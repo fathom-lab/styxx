@@ -1,0 +1,363 @@
+{
+ "valid": true,
+ "gates": {
+  "G-S9-1": {
+   "pass": true,
+   "detail": "8 passed in 8.79s"
+  },
+  "G-S9-2": {
+   "pass": true,
+   "detail": "2123 of 2286 audited (92.87%); 12 of 635 repositories failed to clone (66 PRs); missing head 3, no base 1, suspect 11, head moved 22, commit list capped 60, capped 0"
+  },
+  "G-S9-3": {
+   "pass": true,
+   "detail": "instrument ec9ef750826516a8\u2026, population 952509e5b731f352\u2026 (file 952509e5b731f352\u2026), differential 91e4a4a755b80027\u2026, history 93efb4a9\u2026, faults d26a407c\u2026"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "fire rate among audited pull requests in [0.5%, 2.0%]",
+   "observed": {
+    "firing": 17,
+    "audited": 2123,
+    "rate_pct": 0.8,
+    "new_hidden_checks": 24
+   }
+  },
+  "P2": {
+   "hit": false,
+   "predicted": "merge rate of firing \u2265 0.8\u00d7 merge rate of non-firing, among pull requests closed at collection",
+   "observed": {
+    "firing_merged": "9 of 17 (52.94%)",
+    "non_firing_merged": "1514 of 1965 (77.05%)",
+    "ratio": 0.687
+   }
+  },
+  "P3": {
+   "hit": false,
+   "predicted": "Copilot has the highest fire rate among agents with \u2265 100 audited pull requests",
+   "observed": {
+    "highest": "Cursor",
+    "tied": null,
+    "by_agent": {
+     "Claude_Code": {
+      "audited": 49,
+      "firing": 3,
+      "checks": 10,
+      "rate_pct": 6.12
+     },
+     "Copilot": {
+      "audited": 516,
+      "firing": 3,
+      "checks": 3,
+      "rate_pct": 0.58
+     },
+     "Cursor": {
+      "audited": 117,
+      "firing": 2,
+      "checks": 2,
+      "rate_pct": 1.71
+     },
+     "Devin": {
+      "audited": 488,
+      "firing": 3,
+      "checks": 3,
+      "rate_pct": 0.61
+     },
+     "OpenAI_Codex": {
+      "audited": 953,
+      "firing": 6,
+      "checks": 6,
+      "rate_pct": 0.63
+     }
+    }
+   }
+  },
+  "P4": {
+   "hit": true,
+   "predicted": "\u2265 60% of newly hidden checks have a verified repair",
+   "observed": {
+    "repaired": 22,
+    "of": 24,
+    "pct": 91.67,
+    "by_repair": {
+     "strict-shell": 9,
+     "no-continue-on-error": 6,
+     "no-default": 6,
+     "none": 2,
+     "guard-status": 1
+    }
+   }
+  },
+  "P5": {
+   "hit": false,
+   "predicted": "\u2265 50% of newly hidden checks carry continue-on-error: true",
+   "observed": {
+    "continue_on_error": 6,
+    "of": 24,
+    "pct": 25.0
+   }
+  },
+  "P6": {
+   "hit": false,
+   "predicted": "acknowledging firing pull requests \u2265 1.5\u00d7 the count expected from each agent's non-firing rate",
+   "observed": {
+    "acknowledging_firing": 6,
+    "of": 17,
+    "expected": 5.07,
+    "ratio": 1.18,
+    "non_firing_rate_pct_by_agent": {
+     "Claude_Code": 43.5,
+     "Copilot": 51.3,
+     "Cursor": 26.1,
+     "Devin": 17.9,
+     "OpenAI_Codex": 19.4
+    },
+    "words": {
+     "warn": 3,
+     "skip": 2,
+     "flak": 1
+    }
+   }
+  },
+  "P7": {
+   "hit": false,
+   "predicted": "\u2265 70% of newly hidden checks are born hidden",
+   "observed": {
+    "born_hidden": 15,
+    "of": 24,
+    "pct": 62.5,
+    "by_kind": {
+     "born hidden": 15,
+     "acquired": 9
+    }
+   }
+  },
+  "P8": {
+   "hit": false,
+   "predicted": "\u2265 70% of the checks merged firing pull requests brought, whose file still exists at the tip, are still hidden",
+   "observed": {
+    "still_hidden": 2,
+    "of": 6,
+    "pct": 33.33,
+    "file_gone": 3,
+    "by_now": {
+     "file gone": 3,
+     "repaired": 2,
+     "still hidden": 2,
+     "no longer a check": 1,
+     "removed": 1
+    }
+   }
+  }
+ },
+ "hits": 2,
+ "of": 8,
+ "exploratory_not_scored": {
+  "without_repos_of_100_or_more_prs": {
+   "audited": 1692,
+   "firing": 15,
+   "rate_pct": 0.89,
+   "by_agent": {
+    "Claude_Code": {
+     "audited": 49,
+     "firing": 3,
+     "rate_pct": 6.12
+    },
+    "Copilot": {
+     "audited": 516,
+     "firing": 3,
+     "rate_pct": 0.58
+    },
+    "Cursor": {
+     "audited": 117,
+     "firing": 2,
+     "rate_pct": 1.71
+    },
+    "Devin": {
+     "audited": 488,
+     "firing": 3,
+     "rate_pct": 0.61
+    },
+    "OpenAI_Codex": {
+     "audited": 522,
+     "firing": 4,
+     "rate_pct": 0.77
+    }
+   }
+  },
+  "own_workflow_change_only": {
+   "audited": 1407,
+   "firing": 17,
+   "rate_pct": 1.21,
+   "by_agent": {
+    "Claude_Code": {
+     "audited": 39,
+     "firing": 3,
+     "rate_pct": 7.69
+    },
+    "Copilot": {
+     "audited": 277,
+     "firing": 3,
+     "rate_pct": 1.08
+    },
+    "Cursor": {
+     "audited": 71,
+     "firing": 2,
+     "rate_pct": 2.82
+    },
+    "Devin": {
+     "audited": 262,
+     "firing": 3,
+     "rate_pct": 1.15
+    },
+    "OpenAI_Codex": {
+     "audited": 758,
+     "firing": 6,
+     "rate_pct": 0.79
+    }
+   },
+   "merged_firing_closed": "9 of 17",
+   "merged_non_firing_closed": "1030 of 1308"
+  },
+  "no_workflow_change_of_its_own": {
+   "audited": 716,
+   "by_agent": {
+    "Copilot": 239,
+    "Devin": 226,
+    "OpenAI_Codex": 195,
+    "Cursor": 46,
+    "Claude_Code": 10
+   }
+  },
+  "ambiguous_base": 3,
+  "head_in_tip_merged_firing": 3,
+  "by_month": {
+   "2024-12": {
+    "audited": 7,
+    "firing": 0
+   },
+   "2025-01": {
+    "audited": 55,
+    "firing": 0
+   },
+   "2025-02": {
+    "audited": 52,
+    "firing": 0
+   },
+   "2025-03": {
+    "audited": 57,
+    "firing": 0
+   },
+   "2025-04": {
+    "audited": 82,
+    "firing": 1
+   },
+   "2025-05": {
+    "audited": 398,
+    "firing": 2
+   },
+   "2025-06": {
+    "audited": 647,
+    "firing": 7
+   },
+   "2025-07": {
+    "audited": 825,
+    "firing": 7
+   }
+  },
+  "by_base_method": {
+   "pr-commits": 2123
+  },
+  "firing_by_base_method": {
+   "pr-commits": 17
+  },
+  "open_at_collection": {
+   "audited": 141,
+   "firing": 0
+  },
+  "firing_repos": 15,
+  "checks_per_firing_pr": 1.41,
+  "batch_firings_3_or_more": 1,
+  "hidden_after_unread_prs": 0,
+  "removed_hidden_prs": 6,
+  "suspect_firing": 0,
+  "mechanisms_of_acquired": {
+   "gating": 4,
+   "or-true": 4,
+   "continue-on-error": 3,
+   "default": 2
+  },
+  "median_seconds_per_audited_pr": 0.05,
+  "repos_deepened": 0,
+  "verdicts": {
+   "SWALLOWED": 21,
+   "FAIL_OPEN": 3
+  }
+ },
+ "summary": {
+  "ambiguous_base": 3,
+  "audited": 2123,
+  "by_agent": {
+   "Claude_Code": {
+    "audited": 49,
+    "firing": 3,
+    "firing_merged": 0,
+    "merged": 34,
+    "new_hidden_checks": 10
+   },
+   "Copilot": {
+    "audited": 516,
+    "firing": 3,
+    "firing_merged": 3,
+    "merged": 337,
+    "new_hidden_checks": 3
+   },
+   "Cursor": {
+    "audited": 117,
+    "firing": 2,
+    "firing_merged": 1,
+    "merged": 73,
+    "new_hidden_checks": 2
+   },
+   "Devin": {
+    "audited": 488,
+    "firing": 3,
+    "firing_merged": 1,
+    "merged": 323,
+    "new_hidden_checks": 3
+   },
+   "OpenAI_Codex": {
+    "audited": 953,
+    "firing": 6,
+    "firing_merged": 4,
+    "merged": 756,
+    "new_hidden_checks": 6
+   }
+  },
+  "capped": 0,
+  "clone_failures": 12,
+  "commit_list_capped": 60,
+  "fire_rate": 0.008,
+  "firing": 17,
+  "head_in_tip": 703,
+  "head_moved": 22,
+  "merged_audited": 1523,
+  "merged_firing": 9,
+  "missing_head": 3,
+  "new_hidden_checks": 24,
+  "no_base": 1,
+  "prs_in_population": 2286,
+  "prs_lost_to_clone_failures": 66,
+  "prs_seen": 2220,
+  "repos": 623,
+  "repos_deepened": 0,
+  "suspect": 11
+ },
+ "seconds": 1675.3,
+ "instrument_sha256": "ec9ef750826516a8ff425f184598d38b1249759b06bfe172518166e514b2b950",
+ "receipt_sha256": "fabfc00a2238aa1f44b6f419a204432a12abfe2bd3cd688c90323ee5122c5f65",
+ "receipt_file": "swallow9_receipt.json.gz",
+ "prereg_sha256_at_freeze": "6b81763692cc2de0bc461aae168934998c58e28ef4ce683f19cbd56e7e937bd5"
+}

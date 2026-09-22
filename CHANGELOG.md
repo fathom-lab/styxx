@@ -92,6 +92,32 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-9: the agent's pull request at the gate
+
+The gate, run on the pull requests coding agents actually opened.
+`benchmarks/harness_mutation/agent_prs.py` takes AIDev's 2,286 pull requests by OpenAI Codex,
+Copilot, Devin, Cursor and Claude Code that touch a hand-written workflow — the agent named by
+GitHub, the merge decided by a person — fetches each head, takes as BASE what the pull request's
+own commit list implies (the base branch as it last saw it, whatever branch that is), and runs
+SWALLOW-7's gate on the workflows the pull request changed. No name is written.
+
+**VALID on its gates, 2/8** (`RESULT_swallow9_the_agents_pull_request_at_the_gate_2026_09_21.md`;
+prereg frozen at `6b817636…`; two runs stated — run 1's base rule compared pull requests into
+`dev` with `main` and put seven false firings in one repository; amended, rerun). **The gate
+fires on 17 of 2,123 audited pull requests (0.8%), bringing 24 checks that hide their own
+failure; a person merged 9 of the 17 — 53%, against 77% of the pull requests that do not fire**
+(the prereg guessed the reviewer would not notice: MISS, the other way). 22 of the 24 checks have
+a verified repair. The shape is not the mainline's: 6 `continue-on-error`, 6 `|| true`, 4
+`|| echo …` defaults, 2 `set +e`, 3 fail-open queries. Claude Code's pull requests fire most (3
+of 49; one closed pull request brought seven checks — `npm run lint || echo "Linting needs
+fixing"`), Copilot's least (3 of 516; the prereg named Copilot: MISS). Of the 9 checks merged
+into a default branch, 2 are still hidden today, 2 were repaired — both by the same agent's next
+pull request. A third of the population turned out to carry no workflow change of its own (the
+dataset counts a merge of the base branch as the pull request's change): stated, and the rate on
+the rest is 1.2%.
+
+Nothing in `styxx` changes: `styxx ci-audit --base` is the gate these pull requests were read with.
+
 ## [Unreleased] — SWALLOW-8: who writes the hidden check
 
 The gate's 104 firings, by who made the commit. `benchmarks/harness_mutation/authorship.py`
