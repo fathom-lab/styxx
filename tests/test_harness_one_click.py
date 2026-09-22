@@ -23,15 +23,42 @@ from tests.test_ciaudit_action import CI_PR7, _github, _line  # noqa: E402
 
 # frozen at the sha256 the SWALLOW-11 receipt names (papers/harness/swallow11_receipt.json.gz); a change needs a new receipt, not a new pin
 INSTRUMENT_SHA256 = "047a11235ce35f02bb3c1e2e467857bf2c1e54d5cbd0b0fc9eede8dc6a6ff807"
-ACTION_SHA256 = "a9615d9bb909b4435fd301f4aa6496320af81828177766bf7c4718ee3c25a76f"
+# the Action as it ships. The scored receipt was taken with action.py a9615d9b...; after scoring, one text-mode subprocess
+# call (readable()'s `git diff --quiet`) gained its encoding pin, and the replay was re-run with the shipped file:
+# swallow11_rerun_receipt.json.gz names this sha, and is the scored receipt in every pair and check (held below)
+ACTION_SHA256 = "c642493df6e2c00d483debd8e28bc3c8a104528df345dd3703881de9b3952c3a"
+ACTION_SHA256_SCORED = "a9615d9bb909b4435fd301f4aa6496320af81828177766bf7c4718ee3c25a76f"
+HARNESS = ROOT / "papers" / "harness"
 
 
-def test_the_instrument_and_the_action_are_the_ones_the_receipt_names():
+def _receipt(name: str) -> dict:
+    import gzip
+    import json
+    return json.loads(gzip.decompress((HARNESS / name).read_bytes()).decode("utf-8"))
+
+
+def test_the_instrument_and_the_action_are_the_ones_a_receipt_names():
     import hashlib
     if INSTRUMENT_SHA256 is None:
         pytest.skip("not yet frozen")
     assert hashlib.sha256((ROOT / "benchmarks" / "harness_mutation" / "one_click.py").read_bytes()).hexdigest() == INSTRUMENT_SHA256
     assert hashlib.sha256((ROOT / "styxx" / "ciaudit" / "action.py").read_bytes()).hexdigest() == ACTION_SHA256
+
+
+def test_the_rerun_with_the_shipped_action_is_the_scored_receipt():
+    """The shipped action.py differs from the one the scored receipt ran by an encoding pin; the
+    replay re-run with the shipped file must be that receipt in every pair and every check."""
+    scored, rerun = _receipt("swallow11_receipt.json.gz"), _receipt("swallow11_rerun_receipt.json.gz")
+    assert scored["action_sha256"] == ACTION_SHA256_SCORED and rerun["action_sha256"] == ACTION_SHA256
+    assert rerun["instrument_sha256"] == scored["instrument_sha256"] == INSTRUMENT_SHA256
+    assert rerun["differential_living_sha256"] == scored["differential_living_sha256"]
+    assert rerun["sources_sha256"] == scored["sources_sha256"]
+
+    def strip(r: dict) -> list[dict]:
+        return [{k: v for k, v in p.items() if k != "time"} for p in r["pairs"]]
+
+    assert strip(rerun) == strip(scored)
+    assert rerun["summary"] == scored["summary"]
 
 
 def test_the_population_is_every_firing_pair_once():
