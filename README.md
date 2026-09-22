@@ -95,9 +95,9 @@ Fails only on a contradicted claim.
 
 It reads only the workflows the change touched, simulates each step's tools failing (no runner,
 no token, no code run), marks the line that hides the check and writes the verified repair into the
-job summary; with `suggest: true` it posts that repair as a review suggestion. Replayed on all 226
+job summary; with `suggest: true` it posts that repair as a review suggestion. Replayed on all 220
 hidden checks it has caught in this program's receipts, it located every hiding line, and the
-verified fix was one click away for 165 — for 76 of 79 in pull requests
+verified fix was one click away for 159 — for 70 of 73 in pull requests
 ([RESULT_swallow11](papers/harness/RESULT_swallow11_one_click_from_loud_2026_09_22.md)). The same gate on every commit before it lands:
 [`integrations/git/commit-msg`](integrations/git/README.md), one file, the message vs the staged diff. Prose outside the closed template set is never judged,
 and the CLI prints what it checks when it finds nothing — silence is scope, not weakness.

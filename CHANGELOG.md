@@ -111,14 +111,17 @@ change), and exits 2 — never 0 — when it could not run. Its own steps pass t
 (tested). This repository's `ci-audit.yml` now runs it on its own pull requests.
 
 **VALID, 7/8** (`RESULT_swallow11_one_click_from_loud_2026_09_22.md`; prereg frozen at
-`1017fac9…`; one run). Every firing change of the SWALLOW-7, -9 and -10 receipts — 140 changes, 226
-hidden checks — replayed through the functions the Action ships: **the product re-read all 140 and
-found exactly the receipts' hidden checks in each; it located the hiding line for all 226, inside
-the change's diff for 213; all 177 verified repairs were rebuilt and reproduced line for line by
-their suggestion; 165 of 226 (73%) are one click away — 124 of them one line — and in pull
-requests 76 of 79.** The miss (P6, the other way): an acquired check is always one click away,
+`1017fac9…`; one run). Every firing change of the SWALLOW-7, -9 and -10 receipts — 139 changes, 220
+hidden checks — replayed through the functions the Action ships: **the product re-read all 139 and
+found exactly the receipts' hidden checks in each; it located the hiding line for all 220, inside
+the change's diff for 207; all 171 verified repairs were rebuilt and reproduced line for line by
+their suggestion; 159 of 220 (72%) are one click away — 121 of them one line — and in pull
+requests 70 of 73.** The miss (P6, the other way): an acquired check is always one click away,
 because the change itself wrote the line that hides it; a born-hidden check less often, for want
-of a verified repair rather than a place to put it.
+of a verified repair rather than a place to put it. A correction found after scoring, before
+merge: the population held one change twice — `ruvnet/ruv-FANN` #44 and #48, two pull requests
+with one base and one head — and the numbers above count it once (`swallow11_once.py`); the scored
+file keeps the rule as frozen (226 checks, 165 one click, 76 of 79); no verdict moves.
 
 ## [Unreleased] — SWALLOW-10: the baseline — and `styxx ci-audit --pr N`
 
