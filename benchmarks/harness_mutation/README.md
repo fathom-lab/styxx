@@ -252,3 +252,33 @@ gates, 2/8; two runs stated — the first's base rule compared a pull request in
 queries; Claude Code's pull requests fire most (3 of 49, one bringing seven checks), Copilot's
 least (3 of 516); of the 9 checks merged into a default branch, 2 are still hidden today.
 `agent_prs.py` is frozen at the sha256 that receipt names (`ec9ef750…`) and pinned by its test.
+
+## The baseline (SWALLOW-10)
+
+`human_prs.py` puts the agents' pull requests and everyone else's through one pipeline. For every
+repository SWALLOW-9 read, the numbers between its first and last agent pull request in the
+dataset's window are the same months; the ones the dataset attributes to no agent are sampled
+(seeded, up to 150 per repository) from what `refs/pull/*/head` lists. Each pull request is
+grouped — the dataset's agent, else SWALLOW-8's rule on the head commit (`agent-signed`,
+`automation`, `human`) — based by the closest-branch rule (the merge commit's first parent when
+one merged the head, else the fork point from the nearest branch), diffed for hand-written
+workflows, read by SWALLOW-7's gate, and given a merge signal from git alone (a merge commit, a
+squash subject, a rebase's kept subject and author date). No name is written.
+
+```
+python -m benchmarks.harness_mutation.human_prs --aidev <dir> --receipt9 papers/harness/swallow9_receipt.json.gz --population9 papers/harness/swallow9_population.json.gz --sample-out sample.json
+python -m benchmarks.harness_mutation.human_prs --sample papers/harness/swallow10_sample.json.gz --receipt9 papers/harness/swallow9_receipt.json.gz --work <clones> --workers 5 --out receipt.json
+python papers/harness/swallow10_score.py
+```
+
+`papers/harness/RESULT_swallow10_the_baseline_2026_09_22.md` (INVALID on its merge-signal gate
+as frozen — the gate held the signal against a dataset flag that is a snapshot, and 177 of the
+221 "false positives" are pull requests merged after collection; 8/8 reported, not claimed): of
+1,989 pull requests people opened that change a workflow, 12 bring a hidden check (0.60%); of
+1,479 the agents opened, 18 (1.22%) — twice the rate, by one pipeline, one base rule, one gate;
+without the one repository that holds five of the twelve human firings, 0.35% and 3.4×. A
+person's hidden check is the textbook one (19 of 32 `continue-on-error`, 31 of 32 born hidden,
+31 of 32 repairable); none of 249 bot pull requests fires; pull requests outside the dataset's
+attribution whose head commit carries an agent's signature fire at 3.7%. The closest-branch base
+agrees with SWALLOW-9's on 96.5% of the agents' pull requests and the gate's verdict on 100%.
+`human_prs.py` is frozen at the sha256 that receipt names (`7d764d5d…`) and pinned by its test.
