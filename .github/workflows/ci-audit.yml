@@ -23,6 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: What this change hides that its base did not
         uses: ./ci-audit
