@@ -1,0 +1,15 @@
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install
+        run: pip install -e .[dev]
+      - name: Build wheel
+        run: python -m build

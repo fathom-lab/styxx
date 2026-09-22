@@ -1,0 +1,17 @@
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Format
+        run: npx prettier --check .

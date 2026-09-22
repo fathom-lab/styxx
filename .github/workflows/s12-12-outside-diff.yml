@@ -1,0 +1,20 @@
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: rustup toolchain install nightly
+      - name: Build
+        run: cargo +nightly build
+      - name: Docs
+        run: cargo +nightly doc --no-deps
+      - name: Bench build
+        run: cargo +nightly bench --no-run
