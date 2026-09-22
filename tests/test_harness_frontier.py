@@ -21,6 +21,13 @@ from tests.test_ciaudit_frontier import FRONTIER_FIXTURE, _tree  # noqa: E402
 INSTRUMENT_SHA256 = "7b3c2b129750292cf058458cc975f4d2257ea6e642e932e982d5513a4ccbd9d1"
 
 
+@pytest.fixture
+def swallow13_stage(monkeypatch):
+    """The third stage as SWALLOW-13 ran it: SWALLOW-14 put hoist-local and wait-list in front of it."""
+    from styxx.ciaudit import repair_frontier
+    monkeypatch.setattr(repair_frontier, "REPAIRS", repair_frontier.S13_REPAIRS)
+
+
 def test_the_instrument_is_the_one_the_preregistration_names():
     import hashlib
     if INSTRUMENT_SHA256 is None:
@@ -38,7 +45,7 @@ def test_the_population_is_its_rule():
     assert all(len(r["tip"]) == 40 for r in committed["repos"])
 
 
-def test_one_checkout_read_as_the_product_reads_it(tmp_path):
+def test_one_checkout_read_as_the_product_reads_it(tmp_path, swallow13_stage):
     from styxx import ciaudit
     tree = _tree(tmp_path, FRONTIER_FIXTURE)
     res = FR.audit_one(tree)
@@ -58,7 +65,7 @@ def test_one_checkout_read_as_the_product_reads_it(tmp_path):
     assert s["distinct_scripts"]["stage3_population"] == 6
 
 
-def test_a_check_the_first_stage_repairs_never_reaches_the_third(tmp_path):
+def test_a_check_the_first_stage_repairs_never_reaches_the_third(tmp_path, swallow13_stage):
     tree = _tree(tmp_path, """on: [push]
 jobs:
   t:
