@@ -158,8 +158,9 @@ runs styxx from its own ref with only numpy and PyYAML installed, refuses `pull_
 drops every token from its environment before reading the change, keeps the change's text from
 acting as a workflow command, and exits 2 — never 0 — when it could not run. This repository's own
 `ci-audit.yml` now runs it on its own pull requests, from the default depth-1 checkout.
-`one_click.py` is frozen at `047a1123…` and pinned, with the shipped `action.py` at `c642493d…`,
-by `tests/test_harness_one_click.py`, which also holds the re-run equal to the scored receipt.
+`one_click.py` is frozen at `047a1123…` and pinned by `tests/test_harness_one_click.py`, which also
+holds the re-run equal to the scored receipt and pins, by their source, the ten functions of
+`action.py` the replay called (as of `c642493d…`) — the rest of the file moves on (SWALLOW-12).
 
 ## 6. Next
 
