@@ -42,10 +42,12 @@ verified on both halves against the same model, and the card prints the diff -- 
 failed, and what the original line was protecting (SWALLOW-4). For a finding those leave
 unverified, two edits to the script's logic are tried next (`repair_structural.py`: a guard whose
 failing tool is not its green path; a query without its `|| echo` default), verified the same way
-(SWALLOW-5). For what those leave, a third stage (`repair_frontier.py`, SWALLOW-13): a `$(...)`
-whose status its line throws away hoisted onto a line of its own, a background job whose early
-death nobody waits for checked once, `|| exit 0` removed, a fallback hidden by a continued line,
-each alone or with the `continue-on-error` removed -- verified the same way. A finding none of the
+(SWALLOW-5). For what those leave, a third stage (`repair_frontier.py`, SWALLOW-13 and -14): a
+`$(...)` whose status its line throws away hoisted onto a line of its own that keeps it, a list read
+from a process substitution whose command's failure is waited for (`wait $!`) instead of read as an
+empty list, a background job whose early death nobody waits for checked once, `|| exit 0` removed,
+a fallback hidden by a continued line, each alone or with the `continue-on-error` removed --
+verified the same way. A finding none of the
 three stages repairs carries two readings of its script, when they match: its failure is routed (a
 flag written to GITHUB_ENV or GITHUB_OUTPUT that a later step reads), or the script says it is not
 fatal (a `::warning`, or stated words). A reading is context for the reviewer, not a verdict.
