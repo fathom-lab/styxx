@@ -86,6 +86,29 @@ def test_hoist_substitution_moves_a_status_the_line_throws_away_onto_a_line_of_i
     assert F.hoist_substitution('echo "__sub1 $(a)"\n') == 'set -eo pipefail\n__sub2="$(a)"\necho "__sub1 ${__sub2}"\n'
 
 
+def test_a_hoisted_answer_by_status_keeps_its_no(tmp_path):
+    """grep's, diff's, `git diff --exit-code`'s, `jq -e`'s status 1 is an answer; hoisted, it stays one:
+    only a status above 1 stops the step. The model's stubs never answer 1, so the repair is verified
+    as before (added after SWALLOW-13's run)."""
+    assert F.hoist_substitution('echo "todos=$(grep -c TODO src/main.c)" >> $GITHUB_OUTPUT\n') == \
+        'set -eo pipefail\n__sub1="$(grep -c TODO src/main.c)" || [ $? -eq 1 ]\necho "todos=${__sub1}" >> $GITHUB_OUTPUT\n'
+    assert "|| [ $? -eq 1 ]" in F.hoist_substitution('if [[ $(git diff --exit-code) ]]; then\n  exit 1\nfi\n')
+    for run in ('echo "d=$(git diff --stat)"\n', 'echo "m=$(cat m.json | jq -c .)"\n', 'echo "x=$(ls | grep_helper)"\n'):
+        assert "|| [ $? -eq 1 ]" not in F.hoist_substitution(run), run
+    from styxx.ciaudit import engine
+    text = """on: [push]
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify no TODOs
+        run: echo "todos=$(grep -c TODO src/main.c)" >> $GITHUB_OUTPUT
+"""
+    rec = F.try_frontier(text, "ci.yml", "t", 0, engine.Runner())
+    assert rec["verified_repair"] == "hoist-substitution"
+    assert '+          __sub1="$(grep -c TODO src/main.c)" || [ $? -eq 1 ]' in next(c for c in rec["candidates"] if c["repair"] == "hoist-substitution")["diff"]
+
+
 def test_background_liveness_waits_on_a_job_that_has_already_died():
     assert F.background_liveness('  npm start &\n  npx wait-on http://localhost:3000\n') == (
         '  npm start &\n  __bg1=$!\n  sleep 5\n  if ! kill -0 "$__bg1" 2>/dev/null; then wait "$__bg1" || exit $?; fi\n'

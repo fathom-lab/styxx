@@ -117,7 +117,7 @@ def _without_scratch_shas(p: dict) -> dict:
     q = copy.deepcopy(p)
     for run in q["runs"].values():
         run["summary"] = re.sub(r"`[0-9a-f]{8}`", "`<commit>`", run["summary"])
-    for k in ("action_sha256", "differential_living_sha256"):
+    for k in ("action_sha256", "action_yml_sha256", "differential_living_sha256"):
         q[k] = "<the product as it is>"
     return q
 
@@ -128,6 +128,7 @@ def test_the_plan_is_deterministic_and_is_the_frozen_one(plan, tmp_path):
         assert L.plan(tmp_path) == plan
     frozen = json.loads((ROOT / "papers" / "harness" / "swallow12_plan.json").read_text(encoding="utf-8"))
     assert frozen["action_sha256"].startswith("e0cb518e") and frozen["differential_living_sha256"].startswith("95f6ccf1")
+    assert frozen["action_yml_sha256"].startswith("83d14bc1")
     assert _without_scratch_shas(frozen) == _without_scratch_shas(plan)
 
 
