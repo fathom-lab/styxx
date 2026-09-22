@@ -141,7 +141,8 @@ def readable(tree: Path, base: str, head: str) -> None:
     for sha in (base, head):
         if not have(tree, sha):
             raise RuntimeError(f"{sha[:12]} is not in the clone")
-    p = subprocess.run(["git", "-C", str(tree), "diff", "--quiet", base, head, "--", ".github/workflows"], capture_output=True, text=True, timeout=600)
+    p = subprocess.run(["git", "-C", str(tree), "diff", "--quiet", base, head, "--", ".github/workflows"], capture_output=True, text=True, encoding="utf-8",
+                       errors="replace", timeout=600)
     if p.returncode not in (0, 1):
         raise RuntimeError(f"git cannot compare {base[:12]} and {head[:12]}: {(p.stderr or '').strip()[-200:]}")
 
