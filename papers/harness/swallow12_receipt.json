@@ -1,0 +1,357 @@
+{
+ "action_sha256": "e0cb518ed10002c634f0ebb64e95219d320a8212647ee817ebd58605bb9fa55c",
+ "action_yml_sha256": "83d14bc1558f4098c39d69f18acfa33dd0b1349036e9cc2f90db3a18f1e3cd93",
+ "again": {
+  "comments_after": 16,
+  "comments_before": 16,
+  "same_ids": true
+ },
+ "annotations": {
+  "again": {
+   "conclusion": "failure",
+   "equal": true,
+   "levels_live": {
+    "error": 10,
+    "notice": 0,
+    "warning": 9
+   },
+   "levels_planned": {
+    "error": 10,
+    "notice": 0,
+    "warning": 9
+   },
+   "live": 19,
+   "only_in_plan": [],
+   "only_live": [],
+   "planned": 19,
+   "planned_rc": 1
+  },
+  "applied": {
+   "conclusion": "failure",
+   "equal": true,
+   "levels_live": {
+    "error": 3,
+    "notice": 0,
+    "warning": 0
+   },
+   "levels_planned": {
+    "error": 3,
+    "notice": 0,
+    "warning": 0
+   },
+   "live": 3,
+   "only_in_plan": [],
+   "only_live": [],
+   "planned": 3,
+   "planned_rc": 1
+  },
+  "first": {
+   "conclusion": "failure",
+   "equal": true,
+   "levels_live": {
+    "error": 10,
+    "notice": 0,
+    "warning": 9
+   },
+   "levels_planned": {
+    "error": 10,
+    "notice": 0,
+    "warning": 9
+   },
+   "live": 19,
+   "only_in_plan": [],
+   "only_live": [],
+   "planned": 19,
+   "planned_rc": 1
+  }
+ },
+ "applied_changed_files": [
+  ".github/workflows/s12-01-coe-step-acquired.yml",
+  ".github/workflows/s12-02-coe-step-born.yml",
+  ".github/workflows/s12-03-coe-job-born.yml",
+  ".github/workflows/s12-04-coe-step-eof.yml",
+  ".github/workflows/s12-05-strict-one-line.yml",
+  ".github/workflows/s12-05b-strict-acquired.yml",
+  ".github/workflows/s12-06-strict-multi.yml",
+  ".github/workflows/s12-06b-strict-ws-line.yml",
+  ".github/workflows/s12-07-strict-eof.yml",
+  ".github/workflows/s12-08-strict-eof-no-newline.yml",
+  ".github/workflows/s12-09-no-default.yml",
+  ".github/workflows/s12-09b-no-default-block.yml",
+  ".github/workflows/s12-10-guard.yml",
+  ".github/workflows/s12-11-both.yml",
+  ".github/workflows/s12-14-two-in-one.yml"
+ ],
+ "applied_checks": {
+  "live_annotated": [
+   [
+    ".github/workflows/s12-12-outside-diff.yml",
+    10
+   ],
+   [
+    ".github/workflows/s12-12b-span-leaves-hunk.yml",
+    13
+   ],
+   [
+    ".github/workflows/s12-13-no-repair.yml",
+    15
+   ]
+  ],
+  "planned": [
+   [
+    ".github/workflows/s12-12-outside-diff.yml",
+    "name:Tests"
+   ],
+   [
+    ".github/workflows/s12-12b-span-leaves-hunk.yml",
+    "name:Integration"
+   ],
+   [
+    ".github/workflows/s12-13-no-repair.yml",
+    "name:Tests"
+   ]
+  ],
+  "planned_annotated": [
+   [
+    ".github/workflows/s12-12-outside-diff.yml",
+    10
+   ],
+   [
+    ".github/workflows/s12-12b-span-leaves-hunk.yml",
+    13
+   ],
+   [
+    ".github/workflows/s12-13-no-repair.yml",
+    15
+   ]
+  ]
+ },
+ "applied_sha": "d815a4f2b4f1155646eda049a6c0f6a89c783eb8",
+ "base_sha": "3fbff02ca17040335a6da29643b5555f75af7a3e",
+ "comments": {
+  "authors": [
+   "Bot"
+  ],
+  "commit_ids": [
+   true
+  ],
+  "equal": true,
+  "live": 16,
+  "only_in_plan": [],
+  "only_live": [],
+  "planned": 16
+ },
+ "differential_living_sha256": "95f6ccf1f981a21882af152296d4ae6cd1f27c0d3a12fe66a3d22ea46b321428",
+ "files": {
+  ".github/workflows/s12-01-coe-step-acquired.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "cc598436c1966e8f6b729f43d884c64c0520f8405d859eb71a209c5c0e78ab84",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-02-coe-step-born.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "8d8ee60ec66c67d97c9749c2a14aae17fbf75735c132caa71d2c1fa7d2997808",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-03-coe-job-born.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "befb98d1c10ca35bf2a44b3b13da845724614f145ced3ab2590ee7f734b5dc72",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-04-coe-step-eof.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "43269278111b0fab139749bcc4f98351c2dc65ee2dd3b4a18bcb18f2fb2cf7a1",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-05-strict-one-line.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "54bd812f18e71ab008dd4c6db14bb9738085a7d1ad2b2f7a68db93eff1da0d49",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-05b-strict-acquired.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "f065f9bc16d4707a6de44a854ea3eaa9aa8735345428bf444319c645baeed49b",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-06-strict-multi.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "af8292cbac53d69ce63eca3a08be025cab53f451d73b2b15a1d06c376e22f0d1",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-06b-strict-ws-line.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "5a47ce215528ec82c696d1a8b5bb1cfe60e35ab2a921aab2f38298d8eb258174",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-07-strict-eof.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "33f4dc7daee2ff679cf0f0f7738d9fa607ce78e8e30f7816c32ce014fcdfb253",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-08-strict-eof-no-newline.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": false,
+   "final_newline_got": false,
+   "got_sha256": "aff8558b6314209e4d9ff9689a30329680dcae55f3b6e87a2b9a03c19e261b79",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-09-no-default.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "021bf40d36302900a3d9f4eba8f34f25c310087f2fe89d032383218971d65f75",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-09b-no-default-block.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "4d7b5996bb846e1d3c0e9d0fcfa6c6572f7957ace4f19e30cea85ca63b5872de",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-10-guard.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "a8aba0bc134e2c4a73c0a0358fd1987b7b5ae09ca5aff88630e8b5e3d5a5bdca",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-11-both.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "392e660a78e9b539e1ba0573c0af1958e46c41fc086382d978a403301f65833c",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 1
+  },
+  ".github/workflows/s12-14-two-in-one.yml": {
+   "bytes_equal": true,
+   "final_newline_expected": true,
+   "final_newline_got": true,
+   "got_sha256": "abad7801522a75802e24146d489e593b51395c4d2872d3133ddec90cb9744fe6",
+   "lines_equal": true,
+   "present": true,
+   "suggestions": 2
+  }
+ },
+ "head_sha": "fb520bc503d2592148a8f31de07e8087c59d7f83",
+ "instrument_sha256": "83be210029e8c647f6e6f20eafafe4b0de6b97002d7cc40cbaf3a792c520577c",
+ "live_is_the_plan": {
+  "applied_by_github": true,
+  "applied_parent_is_head": true,
+  "base": {
+   ".github/workflows/ci-audit.yml": true,
+   ".github/workflows/s12-01-coe-step-acquired.yml": true,
+   ".github/workflows/s12-02-coe-step-born.yml": true,
+   ".github/workflows/s12-03-coe-job-born.yml": true,
+   ".github/workflows/s12-04-coe-step-eof.yml": true,
+   ".github/workflows/s12-05-strict-one-line.yml": true,
+   ".github/workflows/s12-05b-strict-acquired.yml": true,
+   ".github/workflows/s12-06-strict-multi.yml": true,
+   ".github/workflows/s12-06b-strict-ws-line.yml": true,
+   ".github/workflows/s12-07-strict-eof.yml": true,
+   ".github/workflows/s12-08-strict-eof-no-newline.yml": true,
+   ".github/workflows/s12-09-no-default.yml": true,
+   ".github/workflows/s12-09b-no-default-block.yml": true,
+   ".github/workflows/s12-10-guard.yml": true,
+   ".github/workflows/s12-11-both.yml": true,
+   ".github/workflows/s12-12-outside-diff.yml": true,
+   ".github/workflows/s12-12b-span-leaves-hunk.yml": true,
+   ".github/workflows/s12-13-no-repair.yml": true,
+   ".github/workflows/s12-14-two-in-one.yml": true
+  },
+  "first_run_on_test_merge": true,
+  "gate_code": {
+   "ci-audit/action.yml": true,
+   "styxx/ciaudit/action.py": true,
+   "styxx/ciaudit/differential.py": true
+  },
+  "head": {
+   ".github/workflows/ci-audit.yml": true,
+   ".github/workflows/s12-01-coe-step-acquired.yml": true,
+   ".github/workflows/s12-02-coe-step-born.yml": true,
+   ".github/workflows/s12-03-coe-job-born.yml": true,
+   ".github/workflows/s12-04-coe-step-eof.yml": true,
+   ".github/workflows/s12-05-strict-one-line.yml": true,
+   ".github/workflows/s12-05b-strict-acquired.yml": true,
+   ".github/workflows/s12-06-strict-multi.yml": true,
+   ".github/workflows/s12-06b-strict-ws-line.yml": true,
+   ".github/workflows/s12-07-strict-eof.yml": true,
+   ".github/workflows/s12-08-strict-eof-no-newline.yml": true,
+   ".github/workflows/s12-09-no-default.yml": true,
+   ".github/workflows/s12-09b-no-default-block.yml": true,
+   ".github/workflows/s12-10-guard.yml": true,
+   ".github/workflows/s12-11-both.yml": true,
+   ".github/workflows/s12-12-outside-diff.yml": true,
+   ".github/workflows/s12-12b-span-leaves-hunk.yml": true,
+   ".github/workflows/s12-13-no-repair.yml": true,
+   ".github/workflows/s12-14-two-in-one.yml": true
+  }
+ },
+ "plan_instrument_sha256": "83be210029e8c647f6e6f20eafafe4b0de6b97002d7cc40cbaf3a792c520577c",
+ "pr": 156,
+ "refused": {
+  "live_again": "styxx ci-audit: 0 suggestions posted; 16 already on this pull request; .github/workflows/s12-12-outside-diff.yml name:Tests: the lines are outside the pull request's diff; .github/workflows/s12-12b-span-leaves-hunk.yml name:Integration: the lines are outside the pull request's diff; .github/workflows/s12-13-no-repair.yml name:Tests: no verified repair",
+  "live_first": "styxx ci-audit: 16 suggestions posted; .github/workflows/s12-12-outside-diff.yml name:Tests: the lines are outside the pull request's diff; .github/workflows/s12-12b-span-leaves-hunk.yml name:Integration: the lines are outside the pull request's diff; .github/workflows/s12-13-no-repair.yml name:Tests: no verified repair",
+  "planned": [
+   ".github/workflows/s12-12-outside-diff.yml",
+   ".github/workflows/s12-12b-span-leaves-hunk.yml"
+  ],
+  "planned_again": "styxx ci-audit: 0 suggestions posted; 16 already on this pull request; .github/workflows/s12-12-outside-diff.yml name:Tests: the lines are outside the pull request's diff; .github/workflows/s12-12b-span-leaves-hunk.yml name:Integration: the lines are outside the pull request's diff; .github/workflows/s12-13-no-repair.yml name:Tests: no verified repair",
+  "planned_first": "styxx ci-audit: 16 suggestions posted; .github/workflows/s12-12-outside-diff.yml name:Tests: the lines are outside the pull request's diff; .github/workflows/s12-12b-span-leaves-hunk.yml name:Integration: the lines are outside the pull request's diff; .github/workflows/s12-13-no-repair.yml name:Tests: no verified repair"
+ },
+ "repo": "fathom-lab/styxx",
+ "schema": "styxx.harness-live-click/v1",
+ "seconds": 0.2,
+ "untouched_after_apply": {
+  ".github/workflows/ci-audit.yml": true,
+  ".github/workflows/s12-12-outside-diff.yml": true,
+  ".github/workflows/s12-12b-span-leaves-hunk.yml": true,
+  ".github/workflows/s12-13-no-repair.yml": true
+ }
+}

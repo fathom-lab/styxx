@@ -166,6 +166,8 @@ holds the re-run equal to the scored receipt and pins, by their source, the ten 
 
 The 49 checks with no verified repair are the repair families' frontier: fail-open queries whose
 empty answer is the green path, and scripts that swallow further down. The suggestion's one click
-wants a live test on GitHub's API on a pull request made for it. And a population drawn from
+wants a live test on GitHub's API on a pull request made for it — SWALLOW-12 ran it: the API placed
+and refused exactly as the rule says, and GitHub's button made each suggestion the verified repair,
+byte for byte, for fifteen shapes. And a population drawn from
 pull requests is deduplicated by (repository, base, head) within every receipt, not only across
 them.
