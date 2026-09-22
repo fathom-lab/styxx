@@ -1,0 +1,241 @@
+{
+ "valid": true,
+ "gates": {
+  "G-S11-1": {
+   "pass": true,
+   "detail": "22 passed in 9.17s"
+  },
+  "G-S11-2": {
+   "pass": true,
+   "detail": "140 of 140 pairs re-read (100.0%); 140 of 140 give the receipt's set (100.0%); errors: {}"
+  },
+  "G-S11-3": {
+   "pass": true,
+   "detail": "instrument 047a11235ce35f02\u2026, action a9615d9bb909b443\u2026, living differential 95f6ccf1f981a218\u2026, sources {'swallow10': 'cc6b5dc1', 'swallow7': 'c6b12d09', 'swallow9': 'b78c4730'}"
+  },
+  "G-S11-4": {
+   "pass": true,
+   "detail": "177 of 177 rebuilt repairs reproduced by their suggestion; 0 reproduced without a rebuild"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "\u2265 98% of re-read checks located",
+   "observed": {
+    "located": 226,
+    "of": 226,
+    "pct": 100.0,
+    "target": {
+     "run": 107,
+     "continue-on-error": 96,
+     "job continue-on-error": 23
+    }
+   }
+  },
+  "P2": {
+   "hit": true,
+   "predicted": "\u2265 80% of located annotations inside the change's diff",
+   "observed": {
+    "visible": 213,
+    "of": 226,
+    "pct": 94.25,
+    "not_visible_by_target": {
+     "continue-on-error": 11,
+     "run": 2
+    }
+   }
+  },
+  "P3": {
+   "hit": true,
+   "predicted": "\u2265 60% of re-read checks one click away",
+   "observed": {
+    "one_click": 165,
+    "of": 226,
+    "pct": 73.01,
+    "why_not": {
+     "no verified repair": 49,
+     "outside the change's diff": 12
+    }
+   }
+  },
+  "P4": {
+   "hit": true,
+   "predicted": "\u2265 80% of checks with a rebuilt repair one click away",
+   "observed": {
+    "one_click": 165,
+    "of": 177,
+    "pct": 93.22,
+    "outside_by_repair": {
+     "no-continue-on-error": 11,
+     "no-default": 1
+    }
+   }
+  },
+  "P5": {
+   "hit": true,
+   "predicted": "\u2265 75% of one-click suggestions replace \u2264 3 HEAD lines",
+   "observed": {
+    "small": 133,
+    "of": 165,
+    "pct": 80.61,
+    "sizes": {
+     "1": 124,
+     "6": 12,
+     "3": 7,
+     "14": 5,
+     "4": 5,
+     "2": 2,
+     "5": 2,
+     "10": 1,
+     "11": 1,
+     "12": 1,
+     "15": 1,
+     "38": 1,
+     "45": 1,
+     "7": 1,
+     "8": 1
+    },
+    "by_repair": {
+     "no-continue-on-error": 83,
+     "strict-shell": 50,
+     "no-default": 15,
+     "guard-status": 13,
+     "both": 4
+    }
+   }
+  },
+  "P6": {
+   "hit": false,
+   "predicted": "one-click share of born-hidden checks > acquired",
+   "observed": {
+    "born_hidden": "131 of 177 (74.01%)",
+    "acquired": "32 of 32 (100.0%)",
+    "became_a_check": "2 of 17"
+   }
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "one-click share in pull requests \u2265 in mainline commits",
+   "observed": {
+    "pull_requests": "76 of 79 (96.2%)",
+    "mainline": "89 of 147 (60.54%)"
+   }
+  },
+  "P8": {
+   "hit": true,
+   "predicted": "one-click share of people's checks \u2265 the agents'",
+   "observed": {
+    "people": "31 of 32 (96.88%)",
+    "agents": "25 of 27 (92.59%)",
+    "agent_signed": "20 of 20"
+   }
+  }
+ },
+ "hits": 7,
+ "of": 8,
+ "exploratory_not_scored": {
+  "by_source": {
+   "swallow7": "89 of 147",
+   "swallow9": "22 of 24",
+   "swallow10": "54 of 55"
+  },
+  "by_repair": {
+   "None": "0 of 0",
+   "both": "4 of 4",
+   "guard-status": "13 of 13",
+   "no-continue-on-error": "83 of 94",
+   "no-default": "15 of 16",
+   "strict-shell": "50 of 50"
+  },
+  "by_verdict": {
+   "FAIL_OPEN": "14 of 28",
+   "SWALLOWED": "151 of 198"
+  },
+  "repos_with_a_one_click_fix": 52,
+  "repos": 60,
+  "not_reproduced_pairs": [],
+  "added_lines": {
+   "0": 83,
+   "3": 34,
+   "2": 13,
+   "7": 9,
+   "4": 5,
+   "6": 5,
+   "14": 4,
+   "1": 3,
+   "11": 2,
+   "12": 1,
+   "13": 1,
+   "15": 1,
+   "35": 1,
+   "42": 1,
+   "8": 1,
+   "9": 1
+  },
+  "seconds": 485.1
+ },
+ "summary": {
+  "by_group": {
+   "agent-signed": {
+    "n": 20,
+    "one_click": 20
+   },
+   "agents": {
+    "n": 27,
+    "one_click": 25
+   },
+   "human": {
+    "n": 32,
+    "one_click": 31
+   },
+   "mainline": {
+    "n": 147,
+    "one_click": 89
+   }
+  },
+  "by_kind": {
+   "acquired": {
+    "n": 32,
+    "one_click": 32
+   },
+   "became a check, hidden": {
+    "n": 17,
+    "one_click": 2
+   },
+   "born hidden": {
+    "n": 177,
+    "one_click": 131
+   }
+  },
+  "by_source": {
+   "swallow10": {
+    "n": 55,
+    "one_click": 54
+   },
+   "swallow7": {
+    "n": 147,
+    "one_click": 89
+   },
+   "swallow9": {
+    "n": 24,
+    "one_click": 22
+   }
+  },
+  "checks": 226,
+  "errors": 0,
+  "located": 226,
+  "one_click": 165,
+  "pairs": 140,
+  "re_read": 140,
+  "rebuilt": 177,
+  "reproduced": 140,
+  "reproduces": 177,
+  "visible": 213,
+  "with_repair": 177
+ },
+ "instrument_sha256": "047a11235ce35f02bb3c1e2e467857bf2c1e54d5cbd0b0fc9eede8dc6a6ff807",
+ "receipt_sha256": "d84c70ec8b66301f330af18a81c8488fc51fe98b026d2da4b7379e708b045229",
+ "receipt_file": "swallow11_receipt.json.gz",
+ "prereg_sha256_at_freeze": "1017fac935d1945880177a07d67f7656b79d069c1504a78619d858e354194ec4"
+}
