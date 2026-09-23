@@ -308,7 +308,7 @@ def _mask_text(text: str) -> str:
         ch = text[i]
         if q is None:
             if ch == "\\":
-                out.append("_" * min(2, n - i))
+                out.append("_" + ("\n" if text[i + 1:i + 2] == "\n" else "_" * len(text[i + 1:i + 2])))   # a continued line keeps its newline
                 i += 2
                 continue
             if ch in "'\"":
@@ -326,7 +326,7 @@ def _mask_text(text: str) -> str:
             i += 1
             continue
         if ch == "\\" and q == '"':
-            out.append("_" * min(2, n - i))
+            out.append("_" + ("\n" if text[i + 1:i + 2] == "\n" else "_" * len(text[i + 1:i + 2])))
             i += 2
             continue
         if ch == q:
@@ -371,7 +371,7 @@ def wait_list(run: str) -> str:
     def line_of(idx: int) -> int:
         return max(j for j in range(len(lines)) if starts[j] <= idx)
 
-    edits = []                                                   # (index just past `<(`, closing line, piped, answer)
+    edits = []                                                   # (index just past `<(`, closing line, piped, answer, first line)
     for mt in _PROCSUB.finditer(text):
         li = line_of(mt.start())
         col = mt.start() - starts[li]
@@ -391,16 +391,16 @@ def wait_list(run: str) -> str:
             if st is None or "<(" in "\n".join(masked[st:li]) + prefix:
                 continue                                         # another substitution inside the loop takes `$!` last
         body = _mask_text(text[mt.end():close - 1])
-        edits.append((mt.end(), cl, bool(_PIPE.search(body)), bool(_STATUS_ONE.search(body))))
+        edits.append((mt.end(), cl, bool(_PIPE.search(body)), bool(_STATUS_ONE.search(body)), li))
     if not edits:
         return run
     out_lines = list(lines)
-    for k, cl, piped, _ in sorted(edits, key=lambda e: -e[0]):
+    for k, cl, piped, _, _ in sorted(edits, key=lambda e: -e[0]):
         if piped:
             li = line_of(k - 1)
             col = k - starts[li]
             out_lines[li] = out_lines[li][:col] + ("set -o pipefail;" if col == len(lines[li]) else "set -o pipefail; ") + out_lines[li][col:]
-    adds = {cl: lines[cl][: len(lines[cl]) - len(lines[cl].lstrip())] + WAIT_LINE[answer] for _, cl, _, answer in edits}
+    adds = {cl: lines[li][: len(lines[li]) - len(lines[li].lstrip())] + WAIT_LINE[answer] for _, cl, _, answer, li in edits}   # at the statement's indent
     final = []
     for i, ln in enumerate(out_lines):
         final.append(ln)
@@ -551,7 +551,10 @@ def try_frontier(text: str, wf_name: str, jid: str, i: int, runner: faults.Runne
     base_shape = {f: _healthy_shape(base_plus[f]) for f in faults.FLAVOURS}
     for name in REPAIRS:
         cand = {"repair": name}
-        new_text, why = apply_frontier(text, jid, i, name)
+        try:
+            new_text, why = apply_frontier(text, jid, i, name)
+        except Exception as e:  # noqa: BLE001 -- an edit that cannot read a script does not apply to it; the audit goes on
+            new_text, why = None, f"the edit could not read this script ({type(e).__name__})"
         if new_text is None:
             cand.update(applies=False, why=why)
             rec["candidates"].append(cand)
