@@ -281,6 +281,38 @@ def test_wait_list_waits_for_the_command_that_makes_the_list():
     assert F.wait_list("cat <<EOF\nIt's text\nEOF\nwhile read x; do :; done < <(ls)\n").endswith(W + "\n")
 
 
+def test_a_continued_line_before_a_second_list_is_read_in_place():
+    # SWALLOW-14's run: the masked script lost the newline of a backslash-continued line, so a second
+    # list was read on the wrong line -- an IndexError that stopped the repository's audit
+    run = ('mapfile -t files < <(git diff --name-only "$A" "$B" \\\n'
+           "  | grep -E '^docs/' || true)\n"
+           'for f in "${files[@]}"; do\n'
+           '  mapfile -t added < <(git diff -U0 "$A" "$B" -- "$f" \\\n'
+           "    | grep -E '^\\+## ' || true)\n"
+           'done\n')
+    masked = F._mask_text(run)
+    assert len(masked) == len(run) and masked.count("\n") == run.count("\n")
+    W1 = F.WAIT_LINE[True]
+    assert F.wait_list(run) == ('mapfile -t files < <(set -o pipefail; git diff --name-only "$A" "$B" \\\n'
+                                "  | grep -E '^docs/' || true)\n" + W1 + "\n"      # at the statement's indent, not its last line's
+                                'for f in "${files[@]}"; do\n'
+                                '  mapfile -t added < <(set -o pipefail; git diff -U0 "$A" "$B" -- "$f" \\\n'
+                                "    | grep -E '^\\+## ' || true)\n  " + W1 + "\n"
+                                'done\n')
+
+
+def test_an_edit_that_cannot_read_a_script_does_not_stop_the_audit(monkeypatch):
+    from styxx.ciaudit import engine
+
+    def broken(run):
+        raise IndexError("string index out of range")
+    monkeypatch.setattr(F, "wait_list", broken)
+    rec = F.try_frontier(LISTS_FIXTURE, "ci.yml", "lists", 3, engine.Runner())
+    by = {c["repair"]: c for c in rec["candidates"]}
+    assert by["wait-list"] == {"repair": "wait-list", "applies": False, "why": "the edit could not read this script (IndexError)"}
+    assert rec["verified_repair"] == "hoist-local" and len(rec["candidates"]) == len(F.REPAIRS)
+
+
 def test_the_empty_list_and_the_local_hoist_verified_end_to_end():
     from styxx.ciaudit import engine
     text = LISTS_FIXTURE
