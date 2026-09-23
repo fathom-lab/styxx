@@ -160,3 +160,15 @@ The empty loop: ten checks here, and an edit a strict shell and the model can bo
 producer of a process substitution run as a command of its own. The negative check (four) needs the
 tool's status apart from the pattern's. And "nothing to check" (eight) is beyond what an
 empty-answer flavour can verify; it needs a different kind of evidence, or a reading that says it.
+
+## Erratum (2026-09-22, SWALLOW-14)
+
+§0 says the environment deleted the session's scratch directory at 17:55Z. Almost certainly it did
+not: the audit simulates a step by running its shell on the machine, tools stubbed, and a path the
+script names outside its temporary directory is the machine's — a step's `rm -rf /tmp/*`, run as
+root, deletes everything under `/tmp`, which is where all that the first run lost was (the
+session's scratch directory, a signing helper). SWALLOW-14's first run lost the machine's root
+filesystem the same way, and a fixture step reproduces it (`RESULT_swallow14_the_empty_list_2026_09_22.md`
+§0). The receipt scored here is the second run's, which finished; like every earlier cycle's run it
+ran unconfined, so a simulated step could see what another repository's steps had left on the
+machine.
