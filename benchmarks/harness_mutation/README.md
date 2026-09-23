@@ -62,7 +62,7 @@ python papers/harness/swallow2_self.py --before <gauntlet-pr.yml@main> --after <
 python papers/harness/swallow2_score.py
 ```
 
-It reproduces #137 with no runner, no token and no code: on `main` the two gated steps are skipped
+It reproduces #137 with no runner and no token: on `main` the two gated steps are skipped
 and the job is green when the discover step's tools fail; on #137's tree the same fault is RED.
 `papers/harness/RESULT_swallow2_which_way_it_falls_2026_09_21.md` has the map for 100
 repositories, and the runs it took to draw it.
@@ -355,3 +355,31 @@ checks; stage 1 verifies 86, stage 2 13; of the 44 left, stage 3 verifies 13 (30
 repositories, twelve by hoist-substitution, a median of 5 lines; the same outcome twice. The three
 stages together reach 112 of 143 (78%); the readings match 2 of the 31 left, most of which pass on
 an empty list. `frontier.py` is frozen at `7b3c2b12…` and pinned by its test.
+
+## The empty list (SWALLOW-14)
+
+Two more edits in the third stage, written on SWALLOW-13's 44: **wait-list** (after a statement that
+reads its list from `< <(…)`, `wait $! || exit $?`, so the list's command stops the step when it
+fails instead of leaving an empty list) and **hoist-local** (the hoist with its strictness on its
+own line). `empty_list.py` runs the product's `--repair` path, unchanged, on the AIDev repository
+table less every repository an earlier cycle read — 5,945, each at the tip `ls-remote` gave at the
+freeze — every stage-3 candidate tried and recorded, stage 3 twice.
+
+**It runs each step's shell.** The audit's simulation is not confined: a path a script names outside
+its temporary directory is the machine's, and `rm -rf $RUNNER_TOOL_CACHE/*` with the variable unset
+is `rm -rf /*`. The first run lost its machine to `actions/setup-node`'s step. The scored run gave the
+instrument `papers/harness/swallow14_sandbox.sh` as its interpreter, so each repository's process ran
+as root in a throwaway overlay of the machine (bubblewrap, root needed):
+
+```
+python -m benchmarks.harness_mutation.empty_list --build-population --parquet repository.parquet --out papers/harness/swallow14_population.json.gz
+<sandbox>/python3.v2 -m benchmarks.harness_mutation.empty_list --population papers/harness/swallow14_population.json.gz --work <dir> --out papers/harness/swallow14_receipt.json.gz --workers 3
+python papers/harness/swallow14_score.py
+<sandbox>/python3.v2 papers/harness/swallow14_after_fix.py --work <dir>
+```
+
+`papers/harness/RESULT_swallow14_the_empty_list_2026_09_22.md` (INVALID on its determinism gate —
+one check of 268, a backgrounded command, moved between two runs of stage 3 — 6/8 reported, not
+claimed): 1,066 hand-written hidden checks; stages 1 and 2 verify 798; SWALLOW-13's stage 154 of the
+268 left; of the 114 it leaves, wait-list verifies 15 in 15 repositories; the local hoist verifies
+the same 134 as the global one. `empty_list.py` is frozen at `9b40257a…` and pinned by its test.
