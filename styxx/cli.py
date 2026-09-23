@@ -1252,11 +1252,12 @@ def cmd_ci_audit(args):
     Simulates every workflow under .github/workflows with one fault at a time -- every external
     command of one `run:` step failing, everything else healthy -- and reports, per fault, whether
     the workflow goes RED, a check is silently not run (FAIL_OPEN), a check runs and its failure
-    is hidden (SWALLOWED), or nothing about the checks changes. No runner and no token, but the
-    steps' shell runs on this machine with its tools stubbed: what the stubs do not cover -- `rm`,
-    `mkdir`, a redirect -- is real, so run it on a CI runner or in a container, not on a repository
-    you do not trust (RESULT_swallow14 §0). `owner/repo` is a blob-less sparse clone of the
-    workflow files alone. The engine is the
+    is hidden (SWALLOWED), or nothing about the checks changes. No runner and no token. The steps'
+    shell runs with its tools stubbed, and what the stubs do not cover -- `rm`, `mkdir`, a redirect --
+    is real (RESULT_swallow14 §0), so it runs confined: Linux's Landlock (5.13+) lets it write only in
+    a scratch directory of its own, open no TCP connection and signal nothing outside the audit.
+    Where the kernel has no Landlock it refuses, unless `--unconfined` (only on a CI runner or in a
+    container). `owner/repo` is a blob-less sparse clone of the workflow files alone. The engine is the
     instrument of papers/harness/RESULT_swallow2_which_way_it_falls_2026_09_21.md, with the
     catalogue of checking actions of RESULT_swallow3_the_checks_that_are_actions_2026_09_21.md
     (`--no-actions` reads without it).
@@ -1287,6 +1288,8 @@ def cmd_ci_audit(args):
         argv += ["--work", args.work]
     if args.deadline is not None:
         argv += ["--deadline", str(args.deadline)]
+    if getattr(args, "unconfined", False):
+        argv.append("--unconfined")
     return _main(argv)
 
 
@@ -2999,7 +3002,7 @@ def _build_parser() -> argparse.ArgumentParser:
     # ci-audit — one fault at a time through the workflows (SWALLOW-2's engine)
     p_ciaudit = sub.add_parser(
         "ci-audit",
-        help="when one CI step's tools fail, what does the workflow do? (RED / FAIL_OPEN / SWALLOWED, per step; no runner, no token; the steps' shell runs on this machine)",
+        help="when one CI step's tools fail, what does the workflow do? (RED / FAIL_OPEN / SWALLOWED, per step; no runner, no token; the steps' shell runs confined)",
     )
     p_ciaudit.add_argument("target", nargs="?", default=".",
                            help="a checkout path (default: .), or owner/repo for a public repository's workflow files")
@@ -3021,6 +3024,8 @@ def _build_parser() -> argparse.ArgumentParser:
     p_ciaudit.add_argument("--out", type=str, default=None, help="also write the receipt (JSON) to this path")
     p_ciaudit.add_argument("--work", type=str, default=None, help="where to clone owner/repo (default: a temporary directory)")
     p_ciaudit.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")
+    p_ciaudit.add_argument("--unconfined", action="store_true",
+                           help="run the steps' shell without confining it -- on this machine, as this user; only on a CI runner or in a container")
     p_ciaudit.set_defaults(func=cmd_ci_audit)
 
     p_gauntlet = sub.add_parser(
