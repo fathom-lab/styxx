@@ -17,7 +17,12 @@ check could have failed. This command asks the question the light does not answe
 `run:` step that reaches a tool, if that step's tools failed and everything else stayed healthy,
 would the workflow go red? Would a check be silently skipped? Would a check run, fail, and be
 hidden? It answers by simulating the workflow -- outputs, env, `if:`, `needs:`, `fromJSON`
-matrices -- in a sandbox where every tool is a stub, with no runner, no token, and no code.
+matrices -- with its tools stubbed, no runner and no token. The steps' shell itself runs, on this
+machine, in a temporary directory with an empty environment: what the stubs do not cover -- `rm`,
+`mkdir`, a redirect -- is real, a path a script names outside that directory is this machine's,
+and a value the empty flavour empties can make a relative path absolute (`rm -rf "$D"/build`
+with `D` empty). Run it where that is safe -- a CI runner, a container -- and not on a checkout
+you do not trust (papers/harness/RESULT_swallow14_the_empty_list_2026_09_22.md, §0).
 
 Verdicts per fault, in precedence: RED (loud), FAIL_OPEN (a check that would have run is silently
 not run), SWALLOWED (a check ran and its failure was hidden), ABSORBED, NO_CHECK; BASELINE_RED /
