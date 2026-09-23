@@ -11,7 +11,8 @@ next to what was scored.
 Each repository is fetched again at the receipt's tip, in a process of its own. That process runs
 the workflow's steps' shell with their tools stubbed, and what the shell does -- a redirect, a
 `mkdir`, an `rm` -- acts on the machine it runs on (RESULT_swallow14 §0): run it where that is safe.
-The scored run's processes each ran as an unprivileged user of their own (`swallow14_sandbox.sh`).
+The scored run's processes, and this replay's, each ran as root in a throwaway overlay of the
+machine (`swallow14_sandbox.sh`).
 
     python papers/harness/swallow14_after_fix.py --work <dir>          # writes swallow14_after_fix.json
 """
