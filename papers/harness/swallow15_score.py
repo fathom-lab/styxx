@@ -40,13 +40,17 @@ WIPERS = ("actions/setup-node", "djylb/nps")
 
 
 def _moved_is_background(rec: dict, moved_targets: list) -> bool:
-    """Every target where the chosen repair moved has a candidate that backgrounds a command."""
-    idx = {(t["workflow"], t["job"], t["index"]): t for t in rec.get("targets", [])}
+    """Every target where the chosen repair moved has a candidate that backgrounds a command. The
+    confined receipt stores a target COUNT, not the candidate lists, so this cannot be read from it:
+    a move can be confirmed a backgrounded command only by the separate classification
+    (swallow15_classify.json). Absent the lists, a move is not confirmed background."""
+    tgts = rec.get("targets", [])
+    if not isinstance(tgts, list):
+        return False
+    idx = {(t["workflow"], t["job"], t["index"]): t for t in tgts}
     for key in moved_targets:
         t = idx.get(tuple(key))
-        if not t:
-            return False
-        if not any(c["repair"].endswith("background-liveness") for c in t.get("candidates", [])):
+        if not t or not any(c["repair"].endswith("background-liveness") for c in t.get("candidates", [])):
             return False
     return True
 
