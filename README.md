@@ -93,9 +93,11 @@ Fails only on a contradicted claim.
 - uses: fathom-lab/styxx/ci-audit@main    # a new `|| true` / continue-on-error / fail-open guard: the line marked, the verified fix one click away
 ```
 
-It reads only the workflows the change touched, simulates each step's tools failing (no runner,
-no token, no code run), marks the line that hides the check and writes the verified repair into the
-job summary; with `suggest: true` it posts that repair as a review suggestion. Replayed on all 220
+It reads only the workflows the change touched, simulates each step's tools failing (no runner, no
+token; the step's own shell runs with its tools stubbed, and what the stubs do not cover — an `rm`,
+a redirect — is real, so run the CLI on a CI runner or in a container, not on a checkout you do not
+trust: [SWALLOW-14 §0](papers/harness/RESULT_swallow14_the_empty_list_2026_09_22.md)), marks the
+line that hides the check and writes the verified repair into the job summary; with `suggest: true` it posts that repair as a review suggestion. Replayed on all 220
 hidden checks it has caught in this program's receipts, it located every hiding line, and the
 verified fix was one click away for 159 — for 70 of 73 in pull requests
 ([RESULT_swallow11](papers/harness/RESULT_swallow11_one_click_from_loud_2026_09_22.md)); on a pull
@@ -104,7 +106,10 @@ each the verified repair, byte for byte
 ([RESULT_swallow12](papers/harness/RESULT_swallow12_the_click_live_2026_09_22.md)). A third repair stage — a
 `$(...)` its line throws away, put on a line of its own — verified a repair for 13 of the 44 hidden
 checks the first two left on 549 repositories it was not designed on
-([RESULT_swallow13](papers/harness/RESULT_swallow13_the_frontier_2026_09_22.md)). The same gate on every commit before it lands:
+([RESULT_swallow13](papers/harness/RESULT_swallow13_the_frontier_2026_09_22.md)); two more edits — waiting for the command
+that makes a loop's list, and a hoist that keeps its strictness to its own line — verified 15 of the 114 it
+left on 5,945 more, in a cycle INVALID on its determinism gate whose first run found the hazard above
+([RESULT_swallow14](papers/harness/RESULT_swallow14_the_empty_list_2026_09_22.md)). The same gate on every commit before it lands:
 [`integrations/git/commit-msg`](integrations/git/README.md), one file, the message vs the staged diff. Prose outside the closed template set is never judged,
 and the CLI prints what it checks when it finds nothing — silence is scope, not weakness.
 

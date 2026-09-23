@@ -92,6 +92,40 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-14: the empty list — and `ci-audit` runs a step's shell on the machine
+
+**`ci-audit` is not safe to run on a repository you have not read.** It simulates a step by running
+its shell with its tools stubbed, in a temporary directory, with an empty environment — but the
+shell is real, and so is what the stubs do not cover: `rm`, `mkdir`, a redirect. A path a script
+names outside the temporary directory is the machine's, and an empty value can make it the root:
+`actions/setup-node`'s "Clear tool cache" step, `rm -rf $RUNNER_TOOL_CACHE/*`, is `rm -rf /*` in the
+simulation, and `styxx ci-audit actions/setup-node` deletes whatever its user can delete. SWALLOW-14's
+first run lost its machine that way; SWALLOW-13's first run lost `/tmp` (an erratum is appended to
+its RESULT). The README, the Action's description and job summary, the package docstring and the
+CLI's help no longer say "no code run". Not released: PyPI's 7.47.0 has no `ci-audit`, and `main`
+has neither it nor the Action. The fix — each simulated step in a throwaway root — is next.
+
+The third repair stage gains **wait-list** (a list read from a process substitution — `done <
+<(find …)`, `mapfile -t a < <(…)` — whose command fails into an empty list the loop reads as nothing
+to check: `wait $! || exit $?` after the statement, which bash 4.4+ reads as the substitution's
+status) and **hoist-local** (SWALLOW-13's hoist with its strictness kept on its own line, nothing
+else in the script changed), and their no-coe+ forms.
+
+**INVALID, 6/8 reported, not claimed** (`RESULT_swallow14_the_empty_list_2026_09_22.md`; prereg
+`a34a0676…`), on its determinism gate: stage 3 run twice moved one check of 268 — a step that
+backgrounds a command, whose healthy run depends on the machine's load. On 5,945 repositories no
+earlier cycle read, each at a pinned tip and each in a throwaway copy of the machine
+(`swallow14_sandbox.sh`): 1,066 hand-written hidden checks; stages 1 and 2 verify 798; of the 268
+left, SWALLOW-13's stage verifies 154, and of the 114 it leaves, wait-list verifies **15** (13%,
+20% predicted), in 15 repositories, a median of 3 lines — seven of them a list that decides whether
+a check runs at all. The local hoist verifies the same 134 checks the global one does. The three
+stages together: 967 of 1,066 (91%).
+
+After scoring: wait-list's masker keeps a backslash-continued line's newline (it stopped two
+repositories' audits with an IndexError and read two more checks one line off), and an edit that
+cannot read a script no longer stops the audit; stage 3 again on the 268, from the same tips,
+verifies 171. `benchmarks/harness_mutation/empty_list.py` frozen at `9b40257a…`.
+
 ## [Unreleased] — SWALLOW-13: the frontier — a third repair stage, and a reading for what it cannot repair
 
 `styxx ci-audit --repair`, the pull request's gate and the Action verify a repair in two stages;
