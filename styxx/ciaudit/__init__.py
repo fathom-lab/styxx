@@ -112,17 +112,25 @@ def _require_yaml() -> None:
 
 def audit(target: str, *, counted: bool = False, actions: bool = True, repair: bool = False, history: bool = False,
           base: Optional[str] = None, pr: Optional[int] = None, remote: str = "origin", work: Optional[str] = None,
-          deadline_seconds: Optional[float] = None) -> dict:
+          deadline_seconds: Optional[float] = None, confined: Optional[bool] = None) -> dict:
     """Audit one repository. `target` is a checkout path, or `owner/repo` for a blob-less sparse
     clone of its `.github/workflows` (git and network needed). Returns the receipt: every fault
     with its verdict, every dropped check with its mechanism, and a summary. `actions=False` is
-    SWALLOW-2's reading (checks are `run:` steps only); the default counts the catalogue's actions."""
+    SWALLOW-2's reading (checks are `run:` steps only); the default counts the catalogue's actions.
+
+    `confined`: the part that simulates -- every step's shell -- runs in a child process confined by
+    Landlock (`confine.run`: writes only in its own scratch directory, no TCP, no signal outside the
+    audit). True requires it (`confine.Unconfinable` where the kernel has none), False runs it
+    unconfined, None (the default) confines where the kernel can. The clone, `--history`'s deepening
+    and `--pr`'s fetch come first, unconfined: they need the network and write only the clone's
+    `.git`. The receipt's `confinement` says which it was."""
     import shutil
     import subprocess
     import tempfile
     import time
 
     _require_yaml()
+    from . import confine
     from . import engine
 
     t0 = time.time()
@@ -141,45 +149,65 @@ def audit(target: str, *, counted: bool = False, actions: bool = True, repair: b
         tree = dest
     else:
         raise FileNotFoundError(f"{target}: not a directory, and not an owner/repo")
+    deadline = (t0 + deadline_seconds) if deadline_seconds else None
+    history_clone = None
+    if history and cloned is not None:                  # the network, before the confinement
+        from .history import deepen
+        history_clone = deepen(tree)
+    if pr is not None and not base:
+        from .differential import pr_fetch
+        pr_fetch(tree, int(pr), remote=remote)
 
-    rec = engine.analyse_tree(tree, repo, deadline=(t0 + deadline_seconds) if deadline_seconds else None, actions=actions)
-    if repair:
-        from .repair import REPAIRS, repair_faults
-        from .repair_frontier import REPAIRS as FRONTIER
-        from .repair_structural import REPAIRS as STRUCTURAL
-        rec["repairs"] = repair_faults(tree, rec["faults"])
-        rec["repair_catalogue"] = list(REPAIRS) + list(STRUCTURAL) + list(FRONTIER)
-    if history:
-        from .history import deepen, since
-        if cloned is not None:
-            rec["history_clone"] = deepen(tree)
-        rec["history"] = since(tree, rec["faults"], deadline=(t0 + deadline_seconds) if deadline_seconds else None)
-    if base:
-        from .differential import tree_differential
-        try:
-            rec["differential"] = tree_differential(tree, base)
-        except RuntimeError as e:
-            rec["differential"] = {"base_ref": base, "error": str(e)[:200], "fires": False, "workflows": [], "new_hidden": 0, "removed_hidden": 0, "still_hidden": 0}
-    elif pr is not None:
-        from .differential import pr_differential
-        try:
-            rec["differential"] = pr_differential(tree, int(pr), remote=remote)
-        except RuntimeError as e:
-            rec["differential"] = {"base_ref": f"pull request #{pr}", "error": str(e)[:200], "fires": False, "workflows": [], "new_hidden": 0, "removed_hidden": 0, "still_hidden": 0}
-    head = subprocess.run(["git", "-C", str(tree), "rev-parse", "HEAD"], capture_output=True, text=True, encoding="utf-8", errors="replace")
+    def analyse() -> dict:
+        rec = engine.analyse_tree(tree, repo, deadline=deadline, actions=actions)
+        if repair:
+            from .repair import REPAIRS, repair_faults
+            from .repair_frontier import REPAIRS as FRONTIER
+            from .repair_structural import REPAIRS as STRUCTURAL
+            rec["repairs"] = repair_faults(tree, rec["faults"])
+            rec["repair_catalogue"] = list(REPAIRS) + list(STRUCTURAL) + list(FRONTIER)
+        if history:
+            from .history import since
+            if history_clone is not None:
+                rec["history_clone"] = history_clone
+            rec["history"] = since(tree, rec["faults"], deadline=deadline)
+        if base:
+            from .differential import tree_differential
+            try:
+                rec["differential"] = tree_differential(tree, base)
+            except RuntimeError as e:
+                rec["differential"] = {"base_ref": base, "error": str(e)[:200], "fires": False, "workflows": [], "new_hidden": 0, "removed_hidden": 0, "still_hidden": 0}
+        elif pr is not None:
+            from .differential import pr_differential
+            try:
+                rec["differential"] = pr_differential(tree, int(pr), remote=remote, fetch=False)
+            except RuntimeError as e:
+                rec["differential"] = {"base_ref": f"pull request #{pr}", "error": str(e)[:200], "fires": False, "workflows": [], "new_hidden": 0, "removed_hidden": 0, "still_hidden": 0}
+        head = subprocess.run(["git", "-C", str(tree), "rev-parse", "HEAD"], capture_output=True, text=True, encoding="utf-8", errors="replace")
+        rec["head"] = head.stdout.strip() if head.returncode == 0 else None
+        return rec
+
+    try:
+        if confined or (confined is None and confine.abi()):
+            rec, info = confine.run(analyse)
+        else:
+            rec = analyse()
+            info = {"schema": confine.SCHEMA, "confined": False,
+                    "why": "unconfined by request" if confined is False else "this kernel has no Landlock"}
+    finally:
+        if cloned is not None and work is None:
+            shutil.rmtree(cloned, ignore_errors=True)
     rec.update(
         schema=CIAUDIT_VERSION,
         instrument="styxx/ciaudit/engine.py",
         instrument_sha256=engine.instrument_sha256(),
         target=target,
-        head=head.stdout.strip() if head.returncode == 0 else None,
         counted=bool(counted),
         actions=bool(actions),
+        confinement=info,
         seconds=round(time.time() - t0, 1),
     )
     rec["summary"] = summarize(rec, counted=counted)
-    if cloned is not None and work is None:
-        shutil.rmtree(cloned, ignore_errors=True)
     return rec
 
 
@@ -259,10 +287,21 @@ def main(argv=None) -> int:
     ap.add_argument("--out", default=None, help="also write the receipt (JSON) here")
     ap.add_argument("--work", default=None, help="where to clone owner/repo (default: a temporary directory, removed afterwards)")
     ap.add_argument("--deadline", type=float, default=None, help="seconds to spend at most; a capped audit says so")
+    ap.add_argument("--unconfined", action="store_true",
+                    help="run the steps' shell without confining it -- on this machine, as this user; only where that is safe "
+                         "(a CI runner, a container). Also STYXX_CIAUDIT_UNCONFINED=1")
     a = ap.parse_args(argv)
+    from . import confine
+    unconfined = a.unconfined or confine.unconfined_allowed()
+    if not unconfined and not confine.abi():
+        print("error: this machine cannot confine the audit (it needs Linux's Landlock, 5.13+). ci-audit runs each workflow step's "
+              "shell with its tools stubbed; what the stubs do not cover -- rm, mkdir, a redirect -- would act on this machine, and an "
+              "empty value can make a scoped path the root. Run it on a CI runner or in a container, or pass --unconfined to run it "
+              "here anyway.", file=sys.stderr)
+        return 2
     try:
         rec = audit(a.target, counted=a.counted, actions=not a.no_actions, repair=a.repair, history=a.history, base=a.base, pr=a.pr, remote=a.remote,
-                    work=a.work, deadline_seconds=a.deadline)
+                    work=a.work, deadline_seconds=a.deadline, confined=not unconfined)
     except (FileNotFoundError, RuntimeError, ImportError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 2
