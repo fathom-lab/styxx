@@ -1,8 +1,17 @@
 # -*- coding: utf-8 -*-
-"""`styxx ci-audit --repair`, third stage (SWALLOW-13): for the hidden checks SWALLOW-4's and
-SWALLOW-5's repairs leave unverified, more edits, verified on the same two halves -- loud under the
-same fault, the healthy run unchanged:
+"""`styxx ci-audit --repair`, third stage (SWALLOW-13, SWALLOW-14): for the hidden checks SWALLOW-4's
+and SWALLOW-5's repairs leave unverified, more edits, verified on the same two halves -- loud under
+the same fault, the healthy run unchanged. Tried in this order; the first verified is the repair:
 
+  hoist-local           (SWALLOW-14) a `$(...)` whose status the line throws away, put on a line of
+                        its own that keeps it -- `__subN="$(...)" || exit $?`, pipefail inside the
+                        substitution when it is a pipeline -- and nothing else in the script
+                        changed: no `set -e` for every other line, no `|| true` elsewhere removed
+  wait-list             (SWALLOW-14) a list read from a process substitution -- `done < <(cmd)`,
+                        `mapfile -t a < <(cmd)` -- whose command fails into an empty list the loop
+                        reads as nothing to check: `wait $! || exit $?` after the statement (bash
+                        4.4+: `$!` is the substitution; before, `$!` is empty and the line does
+                        nothing), pipefail inside it when it is a pipeline
   hoist-substitution    a `$(...)` whose status the line throws away -- inside an `echo`/`printf`
                         argument, a `for ... in` list, an `export`/`local` assignment, a one-test
                         `if [ ... ]` -- moved onto its own line as `__subN="$(...)"`, and the shell
@@ -42,8 +51,11 @@ from . import repair_structural as rs
 from .repair import _first_change, _healthy_shape, analyse, diff_size, locate, strict_shell, unified_diff
 
 SCHEMA = "styxx.ci-audit-repair-frontier/v1"
-EDITS = ("hoist-substitution", "background-liveness", "no-exit-zero", "no-default-joined")
+EDITS = ("hoist-local", "wait-list", "hoist-substitution", "background-liveness", "no-exit-zero", "no-default-joined")
 REPAIRS = EDITS + tuple(f"no-coe+{e}" for e in ("no-default", "guard-status") + EDITS)
+# the stage as SWALLOW-13 ran it, for replaying its receipt and its tests
+S13_EDITS = ("hoist-substitution", "background-liveness", "no-exit-zero", "no-default-joined")
+S13_REPAIRS = S13_EDITS + tuple(f"no-coe+{e}" for e in ("no-default", "guard-status") + S13_EDITS)
 
 
 # ----------------------------------------------------------------------------- reading a line of shell
@@ -189,8 +201,25 @@ _STATUS_ONE = re.compile(r"(?:^|[|;&(`!])\s*(?:e?grep|fgrep|zgrep|rg|ag|pgrep|di
                          r"git\s+diff\b[^|;&]*--(?:exit-code|quiet)|jq\b[^|;&]*\s(?:-[a-zA-Z]*e[a-zA-Z]*|--exit-status))(?=\s|$|\))")
 
 
-def hoist_substitution(run: str) -> str:
-    """The hoist-substitution repair; the script unchanged when no substitution can be hoisted."""
+_PIPE = re.compile(r"(?<!\|)\|(?!\|)")
+
+
+def _hoisted(sub: str, v: str, ind: str, local: bool) -> str:
+    """The line a hoisted substitution becomes. Global (SWALLOW-13): `__subN="$(…)"`, the script made
+    strict around it. Local (SWALLOW-14): the substitution keeps its own status and nothing else
+    changes -- `|| exit $?`, pipefail inside it when it is a pipeline -- so no other line of the
+    script is made strict, and no `|| true` elsewhere is taken away."""
+    body = sub[2:-1]
+    answer = bool(_STATUS_ONE.search(body))
+    if not local:
+        return f'{ind}{v}="{sub}"' + (" || [ $? -eq 1 ]" if answer else "")
+    sc = scan(body)
+    if _PIPE.search(sc[1] if sc else body):
+        sub = "$(set -o pipefail; " + body + ")"
+    return f'{ind}{v}="{sub}"' + (' || { __rc=$?; [ "$__rc" -eq 1 ] || exit "$__rc"; }' if answer else " || exit $?")
+
+
+def _hoist(run: str, local: bool) -> str:
     lines = run.splitlines()
     taken = set(re.findall(r"__sub(\d+)", run))
     k = 0
@@ -224,8 +253,7 @@ def hoist_substitution(run: str) -> str:
         new, pre, last = [], [], 0
         for s0, s1 in subs:
             v = name()
-            keep_one = " || [ $? -eq 1 ]" if _STATUS_ONE.search(line[s0 + 2:s1 - 1]) else ""
-            pre.append(f'{ind}{v}="{line[s0:s1]}"{keep_one}')
+            pre.append(_hoisted(line[s0:s1], v, ind, local))
             new.append(line[last:s0] + "${" + v + "}")
             last = s1
         new.append(line[last:])
@@ -237,7 +265,148 @@ def hoist_substitution(run: str) -> str:
     for i, line in enumerate(lines):
         out.extend(inserts.get(i, []))
         out.append(line)
-    return strict_shell("\n".join(out) + ("\n" if run.endswith("\n") else ""))
+    text = "\n".join(out) + ("\n" if run.endswith("\n") else "")
+    return text if local else strict_shell(text)
+
+
+def hoist_substitution(run: str) -> str:
+    """The hoist-substitution repair (SWALLOW-13: the whole script made strict); the script unchanged
+    when no substitution can be hoisted."""
+    return _hoist(run, local=False)
+
+
+def hoist_local(run: str) -> str:
+    """The hoist-local repair (SWALLOW-14): the same hoist, the substitution's status kept by its own
+    line and nothing else in the script changed; the script unchanged when none can be hoisted."""
+    return _hoist(run, local=True)
+
+
+# a list read from a process substitution: `done < <(cmd)`, `mapfile -t a < <(cmd)`. Bash drops the
+# status of `<(…)` -- `set -e` and pipefail never see it -- so a failed `cmd` is an empty list and the
+# loop runs zero times. From bash 4.4, `$!` is the process substitution and `wait $!` returns its status.
+_PROCSUB = re.compile(r"<\s*<\(")
+# `$!` is empty before bash 4.4 when no job ran: the line then waits for nothing, as the step did
+WAIT_LINE = {False: '[ -z "$!" ] || wait $! || exit $?  # stop if the command that made the list failed',
+             True: '[ -z "$!" ] || wait $! || { __rc=$?; [ "$__rc" -eq 1 ] || exit "$__rc"; }  # stop if the command that made the list failed'}
+_READS = re.compile(r"^\s*(?:mapfile|readarray|read)\b|\bdone\s*$")
+
+
+def _masked_lines(lines: list[str]) -> list[str | None]:
+    """Each line with quotes, substitutions and comments blanked (None when its quoting does not
+    close on the line), for reading its operators and keywords."""
+    out = []
+    for ln in lines:
+        sc = scan(ln)
+        out.append(sc[1] if sc else None)
+    return out
+
+
+def _mask_text(text: str) -> str:
+    """A script fragment, lines and all, with its quoted strings and comments blanked."""
+    out, i, n, q = [], 0, len(text), None
+    while i < n:
+        ch = text[i]
+        if q is None:
+            if ch == "\\":
+                out.append("_" + ("\n" if text[i + 1:i + 2] == "\n" else "_" * len(text[i + 1:i + 2])))   # a continued line keeps its newline
+                i += 2
+                continue
+            if ch in "'\"":
+                q = ch
+                out.append("_")
+                i += 1
+                continue
+            if ch == "#" and (i == 0 or text[i - 1] in " \t\n;"):
+                j = text.find("\n", i)
+                j = n if j < 0 else j
+                out.append("_" * (j - i))
+                i = j
+                continue
+            out.append(ch)
+            i += 1
+            continue
+        if ch == "\\" and q == '"':
+            out.append("_" + ("\n" if text[i + 1:i + 2] == "\n" else "_" * len(text[i + 1:i + 2])))
+            i += 2
+            continue
+        if ch == q:
+            q = None
+        out.append("\n" if ch == "\n" else "_")
+        i += 1
+    return "".join(out)
+
+
+def _loop_start(masked: list[str | None], end: int, prefix: str) -> int | None:
+    """The line where the loop whose `done` ends `prefix` (line `end`, up to the substitution) begins;
+    None when a line on the way cannot be read."""
+    depth = 0
+    for i in range(end, -1, -1):
+        m = prefix if i == end else masked[i]
+        if m is None:
+            return None
+        depth += len(re.findall(r"\bdone\b", m)) - len(re.findall(r"\bdo\b", m))
+        if depth <= 0:
+            return i
+    return None
+
+
+def wait_list(run: str) -> str:
+    """The wait-list repair (SWALLOW-14): after a statement that reads its list from a process
+    substitution, `wait $! || exit $?` -- the list's command stops the step when it fails, instead of
+    leaving an empty list the loop reads as nothing to check; pipefail inside the substitution when
+    it is a pipeline, for that command only; a command whose status 1 is an answer keeps its 1. The
+    script unchanged when there is none, when a background job or another substitution inside the
+    loop would take `$!`, or when the substitution is followed by more than a comment."""
+    lines = run.splitlines()
+    in_script = {i for a, b in _logical(lines) for i in range(a, b + 1)}     # heredoc bodies excluded
+    text = "\n".join(lines)
+    masked = _mask_text("\n".join(ln if i in in_script else " " * len(ln) for i, ln in enumerate(lines))).split("\n")
+    if any(m.rstrip().endswith("&") and not m.rstrip().endswith("&&") for m in masked):
+        return run                                                            # a background job would take `$!`
+    starts, pos = [], 0
+    for ln in lines:
+        starts.append(pos)
+        pos += len(ln) + 1
+
+    def line_of(idx: int) -> int:
+        return max(j for j in range(len(lines)) if starts[j] <= idx)
+
+    edits = []                                                   # (index just past `<(`, closing line, piped, answer, first line)
+    for mt in _PROCSUB.finditer(text):
+        li = line_of(mt.start())
+        col = mt.start() - starts[li]
+        if li not in in_script or masked[li][col] != "<":
+            continue                                             # a heredoc body, or inside quotes or a comment
+        prefix = masked[li][:col]
+        if not _READS.search(prefix):
+            continue
+        close = _close(text, mt.end())
+        if close is None:
+            continue
+        cl = line_of(close - 1)
+        if not re.match(r"^\s*(?:#.*)?$", text[close:starts[cl] + len(lines[cl])]):
+            continue                                             # more than a comment after it
+        if re.search(r"\bdone\s*$", prefix):
+            st = _loop_start(masked, li, prefix)
+            if st is None or "<(" in "\n".join(masked[st:li]) + prefix:
+                continue                                         # another substitution inside the loop takes `$!` last
+        body = _mask_text(text[mt.end():close - 1])
+        edits.append((mt.end(), cl, bool(_PIPE.search(body)), bool(_STATUS_ONE.search(body)), li))
+    if not edits:
+        return run
+    out_lines = list(lines)
+    for k, cl, piped, _, _ in sorted(edits, key=lambda e: -e[0]):
+        if piped:
+            li = line_of(k - 1)
+            col = k - starts[li]
+            out_lines[li] = out_lines[li][:col] + ("set -o pipefail;" if col == len(lines[li]) else "set -o pipefail; ") + out_lines[li][col:]
+    adds = {cl: lines[li][: len(lines[li]) - len(lines[li].lstrip())] + WAIT_LINE[answer] for _, cl, _, answer, li in edits}   # at the statement's indent
+    final = []
+    for i, ln in enumerate(out_lines):
+        final.append(ln)
+        if i in adds:
+            final.append(adds[i])
+    return "\n".join(final) + ("\n" if run.endswith("\n") else "")
 
 
 _WORD = re.compile(r"^\s*[A-Za-z0-9_./~$\"'-]")
@@ -328,6 +497,12 @@ def transform(run: str, name: str) -> tuple[str | None, str | None]:
     if name == "hoist-substitution":
         new = hoist_substitution(run)
         return (new, None) if new != run else (None, "no substitution whose status the line throws away")
+    if name == "hoist-local":
+        new = hoist_local(run)
+        return (new, None) if new != run else (None, "no substitution whose status the line throws away")
+    if name == "wait-list":
+        new = wait_list(run)
+        return (new, None) if new != run else (None, "no list read from a process substitution, or `$!` not its")
     if name == "background-liveness":
         new = background_liveness(run)
         return (new, None) if new != run else (None, "no command started with `&`")
@@ -376,7 +551,10 @@ def try_frontier(text: str, wf_name: str, jid: str, i: int, runner: faults.Runne
     base_shape = {f: _healthy_shape(base_plus[f]) for f in faults.FLAVOURS}
     for name in REPAIRS:
         cand = {"repair": name}
-        new_text, why = apply_frontier(text, jid, i, name)
+        try:
+            new_text, why = apply_frontier(text, jid, i, name)
+        except Exception as e:  # noqa: BLE001 -- an edit that cannot read a script does not apply to it; the audit goes on
+            new_text, why = None, f"the edit could not read this script ({type(e).__name__})"
         if new_text is None:
             cand.update(applies=False, why=why)
             rec["candidates"].append(cand)

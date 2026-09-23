@@ -8,7 +8,7 @@ check it hides marked on its own line, and the verified repair one click away.
 It reads the event payload from GITHUB_EVENT_PATH (no event text ever reaches a shell), works out
 the comparison the event implies, fetches only the commits that comparison needs, and runs the
 gate (`differential.audit_commit`: only the workflows that changed, every step matched across the
-two revisions, each read by simulating its tools failing in a sandbox of stubs). Then it reports
+two revisions, each read by running its steps' shell with their tools stubbed). Then it reports
 in five places:
 
   annotations   an error on the exact line of every check the change hides -- the
@@ -369,8 +369,8 @@ def summary_md(rec: dict, res: dict, located: dict) -> str:
         extra.append(f"{unread} hidden here that the base could not be read for")
     if extra:
         out += ["", " · ".join(extra)]
-    out += ["", "<sub>The gate reads only the workflows this change touched, simulating each step's tools failing in a sandbox of stubs: "
-                "no runner, no token, no code run. RED is loud, not correct. "
+    out += ["", "<sub>The gate reads only the workflows this change touched, running each step's shell with its tools stubbed: "
+                "no runner, no token. RED is loud, not correct. "
                 "<a href=\"https://github.com/fathom-lab/styxx\">styxx ci-audit</a></sub>", ""]
     return "\n".join(out)
 

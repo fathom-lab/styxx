@@ -105,8 +105,11 @@ jobs:
         run: echo "todos=$(grep -c TODO src/main.c)" >> $GITHUB_OUTPUT
 """
     rec = F.try_frontier(text, "ci.yml", "t", 0, engine.Runner())
-    assert rec["verified_repair"] == "hoist-substitution"
-    assert '+          __sub1="$(grep -c TODO src/main.c)" || [ $? -eq 1 ]' in next(c for c in rec["candidates"] if c["repair"] == "hoist-substitution")["diff"]
+    assert rec["verified_repair"] == "hoist-local"
+    by = {c["repair"]: c for c in rec["candidates"]}
+    assert by["hoist-substitution"]["verified"]
+    assert '+          __sub1="$(grep -c TODO src/main.c)" || [ $? -eq 1 ]' in by["hoist-substitution"]["diff"]
+    assert '+          __sub1="$(grep -c TODO src/main.c)" || { __rc=$?; [ "$__rc" -eq 1 ] || exit "$__rc"; }' in by["hoist-local"]["diff"]
 
 
 def test_background_liveness_waits_on_a_job_that_has_already_died():
@@ -135,8 +138,10 @@ def test_every_edit_is_verified_on_a_workflow_and_the_rest_is_read(tmp_path, cap
     rec = ciaudit.audit(str(tree), repair=True)
     by = {t["name"]: t for t in rec["repairs"]}
     assert {n: t["verified_repair"] for n, t in by.items()} == {
-        "Verify the changelog": "hoist-substitution", "Run tests": "no-exit-zero", "Test server": "background-liveness",
-        "Verify the browser binary": "no-default-joined", "Lint": "no-coe+hoist-substitution", "Lint baseline": None}
+        "Verify the changelog": "hoist-local", "Run tests": "no-exit-zero", "Test server": "background-liveness",
+        "Verify the browser binary": "no-default-joined", "Lint": "no-coe+hoist-local", "Lint baseline": None}
+    for n in ("Verify the changelog", "Lint"):                  # the global hoist verifies too; the local one comes first
+        assert any(c["repair"].endswith("hoist-substitution") and c.get("verified") for c in by[n]["candidates"])
     for n, t in by.items():                                   # the first two stages ran first, and verified none of these
         assert [c["repair"] for c in t["candidates"]] == rec["repair_catalogue"]
         assert not any(c.get("verified") for c in t["candidates"][:6])
@@ -217,3 +222,109 @@ def test_the_action_says_the_reading_where_there_is_no_repair():
         {"job": "ci", "index": 1, "step": "name:Tests", "name": "Tests", "kind": "born hidden", "verdict": "SWALLOWED", "mechanism": None, "fix": fx}]}]}
     md = A.summary_md(rec, {"reading": "test-merge", "base": "a" * 40, "head": "b" * 40}, {})
     assert "| none verified — the script says 'allowed to fail' |" in md
+
+
+# ----------------------------------------------------------------------------- SWALLOW-14: the empty list, and a hoist that stays local
+
+LISTS_FIXTURE = """on: [push]
+jobs:
+  lists:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate manifests
+        run: |
+          ERRORS=0
+          while IFS= read -r f; do
+            python3 -m json.tool "$f" > /dev/null || ERRORS=$((ERRORS + 1))
+          done < <(find manifests -name "*.json")
+          exit $ERRORS
+      - name: Check every package has a changelog
+        run: |
+          mapfile -t pkgs < <(ls packages | sort)
+          for p in "${pkgs[@]}"; do
+            ./scripts/check-changelog.sh "$p"
+          done
+      - name: Verify the changelog
+        run: |
+          test -f .changelog-cache || true
+          echo "entries: $(./scripts/check-changelog.sh)"
+"""
+
+
+def test_hoist_local_keeps_the_status_on_its_own_line_and_changes_nothing_else():
+    assert F.hoist_local('echo "m=$(cat f | jq -c .)" >> $GITHUB_OUTPUT\n') == \
+        '__sub1="$(set -o pipefail; cat f | jq -c .)" || exit $?\necho "m=${__sub1}" >> $GITHUB_OUTPUT\n'
+    assert F.hoist_local('echo "n=$(grep -c x f)"\n') == '__sub1="$(grep -c x f)" || { __rc=$?; [ "$__rc" -eq 1 ] || exit "$__rc"; }\necho "n=${__sub1}"\n'
+    assert F.hoist_local('test -f x || true\nfor i in $(seq 1 "$N"); do\n  echo $i\ndone\n') == \
+        'test -f x || true\n__sub1="$(seq 1 "$N")" || exit $?\nfor i in ${__sub1}; do\n  echo $i\ndone\n'   # no set -e, the `|| true` kept
+    assert F.hoist_local('echo "$(a)" && b\n') == 'echo "$(a)" && b\n'
+
+
+def test_wait_list_waits_for_the_command_that_makes_the_list():
+    loop = 'while IFS= read -r -d "" f; do\n  check "$f"\ndone < <(find skills -name SKILL.md -print0)\nexit 0\n'
+    W, W1 = F.WAIT_LINE[False], F.WAIT_LINE[True]
+    assert W == '[ -z "$!" ] || wait $! || exit $?  # stop if the command that made the list failed'
+    assert F.wait_list(loop) == 'while IFS= read -r -d "" f; do\n  check "$f"\ndone < <(find skills -name SKILL.md -print0)\n' + W + '\nexit 0\n'
+    multi = 'mapfile -t M < <(\n  find . -name go.mod \\\n    | sort\n)\n'
+    assert F.wait_list(multi) == 'mapfile -t M < <(set -o pipefail;\n  find . -name go.mod \\\n    | sort\n)\n' + W + '\n'
+    assert F.wait_list('while read f; do :; done < <(git ls-files | grep "\\.md$")\n').endswith(W1 + "\n")      # grep's no-match is an answer
+    jq = "mapfile -t f < <(\n  jq -r '\n    .[] | .name\n  ' x.json\n)\n"
+    assert "pipefail" not in F.wait_list(jq) and F.wait_list(jq).endswith(W + "\n")                      # a pipe inside quotes is no pipeline
+    nested = 'while read x; do\n  while read y; do :; done < <(inner "$x")\ndone < <(outer)\n'
+    assert F.wait_list(nested) == 'while read x; do\n  while read y; do :; done < <(inner "$x")\n  ' + W + '\ndone < <(outer)\n'
+    for run in ('sleep 9 &\nwhile read x; do :; done < <(ls)\n',                      # a background job would take $!
+                'while read f; do :; done < <(find . -name x) | tee out\n',            # more than a comment after it
+                "cat <<EOF\nwhile read x; do :; done < <(ls)\nEOF\n",                   # a heredoc body is text
+                'echo "no list here"\n'):
+        assert F.wait_list(run) == run, run
+    assert F.wait_list("cat <<EOF\nIt's text\nEOF\nwhile read x; do :; done < <(ls)\n").endswith(W + "\n")
+
+
+def test_a_continued_line_before_a_second_list_is_read_in_place():
+    # SWALLOW-14's run: the masked script lost the newline of a backslash-continued line, so a second
+    # list was read on the wrong line -- an IndexError that stopped the repository's audit
+    run = ('mapfile -t files < <(git diff --name-only "$A" "$B" \\\n'
+           "  | grep -E '^docs/' || true)\n"
+           'for f in "${files[@]}"; do\n'
+           '  mapfile -t added < <(git diff -U0 "$A" "$B" -- "$f" \\\n'
+           "    | grep -E '^\\+## ' || true)\n"
+           'done\n')
+    masked = F._mask_text(run)
+    assert len(masked) == len(run) and masked.count("\n") == run.count("\n")
+    W1 = F.WAIT_LINE[True]
+    assert F.wait_list(run) == ('mapfile -t files < <(set -o pipefail; git diff --name-only "$A" "$B" \\\n'
+                                "  | grep -E '^docs/' || true)\n" + W1 + "\n"      # at the statement's indent, not its last line's
+                                'for f in "${files[@]}"; do\n'
+                                '  mapfile -t added < <(set -o pipefail; git diff -U0 "$A" "$B" -- "$f" \\\n'
+                                "    | grep -E '^\\+## ' || true)\n  " + W1 + "\n"
+                                'done\n')
+
+
+def test_an_edit_that_cannot_read_a_script_does_not_stop_the_audit(monkeypatch):
+    from styxx.ciaudit import engine
+
+    def broken(run):
+        raise IndexError("string index out of range")
+    monkeypatch.setattr(F, "wait_list", broken)
+    rec = F.try_frontier(LISTS_FIXTURE, "ci.yml", "lists", 3, engine.Runner())
+    by = {c["repair"]: c for c in rec["candidates"]}
+    assert by["wait-list"] == {"repair": "wait-list", "applies": False, "why": "the edit could not read this script (IndexError)"}
+    assert rec["verified_repair"] == "hoist-local" and len(rec["candidates"]) == len(F.REPAIRS)
+
+
+def test_the_empty_list_and_the_local_hoist_verified_end_to_end():
+    from styxx.ciaudit import engine
+    text = LISTS_FIXTURE
+    for i, name in ((1, "Validate manifests"), (2, "Check every package has a changelog")):
+        rec = F.try_frontier(text, "ci.yml", "lists", i, engine.Runner())
+        assert rec["verified_repair"] == "wait-list", name
+        c = next(c for c in rec["candidates"] if c["repair"] == "wait-list")
+        assert c["loud"] and c["unchanged"] and "+          " + F.WAIT_LINE[False] in c["diff"]
+    rec = F.try_frontier(text, "ci.yml", "lists", 3, engine.Runner())
+    by = {c["repair"]: c for c in rec["candidates"]}
+    # the global hoist makes the whole script strict and takes the `|| true` of `test -f`: the healthy run changes
+    assert rec["verified_repair"] == "hoist-local" and by["hoist-local"]["unchanged"]
+    assert by["hoist-substitution"]["loud"] is False and by["hoist-substitution"]["unchanged"] is False
+    assert by["hoist-substitution"]["why"].startswith("changes the healthy run")
+

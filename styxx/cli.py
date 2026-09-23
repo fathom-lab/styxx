@@ -1252,8 +1252,11 @@ def cmd_ci_audit(args):
     Simulates every workflow under .github/workflows with one fault at a time -- every external
     command of one `run:` step failing, everything else healthy -- and reports, per fault, whether
     the workflow goes RED, a check is silently not run (FAIL_OPEN), a check runs and its failure
-    is hidden (SWALLOWED), or nothing about the checks changes. No runner, no token, no code:
-    `owner/repo` is a blob-less sparse clone of the workflow files alone. The engine is the
+    is hidden (SWALLOWED), or nothing about the checks changes. No runner and no token, but the
+    steps' shell runs on this machine with its tools stubbed: what the stubs do not cover -- `rm`,
+    `mkdir`, a redirect -- is real, so run it on a CI runner or in a container, not on a repository
+    you do not trust (RESULT_swallow14 §0). `owner/repo` is a blob-less sparse clone of the
+    workflow files alone. The engine is the
     instrument of papers/harness/RESULT_swallow2_which_way_it_falls_2026_09_21.md, with the
     catalogue of checking actions of RESULT_swallow3_the_checks_that_are_actions_2026_09_21.md
     (`--no-actions` reads without it).
@@ -2996,7 +2999,7 @@ def _build_parser() -> argparse.ArgumentParser:
     # ci-audit — one fault at a time through the workflows (SWALLOW-2's engine)
     p_ciaudit = sub.add_parser(
         "ci-audit",
-        help="when one CI step's tools fail, what does the workflow do? (RED / FAIL_OPEN / SWALLOWED, per step; no runner, no token)",
+        help="when one CI step's tools fail, what does the workflow do? (RED / FAIL_OPEN / SWALLOWED, per step; no runner, no token; the steps' shell runs on this machine)",
     )
     p_ciaudit.add_argument("target", nargs="?", default=".",
                            help="a checkout path (default: .), or owner/repo for a public repository's workflow files")

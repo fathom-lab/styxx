@@ -1,0 +1,351 @@
+{
+ "valid": false,
+ "gates": {
+  "G-S14-1": {
+   "pass": true,
+   "detail": "48 passed in 36.57s"
+  },
+  "G-S14-2": {
+   "pass": true,
+   "detail": "instrument 9b40257a3b718f02\u2026, product files at the frozen hashes: 5 of 5, population 21c0e00fdaad3296\u2026"
+  },
+  "G-S14-3": {
+   "pass": true,
+   "detail": "5941 of 5945 fetched at the tip and audited without error or timeout (fetch failed 0, errors 4, capped 0)"
+  },
+  "G-S14-4": {
+   "pass": true,
+   "detail": "S13 residue 114"
+  },
+  "G-S14-5": {
+   "pass": false,
+   "detail": "stage 3 twice: 267 equal, 1 differ, of 268"
+  },
+  "G-S14-6": {
+   "pass": true,
+   "detail": "P1\u2013P8 scored"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": false,
+   "predicted": "the new edits verify a repair for at least 20% of the S13 residue",
+   "observed": {
+    "verified": 15,
+    "of": 114,
+    "share": 0.132,
+    "by_edit": {
+     "no-coe+wait-list": 1,
+     "wait-list": 14
+    }
+   }
+  },
+  "P2": {
+   "hit": true,
+   "predicted": "wait-list verifies at least 50% of the wait class (fewer than 10 is a miss)",
+   "observed": {
+    "verified": 15,
+    "of": 19,
+    "share": 0.789
+   }
+  },
+  "P3": {
+   "hit": true,
+   "predicted": "every check the global hoist verifies, the local hoist verifies too",
+   "observed": {
+    "global": 134,
+    "local": 134,
+    "global_not_local": 0
+   }
+  },
+  "P4": {
+   "hit": false,
+   "predicted": "(a coin) the local hoist verifies at least one check the global hoist does not",
+   "observed": {
+    "local_not_global": 0
+   }
+  },
+  "P5": {
+   "hit": true,
+   "predicted": "wait-list verifies a repair in at least 3 repositories",
+   "observed": {
+    "repositories": 15,
+    "checks": 15
+   }
+  },
+  "P6": {
+   "hit": true,
+   "predicted": "SWALLOW-13's stage verifies at least 25% of the stage-3 population",
+   "observed": {
+    "verified": 154,
+    "of": 268,
+    "share": 0.575
+   }
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "stages 1, 2 and 3 as the product now runs them verify at least 80% of the read targets",
+   "observed": {
+    "stage1": 678,
+    "stage2": 120,
+    "stage3": 169,
+    "of": 1066,
+    "share": 0.907
+   }
+  },
+  "P8": {
+   "hit": true,
+   "predicted": "the median wait-list repair the product chooses changes at most 3 lines",
+   "observed": {
+    "median": 3,
+    "lines": [
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     3,
+     3,
+     3,
+     4,
+     4,
+     4,
+     4,
+     4,
+     23
+    ]
+   }
+  }
+ },
+ "hits": 6,
+ "of": 8,
+ "receipt_sha256": "9eba6f23d66ea62f8918b8f2c0fd067eb5cc3635976dd1c4fb8b3bb578ae7fb7",
+ "prereg_sha256_at_freeze": "a34a06765aff3d25693a2e252dac38fb7a61e7a5d1c565681ab876571d93eb8d",
+ "summary": {
+  "all_stages_verified": 967,
+  "by_verdict": {
+   "read": {
+    "FAIL_OPEN": 149,
+    "SWALLOWED": 917
+   },
+   "stage3_population": {
+    "FAIL_OPEN": 105,
+    "SWALLOWED": 163
+   }
+  },
+  "capped": 0,
+  "errors": 4,
+  "fetch_failed": 0,
+  "fetched": 5941,
+  "global_not_local": 0,
+  "hoist_global_verified": 134,
+  "hoist_local_verified": 134,
+  "local_not_global": 0,
+  "new_chosen_lines": [
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   4,
+   5,
+   5,
+   5,
+   6,
+   6,
+   6,
+   6,
+   6,
+   6,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   7,
+   8,
+   8,
+   8,
+   8,
+   9,
+   9,
+   10,
+   13,
+   16,
+   19,
+   23
+  ],
+  "new_chosen_lines_median": 4,
+  "new_reach": 15,
+  "new_reach_by_edit": {
+   "no-coe+wait-list": 1,
+   "wait-list": 14
+  },
+  "new_reach_repos": 15,
+  "read": 1066,
+  "repos": 5945,
+  "repos_with_targets": 500,
+  "residue": 99,
+  "residue_read": 11,
+  "s13_residue": 114,
+  "s13_verified": 154,
+  "stage1_verified": 678,
+  "stage2_verified": 120,
+  "stage3_again_differs": 1,
+  "stage3_again_equal": 267,
+  "stage3_chosen": {
+   "background-liveness": 5,
+   "hoist-local": 134,
+   "no-coe+background-liveness": 1,
+   "no-coe+guard-status": 2,
+   "no-coe+no-default": 7,
+   "no-coe+wait-list": 1,
+   "no-default-joined": 1,
+   "no-exit-zero": 4,
+   "wait-list": 14
+  },
+  "stage3_population": 268,
+  "targets": 1066,
+  "wait_chosen_lines": [
+   1,
+   1,
+   1,
+   1,
+   2,
+   2,
+   3,
+   3,
+   3,
+   4,
+   4,
+   4,
+   4,
+   4,
+   23
+  ],
+  "wait_chosen_lines_median": 3,
+  "wait_class": 19,
+  "wait_class_verified": 15,
+  "wait_repos": 15,
+  "wait_verified": 15,
+  "workflows": 40682
+ }
+}

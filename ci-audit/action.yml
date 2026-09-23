@@ -5,7 +5,7 @@ description: >-
   is its green path, a `$(...)` whose status its line throws away -- marks the line, and puts the
   verified repair in the job summary, or, with `suggest`, one click away on the pull request. It
   reads only the workflows the change touched,
-  simulating each step's tools failing in a sandbox of stubs (no runner, no token, no code run),
+  running each step's shell with its tools stubbed (no runner, no token),
   and matches every step across base and head: a check that was already hidden is reported, not
   failed. On 2,123 pull requests five coding agents opened that touch a workflow, it fired on 17,
   and 22 of the 24 checks had a verified repair

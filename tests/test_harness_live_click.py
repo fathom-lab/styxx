@@ -111,12 +111,13 @@ def _without_scratch_shas(p: dict) -> dict:
     configuration: the machine that froze the plan signs its commits (commit.gpgsign), the CI runner
     does not. Nothing the receipt compares holds a commit id. The product's files move on after the
     run (SWALLOW-13's third stage): their hashes are the frozen ones in the frozen plan, held below,
-    and masked here."""
+    and masked here; so does the summary's footer, whose "no code run" SWALLOW-14 found false."""
     import copy
     import re
     q = copy.deepcopy(p)
     for run in q["runs"].values():
         run["summary"] = re.sub(r"`[0-9a-f]{8}`", "`<commit>`", run["summary"])
+        run["summary"] = re.sub(r"<sub>The gate reads only .*?</sub>", "<sub><the footer as it is></sub>", run["summary"], flags=re.S)
     for k in ("action_sha256", "action_yml_sha256", "differential_living_sha256"):
         q[k] = "<the product as it is>"
     return q

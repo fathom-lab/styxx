@@ -17,7 +17,12 @@ check could have failed. This command asks the question the light does not answe
 `run:` step that reaches a tool, if that step's tools failed and everything else stayed healthy,
 would the workflow go red? Would a check be silently skipped? Would a check run, fail, and be
 hidden? It answers by simulating the workflow -- outputs, env, `if:`, `needs:`, `fromJSON`
-matrices -- in a sandbox where every tool is a stub, with no runner, no token, and no code.
+matrices -- with its tools stubbed, no runner and no token. The steps' shell itself runs, on this
+machine, in a temporary directory with an empty environment: what the stubs do not cover -- `rm`,
+`mkdir`, a redirect -- is real, a path a script names outside that directory is this machine's,
+and a value the empty flavour empties can make a relative path absolute (`rm -rf "$D"/build`
+with `D` empty). Run it where that is safe -- a CI runner, a container -- and not on a checkout
+you do not trust (papers/harness/RESULT_swallow14_the_empty_list_2026_09_22.md, §0).
 
 Verdicts per fault, in precedence: RED (loud), FAIL_OPEN (a check that would have run is silently
 not run), SWALLOWED (a check ran and its failure was hidden), ABSORBED, NO_CHECK; BASELINE_RED /
@@ -42,10 +47,12 @@ verified on both halves against the same model, and the card prints the diff -- 
 failed, and what the original line was protecting (SWALLOW-4). For a finding those leave
 unverified, two edits to the script's logic are tried next (`repair_structural.py`: a guard whose
 failing tool is not its green path; a query without its `|| echo` default), verified the same way
-(SWALLOW-5). For what those leave, a third stage (`repair_frontier.py`, SWALLOW-13): a `$(...)`
-whose status its line throws away hoisted onto a line of its own, a background job whose early
-death nobody waits for checked once, `|| exit 0` removed, a fallback hidden by a continued line,
-each alone or with the `continue-on-error` removed -- verified the same way. A finding none of the
+(SWALLOW-5). For what those leave, a third stage (`repair_frontier.py`, SWALLOW-13 and -14): a
+`$(...)` whose status its line throws away hoisted onto a line of its own that keeps it, a list read
+from a process substitution whose command's failure is waited for (`wait $!`) instead of read as an
+empty list, a background job whose early death nobody waits for checked once, `|| exit 0` removed,
+a fallback hidden by a continued line, each alone or with the `continue-on-error` removed --
+verified the same way. A finding none of the
 three stages repairs carries two readings of its script, when they match: its failure is routed (a
 flag written to GITHUB_ENV or GITHUB_OUTPUT that a later step reads), or the script says it is not
 fatal (a `::warning`, or stated words). A reading is context for the reviewer, not a verdict.
