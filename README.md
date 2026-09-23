@@ -109,7 +109,12 @@ checks the first two left on 549 repositories it was not designed on
 ([RESULT_swallow13](papers/harness/RESULT_swallow13_the_frontier_2026_09_22.md)); two more edits — waiting for the command
 that makes a loop's list, and a hoist that keeps its strictness to its own line — verified 15 of the 114 it
 left on 5,945 more, in a cycle INVALID on its determinism gate whose first run found the hazard above
-([RESULT_swallow14](papers/harness/RESULT_swallow14_the_empty_list_2026_09_22.md)). The same gate on every commit before it lands:
+([RESULT_swallow14](papers/harness/RESULT_swallow14_the_empty_list_2026_09_22.md)); and because that simulation runs each
+step's shell, the CLI now confines itself with Linux Landlock before it reads — every simulated step may write only in a
+scratch directory of its own, open no network, and signal nothing outside the audit — so `styxx ci-audit owner/repo` is safe
+to type on a repository nobody has read: on 5,945 of them, including two that run `rm -rf /*` in the simulation, the bare
+machine was untouched and every boundary probe neutralised
+([RESULT_swallow15](papers/harness/RESULT_swallow15_the_escape_that_isnt_2026_09_23.md)). The same gate on every commit before it lands:
 [`integrations/git/commit-msg`](integrations/git/README.md), one file, the message vs the staged diff. Prose outside the closed template set is never judged,
 and the CLI prints what it checks when it finds nothing — silence is scope, not weakness.
 
