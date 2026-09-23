@@ -1,0 +1,212 @@
+[
+ {
+  "repo": "CopilotKit/CopilotKit",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "static_quality.yml",
+    "commitlint",
+    5
+   ]
+  ],
+  "n_uncon": 1,
+  "n_conf": 0,
+  "n_receipt": 1
+ },
+ {
+  "repo": "MetaMask/metamask-mobile",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "analyze-app-profiling.yml",
+    "report-upstream-failure",
+    2
+   ]
+  ],
+  "n_uncon": 3,
+  "n_conf": 2,
+  "n_receipt": 3
+ },
+ {
+  "repo": "MicrosoftLearning/mslearn-ai-agents",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "sdk-contract.yml",
+    "contract",
+    4
+   ]
+  ],
+  "n_uncon": 1,
+  "n_conf": 0,
+  "n_receipt": 1
+ },
+ {
+  "repo": "Norconex/crawlers",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "copyright-check-new.yaml",
+    "update-author",
+    0
+   ]
+  ],
+  "n_uncon": 1,
+  "n_conf": 0,
+  "n_receipt": 1
+ },
+ {
+  "repo": "OpenHands/OpenHands",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "issue-readiness-check.yml",
+    "check",
+    1
+   ]
+  ],
+  "n_uncon": 2,
+  "n_conf": 1,
+  "n_receipt": 2
+ },
+ {
+  "repo": "PX4/PX4-Autopilot",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "sbom_monthly_audit.yml",
+    "audit",
+    2
+   ]
+  ],
+  "n_uncon": 1,
+  "n_conf": 0,
+  "n_receipt": 1
+ },
+ {
+  "repo": "Z3Prover/z3",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "fstar-master-build.yml",
+    "build-and-report",
+    7
+   ],
+   [
+    "memory-safety.yml",
+    "asan-test",
+    7
+   ],
+   [
+    "memory-safety.yml",
+    "ubsan-test",
+    7
+   ]
+  ],
+  "n_uncon": 3,
+  "n_conf": 0,
+  "n_receipt": 3
+ },
+ {
+  "repo": "khive-ai/lionagi",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "typecheck.yml",
+    "pyright",
+    5
+   ]
+  ],
+  "n_uncon": 2,
+  "n_conf": 1,
+  "n_receipt": 2
+ },
+ {
+  "repo": "kodustech/kodus-ai",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "e2e-cloud-aws.yml",
+    "run",
+    8
+   ]
+  ],
+  "n_uncon": 2,
+  "n_conf": 1,
+  "n_receipt": 2
+ },
+ {
+  "repo": "kortix-ai/suna",
+  "kind": "code-delta (repair_frontier)",
+  "confined_drops": [],
+  "n_uncon": 4,
+  "n_conf": 4,
+  "n_receipt": 4
+ },
+ {
+  "repo": "langflow-ai/langflow",
+  "kind": "other",
+  "confined_drops": [],
+  "n_uncon": 9,
+  "n_conf": 9,
+  "n_receipt": 9
+ },
+ {
+  "repo": "llamastack/llama-stack",
+  "kind": "confinement",
+  "confined_drops": [],
+  "n_uncon": 1,
+  "n_conf": 1,
+  "n_receipt": 1
+ },
+ {
+  "repo": "mavlink/qgroundcontrol",
+  "kind": "code-delta (repair_frontier)",
+  "confined_drops": [],
+  "n_uncon": 2,
+  "n_conf": 2,
+  "n_receipt": 2
+ },
+ {
+  "repo": "openshift-pipelines/pipelines-as-code",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "e2e.yaml",
+    "e2e-tests",
+    14
+   ]
+  ],
+  "n_uncon": 1,
+  "n_conf": 0,
+  "n_receipt": 1
+ },
+ {
+  "repo": "plasma-umass/scalene",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "tests.yml",
+    "run-tests",
+    9
+   ]
+  ],
+  "n_uncon": 2,
+  "n_conf": 1,
+  "n_receipt": 2
+ },
+ {
+  "repo": "pytorch/test-infra",
+  "kind": "confinement",
+  "confined_drops": [
+   [
+    "_lambda-do-release-runners.yml",
+    "build-greenlight-lambda",
+    4
+   ]
+  ],
+  "n_uncon": 1,
+  "n_conf": 0,
+  "n_receipt": 1
+ }
+]

@@ -383,3 +383,25 @@ one check of 268, a backgrounded command, moved between two runs of stage 3 — 
 claimed): 1,066 hand-written hidden checks; stages 1 and 2 verify 798; SWALLOW-13's stage 154 of the
 268 left; of the 114 it leaves, wait-list verifies 15 in 15 repositories; the local hoist verifies
 the same 134 as the global one. `empty_list.py` is frozen at `9b40257a…` and pinned by its test.
+
+## The escape that isn't (SWALLOW-15)
+
+The audit runs each step's shell, so `styxx ci-audit` now confines its own simulation with Linux
+Landlock (`styxx/ciaudit/confine.py`): every simulated step may write only in a scratch directory of
+its own, open no TCP, and signal nothing outside the audit. `confined.py` runs the product's audit in
+that confinement, on the bare machine, three ways: a **battery** of 13 hand-written steps that each
+try to reach the host (each scoped to a canary), the **population** (SWALLOW-14's 5,945 repositories,
+the confined core compared to the receipt, host canaries after every one), and the **perimeter** (what
+Landlock does not stop).
+
+```
+python -m benchmarks.harness_mutation.confined --battery --out papers/harness/swallow15_battery.json
+python -m benchmarks.harness_mutation.confined --population papers/harness/swallow14_population.json.gz \
+    --receipt papers/harness/swallow14_receipt.json.gz --work <dir> --out papers/harness/swallow15_receipt.json.gz --workers 3
+python papers/harness/swallow15_score.py
+```
+
+`papers/harness/RESULT_swallow15_the_escape_that_isnt_2026_09_23.md` (INVALID on its equivalence gate,
+5/7 reported): on 5,945 repositories, two that delete `/` in the simulation, no canary was ever touched
+and every boundary probe was neutralised; 16 of 5,941 read differently, 12 because confinement denies a
+step's `/tmp` write and a finding drops. `confined.py` is frozen at `7014bc02…` and pinned by its test.

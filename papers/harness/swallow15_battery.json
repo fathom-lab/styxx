@@ -1,0 +1,309 @@
+{
+ "schema": "styxx.harness-confined/v1#battery",
+ "instrument_sha256": "7014bc02c46f5344249ed1636d4778c217df6998aa93164f96974817d2e97036",
+ "product_sha256": {
+  "styxx/ciaudit/engine.py": "5c219887e389ed671d082c18be220af4479d48d0bd152fb348997ba4f5368b24",
+  "styxx/ciaudit/actions.py": "ecbcd4f94a050e5b983f91464e681f61f2504a5447c45c68f91e419459c8d42a",
+  "styxx/ciaudit/repair.py": "4282dbfa4d5caf22bac274e0964603dc451db164df8c730ba94afee58189241a",
+  "styxx/ciaudit/repair_structural.py": "af46c492656e4d1837c97e0ecb3f40088e782c04c306ac94f70dc4bde7846570",
+  "styxx/ciaudit/repair_frontier.py": "bd6eb5af4fe169e9207a0ad67d6d7977cfea306d399ef1ce57f3bde9237f7c09",
+  "styxx/ciaudit/confine.py": "46a1b40bf99db0313db24362ec970dc1cede67287fca32806544146718404da6",
+  "styxx/ciaudit/__init__.py": "5c021afe1f09ac4c51d0534b4af26db505bd36e30145776f32efa9a80cdc89c7",
+  "styxx/ciaudit/differential.py": "dc79fc97e3084df90c31bc64139bd6c44fbd5ff277f0f3fbf35776b319f888b0"
+ },
+ "abi": 7,
+ "items": 13,
+ "control_fired": 10,
+ "confined_neutralised": 13,
+ "confined_audited_ok": 13,
+ "any_reached_host": [],
+ "rows": [
+  {
+   "item": "rm -rf a scope that came out empty",
+   "confined": false,
+   "fired_on_host": true,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "rm -rf a scope that came out empty",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "delete a named file outside",
+   "confined": false,
+   "fired_on_host": true,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "delete a named file outside",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "delete a directory outside",
+   "confined": false,
+   "fired_on_host": true,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "delete a directory outside",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "create a file outside",
+   "confined": false,
+   "fired_on_host": true,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 0,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "create a file outside",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "truncate a file outside",
+   "confined": false,
+   "fired_on_host": true,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 0,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "truncate a file outside",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "append to a file outside",
+   "confined": false,
+   "fired_on_host": true,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 0,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "append to a file outside",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "rename a file outside",
+   "confined": false,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "rename a file outside",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "make a directory outside",
+   "confined": false,
+   "fired_on_host": true,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "make a directory outside",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "plant a symlink outside",
+   "confined": false,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "plant a symlink outside",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "write through a redirect to an absolute path",
+   "confined": false,
+   "fired_on_host": true,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 0,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "write through a redirect to an absolute path",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "a child process writes outside",
+   "confined": false,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "a child process writes outside",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "a background job writes outside",
+   "confined": false,
+   "fired_on_host": true,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "a background job writes outside",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "workflows": 1,
+    "fault_sites": 1,
+    "confined": true
+   },
+   "error": null
+  },
+  {
+   "item": "connect a socket to a listening port",
+   "confined": false,
+   "fired_on_host": true,
+   "audited": {
+    "confined": false
+   },
+   "error": null
+  },
+  {
+   "item": "connect a socket to a listening port",
+   "confined": true,
+   "fired_on_host": false,
+   "audited": {
+    "confined": true
+   },
+   "error": null
+  }
+ ],
+ "perimeter": {
+  "read outside": "yes",
+  "chmod outside": "yes",
+  "udp send": "yes"
+ }
+}

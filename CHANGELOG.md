@@ -92,6 +92,35 @@ failing ten times against the unfixed tree.
 
 ---
 
+## [Unreleased] — SWALLOW-15: the escape that isn't — `ci-audit` confines its own simulation with Landlock
+
+SWALLOW-14 found that the audit runs each workflow step's shell on the machine (`rm -rf $RUNNER_TOOL_CACHE/*`
+becomes `rm -rf /*` in the simulation) and lost a machine to it. This cycle puts the fix **inside the
+product** (`styxx/ciaudit/confine.py`): before it simulates, the audit restricts itself with Linux
+**Landlock** (5.13+, no root, nothing to install), and every simulated step may then write only beneath
+a scratch directory of its own, open no TCP connection, and signal nothing outside the audit. The CLI
+refuses on a kernel without Landlock unless `--unconfined`; the Action refuses on a self-hosted runner
+but runs on a GitHub-hosted one, thrown away after the job. So `styxx ci-audit owner/repo` is safe to
+type on a repository nobody has read.
+
+**INVALID, 5/7 reported, not claimed** (`RESULT_swallow15_the_escape_that_isnt_2026_09_23.md`; prereg
+`9c429903…`), on its equivalence gate. On **5,945 repositories audited on the bare machine** — no
+overlay, the product's own confinement the only thing protecting the host — **no canary was ever
+touched**, the two repositories that delete `/bin` unconfined (`actions/setup-node`, `djylb/nps`)
+completed with the machine intact, and **every one of 13 hand-written boundary probes was neutralised,
+none reached the host** (10 fired unconfined). Median overhead 1.7 s a repository. INVALID on G-S15-5:
+the confined audit did not read **16 of 5,941** repositories exactly as the unconfined run — **12** are
+one cause, confinement denies a step's write to `/tmp` and a finding drops (all recover with `/tmp`
+writable); 2 are the load-dependent backgrounded-command check SWALLOW-14 named; 2 are the
+`repair_frontier` change this product carries that the frozen receipt predates.
+
+The perimeter, stated: a confined step may still read what its user can read, change a file's
+mode/owner/timestamps, and send a UDP datagram — Landlock here governs none of those. Not shipped, on
+purpose: making `/tmp` writable, which recovers the 12 but lets a step clobber the host's shared `/tmp`.
+The next cycle gives the simulation a `/tmp` remapped into its scratch directory (a mount namespace),
+for the transparency this gate asked for with the host's `/tmp` still untouched.
+`benchmarks/harness_mutation/confined.py` frozen at `7014bc02…`.
+
 ## [Unreleased] — SWALLOW-14: the empty list — and `ci-audit` runs a step's shell on the machine
 
 **`ci-audit` is not safe to run on a repository you have not read.** It simulates a step by running

@@ -115,6 +115,9 @@ def card(rec: dict, *, counted: bool = False, width: int = 96) -> str:
                  + (f"  ·  {rec['seconds']} s" if rec.get("seconds") is not None else ""))
     lines.append("one fault at a time: every external command of one `run:` step fails, everything else stays healthy"
                  + ("  ·  counted reading" if counted else ""))
+    if rec.get("confinement") is not None:
+        from .confine import describe
+        lines.append(describe(rec["confinement"]))
     lines.append("")
     for v in _ORDER:
         n = by.get(v, 0)

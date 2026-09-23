@@ -204,21 +204,30 @@ def tree_differential(tree: Path, base: str, fix: bool = True) -> dict:
     return out
 
 
-def pr_differential(tree: Path, number: int, remote: str = "origin", fix: bool = True) -> dict:
+def pr_fetch(tree: Path, number: int, remote: str = "origin") -> None:
+    """Fetch pull request `number`'s two refs into `tree` (network, and writes to its `.git`): done
+    before the simulation is confined, which may write neither (`confine.run`)."""
+    pfx = f"refs/ciaudit/pull/{number}"
+    # a clone that is already shallow (owner/repo's sparse clone) stays so: the merge and its two parents are enough;
+    # a real checkout is never made shallow by this command
+    depth = ["--depth=2"] if H._git(tree, ["rev-parse", "--is-shallow-repository"], check=False).strip() == "true" else []
+    H._git(tree, ["fetch", "--quiet", "--no-tags", "--no-write-fetch-head", *depth, remote, f"+refs/pull/{number}/merge:{pfx}/merge"], check=False, timeout=600)
+    H._git(tree, ["fetch", "--quiet", "--no-tags", "--no-write-fetch-head", *depth, remote, f"+refs/pull/{number}/head:{pfx}/head"], check=False, timeout=600)
+
+
+def pr_differential(tree: Path, number: int, remote: str = "origin", fix: bool = True, fetch: bool = True) -> dict:
     """The gate on pull request `number` of `remote`, without checking it out. GitHub keeps two refs
     per pull request: `refs/pull/N/head`, the branch as pushed, and -- while the pull request is
     open and mergeable -- `refs/pull/N/merge`, its test merge into the base branch. With the merge
     ref, BASE is the merge's first parent (the base branch as GitHub would merge into) and HEAD the
     merge itself: exactly what merging would bring, no history needed. Without it (closed, or
     conflicting), BASE is the merge-base of the head with the remote's default branch, which needs
-    history, and the record says which reading it is."""
+    history, and the record says which reading it is. `fetch=False`: the refs are already fetched
+    (`pr_fetch`, before a confined simulation)."""
     pfx = f"refs/ciaudit/pull/{number}"
-    # a clone that is already shallow (owner/repo's sparse clone) stays so: the merge and its two parents are enough;
-    # a real checkout is never made shallow by this command
-    depth = ["--depth=2"] if H._git(tree, ["rev-parse", "--is-shallow-repository"], check=False).strip() == "true" else []
-    H._git(tree, ["fetch", "--quiet", "--no-tags", "--no-write-fetch-head", *depth, remote, f"+refs/pull/{number}/merge:{pfx}/merge"], check=False, timeout=600)
+    if fetch:
+        pr_fetch(tree, number, remote)
     got_merge = H._git(tree, ["rev-parse", "--verify", "--quiet", f"{pfx}/merge^{{commit}}"], check=False).strip() != ""
-    H._git(tree, ["fetch", "--quiet", "--no-tags", "--no-write-fetch-head", *depth, remote, f"+refs/pull/{number}/head:{pfx}/head"], check=False, timeout=600)
     head = H._git(tree, ["rev-parse", "--verify", "--quiet", f"{pfx}/head^{{commit}}"], check=False).strip()
     if not head:
         raise RuntimeError(f"{remote} has no refs/pull/{number}/head")

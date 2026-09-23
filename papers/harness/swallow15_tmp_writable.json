@@ -1,0 +1,85 @@
+{
+ "writable_added": "/tmp",
+ "repos": 13,
+ "recovered": 12,
+ "rows": [
+  {
+   "repo": "CopilotKit/CopilotKit",
+   "recovered": true,
+   "n_uncon": 1,
+   "n_conf_tmp": 1
+  },
+  {
+   "repo": "MetaMask/metamask-mobile",
+   "recovered": true,
+   "n_uncon": 3,
+   "n_conf_tmp": 3
+  },
+  {
+   "repo": "MicrosoftLearning/mslearn-ai-agents",
+   "recovered": true,
+   "n_uncon": 1,
+   "n_conf_tmp": 1
+  },
+  {
+   "repo": "Norconex/crawlers",
+   "recovered": true,
+   "n_uncon": 1,
+   "n_conf_tmp": 1
+  },
+  {
+   "repo": "OpenHands/OpenHands",
+   "recovered": true,
+   "n_uncon": 2,
+   "n_conf_tmp": 2
+  },
+  {
+   "repo": "PX4/PX4-Autopilot",
+   "recovered": true,
+   "n_uncon": 1,
+   "n_conf_tmp": 1
+  },
+  {
+   "repo": "Z3Prover/z3",
+   "recovered": true,
+   "n_uncon": 3,
+   "n_conf_tmp": 3
+  },
+  {
+   "repo": "khive-ai/lionagi",
+   "recovered": true,
+   "n_uncon": 2,
+   "n_conf_tmp": 2
+  },
+  {
+   "repo": "kodustech/kodus-ai",
+   "recovered": true,
+   "n_uncon": 2,
+   "n_conf_tmp": 2
+  },
+  {
+   "repo": "llamastack/llama-stack",
+   "recovered": true,
+   "n_uncon": 1,
+   "n_conf_tmp": 1
+  },
+  {
+   "repo": "openshift-pipelines/pipelines-as-code",
+   "recovered": false,
+   "n_uncon": 1,
+   "n_conf_tmp": 1
+  },
+  {
+   "repo": "plasma-umass/scalene",
+   "recovered": true,
+   "n_uncon": 2,
+   "n_conf_tmp": 2
+  },
+  {
+   "repo": "pytorch/test-infra",
+   "recovered": true,
+   "n_uncon": 1,
+   "n_conf_tmp": 1
+  }
+ ]
+}

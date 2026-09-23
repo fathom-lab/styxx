@@ -149,14 +149,36 @@ def readable(tree: Path, base: str, head: str) -> None:
         raise RuntimeError(f"git cannot compare {base[:12]} and {head[:12]}: {(p.stderr or '').strip()[-200:]}")
 
 
+def _confined(fn, *args, **kwargs) -> dict:
+    """The gate's simulation -- every step's shell -- in a child process confined by Landlock
+    (`confine.run`: writes only in its own scratch directory, no TCP, no signal outside it). Where
+    the runner has no Landlock: unconfined on a GitHub-hosted runner, which is thrown away after the
+    job, or with STYXX_CIAUDIT_UNCONFINED set; refused anywhere else -- a self-hosted runner is a
+    machine someone keeps."""
+    from . import confine
+    if confine.abi() and not confine.unconfined_allowed():
+        rec, info = confine.run(fn, *args, **kwargs)
+    elif confine.unconfined_allowed() or os.environ.get("RUNNER_ENVIRONMENT") == "github-hosted":
+        rec = fn(*args, **kwargs)
+        info = {"schema": confine.SCHEMA, "confined": False,
+                "why": f"{confine.UNCONFINED_ENV} set" if confine.unconfined_allowed() else "no Landlock on this GitHub-hosted runner, thrown away after the job"}
+    else:
+        raise RuntimeError("this runner cannot confine the gate (it needs Linux's Landlock, 5.13+), and it is not a GitHub-hosted runner "
+                           "that is thrown away after the job: the gate runs each changed step's shell, and what its tools' stubs do not "
+                           f"cover -- rm, mkdir, a redirect -- would act on this machine. Set {confine.UNCONFINED_ENV}=1 to run it anyway")
+    rec["confinement"] = info
+    return rec
+
+
 def run_gate(tree: Path, res: dict) -> dict:
     if "pr_differential" in res:
-        rec = D.pr_differential(tree, int(res["pr_differential"]))
+        D.pr_fetch(tree, int(res["pr_differential"]))           # the network, before the confinement
+        rec = _confined(D.pr_differential, tree, int(res["pr_differential"]), fetch=False)
         res.update(base=rec["merge_base"], head=rec["head"], reading="pr-ref", reading_text=rec.get("reading"))
         readable(tree, res["base"], res["head"])
         return rec
     readable(tree, res["base"], res["head"])
-    rec = D.audit_commit(tree, res["base"], res["head"], readers={}, fix=True)
+    rec = _confined(D.audit_commit, tree, res["base"], res["head"], readers={}, fix=True)
     rec.update(base_ref=res.get("base_ref"), merge_base=res["base"], reading=READINGS.get(res.get("reading"), res.get("reading")))
     if res.get("pr") is not None:
         rec.update(pr=res["pr"], pr_head=res.get("pr_head") or res["head"], pr_merge=res["head"] if res.get("reading") == "test-merge" else None)
@@ -369,8 +391,11 @@ def summary_md(rec: dict, res: dict, located: dict) -> str:
         extra.append(f"{unread} hidden here that the base could not be read for")
     if extra:
         out += ["", " · ".join(extra)]
-    out += ["", "<sub>The gate reads only the workflows this change touched, running each step's shell with its tools stubbed: "
-                "no runner, no token. RED is loud, not correct. "
+    conf = rec.get("confinement") or {}
+    where = ("confined by Landlock to a scratch directory of its own, with no network" if conf.get("confined")
+             else f"unconfined ({conf['why']})" if conf.get("why") else "")
+    out += ["", "<sub>The gate reads only the workflows this change touched, running each step's shell with its tools stubbed"
+                + (f", {where}" if where else "") + ": no runner, no token. RED is loud, not correct. "
                 "<a href=\"https://github.com/fathom-lab/styxx\">styxx ci-audit</a></sub>", ""]
     return "\n".join(out)
 

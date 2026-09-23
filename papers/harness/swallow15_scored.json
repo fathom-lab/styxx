@@ -1,0 +1,902 @@
+{
+ "valid": false,
+ "gates": {
+  "G-S15-1": {
+   "pass": true,
+   "detail": "70 passed in 60.59s (0:01:00)"
+  },
+  "G-S15-2": {
+   "pass": true,
+   "detail": "instrument 7014bc02c46f5344\u2026, product 8 of 8, population 21c0e00fdaad\u2026, compared receipt 9eba6f23d66e\u2026, battery 9db078c19d3a\u2026"
+  },
+  "G-S15-3": {
+   "pass": true,
+   "detail": "5945 of 5945 audited confined without error (fetch failed 0, errors 0)"
+  },
+  "G-S15-4": {
+   "pass": true,
+   "detail": "canary breaches: 0"
+  },
+  "G-S15-5": {
+   "pass": false,
+   "detail": "5925 of 5941 match the receipt's core; 16 differ"
+  },
+  "G-S15-6": {
+   "pass": true,
+   "detail": "13 of 13 neutralised confined; reached host: []"
+  },
+  "G-S15-7": {
+   "pass": true,
+   "detail": "P1\u2013P7 scored"
+  }
+ },
+ "predictions": {
+  "P1": {
+   "hit": true,
+   "predicted": "no canary breach across the population",
+   "observed": {
+    "canaries_breached": 0,
+    "breaches": []
+   }
+  },
+  "P2": {
+   "hit": true,
+   "predicted": "the two /-wipers audit confined on the bare machine, no error, the machine intact",
+   "observed": {
+    "actions/setup-node": {
+     "confined": true,
+     "error": null,
+     "targets": 0
+    },
+    "djylb/nps": {
+     "confined": true,
+     "error": null,
+     "targets": 0
+    }
+   }
+  },
+  "P3": {
+   "hit": false,
+   "predicted": "the confined core matches the receipt for every repository compared",
+   "observed": {
+    "compared": 5941,
+    "match": 5925,
+    "differ": 16,
+    "first_differs": [
+     {
+      "diff": {
+       "keys_only_in_receipt": [
+        [
+         "static_quality.yml",
+         "commitlint",
+         5
+        ]
+       ],
+       "keys_only_in_run": []
+      },
+      "repo": "CopilotKit/CopilotKit"
+     },
+     {
+      "diff": {
+       "keys_only_in_receipt": [
+        [
+         "analyze-app-profiling.yml",
+         "report-upstream-failure",
+         2
+        ]
+       ],
+       "keys_only_in_run": []
+      },
+      "repo": "MetaMask/metamask-mobile"
+     },
+     {
+      "diff": {
+       "keys_only_in_receipt": [
+        [
+         "sdk-contract.yml",
+         "contract",
+         4
+        ]
+       ],
+       "keys_only_in_run": []
+      },
+      "repo": "MicrosoftLearning/mslearn-ai-agents"
+     }
+    ]
+   }
+  },
+  "P4": {
+   "hit": false,
+   "predicted": "verified_repair matches the receipt on \u226599% compared, every move a backgrounded command",
+   "observed": {
+    "moved_repos": 2,
+    "of": 5941,
+    "all_moves_background": false,
+    "moved": [
+     {
+      "repo": "kortix-ai/suna",
+      "targets": [
+       [
+        "terraform-ci.yml",
+        "validate",
+        9
+       ]
+      ]
+     },
+     {
+      "repo": "mavlink/qgroundcontrol",
+      "targets": [
+       [
+        "docs-lint.yml",
+        "lint",
+        3
+       ]
+      ]
+     }
+    ]
+   }
+  },
+  "P5": {
+   "hit": true,
+   "predicted": "every confined item neutralised, none reaches the host, \u22658 reach it unconfined",
+   "observed": {
+    "items": 13,
+    "confined_neutralised": 13,
+    "reached_host": [],
+    "control_fired": 10
+   }
+  },
+  "P6": {
+   "hit": true,
+   "predicted": "confined, a read, a chmod and a UDP send all still succeed",
+   "observed": {
+    "read outside": "yes",
+    "chmod outside": "yes",
+    "udp send": "yes"
+   }
+  },
+  "P7": {
+   "hit": true,
+   "predicted": "median seconds per repository \u2264 10",
+   "observed": {
+    "median": 1.7
+   }
+  }
+ },
+ "hits": 5,
+ "of": 7,
+ "receipt_sha256": "6f449092961c3b53bdda7226eca6efc823d89d8f6f20c2188207ef86a201f18e",
+ "battery_sha256": "9db078c19d3a21e4466e4f64e0367616ec58a36a2af516f886e4a08e170e925c",
+ "prereg_sha256_at_freeze": "9c429903768701c88c3b8d026147b8ea9f4006a48ff992c690a9f4c03186348e",
+ "summary": {
+  "canaries_breached": 0,
+  "compared_to_receipt": 5941,
+  "confined": 5945,
+  "differ_from_receipt": 16,
+  "differs": [
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "static_quality.yml",
+       "commitlint",
+       5
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "CopilotKit/CopilotKit"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "analyze-app-profiling.yml",
+       "report-upstream-failure",
+       2
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "MetaMask/metamask-mobile"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "sdk-contract.yml",
+       "contract",
+       4
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "MicrosoftLearning/mslearn-ai-agents"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "copyright-check-new.yaml",
+       "update-author",
+       0
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "Norconex/crawlers"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "issue-readiness-check.yml",
+       "check",
+       1
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "OpenHands/OpenHands"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "sbom_monthly_audit.yml",
+       "audit",
+       2
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "PX4/PX4-Autopilot"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "memory-safety.yml",
+       "ubsan-test",
+       7
+      ],
+      [
+       "fstar-master-build.yml",
+       "build-and-report",
+       7
+      ],
+      [
+       "memory-safety.yml",
+       "asan-test",
+       7
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "Z3Prover/z3"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "typecheck.yml",
+       "pyright",
+       5
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "khive-ai/lionagi"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "e2e-cloud-aws.yml",
+       "run",
+       8
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "kodustech/kodus-ai"
+   },
+   {
+    "diff": {
+     "receipt": {
+      "baseline": "SWALLOWED",
+      "candidates": [
+       [
+        "no-continue-on-error",
+        false,
+        null
+       ],
+       [
+        "strict-shell",
+        false,
+        null
+       ],
+       [
+        "both",
+        false,
+        null
+       ],
+       [
+        "guard-status",
+        false,
+        null
+       ],
+       [
+        "no-default",
+        false,
+        null
+       ],
+       [
+        "both-structural",
+        false,
+        null
+       ],
+       [
+        "hoist-local",
+        false,
+        null
+       ],
+       [
+        "wait-list",
+        false,
+        null
+       ],
+       [
+        "hoist-substitution",
+        false,
+        null
+       ],
+       [
+        "background-liveness",
+        false,
+        null
+       ],
+       [
+        "no-exit-zero",
+        false,
+        null
+       ],
+       [
+        "no-default-joined",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-default",
+        false,
+        null
+       ],
+       [
+        "no-coe+guard-status",
+        false,
+        null
+       ],
+       [
+        "no-coe+hoist-local",
+        false,
+        null
+       ],
+       [
+        "no-coe+wait-list",
+        false,
+        null
+       ],
+       [
+        "no-coe+hoist-substitution",
+        false,
+        null
+       ],
+       [
+        "no-coe+background-liveness",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-exit-zero",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-default-joined",
+        false,
+        null
+       ]
+      ],
+      "run_sha256": "eedea9ab1afcd1a5e3ebd790c4b8e24ca7ba817e80c3ec77953e6fe87799a87d",
+      "stage": null,
+      "tried_stage3": true,
+      "verdict": "SWALLOWED"
+     },
+     "run": {
+      "baseline": "SWALLOWED",
+      "candidates": [
+       [
+        "no-continue-on-error",
+        false,
+        null
+       ],
+       [
+        "strict-shell",
+        false,
+        null
+       ],
+       [
+        "both",
+        false,
+        null
+       ],
+       [
+        "guard-status",
+        false,
+        null
+       ],
+       [
+        "no-default",
+        false,
+        null
+       ],
+       [
+        "both-structural",
+        false,
+        null
+       ],
+       [
+        "hoist-local",
+        false,
+        null
+       ],
+       [
+        "wait-list",
+        true,
+        true
+       ],
+       [
+        "hoist-substitution",
+        false,
+        null
+       ],
+       [
+        "background-liveness",
+        false,
+        null
+       ],
+       [
+        "no-exit-zero",
+        false,
+        null
+       ],
+       [
+        "no-default-joined",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-default",
+        false,
+        null
+       ],
+       [
+        "no-coe+guard-status",
+        false,
+        null
+       ],
+       [
+        "no-coe+hoist-local",
+        false,
+        null
+       ],
+       [
+        "no-coe+wait-list",
+        false,
+        null
+       ],
+       [
+        "no-coe+hoist-substitution",
+        false,
+        null
+       ],
+       [
+        "no-coe+background-liveness",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-exit-zero",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-default-joined",
+        false,
+        null
+       ]
+      ],
+      "run_sha256": "eedea9ab1afcd1a5e3ebd790c4b8e24ca7ba817e80c3ec77953e6fe87799a87d",
+      "stage": "swallow-13",
+      "tried_stage3": true,
+      "verdict": "SWALLOWED"
+     },
+     "target": [
+      "terraform-ci.yml",
+      "validate",
+      9
+     ]
+    },
+    "repo": "kortix-ai/suna"
+   },
+   {
+    "diff": {
+     "receipt": {
+      "baseline": "SWALLOWED",
+      "candidates": [
+       [
+        "no-continue-on-error",
+        true,
+        true
+       ],
+       [
+        "strict-shell",
+        true,
+        false
+       ],
+       [
+        "both",
+        true,
+        true
+       ]
+      ],
+      "run_sha256": "190ae01368598ee2507a8747b1d928d032a89acbc4d7fbff81c95381e11183cd",
+      "stage": "swallow-4",
+      "tried_stage3": false,
+      "verdict": "SWALLOWED"
+     },
+     "run": {
+      "baseline": "SWALLOWED",
+      "candidates": [
+       [
+        "no-continue-on-error",
+        true,
+        true
+       ],
+       [
+        "strict-shell",
+        true,
+        false
+       ],
+       [
+        "both",
+        true,
+        false
+       ]
+      ],
+      "run_sha256": "190ae01368598ee2507a8747b1d928d032a89acbc4d7fbff81c95381e11183cd",
+      "stage": "swallow-4",
+      "tried_stage3": false,
+      "verdict": "SWALLOWED"
+     },
+     "target": [
+      "cross-platform-test.yml",
+      "test-installation-experimental",
+      20
+     ]
+    },
+    "repo": "langflow-ai/langflow"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "openresponses-conformance.yml",
+       "openresponses-conformance",
+       9
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "llamastack/llama-stack"
+   },
+   {
+    "diff": {
+     "receipt": {
+      "baseline": "FAIL_OPEN",
+      "candidates": [
+       [
+        "no-continue-on-error",
+        false,
+        null
+       ],
+       [
+        "strict-shell",
+        true,
+        false
+       ],
+       [
+        "both",
+        true,
+        false
+       ],
+       [
+        "guard-status",
+        false,
+        null
+       ],
+       [
+        "no-default",
+        false,
+        null
+       ],
+       [
+        "both-structural",
+        false,
+        null
+       ],
+       [
+        "hoist-local",
+        false,
+        null
+       ],
+       [
+        "wait-list",
+        true,
+        false
+       ],
+       [
+        "hoist-substitution",
+        false,
+        null
+       ],
+       [
+        "background-liveness",
+        false,
+        null
+       ],
+       [
+        "no-exit-zero",
+        false,
+        null
+       ],
+       [
+        "no-default-joined",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-default",
+        false,
+        null
+       ],
+       [
+        "no-coe+guard-status",
+        false,
+        null
+       ],
+       [
+        "no-coe+hoist-local",
+        false,
+        null
+       ],
+       [
+        "no-coe+wait-list",
+        false,
+        null
+       ],
+       [
+        "no-coe+hoist-substitution",
+        false,
+        null
+       ],
+       [
+        "no-coe+background-liveness",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-exit-zero",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-default-joined",
+        false,
+        null
+       ]
+      ],
+      "run_sha256": "d087740e219f3e53b15986114357feafda3e66dd3ad0cdd7fb5e96d3e2b5168e",
+      "stage": null,
+      "tried_stage3": true,
+      "verdict": "FAIL_OPEN"
+     },
+     "run": {
+      "baseline": "FAIL_OPEN",
+      "candidates": [
+       [
+        "no-continue-on-error",
+        false,
+        null
+       ],
+       [
+        "strict-shell",
+        true,
+        false
+       ],
+       [
+        "both",
+        true,
+        false
+       ],
+       [
+        "guard-status",
+        false,
+        null
+       ],
+       [
+        "no-default",
+        false,
+        null
+       ],
+       [
+        "both-structural",
+        false,
+        null
+       ],
+       [
+        "hoist-local",
+        false,
+        null
+       ],
+       [
+        "wait-list",
+        true,
+        true
+       ],
+       [
+        "hoist-substitution",
+        false,
+        null
+       ],
+       [
+        "background-liveness",
+        false,
+        null
+       ],
+       [
+        "no-exit-zero",
+        false,
+        null
+       ],
+       [
+        "no-default-joined",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-default",
+        false,
+        null
+       ],
+       [
+        "no-coe+guard-status",
+        false,
+        null
+       ],
+       [
+        "no-coe+hoist-local",
+        false,
+        null
+       ],
+       [
+        "no-coe+wait-list",
+        false,
+        null
+       ],
+       [
+        "no-coe+hoist-substitution",
+        false,
+        null
+       ],
+       [
+        "no-coe+background-liveness",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-exit-zero",
+        false,
+        null
+       ],
+       [
+        "no-coe+no-default-joined",
+        false,
+        null
+       ]
+      ],
+      "run_sha256": "d087740e219f3e53b15986114357feafda3e66dd3ad0cdd7fb5e96d3e2b5168e",
+      "stage": "swallow-13",
+      "tried_stage3": true,
+      "verdict": "FAIL_OPEN"
+     },
+     "target": [
+      "docs-lint.yml",
+      "lint",
+      3
+     ]
+    },
+    "repo": "mavlink/qgroundcontrol"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "e2e.yaml",
+       "e2e-tests",
+       14
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "openshift-pipelines/pipelines-as-code"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "tests.yml",
+       "run-tests",
+       9
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "plasma-umass/scalene"
+   },
+   {
+    "diff": {
+     "keys_only_in_receipt": [
+      [
+       "_lambda-do-release-runners.yml",
+       "build-greenlight-lambda",
+       4
+      ]
+     ],
+     "keys_only_in_run": []
+    },
+    "repo": "pytorch/test-infra"
+   }
+  ],
+  "errors": 0,
+  "fetch_failed": 0,
+  "fetched": 5945,
+  "match_receipt": 5925,
+  "repos": 5945,
+  "seconds_median_per_repo": 1.7,
+  "unconfined": 0,
+  "verified_repair_moved": [
+   {
+    "repo": "kortix-ai/suna",
+    "targets": [
+     [
+      "terraform-ci.yml",
+      "validate",
+      9
+     ]
+    ]
+   },
+   {
+    "repo": "mavlink/qgroundcontrol",
+    "targets": [
+     [
+      "docs-lint.yml",
+      "lint",
+      3
+     ]
+    ]
+   }
+  ],
+  "verified_repair_moved_repos": 2
+ }
+}
