@@ -7,31 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [7.48.0] — 2026-09-25 — sworn output reaches PyPI with a second verifier held to it, and the diff gate stops being graded by the people who wrote it
+## [7.48.0] — 2026-09-25 — sworn output ships with a second verifier held to it, and the diff gate is measured on pull requests nobody here wrote, with the data published for others to grade
 
-The work since 7.47.0, which did not carry `styxx.sworn`: the format, the verifiers and minters
+What changed since 7.47.0, which did not carry `styxx.sworn`: the format, the verifiers and minters
 built around it, the diff gate's measurements including the ones that went against it, and the
-checksum series. The summary is grouped by area; the entries beneath it are the detail, kept whole
-in the order they were written, each headed `[Unreleased]` until this cut.
+checksum series. Every line of this summary comes from an entry below and carries that entry's own
+limits; work merged with no entry is not summarised. The entries headed `[Unreleased]` until this
+cut are kept whole, in the order this file carried them. Entries written at this cut say so in their
+opening line, name the commits and files they were written from, and sit beside the work they belong
+to.
 
-**Sworn output — `styxx.sworn`, new on PyPI**
+**Sworn output — `styxx.sworn`, new in this release**
 - v0.1: the author binds one sentence at write time to bytes it could not have written —
   `<sworn r="RECEIPT" k="KIND">…</sworn>` — and everything unbound is narrative, never accused. Span
   verdicts HELD / FAILED / UNRESOLVED / MALFORMED; a document that swore nothing is UNSWORN, never
   "no failures".
 - v0.2, after the adversarial pass: twelve attacks, four repaired, six not repaired and saying so
   beside the verdict. Its rules add leaf pointers and line anchors on `rN`, refuse hidden
-  commitments and `quote` needles under 16 bytes over a whole receipt, and give every manifest a
-  declared rung (L1 or L2; L3 refused). The coverage estimate is withdrawn: its denominator was a
-  diff-claim detector.
-- The sidecar battery: 49 attacks, `load_sidecar` refused none, and 14 of the 42 that verify
-  SWORN-HELD hold nothing. The headline now warns when nothing was checked. Renaming `SWORN-HELD`
-  was proposed and then withdrawn: `UNRESOLVED` means the verifier could not look, not that it
-  caught something.
+  commitments and `quote` needles under 16 bytes over a whole receipt, and give every 0.2 manifest a
+  declared rung (L1 or L2; L3 refused; a 0.1 manifest still loads and resolves at `undeclared`,
+  never L2). The coverage estimate is withdrawn: its denominator was a diff-claim detector.
+- The sidecar battery: 49 attacks, `load_sidecar` refused none, 10 of the 49 succeeded by the frozen
+  criterion (`text_smuggling` 5 times of 7), and 14 of the 42 that verify SWORN-HELD hold nothing.
+  The headline now warns when nothing was checked. Renaming `SWORN-HELD` was proposed and then
+  withdrawn: `UNRESOLVED` means the verifier could not look, not that it caught something. Two
+  findings stand: the `load_sidecar`/`render` round-trip gap, and the rounding floor — a receipt of
+  `0.4211` against a sentence printing `0.` is HELD, a verdict deliberately unchanged and now
+  counted in the headline.
 - Two gaps closed, each guard watched to fail before the repair: a line slice exempts a short needle
   only when it narrows the receipt (2 of 8 failed before, 0 of 8 after), and `path:` and `prereg:`
-  receipts, and `absent` by path, now refuse bytes the agent minted, as `rN` already did (3 of 10
-  before, 0 of 10 after).
+  receipts, and `absent` by path, now refuse bytes the manifest lists as agent-authored, as `rN`
+  already did (3 of 10 before, 0 of 10 after). A file the agent committed under a name the harness
+  never digested is still not caught.
 
 **A second verifier, and a measure of what it can see**
 - Conformance v0.1 (`conformance/sworn/`): every call the two sworn test files make into
@@ -51,63 +58,180 @@ in the order they were written, each headed `[Unreleased]` until this cut.
 - Suite power, for the layers no second implementation reaches: 51 viable mutants, 25 killed
   (0.4902); the tree layer 4 of 14.
 
-**Receipts, manifests and the record**
-- `styxx.harness` v0.1: adapters that turn a JUnit report, a GitHub event and diff, or a Claude Code
-  hook payload into a `sworn/manifest/0.2`. They sign nothing and fetch nothing; the rung is the one
-  the caller declared.
-- The sworn action v0.1 (`sworn/action.yml`): mints the manifest after the turn, verifies every
-  sworn document a pull request touched, and exits zero on every verdict — report-only until the
-  measurement prices FAILED.
+**Receipts and the record**
 - Receipt binding: every OATH certificate issued from now on names the bytes it swore to, and
   `corpus_audit --history` looks for them in git. Census over 213 certificates and 631 citations:
-  630 `same`, 1 `at_issue`. No verdict moves; no certificate is re-issued.
+  630 `same`, 1 `at_issue`; 211 certificates stand over their sworn bytes and 2 do not, both the
+  verifier having moved rather than a binding defect; eight certificates' documents were edited
+  after issue, and all eight stand. The binding moves no verdict and re-issues no certificate.
 - `styxx.charon` v0.1, the ferry log: an append-only, hash-chained record in which every line is a
   verdict re-derived from bytes, 243 lines at ship; `verify` separates a core that moved with the
   instrument's bytes (SKEW) from one that moved under the same build (DRIFT).
 - The sworn measurement's machinery, built and dry-run with nothing run as a measurement: the scorer
   is committed before any seat can speak, and the seat runners refuse until the operator's
   preregistration is committed.
+- `python -m styxx.undeclared WORKLOG DIFF` sets the harness's record of what it wrote beside the
+  diff, in two report-only bands, ATTRIBUTED and UNATTRIBUTED, with the verdict `UNGATED`.
+  UNATTRIBUTED is never called concealment, and its precision as a signal has never been measured.
 - The prior-art survey: nineteen of nineteen sources read under a procedure frozen before any fetch;
-  all six clauses OCCUPIED, none retired, and nothing read does all six.
+  all six clauses OCCUPIED, none retired. Its limits travel with it: nineteen named sources are not
+  the literature, the survey was one agent in one pass with no independent re-fetch, and a
+  human-reviewed pass is owed before any of it goes outward.
+
+**Shipped before the adversarial pass their entries owe**
+- `styxx.harness` v0.1: adapters that turn a JUnit report, a GitHub event and diff, or a Claude Code
+  hook payload into a `sworn/manifest/0.2`. They sign nothing and fetch nothing; the rung is the one
+  the caller declared. No adversarial pass has run against `styxx/harness/`, and its RESULT says it
+  is not announced until one has. The Claude Code adapter is blind, permanently, to files written by
+  shell commands.
+- The sworn action v0.1 (`sworn/action.yml`, in the repository and not the wheel): mints the
+  manifest after the turn, verifies every sworn document a pull request touched, and exits zero on
+  every verdict — report-only until the measurement prices FAILED. It has not run on GitHub, and it
+  owes the same adversarial pass and inherits every defect found in the adapters.
 
 **The diff gate, measured on pull requests nobody here wrote**
 - Eleven preregistered cycles against 71,016 agent pull requests from the AIDev corpus; four voided
   themselves. BC-2 removed 569 accusations and added none; COMPAT-1 and COMPAT-2 read 8,467 compat
   claims without one accusation; BIN-2 and PATH-1 repair the reading, and HARNESS-1 found 16
   accusations were the harness's, not the agents'.
-- The measurements that went against it ship too: BENCH-1 and BENCH-2 INVALID; hand adjudication
-  found 9 of 11 accusations wrong (precision 0.18), PATH-1 moved it to 0.25, and SCOPE-1, which
-  would have reached 1.00 by withholding, was abandoned with nothing shipped. DECIDE-1: 71% of these
-  claims are decidable from the diff, while the instrument returns a verdict on 5.7% of
-  `only_touches`.
+- An erratum to the entry "the gate was pointed at itself", which prints EXTERNAL-5's "19 were the
+  harness's" as written: its RESULT corrected that on 2026-09-16 (956d8deb). Of the 19 overturned
+  items, 9 are the fold carrying merge traffic, 2 the dataset's 300-file per-commit cap, and 8 are
+  explained by neither — the pull request is a different object today than in the dataset.
+- The measurements that went against it ship too, and this lab graded them: BENCH-1 and BENCH-2
+  INVALID; the lab's own hand adjudication found 9 of 11 accusations wrong (precision 0.18), PATH-1
+  moved it to 0.25, and SCOPE-1, which would have reached 1.00 by withholding, was abandoned with
+  nothing shipped. DECIDE-1, 100 claims read by hand by the lab, whose RESULT states that conflict
+  of interest and publishes every call: 71% decidable from the diff (corpus-weighted; `only_touches`
+  52%), while the instrument returns a verdict on 5.7% of `only_touches`.
+- DECLARE-1, preregistered after those cycles: a pull request body may declare its claims in one
+  fenced `styxx` block, read by the same reader as prose, so the two cannot disagree, with every
+  refusal pinned by a test. The gate written to measure whether it was worth building could not see
+  the answer, because its items were the ones where extraction already worked. On DECIDE-1's
+  hand-read claims the instrument is silent on 49 of the 76 decidable, and on 13 of 13 decidable
+  `only_touches`. Declaring fixes extraction, not meaning; adoption is zero.
+- "tests pass" is read from bytes: `--evidence` and `--commit` hand a JUnit report or a test-result
+  attestation to `styxx.evidence`, whose only verdicts are VERIFIED and UNCHECKABLE. The `--run`
+  accusation is deleted, not flagged off: a nonzero exit is UNCHECKABLE, because it is also pytest's
+  "no tests collected", a misspelled command or a flaky test. It had made 0 accusations over 5,514
+  `tests_pass` claims.
 - `papers/closed-model-frontier/bench{1,2}_dataset.jsonl`: 604 claims from 568 pull requests with
   the live diff's sha256 per row, styxx's own verdicts deliberately absent; `bench_reproduce.py`
   scores styxx or any other checker in one command.
-- `web/gate/diffgate.js` carries the COMPAT-2 reading: 3,220 pairs, 6,933 claims, 0 disagreements;
-  `tests/test_port_is_current.py` fails when the port goes stale.
-- Two new doors: `python -m styxx.diffgate --pr <url>` gates a public pull request with no checkout,
-  and `integrations/git/commit-msg` refuses a commit whose message contradicts the staged diff.
+- `web/gate/diffgate.js` carries the COMPAT-2 reading: 3,220 pairs, 6,933 claims, 0 disagreements,
+  and after DECLARE-1 3,230 pairs, 6,945 claims, 0 disagreements; `tests/test_port_is_current.py`
+  fails when the port goes stale.
+- New doors: `python -m styxx.diffgate --pr <url>` gates a public pull request with no checkout, and
+  `integrations/git/commit-msg` refuses a commit whose message contradicts the staged diff. The same
+  gate ships as the console script `styxx-diffgate-commit-msg` and the pre-commit hook
+  `diffgate-commit-msg`, at a rung its README calls weak.
 
 **Checksum, the plate, and the sand check**
 - `styxx.checksum` fingerprints a model on a hashed 48-item canary set, beside `styxx.observatory`,
   `styxx.beacon`, `styxx.epoch`, `styxx.clock` and `styxx.challenge`. The sworn RESULT, on one 135M
   model on cpu: the same weights reloaded read SAME at 0 nats/token, per-tensor int8 DRIFT at 1.51,
-  random weights 9.50. The deploy-scale PREREG is frozen and unrun.
+  random weights 9.50. The deploy-scale PREREG is frozen and unrun, its seal pending, with a
+  CORRECTION beside it that fixes how H1 is read before the run.
 - `python -m styxx.plate <sha256>` renders a hash as a Chladni figure and `styxx.geoplate` renders a
   representational dissimilarity matrix; new extra `styxx[plate]`.
-- The series red-teamed before it was pushed: ten adversarial reviewers, no blocker or defect
-  finding refuted; every repair a new commit, no sworn document and no frozen PREREG edited.
-  `styxx.stranger` runs the seven checks as one command. A second machine reproduces the verdicts,
-  not the magnitudes: int8 1.51 → 1.41 nats/token.
+- The series red-teamed before it was pushed: ten adversarial reviewers on 2026-09-13, none of whose
+  blocker or defect findings was refuted; every repair a new commit, no sworn document and no frozen
+  PREREG edited. One PREREG claim is withdrawn by CORRECTION (that the beacon-drawn values "could
+  not have been computed before the slot existed"; they can), fourteen false or overstated
+  statements in the pass-4 SURVEY are corrected, and an ERRATUM records that the sand survey's
+  fetchers presented as a browser, against the lab's rule. `styxx.stranger` runs the seven checks as
+  one command. A second machine reproduces the verdicts, not the magnitudes: int8 1.51 → 1.41
+  nats/token.
 
 **Also in this release**
 - Token-level h v3, preregistered and HELD: accusations handed by a table header are genuine at
-  0.9515, those handed by a trigger word in the line at 0.6391.
+  0.9515 (n=165), those handed by a trigger word in the line at 0.6391 (n=169), after two INVALID
+  runs shipped as INVALID. An exploratory split by token kind, never a result, puts the
+  kind-adjusted gap at 0.1695, with one repository supplying 184 of 334 rows.
 - OATH v0.14's `V14_RANGE_SANITY_REPORT` ships default OFF; its RESULT recommends the flip, and this
   release does not make it.
 - The frequency arc's efficiency control reads CAPACITY_IN_DISGUISE, and `styxx/resonance.py` ships
   the resonance profiler; `corpus_audit` compares verdict classes, so an `N uncovered` suffix no
   longer reads as drift.
+
+**Cutting this release**
+- The italic "Staged for 7.48.0" note that opens the entry "the gate was pointed at itself" is left
+  as written and resolved here. The step it names was done in commit 989abdb2
+  (`papers/sworn/NOTE_sworn_conformance_regenerated_for_7_48_0_2026_09_25.md`): 15 `receipt_check`
+  vectors took new ids, 0 moved, no expected outcome changed, and 3620 of 3620 replay. The cause it
+  states is wrong: `provenance.styxx_version` sits outside `set_sha256`. The digest moves because
+  `verifier.styxx_version` sits inside the verdict-receipt digests those vectors carry. The
+  conformance RESULT says the set "is never regenerated in place"; the NOTE records that conflict
+  and leaves the RESULT unedited. A CI run on the regenerated set is owed.
+- `styxx.challenge` calls a version-only difference version skew, not a span-level difference: when
+  a committed 7.47.0 receipt is re-run at 7.48.0 with the same `sworn.py` and only the version
+  differs, the record says `version_skew: true`, names both versions, and says the verdict and every
+  span agree. It stays a CHALLENGE (exit 3), because the digests differ. Both challenge test modules
+  had been skipping at collection in a depth-1 checkout, so CI could not see the bump break five of
+  their tests; a depth-1 clone whose origin is reachable now unshallows and runs all 14.
+
+### conformance/sworn regenerated for 7.48.0: the version stamp gave fifteen vectors new ids and moved no expected outcome
+
+**`conformance/sworn/` (seven files) and
+`papers/sworn/NOTE_sworn_conformance_regenerated_for_7_48_0_2026_09_25.md` (NEW); commit 989abdb2.
+Written at this cut from that commit, the NOTE, and the staging commits 7696a94a and 98536d01 it
+answers.**
+
+- **Why it was regenerated.** Bumping `styxx/_version.py` to 7.48.0 turned C7,
+  `test_the_committed_set_regenerates_to_its_own_digest`, red: `set_sha256` drifted from `ca5e715a…`
+  to `05e64577…`. Commit 7696a94a had named the regeneration as a release step, to be done "where
+  the regeneration matches"; `RESULT_sworn_conformance_v01_ships_2026_09_05.md` says the set "is
+  never regenerated in place". The NOTE records that conflict, follows 7696a94a, and leaves the
+  RESULT as written. The RESULT's sworn spans resolve at `7add6fff`, the commit its sidecar names,
+  and do not move.
+- **The environment reproduced the set before anything was regenerated.** A scratch clone checked
+  out LF, on win32 with CPython 3.12.10 (the platform and Python the set's `provenance` records) and
+  no torch: at 98a5c368, still 7.47.0, `gen_vectors.py --check` regenerated the committed digest.
+- **What moved.** 15 vectors, all in mode `receipt_check` — `cli` 1, `gaming` 7, `receipt_v1` 4,
+  `rules` 3 — each taking a verdict receipt as an input. A receipt's digest covers its `verifier`
+  block, and so `verifier.styxx_version`. Each new receipt blob equals a committed one once that
+  version string and the digest are set aside. The 15 vectors take new ids; the refuse-if-moved
+  guard found 0 moved, and no expected outcome changed. Still 3620 vectors, 20 families and 3981
+  blobs; the other 16 family files are byte-identical. After the regeneration `--check` and
+  `--replay` exit 0, with 3620 of 3620 replaying.
+- **The staged note named the wrong field.** The italic note that opens the entry "the gate was
+  pointed at itself", and commits 7696a94a and 98536d01, say the bump invalidates the set because it
+  pins `provenance.styxx_version`. `provenance` is outside `set_sha256`: recomputing the committed
+  digest with only that field changed gives `ca5e715a…`, unchanged. Editing `provenance` could not
+  have repaired C7. The note stays as written; the NOTE carries the correction.
+- **What it does not say:** that CI passes on the regenerated set (not observed; that run is owed),
+  or that the set is more correct than it was. No committed receipt, certificate, sworn document,
+  capsule or charon log was touched, and the 60 committed receipts stamped 7.47.0 stay as issued.
+
+### `styxx.challenge`: a version-only difference is version skew, not a span-level difference
+
+**`styxx/challenge.py`, `tests/test_challenge.py`, `tests/test_challenge_record.py`; commit
+c5bc3083. Written at this cut from the commit.**
+
+- **The defect the bump exposed.** The verdict-receipt digest covers `verifier.styxx_version`. At
+  7.48.0, re-running a committed 7.47.0 receipt with the same `sworn.py` (`same_build: true`) gave
+  `agree: false` and the why "the verdict agrees but the digest differs: a span-level difference".
+  Only the version string differed.
+- **The repair.** When the digests differ, both receipts are re-issued through
+  `styxx.sworn.issue_receipt`, the receipt module's own canonicalisation, with
+  `verifier.styxx_version` set aside. If they then agree, and the lab's receipt re-issues to its own
+  digest, the record says `version_skew: true`, names both versions, and says the verdict and every
+  span agree. A lab receipt that does not re-issue to its own digest is reported as exactly that,
+  never as version skew. A real span-level difference is still reported as one, naming both versions
+  when they differ too.
+- **`agree` and the exit code do not change.** `agree` is digest and verdict, and
+  `papers/plates/SAND_CHECK.md` counts a receipt as reproduced only when the two digests are equal,
+  so version skew is still a CHALLENGE (exit 3). Its why carries the instruction the module already
+  gives when the build differs: check out the commit the receipt names and run again. Five record
+  fields are new — `lab_styxx_version`, `my_styxx_version`, `lab_digest_reissues`,
+  `agree_without_version`, `version_skew` — and additive, so the schema stays `styxx.challenge/v1`;
+  the CLI line prints `version_skew=`.
+- **The tests CI could not see.** Both challenge test modules skipped at import when the receipt's
+  commit was absent. In a depth-1 checkout that skip ran at collection, before conftest's unshallow
+  fixture, so CI never ran them and could not see the bump break five of them. The check is now a
+  module-scoped fixture that depends on `full_git_history`; a depth-1 clone whose origin is
+  reachable unshallows and runs all 14. The new tests build their lab receipts under a temporary
+  directory with `sworn.issue_receipt`; no committed receipt is touched.
 
 ### the gate was pointed at itself, and the measurement is what came back
 
@@ -194,6 +318,41 @@ failing ten times against the unfixed tree.
 
 ---
 
+### DECLARE-1: a pull request may declare its claims, and the gate written to price that could not see the answer
+
+**`styxx/declare.py` (NEW), `styxx/diffgate.py`, `web/gate/diffgate.js` and the bookmarklet,
+`web/gate/differential/declare1_pairs.json`, `tests/test_declare1.py`,
+`papers/closed-model-frontier/declare1_ceiling.py` and `declare1_ceiling.json`; commits b57cf905,
+df01c765, 7915f031, 36c7f30d and 2ae159fd. Preregistered after the eleven cycles the entry above
+counts, in `PREREG_declare1_the_toll_2026_09_18.md` (00666179), frozen before `styxx/declare.py`
+existed; read in `RESULT_declare1_the_toll_2026_09_18.md`. Written at this cut from those commits
+and the RESULT.**
+
+- **What shipped.** A pull request body may declare its claims in one fenced `styxx` block instead
+  of having them guessed out of prose. A declaration is normalised into the canonical sentence the
+  existing reader already understands, and read by that same reader in a second pass after the prose
+  pass. Nothing re-implements a verdict, so a declared claim and the same claim in prose cannot
+  disagree.
+- **Refusals, each pinned by a test:** `tests_pass` is UNCHECKABLE even when declared; an unknown
+  key or an unreadable value is reported and never accused; two blocks declare nothing rather than
+  being merged; only a fence tagged exactly `styxx` counts; declaring narrowly is visible and not
+  punished.
+- **The blocking gates pass.** G-D1-1: 604 corpus claims, 651 readings, 0 differences before and
+  after. G-D1-6: the port mirrors it — 3,230 pairs, 6,945 claims, 0 disagreements, and 54 pinned
+  pairs, 0 disagreements. The differential caught one divergence in the port before it shipped: a
+  reason string quoted by `JSON.stringify` where Python quotes with `repr`.
+- **The negative finding: the gate written to measure whether this was worth building, G-D1-2, is
+  structurally blind.** It passes, and its table says the format buys almost nothing, but its items
+  are exactly those the BENCH-2 oracle could admit — the ones where extraction already worked. The
+  RESULT records this as a defect in the preregistration, written by the lab, rather than replacing
+  it with a better number.
+- **The measurement it should have specified**, on DECIDE-1's hand-read claims: of the 76 a human
+  can settle from the diff, the instrument says nothing about 49 (64%), and on `only_touches` it is
+  silent on 13 of 13. `symbol_added` stays abstained even when declared, and four `only_touches`
+  items still read wrong when declared: declaring fixes extraction, not meaning.
+- **Adoption is zero.** No pull request carried this block when the RESULT was written; every number
+  above is a property of a synthesized or hand-adjudicated corpus.
+
 ### a commit-msg hook: the message cannot lie about the staged diff
 
 `integrations/git/commit-msg`, one file, copied into `.git/hooks/`: every commit message is read
@@ -207,6 +366,27 @@ notice rather than blocking the commit. It pairs with the "write the commit mess
 code" habit — the message becomes a preregistration and this is the half that checks whether it
 came true. Verdict logic untouched; `tests/test_git_commit_msg_hook.py` runs the hook the way
 git runs it, in a real temporary repository, including once installed as a real hook.
+
+### `styxx-diffgate-commit-msg`: the commit-msg gate as a console script and a pre-commit hook
+
+**`styxx/diffgate_hook.py` (NEW), the `styxx-diffgate-commit-msg` line in `pyproject.toml`,
+`.pre-commit-hooks.yaml` (NEW), `integrations/pre-commit/README.md` (NEW),
+`tests/test_diffgate_hook.py`; commits 08bf7c48, 0e518f9b, 2b623c9d, 65d1eaee and 70a08dff. Written
+at this cut from those commits and files.**
+
+- **The same gate, installed with the package.** The entry above describes
+  `integrations/git/commit-msg`, one file to copy. The wheel now carries it as a console script:
+  `styxx-diffgate-commit-msg COMMIT_MSG_FILE` reads the message, git's `#` commentary stripped,
+  against `git diff --cached`, prints each diff-shaped claim as `[ok ]` / `[LIE]` / `[ ? ]`, and
+  exits 1 on a CONTRADICTED claim so the commit is refused. An empty message passes, a missing
+  `styxx.diffgate` skips with a notice, and "tests pass" stays UNCHECKABLE.
+- **As a pre-commit hook.** `.pre-commit-hooks.yaml` defines `diffgate-commit-msg`;
+  `pre-commit install --hook-type commit-msg` installs it per clone, and a checkout never installs
+  it. `integrations/pre-commit/README.md` states the rung as weak: the hook shares a filesystem and
+  a shell with the agent, and `git commit --no-verify` skips it.
+- **Known and not repaired:** `styxx-diffgate-commit-msg --help` reads `--help` as the message file
+  and exits with a traceback; the README names one open class of false VERIFIED, #101, where a
+  changed `def` line counts as an added definition.
 
 ### the sand check turned on itself: the series red-teamed on the lab's second machine before it was pushed
 
@@ -1412,6 +1592,60 @@ and 0.35 of verified on the same run. A test fails if a new source appears witho
 **AUDIT addendum M7 — verifier-version stratification.** Every field the certificate gains
 silently partitions the corpus by verifier build; found four times on 2026-09-01 and added to the
 program audit as a dated addendum.
+
+### the evidence leg: "tests pass" read from bytes, and the `--run` accusation deleted
+
+**`styxx/evidence.py` (NEW, spec `styxx-evidence/v0.2`), `styxx/diffgate.py` (`--evidence`,
+`--commit`), `tests/test_evidence.py`, `tests/test_diffgate_evidence.py`,
+`papers/closed-model-frontier/PREREG_evidence_leg_2026_09_01.md`,
+`papers/closed-model-frontier/extraction_census.py` and `extraction_census.json`; commits 5e225b49
+and 4c90d9cf, both after the 7.47.0 tag. Written at this cut from those commits and files.**
+
+- **`styxx.evidence`** adjudicates "all tests pass" against a JUnit XML report or an in-toto
+  test-result attestation as a pure function of bytes: no subprocess, no network, no clock. Its
+  verdicts are VERIFIED and UNCHECKABLE and nothing else. The accusing branch is deleted, not behind
+  a flag: the binding meant to license an accusation was never cryptographic (a DSSE envelope whose
+  signature was base64 of the text `not-a-signature` reached one), and the bound branch fired 11
+  times across 1,775,765 changed files, too few to build a blind panel from.
+- **Wired into the gate.** `python -m styxx.diffgate --evidence REPORT... --commit SHA` resolves
+  `tests_pass` from those bytes through `styxx.evidence` itself, with no second parser and no second
+  verdict table.
+- **The `--run` accusation is deleted.** A nonzero exit is not evidence that the author lied: it is
+  also pytest rc=5 (no tests collected), a misspelled command, a missing dependency and a flaky
+  test. `--run` stays; exit 0 gives VERIFIED and any other exit UNCHECKABLE, never an accusation.
+  The measured cost of the deletion: over 71,016 eligible pull requests, 5,514 `tests_pass` claims
+  and 0 accusations on every split.
+- **Four repairs, none a verdict change:** a gate that printed that it had not run no longer exits 1
+  with an accusation; the command runs once per invocation, not once per match; a timeout is caught
+  instead of raised; and `--run` with no repository is refused instead of executed in the verifier's
+  own working directory.
+- **The step before the verdict, measured.** `extraction_census.json`: of 5,514 matches, 179 sit in
+  unticked task-list boxes, 23.22% of every match on a task-list line — an author declining to
+  claim, read as a claim. These are containment figures, not an error rate, and the judgment half of
+  the census is marked UNVALIDATED.
+- **Monotone against the empty baseline only.** Supplying evidence never does worse than supplying
+  none, but extending a non-empty evidence set can demote VERIFIED to UNCHECKABLE, deliberately: a
+  partial read may decline, and may not affirm.
+
+### `styxx.undeclared`: what the harness wrote, beside what the diff shows, and no verdict
+
+**`styxx/undeclared.py` (NEW, spec `styxx-undeclared/v0.1`), `tests/test_undeclared.py`,
+`papers/closed-model-frontier/undeclared_dogfood.json` and its worklog; commit 5cdb349d, after the
+7.47.0 tag. Written at this cut from the commit and those files.**
+
+- **Two authors, two bands.** `python -m styxx.undeclared WORKLOG DIFF` compares the harness's
+  record of every write it performed with what the diff shows. ATTRIBUTED: in the diff and in the
+  worklog. UNATTRIBUTED: in the diff, never written through the instrumented surface — formatters,
+  package managers, code generators, merges. Both are report-only, and the verdict field is always
+  `UNGATED`.
+- **No verdict, by design.** UNATTRIBUTED is never called concealment; a file written and then
+  reverted is reported, not accused; the diff is parsed by the gate's own `parse_unified_diff`, not
+  a copy. Its noise floor is measured (non-substantive files are 10.96% of 1,386,104 changed files)
+  but its precision as a signal has never been measured by a blind panel, and the report says so in
+  a field of its own.
+- **Dogfooded on its own construction.** A worklog opened before the module was written recorded
+  both source files; a generator then wrote `corpus_census.json`, which the diff shows and the
+  worklog does not: 2 of 3 attributed, and nothing accused.
 
 ---
 
