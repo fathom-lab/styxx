@@ -7,7 +7,109 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased] — the gate was pointed at itself, and the measurement is what came back
+## [7.48.0] — 2026-09-25 — sworn output reaches PyPI with a second verifier held to it, and the diff gate stops being graded by the people who wrote it
+
+The work since 7.47.0, which did not carry `styxx.sworn`: the format, the verifiers and minters
+built around it, the diff gate's measurements including the ones that went against it, and the
+checksum series. The summary is grouped by area; the entries beneath it are the detail, kept whole
+in the order they were written, each headed `[Unreleased]` until this cut.
+
+**Sworn output — `styxx.sworn`, new on PyPI**
+- v0.1: the author binds one sentence at write time to bytes it could not have written —
+  `<sworn r="RECEIPT" k="KIND">…</sworn>` — and everything unbound is narrative, never accused. Span
+  verdicts HELD / FAILED / UNRESOLVED / MALFORMED; a document that swore nothing is UNSWORN, never
+  "no failures".
+- v0.2, after the adversarial pass: twelve attacks, four repaired, six not repaired and saying so
+  beside the verdict. Its rules add leaf pointers and line anchors on `rN`, refuse hidden
+  commitments and `quote` needles under 16 bytes over a whole receipt, and give every manifest a
+  declared rung (L1 or L2; L3 refused). The coverage estimate is withdrawn: its denominator was a
+  diff-claim detector.
+- The sidecar battery: 49 attacks, `load_sidecar` refused none, and 14 of the 42 that verify
+  SWORN-HELD hold nothing. The headline now warns when nothing was checked. Renaming `SWORN-HELD`
+  was proposed and then withdrawn: `UNRESOLVED` means the verifier could not look, not that it
+  caught something.
+- Two gaps closed, each guard watched to fail before the repair: a line slice exempts a short needle
+  only when it narrows the receipt (2 of 8 failed before, 0 of 8 after), and `path:` and `prereg:`
+  receipts, and `absent` by path, now refuse bytes the agent minted, as `rN` already did (3 of 10
+  before, 0 of 10 after).
+
+**A second verifier, and a measure of what it can see**
+- Conformance v0.1 (`conformance/sworn/`): every call the two sworn test files make into
+  `styxx.sworn` recorded as bytes and addressed by one digest; a moved core refuses regeneration.
+  `styxx.sworn.SnapshotTree` is new.
+- The browser verifier v0.1 (`styxx/_data/sworn_verify.js`): 1689 vectors in scope, 1689 reproduce
+  the verdict core digest, 0 disagree, 1929 skipped. Five disagreements were found by vectors, all
+  repaired in the JavaScript. A forger controlling the whole file passes both browser layers; the
+  package at the named commit is the check.
+- Differential agreement: 150000 generated documents through both shipped verifiers, 0 disagreements
+  — agreement, not correctness. Mutation coverage then priced the generator: 70 viable mutations, 41
+  caught, 29 missed (0.5857).
+- Aperture closure: a widened generator found 712 disagreements and two real defects in the
+  JavaScript — a leading BOM the decoder stripped, and astral characters destroyed — with the
+  browser verifier vouching HELD for a span `styxx.sworn` reports MALFORMED. After both repairs, 0
+  of 150000 disagree.
+- Suite power, for the layers no second implementation reaches: 51 viable mutants, 25 killed
+  (0.4902); the tree layer 4 of 14.
+
+**Receipts, manifests and the record**
+- `styxx.harness` v0.1: adapters that turn a JUnit report, a GitHub event and diff, or a Claude Code
+  hook payload into a `sworn/manifest/0.2`. They sign nothing and fetch nothing; the rung is the one
+  the caller declared.
+- The sworn action v0.1 (`sworn/action.yml`): mints the manifest after the turn, verifies every
+  sworn document a pull request touched, and exits zero on every verdict — report-only until the
+  measurement prices FAILED.
+- Receipt binding: every OATH certificate issued from now on names the bytes it swore to, and
+  `corpus_audit --history` looks for them in git. Census over 213 certificates and 631 citations:
+  630 `same`, 1 `at_issue`. No verdict moves; no certificate is re-issued.
+- `styxx.charon` v0.1, the ferry log: an append-only, hash-chained record in which every line is a
+  verdict re-derived from bytes, 243 lines at ship; `verify` separates a core that moved with the
+  instrument's bytes (SKEW) from one that moved under the same build (DRIFT).
+- The sworn measurement's machinery, built and dry-run with nothing run as a measurement: the scorer
+  is committed before any seat can speak, and the seat runners refuse until the operator's
+  preregistration is committed.
+- The prior-art survey: nineteen of nineteen sources read under a procedure frozen before any fetch;
+  all six clauses OCCUPIED, none retired, and nothing read does all six.
+
+**The diff gate, measured on pull requests nobody here wrote**
+- Eleven preregistered cycles against 71,016 agent pull requests from the AIDev corpus; four voided
+  themselves. BC-2 removed 569 accusations and added none; COMPAT-1 and COMPAT-2 read 8,467 compat
+  claims without one accusation; BIN-2 and PATH-1 repair the reading, and HARNESS-1 found 16
+  accusations were the harness's, not the agents'.
+- The measurements that went against it ship too: BENCH-1 and BENCH-2 INVALID; hand adjudication
+  found 9 of 11 accusations wrong (precision 0.18), PATH-1 moved it to 0.25, and SCOPE-1, which
+  would have reached 1.00 by withholding, was abandoned with nothing shipped. DECIDE-1: 71% of these
+  claims are decidable from the diff, while the instrument returns a verdict on 5.7% of
+  `only_touches`.
+- `papers/closed-model-frontier/bench{1,2}_dataset.jsonl`: 604 claims from 568 pull requests with
+  the live diff's sha256 per row, styxx's own verdicts deliberately absent; `bench_reproduce.py`
+  scores styxx or any other checker in one command.
+- `web/gate/diffgate.js` carries the COMPAT-2 reading: 3,220 pairs, 6,933 claims, 0 disagreements;
+  `tests/test_port_is_current.py` fails when the port goes stale.
+- Two new doors: `python -m styxx.diffgate --pr <url>` gates a public pull request with no checkout,
+  and `integrations/git/commit-msg` refuses a commit whose message contradicts the staged diff.
+
+**Checksum, the plate, and the sand check**
+- `styxx.checksum` fingerprints a model on a hashed 48-item canary set, beside `styxx.observatory`,
+  `styxx.beacon`, `styxx.epoch`, `styxx.clock` and `styxx.challenge`. The sworn RESULT, on one 135M
+  model on cpu: the same weights reloaded read SAME at 0 nats/token, per-tensor int8 DRIFT at 1.51,
+  random weights 9.50. The deploy-scale PREREG is frozen and unrun.
+- `python -m styxx.plate <sha256>` renders a hash as a Chladni figure and `styxx.geoplate` renders a
+  representational dissimilarity matrix; new extra `styxx[plate]`.
+- The series red-teamed before it was pushed: ten adversarial reviewers, no blocker or defect
+  finding refuted; every repair a new commit, no sworn document and no frozen PREREG edited.
+  `styxx.stranger` runs the seven checks as one command. A second machine reproduces the verdicts,
+  not the magnitudes: int8 1.51 → 1.41 nats/token.
+
+**Also in this release**
+- Token-level h v3, preregistered and HELD: accusations handed by a table header are genuine at
+  0.9515, those handed by a trigger word in the line at 0.6391.
+- OATH v0.14's `V14_RANGE_SANITY_REPORT` ships default OFF; its RESULT recommends the flip, and this
+  release does not make it.
+- The frequency arc's efficiency control reads CAPACITY_IN_DISGUISE, and `styxx/resonance.py` ships
+  the resonance profiler; `corpus_audit` compares verdict classes, so an `N uncovered` suffix no
+  longer reads as drift.
+
+### the gate was pointed at itself, and the measurement is what came back
 
 *Staged for 7.48.0. Cutting the release also requires regenerating `conformance/sworn/` — the
 committed set pins `provenance.styxx_version`, so bumping `styxx/_version.py` invalidates its
@@ -92,7 +194,7 @@ failing ten times against the unfixed tree.
 
 ---
 
-## [Unreleased] — a commit-msg hook: the message cannot lie about the staged diff
+### a commit-msg hook: the message cannot lie about the staged diff
 
 `integrations/git/commit-msg`, one file, copied into `.git/hooks/`: every commit message is read
 against `git diff --cached` by `styxx.diffgate.gate_diff_text`, each diff-shaped claim printed as
@@ -106,7 +208,7 @@ code" habit — the message becomes a preregistration and this is the half that 
 came true. Verdict logic untouched; `tests/test_git_commit_msg_hook.py` runs the hook the way
 git runs it, in a real temporary repository, including once installed as a real hook.
 
-## [Unreleased] — the sand check turned on itself: the series red-teamed on the lab's second machine before it was pushed
+### the sand check turned on itself: the series red-teamed on the lab's second machine before it was pushed
 
 **Ten adversarial reviewers, one skeptic per dimension, on 2026-09-13; no blocker or defect finding
 was refuted. Every repair is a new commit; no sworn document and no frozen PREREG was edited. The
@@ -317,7 +419,7 @@ the reading rules as code, and a command for the stranger.**
   `styxx/__init__.py` exports none of them); the `styxx[plate]` extra serves modules the CLI does
   not register.
 
-## [Unreleased] — checksum v0: a fingerprint for model behavior, the observatory, the clock, the challenge record, the bounty
+### checksum v0: a fingerprint for model behavior, the observatory, the clock, the challenge record, the bounty
 
 **`styxx/checksum.py`, `styxx/observatory.py`, `styxx/beacon.py`, `styxx/epoch.py`,
 `styxx/clock.py`, `styxx/challenge.py`; `papers/checksum/`; `BOUNTY.md`;
@@ -342,7 +444,7 @@ eleven commits absent from this file) and is written after the fact from the com
 - **`BOUNTY.md`** (rules v0, amounts unfilled) and **`SAND_CHECK.md`** (three ways in) — the
   holder-facing procedure; and `DUE_DILIGENCE_2026_09_13.md`, the series' own adversarial read.
 
-## [Unreleased] — the plate: a receipt gets a face, a geometry gets a face, and neither can lie about the number
+### the plate: a receipt gets a face, a geometry gets a face, and neither can lie about the number
 
 **`styxx/plate.py`, `styxx/geoplate.py`, `tests/test_plate.py`, `papers/plates/`,
 `papers/disjoint-worlds/geometry_plates_demo.py`, `papers/charon/gallery.py`. Extra: `styxx[plate]`
@@ -373,7 +475,7 @@ for an instrument that does to claims what Chladni's plate did to sound. This is
   imports torch for the concept list. torch is now on the line. The same cold clone reproduced
   `b45_result.json` byte-identical in 2 s of compute.
 
-## [Unreleased] — `--pr`: a public pull request gated by URL, no checkout
+### `--pr`: a public pull request gated by URL, no checkout
 
 `python -m styxx.diffgate --pr https://github.com/OWNER/REPO/pull/N` reads the description and
 the unified diff from api.github.com and hands them to `gate_diff_text` — the same two documents,
@@ -387,7 +489,7 @@ Verdict logic is untouched: this is a third door into `_gate`, not a change to w
 it. `tests/test_diffgate_pr.py` fakes the network at the one seam `fetch_pr` exposes, so the suite
 still runs without one.
 
-## [Unreleased] — prior-art survey: the sentence the plan held back is priced against nineteen fetches
+### prior-art survey: the sentence the plan held back is priced against nineteen fetches
 
 **`papers/sworn/SURVEY_sworn_neighbours_2026_09_05.md`, run against the procedure frozen three
 days earlier in `papers/sworn/PROTOCOL_sworn_prior_art_2026_09_02.md`, which named its nineteen
@@ -468,7 +570,7 @@ other"*.
   SKEW-is-not-DRIFT. A sweep found exactly one such place in the whole suite; it is fixed, and
   silence is now read as neither answer.
 
-## [Unreleased] — withdrawn: the verdict was a decision, not a defect
+### withdrawn: the verdict was a decision, not a defect
 
 - **WITHDRAWN: `SWORN-HELD` ignoring `UNRESOLVED` is a deliberate, documented decision.**
   `RESULT_sidecar_battery` proposed that `SWORN-HELD` should require `UNRESOLVED == 0` and left the
@@ -489,7 +591,7 @@ other"*.
 - Measured before deciding: **68 of 2067 core vectors** would have moved under the rename — the
   corpus stating, 68 times, a behaviour it had already decided on.
 
-## [Unreleased] — the short-needle exemption is earned by narrowing, not by naming a range
+### the short-needle exemption is earned by narrowing, not by naming a range
 
 **Built to `papers/sworn/SPEC_short_needle_anchor_v01_2026_09_06.md`, frozen before the repair.**
 From the sidecar battery's adversary, in its list of what nobody had attacked.
@@ -518,7 +620,7 @@ From the sidecar battery's adversary, in its list of what nobody had attacked.
 - **Not reproduced as described:** `commit: null` blinding the tree channel. With an explicit tree
   handle it resolves; only the CLI path without `--commit` goes blind, which is the UNRESOLVED
   finding already warned about in #71.
-## [Unreleased] — invariant 2 on the tree channel: one refusal on every form a receipt can take
+### invariant 2 on the tree channel: one refusal on every form a receipt can take
 
 **Built to `papers/sworn/SPEC_tree_channel_authorship_v01_2026_09_06.md`, frozen before the
 repair.** From the sidecar battery's adversary, in its list of what nobody had attacked.
@@ -547,7 +649,7 @@ repair.** From the sidecar battery's adversary, in its list of what nobody had a
   `rN` refusal has no analogue there. A file the agent committed under a name the harness never
   digested is still not caught. That is a limit of the manifest.
 
-## [Unreleased] — the sidecar battery: 49 attacks, 0 refused, and a verdict that means less than its name
+### the sidecar battery: 49 attacks, 0 refused, and a verdict that means less than its name
 
 **Built to `papers/sworn/SPEC_sidecar_battery_v01_2026_09_06.md`, frozen before the battery was
 written.** The suite-power study measured the sidecar layer at 6 killed of 13 with both injection
@@ -613,7 +715,7 @@ every prediction was recorded before anything ran.
   otherwise; on this leg's own RESULT it read a span forty bytes away and reported "no digit-bearing
   token" for a span carrying two. Fixed, and pinned by a test whose document carries em-dashes.
 
-## [Unreleased] — suite power: half the changes to the layers nothing can reach would ship green
+### suite power: half the changes to the layers nothing can reach would ship green
 
 **Built to `papers/sworn/SPEC_suite_power_v01_2026_09_06.md`, frozen before any mutant ran.** The
 mutation study found six blind spots no generator can ever reach — the three tree handles, the
@@ -660,7 +762,7 @@ suite, and nobody had measured what it would catch.
   stated: the critic was told to find what nobody had covered and could see the other proposals, so
   it was differentiating against a list rather than predicting from code alone.
 
-## [Unreleased] — aperture closure: the blind spot was hiding two real defects, and one changed a verdict
+### aperture closure: the blind spot was hiding two real defects, and one changed a verdict
 
 **Built to `papers/sworn/SPEC_aperture_closure_v01_2026_09_05.md`, frozen before the generator was
 touched.** The mutation study's most useful sentence — that 20 of its 29 misses would fall to a
@@ -707,7 +809,7 @@ out whether the diagnosis was real. The answer arrived before any of the intende
   old generator emitted no manifest string containing a newline, never more than one
   `authored_sha256` element, and never an uppercase digest — those inputs existed at no case count.
 
-## [Unreleased] — mutation coverage: the differential cannot see 29 of 70 changes, and 9 of those no fuzzing would have found
+### mutation coverage: the differential cannot see 29 of 70 changes, and 9 of those no fuzzing would have found
 
 **`conformance/sworn/mutation_coverage.py` and `conformance/sworn/control_audit.py` (NEW), built to
 `papers/sworn/SPEC_mutation_coverage_v01_2026_09_05.md`, frozen with its five gates before any
@@ -747,7 +849,7 @@ withdrew a coverage estimate on 2026-09-02 for exactly that shape.
   caught by exactly ONE case in 5000, and 8 by five or fewer; a fifth-size guard would have been
   blind to most of them.
 
-## [Unreleased] — differential agreement: 150,000 inputs nobody chose, and the two verifiers never once disagreed
+### differential agreement: 150,000 inputs nobody chose, and the two verifiers never once disagreed
 
 **`conformance/sworn/differential.py` (NEW), built to
 `papers/sworn/SPEC_differential_agreement_v01_2026_09_05.md`, frozen with its five gates and its
@@ -771,7 +873,7 @@ against cannot also be the set that measures you. This asks the other question.
   wrote both. What it removes is the weaker excuse, *they only agree where we looked*. The HELD
   path is under two percent of spans, which is the number a successor should raise first.
 
-## [Unreleased] — leg 2: the sworn measurement's machinery, built and dry-run, with nothing run as a measurement
+### leg 2: the sworn measurement's machinery, built and dry-run, with nothing run as a measurement
 
 **`papers/sworn/measurement/` (NEW), built to `papers/sworn/SPEC_sworn_measurement_machinery_2026_09_05.md`,
 which was frozen in its own commit before any of this code existed.** Leg 2 of
@@ -820,7 +922,7 @@ digests and the key digests. Seats run after that commit and not before.
 
 ---
 
-## [Unreleased] — the browser verifier v0.1: a second implementation agrees on every vector in scope
+### the browser verifier v0.1: a second implementation agrees on every vector in scope
 
 **`styxx/_data/sworn_verify.js` (NEW) and the capsule's sworn profile, built to
 `papers/sworn/SPEC_sworn_browser_verifier_v01_2026_09_05.md`, frozen in its own commit with its
@@ -859,7 +961,7 @@ check.*
   this subset); that `path:` receipts can be checked offline (they cannot, and the profile refuses
   to seal a document carrying one); that anything here is self-verifying.
 
-## [Unreleased] — the sworn action v0.1: a runner mints the manifest after the turn, and exits zero on every verdict
+### the sworn action v0.1: a runner mints the manifest after the turn, and exits zero on every verdict
 
 **`sworn/` (NEW: `action.yml`, `sworn_action.py`, `README.md`, `examples/sworn.yml`), built to
 `papers/sworn/SPEC_sworn_action_v01_2026_09_05.md`, frozen in its own commit before any code.**
@@ -898,7 +1000,7 @@ row.
   nothing), that L2 has been verified (the rung is the workflow's declaration, printed, never
   checked), or that a held document is true.
 
-## [Unreleased] — sworn conformance v0.1: the tests become bytes a second verifier can be held to
+### sworn conformance v0.1: the tests become bytes a second verifier can be held to
 
 **`conformance/sworn/` (NEW) and `styxx.sworn.SnapshotTree` (NEW), built to
 `papers/sworn/SPEC_sworn_conformance_vectors_v01_2026_09_05.md`, frozen in its own commit before
@@ -939,7 +1041,7 @@ language can be shown where it disagrees, byte by byte, before anyone is asked t
   source; the `verdict_core()` split of `verify()`; the Python-versus-JavaScript semantics the
   vectors pin and item 5 must implement; the measurement, the prior-art survey, the harness
   adapters and a release, as before.
-## [Unreleased] — receipt binding: a certificate names the bytes it swore to, and the audit says where those bytes went
+### receipt binding: a certificate names the bytes it swore to, and the audit says where those bytes went
 
 **SPEC first: `papers/closed-model-frontier/SPEC_oath_receipt_binding_2026_09_04.md`, frozen
 in its own commit before any code, with a dated ERRATA appended after the adversarial pass
@@ -1012,7 +1114,7 @@ for them, for the document as well as the receipts. No verdict moves; no certifi
 - Tests: `tests/test_certify_by_digest.py` (23, plus one NTFS skip) — twenty-one on temporary
   repositories, one over the tracked corpus by the census's population rule; the existing corpus
   guard and audit tests pass unchanged.
-## [Unreleased] — harness adapters v0.1: manifest minters at L1 and L2, adapters and never a recorder
+### harness adapters v0.1: manifest minters at L1 and L2, adapters and never a recorder
 
 **`styxx.harness` (NEW), built to `papers/sworn/DESIGN_harness_adapters_2026_09_02.md`, re-sworn and
 frozen in its own commit before any code.** An adapter turns bytes a harness already holds — a test
@@ -1064,7 +1166,7 @@ it. `python -m styxx.harness junit|github|claude-code ...`.
   with a dated ERRATA on the design; the Action that consumes the GitHub adapter (leg 3, item 4); a
   run on a runner the author cannot write to, so a manifest can honestly print L2.
 
-## [Unreleased] — charon v0.1: the ferry log — the lab's record over three formats, re-derived from bytes, chained
+### charon v0.1: the ferry log — the lab's record over three formats, re-derived from bytes, chained
 
 **`styxx.charon` (NEW), built to `papers/charon/SPEC_charon_v01_2026_09_02.md`, committed before
 the module was, with a dated ERRATA appended after the adversarial pass.** Charon is the log of
@@ -1124,7 +1226,7 @@ Also this cycle: `papers/closed-model-frontier/DESIGN_provenance_law_2026_09_02.
 leg 4 of the plan, a total gates table under `styxx.protocol` with its contaminated prior cited
 by digest; licenses nothing until signed.
 
-## [Unreleased] — sworn output v0.2: attacked twelve ways, four rules paid, the coverage number withdrawn
+### sworn output v0.2: attacked twelve ways, four rules paid, the coverage number withdrawn
 
 **The adversarial pass the standing rule requires, run before any sentence about the format
 left the tree.** `papers/sworn/ATTACKS_sworn_v01_battery_2026_09_02.md` (sworn) tries twelve
@@ -1168,7 +1270,7 @@ verdict, two survived v0.1 unchanged. Spec frozen first:
   prior-art survey before any "we know of no other"; L1/L2 harness adapters; a release —
   `styxx.sworn` is not in 7.47.0 and a stranger cannot `pip install` it.
 
-## [Unreleased] — sworn output v0.1: the author declares, the receipt disposes
+### sworn output v0.1: the author declares, the receipt disposes
 
 **Sworn output (`styxx.sworn`, NEW).** Spec frozen first —
 `papers/sworn/SPEC_sworn_output_v01_2026_09_01.md` — then built. Format `sworn/0.1`, manifest
@@ -1310,6 +1412,8 @@ and 0.35 of verified on the same run. A test fails if a new source appears witho
 **AUDIT addendum M7 — verifier-version stratification.** Every field the certificate gains
 silently partitions the corpus by verifier build; found four times on 2026-09-01 and added to the
 program audit as a dated addendum.
+
+---
 
 ## [7.47.0] — the boundary arc: epistemics per token, the agent gate priced, structure over word lists, and the first external bug report
 
