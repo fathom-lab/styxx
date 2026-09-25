@@ -293,6 +293,20 @@ def test_why_names_each_digested_part_that_differs_and_never_a_field_outside_the
     assert challenge._differing_parts(lab, json.loads(json.dumps(lab))) == []
 
 
+def test_a_lab_receipt_re_stamped_with_the_running_version_matches_no_build(tmp_path):
+    # the committed body as another release issued it, then re-stamped with the running version and
+    # its digest left as issued: sworn.py and the version now read as this build, but the digest
+    # vouches for neither, so it matches no build and cannot take the shape SAND_CHECK pays for
+    lab = json.loads(_issued_by(OTHER, tmp_path).read_text(encoding="utf-8"))
+    lab["verifier"]["styxx_version"] = RUNNING
+    p = tmp_path / "restamped.json"
+    p.write_text(json.dumps(lab), encoding="utf-8")
+    rec = challenge.run(DOC, str(p), repo=".", out=str(tmp_path / "mine.json"))
+    assert rec["lab_digest_reissues"] is False
+    assert rec["same_build"] is False
+    assert not (rec["agree"] is False and rec["same_build"] is True)
+
+
 def test_a_lab_receipt_edited_after_issue_is_named_not_excused_as_version_skew(tmp_path):
     # the committed body under another version, with a digest that is not its own. The two bodies
     # differ only by the version, so a check that skipped the lab's own digest would call this skew.

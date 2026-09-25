@@ -29,13 +29,16 @@ digests disagree, and `why` says which; attach the record and the receipt beside
 titled `challenge: <document>`.
 
 The verifier build is two fields of the receipt, and both sit inside the digested core: the hash
-of sworn.py (`verifier.sworn_sha256`) and the styxx release that ran it (`verifier.styxx_version`).
+of sworn.py (`verifier.sworn_sha256`) and the version string the issuing build carried
+(`verifier.styxx_version`).
 `same_build` is true only when BOTH match: the same sworn.py AND the same styxx version. A receipt
 issued by 7.47.0 and one re-derived by 7.48.0 are not from the same verifier build even when
 sworn.py did not move, because their digests differ by construction. A lab receipt that carries
 no `verifier.styxx_version`, or a null one, matches no build. papers/plates/SAND_CHECK.md pays for
 a record with `agree: false` and `same_build: true`; that shape therefore requires the same
 sworn.py AND the same styxx version, and a difference in the version alone can never produce it.
+Both fields are read from the lab's receipt only when that receipt re-issues to the digest it
+states; a receipt edited after issue vouches for nothing, so it matches no build either.
 A CHALLENGE with `same_build: false` is, before anything else, an instruction: check out the
 commit the receipt names and run again with the styxx that commit carries.
 
@@ -224,7 +227,6 @@ def run(doc: str, lab_receipt: str, repo: str = ".", out: str | None = None) -> 
     # receipt with no version string matches no build.
     same_sworn = lab_build is not None and lab_build == my_build
     lab_names_version = isinstance(lab_version, str)
-    same_build = same_sworn and lab_names_version and lab_version == my_version
     agree_digest = lab.get("digest") == mine.get("digest")
     agree_verdict = lab.get("document_verdict") == mine.get("document_verdict")
     # the version is inside the digested core: re-issue both with it set aside, through sworn's own
@@ -233,6 +235,10 @@ def run(doc: str, lab_receipt: str, repo: str = ".", out: str | None = None) -> 
     # and both receipts name a version (a receipt that names none is not skew from anything)
     lab_reissued = _reissued_digest(lab)
     lab_digest_reissues = None if lab_reissued is None else lab_reissued == lab.get("digest")
+    # the build fields count only when the lab's receipt re-issues to the digest it states: a receipt
+    # edited after issue could carry any sworn_sha256 and any version, so it matches no build
+    same_build = (same_sworn and lab_names_version and lab_version == my_version
+                  and lab_digest_reissues is True)
     lab_bare = _reissued_digest(lab, without_version=True)
     agree_without_version = lab_bare is not None and lab_bare == _reissued_digest(mine, without_version=True)
     version_skew = (not agree_digest and lab_digest_reissues is True and agree_without_version

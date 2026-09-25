@@ -170,7 +170,8 @@ to.
   representational dissimilarity matrix; new extra `styxx[plate]`. The extra serves modules the CLI
   does not register, the eight new modules of the series sit outside the guarded public surface,
   and the plate of the 2026-09-12 sworn chat update is unbacked until that update is committed
-  under `papers/chat/`.
+  under `papers/chat/`. A plate is a picture of the number: it says nothing about the document the
+  hash came from, and nothing in the series is a measurement.
 - The series red-teamed before it was pushed: ten adversarial reviewers on 2026-09-13, none of whose
   blocker or defect findings was refuted; every repair a new commit, no sworn document and no frozen
   PREREG edited. One PREREG claim is withdrawn by CORRECTION (that the beacon-drawn values "could
@@ -210,7 +211,7 @@ to.
   `papers/plates/SAND_CHECK.md` pays for; a real disagreement under both still gives it. Both
   challenge test modules had been skipping at collection in a depth-1 checkout, so CI could not see
   the bump break five of their tests; a depth-1 clone whose origin is reachable now unshallows and
-  runs all 19.
+  runs all 20.
 - An erratum to the kept entry "the gate was pointed at itself": its opening sentence, "The release
   where the diff gate stopped being graded by the people who wrote it", is superseded by this
   release's headline. BENCH-2's accusations and DECIDE-1's 100 claims were hand-graded by this lab,
@@ -287,7 +288,9 @@ commits.**
   present and equals the re-derived one AND the lab's `verifier.styxx_version` is a string equal to
   the re-derived one; a lab receipt with no version string matches no build. Version skew therefore
   always reports `same_build: false`, and a difference in the version alone can never take the
-  shape the bounty pays, `agree: false` with `same_build: true`. Run at this cut
+  shape the bounty pays, `agree: false` with `same_build: true`. Both fields are read from the
+  lab's receipt only when it re-issues to the digest it states, so a receipt re-stamped after
+  issue matches no build either. Run at this cut
   against every committed receipt under `papers/`: 60 receipts, 49 records (3 refused because the
   re-derived receipt has UNRESOLVED spans or no HELD span, and 8 not run because the document they
   name is not in the tree); 35 issued by another `sworn.py`, 14 version skew, and 0 with
@@ -308,7 +311,7 @@ commits.**
   commit was absent. In a depth-1 checkout that skip ran at collection, before conftest's unshallow
   fixture, so CI never ran them and could not see the bump break five of them. The check is now a
   module-scoped fixture that depends on `full_git_history`; a depth-1 clone whose origin is
-  reachable unshallows and runs all 19. The new tests build their lab receipts under a temporary
+  reachable unshallows and runs all 20. The new tests build their lab receipts under a temporary
   directory with `sworn.issue_receipt`; no committed receipt is touched.
 
 ### the gate was pointed at itself, and the measurement is what came back
