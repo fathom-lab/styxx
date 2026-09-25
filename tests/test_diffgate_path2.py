@@ -22,9 +22,18 @@ the BIN-1 registration of dotfile headers with no hunks, on both doors.
 NOTE_path2_fourth_pass_2026_09_25 adds the tests marked f1-f4: the prefix-shape test undots the prefix
 (F-1), a diff splits into lines on \\r\\n, \\r and \\n only, on both doors (F-2), `got` reads the indent
 the pairing reads (F-3), and an off-tree prefix beside an on-tree one no longer withdraws an accusation
-no reading of it could answer (F-4)."""
+no reading of it could answer (F-4).
+
+NOTE_path2_fifth_pass_2026_09_25 adds the tests marked v1, v3 and v4: one reading of a Python definition
+line for every pattern that reads one -- CPython's indentation (space, tab, form feed) after one
+optional U+FEFF, the same keyword separator, a name ending at an ASCII non-name character -- checked
+for every character of Python's \\s and U+FEFF on the raw door, through the port, and on the git door
+(V-1); a prefix written to end in `..`, and a `..` after a named segment, could hold anything (V-4);
+and the scorer attributes a move per claim, by reverting one rule in its own copy of the instrument
+(V-3)."""
 import json
 import re
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -458,15 +467,22 @@ def test_r4_the_symbol_rule_boundaries_the_erratum_restates():
     changed = ("symbol_added", "UNCHECKABLE", "added lines define {} 'backoff' only where the removed lines "
                                               "of the same file define it too; a changed definition is not an "
                                               "added one (#101)")
-    # M5h: the lookahead is [ \t(:] or end of line, NOT \b. A generic definition's `[` stops it, so
-    # a CHANGED generic function still verifies -- the reading ERRATUM item 2 restates.
+    # M5h, as NOTE_path2_fifth_pass V-1 re-reads it: the name ends where `hit` ends it -- at an ASCII
+    # character that cannot continue a name, or at the end of the line -- so a generic definition's `[`
+    # ends it too, and a CHANGED generic function pairs. The limit ERRATUM item 2 restated (a changed
+    # generic still verified) was a line `hit` read and the pairing did not; it is closed.
     gen_changed = ("--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n"
                    "-def backoff[T](n: T) -> T:\n+def backoff[T](n: T, j: int = 0) -> T:\n")
     _, got = _claims("Adds function backoff.", gen_changed)
-    assert got == [verified]
-    # M8b: rule (a) needs a file that BOTH adds and removes the name, not a file that removes it.
+    assert got == [("symbol_added", changed[1], changed[2].format("function"))]
+    # M8b: rule (a) needs a file that BOTH adds and removes the name. A function made generic now does.
     made_generic = "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-def backoff(n):\n+def backoff[T](n: T) -> T:\n"
     _, got = _claims("Adds function backoff.", made_generic)
+    assert got == [("symbol_added", changed[1], changed[2].format("function"))]
+    # ... and a file that only REMOVES the name still pairs nothing.
+    removed_only = ("--- a/src/b.py\n+++ b/src/b.py\n@@ -1,2 +1 @@\n-def backoff(n):\n-    pass\n+x = 1\n"
+                    "--- a/src/c.py\n+++ b/src/c.py\n@@ -1 +1,2 @@\n x = 0\n+def backoff(n):\n")
+    _, got = _claims("Adds function backoff.", removed_only)
     assert got == [verified]
     # M5c: the indent is [ \t]*, not \s*. An NBSP-indented removed definition is not read at all.
     nbsp = "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-\u00a0def backoff(n):\n+def backoff(n, j=0):\n"
@@ -769,13 +785,21 @@ def test_f2_a_diff_splits_on_crlf_cr_and_lf_and_nothing_else():
                                                                                ["def test_a():"])}, repr(ch)
 
 
+# NOTE_path2_fifth_pass V-1: a form feed is CPython indentation, so a form-feed re-indent is a CHANGED
+# test; the other three characters are not indentation, and the line defines nothing.
+REINDENT_AS_CHANGED = [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"),
+                       ("tests_added", "UNCHECKABLE", "diff adds 0 test functions and changes 1, claim says 1; a "
+                                                      "changed test is not an added one (#101)")]
+REINDENT_AS_NOTHING = [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0"),
+                       ("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")]
+
+
 @pytest.mark.parametrize("ch", ["\x0b", "\x0c", "\u2028", "\u2029"])
 def test_f2_the_four_classes_the_ports_split_on_differently_now_read_alike(ch):
     # Round 3, review 2: `-def test_a():` / `+<ch>def test_a():` is a re-indent; the port said
     # "Added 1 test." VERIFIED where the Python said CONTRADICTED. The pinned pairs hold the port.
     _, got = _claims("Added 0 tests. Added 1 test.", _reindent(ch))
-    assert got == [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0"),
-                   ("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")]
+    assert got == (REINDENT_AS_CHANGED if ch == "\x0c" else REINDENT_AS_NOTHING)
 
 
 def test_f2_a_separator_inside_a_line_no_longer_forges_a_line():
@@ -853,8 +877,7 @@ def test_f2_f3_the_git_door_reads_the_same_lines_as_the_raw_door(tmp_path, name)
     via_text = gate_diff_text(summary, diff)
     got_git = [(c.kind, c.verdict, c.why) for c in via_git.claims]
     assert got_git == [(c.kind, c.verdict, c.why) for c in via_text.claims]
-    assert got_git == [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0"),
-                       ("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")]
+    assert got_git == (REINDENT_AS_CHANGED if ch == "\x0c" else REINDENT_AS_NOTHING)
 
 
 def test_f2_the_git_door_does_not_forge_an_added_line_from_a_context_line(tmp_path):
@@ -892,11 +915,320 @@ def test_f2_the_git_door_reads_name_status_as_git_writes_it(tmp_path):
     assert got_git == [("only_touches", "CONTRADICTED", f"paths outside 'src': [{name!r}]")]
 
 
+# ─────────────────────────────── NOTE_path2_fifth_pass_2026_09_25: V-1 (one reading of a definition line)
+
+# Python's `\s` (29 characters) and U+FEFF: every character either port has read as a space.
+PY_WS_AND_BOM = [chr(c) for c in range(0x110000) if re.match(r"\s", chr(c))] + ["\ufeff"]
+TOKENIZER_WS = (" ", "\t", "\x0c")        # CPython's indentation and token separator; a U+FEFF may open a file
+TP, SP = "tests/test_a.py", "src/m.py"
+V1_SHAPES = {
+    # name: (summary, path, hunk with the character at {c})
+    "t-lead-new": ("Added 0 tests. Added 1 test.", TP, "@@ -1 +1,3 @@\n x = 0\n+{c}def test_new():\n+    pass\n"),
+    "t-lead-reindent": ("Added 0 tests. Added 1 test.", TP, "@@ -1,2 +1,2 @@\n-def test_a():\n+{c}def test_a():\n     pass\n"),
+    "t-lead-removed": ("Added 0 tests. Added 1 test.", TP, "@@ -1,2 +1,2 @@\n-{c}def test_a():\n+def test_a():\n     pass\n"),
+    "s-lead-new": ("Adds function foo.", SP, "@@ -1 +1,3 @@\n x = 0\n+{c}def foo():\n+    pass\n"),
+    "s-lead-reindent": ("Adds function foo.", SP, "@@ -1,2 +1,2 @@\n-def foo():\n+{c}def foo():\n     pass\n"),
+    "s-lead-removed": ("Adds function foo.", SP, "@@ -1,2 +1,2 @@\n-{c}def foo():\n+def foo():\n     pass\n"),
+    "s-sep-new": ("Adds function foo.", SP, "@@ -1 +1,3 @@\n x = 0\n+def{c}foo():\n+    pass\n"),
+    "s-sep-changed": ("Adds function foo.", SP, "@@ -1,2 +1,2 @@\n-def{c}foo():\n+def{c}foo(x):\n     pass\n"),
+    "s-end-new": ("Adds function foo.", SP, "@@ -1 +1,3 @@\n x = 0\n+def foo{c}():\n+    pass\n"),
+    "s-end-changed": ("Adds function foo.", SP, "@@ -1,2 +1,2 @@\n-def foo{c}():\n+def foo{c}(x):\n     pass\n"),
+}
+ADDED_1 = [("tests_added", "CONTRADICTED", "diff adds 1 test functions, claim says 0"),
+           ("tests_added", "VERIFIED", "diff adds 1 test functions, claim says 1")]
+FOO = {"V": [("symbol_added", "VERIFIED", "added lines do define function 'foo'")],
+       "C": [("symbol_added", "CONTRADICTED", "added lines do NOT define function 'foo'")],
+       "U": [("symbol_added", "UNCHECKABLE", "added lines define function 'foo' only where the removed lines of "
+                                             "the same file define it too; a changed definition is not an added "
+                                             "one (#101)")]}
+
+
+def _v1_expected(shape: str, ch: str) -> list:
+    """What each shape reads as: a character is indentation (and a keyword separator) exactly when
+    CPython's tokenizer takes it as one -- U+FEFF only in the leading position -- and a name ends at an
+    ASCII character that cannot continue it."""
+    lead = ch in TOKENIZER_WS or ch == "\ufeff"
+    table = {
+        "t-lead-new": ADDED_1 if lead else REINDENT_AS_NOTHING,
+        "t-lead-reindent": REINDENT_AS_CHANGED if lead else REINDENT_AS_NOTHING,
+        "t-lead-removed": REINDENT_AS_CHANGED if lead else ADDED_1,
+        "s-lead-new": FOO["V" if lead else "C"], "s-lead-reindent": FOO["U" if lead else "C"],
+        "s-lead-removed": FOO["U" if lead else "V"],
+        "s-sep-new": FOO["V" if ch in TOKENIZER_WS else "C"], "s-sep-changed": FOO["U" if ch in TOKENIZER_WS else "C"],
+        "s-end-new": FOO["V" if ord(ch) < 0x80 else "C"], "s-end-changed": FOO["U" if ord(ch) < 0x80 else "C"],
+    }
+    return table[shape]
+
+
+def _v1_raw(shape: str, ch: str) -> tuple:
+    summary, path, hunk = V1_SHAPES[shape]
+    return summary, f"--- a/{path}\n+++ b/{path}\n" + hunk.format(c=ch)
+
+
+def test_v1_every_definition_pattern_opens_with_one_indent():
+    # Rounds 2, 3 and 4 each repaired one character in one pattern and opened the next. The class: the
+    # patterns that must read the same lines are one pattern. For every character in the set, in every
+    # position it can take on a definition line, `got` counts a line exactly when the added-side test
+    # pairing reads it, and `hit` reads a line exactly when the added-side symbol pairing does.
+    assert len(PY_WS_AND_BOM) == 30
+    for ch in PY_WS_AND_BOM:
+        if ch == "\n":          # no line holds it: F-2 splits there, in both ports
+            continue
+        for line in (f"{ch}def test_a():", f"\ufeff{ch}def test_a():", f"{ch}async def test_a():",
+                     f"{ch}{ch}def test_a():"):
+            assert len(re.findall(dg._GOT_TEST_LINE, line, re.M)) == (1 if dg._DEF_TEST_LINE.match(line) else 0), ascii(line)
+        assert bool(dg._DEF_TEST_LINE.match(f"{ch}def test_a():")) == (ch in TOKENIZER_WS or ch == "\ufeff"), ascii(ch)
+        for line in (f"{ch}def foo():", f"def{ch}foo():", f"def foo{ch}():", f"{ch}class foo:", f"\ufeff{ch}def foo():"):
+            added = bool(dg._symbol_def_line_added("foo").match(line))
+            assert dg._symbol_hit("foo", line) == added, ascii(line)
+            assert bool(dg._symbol_def_line("foo").match(line)) == added, ascii(line)   # no `async` here
+        # the removed side alone reads `async`, for both kinds
+        assert not dg._symbol_def_line_added("foo").match(f"{ch}async def foo():")
+        assert bool(dg._symbol_def_line("foo").match(f"{ch}async def foo():")) == (ch in TOKENIZER_WS or ch == "\ufeff")
+        assert bool(dg._DEF_TEST_LINE_REMOVED.match(f"async{ch}def test_a():")) == (ch in TOKENIZER_WS)
+    # the pairing's ADDED count reads what `hit` reads, so an added `async def` beside a changed `def`
+    # does not make the file add more definitions than it removes
+    sides = {"src/m.py": (["def foo(x):", "async def foo():"], ["def foo():"])}
+    assert dg._definition_only_changed("foo", sides, {"src/m.py": "M"})
+
+
+@pytest.mark.parametrize("ch", [c for c in PY_WS_AND_BOM if c not in "\r\n"], ids=lambda c: f"{ord(c):04x}")
+def test_v1_the_grid_on_the_raw_door(ch):
+    # \r and \n are line breaks by F-2 in both ports, so they make a different diff; the other 28 are here.
+    for shape in V1_SHAPES:
+        summary, diff = _v1_raw(shape, ch)
+        _, got = _claims(summary, diff)
+        assert got == _v1_expected(shape, ch), (shape, ascii(ch))
+
+
+def test_v1_the_port_reads_the_grid_as_the_python_does():
+    # The 300 raw-door inputs (all 30 characters, \r and \n included), through the port as well: a
+    # committed receipt of the agreement the note records, not a number typed once.
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    items = []
+    for shape in V1_SHAPES:
+        for ch in PY_WS_AND_BOM:
+            summary, diff = _v1_raw(shape, ch)
+            g = gate_diff_text(summary, diff, run=None, strict=False)
+            items.append({"summary": summary, "diff": diff, "py": [[c.kind, c.verdict, c.why] for c in g.claims]})
+    script = ("const {gateDiffText}=require(process.argv[1]);let s='';process.stdin.on('data',d=>s+=d);"
+              "process.stdin.on('end',()=>{const out=JSON.parse(s).map(it=>gateDiffText(it.summary,it.diff)"
+              ".claims.map(c=>[c.kind,c.verdict,c.why]));process.stdout.write(JSON.stringify(out));});")
+    r = subprocess.run([node, "-e", script, str(ROOT / "web" / "gate" / "diffgate.js")],
+                       input=json.dumps([{"summary": i["summary"], "diff": i["diff"]} for i in items]),
+                       capture_output=True, text=True, encoding="utf-8", timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+    js = json.loads(r.stdout)
+    disagree = [(i["summary"], ascii(i["diff"])) for i, j in zip(items, js) if i["py"] != j]
+    assert len(items) == 300 and disagree == []
+
+
+V1_DOORS = {
+    # the task's two form-feed pairs, and the round-4 review's shapes around them
+    "ff-reindented-function": ("Adds function foo.", {SP: "def foo():\n    pass\n"}, {SP: "\x0cdef foo():\n    pass\n"},
+                               FOO["U"]),
+    "ff-led-new-test": ("Added 0 tests. Added 1 test.", {TP: "x = 0\n"}, {TP: "x = 0\n\x0cdef test_x():\n    pass\n"},
+                        ADDED_1),
+    "vt-reindented-function": ("Adds function foo.", {SP: "def foo():\n    pass\n"}, {SP: "\x0bdef foo():\n    pass\n"},
+                               FOO["C"]),
+    "nel-led-new-function": ("Adds function foo.", {SP: "x = 0\n"}, {SP: "x = 0\n\x85def foo():\n"}, FOO["C"]),
+    "ls-reindented-test": ("Added 0 tests. Added 1 test.", {TP: "def test_a():\n    pass\n"},
+                           {TP: "\u2028def test_a():\n    pass\n"}, REINDENT_AS_NOTHING),
+    "bom-led-new-function": ("Adds function foo.", {SP: "x = 0\n"}, {SP: "x = 0\n\ufeffdef foo():\n"}, FOO["V"]),
+}
+
+
+@pytest.mark.parametrize("name", sorted(V1_DOORS))
+def test_v1_the_git_door_reads_the_same_definition_lines_as_the_raw_door(tmp_path, name):
+    summary, before, after, want = V1_DOORS[name]
+    diff = _git_repo(tmp_path, before, after)
+    via_git = gate_diff(summary, tmp_path, "HEAD~1", "HEAD")
+    via_text = gate_diff_text(summary, diff)
+    got_git = [(c.kind, c.verdict, c.why) for c in via_git.claims]
+    assert got_git == [(c.kind, c.verdict, c.why) for c in via_text.claims]
+    assert got_git == want
+
+
+# ─────────────────────────────── NOTE_path2_fifth_pass_2026_09_25: V-4 (a `..` the key used to lose)
+
+def test_v4_a_written_parent_and_a_dotdot_after_a_name_could_hold_anything():
+    assert dg._parent_prefix("src/..") == "src/.." and dg._parent_prefix("docs/../") == "docs/.."
+    assert dg._parent_prefix(".github/../.") == ".github/.." and dg._parent_prefix("..") == ".."
+    for not_parent in ("src/...", "../docs", "src/.", "src", "..docs", ""):
+        assert dg._parent_prefix(not_parent) == "", not_parent
+    assert dg._could_lie_under("evil/x.py", "../src/../docs") and dg._could_lie_under("evil/x.py", "src/.../docs")
+    assert dg._could_lie_under("evil/x.py", "../docs", "../docs/..")
+    assert not dg._could_lie_under("evil/x.py", "../docs", "../docs")
+    # a `.` segment is the directory itself, not a parent: named segments stay contiguous across it
+    assert dg._could_lie_under("lib/src/docs/x.md", "../src/./docs")
+    assert not dg._could_lie_under("evil/x.py", "../src/./docs")
+    off = "is relative to a directory the diff does not name (#121)"
+    # the round-4 review's cases: each was an accusation no reading of the prefix could support
+    for summary, path, shown in (
+            ("Only modified `src/` and `../src/../docs` as specified.", "docs/a.md", "../src/../docs"),
+            ("Only modified `src/` and `../docs/..` as specified.", "evil/x.py", "../docs/.."),
+            ("Only touches .github/../.", "github/github/src/f.py", ".github/.."),
+            ("Only modified `github/.docs/..` and `.github/` as specified.", "github/f.py", "github/.docs/.."),
+            ("Only touches src/..", "lib/a.py", "src/..")):
+        _, got = _claims(summary, _m(path))
+        assert got == [("only_touches", "UNCHECKABLE", f"prefix {shown!r} {off}")], summary
+    # the price, disclosed: `docs/.` followed by a sentence period is read as the parent of docs
+    _, got = _claims("Only touches docs/..", _m("lib/a.py"))
+    assert got == [("only_touches", "UNCHECKABLE", f"prefix 'docs/..' {off}")]
+    # `...` is not a parent: `src/...` still reads as `src`
+    _, got = _claims("Only touches src/...", _m("lib/a.py"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside 'src': ['lib/a.py']")]
+
+
+def test_v4_the_two_f4_boundaries_round_4_named():
+    # (a) the could-hold filter reads the OFF-tree prefixes only: `src` would hold lib/src/x.py by segment
+    _, got = _claims("Only modified `src/` and `../docs` as specified.", _m("lib/src/x.py"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside 'src' and '../docs': ['lib/src/x.py']")]
+    # (b) two off-tree prefixes and no on-tree one: R-3 abstains, as for one
+    _, got = _claims("Only touches ../a/ and ../docs/.", _m("evil/x.py"))
+    assert got == [("only_touches", "UNCHECKABLE", "prefix '../a' is relative to a directory the diff does not name (#121)")]
+
+
+# ─────────────────────────────── NOTE_path2_fifth_pass_2026_09_25: V-3 (the scorer attributes per claim)
+
+FRONTIER = ROOT / "papers" / "closed-model-frontier"
+_ABSENT = object()
+
+
+@pytest.fixture(scope="module")
+def scorer():
+    base = "98a5c368ba9ffa242c6862e021df7f8bad2ed8e6"
+    if subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", base + "^{commit}"],
+                      capture_output=True).returncode != 0:
+        pytest.skip("the scorer's baseline commit is not in this clone (a shallow checkout)")
+    import importlib.util
+    import sys
+    saved = sys.modules.get("styxx.claimdetect", _ABSENT)
+    spec = importlib.util.spec_from_file_location("path2_gates_under_test", FRONTIER / "path2_gates.py")
+    pg = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(pg)
+    except SystemExit as e:                       # the scorer refuses rather than raises
+        pytest.skip(f"path2_gates refused to load: {e}")
+    finally:
+        # the scorer blocks the observer for the whole process; give it back to the other tests
+        if saved is _ABSENT:
+            sys.modules.pop("styxx.claimdetect", None)
+        else:
+            sys.modules["styxx.claimdetect"] = saved
+    return pg
+
+
+PROBE = "--- a/.gitignore\n+++ b/.gitignore\n@@ -1,2 +1,2 @@\n x\x0cy\n-a\n+b\n"
+
+
+def test_v3_a_stray_form_feed_no_longer_excuses_the_round_3_blocker(scorer, monkeypatch):
+    # Round 4, both lenses: the fourth pass's F-2 attribution was per RECORD, so a form feed in a
+    # context line no claim reads excused every move on the record -- the round-3 blocker included.
+    pg = scorer
+    src = Path(pg.new.__file__).read_bytes().decode("utf-8")
+    good = 'low = _undotted(_norm(raw)).rstrip("/").lower()'
+    assert src.count(good) == 1
+    blocker = src.replace(good, 'low = _norm(raw).rstrip("/").lower()').encode("utf-8")
+    for name in ("new", "CF"):
+        monkeypatch.setattr(pg, name, pg._module_from(blocker, f"styxx_diffgate_probe_{name}", f"<probe {name}>"))
+    assert pg.split_differs(PROBE)
+    t = pg.Tally(name_prs=True)
+    t.pair("probe", "Only touches .gitignore.", PROBE, pg.raw_paths(PROBE))
+    assert dict(t.violations) == {"G-C4_direction:only_touches": 1}
+    assert not t.attribution["moves_admitted_by_rule"]
+
+
+def test_v3_a_real_f2_move_is_still_attributed_and_counted(scorer):
+    pg = scorer
+    t = pg.Tally(name_prs=True)
+    t.pair("clean", "Only touches .gitignore.", PROBE, pg.raw_paths(PROBE))
+    ff = "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1,2 @@\n x = 0\n+\x0cdef foo():\n"
+    t.pair("ff", "Adds function foo.", ff, pg.raw_paths(ff))
+    assert not t.violations and t.n["records_moved"] == 1
+    assert dict(t.attribution["moves_admitted_by_rule"]) == {"F-2 symbol_added: CONTRADICTED -> VERIFIED": 1}
+    assert dict(t.attribution["new_verified_admitted"]) == {"F-2 symbol_added": 1}
+
+
+def test_v3_a_compat2_flip_only_f2_explains_is_admitted_and_no_other(scorer, monkeypatch):
+    # G-C6: a compat2_candidate flip a TABLE rule explains still fails, as the preregistration froze it.
+    # Planted: COMPAT's scaffold test reads the dotted key again (the round-2 defect C-2 repaired), so
+    # `.storybook/` stops being scaffolding and the candidate flips; reverting #121 gives it back.
+    pg = scorer
+    src = Path(pg.new.__file__).read_bytes().decode("utf-8")
+    good = "not _COMPAT_SCAFFOLD.search(_undotted(path))"
+    assert src.count(good) == 1
+    planted = src.replace(good, "not _COMPAT_SCAFFOLD.search(path)").encode("utf-8")
+    for name in ("new", "CF"):
+        monkeypatch.setattr(pg, name, pg._module_from(planted, f"styxx_diffgate_c6_{name}", f"<c6 {name}>"))
+    t = pg.Tally(name_prs=True)
+    t.pair("storybook", "No breaking changes.", STORYBOOK, pg.raw_paths(STORYBOOK))
+    assert t.violations["G-C6_compat2_candidate_flipped"] == 1
+    assert not t.attribution["compat2_flips_admitted"]
+
+
+def test_v3_a_move_no_rule_explains_is_refused_whatever_the_table_says(scorer, monkeypatch):
+    # Planted: a reason no rule touches is reworded. No revert, alone or in twos or threes, gives the
+    # baseline back, so the move is refused by the counterfactual itself -- and a counterfactual that
+    # compared verdicts only would have credited every rule with it.
+    pg = scorer
+    src = Path(pg.new.__file__).read_bytes().decode("utf-8")
+    good = 'c.why = f"diff changes {len(status)} files, claim says {n}"'
+    assert src.count(good) == 1
+    planted = src.replace(good, 'c.why = f"diff changes {len(status)} files; claim says {n}"').encode("utf-8")
+    for name in ("new", "CF"):
+        monkeypatch.setattr(pg, name, pg._module_from(planted, f"styxx_diffgate_none_{name}", f"<none {name}>"))
+    diff = "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-a\n+b\n"
+    t = pg.Tally(name_prs=True)
+    t.pair("reworded", "1 file changed.", diff, pg.raw_paths(diff))
+    assert dict(t.violations) == {"G-C4_unattributed_counterfactual:files_changed_count": 1}
+
+
+def test_v3_the_post_amendment_rules_admit_only_their_own_kinds():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("path2_gates_admits_only", FRONTIER / "path2_gates.py")
+    src = Path(spec.origin).read_text(encoding="utf-8")
+    # `admits` is read out of the scorer's source and run alone: no git, no baseline needed
+    body = src[src.index("def admits("):src.index("# ── attribution, written out")]
+    ns = {"OFF_TREE_WHY": "is relative to a directory the diff does not name (#121)"}
+    exec(body, ns)  # noqa: S102
+    admits = ns["admits"]
+    off = "prefix '../docs/..' is relative to a directory the diff does not name (#121)"
+    assert admits("F-2", "compat_claim", "UNCHECKABLE", "UNCHECKABLE", "")
+    assert admits("R-1", "tests_added", "VERIFIED", "UNCHECKABLE", "") and not admits("R-1", "symbol_added", "V", "C", "")
+    assert admits("F-3", "tests_added", "VERIFIED", "CONTRADICTED", "") and not admits("F-3", "only_touches", "V", "C", "")
+    assert admits("V-1", "symbol_added", "VERIFIED", "UNCHECKABLE", "") and not admits("V-1", "file_touched", "V", "U", "")
+    assert admits("V-4", "only_touches", "CONTRADICTED", "UNCHECKABLE", off)
+    assert not admits("V-4", "only_touches", "VERIFIED", "CONTRADICTED", "paths outside 'src': ['x']")
+    assert not admits("V-4", "only_touches", "VERIFIED", "UNCHECKABLE", "prefix 'x' is not a path (#110)")
+    with pytest.raises(ValueError):
+        admits("#121", "only_touches", "VERIFIED", "UNCHECKABLE", "")
+
+
+def test_v3_every_revert_names_code_the_instrument_has(scorer):
+    pg = scorer
+    for rule in pg.RULES:
+        with pg.reverted(pg.CF, {rule}):
+            pass
+    with pg.reverted(pg.CF, pg.RULES):
+        # every rule reverted at once gives the baseline back on the pinned pairs
+        for p in json.loads(PAIRS.read_text(encoding="utf-8")):
+            a = [(c.kind, c.verdict, c.why) for c in pg.CF.gate_diff_text(p["summary"], p["diff"]).claims]
+            b = [(c.kind, c.verdict, c.why) for c in pg.BASE.gate_diff_text(p["summary"], p["diff"]).claims]
+            assert a == b, p["id"]
+
+
 # ────────────────────────────────────────────────────────── the pinned pairs
 
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
-    assert len(pairs) == 71 and all(p["id"].startswith("path2:") for p in pairs)
+    assert len(pairs) == 107 and all(p["id"].startswith("path2:") for p in pairs)
+    # NOTE_path2_fifth_pass V-1 re-pinned four pairs and says so in each record
+    assert sorted(p["id"] for p in pairs if "repinned" in p) == [
+        "path2:f2-a-form-feed-is-not-a-line-break", "path2:f2-limit-hit-reads-a-line-separator-as-indent",
+        "path2:r4-a-changed-generic-definition-still-verifies", "path2:r4-a-function-made-generic-still-verifies"]
     for p in pairs:
         g = gate_diff_text(p["summary"], p["diff"], run=None, strict=False)
         got = [[c.kind, c.verdict, c.why] for c in g.claims]
