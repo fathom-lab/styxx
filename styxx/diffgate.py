@@ -387,27 +387,66 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
 # there -- U+00A0, U+3000, U+FEFF, U+2028 -- so the line defines nothing, as V-1 read it.) The indent
 # no longer takes a U+FEFF: W-1's parse drops one where CPython reads it, at line 1 of a file, and a
 # U+FEFF anywhere else is a character CPython refuses.
+#
+# NOTE_path2_seventh_pass_2026_09_25. (1) ONE table. W-2 asked the runtime which characters an identifier
+# holds -- `str.isidentifier` here (Unicode 13.0 to 15.0 on the Pythons this package supports), the
+# runtime's `\p{XID_Continue}` in web/gate/diffgate.js (16.0 on Node 24) -- so "Added function
+# foo<U+30FB>bar." over `def foo<U+30FB>bar():` read CONTRADICTED here and VERIFIED in the port. Both
+# ports now read styxx/_xid.py's table, the same string in both files: Unicode 15.0.0, CPython 3.12's.
+# (2) The claim side is read as the definition side is. W-2 took the identifier that starts where the
+# template's `name` group starts, and when the summary's name ran on past it -- "Added function
+# fo<U+00B2>o." (U+00B2 is `\w` but not XID_Continue) -- it truncated the name to `fo` and verified the
+# claim on any `def fo`, where main read the whole name and matched nothing. `_defined_name` refuses a
+# line whose name runs on into a character no identifier holds; `_claimed_name` now does the same: a
+# claimed name followed by a word character the identifier cannot hold names no identifier, and the
+# claim reads UNCHECKABLE with that reason, never a truncated name. A claimed identifier that ENDS in a
+# middle dot (U+00B7, U+0387: the two punctuation characters XID_Continue holds in 15.0; U+0387 is the
+# Greek semicolon) is read the same way -- prose writes one after a word, so where the name ends is not
+# certain. A name printed in a reason is quoted as repr() quotes an identifier, without asking the
+# runtime which characters it can print.
 _DEF_INDENT = r"^[ \t\f]*"
 _DEF_SEP = r"[ \t\f]+"
 _DEF_HEAD = re.compile(_DEF_INDENT + r"(def|class)" + _DEF_SEP)
 _DEF_HEAD_REMOVED = re.compile(_DEF_INDENT + r"(?:async" + _DEF_SEP + r")?(def|class)" + _DEF_SEP)
+_PROSE_DOTS = "··"
+
+from ._xid import continues_identifier as _xid_continues  # noqa: E402
+from ._xid import is_word as _xid_word  # noqa: E402
+from ._xid import opens_identifier as _xid_opens  # noqa: E402
 
 
 def _identifier_at(text: str, i: int) -> str:
-    """The Python identifier that starts at `text[i]`, or "": the longest prefix `str.isidentifier`
-    accepts. One character at a time: the opening one must be XID_Start or `_`, each later one XID_Continue."""
-    if i >= len(text) or not text[i].isidentifier():
+    """The Python identifier that starts at `text[i]`, or "": the opening character XID_Start or `_`,
+    each later one XID_Continue, by styxx/_xid.py's table (Unicode 15.0.0), not the runtime's."""
+    if i >= len(text) or not _xid_opens(text[i]):
         return ""
     j = i + 1
-    while j < len(text) and ("_" + text[j]).isidentifier():
+    while j < len(text) and _xid_continues(text[j]):
         j += 1
     return text[i:j]
 
 
-def _claimed_name(sentence: str, m) -> str:
-    """The name a `symbol_added` claim names: the identifier starting where the template's `name` group
-    starts (W-2), read by the rule a definition's name is read by."""
-    return _identifier_at(sentence, m.start("name"))
+def _qname(name: str) -> str:
+    """repr() of an identifier, which holds no quote, no backslash and no character repr() escapes."""
+    return "'" + name + "'"
+
+
+def _claimed_name(sentence: str, m) -> tuple:
+    """(name, why) for a `symbol_added` claim: the identifier starting where the template's `name` group
+    starts (W-2), read by the rule a definition's name is read by. `why` is None when the claim names that
+    identifier, and otherwise the reason the claim is UNCHECKABLE (NOTE_path2_seventh_pass): the name runs
+    on into a word character no identifier holds, or it ends in a middle dot."""
+    start = m.start("name")
+    name = _identifier_at(sentence, start)
+    end = start + len(name)
+    if end < len(sentence) and _xid_word(sentence[end]):
+        ch = sentence[end]
+        return name, (f"the claimed name runs past {_qname(name)} into {_qname(ch)} (U+{ord(ch):04X}), which "
+                      "no Python identifier holds; no definition is read for it")
+    if name and name[-1] in _PROSE_DOTS:
+        return name, (f"the claimed name {_qname(name)} ends in {_qname(name[-1])} (U+{ord(name[-1]):04X}), "
+                      "which prose also writes after a word; no definition is read for it")
+    return name, None
 
 
 def _defined_name(line: str, removed: bool = False):
@@ -444,6 +483,30 @@ def _added_tests(added_blob: str) -> int:
     """`tests_added`'s `got`: the added lines that define a test, by the added-side pairing's own
     reading (`_test_name`), one line at a time (W-2)."""
     return sum(1 for line in added_blob.split("\n") if _test_name(line))
+
+
+def _async_tests_added(sides: dict | None, status: dict | None = None) -> int:
+    """NOTE_path2_seventh_pass (A-1): the `async def test_` definitions a file adds beyond those its removed
+    lines define (a file whose status is `A` removes none), summed. `got` counts no `async def test_` line
+    -- on main either -- so where the diff adds one, the count is not the diff's: main's reading was right
+    there only by a second miscount, and the pairing (#101) removed that miscount. Such a claim abstains."""
+    n = 0
+    for path, (added, removed) in (sides or {}).items():
+        fresh: dict = {}
+        for line in added:
+            t = _test_name(line, removed=True)
+            if t and not _test_name(line):
+                fresh[t] = fresh.get(t, 0) + 1
+        if not fresh:
+            continue
+        gone: dict = {}
+        if (status or {}).get(path) != "A":
+            for line in removed:
+                t = _test_name(line, removed=True)
+                if t:
+                    gone[t] = gone.get(t, 0) + 1
+        n += sum(max(0, k - gone.get(t, 0)) for t, k in fresh.items())
+    return n
 
 
 def _changed_test_defs(sides: dict | None, status: dict | None = None) -> int:
@@ -606,27 +669,90 @@ def _diff_lines(text: str) -> list:
 # line the counts do not allow for (a `diff --git` header, a hunk that ends early) closes the hunk and
 # is read as before; outside any counted hunk every line is read exactly as it was, so a hand-written
 # diff with no `@@` header reads as it did on main. A hand-written hunk often declares more lines than
-# it carries, and the next file's `---`/`+++` pair then falls inside its counts; so a `---` line followed
-# by a `+++` line still reads as a file header, as on main, when a hunk header follows the pair or the
-# pair is written `--- a/…`/`/dev/null`, `+++ b/…`/`/dev/null` (`_header_pair`).
+# it carries, and the next file's `---`/`+++` pair then falls inside its counts; the sixth pass kept such
+# a pair a file header through an exception (`_header_pair`), which the seventh pass replaces (below).
 #
 # The same numbers say which line is line 1 of a file, the one place CPython reads a U+FEFF (a byte-order
 # mark opens a file; anywhere else it is a character CPython refuses). The parse drops a U+FEFF that
 # opens line 1 of either side, and nowhere else, and the definition patterns read none: R-1 had them take
 # one on any line, so a definition led by U+FEFF in the middle of a file counted, which `main` did not.
+#
+# NOTE_path2_seventh_pass_2026_09_25: the counts are trusted only for a hunk that CARRIES what it declares.
+# The sixth pass trusted every hunk's counts and kept main's reading through a header-pair exception; a
+# hand-written hunk that declares more lines than it carries, followed by a next file written without
+# `a/`/`b/` and without a numeric `@@` right after its header, read that header as a removed and an added
+# line: the next file never entered the status map and its lines were filed under the previous file (new
+# false VERIFIEDs and CONTRADICTEDs against main on the raw door and the port). Now each hunk is scanned
+# before it is read (`_hunk_is_exact`): its counts are walked over the lines that follow, a `---`/`+++`
+# pair followed by a hunk header ending the walk, and so does a `--- ` line right after an added line --
+# git, `diff -u` and difflib write each change's removed lines before its added ones, so a `---` line
+# there is a file header, not a removed line. The hunk is EXACT when the walk closes and what follows can
+# end a hunk -- the end of the diff, a `diff --git` line, a file header, a hunk header that moves forward
+# in the same file, or a line no hunk carries. An exact hunk is read by its counts, with no exception: a
+# `---`/`+++` line inside it is content, `-- a/x` beside `++ b/x` included. Any other hunk -- one that
+# carries fewer lines than it declares, or whose counts close on a line that goes on as a hunk would, or
+# that orders its lines as no generator does -- is read exactly as main read it, line by line. git
+# writes only exact hunks.
 _HUNK_HEADER = re.compile(r"^@@ -([0-9]+)(?:,([0-9]+))? \+([0-9]+)(?:,([0-9]+))? @@")   # [0-9]: `\d` is Unicode
 _FILE_BOM = "\uFEFF"
 
 
-def _header_pair(lines: list, k: int) -> bool:
-    """Whether `lines[k]` (a `--- ` line inside a hunk's counts) opens a file header all the same."""
-    nxt = lines[k + 1] if k + 1 < len(lines) else ""
-    if not nxt.startswith("+++ "):
-        return False
-    if k + 2 < len(lines) and _HUNK_HEADER.match(lines[k + 2]):
+def _hunk_counts(m) -> tuple:
+    """(old start, old count, new start, new count) of a hunk header match; an omitted count is 1."""
+    return (int(m.group(1)), 1 if m.group(2) is None else int(m.group(2)),
+            int(m.group(3)), 1 if m.group(4) is None else int(m.group(4)))
+
+
+def _hunk_is_exact(lines: list, k: int) -> bool:
+    """Whether the hunk whose header is `lines[k]` carries exactly the lines its counts declare, so that
+    reading it by its counts cannot read the next file's header as content (NOTE_path2_seventh_pass)."""
+    a, b, c, d = _hunk_counts(_HUNK_HEADER.match(lines[k]))
+    old_left, new_left = b, d
+    j = k + 1
+    after_added = False                          # the last counted line was an added one
+    while old_left or new_left:
+        if j >= len(lines):
+            return False                         # the diff ends before the counts close: too many declared
+        line = lines[j]
+        head = line[:1]
+        if (line.startswith("--- ") and j + 2 < len(lines) and lines[j + 1].startswith("+++ ")
+                and lines[j + 2].startswith("@@")):
+            return False                         # a file header and its hunk end the walk
+        if after_added and line.startswith("--- "):
+            return False                         # git and diff -u write removed lines before added ones
+        if head == "+" and new_left:
+            new_left -= 1
+            after_added = True
+        elif head == "-" and old_left:
+            old_left -= 1
+        elif (head == " " or line == "") and old_left and new_left:
+            old_left -= 1
+            new_left -= 1
+            after_added = False
+        elif head != "\\":                       # "\ No newline at end of file" is not counted
+            return False                         # the counts do not allow this line
+        j += 1
+    while j < len(lines) and lines[j].startswith("\\"):
+        j += 1
+    blank = j
+    while j < len(lines) and lines[j] == "":
+        j += 1
+    if j >= len(lines):
+        return True                              # the end of the diff
+    line = lines[j]
+    if line.startswith("diff --git "):
         return True
-    a, b = lines[k][4:].strip(), nxt[4:].strip()
-    return (a == "/dev/null" or a.startswith("a/")) and (b == "/dev/null" or b.startswith("b/"))
+    if line.startswith("--- ") and j + 1 < len(lines) and lines[j + 1].startswith("+++ "):
+        return True                              # the next file's header
+    if line.startswith("@@"):
+        m = _HUNK_HEADER.match(line)
+        if m is None or j != blank:
+            return False
+        a2, _b2, c2, _d2 = _hunk_counts(m)
+        return a2 >= a + b and c2 >= c + d       # the same file, further on, as git writes it
+    if line == "-- " and (j + 1 >= len(lines) or lines[j + 1][:1] not in ("+", "-", " ", "@", "\\")):
+        return True                              # a `git format-patch` signature
+    return line[:1] not in ("+", "-", " ", "\\")   # a line no hunk carries
 
 
 def _read_diff(diff_text: str) -> tuple[dict, list, dict]:
@@ -650,8 +776,6 @@ def _read_diff(diff_text: str) -> tuple[dict, list, dict]:
 
     lines = _diff_lines(diff_text)
     for k, line in enumerate(lines):
-        if (old_left or new_left) and line.startswith("--- ") and _header_pair(lines, k):
-            old_left = new_left = 0              # a file header after all: the hunk declared too many lines
         if old_left or new_left:
             head = line[:1]
             if head == "+" and new_left:
@@ -701,10 +825,8 @@ def _read_diff(diff_text: str) -> tuple[dict, list, dict]:
             sides.setdefault(cur, ([], []))
             pending = None
         elif line.startswith("@@") and _HUNK_HEADER.match(line):
-            m = _HUNK_HEADER.match(line)
-            old_no, new_no = int(m.group(1)), int(m.group(3))
-            old_left = 1 if m.group(2) is None else int(m.group(2))
-            new_left = 1 if m.group(4) is None else int(m.group(4))
+            if _hunk_is_exact(lines, k):         # NOTE_path2_seventh_pass: else read as main read it
+                old_no, old_left, new_no, new_left = _hunk_counts(_HUNK_HEADER.match(line))
         elif line.startswith("+") and not line.startswith("+++"):
             added.append(line[1:])
             if cur is not None:
@@ -1635,7 +1757,14 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         chg = min(_changed_test_defs(sides, status), got)
                         net = got - chg
                         note = f" ({chg} changed, not added: #101)" if chg else ""
-                        if net == n:
+                        # NOTE_path2_seventh_pass (A-1): an added `async def test_` is a test this
+                        # count does not read; beside one, the count is not the diff's.
+                        unread = _async_tests_added(sides, status)
+                        if unread:
+                            c.verdict = "UNCHECKABLE"
+                            c.why = (f"diff adds {unread} async test functions, which this template does not "
+                                     f"count; claim says {n}")
+                        elif net == n:
                             c.verdict, c.why = "VERIFIED", f"diff adds {net} test functions, claim says {n}{note}"
                         elif BC1_BY_CONSTRUCTION and noun in _TEST_NOUNS_NOT_FUNCTIONS:
                             # BC-2 repair 2: a case, file, scenario, suite or class is not a
@@ -1664,17 +1793,21 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         # NOTE_path2_sixth_pass W-2: the claimed name is the identifier the summary
                         # writes, read by the rule a definition's name is read by, so the two end in
                         # the same place; the template's `name` group only says where it starts.
-                        name = _claimed_name(sent, m)
-                        hit = _symbol_hit(name, added_blob)
-                        if hit and _definition_only_changed(name, sides, status):
+                        # NOTE_path2_seventh_pass: a claimed name that runs on past the identifier
+                        # (or ends in a middle dot) names no identifier, and is not truncated to one.
+                        name, why_name = _claimed_name(sent, m)
+                        hit = why_name is None and _symbol_hit(name, added_blob)
+                        if why_name is not None:
+                            c.verdict, c.why = "UNCHECKABLE", why_name
+                        elif hit and _definition_only_changed(name, sides, status):
                             c.verdict = "UNCHECKABLE"               # PATH-2 (#101)
-                            c.why = (f"added lines define {d['kind']} {name!r} only where the "
+                            c.why = (f"added lines define {d['kind']} {_qname(name)} only where the "
                                      "removed lines of the same file define it too; a changed "
                                      "definition is not an added one (#101)")
                         else:
                             c.verdict = "VERIFIED" if hit else "CONTRADICTED"
                             c.why = (f"added lines {'do' if hit else 'do NOT'} define "
-                                     f"{d['kind']} {name!r}")
+                                     f"{d['kind']} {_qname(name)}")
                 elif kind == "only_touches":
                     prefs = [_norm(d["prefix"]).rstrip("/.")]   # sentence-final periods are not path
                     if d.get("prefix2"):
