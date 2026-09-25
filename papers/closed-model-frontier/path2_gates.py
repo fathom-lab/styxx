@@ -60,29 +60,43 @@ cannot say which corpus it read is not one. Corpus mode records the shelf's file
 and the row counts of its `pr` and `f` tables (NOTE_path2_fourth_pass_2026_09_25, P-1); the shelf is
 not hashed, because it is large and opened immutable.
 
-THE FOURTH PASS (NOTE_path2_fourth_pass_2026_09_25). Four rule changes landed after the amendment and
-each is attributed here by this file's own test of whether it can have acted on a record:
+COUNTERFACTUAL ATTRIBUTION (NOTE_path2_fifth_pass_2026_09_25, V-3). The fourth pass attributed F-2
+and F-3 per RECORD: one stray separator anywhere in a pull request excused every move on it, of any
+kind, in any direction -- the round-3 blocker itself would have passed on such a record. Every moved
+claim is now attributed per CLAIM, by the repaired instrument with one rule reverted: this file loads
+its own copy of the repaired module from the same bytes (`CF`), and `REVERTS` gives, as this file's own
+code, what each rule's code was before it. A rule is credited with a move only if the copy with that
+rule reverted gives back the baseline claim -- verdict, reason and, for a compatibility claim, detail:
 
-    F-1  the prefix-shape test undots the prefix    no new attribution: against the baseline it
-                                                    restores main's reading, and C-3's accusations
-                                                    are the dotted-prefix exception already here
-    F-2  a diff splits on \\r\\n, \\r, \\n only       `f2_applies`: str.splitlines() and the git split
-                                                    of the diff differ. Any kind, any direction; a new
-                                                    accusation it explains is admitted and COUNTED
-    F-3  `got` reads a [ \\t]* indent                `f3_applies`: an added line the old `got` pattern
-                                                    counts and the new one does not. tests_added only;
-                                                    a new accusation it explains is admitted and COUNTED
-    F-4  an off-tree prefix beside an on-tree one   only_touches CONTRADICTED -> UNCHECKABLE whose reason
-         no longer withdraws a sure accusation      is the off-tree abstention, on a claim with an
-                                                    off-tree prefix key: the safe direction, admitted
+    #97   `_find_path` back to the any-tier loop           #101  the pairing counts nothing
+    #121  `_norm` back to lstrip("./").lower()             R-1   `got` without its U+FEFF
+    F-2   `_diff_lines` back to str.splitlines()           F-3   `got` back to `^\\uFEFF?\\s*def test_`
+    V-1   the definition-line patterns and `hit` back to their fourth-pass forms
+    V-4   `_parent_prefix` reads nothing and `_could_lie_under` is the fourth pass's
 
-Every admitted F-2 / F-3 accusation is listed under `fourth_pass` in the payload, so the operator sees
-how many there were; none is silent.
+Rules C-1, C-2, C-3, R-2, R-3, F-1 and F-4 have no entry of their own: each acts only through a
+reading one of these rules introduced (a dotted key, or the pairing), so reverting #121 or #101
+reverts it too. When no single revert gives the baseline back, the smallest set of two or three
+that does is the attribution; when none does, the move is a violation whatever the table says.
+
+Every rule in the attribution must admit the move. #97, #121 and #101 admit it only if the amended
+table above does (its preconditions and its directions, unchanged); R-1, F-3 and V-1 admit moves of
+the kinds they read; F-2 admits any; V-4 admits an only_touches move to the off-tree abstention. A
+compat2_candidate flip is admitted only when F-2 alone explains it (G-C6); a G-C2 eligibility move only
+when reverting #121 (with a key moved) or F-2 gives the baseline's eligibility back. Every move and new
+accusation a post-amendment rule explains is counted under `attribution` in the payload, by rule, kind
+and transition, and moves toward VERIFIED are counted apart: none is silent.
+
+What the counterfactual cannot see: a defect planted inside a rule's own code reverts with that rule,
+and is caught only by that rule's admission test and by the pinned pairs. The round-3 blocker is such a
+case -- it lives in #121's reading of a dotted prefix -- and the table's direction test catches it.
 """
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
+import itertools
 import json
 import re
 import sqlite3
@@ -98,7 +112,8 @@ ROOT = HERE.parent.parent
 DIFFERENTIAL = ROOT / "web" / "gate" / "differential"
 PREREG = "PREREG_path2_resolution_2026_09_17.md"
 AMENDMENT = "AMENDMENT_path2_resolution_2026_09_17.md"
-NOTE = ["NOTE_path2_third_pass_2026_09_25.md", "NOTE_path2_fourth_pass_2026_09_25.md"]
+NOTE = ["NOTE_path2_third_pass_2026_09_25.md", "NOTE_path2_fourth_pass_2026_09_25.md",
+        "NOTE_path2_fifth_pass_2026_09_25.md"]
 # The baseline is "the instrument before THIS repair". The preregistration named `87dded26`, the
 # origin/main this branch was cut from; the branch has since been rebased onto `98a5c368`, and
 # PATH-1 (#127), the COMPAT-2 port (#126) and DECLARE-1 (#129/#130) landed in between. Scored
@@ -121,16 +136,19 @@ PATH_KINDS = ("file_created", "file_deleted", "file_touched")
 COMPAT_EXTRAS = ("removed", "languages", "surface_removed", "signature_changed", "compat2_candidate")
 PROVENANCE_FILES = ("papers/closed-model-frontier/path2_gates.py", "papers/closed-model-frontier/external1_harness.py",
                     "styxx/diffgate.py")
-# AMENDMENT C-1, written out: one pattern per kind, no \s, \w or \b, one optional leading U+FEFF.
-DEF_TEST = re.compile(r"^\uFEFF?[ \t]*def (test_[^ \t(:]*)")
+# AMENDMENT C-1 as NOTE_path2_fifth_pass V-1 reads it, written out: CPython's indentation (space, tab,
+# form feed) after one optional U+FEFF, keywords separated by the same class, a name ending at an ASCII
+# character that cannot continue it or at the end of the line; no \s, \w or \b.
+DEF_INDENT = r"^\uFEFF?[ \t\f]*"
+DEF_SEP = r"[ \t\f]+"
+NAME_END = r"(?=[\x00-\x2f\x3a-\x40\x5b-\x5e\x60\x7b-\x7f]|$)"
+DEF_TEST = re.compile(DEF_INDENT + r"def (test_[^ \t(:]*)")
 # NOTE_path2_third_pass R-2: the REMOVED side alone accepts `async`, as the instrument does.
-DEF_TEST_REMOVED = re.compile(r"^\uFEFF?[ \t]*(?:async[ \t]+)?def (test_[^ \t(:]*)")
+DEF_TEST_REMOVED = re.compile(DEF_INDENT + r"(?:async" + DEF_SEP + r")?def (test_[^ \t(:]*)")
 # NOTE_path2_third_pass R-3: a dotfile prefix is one dot then a name character; `..` is not.
 _DOTFILE_PREFIX = re.compile(r"^\.[^./\\]")
-# NOTE_path2_fourth_pass F-2 / F-3, written out here rather than borrowed from the repair.
+# NOTE_path2_fourth_pass F-2, written out here rather than borrowed from the repair.
 GIT_LINE_BREAK = re.compile(r"\r\n|\r|\n")
-GOT_BEFORE_F3 = re.compile(r"^\uFEFF?\s*def test_")
-GOT_AFTER_F3 = re.compile(r"^\uFEFF?[ \t]*def test_")
 OFF_TREE_WHY = "is relative to a directory the diff does not name (#121)"
 
 sys.path.insert(0, str(ROOT))  # the checkout FIRST: the repaired instrument is this tree's
@@ -153,6 +171,19 @@ def _git(*args: str) -> str:
     return r.stdout.decode("utf-8", "replace")
 
 
+def _module_from(src: bytes, name: str, where: str) -> types.ModuleType:
+    mod = types.ModuleType(name)
+    mod.__file__ = where
+    # The file carries `from .declare import declaration_pass` (DECLARE-1, on main before this branch).
+    # `styxx.declare` is byte-identical on main and on this branch -- the branch touches one file under
+    # styxx/ -- so resolving the relative import against this checkout's package gives every copy the
+    # same reader main has.
+    mod.__package__ = "styxx"
+    sys.modules[mod.__name__] = mod
+    exec(compile(src.decode("utf-8"), where, "exec"), mod.__dict__)  # noqa: S102
+    return mod
+
+
 def load_base() -> types.ModuleType:
     r = subprocess.run(["git", "-C", str(ROOT), "show", f"{BASE_COMMIT}:styxx/diffgate.py"],
                        capture_output=True, timeout=60)
@@ -161,20 +192,16 @@ def load_base() -> types.ModuleType:
                  f"{r.stderr.decode('utf-8', 'replace')[:200]}")
     if _sha(r.stdout) != BASE_SHA256:
         sys.exit(f"path2_gates: the baseline hashes to {_sha(r.stdout)[:16]}, not {BASE_SHA256[:16]}")
-    mod = types.ModuleType("styxx_diffgate_base")
-    mod.__file__ = f"<git show {BASE_COMMIT[:8]}:styxx/diffgate.py>"
-    # The baseline file carries `from .declare import declaration_pass` (DECLARE-1, on main before
-    # this branch). `styxx.declare` is byte-identical on main and on this branch -- the branch
-    # touches one file under styxx/ -- so resolving the relative import against this checkout's
-    # package gives the baseline the same reader main has.
-    mod.__package__ = "styxx"
-    sys.modules[mod.__name__] = mod
-    exec(compile(r.stdout.decode("utf-8"), mod.__file__, "exec"), mod.__dict__)  # noqa: S102
-    return mod
+    return _module_from(r.stdout, "styxx_diffgate_base", f"<git show {BASE_COMMIT[:8]}:styxx/diffgate.py>")
 
 
 BASE = load_base()
 NEW_SHA256 = _sha(Path(new.__file__).read_bytes())
+# NOTE_path2_fifth_pass V-3: this file's own copy of the repaired instrument, from the same bytes as
+# `new`, which the counterfactual reverts patch and restore. `new` itself is never patched.
+_CF_BYTES = Path(new.__file__).read_bytes()
+CF = _module_from(_CF_BYTES, "styxx_diffgate_counterfactual", f"<copy of {new.__file__}>")
+CF_SHA256 = _sha(_CF_BYTES)
 
 
 def provenance() -> dict:
@@ -183,12 +210,111 @@ def provenance() -> dict:
     return {"scorer_sha256": _sha(Path(__file__).read_bytes()),
             "harness_sha256": _sha((HERE / "external1_harness.py").read_bytes()),
             "repaired_sha256": NEW_SHA256,
+            "counterfactual_copy_sha256": CF_SHA256,
             "baseline_commit": BASE_COMMIT,
             "prereg_baseline_commit": PREREG_BASE_COMMIT,
             "baseline_moved_from_prereg": BASE_COMMIT != PREREG_BASE_COMMIT,
             "git_head": _git("rev-parse", "HEAD").strip(),
             "unmodified_against_head": not dirty,
             "modified": dirty}
+
+
+# ── the counterfactual reverts: each rule's code as it was before the rule, this file's own ─────────
+
+def _find_path_any_tier(m: types.ModuleType):
+    """#97 reverted: the entry clearing any tier, in diff order (the baseline's loop)."""
+    def find_path(status: dict, claimed: str):
+        c = m._norm(claimed)
+        for p, st in status.items():
+            if p == c or p.endswith("/" + c) or Path(p).name == Path(c).name:
+                return p, st
+        return None, None
+    return find_path
+
+
+def _could_lie_under_fourth_pass(path: str, pref: str, raw: str = "") -> bool:
+    """V-4 reverted: NOTE_path2_fourth_pass F-4's test, which dropped every dots-only segment."""
+    want = [seg.lstrip(".") for seg in pref.split("/") if seg.strip(".")]
+    have = [seg.lstrip(".") for seg in path.split("/")]
+    if not want:
+        return True
+    return any(have[i:i + len(want)] == want for i in range(len(have) - len(want) + 1))
+
+
+def _symbol_line_fourth_pass(name: str) -> re.Pattern:
+    return re.compile(r"^\uFEFF?[ \t]*(?:async[ \t]+)?(?:def|class)[ \t]+" + re.escape(name) + r"(?=[ \t(:]|$)")
+
+
+def _symbol_hit_fourth_pass(name: str, added_blob: str) -> bool:
+    return bool(re.search(r"^\s*(?:def|class)\s+" + re.escape(name) + r"\b", added_blob, re.M))
+
+
+def _got_pattern(rules: frozenset) -> str:
+    """`got` with R-1, F-3 and V-1 each reverted or not: R-1 added the U+FEFF, F-3 moved the indent from
+    `\\s*` to `[ \\t]*` (its round-3 form is `^\\uFEFF?\\s*def test_`), V-1 moved it to `[ \\t\\f]*`."""
+    bom = "" if "R-1" in rules else r"\uFEFF?"
+    indent = r"\s*" if "F-3" in rules else (r"[ \t]*" if "V-1" in rules else r"[ \t\f]*")
+    return "^" + bom + indent + "def test_"
+
+
+REVERTS = {
+    "#97": lambda m: {"_find_path": _find_path_any_tier(m)},
+    "#121": lambda m: {"_norm": lambda p: p.replace("\\", "/").lstrip("./").lower()},
+    "#101": lambda m: {"_changed_test_defs": lambda sides, status=None: 0,
+                       "_definition_only_changed": lambda name, sides, status=None: False},
+    "R-1": lambda m: {},                                 # `got` only: see _got_pattern
+    "F-2": lambda m: {"_diff_lines": lambda text: text.splitlines()},
+    "F-3": lambda m: {},                                 # `got` only: see _got_pattern
+    "V-1": lambda m: {"_DEF_TEST_LINE": re.compile(r"^\uFEFF?[ \t]*def (test_[^ \t(:]*)"),
+                      "_DEF_TEST_LINE_REMOVED": re.compile(r"^\uFEFF?[ \t]*(?:async[ \t]+)?def (test_[^ \t(:]*)"),
+                      "_symbol_def_line": _symbol_line_fourth_pass,
+                      "_symbol_def_line_added": _symbol_line_fourth_pass,
+                      "_symbol_hit": _symbol_hit_fourth_pass},
+    "V-4": lambda m: {"_parent_prefix": lambda raw: "", "_could_lie_under": _could_lie_under_fourth_pass},
+}
+RULES = tuple(REVERTS)
+TABLE_RULES = ("#97", "#121", "#101")
+
+
+@contextlib.contextmanager
+def reverted(m: types.ModuleType, rules):
+    """`m` with every rule in `rules` reverted, restored on exit."""
+    rules = frozenset(rules)
+    patch: dict = {}
+    for r in RULES:
+        if r in rules:
+            patch.update(REVERTS[r](m))
+    if rules & {"R-1", "F-3", "V-1"}:
+        patch["_GOT_TEST_LINE"] = _got_pattern(rules)
+    missing = [k for k in patch if not hasattr(m, k)]
+    if missing:
+        sys.exit(f"path2_gates: the repaired module has no {missing}; the counterfactual cannot revert it")
+    saved = {k: getattr(m, k) for k in patch}
+    try:
+        for k, v in patch.items():
+            setattr(m, k, v)
+        yield m
+    finally:
+        for k, v in saved.items():
+            setattr(m, k, v)
+
+
+def signature(c) -> tuple:
+    """What the counterfactual must give back: verdict and reason, and a compatibility claim's detail."""
+    return (c.kind, c.verdict, c.why, json.dumps(c.detail, sort_keys=True) if c.kind == "compat_claim" else "")
+
+
+def admits(rule: str, k: str, vb: str, vn: str, why: str) -> bool:
+    """Whether a post-amendment rule may make this move. The table rules are asked through the table."""
+    if rule in ("R-1", "F-3"):
+        return k == "tests_added"
+    if rule == "V-1":
+        return k in ("tests_added", "symbol_added")
+    if rule == "F-2":
+        return True
+    if rule == "V-4":
+        return k == "only_touches" and vn == "UNCHECKABLE" and why.endswith(OFF_TREE_WHY)
+    raise ValueError(rule)
 
 
 # ── attribution, written out independently of the repair ─────────────────────────────────────
@@ -201,16 +327,9 @@ def git_lines(diff: str) -> list:
     return lines
 
 
-def f2_applies(diff: str) -> bool:
-    """F-2 can have moved this record only if str.splitlines() and the git split read it differently."""
+def split_differs(diff: str) -> bool:
+    """Informational since V-3 (no longer an attribution): str.splitlines() and the git split differ."""
     return diff.splitlines() != git_lines(diff)
-
-
-def f3_applies(diff: str) -> bool:
-    """F-3 can have moved a tests_added claim only if some added line is counted by the old `got`
-    pattern and not by the new one."""
-    added = [ln[1:] for ln in git_lines(diff) if ln.startswith("+") and not ln.startswith("+++")]
-    return any(GOT_BEFORE_F3.match(a) and not GOT_AFTER_F3.match(a) for a in added)
 
 
 def raw_paths(diff: str) -> list:
@@ -316,8 +435,11 @@ def test_def_excess(sides: dict, status: dict) -> bool:
 
 
 def symbol_def_changed(sides: dict, status: dict, name: str) -> bool:
-    rx = re.compile(r"^\uFEFF?[ \t]*(?:async[ \t]+)?(?:def|class)[ \t]+" + re.escape(name) + r"(?=[ \t(:]|$)")
-    return any(a and r for a, r in _pairs(sides, status, lambda lines: sum(1 for x in lines if rx.match(x))))
+    """#101 for symbol_added, as V-1 reads it: the added side without `async`, the removed side with it."""
+    added = re.compile(DEF_INDENT + r"(?:def|class)" + DEF_SEP + re.escape(name) + NAME_END)
+    removed = re.compile(DEF_INDENT + r"(?:async" + DEF_SEP + r")?(?:def|class)" + DEF_SEP + re.escape(name) + NAME_END)
+    return any(a and r for a, r in _pairs(sides, status, lambda lines: sum(1 for x in lines if added.match(x)),
+                                          lambda lines: sum(1 for x in lines if removed.match(x))))
 
 
 def only_touches_new_accusation_allowed(detail: dict, prefixes: list, paths) -> bool:
@@ -347,6 +469,39 @@ def core(c) -> tuple:
     return (c.kind, c.text, json.dumps(d, sort_keys=True))
 
 
+class Counterfactual:
+    """One record's claims under the repaired copy with a set of rules reverted, computed on demand."""
+
+    def __init__(self, summary: str, diff: str):
+        self.summary, self.diff = summary, diff
+        self.cache: dict = {}
+
+    def claims(self, rules) -> list:
+        key = frozenset(rules)
+        if key not in self.cache:
+            with reverted(CF, key):
+                self.cache[key] = CF.gate_diff_text(self.summary, self.diff, run=None, strict=False).claims
+        return self.cache[key]
+
+    def attribute(self, i: int, cb):
+        """(rules, how) for claim `i`: every rule whose single revert gives back the baseline claim;
+        else the smallest set of two or three that does; else (None, "none") or (None, "all rules")."""
+        target = signature(cb)
+
+        def gives_back(rules) -> bool:
+            got = self.claims(rules)
+            return i < len(got) and signature(got[i]) == target
+
+        single = tuple(r for r in RULES if gives_back({r}))
+        if single:
+            return single, "single"
+        for size in (2, 3):
+            for combo in itertools.combinations(RULES, size):
+                if gives_back(combo):
+                    return combo, "joint"
+        return None, ("all rules" if gives_back(RULES) else "none")
+
+
 class Tally:
     def __init__(self, name_prs: bool):
         self.name_prs = name_prs
@@ -362,9 +517,12 @@ class Tally:
         self.compat2_flips = Counter()
         self.fold_exposed_new_verified = 0
         self.excess_new_verified = 0
-        # NOTE_path2_fourth_pass: moves and new accusations admitted under F-2 / F-3 / F-4, by kind
-        self.fourth_pass = {"f2_records": 0, "f3_records": 0, "moves_by_rule": Counter(),
-                            "new_accusations_admitted": Counter(), "f4_withdrawals": 0}
+        # NOTE_path2_fifth_pass V-3: what the counterfactual attributed, by rule set; and every move,
+        # new accusation, new VERIFIED and compat2 flip a post-amendment rule explains.
+        self.attribution = {"records_whose_split_differs": 0, "attributed_by": Counter(),
+                            "joint_attributions": 0, "moves_admitted_by_rule": Counter(),
+                            "new_accusations_admitted": Counter(), "new_verified_admitted": Counter(),
+                            "compat2_flips_admitted": Counter(), "f4_withdrawals": 0}
 
     def violate(self, rule: str, pid) -> None:
         self.violations[rule] += 1
@@ -393,15 +551,12 @@ class Tally:
         base_status = BASE.parse_unified_diff(diff)[0]
         status = new.parse_unified_diff(diff)[0]
         sides = new.parse_unified_diff_sides(diff)
+        self.attribution["records_whose_split_differs"] += split_differs(diff)
+        cf = Counterfactual(summary, diff)
         record_moved = False
-        # NOTE_path2_fourth_pass: F-2 and F-3 explain a move only where the amended table below does
-        # not, and only on a record where they can have acted; what they explain is counted, not hidden.
-        f2, f3 = f2_applies(diff), f3_applies(diff)
-        self.fourth_pass["f2_records"] += f2
-        self.fourth_pass["f3_records"] += f3
-        for cb, cn in zip(gb.claims, gn.claims):
-            self._claim(pid, cb, cn, paths, fold_repeats, coll, moved_pr, moved_old, moved_new,
-                        base_status, status, sides, f2, f3)
+        for i, (cb, cn) in enumerate(zip(gb.claims, gn.claims)):
+            self._claim(pid, i, cb, cn, paths, fold_repeats, coll, moved_pr, moved_old, moved_new,
+                        base_status, status, sides, cf)
             if (cb.verdict, cb.why) != (cn.verdict, cn.why) or (cb.kind == "compat_claim" and cb.detail != cn.detail):
                 record_moved = True
         if record_moved:
@@ -409,29 +564,10 @@ class Tally:
             if self.name_prs:
                 self.moved_records.append(pid)
 
-    def _claim(self, pid, cb, cn, paths, fold_repeats, coll, moved_pr, moved_old, moved_new,
-               base_status, status, sides, f2, f3) -> None:
-        k = cb.kind
-        self.claims_by_verdict["baseline"][cb.verdict] += 1
-        self.claims_by_verdict["repaired"][cn.verdict] += 1
-        if cb.verdict == "CONTRADICTED":
-            self.accusations_by_kind["baseline"][k] += 1
-        if cn.verdict == "CONTRADICTED":
-            self.accusations_by_kind["repaired"][k] += 1
-        if k == "compat_claim":
-            a, b = cb.detail.get("compat2_candidate"), cn.detail.get("compat2_candidate")
-            if a != b:
-                self.compat2_flips[f"{a}->{b}"] += 1
-                self.violate("G-C6_compat2_candidate_flipped", pid)
-        moved = (cb.verdict, cb.why) != (cn.verdict, cn.why) or (k == "compat_claim" and cb.detail != cn.detail)
-        if not moved:
-            return
-        vb, vn = cb.verdict, cn.verdict
-        if vb == vn:
-            self.reason_only[k] += 1
-        else:
-            self.transitions[f"{k}: {vb} -> {vn}"] += 1
-        pending: list = []              # what the amended table would call a violation for this claim
+    def _table(self, k, cb, cn, vb, vn, paths, coll, moved_pr, moved_old, moved_new,
+               base_status, status, sides, fold_repeats) -> list:
+        """The amended table, as written: what it would call a violation for this moved claim."""
+        pending: list = []
         prefixes = [cb.detail.get("prefix", "")] + ([cb.detail["prefix2"]] if cb.detail.get("prefix2") else [])
         ot_exception = (k == "only_touches" and vb == "VERIFIED" and vn == "CONTRADICTED"
                         and only_touches_new_accusation_allowed(cb.detail, prefixes, paths))
@@ -442,7 +578,6 @@ class Tally:
                          and cn.why.endswith(OFF_TREE_WHY)
                          and any(off_tree_key(new._norm(x).rstrip("/.")) for x in prefixes))
         if vn == "CONTRADICTED" and vb != "CONTRADICTED":
-            self.new_accusations[k] += 1
             if not ((k == "files_changed_count" and coll) or ot_exception):
                 pending.append(f"G-C3_new_accusation:{k}")
         if k in PATH_KINDS:
@@ -464,19 +599,12 @@ class Tally:
             elif vb != vn and not ((vb == "VERIFIED" and vn == "UNCHECKABLE" and cn.why.endswith("(#121)"))
                                    or ot_exception or f4_withdrawal):
                 pending.append(f"G-C4_direction:{k}")
-            if f4_withdrawal:
-                self.fourth_pass["f4_withdrawals"] += 1
         elif k == "tests_added":
             if not test_def_changed(sides, status):
                 pending.append(f"G-C4_unattributed:{k}")
             elif vb != vn and (vb, vn) not in {("VERIFIED", "UNCHECKABLE"), ("CONTRADICTED", "VERIFIED"),
                                                ("CONTRADICTED", "UNCHECKABLE"), ("UNCHECKABLE", "VERIFIED")}:
                 pending.append(f"G-C4_direction:{k}")
-            if vn == "VERIFIED" and vb != "VERIFIED":
-                if fold_repeats:
-                    self.fold_exposed_new_verified += 1
-                if test_def_excess(sides, status):
-                    self.excess_new_verified += 1
         elif k == "symbol_added":
             if not symbol_def_changed(sides, status, cb.detail.get("name", "")):
                 pending.append(f"G-C4_unattributed:{k}")
@@ -490,23 +618,81 @@ class Tally:
                 pending.append(f"G-C4_direction:{k}")
         else:                                   # tests_pass, and any kind the table does not name
             pending.append(f"G-C4_unattributed:{k}")
-        if not pending:
+        return pending, f4_withdrawal
+
+    def _claim(self, pid, i, cb, cn, paths, fold_repeats, coll, moved_pr, moved_old, moved_new,
+               base_status, status, sides, cf) -> None:
+        k = cb.kind
+        self.claims_by_verdict["baseline"][cb.verdict] += 1
+        self.claims_by_verdict["repaired"][cn.verdict] += 1
+        if cb.verdict == "CONTRADICTED":
+            self.accusations_by_kind["baseline"][k] += 1
+        if cn.verdict == "CONTRADICTED":
+            self.accusations_by_kind["repaired"][k] += 1
+        flip = None
+        if k == "compat_claim":
+            a, b = cb.detail.get("compat2_candidate"), cn.detail.get("compat2_candidate")
+            if a != b:
+                flip = f"{a}->{b}"
+                self.compat2_flips[flip] += 1
+        moved = (cb.verdict, cb.why) != (cn.verdict, cn.why) or (k == "compat_claim" and cb.detail != cn.detail)
+        if not moved:
             return
-        # NOTE_path2_fourth_pass: what the amended table cannot explain, F-2 (any kind) or F-3 (tests_added
-        # only) may, on a record where it can have acted. Admitted, and counted by rule, kind and move.
-        rule = "F-2" if f2 else ("F-3" if f3 and k == "tests_added" else None)
-        if rule is None:
-            for r in pending:
-                self.violate(r, pid)
-            return
-        self.fourth_pass["moves_by_rule"][f"{rule} {k}: {vb} -> {vn}"] += 1
+        vb, vn = cb.verdict, cn.verdict
+        if vb == vn:
+            self.reason_only[k] += 1
+        else:
+            self.transitions[f"{k}: {vb} -> {vn}"] += 1
         if vn == "CONTRADICTED" and vb != "CONTRADICTED":
-            self.fourth_pass["new_accusations_admitted"][f"{rule} {k}"] += 1
+            self.new_accusations[k] += 1
+        if k == "tests_added" and vn == "VERIFIED" and vb != "VERIFIED":
+            if fold_repeats:
+                self.fold_exposed_new_verified += 1
+            if test_def_excess(sides, status):
+                self.excess_new_verified += 1
+        pending, f4_withdrawal = self._table(k, cb, cn, vb, vn, paths, coll, moved_pr, moved_old, moved_new,
+                                             base_status, status, sides, fold_repeats)
+        # NOTE_path2_fifth_pass V-3: the counterfactual decides WHICH rule made the move; every rule in the
+        # attribution must then admit it -- the table rules through the table, the others by `admits`.
+        rules, how = cf.attribute(i, cb)
+        if rules is None:
+            self.violate(f"G-C4_unattributed_counterfactual:{k}" + (":diffuse" if how == "all rules" else ""), pid)
+            if flip is not None:
+                self.violate("G-C6_compat2_candidate_flipped", pid)
+            return
+        refused = []
+        for r in rules:
+            if r in TABLE_RULES:
+                refused += pending
+            elif not admits(r, k, vb, vn, cn.why):
+                refused.append(f"G-C4_direction:{k}:{r}")
+        if flip is not None and tuple(rules) != ("F-2",):
+            refused.append("G-C6_compat2_candidate_flipped")
+        if refused:
+            for v in dict.fromkeys(refused):
+                self.violate(v, pid)
+            return
+        label = "+".join(rules)
+        self.attribution["attributed_by"][label] += 1
+        self.attribution["joint_attributions"] += how == "joint"
+        if f4_withdrawal and any(r in TABLE_RULES for r in rules):
+            self.attribution["f4_withdrawals"] += 1
+        post = [r for r in rules if r not in TABLE_RULES]
+        if post:
+            tag = "+".join(post)
+            self.attribution["moves_admitted_by_rule"][f"{tag} {k}: {vb} -> {vn}"] += 1
+            if vn == "CONTRADICTED" and vb != "CONTRADICTED":
+                self.attribution["new_accusations_admitted"][f"{tag} {k}"] += 1
+            if vn == "VERIFIED" and vb != "VERIFIED":
+                self.attribution["new_verified_admitted"][f"{tag} {k}"] += 1
+            if flip is not None:
+                self.attribution["compat2_flips_admitted"][f"{tag} {flip}"] += 1
 
     def report(self, prov: dict) -> dict:
         if not prov["unmodified_against_head"]:
             self.violate("G-C0_modified_tree", "(provenance)")
         blocking = {r: v for r, v in self.violations.items()}
+        att = self.attribution
         return {
             "provenance": prov,
             "counts": dict(self.n),
@@ -516,11 +702,16 @@ class Tally:
             "claims_by_verdict": {k: dict(v) for k, v in self.claims_by_verdict.items()},
             "accusations_by_kind": {k: dict(sorted(v.items())) for k, v in self.accusations_by_kind.items()},
             "compat2_candidate_flips": dict(self.compat2_flips),
-            "fourth_pass": {"f2_records": self.fourth_pass["f2_records"],
-                            "f3_records": self.fourth_pass["f3_records"],
-                            "moves_admitted_by_rule": dict(sorted(self.fourth_pass["moves_by_rule"].items())),
-                            "new_accusations_admitted": dict(sorted(self.fourth_pass["new_accusations_admitted"].items())),
-                            "f4_withdrawals": self.fourth_pass["f4_withdrawals"]},
+            "attribution": {"method": "counterfactual, per claim (NOTE_path2_fifth_pass V-3)",
+                            "rules": list(RULES),
+                            "records_whose_split_differs": att["records_whose_split_differs"],
+                            "attributed_by": dict(sorted(att["attributed_by"].items())),
+                            "joint_attributions": att["joint_attributions"],
+                            "moves_admitted_by_rule": dict(sorted(att["moves_admitted_by_rule"].items())),
+                            "new_accusations_admitted": dict(sorted(att["new_accusations_admitted"].items())),
+                            "new_verified_admitted": dict(sorted(att["new_verified_admitted"].items())),
+                            "compat2_flips_admitted": dict(sorted(att["compat2_flips_admitted"].items())),
+                            "f4_withdrawals": att["f4_withdrawals"]},
             "new_verified_tests_added_on_prs_whose_rows_repeat_a_filename": self.fold_exposed_new_verified,
             "new_verified_tests_added_where_a_file_adds_a_changed_name_more_often_than_it_removes_it":
                 self.excess_new_verified,
@@ -572,6 +763,14 @@ def run_differential(out: Path) -> int:
     return 0 if not t.violations else 1
 
 
+def eligible(mod: types.ModuleType, diff: str, net: dict) -> bool:
+    """EXTERNAL-1's eligibility for one instrument: its parse of the reconstruction equals the implied
+    status map, keyed by that instrument's own `_norm`."""
+    code = {"added": "A", "removed": "D"}
+    implied = {mod._norm(fn): code.get(st, "M") for fn, st in net.items()}
+    return mod.parse_unified_diff(diff)[0] == implied
+
+
 def run_corpus(shelf: Path, limit: int | None, out: Path) -> int:
     if not shelf.exists():
         sys.exit(f"path2_gates: no shelf at {shelf}")
@@ -602,25 +801,23 @@ def run_corpus(shelf: Path, limit: int | None, out: Path) -> int:
             continue
         diff, _implied = reconstruct(files)
         net = _fold_statuses(files)
-        code = {"added": "A", "removed": "D"}
-        ok = {}
-        for tag, mod in (("baseline", BASE), ("repaired", new)):
-            implied = {}
-            for fn, st in net.items():
-                implied[mod._norm(fn)] = code.get(st, "M")
-            ok[tag] = mod.parse_unified_diff(diff)[0] == implied
+        ok = {"baseline": eligible(BASE, diff, net), "repaired": eligible(new, diff, net)}
+        for tag in ok:
             if not ok[tag]:
                 excl[tag]["reconstruction_mismatch"] += 1
         names = [fn for fn in net]
         if ok["baseline"] != ok["repaired"]:
             elig_moves["baseline_only" if ok["baseline"] else "repaired_only"] += 1
-            if not key_moved(names):
-                # NOTE_path2_fourth_pass F-2: a parse that splits the diff as git does can make a
-                # reconstruction match (or stop matching) with no key moving; admitted and counted.
-                if f2_applies(diff):
-                    elig_moves["attributed_to_F-2"] += 1
-                else:
-                    t.violate("G-C2_eligibility_moved_without_a_key", pid)
+            # NOTE_path2_fifth_pass V-3: an eligibility move is attributed as a claim is -- by the copy with
+            # one rule reverted giving the baseline's eligibility back. #121 needs a moved key besides
+            # (the table's own test); F-2 is admitted and counted.
+            back = [r for r in RULES if _elig_reverted(r, diff, net) == ok["baseline"]]
+            if "#121" in back and key_moved(names):
+                elig_moves["attributed_to_#121"] += 1
+            elif "F-2" in back:
+                elig_moves["attributed_to_F-2"] += 1
+            else:
+                t.violate("G-C2_eligibility_moved_without_a_rule", pid)
         if not (ok["baseline"] and ok["repaired"]):
             continue
         rows = Counter(fn for fn, _s, _p in files if fn)
@@ -642,6 +839,11 @@ def run_corpus(shelf: Path, limit: int | None, out: Path) -> int:
     for rule, pid in t.violating:
         print(f"VIOLATION {rule} pr_id={pid}", file=sys.stderr)
     return 0 if not t.violations else 1
+
+
+def _elig_reverted(rule: str, diff: str, net: dict) -> bool:
+    with reverted(CF, {rule}):
+        return eligible(CF, diff, net)
 
 
 def main() -> int:
