@@ -899,12 +899,13 @@
    "claims": [
     [
      "symbol_added",
-     "VERIFIED",
-     "added lines do define function 'backoff'"
+     "UNCHECKABLE",
+     "added lines define function 'backoff' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_fifth_pass V-1: was VERIFIED (AMENDMENT limit 3, as ERRATUM item 2 restated it); the symbol pairing now ends a name where `hit` does, so a changed generic pairs"
  },
  {
   "id": "path2:r4-a-function-made-generic-still-verifies",
@@ -915,12 +916,13 @@
    "claims": [
     [
      "symbol_added",
-     "VERIFIED",
-     "added lines do define function 'backoff'"
+     "UNCHECKABLE",
+     "added lines define function 'backoff' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_fifth_pass V-1: was VERIFIED (AMENDMENT limit 3); a function made generic is a changed definition, and the pairing now reads its `[`"
  },
  {
   "id": "path2:r4-an-nbsp-indented-removed-definition-is-not-read",
@@ -1092,21 +1094,22 @@
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+\fdef test_a():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
      "VERIFIED",
-     "diff adds 0 test functions, claim says 0"
+     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
     ],
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 0 test functions, claim says 1"
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 1; a changed test is not an added one (#101)"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_fifth_pass V-1: was VERIFIED / CONTRADICTED; a form feed is CPython indentation, so the re-indent pairs and 'Added 1 test.' abstains (#101)"
  },
  {
   "id": "path2:f2-a-line-separator-is-not-a-line-break",
@@ -1234,16 +1237,17 @@
   "summary": "Adds function foo.",
   "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1,2 @@\n x = 0\n+\u2028def foo():\n",
   "expect": {
-   "verdict": "PASS",
+   "verdict": "FAIL",
    "claims": [
     [
      "symbol_added",
-     "VERIFIED",
-     "added lines do define function 'foo'"
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_fifth_pass V-1: was VERIFIED, pinned as a limit; `hit` reads CPython's indentation only, so the limit this id names is closed and the line defines nothing"
  },
  {
   "id": "path2:f3-an-nbsp-reindent-is-not-an-added-test",
@@ -1330,6 +1334,592 @@
      "only_touches",
      "CONTRADICTED",
      "paths outside 'src' and '../docs': ['evil/x.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-a-form-feed-reindented-function-is-changed",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1,2 +1,2 @@\n-def foo():\n+\fdef foo():\n     pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "added lines define function 'foo' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-a-form-feed-led-new-test-is-counted",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,3 @@\n x = 0\n+\fdef test_x():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-a-vertical-tab-reindented-function-defines-nothing",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1,2 +1,2 @@\n-def foo():\n+\u000bdef foo():\n     pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-an-nbsp-led-new-function-defines-nothing",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+ def foo():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-a-form-feed-separated-changed-function-pairs",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1 @@\n-def\ffoo():\n+def\ffoo(x):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "added lines define function 'foo' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-a-changed-generic-class-pairs",
+  "summary": "Adds class Stack.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1 @@\n-class Stack[T]:\n+class Stack[T]:  # typed\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "added lines define class 'Stack' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-a-name-followed-by-a-non-ascii-letter-is-another-name",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+def fooé():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-a-name-followed-by-a-middle-dot-is-another-name",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+def foo·():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-a-def-after-a-mid-line-line-separator-is-not-a-definition",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+x = 1\u2028def foo():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-limit-a-bom-led-def-reads-as-a-definition-wherever-it-stands",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+﻿def foo():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-a-next-line-led-def-is-not-a-definition",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+\u0085def foo():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-a-file-separator-led-def-is-not-a-definition",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+\u001cdef foo():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-limit-an-added-async-def-is-not-read",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+async def foo():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v1-limit-an-added-async-def-beside-a-changed-one-is-not-read",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n-def foo():\n+def foo(x):\n+async def foo():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "added lines define function 'foo' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-compat-python-reads-pythons-whitespace",
+  "summary": "No breaking changes.",
+  "diff": "--- a/src/api.py\n+++ b/src/api.py\n@@ -1,2 +1 @@\n-def\u0085public_api():\n-    return 1\n+x = 1\n--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-a = 1\n+a = 2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: src/api.py: public_api"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-compat-typescript-reads-pythons-whitespace",
+  "summary": "No breaking changes.",
+  "diff": "--- a/src/api.ts\n+++ b/src/api.ts\n@@ -1,2 +1 @@\n-export\u0085function publicApi() {\n-}\n+const x = 1;\n--- a/src/b.ts\n+++ b/src/b.ts\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: src/api.ts: publicApi"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-compat-go-reads-pythons-whitespace",
+  "summary": "No breaking changes.",
+  "diff": "--- a/pkg/api.go\n+++ b/pkg/api.go\n@@ -1,2 +1 @@\n-func\u0085PublicApi() {\n-}\n+var x = 1\n--- a/pkg/b.go\n+++ b/pkg/b.go\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: pkg/api.go: PublicApi"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-compat-rust-reads-pythons-whitespace",
+  "summary": "No breaking changes.",
+  "diff": "--- a/src/api.rs\n+++ b/src/api.rs\n@@ -1,2 +1 @@\n-\u0085pub fn public_api() {\n-}\n+let x = 1;\n--- a/src/b.rs\n+++ b/src/b.rs\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: src/api.rs: public_api"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-compat-java-reads-pythons-whitespace",
+  "summary": "No breaking changes.",
+  "diff": "--- a/src/Api.java\n+++ b/src/Api.java\n@@ -1,2 +1 @@\n-public\u0085static void publicApi() {\n-}\n+int x = 1;\n--- a/src/B.java\n+++ b/src/B.java\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: src/api.java: publicApi"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-compat-a-file-separator-is-pythons-whitespace",
+  "summary": "No breaking changes.",
+  "diff": "--- a/src/api.py\n+++ b/src/api.py\n@@ -1,2 +1 @@\n-def\u001cpublic_api():\n-    return 1\n+x = 1\n--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-a = 1\n+a = 2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: src/api.py: public_api"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-compat-a-unit-separator-is-pythons-whitespace",
+  "summary": "No breaking changes.",
+  "diff": "--- a/src/api.rs\n+++ b/src/api.rs\n@@ -1,2 +1 @@\n-\u001fpub fn public_api() {\n-}\n+let x = 1;\n--- a/src/b.rs\n+++ b/src/b.rs\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: src/api.rs: public_api"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-compat-a-bom-is-not-whitespace",
+  "summary": "No breaking changes.",
+  "diff": "--- a/src/api.ts\n+++ b/src/api.ts\n@@ -1,2 +1 @@\n-export﻿function publicApi() {\n-}\n+const x = 1;\n--- a/src/b.ts\n+++ b/src/b.ts\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; no public top-level definition removed (js/ts read; behaviour beyond names not checked)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-compat-a-name-followed-by-a-non-ascii-letter-is-not-a-reference",
+  "summary": "No breaking changes.",
+  "diff": "--- a/src/api.py\n+++ b/src/api.py\n@@ -1,2 +1,2 @@\n-def public_api():\n-    return 1\n+def public_apié():\n+    return 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: src/api.py: public_api"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-compat-a-non-ascii-name-is-read-whole",
+  "summary": "No breaking changes.",
+  "diff": "--- a/src/api.go\n+++ b/src/api.go\n@@ -1,2 +1 @@\n-func Publicé() {\n-}\n+var x = 1\n--- a/src/b.go\n+++ b/src/b.go\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: src/api.go: Publicé"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-compat-a-parameter-list-collapses-pythons-whitespace",
+  "summary": "No breaking changes.",
+  "diff": "--- a/src/api.py\n+++ b/src/api.py\n@@ -1 +1 @@\n-def public_api(a,\u0085b):\n+def public_api(a, b):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; no public top-level definition removed (python read; behaviour beyond names not checked)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-a-header-path-is-stripped-as-python-strips-it",
+  "summary": "Modified src/a.py.",
+  "diff": "--- a/src/a.py\u0085\n+++ b/src/a.py\u0085\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/a.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-a-bom-after-a-header-path-is-kept",
+  "summary": "Modified src/a.py.",
+  "diff": "--- a/src/a.py﻿\n+++ b/src/a.py﻿\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "'src/a.py' does not appear in the diff — accusation WITHHELD: this class failed EXTERNAL-1 precision (0.23 vs 0.95 floor), disabled pending repair"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-a-binary-header-holding-a-line-separator-registers-its-file",
+  "summary": "1 file changed. Only touches docs/.",
+  "diff": "diff --git a/docs/a\u2028b.png b/docs/c.png\nBinary files a/docs/a\u2028b.png and b/docs/c.png differ\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-a-binary-deletion-line-holding-a-line-separator",
+  "summary": "Deleted c.png.",
+  "diff": "diff --git a/docs\u2028x/c.png b/docs\u2028x/c.png\nBinary files a/docs\u2028x/c.png and /dev/null differ\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "VERIFIED",
+     "diff status 'D' for 'docs\\u2028x/c.png'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v2-a-reason-prints-a-path-as-python-repr-does",
+  "summary": "Only touches src/.",
+  "diff": "--- a/a\u2028b c.py\n+++ b/a\u2028b c.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['a\\u2028b\\xa0c.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v4-a-dotdot-after-a-named-segment-could-hold-anything",
+  "summary": "Only modified `src/` and `../src/../docs` as specified.",
+  "diff": "--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix '../src/../docs' is relative to a directory the diff does not name (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v4-a-prefix-ending-in-dotdot-could-hold-anything",
+  "summary": "Only modified `src/` and `../docs/..` as specified.",
+  "diff": "--- a/evil/x.py\n+++ b/evil/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix '../docs/..' is relative to a directory the diff does not name (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v4-a-dotfile-parent-before-a-sentence-period-is-off-tree",
+  "summary": "Only touches .github/../.",
+  "diff": "--- a/github/github/src/f.py\n+++ b/github/github/src/f.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix '.github/..' is relative to a directory the diff does not name (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v4-limit-a-dotted-current-directory-before-a-period-reads-as-a-parent",
+  "summary": "Only touches docs/..",
+  "diff": "--- a/lib/a.py\n+++ b/lib/a.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix 'docs/..' is relative to a directory the diff does not name (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v4-f4-filters-on-the-off-tree-prefix-only",
+  "summary": "Only modified `src/` and `../docs` as specified.",
+  "diff": "--- a/lib/src/x.py\n+++ b/lib/src/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src' and '../docs': ['lib/src/x.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v4-f4-two-off-tree-prefixes-with-no-on-tree-one-abstain",
+  "summary": "Only touches ../a/ and ../docs/.",
+  "diff": "--- a/evil/x.py\n+++ b/evil/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix '../a' is relative to a directory the diff does not name (#121)"
     ]
    ],
    "uncovered_sentences": 0
