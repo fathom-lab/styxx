@@ -60,9 +60,10 @@ inputs:
     default: ""
   styxx-source:
     description: >-
-      What to pip install to get styxx.sworn and styxx.harness. Default: the action's own checkout
-      (styxx.sworn is not in any release yet, so the plan says clone at a pinned commit, not pip
-      install). Empty skips the install because the job already installed it.
+      What to pip install to get styxx.sworn and styxx.harness. Default: the action's own checkout,
+      so the verifier is the bytes at the commit the action is pinned to (the plan's cold-start rule:
+      clone at a pinned commit). styxx.sworn is on PyPI from styxx 7.48.0, so `styxx==7.48.0` installs
+      that release instead. Empty skips the install because the job already installed it.
     required: false
     default: "${{ github.action_path }}/.."
 

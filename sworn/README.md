@@ -62,10 +62,11 @@ jobs:
 
 `GITHUB_SHA` on a `pull_request` event is a merge commit the author could not have named; the
 action verifies at `pull_request.head.sha` and reads DID NOT RUN when that commit is not in the
-checkout. Pin the action to a commit: `styxx.sworn` is not in any release, and the plan's
-cold-start rule is *clone at a pinned commit, not pip install*. By default the action installs
-styxx from its own checkout; set `styxx-source: ""` when the job already installed it (this
-repository's own example does).
+checkout. Pin the action to a commit: the plan's cold-start rule is *clone at a pinned commit*,
+so by default the action installs styxx from its own checkout, the bytes at that commit.
+`styxx.sworn` is on PyPI from styxx 7.48.0; set `styxx-source: "styxx==7.48.0"` to install that
+release instead, or `styxx-source: ""` when the job already installed it (this repository's own
+example does).
 
 ## What the author may cite
 
