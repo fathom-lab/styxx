@@ -27,12 +27,37 @@ imported unchanged): an empty body, no file records, or a reconstruction whose p
 implied status map excludes the PR -- evaluated per instrument, with the implied map keyed by that
 instrument's own `_norm`.
 
-The attribution rules are the amended table, implemented here independently of the repair (the tiered
-and any-tier resolutions, the one-to-one definition pairing, the key comparisons and the dot-miss
-exception are written out below, not imported from the repaired module). #121 is attributed per claim
-wherever the claim names something: a path claim by its own key or the entry it resolves to, a
-compatibility claim by the paths in its detail; `only_touches` reads every path of the PR, so the PR's
-moved keys are the claim's.
+The attribution rules are the amended table, written out below rather than imported: the tiered and
+any-tier resolutions (`tiered`, `any_tier`), the one-to-one definition pairing (`_pairs`,
+`_test_counts`, `DEF_TEST`, `symbol_def_changed`) and the dot-miss / dotted-prefix exception
+(`only_touches_new_accusation_allowed`) are this file's own code.
+
+WHAT IS NOT INDEPENDENT (NOTE_path2_third_pass_2026_09_25, R-5; the earlier wording overstated this).
+The scorer calls the repaired module for its inputs, and a defect in any of these would be attributed
+to #121 by the scorer that is supposed to catch it:
+
+    new._norm                    every key comparison: key_moved, moved_keys, collision,
+                                 path_claim_by121, resolutions_differ, the only_touches prefix test
+                                 and the dotted-prefix / dotdot exception
+    new.parse_unified_diff       the repaired status map (the baseline's comes from BASE)
+    new.parse_unified_diff_sides the added/removed sides the definition rules read
+    new._header_paths            the `diff --git` half of raw_paths
+    new.gate_diff_text           the repaired verdicts themselves, necessarily
+
+`_norm` is the one of these the attribution leans on hardest, so G-C4 now carries a blocking
+key-shape check: a key may move ONLY by dropping leading dots, i.e. the repaired key with `./`
+stripped from its front is the baseline key. A `_norm` that stopped lower-casing, or that moved a key
+any other way, fails `G-C4_key_moved_not_by_a_dot` instead of being attributed to #121. The unit
+tests remain the guard for what the check cannot see.
+
+#121 is attributed per claim wherever the claim names something: a path claim by its own key or the
+entry it resolves to, a compatibility claim by the paths in its detail; `only_touches` reads every
+path of the PR, so the PR's moved keys are the claim's.
+
+Inputs (G-C0): in differential mode every corpus file is hashed into the payload and a missing one is
+a FAILURE, not a note on stderr -- the payload is meant to be the RESULT's receipt, and a receipt that
+cannot say which corpus it read is not one. Corpus mode still records only the shelf's file name; its
+size and row counts are owed (NOTE_path2_third_pass, R-5).
 """
 from __future__ import annotations
 
@@ -53,16 +78,35 @@ ROOT = HERE.parent.parent
 DIFFERENTIAL = ROOT / "web" / "gate" / "differential"
 PREREG = "PREREG_path2_resolution_2026_09_17.md"
 AMENDMENT = "AMENDMENT_path2_resolution_2026_09_17.md"
-BASE_COMMIT = "87dded26377a2d0cee1d872a7af9584646db5199"
-BASE_SHA256 = "473a7dd7c2dce7b1fefd07eaba27291090dd351a0c108b28f4812c7dc77f536d"
+NOTE = "NOTE_path2_third_pass_2026_09_25.md"
+# The baseline is "the instrument before THIS repair". The preregistration named `87dded26`, the
+# origin/main this branch was cut from; the branch has since been rebased onto `98a5c368`, and
+# PATH-1 (#127), the COMPAT-2 port (#126) and DECLARE-1 (#129/#130) landed in between. Scored
+# against `87dded26` the gates read those three changes as PATH-2's and fail: 9 G-C1 claim-set
+# differences, 4 unattributed `only_touches` moves and 2 unattributed `tests_added` moves, none of
+# them this branch's. The baseline therefore moves to the rebase target, so that every move the
+# gates see is a move THIS branch makes. This is a change to the protocol the preregistration set
+# out, and it is recorded in NOTE_path2_third_pass_2026_09_25 (R-6) rather than made quietly. The
+# preregistered baseline is kept beside it and written into every payload.
+PREREG_BASE_COMMIT = "87dded26377a2d0cee1d872a7af9584646db5199"
+PREREG_BASE_SHA256 = "473a7dd7c2dce7b1fefd07eaba27291090dd351a0c108b28f4812c7dc77f536d"
+BASE_COMMIT = "98a5c368ba9ffa242c6862e021df7f8bad2ed8e6"
+BASE_SHA256 = "9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb"
+# Every pinned-pair file the differential harness reads, so the scorer sees the same corpus the
+# differential does. compat2/path1/declare1 arrived on main while this branch was open.
 DIFFERENTIAL_FILES = ("corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json",
-                      "bin1_pairs.json", "path2_pairs.json")
+                      "bin1_pairs.json", "compat2_pairs.json", "path1_pairs.json", "declare1_pairs.json",
+                      "path2_pairs.json")
 PATH_KINDS = ("file_created", "file_deleted", "file_touched")
 COMPAT_EXTRAS = ("removed", "languages", "surface_removed", "signature_changed", "compat2_candidate")
 PROVENANCE_FILES = ("papers/closed-model-frontier/path2_gates.py", "papers/closed-model-frontier/external1_harness.py",
                     "styxx/diffgate.py")
 # AMENDMENT C-1, written out: one pattern per kind, no \s, \w or \b, one optional leading U+FEFF.
 DEF_TEST = re.compile(r"^\uFEFF?[ \t]*def (test_[^ \t(:]*)")
+# NOTE_path2_third_pass R-2: the REMOVED side alone accepts `async`, as the instrument does.
+DEF_TEST_REMOVED = re.compile(r"^\uFEFF?[ \t]*(?:async[ \t]+)?def (test_[^ \t(:]*)")
+# NOTE_path2_third_pass R-3: a dotfile prefix is one dot then a name character; `..` is not.
+_DOTFILE_PREFIX = re.compile(r"^\.[^./\\]")
 
 sys.path.insert(0, str(ROOT))  # the checkout FIRST: the repaired instrument is this tree's
 import styxx.diffgate as new  # noqa: E402
@@ -94,6 +138,11 @@ def load_base() -> types.ModuleType:
         sys.exit(f"path2_gates: the baseline hashes to {_sha(r.stdout)[:16]}, not {BASE_SHA256[:16]}")
     mod = types.ModuleType("styxx_diffgate_base")
     mod.__file__ = f"<git show {BASE_COMMIT[:8]}:styxx/diffgate.py>"
+    # The baseline file carries `from .declare import declaration_pass` (DECLARE-1, on main before
+    # this branch). `styxx.declare` is byte-identical on main and on this branch -- the branch
+    # touches one file under styxx/ -- so resolving the relative import against this checkout's
+    # package gives the baseline the same reader main has.
+    mod.__package__ = "styxx"
     sys.modules[mod.__name__] = mod
     exec(compile(r.stdout.decode("utf-8"), mod.__file__, "exec"), mod.__dict__)  # noqa: S102
     return mod
@@ -109,6 +158,9 @@ def provenance() -> dict:
     return {"scorer_sha256": _sha(Path(__file__).read_bytes()),
             "harness_sha256": _sha((HERE / "external1_harness.py").read_bytes()),
             "repaired_sha256": NEW_SHA256,
+            "baseline_commit": BASE_COMMIT,
+            "prereg_baseline_commit": PREREG_BASE_COMMIT,
+            "baseline_moved_from_prereg": BASE_COMMIT != PREREG_BASE_COMMIT,
             "git_head": _git("rev-parse", "HEAD").strip(),
             "unmodified_against_head": not dirty,
             "modified": dirty}
@@ -137,6 +189,16 @@ def moved_keys(paths) -> tuple[set, set]:
     """(baseline keys, repaired keys) of the filenames whose key moved."""
     moved = [p for p in paths if BASE._norm(p) != new._norm(p)]
     return {BASE._norm(p) for p in moved}, {new._norm(p) for p in moved}
+
+
+def key_shape_violations(tokens) -> list:
+    """NOTE_path2_third_pass R-5, blocking. #121 widened `_norm` in exactly one way: a leading run of
+    `/` and `./` segments is dropped instead of every leading dot and slash. So for ANY token, the
+    repaired key with `./` stripped from its front must be the baseline key. A `_norm` that moved a
+    key any other way -- stopped lower-casing, dropped a segment, changed a separator -- would have
+    its moves attributed to #121 by every rule below, because those rules ask only whether the key
+    moved. This asks HOW."""
+    return [p for p in tokens if new._norm(p).lstrip("./") != BASE._norm(p)]
 
 
 def collision(paths) -> bool:
@@ -177,13 +239,15 @@ def path_claim_by121(claimed: str, base_status: dict, status: dict, moved_old: s
             or tiered(status, new._norm(claimed)) in moved_new)
 
 
-def _pairs(sides: dict, status: dict, rx_for) -> list:
-    """Per file whose repaired status is not `A`: (added count, removed count) under `rx_for`."""
+def _pairs(sides: dict, status: dict, rx_for, rx_for_removed=None) -> list:
+    """Per file whose repaired status is not `A`: (added count, removed count). The removed side may
+    read a different pattern (NOTE_path2_third_pass R-2: `async` is accepted there and not on the
+    added side, because the added-blob count does not read `async def test_`)."""
     out = []
     for path, (added, removed) in sides.items():
         if status.get(path) == "A":
             continue
-        out.append((rx_for(added), rx_for(removed)))
+        out.append((rx_for(added), (rx_for_removed or rx_for)(removed)))
     return out
 
 
@@ -191,14 +255,19 @@ def _test_counts(lines) -> Counter:
     return Counter(m.group(1) for m in map(DEF_TEST.match, lines) if m)
 
 
+def _test_counts_removed(lines) -> Counter:
+    return Counter(m.group(1) for m in map(DEF_TEST_REMOVED.match, lines) if m)
+
+
 def test_def_changed(sides: dict, status: dict) -> bool:
     """#101 for tests_added: a non-`A` file where one test name is defined by an added and a removed line."""
-    return any(set(a) & set(r) for a, r in _pairs(sides, status, _test_counts))
+    return any(set(a) & set(r) for a, r in _pairs(sides, status, _test_counts, _test_counts_removed))
 
 
 def test_def_excess(sides: dict, status: dict) -> bool:
     """G-C5: a non-`A` file with a changed test name defined in more added lines than removed lines."""
-    return any(a[n] > r[n] for a, r in _pairs(sides, status, _test_counts) for n in set(a) & set(r))
+    return any(a[n] > r[n] for a, r in _pairs(sides, status, _test_counts, _test_counts_removed)
+               for n in set(a) & set(r))
 
 
 def symbol_def_changed(sides: dict, status: dict, name: str) -> bool:
@@ -209,7 +278,11 @@ def symbol_def_changed(sides: dict, status: dict, name: str) -> bool:
 def only_touches_new_accusation_allowed(detail: dict, prefixes: list, paths) -> bool:
     """AMENDMENT G-C3 / C-3: a prefix key carrying a leading dot, or a changed path whose repaired key
     begins with `..` -- the two shapes whose old VERIFIED came from the old key dropping the dot."""
-    dotted_prefix = any(new._norm(x).rstrip("/.").startswith(".") and BASE._norm(x) != new._norm(x) for x in prefixes)
+    # NOTE_path2_third_pass R-3: exactly ONE leading dot. A prefix key opening with `..` is not a
+    # repo path and the repaired gate abstains on it, so it can no longer be a new accusation; the
+    # exception is narrowed to the shape the amendment actually argued for.
+    dotted_prefix = any(_DOTFILE_PREFIX.match(new._norm(x).rstrip("/.")) and BASE._norm(x) != new._norm(x)
+                        for x in prefixes)
     dotdot = any(new._norm(p).startswith("..") and BASE._norm(p) != new._norm(p) for p in paths)
     return dotted_prefix or dotdot
 
@@ -254,6 +327,13 @@ class Tally:
             return
         moved_pr = key_moved(paths)
         moved_old, moved_new = moved_keys(paths)
+        # NOTE_path2_third_pass R-5: every path and every claimed path or prefix, before any rule
+        # below is allowed to attribute a move to #121.
+        tokens = list(paths)
+        for c in gb.claims:
+            tokens += [v for k, v in (c.detail or {}).items() if k in ("path", "prefix", "prefix2") and v]
+        if key_shape_violations(tokens):
+            self.violate("G-C4_key_moved_not_by_a_dot", pid)
         coll = collision(paths)
         self.n["key_moved_prs"] += moved_pr
         self.n["collision_prs"] += coll
@@ -364,21 +444,34 @@ class Tally:
 
 
 def run_differential(out: Path) -> int:
+    # NOTE_path2_third_pass R-5: the inputs are hashed into the payload and a missing one FAILS.
+    # Before this, a run with no generated corpora printed two lines on stderr, scored 67 pinned
+    # pairs, wrote "all_attribution_gates_pass": true and exited 0 -- a receipt with no corpus.
     items = []
+    inputs: dict = {}
+    missing: list = []
     for name in DIFFERENTIAL_FILES:
         p = DIFFERENTIAL / name
-        if p.exists():
-            items += [(name, it) for it in json.loads(p.read_text(encoding="utf-8"))]
-        else:
+        if not p.exists():
+            missing.append(name)
             print(f"(missing {name}: run build_corpus.py / fuzz_corpus.py for the full corpus)", file=sys.stderr)
+            continue
+        raw = p.read_bytes()
+        rows = json.loads(raw.decode("utf-8"))
+        items += [(name, it) for it in rows]
+        inputs[name] = {"sha256": _sha(raw), "bytes": len(raw), "items": len(rows)}
     prov = provenance()
     t = Tally(name_prs=True)
+    for name in missing:
+        t.violate("G-C0_missing_corpus_input", name)
     for name, it in items:
         t.pair(it["id"], it["summary"], it["diff"], raw_paths(it["diff"]))
     rep = t.report(prov)
     pre = [i for n, i in items if n != "path2_pairs.json"]
-    payload = {"prereg": PREREG, "amendment": AMENDMENT, "mode": "differential", "baseline_sha256": BASE_SHA256,
-               "repaired_sha256": NEW_SHA256, "pairs": len(items), "pairs_before_path2": len(pre),
+    payload = {"prereg": PREREG, "amendment": AMENDMENT, "note": NOTE, "mode": "differential",
+               "baseline_sha256": BASE_SHA256, "repaired_sha256": NEW_SHA256,
+               "inputs": inputs, "missing_inputs": missing,
+               "pairs": len(items), "pairs_before_path2": len(pre),
                "moved_record_ids": t.moved_records, **rep}
     payload["all_attribution_gates_pass"] = not t.violations
     out.write_text(json.dumps(payload, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -435,7 +528,8 @@ def run_corpus(shelf: Path, limit: int | None, out: Path) -> int:
         t.pair(pid, f"{title or ''}\n\n{body}", diff, names, fold_repeats=any(v > 1 for v in rows.values()))
     con.close()
     rep = t.report(prov)
-    payload = {"prereg": PREREG, "amendment": AMENDMENT, "mode": "corpus", "shelf": shelf.name, "limit": limit,
+    payload = {"prereg": PREREG, "amendment": AMENDMENT, "note": NOTE, "mode": "corpus",
+               "shelf": shelf.name, "limit": limit,
                "baseline_sha256": BASE_SHA256, "repaired_sha256": NEW_SHA256,
                "claimdetect": "blocked for both instruments (unparsed_claims only; never a verdict)",
                "prs_seen": seen, "excluded": {k: dict(v) for k, v in excl.items()},
