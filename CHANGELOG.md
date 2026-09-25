@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the blind packet's ids stop carrying the arm (#125), and the islands demo reads its own cohort (#93)
+
+**#125.** `papers/closed-model-frontier/external1_packet.py` numbered items `E1-000..` in arm order
+and shuffled afterwards, so an id told an adjudicator which arm its item came from without the
+sealed key. `build` now numbers items by their shuffled position and refuses to write if the arms
+still cluster in id order, the way `compat2_packet.py` already did. `build --as-published`
+reproduces the published arm-ordered numbering, key and digest, leak included, because EXTERNAL-1's
+committed packet, key and digest are receipts. It runs from a fresh clone, where the sealed key is
+gitignored. `build` writes LF on every platform and refuses to overwrite a record whose bytes would
+change. It gives a named refusal, not a traceback, when the gitignored ledger or shelf is absent,
+and it opens the shelf read-only. Line 63 is `sample_acc = rng.sample(acc, N_ACC)` again, the line
+`ANALYSIS_base_rate_ceiling_2026_09_01.md:45` cites, and a test holds it there. `score()`'s 27/30
+decoy floor and 0.95 precision gate are each tested at the boundary and one step below.
+
+**#93.** `survey()`'s island rule at `island_z=1.0` sits inside a tight clique's own spread. The
+library default stays 1.0, because the preregistered b47 and h1a runs call `survey()` with its
+defaults. `python -m styxx.islands` gains `--island-z` (finite and positive only). `--demo` reads its
+list at `island_z=3` and prints the rule it used, and it names a missed ISLAND instead of calling
+clique members extra finds.
+
+Not repaired, and stated: the committed EXTERNAL-1 packet still carries the id leak, and whether any
+adjudicator used it cannot be re-tested. The synthetic decoys stay recognisable by their `zz_` path
+perturbation. `--as-published` has not been run against the real shelf and the pre-correction
+ledger. The demo's cross-machine affinity drift (about 0.005) is recorded, but its cause is not
+established.
+
 ## [7.48.0] — 2026-09-25 — sworn output ships with a second verifier held to it, and the diff gate is measured on pull requests nobody here wrote, with the data published for others to grade
 
 What changed since 7.47.0, which did not carry `styxx.sworn`: the format, the verifiers and minters
