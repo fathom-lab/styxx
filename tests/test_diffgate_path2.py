@@ -17,7 +17,12 @@ AMENDMENT_path2_resolution_2026_09_17 (the second freeze) adds the tests marked 
 and added definitions pair one to one per file and name (a status-A file pairs nothing), with patterns
 that read a BOM and a non-ASCII name the same way in both ports; COMPAT's and BC-1's path readings use
 the undotted key; `only_touches` abstains on dot misses alone and accuses listing real paths only. And
-the BIN-1 registration of dotfile headers with no hunks, on both doors."""
+the BIN-1 registration of dotfile headers with no hunks, on both doors.
+
+NOTE_path2_fourth_pass_2026_09_25 adds the tests marked f1-f4: the prefix-shape test undots the prefix
+(F-1), a diff splits into lines on \\r\\n, \\r and \\n only, on both doors (F-2), `got` reads the indent
+the pairing reads (F-3), and an off-tree prefix beside an on-tree one no longer withdraws an accusation
+no reading of it could answer (F-4)."""
 import json
 import re
 import subprocess
@@ -715,11 +720,183 @@ def test_the_doors_agree_on_dotfile_headers_with_no_hunks(tmp_path, name):
                                                            "a leading dot: ['.eslintrc.json'] (#121)")]
 
 
+# ─────────────────────────────── NOTE_path2_fourth_pass_2026_09_25, F-1 .. F-4
+
+@pytest.mark.parametrize("prefix,path", [(".github", ".github/ci.yml"), (".vscode", ".vscode/settings.json"),
+                                         (".circleci", ".circleci/config.yml"), (".husky", ".husky/pre-commit"),
+                                         (".gitignore", ".gitignore"), (".npmrc", ".npmrc"),
+                                         (".env.local", ".env.local"), (".gitignore", "gitignore")])
+def test_f1_a_slashless_dotted_prefix_is_read_undotted_like_the_changed_paths(prefix, path):
+    # The round-3 blocker. The prefix kept its dot while the changed paths were undotted, so a dotted
+    # prefix whose last dot-segment is not a listed extension was "not a path" -- and only
+    # `.eslintrc.json`-shaped spellings, whose suffix is listed, were ever tested.
+    assert dg._prefix_is_path_shaped(prefix, {path: "M"})
+    assert dg._prefix_is_path_shaped(prefix + ".", {path: "M"})         # a sentence-final period
+    assert not dg._prefix_is_path_shaped(".k-step-link", {"packages/core/_layout.scss": "M"})   # PATH-1 still holds
+
+
+def test_f1_a_dotted_prefix_verifies_accuses_and_carries_c3_in_all_three_positions():
+    for summary, path in (("Only touches .github.", ".github/ci.yml"), ("Only touches .gitignore.", ".gitignore"),
+                          ("Only touches .env.local.", ".env.local"), ("Only touches .vscode.", ".vscode/settings.json")):
+        _, got = _claims(summary, _m(path))
+        assert got == [("only_touches", "VERIFIED", "all changed paths under prefix")], summary
+    _, got = _claims("Only touches .npmrc.", _m(".npmrc") + _m("src/a.py"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside '.npmrc': ['src/a.py']")]
+    _, got = _claims("Only touches .gitignore.", _m(".gitignore") + _m("src/a.py"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside '.gitignore': ['src/a.py']")]
+    # AMENDMENT C-3's accusation class, which the blocker had switched off for these spellings
+    _, got = _claims("Only touches .gitignore.", _m("gitignore"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside '.gitignore': ['gitignore']")]
+    _, got = _claims("Only touches .github.", _m("github/ci.yml"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside '.github': ['github/ci.yml']")]
+
+
+# the characters Python's str.splitlines() breaks on and git does not
+PY_ONLY_BREAKS = ["\x0b", "\x0c", "\x1c", "\x1d", "\x1e", "\x85", "\u2028", "\u2029"]
+
+
+def _reindent(ch):
+    return f"--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+{ch}def test_a():\n"
+
+
+def test_f2_a_diff_splits_on_crlf_cr_and_lf_and_nothing_else():
+    assert dg._diff_lines("a\r\nb\rc\nd\n") == ["a", "b", "c", "d"]
+    assert dg._diff_lines("") == [] and dg._diff_lines("a\n\n") == ["a", ""]
+    for ch in PY_ONLY_BREAKS:
+        assert dg._diff_lines(f"+x{ch}y\n") == [f"+x{ch}y"], repr(ch)
+        assert parse_unified_diff(_reindent(ch))[1] == f"{ch}def test_a():", repr(ch)
+        assert parse_unified_diff_sides(_reindent(ch)) == {"tests/test_a.py": ([f"{ch}def test_a():"],
+                                                                               ["def test_a():"])}, repr(ch)
+
+
+@pytest.mark.parametrize("ch", ["\x0b", "\x0c", "\u2028", "\u2029"])
+def test_f2_the_four_classes_the_ports_split_on_differently_now_read_alike(ch):
+    # Round 3, review 2: `-def test_a():` / `+<ch>def test_a():` is a re-indent; the port said
+    # "Added 1 test." VERIFIED where the Python said CONTRADICTED. The pinned pairs hold the port.
+    _, got = _claims("Added 0 tests. Added 1 test.", _reindent(ch))
+    assert got == [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0"),
+                   ("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")]
+
+
+def test_f2_a_separator_inside_a_line_no_longer_forges_a_line():
+    ctx = ("--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,2 @@\n x\u2028+def test_new():\n"
+           "-y = 0\n+y = 1\n")
+    _, got = _claims("Added 1 test.", ctx)
+    assert got == [("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")]
+    hdr = ("--- a/src/a.py\n+++ b/src/a.py\n@@ -1,2 +1,2 @@\n x\u2028+++ b/evil.py\n-y = 0\n+y = 1\n"
+           "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-a\n+b\n")
+    assert parse_unified_diff(hdr)[0] == {"src/a.py": "M", "src/b.py": "M"}
+    _, got = _claims("2 files changed. Only touches src/.", hdr)
+    assert got == [("files_changed_count", "VERIFIED", "diff changes 2 files, claim says 2"),
+                   ("only_touches", "VERIFIED", "all changed paths under prefix")]
+
+
+def test_f3_got_and_the_pairing_read_exactly_the_same_lines():
+    # Round 3, review 2: R-1 made the pairing a SUBSET of `got`. Every whitespace character either
+    # port knows, as an indent: `got` counts the line exactly when the pairing pattern reads it.
+    for c in [0x09, 0x0B, 0x0C, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, 0x85, 0xA0, 0x1680, 0x2000, 0x200A, 0x2028,
+              0x2029, 0x202F, 0x205F, 0x3000, 0xFEFF]:
+        line = chr(c) + "def test_a():"
+        counted = len(re.findall(dg._GOT_TEST_LINE, line, re.M))
+        assert counted == (1 if dg._DEF_TEST_LINE.match(line) else 0), hex(c)
+    for ch in ("\u00a0", "\u3000"):
+        _, got = _claims("Added 0 tests. Added 1 test.", _reindent(ch))
+        assert got == [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0"),
+                       ("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")], repr(ch)
+
+
+def test_f4_an_off_tree_prefix_beside_an_on_tree_one_withdraws_only_what_it_could_answer():
+    off = "prefix '../docs' is relative to a directory the diff does not name (#121)"
+    claim = "Only modified `src/` and `../docs` as specified."
+    # outside `src/` and outside every reading of `../docs`: the accusation stands
+    _, got = _claims(claim, _m("evil/x.py"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside 'src' and '../docs': ['evil/x.py']")]
+    # only the sure paths are listed
+    _, got = _claims(claim, _m("docs/a.md") + _m("evil/x.py"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside 'src' and '../docs': ['evil/x.py']")]
+    # some reading of `../docs` (X/docs) could hold these: abstain, as R-3 did
+    for diff in (_m("packages/docs/x.md"), _m("src/a.py") + _m("docs/guide.md"), _m("src/a.py"), _m(".src/a.py")):
+        _, got = _claims(claim, diff)
+        assert got == [("only_touches", "UNCHECKABLE", off)], diff
+    # an off-tree prefix standing alone still abstains, whatever changed
+    _, got = _claims("Only touches ../docs/ from the package.", _m("evil/x.py"))
+    assert got == [("only_touches", "UNCHECKABLE", off)]
+    assert dg._could_lie_under("packages/docs/x.md", "../docs") and dg._could_lie_under("docs", "../docs")
+    assert not dg._could_lie_under("evil/x.py", "../docs") and not dg._could_lie_under("docsx/a.md", "../docs")
+    assert dg._could_lie_under(".github/x.yml", "../.github") and dg._could_lie_under("anything", "..")
+    # compared undotted on both sides, so the test errs towards "could"
+    assert dg._could_lie_under(".github/x.yml", "../github") and dg._could_lie_under("github/x.yml", "../.github")
+    assert dg._could_lie_under("lib/src/x.py", ".../src/x.py") and not dg._could_lie_under("src/y.py", ".../src/x.py")
+    assert not dg._could_lie_under("x.py/src", ".../src/x.py")        # in order and contiguous, not as a set
+
+
+def test_f5_a_path_opening_with_two_dots_is_never_a_dot_miss():
+    # Round 3, review 2 (mutant P13): the `..` arm of `_dot_miss` had no test. Without it, a bare
+    # filename prefix would read `..a/bar.py` as `.a/bar.py` plus a dot, which is what this pins.
+    assert dg._dot_miss(".a/bar.py", ["bar.py"])
+    assert not dg._dot_miss("..a/bar.py", ["bar.py"])
+
+
+FOURTH_PASS_DOORS = {
+    **{f"f2-{ord(ch):04x}": ("Added 0 tests. Added 1 test.", ch) for ch in ("\x0b", "\x0c", "\u2028", "\u2029")},
+    "f3-nbsp": ("Added 0 tests. Added 1 test.", "\u00a0"),
+}
+
+
+@pytest.mark.parametrize("name", sorted(FOURTH_PASS_DOORS))
+def test_f2_f3_the_git_door_reads_the_same_lines_as_the_raw_door(tmp_path, name):
+    summary, ch = FOURTH_PASS_DOORS[name]
+    diff = _git_repo(tmp_path, {"tests/test_a.py": "def test_a():\n    pass\n"},
+                     {"tests/test_a.py": f"{ch}def test_a():\n    pass\n"})
+    assert f"+{ch}def test_a():" in diff
+    via_git = gate_diff(summary, tmp_path, "HEAD~1", "HEAD")
+    via_text = gate_diff_text(summary, diff)
+    got_git = [(c.kind, c.verdict, c.why) for c in via_git.claims]
+    assert got_git == [(c.kind, c.verdict, c.why) for c in via_text.claims]
+    assert got_git == [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0"),
+                       ("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")]
+
+
+def test_f2_the_git_door_does_not_forge_an_added_line_from_a_context_line(tmp_path):
+    # The git door splits the diff it reads from git exactly as the raw door does. A context line that
+    # holds U+2028 and then "+def test_" was cut in two by str.splitlines(), and its second half was
+    # read as an added test.
+    before = {"tests/test_a.py": "x\u2028+def test_new():\ny = 0\n"}
+    after = {"tests/test_a.py": "x\u2028+def test_new():\ny = 1\n"}
+    diff = _git_repo(tmp_path, before, after)
+    assert " x\u2028+def test_new():" in diff
+    via_git = gate_diff("Added 1 test.", tmp_path, "HEAD~1", "HEAD")
+    via_text = gate_diff_text("Added 1 test.", diff)
+    got_git = [(c.kind, c.verdict, c.why) for c in via_git.claims]
+    assert got_git == [(c.kind, c.verdict, c.why) for c in via_text.claims]
+    assert got_git == [("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")]
+
+
+def test_f2_the_git_door_reads_name_status_as_git_writes_it(tmp_path):
+    # `git diff --name-status` is split the same way. With core.quotePath off, git prints a path holding
+    # U+2028 raw; str.splitlines() cut it into a path `a` and a stray line.
+    name = "a\u2028b.py"
+    try:
+        (tmp_path / name).write_bytes(b"")
+        (tmp_path / name).unlink()
+    except OSError:
+        pytest.skip("this filesystem cannot hold a U+2028 in a file name")
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "config", "core.quotePath", "false"], cwd=tmp_path, check=True)
+    diff = _git_repo(tmp_path, {name: "x = 0\n"}, {name: "x = 1\n"})
+    assert f"+++ b/{name}" in diff
+    via_git = gate_diff("Only touches src/.", tmp_path, "HEAD~1", "HEAD")
+    via_text = gate_diff_text("Only touches src/.", diff)
+    got_git = [(c.kind, c.verdict, c.why) for c in via_git.claims]
+    assert got_git == [(c.kind, c.verdict, c.why) for c in via_text.claims]
+    assert got_git == [("only_touches", "CONTRADICTED", f"paths outside 'src': [{name!r}]")]
+
+
 # ────────────────────────────────────────────────────────── the pinned pairs
 
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
-    assert len(pairs) == 52 and all(p["id"].startswith("path2:") for p in pairs)
+    assert len(pairs) == 71 and all(p["id"].startswith("path2:") for p in pairs)
     for p in pairs:
         g = gate_diff_text(p["summary"], p["diff"], run=None, strict=False)
         got = [[c.kind, c.verdict, c.why] for c in g.claims]
