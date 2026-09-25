@@ -364,48 +364,94 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
 # each repaired one whitespace character in one of these patterns and opened the next, because
 # patterns that must read the same lines were written one by one. CPython's tokenizer takes space,
 # tab and form feed as indentation and as the space between two tokens, and nothing else; a U+FEFF
-# may open a file. So every pattern that reads a definition line opens with `_DEF_INDENT`, separates
-# its keywords with `_DEF_SEP` where it separates them with a class at all, and a symbol name ends at
-# `_NAME_END`: the next character is an ASCII character that cannot continue a name, or the line
-# ends. (A non-ASCII character after the name either continues it, so it is another name, or is one
-# CPython refuses there; `\b` would read U+00A0 or U+00B7 as the end of the name, and JavaScript's
-# `\b` is ASCII, which is why the ports disagreed on `def foo` + U+00E9 + `():`.) `got` counts the
-# lines the added-side test pairing reads, and `hit` asks whether an added line matches
-# `_symbol_def_line_added(name)`, the very pattern the symbol pairing counts added definitions with,
-# so neither count can read a line its pairing cannot. The REMOVED side alone also takes `async`, for
-# tests and symbols alike (R-2): `got` and `hit` do not read `async def`, so the added side must not.
-_DEF_INDENT = r"^\uFEFF?[ \t\f]*"
+# may open a file. So every pattern that reads a definition line opens with `_DEF_INDENT` and
+# separates its keywords with `_DEF_SEP`. `got` counts the lines the added-side test pairing reads,
+# and `hit` asks whether an added line is read by the symbol pairing's added side. (V-1 said neither
+# count could then read a line its pairing cannot; that held per line and failed per diff, because
+# `got` and `hit` read the added blob of one parser and the pairings the sides of another -- W-1
+# below makes them one reading.) The REMOVED side alone also takes `async`, for tests and symbols
+# alike (R-2): `got` and `hit` do not read `async def`, so the added side must not. V-1's name end,
+# an ASCII stop set, is replaced by W-2's identifier.
+#
+# NOTE_path2_sixth_pass_2026_09_25 (W-2): ONE reading of a name. V-1 ended a definition's name at an
+# ASCII stop set while the claimed name came from the claim template's `\w`, so the two ended in
+# different places: "Added function caf<U+00E9>." read CONTRADICTED on the port ('caf') and "Added
+# function col<U+00B7>leccio." on the Python ('col'), both true claims. The test side still read a
+# literal single space after `def` and ran a test name to `[^ \t(:]*`, so a form feed or a `[` after it
+# became part of the name. Now a name, claimed or defined, is the Python identifier that starts there, read by
+# `_identifier_at` with the language's own rule (`str.isidentifier`: XID_Start or `_`, then
+# XID_Continue); every definition line is `_DEF_INDENT`, `def`/`class` (the removed side alone also
+# `async`), `_DEF_SEP`, then that identifier, and the character after it is ASCII or the line ends -- for
+# tests, symbols, `got`, `hit` and both pairings. (A non-ASCII character right after a name is either
+# XID_Continue, so the identifier already holds it and the name is another name, or one CPython refuses
+# there -- U+00A0, U+3000, U+FEFF, U+2028 -- so the line defines nothing, as V-1 read it.) The indent
+# no longer takes a U+FEFF: W-1's parse drops one where CPython reads it, at line 1 of a file, and a
+# U+FEFF anywhere else is a character CPython refuses.
+_DEF_INDENT = r"^[ \t\f]*"
 _DEF_SEP = r"[ \t\f]+"
-_NAME_END = r"(?=[\x00-\x2f\x3a-\x40\x5b-\x5e\x60\x7b-\x7f]|$)"
-_DEF_TEST_LINE = re.compile(_DEF_INDENT + r"def (test_[^ \t(:]*)")
-_DEF_TEST_LINE_REMOVED = re.compile(_DEF_INDENT + r"(?:async" + _DEF_SEP + r")?def (test_[^ \t(:]*)")
-_GOT_TEST_LINE = _DEF_INDENT + r"def test_"
+_DEF_HEAD = re.compile(_DEF_INDENT + r"(def|class)" + _DEF_SEP)
+_DEF_HEAD_REMOVED = re.compile(_DEF_INDENT + r"(?:async" + _DEF_SEP + r")?(def|class)" + _DEF_SEP)
 
 
-def _symbol_def_line(name: str) -> re.Pattern:
-    """The REMOVED-side symbol definition line: `async` allowed (NOTE_path2_fifth_pass, V-1)."""
-    return re.compile(_DEF_INDENT + r"(?:async" + _DEF_SEP + r")?(?:def|class)" + _DEF_SEP
-                      + re.escape(name) + _NAME_END)
+def _identifier_at(text: str, i: int) -> str:
+    """The Python identifier that starts at `text[i]`, or "": the longest prefix `str.isidentifier`
+    accepts. One character at a time: the opening one must be XID_Start or `_`, each later one XID_Continue."""
+    if i >= len(text) or not text[i].isidentifier():
+        return ""
+    j = i + 1
+    while j < len(text) and ("_" + text[j]).isidentifier():
+        j += 1
+    return text[i:j]
 
 
-def _symbol_def_line_added(name: str) -> re.Pattern:
-    """The ADDED-side symbol definition line, read by `hit` and by the pairing's added count alike."""
-    return re.compile(_DEF_INDENT + r"(?:def|class)" + _DEF_SEP + re.escape(name) + _NAME_END)
+def _claimed_name(sentence: str, m) -> str:
+    """The name a `symbol_added` claim names: the identifier starting where the template's `name` group
+    starts (W-2), read by the rule a definition's name is read by."""
+    return _identifier_at(sentence, m.start("name"))
+
+
+def _defined_name(line: str, removed: bool = False):
+    """(`def` or `class`, name) that a diff line defines, or None."""
+    m = (_DEF_HEAD_REMOVED if removed else _DEF_HEAD).match(line)
+    if m is None:
+        return None
+    name = _identifier_at(line, m.end())
+    end = m.end() + len(name)
+    if not name or (end < len(line) and ord(line[end]) > 0x7F):
+        return None
+    return m.group(1), name
+
+
+def _test_name(line: str, removed: bool = False):
+    """The test a diff line defines (`def test_...`), or None."""
+    d = _defined_name(line, removed)
+    return d[1] if d is not None and d[0] == "def" and d[1].startswith("test_") else None
+
+
+def _defines(line: str, name: str, removed: bool = False) -> bool:
+    """Whether a diff line defines `name` (a function or a class)."""
+    d = _defined_name(line, removed)
+    return d is not None and d[1] == name
 
 
 def _symbol_hit(name: str, added_blob: str) -> bool:
     """`symbol_added`'s question: does some added line define `name`? One line at a time, with the
-    added-side pairing pattern (V-1), so `hit` reads exactly the lines the pairing reads."""
-    rx = _symbol_def_line_added(name)
-    return any(rx.match(line) for line in added_blob.split("\n"))
+    added-side pairing's own reading (V-1, W-2)."""
+    return any(_defines(line, name) for line in added_blob.split("\n"))
+
+
+def _added_tests(added_blob: str) -> int:
+    """`tests_added`'s `got`: the added lines that define a test, by the added-side pairing's own
+    reading (`_test_name`), one line at a time (W-2)."""
+    return sum(1 for line in added_blob.split("\n") if _test_name(line))
 
 
 def _changed_test_defs(sides: dict | None, status: dict | None = None) -> int:
     """Test definitions paired one to one: per file whose status is not `A`, per test name,
     min(added lines defining it, removed lines defining it), summed. The caller clamps to `got`.
 
-    The added side reads `_DEF_TEST_LINE`, every line of which `got` also counts; the removed side
-    reads `_DEF_TEST_LINE_REMOVED`, which also accepts `async` (NOTE_path2_third_pass_2026_09_25).
+    The added side reads `_test_name(line)`, every line of which `got` also counts; the removed side
+    reads `_test_name(line, removed=True)`, which also accepts `async` (NOTE_path2_third_pass_2026_09_25).
     """
     n = 0
     for path, (added, removed) in (sides or {}).items():
@@ -413,16 +459,16 @@ def _changed_test_defs(sides: dict | None, status: dict | None = None) -> int:
             continue
         gone: dict = {}
         for line in removed:
-            m = _DEF_TEST_LINE_REMOVED.match(line)
-            if m:
-                gone[m.group(1)] = gone.get(m.group(1), 0) + 1
+            t = _test_name(line, removed=True)
+            if t:
+                gone[t] = gone.get(t, 0) + 1
         if not gone:
             continue
         new: dict = {}
         for line in added:
-            m = _DEF_TEST_LINE.match(line)
-            if m:
-                new[m.group(1)] = new.get(m.group(1), 0) + 1
+            t = _test_name(line)
+            if t:
+                new[t] = new.get(t, 0) + 1
         n += sum(min(k, gone.get(name, 0)) for name, k in new.items())
     return n
 
@@ -430,12 +476,11 @@ def _changed_test_defs(sides: dict | None, status: dict | None = None) -> int:
 def _definition_only_changed(name: str, sides: dict | None, status: dict | None = None) -> bool:
     """Some file both adds and removes a definition of `name`, and no file adds more definitions of
     it than it removes (a file whose status is `A` removes none). Counted per file, one to one.
-    The added side reads `_symbol_def_line_added`, the pattern `hit` reads (V-1)."""
-    rx_added, rx_removed = _symbol_def_line_added(name), _symbol_def_line(name)
+    The added side reads `_defines(line, name)`, the reading `hit` uses (V-1, W-2)."""
     paired = False
     for path, (added, removed) in (sides or {}).items():
-        a = sum(1 for line in added if rx_added.match(line))
-        r = 0 if (status or {}).get(path) == "A" else sum(1 for line in removed if rx_removed.match(line))
+        a = sum(1 for line in added if _defines(line, name))
+        r = 0 if (status or {}).get(path) == "A" else sum(1 for line in removed if _defines(line, name, True))
         if a > r:
             return False
         if a and r:
@@ -549,23 +594,94 @@ def _diff_lines(text: str) -> list:
     return lines
 
 
-def parse_unified_diff_sides(diff_text: str) -> dict:
-    """Unified diff text -> {normalized new-or-old path: (added_lines, removed_lines)}.
+# NOTE_path2_sixth_pass_2026_09_25 (W-1): ONE hunk-aware reading of a diff. `parse_unified_diff`
+# (the status map and the added blob `got` and `hit` read) and `parse_unified_diff_sides` (the
+# per-file sides both pairings read) were two parsers that kept different lines, and neither counted a
+# hunk: a removed line whose text opens with "-- " (a SQL, Lua or Haskell comment, an email signature)
+# prints as `--- x`, and an added line opening with "++ " prints as `+++ x`. The sides parser read the
+# removed one as a file header and dropped every later line of the file while the blob kept them, so a changed
+# `def` read VERIFIED as added (#101's kind); both read the second as a header, a phantom path the git
+# door never saw. Now both come from `_read_diff`: a `---`/`+++` line is a header only OUTSIDE a hunk,
+# and inside one the `@@ -a,b +c,d @@` counts say how many removed and added lines are still owed. A
+# line the counts do not allow for (a `diff --git` header, a hunk that ends early) closes the hunk and
+# is read as before; outside any counted hunk every line is read exactly as it was, so a hand-written
+# diff with no `@@` header reads as it did on main. A hand-written hunk often declares more lines than
+# it carries, and the next file's `---`/`+++` pair then falls inside its counts; so a `---` line followed
+# by a `+++` line still reads as a file header, as on main, when a hunk header follows the pair or the
+# pair is written `--- a/…`/`/dev/null`, `+++ b/…`/`/dev/null` (`_header_pair`).
+#
+# The same numbers say which line is line 1 of a file, the one place CPython reads a U+FEFF (a byte-order
+# mark opens a file; anywhere else it is a character CPython refuses). The parse drops a U+FEFF that
+# opens line 1 of either side, and nowhere else, and the definition patterns read none: R-1 had them take
+# one on any line, so a definition led by U+FEFF in the middle of a file counted, which `main` did not.
+_HUNK_HEADER = re.compile(r"^@@ -([0-9]+)(?:,([0-9]+))? \+([0-9]+)(?:,([0-9]+))? @@")   # [0-9]: `\d` is Unicode
+_FILE_BOM = "\uFEFF"
 
-    The per-file companion of `parse_unified_diff`, added for COMPAT-1; the original's
-    return shape is untouched because callers unpack it. A header without a `---`/`+++`
-    pair (BIN-1) registers its path with empty sides.
-    """
+
+def _header_pair(lines: list, k: int) -> bool:
+    """Whether `lines[k]` (a `--- ` line inside a hunk's counts) opens a file header all the same."""
+    nxt = lines[k + 1] if k + 1 < len(lines) else ""
+    if not nxt.startswith("+++ "):
+        return False
+    if k + 2 < len(lines) and _HUNK_HEADER.match(lines[k + 2]):
+        return True
+    a, b = lines[k][4:].strip(), nxt[4:].strip()
+    return (a == "/dev/null" or a.startswith("a/")) and (b == "/dev/null" or b.startswith("b/"))
+
+
+def _read_diff(diff_text: str) -> tuple[dict, list, dict]:
+    """Unified diff text -> (status map, added lines in order, per-file sides): the one reading W-1
+    gives both parsers. An added line outside any file (no `+++` header before it) is in the blob and in
+    no file's sides, exactly as before."""
+    status: dict[str, str] = {}
+    added: list[str] = []
     sides: dict = {}
     old_path = None
     cur = None
-    pending: _Pending | None = None
+    pending: _Pending | None = None          # BIN-1: a header still waiting for its pair
+    old_left = new_left = 0                  # removed and added lines the open hunk still owes
+    old_no = new_no = 0                      # the line numbers its next removed and added lines carry
 
     def flush() -> None:
         if pending is not None and pending.path():
+            if pending.path() not in status:
+                status[pending.path()] = pending.status
             sides.setdefault(pending.path(), ([], []))
 
-    for line in _diff_lines(diff_text):
+    lines = _diff_lines(diff_text)
+    for k, line in enumerate(lines):
+        if (old_left or new_left) and line.startswith("--- ") and _header_pair(lines, k):
+            old_left = new_left = 0              # a file header after all: the hunk declared too many lines
+        if old_left or new_left:
+            head = line[:1]
+            if head == "+" and new_left:
+                text = line[1:]
+                if new_no == 1 and text.startswith(_FILE_BOM):
+                    text = text[len(_FILE_BOM):]
+                new_left -= 1
+                new_no += 1
+                added.append(text)
+                if cur is not None:
+                    sides[cur][0].append(text)
+                continue
+            if head == "-" and old_left:
+                text = line[1:]
+                if old_no == 1 and text.startswith(_FILE_BOM):
+                    text = text[len(_FILE_BOM):]
+                old_left -= 1
+                old_no += 1
+                if cur is not None:
+                    sides[cur][1].append(text)
+                continue
+            if (head == " " or line == "") and old_left and new_left:
+                old_left -= 1
+                new_left -= 1
+                old_no += 1
+                new_no += 1
+                continue
+            if head == "\\":                     # "\ No newline at end of file"
+                continue
+            old_left = new_left = 0              # the counts do not allow this line: the hunk is over
         if line.startswith("diff --git "):
             flush()
             pending = _Pending(line)
@@ -576,20 +692,40 @@ def parse_unified_diff_sides(diff_text: str) -> dict:
         elif line.startswith("+++ "):
             new = line[4:].strip()
             if new == "/dev/null":
+                status[_norm(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
                 raw = old_path[2:] if old_path and old_path.startswith("a/") else (old_path or "")
             else:
                 raw = new[2:] if new.startswith("b/") else new
+                status[_norm(raw)] = "A" if old_path in ("/dev/null", None) else "M"
             cur = _norm(raw)
             sides.setdefault(cur, ([], []))
             pending = None
-        elif cur is not None and line.startswith("+") and not line.startswith("+++"):
-            sides[cur][0].append(line[1:])
+        elif line.startswith("@@") and _HUNK_HEADER.match(line):
+            m = _HUNK_HEADER.match(line)
+            old_no, new_no = int(m.group(1)), int(m.group(3))
+            old_left = 1 if m.group(2) is None else int(m.group(2))
+            new_left = 1 if m.group(4) is None else int(m.group(4))
+        elif line.startswith("+") and not line.startswith("+++"):
+            added.append(line[1:])
+            if cur is not None:
+                sides[cur][0].append(line[1:])
         elif cur is not None and line.startswith("-") and not line.startswith("---"):
             sides[cur][1].append(line[1:])
         elif pending is not None:
             pending.note(line)
     flush()
-    return sides
+    return status, added, sides
+
+
+def parse_unified_diff_sides(diff_text: str) -> dict:
+    """Unified diff text -> {normalized new-or-old path: (added_lines, removed_lines)}.
+
+    The per-file companion of `parse_unified_diff`, added for COMPAT-1; the original's
+    return shape is untouched because callers unpack it. A header without a `---`/`+++`
+    pair (BIN-1) registers its path with empty sides. Read by `_read_diff`, the one
+    hunk-aware reading `parse_unified_diff` also returns (NOTE_path2_sixth_pass, W-1).
+    """
+    return _read_diff(diff_text)[2]
 
 
 def _compat_params(line: str, at: int) -> str | None:
@@ -1234,37 +1370,10 @@ def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
     """Unified diff text -> ({normalized_path: A|M|D}, added-lines blob).
 
     Lets the gate run on a raw ``.diff`` (webhook payloads, GitHub's ``.diff`` URL) with
-    no checkout at all — the zero-receipt promise taken literally.
+    no checkout at all — the zero-receipt promise taken literally. Read by `_read_diff`, the one
+    hunk-aware reading the per-file sides also come from (NOTE_path2_sixth_pass, W-1).
     """
-    status: dict[str, str] = {}
-    added: list[str] = []
-    old_path = None
-    pending: _Pending | None = None          # BIN-1: a header still waiting for its pair
-
-    def flush() -> None:
-        if pending is not None and pending.path() and pending.path() not in status:
-            status[pending.path()] = pending.status
-
-    for line in _diff_lines(diff_text):
-        if line.startswith("diff --git "):
-            flush()
-            pending = _Pending(line)
-        elif line.startswith("--- "):
-            old_path = line[4:].strip()
-        elif line.startswith("+++ "):
-            new = line[4:].strip()
-            if new == "/dev/null":
-                status[_norm(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
-            elif old_path in ("/dev/null", None):
-                status[_norm(new[2:] if new.startswith("b/") else new)] = "A"
-            else:
-                status[_norm(new[2:] if new.startswith("b/") else new)] = "M"
-            pending = None
-        elif line.startswith("+") and not line.startswith("+++"):
-            added.append(line[1:])
-        elif pending is not None:
-            pending.note(line)
-    flush()
+    status, added, _sides = _read_diff(diff_text)
     return status, "\n".join(added)
 
 
@@ -1317,9 +1426,9 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
             st, path = parts[0][:1], parts[-1]
             status[_norm(path)] = st            # A / M / D / R
     diff_text = _git(repo, "diff", f"{base}..{head}")
-    added_lines = [l[1:] for l in _diff_lines(diff_text)
-                   if l.startswith("+") and not l.startswith("+++")]
-    added_blob = "\n".join(added_lines)
+    # NOTE_path2_sixth_pass W-1: the added blob and the sides are the one hunk-aware reading of git's
+    # bytes. The status stays git's own `--name-status`, which is not a reading of the diff text.
+    added_blob = parse_unified_diff(diff_text)[1]
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base=base, head=head,
                  evidence=evidence, commit=commit,
@@ -1515,9 +1624,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     else:
                         # NOTE_path2_third_pass R-1: one optional leading U+FEFF;
                         # NOTE_path2_fourth_pass F-3 and NOTE_path2_fifth_pass V-1: the indent is
-                        # `_DEF_INDENT`, the pairing's. This count reads exactly the lines the
-                        # added-side pairing pattern reads, so `chg <= got` holds line by line.
-                        got = len(re.findall(_GOT_TEST_LINE, added_blob, re.M))
+                        # `_DEF_INDENT`, the pairing's; NOTE_path2_sixth_pass W-2: the count IS the
+                        # pairing's reading (`_test_name`), and W-1: the blob is the sides' own added
+                        # lines. So `chg <= got` holds line by line.
+                        got = _added_tests(added_blob)
                         # PATH-2 (#101): `chg` added `def test_` lines re-define a test the same
                         # file's removed lines define, paired one to one (AMENDMENT C-1). The true
                         # number added lies in [net, got]: verify `net`, abstain inside the
@@ -1551,27 +1661,36 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         # NOTE_path2_fifth_pass V-1: the added-side pairing pattern, one line at a
                         # time. `^\s*(?:def|class)\s+NAME\b` read lines the pairing did not (a form
                         # feed re-indent, a changed generic), and each was a false VERIFIED.
-                        hit = _symbol_hit(d["name"], added_blob)
-                        if hit and _definition_only_changed(d["name"], sides, status):
+                        # NOTE_path2_sixth_pass W-2: the claimed name is the identifier the summary
+                        # writes, read by the rule a definition's name is read by, so the two end in
+                        # the same place; the template's `name` group only says where it starts.
+                        name = _claimed_name(sent, m)
+                        hit = _symbol_hit(name, added_blob)
+                        if hit and _definition_only_changed(name, sides, status):
                             c.verdict = "UNCHECKABLE"               # PATH-2 (#101)
-                            c.why = (f"added lines define {d['kind']} {d['name']!r} only where the "
+                            c.why = (f"added lines define {d['kind']} {name!r} only where the "
                                      "removed lines of the same file define it too; a changed "
                                      "definition is not an added one (#101)")
                         else:
                             c.verdict = "VERIFIED" if hit else "CONTRADICTED"
                             c.why = (f"added lines {'do' if hit else 'do NOT'} define "
-                                     f"{d['kind']} {d['name']!r}")
+                                     f"{d['kind']} {name!r}")
                 elif kind == "only_touches":
                     prefs = [_norm(d["prefix"]).rstrip("/.")]   # sentence-final periods are not path
                     if d.get("prefix2"):
                         prefs.append(_norm(d["prefix2"]).rstrip("/."))
                     # BC-2 repair 4: a second prefix is read only after "and" and only when it
                     # is path-shaped by the same test; otherwise the first prefix decides alone.
-                    if d.get("prefix2") and not _prefix_is_path_shaped(d["prefix2"], status):
+                    # NOTE_path2_sixth_pass (V-4, completed): a second prefix WRITTEN as a parent (a
+                    # bare `..`) is read before that test drops it -- it is off-tree, as `../` is --
+                    # instead of leaving the leading prefix to accuse alone.
+                    parent2 = bool(d.get("prefix2")) and bool(_parent_prefix(d["prefix2"].replace("\\", "/")))
+                    if d.get("prefix2") and not parent2 and not _prefix_is_path_shaped(d["prefix2"], status):
                         prefs = prefs[:1]
                     raw_prefs = [d["prefix"]] + ([d["prefix2"]] if len(prefs) == 2 else [])
-                    not_paths = [_norm(x).rstrip("/.") for x in raw_prefs
-                                 if not _prefix_is_path_shaped(x, status)] if BC1_BY_CONSTRUCTION else []
+                    not_paths = [_norm(x).rstrip("/.") for i, x in enumerate(raw_prefs)
+                                 if not (i == 1 and parent2)
+                                 and not _prefix_is_path_shaped(x, status)] if BC1_BY_CONSTRUCTION else []
                     # PATH-1 mode 1: _path_inside matches a bare filename on its basename.
                     outside = [p for p in status
                                if not any(_path_inside(p, x) for x in prefs)]
