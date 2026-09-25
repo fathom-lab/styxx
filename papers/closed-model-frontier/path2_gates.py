@@ -56,8 +56,28 @@ path of the PR, so the PR's moved keys are the claim's.
 
 Inputs (G-C0): in differential mode every corpus file is hashed into the payload and a missing one is
 a FAILURE, not a note on stderr -- the payload is meant to be the RESULT's receipt, and a receipt that
-cannot say which corpus it read is not one. Corpus mode still records only the shelf's file name; its
-size and row counts are owed (NOTE_path2_third_pass, R-5).
+cannot say which corpus it read is not one. Corpus mode records the shelf's file name, its byte size
+and the row counts of its `pr` and `f` tables (NOTE_path2_fourth_pass_2026_09_25, P-1); the shelf is
+not hashed, because it is large and opened immutable.
+
+THE FOURTH PASS (NOTE_path2_fourth_pass_2026_09_25). Four rule changes landed after the amendment and
+each is attributed here by this file's own test of whether it can have acted on a record:
+
+    F-1  the prefix-shape test undots the prefix    no new attribution: against the baseline it
+                                                    restores main's reading, and C-3's accusations
+                                                    are the dotted-prefix exception already here
+    F-2  a diff splits on \\r\\n, \\r, \\n only       `f2_applies`: str.splitlines() and the git split
+                                                    of the diff differ. Any kind, any direction; a new
+                                                    accusation it explains is admitted and COUNTED
+    F-3  `got` reads a [ \\t]* indent                `f3_applies`: an added line the old `got` pattern
+                                                    counts and the new one does not. tests_added only;
+                                                    a new accusation it explains is admitted and COUNTED
+    F-4  an off-tree prefix beside an on-tree one   only_touches CONTRADICTED -> UNCHECKABLE whose reason
+         no longer withdraws a sure accusation      is the off-tree abstention, on a claim with an
+                                                    off-tree prefix key: the safe direction, admitted
+
+Every admitted F-2 / F-3 accusation is listed under `fourth_pass` in the payload, so the operator sees
+how many there were; none is silent.
 """
 from __future__ import annotations
 
@@ -78,7 +98,7 @@ ROOT = HERE.parent.parent
 DIFFERENTIAL = ROOT / "web" / "gate" / "differential"
 PREREG = "PREREG_path2_resolution_2026_09_17.md"
 AMENDMENT = "AMENDMENT_path2_resolution_2026_09_17.md"
-NOTE = "NOTE_path2_third_pass_2026_09_25.md"
+NOTE = ["NOTE_path2_third_pass_2026_09_25.md", "NOTE_path2_fourth_pass_2026_09_25.md"]
 # The baseline is "the instrument before THIS repair". The preregistration named `87dded26`, the
 # origin/main this branch was cut from; the branch has since been rebased onto `98a5c368`, and
 # PATH-1 (#127), the COMPAT-2 port (#126) and DECLARE-1 (#129/#130) landed in between. Scored
@@ -107,6 +127,11 @@ DEF_TEST = re.compile(r"^\uFEFF?[ \t]*def (test_[^ \t(:]*)")
 DEF_TEST_REMOVED = re.compile(r"^\uFEFF?[ \t]*(?:async[ \t]+)?def (test_[^ \t(:]*)")
 # NOTE_path2_third_pass R-3: a dotfile prefix is one dot then a name character; `..` is not.
 _DOTFILE_PREFIX = re.compile(r"^\.[^./\\]")
+# NOTE_path2_fourth_pass F-2 / F-3, written out here rather than borrowed from the repair.
+GIT_LINE_BREAK = re.compile(r"\r\n|\r|\n")
+GOT_BEFORE_F3 = re.compile(r"^\uFEFF?\s*def test_")
+GOT_AFTER_F3 = re.compile(r"^\uFEFF?[ \t]*def test_")
+OFF_TREE_WHY = "is relative to a directory the diff does not name (#121)"
 
 sys.path.insert(0, str(ROOT))  # the checkout FIRST: the repaired instrument is this tree's
 import styxx.diffgate as new  # noqa: E402
@@ -168,9 +193,29 @@ def provenance() -> dict:
 
 # ── attribution, written out independently of the repair ─────────────────────────────────────
 
+def git_lines(diff: str) -> list:
+    """The diff's lines as git writes them: split on \\r\\n, \\r and \\n, no trailing empty line."""
+    lines = GIT_LINE_BREAK.split(diff)
+    if lines and lines[-1] == "":
+        lines.pop()
+    return lines
+
+
+def f2_applies(diff: str) -> bool:
+    """F-2 can have moved this record only if str.splitlines() and the git split read it differently."""
+    return diff.splitlines() != git_lines(diff)
+
+
+def f3_applies(diff: str) -> bool:
+    """F-3 can have moved a tests_added claim only if some added line is counted by the old `got`
+    pattern and not by the new one."""
+    added = [ln[1:] for ln in git_lines(diff) if ln.startswith("+") and not ln.startswith("+++")]
+    return any(GOT_BEFORE_F3.match(a) and not GOT_AFTER_F3.match(a) for a in added)
+
+
 def raw_paths(diff: str) -> list:
     out = []
-    for line in diff.splitlines():
+    for line in git_lines(diff):                # NOTE_path2_fourth_pass F-2: the git split
         if line.startswith("+++ b/") or line.startswith("--- a/"):
             out.append(line[6:].strip())
         elif line.startswith("diff --git "):
@@ -287,6 +332,11 @@ def only_touches_new_accusation_allowed(detail: dict, prefixes: list, paths) -> 
     return dotted_prefix or dotdot
 
 
+def off_tree_key(key: str) -> bool:
+    """NOTE_path2_third_pass R-3, written out: a prefix key opening with a dot that is not a dotfile name."""
+    return key.startswith(".") and not _DOTFILE_PREFIX.match(key)
+
+
 def compat_detail_paths(detail: dict) -> list:
     return ([x.get("path") for x in detail.get("removed", []) or []]
             + [x.get("path") for x in detail.get("signature_changed", []) or []])
@@ -312,6 +362,9 @@ class Tally:
         self.compat2_flips = Counter()
         self.fold_exposed_new_verified = 0
         self.excess_new_verified = 0
+        # NOTE_path2_fourth_pass: moves and new accusations admitted under F-2 / F-3 / F-4, by kind
+        self.fourth_pass = {"f2_records": 0, "f3_records": 0, "moves_by_rule": Counter(),
+                            "new_accusations_admitted": Counter(), "f4_withdrawals": 0}
 
     def violate(self, rule: str, pid) -> None:
         self.violations[rule] += 1
@@ -341,82 +394,114 @@ class Tally:
         status = new.parse_unified_diff(diff)[0]
         sides = new.parse_unified_diff_sides(diff)
         record_moved = False
+        # NOTE_path2_fourth_pass: F-2 and F-3 explain a move only where the amended table below does
+        # not, and only on a record where they can have acted; what they explain is counted, not hidden.
+        f2, f3 = f2_applies(diff), f3_applies(diff)
+        self.fourth_pass["f2_records"] += f2
+        self.fourth_pass["f3_records"] += f3
         for cb, cn in zip(gb.claims, gn.claims):
-            k = cb.kind
-            self.claims_by_verdict["baseline"][cb.verdict] += 1
-            self.claims_by_verdict["repaired"][cn.verdict] += 1
-            if cb.verdict == "CONTRADICTED":
-                self.accusations_by_kind["baseline"][k] += 1
-            if cn.verdict == "CONTRADICTED":
-                self.accusations_by_kind["repaired"][k] += 1
-            if k == "compat_claim":
-                a, b = cb.detail.get("compat2_candidate"), cn.detail.get("compat2_candidate")
-                if a != b:
-                    self.compat2_flips[f"{a}->{b}"] += 1
-                    self.violate("G-C6_compat2_candidate_flipped", pid)
-            moved = (cb.verdict, cb.why) != (cn.verdict, cn.why) or (k == "compat_claim" and cb.detail != cn.detail)
-            if not moved:
-                continue
-            record_moved = True
-            vb, vn = cb.verdict, cn.verdict
-            if vb == vn:
-                self.reason_only[k] += 1
-            else:
-                self.transitions[f"{k}: {vb} -> {vn}"] += 1
-            prefixes = [cb.detail.get("prefix", "")] + ([cb.detail["prefix2"]] if cb.detail.get("prefix2") else [])
-            ot_exception = (k == "only_touches" and vb == "VERIFIED" and vn == "CONTRADICTED"
-                            and only_touches_new_accusation_allowed(cb.detail, prefixes, paths))
-            if vn == "CONTRADICTED" and vb != "CONTRADICTED":
-                self.new_accusations[k] += 1
-                if not ((k == "files_changed_count" and coll) or ot_exception):
-                    self.violate(f"G-C3_new_accusation:{k}", pid)
-            if k in PATH_KINDS:
-                claimed = cb.detail.get("path", "")
-                by121 = path_claim_by121(claimed, base_status, status, moved_old, moved_new)
-                by97 = resolutions_differ(status, claimed)
-                if not (by97 or by121):
-                    self.violate(f"G-C4_unattributed:{k}", pid)
-                elif "CONTRADICTED" in (vb, vn):
-                    self.violate(f"G-C4_direction:{k}", pid)
-                elif k == "file_touched" and vb != vn and not by121:
-                    self.violate(f"G-C4_direction:{k}", pid)
-            elif k == "files_changed_count":
-                if not coll:
-                    self.violate(f"G-C4_unattributed:{k}", pid)
-            elif k == "only_touches":
-                if not (moved_pr or any(BASE._norm(x) != new._norm(x) for x in prefixes)):
-                    self.violate(f"G-C4_unattributed:{k}", pid)
-                elif vb != vn and not ((vb == "VERIFIED" and vn == "UNCHECKABLE" and cn.why.endswith("(#121)"))
-                                       or ot_exception):
-                    self.violate(f"G-C4_direction:{k}", pid)
-            elif k == "tests_added":
-                if not test_def_changed(sides, status):
-                    self.violate(f"G-C4_unattributed:{k}", pid)
-                elif vb != vn and (vb, vn) not in {("VERIFIED", "UNCHECKABLE"), ("CONTRADICTED", "VERIFIED"),
-                                                   ("CONTRADICTED", "UNCHECKABLE"), ("UNCHECKABLE", "VERIFIED")}:
-                    self.violate(f"G-C4_direction:{k}", pid)
-                if vn == "VERIFIED" and vb != "VERIFIED":
-                    if fold_repeats:
-                        self.fold_exposed_new_verified += 1
-                    if test_def_excess(sides, status):
-                        self.excess_new_verified += 1
-            elif k == "symbol_added":
-                if not symbol_def_changed(sides, status, cb.detail.get("name", "")):
-                    self.violate(f"G-C4_unattributed:{k}", pid)
-                elif not (vb == "VERIFIED" and vn == "UNCHECKABLE" and cn.why.endswith("(#101)")):
-                    self.violate(f"G-C4_direction:{k}", pid)
-            elif k == "compat_claim":
-                if not (any(p in moved_old for p in compat_detail_paths(cb.detail))
-                        or any(p in moved_new for p in compat_detail_paths(cn.detail))):
-                    self.violate(f"G-C4_unattributed:{k}", pid)
-                elif vb != "UNCHECKABLE" or vn != "UNCHECKABLE":
-                    self.violate(f"G-C4_direction:{k}", pid)
-            else:                                   # tests_pass, and any kind the table does not name
-                self.violate(f"G-C4_unattributed:{k}", pid)
+            self._claim(pid, cb, cn, paths, fold_repeats, coll, moved_pr, moved_old, moved_new,
+                        base_status, status, sides, f2, f3)
+            if (cb.verdict, cb.why) != (cn.verdict, cn.why) or (cb.kind == "compat_claim" and cb.detail != cn.detail):
+                record_moved = True
         if record_moved:
             self.n["records_moved"] += 1
             if self.name_prs:
                 self.moved_records.append(pid)
+
+    def _claim(self, pid, cb, cn, paths, fold_repeats, coll, moved_pr, moved_old, moved_new,
+               base_status, status, sides, f2, f3) -> None:
+        k = cb.kind
+        self.claims_by_verdict["baseline"][cb.verdict] += 1
+        self.claims_by_verdict["repaired"][cn.verdict] += 1
+        if cb.verdict == "CONTRADICTED":
+            self.accusations_by_kind["baseline"][k] += 1
+        if cn.verdict == "CONTRADICTED":
+            self.accusations_by_kind["repaired"][k] += 1
+        if k == "compat_claim":
+            a, b = cb.detail.get("compat2_candidate"), cn.detail.get("compat2_candidate")
+            if a != b:
+                self.compat2_flips[f"{a}->{b}"] += 1
+                self.violate("G-C6_compat2_candidate_flipped", pid)
+        moved = (cb.verdict, cb.why) != (cn.verdict, cn.why) or (k == "compat_claim" and cb.detail != cn.detail)
+        if not moved:
+            return
+        vb, vn = cb.verdict, cn.verdict
+        if vb == vn:
+            self.reason_only[k] += 1
+        else:
+            self.transitions[f"{k}: {vb} -> {vn}"] += 1
+        pending: list = []              # what the amended table would call a violation for this claim
+        prefixes = [cb.detail.get("prefix", "")] + ([cb.detail["prefix2"]] if cb.detail.get("prefix2") else [])
+        ot_exception = (k == "only_touches" and vb == "VERIFIED" and vn == "CONTRADICTED"
+                        and only_touches_new_accusation_allowed(cb.detail, prefixes, paths))
+        # NOTE_path2_fourth_pass F-4: withdrawing an accusation because an off-tree prefix could hold the
+        # path is the safe direction; admitted when the reason says so AND a prefix key is off-tree by
+        # this file's own test.
+        f4_withdrawal = (k == "only_touches" and vb == "CONTRADICTED" and vn == "UNCHECKABLE"
+                         and cn.why.endswith(OFF_TREE_WHY)
+                         and any(off_tree_key(new._norm(x).rstrip("/.")) for x in prefixes))
+        if vn == "CONTRADICTED" and vb != "CONTRADICTED":
+            self.new_accusations[k] += 1
+            if not ((k == "files_changed_count" and coll) or ot_exception):
+                pending.append(f"G-C3_new_accusation:{k}")
+        if k in PATH_KINDS:
+            claimed = cb.detail.get("path", "")
+            by121 = path_claim_by121(claimed, base_status, status, moved_old, moved_new)
+            by97 = resolutions_differ(status, claimed)
+            if not (by97 or by121):
+                pending.append(f"G-C4_unattributed:{k}")
+            elif "CONTRADICTED" in (vb, vn):
+                pending.append(f"G-C4_direction:{k}")
+            elif k == "file_touched" and vb != vn and not by121:
+                pending.append(f"G-C4_direction:{k}")
+        elif k == "files_changed_count":
+            if not coll:
+                pending.append(f"G-C4_unattributed:{k}")
+        elif k == "only_touches":
+            if not (moved_pr or any(BASE._norm(x) != new._norm(x) for x in prefixes)):
+                pending.append(f"G-C4_unattributed:{k}")
+            elif vb != vn and not ((vb == "VERIFIED" and vn == "UNCHECKABLE" and cn.why.endswith("(#121)"))
+                                   or ot_exception or f4_withdrawal):
+                pending.append(f"G-C4_direction:{k}")
+            if f4_withdrawal:
+                self.fourth_pass["f4_withdrawals"] += 1
+        elif k == "tests_added":
+            if not test_def_changed(sides, status):
+                pending.append(f"G-C4_unattributed:{k}")
+            elif vb != vn and (vb, vn) not in {("VERIFIED", "UNCHECKABLE"), ("CONTRADICTED", "VERIFIED"),
+                                               ("CONTRADICTED", "UNCHECKABLE"), ("UNCHECKABLE", "VERIFIED")}:
+                pending.append(f"G-C4_direction:{k}")
+            if vn == "VERIFIED" and vb != "VERIFIED":
+                if fold_repeats:
+                    self.fold_exposed_new_verified += 1
+                if test_def_excess(sides, status):
+                    self.excess_new_verified += 1
+        elif k == "symbol_added":
+            if not symbol_def_changed(sides, status, cb.detail.get("name", "")):
+                pending.append(f"G-C4_unattributed:{k}")
+            elif not (vb == "VERIFIED" and vn == "UNCHECKABLE" and cn.why.endswith("(#101)")):
+                pending.append(f"G-C4_direction:{k}")
+        elif k == "compat_claim":
+            if not (any(p in moved_old for p in compat_detail_paths(cb.detail))
+                    or any(p in moved_new for p in compat_detail_paths(cn.detail))):
+                pending.append(f"G-C4_unattributed:{k}")
+            elif vb != "UNCHECKABLE" or vn != "UNCHECKABLE":
+                pending.append(f"G-C4_direction:{k}")
+        else:                                   # tests_pass, and any kind the table does not name
+            pending.append(f"G-C4_unattributed:{k}")
+        if not pending:
+            return
+        # NOTE_path2_fourth_pass: what the amended table cannot explain, F-2 (any kind) or F-3 (tests_added
+        # only) may, on a record where it can have acted. Admitted, and counted by rule, kind and move.
+        rule = "F-2" if f2 else ("F-3" if f3 and k == "tests_added" else None)
+        if rule is None:
+            for r in pending:
+                self.violate(r, pid)
+            return
+        self.fourth_pass["moves_by_rule"][f"{rule} {k}: {vb} -> {vn}"] += 1
+        if vn == "CONTRADICTED" and vb != "CONTRADICTED":
+            self.fourth_pass["new_accusations_admitted"][f"{rule} {k}"] += 1
 
     def report(self, prov: dict) -> dict:
         if not prov["unmodified_against_head"]:
@@ -431,6 +516,11 @@ class Tally:
             "claims_by_verdict": {k: dict(v) for k, v in self.claims_by_verdict.items()},
             "accusations_by_kind": {k: dict(sorted(v.items())) for k, v in self.accusations_by_kind.items()},
             "compat2_candidate_flips": dict(self.compat2_flips),
+            "fourth_pass": {"f2_records": self.fourth_pass["f2_records"],
+                            "f3_records": self.fourth_pass["f3_records"],
+                            "moves_admitted_by_rule": dict(sorted(self.fourth_pass["moves_by_rule"].items())),
+                            "new_accusations_admitted": dict(sorted(self.fourth_pass["new_accusations_admitted"].items())),
+                            "f4_withdrawals": self.fourth_pass["f4_withdrawals"]},
             "new_verified_tests_added_on_prs_whose_rows_repeat_a_filename": self.fold_exposed_new_verified,
             "new_verified_tests_added_where_a_file_adds_a_changed_name_more_often_than_it_removes_it":
                 self.excess_new_verified,
@@ -487,6 +577,10 @@ def run_corpus(shelf: Path, limit: int | None, out: Path) -> int:
         sys.exit(f"path2_gates: no shelf at {shelf}")
     prov = provenance()
     con = sqlite3.connect(f"{shelf.resolve().as_uri()}?immutable=1", uri=True)
+    # NOTE_path2_fourth_pass P-1: which shelf, by size and row counts, not by file name alone.
+    shelf_input = {"name": shelf.name, "bytes": shelf.stat().st_size,
+                   "pr_rows": con.execute("SELECT COUNT(*) FROM pr").fetchone()[0],
+                   "f_rows": con.execute("SELECT COUNT(*) FROM f").fetchone()[0]}
     t = Tally(name_prs=False)
     excl = {"baseline": Counter(), "repaired": Counter()}
     elig_moves = Counter()
@@ -521,7 +615,12 @@ def run_corpus(shelf: Path, limit: int | None, out: Path) -> int:
         if ok["baseline"] != ok["repaired"]:
             elig_moves["baseline_only" if ok["baseline"] else "repaired_only"] += 1
             if not key_moved(names):
-                t.violate("G-C2_eligibility_moved_without_a_key", pid)
+                # NOTE_path2_fourth_pass F-2: a parse that splits the diff as git does can make a
+                # reconstruction match (or stop matching) with no key moving; admitted and counted.
+                if f2_applies(diff):
+                    elig_moves["attributed_to_F-2"] += 1
+                else:
+                    t.violate("G-C2_eligibility_moved_without_a_key", pid)
         if not (ok["baseline"] and ok["repaired"]):
             continue
         rows = Counter(fn for fn, _s, _p in files if fn)
@@ -529,7 +628,7 @@ def run_corpus(shelf: Path, limit: int | None, out: Path) -> int:
     con.close()
     rep = t.report(prov)
     payload = {"prereg": PREREG, "amendment": AMENDMENT, "note": NOTE, "mode": "corpus",
-               "shelf": shelf.name, "limit": limit,
+               "shelf": shelf.name, "shelf_input": shelf_input, "limit": limit,
                "baseline_sha256": BASE_SHA256, "repaired_sha256": NEW_SHA256,
                "claimdetect": "blocked for both instruments (unparsed_claims only; never a verdict)",
                "prs_seen": seen, "excluded": {k: dict(v) for k, v in excl.items()},
