@@ -408,6 +408,9 @@ def _demo(island_z: float = _DEMO_ISLAND_Z) -> int:
     extra = [m for m in s.islands if m != "ISLAND"]
     if s.islands == ["ISLAND"]:
         print("Frame affinity alone separates the planted island from the clique.\n")
+    elif extra and "ISLAND" not in s.islands:
+        print(f"At island_z={island_z} the rule missed the planted ISLAND and listed {extra} "
+              f"instead: every member it listed was built from the shared geometry.\n")
     elif extra:
         print(f"At island_z={island_z} the rule also lists {extra}, built from the shared "
               f"geometry: the cut sits inside the clique's own scatter, so those marks are "
@@ -437,9 +440,11 @@ def main(argv=None) -> int:
     def _island_z(text):
         """A finite z strictly greater than 0 — the only values the rule is defined for.
 
-        At z <= 0 the cut sits at or above the cohort median, so the rule lists roughly half the
-        members as islands; at nan every comparison is False and the list is silently empty.
-        Neither is a survey, and neither announced itself before this check.
+        At z <= 0 the cut sits at or above the cohort median, so the rule lists every member
+        below the median, and at z < 0 possibly more. At nan every comparison is False and at
+        +inf the cut is -inf, so the list is silently empty; at -inf the cut is +inf and it
+        names every member. None of these is a survey, and none announced itself before this
+        check.
         """
         try:
             z = float(text)
@@ -448,8 +453,9 @@ def main(argv=None) -> int:
         if not np.isfinite(z) or z <= 0:
             raise argparse.ArgumentTypeError(
                 f"{text!r}: island z must be finite and greater than 0. At z<=0 the cut sits at "
-                f"or above the cohort median and names about half the cohort; at nan or inf the "
-                f"list is empty whatever the data says.")
+                f"or above the cohort median and lists every member below it, and at z<0 "
+                f"possibly more; at nan or +inf the list is empty whatever the data says, and "
+                f"at -inf it names every member.")
         return z
 
     ap = argparse.ArgumentParser(

@@ -139,10 +139,48 @@ def test_demo_cohort_helper_keeps_the_demo_data():
     assert all(np.array_equal(got[m], want[m]) for m in want)
 
 
-def test_demo_cohort_at_island_z_three_flags_exactly_the_planted_island():
+def _demo_survey_at_three():
     s = survey(islands_mod._demo_cohort(), n_null=400, n_perm=400, island_z=3.0)
-    assert s.islands == ["ISLAND"]
+    cut = float(s.island_rule.rsplit("= ", 1)[1])          # the stated rule, as printed
+    lowest = min(v for m, v in s.mean_affinity.items() if m != "ISLAND")
+    return s, round(lowest - cut, 4)
+
+
+# survey()'s docstring: the same cohort gives affinities up to about 0.005 apart between the two
+# machines it has been run on, cause not isolated. CI runs neither of them.
+DRIFT = 0.005
+
+
+def test_demo_cohort_at_island_z_three_lists_the_planted_island():
+    """ISLAND sits 61.5 robust deviations below the median in survey()'s docstring: a drift in
+    the third decimal does not move it across the cut."""
+    s, _ = _demo_survey_at_three()
+    assert "ISLAND" in s.islands
     assert s.island_rule.startswith("mean affinity < median - 3.0*1.4826*MAD")
+
+
+def test_demo_cohort_at_island_z_three_lists_only_the_planted_island():
+    """The exact list, which is what the demo's separation claim rests on. It depends on the
+    clique's lowest member staying above the cut, which the next test records."""
+    s, margin = _demo_survey_at_three()
+    assert s.islands == ["ISLAND"], (
+        f"at z=3 the demo cohort lists {s.islands}. The lowest clique member sits {margin} "
+        f"above the cut here. survey()'s docstring records affinities up to about {DRIFT} apart "
+        f"between machines, cause not isolated: a failure here with a margin near or under that "
+        f"is that drift reaching the demo, not a broken rule.")
+
+
+def test_demo_cohort_clique_margin_is_wider_than_the_documented_drift():
+    """The margin between the clique's lowest member and the z=3 cut: 0.0116 on the lab's
+    Windows box (Python 3.12.10, numpy 2.4.4), 0.0086 from the reporter's median and MAD in
+    survey()'s docstring. Both clear the documented drift; the gap between them (0.003) is of
+    the same order, which is why this is recorded apart from the exact list above."""
+    _, margin = _demo_survey_at_three()
+    assert margin > DRIFT, (
+        f"the demo's clique margin at z=3 is {margin}, not wider than the ~{DRIFT} "
+        f"between-machine affinity drift survey()'s docstring documents (cause not isolated). "
+        f"The exact island list is no longer safe on this machine: read a failure of the "
+        f"exact-list test as that drift, and isolate its cause before trusting the demo's claim.")
 
 
 def _recording_survey(monkeypatch):
@@ -156,12 +194,13 @@ def _recording_survey(monkeypatch):
 
 
 def test_demo_calls_survey_at_island_z_three_and_prints_the_rule(monkeypatch, capsys):
+    """Which sentence follows the rule depends on the exact list, which the tests above hold
+    apart from the drift; the branches themselves are driven with a fixed list below."""
     calls = _recording_survey(monkeypatch)
     assert islands_mod.main(["--demo"]) == 0
     assert [c["island_z"] for c in calls] == [3.0]
     out = capsys.readouterr().out
     assert "island rule used: mean affinity < median - 3.0*1.4826*MAD" in out
-    assert "Frame affinity alone separates the planted island from the clique." in out
 
 
 def test_demo_honours_an_explicit_island_z(monkeypatch, capsys):
@@ -239,22 +278,52 @@ def test_demo_makes_the_separation_claim_only_for_the_planted_island_alone(monke
     assert islands_mod.main(["--demo"]) == 0
     out = capsys.readouterr().out
     assert SEPARATION_CLAIM in out
-    assert "the rule also lists" not in out
+    assert "the rule also lists" not in out and "missed the planted ISLAND" not in out
 
 
-@pytest.mark.parametrize("bad", ["0", "0.0", "-1", "-0.5", "nan", "NaN", "inf", "-inf",
-                                 "abc", ""])
-def test_island_z_rejects_values_the_rule_is_not_defined_for(bad, capsys):
-    """A negative z puts the cut above the median and lists about half the cohort; nan makes
-    every comparison False and empties the list. Neither announced itself before this check."""
+@pytest.mark.parametrize("listed", [["mind_0"], ["mind_0", "mind_1"]])
+def test_demo_names_the_miss_when_the_list_leaves_out_the_planted_island(monkeypatch, capsys,
+                                                                         listed):
+    """Clique members listed and ISLAND not: the demo must say it missed, not that the rule
+    'also' lists them."""
+    _survey_reporting_islands(monkeypatch, listed)
+    assert islands_mod.main(["--demo"]) == 0
+    out = capsys.readouterr().out
+    assert SEPARATION_CLAIM not in out
+    assert f"the rule missed the planted ISLAND and listed {listed} instead" in out
+    assert "the rule also lists" not in out and "Only ISLAND was planted." not in out
+
+
+FINITE = "island z must be finite and greater than 0"
+
+
+@pytest.mark.parametrize("argv, fragment", [
+    (["--island-z", "0"], FINITE),
+    (["--island-z", "0.0"], FINITE),
+    (["--island-z", "-1"], FINITE),
+    (["--island-z", "-0.5"], FINITE),
+    (["--island-z", "nan"], FINITE),
+    (["--island-z", "NaN"], FINITE),
+    (["--island-z", "inf"], FINITE),
+    (["--island-z=-inf"], FINITE),
+    (["--island-z", "-inf"], "expected one argument"),
+    (["--island-z", "abc"], "is not a number"),
+    (["--island-z", ""], "is not a number"),
+])
+def test_island_z_rejects_values_the_rule_is_not_defined_for(argv, fragment, capsys):
+    """At z<=0 the cut sits at or above the median and lists every member below it; nan and
+    +inf empty the list and -inf lists everyone. None announced itself before this check."""
     with pytest.raises(SystemExit) as e:
-        islands_mod.main(["--demo", "--island-z", bad])
+        islands_mod.main(["--demo", *argv])
     assert e.value.code == 2
     err = capsys.readouterr().err
-    # "-inf" and "-1" never reach the type: argparse reads a leading "-" that is not a decimal
-    # number as an option string. That is still a refusal, and the reason differs.
-    assert any(s in err for s in ("island z must be finite and greater than 0",
-                                  "is not a number", "expected one argument"))
+    # "-1" and "-0.5" reach the type: argparse reads them as negative numbers. "-inf" after a
+    # space does not: a leading "-" that is not a negative decimal number is read as an option
+    # string, so argparse refuses it one step earlier. "--island-z=-inf" hands it to the type.
+    assert fragment in err
+    if fragment == FINITE:
+        assert "at nan or +inf the list is empty whatever the data says" in err
+        assert "at -inf it names every member" in err
 
 
 @pytest.mark.parametrize("good", ["1", "0.5", "3.0", "1e-6", "100"])
