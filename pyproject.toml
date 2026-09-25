@@ -25,7 +25,6 @@ keywords = [
     "cognitive",
     "cognitive-profiler",
     "cognometric-fingerprint",
-    "hallucination-detection",
     "refusal-detection",
     "tool-call-drift",
     "sycophancy-detection",
