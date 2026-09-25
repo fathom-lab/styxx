@@ -30,11 +30,21 @@ optional U+FEFF, the same keyword separator, a name ending at an ASCII non-name 
 for every character of Python's \\s and U+FEFF on the raw door, through the port, and on the git door
 (V-1); a prefix written to end in `..`, and a `..` after a named segment, could hold anything (V-4);
 and the scorer attributes a move per claim, by reverting one rule in its own copy of the instrument
-(V-3)."""
+(V-3).
+
+NOTE_path2_seventh_pass_2026_09_25 adds the tests marked x1, x2 and x7: both ports read a name by ONE
+pinned Unicode table (15.0.0), which the generator reproduces; a claimed name that runs on past the
+identifier, or ends in a middle dot, names none (x1); a hunk is read by its counts only when it carries
+what it declares and orders its lines as a generator does, else as main reads it (x2); and every check
+the scorer gained -- its own reading of each rule it re-implements (G-C7), the gate-level fields and
+verdict (G-C1), the git door (G-C8) -- fails on a defect planted in the instrument (x7)."""
+import hashlib
+import importlib.util
 import json
 import re
 import shutil
 import subprocess
+import unicodedata
 from pathlib import Path
 
 import pytest
@@ -1228,6 +1238,9 @@ def test_v3_the_post_amendment_rules_admit_only_their_own_kinds():
     assert admits("F-3", "tests_added", "VERIFIED", "CONTRADICTED", "") and not admits("F-3", "only_touches", "V", "C", "")
     assert admits("V-1", "symbol_added", "VERIFIED", "UNCHECKABLE", "") and not admits("V-1", "file_touched", "V", "U", "")
     assert admits("V-4", "only_touches", "CONTRADICTED", "UNCHECKABLE", off)
+    # NOTE_path2_seventh_pass: A-1 only abstains a test count
+    assert admits("A-1", "tests_added", "CONTRADICTED", "UNCHECKABLE", "") and admits("A-1", "tests_added", "VERIFIED", "UNCHECKABLE", "")
+    assert not admits("A-1", "tests_added", "VERIFIED", "CONTRADICTED", "") and not admits("A-1", "symbol_added", "VERIFIED", "UNCHECKABLE", "")
     assert not admits("V-4", "only_touches", "VERIFIED", "CONTRADICTED", "paths outside 'src': ['x']")
     assert not admits("V-4", "only_touches", "VERIFIED", "UNCHECKABLE", "prefix 'x' is not a path (#110)")
     with pytest.raises(ValueError):
@@ -1279,7 +1292,8 @@ def test_v3_w1_and_w2_are_credited_only_with_what_their_reverts_give_back(scorer
     assert not pg.parse_differs(two)
     t = pg.Tally(name_prs=True)
     t.pair("zz", "2 files changed.", two, pg.raw_paths(two))
-    assert dict(t.violations) == {"G-C4_direction:files_changed_count:W-1": 1}
+    # (NOTE_path2_seventh_pass: the scorer's own reading of the parse refuses it too, G-C7)
+    assert dict(t.violations) == {"G-C4_direction:files_changed_count:W-1": 1, "G-C7_oracle:W-1_status": 1}
 
 
 # ─────────────────────────────── NOTE_path2_sixth_pass_2026_09_25: W-1 (one hunk-aware parse)
@@ -1353,24 +1367,24 @@ def test_w1_the_blob_and_the_sides_are_one_reading():
     for diff in (PROBE, _v1_raw("t-lead-new", "\x0c")[1], _m("src/a.py") + _m("lib/b.py")):
         blob = parse_unified_diff(diff)[1]
         assert blob.split("\n") == [a for added, _r in parse_unified_diff_sides(diff).values() for a in added]
-    diff =("--- a/src/m.py\n+++ b/src/m.py\n@@ -1,4 +1,4 @@\n Q = 1\n--- users\n+++ x\n-def foo():\n"
+    diff =("--- a/src/m.py\n+++ b/src/m.py\n@@ -1,3 +1,3 @@\n Q = 1\n--- users\n+++ x\n-def foo():\n"
             "+def foo(x):\n")
     status, blob = parse_unified_diff(diff)
     assert status == {"src/m.py": "M"} and blob == "++ x\ndef foo(x):"
     assert parse_unified_diff_sides(diff) == {"src/m.py": (["++ x", "def foo(x):"], ["-- users", "def foo():"])}
+    # NOTE_path2_seventh_pass: the same lines under counts they do not carry (4 and 4) are read as main reads them
+    over = diff.replace("@@ -1,3 +1,3 @@", "@@ -1,4 +1,4 @@")
+    assert parse_unified_diff(over)[0] == {"src/m.py": "M", "x": "M"}
 
 
 def test_w1_a_hunk_that_declares_too_many_lines_still_ends_at_the_next_file_header():
     # hand-written hunks often declare more lines than they carry; the next file's `---`/`+++` pair then
-    # falls inside the counts and still reads as a header, as on main, when a hunk header follows it or
-    # it is written `--- a/...`/`+++ b/...`
+    # falls inside the counts. NOTE_path2_seventh_pass: such a hunk is not EXACT, and is read as main reads
+    # it, so the pair is a header (the sixth pass's `_header_pair` exception is gone)
     sloppy = "--- a/src/a.py\n+++ b/src/a.py\n@@ -1,3 +1,4 @@\n x\n+y = 1\n--- a/lib/b.py\n+++ b/lib/b.py\n@@ -1 +1 @@\n-a\n+b\n"
     assert parse_unified_diff(sloppy)[0] == {"src/a.py": "M", "lib/b.py": "M"}
     lines = sloppy.split("\n")
-    assert dg._header_pair(lines, lines.index("--- a/lib/b.py"))
-    no_prefix = ["--- old", "+++ new", "@@ -9 +9 @@"]
-    assert dg._header_pair(no_prefix, 0) and not dg._header_pair(["--- old", "+++ new", " x"], 0)
-    assert dg._header_pair(["--- /dev/null", "+++ b/x", " y"], 0) and not dg._header_pair(["--- users", " x"], 0)
+    assert not dg._hunk_is_exact(lines, 2) and dg._hunk_is_exact(lines, lines.index("@@ -1 +1 @@"))
     # the limit this leaves: `-- a` and `++ b` as the last lines of a hunk, right before the next `@@`,
     # read as a file header, as main reads them (path2:w1-limit-...-read-as-a-file-header)
     limit = "--- a/src/a.sql\n+++ b/src/a.sql\n@@ -1,2 +1,2 @@\n x\n--- old\n+++ new\n@@ -9 +9 @@\n-a\n+b\n"
@@ -1400,7 +1414,7 @@ def test_w2_a_name_is_the_python_identifier_that_starts_there():
         assert dg._identifier_at(text, 0) == want, ascii(text)
         assert want == "" or want.isidentifier()
     m = dg._TEMPLATES[7][1].search("Added function col\u00b7leccio.")
-    assert m.group("name") == "col" and dg._claimed_name("Added function col\u00b7leccio.", m) == "col\u00b7leccio"
+    assert m.group("name") == "col" and dg._claimed_name("Added function col\u00b7leccio.", m) == ("col\u00b7leccio", None)
 
 
 W2_XS = ["\u00e9", "\u00ef", "\u00df", "\u00f6", "\u00f1", "\u0107", "\u011f", "\u03a9", "\u0434", "\u8ba1",
@@ -1423,15 +1437,20 @@ def test_w2_a_claimed_non_ascii_name_reads_as_its_definition_on_both_ports():
     # port at the fifth pass, and the combining-mark, middle-dot and connector cases on the Python too.
     # The claimed name and the definition's name are now one reading, so each verifies, naming the
     # identifier both sides read -- except U+00B2, which no identifier holds: CPython refuses
-    # `def foo<U+00B2>bar():`, the line defines nothing, and the claim reads CONTRADICTED (main read it
-    # VERIFIED through `\b`).
+    # `def foo<U+00B2>bar():` and the line defines nothing (main read it VERIFIED through `\b`).
+    # NOTE_path2_seventh_pass: a claimed name that runs on into U+00B2 (a word character no identifier
+    # holds) names no identifier, and one that ends in U+00B7 names none for certain; both are UNCHECKABLE.
     cells = _w2_name_cells()
     assert len(cells) == 64
     py = []
     for summary, diff, kind, ident in cells:
         _, got = _claims(summary, diff)
         if "\u00b2" in summary:
-            assert got == [("symbol_added", "CONTRADICTED", f"added lines do NOT define {kind} {ident!r}")]
+            assert got == [("symbol_added", "UNCHECKABLE", f"the claimed name runs past {ident!r} into '\u00b2' "
+                            "(U+00B2), which no Python identifier holds; no definition is read for it")]
+        elif summary.endswith("\u00b7."):
+            assert got == [("symbol_added", "UNCHECKABLE", f"the claimed name {ident!r} ends in '\u00b7' (U+00B7), "
+                            "which prose also writes after a word; no definition is read for it")]
         else:
             assert got == [("symbol_added", "VERIFIED", f"added lines do define {kind} {ident!r}")], ascii(summary)
         py.append(got)
@@ -1550,7 +1569,7 @@ def test_v3_g_c6_admits_a_flip_only_one_rule_explains_alone(scorer, monkeypatch)
     # is not "F-2 alone", and fails G-C6, although each rule admits a move of its kind on this diff.
     pg = scorer
     _planted(pg, monkeypatch, "not _COMPAT_SCAFFOLD.search(_undotted(path))", "not _COMPAT_SCAFFOLD.search(path)", "s4")
-    diff = STORYBOOK.replace("@@ -1 +1 @@\n", "@@ -1,2 +1,2 @@\n x\u2028--- y\n")
+    diff = STORYBOOK.replace("@@ -1 +1 @@\n", "@@ -1,3 +1,2 @@\n x\u2028--- y\n")   # exact under splitlines()
     assert pg.split_differs(diff) and pg.parse_differs(diff)
     base = pg.BASE.gate_diff_text("No breaking changes.", diff, run=None, strict=False).claims
     repaired = pg.new.gate_diff_text("No breaking changes.", diff, run=None, strict=False).claims
@@ -1573,7 +1592,8 @@ def test_v3_f2_and_w1_admit_only_on_a_diff_where_they_can_act(scorer, monkeypatc
     assert not pg.split_differs(diff)
     t = pg.Tally(name_prs=True)
     t.pair("tab", "Added 1 test.", diff, pg.raw_paths(diff))
-    assert dict(t.violations) == {"G-C4_direction:tests_added:F-2": 1}
+    # (NOTE_path2_seventh_pass: the scorer's own split refuses it too, on any diff, G-C7)
+    assert t.violations["G-C4_direction:tests_added:F-2"] == 1 and t.violations["G-C7_oracle:F-2_split"] == 1
 
 
 def test_v3_a_key_moved_by_anything_but_a_dot_is_refused(scorer, monkeypatch):
@@ -1651,21 +1671,397 @@ def test_v3_raw_paths_reads_a_header_only_outside_a_hunk(scorer):
 def test_v3_limit_12_a_defect_whose_trigger_a_rule_exposes_is_credited_to_that_rule(scorer, monkeypatch):
     # Round-5 protocol lens, minor 3: the stated blind spot was incomplete. Planted in code no rule
     # touches (`net >= n` for `net == n`), a false VERIFIED whose trigger is the form feed F-2 and V-1
-    # expose is credited to them and admitted -- an EXPECTED LIMIT, pinned so a change to it is seen.
+    # expose is credited to them by the counterfactual -- limit 12(b). NOTE_path2_seventh_pass: the claim
+    # oracle (G-C7) reads the tests_added claim with the scorer's own code, so the gate now fails.
     pg = scorer
     _planted(pg, monkeypatch, "if net == n:", "if net >= n:", "l12")
     diff = "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,3 @@\n x = 0\n+def test_a():\n+\x0cdef test_b():\n"
     t = pg.Tally(name_prs=True)
     t.pair("pr105", "Added 1 test.", diff, pg.raw_paths(diff))
-    assert not t.violations
+    assert dict(t.violations) == {"G-C7_oracle:tests_added_claim": 1}
     assert dict(t.attribution["moves_admitted_by_rule"]) == {"F-2+V-1 tests_added: VERIFIED -> VERIFIED": 1}
+
+
+# ─────────────────────────────── NOTE_path2_seventh_pass_2026_09_25: x1, one name table and the claim side
+
+XID_PY = ROOT / "styxx" / "_xid.py"
+XID_JS = ROOT / "web" / "gate" / "diffgate.js"
+
+
+def _gen_xid():
+    spec = importlib.util.spec_from_file_location("gen_xid_under_test", ROOT / "web" / "gate" / "gen_xid.py")
+    g = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(g)
+    return g
+
+
+def _port_records(items: list) -> list:
+    """[(summary, diff)] through the port: [[kind, verdict, why, detail], ...] per item."""
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    script = ("const {gateDiffText}=require(process.argv[1]);let s='';process.stdin.on('data',d=>s+=d);"
+              "process.stdin.on('end',()=>{process.stdout.write(JSON.stringify(JSON.parse(s).map(it=>gateDiffText("
+              "it.summary,it.diff).claims.map(c=>[c.kind,c.verdict,c.why,c.detail]))));});")
+    r = subprocess.run([node, "-e", script, str(XID_JS)], input=json.dumps([{"summary": s, "diff": d} for s, d in items]),
+                       capture_output=True, text=True, encoding="utf-8", timeout=300)
+    assert r.returncode == 0, r.stderr[-2000:]
+    return json.loads(r.stdout)
+
+
+def _py_records(items: list) -> list:
+    return [[[c.kind, c.verdict, c.why, c.detail] for c in gate_diff_text(s, d, run=None, strict=False).claims]
+            for s, d in items]
+
+
+def test_x1_both_ports_carry_one_table_with_its_version_and_hash_pinned():
+    from styxx import _xid
+    g = _gen_xid()
+    js_block = g.blocks_of(XID_JS.read_text(encoding="utf-8"))
+    js_table = "".join(re.findall(r'"([0-9A-Za-z]+)"', js_block.split("const _XID_TABLE =", 1)[1]))
+    assert js_table == _xid.TABLE
+    assert _xid.UNICODE_VERSION == g.PINNED == "15.0.0"
+    assert f'const _XID_UNICODE_VERSION = "{_xid.UNICODE_VERSION}";' in js_block
+    assert f'const _XID_TABLE_SHA256 = "{_xid.TABLE_SHA256}";' in js_block
+    assert hashlib.sha256(_xid.TABLE.encode("ascii")).hexdigest() == _xid.TABLE_SHA256
+    # the Python reads names by the table, not by the runtime (on Python 3.12 the two agree on every code
+    # point, so this is asked of the reading itself: a table that refused `b` would end `abc` at `a`)
+    assert dg._xid_opens is _xid.opens_identifier and dg._xid_continues is _xid.continues_identifier
+
+
+def test_x1_the_identifier_is_read_through_the_table_functions(monkeypatch):
+    monkeypatch.setattr(dg, "_xid_continues", lambda ch: ch != "c")
+    assert dg._identifier_at("abc", 0) == "ab"
+    m = dg._TEMPLATES[7][1].search("Added function abc.")
+    monkeypatch.setattr(dg, "_xid_word", lambda ch: ch == "c")
+    assert dg._claimed_name("Added function abc.", m) == (
+        "ab", "the claimed name runs past 'ab' into 'c' (U+0063), which no Python identifier holds; no definition is read for it")
+    monkeypatch.setattr(dg, "_xid_opens", lambda ch: ch != "a")
+    assert dg._identifier_at("abc", 0) == ""
+
+
+@pytest.mark.skipif(unicodedata.unidata_version != "15.0.0",
+                    reason="gen_xid.py runs only under the table's Unicode version, 15.0.0 (Python 3.12)")
+def test_x1_the_generator_reproduces_both_blocks_from_the_pinned_version():
+    g = _gen_xid()
+    t = g.table()
+    for path, block in ((XID_PY, g.python_block(t)), (XID_JS, g.js_block(t))):
+        before, after = g.splice(path, block)
+        assert before == after, path
+    # the middle dots the claim reading refuses to end a name on are the punctuation XID_Continue holds
+    po = [c for c in range(0x110000) if ("a" + chr(c)).isidentifier() and unicodedata.category(chr(c)) == "Po"]
+    assert po == [0xB7, 0x387] and dg._PROSE_DOTS == "\u00b7\u0387"
+
+
+def test_x1_the_port_decodes_the_table_as_the_python_does():
+    from styxx import _xid
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    script = ("const src=require('fs').readFileSync(process.argv[1],'utf8');"
+              "const f=new Function(src+';return [_XID_STARTS,_XID_MASKS];');process.stdout.write(JSON.stringify(f()));")
+    r = subprocess.run([node, "-e", script, str(XID_JS)], capture_output=True, text=True, encoding="utf-8", timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+    starts, masks = json.loads(r.stdout)
+    assert (starts, masks) == (_xid._STARTS, _xid._MASKS)
+
+
+X1_SKEW = ["\u200c", "\u200d", "\u30fb", "\uff65", "\u1c89", "\U0002ebf0"]
+
+
+def test_x1_the_characters_the_runtimes_disagree_on_read_alike_in_both_ports():
+    # Round-6 review, blocker 2: U+200C, U+200D, U+30FB, U+FF65 (XID_Continue since Unicode 15.1) and letters
+    # 15.1 and 16.0 assigned split the ports: Python 3.12 read Unicode 15.0 and Node 24 reads 16.0. One table.
+    items = []
+    for x in X1_SKEW:
+        items += [(f"Added function foo{x}bar. Added function foo. Added class Foo{x}.",
+                   f"--- a/{SP}\n+++ b/{SP}\n@@ -1 +1,3 @@\n x = 0\n+def foo{x}bar():\n+class Foo{x}:\n"),
+                  ("Added 1 test. Added 0 tests.", f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,2 @@\n x = 0\n+def test_a{x}b():\n"),
+                  ("Added 1 test. Added 0 tests.", f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1 @@\n-def test_a{x}b():\n+def test_a{x}b(y):\n"),
+                  ("No breaking changes.", f"--- a/{SP}\n+++ b/{SP}\n@@ -1,2 +1 @@\n-def api{x}x():\n-    pass\n+x = 1\n")]
+    assert _port_records(items) == _py_records(items)
+    assert dg._identifier_at("foo\u30fbbar", 0) == "foo" and dg._identifier_at("a\u200db", 0) == "a"
+    assert dg._identifier_at("x\U0002ebf0", 0) == "x" and dg._identifier_at("caf\u00e9", 0) == "caf\u00e9"
+
+
+def test_x1_a_claimed_name_that_runs_past_the_identifier_names_none(tmp_path):
+    # Round-6 review, blocker 1: W-2 truncated `fo<U+00B2>o` to `fo` and verified it on `def fo`, a new false
+    # VERIFIED against main on both Python doors. It names no identifier: UNCHECKABLE, on every door.
+    summary = "Added function fo\u00b2o. Added class Fo\u2082o. Added function fo."
+    diff = _git_repo(tmp_path, {SP: "x = 1\n"}, {SP: "x = 1\ndef fo():\n    pass\n\n\nclass Fo:\n    pass\n"})
+    want = [("symbol_added", "UNCHECKABLE", "the claimed name runs past 'fo' into '\u00b2' (U+00B2), which no Python "
+                                             "identifier holds; no definition is read for it"),
+            ("symbol_added", "UNCHECKABLE", "the claimed name runs past 'Fo' into '\u2082' (U+2082), which no Python "
+                                             "identifier holds; no definition is read for it"),
+            ("symbol_added", "VERIFIED", "added lines do define function 'fo'")]
+    via_git = [(c.kind, c.verdict, c.why) for c in gate_diff(summary, tmp_path, "HEAD~1", "HEAD").claims]
+    assert via_git == _claims(summary, diff)[1] == want
+    assert _port_claims([(summary, diff)]) == [want]
+
+
+def test_x1_every_word_character_no_identifier_holds_ends_no_claimed_name_in_either_port():
+    from styxx import _xid
+    word_not_ident = [c for c in range(0x80, 0x110000) if _xid.is_word(chr(c)) and not _xid.continues_identifier(chr(c))]
+    assert len(word_not_ident) == 923            # Unicode 15.0.0: 905 No, 16 Lo and 2 Lm
+    diff = f"--- a/{SP}\n+++ b/{SP}\n@@ -1 +1,2 @@\n x = 0\n+def fo():\n"
+    items = [(f"Added function fo{chr(c)}o.", diff) for c in word_not_ident]
+    py = _py_records(items)
+    assert all(r[0][1] == "UNCHECKABLE" and r[0][2].startswith("the claimed name runs past 'fo' into") for r in py)
+    assert _port_records(items) == py
+
+
+def test_x1_a_claimed_name_ending_in_a_middle_dot_names_none_for_certain():
+    # U+00B7 and U+0387 (the Greek semicolon) continue an identifier and are also written after a word in prose
+    diff = f"--- a/{SP}\n+++ b/{SP}\n@@ -1 +1,2 @@\n x = 0\n+def foo():\n"
+    for dot in ("\u00b7", "\u0387"):
+        summary = f"Added function foo{dot} Then."
+        want = [("symbol_added", "UNCHECKABLE", f"the claimed name 'foo{dot}' ends in '{dot}' (U+{ord(dot):04X}), "
+                                                 "which prose also writes after a word; no definition is read for it")]
+        assert _claims(summary, diff)[1] == want and _port_claims([(summary, diff)]) == [want]
+    # inside a name the dot is the name's: `col<U+00B7>leccio` is one identifier
+    assert _claims("Added function col\u00b7leccio.", diff)[1][0][1] == "CONTRADICTED"
+
+
+# ─────────────────────────────── NOTE_path2_seventh_pass_2026_09_25: x2, a hunk's counts read only when exact
+
+X2_OVER = ("--- a/src/x.py\n+++ b/src/x.py\n@@ -1,5 +1,6 @@\n-a = 1\n+a = 2\n"
+           "--- lib/y.py\n+++ lib/y.py\n@@\n-c = 1\n+c = 2\n+def test_new():\n+    pass\n")
+X2_SHAPES = {   # round-6 review, blocker 3: each read the second file's header as content; main read a header
+    "bare-at-at": X2_OVER,
+    "elided-at-at": X2_OVER.replace("\n@@\n", "\n@@ ... @@\n"),
+    "blank-then-hunk": X2_OVER.replace("+++ lib/y.py\n@@\n", "+++ lib/y.py\n\n@@ -1 +1,3 @@\n"),
+    "no-hunk-header": X2_OVER.replace("\n@@\n", "\n"),
+    "timestamps": X2_OVER.replace("--- lib/y.py\n+++ lib/y.py\n", "--- lib/y.py\t2024-01-01 00:00:00\n+++ lib/y.py\t2024-01-02\n"),
+    "numeric-hunk": X2_OVER.replace("\n@@\n", "\n@@ -1 +1,3 @@\n"),
+    "new-file": X2_OVER.replace("--- lib/y.py", "--- /dev/null"),
+}
+
+
+@pytest.mark.parametrize("shape", sorted(X2_SHAPES))
+def test_x2_an_over_declared_hunk_before_a_gnu_header_reads_as_main_reads_it(shape):
+    diff = X2_SHAPES[shape]
+    lines = diff.split("\n")
+    assert not dg._hunk_is_exact(lines, 2)
+    status = parse_unified_diff(diff)[0]
+    assert len(status) == 2 and "src/x.py" in status, status
+    summary = "2 files changed. Added 1 test."
+    assert _claims(summary, diff)[1] == [("files_changed_count", "VERIFIED", "diff changes 2 files, claim says 2"),
+                                        ("tests_added", "VERIFIED", "diff adds 1 test functions, claim says 1")]
+    assert _port_claims([(summary, diff)]) == [_claims(summary, diff)[1]]
+
+
+def test_x2_an_exact_git_hunk_holding_a_slash_pair_is_content_on_every_door(tmp_path):
+    # Round-6 review, minor: `-- a/x` beside `++ b/x` in a real hunk read as a file header on the raw door and
+    # the port (the header-pair exception's a/ b/ clause); git's hunks are exact, so they are content now
+    before = {"src/a.py": 'S = """\n-- a/x\n"""\ndef foo():\n    pass\n'}
+    after = {"src/a.py": 'S = """\n++ b/x\n"""\ndef foo(y):\n    pass\n'}
+    diff = _git_repo(tmp_path, before, after)
+    assert "\n--- a/x\n+++ b/x\n" in diff
+    summary = "Only touches src/. 1 file changed."
+    want = [("only_touches", "VERIFIED", "all changed paths under prefix"),
+            ("files_changed_count", "VERIFIED", "diff changes 1 files, claim says 1")]
+    via_git = [(c.kind, c.verdict, c.why) for c in gate_diff(summary, tmp_path, "HEAD~1", "HEAD").claims]
+    assert via_git == _claims(summary, diff)[1] == want and _port_claims([(summary, diff)]) == [want]
+
+
+def test_x2_what_may_follow_an_exact_hunk():
+    head = "--- a/s.sql\n+++ b/s.sql\n@@ -1,3 +1,3 @@\n x\n--- a\n+++ b\n y\n"
+    exact = {"end of diff": "", "diff --git": "diff --git a/t b/t\n", "a file header": "--- a/t\n+++ b/t\n@@ -1 +1 @@\n-p\n+q\n",
+             "a hunk further on": "@@ -9 +9 @@\n-p\n+q\n", "a signature": "-- \n2.39.2\n", "prose": "Index: t\n",
+             "a no-newline marker": "\\ No newline at end of file\n"}
+    not_exact = {"a hunk going back": "@@ -1 +1 @@\n-p\n+q\n", "a body line": "+more\n", "a context line": " more\n",
+                 "a blank line then a body line": "\n+more\n", "a blank line then a hunk": "\n@@ -9 +9 @@\n-p\n+q\n",
+                 "a hunk header with no counts": "@@ ... @@\n-p\n+q\n"}
+    for label, tail in exact.items():
+        assert dg._hunk_is_exact((head + tail).split("\n"), 2), label
+    for label, tail in not_exact.items():
+        assert not dg._hunk_is_exact((head + tail).split("\n"), 2), label
+    # a `--- ` line right after an added one is written by no generator: it is a header, and the hunk that
+    # swallowed it declared too many lines (path2:w1-a-short-hunk-before-an-a-b-header-pair-with-no-hunk-header)
+    assert not dg._hunk_is_exact("@@ -1,3 +1,4 @@\n x\n+y\n--- a/b\n+++ b/b\n-p\n+q\n".split("\n"), 0)
+    # other lines a hand-written hunk interleaves stay countable
+    assert dg._hunk_is_exact("@@ -1,3 +1,3 @@\n x\n--- users\n+++ x\n-def foo():\n+def foo(x):\n".split("\n"), 0)
+    # the pair right before a hunk header is a header (the pinned limit), as on main
+    assert not dg._hunk_is_exact("@@ -1,2 +1,2 @@\n x\n--- old\n+++ new\n@@ -9 +9 @@\n-a\n+b\n".split("\n"), 0)
+
+
+def test_x2_the_walk_edges_on_both_ports():
+    # a context line ends a change: a removed `-- users` after it is content again, and the changed def pairs
+    exact = "--- a/src/m.py\n+++ b/src/m.py\n@@ -1,4 +1,4 @@\n x\n+y\n z\n--- users\n-def foo():\n+def foo(x):\n"
+    # the same lines under counts the diff ends before closing: read as main reads them, `--- users` a header
+    over = "--- a/src/m.py\n+++ b/src/m.py\n@@ -1,9 +1,9 @@\n Q = 1\n--- users\n-def foo():\n+def foo(x):\n"
+    # an identifier character outside the Basic Multilingual Plane (CJK Extension B), in a claim and a definition
+    astral = f"--- a/{SP}\n+++ b/{SP}\n@@ -1 +1,2 @@\n x = 0\n+def foo\U00020000bar():\n"
+    # the shelf's fold: a file created by the diff removes nothing, so both async definitions are added
+    fold = "--- /dev/null\n+++ b/tests/test_n.py\n@@ -1 +1,2 @@\n-async def test_n():\n+async def test_n():\n+async def test_n():\n"
+    items = [("Added function foo. 1 file changed.", exact), ("Added function foo. 1 file changed.", over),
+             ("Added function foo\U00020000bar. Added function foo.", astral), ("Added 2 tests.", fold)]
+    py = [_claims(s, d)[1] for s, d in items]
+    assert py[0][0][1] == "UNCHECKABLE" and py[1][0][1] == "VERIFIED"
+    assert [c[1] for c in py[2]] == ["VERIFIED", "CONTRADICTED"]
+    assert py[3] == [("tests_added", "UNCHECKABLE", "diff adds 2 async test functions, which this template does not "
+                                                     "count; claim says 2")]
+    assert _port_claims(items) == py
+
+
+# ─────────────────────────────── NOTE_path2_seventh_pass_2026_09_25: A-1, an added async test abstains the count
+
+def test_a1_an_added_async_test_abstains_the_count_it_does_not_read():
+    # The seventh pass's randomised repositories: `got` has never read `async def test_` (main neither), and
+    # main's "Added 0 tests." over a new async test beside a changed sync one read CONTRADICTED only because
+    # it also counted the changed test; the pairing (#101) took that second miscount away. Now it abstains.
+    async_new = (f"--- a/{TP}\n+++ b/{TP}\n@@ -1,2 +1,4 @@\n-def test_load():\n+def test_load(z=0):\n     pass\n"
+                 "+async def test_parse():\n+    pass\n")
+    for summary in ("Added 0 tests.", "Added 1 test.", "Added 2 tests."):
+        want = [("tests_added", "UNCHECKABLE", "diff adds 1 async test functions, which this template does not "
+                                                f"count; claim says {summary.split()[1]}")]
+        assert _claims(summary, async_new)[1] == want and _port_claims([(summary, async_new)]) == [want]
+    # a changed async test is changed, not added (R-2 reads `async` on the removed side): no abstention
+    changed = f"--- a/{TP}\n+++ b/{TP}\n@@ -1,2 +1,2 @@\n-async def test_a():\n+async def test_a(x):\n     pass\n"
+    assert _claims("Added 0 tests.", changed)[1] == [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0")]
+    # a new file's async test abstains too; a sync test beside nothing async reads as before
+    new_file = "--- /dev/null\n+++ b/tests/test_n.py\n@@ -0,0 +1,2 @@\n+async def test_n():\n+    pass\n"
+    assert _claims("Added 1 test.", new_file)[1][0][1] == "UNCHECKABLE"
+    assert _claims("Added 1 test.", _v1_raw("t-lead-new", " ")[1])[1][0][1] in ("VERIFIED", "CONTRADICTED")
+    assert dg._async_tests_added({TP: (["async def test_x():", "def test_y():"], ["async def test_x(a):"])}) == 0
+    assert dg._async_tests_added({TP: (["async def test_x():", "async def test_x(b):"], ["async def test_x(a):"])}) == 1
+    assert dg._async_tests_added({TP: (["async def test_x():"], ["async def test_x():"])}, {TP: "A"}) == 1
+
+
+# ─────────────────────────────── NOTE_path2_seventh_pass_2026_09_25: x7, the scorer's new checks
+
+X7_PLANTED = {
+    # label: (good text in styxx/diffgate.py, planted text, summary, diff, the violation that must fire)
+    "D2 a U+FEFF dropped from any added line (W-1's own code)": (
+        "                if new_no == 1 and text.startswith(_FILE_BOM):", "                if text.startswith(_FILE_BOM):",
+        "Added 1 test.",
+        "--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,2 +1 @@\n x\n----\n"
+        "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,2 @@\n x = 0\n+\ufeffdef test_b():\n",
+        "G-C7_oracle:W-1_added_lines"),
+    "D4 `_defined_name` refuses a colon after the name (W-2's own code)": (
+        "    if not name or (end < len(line) and ord(line[end]) > 0x7F):",
+        "    if not name or (end < len(line) and (ord(line[end]) > 0x7F or line[end] == ':')):",
+        "Added class Foo.", f"--- a/{SP}\n+++ b/{SP}\n@@ -1 +1,2 @@\n x = 0\n+class Foo:\n",
+        "G-C7_oracle:W-2_defined_name"),
+    "D5 a line holding U+2028 dropped by the split (F-2's own code)": (
+        "lines = _DIFF_LINE_BREAK.split(text)",
+        "lines = [x for x in _DIFF_LINE_BREAK.split(text) if '\\u2028' not in x]",
+        "Added 2 tests.", f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,3 @@\n x = 0\n+def test_a():\n+def test_b():  #  \n",
+        "G-C7_oracle:F-2_split"),
+    "D7 the gate ignores an only_touches accusation": (
+        '    contradicted = any(c.verdict == "CONTRADICTED" for c in claims)',
+        '    contradicted = any(c.verdict == "CONTRADICTED" for c in claims if c.kind != "only_touches")',
+        "Only touches src/.", "--- a/docs/x.md\n+++ b/docs/x.md\n@@ -1 +1 @@\n-a\n+b\n",
+        "G-C1_gate_verdict_not_from_its_claims"),
+    "the runs-past rule removed (W-2's own code)": (
+        "    if end < len(sentence) and _xid_word(sentence[end]):", "    if False:",
+        "Added function fo\u00b2o.", f"--- a/{SP}\n+++ b/{SP}\n@@ -1 +1,2 @@\n x = 0\n+def fo():\n",
+        "G-C7_oracle:symbol_added_claim"),
+    "the key strips one leading segment only (#121's own code)": (
+        '_LEADING_SLASH_SEGMENTS = re.compile(r"^(?:\\.?/)+")', '_LEADING_SLASH_SEGMENTS = re.compile(r"^(?:\\.?/)")',
+        "1 file changed.", "--- a//./x.py\n+++ b//./x.py\n@@ -1 +1 @@\n-a\n+b\n",
+        "G-C7_oracle:#121_key"),
+    "the suffix tier before the exact one (#97's own code)": (
+        "    for tier in (lambda p: p == c,",
+        "    for tier in (lambda p: p.endswith(\"/\" + c), lambda p: p == c,",
+        "Created a/b.py.", "--- a/x/a/b.py\n+++ b/x/a/b.py\n@@ -1 +1 @@\n-p\n+q\n--- /dev/null\n+++ b/a/b.py\n@@ -0,0 +1 @@\n+z\n",
+        "G-C7_oracle:#97_tiers"),
+    "got strips its line before reading it (F-3's own code)": (
+        '    return sum(1 for line in added_blob.split("\\n") if _test_name(line))',
+        '    return sum(1 for line in added_blob.split("\\n") if _test_name(line.lstrip()))',
+        "Added 1 test.", f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,2 @@\n x = 0\n+\u00a0def test_a():\n",
+        "G-C7_oracle:F-3_got"),
+    "the async guard removed (A-1's own code)": (
+        "                        if unread:", "                        if False:",
+        "Added 0 tests.", (f"--- a/{TP}\n+++ b/{TP}\n@@ -1,2 +1,4 @@\n-def test_load():\n+def test_load(z=0):\n     pass\n"
+                           "+async def test_parse():\n+    pass\n"),
+        "G-C7_oracle:tests_added_claim"),
+    "A-1 accusing instead of abstaining (A-1 admits only an abstention)": (
+        'c.why = (f"diff adds {unread} async test functions, which this template does not "',
+        'c.verdict = "CONTRADICTED"; c.why = (f"diff adds {unread} async test functions, which this template does not "',
+        "Added 0 tests.", "--- /dev/null\n+++ b/tests/test_n.py\n@@ -0,0 +1,2 @@\n+async def test_n():\n+    pass\n",
+        "G-C4_direction:tests_added:A-1"),
+    "gate fields moved by F-2's own code on a diff where F-2 cannot act": (
+        "lines = _DIFF_LINE_BREAK.split(text)", "lines = [] if 'zz.py' in text else _DIFF_LINE_BREAK.split(text)",
+        "1 file changed.", "--- a/src/zz.py\n+++ b/src/zz.py\n@@ -1 +1 @@\n-a\n+b\n",
+        "G-C1_gate_fields_differ"),
+    "a gate field moved by no rule": (
+        "                    sentences_total=total, uncovered_texts=uncovered_texts,",
+        "                    sentences_total=total + 1, uncovered_texts=uncovered_texts,",
+        "1 file changed.", "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-a\n+b\n",
+        "G-C1_gate_fields_differ"),
+}
+
+
+@pytest.mark.parametrize("label", sorted(X7_PLANTED))
+def test_x7_every_new_check_fails_on_a_planted_defect(scorer, monkeypatch, label):
+    # Round-6 protocol lens, major and minor: a defect inside a post-amendment rule's own code passed the
+    # gates (its revert took it back), and the gate-level fields went unread. Each is refused now.
+    pg = scorer
+    good, bad, summary, diff, violation = X7_PLANTED[label]
+    t = pg.Tally(name_prs=True)
+    t.pair("clean", summary, diff, pg.raw_paths(diff))
+    assert not t.violations, t.violating
+    _planted(pg, monkeypatch, good, bad, "x7")
+    t = pg.Tally(name_prs=True)
+    t.pair("planted", summary, diff, pg.raw_paths(diff))
+    assert violation in t.violations, dict(t.violations)
+
+
+def test_x7_the_git_door_is_scored_and_a_defect_in_it_fails(scorer, monkeypatch):
+    from collections import Counter
+    pg = scorer
+    summary = "Added 1 test. Added 0 tests."
+    diff = f"--- a/{TP}\n+++ b/{TP}\n@@ -1,2 +1,2 @@\n-def test_a():\n+def test_a(x):\n     pass\n"
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "clean", summary, diff, sample)
+    assert sample == {"scored": 1} and not t.violations and t.n["records_moved"] == 1
+    # planted: the git door hands the gate no sides, so its pairing is blind (the raw door's is not)
+    _planted(pg, monkeypatch, "                 sides=parse_unified_diff_sides(diff_text))",
+             "                 sides=None)", "x7git")
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "planted", summary, diff, sample)
+    assert t.violations["G-C8_git_door_differs_from_the_raw_door"] == 1
+    # a diff that cannot be rebuilt faithfully is counted, not scored
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "sloppy", "2 files changed.", X2_OVER, sample)
+    assert sample == {"not_rebuildable": 1} and not t.n
+
+
+@pytest.mark.skipif(unicodedata.unidata_version != "15.0.0", reason="the scorer checks the table against a 15.0.0 database only")
+def test_x7_the_scorer_refuses_a_name_table_its_database_does_not_read(monkeypatch):
+    # a table whose hash was made to match after one run was changed: only the database can tell
+    import sys
+    import types
+    from styxx import _xid
+    g = _gen_xid()
+    runs = [(nxt - s, m) for s, nxt, m in zip(_xid._STARTS, _xid._STARTS[1:] + [0x110000], _xid._MASKS)]
+    runs[0] = (runs[0][0], 4)                       # U+0000.. read as word characters
+    table = "".join(g.encode(n * 8 + k) for n, k in runs)
+    fake = types.ModuleType("styxx._xid")
+    fake.TABLE, fake.UNICODE_VERSION = table, "15.0.0"
+    fake.TABLE_SHA256 = hashlib.sha256(table.encode("ascii")).hexdigest()
+    monkeypatch.setitem(sys.modules, "styxx._xid", fake)
+    monkeypatch.setitem(sys.modules, "styxx.claimdetect", sys.modules.get("styxx.claimdetect"))
+    spec = importlib.util.spec_from_file_location("path2_gates_corrupt_table", FRONTIER / "path2_gates.py")
+    with pytest.raises(SystemExit, match="name table reads U\\+0000"):
+        spec.loader.exec_module(importlib.util.module_from_spec(spec))
+
+
+def test_x7_the_scorer_reads_names_by_the_same_table_with_its_own_decoder(scorer):
+    from styxx import _xid
+    pg = scorer
+    assert (pg.XID_STARTS, pg.XID_MASKS) == (_xid._STARTS, _xid._MASKS)
+    assert pg.XID_CHECKED_AGAINST_DATABASE == (unicodedata.unidata_version == "15.0.0")
+    for text in ("fo\u00b2o", "foo\u30fbbar", "col\u00b7leccio", "x\u0301y", "_a1", "1abc"):
+        assert pg.ident_at(text, 0) == dg._identifier_at(text, 0), ascii(text)
 
 
 # ────────────────────────────────────────────────────────── the pinned pairs
 
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
-    assert len(pairs) == 136 and all(p["id"].startswith("path2:") for p in pairs)
+    assert len(pairs) == 151 and all(p["id"].startswith("path2:") for p in pairs)
     # NOTE_path2_fifth_pass V-1 re-pinned four pairs and NOTE_path2_sixth_pass W-1 one; each record says so
     assert sorted(p["id"] for p in pairs if "repinned" in p) == [
         "path2:f2-a-form-feed-is-not-a-line-break", "path2:f2-limit-hit-reads-a-line-separator-as-indent",
