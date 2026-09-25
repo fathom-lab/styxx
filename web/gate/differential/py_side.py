@@ -5,18 +5,23 @@
 
 The port in ../diffgate.js is a transliteration of one specific file: styxx/diffgate.py as it stands
 on main (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2 + PATH-1 + DECLARE-1), re-cut for the PATH-2 repairs
-(#97, #121, #101, as amended by AMENDMENT_path2_resolution_2026_09_17 and
-NOTE_path2_third_pass_2026_09_25) on the file that carries them, sha256 PINNED below. By default this
+(#97, #121, #101, as amended by AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25
+and NOTE_path2_fourth_pass_2026_09_25) on the file that carries them, sha256 PINNED below. By default this
 script imports the checkout's module and REFUSES to run unless it hashes to that pin (after CRLF -> LF
 normalisation, because a wheel built on Windows carries CRLF and the same file then hashes
 differently), so a disagreement count always means "against the file the port claims to be", never
 against whatever happened to be importable.
 
-The count is 0, and any disagreement is a port defect. The COMPAT-2 gap this docstring used to
+Over this corpus the count is 0, and any disagreement on it is a port defect. A count of 0 says
+nothing about inputs the corpus does not carry: until NOTE_path2_fourth_pass (F-2, F-3) the two
+implementations returned opposite `tests_added` verdicts on a re-indent by U+000B, U+000C, U+2028 or
+U+2029 while this corpus read 0, because it held no such line. The COMPAT-2 gap this docstring used to
 declare is closed: the port carries COMPAT-2 since #126, and the one PATH-2 pair that was pinned for
 the Python alone (`path2:121-compat2-a-dotted-scaffold-directory-stays-scaffolding`) is now pinned at
-full width on both sides. The two `tests_added` disagreements that origin/main still shows on the new
-BOM pairs are closed by this branch (NOTE_path2_third_pass, R-1).
+full width on both sides. The two `tests_added` disagreements that origin/main still shows on the
+BOM pairs are closed by this branch (NOTE_path2_third_pass, R-1). One known disagreement remains
+outside this corpus: a symbol name followed by a non-ASCII letter (JavaScript's `\\b` is ASCII), the
+disclosed half of amendment limit 5 (NOTE_path2_fourth_pass, section E).
 `--installed` runs the installed package instead, which is how far the release on PyPI sits from
 the port; that run is expected to disagree until 7.48.0 ships, and the README says by how much.
 
@@ -33,7 +38,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "e19b688a4bba09116cca577578dca0abf283c39980a80c5068dd7dbabcf47bfd"  # styxx/diffgate.py, main + PATH-2 amended (LF)
+PINNED = "93d533cadaf075f8cdce8820f4730fda545b42c6dc63e9fed2d1c19af11105ec"  # styxx/diffgate.py, main + PATH-2 fourth pass (LF)
 # The pin moved twice in one step and both moves are deliberate. COMPAT-2 (#124) changed the
 # compat reading, so the port had to follow it; and `fetch_pr` landed on main after the previous
 # pin was written, which is why this script has been REFUSING TO RUN on main ever since -- the

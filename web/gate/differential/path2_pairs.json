@@ -985,5 +985,354 @@
    ],
    "uncovered_sentences": 0
   }
+ },
+ {
+  "id": "path2:f1-a-dotted-directory-prefix-is-a-path",
+  "summary": "Only touches .github.",
+  "diff": "--- a/.github/ci.yml\n+++ b/.github/ci.yml\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f1-a-dotfile-prefix-with-an-unlisted-suffix-verifies",
+  "summary": "Only touches .gitignore.",
+  "diff": "--- a/.gitignore\n+++ b/.gitignore\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f1-a-dotfile-prefix-with-two-dots-verifies",
+  "summary": "Only touches .env.local.",
+  "diff": "--- a/.env.local\n+++ b/.env.local\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f1-a-dotfile-prefix-still-accuses-a-real-outside-path",
+  "summary": "Only touches .npmrc.",
+  "diff": "--- a/.npmrc\n+++ b/.npmrc\n@@ -1 +1 @@\n-a\n+b\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside '.npmrc': ['src/a.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f1-c3-accuses-a-dotfile-prefix-over-its-undotted-twin",
+  "summary": "Only touches .gitignore.",
+  "diff": "--- a/gitignore\n+++ b/gitignore\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside '.gitignore': ['gitignore']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f2-a-vertical-tab-is-not-a-line-break",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+\u000bdef test_a():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f2-a-form-feed-is-not-a-line-break",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+\fdef test_a():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f2-a-line-separator-is-not-a-line-break",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+\u2028def test_a():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f2-a-paragraph-separator-is-not-a-line-break",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+\u2029def test_a():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f2-a-line-separator-mid-line-starts-no-line",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,2 @@\n x = 0\n+x = 1\u2028def test_new():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f2-a-context-line-holding-a-separator-adds-nothing",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,2 @@\n x\u2028+def test_new():\n-y = 0\n+y = 1\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f2-a-separator-before-a-header-shape-adds-no-file",
+  "summary": "2 files changed. Only touches src/.",
+  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1,2 +1,2 @@\n x\u2028+++ b/evil.py\n-y = 0\n+y = 1\n--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f2-a-form-feed-indent-defines-a-function",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1,2 @@\n x = 0\n+\fdef foo():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f2-limit-hit-reads-a-line-separator-as-indent",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1,2 @@\n x = 0\n+\u2028def foo():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f3-an-nbsp-reindent-is-not-an-added-test",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+ def test_a():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f3-an-ideographic-space-reindent-is-not-an-added-test",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+　def test_a():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f4-a-path-no-reading-could-hold-still-accuses",
+  "summary": "Only modified `src/` and `../docs` as specified.",
+  "diff": "--- a/evil/x.py\n+++ b/evil/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src' and '../docs': ['evil/x.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f4-a-path-some-reading-could-hold-abstains",
+  "summary": "Only modified `src/` and `../docs` as specified.",
+  "diff": "--- a/packages/docs/x.md\n+++ b/packages/docs/x.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix '../docs' is relative to a directory the diff does not name (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:f4-only-the-sure-paths-are-listed",
+  "summary": "Only modified `src/` and `../docs` as specified.",
+  "diff": "--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n--- a/evil/x.py\n+++ b/evil/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src' and '../docs': ['evil/x.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
  }
 ]
