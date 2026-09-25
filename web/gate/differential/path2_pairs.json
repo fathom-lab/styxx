@@ -1493,16 +1493,17 @@
   "summary": "Adds function foo.",
   "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+﻿def foo():\n",
   "expect": {
-   "verdict": "PASS",
+   "verdict": "FAIL",
    "claims": [
     [
      "symbol_added",
-     "VERIFIED",
-     "added lines do define function 'foo'"
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_sixth_pass W-1: was VERIFIED (a limit of V-1); a U+FEFF is read only where it opens line 1 of a file, and this one stands mid-file"
  },
  {
   "id": "path2:v1-a-next-line-led-def-is-not-a-definition",
@@ -1920,6 +1921,555 @@
      "only_touches",
      "UNCHECKABLE",
      "prefix '../a' is relative to a directory the diff does not name (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-a-removed-sql-comment-does-not-hide-a-changed-def",
+  "summary": "Added function foo. 1 file changed. Only touches src/.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 2b223d1..1efbdac 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1,8 +1,7 @@\n Q = \"\"\"\n--- users\n SELECT 1\n \"\"\"\n \n \n-def foo():\n+def foo(x):\n     return Q\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "added lines define function 'foo' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-a-removed-sql-comment-does-not-hide-a-changed-test",
+  "summary": "Added 1 test. Added 0 tests.",
+  "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex d9fe4c6..3f19f91 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,8 +1,7 @@\n Q = \"\"\"\n--- users\n SELECT 1\n \"\"\"\n \n \n-def test_a():\n+def test_a(tmp_path):\n     assert Q\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 1; a changed test is not an added one (#101)"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-an-added-line-opening-with-plus-plus-space-is-not-a-file",
+  "summary": "Only touches src/. 1 file changed.",
+  "diff": "diff --git a/src/a.txt b/src/a.txt\nindex 7898192..58474f6 100644\n--- a/src/a.txt\n+++ b/src/a.txt\n@@ -1 +1,2 @@\n a\n+++ x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-a-hunk-with-both-shapes",
+  "summary": "Added function foo. 1 file changed. Only touches src/.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 2b223d1..3afceb4 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1,8 +1,8 @@\n Q = \"\"\"\n--- users\n+++ x\n SELECT 1\n \"\"\"\n \n \n-def foo():\n+def foo(x):\n     return Q\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "added lines define function 'foo' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-a-removed-sql-comment-does-not-hide-a-removed-public-def",
+  "summary": "No breaking changes.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 80190d2..ad926dc 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1,7 +1,2 @@\n Q = \"\"\"\n--- users\n \"\"\"\n-\n-\n-def public_api():\n-    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; the diff removes 1 public definition(s) from the surface, not re-defined in the added lines: src/m.py: public_api"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-an-added-line-opening-with-two-pluses-is-content",
+  "summary": "No breaking changes.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 9332a27..1223da4 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1,2 +1 @@\n-def foo():\n-    pass\n+++foo()\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; no public top-level definition removed (python read; behaviour beyond names not checked)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-a-bom-opening-line-one-of-a-new-file-is-a-bom",
+  "summary": "Added 1 test. Adds function helper.",
+  "diff": "diff --git a/src/h.py b/src/h.py\nnew file mode 100644\nindex 0000000..ad4a36b\n--- /dev/null\n+++ b/src/h.py\n@@ -0,0 +1,2 @@\n+﻿def helper():\n+    pass\ndiff --git a/tests/test_n.py b/tests/test_n.py\nnew file mode 100644\nindex 0000000..eb3df2e\n--- /dev/null\n+++ b/tests/test_n.py\n@@ -0,0 +1,2 @@\n+﻿def test_n():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ],
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'helper'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-claimed-name-with-an-accented-letter-is-read-whole",
+  "summary": "Added function café.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 3aea0c5..b1ca9ee 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def café():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'café'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-claimed-name-with-a-middle-dot-is-read-whole",
+  "summary": "Added function col·leccio.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 3aea0c5..99cffa1 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def col·leccio():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'col·leccio'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-claimed-name-with-a-combining-mark-is-read-whole",
+  "summary": "Added function café.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 3aea0c5..35be9eb 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def café():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'café'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-claimed-name-with-connector-punctuation-is-read-whole",
+  "summary": "Added function foo‿bar.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 3aea0c5..ce7480e 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def foo‿bar():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'foo‿bar'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-claimed-name-with-cjk-letters-is-read-whole",
+  "summary": "Added function calc计算.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 3aea0c5..f83e9c9 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def calc计算():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'calc计算'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-claimed-class-with-a-sharp-s-is-read-whole",
+  "summary": "Added class Größe.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 3aea0c5..b64c332 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+class Größe:\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define class 'Größe'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-claimed-name-with-a-virama-is-read-whole",
+  "summary": "Added function get_नमस्ते.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 3aea0c5..23923b6 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def get_नमस्ते():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'get_नमस्ते'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-claimed-name-before-a-right-quote-ends-there",
+  "summary": "Added function café’s wrapper.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 3aea0c5..b1ca9ee 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def café():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'café'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-name-followed-by-a-no-break-space-defines-nothing",
+  "summary": "Adds function foo.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 3aea0c5..4c4846a 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def foo ():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-test-separated-from-def-by-a-tab-is-counted",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex 3aea0c5..494b06c 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def\ttest_new():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-test-with-two-spaces-after-def-is-counted",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex 3aea0c5..93328c6 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def  test_new():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-test-whose-separator-changed-pairs",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex f37add7..3a5db01 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,2 @@\n-def\ftest_a():\n+def test_a(x):\n     pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 1; a changed test is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-test-name-followed-by-a-form-feed-pairs",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex 06a99d3..0ebb178 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,2 @@\n-def test_a():\n+def test_a\f():\n     pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 1; a changed test is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-test-made-generic-pairs",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex 06a99d3..f4b2183 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,2 @@\n-def test_a():\n+def test_a[T]():\n     pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 1; a changed test is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-test-name-followed-by-a-no-break-space-defines-nothing",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex 3aea0c5..f53c213 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def test_new ():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-a-hunk-that-declares-too-many-lines-still-ends-at-the-next-header",
+  "summary": "2 files changed. Only touches src/.",
+  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1,3 +1,4 @@\n x\n+y = 1\n--- a/lib/b.py\n+++ b/lib/b.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['lib/b.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-limit-two-dashes-and-two-pluses-before-a-hunk-header-read-as-a-file-header",
+  "summary": "1 file changed.",
+  "diff": "--- a/src/a.sql\n+++ b/src/a.sql\n@@ -1,2 +1,2 @@\n x\n--- old\n+++ new\n@@ -9 +9 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 2 files, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:v4-a-bare-dotdot-second-prefix-is-off-tree",
+  "summary": "Only touches `src/` and `..`.",
+  "diff": "--- a/evil/x.py\n+++ b/evil/x.py\n@@ -1 +1 @@\n-a\n+b\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix '..' is relative to a directory the diff does not name (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-a-no-newline-marker-inside-a-hunk-does-not-end-it",
+  "summary": "1 file changed. Only touches src/.",
+  "diff": "diff --git a/src/a.txt b/src/a.txt\nindex 2e65efe..b995c1b 100644\n--- a/src/a.txt\n+++ b/src/a.txt\n@@ -1 +1 @@\n-a\n\\ No newline at end of file\n+++ x\n\\ No newline at end of file\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w2-a-class-named-like-a-test-is-not-a-test",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex 3aea0c5..2924dd8 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+class test_helpers:\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-a-short-hunk-before-an-a-b-header-pair-with-no-hunk-header",
+  "summary": "2 files changed. Only touches src/.",
+  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1,3 +1,4 @@\n x\n+y = 1\n--- a/lib/b.py\n+++ b/lib/b.py\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['lib/b.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:w1-an-empty-line-inside-a-hunk-is-a-context-line",
+  "summary": "Added function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1,4 +1,3 @@\n x\n\n--- users\n-def foo():\n+def foo(x):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "added lines define function 'foo' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
     ]
    ],
    "uncovered_sentences": 0
