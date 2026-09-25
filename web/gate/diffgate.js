@@ -8,9 +8,9 @@
  * #120 and #124 on fathom-lab/styxx, plus the fetch_pr door, with PATH-1 (#127) and DECLARE-1 (#129)
  * on top), sha256 9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb, re-cut for the
  * PATH-2 repairs (PREREG_path2_resolution_2026_09_17: #97, #121, #101, as amended by
- * AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25 and
- * NOTE_path2_fourth_pass_2026_09_25) on the file that
- * carries them, sha256 93d533cadaf075f8cdce8820f4730fda545b42c6dc63e9fed2d1c19af11105ec — the
+ * AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
+ * NOTE_path2_fourth_pass_2026_09_25 and NOTE_path2_fifth_pass_2026_09_25) on the file that
+ * carries them, sha256 0a5522ebdec4c16890070f79920f04f48f4b6a439c0086a01bbf85c1b9c2ec2b — the
  * styxx/diffgate.py that 7.48.0 ships once they merge. Relative to the 7.47.0 wheel the port
  * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
  * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
@@ -26,7 +26,13 @@
  * file's removed lines also define is changed, not added, paired one to one per name (#101). The
  * fourth pass adds: a diff splits into lines on \r\n, \r and \n only, in both implementations, and
  * the added lines are read with Python's `^` (the test count and the symbol test) and, in the symbol
- * test, Python's `\s` rather than JavaScript's. Two
+ * test, Python's `\s` rather than JavaScript's. The fifth pass adds: one reading of a Python
+ * definition line (CPython's indentation, space, tab and form feed, after one optional U+FEFF; the same
+ * keyword separator; a name that ends at an ASCII non-name character) for the test count, the symbol
+ * test and both pairings, with the symbol test now the pairing's own pattern; every regex over a diff
+ * line spells Python's `\s`, `\w`, `\b` and `.`, a header path is stripped as str.strip() strips it, and
+ * a reason prints a path as Python's repr() does; and a prefix written to end in `..`, or holding a `..`
+ * after a named segment, could hold any path. Two
  * deliberate gaps remain: the structural "unparsed claims"
  * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
  * pass" is always UNCHECKABLE, exactly as the CLI without --run.
@@ -158,14 +164,41 @@ function _prefixIsPathShaped(prefix, status) {
 // only; the `m` flag here also matched after "\r", U+2028 and U+2029, which a git diff does not treat
 // as line breaks. `(?<![^\n])` is Python's `^` under re.M, so the blob is read line by line as git
 // writes it.
-const _DEF_TEST_LINE = /^\uFEFF?[ \t]*def (test_[^ \t(:]*)/;
-const _DEF_TEST_LINE_REMOVED = /^\uFEFF?[ \t]*(?:async[ \t]+)?def (test_[^ \t(:]*)/;
-const _GOT_TEST_LINE = /(?<![^\n])\uFEFF?[ \t]*def test_/g;
+// NOTE_path2_fifth_pass_2026_09_25 (V-1): ONE reading of a Python definition line, the Python's own:
+// the indent is `_DEF_INDENT` (space, tab and form feed, CPython's tokenizer, after one optional
+// U+FEFF), keywords are separated by `_DEF_SEP`, and a symbol name ends at `_NAME_END` (an ASCII
+// character that cannot continue a name, or the end of the line). `got` counts the lines the
+// added-side test pairing reads, and `hit` is the added-side symbol pairing pattern tested line by
+// line; neither uses \s or \b any more, so there is no JavaScript/Python class left to differ.
+const _DEF_INDENT = "^\\uFEFF?[ \\t\\f]*";
+const _DEF_SEP = "[ \\t\\f]+";
+const _NAME_END = "(?=[\\x00-\\x2f\\x3a-\\x40\\x5b-\\x5e\\x60\\x7b-\\x7f]|$)";
+const _DEF_TEST_LINE = new RegExp(_DEF_INDENT + "def (test_[^ \\t(:]*)");
+const _DEF_TEST_LINE_REMOVED = new RegExp(_DEF_INDENT + "(?:async" + _DEF_SEP + ")?def (test_[^ \\t(:]*)");
+const _GOT_TEST_LINE = new RegExp("(?<![^\\n])" + _DEF_INDENT.slice(1) + "def test_", "g");
 // Python's `\s` for a str pattern, written out: JavaScript's `\s` also matches U+FEFF and lacks
-// U+001C-U+001F and U+0085. Used where the Python writes `\s` over the added lines (`hit`), so that
-// F-2's lines, which may now carry those characters, are read identically (NOTE_path2_fourth_pass).
-const _PY_WS = "[\\t\\n\\x0b\\x0c\\r\\x1c-\\x20\\x85\\xa0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000]";
-const _symbolDefLine = name => new RegExp("^\\uFEFF?[ \\t]*(?:async[ \\t]+)?(?:def|class)[ \\t]+" + _reEscape(name) + "(?=[ \\t(:]|$)");
+// U+001C-U+001F and U+0085. NOTE_path2_fifth_pass (V-2): used wherever the Python writes `\s` over a
+// diff line -- the COMPAT patterns and their parameter lists -- and, as `_pyStrip`, wherever the
+// Python calls str.strip() on one (a `---`/`+++` header, a parameter list).
+const _PY_WS_CHARS = "\\t\\n\\x0b\\x0c\\r\\x1c-\\x20\\x85\\xa0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000";
+const _PY_WS = "[" + _PY_WS_CHARS + "]";
+// Python's `\w` for a str pattern: str.isalnum() or "_", i.e. Unicode letters and numbers. Needs the
+// `u` flag. Equal to the Python's set on every code point Unicode 15.0 (Python 3.12) assigns; an
+// engine on a later Unicode also reads the letters added since (NOTE_path2_fifth_pass, V-2).
+const _PY_W_CHARS = "\\p{L}\\p{N}_";
+const _PY_W = "[" + _PY_W_CHARS + "]";
+// Python's Unicode `\b`, from `_PY_W`: a word character on exactly one side.
+const _PY_B = "(?:(?<=" + _PY_W + ")(?!" + _PY_W + ")|(?<!" + _PY_W + ")(?=" + _PY_W + "))";
+const _PY_STRIP = new RegExp("^" + _PY_WS + "+|" + _PY_WS + "+$", "g");
+const _pyStrip = s => s.replace(_PY_STRIP, "");
+// The removed-side symbol line (`async` allowed) and the added-side one, read by `hit` and by the
+// pairing's added count alike.
+const _symbolDefLine = name => new RegExp(_DEF_INDENT + "(?:async" + _DEF_SEP + ")?(?:def|class)" + _DEF_SEP + _reEscape(name) + _NAME_END);
+const _symbolDefLineAdded = name => new RegExp(_DEF_INDENT + "(?:def|class)" + _DEF_SEP + _reEscape(name) + _NAME_END);
+function _symbolHit(name, addedBlob) {
+  const rx = _symbolDefLineAdded(name);
+  return addedBlob.split("\n").some(line => rx.test(line));
+}
 
 function _changedTestDefs(sides, status) {
   // Per file whose status is not `A`, per test name, min(added lines defining it, removed lines
@@ -186,12 +219,13 @@ function _changedTestDefs(sides, status) {
 
 function _definitionOnlyChanged(name, sides, status) {
   // Some file both adds and removes a definition of `name`, and no file adds more definitions of it
-  // than it removes (a file whose status is `A` removes none). Counted per file, one to one.
-  const rx = _symbolDefLine(name);
+  // than it removes (a file whose status is `A` removes none). Counted per file, one to one. The
+  // added side reads the pattern `hit` reads (NOTE_path2_fifth_pass, V-1).
+  const rxAdded = _symbolDefLineAdded(name), rxRemoved = _symbolDefLine(name);
   let paired = false;
   for (const [path, [added, removed]] of (sides || new Map())) {
-    const a = added.filter(line => rx.test(line)).length;
-    const r = (status && status.get(path) === "A") ? 0 : removed.filter(line => rx.test(line)).length;
+    const a = added.filter(line => rxAdded.test(line)).length;
+    const r = (status && status.get(path) === "A") ? 0 : removed.filter(line => rxRemoved.test(line)).length;
     if (a > r) return false;
     if (a && r) paired = true;
   }
@@ -204,14 +238,19 @@ function _definitionOnlyChanged(name, sides, status) {
 const COMPAT2_LICENSED = false;
 const _COMPAT_VERDICTS = COMPAT2_LICENSED ? ["UNCHECKABLE", "CONTRADICTED"] : ["UNCHECKABLE"];
 const _COMPAT_SCAFFOLD = /(?:^|\/)(?:tests?|testing|specs?|__tests__|examples?|samples?|demos?|docs?|scripts?|tools?|bench|benchmarks?|fixtures?|internal|_internal|private|vendor|third_party|migrations?|cmd|e2e|integration|mocks?|stories|storybook|playground|sandbox|experiments?|dev|build)\/|(?:^|\/)(?:test_[^/]*|[^/]*_test\.(?:go|py)|[^/]*\.(?:test|spec)\.[^/]+|conftest\.py|setup\.py)$/;
+// NOTE_path2_fifth_pass_2026_09_25 (V-2): the Python's patterns, with its `\s`, `\w` and `\b` spelled
+// out (`_PY_WS`, `_PY_W`, `_PY_B`, `u` flag). JavaScript's own classes read U+001C-U+001F and U+0085 as
+// non-space, U+FEFF as space, and every non-ASCII letter as a name's end, and F-2 hands both ports whole
+// lines that can hold any of them.
+const _PS = _PY_WS, _PW = _PY_W;
 const _COMPAT_LANGS = [
   // [language, suffixes, regex over ONE removed line with a `name` group]
-  ["python", [".py"], /^(?:async\s+)?(?:def|class)\s+(?<name>[A-Za-z]\w*)/],
+  ["python", [".py"], new RegExp(`^(?:async${_PS}+)?(?:def|class)${_PS}+(?<name>[A-Za-z]${_PW}*)`, "u")],
   ["js/ts", [".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".mts", ".cts"],
-    /^export\s+(?:default\s+)?(?:async\s+)?(?:function\*?|class|const|let|var|interface|type|enum)\s+(?<name>[A-Za-z_$]\w*)/],
-  ["go", [".go"], /^(?:func\s+(?:\([^)]*\)\s*)?|type\s+)(?<name>[A-Z]\w*)\b/],
-  ["rust", [".rs"], /^\s*pub\s+(?:async\s+)?(?:fn|struct|enum|trait|type|const|static)\s+(?<name>[A-Za-z_]\w*)/],
-  ["java", [".java", ".kt"], /^\s*public\s+(?:static\s+|final\s+|abstract\s+)*[\w<>\[\],\s]+?\s+(?<name>[a-zA-Z_]\w*)\s*\(/],
+    new RegExp(`^export${_PS}+(?:default${_PS}+)?(?:async${_PS}+)?(?:function\\*?|class|const|let|var|interface|type|enum)${_PS}+(?<name>[A-Za-z_$]${_PW}*)`, "u")],
+  ["go", [".go"], new RegExp(`^(?:func${_PS}+(?:\\([^)]*\\)${_PS}*)?|type${_PS}+)(?<name>[A-Z]${_PW}*)${_PY_B}`, "u")],
+  ["rust", [".rs"], new RegExp(`^${_PS}*pub${_PS}+(?:async${_PS}+)?(?:fn|struct|enum|trait|type|const|static)${_PS}+(?<name>[A-Za-z_]${_PW}*)`, "u")],
+  ["java", [".java", ".kt"], new RegExp(`^${_PS}*public${_PS}+(?:static${_PS}+|final${_PS}+|abstract${_PS}+)*[${_PY_W_CHARS}<>\\[\\],${_PY_WS_CHARS}]+?${_PS}+(?<name>[a-zA-Z_]${_PW}*)${_PS}*\\(`, "u")],
 ];
 const _COMPAT_MAX_NAMED = 5;
 
@@ -220,8 +259,10 @@ const _reEscape = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 // BIN-1 (issue #118): a `diff --git` header with no `---`/`+++` pair — a binary change, a mode-only
 // change, a pure rename — registers its file: A on `new file mode` / `Binary files /dev/null and …`,
 // D on `deleted file mode` / `… and /dev/null differ`, else M. Files with hunks read as before.
-const _DIFF_GIT = /^diff --git (?:"a\/(?<qa>(?:[^"\\]|\\.)*)"|a\/(?<a>.*?)) (?:"b\/(?<qb>(?:[^"\\]|\\.)*)"|b\/(?<b>.*))$/;
-const _BINARY_LINE = /^Binary files (?<a>.+?) and (?<b>.+?) differ$/;
+// NOTE_path2_fifth_pass (V-2): `[^\n]` is Python's `.`; JavaScript's `.` also stops at \r, U+2028 and U+2029,
+// which F-2 leaves inside a header line.
+const _DIFF_GIT = /^diff --git (?:"a\/(?<qa>(?:[^"\\]|\\[^\n])*)"|a\/(?<a>[^\n]*?)) (?:"b\/(?<qb>(?:[^"\\]|\\[^\n])*)"|b\/(?<b>[^\n]*))$/;
+const _BINARY_LINE = /^Binary files (?<a>[^\n]+?) and (?<b>[^\n]+?) differ$/;
 
 function _headerPaths(line) {
   const body = line.slice("diff --git ".length);
@@ -265,10 +306,10 @@ function parseUnifiedDiffSides(diffText) {
       pending = new _Pending(line);
       cur = null;
     } else if (line.startsWith("--- ")) {
-      oldPath = line.slice(4).trim();
+      oldPath = _pyStrip(line.slice(4));          // str.strip(), not trim() (V-2)
       cur = null;
     } else if (line.startsWith("+++ ")) {
-      const nw = line.slice(4).trim();
+      const nw = _pyStrip(line.slice(4));
       let raw;
       if (nw === "/dev/null") raw = (oldPath && oldPath.startsWith("a/")) ? oldPath.slice(2) : (oldPath || "");
       else raw = nw.startsWith("b/") ? nw.slice(2) : nw;
@@ -287,6 +328,8 @@ function parseUnifiedDiffSides(diffText) {
   return sides;
 }
 
+// NOTE_path2_fifth_pass (V-2): re.sub(r"\s+", " ", ...).strip(), with Python's \s.
+const _PY_WS_RUN = new RegExp(_PY_WS + "+", "g");
 function _compatParams(line, at) {
   // The parameter list of a definition line: the text inside the first `(` at or after `at`,
   // whitespace-collapsed, or null when there is none. A list that does not close on the line is
@@ -298,10 +341,10 @@ function _compatParams(line, at) {
     if (line[e] === "(") depth += 1;
     else if (line[e] === ")") {
       depth -= 1;
-      if (depth === 0) return line.slice(k + 1, e).replace(/\s+/g, " ").trim();
+      if (depth === 0) return _pyStrip(line.slice(k + 1, e).replace(_PY_WS_RUN, " "));
     }
   }
-  return line.slice(k + 1).replace(/\s+/g, " ").trim() + "…";
+  return _pyStrip(line.slice(k + 1).replace(_PY_WS_RUN, " ")) + "…";
 }
 
 function _nameEnd(m) {
@@ -337,7 +380,7 @@ function _compatRemovedPublicNames(sides) {
         const name = m.groups.name;
         if (name.startsWith("_")) continue;                              // private by convention
         const key = path + " " + lang + " " + name;
-        if (new RegExp("\\b" + _reEscape(name) + "\\b").test(ablob)) {
+        if (new RegExp(_PY_B + _reEscape(name) + _PY_B, "u").test(ablob)) {      // Python's \b (V-2)
           // re-defined or still referenced: a change or a move. COMPAT-2 compares the parameter lists.
           const before = _compatParams(line, _nameEnd(m));
           if (before !== null) {
@@ -463,7 +506,21 @@ function _prefixOffTree(pref) {
 }
 // NOTE_path2_fourth_pass F-4: whether SOME reading of an off-tree prefix could hold `path` -- its named
 // segments (undotted, dots-only segments dropped) occur contiguously among the path's undotted segments.
-function _couldLieUnder(path, pref) {
+// NOTE_path2_fifth_pass V-4: the prefix as written, before rstrip("/."), when it ends in a `..` segment
+// (trailing "/" and "." segments dropped), else "". Such a prefix is off-tree and could hold anything.
+function _parentPrefix(raw) {
+  const segs = raw.split("/");
+  while (segs.length && (segs[segs.length - 1] === "" || segs[segs.length - 1] === ".")) segs.pop();
+  return segs.length && segs[segs.length - 1] === ".." ? segs.join("/") : "";
+}
+// V-4 as well: a `..` or `...` segment AFTER a named one (`../src/../docs`) could hold anything.
+function _couldLieUnder(path, pref, raw = "") {
+  if (_parentPrefix(raw)) return true;
+  let named = false;
+  for (const seg of pref.split("/")) {
+    if (_stripChars(seg, ".")) named = true;
+    else if (named && seg !== "" && seg !== ".") return true;
+  }
   const want = pref.split("/").filter(seg => _stripChars(seg, ".")).map(seg => _stripChars(seg, ".", true, false));
   const have = path.split("/").map(seg => _stripChars(seg, ".", true, false));
   if (!want.length) return true;
@@ -503,6 +560,10 @@ function _splitlines(text) {
 }
 
 // repr() of a str, for the `why` strings the Python builds with !r.
+// NOTE_path2_fifth_pass (V-2): a non-ASCII character str.isprintable() refuses (categories C and Z,
+// other than the space) is escaped as \xhh, \uhhhh or \Uhhhhhhhh, as Python's repr() does; a reason
+// that prints a path or a name holding U+2028, U+0085 or U+00A0 then reads the same in both ports.
+const _PY_UNPRINTABLE = /[\p{C}\p{Z}]/u;
 function pyRepr(s) {
   const q = (s.includes("'") && !s.includes('"')) ? '"' : "'";
   let out = q;
@@ -514,6 +575,10 @@ function pyRepr(s) {
     else if (ch === "\r") out += "\\r";
     else if (ch === "\t") out += "\\t";
     else if (c < 0x20 || c === 0x7f) out += "\\x" + c.toString(16).padStart(2, "0");
+    else if (c > 0x7f && _PY_UNPRINTABLE.test(ch)) {
+      out += c <= 0xff ? "\\x" + c.toString(16).padStart(2, "0")
+        : c <= 0xffff ? "\\u" + c.toString(16).padStart(4, "0") : "\\U" + c.toString(16).padStart(8, "0");
+    }
     else out += ch;
   }
   return out + q;
@@ -531,9 +596,9 @@ function parseUnifiedDiff(diffText) {
       flush();
       pending = new _Pending(line);
     } else if (line.startsWith("--- ")) {
-      oldPath = line.slice(4).trim();
+      oldPath = _pyStrip(line.slice(4));          // str.strip(), not trim() (V-2)
     } else if (line.startsWith("+++ ")) {
-      const nw = line.slice(4).trim();
+      const nw = _pyStrip(line.slice(4));
       if (nw === "/dev/null") {
         status.set(_norm(oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath), "D");
       } else if (oldPath === "/dev/null" || oldPath === null) {
@@ -719,10 +784,8 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             c.verdict = "UNCHECKABLE";
             c.why = "no Python file in the diff; this template counts `def` lines (#110)";
           } else {
-            // NOTE_path2_fourth_pass F-2: `(?<![^\n])` is Python's re.M `^` (start, or after "\n" only),
-            // and _PY_WS is Python's `\s`, so the port reads the lines F-2 hands it as the Python does.
-            const src = "(?<![^\\n])" + _PY_WS + "*(?:def|class)" + _PY_WS + "+" + _reEscape(d.name) + "\\b";
-            const hit = new RegExp(src).test(addedBlob);
+            // NOTE_path2_fifth_pass V-1: the added-side pairing pattern, one line at a time.
+            const hit = _symbolHit(d.name, addedBlob);
             if (hit && _definitionOnlyChanged(d.name, sides, status)) {
               c.verdict = "UNCHECKABLE";                                   // PATH-2 (#101)
               c.why = `added lines define ${d.kind} ${pyRepr(d.name)} only where the removed lines of the same file define it too; a changed definition is not an added one (#101)`;
@@ -745,11 +808,15 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
           // and only real paths are listed. _dotMiss uses the same _pathInside containment.
           const dotMiss = outside.filter(p => _dotMiss(p, prefs));
           let real = outside.filter(p => !dotMiss.includes(p));
-          const offTree = prefs.filter(x => _prefixOffTree(x));
+          // NOTE_path2_fifth_pass V-4: off-tree-ness is also read on the prefix as written, before the
+          // rstrip("/."), so a prefix ending in `..` is off-tree (_parentPrefix).
+          const written = rawPrefs.map(x => _norm(x));
+          const offPairs = prefs.map((x, i) => [x, written[i]]).filter(([x, r]) => _prefixOffTree(x) || _parentPrefix(r));
+          const offTree = offPairs.map(([x, r]) => _parentPrefix(r) || x);
           // NOTE_path2_fourth_pass F-4: beside an on-tree prefix, a real path no reading of the off-tree
           // prefix could hold still accuses, and only such paths are listed; otherwise R-3 abstains.
           const besideOnTree = offTree.length > 0 && offTree.length < prefs.length;
-          if (besideOnTree) real = real.filter(p => !offTree.some(x => _couldLieUnder(p, x)));
+          if (besideOnTree) real = real.filter(p => !offPairs.some(([x, r]) => _couldLieUnder(p, x, r)));
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
           else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
           else if (offTree.length && !(besideOnTree && real.length)) {   // R-3, narrowed by F-4
