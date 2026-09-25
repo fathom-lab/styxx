@@ -10,8 +10,9 @@ then suffix, then basename, #97; a dotfile keeps its dots in the path key, #121;
 file's removed lines also define is changed, not added, #101; as amended by
 `AMENDMENT_path2_resolution_2026_09_17.md`: definitions pair one to one per name, `only_touches`
 lists only the paths outside by more than a dot, COMPAT's scaffold reading keeps `.storybook/` as
-scaffolding; and by `NOTE_path2_third_pass_2026_09_25.md`) on the file that carries them,
-sha256 `e19b688a4bba09116cca577578dca0abf283c39980a80c5068dd7dbabcf47bfd` (LF line endings; a wheel
+scaffolding; and by `NOTE_path2_third_pass_2026_09_25.md` and `NOTE_path2_fourth_pass_2026_09_25.md`)
+on the file that carries them,
+sha256 `93d533cadaf075f8cdce8820f4730fda545b42c6dc63e9fed2d1c19af11105ec` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -49,17 +50,25 @@ and the never-read count to the page.
 `build_bookmarklet.py` — assembles the two into `bookmarklet_src.js`, minifies with
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds all three in memory and compares them with the files on disk, byte for byte, and
-writes nothing; every output is written with LF. The shipped bookmarklet is
+writes nothing; every output is written with LF. `.gitattributes` marks `bookmarklet_src.js` `-text`,
+so a checkout keeps those LF bytes. Before that line existed, `--check` failed on a stock Windows
+checkout (`core.autocrlf=true`) with the committed blob correct: git rewrote the source to CRLF and the
+byte comparison reported `bookmarklet_src.js … DIFFERS`, exit 1 (NOTE_path2_fourth_pass_2026_09_25,
+B-1). Measured after the line, on this Windows checkout, with terser 5.46.0: all three `matches`,
+exit 0. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 af2524340320b69196ad3be84d86fbab5cc46cd614eae6edf1f57dc734adda31   26,236 chars
-    bookmarklet.href.txt  sha256 ea86c5626f730853e305e3aa64ad3ea92816cc54e4b82872879dfdc4dfb29c5a   26,247 chars
+    bookmarklet.min.js    sha256 5b6f31670ac4ac4053df22a60c49b602b80c722ef8a2a27bba47a9e77c03afca   26,691 chars
+    bookmarklet.href.txt  sha256 da8c8a8bb233dcd3a5285e6823621841732a1ab119fcd737b50b47e3d92ae861   26,702 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file; `4b2d34e1…`,
 19,002 chars, the BIN-2 re-cut — resolves a path claim to an earlier basename match, keys a
 dotfile without its dot, counts a changed `def` as added; `22c31746…`, 20,255 chars, an unmerged
 PATH-2 cut — one changed test cancels every same-named new one, and `only_touches` abstains when the
-dot is on the prefix. A bookmark that hashes to any of them is an old port; drag the new one.)
+dot is on the prefix; `af252434…`, 26,236 chars, the unmerged third-pass cut — reads "only touches
+.gitignore" as not a path, counts an NBSP re-indent of a test as an added test, and reads a line
+holding U+000B, U+000C, U+2028 or U+2029 differently from the Python. A bookmark that hashes to any
+of them is an old port; drag the new one.)
 
 Whatever a browser holds under that bookmark either hashes to the line above (drop the
 `javascript:` prefix) or is not this build. terser 5.46.0 produced these bytes; the same terser
@@ -80,10 +89,10 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to e19b688a…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 93d533ca…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 106 pinned pairs against their expect blocks
+    node check_pairs.js                  # the 125 pinned pairs against their expect blocks
 
 The pin moved twice between the last two runs of this differential, and one of those moves is a
 finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to
@@ -108,26 +117,49 @@ The corpus needed them. Before PATH-1 added these, `corpus_real.json` carried ex
 what changed is not evidence, and the honest py/js comparison for PATH-1 was run separately over
 the 604-row BENCH corpus (297 `only_touches` readings, 0 disagreements).
 
-Result, 2026-09-25, this branch at the amended PATH-2 repairs, rebased onto `main`:
+Result, 2026-09-25, this branch after the fourth pass (`NOTE_path2_fourth_pass_2026_09_25`), rebased
+onto `main`:
 
-    3282 pairs, 7028 claims (653 verified, 1640 contradicted, 4735 uncheckable) — 0 disagreement(s)
-    106 pinned pairs, 0 disagreement(s)
+    3301 pairs, 7056 claims (668 verified, 1652 contradicted, 4736 uncheckable) — 0 disagreement(s)
+    125 pinned pairs, 0 disagreement(s)
 
-The same corpus with `origin/main` on BOTH sides — `git show origin/main` for the Python and for the
-port, which is the honest before-figure now that the branch is rebased onto `98a5c368` — reads 3282
-pairs, 7028 claims (658 verified, 1646 contradicted, 4724 uncheckable) and **2** disagreements. Both
-are the two new BOM pairs, where Python's `\s` did not count an added `def test_` line starting with
-U+FEFF and JavaScript's did; that gap was disclosed as a limit in the amendment and this round closes
-it (`NOTE_path2_third_pass_2026_09_25`, R-1). Nothing else disagreed before, and nothing disagrees
-after.
+**Zero is a count over this corpus, not a property of the two implementations.** The third pass
+reported the same zero over 3,282 pairs while the two returned opposite `tests_added` verdicts on any
+re-indent by U+000B, U+000C, U+2028 or U+2029, because no record in the corpus carried such a line;
+the fourth pass found it from a reviewer's input, not from this run. The same 3,301 pairs with the
+third-pass head on BOTH sides read **9** disagreements (the nine F-2 pairs this pass pins), and with
+`origin/main` on BOTH sides **11** (those nine and the two BOM pairs R-1 closed). On a separate grid
+of 242 inputs — 22 space and line-separator characters in 11 positions a test or a definition can
+take — the third-pass head disagrees on 49 and this branch on 1: a symbol name followed by a
+non-ASCII letter, where JavaScript's `\b` is ASCII. That one is disclosed and not repaired
+(NOTE_path2_fourth_pass, section E).
 
-PATH-2 moves **58** of the 3,282 records, and Python and the port move the same 58. Thirty-five are
-PATH-2's own pinned pairs. The other **23** are corpus records that predate them, carrying 28 moved
-claims: 12 `file_created` (3 UNCHECKABLE → VERIFIED and 1 VERIFIED → UNCHECKABLE under #97's tiers,
-8 reason-only), 14 `file_touched` (all reason-only, the key now printing its dots), and 2
-`only_touches` reasons, also dotted. `path2_gates.py differential` attributes all 58 with no
-violation, records 3 new `only_touches` accusations — the three dotted-prefix pairs the amendment
-allows — and 0 `compat2_candidate` flips.
+The earlier result, kept as it was measured: at the third pass, 3282 pairs, 7028 claims (653
+verified, 1640 contradicted, 4735 uncheckable), 0 disagreements; with `origin/main` on both sides, 2
+(the BOM pairs, closed by R-1). Its sentence "nothing else disagreed before, and nothing disagrees
+after" was true of that corpus and not of the port.
+
+Against `origin/main`, PATH-2 moves **69** of the 3,301 records in the Python and **70** in the port.
+The two sets differ only in the nine F-2 pairs, on which the two implementations disagreed on `main`:
+four move in the Python alone, five in the port alone.
+Both move the same **23** corpus records that predate the pinned pairs — the same
+23 the third pass reported, carrying 28 moved claims: 12 `file_created` (3
+UNCHECKABLE → VERIFIED and 1 VERIFIED → UNCHECKABLE under #97's tiers, 8 reason-only), 14
+`file_touched` (all reason-only, the key now printing its dots), and 2 `only_touches` reasons, also
+dotted. The fourth pass itself moves **none** of the 3,282 records that predate it: against the
+third-pass head the Python moves 13 records and the port 14, all of them the fourth pass's own pinned
+pairs. Its blocker repair alone (F-1) moves 5, all its own pairs; the 3,282 older records hold 942
+`only_touches` claims and only 3 slashless dotted prefixes, none of which the defect reached — which is
+why the corpus could not see it.
+
+`path2_gates.py differential`, from a clean tree at `2e330971` (the commit before this README's; it
+touches no file the scorer's provenance reads): exit 0, every attribution gate passes, no violation;
+69 records moved; new accusations 4 `only_touches` (the three dotted-prefix pairs the amendment allows
+and F-1's C-3 pair) and 3 `tests_added`, those three admitted under the fourth pass's own rules (F-2
+one, F-3 two) and counted in the payload; 1 F-4 withdrawal; 0 `compat2_candidate` flips. Scorer
+`f4e28117…`, harness `75bfbc39…`, repaired `diffgate.py` `93d533ca…`, baseline `98a5c368`. Each of
+the scorer's three fourth-pass attributions is load-bearing: switched off one at a time over the
+fourth-pass pairs, they leave 7, 6 and 1 violations.
 
 Result, 2026-09-18, this branch at the COMPAT-2 reading plus PATH-1:
 
@@ -167,7 +199,13 @@ header, a BOM strip on a test and on a function, non-ASCII test names, a non-ASC
 same-named method added in another class and one changed in place, a changed `def` under an `A`
 header, a generic `def`, a dot miss beside a real outside path (one and two prefixes), a dotted
 prefix over an undotted file and directory, a `..` path, binary dotfile twins with no hunks, a pure
-rename to a dotted name, a file named `.py`, and the `.storybook/` COMPAT-2 reading — also checked on
+rename to a dotted name, a file named `.py`, and the `.storybook/` COMPAT-2 reading; and, for the fourth
+pass, a slashless dotted prefix whose suffix the extension list does not hold in the three positions it
+can take (VERIFIED, a real outside path, C-3's accusation), a test re-indented by U+000B, U+000C,
+U+2028 and U+2029, a line separator inside an added line, inside a context line and before a
+header-shaped fragment, a form-feed indent that does define a function and a line-separator indent the
+symbol test still reads as one (a disclosed limit, pinned so it cannot move unseen), an NBSP and an
+ideographic-space re-indent, and an off-tree prefix beside an on-tree one read three ways — also checked on
 the Python side by `tests/test_diffgate_path2.py`. Their `expect` blocks are the Python's output, written down so a
 reader can see the intended readings without running anything. The 3,199 pre-BIN-1 records are
 byte-identical before and after that repair (no binary in the corpus), which is its G-BIN-2.
