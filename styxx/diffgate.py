@@ -359,13 +359,45 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
 # the pairing reads, so the two count exactly the same lines. (Of the characters this drops, only
 # U+000C is legal Python indentation, and the Python never counted a line it led: `splitlines()`
 # cut the line there until F-2.)
-_DEF_TEST_LINE = re.compile(r"^\uFEFF?[ \t]*def (test_[^ \t(:]*)")
-_DEF_TEST_LINE_REMOVED = re.compile(r"^\uFEFF?[ \t]*(?:async[ \t]+)?def (test_[^ \t(:]*)")
-_GOT_TEST_LINE = r"^\uFEFF?[ \t]*def test_"
+#
+# NOTE_path2_fifth_pass_2026_09_25 (V-1): ONE reading of a Python definition line. Rounds 2, 3 and 4
+# each repaired one whitespace character in one of these patterns and opened the next, because
+# patterns that must read the same lines were written one by one. CPython's tokenizer takes space,
+# tab and form feed as indentation and as the space between two tokens, and nothing else; a U+FEFF
+# may open a file. So every pattern that reads a definition line opens with `_DEF_INDENT`, separates
+# its keywords with `_DEF_SEP` where it separates them with a class at all, and a symbol name ends at
+# `_NAME_END`: the next character is an ASCII character that cannot continue a name, or the line
+# ends. (A non-ASCII character after the name either continues it, so it is another name, or is one
+# CPython refuses there; `\b` would read U+00A0 or U+00B7 as the end of the name, and JavaScript's
+# `\b` is ASCII, which is why the ports disagreed on `def foo` + U+00E9 + `():`.) `got` counts the
+# lines the added-side test pairing reads, and `hit` asks whether an added line matches
+# `_symbol_def_line_added(name)`, the very pattern the symbol pairing counts added definitions with,
+# so neither count can read a line its pairing cannot. The REMOVED side alone also takes `async`, for
+# tests and symbols alike (R-2): `got` and `hit` do not read `async def`, so the added side must not.
+_DEF_INDENT = r"^\uFEFF?[ \t\f]*"
+_DEF_SEP = r"[ \t\f]+"
+_NAME_END = r"(?=[\x00-\x2f\x3a-\x40\x5b-\x5e\x60\x7b-\x7f]|$)"
+_DEF_TEST_LINE = re.compile(_DEF_INDENT + r"def (test_[^ \t(:]*)")
+_DEF_TEST_LINE_REMOVED = re.compile(_DEF_INDENT + r"(?:async" + _DEF_SEP + r")?def (test_[^ \t(:]*)")
+_GOT_TEST_LINE = _DEF_INDENT + r"def test_"
 
 
 def _symbol_def_line(name: str) -> re.Pattern:
-    return re.compile(r"^\uFEFF?[ \t]*(?:async[ \t]+)?(?:def|class)[ \t]+" + re.escape(name) + r"(?=[ \t(:]|$)")
+    """The REMOVED-side symbol definition line: `async` allowed (NOTE_path2_fifth_pass, V-1)."""
+    return re.compile(_DEF_INDENT + r"(?:async" + _DEF_SEP + r")?(?:def|class)" + _DEF_SEP
+                      + re.escape(name) + _NAME_END)
+
+
+def _symbol_def_line_added(name: str) -> re.Pattern:
+    """The ADDED-side symbol definition line, read by `hit` and by the pairing's added count alike."""
+    return re.compile(_DEF_INDENT + r"(?:def|class)" + _DEF_SEP + re.escape(name) + _NAME_END)
+
+
+def _symbol_hit(name: str, added_blob: str) -> bool:
+    """`symbol_added`'s question: does some added line define `name`? One line at a time, with the
+    added-side pairing pattern (V-1), so `hit` reads exactly the lines the pairing reads."""
+    rx = _symbol_def_line_added(name)
+    return any(rx.match(line) for line in added_blob.split("\n"))
 
 
 def _changed_test_defs(sides: dict | None, status: dict | None = None) -> int:
@@ -397,12 +429,13 @@ def _changed_test_defs(sides: dict | None, status: dict | None = None) -> int:
 
 def _definition_only_changed(name: str, sides: dict | None, status: dict | None = None) -> bool:
     """Some file both adds and removes a definition of `name`, and no file adds more definitions of
-    it than it removes (a file whose status is `A` removes none). Counted per file, one to one."""
-    rx = _symbol_def_line(name)
+    it than it removes (a file whose status is `A` removes none). Counted per file, one to one.
+    The added side reads `_symbol_def_line_added`, the pattern `hit` reads (V-1)."""
+    rx_added, rx_removed = _symbol_def_line_added(name), _symbol_def_line(name)
     paired = False
     for path, (added, removed) in (sides or {}).items():
-        a = sum(1 for line in added if rx.match(line))
-        r = 0 if (status or {}).get(path) == "A" else sum(1 for line in removed if rx.match(line))
+        a = sum(1 for line in added if rx_added.match(line))
+        r = 0 if (status or {}).get(path) == "A" else sum(1 for line in removed if rx_removed.match(line))
         if a > r:
             return False
         if a and r:
@@ -1145,14 +1178,38 @@ def _prefix_off_tree(pref: str) -> bool:
     return pref.startswith(".") and not _DOTFILE_PREFIX.match(pref)
 
 
-def _could_lie_under(path: str, pref: str) -> bool:
+def _parent_prefix(raw: str) -> str:
+    """NOTE_path2_fifth_pass_2026_09_25 (V-4): the prefix as written, BEFORE `rstrip("/.")`, when it
+    ends in a `..` segment -- trailing `/` and `.` segments dropped, so `src/..`, `docs/../` and
+    `.github/../.` (a sentence period after `../`) all do -- else "". `rstrip("/.")` deleted that
+    segment, so `../docs/..` was read as `../docs` and `src/..` as `src`; the parent of a directory
+    can hold any path, so such a prefix is off-tree and could hold anything."""
+    segs = raw.split("/")
+    while segs and segs[-1] in ("", "."):
+        segs.pop()
+    return "/".join(segs) if segs and segs[-1] == ".." else ""
+
+
+def _could_lie_under(path: str, pref: str, raw: str = "") -> bool:
     """NOTE_path2_fourth_pass F-4: whether SOME reading of an off-tree prefix could hold `path`.
 
     `../docs` from an unknown directory X is `X/docs`, so a changed path lies under it on some
     reading exactly when the prefix's named segments occur, in order and contiguously, among the
     path's segments. Both sides are compared undotted and the dots-only segments of the prefix
     (`..`, `.`, `...`) are dropped, so the test errs towards "could": `../.github` could hold
-    `.github/x.yml`, and a bare `..` could hold anything."""
+    `.github/x.yml`, and a bare `..` could hold anything.
+
+    NOTE_path2_fifth_pass V-4: a prefix whose written form ends in `..` (`raw`, before
+    `rstrip("/.")`), and a `..` or `...` segment AFTER a named one (`../src/../docs` is `X/docs`,
+    not `X/src/docs`), could hold anything; dropping those segments had turned "could" into "no"."""
+    if _parent_prefix(raw):
+        return True
+    named = False
+    for seg in pref.split("/"):
+        if seg.strip("."):
+            named = True
+        elif named and seg not in ("", "."):
+            return True
     want = [seg.lstrip(".") for seg in pref.split("/") if seg.strip(".")]
     have = [seg.lstrip(".") for seg in path.split("/")]
     if not want:
@@ -1456,10 +1513,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         c.why = ("no Python file in the diff; this template counts "
                                  "`def` lines (#110)")
                     else:
-                        # NOTE_path2_third_pass R-1: one optional leading U+FEFF; and
-                        # NOTE_path2_fourth_pass F-3: the indent is [ \t]*, as in the pairing.
-                        # This count reads exactly the lines the added-side pairing pattern
-                        # reads, so `chg <= got` holds line by line, not only in total.
+                        # NOTE_path2_third_pass R-1: one optional leading U+FEFF;
+                        # NOTE_path2_fourth_pass F-3 and NOTE_path2_fifth_pass V-1: the indent is
+                        # `_DEF_INDENT`, the pairing's. This count reads exactly the lines the
+                        # added-side pairing pattern reads, so `chg <= got` holds line by line.
                         got = len(re.findall(_GOT_TEST_LINE, added_blob, re.M))
                         # PATH-2 (#101): `chg` added `def test_` lines re-define a test the same
                         # file's removed lines define, paired one to one (AMENDMENT C-1). The true
@@ -1491,8 +1548,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         c.why = ("no Python file in the diff; this template counts "
                                  "`def` lines (#110)")
                     else:
-                        pat = (r"^\s*(?:def|class)\s+" + re.escape(d["name"]) + r"\b")
-                        hit = bool(re.search(pat, added_blob, re.M))
+                        # NOTE_path2_fifth_pass V-1: the added-side pairing pattern, one line at a
+                        # time. `^\s*(?:def|class)\s+NAME\b` read lines the pairing did not (a form
+                        # feed re-indent, a changed generic), and each was a false VERIFIED.
+                        hit = _symbol_hit(d["name"], added_blob)
                         if hit and _definition_only_changed(d["name"], sides, status):
                             c.verdict = "UNCHECKABLE"               # PATH-2 (#101)
                             c.why = (f"added lines define {d['kind']} {d['name']!r} only where the "
@@ -1525,7 +1584,12 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     # decided `outside` above, so a bare filename keeps its basename reading.
                     dot_miss = [p for p in outside if _dot_miss(p, prefs)]
                     real = [p for p in outside if p not in dot_miss]
-                    off_tree = [x for x in prefs if _prefix_off_tree(x)]
+                    # NOTE_path2_fifth_pass V-4: off-tree-ness is also read on the prefix as written,
+                    # before rstrip("/."), so a prefix ending in `..` is off-tree (`_parent_prefix`).
+                    written = [_norm(x) for x in raw_prefs]
+                    off_pairs = [(x, r) for x, r in zip(prefs, written)
+                                 if _prefix_off_tree(x) or _parent_prefix(r)]
+                    off_tree = [_parent_prefix(r) or x for x, r in off_pairs]
                     # NOTE_path2_fourth_pass F-4: beside an ON-tree prefix, an off-tree one no longer
                     # withdraws a correct accusation. A real path outside every on-tree prefix that
                     # no reading of the off-tree prefix could hold is outside the claim on every
@@ -1533,7 +1597,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     # certain -- and an off-tree prefix standing alone -- abstains as R-3 did.
                     beside_on_tree = bool(off_tree) and len(off_tree) < len(prefs)
                     if beside_on_tree:
-                        real = [p for p in real if not any(_could_lie_under(p, x) for x in off_tree)]
+                        real = [p for p in real
+                                if not any(_could_lie_under(p, x, r) for x, r in off_pairs)]
                     if no_paths:
                         c.verdict, c.why = "UNCHECKABLE", no_paths
                     elif not_paths:                             # BC-1 repair 4
