@@ -10,10 +10,14 @@ prefixed with  javascript:  for the href. Nothing else goes in: no analytics, no
 beyond the two api.github.com reads the UI makes. The sha256 of the minified output is the receipt —
 whatever a browser holds in its bookmarks bar either hashes to it or is not this build.
 
-All three outputs are written as bytes with LF line endings, on every platform: `bookmarklet_src.js`
-is committed without EOL conversion (it carries NUL bytes, so git reads it as binary), and a text-mode
-write on Windows would give it CRLF. `--check` compares against the files on disk and never rewrites
-them, so a committed source that drifted from its two inputs is reported, not repaired in passing.
+All three outputs are written as bytes with LF line endings, on every platform, and a text-mode write
+on Windows would give them CRLF. `bookmarklet_src.js` is the one of the three git would convert: it is
+text. (An earlier cut of this branch's diffgate.js, at ab3084d9, carried two NUL bytes, which made git
+read the assembled source as binary and leave it alone; the reconciled diffgate.js carries none.) So
+`.gitattributes` marks it `-text` and a checkout keeps the LF bytes the build writes
+(NOTE_path2_fourth_pass_2026_09_25, B-1). `--check` compares all three against the files on disk, byte
+for byte, and never rewrites them, so a committed source that drifted from its two inputs is reported,
+not repaired in passing.
 """
 from __future__ import annotations
 

@@ -9,8 +9,9 @@
  * #120 and #124 on fathom-lab/styxx, plus the fetch_pr door, with PATH-1 (#127) and DECLARE-1 (#129)
  * on top), sha256 9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb, re-cut for the
  * PATH-2 repairs (PREREG_path2_resolution_2026_09_17: #97, #121, #101, as amended by
- * AMENDMENT_path2_resolution_2026_09_17 and NOTE_path2_third_pass_2026_09_25) on the file that
- * carries them, sha256 e19b688a4bba09116cca577578dca0abf283c39980a80c5068dd7dbabcf47bfd — the
+ * AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25 and
+ * NOTE_path2_fourth_pass_2026_09_25) on the file that
+ * carries them, sha256 93d533cadaf075f8cdce8820f4730fda545b42c6dc63e9fed2d1c19af11105ec — the
  * styxx/diffgate.py that 7.48.0 ships once they merge. Relative to the 7.47.0 wheel the port
  * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
  * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
@@ -23,7 +24,10 @@
  * UNCHECKABLE). PATH-2 adds: a path claim resolves exact, then suffix, then
  * basename, over every entry (#97); the path key keeps a dotfile's dots, and "only touches" does not
  * accuse on a dot alone and lists only the paths outside by more than a dot (#121); a `def` the same
- * file's removed lines also define is changed, not added, paired one to one per name (#101). Two
+ * file's removed lines also define is changed, not added, paired one to one per name (#101). The
+ * fourth pass adds: a diff splits into lines on \r\n, \r and \n only, in both implementations, and
+ * the added lines are read with Python's `^` (the test count and the symbol test) and, in the symbol
+ * test, Python's `\s` rather than JavaScript's. Two
  * deliberate gaps remain: the structural "unparsed claims"
  * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
  * pass" is always UNCHECKABLE, exactly as the CLI without --run.
@@ -133,7 +137,8 @@ function _prefixIsPathShaped(prefix, status) {
   if (/[/\\]/.test(raw)) return true;
   // PATH-1 mode 2: a dot alone is no longer enough -- the suffix must be a real file extension.
   if (raw.includes(".") && _hasRealExtension(_rstrip(raw, "/"))) return true;
-  const low = _rstrip(_norm(raw), "/").toLowerCase();
+  // NOTE_path2_fourth_pass F-1: the prefix is undotted too, as the changed paths are below.
+  const low = _rstrip(_undotted(_norm(raw)), "/").toLowerCase();
   for (const changed of status.keys()) {
     // PATH-2 (#121): segments read with the key's leading dots dropped, as before the key kept them.
     if (_undotted(changed).split("/").some(seg => seg.toLowerCase() === low)) return true;
@@ -148,11 +153,19 @@ function _prefixIsPathShaped(prefix, status) {
 // NOTE_path2_third_pass_2026_09_25 (R-1, R-2): the added-side pattern and the added-blob count
 // `got` read the same set of lines, so `chg <= got` line by line and not only in total; the
 // removed side alone accepts `async`, so `async def test_x` rewritten as `def test_x` is a changed
-// test rather than an added one. `got` carries the same optional U+FEFF as the pattern, which is
-// what JavaScript's \s was already doing and what Python now does too.
+// test rather than an added one. `got` carries the same optional U+FEFF as the pattern.
+// NOTE_path2_fourth_pass_2026_09_25 (F-3): `got` reads the indent as [ \t]*, as the pairing does, so
+// the two count exactly the same lines. (F-2): Python's re.M `^` matches at the start and after "\n"
+// only; the `m` flag here also matched after "\r", U+2028 and U+2029, which a git diff does not treat
+// as line breaks. `(?<![^\n])` is Python's `^` under re.M, so the blob is read line by line as git
+// writes it.
 const _DEF_TEST_LINE = /^\uFEFF?[ \t]*def (test_[^ \t(:]*)/;
 const _DEF_TEST_LINE_REMOVED = /^\uFEFF?[ \t]*(?:async[ \t]+)?def (test_[^ \t(:]*)/;
-const _GOT_TEST_LINE = /^\uFEFF?\s*def test_/gm;
+const _GOT_TEST_LINE = /(?<![^\n])\uFEFF?[ \t]*def test_/g;
+// Python's `\s` for a str pattern, written out: JavaScript's `\s` also matches U+FEFF and lacks
+// U+001C-U+001F and U+0085. Used where the Python writes `\s` over the added lines (`hit`), so that
+// F-2's lines, which may now carry those characters, are read identically (NOTE_path2_fourth_pass).
+const _PY_WS = "[\\t\\n\\x0b\\x0c\\r\\x1c-\\x20\\x85\\xa0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000]";
 const _symbolDefLine = name => new RegExp("^\\uFEFF?[ \\t]*(?:async[ \\t]+)?(?:def|class)[ \\t]+" + _reEscape(name) + "(?=[ \\t(:]|$)");
 
 function _changedTestDefs(sides, status) {
@@ -449,6 +462,17 @@ const _DOTFILE_PREFIX = /^\.[^./\\]/;
 function _prefixOffTree(pref) {
   return pref.startsWith(".") && !_DOTFILE_PREFIX.test(pref);
 }
+// NOTE_path2_fourth_pass F-4: whether SOME reading of an off-tree prefix could hold `path` -- its named
+// segments (undotted, dots-only segments dropped) occur contiguously among the path's undotted segments.
+function _couldLieUnder(path, pref) {
+  const want = pref.split("/").filter(seg => _stripChars(seg, ".")).map(seg => _stripChars(seg, ".", true, false));
+  const have = path.split("/").map(seg => _stripChars(seg, ".", true, false));
+  if (!want.length) return true;
+  for (let i = 0; i + want.length <= have.length; i++) {
+    if (want.every((w, k) => have[i + k] === w)) return true;
+  }
+  return false;
+}
 
 // AMENDMENT_path2 C-3: `path` lies outside every prefix only by a dot the prose left off. The
 // containment test is PATH-1's _pathInside, the same one that decided `outside`.
@@ -471,7 +495,9 @@ function _basename(p) {
   return s.slice(s.lastIndexOf("/") + 1);
 }
 function _splitlines(text) {
-  // str.splitlines() for the line endings a diff can carry
+  // The three line endings a diff can carry, and nothing else. NOTE_path2_fourth_pass F-2: the Python
+  // (`_diff_lines`) now splits exactly this way; str.splitlines() also broke on U+000B, U+000C,
+  // U+001C-U+001E, U+0085, U+2028 and U+2029, and the two ports disagreed on `tests_added`.
   const lines = text.split(/\r\n|\r|\n/);
   if (lines.length && lines[lines.length - 1] === "") lines.pop();
   return lines;
@@ -694,8 +720,10 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             c.verdict = "UNCHECKABLE";
             c.why = "no Python file in the diff; this template counts `def` lines (#110)";
           } else {
-            const src = "^\\s*(?:def|class)\\s+" + _reEscape(d.name) + "\\b";
-            const hit = new RegExp(src, "m").test(addedBlob);
+            // NOTE_path2_fourth_pass F-2: `(?<![^\n])` is Python's re.M `^` (start, or after "\n" only),
+            // and _PY_WS is Python's `\s`, so the port reads the lines F-2 hands it as the Python does.
+            const src = "(?<![^\\n])" + _PY_WS + "*(?:def|class)" + _PY_WS + "+" + _reEscape(d.name) + "\\b";
+            const hit = new RegExp(src).test(addedBlob);
             if (hit && _definitionOnlyChanged(d.name, sides, status)) {
               c.verdict = "UNCHECKABLE";                                   // PATH-2 (#101)
               c.why = `added lines define ${d.kind} ${pyRepr(d.name)} only where the removed lines of the same file define it too; a changed definition is not an added one (#101)`;
@@ -717,11 +745,15 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
           // PATH-2 (#121), AMENDMENT_path2 C-3: dot misses alone abstain; any real outside path accuses,
           // and only real paths are listed. _dotMiss uses the same _pathInside containment.
           const dotMiss = outside.filter(p => _dotMiss(p, prefs));
-          const real = outside.filter(p => !dotMiss.includes(p));
+          let real = outside.filter(p => !dotMiss.includes(p));
           const offTree = prefs.filter(x => _prefixOffTree(x));
+          // NOTE_path2_fourth_pass F-4: beside an on-tree prefix, a real path no reading of the off-tree
+          // prefix could hold still accuses, and only such paths are listed; otherwise R-3 abstains.
+          const besideOnTree = offTree.length > 0 && offTree.length < prefs.length;
+          if (besideOnTree) real = real.filter(p => !offTree.some(x => _couldLieUnder(p, x)));
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
           else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
-          else if (offTree.length) {                              // NOTE_path2_third_pass R-3
+          else if (offTree.length && !(besideOnTree && real.length)) {   // R-3, narrowed by F-4
             c.verdict = "UNCHECKABLE";
             c.why = `prefix ${pyRepr(offTree[0])} is relative to a directory the diff does not name (#121)`;
           }
