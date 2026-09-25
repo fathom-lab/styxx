@@ -9,9 +9,11 @@
  * on top), sha256 9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb, re-cut for the
  * PATH-2 repairs (PREREG_path2_resolution_2026_09_17: #97, #121, #101, as amended by
  * AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
- * NOTE_path2_fourth_pass_2026_09_25 and NOTE_path2_fifth_pass_2026_09_25) on the file that
- * carries them, sha256 0a5522ebdec4c16890070f79920f04f48f4b6a439c0086a01bbf85c1b9c2ec2b — the
- * styxx/diffgate.py that 7.48.0 ships once they merge. Relative to the 7.47.0 wheel the port
+ * NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25 and
+ * NOTE_path2_sixth_pass_2026_09_25) on the file that carries them, sha256
+ * b837f7e4b7ce1e06472a5fa83af1c5a43000d7e1d6b25ac15d8c28504d4ee8e9 — the styxx/diffgate.py this
+ * branch would put on main; the 7.48.0 release carries main's file (9b620e00…), without the PATH-2
+ * repairs. Relative to the 7.47.0 wheel the port
  * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
  * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
  * templates abstain when the diff has no Python; "added 3 test cases" is not a count of functions;
@@ -32,7 +34,11 @@
  * test and both pairings, with the symbol test now the pairing's own pattern; every regex over a diff
  * line spells Python's `\s`, `\w`, `\b` and `.`, a header path is stripped as str.strip() strips it, and
  * a reason prints a path as Python's repr() does; and a prefix written to end in `..`, or holding a `..`
- * after a named segment, could hold any path. Two
+ * after a named segment, could hold any path. The sixth pass adds: one hunk-aware reading of a diff
+ * for the status map, the added lines and both pairings (a `---`/`+++` line inside a hunk's counts is
+ * content, and a U+FEFF is read only where it opens line 1 of a file); one reading of a name (the
+ * Python identifier, claimed or defined, with CPython's separator for tests as for symbols); and a
+ * bare `..` second prefix read as off-tree. Two
  * deliberate gaps remain: the structural "unparsed claims"
  * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
  * pass" is always UNCHECKABLE, exactly as the CLI without --run.
@@ -166,16 +172,52 @@ function _prefixIsPathShaped(prefix, status) {
 // writes it.
 // NOTE_path2_fifth_pass_2026_09_25 (V-1): ONE reading of a Python definition line, the Python's own:
 // the indent is `_DEF_INDENT` (space, tab and form feed, CPython's tokenizer, after one optional
-// U+FEFF), keywords are separated by `_DEF_SEP`, and a symbol name ends at `_NAME_END` (an ASCII
-// character that cannot continue a name, or the end of the line). `got` counts the lines the
-// added-side test pairing reads, and `hit` is the added-side symbol pairing pattern tested line by
-// line; neither uses \s or \b any more, so there is no JavaScript/Python class left to differ.
-const _DEF_INDENT = "^\\uFEFF?[ \\t\\f]*";
+// U+FEFF) and keywords are separated by `_DEF_SEP`. `got` counts the lines the added-side test pairing
+// reads, and `hit` is the added-side symbol pairing's reading tested line by line.
+// NOTE_path2_sixth_pass_2026_09_25 (W-2): ONE reading of a name. A name, claimed or defined, is the
+// identifier that starts there, read with the language's own rule -- the Python's str.isidentifier():
+// XID_Start or `_`, then XID_Continue (`_identifierAt`) -- so the claimed name and a definition's name
+// end in the same place in both ports. V-1's ASCII name end and the test side's `def (test_[^ \t(:]*)`
+// are gone; the test side reads `_DEF_SEP` after `def` too. A line defines the name when the character
+// after it is ASCII or the line ends (a non-ASCII one is XID_Continue, so the name holds it, or one
+// CPython refuses there). `got` is the added-side pairing's own reading, counted line by line.
+const _DEF_INDENT = "^[ \\t\\f]*";                    // no U+FEFF: W-1's parse drops one at line 1 only
 const _DEF_SEP = "[ \\t\\f]+";
-const _NAME_END = "(?=[\\x00-\\x2f\\x3a-\\x40\\x5b-\\x5e\\x60\\x7b-\\x7f]|$)";
-const _DEF_TEST_LINE = new RegExp(_DEF_INDENT + "def (test_[^ \\t(:]*)");
-const _DEF_TEST_LINE_REMOVED = new RegExp(_DEF_INDENT + "(?:async" + _DEF_SEP + ")?def (test_[^ \\t(:]*)");
-const _GOT_TEST_LINE = new RegExp("(?<![^\\n])" + _DEF_INDENT.slice(1) + "def test_", "g");
+const _DEF_HEAD = new RegExp(_DEF_INDENT + "(def|class)" + _DEF_SEP);
+const _DEF_HEAD_REMOVED = new RegExp(_DEF_INDENT + "(?:async" + _DEF_SEP + ")?(def|class)" + _DEF_SEP);
+const _XID_START = /[\p{XID_Start}_]/u;
+const _XID_CONTINUE = /\p{XID_Continue}/u;
+function _identifierAt(text, i) {
+  // The Python identifier that starts at text[i] (a UTF-16 index), or "": one code point at a time.
+  if (i >= text.length) return "";
+  const lead = String.fromCodePoint(text.codePointAt(i));
+  if (!_XID_START.test(lead)) return "";
+  let j = i + lead.length;
+  while (j < text.length) {
+    const ch = String.fromCodePoint(text.codePointAt(j));
+    if (!_XID_CONTINUE.test(ch)) break;
+    j += ch.length;
+  }
+  return text.slice(i, j);
+}
+function _definedName(line, removed = false) {
+  // [`def` or `class`, name] that a diff line defines, or null.
+  const m = (removed ? _DEF_HEAD_REMOVED : _DEF_HEAD).exec(line);
+  if (!m) return null;
+  const start = m.index + m[0].length;
+  const name = _identifierAt(line, start);
+  const end = start + name.length;
+  if (!name || (end < line.length && line.charCodeAt(end) > 0x7f)) return null;
+  return [m[1], name];
+}
+function _testName(line, removed = false) {
+  const d = _definedName(line, removed);
+  return d && d[0] === "def" && d[1].startsWith("test_") ? d[1] : null;
+}
+function _defines(line, name, removed = false) {
+  const d = _definedName(line, removed);
+  return d !== null && d[1] === name;
+}
 // Python's `\s` for a str pattern, written out: JavaScript's `\s` also matches U+FEFF and lacks
 // U+001C-U+001F and U+0085. NOTE_path2_fifth_pass (V-2): used wherever the Python writes `\s` over a
 // diff line -- the COMPAT patterns and their parameter lists -- and, as `_pyStrip`, wherever the
@@ -191,13 +233,22 @@ const _PY_W = "[" + _PY_W_CHARS + "]";
 const _PY_B = "(?:(?<=" + _PY_W + ")(?!" + _PY_W + ")|(?<!" + _PY_W + ")(?=" + _PY_W + "))";
 const _PY_STRIP = new RegExp("^" + _PY_WS + "+|" + _PY_WS + "+$", "g");
 const _pyStrip = s => s.replace(_PY_STRIP, "");
-// The removed-side symbol line (`async` allowed) and the added-side one, read by `hit` and by the
-// pairing's added count alike.
-const _symbolDefLine = name => new RegExp(_DEF_INDENT + "(?:async" + _DEF_SEP + ")?(?:def|class)" + _DEF_SEP + _reEscape(name) + _NAME_END);
-const _symbolDefLineAdded = name => new RegExp(_DEF_INDENT + "(?:def|class)" + _DEF_SEP + _reEscape(name) + _NAME_END);
+// NOTE_path2_sixth_pass_2026_09_25 (W-2, port): the `symbol_added` template's `name` group as the Python
+// captures it, `[A-Za-z_]\w*` with Python's `\w`. JavaScript's `\w` is ASCII, so the port stored `caf` for
+// "Added function caf<U+00E9>." in the claim's detail and asked the symbol-word test about `caf`; the verdict and
+// the reason read the identifier (`_identifierAt`) in both ports, and the detail now reads what the
+// Python's template reads.
+const _PY_TEMPLATE_NAME = new RegExp("[A-Za-z_]" + _PY_W + "*", "uy");
+function _pyTemplateName(sent, start) {
+  _PY_TEMPLATE_NAME.lastIndex = start;
+  const r = _PY_TEMPLATE_NAME.exec(sent);
+  return r ? r[0] : "";
+}
 function _symbolHit(name, addedBlob) {
-  const rx = _symbolDefLineAdded(name);
-  return addedBlob.split("\n").some(line => rx.test(line));
+  return addedBlob.split("\n").some(line => _defines(line, name));
+}
+function _addedTests(addedBlob) {
+  return addedBlob.split("\n").filter(line => _testName(line)).length;
 }
 
 function _changedTestDefs(sides, status) {
@@ -208,10 +259,10 @@ function _changedTestDefs(sides, status) {
   for (const [path, [added, removed]] of sides) {
     if (status && status.get(path) === "A") continue;
     const gone = new Map();
-    for (const line of removed) { const m = _DEF_TEST_LINE_REMOVED.exec(line); if (m) gone.set(m[1], (gone.get(m[1]) || 0) + 1); }
+    for (const line of removed) { const t = _testName(line, true); if (t) gone.set(t, (gone.get(t) || 0) + 1); }
     if (!gone.size) continue;
     const fresh = new Map();
-    for (const line of added) { const m = _DEF_TEST_LINE.exec(line); if (m) fresh.set(m[1], (fresh.get(m[1]) || 0) + 1); }
+    for (const line of added) { const t = _testName(line); if (t) fresh.set(t, (fresh.get(t) || 0) + 1); }
     for (const [name, k] of fresh) n += Math.min(k, gone.get(name) || 0);
   }
   return n;
@@ -220,12 +271,11 @@ function _changedTestDefs(sides, status) {
 function _definitionOnlyChanged(name, sides, status) {
   // Some file both adds and removes a definition of `name`, and no file adds more definitions of it
   // than it removes (a file whose status is `A` removes none). Counted per file, one to one. The
-  // added side reads the pattern `hit` reads (NOTE_path2_fifth_pass, V-1).
-  const rxAdded = _symbolDefLineAdded(name), rxRemoved = _symbolDefLine(name);
+  // added side reads what `hit` reads (NOTE_path2_fifth_pass V-1, NOTE_path2_sixth_pass W-2).
   let paired = false;
   for (const [path, [added, removed]] of (sides || new Map())) {
-    const a = added.filter(line => rxAdded.test(line)).length;
-    const r = (status && status.get(path) === "A") ? 0 : removed.filter(line => rxRemoved.test(line)).length;
+    const a = added.filter(line => _defines(line, name)).length;
+    const r = (status && status.get(path) === "A") ? 0 : removed.filter(line => _defines(line, name, true)).length;
     if (a > r) return false;
     if (a && r) paired = true;
   }
@@ -293,14 +343,67 @@ class _Pending {
   path() { const raw = this.status === "D" ? this.a : this.b; return raw ? _norm(raw) : ""; }
 }
 
-function parseUnifiedDiffSides(diffText) {
-  // Unified diff text -> Map(normalized new-or-old path -> [added_lines, removed_lines]).
+// NOTE_path2_sixth_pass_2026_09_25 (W-1): ONE hunk-aware reading of a diff, as the Python's _read_diff.
+// A `---`/`+++` line is a header only OUTSIDE a hunk; inside one, the `@@ -a,b +c,d @@` counts say how
+// many removed and added lines are still owed, so a removed `-- x` (printed `--- x`) and an added `++ x`
+// (printed `+++ x`) are content. A line the counts do not allow for closes the hunk and is read as
+// before; outside any counted hunk every line is read as it was on main. `[0-9]`, not `\d`: the
+// Python's `\d` is Unicode. A `---` line followed by a `+++` line inside a hunk's counts still reads as
+// a file header, as on main, when a hunk header follows the pair or the pair is written `--- a/…` or
+// `/dev/null`, `+++ b/…` or `/dev/null` (_headerPair): a hand-written hunk often declares more lines
+// than it carries. The same numbers say which line is line 1 of a file, the one place CPython reads a
+// U+FEFF: the parse drops one that opens line 1 of either side, and nowhere else, and the definition
+// patterns read none (R-1 took one on any line, so a mid-file U+FEFF-led definition counted).
+const _HUNK_HEADER = /^@@ -([0-9]+)(?:,([0-9]+))? \+([0-9]+)(?:,([0-9]+))? @@/;
+const _FILE_BOM = "\uFEFF";
+function _headerPair(lines, k) {
+  const nxt = k + 1 < lines.length ? lines[k + 1] : "";
+  if (!nxt.startsWith("+++ ")) return false;
+  if (k + 2 < lines.length && _HUNK_HEADER.test(lines[k + 2])) return true;
+  const a = _pyStrip(lines[k].slice(4)), b = _pyStrip(nxt.slice(4));
+  return (a === "/dev/null" || a.startsWith("a/")) && (b === "/dev/null" || b.startsWith("b/"));
+}
+function _readDiff(diffText) {
+  const status = new Map();
+  const added = [];
   const sides = new Map();
   let oldPath = null;
   let cur = null;
-  let pending = null;
-  const flush = () => { if (pending !== null && pending.path() && !sides.has(pending.path())) sides.set(pending.path(), [[], []]); };
-  for (const line of _splitlines(diffText || "")) {
+  let pending = null;                       // BIN-1: a header still waiting for its pair
+  let oldLeft = 0, newLeft = 0;             // removed and added lines the open hunk still owes
+  let oldNo = 0, newNo = 0;                 // the line numbers its next removed and added lines carry
+  const flush = () => {
+    if (pending !== null && pending.path()) {
+      if (!status.has(pending.path())) status.set(pending.path(), pending.status);
+      if (!sides.has(pending.path())) sides.set(pending.path(), [[], []]);
+    }
+  };
+  const lines = _splitlines(diffText || "");
+  for (let k = 0; k < lines.length; k++) {
+    const line = lines[k];
+    if ((oldLeft || newLeft) && line.startsWith("--- ") && _headerPair(lines, k)) {
+      oldLeft = 0; newLeft = 0;                 // a file header after all: the hunk declared too many lines
+    }
+    if (oldLeft || newLeft) {
+      const head = line.slice(0, 1);
+      if (head === "+" && newLeft) {
+        let text = line.slice(1);
+        if (newNo === 1 && text.startsWith(_FILE_BOM)) text = text.slice(_FILE_BOM.length);
+        newLeft -= 1; newNo += 1; added.push(text);
+        if (cur !== null) sides.get(cur)[0].push(text);
+        continue;
+      }
+      if (head === "-" && oldLeft) {
+        let text = line.slice(1);
+        if (oldNo === 1 && text.startsWith(_FILE_BOM)) text = text.slice(_FILE_BOM.length);
+        oldLeft -= 1; oldNo += 1;
+        if (cur !== null) sides.get(cur)[1].push(text);
+        continue;
+      }
+      if ((head === " " || line === "") && oldLeft && newLeft) { oldLeft -= 1; newLeft -= 1; oldNo += 1; newNo += 1; continue; }
+      if (head === "\\") continue;              // "\ No newline at end of file"
+      oldLeft = 0; newLeft = 0;                 // the counts do not allow this line: the hunk is over
+    }
     if (line.startsWith("diff --git ")) {
       flush();
       pending = new _Pending(line);
@@ -311,13 +414,24 @@ function parseUnifiedDiffSides(diffText) {
     } else if (line.startsWith("+++ ")) {
       const nw = _pyStrip(line.slice(4));
       let raw;
-      if (nw === "/dev/null") raw = (oldPath && oldPath.startsWith("a/")) ? oldPath.slice(2) : (oldPath || "");
-      else raw = nw.startsWith("b/") ? nw.slice(2) : nw;
+      if (nw === "/dev/null") {
+        status.set(_norm(oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath), "D");
+        raw = (oldPath && oldPath.startsWith("a/")) ? oldPath.slice(2) : (oldPath || "");
+      } else {
+        raw = nw.startsWith("b/") ? nw.slice(2) : nw;
+        status.set(_norm(raw), (oldPath === "/dev/null" || oldPath === null) ? "A" : "M");
+      }
       cur = _norm(raw);
       if (!sides.has(cur)) sides.set(cur, [[], []]);
       pending = null;
-    } else if (cur !== null && line.startsWith("+") && !line.startsWith("+++")) {
-      sides.get(cur)[0].push(line.slice(1));
+    } else if (line.startsWith("@@") && _HUNK_HEADER.test(line)) {
+      const m = _HUNK_HEADER.exec(line);
+      oldNo = parseInt(m[1], 10); newNo = parseInt(m[3], 10);
+      oldLeft = m[2] === undefined ? 1 : parseInt(m[2], 10);
+      newLeft = m[4] === undefined ? 1 : parseInt(m[4], 10);
+    } else if (line.startsWith("+") && !line.startsWith("+++")) {
+      added.push(line.slice(1));
+      if (cur !== null) sides.get(cur)[0].push(line.slice(1));
     } else if (cur !== null && line.startsWith("-") && !line.startsWith("---")) {
       sides.get(cur)[1].push(line.slice(1));
     } else if (pending !== null) {
@@ -325,7 +439,13 @@ function parseUnifiedDiffSides(diffText) {
     }
   }
   flush();
-  return sides;
+  return { status, added, sides };
+}
+
+function parseUnifiedDiffSides(diffText) {
+  // Unified diff text -> Map(normalized new-or-old path -> [added_lines, removed_lines]), read by
+  // _readDiff, the one reading parseUnifiedDiff also returns (W-1).
+  return _readDiff(diffText).sides;
 }
 
 // NOTE_path2_fifth_pass (V-2): re.sub(r"\s+", " ", ...).strip(), with Python's \s.
@@ -586,34 +706,8 @@ function pyRepr(s) {
 function pyList(arr) { return "[" + arr.map(pyRepr).join(", ") + "]"; }
 
 function parseUnifiedDiff(diffText) {
-  const status = new Map();
-  const added = [];
-  let oldPath = null;
-  let pending = null;                       // BIN-1: a header still waiting for its pair
-  const flush = () => { if (pending !== null && pending.path() && !status.has(pending.path())) status.set(pending.path(), pending.status); };
-  for (const line of _splitlines(diffText || "")) {
-    if (line.startsWith("diff --git ")) {
-      flush();
-      pending = new _Pending(line);
-    } else if (line.startsWith("--- ")) {
-      oldPath = _pyStrip(line.slice(4));          // str.strip(), not trim() (V-2)
-    } else if (line.startsWith("+++ ")) {
-      const nw = _pyStrip(line.slice(4));
-      if (nw === "/dev/null") {
-        status.set(_norm(oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath), "D");
-      } else if (oldPath === "/dev/null" || oldPath === null) {
-        status.set(_norm(nw.startsWith("b/") ? nw.slice(2) : nw), "A");
-      } else {
-        status.set(_norm(nw.startsWith("b/") ? nw.slice(2) : nw), "M");
-      }
-      pending = null;
-    } else if (line.startsWith("+") && !line.startsWith("+++")) {
-      added.push(line.slice(1));
-    } else if (pending !== null) {
-      pending.note(line);
-    }
-  }
-  flush();
+  // The status map and the added blob, from _readDiff (NOTE_path2_sixth_pass, W-1).
+  const { status, added } = _readDiff(diffText);
   return { status, addedBlob: added.join("\n") };
 }
 
@@ -739,10 +833,12 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
         if (_PATH_KINDS.has(kind) && _isNonFileNoun(m.groups.path)) continue;
         if ((kind === "file_created" || kind === "file_deleted") && _demotedByContainment(sent, m)) kind = "file_touched";
         if (V14_CONTAINMENT_TOUCH && kind === "file_touched" && _demotedByContainment(sent, m)) continue;
-        if (BC1_BY_CONSTRUCTION && kind === "symbol_added" && _SYMBOL_WORDS.has(m.groups.name.toLowerCase())) continue;
+        const pyName = kind === "symbol_added" ? _pyTemplateName(sent, m.indices.groups.name[0]) : null;   // W-2 (port)
+        if (BC1_BY_CONSTRUCTION && kind === "symbol_added" && _SYMBOL_WORDS.has(pyName.toLowerCase())) continue;
         covered.add(si);
         const d = {};
         for (const [k, v] of Object.entries(m.groups || {})) if (v !== undefined) d[k] = v;
+        if (pyName !== null) d.name = pyName;
         const c = { kind, text: sent.trim().slice(0, 160), detail: d, verdict: "UNCHECKABLE", why: "" };
         if (noEvidence) {
           c.verdict = "UNCHECKABLE"; c.why = noEvidence; claims.push(c); continue;
@@ -760,7 +856,7 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             c.verdict = "UNCHECKABLE";
             c.why = "no Python file in the diff; this template counts `def` lines (#110)";
           } else {
-            const got = (addedBlob.match(_GOT_TEST_LINE) || []).length;
+            const got = _addedTests(addedBlob);                        // the pairing's reading (W-2)
             // PATH-2 (#101): verify net, abstain inside [net, got], accuse only outside it.
             // AMENDMENT_path2 C-1: pairs one to one, clamped to got.
             const chg = Math.min(_changedTestDefs(sides, status), got);
@@ -784,23 +880,29 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             c.verdict = "UNCHECKABLE";
             c.why = "no Python file in the diff; this template counts `def` lines (#110)";
           } else {
-            // NOTE_path2_fifth_pass V-1: the added-side pairing pattern, one line at a time.
-            const hit = _symbolHit(d.name, addedBlob);
-            if (hit && _definitionOnlyChanged(d.name, sides, status)) {
+            // NOTE_path2_fifth_pass V-1: the added-side pairing's reading, one line at a time.
+            // NOTE_path2_sixth_pass W-2: the claimed name is the identifier the summary writes, from where
+            // the template's `name` group starts, read as a definition's name is read.
+            const name = _identifierAt(sent, m.indices.groups.name[0]);
+            const hit = _symbolHit(name, addedBlob);
+            if (hit && _definitionOnlyChanged(name, sides, status)) {
               c.verdict = "UNCHECKABLE";                                   // PATH-2 (#101)
-              c.why = `added lines define ${d.kind} ${pyRepr(d.name)} only where the removed lines of the same file define it too; a changed definition is not an added one (#101)`;
+              c.why = `added lines define ${d.kind} ${pyRepr(name)} only where the removed lines of the same file define it too; a changed definition is not an added one (#101)`;
             } else {
               c.verdict = hit ? "VERIFIED" : "CONTRADICTED";
-              c.why = `added lines ${hit ? "do" : "do NOT"} define ${d.kind} ${pyRepr(d.name)}`;
+              c.why = `added lines ${hit ? "do" : "do NOT"} define ${d.kind} ${pyRepr(name)}`;
             }
           }
         } else if (kind === "only_touches") {
           let prefs = [_rstrip(_norm(d.prefix), "/.")];      // sentence-final periods are not path
           if (d.prefix2) prefs.push(_rstrip(_norm(d.prefix2), "/."));
-          if (d.prefix2 && !_prefixIsPathShaped(d.prefix2, status)) prefs = prefs.slice(0, 1);
+          // NOTE_path2_sixth_pass (V-4, completed): a second prefix written as a parent (a bare `..`) is
+          // read before the path-shape test drops it: it is off-tree, as `../` is.
+          const parent2 = !!d.prefix2 && !!_parentPrefix(d.prefix2.replace(/\\/g, "/"));
+          if (d.prefix2 && !parent2 && !_prefixIsPathShaped(d.prefix2, status)) prefs = prefs.slice(0, 1);
           const rawPrefs = [d.prefix].concat(prefs.length === 2 ? [d.prefix2] : []);
           const notPaths = BC1_BY_CONSTRUCTION
-            ? rawPrefs.filter(x => !_prefixIsPathShaped(x, status)).map(x => _rstrip(_norm(x), "/."))
+            ? rawPrefs.filter((x, i) => !(i === 1 && parent2) && !_prefixIsPathShaped(x, status)).map(x => _rstrip(_norm(x), "/."))
             : [];
           // PATH-1 mode 1: _pathInside matches a bare filename on its basename.
           const outside = [...status.keys()].filter(p => !prefs.some(x => _pathInside(p, x)));
