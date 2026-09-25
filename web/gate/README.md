@@ -11,16 +11,15 @@ file's removed lines also define is changed, not added, #101; as amended by
 `AMENDMENT_path2_resolution_2026_09_17.md`: definitions pair one to one per name, `only_touches`
 lists only the paths outside by more than a dot, COMPAT's scaffold reading keeps `.storybook/` as
 scaffolding; and by `NOTE_path2_third_pass_2026_09_25.md`) on the file that carries them,
-sha256 `PATH2SHA256PLACEHOLDER` (LF line endings; a wheel
+sha256 `e19b688a4bba09116cca577578dca0abf283c39980a80c5068dd7dbabcf47bfd` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
 their bookmarks bar.
 
-One known gap, measured below: that file also carries COMPAT-2's sharpened compatibility reading
-(surface vs scaffolding, signature changes, the candidate flag), and the port does not. Its
-`compat_claim` reasons and detail are COMPAT-1's, the verdict (always UNCHECKABLE) is the same, and
-the differential counts every such record as a disagreement: 10 on the corpus below, and nothing else.
+That gap is closed. Until #126 the port lacked COMPAT-2's sharpened compatibility reading (surface
+vs scaffolding, signature changes, the candidate flag) and the differential counted 10 `compat_claim`
+records as disagreements. The port carries that reading now, and the run below reads 0.
 
 The port was first cut from the 7.47.0 wheel (`fb2d9b3e…`) and re-cut on 2026-09-16 for issue
 #110: the 7.47.0 templates count Python `def` lines and accuse a TypeScript commit that says
@@ -52,8 +51,8 @@ and the never-read count to the page.
 `--check` rebuilds all three in memory and compares them with the files on disk, byte for byte, and
 writes nothing; every output is written with LF. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 MINSHA_PLACEHOLDER   MINLEN_PLACEHOLDER chars
-    bookmarklet.href.txt  sha256 HREFSHA_PLACEHOLDER   HREFLEN_PLACEHOLDER chars
+    bookmarklet.min.js    sha256 af2524340320b69196ad3be84d86fbab5cc46cd614eae6edf1f57dc734adda31   26,236 chars
+    bookmarklet.href.txt  sha256 ea86c5626f730853e305e3aa64ad3ea92816cc54e4b82872879dfdc4dfb29c5a   26,247 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file; `4b2d34e1…`,
@@ -81,10 +80,10 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to PATH2SHA8…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to e19b688a…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the PINNEDCOUNT_PLACEHOLDER pinned pairs against their expect blocks
+    node check_pairs.js                  # the 106 pinned pairs against their expect blocks
 
 The pin moved twice between the last two runs of this differential, and one of those moves is a
 finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to
@@ -111,9 +110,24 @@ the 604-row BENCH corpus (297 `only_touches` readings, 0 disagreements).
 
 Result, 2026-09-25, this branch at the amended PATH-2 repairs, rebased onto `main`:
 
-    DIFFRESULT_PLACEHOLDER
+    3282 pairs, 7028 claims (653 verified, 1640 contradicted, 4735 uncheckable) — 0 disagreement(s)
+    106 pinned pairs, 0 disagreement(s)
 
-DIFFNOTE_PLACEHOLDER
+The same corpus with `origin/main` on BOTH sides — `git show origin/main` for the Python and for the
+port, which is the honest before-figure now that the branch is rebased onto `98a5c368` — reads 3282
+pairs, 7028 claims (658 verified, 1646 contradicted, 4724 uncheckable) and **2** disagreements. Both
+are the two new BOM pairs, where Python's `\s` did not count an added `def test_` line starting with
+U+FEFF and JavaScript's did; that gap was disclosed as a limit in the amendment and this round closes
+it (`NOTE_path2_third_pass_2026_09_25`, R-1). Nothing else disagreed before, and nothing disagrees
+after.
+
+PATH-2 moves **58** of the 3,282 records, and Python and the port move the same 58. Thirty-five are
+PATH-2's own pinned pairs. The other **23** are corpus records that predate them, carrying 28 moved
+claims: 12 `file_created` (3 UNCHECKABLE → VERIFIED and 1 VERIFIED → UNCHECKABLE under #97's tiers,
+8 reason-only), 14 `file_touched` (all reason-only, the key now printing its dots), and 2
+`only_touches` reasons, also dotted. `path2_gates.py differential` attributes all 58 with no
+violation, records 3 new `only_touches` accusations — the three dotted-prefix pairs the amendment
+allows — and 0 `compat2_candidate` flips.
 
 Result, 2026-09-18, this branch at the COMPAT-2 reading plus PATH-1:
 

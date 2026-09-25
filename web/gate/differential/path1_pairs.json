@@ -88,7 +88,7 @@
     [
      "only_touches",
      "UNCHECKABLE",
-     "prefix 'k-step-link' is not a path (#110)"
+     "prefix '.k-step-link' is not a path (#110)"
     ]
    ],
    "uncovered_sentences": 0
@@ -136,12 +136,12 @@
     [
      "file_touched",
      "VERIFIED",
-     "diff status 'M' for 'github/workflows/dependabot.yml'"
+     "diff status 'M' for '.github/workflows/dependabot.yml'"
     ],
     [
      "only_touches",
      "CONTRADICTED",
-     "paths outside 'githiub/workflows/dependabot.yml': ['github/workflows/dependabot.yml']"
+     "paths outside '.githiub/workflows/dependabot.yml': ['.github/workflows/dependabot.yml']"
     ]
    ],
    "uncovered_sentences": 0

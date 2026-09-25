@@ -438,7 +438,7 @@
  {
   "id": "path2:101-a-bom-strip-changes-a-test",
   "summary": "Added 0 tests. Added 1 test.",
-  "diff": "--- a/tests/test_b.py\n+++ b/tests/test_b.py\n@@ -1 +1 @@\n-\ufeffdef test_a():\n+def test_a():\n",
+  "diff": "--- a/tests/test_b.py\n+++ b/tests/test_b.py\n@@ -1 +1 @@\n-﻿def test_a():\n+def test_a():\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -459,7 +459,7 @@
  {
   "id": "path2:101-a-bom-strip-changes-a-function",
   "summary": "Adds function backoff.",
-  "diff": "--- a/src/h.py\n+++ b/src/h.py\n@@ -1 +1 @@\n-\ufeffdef backoff(n):\n+def backoff(n):\n",
+  "diff": "--- a/src/h.py\n+++ b/src/h.py\n@@ -1 +1 @@\n-﻿def backoff(n):\n+def backoff(n):\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -475,7 +475,7 @@
  {
   "id": "path2:101-non-ascii-test-names-are-distinct",
   "summary": "Added 1 test. Added 2 tests.",
-  "diff": "--- a/tests/test_u.py\n+++ b/tests/test_u.py\n@@ -1 +1 @@\n-def test_\u00f6len():\n+def test_\u00f6len(tmp_path):\n+def test_\u00e4rger():\n+def test_plain():\n",
+  "diff": "--- a/tests/test_u.py\n+++ b/tests/test_u.py\n@@ -1 +1 @@\n-def test_ölen():\n+def test_ölen(tmp_path):\n+def test_ärger():\n+def test_plain():\n",
   "expect": {
    "verdict": "FAIL",
    "claims": [
@@ -496,7 +496,7 @@
  {
   "id": "path2:101-a-non-ascii-suffix-is-another-name",
   "summary": "Adds function backoff.",
-  "diff": "--- a/src/r.py\n+++ b/src/r.py\n@@ -1 +1 @@\n-def backoff\u00e9(n):\n+def backoff(n):\n",
+  "diff": "--- a/src/r.py\n+++ b/src/r.py\n@@ -1 +1 @@\n-def backoffé(n):\n+def backoff(n):\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -740,15 +740,250 @@
    "claims": [
     [
      "compat_claim",
-     "UNCHECKABLE"
+     "UNCHECKABLE",
+     "compatibility claimed; 1 public definition(s) removed, all in test/example/internal code: .storybook/preview.js: withTheme"
     ]
    ],
-   "uncovered_sentences": 0,
-   "python_only": {
-    "why": "compatibility claimed; 1 public definition(s) removed, all in test/example/internal code: .storybook/preview.js: withTheme",
-    "surface_removed": 0,
-    "compat2_candidate": false
-   }
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r1-a-bom-on-a-changed-test-does-not-hide-a-new-one",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_bom.py\n+++ b/tests/test_bom.py\n@@ -1,2 +1,4 @@\n-def test_a():\n+﻿def test_a():\n     pass\n+def test_b():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1 (1 changed, not added: #101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r1-a-bom-on-a-changed-test-beside-two-new-ones",
+  "summary": "Added 1 test. Added 2 tests.",
+  "diff": "--- a/tests/test_bom.py\n+++ b/tests/test_bom.py\n@@ -1,2 +1,6 @@\n-def test_a():\n+﻿def test_a():\n     pass\n+def test_b():\n+    pass\n+def test_c():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 2 test functions, claim says 1 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 2 test functions, claim says 2 (1 changed, not added: #101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r2-an-async-test-made-sync-is-a-changed-test",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_as.py\n+++ b/tests/test_as.py\n@@ -1,2 +1,2 @@\n-async def test_fetch():\n+def test_fetch():\n     assert fetch()\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 1; a changed test is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r3-a-relative-prefix-is-not-a-repo-path",
+  "summary": "Only touches ../docs/ from the package.",
+  "diff": "--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix '../docs' is relative to a directory the diff does not name (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r3-an-elided-prefix-is-not-a-repo-path",
+  "summary": "Only touches .../src/x.py here.",
+  "diff": "--- a/src/x.py\n+++ b/src/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix '.../src/x.py' is relative to a directory the diff does not name (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r3-one-off-tree-prefix-abstains-for-both",
+  "summary": "Only touches ../docs/ and src/.",
+  "diff": "--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1 +1 @@\n-a\n+b\n--- a/src/pkg/a.py\n+++ b/src/pkg/a.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "prefix '../docs' is relative to a directory the diff does not name (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r4-a-dot-miss-needs-a-path-segment-boundary",
+  "summary": "Only touches docs/.",
+  "diff": "--- a/.docsearch.json\n+++ b/.docsearch.json\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'docs': ['.docsearch.json']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r4-a-dotfile-whose-name-starts-with-the-prefix",
+  "summary": "Only touches github/.",
+  "diff": "--- a/.githubx/a.yml\n+++ b/.githubx/a.yml\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'github': ['.githubx/a.yml']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r4-a-changed-generic-definition-still-verifies",
+  "summary": "Adds function backoff.",
+  "diff": "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-def backoff[T](n: T) -> T:\n+def backoff[T](n: T, j: int = 0) -> T:\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'backoff'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r4-a-function-made-generic-still-verifies",
+  "summary": "Adds function backoff.",
+  "diff": "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-def backoff(n):\n+def backoff[T](n: T) -> T:\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'backoff'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r4-an-nbsp-indented-removed-definition-is-not-read",
+  "summary": "Adds function backoff.",
+  "diff": "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n- def backoff(n):\n+def backoff(n, j=0):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'backoff'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r4-a-space-before-the-parameter-list-still-pairs",
+  "summary": "Adds function backoff.",
+  "diff": "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-def backoff (n):\n+def backoff (n, j=0):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "added lines define function 'backoff' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r4-a-class-name-at-end-of-line-still-pairs",
+  "summary": "Adds class Backoff.",
+  "diff": "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-class Backoff\n+class Backoff:\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "added lines define class 'Backoff' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:r4-compat-reads-the-undotted-key-on-removed-lines",
+  "summary": "No breaking changes.",
+  "diff": "--- a/.py\n+++ b/.py\n@@ -1,2 +1,1 @@\n-def public_api():\n-    return 1\n+x = 1\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-a = 1\n+a = 2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; no public top-level definition removed (python read; behaviour beyond names not checked)"
+    ]
+   ],
+   "uncovered_sentences": 0
   }
  }
 ]

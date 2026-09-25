@@ -3,21 +3,20 @@
     python py_side.py                  # this checkout's styxx/diffgate.py, the file the port was made from -> py_out.json
     python py_side.py --installed      # the installed `styxx` package instead (drift measurement)
 
-The port in ../diffgate.js is a transliteration of one specific file: styxx/diffgate.py at the
-BC-2 + COMPAT-1 + BIN-1 checkout (pull requests #113, #115 and the #118 repair), re-cut for the PATH-2
-repairs (#97, #121, #101, as amended by AMENDMENT_path2_resolution_2026_09_17) on the file that
-carries them, sha256 PINNED below. By default this script imports the checkout's module and REFUSES
-to run unless it hashes to that pin (after CRLF -> LF normalisation, because a wheel built on Windows
-carries CRLF and the same file then hashes differently), so a disagreement count always means
-"against the file the port claims to be", never against whatever happened to be importable.
+The port in ../diffgate.js is a transliteration of one specific file: styxx/diffgate.py as it stands
+on main (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2 + PATH-1 + DECLARE-1), re-cut for the PATH-2 repairs
+(#97, #121, #101, as amended by AMENDMENT_path2_resolution_2026_09_17 and
+NOTE_path2_third_pass_2026_09_25) on the file that carries them, sha256 PINNED below. By default this
+script imports the checkout's module and REFUSES to run unless it hashes to that pin (after CRLF -> LF
+normalisation, because a wheel built on Windows carries CRLF and the same file then hashes
+differently), so a disagreement count always means "against the file the port claims to be", never
+against whatever happened to be importable.
 
-The count is not 0, and it is not expected to be. KNOWN GAP: the pinned file carries COMPAT-2's
-sharpened compatibility reading (surface vs scaffolding, signature changes, the candidate flag),
-merged before PATH-2, and the port was never given it. Every `compat_claim` record whose reading
-differs is a disagreement: the 9 on the 3,205-pair corpus that predate PATH-2 (8 pinned compatibility
-pairs and one commit message), plus the one PATH-2 pair pinned for COMPAT-2's `.storybook/` reading
-(`path2:121-compat2-a-dotted-scaffold-directory-stays-scaffolding`), 10 in all. Any other disagreement
-is a port defect.
+The count is 0, and any disagreement is a port defect. The COMPAT-2 gap this docstring used to
+declare is closed: the port carries COMPAT-2 since #126, and the one PATH-2 pair that was pinned for
+the Python alone (`path2:121-compat2-a-dotted-scaffold-directory-stays-scaffolding`) is now pinned at
+full width on both sides. The two `tests_added` disagreements that origin/main still shows on the new
+BOM pairs are closed by this branch (NOTE_path2_third_pass, R-1).
 `--installed` runs the installed package instead, which is how far the release on PyPI sits from
 the port; that run is expected to disagree until 7.48.0 ships, and the README says by how much.
 
@@ -34,7 +33,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "PATH2SHA256PLACEHOLDER"  # styxx/diffgate.py, main + PATH-2 amended (LF)
+PINNED = "e19b688a4bba09116cca577578dca0abf283c39980a80c5068dd7dbabcf47bfd"  # styxx/diffgate.py, main + PATH-2 amended (LF)
 # The pin moved twice in one step and both moves are deliberate. COMPAT-2 (#124) changed the
 # compat reading, so the port had to follow it; and `fetch_pr` landed on main after the previous
 # pin was written, which is why this script has been REFUSING TO RUN on main ever since -- the
@@ -60,8 +59,8 @@ def load(installed: bool):
     if not installed and digest != PINNED:
         sys.exit(f"{mod.__file__} hashes to {digest[:16]}…, not the file the port was made from "
                  f"({PINNED[:16]}…). Check out the PATH-2 instrument the pin names (its differential is "
-                 "expected to show the 10 compat_claim disagreements of the known COMPAT-2 port gap and "
-                 "nothing else), or pass --installed to measure drift against the installed package instead.")
+                 "expected to show 0 disagreements), or pass --installed to measure drift against the "
+                 "installed package instead.")
     return mod, digest
 
 
