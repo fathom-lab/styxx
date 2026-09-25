@@ -117,21 +117,23 @@ def build(as_published: bool = False) -> int:
         raise AssertionError(f"ids still cluster by arm ({runs} runs over {n_arms} arms); "
                              f"the shuffle did not take")
 
-    packet_text = json.dumps(
+    packet_text = packet_json(
         {"prereg": "PREREG_external1_aidev_2026_08_31.md", "seed": SEED,
          "n_items": len(items),
          "instructions": ("For each item answer SUPPORTED or CONTRADICTED: do the "
                           "PR's changed files support the claim, or contradict it? "
                           "You are not told the gate's verdict. Answer every item."),
-         "items": items}, indent=1, ensure_ascii=False) + "\n"
+         "items": items})
     body = json.dumps(key, sort_keys=True, ensure_ascii=False)
     digest = hashlib.sha256((SALT + body).encode("utf-8")).hexdigest()
     digest_text = f"sha256(salt+key) = {digest}\nsalt = {SALT}\nitems = {len(items)}\n"
     outputs = ((PACKET, packet_text), (KEY, body + "\n"), (DIGEST, digest_text))
     # Last guard, on the bytes themselves: refuses_to_overwrite() above cannot compare contents
-    # it has not built yet, so `--as-published` gets its exact-bytes check here.
+    # it has not built yet, so `--as-published` gets its exact-bytes check here. Git stores the
+    # receipts with LF and a Windows checkout renders them with CRLF, so that rendering counts
+    # as the record; no other difference does.
     clash = [p.name for p, text in outputs
-             if p.exists() and p.read_text(encoding="utf-8") != text]
+             if p.exists() and p.read_bytes().replace(b"\r\n", b"\n") != text.encode("utf-8")]
     if clash:
         print(f"REFUSED: {', '.join(clash)} already exist with different contents and are "
               f"EXTERNAL-1's receipts. To regenerate the published packet run "
@@ -139,10 +141,30 @@ def build(as_published: bool = False) -> int:
               f"with its own prereg and its own paths.")
         return 1
     for p, text in outputs:
-        p.write_text(text, encoding="utf-8")
+        write_lf(p, text)
     print(f"packet: {len(items)} items -> {PACKET.name}")
     print(f"SEALED KEY DIGEST (commit this before adjudicating):\n  {digest}")
     return 0
+
+
+def packet_json(packet) -> str:
+    """The packet's serialisation: one-space indent, non-ASCII written as itself, one final LF.
+
+    The committed external1_packet.json is exactly this rendering of its own parsed contents,
+    and it is not ASCII, so `ensure_ascii` is part of the record.
+    """
+    return json.dumps(packet, indent=1, ensure_ascii=False) + "\n"
+
+
+def write_lf(path, text) -> None:
+    """Write `text` as UTF-8 with LF line endings on every platform.
+
+    LF is what git stores for the committed receipts and what the pre-repair builder wrote on
+    Linux. Path.write_text emits the platform's separator (CRLF on Windows), and its `newline`
+    argument needs Python 3.10, so this opens the file itself.
+    """
+    with open(path, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(text)
 
 
 def arm_runs(arms_in_id_order) -> int:
@@ -152,21 +174,27 @@ def arm_runs(arms_in_id_order) -> int:
 
 
 def refuses_to_overwrite(as_published: bool) -> bool:
-    """Would this build rewrite or half-complete EXTERNAL-1's receipts? Decided from the files.
+    """Would a plain build rewrite or half-complete EXTERNAL-1's receipts? Decided from the files.
 
     Called before the ledger and the shelf are opened, so a build that is going to be refused
-    reads nothing, opens nothing and leaves nothing behind. It answers only the two questions
-    that need no built bytes; the exact-bytes comparison stays at the end of build().
+    reads nothing, opens nothing and leaves nothing behind. `--as-published` is never refused
+    here: it is the mode whose job is to write where the receipts are, the fresh-clone state
+    included, and the exact-bytes comparison at the end of build() is what holds it.
     """
+    if as_published:
+        return False
     present = [p.name for p in (PACKET, KEY, DIGEST) if p.exists()]
     absent = [p.name for p in (PACKET, KEY, DIGEST) if not p.exists()]
     if present and absent:
         print(f"REFUSED: {', '.join(present)} present but {', '.join(absent)} missing. That is "
               f"the fresh-clone state — the packet and the digest are committed, the sealed key "
-              f"is gitignored — and a key minted now would be a different key under a committed "
-              f"digest. Restore the sealed file, or build a new cycle in its own directory.")
+              f"is gitignored — and a key minted under the repaired numbering would be a "
+              f"different key under a committed digest. `build --as-published` restores the "
+              f"sealed key from this state: it writes only if the packet and the digest it "
+              f"builds are the ones on disk, and the digest is the key's salted hash. A build "
+              f"under the repaired numbering is a new cycle in its own directory.")
         return True
-    if present and not as_published:
+    if present:
         print(f"REFUSED: {', '.join(present)} already exist and are EXTERNAL-1's receipts; the "
               f"repaired numbering would rewrite them, leaving the recorded answers keyed to "
               f"items nobody was given. To regenerate the published packet run "
@@ -203,10 +231,15 @@ the digest in external1_key_digest.txt. It reproduces the leak with them, on pur
 part of the record. The published id order follows from the two population counts alone, and
 tests/test_external1_packet_ids.py pins it against the committed packet.
 
-Neither mode overwrites an existing packet, key or digest whose contents would change, and neither
-writes at all from the fresh-clone state where the packet and digest are present and the sealed key
-is not. A run under the repaired numbering is a new cycle with its own preregistration and its own
-paths, never a rewrite of this one.
+This works from the repository as cloned, where the packet and the digest are committed and the
+sealed key is gitignored and absent. `build --as-published` writes nothing unless every receipt
+already on disk is what it built, byte for byte once a Windows checkout's CRLF is read as LF. From
+a clone that means it restores the sealed key only when the packet and the digest it builds are
+the committed ones, and the digest is the key's salted SHA-256, so the key it writes is the sealed
+key: the digest covers every byte of its body. It writes LF on every platform, the bytes git stores
+for the receipts. A plain build writes nothing where any receipt exists, the fresh-clone state
+included. A run under the repaired numbering is a new cycle with its own preregistration and its
+own paths, never a rewrite of this one.
 """
 
 
