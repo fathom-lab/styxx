@@ -314,7 +314,12 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
     # to the segment test below, exactly as a dotless word does.
     if "." in raw and _has_real_extension(raw.rstrip("/")):
         return True
-    low = _norm(raw).rstrip("/").lower()
+    # NOTE_path2_fourth_pass_2026_09_25 (F-1): the prefix is undotted too. Undotting the changed
+    # paths alone compared ".gitignore" with "gitignore" and ".github" with "github", so every
+    # slashless dotted prefix whose last dot-segment is not a listed extension stopped being a path:
+    # correct VERIFIEDs and correct CONTRADICTEDs were withdrawn as "not a path", and C-3's own
+    # accusation class never fired for them. Both sides undotted is the reading main had.
+    low = _undotted(_norm(raw)).rstrip("/").lower()
     for changed in status:
         # PATH-2 (#121): the segments are read with the key's leading dots dropped, as they were
         # before the key kept them, so "github" still names the ".github" directory here; whether
@@ -346,9 +351,17 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
 # The REMOVED-side pattern alone accepts `async`, so an `async def test_x` rewritten as `def
 # test_x` is a changed test, not an added one; the added side must not, because `got` does not
 # count `async def test_` and the two sets would part again.
+#
+# NOTE_path2_fourth_pass_2026_09_25 (F-3): R-1 made the pairing a SUBSET of `got`, not the same
+# set. `got` read its indent as `\s*`, which also takes U+00A0, U+3000 and every other Unicode
+# space, while the pairing reads `[ \t]*`; an NBSP re-indent of a test was counted as added and
+# paired with nothing, and "Added 1 test." over it VERIFIED on both ports. `got` now reads the indent
+# the pairing reads, so the two count exactly the same lines. (Of the characters this drops, only
+# U+000C is legal Python indentation, and the Python never counted a line it led: `splitlines()`
+# cut the line there until F-2.)
 _DEF_TEST_LINE = re.compile(r"^\uFEFF?[ \t]*def (test_[^ \t(:]*)")
 _DEF_TEST_LINE_REMOVED = re.compile(r"^\uFEFF?[ \t]*(?:async[ \t]+)?def (test_[^ \t(:]*)")
-_GOT_TEST_LINE = r"^\uFEFF?\s*def test_"
+_GOT_TEST_LINE = r"^\uFEFF?[ \t]*def test_"
 
 
 def _symbol_def_line(name: str) -> re.Pattern:
@@ -485,6 +498,24 @@ class _Pending:
         return _norm(raw) if raw else ""
 
 
+# NOTE_path2_fourth_pass_2026_09_25 (F-2). Git separates the lines of a diff with "\n"; a CRLF file
+# shows its "\r" before it. `str.splitlines()` also breaks on U+000B, U+000C, U+001C-U+001E, U+0085,
+# U+2028 and U+2029, so a line holding one of them was cut in two, the second half lost its "+" and
+# was dropped, and Python and web/gate/diffgate.js (which splits on \r\n, \r and \n) returned opposite
+# `tests_added` verdicts on the same diff. Every place a diff is split into lines -- both doors,
+# `gate_diff_text` and `gate_diff` -- splits exactly as the port does.
+_DIFF_LINE_BREAK = re.compile(r"\r\n|\r|\n")
+
+
+def _diff_lines(text: str) -> list:
+    """`text` split on \\r\\n, \\r and \\n only, with no trailing empty line: `str.splitlines()` for the
+    three line endings a diff can carry, and nothing else."""
+    lines = _DIFF_LINE_BREAK.split(text)
+    if lines and lines[-1] == "":
+        lines.pop()
+    return lines
+
+
 def parse_unified_diff_sides(diff_text: str) -> dict:
     """Unified diff text -> {normalized new-or-old path: (added_lines, removed_lines)}.
 
@@ -501,7 +532,7 @@ def parse_unified_diff_sides(diff_text: str) -> dict:
         if pending is not None and pending.path():
             sides.setdefault(pending.path(), ([], []))
 
-    for line in diff_text.splitlines():
+    for line in _diff_lines(diff_text):
         if line.startswith("diff --git "):
             flush()
             pending = _Pending(line)
@@ -1104,8 +1135,29 @@ _DOTFILE_PREFIX = re.compile(r"^\.[^./\\]")
 
 
 def _prefix_off_tree(pref: str) -> bool:
-    """A prefix key that opens with a dot and is not a dotfile name: `..`, `...`, `../docs`."""
+    """A prefix KEY that opens with a dot and is not a dotfile name.
+
+    What reaches this is a key, `_norm(prefix).rstrip("/.")`: `../docs`, `./../docs` (normalised to
+    `../docs`), `.../src/x.py`, and a literal name opening with two dots such as `..docs`, which the
+    reason string then calls relative although it may be a name (NOTE_path2_fourth_pass, section E).
+    A bare `..` or `...` never gets here: its key is empty, and BC-1 answers "is not a path" before it.
+    """
     return pref.startswith(".") and not _DOTFILE_PREFIX.match(pref)
+
+
+def _could_lie_under(path: str, pref: str) -> bool:
+    """NOTE_path2_fourth_pass F-4: whether SOME reading of an off-tree prefix could hold `path`.
+
+    `../docs` from an unknown directory X is `X/docs`, so a changed path lies under it on some
+    reading exactly when the prefix's named segments occur, in order and contiguously, among the
+    path's segments. Both sides are compared undotted and the dots-only segments of the prefix
+    (`..`, `.`, `...`) are dropped, so the test errs towards "could": `../.github` could hold
+    `.github/x.yml`, and a bare `..` could hold anything."""
+    want = [seg.lstrip(".") for seg in pref.split("/") if seg.strip(".")]
+    have = [seg.lstrip(".") for seg in path.split("/")]
+    if not want:
+        return True
+    return any(have[i:i + len(want)] == want for i in range(len(have) - len(want) + 1))
 
 
 def _dot_miss(path: str, prefs: list) -> bool:
@@ -1136,7 +1188,7 @@ def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
         if pending is not None and pending.path() and pending.path() not in status:
             status[pending.path()] = pending.status
 
-    for line in diff_text.splitlines():
+    for line in _diff_lines(diff_text):
         if line.startswith("diff --git "):
             flush()
             pending = _Pending(line)
@@ -1202,13 +1254,13 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
     repo = Path(repo)
     name_status = _git(repo, "diff", "--name-status", f"{base}..{head}")
     status: dict[str, str] = {}
-    for line in name_status.splitlines():
+    for line in _diff_lines(name_status):                  # NOTE_path2_fourth_pass F-2
         parts = line.split("\t")
         if len(parts) >= 2:
             st, path = parts[0][:1], parts[-1]
             status[_norm(path)] = st            # A / M / D / R
     diff_text = _git(repo, "diff", f"{base}..{head}")
-    added_lines = [l[1:] for l in diff_text.splitlines()
+    added_lines = [l[1:] for l in _diff_lines(diff_text)
                    if l.startswith("+") and not l.startswith("+++")]
     added_blob = "\n".join(added_lines)
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
@@ -1404,9 +1456,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         c.why = ("no Python file in the diff; this template counts "
                                  "`def` lines (#110)")
                     else:
-                        # NOTE_path2_third_pass R-1: one optional leading U+FEFF, so this count
-                        # holds every line the pairing pattern reads and `chg <= got` line by
-                        # line, not only in total. The port's `\s` already counted it.
+                        # NOTE_path2_third_pass R-1: one optional leading U+FEFF; and
+                        # NOTE_path2_fourth_pass F-3: the indent is [ \t]*, as in the pairing.
+                        # This count reads exactly the lines the added-side pairing pattern
+                        # reads, so `chg <= got` holds line by line, not only in total.
                         got = len(re.findall(_GOT_TEST_LINE, added_blob, re.M))
                         # PATH-2 (#101): `chg` added `def test_` lines re-define a test the same
                         # file's removed lines define, paired one to one (AMENDMENT C-1). The true
@@ -1473,12 +1526,20 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     dot_miss = [p for p in outside if _dot_miss(p, prefs)]
                     real = [p for p in outside if p not in dot_miss]
                     off_tree = [x for x in prefs if _prefix_off_tree(x)]
+                    # NOTE_path2_fourth_pass F-4: beside an ON-tree prefix, an off-tree one no longer
+                    # withdraws a correct accusation. A real path outside every on-tree prefix that
+                    # no reading of the off-tree prefix could hold is outside the claim on every
+                    # reading, so it still accuses, and only such paths are listed. Anything less
+                    # certain -- and an off-tree prefix standing alone -- abstains as R-3 did.
+                    beside_on_tree = bool(off_tree) and len(off_tree) < len(prefs)
+                    if beside_on_tree:
+                        real = [p for p in real if not any(_could_lie_under(p, x) for x in off_tree)]
                     if no_paths:
                         c.verdict, c.why = "UNCHECKABLE", no_paths
                     elif not_paths:                             # BC-1 repair 4
                         c.verdict = "UNCHECKABLE"
                         c.why = f"prefix {not_paths[0]!r} is not a path (#110)"
-                    elif off_tree:                              # NOTE_path2_third_pass R-3
+                    elif off_tree and not (beside_on_tree and real):   # R-3, narrowed by F-4
                         c.verdict = "UNCHECKABLE"
                         c.why = (f"prefix {off_tree[0]!r} is relative to a directory the diff does "
                                  "not name (#121)")
