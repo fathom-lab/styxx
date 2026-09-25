@@ -7,6 +7,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — PATH-2: a path claim names the file it names (#97), a dotfile keeps its dot (#121), and a changed definition is not an added one (#101)
+
+**What was wrong.** Three defects in the diff gate, `styxx/diffgate.py`, and in its browser port
+`web/gate/diffgate.js`, each reproduced on `main`. **#97**: a path claim resolved to the earliest entry,
+in diff order, that matched it by exact path, by suffix or by basename, so over a diff that modified
+`README.md` and then created `integrations/git/README.md`, "Created integrations/git/README.md" was checked
+against the root README. **#121**: the path key dropped every leading dot and slash (`lstrip("./")`), so
+`.pr_agent.toml` and `pr_agent.toml` were one file, `.github/x` printed as `github/x`, and a claim about a
+dotfile answered for its undotted twin. **#101**: `tests_added` and `symbol_added` counted every added
+`def` line, so a test or function that was only edited read as added — "Added 2 tests" over two changed
+tests read VERIFIED.
+
+**What changed.** Frozen as `papers/closed-model-frontier/PREREG_path2_resolution_2026_09_17.md`,
+`AMENDMENT_path2_resolution_2026_09_17.md` and `ERRATUM_path2_amendment_2026_09_17.md`, then repaired in
+four passes, each recorded in a note committed alone before its code (`NOTE_path2_third_pass` to
+`NOTE_path2_sixth_pass`, all `_2026_09_25`):
+- #97: a path claim resolves in tiers over every entry — exact, then suffix, then basename.
+- #121: only a leading run of `/` and `./` segments leaves the key. Readings that must not move with a dot
+  (BC-2's path-shape test, BC-1's "no Python file" test, COMPAT's language and scaffold tests) read the
+  undotted key. `only_touches` does not accuse a path that lies outside a prefix by a leading dot alone,
+  and lists only the paths outside by more. A prefix written with two leading dots, or ending in `..`, is
+  relative to a directory the diff does not name: alone it abstains, and beside an on-tree prefix it
+  accuses only paths no reading of it could hold.
+- #101: a definition that the removed lines of the same file also define is changed, not added, paired
+  one to one per file and name; a file created by the diff pairs nothing. `tests_added` verifies the net
+  count, abstains between the net and the added count, and accuses only outside that interval.
+- The readings under them, each made one reading where two had to agree: a diff splits into lines on
+  `\r\n`, `\r` and `\n` only; a Python definition line is read as CPython's tokenizer reads it (space, tab
+  and form feed as indentation and between keywords, a U+FEFF only where it opens line 1 of a file); the
+  status map, the added lines and both pairings come from one hunk-aware parse, so a removed `-- comment`
+  inside a hunk (printed `--- comment`) is content, not a file header; a name, claimed in the summary or
+  defined in the diff, is the Python identifier that starts there.
+- The port follows the Python in each, and spells Python's `\s`, `\w`, `\b`, `.`, `str.strip` and `repr`
+  wherever it reads a diff line. The bookmarklet is rebuilt: `bookmarklet.min.js` sha256 `5d15861e…`,
+  29,038 characters (`web/gate/README.md`).
+- `papers/closed-model-frontier/path2_gates.py` scores the preregistered gates: the instrument before the
+  repair against the instrument after it, claim by claim, every moved claim attributed by counterfactual
+  (the scorer's own copy of the instrument, with one rule reverted, must give the baseline claim back) and
+  admitted only if every rule in its attribution admits it.
+
+**The review record.** Six rounds of repair, five of them answering an adversarial review round, each round
+naming its own findings. What they found and what was done about each is in the notes; the notes also
+correct earlier notes where those were wrong, and none of the frozen documents is edited. The last round
+measured, on every door (`gate_diff_text`, `gate_diff` on a real repository, the port), with CPython's
+parser as the judge: 0 verdicts wrong where `main` was right and 0 Python/port disagreements over a
+467-cell definition-line grid and a 103-cell name grid, where `main` disagreed on 44 and 63; and on the
+differential corpus (3,366 pairs, 7,140 claims) 0 disagreements, where `main` has 33.
+
+Not claimed, and stated: the corpus gates over the EXTERNAL-1 shelf are run separately and reported in the
+RESULT, with `path2_differential_gates.json`; nothing here reports them. The repair moves claims only where
+the notes say, and the limits it leaves are listed in `NOTE_path2_sixth_pass_2026_09_25.md`, section F:
+among them, a removed `-- a` and an added `++ b` right before the next hunk still read as a file header,
+identifiers are compared as text rather than under NFKC, the port's claim templates still read the
+description with JavaScript's classes, and #128's modes 2, 3, 5 and 6 are not repaired. PATH-2 is not in
+7.48.0, which ships `main`'s file.
+
 ## [Unreleased] — the blind packet's ids stop carrying the arm (#125), and the islands demo reads its own cohort (#93)
 
 **#125.** `papers/closed-model-frontier/external1_packet.py` numbered items `E1-000..` in arm order
