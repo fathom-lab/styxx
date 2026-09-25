@@ -9,7 +9,7 @@
  * on top), sha256 9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb, re-cut for the
  * PATH-2 repairs (PREREG_path2_resolution_2026_09_17: #97, #121, #101, as amended by
  * AMENDMENT_path2_resolution_2026_09_17 and NOTE_path2_third_pass_2026_09_25) on the file that
- * carries them, sha256 PATH2SHA256PLACEHOLDER — the
+ * carries them, sha256 e19b688a4bba09116cca577578dca0abf283c39980a80c5068dd7dbabcf47bfd — the
  * styxx/diffgate.py that 7.48.0 ships once they merge. Relative to the 7.47.0 wheel the port
  * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
  * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
@@ -144,7 +144,14 @@ function _prefixIsPathShaped(prefix, status) {
 // AMENDMENT_path2 C-1: paired one to one, per file and per name; a file whose status is `A` pairs
 // nothing. The patterns carry no \s, \w or \b (JavaScript's \s matches U+FEFF and its \b is ASCII),
 // so this file and styxx/diffgate.py read a BOM strip and a non-ASCII name the same way.
+// NOTE_path2_third_pass_2026_09_25 (R-1, R-2): the added-side pattern and the added-blob count
+// `got` read the same set of lines, so `chg <= got` line by line and not only in total; the
+// removed side alone accepts `async`, so `async def test_x` rewritten as `def test_x` is a changed
+// test rather than an added one. `got` carries the same optional U+FEFF as the pattern, which is
+// what JavaScript's \s was already doing and what Python now does too.
 const _DEF_TEST_LINE = /^\uFEFF?[ \t]*def (test_[^ \t(:]*)/;
+const _DEF_TEST_LINE_REMOVED = /^\uFEFF?[ \t]*(?:async[ \t]+)?def (test_[^ \t(:]*)/;
+const _GOT_TEST_LINE = /^\uFEFF?\s*def test_/gm;
 const _symbolDefLine = name => new RegExp("^\\uFEFF?[ \\t]*(?:async[ \\t]+)?(?:def|class)[ \\t]+" + _reEscape(name) + "(?=[ \\t(:]|$)");
 
 function _changedTestDefs(sides, status) {
@@ -155,7 +162,7 @@ function _changedTestDefs(sides, status) {
   for (const [path, [added, removed]] of sides) {
     if (status && status.get(path) === "A") continue;
     const gone = new Map();
-    for (const line of removed) { const m = _DEF_TEST_LINE.exec(line); if (m) gone.set(m[1], (gone.get(m[1]) || 0) + 1); }
+    for (const line of removed) { const m = _DEF_TEST_LINE_REMOVED.exec(line); if (m) gone.set(m[1], (gone.get(m[1]) || 0) + 1); }
     if (!gone.size) continue;
     const fresh = new Map();
     for (const line of added) { const m = _DEF_TEST_LINE.exec(line); if (m) fresh.set(m[1], (fresh.get(m[1]) || 0) + 1); }
@@ -336,7 +343,9 @@ function _compatRemovedPublicNames(sides) {
           }
           continue;
         }
-        if (!seen.has(key)) { seen.add(key); dropped.push([path, lang, name, !_COMPAT_SCAFFOLD.test(path)]); }
+        // AMENDMENT_path2 C-2: the scaffold test reads the undotted key, as the Python does, so
+        // `.storybook/` stays scaffolding after #121 gave the key its dots back.
+        if (!seen.has(key)) { seen.add(key); dropped.push([path, lang, name, !_COMPAT_SCAFFOLD.test(_undotted(path))]); }
       }
     }
   }
@@ -432,6 +441,14 @@ function _undotted(key) {
 // AMENDMENT_path2 C-3: `path` lies outside every prefix only by a dot the prose left off -- some prefix
 // key has no leading dot, the path's leading segment starts with exactly one dot (not `..`), and the
 // path without that dot is the prefix or lies under it.
+// NOTE_path2_third_pass_2026_09_25 (R-3): a prefix key opening with two dots (`..`, `...`,
+// `../docs`) is relative or elided notation, not a repo path. Git never emits a changed path that
+// starts with `../`, so every changed path is outside it; the gate abstains instead of accusing.
+const _DOTFILE_PREFIX = /^\.[^./\\]/;
+function _prefixOffTree(pref) {
+  return pref.startsWith(".") && !_DOTFILE_PREFIX.test(pref);
+}
+
 // AMENDMENT_path2 C-3: `path` lies outside every prefix only by a dot the prose left off. The
 // containment test is PATH-1's _pathInside, the same one that decided `outside`.
 function _dotMiss(path, prefs) {
@@ -652,7 +669,7 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             c.verdict = "UNCHECKABLE";
             c.why = "no Python file in the diff; this template counts `def` lines (#110)";
           } else {
-            const got = (addedBlob.match(/^\s*def test_/gm) || []).length;
+            const got = (addedBlob.match(_GOT_TEST_LINE) || []).length;
             // PATH-2 (#101): verify net, abstain inside [net, got], accuse only outside it.
             // AMENDMENT_path2 C-1: pairs one to one, clamped to got.
             const chg = Math.min(_changedTestDefs(sides, status), got);
@@ -700,8 +717,13 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
           // and only real paths are listed. _dotMiss uses the same _pathInside containment.
           const dotMiss = outside.filter(p => _dotMiss(p, prefs));
           const real = outside.filter(p => !dotMiss.includes(p));
+          const offTree = prefs.filter(x => _prefixOffTree(x));
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
           else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
+          else if (offTree.length) {                              // NOTE_path2_third_pass R-3
+            c.verdict = "UNCHECKABLE";
+            c.why = `prefix ${pyRepr(offTree[0])} is relative to a directory the diff does not name (#121)`;
+          }
           else if (dotMiss.length && !real.length) {
             c.verdict = "UNCHECKABLE";
             c.why = prefs.length === 1
