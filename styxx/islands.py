@@ -211,12 +211,14 @@ def survey(reps: dict, k: int = _DEF_K, n_null: int = 1000, n_perm: int = 100_00
     ==========  ======  ===========================
 
     In robust deviations mind_0 sits 1.4 below the median, mind_1 1.1, the planted ISLAND 61.5.
-    Affinities move in the fourth decimal between linear-algebra builds, so on another machine the
-    same low clique members can land just above the z=1 cut instead (Python 3.12 / numpy 2.4 on
-    Windows: mind_1 at 0.4407 against a cut of 0.4401, only ISLAND listed). Whether they are
-    listed is a coin flip, not a finding. On a cohort with no island at all the z=1 list is usually non-empty
-    (the red-team note in ``tests/test_islands.py``). The list is a lead; the verdict's bimodality
-    screen is the claim.
+    The same cohort does not give the same affinities on the two machines it has been run on:
+    the reporter's (Python 3.11, styxx 7.47.0) and this lab's (Python 3.12.10, numpy 2.4.4,
+    Windows) differ by up to about 0.005 — the third decimal — and the cause has not been
+    isolated. That is wider than the margin between a tight clique's low members and the z=1 cut,
+    so which of them the list names can differ by machine (here: mind_1 at 0.4407 against a cut
+    of 0.4401, only ISLAND listed). On a cohort with no island at all the z=1 list is usually
+    non-empty (the red-team note in ``tests/test_islands.py``). The list is a lead; the verdict's
+    bimodality screen is the claim.
 
     The default stays 1.0 because preregistered studies ran ``survey()`` with its defaults and
     froze that rule in their text: ``papers/disjoint-worlds/PREREG_b47_eight_minds_2026_08_06.md``
@@ -432,6 +434,24 @@ def main(argv=None) -> int:
             setattr(namespace, self.dest, values)
             namespace.island_z_given = True
 
+    def _island_z(text):
+        """A finite z strictly greater than 0 — the only values the rule is defined for.
+
+        At z <= 0 the cut sits at or above the cohort median, so the rule lists roughly half the
+        members as islands; at nan every comparison is False and the list is silently empty.
+        Neither is a survey, and neither announced itself before this check.
+        """
+        try:
+            z = float(text)
+        except (TypeError, ValueError):
+            raise argparse.ArgumentTypeError(f"{text!r} is not a number")
+        if not np.isfinite(z) or z <= 0:
+            raise argparse.ArgumentTypeError(
+                f"{text!r}: island z must be finite and greater than 0. At z<=0 the cut sits at "
+                f"or above the cohort median and names about half the cohort; at nan or inf the "
+                f"list is empty whatever the data says.")
+        return z
+
     ap = argparse.ArgumentParser(
         prog="styxx.islands",
         description="Survey a cohort of minds for islands: shared frame, cliff, low-rank rescue.")
@@ -440,7 +460,7 @@ def main(argv=None) -> int:
     ap.add_argument("--demo", action="store_true",
                     help="run a self-contained demonstration on a planted cohort (no data needed)")
     ap.add_argument("--k", type=int, default=_DEF_K)
-    ap.add_argument("--island-z", type=float, default=_DEF_ISLAND_Z, action=_ExplicitFloat,
+    ap.add_argument("--island-z", type=_island_z, default=_DEF_ISLAND_Z, action=_ExplicitFloat,
                     help=f"robust deviations below the median that name an island (default "
                          f"{_DEF_ISLAND_Z}, survey()'s own default; --demo uses {_DEMO_ISLAND_Z} "
                          f"unless this is given)")

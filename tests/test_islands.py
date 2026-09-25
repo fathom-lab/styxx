@@ -182,3 +182,93 @@ def test_cli_accepts_island_z_and_passes_it_for_npz_input(tmp_path, monkeypatch,
     out = capsys.readouterr().out
     assert "island rule used: mean affinity < median - 2.5*1.4826*MAD" in out
     assert "island rule used: mean affinity < median - 1.0*1.4826*MAD" in out
+
+
+def test_demo_with_no_arguments_uses_three_and_names_surveys_default(monkeypatch, capsys):
+    """_demo() is public enough to be called directly; its own default must be the demo z, and
+    it must say that the library default is a different number."""
+    calls = _recording_survey(monkeypatch)
+    assert islands_mod._demo() == 0
+    assert [c["island_z"] for c in calls] == [3.0]
+    out = capsys.readouterr().out
+    assert "survey()'s default is island_z=1.0" in out
+    assert "a tight clique's low members can be listed too" in out
+
+
+def test_demo_does_not_print_the_default_note_when_the_z_is_the_library_default(monkeypatch,
+                                                                               capsys):
+    _recording_survey(monkeypatch)
+    assert islands_mod._demo(island_z=1.0) == 0
+    assert "survey()'s default is island_z=" not in capsys.readouterr().out
+
+
+def _survey_reporting_islands(monkeypatch, islands):
+    """Run the real survey cheaply, then overwrite its island list — the branch under test reads
+    that list and nothing else."""
+    real = islands_mod.survey
+
+    def fake(reps, **kw):
+        s = real(reps, k=kw.get("k", 20), island_z=kw.get("island_z", 1.0), n_null=20, n_perm=20)
+        s.islands = list(islands)
+        return s
+    monkeypatch.setattr(islands_mod, "survey", fake)
+
+
+SEPARATION_CLAIM = "Frame affinity alone separates the planted island from the clique."
+
+
+def test_demo_withholds_the_separation_claim_when_the_list_has_extra_members(monkeypatch, capsys):
+    _survey_reporting_islands(monkeypatch, ["mind_0", "ISLAND"])
+    assert islands_mod.main(["--demo"]) == 0
+    out = capsys.readouterr().out
+    assert SEPARATION_CLAIM not in out
+    assert "the rule also lists ['mind_0']" in out
+    assert "Only ISLAND was planted." in out
+
+
+def test_demo_withholds_the_separation_claim_when_the_list_is_empty(monkeypatch, capsys):
+    _survey_reporting_islands(monkeypatch, [])
+    assert islands_mod.main(["--demo"]) == 0
+    out = capsys.readouterr().out
+    assert SEPARATION_CLAIM not in out
+    assert "too strict to list the planted ISLAND" in out
+
+
+def test_demo_makes_the_separation_claim_only_for_the_planted_island_alone(monkeypatch, capsys):
+    _survey_reporting_islands(monkeypatch, ["ISLAND"])
+    assert islands_mod.main(["--demo"]) == 0
+    out = capsys.readouterr().out
+    assert SEPARATION_CLAIM in out
+    assert "the rule also lists" not in out
+
+
+@pytest.mark.parametrize("bad", ["0", "0.0", "-1", "-0.5", "nan", "NaN", "inf", "-inf",
+                                 "abc", ""])
+def test_island_z_rejects_values_the_rule_is_not_defined_for(bad, capsys):
+    """A negative z puts the cut above the median and lists about half the cohort; nan makes
+    every comparison False and empties the list. Neither announced itself before this check."""
+    with pytest.raises(SystemExit) as e:
+        islands_mod.main(["--demo", "--island-z", bad])
+    assert e.value.code == 2
+    err = capsys.readouterr().err
+    # "-inf" and "-1" never reach the type: argparse reads a leading "-" that is not a decimal
+    # number as an option string. That is still a refusal, and the reason differs.
+    assert any(s in err for s in ("island z must be finite and greater than 0",
+                                  "is not a number", "expected one argument"))
+
+
+@pytest.mark.parametrize("good", ["1", "0.5", "3.0", "1e-6", "100"])
+def test_island_z_accepts_any_finite_positive_value(good, monkeypatch):
+    calls = _recording_survey(monkeypatch)
+    assert islands_mod.main(["--demo", "--island-z", good]) == 0
+    assert calls[-1]["island_z"] == float(good)
+
+
+def test_survey_docstring_states_the_measured_spread_not_a_coin_flip():
+    """The docstring used to call the between-machine move 'the fourth decimal' and the
+    resulting listing 'a coin flip'. What was observed is about 0.005, cause not isolated."""
+    doc = " ".join(survey.__doc__.split())
+    assert "fourth decimal" not in doc and "coin flip" not in doc
+    assert "0.005" in doc and "third decimal" in doc
+    assert "the cause has not been isolated" in doc
+    assert "Python 3.11" in doc and "Python 3.12.10" in doc and "numpy 2.4.4" in doc
