@@ -515,7 +515,29 @@ def test_a_refused_build_reads_neither_the_ledger_nor_the_shelf(corpus, monkeypa
     monkeypatch.setattr(E, "LEDGER", corpus / "nowhere" / "ledger.jsonl")
     monkeypatch.setattr(E, "DB", corpus / "nowhere" / "shelf.sqlite")
     assert E.build() == 1
-    assert "REFUSED" in capsys.readouterr().out
+    # the overwrite refusal, not the missing-inputs one: the receipts decide it
+    assert "already exist and are EXTERNAL-1's receipts" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("state", ["empty", "fresh_clone"])
+def test_a_build_without_its_inputs_refuses_and_writes_nothing(corpus, monkeypatch, capsys,
+                                                               state):
+    """The ledger and the shelf are gitignored, so a clone runs `build --as-published` without
+    them unless someone puts them in place. That is a refusal naming both, not a traceback."""
+    d = corpus / f"no_inputs_{state}"
+    if state == "fresh_clone":
+        _fresh_clone(monkeypatch, d)
+    else:
+        _point_outputs(monkeypatch, d)
+    before = {p.name: p.read_bytes() for p in d.iterdir()}
+    monkeypatch.setattr(E, "LEDGER", corpus / "nowhere" / "external1_ledger.jsonl")
+    monkeypatch.setattr(E, "DB", corpus / "nowhere" / "external1_shelf.sqlite")
+    capsys.readouterr()
+    assert E.main(["build", "--as-published"]) == 1
+    out = capsys.readouterr().out
+    assert "REFUSED: external1_ledger.jsonl, external1_shelf.sqlite not found" in out
+    assert {p.name: p.read_bytes() for p in d.iterdir()} == before
+    assert not (corpus / "nowhere").exists()
 
 
 def test_the_shelf_is_opened_read_only(corpus, monkeypatch):

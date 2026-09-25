@@ -43,7 +43,7 @@ def _facts(con, pr_id):
 
 
 def build(as_published: bool = False) -> int:
-    if refuses_to_overwrite(as_published):       # from the output files alone, before any read
+    if refuses_to_overwrite(as_published) or inputs_missing():      # decided before any read
         return 1
     rng = random.Random(SEED)
     acc, ver = [], []
@@ -200,6 +200,18 @@ def refuses_to_overwrite(as_published: bool) -> bool:
               f"items nobody was given. To regenerate the published packet run "
               f"`build --as-published`; a build under the repaired numbering is a new cycle "
               f"with its own prereg and its own paths.")
+        return True
+    return False
+
+
+def inputs_missing() -> bool:
+    """Is either gitignored recipe input absent? Checked before either is opened, so that
+    `build --as-published` run from a clone as it ships refuses instead of raising."""
+    missing = [p.name for p in (LEDGER, DB) if not p.exists()]
+    if missing:
+        print(f"REFUSED: {', '.join(missing)} not found beside this file. The ledger and the "
+              f"shelf are gitignored inputs; RECIPE (printed for any unrecognised command) says "
+              f"which ledger the published packet was drawn from.")
         return True
     return False
 
