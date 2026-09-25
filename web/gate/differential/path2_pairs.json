@@ -2474,5 +2474,400 @@
    ],
    "uncovered_sentences": 0
   }
+ },
+ {
+  "id": "path2:x1-a-claimed-name-that-runs-past-the-identifier-names-none",
+  "summary": "Added function fo²o. Added class Fo₂o. Added function fo.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 7d4290a..9c6e2b7 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,7 @@\n x = 1\n+def fo():\n+    pass\n+\n+\n+class Fo:\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "the claimed name runs past 'fo' into '²' (U+00B2), which no Python identifier holds; no definition is read for it"
+    ],
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "the claimed name runs past 'Fo' into '₂' (U+2082), which no Python identifier holds; no definition is read for it"
+    ],
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'fo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x1-a-claimed-name-ending-in-a-middle-dot-names-none-for-certain",
+  "summary": "Added function foo· Then. Added function foo· Also. Added function foo.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 7d4290a..4714ce2 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n x = 1\n+def foo():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "the claimed name 'foo·' ends in '·' (U+00B7), which prose also writes after a word; no definition is read for it"
+    ],
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "the claimed name 'foo·' ends in '·' (U+0387), which prose also writes after a word; no definition is read for it"
+    ],
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x1-the-name-table-is-unicode-15-for-both-ports-a-katakana-middle-dot",
+  "summary": "Added function foo・bar. Added 1 test. Added 0 tests.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 7d4290a..015efd0 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n x = 1\n+def foo・bar():\n+    pass\ndiff --git a/tests/test_m.py b/tests/test_m.py\nindex da51a7a..d37459a 100644\n--- a/tests/test_m.py\n+++ b/tests/test_m.py\n@@ -1,2 +1,6 @@\n def test_z():\n     pass\n+\n+\n+def test_a・b():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x1-the-name-table-is-unicode-15-for-both-ports-a-zero-width-joiner",
+  "summary": "Added function foo‍bar. Added function foo.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 7d4290a..00e1794 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n x = 1\n+def foo‍bar():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ],
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x1-the-name-table-is-unicode-15-for-both-ports-a-letter-unicode-16-added",
+  "summary": "Added function fooᲉbar. Added 1 test.",
+  "diff": "diff --git a/src/m.py b/src/m.py\nindex 7d4290a..712a94c 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n x = 1\n+def fooᲉbar():\n+    pass\ndiff --git a/tests/test_m.py b/tests/test_m.py\nindex da51a7a..a09dd32 100644\n--- a/tests/test_m.py\n+++ b/tests/test_m.py\n@@ -1,2 +1,6 @@\n def test_z():\n     pass\n+\n+\n+def test_aᲉb():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'foo'"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x2-a-removed-a-slash-line-beside-an-added-b-slash-line-in-git-output-is-content",
+  "summary": "Only touches src/. 1 file changed. Added function foo. Added 0 tests.",
+  "diff": "diff --git a/src/a.py b/src/a.py\nindex 93b5e8b..85007e8 100644\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1,7 +1,7 @@\n S = \"\"\"\n--- a/x\n+++ b/x\n \"\"\"\n-def foo():\n+def foo(y):\n     pass\n-def test_k():\n+def test_k(z):\n     pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ],
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "added lines define function 'foo' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x2-an-over-declared-hunk-then-a-gnu-header-and-a-bare-at-at",
+  "summary": "2 files changed. Only touches src/. Modified lib/y.py. Added 1 test.",
+  "diff": "--- a/src/x.py\n+++ b/src/x.py\n@@ -1,5 +1,6 @@\n-a = 1\n+a = 2\n--- lib/y.py\n+++ lib/y.py\n@@\n-c = 1\n+c = 2\n+def test_new():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['lib/y.py']"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'lib/y.py'"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x2-an-over-declared-hunk-then-a-gnu-header-and-an-elided-at-at",
+  "summary": "2 files changed. Only touches src/. Modified lib/y.py. Added 1 test.",
+  "diff": "--- a/src/x.py\n+++ b/src/x.py\n@@ -1,5 +1,6 @@\n-a = 1\n+a = 2\n--- lib/y.py\n+++ lib/y.py\n@@ ... @@\n-c = 1\n+c = 2\n+def test_new():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['lib/y.py']"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'lib/y.py'"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x2-an-over-declared-hunk-then-a-gnu-header-a-blank-line-and-a-hunk",
+  "summary": "2 files changed. Only touches src/. Modified lib/y.py. Added 1 test.",
+  "diff": "--- a/src/x.py\n+++ b/src/x.py\n@@ -1,5 +1,6 @@\n-a = 1\n+a = 2\n--- lib/y.py\n+++ lib/y.py\n\n@@ -1 +1,3 @@\n-c = 1\n+c = 2\n+def test_new():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['lib/y.py']"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'lib/y.py'"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x2-an-over-declared-hunk-then-a-gnu-header-and-no-hunk-header",
+  "summary": "2 files changed. Only touches src/. Modified lib/y.py. Added 1 test.",
+  "diff": "--- a/src/x.py\n+++ b/src/x.py\n@@ -1,5 +1,6 @@\n-a = 1\n+a = 2\n--- lib/y.py\n+++ lib/y.py\n-c = 1\n+c = 2\n+def test_new():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['lib/y.py']"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'lib/y.py'"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x2-an-over-declared-hunk-then-a-gnu-header-with-timestamps",
+  "summary": "2 files changed. Only touches src/. Modified lib/y.py. Added 1 test.",
+  "diff": "--- a/src/x.py\n+++ b/src/x.py\n@@ -1,5 +1,6 @@\n-a = 1\n+a = 2\n--- lib/y.py\t2024-01-01 00:00:00\n+++ lib/y.py\t2024-01-02 00:00:00\n@@\n-c = 1\n+c = 2\n+def test_new():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['lib/y.py\\t2024-01-02 00:00:00']"
+    ],
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "'lib/y.py' does not appear in the diff — accusation WITHHELD: this class failed EXTERNAL-1 precision (0.23 vs 0.95 floor), disabled pending repair"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x2-an-over-declared-hunk-then-a-new-file-header",
+  "summary": "2 files changed. Only touches src/. Created lib/y.py.",
+  "diff": "--- a/src/x.py\n+++ b/src/x.py\n@@ -1,5 +1,6 @@\n-a = 1\n+a = 2\n--- /dev/null\n+++ lib/y.py\n@@\n-c = 1\n+c = 2\n+def test_new():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['lib/y.py']"
+    ],
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'lib/y.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x2-a-test-moved-between-files-under-an-over-declared-hunk",
+  "summary": "Added 0 tests. Only touches tests/test_x.py.",
+  "diff": "--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,6 +1,5 @@\n x = 1\n-def test_a():\n-    pass\n--- tests/test_y.py\n+++ tests/test_y.py\n@@ ... @@\n+def test_a():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'tests/test_x.py': ['tests/test_y.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:x2-an-exact-hunk-whose-last-lines-are-a-dash-pair-ends-at-the-diff-git-line",
+  "summary": "1 file changed. Only touches src/.",
+  "diff": "diff --git a/src/a.sql b/src/a.sql\n--- a/src/a.sql\n+++ b/src/a.sql\n@@ -1,2 +1,2 @@\n x\n--- old\n+++ new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:a1-an-added-async-test-abstains-the-count",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,4 @@\n-def test_load():\n+def test_load(z=0):\n     pass\n+async def test_parse():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 1 async test functions, which this template does not count; claim says 0"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 1 async test functions, which this template does not count; claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
  }
 ]

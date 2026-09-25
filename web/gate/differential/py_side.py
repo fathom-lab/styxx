@@ -6,8 +6,9 @@
 The port in ../diffgate.js is a transliteration of one specific file: styxx/diffgate.py as it stands
 on main (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2 + PATH-1 + DECLARE-1), re-cut for the PATH-2 repairs
 (#97, #121, #101, as amended by AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
-NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25 and NOTE_path2_sixth_pass_2026_09_25)
-on the file that carries them, sha256 PINNED below. By default this
+NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25 and
+NOTE_path2_seventh_pass_2026_09_25) on the file that carries them, sha256 PINNED below, reading names by
+the table styxx/_xid.py carries (PINNED_NAME_TABLE). By default this
 script imports the checkout's module and REFUSES to run unless it hashes to that pin (after CRLF -> LF
 normalisation, because a wheel built on Windows carries CRLF and the same file then hashes
 differently), so a disagreement count always means "against the file the port claims to be", never
@@ -27,7 +28,9 @@ diff line differently in the two ports. NOTE_path2_fifth_pass (V-1, V-2) closes 
 definition-line grid is a committed test (`test_v1_the_port_reads_the_grid_as_the_python_does`). The
 sixth pass (W-1, W-2) closes two more a round-5 review found: two diff parsers that kept different
 lines, and a claimed name and a defined name that ended in different places; its name and test-shape
-grids are committed tests too. What still disagrees is on the SUMMARY side -- the claim templates read
+grids are committed tests too. The seventh pass closes the one its own review found: the two ports read
+identifiers from their runtimes' Unicode tables (Python 3.12's 15.0, Node 24's 16.0), and now read one
+pinned table. What still disagrees is on the SUMMARY side -- the claim templates read
 the description with JavaScript's `\\s`, `\\w` and `\\b` -- and web/gate/README.md gives the count.
 `--installed` runs the installed package instead, which is how far the release on PyPI sits from
 the port. 7.48.0 is on PyPI and ships main's styxx/diffgate.py (sha256 9b620e00..., LF), which this
@@ -46,7 +49,10 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "b837f7e4b7ce1e06472a5fa83af1c5a43000d7e1d6b25ac15d8c28504d4ee8e9"  # styxx/diffgate.py, main + PATH-2 sixth pass (LF)
+PINNED = "67fb1b7510b63cccaf6f8e488466fc14748f2c1b0ace6ee940c0c73bc7cf9ced"  # styxx/diffgate.py, main + PATH-2 seventh pass (LF)
+# NOTE_path2_seventh_pass: the instrument reads a name by styxx/_xid.py's table, so the table is pinned too
+# (the sha256 of the table string both ports carry; tests/test_diffgate_path2.py holds the two copies equal).
+PINNED_NAME_TABLE = "8df68f217cca495ab8a38ced9096213aabac4cf23927068d61397d2c9074d4cb"  # Unicode 15.0.0
 # The pin moved twice in one step and both moves are deliberate. COMPAT-2 (#124) changed the
 # compat reading, so the port had to follow it; and `fetch_pr` landed on main after the previous
 # pin was written, which is why this script has been REFUSING TO RUN on main ever since -- the
@@ -74,6 +80,12 @@ def load(installed: bool):
                  f"({PINNED[:16]}…). Check out the PATH-2 instrument the pin names (its differential is "
                  "expected to show 0 disagreements), or pass --installed to measure drift against the "
                  "installed package instead.")
+    if not installed:
+        xid = importlib.import_module("styxx._xid")
+        table = hashlib.sha256(xid.TABLE.encode("ascii")).hexdigest()
+        if table != PINNED_NAME_TABLE or xid.TABLE_SHA256 != PINNED_NAME_TABLE:
+            sys.exit(f"styxx/_xid.py's name table hashes to {table[:16]}…, not the one the port carries "
+                     f"({PINNED_NAME_TABLE[:16]}…).")
     return mod, digest
 
 
