@@ -31,19 +31,23 @@ def _the_commit_the_receipt_names(full_git_history):
 def test_the_lab_receipt_replicates_from_its_own_repo(tmp_path):
     # the committed receipt, as committed, against the styxx this checkout runs. Every span and the
     # verdict reproduce; the digest reproduces too while the release is the one that issued the
-    # receipt, and after a version bump the record says version skew, naming both versions.
+    # receipt, and after a version bump the record says version skew, naming both versions. The
+    # verifier build is sworn.py and the styxx version, so after a bump it is not the same build, and
+    # the record never takes the shape the bounty pays (agree false with same_build true).
     from styxx._version import __version__ as running
     rec = challenge.run(DOC, RCPT, repo=".", out=str(tmp_path / "mine.json"))
-    assert rec["same_build"] is True
+    assert rec["lab_build"] == rec["my_build"]
+    assert rec["same_build"] is (rec["lab_styxx_version"] == running)
     assert rec["lab_verdict"] == rec["my_verdict"] == "SWORN-HELD"
     assert rec["lab_digest_reissues"] is True and rec["agree_without_version"] is True
     assert rec["my_styxx_version"] == running
     if rec["lab_styxx_version"] == running:
         assert rec["agree"] is True and rec["version_skew"] is False and rec["why"] == ""
     else:
-        assert rec["agree"] is False and rec["version_skew"] is True
-        assert rec["why"].startswith("version skew, not a span-level difference")
+        assert rec["agree"] is False and rec["version_skew"] is True and rec["same_build"] is False
+        assert rec["why"].startswith("version skew, not a disagreement")
         assert rec["lab_styxx_version"] in rec["why"] and running in rec["why"]
+    assert not (rec["agree"] is False and rec["same_build"] is True)
     assert len(rec["record_sha256"]) == 64
 
 

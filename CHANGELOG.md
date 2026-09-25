@@ -163,12 +163,16 @@ to.
   `verifier.styxx_version` sits inside the verdict-receipt digests those vectors carry. The
   conformance RESULT says the set "is never regenerated in place"; the NOTE records that conflict
   and leaves the RESULT unedited. A CI run on the regenerated set is owed.
-- `styxx.challenge` calls a version-only difference version skew, not a span-level difference: when
-  a committed 7.47.0 receipt is re-run at 7.48.0 with the same `sworn.py` and only the version
-  differs, the record says `version_skew: true`, names both versions, and says the verdict and every
-  span agree. It stays a CHALLENGE (exit 3), because the digests differ. Both challenge test modules
-  had been skipping at collection in a depth-1 checkout, so CI could not see the bump break five of
-  their tests; a depth-1 clone whose origin is reachable now unshallows and runs all 14.
+- `styxx.challenge` calls a version-only difference version skew, not a disagreement: when a
+  committed 7.47.0 receipt is re-run at 7.48.0 with the same `sworn.py` and only the version
+  differs, the record says `version_skew: true` and `same_build: false`, names both versions, and
+  says the verdict and every span agree. It stays a CHALLENGE (exit 3), because the digests differ.
+  The same verifier build now means the same `sworn.py` and the same styxx version, so a version
+  difference alone can never give `agree: false` with `same_build: true`, the shape
+  `papers/plates/SAND_CHECK.md` pays for; a real disagreement under both still gives it. Both
+  challenge test modules had been skipping at collection in a depth-1 checkout, so CI could not see
+  the bump break five of their tests; a depth-1 clone whose origin is reachable now unshallows and
+  runs all 19.
 
 ### conformance/sworn regenerated for 7.48.0: the version stamp gave fifteen vectors new ids and moved no expected outcome
 
@@ -203,34 +207,56 @@ answers.**
   or that the set is more correct than it was. No committed receipt, certificate, sworn document,
   capsule or charon log was touched, and the 60 committed receipts stamped 7.47.0 stay as issued.
 
-### `styxx.challenge`: a version-only difference is version skew, not a span-level difference
+### `styxx.challenge`: a version-only difference is version skew, not a disagreement, and never the shape the bounty pays
 
 **`styxx/challenge.py`, `tests/test_challenge.py`, `tests/test_challenge_record.py`; commit
-c5bc3083. Written at this cut from the commit.**
+c5bc3083 and the review repair committed with this paragraph. Written at this cut from those
+commits.**
 
 - **The defect the bump exposed.** The verdict-receipt digest covers `verifier.styxx_version`. At
-  7.48.0, re-running a committed 7.47.0 receipt with the same `sworn.py` (`same_build: true`) gave
-  `agree: false` and the why "the verdict agrees but the digest differs: a span-level difference".
-  Only the version string differed.
+  7.48.0, re-running a committed 7.47.0 receipt with the same `sworn.py` (then `same_build: true`)
+  gave `agree: false` and the why "the verdict agrees but the digest differs: a span-level
+  difference". Only the version string differed.
 - **The repair.** When the digests differ, both receipts are re-issued through
   `styxx.sworn.issue_receipt`, the receipt module's own canonicalisation, with
-  `verifier.styxx_version` set aside. If they then agree, and the lab's receipt re-issues to its own
-  digest, the record says `version_skew: true`, names both versions, and says the verdict and every
-  span agree. A lab receipt that does not re-issue to its own digest is reported as exactly that,
-  never as version skew. A real span-level difference is still reported as one, naming both versions
-  when they differ too.
+  `verifier.styxx_version` set aside. If they then agree, the lab's receipt re-issues to its own
+  digest, and both receipts name a version, the record says `version_skew: true`, names both
+  versions, and says the verdict and every span agree. A lab receipt that does not re-issue to its
+  own digest is reported as exactly that, never as version skew. A lab receipt with no
+  `verifier.styxx_version`, or a null one, is never called version skew either; the why says it
+  carries none. When the digests still differ with the version set aside, the why compares the
+  digested parts separately and names each one that differs: the spans and the counts taken from
+  them ("a span-level difference", said only then), the document bytes, the commit, the manifest
+  digest, or any other digested field by its key.
+- **The same verifier build means the same `sworn.py` and the same styxx version.** Review found
+  that c5bc3083 left version skew with `same_build: true`. Once 7.48.0 is on PyPI,
+  `python -m styxx.challenge` against any of the 14 committed receipts that carry the current
+  `sworn.py` would have produced `agree: false, same_build: true`, the shape
+  `papers/plates/SAND_CHECK.md` pays for, with no disagreement found. The digest covers
+  `verifier.styxx_version`, so a receipt issued by 7.47.0 and one issued by 7.48.0 are not from the
+  same verifier build. `same_build` is now true only when both `verifier.sworn_sha256` and
+  `verifier.styxx_version` match, and version skew reports `same_build: false`. Run at this cut
+  against every committed receipt under `papers/`: 60 receipts, 49 records (3 refused because the
+  re-derived receipt has UNRESOLVED spans or no HELD span, and 8 not run because the document they
+  name is not in the tree); 35 issued by another `sworn.py`, 14 version skew, and 0 with
+  `agree: false` and `same_build: true`. With `same_build` reverted to the `sworn.py` comparison
+  alone, the same run gives 14 such records and five of the challenge tests fail. A span difference
+  under the same `sworn.py` and the same version still gives `agree: false, same_build: true`, and
+  a test holds that shape reachable. The bounty terms are unchanged.
 - **`agree` and the exit code do not change.** `agree` is digest and verdict, and
   `papers/plates/SAND_CHECK.md` counts a receipt as reproduced only when the two digests are equal,
   so version skew is still a CHALLENGE (exit 3). Its why carries the instruction the module already
-  gives when the build differs: check out the commit the receipt names and run again. Five record
-  fields are new — `lab_styxx_version`, `my_styxx_version`, `lab_digest_reissues`,
-  `agree_without_version`, `version_skew` — and additive, so the schema stays `styxx.challenge/v1`;
-  the CLI line prints `version_skew=`.
+  gives when the build differs: check out the commit the receipt names and run again. A lab receipt
+  edited after issue whose digest still reproduces stays a REPLICATION (exit 0), and its why says
+  the body does not re-issue to that digest. Five record fields are new — `lab_styxx_version`,
+  `my_styxx_version`, `lab_digest_reissues`, `agree_without_version`, `version_skew` — and
+  additive, so the schema stays `styxx.challenge/v1`; the CLI line prints `version_skew=` and
+  `lab_digest_reissues=`.
 - **The tests CI could not see.** Both challenge test modules skipped at import when the receipt's
   commit was absent. In a depth-1 checkout that skip ran at collection, before conftest's unshallow
   fixture, so CI never ran them and could not see the bump break five of them. The check is now a
   module-scoped fixture that depends on `full_git_history`; a depth-1 clone whose origin is
-  reachable unshallows and runs all 14. The new tests build their lab receipts under a temporary
+  reachable unshallows and runs all 19. The new tests build their lab receipts under a temporary
   directory with `sworn.issue_receipt`; no committed receipt is touched.
 
 ### the gate was pointed at itself, and the measurement is what came back
