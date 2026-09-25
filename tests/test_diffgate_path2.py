@@ -19,6 +19,7 @@ that read a BOM and a non-ASCII name the same way in both ports; COMPAT's and BC
 the undotted key; `only_touches` abstains on dot misses alone and accuses listing real paths only. And
 the BIN-1 registration of dotfile headers with no hunks, on both doors."""
 import json
+import re
 import subprocess
 from pathlib import Path
 
@@ -362,13 +363,51 @@ def test_101_c1_a_bom_strip_is_a_changed_test_and_a_changed_function():
     assert got == [("symbol_added", "UNCHECKABLE", ISSUE_101[0][2])]
 
 
-def test_101_c1_the_clamp_keeps_net_at_zero_when_only_the_pairing_reads_an_added_line():
-    # Python's \s does not match U+FEFF, so `got` does not count this added line while the pairing
-    # pattern does; without the clamp `net` would be -1. (JavaScript's \s does match U+FEFF: the
-    # disclosed, pre-existing added-blob gap, so this input is not a pinned pair.)
+def test_r1_an_added_bom_line_is_counted_by_got_as_well_as_by_the_pairing():
+    # NOTE_path2_third_pass R-1. `got` and the added-side pairing pattern read the same lines, so a
+    # BOM-prefixed added definition cancels a removed one only when it was counted as added
+    # beforehand. Before the repair Python's \s skipped it in `got` while the pairing subtracted it, and
+    # `net` fell below the tests really added: a false VERIFIED of the #101 kind.
     diff = "--- a/tests/test_b.py\n+++ b/tests/test_b.py\n@@ -1 +1 @@\n-def test_a():\n+\ufeffdef test_a():\n"
     _, got = _claims("Added 0 tests.", diff)
-    assert got == [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0")]
+    assert got == [("tests_added", "VERIFIED",
+                    "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)")]
+    assert len(re.findall(dg._GOT_TEST_LINE, "\ufeffdef test_a():", re.M)) == 1
+
+
+def test_r1_a_bom_on_a_changed_test_does_not_hide_a_new_one():
+    # The non-degenerate case the round-2 reviewers filed: one test really is added.
+    diff = ("--- a/tests/test_bom.py\n+++ b/tests/test_bom.py\n@@ -1,2 +1,4 @@\n"
+            "-def test_a():\n+\ufeffdef test_a():\n     pass\n+def test_b():\n+    pass\n")
+    _, got = _claims("Added 0 tests. Added 1 test.", diff)
+    assert got == [
+        ("tests_added", "CONTRADICTED", "diff adds 1 test functions, claim says 0 (1 changed, not added: #101)"),
+        ("tests_added", "VERIFIED", "diff adds 1 test functions, claim says 1 (1 changed, not added: #101)"),
+    ]
+    two = ("--- a/tests/test_bom.py\n+++ b/tests/test_bom.py\n@@ -1,2 +1,6 @@\n"
+           "-def test_a():\n+\ufeffdef test_a():\n     pass\n+def test_b():\n+    pass\n"
+           "+def test_c():\n+    pass\n")
+    _, got = _claims("Added 1 test. Added 2 tests.", two)
+    assert got == [
+        ("tests_added", "CONTRADICTED", "diff adds 2 test functions, claim says 1 (1 changed, not added: #101)"),
+        ("tests_added", "VERIFIED", "diff adds 2 test functions, claim says 2 (1 changed, not added: #101)"),
+    ]
+
+
+def test_r2_an_async_test_made_sync_is_a_changed_test_not_an_added_one():
+    # NOTE_path2_third_pass R-2. `async` is accepted on the REMOVED side only: `got` does not count
+    # `async def test_`, so accepting it on the added side would part the two sets again (R-1).
+    diff = ("--- a/tests/test_as.py\n+++ b/tests/test_as.py\n@@ -1,2 +1,2 @@\n"
+            "-async def test_fetch():\n+def test_fetch():\n     assert fetch()\n")
+    _, got = _claims("Added 0 tests. Added 1 test.", diff)
+    assert got == [
+        ("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"),
+        ("tests_added", "UNCHECKABLE", "diff adds 0 test functions and changes 1, claim says 1; "
+                                       "a changed test is not an added one (#101)"),
+    ]
+    assert dg._DEF_TEST_LINE_REMOVED.match("async def test_fetch():").group(1) == "test_fetch"
+    assert dg._DEF_TEST_LINE.match("async def test_fetch():") is None
+    assert len(re.findall(dg._GOT_TEST_LINE, "async def test_fetch():", re.M)) == 0
 
 
 def test_101_c1_a_test_name_runs_to_a_space_tab_paren_or_colon_so_non_ascii_names_are_distinct():
@@ -407,6 +446,42 @@ def test_101_c1_symbol_names_end_at_a_space_tab_paren_or_colon_and_status_A_remo
     assert not dg._symbol_def_line("backoff").match("def backoff_v2(n):")
 
 
+def test_r4_the_symbol_rule_boundaries_the_erratum_restates():
+    # NOTE_path2_third_pass R-4. The round-2 reviewer found five mutants of the symbol pattern and
+    # of rule (a) that no test could tell from the frozen rule. Each line below is one of them.
+    verified = ("symbol_added", "VERIFIED", "added lines do define function 'backoff'")
+    changed = ("symbol_added", "UNCHECKABLE", "added lines define {} 'backoff' only where the removed lines "
+                                              "of the same file define it too; a changed definition is not an "
+                                              "added one (#101)")
+    # M5h: the lookahead is [ \t(:] or end of line, NOT \b. A generic definition's `[` stops it, so
+    # a CHANGED generic function still verifies -- the reading ERRATUM item 2 restates.
+    gen_changed = ("--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n"
+                   "-def backoff[T](n: T) -> T:\n+def backoff[T](n: T, j: int = 0) -> T:\n")
+    _, got = _claims("Adds function backoff.", gen_changed)
+    assert got == [verified]
+    # M8b: rule (a) needs a file that BOTH adds and removes the name, not a file that removes it.
+    made_generic = "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-def backoff(n):\n+def backoff[T](n: T) -> T:\n"
+    _, got = _claims("Adds function backoff.", made_generic)
+    assert got == [verified]
+    # M5c: the indent is [ \t]*, not \s*. An NBSP-indented removed definition is not read at all.
+    nbsp = "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-\u00a0def backoff(n):\n+def backoff(n, j=0):\n"
+    _, got = _claims("Adds function backoff.", nbsp)
+    assert got == [verified]
+    assert dg._symbol_def_line("backoff").match("\u00a0def backoff(n):") is None
+    # M5g: a space before the parameter list is inside the lookahead, so the pair is seen.
+    space_par = "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-def backoff (n):\n+def backoff (n, j=0):\n"
+    _, got = _claims("Adds function backoff.", space_par)
+    assert got == [("symbol_added", changed[1], changed[2].format("function"))]
+    # M5e: the lookahead also accepts end of line, so `class Backoff` with no colon pairs.
+    cls_eol = "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-class Backoff\n+class Backoff:\n"
+    _, got = _claims("Adds class Backoff.", cls_eol)
+    assert got == [("symbol_added", "UNCHECKABLE",
+                    "added lines define class 'Backoff' only where the removed lines of the same file "
+                    "define it too; a changed definition is not an added one (#101)")]
+    assert dg._symbol_def_line("Backoff").match("class Backoff")
+    assert dg._symbol_def_line("Backoff").match("class Backoff:")
+
+
 # ─────────────────────────────── AMENDMENT_path2_resolution_2026_09_17, C-2 (#121)
 
 STORYBOOK = ("--- a/.storybook/preview.js\n+++ b/.storybook/preview.js\n@@ -1 +1 @@\n"
@@ -422,6 +497,22 @@ def test_121_c2_a_dotted_scaffold_directory_stays_scaffolding_for_compat2():
     assert c.detail["surface_removed"] == 0 and c.detail["compat2_candidate"] is False
     assert c.detail["removed"] == [{"path": ".storybook/preview.js", "language": "js/ts", "name": "withTheme",
                                     "surface": False}]
+
+
+def test_r4_the_compat_language_suffix_reads_the_undotted_key_on_removed_lines_too():
+    # NOTE_path2_third_pass R-4 (mutant M10b). The one-file `.py` diff below never reaches the
+    # second suffix site, because no language is present at all; this two-file diff does, and with
+    # that site reading the dotted key the removed definition in `.py` joins python's surface and
+    # compat2_candidate flips False -> True, which is exactly what C-2 says cannot happen.
+    diff = ("--- a/.py\n+++ b/.py\n@@ -1,2 +1,1 @@\n-def public_api():\n-    return 1\n+x = 1\n"
+            "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-a = 1\n+a = 2\n")
+    g = gate_diff_text("No breaking changes.", diff, run=None, strict=False)
+    (c,) = g.claims
+    assert (c.kind, c.verdict) == ("compat_claim", "UNCHECKABLE")
+    assert c.why == ("compatibility claimed; no public top-level definition removed "
+                     "(python read; behaviour beyond names not checked)")
+    assert c.detail["surface_removed"] == 0 and c.detail["compat2_candidate"] is False
+    assert c.detail["removed"] == []
 
 
 def test_121_c2_a_file_named_dot_py_is_not_python_to_bc1_or_compat():
@@ -465,6 +556,39 @@ def test_121_c3_a_dotdot_path_is_not_a_dot_miss():
     assert not dg._dot_miss("..env", [".env"]) and not dg._dot_miss("..github/x.yml", [".github"])
     _, got = _claims("Only touches .env.", _m("..env"))
     assert got == [("only_touches", "CONTRADICTED", "paths outside '.env': ['..env']")]
+
+
+def test_r3_a_prefix_written_with_two_dots_is_not_a_repo_path_and_abstains():
+    # NOTE_path2_third_pass R-3. `../docs` and `.../src/x.py` name a location outside the tree the
+    # diff describes; git emits no path that starts with `../`, so EVERY changed path was "outside"
+    # and C-3 as frozen accused whatever the pull request did. The accusation class C-3 keeps is the
+    # dotfile one below; this class abstains, the lab's habit where the claim is not a repo path.
+    off = "prefix {!r} is relative to a directory the diff does not name (#121)"
+    _, got = _claims("Only touches ../docs/ from the package.", _m("docs/guide.md"))
+    assert got == [("only_touches", "UNCHECKABLE", off.format("../docs"))]
+    _, got = _claims("Only touches ./../docs.", _m("docs/guide.md"))
+    assert got == [("only_touches", "UNCHECKABLE", off.format("../docs"))]
+    _, got = _claims("Only touches .../src/x.py here.", _m("src/x.py"))
+    assert got == [("only_touches", "UNCHECKABLE", off.format(".../src/x.py"))]
+    # one off-tree prefix is enough: abstaining beats accusing on the half that can be read
+    _, got = _claims("Only touches ../docs/ and src/.", _m("docs/guide.md") + _m("src/pkg/a.py"))
+    assert got == [("only_touches", "UNCHECKABLE", off.format("../docs"))]
+    assert dg._prefix_off_tree("../docs") and dg._prefix_off_tree(".../src/x.py")
+    assert not dg._prefix_off_tree(".env") and not dg._prefix_off_tree(".github/x")
+    assert not dg._prefix_off_tree("docs") and not dg._prefix_off_tree("")
+
+
+def test_r3_c3_reads_a_path_segment_boundary_and_not_a_name_prefix():
+    # NOTE_path2_third_pass R-4 (mutant M13). A dot miss needs the undotted path to BE the prefix or
+    # to lie under `prefix/`; `.docsearch.json` merely starts with `docs`, and dropping the slash
+    # turned a correct accusation into an abstention.
+    _, got = _claims("Only touches docs/.", _m(".docsearch.json"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside 'docs': ['.docsearch.json']")]
+    _, got = _claims("Only touches github/.", _m(".githubx/a.yml"))
+    assert got == [("only_touches", "CONTRADICTED", "paths outside 'github': ['.githubx/a.yml']")]
+    assert not dg._dot_miss(".docsearch.json", ["docs"])
+    assert not dg._dot_miss(".githubx/a.yml", ["github"])
+    assert dg._dot_miss(".docs/search.json", ["docs"]) and dg._dot_miss(".docs", ["docs"])
 
 
 # ─────────────────────────────── BIN-1 registration keeps the dots (#121, R-121.2)
@@ -595,21 +719,17 @@ def test_the_doors_agree_on_dotfile_headers_with_no_hunks(tmp_path, name):
 
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
-    assert len(pairs) == 38 and all(p["id"].startswith("path2:") for p in pairs)
+    assert len(pairs) == 52 and all(p["id"].startswith("path2:") for p in pairs)
     for p in pairs:
         g = gate_diff_text(p["summary"], p["diff"], run=None, strict=False)
-        width = len(p["expect"]["claims"][0]) if p["expect"]["claims"] else 3
-        got = [[c.kind, c.verdict, c.why][:width] for c in g.claims]
+        got = [[c.kind, c.verdict, c.why] for c in g.claims]
         assert got == p["expect"]["claims"], (p["id"], got)
         assert g.verdict == p["expect"]["verdict"], p["id"]
         assert g.uncovered_sentences == p["expect"]["uncovered_sentences"], p["id"]
-        extra = p["expect"].get("python_only")
-        if extra:
-            # a reading the port does not carry (COMPAT-2), pinned for the Python instrument alone
-            (c,) = g.claims
-            assert (c.why, c.detail["surface_removed"], c.detail["compat2_candidate"]) == \
-                (extra["why"], extra["surface_removed"], extra["compat2_candidate"]), p["id"]
-    assert sum(1 for p in pairs if "python_only" in p["expect"]) == 1
+    # NOTE_path2_third_pass: no pair needs a `python_only` escape any more. The `.storybook` pair
+    # needed one while the port lacked COMPAT-2; the port carries it since #126, so every pair is
+    # pinned at full width, holding the port to the reason as well as to the verdict.
+    assert not any("python_only" in p["expect"] for p in pairs)
 
 
 def test_the_demo_is_unchanged():
