@@ -335,8 +335,20 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
 # file and per name, and a file whose status is `A` pairs nothing (it has no base; removed lines
 # under an `A` header are the shelf's fold). The definition-line patterns are written without
 # `\s`, `\w` or `\b`, with one optional leading U+FEFF, so this file and web/gate/diffgate.js read
-# a BOM strip and a non-ASCII name the same way. The added-blob counts (`got`, `hit`) are unchanged.
+# a BOM strip and a non-ASCII name the same way.
+#
+# NOTE_path2_third_pass_2026_09_25 (R-1, R-2): the ADDED-side pattern and the added-blob count
+# `got` must read the same set of lines, or a line the pairing subtracts is one `got` never added
+# and `net` falls below the tests really added -- a false VERIFIED of the #101 kind, which is what
+# C-1 was frozen to remove. They are made to agree by counting a leading U+FEFF in `got` too, in
+# this file and in the port, rather than by dropping it from the pairing: that is the reading the
+# port already had, and it leaves Python and JavaScript on the same verdict AND the same reason.
+# The REMOVED-side pattern alone accepts `async`, so an `async def test_x` rewritten as `def
+# test_x` is a changed test, not an added one; the added side must not, because `got` does not
+# count `async def test_` and the two sets would part again.
 _DEF_TEST_LINE = re.compile(r"^\uFEFF?[ \t]*def (test_[^ \t(:]*)")
+_DEF_TEST_LINE_REMOVED = re.compile(r"^\uFEFF?[ \t]*(?:async[ \t]+)?def (test_[^ \t(:]*)")
+_GOT_TEST_LINE = r"^\uFEFF?\s*def test_"
 
 
 def _symbol_def_line(name: str) -> re.Pattern:
@@ -345,14 +357,18 @@ def _symbol_def_line(name: str) -> re.Pattern:
 
 def _changed_test_defs(sides: dict | None, status: dict | None = None) -> int:
     """Test definitions paired one to one: per file whose status is not `A`, per test name,
-    min(added lines defining it, removed lines defining it), summed. The caller clamps to `got`."""
+    min(added lines defining it, removed lines defining it), summed. The caller clamps to `got`.
+
+    The added side reads `_DEF_TEST_LINE`, every line of which `got` also counts; the removed side
+    reads `_DEF_TEST_LINE_REMOVED`, which also accepts `async` (NOTE_path2_third_pass_2026_09_25).
+    """
     n = 0
     for path, (added, removed) in (sides or {}).items():
         if (status or {}).get(path) == "A":
             continue
         gone: dict = {}
         for line in removed:
-            m = _DEF_TEST_LINE.match(line)
+            m = _DEF_TEST_LINE_REMOVED.match(line)
             if m:
                 gone[m.group(1)] = gone.get(m.group(1), 0) + 1
         if not gone:
@@ -1077,12 +1093,27 @@ def _undotted(key: str) -> str:
     return key.lstrip("./")
 
 
+# NOTE_path2_third_pass_2026_09_25 (R-3). C-3's new accusation class is a prefix WRITTEN with a
+# leading dot over a path without one ("Only touches .env." over `env`), and the key now keeps that
+# dot. A key opening with two dots is a different thing: `../docs`, `./../docs` and `.../src/x.py`
+# are relative or elided notations, and git never emits a changed path that starts with `../`, so
+# EVERY changed path is outside such a prefix and the gate accused whatever the PR did. There is no
+# repo path to check the claim against, so it abstains -- the lab's habit where the claim is not a
+# repo path -- rather than accusing or verifying.
+_DOTFILE_PREFIX = re.compile(r"^\.[^./\\]")
+
+
+def _prefix_off_tree(pref: str) -> bool:
+    """A prefix key that opens with a dot and is not a dotfile name: `..`, `...`, `../docs`."""
+    return pref.startswith(".") and not _DOTFILE_PREFIX.match(pref)
+
+
 def _dot_miss(path: str, prefs: list) -> bool:
     """AMENDMENT_path2 C-3: `path` lies outside every prefix only by a dot the prose left off --
     some prefix key has no leading dot, the path's leading segment starts with exactly one dot
     (not `..`), and the path without that dot lies INSIDE the prefix by PATH-1's `_path_inside`
     (PREREG_path1_only_touches_repair_2026_09_17), the same containment test that decided the path
-    was outside in the first place. Using anything weaker here would make a bare-filename prefix
+    was outside to begin with. Using anything weaker here would make a bare-filename prefix
     mean one thing for `outside` and another for the dot reading."""
     if not path.startswith(".") or path.startswith(".."):
         return False
@@ -1373,7 +1404,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         c.why = ("no Python file in the diff; this template counts "
                                  "`def` lines (#110)")
                     else:
-                        got = len(re.findall(r"^\s*def test_", added_blob, re.M))
+                        # NOTE_path2_third_pass R-1: one optional leading U+FEFF, so this count
+                        # holds every line the pairing pattern reads and `chg <= got` line by
+                        # line, not only in total. The port's `\s` already counted it.
+                        got = len(re.findall(_GOT_TEST_LINE, added_blob, re.M))
                         # PATH-2 (#101): `chg` added `def test_` lines re-define a test the same
                         # file's removed lines define, paired one to one (AMENDMENT C-1). The true
                         # number added lies in [net, got]: verify `net`, abstain inside the
@@ -1438,11 +1472,16 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     # decided `outside` above, so a bare filename keeps its basename reading.
                     dot_miss = [p for p in outside if _dot_miss(p, prefs)]
                     real = [p for p in outside if p not in dot_miss]
+                    off_tree = [x for x in prefs if _prefix_off_tree(x)]
                     if no_paths:
                         c.verdict, c.why = "UNCHECKABLE", no_paths
                     elif not_paths:                             # BC-1 repair 4
                         c.verdict = "UNCHECKABLE"
                         c.why = f"prefix {not_paths[0]!r} is not a path (#110)"
+                    elif off_tree:                              # NOTE_path2_third_pass R-3
+                        c.verdict = "UNCHECKABLE"
+                        c.why = (f"prefix {off_tree[0]!r} is relative to a directory the diff does "
+                                 "not name (#121)")
                     elif dot_miss and not real:
                         c.verdict = "UNCHECKABLE"
                         c.why = ((f"paths outside {prefs[0]!r} differ from it only by a leading dot: "
