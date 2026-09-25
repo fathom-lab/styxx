@@ -1,53 +1,17 @@
-"""EXTERNAL-1 blind adjudication packet — build, then (separately) score.
+"""EXTERNAL-1 blind adjudication packet — `build [--as-published]`, then `score`.
 
-Prereg: PREREG_external1_aidev_2026_08_31.md, seed 20260831.
-100 accusations + 30 decoys (15 gate-VERIFIED, 15 synthetic contradictions made
-by perturbing a verified claim's path). Shuffled. The adjudicator sees the claim
-text and the PR's real changed-file facts — never the gate's verdict or reason.
-
-The key is written to a SEALED file whose salted SHA-256 is printed at build
-time and committed BEFORE any adjudication is recorded. Scoring refuses to run
-unless the sealed key still hashes to the committed digest.
-
-  python external1_packet.py build                  # packet + sealed key, ids after the shuffle
-  python external1_packet.py build --as-published   # regenerates the PUBLISHED packet exactly
-  python external1_packet.py score                  # after answers exist
-
-Item ids (issue #125). The packet that was published and adjudicated was built by
-a version of this file that numbered each item as it was added (100 sampled
-accusations, then 15 gate-VERIFIED decoys, then 15 synthetic contradictions) and
-shuffled the list afterwards. The shuffle moved the items and renumbered nothing,
-so the id carries the arm: E1-000..E1-099 are accusations, E1-100..E1-114
-verified decoys, E1-115..E1-129 synthetic contradictions. The last range can be
-read off the published packet alone, because those fifteen items show the `zz_`
-path perturbation. The protocol's blinding was weaker than it asserted, on the id.
-
-`build` now assigns each id from the item's shuffled position, as
-compat2_packet.py does, and refuses to write if the arms still cluster in id order.
-
-Recipe for regenerating the published packet. external1_packet.json, the sealed
-key and external1_key_digest.txt are EXTERNAL-1's receipts; the repair does not
-rebuild them. Put the gitignored external1_shelf.sqlite in place, and as
-external1_ledger.jsonl the ledger the packet was drawn from: the pre-correction
-ledger whose counts are external1_summary_PREFIX.json (7,029 CONTRADICTED, 16,868
-VERIFIED claims). The ledger regenerated for CORRECTION_external1_cause_2026_08_31.md
-(665 / 17,887, external1_summary.json) yields a different sample under any version
-of this file. Then run `build --as-published`. It draws the same sample and the
-same shuffle (Random.shuffle's draws depend only on the list's length) and numbers
-every item by its pre-shuffle, arm-order position, which reproduces the published
-numbering, the key and the digest in external1_key_digest.txt. It reproduces the
-leak with them, on purpose: the leak is part of the record. The published id order
-follows from the two population counts alone, and
-tests/test_external1_packet_ids.py pins it against the committed packet.
-
-Neither mode overwrites an existing packet, key or digest whose contents would
-change. A run under the repaired numbering is a new cycle with its own
-preregistration and its own paths, never a rewrite of this one.
+Prereg: PREREG_external1_aidev_2026_08_31.md, seed 20260831. 100 accusations and
+30 decoys (15 gate-VERIFIED, 15 synthetic contradictions made by perturbing a
+verified claim's path), shuffled; the adjudicator never sees the gate's verdict.
+The key goes to a SEALED file whose salted SHA-256 is committed BEFORE any
+adjudication is recorded, and `score` refuses unless the key still hashes to it.
+This repair closes the id channel only: the synthetic decoys stay recognisable
+by their `zz_` perturbation, and a less conspicuous one needs its own prereg.
+RECIPE, defined below build(), has the #125 id history and the regeneration steps.
 """
 from __future__ import annotations
 
 import hashlib
-import itertools
 import json
 import random
 import sqlite3
@@ -78,12 +42,9 @@ def _facts(con, pr_id):
     return out
 
 
-def arm_runs(arms_in_id_order) -> int:
-    """How many maximal runs of one arm the id order contains (3 = every arm contiguous)."""
-    return sum(1 for _arm, _g in itertools.groupby(arms_in_id_order))
-
-
 def build(as_published: bool = False) -> int:
+    if refuses_to_overwrite(as_published):       # from the output files alone, before any read
+        return 1
     rng = random.Random(SEED)
     acc, ver = [], []
     with LEDGER.open(encoding="utf-8") as fh:
@@ -104,7 +65,9 @@ def build(as_published: bool = False) -> int:
     decoy_ver = sample_ver[:N_VER]
     to_perturb = sample_ver[N_VER:]
 
-    con = sqlite3.connect(DB)
+    # Read-only: the shelf is 5 GB and is one of the recipe's inputs. A read-write connection
+    # can leave journal sidecars beside it, and nothing here ever writes to it.
+    con = sqlite3.connect(DB.as_uri() + "?mode=ro", uri=True)
     entries = []          # (arm-order position, packet fields without the id, key entry)
 
     def add(item, truth, note):
@@ -165,8 +128,8 @@ def build(as_published: bool = False) -> int:
     digest = hashlib.sha256((SALT + body).encode("utf-8")).hexdigest()
     digest_text = f"sha256(salt+key) = {digest}\nsalt = {SALT}\nitems = {len(items)}\n"
     outputs = ((PACKET, packet_text), (KEY, body + "\n"), (DIGEST, digest_text))
-    # An adjudicated packet is a receipt. Rewriting it under other ids would leave the answers
-    # keyed to items they were not given, and `score` would still pass its digest check.
+    # Last guard, on the bytes themselves: refuses_to_overwrite() above cannot compare contents
+    # it has not built yet, so `--as-published` gets its exact-bytes check here.
     clash = [p.name for p, text in outputs
              if p.exists() and p.read_text(encoding="utf-8") != text]
     if clash:
@@ -180,6 +143,71 @@ def build(as_published: bool = False) -> int:
     print(f"packet: {len(items)} items -> {PACKET.name}")
     print(f"SEALED KEY DIGEST (commit this before adjudicating):\n  {digest}")
     return 0
+
+
+def arm_runs(arms_in_id_order) -> int:
+    """How many maximal runs of one arm the id order contains (3 = every arm contiguous)."""
+    arms = list(arms_in_id_order)
+    return sum(1 for i, a in enumerate(arms) if i == 0 or a != arms[i - 1])
+
+
+def refuses_to_overwrite(as_published: bool) -> bool:
+    """Would this build rewrite or half-complete EXTERNAL-1's receipts? Decided from the files.
+
+    Called before the ledger and the shelf are opened, so a build that is going to be refused
+    reads nothing, opens nothing and leaves nothing behind. It answers only the two questions
+    that need no built bytes; the exact-bytes comparison stays at the end of build().
+    """
+    present = [p.name for p in (PACKET, KEY, DIGEST) if p.exists()]
+    absent = [p.name for p in (PACKET, KEY, DIGEST) if not p.exists()]
+    if present and absent:
+        print(f"REFUSED: {', '.join(present)} present but {', '.join(absent)} missing. That is "
+              f"the fresh-clone state — the packet and the digest are committed, the sealed key "
+              f"is gitignored — and a key minted now would be a different key under a committed "
+              f"digest. Restore the sealed file, or build a new cycle in its own directory.")
+        return True
+    if present and not as_published:
+        print(f"REFUSED: {', '.join(present)} already exist and are EXTERNAL-1's receipts; the "
+              f"repaired numbering would rewrite them, leaving the recorded answers keyed to "
+              f"items nobody was given. To regenerate the published packet run "
+              f"`build --as-published`; a build under the repaired numbering is a new cycle "
+              f"with its own prereg and its own paths.")
+        return True
+    return False
+
+
+RECIPE = """Item ids (issue #125). The packet that was published and adjudicated was built by a
+version of this file that numbered each item as it was added (100 sampled accusations, then 15
+gate-VERIFIED decoys, then 15 synthetic contradictions) and shuffled the list afterwards. The
+shuffle moved the items and renumbered nothing, so the id carries the arm: E1-000..E1-099 are
+accusations, E1-100..E1-114 verified decoys, E1-115..E1-129 synthetic contradictions. The last
+range can be read off the published packet alone, because those fifteen items show the `zz_` path
+perturbation. The protocol's blinding was weaker than it asserted, on the id.
+
+`build` assigns each id from the item's shuffled position, as compat2_packet.py does, and refuses
+to write if the arms still cluster in id order. It closes the id channel and nothing else: the
+synthetic contradictions are still the fifteen items whose path carries a `zz_` prefix, so an
+adjudicator who looks for it can still name that arm. A perturbation that does not announce
+itself is a change to the design, and belongs to a new cycle under its own preregistration.
+
+Regenerating the published packet. external1_packet.json, the sealed key and
+external1_key_digest.txt are EXTERNAL-1's receipts; the repair does not rebuild them. Put the
+gitignored external1_shelf.sqlite in place, and as external1_ledger.jsonl the ledger the packet
+was drawn from: the pre-correction ledger whose counts are external1_summary_PREFIX.json (7,029
+CONTRADICTED, 16,868 VERIFIED claims). The ledger regenerated for
+CORRECTION_external1_cause_2026_08_31.md (665 / 17,887, external1_summary.json) yields a different
+sample under any version of this file. Then run `build --as-published`. It draws the same sample
+and the same shuffle (Random.shuffle's draws depend only on the list's length) and numbers every
+item by its pre-shuffle, arm-order position, which reproduces the published numbering, the key and
+the digest in external1_key_digest.txt. It reproduces the leak with them, on purpose: the leak is
+part of the record. The published id order follows from the two population counts alone, and
+tests/test_external1_packet_ids.py pins it against the committed packet.
+
+Neither mode overwrites an existing packet, key or digest whose contents would change, and neither
+writes at all from the fresh-clone state where the packet and digest are present and the sealed key
+is not. A run under the repaired numbering is a new cycle with its own preregistration and its own
+paths, never a rewrite of this one.
+"""
 
 
 def score() -> int:
@@ -241,6 +269,7 @@ def main(argv=None) -> int:
     if cmd == "score" and not args:
         return score()
     print(__doc__, file=sys.stderr)
+    print(RECIPE, file=sys.stderr)
     return 2
 
 

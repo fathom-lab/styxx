@@ -4,6 +4,7 @@
 The ledger and the shelf are gitignored, so every build here runs on a synthetic ledger and a
 synthetic `f` table in tmp_path. No test writes next to the committed packet, key or digest.
 """
+import hashlib
 import importlib.util
 import json
 import random
@@ -211,3 +212,234 @@ def test_cli_accepts_as_published_and_refuses_anything_else(corpus, monkeypatch)
     assert not any(d.iterdir())
     assert E.main(["build", "--as-published"]) == 0
     assert E.arm_runs(_arms_in_id_order(_read(d)[1])) == 3
+
+
+def test_main_drives_a_plain_build_and_the_no_argument_default(corpus, monkeypatch):
+    """`build` and the bare default are the two paths a person actually types, and neither was
+    exercised through main() before."""
+    for argv, tag in (([], "bare"), (["build"], "named")):
+        d = _point_outputs(monkeypatch, corpus / tag)
+        assert E.main(argv) == 0
+        packet, key = _read(d)
+        assert [it["id"] for it in packet["items"]] == [f"E1-{n:03d}" for n in range(len(key))]
+        assert E.arm_runs(_arms_in_id_order(key)) > 5
+        assert (d / "key_digest.txt").exists()
+
+
+# --- the bytes, pinned against the builder that wrote the record -----------------------------------
+
+# sha256 of what origin/main's external1_packet.py — the version that built the published packet,
+# before the #125 repair — writes on the `corpus` fixture's synthetic ledger and shelf. Computed
+# once from that file; the repaired `build --as-published` has to reproduce it byte for byte, or
+# the recipe in RECIPE no longer regenerates anything.
+AS_PUBLISHED_SHA256 = {
+    "packet.json": "94c3f0760d4e0955bc73255a5474c7a9d5df41758b34c57b2d80cd1873efd7c1",
+    "key_SEALED.json": "ec0b05d44c9e4a4cafbf63e487df044ebb2526bd339bd91a547dbbc8ac670999",
+    "key_digest.txt": "36477b3d3efc4369ea6c9e03fd32d269d73b0e7f72e7e8b3443f6250a1ef7bc7",
+}
+AS_PUBLISHED_BYTES = {"packet.json": 55250, "key_SEALED.json": 15037, "key_digest.txt": 139}
+
+
+def test_as_published_writes_the_bytes_the_pre_repair_builder_wrote(corpus, monkeypatch):
+    d = _point_outputs(monkeypatch, corpus / "pinned")
+    assert E.build(as_published=True) == 0
+    got = {p.name: p.read_bytes() for p in d.iterdir()}
+    assert {n: len(b) for n, b in got.items()} == AS_PUBLISHED_BYTES
+    assert {n: hashlib.sha256(b).hexdigest() for n, b in got.items()} == AS_PUBLISHED_SHA256
+
+
+def test_the_repaired_build_writes_different_bytes(corpus, monkeypatch):
+    """The pin above is a claim about `--as-published` alone: a plain build must not match it,
+    or the pin would pass on a module that ignored the flag."""
+    d = _point_outputs(monkeypatch, corpus / "pinned_default")
+    assert E.build() == 0
+    got = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in d.iterdir()}
+    assert got["packet.json"] != AS_PUBLISHED_SHA256["packet.json"]
+    assert got["key_SEALED.json"] != AS_PUBLISHED_SHA256["key_SEALED.json"]
+
+
+# --- score, on the renumbered ids ------------------------------------------------------------------
+
+def _answers_for(key, wrong_accusations=4):
+    """Every decoy right; `wrong_accusations` of the 100 accusations called SUPPORTED."""
+    out, wrong = {}, 0
+    for iid in sorted(key):
+        t = key[iid]["truth"]
+        if t == VER:
+            out[iid] = "SUPPORTED"
+        elif t == SYN:
+            out[iid] = "CONTRADICTED"
+        elif wrong < wrong_accusations:
+            out[iid], wrong = "SUPPORTED", wrong + 1
+        else:
+            out[iid] = "CONTRADICTED"
+    return out
+
+
+def test_score_round_trips_the_renumbered_ids(corpus, monkeypatch):
+    d = _point_outputs(monkeypatch, corpus / "scored")
+    assert E.build() == 0
+    key = _read(d)[1]
+    E.ANSWERS.write_text(json.dumps(_answers_for(key)), encoding="utf-8")
+    assert E.score() == 0
+    out = json.loads(E.RESULT.read_text(encoding="utf-8"))
+    assert out["decoys_correct"] == 30 and out["decoys_total"] == 30
+    assert out["adjudicator_reliable"] is True and out["decoy_misses"] == []
+    assert out["accusations_scored"] == 100 and out["accusations_upheld"] == 96
+    assert out["precision"] == 0.96 and out["gate_G_E1_pass"] is True
+
+
+def test_score_refuses_when_one_key_byte_changes(corpus, monkeypatch, capsys):
+    d = _point_outputs(monkeypatch, corpus / "tampered_key")
+    assert E.build() == 0
+    key = _read(d)[1]
+    E.ANSWERS.write_text(json.dumps(_answers_for(key)), encoding="utf-8")
+    text = E.KEY.read_text(encoding="utf-8")
+    tampered = text.replace(VER, VER[:-1] + VER[-1].upper(), 1)   # one byte, one arm relabelled
+    assert tampered != text and len(tampered) == len(text)
+    E.KEY.write_text(tampered, encoding="utf-8")
+    assert E.score() == 1
+    assert "does not match the committed digest" in capsys.readouterr().out
+    assert not E.RESULT.exists()
+
+
+def test_score_refuses_when_the_committed_digest_changes(corpus, monkeypatch, capsys):
+    d = _point_outputs(monkeypatch, corpus / "tampered_digest")
+    assert E.build() == 0
+    key = _read(d)[1]
+    E.ANSWERS.write_text(json.dumps(_answers_for(key)), encoding="utf-8")
+    text = E.DIGEST.read_text(encoding="utf-8")
+    recorded = text.split(" = ", 1)[1].split("\n", 1)[0]
+    assert len(recorded) == 64
+    flipped = ("0" if recorded[0] != "0" else "1") + recorded[1:]
+    E.DIGEST.write_text(text.replace(recorded, flipped), encoding="utf-8")
+    assert E.score() == 1
+    assert "does not match the committed digest" in capsys.readouterr().out
+    assert not E.RESULT.exists()
+
+
+# --- a refused build touches nothing ---------------------------------------------------------------
+
+def test_the_fresh_clone_state_refuses_and_writes_nothing(corpus, monkeypatch, capsys):
+    """A clone has the packet and the digest (committed) and not the sealed key (gitignored).
+    A key minted now would be a different key under a committed digest, so both modes refuse."""
+    d = _point_outputs(monkeypatch, corpus / "clone")
+    assert E.build(as_published=True) == 0
+    E.KEY.unlink()
+    before = {p.name: p.read_bytes() for p in d.iterdir()}
+    assert sorted(before) == ["key_digest.txt", "packet.json"]
+    for as_published in (False, True):
+        assert E.build(as_published=as_published) == 1
+        assert "REFUSED" in capsys.readouterr().out
+    assert not E.KEY.exists()
+    assert {p.name: p.read_bytes() for p in d.iterdir()} == before
+
+
+def test_as_published_refuses_when_the_record_on_disk_is_not_the_record_it_built(
+        corpus, monkeypatch, capsys):
+    """The early check cannot compare bytes it has not built yet, so `--as-published` — the one
+    mode allowed to write over a complete record — is held by the exact-bytes check at the end.
+    A wrong ledger in place is how that goes wrong in practice."""
+    d = _point_outputs(monkeypatch, corpus / "mismatch")
+    assert E.build(as_published=True) == 0
+    capsys.readouterr()
+    packet = E.PACKET.read_text(encoding="utf-8")
+    E.PACKET.write_text(packet.replace("E1-000", "E1-999", 1), encoding="utf-8")
+    before = {p.name: p.read_bytes() for p in d.iterdir()}
+    assert E.build(as_published=True) == 1
+    assert "already exist with different contents" in capsys.readouterr().out
+    assert {p.name: p.read_bytes() for p in d.iterdir()} == before
+
+
+def test_a_refused_build_reads_neither_the_ledger_nor_the_shelf(corpus, monkeypatch, capsys):
+    """The refusal is decided from the output files alone: point the 5 GB shelf and the ledger at
+    paths that do not exist and the build still returns 1 instead of raising."""
+    _point_outputs(monkeypatch, corpus / "no_inputs")
+    assert E.build(as_published=True) == 0
+    capsys.readouterr()
+    monkeypatch.setattr(E, "LEDGER", corpus / "nowhere" / "ledger.jsonl")
+    monkeypatch.setattr(E, "DB", corpus / "nowhere" / "shelf.sqlite")
+    assert E.build() == 1
+    assert "REFUSED" in capsys.readouterr().out
+
+
+def test_the_shelf_is_opened_read_only(corpus, monkeypatch):
+    """A read-write connection to one of the recipe's inputs can leave journal sidecars beside a
+    5 GB file the builder never writes to."""
+    seen = []
+    real_connect = sqlite3.connect
+
+    def spy(*a, **kw):
+        seen.append((a, kw))
+        return real_connect(*a, **kw)
+
+    monkeypatch.setattr(E, "sqlite3", type("Shim", (), {"connect": staticmethod(spy)}))
+    _point_outputs(monkeypatch, corpus / "readonly")
+    assert E.build() == 0
+    assert len(seen) == 1
+    (uri,), kw = seen[0]
+    assert kw == {"uri": True}
+    assert uri.startswith("file:") and uri.endswith("?mode=ro")
+    con = real_connect(uri, uri=True)
+    try:
+        with pytest.raises(sqlite3.OperationalError):
+            con.execute("CREATE TABLE zz (x)")
+    finally:
+        con.close()
+    assert sorted(p.name for p in corpus.iterdir() if p.name.startswith("shelf")) \
+        == ["shelf.sqlite"]
+
+
+# --- the clustering guard, at its threshold --------------------------------------------------------
+
+def _chunks(seq, n):
+    size, extra = divmod(len(seq), n)
+    out, i = [], 0
+    for j in range(n):
+        take = size + (1 if j < extra else 0)
+        out.append(seq[i:i + take])
+        i += take
+    return out
+
+
+def _shuffle_leaving_runs(monkeypatch, n_runs):
+    """Replace the builder's Random with one whose shuffle leaves exactly `n_runs` arm runs:
+    alternating accusation / verified-decoy blocks, then the synthetic block."""
+    alt = n_runs - 1
+
+    class Staged(random.Random):
+        def shuffle(self, x):
+            by_arm = {}
+            for e in x:
+                by_arm.setdefault(e[2]["truth"], []).append(e)
+            a_blocks = _chunks(by_arm[ACC], (alt + 1) // 2)
+            v_blocks = _chunks(by_arm[VER], alt // 2)
+            ordered = []
+            for i in range(alt):
+                ordered += (a_blocks if i % 2 == 0 else v_blocks)[i // 2]
+            x[:] = ordered + by_arm[SYN]
+
+    monkeypatch.setattr(E, "random", type("Shim", (), {"Random": Staged}))
+
+
+def test_the_clustering_guard_refuses_five_runs_and_accepts_six(corpus, monkeypatch):
+    """The guard's bar is `runs <= n_arms + 2`, i.e. 5 with three arms. Only a no-op shuffle
+    (3 runs) exercised it before, so any threshold from 3 upward survived."""
+    d = _point_outputs(monkeypatch, corpus / "runs5")
+    _shuffle_leaving_runs(monkeypatch, 5)
+    with pytest.raises(AssertionError, match="5 runs over 3 arms"):
+        E.build()
+    assert not any(d.iterdir())
+
+    d = _point_outputs(monkeypatch, corpus / "runs6")
+    _shuffle_leaving_runs(monkeypatch, 6)
+    assert E.build() == 0
+    assert E.arm_runs(_arms_in_id_order(_read(d)[1])) == 6
+
+
+def test_arm_runs_counts_maximal_runs():
+    assert E.arm_runs([]) == 0
+    assert E.arm_runs(["a"]) == 1
+    assert E.arm_runs(["a", "a", "a"]) == 1
+    assert E.arm_runs(["a", "b", "a"]) == 3
+    assert E.arm_runs(["a", "a", "b", "b", "c"]) == 3
