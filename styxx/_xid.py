@@ -26,6 +26,17 @@ supported Python a name CPython accepts is a name this table accepts; the note s
 3.13 and later. The block between the two GENERATED lines is the generator's output: do not edit it by
 hand (`gen_xid.py --check` and tests/test_diffgate_path2.py hold it, the port's copy and the generator to
 the same bytes).
+
+NOTE_path2_eighth_pass_2026_09_27 (Y-3). The package installs on every Python from 3.9 (`requires-python
+>=3.9`, no cap), and a Python reads identifiers by its own Unicode: 13.0.0 on 3.9 and 3.10, 14.0.0 on 3.11,
+15.0.0 on 3.12, 15.1.0 on 3.13, 16.0.0 on 3.14. SKEW, in the same block and the same encoding (mask 1 in the
+set), is every code point one of those versions gives other bits than the table does -- 10,153 of them: the
+letters, marks and digits Unicode 14.0, 15.0, 15.1 and 16.0 assigned (5,068 the table holds and 13.0 or 14.0
+does not; 5,059 16.0 reads otherwise), U+200C, U+200D, U+30FB and U+FF65 (made to continue an identifier in
+15.1), and a margin of 28 whose general category moved since 3.2. A claimed name that meets one, and a test
+definition's name that holds one, are not the same name on every supported Python, so both ports abstain on
+them (`in_skew`). gen_xid.py's docstring says where each version's reading comes from; its sha256 is pinned
+beside the table's.
 """
 from __future__ import annotations
 
@@ -68,6 +79,15 @@ TABLE = (
     "8i8wbw9L7DgaXsGqowrx1gxow1fxPqCuazcGiw3xoyX9Cew3xoBAfx18w88n8z38wP2gxewrFiMowrfw1xoBN4Kb8s8w5OjG"
     "n8z0wO2w88C68n8fgf8xp8w88f8fwhfw1f8f8f8w08n8fgf8f8f8f8f8n8fgw88x18w88w88f8xp8zjw9w08wg8zjzUlyfSB"
     "7xoDMpGJOnD8wyN7whwVggwLZ6yjxvBnUUozL3HLkwFypw9wyX1BABE2xv0wQPMh"
+)
+SKEW_VERSIONS = "13.0.0 14.0.0 15.1.0 16.0.0"
+SKEW_SHA256 = "0b7134fd20e249f7ea69f8fcfcc1993bac0ebd5b7fe9e2e41d507594b097bfd3"
+SKEW = (
+    "ATrhxqxjC79wyq9FO1B78wix2xbAd9zkxrCD99D89wwo9Ad9yYa9EU0xbCQ69wp9xa9wZl9Z6hzS3ykww89xOhhywm9zHghx"
+    "Ib9SHl9H49EU89COMdpLL0hxapgh898x3AdpBvFg9HVuxr8ys8wq8h8xr8ys8wq8hoIeyE6wi8Fr8xbGSkEqowa8AuxOhpJ6"
+    "w2XsAmwYcwiOj9yA2pxP2xj89g98Eq8xj89g98w28x3ybhBC9A6SnwqCD9z5xz2DhyrxjBInzd8FjowaybxrwyLmU2Ew89z4"
+    "AmxiwxD0wZV5K0OOgPd8xjACiGkoxjxAAa9xHJ4w28wq8hxHaw2yr9Do9wWUfxjzElGsgAuCHdA6UY4D1whwixAbL1Dg9zD4"
+    "D1zLkFrwT7G4zw5wq8w28h8ysIySphwyTuwayOFaAAhxLRowyWqCVXVh"
 )
 # END GENERATED
 
@@ -119,3 +139,13 @@ def continues_identifier(ch: str) -> bool:
 def is_word(ch: str) -> bool:
     """Python's `\\w` for a str pattern, str.isalnum() or `_` (Unicode 15.0.0)."""
     return bool(mask(ch) & 4)
+
+
+_SKEW_STARTS, _SKEW_MASKS = decode(SKEW)
+
+
+def in_skew(ch: str) -> bool:
+    """NOTE_path2_eighth_pass (Y-3): whether some Python this package supports (Unicode 13.0.0 on 3.9 and 3.10,
+    14.0.0 on 3.11, 15.1.0 on 3.13, 16.0.0 on 3.14) gives this character other bits than the table does, so that
+    a name holding it is not one name on every supported Python."""
+    return bool(_SKEW_MASKS[bisect_right(_SKEW_STARTS, ord(ch)) - 1] & 1)

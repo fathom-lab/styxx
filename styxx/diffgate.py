@@ -411,8 +411,123 @@ _DEF_HEAD_REMOVED = re.compile(_DEF_INDENT + r"(?:async" + _DEF_SEP + r")?(def|c
 _PROSE_DOTS = "··"
 
 from ._xid import continues_identifier as _xid_continues  # noqa: E402
+from ._xid import in_skew as _xid_skew  # noqa: E402
 from ._xid import is_word as _xid_word  # noqa: E402
 from ._xid import opens_identifier as _xid_opens  # noqa: E402
+
+# NOTE_path2_eighth_pass_2026_09_27. The convergence principle: wherever this branch's new reading cannot be
+# sure it reads a claim at least as well as main, it ABSTAINS -- in both ports, with a reason that names the
+# uncertainty. The seventh pass asserted in five places where it could not be sure; each now abstains:
+#   Y-1  the file list. A `---`/`+++` line read as a header after lines no hunk count placed may be content (a
+#        removed `-- users` prints `--- users`, an added `++ x` prints `+++ x`) or a header; and two header
+#        paths that differ only in case are one key, on main too. Where the list may hold a phantom or a merge
+#        main's other errors balanced, a count, a scope and a path claim abstain. A pair with a header's shape
+#        -- `--- X`, `+++ X` (or /dev/null), then `@@` -- is read as a header, as main read it.
+#   Y-2  U+FEFF. Outside the counts, one is dropped from a line the diff shows is line 1 -- the opening added
+#        line of a created file, the opening line of a side after a hunk header starting at 1 -- as CPython reads it
+#        and main's port read it. A definition a U+FEFF opens anywhere else makes a claim that could read it
+#        abstain. And any added test definition a U+FEFF opens, line 1 included, abstains the test count: main's
+#        Python counted it as no test and its port as one, so a count elsewhere may have balanced either.
+#   Y-3  the Pythons this package supports read identifiers by Unicode 13.0 to 16.0, the table by 15.0; a
+#        claimed name, or a test definition's name, that meets a code point those versions read differently
+#        (styxx/_xid.py's SKEW) is not one name on every supported Python, and the claim abstains.
+#   Y-5  the #101 pairing withdraws; it does not verify. The reading is by line and by text, on main as here:
+#        a `def test_` line inside a string (opened where the diff does not show it), in a file that is not
+#        Python, or split by a backslash is read as Python does not read it, and main's count was sometimes
+#        right only because it also counted a changed test. So where a changed test is paired away, a claimed
+#        count equal to what is left reads UNCHECKABLE, never VERIFIED; a count outside [net, got] is one main
+#        contradicts too.
+# And Y-4, a repair of a defect main has too: GNU diff writes `/dev/null` followed by a TAB and a timestamp,
+# and neither parser recognised it, so two deletions shared the key "dev/null\t<time>" and a created file
+# read as modified; the check now cuts the timestamp. Every other header path keeps it, exactly as main keys
+# it, so no claim main abstained on by that key is read now.
+
+
+def _skew(ch: str) -> bool:
+    """Y-3: the character is one some supported Python reads differently from the table (styxx/_xid.py)."""
+    return _xid_skew(ch)
+
+
+def _wide_identifier_at(text: str, i: int) -> str:
+    """Y-3: the longest name any supported Python could read at `text[i]`: the table's identifier, widened by
+    every code point of the skew set."""
+    if i >= len(text) or not (_xid_opens(text[i]) or _skew(text[i])):
+        return ""
+    j = i + 1
+    while j < len(text) and (_xid_continues(text[j]) or _skew(text[j])):
+        j += 1
+    return text[i:j]
+
+
+_LEADING_BOM_RUN = re.compile("^[ \t\f\ufeff]*")
+
+
+def _bom_hidden(line: str):
+    """Y-2: the line with the U+FEFF dropped from its indent, when a U+FEFF opens it (after any indent), else
+    None. main's port read such a line through JavaScript's \\s; CPython reads one only at line 1 of a file."""
+    lead = _LEADING_BOM_RUN.match(line).group(0)
+    if "\ufeff" not in lead:
+        return None
+    return lead.replace("\ufeff", "") + line[len(lead):]
+
+
+def _skew_test(line: str):
+    """Y-3: the earliest skew code point in the name of a test definition (`def test_`, `async` too) on this line,
+    read as widely as any supported Python reads it; else None."""
+    text = _bom_hidden(line) or line
+    m = _DEF_HEAD_REMOVED.match(text)
+    if m is None or m.group(1) != "def":
+        return None
+    wide = _wide_identifier_at(text, m.end())
+    if not wide.startswith("test_"):
+        return None
+    return next((ch for ch in wide if _skew(ch)), None)
+
+
+_Y2_WHY = "opens with U+FEFF where the diff does not show it is line 1 of its file, the one place CPython reads one"
+_Y2_TEST = "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one"
+_Y3_VERSIONS = "the Pythons this package supports (Unicode 13.0 to 16.0)"
+
+
+def _bom_test_note(raw: str, text: str):
+    """Y-2: `text` is an added line with the U+FEFF opening line 1 of its file dropped (`raw` as the diff wrote
+    it); when what is left defines a test `got` counts, the reason the count abstains, else None."""
+    return _Y2_TEST if text != raw and _test_name(text) else None
+
+
+def _test_doubt(added_blob: str, sides: dict | None, notes: dict | None = None):
+    """Y-2 and Y-3 for `tests_added`: why a test definition on some added or removed line cannot be read the
+    same way by every reading that matters, or None. A U+FEFF the parse dropped at line 1 (`notes`), then the
+    added lines in the blob's order and each file's removed lines in the sides' order; the earliest found."""
+    if (notes or {}).get("bom"):
+        return notes["bom"]
+    removed = [line for _a, r in (sides or {}).values() for line in r]
+    for line in added_blob.split("\n") + removed:
+        hidden = _bom_hidden(line)
+        if hidden is not None and _test_name(hidden, removed=True):
+            return f"a test definition {_Y2_WHY}"
+        ch = _skew_test(line)
+        if ch is not None:
+            return f"a test definition's name holds U+{ord(ch):04X}, which {_Y3_VERSIONS} read differently"
+    return None
+
+
+def _symbol_doubt(name: str, added_blob: str, sides: dict | None):
+    """Y-2 for `symbol_added`: a line that defines `name` once the U+FEFF opening it is dropped."""
+    removed = [line for _a, r in (sides or {}).values() for line in r]
+    for line in added_blob.split("\n") + removed:
+        hidden = _bom_hidden(line)
+        if hidden is not None and _defines(hidden, name, removed=True):
+            return f"a definition of {_qname(name)} {_Y2_WHY}"
+    return None
+
+
+def _pairing_withdraws(chg: int) -> bool:
+    """Y-5: the #101 pairing paired `chg` added test definitions with removed ones. It may then withdraw a
+    verdict main gave (a count inside [net, got] abstains) but not give one main did not: `net` equal to the
+    claim is not verified, since `got` itself may read a line Python does not define (a string opened where the
+    diff does not show it, a file that is not Python) and main's contradiction was then right."""
+    return chg > 0
 
 
 def _identifier_at(text: str, i: int) -> str:
@@ -439,6 +554,12 @@ def _claimed_name(sentence: str, m) -> tuple:
     start = m.start("name")
     name = _identifier_at(sentence, start)
     end = start + len(name)
+    # NOTE_path2_eighth_pass (Y-3): a name, or the character right after it, that some supported Python reads
+    # differently from the table is not one name on every Python; checked before the table's own rules.
+    met = next((ch for ch in sentence[start:end + 1] if _skew(ch)), None)
+    if met is not None:
+        return name, (f"the claimed name {_qname(name)} meets U+{ord(met):04X}, which {_Y3_VERSIONS} read "
+                      "differently; no definition is read for it")
     if end < len(sentence) and _xid_word(sentence[end]):
         ch = sentence[end]
         return name, (f"the claimed name runs past {_qname(name)} into {_qname(ch)} (U+{ord(ch):04X}), which "
@@ -755,10 +876,53 @@ def _hunk_is_exact(lines: list, k: int) -> bool:
     return line[:1] not in ("+", "-", " ", "\\")   # a line no hunk carries
 
 
-def _read_diff(diff_text: str) -> tuple[dict, list, dict]:
+def _dev_null(path) -> bool:
+    """NOTE_path2_eighth_pass (Y-4): a header path naming /dev/null -- as git writes it, or as GNU diff does,
+    followed by a TAB and a timestamp. main compared the whole string, so `+++ /dev/null<TAB>2024-...` keyed a
+    deletion as "dev/null<TAB>2024-..." (two deletions shared that key) and `--- /dev/null<TAB>...` read a
+    created file as modified."""
+    return path == "/dev/null" or (path or "").startswith("/dev/null\t")
+
+
+def _header_shape(path: str) -> str:
+    """Y-1: a header path as a header's shape is compared: cut at a TAB (GNU's timestamp), then `a/` or `b/`
+    dropped."""
+    p = path.split("\t", 1)[0].strip()
+    return p[2:] if p.startswith(("a/", "b/")) else p
+
+
+def _clean_header(lines: list, k: int) -> bool:
+    """Y-1: whether `lines[k]` (a `--- ` line) opens a pair with a file header's shape: a `+++ ` line, then a
+    line opening `@@`, the two naming the same path or one of them /dev/null. A pair of a removed `-- X` and an
+    added `++ Y` read outside the counts has that shape only when X and Y are the same text."""
+    if not (k + 2 < len(lines) and lines[k + 1].startswith("+++ ") and lines[k + 2].startswith("@@")):
+        return False
+    x, y = _header_shape(lines[k][4:]), _header_shape(lines[k + 1][4:])
+    return x == y or "/dev/null" in (x, y)
+
+
+def _line_one_bom(text: str, at_one: bool) -> str:
+    """Y-2: outside the counts, a U+FEFF is dropped from a line the diff shows is line 1 of its side (`at_one`),
+    where CPython reads one; W-1 drops it inside the counts."""
+    return text[len(_FILE_BOM):] if at_one and text.startswith(_FILE_BOM) else text
+
+
+_Y1_LOOSE = ("a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, "
+             "a `++` line) or a file header")
+_Y1_COLLIDE = "two header paths that differ only in case are one key"
+_Y1_UNCOUNTED = ("a line names a changed file no header pair counts (GNU's `Binary files ... differ`, "
+                 "`Only in ...` and the like)")
+_UNCOUNTED = re.compile(r"^(?:(?:Binary files|Files|Symbolic links) .+ and .+ differ|Only in .+: .+|File .+ is a .+ while file .+ is a .+)$")
+
+
+def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, dict]:
     """Unified diff text -> (status map, added lines in order, per-file sides): the one reading W-1
     gives both parsers. An added line outside any file (no `+++` header before it) is in the blob and in
-    no file's sides, exactly as before."""
+    no file's sides, exactly as before.
+
+    NOTE_path2_eighth_pass: `notes`, when given, is filled with what this reading cannot be sure of: "files"
+    when a header was read that may be content, two paths are one key, or a line names a changed file no header
+    pair counts (Y-1); "bom" when a U+FEFF was dropped from an added line 1 that defines a test (Y-2)."""
     status: dict[str, str] = {}
     added: list[str] = []
     sides: dict = {}
@@ -767,9 +931,22 @@ def _read_diff(diff_text: str) -> tuple[dict, list, dict]:
     pending: _Pending | None = None          # BIN-1: a header still waiting for its pair
     old_left = new_left = 0                  # removed and added lines the open hunk still owes
     old_no = new_no = 0                      # the line numbers its next removed and added lines carry
+    loose = False                            # Y-1: a line no count placed was read since the last `diff --git`
+    clean_plus = -1                          # Y-1: the `+++ ` line of a header pair read with a header's shape
+    lead_old = lead_new = False            # Y-2: the next removed / added line read outside the counts is line 1
+    found: dict = {}
+    forms: dict = {}                         # Y-1: each key's header path as written, case kept
+
+    def register(raw_path: str, key: str) -> None:
+        # Y-1: the key lower-cases, so two files whose paths differ only in case are one key -- one count, one
+        # side -- on main too; a count main's other errors balanced is not sure
+        form = _LEADING_SLASH_SEGMENTS.sub("", raw_path.replace("\\", "/"))
+        if forms.setdefault(key, form) != form:
+            found.setdefault("files", _Y1_COLLIDE)
 
     def flush() -> None:
         if pending is not None and pending.path():
+            register(pending.a if pending.status == "D" else pending.b, pending.path())
             if pending.path() not in status:
                 status[pending.path()] = pending.status
             sides.setdefault(pending.path(), ([], []))
@@ -782,6 +959,9 @@ def _read_diff(diff_text: str) -> tuple[dict, list, dict]:
                 text = line[1:]
                 if new_no == 1 and text.startswith(_FILE_BOM):
                     text = text[len(_FILE_BOM):]
+                    why = _bom_test_note(line[1:], text)           # Y-2
+                    if why:
+                        found.setdefault("bom", why)
                 new_left -= 1
                 new_no += 1
                 added.append(text)
@@ -810,33 +990,96 @@ def _read_diff(diff_text: str) -> tuple[dict, list, dict]:
             flush()
             pending = _Pending(line)
             cur = None
+            loose = False
+            lead_old = lead_new = False
         elif line.startswith("--- "):
+            if loose:                            # Y-1: after lines no count placed, a header is not certain
+                if _clean_header(lines, k):
+                    clean_plus, loose = k + 1, False
+                else:
+                    found.setdefault("files", _Y1_LOOSE)
             old_path = line[4:].strip()
             cur = None
+            lead_old = lead_new = False
         elif line.startswith("+++ "):
+            if loose and k != clean_plus:
+                found.setdefault("files", _Y1_LOOSE)
             new = line[4:].strip()
-            if new == "/dev/null":
+            if _dev_null(new):                   # Y-4: a GNU timestamp after /dev/null
                 status[_norm(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
                 raw = old_path[2:] if old_path and old_path.startswith("a/") else (old_path or "")
             else:
                 raw = new[2:] if new.startswith("b/") else new
-                status[_norm(raw)] = "A" if old_path in ("/dev/null", None) else "M"
+                status[_norm(raw)] = "A" if (old_path is None or _dev_null(old_path)) else "M"
             cur = _norm(raw)
+            register(raw, cur)
             sides.setdefault(cur, ([], []))
             pending = None
+            # Y-2: a created file's opening added line, a deleted file's opening removed line, is line 1
+            lead_new = old_path is not None and _header_shape(old_path) == "/dev/null"
+            lead_old = _header_shape(new) == "/dev/null"
         elif line.startswith("@@") and _HUNK_HEADER.match(line):
             if _hunk_is_exact(lines, k):         # NOTE_path2_seventh_pass: else read as main read it
                 old_no, old_left, new_no, new_left = _hunk_counts(_HUNK_HEADER.match(line))
+                lead_old = lead_new = False
+            else:
+                loose = True
+                a, _b, c, _d = _hunk_counts(_HUNK_HEADER.match(line))
+                lead_old, lead_new = lead_old or a == 1, lead_new or c == 1
         elif line.startswith("+") and not line.startswith("+++"):
-            added.append(line[1:])
+            loose = True
+            text = _line_one_bom(line[1:], lead_new)
+            why = _bom_test_note(line[1:], text)                   # Y-2
+            if why:
+                found.setdefault("bom", why)
+            lead_new = False
+            added.append(text)
             if cur is not None:
-                sides[cur][0].append(line[1:])
-        elif cur is not None and line.startswith("-") and not line.startswith("---"):
-            sides[cur][1].append(line[1:])
-        elif pending is not None:
-            pending.note(line)
+                sides[cur][0].append(text)
+        elif line.startswith("-") and not line.startswith("---"):
+            loose = True
+            text = _line_one_bom(line[1:], lead_old)
+            lead_old = False
+            if cur is not None:
+                sides[cur][1].append(text)
+            elif pending is not None:
+                pending.note(line)
+        else:
+            if line.startswith("@@") or line.startswith(" ") or line == "":
+                loose = True                     # a hunk header with no counts, a context line, a blank
+                if not line.startswith("@@"):
+                    lead_old = lead_new = False
+            elif _UNCOUNTED.match(line) and not (pending is not None and _BINARY_LINE.match(line)):
+                found.setdefault("files", _Y1_UNCOUNTED)   # Y-1: a changed file no header pair counts
+            if pending is not None:
+                pending.note(line)
     flush()
+    if notes is not None:
+        notes.update(found)
     return status, added, sides
+
+
+def _diff_notes(diff_text: str) -> dict:
+    """NOTE_path2_eighth_pass: what the one reading of `diff_text` cannot be sure of -- {"files": why} (Y-1),
+    {"bom": why} (Y-2), each only when it holds."""
+    notes: dict = {}
+    _read_diff(diff_text, notes)
+    return notes
+
+
+def _status_notes(paths: list) -> dict:
+    """NOTE_path2_eighth_pass (Y-1), the git door: git's `--name-status` is a sure file list, except where two of
+    its paths differ only in case, which the key reads as one file."""
+    forms: dict = {}
+    for p in paths:
+        forms.setdefault(_norm(p), set()).add(_LEADING_SLASH_SEGMENTS.sub("", p.replace("\\", "/")))
+    return {"files": _Y1_COLLIDE} if any(len(v) > 1 for v in forms.values()) else {}
+
+
+def _files_unsure(notes: dict | None):
+    """NOTE_path2_eighth_pass (Y-1): why the file list a gate reads is not sure, or None -- a count, a scope and a
+    path claim then abstain."""
+    return (notes or {}).get("files")
 
 
 def parse_unified_diff_sides(diff_text: str) -> dict:
@@ -1515,7 +1758,8 @@ def gate_diff_text(summary_text: str, diff_text: str,
                  repo=repo, base="(diff-text)", head="(diff-text)",
                  evidence=evidence, commit=commit,
                  raw_input_len=len(diff_text or ""),
-                 sides=parse_unified_diff_sides(diff_text or ""))
+                 sides=parse_unified_diff_sides(diff_text or ""),
+                 notes=_diff_notes(diff_text or ""))
 
 
 def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
@@ -1542,19 +1786,25 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
     repo = Path(repo)
     name_status = _git(repo, "diff", "--name-status", f"{base}..{head}")
     status: dict[str, str] = {}
+    paths: list = []
     for line in _diff_lines(name_status):                  # NOTE_path2_fourth_pass F-2
         parts = line.split("\t")
         if len(parts) >= 2:
             st, path = parts[0][:1], parts[-1]
             status[_norm(path)] = st            # A / M / D / R
+            paths.append(path)
     diff_text = _git(repo, "diff", f"{base}..{head}")
     # NOTE_path2_sixth_pass W-1: the added blob and the sides are the one hunk-aware reading of git's
     # bytes. The status stays git's own `--name-status`, which is not a reading of the diff text.
     added_blob = parse_unified_diff(diff_text)[1]
+    # NOTE_path2_eighth_pass: the file list here is git's own, so the only thing it can be unsure of is two paths
+    # the key reads as one (they differ only in case, Y-1); a U+FEFF dropped from a test at line 1 is the parse's (Y-2).
+    parsed, listed = _diff_notes(diff_text), _status_notes(paths)
+    notes = {k: v for k, v in (("files", listed.get("files")), ("bom", parsed.get("bom"))) if v}
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base=base, head=head,
                  evidence=evidence, commit=commit,
-                 sides=parse_unified_diff_sides(diff_text))
+                 sides=parse_unified_diff_sides(diff_text), notes=notes)
 
 
 def _find_path(status: dict, claimed: str):
@@ -1646,7 +1896,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
           run: str | None, strict: bool, repo, base: str, head: str,
           evidence=None, commit: str | None = None,
           raw_input_len: int | None = None, sides: dict | None = None,
-          _declared: bool = False) -> DiffGate:
+          notes: dict | None = None, _declared: bool = False) -> DiffGate:
 
     # Some claim kinds are VACUOUSLY TRUE against an empty diff. `only_touches`
     # asks "is anything outside the prefix?" and an empty status answers "no" —
@@ -1664,6 +1914,9 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                             f"nothing, which is a parse failure, not an empty change")
     no_paths = "the diff carries no file paths, so scope cannot be checked" \
         if not status else None
+    # NOTE_path2_eighth_pass (Y-1): what the one reading of the diff is not sure of.
+    unsure_files = _files_unsure(notes)
+    not_sure = f"the diff's file list is not certain: {unsure_files}" if unsure_files else None
 
     def find_path(claimed: str):
         return _find_path(status, claimed)
@@ -1727,12 +1980,17 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     claims.append(c)
                     continue
                 if kind in _PATH_KINDS:
-                    c.verdict, c.why = _path_claim_verdict(kind, d["path"],
-                                                           find_path)
+                    if not_sure:                        # NOTE_path2_eighth_pass (Y-1)
+                        c.verdict, c.why = "UNCHECKABLE", not_sure
+                    else:
+                        c.verdict, c.why = _path_claim_verdict(kind, d["path"],
+                                                               find_path)
                 elif kind == "files_changed_count":
                     n = int(d["n"])
                     if no_paths:
                         c.verdict, c.why = "UNCHECKABLE", no_paths
+                    elif not_sure:                      # NOTE_path2_eighth_pass (Y-1)
+                        c.verdict, c.why = "UNCHECKABLE", f"{not_sure}; claim says {n}"
                     else:
                         c.verdict = "VERIFIED" if n == len(status) else "CONTRADICTED"
                         c.why = f"diff changes {len(status)} files, claim says {n}"
@@ -1760,10 +2018,21 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         # NOTE_path2_seventh_pass (A-1): an added `async def test_` is a test this
                         # count does not read; beside one, the count is not the diff's.
                         unread = _async_tests_added(sides, status)
+                        # NOTE_path2_eighth_pass: a test definition some reading that matters cannot read
+                        # alike (Y-2, Y-3).
+                        doubt = _test_doubt(added_blob, sides, notes)
                         if unread:
                             c.verdict = "UNCHECKABLE"
                             c.why = (f"diff adds {unread} async test functions, which this template does not "
                                      f"count; claim says {n}")
+                        elif doubt:
+                            c.verdict, c.why = "UNCHECKABLE", f"{doubt}; claim says {n}"
+                        elif net == n and _pairing_withdraws(chg):
+                            # NOTE_path2_eighth_pass (Y-5): the pairing withdraws, it does not verify
+                            c.verdict = "UNCHECKABLE"
+                            c.why = (f"diff adds {net} test functions and changes {chg}, claim says {n}; a count "
+                                     "left after pairing changed tests away is not verified, since a line this "
+                                     "template reads may be one Python does not define (#101)")
                         elif net == n:
                             c.verdict, c.why = "VERIFIED", f"diff adds {net} test functions, claim says {n}{note}"
                         elif BC1_BY_CONSTRUCTION and noun in _TEST_NOUNS_NOT_FUNCTIONS:
@@ -1796,9 +2065,13 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         # NOTE_path2_seventh_pass: a claimed name that runs on past the identifier
                         # (or ends in a middle dot) names no identifier, and is not truncated to one.
                         name, why_name = _claimed_name(sent, m)
+                        # NOTE_path2_eighth_pass (Y-2): a line defining the name behind a U+FEFF.
+                        doubt = _symbol_doubt(name, added_blob, sides) if why_name is None else None
                         hit = why_name is None and _symbol_hit(name, added_blob)
                         if why_name is not None:
                             c.verdict, c.why = "UNCHECKABLE", why_name
+                        elif doubt:
+                            c.verdict, c.why = "UNCHECKABLE", doubt
                         elif hit and _definition_only_changed(name, sides, status):
                             c.verdict = "UNCHECKABLE"               # PATH-2 (#101)
                             c.why = (f"added lines define {d['kind']} {_qname(name)} only where the "
@@ -1853,6 +2126,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                                 if not any(_could_lie_under(p, x, r) for x, r in off_pairs)]
                     if no_paths:
                         c.verdict, c.why = "UNCHECKABLE", no_paths
+                    elif not_sure:                              # NOTE_path2_eighth_pass (Y-1)
+                        c.verdict, c.why = "UNCHECKABLE", not_sure
                     elif not_paths:                             # BC-1 repair 4
                         c.verdict = "UNCHECKABLE"
                         c.why = f"prefix {not_paths[0]!r} is not a path (#110)"
@@ -1904,7 +2179,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
             if _dtext:
                 _sub = _gate(_dtext, status, added_blob, run=run, strict=strict, repo=repo,
                              base=base, head=head, evidence=evidence, commit=commit,
-                             raw_input_len=raw_input_len, sides=sides, _declared=True)
+                             raw_input_len=raw_input_len, sides=sides, notes=notes, _declared=True)
                 for _c in _sub.claims:
                     _c.detail = dict(_c.detail or {})
                     _c.detail["declared"] = True
