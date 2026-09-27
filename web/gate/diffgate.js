@@ -9,12 +9,12 @@
  * on top), sha256 9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb, re-cut for the
  * PATH-2 repairs (PREREG_path2_resolution_2026_09_17: #97, #121, #101, as amended by
  * AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
- * NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25
- * and NOTE_path2_seventh_pass_2026_09_25) on the file that carries them, sha256
- * 67fb1b7510b63cccaf6f8e488466fc14748f2c1b0ace6ee940c0c73bc7cf9ced — the styxx/diffgate.py this
+ * NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25,
+ * NOTE_path2_seventh_pass_2026_09_25 and NOTE_path2_eighth_pass_2026_09_27) on the file that carries them,
+ * sha256 d7c298d4d93fd814f1f25a8eaa4c96d90372b31459cb30055b5cebf4fa9e23da — the styxx/diffgate.py this
  * branch would put on main, with the name table styxx/_xid.py carries (Unicode 15.0.0, table sha256
- * 8df68f21…, copied below); the 7.48.0 release carries main's file (9b620e00…), without the PATH-2
- * repairs. Relative to the 7.47.0 wheel the port
+ * 8df68f21…, and the skew set beside it, 0b7134fd…, copied below); the 7.48.0 release carries main's file
+ * (9b620e00…), without the PATH-2 repairs. Relative to the 7.47.0 wheel the port
  * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
  * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
  * templates abstain when the diff has no Python; "added 3 test cases" is not a count of functions;
@@ -43,7 +43,12 @@
  * `\w`, from ONE pinned Unicode table (15.0.0), not their runtimes'; a claimed name that runs on past the
  * identifier, or ends in a middle dot, names none and abstains; a hunk is read by its counts only when it
  * carries what it declares, else as main read it; and an added `async def test_` abstains the test
- * count. Two
+ * count. The eighth pass adds: where the reading cannot be sure it reads a claim at least as well as main,
+ * it abstains -- a file list read from a header that may be content, holding two paths one key in case, or
+ * missing a file GNU names outside any header pair (Y-1); a U+FEFF-led definition the diff does not show is
+ * line 1, and any U+FEFF-led added test for the count (Y-2); a name that meets a code point the supported
+ * Pythons read differently (Y-3); a count equal to what the #101 pairing leaves (Y-5) -- and GNU's
+ * `/dev/null<TAB>timestamp` is recognised (Y-4). Two
  * deliberate gaps remain: the structural "unparsed claims"
  * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
  * pass" is always UNCHECKABLE, exactly as the CLI without --run.
@@ -231,6 +236,14 @@ const _XID_TABLE =
   "8i8wbw9L7DgaXsGqowrx1gxow1fxPqCuazcGiw3xoyX9Cew3xoBAfx18w88n8z38wP2gxewrFiMowrfw1xoBN4Kb8s8w5OjG" +
   "n8z0wO2w88C68n8fgf8xp8w88f8fwhfw1f8f8f8w08n8fgf8f8f8f8f8n8fgw88x18w88w88f8xp8zjw9w08wg8zjzUlyfSB" +
   "7xoDMpGJOnD8wyN7whwVggwLZ6yjxvBnUUozL3HLkwFypw9wyX1BABE2xv0wQPMh";
+const _XID_SKEW_VERSIONS = "13.0.0 14.0.0 15.1.0 16.0.0";
+const _XID_SKEW_SHA256 = "0b7134fd20e249f7ea69f8fcfcc1993bac0ebd5b7fe9e2e41d507594b097bfd3";
+const _XID_SKEW =
+  "ATrhxqxjC79wyq9FO1B78wix2xbAd9zkxrCD99D89wwo9Ad9yYa9EU0xbCQ69wp9xa9wZl9Z6hzS3ykww89xOhhywm9zHghx" +
+  "Ib9SHl9H49EU89COMdpLL0hxapgh898x3AdpBvFg9HVuxr8ys8wq8h8xr8ys8wq8hoIeyE6wi8Fr8xbGSkEqowa8AuxOhpJ6" +
+  "w2XsAmwYcwiOj9yA2pxP2xj89g98Eq8xj89g98w28x3ybhBC9A6SnwqCD9z5xz2DhyrxjBInzd8FjowaybxrwyLmU2Ew89z4" +
+  "AmxiwxD0wZV5K0OOgPd8xjACiGkoxjxAAa9xHJ4w28wq8hxHaw2yr9Do9wWUfxjzElGsgAuCHdA6UY4D1whwixAbL1Dg9zD4" +
+  "D1zLkFrwT7G4zw5wq8w28h8ysIySphwyTuwayOFaAAhxLRowyWqCVXVh";
 // END GENERATED
 const _XID_STARTS = [], _XID_MASKS = [];
 (() => {
@@ -251,6 +264,28 @@ function _xidMask(cp) {
   let lo = 0, hi = _XID_STARTS.length - 1;
   while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (_XID_STARTS[mid] <= cp) lo = mid; else hi = mid - 1; }
   return _XID_MASKS[lo];
+}
+// NOTE_path2_eighth_pass_2026_09_27 (Y-3): the skew set, decoded as the table is. The Pythons the package
+// supports read identifiers by Unicode 13.0 to 16.0; a code point one of them reads differently from the table
+// (mask 1) makes a name that meets it not one name on every supported Python, and both ports abstain on it.
+const _SKEW_STARTS = [], _SKEW_MASKS = [];
+(() => {
+  const ends = "0123456789abcdefghijklmnopqrstu", more = "vwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let cp = 0, value = 0;
+  for (const ch of _XID_SKEW) {
+    const k = more.indexOf(ch);
+    if (k >= 0) { value = value * 31 + k; continue; }
+    const e = ends.indexOf(ch);
+    if (e < 0) throw new Error("diffgate: not a table digit: " + ch);
+    value = value * 31 + e;
+    _SKEW_STARTS.push(cp); _SKEW_MASKS.push(value & 7); cp += value >> 3; value = 0;
+  }
+  if (cp !== 0x110000 || value) throw new Error("diffgate: the skew set does not cover every code point");
+})();
+function _skew(cp) {
+  let lo = 0, hi = _SKEW_STARTS.length - 1;
+  while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (_SKEW_STARTS[mid] <= cp) lo = mid; else hi = mid - 1; }
+  return (_SKEW_MASKS[lo] & 1) === 1;
 }
 const _DEF_INDENT = "^[ \\t\\f]*";                    // no U+FEFF: W-1's parse drops one at line 1 only
 const _DEF_SEP = "[ \\t\\f]+";
@@ -278,10 +313,18 @@ const _hex4 = cp => cp.toString(16).toUpperCase().padStart(4, "0");
 // truncated it to `fo` and verified it on any `def fo` -- and one that ends in a middle dot (U+00B7,
 // U+0387, which prose also writes after a word) names none for certain: both read UNCHECKABLE.
 const _PROSE_DOTS = "··";
+const _Y3_VERSIONS = "the Pythons this package supports (Unicode 13.0 to 16.0)";
 function _claimedName(sent, start) {
   // [name, why]: why is null when the claim names that identifier, else the UNCHECKABLE reason.
   const name = _identifierAt(sent, start);
   const end = start + name.length;
+  // NOTE_path2_eighth_pass (Y-3): the name, or the character right after it, meeting the skew set.
+  let met = null;
+  for (const ch of name) { if (_skew(ch.codePointAt(0))) { met = ch.codePointAt(0); break; } }
+  if (met === null && end < sent.length && _skew(sent.codePointAt(end))) met = sent.codePointAt(end);
+  if (met !== null) {
+    return [name, `the claimed name ${_qname(name)} meets U+${_hex4(met)}, which ${_Y3_VERSIONS} read differently; no definition is read for it`];
+  }
   if (end < sent.length) {
     const cp = sent.codePointAt(end);
     if (_xidMask(cp) & 4) {
@@ -351,6 +394,74 @@ function _symbolHit(name, addedBlob) {
 }
 function _addedTests(addedBlob) {
   return addedBlob.split("\n").filter(line => _testName(line)).length;
+}
+
+// NOTE_path2_eighth_pass_2026_09_27, as the Python's: Y-2 (a U+FEFF opening a definition line the diff does not
+// show is line 1 of its file; any added test definition a U+FEFF opens, line 1 included) and Y-3 (a test
+// definition's name meeting the skew set) make a claim that could read the line abstain; Y-5, the pairing
+// withdraws and does not verify.
+function _wideIdentifierAt(text, i) {
+  // The longest name any supported Python could read at text[i]: the table's identifier, widened by the skew set.
+  if (i >= text.length) return "";
+  const lead = text.codePointAt(i);
+  if (!((_xidMask(lead) & 1) || _skew(lead))) return "";
+  let j = i + (lead > 0xffff ? 2 : 1);
+  while (j < text.length) {
+    const cp = text.codePointAt(j);
+    if (!((_xidMask(cp) & 2) || _skew(cp))) break;
+    j += cp > 0xffff ? 2 : 1;
+  }
+  return text.slice(i, j);
+}
+const _LEADING_BOM_RUN = /^[ \t\f\uFEFF]*/;
+function _bomHidden(line) {
+  // The line with the U+FEFF dropped from its indent when one opens it (after any indent), else null.
+  const lead = _LEADING_BOM_RUN.exec(line)[0];
+  if (!lead.includes("\uFEFF")) return null;
+  return lead.replace(/\uFEFF/g, "") + line.slice(lead.length);
+}
+function _skewTest(line) {
+  // The earliest skew code point in the name of a test definition on this line (`async` too), else null.
+  const hidden = _bomHidden(line);
+  const text = hidden !== null ? hidden : line;
+  const m = _DEF_HEAD_REMOVED.exec(text);
+  if (!m || m[1] !== "def") return null;
+  const wide = _wideIdentifierAt(text, m.index + m[0].length);
+  if (!wide.startsWith("test_")) return null;
+  for (const ch of wide) if (_skew(ch.codePointAt(0))) return ch.codePointAt(0);
+  return null;
+}
+const _Y2_WHY = "opens with U+FEFF where the diff does not show it is line 1 of its file, the one place CPython reads one";
+const _Y2_TEST = "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one";
+function _bomTestNote(raw, text) {
+  // Y-2: an added line 1 whose U+FEFF was dropped, and what is left defines a test `got` counts.
+  return text !== raw && _testName(text) ? _Y2_TEST : null;
+}
+function _removedLines(sides) {
+  const out = [];
+  for (const [, [, removed]] of (sides || new Map())) out.push(...removed);
+  return out;
+}
+function _testDoubt(addedBlob, sides, notes) {
+  if (notes && notes.bom) return notes.bom;
+  for (const line of addedBlob.split("\n").concat(_removedLines(sides))) {
+    const hidden = _bomHidden(line);
+    if (hidden !== null && _testName(hidden, true)) return `a test definition ${_Y2_WHY}`;
+    const cp = _skewTest(line);
+    if (cp !== null) return `a test definition's name holds U+${_hex4(cp)}, which ${_Y3_VERSIONS} read differently`;
+  }
+  return null;
+}
+function _symbolDoubt(name, addedBlob, sides) {
+  for (const line of addedBlob.split("\n").concat(_removedLines(sides))) {
+    const hidden = _bomHidden(line);
+    if (hidden !== null && _defines(hidden, name, true)) return `a definition of ${_qname(name)} ${_Y2_WHY}`;
+  }
+  return null;
+}
+function _pairingWithdraws(chg) {
+  // Y-5: with changed tests paired away, a claimed count equal to what is left is not verified.
+  return chg > 0;
 }
 
 function _asyncTestsAdded(sides, status) {
@@ -518,7 +629,32 @@ function _hunkIsExact(lines, k) {
   if (line === "-- " && (j + 1 >= lines.length || !["+", "-", " ", "@", "\\"].includes(lines[j + 1].slice(0, 1)))) return true;
   return !["+", "-", " ", "\\"].includes(line.slice(0, 1));   // a line no hunk carries
 }
-function _readDiff(diffText) {
+// NOTE_path2_eighth_pass_2026_09_27, as the Python's _read_diff. Y-4: GNU diff writes `/dev/null` then a TAB and a
+// timestamp, which main did not recognise (two deletions shared one key, a created file read as modified).
+// Y-1: a `---`/`+++` line read as a header after lines no hunk count placed may be content or a header, two
+// header paths that differ only in case are one key, and GNU may name a changed file no header pair counts; the
+// reading records that its file list is not sure ("files"). Y-2: outside the counts, a U+FEFF is dropped from a line the diff shows is line 1 of its side, and a
+// U+FEFF dropped from an added test definition at line 1 is recorded ("bom").
+function _devNull(p) {
+  return p === "/dev/null" || (p || "").startsWith("/dev/null\t");
+}
+function _headerShape(p) {
+  const s = _pyStrip(p.split("\t")[0]);
+  return (s.startsWith("a/") || s.startsWith("b/")) ? s.slice(2) : s;
+}
+function _cleanHeader(lines, k) {
+  if (!(k + 2 < lines.length && lines[k + 1].startsWith("+++ ") && lines[k + 2].startsWith("@@"))) return false;
+  const x = _headerShape(lines[k].slice(4)), y = _headerShape(lines[k + 1].slice(4));
+  return x === y || x === "/dev/null" || y === "/dev/null";
+}
+function _lineOneBom(text, atOne) {
+  return atOne && text.startsWith(_FILE_BOM) ? text.slice(_FILE_BOM.length) : text;
+}
+const _Y1_LOOSE = "a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header";
+const _Y1_COLLIDE = "two header paths that differ only in case are one key";
+const _Y1_UNCOUNTED = "a line names a changed file no header pair counts (GNU's `Binary files ... differ`, `Only in ...` and the like)";
+const _UNCOUNTED = /^(?:(?:Binary files|Files|Symbolic links) [^\n]+ and [^\n]+ differ|Only in [^\n]+: [^\n]+|File [^\n]+ is a [^\n]+ while file [^\n]+ is a [^\n]+)$/;
+function _readDiff(diffText, notes = null) {
   const status = new Map();
   const added = [];
   const sides = new Map();
@@ -527,8 +663,19 @@ function _readDiff(diffText) {
   let pending = null;                       // BIN-1: a header still waiting for its pair
   let oldLeft = 0, newLeft = 0;             // removed and added lines the open hunk still owes
   let oldNo = 0, newNo = 0;                 // the line numbers its next removed and added lines carry
+  let loose = false, cleanPlus = -1;        // Y-1
+  let leadOld = false, leadNew = false;   // Y-2
+  const found = {};
+  const note = (key, why) => { if (why && !(key in found)) found[key] = why; };
+  const forms = new Map();                  // Y-1: each key's header path as written, case kept
+  const register = (rawPath, key) => {
+    const form = rawPath.replace(/\\/g, "/").replace(/^(?:\.?\/)+/, "");
+    if (!forms.has(key)) forms.set(key, form);
+    else if (forms.get(key) !== form) note("files", _Y1_COLLIDE);
+  };
   const flush = () => {
     if (pending !== null && pending.path()) {
+      register(pending.status === "D" ? pending.a : pending.b, pending.path());
       if (!status.has(pending.path())) status.set(pending.path(), pending.status);
       if (!sides.has(pending.path())) sides.set(pending.path(), [[], []]);
     }
@@ -540,7 +687,10 @@ function _readDiff(diffText) {
       const head = line.slice(0, 1);
       if (head === "+" && newLeft) {
         let text = line.slice(1);
-        if (newNo === 1 && text.startsWith(_FILE_BOM)) text = text.slice(_FILE_BOM.length);
+        if (newNo === 1 && text.startsWith(_FILE_BOM)) {
+          text = text.slice(_FILE_BOM.length);
+          note("bom", _bomTestNote(line.slice(1), text));   // Y-2
+        }
         newLeft -= 1; newNo += 1; added.push(text);
         if (cur !== null) sides.get(cur)[0].push(text);
         continue;
@@ -560,37 +710,72 @@ function _readDiff(diffText) {
       flush();
       pending = new _Pending(line);
       cur = null;
+      loose = false; leadOld = false; leadNew = false;
     } else if (line.startsWith("--- ")) {
+      if (loose) {                                // Y-1: after lines no count placed, a header is not certain
+        if (_cleanHeader(lines, k)) { cleanPlus = k + 1; loose = false; }
+        else note("files", _Y1_LOOSE);
+      }
       oldPath = _pyStrip(line.slice(4));          // str.strip(), not trim() (V-2)
       cur = null;
+      leadOld = false; leadNew = false;
     } else if (line.startsWith("+++ ")) {
+      if (loose && k !== cleanPlus) note("files", _Y1_LOOSE);
       const nw = _pyStrip(line.slice(4));
       let raw;
-      if (nw === "/dev/null") {
+      if (_devNull(nw)) {                         // Y-4: a GNU timestamp after /dev/null
         status.set(_norm(oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath), "D");
         raw = (oldPath && oldPath.startsWith("a/")) ? oldPath.slice(2) : (oldPath || "");
       } else {
         raw = nw.startsWith("b/") ? nw.slice(2) : nw;
-        status.set(_norm(raw), (oldPath === "/dev/null" || oldPath === null) ? "A" : "M");
+        status.set(_norm(raw), (oldPath === null || _devNull(oldPath)) ? "A" : "M");
       }
       cur = _norm(raw);
+      register(raw, cur);
       if (!sides.has(cur)) sides.set(cur, [[], []]);
       pending = null;
+      leadNew = oldPath !== null && _headerShape(oldPath) === "/dev/null";   // Y-2
+      leadOld = _headerShape(nw) === "/dev/null";
     } else if (line.startsWith("@@") && _HUNK_HEADER.test(line)) {
       if (_hunkIsExact(lines, k)) {              // NOTE_path2_seventh_pass: else read as main read it
         [oldNo, oldLeft, newNo, newLeft] = _hunkCounts(_HUNK_HEADER.exec(line));
+        leadOld = false; leadNew = false;
+      } else {
+        loose = true;
+        const [a, , c] = _hunkCounts(_HUNK_HEADER.exec(line));
+        leadOld = leadOld || a === 1; leadNew = leadNew || c === 1;
       }
     } else if (line.startsWith("+") && !line.startsWith("+++")) {
-      added.push(line.slice(1));
-      if (cur !== null) sides.get(cur)[0].push(line.slice(1));
-    } else if (cur !== null && line.startsWith("-") && !line.startsWith("---")) {
-      sides.get(cur)[1].push(line.slice(1));
-    } else if (pending !== null) {
-      pending.note(line);
+      loose = true;
+      const text = _lineOneBom(line.slice(1), leadNew);
+      note("bom", _bomTestNote(line.slice(1), text));     // Y-2
+      leadNew = false;
+      added.push(text);
+      if (cur !== null) sides.get(cur)[0].push(text);
+    } else if (line.startsWith("-") && !line.startsWith("---")) {
+      loose = true;
+      const text = _lineOneBom(line.slice(1), leadOld);
+      leadOld = false;
+      if (cur !== null) sides.get(cur)[1].push(text);
+      else if (pending !== null) pending.note(line);
+    } else {
+      if (line.startsWith("@@") || line.startsWith(" ") || line === "") {
+        loose = true;                             // a hunk header with no counts, a context line, a blank
+        if (!line.startsWith("@@")) { leadOld = false; leadNew = false; }
+      } else if (_UNCOUNTED.test(line) && !(pending !== null && _BINARY_LINE.test(line))) {
+        note("files", _Y1_UNCOUNTED);             // Y-1: a changed file no header pair counts
+      }
+      if (pending !== null) pending.note(line);
     }
   }
   flush();
+  if (notes !== null) Object.assign(notes, found);
   return { status, added, sides };
+}
+function _diffNotes(diffText) {
+  const notes = {};
+  _readDiff(diffText, notes);
+  return notes;
 }
 
 function parseUnifiedDiffSides(diffText) {
@@ -968,6 +1153,10 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
     if (rawInputLen) noEvidence += `; ${rawInputLen} characters of input parsed to nothing, which is a parse failure, not an empty change`;
   }
   const noPaths = status.size === 0 ? "the diff carries no file paths, so scope cannot be checked" : null;
+  // NOTE_path2_eighth_pass (Y-1): what the one reading of the diff is not sure of.
+  const notes = _diffNotes(diffText);
+  const unsureFiles = notes.files || null;
+  const notSure = unsureFiles ? `the diff's file list is not certain: ${unsureFiles}` : null;
 
   const findPath = claimed => _findPath(status, claimed);
 
@@ -995,10 +1184,12 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
           c.verdict = "UNCHECKABLE"; c.why = noEvidence; claims.push(c); continue;
         }
         if (_PATH_KINDS.has(kind)) {
-          [c.verdict, c.why] = _pathClaimVerdict(kind, d.path, findPath);
+          if (notSure) { c.verdict = "UNCHECKABLE"; c.why = notSure; }               // NOTE_path2_eighth_pass (Y-1)
+          else [c.verdict, c.why] = _pathClaimVerdict(kind, d.path, findPath);
         } else if (kind === "files_changed_count") {
           const n = parseInt(d.n, 10);
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
+          else if (notSure) { c.verdict = "UNCHECKABLE"; c.why = `${notSure}; claim says ${n}`; }
           else { c.verdict = n === status.size ? "VERIFIED" : "CONTRADICTED"; c.why = `diff changes ${status.size} files, claim says ${n}`; }
         } else if (kind === "tests_added") {
           const n = parseInt(d.n, 10);
@@ -1014,8 +1205,14 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             const net = got - chg;
             const note = chg ? ` (${chg} changed, not added: #101)` : "";
             const unread = _asyncTestsAdded(sides, status);             // NOTE_path2_seventh_pass (A-1)
+            const doubt = _testDoubt(addedBlob, sides, notes);          // NOTE_path2_eighth_pass (Y-2, Y-3)
             if (unread) {
               c.verdict = "UNCHECKABLE"; c.why = `diff adds ${unread} async test functions, which this template does not count; claim says ${n}`;
+            } else if (doubt) {
+              c.verdict = "UNCHECKABLE"; c.why = `${doubt}; claim says ${n}`;
+            } else if (net === n && _pairingWithdraws(chg)) {            // NOTE_path2_eighth_pass (Y-5)
+              c.verdict = "UNCHECKABLE";
+              c.why = `diff adds ${net} test functions and changes ${chg}, claim says ${n}; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)`;
             } else if (net === n) {
               c.verdict = "VERIFIED"; c.why = `diff adds ${net} test functions, claim says ${n}${note}`;
             } else if (BC1_BY_CONSTRUCTION && _TEST_NOUNS_NOT_FUNCTIONS.has(noun)) {
@@ -1040,9 +1237,12 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             // NOTE_path2_seventh_pass: a claimed name that runs on past the identifier (or ends in a middle
             // dot) names no identifier, and is not truncated to one.
             const [name, whyName] = _claimedName(sent, m.indices.groups.name[0]);
+            const doubt = whyName === null ? _symbolDoubt(name, addedBlob, sides) : null;   // NOTE_path2_eighth_pass (Y-2)
             const hit = whyName === null && _symbolHit(name, addedBlob);
             if (whyName !== null) {
               c.verdict = "UNCHECKABLE"; c.why = whyName;
+            } else if (doubt) {
+              c.verdict = "UNCHECKABLE"; c.why = doubt;
             } else if (hit && _definitionOnlyChanged(name, sides, status)) {
               c.verdict = "UNCHECKABLE";                                   // PATH-2 (#101)
               c.why = `added lines define ${d.kind} ${_qname(name)} only where the removed lines of the same file define it too; a changed definition is not an added one (#101)`;
@@ -1078,6 +1278,7 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
           const besideOnTree = offTree.length > 0 && offTree.length < prefs.length;
           if (besideOnTree) real = real.filter(p => !offPairs.some(([x, r]) => _couldLieUnder(p, x, r)));
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
+          else if (notSure) { c.verdict = "UNCHECKABLE"; c.why = notSure; }            // NOTE_path2_eighth_pass (Y-1)
           else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
           else if (offTree.length && !(besideOnTree && real.length)) {   // R-3, narrowed by F-4
             c.verdict = "UNCHECKABLE";
