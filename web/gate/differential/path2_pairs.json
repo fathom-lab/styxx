@@ -245,8 +245,8 @@
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 1 test functions, claim says 1 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 1; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ],
     [
      "tests_added",
@@ -260,7 +260,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was VERIFIED/UNCHECKABLE/CONTRADICTED; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:101-a-changed-def-and-a-fresh-one-elsewhere",
@@ -345,8 +346,8 @@
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 2 test functions, claim says 2 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 2 test functions and changes 1, claim says 2; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ],
     [
      "tests_added",
@@ -355,7 +356,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was CONTRADICTED/CONTRADICTED/VERIFIED/UNCHECKABLE; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:101-a-changed-test-and-a-same-named-new-one",
@@ -371,8 +373,8 @@
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 1 test functions, claim says 1 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 1; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ],
     [
      "tests_added",
@@ -381,7 +383,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was CONTRADICTED/VERIFIED/UNCHECKABLE; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:101-the-fold-under-an-A-header-pairs-nothing",
@@ -423,8 +426,8 @@
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 1 test functions, claim says 1 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 1; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ],
     [
      "tests_added",
@@ -433,7 +436,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was CONTRADICTED/VERIFIED/UNCHECKABLE; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:101-a-bom-strip-changes-a-test",
@@ -444,8 +448,8 @@
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 0; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ],
     [
      "tests_added",
@@ -454,7 +458,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was VERIFIED/UNCHECKABLE; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:101-a-bom-strip-changes-a-function",
@@ -486,12 +491,13 @@
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 2 test functions, claim says 2 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 2 test functions and changes 1, claim says 2; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was CONTRADICTED/VERIFIED; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:101-a-non-ascii-suffix-is-another-name",
@@ -752,42 +758,44 @@
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "--- a/tests/test_bom.py\n+++ b/tests/test_bom.py\n@@ -1,2 +1,4 @@\n-def test_a():\n+﻿def test_a():\n     pass\n+def test_b():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 1 test functions, claim says 0 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one; claim says 0"
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 1 test functions, claim says 1 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-2: was CONTRADICTED/VERIFIED; a U+FEFF opens the definition (at line 1 main's two ports counted it apart, elsewhere CPython refuses it), so the claim abstains"
  },
  {
   "id": "path2:r1-a-bom-on-a-changed-test-beside-two-new-ones",
   "summary": "Added 1 test. Added 2 tests.",
   "diff": "--- a/tests/test_bom.py\n+++ b/tests/test_bom.py\n@@ -1,2 +1,6 @@\n-def test_a():\n+﻿def test_a():\n     pass\n+def test_b():\n+    pass\n+def test_c():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 2 test functions, claim says 1 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one; claim says 1"
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 2 test functions, claim says 2 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one; claim says 2"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-2: was CONTRADICTED/VERIFIED; a U+FEFF opens the definition (at line 1 main's two ports counted it apart, elsewhere CPython refuses it), so the claim abstains"
  },
  {
   "id": "path2:r2-an-async-test-made-sync-is-a-changed-test",
@@ -798,8 +806,8 @@
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 0; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ],
     [
      "tests_added",
@@ -808,7 +816,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was VERIFIED/UNCHECKABLE; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:r3-a-relative-prefix-is-not-a-repo-path",
@@ -1098,8 +1107,8 @@
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 0; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ],
     [
      "tests_added",
@@ -1109,7 +1118,7 @@
    ],
    "uncovered_sentences": 0
   },
-  "repinned": "NOTE_path2_fifth_pass V-1: was VERIFIED / CONTRADICTED; a form feed is CPython indentation, so the re-indent pairs and 'Added 1 test.' abstains (#101)"
+  "repinned": "NOTE_path2_fifth_pass V-1: was VERIFIED / CONTRADICTED; a form feed is CPython indentation, so the re-indent pairs and 'Added 1 test.' abstains (#101); NOTE_path2_eighth_pass Y-5: was VERIFIED/UNCHECKABLE; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:f2-a-line-separator-is-not-a-line-break",
@@ -1493,17 +1502,17 @@
   "summary": "Adds function foo.",
   "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+﻿def foo():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "a definition of 'foo' opens with U+FEFF where the diff does not show it is line 1 of its file, the one place CPython reads one"
     ]
    ],
    "uncovered_sentences": 0
   },
-  "repinned": "NOTE_path2_sixth_pass W-1: was VERIFIED (a limit of V-1); a U+FEFF is read only where it opens line 1 of a file, and this one stands mid-file"
+  "repinned": "NOTE_path2_sixth_pass W-1: was VERIFIED (a limit of V-1); a U+FEFF is read only where it opens line 1 of a file, and this one stands mid-file; NOTE_path2_eighth_pass Y-2: was CONTRADICTED; a U+FEFF opens the definition (at line 1 main's two ports counted it apart, elsewhere CPython refuses it), so the claim abstains"
  },
  {
   "id": "path2:v1-a-next-line-led-def-is-not-a-definition",
@@ -1966,12 +1975,13 @@
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 0; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was UNCHECKABLE/VERIFIED; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:w1-an-added-line-opening-with-plus-plus-space-is-not-a-file",
@@ -2061,8 +2071,8 @@
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 1 test functions, claim says 1"
+     "UNCHECKABLE",
+     "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one; claim says 1"
     ],
     [
      "symbol_added",
@@ -2071,7 +2081,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-2: was VERIFIED/VERIFIED; a U+FEFF opens the definition (at line 1 main's two ports counted it apart, elsewhere CPython refuses it), so the claim abstains"
  },
  {
   "id": "path2:w2-a-claimed-name-with-an-accented-letter-is-read-whole",
@@ -2268,8 +2279,8 @@
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 0; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ],
     [
      "tests_added",
@@ -2278,7 +2289,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was VERIFIED/UNCHECKABLE; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:w2-a-test-name-followed-by-a-form-feed-pairs",
@@ -2289,8 +2301,8 @@
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 0; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ],
     [
      "tests_added",
@@ -2299,7 +2311,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was VERIFIED/UNCHECKABLE; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:w2-a-test-made-generic-pairs",
@@ -2310,8 +2323,8 @@
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 0; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ],
     [
      "tests_added",
@@ -2320,7 +2333,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was VERIFIED/UNCHECKABLE; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:w2-a-test-name-followed-by-a-no-break-space-defines-nothing",
@@ -2369,16 +2383,17 @@
   "summary": "1 file changed.",
   "diff": "--- a/src/a.sql\n+++ b/src/a.sql\n@@ -1,2 +1,2 @@\n x\n--- old\n+++ new\n@@ -9 +9 @@\n-a\n+b\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "CONTRADICTED",
-     "diff changes 2 files, claim says 1"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-1: was CONTRADICTED; the header after lines no count placed has no header's shape, so the file list is not certain and the claims that read it abstain"
  },
  {
   "id": "path2:v4-a-bare-dotdot-second-prefix-is-off-tree",
@@ -2443,21 +2458,22 @@
   "summary": "2 files changed. Only touches src/.",
   "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1,3 +1,4 @@\n x\n+y = 1\n--- a/lib/b.py\n+++ b/lib/b.py\n-a\n+b\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 2 files, claim says 2"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header; claim says 2"
     ],
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside 'src': ['lib/b.py']"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-1: was VERIFIED/CONTRADICTED; the header after lines no count placed has no header's shape, so the file list is not certain and the claims that read it abstain"
  },
  {
   "id": "path2:w1-an-empty-line-inside-a-hunk-is-a-context-line",
@@ -2532,26 +2548,27 @@
   "summary": "Added function foo・bar. Added 1 test. Added 0 tests.",
   "diff": "diff --git a/src/m.py b/src/m.py\nindex 7d4290a..015efd0 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n x = 1\n+def foo・bar():\n+    pass\ndiff --git a/tests/test_m.py b/tests/test_m.py\nindex da51a7a..d37459a 100644\n--- a/tests/test_m.py\n+++ b/tests/test_m.py\n@@ -1,2 +1,6 @@\n def test_z():\n     pass\n+\n+\n+def test_a・b():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "the claimed name 'foo' meets U+30FB, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently; no definition is read for it"
     ],
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 0 test functions, claim says 1"
+     "UNCHECKABLE",
+     "a test definition's name holds U+30FB, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently; claim says 1"
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0"
+     "UNCHECKABLE",
+     "a test definition's name holds U+30FB, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently; claim says 0"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-3: was CONTRADICTED/CONTRADICTED/VERIFIED; the name meets a code point the Pythons this package supports read differently (Unicode 13.0 to 16.0), so the claim abstains"
  },
  {
   "id": "path2:x1-the-name-table-is-unicode-15-for-both-ports-a-zero-width-joiner",
@@ -2562,8 +2579,8 @@
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "the claimed name 'foo' meets U+200D, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently; no definition is read for it"
     ],
     [
      "symbol_added",
@@ -2572,28 +2589,30 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-3: was CONTRADICTED/CONTRADICTED; the name meets a code point the Pythons this package supports read differently (Unicode 13.0 to 16.0), so the claim abstains"
  },
  {
   "id": "path2:x1-the-name-table-is-unicode-15-for-both-ports-a-letter-unicode-16-added",
   "summary": "Added function fooᲉbar. Added 1 test.",
   "diff": "diff --git a/src/m.py b/src/m.py\nindex 7d4290a..712a94c 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n x = 1\n+def fooᲉbar():\n+    pass\ndiff --git a/tests/test_m.py b/tests/test_m.py\nindex da51a7a..a09dd32 100644\n--- a/tests/test_m.py\n+++ b/tests/test_m.py\n@@ -1,2 +1,6 @@\n def test_z():\n     pass\n+\n+\n+def test_aᲉb():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "the claimed name 'foo' meets U+1C89, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently; no definition is read for it"
     ],
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 0 test functions, claim says 1"
+     "UNCHECKABLE",
+     "a test definition's name holds U+1C89, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-3: was CONTRADICTED/CONTRADICTED; the name meets a code point the Pythons this package supports read differently (Unicode 13.0 to 16.0), so the claim abstains"
  },
  {
   "id": "path2:x2-a-removed-a-slash-line-beside-an-added-b-slash-line-in-git-output-is-content",
@@ -2619,12 +2638,13 @@
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0 (1 changed, not added: #101)"
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 0; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-5: was VERIFIED/VERIFIED/UNCHECKABLE/VERIFIED; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
  },
  {
   "id": "path2:x2-an-over-declared-hunk-then-a-gnu-header-and-a-bare-at-at",
@@ -2693,22 +2713,22 @@
   "summary": "2 files changed. Only touches src/. Modified lib/y.py. Added 1 test.",
   "diff": "--- a/src/x.py\n+++ b/src/x.py\n@@ -1,5 +1,6 @@\n-a = 1\n+a = 2\n--- lib/y.py\n+++ lib/y.py\n\n@@ -1 +1,3 @@\n-c = 1\n+c = 2\n+def test_new():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 2 files, claim says 2"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header; claim says 2"
     ],
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside 'src': ['lib/y.py']"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header"
     ],
     [
      "file_touched",
-     "VERIFIED",
-     "diff status 'M' for 'lib/y.py'"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header"
     ],
     [
      "tests_added",
@@ -2717,29 +2737,30 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-1: was VERIFIED/CONTRADICTED/VERIFIED/VERIFIED; the header after lines no count placed has no header's shape, so the file list is not certain and the claims that read it abstain"
  },
  {
   "id": "path2:x2-an-over-declared-hunk-then-a-gnu-header-and-no-hunk-header",
   "summary": "2 files changed. Only touches src/. Modified lib/y.py. Added 1 test.",
   "diff": "--- a/src/x.py\n+++ b/src/x.py\n@@ -1,5 +1,6 @@\n-a = 1\n+a = 2\n--- lib/y.py\n+++ lib/y.py\n-c = 1\n+c = 2\n+def test_new():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 2 files, claim says 2"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header; claim says 2"
     ],
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside 'src': ['lib/y.py']"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header"
     ],
     [
      "file_touched",
-     "VERIFIED",
-     "diff status 'M' for 'lib/y.py'"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header"
     ],
     [
      "tests_added",
@@ -2748,7 +2769,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eighth_pass Y-1: was VERIFIED/CONTRADICTED/VERIFIED/VERIFIED; the header after lines no count placed has no header's shape, so the file list is not certain and the claims that read it abstain"
  },
  {
   "id": "path2:x2-an-over-declared-hunk-then-a-gnu-header-with-timestamps",
@@ -2868,6 +2890,756 @@
     ]
    ],
    "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-a-sql-comment-read-as-a-header-in-a-bare-hunk-leaves-main-s-count",
+  "summary": "Added 0 tests. Added 1 test. Added 2 tests.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@\n-def test_one():\n+def test_one(tmp_path):\n     pass\n@@\n Q = \"\"\"\n--- users\n \"\"\"\n-def test_two():\n+def test_two(tmp_path):\n     pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 1; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 2; a changed test is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-a-sql-comment-read-as-a-header-in-an-elided-hunk-leaves-main-s-count",
+  "summary": "Added 0 tests. Added 1 test. Added 2 tests.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ ... @@\n-def test_one():\n+def test_one(tmp_path):\n     pass\n@@ ... @@\n Q = \"\"\"\n--- users\n \"\"\"\n-def test_two():\n+def test_two(tmp_path):\n     pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 1; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 2; a changed test is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-a-plus-content-line-after-dotfile-twins-makes-the-file-list-unsure",
+  "summary": "3 files changed. Only touches src/.",
+  "diff": "--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\n--- a/src/c.md\n+++ b/src/c.md\n@@\n-x\n+++ plus\n y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header; claim says 3"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-one-phantom-in-an-exact-hunk-and-one-in-a-bare-hunk",
+  "summary": "2 files changed. 3 files changed.",
+  "diff": "--- a/src/c.md\n+++ b/src/c.md\n@@ -1,2 +1,2 @@\n-x\n+++ plus\n y\n--- a/src/d.md\n+++ b/src/d.md\n@@\n-x\n+++ more\n y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header; claim says 2"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header; claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-two-paths-that-differ-only-in-case-are-one-key",
+  "summary": "2 files changed. Modified tests/Test_a.py.",
+  "diff": "--- a/tests/Test_a.py\n+++ b/tests/Test_a.py\n@@ -1 +0,0 @@\n-def test_x():\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,2 @@\n x = 0\n+def test_x():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key; claim says 2"
+    ],
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-a-header-with-a-headers-shape-after-a-bare-hunk-is-read-as-one",
+  "summary": "2 files changed. Only touches src/.",
+  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@\n-a = 1\n+a = 2\n--- a/lib/b.py\n+++ b/lib/b.py\n@@\n-b = 1\n+b = 2\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['lib/b.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-an-added-line-under-no-hunk-header-makes-a-later-header-unsure",
+  "summary": "2 files changed. Only touches src/.",
+  "diff": "--- a/src/c.md\n+++ b/src/c.md\n+x\n--- src/e.md\n+++ src/d.md\n+z\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header; claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-a-context-line-under-no-hunk-header-makes-a-later-header-unsure",
+  "summary": "2 files changed. Only touches src/.",
+  "diff": "--- a/src/c.md\n+++ b/src/c.md\n x\n--- src/e.md\n+++ src/d.md\n+z\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header; claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-a-diff-git-line-ends-a-loose-stretch",
+  "summary": "2 files changed. Only touches src/.",
+  "diff": "--- a/src/c.md\n+++ b/src/c.md\n@@\n-x\n+y\ndiff --git a/src/e.md b/src/d.md\n--- a/src/e.md\n+++ b/src/d.md\n@@ -1 +1 @@\n-p\n+q\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-a-gnu-binary-line-names-a-file-no-header-pair-counts",
+  "summary": "2 files changed. Only touches src/.",
+  "diff": "diff -ru a/docs/img.png b/docs/img.png\nBinary files a/docs/img.png and b/docs/img.png differ\ndiff -ru a/src/c.md b/src/c.md\n--- a/src/c.md\t2024-01-01 00:00:00.000000000 +0000\n+++ b/src/c.md\t2024-01-01 00:00:00.000000000 +0000\n@@ -1,2 +1,2 @@\n-x\n+++ plus\n y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a line names a changed file no header pair counts (GNU's `Binary files ... differ`, `Only in ...` and the like); claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a line names a changed file no header pair counts (GNU's `Binary files ... differ`, `Only in ...` and the like)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-a-gnu-only-in-line-names-a-file-no-header-pair-counts",
+  "summary": "2 files changed. Only touches src/.",
+  "diff": "Only in b/docs: new.md\n--- a/src/c.md\n+++ b/src/c.md\n@@ -1,2 +1,2 @@\n-x\n+++ plus\n y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a line names a changed file no header pair counts (GNU's `Binary files ... differ`, `Only in ...` and the like); claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a line names a changed file no header pair counts (GNU's `Binary files ... differ`, `Only in ...` and the like)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-a-binary-line-under-a-git-header-is-counted",
+  "summary": "2 files changed. Only touches src/.",
+  "diff": "diff --git a/docs/img.png b/docs/img.png\nindex 1..2 100644\nBinary files a/docs/img.png and b/docs/img.png differ\ndiff --git a/src/c.md b/src/c.md\n--- a/src/c.md\n+++ b/src/c.md\n@@ -1,2 +1,2 @@\n-x\n+++ plus\n y\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['docs/img.png']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y1-a-declared-count-over-an-unsure-file-list",
+  "summary": "```styxx\nfiles_changed: 3\ntests_added: 0\n```\n",
+  "diff": "--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\n--- a/src/c.md\n+++ b/src/c.md\n@@\n-x\n+++ plus\n y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header; claim says 3"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "no Python file in the diff; this template counts `def` lines (#110)"
+    ]
+   ],
+   "uncovered_sentences": 4
+  }
+ },
+ {
+  "id": "path2:y2-a-created-files-line-one-bom-under-a-bare-hunk-is-line-one",
+  "summary": "Added function scan. Added 1 test. Added 0 tests.",
+  "diff": "--- /dev/null\n+++ b/tests/test_new.py\n@@\n+﻿def scan():\n+    return 1\n+def test_x():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'scan'"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y2-a-created-files-line-one-bom-under-an-over-declared-hunk-is-line-one",
+  "summary": "Added function scan. Added 1 test. Added 0 tests.",
+  "diff": "--- /dev/null\n+++ b/tests/test_new.py\n@@ -0,0 +1,5 @@\n+﻿def scan():\n+    return 1\n+def test_x():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'scan'"
+    ],
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y2-a-changed-test-beside-a-created-bom-test-under-bare-hunks",
+  "summary": "Added 0 tests. Added 1 test. Added 2 tests.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@\n-def test_old():\n+def test_old(tmp_path):\n     pass\n--- /dev/null\n+++ b/tests/test_b.py\n@@\n+﻿def test_new():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one; claim says 0"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one; claim says 1"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one; claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y2-a-bom-test-at-line-one-beside-a-string-held-def-abstains-the-count",
+  "summary": "Added 1 test. Added 2 tests.",
+  "diff": "diff --git a/tests/test_b.py b/tests/test_b.py\nnew file mode 100644\nindex 0000000..2222222\n--- /dev/null\n+++ b/tests/test_b.py\n@@ -0,0 +1,2 @@\n+﻿def test_new():\n+    pass\ndiff --git a/tests/test_c.py b/tests/test_c.py\nindex 1111111..2222222 100644\n--- a/tests/test_c.py\n+++ b/tests/test_c.py\n@@ -1 +1,4 @@\n X = 1\n+S = \"\"\"\n+def test_str():\n+\"\"\"\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one; claim says 1"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "an added test definition opens with U+FEFF, which main's Python counted as no test and its port as one; claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y2-a-deleted-files-line-one-bom-under-a-bare-hunk-is-line-one",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/old.py\n+++ /dev/null\n@@\n-﻿def foo():\n-    pass\n--- a/src/new.py\n+++ b/src/new.py\n@@ -1 +1,2 @@\n x = 0\n+def foo():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y2-an-over-declared-hunk-starting-at-one-shows-line-one",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1,3 +1,4 @@\n+﻿def foo():\n+    pass\n x = 0\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y2-a-context-line-ends-line-one-in-an-over-declared-hunk",
+  "summary": "Adds function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1,3 +1,4 @@\n x = 0\n+﻿def foo():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "a definition of 'foo' opens with U+FEFF where the diff does not show it is line 1 of its file, the one place CPython reads one"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y2-a-bom-led-definition-mid-file-abstains",
+  "summary": "Adds function foo. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n x = 0\n+﻿def foo():\n+    pass\n+﻿def test_n():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "a definition of 'foo' opens with U+FEFF where the diff does not show it is line 1 of its file, the one place CPython reads one"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "a test definition opens with U+FEFF where the diff does not show it is line 1 of its file, the one place CPython reads one; claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y3-a-claimed-name-running-into-a-unicode-16-letter",
+  "summary": "Added function fo𐗀. Added function fo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,4 @@\n a = 1\n+\n+def fo():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "the claimed name 'fo' meets U+105C0, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently; no definition is read for it"
+    ],
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'fo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y3-a-test-name-holding-a-zero-width-non-joiner",
+  "summary": "Added 1 test. Added 0 tests.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,3 @@\n x = 0\n+def test_a‌b():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "a test definition's name holds U+200C, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently; claim says 1"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "a test definition's name holds U+200C, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently; claim says 0"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y3-a-symbol-definition-running-into-a-skew-letter-defines-nothing-for-the-prefix",
+  "summary": "Added function backoff. Added function backoff‌.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n a = 1\n+def backoff‌():\n+    return 1\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'backoff'"
+    ],
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "the claimed name 'backoff' meets U+200C, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently; no definition is read for it"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y4-gnu-deletions-with-timestamps-are-two-files",
+  "summary": "3 files changed. Only touches docs/ and src/.",
+  "diff": "--- docs/a.md\t2024-01-01 00:00:00.000000000 +0000\n+++ /dev/null\t2024-01-01 00:00:00.000000000 +0000\n@@ -1 +0,0 @@\n-a\n--- docs/b.md\t2024-01-01 00:00:00.000000000 +0000\n+++ /dev/null\t2024-01-01 00:00:00.000000000 +0000\n@@ -1 +0,0 @@\n-b\n--- src/c.md\t2024-01-01 00:00:00.000000000 +0000\n+++ src/c.md\t2024-01-01 00:00:00.000000000 +0000\n@@ -1,2 +1,2 @@\n-x\n+++ plus\n y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 3 files, claim says 3"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y4-dev-null-is-the-whole-path-or-a-tab-after-it",
+  "summary": "1 file changed. Only touches docs/.",
+  "diff": "--- a/docs/a.md\n+++ /dev/nullx\n@@ -1 +0,0 @@\n-a\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'docs': ['dev/nullx']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y4-a-gnu-creation-with-a-timestamp-is-a-creation",
+  "summary": "1 file changed. Added 1 test.",
+  "diff": "--- /dev/null\t2024-01-01 00:00:00.000000000 +0000\n+++ tests/test_n.py\t2024-01-01 00:00:00.000000000 +0000\n@@ -0,0 +1,2 @@\n+def test_n():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "no Python file in the diff; this template counts `def` lines (#110)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y5-a-test-defined-in-a-markdown-block-beside-a-changed-test",
+  "summary": "Added 0 tests. Added 1 test. Added 2 tests.",
+  "diff": "diff --git a/README.md b/README.md\nindex 1111111..2222222 100644\n--- a/README.md\n+++ b/README.md\n@@ -1 +1,4 @@\n # T\n+\n+def test_doc():\n+    pass\ndiff --git a/tests/test_a.py b/tests/test_a.py\nindex 1111111..2222222 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,2 @@\n-def test_a():\n+def test_a(x):\n     pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 1; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 2; a changed test is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y5-a-def-inside-a-string-opened-in-unchanged-lines-beside-a-changed-test",
+  "summary": "Added 0 tests. Added 1 test. Added 2 tests.",
+  "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex 1111111..2222222 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -2,7 +2,8 @@ S = \"\"\"\n alpha\n beta\n+def test_s():\n gamma\n delta\n \"\"\"\n \n@@ -9,2 +10,2 @@\n-def test_a():\n+def test_a(x):\n     pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 1; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 2; a changed test is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y5-a-definition-inside-a-string-the-diff-opens",
+  "summary": "Added 1 test. Added 2 tests.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,7 @@\n-def test_b():\n+def test_b(x):\n     pass\n+S = \"\"\"\n+def test_s():\n+\"\"\"\n+def test_c():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 2 test functions, claim says 1 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 2 test functions and changes 1, claim says 2; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y5-a-definition-name-after-a-backslash",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,4 @@\n-def test_b():\n+def test_b(x):\n     pass\n+def \\\n+    test_c():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 0; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 1; a changed test is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y5-a-test-name-nfkc-changes",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,4 +1,4 @@\n-def test_ﬁ():\n+def test_fi():\n     pass\n-def test_b():\n+def test_b(x):\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 0 (1 changed, not added: #101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 1 test functions and changes 1, claim says 1; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y5-an-added-async-test-beside-a-sync-twin-the-removed-one-could-pair",
+  "summary": "Added 1 test. Added 2 tests.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,5 @@\n-async def test_f():\n+async def test_f():  # changed\n     pass\n+def test_f():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 1; a changed test is not an added one (#101)"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 0 test functions, claim says 2 (1 changed, not added: #101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y5-a-lone-cr-leaves-a-definition-line-with-no-prefix",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,3 @@\n-def test_a():\n+def test_a(x):\n     pass\n+x = 1\rdef test_y():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 0; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "diff adds 0 test functions and changes 1, claim says 1; a changed test is not an added one (#101)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:y-w1-a-removed-line-between-an-added-line-and-a-dash-line",
+  "summary": "Modified src/m.sql. 1 file changed.",
+  "diff": "--- a/src/m.sql\n+++ b/src/m.sql\n@@ -1,2 +1,1 @@\n+x\n-y\n--- z\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header; claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 1
   }
  }
 ]
