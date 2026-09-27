@@ -11,12 +11,15 @@ file's removed lines also define is changed, not added, #101; as amended by
 `AMENDMENT_path2_resolution_2026_09_17.md`: definitions pair one to one per name, `only_touches`
 lists only the paths outside by more than a dot, COMPAT's scaffold reading keeps `.storybook/` as
 scaffolding; and by `NOTE_path2_third_pass_2026_09_25.md`, `NOTE_path2_fourth_pass_2026_09_25.md`,
-`NOTE_path2_fifth_pass_2026_09_25.md`, `NOTE_path2_sixth_pass_2026_09_25.md` and
-`NOTE_path2_seventh_pass_2026_09_25.md`) on the file that carries them, sha256
-`67fb1b7510b63cccaf6f8e488466fc14748f2c1b0ace6ee940c0c73bc7cf9ced` (LF line endings; a wheel
+`NOTE_path2_fifth_pass_2026_09_25.md`, `NOTE_path2_sixth_pass_2026_09_25.md`,
+`NOTE_path2_seventh_pass_2026_09_25.md` and `NOTE_path2_eighth_pass_2026_09_27.md`) on the file that carries
+them, sha256 `d7c298d4d93fd814f1f25a8eaa4c96d90372b31459cb30055b5cebf4fa9e23da` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares), reading names by the Unicode table `styxx/_xid.py` carries (15.0.0, table sha256
-`8df68f21…`; `diffgate.js` carries the same bytes, `gen_xid.py` writes both) — and this directory is the
+`8df68f21…`) and abstaining on a name that meets the skew set beside it (the code points the Pythons the
+package supports, Unicode 13.0 to 16.0, read differently from the table; sha256 `0b7134fd…`; `diffgate.js`
+carries the same bytes, `gen_xid.py` writes both, `xid_versions.json` holds the skew set's sources) — and this
+directory is the
 receipt for that port: the differential test that holds it to the Python's output, and the build that turns
 it into the bookmarklet people drag into their bookmarks bar.
 
@@ -59,11 +62,12 @@ byte comparison reported `bookmarklet_src.js … DIFFERS`, exit 1 (NOTE_path2_fo
 B-1). Measured after the line, on this Windows checkout, with terser 5.46.0: all three `matches`,
 exit 0. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 03d1e1a1d1089a65e3976f7aaf6c0547cde3b79de7da0097b3de74c4daebdb5c   34,455 chars
-    bookmarklet.href.txt  sha256 a3368d5e9d47dfba30992bb9ed6c07a9219386f571eee7e198773e3a1842eff3   34,466 chars
+    bookmarklet.min.js    sha256 caf3682bfb99356165ebb49feb4da036e52253ac0cdd03067e7513da8e4f4daf   39,350 chars
+    bookmarklet.href.txt  sha256 be1820a50f423b7d39c9a747e64860589e8af1d2aeaddba54aa93ef7325fb31e   39,361 chars
 
-(5,417 characters more than the sixth-pass build: 3,136 of them are the name table, the rest its decoder,
-the claim-side rule, the hunk scan and the async guard.)
+(4,895 characters more than the seventh-pass build: 440 of them are the skew set, the rest its decoder and
+the eighth pass's abstentions; the seventh-pass build was 5,417 more than the sixth's, 3,136 of them the name
+table.)
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file; `4b2d34e1…`,
@@ -80,7 +84,11 @@ fifth-pass cut — reads a line opening `--- ` or `+++ ` inside a hunk as a file
 non-ASCII name where the Python does not, and reads a U+FEFF-led definition in the middle of a file;
 `5d15861e…`, 29,038 chars, the unmerged sixth-pass cut — reads identifiers by its engine's Unicode (16.0 on
 Node 24) where the Python read 15.0, and reads a GNU-style next-file header inside a hunk that declares more
-lines than it carries as content. A bookmark that hashes to any of them is an old port; drag the new one.)
+lines than it carries as content; `03d1e1a1…`, 34,455 chars, the unmerged seventh-pass cut — verifies a test
+count left after pairing changed tests away beside a `def test_` line in a markdown file or a string, counts a
+U+FEFF-led test at line 1 where a count elsewhere had balanced it, reads a file list holding a header that may
+be a SQL comment or a `++` line, and reads a name meeting a letter Unicode 15.1 or 16.0 assigned as its
+prefix. A bookmark that hashes to any of them is an old port; drag the new one.)
 
 Whatever a browser holds under that bookmark either hashes to the line above (drop the
 `javascript:` prefix) or is not this build. terser 5.46.0 produced these bytes; the same terser
@@ -101,11 +109,11 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 67fb1b75…
-                                         # and styxx/_xid.py's name table to 8df68f21…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to d7c298d4…,
+                                         # styxx/_xid.py's name table to 8df68f21… and its skew set to 0b7134fd…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 205 pinned pairs against their expect blocks
+    node check_pairs.js                  # the 240 pinned pairs against their expect blocks
 
 The pin moved twice between the last two runs of this differential, and one of those moves is a
 finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to
@@ -130,8 +138,31 @@ The corpus needed them. Before PATH-1 added these, `corpus_real.json` carried ex
 what changed is not evidence, and the honest py/js comparison for PATH-1 was run separately over
 the 604-row BENCH corpus (297 `only_touches` readings, 0 disagreements).
 
-Result, 2026-09-25, this branch after the seventh pass (`NOTE_path2_seventh_pass_2026_09_25`), merged with
+Result, 2026-09-27, this branch after the eighth pass (`NOTE_path2_eighth_pass_2026_09_27`), merged with
 `main` at `2a6ce0a3` (whose `styxx/diffgate.py` is the one at `98a5c368`):
+
+    3416 pairs, 7259 claims (715 verified, 1595 contradicted, 4949 uncheckable) — 0 disagreement(s)
+    240 pinned pairs, 0 disagreement(s)
+
+The same 3,416 pairs with `main` on both sides read **41** disagreements, with the seventh-pass head on both
+sides **0**. With `main`'s Python on one side and this port on the other, **248** records differ — what
+`py_side.py --installed` measures against 7.48.0, whose file is `main`'s; this Python against `main`'s port,
+259. Against the seventh-pass head, 52 records move in the Python and 52 in the port, every one a pinned pair
+this pass added or re-pinned — no generated record moves. The minified bookmarklet, loaded in Node with the
+browser stubbed, reads the 240 pinned pairs as the Python does.
+
+The eighth pass adds no reading `main` lacked except one repair: where this branch cannot be sure it reads a
+claim at least as well as `main`, it abstains, identically here and in the Python (the note, section B). A
+file list read from a `---`/`+++` line that may be a SQL comment or a `++` line, holding two paths one key in
+case, or missing a file GNU names outside any header pair abstains the count, the scope and the path claims
+(Y-1). A U+FEFF-led definition the diff does not show is line 1 abstains the claim that could read it, and any
+U+FEFF-led added test abstains the test count (Y-2). A name that meets a code point the supported Pythons read
+differently from the table abstains (Y-3). A count equal to what the #101 pairing leaves abstains: the pairing
+withdraws and never verifies (Y-5). And GNU's `+++ /dev/null<TAB>timestamp` is a deletion again (Y-4). Measured on
+every door under Python 3.12 and 3.14 with CPython as the judge (the note, section E): 0 claims read worse than
+on `main`, and 0 Python/port disagreements `main` did not have.
+
+Result at the seventh pass, kept as it was measured:
 
     3381 pairs, 7186 claims (722 verified, 1594 contradicted, 4870 uncheckable) — 0 disagreement(s)
     205 pinned pairs, 0 disagreement(s)
@@ -208,6 +239,10 @@ reads names and Python's `\w` from the pinned 15.0.0 table, not its engine; what
 Unicode is the claim templates' own JavaScript classes (above) and 27 code points that lower-case
 differently.
 
+At the eighth pass, against `origin/main`, PATH-2 moves **248** of the 3,416 records in the Python and
+**259** in the port; against the seventh-pass head, 52 and 52, every one a pinned pair this pass added or
+re-pinned — no generated record moves.
+
 At the seventh pass, against `origin/main`, PATH-2 moves **213** of the 3,381 records in the Python and
 **227** in the port; against the sixth-pass head, 11 and 14, every one a pinned pair this pass added — no
 generated record moves.
@@ -223,6 +258,23 @@ files. The fifth pass itself moves, of the 3,301 records that predate it, the fo
 changed generic definitions pair and abstain) and **90 fuzzed records**, 92 claims CONTRADICTED →
 UNCHECKABLE: the fuzzer writes `docs/.` followed by a sentence period, and V-4 reads a prefix written to
 end in `..` as the parent it spells. No real-corpus record moves.
+
+`path2_gates.py differential` at the eighth pass, from a clean tree at `56320b90` (the scorer, the harness,
+`styxx/diffgate.py` and `styxx/_xid.py` unmodified; this README and the CHANGELOG were not yet committed and
+are not files the scorer's provenance reads): exit 0, every gate passes, no violation; 248 records moved.
+Claims attributed to #97 27, #121 28, #101 51, F-2 16, F-3 4, V-1 13, V-4 94, W-1 15, Y-1 16, Y-2 7, and to
+sets #101+A-1 2, #101+F-2+V-1+W-2 2, #101+V-1 4, #101+V-1+W-2 4, #101+W-1 4, #101+Y-2 3, #121+V-4 2,
+#121+Y-1 10, F-2+V-1 4, F-2+Y-1 2, F-3+V-1+W-2 6, F-3+Y-3 5, V-1+W-2 4, V-1+W-2+Y-3 1, W-1+Y-1 6, W-1+Y-2 8
+(38 joint); no claim is attributed to Y-4 or Y-5, alone or in a set. New accusations 16: `only_touches` 4
+through the amendment's dotted-prefix exception and 12 explained only by post-amendment rules, for which
+G-C3 is not asked (F-2 1, F-2+V-1 1, F-3 2, F-3+V-1+W-2 3, V-1 `symbol_added` 5). `compat2_candidate` flips
+8, each one rule alone (F-2 six False → True, W-1 one each way); the gate-level fields moved on 2 records,
+both given back by F-2; 4 F-4 withdrawals. **G-C7**: 0 oracle violations over the 3,416 records, declared and
+file-list claims included; the scorer refuses to start unless the name table equals Python 3.12's 15.0.0
+database code point by code point and the skew set is the one its sources give, each hashing to the sha256
+the scorer pins. **G-C8**: every one of the 3,416 records tried, 1,076 rebuilt as repositories and scored
+through `gate_diff`, 2,340 not rebuildable faithfully; 122 moved, all attributed; 0 violations. Scorer
+`9eec3d6c…`, harness `75bfbc39…`, repaired `diffgate.py` `d7c298d4…`, baseline `98a5c368`.
 
 `path2_gates.py differential` at the seventh pass, from a clean tree at `a6a215be` (the scorer, the harness,
 `styxx/diffgate.py` and `styxx/_xid.py` unmodified; this README and the tests were not yet committed and are
@@ -352,8 +404,8 @@ not ours to republish. It carried zero diff-shaped claims, so the claim count is
 `9b620e00…` (LF) — the wheel built at the cut carries that file — which this branch changes. So
 `pip install styxx` gives a file the port does not match, and `python py_side.py --installed` against it
 disagrees by the PATH-2 repairs: on the seventh pass's 3,381 pairs, 213 records with the port on one side
-and 7.48.0's file on the other (the same file as `main`'s, measured in section *The differential test*; the
-sixth pass measured 205 on its 3,366).
+and 7.48.0's file on the other (the same file as `main`'s, measured in section *The differential test*); on
+the eighth pass's 3,416, 248 (the sixth pass measured 205 on its 3,366).
 When PATH-2 merges and a release carries it, `--installed` should read 0 again.
 
 The measurement below is the older one, kept as it was taken: 7.47.0, the release before, whose file the
