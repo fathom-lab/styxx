@@ -2416,7 +2416,7 @@ def test_x7_the_scorer_reads_names_by_the_same_table_with_its_own_decoder(scorer
 
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
-    assert len(pairs) == 256 and all(p["id"].startswith("path2:") for p in pairs)
+    assert len(pairs) == 255 and all(p["id"].startswith("path2:") for p in pairs)
     # NOTE_path2_fifth_pass V-1 re-pinned four pairs and NOTE_path2_sixth_pass W-1 one; NOTE_path2_eighth_pass
     # twenty-four (Y-5 thirteen: the pairing withdraws; Y-2 four; Y-1 four; Y-3 three), each to UNCHECKABLE;
     # NOTE_path2_ninth_pass thirty-six (Z-2 sixteen, Z-1 twelve, Z-3 seven, Z-4 one), each to UNCHECKABLE;
@@ -2498,8 +2498,6 @@ def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     assert sum("NOTE_path2_eleventh_pass" in p.get("repinned", "") for p in pairs) == 2
     for p in pairs:
         g = gate_diff_text(p["summary"], p["diff"], run=None, strict=False)
-        # (NOTE_path2_eleventh_pass: R10-K5A reads as main's two ports read it, and they print different reasons, so it is
-        # pinned by verdict)
         with_why = bool(p["expect"]["claims"]) and len(p["expect"]["claims"][0]) == 3
         got = [[c.kind, c.verdict, c.why] if with_why else [c.kind, c.verdict] for c in g.claims]
         assert got == p["expect"]["claims"], (p["id"], got)

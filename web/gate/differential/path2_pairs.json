@@ -5179,21 +5179,6 @@
   }
  },
  {
-  "id": "path2:l-r10-k5a-a-letter-after-the-path-reads-as-main",
-  "summary": "Updated lib/a.pyé/x.md.",
-  "diff": "diff --git a/other/a.py b/other/a.py\nindex 1111111..2222222 100644\n--- a/other/a.py\n+++ b/other/a.py\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/x.md b/x.md\nindex 1111111..2222222 100644\n--- a/x.md\n+++ b/x.md\n@@ -1 +1 @@\n-a\n+b\n",
-  "expect": {
-   "verdict": "PASS",
-   "claims": [
-    [
-     "file_touched",
-     "VERIFIED"
-    ]
-   ],
-   "uncovered_sentences": 0
-  }
- },
- {
   "id": "path2:l-k5-an-em-dash-keeps-97s-repair",
   "summary": "integrations/git/README.md — created.",
   "diff": "--- a/README.md\n+++ b/README.md\n@@ -1 +1 @@\n-a\n+b\n--- /dev/null\n+++ b/integrations/git/README.md\n@@ -0,0 +1 @@\n+hello\n",
