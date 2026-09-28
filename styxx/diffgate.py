@@ -415,6 +415,7 @@ from ._xid import continues_identifier as _xid_continues  # noqa: E402
 from ._xid import in_skew as _xid_skew  # noqa: E402
 from ._xid import is_word as _xid_word  # noqa: E402
 from ._xid import opens_identifier as _xid_opens  # noqa: E402
+from ._fold import fold as _case_fold  # noqa: E402  (NOTE_path2_tenth_pass, K-2)
 
 # NOTE_path2_eighth_pass_2026_09_27. The convergence principle: wherever this branch's new reading cannot be
 # sure it reads a claim at least as well as main, it ABSTAINS -- in both ports, with a reason that names the
@@ -937,20 +938,23 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
     clean_plus = -1                          # Y-1: the `+++ ` line of a header pair read with a header's shape
     lead_old = lead_new = False            # Y-2: the next removed / added line read outside the counts is line 1
     found: dict = {}
-    forms: dict = {}                         # Y-1: each key's header path as written, case kept
+    forms: dict = {}                         # Y-1: each header path as written, case kept, by its fold (K-2)
     inside: set = set()                      # Z-3: the lines an exact hunk's counts read (W-1)
     soft: list = []                          # Z-3: doubts main's reading of the file list also held
+    binary = False                           # K-4: inside a `GIT binary patch` block (until a blank line)
 
-    def register(raw_path: str, key: str) -> None:
+    def register(raw_path: str) -> None:
         # Y-1: the key lower-cases, so two files whose paths differ only in case are one key -- one count, one
-        # side -- on main too; a count main's other errors balanced is not sure
+        # side -- on main too; a count main's other errors balanced is not sure. NOTE_path2_tenth_pass (K-2): two
+        # paths are compared by the one fold both ports carry, not by this runtime's lower-casing (the Pythons and
+        # the port read 67 code points differently); every pair any supported runtime keys alike folds alike
         form = _LEADING_SLASH_SEGMENTS.sub("", raw_path.replace("\\", "/"))
-        if forms.setdefault(key, form) != form:
+        if forms.setdefault(_case_fold(form), form) != form:
             found.setdefault("files", _Y1_COLLIDE)
 
     def flush() -> None:
         if pending is not None and pending.path():
-            register(pending.a if pending.status == "D" else pending.b, pending.path())
+            register(pending.a if pending.status == "D" else pending.b)
             if pending.path() not in status:
                 status[pending.path()] = pending.status
             sides.setdefault(pending.path(), ([], []))
@@ -1000,7 +1004,7 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
             flush()
             pending = _Pending(line)
             cur = None
-            loose = False
+            loose = binary = False
             lead_old = lead_new = False
         elif line.startswith("--- "):
             if loose:                            # Y-1: after lines no count placed, a header is not certain
@@ -1018,16 +1022,24 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
             new = line[4:].strip()
             if pending is not None and pending.path() and \
                     _pair_names((old_path or "") if _dev_null(new) else new) not in (_norm(pending.a), _norm(pending.b)):
-                soft.append(_Z3_REPLACED.format(pending.path()))      # Z-3: dropped, as main dropped it
-            if _dev_null(new):                   # Y-4: a GNU timestamp after /dev/null
-                status[_norm(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
-                raw = old_path[2:] if old_path and old_path.startswith("a/") else (old_path or "")
+                soft.append(_Z3_REPLACED.format(_shown(pending.path())))   # Z-3: dropped, as main dropped it
+            if _dev_null(new) and old_path is None:
+                # NOTE_path2_tenth_pass (K-3): a deletion with no `---` line before it names no file, and is not read
+                # as one. main raised on it where its own reading held no `---` line either (every claim then abstains:
+                # Z-1 to Z-3 read main as raising); where main read one this reading does not -- inside an exact hunk,
+                # or before a `+++ /dev/null<TAB>` it did not read as /dev/null -- Z-3 abstains the file-list claims.
+                # This reading raised there, where main did not.
+                cur = None
             else:
-                raw = new[2:] if new.startswith("b/") else new
-                status[_norm(raw)] = "A" if (old_path is None or _dev_null(old_path)) else "M"
-            cur = _norm(raw)
-            register(raw, cur)
-            sides.setdefault(cur, ([], []))
+                if _dev_null(new):               # Y-4: a GNU timestamp after /dev/null
+                    status[_norm(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
+                    raw = old_path[2:] if old_path.startswith("a/") else old_path
+                else:
+                    raw = new[2:] if new.startswith("b/") else new
+                    status[_norm(raw)] = "A" if (old_path is None or _dev_null(old_path)) else "M"
+                cur = _norm(raw)
+                register(raw)
+                sides.setdefault(cur, ([], []))
             pending = None
             # Y-2: a created file's opening added line, a deleted file's opening removed line, is line 1
             lead_new = old_path is not None and _header_shape(old_path) == "/dev/null"
@@ -1063,8 +1075,15 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
                 loose = True                     # a hunk header with no counts, a context line, a blank
                 if not line.startswith("@@"):
                     lead_old = lead_new = False
+                if line == "":
+                    binary = False
             elif _UNCOUNTED.match(line) and not (pending is not None and _BINARY_LINE.match(line)):
                 found.setdefault("files", _Y1_UNCOUNTED)   # Y-1: a changed file no header pair counts
+            elif line == "GIT binary patch" or _BINARY_PATCH.match(line):
+                binary = True                    # K-4: its `literal N`/`delta N` blocks, each ended by a blank line
+            elif not (binary or line.startswith("\\") or _GIT_META.match(line)
+                      or (pending is not None and _BINARY_LINE.match(line))):
+                soft.append(_Z3_UNPLACED)        # K-4: a line no reading places may name a file neither counts
             if pending is not None:
                 pending.note(line)
     flush()
@@ -1078,9 +1097,19 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
 
 _Z3_SHAPED = ("main's reading also took a `---`/`+++` pair after lines no hunk count holds for a header because it "
               "has a header's shape, and it may be content (a SQL `-- ` comment beside a `++` line)")
-_Z3_REPLACED = ("main's reading also dropped the `diff --git` file {!r} for the next `---`/`+++` pair, which names "
+_Z3_REPLACED = ("main's reading also dropped the `diff --git` file {} for the next `---`/`+++` pair, which names "
                 "another")
 _Z3_UNREAD = "main's reading also dropped a `diff --git` file whose header paths neither reading can read"
+# NOTE_path2_tenth_pass (K-4): a line outside every header, hunk and git extended header that neither reading places --
+# git's `Submodule p a..b` under diff.submodule=log, svn's `Index:` and `Cannot display` blocks, hg's `diff -r` and
+# `Binary file p has changed`, and formats not listed -- may name a changed file neither reading counts; beside a
+# licensed difference (#121's dotted key) the repair may have removed the error that balanced it.
+_Z3_UNPLACED = ("main's reading also passed over a line no reading places, which may name a changed file neither "
+                "reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like)")
+_BINARY_PATCH = re.compile(r"^(?:literal|delta) [0-9]+$")      # a block of git's binary patch (git-diff(1) --binary)
+# git's extended header lines (git-diff(1), "generating patch text with -p"), which both readings read as a header's
+_GIT_META = re.compile(r"^(?:index |old mode |new mode |deleted file mode |new file mode |copy from |copy to |"
+                       r"rename from |rename to |similarity index |dissimilarity index )")
 
 
 def _pair_names(raw: str) -> str:
@@ -1102,10 +1131,12 @@ def _diff_notes(diff_text: str) -> dict:
 
 def _status_notes(paths: list) -> dict:
     """NOTE_path2_eighth_pass (Y-1), the git door: git's `--name-status` is a sure file list, except where two of
-    its paths differ only in case, which the key reads as one file."""
+    its paths differ only in case, which the key reads as one file. NOTE_path2_tenth_pass (K-2): compared by the one
+    fold both ports carry, as the raw door compares them."""
     forms: dict = {}
     for p in paths:
-        forms.setdefault(_norm(p), set()).add(_LEADING_SLASH_SEGMENTS.sub("", p.replace("\\", "/")))
+        form = _LEADING_SLASH_SEGMENTS.sub("", p.replace("\\", "/"))
+        forms.setdefault(_case_fold(form), set()).add(form)
     return {"files": _Y1_COLLIDE} if any(len(v) > 1 for v in forms.values()) else {}
 
 
@@ -1143,6 +1174,16 @@ def _files_unsure(notes: dict | None):
 #        refuses defines nothing -- makes tests_added abstain, and symbol_added where the claimed name's definition
 #        is in that file.
 # None of them gives a verdict main could not give: each only turns this reading's verdict into an abstention.
+#
+# NOTE_path2_tenth_pass_2026_09_28: the licences are #97's exact and suffix tiers, #121's dotted key and #101's
+# pairing, and no other. W-1's exact hunk licensed a file main read from content being removed, and that file had
+# balanced a changed file neither reading counts (git's `Submodule` line, svn's and hg's binary notices): K-1 abstains
+# the file list wherever main's reading with an exact hunk's lines is not its reading without them. Beside #121's
+# dotted key, a line no reading places is such a doubt too (K-4). Y-1's collision compares two header paths by one
+# fixed case fold (styxx/_fold.py), not by the runtime's lower-casing (K-2). A `+++ /dev/null` with no `---` line
+# before it names no file instead of raising where main did not (K-3). A path claim the two ports' templates may
+# read apart reads as main read it (K-5). A key a Z-3 or Z-4 reason prints is folded and ascii()-escaped, so the
+# reason is the same on every runtime.
 
 
 def _chars(cps) -> str:
@@ -1281,9 +1322,10 @@ def _main_touches_python(status) -> bool:
 class _MainReading:
     """NOTE_path2_ninth_pass: main's reading of one diff's added lines, in its two spellings, and BC-1's answer on
     main's file list(s). `raises` when main's reading of the file list raises."""
-    __slots__ = ("added_py", "added_js", "tests", "python", "raises")
+    __slots__ = ("added_py", "added_js", "tests", "python", "raises", "maps")
 
     def __init__(self, diff_text: str, maps: tuple):
+        self.maps = maps                     # NOTE_path2_tenth_pass (K-5): main's file list(s), its Python's leading
         self.added_py = _main_added(_py_lines(diff_text))
         self.added_js = _main_added(_diff_lines(diff_text))
         # `^\s*def test_` over the added lines joined by \n: a line start only after \n in the Python (re.M), also
@@ -1452,6 +1494,26 @@ def _whole_file_symbol(name: str, added_blob: str, sides: dict | None):
     return None
 
 
+def _read_apart(claimed: str, before: str) -> bool:
+    """NOTE_path2_tenth_pass (K-5): whether the two ports' path templates may read this claim's path apart. The path
+    template's `\\w` is Python's (Unicode) here and ASCII in the port, and the `[^.!?\\n]{0,60}?` before it lets the
+    port start the path past a character it cannot hold, so a path holding a non-ASCII character, or one the sentence
+    runs into from a non-ASCII character, is another path in the other port (`Docs/<U+A7D0>/a.md` here, `/a.md`
+    there). main read each in its two ports as that port's template reads it; this reading licenses no difference
+    the two ports do not share, so such a claim reads as main read it (`_main_find`)."""
+    return not claimed.isascii() or not before.isascii()
+
+
+def _main_find(main_map: dict, claimed: str):
+    """NOTE_path2_tenth_pass (K-5): main's own resolution of a path claim over main's file list -- one loop in diff
+    order, the earliest entry the claim matches exactly, by suffix or by basename."""
+    c = _main_key(claimed)
+    for p, st in main_map.items():
+        if p == c or p.endswith("/" + c) or Path(p).name == Path(c).name:
+            return p, st
+    return None, None
+
+
 def _basename_only(status: dict, claimed: str):
     """Z-4: why a path claim with a directory component that only the basename tier matches abstains, else None."""
     c = _norm(claimed)
@@ -1461,7 +1523,14 @@ def _basename_only(status: dict, claimed: str):
     if p is None or p == c or p.endswith("/" + c):
         return None
     return (f"{claimed!r}: only a file with the same name in another directory is in the diff "
-            f"({p!r}, status {st!r}); #97 licenses the exact and suffix tiers only")
+            f"({_shown(p)}, status {st!r}); #97 licenses the exact and suffix tiers only")
+
+
+def _shown(key: str) -> str:
+    """NOTE_path2_tenth_pass: a key as a Z-3 reason prints it, the same on every runtime -- folded by the one table (a
+    key is the runtime's lower case, which the supported runtimes read differently for 67 code points) and escaped as
+    ascii() escapes it (repr() asks the runtime which characters it can print)."""
+    return ascii(_case_fold(key))
 
 
 def _licensed_against(status: dict, main: dict):
@@ -1473,12 +1542,12 @@ def _licensed_against(status: dict, main: dict):
         groups.setdefault(_undotted(k), []).append((k, st))
     for k, st in main.items():
         if k not in groups:
-            return f"main reads {k!r} ({st!r}), which this reading does not"
+            return f"main reads {_shown(k)} ({st!r}), which this reading does not"
     for u, ks in groups.items():
         if u not in main:
-            return f"this reading reads {ks[0][0]!r} ({ks[0][1]!r}), which main does not"
+            return f"this reading reads {_shown(ks[0][0])} ({ks[0][1]!r}), which main does not"
         if main[u] not in [st for _k, st in ks]:
-            return f"main reads {u!r} as {main[u]!r}, this reading {ks[0][0]!r} as {ks[0][1]!r}"
+            return f"main reads {_shown(u)} as {main[u]!r}, this reading {_shown(ks[0][0])} as {ks[0][1]!r}"
     return None
 
 
@@ -1489,22 +1558,51 @@ def _apart(py: dict, js: dict) -> str:
     """Z-3: the first place main's Python's file list and its port's differ, in words."""
     for k, st in py.items():
         if k not in js:
-            return f"main's Python reads {k!r} ({st!r}), which its port does not"
+            return f"main's Python reads {_shown(k)} ({st!r}), which its port does not"
         if js[k] != st:
-            return f"main's Python reads {k!r} as {st!r}, its port as {js[k]!r}"
+            return f"main's Python reads {_shown(k)} as {st!r}, its port as {js[k]!r}"
     k, st = next((k, st) for k, st in js.items() if k not in py)
-    return f"main's port reads {k!r} ({st!r}), which its Python does not"
+    return f"main's port reads {_shown(k)} ({st!r}), which its Python does not"
+
+
+def _w1_moved(full, skipped) -> str:
+    """K-1: the earliest place main's file list read with an exact hunk's lines (`full`) and without them (`skipped`)
+    differ, in words."""
+    if skipped is None:
+        return "without those lines main raises (`+++ /dev/null` with no `---` line before it)"
+    for k, st in full.items():
+        if k not in skipped:
+            return f"main reads {_shown(k)} ({st!r}) from them"
+        if skipped[k] != st:
+            return f"main reads {_shown(k)} as {st!r} with them, as {skipped[k]!r} without"
+    k, st = next((k, st) for k, st in skipped.items() if k not in full)
+    return f"main reads {_shown(k)} ({st!r}) only without them"
+
+
+_K1_WHY = ("main read the file list from lines an exact hunk's counts hold, which W-1 reads as content ({}); a "
+           "changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference")
 
 
 def _file_list_differs(diff_text: str, lines: list, status: dict, inside: set, soft: list):
-    """Z-3 at the raw door: why this reading's file list is not licensed against main's, else None."""
+    """Z-3 at the raw door: why this reading's file list is not licensed against main's, else None.
+
+    NOTE_path2_tenth_pass (K-1): W-1's exact hunk no longer licenses a file-list difference. Where main's reading of the
+    file list with the lines an exact hunk's counts hold is not its reading without them, main read a file (or a
+    status) from content; that error may have balanced a changed file neither reading counts (git's `Submodule`
+    line under diff.submodule=log, svn's `Cannot display` block, hg's `Binary file ... has changed`, and formats not
+    listed), so the file-list claims abstain."""
     py, js = _main_status(_py_lines(diff_text), False), _main_status(lines, True)
     if py is None or js is None:
         return f"{_Z3_PREFIX}: main raises on it (`+++ /dev/null` with no `---` line before it)"
     if py != js:
         return (f"main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript "
                 f"does not): {_apart(py, js)}")
-    why = _licensed_against(status, _main_status(lines, False, skip=inside))
+    full, skipped = _main_status(lines, False), _main_status(lines, False, skip=inside)
+    if full is None:
+        return f"{_Z3_PREFIX}: main raises on it (`+++ /dev/null` with no `---` line before it)"
+    if skipped != full:
+        return f"{_Z3_PREFIX}: " + _K1_WHY.format(_w1_moved(full, skipped))
+    why = _licensed_against(status, full)
     if why:
         return f"{_Z3_PREFIX} where no repair accounts for it: {why}"
     if soft and set(status) != set(js):
@@ -2438,9 +2536,14 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     claims.append(c)
                     continue
                 if kind in _PATH_KINDS:
-                    only_name = None if not_sure else _basename_only(status, d["path"])
+                    at = m.start("path")
+                    apart = main is not None and _read_apart(d["path"], sent[at - 1:at])
+                    only_name = None if (not_sure or apart) else _basename_only(status, d["path"])
                     if not_sure:                        # NOTE_path2_eighth_pass (Y-1)
                         c.verdict, c.why = "UNCHECKABLE", not_sure
+                    elif apart:                         # NOTE_path2_tenth_pass (K-5): as main read it
+                        c.verdict, c.why = _path_claim_verdict(kind, d["path"],
+                                                               lambda claimed: _main_find(main.maps[0], claimed))
                     elif only_name:                     # NOTE_path2_ninth_pass (Z-4)
                         c.verdict, c.why = "UNCHECKABLE", only_name
                     else:
