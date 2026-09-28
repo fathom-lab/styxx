@@ -128,6 +128,92 @@ def _claims(summary, diff):
     return g, [(c.kind, c.verdict, c.why) for c in g.claims]
 
 
+# NOTE_path2_ninth_pass_2026_09_27: main's reading, written out a third time for the tests (the instrument and the
+# scorer each carry their own). The licensed-difference rule turns an earlier pass's verdict into an abstention where
+# main's reading differs from this one's: `_ninth` does that to an earlier pass's expected claims, so each earlier
+# test still pins the reading it was written for, and now also the abstention that reading earns.
+Z1_TAIL = "(`^\\s*def test_` over main's line split); no repair licenses the difference"
+Z2_TAIL = "(`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
+Z5_WHY = ("is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this "
+          "reading reads it line by line")
+Z4_TAIL = "#97 licenses the exact and suffix tiers only"
+_JS_SPACE = re.escape("".join(map(chr, (9, 10, 11, 12, 13, 32, 0xA0, 0x1680, *range(0x2000, 0x200B), 0x2028, 0x2029,
+                                        0x202F, 0x205F, 0x3000, 0xFEFF))))
+_LS_PS = chr(0x2028) + chr(0x2029)
+_ANY_SPACE = "[\\s" + chr(0xFEFF) + "]"
+
+
+def _main_added(diff, js):
+    lines = re.split("\r\n|\r|\n", diff) if js else diff.splitlines()
+    return [x[1:] for x in lines if x.startswith("+") and not x.startswith("+++")]
+
+
+def _main_tests(diff):
+    """main's `got`: its Python's (str.splitlines(), `re`'s \\s, `^` after \\n) and its port's (\\r\\n, \\r and \\n;
+    JavaScript's \\s; `^` after \\n, U+2028 and U+2029)."""
+    py = len(re.findall(r"^\s*def test_", "\n".join(_main_added(diff, False)), re.M))
+    js = len(re.findall("(?:^|(?<=[" + _LS_PS + "]))[" + _JS_SPACE + "]*def test_", "\n".join(_main_added(diff, True)),
+                        re.M))
+    return py, js
+
+
+def _main_hits(diff, name):
+    """main's `hit` in each spelling (the port's name is the ASCII run the port's template captures)."""
+    py = re.search(r"^\s*(?:def|class)\s+" + re.escape(name) + r"\b", "\n".join(_main_added(diff, False)), re.M)
+    js_name = re.match(r"[A-Za-z_][A-Za-z0-9_]*", name).group(0)
+    js = re.search("(?:^|(?<=[" + _LS_PS + "]))[" + _JS_SPACE + "]*(?:def|class)[" + _JS_SPACE + "]+"
+                   + re.escape(js_name) + "(?![A-Za-z0-9_])", "\n".join(_main_added(diff, True)), re.M)
+    return py is not None, js is not None
+
+
+def _refused(line):
+    m = re.match("^" + _ANY_SPACE + "*(?:async" + _ANY_SPACE + "+)?(?:def|class)" + _ANY_SPACE + "+", line)
+    return (m is not None and m.end() < len(line) and (line[m.end()].isidentifier() or dg._xid_skew(line[m.end()]))
+            and dg._defined_name(line, True) is None)
+
+
+_EARLIER = ("async test functions, which this template does not count", "U+FEFF", "Unicode 13.0 to 16.0",
+            "no Python file in the diff", "the claimed name")
+
+
+def _ninth(diff, earlier, name="foo"):
+    """An earlier pass's expected (kind, verdict, why) claims over a raw diff, as the ninth pass reads them: Z-1 and
+    Z-2 (this reading's `got` or `hit` against main's) and then Z-5 (a refused definition line), after the abstentions
+    that precede them (BC-1, A-1, Y-2, Y-3, the claimed name's own rules)."""
+    blob = parse_unified_diff(diff)[1]
+    sides = parse_unified_diff_sides(diff)
+    got, (py, js) = dg._added_tests(blob), _main_tests(diff)
+    refused = [p for p, (a, _r) in sides.items() if p.endswith(".py") and any(_refused(x) for x in a)]
+    out = []
+    for kind, verdict, why in earlier:
+        if verdict == "UNCHECKABLE" and any(x in why for x in _EARLIER):
+            out.append((kind, verdict, why))
+        elif kind == "tests_added":
+            n = re.search(r"claim says (\d+)", why).group(1)
+            if not got == py == js:
+                out.append((kind, "UNCHECKABLE", f"this reading counts {got} added test definitions where main's Python "
+                                                 f"counted {py} and its port {js} {Z1_TAIL}; claim says {n}"))
+            elif refused:
+                out.append((kind, "UNCHECKABLE", f"an added definition line in {refused[0]!r} {Z5_WHY}; claim says {n}"))
+            else:
+                out.append((kind, verdict, why))
+        elif kind == "symbol_added":
+            hit = dg._symbol_hit(name, blob)
+            mp, mj = _main_hits(diff, name)
+            holding = [p for p in refused if any(dg._defines(x, name) for x in sides[p][0])]
+            if not hit == mp == mj:
+                out.append((kind, "UNCHECKABLE", f"this reading finds {'an' if hit else 'no'} added definition of "
+                                                 f"'{name}' where main's Python {'did' if mp else 'did not'} and its "
+                                                 f"port {'did' if mj else 'did not'} {Z2_TAIL}"))
+            elif hit and holding:
+                out.append((kind, "UNCHECKABLE", f"an added definition line in {holding[0]!r} {Z5_WHY}"))
+            else:
+                out.append((kind, verdict, why))
+        else:
+            out.append((kind, verdict, why))
+    return out
+
+
 # ────────────────────────────────────────────────────────────────────────── #97
 
 def test_97_an_exact_match_is_not_shadowed_by_an_earlier_basename():
@@ -155,10 +241,16 @@ def test_97_an_exact_match_beats_an_earlier_suffix_match():
 
 
 def test_97_a_basename_still_resolves_when_nothing_stronger_exists():
-    # the disclosed limit: a claim that names a directory still meets a same-named file elsewhere
+    # the disclosed limit: a claim that names a directory still meets a same-named file elsewhere -- and since
+    # NOTE_path2_ninth_pass (Z-4) it no longer verifies there: only the exact and suffix tiers are #97's licence
     diff = "--- a/lib/util/helpers.py\n+++ b/lib/util/helpers.py\n@@ -1 +1 @@\n-a = 1\n+a = 2\n"
     _, got = _claims("Modified src/helpers.py.", diff)
-    assert got == [("file_touched", "VERIFIED", "diff status 'M' for 'lib/util/helpers.py'")]
+    assert dg._find_path(parse_unified_diff(diff)[0], "src/helpers.py") == ("lib/util/helpers.py", "M")
+    assert got == [("file_touched", "UNCHECKABLE", "'src/helpers.py': only a file with the same name in another "
+                                                   f"directory is in the diff ('lib/util/helpers.py', status 'M'); {Z4_TAIL}")]
+    # a bare name is resolved by the suffix tier and still verifies
+    assert _claims("Modified helpers.py.", diff)[1] == [("file_touched", "VERIFIED",
+                                                         "diff status 'M' for 'lib/util/helpers.py'")]
 
 
 @pytest.mark.parametrize("claimed", ["README.md", "readme.md", "git/README.md", "integrations/git/README.md",
@@ -822,20 +914,27 @@ def test_f2_the_four_classes_the_ports_split_on_differently_now_read_alike(ch):
     # Round 3, review 2: `-def test_a():` / `+<ch>def test_a():` is a re-indent; the port said
     # "Added 1 test." VERIFIED where the Python said CONTRADICTED. The pinned pairs hold the port.
     _, got = _claims("Added 0 tests. Added 1 test.", _reindent(ch))
-    assert got == (REINDENT_AS_CHANGED if ch == "\x0c" else REINDENT_AS_NOTHING)
+    # NOTE_path2_ninth_pass (Z-1): the two readings still hold (`_ninth` keeps them) wherever main's two ports counted
+    # what this reading counts; here main's Python split the line and its port did not, so the count abstains
+    assert got == _ninth(_reindent(ch), REINDENT_AS_CHANGED if ch == "\x0c" else REINDENT_AS_NOTHING)
+    assert all(v == "UNCHECKABLE" for _k, v, _w in got)
 
 
 def test_f2_a_separator_inside_a_line_no_longer_forges_a_line():
     ctx = ("--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,2 @@\n x\u2028+def test_new():\n"
            "-y = 0\n+y = 1\n")
     _, got = _claims("Added 1 test.", ctx)
-    assert got == [("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")]
+    assert got == _ninth(ctx, [("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")])
     hdr = ("--- a/src/a.py\n+++ b/src/a.py\n@@ -1,2 +1,2 @@\n x\u2028+++ b/evil.py\n-y = 0\n+y = 1\n"
            "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-a\n+b\n")
     assert parse_unified_diff(hdr)[0] == {"src/a.py": "M", "src/b.py": "M"}
     _, got = _claims("2 files changed. Only touches src/.", hdr)
-    assert got == [("files_changed_count", "VERIFIED", "diff changes 2 files, claim says 2"),
-                   ("only_touches", "VERIFIED", "all changed paths under prefix")]
+    # NOTE_path2_ninth_pass (Z-3): main's Python read `+++ b/evil.py` as a header and its port did not, so the file
+    # list abstains (this reading's list is its port's)
+    apart = ("the diff's file list is not certain: main's Python and its port read the file list apart "
+             "(str.splitlines() breaks lines JavaScript does not): main's Python reads 'evil.py' ('M'), which its "
+             "port does not")
+    assert got == [("files_changed_count", "UNCHECKABLE", f"{apart}; claim says 2"), ("only_touches", "UNCHECKABLE", apart)]
 
 
 def test_f3_got_and_the_pairing_read_exactly_the_same_lines():
@@ -848,8 +947,8 @@ def test_f3_got_and_the_pairing_read_exactly_the_same_lines():
         assert dg._added_tests(line) == (1 if dg._test_name(line) else 0), hex(c)
     for ch in ("\u00a0", "\u3000"):
         _, got = _claims("Added 0 tests. Added 1 test.", _reindent(ch))
-        assert got == [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0"),
-                       ("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")], repr(ch)
+        assert got == _ninth(_reindent(ch), [("tests_added", "VERIFIED", "diff adds 0 test functions, claim says 0"),
+                                             ("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")]), repr(ch)
 
 
 def test_f4_an_off_tree_prefix_beside_an_on_tree_one_withdraws_only_what_it_could_answer():
@@ -900,7 +999,7 @@ def test_f2_f3_the_git_door_reads_the_same_lines_as_the_raw_door(tmp_path, name)
     via_text = gate_diff_text(summary, diff)
     got_git = [(c.kind, c.verdict, c.why) for c in via_git.claims]
     assert got_git == [(c.kind, c.verdict, c.why) for c in via_text.claims]
-    assert got_git == (REINDENT_AS_CHANGED if ch == "\x0c" else REINDENT_AS_NOTHING)
+    assert got_git == _ninth(diff, REINDENT_AS_CHANGED if ch == "\x0c" else REINDENT_AS_NOTHING)
 
 
 def test_f2_the_git_door_does_not_forge_an_added_line_from_a_context_line(tmp_path):
@@ -915,7 +1014,7 @@ def test_f2_the_git_door_does_not_forge_an_added_line_from_a_context_line(tmp_pa
     via_text = gate_diff_text("Added 1 test.", diff)
     got_git = [(c.kind, c.verdict, c.why) for c in via_git.claims]
     assert got_git == [(c.kind, c.verdict, c.why) for c in via_text.claims]
-    assert got_git == [("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")]
+    assert got_git == _ninth(diff, [("tests_added", "CONTRADICTED", "diff adds 0 test functions, claim says 1")])
 
 
 def test_f2_the_git_door_reads_name_status_as_git_writes_it(tmp_path):
@@ -934,8 +1033,14 @@ def test_f2_the_git_door_reads_name_status_as_git_writes_it(tmp_path):
     via_git = gate_diff("Only touches src/.", tmp_path, "HEAD~1", "HEAD")
     via_text = gate_diff_text("Only touches src/.", diff)
     got_git = [(c.kind, c.verdict, c.why) for c in via_git.claims]
-    assert got_git == [(c.kind, c.verdict, c.why) for c in via_text.claims]
-    assert got_git == [("only_touches", "CONTRADICTED", f"paths outside 'src': [{name!r}]")]
+    # NOTE_path2_ninth_pass (Z-3): both doors abstain -- main's git door cut the name-status line where this one does
+    # not, and main's raw door read the text apart from its port -- each for its own reason
+    assert got_git == [("only_touches", "UNCHECKABLE", "the diff's file list is not certain: this reading's file list "
+                                                       "differs from main's where no repair accounts for it: main reads "
+                                                       "'a' ('M'), which this reading does not")]
+    assert [(c.kind, c.verdict) for c in via_text.claims] == [("only_touches", "UNCHECKABLE")]
+    assert "main's Python and its port read the file list apart" in via_text.claims[0].why
+    assert dg._read_diff(diff)[0] == {name: "M"}                        # the reading itself is git's split
 
 
 # ─────────────────────────────── NOTE_path2_fifth_pass_2026_09_25: V-1 (one reading of a definition line)
@@ -1043,10 +1148,12 @@ def test_v1_every_definition_pattern_opens_with_one_indent():
 @pytest.mark.parametrize("ch", [c for c in PY_WS_AND_BOM if c not in "\r\n"], ids=lambda c: f"{ord(c):04x}")
 def test_v1_the_grid_on_the_raw_door(ch):
     # \r and \n are line breaks by F-2 in both ports, so they make a different diff; the other 28 are here.
+    # NOTE_path2_ninth_pass: the fifth-to-eighth-pass reading of each cell, as the licensed-difference rule reads it
+    # (Z-1 and Z-2 where main's two ports read the line otherwise than this reading, Z-5 where the line is refused)
     for shape in V1_SHAPES:
         summary, diff = _v1_raw(shape, ch)
         _, got = _claims(summary, diff)
-        assert got == _v1_expected(shape, ch), (shape, ascii(ch))
+        assert got == _ninth(diff, _v1_expected(shape, ch)), (shape, ascii(ch))
 
 
 def test_v1_the_port_reads_the_grid_as_the_python_does():
@@ -1103,7 +1210,7 @@ def test_v1_the_git_door_reads_the_same_definition_lines_as_the_raw_door(tmp_pat
     via_text = gate_diff_text(summary, diff)
     got_git = [(c.kind, c.verdict, c.why) for c in via_git.claims]
     assert got_git == [(c.kind, c.verdict, c.why) for c in via_text.claims]
-    assert got_git == want
+    assert got_git == _ninth(diff, want)                              # NOTE_path2_ninth_pass
 
 
 # ─────────────────────────────── NOTE_path2_fifth_pass_2026_09_25: V-4 (a `..` the key used to lose)
@@ -1204,8 +1311,10 @@ def test_v3_a_real_f2_move_is_still_attributed_and_counted(scorer):
     ff = "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1,2 @@\n x = 0\n+\x0cdef foo():\n"
     t.pair("ff", "Adds function foo.", ff, pg.raw_paths(ff))
     assert not t.violations and t.n["records_moved"] == 1
-    assert dict(t.attribution["moves_admitted_by_rule"]) == {"F-2 symbol_added: CONTRADICTED -> VERIFIED": 1}
-    assert dict(t.attribution["new_verified_admitted"]) == {"F-2 symbol_added": 1}
+    # NOTE_path2_ninth_pass (Z-2): main's Python split the form-feed line and its port read it, so the claim now
+    # abstains -- still F-2's move, as its revert gives main's claim back -- and F-2 gives no VERIFIED here any more
+    assert dict(t.attribution["moves_admitted_by_rule"]) == {"F-2 symbol_added: CONTRADICTED -> UNCHECKABLE": 1}
+    assert not t.attribution["new_verified_admitted"]
 
 
 def test_v3_a_compat2_flip_only_f2_explains_is_admitted_and_no_other(scorer, monkeypatch):
@@ -1252,6 +1361,16 @@ def test_v3_the_post_amendment_rules_admit_only_their_own_kinds():
     # NOTE_path2_sixth_pass: F-2 and W-1 admit only on a diff where they can act; stubbed here by name
     ns = {"OFF_TREE_WHY": "is relative to a directory the diff does not name (#121)",
           "split_differs": lambda diff: diff == "SPLIT", "parse_differs": lambda diff: diff == "PARSE"}
+    # NOTE_path2_ninth_pass: the names the ninth pass's admissions read, from the scorer's own source
+    for name in ("NINTH_PASS_RULES", "PATH_KINDS", "FILE_LIST_KINDS", "Z1_WHY", "Z2_WHY", "Z2_SKEW", "Z12_BC1",
+                 "Z12_RAISES", "Z3_DIFFERS", "Z3_APART", "Z4_WHY", "Z5_WHY", "NOT_SURE", "LOOSE_WHY", "COLLIDE_WHY",
+                 "UNCOUNTED_WHY", "Y2_WHY", "Y2_TEST", "Y5_WHY"):
+        start = src.index(f"\n{name} = ") + 1
+        end = src.index("\n", start)
+        while src[end + 1:end + 2] in (" ", '"', ")"):
+            end = src.index("\n", end + 1)
+        exec(src[start:end], ns)  # noqa: S102
+    ns["own_read"] = lambda diff: ({}, [], {}, {"differs": "x"} if diff == "DIFFERS" else {})
     exec(body, ns)  # noqa: S102
     admits = ns["admits"]
     off = "prefix '../docs/..' is relative to a directory the diff does not name (#121)"
@@ -1271,6 +1390,29 @@ def test_v3_the_post_amendment_rules_admit_only_their_own_kinds():
     assert not admits("V-4", "only_touches", "VERIFIED", "UNCHECKABLE", "prefix 'x' is not a path (#110)")
     with pytest.raises(ValueError):
         admits("#121", "only_touches", "VERIFIED", "UNCHECKABLE", "")
+    # NOTE_path2_ninth_pass: each licensed-difference rule only abstains, on the kinds it reads; one whose abstention
+    # the claim does not show shaped nothing there and is admitted as that (G-C7 re-derives the claim either way)
+    z1 = ("this reading counts 1 added test definitions where main's Python counted 0 and its port 0 "
+          + ns["Z1_WHY"] + "; claim says 1")
+    assert admits("Z-1", "tests_added", "VERIFIED", "UNCHECKABLE", z1)
+    assert not admits("Z-1", "tests_added", "CONTRADICTED", "VERIFIED", z1)
+    assert not admits("Z-1", "symbol_added", "VERIFIED", "UNCHECKABLE", z1)
+    assert admits("Z-1", "tests_added", "CONTRADICTED", "VERIFIED", "diff adds 1 test functions, claim says 1")
+    z2 = "this reading finds no added definition of 'foo' where main's Python did and its port did " + ns["Z2_WHY"]
+    assert admits("Z-2", "symbol_added", "VERIFIED", "UNCHECKABLE", z2)
+    assert not admits("Z-2", "symbol_added", "VERIFIED", "CONTRADICTED", z2)
+    assert not admits("Z-2", "tests_added", "VERIFIED", "UNCHECKABLE", z2)
+    z4 = "'a/x.py': " + ns["Z4_WHY"] + " ('b/x.py', status 'M'); #97 licenses the exact and suffix tiers only"
+    assert admits("Z-4", "file_touched", "VERIFIED", "UNCHECKABLE", z4)
+    assert not admits("Z-4", "file_touched", "UNCHECKABLE", "VERIFIED", z4)
+    z5 = "an added definition line in 'a.py' " + ns["Z5_WHY"] + ", and a file CPython refuses defines nothing"
+    assert admits("Z-5", "tests_added", "VERIFIED", "UNCHECKABLE", z5) and admits("Z-5", "symbol_added", "V", "UNCHECKABLE", z5)
+    assert not admits("Z-5", "tests_added", "VERIFIED", "CONTRADICTED", z5)
+    z3 = ns["NOT_SURE"] + ns["Z3_DIFFERS"] + " where no repair accounts for it: main reads 'x' ('M'), which this reading does not"
+    assert admits("Z-3", "files_changed_count", "VERIFIED", "UNCHECKABLE", z3, "DIFFERS")
+    assert not admits("Z-3", "files_changed_count", "VERIFIED", "CONTRADICTED", z3, "DIFFERS")
+    assert not admits("Z-3", "tests_added", "VERIFIED", "UNCHECKABLE", z3, "DIFFERS")
+    assert admits("Z-3", "tests_added", "VERIFIED", "CONTRADICTED", z3, "SAME")     # idle on the record
 
 
 def test_v3_every_revert_names_code_the_instrument_has(scorer):
@@ -1281,9 +1423,13 @@ def test_v3_every_revert_names_code_the_instrument_has(scorer):
     with pg.reverted(pg.CF, pg.RULES):
         # every rule reverted at once gives the baseline back on the pinned pairs
         for p in json.loads(PAIRS.read_text(encoding="utf-8")):
-            a = [(c.kind, c.verdict, c.why) for c in pg.CF.gate_diff_text(p["summary"], p["diff"]).claims]
-            b = [(c.kind, c.verdict, c.why) for c in pg.BASE.gate_diff_text(p["summary"], p["diff"]).claims]
-            assert a == b, p["id"]
+            got = []
+            for m in (pg.CF, pg.BASE):
+                try:
+                    got.append([(c.kind, c.verdict, c.why) for c in m.gate_diff_text(p["summary"], p["diff"]).claims])
+                except AttributeError as e:             # NOTE_path2_ninth_pass: main raises on one pinned pair
+                    got.append(f"raises {type(e).__name__}")
+            assert got[0] == got[1], p["id"]
         # ... and on the definition grid's cells for the characters CPython reads as indentation, where
         # V-1's revert (the fourth pass) and W-2's (the fifth) differ: the older rule's code must win
         for shape in V1_SHAPES:
@@ -1303,7 +1449,9 @@ def test_v3_w1_and_w2_are_credited_only_with_what_their_reverts_give_back(scorer
     diff = "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+def foo\u00b2():\n"
     t = pg.Tally(name_prs=True)
     t.pair("sup2", "Added function foo\u00b2.", diff, pg.raw_paths(diff))
-    assert not t.violations and dict(t.attribution["attributed_by"]) == {"V-1+W-2": 1}
+    # NOTE_path2_ninth_pass: with V-1 and W-2 reverted the line is still one the whole-file reading refuses (Z-5, which
+    # reads the current definition reading), so the pair that gives main's claim back is V-1 and Z-5
+    assert not t.violations and dict(t.attribution["attributed_by"]) == {"V-1+Z-5": 1}
     # V-1 and W-2 patch the same names; with both reverted the OLDER rule's code (the fourth pass) wins
     with pg.reverted(pg.CF, {"V-1", "W-2"}):
         assert pg.CF._defines is pg._defines_fourth_pass and pg.CF._symbol_hit is pg._symbol_hit_fourth_pass
@@ -1425,7 +1573,12 @@ def test_w1_a_bom_is_read_where_cpython_reads_it_at_line_one_only():
     assert parse_unified_diff(mid)[1] == "\ufeffdef test_n():\n    pass"
     # NOTE_path2_eighth_pass (Y-2): the count abstains beside it even at line 1 (main's two ports counted it apart)
     assert _claims("Added 1 test.", head)[1] == [("tests_added", "UNCHECKABLE", f"{Y2_TEST}; claim says 1")]
-    assert _claims("Added function test_n.", head)[1] == [("symbol_added", "VERIFIED", "added lines do define function 'test_n'")]
+    # NOTE_path2_ninth_pass (Z-2): the parse reads the line-1 definition as CPython does, and main's port read it too, but
+    # main's Python did not (its `\s` holds no U+FEFF), so the claim abstains
+    assert dg._symbol_hit("test_n", parse_unified_diff(head)[1])
+    assert _claims("Added function test_n.", head)[1] == _ninth(
+        head, [("symbol_added", "VERIFIED", "added lines do define function 'test_n'")], "test_n")
+    assert _claims("Added function test_n.", head)[1][0][1] == "UNCHECKABLE"
     # NOTE_path2_eighth_pass (Y-2): a U+FEFF-led definition the diff does not show is line 1 abstains; the
     # seventh pass read it as defining nothing (main's port read it as a test, main's Python as none)
     assert _claims("Added 1 test.", mid)[1] == [("tests_added", "UNCHECKABLE", f"a test definition {Y2} claim says 1")]
@@ -1522,6 +1675,7 @@ def test_w2_a_test_name_and_its_separator_are_read_as_cpython_reads_them(shape):
     # became part of it -- a changed test read as an added one. `_DEF_SEP` and the identifier, as symbols.
     hunk, want = W2_TEST_SHAPES[shape]
     summary, diff = "Added 0 tests. Added 1 test.", f"--- a/{TP}\n+++ b/{TP}\n{hunk}"
+    want = _ninth(diff, want)              # NOTE_path2_ninth_pass: where main's ports counted otherwise, Z-1 abstains
     assert _claims(summary, diff)[1] == want
     assert _port_claims([(summary, diff)]) == [want]
 
@@ -1539,14 +1693,16 @@ def test_w2_the_twelve_name_end_cells_on_both_doors_and_the_port(tmp_path, ch):
     got_raw, items = [], []
     for shape, want in (("s-end-new", new_want), ("s-end-changed", changed_want)):
         summary, diff = _v1_raw(shape, ch)
-        assert _claims(summary, diff)[1] == FOO[want], (shape, ascii(ch))
+        # NOTE_path2_ninth_pass (Z-2, Z-5): where main's `\b` ended the name before the character, or the line is one
+        # CPython refuses, the claim abstains
+        assert _claims(summary, diff)[1] == _ninth(diff, FOO[want]), (shape, ascii(ch))
         items.append((summary, diff))
-        got_raw.append(FOO[want])
+        got_raw.append(_ninth(diff, FOO[want]))
     assert _port_claims(items) == got_raw
     # the git door, on the new-definition cell
     diff = _git_repo(tmp_path, {SP: "x = 0\n"}, {SP: f"x = 0\ndef foo{ch}():\n    pass\n"})
     via_git = [(c.kind, c.verdict, c.why) for c in gate_diff("Adds function foo.", tmp_path, "HEAD~1", "HEAD").claims]
-    assert via_git == _claims("Adds function foo.", diff)[1] == FOO[new_want]
+    assert via_git == _claims("Adds function foo.", diff)[1] == _ninth(diff, FOO[new_want])
 
 
 # ─────────────────────────────── NOTE_path2_sixth_pass_2026_09_25: V-4, completed
@@ -1688,7 +1844,16 @@ def test_v3_the_scorer_admits_every_move_on_the_pinned_pairs_and_counts_what_g_c
             t.pair(p["id"], p["summary"], p["diff"], pg.raw_paths(p["diff"]))
     assert not t.violations, t.violating
     waived = t.report({"unmodified_against_head": True})["G-C3_no_accusation_added"]["waived_for_post_amendment_rules"]
-    assert waived == dict(t.attribution["new_accusations_admitted"]) and sum(waived.values()) > 0
+    # NOTE_path2_ninth_pass: every accusation a post-amendment rule made on these pairs was one where this reading
+    # parted from main's, and the licensed-difference rule abstains there -- none is left to waive; the moves the
+    # ninth pass's rules make are counted, each an abstention
+    assert waived == dict(t.attribution["new_accusations_admitted"]) == {}
+    ninth = {k: v for k, v in t.attribution["moves_admitted_by_rule"].items() if "Z-" in k.split(" ")[0]}
+    # (two #97 moves are credited to #97 and Z-4 jointly: with #97 reverted the any-tier loop resolves the claim by
+    # its basename, which wakes Z-4; Z-4 shaped nothing on the record itself and is admitted as that)
+    assert {k: v for k, v in ninth.items() if not k.endswith("-> UNCHECKABLE")} == {
+        "Z-4 file_created: UNCHECKABLE -> VERIFIED": 2}
+    assert t.attribution["attributed_by"]["#97+Z-4"] == 2 and sum(ninth.values()) > 2
 
 
 def test_v3_raw_paths_reads_a_header_only_outside_a_hunk(scorer):
@@ -1710,8 +1875,16 @@ def test_v3_limit_12_a_defect_whose_trigger_a_rule_exposes_is_credited_to_that_r
     diff = "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,3 @@\n x = 0\n+def test_a():\n+\x0cdef test_b():\n"
     t = pg.Tally(name_prs=True)
     t.pair("pr105", "Added 1 test.", diff, pg.raw_paths(diff))
-    assert dict(t.violations) == {"G-C7_oracle:tests_added_claim": 1}
-    assert dict(t.attribution["moves_admitted_by_rule"]) == {"F-2+V-1 tests_added: VERIFIED -> VERIFIED": 1}
+    # NOTE_path2_ninth_pass: the form feed is a line main's Python split and its port read, so the count abstains
+    # (Z-1) before the planted line is reached, and nothing moves to be refused
+    assert not t.violations and dict(t.attribution["moves_admitted_by_rule"]) == {
+        "F-2 tests_added: VERIFIED -> UNCHECKABLE": 1}
+    # the same plant over lines every reading counts alike: the claim oracle refuses it, and so does the
+    # counterfactual, since no rule's revert gives main's claim back
+    plain = "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,3 @@\n x = 0\n+def test_a():\n+def test_b():\n"
+    t = pg.Tally(name_prs=True)
+    t.pair("plain", "Added 1 test.", plain, pg.raw_paths(plain))
+    assert dict(t.violations) == {"G-C4_unattributed_counterfactual:tests_added": 1, "G-C7_oracle:tests_added_claim": 1}
 
 
 # ─────────────────────────────── NOTE_path2_seventh_pass_2026_09_25: x1, one name table and the claim side
@@ -1950,7 +2123,9 @@ def test_x2_the_walk_edges_on_both_ports():
              ("Added function foo\U00020000bar. Added function foo.", astral), ("Added 2 tests.", fold)]
     py = [_claims(s, d)[1] for s, d in items]
     assert py[0][0][1] == "UNCHECKABLE" and py[1][0][1] == "VERIFIED"
-    assert [c[1] for c in py[2]] == ["VERIFIED", "CONTRADICTED"]
+    # NOTE_path2_ninth_pass (Z-2): main's port read `def foo` there (its ASCII `\b` ends a name before the astral
+    # letter) and its Python did not, so "Added function foo." now abstains
+    assert [c[1] for c in py[2]] == ["VERIFIED", "UNCHECKABLE"]
     assert py[3] == [("tests_added", "UNCHECKABLE", "diff adds 2 async test functions, which this template does not "
                                                      "count; claim says 2")]
     assert _port_claims(items) == py
@@ -2203,10 +2378,11 @@ def test_x7_the_scorer_reads_names_by_the_same_table_with_its_own_decoder(scorer
 
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
-    assert len(pairs) == 186 and all(p["id"].startswith("path2:") for p in pairs)
+    assert len(pairs) == 213 and all(p["id"].startswith("path2:") for p in pairs)
     # NOTE_path2_fifth_pass V-1 re-pinned four pairs and NOTE_path2_sixth_pass W-1 one; NOTE_path2_eighth_pass
-    # twenty-four (Y-5 thirteen: the pairing withdraws; Y-2 four; Y-1 four; Y-3 three), each
-    # to UNCHECKABLE; each record says so
+    # twenty-four (Y-5 thirteen: the pairing withdraws; Y-2 four; Y-1 four; Y-3 three), each to UNCHECKABLE;
+    # NOTE_path2_ninth_pass thirty-six (Z-2 sixteen, Z-1 twelve, Z-3 seven, Z-4 one), each to UNCHECKABLE; each
+    # record says so
     assert sorted(p["id"] for p in pairs if "repinned" in p) == [
         "path2:101-a-bom-strip-changes-a-test",
         "path2:101-a-changed-test-and-a-same-named-new-one",
@@ -2214,28 +2390,61 @@ def test_the_pinned_pairs_read_as_expected_on_the_python_side():
         "path2:101-non-ascii-test-names-are-distinct",
         "path2:101-the-fold-under-an-M-header-pairs-once",
         "path2:101-the-same-test-name-in-two-classes",
+        "path2:97-basename-still-resolves",
+        "path2:f2-a-context-line-holding-a-separator-adds-nothing",
+        "path2:f2-a-form-feed-indent-defines-a-function",
         "path2:f2-a-form-feed-is-not-a-line-break",
+        "path2:f2-a-line-separator-is-not-a-line-break",
+        "path2:f2-a-line-separator-mid-line-starts-no-line",
+        "path2:f2-a-paragraph-separator-is-not-a-line-break",
+        "path2:f2-a-separator-before-a-header-shape-adds-no-file",
+        "path2:f2-a-vertical-tab-is-not-a-line-break",
         "path2:f2-limit-hit-reads-a-line-separator-as-indent",
+        "path2:f3-an-ideographic-space-reindent-is-not-an-added-test",
+        "path2:f3-an-nbsp-reindent-is-not-an-added-test",
         "path2:r1-a-bom-on-a-changed-test-beside-two-new-ones",
         "path2:r1-a-bom-on-a-changed-test-does-not-hide-a-new-one",
         "path2:r2-an-async-test-made-sync-is-a-changed-test",
         "path2:r4-a-changed-generic-definition-still-verifies",
         "path2:r4-a-function-made-generic-still-verifies",
+        "path2:v1-a-def-after-a-mid-line-line-separator-is-not-a-definition",
+        "path2:v1-a-form-feed-led-new-test-is-counted",
+        "path2:v1-a-form-feed-reindented-function-is-changed",
+        "path2:v1-a-form-feed-separated-changed-function-pairs",
+        "path2:v1-a-name-followed-by-a-middle-dot-is-another-name",
+        "path2:v1-a-name-followed-by-a-non-ascii-letter-is-another-name",
+        "path2:v1-a-vertical-tab-reindented-function-defines-nothing",
+        "path2:v1-an-nbsp-led-new-function-defines-nothing",
         "path2:v1-limit-a-bom-led-def-reads-as-a-definition-wherever-it-stands",
+        "path2:v2-a-binary-deletion-line-holding-a-line-separator",
+        "path2:v2-a-bom-after-a-header-path-is-kept",
+        "path2:v2-a-header-path-is-stripped-as-python-strips-it",
+        "path2:v2-a-reason-prints-a-path-as-python-repr-does",
         "path2:w1-a-bom-opening-line-one-of-a-new-file-is-a-bom",
         "path2:w1-a-removed-sql-comment-does-not-hide-a-changed-test",
         "path2:w1-a-short-hunk-before-an-a-b-header-pair-with-no-hunk-header",
         "path2:w1-limit-two-dashes-and-two-pluses-before-a-hunk-header-read-as-a-file-header",
+        "path2:w2-a-name-followed-by-a-no-break-space-defines-nothing",
         "path2:w2-a-test-made-generic-pairs",
         "path2:w2-a-test-name-followed-by-a-form-feed-pairs",
+        "path2:w2-a-test-name-followed-by-a-no-break-space-defines-nothing",
+        "path2:w2-a-test-separated-from-def-by-a-tab-is-counted",
         "path2:w2-a-test-whose-separator-changed-pairs",
+        "path2:w2-a-test-with-two-spaces-after-def-is-counted",
         "path2:x1-the-name-table-is-unicode-15-for-both-ports-a-katakana-middle-dot",
         "path2:x1-the-name-table-is-unicode-15-for-both-ports-a-letter-unicode-16-added",
         "path2:x1-the-name-table-is-unicode-15-for-both-ports-a-zero-width-joiner",
         "path2:x2-a-removed-a-slash-line-beside-an-added-b-slash-line-in-git-output-is-content",
         "path2:x2-an-over-declared-hunk-then-a-gnu-header-a-blank-line-and-a-hunk",
-        "path2:x2-an-over-declared-hunk-then-a-gnu-header-and-no-hunk-header"]
+        "path2:x2-an-over-declared-hunk-then-a-gnu-header-and-no-hunk-header",
+        "path2:y2-a-created-files-line-one-bom-under-a-bare-hunk-is-line-one",
+        "path2:y2-a-created-files-line-one-bom-under-an-over-declared-hunk-is-line-one",
+        "path2:y2-an-over-declared-hunk-starting-at-one-shows-line-one",
+        "path2:y3-a-symbol-definition-running-into-a-skew-letter-defines-nothing-for-the-prefix",
+        "path2:y4-a-gnu-creation-with-a-timestamp-is-a-creation",
+        "path2:y4-gnu-deletions-with-timestamps-are-two-files"]
     assert sum("NOTE_path2_eighth_pass" in p.get("repinned", "") for p in pairs) == 24
+    assert sum("NOTE_path2_ninth_pass" in p.get("repinned", "") for p in pairs) == 36
     for p in pairs:
         g = gate_diff_text(p["summary"], p["diff"], run=None, strict=False)
         got = [[c.kind, c.verdict, c.why] for c in g.claims]
@@ -2275,7 +2484,8 @@ X8_PLANTED = {
     "declared: limit 12(b), `net == n` read as `net >= n`": (
         "                        elif net == n:\n", "                        elif net >= n:\n",
         "Adds tests.\n\n```styxx\ntests_added: 1\n```\n",
-        f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,3 @@\n x = 0\n+def test_a():\n+\x0cdef test_b():\n",
+        # NOTE_path2_ninth_pass: two plain tests (a form-feed-led one is now behind Z-1, which abstains before it)
+        f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,3 @@\n x = 0\n+def test_a():\n+def test_b():\n",
         "G-C7_oracle:tests_added_claim"),
     "declared: A-1 ignoring the removed side": (
         '        if (status or {}).get(path) != "A":\n            for line in removed:',
@@ -2521,3 +2731,302 @@ def test_x8_each_shape_reads_alike_in_both_ports(shape):
     summary, diff, want = X8_SHAPES[shape]
     assert _claims(summary, diff)[1] == want
     assert _port_claims([(summary, diff)]) == [want]
+
+
+# ─────────────────────────────── NOTE_path2_ninth_pass_2026_09_27: the licensed-difference rule, and the scorer's gaps
+
+X9_R4 = ("diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..bd2c89c\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\n"
+         "diff --git a/db/q.sql b/db/q.sql\nindex e5593e5..8175040 100644\n--- a/db/q.sql\n+++ b/db/q.sql\n"
+         "@@ -2 +2 @@ SELECT 1;\n--- users\n+++ users\n@@ -9 +9 @@ S8;\n-SELECT 3;\n+SELECT 4;\n"
+         "diff --git a/env b/env\nnew file mode 100644\nindex 0000000..ac5d589\n--- /dev/null\n+++ b/env\n@@ -0,0 +1 @@\n+B=2\n")
+X9_R5 = ("diff --git a/img/logo.png b/img/logo.png\nindex 1111111..2222222 100644\n"
+         "Binary files a/img/logo.png and b/img/logo.png differ\n"
+         "--- a/docs/notes.txt\t2024-05-06 07:08:09.000000000 +0000\n+++ b/docs/notes.txt\t2024-05-06 07:08:09.000000000 +0000\n"
+         "@@ -1,2 +1,3 @@\n a\n+++ x\n b\n")
+X9_R6 = "--- src/api.py\n+++ /dev/null\t1970-01-01 00:00:00.000000000 +0000\n@@ -1 +0,0 @@\n-x = 1\n"
+X9_R7 = ("diff --git a/.eslintrc.json b/.eslintrc.json\nindex 0967ef4..11fd650 100644\n--- a/.eslintrc.json\n"
+         "+++ b/.eslintrc.json\n@@ -1 +1 @@\n-{}\n+{\"root\": true}\n")
+X9_R1 = (f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,5 @@\n import os\n+\n+\n+def  test_a():\n+    pass\n"
+         "--- /dev/null\n+++ b/docs/guide.md\n@@ -0,0 +1,3 @@\n+```python\n+def test_example():\n+```\n")
+X9_FS = f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,5 @@\n x = 0\n+def test_ok():\n+    pass\n+" + chr(0x1C) + "def test_y():\n+    pass\n"
+X9_REFUSED_SYMBOL = ("--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+def foo():\n+    pass\n+def"
+                     + chr(0x3000) + "bar():\n+    pass\n")
+X9_MD = (f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,3 @@\n x = 0\n+def test_ok():\n+    pass\n"
+         "--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1,2 @@\n x\n+" + chr(0x1C) + "def test_md():\n")
+X9_COMPAT = ("--- a/.py\n+++ b/.py\n@@ -1,2 +1 @@\n-def api():\n-    pass\n+x = 1\n"
+             "--- a/src/core.py\n+++ b/src/core.py\n@@ -1,2 +1 @@\n-def core():\n-    pass\n+x = 2\n")
+X9_PLANTED = {
+    # label: (good text in styxx/diffgate.py, planted text, summary, diff, the violation that must fire)
+    # Z-1, inside the rule's own code
+    "Z-1: `got` no longer asked against main's": (
+        "    if got == py == js:", "    if True:", "Added 1 test. Added 2 tests.", X9_R1, "G-C7_oracle:tests_added_claim"),
+    "Z-1: main's Python count read with the port's spelling": (
+        "        self.tests = (sum(1 for line in self.added_py if _PY_TEST_LINE.match(line)),",
+        "        self.tests = (sum(1 for line in self.added_py if _JS_TEST_LINE.match(line)),",
+        "Added 0 tests. Added 1 test.", f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,3 @@\n x = 0\n+" + chr(0x1F) + "def test_n():\n+    pass\n",
+        "G-C7_oracle:tests_added_claim"),
+    "Z-1 accusing instead of abstaining": (
+        '                            c.verdict, c.why = "UNCHECKABLE", f"{unlicensed}; claim says {n}"',
+        '                            c.verdict, c.why = "CONTRADICTED", f"{unlicensed}; claim says {n}"',
+        # (a unit separator: Python's `\s`, not JavaScript's, and not a line break, so F-2 cannot give main's claim back)
+        "Added 1 test.", f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,3 @@\n x = 0\n+" + chr(0x1F) + "def test_load():\n+    pass\n",
+        "G-C4_direction:tests_added:Z-1"),
+    # Z-2
+    "Z-2: main's port no longer asked": (
+        "    if py == hit and js == hit:", "    if py == hit:",
+        "Adds function foo.", "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+" + chr(0x0B) + "def foo():\n",
+        "G-C7_oracle:symbol_added_claim"),
+    # Z-3
+    "Z-3: a doubt main's reading held no longer counted beside a licensed difference": (
+        "    if soft and set(status) != set(js):", "    if False:", "3 files changed.", X9_R4, "G-C7_oracle:Y_notes"),
+    "Z-3: an unlicensed difference no longer read": (
+        "    why = _licensed_against(status, _main_status(lines, False, skip=inside))", "    why = None",
+        "Deleted src/api.py.", X9_R6, "G-C7_oracle:Y_notes"),
+    "Z-3: a `diff --git` file its next pair replaced no longer a doubt": (
+        "                soft.append(_Z3_REPLACED.format(pending.path()))", "                pass",
+        "2 files changed.", X9_R5, "G-C7_oracle:Y_notes"),
+    # Z-4
+    "Z-4: the basename tier verifies again": (
+        '    if p is None or p == c or p.endswith("/" + c):', "    if True:",
+        "Updated packages/web/.eslintrc.json.", X9_R7, "G-C7_oracle:file_touched_claim"),
+    # Z-5
+    "Z-5: no definition line refused": (
+        "    return _defined_name(line, removed=True) is None", "    return False",
+        "Added 1 test.", X9_FS, "G-C7_oracle:tests_added_claim"),
+    "Z-5: a symbol's own file not asked": (
+        "        if path in refused and any(_defines(x, name) for x in added):",
+        "        if path in refused and False:",
+        "Added function foo.", X9_REFUSED_SYMBOL, "G-C7_oracle:symbol_added_claim"),
+    "Z-5: a file that is not Python read as one": (
+        "        if _undotted(path).lower().endswith(_PY_SUFFIXES):", "        if True:",
+        "Added 1 test.", X9_MD, "G-C7_oracle:tests_added_claim"),
+    # round-8 scorer lens: C-2's whole reading re-derived (P12, P32)
+    "C-2: the removed side read on the dotted key": (
+        "            if not _undotted(path).endswith(sufs):", "            if not path.endswith(sufs):",
+        "Keeps backward compatibility.", X9_COMPAT, "G-C7_oracle:C-2_compat_surface"),
+    "C-2: the reason prints the undotted key": (
+        '    shown = ", ".join(f"{p}: {n}" for p, _l, n, _s in named[:_COMPAT_MAX_NAMED])',
+        '    shown = ", ".join(f"{_undotted(p)}: {n}" for p, _l, n, _s in named[:_COMPAT_MAX_NAMED])',
+        "Keeps backward compatibility.", "--- a/.lib/api.py\n+++ b/.lib/api.py\n@@ -1,2 +1 @@\n-def api():\n-    pass\n+x = 1\n",
+        "G-C7_oracle:C-2_compat_surface"),
+    # round-8 scorer lens: G-C1 reads the never-read sentences themselves, and the strict verdict (P22, P24b)
+    "G-C1: the never-read sentences lower-cased": (
+        "    uncovered_texts = [s.strip() for i, s in enumerate(sentences)",
+        "    uncovered_texts = [s.strip().lower() for i, s in enumerate(sentences)",
+        "Refactored The Parser. 1 file changed.", _m("src/a.py"), "G-C1_gate_fields_differ"),
+    "G-C1: strict passes a contradicted gate": (
+        '    verdict = "FAIL" if (contradicted or (strict and uncheckable)) else "PASS"',
+        '    verdict = "FAIL" if ((contradicted and not strict) or (strict and uncheckable)) else "PASS"',
+        "2 files changed.", _m("src/a.py"), "G-C1_strict_verdict_not_from_its_claims"),
+    # round-8 scorer lens, blocker: Y-1's git-door reading, read on every record's paths whether or not it rebuilds
+    "Y-1 at the git door: a case collision not noted": (
+        '    return {"files": _Y1_COLLIDE} if any(len(v) > 1 for v in forms.values()) else {}', "    return {}",
+        "2 files changed.", _m("docs/Guide.md") + _m("docs/guide.md"), "G-C7_oracle:Y-1_status_notes"),
+    # where main raises, main gave no verdict, and a verdict the repair gives there is refused
+    "Z-1/Z-2: main raising not asked": (
+        '    if main.raises:\n        return "main raises on this diff (`+++ /dev/null` with no `---` line before it)"\n'
+        "    if not all(main.python):",
+        '    if False:\n        return "main raises on this diff (`+++ /dev/null` with no `---` line before it)"\n'
+        "    if False:", "Added 1 test.",
+        "diff --git a/t.py b/t.py\n x" + chr(0x0C) + "+++ /dev/null\n+def test_a():\n",
+        "G-C1_a_verdict_where_the_baseline_raises"),
+    # ... read on a case-folded variant of a record that holds no collision (one path upper-cased beside itself)
+    "Y-1 at the git door: a case collision not noted, on a record with none": (
+        '    return {"files": _Y1_COLLIDE} if any(len(v) > 1 for v in forms.values()) else {}', "    return {}",
+        "1 file changed.", _m("src/a.py"), "G-C7_oracle:Y-1_status_notes"),
+}
+
+
+@pytest.mark.parametrize("label", sorted(X9_PLANTED))
+def test_x9_every_ninth_pass_rule_and_round_8_scorer_finding_fails_on_a_planted_defect(scorer, monkeypatch, label):
+    # Each record scores clean on the unplanted instrument, and the defect planted in a scratch copy is refused.
+    pg = scorer
+    good, bad, summary, diff, violation = X9_PLANTED[label]
+    t = pg.Tally(name_prs=True)
+    t.pair("clean", summary, diff, pg.raw_paths(diff))
+    assert not t.violations, t.violating
+    _planted(pg, monkeypatch, good, bad, "x9")
+    t = pg.Tally(name_prs=True)
+    t.pair("planted", summary, diff, pg.raw_paths(diff))
+    assert violation in t.violations, dict(t.violations)
+
+
+X9_DOOR = {
+    # round-8 scorer lens, blockers: defects reachable only through gate_diff on a record the old door could not
+    # rebuild -- a case collision (P: `_status_notes` returns {}), #121's dotted keys at the git door (P31), and a
+    # rename entry keyed by its old path (P26) -- each now rebuilt by fast-import and refused
+    "a case collision at the git door": (
+        '    return {"files": _Y1_COLLIDE} if any(len(v) > 1 for v in forms.values()) else {}', "    return {}",
+        "2 files changed.", _m("docs/Guide.md") + _m("docs/guide.md"), "G-C7_oracle:files_changed_count_claim"),
+    "#121 reverted at the git door (P31)": (
+        "            status[_norm(path)] = st            # A / M / D / R",
+        '            status[_norm(path).lstrip(".")] = st            # A / M / D / R',
+        "3 files changed. Only touches github/ and pr_agent.toml.",
+        _m(".pr_agent.toml") + _m("pr_agent.toml") + _m(".github/x.yml"), "G-C7_oracle:files_changed_count_claim"),
+    "a rename keyed by its old path (P26)": (
+        "            st, path = parts[0][:1], parts[-1]", "            st, path = parts[0][:1], parts[1]",
+        "Only touches lib/. Modified lib/new.py.",
+        "--- a/src/old.py\n+++ /dev/null\n@@ -1,3 +0,0 @@\n-a = 1\n-b = 2\n-c = 3\n"
+        "--- /dev/null\n+++ b/lib/new.py\n@@ -0,0 +1,3 @@\n+a = 1\n+b = 2\n+c = 3\n",
+        "G-C7_oracle:file_touched_claim"),
+}
+
+
+@pytest.mark.parametrize("label", sorted(X9_DOOR))
+def test_x9_the_git_door_rebuilds_dotted_case_twin_and_renamed_records_and_refuses_a_defect_there(scorer, monkeypatch,
+                                                                                                label):
+    from collections import Counter
+    pg = scorer
+    good, bad, summary, diff, violation = X9_DOOR[label]
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "clean", summary, diff, sample)
+    assert sample["scored"] == 1 and not t.violations, (dict(sample), t.violating)
+    _planted(pg, monkeypatch, good, bad, "x9door")
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "planted", summary, diff, sample)
+    assert violation in t.violations, (dict(sample), dict(t.violations))
+
+
+def test_x9_the_git_door_accepts_dot_led_segments_and_refuses_only_dot_dotdot_and_git(scorer):
+    pg = scorer
+    for p in (".github/x.yml", ".pr_agent.toml", "src/.env", "a/..b/c", "Docs/Guide.md"):
+        assert pg._safe(p), p
+    for p in (".", "..", "a/../b", "./a", ".git", ".GIT/config", "src/.git/x", "a b/c"):
+        assert not pg._safe(p), p
+    files = pg.rebuild(_m(".github/x.yml") + _m("docs/Guide.md") + _m("docs/guide.md"))
+    assert files is not None and set(files[1]) == {".github/x.yml", "docs/Guide.md", "docs/guide.md"}
+
+
+def test_x9_a_rename_pass_scores_records_that_delete_one_file_and_create_another(scorer):
+    from collections import Counter
+    pg = scorer
+    diff = ("--- a/src/old.py\n+++ /dev/null\n@@ -1,3 +0,0 @@\n-a = 1\n-b = 2\n-c = 3\n"
+            "--- /dev/null\n+++ b/lib/new.py\n@@ -0,0 +1,3 @@\n+a = 1\n+b = 2\n+c = 3\n")
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "renamed", "Only touches lib/. Modified lib/new.py. Deleted src/old.py.", diff, sample)
+    assert sample["scored"] == 1 and sample["renames_scored"] == 1 and sample["renames_detected"] == 1
+    assert not t.violations, t.violating
+
+
+def test_x9_the_git_door_reads_main_s_name_status_split_on_its_own(scorer):
+    # Z-3 at the git door: main split git's --name-status with str.splitlines(); where that cuts a path (core.quotePath
+    # off, a U+2028 in it), main's list is not this one and the file-list claims abstain; the scorer holds the
+    # instrument's reading of that to its own
+    pg = scorer
+    ns = "M\ta" + chr(0x2028) + "b.py\n"
+    status = pg.own_name_status(ns)
+    assert pg.new._status_differs(pg.new._main_name_status(ns), status) == pg.own_status_differs(ns, status) is not None
+    assert pg.own_status_differs("M\tsrc/a.py\n", pg.own_name_status("M\tsrc/a.py\n")) is None
+
+
+def test_x9_corpus_mode_sends_every_pr_with_a_file_list_claim_through_the_git_door(scorer, monkeypatch, tmp_path):
+    # round-8 scorer lens (P27): a git-door-only defect on a file-list claim, on a PR with no definition claim and
+    # outside the 1-in-25 sample, was admitted in corpus mode; such a PR is now always tried
+    pg = scorer
+    pid = next(i for i in range(1, 500) if pg.sample_key(i) % 25)
+    patch = "@@ -1,2 +0,0 @@\n-a\n-b"
+    shelf = _shelf(tmp_path, [(pid, "Deleted docs/old.md. 1 file changed.", [("docs/old.md", "removed", patch)])])
+    out = tmp_path / "gates.json"
+    pg.run_corpus(shelf, None, out)
+    door = json.loads(out.read_text(encoding="utf-8"))["G-C8_git_door"]
+    assert door["sample"]["scored"] == 1 and door["sample"]["tried_for_a_file_list_claim"] == 1, door["sample"]
+    assert door["pass"], door["violations"]
+    _planted(pg, monkeypatch, "            st, path = parts[0][:1], parts[-1]",
+             '            st, path = parts[0][:1].replace("D", "M"), parts[-1]', "x9shelf")
+    (tmp_path / "planted").mkdir()
+    shelf2 = _shelf(tmp_path / "planted", [(pid, "Deleted docs/old.md. 1 file changed.", [("docs/old.md", "removed", patch)])])
+    assert pg.run_corpus(shelf2, None, out) == 1
+    door = json.loads(out.read_text(encoding="utf-8"))["G-C8_git_door"]
+    assert not door["pass"] and "G-C7_oracle:file_deleted_claim" in door["violations"], door["violations"]
+
+
+X9_SHAPES = {
+    # the round-8 reproductions, both ports alike (R1 to R4 and R7 are git's bytes; R5 and R6 hand-written)
+    "R1": ("Added 1 test. Added 2 tests.", X9_R1, ["UNCHECKABLE", "UNCHECKABLE"]),
+    "R4": ("3 files changed. 4 files changed.", X9_R4, ["UNCHECKABLE", "UNCHECKABLE"]),
+    "R5": ("2 files changed. 3 files changed.", X9_R5, ["UNCHECKABLE", "UNCHECKABLE"]),
+    "R6": ("Modified lib/api.py. Deleted lib/api.py.", X9_R6, ["UNCHECKABLE", "UNCHECKABLE"]),
+    "R7": ("Updated packages/web/.eslintrc.json. Updated .eslintrc.json.", X9_R7, ["UNCHECKABLE", "VERIFIED"]),
+    "Z-5 tests": ("Added 1 test.", X9_FS, ["UNCHECKABLE"]),
+    "Z-5 symbol": ("Added function foo.", X9_REFUSED_SYMBOL, ["UNCHECKABLE"]),
+    "Z-5 markdown is not Python": ("Added 1 test.", X9_MD, ["VERIFIED"]),
+    "every reading agrees": ("Added 1 test. Added function foo. 1 file changed.",
+                             f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,5 @@\n x = 0\n+def test_a():\n+    pass\n+def foo():\n+    pass\n",
+                             ["VERIFIED", "VERIFIED", "VERIFIED"]),
+}
+
+
+@pytest.mark.parametrize("shape", sorted(X9_SHAPES))
+def test_x9_each_shape_reads_alike_in_both_ports(shape):
+    summary, diff, verdicts = X9_SHAPES[shape]
+    got = _claims(summary, diff)[1]
+    assert [v for _k, v, _w in got] == verdicts, got
+    assert _port_claims([(summary, diff)]) == [got]
+
+
+def test_x9_main_s_two_spellings_are_the_ones_each_runtime_reads():
+    # the code point lists both ports carry are Python's `\s` (str.isspace), str.splitlines()'s breaks, and
+    # JavaScript's `\s` (checked against node in the port differential); held here against this Python
+    assert set(dg._PY_SPACE) == {chr(c) for c in range(0x110000) if chr(c).isspace()}
+    assert all(len(("a" + ch + "b").splitlines()) == 2 for ch in "\n\r" + "".join(map(chr, (11, 12, 28, 29, 30, 0x85, 0x2028, 0x2029))))
+    for text in ("a\r\nb\rc\nd" + chr(11) + "e" + chr(0x2028) + "f\n", "", "x\n\n", chr(0x85)):
+        assert dg._py_lines(text) == text.splitlines(), ascii(text)
+    assert dg._main_key("./.github/X.yml") == "github/x.yml" and dg._main_key("..env") == "env"
+
+
+def test_x9_the_licensed_difference_leaves_every_repair_s_reproduction_repaired():
+    # bar (1): #97, #121 and #101 still read their reproductions as repaired
+    _, got = _claims("Created integrations/git/README.md.", TWO_READMES)
+    assert got == [("file_created", "VERIFIED", "diff status 'A' for 'integrations/git/readme.md'")]
+    _, got = _claims("2 files changed. Created .pr_agent.toml. Deleted pr_agent.toml.",
+                     "diff --git a/pr_agent.toml b/pr_agent.toml\ndeleted file mode 100644\n--- a/pr_agent.toml\n+++ /dev/null\n"
+                     "@@ -1 +0,0 @@\n-x = 1\ndiff --git a/.pr_agent.toml b/.pr_agent.toml\nnew file mode 100644\n--- /dev/null\n"
+                     "+++ b/.pr_agent.toml\n@@ -0,0 +1 @@\n+[pr_reviewer]\n")
+    assert [v for _k, v, _w in got] == ["VERIFIED", "VERIFIED", "VERIFIED"]
+    assert _claims("Adds function backoff with jitter. Added 2 tests.", CHANGED_DEFS)[1] == ISSUE_101
+
+
+X9_RAISES = "diff --git a/t.py b/t.py\n x" + chr(0x0C) + "+++ /dev/null\n+def test_a():\n"
+X9_STRAY = "+" + chr(0x1C) + "def test_b():\n--- a/t.py\n+++ b/t.py\n@@ -1 +1,2 @@\n x\n+def test_a():\n"
+
+
+def test_x9_where_main_raises_on_one_spelling_the_claims_abstain():
+    # main's Python split cuts a `+++ /dev/null` out of a context line and raises on it (no `---` before it); main's
+    # port and this reading do not, and every claim that reads main's reading abstains, in both ports
+    _, got = _claims("Added 1 test. 1 file changed. Added function test_a.", X9_RAISES)
+    raises = "main raises on this diff (`+++ /dev/null` with no `---` line before it)"
+    assert got == [("tests_added", "UNCHECKABLE", f"{raises}; claim says 1"),
+                   ("files_changed_count", "UNCHECKABLE", "the diff's file list is not certain: this reading's file list "
+                                                          "differs from main's: main raises on it (`+++ /dev/null` with "
+                                                          "no `---` line before it); claim says 1"),
+                   ("symbol_added", "UNCHECKABLE", raises)]
+    assert _port_claims([("Added 1 test. 1 file changed. Added function test_a.", X9_RAISES)]) == [got]
+
+
+def test_x9_a_refused_line_outside_any_file_abstains_the_count_and_not_a_symbol_elsewhere():
+    _, got = _claims("Added 1 test. Added function test_a.", X9_STRAY)
+    assert got == [("tests_added", "UNCHECKABLE", f"an added definition line outside any file {Z5_WHY}; claim says 1"),
+                   ("symbol_added", "VERIFIED", "added lines do define function 'test_a'")]
+    assert _port_claims([("Added 1 test. Added function test_a.", X9_STRAY)]) == [got]
+
+
+def test_x9_a_pair_naming_the_header_s_old_path_replaces_nothing():
+    # a deletion under a `diff --git` header whose two paths differ: the `---`/`+++` pair names the old path, which
+    # is the header's file, so no file is dropped and the count stands beside a dotfile's licensed key
+    diff = ("diff --git a/src/old.py b/src/new.py\ndeleted file mode 100644\n--- a/src/old.py\n+++ /dev/null\n"
+            "@@ -1 +0,0 @@\n-x = 1\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\n")
+    assert _claims("2 files changed.", diff)[1] == [("files_changed_count", "VERIFIED", "diff changes 2 files, claim says 2")]
+    assert _port_claims([("2 files changed.", diff)]) == [_claims("2 files changed.", diff)[1]]
+
+
+def test_x9_the_git_door_s_z3_reading_is_held_to_the_scorer_s(scorer, monkeypatch):
+    from collections import Counter
+    pg = scorer
+    good = '    return f"{_Z3_PREFIX} where no repair accounts for it: {why}" if why else None'
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "clean", "1 file changed.", _m("src/a.py"), sample)
+    assert sample["scored"] == 1 and not t.violations, t.violating
+    _planted(pg, monkeypatch, good, '    return f"{_Z3_PREFIX} where no repair accounts for it: planted"', "x9z3")
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "planted", "1 file changed.", _m("src/a.py"), sample)
+    assert "G-C7_oracle:Z-3_status_differs" in t.violations, dict(t.violations)
