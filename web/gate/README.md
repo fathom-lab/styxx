@@ -12,14 +12,16 @@ file's removed lines also define is changed, not added, #101; as amended by
 lists only the paths outside by more than a dot, COMPAT's scaffold reading keeps `.storybook/` as
 scaffolding; and by `NOTE_path2_third_pass_2026_09_25.md`, `NOTE_path2_fourth_pass_2026_09_25.md`,
 `NOTE_path2_fifth_pass_2026_09_25.md`, `NOTE_path2_sixth_pass_2026_09_25.md`,
-`NOTE_path2_seventh_pass_2026_09_25.md`, `NOTE_path2_eighth_pass_2026_09_27.md` and
-`NOTE_path2_ninth_pass_2026_09_27.md`) on the file that carries
-them, sha256 `e975d098e0ecba01e3b2215e5bf59f0fdca2a5cb6880fba1ef317bf211135067` (LF line endings; a wheel
+`NOTE_path2_seventh_pass_2026_09_25.md`, `NOTE_path2_eighth_pass_2026_09_27.md`,
+`NOTE_path2_ninth_pass_2026_09_27.md` and `NOTE_path2_tenth_pass_2026_09_28.md`) on the file that carries
+them, sha256 `0fc470c5a17b865999b0e6946378d1292233bf2c7d86b813f2d7f5c5a08f27ad` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares), reading names by the Unicode table `styxx/_xid.py` carries (15.0.0, table sha256
 `8df68f21…`) and abstaining on a name that meets the skew set beside it (the code points the Pythons the
 package supports, Unicode 13.0 to 16.0, read differently from the table; sha256 `0b7134fd…`; `diffgate.js`
-carries the same bytes, `gen_xid.py` writes both, `xid_versions.json` holds the skew set's sources) — and this
+carries the same bytes, `gen_xid.py` writes both, `xid_versions.json` holds the skew set's sources), comparing two
+header paths' case by the fold `styxx/_fold.py` carries (Unicode 16.0.0, sha256 `a52cda82…`; `gen_fold.py` writes
+it into both files) — and this
 directory is the
 receipt for that port: the differential test that holds it to the Python's output, and the build that turns
 it into the bookmarklet people drag into their bookmarks bar.
@@ -63,10 +65,11 @@ byte comparison reported `bookmarklet_src.js … DIFFERS`, exit 1 (NOTE_path2_fo
 B-1). Measured after the line, on this Windows checkout, with terser 5.46.0: all three `matches`,
 exit 0. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 f13f056df764a629037e6a74a47fecb0593a1f73d811adec51f694086cd00995   47,927 chars
-    bookmarklet.href.txt  sha256 20255ef8755355050a56eaf0dfc98180475dd2633f196686f9e77978e8a97669   47,938 chars
+    bookmarklet.min.js    sha256 c9a23982484b8fbf0b0fe18926ec1b0c1da57623540ca4cbd08d885bbbd218b8   52,373 chars
+    bookmarklet.href.txt  sha256 32080fb3992a9e55dcfd6824a9494a7232367684941f5dcc5627d7a6e4b44f37   52,384 chars
 
-(8,577 characters more than the eighth-pass build: `main`'s own reading in both of its spellings and the
+(4,446 characters more than the ninth-pass build: the case fold, 1,996 of them, and the tenth pass's K-1 to K-5;
+the ninth-pass build was 8,577 more than the eighth's, `main`'s own reading in both of its spellings and the
 ninth pass's abstentions; the eighth-pass build was 4,895 more than the seventh's, 440 of them the skew set;
 the seventh-pass build was 5,417 more than the sixth's, 3,136 of them the name table.)
 
@@ -92,7 +95,11 @@ be a SQL comment or a `++` line, and reads a name meeting a letter Unicode 15.1 
 prefix; `caf3682b…`, 39,350 chars, the unmerged eighth-pass cut — reads a test count, a symbol claim, a file
 count or a path claim otherwise than `main` where `main`'s answer had been right by a second error both share
 (a test behind a lone CR, a `def test_` in markdown, a `-U0` header triple, a monorepo's same-named file in
-another directory). A bookmark that hashes to any of them is an old port; drag the new one.)
+another directory); `f13f056d…`, 47,927 chars, the unmerged ninth-pass cut — licenses a file list that differs
+from `main`'s by a file `main` read from a hunk's content, beside a changed file neither reading counts (a `Submodule`
+line), compares two header paths' case by its engine's Unicode, raises on a `+++ /dev/null` with no `---` line
+where `main` does not, and abstains on a path the Python extracts otherwise where the Python verifies. A bookmark
+that hashes to any of them is an old port; drag the new one.)
 
 Whatever a browser holds under that bookmark either hashes to the line above (drop the
 `javascript:` prefix) or is not this build. terser 5.46.0 produced these bytes; the same terser
@@ -113,11 +120,12 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to e975d098…,
-                                         # styxx/_xid.py's name table to 8df68f21… and its skew set to 0b7134fd…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 0fc470c5…,
+                                         # styxx/_xid.py's name table to 8df68f21… and its skew set to 0b7134fd…,
+                                         # and styxx/_fold.py's case fold to a52cda82…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 267 pinned pairs against their expect blocks
+    node check_pairs.js                  # the 299 pinned pairs against their expect blocks
 
 The pin moved twice between the last two runs of this differential, and one of those moves is a
 finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to
@@ -142,8 +150,36 @@ The corpus needed them. Before PATH-1 added these, `corpus_real.json` carried ex
 what changed is not evidence, and the honest py/js comparison for PATH-1 was run separately over
 the 604-row BENCH corpus (297 `only_touches` readings, 0 disagreements).
 
-Result, 2026-09-27, this branch after the ninth pass (`NOTE_path2_ninth_pass_2026_09_27`), merged with
+Result, 2026-09-28, this branch after the tenth pass (`NOTE_path2_tenth_pass_2026_09_28`), merged with
 `main` at `2a6ce0a3` (whose `styxx/diffgate.py` is the one at `98a5c368`):
+
+    3475 pairs, 7402 claims (622 verified, 1579 contradicted, 5201 uncheckable) — 0 disagreement(s)
+    299 pinned pairs, 0 disagreement(s)
+
+The same 3,475 pairs with `main` on both sides read **47** disagreements, with the ninth-pass head on both
+sides **6**, all six on pairs this pass adds (round 9's two regression classes, which were the ninth pass's own
+Python/port disagreements). With `main`'s Python on one side and this port on the other, **404** records differ —
+what `py_side.py --installed` measures against 7.48.0, whose file is `main`'s; this Python against `main`'s port,
+412. Against the ninth-pass head, 29 records move in the Python and 26 in the port, every one a pinned pair this
+pass added or re-pinned: no generated or real record moves. The minified bookmarklet, loaded in Node with the
+browser stubbed, reads the 299 pinned pairs as the Python does. Three pairs this pass wrote are tests, not pinned
+pairs: where the two ports' path templates extract different paths from one sentence (a non-ASCII character in or
+before the path, as on `main`), the details differ, and the pinned pairs are held at full width.
+
+The tenth pass narrows the licences to #97's exact and suffix tiers, #121's dotted key and #101's pairing (the
+note, section B). A file list `main` read from a hunk's content abstains where the ninth pass licensed its removal
+(K-1: that file had balanced a changed file neither reading counts, git's `Submodule` line under
+`diff.submodule=log`, svn's and hg's binary notices); two header paths are compared by one fixed case fold carried
+in both files, not by the engine's lower-casing (K-2); a `+++ /dev/null` with no `---` line no longer raises (K-3);
+beside #121's dotted key, a line no reading places abstains the file list (K-4); a path claim the two ports'
+templates may extract differently reads as `main` read it (K-5); and a key a reason prints is the same text on every
+engine. Measured on every door under Python 3.12 and 3.14 with CPython and git as the judge, over 22 sets and 44,129
+cases, 16,000 of them randomised at fresh seeds (the note, section E): 0 claims read worse than on `main`, 0
+Python/port disagreements `main` did not have, and nothing raises where `main` does not. The cost is recall: on the
+differential corpus this branch abstains on 452 of the 2,642 claims `main` decides, 56 of them new at the tenth pass
+(K-1 34, K-2 16, K-4 6), 44 of those on the pairs this pass adds.
+
+Result at the ninth pass, kept as it was measured:
 
     3443 pairs, 7311 claims (623 verified, 1576 contradicted, 5112 uncheckable) — 0 disagreement(s)
     267 pinned pairs, 0 disagreement(s)
@@ -167,7 +203,10 @@ refuses abstains the claims that read its file (Z-5). Measured on every door und
 CPython and git as the judge, over 23,110 cases (the note, section E): 0 claims read worse than on `main`,
 and 0 Python/port disagreements `main` did not have. The cost is recall: on the differential corpus this
 branch abstains on 369 of the 2,557 claims `main` decides, 152 of them new at the ninth pass (Z-4 81, Z-1 34,
-Z-2 18, Z-3 15, Z-5 4).
+Z-2 18, Z-3 15, Z-5 4). Those zeros did not hold: round 9's review measured 877 and 828 claim-door cells per door
+reading worse at two seeds (a file `main` read from a hunk's content, licensed away beside a `Submodule` line) and
+267 and 242 new Python/port disagreements under 3.12 (a case pair Unicode 16.0 assigned), and the tenth pass's own
+differential found three more classes (NOTE_path2_tenth_pass, sections A and D); the tenth pass is the answer.
 
 Result at the eighth pass, kept as it was measured:
 
@@ -271,6 +310,10 @@ reads names and Python's `\w` from the pinned 15.0.0 table, not its engine; what
 Unicode is the claim templates' own JavaScript classes (above) and 27 code points that lower-case
 differently.
 
+At the tenth pass, against `origin/main`, PATH-2 moves **404** of the 3,475 records in the Python and
+**412** in the port; against the ninth-pass head, 29 and 26, every one a pinned pair this pass added or re-pinned
+— no generated record moves.
+
 At the ninth pass, against `origin/main`, PATH-2 moves **375** of the 3,443 records in the Python and
 **383** in the port; against the eighth-pass head, 155 and 155: 59 pinned pairs this pass added or re-pinned
 and 96 fuzzed records, every one by Z-4.
@@ -294,6 +337,26 @@ files. The fifth pass itself moves, of the 3,301 records that predate it, the fo
 changed generic definitions pair and abstain) and **90 fuzzed records**, 92 claims CONTRADICTED →
 UNCHECKABLE: the fuzzer writes `docs/.` followed by a sentence period, and V-4 reads a prefix written to
 end in `..` as the parent it spells. No real-corpus record moves.
+
+`path2_gates.py differential` at the tenth pass, from a clean tree at `75bc4b06` (the scorer, the harness,
+`styxx/diffgate.py`, `styxx/_xid.py`, `styxx/_fold.py`, `styxx/declare.py` and `path1_extensions.txt` unmodified; this
+README and the CHANGELOG were not yet committed and are not files the scorer's provenance reads): exit 0, every gate
+passes, no violation; 402 records moved, two of them records the baseline raises on (every claim abstains there, and
+the gate, strict and summary-only fields are scored). Claims attributed to #97 11, #121 55, #101 51, F-2 28, V-1 10,
+V-4 94, W-1 2, Y-1 46, Y-4 6, Z-2 1, Z-3 4, Z-4 117, Z-5 1, and to 32 sets (115 joint), among them W-1+Z-3 39 (with
+Z-3 reverted the repair still reads W-1's map, so only the pair gives `main`'s claim back: K-1), #97+Z-4 16 and
+W-1+Y-1+Z-3 6. New accusations 7: `only_touches` 4 through the amendment's dotted-prefix exception and
+`files_changed_count` 3, #121's own (a dotfile twin counted apart), each admitted by the table; none explained only by
+a post-amendment rule. `compat2_candidate` flips 8, each one rule alone (F-2 six False → True, W-1 one each way); the
+gate-level fields moved on 3 records, given back by F-2 (2) and Y-4 (1); 4 F-4 withdrawals. **G-C7**: 0 oracle
+violations over the 3,475 records, the tenth pass's oracles (K-1 to K-5, the fold pinned and checked sound against this
+interpreter) included; the parse oracles hold every excluded PR in corpus mode. **G-C1**: the never-read sentences,
+the strict pass and the report (`to_dict`, base and head) compared, 0 violations. **G-C8**: every one of the 3,475
+records tried, 1,140 rebuilt through `git fast-import` and scored through `gate_diff` (38 of them holding a dotted
+path), 2,335 not rebuildable faithfully; 366 scored again with rename detection on, 2 renames detected; 226 moved, all
+attributed; the two door canaries (U+0085 and U+2028 paths, where `main`'s `--name-status` split cuts the path and
+Z-3 abstains at the git door) scored, 0 violations. Scorer `f09b6eb1…`, harness `75bfbc39…`, repaired `diffgate.py`
+`0fc470c5…`, baseline `98a5c368`.
 
 `path2_gates.py differential` at the ninth pass, from a clean tree at `8e89333a` (the scorer, the harness,
 `styxx/diffgate.py` and `styxx/_xid.py` unmodified; this README and the CHANGELOG were not yet committed and
