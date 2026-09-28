@@ -135,8 +135,8 @@
    "claims": [
     [
      "file_touched",
-     "VERIFIED",
-     "diff status 'M' for '.github/workflows/dependabot.yml'"
+     "UNCHECKABLE",
+     "'.githiub/workflows/dependabot.yml': only a file with the same name in another directory is in the diff ('.github/workflows/dependabot.yml', status 'M'); #97 licenses the exact and suffix tiers only"
     ],
     [
      "only_touches",
@@ -145,6 +145,7 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-4: was VERIFIED/CONTRADICTED; the claimed path, a typo with a directory component, meets the changed file only by its basename, which #97 does not license, so the path claim abstains (the only_touches accusation, PATH-1's mode 6, is unchanged)"
  }
 ]

@@ -72,12 +72,13 @@
    "claims": [
     [
      "file_touched",
-     "VERIFIED",
-     "diff status 'M' for 'lib/util/helpers.py'"
+     "UNCHECKABLE",
+     "'src/helpers.py': only a file with the same name in another directory is in the diff ('lib/util/helpers.py', status 'M'); #97 licenses the exact and suffix tiers only"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-4: was VERIFIED; only the basename tier matches a claim with a directory component, which #97 does not license, so the claim abstains"
  },
  {
   "id": "path2:121-dotfile-twins",
@@ -1082,21 +1083,22 @@
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+\u000bdef test_a():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 0 test functions, claim says 1"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-1: was VERIFIED/CONTRADICTED; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:f2-a-form-feed-is-not-a-line-break",
@@ -1108,101 +1110,105 @@
     [
      "tests_added",
      "UNCHECKABLE",
-     "diff adds 0 test functions and changes 1, claim says 0; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)"
+     "this reading counts 1 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
      "UNCHECKABLE",
-     "diff adds 0 test functions and changes 1, claim says 1; a changed test is not an added one (#101)"
+     "this reading counts 1 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
   },
-  "repinned": "NOTE_path2_fifth_pass V-1: was VERIFIED / CONTRADICTED; a form feed is CPython indentation, so the re-indent pairs and 'Added 1 test.' abstains (#101); NOTE_path2_eighth_pass Y-5: was VERIFIED/UNCHECKABLE; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
+  "repinned": "NOTE_path2_fifth_pass V-1: was VERIFIED / CONTRADICTED; a form feed is CPython indentation, so the re-indent pairs and 'Added 1 test.' abstains (#101); NOTE_path2_eighth_pass Y-5: was VERIFIED/UNCHECKABLE; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains; NOTE_path2_ninth_pass Z-1: was UNCHECKABLE/UNCHECKABLE; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:f2-a-line-separator-is-not-a-line-break",
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+\u2028def test_a():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 0 test functions, claim says 1"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-1: was VERIFIED/CONTRADICTED; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:f2-a-paragraph-separator-is-not-a-line-break",
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+\u2029def test_a():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 0 test functions, claim says 1"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-1: was VERIFIED/CONTRADICTED; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:f2-a-line-separator-mid-line-starts-no-line",
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,2 @@\n x = 0\n+x = 1\u2028def test_new():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 0 test functions, claim says 1"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-1: was VERIFIED/CONTRADICTED; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:f2-a-context-line-holding-a-separator-adds-nothing",
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,2 @@\n x\u2028+def test_new():\n-y = 0\n+y = 1\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 0 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 0 test functions, claim says 1"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 0 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-1: was VERIFIED/CONTRADICTED; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:f2-a-separator-before-a-header-shape-adds-no-file",
@@ -1213,17 +1219,18 @@
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 2 files, claim says 2"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'evil.py' ('M'), which its port does not; claim says 2"
     ],
     [
      "only_touches",
-     "VERIFIED",
-     "all changed paths under prefix"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'evil.py' ('M'), which its port does not"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-3: was VERIFIED/VERIFIED; the file list is not main's where no repair accounts for it, or main's two ports read it apart, so the claims that read it abstain"
  },
  {
   "id": "path2:f2-a-form-feed-indent-defines-a-function",
@@ -1234,71 +1241,74 @@
    "claims": [
     [
      "symbol_added",
-     "VERIFIED",
-     "added lines do define function 'foo'"
+     "UNCHECKABLE",
+     "this reading finds an added definition of 'foo' where main's Python did not and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was VERIFIED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:f2-limit-hit-reads-a-line-separator-as-indent",
   "summary": "Adds function foo.",
   "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1,2 @@\n x = 0\n+\u2028def foo():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'foo' where main's Python did not and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
   },
-  "repinned": "NOTE_path2_fifth_pass V-1: was VERIFIED, pinned as a limit; `hit` reads CPython's indentation only, so the limit this id names is closed and the line defines nothing"
+  "repinned": "NOTE_path2_fifth_pass V-1: was VERIFIED, pinned as a limit; `hit` reads CPython's indentation only, so the limit this id names is closed and the line defines nothing; NOTE_path2_ninth_pass Z-2: was CONTRADICTED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:f3-an-nbsp-reindent-is-not-an-added-test",
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+ def test_a():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 0 test functions, claim says 1"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-1: was VERIFIED/CONTRADICTED; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:f3-an-ideographic-space-reindent-is-not-an-added-test",
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+　def test_a():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 0 test functions, claim says 1"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-1: was VERIFIED/CONTRADICTED; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:f4-a-path-no-reading-could-hold-still-accuses",
@@ -1358,64 +1368,68 @@
     [
      "symbol_added",
      "UNCHECKABLE",
-     "added lines define function 'foo' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
+     "this reading finds an added definition of 'foo' where main's Python did not and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was UNCHECKABLE; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:v1-a-form-feed-led-new-test-is-counted",
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,3 @@\n x = 0\n+\fdef test_x():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 1 test functions, claim says 0"
+     "UNCHECKABLE",
+     "this reading counts 1 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 1 test functions, claim says 1"
+     "UNCHECKABLE",
+     "this reading counts 1 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-1: was CONTRADICTED/VERIFIED; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:v1-a-vertical-tab-reindented-function-defines-nothing",
   "summary": "Adds function foo.",
   "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1,2 +1,2 @@\n-def foo():\n+\u000bdef foo():\n     pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'foo' where main's Python did not and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was CONTRADICTED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:v1-an-nbsp-led-new-function-defines-nothing",
   "summary": "Adds function foo.",
   "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+ def foo():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'foo' where main's Python did and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was CONTRADICTED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:v1-a-form-feed-separated-changed-function-pairs",
@@ -1427,11 +1441,12 @@
     [
      "symbol_added",
      "UNCHECKABLE",
-     "added lines define function 'foo' only where the removed lines of the same file define it too; a changed definition is not an added one (#101)"
+     "this reading finds an added definition of 'foo' where main's Python did not and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was UNCHECKABLE; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:v1-a-changed-generic-class-pairs",
@@ -1454,48 +1469,51 @@
   "summary": "Adds function foo.",
   "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+def fooé():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'foo' where main's Python did not and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was CONTRADICTED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:v1-a-name-followed-by-a-middle-dot-is-another-name",
   "summary": "Adds function foo.",
   "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+def foo·():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'foo' where main's Python did and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was CONTRADICTED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:v1-a-def-after-a-mid-line-line-separator-is-not-a-definition",
   "summary": "Adds function foo.",
   "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+x = 1\u2028def foo():\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'foo' where main's Python did not and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was CONTRADICTED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:v1-limit-a-bom-led-def-reads-as-a-definition-wherever-it-stands",
@@ -1763,12 +1781,13 @@
    "claims": [
     [
      "file_touched",
-     "VERIFIED",
-     "diff status 'M' for 'src/a.py'"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'src/a.py' ('M'), which its port does not"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-3: was VERIFIED; the file list is not main's where no repair accounts for it, or main's two ports read it apart, so the claims that read it abstain"
  },
  {
   "id": "path2:v2-a-bom-after-a-header-path-is-kept",
@@ -1780,11 +1799,12 @@
     [
      "file_touched",
      "UNCHECKABLE",
-     "'src/a.py' does not appear in the diff — accusation WITHHELD: this class failed EXTERNAL-1 precision (0.23 vs 0.95 floor), disabled pending repair"
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'src/a.py\\ufeff' ('M'), which its port does not"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-3: was UNCHECKABLE; the file list is not main's where no repair accounts for it, or main's two ports read it apart, so the claims that read it abstain"
  },
  {
   "id": "path2:v2-a-binary-header-holding-a-line-separator-registers-its-file",
@@ -1816,28 +1836,30 @@
    "claims": [
     [
      "file_deleted",
-     "VERIFIED",
-     "diff status 'D' for 'docs\\u2028x/c.png'"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's port reads 'docs\\u2028x/c.png' ('M'), which its Python does not"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-3: was VERIFIED; the file list is not main's where no repair accounts for it, or main's two ports read it apart, so the claims that read it abstain"
  },
  {
   "id": "path2:v2-a-reason-prints-a-path-as-python-repr-does",
   "summary": "Only touches src/.",
   "diff": "--- a/a\u2028b c.py\n+++ b/a\u2028b c.py\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside 'src': ['a\\u2028b\\xa0c.py']"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'a' ('M'), which its port does not"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-3: was CONTRADICTED; the file list is not main's where no repair accounts for it, or main's two ports read it apart, so the claims that read it abstain"
  },
  {
   "id": "path2:v4-a-dotdot-after-a-named-segment-could-hold-anything",
@@ -2076,13 +2098,13 @@
     ],
     [
      "symbol_added",
-     "VERIFIED",
-     "added lines do define function 'helper'"
+     "UNCHECKABLE",
+     "this reading finds an added definition of 'helper' where main's Python did not and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
   },
-  "repinned": "NOTE_path2_eighth_pass Y-2: was VERIFIED/VERIFIED; a U+FEFF opens the definition (at line 1 main's two ports counted it apart, elsewhere CPython refuses it), so the claim abstains"
+  "repinned": "NOTE_path2_eighth_pass Y-2: was VERIFIED/VERIFIED; a U+FEFF opens the definition (at line 1 main's two ports counted it apart, elsewhere CPython refuses it), so the claim abstains; NOTE_path2_ninth_pass Z-2: was UNCHECKABLE/VERIFIED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:w2-a-claimed-name-with-an-accented-letter-is-read-whole",
@@ -2217,58 +2239,61 @@
   "summary": "Adds function foo.",
   "diff": "diff --git a/src/m.py b/src/m.py\nindex 3aea0c5..4c4846a 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def foo ():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'foo' where main's Python did and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was CONTRADICTED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:w2-a-test-separated-from-def-by-a-tab-is-counted",
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex 3aea0c5..494b06c 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def\ttest_new():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 1 test functions, claim says 0"
+     "UNCHECKABLE",
+     "this reading counts 1 added test definitions where main's Python counted 0 and its port 0 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 1 test functions, claim says 1"
+     "UNCHECKABLE",
+     "this reading counts 1 added test definitions where main's Python counted 0 and its port 0 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-1: was CONTRADICTED/VERIFIED; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:w2-a-test-with-two-spaces-after-def-is-counted",
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex 3aea0c5..93328c6 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def  test_new():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 1 test functions, claim says 0"
+     "UNCHECKABLE",
+     "this reading counts 1 added test definitions where main's Python counted 0 and its port 0 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 1 test functions, claim says 1"
+     "UNCHECKABLE",
+     "this reading counts 1 added test definitions where main's Python counted 0 and its port 0 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-1: was CONTRADICTED/VERIFIED; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:w2-a-test-whose-separator-changed-pairs",
@@ -2341,21 +2366,22 @@
   "summary": "Added 0 tests. Added 1 test.",
   "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\nindex 3aea0c5..f53c213 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n x = 0\n+\n+\n+def test_new ():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "tests_added",
-     "VERIFIED",
-     "diff adds 0 test functions, claim says 0"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
     ],
     [
      "tests_added",
-     "CONTRADICTED",
-     "diff adds 0 test functions, claim says 1"
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-1: was VERIFIED/CONTRADICTED; this reading's test count is not main's (its Python's, its port's, or BC-1 on its keys) and no repair licenses the difference, so the count abstains"
  },
  {
   "id": "path2:w1-a-hunk-that-declares-too-many-lines-still-ends-at-the-next-header",
@@ -2575,7 +2601,7 @@
   "summary": "Added function foo‍bar. Added function foo.",
   "diff": "diff --git a/src/m.py b/src/m.py\nindex 7d4290a..00e1794 100644\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n x = 1\n+def foo‍bar():\n+    pass\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
@@ -2584,13 +2610,13 @@
     ],
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'foo'"
+     "UNCHECKABLE",
+     "main's Python read a definition of 'foo' through `\\b` before U+200D, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently"
     ]
    ],
    "uncovered_sentences": 0
   },
-  "repinned": "NOTE_path2_eighth_pass Y-3: was CONTRADICTED/CONTRADICTED; the name meets a code point the Pythons this package supports read differently (Unicode 13.0 to 16.0), so the claim abstains"
+  "repinned": "NOTE_path2_eighth_pass Y-3: was CONTRADICTED/CONTRADICTED; the name meets a code point the Pythons this package supports read differently (Unicode 13.0 to 16.0), so the claim abstains; NOTE_path2_ninth_pass Z-2: was UNCHECKABLE/CONTRADICTED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:x1-the-name-table-is-unicode-15-for-both-ports-a-letter-unicode-16-added",
@@ -3184,8 +3210,8 @@
    "claims": [
     [
      "symbol_added",
-     "VERIFIED",
-     "added lines do define function 'scan'"
+     "UNCHECKABLE",
+     "this reading finds an added definition of 'scan' where main's Python did not and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ],
     [
      "tests_added",
@@ -3199,7 +3225,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was VERIFIED/VERIFIED/CONTRADICTED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:y2-a-created-files-line-one-bom-under-an-over-declared-hunk-is-line-one",
@@ -3210,8 +3237,8 @@
    "claims": [
     [
      "symbol_added",
-     "VERIFIED",
-     "added lines do define function 'scan'"
+     "UNCHECKABLE",
+     "this reading finds an added definition of 'scan' where main's Python did not and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ],
     [
      "tests_added",
@@ -3225,7 +3252,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was VERIFIED/VERIFIED/CONTRADICTED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:y2-a-changed-test-beside-a-created-bom-test-under-bare-hunks",
@@ -3299,12 +3327,13 @@
    "claims": [
     [
      "symbol_added",
-     "VERIFIED",
-     "added lines do define function 'foo'"
+     "UNCHECKABLE",
+     "this reading finds an added definition of 'foo' where main's Python did not and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was VERIFIED; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:y2-a-context-line-ends-line-one-in-an-over-declared-hunk",
@@ -3390,12 +3419,12 @@
   "summary": "Added function backoff. Added function backoff‌.",
   "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n a = 1\n+def backoff‌():\n+    return 1\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "symbol_added",
-     "CONTRADICTED",
-     "added lines do NOT define function 'backoff'"
+     "UNCHECKABLE",
+     "main's Python read a definition of 'backoff' through `\\b` before U+200C, which the Pythons this package supports (Unicode 13.0 to 16.0) read differently"
     ],
     [
      "symbol_added",
@@ -3404,7 +3433,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-2: was CONTRADICTED/UNCHECKABLE; whether the added lines define the name is not what main's Python and its port read, and no repair licenses the difference, so the claim abstains"
  },
  {
   "id": "path2:y4-gnu-deletions-with-timestamps-are-two-files",
@@ -3415,17 +3445,18 @@
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 3 files, claim says 3"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's where no repair accounts for it: main reads 'dev/null\\t2024-01-01 00:00:00.000000000 +0000' ('M'), which this reading does not; claim says 3"
     ],
     [
      "only_touches",
-     "VERIFIED",
-     "all changed paths under prefix"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's where no repair accounts for it: main reads 'dev/null\\t2024-01-01 00:00:00.000000000 +0000' ('M'), which this reading does not"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-3: was VERIFIED/VERIFIED; the file list is not main's where no repair accounts for it, or main's two ports read it apart, so the claims that read it abstain"
  },
  {
   "id": "path2:y4-dev-null-is-the-whole-path-or-a-tab-after-it",
@@ -3457,8 +3488,8 @@
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 1 files, claim says 1"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's where no repair accounts for it: main reads 'tests/test_n.py\\t2024-01-01 00:00:00.000000000 +0000' as 'M', this reading 'tests/test_n.py\\t2024-01-01 00:00:00.000000000 +0000' as 'A'; claim says 1"
     ],
     [
      "tests_added",
@@ -3467,7 +3498,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_ninth_pass Z-3: was VERIFIED/UNCHECKABLE; the file list is not main's where no repair accounts for it, or main's two ports read it apart, so the claims that read it abstain"
  },
  {
   "id": "path2:y5-a-test-defined-in-a-markdown-block-beside-a-changed-test",
@@ -3640,6 +3672,563 @@
     ]
    ],
    "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "path2:z1-r1-a-double-space-test-beside-a-markdown-pytest-example",
+  "summary": "Added 1 test. Added 2 tests.",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\nnew file mode 100644\nindex 0000000..5f4464b\n--- /dev/null\n+++ b/docs/guide.md\n@@ -0,0 +1,6 @@\n+Example:\n+\n+```python\n+def test_example():\n+    assert True\n+```\ndiff --git a/tests/test_a.py b/tests/test_a.py\nindex 21b405d..5c8b596 100644\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n import os\n+\n+\n+def  test_a():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 2 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 2 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z1-r2-a-lone-cr-hidden-test-beside-an-nbsp-led-one",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "diff --git a/tests/test_bad.py b/tests/test_bad.py\nnew file mode 100644\nindex 0000000..98ff282\n--- /dev/null\n+++ b/tests/test_bad.py\n@@ -0,0 +1,2 @@\n+ def test_b():\n+    pass\ndiff --git a/tests/test_cr.py b/tests/test_cr.py\nnew file mode 100644\nindex 0000000..fa22cf3\n--- /dev/null\n+++ b/tests/test_cr.py\n@@ -0,0 +1,2 @@\n+a = 1\rdef test_a():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z1-a-tab-separated-test-main-counted-as-none",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,3 @@\n x = 0\n+def\ttest_new():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 1 added test definitions where main's Python counted 0 and its port 0 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 1 added test definitions where main's Python counted 0 and its port 0 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z1-a-u3000-led-test-both-of-main-s-ports-counted",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,3 @@\n x = 0\n+　def test_new():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 1 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z1-a-vertical-tab-in-an-indent-only-main-s-port-counted",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,3 @@\n x = 0\n+  \u000bdef test_load():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 0"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 0 added test definitions where main's Python counted 0 and its port 1 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z1-bc1-main-keyed-a-gnu-deletion-as-dev-null-and-read-no-python-file",
+  "summary": "Added 0 tests. Added 1 test.",
+  "diff": "--- src/a.py\n+++ /dev/null\t2024-01-01 00:00:00.000000000 +0000\n@@ -1,2 +0,0 @@\n-def test_a():\n-    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading finds a Python file in the diff's file list where main's reading of it found none (BC-1 read on main's keys); no repair licenses the difference; claim says 0"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading finds a Python file in the diff's file list where main's reading of it found none (BC-1 read on main's keys); no repair licenses the difference; claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z1-counts-every-reading-agrees-on-still-verify",
+  "summary": "Added 1 test. Added 2 tests.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,3 @@\n x = 0\n+def test_new():\n+    pass\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ],
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 1 test functions, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z2-r3-a-lone-cr-hidden-def-beside-an-nbsp-ended-one",
+  "summary": "Added function foo.",
+  "diff": "diff --git a/src/a.py b/src/a.py\nnew file mode 100644\nindex 0000000..0d79648\n--- /dev/null\n+++ b/src/a.py\n@@ -0,0 +1,2 @@\n+x = 1\rdef foo():\n+    pass\ndiff --git a/src/b.py b/src/b.py\nnew file mode 100644\nindex 0000000..ee45c5f\n--- /dev/null\n+++ b/src/b.py\n@@ -0,0 +1,2 @@\n+def foo ():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'foo' where main's Python did and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z2-a-combining-mark-after-the-name-main-read-as-its-end",
+  "summary": "Added function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n x = 0\n+def foó():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'foo' where main's Python did and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z2-a-devanagari-sign-after-a-test-name-beside-a-backslash-continued-def",
+  "summary": "Introduced function `test_parseः`.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n x = 0\n+def \\\n+    test_parseः():\n+def test_parse(x):\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'test_parseः' where main's Python did and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z2-an-nbsp-separator-main-read-as-a-space",
+  "summary": "Added function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n x = 0\n+def foo():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'foo' where main's Python did and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z2-a-definition-every-reading-reads-still-verifies",
+  "summary": "Added function foo. Added class Bar.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+def foo():\n+    pass\n+class Bar:\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'foo'"
+    ],
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define class 'Bar'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z3-r4-a-sql-comment-pair-in-u0-bytes-beside-dotfile-twins",
+  "summary": "3 files changed. 4 files changed.",
+  "diff": "diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..bd2c89c\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/db/q.sql b/db/q.sql\nindex e5593e5..8175040 100644\n--- a/db/q.sql\n+++ b/db/q.sql\n@@ -2 +2 @@ SELECT 1;\n--- users\n+++ users\n@@ -9 +9 @@ S8;\n-SELECT 3;\n+SELECT 4;\ndiff --git a/env b/env\nnew file mode 100644\nindex 0000000..ac5d589\n--- /dev/null\n+++ b/env\n@@ -0,0 +1 @@\n+B=2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also took a `---`/`+++` pair after lines no hunk count holds for a header because it has a header's shape, and it may be content (a SQL `-- ` comment beside a `++` line); the repair may have balanced that error; claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also took a `---`/`+++` pair after lines no hunk count holds for a header because it has a header's shape, and it may be content (a SQL `-- ` comment beside a `++` line); the repair may have balanced that error; claim says 4"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z3-r5-a-binary-section-replaced-by-a-gnu-pair",
+  "summary": "2 files changed. 3 files changed.",
+  "diff": "diff --git a/img/logo.png b/img/logo.png\nindex 1111111..2222222 100644\nBinary files a/img/logo.png and b/img/logo.png differ\n--- a/docs/notes.txt\t2024-05-06 07:08:09.000000000 +0000\n+++ b/docs/notes.txt\t2024-05-06 07:08:09.000000000 +0000\n@@ -1,2 +1,3 @@\n a\n+++ x\n b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (W-1 reads an exact hunk's `---`/`+++` line as content), and main's reading also dropped the `diff --git` file 'img/logo.png' for the next `---`/`+++` pair, which names another; the repair may have balanced that error; claim says 2"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (W-1 reads an exact hunk's `---`/`+++` line as content), and main's reading also dropped the `diff --git` file 'img/logo.png' for the next `---`/`+++` pair, which names another; the repair may have balanced that error; claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z3-r6-a-gnu-deletion-main-keyed-as-dev-null",
+  "summary": "Modified lib/api.py. Deleted lib/api.py. Deleted src/api.py.",
+  "diff": "--- src/api.py\n+++ /dev/null\t1970-01-01 00:00:00.000000000 +0000\n@@ -1 +0,0 @@\n-x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's where no repair accounts for it: main reads 'dev/null\\t1970-01-01 00:00:00.000000000 +0000' ('M'), which this reading does not"
+    ],
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's where no repair accounts for it: main reads 'dev/null\\t1970-01-01 00:00:00.000000000 +0000' ('M'), which this reading does not"
+    ],
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's where no repair accounts for it: main reads 'dev/null\\t1970-01-01 00:00:00.000000000 +0000' ('M'), which this reading does not"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z3-a-no-prefix-binary-header-nobody-reads-beside-a-plus-content-line",
+  "summary": "1 file changed. 2 files changed.",
+  "diff": "diff --git img/logo.png img/logo.png\nindex 1111111..2222222 100644\nBinary files img/logo.png and img/logo.png differ\ndiff --git a/docs/n.txt b/docs/n.txt\n--- a/docs/n.txt\n+++ b/docs/n.txt\n@@ -1,2 +1,3 @@\n a\n+++ y\n b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (W-1 reads an exact hunk's `---`/`+++` line as content), and main's reading also dropped a `diff --git` file whose header paths neither reading can read; the repair may have balanced that error; claim says 1"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (W-1 reads an exact hunk's `---`/`+++` line as content), and main's reading also dropped a `diff --git` file whose header paths neither reading can read; the repair may have balanced that error; claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z3-a-quoted-path-is-no-lost-file-beside-dotfile-twins",
+  "summary": "3 files changed. Only touches src/.",
+  "diff": "diff --git \"a/sp ace.py\" \"b/sp ace.py\"\n--- \"a/sp ace.py\"\n+++ \"b/sp ace.py\"\n@@ -1 +1,2 @@\n x = 1\n+y = 2\ndiff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..2222222\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nnew file mode 100644\nindex 0000000..2222222\n--- /dev/null\n+++ b/env\n@@ -0,0 +1 @@\n+B=2\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 3 files, claim says 3"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['\"b/sp ace.py\"', '.env', 'env']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z3-a-shaped-header-after-a-bare-hunk-beside-a-dotfile",
+  "summary": "2 files changed. Only touches src/.",
+  "diff": "--- a/.env\n+++ b/.env\n@@\n-A=1\n+A=2\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-a = 1\n+a = 2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also took a `---`/`+++` pair after lines no hunk count holds for a header because it has a header's shape, and it may be content (a SQL `-- ` comment beside a `++` line); the repair may have balanced that error; claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also took a `---`/`+++` pair after lines no hunk count holds for a header because it has a header's shape, and it may be content (a SQL `-- ` comment beside a `++` line); the repair may have balanced that error"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z4-r7-a-nested-dotfile-claimed-where-the-root-one-changed",
+  "summary": "Updated packages/web/.eslintrc.json. Modified packages/web/.eslintrc.json. Updated .eslintrc.json.",
+  "diff": "diff --git a/.eslintrc.json b/.eslintrc.json\nindex 0967ef4..11fd650 100644\n--- a/.eslintrc.json\n+++ b/.eslintrc.json\n@@ -1 +1 @@\n-{}\n+{\"root\": true}\ndiff --git a/packages/web/index.js b/packages/web/index.js\nindex 587be6b..975fbec 100644\n--- a/packages/web/index.js\n+++ b/packages/web/index.js\n@@ -1 +1 @@\n-x\n+y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "'packages/web/.eslintrc.json': only a file with the same name in another directory is in the diff ('.eslintrc.json', status 'M'); #97 licenses the exact and suffix tiers only"
+    ],
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "'packages/web/.eslintrc.json': only a file with the same name in another directory is in the diff ('.eslintrc.json', status 'M'); #97 licenses the exact and suffix tiers only"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for '.eslintrc.json'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z4-a-package-s-index-claimed-where-another-package-s-changed",
+  "summary": "Modified packages/api/index.js. Modified packages/web/index.js. Modified web/index.js. Modified index.js.",
+  "diff": "diff --git a/packages/web/index.js b/packages/web/index.js\nindex 1111111..2222222 100644\n--- a/packages/web/index.js\n+++ b/packages/web/index.js\n@@ -1 +1 @@\n-x\n+y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "'packages/api/index.js': only a file with the same name in another directory is in the diff ('packages/web/index.js', status 'M'); #97 licenses the exact and suffix tiers only"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'packages/web/index.js'"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'packages/web/index.js'"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'packages/web/index.js'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z5-a-file-separator-led-test-beside-a-good-one",
+  "summary": "Added 1 test. Added 2 tests.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n x = 0\n+def test_ok():\n+    pass\n+\u001cdef test_y():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "an added definition line in 'tests/test_a.py' is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line; claim says 1"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "an added definition line in 'tests/test_a.py' is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line; claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z5-a-symbol-in-a-file-holding-a-refused-definition",
+  "summary": "Added function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,5 @@\n x = 0\n+def foo():\n+    pass\n+def　bar():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "an added definition line in 'src/m.py' is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z5-a-symbol-in-another-file-still-verifies",
+  "summary": "Added function foo.",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,3 @@\n x = 0\n+def　bar():\n+    pass\n--- a/src/n.py\n+++ b/src/n.py\n@@ -1 +1,3 @@\n x = 0\n+def foo():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'foo'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z5-a-name-running-into-a-superscript-two-refuses-the-file",
+  "summary": "Added 1 test. Added 2 tests.",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,5 @@\n x = 0\n+def test_ok():\n+    pass\n+def test_z²():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 1 added test definitions where main's Python counted 2 and its port 2 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 1"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "this reading counts 1 added test definitions where main's Python counted 2 and its port 2 (`^\\s*def test_` over main's line split); no repair licenses the difference; claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z5-a-refused-line-outside-any-file",
+  "summary": "Added 1 test. Added function test_a.",
+  "diff": "+\u001cdef test_b():\n--- a/t.py\n+++ b/t.py\n@@ -1 +1,2 @@\n x\n+def test_a():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "an added definition line outside any file is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line; claim says 1"
+    ],
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'test_a'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z1-z3-main-s-python-raises-on-a-split-it-alone-makes",
+  "summary": "Added 1 test. 1 file changed. Added function test_a.",
+  "diff": "diff --git a/t.py b/t.py\n x\f+++ /dev/null\n+def test_a():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "main raises on this diff (`+++ /dev/null` with no `---` line before it); claim says 1"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main raises on it (`+++ /dev/null` with no `---` line before it); claim says 1"
+    ],
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "main raises on this diff (`+++ /dev/null` with no `---` line before it)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:z3-a-pair-naming-the-header-s-old-path-replaces-nothing",
+  "summary": "2 files changed.",
+  "diff": "diff --git a/src/old.py b/src/new.py\ndeleted file mode 100644\n--- a/src/old.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-x = 1\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
   }
  }
 ]
