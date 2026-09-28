@@ -1256,13 +1256,20 @@ class _MainPending {
   }
   key() { const raw = this.status === "D" ? this.a : this.b; return raw ? _mainKey(raw) : ""; }
 }
-function _mainStatus(lines, js, skip = null) {
+function _mainStatus(lines, js, skip = null, forms = null) {
   // main's parseUnifiedDiff status map over `lines`, keyed by main's `_norm`, in main's Python's spelling or (`js`) its
   // port's; a line whose index is in `skip` is not read. null where main raises (`+++ /dev/null`, no `---` before it).
+  // NOTE_path2_eleventh_pass: `forms`, when given, receives every path main keys, as written.
   const strip = js ? (s => s.trim()) : _pyStrip;
   const status = new Map();
   let oldPath = null, pending = null;
-  const flush = () => { if (pending !== null && pending.key() && !status.has(pending.key())) status.set(pending.key(), pending.status); };
+  const key = raw => { if (forms !== null) forms.push(raw); return _mainKey(raw); };
+  const flush = () => {
+    if (pending !== null && pending.key() && !status.has(pending.key())) {
+      key(pending.status === "D" ? pending.a : pending.b);
+      status.set(pending.key(), pending.status);
+    }
+  };
   for (let i = 0; i < lines.length; i++) {
     if (skip !== null && skip.has(i)) continue;
     const line = lines[i];
@@ -1272,9 +1279,9 @@ function _mainStatus(lines, js, skip = null) {
       const nw = strip(line.slice(4));
       if (nw === "/dev/null") {
         if (oldPath === null) return null;
-        status.set(_mainKey(oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath), "D");
+        status.set(key(oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath), "D");
       } else {
-        status.set(_mainKey(nw.startsWith("b/") ? nw.slice(2) : nw), (oldPath === "/dev/null" || oldPath === null) ? "A" : "M");
+        status.set(key(nw.startsWith("b/") ? nw.slice(2) : nw), (oldPath === "/dev/null" || oldPath === null) ? "A" : "M");
       }
       pending = null;
     } else if (line.startsWith("+") && !line.startsWith("+++")) continue;
@@ -1516,11 +1523,26 @@ function _w1Moved(full, skipped) {
   return "";
 }
 const _K1_WHY = moved => `main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (${moved}); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference`;
+// NOTE_path2_eleventh_pass: two paths main keys differ as written and fold alike (K-2's table); main's key is the runtime's
+// lower case, so main's two file lists, and where they differ, are not the same on every runtime.
+function _foldsApart(forms) {
+  const seen = new Map();
+  for (const raw of forms) {
+    const form = _stripChars(raw.replace(/\\/g, "/"), "./", true, false);
+    const folded = _caseFold(form);
+    if (!seen.has(folded)) seen.set(folded, form);
+    else if (seen.get(folded) !== form) return true;
+  }
+  return false;
+}
+const _Z3_FOLDS = "main's reading holds two paths that differ only in case, which the runtimes this package supports key apart or together";
 function _fileListDiffers(diffText, lines, status, inside, soft) {
   // NOTE_path2_tenth_pass (K-1): W-1's exact hunk licenses no file-list difference; where main's reading of the file
   // list with an exact hunk's lines is not its reading without them, the file-list claims abstain.
-  const py = _mainStatus(_pyLines(diffText), false), js = _mainStatus(lines, true);
+  const forms = [];
+  const py = _mainStatus(_pyLines(diffText), false, null, forms), js = _mainStatus(lines, true, null, forms);
   if (py === null || js === null) return `${_Z3_PREFIX}: main raises on it (\`+++ /dev/null\` with no \`---\` line before it)`;
+  if (_foldsApart(forms)) return `${_Z3_PREFIX}: ${_Z3_FOLDS}`;   // NOTE_path2_eleventh_pass: asked before the lists are compared
   if (!_mapsEqual(py, js)) {
     return `main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): ${_apart(py, js)}`;
   }

@@ -1304,19 +1304,25 @@ class _MainPending:
         return _main_key(raw) if raw else ""
 
 
-def _main_status(lines: list, js: bool, skip=frozenset()):
+def _main_status(lines: list, js: bool, skip=frozenset(), forms: list | None = None):
     """main's `parse_unified_diff` status map over `lines`, keyed by main's `_norm`, in main's Python's spelling or
     (`js`) its port's; a line whose index is in `skip` is not read. None where main raises (a `+++ /dev/null` with no
-    `---` line before it)."""
+    `---` line before it). NOTE_path2_eleventh_pass: `forms`, when given, receives every path main keys, as written."""
     space = _JS_SPACE if js else _PY_SPACE
     status: dict = {}
     old_path = None
     pending = None
+
+    def key(raw: str) -> str:
+        if forms is not None:
+            forms.append(raw)
+        return _main_key(raw)
     for i, line in enumerate(lines):
         if i in skip:
             continue
         if line.startswith("diff --git "):
             if pending is not None and pending.key() and pending.key() not in status:
+                key(pending.a if pending.status == "D" else pending.b)
                 status[pending.key()] = pending.status
             pending = _MainPending(line, js)
         elif line.startswith("--- "):
@@ -1326,9 +1332,9 @@ def _main_status(lines: list, js: bool, skip=frozenset()):
             if new == "/dev/null":
                 if old_path is None:
                     return None
-                status[_main_key(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
+                status[key(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
             else:
-                status[_main_key(new[2:] if new.startswith("b/") else new)] = \
+                status[key(new[2:] if new.startswith("b/") else new)] = \
                     "A" if old_path in ("/dev/null", None) else "M"
             pending = None
         elif line.startswith("+") and not line.startswith("+++"):
@@ -1336,8 +1342,25 @@ def _main_status(lines: list, js: bool, skip=frozenset()):
         elif pending is not None:
             pending.note(line)
     if pending is not None and pending.key() and pending.key() not in status:
+        key(pending.a if pending.status == "D" else pending.b)
         status[pending.key()] = pending.status
     return status
+
+
+def _folds_apart(forms: list) -> bool:
+    """NOTE_path2_eleventh_pass: two paths main keys differ as written and fold alike (styxx/_fold.py, K-2). main's key is
+    the runtime's lower case, which the supported runtimes read differently for 67 code points, so main's two file lists
+    -- and where they differ -- are not the same on every runtime."""
+    seen: dict = {}
+    for raw in forms:
+        form = raw.replace("\\", "/").lstrip("./")
+        if seen.setdefault(_case_fold(form), form) != form:
+            return True
+    return False
+
+
+_Z3_FOLDS = ("main's reading holds two paths that differ only in case, which the runtimes this package supports key "
+             "apart or together")
 
 
 def _main_added(lines: list) -> list:
@@ -1675,9 +1698,14 @@ def _file_list_differs(diff_text: str, lines: list, status: dict, inside: set, s
     status) from content; that error may have balanced a changed file neither reading counts (git's `Submodule`
     line under diff.submodule=log, svn's `Cannot display` block, hg's `Binary file ... has changed`, and formats not
     listed), so the file-list claims abstain."""
-    py, js = _main_status(_py_lines(diff_text), False), _main_status(lines, True)
+    forms: list = []
+    py, js = _main_status(_py_lines(diff_text), False, forms=forms), _main_status(lines, True, forms=forms)
     if py is None or js is None:
         return f"{_Z3_PREFIX}: main raises on it (`+++ /dev/null` with no `---` line before it)"
+    # NOTE_path2_eleventh_pass: asked before main's two lists are compared, since which of them differ, and where, is the
+    # runtime's (the round's own differential: U+1C89 beside U+1C8A, one key on Node 24 and two on Python 3.12)
+    if _folds_apart(forms):
+        return f"{_Z3_PREFIX}: {_Z3_FOLDS}"
     if py != js:
         return (f"main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript "
                 f"does not): {_apart(py, js)}")
