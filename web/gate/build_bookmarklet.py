@@ -28,7 +28,8 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-EXPORT_LINE = 'if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides };\n'
+EXPORT_LINE = ('if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides, '
+               '_evaluate, _Repairs, REPAIRS };\n')
 
 
 def source() -> str:

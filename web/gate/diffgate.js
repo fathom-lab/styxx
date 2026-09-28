@@ -714,7 +714,15 @@ const _Y1_LOOSE = "a `---` or `+++` line after lines no hunk count holds may be 
 const _Y1_COLLIDE = "two header paths that differ only in case are one key";
 const _Y1_UNCOUNTED = "a line names a changed file no header pair counts (GNU's `Binary files ... differ`, `Only in ...` and the like)";
 const _UNCOUNTED = /^(?:(?:Binary files|Files|Symbolic links) [^\n]+ and [^\n]+ differ|Only in [^\n]+: [^\n]+|File [^\n]+ is a [^\n]+ while file [^\n]+ is a [^\n]+)$/;
-function _readDiff(diffText, notes = null) {
+function _pendingKey(pending, key) {
+  // The key of the file a `diff --git` header still waiting for its pair names, by the reading's key function
+  // (`_Pending.path()`, main's code, keys by `_norm`; NOTE_path2_eleventh_pass: #121 switched off keys by main's).
+  const raw = pending.status === "D" ? pending.a : pending.b;
+  return raw ? key(raw) : "";
+}
+function _readDiff(diffText, notes = null, rp = null) {
+  // NOTE_path2_eleventh_pass: `rp`, the repairs this reading applies; with #121 switched off every path is keyed by main's key.
+  const key = p => (rp || _ALL_ON).key(p);
   const status = new Map();
   const added = [];
   const sides = new Map();
@@ -739,10 +747,11 @@ function _readDiff(diffText, notes = null) {
     else if (forms.get(folded) !== form) note("files", _Y1_COLLIDE);
   };
   const flush = () => {
-    if (pending !== null && pending.path()) {
+    const pk = pending !== null ? _pendingKey(pending, key) : "";
+    if (pk) {
       register(pending.status === "D" ? pending.a : pending.b);
-      if (!status.has(pending.path())) status.set(pending.path(), pending.status);
-      if (!sides.has(pending.path())) sides.set(pending.path(), [[], []]);
+      if (!status.has(pk)) status.set(pk, pending.status);
+      if (!sides.has(pk)) sides.set(pk, [[], []]);
     } else if (pending !== null) soft.push(_Z3_UNREAD);                  // Z-3: dropped, as main dropped it
   };
   const lines = _splitlines(diffText || "");
@@ -789,9 +798,9 @@ function _readDiff(diffText, notes = null) {
     } else if (line.startsWith("+++ ")) {
       if (loose && k !== cleanPlus) note("files", _Y1_LOOSE);
       const nw = _pyStrip(line.slice(4));
-      if (pending !== null && pending.path()
-          && ![_norm(pending.a), _norm(pending.b)].includes(_pairNames(_devNull(nw) ? (oldPath || "") : nw))) {
-        soft.push(_Z3_REPLACED(pending.path()));   // Z-3: dropped, as main dropped it
+      const pk = pending !== null ? _pendingKey(pending, key) : "";
+      if (pk && ![key(pending.a), key(pending.b)].includes(_pairNames(_devNull(nw) ? (oldPath || "") : nw, key))) {
+        soft.push(_Z3_REPLACED(pk));                // Z-3: dropped, as main dropped it
       }
       if (_devNull(nw) && oldPath === null) {
         // NOTE_path2_tenth_pass (K-3): a deletion with no `---` line before it names no file, and is not read as one
@@ -800,13 +809,13 @@ function _readDiff(diffText, notes = null) {
       } else {
         let raw;
         if (_devNull(nw)) {                       // Y-4: a GNU timestamp after /dev/null
-          status.set(_norm(oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath), "D");
+          status.set(key(oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath), "D");
           raw = oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath;
         } else {
           raw = nw.startsWith("b/") ? nw.slice(2) : nw;
-          status.set(_norm(raw), (oldPath === null || _devNull(oldPath)) ? "A" : "M");
+          status.set(key(raw), (oldPath === null || _devNull(oldPath)) ? "A" : "M");
         }
-        cur = _norm(raw);
+        cur = key(raw);
         register(raw);
         if (!sides.has(cur)) sides.set(cur, [[], []]);
       }
@@ -1092,6 +1101,33 @@ function _basename(p) {
   const s = p.replace(/\/+$/, "");
   return s.slice(s.lastIndexOf("/") + 1);
 }
+// #97 switched off (NOTE_path2_eleventh_pass): main's resolution, one loop in diff order, the earliest entry the claim
+// matches exactly, by suffix or by basename.
+function _earliestMatch(status, claimed) {
+  const c = _norm(claimed);
+  for (const [p, st] of status) if (p === c || p.endsWith("/" + c) || _basename(p) === _basename(c)) return [p, st];
+  return [null, null];
+}
+// NOTE_path2_eleventh_pass_2026_09_28: THE SWITCHES, as the Python's `_Repairs`. The three licensed repairs, each of
+// which this reading can be evaluated without; the set is an explicit parameter (`rp`), never module state, and each
+// switch turns off one repair's own code: #97 resolves by main's loop, #121 keys every path by main's key, #101 pairs
+// nothing. The guard reads them to decide whether a difference from main's verdict is licensed.
+const REPAIRS = ["#97", "#121", "#101"];
+class _Repairs {
+  constructor(off = []) {
+    this.off = new Set(off);
+    for (const r of this.off) if (!REPAIRS.includes(r)) throw new Error(`no such repair: ${r}`);
+  }
+  on(repair) { return !this.off.has(repair); }
+  key(p) { return this.off.has("#121") ? _mainKey(p) : _norm(p); }
+  findPath(status, claimed) {
+    const c = this.off.has("#121") ? _mainKey(claimed) : claimed;
+    return this.off.has("#97") ? _earliestMatch(status, c) : _findPath(status, c);
+  }
+  changedTests(sides, status) { return this.off.has("#101") ? 0 : _changedTestDefs(sides, status); }
+  onlyChanged(name, sides, status) { return this.off.has("#101") ? false : _definitionOnlyChanged(name, sides, status); }
+}
+const _ALL_ON = new _Repairs();
 function _splitlines(text) {
   // The three line endings a diff can carry, and nothing else. NOTE_path2_fourth_pass F-2: the Python
   // (`_diff_lines`) now splits exactly this way; str.splitlines() also broke on U+000B, U+000C,
@@ -1358,11 +1394,12 @@ function _mainFind(mainMap, claimed) {
   for (const [p, st] of mainMap) if (p === c || p.endsWith("/" + c) || _basename(p) === _basename(c)) return [p, st];
   return [null, null];
 }
-function _basenameOnly(status, claimed) {
-  // Z-4: a path claim with a directory component that only the basename tier matches.
-  const c = _norm(claimed);
+function _basenameOnly(status, claimed, rp = null) {
+  // Z-4: a path claim with a directory component that only the basename tier matches (read with the repairs `rp`).
+  rp = rp || _ALL_ON;
+  const c = rp.key(claimed);
   if (!c.includes("/")) return null;
-  const [p, st] = _findPath(status, claimed);
+  const [p, st] = rp.findPath(status, claimed);
   if (p === null || p === c || p.endsWith("/" + c)) return null;
   return `${pyRepr(claimed)}: only a file with the same name in another directory is in the diff (${_shown(p)}, status ${pyRepr(st)}); #97 licenses the exact and suffix tiers only`;
 }
@@ -1441,11 +1478,12 @@ function _fileListDiffers(diffText, lines, status, inside, soft) {
   }
   return null;
 }
-function _pairNames(raw) {
-  // Z-3: the file a `---`/`+++` header path names: cut at a TAB, quotes and `a/`/`b/` dropped, keyed.
+function _pairNames(raw, key = null) {
+  // Z-3: the file a `---`/`+++` header path names: cut at a TAB, quotes and `a/`/`b/` dropped, keyed (by `key`, the
+  // reading's key function; _norm when none is given).
   let p = _pyStrip(raw.split("\t")[0]);
   if (p.length >= 2 && p.startsWith('"') && p.endsWith('"')) p = p.slice(1, -1);
-  return _norm(p.startsWith("a/") || p.startsWith("b/") ? p.slice(2) : p);
+  return (key || _norm)(p.startsWith("a/") || p.startsWith("b/") ? p.slice(2) : p);
 }
 
 function parseUnifiedDiff(diffText) {
@@ -1551,8 +1589,22 @@ function declarationPass(summaryText) {
 }
 
 function gateDiffText(summaryText, diffText, { strict = false, _declared = false } = {}) {
-  const { status, addedBlob } = parseUnifiedDiff(diffText);
-  const sides = parseUnifiedDiffSides(diffText);
+  return _evaluate(summaryText, diffText, { strict, _declared, rp: _ALL_ON });
+}
+
+// NOTE_path2_eleventh_pass: this reading of a raw diff with the repairs `rp`. With every repair on, the three parses the
+// tenth pass made; with #121 switched off, one parse keyed by main's key (#97 and #101 act below, not in the parse).
+function _evaluate(summaryText, diffText, { strict = false, _declared = false, rp = _ALL_ON } = {}) {
+  let status, addedBlob, sides, notes;
+  if (rp.on("#121")) {
+    ({ status, addedBlob } = parseUnifiedDiff(diffText));
+    sides = parseUnifiedDiffSides(diffText);
+    notes = _diffNotes(diffText);
+  } else {
+    notes = {};
+    const r = _readDiff(diffText, notes, rp);
+    status = r.status; addedBlob = r.added.join("\n"); sides = r.sides;
+  }
   const rawInputLen = (diffText || "").length;
   let noEvidence = null;
   if (status.size === 0 && !addedBlob) {
@@ -1562,12 +1614,11 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
   const noPaths = status.size === 0 ? "the diff carries no file paths, so scope cannot be checked" : null;
   // NOTE_path2_eighth_pass (Y-1): what the one reading of the diff is not sure of; NOTE_path2_ninth_pass (Z-3): where
   // its file list is not main's and no repair licenses the difference.
-  const notes = _diffNotes(diffText);
   const unsureFiles = notes.files || notes.differs || null;
   const notSure = unsureFiles ? `the diff's file list is not certain: ${unsureFiles}` : null;
   const main = _mainReading(diffText || "");                          // NOTE_path2_ninth_pass
 
-  const findPath = claimed => _findPath(status, claimed);
+  const findPath = claimed => rp.findPath(status, claimed);
 
   const claims = [];
   const sentences = _pySplitSentences(summaryText);
@@ -1595,7 +1646,7 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
         if (_PATH_KINDS.has(kind)) {
           const at = m.indices.groups.path[0];
           const apart = main !== null && _readApart(d.path, at > 0 ? sent.slice(at - 1, at) : "");
-          const onlyName = (notSure || apart) ? null : _basenameOnly(status, d.path);
+          const onlyName = (notSure || apart) ? null : _basenameOnly(status, d.path, rp);
           if (notSure) { c.verdict = "UNCHECKABLE"; c.why = notSure; }               // NOTE_path2_eighth_pass (Y-1)
           else if (apart) {                                                           // NOTE_path2_tenth_pass (K-5)
             const own = main.maps[main.maps.length - 1];     // main's port's file list: the port reads as main's port did
@@ -1618,7 +1669,7 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             const got = _addedTests(addedBlob);                        // the pairing's reading (W-2)
             // PATH-2 (#101): verify net, abstain inside [net, got], accuse only outside it.
             // AMENDMENT_path2 C-1: pairs one to one, clamped to got.
-            const chg = Math.min(_changedTestDefs(sides, status), got);
+            const chg = Math.min(rp.changedTests(sides, status), got);
             const net = got - chg;
             const note = chg ? ` (${chg} changed, not added: #101)` : "";
             const unread = _asyncTestsAdded(sides, status);             // NOTE_path2_seventh_pass (A-1)
@@ -1679,7 +1730,7 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
               c.verdict = "UNCHECKABLE"; c.why = unlicensed;
             } else if (whole) {
               c.verdict = "UNCHECKABLE"; c.why = whole;
-            } else if (hit && _definitionOnlyChanged(name, sides, status)) {
+            } else if (hit && rp.onlyChanged(name, sides, status)) {
               c.verdict = "UNCHECKABLE";                                   // PATH-2 (#101)
               c.why = `added lines define ${d.kind} ${_qname(name)} only where the removed lines of the same file define it too; a changed definition is not an added one (#101)`;
             } else {
@@ -1688,15 +1739,15 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             }
           }
         } else if (kind === "only_touches") {
-          let prefs = [_rstrip(_norm(d.prefix), "/.")];      // sentence-final periods are not path
-          if (d.prefix2) prefs.push(_rstrip(_norm(d.prefix2), "/."));
+          let prefs = [_rstrip(rp.key(d.prefix), "/.")];      // sentence-final periods are not path
+          if (d.prefix2) prefs.push(_rstrip(rp.key(d.prefix2), "/."));
           // NOTE_path2_sixth_pass (V-4, completed): a second prefix written as a parent (a bare `..`) is
           // read before the path-shape test drops it: it is off-tree, as `../` is.
           const parent2 = !!d.prefix2 && !!_parentPrefix(d.prefix2.replace(/\\/g, "/"));
           if (d.prefix2 && !parent2 && !_prefixIsPathShaped(d.prefix2, status)) prefs = prefs.slice(0, 1);
           const rawPrefs = [d.prefix].concat(prefs.length === 2 ? [d.prefix2] : []);
           const notPaths = BC1_BY_CONSTRUCTION
-            ? rawPrefs.filter((x, i) => !(i === 1 && parent2) && !_prefixIsPathShaped(x, status)).map(x => _rstrip(_norm(x), "/."))
+            ? rawPrefs.filter((x, i) => !(i === 1 && parent2) && !_prefixIsPathShaped(x, status)).map(x => _rstrip(rp.key(x), "/."))
             : [];
           // PATH-1 mode 1: _pathInside matches a bare filename on its basename.
           const outside = [...status.keys()].filter(p => !prefs.some(x => _pathInside(p, x)));
@@ -1706,7 +1757,7 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
           let real = outside.filter(p => !dotMiss.includes(p));
           // NOTE_path2_fifth_pass V-4: off-tree-ness is also read on the prefix as written, before the
           // rstrip("/."), so a prefix ending in `..` is off-tree (_parentPrefix).
-          const written = rawPrefs.map(x => _norm(x));
+          const written = rawPrefs.map(x => rp.key(x));
           const offPairs = prefs.map((x, i) => [x, written[i]]).filter(([x, r]) => _prefixOffTree(x) || _parentPrefix(r));
           const offTree = offPairs.map(([x, r]) => _parentPrefix(r) || x);
           // NOTE_path2_fourth_pass F-4: beside an on-tree prefix, a real path no reading of the off-tree
@@ -1751,7 +1802,7 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
     const [dtext, drep] = declarationPass(summaryText);
     if (drep.declared) {
       if (dtext) {
-        const sub = gateDiffText(dtext, diffText, { strict, _declared: true });
+        const sub = _evaluate(dtext, diffText, { strict, _declared: true, rp });
         for (const c of (sub.claims || [])) {
           c.detail = Object.assign({}, c.detail || {}, { declared: true });
           claims.push(c);
@@ -1780,5 +1831,5 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
   };
 }
 
-if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides };
+if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides, _evaluate, _Repairs, REPAIRS };
 if (typeof globalThis !== "undefined") globalThis.styxxDiffgateJS = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides };

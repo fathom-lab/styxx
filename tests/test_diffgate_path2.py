@@ -2274,8 +2274,8 @@ def test_x7_the_git_door_is_scored_and_a_defect_in_it_fails(scorer, monkeypatch)
     pg.git_door_pair(t, "clean", summary, diff, sample)
     assert sample == {"tried": 1, "scored": 1} and not t.violations and t.n["records_moved"] == 1
     # planted: the git door hands the gate no sides, so its pairing is blind (the raw door's is not)
-    _planted(pg, monkeypatch, "                 sides=parse_unified_diff_sides(diff_text), notes=notes)",
-             "                 sides=None, notes=notes)", "x7git")
+    _planted(pg, monkeypatch, '    sides = parse_unified_diff_sides(diff_text) if rp.on("#121") else _read_diff(diff_text, None, rp)[2]',
+             "    sides = None", "x7git")
     t, sample = pg.Tally(name_prs=True), Counter()
     pg.git_door_pair(t, "planted", summary, diff, sample)
     assert t.violations["G-C8_git_door_differs_from_the_raw_door"] == 1
@@ -2823,7 +2823,7 @@ X9_PLANTED = {
         "    why = _licensed_against(status, full)", "    why = None",
         "Deleted src/api.py.", X9_R6, "G-C7_oracle:Y_notes"),
     "Z-3: a `diff --git` file its next pair replaced no longer a doubt": (
-        "                soft.append(_Z3_REPLACED.format(_shown(pending.path())))", "                pass",
+        "                soft.append(_Z3_REPLACED.format(_shown(pk)))", "                pass",
         # NOTE_path2_tenth_pass: R5 abstains by K-1 now (main read `+++ x` from its exact hunk), so the doubt is asked
         # beside #121's licensed dotted key instead, where it is the only thing that abstains
         "2 files changed.", "diff --git a/img/logo.png b/img/logo.png\nindex 1111111..2222222 100644\n"
@@ -2903,8 +2903,8 @@ X9_DOOR = {
         '    return {"files": _Y1_COLLIDE} if any(len(v) > 1 for v in forms.values()) else {}', "    return {}",
         "2 files changed.", _m("docs/Guide.md") + _m("docs/guide.md"), "G-C7_oracle:files_changed_count_claim"),
     "#121 reverted at the git door (P31)": (
-        "            status[_norm(path)] = st            # A / M / D / R",
-        '            status[_norm(path).lstrip(".")] = st            # A / M / D / R',
+        "            status[rp.key(path)] = st           # A / M / D / R",
+        '            status[rp.key(path).lstrip(".")] = st           # A / M / D / R',
         "3 files changed. Only touches github/ and pr_agent.toml.",
         _m(".pr_agent.toml") + _m("pr_agent.toml") + _m(".github/x.yml"), "G-C7_oracle:files_changed_count_claim"),
     "a rename keyed by its old path (P26)": (

@@ -917,7 +917,14 @@ _Y1_UNCOUNTED = ("a line names a changed file no header pair counts (GNU's `Bina
 _UNCOUNTED = re.compile(r"^(?:(?:Binary files|Files|Symbolic links) .+ and .+ differ|Only in .+: .+|File .+ is a .+ while file .+ is a .+)$")
 
 
-def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, dict]:
+def _pending_key(pending: "_Pending", key) -> str:
+    """The key of the file a `diff --git` header still waiting for its pair names, by the key function `key`
+    (`_Pending.path()`, main's code, keys by `_norm`; NOTE_path2_eleventh_pass: #121 switched off keys by main's)."""
+    raw = pending.a if pending.status == "D" else pending.b
+    return key(raw) if raw else ""
+
+
+def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" = None) -> tuple[dict, list, dict]:
     """Unified diff text -> (status map, added lines in order, per-file sides): the one reading W-1
     gives both parsers. An added line outside any file (no `+++` header before it) is in the blob and in
     no file's sides, exactly as before.
@@ -925,7 +932,10 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
     NOTE_path2_eighth_pass: `notes`, when given, is filled with what this reading cannot be sure of: "files"
     when a header was read that may be content, two paths are one key, or a line names a changed file no header
     pair counts (Y-1); "bom" when a U+FEFF was dropped from an added line 1 that defines a test (Y-2).
-    NOTE_path2_ninth_pass: and "differs" when this file list is not licensed against main's (Z-3)."""
+    NOTE_path2_ninth_pass: and "differs" when this file list is not licensed against main's (Z-3).
+    NOTE_path2_eleventh_pass: `rp`, the repairs this reading applies; with #121 switched off every path is keyed by
+    main's key."""
+    key = (rp or _ALL_ON).key
     status: dict[str, str] = {}
     added: list[str] = []
     sides: dict = {}
@@ -953,11 +963,12 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
             found.setdefault("files", _Y1_COLLIDE)
 
     def flush() -> None:
-        if pending is not None and pending.path():
+        pk = _pending_key(pending, key) if pending is not None else ""
+        if pk:
             register(pending.a if pending.status == "D" else pending.b)
-            if pending.path() not in status:
-                status[pending.path()] = pending.status
-            sides.setdefault(pending.path(), ([], []))
+            if pk not in status:
+                status[pk] = pending.status
+            sides.setdefault(pk, ([], []))
         elif pending is not None:
             soft.append(_Z3_UNREAD)                                   # Z-3: dropped, as main dropped it
 
@@ -1020,9 +1031,9 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
             if loose and k != clean_plus:
                 found.setdefault("files", _Y1_LOOSE)
             new = line[4:].strip()
-            if pending is not None and pending.path() and \
-                    _pair_names((old_path or "") if _dev_null(new) else new) not in (_norm(pending.a), _norm(pending.b)):
-                soft.append(_Z3_REPLACED.format(_shown(pending.path())))   # Z-3: dropped, as main dropped it
+            pk = _pending_key(pending, key) if pending is not None else ""
+            if pk and _pair_names((old_path or "") if _dev_null(new) else new, key) not in (key(pending.a), key(pending.b)):
+                soft.append(_Z3_REPLACED.format(_shown(pk)))              # Z-3: dropped, as main dropped it
             if _dev_null(new) and old_path is None:
                 # NOTE_path2_tenth_pass (K-3): a deletion with no `---` line before it names no file, and is not read
                 # as one. main raised on it where its own reading held no `---` line either (every claim then abstains:
@@ -1032,12 +1043,12 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
                 cur = None
             else:
                 if _dev_null(new):               # Y-4: a GNU timestamp after /dev/null
-                    status[_norm(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
+                    status[key(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
                     raw = old_path[2:] if old_path.startswith("a/") else old_path
                 else:
                     raw = new[2:] if new.startswith("b/") else new
-                    status[_norm(raw)] = "A" if (old_path is None or _dev_null(old_path)) else "M"
-                cur = _norm(raw)
+                    status[key(raw)] = "A" if (old_path is None or _dev_null(old_path)) else "M"
+                cur = key(raw)
                 register(raw)
                 sides.setdefault(cur, ([], []))
             pending = None
@@ -1112,13 +1123,13 @@ _GIT_META = re.compile(r"^(?:index |old mode |new mode |deleted file mode |new f
                        r"rename from |rename to |similarity index |dissimilarity index )")
 
 
-def _pair_names(raw: str) -> str:
+def _pair_names(raw: str, key=None) -> str:
     """Z-3: the file a `---`/`+++` header path names: cut at a TAB (GNU's timestamp), quotes and `a/`/`b/` dropped,
-    keyed."""
+    keyed (by `key`, the reading's key function; `_norm` when none is given)."""
     p = raw.split("\t", 1)[0].strip()
     if len(p) >= 2 and p.startswith('"') and p.endswith('"'):
         p = p[1:-1]
-    return _norm(p[2:] if p.startswith(("a/", "b/")) else p)
+    return (key or _norm)(p[2:] if p.startswith(("a/", "b/")) else p)
 
 
 def _diff_notes(diff_text: str) -> dict:
@@ -1514,12 +1525,14 @@ def _main_find(main_map: dict, claimed: str):
     return None, None
 
 
-def _basename_only(status: dict, claimed: str):
-    """Z-4: why a path claim with a directory component that only the basename tier matches abstains, else None."""
-    c = _norm(claimed)
+def _basename_only(status: dict, claimed: str, rp: "_Repairs | None" = None):
+    """Z-4: why a path claim with a directory component that only the basename tier matches abstains, else None.
+    NOTE_path2_eleventh_pass: read with the repairs `rp` (#97 switched off resolves by main's loop, #121 by main's key)."""
+    rp = rp or _ALL_ON
+    c = rp.key(claimed)
     if "/" not in c:
         return None
-    p, st = _find_path(status, claimed)
+    p, st = rp.find_path(status, claimed)
     if p is None or p == c or p.endswith("/" + c):
         return None
     return (f"{claimed!r}: only a file with the same name in another directory is in the diff "
@@ -2304,13 +2317,29 @@ def gate_diff_text(summary_text: str, diff_text: str,
     says in its own `why` that the report is not tied to any particular change.
     Neither can produce an accusation — see `_tests_pass_verdict`.
     """
-    status, added_blob = parse_unified_diff(diff_text)
+    return _evaluate_text(summary_text, diff_text, _ALL_ON, run=run, strict=strict, repo=repo,
+                          evidence=evidence, commit=commit)
+
+
+def _evaluate_text(summary_text: str, diff_text: str, rp: "_Repairs", *, run: str | None = None,
+                   strict: bool = False, repo=None, evidence=None, commit: str | None = None,
+                   tp: list | None = None, observe: bool = True) -> DiffGate:
+    """NOTE_path2_eleventh_pass: this reading of a raw diff with the repairs `rp`. With every repair on, the three
+    parses the tenth pass made (`parse_unified_diff`, `parse_unified_diff_sides`, `_diff_notes`); with #121 switched
+    off, one parse keyed by main's key (#97 and #101 act in `_gate`, not in the parse). `tp` shares one tests_pass
+    answer between evaluations, and `observe=False` skips the never-read observer (it touches no verdict)."""
+    if rp.on("#121"):
+        status, added_blob = parse_unified_diff(diff_text)
+        sides, notes = parse_unified_diff_sides(diff_text or ""), _diff_notes(diff_text or "")
+    else:
+        notes = {}
+        status, added, sides = _read_diff(diff_text or "", notes, rp)
+        added_blob = "\n".join(added)
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base="(diff-text)", head="(diff-text)",
                  evidence=evidence, commit=commit,
                  raw_input_len=len(diff_text or ""), main=_main_reading(diff_text or ""),
-                 sides=parse_unified_diff_sides(diff_text or ""),
-                 notes=_diff_notes(diff_text or ""))
+                 sides=sides, notes=notes, rp=rp, tp=tp, observe=observe)
 
 
 def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
@@ -2336,15 +2365,24 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
     """
     repo = Path(repo)
     name_status = _git(repo, "diff", "--name-status", f"{base}..{head}")
+    diff_text = _git(repo, "diff", f"{base}..{head}")
+    return _evaluate_git(summary_text, name_status, diff_text, _ALL_ON, run=run, strict=strict, repo=repo,
+                         base=base, head=head, evidence=evidence, commit=commit)
+
+
+def _evaluate_git(summary_text: str, name_status: str, diff_text: str, rp: "_Repairs", *, run: str | None = None,
+                  strict: bool = False, repo=None, base: str = "", head: str = "", evidence=None,
+                  commit: str | None = None, tp: list | None = None, observe: bool = True) -> DiffGate:
+    """NOTE_path2_eleventh_pass: the git door's reading of git's two outputs with the repairs `rp`; git is run once, by
+    `gate_diff`, however many evaluations read its bytes."""
     status: dict[str, str] = {}
     paths: list = []
     for line in _diff_lines(name_status):                  # NOTE_path2_fourth_pass F-2
         parts = line.split("\t")
         if len(parts) >= 2:
             st, path = parts[0][:1], parts[-1]
-            status[_norm(path)] = st            # A / M / D / R
+            status[rp.key(path)] = st           # A / M / D / R
             paths.append(path)
-    diff_text = _git(repo, "diff", f"{base}..{head}")
     # NOTE_path2_sixth_pass W-1: the added blob and the sides are the one hunk-aware reading of git's
     # bytes. The status stays git's own `--name-status`, which is not a reading of the diff text.
     added_blob = parse_unified_diff(diff_text)[1]
@@ -2355,10 +2393,11 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
     main_map = _main_name_status(name_status)
     notes = {k: v for k, v in (("files", listed.get("files")), ("bom", parsed.get("bom")),
                                ("differs", _status_differs(main_map, status))) if v}
+    sides = parse_unified_diff_sides(diff_text) if rp.on("#121") else _read_diff(diff_text, None, rp)[2]
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base=base, head=head, main=_MainReading(diff_text, (main_map,)),
                  evidence=evidence, commit=commit,
-                 sides=parse_unified_diff_sides(diff_text), notes=notes)
+                 sides=sides, notes=notes, rp=rp, tp=tp, observe=observe)
 
 
 def _find_path(status: dict, claimed: str):
@@ -2379,6 +2418,68 @@ def _find_path(status: dict, claimed: str):
             if tier(p):
                 return p, st
     return None, None
+
+
+def _earliest_match(status: dict, claimed: str):
+    """#97 switched off (NOTE_path2_eleventh_pass): main's resolution, one loop in diff order, the earliest entry the
+    claim matches exactly, by suffix or by basename."""
+    c = _norm(claimed)
+    for p, st in status.items():
+        if p == c or p.endswith("/" + c) or Path(p).name == Path(c).name:
+            return p, st
+    return None, None
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# NOTE_path2_eleventh_pass_2026_09_28: THE SWITCHES
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# The three licensed repairs, each of which this reading can be evaluated without. The set is an explicit parameter,
+# passed from the door to every function that reads it -- there is no module-level switch -- and each switch turns off
+# one repair's own code and nothing else (every other layer of the reading stays on):
+#   #97   a path claim resolves by main's loop, the earliest entry in diff order it matches (`_earliest_match`);
+#   #121  every key is main's key, `p.replace("\\", "/").lstrip("./").lower()` (`_main_key`): the status map, the sides,
+#         a header pending its pair, a claimed path, an `only_touches` prefix;
+#   #101  nothing is paired: `_changed_test_defs` counts 0 and `_definition_only_changed` answers no.
+# They are the scorer's reverts of the same three rules (papers/closed-model-frontier/path2_gates.py, REVERTS), and the
+# guard below reads them to decide whether a difference from main's verdict is licensed.
+REPAIRS = ("#97", "#121", "#101")
+
+
+class _Repairs:
+    """Which of the three licensed repairs a reading applies: all of them, less `off`."""
+    __slots__ = ("off",)
+
+    def __init__(self, off=()):
+        off = frozenset(off)
+        unknown = off - set(REPAIRS)
+        if unknown:
+            raise ValueError(f"no such repair: {sorted(unknown)}")
+        self.off = off
+
+    def on(self, repair: str) -> bool:
+        return repair not in self.off
+
+    def key(self, p: str) -> str:
+        """#121: the key a path is read by."""
+        return _main_key(p) if "#121" in self.off else _norm(p)
+
+    def find_path(self, status: dict, claimed: str):
+        """#97 (and #121, for the claimed path's key): the status entry a path claim names."""
+        if "#121" in self.off:
+            claimed = _main_key(claimed)
+        return _earliest_match(status, claimed) if "#97" in self.off else _find_path(status, claimed)
+
+    def changed_tests(self, sides, status) -> int:
+        """#101: the test definitions paired one to one."""
+        return 0 if "#101" in self.off else _changed_test_defs(sides, status)
+
+    def only_changed(self, name: str, sides, status) -> bool:
+        """#101: whether every added definition of `name` is paired with a removed one."""
+        return False if "#101" in self.off else _definition_only_changed(name, sides, status)
+
+
+_ALL_ON = _Repairs()
 
 
 def _path_claim_verdict(kind: str, claimed: str, find_path) -> tuple[str, str]:
@@ -2451,7 +2552,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
           evidence=None, commit: str | None = None,
           raw_input_len: int | None = None, sides: dict | None = None,
           notes: dict | None = None, main: "_MainReading | None" = None,
+          rp: "_Repairs | None" = None, tp: list | None = None, observe: bool = True,
           _declared: bool = False) -> DiffGate:
+    # NOTE_path2_eleventh_pass: `rp`, the repairs this reading applies (the switches); `tp`, one tests_pass answer shared
+    # by every evaluation of one gate call, so a --run command runs once; `observe=False` skips the never-read observer.
+    rp = rp or _ALL_ON
 
     # Some claim kinds are VACUOUSLY TRUE against an empty diff. `only_touches`
     # asks "is anything outside the prefix?" and an empty status answers "no" —
@@ -2475,12 +2580,12 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     not_sure = f"the diff's file list is not certain: {unsure_files}" if unsure_files else None
 
     def find_path(claimed: str):
-        return _find_path(status, claimed)
+        return rp.find_path(status, claimed)
 
     # ONE resolution of the tests_pass question per gate invocation, memoised
     # here and shared by every match. See `_tests_pass_verdict` for what this
     # repairs: the command used to run once per REGEX MATCH.
-    _tp: list[tuple[str, str]] = []
+    _tp: list[tuple[str, str]] = tp if tp is not None else []
 
     def tests_pass_leg() -> tuple[str, str]:
         if not _tp:
@@ -2538,7 +2643,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 if kind in _PATH_KINDS:
                     at = m.start("path")
                     apart = main is not None and _read_apart(d["path"], sent[at - 1:at])
-                    only_name = None if (not_sure or apart) else _basename_only(status, d["path"])
+                    only_name = None if (not_sure or apart) else _basename_only(status, d["path"], rp)
                     if not_sure:                        # NOTE_path2_eighth_pass (Y-1)
                         c.verdict, c.why = "UNCHECKABLE", not_sure
                     elif apart:                         # NOTE_path2_tenth_pass (K-5): as main read it
@@ -2576,7 +2681,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         # file's removed lines define, paired one to one (AMENDMENT C-1). The true
                         # number added lies in [net, got]: verify `net`, abstain inside the
                         # interval, accuse only outside it.
-                        chg = min(_changed_test_defs(sides, status), got)
+                        chg = min(rp.changed_tests(sides, status), got)
                         net = got - chg
                         note = f" ({chg} changed, not added: #101)" if chg else ""
                         # NOTE_path2_seventh_pass (A-1): an added `async def test_` is a test this
@@ -2654,7 +2759,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                             c.verdict, c.why = "UNCHECKABLE", unlicensed
                         elif whole:
                             c.verdict, c.why = "UNCHECKABLE", whole
-                        elif hit and _definition_only_changed(name, sides, status):
+                        elif hit and rp.only_changed(name, sides, status):
                             c.verdict = "UNCHECKABLE"               # PATH-2 (#101)
                             c.why = (f"added lines define {d['kind']} {_qname(name)} only where the "
                                      "removed lines of the same file define it too; a changed "
@@ -2664,9 +2769,9 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                             c.why = (f"added lines {'do' if hit else 'do NOT'} define "
                                      f"{d['kind']} {_qname(name)}")
                 elif kind == "only_touches":
-                    prefs = [_norm(d["prefix"]).rstrip("/.")]   # sentence-final periods are not path
+                    prefs = [rp.key(d["prefix"]).rstrip("/.")]   # sentence-final periods are not path
                     if d.get("prefix2"):
-                        prefs.append(_norm(d["prefix2"]).rstrip("/."))
+                        prefs.append(rp.key(d["prefix2"]).rstrip("/."))
                     # BC-2 repair 4: a second prefix is read only after "and" and only when it
                     # is path-shaped by the same test; otherwise the first prefix decides alone.
                     # NOTE_path2_sixth_pass (V-4, completed): a second prefix WRITTEN as a parent (a
@@ -2676,7 +2781,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     if d.get("prefix2") and not parent2 and not _prefix_is_path_shaped(d["prefix2"], status):
                         prefs = prefs[:1]
                     raw_prefs = [d["prefix"]] + ([d["prefix2"]] if len(prefs) == 2 else [])
-                    not_paths = [_norm(x).rstrip("/.") for i, x in enumerate(raw_prefs)
+                    not_paths = [rp.key(x).rstrip("/.") for i, x in enumerate(raw_prefs)
                                  if not (i == 1 and parent2)
                                  and not _prefix_is_path_shaped(x, status)] if BC1_BY_CONSTRUCTION else []
                     # PATH-1 mode 1: _path_inside matches a bare filename on its basename.
@@ -2693,7 +2798,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     real = [p for p in outside if p not in dot_miss]
                     # NOTE_path2_fifth_pass V-4: off-tree-ness is also read on the prefix as written,
                     # before rstrip("/."), so a prefix ending in `..` is off-tree (`_parent_prefix`).
-                    written = [_norm(x) for x in raw_prefs]
+                    written = [rp.key(x) for x in raw_prefs]
                     off_pairs = [(x, r) for x, r in zip(prefs, written)
                                  if _prefix_off_tree(x) or _parent_prefix(r)]
                     off_tree = [_parent_prefix(r) or x for x, r in off_pairs]
@@ -2762,7 +2867,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 _sub = _gate(_dtext, status, added_blob, run=run, strict=strict, repo=repo,
                              base=base, head=head, evidence=evidence, commit=commit,
                              raw_input_len=raw_input_len, sides=sides, notes=notes, main=main,
-                             _declared=True)
+                             rp=rp, tp=_tp, observe=False, _declared=True)
                 for _c in _sub.claims:
                     _c.detail = dict(_c.detail or {})
                     _c.detail["declared"] = True
@@ -2813,8 +2918,9 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     # verdict that depends on an observer is not an observation.
     unparsed = []
     try:
-        from styxx.claimdetect import detect as _detect
-        unparsed = [s for s in uncovered_texts if _detect(s).is_claim]
+        if observe:
+            from styxx.claimdetect import detect as _detect
+            unparsed = [s for s in uncovered_texts if _detect(s).is_claim]
     except Exception:
         unparsed = []
     return DiffGate(verdict=verdict, base=base, head=head, claims=claims,
