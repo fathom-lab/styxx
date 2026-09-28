@@ -195,6 +195,13 @@ K5_REPROS = {
                 "diff --git a/x.md b/x.md\nindex 1111111..2222222 100644\n--- a/x.md\n+++ b/x.md\n@@ -1 +1 @@\n-a\n+b\n"
                 "diff --git a/other/a.py b/other/a.py\nindex 1111111..2222222 100644\n--- a/other/a.py\n+++ b/other/a.py\n"
                 "@@ -1 +1 @@\n-a\n+b\n"),
+    # (the same shape with the separators only one port's `\s` holds: U+0085 Python's, U+FEFF JavaScript's)
+    "K5-NEL": ("Only touches\u0085.docs/ and only touches docs/.",
+               "diff --git a/.docs/a.md b/.docs/a.md\nindex 1111111..2222222 100644\n--- a/.docs/a.md\n+++ b/.docs/a.md\n"
+               "@@ -1 +1 @@\n-a\n+b\n"),
+    "K5-BOM": ("Only touches﻿.docs/ and only touches docs/.",
+               "diff --git a/.docs/a.md b/.docs/a.md\nindex 1111111..2222222 100644\n--- a/.docs/a.md\n+++ b/.docs/a.md\n"
+               "@@ -1 +1 @@\n-a\n+b\n"),
 }
 
 
@@ -324,6 +331,8 @@ def test_k5_reads_the_sentence_not_every_non_ascii_character():
     assert dg._apart_readings("Updated lib/a.pyé/x.md.") == (True, True)
     assert dg._apart_readings("Changed\u001csrc/util.py") == (True, True)
     assert dg._apart_readings("a\rb.py: x") == (True, True)
+    for mark in ("\u001f", "\u0085", "﻿", " ", " "):
+        assert dg._apart_readings(f"Only touches{mark}docs/.") == (True, True), hex(ord(mark))
     assert dg._apart_readings("Updated a.py.\r") == (False, False)
     assert dg._apart_readings("Added function café.") == (True, False)          # the name is W-2's in both ports
     assert dg._apart_readings("éadded function foo.") == (True, True)          # a word character outside the name
