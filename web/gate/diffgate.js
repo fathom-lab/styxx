@@ -10,9 +10,9 @@
  * PATH-2 repairs (PREREG_path2_resolution_2026_09_17: #97, #121, #101, as amended by
  * AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
  * NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25,
- * NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27, NOTE_path2_ninth_pass_2026_09_27 and
- * NOTE_path2_tenth_pass_2026_09_28) on the file that carries them, sha256
- * 0fc470c5a17b865999b0e6946378d1292233bf2c7d86b813f2d7f5c5a08f27ad — the styxx/diffgate.py this
+ * NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27, NOTE_path2_ninth_pass_2026_09_27,
+ * NOTE_path2_tenth_pass_2026_09_28 and NOTE_path2_eleventh_pass_2026_09_28) on the file that carries them, sha256
+ * 73a03de6aa103dd55a58d86228d9e9b6c9411ef4618517ab0eb25dd6d587ad4f — the styxx/diffgate.py this
  * branch would put on main, with the name table styxx/_xid.py carries (Unicode 15.0.0, table sha256
  * 8df68f21…, and the skew set beside it, 0b7134fd…, copied below) and the case fold styxx/_fold.py carries
  * (Unicode 16.0.0, sha256 a52cda82…, copied below); the 7.48.0 release carries main's file
@@ -59,7 +59,12 @@
  * (K-1); two header paths are compared by one fixed case fold, not the runtime's lower-casing (K-2); a `+++ /dev/null`
  * with no `---` line before it names no file instead of raising (K-3); beside #121's dotted key, a line no reading
  * places abstains the file list (K-4); a path claim the two ports' templates may read apart reads as main read it
- * (K-5); and a key a Z-3 or Z-4 reason prints is folded and escaped as Python's ascii() escapes it. Two
+ * (K-5); and a key a Z-3 or Z-4 reason prints is folded and escaped as Python's ascii() escapes it. The eleventh
+ * pass moves the licensed-difference rule to the verdict: main's port is vendored unchanged as the reference, the
+ * three repairs are switches (`_Repairs`), and per claim a verdict other than the reference's is kept only where one
+ * repair switched off gives the reference's verdict back and that repair's precondition holds on the claim, else the
+ * claim abstains naming the reference's verdict (`_guard`); K-5 reads a whole sentence, and every kind but the test
+ * verdict and compat, as main's port read it. Two
  * deliberate gaps remain: the structural "unparsed claims"
  * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
  * pass" is always UNCHECKABLE, exactly as the CLI without --run.

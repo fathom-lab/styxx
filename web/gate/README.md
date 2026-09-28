@@ -13,8 +13,9 @@ lists only the paths outside by more than a dot, COMPAT's scaffold reading keeps
 scaffolding; and by `NOTE_path2_third_pass_2026_09_25.md`, `NOTE_path2_fourth_pass_2026_09_25.md`,
 `NOTE_path2_fifth_pass_2026_09_25.md`, `NOTE_path2_sixth_pass_2026_09_25.md`,
 `NOTE_path2_seventh_pass_2026_09_25.md`, `NOTE_path2_eighth_pass_2026_09_27.md`,
-`NOTE_path2_ninth_pass_2026_09_27.md` and `NOTE_path2_tenth_pass_2026_09_28.md`) on the file that carries
-them, sha256 `0fc470c5a17b865999b0e6946378d1292233bf2c7d86b813f2d7f5c5a08f27ad` (LF line endings; a wheel
+`NOTE_path2_ninth_pass_2026_09_27.md`, `NOTE_path2_tenth_pass_2026_09_28.md` and
+`NOTE_path2_eleventh_pass_2026_09_28.md`) on the file that carries
+them, sha256 `73a03de6aa103dd55a58d86228d9e9b6c9411ef4618517ab0eb25dd6d587ad4f` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares), reading names by the Unicode table `styxx/_xid.py` carries (15.0.0, table sha256
 `8df68f21…`) and abstaining on a name that meets the skew set beside it (the code points the Pythons the
@@ -50,12 +51,20 @@ stated in the file: the structural "unparsed claims" observer (`styxx.claimdetec
 ported, and `--run` / `--evidence` do not exist, so "tests pass" is always UNCHECKABLE, exactly
 as the CLI without `--run`.
 
+`diffgate_ref.js` — `origin/main`'s `web/gate/diffgate.js` at `2a6ce0a3`, byte for byte (sha256 `06688702…`;
+`.gitattributes` keeps its bytes, `tests/test_diffgate_guard.py` and `build_bookmarklet.py` refuse any other): the
+guard's reference (`NOTE_path2_eleventh_pass_2026_09_28`). `gateDiffText` reads every claim with it too, and keeps a
+verdict other than its verdict only where one of the three repairs, switched off alone, gives its verdict back and
+that repair's own precondition holds on the claim; else the claim is UNCHECKABLE and names its verdict. The Python
+carries the same reference, `styxx/_diffgate_ref.py`, `origin/main`'s `styxx/diffgate.py` (`9b620e00…`).
+
 `bookmarklet_ui.js` — the panel: on a `github.com/OWNER/REPO/pull/N` page it reads the
 description and the diff from `api.github.com` (two unauthenticated requests, nothing else,
 nothing stored, nothing sent anywhere) and pins `[ok ]` / `[LIE]` / `[ ? ]` lines, the verdict
 and the never-read count to the page.
 
-`build_bookmarklet.py` — assembles the two into `bookmarklet_src.js`, minifies with
+`build_bookmarklet.py` — assembles the three (the reference in a function scope of its own, handed to the port) into
+`bookmarklet_src.js`, minifies with
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds all three in memory and compares them with the files on disk, byte for byte, and
 writes nothing; every output is written with LF. `.gitattributes` marks `bookmarklet_src.js` `-text`,
@@ -65,10 +74,11 @@ byte comparison reported `bookmarklet_src.js … DIFFERS`, exit 1 (NOTE_path2_fo
 B-1). Measured after the line, on this Windows checkout, with terser 5.46.0: all three `matches`,
 exit 0. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 c9a23982484b8fbf0b0fe18926ec1b0c1da57623540ca4cbd08d885bbbd218b8   52,373 chars
-    bookmarklet.href.txt  sha256 32080fb3992a9e55dcfd6824a9494a7232367684941f5dcc5627d7a6e4b44f37   52,384 chars
+    bookmarklet.min.js    sha256 ce8c5d99643df13aa9aa20dffcc52a2c8ba625513723eca64ceef527e18158aa   77,675 chars
+    bookmarklet.href.txt  sha256 06cc044e46fc61ca360d75824697d653285704076e679360b00963258e0f1abd   77,686 chars
 
-(4,446 characters more than the ninth-pass build: the case fold, 1,996 of them, and the tenth pass's K-1 to K-5;
+(25,302 characters more than the tenth-pass build: `main`'s port, carried whole as the guard's reference (`main`'s
+own bookmarklet is 24,335 characters), and the guard; the tenth-pass build was 4,446 more than the ninth's: the case fold, 1,996 of them, and the tenth pass's K-1 to K-5;
 the ninth-pass build was 8,577 more than the eighth's, `main`'s own reading in both of its spellings and the
 ninth pass's abstentions; the eighth-pass build was 4,895 more than the seventh's, 440 of them the skew set;
 the seventh-pass build was 5,417 more than the sixth's, 3,136 of them the name table.)
@@ -98,7 +108,10 @@ count or a path claim otherwise than `main` where `main`'s answer had been right
 another directory); `f13f056d…`, 47,927 chars, the unmerged ninth-pass cut — licenses a file list that differs
 from `main`'s by a file `main` read from a hunk's content, beside a changed file neither reading counts (a `Submodule`
 line), compares two header paths' case by its engine's Unicode, raises on a `+++ /dev/null` with no `---` line
-where `main` does not, and abstains on a path the Python extracts otherwise where the Python verifies. A bookmark
+where `main` does not, and abstains on a path the Python extracts otherwise where the Python verifies;
+`c9a23982…`, 52,373 chars, the unmerged tenth-pass cut — licenses a file count over #121's dotted key beside a
+`---`/`+++` pair under a header neither reading can read (`git diff --no-prefix`) or a pair read as a header without a
+header's shape, where `main` read the count right, and prints two reasons' keys unfolded. A bookmark
 that hashes to any of them is an old port; drag the new one.)
 
 Whatever a browser holds under that bookmark either hashes to the line above (drop the

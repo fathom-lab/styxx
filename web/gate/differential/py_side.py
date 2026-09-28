@@ -7,11 +7,13 @@ The port in ../diffgate.js is a transliteration of one specific file: styxx/diff
 on main (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2 + PATH-1 + DECLARE-1), re-cut for the PATH-2 repairs
 (#97, #121, #101, as amended by AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
 NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25,
-NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27, NOTE_path2_ninth_pass_2026_09_27 and
-NOTE_path2_tenth_pass_2026_09_28) on the file that carries them, sha256
+NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27, NOTE_path2_ninth_pass_2026_09_27,
+NOTE_path2_tenth_pass_2026_09_28 and NOTE_path2_eleventh_pass_2026_09_28) on the file that carries them, sha256
 PINNED below, reading names by the table styxx/_xid.py carries (PINNED_NAME_TABLE), abstaining on the skew
 set beside it (PINNED_SKEW_SET), and comparing two header paths' case by the fold styxx/_fold.py carries
-(PINNED_FOLD). By default this
+(PINNED_FOLD). Since the eleventh pass that file's verdicts pass through a guard that reads main's reader,
+vendored unchanged as styxx/_diffgate_ref.py (PINNED_REFERENCE, origin/main's styxx/diffgate.py byte for
+byte), so the reference is pinned too: a checkout whose reference moved is not the instrument either. By default this
 script imports the checkout's module and REFUSES to run unless it hashes to that pin (after CRLF -> LF
 normalisation, because a wheel built on Windows carries CRLF and the same file then hashes
 differently), so a disagreement count always means "against the file the port claims to be", never
@@ -52,7 +54,10 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "0fc470c5a17b865999b0e6946378d1292233bf2c7d86b813f2d7f5c5a08f27ad"  # styxx/diffgate.py, main + PATH-2 tenth pass (LF)
+PINNED = "73a03de6aa103dd55a58d86228d9e9b6c9411ef4618517ab0eb25dd6d587ad4f"  # styxx/diffgate.py, main + PATH-2 eleventh pass (LF)
+# NOTE_path2_eleventh_pass_2026_09_28: the guard's reference, main's reader unchanged (origin/main 2a6ce0a3's
+# styxx/diffgate.py, the file 7.48.0 ships; tests/test_diffgate_guard.py pins it too).
+PINNED_REFERENCE = "9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb"  # styxx/_diffgate_ref.py (LF)
 # NOTE_path2_seventh_pass: the instrument reads a name by styxx/_xid.py's table, so the table is pinned too
 # (the sha256 of the table string both ports carry; tests/test_diffgate_path2.py holds the two copies equal).
 PINNED_NAME_TABLE = "8df68f217cca495ab8a38ced9096213aabac4cf23927068d61397d2c9074d4cb"  # Unicode 15.0.0
@@ -90,6 +95,11 @@ def load(installed: bool):
                  "expected to show 0 disagreements), or pass --installed to measure drift against the "
                  "installed package instead.")
     if not installed:
+        ref = importlib.import_module("styxx._diffgate_ref")
+        ref_digest = _digest(Path(ref.__file__))
+        if ref_digest != PINNED_REFERENCE:
+            sys.exit(f"{ref.__file__} hashes to {ref_digest[:16]}…, not main's reader, the guard's reference "
+                     f"({PINNED_REFERENCE[:16]}…).")
         xid = importlib.import_module("styxx._xid")
         table = hashlib.sha256(xid.TABLE.encode("ascii")).hexdigest()
         if table != PINNED_NAME_TABLE or xid.TABLE_SHA256 != PINNED_NAME_TABLE:
