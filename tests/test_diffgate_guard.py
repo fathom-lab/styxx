@@ -370,3 +370,244 @@ def test_the_git_door_is_guarded_against_mains_git_door_on_the_same_range(tmp_pa
     assert [(c.kind, c.verdict) for c in g.claims] == [("files_changed_count", "VERIFIED")]     # #121, licensed
     assert seen == [("2 files changed.", tmp_path, "HEAD~1", "HEAD",
                      {"run": None, "strict": False, "evidence": None, "commit": None})]
+
+
+# ---- 3. THE GUARANTEE ------------------------------------------------------------------------------------------------
+#
+# Stated (NOTE_path2_eleventh_pass, B): for every claim, the final verdict is main's, or UNCHECKABLE, or this reading's own
+# licensed by one named repair -- #97, #121 or #101 -- whose precondition holds on the claim and whose switch, alone, gives
+# main's verdict back. Held here claim by claim over every committed corpus (the pinned pairs of every file, and the
+# differential corpora where a checkout has built them) and a seeded randomised set; the scratch harness of this round
+# runs the same check over every reviewer's harness set and more than 10,000 fresh cases.
+
+import random  # noqa: E402
+
+DIFFERENTIAL = ROOT / "web" / "gate" / "differential"
+PAIR_FILES = ("bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "compat2_pairs.json", "path1_pairs.json",
+              "declare1_pairs.json", "path2_pairs.json")
+
+
+def guarantee_violations(summary: str, diff: str, module=dg) -> tuple:
+    """(claims read, [claims that break the guarantee]) for one record, through `module`'s raw door."""
+    final = module.gate_diff_text(summary, diff)
+    try:
+        main = ref.gate_diff_text(summary, diff)
+        theirs = dict(zip(dg._claim_keys(main.claims), main.claims))
+    except Exception:
+        theirs = None
+    seen: dict = {}
+    before = module._evaluate_text(summary, diff, module._ALL_ON, out=seen)
+    switched = {r: dict(zip(dg._claim_keys(g.claims), g.claims))
+                for r in dg.REPAIRS for g in [module._evaluate_text(summary, diff, module._Repairs({r}))]}
+    bad = []
+    for key, c, b in zip(dg._claim_keys(final.claims), final.claims, before.claims):
+        m = None if theirs is None else theirs.get(key)
+        mv = None if m is None else m.verdict
+        if c.verdict in ("UNCHECKABLE", mv):
+            continue
+        if not (mv is not None and c.verdict == b.verdict
+                and any(switched[r].get(key) is not None and switched[r][key].verdict == mv
+                        and module._precondition(r, b, seen["status"], seen["sides"]) for r in dg.REPAIRS)):
+            bad.append((key, c.verdict, mv))
+    if final.verdict != ("FAIL" if any(c.verdict == "CONTRADICTED" for c in final.claims) else "PASS"):
+        bad.append(("gate verdict", final.verdict, None))
+    return len(final.claims), bad
+
+
+def _pinned():
+    for name in PAIR_FILES:
+        for p in json.loads((DIFFERENTIAL / name).read_text(encoding="utf-8")):
+            yield p["id"], p["summary"], p["diff"]
+
+
+# The randomised set: the shapes every round's review built its regressions from, crossed at random.
+_G_FILES = [".env", "env", ".github/x.yml", "github/x.yml", ".pr_agent.toml", "pr_agent.toml", "README.md",
+            "integrations/git/README.md", "docs/README.md", "src/node/glob.ts", "glob.ts", "src/a.py", "lib/a.py",
+            "tests/test_a.py", "b/x.py", "x.py", "docs/Guide.md", "docs/guide.md", "db/q.sql", "src/café.py",
+            "docs/é.md", "a.py ", "sp ace.py", "tests/Ɤt.py", "docs/x\U00010d50.md", "docs/x\U00010d70.md"]
+_G_LINES = ["x = 1", "def test_a():", "def test_b(x):", "async def test_c():", "def helper():", "class K:", "-- users",
+            "++ x", "﻿def test_d():", "\x0cdef test_e():", " def test_f():", "a b", "c\rd", "    pass",
+            "def café():", "def get_नमस्ते():", "SELECT 1;"]
+_G_SEPS = [" ", " ", " ", "\n", "  ", "\x1c", " ", " — ", " ✅ ", "’ ", "\t"]
+
+
+def _g_header(rng, path: str, st: str, style: str) -> str:
+    a = "/dev/null" if st == "A" else path
+    b = "/dev/null" if st == "D" else path
+    if style == "git":
+        q = '"' if " " in path else ""
+        mode = {"A": "new file mode 100644\n", "D": "deleted file mode 100644\n"}.get(st, "")
+        return (f"diff --git {q}a/{path}{q} {q}b/{path}{q}\n{mode}index 1111111..2222222\n"
+                f"--- {'/dev/null' if st == 'A' else q + 'a/' + path + q}\n"
+                f"+++ {'/dev/null' if st == 'D' else q + 'b/' + path + q}\n")
+    if style == "noprefix":
+        return f"diff --git {path} {path}\n--- {a}\n+++ {b}\n"
+    if style == "gnu":
+        ts = "\t2024-05-06 07:08:09.000000000 +0000"
+        return f"--- {'/dev/null' if st == 'A' else 'a/' + path}{ts}\n+++ {'/dev/null' if st == 'D' else 'b/' + path}{ts}\n"
+    return f"--- {a}\n+++ {b}\n"
+
+
+def _g_hunk(rng, st: str) -> str:
+    old = [] if st == "A" else [rng.choice(_G_LINES) for _ in range(rng.randint(0, 3))]
+    new = [] if st == "D" else [rng.choice(_G_LINES) for _ in range(rng.randint(0, 3))]
+    ctx = [] if st != "M" else [rng.choice(_G_LINES) for _ in range(rng.randint(0, 2))]
+    if not (old or new or ctx):
+        new = ["x = 2"] if st != "D" else []
+        old = old or (["x = 1"] if st == "D" else [])
+    b, d = len(old) + len(ctx), len(new) + len(ctx)
+    if rng.random() < 0.2:                            # a hunk that declares otherwise than it carries
+        b, d = max(0, b + rng.choice((-1, 1))), max(0, d + rng.choice((-1, 1)))
+    body = [" " + x for x in ctx] + ["-" + x for x in old] + ["+" + x for x in new]
+    return f"@@ -{0 if st == 'A' else 1},{b} +{0 if st == 'D' else 1},{d} @@\n" + "".join(x + "\n" for x in body)
+
+
+def _g_diff(rng) -> str:
+    out = []
+    for path in rng.sample(_G_FILES, rng.randint(1, 5)):
+        st = rng.choice("AMMD")
+        style = rng.choice(("git", "git", "git", "noprefix", "gnu", "plain"))
+        if rng.random() < 0.08:
+            out.append(f"diff --git a/{path} b/{path}\nindex 1111111..2222222 100644\n"
+                       f"Binary files a/{path} and b/{path} differ\n")
+            continue
+        out.append(_g_header(rng, path, st, style) + _g_hunk(rng, st))
+        if rng.random() < 0.05:
+            out.append("\\ No newline at end of file\n")
+    extra = rng.random()
+    if extra < 0.05:
+        out.append("Submodule vendor/lib 1234567..89abcde:\n")
+    elif extra < 0.08:
+        out.append("+++ /dev/null\n")
+    elif extra < 0.1:
+        out.append("Index: img/logo.png\n===\nCannot display: file marked as a binary type.\n")
+    text = "".join(out)
+    if rng.random() < 0.08:
+        text = text.replace("\n", "\r\n")
+    return text
+
+
+def _g_sentence(rng) -> str:
+    p = rng.choice(_G_FILES).strip()
+    r = rng.random()
+    if r < 0.18:
+        return f"{rng.choice(['Modified', 'Updated', 'Edited', 'émodified', 'Refactored'])} {p}."
+    if r < 0.3:
+        return rng.choice([f"Created {p}.", f"{p} — created.", f"New file {p}.", f"Created file {p}."])
+    if r < 0.38:
+        return f"{rng.choice(['Deleted', 'Removed'])} {p}."
+    if r < 0.52:
+        return f"{rng.randint(0, 6)} files changed."
+    if r < 0.64:
+        return f"Added {rng.randint(0, 4)} {rng.choice(['', 'new '])}tests."
+    if r < 0.74:
+        return f"Adds {rng.choice(['function', 'class'])} {rng.choice(['helper', 'K', 'test_a', 'café', 'zap'])}."
+    if r < 0.88:
+        pre = rng.choice(["src/", "docs/", "github/", ".github/", "env", ".env", "tests", "db/", "lib/"])
+        two = rng.choice(["", f" and {rng.choice(['src/', 'docs/', 'tests/'])}"])
+        return f"Only touches {pre}{two}."
+    if r < 0.94:
+        return rng.choice(["No breaking changes.", "All tests pass.", "Keeps backward compatibility."])
+    return "```styxx\nfiles_changed: 2\ntests_added: 1\n```"
+
+
+def guard_cases(seed: int, n: int):
+    rng = random.Random(seed)
+    for i in range(n):
+        summary = "".join(_g_sentence(rng) + rng.choice(_G_SEPS) for _ in range(rng.randint(1, 5)))
+        yield f"guard:{seed}:{i}", summary, _g_diff(rng)
+
+
+def test_the_guarantee_holds_on_every_pinned_pair():
+    claims = 0
+    for pid, summary, diff in _pinned():
+        n, bad = guarantee_violations(summary, diff)
+        claims += n
+        assert not bad, (pid, bad)
+    assert claims > 500
+
+
+@pytest.mark.parametrize("name", ["corpus_fuzz.json", "corpus_real.json"])
+def test_the_guarantee_holds_on_the_differential_corpora(name):
+    path = DIFFERENTIAL / name
+    if not path.exists():
+        pytest.skip(f"{name} is built by the differential's own scripts and not committed")
+    for it in json.loads(path.read_text(encoding="utf-8")):
+        _n, bad = guarantee_violations(it["summary"], it["diff"])
+        assert not bad, (it["id"], bad)
+
+
+def test_the_guarantee_holds_on_a_seeded_randomised_set():
+    claims = moved = 0
+    for pid, summary, diff in guard_cases(20260928, 1500):
+        n, bad = guarantee_violations(summary, diff)
+        claims += n
+        assert not bad, (pid, bad)
+    assert claims > 3500
+
+
+# ---- 3. mutation: a defect planted in the reader outside the three repairs --------------------------------------------
+
+def _mutant(good: str, bad: str, tag: str):
+    """A copy of styxx/diffgate.py with one defect planted, loaded inside the package (its reference is the real one)."""
+    import types
+    src = INSTRUMENT.read_text(encoding="utf-8")
+    assert src.count(good) == 1, good
+    mod = types.ModuleType(f"styxx._diffgate_mutant_{tag}")
+    mod.__package__, mod.__file__ = "styxx", f"<mutant {tag}>"
+    sys.modules[mod.__name__] = mod
+    exec(compile(src.replace(good, bad), mod.__file__, "exec"), mod.__dict__)  # noqa: S102
+    return mod
+
+
+MUTANTS = {
+    # label: (good, bad) -- each outside #97's tiers, #121's key and #101's pairing
+    "W-1: every hunk exact": ("def _hunk_is_exact(lines: list, k: int) -> bool:\n",
+                              "def _hunk_is_exact(lines: list, k: int) -> bool:\n    return True\n"),
+    "Y-4: /dev/null read with anything after it": ('    return path == "/dev/null" or (path or "").startswith("/dev/null\\t")',
+                                                    '    return (path or "").startswith("/dev/null")'),
+    "the test count reads async tests": ('    return sum(1 for line in added_blob.split("\\n") if _test_name(line))',
+                                         '    return sum(1 for line in added_blob.split("\\n") if _test_name(line, True))'),
+    "BC-1: every diff holds Python": ("    return any(_undotted(p).lower().endswith(_PY_SUFFIXES) for p in status)",
+                                      "    return True"),
+    "A-1: an added async test no longer abstains": ("                        if unread:", "                        if False:"),
+    "the count off by one": ('                        c.verdict = "VERIFIED" if n == len(status) else "CONTRADICTED"',
+                             '                        c.verdict = "VERIFIED" if n == len(status) + 1 else "CONTRADICTED"'),
+    "only_touches containment by string prefix": ("    return path == pref or path.startswith(pref + \"/\")",
+                                                  "    return path == pref or path.startswith(pref)"),
+    "F-2 breaks a line at a form feed": ('_DIFF_LINE_BREAK = re.compile(r"\\r\\n|\\r|\\n")',
+                                         '_DIFF_LINE_BREAK = re.compile(r"\\r\\n|\\r|\\n|\\x0c")'),
+}
+
+
+# Not among them: Z-3's and Y-1's doubts. They are #121's licence's own defence -- each abstains where #121's dotted split may
+# have removed an error that balanced main's merge of dotfile twins -- so a defect there passes through the licence (the
+# surface the guarantee names), and the reading oracles refuse it (tests/test_diffgate_path2.py, the Z-3 and Y-1 plants).
+def _mutation_records():
+    yield from _pinned()
+    yield from guard_cases(20260929, 600)
+
+
+@pytest.mark.parametrize("label", sorted(MUTANTS))
+def test_a_defect_outside_the_three_repairs_can_only_abstain(label):
+    """Every claim of the mutant's final gate reads main's verdict, UNCHECKABLE, or the clean branch's own final verdict:
+    the defect can only take a verdict away. Without the guard the same defect gives verdicts none of those is."""
+    mutant = _mutant(*MUTANTS[label], tag=label.split(":")[0].replace(" ", "_").replace("-", "_"))
+    live = unguarded_new = 0
+    for pid, summary, diff in _mutation_records():
+        try:
+            main = ref.gate_diff_text(summary, diff)
+            theirs = dict(zip(dg._claim_keys(main.claims), main.claims))
+        except Exception:
+            theirs = {}
+        clean = dg.gate_diff_text(summary, diff)
+        mine = mutant.gate_diff_text(summary, diff)
+        before = mutant._evaluate_text(summary, diff, mutant._ALL_ON)
+        clean_by = dict(zip(dg._claim_keys(clean.claims), clean.claims))
+        for key, c, b in zip(dg._claim_keys(mine.claims), mine.claims, before.claims):
+            allowed = {"UNCHECKABLE", getattr(theirs.get(key), "verdict", None), getattr(clean_by.get(key), "verdict", None)}
+            assert c.verdict in allowed, (label, pid, key, c.verdict, allowed)
+            live += c.verdict != getattr(clean_by.get(key), "verdict", None)
+            unguarded_new += b.verdict not in allowed
+    assert live or unguarded_new, f"{label}: the mutant moved nothing on these records"
+    assert unguarded_new, f"{label}: without the guard the mutant gives no new verdict here (an equivalent mutant)"
