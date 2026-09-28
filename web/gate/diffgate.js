@@ -672,6 +672,13 @@ function _cleanHeader(lines, k) {
   const x = _headerShape(lines[k].slice(4)), y = _headerShape(lines[k + 1].slice(4));
   return x === y || x === "/dev/null" || y === "/dev/null";
 }
+function _shapedPair(lines, k) {
+  // NOTE_path2_eleventh_pass (round 10, R0.2): a `--- ` line read as a header outside any count opens a pair with a
+  // header's shape -- Y-1's clean header, or git's quoted pair naming one file -- and a `+++ ` line then `@@` after it.
+  if (_cleanHeader(lines, k)) return true;
+  return k + 2 < lines.length && lines[k + 1].startsWith("+++ ") && lines[k + 2].startsWith("@@")
+    && _pairNames(lines[k].slice(4)) === _pairNames(lines[k + 1].slice(4));
+}
 function _lineOneBom(text, atOne) {
   return atOne && text.startsWith(_FILE_BOM) ? text.slice(_FILE_BOM.length) : text;
 }
@@ -805,7 +812,7 @@ function _readDiff(diffText, notes = null, rp = null) {
       if (loose) {                                // Y-1: after lines no count placed, a header is not certain
         if (_cleanHeader(lines, k)) { cleanPlus = k + 1; loose = false; soft.push(_Z3_SHAPED); }   // Z-3
         else note("files", _Y1_LOOSE);
-      }
+      } else if (!_shapedPair(lines, k)) soft.push(_Z3_UNSHAPED);   // NOTE_path2_eleventh_pass (R0.2)
       oldPath = _pyStrip(line.slice(4));          // str.strip(), not trim() (V-2)
       cur = null;
       leadOld = false; leadNew = false;
@@ -815,7 +822,7 @@ function _readDiff(diffText, notes = null, rp = null) {
       const pk = pending !== null ? _pendingKey(pending, key) : "";
       if (pk && ![key(pending.a), key(pending.b)].includes(_pairNames(_devNull(nw) ? (oldPath || "") : nw, key))) {
         soft.push(_Z3_REPLACED(pk));                // Z-3: dropped, as main dropped it
-      }
+      } else if (pending !== null && !pk) soft.push(_Z3_UNREAD_PAIR);   // NOTE_path2_eleventh_pass (R0.0)
       if (_devNull(nw) && oldPath === null) {
         // NOTE_path2_tenth_pass (K-3): a deletion with no `---` line before it names no file, and is not read as one
         // (main raised there where its own reading held no `---` line either; where it read one, Z-3 abstains).
@@ -1382,7 +1389,7 @@ function _refusedFiles(addedBlob, sides) {
   return out;
 }
 function _refusedWhy(path) {
-  const where = path === null ? "outside any file" : `in ${pyRepr(path)}`;
+  const where = path === null ? "outside any file" : `in ${_shown(path)}`;   // NOTE_path2_eleventh_pass (R0.3)
   return `an added definition line ${where} is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line`;
 }
 function _wholeFileTests(addedBlob, sides) {
@@ -1475,6 +1482,11 @@ const _Z3_PREFIX = "this reading's file list differs from main's";
 const _Z3_SHAPED = "main's reading also took a `---`/`+++` pair after lines no hunk count holds for a header because it has a header's shape, and it may be content (a SQL `-- ` comment beside a `++` line)";
 const _Z3_REPLACED = key => `main's reading also dropped the \`diff --git\` file ${_shown(key)} for the next \`---\`/\`+++\` pair, which names another`;
 const _Z3_UNREAD = "main's reading also dropped a `diff --git` file whose header paths neither reading can read";
+// NOTE_path2_eleventh_pass (round 10, R0.0 and R0.2): a `---`/`+++` pair under a `diff --git` header neither reading can
+// read (`git diff --no-prefix`: a directory named `a/` or `b/` is taken for git's prefix), and a pair read as a header
+// after an exact hunk without a header's shape (no `@@` after it, or two different paths): doubts main's reading also held.
+const _Z3_UNREAD_PAIR = "main's reading also read a `---`/`+++` pair under a `diff --git` header neither reading can read (`git diff --no-prefix`), where a directory named `a/` or `b/` is taken for git's prefix";
+const _Z3_UNSHAPED = "main's reading also took a `---`/`+++` pair without a header's shape (no `@@` after it, or two different paths) for a file header, and it may be content (a SQL `-- ` comment beside a `++` line)";
 // NOTE_path2_tenth_pass (K-4): a line outside every header, hunk and git extended header that neither reading places
 // may name a changed file neither reading counts; beside #121's licensed dotted key, the claims abstain.
 const _Z3_UNPLACED = "main's reading also passed over a line no reading places, which may name a changed file neither reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like)";
@@ -1913,9 +1925,11 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
           }
           else if (dotMiss.length && !real.length) {
             c.verdict = "UNCHECKABLE";
+            // NOTE_path2_eleventh_pass (round 10, R0.3): keys print through `_shown`, as Z-3's and Z-4's do
+            const shownMiss = "[" + dotMiss.slice(0, 3).map(_shown).join(", ") + "]";
             c.why = prefs.length === 1
-              ? `paths outside ${pyRepr(prefs[0])} differ from it only by a leading dot: ${pyList(dotMiss.slice(0, 3))} (#121)`
-              : `paths outside ${prefs.map(pyRepr).join(" and ")} differ from them only by a leading dot: ${pyList(dotMiss.slice(0, 3))} (#121)`;
+              ? `paths outside ${_shown(prefs[0])} differ from it only by a leading dot: ${shownMiss} (#121)`
+              : `paths outside ${prefs.map(_shown).join(" and ")} differ from them only by a leading dot: ${shownMiss} (#121)`;
           }
           else {
             c.verdict = real.length === 0 ? "VERIFIED" : "CONTRADICTED";

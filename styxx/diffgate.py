@@ -903,6 +903,16 @@ def _clean_header(lines: list, k: int) -> bool:
     return x == y or "/dev/null" in (x, y)
 
 
+def _shaped_pair(lines: list, k: int) -> bool:
+    """NOTE_path2_eleventh_pass (round 10, R0.2): whether `lines[k]` (a `--- ` line read as a header outside any count)
+    opens a pair with a header's shape -- Y-1's clean header, or git's quoted pair (`--- "a/sp ace.py"`), the two naming
+    one file once the quotes, `a/` and `b/` are dropped -- and a `+++ ` line then `@@` after it."""
+    if _clean_header(lines, k):
+        return True
+    return (k + 2 < len(lines) and lines[k + 1].startswith("+++ ") and lines[k + 2].startswith("@@")
+            and _pair_names(lines[k][4:]) == _pair_names(lines[k + 1][4:]))
+
+
 def _line_one_bom(text: str, at_one: bool) -> str:
     """Y-2: outside the counts, a U+FEFF is dropped from a line the diff shows is line 1 of its side (`at_one`),
     where CPython reads one; W-1 drops it inside the counts."""
@@ -1024,6 +1034,8 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
                     soft.append(_Z3_SHAPED)      # Z-3: read as a header, as main read it, for its shape
                 else:
                     found.setdefault("files", _Y1_LOOSE)
+            elif not _shaped_pair(lines, k):
+                soft.append(_Z3_UNSHAPED)        # NOTE_path2_eleventh_pass (R0.2): read as a header without its shape
             old_path = line[4:].strip()
             cur = None
             lead_old = lead_new = False
@@ -1034,6 +1046,8 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
             pk = _pending_key(pending, key) if pending is not None else ""
             if pk and _pair_names((old_path or "") if _dev_null(new) else new, key) not in (key(pending.a), key(pending.b)):
                 soft.append(_Z3_REPLACED.format(_shown(pk)))              # Z-3: dropped, as main dropped it
+            elif pending is not None and not pk:
+                soft.append(_Z3_UNREAD_PAIR)     # NOTE_path2_eleventh_pass (R0.0): the pair under an unreadable header
             if _dev_null(new) and old_path is None:
                 # NOTE_path2_tenth_pass (K-3): a deletion with no `---` line before it names no file, and is not read
                 # as one. main raised on it where its own reading held no `---` line either (every claim then abstains:
@@ -1111,6 +1125,16 @@ _Z3_SHAPED = ("main's reading also took a `---`/`+++` pair after lines no hunk c
 _Z3_REPLACED = ("main's reading also dropped the `diff --git` file {} for the next `---`/`+++` pair, which names "
                 "another")
 _Z3_UNREAD = "main's reading also dropped a `diff --git` file whose header paths neither reading can read"
+# NOTE_path2_eleventh_pass (round 10, R0.0 and R0.2): two more doubts main's reading also held. `git diff --no-prefix` (or
+# diff.noprefix=true) writes `diff --git x.py x.py`, which neither reading can read, and a `---`/`+++` pair under it whose
+# `b/` (or `a/`) is a directory, not git's prefix: both readings strip it and merge `b/x.py` with `x.py`, and a
+# trailing-whitespace twin by strip(). And a `---`/`+++` pair read as a header after an exact hunk, without a header's shape
+# (no `@@` after it, or two different paths), may be content (`-- users` beside `++ x`) that both readings count as a
+# phantom file. Beside #121's dotted split either may have balanced main's merge of dotfile twins.
+_Z3_UNREAD_PAIR = ("main's reading also read a `---`/`+++` pair under a `diff --git` header neither reading can read "
+                   "(`git diff --no-prefix`), where a directory named `a/` or `b/` is taken for git's prefix")
+_Z3_UNSHAPED = ("main's reading also took a `---`/`+++` pair without a header's shape (no `@@` after it, or two different "
+                "paths) for a file header, and it may be content (a SQL `-- ` comment beside a `++` line)")
 # NOTE_path2_tenth_pass (K-4): a line outside every header, hunk and git extended header that neither reading places --
 # git's `Submodule p a..b` under diff.submodule=log, svn's `Index:` and `Cannot display` blocks, hg's `diff -r` and
 # `Binary file p has changed`, and formats not listed -- may name a changed file neither reading counts; beside a
@@ -1480,8 +1504,9 @@ def _refused_files(added_blob: str, sides: dict | None) -> dict:
 
 
 def _refused_why(path) -> str:
-    """Z-5's reason. The line is not printed: repr() would ask the runtime which characters it can print."""
-    where = "outside any file" if path is None else f"in {path!r}"
+    """Z-5's reason. The line is not printed: repr() would ask the runtime which characters it can print; the file's key
+    prints through `_shown` (NOTE_path2_eleventh_pass, round 10 R0.3)."""
+    where = "outside any file" if path is None else f"in {_shown(path)}"
     return (f"an added definition line {where} is one this reading refuses and CPython may refuse too, and a file "
             "CPython refuses defines nothing; this reading reads it line by line")
 
@@ -3051,10 +3076,12 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                                  "not name (#121)")
                     elif dot_miss and not real:
                         c.verdict = "UNCHECKABLE"
-                        c.why = ((f"paths outside {prefs[0]!r} differ from it only by a leading dot: "
-                                  f"{dot_miss[:3]} (#121)") if len(prefs) == 1 else
-                                 (f"paths outside {' and '.join(repr(x) for x in prefs)} differ from them "
-                                  f"only by a leading dot: {dot_miss[:3]} (#121)"))
+                        # NOTE_path2_eleventh_pass (round 10, R0.3): keys print through `_shown`, as Z-3's and Z-4's do
+                        shown_miss = "[" + ", ".join(_shown(p) for p in dot_miss[:3]) + "]"
+                        c.why = ((f"paths outside {_shown(prefs[0])} differ from it only by a leading dot: "
+                                  f"{shown_miss} (#121)") if len(prefs) == 1 else
+                                 (f"paths outside {' and '.join(_shown(x) for x in prefs)} differ from them "
+                                  f"only by a leading dot: {shown_miss} (#121)"))
                     else:
                         c.verdict = "VERIFIED" if not real else "CONTRADICTED"
                         shown = prefs[0] if len(prefs) == 1 else " and ".join(repr(x) for x in prefs)
