@@ -21,9 +21,10 @@ tests read VERIFIED.
 
 **What changed.** Frozen as `papers/closed-model-frontier/PREREG_path2_resolution_2026_09_17.md`,
 `AMENDMENT_path2_resolution_2026_09_17.md` and `ERRATUM_path2_amendment_2026_09_17.md`, then repaired in
-six passes, each recorded in a note committed alone before its code (`NOTE_path2_third_pass` to
-`NOTE_path2_seventh_pass`, `_2026_09_25`, and `NOTE_path2_eighth_pass_2026_09_27`; the eighth pass's code was
-drafted before its note, by a run a usage limit interrupted, and the note says so):
+seven passes, each recorded in a note committed alone before its code (`NOTE_path2_third_pass` to
+`NOTE_path2_seventh_pass`, `_2026_09_25`, `NOTE_path2_eighth_pass_2026_09_27` and
+`NOTE_path2_ninth_pass_2026_09_27`; the eighth and ninth passes' code was written before its note, and each
+note says so):
 - #97: a path claim resolves in tiers over every entry — exact, then suffix, then basename.
 - #121: only a leading run of `/` and `./` segments leaves the key. Readings that must not move with a dot
   (BC-2's path-shape test, BC-1's "no Python file" test, COMPAT's language and scaffold tests) read the
@@ -52,38 +53,53 @@ drafted before its note, by a run a usage limit interrupted, and the note says s
   Pythons (Unicode 13.0 to 16.0) read differently from the table abstains (a skew set generated beside the
   table); an added `async def test_`, which the test count has never read, abstains the count beside it.
   GNU's `/dev/null<TAB>timestamp` header is recognised (a defect `main` has too).
+- Where the repair reads a claim differently from `main` and no repair licenses the difference, it abstains,
+  in both ports (the ninth pass, the licensed-difference rule): for `tests_added`, `symbol_added`,
+  `files_changed_count` and the path claims the instrument computes `main`'s own reading beside its own —
+  `main`'s patterns over `main`'s line split into `main`'s status map, in both of `main`'s spellings (its
+  Python's and its port's) — and where the readings differ outside #97's exact and suffix tiers, #121's dotted
+  key, #101's pairing and an exact hunk's counts, the claim abstains with a reason that names the difference.
+  A path claim with a directory component that only a file of the same name in another directory matches
+  abstains; a definition line CPython refuses abstains the claims that read its file.
 - The port follows the Python in each, and spells Python's `\s`, `\w`, `\b`, `.`, `str.strip` and `repr`
-  wherever it reads a diff line. The bookmarklet is rebuilt: `bookmarklet.min.js` sha256 `caf3682b…`,
-  39,350 characters (`web/gate/README.md`).
+  wherever it reads a diff line. The bookmarklet is rebuilt: `bookmarklet.min.js` sha256 `f13f056d…`,
+  47,927 characters (`web/gate/README.md`).
 - `papers/closed-model-frontier/path2_gates.py` scores the preregistered gates: the instrument before the
   repair against the instrument after it, claim by claim, every moved claim attributed by counterfactual
   (the scorer's own copy of the instrument, with one rule reverted, must give the baseline claim back) and
   admitted only if every rule in its attribution admits it; on every record it also reads each rule it
   re-implements with its own code — declared claims and every file-list claim included — and holds the
-  repaired instrument to that reading, holds the gate-level fields and verdict, and scores every record it
-  can rebuild through the git door (in corpus mode every PR with a definition claim and 1 in 25 of the
-  rest), refusing to run on a Python whose Unicode is not the table's.
+  repaired instrument to that reading, holds the gate-level fields, the never-read sentences and the strict
+  verdict, and scores every record it can rebuild through the git door — bare repositories written by
+  `git fast-import`, so dotted paths and case twins rebuild, and a deletion beside a creation scored again
+  with rename detection on (in corpus mode every PR with a file-list or definition claim) — refusing to run
+  on a Python whose Unicode is not the table's.
 
-**The review record.** Eight rounds of repair, seven of them answering an adversarial review round, each
+**The review record.** Nine rounds of repair, eight of them answering an adversarial review round, each
 round naming its own findings. What they found and what was done about each is in the notes; the notes also
-correct earlier notes where those were wrong, and none of the frozen documents is edited. The last round
-measured, on every door (`gate_diff_text`, `gate_diff` on a real repository, the port), with CPython's parser
-as the judge, under Python 3.12 and 3.14, 0 claims reading worse than on `main` and 0 new Python/port
-disagreements over every set measured — among them the review rounds' evidence, a 1,020-repository name grid
-over 102 characters (Unicode 14.0 to 16.0 included), a 115-repository hunk grid and 7,800 randomised diffs
-(1,800 real repositories and 6,000 hand-written in GNU, `a/`/`b/`, bare and git styles with over- and
-under-declared hunks, SQL and `++` content lines, U+FEFF, dotfile and case twins, strings and markdown files
-holding `def test_` lines) — and on the differential corpus (3,416 pairs) 0 disagreements.
+correct earlier notes where those were wrong, and none of the frozen documents is edited. The eighth pass
+reported 0 claims reading worse than on `main`; round 8's review measured 507 (Python 3.12) and 525 (3.14)
+claim-door cells that did, and the ninth pass is its answer. The ninth pass measured, on every door
+(`gate_diff_text`, `gate_diff` on a real repository, the port), with CPython's parser and git as the judge,
+under Python 3.12 and 3.14, 0 claims reading worse than on `main` and 0 new Python/port disagreements over
+13 sets and 23,110 cases (664,362 claim-door cells under 3.12) — the review rounds' evidence, the name grid,
+15,700 randomised diffs (non-exact hunks, GNU headers and timestamps, CRLF and lone CR, U+FEFF, renames,
+binary lines, dotfile twins) and 2,407 aimed at the rule (same-basename files of a monorepo in real git,
+`-U0` bytes, NBSP and other separators around `def`, combining marks, backslash continuations, refused
+definition lines) — and on the differential corpus (3,443 pairs) 0 disagreements.
 
 Not claimed, and stated: the corpus gates over the EXTERNAL-1 shelf are run separately and reported in the
 RESULT, with `path2_differential_gates.json`; nothing here reports them. The repair moves claims only where
-the notes say, and the limits it leaves are listed in the sixth, seventh and eighth-pass notes, section F:
-among them, abstaining costs verdicts `main` gave (a count left after a pairing, a test count beside a
-U+FEFF-led test, claims naming a skew code point, file-list claims over hand-written diffs whose headers are
-not sure), a removed `-- a` and an added `++ b` right before the next hunk still read as a file header,
-identifiers are compared as text rather than under NFKC, GNU header paths keep their timestamps as keys, the
-port's claim templates still read the description with JavaScript's classes, and #128's modes 2, 3, 5 and 6
-are not repaired. PATH-2 is not in 7.48.0, which ships `main`'s file.
+the notes say, and the limits it leaves are listed in the sixth to ninth-pass notes, section F: among them,
+abstaining costs verdicts `main` gave (a count left after a pairing, a test count beside a U+FEFF-led test,
+claims naming a skew code point, file-list claims over diffs whose headers are not sure, and since the ninth
+pass every claim where this reading and `main`'s differ unlicensed — on the differential corpus 369 of the
+2,557 claims `main` decides, 152 of them new at the ninth pass, most of them path claims naming a directory
+only a same-named file elsewhere matches), a removed `-- a` and an added `++ b` right before the next hunk
+still read as a file header, identifiers are compared as text rather than under NFKC, GNU header paths keep
+their timestamps as keys, a quoted path keeps its quotes, a lone CR or a backslash continuation still hides a
+definition from both readings, the port's claim templates still read the description with JavaScript's
+classes, and #128's modes 2, 3, 5 and 6 are not repaired. PATH-2 is not in 7.48.0, which ships `main`'s file.
 
 ## [Unreleased] — the blind packet's ids stop carrying the arm (#125), and the islands demo reads its own cohort (#93)
 
