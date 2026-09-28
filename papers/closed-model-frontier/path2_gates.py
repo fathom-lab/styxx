@@ -1487,17 +1487,23 @@ def own_main_header_paths(line: str, js: bool) -> tuple:
             mm.group("qb") if mm.group("qb") is not None else (mm.group("b") or ""))
 
 
-def own_main_status(lines: list, js: bool, skip=()):
+def own_main_status(lines: list, js: bool, skip=(), forms: list | None = None):
     """main's `parse_unified_diff` status map over `lines`, keyed by `main_key`, in main's Python's spelling or its
-    port's; a line whose index is in `skip` (W-1's exact hunks) is not read. None where main raises."""
+    port's; a line whose index is in `skip` (W-1's exact hunks) is not read. None where main raises.
+    NOTE_path2_eleventh_pass: `forms`, when given, receives every path main keys, as written."""
     strip = (lambda s: s.strip(JS_SPACE)) if js else str.strip
     status: dict = {}
     old_path = pend = None
 
+    def main_key(raw: str) -> str:
+        if forms is not None:
+            forms.append(raw)
+        return _MAIN_KEY(raw)
+
     def flush() -> None:
         if pend is not None:
             raw = pend[0] if pend[2] == "D" else pend[1]
-            if raw and main_key(raw) not in status:
+            if raw and _MAIN_KEY(raw) not in status:
                 status[main_key(raw)] = pend[2]
     for i, line in enumerate(lines):
         if i in skip:
@@ -1529,6 +1535,9 @@ def own_main_status(lines: list, js: bool, skip=()):
                 _note(pend, line)
     flush()
     return status
+
+
+_MAIN_KEY = main_key
 
 
 class OwnMain:
@@ -1665,11 +1674,29 @@ def own_licensed(status: dict, main: dict):
     return None
 
 
+def own_folds_apart(forms: list) -> bool:
+    """NOTE_path2_eleventh_pass, written out: two paths main keys differ as written (a leading run of `.` and `/` dropped,
+    backslashes read as slashes) and fold alike by this file's decoding of the fold."""
+    seen: dict = {}
+    for raw in forms:
+        form = raw.replace("\\", "/").lstrip("./")
+        if seen.setdefault(own_fold(form), form) != form:
+            return True
+    return False
+
+
+Z3_FOLDS = ("main's reading holds two paths that differ only in case, which the runtimes this package supports key "
+            "apart or together")
+
+
 def own_file_list_differs(diff: str, status: dict, inside: set, soft: list):
     """Z-3 at the raw door, written out."""
-    py, js = own_main_status(diff.splitlines(), False), own_main_status(git_lines(diff), True)
+    forms: list = []
+    py, js = own_main_status(diff.splitlines(), False, forms=forms), own_main_status(git_lines(diff), True, forms=forms)
     if py is None or js is None:
         return f"{Z3_DIFFERS}: main raises on it (`+++ /dev/null` with no `---` line before it)"
+    if own_folds_apart(forms):                          # NOTE_path2_eleventh_pass: before main's two lists are compared
+        return f"{Z3_DIFFERS}: {Z3_FOLDS}"
     if py != js:
         odd = next(((k, st) for k, st in py.items() if js.get(k) != st), None)
         if odd is None:

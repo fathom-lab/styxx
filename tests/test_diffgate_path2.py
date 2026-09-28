@@ -3618,6 +3618,14 @@ X11_PLANTED = {
          ('        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"])',
           "        if main_verdict is not None and any(True")],
         *_pair(X11_V2), "G-C9_guard:files_changed_count"),
+    # the eleventh pass's own differential: main's paths folding alike, asked before main's two lists are compared
+    "Z-3 compares main's two lists before asking whether its paths fold alike": (
+        [("    if _folds_apart(forms):\n        return f\"{_Z3_PREFIX}: {_Z3_FOLDS}\"\n", "")],
+        "3 files changed. Only touches assets/.",
+        ("+++ b/Ᲊ.md\rdiff -Nu a/Src/config.toml b/Src/config.toml\n--- /dev/null\t1970-01-01 00:00:00.000000000 "
+         "+0000\x1c+++ b/Src/config.toml\t2024-05-06 07:08:09.000000000 +0000\x1c@@ -0,0 +1,3 @@\n+k723 = 8\x85+++ "
+         "/dev/null\t1970-01-01 00:00:00.000000000 +0000\rdiff --cc m.py +k271 = 1\n+k279 = 8\x0b\x0b+++ b/ᲊ.md\n"),
+        "G-C7_oracle:Y_notes"),
     # round-10 scorer lens, blocker (R1.2): nothing anchored the unmeasured reason where main raises
     "raises: the unmeasured reason loses its parse-failure clause": (
         [("        if raw_input_len:\n            no_evidence += (",

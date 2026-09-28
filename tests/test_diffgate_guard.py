@@ -323,6 +323,32 @@ def test_k5_the_port_reads_such_a_claim_as_mains_port_read_it():
         assert mine == main, rid
 
 
+# This round's own differential (m10d, soup-101004-238): main's reading keys `b/<U+1C89>.md` and `b/<U+1C8A>.md` as two
+# files on Python 3.12 (Unicode 15.0) and one on Node 24 (16.0), so where main's two line splits differ was another place
+# in each port, and Z-3's reason named it.
+FOLDS_DIFF = ("+++ b/Ᲊ.md\rdiff -Nu a/Src/config.toml b/Src/config.toml\n--- /dev/null\t1970-01-01 00:00:00.000000000 "
+              "+0000\x1c+++ b/Src/config.toml\t2024-05-06 07:08:09.000000000 +0000\x1c@@ -0,0 +1,3 @@\n+k723 = 8\x85+++ "
+              "/dev/null\t1970-01-01 00:00:00.000000000 +0000\rdiff --cc m.py +k271 = 1\n+k279 = 8\x0b\x0b+++ b/ᲊ.md\n")
+
+
+def test_z3_asks_first_whether_mains_paths_fold_alike():
+    assert dg._folds_apart(["Ᲊ.md", "ᲊ.md"]) and dg._folds_apart(["docs/Guide.md", "./docs/guide.md"])
+    assert not dg._folds_apart(["docs/a.md", "docs/a.md", "./docs/a.md"])
+    g = dg.gate_diff_text("3 files changed. Only touches assets/.", FOLDS_DIFF)
+    assert [(c.kind, c.verdict) for c in g.claims] == [("files_changed_count", "UNCHECKABLE"),
+                                                        ("only_touches", "UNCHECKABLE")]
+    assert all(c.why.endswith(dg._Z3_FOLDS) or dg._Z3_FOLDS in c.why for c in g.claims)
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    script = ("const B = require(process.argv[1]); const [s, d] = JSON.parse(require('fs').readFileSync(0, 'utf8'));"
+              "process.stdout.write(JSON.stringify(B.gateDiffText(s, d).claims.map(c => [c.kind, c.verdict, c.why])));")
+    r = subprocess.run([node, "-e", script, str(PORT)], input=json.dumps(["3 files changed. Only touches assets/.",
+                                                                         FOLDS_DIFF]),
+                       capture_output=True, text=True, encoding="utf-8", timeout=120)
+    assert json.loads(r.stdout) == [[c.kind, c.verdict, c.why] for c in g.claims]
+
+
 def test_k5_reads_the_sentence_not_every_non_ascii_character():
     """Punctuation, symbols and emoji read alike in both ports' templates: the em dash of `path -- created.` (U+2014, a
     literal in the template itself) leaves #97's repair in place; a word character or a split mark does not."""
