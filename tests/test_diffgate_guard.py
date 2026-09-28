@@ -202,6 +202,8 @@ K5_REPROS = {
     "K5-BOM": ("Only touches﻿.docs/ and only touches docs/.",
                "diff --git a/.docs/a.md b/.docs/a.md\nindex 1111111..2222222 100644\n--- a/.docs/a.md\n+++ b/.docs/a.md\n"
                "@@ -1 +1 @@\n-a\n+b\n"),
+    # a count over #121's dotfile twins, in a sentence holding a word character: main's count, not the licensed one
+    "K5-COUNT": ("3 files changed café.", PAIRS["path2:121-dotfile-twins"]["diff"]),
 }
 
 
