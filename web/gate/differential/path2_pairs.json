@@ -1125,7 +1125,7 @@
  {
   "id": "path2:f2-a-line-separator-is-not-a-line-break",
   "summary": "Added 0 tests. Added 1 test.",
-  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+\u2028def test_a():\n",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+ def test_a():\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1147,7 +1147,7 @@
  {
   "id": "path2:f2-a-paragraph-separator-is-not-a-line-break",
   "summary": "Added 0 tests. Added 1 test.",
-  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+\u2029def test_a():\n",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+ def test_a():\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1169,7 +1169,7 @@
  {
   "id": "path2:f2-a-line-separator-mid-line-starts-no-line",
   "summary": "Added 0 tests. Added 1 test.",
-  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,2 @@\n x = 0\n+x = 1\u2028def test_new():\n",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1,2 @@\n x = 0\n+x = 1 def test_new():\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1191,7 +1191,7 @@
  {
   "id": "path2:f2-a-context-line-holding-a-separator-adds-nothing",
   "summary": "Added 0 tests. Added 1 test.",
-  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,2 @@\n x\u2028+def test_new():\n-y = 0\n+y = 1\n",
+  "diff": "--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1,2 +1,2 @@\n x +def test_new():\n-y = 0\n+y = 1\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1213,7 +1213,7 @@
  {
   "id": "path2:f2-a-separator-before-a-header-shape-adds-no-file",
   "summary": "2 files changed. Only touches src/.",
-  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1,2 +1,2 @@\n x\u2028+++ b/evil.py\n-y = 0\n+y = 1\n--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1,2 +1,2 @@\n x +++ b/evil.py\n-y = 0\n+y = 1\n--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1252,7 +1252,7 @@
  {
   "id": "path2:f2-limit-hit-reads-a-line-separator-as-indent",
   "summary": "Adds function foo.",
-  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1,2 @@\n x = 0\n+\u2028def foo():\n",
+  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1,2 @@\n x = 0\n+ def foo():\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1501,7 +1501,7 @@
  {
   "id": "path2:v1-a-def-after-a-mid-line-line-separator-is-not-a-definition",
   "summary": "Adds function foo.",
-  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+x = 1\u2028def foo():\n",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+x = 1 def foo():\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1535,7 +1535,7 @@
  {
   "id": "path2:v1-a-next-line-led-def-is-not-a-definition",
   "summary": "Adds function foo.",
-  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+\u0085def foo():\n",
+  "diff": "--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,2 @@\n x = 0\n+def foo():\n",
   "expect": {
    "verdict": "FAIL",
    "claims": [
@@ -1599,7 +1599,7 @@
  {
   "id": "path2:v2-compat-python-reads-pythons-whitespace",
   "summary": "No breaking changes.",
-  "diff": "--- a/src/api.py\n+++ b/src/api.py\n@@ -1,2 +1 @@\n-def\u0085public_api():\n-    return 1\n+x = 1\n--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-a = 1\n+a = 2\n",
+  "diff": "--- a/src/api.py\n+++ b/src/api.py\n@@ -1,2 +1 @@\n-defpublic_api():\n-    return 1\n+x = 1\n--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-a = 1\n+a = 2\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1615,7 +1615,7 @@
  {
   "id": "path2:v2-compat-typescript-reads-pythons-whitespace",
   "summary": "No breaking changes.",
-  "diff": "--- a/src/api.ts\n+++ b/src/api.ts\n@@ -1,2 +1 @@\n-export\u0085function publicApi() {\n-}\n+const x = 1;\n--- a/src/b.ts\n+++ b/src/b.ts\n@@ -1 +1 @@\n-a\n+b\n",
+  "diff": "--- a/src/api.ts\n+++ b/src/api.ts\n@@ -1,2 +1 @@\n-exportfunction publicApi() {\n-}\n+const x = 1;\n--- a/src/b.ts\n+++ b/src/b.ts\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1631,7 +1631,7 @@
  {
   "id": "path2:v2-compat-go-reads-pythons-whitespace",
   "summary": "No breaking changes.",
-  "diff": "--- a/pkg/api.go\n+++ b/pkg/api.go\n@@ -1,2 +1 @@\n-func\u0085PublicApi() {\n-}\n+var x = 1\n--- a/pkg/b.go\n+++ b/pkg/b.go\n@@ -1 +1 @@\n-a\n+b\n",
+  "diff": "--- a/pkg/api.go\n+++ b/pkg/api.go\n@@ -1,2 +1 @@\n-funcPublicApi() {\n-}\n+var x = 1\n--- a/pkg/b.go\n+++ b/pkg/b.go\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1647,7 +1647,7 @@
  {
   "id": "path2:v2-compat-rust-reads-pythons-whitespace",
   "summary": "No breaking changes.",
-  "diff": "--- a/src/api.rs\n+++ b/src/api.rs\n@@ -1,2 +1 @@\n-\u0085pub fn public_api() {\n-}\n+let x = 1;\n--- a/src/b.rs\n+++ b/src/b.rs\n@@ -1 +1 @@\n-a\n+b\n",
+  "diff": "--- a/src/api.rs\n+++ b/src/api.rs\n@@ -1,2 +1 @@\n-pub fn public_api() {\n-}\n+let x = 1;\n--- a/src/b.rs\n+++ b/src/b.rs\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1663,7 +1663,7 @@
  {
   "id": "path2:v2-compat-java-reads-pythons-whitespace",
   "summary": "No breaking changes.",
-  "diff": "--- a/src/Api.java\n+++ b/src/Api.java\n@@ -1,2 +1 @@\n-public\u0085static void publicApi() {\n-}\n+int x = 1;\n--- a/src/B.java\n+++ b/src/B.java\n@@ -1 +1 @@\n-a\n+b\n",
+  "diff": "--- a/src/Api.java\n+++ b/src/Api.java\n@@ -1,2 +1 @@\n-publicstatic void publicApi() {\n-}\n+int x = 1;\n--- a/src/B.java\n+++ b/src/B.java\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1759,7 +1759,7 @@
  {
   "id": "path2:v2-compat-a-parameter-list-collapses-pythons-whitespace",
   "summary": "No breaking changes.",
-  "diff": "--- a/src/api.py\n+++ b/src/api.py\n@@ -1 +1 @@\n-def public_api(a,\u0085b):\n+def public_api(a, b):\n",
+  "diff": "--- a/src/api.py\n+++ b/src/api.py\n@@ -1 +1 @@\n-def public_api(a,b):\n+def public_api(a, b):\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1775,7 +1775,7 @@
  {
   "id": "path2:v2-a-header-path-is-stripped-as-python-strips-it",
   "summary": "Modified src/a.py.",
-  "diff": "--- a/src/a.py\u0085\n+++ b/src/a.py\u0085\n@@ -1 +1 @@\n-a\n+b\n",
+  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1809,28 +1809,29 @@
  {
   "id": "path2:v2-a-binary-header-holding-a-line-separator-registers-its-file",
   "summary": "1 file changed. Only touches docs/.",
-  "diff": "diff --git a/docs/a\u2028b.png b/docs/c.png\nBinary files a/docs/a\u2028b.png and b/docs/c.png differ\n",
+  "diff": "diff --git a/docs/a b.png b/docs/c.png\nBinary files a/docs/a b.png and b/docs/c.png differ\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 1 files, claim says 1"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
     ],
     [
      "only_touches",
-     "VERIFIED",
-     "all changed paths under prefix"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eleventh_pass: was VERIFIED, VERIFIED; F-2's split reads a file main's str.splitlines() does not, no named repair explains the difference, so the guard abstains where main gives UNCHECKABLE"
  },
  {
   "id": "path2:v2-a-binary-deletion-line-holding-a-line-separator",
   "summary": "Deleted c.png.",
-  "diff": "diff --git a/docs\u2028x/c.png b/docs\u2028x/c.png\nBinary files a/docs\u2028x/c.png and /dev/null differ\n",
+  "diff": "diff --git a/docs x/c.png b/docs x/c.png\nBinary files a/docs x/c.png and /dev/null differ\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -1847,7 +1848,7 @@
  {
   "id": "path2:v2-a-reason-prints-a-path-as-python-repr-does",
   "summary": "Only touches src/.",
-  "diff": "--- a/a\u2028b c.py\n+++ b/a\u2028b c.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "diff": "--- a/a b c.py\n+++ b/a b c.py\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -4908,12 +4909,13 @@
    "claims": [
     [
      "file_touched",
-     "VERIFIED",
-     "diff status 'M' for 'docs/a.md'"
+     "UNCHECKABLE",
+     "'lib/a.md': only a file with the same name in another directory is in the diff ('docs/a.md', status 'M'); #97 licenses the exact and suffix tiers only"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_eleventh_pass: was VERIFIED; K-5 reads the sentence now, and U+00AB and U+00BB are punctuation both ports' templates read alike, so the path is read by this reading, whose Z-4 abstains on a basename-only match in both ports"
  },
  {
   "id": "path2:k5-z4-prints-the-key-it-found-as-ascii-escapes-it",
@@ -4976,7 +4978,7 @@
  {
   "id": "path2:k-canary-z3-a-path-holding-u0085",
   "summary": "2 files changed. 3 files changed. Only touches docs/. Only touches docs/ and src/. Modified src/c.py.",
-  "diff": "--- a/docs/a\u0085b.md\n+++ b/docs/a\u0085b.md\n@@ -1 +1 @@\n-x\n+y\n--- a/src/c.py\n+++ b/src/c.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\n",
+  "diff": "--- a/docs/ab.md\n+++ b/docs/ab.md\n@@ -1 +1 @@\n-x\n+y\n--- a/src/c.py\n+++ b/src/c.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -5012,7 +5014,7 @@
  {
   "id": "path2:k-canary-z3-a-path-holding-u2028",
   "summary": "2 files changed. 3 files changed. Only touches docs/. Only touches docs/ and src/. Modified src/c.py.",
-  "diff": "--- a/docs/a\u2028b.md\n+++ b/docs/a\u2028b.md\n@@ -1 +1 @@\n-x\n+y\n--- a/src/c.py\n+++ b/src/c.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\n",
+  "diff": "--- a/docs/a b.md\n+++ b/docs/a b.md\n@@ -1 +1 @@\n-x\n+y\n--- a/src/c.py\n+++ b/src/c.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -5043,6 +5045,236 @@
     ]
    ],
    "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:l-r10-np1-a-no-prefix-b-directory-beside-dotted-twins-abstains",
+  "summary": "2 files changed. 3 files changed. 4 files changed.",
+  "diff": "diff --git .env .env\nnew file mode 100644\nindex 0000000..bd2c89c\n--- /dev/null\n+++ .env\n@@ -0,0 +1 @@\n+A=1\ndiff --git b/x.py b/x.py\nindex a003ef7..47643d4 100644\n--- b/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-y = 1\n+y = 2\ndiff --git env env\nnew file mode 100644\nindex 0000000..48daf64\n--- /dev/null\n+++ env\n@@ -0,0 +1 @@\n+B=1\ndiff --git x.py x.py\nindex 7d4290a..407de30 100644\n--- x.py\n+++ x.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also read a `---`/`+++` pair under a `diff --git` header neither reading can read (`git diff --no-prefix`), where a directory named `a/` or `b/` is taken for git's prefix; the repair may have balanced that error; claim says 2"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also read a `---`/`+++` pair under a `diff --git` header neither reading can read (`git diff --no-prefix`), where a directory named `a/` or `b/` is taken for git's prefix; the repair may have balanced that error; claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also read a `---`/`+++` pair under a `diff --git` header neither reading can read (`git diff --no-prefix`), where a directory named `a/` or `b/` is taken for git's prefix; the repair may have balanced that error; claim says 4"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:l-r10-np2-a-no-prefix-whitespace-twin-beside-dotted-twins-abstains",
+  "summary": "2 files changed. 3 files changed. 4 files changed.",
+  "diff": "diff --git .env .env\nnew file mode 100644\nindex 0000000..bd2c89c\n--- /dev/null\n+++ .env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a.py a.py\nindex 7d4290a..407de30 100644\n--- a.py\n+++ a.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\ndiff --git a.py　 a.py　\nindex a003ef7..47643d4 100644\n--- a.py　\n+++ a.py　\n@@ -1 +1 @@\n-y = 1\n+y = 2\ndiff --git env env\nnew file mode 100644\nindex 0000000..48daf64\n--- /dev/null\n+++ env\n@@ -0,0 +1 @@\n+B=1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also read a `---`/`+++` pair under a `diff --git` header neither reading can read (`git diff --no-prefix`), where a directory named `a/` or `b/` is taken for git's prefix; the repair may have balanced that error; claim says 2"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also read a `---`/`+++` pair under a `diff --git` header neither reading can read (`git diff --no-prefix`), where a directory named `a/` or `b/` is taken for git's prefix; the repair may have balanced that error; claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also read a `---`/`+++` pair under a `diff --git` header neither reading can read (`git diff --no-prefix`), where a directory named `a/` or `b/` is taken for git's prefix; the repair may have balanced that error; claim says 4"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:l-r10-under1-a-pair-without-a-header-s-shape-beside-dotted-twins-abstains",
+  "summary": "3 files changed. 4 files changed.",
+  "diff": "diff --git a/.env b/.env\nnew file mode 100644\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/db/q.sql b/db/q.sql\n--- a/db/q.sql\n+++ b/db/q.sql\n@@ -1,1 +1,1 @@\n SELECT 1;\n--- users\n+++ x\ndiff --git a/env b/env\nnew file mode 100644\n--- /dev/null\n+++ b/env\n@@ -0,0 +1 @@\n+B=1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also took a `---`/`+++` pair without a header's shape (no `@@` after it, or two different paths) for a file header, and it may be content (a SQL `-- ` comment beside a `++` line); the repair may have balanced that error; claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also took a `---`/`+++` pair without a header's shape (no `@@` after it, or two different paths) for a file header, and it may be content (a SQL `-- ` comment beside a `++` line); the repair may have balanced that error; claim says 4"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:l-r10-under2-the-same-with-no-diff-git-line-abstains",
+  "summary": "3 files changed. 4 files changed.",
+  "diff": "diff --git a/.env b/.env\nnew file mode 100644\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\n--- a/db/q.sql\n+++ b/db/q.sql\n@@ -1,1 +1,1 @@\n SELECT 1;\n--- users\n+++ x\ndiff --git a/env b/env\nnew file mode 100644\n--- /dev/null\n+++ b/env\n@@ -0,0 +1 @@\n+B=1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also took a `---`/`+++` pair without a header's shape (no `@@` after it, or two different paths) for a file header, and it may be content (a SQL `-- ` comment beside a `++` line); the repair may have balanced that error; claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also took a `---`/`+++` pair without a header's shape (no `@@` after it, or two different paths) for a file header, and it may be content (a SQL `-- ` comment beside a `++` line); the repair may have balanced that error; claim says 4"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:l-r10-why1-the-dot-miss-reason-prints-its-keys-folded",
+  "summary": "Only touches github/.",
+  "diff": "diff --git a/.github/Ᲊx.yml b/.github/Ᲊx.yml\nindex 1111111..2222222 100644\n--- a/.github/Ᲊx.yml\n+++ b/.github/Ᲊx.yml\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "paths outside 'github' differ from it only by a leading dot: ['.github/\\u1c8ax.yml'] (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:l-r10-why2-the-refused-file-reason-prints-its-key-folded",
+  "summary": "Added 1 test. Added function helper.",
+  "diff": "diff --git a/tests/Ɤt.py b/tests/Ɤt.py\nindex 1111111..2222222 100644\n--- a/tests/Ɤt.py\n+++ b/tests/Ɤt.py\n@@ -1 +1,2 @@\n-a = 1\n+def test_a(): pass\n+def helper(): pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "an added definition line in 'tests/\\u0264t.py' is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line; claim says 1"
+    ],
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "this reading finds no added definition of 'helper' where main's Python did and its port did (`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:l-r10-k5a-a-letter-after-the-path-reads-as-main",
+  "summary": "Updated lib/a.pyé/x.md.",
+  "diff": "diff --git a/other/a.py b/other/a.py\nindex 1111111..2222222 100644\n--- a/other/a.py\n+++ b/other/a.py\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/x.md b/x.md\nindex 1111111..2222222 100644\n--- a/x.md\n+++ b/x.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:l-k5-an-em-dash-keeps-97s-repair",
+  "summary": "integrations/git/README.md — created.",
+  "diff": "--- a/README.md\n+++ b/README.md\n@@ -1 +1 @@\n-a\n+b\n--- /dev/null\n+++ b/integrations/git/README.md\n@@ -0,0 +1 @@\n+hello\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'integrations/git/readme.md'"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'A' for 'integrations/git/readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:l-k5-an-emoji-and-quotes-keep-97s-repair",
+  "summary": "Created integrations/git/README.md ✅ “done”.",
+  "diff": "--- a/README.md\n+++ b/README.md\n@@ -1 +1 @@\n-a\n+b\n--- /dev/null\n+++ b/integrations/git/README.md\n@@ -0,0 +1 @@\n+hello\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'integrations/git/readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:l-guard-a-quoted-pair-has-a-header-s-shape",
+  "summary": "3 files changed. 2 files changed.",
+  "diff": "diff --git \"a/sp ace.py\" \"b/sp ace.py\"\n--- \"a/sp ace.py\"\n+++ \"b/sp ace.py\"\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/.env b/.env\nnew file mode 100644\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nnew file mode 100644\n--- /dev/null\n+++ b/env\n@@ -0,0 +1 @@\n+B=1\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 3 files, claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 3 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:l-guard-main-raises-every-claim-abstains",
+  "summary": "t\n\nAdded 1 test. 1 file changed. Only touches src/.",
+  "diff": "diff --git a/src/t.py b/src/t.py\n x\f+++ /dev/null\n+def test_a():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "main raises on this diff (`+++ /dev/null` with no `---` line before it); claim says 1"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main raises on it (`+++ /dev/null` with no `---` line before it); claim says 1"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main raises on it (`+++ /dev/null` with no `---` line before it)"
+    ]
+   ],
+   "uncovered_sentences": 1
   }
  }
 ]
