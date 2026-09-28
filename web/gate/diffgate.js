@@ -1750,7 +1750,7 @@ function _guard(evaluate, reference, strict) {
   const keys = _claimKeys(gate.claims);
   const claims = gate.claims.map((c, i) => {
     const key = keys[i], r = theirs.has(key) ? theirs.get(key) : null;
-    if (seen.apart[i] && c.kind !== "tests_pass") {        // K-5: the sentence reads as main's port read it
+    if ((seen.apart || [])[i] && c.kind !== "tests_pass") {        // K-5: the sentence reads as main's port read it
       if (r !== null) return { kind: r.kind, text: r.text, detail: Object.assign({}, r.detail || {}), verdict: r.verdict, why: r.why };
       return { kind: c.kind, text: c.text, detail: c.detail, verdict: "UNCHECKABLE", why: _K5_WHY(ref === null ? _K5_RAISES : _K5_ABSENT) };
     }

@@ -2724,7 +2724,9 @@ def _guard(evaluate, reference, *, strict: bool, tp: list) -> DiffGate:
         return None if other is None else other.verdict
 
     final: list = []
-    for key, c, apart in zip(_claim_keys(gate.claims), gate.claims, seen["apart"]):
+    flags = seen.get("apart") or []
+    for i, (key, c) in enumerate(zip(_claim_keys(gate.claims), gate.claims)):
+        apart = i < len(flags) and flags[i]              # (every claim is read; a missing flag is no K-5)
         r = theirs.get(key)
         if apart and c.kind != "tests_pass":             # K-5: the sentence reads as main's same port read it
             if r is not None:
