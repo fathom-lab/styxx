@@ -2014,17 +2014,18 @@
    "claims": [
     [
      "only_touches",
-     "VERIFIED",
-     "all changed paths under prefix"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'x' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
     ],
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 1 files, claim says 1"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'x' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 1"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_tenth_pass K-1: was VERIFIED, VERIFIED; main read a file from lines an exact hunk's counts hold, which W-1 reads as content, and W-1 no longer licenses that file-list difference (a file neither reading counts may have balanced it), so the file-list claims abstain"
  },
  {
   "id": "path2:w1-a-hunk-with-both-shapes",
@@ -2040,17 +2041,18 @@
     ],
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 1 files, claim says 1"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'x' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 1"
     ],
     [
      "only_touches",
-     "VERIFIED",
-     "all changed paths under prefix"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'x' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_tenth_pass K-1: was VERIFIED, VERIFIED; main read a file from lines an exact hunk's counts hold, which W-1 reads as content, and W-1 no longer licenses that file-list difference (a file neither reading counts may have balanced it), so the file-list claims abstain"
  },
  {
   "id": "path2:w1-a-removed-sql-comment-does-not-hide-a-removed-public-def",
@@ -2446,17 +2448,18 @@
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 1 files, claim says 1"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'x' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 1"
     ],
     [
      "only_touches",
-     "VERIFIED",
-     "all changed paths under prefix"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'x' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_tenth_pass K-1: was VERIFIED, VERIFIED; main read a file from lines an exact hunk's counts hold, which W-1 reads as content, and W-1 no longer licenses that file-list difference (a file neither reading counts may have balanced it), so the file-list claims abstain"
  },
  {
   "id": "path2:w2-a-class-named-like-a-test-is-not-a-test",
@@ -2649,13 +2652,13 @@
    "claims": [
     [
      "only_touches",
-     "VERIFIED",
-     "all changed paths under prefix"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'x' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
     ],
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 1 files, claim says 1"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'x' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 1"
     ],
     [
      "symbol_added",
@@ -2670,7 +2673,7 @@
    ],
    "uncovered_sentences": 0
   },
-  "repinned": "NOTE_path2_eighth_pass Y-5: was VERIFIED/VERIFIED/UNCHECKABLE/VERIFIED; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains"
+  "repinned": "NOTE_path2_eighth_pass Y-5: was VERIFIED/VERIFIED/UNCHECKABLE/VERIFIED; the #101 pairing withdraws, it does not verify: a count equal to what is left after pairing changed tests away abstains | NOTE_path2_tenth_pass K-1: was VERIFIED, VERIFIED; main read a file from lines an exact hunk's counts hold, which W-1 reads as content, and W-1 no longer licenses that file-list difference (a file neither reading counts may have balanced it), so the file-list claims abstain"
  },
  {
   "id": "path2:x2-an-over-declared-hunk-then-a-gnu-header-and-a-bare-at-at",
@@ -2885,17 +2888,18 @@
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 1 files, claim says 1"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'new' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 1"
     ],
     [
      "only_touches",
-     "VERIFIED",
-     "all changed paths under prefix"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'new' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_tenth_pass K-1: was VERIFIED, VERIFIED; main read a file from lines an exact hunk's counts hold, which W-1 reads as content, and W-1 no longer licenses that file-list difference (a file neither reading counts may have balanced it), so the file-list claims abstain"
  },
  {
   "id": "path2:a1-an-added-async-test-abstains-the-count",
@@ -3164,21 +3168,22 @@
   "summary": "2 files changed. Only touches src/.",
   "diff": "diff --git a/docs/img.png b/docs/img.png\nindex 1..2 100644\nBinary files a/docs/img.png and b/docs/img.png differ\ndiff --git a/src/c.md b/src/c.md\n--- a/src/c.md\n+++ b/src/c.md\n@@ -1,2 +1,2 @@\n-x\n+++ plus\n y\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 2 files, claim says 2"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'plus' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 2"
     ],
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside 'src': ['docs/img.png']"
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'plus' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_tenth_pass K-1: was VERIFIED, CONTRADICTED; main read a file from lines an exact hunk's counts hold, which W-1 reads as content, and W-1 no longer licenses that file-list difference (a file neither reading counts may have balanced it), so the file-list claims abstain"
  },
  {
   "id": "path2:y1-a-declared-count-over-an-unsure-file-list",
@@ -3446,17 +3451,17 @@
     [
      "files_changed_count",
      "UNCHECKABLE",
-     "the diff's file list is not certain: this reading's file list differs from main's where no repair accounts for it: main reads 'dev/null\\t2024-01-01 00:00:00.000000000 +0000' ('M'), which this reading does not; claim says 3"
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'plus' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 3"
     ],
     [
      "only_touches",
      "UNCHECKABLE",
-     "the diff's file list is not certain: this reading's file list differs from main's where no repair accounts for it: main reads 'dev/null\\t2024-01-01 00:00:00.000000000 +0000' ('M'), which this reading does not"
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'plus' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
     ]
    ],
    "uncovered_sentences": 0
   },
-  "repinned": "NOTE_path2_ninth_pass Z-3: was VERIFIED/VERIFIED; the file list is not main's where no repair accounts for it, or main's two ports read it apart, so the claims that read it abstain"
+  "repinned": "NOTE_path2_ninth_pass Z-3: was VERIFIED/VERIFIED; the file list is not main's where no repair accounts for it, or main's two ports read it apart, so the claims that read it abstain | NOTE_path2_tenth_pass K-1: was UNCHECKABLE with another reason, UNCHECKABLE with another reason; main read a file from lines an exact hunk's counts hold, which W-1 reads as content, and W-1 no longer licenses that file-list difference (a file neither reading counts may have balanced it), so the file-list claims abstain"
  },
  {
   "id": "path2:y4-dev-null-is-the-whole-path-or-a-tab-after-it",
@@ -3937,16 +3942,17 @@
     [
      "files_changed_count",
      "UNCHECKABLE",
-     "the diff's file list is not certain: this reading's file list differs from main's by a repair (W-1 reads an exact hunk's `---`/`+++` line as content), and main's reading also dropped the `diff --git` file 'img/logo.png' for the next `---`/`+++` pair, which names another; the repair may have balanced that error; claim says 2"
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'x' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 2"
     ],
     [
      "files_changed_count",
      "UNCHECKABLE",
-     "the diff's file list is not certain: this reading's file list differs from main's by a repair (W-1 reads an exact hunk's `---`/`+++` line as content), and main's reading also dropped the `diff --git` file 'img/logo.png' for the next `---`/`+++` pair, which names another; the repair may have balanced that error; claim says 3"
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'x' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 3"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_tenth_pass K-1: was UNCHECKABLE with another reason, UNCHECKABLE with another reason; main read a file from lines an exact hunk's counts hold, which W-1 reads as content, and W-1 no longer licenses that file-list difference (a file neither reading counts may have balanced it), so the file-list claims abstain"
  },
  {
   "id": "path2:z3-r6-a-gnu-deletion-main-keyed-as-dev-null",
@@ -3984,16 +3990,17 @@
     [
      "files_changed_count",
      "UNCHECKABLE",
-     "the diff's file list is not certain: this reading's file list differs from main's by a repair (W-1 reads an exact hunk's `---`/`+++` line as content), and main's reading also dropped a `diff --git` file whose header paths neither reading can read; the repair may have balanced that error; claim says 1"
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'y' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 1"
     ],
     [
      "files_changed_count",
      "UNCHECKABLE",
-     "the diff's file list is not certain: this reading's file list differs from main's by a repair (W-1 reads an exact hunk's `---`/`+++` line as content), and main's reading also dropped a `diff --git` file whose header paths neither reading can read; the repair may have balanced that error; claim says 2"
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'y' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 2"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_tenth_pass K-1: was UNCHECKABLE with another reason, UNCHECKABLE with another reason; main read a file from lines an exact hunk's counts hold, which W-1 reads as content, and W-1 no longer licenses that file-list difference (a file neither reading counts may have balanced it), so the file-list claims abstain"
  },
  {
   "id": "path2:z3-a-quoted-path-is-no-lost-file-beside-dotfile-twins",
@@ -4226,6 +4233,813 @@
      "files_changed_count",
      "VERIFIED",
      "diff changes 2 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k1-p1-a-submodule-line-beside-a-file-main-read-from-an-exact-hunk",
+  "summary": "1 file changed. 2 files changed. Only touches db/. Only touches db/ and assets/. Modified db/q.sql.",
+  "diff": "diff --git a/db/q.sql b/db/q.sql\nindex f7b9cc5..9468ea2 100644\n--- a/db/q.sql\n+++ b/db/q.sql\n@@ -1,2 +1,2 @@\n SELECT 1;\n--- users\n+++ users\nSubmodule vendor/lib 1234567...89abcde (commits not present)\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 1"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
+    ]
+   ],
+   "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "path2:k1-p1-the-same-in-u0-bytes",
+  "summary": "1 file changed. 2 files changed. Only touches db/. Only touches db/ and assets/. Modified db/q.sql.",
+  "diff": "diff --git a/db/q.sql b/db/q.sql\nindex f7b9cc5..9468ea2 100644\n--- a/db/q.sql\n+++ b/db/q.sql\n@@ -2 +2 @@ SELECT 1;\n--- users\n+++ users\nSubmodule vendor/lib 1234567...89abcde (commits not present)\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 1"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
+    ]
+   ],
+   "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "path2:k1-p2-svn-cannot-display-beside-a-file-main-read-from-an-exact-hunk",
+  "summary": "1 file changed. 2 files changed. Only touches db/. Only touches db/ and assets/. Modified db/q.sql.",
+  "diff": "Index: assets/logo.png\n===================================================================\nCannot display: file marked as a binary type.\nsvn:mime-type = application/octet-stream\nIndex: db/q.sql\n===================================================================\n--- db/q.sql\t(revision 1)\n+++ db/q.sql\t(working copy)\n@@ -1,2 +1,2 @@\n SELECT 1;\n--- users\n+++ users\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 1"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
+    ]
+   ],
+   "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "path2:k1-p3-hg-binary-file-has-changed-beside-a-file-main-read-from-an-exact-hunk",
+  "summary": "1 file changed. 2 files changed. Only touches db/. Only touches db/ and assets/. Modified db/q.sql.",
+  "diff": "diff -r 1a2b3c4d5e6f -r 6f5e4d3c2b1a assets/logo.png\nBinary file assets/logo.png has changed\ndiff -r 1a2b3c4d5e6f -r 6f5e4d3c2b1a db/q.sql\n--- a/db/q.sql\tMon May 06 07:08:09 2024 +0000\n+++ b/db/q.sql\tMon May 06 07:08:09 2024 +0000\n@@ -1,2 +1,2 @@\n SELECT 1;\n--- users\n+++ users\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 1"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'users' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
+    ]
+   ],
+   "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "path2:k1-an-exact-hunk-main-read-a-deletion-from",
+  "summary": "2 files changed. Deleted lib/x.py. Only touches src/.",
+  "diff": "--- a/src/a.sql\n+++ b/src/a.sql\n@@ -1,3 +1,3 @@\n x\n--- a/lib/x.py\n+++ /dev/null\n y\n--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'lib/x.py' ('D') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 2"
+    ],
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'lib/x.py' ('D') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'lib/x.py' ('D') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k1-an-exact-hunk-main-read-another-file-s-deletion-from",
+  "summary": "2 files changed. Modified src/b.py.",
+  "diff": "--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-a\n+b\n--- a/src/a.sql\n+++ b/src/a.sql\n@@ -1,3 +1,3 @@\n x\n--- a/src/b.py\n+++ /dev/null\n y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'src/b.py' as 'D' with them, as 'M' without); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 2"
+    ],
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'src/b.py' as 'D' with them, as 'M' without); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k1-a-removed-comment-alone-sets-no-file-and-nothing-abstains",
+  "summary": "1 file changed. Only touches db/.",
+  "diff": "--- a/db/q.sql\n+++ b/db/q.sql\n@@ -1,2 +1 @@\n SELECT 1;\n--- users\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k2-p4-garay-u10d50-and-u10d70-unicode-16",
+  "summary": "Modified docs/a.md. Only touches docs/. Only touches src/. 3 files changed.",
+  "diff": "--- a/docs/x𐵐.md\n+++ b/docs/x𐵐.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/x𐵰.md\n+++ b/docs/x𐵰.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key; claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k2-ua7cb-and-u0264-unicode-16",
+  "summary": "Modified docs/a.md. Only touches docs/. Only touches src/. 3 files changed.",
+  "diff": "--- a/docs/xꟋ.md\n+++ b/docs/xꟋ.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/xɤ.md\n+++ b/docs/xɤ.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key; claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k2-u1c89-and-u1c8a-unicode-16",
+  "summary": "Modified docs/a.md. Only touches docs/. Only touches src/. 3 files changed.",
+  "diff": "--- a/docs/xᲉ.md\n+++ b/docs/xᲉ.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/xᲊ.md\n+++ b/docs/xᲊ.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key; claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k2-u2c2f-and-u2c5f-unicode-14",
+  "summary": "Modified docs/a.md. Only touches docs/. Only touches src/. 3 files changed.",
+  "diff": "--- a/docs/xⰯ.md\n+++ b/docs/xⰯ.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/xⱟ.md\n+++ b/docs/xⱟ.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key; claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k2-u10570-and-u10597-unicode-14",
+  "summary": "Modified docs/a.md. Only touches docs/. Only touches src/. 3 files changed.",
+  "diff": "--- a/docs/x𐕰.md\n+++ b/docs/x𐕰.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/x𐖗.md\n+++ b/docs/x𐖗.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key; claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k2-a-sigma-and-a-final-sigma",
+  "summary": "Modified docs/a.md. Only touches docs/. Only touches src/. 3 files changed.",
+  "diff": "--- a/docs/xσ.md\n+++ b/docs/xσ.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/xς.md\n+++ b/docs/xς.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key; claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k2-the-kelvin-sign-and-k",
+  "summary": "Modified docs/a.md. Only touches docs/. Only touches src/. 3 files changed.",
+  "diff": "--- a/docs/xK.md\n+++ b/docs/xK.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/xk.md\n+++ b/docs/xk.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key; claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k2-paths-that-fold-apart-read-as-before",
+  "summary": "Modified docs/a.md. Only touches docs/. Only touches src/. 3 files changed.",
+  "diff": "--- a/docs/xⰯ.md\n+++ b/docs/xⰯ.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/yⱟ.md\n+++ b/docs/yⱟ.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'docs/a.md'"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['docs/xⱟ.md', 'docs/yⱟ.md', 'docs/a.md']"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 3 files, claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k3-a-deletion-after-an-exact-hunk-main-read-a-dashes-line-from",
+  "summary": "2 files changed.",
+  "diff": "diff --git a/x.sql b/x.sql\nindex 1..2 100644\n@@ -1 +1 @@\n--- q\n+++ z\ndiff --git a/y b/y\n+++ /dev/null\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (without those lines main raises (`+++ /dev/null` with no `---` line before it)); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k3-a-gnu-deletion-with-no-dashes-line",
+  "summary": "1 file changed.",
+  "diff": "+++ /dev/null\t2024-01-01 00:00:00.000000000 +0000\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff carries no file statuses and no added lines; 50 characters of input parsed to nothing, which is a parse failure, not an empty change"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k3-where-main-raises-every-claim-abstains",
+  "summary": "Added 1 test. 1 file changed. Added function test_a.",
+  "diff": "+++ /dev/null\n+def test_a():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "no Python file in the diff; this template counts `def` lines (#110)"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff carries no file paths, so scope cannot be checked"
+    ],
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "no Python file in the diff; this template counts `def` lines (#110)"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k4-a-dotted-twin-beside-a-submodule-line",
+  "summary": "3 files changed. 2 files changed. Only touches env.",
+  "diff": "diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..bd2c89c\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nindex 3367afd..3e75765 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-old\n+new\nSubmodule vendor/lib 1234567...89abcde (commits not present)\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also passed over a line no reading places, which may name a changed file neither reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like); the repair may have balanced that error; claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also passed over a line no reading places, which may name a changed file neither reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like); the repair may have balanced that error; claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also passed over a line no reading places, which may name a changed file neither reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like); the repair may have balanced that error"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k4-a-dotted-twin-beside-an-hg-binary-notice",
+  "summary": "3 files changed. 2 files changed.",
+  "diff": "diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..e69de29\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-old\n+new\ndiff -r 1a2b3c4d5e6f -r 6f5e4d3c2b1a assets/core\nBinary file assets/core has changed\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also passed over a line no reading places, which may name a changed file neither reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like); the repair may have balanced that error; claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also passed over a line no reading places, which may name a changed file neither reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like); the repair may have balanced that error; claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k4-a-dotted-twin-beside-a-git-binary-patch-still-counts",
+  "summary": "3 files changed. 2 files changed.",
+  "diff": "diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..e69de29\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-old\n+new\ndiff --git a/img.png b/img.png\nindex 1111111..2222222 100644\nGIT binary patch\nliteral 5\nMcmZQzWMXCj0000\n\nliteral 5\nMcmZQzWMXCj0000\n\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 3 files, claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 3 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k4-a-dotted-twin-alone-still-counts",
+  "summary": "2 files changed. 1 file changed.",
+  "diff": "diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..e69de29\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-old\n+new\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 2 files, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k4-a-blank-line-ends-a-binary-block-and-an-hg-notice-after-it-is-unplaced",
+  "summary": "3 files changed.",
+  "diff": "diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..e69de29\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-old\n+new\ndiff --git a/img.png b/img.png\nindex 1111111..2222222 100644\nGIT binary patch\nliteral 5\nMcmZQzWMXCj0000\n\nBinary file assets/core has changed\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also passed over a line no reading places, which may name a changed file neither reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like); the repair may have balanced that error; claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k4-a-diff-git-line-ends-a-binary-block",
+  "summary": "3 files changed.",
+  "diff": "diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..e69de29\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-old\n+new\ndiff --git a/img.png b/img.png\nindex 1111111..2222222 100644\nGIT binary patch\nliteral 5\nMcmZQzWMXCj0000\ndiff --git a/y.txt b/y.txt\n--- a/y.txt\n+++ b/y.txt\n@@ -1 +1 @@\n-a\n+b\nSubmodule vendor/lib 1234567...89abcde (commits not present)\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also passed over a line no reading places, which may name a changed file neither reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like); the repair may have balanced that error; claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k4-a-no-newline-marker-past-a-hunk-s-counts-is-placed",
+  "summary": "2 files changed. 1 file changed.",
+  "diff": "diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..e69de29\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-old\n+new\n\\ No newline at end of file\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 2 files, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k2-a-leading-dot-slash-and-a-case-are-one-key",
+  "summary": "2 files changed. 1 file changed.",
+  "diff": "--- a/./docs/A.md\n+++ b/./docs/A.md\n@@ -1 +1 @@\n-a\n+b\n--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key; claim says 2"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: two header paths that differ only in case are one key; claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k5-a-path-the-sentence-runs-into-from-a-non-ascii-character-reads-as-main-read-it",
+  "summary": "Edited «lib/a.md».",
+  "diff": "--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'docs/a.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k5-z4-prints-the-key-it-found-as-ascii-escapes-it",
+  "summary": "Deleted packages/web/a.md.",
+  "diff": "--- a/lib/é/a.md\n+++ b/lib/é/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "'packages/web/a.md': only a file with the same name in another directory is in the diff ('lib/\\xe9/a.md', status 'M'); #97 licenses the exact and suffix tiers only"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k5-an-ascii-path-in-another-directory-still-abstains",
+  "summary": "Edited lib/a.md. Edited docs/a.md.",
+  "diff": "--- a/docs/a.md\n+++ b/docs/a.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "'lib/a.md': only a file with the same name in another directory is in the diff ('docs/a.md', status 'M'); #97 licenses the exact and suffix tiers only"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'docs/a.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k-a-z3-reason-prints-a-folded-key-as-ascii-escapes-it",
+  "summary": "1 file changed. 2 files changed.",
+  "diff": "--- a/db/q.sql\n+++ b/db/q.sql\n@@ -1,2 +1,2 @@\n x\n--- Aé ς\n+++ Aé ς\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'a\\xe9 \\u03c3' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 1"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main read the file list from lines an exact hunk's counts hold, which W-1 reads as content (main reads 'a\\xe9 \\u03c3' ('M') from them); a changed file neither reading counts may have balanced it, so W-1 licenses no file-list difference; claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k-canary-z3-a-path-holding-u0085",
+  "summary": "2 files changed. 3 files changed. Only touches docs/. Only touches docs/ and src/. Modified src/c.py.",
+  "diff": "--- a/docs/a\u0085b.md\n+++ b/docs/a\u0085b.md\n@@ -1 +1 @@\n-x\n+y\n--- a/src/c.py\n+++ b/src/c.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'docs/a' ('M'), which its port does not; claim says 2"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'docs/a' ('M'), which its port does not; claim says 3"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'docs/a' ('M'), which its port does not"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'docs/a' ('M'), which its port does not"
+    ],
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'docs/a' ('M'), which its port does not"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:k-canary-z3-a-path-holding-u2028",
+  "summary": "2 files changed. 3 files changed. Only touches docs/. Only touches docs/ and src/. Modified src/c.py.",
+  "diff": "--- a/docs/a\u2028b.md\n+++ b/docs/a\u2028b.md\n@@ -1 +1 @@\n-x\n+y\n--- a/src/c.py\n+++ b/src/c.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'docs/a' ('M'), which its port does not; claim says 2"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'docs/a' ('M'), which its port does not; claim says 3"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'docs/a' ('M'), which its port does not"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'docs/a' ('M'), which its port does not"
+    ],
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): main's Python reads 'docs/a' ('M'), which its port does not"
     ]
    ],
    "uncovered_sentences": 0
