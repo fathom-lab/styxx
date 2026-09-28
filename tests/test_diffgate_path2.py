@@ -175,6 +175,26 @@ def _refused(line):
 _EARLIER = ("async test functions, which this template does not count", "U+FEFF", "Unicode 13.0 to 16.0",
             "no Python file in the diff", "the claimed name")
 
+# NOTE_path2_tenth_pass_2026_09_27 (K-1): W-1's exact hunk licenses no file-list difference. Where main read a file (or a
+# status) from lines an exact hunk's counts hold, the file-list claims abstain at the raw door and in the port.
+K1_WHY = ("the diff's file list is not certain: this reading's file list differs from main's: main read the file list "
+          "from lines an exact hunk's counts hold, which W-1 reads as content ({}); a changed file neither reading "
+          "counts may have balanced it, so W-1 licenses no file-list difference")
+FILE_LIST = ("files_changed_count", "only_touches", "file_created", "file_deleted", "file_touched")
+
+
+def _k1(earlier, moved):
+    """An earlier pass's expected claims with K-1's abstention on every file-list claim."""
+    out = []
+    for kind, verdict, why in earlier:
+        if kind not in FILE_LIST:
+            out.append((kind, verdict, why))
+            continue
+        n = re.search(r"claim says (\d+)", why)
+        tail = "; claim says " + n.group(1) if kind == "files_changed_count" else ""
+        out.append((kind, "UNCHECKABLE", K1_WHY.format(moved) + tail))
+    return out
+
 
 def _ninth(diff, earlier, name="foo"):
     """An earlier pass's expected (kind, verdict, why) claims over a raw diff, as the ninth pass reads them: Z-1 and
@@ -1526,14 +1546,21 @@ W1_DOORS = {
 }
 
 
+W1_K1 = {"added-plus-plus-space-line": "main reads 'x' ('M') from them", "a-hunk-with-both": "main reads 'x' ('M') from them"}
+
+
 @pytest.mark.parametrize("name", sorted(W1_DOORS))
 def test_w1_the_one_parse_reads_every_door_alike(tmp_path, name):
     summary, before, after, want = W1_DOORS[name]
     diff = _git_repo(tmp_path, before, after)
     via_git = [(c.kind, c.verdict, c.why) for c in gate_diff(summary, tmp_path, "HEAD~1", "HEAD").claims]
     _, via_text = _claims(summary, diff)
-    assert via_git == via_text == want
-    assert _port_claims([(summary, diff)]) == [want]
+    # NOTE_path2_tenth_pass (K-1): where main read a file from an exact hunk's `+++` line, W-1's reading of it as
+    # content licenses no file-list difference, and the raw door and the port abstain on the file-list claims; the git
+    # door reads git's own --name-status and keeps its verdict
+    raw_want = _k1(want, W1_K1[name]) if name in W1_K1 else want
+    assert via_git == want and via_text == raw_want
+    assert _port_claims([(summary, diff)]) == [raw_want]
 
 
 def test_w1_the_blob_and_the_sides_are_one_reading():
@@ -2086,7 +2113,10 @@ def test_x2_an_exact_git_hunk_holding_a_slash_pair_is_content_on_every_door(tmp_
     want = [("only_touches", "VERIFIED", "all changed paths under prefix"),
             ("files_changed_count", "VERIFIED", "diff changes 1 files, claim says 1")]
     via_git = [(c.kind, c.verdict, c.why) for c in gate_diff(summary, tmp_path, "HEAD~1", "HEAD").claims]
-    assert via_git == _claims(summary, diff)[1] == want and _port_claims([(summary, diff)]) == [want]
+    # NOTE_path2_tenth_pass (K-1): the lines are content, and main read a file from them, so the raw door and the port
+    # abstain on the file list; the git door keeps git's
+    raw_want = _k1(want, "main reads 'x' ('M') from them")
+    assert via_git == want and _claims(summary, diff)[1] == raw_want and _port_claims([(summary, diff)]) == [raw_want]
 
 
 def test_x2_what_may_follow_an_exact_hunk():
@@ -2378,11 +2408,11 @@ def test_x7_the_scorer_reads_names_by_the_same_table_with_its_own_decoder(scorer
 
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
-    assert len(pairs) == 213 and all(p["id"].startswith("path2:") for p in pairs)
+    assert len(pairs) == 245 and all(p["id"].startswith("path2:") for p in pairs)
     # NOTE_path2_fifth_pass V-1 re-pinned four pairs and NOTE_path2_sixth_pass W-1 one; NOTE_path2_eighth_pass
     # twenty-four (Y-5 thirteen: the pairing withdraws; Y-2 four; Y-1 four; Y-3 three), each to UNCHECKABLE;
-    # NOTE_path2_ninth_pass thirty-six (Z-2 sixteen, Z-1 twelve, Z-3 seven, Z-4 one), each to UNCHECKABLE; each
-    # record says so
+    # NOTE_path2_ninth_pass thirty-six (Z-2 sixteen, Z-1 twelve, Z-3 seven, Z-4 one), each to UNCHECKABLE;
+    # NOTE_path2_tenth_pass nine (K-1: six to UNCHECKABLE, three reason-only); each record says so
     assert sorted(p["id"] for p in pairs if "repinned" in p) == [
         "path2:101-a-bom-strip-changes-a-test",
         "path2:101-a-changed-test-and-a-same-named-new-one",
@@ -2421,8 +2451,11 @@ def test_the_pinned_pairs_read_as_expected_on_the_python_side():
         "path2:v2-a-header-path-is-stripped-as-python-strips-it",
         "path2:v2-a-reason-prints-a-path-as-python-repr-does",
         "path2:w1-a-bom-opening-line-one-of-a-new-file-is-a-bom",
+        "path2:w1-a-hunk-with-both-shapes",
+        "path2:w1-a-no-newline-marker-inside-a-hunk-does-not-end-it",
         "path2:w1-a-removed-sql-comment-does-not-hide-a-changed-test",
         "path2:w1-a-short-hunk-before-an-a-b-header-pair-with-no-hunk-header",
+        "path2:w1-an-added-line-opening-with-plus-plus-space-is-not-a-file",
         "path2:w1-limit-two-dashes-and-two-pluses-before-a-hunk-header-read-as-a-file-header",
         "path2:w2-a-name-followed-by-a-no-break-space-defines-nothing",
         "path2:w2-a-test-made-generic-pairs",
@@ -2435,16 +2468,21 @@ def test_the_pinned_pairs_read_as_expected_on_the_python_side():
         "path2:x1-the-name-table-is-unicode-15-for-both-ports-a-letter-unicode-16-added",
         "path2:x1-the-name-table-is-unicode-15-for-both-ports-a-zero-width-joiner",
         "path2:x2-a-removed-a-slash-line-beside-an-added-b-slash-line-in-git-output-is-content",
+        "path2:x2-an-exact-hunk-whose-last-lines-are-a-dash-pair-ends-at-the-diff-git-line",
         "path2:x2-an-over-declared-hunk-then-a-gnu-header-a-blank-line-and-a-hunk",
         "path2:x2-an-over-declared-hunk-then-a-gnu-header-and-no-hunk-header",
+        "path2:y1-a-binary-line-under-a-git-header-is-counted",
         "path2:y2-a-created-files-line-one-bom-under-a-bare-hunk-is-line-one",
         "path2:y2-a-created-files-line-one-bom-under-an-over-declared-hunk-is-line-one",
         "path2:y2-an-over-declared-hunk-starting-at-one-shows-line-one",
         "path2:y3-a-symbol-definition-running-into-a-skew-letter-defines-nothing-for-the-prefix",
         "path2:y4-a-gnu-creation-with-a-timestamp-is-a-creation",
-        "path2:y4-gnu-deletions-with-timestamps-are-two-files"]
+        "path2:y4-gnu-deletions-with-timestamps-are-two-files",
+        "path2:z3-a-no-prefix-binary-header-nobody-reads-beside-a-plus-content-line",
+        "path2:z3-r5-a-binary-section-replaced-by-a-gnu-pair"]
     assert sum("NOTE_path2_eighth_pass" in p.get("repinned", "") for p in pairs) == 24
     assert sum("NOTE_path2_ninth_pass" in p.get("repinned", "") for p in pairs) == 36
+    assert sum("NOTE_path2_tenth_pass" in p.get("repinned", "") for p in pairs) == 9
     for p in pairs:
         g = gate_diff_text(p["summary"], p["diff"], run=None, strict=False)
         got = [[c.kind, c.verdict, c.why] for c in g.claims]
@@ -2514,7 +2552,7 @@ X8_PLANTED = {
         "1 file changed.", "--- a/src/q.sql\n+++ b/src/q.sql\n@@\n-a\n--- users\n+++ orders\n@@\n+b\n",
         "G-C7_oracle:Y_notes"),
     "Y-1: two paths one key in case, not noted": (
-        '        if forms.setdefault(key, form) != form:\n            found.setdefault("files", _Y1_COLLIDE)',
+        '        if forms.setdefault(_case_fold(form), form) != form:\n            found.setdefault("files", _Y1_COLLIDE)',
         '        if False:\n            found.setdefault("files", _Y1_COLLIDE)',
         "2 files changed.", "--- a/docs/Guide.md\n+++ b/docs/Guide.md\n@@ -1 +1 @@\n-a\n+b\n"
                             "--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1 +1 @@\n-c\n+d\n",
@@ -2722,7 +2760,9 @@ X8_SHAPES = {
         "2 files changed.",
         "diff --git a/docs/img.png b/docs/img.png\nindex 1..2 100644\nBinary files a/docs/img.png and b/docs/img.png differ\n"
         "diff --git a/src/c.md b/src/c.md\n--- a/src/c.md\n+++ b/src/c.md\n@@ -1,2 +1,2 @@\n-x\n+++ plus\n y\n",
-        [("files_changed_count", "VERIFIED", "diff changes 2 files, claim says 2")]),
+        # NOTE_path2_tenth_pass (K-1): counted and sure, but main read 'plus' from the exact hunk's `+++ plus`, so the
+        # file list abstains (was VERIFIED)
+        _k1([("files_changed_count", "VERIFIED", "diff changes 2 files, claim says 2")], "main reads 'plus' ('M') from them")),
 }
 
 
@@ -2780,11 +2820,15 @@ X9_PLANTED = {
     "Z-3: a doubt main's reading held no longer counted beside a licensed difference": (
         "    if soft and set(status) != set(js):", "    if False:", "3 files changed.", X9_R4, "G-C7_oracle:Y_notes"),
     "Z-3: an unlicensed difference no longer read": (
-        "    why = _licensed_against(status, _main_status(lines, False, skip=inside))", "    why = None",
+        "    why = _licensed_against(status, full)", "    why = None",
         "Deleted src/api.py.", X9_R6, "G-C7_oracle:Y_notes"),
     "Z-3: a `diff --git` file its next pair replaced no longer a doubt": (
-        "                soft.append(_Z3_REPLACED.format(pending.path()))", "                pass",
-        "2 files changed.", X9_R5, "G-C7_oracle:Y_notes"),
+        "                soft.append(_Z3_REPLACED.format(_shown(pending.path())))", "                pass",
+        # NOTE_path2_tenth_pass: R5 abstains by K-1 now (main read `+++ x` from its exact hunk), so the doubt is asked
+        # beside #121's licensed dotted key instead, where it is the only thing that abstains
+        "2 files changed.", "diff --git a/img/logo.png b/img/logo.png\nindex 1111111..2222222 100644\n"
+        "Binary files a/img/logo.png and b/img/logo.png differ\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\n",
+        "G-C7_oracle:Y_notes"),
     # Z-4
     "Z-4: the basename tier verifies again": (
         '    if p is None or p == c or p.endswith("/" + c):', "    if True:",
@@ -3030,3 +3074,486 @@ def test_x9_the_git_door_s_z3_reading_is_held_to_the_scorer_s(scorer, monkeypatc
     t, sample = pg.Tally(name_prs=True), Counter()
     pg.git_door_pair(t, "planted", "1 file changed.", _m("src/a.py"), sample)
     assert "G-C7_oracle:Z-3_status_differs" in t.violations, dict(t.violations)
+
+
+# ─────────────────────────────── NOTE_path2_tenth_pass_2026_09_27: K-1 to K-3, and the round-9 scorer findings
+
+K1_P2 = ("Index: assets/logo.png\n" + "=" * 67 + "\nCannot display: file marked as a binary type.\n"
+         "svn:mime-type = application/octet-stream\n"
+         "Index: db/q.sql\n" + "=" * 67 + "\n--- db/q.sql\t(revision 1)\n+++ db/q.sql\t(working copy)\n"
+         "@@ -1,2 +1,2 @@\n SELECT 1;\n--- users\n+++ users\n")
+K1_P3 = ("diff -r 1a2b3c4d5e6f -r 6f5e4d3c2b1a assets/logo.png\nBinary file assets/logo.png has changed\n"
+         "diff -r 1a2b3c4d5e6f -r 6f5e4d3c2b1a db/q.sql\n--- a/db/q.sql\tMon May 06 07:08:09 2024 +0000\n"
+         "+++ b/db/q.sql\tMon May 06 07:08:09 2024 +0000\n@@ -1,2 +1,2 @@\n SELECT 1;\n--- users\n+++ users\n")
+K1_SUMMARY = "1 file changed. 2 files changed. Only touches db/. Only touches db/ and assets/."
+K1_USERS = "main reads 'users' ('M') from them"
+
+
+def _submodule_repo(tmp_path: Path) -> str:
+    """Round 9's P1: a bare repository written by fast-import, `diff.submodule=log`, db/q.sql's `-- users` changed to
+    `++ users` beside a submodule bump git prints as one `Submodule ...` line. Truth (--name-status): two files."""
+    def git(*a, inp=None):
+        return subprocess.run(["git", *a], cwd=tmp_path, check=True, capture_output=True, input=inp).stdout
+    git("init", "-q", "--bare")
+    git("config", "diff.submodule", "log")
+    s = bytearray()
+    for mark, data in ((1, b"SELECT 1;\n-- users\n"), (2, b"SELECT 1;\n++ users\n")):
+        s += b"blob\nmark :%d\ndata %d\n" % (mark, len(data)) + data + b"\n"
+    s += (b"commit refs/heads/base\nmark :10\ncommitter r <r@r> 1700000000 +0000\ndata 0\n"
+          b"M 100644 :1 db/q.sql\nM 160000 1234567890123456789012345678901234567890 vendor/lib\n\n"
+          b"commit refs/heads/tip\nmark :11\ncommitter r <r@r> 1700000000 +0000\ndata 0\nfrom :10\n"
+          b"M 100644 :2 db/q.sql\nM 160000 89abcdef89abcdef89abcdef89abcdef89abcdef vendor/lib\n\n")
+    git("fast-import", "--quiet", inp=bytes(s))
+    return git("diff", "base..tip").decode("utf-8")
+
+
+def test_x10_k1_a_file_neither_reading_counts_beside_a_phantom_main_read_from_content(tmp_path):
+    # Round 9, regressions lens, blocker 1: W-1 removed the file main read from an exact hunk's `+++ users`, and that
+    # file had balanced a changed file neither reading counts (a submodule under diff.submodule=log). The git door
+    # reads git's --name-status and keeps its verdicts; the raw door and the port abstain on the file list.
+    diff = _submodule_repo(tmp_path)
+    assert "\n--- users\n+++ users\n" in diff and "Submodule vendor/lib" in diff
+    via_git = [(c.kind, c.verdict) for c in gate_diff(K1_SUMMARY, tmp_path, "base", "tip").claims]
+    assert via_git == [("files_changed_count", "CONTRADICTED"), ("files_changed_count", "VERIFIED"),
+                       ("only_touches", "CONTRADICTED"), ("only_touches", "CONTRADICTED")]
+    want = _k1([("files_changed_count", "-", "claim says 1"), ("files_changed_count", "-", "claim says 2"),
+                ("only_touches", "-", ""), ("only_touches", "-", "")], K1_USERS)
+    assert _claims(K1_SUMMARY, diff)[1] == want and _port_claims([(K1_SUMMARY, diff)]) == [want]
+    # svn's `Cannot display` block and hg's `Binary file ... has changed` beside the same hunk, hand-written
+    for text in (K1_P2, K1_P3):
+        assert _claims(K1_SUMMARY, text)[1] == want and _port_claims([(K1_SUMMARY, text)]) == [want]
+
+
+def test_x10_k1_leaves_the_reading_of_the_lines_as_it_was():
+    # K-1 abstains the file-list claims; the exact hunk's lines are still content (W-1), for every other claim
+    status, blob = parse_unified_diff(K1_P3)
+    assert "users" not in status and blob == "++ users"
+    # with no phantom main read, nothing is abstained: a `-- users` removed alone sets no file
+    alone = "--- a/db/q.sql\n+++ b/db/q.sql\n@@ -1,2 +1 @@\n SELECT 1;\n--- users\n"
+    assert _claims("1 file changed.", alone)[1] == [("files_changed_count", "VERIFIED", "diff changes 1 files, claim says 1")]
+    assert _port_claims([("1 file changed.", alone)]) == [_claims("1 file changed.", alone)[1]]
+
+
+# K-2: case pairs whose lowercase mapping differs across the Unicode versions the supported runtimes read
+# (Python 3.9-3.14: 13.0 to 16.0; Node 24: 16.0): 14.0 assigned the leading four, 16.0 the next four; the last is the
+# final sigma, which every runtime lower-cases by its context.
+K2_PAIRS = {
+    "U+2C2F/U+2C5F (14.0)": (0x2C2F, 0x2C5F), "U+A7C0/U+A7C1 (14.0)": (0xA7C0, 0xA7C1),
+    "U+A7D0/U+A7D1 (14.0)": (0xA7D0, 0xA7D1), "U+10570/U+10597 (14.0)": (0x10570, 0x10597),
+    "U+1C89/U+1C8A (16.0)": (0x1C89, 0x1C8A), "U+A7CB/U+0264 (16.0)": (0xA7CB, 0x0264),
+    "U+10D50/U+10D70 (16.0)": (0x10D50, 0x10D70), "U+A7DC/U+019B (16.0)": (0xA7DC, 0x019B),
+    "U+03C3/U+03C2 (final sigma)": (0x3C3, 0x3C2),
+}
+K2_SUMMARY = "Modified docs/a.md. Only touches docs/. Only touches src/. 3 files changed."
+Y1_COLLIDE_WHY = "the diff's file list is not certain: two header paths that differ only in case are one key"
+FOLD_PY = ROOT / "styxx" / "_fold.py"
+FOLD_SHA256 = "a52cda82375292f71230e7e781acc24760084994812e083870b7419bdc5d5fd6"
+
+
+def _k2_diff(a: int, b: int) -> str:
+    return "".join(_m(p) for p in (f"docs/x{chr(a)}.md", f"docs/x{chr(b)}.md", "docs/a.md"))
+
+
+@pytest.mark.parametrize("label", sorted(K2_PAIRS))
+def test_x10_k2_two_paths_the_runtimes_fold_differently_abstain_alike_on_every_python_and_the_port(label):
+    # Round 9, regressions lens, blocker 2: Y-1 compared two header paths through the runtime's lower-casing, so a
+    # diff naming both halves of a pair Unicode 16.0 assigned was a collision in the port and none in Python 3.12, and
+    # every file-list claim -- the ones about docs/a.md too -- abstained in one port only. Both ports read one fold.
+    a, b = K2_PAIRS[label]
+    from styxx import _fold
+    assert _fold.fold(chr(a)) == _fold.fold(chr(b))
+    diff = _k2_diff(a, b)
+    want = [("file_touched", "UNCHECKABLE", Y1_COLLIDE_WHY), ("only_touches", "UNCHECKABLE", Y1_COLLIDE_WHY),
+            ("only_touches", "UNCHECKABLE", Y1_COLLIDE_WHY),
+            ("files_changed_count", "UNCHECKABLE", f"{Y1_COLLIDE_WHY}; claim says 3")]
+    assert _claims(K2_SUMMARY, diff)[1] == want
+    assert _port_claims([(K2_SUMMARY, diff)]) == [want]
+    # the git door's reading of the same two paths (Y-1 on git's --name-status)
+    assert dg._status_notes([f"docs/x{chr(a)}.md", f"docs/x{chr(b)}.md"]) == {"files": dg._Y1_COLLIDE}
+
+
+def test_x10_k2_paths_that_fold_apart_read_as_before():
+    diff = "".join(_m(p) for p in ("docs/x" + chr(0x10D50) + ".md", "docs/y" + chr(0x10D70) + ".md", "docs/a.md"))
+    got = _claims(K2_SUMMARY, diff)[1]
+    assert [v for _k, v, _w in got] == ["VERIFIED", "VERIFIED", "CONTRADICTED", "VERIFIED"]
+    # (the reasons print each port's key, which is the runtime's lower case, as main's is: U+10D50 is its own key on a
+    # Python before 3.14 and U+10D70 in the port -- the fifth pass's disclosed 27 code points, main's reading too)
+    assert [[v for _k, v, _w in c] for c in _port_claims([(K2_SUMMARY, diff)])] == [[v for _k, v, _w in got]]
+
+
+def _gen_fold():
+    spec = importlib.util.spec_from_file_location("gen_fold_under_test", ROOT / "web" / "gate" / "gen_fold.py")
+    g = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(g)
+    return g
+
+
+def test_x10_k2_both_ports_carry_one_fold_with_its_version_and_hash_pinned():
+    from styxx import _fold
+    g = _gen_fold()
+    js_block = g.block_of(XID_JS.read_text(encoding="utf-8"))
+    assert g.table_in(js_block) == g.table_in(g.block_of(FOLD_PY.read_text(encoding="utf-8"))) == _fold.FOLD
+    assert hashlib.sha256(_fold.FOLD.encode("ascii")).hexdigest() == _fold.FOLD_SHA256 == FOLD_SHA256
+    assert _fold.UNICODE_VERSION == g.PINNED == "16.0.0"
+    assert f'const _FOLD_UNICODE_VERSION = "{_fold.UNICODE_VERSION}";' in js_block
+    assert f'const _FOLD_SHA256 = "{_fold.FOLD_SHA256}";' in js_block
+    assert g.decode(_fold.FOLD) == _fold.MAP and len(_fold.MAP) == 1461
+    assert dg._case_fold is _fold.fold
+
+
+@pytest.mark.skipif(unicodedata.unidata_version != "16.0.0",
+                    reason="gen_fold.py regenerates only under the fold's Unicode version, 16.0.0 (Python 3.14)")
+def test_x10_k2_the_generator_reproduces_both_blocks_from_the_pinned_version():
+    g = _gen_fold()
+    t = g.encode(g.mapping())
+    assert g.sha(t) == FOLD_SHA256
+    for path, block in ((FOLD_PY, g.python_block(t)), (XID_JS, g.js_block(t))):
+        before, after = g.splice(path, block)
+        assert before == after, path
+
+
+def test_x10_k2_the_fold_sees_every_merge_this_python_s_key_makes():
+    # sound against this interpreter's str.lower(): a pair of paths it keys alike folds alike
+    from styxx import _fold
+    assert _gen_fold().unsound(_fold.MAP, str.lower) == []
+    sig = chr(0x3A3)
+    assert _fold.fold(sig) == _fold.fold(chr(0x3C3)) == _fold.fold(chr(0x3C2)) == _fold.fold(("A" + sig).lower()[1:])
+
+
+def test_x10_k2_the_fold_sees_every_merge_the_port_s_key_makes():
+    # and against node's toLowerCase(), every code point, through the port's own decoder
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    script = ("const src=require('fs').readFileSync(process.argv[1],'utf8');"
+              "const f=new Function(src+';return [_caseFold,_FOLD];')();const fold=f[0];const bad=[];"
+              "for(let c=0;c<0x110000;c++){if(c>=0xd800&&c<=0xdfff)continue;const ch=String.fromCodePoint(c);"
+              "if(fold(ch.toLowerCase())!==fold(ch)||fold(fold(ch))!==fold(ch))bad.push(c);}"
+              "for(const s of ['A\\u03a3','A\\u03a3A','\\u03a3']){if(fold(s.toLowerCase())!==fold(s))bad.push(s);}"
+              "process.stdout.write(JSON.stringify({bad,size:f[1].size,"
+              "map:[...f[1]].map(([k,v])=>[k,[...v].map(x=>x.codePointAt(0))])}));")
+    r = subprocess.run([node, "-e", script, str(XID_JS)], capture_output=True, text=True, encoding="utf-8", timeout=300)
+    assert r.returncode == 0, r.stderr[-2000:]
+    got = json.loads(r.stdout)
+    from styxx import _fold
+    assert got["bad"] == [] and got["size"] == len(_fold.MAP)
+    assert {k: "".join(map(chr, v)) for k, v in got["map"]} == _fold.MAP
+
+
+# K-3: this reading raised where main did not
+K3_SHAPES = {
+    "a deletion after an exact hunk main read a `---` line from": (
+        "2 files changed.", "diff --git a/x.sql b/x.sql\nindex 1..2 100644\n@@ -1 +1 @@\n--- q\n+++ z\n"
+                            "diff --git a/y b/y\n+++ /dev/null\n",
+        [("files_changed_count", "UNCHECKABLE", K1_WHY.format("without those lines main raises (`+++ /dev/null` "
+                                                              "with no `---` line before it)") + "; claim says 2")]),
+    "a GNU deletion with no `---` line": (
+        "1 file changed.", "+++ /dev/null\t2024-01-01 00:00:00.000000000 +0000\n",
+        [("files_changed_count", "UNCHECKABLE", "the diff carries no file statuses and no added lines; 50 characters "
+                                                 "of input parsed to nothing, which is a parse failure, not an empty "
+                                                 "change")]),
+}
+
+
+@pytest.mark.parametrize("shape", sorted(K3_SHAPES))
+def test_x10_k3_no_raise_where_main_reads_the_diff(shape):
+    summary, diff, want = K3_SHAPES[shape]
+    assert _claims(summary, diff)[1] == want
+    assert _port_claims([(summary, diff)]) == [want]
+
+
+# K-4: beside #121's licensed dotted key, a line no reading places may name a changed file neither reading counts. The
+# builder's own differential found it (fresh seeds of round 9's generator): `.env` created beside `env` and a submodule
+# bump, main counting two where the truth is three -- right by merging the twins -- and this reading three... of four.
+K4_TWINS = ("diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..e69de29\n--- /dev/null\n+++ b/.env\n"
+            "@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n"
+            "@@ -1 +1 @@\n-old\n+new\n")
+K4_HG = "diff -r 1a2b3c4d5e6f -r 6f5e4d3c2b1a assets/core\nBinary file assets/core has changed\n"
+K4_BINARY = K4_TWINS + ("diff --git a/img.png b/img.png\nindex 1111111..2222222 100644\nGIT binary patch\nliteral 5\n"
+                        "McmZQzWMXCj0000\n\nliteral 5\nMcmZQzWMXCj0000\n\n")
+K4_WHY = ("the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a "
+          "dotfile's dot), and main's reading also passed over a line no reading places, which may name a changed file "
+          "neither reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like); the repair may "
+          "have balanced that error")
+
+
+def _submodule_twins_repo(tmp_path: Path) -> str:
+    def git(*a, inp=None):
+        return subprocess.run(["git", *a], cwd=tmp_path, check=True, capture_output=True, input=inp).stdout
+    git("init", "-q", "--bare")
+    git("config", "diff.submodule", "log")
+    s = bytearray()
+    for mark, data in ((1, b"old\n"), (2, b"new\n"), (3, b"A=1\n")):
+        s += b"blob\nmark :%d\ndata %d\n" % (mark, len(data)) + data + b"\n"
+    s += (b"commit refs/heads/base\nmark :10\ncommitter r <r@r> 1700000000 +0000\ndata 0\n"
+          b"M 100644 :1 env\nM 160000 1234567890123456789012345678901234567890 vendor/lib\n\n"
+          b"commit refs/heads/tip\nmark :11\ncommitter r <r@r> 1700000000 +0000\ndata 0\nfrom :10\n"
+          b"M 100644 :2 env\nM 100644 :3 .env\nM 160000 89abcdef89abcdef89abcdef89abcdef89abcdef vendor/lib\n\n")
+    git("fast-import", "--quiet", inp=bytes(s))
+    return git("diff", "base..tip").decode("utf-8")
+
+
+def test_x10_k4_a_dotted_twin_beside_a_file_neither_reading_counts(tmp_path):
+    diff = _submodule_twins_repo(tmp_path)
+    summary = "3 files changed. 2 files changed."
+    assert [(c.kind, c.verdict) for c in gate_diff(summary, tmp_path, "base", "tip").claims] == [
+        ("files_changed_count", "VERIFIED"), ("files_changed_count", "CONTRADICTED")]
+    want = [("files_changed_count", "UNCHECKABLE", f"{K4_WHY}; claim says 3"),
+            ("files_changed_count", "UNCHECKABLE", f"{K4_WHY}; claim says 2")]
+    for text in (diff, K4_TWINS + K4_HG):
+        assert _claims(summary, text)[1] == want and _port_claims([(summary, text)]) == [want]
+
+
+def test_x10_k4_git_s_own_lines_are_placed_and_the_twins_still_count():
+    # #121's reproduction shape, alone and beside a git binary patch (both of its blocks): nothing unplaced, it counts
+    for text in (K4_TWINS, K4_BINARY):
+        got = _claims("3 files changed.", text)[1] if text is K4_BINARY else _claims("2 files changed.", text)[1]
+        assert [v for _k, v, _w in got] == ["VERIFIED"], got
+        assert _port_claims([("3 files changed." if text is K4_BINARY else "2 files changed.", text)]) == [got]
+    assert dg._diff_notes(K4_BINARY) == {} and dg._diff_notes(K4_TWINS) == {}
+
+
+# K-5: Z-4 is asked only of a path both ports' templates read alike. The path template's `\w` is Python's (Unicode) in
+# the Python and ASCII in the port, so `Docs/<U+A7D0>/a.md` is that path in the Python and `/a.md` in the port; Z-4
+# abstained in the Python only, where main read both alike (the builder's own differential, the case-pair set). Where
+# the ports may read the path apart, the claim now reads as main read it, each port as main's same port did -- not by
+# this reading's tiers, which #121's dotted keys would move (a dotfile in a non-ASCII directory, round 8's R7 again).
+K5_ESLINT = "--- a/.eslintrc.json\n+++ b/.eslintrc.json\n@@ -1 +1 @@\n-{}\n+{\"a\": 1}\n"
+K5_SHAPES = {
+    "a path the port starts after a non-ASCII letter": ("Edited Docs/" + chr(0xA7D0) + "/a.md.", _m("docs/a.md"),
+                                                         [("file_touched", "VERIFIED", "diff status 'M' for 'docs/a.md'")]),
+    "a path holding a sigma": ("Added LIB/" + chr(0x3A3) + "/X.MD.", "--- /dev/null\n+++ b/lib/" + chr(0x3C2) + "/x.md\n"
+                               "@@ -0,0 +1 @@\n+new\n",
+                               [("file_touched", "VERIFIED", "diff status 'A' for 'lib/" + chr(0x3C2) + "/x.md'")]),
+    "a dotfile in a non-ASCII directory reads as main read it, not by #121's key": (
+        "Updated packages/w" + chr(0xE9) + "b/.eslintrc.json.", K5_ESLINT,
+        [("file_touched", "UNCHECKABLE", "'packages/w" + chr(0xE9) + "b/.eslintrc.json' does not appear in the diff "
+                                         "— accusation WITHHELD: this class failed EXTERNAL-1 precision (0.23 vs "
+                                         "0.95 floor), disabled pending repair")]),
+    "an ASCII path in another directory still abstains": (
+        "Edited lib/a.md.", _m("docs/a.md"),
+        [("file_touched", "UNCHECKABLE", "'lib/a.md': only a file with the same name in another directory is in the diff "
+                                         f"('docs/a.md', status 'M'); {Z4_TAIL}")]),
+}
+
+
+@pytest.mark.parametrize("shape", sorted(K5_SHAPES))
+def test_x10_k5_z4_reads_only_a_path_both_ports_read_alike(shape):
+    summary, diff, want = K5_SHAPES[shape]
+    assert _claims(summary, diff)[1] == want
+    port = _port_claims([(summary, diff)])[0]
+    if "does not appear in the diff" in want[0][2]:
+        # the reason names the path each port's template extracted, as main's two ports' reasons do; the verdicts agree
+        assert [(k, v) for k, v, _w in port] == [(k, v) for k, v, _w in want]
+        assert port[0][2].startswith("'b/.eslintrc.json' does not appear")      # the port's own extraction, main's too
+    else:
+        assert port == want
+
+
+def test_x10_k3_where_main_raises_every_claim_still_abstains_and_nothing_raises():
+    diff = "+++ /dev/null\n+def test_a():\n"
+    got = _claims("Added 1 test. 1 file changed. Added function test_a.", diff)[1]
+    assert [v for _k, v, _w in got] == ["UNCHECKABLE"] * 3
+    assert _port_claims([("Added 1 test. 1 file changed. Added function test_a.", diff)]) == [got]
+
+
+# ── the round-9 scorer findings, and each tenth-pass rule, against a planted defect
+
+def _planted_many(pg, monkeypatch, pairs: list, tag: str) -> None:
+    src = Path(pg.new.__file__).read_bytes().decode("utf-8")
+    for good, bad in pairs:
+        assert src.count(good) == 1, good
+        src = src.replace(good, bad)
+    for name in ("new", "CF"):
+        monkeypatch.setattr(pg, name, pg._module_from(src.encode("utf-8"), f"styxx_diffgate_{tag}_{name}", f"<{tag} {name}>"))
+
+
+X10_DOT_API = "--- a/.hidden.py\n+++ b/.hidden.py\n@@ -1,2 +1 @@\n-def api():\n-    pass\n+x = 1\n"
+X10_SIGMA = _m("docs/a" + chr(0x3C3) + ".md") + _m("docs/a" + chr(0x3C2) + ".md")
+X10_DROP_LANGS = ('              "compat2_candidate": any(d[3] for d in dropped)}\n',
+                  '              "compat2_candidate": any(d[3] for d in dropped)}\n'
+                  '    if any(p[:1] == "." for p, *_x in dropped):\n        del detail["languages"]\n')
+X10_P32 = ('    shown = ", ".join(f"{p}: {n}" for p, _l, n, _s in named[:_COMPAT_MAX_NAMED])',
+           '    shown = ", ".join(f"{_undotted(p)}: {n}" for p, _l, n, _s in named[:_COMPAT_MAX_NAMED])')
+X10_PLANTED = {
+    # label: ([(good, bad), ...] in styxx/diffgate.py, summary, diff, the violation that must fire)
+    "K-1: W-1's removal of a file main read licensed again": (
+        [("    if skipped != full:", "    if False:")], K1_SUMMARY, K1_P2, "G-C7_oracle:Y_notes"),
+    "K-2: the runtime's lower-casing again": (
+        [("        if forms.setdefault(_case_fold(form), form) != form:",
+          "        if forms.setdefault(form.lower(), form) != form:")], "2 files changed.", X10_SIGMA,
+        "G-C7_oracle:Y_notes"),
+    "K-2 at the git door: the runtime's lower-casing again": (
+        [("        forms.setdefault(_case_fold(form), set()).add(form)",
+          "        forms.setdefault(form.lower(), set()).add(form)")], "2 files changed.", X10_SIGMA,
+        "G-C7_oracle:Y-1_status_notes"),
+    # round-9 scorer lens, blocker: compat_violations skipped a claim whose detail lacked "languages"
+    "C-2 drops the languages on a leading-dot path": (
+        [X10_DROP_LANGS], "Keeps backward compatibility.", X10_DOT_API, "G-C7_oracle:C-2_compat_surface"),
+    "C-2 drops the languages and prints the undotted key (P32)": (
+        [X10_DROP_LANGS, X10_P32], "Keeps backward compatibility.", X10_DOT_API, "G-C7_oracle:C-2_compat_surface"),
+    # round-9 scorer lens, blocker: where the baseline raises, the gate and strict verdicts were not scored
+    "where main raises, strict passes an unverifiable gate": (
+        [('    uncheckable = any(c.verdict == "UNCHECKABLE" for c in claims)',
+          '    uncheckable = any(c.verdict == "UNCHECKABLE" for c in claims) and not (main is not None and main.raises)')],
+        "Added 1 test.", X9_RAISES, "G-C1_strict_verdict_not_from_its_claims"),
+    "where main raises, the gate fails with no contradicted claim": (
+        [('    verdict = "FAIL" if (contradicted or (strict and uncheckable)) else "PASS"',
+          '    verdict = "FAIL" if (contradicted or (strict and uncheckable) or (main is not None and main.raises '
+          'and claims)) else "PASS"')],
+        "Added 1 test.", X9_RAISES, "G-C1_gate_verdict_not_from_its_claims"),
+    "K-4: a line no reading places no longer a doubt": (
+        [("                soft.append(_Z3_UNPLACED)", "                pass")], "3 files changed. 2 files changed.",
+        K4_TWINS + K4_HG, "G-C7_oracle:Y_notes"),
+    "K-4: a git binary patch's second block read as a line no reading places": (
+        [('            elif line == "GIT binary patch" or _BINARY_PATCH.match(line):',
+          '            elif line == "GIT binary patch":')], "3 files changed.", K4_BINARY, "G-C7_oracle:Y_notes"),
+    "K-5: Z-4 asked of a path the ports read apart": (
+        [("    return not claimed.isascii() or not before.isascii()", "    return False")],
+        "Edited Docs/" + chr(0xA7D0) + "/a.md.", _m("docs/a.md"), "G-C7_oracle:file_touched_claim"),
+    "where main raises, a claim's detail altered": (
+        [("                c = DiffClaim(kind=kind, text=sent.strip()[:160], detail=d)",
+          "                c = DiffClaim(kind=kind, text=sent.strip()[:160], detail=({**d, \"x\": 1} if (main is not None "
+          "and main.raises) else d))")],
+        "Added 1 test.", X9_RAISES, "G-C1_claims_differ"),
+    "where main raises, a never-read sentence dropped": (
+        [("    uncovered_texts = [s.strip() for i, s in enumerate(sentences)\n",
+          "    uncovered_texts = [s.strip() for i, s in enumerate(sentences) if not (main is not None and main.raises)\n")],
+        "Refactored the parser. Added 1 test.", X9_RAISES, "G-C1_gate_fields_differ"),
+}
+
+
+@pytest.mark.parametrize("label", sorted(X10_PLANTED))
+def test_x10_every_tenth_pass_rule_and_round_9_scorer_finding_fails_on_a_planted_defect(scorer, monkeypatch, label):
+    pg = scorer
+    pairs, summary, diff, violation = X10_PLANTED[label]
+    t = pg.Tally(name_prs=True)
+    t.pair("clean", summary, diff, pg.raw_paths(diff))
+    assert not t.violations, t.violating
+    _planted_many(pg, monkeypatch, pairs, "x10")
+    t = pg.Tally(name_prs=True)
+    t.pair("planted", summary, diff, pg.raw_paths(diff))
+    assert violation in t.violations, dict(t.violations)
+
+
+X10_DOOR = {
+    # round-9 scorer lens, minor: base and head, and the report users read, were never compared
+    "base and head swapped": (
+        "                 repo=repo, base=base, head=head, main=_MainReading(diff_text, (main_map,)),",
+        "                 repo=repo, base=head, head=base, main=_MainReading(diff_text, (main_map,)),",
+        "1 file changed.", _m("src/a.py"), "G-C1_base_head_differ"),
+    "the report names the head as its base": (
+        '        return {"diffgate": "v0", "verdict": self.verdict, "base": self.base,',
+        '        return {"diffgate": "v0", "verdict": self.verdict, "base": self.head,',
+        "1 file changed.", _m("src/a.py"), "G-C1_report_differs_from_its_gate"),
+}
+
+
+@pytest.mark.parametrize("label", sorted(X10_DOOR))
+def test_x10_the_git_door_scores_base_head_and_the_report(scorer, monkeypatch, label):
+    from collections import Counter
+    pg = scorer
+    good, bad, summary, diff, violation = X10_DOOR[label]
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "clean", summary, diff, sample)
+    assert sample["scored"] == 1 and not t.violations, (dict(sample), t.violating)
+    _planted(pg, monkeypatch, good, bad, "x10door")
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "planted", summary, diff, sample)
+    assert violation in t.violations, (dict(sample), dict(t.violations))
+
+
+@pytest.mark.parametrize("good,bad", [
+    ('("differs", _status_differs(main_map, status))', '("differs", None)'),
+    ("    for line in _py_lines(name_status):", "    for line in _diff_lines(name_status):"),
+])
+def test_x10_the_door_canaries_make_z3_fire_at_the_git_door_and_refuse_a_defect_there(scorer, monkeypatch, good, bad):
+    # round-9 scorer lens, major: no rebuildable record made Z-3 abstain at the git door, so a defect that stopped it
+    # was admitted in both modes. Each run now scores canaries holding a U+0085 or U+2028 path (core.quotePath off),
+    # where main's str.splitlines() cut git's --name-status line and Z-3 abstains.
+    pg = scorer
+    report, _ = pg.score_canaries()
+    assert report["pass"] and report["door"]["scored"] == len(pg.DOOR_CANARIES) == 2, report
+    for _cid, summary, diff in pg.DOOR_CANARIES:
+        files = pg.rebuild(diff)
+        with pg.GitDoor(*files) as door:
+            g = door.gate(pg.new, summary)
+            assert all(c.verdict == "UNCHECKABLE" and "differs from main's" in c.why for c in g.claims), g.claims
+    _planted(pg, monkeypatch, good, bad, "x10canary")
+    report, violating = pg.score_canaries()
+    assert not report["pass"] and violating, report
+
+
+def test_x10_corpus_mode_holds_an_eligibility_move_to_the_parse_oracles(scorer, monkeypatch, tmp_path):
+    # round-9 scorer lens, major: a defect inside W-1 that made the repaired instrument exclude a PR was credited to
+    # W-1 on the counterfactual alone; the PR's parse is now held to the scorer's own beforehand
+    pg = scorer
+    files = [("db/q.sql", "modified", "@@ -1,2 +1,2 @@\n SELECT 1;\n--- users\n+-- accounts"),
+             ("src/a.py", "modified", "@@ -1 +1 @@\n-a\n+b")]
+    out = tmp_path / "gates.json"
+    pg.run_corpus(_shelf(tmp_path, [(3, "2 files changed.", files)]), None, out)
+    # (G-C0 refuses an uncommitted tree; nothing else may fire)
+    assert set(json.loads(out.read_text(encoding="utf-8"))["violations"]) <= {"G-C0_modified_tree"}
+    good = "                old_left -= 1\n                old_no += 1\n"
+    bad = good + ('                if text.startswith("-- ") and cur is not None:\n'
+                  '                    status.setdefault(_norm(text[3:].strip()), "M")\n')
+    _planted(pg, monkeypatch, good, bad, "x10elig")
+    (tmp_path / "planted").mkdir()
+    assert pg.run_corpus(_shelf(tmp_path / "planted", [(3, "2 files changed.", files)]), None, out) == 1
+    payload = json.loads(out.read_text(encoding="utf-8"))
+    assert payload["G-C2_eligibility"]["moves"] == {"baseline_only": 1, "refused_by_a_parse_oracle": 1}
+    assert "G-C7_oracle:W-1_status" in payload["violations"], payload["violations"]
+
+
+def test_x10_corpus_mode_sends_a_pr_with_a_compat_claim_through_the_git_door(scorer, monkeypatch, tmp_path):
+    # round-9 scorer lens, minor: a compat claim reads gate_diff's own sides, and a compat-only PR outside the sample
+    # was never tried there
+    pg = scorer
+    pid = next(i for i in range(1, 500) if pg.sample_key(i) % 25)
+    files = [(".lib/api.py", "modified", "@@ -1,2 +1 @@\n-def api():\n-    pass\n+x = 1")]
+    out = tmp_path / "gates.json"
+    pg.run_corpus(_shelf(tmp_path, [(pid, "Keeps backward compatibility.", files)]), None, out)
+    assert set(json.loads(out.read_text(encoding="utf-8"))["violations"]) <= {"G-C0_modified_tree"}
+    door = json.loads(out.read_text(encoding="utf-8"))["G-C8_git_door"]
+    assert door["sample"]["scored"] == 1 and door["sample"]["tried_for_a_compat_claim"] == 1, door["sample"]
+    _planted(pg, monkeypatch, "                    c.verdict, c.why, extra = _compat_reading(sides)",
+             "                    c.verdict, c.why, extra = _compat_reading(sides if raw_input_len is not None else "
+             "{k: v for k, v in (sides or {}).items() if not k.startswith('.')})", "x10compat")
+    (tmp_path / "planted").mkdir()
+    assert pg.run_corpus(_shelf(tmp_path / "planted", [(pid, "Keeps backward compatibility.", files)]), None, out) == 1
+    door = json.loads(out.read_text(encoding="utf-8"))["G-C8_git_door"]
+    assert "G-C7_oracle:C-2_compat_surface" in door["violations"], door["violations"]
+
+
+def test_x10_g_c0_names_every_byte_both_instruments_read(scorer, monkeypatch):
+    # round-9 scorer lens, minor: styxx/declare.py (imported by both instruments), path1_extensions.txt (read by the
+    # oracle) and styxx/_fold.py (K-2) are provenance too, each hashed into the payload
+    pg = scorer
+    for f in ("styxx/declare.py", "papers/closed-model-frontier/path1_extensions.txt", "styxx/_fold.py", "styxx/_xid.py"):
+        assert f in pg.PROVENANCE_FILES, f
+    prov = pg.provenance()
+    assert {"declare_sha256", "fold_sha256", "xid_sha256", "path1_extensions_sha256"} <= set(prov)
+    real = pg._git
+
+    def git(*args):
+        if args[:2] == ("status", "--porcelain"):
+            return " M styxx/declare.py\n" if "styxx/declare.py" in args else ""
+        return real(*args)
+    monkeypatch.setattr(pg, "_git", git)
+    prov = pg.provenance()
+    assert not prov["unmodified_against_head"] and prov["modified"] == [" M styxx/declare.py"]
+
+
+def test_x10_the_scorer_refuses_a_fold_that_misses_a_merge(scorer):
+    # K-2's table is pinned by sha256 in the scorer and held sound against this Python's own str.lower()
+    from styxx import _fold
+    pg = scorer
+
+    class Fake:
+        UNICODE_VERSION = "16.0.0"
+        FOLD = _fold.FOLD.replace("1t:q:w:1,", "1t:p:w:1,")          # 'Z' no longer folds to 'z'
+    with pytest.raises(SystemExit, match="does not hash"):
+        pg.check_fold(Fake, FOLD_SHA256)
+    with pytest.raises(SystemExit, match="not sound at U[+]005A"):
+        pg.check_fold(Fake, hashlib.sha256(Fake.FOLD.encode("ascii")).hexdigest())
+    assert pg.check_fold(_fold, FOLD_SHA256) == _fold.MAP
