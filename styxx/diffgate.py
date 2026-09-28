@@ -142,6 +142,7 @@ import subprocess
 import sys
 import urllib.error
 import urllib.request
+from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -922,7 +923,8 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
 
     NOTE_path2_eighth_pass: `notes`, when given, is filled with what this reading cannot be sure of: "files"
     when a header was read that may be content, two paths are one key, or a line names a changed file no header
-    pair counts (Y-1); "bom" when a U+FEFF was dropped from an added line 1 that defines a test (Y-2)."""
+    pair counts (Y-1); "bom" when a U+FEFF was dropped from an added line 1 that defines a test (Y-2).
+    NOTE_path2_ninth_pass: and "differs" when this file list is not licensed against main's (Z-3)."""
     status: dict[str, str] = {}
     added: list[str] = []
     sides: dict = {}
@@ -936,6 +938,8 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
     lead_old = lead_new = False            # Y-2: the next removed / added line read outside the counts is line 1
     found: dict = {}
     forms: dict = {}                         # Y-1: each key's header path as written, case kept
+    inside: set = set()                      # Z-3: the lines an exact hunk's counts read (W-1)
+    soft: list = []                          # Z-3: doubts main's reading of the file list also held
 
     def register(raw_path: str, key: str) -> None:
         # Y-1: the key lower-cases, so two files whose paths differ only in case are one key -- one count, one
@@ -950,6 +954,8 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
             if pending.path() not in status:
                 status[pending.path()] = pending.status
             sides.setdefault(pending.path(), ([], []))
+        elif pending is not None:
+            soft.append(_Z3_UNREAD)                                   # Z-3: dropped, as main dropped it
 
     lines = _diff_lines(diff_text)
     for k, line in enumerate(lines):
@@ -967,6 +973,7 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
                 added.append(text)
                 if cur is not None:
                     sides[cur][0].append(text)
+                inside.add(k)
                 continue
             if head == "-" and old_left:
                 text = line[1:]
@@ -976,14 +983,17 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
                 old_no += 1
                 if cur is not None:
                     sides[cur][1].append(text)
+                inside.add(k)
                 continue
             if (head == " " or line == "") and old_left and new_left:
                 old_left -= 1
                 new_left -= 1
                 old_no += 1
                 new_no += 1
+                inside.add(k)
                 continue
             if head == "\\":                     # "\ No newline at end of file"
+                inside.add(k)
                 continue
             old_left = new_left = 0              # the counts do not allow this line: the hunk is over
         if line.startswith("diff --git "):
@@ -996,6 +1006,7 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
             if loose:                            # Y-1: after lines no count placed, a header is not certain
                 if _clean_header(lines, k):
                     clean_plus, loose = k + 1, False
+                    soft.append(_Z3_SHAPED)      # Z-3: read as a header, as main read it, for its shape
                 else:
                     found.setdefault("files", _Y1_LOOSE)
             old_path = line[4:].strip()
@@ -1005,6 +1016,9 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
             if loose and k != clean_plus:
                 found.setdefault("files", _Y1_LOOSE)
             new = line[4:].strip()
+            if pending is not None and pending.path() and \
+                    _pair_names((old_path or "") if _dev_null(new) else new) not in (_norm(pending.a), _norm(pending.b)):
+                soft.append(_Z3_REPLACED.format(pending.path()))      # Z-3: dropped, as main dropped it
             if _dev_null(new):                   # Y-4: a GNU timestamp after /dev/null
                 status[_norm(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
                 raw = old_path[2:] if old_path and old_path.startswith("a/") else (old_path or "")
@@ -1055,8 +1069,27 @@ def _read_diff(diff_text: str, notes: dict | None = None) -> tuple[dict, list, d
                 pending.note(line)
     flush()
     if notes is not None:
+        why = _file_list_differs(diff_text, lines, status, inside, soft)   # Z-3
+        if why:
+            found["differs"] = why
         notes.update(found)
     return status, added, sides
+
+
+_Z3_SHAPED = ("main's reading also took a `---`/`+++` pair after lines no hunk count holds for a header because it "
+              "has a header's shape, and it may be content (a SQL `-- ` comment beside a `++` line)")
+_Z3_REPLACED = ("main's reading also dropped the `diff --git` file {!r} for the next `---`/`+++` pair, which names "
+                "another")
+_Z3_UNREAD = "main's reading also dropped a `diff --git` file whose header paths neither reading can read"
+
+
+def _pair_names(raw: str) -> str:
+    """Z-3: the file a `---`/`+++` header path names: cut at a TAB (GNU's timestamp), quotes and `a/`/`b/` dropped,
+    keyed."""
+    p = raw.split("\t", 1)[0].strip()
+    if len(p) >= 2 and p.startswith('"') and p.endswith('"'):
+        p = p[1:-1]
+    return _norm(p[2:] if p.startswith(("a/", "b/")) else p)
 
 
 def _diff_notes(diff_text: str) -> dict:
@@ -1080,6 +1113,426 @@ def _files_unsure(notes: dict | None):
     """NOTE_path2_eighth_pass (Y-1): why the file list a gate reads is not sure, or None -- a count, a scope and a
     path claim then abstain."""
     return (notes or {}).get("files")
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# NOTE_path2_ninth_pass_2026_09_27: THE LICENSED-DIFFERENCE RULE
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# The endpoint of the eighth pass's convergence principle. Eight rounds each found a place where a repair read a
+# line rightly and a claim wrongly, because main's answer there had been right by two errors that cancelled and the
+# repair removed one of them. A list of the shapes where that happens has never been complete. So main's own reading
+# of the diff is now computed beside this one -- main's patterns over main's line split and main's status map -- in
+# each of main's two spellings: its Python's (str.splitlines(), Python's `\s`, `\w` and `\b`, a line start only after
+# \n) and its port's (\r\n, \r and \n; JavaScript's `\s`, ASCII `\w` and `\b`, a line start after U+2028 and U+2029
+# too). Both ports compute both spellings, from the same code point lists, so the condition is the same in both.
+# Where this reading differs from either and no named repair licenses the difference -- #97's exact or suffix tier,
+# #121's dotted key, #101's one-to-one pairing, W-1's exact hunk, each with its own precondition -- the claim
+# ABSTAINS, with a reason that names the difference:
+#   Z-1  tests_added: `got` is not main's `^\s*def test_` count, or BC-1's "a Python file" is not main's.
+#   Z-2  symbol_added: `hit` is not main's `^\s*(?:def|class)\s+NAME\b`, or BC-1's answer is not main's.
+#   Z-3  the file list: this status map is not main's up to #121's dotted keys and W-1's exact hunks; main's two
+#        ports read it apart; or it differs from main's by one of those repairs where main's reading also held a
+#        doubt of its own (a header read after lines no count placed because it had a header's shape, a `diff --git`
+#        file its next `---`/`+++` pair replaced, a `diff --git` header whose paths cannot be read), which the repair
+#        may have been balancing. A count, a scope and a path claim then abstain, as for Y-1.
+#   Z-4  a path claim with a directory component that only the basename tier matches (a file with the same name in
+#        another directory): main's single loop matched it too, and #97 licenses only the exact and suffix tiers.
+#   Z-5  the whole-file reading: this reading reads a file line by line, CPython whole. An added definition line in a
+#        Python file (or outside any file) that this reading refuses -- CPython may refuse it too, and a file CPython
+#        refuses defines nothing -- makes tests_added abstain, and symbol_added where the claimed name's definition
+#        is in that file.
+# None of them gives a verdict main could not give: each only turns this reading's verdict into an abstention.
+
+
+def _chars(cps) -> str:
+    return "".join(map(chr, cps))
+
+
+_ZWS = tuple(range(0x2000, 0x200B))                  # U+2000 to U+200A
+# Python's `\s` for a str pattern, which is str.isspace() and what str.strip() strips (the same on 3.9 to 3.14).
+_PY_SPACE = _chars((0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, 0x85, 0xA0, 0x1680) + _ZWS
+                   + (0x2028, 0x2029, 0x202F, 0x205F, 0x3000))
+# JavaScript's `\s`, which is what String.prototype.trim() strips.
+_JS_SPACE = _chars((0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x20, 0xA0, 0x1680) + _ZWS
+                   + (0x2028, 0x2029, 0x202F, 0x205F, 0x3000, 0xFEFF))
+_PY_SPACE_CLS = "[" + re.escape(_PY_SPACE) + "]"
+_JS_SPACE_CLS = "[" + re.escape(_JS_SPACE) + "]"
+# str.splitlines()'s line boundaries, and the characters after which JavaScript's multiline `^` matches.
+_PY_LINE_BREAK = re.compile("\r\n|[" + re.escape(_chars((0x0A, 0x0B, 0x0C, 0x0D, 0x1C, 0x1D, 0x1E, 0x85,
+                                                           0x2028, 0x2029))) + "]")
+_JS_TERMINATORS = _chars((0x0A, 0x0D, 0x2028, 0x2029))
+_JS_DOT = "[^" + re.escape(_JS_TERMINATORS) + "]"                # JavaScript's `.`
+_JS_SEGMENT = re.compile("[" + re.escape(_chars((0x2028, 0x2029))) + "]")
+_ASCII_WORD = frozenset("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
+# main's port's BIN-1 patterns, with JavaScript's `.` (the Python's are _DIFF_GIT and _BINARY_LINE above).
+_DIFF_GIT_JS = re.compile(r'^diff --git (?:"a/(?P<qa>(?:[^"\\]|\\' + _JS_DOT + r')*)"|a/(?P<a>' + _JS_DOT
+                          + r'*?)) (?:"b/(?P<qb>(?:[^"\\]|\\' + _JS_DOT + r')*)"|b/(?P<b>' + _JS_DOT + r'*))$')
+_BINARY_LINE_JS = re.compile(r"^Binary files (?P<a>" + _JS_DOT + r"+?) and (?P<b>" + _JS_DOT + r"+?) differ$")
+
+
+def _py_lines(text: str) -> list:
+    """main's Python's split: str.splitlines(), spelled out (the port carries the same list)."""
+    lines = _PY_LINE_BREAK.split(text)
+    if lines and lines[-1] == "":
+        lines.pop()
+    return lines
+
+
+def _main_key(path: str) -> str:
+    """main's `_norm`, before #121: the backslashes turned, every leading dot and slash stripped, lower-cased."""
+    return path.replace("\\", "/").lstrip("./").lower()
+
+
+class _MainPending:
+    """main's BIN-1 pending header, in one of main's spellings (`js`: JavaScript's `.` in its two patterns)."""
+    __slots__ = ("a", "b", "status", "js")
+
+    def __init__(self, line: str, js: bool):
+        self.js = js
+        self.a, self.b = self._paths(line)
+        self.status = "M"
+
+    def _paths(self, line: str) -> tuple:
+        body = line[len("diff --git "):]
+        if len(body) % 2 == 1:
+            mid = len(body) // 2
+            if body[mid] == " " and body[:mid].startswith("a/") and body[mid + 1:].startswith("b/") \
+                    and body[2:mid] == body[mid + 3:]:
+                return body[2:mid], body[mid + 3:]
+        m = (_DIFF_GIT_JS if self.js else _DIFF_GIT).match(line)
+        if not m:
+            return "", ""
+        return (m.group("qa") if m.group("qa") is not None else (m.group("a") or ""),
+                m.group("qb") if m.group("qb") is not None else (m.group("b") or ""))
+
+    def note(self, line: str) -> None:
+        if line.startswith("new file mode"):
+            self.status = "A"
+        elif line.startswith("deleted file mode"):
+            self.status = "D"
+        elif line.startswith("rename from "):
+            self.a = line[len("rename from "):]
+        elif line.startswith("rename to "):
+            self.b = line[len("rename to "):]
+        else:
+            m = (_BINARY_LINE_JS if self.js else _BINARY_LINE).match(line)
+            if m:
+                if m.group("a") == "/dev/null":
+                    self.status = "A"
+                elif m.group("b") == "/dev/null":
+                    self.status = "D"
+
+    def key(self) -> str:
+        raw = self.a if self.status == "D" else self.b
+        return _main_key(raw) if raw else ""
+
+
+def _main_status(lines: list, js: bool, skip=frozenset()):
+    """main's `parse_unified_diff` status map over `lines`, keyed by main's `_norm`, in main's Python's spelling or
+    (`js`) its port's; a line whose index is in `skip` is not read. None where main raises (a `+++ /dev/null` with no
+    `---` line before it)."""
+    space = _JS_SPACE if js else _PY_SPACE
+    status: dict = {}
+    old_path = None
+    pending = None
+    for i, line in enumerate(lines):
+        if i in skip:
+            continue
+        if line.startswith("diff --git "):
+            if pending is not None and pending.key() and pending.key() not in status:
+                status[pending.key()] = pending.status
+            pending = _MainPending(line, js)
+        elif line.startswith("--- "):
+            old_path = line[4:].strip(space)
+        elif line.startswith("+++ "):
+            new = line[4:].strip(space)
+            if new == "/dev/null":
+                if old_path is None:
+                    return None
+                status[_main_key(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
+            else:
+                status[_main_key(new[2:] if new.startswith("b/") else new)] = \
+                    "A" if old_path in ("/dev/null", None) else "M"
+            pending = None
+        elif line.startswith("+") and not line.startswith("+++"):
+            continue
+        elif pending is not None:
+            pending.note(line)
+    if pending is not None and pending.key() and pending.key() not in status:
+        status[pending.key()] = pending.status
+    return status
+
+
+def _main_added(lines: list) -> list:
+    """main's added lines: every line opening `+` and not `+++`, in both doors and both ports."""
+    return [line[1:] for line in lines if line.startswith("+") and not line.startswith("+++")]
+
+
+_PY_TEST_LINE = re.compile(_PY_SPACE_CLS + "*def test_")
+_JS_TEST_LINE = re.compile(_JS_SPACE_CLS + "*def test_")
+
+
+def _main_touches_python(status) -> bool:
+    """main's BC-1 test on main's own keys."""
+    return status is not None and any(p.lower().endswith(_PY_SUFFIXES) for p in status)
+
+
+class _MainReading:
+    """NOTE_path2_ninth_pass: main's reading of one diff's added lines, in its two spellings, and BC-1's answer on
+    main's file list(s). `raises` when main's reading of the file list raises."""
+    __slots__ = ("added_py", "added_js", "tests", "python", "raises")
+
+    def __init__(self, diff_text: str, maps: tuple):
+        self.added_py = _main_added(_py_lines(diff_text))
+        self.added_js = _main_added(_diff_lines(diff_text))
+        # `^\s*def test_` over the added lines joined by \n: a line start only after \n in the Python (re.M), also
+        # after U+2028 and U+2029 in the port (/m); the leading `\s*` may run over empty lines, never past `def`.
+        self.tests = (sum(1 for line in self.added_py if _PY_TEST_LINE.match(line)),
+                      sum(1 for line in self.added_js for seg in _JS_SEGMENT.split(line) if _JS_TEST_LINE.match(seg)))
+        self.raises = any(m is None for m in maps)
+        self.python = tuple(_main_touches_python(m) for m in maps)
+
+
+def _main_reading(diff_text: str) -> "_MainReading":
+    """The raw door's: main's two readings of the diff text, its file list in each spelling."""
+    return _MainReading(diff_text, (_main_status(_py_lines(diff_text), False),
+                                    _main_status(_diff_lines(diff_text), True)))
+
+
+def _main_names(sentence: str, start: int) -> tuple:
+    """(main's Python's name, main's port's name) for a symbol claim whose template `name` group starts at `start`:
+    `[A-Za-z_]\\w*`, with Python's `\\w` (the table's) and with JavaScript's (ASCII, "" where it cannot open)."""
+    j = start + 1
+    while j < len(sentence) and _xid_word(sentence[j]):
+        j += 1
+    k = start
+    while k < len(sentence) and sentence[k] in _ASCII_WORD:
+        k += 1
+    opens = start < len(sentence) and sentence[start] in _ASCII_WORD and not sentence[start].isdigit()
+    return sentence[start:j], (sentence[start:k] if opens else "")
+
+
+def _main_symbol_hit(name_py: str, name_js: str, main: "_MainReading") -> tuple:
+    """main's `hit` in each spelling, and a code point its Python's `\\b` turned on that the supported Pythons read
+    differently (None when there is none): `^\\s*(?:def|class)\\s+NAME\\b` over the added lines joined by \\n."""
+    py, skew_cp = False, None
+    if name_py:
+        blob = "\n".join(main.added_py)
+        rx = re.compile("^" + _PY_SPACE_CLS + "*(?:def|class)" + _PY_SPACE_CLS + "+" + re.escape(name_py), re.M)
+        for m in rx.finditer(blob):
+            nxt = blob[m.end():m.end() + 1]
+            if nxt and _skew(nxt):
+                skew_cp = skew_cp if skew_cp is not None else ord(nxt)
+            elif not nxt or not _xid_word(nxt):
+                py = True
+    js = False
+    if name_js:
+        blob = "\n".join(main.added_js)
+        rx = re.compile("(?:(?<![\\s\\S])|(?<=[" + re.escape(_JS_TERMINATORS) + "]))" + _JS_SPACE_CLS
+                        + "*(?:def|class)" + _JS_SPACE_CLS + "+" + re.escape(name_js) + "(?![A-Za-z0-9_])")
+        js = rx.search(blob) is not None
+    return py, js, (None if py else skew_cp)
+
+
+def _python_differs(status: dict, main: "_MainReading | None"):
+    """Z-1, Z-2: why BC-1's "the diff holds a Python file" is not main's (main raises, or answers otherwise), else
+    None. Only asked where this reading holds a Python file; where it holds none it abstains already."""
+    if main is None:
+        return None
+    if main.raises:
+        return "main raises on this diff (`+++ /dev/null` with no `---` line before it)"
+    if not all(main.python):
+        return ("this reading finds a Python file in the diff's file list where main's reading of it found none "
+                "(BC-1 read on main's keys); no repair licenses the difference")
+    return None
+
+
+def _tests_differ(got: int, status: dict, main: "_MainReading | None"):
+    """Z-1: why `got`, or BC-1's answer, is not main's in both of main's spellings, else None. #101's pairing is
+    licensed only where it pairs lines this count and main's read alike, so it is asked after this."""
+    if main is None:
+        return None
+    why = _python_differs(status, main)
+    if why:
+        return why
+    py, js = main.tests
+    if got == py == js:
+        return None
+    return (f"this reading counts {got} added test definitions where main's Python counted {py} and its port {js} "
+            "(`^\\s*def test_` over main's line split); no repair licenses the difference")
+
+
+def _symbol_differs(hit: bool, name: str, name_py: str, name_js: str, status: dict, main: "_MainReading | None"):
+    """Z-2: why `hit`, or BC-1's answer, is not main's in both of main's spellings, else None."""
+    if main is None:
+        return None
+    why = _python_differs(status, main)
+    if why:
+        return why
+    py, js, skew_cp = _main_symbol_hit(name_py, name_js, main)
+    if skew_cp is not None:
+        return (f"main's Python read a definition of {_qname(name_py)} through `\\b` before U+{skew_cp:04X}, which "
+                f"{_Y3_VERSIONS} read differently")
+    if py == hit and js == hit:
+        return None
+    return (f"this reading finds {'an' if hit else 'no'} added definition of {_qname(name)} where main's "
+            f"Python {'did' if py else 'did not'} and its port {'did' if js else 'did not'} "
+            "(`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference")
+
+
+_ANY_SPACE_CLS = "[" + re.escape(_PY_SPACE + _chars((0xFEFF,))) + "]"     # either spelling's `\s`, and U+FEFF
+_LOOSE_DEF = re.compile("^" + _ANY_SPACE_CLS + "*(?:async" + _ANY_SPACE_CLS + "+)?(?:def|class)" + _ANY_SPACE_CLS + "+")
+
+
+def _refused_definition(line: str) -> bool:
+    """Z-5: the line opens a definition of a name when read loosely -- any whitespace either of main's spellings
+    reads, or U+FEFF, around `def`/`class` (`async` too) -- and this reading refuses it: a character CPython does not
+    take for indentation or a separator, or a name running into one no identifier holds. CPython may refuse such a
+    line (a supported Python may accept a skew code point), and a file it refuses defines nothing."""
+    m = _LOOSE_DEF.match(line)
+    if m is None:
+        return False
+    i = m.end()
+    if i >= len(line) or not (_xid_opens(line[i]) or _skew(line[i])):
+        return False
+    return _defined_name(line, removed=True) is None
+
+
+def _stray_lines(added_blob: str, sides: dict | None) -> list:
+    """The added lines outside any file (no `+++` header before them), in order: the blob less every file's side."""
+    left = Counter(line for added, _removed in (sides or {}).values() for line in added)
+    out = []
+    for line in added_blob.split("\n"):
+        if left[line] > 0:
+            left[line] -= 1
+        else:
+            out.append(line)
+    return out
+
+
+def _refused_files(added_blob: str, sides: dict | None) -> dict:
+    """Z-5: {file: its first added line `_refused_definition` reads} over the Python files (BC-1's suffix on the
+    undotted key) and, as the file None, the added lines outside any file."""
+    out: dict = {}
+    for path, (added, _removed) in (sides or {}).items():
+        if _undotted(path).lower().endswith(_PY_SUFFIXES):
+            line = next((x for x in added if _refused_definition(x)), None)
+            if line is not None:
+                out[path] = line
+    line = next((x for x in _stray_lines(added_blob, sides) if _refused_definition(x)), None)
+    if line is not None:
+        out[None] = line
+    return out
+
+
+def _refused_why(path) -> str:
+    """Z-5's reason. The line is not printed: repr() would ask the runtime which characters it can print."""
+    where = "outside any file" if path is None else f"in {path!r}"
+    return (f"an added definition line {where} is one this reading refuses and CPython may refuse too, and a file "
+            "CPython refuses defines nothing; this reading reads it line by line")
+
+
+def _whole_file_tests(added_blob: str, sides: dict | None):
+    """Z-5 for tests_added, which counts over every file: why, else None."""
+    refused = _refused_files(added_blob, sides)
+    return _refused_why(next(iter(refused))) if refused else None
+
+
+def _whole_file_symbol(name: str, added_blob: str, sides: dict | None):
+    """Z-5 for symbol_added: why, where a file whose added lines define `name` holds a refused definition line."""
+    refused = _refused_files(added_blob, sides)
+    if not refused:
+        return None
+    for path, (added, _removed) in (sides or {}).items():
+        if path in refused and any(_defines(x, name) for x in added):
+            return _refused_why(path)
+    if None in refused and any(_defines(x, name) for x in _stray_lines(added_blob, sides)):
+        return _refused_why(None)
+    return None
+
+
+def _basename_only(status: dict, claimed: str):
+    """Z-4: why a path claim with a directory component that only the basename tier matches abstains, else None."""
+    c = _norm(claimed)
+    if "/" not in c:
+        return None
+    p, st = _find_path(status, claimed)
+    if p is None or p == c or p.endswith("/" + c):
+        return None
+    return (f"{claimed!r}: only a file with the same name in another directory is in the diff "
+            f"({p!r}, status {st!r}); #97 licenses the exact and suffix tiers only")
+
+
+def _licensed_against(status: dict, main: dict):
+    """Z-3: why this status map is not `main` (main's map, with W-1's exact hunks read as content) up to #121's
+    dotted keys -- each key of this one, undotted, is one of main's, and main's status for it is one of theirs --
+    else None."""
+    groups: dict = {}
+    for k, st in status.items():
+        groups.setdefault(_undotted(k), []).append((k, st))
+    for k, st in main.items():
+        if k not in groups:
+            return f"main reads {k!r} ({st!r}), which this reading does not"
+    for u, ks in groups.items():
+        if u not in main:
+            return f"this reading reads {ks[0][0]!r} ({ks[0][1]!r}), which main does not"
+        if main[u] not in [st for _k, st in ks]:
+            return f"main reads {u!r} as {main[u]!r}, this reading {ks[0][0]!r} as {ks[0][1]!r}"
+    return None
+
+
+_Z3_PREFIX = "this reading's file list differs from main's"
+
+
+def _apart(py: dict, js: dict) -> str:
+    """Z-3: the first place main's Python's file list and its port's differ, in words."""
+    for k, st in py.items():
+        if k not in js:
+            return f"main's Python reads {k!r} ({st!r}), which its port does not"
+        if js[k] != st:
+            return f"main's Python reads {k!r} as {st!r}, its port as {js[k]!r}"
+    k, st = next((k, st) for k, st in js.items() if k not in py)
+    return f"main's port reads {k!r} ({st!r}), which its Python does not"
+
+
+def _file_list_differs(diff_text: str, lines: list, status: dict, inside: set, soft: list):
+    """Z-3 at the raw door: why this reading's file list is not licensed against main's, else None."""
+    py, js = _main_status(_py_lines(diff_text), False), _main_status(lines, True)
+    if py is None or js is None:
+        return f"{_Z3_PREFIX}: main raises on it (`+++ /dev/null` with no `---` line before it)"
+    if py != js:
+        return (f"main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript "
+                f"does not): {_apart(py, js)}")
+    why = _licensed_against(status, _main_status(lines, False, skip=inside))
+    if why:
+        return f"{_Z3_PREFIX} where no repair accounts for it: {why}"
+    if soft and set(status) != set(js):
+        repair = ("#121 keeps a dotfile's dot" if {_undotted(k) for k in status} == set(js)
+                  else "W-1 reads an exact hunk's `---`/`+++` line as content")
+        return f"{_Z3_PREFIX} by a repair ({repair}), and {soft[0]}; the repair may have balanced that error"
+    return None
+
+
+def _main_name_status(name_status: str) -> dict:
+    """main's git-door file list: git's `--name-status` split by str.splitlines(), keyed by main's `_norm`."""
+    main: dict = {}
+    for line in _py_lines(name_status):
+        parts = line.split("\t")
+        if len(parts) >= 2:
+            main[_main_key(parts[-1])] = parts[0][:1]
+    return main
+
+
+def _status_differs(main: dict, status: dict):
+    """Z-3 at the git door: why this file list is not main's (`_main_name_status`) up to #121's dotted keys."""
+    why = _licensed_against(status, main)
+    return f"{_Z3_PREFIX} where no repair accounts for it: {why}" if why else None
+
+
+def _files_differ(notes: dict | None):
+    """Z-3: why the file list a gate reads is not licensed against main's, or None."""
+    return (notes or {}).get("differs")
 
 
 def parse_unified_diff_sides(diff_text: str) -> dict:
@@ -1757,7 +2210,7 @@ def gate_diff_text(summary_text: str, diff_text: str,
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base="(diff-text)", head="(diff-text)",
                  evidence=evidence, commit=commit,
-                 raw_input_len=len(diff_text or ""),
+                 raw_input_len=len(diff_text or ""), main=_main_reading(diff_text or ""),
                  sides=parse_unified_diff_sides(diff_text or ""),
                  notes=_diff_notes(diff_text or ""))
 
@@ -1800,9 +2253,12 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
     # NOTE_path2_eighth_pass: the file list here is git's own, so the only thing it can be unsure of is two paths
     # the key reads as one (they differ only in case, Y-1); a U+FEFF dropped from a test at line 1 is the parse's (Y-2).
     parsed, listed = _diff_notes(diff_text), _status_notes(paths)
-    notes = {k: v for k, v in (("files", listed.get("files")), ("bom", parsed.get("bom"))) if v}
+    # NOTE_path2_ninth_pass (Z-3): main keyed the same `--name-status` lines with str.splitlines() and its `_norm`.
+    main_map = _main_name_status(name_status)
+    notes = {k: v for k, v in (("files", listed.get("files")), ("bom", parsed.get("bom")),
+                               ("differs", _status_differs(main_map, status))) if v}
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
-                 repo=repo, base=base, head=head,
+                 repo=repo, base=base, head=head, main=_MainReading(diff_text, (main_map,)),
                  evidence=evidence, commit=commit,
                  sides=parse_unified_diff_sides(diff_text), notes=notes)
 
@@ -1896,7 +2352,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
           run: str | None, strict: bool, repo, base: str, head: str,
           evidence=None, commit: str | None = None,
           raw_input_len: int | None = None, sides: dict | None = None,
-          notes: dict | None = None, _declared: bool = False) -> DiffGate:
+          notes: dict | None = None, main: "_MainReading | None" = None,
+          _declared: bool = False) -> DiffGate:
 
     # Some claim kinds are VACUOUSLY TRUE against an empty diff. `only_touches`
     # asks "is anything outside the prefix?" and an empty status answers "no" —
@@ -1914,8 +2371,9 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                             f"nothing, which is a parse failure, not an empty change")
     no_paths = "the diff carries no file paths, so scope cannot be checked" \
         if not status else None
-    # NOTE_path2_eighth_pass (Y-1): what the one reading of the diff is not sure of.
-    unsure_files = _files_unsure(notes)
+    # NOTE_path2_eighth_pass (Y-1): what the one reading of the diff is not sure of; NOTE_path2_ninth_pass (Z-3):
+    # where its file list is not main's and no repair licenses the difference.
+    unsure_files = _files_unsure(notes) or _files_differ(notes)
     not_sure = f"the diff's file list is not certain: {unsure_files}" if unsure_files else None
 
     def find_path(claimed: str):
@@ -1980,8 +2438,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     claims.append(c)
                     continue
                 if kind in _PATH_KINDS:
+                    only_name = None if not_sure else _basename_only(status, d["path"])
                     if not_sure:                        # NOTE_path2_eighth_pass (Y-1)
                         c.verdict, c.why = "UNCHECKABLE", not_sure
+                    elif only_name:                     # NOTE_path2_ninth_pass (Z-4)
+                        c.verdict, c.why = "UNCHECKABLE", only_name
                     else:
                         c.verdict, c.why = _path_claim_verdict(kind, d["path"],
                                                                find_path)
@@ -2021,12 +2482,20 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         # NOTE_path2_eighth_pass: a test definition some reading that matters cannot read
                         # alike (Y-2, Y-3).
                         doubt = _test_doubt(added_blob, sides, notes)
+                        # NOTE_path2_ninth_pass: `got`, or BC-1's answer, not main's (Z-1); a definition line the
+                        # whole file may not survive (Z-5).
+                        unlicensed = _tests_differ(got, status, main)
+                        whole = _whole_file_tests(added_blob, sides)
                         if unread:
                             c.verdict = "UNCHECKABLE"
                             c.why = (f"diff adds {unread} async test functions, which this template does not "
                                      f"count; claim says {n}")
                         elif doubt:
                             c.verdict, c.why = "UNCHECKABLE", f"{doubt}; claim says {n}"
+                        elif unlicensed:
+                            c.verdict, c.why = "UNCHECKABLE", f"{unlicensed}; claim says {n}"
+                        elif whole:
+                            c.verdict, c.why = "UNCHECKABLE", f"{whole}; claim says {n}"
                         elif net == n and _pairing_withdraws(chg):
                             # NOTE_path2_eighth_pass (Y-5): the pairing withdraws, it does not verify
                             c.verdict = "UNCHECKABLE"
@@ -2068,10 +2537,20 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         # NOTE_path2_eighth_pass (Y-2): a line defining the name behind a U+FEFF.
                         doubt = _symbol_doubt(name, added_blob, sides) if why_name is None else None
                         hit = why_name is None and _symbol_hit(name, added_blob)
+                        # NOTE_path2_ninth_pass: `hit`, or BC-1's answer, not main's (Z-2); a file holding the
+                        # definition that the whole-file reading may refuse (Z-5).
+                        unlicensed = whole = None
+                        if why_name is None:
+                            unlicensed = _symbol_differs(hit, name, *_main_names(sent, m.start("name")), status, main)
+                            whole = _whole_file_symbol(name, added_blob, sides) if hit else None
                         if why_name is not None:
                             c.verdict, c.why = "UNCHECKABLE", why_name
                         elif doubt:
                             c.verdict, c.why = "UNCHECKABLE", doubt
+                        elif unlicensed:
+                            c.verdict, c.why = "UNCHECKABLE", unlicensed
+                        elif whole:
+                            c.verdict, c.why = "UNCHECKABLE", whole
                         elif hit and _definition_only_changed(name, sides, status):
                             c.verdict = "UNCHECKABLE"               # PATH-2 (#101)
                             c.why = (f"added lines define {d['kind']} {_qname(name)} only where the "
@@ -2179,7 +2658,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
             if _dtext:
                 _sub = _gate(_dtext, status, added_blob, run=run, strict=strict, repo=repo,
                              base=base, head=head, evidence=evidence, commit=commit,
-                             raw_input_len=raw_input_len, sides=sides, notes=notes, _declared=True)
+                             raw_input_len=raw_input_len, sides=sides, notes=notes, main=main,
+                             _declared=True)
                 for _c in _sub.claims:
                     _c.detail = dict(_c.detail or {})
                     _c.detail["declared"] = True
