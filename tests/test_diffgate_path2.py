@@ -1320,7 +1320,10 @@ def test_v3_a_stray_form_feed_no_longer_excuses_the_round_3_blocker(scorer, monk
     t = pg.Tally(name_prs=True)
     t.pair("probe", "Only touches .gitignore.", PROBE, pg.raw_paths(PROBE))
     # NOTE_path2_eighth_pass: the only_touches oracle (G-C7) re-derives the verdict and refuses it as well
-    assert dict(t.violations) == {"G-C4_direction:only_touches": 1, "G-C7_oracle:only_touches_claim": 1}
+    # NOTE_path2_eleventh_pass: and the planted line reads `_norm` outside the switches, so #121 switched off no longer
+    # reads as the scorer's revert of #121 (G-C9)
+    assert dict(t.violations) == {"G-C4_direction:only_touches": 1, "G-C7_oracle:only_touches_claim": 1,
+                                  "G-C9_switch_is_not_the_revert:#121": 1}
     assert not t.attribution["moves_admitted_by_rule"]
 
 
@@ -1878,9 +1881,11 @@ def test_v3_the_scorer_admits_every_move_on_the_pinned_pairs_and_counts_what_g_c
     ninth = {k: v for k, v in t.attribution["moves_admitted_by_rule"].items() if "Z-" in k.split(" ")[0]}
     # (two #97 moves are credited to #97 and Z-4 jointly: with #97 reverted the any-tier loop resolves the claim by
     # its basename, which wakes Z-4; Z-4 shaped nothing on the record itself and is admitted as that)
+    # (NOTE_path2_eleventh_pass: two more, the pairs whose sentences hold an em dash, an emoji and curly quotes, which
+    # both ports' templates read alike, so #97's repair stands there; one reason-only move beside them)
     assert {k: v for k, v in ninth.items() if not k.endswith("-> UNCHECKABLE")} == {
-        "Z-4 file_created: UNCHECKABLE -> VERIFIED": 2}
-    assert t.attribution["attributed_by"]["#97+Z-4"] == 2 and sum(ninth.values()) > 2
+        "Z-4 file_created: UNCHECKABLE -> VERIFIED": 4, "Z-4 file_touched: VERIFIED -> VERIFIED": 1}
+    assert t.attribution["attributed_by"]["#97+Z-4"] == 5 and sum(ninth.values()) > 5
 
 
 def test_v3_raw_paths_reads_a_header_only_outside_a_hunk(scorer):
@@ -2206,8 +2211,9 @@ X7_PLANTED = {
         "Added 2 tests.", f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,3 @@\n x = 0\n+def test_a():\n+def test_b():  #  \n",
         "G-C7_oracle:F-2_split"),
     "D7 the gate ignores an only_touches accusation": (
-        '    contradicted = any(c.verdict == "CONTRADICTED" for c in claims)',
-        '    contradicted = any(c.verdict == "CONTRADICTED" for c in claims if c.kind != "only_touches")',
+        # NOTE_path2_eleventh_pass: the verdict is the guard's, recomputed from the final claims
+        '    contradicted = any(c.verdict == "CONTRADICTED" for c in final)',
+        '    contradicted = any(c.verdict == "CONTRADICTED" for c in final if c.kind != "only_touches")',
         "Only touches src/.", "--- a/docs/x.md\n+++ b/docs/x.md\n@@ -1 +1 @@\n-a\n+b\n",
         "G-C1_gate_verdict_not_from_its_claims"),
     "the runs-past rule removed (W-2's own code)": (
@@ -2237,7 +2243,9 @@ X7_PLANTED = {
         'c.why = (f"diff adds {unread} async test functions, which this template does not "',
         'c.verdict = "CONTRADICTED"; c.why = (f"diff adds {unread} async test functions, which this template does not "',
         "Added 0 tests.", "--- /dev/null\n+++ b/tests/test_n.py\n@@ -0,0 +1,2 @@\n+async def test_n():\n+    pass\n",
-        "G-C4_direction:tests_added:A-1"),
+        # NOTE_path2_eleventh_pass: the guard turns the planted accusation into an abstention (main verifies), so it is
+        # the reading before the guard that G-C7 refuses
+        "G-C7_oracle:tests_added_claim"),
     "gate fields moved by F-2's own code on a diff where F-2 cannot act": (
         "lines = _DIFF_LINE_BREAK.split(text)", "lines = [] if 'zz.py' in text else _DIFF_LINE_BREAK.split(text)",
         "1 file changed.", "--- a/src/zz.py\n+++ b/src/zz.py\n@@ -1 +1 @@\n-a\n+b\n",
@@ -2408,11 +2416,13 @@ def test_x7_the_scorer_reads_names_by_the_same_table_with_its_own_decoder(scorer
 
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
-    assert len(pairs) == 245 and all(p["id"].startswith("path2:") for p in pairs)
+    assert len(pairs) == 256 and all(p["id"].startswith("path2:") for p in pairs)
     # NOTE_path2_fifth_pass V-1 re-pinned four pairs and NOTE_path2_sixth_pass W-1 one; NOTE_path2_eighth_pass
     # twenty-four (Y-5 thirteen: the pairing withdraws; Y-2 four; Y-1 four; Y-3 three), each to UNCHECKABLE;
     # NOTE_path2_ninth_pass thirty-six (Z-2 sixteen, Z-1 twelve, Z-3 seven, Z-4 one), each to UNCHECKABLE;
-    # NOTE_path2_tenth_pass nine (K-1: six to UNCHECKABLE, three reason-only); each record says so
+    # NOTE_path2_tenth_pass nine (K-1: six to UNCHECKABLE, three reason-only); NOTE_path2_eleventh_pass two (the guard
+    # abstaining where F-2 alone parts from main; K-5 at the sentence leaving a path both ports read alike to Z-4), each
+    # to UNCHECKABLE; each record says so
     assert sorted(p["id"] for p in pairs if "repinned" in p) == [
         "path2:101-a-bom-strip-changes-a-test",
         "path2:101-a-changed-test-and-a-same-named-new-one",
@@ -2432,6 +2442,7 @@ def test_the_pinned_pairs_read_as_expected_on_the_python_side():
         "path2:f2-limit-hit-reads-a-line-separator-as-indent",
         "path2:f3-an-ideographic-space-reindent-is-not-an-added-test",
         "path2:f3-an-nbsp-reindent-is-not-an-added-test",
+        "path2:k5-a-path-the-sentence-runs-into-from-a-non-ascii-character-reads-as-main-read-it",
         "path2:r1-a-bom-on-a-changed-test-beside-two-new-ones",
         "path2:r1-a-bom-on-a-changed-test-does-not-hide-a-new-one",
         "path2:r2-an-async-test-made-sync-is-a-changed-test",
@@ -2447,6 +2458,7 @@ def test_the_pinned_pairs_read_as_expected_on_the_python_side():
         "path2:v1-an-nbsp-led-new-function-defines-nothing",
         "path2:v1-limit-a-bom-led-def-reads-as-a-definition-wherever-it-stands",
         "path2:v2-a-binary-deletion-line-holding-a-line-separator",
+        "path2:v2-a-binary-header-holding-a-line-separator-registers-its-file",
         "path2:v2-a-bom-after-a-header-path-is-kept",
         "path2:v2-a-header-path-is-stripped-as-python-strips-it",
         "path2:v2-a-reason-prints-a-path-as-python-repr-does",
@@ -2483,9 +2495,13 @@ def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     assert sum("NOTE_path2_eighth_pass" in p.get("repinned", "") for p in pairs) == 24
     assert sum("NOTE_path2_ninth_pass" in p.get("repinned", "") for p in pairs) == 36
     assert sum("NOTE_path2_tenth_pass" in p.get("repinned", "") for p in pairs) == 9
+    assert sum("NOTE_path2_eleventh_pass" in p.get("repinned", "") for p in pairs) == 2
     for p in pairs:
         g = gate_diff_text(p["summary"], p["diff"], run=None, strict=False)
-        got = [[c.kind, c.verdict, c.why] for c in g.claims]
+        # (NOTE_path2_eleventh_pass: R10-K5A reads as main's two ports read it, and they print different reasons, so it is
+        # pinned by verdict)
+        with_why = bool(p["expect"]["claims"]) and len(p["expect"]["claims"][0]) == 3
+        got = [[c.kind, c.verdict, c.why] if with_why else [c.kind, c.verdict] for c in g.claims]
         assert got == p["expect"]["claims"], (p["id"], got)
         assert g.verdict == p["expect"]["verdict"], p["id"]
         assert g.uncovered_sentences == p["expect"]["uncovered_sentences"], p["id"]
@@ -2589,7 +2605,7 @@ X8_PLANTED = {
         "                    elif not_sure:                      # NOTE_path2_eighth_pass (Y-1)\n"
         '                        c.verdict, c.why = "CONTRADICTED", f"{not_sure}; claim says {n}"',
         "2 files changed.", "--- a/src/c.md\n+++ b/src/c.md\n@@\n-x\n+++ plus\n y\n",
-        "G-C4_direction:files_changed_count:Y-1"),
+        "G-C7_oracle:files_changed_count_claim"),       # NOTE_path2_eleventh_pass: the guard abstains; the reading is refused
     "Y-2 abstaining where no U+FEFF stands": (
         "    return _Y2_TEST if text != raw and _test_name(text) else None",
         "    return _Y2_TEST if _test_name(text) else None",
@@ -2608,7 +2624,7 @@ X8_PLANTED = {
         "                            # NOTE_path2_eighth_pass (Y-5): the pairing withdraws, it does not verify\n"
         '                            c.verdict = "CONTRADICTED"',
         "Added 1 test.", f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,2 @@\n x = 0\n+def test_a():\n",
-        "G-C4_direction:tests_added:Y-5"),
+        "G-C7_oracle:tests_added_claim"),               # NOTE_path2_eleventh_pass: the guard abstains; the reading is refused
     "Y-5: the pairing verifies `net` again": (
         "    return chg > 0", "    return False",
         "Added 1 test.", (f"--- a/{TP}\n+++ b/{TP}\n@@ -1,2 +1,4 @@\n-def test_a():\n+def test_a(x):\n     pass\n"
@@ -2810,7 +2826,8 @@ X9_PLANTED = {
         '                            c.verdict, c.why = "CONTRADICTED", f"{unlicensed}; claim says {n}"',
         # (a unit separator: Python's `\s`, not JavaScript's, and not a line break, so F-2 cannot give main's claim back)
         "Added 1 test.", f"--- a/{TP}\n+++ b/{TP}\n@@ -1 +1,3 @@\n x = 0\n+" + chr(0x1F) + "def test_load():\n+    pass\n",
-        "G-C4_direction:tests_added:Z-1"),
+        # NOTE_path2_eleventh_pass: the guard abstains where main verifies, so the reading before it is what G-C7 refuses
+        "G-C7_oracle:tests_added_claim"),
     # Z-2
     "Z-2: main's port no longer asked": (
         "    if py == hit and js == hit:", "    if py == hit:",
@@ -2859,8 +2876,9 @@ X9_PLANTED = {
         "    uncovered_texts = [s.strip().lower() for i, s in enumerate(sentences)",
         "Refactored The Parser. 1 file changed.", _m("src/a.py"), "G-C1_gate_fields_differ"),
     "G-C1: strict passes a contradicted gate": (
-        '    verdict = "FAIL" if (contradicted or (strict and uncheckable)) else "PASS"',
-        '    verdict = "FAIL" if ((contradicted and not strict) or (strict and uncheckable)) else "PASS"',
+        # NOTE_path2_eleventh_pass: the verdict, and --strict, are the guard's, recomputed from the final claims
+        '    return DiffGate(verdict="FAIL" if (contradicted or (strict and uncheckable)) else "PASS",',
+        '    return DiffGate(verdict="FAIL" if ((contradicted and not strict) or (strict and uncheckable)) else "PASS",',
         "2 files changed.", _m("src/a.py"), "G-C1_strict_verdict_not_from_its_claims"),
     # round-8 scorer lens, blocker: Y-1's git-door reading, read on every record's paths whether or not it rebuilds
     "Y-1 at the git door: a case collision not noted": (
@@ -2873,7 +2891,9 @@ X9_PLANTED = {
         '    if False:\n        return "main raises on this diff (`+++ /dev/null` with no `---` line before it)"\n'
         "    if False:", "Added 1 test.",
         "diff --git a/t.py b/t.py\n x" + chr(0x0C) + "+++ /dev/null\n+def test_a():\n",
-        "G-C1_a_verdict_where_the_baseline_raises"),
+        # NOTE_path2_eleventh_pass: where main raises the guard abstains every decided claim, so it is the reading before
+        # the guard that G-C7 refuses
+        "G-C7_oracle:tests_added_claim"),
     # ... read on a case-folded variant of a record that holds no collision (one path upper-cased beside itself)
     "Y-1 at the git door: a case collision not noted, on a record with none": (
         '    return {"files": _Y1_COLLIDE} if any(len(v) > 1 for v in forms.values()) else {}', "    return {}",
@@ -3394,13 +3414,14 @@ X10_PLANTED = {
         [X10_DROP_LANGS, X10_P32], "Keeps backward compatibility.", X10_DOT_API, "G-C7_oracle:C-2_compat_surface"),
     # round-9 scorer lens, blocker: where the baseline raises, the gate and strict verdicts were not scored
     "where main raises, strict passes an unverifiable gate": (
-        [('    uncheckable = any(c.verdict == "UNCHECKABLE" for c in claims)',
-          '    uncheckable = any(c.verdict == "UNCHECKABLE" for c in claims) and not (main is not None and main.raises)')],
+        # NOTE_path2_eleventh_pass: the guard's strict verdict (`ref is None` where main raises)
+        [('    uncheckable = any(c.verdict == "UNCHECKABLE" for c in final)',
+          '    uncheckable = any(c.verdict == "UNCHECKABLE" for c in final) and ref is not None')],
         "Added 1 test.", X9_RAISES, "G-C1_strict_verdict_not_from_its_claims"),
     "where main raises, the gate fails with no contradicted claim": (
-        [('    verdict = "FAIL" if (contradicted or (strict and uncheckable)) else "PASS"',
-          '    verdict = "FAIL" if (contradicted or (strict and uncheckable) or (main is not None and main.raises '
-          'and claims)) else "PASS"')],
+        [('    return DiffGate(verdict="FAIL" if (contradicted or (strict and uncheckable)) else "PASS",',
+          '    return DiffGate(verdict="FAIL" if (contradicted or (strict and uncheckable) or (ref is None and final)) '
+          'else "PASS",')],
         "Added 1 test.", X9_RAISES, "G-C1_gate_verdict_not_from_its_claims"),
     "K-4: a line no reading places no longer a doubt": (
         [("                soft.append(_Z3_UNPLACED)", "                pass")], "3 files changed. 2 files changed.",
@@ -3408,9 +3429,11 @@ X10_PLANTED = {
     "K-4: a git binary patch's second block read as a line no reading places": (
         [('            elif line == "GIT binary patch" or _BINARY_PATCH.match(line):',
           '            elif line == "GIT binary patch":')], "3 files changed.", K4_BINARY, "G-C7_oracle:Y_notes"),
-    "K-5: Z-4 asked of a path the ports read apart": (
-        [("    return not claimed.isascii() or not before.isascii()", "    return False")],
-        "Edited Docs/" + chr(0xA7D0) + "/a.md.", _m("docs/a.md"), "G-C7_oracle:file_touched_claim"),
+    "K-5: a sentence the ports read apart not read as main read it": (
+        # NOTE_path2_eleventh_pass: K-5 is the guard's, at the sentence; ignored, Z-4 abstains where main verifies
+        [('        if apart and c.kind != "tests_pass":             # K-5: the sentence reads as main\'s same port read it',
+          "        if False:")],
+        "Edited Docs/" + chr(0xA7D0) + "/a.md.", _m("docs/a.md"), "G-C9_guard:file_touched"),
     "where main raises, a claim's detail altered": (
         [("                c = DiffClaim(kind=kind, text=sent.strip()[:160], detail=d)",
           "                c = DiffClaim(kind=kind, text=sent.strip()[:160], detail=({**d, \"x\": 1} if (main is not None "
@@ -3470,10 +3493,11 @@ def test_x10_the_git_door_scores_base_head_and_the_report(scorer, monkeypatch, l
 def test_x10_the_door_canaries_make_z3_fire_at_the_git_door_and_refuse_a_defect_there(scorer, monkeypatch, good, bad):
     # round-9 scorer lens, major: no rebuildable record made Z-3 abstain at the git door, so a defect that stopped it
     # was admitted in both modes. Each run now scores canaries holding a U+0085 or U+2028 path (core.quotePath off),
-    # where main's str.splitlines() cut git's --name-status line and Z-3 abstains.
+    # where main's str.splitlines() cut git's --name-status line and Z-3 abstains. NOTE_path2_eleventh_pass (round-10
+    # scorer lens, blocker): and U+2029, a third.
     pg = scorer
     report, _ = pg.score_canaries()
-    assert report["pass"] and report["door"]["scored"] == len(pg.DOOR_CANARIES) == 2, report
+    assert report["pass"] and report["door"]["scored"] == len(pg.DOOR_CANARIES) == 3, report
     for _cid, summary, diff in pg.DOOR_CANARIES:
         files = pg.rebuild(diff)
         with pg.GitDoor(*files) as door:
@@ -3557,3 +3581,151 @@ def test_x10_the_scorer_refuses_a_fold_that_misses_a_merge(scorer):
     with pytest.raises(SystemExit, match="not sound at U[+]005A"):
         pg.check_fold(Fake, hashlib.sha256(Fake.FOLD.encode("ascii")).hexdigest())
     assert pg.check_fold(_fold, FOLD_SHA256) == _fold.MAP
+
+
+# ─────────────────────────────── NOTE_path2_eleventh_pass_2026_09_28: x11, the guard in the scorer (G-C9), and round 10
+
+def _pair(pid: str) -> tuple:
+    p = next(p for p in json.loads(PAIRS.read_text(encoding="utf-8")) if p["id"] == pid)
+    return p["summary"], p["diff"]
+
+
+X11_TWO_CREATED = "--- /dev/null\n+++ b/a.py\n@@ -0,0 +1 @@\n+x\n--- a/b.py\n+++ b/b.py\n@@ -1 +1 @@\n-a\n+b\n"
+X11_V2 = "path2:v2-a-binary-header-holding-a-line-separator-registers-its-file"
+X11_PLANTED = {
+    # label: ([(good, bad), ...] in styxx/diffgate.py, summary, diff, the violation that must fire)
+    "the guard keeps a difference no repair explains (the reference skipped)": (
+        [("        if main_verdict == c.verdict:", "        if True:")], *_pair(X11_V2), "G-C9_guard:files_changed_count"),
+    "the guard reads main as raising (the reference dropped)": (
+        [("        ref = reference()", "        ref = None")], *_pair("path2:97-two-readmes"), "G-C9_guard:file_created"),
+    "the guard pairs claims without their occurrence": (
+        [("        out.append((c.kind, c.text, seen[k]))", "        out.append((c.kind, c.text, 0))")],
+        "Created a.py, created b.py.", X11_TWO_CREATED, "G-C9_guard:file_created"),
+    "the guard prints another reason": (
+        [('_GUARD_DIFFERS = ("main\'s reading gives {main} and this one {this}; no named repair',
+          '_GUARD_DIFFERS = ("main gives {main} and this one {this}; no named repair')],
+        *_pair(X11_V2), "G-C9_guard:files_changed_count"),
+    "K-5's symbol span stops at a combining mark": (
+        [("(_xid_word(sentence[j]) or _xid_continues(sentence[j]) or _xid_skew(sentence[j]))",
+          "(_xid_word(sentence[j]) or _xid_skew(sentence[j]))")],
+        *_pair("path2:w2-a-claimed-name-with-a-virama-is-read-whole"), "G-C9_guard:symbol_added"),
+    "#121 switched off keys nothing by main's key": (
+        [('        return _main_key(p) if "#121" in self.off else _norm(p)', "        return _norm(p)")],
+        *_pair("path2:121-dotfile-twins"), "G-C9_switch_is_not_the_revert:#121"),
+    # (the switch, switched off, reads no file at all, so it gives main's UNCHECKABLE back on a record with no dotted key;
+    # only #121's precondition stood between that and a licence)
+    "a licence without the precondition, beside a switch that reads more than its repair": (
+        [('        return _main_key(p) if "#121" in self.off else _norm(p)',
+          '        return "" if "#121" in self.off else _norm(p)'),
+         ('        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"])',
+          "        if main_verdict is not None and any(True")],
+        *_pair(X11_V2), "G-C9_guard:files_changed_count"),
+    # round-10 scorer lens, blocker (R1.2): nothing anchored the unmeasured reason where main raises
+    "raises: the unmeasured reason loses its parse-failure clause": (
+        [("        if raw_input_len:\n            no_evidence += (",
+          "        if raw_input_len and not (main is not None and main.raises):\n            no_evidence += (")],
+        "t\n\nAdded 1 test. 1 file changed.", "x\x0c+++ /dev/null\n", "G-C7_oracle:why_unmeasured"),
+    "raises: why_unmeasured set on a measured gate": (
+        [('                    measured=not no_evidence, why_unmeasured=no_evidence or "",',
+          '                    measured=not no_evidence, why_unmeasured=no_evidence or ("main raises" if main is not None '
+          'and main.raises else ""),')], "Added 1 test.", X9_RAISES, "G-C7_oracle:why_unmeasured"),
+    # round-10 scorer lens, blocker (R1.0): the strict gates' reports were never compared
+    "strict: the never-read sentences dropped": (
+        [("                    sentences_total=total, uncovered_texts=uncovered_texts,",
+          "                    sentences_total=total, uncovered_texts=[] if strict else uncovered_texts,")],
+        "Refactored the loader. Keeps backward compatibility. Adds function zap.",
+        "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1,2 @@\n x = 0\n+def zap():\n", "G-C1_strict_report_differs"),
+    "strict: a compat claim's languages dropped": (
+        [("                    c.detail.update(extra)",
+          '                    c.detail.update(extra)\n                    if strict:\n                        c.detail.pop("languages", None)')],
+        "Keeps backward compatibility.", "--- a/src/a.py\n+++ b/src/a.py\n@@ -1,2 +1 @@\n-def api():\n-    pass\n+x = 1\n",
+        "G-C1_strict_report_differs"),
+    "to_dict: a FAIL with no CONTRADICTED claim prints no claims": (
+        [('                "claims": [c.__dict__ for c in self.claims],',
+          '                "claims": [c.__dict__ for c in self.claims] if (self.verdict == "PASS" or any('
+          'c.verdict == "CONTRADICTED" for c in self.claims)) else [],')],
+        "Refactored the loader. Keeps backward compatibility.",
+        "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1,2 @@\n x = 0\n+def zap():\n", "G-C1_report_differs_from_its_gate"),
+}
+
+
+@pytest.mark.parametrize("label", sorted(X11_PLANTED))
+def test_x11_every_eleventh_pass_rule_and_round_10_scorer_finding_fails_on_a_planted_defect(scorer, monkeypatch, label):
+    # NOTE_path2_eleventh_pass: the guard is a rule the scorer re-implements (G-C9), and each round-10 scorer finding is a
+    # check of its own; each refuses a defect planted in the instrument, and the unplanted record scores clean
+    pg = scorer
+    pairs, summary, diff, violation = X11_PLANTED[label]
+    t = pg.Tally(name_prs=True)
+    t.pair("clean", summary, diff, pg.raw_paths(diff))
+    assert not t.violations, t.violating
+    _planted_many(pg, monkeypatch, pairs, "x11")
+    t = pg.Tally(name_prs=True)
+    t.pair("planted", summary, diff, pg.raw_paths(diff))
+    assert violation in t.violations, dict(t.violations)
+
+
+def test_x11_a_licence_without_its_precondition_alone_moves_nothing_the_switches_decide(scorer, monkeypatch):
+    """With every switch reading its own repair, each precondition holds wherever its switch alone gives main's verdict
+    back (a switch moves a verdict only where its repair acts), so dropping the precondition alone changes no claim on
+    the pinned pairs: the mutant is equivalent there, and the scorer says so by passing. Beside a switch that reads more
+    than its repair (above), the same drop is refused."""
+    pg = scorer
+    _planted_many(pg, monkeypatch, [(
+        '        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"])',
+        "        if main_verdict is not None and any(True")], "x11pre")
+    t = pg.Tally(name_prs=True)
+    for p in json.loads(PAIRS.read_text(encoding="utf-8")):
+        t.pair(p["id"], p["summary"], p["diff"], pg.raw_paths(p["diff"]))
+    assert not t.violations, t.violating
+
+
+def test_x11_the_git_door_strict_report_is_compared(scorer, monkeypatch):
+    # round-10 scorer lens, blocker (R1.0, plant c): a gate's base naming its head under --strict, at the git door
+    from collections import Counter
+    pg = scorer
+    summary, diff = "Added 1 test. Adds function foo. 1 file changed. Only touches tests/.", _m("tests/test_a.py")
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "clean", summary, diff, sample)
+    assert sample["scored"] == 1 and not t.violations, t.violating
+    _planted_many(pg, monkeypatch, [(
+        "    return DiffGate(verdict=verdict, base=base, head=head, claims=claims,",
+        "    return DiffGate(verdict=verdict, base=head if strict else base, head=head, claims=claims,")], "x11gitstrict")
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "planted", summary, diff, sample)
+    assert "G-C1_strict_report_differs" in t.violations, dict(t.violations)
+
+
+@pytest.mark.parametrize("good,bad", [
+    # round-10 scorer lens, blocker (R1.1): main's --name-status split forgetting U+2029 alone, refused by the third canary
+    ("    for line in _py_lines(name_status):",
+     "    for line in re.split(\"\\r\\n|[\\n\\r\\x0b\\x0c\\x1c\\x1d\\x1e\\x85\\u2028]\", name_status):"),
+    # round-10 scorer lens, minor (R1.3): K-3's `+++ /dev/null` with no `---` read as a deletion, refused by a raw canary
+    ("                cur = None\n            else:\n                if _dev_null(new):",
+     "                cur = None\n                status.setdefault(\"dev/null\", \"D\")\n            else:\n"
+     "                if _dev_null(new):"),
+    # (R1.3) the unreadable-header doubt dropped, refused by the raw canary beside dotted twins
+    ("                soft.append(_Z3_UNREAD_PAIR)     # NOTE_path2_eleventh_pass (R0.0): the pair under an unreadable header",
+     "                pass"),
+    # (R1.3) the doubt of a pair without a header's shape dropped, refused by the raw canary after an exact hunk
+    ("                soft.append(_Z3_UNSHAPED)        # NOTE_path2_eleventh_pass (R0.2): read as a header without its shape",
+     "                pass"),
+])
+def test_x11_the_canaries_refuse_what_no_shelf_record_reaches(scorer, monkeypatch, good, bad):
+    pg = scorer
+    report, violating = pg.score_canaries()
+    assert report["pass"] and not violating, report
+    assert report["door"]["scored"] == len(pg.DOOR_CANARIES) == 3 and report["raw_door_canaries"] == len(pg.RAW_CANARIES)
+    assert chr(0x2029) in pg.SPLIT_ONLY_BY_PYTHON
+    _planted_many(pg, monkeypatch, [(good, bad)], "x11canary")
+    report, violating = pg.score_canaries()
+    assert not report["pass"] and violating, report
+
+
+def test_x11_the_reference_is_provenance_and_must_be_the_baseline(scorer, monkeypatch):
+    pg = scorer
+    assert "styxx/_diffgate_ref.py" in pg.PROVENANCE_FILES
+    prov = pg.provenance()
+    assert prov["reference_is_the_baseline"] and prov["reference_sha256"] == pg.BASE_SHA256
+    t = pg.Tally(name_prs=True)
+    t.report({**prov, "reference_is_the_baseline": False, "unmodified_against_head": True})
+    assert "G-C0_reference_is_not_the_baseline" in t.violations
