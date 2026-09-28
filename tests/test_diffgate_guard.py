@@ -406,6 +406,9 @@ def test_k5_reads_the_sentence_not_every_non_ascii_character():
     assert dg._apart_readings("a\rb.py: x") == (True, True)
     for mark in ("\u001f", "\u0085", "﻿", " ", " "):
         assert dg._apart_readings(f"Only touches{mark}docs/.") == (True, True), hex(ord(mark))
+        # and beside a character both templates read alike (the sentence is not ASCII, so not the fast path)
+        assert dg._apart_readings(f"Only touches{mark}docs/ — done.") == (True, True), hex(ord(mark))
+    assert dg._apart_readings("a\rb.py: x ✅") == (True, True)
     assert dg._apart_readings("Updated a.py.\r") == (False, False)
     assert dg._apart_readings("Added function café.") == (True, False)          # the name is W-2's in both ports
     assert dg._apart_readings("éadded function foo.") == (True, True)          # a word character outside the name
