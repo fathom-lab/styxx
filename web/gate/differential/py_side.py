@@ -7,7 +7,8 @@ The port in ../diffgate.js is a transliteration of one specific file: styxx/diff
 on main (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2 + PATH-1 + DECLARE-1), re-cut for the PATH-2 repairs
 (#97, #121, #101, as amended by AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
 NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25,
-NOTE_path2_seventh_pass_2026_09_25 and NOTE_path2_eighth_pass_2026_09_27) on the file that carries them, sha256
+NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27 and NOTE_path2_ninth_pass_2026_09_27) on the
+file that carries them, sha256
 PINNED below, reading names by the table styxx/_xid.py carries (PINNED_NAME_TABLE) and abstaining on the skew
 set beside it (PINNED_SKEW_SET). By default this
 script imports the checkout's module and REFUSES to run unless it hashes to that pin (after CRLF -> LF
@@ -50,7 +51,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "d7c298d4d93fd814f1f25a8eaa4c96d90372b31459cb30055b5cebf4fa9e23da"  # styxx/diffgate.py, main + PATH-2 eighth pass (LF)
+PINNED = "e975d098e0ecba01e3b2215e5bf59f0fdca2a5cb6880fba1ef317bf211135067"  # styxx/diffgate.py, main + PATH-2 ninth pass (LF)
 # NOTE_path2_seventh_pass: the instrument reads a name by styxx/_xid.py's table, so the table is pinned too
 # (the sha256 of the table string both ports carry; tests/test_diffgate_path2.py holds the two copies equal).
 PINNED_NAME_TABLE = "8df68f217cca495ab8a38ced9096213aabac4cf23927068d61397d2c9074d4cb"  # Unicode 15.0.0

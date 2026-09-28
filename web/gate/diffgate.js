@@ -10,8 +10,8 @@
  * PATH-2 repairs (PREREG_path2_resolution_2026_09_17: #97, #121, #101, as amended by
  * AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
  * NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25,
- * NOTE_path2_seventh_pass_2026_09_25 and NOTE_path2_eighth_pass_2026_09_27) on the file that carries them,
- * sha256 d7c298d4d93fd814f1f25a8eaa4c96d90372b31459cb30055b5cebf4fa9e23da — the styxx/diffgate.py this
+ * NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27 and NOTE_path2_ninth_pass_2026_09_27) on the
+ * file that carries them, sha256 e975d098e0ecba01e3b2215e5bf59f0fdca2a5cb6880fba1ef317bf211135067 — the styxx/diffgate.py this
  * branch would put on main, with the name table styxx/_xid.py carries (Unicode 15.0.0, table sha256
  * 8df68f21…, and the skew set beside it, 0b7134fd…, copied below); the 7.48.0 release carries main's file
  * (9b620e00…), without the PATH-2 repairs. Relative to the 7.47.0 wheel the port
@@ -48,7 +48,11 @@
  * missing a file GNU names outside any header pair (Y-1); a U+FEFF-led definition the diff does not show is
  * line 1, and any U+FEFF-led added test for the count (Y-2); a name that meets a code point the supported
  * Pythons read differently (Y-3); a count equal to what the #101 pairing leaves (Y-5) -- and GNU's
- * `/dev/null<TAB>timestamp` is recognised (Y-4). Two
+ * `/dev/null<TAB>timestamp` is recognised (Y-4). The ninth pass adds the licensed-difference rule: main's own reading of
+ * the diff, in its Python's spelling and its port's, is computed beside this one, and where this one differs from either
+ * and no named repair licenses the difference, the claim abstains -- the test count (Z-1), a definition (Z-2), the file
+ * list (Z-3) -- as does a path claim only the basename tier resolves (Z-4) and a definition claim over a Python file
+ * holding a definition line CPython may refuse (Z-5). Two
  * deliberate gaps remain: the structural "unparsed claims"
  * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
  * pass" is always UNCHECKABLE, exactly as the CLI without --run.
@@ -668,6 +672,8 @@ function _readDiff(diffText, notes = null) {
   const found = {};
   const note = (key, why) => { if (why && !(key in found)) found[key] = why; };
   const forms = new Map();                  // Y-1: each key's header path as written, case kept
+  const inside = new Set();                 // Z-3: the lines an exact hunk's counts read (W-1)
+  const soft = [];                          // Z-3: doubts main's reading of the file list also held
   const register = (rawPath, key) => {
     const form = rawPath.replace(/\\/g, "/").replace(/^(?:\.?\/)+/, "");
     if (!forms.has(key)) forms.set(key, form);
@@ -678,7 +684,7 @@ function _readDiff(diffText, notes = null) {
       register(pending.status === "D" ? pending.a : pending.b, pending.path());
       if (!status.has(pending.path())) status.set(pending.path(), pending.status);
       if (!sides.has(pending.path())) sides.set(pending.path(), [[], []]);
-    }
+    } else if (pending !== null) soft.push(_Z3_UNREAD);                  // Z-3: dropped, as main dropped it
   };
   const lines = _splitlines(diffText || "");
   for (let k = 0; k < lines.length; k++) {
@@ -693,6 +699,7 @@ function _readDiff(diffText, notes = null) {
         }
         newLeft -= 1; newNo += 1; added.push(text);
         if (cur !== null) sides.get(cur)[0].push(text);
+        inside.add(k);
         continue;
       }
       if (head === "-" && oldLeft) {
@@ -700,10 +707,11 @@ function _readDiff(diffText, notes = null) {
         if (oldNo === 1 && text.startsWith(_FILE_BOM)) text = text.slice(_FILE_BOM.length);
         oldLeft -= 1; oldNo += 1;
         if (cur !== null) sides.get(cur)[1].push(text);
+        inside.add(k);
         continue;
       }
-      if ((head === " " || line === "") && oldLeft && newLeft) { oldLeft -= 1; newLeft -= 1; oldNo += 1; newNo += 1; continue; }
-      if (head === "\\") continue;              // "\ No newline at end of file"
+      if ((head === " " || line === "") && oldLeft && newLeft) { oldLeft -= 1; newLeft -= 1; oldNo += 1; newNo += 1; inside.add(k); continue; }
+      if (head === "\\") { inside.add(k); continue; }   // "\ No newline at end of file"
       oldLeft = 0; newLeft = 0;                 // the counts do not allow this line: the hunk is over
     }
     if (line.startsWith("diff --git ")) {
@@ -713,7 +721,7 @@ function _readDiff(diffText, notes = null) {
       loose = false; leadOld = false; leadNew = false;
     } else if (line.startsWith("--- ")) {
       if (loose) {                                // Y-1: after lines no count placed, a header is not certain
-        if (_cleanHeader(lines, k)) { cleanPlus = k + 1; loose = false; }
+        if (_cleanHeader(lines, k)) { cleanPlus = k + 1; loose = false; soft.push(_Z3_SHAPED); }   // Z-3
         else note("files", _Y1_LOOSE);
       }
       oldPath = _pyStrip(line.slice(4));          // str.strip(), not trim() (V-2)
@@ -722,6 +730,10 @@ function _readDiff(diffText, notes = null) {
     } else if (line.startsWith("+++ ")) {
       if (loose && k !== cleanPlus) note("files", _Y1_LOOSE);
       const nw = _pyStrip(line.slice(4));
+      if (pending !== null && pending.path()
+          && ![_norm(pending.a), _norm(pending.b)].includes(_pairNames(_devNull(nw) ? (oldPath || "") : nw))) {
+        soft.push(_Z3_REPLACED(pending.path()));   // Z-3: dropped, as main dropped it
+      }
       let raw;
       if (_devNull(nw)) {                         // Y-4: a GNU timestamp after /dev/null
         status.set(_norm(oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath), "D");
@@ -769,7 +781,11 @@ function _readDiff(diffText, notes = null) {
     }
   }
   flush();
-  if (notes !== null) Object.assign(notes, found);
+  if (notes !== null) {
+    const why = _fileListDiffers(diffText || "", lines, status, inside, soft);   // Z-3
+    if (why) found.differs = why;
+    Object.assign(notes, found);
+  }
   return { status, added, sides };
 }
 function _diffNotes(diffText) {
@@ -1041,6 +1057,273 @@ function pyRepr(s) {
 }
 function pyList(arr) { return "[" + arr.map(pyRepr).join(", ") + "]"; }
 
+// NOTE_path2_ninth_pass_2026_09_27: THE LICENSED-DIFFERENCE RULE, as the Python's. main's own reading of the diff is
+// computed beside this one, in each of main's two spellings -- its Python's (str.splitlines(), Python's `\s`, `\w` and
+// `\b`, a line start only after \n) and its port's (\r\n, \r and \n; JavaScript's `\s`, ASCII `\w` and `\b`, a line start
+// after U+2028 and U+2029 too). The Python spelling is written from the code point lists the Python carries; the port
+// spelling is this runtime's own (`\s`, `trim()`, `.`, the multiline `^`), which is what main's port ran, and the
+// Python spells it out from its lists, so the condition is the same in both ports. Where this reading differs from
+// either and no named repair licenses the difference (#97's exact or suffix tier, #121's dotted key, #101's one-to-one
+// pairing, W-1's exact hunk), the claim abstains: Z-1 tests_added, Z-2 symbol_added, Z-3 the file list, Z-4 a path
+// claim only the basename tier matches, Z-5 the whole-file reading.
+const _chars = cps => String.fromCharCode(...cps);
+const _ZWS = Array.from({ length: 11 }, (_, i) => 0x2000 + i);                    // U+2000 to U+200A
+const _PY_SPACE = _chars([0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x85, 0xa0, 0x1680].concat(
+  _ZWS, [0x2028, 0x2029, 0x202f, 0x205f, 0x3000]));                              // Python's `\s`, str.strip()
+const _reCls = s => "[" + s.replace(/[\]\\^-]/g, "\\$&") + "]";
+const _PY_SPACE_CLS = _reCls(_PY_SPACE);
+const _PY_LINE_BREAK = new RegExp("\r\n|" + _reCls(_chars([0x0a, 0x0b, 0x0c, 0x0d, 0x1c, 0x1d, 0x1e, 0x85, 0x2028, 0x2029])));
+// main's port's BIN-1 patterns, with JavaScript's `.` (this port's _DIFF_GIT and _BINARY_LINE spell the Python's).
+const _DIFF_GIT_JS = /^diff --git (?:"a\/(?<qa>(?:[^"\\]|\\.)*)"|a\/(?<a>.*?)) (?:"b\/(?<qb>(?:[^"\\]|\\.)*)"|b\/(?<b>.*))$/;
+const _BINARY_LINE_JS = /^Binary files (?<a>.+?) and (?<b>.+?) differ$/;
+function _pyLines(text) {
+  // main's Python's split: str.splitlines(), spelled out.
+  const lines = text.split(_PY_LINE_BREAK);
+  if (lines.length && lines[lines.length - 1] === "") lines.pop();
+  return lines;
+}
+function _mainKey(p) {
+  // main's `_norm`, before #121: str.lstrip("./") after the backslashes turn, lower-cased.
+  return _stripChars(p.replace(/\\/g, "/"), "./", true, false).toLowerCase();
+}
+class _MainPending {
+  constructor(line, js) { this.js = js; [this.a, this.b] = this._paths(line); this.status = "M"; }
+  _paths(line) {
+    const body = line.slice("diff --git ".length);
+    if (body.length % 2 === 1) {
+      const mid = Math.floor(body.length / 2);
+      if (body[mid] === " " && body.slice(0, mid).startsWith("a/") && body.slice(mid + 1).startsWith("b/")
+          && body.slice(2, mid) === body.slice(mid + 3)) return [body.slice(2, mid), body.slice(mid + 3)];
+    }
+    const m = (this.js ? _DIFF_GIT_JS : _DIFF_GIT).exec(line);
+    if (!m) return ["", ""];
+    return [m.groups.qa !== undefined ? m.groups.qa : (m.groups.a || ""), m.groups.qb !== undefined ? m.groups.qb : (m.groups.b || "")];
+  }
+  note(line) {
+    if (line.startsWith("new file mode")) this.status = "A";
+    else if (line.startsWith("deleted file mode")) this.status = "D";
+    else if (line.startsWith("rename from ")) this.a = line.slice("rename from ".length);
+    else if (line.startsWith("rename to ")) this.b = line.slice("rename to ".length);
+    else {
+      const m = (this.js ? _BINARY_LINE_JS : _BINARY_LINE).exec(line);
+      if (m) { if (m.groups.a === "/dev/null") this.status = "A"; else if (m.groups.b === "/dev/null") this.status = "D"; }
+    }
+  }
+  key() { const raw = this.status === "D" ? this.a : this.b; return raw ? _mainKey(raw) : ""; }
+}
+function _mainStatus(lines, js, skip = null) {
+  // main's parseUnifiedDiff status map over `lines`, keyed by main's `_norm`, in main's Python's spelling or (`js`) its
+  // port's; a line whose index is in `skip` is not read. null where main raises (`+++ /dev/null`, no `---` before it).
+  const strip = js ? (s => s.trim()) : _pyStrip;
+  const status = new Map();
+  let oldPath = null, pending = null;
+  const flush = () => { if (pending !== null && pending.key() && !status.has(pending.key())) status.set(pending.key(), pending.status); };
+  for (let i = 0; i < lines.length; i++) {
+    if (skip !== null && skip.has(i)) continue;
+    const line = lines[i];
+    if (line.startsWith("diff --git ")) { flush(); pending = new _MainPending(line, js); }
+    else if (line.startsWith("--- ")) oldPath = strip(line.slice(4));
+    else if (line.startsWith("+++ ")) {
+      const nw = strip(line.slice(4));
+      if (nw === "/dev/null") {
+        if (oldPath === null) return null;
+        status.set(_mainKey(oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath), "D");
+      } else {
+        status.set(_mainKey(nw.startsWith("b/") ? nw.slice(2) : nw), (oldPath === "/dev/null" || oldPath === null) ? "A" : "M");
+      }
+      pending = null;
+    } else if (line.startsWith("+") && !line.startsWith("+++")) continue;
+    else if (pending !== null) pending.note(line);
+  }
+  flush();
+  return status;
+}
+const _mainAdded = lines => lines.filter(l => l.startsWith("+") && !l.startsWith("+++")).map(l => l.slice(1));
+const _PY_TEST_LINE = new RegExp("^" + _PY_SPACE_CLS + "*def test_");
+const _mainTouchesPython = status => status !== null && [...status.keys()].some(p => _PY_SUFFIXES.some(s => p.toLowerCase().endsWith(s)));
+class _MainReading {
+  // main's reading of one diff's added lines in its two spellings, and BC-1's answer on main's file list(s).
+  constructor(diffText, maps) {
+    this.addedPy = _mainAdded(_pyLines(diffText));
+    this.addedJs = _mainAdded(_splitlines(diffText));
+    this.tests = [this.addedPy.filter(l => _PY_TEST_LINE.test(l)).length,
+      (this.addedJs.join("\n").match(/^\s*def test_/gm) || []).length];           // main's port's own expression
+    this.raises = maps.some(m => m === null);
+    this.python = maps.map(_mainTouchesPython);
+  }
+}
+const _mainReading = diffText => new _MainReading(diffText, [_mainStatus(_pyLines(diffText), false), _mainStatus(_splitlines(diffText), true)]);
+function _mainNames(sent, start, jsName) {
+  // [main's Python's name, main's port's name]: `[A-Za-z_]\w*` with Python's `\w` (the table's) from where the
+  // template's `name` group starts, and the port's own group (ASCII `\w`).
+  let j = start + (start < sent.length ? (sent.codePointAt(start) > 0xffff ? 2 : 1) : 0);
+  while (j < sent.length) {
+    const cp = sent.codePointAt(j);
+    if (!(_xidMask(cp) & 4)) break;
+    j += cp > 0xffff ? 2 : 1;
+  }
+  return [sent.slice(start, j), jsName];
+}
+function _mainSymbolHit(namePy, nameJs, main) {
+  // [main's `hit` in each spelling, a code point its Python's `\b` turned on that the supported Pythons read differently].
+  let py = false, skewCp = null;
+  if (namePy) {
+    const blob = main.addedPy.join("\n");
+    const rx = new RegExp("(?:^|(?<=\\n))" + _PY_SPACE_CLS + "*(?:def|class)" + _PY_SPACE_CLS + "+" + _reEscape(namePy), "gu");
+    for (const m of blob.matchAll(rx)) {
+      const end = m.index + m[0].length;
+      if (end >= blob.length) { py = true; continue; }
+      const cp = blob.codePointAt(end);
+      if (_skew(cp)) { if (skewCp === null) skewCp = cp; }
+      else if (!(_xidMask(cp) & 4)) py = true;
+    }
+  }
+  const js = !!nameJs && new RegExp("^\\s*(?:def|class)\\s+" + _reEscape(nameJs) + "\\b", "m").test(main.addedJs.join("\n"));   // main's port's own
+  return [py, js, py ? null : skewCp];
+}
+function _pythonDiffers(status, main) {
+  if (main === null) return null;
+  if (main.raises) return "main raises on this diff (`+++ /dev/null` with no `---` line before it)";
+  if (!main.python.every(Boolean)) return "this reading finds a Python file in the diff's file list where main's reading of it found none (BC-1 read on main's keys); no repair licenses the difference";
+  return null;
+}
+function _testsDiffer(got, status, main) {
+  // Z-1: why `got`, or BC-1's answer, is not main's in both of main's spellings, else null.
+  if (main === null) return null;
+  const why = _pythonDiffers(status, main);
+  if (why) return why;
+  const [py, js] = main.tests;
+  if (got === py && py === js) return null;
+  return `this reading counts ${got} added test definitions where main's Python counted ${py} and its port ${js} (\`^\\s*def test_\` over main's line split); no repair licenses the difference`;
+}
+function _symbolDiffers(hit, name, namePy, nameJs, status, main) {
+  // Z-2: why `hit`, or BC-1's answer, is not main's in both of main's spellings, else null.
+  if (main === null) return null;
+  const why = _pythonDiffers(status, main);
+  if (why) return why;
+  const [py, js, skewCp] = _mainSymbolHit(namePy, nameJs, main);
+  if (skewCp !== null) return `main's Python read a definition of ${_qname(namePy)} through \`\\b\` before U+${_hex4(skewCp)}, which ${_Y3_VERSIONS} read differently`;
+  if (py === hit && js === hit) return null;
+  return `this reading finds ${hit ? "an" : "no"} added definition of ${_qname(name)} where main's Python ${py ? "did" : "did not"} and its port ${js ? "did" : "did not"} (\`^\\s*(?:def|class)\\s+NAME\\b\` over main's line split); no repair licenses the difference`;
+}
+const _ANY_SPACE_CLS = _reCls(_PY_SPACE + _chars([0xfeff]));
+const _LOOSE_DEF = new RegExp("^" + _ANY_SPACE_CLS + "*(?:async" + _ANY_SPACE_CLS + "+)?(?:def|class)" + _ANY_SPACE_CLS + "+");
+function _refusedDefinition(line) {
+  // Z-5: the line opens a definition of a name read loosely, and this reading refuses it.
+  const m = _LOOSE_DEF.exec(line);
+  if (!m) return false;
+  const i = m[0].length;
+  if (i >= line.length) return false;
+  const cp = line.codePointAt(i);
+  if (!((_xidMask(cp) & 1) || _skew(cp))) return false;
+  return _definedName(line, true) === null;
+}
+function _strayLines(addedBlob, sides) {
+  // The added lines outside any file, in order: the blob less every file's side.
+  const left = new Map();
+  for (const [, [added]] of (sides || new Map())) for (const l of added) left.set(l, (left.get(l) || 0) + 1);
+  const out = [];
+  for (const l of addedBlob.split("\n")) {
+    if ((left.get(l) || 0) > 0) left.set(l, left.get(l) - 1);
+    else out.push(l);
+  }
+  return out;
+}
+function _refusedFiles(addedBlob, sides) {
+  // Z-5: Map(file -> its earliest refused definition line) over the Python files and, as null, the lines outside any file.
+  const out = new Map();
+  for (const [path, [added]] of (sides || new Map())) {
+    if (_PY_SUFFIXES.some(s => _undotted(path).toLowerCase().endsWith(s))) {
+      const line = added.find(x => _refusedDefinition(x));
+      if (line !== undefined) out.set(path, line);
+    }
+  }
+  const line = _strayLines(addedBlob, sides).find(x => _refusedDefinition(x));
+  if (line !== undefined) out.set(null, line);
+  return out;
+}
+function _refusedWhy(path) {
+  const where = path === null ? "outside any file" : `in ${pyRepr(path)}`;
+  return `an added definition line ${where} is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line`;
+}
+function _wholeFileTests(addedBlob, sides) {
+  const refused = _refusedFiles(addedBlob, sides);
+  return refused.size ? _refusedWhy(refused.keys().next().value) : null;
+}
+function _wholeFileSymbol(name, addedBlob, sides) {
+  const refused = _refusedFiles(addedBlob, sides);
+  if (!refused.size) return null;
+  for (const [path, [added]] of (sides || new Map())) {
+    if (refused.has(path) && added.some(x => _defines(x, name))) return _refusedWhy(path);
+  }
+  if (refused.has(null) && _strayLines(addedBlob, sides).some(x => _defines(x, name))) return _refusedWhy(null);
+  return null;
+}
+function _basenameOnly(status, claimed) {
+  // Z-4: a path claim with a directory component that only the basename tier matches.
+  const c = _norm(claimed);
+  if (!c.includes("/")) return null;
+  const [p, st] = _findPath(status, claimed);
+  if (p === null || p === c || p.endsWith("/" + c)) return null;
+  return `${pyRepr(claimed)}: only a file with the same name in another directory is in the diff (${pyRepr(p)}, status ${pyRepr(st)}); #97 licenses the exact and suffix tiers only`;
+}
+function _licensedAgainst(status, main) {
+  // Z-3: why this status map is not `main` up to #121's dotted keys, else null.
+  const groups = new Map();
+  for (const [k, st] of status) {
+    const u = _undotted(k);
+    if (!groups.has(u)) groups.set(u, []);
+    groups.get(u).push([k, st]);
+  }
+  for (const [k, st] of main) if (!groups.has(k)) return `main reads ${pyRepr(k)} (${pyRepr(st)}), which this reading does not`;
+  for (const [u, ks] of groups) {
+    if (!main.has(u)) return `this reading reads ${pyRepr(ks[0][0])} (${pyRepr(ks[0][1])}), which main does not`;
+    if (!ks.some(([, st]) => st === main.get(u))) return `main reads ${pyRepr(u)} as ${pyRepr(main.get(u))}, this reading ${pyRepr(ks[0][0])} as ${pyRepr(ks[0][1])}`;
+  }
+  return null;
+}
+const _Z3_PREFIX = "this reading's file list differs from main's";
+const _Z3_SHAPED = "main's reading also took a `---`/`+++` pair after lines no hunk count holds for a header because it has a header's shape, and it may be content (a SQL `-- ` comment beside a `++` line)";
+const _Z3_REPLACED = key => `main's reading also dropped the \`diff --git\` file ${pyRepr(key)} for the next \`---\`/\`+++\` pair, which names another`;
+const _Z3_UNREAD = "main's reading also dropped a `diff --git` file whose header paths neither reading can read";
+function _apart(py, js) {
+  // Z-3: the earliest place main's Python's file list and its port's differ, in words.
+  for (const [k, st] of py) {
+    if (!js.has(k)) return `main's Python reads ${pyRepr(k)} (${pyRepr(st)}), which its port does not`;
+    if (js.get(k) !== st) return `main's Python reads ${pyRepr(k)} as ${pyRepr(st)}, its port as ${pyRepr(js.get(k))}`;
+  }
+  for (const [k, st] of js) if (!py.has(k)) return `main's port reads ${pyRepr(k)} (${pyRepr(st)}), which its Python does not`;
+  return "";
+}
+function _mapsEqual(a, b) {
+  if (a.size !== b.size) return false;
+  for (const [k, v] of a) if (!b.has(k) || b.get(k) !== v) return false;
+  return true;
+}
+function _fileListDiffers(diffText, lines, status, inside, soft) {
+  const py = _mainStatus(_pyLines(diffText), false), js = _mainStatus(lines, true);
+  if (py === null || js === null) return `${_Z3_PREFIX}: main raises on it (\`+++ /dev/null\` with no \`---\` line before it)`;
+  if (!_mapsEqual(py, js)) {
+    return `main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): ${_apart(py, js)}`;
+  }
+  const why = _licensedAgainst(status, _mainStatus(lines, false, inside));
+  if (why) return `${_Z3_PREFIX} where no repair accounts for it: ${why}`;
+  const keys = [...status.keys()];
+  if (soft.length && (keys.length !== js.size || keys.some(k => !js.has(k)))) {
+    const undotted = new Set(keys.map(_undotted));
+    const same = undotted.size === js.size && [...js.keys()].every(k => undotted.has(k));
+    const repair = same ? "#121 keeps a dotfile's dot" : "W-1 reads an exact hunk's `---`/`+++` line as content";
+    return `${_Z3_PREFIX} by a repair (${repair}), and ${soft[0]}; the repair may have balanced that error`;
+  }
+  return null;
+}
+function _pairNames(raw) {
+  // Z-3: the file a `---`/`+++` header path names: cut at a TAB, quotes and `a/`/`b/` dropped, keyed.
+  let p = _pyStrip(raw.split("\t")[0]);
+  if (p.length >= 2 && p.startsWith('"') && p.endsWith('"')) p = p.slice(1, -1);
+  return _norm(p.startsWith("a/") || p.startsWith("b/") ? p.slice(2) : p);
+}
+
 function parseUnifiedDiff(diffText) {
   // The status map and the added blob, from _readDiff (NOTE_path2_sixth_pass, W-1).
   const { status, added } = _readDiff(diffText);
@@ -1153,10 +1436,12 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
     if (rawInputLen) noEvidence += `; ${rawInputLen} characters of input parsed to nothing, which is a parse failure, not an empty change`;
   }
   const noPaths = status.size === 0 ? "the diff carries no file paths, so scope cannot be checked" : null;
-  // NOTE_path2_eighth_pass (Y-1): what the one reading of the diff is not sure of.
+  // NOTE_path2_eighth_pass (Y-1): what the one reading of the diff is not sure of; NOTE_path2_ninth_pass (Z-3): where
+  // its file list is not main's and no repair licenses the difference.
   const notes = _diffNotes(diffText);
-  const unsureFiles = notes.files || null;
+  const unsureFiles = notes.files || notes.differs || null;
   const notSure = unsureFiles ? `the diff's file list is not certain: ${unsureFiles}` : null;
+  const main = _mainReading(diffText || "");                          // NOTE_path2_ninth_pass
 
   const findPath = claimed => _findPath(status, claimed);
 
@@ -1184,7 +1469,9 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
           c.verdict = "UNCHECKABLE"; c.why = noEvidence; claims.push(c); continue;
         }
         if (_PATH_KINDS.has(kind)) {
+          const onlyName = notSure ? null : _basenameOnly(status, d.path);
           if (notSure) { c.verdict = "UNCHECKABLE"; c.why = notSure; }               // NOTE_path2_eighth_pass (Y-1)
+          else if (onlyName) { c.verdict = "UNCHECKABLE"; c.why = onlyName; }        // NOTE_path2_ninth_pass (Z-4)
           else [c.verdict, c.why] = _pathClaimVerdict(kind, d.path, findPath);
         } else if (kind === "files_changed_count") {
           const n = parseInt(d.n, 10);
@@ -1206,10 +1493,17 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             const note = chg ? ` (${chg} changed, not added: #101)` : "";
             const unread = _asyncTestsAdded(sides, status);             // NOTE_path2_seventh_pass (A-1)
             const doubt = _testDoubt(addedBlob, sides, notes);          // NOTE_path2_eighth_pass (Y-2, Y-3)
+            // NOTE_path2_ninth_pass: `got`, or BC-1's answer, not main's (Z-1); a line the whole file may not survive (Z-5).
+            const unlicensed = _testsDiffer(got, status, main);
+            const whole = _wholeFileTests(addedBlob, sides);
             if (unread) {
               c.verdict = "UNCHECKABLE"; c.why = `diff adds ${unread} async test functions, which this template does not count; claim says ${n}`;
             } else if (doubt) {
               c.verdict = "UNCHECKABLE"; c.why = `${doubt}; claim says ${n}`;
+            } else if (unlicensed) {
+              c.verdict = "UNCHECKABLE"; c.why = `${unlicensed}; claim says ${n}`;
+            } else if (whole) {
+              c.verdict = "UNCHECKABLE"; c.why = `${whole}; claim says ${n}`;
             } else if (net === n && _pairingWithdraws(chg)) {            // NOTE_path2_eighth_pass (Y-5)
               c.verdict = "UNCHECKABLE";
               c.why = `diff adds ${net} test functions and changes ${chg}, claim says ${n}; a count left after pairing changed tests away is not verified, since a line this template reads may be one Python does not define (#101)`;
@@ -1239,10 +1533,22 @@ function gateDiffText(summaryText, diffText, { strict = false, _declared = false
             const [name, whyName] = _claimedName(sent, m.indices.groups.name[0]);
             const doubt = whyName === null ? _symbolDoubt(name, addedBlob, sides) : null;   // NOTE_path2_eighth_pass (Y-2)
             const hit = whyName === null && _symbolHit(name, addedBlob);
+            // NOTE_path2_ninth_pass: `hit`, or BC-1's answer, not main's (Z-2); a file holding the definition that the
+            // whole-file reading may refuse (Z-5).
+            let unlicensed = null, whole = null;
+            if (whyName === null) {
+              const [namePy, nameJs] = _mainNames(sent, m.indices.groups.name[0], m.groups.name);
+              unlicensed = _symbolDiffers(hit, name, namePy, nameJs, status, main);
+              whole = hit ? _wholeFileSymbol(name, addedBlob, sides) : null;
+            }
             if (whyName !== null) {
               c.verdict = "UNCHECKABLE"; c.why = whyName;
             } else if (doubt) {
               c.verdict = "UNCHECKABLE"; c.why = doubt;
+            } else if (unlicensed) {
+              c.verdict = "UNCHECKABLE"; c.why = unlicensed;
+            } else if (whole) {
+              c.verdict = "UNCHECKABLE"; c.why = whole;
             } else if (hit && _definitionOnlyChanged(name, sides, status)) {
               c.verdict = "UNCHECKABLE";                                   // PATH-2 (#101)
               c.why = `added lines define ${d.kind} ${_qname(name)} only where the removed lines of the same file define it too; a changed definition is not an added one (#101)`;

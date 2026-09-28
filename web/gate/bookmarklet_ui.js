@@ -1,8 +1,8 @@
 /* the gate, as a bookmarklet: on any public GitHub pull request page, one click reads the
  * description against the diff (both from api.github.com, nothing else) and pins the verdict
  * to the top of the page. Same JS port as the preview build (differential-tested against the
- * styxx Python instrument: the PATH-2 file, styxx/diffgate.py sha256 d7c298d4..., main's file -- the one
- * 7.48.0 ships -- with the #97, #121 and #101 repairs, NOTE_path2_eighth_pass_2026_09_27). Nothing
+ * styxx Python instrument: the PATH-2 file, styxx/diffgate.py sha256 e975d098..., main's file -- the one
+ * 7.48.0 ships -- with the #97, #121 and #101 repairs, NOTE_path2_ninth_pass_2026_09_27). Nothing
  * is sent anywhere; nothing is stored. */
 (async function () {
   const G = window.styxxDiffgateJS;
