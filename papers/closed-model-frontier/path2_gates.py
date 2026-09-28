@@ -87,6 +87,11 @@ rule reverted gives back the baseline claim -- verdict, reason and, for a compat
     Y-3   no code point is in the skew set (Unicode 13.0 to 16.0 against the table's 15.0.0)
     Y-4   `/dev/null` is the whole header path again (GNU's TAB and timestamp not cut)
     Y-5   the #101 pairing verifies `net` again (a count equal to it after a pairing reads VERIFIED)
+    Z-1   `got` and BC-1 are not asked against main's reading (NOTE_path2_ninth_pass, the licensed-difference rule)
+    Z-2   `hit` and BC-1 are not asked against main's reading
+    Z-3   the file list is not asked against main's (an unlicensed difference, main's ports apart, a doubt main held)
+    Z-4   a claim with a directory component that only the basename tier resolves verifies again
+    Z-5   no added definition line is refused as a whole file
 
 (NOTE_path2_seventh_pass: W-1's and W-2's code changed again this round -- a hunk read by its counts
 only when exact; one pinned name table; a claimed name that runs on past the identifier names none --
@@ -173,17 +178,29 @@ must be the one its own claims give: FAIL when a claim is CONTRADICTED, else PAS
 therefore moves only with an attributed claim.
 
 THE GIT DOOR (G-C8, blocking). Records whose every hunk is exact and whose paths are safe to write are rebuilt
-as two-commit repositories in a temporary directory; `gate_diff` (the git door) is run by both instruments and
+as two-commit repositories in a temporary directory (NOTE_path2_ninth_pass: bare, by `git fast-import`); `gate_diff` (the git door) is run by both instruments and
 scored as a door of its own, with the counterfactual's reverts acting through `gate_diff`, and the repaired git
 door must read exactly what the repaired raw door reads on git's bytes (except a file-list claim the raw door
 abstains on by Y-1 and git's list answers; G-C7 reads that claim from git's list). NOTE_path2_eighth_pass:
 differential mode tries EVERY record (a `--git-sample` smoke run fails the gate); corpus mode every PR with a
-tests_added or symbol_added claim and 1 in `--git-every` (25) of the others, up to `--git-sample` (3,000) scored;
+tests_added, symbol_added or file-list claim (NOTE_path2_ninth_pass) and 1 in `--git-every` (25) of the others, up to
+`--git-sample` (3,000) scored;
 and the counts are part of the verdict -- every record tried accounted for, none failed to rebuild, some scored.
 
 THE NAME TABLE AND THE SKEW SET (NOTE_path2_eighth_pass). Their sha256s are pinned in this file as literals; the
 scorer refuses to run on a Python whose Unicode is not 15.0.0 (the table is checked against that database, code
 point by code point); the skew set is re-derived from web/gate/xid_versions.json.
+
+NOTE_path2_ninth_pass. The licensed-difference rules Z-1 to Z-5 have reverts and admissions (each only abstains, on
+the kinds it reads) and oracles: main's reading of the diff in both of main's spellings is this file's own
+(`own_main_status`, `OwnMain`; main's Python is this interpreter, main's port is spelled out), and every claim's
+verdict and reason re-derives the rule. The round-8 scorer findings: G-C7 holds Y-1's git-door reading
+(`_status_notes`) to this file's on every record's paths and a case-folded variant; the git door's repositories are
+bare and written by `git fast-import`, so dot-led segments and case twins rebuild, and a record that deletes one file
+and creates another is scored a second time with git's rename detection on; `compat_violations` re-derives C-2's
+whole reading (the removed and signature_changed lists and the reason); corpus mode sends every PR with a file-list
+or definition claim through the git door; G-C1 compares `uncovered_texts` and scores every record a second time with
+strict on, for both instruments.
 """
 from __future__ import annotations
 
@@ -214,7 +231,8 @@ PREREG = "PREREG_path2_resolution_2026_09_17.md"
 AMENDMENT = "AMENDMENT_path2_resolution_2026_09_17.md"
 NOTE = ["NOTE_path2_third_pass_2026_09_25.md", "NOTE_path2_fourth_pass_2026_09_25.md",
         "NOTE_path2_fifth_pass_2026_09_25.md", "NOTE_path2_sixth_pass_2026_09_25.md",
-        "NOTE_path2_seventh_pass_2026_09_25.md", "NOTE_path2_eighth_pass_2026_09_27.md"]
+        "NOTE_path2_seventh_pass_2026_09_25.md", "NOTE_path2_eighth_pass_2026_09_27.md",
+        "NOTE_path2_ninth_pass_2026_09_27.md"]
 # The baseline is "the instrument before THIS repair". The preregistration named `87dded26`, the
 # origin/main this branch was cut from; the branch has since been rebased onto `98a5c368`, and
 # PATH-1 (#127), the COMPAT-2 port (#126) and DECLARE-1 (#129/#130) landed in between. Scored
@@ -494,7 +512,8 @@ def _parsers_fifth_pass(m: types.ModuleType) -> dict:
     """W-1 reverted: the fifth pass's two parsers, this file's own copy -- no hunk counts, so a `--- ` or
     `+++ ` line is a header wherever it stands, the sides parser forgets its file at a `--- ` line, and no
     U+FEFF is dropped at line 1. They call the module's `_diff_lines`, `_Pending` and `_norm`, so F-2's and
-    #121's reverts still act through them."""
+    #121's reverts still act through them -- and (NOTE_path2_ninth_pass) its `_dev_null`, Y-4's reading, a later rule's
+    code the fifth pass did not have: W-1's revert no longer reverts Y-4 with it, and Y-4's acts through these."""
     def parse_unified_diff(diff_text: str):
         status: dict = {}
         added: list = []
@@ -513,9 +532,9 @@ def _parsers_fifth_pass(m: types.ModuleType) -> dict:
                 old_path = line[4:].strip()
             elif line.startswith("+++ "):
                 new_ = line[4:].strip()
-                if new_ == "/dev/null":
+                if m._dev_null(new_):
                     status[m._norm(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
-                elif old_path in ("/dev/null", None):
+                elif old_path is None or m._dev_null(old_path):
                     status[m._norm(new_[2:] if new_.startswith("b/") else new_)] = "A"
                 else:
                     status[m._norm(new_[2:] if new_.startswith("b/") else new_)] = "M"
@@ -547,7 +566,7 @@ def _parsers_fifth_pass(m: types.ModuleType) -> dict:
                 cur = None
             elif line.startswith("+++ "):
                 new_ = line[4:].strip()
-                if new_ == "/dev/null":
+                if m._dev_null(new_):
                     raw = old_path[2:] if old_path and old_path.startswith("a/") else (old_path or "")
                 else:
                     raw = new_[2:] if new_.startswith("b/") else new_
@@ -591,12 +610,23 @@ REVERTS = {
     "Y-3": lambda m: {"_skew": lambda ch: False},
     "Y-4": lambda m: {"_dev_null": lambda path: path == "/dev/null"},
     "Y-5": lambda m: {"_pairing_withdraws": lambda chg: False},
+    # NOTE_path2_ninth_pass: the licensed-difference rule. Z-1 `got` and BC-1 are not asked against main's reading;
+    # Z-2 nor is `hit`; Z-3 the file list is not asked against main's; Z-4 the basename tier verifies again; Z-5 no
+    # definition line is refused as a whole file.
+    "Z-1": lambda m: {"_tests_differ": lambda got, status, main: None},
+    "Z-2": lambda m: {"_symbol_differs": lambda hit, name, name_py, name_js, status, main: None},
+    "Z-3": lambda m: {"_files_differ": lambda notes: None},
+    "Z-4": lambda m: {"_basename_only": lambda status, claimed: None},
+    "Z-5": lambda m: {"_whole_file_tests": lambda blob, sides: None,
+                      "_whole_file_symbol": lambda name, blob, sides: None},
 }
 RULES = tuple(REVERTS)
 TABLE_RULES = ("#97", "#121", "#101")
+NINTH_PASS_RULES = ("Z-1", "Z-2", "Z-3", "Z-4", "Z-5")
 # Where two reverts patch the same name (V-1 and W-2: the definition reading), the OLDER rule's code wins:
 # W-2 was written over V-1, so V-1 reverted means the fourth pass's reading whether or not W-2 is.
-PRECEDENCE = ("Y-5", "Y-4", "Y-3", "Y-2", "Y-1", "A-1", "W-2", "W-1", "V-4", "V-1", "F-3", "F-2", "R-1", "#101", "#121", "#97")
+PRECEDENCE = ("Z-5", "Z-4", "Z-3", "Z-2", "Z-1", "Y-5", "Y-4", "Y-3", "Y-2", "Y-1", "A-1", "W-2", "W-1", "V-4", "V-1",
+              "F-3", "F-2", "R-1", "#101", "#121", "#97")
 # NOTE_path2_eighth_pass: the kinds whose verdict reads the file list (Y-1 abstains them where it is unsure).
 FILE_LIST_KINDS = ("files_changed_count", "only_touches") + PATH_KINDS
 
@@ -666,11 +696,31 @@ def admits(rule: str, k: str, vb: str, vn: str, why: str, diff: str = "", summar
         return gnu_null_in(diff)
     if rule == "Y-5":
         return k == "tests_added" and vn == "UNCHECKABLE"
+    # NOTE_path2_ninth_pass. Each licensed-difference rule only abstains, on the kinds it reads: Z-1 tests_added, Z-2
+    # symbol_added, Z-3 the file-list kinds, Z-4 the path claims, Z-5 the two definition kinds. As for Y-1, a rule whose
+    # abstention the repaired claim does not show shaped nothing there (another rule's revert woke it) and is admitted
+    # as that; G-C7 re-derives every one of them with this file's own code either way.
+    if rule in NINTH_PASS_RULES:
+        kinds = {"Z-1": ("tests_added",), "Z-2": ("symbol_added",), "Z-3": FILE_LIST_KINDS, "Z-4": PATH_KINDS,
+                 "Z-5": ("tests_added", "symbol_added")}[rule]
+        if rule == "Z-3" and not own_read(diff)[3].get("differs"):
+            return True
+        return (vn == "UNCHECKABLE" and k in kinds) or abstention_owner(why, k) != rule
     raise ValueError(rule)
 
 
-def abstention_owner(why: str):
-    """The eighth-pass rule (or A-1) whose abstention a reason is, by its words, else None."""
+def abstention_owner(why: str, k: str = ""):
+    """The eighth- or ninth-pass rule (or A-1) whose abstention a reason is, by its words, else None."""
+    if any(x in why for x in (Z3_DIFFERS, Z3_APART)):
+        return "Z-3"
+    if Z1_WHY in why or ((Z12_BC1 in why or Z12_RAISES in why) and k == "tests_added"):
+        return "Z-1"
+    if Z2_WHY in why or Z2_SKEW in why or ((Z12_BC1 in why or Z12_RAISES in why) and k == "symbol_added"):
+        return "Z-2"
+    if Z4_WHY in why:
+        return "Z-4"
+    if Z5_WHY in why:
+        return "Z-5"
     if why.startswith(NOT_SURE) or any(x in why for x in (LOOSE_WHY, COLLIDE_WHY, UNCOUNTED_WHY)):
         return "Y-1"
     if Y2_WHY in why or Y2_TEST in why:
@@ -921,6 +971,16 @@ Y2_TEST = "an added test definition opens with U+FEFF, which main's Python count
 Y5_WHY = ("a count left after pairing changed tests away is not verified, since a line this template reads may be "
           "one Python does not define (#101)")
 Y3_VERSIONS = "the Pythons this package supports (Unicode 13.0 to 16.0)"
+# NOTE_path2_ninth_pass: each licensed-difference rule's abstention, by its words.
+Z1_WHY = "(`^\\s*def test_` over main's line split); no repair licenses the difference"
+Z2_WHY = "(`^\\s*(?:def|class)\\s+NAME\\b` over main's line split); no repair licenses the difference"
+Z2_SKEW = "through `\\b` before U+"
+Z12_BC1 = "(BC-1 read on main's keys); no repair licenses the difference"
+Z12_RAISES = "main raises on this diff (`+++ /dev/null` with no `---` line before it)"
+Z3_DIFFERS = "this reading's file list differs from main's"
+Z3_APART = "main's Python and its port read the file list apart"
+Z4_WHY = "only a file with the same name in another directory is in the diff"
+Z5_WHY = "is one this reading refuses and CPython may refuse too"
 
 
 def own_wide(text: str, i: int) -> str:
@@ -1141,6 +1201,8 @@ def own_read(diff: str) -> tuple:
     lines = git_lines(diff)
     loose, plus_ok = False, -1
     lead_old = lead_new = False
+    counted: set = set()          # NOTE_path2_ninth_pass (Z-3): the lines an exact hunk's counts read
+    soft: list = []               # Z-3: the doubts main's reading of the file list also held
 
     def pend_key() -> str:
         raw = pend[0] if pend[2] == "D" else pend[1]
@@ -1151,6 +1213,8 @@ def own_read(diff: str) -> tuple:
             register(pend[0] if pend[2] == "D" else pend[1])
             status.setdefault(pend_key(), pend[2])
             sides.setdefault(pend_key(), ([], []))
+        elif pend is not None:
+            soft.append(Z3_UNREAD)
 
     def unsure(*keys_why) -> None:
         for key, why in keys_why:
@@ -1171,6 +1235,7 @@ def own_read(diff: str) -> tuple:
 
     for k, (line, (where, no)) in enumerate(hunk_walk(diff)):
         if where in ("added", "removed"):
+            counted.add(k)
             text = line[1:]
             if no == 1 and text[:1] == "\ufeff":
                 text = text[1:]
@@ -1181,6 +1246,7 @@ def own_read(diff: str) -> tuple:
                 sides[cur][0 if where == "added" else 1].append(text)
             continue
         if where == "context":
+            counted.add(k)
             continue
         mm = HUNK.match(line)
         if line.startswith("diff --git "):
@@ -1191,6 +1257,7 @@ def own_read(diff: str) -> tuple:
             if loose:
                 if own_clean_header(lines, k):
                     plus_ok, loose = k + 1, False
+                    soft.append(Z3_SHAPED)
                 else:
                     unsure(("files", LOOSE_WHY))
             old_path, cur = line[4:].strip(), None
@@ -1199,6 +1266,11 @@ def own_read(diff: str) -> tuple:
             if loose and k != plus_ok:
                 unsure(("files", LOOSE_WHY))
             nw = line[4:].strip()
+            if pend is not None and pend_key():
+                named = own_pair_names((old_path or "") if own_dev_null(nw) else nw)
+                if named not in (own_key(pend[0]), own_key(pend[1])):
+                    soft.append(f"main's reading also dropped the `diff --git` file {pend_key()!r} for the next "
+                                "`---`/`+++` pair, which names another")
             if own_dev_null(nw):
                 status[own_key(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
                 raw = old_path[2:] if old_path and old_path.startswith("a/") else (old_path or "")
@@ -1243,6 +1315,9 @@ def own_read(diff: str) -> tuple:
             if pend is not None:
                 _note(pend, line)
     flush()
+    why = own_file_list_differs(diff, status, counted, soft)           # NOTE_path2_ninth_pass (Z-3)
+    if why:
+        notes["differs"] = why
     return status, added, sides, notes
 
 
@@ -1255,6 +1330,275 @@ def own_name_status(text: str) -> dict:
         if len(parts) >= 2:
             status[own_key(parts[-1])] = parts[0][:1]
     return status
+
+
+# ── NOTE_path2_ninth_pass: main's own reading, written out -- the other side of the licensed-difference rule ──
+# main's Python is this interpreter (the scorer runs under 3.12, whose Unicode is the table's): str.splitlines(),
+# str.strip(), `re`'s `\s`, `\w` and `\b`. main's port is JavaScript, spelled out here: its `\s` (which trim() strips),
+# its `.` (no line terminator), its multiline `^` (after \n, \r, U+2028, U+2029), its ASCII `\w` and `\b`.
+LS_PS = chr(0x2028) + chr(0x2029)
+JS_SPACE = "".join(map(chr, (9, 10, 11, 12, 13, 32, 0xA0, 0x1680, *range(0x2000, 0x200B), 0x2028, 0x2029, 0x202F,
+                            0x205F, 0x3000, 0xFEFF)))
+JS_WS = "[" + re.escape(JS_SPACE) + "]"
+JS_DOT = "[^\n\r" + LS_PS + "]"
+JS_LINE_START = "(?:(?<![\\s\\S])|(?<=[\n\r" + LS_PS + "]))"
+DIFF_GIT_JS = re.compile(r'^diff --git (?:"a/(?P<qa>(?:[^"\\]|\\' + JS_DOT + r')*)"|a/(?P<a>' + JS_DOT + r'*?)) '
+                         r'(?:"b/(?P<qb>(?:[^"\\]|\\' + JS_DOT + r')*)"|b/(?P<b>' + JS_DOT + r'*))$')
+BINARY_JS = re.compile("^Binary files (?P<a>" + JS_DOT + "+?) and (?P<b>" + JS_DOT + "+?) differ$")
+
+
+def main_key(p: str) -> str:
+    """main's `_norm`: `lstrip("./")` after the backslashes turn, lower case."""
+    return p.replace("\\", "/").lstrip("./").lower()
+
+
+def own_main_header_paths(line: str, js: bool) -> tuple:
+    if not js:
+        return BASE._header_paths(line)                  # main's BIN-1 code, which this branch does not change
+    body = line[len("diff --git "):]
+    if len(body) % 2 == 1:
+        mid = len(body) // 2
+        if body[mid] == " " and body[:mid].startswith("a/") and body[mid + 1:].startswith("b/") and body[2:mid] == body[mid + 3:]:
+            return body[2:mid], body[mid + 3:]
+    mm = DIFF_GIT_JS.match(line)
+    if not mm:
+        return "", ""
+    return (mm.group("qa") if mm.group("qa") is not None else (mm.group("a") or ""),
+            mm.group("qb") if mm.group("qb") is not None else (mm.group("b") or ""))
+
+
+def own_main_status(lines: list, js: bool, skip=()):
+    """main's `parse_unified_diff` status map over `lines`, keyed by `main_key`, in main's Python's spelling or its
+    port's; a line whose index is in `skip` (W-1's exact hunks) is not read. None where main raises."""
+    strip = (lambda s: s.strip(JS_SPACE)) if js else str.strip
+    status: dict = {}
+    old_path = pend = None
+
+    def flush() -> None:
+        if pend is not None:
+            raw = pend[0] if pend[2] == "D" else pend[1]
+            if raw and main_key(raw) not in status:
+                status[main_key(raw)] = pend[2]
+    for i, line in enumerate(lines):
+        if i in skip:
+            continue
+        if line.startswith("diff --git "):
+            flush()
+            pend = [*own_main_header_paths(line, js), "M"]
+        elif line.startswith("--- "):
+            old_path = strip(line[4:])
+        elif line.startswith("+++ "):
+            nw = strip(line[4:])
+            if nw == "/dev/null":
+                if old_path is None:
+                    return None
+                status[main_key(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
+            else:
+                status[main_key(nw[2:] if nw.startswith("b/") else nw)] = "A" if old_path in ("/dev/null", None) else "M"
+            pend = None
+        elif line.startswith("+") and not line.startswith("+++"):
+            pass
+        elif pend is not None:
+            if js and not line.startswith(("new file mode", "deleted file mode", "rename from ", "rename to ")):
+                mm = BINARY_JS.match(line)
+                if mm and mm.group("a") == "/dev/null":
+                    pend[2] = "A"
+                elif mm and mm.group("b") == "/dev/null":
+                    pend[2] = "D"
+            else:
+                _note(pend, line)
+    flush()
+    return status
+
+
+class OwnMain:
+    """main's reading of one door's text: its added lines in each spelling, its `got` in each, BC-1 on its file
+    list(s), and whether it raises."""
+
+    def __init__(self, text: str, maps: tuple):
+        self.added_py = [x[1:] for x in text.splitlines() if x.startswith("+") and not x.startswith("+++")]
+        self.added_js = [x[1:] for x in git_lines(text) if x.startswith("+") and not x.startswith("+++")]
+        self.tests = (len(re.findall(r"^\s*def test_", "\n".join(self.added_py), re.M)),
+                      len(re.findall(JS_LINE_START + JS_WS + "*def test_", "\n".join(self.added_js))))
+        self.raises = any(m is None for m in maps)
+        self.python = [m is not None and any(p.lower().endswith((".py", ".pyi")) for p in m) for m in maps]
+
+
+def own_main_raw(diff: str) -> OwnMain:
+    return OwnMain(diff, (own_main_status(diff.splitlines(), False), own_main_status(git_lines(diff), True)))
+
+
+def own_tests_differ(got: int, main: OwnMain):
+    """Z-1, written out."""
+    if main.raises:
+        return Z12_RAISES
+    if not all(main.python):
+        return ("this reading finds a Python file in the diff's file list where main's reading of it found none "
+                + Z12_BC1)
+    py, js = main.tests
+    if got == py == js:
+        return None
+    return f"this reading counts {got} added test definitions where main's Python counted {py} and its port {js} {Z1_WHY}"
+
+
+def own_symbol_differs(hit: bool, name: str, text: str, start: int, main: OwnMain):
+    """Z-2, written out: main's Python's name is its template's (this interpreter's `\\w`), its port's the ASCII run."""
+    if main.raises:
+        return Z12_RAISES
+    if not all(main.python):
+        return ("this reading finds a Python file in the diff's file list where main's reading of it found none "
+                + Z12_BC1)
+    template_name = re.match(r"[A-Za-z_]\w*", text[start:], re.I)
+    name_py = template_name.group(0) if template_name else ""
+    ascii_run = re.match(r"[A-Za-z_][A-Za-z0-9_]*", text[start:])
+    name_js = ascii_run.group(0) if ascii_run else ""
+    py, skew_cp = False, None
+    if name_py:
+        blob = "\n".join(main.added_py)
+        for mm in re.finditer(r"^\s*(?:def|class)\s+" + re.escape(name_py), blob, re.M):
+            nxt = blob[mm.end():mm.end() + 1]
+            if nxt and skew(nxt):
+                skew_cp = skew_cp if skew_cp is not None else ord(nxt)
+            elif not nxt or not re.match(r"\w", nxt):
+                py = True
+    js = bool(name_js) and re.search(JS_LINE_START + JS_WS + "*(?:def|class)" + JS_WS + "+" + re.escape(name_js)
+                                     + "(?![A-Za-z0-9_])", "\n".join(main.added_js)) is not None
+    if not py and skew_cp is not None:
+        return f"main's Python read a definition of '{name_py}' {Z2_SKEW}{skew_cp:04X}, which {Y3_VERSIONS} read differently"
+    if py == hit and js == hit:
+        return None
+    return (f"this reading finds {'an' if hit else 'no'} added definition of '{name}' where main's Python "
+            f"{'did' if py else 'did not'} and its port {'did' if js else 'did not'} {Z2_WHY}")
+
+
+def own_refused(line: str) -> bool:
+    """Z-5, written out: a definition head read loosely (any whitespace either of main's spellings reads, and U+FEFF),
+    a name opening there (by the table, or the skew set), and W-2's reading refusing the line."""
+    mm = re.match("^[\\s" + chr(0xFEFF) + "]*(?:async[\\s" + chr(0xFEFF) + "]+)?(?:def|class)[\\s" + chr(0xFEFF) + "]+", line)
+    if mm is None or mm.end() >= len(line):
+        return False
+    ch = line[mm.end()]
+    return bool(xid_mask(ch) & 1 or skew(ch)) and defined(line, True) is None
+
+
+def own_strays(added: list, sides: dict) -> list:
+    left = Counter(x for a, _r in sides.values() for x in a)
+    out = []
+    for x in "\n".join(added).split("\n"):
+        if left[x] > 0:
+            left[x] -= 1
+        else:
+            out.append(x)
+    return out
+
+
+def own_refused_files(added: list, sides: dict) -> dict:
+    out: dict = {}
+    for path, (a, _r) in sides.items():
+        if own_undotted(path).lower().endswith((".py", ".pyi")):
+            hit = next((x for x in a if own_refused(x)), None)
+            if hit is not None:
+                out[path] = hit
+    stray = next((x for x in own_strays(added, sides) if own_refused(x)), None)
+    if stray is not None:
+        out[None] = stray
+    return out
+
+
+def own_refused_why(path) -> str:
+    where = "outside any file" if path is None else f"in {path!r}"
+    return (f"an added definition line {where} {Z5_WHY}, and a file CPython refuses defines nothing; this reading "
+            "reads it line by line")
+
+
+def own_whole_symbol(name: str, added: list, sides: dict):
+    refused = own_refused_files(added, sides)
+    for path, (a, _r) in sides.items():
+        if path in refused and any((defined(x) or ("", ""))[1] == name for x in a):
+            return own_refused_why(path)
+    if None in refused and any((defined(x) or ("", ""))[1] == name for x in own_strays(added, sides)):
+        return own_refused_why(None)
+    return None
+
+
+def own_licensed(status: dict, main: dict):
+    """Z-3, written out: each of this reading's keys, undotted, is one of main's, every one of main's is, and main's
+    status for it is one of theirs -- else the earliest difference, in words."""
+    groups: dict = {}
+    for k, st in status.items():
+        groups.setdefault(own_undotted(k), []).append((k, st))
+    for k, st in main.items():
+        if k not in groups:
+            return f"main reads {k!r} ({st!r}), which this reading does not"
+    for u, ks in groups.items():
+        if u not in main:
+            return f"this reading reads {ks[0][0]!r} ({ks[0][1]!r}), which main does not"
+        if main[u] not in [st for _k, st in ks]:
+            return f"main reads {u!r} as {main[u]!r}, this reading {ks[0][0]!r} as {ks[0][1]!r}"
+    return None
+
+
+def own_file_list_differs(diff: str, status: dict, inside: set, soft: list):
+    """Z-3 at the raw door, written out."""
+    py, js = own_main_status(diff.splitlines(), False), own_main_status(git_lines(diff), True)
+    if py is None or js is None:
+        return f"{Z3_DIFFERS}: main raises on it (`+++ /dev/null` with no `---` line before it)"
+    if py != js:
+        odd = next(((k, st) for k, st in py.items() if js.get(k) != st), None)
+        if odd is None:
+            k, st = next((k, st) for k, st in js.items() if k not in py)
+            where = f"main's port reads {k!r} ({st!r}), which its Python does not"
+        elif odd[0] not in js:
+            where = f"main's Python reads {odd[0]!r} ({odd[1]!r}), which its port does not"
+        else:
+            where = f"main's Python reads {odd[0]!r} as {odd[1]!r}, its port as {js[odd[0]]!r}"
+        return f"{Z3_APART} (str.splitlines() breaks lines JavaScript does not): {where}"
+    why = own_licensed(status, own_main_status(git_lines(diff), False, inside))
+    if why:
+        return f"{Z3_DIFFERS} where no repair accounts for it: {why}"
+    if soft and set(status) != set(js):
+        repair = ("#121 keeps a dotfile's dot" if {own_undotted(k) for k in status} == set(js)
+                  else "W-1 reads an exact hunk's `---`/`+++` line as content")
+        return f"{Z3_DIFFERS} by a repair ({repair}), and {soft[0]}; the repair may have balanced that error"
+    return None
+
+
+def own_main_name_status(text: str) -> dict:
+    """main's git-door file list: `--name-status` split by str.splitlines(), keyed by `main_key`."""
+    out: dict = {}
+    for line in text.splitlines():
+        parts = line.split("\t")
+        if len(parts) >= 2:
+            out[main_key(parts[-1])] = parts[0][:1]
+    return out
+
+
+def own_status_differs(name_status: str, status: dict):
+    why = own_licensed(status, own_main_name_status(name_status))
+    return f"{Z3_DIFFERS} where no repair accounts for it: {why}" if why else None
+
+
+def own_basename_only(status: dict, claimed: str):
+    """Z-4, written out: a claim with a directory component that only the basename tier resolves."""
+    c = own_key(claimed)
+    if "/" not in c:
+        return None
+    p, st = own_find_path(status, claimed)
+    if p is None or p == c or p.endswith("/" + c):
+        return None
+    return (f"{claimed!r}: {Z4_WHY} ({p!r}, status {st!r}); #97 licenses the exact and suffix tiers only")
+
+
+Z3_SHAPED = ("main's reading also took a `---`/`+++` pair after lines no hunk count holds for a header because it has "
+             "a header's shape, and it may be content (a SQL `-- ` comment beside a `++` line)")
+Z3_UNREAD = "main's reading also dropped a `diff --git` file whose header paths neither reading can read"
+
+
+def own_pair_names(raw: str) -> str:
+    p = raw.split("\t", 1)[0].strip()
+    if len(p) >= 2 and p[0] == '"' and p[-1] == '"':
+        p = p[1:-1]
+    return own_key(p[2:] if p[:2] in ("a/", "b/") else p)
 
 
 BC1_WHY = "no Python file in the diff; this template counts `def` lines (#110)"
@@ -1325,7 +1669,8 @@ def own_test_doubt(added: list, sides: dict, notes: dict | None = None):
     return None
 
 
-def expected_tests(c, status: dict, added: list, sides: dict, notes: dict | None = None) -> tuple:
+def expected_tests(c, status: dict, added: list, sides: dict, notes: dict | None = None,
+                   main: "OwnMain | None" = None) -> tuple:
     """A tests_added claim's (verdict, reason), by this file's own code."""
     n, noun = int(c.detail["n"]), c.detail.get("noun", "").lower()
     if not touches_python(status):
@@ -1340,6 +1685,12 @@ def expected_tests(c, status: dict, added: list, sides: dict, notes: dict | None
     doubt = own_test_doubt(added, sides, notes)
     if doubt:
         return "UNCHECKABLE", f"{doubt}; claim says {n}"
+    z1 = own_tests_differ(got, main) if main is not None else None          # NOTE_path2_ninth_pass (Z-1)
+    if z1:
+        return "UNCHECKABLE", f"{z1}; claim says {n}"
+    refused = own_refused_files(added, sides)                                # Z-5
+    if refused:
+        return "UNCHECKABLE", f"{own_refused_why(next(iter(refused)))}; claim says {n}"
     if net == n and chg:                                   # Y-5: the pairing withdraws, it does not verify
         return "UNCHECKABLE", f"diff adds {net} test functions and changes {chg}, claim says {n}; {Y5_WHY}"
     if net == n:
@@ -1353,7 +1704,8 @@ def expected_tests(c, status: dict, added: list, sides: dict, notes: dict | None
     return "CONTRADICTED", f"diff adds {net} test functions, claim says {n}{note}"
 
 
-def expected_symbol(c, sentence: str, start: int, status: dict, added: list, sides: dict) -> tuple:
+def expected_symbol(c, sentence: str, start: int, status: dict, added: list, sides: dict,
+                    main: "OwnMain | None" = None) -> tuple:
     """A symbol_added claim's (verdict, reason), by this file's own code."""
     if not touches_python(status):
         return "UNCHECKABLE", BC1_WHY
@@ -1366,6 +1718,12 @@ def expected_symbol(c, sentence: str, start: int, status: dict, added: list, sid
             return "UNCHECKABLE", f"a definition of '{name}' {Y2_WHY}"
     kind = c.detail["kind"]
     hit = any((defined(x) or ("", ""))[1] == name for x in "\n".join(added).split("\n"))
+    z2 = own_symbol_differs(hit, name, sentence, start, main) if main is not None else None   # NOTE_path2_ninth_pass
+    if z2:
+        return "UNCHECKABLE", z2
+    z5 = own_whole_symbol(name, added, sides) if hit else None                                  # Z-5
+    if z5:
+        return "UNCHECKABLE", z5
     if hit and only_changed(name, sides, status):
         return "UNCHECKABLE", (f"added lines define {kind} '{name}' only where the removed lines of the same file "
                                "define it too; a changed definition is not an added one (#101)")
@@ -1444,8 +1802,8 @@ def expected_only_touches(d: dict, status: dict, notes: dict) -> tuple:
     """An only_touches claim's (verdict, reason), by this file's own code."""
     if not status:
         return "UNCHECKABLE", NO_PATHS_WHY
-    if notes.get("files"):
-        return "UNCHECKABLE", NOT_SURE + notes["files"]
+    if notes.get("files") or notes.get("differs"):
+        return "UNCHECKABLE", NOT_SURE + (notes.get("files") or notes["differs"])
     p2 = d.get("prefix2")
     prefs = [own_key(d["prefix"]).rstrip("/.")] + ([own_key(p2).rstrip("/.")] if p2 else [])
     parent2 = bool(p2) and bool(own_parent(p2.replace("\\", "/")))
@@ -1481,15 +1839,18 @@ def expected_only_touches(d: dict, status: dict, notes: dict) -> tuple:
 def expected_count(n: int, status: dict, notes: dict) -> tuple:
     if not status:
         return "UNCHECKABLE", NO_PATHS_WHY
-    if notes.get("files"):
-        return "UNCHECKABLE", f"{NOT_SURE}{notes['files']}; claim says {n}"
+    if notes.get("files") or notes.get("differs"):
+        return "UNCHECKABLE", f"{NOT_SURE}{notes.get('files') or notes['differs']}; claim says {n}"
     return ("VERIFIED" if n == len(status) else "CONTRADICTED"), f"diff changes {len(status)} files, claim says {n}"
 
 
 def expected_path(kind: str, claimed: str, status: dict, notes: dict) -> tuple:
     """A path claim (accusation withheld, V14 repair 2): main's branches and strings, over this file's #97."""
-    if notes.get("files"):
-        return "UNCHECKABLE", NOT_SURE + notes["files"]
+    if notes.get("files") or notes.get("differs"):
+        return "UNCHECKABLE", NOT_SURE + (notes.get("files") or notes["differs"])
+    only_name = own_basename_only(status, claimed)                 # NOTE_path2_ninth_pass (Z-4)
+    if only_name:
+        return "UNCHECKABLE", only_name
     p, st = own_find_path(status, claimed)
     want = {"file_created": "A", "file_deleted": "D"}.get(kind)
     if p is None and "/" not in claimed and "\\" not in claimed:
@@ -1514,21 +1875,81 @@ COMPAT_SUFFIXES = (("python", (".py",)), ("js/ts", (".js", ".jsx", ".ts", ".tsx"
                    ("go", (".go",)), ("rust", (".rs",)), ("java", (".java", ".kt")))
 
 
+def own_compat_reading(sides: dict) -> tuple:
+    """C-2, written out whole (NOTE_path2_ninth_pass, round-8 scorer lens): COMPAT's verdict, reason and detail with
+    every language suffix and the scaffold test read on the undotted key, and main's definition patterns, parameter
+    reading and `\\b` test (main's COMPAT code, which this branch does not change, read through BASE)."""
+    empty = {"removed": [], "languages": [], "surface_removed": 0, "signature_changed": [], "compat2_candidate": False}
+    if not sides:
+        return ("UNCHECKABLE", "compatibility claimed; no per-file diff available to read (behaviour beyond names not "
+                               "checked)", dict(empty))
+    rx_of = {lang: rx for lang, (_sufs, rx) in BASE._COMPAT_LANGS.items()}
+    added_by: dict = {}
+    langs: list = []
+    for path, (a, _r) in sides.items():
+        for lang, sufs in COMPAT_SUFFIXES:
+            if own_undotted(path).endswith(sufs):
+                added_by.setdefault(lang, []).extend(a)
+                if lang not in langs:
+                    langs.append(lang)
+    dropped: list = []
+    changed: list = []
+    for path, (_a, r) in sides.items():
+        for lang, sufs in COMPAT_SUFFIXES:
+            if not own_undotted(path).endswith(sufs):
+                continue
+            a_lines = added_by.get(lang, [])
+            blob = "\n".join(a_lines)
+            for line in r:
+                mm = rx_of[lang].match(line)
+                if not mm or mm.group("name").startswith("_"):
+                    continue
+                name = mm.group("name")
+                if re.search(r"\b" + re.escape(name) + r"\b", blob):
+                    before = BASE._compat_params(line, mm.end("name"))
+                    if before is not None:
+                        afters = [BASE._compat_params(x, am.end("name")) for x in a_lines
+                                  for am in [rx_of[lang].match(x)] if am and am.group("name") == name]
+                        afters = [x for x in afters if x is not None]
+                        if afters and before not in afters and (path, lang, name) not in [x[:3] for x in changed]:
+                            changed.append((path, lang, name, before, afters[0]))
+                    continue
+                if (path, lang, name) not in [x[:3] for x in dropped]:
+                    dropped.append((path, lang, name, not COMPAT_SCAFFOLD.search(own_undotted(path))))
+    if not langs:
+        return ("UNCHECKABLE", "compatibility claimed; no language this reading covers in the diff (python, js/ts, go, "
+                               "rust, java)", dict(empty))
+    sig = f"; {len(changed)} signature(s) changed" if changed else ""
+    detail = {"removed": [{"path": p, "language": lg, "name": n, "surface": sf} for p, lg, n, sf in dropped],
+              "languages": langs, "surface_removed": sum(1 for x in dropped if x[3]),
+              "signature_changed": [{"path": p, "language": lg, "name": n, "before": b, "after": a_}
+                                    for p, lg, n, b, a_ in changed],
+              "compat2_candidate": any(x[3] for x in dropped)}
+    if not dropped:
+        return ("UNCHECKABLE", f"compatibility claimed; no public top-level definition removed ({', '.join(langs)} "
+                               f"read; behaviour beyond names not checked){sig}", detail)
+    surface = [x for x in dropped if x[3]]
+    scaffold = [x for x in dropped if not x[3]]
+    named = surface or scaffold
+    shown = ", ".join(f"{p}: {n}" for p, _lg, n, _s in named[:5])
+    more = f" (+{len(named) - 5} more)" if len(named) > 5 else ""
+    if surface:
+        rest = f"; {len(scaffold)} more in test/example/internal code" if scaffold else ""
+        return ("UNCHECKABLE", f"compatibility claimed; the diff removes {len(surface)} public definition(s) from the "
+                               f"surface, not re-defined in the added lines: {shown}{more}{rest}{sig}", detail)
+    return ("UNCHECKABLE", f"compatibility claimed; {len(scaffold)} public definition(s) removed, all in "
+                           f"test/example/internal code: {shown}{more}{sig}", detail)
+
+
 def compat_violations(c, sides: dict) -> list:
-    """C-2, written out: a compatibility claim's languages and each removed definition's surface flag read the
-    undotted key; the counts in the detail follow from the flags."""
+    """C-2, written out: NOTE_path2_ninth_pass, the whole reading -- the verdict, the reason and every field of the
+    detail (the removed and signature_changed lists, languages, counts, candidate) -- not only the languages and the
+    surface flags, so a defect inside C-2's own code is refused rather than attributed to #121."""
     d = c.detail or {}
     if "languages" not in d:
         return []
-    langs: list = []
-    for path in sides:
-        for lang, sufs in COMPAT_SUFFIXES:
-            if own_undotted(path).endswith(sufs) and lang not in langs:
-                langs.append(lang)
-    flags = [x.get("surface") for x in d.get("removed", [])]
-    want = [not COMPAT_SCAFFOLD.search(own_undotted(x.get("path", ""))) for x in d.get("removed", [])]
-    if (d.get("languages") != (langs if sides else []) or flags != want
-            or d.get("surface_removed") != sum(want) or d.get("compat2_candidate") != any(want)):
+    verdict, why, want = own_compat_reading(sides)
+    if (c.verdict, c.why) != (verdict, why) or any(d.get(k) != v for k, v in want.items()):
         return ["G-C7_oracle:C-2_compat_surface"]
     return []
 
@@ -1545,12 +1966,17 @@ def own_status_notes(status_paths: list) -> dict:
 
 
 def oracle_violations(summary: str, diff: str, paths, g, status_override: dict | None = None,
-                      status_paths: list | None = None) -> list:
+                      status_paths: list | None = None, name_status: str | None = None,
+                      git_text: str | None = None) -> list:
     """G-C7: the repaired instrument against this file's own reading of every rule it re-implements, on one
     record. `g` is the repaired gate's result for the record; `status_override` is the git door's status.
     NOTE_path2_eighth_pass: declared (DECLARE-1) claims are re-read too, through their canonical sentences, and
     the file-list kinds (files_changed_count, only_touches, the path claims) and COMPAT's C-2 reading join the
-    claim oracles."""
+    claim oracles. NOTE_path2_ninth_pass: the licensed-difference rule is re-derived against main's reading as this
+    file reads it (`OwnMain`, `own_file_list_differs`); at the git door, main's reading is of the text `gate_diff`
+    reads (`git_text`, git's bytes through universal newlines) and of git's `--name-status` (`name_status`); and
+    Y-1's git-door reading (`_status_notes`) is held to this file's on every record's paths and a case-folded
+    variant, whether or not the record can be rebuilt."""
     out: list = []
     if new._diff_lines(diff) != git_lines(diff):
         out.append("G-C7_oracle:F-2_split")
@@ -1564,11 +1990,23 @@ def oracle_violations(summary: str, diff: str, paths, g, status_override: dict |
         out.append("G-C7_oracle:W-1_sides")
     if new._diff_notes(diff) != own[3]:
         out.append("G-C7_oracle:Y_notes")
+    raw_list = list(paths)
+    folded = next(([*raw_list, p.upper()] for p in raw_list if p.upper() != p), None)
+    for variant in (raw_list, folded):
+        if variant is not None and new._status_notes(variant) != own_status_notes(variant):
+            out.append("G-C7_oracle:Y-1_status_notes")
+            break
     status, added, sides, notes = own
+    main = own_main_raw(diff)
     if status_override is not None:
         status = status_override
         listed = own_status_notes(status_paths or [])        # the git door's file list is git's
-        notes = {k: v for k, v in (("files", listed.get("files")), ("bom", notes.get("bom"))) if v}
+        differs = own_status_differs(name_status or "", status)
+        notes = {k: v for k, v in (("files", listed.get("files")), ("bom", notes.get("bom")),
+                                   ("differs", differs)) if v}
+        main = OwnMain(git_text if git_text is not None else diff, (own_main_name_status(name_status or ""),))
+        if new._status_differs(new._main_name_status(name_status or ""), status) != differs:
+            out.append("G-C7_oracle:Z-3_status_differs")
     lines = set(added)
     for a, r in sides.values():
         lines.update(a)
@@ -1614,7 +2052,7 @@ def oracle_violations(summary: str, diff: str, paths, g, status_override: dict |
             out += compat_violations(c, sides)
             continue
         if c.kind == "tests_added":
-            want = expected_tests(c, status, added, sides, notes)
+            want = expected_tests(c, status, added, sides, notes, main)
         elif c.kind == "files_changed_count":
             want = expected_count(int(c.detail["n"]), status, notes)
         elif c.kind == "only_touches":
@@ -1627,21 +2065,22 @@ def oracle_violations(summary: str, diff: str, paths, g, status_override: dict |
             if mm is None:
                 out.append("G-C7_oracle:symbol_claim_unplaced")
                 continue
-            want = expected_symbol(c, c.text, mm.start("name"), status, added, sides)
+            want = expected_symbol(c, c.text, mm.start("name"), status, added, sides, main)
         else:
             k = next((i for i, (s, mm) in enumerate(sites) if s.strip()[:160] == c.text
                       and mm.group("name") == c.detail["name"] and mm.group("kind") == c.detail["kind"]), None)
             if k is None:
                 out.append("G-C7_oracle:symbol_claim_unplaced")
                 continue
-            want = expected_symbol(c, sites[k][0], sites[k][1].start("name"), status, added, sides)
+            want = expected_symbol(c, sites[k][0], sites[k][1].start("name"), status, added, sides, main)
             del sites[k]
         if (c.verdict, c.why) != want:
             out.append(f"G-C7_oracle:{c.kind}_claim")
     return list(dict.fromkeys(out))
 
 
-GATE_FIELDS = ("measured", "why_unmeasured", "uncovered_sentences", "sentences_total")
+# NOTE_path2_ninth_pass (round-8 scorer lens, major): the never-read sentences themselves, not only their count.
+GATE_FIELDS = ("measured", "why_unmeasured", "uncovered_sentences", "sentences_total", "uncovered_texts")
 
 
 def gate_violations(gb, gn) -> list:
@@ -1651,6 +2090,18 @@ def gate_violations(gb, gn) -> list:
     for g in (gb, gn):
         if g.verdict != ("FAIL" if any(c.verdict == "CONTRADICTED" for c in g.claims) else "PASS"):
             out.append("G-C1_gate_verdict_not_from_its_claims")
+    return list(dict.fromkeys(out))
+
+
+def strict_violations(*pairs) -> list:
+    """G-C1 under --strict (NOTE_path2_ninth_pass): for each instrument's (strict off, strict on) gates, strict moves
+    no claim, and the strict verdict is FAIL exactly when a claim is CONTRADICTED or UNCHECKABLE."""
+    out = []
+    for g, gs in pairs:
+        if [(c.kind, c.text, c.verdict, c.why) for c in gs.claims] != [(c.kind, c.text, c.verdict, c.why) for c in g.claims]:
+            out.append("G-C1_strict_moves_a_claim")
+        if gs.verdict != ("FAIL" if any(c.verdict in ("CONTRADICTED", "UNCHECKABLE") for c in gs.claims) else "PASS"):
+            out.append("G-C1_strict_verdict_not_from_its_claims")
     return list(dict.fromkeys(out))
 
 
@@ -1701,20 +2152,30 @@ class Counterfactual:
             for combo in itertools.combinations(RULES, size):
                 if gives_back(combo):
                     return combo, "joint"
-        return None, ("all rules" if gives_back(RULES) else "none")
+        if not gives_back(RULES):
+            return None, "none"
+        # NOTE_path2_ninth_pass: a claim four rules abstain on at once (a U+FEFF-led test: W-1's line 1, Y-2, Z-1 and
+        # Z-5) needs all four reverted. The rules whose revert is needed with every other one reverted are tried as a
+        # set; if they give the baseline back they are the attribution, and each must still admit the move.
+        needed = tuple(r for r in RULES if not gives_back(set(RULES) - {r}))
+        if needed and gives_back(needed):
+            return needed, "joint"
+        return None, "all rules"
 
 
 # ── the git door (NOTE_path2_seventh_pass, G-C8): a record rebuilt as a two-commit repository ─────────
 
-SAFE_PATH = re.compile(r"^[A-Za-z0-9_][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_][A-Za-z0-9_.-]*)*$")
-RESERVED = {"con", "prn", "aux", "nul", *(f"com{i}" for i in range(10)), *(f"lpt{i}" for i in range(10))}
+# NOTE_path2_ninth_pass (round-8 scorer lens, blocker): the door's repositories are written by `git fast-import`
+# into a bare repository -- no working tree, no file on disk -- so a path segment may open with a dot (#121's dotted
+# keys: `.github/x.yml`, `.pr_agent.toml`, `src/.env`) and two paths may differ only in case (Y-1's collision); only
+# `.`, `..` and `.git` (in any case) are refused, which git itself refuses in a tree.
+SAFE_PATH = re.compile(r"^[A-Za-z0-9_.][A-Za-z0-9_.-]*(?:/[A-Za-z0-9_.][A-Za-z0-9_.-]*)*$")
 PLACEHOLDER = "rebuilt_placeholder.txt"
 
 
 def _safe(path: str) -> bool:
     return (bool(SAFE_PATH.match(path)) and len(path) < 180 and path != PLACEHOLDER
-            and not any(seg.split(".")[0].lower() in RESERVED or seg.endswith(".") for seg in path.split("/"))
-            and not path.lower().startswith(".git/") and path.lower() != ".git")
+            and not any(seg in (".", "..") or seg.lower() == ".git" for seg in path.split("/")))
 
 
 def rebuild(diff: str):
@@ -1792,8 +2253,7 @@ def rebuild(diff: str):
     if not after:
         return None
     paths = list(after)
-    low = [p.lower() for p in paths]
-    if len(set(low)) != len(low) or any(q.startswith(p + "/") for p in low for q in low):
+    if any(q.startswith(p + "/") for p in paths for q in paths):      # a file and a directory of one name
         return None
     return before, after
 
@@ -1806,55 +2266,64 @@ def _rmtree(path: str) -> None:
     shutil.rmtree(path, onerror=onerror)
 
 
+def _fast_import_path(path: str) -> bytes:
+    return path.encode("utf-8")                       # `_safe` paths need no quoting in a fast-import `M` command
+
+
 class GitDoor:
     """A record rebuilt as a two-commit repository in a temporary directory (G-C8). `gate(m, summary)`
     runs m.gate_diff on it; git's answers are memoised per module, so a counterfactual's reverts re-read
-    the same bytes without re-running git. Use as a context manager: the directory is removed on exit."""
+    the same bytes without re-running git. Use as a context manager: the directory is removed on exit.
 
-    def __init__(self, before: dict, after: dict):
+    NOTE_path2_ninth_pass (round-8 scorer lens, blocker): the repository is BARE and both commits are written with
+    `git fast-import` (core.ignorecase off), so no file touches the disk: a dot-led segment and two paths that differ
+    only in case rebuild. `renames` turns git's rename detection on (the second pass, for a record that deletes one
+    file and creates another); the plain pass keeps it off, because the record says "deleted" and "created"."""
+
+    def __init__(self, before: dict, after: dict, renames: bool = False):
         self.dir = tempfile.mkdtemp(prefix="path2_gitdoor_")
         self.memo: dict = {}
+        self.renames = renames
 
-        def git(*args):
-            r = subprocess.run(["git", "-c", "core.autocrlf=false", "-c", "core.safecrlf=false", "-c", "user.name=t",
-                                "-c", "user.email=t@t", *args], cwd=self.dir, capture_output=True, timeout=60)
+        def git(*args, stdin: bytes | None = None):
+            r = subprocess.run(["git", "-c", "core.autocrlf=false", "-c", "core.safecrlf=false", *args], cwd=self.dir,
+                               capture_output=True, timeout=60, input=stdin)
             if r.returncode != 0:
                 raise RuntimeError(f"git {args[0]}: {r.stderr.decode('utf-8', 'replace')[:200]}")
             return r.stdout.decode("utf-8", "replace")
 
-        def write(files: dict) -> None:
-            for rel, text in files.items():
-                full = Path(self.dir, *rel.split("/"))
-                if text is None:
-                    if full.exists():
-                        full.unlink()
-                    continue
-                full.parent.mkdir(parents=True, exist_ok=True)
-                full.write_bytes(text.encode("utf-8"))
+        def commit(ref: str, files: dict, parent: str | None) -> bytes:
+            out = bytearray(b"commit refs/heads/" + ref.encode("ascii") + b"\n")
+            out += b"committer t <t@t> 1700000000 +0000\ndata 0\n"
+            if parent:
+                out += b"from refs/heads/" + parent.encode("ascii") + b"\n"
+            out += b"deleteall\n"
+            for p, text in sorted(files.items()):
+                data = text.encode("utf-8")
+                out += b"M 100644 inline " + _fast_import_path(p) + b"\n" + b"data %d\n" % len(data) + data + b"\n"
+            return bytes(out) + b"\n"
 
         try:
-            git("init", "-q")
-            # the record says "deleted" and "created"; git would call a delete and an equal add a rename
-            git("config", "diff.renames", "false")
-            Path(self.dir, PLACEHOLDER).write_bytes(b"rebuilt by path2_gates.py\n")
-            write({p: t for p, t in before.items() if t is not None})
-            git("add", "-A")
-            git("commit", "-q", "-m", "before")
-            write(after)
-            write({p: None for p, t in before.items() if t is not None and p not in after})
-            git("add", "-A")
-            git("commit", "-q", "-m", "after")
-            self.base = git("rev-parse", "HEAD~1").strip()
-            self.head = git("rev-parse", "HEAD").strip()
+            git("init", "-q", "--bare")
+            git("config", "core.ignorecase", "false")
+            git("config", "diff.renames", "true" if renames else "false")
+            placeholder = {PLACEHOLDER: "rebuilt by path2_gates.py\n"}
+            old = {**placeholder, **{p: t for p, t in before.items() if t is not None}}
+            new_files = {**placeholder, **{p: t for p, t in after.items() if t is not None}}
+            git("fast-import", "--quiet", stdin=commit("before", old, None) + commit("after", new_files, "before"))
+            self.base = git("rev-parse", "refs/heads/before").strip()
+            self.head = git("rev-parse", "refs/heads/after").strip()
             self.diff = git("diff", f"{self.base}..{self.head}")
-            name_status = git("diff", "--name-status", f"{self.base}..{self.head}")
-            self.status = own_name_status(name_status)
-            self.status_paths = [x.split("\t")[-1] for x in git_lines(name_status) if len(x.split("\t")) >= 2]
+            # `gate_diff` reads git's output through text mode (universal newlines); main's reading of it is of that text
+            self.text = self.diff.replace("\r\n", "\n").replace("\r", "\n")
+            self.name_status = git("diff", "--name-status", f"{self.base}..{self.head}")
+            self.status = own_name_status(self.name_status)
+            self.status_paths = [x.split("\t")[-1] for x in git_lines(self.name_status) if len(x.split("\t")) >= 2]
         except Exception:
             _rmtree(self.dir)
             raise
 
-    def gate(self, m: types.ModuleType, summary: str):
+    def gate(self, m: types.ModuleType, summary: str, strict: bool = False):
         real = m._git
         memo = self.memo.setdefault(id(real), {})
 
@@ -1864,7 +2333,7 @@ class GitDoor:
             return memo[args]
         m._git = git
         try:
-            return m.gate_diff(summary, self.dir, self.base, self.head, run=None, strict=False)
+            return m.gate_diff(summary, self.dir, self.base, self.head, run=None, strict=strict)
         finally:
             m._git = real
 
@@ -1900,7 +2369,26 @@ def git_door_pair(t, pid, summary: str, diff: str, counter: Counter) -> None:
             counter["rebuilt_to_no_change"] += 1
             return
         counter["scored"] += 1
+        if any(seg.startswith(".") for p in door.status for seg in p.split("/")):
+            counter["scored_with_a_dotted_path"] += 1
         t.pair(f"{pid}#git", summary, door.diff, raw_paths(door.diff), door=door)
+    # NOTE_path2_ninth_pass (round-8 scorer lens, blocker): a second pass with git's rename detection on, for a record
+    # that deletes one file and creates another -- `--name-status` then writes `R<n> old new`, and `gate_diff` keys
+    # the entry by its last field. Scored as a door of its own (the counterfactual and G-C7 act through it); the raw
+    # door is not compared with it (git's `R` against the rendered text's `M` is main's reading too).
+    before, after = files
+    if any(t_ is None for t_ in after.values()) and any(t_ is None for t_ in before.values()):
+        counter["renames_tried"] += 1
+        try:
+            door = GitDoor(before, after, renames=True)
+        except (RuntimeError, OSError, UnicodeError, subprocess.TimeoutExpired):
+            counter["renames_rebuild_failed"] += 1
+            return
+        with door:
+            renamed = any(x.startswith("R") for x in git_lines(door.name_status))
+            counter["renames_scored"] += 1
+            counter["renames_detected"] += renamed
+            t.pair(f"{pid}#git-renames", summary, door.diff, raw_paths(door.diff), door=door)
 
 
 class Tally:
@@ -1936,7 +2424,19 @@ class Tally:
         """One record, scored through the raw door, or through the git door when `door` is a `GitDoor`
         (whose `diff` is git's own bytes for the rebuilt repository). Returns the repaired gate."""
         if door is None:
-            gb = BASE.gate_diff_text(summary, diff, run=None, strict=False)
+            try:
+                gb = BASE.gate_diff_text(summary, diff, run=None, strict=False)
+            except Exception:
+                # NOTE_path2_ninth_pass: `main` raises on a diff whose Python split cuts a `+++ /dev/null` out of a
+                # line with no `---` before it. It gave no verdict there, so the repair may give none either: every
+                # claim must abstain (Z-1 to Z-3 read main's reading as raising), and the oracles still read it.
+                self.n["baseline_raises"] += 1
+                gn = new.gate_diff_text(summary, diff, run=None, strict=False)
+                if any(c.verdict != "UNCHECKABLE" for c in gn.claims):
+                    self.violate("G-C1_a_verdict_where_the_baseline_raises", pid)
+                for v in oracle_violations(summary, diff, paths, gn):
+                    self.violate(v, pid)
+                return gn
             gn = new.gate_diff_text(summary, diff, run=None, strict=False)
         else:
             gb, gn = door.gate(BASE, summary), door.gate(new, summary)
@@ -1950,6 +2450,16 @@ class Tally:
         cf = Counterfactual(summary, diff, door)
         for v in gate_violations(gb, gn):
             self.violate(v, pid)
+        # NOTE_path2_ninth_pass (round-8 scorer lens, major): each record is scored a second time with strict on, for
+        # both instruments -- the verdict the GitHub Action reads under STYXX_STRICT. Strict moves no claim, and each
+        # strict verdict is FAIL exactly when a claim is CONTRADICTED or UNCHECKABLE.
+        if door is None:
+            gbs = BASE.gate_diff_text(summary, diff, run=None, strict=True)
+            gns = new.gate_diff_text(summary, diff, run=None, strict=True)
+        else:
+            gbs, gns = door.gate(BASE, summary, strict=True), door.gate(new, summary, strict=True)
+        for v in strict_violations((gb, gbs), (gn, gns)):
+            self.violate(v, pid)
         if any(getattr(gb, f) != getattr(gn, f) for f in GATE_FIELDS):
             rules = cf.attribute_fields(gb)
             if rules is None or not all(r in ("F-2", "W-1") and admits(r, "gate", "", "", "", diff) for r in rules):
@@ -1957,9 +2467,11 @@ class Tally:
             else:
                 self.attribution["gate_fields_moved_by"]["+".join(rules)] += 1
         for v in oracle_violations(summary, diff, paths, gn, None if door is None else door.status,
-                                   None if door is None else door.status_paths):
+                                   None if door is None else door.status_paths,
+                                   None if door is None else door.name_status,
+                                   None if door is None else door.text):
             self.violate(v, pid)
-        if door is not None:
+        if door is not None and not door.renames:
             # G-C8: the repaired git door reads exactly what the repaired raw door reads on git's bytes -- except
             # where the raw door, whose file list is its own parse, is not sure of it (NOTE_path2_eighth_pass,
             # Y-1: a lone CR git prints inside a line splits it, and a line after it may read as a header) and
@@ -2108,11 +2620,17 @@ class Tally:
         # the attribution and admits it, a table rule beside it only shaped what the claim would have read had that
         # rule not abstained (#121's keys listed in a reason, say); the table's DIRECTION test is not asked of it --
         # the abstention is the move -- while its other conditions are. G-C7 re-reads the claim either way.
-        owner = abstention_owner(cn.why) if vn == "UNCHECKABLE" else None
-        abstained = owner in rules and admits(owner, k, vb, vn, cn.why, diff, summary)
+        owner = abstention_owner(cn.why, k) if vn == "UNCHECKABLE" else None
+        # NOTE_path2_ninth_pass: Z-3's doubt that main's reading also held counts only beside a licensed difference,
+        # and #121's dotted keys are one: reverting #121 removes Z-3's precondition, so #121 alone gives main's claim
+        # back although the move is Z-3's abstention. There the table's conditions do not apply at all -- #121 moved
+        # no count and no scope -- and G-C7 re-derives the claim (Z-3 with this file's own code) either way.
+        woken = owner == "Z-3" and "#121" in rules
+        abstained = (owner in rules or woken) and admits(owner, k, vb, vn, cn.why, diff, summary)
+        waived = ("G-C4_direction:", "G-C4_unattributed:") if woken else ("G-C4_direction:",)
         for r in rules:
             if r in TABLE_RULES:
-                refused += [x for x in pending if not (abstained and x.startswith("G-C4_direction:"))]
+                refused += [x for x in pending if not (abstained and x.startswith(waived))]
             elif not admits(r, k, vb, vn, cn.why, diff, summary):
                 refused.append(f"G-C4_direction:{k}:{r}")
         if abstained and any(r in TABLE_RULES for r in rules):
@@ -2199,7 +2717,7 @@ class Tally:
         count_violations = []
         if accounted != tried:
             count_violations.append("G-C8_records_unaccounted")
-        if sample["rebuild_failed"]:
+        if sample["rebuild_failed"] or sample["renames_rebuild_failed"]:
             count_violations.append("G-C8_rebuild_failed")
         if tried and not sample["scored"]:
             count_violations.append("G-C8_nothing_scored")
@@ -2333,12 +2851,16 @@ def run_corpus(shelf: Path, limit: int | None, out: Path, git_sample: int = 3000
             continue
         rows = Counter(fn for fn, _s, _p in files if fn)
         gn = t.pair(pid, f"{title or ''}\n\n{body}", diff, names, fold_repeats=any(v > 1 for v in rows.values()))
-        # NOTE_path2_seventh_pass (G-C8). NOTE_path2_eighth_pass: every PR with a tests_added or symbol_added claim
-        # (gate_diff feeds exactly those through its own added blob and sides), and every `git_every`-th other PR
-        # by its id's sha256 (default 1 in 25), up to `git_sample` scored (default 3,000).
+        # NOTE_path2_seventh_pass (G-C8). NOTE_path2_ninth_pass (round-8 scorer lens, major; the eighth pass's rationale
+        # was wrong): every PR with a claim `gate_diff` reads through code of its own -- a tests_added or symbol_added
+        # claim (its own added blob and sides) AND a file-list claim (its own `--name-status` parse, `_status_notes`,
+        # the Z-3 comparison with main's list and the notes dict) -- and every `git_every`-th other PR by its id's
+        # sha256 (default 1 in 25), up to `git_sample` scored (default 3,000).
         definitional = gn is not None and any(c.kind in ("tests_added", "symbol_added") for c in gn.claims)
-        if sample["scored"] < git_sample and (definitional or sample_key(pid) % max(git_every, 1) == 0):
+        file_list = gn is not None and any(c.kind in FILE_LIST_KINDS for c in gn.claims)
+        if sample["scored"] < git_sample and (definitional or file_list or sample_key(pid) % max(git_every, 1) == 0):
             sample["tried_for_a_definition_claim"] += definitional
+            sample["tried_for_a_file_list_claim"] += file_list
             git_door_pair(t_git, pid, f"{title or ''}\n\n{body}", diff, sample)
     con.close()
     rep = t.report(prov)
@@ -2377,8 +2899,8 @@ def main() -> int:
     c.add_argument("--out", type=Path, default=HERE / "path2_corpus_gates.json")
     c.add_argument("--git-sample", type=int, default=3000, help="PRs scored through the git door at most (G-C8)")
     c.add_argument("--git-every", type=int, default=25,
-                   help="besides every PR with a tests_added or symbol_added claim, a PR is sampled when "
-                        "sha256(id) %% N == 0")
+                   help="besides every PR with a tests_added, symbol_added or file-list claim, a PR is sampled "
+                        "when sha256(id) %% N == 0")
     a = ap.parse_args()
     return (run_differential(a.out, a.git_sample) if a.mode == "differential"
             else run_corpus(a.shelf, a.limit, a.out, a.git_sample, a.git_every))
