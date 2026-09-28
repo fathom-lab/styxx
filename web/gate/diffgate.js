@@ -66,6 +66,20 @@
  */
 "use strict";
 
+// NOTE_path2_eleventh_pass_2026_09_28: main's port, vendored unchanged (web/gate/diffgate_ref.js, origin/main's
+// web/gate/diffgate.js byte for byte, sha256 06688702...): the guard's reference (`_guard`). The bookmarklet build wraps
+// it in a function scope of its own and hands it over as `_STYXX_REF`; Node loads it from beside this file, on the
+// guard's call, so a script that only reads this file's tables needs no reference.
+let _REF_LOADED = null;
+function _reference() {
+  if (_REF_LOADED === null) {
+    if (typeof _STYXX_REF !== "undefined") _REF_LOADED = _STYXX_REF;
+    else if (typeof require === "function") _REF_LOADED = require((typeof __dirname === "string" ? __dirname + "/" : "./") + "diffgate_ref.js");
+    else throw new Error("diffgate.js needs its reference, diffgate_ref.js (see build_bookmarklet.py)");
+  }
+  return _REF_LOADED;
+}
+
 const _EXT = "py|md|json|jsonl|txt|yml|yaml|toml|cfg|ini|js|ts|tsx|jsx|css|html|tex|sh|ps1|bat|ipynb|csv|tsv|npz|npy|pdf|png|jpg|svg|gz|zip|lock|xml|rst|c|h|cpp|rs|go|java";
 const _PATH = `[\\w./\\\\-]*[A-Za-z_][\\w-]*\\.(?:${_EXT})\\b`;
 const _W = "[^.!?\\n]{0,60}?";
@@ -1015,6 +1029,7 @@ function _demotedByContainment(sentence, m) {
 }
 
 const _PATH_KINDS = new Set(["file_created", "file_deleted", "file_touched"]);
+const _SYMBOL_TEMPLATE = (() => { const rx = _TEMPLATES.find(([k]) => k === "symbol_added")[1]; return new RegExp(rx.source, rx.flags + "d"); })();
 const _REFERENTIAL = [
   "same way", "same as", "same fix", "just like", "as in ", "similar to",
   "mirrors", "analogous", "cf.", "compare", "unlike", "whereas", "matching the",
@@ -1383,16 +1398,49 @@ function _wholeFileSymbol(name, addedBlob, sides) {
   if (refused.has(null) && _strayLines(addedBlob, sides).some(x => _defines(x, name))) return _refusedWhy(null);
   return null;
 }
-function _readApart(claimed, before) {
-  // NOTE_path2_tenth_pass (K-5): the two ports' path templates may read this path apart (a non-ASCII character in it,
-  // or one the sentence runs into it from); the claim then reads as main read it, each port as main's same port did.
-  return /[^\x00-\x7f]/.test(claimed) || /[^\x00-\x7f]/.test(before);
+// NOTE_path2_eleventh_pass (K-5, at the sentence), as the Python's `_apart_readings`: [whether the two ports' claim
+// templates may read this sentence's claims apart, whether they may read its symbol_added claims apart]. A sentence may be
+// read apart when it holds a non-ASCII word character (Python's `\w` by the pinned table, or a code point of the skew set)
+// or a mark: one of U+001C to U+001F, U+0085, U+FEFF, U+2028, U+2029, or a CR with a character after it. Every other
+// character (punctuation such as the em dash, symbols, emoji, combining marks, the spaces both `\s` hold) reads alike in
+// both ports. A symbol_added claim's name is read as the Python reads it in both ports (W-2), so its claims are read apart
+// only where the sentence holds a mark, or a word character outside every name the symbol template reads (a name's extent,
+// from where it starts, is every character the table reads as a word character or as continuing an identifier, and the skew
+// set). The tenth pass asked this of a path claim's path.
+const _APART_MARKS = new Set([0x1c, 0x1d, 0x1e, 0x1f, 0x85, 0xfeff, 0x2028, 0x2029]);
+const _K5_KINDS = new Set(["file_created", "file_deleted", "file_touched", "files_changed_count", "tests_added", "only_touches"]);
+const _wordish = cp => !!(_xidMask(cp) & 4) || _skew(cp);
+const _nameChar = cp => !!(_xidMask(cp) & 6) || _skew(cp);     // a word character, one continuing an identifier, or skew
+function _apartReadings(sentence) {
+  const words = [];
+  for (let i = 0; i < sentence.length;) {
+    const cp = sentence.codePointAt(i);
+    const w = cp > 0xffff ? 2 : 1;
+    if (cp < 0x80) {
+      if ((cp >= 0x1c && cp <= 0x1f) || (cp === 0x0d && i + 1 < sentence.length)) return [true, true];
+    } else if (_APART_MARKS.has(cp)) return [true, true];
+    else if (_wordish(cp)) words.push(i);
+    i += w;
+  }
+  if (!words.length) return [false, false];
+  const spans = [];
+  for (const m of sentence.matchAll(_SYMBOL_TEMPLATE)) {
+    const s0 = m.indices.groups.name[0];
+    let j = s0;
+    while (j < sentence.length) {
+      const cp = sentence.codePointAt(j);
+      if (!_nameChar(cp)) break;
+      j += cp > 0xffff ? 2 : 1;
+    }
+    spans.push([s0, j]);
+  }
+  return [true, words.some(i => !spans.some(([a, b]) => a <= i && i < b))];
 }
-function _mainFind(mainMap, claimed) {
-  // main's own resolution: one loop in diff order, the earliest entry the claim matches exactly, by suffix or by basename.
-  const c = _mainKey(claimed);
-  for (const [p, st] of mainMap) if (p === c || p.endsWith("/" + c) || _basename(p) === _basename(c)) return [p, st];
-  return [null, null];
+function _k5Flag(kind, sentence, memo) {
+  // K-5 for one claim of `sentence`: `memo` holds _apartReadings(sentence) once asked.
+  if (!_K5_KINDS.has(kind) && kind !== "symbol_added") return false;
+  if (!memo.length) memo.push(..._apartReadings(sentence));
+  return kind === "symbol_added" ? memo[1] : memo[0];
 }
 function _basenameOnly(status, claimed, rp = null) {
   // Z-4: a path claim with a directory component that only the basename tier matches (read with the repairs `rp`).
@@ -1588,13 +1636,109 @@ function declarationPass(summaryText) {
   return [sentences.join("\n"), report];
 }
 
-function gateDiffText(summaryText, diffText, { strict = false, _declared = false } = {}) {
-  return _evaluate(summaryText, diffText, { strict, _declared, rp: _ALL_ON });
+function gateDiffText(summaryText, diffText, { strict = false } = {}) {
+  // NOTE_path2_eleventh_pass: this reading, guarded against main's port (`_guard`).
+  return _guard((rp, out) => _evaluate(summaryText, diffText, { strict, rp, out }),
+                () => _reference().gateDiffText(summaryText, diffText), strict);
+}
+
+// NOTE_path2_eleventh_pass_2026_09_28: THE GUARD, as the Python's `_guard` -- the licensed-difference rule at the verdict.
+// Per claim: this reading's verdict (every repair on) against main's port's on the same input, the claim paired by kind,
+// sentence and occurrence. The same verdict, or an abstention here: kept. A different one: this reading is evaluated
+// again with each single repair switched off, and the difference is licensed by repair R only if R switched off gives
+// main's verdict and R's own precondition holds on this claim (`_precondition`); licensed, kept; else UNCHECKABLE,
+// naming main's verdict. Where main raises or makes no such claim: UNCHECKABLE. A claim read from a sentence the two
+// ports may read apart reads as main's port read it (K-5). The verdict and --strict are recomputed from the final claims.
+const _GUARD_DIFFERS = (main, mine) => `main's reading gives ${main} and this one ${mine}; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains`;
+const _GUARD_RAISES = mine => `main's reading raises on this diff and gives no verdict; this one gives ${mine}, and no named repair licenses a verdict where main gives none`;
+const _GUARD_ABSENT = mine => `main's reading makes no such claim of this sentence; this one gives ${mine}, and no named repair licenses a verdict where main gives none`;
+const _K5_WHY = rest => `the two ports' templates may read this sentence apart (it holds a character at or past U+0080, or one of U+001C to U+001F), so the claim reads as main read it, and ${rest}`;
+const _K5_ABSENT = "main's reading makes no such claim of it";
+const _K5_RAISES = "main's reading raises on this diff";
+function _claimKeys(claims) {
+  // (kind, text, occurrence) of each claim, joined into one string: the pairing between this reading's claims and main's.
+  const seen = new Map();
+  return claims.map(c => {
+    const k = JSON.stringify([c.kind, c.text]);
+    const o = seen.get(k) || 0;
+    seen.set(k, o + 1);
+    return JSON.stringify([c.kind, c.text, o]);
+  });
+}
+function _definitionPaired(name, sides, status) {
+  // #101's precondition for symbol_added: some file that is not created (`A`) both adds and removes a definition of `name`.
+  for (const [path, [added, removed]] of (sides || new Map())) {
+    if (status && status.get(path) === "A") continue;
+    if (added.some(x => _defines(x, name)) && removed.some(x => _defines(x, name, true))) return true;
+  }
+  return false;
+}
+function _precondition(repair, c, status, sides) {
+  // Whether `repair`'s own precondition holds on claim `c`, read on this reading with every repair on (the Python's).
+  const d = c.detail || {};
+  if (repair === "#97") {
+    if (!_PATH_KINDS.has(c.kind) || typeof d.path !== "string") return false;
+    const key = _norm(d.path);
+    const [p] = _findPath(status, d.path);
+    if (p === null || !(p === key || p.endsWith("/" + key))) return false;
+    return _earliestMatch(status, d.path)[0] !== p;
+  }
+  if (repair === "#121") {
+    const own = ["path", "prefix", "prefix2"].map(k => d[k]).filter(x => typeof x === "string");
+    return [...status.keys()].some(k => k.startsWith(".")) || [...(sides || new Map()).keys()].some(k => k.startsWith("."))
+      || own.some(x => _norm(x).startsWith("."));
+  }
+  if (repair === "#101") {
+    if (c.kind === "tests_added") return _changedTestDefs(sides, status) > 0;
+    if (c.kind === "symbol_added" && typeof d.name === "string") return _definitionPaired(d.name, sides, status);
+    return false;
+  }
+  throw new Error(repair);
+}
+function _guard(evaluate, reference, strict) {
+  const seen = {};
+  const gate = evaluate(_ALL_ON, seen);
+  let ref = null;
+  try { ref = reference(); } catch (e) { ref = null; }   // main raises: there is no verdict to license a difference from
+  const theirs = new Map();
+  if (ref !== null) _claimKeys(ref.claims).forEach((k, i) => theirs.set(k, ref.claims[i]));
+  const switched = new Map();
+  const switchedVerdict = (repair, key) => {
+    if (!switched.has(repair)) {
+      const g = evaluate(new _Repairs([repair]), null);
+      const m = new Map();
+      _claimKeys(g.claims).forEach((k, i) => m.set(k, g.claims[i]));
+      switched.set(repair, m);
+    }
+    const other = switched.get(repair).get(key);
+    return other === undefined ? null : other.verdict;
+  };
+  const keys = _claimKeys(gate.claims);
+  const claims = gate.claims.map((c, i) => {
+    const key = keys[i], r = theirs.has(key) ? theirs.get(key) : null;
+    if (seen.apart[i] && c.kind !== "tests_pass") {        // K-5: the sentence reads as main's port read it
+      if (r !== null) return { kind: r.kind, text: r.text, detail: Object.assign({}, r.detail || {}), verdict: r.verdict, why: r.why };
+      return { kind: c.kind, text: c.text, detail: c.detail, verdict: "UNCHECKABLE", why: _K5_WHY(ref === null ? _K5_RAISES : _K5_ABSENT) };
+    }
+    if (c.verdict === "UNCHECKABLE") return c;
+    const mainVerdict = r === null ? null : r.verdict;    // tests_pass: UNCHECKABLE in both ports, with no --run here
+    if (mainVerdict === c.verdict) return c;
+    if (mainVerdict !== null && REPAIRS.some(repair => _precondition(repair, c, seen.status, seen.sides)
+                                             && switchedVerdict(repair, key) === mainVerdict)) return c;   // licensed
+    const why = ref === null ? _GUARD_RAISES(c.verdict) : r === null ? _GUARD_ABSENT(c.verdict) : _GUARD_DIFFERS(mainVerdict, c.verdict);
+    return { kind: c.kind, text: c.text, detail: c.detail, verdict: "UNCHECKABLE", why };
+  });
+  const contradicted = claims.some(c => c.verdict === "CONTRADICTED");
+  const uncheckable = claims.some(c => c.verdict === "UNCHECKABLE");
+  return Object.assign({}, gate, { verdict: (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS", claims });
 }
 
 // NOTE_path2_eleventh_pass: this reading of a raw diff with the repairs `rp`. With every repair on, the three parses the
 // tenth pass made; with #121 switched off, one parse keyed by main's key (#97 and #101 act below, not in the parse).
-function _evaluate(summaryText, diffText, { strict = false, _declared = false, rp = _ALL_ON } = {}) {
+function _evaluate(summaryText, diffText, { strict = false, _declared = false, rp = _ALL_ON, out = null } = {}) {
+  // `out`, when given, receives what the guard reads besides the claims: the file list and the sides the preconditions
+  // read, and for each claim whether its sentence is one the two ports may read apart (K-5).
+  const flags = [];
   let status, addedBlob, sides, notes;
   if (rp.on("#121")) {
     ({ status, addedBlob } = parseUnifiedDiff(diffText));
@@ -1624,6 +1768,7 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
   const sentences = _pySplitSentences(summaryText);
   const covered = new Set();
   sentences.forEach((sent, si) => {
+    const k5 = [];                                  // NOTE_path2_eleventh_pass: _apartReadings(sent), once asked
     for (const [kind0, rx] of _TEMPLATES) {
       let kind = kind0;
       const withIndices = new RegExp(rx.source, rx.flags.includes("d") ? rx.flags : rx.flags + "d");
@@ -1641,17 +1786,12 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
         if (pyName !== null) d.name = pyName;
         const c = { kind, text: sent.trim().slice(0, 160), detail: d, verdict: "UNCHECKABLE", why: "" };
         if (noEvidence) {
-          c.verdict = "UNCHECKABLE"; c.why = noEvidence; claims.push(c); continue;
+          c.verdict = "UNCHECKABLE"; c.why = noEvidence; claims.push(c); flags.push(_k5Flag(kind, sent, k5)); continue;
         }
         if (_PATH_KINDS.has(kind)) {
-          const at = m.indices.groups.path[0];
-          const apart = main !== null && _readApart(d.path, at > 0 ? sent.slice(at - 1, at) : "");
-          const onlyName = (notSure || apart) ? null : _basenameOnly(status, d.path, rp);
+          // NOTE_path2_eleventh_pass: the tenth pass's K-5 is the guard's now, and covers the whole sentence (`_guard`).
+          const onlyName = notSure ? null : _basenameOnly(status, d.path, rp);
           if (notSure) { c.verdict = "UNCHECKABLE"; c.why = notSure; }               // NOTE_path2_eighth_pass (Y-1)
-          else if (apart) {                                                           // NOTE_path2_tenth_pass (K-5)
-            const own = main.maps[main.maps.length - 1];     // main's port's file list: the port reads as main's port did
-            [c.verdict, c.why] = _pathClaimVerdict(kind, d.path, claimed => _mainFind(own, claimed));
-          }
           else if (onlyName) { c.verdict = "UNCHECKABLE"; c.why = onlyName; }        // NOTE_path2_ninth_pass (Z-4)
           else [c.verdict, c.why] = _pathClaimVerdict(kind, d.path, findPath);
         } else if (kind === "files_changed_count") {
@@ -1793,6 +1933,7 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
           c.verdict = "UNCHECKABLE"; c.why = _TESTS_PASS_NO_EVIDENCE_WHY;
         }
         claims.push(c);
+        flags.push(_k5Flag(kind, sent, k5));
       }
     }
   });
@@ -1802,19 +1943,23 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
     const [dtext, drep] = declarationPass(summaryText);
     if (drep.declared) {
       if (dtext) {
-        const sub = _evaluate(dtext, diffText, { strict, _declared: true, rp });
+        const subOut = {};
+        const sub = _evaluate(dtext, diffText, { strict, _declared: true, rp, out: subOut });
         for (const c of (sub.claims || [])) {
           c.detail = Object.assign({}, c.detail || {}, { declared: true });
           claims.push(c);
         }
+        flags.push(...subOut.apart);
       }
       for (const u of drep.unverifiable) {
         claims.push({ kind: u.key, text: `${u.key}: ${u.value}`, detail: { declared: true },
                       verdict: "UNCHECKABLE", why: u.why });
+        flags.push(false);
       }
       for (const p of drep.problems) {
         claims.push({ kind: "declaration_problem", text: p, detail: { declared: true },
                       verdict: "UNCHECKABLE", why: p });
+        flags.push(false);
       }
     }
   }
@@ -1824,6 +1969,7 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
   const verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";
   const uncoveredTexts = sentences.map((s, i) => [s.trim(), i]).filter(([s, i]) => s && !covered.has(i)).map(([s]) => s);
   const total = sentences.filter(s => s.trim()).length;
+  if (out !== null) Object.assign(out, { status, sides, apart: flags });
   return {
     diffgate: "v0", verdict, base: "(diff-text)", head: "(diff-text)", claims,
     uncovered_sentences: uncoveredTexts.length, sentences_total: total, uncovered_texts: uncoveredTexts,
@@ -1831,5 +1977,5 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
   };
 }
 
-if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides, _evaluate, _Repairs, REPAIRS };
+if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides, _evaluate, _Repairs, REPAIRS, _apartReadings };
 if (typeof globalThis !== "undefined") globalThis.styxxDiffgateJS = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides };

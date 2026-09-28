@@ -3,7 +3,11 @@
     python web/gate/build_bookmarklet.py            # writes bookmarklet_src.js, bookmarklet.min.js, bookmarklet.href.txt
     python web/gate/build_bookmarklet.py --check    # rebuilds in memory and compares all three; writes nothing
 
-The bookmarklet is  (function(){ <diffgate.js without its CommonJS export line> <bookmarklet_ui.js> })();
+The bookmarklet is  (function(){ "use strict"; <the reference> <diffgate.js without its CommonJS export line>
+<bookmarklet_ui.js> })();  where <the reference> is web/gate/diffgate_ref.js -- origin/main's web/gate/diffgate.js, byte
+for byte, refused unless it hashes to REF_SHA256 -- wrapped in a function scope of its own, with a local `module` its
+export line writes to and a local `globalThis` its second export line then leaves alone, and handed to the port as
+`_STYXX_REF` (NOTE_path2_eleventh_pass_2026_09_28: the guard's reference). It is then
 minified with  terser -c -m --format ascii_only  (terser 5.46.0 produced the shipped bytes; the same
 terser rebuilds the earlier 4b2d34e1... bookmarklet, which terser 5.51.2 produced, byte for byte), then
 prefixed with  javascript:  for the href. Nothing else goes in: no analytics, no config, no network
@@ -29,14 +33,26 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 EXPORT_LINE = ('if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides, '
-               '_evaluate, _Repairs, REPAIRS };\n')
+               '_evaluate, _Repairs, REPAIRS, _apartReadings };\n')
+# origin/main's web/gate/diffgate.js (2a6ce0a3), the guard's reference, byte for byte (tests/test_diffgate_guard.py pins it too)
+REF_SHA256 = "06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141"
+REF_OPEN = "const _STYXX_REF = (function () { const module = { exports: null }; const globalThis = undefined;\n"
+REF_CLOSE = "\nreturn module.exports; })();\n"
+
+
+def reference() -> str:
+    raw = (HERE / "diffgate_ref.js").read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    assert digest == REF_SHA256, f"diffgate_ref.js hashes to {digest[:16]}, not main's port ({REF_SHA256[:16]})"
+    return raw.decode("utf-8")
 
 
 def source() -> str:
     dg = (HERE / "diffgate.js").read_text(encoding="utf-8")
     assert EXPORT_LINE in dg, "diffgate.js lost its CommonJS export line"
     ui = (HERE / "bookmarklet_ui.js").read_text(encoding="utf-8")
-    return "(function(){\n" + dg.replace(EXPORT_LINE, "\n") + "\n" + ui + "\n})();"
+    return ('(function(){\n"use strict";\n' + REF_OPEN + reference() + REF_CLOSE
+            + dg.replace(EXPORT_LINE, "\n") + "\n" + ui + "\n})();")
 
 
 def minify(src: str) -> str:

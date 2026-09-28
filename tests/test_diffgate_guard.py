@@ -173,3 +173,200 @@ def test_the_port_switches_read_as_the_python_switches_on_the_reproductions():
             py = [[c.kind, c.verdict, c.why] for c in
                   dg._evaluate_text(p["summary"], p["diff"], dg._Repairs({repair})).claims]
             assert js[pid][repair] == py, (pid, repair)
+
+
+# ---- (c) the guard ------------------------------------------------------------------------------------------------
+
+from styxx.diffgate import DiffClaim, DiffGate  # noqa: E402
+
+# Round 10's regressions lens, R0.1 (rv10_repros.json): sentences the two ports' templates read apart.
+K5_REPROS = {
+    "R10-K5A": ("Updated lib/a.pyé/x.md.",
+                "diff --git a/other/a.py b/other/a.py\nindex 1111111..2222222 100644\n--- a/other/a.py\n+++ b/other/a.py\n"
+                "@@ -1 +1 @@\n-a\n+b\ndiff --git a/x.md b/x.md\nindex 1111111..2222222 100644\n--- a/x.md\n+++ b/x.md\n"
+                "@@ -1 +1 @@\n-a\n+b\n"),
+    "R10-K5B": ("Changed\u001csrc/util.py and refactored web/util.py.",
+                "diff --git a/web/util.py b/web/util.py\nnew file mode 100644\nindex 0000000..2222222\n--- /dev/null\n"
+                "+++ b/web/util.py\n@@ -0,0 +1 @@\n+b\n"),
+    "R10-K5C": ("Only touches\u001c.docs/ and only touches docs/.",
+                "diff --git a/.docs/a.md b/.docs/a.md\nindex 1111111..2222222 100644\n--- a/.docs/a.md\n+++ b/.docs/a.md\n"
+                "@@ -1 +1 @@\n-a\n+b\n"),
+    "R10-K5D": ("émodified lib/a.py and updated x.md.",
+                "diff --git a/x.md b/x.md\nindex 1111111..2222222 100644\n--- a/x.md\n+++ b/x.md\n@@ -1 +1 @@\n-a\n+b\n"
+                "diff --git a/other/a.py b/other/a.py\nindex 1111111..2222222 100644\n--- a/other/a.py\n+++ b/other/a.py\n"
+                "@@ -1 +1 @@\n-a\n+b\n"),
+}
+
+
+def _full(g):
+    return [(c.kind, c.text, c.verdict, c.why, c.detail) for c in g.claims]
+
+
+def _stub_gate(*claims, measured=True):
+    return DiffGate(verdict="PASS", base="b", head="h", claims=list(claims), measured=measured)
+
+
+def _claim(kind, verdict, text="s.", **detail):
+    return DiffClaim(kind=kind, text=text, detail=dict(detail), verdict=verdict, why=f"{verdict.lower()} here")
+
+
+def _stub_evaluate(on, switched, status=None, sides=None, apart=None):
+    """evaluate(rp, out) for `_guard`: `on` with every repair on, `switched[repair]` with one switched off."""
+    def evaluate(rp, out):
+        if out is not None:
+            out.update(status=status or {}, sides=sides or {}, apart=apart or [False] * len(on.claims))
+            return on
+        (repair,) = rp.off
+        return switched[repair]
+    return evaluate
+
+
+@pytest.mark.parametrize("repair", ["#97", "#121", "#101"])
+def test_the_reproductions_stay_repaired_under_the_guard(repair):
+    """Each difference from main on a reproduction is licensed by its own repair: the guarded gate is the reading."""
+    p = PAIRS[REPRO[repair]]
+    assert _full(dg.gate_diff_text(p["summary"], p["diff"])) == \
+        _full(dg._evaluate_text(p["summary"], p["diff"], dg._ALL_ON))
+
+
+def test_a_difference_no_named_repair_explains_abstains_and_names_mains_verdict():
+    """A `diff --git` header holding U+2028: F-2's split reads the file main's str.splitlines() does not. No named
+    repair explains the difference, so the claims main leaves UNCHECKABLE abstain here too."""
+    p = PAIRS["path2:v2-a-binary-header-holding-a-line-separator-registers-its-file"]
+    before = dg._evaluate_text(p["summary"], p["diff"], dg._ALL_ON)
+    after = dg.gate_diff_text(p["summary"], p["diff"])
+    moved = [(b.kind, b.verdict, a.verdict, a.why) for b, a in zip(before.claims, after.claims) if b.verdict != a.verdict]
+    assert moved and all(v == "VERIFIED" and w == "UNCHECKABLE" for _k, v, w, _y in moved)
+    assert all(y.startswith("main's reading gives UNCHECKABLE and this one VERIFIED; no named repair") for *_x, y in moved)
+
+
+def test_a_licence_needs_the_switch_and_the_precondition():
+    mine, theirs = _claim("files_changed_count", "VERIFIED", n="2"), _claim("files_changed_count", "CONTRADICTED", n="2")
+    switched = {"#97": _stub_gate(mine), "#121": _stub_gate(theirs), "#101": _stub_gate(mine)}
+    reference = lambda: _stub_gate(theirs)  # noqa: E731
+    # #121 switched off gives main's verdict, and a dotted key is in the file list: licensed, kept
+    g = dg._guard(_stub_evaluate(_stub_gate(mine), switched, status={".env": "A", "env": "A"}), reference,
+                  strict=False, tp=[])
+    assert [c.verdict for c in g.claims] == ["VERIFIED"]
+    # the same switch, no dotted key anywhere: #121's precondition fails, so the difference abstains
+    g = dg._guard(_stub_evaluate(_stub_gate(mine), switched, status={"env": "A", "x": "M"}), reference,
+                  strict=False, tp=[])
+    assert [(c.verdict, c.why) for c in g.claims] == [("UNCHECKABLE", dg._GUARD_DIFFERS.format(
+        main="CONTRADICTED", this="VERIFIED"))]
+    # the precondition holds but no switch gives main's verdict: abstains
+    switched["#121"] = _stub_gate(mine)
+    g = dg._guard(_stub_evaluate(_stub_gate(mine), switched, status={".env": "A"}), reference, strict=False, tp=[])
+    assert [c.verdict for c in g.claims] == ["UNCHECKABLE"]
+
+
+def test_where_main_raises_or_makes_no_such_claim_every_decided_claim_abstains():
+    mine = _claim("files_changed_count", "CONTRADICTED", n="2")
+    same = {"#97": _stub_gate(mine), "#121": _stub_gate(mine), "#101": _stub_gate(mine)}
+
+    def raises():
+        raise AttributeError("'NoneType' object has no attribute 'startswith'")
+
+    g = dg._guard(_stub_evaluate(_stub_gate(mine), same, status={".env": "A"}), raises, strict=False, tp=[])
+    assert [(c.verdict, c.why) for c in g.claims] == [("UNCHECKABLE", dg._GUARD_RAISES.format(this="CONTRADICTED"))]
+    assert g.verdict == "PASS"
+    other = _claim("files_changed_count", "CONTRADICTED", text="another sentence.", n="2")
+    g = dg._guard(_stub_evaluate(_stub_gate(mine), same, status={".env": "A"}), lambda: _stub_gate(other),
+                  strict=False, tp=[])
+    assert [(c.verdict, c.why) for c in g.claims] == [("UNCHECKABLE", dg._GUARD_ABSENT.format(this="CONTRADICTED"))]
+
+
+def test_an_abstention_and_an_equal_verdict_are_kept_with_their_own_reasons():
+    a = _claim("only_touches", "UNCHECKABLE", prefix="x")
+    b = _claim("only_touches", "VERIFIED", text="t.", prefix="x")
+    main = [_claim("only_touches", "VERIFIED", prefix="x"), _claim("only_touches", "VERIFIED", text="t.", prefix="x")]
+    g = dg._guard(_stub_evaluate(_stub_gate(a, b), {}), lambda: _stub_gate(*main), strict=True, tp=[])
+    assert g.claims == [a, b]
+    assert g.verdict == "FAIL"                       # --strict, recomputed from the final claims: one abstains
+
+
+def test_the_verdict_is_recomputed_from_the_final_claims():
+    mine = _claim("files_changed_count", "CONTRADICTED", n="2")
+    same = {"#97": _stub_gate(mine), "#121": _stub_gate(mine), "#101": _stub_gate(mine)}
+    on = _stub_gate(mine)
+    on.verdict = "FAIL"
+    g = dg._guard(_stub_evaluate(on, same), lambda: _stub_gate(_claim("files_changed_count", "VERIFIED", n="2")),
+                  strict=False, tp=[])
+    assert [c.verdict for c in g.claims] == ["UNCHECKABLE"] and g.verdict == "PASS"
+
+
+def test_k5_a_claim_of_a_sentence_the_ports_read_apart_reads_as_main_read_it():
+    """R10-K5A to R10-K5D: the Python reads each such claim as main's Python did, reason and detail included."""
+    for rid, (summary, diff) in K5_REPROS.items():
+        assert _full(dg.gate_diff_text(summary, diff)) == _full(ref.gate_diff_text(summary, diff)), rid
+
+
+def test_k5_the_port_reads_such_a_claim_as_mains_port_read_it():
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    script = ("const B = require(process.argv[1]), M = require(process.argv[2]);"
+              "const P = JSON.parse(require('fs').readFileSync(0, 'utf8')); const out = {};"
+              "for (const [id, [s, d]] of Object.entries(P)) out[id] = [B.gateDiffText(s, d).claims,"
+              " M.gateDiffText(s, d).claims];"
+              "process.stdout.write(JSON.stringify(out));")
+    r = subprocess.run([node, "-e", script, str(PORT), str(REF_JS)], input=json.dumps(K5_REPROS), capture_output=True,
+                       text=True, encoding="utf-8", timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+    for rid, (mine, main) in json.loads(r.stdout).items():
+        assert mine == main, rid
+
+
+def test_k5_reads_the_sentence_not_every_non_ascii_character():
+    """Punctuation, symbols and emoji read alike in both ports' templates: the em dash of `path -- created.` (U+2014, a
+    literal in the template itself) leaves #97's repair in place; a word character or a split mark does not."""
+    assert dg._apart_readings("integrations/git/README.md — created.") == (False, False)
+    assert dg._apart_readings("Added 2 tests ✅ «» ’") == (False, False)
+    assert dg._apart_readings("Updated lib/a.pyé/x.md.") == (True, True)
+    assert dg._apart_readings("Changed\u001csrc/util.py") == (True, True)
+    assert dg._apart_readings("a\rb.py: x") == (True, True)
+    assert dg._apart_readings("Updated a.py.\r") == (False, False)
+    assert dg._apart_readings("Added function café.") == (True, False)          # the name is W-2's in both ports
+    assert dg._apart_readings("éadded function foo.") == (True, True)          # a word character outside the name
+    g = dg.gate_diff_text("integrations/git/README.md — created.", PAIRS["path2:97-two-readmes"]["diff"])
+    m = ref.gate_diff_text("integrations/git/README.md — created.", PAIRS["path2:97-two-readmes"]["diff"])
+    assert [(c.kind, c.verdict) for c in g.claims if c.kind == "file_created"] == [("file_created", "VERIFIED")]
+    assert [(c.kind, c.verdict) for c in m.claims if c.kind == "file_created"] == [("file_created", "UNCHECKABLE")]
+
+
+def test_tests_pass_runs_its_command_once_and_reads_as_main(tmp_path):
+    """The reference is run without --run; its tests_pass verdict is the shared leg's answer where it is measured."""
+    counter = tmp_path / "ran.txt"
+    cmd = f'"{sys.executable}" -c "open(r\'{counter}\', \'a\').write(\'x\')"'
+    diff = "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-a = 1\n+a = 2\n"
+    g = dg.gate_diff_text("All tests pass. Modified src/a.py.", diff, run=cmd, repo=tmp_path)
+    assert counter.read_text() == "x"
+    assert sorted((c.kind, c.verdict) for c in g.claims) == [("file_touched", "VERIFIED"), ("tests_pass", "VERIFIED")]
+
+
+def test_the_git_door_is_guarded_against_mains_git_door_on_the_same_range(tmp_path, monkeypatch):
+    git = shutil.which("git")
+    if git is None:
+        pytest.skip("git is not on PATH")
+    run = lambda *a: subprocess.run([git, *a], cwd=tmp_path, check=True, capture_output=True)  # noqa: E731
+    run("init", "-q")
+    run("config", "user.email", "t@example.invalid")
+    run("config", "user.name", "t")
+    (tmp_path / "a.txt").write_text("a\n", encoding="utf-8")
+    run("add", "-A")
+    run("commit", "-qm", "base")
+    (tmp_path / ".env").write_text("A=1\n", encoding="utf-8")
+    (tmp_path / "env").write_text("B=1\n", encoding="utf-8")
+    run("add", "-A")
+    run("commit", "-qm", "head")
+    seen = []
+    real = ref.gate_diff
+
+    def recorded(summary, repo, base, head, **kw):
+        seen.append((summary, Path(repo), base, head, kw))
+        return real(summary, repo, base, head, **kw)
+
+    monkeypatch.setattr(dg._REF, "gate_diff", recorded)
+    g = dg.gate_diff("2 files changed.", tmp_path, "HEAD~1", "HEAD")
+    assert [(c.kind, c.verdict) for c in g.claims] == [("files_changed_count", "VERIFIED")]     # #121, licensed
+    assert seen == [("2 files changed.", tmp_path, "HEAD~1", "HEAD",
+                     {"run": None, "strict": False, "evidence": None, "commit": None})]

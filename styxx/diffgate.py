@@ -1505,24 +1505,70 @@ def _whole_file_symbol(name: str, added_blob: str, sides: dict | None):
     return None
 
 
-def _read_apart(claimed: str, before: str) -> bool:
-    """NOTE_path2_tenth_pass (K-5): whether the two ports' path templates may read this claim's path apart. The path
-    template's `\\w` is Python's (Unicode) here and ASCII in the port, and the `[^.!?\\n]{0,60}?` before it lets the
-    port start the path past a character it cannot hold, so a path holding a non-ASCII character, or one the sentence
-    runs into from a non-ASCII character, is another path in the other port (`Docs/<U+A7D0>/a.md` here, `/a.md`
-    there). main read each in its two ports as that port's template reads it; this reading licenses no difference
-    the two ports do not share, so such a claim reads as main read it (`_main_find`)."""
-    return not claimed.isascii() or not before.isascii()
+# NOTE_path2_eleventh_pass (K-5): the characters the two ports' templates read apart, other than the word characters.
+# U+001C to U+001F and U+0085 are Python's `\\s` only, U+FEFF JavaScript's only; U+2028 and U+2029 end a line for
+# JavaScript's `^` (the `m` flag), not for Python's `re.M`.
+_APART_MARKS = frozenset("\x1c\x1d\x1e\x1f\x85\ufeff\u2028\u2029")
+# The kinds K-5 reads as main read them in a sentence the two ports may read apart. `symbol_added` is asked apart
+# (`_apart_readings`); `tests_pass` and `compat_claim` read no path, no count and no name.
+_K5_KINDS = ("file_created", "file_deleted", "file_touched", "files_changed_count", "tests_added", "only_touches")
 
 
-def _main_find(main_map: dict, claimed: str):
-    """NOTE_path2_tenth_pass (K-5): main's own resolution of a path claim over main's file list -- one loop in diff
-    order, the earliest entry the claim matches exactly, by suffix or by basename."""
-    c = _main_key(claimed)
-    for p, st in main_map.items():
-        if p == c or p.endswith("/" + c) or Path(p).name == Path(c).name:
-            return p, st
-    return None, None
+def _apart_readings(sentence: str) -> tuple:
+    """NOTE_path2_eleventh_pass (K-5, at the sentence): (whether the two ports' claim templates may read this sentence's
+    claims apart, whether they may read its `symbol_added` claims apart).
+
+    The templates read a character through `\\w`, `\\b`, `\\d`, `\\s`, `re.I` and the multiline `^`, and the two ports
+    spell those differently: Python's `\\w`, `\\b` and `\\d` are Unicode, the port's ASCII; Python's `re.I` also matches
+    U+0130, U+0131, U+017F and U+212A to an ASCII letter, the port's does not; the two `\\s` differ on U+001C to U+001F,
+    U+0085 and U+FEFF; and the port's `^` also starts a line after CR, U+2028 and U+2029. So a sentence may be read
+    apart when it holds
+      - a non-ASCII word character: Python's `\\w` by the pinned table (styxx/_xid.py, Unicode 15.0.0), or a code point
+        some supported Python reads otherwise (the skew set, Unicode 13.0 to 16.0) -- every letter and digit, so every
+        character Python's `re.I` or `\\d` reads as ASCII;
+      - one of U+001C to U+001F, U+0085, U+FEFF, U+2028, U+2029, or a CR with a character after it (a mark).
+    Every other character -- punctuation (the em dash of "README.md — created."), symbols, emoji, combining marks, the
+    spaces both `\\s` hold -- reads alike in both ports: neither `\\w` holds it, both or neither `\\s` does, it folds to
+    nothing ASCII and ends no line.
+
+    A `symbol_added` claim's name is read as the Python reads it in both ports (the port takes its name from where the
+    template's `name` group starts, by the table: NOTE_path2_sixth_pass W-2), so word characters inside a name read
+    alike; its claims are read apart only where the sentence holds a mark, or a word character outside every name the
+    symbol template reads (a name's extent, from where it starts, is every character the table reads as a word character
+    or as continuing an identifier, and the skew set: W-2 reads the identifier, the port's name group Python's `\\w`).
+
+    The tenth pass asked this of a path claim's path and the character before it; round 10 found the ports reading claim
+    lists apart after a path, around a verb and at a separator (R0.1), so it is the sentence."""
+    if sentence.isascii():
+        mark = any("\x1c" <= ch <= "\x1f" for ch in sentence) or "\r" in sentence[:-1]
+        return mark, mark
+    words = []
+    for i, ch in enumerate(sentence):
+        if ch < "\x80":
+            if "\x1c" <= ch <= "\x1f" or (ch == "\r" and i + 1 < len(sentence)):
+                return True, True
+        elif ch in _APART_MARKS:
+            return True, True
+        elif _xid_word(ch) or _xid_skew(ch):
+            words.append(i)
+    if not words:
+        return False, False
+    spans = []
+    for m in _SYMBOL_TEMPLATE.finditer(sentence):
+        j = m.start("name")
+        while j < len(sentence) and (_xid_word(sentence[j]) or _xid_continues(sentence[j]) or _xid_skew(sentence[j])):
+            j += 1
+        spans.append((m.start("name"), j))
+    return True, any(not any(a <= i < b for a, b in spans) for i in words)
+
+
+def _k5_flag(kind: str, sentence: str, memo: list) -> bool:
+    """K-5 for one claim of `sentence`: `memo` holds `_apart_readings(sentence)` once asked."""
+    if kind not in _K5_KINDS and kind != "symbol_added":
+        return False
+    if not memo:
+        memo.extend(_apart_readings(sentence))
+    return memo[1] if kind == "symbol_added" else memo[0]
 
 
 def _basename_only(status: dict, claimed: str, rp: "_Repairs | None" = None):
@@ -1798,6 +1844,7 @@ def _demoted_by_containment(sentence: str, m) -> bool:
 
 
 _PATH_KINDS = ("file_created", "file_deleted", "file_touched")
+_SYMBOL_TEMPLATE = next(rx for kind, rx in _TEMPLATES if kind == "symbol_added")
 
 # A path mentioned after one of these is being REFERRED to, not claimed. Closed
 # set, in the same spirit as the extension whitelist: the gate would rather miss
@@ -2141,6 +2188,9 @@ def selfcheck_tests_pass_never_accuses(source: str | None = None) -> dict:
 
 
 from .declare import declaration_pass as _declaration_pass
+# NOTE_path2_eleventh_pass: main's reader, vendored unchanged (origin/main's styxx/diffgate.py, sha256 9b620e00...): the
+# guard's reference (`_guard`).
+from . import _diffgate_ref as _REF  # noqa: E402
 
 
 @dataclass
@@ -2317,14 +2367,24 @@ def gate_diff_text(summary_text: str, diff_text: str,
     says in its own `why` that the report is not tied to any particular change.
     Neither can produce an accusation — see `_tests_pass_verdict`.
     """
-    return _evaluate_text(summary_text, diff_text, _ALL_ON, run=run, strict=strict, repo=repo,
-                          evidence=evidence, commit=commit)
+    tp: list = []
+
+    def evaluate(rp: "_Repairs", out: dict | None) -> DiffGate:
+        return _evaluate_text(summary_text, diff_text, rp, run=run, strict=strict, repo=repo, evidence=evidence,
+                              commit=commit, tp=tp, observe=out is not None, out=out)
+
+    def reference():
+        # NOTE_path2_eleventh_pass: main's reader, unchanged; without --run and --evidence (see `_guard` on tests_pass)
+        return _REF.gate_diff_text(summary_text, diff_text, run=None, strict=False, repo=repo, evidence=None,
+                                   commit=None)
+
+    return _guard(evaluate, reference, strict=strict, tp=tp)
 
 
 def _evaluate_text(summary_text: str, diff_text: str, rp: "_Repairs", *, run: str | None = None,
                    strict: bool = False, repo=None, evidence=None, commit: str | None = None,
-                   tp: list | None = None, observe: bool = True) -> DiffGate:
-    """NOTE_path2_eleventh_pass: this reading of a raw diff with the repairs `rp`. With every repair on, the three
+                   tp: list | None = None, observe: bool = True, out: dict | None = None) -> DiffGate:
+    """NOTE_path2_eleventh_pass: this reading of a raw diff with the repairs `rp`, before the guard. With every repair on, the three
     parses the tenth pass made (`parse_unified_diff`, `parse_unified_diff_sides`, `_diff_notes`); with #121 switched
     off, one parse keyed by main's key (#97 and #101 act in `_gate`, not in the parse). `tp` shares one tests_pass
     answer between evaluations, and `observe=False` skips the never-read observer (it touches no verdict)."""
@@ -2339,7 +2399,7 @@ def _evaluate_text(summary_text: str, diff_text: str, rp: "_Repairs", *, run: st
                  repo=repo, base="(diff-text)", head="(diff-text)",
                  evidence=evidence, commit=commit,
                  raw_input_len=len(diff_text or ""), main=_main_reading(diff_text or ""),
-                 sides=sides, notes=notes, rp=rp, tp=tp, observe=observe)
+                 sides=sides, notes=notes, rp=rp, tp=tp, observe=observe, out=out)
 
 
 def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
@@ -2366,15 +2426,25 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
     repo = Path(repo)
     name_status = _git(repo, "diff", "--name-status", f"{base}..{head}")
     diff_text = _git(repo, "diff", f"{base}..{head}")
-    return _evaluate_git(summary_text, name_status, diff_text, _ALL_ON, run=run, strict=strict, repo=repo,
-                         base=base, head=head, evidence=evidence, commit=commit)
+    tp: list = []
+
+    def evaluate(rp: "_Repairs", out: dict | None) -> DiffGate:
+        return _evaluate_git(summary_text, name_status, diff_text, rp, run=run, strict=strict, repo=repo, base=base,
+                             head=head, evidence=evidence, commit=commit, tp=tp, observe=out is not None, out=out)
+
+    def reference():
+        # NOTE_path2_eleventh_pass: main's git door on the same repository and range (it runs git itself)
+        return _REF.gate_diff(summary_text, repo, base, head, run=None, strict=False, evidence=None, commit=None)
+
+    return _guard(evaluate, reference, strict=strict, tp=tp)
 
 
 def _evaluate_git(summary_text: str, name_status: str, diff_text: str, rp: "_Repairs", *, run: str | None = None,
                   strict: bool = False, repo=None, base: str = "", head: str = "", evidence=None,
-                  commit: str | None = None, tp: list | None = None, observe: bool = True) -> DiffGate:
-    """NOTE_path2_eleventh_pass: the git door's reading of git's two outputs with the repairs `rp`; git is run once, by
-    `gate_diff`, however many evaluations read its bytes."""
+                  commit: str | None = None, tp: list | None = None, observe: bool = True,
+                  out: dict | None = None) -> DiffGate:
+    """NOTE_path2_eleventh_pass: the git door's reading of git's two outputs with the repairs `rp`, before the guard; git
+    is run once, by `gate_diff`, however many evaluations read its bytes."""
     status: dict[str, str] = {}
     paths: list = []
     for line in _diff_lines(name_status):                  # NOTE_path2_fourth_pass F-2
@@ -2397,7 +2467,7 @@ def _evaluate_git(summary_text: str, name_status: str, diff_text: str, rp: "_Rep
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base=base, head=head, main=_MainReading(diff_text, (main_map,)),
                  evidence=evidence, commit=commit,
-                 sides=sides, notes=notes, rp=rp, tp=tp, observe=observe)
+                 sides=sides, notes=notes, rp=rp, tp=tp, observe=observe, out=out)
 
 
 def _find_path(status: dict, claimed: str):
@@ -2482,6 +2552,161 @@ class _Repairs:
 _ALL_ON = _Repairs()
 
 
+# ══════════════════════════════════════════════════════════════════════════════
+# NOTE_path2_eleventh_pass_2026_09_28: THE GUARD -- the licensed-difference rule at the verdict
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# The operator's decision of 2026-09-28. Ten passes compared this reading of a diff with main's reading of it, rule by
+# rule, and each round found a line, a status or a key the comparison had not listed. The comparison now happens where
+# the answer is given. Per claim, on both doors:
+#   1. this reading gives its verdict with every repair on (the tenth pass's gate);
+#   2. main's reader -- styxx/_diffgate_ref.py, origin/main's styxx/diffgate.py byte for byte -- gives its verdict on the
+#      same input; a claim is paired with main's claim of the same kind, the same sentence and the same occurrence;
+#   3. the same verdict, or an abstention here: the claim is kept, with its own reason;
+#   4. a different verdict: this reading is evaluated again with each single repair switched off, and the difference is
+#      LICENSED by repair R only if R switched off gives main's verdict and R's own precondition holds on this claim
+#      (`_precondition`); licensed, the claim is kept; otherwise it is UNCHECKABLE, naming main's verdict;
+#   5. where main raises, or makes no such claim, there is no verdict to license a difference from: UNCHECKABLE;
+#   6. the gate's verdict, and --strict, are recomputed from the final claims.
+# So no claim main decides can come out with a different verdict unless a named repair on its own precondition explains
+# it: the three repairs are the only surface where a new false verdict can arise. The guard does NOT make the Python and
+# the port agree (each is held to its own reference); K-5 at the sentence does that for the sentences the two ports'
+# templates may read apart: every claim read from such a sentence reads as main's same port read it.
+#
+# tests_pass: its function is main's, byte for byte (tests/test_diffgate_guard.py pins it), so main's reader is run
+# without --run and --evidence -- a command never runs twice -- and main's verdict for such a claim is that function's
+# answer wherever main's gate is measured, UNCHECKABLE where it is not. It is never replaced by K-5: its template reads
+# no path and no name.
+
+_GUARD_DIFFERS = ("main's reading gives {main} and this one {this}; no named repair (#97's exact and suffix tiers, "
+                  "#121's dotted key, #101's pairing) explains the difference on this claim, so it abstains")
+_GUARD_RAISES = ("main's reading raises on this diff and gives no verdict; this one gives {this}, and no named repair "
+                 "licenses a verdict where main gives none")
+_GUARD_ABSENT = ("main's reading makes no such claim of this sentence; this one gives {this}, and no named repair "
+                 "licenses a verdict where main gives none")
+_K5_WHY = ("the two ports' templates may read this sentence apart (it holds a character at or past U+0080, or one of "
+           "U+001C to U+001F), so the claim reads as main read it, and {}")
+_K5_ABSENT = "main's reading makes no such claim of it"
+_K5_RAISES = "main's reading raises on this diff"
+
+
+def _claim_keys(claims) -> list:
+    """(kind, text, occurrence) of each claim: the pairing between this reading's claims and main's. Both readers share
+    the templates, the sentence split and the extraction filters, so where both extract a claim of a sentence they
+    extract it at the same occurrence."""
+    seen: Counter = Counter()
+    out = []
+    for c in claims:
+        k = (c.kind, c.text)
+        out.append((c.kind, c.text, seen[k]))
+        seen[k] += 1
+    return out
+
+
+def _dotted(key: str) -> bool:
+    """#121's precondition: a key that keeps a leading dot main's key drops (`.env`, `.github/x`, `../x`)."""
+    return key.startswith(".")
+
+
+def _definition_paired(name: str, sides, status) -> bool:
+    """#101's precondition for `symbol_added`: some file that is not created (`A`) both adds and removes a definition of
+    `name` -- the pairing had a removed definition of the same name in the same file to pair."""
+    for path, (added, removed) in (sides or {}).items():
+        if (status or {}).get(path) == "A":
+            continue
+        if any(_defines(x, name) for x in added) and any(_defines(x, name, True) for x in removed):
+            return True
+    return False
+
+
+def _precondition(repair: str, c, status: dict, sides) -> bool:
+    """Whether `repair`'s own precondition holds on claim `c`, read on this reading with every repair on (`status`,
+    `sides`). NOTE_path2_eleventh_pass, A.3:
+      #97   a path claim that the tiered resolution resolved by the exact or the suffix tier, where main's loop over the
+            same file list takes another entry;
+      #121  a key the claim reads keeps a leading dot: a key of the file list or of the sides, the claimed path's key,
+            or an only_touches prefix's key;
+      #101  a removed definition of the same name in the same file was paired: for tests_added the pairing paired a
+            test, for symbol_added some file that is not created adds and removes a definition of the claimed name."""
+    d = c.detail or {}
+    if repair == "#97":
+        if c.kind not in _PATH_KINDS or "path" not in d:
+            return False
+        key = _norm(d["path"])
+        p, _st = _find_path(status, d["path"])
+        if p is None or not (p == key or p.endswith("/" + key)):
+            return False
+        return _earliest_match(status, d["path"])[0] != p
+    if repair == "#121":
+        own = [d[k] for k in ("path", "prefix", "prefix2") if isinstance(d.get(k), str)]
+        return (any(_dotted(k) for k in status) or any(_dotted(k) for k in (sides or {}))
+                or any(_dotted(_norm(x)) for x in own))
+    if repair == "#101":
+        if c.kind == "tests_added":
+            return _changed_test_defs(sides, status) > 0
+        if c.kind == "symbol_added" and isinstance(d.get("name"), str):
+            return _definition_paired(d["name"], sides, status)
+        return False
+    raise ValueError(repair)
+
+
+def _guard(evaluate, reference, *, strict: bool, tp: list) -> DiffGate:
+    """NOTE_path2_eleventh_pass: the licensed-difference rule at the verdict. `evaluate(rp, out)` is this reading with the
+    repairs `rp` (filling `out` for the evaluation with every repair on), `reference()` main's gate on the same input,
+    `tp` the tests_pass answer the evaluations share."""
+    seen: dict = {}
+    gate = evaluate(_ALL_ON, seen)
+    try:
+        ref = reference()
+    except Exception:                                    # main raises: there is no verdict to license a difference from
+        ref = None
+    theirs = dict(zip(_claim_keys(ref.claims), ref.claims)) if ref is not None else {}
+    switched: dict = {}
+
+    def switched_verdict(repair: str, key):
+        if repair not in switched:
+            g = evaluate(_Repairs({repair}), None)
+            switched[repair] = dict(zip(_claim_keys(g.claims), g.claims))
+        other = switched[repair].get(key)
+        return None if other is None else other.verdict
+
+    final: list = []
+    for key, c, apart in zip(_claim_keys(gate.claims), gate.claims, seen["apart"]):
+        r = theirs.get(key)
+        if apart and c.kind != "tests_pass":             # K-5: the sentence reads as main's same port read it
+            if r is not None:
+                final.append(DiffClaim(kind=r.kind, text=r.text, detail=dict(r.detail or {}), verdict=r.verdict,
+                                       why=r.why))
+            else:
+                final.append(DiffClaim(kind=c.kind, text=c.text, detail=c.detail, verdict="UNCHECKABLE",
+                                       why=_K5_WHY.format(_K5_RAISES if ref is None else _K5_ABSENT)))
+            continue
+        if c.verdict == "UNCHECKABLE":
+            final.append(c)
+            continue
+        main_verdict = None if r is None else r.verdict
+        if c.kind == "tests_pass" and r is not None and ref.measured:
+            main_verdict = tp[0][0] if tp else "UNCHECKABLE"     # main's own function, on the same evidence and command
+        if main_verdict == c.verdict:
+            final.append(c)
+            continue
+        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"])
+                                    and switched_verdict(repair, key) == main_verdict for repair in REPAIRS):
+            final.append(c)                              # licensed by a named repair on its own precondition
+            continue
+        why = (_GUARD_RAISES.format(this=c.verdict) if ref is None else
+               _GUARD_ABSENT.format(this=c.verdict) if r is None else
+               _GUARD_DIFFERS.format(main=main_verdict, this=c.verdict))
+        final.append(DiffClaim(kind=c.kind, text=c.text, detail=c.detail, verdict="UNCHECKABLE", why=why))
+    contradicted = any(c.verdict == "CONTRADICTED" for c in final)
+    uncheckable = any(c.verdict == "UNCHECKABLE" for c in final)
+    return DiffGate(verdict="FAIL" if (contradicted or (strict and uncheckable)) else "PASS",
+                    base=gate.base, head=gate.head, claims=final,
+                    uncovered_sentences=gate.uncovered_sentences, sentences_total=gate.sentences_total,
+                    uncovered_texts=gate.uncovered_texts, unparsed_claims=gate.unparsed_claims,
+                    measured=gate.measured, why_unmeasured=gate.why_unmeasured)
+
+
 def _path_claim_verdict(kind: str, claimed: str, find_path) -> tuple[str, str]:
     """Resolve a file_created / file_deleted / file_touched claim.
 
@@ -2553,10 +2778,13 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
           raw_input_len: int | None = None, sides: dict | None = None,
           notes: dict | None = None, main: "_MainReading | None" = None,
           rp: "_Repairs | None" = None, tp: list | None = None, observe: bool = True,
-          _declared: bool = False) -> DiffGate:
+          out: dict | None = None, _declared: bool = False) -> DiffGate:
     # NOTE_path2_eleventh_pass: `rp`, the repairs this reading applies (the switches); `tp`, one tests_pass answer shared
-    # by every evaluation of one gate call, so a --run command runs once; `observe=False` skips the never-read observer.
+    # by every evaluation of one gate call, so a --run command runs once; `observe=False` skips the never-read observer;
+    # `out`, when given, receives what the guard reads besides the claims: the file list and the sides the
+    # preconditions read, and for each claim whether its sentence is one the two ports may read apart (K-5).
     rp = rp or _ALL_ON
+    flags: list = []
 
     # Some claim kinds are VACUOUSLY TRUE against an empty diff. `only_touches`
     # asks "is anything outside the prefix?" and an empty status answers "no" —
@@ -2597,6 +2825,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     sentences = re.split(r"(?<=[.!?])\s+|\n+", summary_text)
     covered = set()
     for si, sent in enumerate(sentences):
+        k5: list = []                                   # NOTE_path2_eleventh_pass: `_apart_readings(sent)`, once asked
         for kind, rx in _TEMPLATES:
             for m in rx.finditer(sent):
                 # A path can be NAMED without being CLAIMED. Two forms, both found
@@ -2639,16 +2868,14 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 if no_evidence:
                     c.verdict, c.why = "UNCHECKABLE", no_evidence
                     claims.append(c)
+                    flags.append(_k5_flag(kind, sent, k5))
                     continue
                 if kind in _PATH_KINDS:
-                    at = m.start("path")
-                    apart = main is not None and _read_apart(d["path"], sent[at - 1:at])
-                    only_name = None if (not_sure or apart) else _basename_only(status, d["path"], rp)
+                    # NOTE_path2_eleventh_pass: the tenth pass's K-5 (a path the two ports' templates may read apart, read
+                    # by main's resolution) is the guard's now, and covers the whole sentence (`_guard`, A.4).
+                    only_name = None if not_sure else _basename_only(status, d["path"], rp)
                     if not_sure:                        # NOTE_path2_eighth_pass (Y-1)
                         c.verdict, c.why = "UNCHECKABLE", not_sure
-                    elif apart:                         # NOTE_path2_tenth_pass (K-5): as main read it
-                        c.verdict, c.why = _path_claim_verdict(kind, d["path"],
-                                                               lambda claimed: _main_find(main.maps[0], claimed))
                     elif only_name:                     # NOTE_path2_ninth_pass (Z-4)
                         c.verdict, c.why = "UNCHECKABLE", only_name
                     else:
@@ -2851,6 +3078,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     # That is disclosed rather than patched.
                     c.verdict, c.why = tests_pass_leg()
                 claims.append(c)
+                flags.append(_k5_flag(kind, sent, k5))
 
     # DECLARE-1 (PREREG_declare1_the_toll_2026_09_18, sha256 7ffd0ba1...). The prose pass above
     # is finished and is not changed by any of this. A body may ALSO declare its claims in one
@@ -2864,14 +3092,16 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
         _dtext, _drep = _declaration_pass(summary_text)
         if _drep["declared"]:
             if _dtext:
+                _sub_out: dict = {}
                 _sub = _gate(_dtext, status, added_blob, run=run, strict=strict, repo=repo,
                              base=base, head=head, evidence=evidence, commit=commit,
                              raw_input_len=raw_input_len, sides=sides, notes=notes, main=main,
-                             rp=rp, tp=_tp, observe=False, _declared=True)
+                             rp=rp, tp=_tp, observe=False, out=_sub_out, _declared=True)
                 for _c in _sub.claims:
                     _c.detail = dict(_c.detail or {})
                     _c.detail["declared"] = True
                     claims.append(_c)
+                flags.extend(_sub_out["apart"])
             # Declared but deliberately unverifiable (`tests_pass`), and unreadable lines. Both
             # are reported as UNCHECKABLE: a declaration that cannot be read is not a lie, and a
             # declaration that tests passed is not evidence that they did.
@@ -2879,10 +3109,12 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 claims.append(DiffClaim(kind=_u["key"], text=f"{_u['key']}: {_u['value']}",
                                         detail={"declared": True},
                                         verdict="UNCHECKABLE", why=_u["why"]))
+                flags.append(False)
             for _p in _drep["problems"]:
                 claims.append(DiffClaim(kind="declaration_problem", text=_p,
                                         detail={"declared": True},
                                         verdict="UNCHECKABLE", why=_p))
+                flags.append(False)
 
     contradicted = any(c.verdict == "CONTRADICTED" for c in claims)
     uncheckable = any(c.verdict == "UNCHECKABLE" for c in claims)
@@ -2923,6 +3155,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
             unparsed = [s for s in uncovered_texts if _detect(s).is_claim]
     except Exception:
         unparsed = []
+    if out is not None:
+        out.update(status=status, sides=sides, apart=flags)
     return DiffGate(verdict=verdict, base=base, head=head, claims=claims,
                     measured=not no_evidence, why_unmeasured=no_evidence or "",
                     uncovered_sentences=len(uncovered_texts),
