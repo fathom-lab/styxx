@@ -2013,5 +2013,5 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
   };
 }
 
-if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides, _evaluate, _Repairs, REPAIRS, _apartReadings, _precondition, _claimKeys };
+if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides, _evaluate, _Repairs, REPAIRS, _apartReadings, _precondition, _claimKeys, _guard };
 if (typeof globalThis !== "undefined") globalThis.styxxDiffgateJS = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides };

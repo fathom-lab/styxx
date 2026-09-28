@@ -323,6 +323,53 @@ def test_k5_the_port_reads_such_a_claim_as_mains_port_read_it():
         assert mine == main, rid
 
 
+PORT_GUARD_SCRIPT = r"""
+const B = require(process.argv[1]);
+const claim = (kind, verdict, text = "s.", detail = {}) => ({ kind, text, detail, verdict, why: verdict.toLowerCase() + " here" });
+const gate = (...claims) => ({ diffgate: "v0", verdict: "PASS", base: "b", head: "h", claims, uncovered_sentences: 0,
+                               sentences_total: 1, uncovered_texts: [], unparsed_claims: [], measured: true, why_unmeasured: "" });
+const stub = (on, switched, keys) => (rp, out) => {
+  if (out !== null) { Object.assign(out, { status: new Map(keys.map(k => [k, "A"])), sides: new Map(), apart: on.claims.map(() => false) }); return on; }
+  return switched[[...rp.off][0]];
+};
+const mine = claim("files_changed_count", "VERIFIED", "s.", { n: "2" }), theirs = claim("files_changed_count", "CONTRADICTED", "s.", { n: "2" });
+const out = {};
+const sw = { "#97": gate(mine), "#121": gate(theirs), "#101": gate(mine) };
+out.licensed = B._guard(stub(gate(mine), sw, [".env", "env"]), () => gate(theirs), false).claims.map(c => c.verdict);
+out.no_precondition = B._guard(stub(gate(mine), sw, ["env", "x"]), () => gate(theirs), false).claims.map(c => [c.verdict, c.why]);
+const sw2 = { "#97": gate(mine), "#121": gate(mine), "#101": gate(mine) };
+out.no_switch = B._guard(stub(gate(mine), sw2, [".env"]), () => gate(theirs), false).claims.map(c => c.verdict);
+const acc = claim("files_changed_count", "CONTRADICTED", "s.", { n: "2" }), ver = claim("files_changed_count", "VERIFIED", "s.", { n: "2" });
+const on = gate(acc); on.verdict = "FAIL";
+const g = B._guard(stub(on, { "#97": gate(acc), "#121": gate(acc), "#101": gate(acc) }, ["x"]), () => gate(ver), false);
+out.recomputed = [g.verdict, g.claims.map(c => c.verdict)];
+out.raises = B._guard(stub(gate(acc), { "#97": gate(acc), "#121": gate(acc), "#101": gate(acc) }, ["x"]),
+                      () => { throw new TypeError("x"); }, false).claims.map(c => [c.verdict, c.why]);
+const u = claim("only_touches", "UNCHECKABLE", "s.", { prefix: "x" }), v = claim("only_touches", "VERIFIED", "t.", { prefix: "x" });
+const s = B._guard(stub(gate(u, v), {}, ["x"]), () => gate(claim("only_touches", "VERIFIED", "s."), claim("only_touches", "VERIFIED", "t.")), true);
+out.strict = [s.verdict, s.claims.map(c => c.why)];
+process.stdout.write(JSON.stringify(out));
+"""
+
+
+def test_the_ports_guard_reads_as_the_pythons_on_the_same_stubs():
+    """The port's `_guard` against the Python's own stub cases: a licence needs the switch and the precondition, main
+    raising or absent abstains, the verdict and --strict are recomputed from the final claims."""
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    r = subprocess.run([node, "-e", PORT_GUARD_SCRIPT, str(PORT)], capture_output=True, text=True, encoding="utf-8",
+                       timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+    out = json.loads(r.stdout)
+    assert out["licensed"] == ["VERIFIED"]
+    assert out["no_precondition"] == [["UNCHECKABLE", dg._GUARD_DIFFERS.format(main="CONTRADICTED", this="VERIFIED")]]
+    assert out["no_switch"] == ["UNCHECKABLE"]
+    assert out["recomputed"] == ["PASS", ["UNCHECKABLE"]]
+    assert out["raises"] == [["UNCHECKABLE", dg._GUARD_RAISES.format(this="CONTRADICTED")]]
+    assert out["strict"] == ["FAIL", ["uncheckable here", "verified here"]]
+
+
 # This round's own differential (m10d, soup-101004-238): main's reading keys `b/<U+1C89>.md` and `b/<U+1C8A>.md` as two
 # files on Python 3.12 (Unicode 15.0) and one on Node 24 (16.0), so where main's two line splits differ was another place
 # in each port, and Z-3's reason named it.
