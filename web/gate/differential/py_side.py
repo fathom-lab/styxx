@@ -7,10 +7,11 @@ The port in ../diffgate.js is a transliteration of one specific file: styxx/diff
 on main (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2 + PATH-1 + DECLARE-1), re-cut for the PATH-2 repairs
 (#97, #121, #101, as amended by AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
 NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25,
-NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27 and NOTE_path2_ninth_pass_2026_09_27) on the
-file that carries them, sha256
-PINNED below, reading names by the table styxx/_xid.py carries (PINNED_NAME_TABLE) and abstaining on the skew
-set beside it (PINNED_SKEW_SET). By default this
+NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27, NOTE_path2_ninth_pass_2026_09_27 and
+NOTE_path2_tenth_pass_2026_09_28) on the file that carries them, sha256
+PINNED below, reading names by the table styxx/_xid.py carries (PINNED_NAME_TABLE), abstaining on the skew
+set beside it (PINNED_SKEW_SET), and comparing two header paths' case by the fold styxx/_fold.py carries
+(PINNED_FOLD). By default this
 script imports the checkout's module and REFUSES to run unless it hashes to that pin (after CRLF -> LF
 normalisation, because a wheel built on Windows carries CRLF and the same file then hashes
 differently), so a disagreement count always means "against the file the port claims to be", never
@@ -51,13 +52,16 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "e975d098e0ecba01e3b2215e5bf59f0fdca2a5cb6880fba1ef317bf211135067"  # styxx/diffgate.py, main + PATH-2 ninth pass (LF)
+PINNED = "0fc470c5a17b865999b0e6946378d1292233bf2c7d86b813f2d7f5c5a08f27ad"  # styxx/diffgate.py, main + PATH-2 tenth pass (LF)
 # NOTE_path2_seventh_pass: the instrument reads a name by styxx/_xid.py's table, so the table is pinned too
 # (the sha256 of the table string both ports carry; tests/test_diffgate_path2.py holds the two copies equal).
 PINNED_NAME_TABLE = "8df68f217cca495ab8a38ced9096213aabac4cf23927068d61397d2c9074d4cb"  # Unicode 15.0.0
 # NOTE_path2_eighth_pass_2026_09_27 (Y-3): and the skew set beside it (the code points the Pythons this package
 # supports, Unicode 13.0 to 16.0, read differently from the table; both ports abstain on a name that meets one).
 PINNED_SKEW_SET = "0b7134fd20e249f7ea69f8fcfcc1993bac0ebd5b7fe9e2e41d507594b097bfd3"
+# NOTE_path2_tenth_pass_2026_09_28 (K-2): and the case fold both ports compare two header paths with (Unicode 16.0.0's
+# lowercase mapping of each code point, and U+03C2 to U+03C3; tests/test_diffgate_path2.py holds the two copies equal).
+PINNED_FOLD = "a52cda82375292f71230e7e781acc24760084994812e083870b7419bdc5d5fd6"
 # The pin moved twice in one step and both moves are deliberate. COMPAT-2 (#124) changed the
 # compat reading, so the port had to follow it; and `fetch_pr` landed on main after the previous
 # pin was written, which is why this script has been REFUSING TO RUN on main ever since -- the
@@ -95,6 +99,11 @@ def load(installed: bool):
         if skew != PINNED_SKEW_SET or xid.SKEW_SHA256 != PINNED_SKEW_SET:
             sys.exit(f"styxx/_xid.py's skew set hashes to {skew[:16]}…, not the one the port carries "
                      f"({PINNED_SKEW_SET[:16]}…).")
+        fold = importlib.import_module("styxx._fold")
+        folded = hashlib.sha256(fold.FOLD.encode("ascii")).hexdigest()
+        if folded != PINNED_FOLD or fold.FOLD_SHA256 != PINNED_FOLD:
+            sys.exit(f"styxx/_fold.py's case fold hashes to {folded[:16]}…, not the one the port carries "
+                     f"({PINNED_FOLD[:16]}…).")
     return mod, digest
 
 
