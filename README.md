@@ -478,7 +478,7 @@ contract perfectly and still be completely wrong.
 | DOI (concept, always-latest) | [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174) |
 | DOI (spec v1.0) | [10.5281/zenodo.19746215](https://doi.org/10.5281/zenodo.19746215) |
 | DOI (*Every Mind Leaves Vitals*) | [10.5281/zenodo.19777921](https://doi.org/10.5281/zenodo.19777921) — central claims bounded or falsified by a scope erratum (2026-06-21) in the [repo copy](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/every-mind-leaves-vitals.md) |
-| citation | [CITATION.cff](https://github.com/fathom-lab/styxx/blob/v7.48.0/CITATION.cff) |
+| citation | [CITATION.cff](https://github.com/fathom-lab/styxx/blob/main/CITATION.cff) · software concept DOI [10.5281/zenodo.19758618](https://doi.org/10.5281/zenodo.19758618) |
 | patents | [PATENTS.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/PATENTS.md) — US provisionals 64/020,489 · 64/021,113 · 64/026,964 |
 | issues | [github.com/fathom-lab/styxx/issues](https://github.com/fathom-lab/styxx/issues) |
 

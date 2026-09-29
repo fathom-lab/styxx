@@ -237,3 +237,27 @@ def test_diverged_deposits_explain_themselves():
             f"{d['doi']} is marked DIVERGED but no file entry says which file diverged "
             "or on what evidence"
         )
+
+
+def test_every_cited_in_line_on_a_citation_surface_names_its_doi():
+    """A `cited_in` entry "README.md:478" is a line number, and line numbers go stale silently.
+
+    The 2026-09-29 audit found five of them pointing at the wrong lines. Each entry on a
+    citation surface must still point at a line that carries the DOI's record number (a badge
+    URL-encodes the slash, so only the number is matched).
+    """
+    manifest = load_manifest()
+    lines = {s: (ROOT / s).read_text(encoding="utf-8").splitlines() for s in CITATION_SURFACES}
+    stale = []
+    for d in manifest["deposits"]:
+        number = d["doi"].rsplit(".", 1)[-1]
+        for ref in d.get("cited_in", []):
+            m = re.match(r"(README\.md|CITATION\.cff):(\d+)\b", ref)
+            if not m:
+                continue
+            surface, n = m.group(1), int(m.group(2))
+            text = lines[surface][n - 1] if 0 < n <= len(lines[surface]) else ""
+            if number not in text:
+                found = [i + 1 for i, line in enumerate(lines[surface]) if number in line]
+                stale.append(f"{d['doi']}: {ref} (the DOI is on lines {found})")
+    assert not stale, "cited_in points at lines that do not name the DOI:\n" + "\n".join(stale)

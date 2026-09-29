@@ -1,6 +1,5 @@
 # Citation metadata for styxx — see https://citation-file-format.github.io/
-# GitHub renders a "Cite this repository" widget on the repo home page when
-# this file is present and valid.
+# GitHub's "Cite this repository" prompt renders preferred-citation below (the position paper), not this entry.
 cff-version: 1.2.0
 message: "If you use styxx in research, please cite both the software and the position paper that motivates it."
 title: "styxx: a drop-in cognitive-vitals monitor and cognometric guardrail for LLM agents"
@@ -10,12 +9,13 @@ authors:
     affiliation: Fathom Intelligence
 type: software
 license: MIT
+version: "7.48.0"
+date-released: "2026-09-25"
 repository-code: "https://github.com/fathom-lab/styxx"
-url: "https://fathom.darkflobi.com/cognometry"
+url: "https://styxx-org.netlify.app"
 keywords:
   - cognometry
   - cognitive-fingerprint
-  - hallucination-detection
   - refusal-detection
   - tool-call-drift
   - sycophancy-detection

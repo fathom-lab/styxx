@@ -5,7 +5,8 @@ description: >-
   verifies the pull request body and every changed sworn document against it at the head commit,
   and writes a job summary with the rung and the harness string on every row. Exits 0 on every
   verdict. On a pull request from a fork the minting job is the claimant's, so the manifest
-  declares L1, never L2. No network; nothing is committed; no input can fail the job.
+  declares L1, never L2. The verification opens no network connection (the install step, when
+  styxx-source is non-empty, runs pip); nothing is committed; no input can fail the job.
   Built to papers/sworn/SPEC_sworn_action_v01_2026_09_05.md.
 author: "Fathom Lab"
 branding:
