@@ -234,6 +234,16 @@ canaries; the unmeasured reason is derived by this file's own code and `why_unme
 raw-door canaries (RAW_CANARIES: main raising, K-3's GNU `+++ /dev/null<TAB>` with no `---`, Y-4's `/dev/null` and a space,
 an unreadable header beside dotted twins, an under-counted hunk before a pair without a header's shape) are scored in
 both modes, for rules whose trigger `external1_harness.reconstruct` cannot produce.
+
+NOTE_path2_twelfth_pass and NOTE_path2_thirteenth_pass. The tightened licences are written out here and compared, as
+facts, with the instrument's (G-C7): git's own rendering for #121; the case kept, Z-3's doubts and (thirteenth pass,
+A.1, A.2) a key more than one file section registers and the header path as written before strip() for #97 and #121;
+at the git door (A.1) git's `T` letter and a mode change, compared since the thirteenth pass against what
+`_evaluate_git` reads (round 12's PF). A header path holding a code point the fold's Unicode does not assign is a
+path-key doubt (D), read with this file's own decoding of the assigned set, pinned here. The canaries reach, in every
+run of either mode, a licensed outcome of #97 and of #121 on each door (GUARD_OUTCOMES), a difference only two reverts
+together give back (round 12's PA), an entry matching a path claim only in case (PK), the git door's case-kept forms (PF)
+and a record `main`'s two doors read apart (PG1b).
 """
 from __future__ import annotations
 
@@ -266,7 +276,8 @@ NOTE = ["NOTE_path2_third_pass_2026_09_25.md", "NOTE_path2_fourth_pass_2026_09_2
         "NOTE_path2_fifth_pass_2026_09_25.md", "NOTE_path2_sixth_pass_2026_09_25.md",
         "NOTE_path2_seventh_pass_2026_09_25.md", "NOTE_path2_eighth_pass_2026_09_27.md",
         "NOTE_path2_ninth_pass_2026_09_27.md", "NOTE_path2_tenth_pass_2026_09_28.md",
-        "NOTE_path2_eleventh_pass_2026_09_28.md"]
+        "NOTE_path2_eleventh_pass_2026_09_28.md", "NOTE_path2_twelfth_pass_2026_09_29.md",
+        "NOTE_path2_thirteenth_pass_2026_09_29.md"]
 # The baseline is "the instrument before THIS repair". The preregistration named `87dded26`, the
 # origin/main this branch was cut from; the branch has since been rebased onto `98a5c368`, and
 # PATH-1 (#127), the COMPAT-2 port (#126) and DECLARE-1 (#129/#130) landed in between. Scored
@@ -466,6 +477,51 @@ FOLD_MAP = check_fold(_FOLD_MOD, FOLD_SHA256_PINNED)
 
 def own_fold(text: str) -> str:
     return text.translate(FOLD_MAP)
+
+
+# NOTE_path2_thirteenth_pass (D): the code points the fold's Unicode (16.0.0) assigns, carried beside the fold
+# (`ASSIGNED`). A header path holding one outside it is a path-key doubt: a runtime on a newer Unicode may lower-case it
+# beyond the fold. The data is the repair's; the decoder is this file's own; the set must hash to the sha256 pinned HERE,
+# hold every code point this Python assigns (Unicode never unassigns one) and every code point the fold maps.
+ASSIGNED_SHA256_PINNED = "56a413ebc235c1b375e39f8faf1384e8861da0e8ce4a46b53128c0a16b76456b"
+
+
+def check_assigned(fold_mod, pin: str) -> list:
+    """[(start, end)] half-open runs of styxx/_fold.py's assigned set, or exit."""
+    if hashlib.sha256(fold_mod.ASSIGNED.encode("ascii")).hexdigest() != pin:
+        sys.exit("path2_gates: styxx/_fold.py's assigned set does not hash to the sha256 this file pins")
+    runs, prev = [], 0
+    for entry in fold_mod.ASSIGNED.split(","):
+        gap, n = (int(x, 36) for x in entry.split(":"))
+        runs.append((prev + gap, prev + gap + n))
+        prev = prev + gap + n
+    starts = [a for a, _b in runs]
+
+    def inside(c: int) -> bool:
+        i = bisect_right(starts, c) - 1
+        return i >= 0 and c < runs[i][1]
+    for c in range(0x110000):
+        if unicodedata.category(chr(c)) != "Cn" and not inside(c):
+            sys.exit(f"path2_gates: the assigned set leaves out U+{c:04X}, which this Python assigns")
+    if any(not inside(c) for c in FOLD_MAP):
+        sys.exit("path2_gates: the case fold maps a code point the assigned set leaves out")
+    return runs
+
+
+ASSIGNED_RUNS = check_assigned(_FOLD_MOD, ASSIGNED_SHA256_PINNED)
+_ASSIGNED_STARTS = [a for a, _b in ASSIGNED_RUNS]
+
+
+def own_unassigned(text: str) -> bool:
+    """Whether `text` holds a code point outside the assigned set (this file's own decoding)."""
+    for ch in text:
+        c = ord(ch)
+        if c < 0x80:
+            continue
+        i = bisect_right(_ASSIGNED_STARTS, c) - 1
+        if i < 0 or c >= ASSIGNED_RUNS[i][1]:
+            return True
+    return False
 
 
 def _sha(b: bytes) -> str:
@@ -1289,6 +1345,8 @@ def own_bom_hidden(line: str):
 LOOSE_WHY = ("a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, "
              "a `++` line) or a file header")
 COLLIDE_WHY = "two header paths that differ only in case are one key"
+UNASSIGNED_WHY = ("a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode "
+                  "may key with another path")
 UNCOUNTED_WHY = ("a line names a changed file no header pair counts (GNU's `Binary files ... differ`, "
                  "`Only in ...` and the like)")
 UNCOUNTED = re.compile(r"^(?:(?:Binary files|Files|Symbolic links) .+ and .+ differ|Only in .+: .+|File .+ is a .+ while file .+ is a .+)$")
@@ -1333,7 +1391,9 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
     key in case; a GNU line naming a changed file no header pair counts), Y-2's line-1 U+FEFF outside the counts and its note (a U+FEFF dropped from an added line that
     then defines a test), and Y-4's /dev/null. NOTE_path2_twelfth_pass: `facts`, when given, receives what the guard's
     tightened licences read -- whether the diff is git's own rendering, whether a Z-3 doubt was read, and each key's
-    paths as written, case kept (A.1, A.2)."""
+    paths as written, case kept (A.1, A.2). NOTE_path2_thirteenth_pass (A.1, A.2): a `---`/`+++` path as written is cut
+    only at its TAB (and a CR), never stripped; `multi` the keys more than one file section registers; `moded` the keys a
+    section's `old mode`/`new mode` names; and (D) a path holding a code point the assigned set leaves out is Y-1's."""
     status: dict = {}
     added: list = []
     sides: dict = {}
@@ -1350,6 +1410,10 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
     as_git = None                 # the pending header's paths as git writes them
     minus_read = False            # a `---` line under the pending header
     kept: dict = {}
+    registered: Counter = Counter()   # NOTE_path2_thirteenth_pass (A.1): file sections per key
+    mode_keys: set = set()
+    mode_seen = False                 # `old mode`/`new mode` under the pending header
+    minus_written = None              # the `---` path as written, cut at its TAB only (A.2)
 
     def pend_key() -> str:
         raw = pend[0] if pend[2] == "D" else pend[1]
@@ -1369,15 +1433,21 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
 
     forms: dict = {}
 
-    def register(raw_path: str) -> None:
+    def register(raw_path: str, written: str | None = None) -> None:
         form = raw_path.replace("\\", "/")
         while form.startswith("/") or form.startswith("./"):
             form = form[1:] if form.startswith("/") else form[2:]
         seen_as = kept.setdefault(own_key(raw_path), [])
-        if form not in seen_as:
-            seen_as.append(form)
+        as_read = form if written is None else own_case_kept(written)   # NOTE_path2_thirteenth_pass (A.2)
+        if as_read not in seen_as:
+            seen_as.append(as_read)
+        registered[own_key(raw_path)] += 1                              # (A.1)
+        if mode_seen:
+            mode_keys.add(own_key(raw_path))
         if forms.setdefault(own_fold(form), form) != form:              # NOTE_path2_tenth_pass (K-2)
             unsure(("files", COLLIDE_WHY))
+        if own_unassigned(form):                                        # NOTE_path2_thirteenth_pass (D)
+            unsure(("files", UNASSIGNED_WHY))
 
     def bom_dropped(raw: str, text: str) -> None:
         if text != raw and test_name(text):
@@ -1405,6 +1475,7 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
             loose = lead_old = lead_new = in_binary = False
             any_header, as_git, minus_read = True, own_git_writes(line), False
             outside_git = outside_git or as_git is None
+            mode_seen = False
         elif line.startswith("--- "):
             named = line[4:].split("\t")[0]
             if pend is None or as_git is None or (named != "/dev/null" and named != as_git[0]):
@@ -1419,6 +1490,7 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
             elif not own_shaped_pair(lines, k):
                 soft.append(Z3_UNSHAPED)                  # NOTE_path2_eleventh_pass (round 10, R0.2)
             old_path, cur = line[4:].strip(), None
+            minus_written = own_as_written(line[4:])
             lead_old = lead_new = False
         elif line.startswith("+++ "):
             named = line[4:].split("\t")[0]
@@ -1441,12 +1513,16 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
                 if own_dev_null(nw):
                     status[own_key(old_path[2:] if old_path.startswith("a/") else old_path)] = "D"
                     raw = old_path[2:] if old_path.startswith("a/") else old_path
+                    written = minus_written[2:] if minus_written[:2] == "a/" else minus_written
                 else:
                     raw = nw[2:] if nw.startswith("b/") else nw
                     status[own_key(raw)] = "A" if old_path is None or own_dev_null(old_path) else "M"
+                    plus_written = own_as_written(line[4:])
+                    written = plus_written[2:] if plus_written[:2] == "b/" else plus_written
                 cur, pend = own_key(raw), None
-                register(raw)
+                register(raw, written)
                 sides.setdefault(cur, ([], []))
+            mode_seen = False
             lead_new = old_path is not None and own_shape(old_path) == "/dev/null"
             lead_old = own_shape(nw) == "/dev/null"
         elif mm:
@@ -1491,6 +1567,8 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
             for prefix, at in GIT_NAMES:
                 if line.startswith(prefix) and (pend is None or as_git is None or line[len(prefix):] != as_git[at]):
                     outside_git = True
+            if pend is not None and (line.startswith("old mode ") or line.startswith("new mode ")):
+                mode_seen = True                          # NOTE_path2_thirteenth_pass (A.1)
             if pend is not None:
                 _note(pend, line)
     flush()
@@ -1498,13 +1576,23 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
     if why:
         notes["differs"] = why
     if facts is not None:
-        facts.update(rendered=any_header and not outside_git, soft=bool(soft), forms=kept)
+        facts.update(rendered=any_header and not outside_git, soft=bool(soft), forms=kept,
+                     multi={k for k, n in registered.items() if n > 1}, moded=mode_keys)
     return status, added, sides, notes
 
 
-def own_git_licence(text: str, status_paths: list) -> dict:
+def own_as_written(header_path: str) -> str:
+    """NOTE_path2_thirteenth_pass (A.2), written out: a `---`/`+++` path as written -- up to its TAB, less a CR at the end,
+    and nothing stripped."""
+    cut = header_path.partition("\t")[0]
+    return cut[:-1] if cut[-1:] == "\r" else cut
+
+
+def own_git_licence(text: str, status_paths: list, name_status: str | None = None) -> dict:
     """NOTE_path2_twelfth_pass (A.1, A.2), written out, at the git door: git's diff text read for its rendering; no Z-3
-    doubt, since the file list is `--name-status`; each key's `--name-status` paths as written, case kept."""
+    doubt, since the file list is `--name-status`; each key's `--name-status` paths as written, case kept.
+    NOTE_path2_thirteenth_pass (A.1): and the keys that license nothing -- a `--name-status` line whose letter is `T`,
+    a key git's diff text registers in more than one section, or one its section's mode lines name."""
     facts: dict = {}
     own_read(text, facts)
     kept: dict = {}
@@ -1512,7 +1600,10 @@ def own_git_licence(text: str, status_paths: list) -> dict:
         seen_as = kept.setdefault(own_key(path), [])
         if own_case_kept(path) not in seen_as:
             seen_as.append(own_case_kept(path))
-    return {"rendered": bool(facts["rendered"]), "soft": False, "forms": kept}
+    typechanged = {own_key(x.split("\t")[-1]) for x in git_lines(name_status or "")
+                   if len(x.split("\t")) >= 2 and x.split("\t")[0][:1] == "T"}
+    return {"rendered": bool(facts["rendered"]), "soft": False, "forms": kept,
+            "multi": typechanged | facts["multi"] | facts["moded"]}
 
 
 def own_name_status(text: str) -> dict:
@@ -1761,6 +1852,8 @@ def own_folds_apart(forms: list) -> bool:
 
 Z3_FOLDS = ("main's reading holds two paths that differ only in case, which the runtimes this package supports key "
             "apart or together")
+Z3_UNASSIGNED = ("main's reading keys a path holding a code point Unicode 16.0.0 does not assign, which a runtime on a "
+                 "newer Unicode may key with another path")
 
 
 def own_file_list_differs(diff: str, status: dict, inside: set, soft: list):
@@ -1771,6 +1864,8 @@ def own_file_list_differs(diff: str, status: dict, inside: set, soft: list):
         return f"{Z3_DIFFERS}: main raises on it (`+++ /dev/null` with no `---` line before it)"
     if own_folds_apart(forms):                          # NOTE_path2_eleventh_pass: before main's two lists are compared
         return f"{Z3_DIFFERS}: {Z3_FOLDS}"
+    if any(own_unassigned(p) for p in forms):          # NOTE_path2_thirteenth_pass (D)
+        return f"{Z3_DIFFERS}: {Z3_UNASSIGNED}"
     if py != js:
         odd = next(((k, st) for k, st in py.items() if js.get(k) != st), None)
         if odd is None:
@@ -2240,7 +2335,10 @@ def own_status_notes(status_paths: list) -> dict:
         while form.startswith("/") or form.startswith("./"):
             form = form[1:] if form.startswith("/") else form[2:]
         seen.setdefault(own_fold(form), set()).add(form)
-    return {"files": COLLIDE_WHY} if any(len(v) > 1 for v in seen.values()) else {}
+    if any(len(v) > 1 for v in seen.values()):
+        return {"files": COLLIDE_WHY}
+    # NOTE_path2_thirteenth_pass (D): a path holding a code point the assigned set leaves out
+    return {"files": UNASSIGNED_WHY} if any(own_unassigned(x) for v in seen.values() for x in v) else {}
 
 
 def parse_violations(diff: str, paths, with_reading: bool = False):
@@ -2558,7 +2656,8 @@ def own_precondition(repair: str, c, status: dict, sides: dict, licence: dict | 
     NOTE_path2_twelfth_pass (A.1, A.2), `licence` this file's own facts (`own_read`, `own_git_licence`): #97's match must
     also hold on every path its entry was read from, case kept, and no Z-3 doubt may be read; #121 needs git's own
     rendering, and on a path claim an entry matching the claim, case kept, by the tier it was resolved by. With no facts,
-    neither licenses."""
+    neither licenses. NOTE_path2_thirteenth_pass (A.1): neither licenses a path claim whose resolved entry is a key more
+    than one file section registered (`multi`)."""
     d = c.detail or {}
     facts = licence or {}
     if repair == "#97":
@@ -2573,6 +2672,8 @@ def own_precondition(repair: str, c, status: dict, sides: dict, licence: dict | 
         claimed = own_case_kept(d["path"])
         read_as = (facts.get("forms") or {}).get(p, [])
         if not read_as or any(f != claimed and not f.endswith("/" + claimed) for f in read_as):
+            return False
+        if p in (facts.get("multi") or set()):
             return False
         return any_tier(status, key) != p
     if repair == "#121":
@@ -2592,7 +2693,7 @@ def own_precondition(repair: str, c, status: dict, sides: dict, licence: dict | 
                 same = [f.endswith("/" + claimed) for f in read_as]
             else:
                 same = [Path(f).name == Path(claimed).name for f in read_as]
-            if not all(same):
+            if not all(same) or p in (facts.get("multi") or set()):
                 return False
         own = [d[k] for k in ("path", "prefix", "prefix2") if isinstance(d.get(k), str)]
         return (any(k.startswith(".") for k in status) or any(k.startswith(".") for k in sides)
@@ -2963,14 +3064,15 @@ class GitDoor:
         with self._memo_git(m):
             return m.gate_diff(summary, self.dir, self.base, self.head, run=None, strict=strict)
 
-    def reading(self, m: types.ModuleType, summary: str, rp=None):
+    def reading(self, m: types.ModuleType, summary: str, rp=None, out: dict | None = None):
         """NOTE_path2_eleventh_pass: the repaired git door's reading BEFORE the guard, with the switches `rp` (every
-        repair on by default), on git's own bytes for this repository."""
+        repair on by default), on git's own bytes for this repository. NOTE_path2_thirteenth_pass: `out`, when given,
+        receives what the reading hands its guard (the licence facts among it), for G-C7."""
         with self._memo_git(m):
             name_status = m._git(Path(self.dir), "diff", "--name-status", f"{self.base}..{self.head}")
             text = m._git(Path(self.dir), "diff", f"{self.base}..{self.head}")
             return m._evaluate_git(summary, name_status, text, rp if rp is not None else m._ALL_ON, repo=Path(self.dir),
-                                   base=self.base, head=self.head)
+                                   base=self.base, head=self.head, out=out)
 
     def __enter__(self):
         return self
@@ -3023,7 +3125,42 @@ DOOR_CANARIES = tuple((f"canary:z3-git-door-u{ord(ch):04x}",
      _git_file(".github/ci.yml", "M") + _git_file(".eslintrc.json", "M")),
     ("canary:a-lone-dotfile", "1 file changed. 2 files changed. Only touches .github/. Only touches github/. "
      "Modified .github/ci.yml.", _git_file(".github/ci.yml", "M")),
+    # NOTE_path2_thirteenth_pass (round-12 scorer lens): a LICENSED outcome on each door in every run -- #97's case-kept
+    # exact match beside an earlier basename twin, and #121's dotfile twins counted in git's own rendering -- so a licence
+    # granted otherwise than by one switched-off repair on its own precondition is refused by G-C9 in both modes
+    ("canary:guard-licensed-by-97", "Created integrations/git/README.md.",
+     _git_file("README.md", "M") + _git_file("integrations/git/README.md", "A")),
+    ("canary:guard-licensed-by-121", "2 files changed.", _git_file(".env", "A") + _git_file("env", "A")),
+    # PA: a difference from main that only #97 and #121 reverted together give back; one switched-off repair does not, so
+    # the guard abstains, and a licence read off all three repairs reverted together keeps the VERIFIED
+    ("canary:guard-a-difference-only-two-reverts-give-back", "Created .env.json.",
+     _git_file("lib/env.json", "M") + _git_file(".env.json", "A")),
+    # PK: #121 on a path claim whose entry matches it only once lower-cased (98f74833's tier-kept licence)
+    ("canary:guard-121-an-entry-matching-only-in-case", "Created X.toml.",
+     _git_file(".config/x.toml", "A") + _git_file("config/x.toml", "M")),
+    # PF: the git door's forms, case kept, from --name-status (the existing case canary writes the claim upper-case over a
+    # lower-case path, where lower-casing the forms changes nothing)
+    ("canary:guard-git-door-forms-case-kept", "Created src/readme.md. Deleted src/config.py.",
+     _git_file("docs/readme.md", "M") + _git_file("lib/src/README.md", "A") + _git_file("a/config.py", "M")
+     + _git_file("lib/src/Config.py", "D")),
+    # PG1b: main's git door and main's raw door read git's text apart -- a removed `-- users` beside an added `++ x` in an
+    # exact hunk is a header pair and a phantom file to main's raw door, and nothing to main's git door
+    ("canary:guard-mains-two-doors-read-apart", "1 file changed. 2 files changed.",
+     "diff --git a/db/q.sql b/db/q.sql\n--- a/db/q.sql\n+++ b/db/q.sql\n@@ -1,2 +1,2 @@\n SELECT 1;\n--- users\n+++ x\n"),
 )
+
+
+# NOTE_path2_thirteenth_pass (round 12, R12.1, R12.2): git's own bytes for a typechange (file to symlink), as git writes
+# them: a deletion section then a creation section for one path
+TYPECHANGE_97 = ("diff --git a/aaa/x.sh b/aaa/x.sh\nindex d905d9d..6a69f92 100644\n--- a/aaa/x.sh\n+++ b/aaa/x.sh\n@@ -1 +1 @@\n"
+                 "-e\n+f\ndiff --git a/lib/x.sh b/lib/x.sh\ndeleted file mode 100644\nindex fa11a6a..0000000\n--- a/lib/x.sh\n"
+                 "+++ /dev/null\n@@ -1 +0,0 @@\n-echo\ndiff --git a/lib/x.sh b/lib/x.sh\nnew file mode 120000\n"
+                 "index 0000000..c7e58fc\n--- /dev/null\n+++ b/lib/x.sh\n@@ -0,0 +1 @@\n+tgt\n\\ No newline at end of file\n")
+TYPECHANGE_121 = ("diff --git a/.cfg.json b/.cfg.json\ndeleted file mode 100644\nindex bd2c89c..0000000\n--- a/.cfg.json\n"
+                  "+++ /dev/null\n@@ -1 +0,0 @@\n-A=1\ndiff --git a/.cfg.json b/.cfg.json\nnew file mode 120000\n"
+                  "index 0000000..3b1af6c\n--- /dev/null\n+++ b/.cfg.json\n@@ -0,0 +1 @@\n+target.json\n"
+                  "\\ No newline at end of file\ndiff --git a/cfg.json b/cfg.json\nindex 587be6b..975fbec 100644\n--- a/cfg.json\n"
+                  "+++ b/cfg.json\n@@ -1 +1 @@\n-x\n+y\n")
 
 
 # NOTE_path2_eleventh_pass (round-10 scorer lens, minor): records every run scores through the raw door, in both modes, for
@@ -3075,13 +3212,29 @@ RAW_CANARIES = (
     ("canary:raw-97-beside-a-z3-doubt", "Created integrations/git/README.md.",
      _git_file("README.md", "M") + _git_file("integrations/git/README.md", "A")
      + "Submodule vendor/lib 1234567..89abcde:\n"),
+    # NOTE_path2_thirteenth_pass (A.1): git's typechange -- a deletion section then a creation section for one path --
+    # beside an earlier basename twin (#97) and beside an undotted twin (#121): a key two sections register licenses
+    # nothing (round 12, R12.1 and R12.2; the git door reads `T` and cannot rebuild two sections of one path)
+    ("canary:raw-97-a-typechange-licenses-nothing", "Created lib/x.sh.", TYPECHANGE_97),
+    ("canary:raw-121-a-typechanged-dotfile-licenses-nothing", "Created .cfg.json.", TYPECHANGE_121),
+    # (A.2): a name ending in a space in difflib's rendering, which carries no Z-3 doubt (round 12, R12.3)
+    ("canary:raw-97-a-name-ending-in-a-space-as-written", "Created x.py.",
+     "--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/x.py \n@@ -0,0 +1 @@\n+new\n"),
+    # (D): a header path holding a code point Unicode 16.0.0 does not assign (U+A7CE, assigned by 17.0)
+    ("canary:raw-a-path-holding-an-unassigned-code-point", "1 file changed. 2 files changed. Only touches docs/.",
+     "--- a/docs/a\ua7ceb.md\n+++ b/docs/a\ua7ceb.md\n@@ -1 +1 @@\n-x\n+y\n"
+     "--- a/src/c.py\n+++ b/src/c.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\n"),
 )
 
 # NOTE_path2_twelfth_pass (round-11 scorer lens, blocker): the guard outcomes the canaries must reach in every run, by
 # door -- else a guard defect only those outcomes expose (the git door's guard skipped, main's verdict ignored, a licence
 # without its switch) is admitted in both modes.
-GUARD_OUTCOMES = {"raw": ("guard_k5_read_as_main", "guard_abstained", "guard_abstained_where_a_precondition_held"),
-                  "git": ("guard_k5_read_as_main", "guard_abstained")}
+# NOTE_path2_thirteenth_pass (round-12 scorer lens): and a licensed outcome of #97 and of #121 on each door -- without one, a
+# licence granted otherwise than by its own switch and precondition (PA, PK, PF) was admitted in both modes. #101 licenses
+# no verdict (its switched-off verdicts differ from its own only as UNCHECKABLE), so no canary can reach its licence.
+GUARD_OUTCOMES = {"raw": ("guard_k5_read_as_main", "guard_abstained", "guard_abstained_where_a_precondition_held",
+                          "guard_licensed_by_#97", "guard_licensed_by_#121"),
+                  "git": ("guard_k5_read_as_main", "guard_abstained", "guard_licensed_by_#97", "guard_licensed_by_#121")}
 
 
 def score_canaries() -> tuple:
@@ -3268,7 +3421,13 @@ class Tally:
         own = own_read(diff if door is None else door.text, facts)
         own_status = own[0] if door is None else door.status
         if door is not None:                   # NOTE_path2_twelfth_pass: the git door's facts (A.1, A.2)
-            facts = own_git_licence(door.text, door.status_paths)
+            facts = own_git_licence(door.text, door.status_paths, door.name_status)
+            # NOTE_path2_thirteenth_pass (round 12, PF): G-C7 holds the git door's licence facts -- what `_evaluate_git`
+            # hands its guard -- to this file's own, as it holds the raw door's
+            seen_git: dict = {}
+            door.reading(new, summary, out=seen_git)
+            if seen_git.get("licence") != facts:
+                self.violate("G-C7_oracle:git_licence_facts", pid)
         switched_new = ((lambda r: new._evaluate_text(summary, diff, new._Repairs({r})).claims) if door is None
                         else (lambda r: door.reading(new, summary, new._Repairs({r})).claims))
         for v in guard_violations(summary, gb.claims, gu, gn, lambda r: cf.reading({r}), switched_new, own_status,
