@@ -805,7 +805,10 @@ def admits(rule: str, k: str, vb: str, vn: str, why: str, diff: str = "", summar
 
 
 def abstention_owner(why: str, k: str = ""):
-    """The eighth- or ninth-pass rule (or A-1) whose abstention a reason is, by its words, else None."""
+    """The eighth- or ninth-pass rule (or A-1) whose abstention a reason is, by its words, else None. NOTE_path2_twelfth_pass:
+    and "guard", the eleventh pass's guard abstaining where no licence holds (its three reasons, which G-C9 re-derives)."""
+    if any(why.startswith(x.split("{", 1)[0]) for x in (GUARD_DIFFERS, GUARD_RAISES, GUARD_ABSENT)):
+        return "guard"
     if any(x in why for x in (Z3_DIFFERS, Z3_APART)):
         return "Z-3"
     if Z1_WHY in why or ((Z12_BC1 in why or Z12_RAISES in why) and k == "tests_added"):
@@ -1291,13 +1294,46 @@ UNCOUNTED_WHY = ("a line names a changed file no header pair counts (GNU's `Bina
 UNCOUNTED = re.compile(r"^(?:(?:Binary files|Files|Symbolic links) .+ and .+ differ|Only in .+: .+|File .+ is a .+ while file .+ is a .+)$")
 
 
-def own_read(diff: str) -> tuple:
+def own_case_kept(p: str) -> str:
+    """NOTE_path2_twelfth_pass (A.2), written out: backslashes read as slashes, a leading run of `/` and `./` segments
+    dropped, and the case kept."""
+    p = p.replace("\\", "/")
+    while p.startswith("/") or p.startswith("./"):
+        p = p[1:] if p.startswith("/") else p[2:]
+    return p
+
+
+def own_git_writes(line: str):
+    """NOTE_path2_twelfth_pass (A.1), written out: a `diff --git` header's paths as git writes them after it -- the `---`
+    path, the `+++` path, the `rename from` path, the `rename to` path, each in quotes where the header has the path in
+    quotes -- or None where main's header reading (BIN-1's, which the branch does not change) reads no path."""
+    a, b = BASE._header_paths(line)
+    if not a or not b:
+        return None
+    body = line[len("diff --git "):]
+    half = (len(body) - 1) // 2
+    if len(body) % 2 and body[half] == " " and body[:2] == "a/" and body[half + 1:half + 3] == "b/" \
+            and body[2:half] == body[half + 3:]:
+        quoted_a = quoted_b = False
+    else:
+        mm = BASE._DIFF_GIT.match(line)
+        quoted_a, quoted_b = mm.group("qa") is not None, mm.group("qb") is not None
+    return ('"a/' + a + '"' if quoted_a else "a/" + a, '"b/' + b + '"' if quoted_b else "b/" + b,
+            '"' + a + '"' if quoted_a else a, '"' + b + '"' if quoted_b else b)
+
+
+GIT_NAMES = (("rename from ", 2), ("copy from ", 2), ("rename to ", 3), ("copy to ", 3))
+
+
+def own_read(diff: str, facts: dict | None = None) -> tuple:
     """W-1, written out: (status map, added lines, per-file sides, notes) by this file's own hunk walk. Inside an
     exact hunk a line is content by its counts and a U+FEFF opening line 1 of a side is dropped; every other
     line is read as main read it (a `---`/`+++` line a header, a `+`/`-` line added/removed), with the eighth
     pass's Y-1 note (a header read after lines no count placed, unless it has a header's shape; two paths one
     key in case; a GNU line naming a changed file no header pair counts), Y-2's line-1 U+FEFF outside the counts and its note (a U+FEFF dropped from an added line that
-    then defines a test), and Y-4's /dev/null."""
+    then defines a test), and Y-4's /dev/null. NOTE_path2_twelfth_pass: `facts`, when given, receives what the guard's
+    tightened licences read -- whether the diff is git's own rendering, whether a Z-3 doubt was read, and each key's
+    paths as written, case kept (A.1, A.2)."""
     status: dict = {}
     added: list = []
     sides: dict = {}
@@ -1309,6 +1345,11 @@ def own_read(diff: str) -> tuple:
     counted: set = set()          # NOTE_path2_ninth_pass (Z-3): the lines an exact hunk's counts read
     soft: list = []               # Z-3: the doubts main's reading of the file list also held
     in_binary = False             # NOTE_path2_tenth_pass (K-4): inside a `GIT binary patch` block
+    outside_git = False           # NOTE_path2_twelfth_pass (A.1): a line git's own rendering would not hold
+    any_header = False
+    as_git = None                 # the pending header's paths as git writes them
+    minus_read = False            # a `---` line under the pending header
+    kept: dict = {}
 
     def pend_key() -> str:
         raw = pend[0] if pend[2] == "D" else pend[1]
@@ -1332,6 +1373,9 @@ def own_read(diff: str) -> tuple:
         form = raw_path.replace("\\", "/")
         while form.startswith("/") or form.startswith("./"):
             form = form[1:] if form.startswith("/") else form[2:]
+        seen_as = kept.setdefault(own_key(raw_path), [])
+        if form not in seen_as:
+            seen_as.append(form)
         if forms.setdefault(own_fold(form), form) != form:              # NOTE_path2_tenth_pass (K-2)
             unsure(("files", COLLIDE_WHY))
 
@@ -1359,7 +1403,13 @@ def own_read(diff: str) -> tuple:
             flush()
             pend, cur = [*BASE._header_paths(line), "M"], None
             loose = lead_old = lead_new = in_binary = False
+            any_header, as_git, minus_read = True, own_git_writes(line), False
+            outside_git = outside_git or as_git is None
         elif line.startswith("--- "):
+            named = line[4:].split("\t")[0]
+            if pend is None or as_git is None or (named != "/dev/null" and named != as_git[0]):
+                outside_git = True
+            minus_read = True
             if loose:
                 if own_clean_header(lines, k):
                     plus_ok, loose = k + 1, False
@@ -1371,6 +1421,10 @@ def own_read(diff: str) -> tuple:
             old_path, cur = line[4:].strip(), None
             lead_old = lead_new = False
         elif line.startswith("+++ "):
+            named = line[4:].split("\t")[0]
+            if pend is None or as_git is None or not minus_read or (named != "/dev/null" and named != as_git[1]):
+                outside_git = True
+            as_git, minus_read = None, False
             if loose and k != plus_ok:
                 unsure(("files", LOOSE_WHY))
             nw = line[4:].strip()
@@ -1426,19 +1480,39 @@ def own_read(diff: str) -> tuple:
                 in_binary = in_binary and line != ""
             elif UNCOUNTED.match(line) and not (pend is not None and _BINARY.match(line)):
                 unsure(("files", UNCOUNTED_WHY))
+                outside_git = True
             elif line == "GIT binary patch" or (line.split(" ")[0] in ("literal", "delta") and len(line.split(" ")) == 2
                                                  and line.split(" ")[1].isascii() and line.split(" ")[1].isdigit()):
                 in_binary = True
             elif not (in_binary or line[:1] == "\\" or line.startswith(GIT_EXTENDED)
                       or (pend is not None and _BINARY.match(line))):
                 soft.append(Z3_UNPLACED)                  # NOTE_path2_tenth_pass (K-4)
+                outside_git = True
+            for prefix, at in GIT_NAMES:
+                if line.startswith(prefix) and (pend is None or as_git is None or line[len(prefix):] != as_git[at]):
+                    outside_git = True
             if pend is not None:
                 _note(pend, line)
     flush()
     why = own_file_list_differs(diff, status, counted, soft)           # NOTE_path2_ninth_pass (Z-3)
     if why:
         notes["differs"] = why
+    if facts is not None:
+        facts.update(rendered=any_header and not outside_git, soft=bool(soft), forms=kept)
     return status, added, sides, notes
+
+
+def own_git_licence(text: str, status_paths: list) -> dict:
+    """NOTE_path2_twelfth_pass (A.1, A.2), written out, at the git door: git's diff text read for its rendering; no Z-3
+    doubt, since the file list is `--name-status`; each key's `--name-status` paths as written, case kept."""
+    facts: dict = {}
+    own_read(text, facts)
+    kept: dict = {}
+    for path in status_paths:
+        seen_as = kept.setdefault(own_key(path), [])
+        if own_case_kept(path) not in seen_as:
+            seen_as.append(own_case_kept(path))
+    return {"rendered": bool(facts["rendered"]), "soft": False, "forms": kept}
 
 
 def own_name_status(text: str) -> dict:
@@ -2176,7 +2250,8 @@ def parse_violations(diff: str, paths, with_reading: bool = False):
     out: list = []
     if new._diff_lines(diff) != git_lines(diff):
         out.append("G-C7_oracle:F-2_split")
-    own = own_read(diff)
+    own_facts: dict = {}
+    own = own_read(diff, own_facts)
     got = new._read_diff(diff)
     if list(got[0].items()) != list(own[0].items()):
         out.append("G-C7_oracle:W-1_status")
@@ -2184,8 +2259,11 @@ def parse_violations(diff: str, paths, with_reading: bool = False):
         out.append("G-C7_oracle:W-1_added_lines")
     if got[2] != own[2]:
         out.append("G-C7_oracle:W-1_sides")
-    if new._diff_notes(diff) != own[3]:
+    got_facts: dict = {}
+    if new._diff_notes(diff, got_facts) != own[3]:
         out.append("G-C7_oracle:Y_notes")
+    if got_facts != own_facts:                            # NOTE_path2_twelfth_pass: what the licences read (A.1, A.2)
+        out.append("G-C7_oracle:licence_facts")
     raw_list = list(paths)
     folded = next(([*raw_list, p.upper()] for p in raw_list if p.upper() != p), None)
     for variant in (raw_list, folded):
@@ -2414,18 +2492,21 @@ def own_claim_sentences(summary: str, declared: bool = True) -> list:
     for sent in SENTENCES.split(summary):
         for kind, rx in BASE._TEMPLATES:
             for mm in rx.finditer(sent):
-                k = kind
-                if k in PATH_KINDS and BASE._names_without_claiming(sent, mm):
+                # NOTE_path2_twelfth_pass (round-11 scorer lens): `kind` itself is rebound, as main's loop rebinds it (V13
+                # repair 1 writes `kind = "file_touched"`), so a later match of the same template in the sentence is read
+                # as file_touched too -- main's leak, which both instruments carry
+                if kind in PATH_KINDS and BASE._names_without_claiming(sent, mm):
                     continue
-                if k in PATH_KINDS and BASE._is_non_file_noun(mm.group("path")):
+                if kind in PATH_KINDS and BASE._is_non_file_noun(mm.group("path")):
                     continue
-                if k in ("file_created", "file_deleted") and BASE._demoted_by_containment(sent, mm):
-                    k = "file_touched"
-                if BASE.V14_CONTAINMENT_TOUCH and k == "file_touched" and BASE._demoted_by_containment(sent, mm):
+                if kind in ("file_created", "file_deleted") and BASE._demoted_by_containment(sent, mm):
+                    kind = "file_touched"
+                if BASE.V14_CONTAINMENT_TOUCH and kind == "file_touched" and BASE._demoted_by_containment(sent, mm):
                     continue
-                if BASE.BC1_BY_CONSTRUCTION and k == "symbol_added" and mm.group("name").lower() in BASE._SYMBOL_WORDS:
+                if (BASE.BC1_BY_CONSTRUCTION and kind == "symbol_added"
+                        and mm.group("name").lower() in BASE._SYMBOL_WORDS):
                     continue
-                out.append((k, sent))
+                out.append((kind, sent))
     if declared:
         dtext, drep = BASE._declaration_pass(summary)
         if drep["declared"]:
@@ -2469,12 +2550,16 @@ def own_k5(kind: str, sentence) -> bool:
     return symk if kind == "symbol_added" else anyk
 
 
-def own_precondition(repair: str, c, status: dict, sides: dict) -> bool:
+def own_precondition(repair: str, c, status: dict, sides: dict, licence: dict | None = None) -> bool:
     """The three preconditions, written out, on this file's own reading of the diff (every repair on):
     #97 a path claim the tiered resolution resolved by the exact or the suffix tier, where main's loop over the same file
     list takes another entry; #121 a key the claim reads keeps a leading dot (a key of the file list or of the sides, the
-    claimed path's, an only_touches prefix's); #101 a removed definition of the same name in the same file was paired."""
+    claimed path's, an only_touches prefix's); #101 a removed definition of the same name in the same file was paired.
+    NOTE_path2_twelfth_pass (A.1, A.2), `licence` this file's own facts (`own_read`, `own_git_licence`): #97's match must
+    also hold on every path its entry was read from, case kept, and no Z-3 doubt may be read; #121 needs git's own
+    rendering. With no facts, neither licenses."""
     d = c.detail or {}
+    facts = licence or {}
     if repair == "#97":
         if c.kind not in PATH_KINDS or not isinstance(d.get("path"), str):
             return False
@@ -2482,8 +2567,16 @@ def own_precondition(repair: str, c, status: dict, sides: dict) -> bool:
         p, _st = own_find_path(status, d["path"])
         if p is None or not (p == key or p.endswith("/" + key)):
             return False
+        if facts.get("soft"):
+            return False
+        claimed = own_case_kept(d["path"])
+        read_as = (facts.get("forms") or {}).get(p, [])
+        if not read_as or any(f != claimed and not f.endswith("/" + claimed) for f in read_as):
+            return False
         return any_tier(status, key) != p
     if repair == "#121":
+        if not facts.get("rendered"):
+            return False
         own = [d[k] for k in ("path", "prefix", "prefix2") if isinstance(d.get(k), str)]
         return (any(k.startswith(".") for k in status) or any(k.startswith(".") for k in sides)
                 or any(own_key(x).startswith(".") for x in own))
@@ -2497,10 +2590,14 @@ def own_precondition(repair: str, c, status: dict, sides: dict) -> bool:
     raise ValueError(repair)
 
 
-def expected_guard(summary: str, before: list, main, switched, status: dict, sides: dict, tally=None) -> list:
+def expected_guard(summary: str, before: list, main, switched, status: dict, sides: dict, tally=None,
+                   facts: dict | None = None) -> list:
     """The final claims, by this file's own guard: `before` the repaired reading's claims before the guard, `main` the
     baseline's claims (None where it raises), `switched(repair)` the reading's claims with that repair reverted by this
-    file's own revert (None where that copy raises). Each claim is (kind, text, verdict, why, detail)."""
+    file's own revert (None where that copy raises). Each claim is (kind, text, verdict, why, detail).
+    NOTE_path2_twelfth_pass: `facts` what the tightened licences read, by this file's own code (`own_read`,
+    `own_git_licence`); an abstention where some repair's precondition held (its switch did not give main's verdict
+    back) is counted apart, since only such a record can refuse a licence granted without the switch."""
     theirs = dict(zip(claim_keys(main), main)) if main is not None else {}
     sentences = own_claim_sentences(summary)
     memo: dict = {}
@@ -2533,12 +2630,15 @@ def expected_guard(summary: str, before: list, main, switched, status: dict, sid
             out.append((c.kind, c.text, c.verdict, c.why, c.detail))
             continue
         licence = next((repair for repair in TABLE_RULES if mv is not None
-                        and own_precondition(repair, c, status, sides) and switched_verdict(repair, key) == mv), None)
+                        and own_precondition(repair, c, status, sides, facts) and switched_verdict(repair, key) == mv),
+                       None)
         if licence is not None:
             count(f"guard_licensed_by_{licence}")
             out.append((c.kind, c.text, c.verdict, c.why, c.detail))
             continue
         count("guard_abstained")
+        if mv is not None and any(own_precondition(repair, c, status, sides, facts) for repair in TABLE_RULES):
+            count("guard_abstained_where_a_precondition_held")
         why = (GUARD_RAISES.format(this=c.verdict) if main is None else
                GUARD_ABSENT.format(this=c.verdict) if r is None else GUARD_DIFFERS.format(main=mv, this=c.verdict))
         out.append((c.kind, c.text, "UNCHECKABLE", why, c.detail))
@@ -2546,12 +2646,12 @@ def expected_guard(summary: str, before: list, main, switched, status: dict, sid
 
 
 def guard_violations(summary: str, main, before, final, switched, instrument_switched, status: dict, sides: dict,
-                     tally=None) -> list:
+                     tally=None, facts: dict | None = None) -> list:
     """G-C9: the repaired gate's final claims are this file's own guard's, claim for claim (verdict, reason, detail); its
     verdict is the one its final claims give (G-C1); and the instrument's own switches read as this file's reverts of the
     same rules (`instrument_switched(repair)` against `switched(repair)`)."""
     out = []
-    want = expected_guard(summary, before.claims, main, switched, status, sides, tally)
+    want = expected_guard(summary, before.claims, main, switched, status, sides, tally, facts)
     got = [(c.kind, c.text, c.verdict, c.why, c.detail) for c in final.claims]
     if len(want) != len(got):
         out.append("G-C9_guard_claims")
@@ -2566,6 +2666,12 @@ def guard_violations(summary: str, main, before, final, switched, instrument_swi
     return list(dict.fromkeys(out))
 
 
+# NOTE_path2_twelfth_pass (round-11 scorer lens): what a reverted copy may raise and still read as "the copy raises" --
+# main's `AttributeError` on a `+++ /dev/null` with no `---` line before it (K-3), which a revert can restore. Nothing
+# else: RuntimeError (git failing), OSError and subprocess.TimeoutExpired are the environment's, and fail the run.
+REVERTED_RAISES = (AttributeError,)
+
+
 class Counterfactual:
     """One record's claims under the repaired copy with a set of rules reverted, computed on demand, through
     the raw door or, given a `GitDoor`, through `gate_diff` (NOTE_path2_seventh_pass, G-C8)."""
@@ -2577,14 +2683,16 @@ class Counterfactual:
     def gate(self, rules):
         """The gate with `rules` reverted, or None where that copy raises. NOTE_path2_tenth_pass (K-3): a revert may
         restore code that raised (the fifth pass's parsers on a `+++ /dev/null` with no `---` line before it); a
-        copy that raises gives nothing back."""
+        copy that raises gives nothing back. NOTE_path2_twelfth_pass (round-11 scorer lens): only what reverted code
+        raises reads so -- `AttributeError`, as main raises on K-3 -- and a failure of git, the operating system or a
+        timeout propagates and fails the run, instead of reading as an instrument defect."""
         key = frozenset(rules)
         if key not in self.cache:
             with reverted(CF, key):
                 try:
                     self.cache[key] = (CF.gate_diff_text(self.summary, self.diff, run=None, strict=False)
                                        if self.door is None else self.door.gate(CF, self.summary))
-                except Exception:
+                except REVERTED_RAISES:
                     self.cache[key] = None
         return self.cache[key]
 
@@ -2602,7 +2710,7 @@ class Counterfactual:
                     g = (CF._evaluate_text(self.summary, self.diff, CF._ALL_ON) if self.door is None
                          else self.door.reading(CF, self.summary))
                     self.cache[key] = g.claims
-                except Exception:
+                except REVERTED_RAISES:
                     self.cache[key] = None
         return self.cache[key]
 
@@ -2868,9 +2976,37 @@ def _canary_diff(ch: str) -> str:
             "--- a/src/c.py\n+++ b/src/c.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\n")
 
 
+def _git_file(path: str, st: str, old: str = "a", new: str = "b") -> str:
+    """One file of a canary, in git's own rendering (NOTE_path2_twelfth_pass: #121 licenses only there)."""
+    head = f"diff --git a/{path} b/{path}\n"
+    if st == "A":
+        return head + f"new file mode 100644\n--- /dev/null\n+++ b/{path}\n@@ -0,0 +1 @@\n+{new}\n"
+    if st == "D":
+        return head + f"deleted file mode 100644\n--- a/{path}\n+++ /dev/null\n@@ -1 +0,0 @@\n-{old}\n"
+    return head + f"--- a/{path}\n+++ b/{path}\n@@ -1 +1 @@\n-{old}\n+{new}\n"
+
+
 DOOR_CANARIES = tuple((f"canary:z3-git-door-u{ord(ch):04x}",
                        "2 files changed. 3 files changed. Only touches docs/. Only touches docs/ and src/. Modified src/c.py.",
-                       _canary_diff(ch)) for ch in SPLIT_ONLY_BY_PYTHON)
+                       _canary_diff(ch)) for ch in SPLIT_ONLY_BY_PYTHON) + (
+    # NOTE_path2_twelfth_pass (round-11 scorer lens, blocker): the guard's outcomes, on both doors, in every run. K-5: a
+    # sentence holding a non-ASCII word character reads as main read it (main UNCHECKABLE, the reading #97's VERIFIED).
+    ("canary:guard-k5", "Created integrations/git/README.md, voil\u00e0.",
+     _git_file("README.md", "M") + _git_file("integrations/git/README.md", "A")),
+    # a reading that differs from main's with no licence: #97's suffix match holds only once lower-cased (R11.3), so the
+    # guard abstains where main abstained and the reading verified
+    ("canary:guard-a-case-only-match-abstains", "Created src/README.md. Deleted src/Config.py.",
+     _git_file("docs/README.md", "M") + _git_file("lib/src/readme.md", "A") + _git_file("a/Config.py", "M")
+     + _git_file("lib/src/config.py", "D")),
+    # dotted keys (round-11 scorer lens, minor): created, deleted and touched claims on a dotted path whose status does not
+    # match, and a count and a scope beside a lone dotfile -- a reader defect that fires only on a dotted key passes as
+    # #121's licence, and the reading oracle (G-C7) refuses it here
+    ("canary:dotted-status-mismatch", "Created .github/ci.yml. Deleted .github/ci.yml. Modified .github/ci.yml. "
+     "Created .eslintrc.json. 2 files changed.",
+     _git_file(".github/ci.yml", "M") + _git_file(".eslintrc.json", "M")),
+    ("canary:a-lone-dotfile", "1 file changed. 2 files changed. Only touches .github/. Only touches github/. "
+     "Modified .github/ci.yml.", _git_file(".github/ci.yml", "M")),
+)
 
 
 # NOTE_path2_eleventh_pass (round-10 scorer lens, minor): records every run scores through the raw door, in both modes, for
@@ -2893,7 +3029,42 @@ RAW_CANARIES = (
      "diff --git a/.env b/.env\nnew file mode 100644\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\n"
      "diff --git a/db/q.sql b/db/q.sql\n--- a/db/q.sql\n+++ b/db/q.sql\n@@ -1,1 +1,1 @@\n SELECT 1;\n--- users\n+++ x\n"
      "diff --git a/env b/env\nnew file mode 100644\n--- /dev/null\n+++ b/env\n@@ -0,0 +1 @@\n+B=1\n"),
+    # NOTE_path2_twelfth_pass (round-11 scorer lens, blocker): an abstention whose #121 precondition holds (git's own
+    # rendering, a dotted key) but whose #121 switch does not give main's verdict back -- F-2's split of a header holding
+    # U+2028 moves the count -- so a licence granted without asking the switch keeps a verdict here
+    ("canary:raw-guard-a-precondition-without-its-switch", "1 file changed. Only touches docs/.",
+     "diff --git a/docs/a\u2028b.png b/docs/c.png\nBinary files a/docs/a\u2028b.png and b/docs/c.png differ\n"
+     + _git_file(".env", "A")),
+    # the same shapes as the door's guard canaries, in a plain rendering (the raw door and the port read only the text)
+    ("canary:raw-guard-k5", "Created integrations/git/README.md, voil\u00e0.",
+     "--- a/README.md\n+++ b/README.md\n@@ -1 +1 @@\n-a\n+b\n--- /dev/null\n+++ b/integrations/git/README.md\n"
+     "@@ -0,0 +1 @@\n+hello\n"),
+    ("canary:raw-guard-a-case-only-match-abstains", "Created src/README.md.",
+     "--- a/docs/README.md\n+++ b/docs/README.md\n@@ -1 +1 @@\n-a\n+b\n--- /dev/null\n+++ b/lib/src/readme.md\n"
+     "@@ -0,0 +1 @@\n+x\n"),
+    # main's `kind` leak (round-11 scorer lens, minor): a containment demotion rebinds the template's kind for the rest of
+    # the sentence; the scorer's replay of main's extraction must read it so, or G-C9 flags a correct instrument
+    ("canary:raw-mains-kind-leak", "Delet\u00e9d the parser in lib/x.css and removed the file ci.yml.",
+     _git_file(".github/ci.yml", "M") + _git_file("lib/x.css", "M")),
+    # the tightened licences themselves (NOTE_path2_twelfth_pass, A.1 and A.2), each where dropping it would keep a verdict:
+    # a plain rendering (round 11's R11.0, a directory b/ beside dotted twins) licenses no #121 difference; a rename written
+    # under --no-prefix is not git's rendering; #97 licenses nothing in a reading holding a Z-3 doubt (a Submodule line)
+    ("canary:raw-121-a-plain-rendering-licenses-nothing", "3 files changed.",
+     "--- b/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n--- x.py\n+++ x.py\n@@ -1 +1 @@\n-a\n+b\n"
+     "--- .env\n+++ .env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- env\n+++ env\n@@ -1 +1 @@\n-B=1\n+B=2\n"),
+    ("canary:raw-121-a-rename-under-no-prefix", "3 files changed.",
+     "diff --git a/x.py b/x.py\nsimilarity index 100%\nrename from a/x.py\nrename to b/x.py\n"
+     + _git_file(".env", "M", "A=1", "A=2") + _git_file("env", "M", "B=1", "B=2")),
+    ("canary:raw-97-beside-a-z3-doubt", "Created integrations/git/README.md.",
+     _git_file("README.md", "M") + _git_file("integrations/git/README.md", "A")
+     + "Submodule vendor/lib 1234567..89abcde:\n"),
 )
+
+# NOTE_path2_twelfth_pass (round-11 scorer lens, blocker): the guard outcomes the canaries must reach in every run, by
+# door -- else a guard defect only those outcomes expose (the git door's guard skipped, main's verdict ignored, a licence
+# without its switch) is admitted in both modes.
+GUARD_OUTCOMES = {"raw": ("guard_k5_read_as_main", "guard_abstained", "guard_abstained_where_a_precondition_held"),
+                  "git": ("guard_k5_read_as_main", "guard_abstained")}
 
 
 def score_canaries() -> tuple:
@@ -2913,10 +3084,16 @@ def score_canaries() -> tuple:
             t.pair(cid, summary, diff, raw_paths(diff))
         except Exception:
             t.violate("G-C8_raw_canary_not_scored", cid)
+    # NOTE_path2_twelfth_pass: each door's tally must show the guard outcomes the canaries exist for
+    for door, tally in (("raw", t), ("git", t_git)):
+        for outcome in GUARD_OUTCOMES[door]:
+            if not tally.n[outcome]:
+                tally.violate(f"G-C8_canaries_reach_no_{outcome}_at_the_{door}_door", "canaries")
     violations = t.violations + t_git.violations
     return ({"records": len(DOOR_CANARIES) + len(RAW_CANARIES), "door": dict(counter),
              "raw_door_canaries": len(RAW_CANARIES), "moved_records": t.n["records_moved"],
              "guard": {k: v for k, v in t.n.items() if k.startswith("guard_")},
+             "guard_git_door": {k: v for k, v in t_git.n.items() if k.startswith("guard_")},
              "violations": dict(violations), "pass": not violations}, t.violating + t_git.violating)
 
 
@@ -3022,11 +3199,12 @@ class Tally:
                     self.violate(v, pid)
                 for v in oracle_violations(summary, diff, paths, gu):
                     self.violate(v, pid)
-                own = own_read(diff)
+                facts: dict = {}
+                own = own_read(diff, facts)
                 cf = Counterfactual(summary, diff)
                 for v in guard_violations(summary, None, gu, gn, lambda r: cf.reading({r}),
                                           lambda r: new._evaluate_text(summary, diff, new._Repairs({r})).claims,
-                                          own[0], own[2], self):
+                                          own[0], own[2], self, facts):
                     self.violate(v, pid)
                 return gn
             gn = new.gate_diff_text(summary, diff, run=None, strict=False)
@@ -3069,12 +3247,15 @@ class Tally:
                                    None if door is None else door.text):
             self.violate(v, pid)
         # NOTE_path2_eleventh_pass (G-C9): the guard, this file's own, against the repaired gate's final claims
-        own = own_read(diff if door is None else door.text)
+        facts = {}
+        own = own_read(diff if door is None else door.text, facts)
         own_status = own[0] if door is None else door.status
+        if door is not None:                   # NOTE_path2_twelfth_pass: the git door's facts (A.1, A.2)
+            facts = own_git_licence(door.text, door.status_paths)
         switched_new = ((lambda r: new._evaluate_text(summary, diff, new._Repairs({r})).claims) if door is None
                         else (lambda r: door.reading(new, summary, new._Repairs({r})).claims))
         for v in guard_violations(summary, gb.claims, gu, gn, lambda r: cf.reading({r}), switched_new, own_status,
-                                  own[2], self):
+                                  own[2], self, facts):
             self.violate(v, pid)
         if door is not None and not door.renames:
             # G-C8: the repaired git door reads exactly what the repaired raw door reads on git's bytes -- except
@@ -3233,8 +3414,13 @@ class Tally:
         # back although the move is Z-3's abstention. There the table's conditions do not apply at all -- #121 moved
         # no count and no scope -- and G-C7 re-derives the claim (Z-3 with this file's own code) either way.
         woken = owner == "Z-3" and "#121" in rules
-        abstained = (owner in rules or woken) and admits(owner, k, vb, vn, cn.why, diff, summary)
-        waived = ("G-C4_direction:", "G-C4_unattributed:") if woken else ("G-C4_direction:",)
+        # NOTE_path2_twelfth_pass: the guard's abstention (no licence holds on a difference from main's verdict) is the move
+        # itself, as Z-3's is beside #121: the table's conditions shaped only the verdict the guard withheld, so they are
+        # not asked of it (G-C9 re-derives every such claim, reason included, with this file's own guard); every other rule
+        # in the attribution must still admit the move on this diff.
+        guarded = owner == "guard"
+        abstained = guarded or ((owner in rules or woken) and admits(owner, k, vb, vn, cn.why, diff, summary))
+        waived = ("G-C4_direction:", "G-C4_unattributed:") if (woken or guarded) else ("G-C4_direction:",)
         for r in rules:
             if r in TABLE_RULES:
                 refused += [x for x in pending if not (abstained and x.startswith(waived))]
