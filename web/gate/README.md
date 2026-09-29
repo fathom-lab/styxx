@@ -166,7 +166,7 @@ better:
 - **PR-MCI** (Jingzhi Gong, Giovanni Pinna, Yixin Bian, Jie M. Zhang; arXiv 2601.04886, 2026-01-08)
   measured description-versus-code inconsistency on 23,247 AIDev agent pull requests and
   hand-labelled 974 of them, about seven months before this lab did.
-- **AgentLiar** (Daksh Jain, 2026-05-20) shipped a GitHub Action that checks an agent's completion
+- **AgentLiar** (Daksh Jain per its account name, 2026-05-20) shipped a GitHub Action that checks an agent's completion
   claim against its file changes, including a scope-narrowing check and assertion-free tests.
 - **Swarm Orchestrator** (Brad Kinnard; v10.0.0, 2026-05-23, self-reported) gates AI-written pull
   requests on their diffs with ten cheat detectors and a hash-chained ledger, and measured its own

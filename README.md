@@ -150,8 +150,8 @@ this lab's idea, and several neighbours shipped parts of it before the diff gate
 2026-08-01). [PR-MCI](https://arxiv.org/abs/2601.04886) (Gong, Pinna, Bian and Zhang, 2026-01-08)
 measured description-versus-code inconsistency on 23,247 AIDev agent pull requests, with 974
 hand-labelled ones, about seven months before this lab did.
-[AgentLiar](https://github.com/dakshjain-1616/AgentLiar) (Daksh Jain, 2026-05-20) shipped a GitHub
-Action that checks an agent's completion claim against its file changes.
+[AgentLiar](https://github.com/dakshjain-1616/AgentLiar) (Daksh Jain per its account name,
+2026-05-20) shipped a GitHub Action that checks an agent's completion claim against its file changes.
 [Swarm Orchestrator](https://github.com/moonrunnerkc/swarm-orchestrator) (Brad Kinnard; v10.0.0,
 2026-05-23) gates AI-written pull requests on their diffs with a hash-chained audit ledger, and
 measures its own detectors' recall on planted cheats (self-reported). [backcheck](https://github.com/VectorInstitute/backcheck)

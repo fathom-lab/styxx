@@ -12,8 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 A landscape synthesis dated 2026-09-28, checked by a critic pass, found that neighbours did parts of
 this lab's work earlier. PR-MCI (Gong, Pinna, Bian, Zhang; arXiv 2601.04886, 2026-01-08) measured
 description-versus-code inconsistency on 23,247 AIDev agent pull requests, with 974 hand-labelled
-ones, about seven months before the diff gate existed. AgentLiar (Daksh Jain, 2026-05-20) shipped a
-GitHub Action checking an agent's completion claim against its file changes about ten weeks before
+ones, about seven months before the diff gate existed. AgentLiar (Daksh Jain per its account name,
+2026-05-20) shipped a GitHub Action checking an agent's completion claim against its file changes about ten weeks before
 it, and Swarm Orchestrator (Brad Kinnard, v10.0.0, 2026-05-23, self-reported) gated AI-written pull
 requests on their diffs with a hash-chained ledger. DeerFlow rendered a report with action claims
 and no receipt citations UNVERIFIED (RFC #4651 revision 2, published in the RFC thread by
