@@ -219,11 +219,18 @@ def _claim(kind, verdict, text="s.", **detail):
     return DiffClaim(kind=kind, text=text, detail=dict(detail), verdict=verdict, why=f"{verdict.lower()} here")
 
 
-def _stub_evaluate(on, switched, status=None, sides=None, apart=None):
-    """evaluate(rp, out) for `_guard`: `on` with every repair on, `switched[repair]` with one switched off."""
+def _git_licence(status):
+    """What the licences read of a diff in git's own rendering, with no Z-3 doubt, each key read from itself."""
+    return {"rendered": True, "soft": False, "forms": {k: [k] for k in (status or {})}}
+
+
+def _stub_evaluate(on, switched, status=None, sides=None, apart=None, licence=None):
+    """evaluate(rp, out) for `_guard`: `on` with every repair on, `switched[repair]` with one switched off; `licence` what
+    the licences read (NOTE_path2_twelfth_pass), by default git's own rendering with no doubt."""
     def evaluate(rp, out):
         if out is not None:
-            out.update(status=status or {}, sides=sides or {}, apart=apart or [False] * len(on.claims))
+            out.update(status=status or {}, sides=sides or {}, apart=apart or [False] * len(on.claims),
+                       licence=_git_licence(status) if licence is None else licence)
             return on
         (repair,) = rp.off
         return switched[repair]
@@ -331,7 +338,8 @@ const claim = (kind, verdict, text = "s.", detail = {}) => ({ kind, text, detail
 const gate = (...claims) => ({ diffgate: "v0", verdict: "PASS", base: "b", head: "h", claims, uncovered_sentences: 0,
                                sentences_total: 1, uncovered_texts: [], unparsed_claims: [], measured: true, why_unmeasured: "" });
 const stub = (on, switched, keys) => (rp, out) => {
-  if (out !== null) { Object.assign(out, { status: new Map(keys.map(k => [k, "A"])), sides: new Map(), apart: on.claims.map(() => false) }); return on; }
+  if (out !== null) { Object.assign(out, { status: new Map(keys.map(k => [k, "A"])), sides: new Map(), apart: on.claims.map(() => false),
+                                           licence: { rendered: true, soft: false, forms: new Map(keys.map(k => [k, [k]])) } }); return on; }
   return switched[[...rp.off][0]];
 };
 const mine = claim("files_changed_count", "VERIFIED", "s.", { n: "2" }), theirs = claim("files_changed_count", "CONTRADICTED", "s.", { n: "2" });
@@ -494,7 +502,8 @@ def guarantee_violations(summary: str, diff: str, module=dg) -> tuple:
             continue
         if not (mv is not None and c.verdict == b.verdict
                 and any(switched[r].get(key) is not None and switched[r][key].verdict == mv
-                        and module._precondition(r, b, seen["status"], seen["sides"]) for r in dg.REPAIRS)):
+                        and module._precondition(r, b, seen["status"], seen["sides"], seen["licence"])
+                        for r in dg.REPAIRS)):
             bad.append((key, c.verdict, mv))
     if final.verdict != ("FAIL" if any(c.verdict == "CONTRADICTED" for c in final.claims) else "PASS"):
         bad.append(("gate verdict", final.verdict, None))
@@ -676,11 +685,18 @@ def _mutation_records():
 
 
 @pytest.mark.parametrize("label", sorted(MUTANTS))
-def test_a_defect_outside_the_three_repairs_can_only_abstain(label):
+def test_a_defect_outside_the_three_repairs_can_only_abstain(label, request):
     """Every claim of the mutant's final gate reads main's verdict, UNCHECKABLE, or the clean branch's own final verdict:
-    the defect can only take a verdict away. Without the guard the same defect gives verdicts none of those is."""
+    the defect can only take a verdict away. Without the guard the same defect gives verdicts none of those is.
+
+    NOTE_path2_twelfth_pass: except where the defect passes through a licence -- the eleventh pass's section B.3, stated
+    and now met: over git-rendered dotfile twins, "4 files changed." beside a count off by one reads VERIFIED, and with
+    #121 switched off the same defect reads 3 files as not 4, CONTRADICTED, main's verdict by coincidence, so #121's
+    licence carries the defect's verdict. The guard cannot see that; the scorer's reading oracle (G-C7) does, and each
+    such record is held to it here."""
     mutant = _mutant(*MUTANTS[label], tag=label.split(":")[0].replace(" ", "_").replace("-", "_"))
     live = unguarded_new = 0
+    through: list = []
     for pid, summary, diff in _mutation_records():
         try:
             main = ref.gate_diff_text(summary, diff)
@@ -691,10 +707,300 @@ def test_a_defect_outside_the_three_repairs_can_only_abstain(label):
         mine = mutant.gate_diff_text(summary, diff)
         before = mutant._evaluate_text(summary, diff, mutant._ALL_ON)
         clean_by = dict(zip(dg._claim_keys(clean.claims), clean.claims))
+        seen: dict = {}
+        mutant._evaluate_text(summary, diff, mutant._ALL_ON, out=seen)
         for key, c, b in zip(dg._claim_keys(mine.claims), mine.claims, before.claims):
             allowed = {"UNCHECKABLE", getattr(theirs.get(key), "verdict", None), getattr(clean_by.get(key), "verdict", None)}
-            assert c.verdict in allowed, (label, pid, key, c.verdict, allowed)
+            if c.verdict not in allowed:
+                # only through a licence: some repair's precondition holds and the mutant's own switch gives main's verdict
+                switched = {r: dict(zip(dg._claim_keys(g.claims), g.claims))
+                            for r in dg.REPAIRS for g in [mutant._evaluate_text(summary, diff, mutant._Repairs({r}))]}
+                assert any(mutant._precondition(r, b, seen["status"], seen["sides"], seen["licence"])
+                           and getattr(switched[r].get(key), "verdict", None) == theirs[key].verdict
+                           for r in dg.REPAIRS), (label, pid, key, c.verdict, allowed)
+                through.append((pid, summary, diff))
             live += c.verdict != getattr(clean_by.get(key), "verdict", None)
             unguarded_new += b.verdict not in allowed
     assert live or unguarded_new, f"{label}: the mutant moved nothing on these records"
     assert unguarded_new, f"{label}: without the guard the mutant gives no new verdict here (an equivalent mutant)"
+    if through:
+        pg = request.getfixturevalue("scorer")
+        for pid, summary, diff in dict.fromkeys(through):
+            reading = mutant._evaluate_text(summary, diff, mutant._ALL_ON)
+            assert pg.oracle_violations(summary, diff, pg.raw_paths(diff), reading), (label, pid)
+
+
+# ---- 4. THE GUARANTEE JUDGED AGAINST TRUTH, AND AGAINST THE SCORER'S OWN GUARD ------------------------------------------
+#
+# NOTE_path2_twelfth_pass_2026_09_29, B. Everything above in section 3 asks the module's own `_precondition` and switches
+# whether a difference is licensed: that is self-consistency, and round 11 found licensed differences that were false
+# (R11.0 to R11.4) while it reported 0 violations. Here the round-11 reproductions are judged by a truth model that reads
+# no line of the instrument -- the file lists and statuses from the case's own base and head trees (and, at the git door,
+# git's `--name-status` on a repository built from them), path claims by the claim as written against those paths, case
+# kept -- and the guarantee is held to the scorer's own guard (`path2_gates.expected_guard`: main's verdict from the
+# baseline, the switched readings from the scorer's reverts, the preconditions from the scorer's code) on both doors.
+
+R11 = json.loads((ROOT / "tests" / "fixtures" / "path2_round11_repros.json").read_text(encoding="utf-8"))["cases"]
+
+
+def _truth_status(model) -> dict:
+    """{path: A | M | D}: the files whose bytes differ between the base and the head tree of the case's model."""
+    base, head = model["base"], model["head"]
+    return {p: "A" if base.get(p) is None else "D" if head.get(p) is None else "M"
+            for p in sorted(set(base) | set(head)) if base.get(p) != head.get(p)}
+
+
+def _judge(values: set):
+    return "T" if values == {True} else "F" if values == {False} else "?"
+
+
+def _written(path: str) -> str:
+    """A path as a claim writes it: backslashes as slashes, a leading run of `./` and `/` dropped, case kept."""
+    path = path.replace("\\", "/")
+    while path.startswith(("./", "/")):
+        path = path[2:] if path.startswith("./") else path[1:]
+    return path
+
+
+def _truth(kind: str, detail: dict, status: dict):
+    """T, F or ? (the readings a writer may mean disagree) for one claim, or None for a kind this model does not judge."""
+    if kind == "files_changed_count":
+        return _judge({len(status) == int(detail["n"])})
+    if kind in ("file_created", "file_deleted", "file_touched"):
+        claimed = _written(detail["path"])
+        want = {"file_created": "A", "file_deleted": "D"}.get(kind)
+        readings = [[p for p in status if p == claimed], [p for p in status if p == claimed or p.endswith("/" + claimed)]]
+        if "/" not in claimed:
+            readings.append([p for p in status if p.rsplit("/", 1)[-1] == claimed])
+        return _judge({bool(hits) and (want is None or any(status[p] == want for p in hits)) for hits in readings})
+    return None
+
+
+def _worse(final: list, main: list, status: dict) -> list:
+    """Claims (kind, text, occurrence) whose final verdict is false by truth where main's was not."""
+    def wrong(verdict, t):
+        return (verdict == "VERIFIED" and t == "F") or (verdict == "CONTRADICTED" and t == "T")
+    theirs = dict(zip(_claim_keys_of(main), main))
+    out = []
+    for key, (kind, verdict, detail) in zip(_claim_keys_of(final), final):
+        t = _truth(kind, detail, status)
+        m = theirs.get(key)
+        if t is not None and wrong(verdict, t) and not (m is not None and wrong(m[1], t)):
+            out.append((key, verdict, None if m is None else m[1], t))
+    return out
+
+
+def _claim_keys_of(claims: list) -> list:
+    seen: dict = {}
+    out = []
+    for kind, _verdict, detail in claims:
+        text = detail.get("_text", "")
+        out.append((kind, text, seen.get((kind, text), 0)))
+        seen[(kind, text)] = seen.get((kind, text), 0) + 1
+    return out
+
+
+def _as_rows(g) -> list:
+    return [(c.kind, c.verdict, dict(c.detail or {}, _text=c.text)) for c in g.claims]
+
+
+def test_the_truth_model_reads_the_reproductions_as_round_11_recorded():
+    """The model agrees with the reviewer's own recorded truth on every claim it recorded (their model is theirs; this one
+    is written out here), so a test below is judged by the same truth round 11 measured with."""
+    checked = 0
+    for case in R11:
+        status = _truth_status(case["model"])
+        for key, recorded in case["reviewer_truth"].items():
+            kind, text, _occ = key.split("\x1f")
+            claim = next(c for c in ref.gate_diff_text(case["summary"], case["diff"]).claims if c.text == text)
+            assert _truth(kind, claim.detail, status) == recorded, (case["id"], key)
+            checked += 1
+    assert checked == 16
+
+
+@pytest.mark.parametrize("case", R11, ids=[c["id"] for c in R11])
+def test_round_11_reads_no_worse_than_main_against_truth_on_the_raw_door(case):
+    status = _truth_status(case["model"])
+    final = _as_rows(dg.gate_diff_text(case["summary"], case["diff"]))
+    main = _as_rows(ref.gate_diff_text(case["summary"], case["diff"]))
+    assert not _worse(final, main, status), (case["id"], _worse(final, main, status))
+
+
+def test_the_truth_judged_check_refuses_the_eleventh_pass_instrument():
+    """The check above is not vacuous: the eleventh pass's instrument (15878ab5, before the licences were tightened) reads
+    12 of the 17 reproductions worse than main by the same truth -- the 12 raw-door cells round 11 measured."""
+    import types
+    r = subprocess.run(["git", "-C", str(ROOT), "show", "15878ab5:styxx/diffgate.py"], capture_output=True)
+    if r.returncode:
+        pytest.skip("the eleventh pass's commit is not in this clone")
+    mod = types.ModuleType("styxx._diffgate_eleventh_pass")
+    mod.__package__, mod.__file__ = "styxx", "<15878ab5:styxx/diffgate.py>"
+    sys.modules[mod.__name__] = mod
+    exec(compile(r.stdout.decode("utf-8"), mod.__file__, "exec"), mod.__dict__)  # noqa: S102
+    worse = [case["id"] for case in R11
+             if _worse(_as_rows(mod.gate_diff_text(case["summary"], case["diff"])),
+                       _as_rows(ref.gate_diff_text(case["summary"], case["diff"])), _truth_status(case["model"]))]
+    assert len(worse) == 12 and not any(x.endswith("control") or x.startswith("C121-git") for x in worse), worse
+
+
+def test_round_11_reads_no_worse_than_main_against_truth_in_the_port():
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    script = ("const B = require(process.argv[1]), M = require(process.argv[2]);"
+              "const P = JSON.parse(require('fs').readFileSync(0, 'utf8'));"
+              "const rows = g => g.claims.map(c => [c.kind, c.verdict, Object.assign({}, c.detail || {}, {_text: c.text})]);"
+              "process.stdout.write(JSON.stringify(P.map(([s, d]) => [rows(B.gateDiffText(s, d)), rows(M.gateDiffText(s, d))])));")
+    r = subprocess.run([node, "-e", script, str(PORT), str(REF_JS)], input=json.dumps([[c["summary"], c["diff"]] for c in R11]),
+                       capture_output=True, text=True, encoding="utf-8", timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+    for case, (final, main) in zip(R11, json.loads(r.stdout)):
+        status = _truth_status(case["model"])
+        final, main = [tuple(x) for x in final], [tuple(x) for x in main]
+        assert not _worse(final, main, status), (case["id"], _worse(final, main, status))
+
+
+def _fast_import_path(path: str) -> bytes:
+    """A path as `git fast-import` reads it, C-quoted so that a trailing space, a quote or a backslash survive."""
+    out = bytearray(b'"')
+    for byte in path.encode("utf-8"):
+        out += (b"\\" + bytes([byte]) if byte in (0x22, 0x5C) else
+                b"\\%03o" % byte if byte < 0x20 or byte == 0x7F else bytes([byte]))
+    return bytes(out + b'"')
+
+
+def _repository(tmp_path: Path, cases: list) -> Path:
+    """One bare repository holding each case's base and head trees as branches `bN` and `hN`, written by fast-import
+    (no working tree, so paths that differ only in case, end in a space or open with `a/` all survive)."""
+    git = shutil.which("git")
+    if git is None:
+        pytest.skip("git is not on PATH")
+    repo = tmp_path / "repo.git"
+    subprocess.run([git, "init", "-q", "--bare", str(repo)], check=True, capture_output=True)
+    subprocess.run([git, "-C", str(repo), "config", "core.ignorecase", "false"], check=True)
+    # (git for Windows refuses a path ending in a space unless NTFS protection is off; no file is written to disk here)
+    subprocess.run([git, "-C", str(repo), "config", "core.protectNTFS", "false"], check=True)
+    stream = bytearray()
+    for i, case in enumerate(cases):
+        for side, ref_name in (("base", f"b{i}"), ("head", f"h{i}")):
+            stream += b"commit refs/heads/" + ref_name.encode() + b"\ncommitter t <t@t> 1700000000 +0000\ndata 0\n"
+            if side == "head":
+                stream += b"from refs/heads/b%d\n" % i
+            stream += b"deleteall\n"
+            for path, text in sorted(case["model"][side].items()):
+                data = text.encode("utf-8")
+                stream += b"M 100644 inline " + _fast_import_path(path) + b"\ndata %d\n" % len(data) + data + b"\n"
+            stream += b"\n"
+    subprocess.run([git, "-C", str(repo), "fast-import", "--quiet"], input=bytes(stream), check=True, capture_output=True)
+    return repo
+
+
+def test_round_11_reads_no_worse_than_main_against_truth_at_the_git_door(tmp_path):
+    """Every reproduction, rebuilt as a repository from its model: git's own --name-status is the model's file list (so
+    truth is git's), and the git door reads no claim worse than main's git door."""
+    repo = _repository(tmp_path, R11)
+    for i, case in enumerate(R11):
+        listed = dg._git(repo, "diff", "--name-status", f"b{i}..h{i}")
+        status = _truth_status(case["model"])
+        assert sorted(line.split("\t")[0][:1] + line.split("\t")[-1] for line in listed.splitlines()) == sorted(
+            st + path for path, st in status.items()) or '"' in listed, case["id"]
+        final = _as_rows(dg.gate_diff(case["summary"], repo, f"b{i}", f"h{i}"))
+        main = _as_rows(ref.gate_diff(case["summary"], repo, f"b{i}", f"h{i}"))
+        assert not _worse(final, main, status), (case["id"], _worse(final, main, status))
+
+
+# The property, against the scorer's reverts: the instrument's final claims are the scorer's own guard's, claim for claim.
+@pytest.fixture(scope="module")
+def scorer():
+    import importlib.util
+    base = "98a5c368ba9ffa242c6862e021df7f8bad2ed8e6"
+    if subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", base + "^{commit}"], capture_output=True).returncode:
+        pytest.skip("the scorer's baseline commit is not in this clone (a shallow checkout)")
+    saved = sys.modules.get("styxx.claimdetect", None)
+    had = "styxx.claimdetect" in sys.modules
+    spec = importlib.util.spec_from_file_location(
+        "path2_gates_for_the_guard", ROOT / "papers" / "closed-model-frontier" / "path2_gates.py")
+    pg = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(pg)
+    except SystemExit as e:
+        pytest.skip(f"path2_gates refused to load: {e}")
+    finally:
+        if had:
+            sys.modules["styxx.claimdetect"] = saved
+        else:
+            sys.modules.pop("styxx.claimdetect", None)
+    return pg
+
+
+def _scorer_guard_violations(pg, summary: str, diff: str) -> list:
+    before = pg.new._evaluate_text(summary, diff, pg.new._ALL_ON)
+    final = pg.new.gate_diff_text(summary, diff, run=None, strict=False)
+    try:
+        main = pg.BASE.gate_diff_text(summary, diff, run=None, strict=False).claims
+    except Exception:
+        main = None
+    facts: dict = {}
+    own = pg.own_read(diff, facts)
+    cf = pg.Counterfactual(summary, diff)
+    return pg.guard_violations(summary, main, before, final, lambda r: cf.reading({r}),
+                               lambda r: pg.new._evaluate_text(summary, diff, pg.new._Repairs({r})).claims,
+                               own[0], own[2], None, facts)
+
+
+def test_the_guarantee_holds_against_the_scorers_own_guard_on_the_raw_door(scorer):
+    pg = scorer
+    records = list(_pinned()) + list(guard_cases(20260930, 500)) + [(c["id"], c["summary"], c["diff"]) for c in R11]
+    for pid, summary, diff in records:
+        bad = _scorer_guard_violations(pg, summary, diff)
+        assert not bad, (pid, bad)
+    assert len(records) > 800
+
+
+def test_the_guarantee_holds_against_the_scorers_own_guard_at_the_git_door(scorer):
+    """The git-buildable part of the randomised set and of the pinned pairs, rebuilt as two-commit repositories: the git
+    door's final claims are the scorer's own guard's over git's --name-status and git's own diff text."""
+    import itertools
+    pg = scorer
+    scored = 0
+    records = itertools.chain(guard_cases(20260930, 500), _pinned())
+    for pid, summary, diff in records:
+        try:
+            files = pg.rebuild(diff)
+        except (UnicodeError, ValueError):
+            files = None
+        if files is None:
+            continue
+        with pg.GitDoor(*files) as door:
+            if not door.diff.strip():
+                continue
+            gb, gn, gu = door.gate(pg.BASE, summary), door.gate(pg.new, summary), door.reading(pg.new, summary)
+            cf = pg.Counterfactual(summary, diff, door)
+            facts = pg.own_git_licence(door.text, door.status_paths)
+            bad = pg.guard_violations(summary, gb.claims, gu, gn, lambda r: cf.reading({r}),
+                                      lambda r: door.reading(pg.new, summary, pg.new._Repairs({r})).claims,
+                                      door.status, pg.own_read(door.text)[2], None, facts)
+            assert not bad, (pid, bad)
+            scored += 1
+        if scored >= 60:
+            break
+    assert scored >= 60, scored
+
+
+# ---- 5. the port's reference ---------------------------------------------------------------------------------------------
+
+def test_the_port_without_its_reference_throws_rather_than_reading_main_as_raising():
+    """Round-11 guard lens: a page that loads diffgate.js without diffgate_ref.js (or the bookmarklet's bundle) read every
+    decided claim as UNCHECKABLE with "main's reading raises on this diff". The port now finds its reference before the
+    guard runs, so the missing reference throws; only what main's own gateDiffText throws reads as main raising."""
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    script = ("const vm = require('vm'); const src = require('fs').readFileSync(process.argv[1], 'utf8');"
+              "const ctx = { module: { exports: {} }, console }; vm.createContext(ctx); vm.runInContext(src, ctx);"
+              "let out; try { ctx.module.exports.gateDiffText('Modified src/a.py. 1 file changed.',"
+              " '--- a/src/a.py\\n+++ b/src/a.py\\n@@ -1 +1 @@\\n-a\\n+b\\n'); out = 'no error'; }"
+              " catch (e) { out = 'threw: ' + e.message; } process.stdout.write(out);")
+    r = subprocess.run([node, "-e", script, str(PORT)], capture_output=True, text=True, encoding="utf-8", timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+    assert r.stdout.startswith("threw: diffgate.js needs its reference"), r.stdout

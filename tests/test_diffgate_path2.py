@@ -353,10 +353,16 @@ def test_121_leading_dot_slash_and_slash_still_read_as_before():
 
 
 def test_121_a_dotfile_does_not_answer_for_its_undotted_name():
-    diff = ("--- a/.eslintrc.json\n+++ b/.eslintrc.json\n@@ -1 +1 @@\n-{}\n+{\"a\": 1}\n"
-            "--- /dev/null\n+++ b/config/eslintrc.json\n@@ -0,0 +1 @@\n+{}\n")
+    # NOTE_path2_twelfth_pass (A.1): #121 licenses the difference from main in git's own rendering, and in a plain `---`/`+++`
+    # rendering (where a renderer may have left a file out, or an `a/` directory reads as git's prefix) the claim abstains
+    diff = _g(".eslintrc.json") + _g("config/eslintrc.json", "A")
     _, got = _claims("Created eslintrc.json. Updated .eslintrc.json.", diff)
     assert got == [("file_created", "VERIFIED", "diff status 'A' for 'config/eslintrc.json'"),
+                   ("file_touched", "VERIFIED", "diff status 'M' for '.eslintrc.json'")]
+    plain = ("--- a/.eslintrc.json\n+++ b/.eslintrc.json\n@@ -1 +1 @@\n-{}\n+{\"a\": 1}\n"
+             "--- /dev/null\n+++ b/config/eslintrc.json\n@@ -0,0 +1 @@\n+{}\n")
+    _, got = _claims("Created eslintrc.json. Updated .eslintrc.json.", plain)
+    assert got == [("file_created", "UNCHECKABLE", _unlicensed("UNCHECKABLE", "VERIFIED")),
                    ("file_touched", "VERIFIED", "diff status 'M' for '.eslintrc.json'")]
 
 
@@ -687,6 +693,20 @@ def _m(path):
     return f"--- a/{path}\n+++ b/{path}\n@@ -1 +1 @@\n-a\n+b\n"
 
 
+def _g(path, st="M"):
+    """NOTE_path2_twelfth_pass (A.1): one file as git writes it -- #121 licenses a difference only in git's own rendering."""
+    head = f"diff --git a/{path} b/{path}\n"
+    if st == "A":
+        return head + f"new file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/{path}\n@@ -0,0 +1 @@\n+b\n"
+    return head + f"index 1111111..2222222 100644\n--- a/{path}\n+++ b/{path}\n@@ -1 +1 @@\n-a\n+b\n"
+
+
+def _unlicensed(main, this):
+    """The guard's reason where a difference from main's verdict has no licence (NOTE_path2_twelfth_pass: #121 in a plain
+    rendering)."""
+    return dg._GUARD_DIFFERS.format(main=main, this=this)
+
+
 def test_121_c3_an_accusation_lists_only_real_outside_paths():
     diff = _m(".github/a.yml") + _m(".github/b.yml") + _m(".github/c.yml") + _m("src/x.py")
     _, got = _claims("Only touches github/.", diff)
@@ -696,21 +716,26 @@ def test_121_c3_an_accusation_lists_only_real_outside_paths():
 
 
 def test_121_c3_a_dot_on_the_prefix_and_not_on_the_path_is_not_a_dot_miss():
-    _, got = _claims("Only touches .env.", _m("env"))
+    _, got = _claims("Only touches .env.", _g("env"))
     assert got == [("only_touches", "CONTRADICTED", "paths outside '.env': ['env']")]
-    _, got = _claims("Only touches .github/.", _m(".github/x.yml") + _m("github/z.md"))
+    _, got = _claims("Only touches .github/.", _g(".github/x.yml") + _g("github/z.md"))
     assert got == [("only_touches", "CONTRADICTED", "paths outside '.github': ['github/z.md']")]
+    # NOTE_path2_twelfth_pass (A.1): the same accusation in a plain rendering is #121's alone, and abstains
+    _, got = _claims("Only touches .env.", _m("env"))
+    assert got == [("only_touches", "UNCHECKABLE", _unlicensed("VERIFIED", "CONTRADICTED"))]
 
 
 def test_121_c3_a_dotdot_path_is_not_a_dot_miss():
-    _, got = _claims("Only touches src/.", _m("../src/x.py"))
+    _, got = _claims("Only touches src/.", _g("../src/x.py"))
     assert got == [("only_touches", "CONTRADICTED", "paths outside 'src': ['../src/x.py']")]
+    _, got = _claims("Only touches src/.", _m("../src/x.py"))                  # a plain rendering (A.1)
+    assert got == [("only_touches", "UNCHECKABLE", _unlicensed("VERIFIED", "CONTRADICTED"))]
     assert not dg._dot_miss("..env", ["env"]) and not dg._dot_miss("../src/x.py", ["src"])
     assert dg._dot_miss(".github/x.yml", ["github"]) and dg._dot_miss(".env", ["env"])
     assert not dg._dot_miss(".github/x.yml", [".github"]) and not dg._dot_miss("github/x.yml", ["github"])
     # a dotted prefix over a path with one dot more: each clause alone excludes it, so this pins the pair
     assert not dg._dot_miss("..env", [".env"]) and not dg._dot_miss("..github/x.yml", [".github"])
-    _, got = _claims("Only touches .env.", _m("..env"))
+    _, got = _claims("Only touches .env.", _g("..env"))
     assert got == [("only_touches", "CONTRADICTED", "paths outside '.env': ['..env']")]
 
 
@@ -895,10 +920,11 @@ def test_f1_a_dotted_prefix_verifies_accuses_and_carries_c3_in_all_three_positio
     assert got == [("only_touches", "CONTRADICTED", "paths outside '.npmrc': ['src/a.py']")]
     _, got = _claims("Only touches .gitignore.", _m(".gitignore") + _m("src/a.py"))
     assert got == [("only_touches", "CONTRADICTED", "paths outside '.gitignore': ['src/a.py']")]
-    # AMENDMENT C-3's accusation class, which the blocker had switched off for these spellings
-    _, got = _claims("Only touches .gitignore.", _m("gitignore"))
+    # AMENDMENT C-3's accusation class, which the blocker had switched off for these spellings (NOTE_path2_twelfth_pass:
+    # #121's alone, so in git's own rendering)
+    _, got = _claims("Only touches .gitignore.", _g("gitignore"))
     assert got == [("only_touches", "CONTRADICTED", "paths outside '.gitignore': ['gitignore']")]
-    _, got = _claims("Only touches .github.", _m("github/ci.yml"))
+    _, got = _claims("Only touches .github.", _g("github/ci.yml"))
     assert got == [("only_touches", "CONTRADICTED", "paths outside '.github': ['github/ci.yml']")]
 
 
@@ -1387,7 +1413,7 @@ def test_v3_the_post_amendment_rules_admit_only_their_own_kinds():
     # NOTE_path2_ninth_pass: the names the ninth pass's admissions read, from the scorer's own source
     for name in ("NINTH_PASS_RULES", "PATH_KINDS", "FILE_LIST_KINDS", "Z1_WHY", "Z2_WHY", "Z2_SKEW", "Z12_BC1",
                  "Z12_RAISES", "Z3_DIFFERS", "Z3_APART", "Z4_WHY", "Z5_WHY", "NOT_SURE", "LOOSE_WHY", "COLLIDE_WHY",
-                 "UNCOUNTED_WHY", "Y2_WHY", "Y2_TEST", "Y5_WHY"):
+                 "UNCOUNTED_WHY", "Y2_WHY", "Y2_TEST", "Y5_WHY", "GUARD_DIFFERS", "GUARD_RAISES", "GUARD_ABSENT"):
         start = src.index(f"\n{name} = ") + 1
         end = src.index("\n", start)
         while src[end + 1:end + 2] in (" ", '"', ")"):
@@ -1883,9 +1909,12 @@ def test_v3_the_scorer_admits_every_move_on_the_pinned_pairs_and_counts_what_g_c
     # its basename, which wakes Z-4; Z-4 shaped nothing on the record itself and is admitted as that)
     # (NOTE_path2_eleventh_pass: two more, the pairs whose sentences hold an em dash, an emoji and curly quotes, which
     # both ports' templates read alike, so #97's repair stands there; one reason-only move beside them)
+    # (NOTE_path2_twelfth_pass: two more, round 11's same-case control and the case-kept suffix match, where #97's licence
+    # holds on the paths as written; and seven credited to #97 and Z-4 jointly that the guard abstains on, a case-only
+    # match, a Z-3 doubt or a trailing-space name)
     assert {k: v for k, v in ninth.items() if not k.endswith("-> UNCHECKABLE")} == {
-        "Z-4 file_created: UNCHECKABLE -> VERIFIED": 4, "Z-4 file_touched: VERIFIED -> VERIFIED": 1}
-    assert t.attribution["attributed_by"]["#97+Z-4"] == 5 and sum(ninth.values()) > 5
+        "Z-4 file_created: UNCHECKABLE -> VERIFIED": 6, "Z-4 file_touched: VERIFIED -> VERIFIED": 1}
+    assert t.attribution["attributed_by"]["#97+Z-4"] == 12 and sum(ninth.values()) > 12
 
 
 def test_v3_raw_paths_reads_a_header_only_outside_a_hunk(scorer):
@@ -2416,13 +2445,14 @@ def test_x7_the_scorer_reads_names_by_the_same_table_with_its_own_decoder(scorer
 
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
-    assert len(pairs) == 255 and all(p["id"].startswith("path2:") for p in pairs)
+    assert len(pairs) == 291 and all(p["id"].startswith("path2:") for p in pairs)
     # NOTE_path2_fifth_pass V-1 re-pinned four pairs and NOTE_path2_sixth_pass W-1 one; NOTE_path2_eighth_pass
     # twenty-four (Y-5 thirteen: the pairing withdraws; Y-2 four; Y-1 four; Y-3 three), each to UNCHECKABLE;
     # NOTE_path2_ninth_pass thirty-six (Z-2 sixteen, Z-1 twelve, Z-3 seven, Z-4 one), each to UNCHECKABLE;
     # NOTE_path2_tenth_pass nine (K-1: six to UNCHECKABLE, three reason-only); NOTE_path2_eleventh_pass two (the guard
     # abstaining where F-2 alone parts from main; K-5 at the sentence leaving a path both ports read alike to Z-4), each
-    # to UNCHECKABLE; each record says so
+    # to UNCHECKABLE; NOTE_path2_twelfth_pass five (#121 licensing nothing in a plain rendering), each to UNCHECKABLE;
+    # each record says so
     assert sorted(p["id"] for p in pairs if "repinned" in p) == [
         "path2:101-a-bom-strip-changes-a-test",
         "path2:101-a-changed-test-and-a-same-named-new-one",
@@ -2430,7 +2460,12 @@ def test_the_pinned_pairs_read_as_expected_on_the_python_side():
         "path2:101-non-ascii-test-names-are-distinct",
         "path2:101-the-fold-under-an-M-header-pairs-once",
         "path2:101-the-same-test-name-in-two-classes",
+        "path2:121-a-dotdot-path-is-not-a-dot-miss",
+        "path2:121-a-dotfile-and-a-nested-undotted-name",
+        "path2:121-a-dotted-prefix-over-an-undotted-directory",
+        "path2:121-a-dotted-prefix-over-an-undotted-file",
         "path2:97-basename-still-resolves",
+        "path2:f1-c3-accuses-a-dotfile-prefix-over-its-undotted-twin",
         "path2:f2-a-context-line-holding-a-separator-adds-nothing",
         "path2:f2-a-form-feed-indent-defines-a-function",
         "path2:f2-a-form-feed-is-not-a-line-break",
@@ -3314,8 +3349,12 @@ def _submodule_twins_repo(tmp_path: Path) -> str:
 def test_x10_k4_a_dotted_twin_beside_a_file_neither_reading_counts(tmp_path):
     diff = _submodule_twins_repo(tmp_path)
     summary = "3 files changed. 2 files changed."
-    assert [(c.kind, c.verdict) for c in gate_diff(summary, tmp_path, "base", "tip").claims] == [
-        ("files_changed_count", "VERIFIED"), ("files_changed_count", "CONTRADICTED")]
+    # NOTE_path2_twelfth_pass (A.1): git's `Submodule` line under diff.submodule=log names a changed file outside any
+    # `diff --git` header, so git's diff text is not git's own rendering and #121 licenses nothing at the git door either
+    # (a recall cost the note takes knowingly: git's --name-status was right here)
+    assert [(c.kind, c.verdict, c.why) for c in gate_diff(summary, tmp_path, "base", "tip").claims] == [
+        ("files_changed_count", "UNCHECKABLE", _unlicensed("CONTRADICTED", "VERIFIED")),
+        ("files_changed_count", "UNCHECKABLE", _unlicensed("VERIFIED", "CONTRADICTED"))]
     want = [("files_changed_count", "UNCHECKABLE", f"{K4_WHY}; claim says 3"),
             ("files_changed_count", "UNCHECKABLE", f"{K4_WHY}; claim says 2")]
     for text in (diff, K4_TWINS + K4_HG):
@@ -3495,8 +3534,10 @@ def test_x10_the_door_canaries_make_z3_fire_at_the_git_door_and_refuse_a_defect_
     # scorer lens, blocker): and U+2029, a third.
     pg = scorer
     report, _ = pg.score_canaries()
-    assert report["pass"] and report["door"]["scored"] == len(pg.DOOR_CANARIES) == 3, report
-    for _cid, summary, diff in pg.DOOR_CANARIES:
+    assert report["pass"] and report["door"]["scored"] == len(pg.DOOR_CANARIES) == 7, report
+    z3 = [c for c in pg.DOOR_CANARIES if c[0].startswith("canary:z3-git-door-")]      # (the twelfth pass adds four more)
+    assert len(z3) == 3
+    for _cid, summary, diff in z3:
         files = pg.rebuild(diff)
         with pg.GitDoor(*files) as door:
             g = door.gate(pg.new, summary)
@@ -3623,7 +3664,7 @@ X11_PLANTED = {
     "a licence without the precondition, beside a switch that reads more than its repair": (
         [('        return _main_key(p) if "#121" in self.off else _norm(p)',
           '        return "" if "#121" in self.off else _norm(p)'),
-         ('        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"])',
+         ('        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"], seen.get("licence"))',
           "        if main_verdict is not None and any(True")],
         *_pair(X11_V2), "G-C9_guard:files_changed_count"),
     # the eleventh pass's own differential: main's paths folding alike, asked before main's two lists are compared
@@ -3684,19 +3725,21 @@ def test_x11_every_eleventh_pass_rule_and_round_10_scorer_finding_fails_on_a_pla
     assert violation in t.violations, dict(t.violations)
 
 
-def test_x11_a_licence_without_its_precondition_alone_moves_nothing_the_switches_decide(scorer, monkeypatch):
-    """With every switch reading its own repair, each precondition holds wherever its switch alone gives main's verdict
-    back (a switch moves a verdict only where its repair acts), so dropping the precondition alone changes no claim on
-    the pinned pairs: the mutant is equivalent there, and the scorer says so by passing. Beside a switch that reads more
-    than its repair (above), the same drop is refused."""
+def test_x12_a_licence_without_its_precondition_is_refused_on_the_pinned_pairs(scorer, monkeypatch):
+    """At the eleventh pass each precondition held wherever its switch alone gave main's verdict back, so dropping the
+    precondition changed no claim on the pinned pairs (an equivalent mutant there, held only by stub tests). The twelfth
+    pass's preconditions read more than the switches do -- git's own rendering for #121, the case and Z-3's doubts for
+    #97 (NOTE_path2_twelfth_pass, A.1, A.2) -- so the same drop now keeps a verdict on round 11's reproductions, and the
+    scorer's own guard (G-C9) refuses it."""
     pg = scorer
     _planted_many(pg, monkeypatch, [(
-        '        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"])',
-        "        if main_verdict is not None and any(True")], "x11pre")
+        '        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"], seen.get("licence"))',
+        "        if main_verdict is not None and any(True")], "x12pre")
     t = pg.Tally(name_prs=True)
     for p in json.loads(PAIRS.read_text(encoding="utf-8")):
         t.pair(p["id"], p["summary"], p["diff"], pg.raw_paths(p["diff"]))
-    assert not t.violations, t.violating
+    refused = {pid for rule, pid in t.violating if rule.startswith("G-C9_guard")}
+    assert {"path2:m-r11-b121-difflib-noprefix-bdir", "path2:m-r11-a97-created-suffix-case"} <= refused, t.violating
 
 
 def test_x11_the_scorers_own_guard_licenses_only_by_the_precondition_and_the_switch_together(scorer):
@@ -3709,8 +3752,9 @@ def test_x11_the_scorers_own_guard_licenses_only_by_the_precondition_and_the_swi
     def one(kind, text, verdict, detail):
         return [C(kind=kind, text=text, detail=dict(detail), verdict=verdict, why=f"{kind} {verdict}")]
 
-    def final(status, before, main, switched):
-        return pg.expected_guard("", before, main, lambda r: switched.get(r, before), status, {})
+    def final(status, before, main, switched, facts=None):
+        facts = {"rendered": True, "soft": False, "forms": {k: [k] for k in status}} if facts is None else facts
+        return pg.expected_guard("", before, main, lambda r: switched.get(r, before), status, {}, None, facts)
 
     # the #121 revert gives main's verdict back, but no key the claim reads keeps a dot: abstain, naming main's verdict
     before = one("file_touched", "Modified src/x.py.", "VERIFIED", {"path": "src/x.py"})
@@ -3726,6 +3770,19 @@ def test_x11_the_scorers_own_guard_licenses_only_by_the_precondition_and_the_swi
     # both: the precondition holds and the #121 revert gives main's verdict back -- the repair's verdict is kept
     got = final(twins, before, main, {"#121": main})
     assert [g[2] for g in got] == ["VERIFIED"], got
+    # NOTE_path2_twelfth_pass (A.1): the same, where the diff is not git's own rendering -- no licence, abstain
+    got = final(twins, before, main, {"#121": main}, {"rendered": False, "soft": False, "forms": {}})
+    assert [g[2] for g in got] == ["UNCHECKABLE"], got
+    # (A.2): #97's suffix match holds only once lower-cased, or beside a Z-3 doubt -- no licence, abstain
+    before = one("file_created", "Created src/README.md.", "VERIFIED", {"path": "src/README.md"})
+    main = one("file_created", "Created src/README.md.", "UNCHECKABLE", {"path": "src/README.md"})
+    listing = {"docs/readme.md": "M", "lib/src/readme.md": "A"}
+    kept = {"rendered": True, "soft": False, "forms": {"docs/readme.md": ["docs/README.md"],
+                                                         "lib/src/readme.md": ["lib/src/readme.md"]}}
+    assert [g[2] for g in final(listing, before, main, {"#97": main}, kept)] == ["UNCHECKABLE"]
+    kept["forms"]["lib/src/readme.md"] = ["lib/src/README.md"]
+    assert [g[2] for g in final(listing, before, main, {"#97": main}, kept)] == ["VERIFIED"]
+    assert [g[2] for g in final(listing, before, main, {"#97": main}, dict(kept, soft=True))] == ["UNCHECKABLE"]
 
 
 def test_x11_g_c8_compares_the_two_doors_readings_before_the_guard(scorer):
@@ -3779,7 +3836,7 @@ def test_x11_the_canaries_refuse_what_no_shelf_record_reaches(scorer, monkeypatc
     pg = scorer
     report, violating = pg.score_canaries()
     assert report["pass"] and not violating, report
-    assert report["door"]["scored"] == len(pg.DOOR_CANARIES) == 3 and report["raw_door_canaries"] == len(pg.RAW_CANARIES)
+    assert report["door"]["scored"] == len(pg.DOOR_CANARIES) == 7 and report["raw_door_canaries"] == len(pg.RAW_CANARIES)
     assert chr(0x2029) in pg.SPLIT_ONLY_BY_PYTHON
     _planted_many(pg, monkeypatch, [(good, bad)], "x11canary")
     report, violating = pg.score_canaries()
@@ -3794,3 +3851,121 @@ def test_x11_the_reference_is_provenance_and_must_be_the_baseline(scorer, monkey
     t = pg.Tally(name_prs=True)
     t.report({**prov, "reference_is_the_baseline": False, "unmodified_against_head": True})
     assert "G-C0_reference_is_not_the_baseline" in t.violations
+
+
+# ---- NOTE_path2_twelfth_pass_2026_09_29: the scorer, round 11's findings ------------------------------------------------
+
+X12_GIT_TAIL = ("        return _REF.gate_diff(summary_text, repo, base, head, run=None, strict=False, evidence=None, commit=None)\n"
+                "\n    return _guard(evaluate, reference, strict=strict, tp=tp)\n")
+X12_LICENCE = ('        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"], seen.get("licence"))\n'
+               "                                    and switched_verdict(repair, key) == main_verdict for repair in REPAIRS):")
+X12_CANARY_PLANTS = {
+    # round-11 scorer lens, blocker: the git door's guard defects, admitted in both modes at the eleventh pass
+    "PG1 the git door returns the reading unguarded": [(X12_GIT_TAIL, X12_GIT_TAIL.replace(
+        "    return _guard(evaluate, reference, strict=strict, tp=tp)\n", "    return evaluate(_ALL_ON, None)\n"))],
+    "PG1c the git door calls main's gate_diff and ignores it": [(X12_GIT_TAIL, X12_GIT_TAIL.replace(
+        "    return _guard(evaluate, reference, strict=strict, tp=tp)\n",
+        "    return _guard(evaluate, lambda: (reference(), evaluate(_ALL_ON, None))[1], strict=strict, tp=tp)\n"))],
+    "PG3 a licence without the precondition": [(X12_LICENCE, "        if main_verdict is not None and any("
+                                                             "switched_verdict(repair, key) == main_verdict for repair in REPAIRS):")],
+    "PG4 a licence without the switch": [(X12_LICENCE, X12_LICENCE.replace(
+        "\n                                    and switched_verdict(repair, key) == main_verdict for repair in REPAIRS):",
+        "\n                                    for repair in REPAIRS):"))],
+    # round-11 scorer lens, minor: reader defects that fire only on a dotted key, refused by the reading oracle (G-C7)
+    "PD2 a dotted entry satisfies any path claim": [("    if want and st != want:",
+                                                     '    if want and st != want and not p.startswith("."):')],
+    "PD3 the count adds one beside a dotfile": [(
+        '                        c.verdict = "VERIFIED" if n == len(status) else "CONTRADICTED"',
+        '                        c.verdict = "VERIFIED" if n == len(status) + any(k.startswith(".") for k in status) '
+        'else "CONTRADICTED"')],
+    # the twelfth pass's own licences, each dropped
+    "A.1 #121 licenses in any rendering": [('        if not lic.get("rendered"):\n            return False',
+                                            "        if False:\n            return False")],
+    "A.1 a rename line may name anything": [(
+        '                if pending is None or written is None or line.split(" ", 2)[2] != written[at]:',
+        "                if pending is None or written is None:")],
+    "A.1 a line no reading places is git's rendering": [(
+        "                soft.append(_Z3_UNPLACED)        # K-4: a line no reading places may name a file neither counts\n"
+        "                git_form = False",
+        "                soft.append(_Z3_UNPLACED)        # K-4: a line no reading places may name a file neither counts")],
+    "A.2 #97 licenses a match only in case": [(
+        '        if lic.get("soft") or not as_read or not all(f == claimed or f.endswith("/" + claimed) for f in as_read):',
+        '        if lic.get("soft"):')],
+    "A.2 #97 licenses beside a Z-3 doubt": [(
+        '        if lic.get("soft") or not as_read or not all(f == claimed or f.endswith("/" + claimed) for f in as_read):',
+        '        if not as_read or not all(f == claimed or f.endswith("/" + claimed) for f in as_read):')],
+}
+
+
+def test_x12_the_canaries_reach_every_guard_outcome_on_both_doors(scorer):
+    """Round-11 scorer lens, blocker: no record of either mode reached the git door's guard abstention or its K-5 reading,
+    and no abstention held a precondition, so defects only those outcomes expose were admitted. The canaries now reach
+    them in every run, and a run whose canaries reach none fails."""
+    pg = scorer
+    report, violating = pg.score_canaries()
+    assert report["pass"] and not violating, report
+    for outcome in pg.GUARD_OUTCOMES["raw"]:
+        assert report["guard"].get(outcome), (outcome, report["guard"])
+    for outcome in pg.GUARD_OUTCOMES["git"]:
+        assert report["guard_git_door"].get(outcome), (outcome, report["guard_git_door"])
+
+
+@pytest.mark.parametrize("label", sorted(X12_CANARY_PLANTS))
+def test_x12_the_canaries_refuse_a_planted_guard_or_licence_defect(scorer, monkeypatch, label):
+    """Each defect is refused by the scorer program itself -- the canaries every run of either mode scores -- not only by a
+    stub test (PG7, keeping a decided claim where main makes no claim or raises, is not among them: the two readers
+    extract the same claims, and where main raises Z-1 to Z-3 abstain every claim unless --run or --evidence is given,
+    which the scorer never passes; tests/test_diffgate_guard.py holds it on stubs)."""
+    pg = scorer
+    _planted_many(pg, monkeypatch, X12_CANARY_PLANTS[label], "x12canary")
+    report, violating = pg.score_canaries()
+    assert not report["pass"] and violating, (label, report)
+
+
+def test_x12_the_scorer_replays_mains_kind_leak(scorer):
+    """Round-11 scorer lens, minor: main's loop rebinds `kind` when V13 demotes a created or deleted claim, so a later match
+    of the same template in the sentence reads as file_touched; the scorer's replay of main's extraction must too, or
+    G-C9 flags a correct instrument (the raw canary `canary:raw-mains-kind-leak`)."""
+    pg = scorer
+    summary = "Delet\u00e9d the parser in lib/x.css and removed the file ci.yml."
+    kinds = [k for k, _s in pg.own_claim_sentences(summary)]
+    assert kinds == [c.kind for c in pg.BASE.gate_diff_text(summary, _m("lib/x.css")).claims]
+    assert kinds == [c.kind for c in dg._evaluate_text(summary, _m("lib/x.css"), dg._ALL_ON).claims]
+    assert "file_touched" in kinds
+
+
+def test_x12_the_counterfactual_lets_an_environment_failure_through(scorer, monkeypatch):
+    """Round-11 scorer lens, minor: a failure of git, the operating system or a timeout inside the counterfactual copy
+    fails the run; only what reverted code raises (main's AttributeError on K-3) reads as the copy raising."""
+    pg = scorer
+    cf = pg.Counterfactual("1 file changed.", _m("src/a.py"))
+
+    def boom(*_a, **_k):
+        raise RuntimeError("git diff: fatal: not a git repository")
+    monkeypatch.setattr(pg.CF, "_evaluate_text", boom)
+    with pytest.raises(RuntimeError):
+        cf.reading({"#97"})
+
+    def k3(*_a, **_k):
+        raise AttributeError("'NoneType' object has no attribute 'startswith'")
+    monkeypatch.setattr(pg.CF, "_evaluate_text", k3)
+    assert cf.reading({"#121"}) is None
+    assert pg.REVERTED_RAISES == (AttributeError,)
+
+
+def test_x12_the_scorer_reads_the_licence_facts_as_the_instrument_does(scorer):
+    """G-C7 holds what the instrument's licences read (git's own rendering, a Z-3 doubt, each key's paths as written) to
+    the scorer's own reading of the same, on every pinned pair and every canary."""
+    pg = scorer
+    records = [(p["id"], p["diff"]) for p in json.loads(PAIRS.read_text(encoding="utf-8"))]
+    records += [(cid, d) for cid, _s, d in pg.RAW_CANARIES + pg.DOOR_CANARIES]
+    facts = []
+    for pid, diff in records:
+        got, own = {}, {}
+        dg._diff_notes(diff, got)
+        pg.own_read(diff, own)
+        assert got == own, pid
+        facts.append(got)
+    assert len(records) > 300
+    # and both answers of each occur among them, so the comparison is not of a constant
+    assert {f["rendered"] for f in facts} == {True, False} and {f["soft"] for f in facts} == {True, False}
