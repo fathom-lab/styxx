@@ -934,7 +934,8 @@ def _pending_key(pending: "_Pending", key) -> str:
     return key(raw) if raw else ""
 
 
-def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" = None) -> tuple[dict, list, dict]:
+def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" = None,
+               facts: dict | None = None) -> tuple[dict, list, dict]:
     """Unified diff text -> (status map, added lines in order, per-file sides): the one reading W-1
     gives both parsers. An added line outside any file (no `+++` header before it) is in the blob and in
     no file's sides, exactly as before.
@@ -944,7 +945,10 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
     pair counts (Y-1); "bom" when a U+FEFF was dropped from an added line 1 that defines a test (Y-2).
     NOTE_path2_ninth_pass: and "differs" when this file list is not licensed against main's (Z-3).
     NOTE_path2_eleventh_pass: `rp`, the repairs this reading applies; with #121 switched off every path is keyed by
-    main's key."""
+    main's key.
+    NOTE_path2_twelfth_pass: `facts`, when given, is filled with what the guard's tightened licences read (A.1, A.2):
+    "rendered" (the diff is git's own rendering), "soft" (the reading holds a Z-3 doubt) and "forms" (each key's paths
+    as written, case kept)."""
     key = (rp or _ALL_ON).key
     status: dict[str, str] = {}
     added: list[str] = []
@@ -962,6 +966,12 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
     inside: set = set()                      # Z-3: the lines an exact hunk's counts read (W-1)
     soft: list = []                          # Z-3: doubts main's reading of the file list also held
     binary = False                           # K-4: inside a `GIT binary patch` block (until a blank line)
+    # NOTE_path2_twelfth_pass (A.1, A.2): git's own rendering, read as the diff is read; each key's paths, case kept
+    git_form = True                          # nothing read so far is outside git's rendering
+    headers = False                          # a `diff --git` line was read
+    written = None                           # the pending header's paths as git writes them (`_as_git_writes`)
+    minus = False                            # a `---` line was read under the pending header
+    kept: dict = {}
 
     def register(raw_path: str) -> None:
         # Y-1: the key lower-cases, so two files whose paths differ only in case are one key -- one count, one
@@ -969,6 +979,9 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
         # paths are compared by the one fold both ports carry, not by this runtime's lower-casing (the Pythons and
         # the port read 67 code points differently); every pair any supported runtime keys alike folds alike
         form = _LEADING_SLASH_SEGMENTS.sub("", raw_path.replace("\\", "/"))
+        paths = kept.setdefault(key(raw_path), [])
+        if form not in paths:
+            paths.append(form)
         if forms.setdefault(_case_fold(form), form) != form:
             found.setdefault("files", _Y1_COLLIDE)
 
@@ -1027,7 +1040,12 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
             cur = None
             loose = binary = False
             lead_old = lead_new = False
+            headers, written, minus = True, _as_git_writes(line), False
+            git_form = git_form and written is not None
         elif line.startswith("--- "):
+            if pending is None or written is None or _as_written(line[4:]) not in ("/dev/null", written[0]):
+                git_form = False                 # NOTE_path2_twelfth_pass (A.1): not a header git wrote
+            minus = True
             if loose:                            # Y-1: after lines no count placed, a header is not certain
                 if _clean_header(lines, k):
                     clean_plus, loose = k + 1, False
@@ -1040,6 +1058,9 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
             cur = None
             lead_old = lead_new = False
         elif line.startswith("+++ "):
+            if (pending is None or written is None or not minus
+                    or _as_written(line[4:]) not in ("/dev/null", written[1])):
+                git_form = False                 # NOTE_path2_twelfth_pass (A.1): not a header git wrote
             if loose and k != clean_plus:
                 found.setdefault("files", _Y1_LOOSE)
             new = line[4:].strip()
@@ -1065,7 +1086,8 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
                 cur = key(raw)
                 register(raw)
                 sides.setdefault(cur, ([], []))
-            pending = None
+            pending = written = None
+            minus = False
             # Y-2: a created file's opening added line, a deleted file's opening removed line, is line 1
             lead_new = old_path is not None and _header_shape(old_path) == "/dev/null"
             lead_old = _header_shape(new) == "/dev/null"
@@ -1104,11 +1126,18 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
                     binary = False
             elif _UNCOUNTED.match(line) and not (pending is not None and _BINARY_LINE.match(line)):
                 found.setdefault("files", _Y1_UNCOUNTED)   # Y-1: a changed file no header pair counts
+                git_form = False
             elif line == "GIT binary patch" or _BINARY_PATCH.match(line):
                 binary = True                    # K-4: its `literal N`/`delta N` blocks, each ended by a blank line
             elif not (binary or line.startswith("\\") or _GIT_META.match(line)
                       or (pending is not None and _BINARY_LINE.match(line))):
                 soft.append(_Z3_UNPLACED)        # K-4: a line no reading places may name a file neither counts
+                git_form = False
+            if line.startswith(("rename from ", "copy from ", "rename to ", "copy to ")):
+                # NOTE_path2_twelfth_pass (A.1): git names the header's own paths here, as written
+                at = 2 if line.startswith(("rename from ", "copy from ")) else 3
+                if pending is None or written is None or line.split(" ", 2)[2] != written[at]:
+                    git_form = False
             if pending is not None:
                 pending.note(line)
     flush()
@@ -1117,6 +1146,8 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
         if why:
             found["differs"] = why
         notes.update(found)
+    if facts is not None:
+        facts.update(rendered=git_form and headers, soft=bool(soft), forms=kept)
     return status, added, sides
 
 
@@ -1156,11 +1187,56 @@ def _pair_names(raw: str, key=None) -> str:
     return (key or _norm)(p[2:] if p.startswith(("a/", "b/")) else p)
 
 
-def _diff_notes(diff_text: str) -> dict:
+# NOTE_path2_twelfth_pass_2026_09_29 (A.1, A.2): what the guard's tightened licences read of a diff, beside its reading.
+#   rendered  the diff is git's own rendering: it has a `diff --git` header, every header reads both its paths, every
+#             `---`/`+++` pair read as a file header sits under a header of its own, `---` before `+++`, and names that
+#             header's files as git writes them (`a/X` or /dev/null, `b/Y` or /dev/null, cut at a TAB, quoted as the
+#             header quotes them), every `rename`/`copy` line names the header's path as written, and no line is one no
+#             reading places (K-4) or names a changed file no header counts (Y-1). Only there does #121 license: git
+#             writes a header for every changed file, empty ones included, and its `a/` and `b/` are prefixes, never
+#             directories; `difflib` and GNU `diff -uN` run per file leave an empty file out, and a plain rendering
+#             cannot tell a directory `a/` from git's prefix (round 11, R11.0 and R11.1).
+#   soft      the reading holds one of Z-3's doubts main's reading also held; #97 then licenses nothing (R11.2).
+#   forms     each key of the file list, the paths it was read from as written: backslashes as slashes, a leading run
+#             of `/` and `./` segments dropped, case kept; #97 licenses only a match on these (R11.3).
+def _case_kept(path: str) -> str:
+    """NOTE_path2_twelfth_pass (A.2): a path as #97's licence compares it -- backslashes read as slashes and a leading
+    run of `/` and `./` segments dropped, as the key drops them, and nothing lower-cased."""
+    return _LEADING_SLASH_SEGMENTS.sub("", path.replace("\\", "/"))
+
+
+def _as_git_writes(line: str):
+    """NOTE_path2_twelfth_pass (A.1): a `diff --git` header's paths as git writes them after it -- (`---` path, `+++`
+    path, `rename from` path, `rename to` path), quoted where the header quotes them -- or None where the header does
+    not read both of its paths."""
+    a, b = _header_paths(line)
+    if not (a and b):
+        return None
+    body = line[len("diff --git "):]
+    mid = len(body) // 2
+    if (len(body) % 2 == 1 and body[mid] == " " and body[:mid].startswith("a/") and body[mid + 1:].startswith("b/")
+            and body[2:mid] == body[mid + 3:]):
+        qa = qb = False                          # `_header_paths`'s same-name split: git quoted neither
+    else:
+        m = _DIFF_GIT.match(line)
+        qa, qb = m.group("qa") is not None, m.group("qb") is not None
+    x = f'"{a}"' if qa else a
+    y = f'"{b}"' if qb else b
+    return (f'"a/{a}"' if qa else "a/" + a), (f'"b/{b}"' if qb else "b/" + b), x, y
+
+
+def _as_written(header_path: str) -> str:
+    """NOTE_path2_twelfth_pass (A.1): a `---`/`+++` line's path as git wrote it, cut at the TAB git appends to a name
+    holding a space (and GNU diff before its timestamp); spaces are kept."""
+    return header_path.split("\t", 1)[0]
+
+
+def _diff_notes(diff_text: str, facts: dict | None = None) -> dict:
     """NOTE_path2_eighth_pass: what the one reading of `diff_text` cannot be sure of -- {"files": why} (Y-1),
-    {"bom": why} (Y-2), each only when it holds."""
+    {"bom": why} (Y-2), each only when it holds. NOTE_path2_twelfth_pass: `facts`, when given, receives what the
+    guard's licences read of the same reading (`_read_diff`)."""
     notes: dict = {}
-    _read_diff(diff_text, notes)
+    _read_diff(diff_text, notes, None, facts)
     return notes
 
 
@@ -2441,18 +2517,19 @@ def _evaluate_text(summary_text: str, diff_text: str, rp: "_Repairs", *, run: st
     parses the tenth pass made (`parse_unified_diff`, `parse_unified_diff_sides`, `_diff_notes`); with #121 switched
     off, one parse keyed by main's key (#97 and #101 act in `_gate`, not in the parse). `tp` shares one tests_pass
     answer between evaluations, and `observe=False` skips the never-read observer (it touches no verdict)."""
+    facts: dict = {}                       # NOTE_path2_twelfth_pass: what the licences read (`_read_diff`)
     if rp.on("#121"):
         status, added_blob = parse_unified_diff(diff_text)
-        sides, notes = parse_unified_diff_sides(diff_text or ""), _diff_notes(diff_text or "")
+        sides, notes = parse_unified_diff_sides(diff_text or ""), _diff_notes(diff_text or "", facts)
     else:
         notes = {}
-        status, added, sides = _read_diff(diff_text or "", notes, rp)
+        status, added, sides = _read_diff(diff_text or "", notes, rp, facts)
         added_blob = "\n".join(added)
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base="(diff-text)", head="(diff-text)",
                  evidence=evidence, commit=commit,
                  raw_input_len=len(diff_text or ""), main=_main_reading(diff_text or ""),
-                 sides=sides, notes=notes, rp=rp, tp=tp, observe=observe, out=out)
+                 sides=sides, notes=notes, rp=rp, tp=tp, observe=observe, out=out, licence=facts)
 
 
 def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
@@ -2500,27 +2577,35 @@ def _evaluate_git(summary_text: str, name_status: str, diff_text: str, rp: "_Rep
     is run once, by `gate_diff`, however many evaluations read its bytes."""
     status: dict[str, str] = {}
     paths: list = []
+    kept: dict = {}                             # NOTE_path2_twelfth_pass (A.2): each key's paths as git wrote them
     for line in _diff_lines(name_status):                  # NOTE_path2_fourth_pass F-2
         parts = line.split("\t")
         if len(parts) >= 2:
             st, path = parts[0][:1], parts[-1]
             status[rp.key(path)] = st           # A / M / D / R
             paths.append(path)
+            forms = kept.setdefault(rp.key(path), [])
+            if _case_kept(path) not in forms:
+                forms.append(_case_kept(path))
     # NOTE_path2_sixth_pass W-1: the added blob and the sides are the one hunk-aware reading of git's
     # bytes. The status stays git's own `--name-status`, which is not a reading of the diff text.
     added_blob = parse_unified_diff(diff_text)[1]
     # NOTE_path2_eighth_pass: the file list here is git's own, so the only thing it can be unsure of is two paths
     # the key reads as one (they differ only in case, Y-1); a U+FEFF dropped from a test at line 1 is the parse's (Y-2).
-    parsed, listed = _diff_notes(diff_text), _status_notes(paths)
+    facts: dict = {}
+    parsed, listed = _diff_notes(diff_text, facts), _status_notes(paths)
     # NOTE_path2_ninth_pass (Z-3): main keyed the same `--name-status` lines with str.splitlines() and its `_norm`.
     main_map = _main_name_status(name_status)
     notes = {k: v for k, v in (("files", listed.get("files")), ("bom", parsed.get("bom")),
                                ("differs", _status_differs(main_map, status))) if v}
     sides = parse_unified_diff_sides(diff_text) if rp.on("#121") else _read_diff(diff_text, None, rp)[2]
+    # NOTE_path2_twelfth_pass (A.1, A.2): git's diff text read for its rendering; the file list is `--name-status`, read
+    # under none of Z-3's doubts, and its paths are the forms #97 compares
+    licence = {"rendered": bool(facts.get("rendered")), "soft": False, "forms": kept}
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base=base, head=head, main=_MainReading(diff_text, (main_map,)),
                  evidence=evidence, commit=commit,
-                 sides=sides, notes=notes, rp=rp, tp=tp, observe=observe, out=out)
+                 sides=sides, notes=notes, rp=rp, tp=tp, observe=observe, out=out, licence=licence)
 
 
 def _find_path(status: dict, claimed: str):
@@ -2672,16 +2757,20 @@ def _definition_paired(name: str, sides, status) -> bool:
     return False
 
 
-def _precondition(repair: str, c, status: dict, sides) -> bool:
+def _precondition(repair: str, c, status: dict, sides, licence: dict | None = None) -> bool:
     """Whether `repair`'s own precondition holds on claim `c`, read on this reading with every repair on (`status`,
-    `sides`). NOTE_path2_eleventh_pass, A.3:
+    `sides`, and `licence`, what `_read_diff` or the git door read for the licences). NOTE_path2_eleventh_pass, A.3:
       #97   a path claim that the tiered resolution resolved by the exact or the suffix tier, where main's loop over the
             same file list takes another entry;
       #121  a key the claim reads keeps a leading dot: a key of the file list or of the sides, the claimed path's key,
             or an only_touches prefix's key;
       #101  a removed definition of the same name in the same file was paired: for tests_added the pairing paired a
-            test, for symbol_added some file that is not created adds and removes a definition of the claimed name."""
+            test, for symbol_added some file that is not created adds and removes a definition of the claimed name.
+    NOTE_path2_twelfth_pass, tightened (A.1, A.2): #97's exact or suffix match must hold on the paths as written, case
+    kept (`_case_kept`), and #97 licenses nothing in a reading holding a Z-3 doubt; #121 licenses only where the diff is
+    git's own rendering. With no `licence` read, neither licenses."""
     d = c.detail or {}
+    lic = licence or {}
     if repair == "#97":
         if c.kind not in _PATH_KINDS or "path" not in d:
             return False
@@ -2689,8 +2778,14 @@ def _precondition(repair: str, c, status: dict, sides) -> bool:
         p, _st = _find_path(status, d["path"])
         if p is None or not (p == key or p.endswith("/" + key)):
             return False
+        claimed = _case_kept(d["path"])
+        as_read = (lic.get("forms") or {}).get(p) or []
+        if lic.get("soft") or not as_read or not all(f == claimed or f.endswith("/" + claimed) for f in as_read):
+            return False                         # NOTE_path2_twelfth_pass (A.2): a Z-3 doubt, or a match only in case
         return _earliest_match(status, d["path"])[0] != p
     if repair == "#121":
+        if not lic.get("rendered"):
+            return False                         # NOTE_path2_twelfth_pass (A.1): not git's own rendering
         own = [d[k] for k in ("path", "prefix", "prefix2") if isinstance(d.get(k), str)]
         return (any(_dotted(k) for k in status) or any(_dotted(k) for k in (sides or {}))
                 or any(_dotted(_norm(x)) for x in own))
@@ -2745,7 +2840,7 @@ def _guard(evaluate, reference, *, strict: bool, tp: list) -> DiffGate:
         if main_verdict == c.verdict:
             final.append(c)
             continue
-        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"])
+        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"], seen.get("licence"))
                                     and switched_verdict(repair, key) == main_verdict for repair in REPAIRS):
             final.append(c)                              # licensed by a named repair on its own precondition
             continue
@@ -2833,11 +2928,12 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
           raw_input_len: int | None = None, sides: dict | None = None,
           notes: dict | None = None, main: "_MainReading | None" = None,
           rp: "_Repairs | None" = None, tp: list | None = None, observe: bool = True,
-          out: dict | None = None, _declared: bool = False) -> DiffGate:
+          out: dict | None = None, _declared: bool = False, licence: dict | None = None) -> DiffGate:
     # NOTE_path2_eleventh_pass: `rp`, the repairs this reading applies (the switches); `tp`, one tests_pass answer shared
     # by every evaluation of one gate call, so a --run command runs once; `observe=False` skips the never-read observer;
     # `out`, when given, receives what the guard reads besides the claims: the file list and the sides the
     # preconditions read, and for each claim whether its sentence is one the two ports may read apart (K-5).
+    # NOTE_path2_twelfth_pass: `licence`, what the tightened licences read of the diff (A.1, A.2), handed to `out` as is.
     rp = rp or _ALL_ON
     flags: list = []
 
@@ -3213,7 +3309,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     except Exception:
         unparsed = []
     if out is not None:
-        out.update(status=status, sides=sides, apart=flags)
+        out.update(status=status, sides=sides, apart=flags, licence=licence)
     return DiffGate(verdict=verdict, base=base, head=head, claims=claims,
                     measured=not no_evidence, why_unmeasured=no_evidence or "",
                     uncovered_sentences=len(uncovered_texts),
