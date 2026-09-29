@@ -157,8 +157,9 @@ Action that checks an agent's completion claim against its file changes.
 measures its own detectors' recall on planted cheats (self-reported). [backcheck](https://github.com/VectorInstitute/backcheck)
 (Vector Institute, 2026-08-04) binds a "tests pass" claim to the run it names, which this gate
 cannot. The other instruments have neighbours too: DeerFlow marks a report with action claims and
-no receipt citations UNVERIFIED (added in revision 2 of RFC #4651, merged in #5076 on 2026-08-29),
-three days before sworn's `UNSWORN`; NabaOS (2026-03-09) and readback (2026-09-13) had
+no receipt citations UNVERIFIED (added in revision 2 of RFC #4651, published in the RFC thread by
+2026-08-04 and merged in #5076 on 2026-08-29), about four weeks before sworn's `UNSWORN` as written
+in the RFC and three days before it as merged code; NabaOS (2026-03-09) and readback (2026-09-13) had
 declared claim blocks before DECLARE-1; Proof-Carrying Agent Actions (2026-06-02) told a moved
 checker from a moved result before charon. Every neighbour, with dates and the sentences of ours
 each one corrects, is in

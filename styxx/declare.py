@@ -40,7 +40,7 @@ neighbours' own; the record is papers/closed-model-frontier/NOTE_prior_art_credi
 NabaOS tool receipts (Abhinaba Basu, arXiv 2603.10060, 2026-03-09) have the model tag each claim
 with its evidence source and check count and absence claims against a runtime-signed record.
 DeerFlow's receipt citations (bytedance/deer-flow RFC #4651, the UNVERIFIED rule added in its
-revision 2, date of the edit not recorded; merged in #5076 2026-08-29) render any uncited claim
+revision 2, published in the RFC thread by 2026-08-04; merged in #5076 2026-08-29) render any uncited claim
 UNVERIFIED. readback (Josh Duffy,
 2026-09-13) reads a fenced JSON claim block and returns verified / contradicted / indeterminate,
 five days before this file. commitlint-scope (thumbrise, 2026-05-25) checks changed paths against

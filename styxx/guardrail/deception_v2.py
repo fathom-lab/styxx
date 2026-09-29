@@ -20,7 +20,8 @@ it. v2 is the upgrade that addresses v0's documented "single-source
 corpus" failure mode by scoring the response against a *correct
 reference* instead of against a calibrated bag of lexical features.
 
-See `.styxx/DECEPTION_V2_BREAKTHROUGH_2026_05_10.md` and
+See `.styxx/DECEPTION_V2_BREAKTHROUGH_2026_05_10.md` (a local lab file; the name is
+historical and makes no claim) and
 `.styxx/DECEPTION_V1_FINDING_2026_05_10.md` for the full evidence trail.
 ============================================================================
 

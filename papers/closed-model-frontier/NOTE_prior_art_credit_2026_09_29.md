@@ -27,7 +27,7 @@ release notes and evidence-directory names; its commit history was not audited.
 | **AgentLiar**, Daksh Jain (MIT per its README; the GitHub API finds no licence file) | Takes a task description, an agent's completion claim (a JSON object with free-text summary and details plus structured files_modified / tests_added / tests_passed fields) and its file changes; runs a file check, a test-quality check (assertion-free tests), a scope-narrowing check ("only", "for now") and an optional LLM judge; one 0-100 score per PR; CLI, Python, GitHub Action, HTTP API. No accuracy published. | repository 2026-05-20 | about ten weeks before diffgate, as a checker of an agent's completion claim against its changes | https://github.com/dakshjain-1616/AgentLiar |
 | **PR-MCI**, Jingzhi Gong, Giovanni Pinna, Yixin Bian, Jie M. Zhang (MSR '26 Mining Challenge) | Message-code inconsistency on 23,247 AIDev agent PRs; 406 (1.7%) highly inconsistent, 45.4% of them descriptions claiming unimplemented changes; accepted 28.3% vs 80.0%, merged in 55.8 h vs 16.0 h. 974 hand-annotated PRs (a 600-PR validation sample, κ 0.892, plus 374 high-inconsistency PRs). A heuristic similarity detector at P 0.742, R 0.548, F1 0.630 on the 600, in the replication repository `gjz78910/PR-MCI` (no licence per the GitHub API). | arXiv v1 2026-01-08 | about seven months before diffgate; they measured the phenomenon on AIDev before this lab did | https://arxiv.org/abs/2601.04886 |
 | **backcheck**, Vector Institute (Apache-2.0) | Reads a coding-agent transcript, extracts the closing claims (tests pass, lint, build, commits, files written) and checks each against the tool-execution records in the same transcript; no model in the verdict path; supported / inconclusive / contradicted / unsupported / *qualified*. Reports 36 of 36 "tests pass" claims agreeing with an independent scan over 81 sessions. | repository 2026-08-04 | three days after diffgate; ahead of it on binding a test claim to the run it names | https://github.com/VectorInstitute/backcheck |
-| **DeerFlow tool receipts**, bytedance/deer-flow (MIT) | The runtime stamps each tool result (name, status, argument and output sha256, bytes, time); the model never writes it. Report claims cite `[rN]`; an uncited claim is UNVERIFIED. Layer 2 anchors `tests_passed:<command>` to the recorded exit status. | RFC #4651 opened 2026-08-03 (the no-citation UNVERIFIED rule and the `tests_passed` binding were added in its revision 2, after reviews of 2026-08-03/04; the date of that edit is not recorded); receipts #4659 merged 2026-08-23; citation verification #5076 merged 2026-08-29; checklist #5109 merged 2026-09-01 | the RFC opened two days after diffgate; citation verification merged about three weeks before DECLARE-1 | https://github.com/bytedance/deer-flow/issues/4651 |
+| **DeerFlow tool receipts**, bytedance/deer-flow (MIT) | The runtime stamps each tool result (name, status, argument and output sha256, bytes, time); the model never writes it. Report claims cite `[rN]`; an uncited claim is UNVERIFIED. Layer 2 anchors `tests_passed:<command>` to the recorded exit status. | RFC #4651 opened 2026-08-03 (the no-citation UNVERIFIED rule and the `tests_passed` binding were added in its revision 2, after reviews of 2026-08-03/04, and were published in the RFC thread by 2026-08-04: its mirror comment carrying revision 2 was last edited 2026-08-04T08:59Z); receipts #4659 merged 2026-08-23; citation verification #5076 merged 2026-08-29; checklist #5109 merged 2026-09-01 | the RFC opened two days after diffgate; citation verification merged about three weeks before DECLARE-1 | https://github.com/bytedance/deer-flow/issues/4651 |
 | **NabaOS tool receipts**, Abhinaba Basu | HMAC-signed per-call receipts; the model tags each claim by its evidence source; count and absence claims checked against result counts; 1,800 synthetic scenarios; self-tag compliance about 92% (Claude). Code promised, URL withheld for anonymous review. | arXiv 2026-03-09 | before diffgate and DECLARE-1 | https://arxiv.org/abs/2603.10060 |
 | **readback**, Josh Duffy (MIT) | An agent declares claims as JSON in a `readback-claims` fenced block; six types; verified / contradicted / indeterminate; no LLM; exit 2 when nothing could be checked or no usable claims. | repository 2026-09-13 | five days before DECLARE-1, with the same three-verdict shape | https://github.com/joshduffy/readback |
 | **AgentLTL**, Laila Elkoussy, Julien Perez (EPITA) | Temporal-logic (LTL) properties over tool-call traces, scored without a judge; a grounding predicate requires final-answer entities to appear in tool outputs. | arXiv 2026-07-01 | before diffgate | https://arxiv.org/abs/2607.02599 |
@@ -80,8 +80,8 @@ diffs" part, not the free-form-claim part. backcheck (2026-08-04) adjudicates th
 of a session, a retrospective report, against tool records the claimant did not write,
 deterministically, though where the agent works rather than in CI. DeerFlow renders a report with
 action claims and no receipt citations UNVERIFIED against runtime-stamped receipts the model never
-writes (a rule added in revision 2 of RFC #4651, date of the edit not recorded; merged in #5076 on
-2026-08-29, three days before this PREREG). **Reading from today:** withdrawn as a
+writes (a rule added in revision 2 of RFC #4651, published in the RFC thread by 2026-08-04, four weeks
+before this PREREG; merged in #5076 on 2026-08-29, three days before it). **Reading from today:** withdrawn as a
 priority sentence. What is left after every neighbour is named is at most a residual, and it may
 not carry any sentence until the frozen survey the landscape asks for prices it (candidates:
 Swarm Orchestrator, AgentLiar, DOCER, backcheck, readback, DeerFlow, NabaOS, AgentLTL,
@@ -91,7 +91,7 @@ agent-claim-verifier, PR-MCI, Qodo).
 attestation the claimant did not author."* backcheck verifies a "tests pass" sentence against the
 transcript's own tool-execution record (2026-08-04). DeerFlow's layer 2 anchors
 `tests_passed:<command>` to the recorded exit status (a binding added in revision 2 of RFC #4651,
-date of the edit not recorded; merged 2026-09-01, the day of this PREREG). **Reading from today:** others verify that sentence against a run record the
+published in the RFC thread by 2026-08-04; merged 2026-09-01, the day of this PREREG). **Reading from today:** others verify that sentence against a run record the
 claimant did not write, and on this class they are ahead of diffgate, whose accusing `tests_pass`
 branch was deleted (`5e225b49`).
 
@@ -211,7 +211,7 @@ turn it on themselves; the scale comparison is unmeasured and may not be said.
 Neither document makes a priority claim, and neither credits the neighbours that declared claims
 earlier. They are: NabaOS (2026-03-09: claims tagged by evidence source, checked against signed
 receipts, with a measured self-tag compliance DECLARE-1 does not have); DeerFlow's receipt
-citations (RFC #4651, its UNVERIFIED rule added in revision 2, date of the edit not recorded;
+citations (RFC #4651, its UNVERIFIED rule added in revision 2, published in the RFC thread by 2026-08-04;
 merged in #5076 2026-08-29); Swarm Orchestrator's declared-file-set check
 (evidence dated 2026-08-18); readback (2026-09-13, a fenced claim block and the same three
 verdicts, five days earlier); commitlint-scope (2026-05-25, a declared scope against changed

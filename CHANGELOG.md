@@ -16,8 +16,8 @@ ones, about seven months before the diff gate existed. AgentLiar (Daksh Jain, 20
 GitHub Action checking an agent's completion claim against its file changes about ten weeks before
 it, and Swarm Orchestrator (Brad Kinnard, v10.0.0, 2026-05-23, self-reported) gated AI-written pull
 requests on their diffs with a hash-chained ledger. DeerFlow rendered a report with action claims
-and no receipt citations UNVERIFIED (RFC #4651 revision 2, date of the edit not recorded; merged in
-#5076 2026-08-29) before sworn's `UNSWORN`, and Proof-Carrying Agent Actions
+and no receipt citations UNVERIFIED (RFC #4651 revision 2, published in the RFC thread by
+2026-08-04; merged in #5076 2026-08-29) before sworn's `UNSWORN`, and Proof-Carrying Agent Actions
 (2026-06-02) told a moved checker from a moved result before charon. The operator approved these
 corrections on 2026-09-29. The synthesis was single agents through a summarising web reader, with
 no frozen procedure and no human review, so everything here corrects toward less. No frozen
@@ -46,6 +46,9 @@ two comments in `styxx/__init__.py` ("the first drop-in cognitive vitals monitor
 dynamical-systems model", "first reward calibrated"), `styxx/dynamics.py` ("the first cognitive
 dynamics model in the field", and the field having no state variable), `styxx/reward.py`,
 `styxx/sae.py`, `styxx/d_axis.py`, `styxx/cognometrics.py` (an interpretation string),
+`styxx/critique.py` ("the first method to PASS" the gauntlet's v3 bars) and
+`styxx/attack/universal_suffixes_v0.json` ("the first cognometric universal adversarial
+perturbation", an interpretation string; both found by the 2026-09-29 audit),
 `styxx/guardrail/__init__.py` ("first text-only detector to beat" a baseline),
 `styxx/guardrail/calibrated_weights_sycophancy_v0.py` (its `prior_art_context`),
 `styxx/verify.py` ("the problem AI has never been able to solve since Turing"), `styxx/ladder.py`
