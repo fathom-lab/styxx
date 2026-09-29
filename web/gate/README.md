@@ -174,7 +174,122 @@ The corpus needed them. Before PATH-1 added these, `corpus_real.json` carried ex
 what changed is not evidence, and the honest py/js comparison for PATH-1 was run separately over
 the 604-row BENCH corpus (297 `only_touches` readings, 0 disagreements).
 
-Result, 2026-09-29, this branch after the twelfth pass (`NOTE_path2_twelfth_pass_2026_09_29`), merged with `main` at
+Result, 2026-09-29, this branch after the thirteenth pass (`NOTE_path2_thirteenth_pass_2026_09_29`), merged with `main`
+at `a4732c52` (whose `styxx/diffgate.py` is the one at `98a5c368`):
+
+    3565 pairs, 7584 claims (659 verified, 1613 contradicted, 5312 uncheckable) — 0 disagreement(s)
+    389 pinned pairs, 0 disagreement(s)
+
+The 36 pairs this pass adds are round 12's 34 reproductions (`path2:m-r12-*`, the raw renderings of
+`tests/fixtures/path2_round12_repros.json`) and section D's two (`path2:m-13-*`). Against the twelfth pass, no claim of
+the 3,529 earlier pairs moves; 34 claims of the new pairs that the twelfth pass decided abstain here.
+
+**The thirteenth pass** (the note, sections A to D). Round 12's review judged the branch against truth with git's `T`
+letter and file modes, which the round-11 truth model could not express, and read 294 claim-door cells worse than
+`main` on the raw door and 294 in the port, under each Python, and none at the git door. 293 were typechanges: git
+writes a file turned symlink (or submodule, or an empty file turned symlink, an executable turned symlink) as a deletion
+section then a creation section for one path, the reading keeps one status for both, and #97's exact tier or #121's
+dotted key licensed a false VERIFIED on it. One was a name ending in whitespace in `difflib`'s rendering, where
+`strip()` drops the space and no Z-3 doubt is read. CI was red on one test: the runner's Node reads Unicode 17.0 and
+lower-cases 28 code points the fold (Unicode 16.0.0) does not know. So:
+- #97 and #121 license no path claim whose resolved entry is a key more than one file section registers; at the git
+  door, none whose `--name-status` letter is `T` or whose section shows a mode change (inert for a verdict at the git
+  door, where a `T` or a mode-changed `M` never equals `A` or `D`; G-C7 compares the facts).
+- The forms a licence compares are each `---`/`+++` path as written, cut only at git's terminating TAB (the one TAB, at
+  the end, after a name holding a space) or GNU's (the one TAB, its timestamp right after it), never stripped.
+- A header path holding a code point Unicode 16.0.0 does not assign makes the file list unsure in both ports (Y-1's
+  note, and Z-3's when only `main`'s reading keys it). The fold is sound on paths of assigned code points wherever a
+  runtime lower-cases them as 16.0.0 does, and `test_x10_k2_*` check that premise on whatever runtime runs them.
+- `98f74833`'s tier-kept #121 path licence is recorded in the note as a protocol change (section B).
+
+**What is measured, and how** (as in the twelfth pass: the regression differential is judged against truth; the
+guarantee harness is self-consistency; the property test is the scorer's rules asked about the module's verdicts).
+The truth model the committed tests use now reads a mode per path and git's `T` letter
+(`tests/test_diffgate_guard.py`, `_truth_status`), and the fast-import builder writes each mode. Round 12's 34
+reproductions are judged by it on the raw door, in the port and at the git door; the same check refuses the
+twelfth-pass instrument (`0f559a87`) on 30 of them, every typechange under git's default `diff.submodule` and every
+whitespace name.
+
+The regression differential of this pass used round 12's reviewer's harness (its builder writes `100755`, `120000` and
+`160000` entries), with its truth model extended to letter a type change `T`, `origin/main` `a4732c52` against this
+branch, three doors, Python 3.12.10 and 3.14.2, Node 24.13.0. It ran 10 sets, 31,874 cases, every one at a fresh seed or
+a round-12 record:
+- 10,000 from round 12's reviewer's typechange generator: 6,000 under git's default `diff.submodule`, 4,000 under
+  `diff.submodule=log` (19,837 `T` entries, 6,126 cases holding a gitlink, 2,698 a mode change, 7,629 a symlink
+  section);
+- 5,000 from a generator of this pass for names ending (or opening) in whitespace (a space, a TAB, NBSP, U+3000, two
+  spaces, a space and a TAB) beside earlier basename twins and dotfile twins, in every rendering: git's bytes, `-U0`,
+  CRLF, GNU, `--no-prefix`, mnemonic prefixes, a mailbox, `difflib` with and without `a/` `b/`, `difflib` with dates,
+  per-file GNU `diff -uN`;
+- 2,000 copies and renames under `diff.renames=copies` (1,817 `C` and 1,159 `R` entries), and 1,500 paths holding code
+  points Unicode 16.0.0 does not assign beside assigned non-ASCII paths (git with `core.quotePath` off, and `difflib`);
+- 5,000 from the twelfth pass's generator (case twins, dotfile twins, `a/` and `b/` directories under `--no-prefix`,
+  empty files `difflib` leaves out), 3,000 from round 11's, 3,000 and 2,000 from the builders' earlier ones;
+- round 12's 340 worse records and this pass's 34 reproductions.
+
+Under Python 3.12 (173,242 raw-door, 118,393 git-door and 173,457 port cells) and 3.14 (173,045, 118,342, 173,457) it
+reads:
+- **0 claims worse than on `main`, judged against truth**, on the raw door, the git door and the port;
+- **0 new Python/port disagreements on the same input**, in verdict or in reason;
+- no raise that `main` does not have (`main` raises on 4 raw-door and 16 port cases the branch reads).
+
+Round 12's 340 worse records read none worse. Where the truth model's readings disagree (a suffix reading against an
+exact one, a rename counted as one file or two), 241 raw-door, 241 port and 496 git-door cells move to a verdict;
+the differential judges none of them. 9 cases of gen10's set carry no truth (git's list and the model disagree) and are
+left out of the judgement.
+
+The git door reads the repository and the port reads the text, so the two can differ on the same case. Where `main`'s
+two doors agreed:
+- 82 cells carry opposite verdicts, 76 on texts rewritten with mnemonic prefixes, 4 with `--no-prefix` and 2 as GNU
+  diffs, each with the port's verdict the wrong one by truth (the git door reads git's `--name-status`);
+- in 19,726 cells the port abstains where the git door decides, and in 304 the reverse.
+
+The cost is recall. On the differential corpus `main` decides 2,749 claims and this branch abstains on 493 of them
+(on the 3,529 pairs the twelfth pass measured, 486 of 2,726, as it measured). Over the regression sets' raw door under
+3.12 (173,242 claims), this pass abstains on 4,934 claims the twelfth pass decided:
+- 774 of them false by truth where `main`'s were not: the regressions this pass removes (the typechanges, the
+  whitespace names);
+- 4,037 right and 123 undecided by the harness; 4,016 of the right ones and 117 of the undecided are in the set built
+  around code points Unicode 16.0.0 does not assign, where every file-list and path claim now abstains;
+- by kind, `files_changed_count` 2,760, `only_touches` 1,050, `file_created` 701, `file_deleted` 229 and `file_touched`
+  194.
+
+It decides no claim the twelfth pass left UNCHECKABLE, and changes no decided verdict. Against `main` on the same
+claims, the branch abstains on 49,794 of the 134,273 `main` decides: 29,708 where `main` was right, 12,000 where it was
+wrong, 8,086 undecided.
+
+`path2_gates.py differential` at the thirteenth pass ran from a clean tree at `32fbddac`. It exits 0: every gate passes,
+no violation, and the provenance records the guard's reference as the baseline, byte for byte.
+- **Moves.** 487 records moved, three of them records the baseline raises on; 11 new accusations
+  (`files_changed_count` 7 and `only_touches` 4), each admitted.
+- **G-C9** (the guard, the scorer's own, with this pass's licences written out): on the raw door 10 claims licensed by
+  #97, 32 by #121 and 66 abstained by the guard; at the git door 13 by #97, 35 by #121 and 13 abstained.
+- **G-C7**: 0 oracle violations, the git door's licence facts (what `_evaluate_git` hands its guard) now among them.
+- **G-C8**: every one of the 3,565 records tried; 1,176 rebuilt and scored through `gate_diff` (60 holding a dotted
+  path), 2,389 not rebuildable faithfully, 368 scored again with rename detection on (2 renames detected).
+- **The canaries** (31 records: 13 door canaries and 18 raw-door canaries): 0 violations. They reach, on each door,
+  K-5, an abstention and a licensed outcome of #97 and of #121, and on the raw door an abstention whose precondition
+  held without its switch; a run whose canaries miss any of them fails.
+- Scorer `3ec3d7f0…`, harness `75bfbc39…`, repaired `diffgate.py` `c3eed72e…`, reference and baseline `9b620e00…`
+  (`98a5c368`).
+
+**Planted defects**, each committed in `X12_CANARY_PLANTS` and refused by the scorer program through the canaries that
+every run of either mode scores: a licence read off all three repairs reverted together (round 12's PA), `98f74833`'s
+tier-kept licence dropped (PK), the git door's forms lower-cased (PF), the git door's reference read off `main`'s raw
+door (PG1b), #97 or #121 licensing on a key two sections register, the reader counting no section twice, the forms
+stripped, every TAB cutting a name, and the unassigned-code-point doubt dropped from the reader, the git door or Z-3's
+check of `main`'s paths. The git door's `T` and mode rule dropped moves no verdict; the committed test of the git
+door's licence facts on a real typechange repository refuses it. In the port, `check_pairs.js` refuses the same rules
+dropped (the multi-section key in either licence and in the reader, the forms, the TAB, the doubt in the reader and in
+Z-3's check).
+
+**Not closed, and stated.** A name holding a TAB followed by other characters, printed by a tool that neither quotes it
+nor appends a timestamp (Python's `difflib` with no date), is read as GNU's timestamp after a name. Under Python 3.14
+(Unicode 16.0), `tests/test_diffgate_path2.py::test_x1_the_characters_the_runtimes_disagree_on_read_alike_in_both_ports`
+reads one reason apart between the Python and the port (a symbol claim meeting U+1C89, UNCHECKABLE in both); the
+twelfth-pass instrument reads it so too, CI runs 3.9 to 3.12, and it is filed as a follow-up.
+
+Result at the twelfth pass (`NOTE_path2_twelfth_pass_2026_09_29`), kept as it was measured, merged with `main` at
 `2a6ce0a3` (whose `styxx/diffgate.py` is the one at `98a5c368`):
 
     3529 pairs, 7519 claims (649 verified, 1607 contradicted, 5263 uncheckable) — 0 disagreement(s)
