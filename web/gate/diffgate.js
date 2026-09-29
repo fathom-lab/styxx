@@ -11,12 +11,13 @@
  * AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
  * NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25,
  * NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27, NOTE_path2_ninth_pass_2026_09_27,
- * NOTE_path2_tenth_pass_2026_09_28, NOTE_path2_eleventh_pass_2026_09_28 and NOTE_path2_twelfth_pass_2026_09_29) on the
- * file that carries them, sha256
- * ede86d7b13136344039e1fbf91f7653a39768e344e3687f3baecb5c2df2b9c75 — the styxx/diffgate.py this
+ * NOTE_path2_tenth_pass_2026_09_28, NOTE_path2_eleventh_pass_2026_09_28, NOTE_path2_twelfth_pass_2026_09_29 and
+ * NOTE_path2_thirteenth_pass_2026_09_29) on the file that carries them, sha256
+ * c3eed72edfdf2ea8cf11667e42d47259964340b87d26b7fd56f5358a60012ac3 — the styxx/diffgate.py this
  * branch would put on main, with the name table styxx/_xid.py carries (Unicode 15.0.0, table sha256
  * 8df68f21…, and the skew set beside it, 0b7134fd…, copied below) and the case fold styxx/_fold.py carries
- * (Unicode 16.0.0, sha256 a52cda82…, copied below); the 7.48.0 release carries main's file
+ * (Unicode 16.0.0, sha256 a52cda82…, and beside it the set of code points 16.0.0 assigns, 56a413eb…, copied
+ * below); the 7.48.0 release carries main's file
  * (9b620e00…), without the PATH-2 repairs. Relative to the 7.47.0 wheel the port
  * was first cut from, that file carries: the V14 repairs (containment demotes "touched" claims too;
  * a bare basename absent from the diff abstains), the BC-2 repairs for issue #110 (the def-counting
@@ -70,7 +71,11 @@
  * pair and rename lines naming that header's paths, no line no reading places), and on a path claim only where the
  * entry resolved matches the claim, case kept, by its tier; #97 only on a case-kept exact or suffix match, and never in
  * a reading holding a Z-3 doubt. `gateDiffText` finds its reference before the guard runs, so a page without
- * diffgate_ref.js throws instead of reading main as raising. Two
+ * diffgate_ref.js throws instead of reading main as raising. The thirteenth pass: neither licence holds on a path
+ * claim whose entry more than one file section registers (git writes a typechange as a deletion then a creation for one
+ * path), the forms a licence compares are the header paths as written, cut only at git's or GNU's TAB and never
+ * stripped, and a header path holding a code point Unicode 16.0.0 does not assign makes the file list unsure (a
+ * runtime on a newer Unicode may lower-case it beyond the fold). Two
  * deliberate gaps remain: the structural "unparsed claims"
  * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
  * pass" is always UNCHECKABLE, exactly as the CLI without --run.
