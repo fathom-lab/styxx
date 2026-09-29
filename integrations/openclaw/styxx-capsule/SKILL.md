@@ -40,8 +40,9 @@ python -m styxx.diffgate /tmp/summary.md --repo . --base origin/main --head HEAD
 
 ## 2. Seal the handoff into a capsule
 
-When the gate passes, export the diff and mint the portable proof — one
-self-verifying HTML file:
+When the gate passes, export the diff and mint the portable record — one
+HTML file that carries its bytes and a checker for them (Swarm Orchestrator's
+run bundles carried their own verifier earlier, with evidence dated 2026-08-18):
 
 ```bash
 git diff origin/main..HEAD > /tmp/change.diff

@@ -84,8 +84,8 @@ def main() -> None:
     print("the artifact: each line is a (chosen, rejected) preference pair")
     print("ready for cogn-RLHF DPO training. mechanism: inverse cognometry")
     print("appended a 1-3 token suffix that spiked sycophancy on each balanced")
-    print("response. nobody else can build this because nobody else has both")
-    print("forward and inverse cognometry shipped.")
+    print("response. it uses styxx's forward and inverse cognometry together;")
+    print("whether others can build the same was never surveyed.")
 
 
 if __name__ == "__main__":

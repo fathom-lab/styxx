@@ -6,8 +6,9 @@ styxx.dashboard — the live cognitive display.
     [styxx] cognitive display at http://localhost:9800
     [styxx] watching ~/.styxx/chart.jsonl
 
-Nobody has visualized AI cognitive state in real-time before. The
-visual language doesn't exist yet. This is the first implementation.
+A live view of the cognitive-state stream this package records. (The
+earlier text here claimed priority for it; that was never surveyed and
+was withdrawn on 2026-09-29, papers/NOTE_prior_art_credit_2026_09_29.md.)
 
 Three displays, one page:
 

@@ -9,19 +9,20 @@
 
 ## 1. The thesis
 
-The field of large language models treats inference as an **open-loop**
-process. A prompt goes in, a generation comes out, and there is no
-measurable state variable that an external agent can use to predict,
-control, or counterfactually reason about what is happening inside.
+This primer treats inference as a process with a measurable state
+variable that an external agent can use to predict, and possibly
+control, what a generation does next.
 
-This is not because LLMs are inherently unobservable. It is because
-nobody has had a calibrated, cross-architecture, real-time readout of
-cognitive state. Every other interpretability technique — SAE
-features, attention patterns, residual stream probes, embedding
-similarity — is **model-specific** and dies the moment you swap the
-model.
+Earlier text here said the field had no such variable, that nobody had
+had a calibrated, cross-architecture, real-time readout of cognitive
+state, and that every other interpretability technique dies the moment
+you swap the model. None of that was surveyed, and it was withdrawn on
+2026-09-29 (`papers/NOTE_prior_art_credit_2026_09_29.md`):
+representation engineering (Zou et al., 2023) read and steered a
+model's internal state during generation before this primer existed,
+and whether other cross-model readouts exist was never checked.
 
-Fathom changed that with the atlas v0.3 calibration: a 6-dimensional
+Fathom's attempt is the atlas v0.3 calibration: a 6-dimensional
 projection of cognitive state into a substrate-independent eigenvalue
 space, validated cross-model on 12 open-weight models from 3
 architecture families. The styxx 3.0.0a1 release lifted that

@@ -3,7 +3,7 @@
 styxx.analytics - audit log aggregation + identity primitives.
 
 This module is the power-up layer that turns the raw chart.jsonl
-audit log into agent-facing primitives nobody else has shipped:
+audit log into agent-facing primitives:
 
     ─── stats ──────────────────────────────────────────────────
     styxx.load_audit(last_n=...)         read recent entries
@@ -28,12 +28,12 @@ no side effects, no network calls. Safe to run in a tight loop, safe
 to run from a callback, safe to call from anywhere in the agent's
 code.
 
-The personality profile is the headline feature of 0.1.0a3 - no other
-tool in the observability space computes an agent personality from a
-calibrated cognitive-state stream, because no other tool has a
-calibrated cognitive-state stream to aggregate. This is what makes
-Fathom Lab different: we measure the shape of the mind over time,
-not just the output of it.
+The personality profile was the headline feature of 0.1.0a3. It
+aggregates the cognitive-state stream this package records, over time.
+The 0.1.0a3 text said no other observability tool did this and that
+nobody else had shipped these primitives. No survey ever priced those
+sentences; they were withdrawn on 2026-09-29, and the record is
+papers/NOTE_prior_art_credit_2026_09_29.md.
 """
 
 from __future__ import annotations

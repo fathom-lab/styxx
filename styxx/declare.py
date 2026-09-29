@@ -34,6 +34,19 @@ What this file must not do, from the prereg:
   write the verdict it wants is the one this format refuses to help with.
 * **A declaration that cannot be read is not a lie.** Unknown keys and unparseable values are
   reported as problems and never become accusations.
+
+Declared claims are older than this file, and the credit is owed by name (dates are the
+neighbours' own; the record is papers/closed-model-frontier/NOTE_prior_art_credit_2026_09_29.md).
+NabaOS tool receipts (Abhinaba Basu, arXiv 2603.10060, 2026-03-09) have the model tag each claim
+with its evidence source and check count and absence claims against a runtime-signed record.
+DeerFlow's receipt citations (bytedance/deer-flow issue #4651, RFC 2026-08-03; citation
+verification merged 2026-08-29) render any uncited claim UNVERIFIED. readback (Josh Duffy,
+2026-09-13) reads a fenced JSON claim block and returns verified / contradicted / indeterminate,
+five days before this file. commitlint-scope (thumbrise, 2026-05-25) checks changed paths against
+a declared scope, the comparison `only_touches` makes. Swarm Orchestrator (Brad Kinnard) records a
+declared-file-set check with evidence dated 2026-08-18. Agent Trace (v0.1.0 RFC, 2026-01) specifies
+structured attribution records and verifies nothing. The routing through the prose reader, above,
+is this file's design choice, not a priority.
 """
 from __future__ import annotations
 

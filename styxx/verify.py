@@ -18,8 +18,11 @@ Knowledge converges (entropy falls, logprob rises). Fabrication
 diverges (entropy rises, logprob falls). d=2.04 on matched controls
 (ent_slope, N=92; papers/logprob-trajectory-confabulation.md, section 3.1).
 
-styxx.verify() reads the trajectory shape and gives you the answer
-no one else can.
+styxx.verify() reads the trajectory shape and gives you its answer.
+Using a model's own uncertainty to flag confabulation is older than
+this module (semantic entropy, Farquhar et al., Nature 2024, cited in
+papers/cognometry-manifesto.md). A sentence here saying no one else
+could give this answer was never surveyed and was withdrawn 2026-09-29.
 
 Usage:
     from styxx import OpenAI, verify
