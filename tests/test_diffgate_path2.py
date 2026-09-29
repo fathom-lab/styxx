@@ -1912,9 +1912,13 @@ def test_v3_the_scorer_admits_every_move_on_the_pinned_pairs_and_counts_what_g_c
     # (NOTE_path2_twelfth_pass: two more, round 11's same-case control and the case-kept suffix match, where #97's licence
     # holds on the paths as written; one reason-only move on a record of this pass's own differential; and eight credited
     # to #97 and Z-4 jointly that the guard abstains on, a case-only match, a Z-3 doubt or a trailing-space name)
+    # (NOTE_path2_thirteenth_pass: round 12's reproductions add five reason-only touched moves, each a path read as its own
+    # entry where main read an earlier basename twin -- typechanged, mode-changed or retargeted paths -- and twenty-four
+    # more credited to #97 and Z-4 jointly that the guard abstains on, a key two sections register or a whitespace name
+    # as written)
     assert {k: v for k, v in ninth.items() if not k.endswith("-> UNCHECKABLE")} == {
-        "Z-4 file_created: UNCHECKABLE -> VERIFIED": 6, "Z-4 file_touched: VERIFIED -> VERIFIED": 2}
-    assert t.attribution["attributed_by"]["#97+Z-4"] == 13 and sum(ninth.values()) > 13
+        "Z-4 file_created: UNCHECKABLE -> VERIFIED": 6, "Z-4 file_touched: VERIFIED -> VERIFIED": 7}
+    assert t.attribution["attributed_by"]["#97+Z-4"] == 37 and sum(ninth.values()) > 37
 
 
 def test_v3_raw_paths_reads_a_header_only_outside_a_hunk(scorer):
