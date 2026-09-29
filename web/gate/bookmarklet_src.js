@@ -1430,8 +1430,32 @@ function _pendingKey(pending, key) {
   const raw = pending.status === "D" ? pending.a : pending.b;
   return raw ? key(raw) : "";
 }
-function _readDiff(diffText, notes = null, rp = null) {
+// NOTE_path2_twelfth_pass_2026_09_29 (A.1, A.2), as the Python's: what the guard's tightened licences read of a diff.
+// `rendered`: the diff is git's own rendering (a `diff --git` header, every header reading both paths, every `---`/`+++`
+// pair read as a header under a header of its own, `---` before `+++`, naming that header's files as git writes them,
+// every `rename`/`copy` line naming the header's path as written, no line no reading places, no changed file no header
+// counts); only there does #121 license. `soft`: the reading holds a Z-3 doubt; #97 then licenses nothing. `forms`: each
+// key's paths as written, case kept; #97 licenses only a match on these.
+const _caseKept = p => p.replace(/\\/g, "/").replace(/^(?:\.?\/)+/, "");
+function _asGitWrites(line) {
+  // a `diff --git` header's paths as git writes them after it -- [`---` path, `+++` path, `rename from`, `rename to`],
+  // quoted where the header quotes them -- or null where the header does not read both of its paths
+  const [a, b] = _headerPaths(line);
+  if (!(a && b)) return null;
+  const body = line.slice("diff --git ".length);
+  const mid = Math.floor(body.length / 2);
+  let qa = false, qb = false;
+  if (!(body.length % 2 === 1 && body[mid] === " " && body.slice(0, mid).startsWith("a/") && body.slice(mid + 1).startsWith("b/")
+        && body.slice(2, mid) === body.slice(mid + 3))) {
+    const m = _DIFF_GIT.exec(line);
+    qa = m.groups.qa !== undefined; qb = m.groups.qb !== undefined;
+  }
+  return [qa ? `"a/${a}"` : "a/" + a, qb ? `"b/${b}"` : "b/" + b, qa ? `"${a}"` : a, qb ? `"${b}"` : b];
+}
+const _asWritten = headerPath => headerPath.split("\t")[0];   // cut at the TAB git appends to a name holding a space
+function _readDiff(diffText, notes = null, rp = null, facts = null) {
   // NOTE_path2_eleventh_pass: `rp`, the repairs this reading applies; with #121 switched off every path is keyed by main's key.
+  // NOTE_path2_twelfth_pass: `facts`, when given, receives what the guard's tightened licences read (A.1, A.2).
   const key = p => (rp || _ALL_ON).key(p);
   const status = new Map();
   const added = [];
@@ -1449,9 +1473,15 @@ function _readDiff(diffText, notes = null, rp = null) {
   const inside = new Set();                 // Z-3: the lines an exact hunk's counts read (W-1)
   const soft = [];                          // Z-3: doubts main's reading of the file list also held
   let binary = false;                       // K-4: inside a `GIT binary patch` block (until a blank line)
+  // NOTE_path2_twelfth_pass (A.1, A.2): git's own rendering, read as the diff is read; each key's paths, case kept
+  let gitForm = true, headers = false, written = null, minus = false;
+  const kept = new Map();
   const register = rawPath => {
     // NOTE_path2_tenth_pass (K-2): two header paths are compared by the one fold both ports carry, not toLowerCase()
     const form = rawPath.replace(/\\/g, "/").replace(/^(?:\.?\/)+/, "");
+    const k = key(rawPath);
+    if (!kept.has(k)) kept.set(k, []);
+    if (!kept.get(k).includes(form)) kept.get(k).push(form);
     const folded = _caseFold(form);
     if (!forms.has(folded)) forms.set(folded, form);
     else if (forms.get(folded) !== form) note("files", _Y1_COLLIDE);
@@ -1497,7 +1527,12 @@ function _readDiff(diffText, notes = null, rp = null) {
       pending = new _Pending(line);
       cur = null;
       loose = false; binary = false; leadOld = false; leadNew = false;
+      headers = true; written = _asGitWrites(line); minus = false;
+      gitForm = gitForm && written !== null;
     } else if (line.startsWith("--- ")) {
+      const was = _asWritten(line.slice(4));
+      if (pending === null || written === null || !(was === "/dev/null" || was === written[0])) gitForm = false;   // A.1
+      minus = true;
       if (loose) {                                // Y-1: after lines no count placed, a header is not certain
         if (_cleanHeader(lines, k)) { cleanPlus = k + 1; loose = false; soft.push(_Z3_SHAPED); }   // Z-3
         else note("files", _Y1_LOOSE);
@@ -1506,6 +1541,8 @@ function _readDiff(diffText, notes = null, rp = null) {
       cur = null;
       leadOld = false; leadNew = false;
     } else if (line.startsWith("+++ ")) {
+      const was = _asWritten(line.slice(4));
+      if (pending === null || written === null || !minus || !(was === "/dev/null" || was === written[1])) gitForm = false;   // A.1
       if (loose && k !== cleanPlus) note("files", _Y1_LOOSE);
       const nw = _pyStrip(line.slice(4));
       const pk = pending !== null ? _pendingKey(pending, key) : "";
@@ -1529,7 +1566,7 @@ function _readDiff(diffText, notes = null, rp = null) {
         register(raw);
         if (!sides.has(cur)) sides.set(cur, [[], []]);
       }
-      pending = null;
+      pending = null; written = null; minus = false;
       leadNew = oldPath !== null && _headerShape(oldPath) === "/dev/null";   // Y-2
       leadOld = _headerShape(nw) === "/dev/null";
     } else if (line.startsWith("@@") && _HUNK_HEADER.test(line)) {
@@ -1561,10 +1598,16 @@ function _readDiff(diffText, notes = null, rp = null) {
         if (line === "") binary = false;
       } else if (_UNCOUNTED.test(line) && !(pending !== null && _BINARY_LINE.test(line))) {
         note("files", _Y1_UNCOUNTED);             // Y-1: a changed file no header pair counts
+        gitForm = false;
       } else if (line === "GIT binary patch" || /^(?:literal|delta) [0-9]+$/.test(line)) {
         binary = true;                            // K-4: its `literal N`/`delta N` blocks, each ended by a blank line
       } else if (!(binary || line.startsWith("\\") || _GIT_META.test(line) || (pending !== null && _BINARY_LINE.test(line)))) {
         soft.push(_Z3_UNPLACED);                  // K-4: a line no reading places may name a file neither counts
+        gitForm = false;
+      }
+      for (const [prefix, at] of [["rename from ", 2], ["copy from ", 2], ["rename to ", 3], ["copy to ", 3]]) {
+        // NOTE_path2_twelfth_pass (A.1): git names the header's own paths here, as written
+        if (line.startsWith(prefix) && (pending === null || written === null || line.slice(prefix.length) !== written[at])) gitForm = false;
       }
       if (pending !== null) pending.note(line);
     }
@@ -1575,11 +1618,12 @@ function _readDiff(diffText, notes = null, rp = null) {
     if (why) found.differs = why;
     Object.assign(notes, found);
   }
+  if (facts !== null) Object.assign(facts, { rendered: gitForm && headers, soft: soft.length > 0, forms: kept });
   return { status, added, sides };
 }
-function _diffNotes(diffText) {
+function _diffNotes(diffText, facts = null) {
   const notes = {};
-  _readDiff(diffText, notes);
+  _readDiff(diffText, notes, null, facts);
   return notes;
 }
 
@@ -2360,9 +2404,12 @@ function declarationPass(summaryText) {
 }
 
 function gateDiffText(summaryText, diffText, { strict = false } = {}) {
-  // NOTE_path2_eleventh_pass: this reading, guarded against main's port (`_guard`).
+  // NOTE_path2_eleventh_pass: this reading, guarded against main's port (`_guard`). NOTE_path2_twelfth_pass (round 11):
+  // the reference is found before the guard runs, so a page that loads this file without diffgate_ref.js throws here;
+  // only what main's own gateDiffText throws reads, inside the guard, as main raising.
+  const ref = _reference();
   return _guard((rp, out) => _evaluate(summaryText, diffText, { strict, rp, out }),
-                () => _reference().gateDiffText(summaryText, diffText), strict);
+                () => ref.gateDiffText(summaryText, diffText), strict);
 }
 
 // NOTE_path2_eleventh_pass_2026_09_28: THE GUARD, as the Python's `_guard` -- the licensed-difference rule at the verdict.
@@ -2396,17 +2443,38 @@ function _definitionPaired(name, sides, status) {
   }
   return false;
 }
-function _precondition(repair, c, status, sides) {
+function _keptByItsTier(p, claimed, forms) {
+  // NOTE_path2_twelfth_pass (A.2, and its own differential), as the Python's `_kept_by_its_tier`: the entry a path claim
+  // resolved to matches the claim as written, case kept, by the tier the resolution used.
+  const key = _norm(claimed), kept = _caseKept(claimed);
+  if (!forms.length) return false;
+  if (p === key) return forms.every(f => f === kept);
+  if (p.endsWith("/" + key)) return forms.every(f => f.endsWith("/" + kept));
+  return forms.every(f => _basename(f) === _basename(kept));
+}
+function _precondition(repair, c, status, sides, licence = null) {
   // Whether `repair`'s own precondition holds on claim `c`, read on this reading with every repair on (the Python's).
+  // NOTE_path2_twelfth_pass, tightened (A.1, A.2): #97's match must hold on the paths as written, case kept, and never in
+  // a reading holding a Z-3 doubt; #121 licenses only where the diff is git's own rendering. With no licence read,
+  // neither licenses.
   const d = c.detail || {};
+  const lic = licence || {};
   if (repair === "#97") {
     if (!_PATH_KINDS.has(c.kind) || typeof d.path !== "string") return false;
     const key = _norm(d.path);
     const [p] = _findPath(status, d.path);
     if (p === null || !(p === key || p.endsWith("/" + key))) return false;
+    const claimed = _caseKept(d.path);
+    const asRead = (lic.forms && lic.forms.get(p)) || [];
+    if (lic.soft || !asRead.length || !asRead.every(f => f === claimed || f.endsWith("/" + claimed))) return false;
     return _earliestMatch(status, d.path)[0] !== p;
   }
   if (repair === "#121") {
+    if (!lic.rendered) return false;        // NOTE_path2_twelfth_pass (A.1): not git's own rendering
+    if (_PATH_KINDS.has(c.kind) && typeof d.path === "string") {
+      const [p] = _findPath(status, d.path);      // NOTE_path2_twelfth_pass: an entry matching the claim only in case
+      if (p === null || !_keptByItsTier(p, d.path, (lic.forms && lic.forms.get(p)) || [])) return false;
+    }
     const own = ["path", "prefix", "prefix2"].map(k => d[k]).filter(x => typeof x === "string");
     return [...status.keys()].some(k => k.startsWith(".")) || [...(sides || new Map()).keys()].some(k => k.startsWith("."))
       || own.some(x => _norm(x).startsWith("."));
@@ -2446,7 +2514,7 @@ function _guard(evaluate, reference, strict) {
     if (c.verdict === "UNCHECKABLE") return c;
     const mainVerdict = r === null ? null : r.verdict;    // tests_pass: UNCHECKABLE in both ports, with no --run here
     if (mainVerdict === c.verdict) return c;
-    if (mainVerdict !== null && REPAIRS.some(repair => _precondition(repair, c, seen.status, seen.sides)
+    if (mainVerdict !== null && REPAIRS.some(repair => _precondition(repair, c, seen.status, seen.sides, seen.licence)
                                              && switchedVerdict(repair, key) === mainVerdict)) return c;   // licensed
     const why = ref === null ? _GUARD_RAISES(c.verdict) : r === null ? _GUARD_ABSENT(c.verdict) : _GUARD_DIFFERS(mainVerdict, c.verdict);
     return { kind: c.kind, text: c.text, detail: c.detail, verdict: "UNCHECKABLE", why };
@@ -2463,13 +2531,14 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
   // read, and for each claim whether its sentence is one the two ports may read apart (K-5).
   const flags = [];
   let status, addedBlob, sides, notes;
+  const facts = {};                         // NOTE_path2_twelfth_pass: what the licences read (`_readDiff`)
   if (rp.on("#121")) {
     ({ status, addedBlob } = parseUnifiedDiff(diffText));
     sides = parseUnifiedDiffSides(diffText);
-    notes = _diffNotes(diffText);
+    notes = _diffNotes(diffText, facts);
   } else {
     notes = {};
-    const r = _readDiff(diffText, notes, rp);
+    const r = _readDiff(diffText, notes, rp, facts);
     status = r.status; addedBlob = r.added.join("\n"); sides = r.sides;
   }
   const rawInputLen = (diffText || "").length;
@@ -2694,7 +2763,7 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
   const verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";
   const uncoveredTexts = sentences.map((s, i) => [s.trim(), i]).filter(([s, i]) => s && !covered.has(i)).map(([s]) => s);
   const total = sentences.filter(s => s.trim()).length;
-  if (out !== null) Object.assign(out, { status, sides, apart: flags });
+  if (out !== null) Object.assign(out, { status, sides, apart: flags, licence: facts });
   return {
     diffgate: "v0", verdict, base: "(diff-text)", head: "(diff-text)", claims,
     uncovered_sentences: uncoveredTexts.length, sentences_total: total, uncovered_texts: uncoveredTexts,
