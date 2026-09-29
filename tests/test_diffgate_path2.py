@@ -3639,6 +3639,12 @@ X11_PLANTED = {
         [("        if raw_input_len:\n            no_evidence += (",
           "        if raw_input_len and not (main is not None and main.raises):\n            no_evidence += (")],
         "t\n\nAdded 1 test. 1 file changed.", "x\x0c+++ /dev/null\n", "G-C7_oracle:why_unmeasured"),
+    # the same defect, read claim by claim: an unmeasured claim's reason is held to this file's own reason, not to the
+    # gate's (which carries the same defect)
+    "raises: an unmeasured claim's reason loses the parse-failure clause with its gate's": (
+        [("        if raw_input_len:\n            no_evidence += (",
+          "        if raw_input_len and not (main is not None and main.raises):\n            no_evidence += (")],
+        "t\n\nAdded 1 test. 1 file changed.", "x\x0c+++ /dev/null\n", "G-C7_oracle:tests_added_claim"),
     "raises: why_unmeasured set on a measured gate": (
         [('                    measured=not no_evidence, why_unmeasured=no_evidence or "",',
           '                    measured=not no_evidence, why_unmeasured=no_evidence or ("main raises" if main is not None '
@@ -3720,6 +3726,22 @@ def test_x11_the_scorers_own_guard_licenses_only_by_the_precondition_and_the_swi
     # both: the precondition holds and the #121 revert gives main's verdict back -- the repair's verdict is kept
     got = final(twins, before, main, {"#121": main})
     assert [g[2] for g in got] == ["VERIFIED"], got
+
+
+def test_x11_g_c8_compares_the_two_doors_readings_before_the_guard(scorer):
+    """G-C8 holds the git door's reading to the raw door's, both before the guard: each door's guard reads its own main
+    reading, so a final claim may differ between doors where the readings agree. Here K-5 (an accented word in the
+    sentence) gives each door main's claim, UNCHECKABLE, while both readings resolve #97's path VERIFIED: the clean record
+    scores with no violation, and a G-C8 that compared a final gate with a reading would refuse it."""
+    from collections import Counter
+    pg = scorer
+    summary = "Created integrations/git/README.md, voilà."
+    diff = _m("README.md") + "--- /dev/null\n+++ b/integrations/git/README.md\n@@ -0,0 +1 @@\n+hello\n"
+    assert [c.verdict for c in dg._evaluate_text(summary, diff, dg._ALL_ON).claims] == ["VERIFIED"]
+    assert [c.verdict for c in gate_diff_text(summary, diff).claims] == ["UNCHECKABLE"]
+    t, sample = pg.Tally(name_prs=True), Counter()
+    pg.git_door_pair(t, "k5-both-doors", summary, diff, sample)
+    assert sample["scored"] == 1 and not t.violations, (dict(sample), t.violating)
 
 
 def test_x11_the_git_door_strict_report_is_compared(scorer, monkeypatch):
