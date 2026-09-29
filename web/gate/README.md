@@ -78,10 +78,11 @@ exit 0. The shipped bookmarklet is
     bookmarklet.href.txt  sha256 06cc044e46fc61ca360d75824697d653285704076e679360b00963258e0f1abd   77,686 chars
 
 (25,302 characters more than the tenth-pass build: `main`'s port, carried whole as the guard's reference (`main`'s
-own bookmarklet is 24,335 characters), and the guard; the tenth-pass build was 4,446 more than the ninth's: the case fold, 1,996 of them, and the tenth pass's K-1 to K-5;
-the ninth-pass build was 8,577 more than the eighth's, `main`'s own reading in both of its spellings and the
-ninth pass's abstentions; the eighth-pass build was 4,895 more than the seventh's, 440 of them the skew set;
-the seventh-pass build was 5,417 more than the sixth's, 3,136 of them the name table.)
+own bookmarklet is 24,335 characters), and the guard; the tenth-pass build was 4,446 more than the ninth's: the
+case fold, 1,996 of them, and the tenth pass's K-1 to K-5; the ninth-pass build was 8,577 more than the eighth's,
+`main`'s own reading in both of its spellings and the ninth pass's abstentions; the eighth-pass build was 4,895 more
+than the seventh's, 440 of them the skew set; the seventh-pass build was 5,417 more than the sixth's, 3,136 of them the
+name table.)
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file; `4b2d34e1…`,
@@ -133,12 +134,13 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 0fc470c5…,
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 73a03de6…,
+                                         # styxx/_diffgate_ref.py (main's reader) to 9b620e00…,
                                          # styxx/_xid.py's name table to 8df68f21… and its skew set to 0b7134fd…,
                                          # and styxx/_fold.py's case fold to a52cda82…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 299 pinned pairs against their expect blocks
+    node check_pairs.js                  # the 309 pinned pairs against their expect blocks
 
 The pin moved twice between the last two runs of this differential, and one of those moves is a
 finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to
@@ -163,7 +165,98 @@ The corpus needed them. Before PATH-1 added these, `corpus_real.json` carried ex
 what changed is not evidence, and the honest py/js comparison for PATH-1 was run separately over
 the 604-row BENCH corpus (297 `only_touches` readings, 0 disagreements).
 
-Result, 2026-09-28, this branch after the tenth pass (`NOTE_path2_tenth_pass_2026_09_28`), merged with
+Result, 2026-09-28, this branch after the eleventh pass (`NOTE_path2_eleventh_pass_2026_09_28`), merged with `main` at
+`2a6ce0a3` (whose `styxx/diffgate.py` is the one at `98a5c368`):
+
+    3485 pairs, 7423 claims (623 verified, 1580 contradicted, 5220 uncheckable) — 0 disagreement(s)
+    309 pinned pairs, 0 disagreement(s)
+
+The same 3,485 pairs with `main` on both sides read **48** disagreements, with the tenth-pass head on both sides **2**
+(R10-WHY1 and R10-WHY2, round 10's two reasons that printed a runtime's lower case, pinned by this pass). With
+`main`'s Python on one side and this port on the other, **415** records differ — what `py_side.py --installed`
+measures against 7.48.0, whose file is `main`'s; this Python against `main`'s port, **423**. Against the tenth-pass
+head, 8 records move in the Python and 8 in the port, every one a pinned pair this pass added or re-pinned: no
+generated or real record moves. The minified bookmarklet, loaded in Node with the browser stubbed, reads all 3,485
+records as the port does. Round 10's K-5 reproductions (R10-K5A to R10-K5D), and a U+0085 and a U+FEFF separator
+beside them, are tests, not pinned pairs: on `main` the two ports already extract different claims from those
+sentences, and each port now reads them exactly as `main`'s same port did.
+
+The eleventh pass moves the licensed-difference rule from the reading to the verdict (the operator's decision of
+2026-09-28; the note, sections A and B). `main`'s reader is vendored unchanged — `diffgate_ref.js` here is
+`origin/main`'s `web/gate/diffgate.js` byte for byte, and `styxx/_diffgate_ref.py` `origin/main`'s `styxx/diffgate.py`
+— and `gateDiffText`, like the Python's two doors, holds every claim to that reader's verdict on the same input: an
+equal verdict or an abstention is kept, and a different one only where one of the three repairs (#97's tiers, #121's
+dotted key, #101's pairing), switched off alone by an explicit parameter, gives `main`'s verdict back and that
+repair's own precondition holds on the claim; otherwise the claim is UNCHECKABLE and names `main`'s verdict. Where
+`main` raises, or makes no such claim, a decided claim abstains; the verdict and `--strict` are recomputed from the
+final claims. **The three repairs are therefore the only surface where a new false verdict can arise.** A claim read
+from a sentence the two ports' templates may read apart — a non-ASCII word character (by the pinned table and skew
+set), U+001C to U+001F, U+0085, U+FEFF, U+2028, U+2029 or a CR with a character after it; for a symbol claim only
+outside every name — reads as `main`'s same port read it (K-5 at the sentence); the em dash, emoji and curly quotes
+read alike in both templates, so `integrations/git/README.md — created.` keeps #97's repair. The guard does not make
+the two ports agree; that stays the parity layers' work, and the differential above is its measure.
+
+Round 10's review found four regression classes and four scorer gaps (the note, section C). The two verdict
+regressions had passed through #121's licence, so the guard alone would not have caught them; each is fixed in the
+reader. A `---`/`+++` pair under a `diff --git` header neither reading can read (`git diff --no-prefix`,
+`diff.noprefix=true`), and a pair read as a header without a header's shape, are now doubts `main`'s reading also
+held, and beside #121's dotted key the file-list claims abstain. The two Python/port disagreements are fixed too: K-5
+reads the whole sentence, and the dot-miss and refused-file reasons print their keys through the fold. The raw-door
+reproductions (R10-NP1, R10-NP2, R10-UNDER1, R10-UNDER2, R10-WHY1, R10-WHY2) are pinned pairs and read UNCHECKABLE in
+both ports. At the git door, where the file list is git's `--name-status` and not the no-prefix text, the no-prefix
+shapes keep #121's licensed verdict: over the 18 cases written for them in real repositories (`diff.noprefix=true`,
+`diff.mnemonicPrefix=true` and git's default, each beside dotted twins and a whitespace twin or an `a/` or `b/`
+directory), the git door reads 38 claims right that `main`'s git door read wrong and reads none worse; the port, which
+has only the text, abstains there, as does the Python's raw door.
+
+The regression differential of this pass (the round's own harness and the round-10 reviewers' runners, `main`'s file
+against this branch, CPython's parser and git's `--name-status` as the judge), over 37 sets and 75,047 cases — 14,018
+written this round (11,000 randomised diffs at fresh seeds, 379 of them rendered as `git diff --no-prefix` prints them
+and 375 with mnemonic prefixes, beside 1,500 aimed at K-5's sentences, 1,500 at header-shaped pairs after an exact
+hunk and 18 cases in real repositories set to `diff.noprefix=true`, `diff.mnemonicPrefix=true` or git's default),
+25,000 from the round-10 reviewers' generators and 36,029 from earlier rounds — reads, under Python 3.12 (2,054,053
+claim-door cells) and 3.14 (2,052,816): **0 claims worse than on `main`** on the raw door, the git door and the port;
+0 raises `main` does not have; **0 new Python/port disagreements**, in verdict or in reason, on the same input. Where
+the git door (which reads the repository) is set against the port (which reads the text), 136 cells on 80 records
+carry opposite verdicts, every one on a text rewritten with mnemonic prefixes (`c/`, `i/`, `w/`): the git door right
+on 126 and the harness undecided on 10, and the tenth-pass head read 79 of the 80 records the same on the git door and
+all 80 on the raw door.
+
+The guarantee (the note, section B) was checked claim by claim over the regression sets' 75,047 cases and the
+differential corpora's 3,485 pairs (78,532 inputs): every final claim reads `main`'s verdict, UNCHECKABLE, or the
+branch's own verdict where a repair switched off alone gives `main`'s verdict back and that repair's precondition
+holds. In the port, 871,428 claims; in the Python under 3.12, 869,220 raw-door claims and 339,918 git-door claims (the
+git door against `main`'s `gate_diff` on the same repository and range), and under 3.14, 868,182 and 339,713: **0
+violations**, and nothing raises. `tests/test_diffgate_guard.py` commits the same check over the pinned pairs, the
+differential corpora and 1,500 randomised diffs at a fixed seed, and plants eight defects in the reader outside the
+three repairs (a hunk always read exact, `/dev/null` read with anything after it, async tests counted, every diff
+holding Python, A-1's abstention dropped, a count off by one, a prefix held by string, F-2 breaking a line at a form
+feed): each gives new verdicts without the guard and, with it, only abstentions or `main`'s own verdict.
+
+The cost is recall, and this pass measured it rather than the note's estimate (section D expected most of the round-8
+and round-9 generators' W-1, F-2 and Y-4 gains to become abstentions; they did not, because the ninth and tenth
+passes' reading-level rule had already abstained on almost every difference no repair explains, and the guard found 12
+more cells over 861,797 raw-door claims under 3.12, none where `main` was right). On the differential corpus `main`
+decides 2,660 claims and this branch abstains on 468 of them (file_created 23, file_deleted 6, file_touched 70,
+files_changed_count 73, only_touches 152, symbol_added 47, tests_added 97): 11 more than the tenth pass (R0.0's doubt
+6, R0.2's 4, and 1 path claim K-5 now reads with this reading, which abstains). Over the regression sets' raw door
+(3.12), `main` decides 612,047 claims; the tenth pass abstained on 308,091 of them and this pass abstains on 306,472:
+3,040 new abstentions (R0.0 648, R0.2 2,334, main's paths folding apart 25, the guard 8, other 25; 1,993 of them where
+`main` was right), and 4,669 claims the tenth pass left UNCHECKABLE decided again: 10 by a licensed repair (4 right, 6
+undecided by the harness) and 4,659 by K-5, which takes `main`'s claim whole — 685 right, 2,096 undecided and **1,878
+wrong**, each `main`'s own wrong verdict, where the tenth pass had abstained. That is the operator's K-5 rule as
+written (a claim the two ports may read apart reads as `main` read it), not worse than `main`, and it is a verdict the
+tenth pass withheld: it is the largest single move this pass makes against the tenth, and it is listed as a follow-up.
+
+Per call, over the 3,485 records of the differential corpus (the fastest of three rounds each, on this Windows box
+with other work running, the never-read observer on): the Python `gate_diff_text` takes 3.93 ms on average (median
+0.59 ms, 95th percentile 1.61 ms, slowest 2.0 s) against `main`'s 0.60 ms (median 0.19 ms) and the tenth-pass head's
+3.36 ms (median 0.36 ms) — 6.6 times `main`'s total and 1.17 times the tenth pass's. The port takes 0.86 ms on average
+(median 0.16 ms) against `main`'s port's 0.17 ms and the tenth pass's 0.67 ms — 4.9 and 1.3 times. The guard reads
+every input with `main`'s reader as well, and where a claim differs from `main`'s, once more with each repair switched
+off; the git door runs git's two reads twice.
+
+Result at the tenth pass (`NOTE_path2_tenth_pass_2026_09_28`), kept as it was measured, merged with
 `main` at `2a6ce0a3` (whose `styxx/diffgate.py` is the one at `98a5c368`):
 
     3475 pairs, 7402 claims (622 verified, 1579 contradicted, 5201 uncheckable) — 0 disagreement(s)
@@ -350,6 +443,25 @@ files. The fifth pass itself moves, of the 3,301 records that predate it, the fo
 changed generic definitions pair and abstain) and **90 fuzzed records**, 92 claims CONTRADICTED →
 UNCHECKABLE: the fuzzer writes `docs/.` followed by a sentence period, and V-4 reads a prefix written to
 end in `..` as the parent it spells. No real-corpus record moves.
+
+`path2_gates.py differential` at the eleventh pass, from a clean tree at `cabaa6cc` (the scorer, the harness,
+`styxx/diffgate.py`, `styxx/_diffgate_ref.py`, `styxx/_xid.py`, `styxx/_fold.py`, `styxx/declare.py` and
+`path1_extensions.txt` unmodified; the commits after it touch tests, the port's comments, `py_side.py`, the bookmarklet,
+this README and the CHANGELOG, none of them a file the scorer's provenance reads): exit 0, every gate passes, no
+violation; the provenance records the guard's reference as the baseline, byte for byte. 412 records moved, three of
+them records the baseline raises on. Claims attributed to #97 11, #121 68, #101 51, F-2 28, V-1 11, V-4 94, W-1 2,
+Y-1 14, Y-4 6, Z-2 1, Z-3 4, Z-4 118, Z-5 2, and to 33 sets (196 joint), among them W-1+Z-3 39, Y-1+Z-3 32 and
+#97+Z-4 19. New accusations 8 (`files_changed_count` 4 and `only_touches` 4, #121's dotfile twins counted apart),
+each admitted. **G-C9** (the guard, this file's own): every final claim reads as the scorer's guard reads it, reason and
+detail included, and each of the instrument's switches reads as the scorer's own revert of the same rule — on the raw
+door 8 claims licensed by #97, 18 by #121 and 2 abstained by the guard; at the git door 10 by #97 and 11 by #121.
+**G-C7**: 0 oracle violations, the oracles reading the instrument's reading before the guard. **G-C1**: the strict
+gates' reports compared key for key, 0 violations. **G-C8**: every one of the 3,485 records tried, 1,142 rebuilt and
+scored through `gate_diff` (38 holding a dotted path), 2,343 not rebuildable faithfully, 366 scored again with rename
+detection on (2 renames detected), 229 moved, all attributed; the nine canaries (three door canaries, U+0085, U+2028 and
+U+2029 paths, and six raw-door canaries: `main` raising twice, K-3, Y-4, an unreadable header beside dotted twins and
+a header-shaped pair after an exact hunk; every run of either mode scores them), 0 violations. Scorer `9178b4fd…`,
+harness `75bfbc39…`, repaired `diffgate.py` `73a03de6…`, reference and baseline `9b620e00…` (`98a5c368`).
 
 `path2_gates.py differential` at the tenth pass, from a clean tree at `75bc4b06` (the scorer, the harness,
 `styxx/diffgate.py`, `styxx/_xid.py`, `styxx/_fold.py`, `styxx/declare.py` and `path1_extensions.txt` unmodified; this

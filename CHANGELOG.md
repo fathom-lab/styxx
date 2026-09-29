@@ -21,10 +21,11 @@ tests read VERIFIED.
 
 **What changed.** Frozen as `papers/closed-model-frontier/PREREG_path2_resolution_2026_09_17.md`,
 `AMENDMENT_path2_resolution_2026_09_17.md` and `ERRATUM_path2_amendment_2026_09_17.md`, then repaired in
-eight passes, each recorded in a note committed alone before its code (`NOTE_path2_third_pass` to
+nine passes, each recorded in a note committed alone before its code (`NOTE_path2_third_pass` to
 `NOTE_path2_seventh_pass`, `_2026_09_25`, `NOTE_path2_eighth_pass_2026_09_27`,
-`NOTE_path2_ninth_pass_2026_09_27` and `NOTE_path2_tenth_pass_2026_09_28`; the eighth to tenth passes' code was
-written before its note, and each note says so):
+`NOTE_path2_ninth_pass_2026_09_27`, `NOTE_path2_tenth_pass_2026_09_28` and `NOTE_path2_eleventh_pass_2026_09_28`;
+the eighth to tenth passes' code was written before its note, and each note says so; the eleventh's note was
+committed alone before any of its code):
 - #97: a path claim resolves in tiers over every entry — exact, then suffix, then basename.
 - #121: only a leading run of `/` and `./` segments leaves the key. Readings that must not move with a dot
   (BC-2's path-shape test, BC-1's "no Python file" test, COMPAT's language and scaffold tests) read the
@@ -71,25 +72,54 @@ written before its note, and each note says so):
   with no `---` line before it no longer raises. A path claim the two ports' templates may extract differently (a
   non-ASCII character in or before it) reads as `main` read it, in each port as `main`'s same port did. A key a
   reason prints is the same text on every runtime.
+- The licensed-difference rule is at the verdict (the eleventh pass, the operator's decision of 2026-09-28). `main`'s
+  reader is vendored unchanged as the reference — `styxx/_diffgate_ref.py` is `origin/main`'s `styxx/diffgate.py` and
+  `web/gate/diffgate_ref.js` its port, byte for byte, pinned by sha256 — and the three repairs can be switched off one
+  at a time, by an explicit parameter, never by global state. Per claim, on both doors (`gate_diff_text`, and
+  `gate_diff` against the reference's `gate_diff` on the same repository and range) and in the port: a verdict equal to
+  `main`'s, or an abstention, is kept; a different one only where one repair switched off gives `main`'s verdict back
+  and that repair's own precondition holds on the claim (#97: resolved by the exact or suffix tier where `main`'s loop
+  takes another entry; #121: a key the diff's file list or the claim holds keeps a leading dot; #101: a removed
+  definition of the same name in the same file was paired); otherwise UNCHECKABLE, naming `main`'s verdict. Where
+  `main` raises or makes no such claim, a decided claim abstains; the verdict and `--strict` are recomputed from the
+  final claims. So no claim `main` decides can come out with another verdict unless a named repair on its own
+  precondition explains it. The guard does not make the two ports agree; the parity layers and the differential do
+  that. A claim of a sentence the two ports' templates may read apart (a non-ASCII word character, U+001C to U+001F,
+  U+0085, U+FEFF, U+2028, U+2029, a CR with a character after it; for a symbol claim only outside every name) reads as
+  `main`'s same port read it; punctuation, symbols and emoji read alike, so `integrations/git/README.md — created.`
+  keeps #97's repair. Round 10's two verdict regressions passed through #121's licence, and each is fixed in the
+  reader: a `---`/`+++` pair under a header neither reading can read (`git diff --no-prefix`, `diff.noprefix=true`)
+  and a pair read as a header without a header's shape are doubts `main`'s reading also held; two reasons print their
+  keys by the fold; and whether `main`'s paths fold alike (a key the runtimes read apart) is asked before `main`'s two
+  line splits are compared.
 - The port follows the Python in each, and spells Python's `\s`, `\w`, `\b`, `.`, `str.strip` and `repr`
-  wherever it reads a diff line. The bookmarklet is rebuilt: `bookmarklet.min.js` sha256 `c9a23982…`,
-  52,373 characters (`web/gate/README.md`).
-- `papers/closed-model-frontier/path2_gates.py` scores the preregistered gates: the instrument before the
-  repair against the instrument after it, claim by claim, every moved claim attributed by counterfactual
-  (the scorer's own copy of the instrument, with one rule reverted, must give the baseline claim back) and
-  admitted only if every rule in its attribution admits it; on every record it also reads each rule it
-  re-implements with its own code — declared claims and every file-list claim included — and holds the
-  repaired instrument to that reading, holds the gate-level fields, the never-read sentences and the strict
-  verdict, and scores every record it can rebuild through the git door — bare repositories written by
-  `git fast-import`, so dotted paths and case twins rebuild, and a deletion beside a creation scored again
-  with rename detection on (in corpus mode every PR with a file-list, definition or compat claim), two door
-  canaries in every run whose paths `main`'s `--name-status` split cuts, so the git door's comparison with
-  `main`'s file list is exercised — refusing to run on a Python whose Unicode is not the table's, or with a case
-  fold that is not sound against its own `str.lower()`; where `main` raises, the repaired gate and its strict
-  verdict are scored whole; a PR the repair excludes is held to the parse oracles before any eligibility move is
-  credited; and the report users read (`to_dict`, base and head) is compared.
+  wherever it reads a diff line. The bookmarklet is rebuilt, carrying `main`'s port whole as the guard's reference:
+  `bookmarklet.min.js` sha256 `ce8c5d99…`, 77,675 characters (`web/gate/README.md`).
+- `papers/closed-model-frontier/path2_gates.py` scores the preregistered gates: the instrument before the repair
+  against the instrument after it, claim by claim, every moved claim attributed by counterfactual (the scorer's own
+  copy of the instrument, with one rule reverted, must give the baseline claim back) and admitted only if every rule
+  in its attribution admits it; on every record it also reads each rule it re-implements with its own code — declared
+  claims and every file-list claim included — and holds the repaired instrument to that reading, holds the gate-level
+  fields, the never-read sentences and the strict verdict, and scores every record it can rebuild through the git door
+  — bare repositories written by `git fast-import`, so dotted paths and case twins rebuild, and a deletion beside a
+  creation scored again with rename detection on (in corpus mode every PR with a file-list, definition or compat
+  claim), two door canaries in every run whose paths `main`'s `--name-status` split cuts, so the git door's comparison
+  with `main`'s file list is exercised — refusing to run on a Python whose Unicode is not the table's, or with a case
+  fold that is not sound against its own `str.lower()`; where `main` raises, the repaired gate and its strict verdict
+  are scored whole; a PR the repair excludes is held to the parse oracles before any eligibility move is credited; and
+  the report users read (`to_dict`, base and head) is compared. Since the eleventh pass it re-implements the guard as
+  a gate of its own (G-C9): `main`'s verdict from its own baseline bytes, the switched readings from its own reverts
+  of the three repairs, the three preconditions and K-5's sentence test from its own code, and the final claim, reason
+  included, held to the instrument's, on both doors; the reading-level oracles (G-C7) read the instrument's reading
+  before the guard; the strict gates' reports are compared key for key; the unmeasured reason is derived with its own
+  code; a U+2029 door canary and six raw-door canaries run in both modes; and the provenance records whether the
+  guard's reference is the baseline, byte for byte. Defects planted in the guard (the reference skipped, or read as
+  raising; a decided claim kept where `main` raises; claims paired without their occurrence; another reason printed; a
+  licence without its precondition beside a switch that reads more than its repair; #121's switch keying nothing by
+  `main`'s key; K-5's symbol span stopping at a combining mark; `main`'s paths folding alike left unasked) each fail a
+  gate, each by a committed test.
 
-**The review record.** Ten rounds of repair, nine of them answering an adversarial review round, each
+**The review record.** Eleven rounds of repair, ten of them answering an adversarial review round, each
 round naming its own findings. What they found and what was done about each is in the notes; the notes also
 correct earlier notes where those were wrong, and none of the frozen documents is edited. The eighth pass
 reported 0 claims reading worse than on `main`; round 8's review measured 507 (Python 3.12) and 525 (3.14)
@@ -108,22 +138,38 @@ ports' templates extract differently). The tenth pass measured, on every door un
 reading worse than on `main`, 0 new Python/port disagreements and 0 raises `main` does not have over 22 sets and
 44,129 cases (1,454,785 claim-door cells under 3.12) — every earlier set, the round-9 reviewer's seeds, 16,000
 randomised diffs at fresh seeds and 1,500 aimed at case pairs across Unicode 13.0 to 16.0 — and on the
-differential corpus (3,475 pairs) 0 disagreements.
+differential corpus (3,475 pairs) 0 disagreements. Round 10's review found that zero false again: two verdict
+regressions passed through #121's licence (a `---`/`+++` pair under a header neither reading can read, as
+`git diff --no-prefix` prints, and a header-shaped pair after an exact hunk, each balancing `main`'s merge of dotfile
+twins), and K-5's precondition and two reasons left Python/port disagreements. The operator then moved the rule to
+the verdict (the eleventh pass). It measured, on every door under Python 3.12 and 3.14, 0 claims reading worse than
+on `main`, 0 new Python/port disagreements on the same input and 0 raises `main` does not have over 37 sets and 75,047
+cases (2,054,053 claim-door cells under 3.12) — every earlier set, the round-10 reviewers' generators, 11,000
+randomised diffs at fresh seeds (754 of them rendered with no prefix or mnemonic prefixes) and 3,018 aimed at K-5's
+sentences, header-shaped pairs and repositories with `diff.noprefix=true` — the guarantee held claim by claim on
+every claim of those cases and of the differential corpora (78,532 inputs; 869,220 raw-door and 339,918 git-door
+claims under 3.12, 871,428 in the port; 0 violations), and on the differential corpus (3,485 pairs) 0 disagreements.
+The recall this pass gives up against the tenth, and the wrong verdicts of `main`'s that K-5 now returns where the
+tenth pass abstained, are measured in `web/gate/README.md`.
 
-Not claimed, and stated: the corpus gates over the EXTERNAL-1 shelf are run separately and reported in the
-RESULT, with `path2_differential_gates.json`; nothing here reports them. The repair moves claims only where
-the notes say, and the limits it leaves are listed in the sixth to ninth-pass notes, section F: among them,
-abstaining costs verdicts `main` gave (a count left after a pairing, a test count beside a U+FEFF-led test,
-claims naming a skew code point, file-list claims over diffs whose headers are not sure, and since the ninth
-pass every claim where this reading and `main`'s differ unlicensed — on the differential corpus 452 of the
-2,642 claims `main` decides, 397 of them at the ninth pass, most of them path claims naming a directory
-only a same-named file elsewhere matches, and 56 new at the tenth, file-list claims beside a file `main` read from a
-hunk's content, a case pair or an unplaced line), a removed `-- a` and an added `++ b` right before the next hunk
-still read as a file header, identifiers are compared as text rather than under NFKC, GNU header paths keep
-their timestamps as keys, a quoted path keeps its quotes, a lone CR or a backslash continuation still hides a
-definition from both readings, the port's claim templates still read the description with JavaScript's
-classes, a changed file named only by a `Submodule` line or an svn or hg binary notice is counted by neither
-reading, the path key is still each runtime's lower case, and #128's modes 2, 3, 5 and 6 are not repaired. PATH-2 is not in 7.48.0, which ships `main`'s file.
+Not claimed, and stated: the corpus gates over the EXTERNAL-1 shelf are run separately and reported in the RESULT,
+with `path2_differential_gates.json`; nothing here reports them. The repair moves claims only where the notes say, and
+the limits it leaves are listed in the sixth to ninth-pass notes, section F, and the eleventh's, section B: among
+them, abstaining costs verdicts `main` gave (a count left after a pairing, a test count beside a U+FEFF-led test,
+claims naming a skew code point, file-list claims over diffs whose headers are not sure, and since the ninth pass
+every claim where this reading and `main`'s differ unlicensed — on the differential corpus 468 of the 2,660 claims
+`main` decides, most of them path claims naming a directory only a same-named file elsewhere matches, file-list claims
+beside a file `main` read from a hunk's content, a case pair or an unplaced line, and 11 new at the eleventh pass, 10
+of them file counts beside a no-prefix or header-shaped pair), a claim of a sentence the two ports' templates may read
+apart takes `main`'s claim whole, wrong verdicts included, the guard does not make the two ports agree, a licence
+under #121 is as sound as Z-3's list of doubts `main`'s reading also held (not provably complete), a defect that fires
+only on what a repair produces passes as that repair, the git door reads the repository twice (once for the
+reference), a removed `-- a` and an added `++ b` right before the next hunk still read as a file header, identifiers
+are compared as text rather than under NFKC, GNU header paths keep their timestamps as keys, a quoted path keeps its
+quotes, a lone CR or a backslash continuation still hides a definition from both readings, the port's claim templates
+still read the description with JavaScript's classes, a changed file named only by a `Submodule` line or an svn or hg
+binary notice is counted by neither reading, the path key is still each runtime's lower case, and #128's modes 2, 3, 5
+and 6 are not repaired. PATH-2 is not in 7.48.0, which ships `main`'s file.
 
 ## [Unreleased] — the blind packet's ids stop carrying the arm (#125), and the islands demo reads its own cohort (#93)
 
