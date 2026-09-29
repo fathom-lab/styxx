@@ -29,7 +29,8 @@
       "evidence": "release/zenodo-deposit-receipt-software-v6.2.0.json records software_doi=10.5281/zenodo.19758619 AND concept_doi=10.5281/zenodo.19758618 for the same deposit.",
       "should_say": "    value: \"10.5281/zenodo.19758618\"",
       "staleness": "UNVERIFIED as a release count. The repo ships zenodo bundles for v7.7.7 and v7.7.9 and papers reference styxx 7.47.0, so v6.2.0 is many releases behind, but the exact number of intervening releases was not counted for this entry and the 'around forty releases stale' figure in the task brief is not confirmed here.",
-      "fix_owner": "operator — rewriting a citation identifier is not the agent's call"
+      "fix_owner": "operator — rewriting a citation identifier is not the agent's call",
+      "resolved": "2026-09-29: CITATION.cff line 33 now names the concept DOI 10.5281/zenodo.19758618, which resolves to the latest software version (7.48.0, 10.5281/zenodo.23042251, deposited as a new version of that concept; release/zenodo-deposit-receipt-software-v7.48.0.json). Kept here as the record of the defect."
     },
     {
       "id": "D2",
@@ -110,9 +111,11 @@
       "points_at": "The styxx SOFTWARE concept record. This is the always-latest software DOI.",
       "chain": null,
       "status": "NO_LOCAL_COUNTERPART",
-      "cited_in": [],
+      "cited_in": [
+        "CITATION.cff:33"
+      ],
       "deposited_files": [],
-      "notes": "This is what CITATION.cff line 33 should name instead of 19758619. See defect D1."
+      "notes": "Named by CITATION.cff line 33 since 2026-09-29 (defect D1 resolved). Latest version: 7.48.0, 10.5281/zenodo.23042251 (release/zenodo-deposit-receipt-software-v7.48.0.json)."
     },
     {
       "doi": "10.5281/zenodo.19502715",
@@ -202,11 +205,9 @@
       "points_at": "styxx v6.2.0 — Reference Python Implementation. One file: styxx-v6.2.0-source-bundle.zip. Deposited 2026-04-25T09:21:39Z.",
       "chain": "concept 10.5281/zenodo.19758618",
       "status": "NO_LOCAL_COUNTERPART",
-      "cited_in": [
-        "CITATION.cff:33"
-      ],
+      "cited_in": [],
       "deposited_files": [],
-      "notes": "The deposited bundle styxx-v6.2.0-source-bundle.zip is not in the repo, so there is nothing to hash. CITATION.cff calls this a concept DOI; it is not. See defect D1."
+      "notes": "The deposited bundle styxx-v6.2.0-source-bundle.zip is not in the repo, so there is nothing to hash. No longer named by CITATION.cff (D1 resolved 2026-09-29); superseded as latest by 7.48.0, 10.5281/zenodo.23042251."
     },
     {
       "doi": "10.5281/zenodo.19761194",
@@ -599,6 +600,19 @@
       "cited_in": [],
       "deposited_files": [],
       "notes": null
+    },
+    {
+      "doi": "10.5281/zenodo.23042251",
+      "kind": "VERSION",
+      "kind_evidence": "release/zenodo-deposit-receipt-software-v7.48.0.json (deposit_id 23042251, software_doi, version 7.48.0, concept_recid 19758618)",
+      "points_at": "styxx v7.48.0: three files - styxx-v7.48.0-source-bundle.zip (git archive of tag v7.48.0, commit 1218dbad, with core.autocrlf=false), and the PyPI wheel and sdist. Published 2026-09-29T15:46:04Z as a new version of concept 10.5281/zenodo.19758618; related identifiers link the spec v1.0 (10.5281/zenodo.19746215, isSupplementTo) and the Fathom research series (10.5281/zenodo.19326174, isPartOf).",
+      "chain": "concept 10.5281/zenodo.19758618",
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [
+        "CITATION.cff:34 (description)"
+      ],
+      "deposited_files": [],
+      "notes": "The deposited zip is not in the repo; its contents are the tagged tree, reproducible with `git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.48.0/ v7.48.0`. File md5s are in the receipt; the wheel and sdist sha256 are the ones PyPI serves for 7.48.0. Zenodo stores the MIT license as 'mit-license'."
     }
   ],
   "open_questions": [

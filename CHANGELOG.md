@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — styxx 7.48.0 on Zenodo, as the next version of the software record
+
+styxx 7.48.0 is deposited on Zenodo as **10.5281/zenodo.23042251**, a new version of the styxx software
+concept record **10.5281/zenodo.19758618**, whose previous version was v6.2.0 (10.5281/zenodo.19758619,
+2026-04-25). The concept DOI now resolves to 7.48.0. The record holds three files: the v7.48.0 tag's tree as
+a zip (commit 1218dbad; every file equals its git blob; `git -c core.autocrlf=false archive` reproduces its
+contents) and the wheel and sdist PyPI serves for 7.48.0. Its related identifiers link the Cognometric
+Fingerprint Specification v1.0 (10.5281/zenodo.19746215, isSupplementTo), the Fathom research series
+(10.5281/zenodo.19326174, isPartOf), the GitHub release, the tagged tree and the PyPI page. It contains no
+result held back from publication and no unreleased work.
+
+- `CITATION.cff` line 33 now names the concept DOI, so "Cite this repository" follows the latest version;
+  `zenodo/MANIFEST.json` marks defect D1 resolved (kept as the record) and records the new version DOI.
+- `release/zenodo-deposit-receipt-software-v7.48.0.json` (published), `release/zenodo-draft-receipt-software-v7.48.0.json`
+  (the draft run, which stopped at read-back because Zenodo stores MIT as `mit-license`; the publish script
+  re-verified the draft before publishing), `release/zenodo-metadata-software-v7.48.0.json`, and the two scripts
+  in `scripts/`. The deposit script cannot publish; the publish script re-checks chain, version, file md5s and
+  links from Zenodo's side before it does.
+
 ## [Unreleased] — the blind packet's ids stop carrying the arm (#125), and the islands demo reads its own cohort (#93)
 
 **#125.** `papers/closed-model-frontier/external1_packet.py` numbered items `E1-000..` in arm order

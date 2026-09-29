@@ -30,8 +30,8 @@ keywords:
 # Concept DOI — always resolves to the latest software release
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.19758619"
-    description: "styxx software (concept DOI — latest version)"
+    value: "10.5281/zenodo.19758618"
+    description: "styxx software (concept DOI — resolves to the latest version; 7.48.0 is 10.5281/zenodo.23042251)"
 
 # Preferred citation: the position paper that called for the
 # 9 instruments shipped in this repo.
