@@ -1,0 +1,189 @@
+{
+  "schema": "fathom/zenodo-draft-receipt/v1",
+  "status": "stopped_at_metadata_readback",
+  "published": false,
+  "publish_step": "the operator, in the browser, after reading the draft",
+  "concept_recid": "19758618",
+  "concept_doi": "10.5281/zenodo.19758618",
+  "version": "7.48.0",
+  "token_source": "--token-file C:\\Users\\heyzo\\clawd\\secrets\\arxiv-creds.txt ([ZENODO] zenodo_token)",
+  "metadata_json_sha256": "4e43630758eed264bcda8607a47f0fc73d0a193eb719fded0ed13b6956647e7b",
+  "script_sha256": "a7c467593d280818d5a42af4399b61ab6001b595768b089f446d56576da0dee9",
+  "local_files": [
+    {
+      "name": "styxx-v7.48.0-source-bundle.zip",
+      "bytes": 275463019,
+      "sha256": "4e886abe45691e56d1046ad41fa1f9d1cb59ab4594366e30a6faa2dcd90d1336",
+      "md5": "1145aff5e0fe5f532ee2f7e8ab01f9fe"
+    },
+    {
+      "name": "styxx-7.48.0-py3-none-any.whl",
+      "bytes": 8040992,
+      "sha256": "624e0715e1f7e23dc17fd2aabf21b942caebec8f094d2a620f8f29e8811be1f0",
+      "md5": "4304824ee5e3f0335586ba82a1ddd771"
+    },
+    {
+      "name": "styxx-7.48.0.tar.gz",
+      "bytes": 8576261,
+      "sha256": "48208cdbe60dd80285110b2d845f52c52fa0c653cf1bb6115560ae937acb7b0d",
+      "md5": "0fc7b2fcf57762d633d6fffc1415939b"
+    }
+  ],
+  "predecessor": {
+    "id": 19758619,
+    "doi": "10.5281/zenodo.19758619",
+    "version": "6.2.0",
+    "title": "styxx v6.2.0 — Reference Python Implementation of the Cognometric Fingerprint Specification",
+    "files": [
+      "styxx-v6.2.0-source-bundle.zip"
+    ]
+  },
+  "draft_id": 23042251,
+  "draft_url": "https://zenodo.org/deposit/23042251",
+  "draft_api_url": "https://zenodo.org/api/deposit/depositions/23042251",
+  "written_utc": "2026-09-29T15:45:34Z",
+  "inherited_files_deleted": [
+    "styxx-v6.2.0-source-bundle.zip"
+  ],
+  "uploads": [
+    {
+      "name": "styxx-v7.48.0-source-bundle.zip",
+      "put_md5": "1145aff5e0fe5f532ee2f7e8ab01f9fe",
+      "put_size": 275463019
+    },
+    {
+      "name": "styxx-7.48.0-py3-none-any.whl",
+      "put_md5": "4304824ee5e3f0335586ba82a1ddd771",
+      "put_size": 8040992
+    },
+    {
+      "name": "styxx-7.48.0.tar.gz",
+      "put_md5": "0fc7b2fcf57762d633d6fffc1415939b",
+      "put_size": 8576261
+    }
+  ],
+  "metadata_readback": {
+    "title": true,
+    "version": true,
+    "publication_date": true,
+    "upload_type": true,
+    "license": false,
+    "creators": true,
+    "keywords": true,
+    "related_identifiers": true,
+    "description_nonempty": true,
+    "notes": true,
+    "access_right": true
+  },
+  "reserved_doi_not_registered_until_publish": "10.5281/zenodo.23042251",
+  "file_checksums": [
+    {
+      "name": "styxx-v7.48.0-source-bundle.zip",
+      "bytes": 275463019,
+      "sha256": "4e886abe45691e56d1046ad41fa1f9d1cb59ab4594366e30a6faa2dcd90d1336",
+      "local_md5": "1145aff5e0fe5f532ee2f7e8ab01f9fe",
+      "zenodo_md5": "1145aff5e0fe5f532ee2f7e8ab01f9fe",
+      "zenodo_filesize": 275463019.0,
+      "match": true
+    },
+    {
+      "name": "styxx-7.48.0-py3-none-any.whl",
+      "bytes": 8040992,
+      "sha256": "624e0715e1f7e23dc17fd2aabf21b942caebec8f094d2a620f8f29e8811be1f0",
+      "local_md5": "4304824ee5e3f0335586ba82a1ddd771",
+      "zenodo_md5": "4304824ee5e3f0335586ba82a1ddd771",
+      "zenodo_filesize": 8040992.0,
+      "match": true
+    },
+    {
+      "name": "styxx-7.48.0.tar.gz",
+      "bytes": 8576261,
+      "sha256": "48208cdbe60dd80285110b2d845f52c52fa0c653cf1bb6115560ae937acb7b0d",
+      "local_md5": "0fc7b2fcf57762d633d6fffc1415939b",
+      "zenodo_md5": "0fc7b2fcf57762d633d6fffc1415939b",
+      "zenodo_filesize": 8576261.0,
+      "match": true
+    }
+  ],
+  "stopped_because": "files verified, but Zenodo read back these metadata fields differently from metadata.json: ['license']. Compare them in the draft before anyone publishes",
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/records/19758618/versions/latest",
+      "status": 200,
+      "seconds": 1.08
+    },
+    {
+      "method": "GET",
+      "path": "/api/deposit/depositions",
+      "status": 200,
+      "seconds": 0.34
+    },
+    {
+      "method": "GET",
+      "path": "/api/deposit/depositions/19758619",
+      "status": 200,
+      "seconds": 0.23
+    },
+    {
+      "method": "POST",
+      "path": "/api/deposit/depositions/19758619/actions/newversion",
+      "status": 201,
+      "seconds": 0.42
+    },
+    {
+      "method": "GET",
+      "path": "/api/deposit/depositions/23042251",
+      "status": 200,
+      "seconds": 0.17
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/deposit/depositions/23042251/files/48098a8c-c4c2-4d02-a736-7731cb8bbb01",
+      "status": 204,
+      "seconds": 0.25
+    },
+    {
+      "method": "GET",
+      "path": "/api/deposit/depositions/23042251/files",
+      "status": 200,
+      "seconds": 0.13
+    },
+    {
+      "method": "PUT",
+      "path": "/api/files/2fc0b960-fbd4-43c5-8e63-aab38331f609/styxx-v7.48.0-source-bundle.zip",
+      "status": 201,
+      "seconds": 920.34
+    },
+    {
+      "method": "PUT",
+      "path": "/api/files/2fc0b960-fbd4-43c5-8e63-aab38331f609/styxx-7.48.0-py3-none-any.whl",
+      "status": 201,
+      "seconds": 35.85
+    },
+    {
+      "method": "PUT",
+      "path": "/api/files/2fc0b960-fbd4-43c5-8e63-aab38331f609/styxx-7.48.0.tar.gz",
+      "status": 201,
+      "seconds": 54.68
+    },
+    {
+      "method": "PUT",
+      "path": "/api/deposit/depositions/23042251",
+      "status": 200,
+      "seconds": 0.42
+    },
+    {
+      "method": "GET",
+      "path": "/api/deposit/depositions/23042251",
+      "status": 200,
+      "seconds": 0.26
+    },
+    {
+      "method": "GET",
+      "path": "/api/deposit/depositions/23042251/files",
+      "status": 200,
+      "seconds": 0.27
+    }
+  ]
+}
