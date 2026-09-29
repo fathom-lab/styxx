@@ -132,9 +132,10 @@ so; the eleventh's and the twelfth's notes were each committed alone before any 
   licence without its precondition beside a switch that reads more than its repair; #121's switch keying nothing by
   `main`'s key; K-5's symbol span stopping at a combining mark; `main`'s paths folding alike left unasked) each fail a
   gate, each by a committed test. At the twelfth pass the scorer writes out the tightened licences in its own code and
-  holds the instrument's licence facts to them. Its canaries reach every guard outcome on both doors in every run of
-  either mode (K-5, an abstention, and an abstention whose precondition held without its switch), and a run whose
-  canaries reach none fails. That closes round 11's finding that both modes admitted the git door skipping the guard,
+  holds the instrument's licence facts to them. Its canaries reach K-5 and an abstention on both doors, and an
+  abstention whose precondition held without its switch, in every run of either mode, and a run whose canaries reach
+  none fails (the twelfth pass wrote "every guard outcome"; no canary reached a licensed outcome until the thirteenth
+  pass). That closes round 11's finding that both modes admitted the git door skipping the guard,
   calling `main` and ignoring it, and a licence without its switch. It also replays `main`'s `kind` leak in its own
   extraction, and lets a failure of git or the operating system fail the run instead of reading as an instrument
   defect.

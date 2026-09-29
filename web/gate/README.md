@@ -247,8 +247,9 @@ two doors agreed:
   text's own doubts), and in 47 the reverse.
 
 The cost is recall. On the differential corpus `main` decides 2,726 claims and this branch abstains on 486 of them. On
-the 3,485 pairs the eleventh pass measured, it abstains on 472 of 2,660, five more than the eleventh pass (the five
-re-pinned pairs). Over the regression sets' raw door under 3.12 (214,951 claims), this pass abstains on 8,993 claims
+the 3,485 pairs the eleventh pass measured, it abstains on 472 of 2,660, four more than the eleventh pass's 468 (the
+re-pinned pairs; this README said "five more" until the thirteenth pass, `NOTE_path2_thirteenth_pass_2026_09_29`,
+H.4). Over the regression sets' raw door under 3.12 (214,951 claims), this pass abstains on 8,993 claims
 the eleventh pass decided:
 - 3,060 of them false by truth where `main`'s were not: the regressions this pass removes;
 - 5,705 right, and 228 undecided by the harness;
@@ -562,8 +563,10 @@ violation, and the provenance records the guard's reference as the baseline, byt
   detected).
 - **The canaries** (20 records: seven door canaries and thirteen raw-door canaries): 0 violations. The door canaries are
   paths holding U+0085, U+2028 or U+2029, K-5's sentence, a case-only #97 match, a dotted status mismatch and a lone
-  dotfile. The canaries reach every guard outcome on both doors (K-5, an abstention, and on the raw door an abstention
-  whose precondition held without its switch), and a run whose canaries reach none fails.
+  dotfile. The canaries reach K-5 and an abstention on both doors, and on the raw door an abstention whose
+  precondition held without its switch, and a run whose canaries reach none fails. (This README said they reach
+  "every guard outcome"; they reached no licensed outcome on either door, which is why round 12's PA, PK and PF passed
+  them. The thirteenth pass adds canaries that do, and requires them: NOTE H.2.)
 - Scorer `93f3c169…`, harness `75bfbc39…`, repaired `diffgate.py` `ede86d7b…`, reference and baseline `9b620e00…`
   (`98a5c368`).
 
@@ -573,7 +576,8 @@ refuses it through the canaries that every run of either mode scores:
   PG1c, which both modes admitted at the eleventh pass);
 - a licence without its precondition, or without its switch (PG3, PG4);
 - a dotted entry satisfying any path claim, or a count off by one beside a dotfile (PD2, PD3);
-- each tightened licence dropped.
+- each tightened licence dropped, except `98f74833`'s tier-kept #121 path licence, which no canary reached: dropped, it
+  passed the canaries and corpus mode (round 12's PK; the thirteenth pass adds its canary, NOTE H.3).
 
 Keeping a decided claim where `main` makes no such claim, or raises (PG7), is held by stub tests only. The two readers
 extract the same claims, and where `main` raises Z-1 to Z-3 abstain every claim unless `--run` or `--evidence` is
