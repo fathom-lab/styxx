@@ -1,0 +1,615 @@
+{
+ "source": "NOTE_path2_thirteenth_pass: round 12's reproductions (verify12_diffgate_0.json, the regressions lens) -- git's typechange (a deletion section then a creation section for one path: file to symlink, to and from a submodule under diff.submodule default and log, symlink to empty file, executable to symlink) through #97 and #121, and a name ending in whitespace in difflib's rendering through #97 -- with each case's base and head model (modes included) and git's --name-status for it; two controls (a mode change and a symlink retarget, both M)",
+ "cases": [
+  {
+   "id": "T1",
+   "summary": "Created .cfg.json. Removed .cfg.json. 2 files changed.",
+   "diff": "diff --git a/.cfg.json b/.cfg.json\ndeleted file mode 100644\nindex bd2c89c..0000000\n--- a/.cfg.json\n+++ /dev/null\n@@ -1 +0,0 @@\n-A=1\ndiff --git a/.cfg.json b/.cfg.json\nnew file mode 120000\nindex 0000000..3b1af6c\n--- /dev/null\n+++ b/.cfg.json\n@@ -0,0 +1 @@\n+target.json\n\\ No newline at end of file\ndiff --git a/cfg.json b/cfg.json\nindex 587be6b..975fbec 100644\n--- a/cfg.json\n+++ b/cfg.json\n@@ -1 +1 @@\n-x\n+y\n",
+   "git": true,
+   "name_status": "T\t.cfg.json\nM\tcfg.json\n",
+   "model": {
+    "base": {
+     ".cfg.json": "A=1\n",
+     "cfg.json": "x\n"
+    },
+    "head": {
+     ".cfg.json": {
+      "link": "target.json"
+     },
+     "cfg.json": "y\n"
+    }
+   }
+  },
+  {
+   "id": "T2",
+   "summary": "Created lib/x.sh. Deleted lib/x.sh. Modified lib/x.sh.",
+   "diff": "diff --git a/aaa/x.sh b/aaa/x.sh\nindex d905d9d..6a69f92 100644\n--- a/aaa/x.sh\n+++ b/aaa/x.sh\n@@ -1 +1 @@\n-e\n+f\ndiff --git a/lib/x.sh b/lib/x.sh\ndeleted file mode 100644\nindex fa11a6a..0000000\n--- a/lib/x.sh\n+++ /dev/null\n@@ -1 +0,0 @@\n-echo\ndiff --git a/lib/x.sh b/lib/x.sh\nnew file mode 120000\nindex 0000000..c7e58fc\n--- /dev/null\n+++ b/lib/x.sh\n@@ -0,0 +1 @@\n+tgt\n\\ No newline at end of file\n",
+   "git": true,
+   "name_status": "M\taaa/x.sh\nT\tlib/x.sh\n",
+   "model": {
+    "base": {
+     "lib/x.sh": "echo\n",
+     "aaa/x.sh": "e\n"
+    },
+    "head": {
+     "lib/x.sh": {
+      "link": "tgt"
+     },
+     "aaa/x.sh": "f\n"
+    }
+   }
+  },
+  {
+   "id": "T3",
+   "summary": "Created lib/x.sh.",
+   "diff": "diff --git a/aaa/x.sh b/aaa/x.sh\nindex d905d9d..6a69f92 100644\n--- a/aaa/x.sh\n+++ b/aaa/x.sh\n@@ -1 +1 @@\n-e\n+f\ndiff --git a/src/lib/x.sh b/src/lib/x.sh\ndeleted file mode 100644\nindex fa11a6a..0000000\n--- a/src/lib/x.sh\n+++ /dev/null\n@@ -1 +0,0 @@\n-echo\ndiff --git a/src/lib/x.sh b/src/lib/x.sh\nnew file mode 120000\nindex 0000000..c7e58fc\n--- /dev/null\n+++ b/src/lib/x.sh\n@@ -0,0 +1 @@\n+tgt\n\\ No newline at end of file\n",
+   "git": true,
+   "name_status": "M\taaa/x.sh\nT\tsrc/lib/x.sh\n",
+   "model": {
+    "base": {
+     "src/lib/x.sh": "echo\n",
+     "aaa/x.sh": "e\n"
+    },
+    "head": {
+     "src/lib/x.sh": {
+      "link": "tgt"
+     },
+     "aaa/x.sh": "f\n"
+    }
+   }
+  },
+  {
+   "id": "T4",
+   "summary": "Created lib/x.py.",
+   "diff": "diff --git a/aaa/x.py b/aaa/x.py\nindex 6e5be25..a678603 100644\n--- a/aaa/x.py\n+++ b/aaa/x.py\n@@ -1 +1 @@\n-b = 1\n+b = 2\ndiff --git a/lib/x.py b/lib/x.py\ndeleted file mode 100644\nindex 1337a53..0000000\n--- a/lib/x.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-a = 1\ndiff --git a/lib/x.py b/lib/x.py\nnew file mode 160000\nindex 0000000..1111111\n--- /dev/null\n+++ b/lib/x.py\n@@ -0,0 +1 @@\n+Subproject commit 1111111111111111111111111111111111111111\n",
+   "git": true,
+   "name_status": "M\taaa/x.py\nT\tlib/x.py\n",
+   "model": {
+    "base": {
+     "lib/x.py": "a = 1\n",
+     "aaa/x.py": "b = 1\n"
+    },
+    "head": {
+     "lib/x.py": {
+      "gitlink": "1111111111111111111111111111111111111111"
+     },
+     "aaa/x.py": "b = 2\n"
+    }
+   }
+  },
+  {
+   "id": "T4-submodule-log",
+   "summary": "Created lib/x.py. Deleted lib/x.py.",
+   "diff": "diff --git a/aaa/x.py b/aaa/x.py\nindex 6e5be25..a678603 100644\n--- a/aaa/x.py\n+++ b/aaa/x.py\n@@ -1 +1 @@\n-b = 1\n+b = 2\ndiff --git a/lib/x.py b/lib/x.py\ndeleted file mode 100644\nindex 1337a53..0000000\n--- a/lib/x.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-a = 1\nSubmodule lib/x.py 0000000...1111111 (new submodule)\n",
+   "git": true,
+   "name_status": "M\taaa/x.py\nT\tlib/x.py\n",
+   "model": {
+    "base": {
+     "lib/x.py": "a = 1\n",
+     "aaa/x.py": "b = 1\n"
+    },
+    "head": {
+     "lib/x.py": {
+      "gitlink": "1111111111111111111111111111111111111111"
+     },
+     "aaa/x.py": "b = 2\n"
+    }
+   }
+  },
+  {
+   "id": "T5",
+   "summary": "Created lib/x.py. Deleted lib/x.py.",
+   "diff": "diff --git a/aaa/x.py b/aaa/x.py\nindex 6e5be25..a678603 100644\n--- a/aaa/x.py\n+++ b/aaa/x.py\n@@ -1 +1 @@\n-b = 1\n+b = 2\ndiff --git a/lib/x.py b/lib/x.py\ndeleted file mode 160000\nindex 1111111..0000000\n--- a/lib/x.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-Subproject commit 1111111111111111111111111111111111111111\ndiff --git a/lib/x.py b/lib/x.py\nnew file mode 100644\nindex 0000000..1337a53\n--- /dev/null\n+++ b/lib/x.py\n@@ -0,0 +1 @@\n+a = 1\n",
+   "git": true,
+   "name_status": "M\taaa/x.py\nT\tlib/x.py\n",
+   "model": {
+    "base": {
+     "lib/x.py": {
+      "gitlink": "1111111111111111111111111111111111111111"
+     },
+     "aaa/x.py": "b = 1\n"
+    },
+    "head": {
+     "lib/x.py": "a = 1\n",
+     "aaa/x.py": "b = 2\n"
+    }
+   }
+  },
+  {
+   "id": "T5-submodule-log",
+   "summary": "Created lib/x.py. Deleted lib/x.py.",
+   "diff": "diff --git a/aaa/x.py b/aaa/x.py\nindex 6e5be25..a678603 100644\n--- a/aaa/x.py\n+++ b/aaa/x.py\n@@ -1 +1 @@\n-b = 1\n+b = 2\nSubmodule lib/x.py 1111111...0000000 (submodule deleted)\ndiff --git a/lib/x.py b/lib/x.py\nnew file mode 100644\nindex 0000000..1337a53\n--- /dev/null\n+++ b/lib/x.py\n@@ -0,0 +1 @@\n+a = 1\n",
+   "git": true,
+   "name_status": "M\taaa/x.py\nT\tlib/x.py\n",
+   "model": {
+    "base": {
+     "lib/x.py": {
+      "gitlink": "1111111111111111111111111111111111111111"
+     },
+     "aaa/x.py": "b = 1\n"
+    },
+    "head": {
+     "lib/x.py": "a = 1\n",
+     "aaa/x.py": "b = 2\n"
+    }
+   }
+  },
+  {
+   "id": "T6",
+   "summary": "Deleted lib/x.sh. Created lib/x.sh.",
+   "diff": "diff --git a/aaa/x.sh b/aaa/x.sh\nindex d905d9d..6a69f92 100644\n--- a/aaa/x.sh\n+++ b/aaa/x.sh\n@@ -1 +1 @@\n-e\n+f\ndiff --git a/lib/x.sh b/lib/x.sh\ndeleted file mode 120000\nindex c7e58fc..0000000\n--- a/lib/x.sh\n+++ /dev/null\n@@ -1 +0,0 @@\n-tgt\n\\ No newline at end of file\ndiff --git a/lib/x.sh b/lib/x.sh\nnew file mode 100644\nindex 0000000..e69de29\n",
+   "git": true,
+   "name_status": "M\taaa/x.sh\nT\tlib/x.sh\n",
+   "model": {
+    "base": {
+     "lib/x.sh": {
+      "link": "tgt"
+     },
+     "aaa/x.sh": "e\n"
+    },
+    "head": {
+     "lib/x.sh": "",
+     "aaa/x.sh": "f\n"
+    }
+   }
+  },
+  {
+   "id": "T7",
+   "summary": "Deleted .cfg.json. Created .cfg.json.",
+   "diff": "diff --git a/.cfg.json b/.cfg.json\ndeleted file mode 120000\nindex c7e58fc..0000000\n--- a/.cfg.json\n+++ /dev/null\n@@ -1 +0,0 @@\n-tgt\n\\ No newline at end of file\ndiff --git a/.cfg.json b/.cfg.json\nnew file mode 100644\nindex 0000000..e69de29\ndiff --git a/cfg.json b/cfg.json\nindex d905d9d..6a69f92 100644\n--- a/cfg.json\n+++ b/cfg.json\n@@ -1 +1 @@\n-e\n+f\n",
+   "git": true,
+   "name_status": "T\t.cfg.json\nM\tcfg.json\n",
+   "model": {
+    "base": {
+     ".cfg.json": {
+      "link": "tgt"
+     },
+     "cfg.json": "e\n"
+    },
+    "head": {
+     ".cfg.json": "",
+     "cfg.json": "f\n"
+    }
+   }
+  },
+  {
+   "id": "T7-env",
+   "summary": "Removed .env.json.",
+   "diff": "diff --git a/.env.json b/.env.json\ndeleted file mode 120000\nindex c1b0730..0000000\n--- a/.env.json\n+++ /dev/null\n@@ -1 +0,0 @@\n-x\n\\ No newline at end of file\ndiff --git a/.env.json b/.env.json\nnew file mode 100644\nindex 0000000..e69de29\ndiff --git a/env.json b/env.json\nindex 7898192..6178079 100644\n--- a/env.json\n+++ b/env.json\n@@ -1 +1 @@\n-a\n+b\n",
+   "git": true,
+   "name_status": "T\t.env.json\nM\tenv.json\n",
+   "model": {
+    "base": {
+     ".env.json": {
+      "link": "x"
+     },
+     "env.json": "a\n"
+    },
+    "head": {
+     ".env.json": "",
+     "env.json": "b\n"
+    }
+   }
+  },
+  {
+   "id": "T8",
+   "summary": "Created bin/run.sh.",
+   "diff": "diff --git a/aaa/run.sh b/aaa/run.sh\nindex d905d9d..6a69f92 100644\n--- a/aaa/run.sh\n+++ b/aaa/run.sh\n@@ -1 +1 @@\n-e\n+f\ndiff --git a/bin/run.sh b/bin/run.sh\ndeleted file mode 100755\nindex fa11a6a..0000000\n--- a/bin/run.sh\n+++ /dev/null\n@@ -1 +0,0 @@\n-echo\ndiff --git a/bin/run.sh b/bin/run.sh\nnew file mode 120000\nindex 0000000..eda76f7\n--- /dev/null\n+++ b/bin/run.sh\n@@ -0,0 +1 @@\n+../x\n\\ No newline at end of file\n",
+   "git": true,
+   "name_status": "M\taaa/run.sh\nT\tbin/run.sh\n",
+   "model": {
+    "base": {
+     "bin/run.sh": {
+      "x": "echo\n"
+     },
+     "aaa/run.sh": "e\n"
+    },
+    "head": {
+     "bin/run.sh": {
+      "link": "../x"
+     },
+     "aaa/run.sh": "f\n"
+    }
+   }
+  },
+  {
+   "id": "T9",
+   "summary": "Created .github/ci.yml. Only touches .github/. 2 files changed.",
+   "diff": "diff --git a/.github/ci.yml b/.github/ci.yml\ndeleted file mode 100644\nindex a8926a5..0000000\n--- a/.github/ci.yml\n+++ /dev/null\n@@ -1 +0,0 @@\n-a: 1\ndiff --git a/.github/ci.yml b/.github/ci.yml\nnew file mode 120000\nindex 0000000..6a9e185\n--- /dev/null\n+++ b/.github/ci.yml\n@@ -0,0 +1 @@\n+x.yml\n\\ No newline at end of file\ndiff --git a/github/ci.yml b/github/ci.yml\nindex 8b76663..f6f4a02 100644\n--- a/github/ci.yml\n+++ b/github/ci.yml\n@@ -1 +1 @@\n-b: 1\n+b: 2\n",
+   "git": true,
+   "name_status": "T\t.github/ci.yml\nM\tgithub/ci.yml\n",
+   "model": {
+    "base": {
+     ".github/ci.yml": "a: 1\n",
+     "github/ci.yml": "b: 1\n"
+    },
+    "head": {
+     ".github/ci.yml": {
+      "link": "x.yml"
+     },
+     "github/ci.yml": "b: 2\n"
+    }
+   }
+  },
+  {
+   "id": "M1-mode-change",
+   "summary": "Modified bin/run.sh. Created bin/run.sh. 2 files changed.",
+   "diff": "diff --git a/aaa/run.sh b/aaa/run.sh\nindex d905d9d..6a69f92 100644\n--- a/aaa/run.sh\n+++ b/aaa/run.sh\n@@ -1 +1 @@\n-e\n+f\ndiff --git a/bin/run.sh b/bin/run.sh\nold mode 100644\nnew mode 100755\n",
+   "git": true,
+   "name_status": "M\taaa/run.sh\nM\tbin/run.sh\n",
+   "model": {
+    "base": {
+     "bin/run.sh": "echo\n",
+     "aaa/run.sh": "e\n"
+    },
+    "head": {
+     "bin/run.sh": {
+      "x": "echo\n"
+     },
+     "aaa/run.sh": "f\n"
+    }
+   }
+  },
+  {
+   "id": "M2-symlink-retarget",
+   "summary": "Modified lib/x.sh. Created lib/x.sh.",
+   "diff": "diff --git a/aaa/x.sh b/aaa/x.sh\nindex d905d9d..6a69f92 100644\n--- a/aaa/x.sh\n+++ b/aaa/x.sh\n@@ -1 +1 @@\n-e\n+f\ndiff --git a/lib/x.sh b/lib/x.sh\nindex 2e65efe..63d8dbd 120000\n--- a/lib/x.sh\n+++ b/lib/x.sh\n@@ -1 +1 @@\n-a\n\\ No newline at end of file\n+b\n\\ No newline at end of file\n",
+   "git": true,
+   "name_status": "M\taaa/x.sh\nM\tlib/x.sh\n",
+   "model": {
+    "base": {
+     "lib/x.sh": {
+      "link": "a"
+     },
+     "aaa/x.sh": "e\n"
+    },
+    "head": {
+     "lib/x.sh": {
+      "link": "b"
+     },
+     "aaa/x.sh": "f\n"
+    }
+   }
+  },
+  {
+   "id": "W-sp-created-difflib",
+   "summary": "Created x.py.",
+   "diff": "--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/x.py \n@@ -0,0 +1 @@\n+new\n",
+   "git": false,
+   "name_status": "M\tlib/x.py\nA\tx.py \n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "x.py ": "new\n"
+    }
+   }
+  },
+  {
+   "id": "W-sp-deleted-difflib-noprefix",
+   "summary": "Deleted util.py.",
+   "diff": "--- a/util.py\n+++ a/util.py\n@@ -1 +1 @@\n-1\n+2\n--- util.py \n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "git": false,
+   "name_status": "M\ta/util.py\nD\tutil.py \n",
+   "model": {
+    "base": {
+     "a/util.py": "1\n",
+     "util.py ": "old\n"
+    },
+    "head": {
+     "a/util.py": "2\n"
+    }
+   }
+  },
+  {
+   "id": "W-sp-created-dir-difflib",
+   "summary": "Created lib/x.json.",
+   "diff": "--- a/aaa/x.json\n+++ b/aaa/x.json\n@@ -1 +1 @@\n-e\n+f\n--- /dev/null\n+++ b/lib/x.json \n@@ -0,0 +1 @@\n+new\n",
+   "git": false,
+   "name_status": "M\taaa/x.json\nA\tlib/x.json \n",
+   "model": {
+    "base": {
+     "aaa/x.json": "e\n"
+    },
+    "head": {
+     "aaa/x.json": "f\n",
+     "lib/x.json ": "new\n"
+    }
+   }
+  },
+  {
+   "id": "W-tab-created-difflib",
+   "summary": "Created x.py.",
+   "diff": "--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/x.py\t\n@@ -0,0 +1 @@\n+new\n",
+   "git": false,
+   "name_status": "M\tlib/x.py\nA\t\"x.py\\t\"\n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "x.py\t": "new\n"
+    }
+   }
+  },
+  {
+   "id": "W-tab-deleted-difflib-noprefix",
+   "summary": "Deleted util.py.",
+   "diff": "--- a/util.py\n+++ a/util.py\n@@ -1 +1 @@\n-1\n+2\n--- util.py\t\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "git": false,
+   "name_status": "M\ta/util.py\nD\t\"util.py\\t\"\n",
+   "model": {
+    "base": {
+     "a/util.py": "1\n",
+     "util.py\t": "old\n"
+    },
+    "head": {
+     "a/util.py": "2\n"
+    }
+   }
+  },
+  {
+   "id": "W-tab-created-dir-difflib",
+   "summary": "Created lib/x.json.",
+   "diff": "--- a/aaa/x.json\n+++ b/aaa/x.json\n@@ -1 +1 @@\n-e\n+f\n--- /dev/null\n+++ b/lib/x.json\t\n@@ -0,0 +1 @@\n+new\n",
+   "git": false,
+   "name_status": "M\taaa/x.json\nA\t\"lib/x.json\\t\"\n",
+   "model": {
+    "base": {
+     "aaa/x.json": "e\n"
+    },
+    "head": {
+     "aaa/x.json": "f\n",
+     "lib/x.json\t": "new\n"
+    }
+   }
+  },
+  {
+   "id": "W-nbsp-created-difflib",
+   "summary": "Created x.py.",
+   "diff": "--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/x.py \n@@ -0,0 +1 @@\n+new\n",
+   "git": false,
+   "name_status": "M\tlib/x.py\nA\t\"x.py\\302\\240\"\n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "x.py ": "new\n"
+    }
+   }
+  },
+  {
+   "id": "W-nbsp-deleted-difflib-noprefix",
+   "summary": "Deleted util.py.",
+   "diff": "--- a/util.py\n+++ a/util.py\n@@ -1 +1 @@\n-1\n+2\n--- util.py \n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "git": false,
+   "name_status": "M\ta/util.py\nD\t\"util.py\\302\\240\"\n",
+   "model": {
+    "base": {
+     "a/util.py": "1\n",
+     "util.py ": "old\n"
+    },
+    "head": {
+     "a/util.py": "2\n"
+    }
+   }
+  },
+  {
+   "id": "W-nbsp-created-dir-difflib",
+   "summary": "Created lib/x.json.",
+   "diff": "--- a/aaa/x.json\n+++ b/aaa/x.json\n@@ -1 +1 @@\n-e\n+f\n--- /dev/null\n+++ b/lib/x.json \n@@ -0,0 +1 @@\n+new\n",
+   "git": false,
+   "name_status": "M\taaa/x.json\nA\t\"lib/x.json\\302\\240\"\n",
+   "model": {
+    "base": {
+     "aaa/x.json": "e\n"
+    },
+    "head": {
+     "aaa/x.json": "f\n",
+     "lib/x.json ": "new\n"
+    }
+   }
+  },
+  {
+   "id": "W-ideo-created-difflib",
+   "summary": "Created x.py.",
+   "diff": "--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/x.py　\n@@ -0,0 +1 @@\n+new\n",
+   "git": false,
+   "name_status": "M\tlib/x.py\nA\t\"x.py\\343\\200\\200\"\n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "x.py　": "new\n"
+    }
+   }
+  },
+  {
+   "id": "W-ideo-deleted-difflib-noprefix",
+   "summary": "Deleted util.py.",
+   "diff": "--- a/util.py\n+++ a/util.py\n@@ -1 +1 @@\n-1\n+2\n--- util.py　\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "git": false,
+   "name_status": "M\ta/util.py\nD\t\"util.py\\343\\200\\200\"\n",
+   "model": {
+    "base": {
+     "a/util.py": "1\n",
+     "util.py　": "old\n"
+    },
+    "head": {
+     "a/util.py": "2\n"
+    }
+   }
+  },
+  {
+   "id": "W-ideo-created-dir-difflib",
+   "summary": "Created lib/x.json.",
+   "diff": "--- a/aaa/x.json\n+++ b/aaa/x.json\n@@ -1 +1 @@\n-e\n+f\n--- /dev/null\n+++ b/lib/x.json　\n@@ -0,0 +1 @@\n+new\n",
+   "git": false,
+   "name_status": "M\taaa/x.json\nA\t\"lib/x.json\\343\\200\\200\"\n",
+   "model": {
+    "base": {
+     "aaa/x.json": "e\n"
+    },
+    "head": {
+     "aaa/x.json": "f\n",
+     "lib/x.json　": "new\n"
+    }
+   }
+  },
+  {
+   "id": "W-2sp-created-difflib",
+   "summary": "Created x.py.",
+   "diff": "--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/x.py  \n@@ -0,0 +1 @@\n+new\n",
+   "git": false,
+   "name_status": "M\tlib/x.py\nA\tx.py  \n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "x.py  ": "new\n"
+    }
+   }
+  },
+  {
+   "id": "W-2sp-deleted-difflib-noprefix",
+   "summary": "Deleted util.py.",
+   "diff": "--- a/util.py\n+++ a/util.py\n@@ -1 +1 @@\n-1\n+2\n--- util.py  \n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "git": false,
+   "name_status": "M\ta/util.py\nD\tutil.py  \n",
+   "model": {
+    "base": {
+     "a/util.py": "1\n",
+     "util.py  ": "old\n"
+    },
+    "head": {
+     "a/util.py": "2\n"
+    }
+   }
+  },
+  {
+   "id": "W-2sp-created-dir-difflib",
+   "summary": "Created lib/x.json.",
+   "diff": "--- a/aaa/x.json\n+++ b/aaa/x.json\n@@ -1 +1 @@\n-e\n+f\n--- /dev/null\n+++ b/lib/x.json  \n@@ -0,0 +1 @@\n+new\n",
+   "git": false,
+   "name_status": "M\taaa/x.json\nA\tlib/x.json  \n",
+   "model": {
+    "base": {
+     "aaa/x.json": "e\n"
+    },
+    "head": {
+     "aaa/x.json": "f\n",
+     "lib/x.json  ": "new\n"
+    }
+   }
+  },
+  {
+   "id": "A97-trailing-space-created-difflib",
+   "summary": "Created x.py.",
+   "diff": "--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/x.py \n@@ -0,0 +1 @@\n+new\n",
+   "git": false,
+   "name_status": "M\tlib/x.py\nA\tx.py \n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "x.py ": "new\n"
+    }
+   }
+  },
+  {
+   "id": "A97-trailing-space-deleted-difflib",
+   "summary": "Deleted util.py.",
+   "diff": "--- a/a/util.py\n+++ b/a/util.py\n@@ -1 +1 @@\n-1\n+2\n--- a/util.py \n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "git": false,
+   "name_status": "M\ta/util.py\nD\tutil.py \n",
+   "model": {
+    "base": {
+     "a/util.py": "1\n",
+     "util.py ": "old\n"
+    },
+    "head": {
+     "a/util.py": "2\n"
+    }
+   }
+  },
+  {
+   "id": "t121-2912001-4-t_link_empty-t_empty_link",
+   "summary": "2 files changed. 3 files changed. Updated env.json. Removed .env.json.",
+   "diff": "diff --git a/.env.json b/.env.json\ndeleted file mode 120000\nindex 3079f48d..00000000\n--- a/.env.json\n+++ /dev/null\n@@ -1 +0,0 @@\n-t6.json\n\\ No newline at end of file\ndiff --git a/.env.json b/.env.json\nnew file mode 100644\nindex 00000000..e69de29b\ndiff --git a/env.json b/env.json\ndeleted file mode 100644\nindex e69de29b..00000000\ndiff --git a/env.json b/env.json\nnew file mode 120000\nindex 00000000..92b99316\n--- /dev/null\n+++ b/env.json\n@@ -0,0 +1 @@\n+t1.json\n\\ No newline at end of file\n",
+   "git": true,
+   "name_status": "T\t.env.json\nT\tenv.json\n",
+   "model": {
+    "base": {
+     ".env.json": {
+      "link": "t6.json"
+     },
+     "env.json": ""
+    },
+    "head": {
+     ".env.json": "",
+     "env.json": {
+      "link": "t1.json"
+     }
+    }
+   }
+  },
+  {
+   "id": "t97-2912001-5-t_empty_git",
+   "summary": "Modified lib/run.txt. Added new file aaa/run.txt. Only touches lib/.",
+   "diff": "diff --git a/A/run.txt b/A/run.txt\ndeleted file mode 100644\nindex fefa1cc8..00000000\nBinary files a/A/run.txt and /dev/null differ\ndiff --git a/aaa/run.txt b/aaa/run.txt\ndeleted file mode 100644\nindex df58afce..00000000\n--- a/aaa/run.txt\n+++ /dev/null\n@@ -1,3 +0,0 @@\n-k90 = 0\n-k54 = 7\n-k36 = 9\ndiff --git a/aaa/run.txt b/aaa/run.txt\nnew file mode 120000\nindex 00000000..738f9e75\n--- /dev/null\n+++ b/aaa/run.txt\n@@ -0,0 +1 @@\n+t8.json\n\\ No newline at end of file\ndiff --git a/lib/run.txt b/lib/run.txt\ndeleted file mode 100644\nindex e69de29b..00000000\ndiff --git a/lib/run.txt b/lib/run.txt\nnew file mode 160000\nindex 00000000..11111111\n--- /dev/null\n+++ b/lib/run.txt\n@@ -0,0 +1 @@\n+Subproject commit 1111111111111111111111111111111111111111\n",
+   "git": true,
+   "name_status": "D\tA/run.txt\nT\taaa/run.txt\nT\tlib/run.txt\n",
+   "model": {
+    "base": {
+     "lib/run.txt": "",
+     "A/run.txt": {
+      "b64": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8="
+     },
+     "aaa/run.txt": "k90 = 0\nk54 = 7\nk36 = 9\n"
+    },
+    "head": {
+     "lib/run.txt": {
+      "gitlink": "1111111111111111111111111111111111111111"
+     },
+     "A/run.txt": null,
+     "aaa/run.txt": {
+      "link": "t8.json"
+     }
+    }
+   }
+  },
+  {
+   "id": "sp-2912003-3644-difflib-noprefix#hand",
+   "summary": "7 files changed. Deleted x.py. Removed lib/x.py. 6 files changed. 5 files changed.",
+   "diff": "--- /dev/null\n+++ docs/a.md\n@@ -0,0 +1,2 @@\n+v720 = 8\n+v511 = 2\n--- docs/a.md \n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v683 = 2\n-v663 = 7\n--- lib/x.py\n+++ lib/x.py\n@@ -2,0 +3 @@\n+v98 = 9\n--- util.py\n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v208 = 7\n-v429 = 1\n--- util.py \n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v980 = 8\n-v456 = 2\n--- x.py\n+++ x.py\n@@ -1,2 +1,3 @@\n v478 = 5\n v837 = 4\n+v134 = 9\n--- x.py \n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v465 = 5\n-v457 = 9\n",
+   "git": false,
+   "name_status": "A\tdocs/a.md\nD\tdocs/a.md \nM\tlib/x.py\nD\tutil.py\nD\tutil.py \nM\tx.py\nD\tx.py \n",
+   "model": {
+    "base": {
+     "docs/a.md ": "v683 = 2\nv663 = 7\n",
+     "x.py": "v478 = 5\nv837 = 4\n",
+     "x.py ": "v465 = 5\nv457 = 9\n",
+     "lib/x.py": "v481 = 3\nv288 = 2\n",
+     "util.py": "v208 = 7\nv429 = 1\n",
+     "util.py ": "v980 = 8\nv456 = 2\n"
+    },
+    "head": {
+     "docs/a.md": "v720 = 8\nv511 = 2\n",
+     "x.py": "v478 = 5\nv837 = 4\nv134 = 9\n",
+     "lib/x.py": "v481 = 3\nv288 = 2\nv98 = 9\n"
+    }
+   }
+  }
+ ]
+}

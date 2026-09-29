@@ -220,18 +220,26 @@ def _claim(kind, verdict, text="s.", **detail):
 
 
 def _git_licence(status):
-    """What the licences read of a diff in git's own rendering, with no Z-3 doubt, each key read from itself."""
-    return {"rendered": True, "soft": False, "forms": {k: [k] for k in (status or {})}}
+    """What the licences read of a diff in git's own rendering, with no Z-3 doubt, each key read from itself, once."""
+    return {"rendered": True, "soft": False, "forms": {k: [k] for k in (status or {})}, "multi": set()}
+
+
+class _NotOneRepair(AssertionError):
+    """The guard asked a switched-off reading with other than exactly one repair off."""
 
 
 def _stub_evaluate(on, switched, status=None, sides=None, apart=None, licence=None):
     """evaluate(rp, out) for `_guard`: `on` with every repair on, `switched[repair]` with one switched off; `licence` what
-    the licences read (NOTE_path2_twelfth_pass), by default git's own rendering with no doubt."""
+    the licences read (NOTE_path2_twelfth_pass), by default git's own rendering with no doubt.
+    NOTE_path2_thirteenth_pass (round 12, PA): the guard's rule is ONE repair switched off at a time -- a licence read off
+    two or three repairs reverted together is not the operator's -- so a stub asked otherwise fails by that rule."""
     def evaluate(rp, out):
         if out is not None:
             out.update(status=status or {}, sides=sides or {}, apart=apart or [False] * len(on.claims),
                        licence=_git_licence(status) if licence is None else licence)
             return on
+        if len(rp.off) != 1:
+            raise _NotOneRepair(f"the guard asked a reading with {sorted(rp.off)} switched off, not one repair")
         (repair,) = rp.off
         return switched[repair]
     return evaluate
@@ -309,6 +317,24 @@ def test_the_tightened_licences_on_stubs():
     assert final(created, listing, only_case, lambda: _stub_gate(withheld))[0][0] == "UNCHECKABLE"
     assert final(created, listing, kept, lambda: _stub_gate(withheld))[0][0] == "VERIFIED"
     assert final(created, listing, dict(kept, soft=True), lambda: _stub_gate(withheld))[0][0] == "UNCHECKABLE"
+    # NOTE_path2_thirteenth_pass (A.1): the same licence, where the resolved entry is a key two file sections registered
+    assert final(created, listing, dict(kept, multi={"lib/src/readme.md"}), lambda: _stub_gate(withheld))[0][0] == \
+        "UNCHECKABLE"
+    assert final(created, listing, dict(kept, multi={"docs/readme.md"}), lambda: _stub_gate(withheld))[0][0] == \
+        "VERIFIED"
+
+
+def test_the_guard_asks_one_switched_off_repair_at_a_time():
+    """NOTE_path2_thirteenth_pass (round 12, PA): a licence is one repair switched off giving main's verdict back on its
+    own precondition. The stub refuses any other question, so a guard that asked two or three repairs reverted together
+    fails here by that rule, not by an unpacking error."""
+    mine, theirs = _claim("files_changed_count", "VERIFIED", n="2"), _claim("files_changed_count", "CONTRADICTED", n="2")
+    switched = {"#97": _stub_gate(mine), "#121": _stub_gate(theirs), "#101": _stub_gate(mine)}
+    g = dg._guard(_stub_evaluate(_stub_gate(mine), switched, status={".env": "A", "env": "A"}),
+                  lambda: _stub_gate(theirs), strict=False, tp=[])
+    assert [c.verdict for c in g.claims] == ["VERIFIED"]
+    with pytest.raises(_NotOneRepair):
+        _stub_evaluate(_stub_gate(mine), switched)(dg._Repairs(dg.REPAIRS), None)
 
 
 def test_git_own_rendering_is_read_alike_in_both_ports():
@@ -552,6 +578,7 @@ def test_the_git_door_is_guarded_against_mains_git_door_on_the_same_range(tmp_pa
 # differential corpora where a checkout has built them) and a seeded randomised set; the scratch harness of this round
 # runs the same check over every reviewer's harness set and more than 10,000 fresh cases.
 
+import base64  # noqa: E402
 import random  # noqa: E402
 
 DIFFERENTIAL = ROOT / "web" / "gate" / "differential"
@@ -821,14 +848,45 @@ R11 = json.loads((ROOT / "tests" / "fixtures" / "path2_round11_repros.json").rea
 # and the records this pass's own truth-judged differential found against its licences as committed at e4586637 (#121
 # licensing a path claim whose entry matched it only once lower-cased)
 R12 = json.loads((ROOT / "tests" / "fixtures" / "path2_twelfth_pass_repros.json").read_text(encoding="utf-8"))["cases"]
-TRUTH_CASES = R11 + R12
+# NOTE_path2_thirteenth_pass_2026_09_29 (E): round 12's reproductions -- git's typechange through #97 and #121, and a name
+# ending in whitespace in difflib's rendering through #97 -- each with a model whose entries carry their modes
+R13 = json.loads((ROOT / "tests" / "fixtures" / "path2_round12_repros.json").read_text(encoding="utf-8"))["cases"]
+TRUTH_CASES = R11 + R12 + R13
+# the twelfth pass's instrument (0f559a87) reads 30 of the 34 worse than main on the raw door: every typechange under git's
+# default diff.submodule (under diff.submodule=log the Submodule line's doubt already stopped #97) and every whitespace name;
+# not the two controls
+R13_WORSE_AT_0F559A87 = 30
+
+
+def _entry(value):
+    """(type, mode, content) of one model entry, or None where the path is absent: a str is a regular file (100644),
+    {"x": text} an executable (100755), {"b64": data} a binary regular file (100644), {"link": target} a symlink
+    (120000), {"gitlink": commit} a submodule (160000). NOTE_path2_thirteenth_pass (E): round 12 found the content-only
+    model blind to git's `T` (typechange), which two licences had turned into false verdicts."""
+    if value is None:
+        return None
+    if isinstance(value, str):
+        return ("file", "100644", value)
+    if "x" in value:
+        return ("file", "100755", value["x"])
+    if "b64" in value:
+        return ("file", "100644", "b64:" + value["b64"])
+    if "link" in value:
+        return ("symlink", "120000", value["link"])
+    return ("gitlink", "160000", value["gitlink"])
 
 
 def _truth_status(model) -> dict:
-    """{path: A | M | D}: the files whose bytes differ between the base and the head tree of the case's model."""
+    """{path: A | M | D | T}, as git's --name-status letters them: A absent in the base, D absent in the head, T the
+    path's type changed (a regular file, a symlink, a submodule), M its bytes or its executable bit changed."""
     base, head = model["base"], model["head"]
-    return {p: "A" if base.get(p) is None else "D" if head.get(p) is None else "M"
-            for p in sorted(set(base) | set(head)) if base.get(p) != head.get(p)}
+    out = {}
+    for p in sorted(set(base) | set(head)):
+        b, h = _entry(base.get(p)), _entry(head.get(p))
+        if b == h:
+            continue
+        out[p] = "A" if b is None else "D" if h is None else "T" if b[0] != h[0] else "M"
+    return out
 
 
 def _judge(values: set):
@@ -941,6 +999,50 @@ def test_the_truth_judged_check_refuses_the_licences_before_the_tier_kept_case()
     assert len(worse) == 4, worse
 
 
+def _instrument_at(sha: str, tag: str):
+    import types
+    r = subprocess.run(["git", "-C", str(ROOT), "show", f"{sha}:styxx/diffgate.py"], capture_output=True)
+    if r.returncode:
+        pytest.skip(f"commit {sha} is not in this clone")
+    mod = types.ModuleType(f"styxx._diffgate_{tag}")
+    mod.__package__, mod.__file__ = "styxx", f"<{sha}:styxx/diffgate.py>"
+    sys.modules[mod.__name__] = mod
+    exec(compile(r.stdout.decode("utf-8"), mod.__file__, "exec"), mod.__dict__)  # noqa: S102
+    return mod
+
+
+def _worse_at(mod, cases) -> list:
+    return [case["id"] for case in cases
+            if _worse(_as_rows(mod.gate_diff_text(case["summary"], case["diff"])),
+                      _as_rows(ref.gate_diff_text(case["summary"], case["diff"])), _truth_status(case["model"]))]
+
+
+def test_the_truth_model_reads_gits_letters_for_every_round_12_model():
+    """The model's statuses are git's own --name-status for the same trees, T included (recorded when the fixture was
+    built from repositories with those modes); the two controls, a mode change and a symlink retarget, are M."""
+    for case in R13:
+        listed = {}
+        for line in case["name_status"].splitlines():
+            parts = line.split("\t")
+            path = parts[-1]
+            if path.startswith('"'):
+                path = path[1:-1].encode("latin-1", "backslashreplace").decode("unicode_escape").encode(
+                    "latin-1").decode("utf-8")
+            listed[path] = parts[0][:1]
+        assert listed == _truth_status(case["model"]), case["id"]
+    assert {"T", "M", "A", "D"} <= {st for case in R13 for st in _truth_status(case["model"]).values()}
+
+
+def test_the_truth_judged_check_refuses_the_twelfth_pass_instrument():
+    """NOTE_path2_thirteenth_pass (E), calibration: the twelfth pass's instrument (0f559a87) reads round 12's
+    reproductions worse than main by this truth on the raw door -- the typechange through #97 and #121, and the name
+    ending in whitespace in difflib's rendering -- and this pass's head reads none of them worse (the test above)."""
+    mod = _instrument_at("0f559a87", "twelfth_pass")
+    worse = _worse_at(mod, R13)
+    assert len(worse) == R13_WORSE_AT_0F559A87, worse
+    assert not any(x.startswith("M1") or x.startswith("M2") for x in worse), worse
+
+
 def test_the_reproductions_read_no_worse_than_main_against_truth_in_the_port():
     node = shutil.which("node")
     if node is None:
@@ -970,7 +1072,9 @@ def _fast_import_path(path: str) -> bytes:
 
 def _repository(tmp_path: Path, cases: list) -> Path:
     """One bare repository holding each case's base and head trees as branches `bN` and `hN`, written by fast-import
-    (no working tree, so paths that differ only in case, end in a space or open with `a/` all survive)."""
+    (no working tree, so paths that differ only in case, end in a space or open with `a/` all survive).
+    NOTE_path2_thirteenth_pass (E): each entry is written with its mode -- 100644, 100755, a symlink (120000) and a
+    submodule (160000, a commit id) -- so git's --name-status reads its `T`."""
     git = shutil.which("git")
     if git is None:
         pytest.skip("git is not on PATH")
@@ -986,9 +1090,18 @@ def _repository(tmp_path: Path, cases: list) -> Path:
             if side == "head":
                 stream += b"from refs/heads/b%d\n" % i
             stream += b"deleteall\n"
-            for path, text in sorted(case["model"][side].items()):
-                data = text.encode("utf-8")
-                stream += b"M 100644 inline " + _fast_import_path(path) + b"\ndata %d\n" % len(data) + data + b"\n"
+            for path, value in sorted(case["model"][side].items()):
+                entry = _entry(value)
+                if entry is None:
+                    continue
+                kind, mode, content = entry
+                if kind == "gitlink":
+                    stream += b"M 160000 " + content.encode("ascii") + b" " + _fast_import_path(path) + b"\n"
+                    continue
+                data = (base64.b64decode(content[4:]) if isinstance(value, dict) and "b64" in value
+                        else content.encode("utf-8"))
+                stream += (b"M " + mode.encode("ascii") + b" inline " + _fast_import_path(path) + b"\ndata %d\n" % len(data)
+                           + data + b"\n")
             stream += b"\n"
     subprocess.run([git, "-C", str(repo), "fast-import", "--quiet"], input=bytes(stream), check=True, capture_output=True)
     return repo
@@ -1075,7 +1188,7 @@ def test_the_guarantee_holds_against_the_scorers_own_guard_at_the_git_door(score
                 continue
             gb, gn, gu = door.gate(pg.BASE, summary), door.gate(pg.new, summary), door.reading(pg.new, summary)
             cf = pg.Counterfactual(summary, diff, door)
-            facts = pg.own_git_licence(door.text, door.status_paths)
+            facts = pg.own_git_licence(door.text, door.status_paths, door.name_status)
             bad = pg.guard_violations(summary, gb.claims, gu, gn, lambda r: cf.reading({r}),
                                       lambda r: door.reading(pg.new, summary, pg.new._Repairs({r})).claims,
                                       door.status, pg.own_read(door.text)[2], None, facts)
@@ -1084,6 +1197,53 @@ def test_the_guarantee_holds_against_the_scorers_own_guard_at_the_git_door(score
         if scored >= 60:
             break
     assert scored >= 60, scored
+
+
+def test_the_git_door_licence_facts_read_gits_typechange_and_the_scorers_own(tmp_path, scorer):
+    """NOTE_path2_thirteenth_pass (A.1): at the git door an entry whose --name-status letter is T, one a mode change names,
+    or a key the diff text registers twice, licenses nothing (inert for a verdict: T and a mode-changed M never equal A or
+    D). What `_evaluate_git` hands its guard is held to the scorer's own reading of the same bytes, T included."""
+    pg = scorer
+    cases = [c for c in R13 if c["id"] in ("T1", "T2", "T8", "M1-mode-change", "T4")]
+    repo = _repository(tmp_path, cases)
+    multi = {}
+    for i, case in enumerate(cases):
+        ns = dg._git(repo, "diff", "--name-status", f"b{i}..h{i}")
+        text = dg._git(repo, "diff", f"b{i}..h{i}")
+        out: dict = {}
+        dg._evaluate_git(case["summary"], ns, text, dg._ALL_ON, repo=repo, base=f"b{i}", head=f"h{i}", out=out)
+        paths = [x.split("\t")[-1] for x in ns.splitlines() if len(x.split("\t")) >= 2]
+        assert out["licence"] == pg.own_git_licence(text, paths, ns), case["id"]
+        typechanged = {dg._norm(p) for p, st in _truth_status(case["model"]).items() if st == "T"}
+        assert typechanged <= out["licence"]["multi"], case["id"]
+        multi[case["id"]] = out["licence"]["multi"]
+    assert all(multi[c] for c in ("T1", "T2", "T8", "T4"))
+    assert multi["M1-mode-change"] == {"bin/run.sh"}          # git's `old mode`/`new mode`, an M in --name-status
+
+
+def test_the_licence_facts_read_alike_in_both_ports_on_round_12s_renderings():
+    """NOTE_path2_thirteenth_pass (A.1, A.2): `multi`, `moded` and the forms as written, the same in the Python and the port
+    on every round-12 rendering (typechange sections, names ending in whitespace, a TAB that ends a name)."""
+    py = {}
+    for case in R13:
+        facts: dict = {}
+        dg._diff_notes(case["diff"], facts)
+        py[case["id"]] = [sorted(facts["multi"]), sorted(facts["moded"]), sorted(facts["forms"].items())]
+    assert any(v[0] for v in py.values())
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    script = ("const B = require(process.argv[1]); const D = JSON.parse(require('fs').readFileSync(0, 'utf8')); const out = {};"
+              "for (const [k, d] of Object.entries(D)) { const o = {}; B._evaluate('1 file changed.', d, { out: o });"
+              " out[k] = [[...o.licence.multi].sort(), [...o.licence.moded].sort(), [...o.licence.forms].sort()]; }"
+              " process.stdout.write(JSON.stringify(out));")
+    r = subprocess.run([node, "-e", script, str(PORT)], input=json.dumps({c["id"]: c["diff"] for c in R13}),
+                       capture_output=True, text=True, encoding="utf-8", timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+    js = json.loads(r.stdout)
+    for cid, (multi, moded, forms) in py.items():
+        assert js[cid][0] == multi and js[cid][1] == moded, cid
+        assert [[k, v] for k, v in forms] == js[cid][2], cid
 
 
 # ---- 5. the port's reference ---------------------------------------------------------------------------------------------
