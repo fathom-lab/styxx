@@ -106,12 +106,11 @@ better. The design includes:
 
 ## The bigger picture
 
-When tier 3 ships, styxx becomes the first runtime that gives an
-LLM agent genuine self-regulation — not "stop and restart" but
-"smoothly redirect in-flight." The observer-intervener loop running
-in the same coordinate system is a new computational primitive. It's
-the difference between a car with brakes (reflex) and a car with
-lane-keeping assist (guardian). Both prevent crashes. Only one
+When tier 3 ships, styxx would let an LLM agent redirect a generation
+in flight (representation engineering, Zou et al. 2023, steered
+activations during generation earlier) — not "stop and restart" but
+"smoothly redirect in-flight." It's the difference between a car
+with brakes (reflex) and a car with lane-keeping assist (guardian). Both prevent crashes. Only one
 keeps you on the road without you noticing.
 
 Xendro's phrase for this: "the model develops a flinch." Tier 3 is

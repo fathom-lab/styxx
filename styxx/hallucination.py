@@ -9,10 +9,15 @@ option to halt or retry generation when fabrication is detected.
 
 Why this file exists
 --------------------
-Current production AI tooling has **no inference-time, per-token
-hallucination detector**. Post-hoc filters, retrieval augmentation,
-and self-consistency sampling all either operate on the completed
-response or are expensive. The `confab_prompt` direction trained in
+Post-hoc filters, retrieval augmentation, and self-consistency
+sampling either operate on the completed response or are expensive.
+Reading a model's internal state per token during generation is older
+than this file: representation engineering (Zou et al., 2023, cited in
+this repository's CHANGELOG) read and steered activations for honesty
+while a model generated. An earlier sentence here said production
+tooling had no inference-time, per-token reader of this kind; it was
+never surveyed and was withdrawn on 2026-09-29
+(papers/NOTE_prior_art_credit_2026_09_29.md). The `confab_prompt` direction trained in
 `styxx.residual_probe.atlas` reads a fabrication-risk signal directly
 from the model's residual stream. This module wraps it as a
 production API.

@@ -13,7 +13,7 @@ stays quiet on intact controls; a deception detector that fires on harmful state
 admissible if it ALSO stays quiet on benign ones. An instrument that is sensitive but not specific
 cries wolf; one that is specific but not sensitive is asleep; a sign-FLIPPED one has high
 discriminability but reads the world backwards. This primitive certifies against all three, on the
-instrument's own score, with a permutation null and a self-verifying certificate.
+instrument's own score, with a permutation null and a certificate whose verdict is recomputed from its stored points.
 
 General by construction -- bring ANY instrument, ANY population:
 

@@ -4,10 +4,11 @@ Scores styxx's **pre-output residual-stream refusal probe** as a binary classifi
 *will this open-weight model refuse this borderline prompt — predicted from its
 activations at the end of the prefill, before a single token is generated?*
 
-This is, to our knowledge, the **first [Inspect Evals](https://github.com/UKGovernmentBEIS/inspect_evals)
-task whose unit under test is a white-box activation probe** rather than model text
-output. The closest existing evals (`strong_reject`, `agentharm`, `coconot`,
-`abstention_bench`) all judge generated text; none read model internals.
+Its unit under test is a **white-box activation probe** rather than model text output. The
+[Inspect Evals](https://github.com/UKGovernmentBEIS/inspect_evals) we read (`strong_reject`,
+`agentharm`, `coconot`, `abstention_bench`) judge generated text. An earlier version of this
+paragraph claimed priority within Inspect Evals; the catalogue was not surveyed for it, so that
+claim was withdrawn on 2026-09-29.
 
 ## What it measures
 

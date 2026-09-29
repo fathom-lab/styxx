@@ -2,13 +2,15 @@
 """
 styxx.intercept -- real-time cognitive intervention.
 
-The first system that catches an LLM mid-thought and corrects it
-before the failure reaches the user.
+Catches a generation mid-stream, from its forecast trajectory, and
+corrects it before the failure reaches the user.
 
-Every AI safety system today is reactive:
-  - RLHF: trains before deployment (can't prevent novel failures)
-  - Guardrails: filter after generation (damage already done)
-  - Human review: catches after delivery (user already read it)
+An earlier version of this docstring claimed priority and called every
+other AI safety system reactive. Neither sentence was surveyed, and both
+were withdrawn on 2026-09-29: intervening in a model while it generates
+predates this module (representation engineering, Zou et al., 2023,
+reads and steers activations during generation). See
+papers/NOTE_prior_art_credit_2026_09_29.md.
 
 styxx.intercept works DURING generation:
   1. Token stream begins
@@ -382,7 +384,7 @@ def simulate_all_demo(verbose: bool = True) -> Dict[str, InterceptReport]:
     if verbose:
         print("=" * 58)
         print("  COGNITIVE INTERCEPT SIMULATION")
-        print("  the first system that catches an LLM mid-thought")
+        print("  forecast, rewind, re-anchor, resume")
         print("=" * 58)
 
     reports = {}

@@ -28,7 +28,7 @@ Research validation
 - K constant: K=1.0343 weighted mean across Gemma-2-2B/IT
   (Zenodo doi.org/10.5281/zenodo.19326174)
 - C metric: C_delta p=0.040 on TruthfulQA (n=50, Gemma-2-2B base)
-  First statistically significant circuit-level hallucination
+  A statistically significant circuit-level hallucination
   signature via SAE feature coherence geometry.
 - S axis: p=0.0002, d=1.03, AUC=0.81 (n=20 commitment vs hedging)
   IPR physics grounding: S = M * IPR(event_locations)

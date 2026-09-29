@@ -71,7 +71,7 @@ def _reference_from_metadata(metadata: Dict[str, Any]) -> Optional[str]:
                      data_type="string")
 class HallucinationCheck(Validator):
     """Guardrails AI validator backed by styxx's 9-signal cross-validated
-    hallucination detector.
+    fabrication-risk score.
 
     Parameters
     ----------

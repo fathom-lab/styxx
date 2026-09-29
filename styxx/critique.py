@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """styxx.critique — production-grade misconception detector via critique-mode prompting.
 
-The first method to PASS the styxx gauntlet's v3 detection bars (D1+D2+D3+D4)
-on the dark-core consensus-hallucination benchmark. See:
+It passed the styxx gauntlet's v3 detection bars (D1+D2+D3+D4) on the
+dark-core consensus-hallucination benchmark. See:
 
   - submissions/baseline_019_openai_critique/PRE_STATED_PREDICTION.md (commit fdcf92e)
   - submissions/baseline_019_openai_critique/submission.json (commit 17fdd97)

@@ -153,6 +153,37 @@ The correct response to all three is contribution: cases from other codebases,
 in the same schema, are the thing that turns this from a receipt into a
 benchmark. `CONTRIBUTING.md` in this directory has the format.
 
+## who named this family earlier
+
+A success report that hid a failure was named, measured and detected in
+continuous-integration research years before this corpus (August 2026).
+SILENT-PASS is a code-level member of that family, not its CI form, and it
+owes the credit:
+
+- **Gallaba, Macho, Pinzger, McIntosh**, *Noise and Heterogeneity in
+  Historical Build Data* (ASE 2018): 12% of passing Travis builds actively
+  ignore a failure; the Hansel detector and the Gretel fixer, with accepted
+  pull requests.
+- **CI-Odor** (Vassallo, Proksch, Gall, Di Penta, 2019): "skip failed tests"
+  detected from build logs across consecutive builds.
+- **Zampetti, Vassallo, Panichella, Canfora, Gall, Di Penta** (2020): an
+  empirical catalogue of CI bad practices.
+- **CD-Linter** (Vassallo, Proksch, Jancso, Gall, Di Penta, 2020): a Fake
+  Success smell (`allow_failure: true`) in 5.4% of 5,312 GitLab projects, and
+  145 issues followed for six months.
+- **Aïdasso, Bordeleau, Tizghadam**, *On the Illusion of Success*
+  (arXiv 2509.14347, 2025-09-17): "silent failures", green jobs that failed at
+  their task, measured by rerunning successful jobs in an industrial pipeline.
+- The **pseudo-tested-methods** line (Niedermayr et al., 2016; Vera-Pérez,
+  Danglot, Monperrus, Baudry, arXiv 1807.05030, 2018): remove the work and
+  demand that something fails.
+- *Towards Evaluation Engineering* (arXiv 2605.24213, 2026), which reports
+  evaluation harnesses failing silently, as `papers/RECON_landscape_2026_08_21.md`
+  records.
+
+The 2026-08-21 recon's sentence that no one else held a named class of this
+kind is withdrawn; see `papers/NOTE_prior_art_credit_2026_09_29.md`.
+
 ## what a case looks like
 
 ```json

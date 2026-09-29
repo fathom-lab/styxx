@@ -672,7 +672,7 @@ def tool_cogn_universal_perturbation(args: Dict[str, Any]) -> Dict[str, Any]:
             "deception": -0.056,
         },
         "interpretation": (
-            "First universal cognometric perturbation. Append to ANY response and "
+            "A universal cognometric perturbation. Append to ANY response and "
             "the sycophancy + overconfidence instruments will fire. The deception "
             "instrument resists (negative delta) — it tracks length and the suffix "
             "ADDS words, lowering the deception score. Use to red-team your own "

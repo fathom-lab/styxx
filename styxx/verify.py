@@ -8,9 +8,8 @@ styxx.verify -- the one question that matters.
     if not verdict.trustworthy:
         print(f"caution: {verdict.reason}")
 
-That's the entire API. One function. One answer. The problem AI has
-never been able to solve since Turing: knowing when the machine is
-wrong.
+That's the entire API. One function. One answer. It estimates
+whether the model is confabulating.
 
 The model's words don't tell you. RLHF trained it to sound confident
 regardless of correctness. But the logprob trajectory does tell you.
@@ -18,8 +17,11 @@ Knowledge converges (entropy falls, logprob rises). Fabrication
 diverges (entropy rises, logprob falls). d=2.04 on matched controls
 (ent_slope, N=92; papers/logprob-trajectory-confabulation.md, section 3.1).
 
-styxx.verify() reads the trajectory shape and gives you the answer
-no one else can.
+styxx.verify() reads the trajectory shape and gives you its answer.
+Using a model's own uncertainty to flag confabulation is older than
+this module (semantic entropy, Farquhar et al., Nature 2024, cited in
+papers/cognometry-manifesto.md). A sentence here saying no one else
+could give this answer was never surveyed and was withdrawn 2026-09-29.
 
 Usage:
     from styxx import OpenAI, verify

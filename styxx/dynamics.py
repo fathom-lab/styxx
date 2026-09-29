@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-styxx.dynamics — the first dynamical-systems model of LLM cognition.
+styxx.dynamics — a dynamical-systems model of LLM cognition.
 
-The field treats LLM inference as open-loop. There is no measurable
-state variable to close the loop on. fathom changes that: the
-calibrated cross-architecture cognitive eigenvalue projection (atlas
-v0.3) gives us a real state vector that lives in a substrate-
-independent space. Once you have a state vector you can fit a
-dynamical system to it. Once you have a dynamical system you can
+fathom's calibrated cross-architecture cognitive eigenvalue
+projection (atlas v0.3) gives a state vector that lives in a
+substrate-independent space. (An earlier version said the field had
+no measurable state variable to close the loop on; that was never
+surveyed and was withdrawn 2026-09-29: representation engineering,
+Zou et al., 2023, read and steered internal state earlier.) Once you
+have a state vector you can fit a dynamical system to it. Once you have a dynamical system you can
 predict, simulate, control, and reason about counterfactuals.
 
-This module is the first cognitive dynamics model in the field.
+This module is styxx's cognitive dynamics model.
 
 Math
 ────
@@ -89,7 +90,7 @@ Example
     # Forecast natural drift for n steps
     drift_path = dyn.forecast_horizon(t0, n_steps=10)
 
-3.1.0a1 — the first cognitive dynamics model in the field.
+3.1.0a1 — styxx's cognitive dynamics model.
 """
 
 from __future__ import annotations
