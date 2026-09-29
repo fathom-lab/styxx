@@ -7,6 +7,86 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — prior art credited, and the priority sentences that were not earned
+
+A landscape synthesis dated 2026-09-28, checked by a critic pass, found that neighbours did parts of
+this lab's work earlier. PR-MCI (Gong, Pinna, Bian, Zhang; arXiv 2601.04886, 2026-01-08) measured
+description-versus-code inconsistency on 23,247 AIDev agent pull requests, with 974 hand-labelled
+ones, about seven months before the diff gate existed. AgentLiar (Daksh Jain, 2026-05-20) shipped a
+GitHub Action checking an agent's completion claim against its file changes about ten weeks before
+it, and Swarm Orchestrator (Brad Kinnard, v10.0.0, 2026-05-23, self-reported) gated AI-written pull
+requests on their diffs with a hash-chained ledger. DeerFlow rendered an uncited report UNVERIFIED
+(RFC 2026-08-03, merged 2026-08-29) before sworn's `UNSWORN`, and Proof-Carrying Agent Actions
+(2026-06-02) told a moved checker from a moved result before charon. The operator approved these
+corrections on 2026-09-29. The synthesis was single agents through a summarising web reader, with
+no frozen procedure and no human review, so everything here corrects toward less. No frozen
+document, receipt, certificate, sworn file, sidecar or log is edited, and no released entry below
+is edited. The record, sentence by sentence, is `papers/NOTE_prior_art_credit_2026_09_29.md`.
+
+**Corrected in place.** `styxx/analytics.py` (primitives "nobody else has shipped"; no other
+observability tool computes a personality profile), `styxx/dashboard.py`, `styxx/forecast.py`,
+`styxx/intercept.py` (docstring and demo banner), `styxx/probe.py` ("Nobody offers this"),
+`styxx/verify.py` ("the answer no one else can") and `styxx/hallucination.py` (production tooling
+had no per-token reader): each unsurveyed priority sentence is withdrawn in the docstring that made
+it, and representation engineering (Zou et al., 2023) or semantic entropy (Farquhar et al., 2024),
+both already cited in this repository, is named where it applies. `examples/synth_preference_pairs.py`
+stops printing "nobody else can build this". `styxx/declare.py` credits the declared-claim
+neighbours with dates: NabaOS (2026-03-09), DeerFlow's receipt citations, readback (2026-09-13),
+commitlint-scope (2026-05-25), Swarm Orchestrator (2026-08-18) and Agent Trace (2026-01).
+`styxx/admissibility.py`, `styxx/adapters/guardrails.py` and the capsule skill
+(`integrations/openclaw/styxx-capsule/SKILL.md`) drop charter words about the lab's own work, and
+the skill credits Swarm Orchestrator's verifier-carrying bundles. The Inspect eval's README and
+`eval.yaml`, `docs/research/cognitive-dynamics-v0.md` and `docs/research/cognitive-metrology-charter.md`
+drop unsurveyed priority claims. `README.md`, `web/gate/README.md`, `sworn/README.md` and
+`benchmarks/silent_pass/CORPUS.md` gain a section saying who did this earlier, with dates.
+
+**Notes beside frozen documents.** `papers/closed-model-frontier/NOTE_prior_art_credit_2026_09_29.md`:
+the evidence leg's "we know of no one who pointed it at prose and measured what happened" (PR-MCI;
+DOCER, 2023; iComment, 2007), its conjunction (AgentLiar, Swarm Orchestrator, backcheck
+2026-08-04, DeerFlow), and "we can find none that verify the sentence is true" (backcheck,
+DeerFlow); the 2026-08-31 prior-art plan's gap sentences, its capsule sentence and its "nearest
+neighbour"; BENCH-1's "no PR-level benchmark" (PR-MCI's 974 labelled PRs); the "nobody" sentences
+in DECIDE-1, COMPAT-2 (cargo-semver-checks, japicmp, revapi) and the collateral census; the
+certified OATH survey's negative result (statcheck, PR-MCI, Deterministic Integrity Gates
+2026-06-08, metacheck 2026-08-16); and the credits DECLARE-1 and the capsule lacked.
+`papers/sworn/NOTE_prior_art_credit_2026_09_29.md`: the second-question sentence is retired
+(metacheck), and the survey's surviving sentence is at most a residual (DeerFlow's zero-citation
+verdict; Inline XBRL, 2013; showyourwork!, 2021; VeriFin, 2026-08-10).
+`papers/charon/NOTE_prior_art_credit_2026_09_29.md`: SKEW versus DRIFT (Proof-Carrying Agent
+Actions §8.3), signed chained receipts (Microsoft agent-governance-toolkit, 2026-04-27), Swarm
+Orchestrator's ledger and re-derivation. `papers/NOTE_prior_art_credit_2026_09_29.md`: the plan of
+record's claim-ledger sentence, the 2026-08-21 recon's "four things … no one else appears to" hold
+(Gallaba et al. 2018, CI-Odor 2019, Zampetti et al. 2020, CD-Linter 2020, Aïdasso et al.
+2025-09-17), the honesty thesis's missing MASK (2025) and Liars' Bench (2025), and 30 further
+priority sentences outside the landscape's lanes, withdrawn as never priced.
+
+**Released entries whose priority sentences are withdrawn, not edited.** [0.1.0a3]: "four
+creative primitives that no other tool in the space ships", and the `styxx personality` bullet's
+"no other tool in the observability space" sentences. [3.5.0]: the three priority claims in its
+headline list (a runtime for residual-stream control, a multi-vendor direction library, a
+cross-vendor cognitive audit); representation engineering, which the same entry cites, steered
+residual streams earlier. [3.5.1]: the priority claim in its opening line. [6.2.0]: the priority
+claim for `styxx.profile`. [7.1.0]: "Nobody else can build this because nobody else has both
+forward and inverse cognometry shipped." [7.7.10]: the priority claim for the EU AI Act Article 15
+bridge, in the heading and the bullet. [7.12.0] and [7.15.0]: use cases "nobody has a tool for".
+Each is withdrawn as a priority claim because no survey priced it; the measurements in those
+entries stand on their own receipts.
+
+**Not edited, and why.** `styxx/sworn.py`, `charon.py`, `capsule.py`, `certify.py`, `diffgate.py`,
+`evidence.py`, `claimdetect.py`, `attestation.py` and `corpus_audit.py`: their bytes are digested
+into sworn receipts, conformance vectors and charon lines, and `web/gate` pins `diffgate.py`, so a
+docstring edit would move digests that committed receipts name. `release/`, `zenodo/`, `arxiv/`,
+`drafts/` and the outreach and deposit scripts in `scripts/` are copies of what was said and carry
+the same claims, read the same way.
+
+**Owed.** A frozen-procedure survey pricing the diff gate's conjunction and re-pricing sworn's
+surviving sentence, with an independent re-fetch; a human-reviewed pass over the landscape's
+closest rows. Before the open ci-audit pull requests merge, their documents must credit CD-Linter,
+Gallaba et al., Zampetti et al., CI-Odor, Aïdasso et al., the pseudo-tested-methods line,
+Alshammari et al., ShellCheck SC2312 and actionlint, Swarm Orchestrator's defect-injection oracle
+and `--challenges`, backcheck's *qualified* verdict and i-dont-believe-you. styxx 7.48.0 carries no
+PEP 740 provenance; a release after this one should.
+
 ## [Unreleased] — the blind packet's ids stop carrying the arm (#125), and the islands demo reads its own cohort (#93)
 
 **#125.** `papers/closed-model-frontier/external1_packet.py` numbered items `E1-000..` in arm order
