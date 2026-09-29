@@ -14,15 +14,17 @@ scaffolding; and by `NOTE_path2_third_pass_2026_09_25.md`, `NOTE_path2_fourth_pa
 `NOTE_path2_fifth_pass_2026_09_25.md`, `NOTE_path2_sixth_pass_2026_09_25.md`,
 `NOTE_path2_seventh_pass_2026_09_25.md`, `NOTE_path2_eighth_pass_2026_09_27.md`,
 `NOTE_path2_ninth_pass_2026_09_27.md`, `NOTE_path2_tenth_pass_2026_09_28.md`,
-`NOTE_path2_eleventh_pass_2026_09_28.md` and `NOTE_path2_twelfth_pass_2026_09_29.md`) on the file that carries
-them, sha256 `ede86d7b13136344039e1fbf91f7653a39768e344e3687f3baecb5c2df2b9c75` (LF line endings; a wheel
+`NOTE_path2_eleventh_pass_2026_09_28.md`, `NOTE_path2_twelfth_pass_2026_09_29.md` and
+`NOTE_path2_thirteenth_pass_2026_09_29.md`) on the file that carries
+them, sha256 `c3eed72edfdf2ea8cf11667e42d47259964340b87d26b7fd56f5358a60012ac3` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares), reading names by the Unicode table `styxx/_xid.py` carries (15.0.0, table sha256
 `8df68f21…`) and abstaining on a name that meets the skew set beside it (the code points the Pythons the
 package supports, Unicode 13.0 to 16.0, read differently from the table; sha256 `0b7134fd…`; `diffgate.js`
 carries the same bytes, `gen_xid.py` writes both, `xid_versions.json` holds the skew set's sources), comparing two
 header paths' case by the fold `styxx/_fold.py` carries (Unicode 16.0.0, sha256 `a52cda82…`; `gen_fold.py` writes
-it into both files) — and this
+it into both files), and making the file list unsure where a header path holds a code point outside the set of code
+points Unicode 16.0.0 assigns, carried beside the fold (sha256 `56a413eb…`; the thirteenth pass, section D) — and this
 directory is the
 receipt for that port: the differential test that holds it to the Python's output, and the build that turns
 it into the bookmarklet people drag into their bookmarks bar.
@@ -74,10 +76,13 @@ byte comparison reported `bookmarklet_src.js … DIFFERS`, exit 1 (NOTE_path2_fo
 B-1). Measured after the line, on this Windows checkout, with terser 5.46.0: all three `matches`,
 exit 0. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 ce8c5d99643df13aa9aa20dffcc52a2c8ba625513723eca64ceef527e18158aa   77,675 chars
-    bookmarklet.href.txt  sha256 06cc044e46fc61ca360d75824697d653285704076e679360b00963258e0f1abd   77,686 chars
+    bookmarklet.min.js    sha256 51f06338e13dd2fd24de7fd6074cdadd627f0e8b8375e3d8b8a56a45e4f189e0   83,768 chars
+    bookmarklet.href.txt  sha256 1f803689069b21ec94b283ae9c4e6f89a56593613596e6db7f7896c20a495ad3   83,779 chars
 
-(25,302 characters more than the tenth-pass build: `main`'s port, carried whole as the guard's reference (`main`'s
+(4,551 characters more than the twelfth-pass build, `830b4ba7…`, 79,217 characters: the set of code points Unicode
+16.0.0 assigns, 3,225 of them, its decoder and the thirteenth pass's facts. The twelfth-pass build was 1,542 more than
+the eleventh's, `ce8c5d99…`, 77,675 characters, which was 25,302 characters more than the tenth-pass build: `main`'s
+port, carried whole as the guard's reference (`main`'s
 own bookmarklet is 24,335 characters), and the guard; the tenth-pass build was 4,446 more than the ninth's: the
 case fold, 1,996 of them, and the tenth pass's K-1 to K-5; the ninth-pass build was 8,577 more than the eighth's,
 `main`'s own reading in both of its spellings and the ninth pass's abstentions; the eighth-pass build was 4,895 more
@@ -112,7 +117,10 @@ line), compares two header paths' case by its engine's Unicode, raises on a `+++
 where `main` does not, and abstains on a path the Python extracts otherwise where the Python verifies;
 `c9a23982…`, 52,373 chars, the unmerged tenth-pass cut — licenses a file count over #121's dotted key beside a
 `---`/`+++` pair under a header neither reading can read (`git diff --no-prefix`) or a pair read as a header without a
-header's shape, where `main` read the count right, and prints two reasons' keys unfolded. A bookmark
+header's shape, where `main` read the count right, and prints two reasons' keys unfolded; `ce8c5d99…`, 77,675 chars,
+the unmerged eleventh-pass cut — licenses #121 in renderings with no `diff --git` header and #97 on a match only in
+case; `830b4ba7…`, 79,217 chars, the unmerged twelfth-pass cut — licenses #97 and #121 on a typechanged path (git's
+deletion then creation for one path) and #97 on a name ending in whitespace in `difflib`'s rendering. A bookmark
 that hashes to any of them is an old port; drag the new one.)
 
 Whatever a browser holds under that bookmark either hashes to the line above (drop the
@@ -134,13 +142,14 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to ede86d7b…,
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to c3eed72e…,
                                          # styxx/_diffgate_ref.py (main's reader) to 9b620e00…,
                                          # styxx/_xid.py's name table to 8df68f21… and its skew set to 0b7134fd…,
-                                         # and styxx/_fold.py's case fold to a52cda82…
+                                         # and styxx/_fold.py's case fold to a52cda82… and its assigned set
+                                         # to 56a413eb…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 353 pinned pairs against their expect blocks
+    node check_pairs.js                  # the 389 pinned pairs against their expect blocks
 
 The pin moved twice between the last two runs of this differential, and one of those moves is a
 finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to

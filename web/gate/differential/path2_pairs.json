@@ -6893,5 +6893,62 @@
    ],
    "uncovered_sentences": 0
   }
+ },
+ {
+  "id": "path2:m-13-a-header-path-holding-a-code-point-unicode-16-does-not-assign",
+  "summary": "1 file changed. 2 files changed. Only touches docs/. Modified src/c.py.",
+  "diff": "--- a/docs/a꟎b.md\n+++ b/docs/a꟎b.md\n@@ -1 +1 @@\n-x\n+y\n--- a/src/c.py\n+++ b/src/c.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path; claim says 1"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path; claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path"
+    ],
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-13-a-code-point-unicode-16-does-not-assign-in-a-path-only-main-keys",
+  "summary": "1 file changed. 2 files changed. Only touches db/.",
+  "diff": "diff --git a/db/q.sql b/db/q.sql\n--- a/db/q.sql\n+++ b/db/q.sql\n@@ -1,2 +1,2 @@\n SELECT 1;\n--- users꟎\n+++ x꟎\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main's reading keys a path holding a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path; claim says 1"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main's reading keys a path holding a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path; claim says 2"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's: main's reading keys a path holding a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
  }
 ]
