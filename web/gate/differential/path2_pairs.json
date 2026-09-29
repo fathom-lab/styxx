@@ -5901,5 +5901,333 @@
    ],
    "uncovered_sentences": 0
   }
+ },
+ {
+  "id": "path2:m-d12-cs-2909292-382-git-noprefix",
+  "summary": "Only touches README.md/. 1 file changed. New .ENV.JSON. New rEADME.md. 3 files changed. 4 files changed. Only touches docs/.",
+  "diff": "diff --git README.md README.md\nnew file mode 100644\nindex 00000000..d3182254\n--- /dev/null\n+++ README.md\n@@ -0,0 +1,2 @@\n+v234 = 6\n+v223 = 8\ndiff --git api/.env.json api/.env.json\nnew file mode 100644\nindex 00000000..f735bb22\n--- /dev/null\n+++ api/.env.json\n@@ -0,0 +1,2 @@\n+v867 = 7\n+v140 = 2\ndiff --git src/index.ts src/index.ts\nnew file mode 100644\nindex 00000000..03d23737\n--- /dev/null\n+++ src/index.ts\n@@ -0,0 +1,2 @@\n+v756 = 0\n+v238 = 5\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'readme.md': ['api/.env.json', 'src/index.ts']"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 3 files, claim says 1"
+    ],
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ],
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'readme.md'"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 3 files, claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 3 files, claim says 4"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'docs': ['readme.md', 'api/.env.json', 'src/index.ts']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-d12-em-2909292-786-git",
+  "summary": "New Ci.yml. 7 files changed. 5 files changed. Only touches github/. 8 files changed. Only touches .env/. New .github/Ci.yml.",
+  "diff": "diff --git a/.config/x.toml b/.config/x.toml\nnew file mode 100644\nindex 00000000..2f0133c4\n--- /dev/null\n+++ b/.config/x.toml\n@@ -0,0 +1,2 @@\n+v22 = 7\n+v325 = 6\ndiff --git a/.github/ci.yml b/.github/ci.yml\nnew file mode 100644\nindex 00000000..50ef1877\n--- /dev/null\n+++ b/.github/ci.yml\n@@ -0,0 +1,2 @@\n+v595 = 4\n+v45 = 9\ndiff --git a/.keep b/.keep\ndeleted file mode 100644\nindex e69de29b..00000000\ndiff --git a/config/x.toml b/config/x.toml\nindex 857ccd89..f98e93bd 100644\n--- a/config/x.toml\n+++ b/config/x.toml\n@@ -1,2 +1,3 @@\n v983 = 0\n v80 = 7\n+v485 = 3\ndiff --git a/github/ci.yml b/github/ci.yml\nindex 1ab9eebc..7d66da64 100644\n--- a/github/ci.yml\n+++ b/github/ci.yml\n@@ -1,2 +1,3 @@\n v103 = 7\n v604 = 1\n+v956 = 3\ndiff --git a/keep b/keep\nindex 5c2b2b77..d94d1469 100644\n--- a/keep\n+++ b/keep\n@@ -1,2 +1,3 @@\n v184 = 5\n v38 = 4\n+v444 = 3\ndiff --git a/pkg/__init__.py b/pkg/__init__.py\ndeleted file mode 100644\nindex e69de29b..00000000\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 7 files, claim says 7"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 7 files, claim says 5"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'github': ['.config/x.toml', '.keep', 'config/x.toml']"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 7 files, claim says 8"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside '.env': ['.config/x.toml', '.github/ci.yml', '.keep']"
+    ],
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-d12-ab-2909292-1885-git-mnemonic",
+  "summary": "Only touches config/. 6 files changed. New Src/a.py. Modified SETUP.CFG. 3 files changed. Deleted X.toml. 5 files changed. Only touches github/. 4 files changed.",
+  "diff": "diff --git c/.config/x.toml w/.config/x.toml\ndeleted file mode 100644\nindex 407aa99b..00000000\n--- c/.config/x.toml\n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v41 = 4\n-v855 = 2\ndiff --git c/a/setup.cfg w/a/setup.cfg\nnew file mode 100644\nindex 00000000..a119bb5e\n--- /dev/null\n+++ w/a/setup.cfg\n@@ -0,0 +1,2 @@\n+v694 = 9\n+v750 = 9\ndiff --git c/config/x.toml w/config/x.toml\nindex 4cbbe435..6a80ddb5 100644\n--- c/config/x.toml\n+++ w/config/x.toml\n@@ -1,2 +1,3 @@\n v844 = 7\n v883 = 3\n+v736 = 6\ndiff --git c/setup.cfg w/setup.cfg\ndeleted file mode 100644\nindex dd04562f..00000000\n--- c/setup.cfg\n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v547 = 4\n-v188 = 9\ndiff --git c/src/a.py w/src/a.py\ndeleted file mode 100644\nindex 3e37f833..00000000\n--- c/src/a.py\n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v742 = 6\n-v417 = 3\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'config': ['c/.config/x.toml', 'w/a/setup.cfg', 'w/config/x.toml']"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 5 files, claim says 6"
+    ],
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "'Src/a.py' is status 'D', claim wants 'A' — accusation WITHHELD pending the EXTERNAL-1 repair"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'A' for 'w/a/setup.cfg'"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 5 files, claim says 3"
+    ],
+    [
+     "file_deleted",
+     "VERIFIED",
+     "diff status 'D' for 'c/.config/x.toml'"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 5 files, claim says 5"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'github': ['c/.config/x.toml', 'w/a/setup.cfg', 'w/config/x.toml']"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 5 files, claim says 4"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-d12-cs-2909292-2384-git",
+  "summary": "1 file changed. Modified src/.env.json. 3 files changed. Deleted docs/.Env.json. 0 files changed. Created .env.json. 2 files changed.",
+  "diff": "diff --git a/docs/.Env.json b/docs/.Env.json\nnew file mode 100644\nindex 00000000..c4f7d17a\n--- /dev/null\n+++ b/docs/.Env.json\n@@ -0,0 +1,2 @@\n+v521 = 4\n+v338 = 2\ndiff --git a/src/.env.json b/src/.env.json\nindex c02486f9..54bf01ac 100644\n--- a/src/.env.json\n+++ b/src/.env.json\n@@ -1,2 +1,3 @@\n v572 = 2\n v31 = 6\n+v817 = 6\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 2 files, claim says 1"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/.env.json'"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 2 files, claim says 3"
+    ],
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "'docs/.Env.json' is status 'A', claim wants 'D' — accusation WITHHELD pending the EXTERNAL-1 repair"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 2 files, claim says 0"
+    ],
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-d12-em-2909292-3528-git",
+  "summary": "Updated pkg/__init__.py. Created X.toml. 4 files changed. 5 files changed. Updated config/x.toml. 6 files changed. Only touches env.json/. 7 files changed.",
+  "diff": "diff --git a/.config/x.toml b/.config/x.toml\nnew file mode 100644\nindex 00000000..ba8e188d\n--- /dev/null\n+++ b/.config/x.toml\n@@ -0,0 +1,2 @@\n+v953 = 3\n+v609 = 6\ndiff --git a/.env.json b/.env.json\ndeleted file mode 100644\nindex 9b38c3fe..00000000\n--- a/.env.json\n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v675 = 1\n-v689 = 6\ndiff --git a/config/x.toml b/config/x.toml\nindex 797eaae8..e7b0b673 100644\n--- a/config/x.toml\n+++ b/config/x.toml\n@@ -1,2 +1,3 @@\n v935 = 6\n v240 = 9\n+v432 = 4\ndiff --git a/docs/README.md b/docs/README.md\nnew file mode 100644\nindex 00000000..e69de29b\ndiff --git a/env.json b/env.json\nnew file mode 100644\nindex 00000000..4ca34fdf\n--- /dev/null\n+++ b/env.json\n@@ -0,0 +1,2 @@\n+v581 = 7\n+v698 = 3\ndiff --git a/pkg/__init__.py b/pkg/__init__.py\nnew file mode 100644\nindex 00000000..32272f07\n--- /dev/null\n+++ b/pkg/__init__.py\n@@ -0,0 +1,2 @@\n+v990 = 1\n+v345 = 7\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'A' for 'pkg/__init__.py'"
+    ],
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 6 files, claim says 4"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 6 files, claim says 5"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'config/x.toml'"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 6 files, claim says 6"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'env.json': ['.config/x.toml', 'config/x.toml', 'docs/readme.md']"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 6 files, claim says 7"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-d12-cs-2909292-3739-git",
+  "summary": "Created .ENV.JSON. Created Docs/.Env.json. 0 files changed. 1 file changed. Created .Env.json. 2 files changed.",
+  "diff": "diff --git a/docs/.Env.json b/docs/.Env.json\nnew file mode 100644\nindex 00000000..763700da\n--- /dev/null\n+++ b/docs/.Env.json\n@@ -0,0 +1,2 @@\n+v947 = 5\n+v407 = 0\ndiff --git a/lib/Src/Readme.md b/lib/Src/Readme.md\nindex f635ce32..d030fa46 100644\n--- a/lib/Src/Readme.md\n+++ b/lib/Src/Readme.md\n@@ -1,2 +1,3 @@\n v162 = 2\n v357 = 8\n+v833 = 8\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ],
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'docs/.env.json'"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 2 files, claim says 0"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 2 files, claim says 1"
+    ],
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'docs/.env.json'"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-a-path-claim-whose-entry-matches-only-in-case-abstains",
+  "summary": "Created X.toml. Created .ENV.JSON.",
+  "diff": "diff --git a/.config/x.toml b/.config/x.toml\nnew file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/.config/x.toml\n@@ -0,0 +1 @@\n+b\ndiff --git a/config/x.toml b/config/x.toml\nindex 1111111..2222222 100644\n--- a/config/x.toml\n+++ b/config/x.toml\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/docs/.Env.json b/docs/.Env.json\nnew file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/docs/.Env.json\n@@ -0,0 +1 @@\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ],
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-a-path-claim-whose-entry-matches-in-case-keeps-the-repair",
+  "summary": "Created x.toml. Created .Env.json.",
+  "diff": "diff --git a/.config/x.toml b/.config/x.toml\nnew file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/.config/x.toml\n@@ -0,0 +1 @@\n+b\ndiff --git a/config/x.toml b/config/x.toml\nindex 1111111..2222222 100644\n--- a/config/x.toml\n+++ b/config/x.toml\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/docs/.Env.json b/docs/.Env.json\nnew file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/docs/.Env.json\n@@ -0,0 +1 @@\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for '.config/x.toml'"
+    ],
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'docs/.env.json'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
  }
 ]

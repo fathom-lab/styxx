@@ -2557,7 +2557,8 @@ def own_precondition(repair: str, c, status: dict, sides: dict, licence: dict | 
     claimed path's, an only_touches prefix's); #101 a removed definition of the same name in the same file was paired.
     NOTE_path2_twelfth_pass (A.1, A.2), `licence` this file's own facts (`own_read`, `own_git_licence`): #97's match must
     also hold on every path its entry was read from, case kept, and no Z-3 doubt may be read; #121 needs git's own
-    rendering. With no facts, neither licenses."""
+    rendering, and on a path claim an entry matching the claim, case kept, by the tier it was resolved by. With no facts,
+    neither licenses."""
     d = c.detail or {}
     facts = licence or {}
     if repair == "#97":
@@ -2577,6 +2578,22 @@ def own_precondition(repair: str, c, status: dict, sides: dict, licence: dict | 
     if repair == "#121":
         if not facts.get("rendered"):
             return False
+        if c.kind in PATH_KINDS and isinstance(d.get("path"), str):
+            # the entry the tiers resolved must match the claim as written by that tier, case kept (git's paths are
+            # case-sensitive)
+            p, _st = own_find_path(status, d["path"])
+            read_as = (facts.get("forms") or {}).get(p, []) if p is not None else []
+            key, claimed = own_key(d["path"]), own_case_kept(d["path"])
+            if p is None or not read_as:
+                return False
+            if p == key:
+                same = [f == claimed for f in read_as]
+            elif p.endswith("/" + key):
+                same = [f.endswith("/" + claimed) for f in read_as]
+            else:
+                same = [Path(f).name == Path(claimed).name for f in read_as]
+            if not all(same):
+                return False
         own = [d[k] for k in ("path", "prefix", "prefix2") if isinstance(d.get(k), str)]
         return (any(k.startswith(".") for k in status) or any(k.startswith(".") for k in sides)
                 or any(own_key(x).startswith(".") for x in own))

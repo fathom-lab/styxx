@@ -275,6 +275,81 @@ def test_a_licence_needs_the_switch_and_the_precondition():
     assert [c.verdict for c in g.claims] == ["UNCHECKABLE"]
 
 
+def test_the_tightened_licences_on_stubs():
+    """NOTE_path2_twelfth_pass (A.1, A.2): #121 licenses only in git's own rendering, and on a path claim only where the
+    resolved entry matches the claim case kept by its tier; #97 only on a case-kept exact or suffix match and never beside
+    a Z-3 doubt. Each stub has the switch giving main's verdict back, so only the precondition decides."""
+    twins = {".env": "A", "env": "A"}
+    mine, theirs = _claim("files_changed_count", "VERIFIED", n="2"), _claim("files_changed_count", "CONTRADICTED", n="2")
+    switched = {"#97": _stub_gate(mine), "#121": _stub_gate(theirs), "#101": _stub_gate(mine)}
+
+    def final(on, status, licence, reference):
+        return [(c.verdict, c.why) for c in dg._guard(_stub_evaluate(_stub_gate(on), switched, status=status,
+                                                                     licence=licence), reference, strict=False,
+                                                      tp=[]).claims]
+    plain = {"rendered": False, "soft": False, "forms": {k: [k] for k in twins}}
+    assert final(mine, twins, None, lambda: _stub_gate(theirs)) == [("VERIFIED", "verified here")]
+    assert final(mine, twins, plain, lambda: _stub_gate(theirs)) == [
+        ("UNCHECKABLE", dg._GUARD_DIFFERS.format(main="CONTRADICTED", this="VERIFIED"))]
+    # #121 on a path claim resolved only in case
+    path_mine = _claim("file_created", "VERIFIED", text="Created X.toml.", path="X.toml")
+    path_main = _claim("file_created", "UNCHECKABLE", text="Created X.toml.", path="X.toml")
+    switched.update({"#121": _stub_gate(path_main), "#97": _stub_gate(path_mine)})
+    listing = {".config/x.toml": "A", "config/x.toml": "M"}
+    assert final(path_mine, listing, None, lambda: _stub_gate(path_main))[0][0] == "UNCHECKABLE"
+    # #97: a case-only suffix match, and a Z-3 doubt
+    created = _claim("file_created", "VERIFIED", text="Created src/README.md.", path="src/README.md")
+    withheld = _claim("file_created", "UNCHECKABLE", text="Created src/README.md.", path="src/README.md")
+    switched.update({"#97": _stub_gate(withheld), "#121": _stub_gate(created)})
+    listing = {"docs/readme.md": "M", "lib/src/readme.md": "A"}
+    only_case = {"rendered": True, "soft": False, "forms": {"docs/readme.md": ["docs/README.md"],
+                                                            "lib/src/readme.md": ["lib/src/readme.md"]}}
+    kept = {"rendered": True, "soft": False, "forms": {"docs/readme.md": ["docs/README.md"],
+                                                       "lib/src/readme.md": ["lib/src/README.md"]}}
+    assert final(created, listing, only_case, lambda: _stub_gate(withheld))[0][0] == "UNCHECKABLE"
+    assert final(created, listing, kept, lambda: _stub_gate(withheld))[0][0] == "VERIFIED"
+    assert final(created, listing, dict(kept, soft=True), lambda: _stub_gate(withheld))[0][0] == "UNCHECKABLE"
+
+
+def test_git_own_rendering_is_read_alike_in_both_ports():
+    """The facts #121's licence reads, on the renderings round 11 and this pass name, the same in the Python and the port."""
+    diffs = {
+        "git": "diff --git a/.env b/.env\nindex 1..2 100644\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-a\n+b\n",
+        "an empty created file": "diff --git a/p/__init__.py b/p/__init__.py\nnew file mode 100644\nindex 0000000..e69de29\n",
+        "a quoted path": 'diff --git "a/sp\\tx.py" "b/sp\\tx.py"\n--- "a/sp\\tx.py"\n+++ "b/sp\\tx.py"\n@@ -1 +1 @@\n-a\n+b\n',
+        "a name ending in a space": "diff --git a/x.py  b/x.py \nnew file mode 100644\n--- /dev/null\n+++ b/x.py \t\n@@ -0,0 +1 @@\n+a\n",
+        "difflib": "--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-a\n+b\n",
+        "GNU per file": "--- a/.env\t2024-05-06 07:08:09.000000000 +0000\n+++ b/.env\t2024-05-06 07:08:09.000000000 +0000\n"
+                        "@@ -1 +1 @@\n-a\n+b\n",
+        "--no-prefix": "diff --git .env .env\n--- .env\n+++ .env\n@@ -1 +1 @@\n-a\n+b\n",
+        "mnemonic prefixes": "diff --git c/.env w/.env\n--- c/.env\n+++ w/.env\n@@ -1 +1 @@\n-a\n+b\n",
+        "a pair naming another file": "diff --git a/x b/x\n--- a/y\n+++ b/y\n@@ -1 +1 @@\n-a\n+b\n",
+        "a rename under --no-prefix": "diff --git a/x.py b/x.py\nsimilarity index 100%\nrename from a/x.py\nrename to b/x.py\n",
+        "a Submodule line": "diff --git a/.env b/.env\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-a\n+b\nSubmodule v 1234567..89abcde:\n",
+        "no --- line": "diff --git a/x b/x\n+++ /dev/null\n",
+    }
+    want = {"git": True, "an empty created file": True, "a quoted path": True, "a name ending in a space": True,
+            "difflib": False, "GNU per file": False, "--no-prefix": False, "mnemonic prefixes": False,
+            "a pair naming another file": False, "a rename under --no-prefix": False, "a Submodule line": False,
+            "no --- line": False}
+    py = {}
+    for name, diff in diffs.items():
+        facts: dict = {}
+        dg._diff_notes(diff, facts)
+        py[name] = facts["rendered"]
+    assert py == want
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    script = ("const B = require(process.argv[1]); const D = JSON.parse(require('fs').readFileSync(0, 'utf8')); const out = {};"
+              "for (const [k, d] of Object.entries(D)) { const o = {}; B._evaluate('3 files changed.', d, { out: o });"
+              " out[k] = o.licence.rendered; } process.stdout.write(JSON.stringify(out));")
+    r = subprocess.run([node, "-e", script, str(PORT)], input=json.dumps(diffs), capture_output=True, text=True,
+                       encoding="utf-8", timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+    assert json.loads(r.stdout) == want
+
+
 def test_where_main_raises_or_makes_no_such_claim_every_decided_claim_abstains():
     mine = _claim("files_changed_count", "CONTRADICTED", n="2")
     same = {"#97": _stub_gate(mine), "#121": _stub_gate(mine), "#101": _stub_gate(mine)}
@@ -741,6 +816,10 @@ def test_a_defect_outside_the_three_repairs_can_only_abstain(label, request):
 # baseline, the switched readings from the scorer's reverts, the preconditions from the scorer's code) on both doors.
 
 R11 = json.loads((ROOT / "tests" / "fixtures" / "path2_round11_repros.json").read_text(encoding="utf-8"))["cases"]
+# and the records this pass's own truth-judged differential found against its licences as committed at e4586637 (#121
+# licensing a path claim whose entry matched it only once lower-cased)
+R12 = json.loads((ROOT / "tests" / "fixtures" / "path2_twelfth_pass_repros.json").read_text(encoding="utf-8"))["cases"]
+TRUTH_CASES = R11 + R12
 
 
 def _truth_status(model) -> dict:
@@ -818,8 +897,8 @@ def test_the_truth_model_reads_the_reproductions_as_round_11_recorded():
     assert checked == 16
 
 
-@pytest.mark.parametrize("case", R11, ids=[c["id"] for c in R11])
-def test_round_11_reads_no_worse_than_main_against_truth_on_the_raw_door(case):
+@pytest.mark.parametrize("case", TRUTH_CASES, ids=[c["id"] for c in TRUTH_CASES])
+def test_the_reproductions_read_no_worse_than_main_against_truth_on_the_raw_door(case):
     status = _truth_status(case["model"])
     final = _as_rows(dg.gate_diff_text(case["summary"], case["diff"]))
     main = _as_rows(ref.gate_diff_text(case["summary"], case["diff"]))
@@ -843,7 +922,24 @@ def test_the_truth_judged_check_refuses_the_eleventh_pass_instrument():
     assert len(worse) == 12 and not any(x.endswith("control") or x.startswith("C121-git") for x in worse), worse
 
 
-def test_round_11_reads_no_worse_than_main_against_truth_in_the_port():
+def test_the_truth_judged_check_refuses_the_licences_before_the_tier_kept_case():
+    """And this pass's own records: the licences as committed at e4586637, before #121's path licence asked for the case
+    kept by the tier, read four of the six worse than main on the raw door (the other two only at the git door)."""
+    import types
+    r = subprocess.run(["git", "-C", str(ROOT), "show", "e4586637:styxx/diffgate.py"], capture_output=True)
+    if r.returncode:
+        pytest.skip("commit e4586637 is not in this clone")
+    mod = types.ModuleType("styxx._diffgate_e4586637")
+    mod.__package__, mod.__file__ = "styxx", "<e4586637:styxx/diffgate.py>"
+    sys.modules[mod.__name__] = mod
+    exec(compile(r.stdout.decode("utf-8"), mod.__file__, "exec"), mod.__dict__)  # noqa: S102
+    worse = [case["id"] for case in R12
+             if _worse(_as_rows(mod.gate_diff_text(case["summary"], case["diff"])),
+                       _as_rows(ref.gate_diff_text(case["summary"], case["diff"])), _truth_status(case["model"]))]
+    assert len(worse) == 4, worse
+
+
+def test_the_reproductions_read_no_worse_than_main_against_truth_in_the_port():
     node = shutil.which("node")
     if node is None:
         pytest.skip("node is not on PATH")
@@ -851,10 +947,11 @@ def test_round_11_reads_no_worse_than_main_against_truth_in_the_port():
               "const P = JSON.parse(require('fs').readFileSync(0, 'utf8'));"
               "const rows = g => g.claims.map(c => [c.kind, c.verdict, Object.assign({}, c.detail || {}, {_text: c.text})]);"
               "process.stdout.write(JSON.stringify(P.map(([s, d]) => [rows(B.gateDiffText(s, d)), rows(M.gateDiffText(s, d))])));")
-    r = subprocess.run([node, "-e", script, str(PORT), str(REF_JS)], input=json.dumps([[c["summary"], c["diff"]] for c in R11]),
+    r = subprocess.run([node, "-e", script, str(PORT), str(REF_JS)],
+                       input=json.dumps([[c["summary"], c["diff"]] for c in TRUTH_CASES]),
                        capture_output=True, text=True, encoding="utf-8", timeout=120)
     assert r.returncode == 0, r.stderr[-2000:]
-    for case, (final, main) in zip(R11, json.loads(r.stdout)):
+    for case, (final, main) in zip(TRUTH_CASES, json.loads(r.stdout)):
         status = _truth_status(case["model"])
         final, main = [tuple(x) for x in final], [tuple(x) for x in main]
         assert not _worse(final, main, status), (case["id"], _worse(final, main, status))
@@ -895,11 +992,11 @@ def _repository(tmp_path: Path, cases: list) -> Path:
     return repo
 
 
-def test_round_11_reads_no_worse_than_main_against_truth_at_the_git_door(tmp_path):
+def test_the_reproductions_read_no_worse_than_main_against_truth_at_the_git_door(tmp_path):
     """Every reproduction, rebuilt as a repository from its model: git's own --name-status is the model's file list (so
     truth is git's), and the git door reads no claim worse than main's git door."""
-    repo = _repository(tmp_path, R11)
-    for i, case in enumerate(R11):
+    repo = _repository(tmp_path, TRUTH_CASES)
+    for i, case in enumerate(TRUTH_CASES):
         listed = dg._git(repo, "diff", "--name-status", f"b{i}..h{i}")
         status = _truth_status(case["model"])
         assert sorted(line.split("\t")[0][:1] + line.split("\t")[-1] for line in listed.splitlines()) == sorted(
@@ -950,7 +1047,7 @@ def _scorer_guard_violations(pg, summary: str, diff: str) -> list:
 
 def test_the_guarantee_holds_against_the_scorers_own_guard_on_the_raw_door(scorer):
     pg = scorer
-    records = list(_pinned()) + list(guard_cases(20260930, 500)) + [(c["id"], c["summary"], c["diff"]) for c in R11]
+    records = list(_pinned()) + list(guard_cases(20260930, 500)) + [(c["id"], c["summary"], c["diff"]) for c in TRUTH_CASES]
     for pid, summary, diff in records:
         bad = _scorer_guard_violations(pg, summary, diff)
         assert not bad, (pid, bad)

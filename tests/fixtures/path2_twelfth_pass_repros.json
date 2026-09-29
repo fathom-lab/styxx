@@ -1,0 +1,118 @@
+{
+ "source": "NOTE_path2_twelfth_pass: its own truth-judged differential (gen12.py, seed 2909292), the six records where the tightened licences as committed at e4586637 still read a path claim worse than main -- #121 licensing a path claim whose entry matched the claim only once lower-cased (`.ENV.JSON` over `docs/.Env.json`, `X.toml` over `.config/x.toml`); git's own bytes, two of them rewritten for the raw door as `--no-prefix` and mnemonic prefixes print them",
+ "cases": [
+  {
+   "id": "cs-2909292-382-git-noprefix#git",
+   "summary": "Only touches README.md/. 1 file changed. New .ENV.JSON. New rEADME.md. 3 files changed. 4 files changed. Only touches docs/.",
+   "diff": "diff --git README.md README.md\nnew file mode 100644\nindex 00000000..d3182254\n--- /dev/null\n+++ README.md\n@@ -0,0 +1,2 @@\n+v234 = 6\n+v223 = 8\ndiff --git api/.env.json api/.env.json\nnew file mode 100644\nindex 00000000..f735bb22\n--- /dev/null\n+++ api/.env.json\n@@ -0,0 +1,2 @@\n+v867 = 7\n+v140 = 2\ndiff --git src/index.ts src/index.ts\nnew file mode 100644\nindex 00000000..03d23737\n--- /dev/null\n+++ src/index.ts\n@@ -0,0 +1,2 @@\n+v756 = 0\n+v238 = 5\n",
+   "git": true,
+   "name_status": "A\tREADME.md\nA\tapi/.env.json\nA\tsrc/index.ts\n",
+   "model": {
+    "base": {},
+    "head": {
+     "README.md": "v234 = 6\nv223 = 8\n",
+     "api/.env.json": "v867 = 7\nv140 = 2\n",
+     "src/index.ts": "v756 = 0\nv238 = 5\n"
+    }
+   }
+  },
+  {
+   "id": "em-2909292-786-git#git",
+   "summary": "New Ci.yml. 7 files changed. 5 files changed. Only touches github/. 8 files changed. Only touches .env/. New .github/Ci.yml.",
+   "diff": "diff --git a/.config/x.toml b/.config/x.toml\nnew file mode 100644\nindex 00000000..2f0133c4\n--- /dev/null\n+++ b/.config/x.toml\n@@ -0,0 +1,2 @@\n+v22 = 7\n+v325 = 6\ndiff --git a/.github/ci.yml b/.github/ci.yml\nnew file mode 100644\nindex 00000000..50ef1877\n--- /dev/null\n+++ b/.github/ci.yml\n@@ -0,0 +1,2 @@\n+v595 = 4\n+v45 = 9\ndiff --git a/.keep b/.keep\ndeleted file mode 100644\nindex e69de29b..00000000\ndiff --git a/config/x.toml b/config/x.toml\nindex 857ccd89..f98e93bd 100644\n--- a/config/x.toml\n+++ b/config/x.toml\n@@ -1,2 +1,3 @@\n v983 = 0\n v80 = 7\n+v485 = 3\ndiff --git a/github/ci.yml b/github/ci.yml\nindex 1ab9eebc..7d66da64 100644\n--- a/github/ci.yml\n+++ b/github/ci.yml\n@@ -1,2 +1,3 @@\n v103 = 7\n v604 = 1\n+v956 = 3\ndiff --git a/keep b/keep\nindex 5c2b2b77..d94d1469 100644\n--- a/keep\n+++ b/keep\n@@ -1,2 +1,3 @@\n v184 = 5\n v38 = 4\n+v444 = 3\ndiff --git a/pkg/__init__.py b/pkg/__init__.py\ndeleted file mode 100644\nindex e69de29b..00000000\n",
+   "git": true,
+   "name_status": "A\t.config/x.toml\nA\t.github/ci.yml\nD\t.keep\nM\tconfig/x.toml\nM\tgithub/ci.yml\nM\tkeep\nD\tpkg/__init__.py\n",
+   "model": {
+    "base": {
+     "config/x.toml": "v983 = 0\nv80 = 7\n",
+     "github/ci.yml": "v103 = 7\nv604 = 1\n",
+     "pkg/__init__.py": "",
+     ".keep": "",
+     "keep": "v184 = 5\nv38 = 4\n"
+    },
+    "head": {
+     ".config/x.toml": "v22 = 7\nv325 = 6\n",
+     "config/x.toml": "v983 = 0\nv80 = 7\nv485 = 3\n",
+     ".github/ci.yml": "v595 = 4\nv45 = 9\n",
+     "github/ci.yml": "v103 = 7\nv604 = 1\nv956 = 3\n",
+     "keep": "v184 = 5\nv38 = 4\nv444 = 3\n"
+    }
+   }
+  },
+  {
+   "id": "ab-2909292-1885-git-mnemonic#git",
+   "summary": "Only touches config/. 6 files changed. New Src/a.py. Modified SETUP.CFG. 3 files changed. Deleted X.toml. 5 files changed. Only touches github/. 4 files changed.",
+   "diff": "diff --git c/.config/x.toml w/.config/x.toml\ndeleted file mode 100644\nindex 407aa99b..00000000\n--- c/.config/x.toml\n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v41 = 4\n-v855 = 2\ndiff --git c/a/setup.cfg w/a/setup.cfg\nnew file mode 100644\nindex 00000000..a119bb5e\n--- /dev/null\n+++ w/a/setup.cfg\n@@ -0,0 +1,2 @@\n+v694 = 9\n+v750 = 9\ndiff --git c/config/x.toml w/config/x.toml\nindex 4cbbe435..6a80ddb5 100644\n--- c/config/x.toml\n+++ w/config/x.toml\n@@ -1,2 +1,3 @@\n v844 = 7\n v883 = 3\n+v736 = 6\ndiff --git c/setup.cfg w/setup.cfg\ndeleted file mode 100644\nindex dd04562f..00000000\n--- c/setup.cfg\n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v547 = 4\n-v188 = 9\ndiff --git c/src/a.py w/src/a.py\ndeleted file mode 100644\nindex 3e37f833..00000000\n--- c/src/a.py\n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v742 = 6\n-v417 = 3\n",
+   "git": true,
+   "name_status": "D\t.config/x.toml\nA\ta/setup.cfg\nM\tconfig/x.toml\nD\tsetup.cfg\nD\tsrc/a.py\n",
+   "model": {
+    "base": {
+     "src/a.py": "v742 = 6\nv417 = 3\n",
+     "setup.cfg": "v547 = 4\nv188 = 9\n",
+     ".config/x.toml": "v41 = 4\nv855 = 2\n",
+     "config/x.toml": "v844 = 7\nv883 = 3\n"
+    },
+    "head": {
+     "a/setup.cfg": "v694 = 9\nv750 = 9\n",
+     "config/x.toml": "v844 = 7\nv883 = 3\nv736 = 6\n"
+    }
+   }
+  },
+  {
+   "id": "cs-2909292-2384-git#git",
+   "summary": "1 file changed. Modified src/.env.json. 3 files changed. Deleted docs/.Env.json. 0 files changed. Created .env.json. 2 files changed.",
+   "diff": "diff --git a/docs/.Env.json b/docs/.Env.json\nnew file mode 100644\nindex 00000000..c4f7d17a\n--- /dev/null\n+++ b/docs/.Env.json\n@@ -0,0 +1,2 @@\n+v521 = 4\n+v338 = 2\ndiff --git a/src/.env.json b/src/.env.json\nindex c02486f9..54bf01ac 100644\n--- a/src/.env.json\n+++ b/src/.env.json\n@@ -1,2 +1,3 @@\n v572 = 2\n v31 = 6\n+v817 = 6\n",
+   "git": true,
+   "name_status": "A\tdocs/.Env.json\nM\tsrc/.env.json\n",
+   "model": {
+    "base": {
+     "Src/Util.py": "v241 = 9\nv275 = 0\n",
+     "config.py": "v653 = 5\nv518 = 9\n",
+     "src/.env.json": "v572 = 2\nv31 = 6\n"
+    },
+    "head": {
+     "Src/Util.py": "v241 = 9\nv275 = 0\n",
+     "config.py": "v653 = 5\nv518 = 9\n",
+     "docs/.Env.json": "v521 = 4\nv338 = 2\n",
+     "src/.env.json": "v572 = 2\nv31 = 6\nv817 = 6\n"
+    }
+   }
+  },
+  {
+   "id": "em-2909292-3528-git#git",
+   "summary": "Updated pkg/__init__.py. Created X.toml. 4 files changed. 5 files changed. Updated config/x.toml. 6 files changed. Only touches env.json/. 7 files changed.",
+   "diff": "diff --git a/.config/x.toml b/.config/x.toml\nnew file mode 100644\nindex 00000000..ba8e188d\n--- /dev/null\n+++ b/.config/x.toml\n@@ -0,0 +1,2 @@\n+v953 = 3\n+v609 = 6\ndiff --git a/.env.json b/.env.json\ndeleted file mode 100644\nindex 9b38c3fe..00000000\n--- a/.env.json\n+++ /dev/null\n@@ -1,2 +0,0 @@\n-v675 = 1\n-v689 = 6\ndiff --git a/config/x.toml b/config/x.toml\nindex 797eaae8..e7b0b673 100644\n--- a/config/x.toml\n+++ b/config/x.toml\n@@ -1,2 +1,3 @@\n v935 = 6\n v240 = 9\n+v432 = 4\ndiff --git a/docs/README.md b/docs/README.md\nnew file mode 100644\nindex 00000000..e69de29b\ndiff --git a/env.json b/env.json\nnew file mode 100644\nindex 00000000..4ca34fdf\n--- /dev/null\n+++ b/env.json\n@@ -0,0 +1,2 @@\n+v581 = 7\n+v698 = 3\ndiff --git a/pkg/__init__.py b/pkg/__init__.py\nnew file mode 100644\nindex 00000000..32272f07\n--- /dev/null\n+++ b/pkg/__init__.py\n@@ -0,0 +1,2 @@\n+v990 = 1\n+v345 = 7\n",
+   "git": true,
+   "name_status": "A\t.config/x.toml\nD\t.env.json\nM\tconfig/x.toml\nA\tdocs/README.md\nA\tenv.json\nA\tpkg/__init__.py\n",
+   "model": {
+    "base": {
+     "config/x.toml": "v935 = 6\nv240 = 9\n",
+     ".env.json": "v675 = 1\nv689 = 6\n"
+    },
+    "head": {
+     ".config/x.toml": "v953 = 3\nv609 = 6\n",
+     "config/x.toml": "v935 = 6\nv240 = 9\nv432 = 4\n",
+     "env.json": "v581 = 7\nv698 = 3\n",
+     "pkg/__init__.py": "v990 = 1\nv345 = 7\n",
+     "docs/README.md": ""
+    }
+   }
+  },
+  {
+   "id": "cs-2909292-3739-git#git",
+   "summary": "Created .ENV.JSON. Created Docs/.Env.json. 0 files changed. 1 file changed. Created .Env.json. 2 files changed.",
+   "diff": "diff --git a/docs/.Env.json b/docs/.Env.json\nnew file mode 100644\nindex 00000000..763700da\n--- /dev/null\n+++ b/docs/.Env.json\n@@ -0,0 +1,2 @@\n+v947 = 5\n+v407 = 0\ndiff --git a/lib/Src/Readme.md b/lib/Src/Readme.md\nindex f635ce32..d030fa46 100644\n--- a/lib/Src/Readme.md\n+++ b/lib/Src/Readme.md\n@@ -1,2 +1,3 @@\n v162 = 2\n v357 = 8\n+v833 = 8\n",
+   "git": true,
+   "name_status": "A\tdocs/.Env.json\nM\tlib/Src/Readme.md\n",
+   "model": {
+    "base": {
+     "lib/Src/Readme.md": "v162 = 2\nv357 = 8\n"
+    },
+    "head": {
+     "docs/.Env.json": "v947 = 5\nv407 = 0\n",
+     "lib/Src/Readme.md": "v162 = 2\nv357 = 8\nv833 = 8\n"
+    }
+   }
+  }
+ ]
+}

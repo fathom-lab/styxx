@@ -1910,11 +1910,11 @@ def test_v3_the_scorer_admits_every_move_on_the_pinned_pairs_and_counts_what_g_c
     # (NOTE_path2_eleventh_pass: two more, the pairs whose sentences hold an em dash, an emoji and curly quotes, which
     # both ports' templates read alike, so #97's repair stands there; one reason-only move beside them)
     # (NOTE_path2_twelfth_pass: two more, round 11's same-case control and the case-kept suffix match, where #97's licence
-    # holds on the paths as written; and seven credited to #97 and Z-4 jointly that the guard abstains on, a case-only
-    # match, a Z-3 doubt or a trailing-space name)
+    # holds on the paths as written; one reason-only move on a record of this pass's own differential; and eight credited
+    # to #97 and Z-4 jointly that the guard abstains on, a case-only match, a Z-3 doubt or a trailing-space name)
     assert {k: v for k, v in ninth.items() if not k.endswith("-> UNCHECKABLE")} == {
-        "Z-4 file_created: UNCHECKABLE -> VERIFIED": 6, "Z-4 file_touched: VERIFIED -> VERIFIED": 1}
-    assert t.attribution["attributed_by"]["#97+Z-4"] == 12 and sum(ninth.values()) > 12
+        "Z-4 file_created: UNCHECKABLE -> VERIFIED": 6, "Z-4 file_touched: VERIFIED -> VERIFIED": 2}
+    assert t.attribution["attributed_by"]["#97+Z-4"] == 13 and sum(ninth.values()) > 13
 
 
 def test_v3_raw_paths_reads_a_header_only_outside_a_hunk(scorer):
@@ -2445,7 +2445,7 @@ def test_x7_the_scorer_reads_names_by_the_same_table_with_its_own_decoder(scorer
 
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
-    assert len(pairs) == 291 and all(p["id"].startswith("path2:") for p in pairs)
+    assert len(pairs) == 299 and all(p["id"].startswith("path2:") for p in pairs)
     # NOTE_path2_fifth_pass V-1 re-pinned four pairs and NOTE_path2_sixth_pass W-1 one; NOTE_path2_eighth_pass
     # twenty-four (Y-5 thirteen: the pairing withdraws; Y-2 four; Y-1 four; Y-3 three), each to UNCHECKABLE;
     # NOTE_path2_ninth_pass thirty-six (Z-2 sixteen, Z-1 twelve, Z-3 seven, Z-4 one), each to UNCHECKABLE;
@@ -3783,6 +3783,17 @@ def test_x11_the_scorers_own_guard_licenses_only_by_the_precondition_and_the_swi
     kept["forms"]["lib/src/readme.md"] = ["lib/src/README.md"]
     assert [g[2] for g in final(listing, before, main, {"#97": main}, kept)] == ["VERIFIED"]
     assert [g[2] for g in final(listing, before, main, {"#97": main}, dict(kept, soft=True))] == ["UNCHECKABLE"]
+    # #121 on a path claim: the entry the tiers resolved must match the claim, case kept, by that tier (this pass's own
+    # differential: "Created X.toml." read VERIFIED from a created `.config/x.toml`, licensed by #121's dot)
+    before = one("file_created", "Created X.toml.", "VERIFIED", {"path": "X.toml"})
+    main = one("file_created", "Created X.toml.", "UNCHECKABLE", {"path": "X.toml"})
+    listing = {".config/x.toml": "A", "config/x.toml": "M"}
+    facts = {"rendered": True, "soft": False, "forms": {".config/x.toml": [".config/x.toml"],
+                                                         "config/x.toml": ["config/x.toml"]}}
+    assert [g[2] for g in final(listing, before, main, {"#121": main}, facts)] == ["UNCHECKABLE"]
+    before = one("file_created", "Created x.toml.", "VERIFIED", {"path": "x.toml"})
+    main = one("file_created", "Created x.toml.", "UNCHECKABLE", {"path": "x.toml"})
+    assert [g[2] for g in final(listing, before, main, {"#121": main}, facts)] == ["VERIFIED"]
 
 
 def test_x11_g_c8_compares_the_two_doors_readings_before_the_guard(scorer):
