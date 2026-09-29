@@ -21,8 +21,9 @@ release.
   (its demo prints one), `critique.py` and `hallucination.py`, in `attack/universal_suffixes_v0.json`,
   `adapters/guardrails.py` and `admissibility.py`, and on README line 422. #165 withdraws them.
 - The PyPI summary ties "0.998 hallucination (HaluEval-QA)" to the `@styxx.profile` readout. That
-  AUC belongs to `guardrail.check` scored against a grounding passage, and the README row that
-  reports it also reports DROP 0.424 and FinanceBench 0.492. `pyproject.toml` now gives each number
+  AUC belongs to `guardrail.check` scored against a grounding passage, a register-detection figure
+  at a documented construct ceiling, and the README row that reports it also reports DROP 0.424
+  and FinanceBench 0.492. `pyproject.toml` now gives each number
   to its instrument (below).
 - charon: "243 lines at ship" and "SAME_LINE 243, TAMPER 0 at ship" do not describe the shipped
   tree. The log held 243 entries when charon v0.1 merged (#65, 2026-09-05) and holds 257 at the
@@ -72,7 +73,9 @@ release.
 - The Zenodo record's description was corrected in place on 2026-09-29; the DOI and files did not
   change. Zenodo keeps no public prior revision, so
   `release/zenodo-metadata-software-v7.48.0-as-published.json` holds the metadata as published and
-  `release/zenodo-metadata-software-v7.48.0-edit-2026-09-29.json` holds it after the edit.
+  `release/zenodo-metadata-software-v7.48.0-edit-2026-09-29.json` holds it after the day's two
+  edits (17:06Z, and 20:15Z to put the ceiling caveat beside the 0.998 figure the first edit
+  quoted; the first edit's text is in 1b241511).
   `release/github-release-v7.48.0-body-as-published.md` holds the release notes as published on
   2026-09-25, before the errata; GitHub keeps no public history of a release body either.
 - `sworn/examples/sworn.yml` said `styxx.sworn` is in no release, which #164 missed, and that this
