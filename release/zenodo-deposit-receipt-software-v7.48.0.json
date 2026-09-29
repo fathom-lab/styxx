@@ -1,0 +1,44 @@
+{
+  "action": "software_deposit_published",
+  "version": "7.48.0",
+  "deposit_id": 23042251,
+  "software_doi": "10.5281/zenodo.23042251",
+  "software_doi_url": "https://doi.org/10.5281/zenodo.23042251",
+  "concept_recid": "19758618",
+  "concept_doi": "10.5281/zenodo.19758618",
+  "record_url": "https://zenodo.org/record/23042251",
+  "files": {
+    "styxx-v7.48.0-source-bundle.zip": {
+      "md5": "1145aff5e0fe5f532ee2f7e8ab01f9fe"
+    },
+    "styxx-7.48.0-py3-none-any.whl": {
+      "md5": "4304824ee5e3f0335586ba82a1ddd771"
+    },
+    "styxx-7.48.0.tar.gz": {
+      "md5": "0fc7b2fcf57762d633d6fffc1415939b"
+    }
+  },
+  "related_identifiers": [
+    [
+      "isDerivedFrom",
+      "https://github.com/fathom-lab/styxx/tree/1218dbad4fca61b01179f3af2b83dbea67d34f82"
+    ],
+    [
+      "isPartOf",
+      "10.5281/zenodo.19326174"
+    ],
+    [
+      "isSupplementTo",
+      "10.5281/zenodo.19746215"
+    ],
+    [
+      "isSupplementTo",
+      "https://github.com/fathom-lab/styxx/releases/tag/v7.48.0"
+    ],
+    [
+      "isSupplementTo",
+      "https://pypi.org/project/styxx/7.48.0/"
+    ]
+  ],
+  "published_at": "2026-09-29T15:46:04Z"
+}
