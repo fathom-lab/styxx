@@ -7,6 +7,93 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the 7.48.0 week's public text, audited: errata to [7.48.0], and corrections on main
+
+On 2026-09-29 an audit read every public surface of the 7.48.0 week: the release notes, the PyPI
+page, the Zenodo record, `main`, the open and merged pull requests, and the lab's channel posts. This
+entry lists what it found wrong. Released text stays as published, and each correction is dated.
+The wheel, the sdist and their PyPI metadata cannot change, so those corrections land in the next
+release.
+
+**Errata to [7.48.0].** The GitHub release notes carry these under "Errata, 2026-09-29".
+- The wheel and its README carry priority claims and charter words this lab has not earned or that
+  its charter rules out: in the docstrings of `styxx/__init__.py`, `forecast.py`, `intercept.py`
+  (its demo prints one), `critique.py` and `hallucination.py`, in `attack/universal_suffixes_v0.json`,
+  `adapters/guardrails.py` and `admissibility.py`, and on README line 422. #165 withdraws them.
+- The PyPI summary ties "0.998 hallucination (HaluEval-QA)" to the `@styxx.profile` readout. That
+  AUC belongs to `guardrail.check` scored against a grounding passage, a register-detection figure
+  at a documented construct ceiling, and the README row that reports it also reports DROP 0.424
+  and FinanceBench 0.492. `pyproject.toml` now gives each number
+  to its instrument (below).
+- charon: "243 lines at ship" and "SAME_LINE 243, TAMPER 0 at ship" do not describe the shipped
+  tree. The log held 243 entries when charon v0.1 merged (#65, 2026-09-05) and holds 257 at the
+  tag. The verify result committed on 2026-09-14 (254 entries, head `7817c731`) reads SAME_LINE 11,
+  MOVED_VERIFIER 243, TAMPER 0. `papers/charon/charon_verify_result_2026_09_29.json` is a new
+  verify over all 257 entries, run on 2026-09-29 with the verifier at a4732c52. It reads SAME_LINE
+  14, MOVED_VERIFIER 243, SKEW 0, DRIFT 0, UNRESOLVED 0, TAMPER 0. Its head, `8a0ee53b…`, matches
+  the head that f3f0bfa4's message pins (the run passed no `--expect-head`). The 2026-09-14 result
+  is not re-run in place.
+- The browser verifier's "1929 skipped" comes from the replay report of 2026-09-05, over 3618
+  vectors. Over the 3620 vectors in the tag, `sworn_verify.js` runs 1689, reproduces 1689 and
+  skips 1931 (replayed 2026-09-29).
+- "A CI run on the regenerated set is owed" appears in the "Cutting this release" entry, in its
+  "What it does not say", and at line 57 of
+  `papers/sworn/NOTE_sworn_conformance_regenerated_for_7_48_0_2026_09_25.md` (not edited). Two
+  `tests` runs passed before the tag: 36167419000 on 99118487 and 36173712926 on 1218dbad. C7
+  skips when its subprocess dies, so a pass does not show that it ran. Only #163's body records C7
+  passing, and only in the first run.
+- The README audit note leaves out that 1218dbad also fixed the Conscience/crossmind row, which
+  now cites FINDING_mount_regime.
+- The README's islands block is abridged, not the literal `--demo` output. Its "across builds"
+  names a cause the lab has not established. In 7.48.0, `--demo` still lists at `island_z=1.0`;
+  #162 fixed that on main.
+- Citation: the tag's `CITATION.cff` names 10.5281/zenodo.19758619, the v6.2.0 version record, as
+  the concept DOI (#166 corrected it). The README's "DOI (concept, always-latest)" row names
+  10.5281/zenodo.19326174, the concept DOI of the Fathom research series.
+
+**Corrected on main.**
+- `CITATION.cff` drops the keyword `hallucination-detection`, which `pyproject.toml` dropped for
+  7.48.0 per the charter. Its `url` is now the canonical site, https://styxx-org.netlify.app. It
+  gains `version` and `date-released` (7.48.0, 2026-09-25). Its header comment says what GitHub's
+  prompt renders. Lines from 19 on do not move.
+- The Zenodo entry below said "Cite this repository" follows the latest version. It does not:
+  GitHub's prompt renders `preferred-citation`, the position paper (manifest defect D2). The entry
+  now says so, and D1 in `zenodo/MANIFEST.json` carries a dated note. Whether the prompt should
+  cite the software is the operator's call.
+- `README.md`'s citation row links `CITATION.cff` on main and the software concept DOI
+  10.5281/zenodo.19758618.
+- `zenodo/MANIFEST.json` gains `updated`. Its line references follow the files again (README
+  447-449 to 478-480, D3 to 478, CITATION.cff 56 to 57 and 62 to 64). Its 23042251 entry says the
+  tag reproduces the deposited zip. A new test,
+  `test_every_cited_in_line_on_a_citation_surface_names_its_doi`, fails when a reference goes
+  stale; it failed on five of them before this change.
+- `zenodo/README.md` names the 7.48.0 flow and the rule actually followed.
+  `release/NOTE_zenodo_software_v7_48_0_provenance.md` records how the deposit was published,
+  which the draft receipt's `publish_step` gets wrong.
+- The Zenodo record's description was corrected in place on 2026-09-29; the DOI and files did not
+  change. Zenodo keeps no public prior revision, so
+  `release/zenodo-metadata-software-v7.48.0-as-published.json` holds the metadata as published and
+  `release/zenodo-metadata-software-v7.48.0-edit-2026-09-29.json` holds it after the day's two
+  edits (17:06Z, and 20:15Z to put the ceiling caveat beside the 0.998 figure the first edit
+  quoted; the first edit's text is in 1b241511).
+  `release/github-release-v7.48.0-body-as-published.md` holds the release notes as published on
+  2026-09-25, before the errata; GitHub keeps no public history of a release body either.
+- `sworn/examples/sworn.yml` said `styxx.sworn` is in no release, which #164 missed, and that this
+  repository dogfoods the action, though no workflow here uses it. Both are corrected.
+  `sworn/action.yml`'s "No network" now says the install step runs pip.
+- `pyproject.toml`'s description gives each AUC to the instrument that earned it. What the package
+  page leads with is the operator's call.
+- The `#125` paragraph below now says `--as-published` was shown on a synthetic ledger only.
+- Three headings inside released sections read `## [Unreleased]`. They are now `###` headings, as
+  the 7.48.0 cut did for others.
+
+Not changed, and why. `scripts/zenodo_deposit_software_v7_48_0.py` names two local branches in
+`EXCLUDED_MARKERS`, and `release/zenodo-draft-receipt-software-v7.48.0.json` names the local path
+of the token file (not its value). The draft receipt pins the script's sha256, so editing the
+script would break a receipt, and both are already in history. Removing them needs a force-push,
+which is the operator's call. `web/gate/README.md`'s drift section and
+`web/gate/differential/py_side.py` still say 7.48.0 has not shipped; #161 rewrites both files.
+
 ## [Unreleased] — styxx 7.48.0 on Zenodo, as the next version of the software record
 
 styxx 7.48.0 is deposited on Zenodo as **10.5281/zenodo.23042251**, a new version of the styxx software
@@ -18,13 +105,27 @@ Fingerprint Specification v1.0 (10.5281/zenodo.19746215, isSupplementTo), the Fa
 (10.5281/zenodo.19326174, isPartOf), the GitHub release, the tagged tree and the PyPI page. It contains no
 result held back from publication and no unreleased work.
 
-- `CITATION.cff` line 33 now names the concept DOI, so "Cite this repository" follows the latest version;
-  `zenodo/MANIFEST.json` marks defect D1 resolved (kept as the record) and records the new version DOI.
+- `CITATION.cff` line 33 now names the software concept DOI, which resolves to the latest version. GitHub's
+  "Cite this repository" prompt still renders `preferred-citation`, the position paper 10.5281/zenodo.19777921
+  (manifest defect D2), so it does not cite the software; `zenodo/MANIFEST.json` marks defect D1 resolved
+  (kept as the record) and records the new version DOI. *(Corrected 2026-09-29: this bullet first said the
+  prompt follows the latest version.)*
 - `release/zenodo-deposit-receipt-software-v7.48.0.json` (published), `release/zenodo-draft-receipt-software-v7.48.0.json`
   (the draft run, which stopped at read-back because Zenodo stores MIT as `mit-license`; the publish script
   re-verified the draft before publishing), `release/zenodo-metadata-software-v7.48.0.json`, and the two scripts
-  in `scripts/`. The deposit script cannot publish; the publish script re-checks chain, version, file md5s and
-  links from Zenodo's side before it does.
+  in `scripts/`. The deposit script cannot publish; the publish script re-checks, from Zenodo's side, the chain,
+  the version, the file md5s, the two DOI links and the charter words (not the licence) before it does.
+  `release/NOTE_zenodo_software_v7_48_0_provenance.md` says who ran it and how, which the draft receipt's
+  `publish_step` does not.
+
+## [Unreleased] — the sworn action's docs stop saying styxx.sworn is in no release (#164)
+
+`sworn/action.yml` (the `styxx-source` input) and `sworn/README.md` said `styxx.sworn` is not in any
+release; publishing 7.48.0 made that false. The default is unchanged: the action installs styxx from
+its own checkout, the bytes at the commit it is pinned to. The text now gives that cold-start rule
+as the reason, and names `styxx==7.48.0` as the way to install the release instead.
+`sworn/examples/sworn.yml` said it too; the audit entry above corrects it. *(Added 2026-09-29: #164
+merged without an entry.)*
 
 ## [Unreleased] — the blind packet's ids stop carrying the arm (#125), and the islands demo reads its own cohort (#93)
 
@@ -32,8 +133,10 @@ result held back from publication and no unreleased work.
 and shuffled afterwards, so an id told an adjudicator which arm its item came from without the
 sealed key. `build` now numbers items by their shuffled position and refuses to write if the arms
 still cluster in id order, the way `compat2_packet.py` already did. `build --as-published`
-reproduces the published arm-ordered numbering, key and digest, leak included, because EXTERNAL-1's
-committed packet, key and digest are receipts. It runs from a fresh clone, where the sealed key is
+writes, on a synthetic ledger and shelf, exactly the bytes the pre-repair builder wrote (arm-ordered
+numbering, key and digest, leak included), because EXTERNAL-1's committed packet, key and digest are
+receipts; a test pins the committed packet's id order from the published population counts. It has
+not been run on the real shelf and ledger (below). It runs from a fresh clone, where the sealed key is
 gitignored. `build` writes LF on every platform and refuses to overwrite a record whose bytes would
 change. It gives a named refusal, not a traceback, when the gitignored ledger or shelf is absent,
 and it opens the shelf read-only. Line 63 is `sample_acc = rng.sample(acc, N_ACC)` again, the line
@@ -1881,7 +1984,7 @@ Corpus at release: 202 certificates, HELD 195, FAILED 7 — failures included.
 
 ---
 
-## [Unreleased] — OATH v0.10: the context windows were pointed at the wrong token
+### OATH v0.10: the context windows were pointed at the wrong token
 
 Closes the defect the v0.9 entry below disclosed and did not repair. `certify_doc`
 located each extracted token with `ctx.find(num["token"])` — the FIRST occurrence
@@ -1951,7 +2054,7 @@ gain one integer (`col`); committed certificates are untouched.
 
 ---
 
-## [Unreleased] — OATH v0.9: a bar in JSON idiom abstains, and the prose bar clause is refused
+### OATH v0.9: a bar in JSON idiom abstains, and the prose bar clause is refused
 
 `is_spec` (the v0.1 SPEC-CONSTANT rule) abstains a pre-registered bar, because a
 bar's receipt is the preregistration and not a result JSON. It recognised a bar
@@ -2118,7 +2221,7 @@ missing".
 
 ---
 
-## [Unreleased] — lint was red, so the test suite had not run in CI for weeks
+### lint was red, so the test suite had not run in CI for weeks
 
 The `tests` workflow gates the test step behind `ruff check styxx`. Lint had been
 failing on five errors since the contract/flattering work landed, so every push

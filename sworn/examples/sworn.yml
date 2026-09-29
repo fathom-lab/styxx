@@ -23,9 +23,9 @@ jobs:
           python-version: "3.12"
       - run: python -m pip install -e ".[test]"
       - id: sworn
-        # This repository dogfoods its own action at the head commit. Another project pins a
-        # commit: uses: fathom-lab/styxx/sworn@<sha>  (styxx.sworn is in no release; clone at a
-        # pinned commit, not pip install). On a pull_request event the workflow file itself comes
+        # Copied into .github/workflows/, this dogfoods the action at the head commit. Another
+        # project pins a commit: uses: fathom-lab/styxx/sworn@<sha> (the cold-start rule: clone at a
+        # pinned commit; styxx.sworn is on PyPI from styxx 7.48.0). On a pull_request event the workflow file itself comes
         # from the head either way; that is what the fork rule and the L2 declaration are about.
         uses: ./sworn
         with:
