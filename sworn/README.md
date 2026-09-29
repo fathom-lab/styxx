@@ -159,6 +159,25 @@ reaches Python through the environment; none is interpolated into a shell line. 
 Reproduce a verdict from the artifacts:
 `python -m styxx.sworn verify <out-dir>/documents/<name> --repo . --commit <head sha> --manifest <out-dir>/sworn.manifest.json`.
 
+## Who did this earlier
+
+sworn landed on 2026-09-01. Binding the numbers in a document to machine-readable facts is much
+older: Inline XBRL 1.1 (2013) with its processor conformance suite and the XBRL US DQC rules (since
+2015), knitr and Sweave, and showyourwork! (2021). Closer and recent: Deterministic Integrity Gates
+(Nam, Jeong, Kim; arXiv 2606.09500, 2026-06-08) reconciles a manuscript's numbers against locked
+analysis tables and prints what it could not trace; Proof-Carrying Certificates for LLM Pipelines
+(Koomullil; arXiv 2605.16407, 2026-05-13) has an Abstain verdict; honest-signal (2026-07-09) gates
+a claim on a preregistration; VeriFin (Hall, Shome, Eiers; arXiv 2608.10213, 2026-08-10) verifies
+numeric claims against filed XBRL facts; and metacheck's `reproducibility_check` (ScienceVerse,
+committed 2026-08-16 on its development branch) re-executes a paper's code and prints "X of Y
+reported tests matched". A distinct verdict for a report that bound nothing was reached before
+sworn's `UNSWORN`, on a narrower object, by DeerFlow: a subagent report with action claims and no
+receipt citations renders `UNVERIFIED`, "not a clean bill" (RFC 2026-08-03, merged 2026-08-29).
+Binding a "tests pass" claim to the run it names, as this action does through JUnit, was done
+earlier by backcheck (2026-08-04) and by DeerFlow's `tests_passed:<command>` check (merged
+2026-09-01). The sentences of this lab's they correct are in
+`papers/sworn/NOTE_prior_art_credit_2026_09_29.md`.
+
 ## What this does not say
 
 That it has run on GitHub: it cannot until the operator merges the workflow, and no manifest

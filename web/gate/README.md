@@ -157,6 +157,35 @@ When 7.48.0 is on PyPI, `py_side.py --installed` should print 0 disagreements ag
 does not, the release is not the file the port claims to be, and the header of `diffgate.js`
 says which one it is.
 
+## Who did this earlier
+
+The gate this directory ports checks an agent's account of a change against the change. Others
+did that, or parts of it, before `styxx/diffgate.py` existed (7.29.0, 2026-08-01), and some did it
+better:
+
+- **PR-MCI** (Jingzhi Gong, Giovanni Pinna, Yixin Bian, Jie M. Zhang; arXiv 2601.04886, 2026-01-08)
+  measured description-versus-code inconsistency on 23,247 AIDev agent pull requests and
+  hand-labelled 974 of them, about seven months before this lab did.
+- **AgentLiar** (Daksh Jain, 2026-05-20) shipped a GitHub Action that checks an agent's completion
+  claim against its file changes, including a scope-narrowing check and assertion-free tests.
+- **Swarm Orchestrator** (Brad Kinnard; v10.0.0, 2026-05-23, self-reported) gates AI-written pull
+  requests on their diffs with ten cheat detectors and a hash-chained ledger, and measured its own
+  detectors on 300 planted cheats (2026-06-02).
+- **commitlint-scope** (thumbrise, 2026-05-25) checks changed paths against a declared scope, the
+  comparison `only_touches` makes.
+- **backcheck** (Vector Institute, 2026-08-04) checks an agent's closing claims against the tool
+  records of its session, and binds a "tests pass" claim to the run it names, which this gate
+  cannot.
+- **DeerFlow** (RFC 2026-08-03) and **NabaOS** (2026-03-09) check agent claims against receipts the
+  model never writes; **readback** (2026-09-13) checks a declared claim block.
+- Older: **DOCER** (a GitHub Action for outdated code references in docs, 2023), **iComment**
+  (comments against code, 2007), linux-next's **`Fixes:` tag checks** (since at least 2019), Qodo's
+  LLM **ticket compliance** (2024-11-26), and **FEVER**'s Supported / Refuted / NotEnoughInfo
+  verdict (2018).
+
+The sentences of this lab's that these neighbours correct, and the dates on both sides, are in
+`papers/closed-model-frontier/NOTE_prior_art_credit_2026_09_29.md`.
+
 ## What this is not
 
 It is not a second instrument. The Python is the instrument; the JavaScript exists only where the

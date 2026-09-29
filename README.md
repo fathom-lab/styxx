@@ -145,6 +145,24 @@ to **0.25**, which is not good — three quarters of what it accuses is still wr
 unrepaired, and tests assert the instrument is still wrong on them so none can be claimed
 silently.
 
+**Who did this earlier.** Checking an agent's account of its work against what it changed is not
+this lab's idea, and several neighbours shipped parts of it before the diff gate (7.29.0,
+2026-08-01). [PR-MCI](https://arxiv.org/abs/2601.04886) (Gong, Pinna, Bian and Zhang, 2026-01-08)
+measured description-versus-code inconsistency on 23,247 AIDev agent pull requests, with 974
+hand-labelled ones, about seven months before this lab did.
+[AgentLiar](https://github.com/dakshjain-1616/AgentLiar) (Daksh Jain, 2026-05-20) shipped a GitHub
+Action that checks an agent's completion claim against its file changes.
+[Swarm Orchestrator](https://github.com/moonrunnerkc/swarm-orchestrator) (Brad Kinnard; v10.0.0,
+2026-05-23) gates AI-written pull requests on their diffs with a hash-chained audit ledger, and
+measures its own detectors' recall on planted cheats. [backcheck](https://github.com/VectorInstitute/backcheck)
+(Vector Institute, 2026-08-04) binds a "tests pass" claim to the run it names, which this gate
+cannot. The other instruments have neighbours too: DeerFlow marks an uncited report UNVERIFIED
+(RFC 2026-08-03) before sworn's `UNSWORN`; NabaOS (2026-03-09) and readback (2026-09-13) had
+declared claim blocks before DECLARE-1; Proof-Carrying Agent Actions (2026-06-02) told a moved
+checker from a moved result before charon. Every neighbour, with dates and the sentences of ours
+each one corrects, is in
+[papers/NOTE_prior_art_credit_2026_09_29.md](https://github.com/fathom-lab/styxx/blob/main/papers/NOTE_prior_art_credit_2026_09_29.md).
+
 ### MEASURE — two minds can share a geometry and still be unable to read each other
 
 ```bash
@@ -460,6 +478,12 @@ it lists every number in your document, says whether it grounds in a receipt, fl
 on accusations — silence is honest and never fails. the rules, each learned by getting it wrong,
 are in [OATH_CONTRACT.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/OATH_CONTRACT.md), including the limits: a document can keep this
 contract perfectly and still be completely wrong.
+
+binding a document's numbers to machine-readable results is older than OATH: Inline XBRL (2013),
+knitr and Sweave, and showyourwork! (2021) did it for filings and papers, and
+[Deterministic Integrity Gates](https://arxiv.org/abs/2606.09500) (2026-06-08) and metacheck's
+[`reproducibility_check`](https://www.scienceverse.org/metacheck_book/chapters/mod-reproducibility-check.html)
+(2026-08-16, on its development branch) check manuscripts against their analysis outputs.
 
 ## links
 
