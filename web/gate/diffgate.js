@@ -1759,6 +1759,15 @@ function _definitionPaired(name, sides, status) {
   }
   return false;
 }
+function _keptByItsTier(p, claimed, forms) {
+  // NOTE_path2_twelfth_pass (A.2, and its own differential), as the Python's `_kept_by_its_tier`: the entry a path claim
+  // resolved to matches the claim as written, case kept, by the tier the resolution used.
+  const key = _norm(claimed), kept = _caseKept(claimed);
+  if (!forms.length) return false;
+  if (p === key) return forms.every(f => f === kept);
+  if (p.endsWith("/" + key)) return forms.every(f => f.endsWith("/" + kept));
+  return forms.every(f => _basename(f) === _basename(kept));
+}
 function _precondition(repair, c, status, sides, licence = null) {
   // Whether `repair`'s own precondition holds on claim `c`, read on this reading with every repair on (the Python's).
   // NOTE_path2_twelfth_pass, tightened (A.1, A.2): #97's match must hold on the paths as written, case kept, and never in
@@ -1778,6 +1787,10 @@ function _precondition(repair, c, status, sides, licence = null) {
   }
   if (repair === "#121") {
     if (!lic.rendered) return false;        // NOTE_path2_twelfth_pass (A.1): not git's own rendering
+    if (_PATH_KINDS.has(c.kind) && typeof d.path === "string") {
+      const [p] = _findPath(status, d.path);      // NOTE_path2_twelfth_pass: an entry matching the claim only in case
+      if (p === null || !_keptByItsTier(p, d.path, (lic.forms && lic.forms.get(p)) || [])) return false;
+    }
     const own = ["path", "prefix", "prefix2"].map(k => d[k]).filter(x => typeof x === "string");
     return [...status.keys()].some(k => k.startsWith(".")) || [...(sides || new Map()).keys()].some(k => k.startsWith("."))
       || own.some(x => _norm(x).startsWith("."));

@@ -2757,6 +2757,19 @@ def _definition_paired(name: str, sides, status) -> bool:
     return False
 
 
+def _kept_by_its_tier(p: str, claimed: str, forms) -> bool:
+    """NOTE_path2_twelfth_pass (A.2, and its own differential): whether the entry `p` a path claim resolved to (a key,
+    lower-cased) matches the claim as written, case kept, by the tier the resolution used -- every path the entry was
+    read from (`forms`) equals it (exact), ends in "/" + it (suffix), or has its name (basename). git's paths are
+    case-sensitive: a claim about `X.toml` says nothing about `.config/x.toml`, whatever the key reads."""
+    key, kept = _norm(claimed), _case_kept(claimed)
+    if p == key:
+        return bool(forms) and all(f == kept for f in forms)
+    if p.endswith("/" + key):
+        return bool(forms) and all(f.endswith("/" + kept) for f in forms)
+    return bool(forms) and all(Path(f).name == Path(kept).name for f in forms)
+
+
 def _precondition(repair: str, c, status: dict, sides, licence: dict | None = None) -> bool:
     """Whether `repair`'s own precondition holds on claim `c`, read on this reading with every repair on (`status`,
     `sides`, and `licence`, what `_read_diff` or the git door read for the licences). NOTE_path2_eleventh_pass, A.3:
@@ -2768,7 +2781,8 @@ def _precondition(repair: str, c, status: dict, sides, licence: dict | None = No
             test, for symbol_added some file that is not created adds and removes a definition of the claimed name.
     NOTE_path2_twelfth_pass, tightened (A.1, A.2): #97's exact or suffix match must hold on the paths as written, case
     kept (`_case_kept`), and #97 licenses nothing in a reading holding a Z-3 doubt; #121 licenses only where the diff is
-    git's own rendering. With no `licence` read, neither licenses."""
+    git's own rendering, and a path claim only where its entry matches the claim, case kept, by the tier it was resolved
+    by (`_kept_by_its_tier`). With no `licence` read, neither licenses."""
     d = c.detail or {}
     lic = licence or {}
     if repair == "#97":
@@ -2786,6 +2800,10 @@ def _precondition(repair: str, c, status: dict, sides, licence: dict | None = No
     if repair == "#121":
         if not lic.get("rendered"):
             return False                         # NOTE_path2_twelfth_pass (A.1): not git's own rendering
+        if c.kind in _PATH_KINDS and isinstance(d.get("path"), str):
+            p, _st = _find_path(status, d["path"])
+            if p is None or not _kept_by_its_tier(p, d["path"], (lic.get("forms") or {}).get(p) or []):
+                return False                     # NOTE_path2_twelfth_pass: the entry matches the claim only in case
         own = [d[k] for k in ("path", "prefix", "prefix2") if isinstance(d.get(k), str)]
         return (any(_dotted(k) for k in status) or any(_dotted(k) for k in (sides or {}))
                 or any(_dotted(_norm(x)) for x in own))
