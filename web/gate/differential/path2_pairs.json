@@ -183,8 +183,8 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'config/eslintrc.json'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
     ],
     [
      "file_touched",
@@ -193,7 +193,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_twelfth_pass: was VERIFIED, VERIFIED; NOTE_path2_twelfth_pass (A.1): #121 licenses only where the diff is git's own rendering, and this pair's diff is a plain `---`/`+++` rendering, so a difference only #121 explained abstains"
  },
  {
   "id": "path2:121-a-dotfile-outside-the-prefix",
@@ -617,48 +618,51 @@
   "summary": "Only touches .env.",
   "diff": "--- a/env\n+++ b/env\n@@ -1 +1 @@\n-A=1\n+A=2\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside '.env': ['env']"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_twelfth_pass: was CONTRADICTED; NOTE_path2_twelfth_pass (A.1): #121 licenses only where the diff is git's own rendering, and this pair's diff is a plain `---`/`+++` rendering, so a difference only #121 explained abstains"
  },
  {
   "id": "path2:121-a-dotted-prefix-over-an-undotted-directory",
   "summary": "Only touches .github/.",
   "diff": "--- a/.github/x.yml\n+++ b/.github/x.yml\n@@ -1 +1 @@\n-a\n+b\n--- a/github/z.md\n+++ b/github/z.md\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside '.github': ['github/z.md']"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_twelfth_pass: was CONTRADICTED; NOTE_path2_twelfth_pass (A.1): #121 licenses only where the diff is git's own rendering, and this pair's diff is a plain `---`/`+++` rendering, so a difference only #121 explained abstains"
  },
  {
   "id": "path2:121-a-dotdot-path-is-not-a-dot-miss",
   "summary": "Only touches src/.",
   "diff": "--- a/../src/x.py\n+++ b/../src/x.py\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside 'src': ['../src/x.py']"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_twelfth_pass: was CONTRADICTED; NOTE_path2_twelfth_pass (A.1): #121 licenses only where the diff is git's own rendering, and this pair's diff is a plain `---`/`+++` rendering, so a difference only #121 explained abstains"
  },
  {
   "id": "path2:121-binary-dotfile-twins-with-no-hunks",
@@ -1067,16 +1071,17 @@
   "summary": "Only touches .gitignore.",
   "diff": "--- a/gitignore\n+++ b/gitignore\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside '.gitignore': ['gitignore']"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_twelfth_pass: was CONTRADICTED; NOTE_path2_twelfth_pass (A.1): #121 licenses only where the diff is git's own rendering, and this pair's diff is a plain `---`/`+++` rendering, so a difference only #121 explained abstains"
  },
  {
   "id": "path2:f2-a-vertical-tab-is-not-a-line-break",
@@ -5260,6 +5265,641 @@
     ]
    ],
    "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "path2:m-r11-a97-created-suffix-case",
+  "summary": "Created src/README.md.",
+  "diff": "diff --git a/docs/README.md b/docs/README.md\nindex 7898192..6178079 100644\n--- a/docs/README.md\n+++ b/docs/README.md\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/lib/src/readme.md b/lib/src/readme.md\nnew file mode 100644\nindex 0000000..587be6b\n--- /dev/null\n+++ b/lib/src/readme.md\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-a97-deleted-suffix-case",
+  "summary": "Deleted src/Config.py.",
+  "diff": "diff --git a/a/Config.py b/a/Config.py\nindex d00491f..0cfbf08 100644\n--- a/a/Config.py\n+++ b/a/Config.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/lib/src/config.py b/lib/src/config.py\ndeleted file mode 100644\nindex 587be6b..0000000\n--- a/lib/src/config.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-a97-created-suffix-case-2",
+  "summary": "Created api/Util.py.",
+  "diff": "diff --git a/a/Util.py b/a/Util.py\nindex d00491f..0cfbf08 100644\n--- a/a/Util.py\n+++ b/a/Util.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/pkg/api/util.py b/pkg/api/util.py\nnew file mode 100644\nindex 0000000..3e75765\n--- /dev/null\n+++ b/pkg/api/util.py\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-a97-control-samecase",
+  "summary": "Created src/readme.md.",
+  "diff": "diff --git a/docs/README.md b/docs/README.md\nindex 7898192..6178079 100644\n--- a/docs/README.md\n+++ b/docs/README.md\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/lib/src/readme.md b/lib/src/readme.md\nnew file mode 100644\nindex 0000000..587be6b\n--- /dev/null\n+++ b/lib/src/readme.md\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'lib/src/readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-b121-difflib-noprefix-bdir",
+  "summary": "3 files changed.",
+  "diff": "--- b/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n--- x.py\n+++ x.py\n@@ -1 +1 @@\n-a\n+b\n--- .env\n+++ .env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- env\n+++ env\n@@ -1 +1 @@\n-B=1\n+B=2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-b121-difflib-empty-new-file",
+  "summary": "3 files changed.",
+  "diff": "--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\n--- a/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-b121-gnu-per-file-empty-new-file",
+  "summary": "3 files changed.",
+  "diff": "--- a/.env\t2024-05-06 07:08:09.000000000 -0400\n+++ b/.env\t2024-05-06 07:08:09.000000000 -0400\n@@ -1 +1 @@\n-A=1\n+A=2\n--- a/env\t2024-05-06 07:08:09.000000000 -0400\n+++ b/env\t2024-05-06 07:08:09.000000000 -0400\n@@ -1 +1 @@\n-B=1\n+B=2\n--- a/x.py\t2024-05-06 07:08:09.000000000 -0400\n+++ b/x.py\t2024-05-06 07:08:09.000000000 -0400\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-b121-difflib-noprefix-adir-delete",
+  "summary": "3 files changed.",
+  "diff": "--- a/x.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-a\n--- x.py\n+++ x.py\n@@ -1 +1 @@\n-a\n+b\n--- .env\n+++ .env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- env\n+++ env\n@@ -1 +1 @@\n-B=1\n+B=2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-b121-difflib-github-twins-empty",
+  "summary": "2 files changed.",
+  "diff": "--- a/.github/ci.yml\n+++ b/.github/ci.yml\n@@ -1 +1 @@\n-a: 1\n+a: 2\n--- a/github/ci.yml\n+++ b/github/ci.yml\n@@ -1 +1 @@\n-a: 1\n+a: 2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-b121-control",
+  "summary": "3 files changed.",
+  "diff": "--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\n--- a/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-a97-trailing-space-created",
+  "summary": "Created x.py.",
+  "diff": "diff --git a/lib/x.py b/lib/x.py\nindex d00491f..0cfbf08 100644\n--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/x.py  b/x.py \nnew file mode 100644\nindex 0000000..3e75765\n--- /dev/null\n+++ b/x.py \t\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-a97-trailing-space-deleted",
+  "summary": "Deleted util.py.",
+  "diff": "diff --git a/a/util.py b/a/util.py\nindex d00491f..0cfbf08 100644\n--- a/a/util.py\n+++ b/a/util.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/util.py  b/util.py \ndeleted file mode 100644\nindex 3367afd..0000000\n--- a/util.py \t\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-c121-difflib-trailing-space-count",
+  "summary": "2 files changed.",
+  "diff": "--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-B=1\n+B=2\n--- a/.env \n+++ b/.env \n@@ -1 +1 @@\n-A=1\n+A=2\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-C=1\n+C=2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-c121-git-trailing-space-count",
+  "summary": "2 files changed.",
+  "diff": "diff --git a/.env b/.env\nindex 48daf64..ac5d589 100644\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-B=1\n+B=2\ndiff --git a/.env  b/.env \nindex bd2c89c..f6a0610 100644\n--- a/.env \t\n+++ b/.env \t\n@@ -1 +1 @@\n-A=1\n+A=2\ndiff --git a/env b/env\nindex 7ebef33..51f3606 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-C=1\n+C=2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also dropped the `diff --git` file '.env ' for the next `---`/`+++` pair, which names another; the repair may have balanced that error; claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-c121-difflib-trailing-space-created",
+  "summary": "Created .env.",
+  "diff": "--- /dev/null\n+++ b/.env \n@@ -0,0 +1 @@\n+A=2\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-C=1\n+C=2\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [],
+   "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "path2:m-r11-c121-difflib-trailing-space-created-json",
+  "summary": "Created .env.json.",
+  "diff": "--- /dev/null\n+++ b/.env.json \n@@ -0,0 +1 @@\n+{}\n--- a/env.json\n+++ b/env.json\n@@ -1 +1 @@\n-{}\n+{\"a\": 1}\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r11-c121-git-trailing-space-created-json",
+  "summary": "Created .env.json.",
+  "diff": "diff --git a/.env.json  b/.env.json \nnew file mode 100644\nindex 0000000..0967ef4\n--- /dev/null\n+++ b/.env.json \t\n@@ -0,0 +1 @@\n+{}\ndiff --git a/env.json b/env.json\nindex 0967ef4..cb5b2f6 100644\n--- a/env.json\n+++ b/env.json\n@@ -1 +1 @@\n-{}\n+{\"a\": 1}\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also dropped the `diff --git` file '.env.json ' for the next `---`/`+++` pair, which names another; the repair may have balanced that error"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-a-dotfile-and-a-nested-undotted-name-in-gits-rendering",
+  "summary": "Created eslintrc.json. Updated .eslintrc.json.",
+  "diff": "diff --git a/.eslintrc.json b/.eslintrc.json\nindex 1111111..2222222 100644\n--- a/.eslintrc.json\n+++ b/.eslintrc.json\n@@ -1 +1 @@\n-{}\n+{\"a\": 1}\ndiff --git a/config/eslintrc.json b/config/eslintrc.json\nnew file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/config/eslintrc.json\n@@ -0,0 +1 @@\n+{}\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'config/eslintrc.json'"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for '.eslintrc.json'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-a-dotted-prefix-over-an-undotted-file-in-gits-rendering",
+  "summary": "Only touches .env.",
+  "diff": "diff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-A=1\n+A=2\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside '.env': ['env']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-a-dotted-prefix-over-an-undotted-directory-in-gits-rendering",
+  "summary": "Only touches .github/.",
+  "diff": "diff --git a/.github/x.yml b/.github/x.yml\nindex 1111111..2222222 100644\n--- a/.github/x.yml\n+++ b/.github/x.yml\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/github/z.md b/github/z.md\nindex 1111111..2222222 100644\n--- a/github/z.md\n+++ b/github/z.md\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside '.github': ['github/z.md']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-a-dotfile-prefix-over-its-undotted-twin-in-gits-rendering",
+  "summary": "Only touches .gitignore.",
+  "diff": "diff --git a/gitignore b/gitignore\nindex 1111111..2222222 100644\n--- a/gitignore\n+++ b/gitignore\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside '.gitignore': ['gitignore']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-dotfile-twins-counted-in-gits-rendering",
+  "summary": "3 files changed. 2 files changed.",
+  "diff": "diff --git a/.env b/.env\nindex 1111111..2222222 100644\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\ndiff --git a/x.py b/x.py\nindex 1111111..2222222 100644\n--- a/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 3 files, claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 3 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-difflib-a-b-prefixes-license-nothing",
+  "summary": "3 files changed. 2 files changed.",
+  "diff": "--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\n--- a/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-mnemonic-prefixes-read-as-main-reads-them",
+  "summary": "3 files changed. 2 files changed.",
+  "diff": "diff --git c/.env w/.env\n--- c/.env\n+++ w/.env\n@@ -1 +1 @@\n-A=1\n+A=2\ndiff --git c/env w/env\n--- c/env\n+++ w/env\n@@ -1 +1 @@\n-B=1\n+B=2\ndiff --git c/x.py w/x.py\n--- c/x.py\n+++ w/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 3 files, claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 3 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-a-submodule-line-licenses-nothing",
+  "summary": "3 files changed. 4 files changed.",
+  "diff": "diff --git a/.env b/.env\nindex 1111111..2222222 100644\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\nSubmodule vendor/lib 1234567..89abcde:\n  > bump\ndiff --git a/x.py b/x.py\nindex 1111111..2222222 100644\n--- a/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also passed over a line no reading places, which may name a changed file neither reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like); the repair may have balanced that error; claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff's file list is not certain: this reading's file list differs from main's by a repair (#121 keeps a dotfile's dot), and main's reading also passed over a line no reading places, which may name a changed file neither reading counts (git's `Submodule` line, svn's and hg's binary notices, and the like); the repair may have balanced that error; claim says 4"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-a-rename-under-no-prefix-licenses-nothing",
+  "summary": "3 files changed. 4 files changed.",
+  "diff": "diff --git a/x.py b/x.py\nsimilarity index 100%\nrename from a/x.py\nrename to b/x.py\ndiff --git a/.env b/.env\nindex 1111111..2222222 100644\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 3 files, claim says 4"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-a-quoted-path-is-gits-rendering",
+  "summary": "3 files changed. 4 files changed.",
+  "diff": "diff --git \"a/sp\\tace.py\" \"b/sp\\tace.py\"\nindex 1111111..2222222 100644\n--- \"a/sp\\tace.py\"\n+++ \"b/sp\\tace.py\"\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/.env b/.env\nindex 1111111..2222222 100644\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 3 files, claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 3 files, claim says 4"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-121-an-empty-created-file-under-its-own-header-is-gits-rendering",
+  "summary": "3 files changed. 2 files changed.",
+  "diff": "diff --git a/pkg/__init__.py b/pkg/__init__.py\nnew file mode 100644\nindex 0000000..e69de29\ndiff --git a/.env b/.env\nindex 1111111..2222222 100644\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 3 files, claim says 3"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 3 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-97-a-case-only-suffix-match-abstains",
+  "summary": "Created src/README.md.",
+  "diff": "diff --git a/docs/README.md b/docs/README.md\nindex 1111111..2222222 100644\n--- a/docs/README.md\n+++ b/docs/README.md\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/lib/src/readme.md b/lib/src/readme.md\nnew file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/lib/src/readme.md\n@@ -0,0 +1 @@\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-97-a-case-kept-suffix-match-keeps-the-repair",
+  "summary": "Created src/readme.md.",
+  "diff": "diff --git a/docs/README.md b/docs/README.md\nindex 1111111..2222222 100644\n--- a/docs/README.md\n+++ b/docs/README.md\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/lib/src/readme.md b/lib/src/readme.md\nnew file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/lib/src/readme.md\n@@ -0,0 +1 @@\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'lib/src/readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-97-a-case-only-exact-match-abstains",
+  "summary": "Created Docs/Guide.md.",
+  "diff": "diff --git a/x/Docs/Guide.md b/x/Docs/Guide.md\nindex 1111111..2222222 100644\n--- a/x/Docs/Guide.md\n+++ b/x/Docs/Guide.md\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/docs/guide.md b/docs/guide.md\nnew file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/docs/guide.md\n@@ -0,0 +1 @@\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-97-beside-a-z3-doubt-abstains",
+  "summary": "Created integrations/git/README.md.",
+  "diff": "diff --git a/README.md b/README.md\nindex 1111111..2222222 100644\n--- a/README.md\n+++ b/README.md\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/integrations/git/README.md b/integrations/git/README.md\nnew file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/integrations/git/README.md\n@@ -0,0 +1 @@\n+b\nSubmodule vendor/lib 1234567..89abcde:\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-dotted-a-created-claim-over-a-modified-dotfile",
+  "summary": "Created .github/ci.yml. Created .eslintrc.json.",
+  "diff": "diff --git a/.github/ci.yml b/.github/ci.yml\nindex 1111111..2222222 100644\n--- a/.github/ci.yml\n+++ b/.github/ci.yml\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/.eslintrc.json b/.eslintrc.json\nindex 1111111..2222222 100644\n--- a/.eslintrc.json\n+++ b/.eslintrc.json\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "'.github/ci.yml' is status 'M', claim wants 'A' — accusation WITHHELD pending the EXTERNAL-1 repair"
+    ],
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "'.eslintrc.json' is status 'M', claim wants 'A' — accusation WITHHELD pending the EXTERNAL-1 repair"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-dotted-a-deleted-claim-over-a-modified-dotfile",
+  "summary": "Deleted .github/ci.yml.",
+  "diff": "diff --git a/.github/ci.yml b/.github/ci.yml\nindex 1111111..2222222 100644\n--- a/.github/ci.yml\n+++ b/.github/ci.yml\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/src/a.py b/src/a.py\nindex 1111111..2222222 100644\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "'.github/ci.yml' is status 'M', claim wants 'D' — accusation WITHHELD pending the EXTERNAL-1 repair"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-dotted-a-touched-claim-over-a-deleted-dotfile",
+  "summary": "Modified .github/ci.yml. Created .github/ci.yml.",
+  "diff": "diff --git a/.github/ci.yml b/.github/ci.yml\ndeleted file mode 100644\nindex 1111111..0000000\n--- a/.github/ci.yml\n+++ /dev/null\n@@ -1 +0,0 @@\n-a\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'D' for '.github/ci.yml'"
+    ],
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "'.github/ci.yml' is status 'D', claim wants 'A' — accusation WITHHELD pending the EXTERNAL-1 repair"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-dotted-a-count-and-a-scope-beside-a-lone-dotfile",
+  "summary": "1 file changed. 2 files changed. Only touches .github/. Only touches github/.",
+  "diff": "diff --git a/.github/ci.yml b/.github/ci.yml\nindex 1111111..2222222 100644\n--- a/.github/ci.yml\n+++ b/.github/ci.yml\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ],
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 1 files, claim says 2"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "paths outside 'github' differ from it only by a leading dot: ['.github/ci.yml'] (#121)"
+    ]
+   ],
+   "uncovered_sentences": 0
   }
  }
 ]
