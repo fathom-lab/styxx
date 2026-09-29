@@ -3226,6 +3226,9 @@ RAW_CANARIES = (
     # (A.2): a name ending in a space in difflib's rendering, which carries no Z-3 doubt (round 12, R12.3)
     ("canary:raw-97-a-name-ending-in-a-space-as-written", "Created x.py.",
      "--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/x.py \n@@ -0,0 +1 @@\n+new\n"),
+    # and a name ending in a TAB, which difflib prints as it is: that TAB is the name's, not git's or GNU's terminator
+    ("canary:raw-97-a-name-ending-in-a-tab-as-written", "Created x.py.",
+     "--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/x.py\t\n@@ -0,0 +1 @@\n+new\n"),
     # (D): a header path holding a code point Unicode 16.0.0 does not assign (U+A7CE, assigned by 17.0)
     ("canary:raw-a-path-holding-an-unassigned-code-point", "1 file changed. 2 files changed. Only touches docs/.",
      "--- a/docs/a\ua7ceb.md\n+++ b/docs/a\ua7ceb.md\n@@ -1 +1 @@\n-x\n+y\n"

@@ -2641,7 +2641,7 @@ def _evaluate_git(summary_text: str, name_status: str, diff_text: str, rp: "_Rep
         parts = line.split("\t")
         if len(parts) >= 2:
             st, path = parts[0][:1], parts[-1]
-            status[rp.key(path)] = st           # A / M / D / R / T
+            status[rp.key(path)] = st           # A / M / D / R
             paths.append(path)
             forms = kept.setdefault(rp.key(path), [])
             if _case_kept(path) not in forms:

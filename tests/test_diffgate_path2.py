@@ -2915,7 +2915,8 @@ X9_PLANTED = {
         "2 files changed.", _m("src/a.py"), "G-C1_strict_verdict_not_from_its_claims"),
     # round-8 scorer lens, blocker: Y-1's git-door reading, read on every record's paths whether or not it rebuilds
     "Y-1 at the git door: a case collision not noted": (
-        '    return {"files": _Y1_COLLIDE} if any(len(v) > 1 for v in forms.values()) else {}', "    return {}",
+        '    if any(len(v) > 1 for v in forms.values()):\n        return {"files": _Y1_COLLIDE}',
+        '    if False:\n        return {"files": _Y1_COLLIDE}',
         "2 files changed.", _m("docs/Guide.md") + _m("docs/guide.md"), "G-C7_oracle:Y-1_status_notes"),
     # where main raises, main gave no verdict, and a verdict the repair gives there is refused
     "Z-1/Z-2: main raising not asked": (
@@ -2929,7 +2930,8 @@ X9_PLANTED = {
         "G-C7_oracle:tests_added_claim"),
     # ... read on a case-folded variant of a record that holds no collision (one path upper-cased beside itself)
     "Y-1 at the git door: a case collision not noted, on a record with none": (
-        '    return {"files": _Y1_COLLIDE} if any(len(v) > 1 for v in forms.values()) else {}', "    return {}",
+        '    if any(len(v) > 1 for v in forms.values()):\n        return {"files": _Y1_COLLIDE}',
+        '    if False:\n        return {"files": _Y1_COLLIDE}',
         "1 file changed.", _m("src/a.py"), "G-C7_oracle:Y-1_status_notes"),
 }
 
@@ -2953,7 +2955,8 @@ X9_DOOR = {
     # rebuild -- a case collision (P: `_status_notes` returns {}), #121's dotted keys at the git door (P31), and a
     # rename entry keyed by its old path (P26) -- each now rebuilt by fast-import and refused
     "a case collision at the git door": (
-        '    return {"files": _Y1_COLLIDE} if any(len(v) > 1 for v in forms.values()) else {}', "    return {}",
+        '    if any(len(v) > 1 for v in forms.values()):\n        return {"files": _Y1_COLLIDE}',
+        '    if False:\n        return {"files": _Y1_COLLIDE}',
         "2 files changed.", _m("docs/Guide.md") + _m("docs/guide.md"), "G-C7_oracle:files_changed_count_claim"),
     "#121 reverted at the git door (P31)": (
         "            status[rp.key(path)] = st           # A / M / D / R",
@@ -3201,6 +3204,8 @@ K2_SUMMARY = "Modified docs/a.md. Only touches docs/. Only touches src/. 3 files
 Y1_COLLIDE_WHY = "the diff's file list is not certain: two header paths that differ only in case are one key"
 FOLD_PY = ROOT / "styxx" / "_fold.py"
 FOLD_SHA256 = "a52cda82375292f71230e7e781acc24760084994812e083870b7419bdc5d5fd6"
+# NOTE_path2_thirteenth_pass_2026_09_29 (D): the code points Unicode 16.0.0 assigns, carried beside the fold
+ASSIGNED_SHA256 = "56a413ebc235c1b375e39f8faf1384e8861da0e8ce4a46b53128c0a16b76456b"
 
 
 def _k2_diff(a: int, b: int) -> str:
@@ -3252,45 +3257,145 @@ def test_x10_k2_both_ports_carry_one_fold_with_its_version_and_hash_pinned():
     assert f'const _FOLD_SHA256 = "{_fold.FOLD_SHA256}";' in js_block
     assert g.decode(_fold.FOLD) == _fold.MAP and len(_fold.MAP) == 1461
     assert dg._case_fold is _fold.fold
+    # NOTE_path2_thirteenth_pass (D): and the assigned set beside it, the same bytes in both ports, its hash pinned
+    py_block = g.block_of(FOLD_PY.read_text(encoding="utf-8"))
+    assert g.table_in(js_block, "assigned") == g.table_in(py_block, "assigned") == _fold.ASSIGNED
+    assert hashlib.sha256(_fold.ASSIGNED.encode("ascii")).hexdigest() == _fold.ASSIGNED_SHA256 == ASSIGNED_SHA256
+    assert f'const _FOLD_ASSIGNED_SHA256 = "{_fold.ASSIGNED_SHA256}";' in js_block
+    runs = g.decode_assigned(_fold.ASSIGNED)
+    assert len(runs) == 731 and sum(e - s for s, e in runs) == 294579
+    assert dg._unassigned is _fold.unassigned
 
 
 @pytest.mark.skipif(unicodedata.unidata_version != "16.0.0",
                     reason="gen_fold.py regenerates only under the fold's Unicode version, 16.0.0 (Python 3.14)")
 def test_x10_k2_the_generator_reproduces_both_blocks_from_the_pinned_version():
     g = _gen_fold()
-    t = g.encode(g.mapping())
-    assert g.sha(t) == FOLD_SHA256
-    for path, block in ((FOLD_PY, g.python_block(t)), (XID_JS, g.js_block(t))):
+    t, a = g.encode(g.mapping()), g.encode_assigned(g.assigned_runs())
+    assert g.sha(t) == FOLD_SHA256 and g.sha(a) == ASSIGNED_SHA256
+    for path, block in ((FOLD_PY, g.python_block(t, a)), (XID_JS, g.js_block(t, a))):
         before, after = g.splice(path, block)
         assert before == after, path
 
 
 def test_x10_k2_the_fold_sees_every_merge_this_python_s_key_makes():
-    # sound against this interpreter's str.lower(): a pair of paths it keys alike folds alike
+    # sound against this interpreter's str.lower(): a pair of paths it keys alike folds alike. NOTE_path2_thirteenth_pass
+    # (D): on ANY runtime -- every code point whose lower-casing merges beyond the fold must be one the fold's Unicode
+    # does not assign (a path holding it is a path-key doubt in both ports); on the supported Pythons (Unicode 13.0 to
+    # 16.0) there is none at all
     from styxx import _fold
-    assert _gen_fold().unsound(_fold.MAP, str.lower) == []
+    g = _gen_fold()
+    assert g.unsound(_fold.MAP, str.lower, _fold.assigned) == []
+    if unicodedata.unidata_version <= "16.0.0" and len(unicodedata.unidata_version) == 6:
+        assert g.unsound(_fold.MAP, str.lower) == []
     sig = chr(0x3A3)
     assert _fold.fold(sig) == _fold.fold(chr(0x3C3)) == _fold.fold(chr(0x3C2)) == _fold.fold(("A" + sig).lower()[1:])
 
 
 def test_x10_k2_the_fold_sees_every_merge_the_port_s_key_makes():
-    # and against node's toLowerCase(), every code point, through the port's own decoder
+    # and against node's toLowerCase(), every code point, through the port's own decoder. NOTE_path2_thirteenth_pass (D):
+    # on any runtime -- CI's Node reads Unicode 17.0 and lower-cases 28 code points 16.0.0 does not assign (U+A7CE,
+    # U+A7D2, U+A7D4, U+16EA0 to U+16EB8), which the fold cannot know: every code point whose lower-casing merges beyond
+    # the fold must be outside the assigned set, by the port's own decoder of it and by the Python's
     node = shutil.which("node")
     if node is None:
         pytest.skip("node is not on PATH")
     script = ("const src=require('fs').readFileSync(process.argv[1],'utf8');"
-              "const f=new Function(src+';return [_caseFold,_FOLD];')();const fold=f[0];const bad=[];"
+              "const f=new Function(src+';return [_caseFold,_FOLD,_assigned,_ASSIGNED_STARTS,_ASSIGNED_ENDS];')();"
+              "const fold=f[0],assigned=f[2];const bad=[];"
               "for(let c=0;c<0x110000;c++){if(c>=0xd800&&c<=0xdfff)continue;const ch=String.fromCodePoint(c);"
               "if(fold(ch.toLowerCase())!==fold(ch)||fold(fold(ch))!==fold(ch))bad.push(c);}"
               "for(const s of ['A\\u03a3','A\\u03a3A','\\u03a3']){if(fold(s.toLowerCase())!==fold(s))bad.push(s);}"
-              "process.stdout.write(JSON.stringify({bad,size:f[1].size,"
+              "process.stdout.write(JSON.stringify({unsound:bad.filter(c=>typeof c!=='number'||assigned(c)),"
+              "beyond:bad.filter(c=>typeof c==='number'&&!assigned(c)),size:f[1].size,runs:[f[3],f[4]],"
+              "unicode:process.versions.unicode,"
               "map:[...f[1]].map(([k,v])=>[k,[...v].map(x=>x.codePointAt(0))])}));")
     r = subprocess.run([node, "-e", script, str(XID_JS)], capture_output=True, text=True, encoding="utf-8", timeout=300)
     assert r.returncode == 0, r.stderr[-2000:]
     got = json.loads(r.stdout)
     from styxx import _fold
-    assert got["bad"] == [] and got["size"] == len(_fold.MAP)
+    assert got["unsound"] == [] and got["size"] == len(_fold.MAP)
+    assert all(not _fold.assigned(c) for c in got["beyond"]), got["beyond"]
+    assert got["runs"] == [_fold._STARTS, _fold._ENDS]
     assert {k: "".join(map(chr, v)) for k, v in got["map"]} == _fold.MAP
+    if got["unicode"] and got["unicode"].split(".")[0] <= "16" and len(got["unicode"].split(".")[0]) == 2:
+        assert got["beyond"] == [], got["unicode"]
+
+
+# NOTE_path2_thirteenth_pass (D): the 28 code points CI's Node (Unicode 17.0) lower-cases beyond the fold -- the red CI
+UNICODE17_LOWERED = (0xA7CE, 0xA7D2, 0xA7D4) + tuple(range(0x16EA0, 0x16EB9))
+Y1_UNASSIGNED_WHY = "the diff's file list is not certain: " + dg._Y1_UNASSIGNED
+
+
+def test_x13_d_the_28_code_points_a_newer_runtime_lower_cases_abstain_alike_in_both_ports():
+    from styxx import _fold
+    assert len(UNICODE17_LOWERED) == 28 and not any(_fold.assigned(c) for c in UNICODE17_LOWERED)
+    items = [(K2_SUMMARY, _m(f"docs/x{chr(c)}.md") + _m("docs/a.md")) for c in UNICODE17_LOWERED]
+    py = [_claims(s, d)[1] for s, d in items]
+    for got in py:
+        assert [(k, v) for k, v, _w in got] == [("file_touched", "UNCHECKABLE"), ("only_touches", "UNCHECKABLE"),
+                                                ("only_touches", "UNCHECKABLE"), ("files_changed_count", "UNCHECKABLE")]
+        assert all(w.startswith(Y1_UNASSIGNED_WHY) for _k, _v, w in got), got
+    assert _port_claims(items) == py
+    # the git door's reading of the same paths, and main's keyed paths in Z-3's check
+    for c in UNICODE17_LOWERED:
+        assert dg._status_notes([f"docs/x{chr(c)}.md", "docs/a.md"]) == {"files": dg._Y1_UNASSIGNED}
+    notes = dg._diff_notes(items[0][1])
+    assert notes["files"] == dg._Y1_UNASSIGNED and notes["differs"].endswith(dg._Z3_UNASSIGNED)
+    # a path of assigned code points only reads as before
+    assert [v for _k, v, _w in _claims(K2_SUMMARY, _m("docs/x\u00e9.md") + _m("docs/a.md"))[1]] == \
+        ["VERIFIED", "VERIFIED", "CONTRADICTED", "CONTRADICTED"]
+
+
+def test_x13_d_a_simulated_newer_runtime_merges_beyond_the_fold_and_the_doubt_abstains(monkeypatch):
+    """A Python whose lower-casing is Unicode 17.0's (simulated: U+A7CE lower-cases to U+A7CF, as 17.0 assigns them;
+    16.0.0 assigns neither) keys `docs/x<U+A7CE>.md` and `docs/x<U+A7CF>.md` as one file, and the fold keeps them apart,
+    so Y-1 cannot see the merge. The doubt on an unassigned code point is what abstains there; without it the reading
+    counts two files where git lists three."""
+    newer = {0xA7CE: 0xA7CF}
+    real_norm, real_main_key = dg._norm, dg._main_key
+    monkeypatch.setattr(dg, "_norm", lambda p: real_norm(p).translate(newer))
+    monkeypatch.setattr(dg, "_main_key", lambda p: real_main_key(p).translate(newer))
+    diff = _m("docs/x\ua7ce.md") + _m("docs/x\ua7cf.md") + _m("docs/a.md")
+    summary = "3 files changed. 2 files changed."
+    reading = dg._evaluate_text(summary, diff, dg._ALL_ON)
+    assert [c.verdict for c in reading.claims] == ["UNCHECKABLE", "UNCHECKABLE"]
+    assert all(c.why.startswith(Y1_UNASSIGNED_WHY) for c in reading.claims)
+    monkeypatch.setattr(dg, "_unassigned", lambda s: False)
+    unsound = dg._evaluate_text(summary, diff, dg._ALL_ON)
+    assert [c.verdict for c in unsound.claims] == ["CONTRADICTED", "VERIFIED"]      # git's --name-status lists three
+    # and the soundness check says why: on that runtime the code points it merges beyond the fold are all unassigned, so
+    # the doubt covers them -- a runtime merging an ASSIGNED code point beyond the fold would fail the check
+    from styxx import _fold
+    g = _gen_fold()
+    lower17 = (lambda s: s.lower().translate(newer))
+    assert 0xA7CE in g.unsound(_fold.MAP, lower17) and g.unsound(_fold.MAP, lower17, _fold.assigned) == []
+    assert g.unsound(_fold.MAP, lambda s: s.lower().replace("\u00e6", "x"), _fold.assigned) == [0xC6, 0xE6]
+
+
+def test_x13_d_a_simulated_newer_runtime_in_the_port():
+    """The port on a patched toLowerCase (U+A7CE to U+A7CF, as Unicode 17.0 reads it): the same abstention, and the same
+    soundness check holding on that runtime."""
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    script = ("const real=String.prototype.toLowerCase;"
+              "String.prototype.toLowerCase=function(){return real.call(this).replace(/\\ua7ce/g,'\\ua7cf');};"
+              "const B=require(process.argv[1]);const src=require('fs').readFileSync(process.argv[1],'utf8');"
+              "const f=new Function(src+';return [_caseFold,_assigned];')();const fold=f[0],assigned=f[1];const bad=[];"
+              "for(let c=0;c<0x110000;c++){if(c>=0xd800&&c<=0xdfff)continue;const ch=String.fromCodePoint(c);"
+              "if(fold(ch.toLowerCase())!==fold(ch))bad.push(c);}"
+              "const d=JSON.parse(require('fs').readFileSync(0,'utf8'));"
+              "process.stdout.write(JSON.stringify({claims:B.gateDiffText(d[0],d[1]).claims.map(c=>[c.verdict,c.why]),"
+              "merged:'x\\ua7ce'.toLowerCase()==='x\\ua7cf',unsound:bad.filter(c=>assigned(c)),beyond:bad.filter(c=>!assigned(c))}));")
+    diff = _m("docs/x\ua7ce.md") + _m("docs/x\ua7cf.md") + _m("docs/a.md")
+    r = subprocess.run([node, "-e", script, str(XID_JS)], input=json.dumps(["3 files changed. 2 files changed.", diff]),
+                       capture_output=True, text=True, encoding="utf-8", timeout=300)
+    assert r.returncode == 0, r.stderr[-2000:]
+    got = json.loads(r.stdout)
+    assert got["merged"] and got["unsound"] == [] and 0xA7CE in got["beyond"]
+    assert [v for v, _w in got["claims"]] == ["UNCHECKABLE", "UNCHECKABLE"]
+    assert all(w.startswith(Y1_UNASSIGNED_WHY) for _v, w in got["claims"])
 
 
 # K-3: this reading raised where main did not
@@ -3534,8 +3639,9 @@ def test_x10_the_door_canaries_make_z3_fire_at_the_git_door_and_refuse_a_defect_
     # scorer lens, blocker): and U+2029, a third.
     pg = scorer
     report, _ = pg.score_canaries()
-    assert report["pass"] and report["door"]["scored"] == len(pg.DOOR_CANARIES) == 7, report
-    z3 = [c for c in pg.DOOR_CANARIES if c[0].startswith("canary:z3-git-door-")]      # (the twelfth pass adds four more)
+    assert report["pass"] and report["door"]["scored"] == len(pg.DOOR_CANARIES) == 13, report
+    z3 = [c for c in pg.DOOR_CANARIES if c[0].startswith("canary:z3-git-door-")]      # (the twelfth pass adds four more,
+    # the thirteenth six: NOTE_path2_thirteenth_pass, C)
     assert len(z3) == 3
     for _cid, summary, diff in z3:
         files = pg.rebuild(diff)
@@ -3847,7 +3953,7 @@ def test_x11_the_canaries_refuse_what_no_shelf_record_reaches(scorer, monkeypatc
     pg = scorer
     report, violating = pg.score_canaries()
     assert report["pass"] and not violating, report
-    assert report["door"]["scored"] == len(pg.DOOR_CANARIES) == 7 and report["raw_door_canaries"] == len(pg.RAW_CANARIES)
+    assert report["door"]["scored"] == len(pg.DOOR_CANARIES) == 13 and report["raw_door_canaries"] == len(pg.RAW_CANARIES)
     assert chr(0x2029) in pg.SPLIT_ONLY_BY_PYTHON
     _planted_many(pg, monkeypatch, [(good, bad)], "x11canary")
     report, violating = pg.score_canaries()
@@ -3905,6 +4011,46 @@ X12_CANARY_PLANTS = {
     "A.2 #97 licenses beside a Z-3 doubt": [(
         '        if lic.get("soft") or not as_read or not all(f == claimed or f.endswith("/" + claimed) for f in as_read):',
         '        if not as_read or not all(f == claimed or f.endswith("/" + claimed) for f in as_read):')],
+    # NOTE_path2_thirteenth_pass (round-12 scorer lens): the plants both modes admitted at the twelfth pass, and each
+    # licence and doubt of this pass dropped. (The git door's `T` and mode rule is inert for a verdict -- a `T` or a
+    # mode-changed `M` never equals `A` or `D` -- and no canary can rebuild a typechange; its drop is refused by
+    # tests/test_diffgate_guard.py's test of the git door's licence facts on a real typechange repository.)
+    "PA a licence read off all three repairs reverted together": [(
+        "            g = evaluate(_Repairs({repair}), None)", "            g = evaluate(_Repairs(REPAIRS), None)")],
+    "PK #121's path licence without the tier-kept case (98f74833)": [(
+        '            if p is None or not _kept_by_its_tier(p, d["path"], (lic.get("forms") or {}).get(p) or []):',
+        "            if p is None:")],
+    "PF the git door's forms lower-cased": [(
+        "            if _case_kept(path) not in forms:\n                forms.append(_case_kept(path))",
+        "            if _case_kept(path).lower() not in forms:\n                forms.append(_case_kept(path).lower())")],
+    "PG1b the git door's reference is main's raw door on git's text": [(
+        "        return _REF.gate_diff(summary_text, repo, base, head, run=None, strict=False, evidence=None, commit=None)",
+        "        return _REF.gate_diff_text(summary_text, diff_text, run=None, strict=False)")],
+    "A.1 #97 licenses on a key two sections register": [(
+        '        if p in (lic.get("multi") or ()):\n            return False                         # NOTE_path2_thirteenth_pass'
+        ' (A.1): one path read twice\n        return _earliest_match',
+        "        return _earliest_match")],
+    "A.1 #121 licenses on a key two sections register": [(
+        '            if p in (lic.get("multi") or ()):\n                return False                     # NOTE_path2_thirteenth_pass'
+        ' (A.1): one path read twice\n',
+        "")],
+    "A.1 the reader counts no section twice": [(
+        "                     multi={k for k, n in sections.items() if n > 1}, moded=moded)",
+        "                     multi=set(), moded=moded)")],
+    "A.2 the forms are the stripped names": [(
+        "        written_form = form if as_written is None else _case_kept(as_written)", "        written_form = form")],
+    "A.2 every TAB cuts a name": [(
+        '    if tab and "\\t" not in rest and ((not rest and " " in head) or rest[:1] not in ("", " ")):',
+        "    if tab:")],
+    "D a header path's unassigned code point is no doubt": [(
+        '        if _unassigned(form):                                        # NOTE_path2_thirteenth_pass (D)\n'
+        '            found.setdefault("files", _Y1_UNASSIGNED)\n', "")],
+    "D a --name-status path's unassigned code point is no doubt": [(
+        '    return {"files": _Y1_UNASSIGNED} if any(_unassigned(f) for v in forms.values() for f in v) else {}',
+        "    return {}")],
+    "D a path main keys with an unassigned code point is no doubt": [(
+        '    if any(_unassigned(f) for f in forms):                   # NOTE_path2_thirteenth_pass (D)\n'
+        '        return f"{_Z3_PREFIX}: {_Z3_UNASSIGNED}"\n', "")],
 }
 
 
@@ -3919,6 +4065,9 @@ def test_x12_the_canaries_reach_every_guard_outcome_on_both_doors(scorer):
         assert report["guard"].get(outcome), (outcome, report["guard"])
     for outcome in pg.GUARD_OUTCOMES["git"]:
         assert report["guard_git_door"].get(outcome), (outcome, report["guard_git_door"])
+    # NOTE_path2_thirteenth_pass (round-12 scorer lens): a licensed outcome of #97 and of #121 on each door is required
+    for door in ("raw", "git"):
+        assert {"guard_licensed_by_#97", "guard_licensed_by_#121"} <= set(pg.GUARD_OUTCOMES[door]), door
 
 
 @pytest.mark.parametrize("label", sorted(X12_CANARY_PLANTS))
