@@ -324,13 +324,15 @@ def test_git_own_rendering_is_read_alike_in_both_ports():
         "--no-prefix": "diff --git .env .env\n--- .env\n+++ .env\n@@ -1 +1 @@\n-a\n+b\n",
         "mnemonic prefixes": "diff --git c/.env w/.env\n--- c/.env\n+++ w/.env\n@@ -1 +1 @@\n-a\n+b\n",
         "a pair naming another file": "diff --git a/x b/x\n--- a/y\n+++ b/y\n@@ -1 +1 @@\n-a\n+b\n",
+        "a +++ line naming another file": "diff --git a/x b/x\n--- a/x\n+++ b/y\n@@ -1 +1 @@\n-a\n+b\n",
         "a rename under --no-prefix": "diff --git a/x.py b/x.py\nsimilarity index 100%\nrename from a/x.py\nrename to b/x.py\n",
         "a Submodule line": "diff --git a/.env b/.env\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-a\n+b\nSubmodule v 1234567..89abcde:\n",
         "no --- line": "diff --git a/x b/x\n+++ /dev/null\n",
     }
     want = {"git": True, "an empty created file": True, "a quoted path": True, "a name ending in a space": True,
             "difflib": False, "GNU per file": False, "--no-prefix": False, "mnemonic prefixes": False,
-            "a pair naming another file": False, "a rename under --no-prefix": False, "a Submodule line": False,
+            "a pair naming another file": False, "a +++ line naming another file": False,
+            "a rename under --no-prefix": False, "a Submodule line": False,
             "no --- line": False}
     py = {}
     for name, diff in diffs.items():
