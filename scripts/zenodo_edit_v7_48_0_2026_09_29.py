@@ -62,7 +62,7 @@ DESC_EDITS = [
      'check, not a stability result. The verify result committed in this tree (2026-09-14, 254 '
      'entries, head <code>7817c731</code>) reads SAME_LINE 11, MOVED_VERIFIER 243, TAMPER 0 and was '
      'not re-run after the last three entries. A verify over all 257 entries, run on 2026-09-29 and '
-     'committed on the default branch (<code>papers/charon/charon_verify_result_2026_09_29.json</code>), '
+     'committed in pull request #167 (<code>papers/charon/charon_verify_result_2026_09_29.json</code>), '
      'reads SAME_LINE 14, MOVED_VERIFIER 243, SKEW 0, DRIFT 0, TAMPER 0.</li>'),
     ('<li><strong>Erratum: the staged "owed" note.</strong>',
      '<li><strong>Erratum: the "Staged for 7.48.0" note.</strong>'),
@@ -75,8 +75,8 @@ DESC_EDITS = [
      'in the earlier of the two.)</li>'),
     ('its own pinned checkout, is unchanged.</li>',
      'its own pinned checkout, is unchanged. <code>sworn/examples/sworn.yml</code> line 27 says the '
-     'same, and also that this repository dogfoods the action, which no workflow here does; the '
-     'default branch corrected it on 2026-09-29.</li>'),
+     'same, and also that this repository dogfoods the action, which no workflow here does; pull '
+     'request #167 corrects it.</li>'),
     ('version DOI; the software concept DOI is 10.5281/zenodo.19758618. <code>README.md</code> labels\n'
      '10.5281/zenodo.19326174, the concept record of the Fathom research-paper series, as the\n'
      'always-latest DOI in the software badge row and link table. Both are recorded as open defects (D1,\n'
@@ -106,7 +106,7 @@ DESC_EDITS = [
 ]
 CLOSING = ("<p><em>This description was corrected on 2026-09-29 after an audit of the release's public "
            "surfaces. The DOI and the files did not change. The metadata as originally published and as "
-           "edited are committed on the default branch as "
+           "edited are committed in pull request #167 as "
            "<code>release/zenodo-metadata-software-v7.48.0-as-published.json</code> and "
            "<code>release/zenodo-metadata-software-v7.48.0-edit-2026-09-29.json</code>.</em></p>")
 NOTES_OLD = "that line is a known defect."

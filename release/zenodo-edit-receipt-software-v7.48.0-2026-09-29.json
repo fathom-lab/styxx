@@ -1,0 +1,19 @@
+{
+  "action": "software_record_metadata_edited",
+  "deposit_id": "23042251",
+  "doi": "10.5281/zenodo.23042251",
+  "checks_after": {
+    "doi unchanged": true,
+    "concept unchanged": true,
+    "version unchanged": true,
+    "files unchanged": true,
+    "published": true,
+    "edited text is live": true
+  },
+  "edited_at": "2026-09-29T17:06:54Z",
+  "fields_changed": [
+    "description",
+    "notes",
+    "related_identifiers[].resource_type"
+  ]
+}
