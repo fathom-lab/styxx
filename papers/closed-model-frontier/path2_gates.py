@@ -1582,9 +1582,15 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
 
 
 def own_as_written(header_path: str) -> str:
-    """NOTE_path2_thirteenth_pass (A.2), written out: a `---`/`+++` path as written -- up to its TAB, less a CR at the end,
-    and nothing stripped."""
-    cut = header_path.partition("\t")[0]
+    """NOTE_path2_thirteenth_pass (A.2), written out: a `---`/`+++` path as written, nothing stripped -- up to its TAB where
+    that TAB is git's (the only one, ending the line, after a name holding a space) or GNU's (the only one, a timestamp
+    straight after it); else the whole path; less a CR at the end."""
+    tabs = header_path.count("\t")
+    cut = header_path
+    if tabs == 1:
+        name, after = header_path.split("\t")
+        if (after == "" and " " in name) or (after != "" and after[0] != " "):
+            cut = name
     return cut[:-1] if cut[-1:] == "\r" else cut
 
 

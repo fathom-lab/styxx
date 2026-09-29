@@ -1265,9 +1265,13 @@ def _as_git_writes(line: str):
 
 def _path_as_written(header_path: str) -> str:
     """NOTE_path2_thirteenth_pass (A.2): a `---`/`+++` line's path as written, for the licences: cut only at the TAB that
-    ends it (git's, after a name holding a space; GNU diff's, before its timestamp) and a CR after it, never stripped."""
-    p = header_path.split("\t", 1)[0]
-    return p[:-1] if p.endswith("\r") else p
+    ends it -- git's, the one TAB, at the end of the line, after a name holding a space; GNU diff's, the one TAB, with its
+    timestamp right after it (no space between) -- and a CR at the end; never stripped. Any other TAB is the name's (a
+    name ending in a TAB, which `difflib` prints as it is), so the path is kept whole and matches no claim."""
+    head, tab, rest = header_path.partition("\t")
+    if tab and "\t" not in rest and ((not rest and " " in head) or rest[:1] not in ("", " ")):
+        header_path = head
+    return header_path[:-1] if header_path.endswith("\r") else header_path
 
 
 def _as_written(header_path: str) -> str:

@@ -844,8 +844,18 @@ function _asGitWrites(line) {
   return [qa ? `"a/${a}"` : "a/" + a, qb ? `"b/${b}"` : "b/" + b, qa ? `"${a}"` : a, qb ? `"${b}"` : b];
 }
 const _asWritten = headerPath => headerPath.split("\t")[0];   // cut at the TAB git appends to a name holding a space
-// NOTE_path2_thirteenth_pass (A.2): a header path as the licences compare it -- cut at its TAB and a CR, never stripped
-const _pathAsWritten = headerPath => { const p = headerPath.split("\t")[0]; return p.endsWith("\r") ? p.slice(0, -1) : p; };
+// NOTE_path2_thirteenth_pass (A.2), as the Python's `_path_as_written`: a header path as the licences compare it -- cut
+// only at git's TAB (the one TAB, at the end, after a name holding a space) or GNU's (the one TAB, its timestamp right
+// after it), and a CR at the end; never stripped; any other TAB is the name's, and the path is kept whole
+function _pathAsWritten(headerPath) {
+  const at = headerPath.indexOf("\t");
+  let p = headerPath;
+  if (at >= 0) {
+    const head = headerPath.slice(0, at), rest = headerPath.slice(at + 1);
+    if (!rest.includes("\t") && ((rest === "" && head.includes(" ")) || (rest !== "" && rest[0] !== " "))) p = head;
+  }
+  return p.endsWith("\r") ? p.slice(0, -1) : p;
+}
 function _readDiff(diffText, notes = null, rp = null, facts = null) {
   // NOTE_path2_eleventh_pass: `rp`, the repairs this reading applies; with #121 switched off every path is keyed by main's key.
   // NOTE_path2_twelfth_pass: `facts`, when given, receives what the guard's tightened licences read (A.1, A.2).
