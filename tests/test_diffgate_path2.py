@@ -3596,6 +3596,14 @@ X11_PLANTED = {
         [("        if main_verdict == c.verdict:", "        if True:")], *_pair(X11_V2), "G-C9_guard:files_changed_count"),
     "the guard reads main as raising (the reference dropped)": (
         [("        ref = reference()", "        ref = None")], *_pair("path2:97-two-readmes"), "G-C9_guard:file_created"),
+    # where main raises, the scorer still asks G-C9: the reading's own Z-1 doubt dropped and the guard keeping a decided
+    # claim there (no main verdict to license it from) must be refused by the guard's own gate, not only by G-C1 and G-C7
+    "where main raises, the guard keeps a decided claim": (
+        [('    if main is None:\n        return None\n    if main.raises:\n        return "main raises on this diff',
+          '    if True:\n        return None\n    if main.raises:\n        return "main raises on this diff'),
+         ("        main_verdict = None if r is None else r.verdict",
+          "        main_verdict = (c.verdict if ref is None else None) if r is None else r.verdict")],
+        *_pair("path2:l-guard-main-raises-every-claim-abstains"), "G-C9_guard:tests_added"),
     "the guard pairs claims without their occurrence": (
         [("        out.append((c.kind, c.text, seen[k]))", "        out.append((c.kind, c.text, 0))")],
         "Created a.py, created b.py.", X11_TWO_CREATED, "G-C9_guard:file_created"),
@@ -3683,6 +3691,35 @@ def test_x11_a_licence_without_its_precondition_alone_moves_nothing_the_switches
     for p in json.loads(PAIRS.read_text(encoding="utf-8")):
         t.pair(p["id"], p["summary"], p["diff"], pg.raw_paths(p["diff"]))
     assert not t.violations, t.violating
+
+
+def test_x11_the_scorers_own_guard_licenses_only_by_the_precondition_and_the_switch_together(scorer):
+    """The scorer's guard (G-C9's oracle), on stub readings: a difference is kept only where a revert alone gives main's
+    verdict back AND that repair's precondition holds. On every corpus the three reverts read only their repairs, so the
+    two conditions never part there (see the test above); these stubs part them, one at a time."""
+    pg = scorer
+    C = dg.DiffClaim
+
+    def one(kind, text, verdict, detail):
+        return [C(kind=kind, text=text, detail=dict(detail), verdict=verdict, why=f"{kind} {verdict}")]
+
+    def final(status, before, main, switched):
+        return pg.expected_guard("", before, main, lambda r: switched.get(r, before), status, {})
+
+    # the #121 revert gives main's verdict back, but no key the claim reads keeps a dot: abstain, naming main's verdict
+    before = one("file_touched", "Modified src/x.py.", "VERIFIED", {"path": "src/x.py"})
+    main = one("file_touched", "Modified src/x.py.", "CONTRADICTED", {"path": "src/x.py"})
+    got = final({"src/x.py": "M"}, before, main, {"#121": main})
+    assert [g[2] for g in got] == ["UNCHECKABLE"] and "CONTRADICTED" in got[0][3], got
+    # a dotted key holds #121's precondition, but no revert gives main's verdict back: abstain
+    before = one("files_changed_count", "2 files changed.", "VERIFIED", {"claimed": 2})
+    main = one("files_changed_count", "2 files changed.", "CONTRADICTED", {"claimed": 2})
+    twins = {".env": "A", "env": "A"}
+    got = final(twins, before, main, {})
+    assert [g[2] for g in got] == ["UNCHECKABLE"], got
+    # both: the precondition holds and the #121 revert gives main's verdict back -- the repair's verdict is kept
+    got = final(twins, before, main, {"#121": main})
+    assert [g[2] for g in got] == ["VERIFIED"], got
 
 
 def test_x11_the_git_door_strict_report_is_compared(scorer, monkeypatch):
