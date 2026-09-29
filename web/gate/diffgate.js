@@ -723,6 +723,42 @@ const _FOLD_TABLE =
   ":1,x4k:8:1:2,x50:1:-1c:1,x51:1:-wn7:1,x52:1:-raw:1,x53:2:1:2,x57:1:-wo7:1,x58:1:1:1,x5c:1:1:1,x5" +
   "i:3:1:2,x5o:1:-wu9:1,x6d:1:1:1,1ee9:q:w:1,1fcw:14:14:1,1fhs:10:14:1,1fn4:b:13:1,1fng:f:13:1,1fnw" +
   ":7:13:1,1fo4:2:13:1,1h1c:1f:1s:1,1h74:m:w:1,1jfk:w:w:1,20cg:w:w:1,2olc:y:y:1";
+const _FOLD_ASSIGNED_SHA256 = "56a413ebc235c1b375e39f8faf1384e8861da0e8ce4a46b53128c0a16b76456b";
+const _FOLD_ASSIGNED =
+  "0:oo,2:6,4:7,1:1,1:k,1:b1,1:12,2:1e,2:3,1:1j,8:r,4:6,b:7i,1:1o,2:2t,e:1n,2:1d,2:f,1:s,2:1,1:b,5:" +
+  "v,1:2,5:6l,1:8,2:2,2:m,1:7,1:1,3:4,2:9,2:2,2:4,8:1,4:2,1:5,2:p,2:3,1:6,4:2,2:m,1:7,1:2,1:2,1:2,2" +
+  ":1,1:5,4:2,2:3,3:1,7:4,1:1,7:h,a:3,1:9,1:3,1:m,1:7,1:2,1:5,2:a,1:3,1:3,2:1,f:4,2:c,7:7,1:3,1:8,2" +
+  ":2,2:m,1:7,1:2,1:5,2:9,2:2,2:3,7:3,4:2,1:5,2:i,a:2,1:6,3:3,1:4,3:2,1:1,1:2,3:2,3:3,3:c,4:5,3:3,1" +
+  ":4,2:1,6:1,e:l,5:d,1:3,1:n,1:g,2:9,1:3,1:4,7:2,1:3,2:1,2:4,2:a,7:m,1:3,1:n,1:a,1:5,2:9,1:3,1:4,7" +
+  ":2,6:2,1:4,2:a,1:3,c:d,1:3,1:1f,1:3,1:6,4:g,2:q,1:3,1:i,3:o,1:9,1:1,2:7,3:1,4:6,1:1,1:8,6:a,2:3," +
+  "c:1m,4:t,11:2,1:1,1:5,1:o,1:1,1:n,2:5,1:1,1:7,1:a,2:4,w:20,1:10,4:13,1:10,1:f,1:d,11:5i,1:1,5:1," +
+  "2:ah,1:4,2:7,1:1,1:4,2:15,1:4,2:x,1:4,2:7,1:1,1:4,2:f,1:1l,1:4,2:1v,2:w,3:q,6:2e,2:6,2:il,3:2h,7" +
+  ":m,9:o,9:k,c:d,1:3,1:2,c:2m,2:a,6:a,6:q,6:2h,7:17,5:1y,a:v,1:c,4:c,4:1,3:16,2:5,b:18,4:q,6:b,3:1" +
+  "q,2:1t,1:t,2:b,6:a,6:e,2:v,1d:25,1:4m,8:1o,3:f,3:1q,5:17,2:b,8:17,5:eu,2:6,2:12,2:6,2:8,1:1,1:1," +
+  "1:1,1:v,2:1h,1:f,1:e,2:6,1:j,2:3,1:9,1:2t,1:c,2:r,1:d,3:x,f:x,f:3w,4:ii,m:b,l:1ec,2:w,1:9p,5:19," +
+  "1:1,5:1,2:1k,7:2,e:o,9:7,1:7,1:7,1:7,1:7,1:7,1:7,1:7,1:3i,y:q,1:2h,c:5y,q:28,1:2e,2:2v,5:17,1:2m" +
+  ",1:2e,9:1c,1:mlp,3:1j,9:9o,k:54,8:5q,2:2,1:1,1:8,l:1n,3:a,6:1k,8:1y,8:c,6:38,b:u,3:26,1:b,4:x,1:" +
+  "1j,9:e,2:a,2:2v,o:s,a:6,2:6,2:6,9:7,1:7,1:1o,4:3i,2:a,6:8mc,c:n,4:1d,4:6su,2:2y,12:7,c:5,5:q,1:5" +
+  ",1:1,1:2,1:2,1:3h,g:cd,2:1i,7:1,w:16,6:1f,1:j,1:4,4:5,1:3r,2:1,1:5a,3:6,2:6,2:6,2:3,3:7,1:7,a:5," +
+  "2:c,1:q,1:j,1:2,1:f,2:e,y:3f,5:3,4:19,3:2g,1:d,3:1,1b:1a,3m:t,3:1d,f:s,4:10,9:u,5:17,5:u,1:11,4:" +
+  "e,16:4e,2:a,6:10,4:10,4:14,8:1g,b:c,1:f,1:7,1:2,1:b,1:f,1:7,1:2,3:1g,c:8n,9:m,a:8,o:6,1:16,1:9,1" +
+  "x:6,2:1,1:18,1:2,3:1,2:n,1:20,8:9,1c:j,1:2,5:x,3:r,5:1,1s:1k,4:k,2:1e,1:2,5:8,1:3,1:t,2:3,4:a,7:" +
+  "9,7:1s,w:13,4:c,9:1i,3:t,2:r,5:q,7:4,c:7,28:21,1j:1f,d:1f,7:1a,8:a,6:12,3:t,8:2,5s:v,1:16,1:3,2:" +
+  "2,g:3,1j:18,8:16,m:q,12:s,k:n,9:26,4:10,9:1w,a:1,2:p,7:a,6:1h,1:i,8:13,9:2o,1:k,b:i,1:1b,1q:7,1:" +
+  "1,1:4,1:f,1:b,6:1n,5:a,6:4,1:8,2:2,2:m,1:7,1:2,1:5,1:a,2:2,2:3,2:1,6:1,5:7,2:7,3:5,b:a,1:1,2:1,1" +
+  ":12,1:a,1:1,2:1,1:4,1:a,1:2,8:2,t:2k,1:5,u:20,8:a,4m:1i,2:12,y:1x,b:a,6:d,j:1m,6:a,6:k,s:r,2:f,4" +
+  ":n,55:1o,2s:2b,c:8,2:1,2:8,1:2,1:u,1:2,2:c,9:a,1y:8,2:1a,2:b,r:20,8:2b,d:21,7:a,52:y,e:a,6:9,1:1" +
+  "9,1:e,a:t,3:w,2:m,1:e,21:7,1:2,1:18,3:1,1:2,1:9,8:a,6:6,1:2,1:11,1:2,1:6,7:a,8m:p,7:h,1:15,3:t,2" +
+  "d:1,f:1e,d:pn,2u:33,1:5,b:5g,218:2r,d:uu,a:32z,5:g7,5a1:1m,1c6:ft,7:v,1:a,4:29,1:a,6:u,2:6,a:1y," +
+  "a:a,1:7,1:l,5:j,c0:1m,5i:2j,2t:23,4:1l,7:h,1s:5,b:2,e:4qg,8:ye,15:a,6w7:4,1:7,1:2,1:83,f:1,t:3,2" +
+  ":1,e:4,8:b0,1s4:2z,5:d,3:9,7:a,2:8,318:6y,6:c4,24:1a,2:n,9:38,1o:6u,a:13,2:5e,l:1y,3e:k,c:k,c:2f" +
+  ",9:p,3r:2d,1:1z,1:2,2:1,2:2,2:4,1:c,1:1,1:7,1:1t,1:4,2:8,1:7,1:s,1:4,1:5,1:1,3:7,1:9g,2:84,2:ji," +
+  "f:5,1:f,uo:v,6:6,5x:7,1:h,2:7,1:2,1:5,5:1q,x:1,34:19,3:e,2:a,4:2,8w:v,h:1m,5:1,cw:16,5y:17,4:1,d" +
+  "c:7,1:4,1:2,1:f,1:5h,2:g,15:24,4:a,4:2,lt:1w,24:1p,5e:4,1:r,1:2,1:1,2:1,1:a,1:4,1:1,1:1,6:1,4:1," +
+  "1:1,1:1,1:3,1:2,1:1,2:1,1:1,1:1,1:1,1:1,1:2,1:1,2:4,1:7,1:4,1:4,1:1,1:a,1:h,5:3,1:5,1:h,1g:2,7i:" +
+  "18,4:2s,c:f,2:f,1:f,1:11,a:4u,1k:t,d:18,4:9,7:2,e:6,4a:rc,4:h,3:d,3:3b,4:2n,6:c,4:1,f:c,4:1k,8:a" +
+  ",6:14,8:u,2:c,4:2,1q:9g,c:e,2:d,3:a,5:1k,7:f,2:b,6:9,7:43,1:2u,sm:wyo,w:37e,6:66,2:4g2,e:5rl,f:h" +
+  "a,1wi:f2,15u:3t7,5:38g,f975:1,u:2o,3k:6o,1e6o:1eke,2:1eke";
 // END OF THE FOLD TABLE
 const _FOLD = new Map();
 for (const entry of _FOLD_TABLE.split(",")) {
@@ -742,8 +778,39 @@ function _caseFold(s) {
   }
   return out;
 }
+// NOTE_path2_thirteenth_pass_2026_09_29 (D): the code points Unicode 16.0.0 assigns, as half-open runs, decoded from the
+// generated block (`G:N`: N assigned code points starting G after the previous run's end, base 36). A runtime on a newer
+// Unicode (CI's Node on 17.0) lower-cases code points 16.0.0 does not assign, beyond the fold; a header path holding one
+// is a path-key doubt in both ports, as styxx/_fold.py's `unassigned`.
+const _ASSIGNED_STARTS = [], _ASSIGNED_ENDS = [];
+{
+  let prev = 0;
+  for (const entry of _FOLD_ASSIGNED.split(",")) {
+    const [gap, n] = entry.split(":").map(x => parseInt(x, 36));
+    _ASSIGNED_STARTS.push(prev + gap);
+    _ASSIGNED_ENDS.push(prev + gap + n);
+    prev = prev + gap + n;
+  }
+}
+function _assigned(cp) {
+  let lo = 0, hi = _ASSIGNED_STARTS.length - 1, at = -1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (_ASSIGNED_STARTS[mid] <= cp) { at = mid; lo = mid + 1; } else hi = mid - 1;
+  }
+  return at >= 0 && cp < _ASSIGNED_ENDS[at];
+}
+function _unassigned(s) {
+  for (const ch of s) {
+    const cp = ch.codePointAt(0);
+    if (cp >= 0x80 && !_assigned(cp)) return true;
+  }
+  return false;
+}
 const _Y1_LOOSE = "a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, a `++` line) or a file header";
 const _Y1_COLLIDE = "two header paths that differ only in case are one key";
+// NOTE_path2_thirteenth_pass (D), as the Python's
+const _Y1_UNASSIGNED = "a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path";
 const _Y1_UNCOUNTED = "a line names a changed file no header pair counts (GNU's `Binary files ... differ`, `Only in ...` and the like)";
 const _UNCOUNTED = /^(?:(?:Binary files|Files|Symbolic links) [^\n]+ and [^\n]+ differ|Only in [^\n]+: [^\n]+|File [^\n]+ is a [^\n]+ while file [^\n]+ is a [^\n]+)$/;
 function _pendingKey(pending, key) {
@@ -757,7 +824,9 @@ function _pendingKey(pending, key) {
 // pair read as a header under a header of its own, `---` before `+++`, naming that header's files as git writes them,
 // every `rename`/`copy` line naming the header's path as written, no line no reading places, no changed file no header
 // counts); only there does #121 license. `soft`: the reading holds a Z-3 doubt; #97 then licenses nothing. `forms`: each
-// key's paths as written, case kept; #97 licenses only a match on these.
+// key's paths as written, case kept; #97 licenses only a match on these. NOTE_path2_thirteenth_pass (A.1, A.2): `forms`
+// are the `---`/`+++` paths BEFORE strip(), cut only at the TAB that ends them (and a CR); `multi` the keys more than one
+// file section registers (git's typechange: a deletion then a creation for one path); `moded` the keys a mode change names.
 const _caseKept = p => p.replace(/\\/g, "/").replace(/^(?:\.?\/)+/, "");
 function _asGitWrites(line) {
   // a `diff --git` header's paths as git writes them after it -- [`---` path, `+++` path, `rename from`, `rename to`],
@@ -775,6 +844,8 @@ function _asGitWrites(line) {
   return [qa ? `"a/${a}"` : "a/" + a, qb ? `"b/${b}"` : "b/" + b, qa ? `"${a}"` : a, qb ? `"${b}"` : b];
 }
 const _asWritten = headerPath => headerPath.split("\t")[0];   // cut at the TAB git appends to a name holding a space
+// NOTE_path2_thirteenth_pass (A.2): a header path as the licences compare it -- cut at its TAB and a CR, never stripped
+const _pathAsWritten = headerPath => { const p = headerPath.split("\t")[0]; return p.endsWith("\r") ? p.slice(0, -1) : p; };
 function _readDiff(diffText, notes = null, rp = null, facts = null) {
   // NOTE_path2_eleventh_pass: `rp`, the repairs this reading applies; with #121 switched off every path is keyed by main's key.
   // NOTE_path2_twelfth_pass: `facts`, when given, receives what the guard's tightened licences read (A.1, A.2).
@@ -798,15 +869,23 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
   // NOTE_path2_twelfth_pass (A.1, A.2): git's own rendering, read as the diff is read; each key's paths, case kept
   let gitForm = true, headers = false, written = null, minus = false;
   const kept = new Map();
-  const register = rawPath => {
+  // NOTE_path2_thirteenth_pass (A.1, A.2): how many file sections registered each key, the keys a mode change names, and
+  // the `---` line's path as written
+  const sections = new Map(), moded = new Set();
+  let sectionModed = false, oldWritten = null;
+  const register = (rawPath, asWritten = null) => {
     // NOTE_path2_tenth_pass (K-2): two header paths are compared by the one fold both ports carry, not toLowerCase()
     const form = rawPath.replace(/\\/g, "/").replace(/^(?:\.?\/)+/, "");
     const k = key(rawPath);
+    const writtenForm = asWritten === null ? form : _caseKept(asWritten);   // A.2: never stripped
     if (!kept.has(k)) kept.set(k, []);
-    if (!kept.get(k).includes(form)) kept.get(k).push(form);
+    if (!kept.get(k).includes(writtenForm)) kept.get(k).push(writtenForm);
+    sections.set(k, (sections.get(k) || 0) + 1);                             // A.1: a key read twice
+    if (sectionModed) moded.add(k);
     const folded = _caseFold(form);
     if (!forms.has(folded)) forms.set(folded, form);
     else if (forms.get(folded) !== form) note("files", _Y1_COLLIDE);
+    if (_unassigned(form)) note("files", _Y1_UNASSIGNED);                     // NOTE_path2_thirteenth_pass (D)
   };
   const flush = () => {
     const pk = pending !== null ? _pendingKey(pending, key) : "";
@@ -851,6 +930,7 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
       loose = false; binary = false; leadOld = false; leadNew = false;
       headers = true; written = _asGitWrites(line); minus = false;
       gitForm = gitForm && written !== null;
+      sectionModed = false;
     } else if (line.startsWith("--- ")) {
       const was = _asWritten(line.slice(4));
       if (pending === null || written === null || !(was === "/dev/null" || was === written[0])) gitForm = false;   // A.1
@@ -860,6 +940,7 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
         else note("files", _Y1_LOOSE);
       } else if (!_shapedPair(lines, k)) soft.push(_Z3_UNSHAPED);   // NOTE_path2_eleventh_pass (R0.2)
       oldPath = _pyStrip(line.slice(4));          // str.strip(), not trim() (V-2)
+      oldWritten = _pathAsWritten(line.slice(4));  // NOTE_path2_thirteenth_pass (A.2)
       cur = null;
       leadOld = false; leadNew = false;
     } else if (line.startsWith("+++ ")) {
@@ -876,18 +957,22 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
         // (main raised there where its own reading held no `---` line either; where it read one, Z-3 abstains).
         cur = null;
       } else {
-        let raw;
+        let raw, asWritten;
         if (_devNull(nw)) {                       // Y-4: a GNU timestamp after /dev/null
           status.set(key(oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath), "D");
           raw = oldPath.startsWith("a/") ? oldPath.slice(2) : oldPath;
+          asWritten = oldWritten.startsWith("a/") ? oldWritten.slice(2) : oldWritten;
         } else {
           raw = nw.startsWith("b/") ? nw.slice(2) : nw;
           status.set(key(raw), (oldPath === null || _devNull(oldPath)) ? "A" : "M");
+          const newWritten = _pathAsWritten(line.slice(4));
+          asWritten = newWritten.startsWith("b/") ? newWritten.slice(2) : newWritten;
         }
         cur = key(raw);
-        register(raw);
+        register(raw, asWritten);
         if (!sides.has(cur)) sides.set(cur, [[], []]);
       }
+      sectionModed = false;
       pending = null; written = null; minus = false;
       leadNew = oldPath !== null && _headerShape(oldPath) === "/dev/null";   // Y-2
       leadOld = _headerShape(nw) === "/dev/null";
@@ -931,6 +1016,7 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
         // NOTE_path2_twelfth_pass (A.1): git names the header's own paths here, as written
         if (line.startsWith(prefix) && (pending === null || written === null || line.slice(prefix.length) !== written[at])) gitForm = false;
       }
+      if (pending !== null && (line.startsWith("old mode ") || line.startsWith("new mode "))) sectionModed = true;   // A.1
       if (pending !== null) pending.note(line);
     }
   }
@@ -940,7 +1026,10 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
     if (why) found.differs = why;
     Object.assign(notes, found);
   }
-  if (facts !== null) Object.assign(facts, { rendered: gitForm && headers, soft: soft.length > 0, forms: kept });
+  if (facts !== null) {
+    Object.assign(facts, { rendered: gitForm && headers, soft: soft.length > 0, forms: kept,
+                           multi: new Set([...sections].filter(([, n]) => n > 1).map(([k]) => k)), moded });
+  }
   return { status, added, sides };
 }
 function _diffNotes(diffText, facts = null) {
@@ -1591,6 +1680,7 @@ function _foldsApart(forms) {
   return false;
 }
 const _Z3_FOLDS = "main's reading holds two paths that differ only in case, which the runtimes this package supports key apart or together";
+const _Z3_UNASSIGNED = "main's reading keys a path holding a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path";
 function _fileListDiffers(diffText, lines, status, inside, soft) {
   // NOTE_path2_tenth_pass (K-1): W-1's exact hunk licenses no file-list difference; where main's reading of the file
   // list with an exact hunk's lines is not its reading without them, the file-list claims abstain.
@@ -1598,6 +1688,7 @@ function _fileListDiffers(diffText, lines, status, inside, soft) {
   const py = _mainStatus(_pyLines(diffText), false, null, forms), js = _mainStatus(lines, true, null, forms);
   if (py === null || js === null) return `${_Z3_PREFIX}: main raises on it (\`+++ /dev/null\` with no \`---\` line before it)`;
   if (_foldsApart(forms)) return `${_Z3_PREFIX}: ${_Z3_FOLDS}`;   // NOTE_path2_eleventh_pass: asked before the lists are compared
+  if (forms.some(_unassigned)) return `${_Z3_PREFIX}: ${_Z3_UNASSIGNED}`;   // NOTE_path2_thirteenth_pass (D)
   if (!_mapsEqual(py, js)) {
     return `main's Python and its port read the file list apart (str.splitlines() breaks lines JavaScript does not): ${_apart(py, js)}`;
   }
@@ -1778,7 +1869,8 @@ function _precondition(repair, c, status, sides, licence = null) {
   // Whether `repair`'s own precondition holds on claim `c`, read on this reading with every repair on (the Python's).
   // NOTE_path2_twelfth_pass, tightened (A.1, A.2): #97's match must hold on the paths as written, case kept, and never in
   // a reading holding a Z-3 doubt; #121 licenses only where the diff is git's own rendering. With no licence read,
-  // neither licenses.
+  // neither licenses. NOTE_path2_thirteenth_pass (A.1, A.2): neither licenses a path claim whose resolved entry more than
+  // one file section registers, and the forms are the header paths as written, before strip().
   const d = c.detail || {};
   const lic = licence || {};
   if (repair === "#97") {
@@ -1789,6 +1881,7 @@ function _precondition(repair, c, status, sides, licence = null) {
     const claimed = _caseKept(d.path);
     const asRead = (lic.forms && lic.forms.get(p)) || [];
     if (lic.soft || !asRead.length || !asRead.every(f => f === claimed || f.endsWith("/" + claimed))) return false;
+    if (lic.multi && lic.multi.has(p)) return false;   // NOTE_path2_thirteenth_pass (A.1): one path read twice
     return _earliestMatch(status, d.path)[0] !== p;
   }
   if (repair === "#121") {
@@ -1796,6 +1889,7 @@ function _precondition(repair, c, status, sides, licence = null) {
     if (_PATH_KINDS.has(c.kind) && typeof d.path === "string") {
       const [p] = _findPath(status, d.path);      // NOTE_path2_twelfth_pass: an entry matching the claim only in case
       if (p === null || !_keptByItsTier(p, d.path, (lic.forms && lic.forms.get(p)) || [])) return false;
+      if (lic.multi && lic.multi.has(p)) return false;   // NOTE_path2_thirteenth_pass (A.1): one path read twice
     }
     const own = ["path", "prefix", "prefix2"].map(k => d[k]).filter(x => typeof x === "string");
     return [...status.keys()].some(k => k.startsWith(".")) || [...(sides || new Map()).keys()].some(k => k.startsWith("."))
