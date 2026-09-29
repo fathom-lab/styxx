@@ -1219,6 +1219,20 @@ def test_the_git_door_licence_facts_read_gits_typechange_and_the_scorers_own(tmp
         multi[case["id"]] = out["licence"]["multi"]
     assert all(multi[c] for c in ("T1", "T2", "T8", "T4"))
     assert multi["M1-mode-change"] == {"bin/run.sh"}          # git's `old mode`/`new mode`, an M in --name-status
+    # Where git writes the typechange's two sections, the text alone registers the path twice. Under diff.submodule=log a
+    # gitlink's section is a `Submodule` line, the text registers the path once, and only the `T` letter names it: the
+    # git door's reading of `T` is what holds it there (its drop moves no verdict, and this refuses it)
+    log_repo = _repository(tmp_path / "submodule-log", [c for c in R13 if c["id"] == "T4"])
+    subprocess.run(["git", "-C", str(log_repo), "config", "diff.submodule", "log"], check=True)
+    ns = dg._git(log_repo, "diff", "--name-status", "b0..h0")
+    text = dg._git(log_repo, "diff", "b0..h0")
+    facts: dict = {}
+    dg._diff_notes(text, facts)
+    out = {}
+    dg._evaluate_git("Created lib/x.py.", ns, text, dg._ALL_ON, repo=log_repo, base="b0", head="h0", out=out)
+    assert "\nSubmodule lib/x.py " in text and "lib/x.py" not in facts["multi"] | facts["moded"]
+    paths = [x.split("\t")[-1] for x in ns.splitlines() if len(x.split("\t")) >= 2]
+    assert out["licence"]["multi"] == {"lib/x.py"} == pg.own_git_licence(text, paths, ns)["multi"]
 
 
 def test_the_licence_facts_read_alike_in_both_ports_on_round_12s_renderings():
