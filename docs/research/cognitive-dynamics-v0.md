@@ -38,7 +38,7 @@ predict that evolution, you can:
 4. test the hypothesis that the eigenvalues are **causal**, not
    merely correlative
 
-This document specifies the v0.1 cognitive dynamics model: the first
+This document specifies the v0.1 cognitive dynamics model: a
 dynamical-systems model of LLM cognition, fitted by ordinary least
 squares on observation tuples in fathom's eigenvalue space.
 

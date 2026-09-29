@@ -23,11 +23,11 @@ release notes and evidence-directory names; its commit history was not audited.
 
 | neighbour | what it did | its date | against styxx | where |
 |---|---|---|---|---|
-| **Swarm Orchestrator / swarm-verify**, Brad Kinnard (ISC) | A merge gate for AI-written pull requests: `swarm audit` runs ten cheat detectors over the diff and writes a hash-chained audit ledger, shipped as a GitHub Action (v10.0.0). A defect-injection oracle catching 253 of 300 planted cheats (v11.1.0). v2.0.1 already "verifies results using transcript evidence before merging". Run bundles that carry their own dependency-free verifier. | v2.0.1 2026-01-26; v10.0.0 2026-05-23; v11.1.0 2026-06-02; bundles with evidence dated 2026-08-18 and 2026-08-23 | about ten weeks before diffgate; the verifier-carrying bundle before the capsule | https://github.com/moonrunnerkc/swarm-orchestrator |
-| **AgentLiar**, Daksh Jain (MIT per its README; the GitHub API finds no licence file) | Takes a task description, an agent's completion claim and its file changes; runs a file check, a test-quality check (assertion-free tests), a scope-narrowing check ("only", "for now") and an optional LLM judge; a 0-100 score; CLI, Python, GitHub Action, HTTP API. No accuracy published. | repository 2026-05-20 | about ten weeks before diffgate, as a checker of an agent's completion claim against its changes | https://github.com/dakshjain-1616/AgentLiar |
+| **Swarm Orchestrator / swarm-verify**, Brad Kinnard (ISC) | A merge gate for AI-written pull requests: `swarm audit` runs ten cheat detectors over the diff (they do not read the PR description) and writes a hash-chained audit ledger, shipped as a GitHub Action (v10.0.0). A defect-injection oracle catching 253 of 300 planted cheats (v11.1.0). v2.0.1 already "verifies results using transcript evidence before merging". Run bundles that carry their own dependency-free verifier. | v2.0.1 2026-01-26; v10.0.0 2026-05-23; v11.1.0 2026-06-02; bundles with evidence dated 2026-08-18 and 2026-08-23 | about ten weeks before diffgate; the verifier-carrying bundle before the capsule | https://github.com/moonrunnerkc/swarm-orchestrator |
+| **AgentLiar**, Daksh Jain (MIT per its README; the GitHub API finds no licence file) | Takes a task description, an agent's completion claim (a JSON object with free-text summary and details plus structured files_modified / tests_added / tests_passed fields) and its file changes; runs a file check, a test-quality check (assertion-free tests), a scope-narrowing check ("only", "for now") and an optional LLM judge; one 0-100 score per PR; CLI, Python, GitHub Action, HTTP API. No accuracy published. | repository 2026-05-20 | about ten weeks before diffgate, as a checker of an agent's completion claim against its changes | https://github.com/dakshjain-1616/AgentLiar |
 | **PR-MCI**, Jingzhi Gong, Giovanni Pinna, Yixin Bian, Jie M. Zhang (MSR '26 Mining Challenge) | Message-code inconsistency on 23,247 AIDev agent PRs; 406 (1.7%) highly inconsistent, 45.4% of them descriptions claiming unimplemented changes; accepted 28.3% vs 80.0%, merged in 55.8 h vs 16.0 h. 974 hand-annotated PRs (a 600-PR validation sample, κ 0.892, plus 374 high-inconsistency PRs). A heuristic similarity detector at P 0.742, R 0.548, F1 0.630 on the 600, in the replication repository `gjz78910/PR-MCI` (no licence per the GitHub API). | arXiv v1 2026-01-08 | about seven months before diffgate; they measured the phenomenon on AIDev before this lab did | https://arxiv.org/abs/2601.04886 |
 | **backcheck**, Vector Institute (Apache-2.0) | Reads a coding-agent transcript, extracts the closing claims (tests pass, lint, build, commits, files written) and checks each against the tool-execution records in the same transcript; no model in the verdict path; supported / inconclusive / contradicted / unsupported / *qualified*. Reports 36 of 36 "tests pass" claims agreeing with an independent scan over 81 sessions. | repository 2026-08-04 | three days after diffgate; ahead of it on binding a test claim to the run it names | https://github.com/VectorInstitute/backcheck |
-| **DeerFlow tool receipts**, bytedance/deer-flow (MIT) | The runtime stamps each tool result (name, status, argument and output sha256, bytes, time); the model never writes it. Report claims cite `[rN]`; an uncited claim is UNVERIFIED. Layer 2 anchors `tests_passed:<command>` to the recorded exit status. | RFC #4651 2026-08-03; receipts #4659 merged 2026-08-23; citation verification #5076 merged 2026-08-29; checklist #5109 merged 2026-09-01 | two days after diffgate; citation verification about three weeks before DECLARE-1 | https://github.com/bytedance/deer-flow/issues/4651 |
+| **DeerFlow tool receipts**, bytedance/deer-flow (MIT) | The runtime stamps each tool result (name, status, argument and output sha256, bytes, time); the model never writes it. Report claims cite `[rN]`; an uncited claim is UNVERIFIED. Layer 2 anchors `tests_passed:<command>` to the recorded exit status. | RFC #4651 opened 2026-08-03 (the no-citation UNVERIFIED rule and the `tests_passed` binding were added in its revision 2, after reviews of 2026-08-03/04; the date of that edit is not recorded); receipts #4659 merged 2026-08-23; citation verification #5076 merged 2026-08-29; checklist #5109 merged 2026-09-01 | the RFC opened two days after diffgate; citation verification merged about three weeks before DECLARE-1 | https://github.com/bytedance/deer-flow/issues/4651 |
 | **NabaOS tool receipts**, Abhinaba Basu | HMAC-signed per-call receipts; the model tags each claim by its evidence source; count and absence claims checked against result counts; 1,800 synthetic scenarios; self-tag compliance about 92% (Claude). Code promised, URL withheld for anonymous review. | arXiv 2026-03-09 | before diffgate and DECLARE-1 | https://arxiv.org/abs/2603.10060 |
 | **readback**, Josh Duffy (MIT) | An agent declares claims as JSON in a `readback-claims` fenced block; six types; verified / contradicted / indeterminate; no LLM; exit 2 when nothing could be checked or no usable claims. | repository 2026-09-13 | five days before DECLARE-1, with the same three-verdict shape | https://github.com/joshduffy/readback |
 | **AgentLTL**, Laila Elkoussy, Julien Perez (EPITA) | Temporal-logic (LTL) properties over tool-call traces, scored without a judge; a grounding predicate requires final-answer entities to appear in tool outputs. | arXiv 2026-07-01 | before diffgate | https://arxiv.org/abs/2607.02599 |
@@ -39,12 +39,12 @@ release notes and evidence-directory names; its commit history was not audited.
 | **commitlint-scope**, thumbrise (Apache-2.0) | Lints changed paths against a declared conventional-commit scope: the comparison `only_touches` makes, on a structured header. | repository 2026-05-25 | about nine weeks before diffgate | https://github.com/thumbrise/commitlint-scope |
 | **FEVER**, James Thorne, Andreas Vlachos, Christos Christodoulopoulos, Arpit Mittal | Supported / Refuted / NotEnoughInfo over 185,445 claims. | 2018 | the three-way claim verdict with abstention, eight years before | https://arxiv.org/abs/1803.05355 |
 | **Pham & Ghaleb; Ogenrwot & Businge** (MSR 2026) | Similarity-based alignment of agent PR descriptions against diffs, with human baselines. | arXiv 2026-01 | before diffgate | https://arxiv.org/abs/2601.17627 ; https://arxiv.org/abs/2601.17581 |
-| **Sello (Notarized Agents)**, Juan Figuera | The receiving service signs a COSE receipt per agent action. | arXiv 2026-05-30 | before the capsule | https://arxiv.org/abs/2606.04193 |
+| **Sello (Notarized Agents)**, Juan Figuera | The receiving service signs a COSE receipt per agent action. | arXiv v1 2026-06-02 | before the capsule | https://arxiv.org/abs/2606.04193 |
 | **GitHub artifact attestations and PEP 740** | Provenance bound to a package release. styxx 7.48.0 on PyPI carries none (the integrity endpoint returned 404 on 2026-09-28). | 2024 | earlier, and adopted by neither styxx release | https://peps.python.org/pep-0740/ |
 
 Later than the styxx part, and recorded so no one reads them as followers of it: Transluce Docent's
 "Measuring coding agent misalignment in the wild" (2026-08-04, contemporaneous with diffgate),
-i-dont-believe-you (Leo Leroy, 2026-09-15), OverclaimBench (arXiv 2609.20812, 2026-09-17),
+i-dont-believe-you (Leonard Leroy, 2026-09-15), OverclaimBench (arXiv 2609.20812, 2026-09-17),
 agent-acceptance (Stackbilt, 2026-09-24), agent-claim-verifier (chiragborse1, 2026-09-27), and
 Kraishan and Jitkajornwanich's *Plans They Abandon, Reports They Author* (arXiv 2609.12205, 2026-09).
 Each was reached independently of this lab as far as anything read shows.
@@ -70,13 +70,18 @@ sources read and is not a survey result.
 free-form claim about a change they just made … against evidence bytes produced by a party other
 than the claimant, deterministically, in CI … we know of none that combine the two, and none that
 adjudicate a retrospective report."* It was never priced under a frozen procedure, and the
-neighbours above occupy it. AgentLiar (2026-05-20) adjudicates an agent's free-form completion
-claim against the repository's file changes in a GitHub Action, with deterministic checks beside
-an optional judge. Swarm Orchestrator (2026-05-23) gates AI-written pull requests on their diffs in
-a GitHub Action. backcheck (2026-08-04) adjudicates the closing claims of a session, a retrospective
-report, against tool records the claimant did not write, deterministically, though where the agent
-works rather than in CI. DeerFlow's RFC (2026-08-03) renders any uncited report claim UNVERIFIED
-against runtime-stamped receipts the model never writes. **Reading from today:** withdrawn as a
+neighbours above occupy it. AgentLiar (2026-05-20) scores an agent's completion claim, a JSON
+object with free-text summary and details plus structured files_modified / tests_added /
+tests_passed fields, against its file changes and a task description, in a GitHub Action, with
+deterministic checks beside an optional LLM judge; its output is one 0-100 score per PR. Swarm
+Orchestrator (2026-05-23) gates AI-written pull requests on their diffs in a GitHub Action; its
+detectors do not read the description, so it occupies the "deterministically, in CI, on agent
+diffs" part, not the free-form-claim part. backcheck (2026-08-04) adjudicates the closing claims
+of a session, a retrospective report, against tool records the claimant did not write,
+deterministically, though where the agent works rather than in CI. DeerFlow renders a report with
+action claims and no receipt citations UNVERIFIED against runtime-stamped receipts the model never
+writes (a rule added in revision 2 of RFC #4651, date of the edit not recorded; merged in #5076 on
+2026-08-29, three days before this PREREG). **Reading from today:** withdrawn as a
 priority sentence. What is left after every neighbour is named is at most a residual, and it may
 not carry any sentence until the frozen survey the landscape asks for prices it (candidates:
 Swarm Orchestrator, AgentLiar, DOCER, backcheck, readback, DeerFlow, NabaOS, AgentLTL,
@@ -85,23 +90,25 @@ agent-claim-verifier, PR-MCI, Qodo).
 **Lines 373-374**, *"… we can find none that verify the sentence is true against a test
 attestation the claimant did not author."* backcheck verifies a "tests pass" sentence against the
 transcript's own tool-execution record (2026-08-04). DeerFlow's layer 2 anchors
-`tests_passed:<command>` to the recorded exit status (RFC 2026-08-03; merged 2026-09-01, the day of
-this PREREG). **Reading from today:** others verify that sentence against a run record the
+`tests_passed:<command>` to the recorded exit status (a binding added in revision 2 of RFC #4651,
+date of the edit not recorded; merged 2026-09-01, the day of this PREREG). **Reading from today:** others verify that sentence against a run record the
 claimant did not write, and on this class they are ahead of diffgate, whose accusing `tests_pass`
 branch was deleted (`5e225b49`).
 
 **Line 416**, on Doc Detective, *"We know of no earlier deployment of that idea."* DOCER (2023) is a
-GitHub Action that checks prose about code in CI. Whether it predates Doc Detective was not checked.
-**Reading:** earlier or contemporaneous deployments exist; the sentence is withdrawn.
+further deployment: a GitHub Action that checks prose about code in CI. Whether it precedes Doc
+Detective was not checked, so line 416's credit to Doc Detective stands, unpriced.
 
 ### `PLAN_prior_art_and_the_next_move_2026_08_31.md`
 
 **Lines 12-14**, *"The gap is real … No shipping tool deterministically gates natural-language
 claims against evidence bytes and fails a build on contradiction."* The evidence-leg PREREG
-retired this sentence itself the next day (its line 331) against Danger and cargo-semver-checks.
-The agent-specific neighbours are older still: AgentLiar (2026-05-20) and Swarm Orchestrator
-(2026-05-23) both shipped as GitHub Actions; commitlint-scope (2026-05-25) fails a lint on a
-declared scope; DOCER (2023) runs on pull requests. **Reading:** withdrawn.
+retired this sentence itself the next day (its lines 331-337) against Cucumber/Gherkin, Doc
+Detective and Jdoctor/Toradocu. The agent-specific neighbours are older still, both GitHub
+Actions: AgentLiar (2026-05-20) scores a partly free-text completion claim against the changes,
+and Swarm Orchestrator (2026-05-23) gates agent diffs without reading the description;
+commitlint-scope (2026-05-25) fails a lint on a declared scope; DOCER (2023) runs on pull requests.
+**Reading:** withdrawn.
 
 **Line 21**, *"Qodo's 'ticket compliance' is the nearest neighbour."* Swarm Orchestrator,
 AgentLiar and backcheck are nearer on the landscape's scale (closeness 4 against Qodo's 3), and
@@ -114,7 +121,9 @@ detector measured against human labels, not a CI tool.
 
 **Lines 83-85**, *"No shipping tool we could find performs deterministic, claim-level gating of an
 author's natural-language summary against the diff it describes, failing CI on contradiction."*
-AgentLiar and Swarm Orchestrator, both earlier, both GitHub Actions. **Reading:** withdrawn.
+AgentLiar (a PR-level score over a partly free-text claim) and Swarm Orchestrator (a diff gate
+that does not read the summary), both earlier and both GitHub Actions. **Reading:** withdrawn as
+never priced.
 
 **Lines 86-89**, *"No project we could find ships a single self-contained file that seals its
 evidence and re-verifies itself offline in a reader's browser, with a local command re-deriving
@@ -140,8 +149,9 @@ question, and the PREREG's next sentences describe them. Sphinx, SWE-PRBench and
 not read. **Reading:** a PR-level labelled set existed; BENCH-1's object is narrower, claim kinds
 the diff settles without an annotator, and that is what it set out to build.
 
-**Lines 12-13**, *"… and stated that detection tooling does not yet exist."* True of PR-MCI when
-written (2026-01-08). By BENCH-1's date AgentLiar, Swarm Orchestrator, backcheck and readback
+**Lines 12-13**, *"… and stated that detection tooling does not yet exist."* PR-MCI's statement at
+its own date (2026-01-08); adjacent tools already existed then (Qodo ticket compliance 2024-11-26,
+DOCER 2023). By BENCH-1's date AgentLiar, Swarm Orchestrator, backcheck and readback
 existed, as did diffgate. **Reading:** read it as PR-MCI's statement at its own date.
 
 **Lines 25-26**, *"no existing benchmark reports the second"* (the false discovery rate at the base
@@ -201,7 +211,8 @@ turn it on themselves; the scale comparison is unmeasured and may not be said.
 Neither document makes a priority claim, and neither credits the neighbours that declared claims
 earlier. They are: NabaOS (2026-03-09: claims tagged by evidence source, checked against signed
 receipts, with a measured self-tag compliance DECLARE-1 does not have); DeerFlow's receipt
-citations (RFC 2026-08-03, merged 2026-08-29); Swarm Orchestrator's declared-file-set check
+citations (RFC #4651, its UNVERIFIED rule added in revision 2, date of the edit not recorded;
+merged in #5076 2026-08-29); Swarm Orchestrator's declared-file-set check
 (evidence dated 2026-08-18); readback (2026-09-13, a fenced claim block and the same three
 verdicts, five days earlier); commitlint-scope (2026-05-25, a declared scope against changed
 paths); and Agent Trace (v0.1.0 RFC, 2026-01, attribution records that verify nothing). Later:
@@ -211,7 +222,7 @@ agent-acceptance (2026-09-24). DECLARE-1 measured adoption at zero; NabaOS measu
 ### The capsule (`SPEC_oath_capsule_v01_2026_08_31.md`, `SPEC_oath_capsule_v02_2026_08_31.md`, `HANDOFF_capsule_v02_2026_08_31.md`)
 
 No priority sentence; the credit they lack is Swarm Orchestrator's verifier-carrying run bundles
-(evidence 2026-08-18 and 2026-08-23) and Sello's receiver-signed action receipts (2026-05-30).
+(evidence 2026-08-18 and 2026-08-23) and Sello's receiver-signed action receipts (arXiv v1 2026-06-02).
 Swarm Orchestrator also signs its verdicts as DSSE / in-toto attestations (v14.0.0, 2026-09-07);
 nothing styxx ships is signed, and its 7.48.0 release carries no PEP 740 provenance.
 

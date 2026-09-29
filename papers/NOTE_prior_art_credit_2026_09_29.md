@@ -24,8 +24,8 @@ known, the neighbour is named with its date.
 
 | lane | note | what it covers |
 |---|---|---|
-| diffgate, evidence leg, BENCH-1, DECIDE-1, COMPAT-2, the OATH prior-art survey, the capsule, DECLARE-1, EXTERNAL-1 | `closed-model-frontier/NOTE_prior_art_credit_2026_09_29.md` | the "we know of no one who pointed it at prose" sentence and the evidence-leg conjunction (PR-MCI 2026-01-08, AgentLiar 2026-05-20, Swarm Orchestrator 2026-05-23, backcheck 2026-08-04, DeerFlow 2026-08-03); BENCH-1's "no PR-level benchmark" (PR-MCI's 974 labelled PRs); the OATH survey's negative result (statcheck, PR-MCI, Deterministic Integrity Gates, metacheck); DECLARE-1's credits (NabaOS, DeerFlow, readback, Swarm Orchestrator, commitlint-scope, Agent Trace) |
-| sworn | `sworn/NOTE_prior_art_credit_2026_09_29.md` | the second-question sentence (metacheck, 2026-08-16); the surviving sentence's `UNSWORN` clause, occupied on a narrower object by DeerFlow's zero-citation verdict (RFC 2026-08-03, merged 2026-08-29); Inline XBRL (2013), showyourwork! (2021), VeriFin (2026-08-10), Trusty URIs (2014) |
+| diffgate, evidence leg, BENCH-1, DECIDE-1, COMPAT-2, the OATH prior-art survey, the capsule, DECLARE-1, EXTERNAL-1 | `closed-model-frontier/NOTE_prior_art_credit_2026_09_29.md` | the "we know of no one who pointed it at prose" sentence and the evidence-leg conjunction (PR-MCI 2026-01-08, AgentLiar 2026-05-20, Swarm Orchestrator 2026-05-23, backcheck 2026-08-04, DeerFlow merged 2026-08-29); BENCH-1's "no PR-level benchmark" (PR-MCI's 974 labelled PRs); the OATH survey's negative result (statcheck, PR-MCI, Deterministic Integrity Gates, metacheck); DECLARE-1's credits (NabaOS, DeerFlow, readback, Swarm Orchestrator, commitlint-scope, Agent Trace) |
+| sworn | `sworn/NOTE_prior_art_credit_2026_09_29.md` | the second-question sentence (metacheck, 2026-08-16); the surviving sentence's `UNSWORN` clause, occupied on a narrower object by DeerFlow's zero-citation verdict (RFC #4651 revision 2, date of the edit not recorded; merged in #5076 2026-08-29); Inline XBRL (2013), showyourwork! (2021), VeriFin (2026-08-10), Trusty URIs (2014) |
 | charon | `charon/NOTE_prior_art_credit_2026_09_29.md` | SKEW versus DRIFT (Proof-Carrying Agent Actions §8.3, 2026-06-02); signed, chained receipts (Microsoft agent-governance-toolkit, 2026-04-27); Swarm Orchestrator's ledger (2026-05-23) and re-derivation (2026-09-02 / 09-07); Agentic Witnessing; Sello; witnessed logs |
 
 ## 2. Documents at `papers/` root (frozen; not edited)
@@ -35,8 +35,8 @@ format that binds whole sentences of a free-text retrospective report … with a
 a document that bound nothing …"* and *"Each clause is occupied; only the conjunction is not."* The
 2026-09-05 sworn survey supplied a qualified successor and was never adopted into the plan. Since
 then one clause was found occupied before sworn on a narrower object: DeerFlow renders a report with
-action claims and no receipt citations `UNVERIFIED`, "not a clean bill" (RFC 2026-08-03, merged
-2026-08-29). **Reading:** at most a residual, pending the re-pricing the sworn note lists.
+action claims and no receipt citations `UNVERIFIED`, "not a clean bill" (RFC #4651 revision 2,
+date of the edit not recorded; merged in #5076 2026-08-29). **Reading:** at most a residual, pending the re-pricing the sworn note lists.
 
 **`RECON_landscape_2026_08_21.md`, lines 74-84**, *"We hold four things there that no one else
 appears to"*: a named class (SILENT-PASS), detectors, a benchmark, and confirmed instances. A
@@ -74,14 +74,22 @@ Liars' Bench (Kretschmar, Laurito, Maiya, Marks, arXiv 2511.16035, 2025). They a
 | `styxx/forecast.py` docstring | a priority claim for predicting failure before it happens; every other AI safety system reactive | both withdrawn; representation engineering (Zou et al., 2023) read and steered internal state during generation earlier |
 | `styxx/intercept.py` docstring and demo banner | a priority claim for catching a model mid-generation; every other system reactive | both withdrawn, with the same credit; the banner prints what the demo does |
 | `styxx/probe.py` docstring | "Nobody offers this." | withdrawn, never surveyed; line count unchanged |
-| `styxx/verify.py` docstring | "the answer no one else can" | withdrawn; semantic entropy (Farquhar et al., Nature 2024, already cited in `cognometry-manifesto.md`) credited |
+| `styxx/verify.py` docstring | "the answer no one else can"; "the problem AI has never been able to solve since Turing" | withdrawn; semantic entropy (Farquhar et al., Nature 2024, already cited in `cognometry-manifesto.md`) credited; the docstring says it estimates whether the model is confabulating |
 | `styxx/hallucination.py` docstring | production tooling had no inference-time, per-token reader | withdrawn; representation engineering (Zou et al., 2023) credited |
 | `styxx/declare.py` docstring | no credit | NabaOS, DeerFlow, readback, commitlint-scope, Swarm Orchestrator, Agent Trace, with dates |
 | `styxx/admissibility.py`, `styxx/adapters/guardrails.py` docstrings | charter words for the lab's own certificate and score | plain descriptions |
 | `examples/synth_preference_pairs.py` | printed "nobody else can build this" | prints what it uses and that others were never surveyed |
 | `integrations/openclaw/styxx-capsule/SKILL.md` | a charter word for the capsule | "an HTML file that carries its bytes and a checker for them"; Swarm Orchestrator's verifier-carrying bundles (evidence 2026-08-18) credited |
 | `integrations/inspect/refusal_probe_gate/README.md`, `eval.yaml` | a priority claim within Inspect Evals | withdrawn: the catalogue was not surveyed |
-| `docs/research/cognitive-dynamics-v0.md`, `docs/research/cognitive-metrology-charter.md` | nobody had a readout of cognitive state; nothing could intervene during generation | withdrawn; representation engineering (Zou et al., 2023) credited |
+| `docs/research/cognitive-dynamics-v0.md`, `docs/research/cognitive-metrology-charter.md` | nobody had a readout of cognitive state; nothing could intervene during generation; "the first dynamical-systems model of LLM cognition"; "Today's AI safety is open-loop and post-hoc"; "its first set of measurable observables"; "a candidate for the first cognitive analog of energy conservation" | withdrawn; representation engineering (Zou et al., 2023) credited; "a dynamical-systems model", "Many AI safety methods are post-hoc", "a set of measurable observables", "a candidate cognitive analog" |
+| `docs/tier3_design.md` | styxx "becomes the first runtime" for in-flight self-regulation; "a new computational primitive" | styxx would let an agent redirect a generation in flight; representation engineering (Zou et al., 2023) steered activations during generation earlier |
+| `styxx/__init__.py` (docstring and two comments), `styxx/dynamics.py`, `styxx/reward.py`, `styxx/sae.py`, `styxx/d_axis.py`, `styxx/cognometrics.py` (an interpretation string) | "the first drop-in cognitive vitals monitor"; "the first dynamical-systems model"; "the first cognitive dynamics model in the field", and the field having no state variable to close the loop on; "the first reward signal calibrated against cognitive failure modes"; "first statistically significant circuit-level hallucination signature"; "the first cognitive measurement that reads from the model's weights"; "First universal cognometric perturbation" | the same descriptions without the priority claim; `dynamics.py` credits representation engineering (Zou et al., 2023) |
+| `styxx/guardrail/__init__.py`, `styxx/guardrail/calibrated_weights_sycophancy_v0.py` (`prior_art_context`) | "first text-only detector to beat" a published baseline; "the first such detector with a published calibration fingerprint" | the baseline comparison stated without priority; "whether others shipped one earlier was not surveyed" |
+| `styxx/ladder.py`, `README.md` (the ladder paragraph) | "the rung nobody runs on their own work"; "the control almost nobody runs on their own work" | "the rung this program had not run on its own work"; "a control we had not run on our own work until this rung" |
+| `styxx/reflex.py` docstring | quotes a user's pitch ("the first thing that sits in the hot path", "for the first time ever") as the module's motivation | the quote is kept, marked as the user's and unsurveyed, with representation engineering (Zou et al., 2023) credited |
+| `examples/advanced/styxx_demo.ipynb` | "the first proprioception system for artificial minds" | "a proprioception system for artificial minds" |
+| `benchmarks/cognitive_bench/run_multi_vendor.py`, `benchmarks/cogvm_demo/demo_cross_vendor_transplant.py`, `benchmarks/cogvm_demo/demo_multi_concept.py`, `benchmarks/darkcity_csv/analyze.py` | "the first public" audit, demonstration, demo and analysis, in docstrings and in the report text the scripts print | "a public" audit, "a demonstration", "a demo", "an analysis"; the result records they wrote earlier are not edited (section 6) |
+| `benchmarks/hallucination_test/test_e2e.py`, `benchmarks/truthfulqa_benchmark.py`, `benchmarks/causal_patching/train_behavioral_confab.py` | a phrase the charter forbids for the lab's gate | "fabrication-risk gate" |
 | `README.md` (VERIFY) | no credit | a paragraph naming who did this earlier, with dates |
 | `web/gate/README.md` | no credit | a section crediting the diff gate's neighbours, with dates |
 | `sworn/README.md` | no credit | a section crediting sworn's neighbours, with dates |
@@ -123,7 +131,7 @@ withdrawn as a priority claim; what the document measured stands on its own rece
 | `showcase-viz/FINDING_live_signature_mvp_2026_06_10.md` line 36; `showcase-viz/SIGNATURE_VIZ_BUILD_PLAN_2026_06_10.md` line 47 | nobody else would build or ship the demo that way |
 | `consensus-truth-engine/preregistration_consensus_2026_05_25.md` line 7 | "Nobody ships" calibrated reference-free abstention |
 | `autopilot/STRATEGY_edge_panel_2026_07_13.md` lines 60-61 | the parity control "nobody else ships", which "styxx alone" can operate |
-| `ai-human-alignment/en/meaning_agreement_demo.py` line 4 | use cases "nobody offers a tool for" (the same sentence is in `CHANGELOG.md` at 4094 and 4163) |
+| `ai-human-alignment/en/meaning_agreement_demo.py` line 4 | use cases "nobody offers a tool for" (the same sentence is in `CHANGELOG.md` under [7.15.0] and [7.12.0]) |
 | `../scripts/dogfood/PREREG_verifiable_attestation.md` line 27 | "Nobody ships" an agent-produced, third-party-reproducible honesty attestation |
 
 Found and **not** withdrawn, because no neighbour the landscape read contradicts them and each is
@@ -137,13 +145,18 @@ still owe a frozen procedure.
 
 ## 6. Copies of released text, not edited
 
-Released `CHANGELOG.md` entries carry the same kind of sentence at lines 4094, 4163, 4713 and 4717,
-5814, 6492, 7685, 7755, 7769, 7809, 8855 and 8935-8936; the `[Unreleased]` entry added today lists
-each with its reading. `release/`, `zenodo/`, `arxiv/`, `drafts/`, `benchmarks/cognitive_bench/`,
-`benchmarks/cogvm_demo/`, `benchmarks/darkcity_csv/` and the outreach and deposit scripts under
-`scripts/` hold historical copies of released text, submission drafts and sent or unsent outreach;
-they carry the same priority claims (and, in the outreach scripts, a charter phrase) and are not
-edited, because they record what was said. They are read the same way: withdrawn, never priced.
+Released `CHANGELOG.md` entries carry the same kind of sentence, cited here by version heading
+because this branch prepends to the file: [7.15.0], [7.12.0], [7.7.10] (heading and bullet),
+[7.1.0], [6.2.0], [3.5.1], [3.5.0] (three sentences), [3.1.0a1] (*"nobody had a calibrated,
+cross-architecture, real-time readout of cognitive state. We do."*, the sentence already withdrawn
+from `docs/research/cognitive-dynamics-v0.md`) and [0.1.0a3] (two passages). The `[Unreleased]`
+entry added today lists each with its reading. `release/`, `zenodo/`, `arxiv/`, `drafts/`, the
+result records in `benchmarks/cognitive_bench/results/`, `benchmarks/darkcity_csv/runs/` and
+`benchmarks/truthfulqa_report.md`, and the outreach and deposit scripts under `scripts/` hold historical copies of released text, results,
+submission drafts and sent or unsent outreach; they carry the same priority claims (and, in the
+outreach scripts, a charter phrase) and are not edited, because they record what was said. The
+scripts that would print those claims again (`benchmarks/cognitive_bench/run_multi_vendor.py`,
+`benchmarks/cogvm_demo/`, `benchmarks/darkcity_csv/analyze.py`) are corrected in place (section 3). They are read the same way: withdrawn, never priced.
 The sand lane (`plates/`, `checksum/`) was not opened, by the landscape's handling note.
 
 ## 7. Owed by the open ci-audit pull requests (not touched here)

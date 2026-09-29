@@ -209,7 +209,7 @@ def generate_report(results: list[dict]):
 - **Ground truth hallucinated:** {n_hall}
 - **Ground truth correct:** {n_correct}
 
-## Confusion Matrix (gate=fail as hallucination detector)
+## Confusion Matrix (gate=fail as fabrication-risk gate)
 
 |  | Predicted hallucination | Predicted not hallucination |
 |---|---|---|

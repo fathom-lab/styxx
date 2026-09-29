@@ -172,7 +172,8 @@ numeric claims against filed XBRL facts; and metacheck's `reproducibility_check`
 committed 2026-08-16 on its development branch) re-executes a paper's code and prints "X of Y
 reported tests matched". A distinct verdict for a report that bound nothing was reached before
 sworn's `UNSWORN`, on a narrower object, by DeerFlow: a subagent report with action claims and no
-receipt citations renders `UNVERIFIED`, "not a clean bill" (RFC 2026-08-03, merged 2026-08-29).
+receipt citations renders `UNVERIFIED`, "not a clean bill" (RFC #4651 revision 2, date of the edit
+not recorded; merged in #5076 2026-08-29).
 Binding a "tests pass" claim to the run it names, as this action does through JUnit, was done
 earlier by backcheck (2026-08-04) and by DeerFlow's `tests_passed:<command>` check (merged
 2026-09-01). The sentences of this lab's they correct are in

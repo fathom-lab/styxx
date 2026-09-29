@@ -176,8 +176,8 @@ better:
 - **backcheck** (Vector Institute, 2026-08-04) checks an agent's closing claims against the tool
   records of its session, and binds a "tests pass" claim to the run it names, which this gate
   cannot.
-- **DeerFlow** (RFC 2026-08-03) and **NabaOS** (2026-03-09) check agent claims against receipts the
-  model never writes; **readback** (2026-09-13) checks a declared claim block.
+- **DeerFlow** (RFC #4651; citation verification merged in #5076 2026-08-29) and **NabaOS**
+  (2026-03-09) check agent claims against receipts the model never writes; **readback** (2026-09-13) checks a declared claim block.
 - Older: **DOCER** (a GitHub Action for outdated code references in docs, 2023), **iComment**
   (comments against code, 2007), linux-next's **`Fixes:` tag checks** (since at least 2019), Qodo's
   LLM **ticket compliance** (2024-11-26), and **FEVER**'s Supported / Refuted / NotEnoughInfo

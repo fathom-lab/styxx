@@ -15,8 +15,9 @@ description-versus-code inconsistency on 23,247 AIDev agent pull requests, with 
 ones, about seven months before the diff gate existed. AgentLiar (Daksh Jain, 2026-05-20) shipped a
 GitHub Action checking an agent's completion claim against its file changes about ten weeks before
 it, and Swarm Orchestrator (Brad Kinnard, v10.0.0, 2026-05-23, self-reported) gated AI-written pull
-requests on their diffs with a hash-chained ledger. DeerFlow rendered an uncited report UNVERIFIED
-(RFC 2026-08-03, merged 2026-08-29) before sworn's `UNSWORN`, and Proof-Carrying Agent Actions
+requests on their diffs with a hash-chained ledger. DeerFlow rendered a report with action claims
+and no receipt citations UNVERIFIED (RFC #4651 revision 2, date of the edit not recorded; merged in
+#5076 2026-08-29) before sworn's `UNSWORN`, and Proof-Carrying Agent Actions
 (2026-06-02) told a moved checker from a moved result before charon. The operator approved these
 corrections on 2026-09-29. The synthesis was single agents through a summarising web reader, with
 no frozen procedure and no human review, so everything here corrects toward less. No frozen
@@ -39,6 +40,24 @@ the skill credits Swarm Orchestrator's verifier-carrying bundles. The Inspect ev
 `eval.yaml`, `docs/research/cognitive-dynamics-v0.md` and `docs/research/cognitive-metrology-charter.md`
 drop unsurveyed priority claims. `README.md`, `web/gate/README.md`, `sworn/README.md` and
 `benchmarks/silent_pass/CORPUS.md` gain a section saying who did this earlier, with dates.
+A second search of `styxx/`, `docs/`, `README.md`, `sworn/`, `web/gate/`, `benchmarks/` and
+`examples/` withdrew the priority sentences it found still standing: the package docstring and
+two comments in `styxx/__init__.py` ("the first drop-in cognitive vitals monitor", "the first
+dynamical-systems model", "first reward calibrated"), `styxx/dynamics.py` ("the first cognitive
+dynamics model in the field", and the field having no state variable), `styxx/reward.py`,
+`styxx/sae.py`, `styxx/d_axis.py`, `styxx/cognometrics.py` (an interpretation string),
+`styxx/guardrail/__init__.py` ("first text-only detector to beat" a baseline),
+`styxx/guardrail/calibrated_weights_sycophancy_v0.py` (its `prior_art_context`),
+`styxx/verify.py` ("the problem AI has never been able to solve since Turing"), `styxx/ladder.py`
+and `README.md` ("the rung nobody runs on their own work"; "the control almost nobody runs"),
+`styxx/reflex.py` (a user's pitch, now marked as unsurveyed), `docs/tier3_design.md` ("the first
+runtime", "a new computational primitive"), `docs/research/cognitive-dynamics-v0.md` and
+`docs/research/cognitive-metrology-charter.md` (four more sentences),
+`examples/advanced/styxx_demo.ipynb`, and the scripts that would print a priority claim again
+(`benchmarks/cognitive_bench/run_multi_vendor.py`, `benchmarks/cogvm_demo/`,
+`benchmarks/darkcity_csv/analyze.py`). `benchmarks/hallucination_test/test_e2e.py`,
+`benchmarks/truthfulqa_benchmark.py` and `benchmarks/causal_patching/train_behavioral_confab.py`
+drop a phrase the lab's charter forbids for its own gate and call it a fabrication-risk gate.
 
 **Notes beside frozen documents.** `papers/closed-model-frontier/NOTE_prior_art_credit_2026_09_29.md`:
 the evidence leg's "we know of no one who pointed it at prose and measured what happened" (PR-MCI;
@@ -62,7 +81,9 @@ priority sentences outside the landscape's lanes, withdrawn as never priced.
 
 **Released entries whose priority sentences are withdrawn, not edited.** [0.1.0a3]: "four
 creative primitives that no other tool in the space ships", and the `styxx personality` bullet's
-"no other tool in the observability space" sentences. [3.5.0]: the three priority claims in its
+"no other tool in the observability space" sentences. [3.1.0a1]: "nobody had a calibrated,
+cross-architecture, real-time readout of cognitive state. We do.", the sentence withdrawn from
+`docs/research/cognitive-dynamics-v0.md` on this branch. [3.5.0]: the three priority claims in its
 headline list (a runtime for residual-stream control, a multi-vendor direction library, a
 cross-vendor cognitive audit); representation engineering, which the same entry cites, steered
 residual streams earlier. [3.5.1]: the priority claim in its opening line. [6.2.0]: the priority
@@ -76,8 +97,10 @@ entries stand on their own receipts.
 `evidence.py`, `claimdetect.py`, `attestation.py` and `corpus_audit.py`: their bytes are digested
 into sworn receipts, conformance vectors and charon lines, and `web/gate` pins `diffgate.py`, so a
 docstring edit would move digests that committed receipts name. `release/`, `zenodo/`, `arxiv/`,
-`drafts/` and the outreach and deposit scripts in `scripts/` are copies of what was said and carry
-the same claims, read the same way.
+`drafts/`, the outreach and deposit scripts in `scripts/`, and the result records
+`benchmarks/cognitive_bench/results/cognitivebench_v0.md`, `benchmarks/darkcity_csv/runs/v0/report.md`
+and `benchmarks/truthfulqa_report.md` are copies of what was said and carry the same claims, read
+the same way.
 
 **Owed.** A frozen-procedure survey pricing the diff gate's conjunction and re-pricing sworn's
 surviving sentence, with an independent re-fetch; a human-reviewed pass over the landscape's

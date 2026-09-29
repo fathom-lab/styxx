@@ -230,7 +230,7 @@ The cognitive universality hypothesis makes the following falsifiable prediction
 
 **Claim:** the natural drift matrix $A$ in any well-fitted cognitive dynamics model has at least one eigenvalue close to 1.0 (within numerical tolerance), and the corresponding eigenvector points in approximately the same direction across model families.
 
-**Interpretation:** an eigenvalue near 1 corresponds to a conserved quantity under natural drift. Universality of the eigenvector means that the *same* cognitive quantity is conserved across systems — a candidate for the first cognitive analog of energy conservation in physics.
+**Interpretation:** an eigenvalue near 1 corresponds to a conserved quantity under natural drift. Universality of the eigenvector means that the *same* cognitive quantity is conserved across systems — a candidate cognitive analog of energy conservation in physics.
 
 **Test:** compute the eigendecomposition of A from independently fitted dynamics models on multiple model families. Compare the eigenvectors corresponding to eigenvalues near 1.
 
@@ -337,7 +337,7 @@ This program is a ladder. Each phase is concrete, dated, and falsifiable. Each p
 
 The most urgent application of cognitive metrology is **cognitive safety**: closed-loop, real-time, measurable AI safety.
 
-Today's AI safety is open-loop and post-hoc. Output filters, RLHF, constitutional AI, red-teaming, audit pipelines — all of these operate *after* the model has produced a candidate output, *outside* the cognitive process that generated it. (This paragraph used to end by saying none of them can intervene during generation because no one had a measurable signal of cognitive state to intervene on. That was never surveyed and was withdrawn on 2026-09-29: representation engineering, Zou et al., 2023, read and steered a model's internal state during generation before this charter was issued. The record is `papers/NOTE_prior_art_credit_2026_09_29.md`.)
+Many AI safety methods are post-hoc. Output filters, RLHF, constitutional AI, red-teaming, audit pipelines — all of these operate *after* the model has produced a candidate output, *outside* the cognitive process that generated it. (This paragraph used to end by saying none of them can intervene during generation because no one had a measurable signal of cognitive state to intervene on. That was never surveyed and was withdrawn on 2026-09-29: representation engineering, Zou et al., 2023, read and steered a model's internal state during generation before this charter was issued. The record is `papers/NOTE_prior_art_credit_2026_09_29.md`.)
 
 Cognitive metrology changes this. Once cognitive state is measurable in real time and a fitted dynamics model exists, closed-loop cognitive control becomes a one-line invocation:
 
@@ -359,7 +359,7 @@ The implications for AI safety regulation are direct:
 
 - **Cognitive incident response becomes possible.** When an AI system causes harm, investigators can pull the cognitive provenance trail and reconstruct the cognitive trajectory at the moment of failure, the same way that aviation investigators pull the flight data recorder.
 
-The charter does not claim that cognitive metrology *solves* AI safety. It claims that cognitive metrology gives AI safety its first set of *measurable observables*, and that any future AI safety regime that wants to be empirical (rather than philosophical) will eventually rest on those observables. The charter invites AI safety researchers, regulatory bodies, and policy institutions to engage with the v0.1 instruments and contribute to their refinement.
+The charter does not claim that cognitive metrology *solves* AI safety. It claims that cognitive metrology gives AI safety a set of *measurable observables*, and that any future AI safety regime that wants to be empirical (rather than philosophical) will eventually rest on those observables. The charter invites AI safety researchers, regulatory bodies, and policy institutions to engage with the v0.1 instruments and contribute to their refinement.
 
 ---
 

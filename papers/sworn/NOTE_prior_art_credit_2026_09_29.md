@@ -16,7 +16,7 @@ the browser verifier and its conformance vectors on 2026-09-05.
 
 | neighbour | what it does | its date | against sworn | where |
 |---|---|---|---|---|
-| **DeerFlow's zero-citation report verdict**, bytedance/deer-flow (MIT) | A completed subagent report that makes action claims with zero receipt citations renders `UNVERIFIED — action claims without receipt citations`, "a weak-negative signal, not a clean bill". Receipts are runtime-stamped; the model never writes them. | RFC #4651 2026-08-03; implemented in #5076, merged 2026-08-29 | before sworn's `UNSWORN`, by four weeks as written in the RFC and three days as merged | https://github.com/bytedance/deer-flow/issues/4651 |
+| **DeerFlow's zero-citation report verdict**, bytedance/deer-flow (MIT) | A completed subagent report that makes action claims with zero receipt citations renders `UNVERIFIED — action claims without receipt citations`, "a weak-negative signal, not a clean bill". Receipts are runtime-stamped; the model never writes them. | RFC opened 2026-08-03; rule added in revision 2 after reviews of 2026-08-03/04 (the date of that edit is not recorded); merged #5076 2026-08-29 | three days before sworn's `UNSWORN`, by merge | https://github.com/bytedance/deer-flow/issues/4651 |
 | **metacheck** `reproducibility_check` and `match-reported`, Lisa DeBruine, Daniel Lakens, Cristian Mesquida, Jakub Werner (ScienceVerse; AGPL; not on CRAN) | Re-executes a paper's shared code, parses the output formats scientists publish, and requires every component of a reported test to co-occur in one output analysis at the reported precision. Prints "X of Y reported tests matched"; NA means there was nothing to check (no code, no self-contained output). | first committed on its `dev` branch 2026-08-16 (v0.3.1 on 2026-09-20; a release has not been checked) | before sworn, on a development branch | https://www.scienceverse.org/metacheck_book/chapters/mod-reproducibility-check.html |
 | **VeriFin**, Bethel Hall, Sachi Shome, William Eiers | An LLM proposes numeric claims about 10-K filings; each operand is grounded in a filed XBRL fact, the formula is authorised independently, and Z3 returns Verified / Violated / Abstain (labels from the body, not re-checked). "Accepts none of the incorrect claims." | arXiv 2026-08-10 | before sworn; better than sworn on derived numbers through an authorised formula | https://arxiv.org/abs/2608.10213 |
 | **Inline XBRL 1.1** and the **XBRL US DQC rules** | The displayed number in a filing is the tagged machine-readable fact; a processor conformance suite; 196 public, versioned, unit-tested rules. | iXBRL 1.1 2013-11-18; DQC rules since 2015 | more than a decade before | https://www.xbrl.org/specification/inlinexbrl-part1/rec-2013-11-18/inlinexbrl-part1-rec-2013-11-18.html |
@@ -49,8 +49,8 @@ beside every verdict."*
 As a statement about nineteen sources it stands. As a position it is weaker than the survey
 thought. Its fourth clause, **a distinct verdict for a document that bound nothing**, was occupied
 before sworn on a narrower object: DeerFlow renders a whole report that makes action claims with no
-receipt citation UNVERIFIED and says in words that this is not a clean bill (RFC 2026-08-03, merged
-2026-08-29). That is the clause the survey found Deterministic Integrity Gates lacking. metacheck's
+receipt citation UNVERIFIED and says in words that this is not a clean bill (RFC #4651 revision 2,
+date of the edit not recorded; merged in #5076 2026-08-29). That is the clause the survey found Deterministic Integrity Gates lacking. metacheck's
 NA is the absence of code, not of bound claims, so it does not occupy the clause. Later neighbours
 reach the same idea: Swarm Orchestrator's `task: unjudged` (2026-09-07) and readback's exit 2
 (2026-09-13). What remains different, per the landscape: sworn's `UNSWORN` does not wait for a
@@ -80,7 +80,7 @@ shared vectors was not read.
 
 No priority sentence. Binding a "tests pass" claim to a run record the claimant did not write was
 done earlier by backcheck (2026-08-04) and by DeerFlow's `tests_passed:<command>` anchoring (RFC
-2026-08-03, merged 2026-09-01). The action's README now names them.
+#4651 revision 2, date of the edit not recorded; merged 2026-09-01). The action's README now names them.
 
 ## What this note does not do
 

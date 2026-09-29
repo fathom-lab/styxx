@@ -8,9 +8,8 @@ styxx.verify -- the one question that matters.
     if not verdict.trustworthy:
         print(f"caution: {verdict.reason}")
 
-That's the entire API. One function. One answer. The problem AI has
-never been able to solve since Turing: knowing when the machine is
-wrong.
+That's the entire API. One function. One answer. It estimates
+whether the model is confabulating.
 
 The model's words don't tell you. RLHF trained it to sound confident
 regardless of correctness. But the logprob trajectory does tell you.

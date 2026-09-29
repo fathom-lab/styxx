@@ -2,8 +2,8 @@
 """
 styxx.reward — cognometric reward signal for RLHF.
 
-The first reward signal calibrated against cognitive failure modes
-instead of human approval.
+A reward signal calibrated against cognitive failure modes instead
+of human approval.
 
 Standard RLHF teaches models to please humans — sycophantic by
 construction, because human raters reward flattery. cogn-RLHF teaches

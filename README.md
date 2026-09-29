@@ -154,10 +154,11 @@ hand-labelled ones, about seven months before this lab did.
 Action that checks an agent's completion claim against its file changes.
 [Swarm Orchestrator](https://github.com/moonrunnerkc/swarm-orchestrator) (Brad Kinnard; v10.0.0,
 2026-05-23) gates AI-written pull requests on their diffs with a hash-chained audit ledger, and
-measures its own detectors' recall on planted cheats. [backcheck](https://github.com/VectorInstitute/backcheck)
+measures its own detectors' recall on planted cheats (self-reported). [backcheck](https://github.com/VectorInstitute/backcheck)
 (Vector Institute, 2026-08-04) binds a "tests pass" claim to the run it names, which this gate
-cannot. The other instruments have neighbours too: DeerFlow marks an uncited report UNVERIFIED
-(RFC 2026-08-03) before sworn's `UNSWORN`; NabaOS (2026-03-09) and readback (2026-09-13) had
+cannot. The other instruments have neighbours too: DeerFlow marks a report with action claims and
+no receipt citations UNVERIFIED (added in revision 2 of RFC #4651, merged in #5076 on 2026-08-29),
+three days before sworn's `UNSWORN`; NabaOS (2026-03-09) and readback (2026-09-13) had
 declared claim blocks before DECLARE-1; Proof-Carrying Agent Actions (2026-06-02) told a moved
 checker from a moved result before charon. Every neighbour, with dates and the sentences of ours
 each one corrects, is in
@@ -437,7 +438,7 @@ four-rung adversarial ladder every honesty-probe robustness claim should survive
 poisoning → probe-parity attribution → static subspace erasure → adaptive re-fit erasure** — each
 rung a frozen, pre-registered attack arc with its receipts committed
 ([styxx/ladder.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/styxx/ladder.py)). the parity rung is the mandatory line item: *how much of your
-probe's "robustness" is just probe capacity?* — the control almost nobody runs on their own work.
+probe's "robustness" is just probe capacity?* — a control we had not run on our own work until this rung.
 we ran it on ours; it demoted our own flagship attribution (median capacity share 0.8379, computed
 live from the receipts every time the CLI runs, never quoted from memory). current standings on the
 honesty construct: the read survived both erasure rungs — the eraser that converged watched the

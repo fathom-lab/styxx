@@ -8,8 +8,8 @@ knowledge floors, pre-committed VOID branches):
   1. POISONING      -- calibration poisoning: mis-point the auditor's probe without removing the
                        signal (the stage-2/E1 arc; defense: private-calibration re-lock).
   2. PARITY         -- probe-capacity attribution: does a capacity-matched probe family fit on the
-                       ATTACKER'S OWN poisoned split recover the read? The rung nobody runs on
-                       their own work: it demoted THIS program's flagship attribution. Its output
+                       ATTACKER'S OWN poisoned split recover the read? The rung this program had not run on
+                       its own work: it demoted THIS program's flagship attribution. Its output
                        -- the capacity share of the recovery -- is the MANDATORY line item of any
                        ladder report.
   3. STATIC ERASURE -- removal: drive the gold subspace to verifiable zero (attacker loss

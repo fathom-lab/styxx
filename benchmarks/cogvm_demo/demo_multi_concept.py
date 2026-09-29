@@ -2,8 +2,8 @@
 """
 benchmarks/cogvm_demo/demo_multi_concept.py
 
-First public demo of multi-concept simultaneous residual steering on
-an open LLM, executed as a cognitive-VM program.
+A demo of multi-concept simultaneous residual steering on an open
+LLM, executed as a cognitive-VM program.
 
 What this shows (in one run, on Llama-3.2-1B-Instruct):
 
