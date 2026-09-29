@@ -21,11 +21,11 @@ tests read VERIFIED.
 
 **What changed.** Frozen as `papers/closed-model-frontier/PREREG_path2_resolution_2026_09_17.md`,
 `AMENDMENT_path2_resolution_2026_09_17.md` and `ERRATUM_path2_amendment_2026_09_17.md`, then repaired in
-nine passes, each recorded in a note committed alone before its code (`NOTE_path2_third_pass` to
+ten passes, each recorded in a note committed alone before its code (`NOTE_path2_third_pass` to
 `NOTE_path2_seventh_pass`, `_2026_09_25`, `NOTE_path2_eighth_pass_2026_09_27`,
-`NOTE_path2_ninth_pass_2026_09_27`, `NOTE_path2_tenth_pass_2026_09_28` and `NOTE_path2_eleventh_pass_2026_09_28`;
-the eighth to tenth passes' code was written before its note, and each note says so; the eleventh's note was
-committed alone before any of its code):
+`NOTE_path2_ninth_pass_2026_09_27`, `NOTE_path2_tenth_pass_2026_09_28`, `NOTE_path2_eleventh_pass_2026_09_28` and
+`NOTE_path2_twelfth_pass_2026_09_29`; the eighth to tenth passes' code was written before its note, and each note says
+so; the eleventh's and the twelfth's notes were each committed alone before any of their code):
 - #97: a path claim resolves in tiers over every entry — exact, then suffix, then basename.
 - #121: only a leading run of `/` and `./` segments leaves the key. Readings that must not move with a dot
   (BC-2's path-shape test, BC-1's "no Python file" test, COMPAT's language and scaffold tests) read the
@@ -92,9 +92,23 @@ committed alone before any of its code):
   and a pair read as a header without a header's shape are doubts `main`'s reading also held; two reasons print their
   keys by the fold; and whether `main`'s paths fold alike (a key the runtimes read apart) is asked before `main`'s two
   line splits are compared.
+- The licences are tightened (the twelfth pass). Round 11's review read licensed differences that were false by
+  truth. #121 was licensed in renderings with no `diff --git` header, where a directory `a/` or `b/` reads as git's
+  prefix, `strip()` merges a name ending in a space, and `difflib` or per-file GNU `diff -uN` leave an empty file out.
+  #97 was licensed on a match that held only once lower-cased, or beside a doubt its reading had recorded.
+  - #121 now licenses only where the diff is git's own rendering: every file section under a readable
+    `diff --git a/X b/Y` header whose `---`/`+++` pair and rename lines name that header's paths, and no line no
+    reading places. This holds on every door.
+  - On a path claim, #121 also needs the resolved entry to match the claim as written, case kept, by the tier it
+    resolved by.
+  - #97 licenses only a case-kept exact or suffix match, and never in a reading that holds one of Z-3's doubts.
+  - Tightening a licence can only turn a verdict into an abstention. Where `main` raises or makes no such claim,
+    "UNCHECKABLE unless licensed" is read as "never", since a licence needs a verdict of `main`'s to give back.
 - The port follows the Python in each, and spells Python's `\s`, `\w`, `\b`, `.`, `str.strip` and `repr`
   wherever it reads a diff line. The bookmarklet is rebuilt, carrying `main`'s port whole as the guard's reference:
-  `bookmarklet.min.js` sha256 `ce8c5d99…`, 77,675 characters (`web/gate/README.md`).
+  `bookmarklet.min.js` sha256 `830b4ba7…`, 79,217 characters (`web/gate/README.md`). The port finds its reference
+  before the guard runs, so a page that loads `diffgate.js` without `diffgate_ref.js` gets an error instead of every
+  claim read as "main raises".
 - `papers/closed-model-frontier/path2_gates.py` scores the preregistered gates: the instrument before the repair
   against the instrument after it, claim by claim, every moved claim attributed by counterfactual (the scorer's own
   copy of the instrument, with one rule reverted, must give the baseline claim back) and admitted only if every rule
@@ -117,7 +131,13 @@ committed alone before any of its code):
   raising; a decided claim kept where `main` raises; claims paired without their occurrence; another reason printed; a
   licence without its precondition beside a switch that reads more than its repair; #121's switch keying nothing by
   `main`'s key; K-5's symbol span stopping at a combining mark; `main`'s paths folding alike left unasked) each fail a
-  gate, each by a committed test.
+  gate, each by a committed test. At the twelfth pass the scorer writes out the tightened licences in its own code and
+  holds the instrument's licence facts to them. Its canaries reach every guard outcome on both doors in every run of
+  either mode (K-5, an abstention, and an abstention whose precondition held without its switch), and a run whose
+  canaries reach none fails. That closes round 11's finding that both modes admitted the git door skipping the guard,
+  calling `main` and ignoring it, and a licence without its switch. It also replays `main`'s `kind` leak in its own
+  extraction, and lets a failure of git or the operating system fail the run instead of reading as an instrument
+  defect.
 
 **The review record.** Eleven rounds of repair, ten of them answering an adversarial review round, each
 round naming its own findings. What they found and what was done about each is in the notes; the notes also
@@ -150,19 +170,39 @@ sentences, header-shaped pairs and repositories with `diff.noprefix=true` — th
 every claim of those cases and of the differential corpora (78,532 inputs; 869,220 raw-door and 339,918 git-door
 claims under 3.12, 871,428 in the port; 0 violations), and on the differential corpus (3,485 pairs) 0 disagreements.
 The recall this pass gives up against the tenth, and the wrong verdicts of `main`'s that K-5 now returns where the
-tenth pass abstained, are measured in `web/gate/README.md`.
+tenth pass abstained, are measured in `web/gate/README.md`. Round 11's review found that zero false: judged against
+truth, one set of 4,000 cases read 1,133 cells worse on the raw door, 1,133 in the port and 6 at the git door, every one
+a difference licensed by #121 or #97. The eleventh pass's "0 violations" were self-consistency (the harness asked the
+module's own preconditions and switches), not truth.
+
+The twelfth pass tightened the two licences (above). Its own truth-judged differential found one more class at
+`e4586637`: #121 licensing a path claim whose entry matched only in case, 14 cells. Its fix is `98f74833`. Over 11 sets
+and 30,017 cases (535,957 claim-door cells under 3.12, 535,510 under 3.14), the differential reads:
+- 0 claims worse than on `main` judged against truth, on every door under Python 3.12 and 3.14;
+- 0 new Python/port disagreements on the same input;
+- 0 raises that `main` does not have.
+
+The 30,017 cases are 19,000 at fresh seeds (10,000 from a generator for round 11's shapes), round 11's three sets, and
+its 17 reproductions. On the differential corpus (3,529 pairs) there are 0 disagreements. The reproductions are
+committed as tests judged by a truth model written out in the test, not by the module's own preconditions. The same
+check refuses the eleventh-pass instrument on 12 of them. The recall this costs is measured in `web/gate/README.md`:
+on the regression sets' raw door, 8,993 claims the eleventh pass decided now abstain, 3,060 of them its regressions.
 
 Not claimed, and stated: the corpus gates over the EXTERNAL-1 shelf are run separately and reported in the RESULT,
 with `path2_differential_gates.json`; nothing here reports them. The repair moves claims only where the notes say, and
 the limits it leaves are listed in the sixth to ninth-pass notes, section F, and the eleventh's, section B: among
 them, abstaining costs verdicts `main` gave (a count left after a pairing, a test count beside a U+FEFF-led test,
 claims naming a skew code point, file-list claims over diffs whose headers are not sure, and since the ninth pass
-every claim where this reading and `main`'s differ unlicensed — on the differential corpus 468 of the 2,660 claims
+every claim where this reading and `main`'s differ unlicensed — on the differential corpus 486 of the 2,726 claims
 `main` decides, most of them path claims naming a directory only a same-named file elsewhere matches, file-list claims
-beside a file `main` read from a hunk's content, a case pair or an unplaced line, and 11 new at the eleventh pass, 10
-of them file counts beside a no-prefix or header-shaped pair), a claim of a sentence the two ports' templates may read
-apart takes `main`'s claim whole, wrong verdicts included, the guard does not make the two ports agree, a licence
-under #121 is as sound as Z-3's list of doubts `main`'s reading also held (not provably complete), a defect that fires
+beside a file `main` read from a hunk's content, a case pair or an unplaced line, 11 new at the eleventh pass, 10
+of them file counts beside a no-prefix or header-shaped pair, and since the twelfth pass every difference only #121
+explained in a diff that is not git's own rendering, and at the git door under `diff.noprefix`,
+`diff.mnemonicPrefix` or `diff.submodule=log`), a claim of a sentence the two ports' templates may read
+apart takes `main`'s claim whole, wrong verdicts included, the guard does not make the two ports agree, the guard
+bounds where a verdict other than `main`'s can come from and not whether it is right (a licence under #121 or #97 is
+as sound as its precondition, which rests on git's own rendering and the case as written, and is not provably
+complete), a defect that fires
 only on what a repair produces passes as that repair, the git door reads the repository twice (once for the
 reference), a removed `-- a` and an added `++ b` right before the next hunk still read as a file header, identifiers
 are compared as text rather than under NFKC, GNU header paths keep their timestamps as keys, a quoted path keeps its

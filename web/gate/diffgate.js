@@ -11,8 +11,9 @@
  * AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
  * NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25,
  * NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27, NOTE_path2_ninth_pass_2026_09_27,
- * NOTE_path2_tenth_pass_2026_09_28 and NOTE_path2_eleventh_pass_2026_09_28) on the file that carries them, sha256
- * 73a03de6aa103dd55a58d86228d9e9b6c9411ef4618517ab0eb25dd6d587ad4f — the styxx/diffgate.py this
+ * NOTE_path2_tenth_pass_2026_09_28, NOTE_path2_eleventh_pass_2026_09_28 and NOTE_path2_twelfth_pass_2026_09_29) on the
+ * file that carries them, sha256
+ * ede86d7b13136344039e1fbf91f7653a39768e344e3687f3baecb5c2df2b9c75 — the styxx/diffgate.py this
  * branch would put on main, with the name table styxx/_xid.py carries (Unicode 15.0.0, table sha256
  * 8df68f21…, and the skew set beside it, 0b7134fd…, copied below) and the case fold styxx/_fold.py carries
  * (Unicode 16.0.0, sha256 a52cda82…, copied below); the 7.48.0 release carries main's file
@@ -64,7 +65,12 @@
  * three repairs are switches (`_Repairs`), and per claim a verdict other than the reference's is kept only where one
  * repair switched off gives the reference's verdict back and that repair's precondition holds on the claim, else the
  * claim abstains naming the reference's verdict (`_guard`); K-5 reads a whole sentence, and every kind but the test
- * verdict and compat, as main's port read it. Two
+ * verdict and compat, as main's port read it. The twelfth pass tightens two licences (`_precondition`): #121 licenses
+ * only where the diff is git's own rendering (a readable `diff --git` header over every file section, its `---`/`+++`
+ * pair and rename lines naming that header's paths, no line no reading places), and on a path claim only where the
+ * entry resolved matches the claim, case kept, by its tier; #97 only on a case-kept exact or suffix match, and never in
+ * a reading holding a Z-3 doubt. `gateDiffText` finds its reference before the guard runs, so a page without
+ * diffgate_ref.js throws instead of reading main as raising. Two
  * deliberate gaps remain: the structural "unparsed claims"
  * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
  * pass" is always UNCHECKABLE, exactly as the CLI without --run.
