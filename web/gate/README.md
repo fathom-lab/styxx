@@ -41,15 +41,17 @@ and the never-read count to the page.
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 54dca73a4f42cfec39beb67d14599d6b17a0df81d654cf413f3b9f805291c48b   21,632 chars
-    bookmarklet.href.txt  sha256 fef555104beaee5775fe04bd9d4cb7d9ea616abba489a9aaa2cc9059d8b92ea6   21,643 chars
+    bookmarklet.min.js    sha256 c457cca3d0672f2c321caad8e40f9e21f53971ccfd859778582c98ffc041ebc4   34,285 chars
+    bookmarklet.href.txt  sha256 4f6261b0e074dfb257bee473c49f2a41a0cddfad62c7d95da16c6bcc066f3950   34,296 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
-`9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file. A bookmark
-that hashes to either is an old port; drag the new one.)
+`9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file;
+`1be19a65…`, 24,335 chars, `main` at `1cde8b82` before PATH-2a, whose README still named an older
+`54dca73a…`, 21,632 chars. A bookmark that hashes to any of these is an old port; drag the new one.)
 
 Whatever a browser holds under that bookmark either hashes to the first line (drop the
-`javascript:` prefix) or is not this build. terser 5.51.2 produced these bytes.
+`javascript:` prefix) or is not this build. terser 5.46.0 produced these bytes, and rebuilds
+`main`'s 24,335-char build from `main`'s sources byte for byte.
 
 `differential/` — the test. Read on.
 
@@ -68,7 +70,7 @@ reason, or reads one sentence more or less, is a disagreement.
     python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 186d5f2c…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 44 pinned pairs against their expect blocks
+    node check_pairs.js                  # the 102 pinned pairs against their expect blocks (+ path2a_moves.json)
 
 The pin moved twice between the last two runs of this differential, and one of those moves is a
 finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to
@@ -158,6 +160,110 @@ accusation the issue showed to be unsupported by construction. On the EXTERNAL-1
 When 7.48.0 is on PyPI, `py_side.py --installed` should print 0 disagreements against it; if it
 does not, the release is not the file the port claims to be, and the header of `diffgate.js`
 says which one it is.
+
+## PATH-2a: abstaining where #97, #121 or #101 can make a verdict wrong
+
+`styxx/diffgate.py` and `diffgate.js` each carry one block between the markers
+`=== PATH-2a abstain-only overlay: BEGIN ===` and `... END ===`
+(`papers/closed-model-frontier/NOTE_path2a_abstain_overlay_2026_09_30.md`). `main`'s reader runs
+unchanged — at the raw door, at the git door and in this port — and then the block reads each decided
+claim once more. Where the #97 mechanism (the earliest entry in diff order matching by exact path,
+suffix or base name), the #121 mechanism (`_norm`'s `lstrip("./")`, which gives `.x` and `x` one key)
+or the #101 mechanism (a changed `def` counted as added) can have made `main`'s verdict wrong, the
+claim becomes UNCHECKABLE with the reason
+
+    {V} withheld by PATH-2a ({defect}): {phrase}. main's reading: {main's reason, verbatim}
+
+and the gate verdict is recomputed with `main`'s own formula. Nothing else in the record moves: the
+claim list, every other verdict and every other reason are `main`'s, byte for byte. Cut the block
+out and revert the door hooks (two lines per file) and you have `main`'s two files back, sha for
+sha; `tests/test_diffgate_path2a.py` does exactly that and uses the result as its reference.
+
+**The three defects are not repaired.** PATH-2a never gives VERIFIED where `main` was wrong; it only
+stops `main`'s false verdicts on these shapes from standing, and says which verdict it withheld and
+why. PREREG_path2's G-P1 (on #161's branch) expects VERIFIED on the reproductions, so PATH-2a does not
+meet G-P1: whether it stands in for it is the operator's decision. `--strict` fails on every new
+abstention, as on any UNCHECKABLE.
+
+The rules. A path claim (VERIFIED only; the path accusation is withheld on `main`) is kept only when
+three readers without the mechanism verify it too: V97 (exact, then suffix, then base name — base
+name only for a bare claim), V121 (keys keep their leading dots) and both. A file count abstains when
+two changed paths differ only by a leading dot and the dot-kept count could read otherwise (a
+CONTRADICTED count only when the dot-kept count range contains the claimed number; a VERIFIED count
+unless that range is exactly it). `only_touches` abstains when keeping the dots changes whether every
+changed path lies under the prefix. `tests_added` abstains when a counted test is also defined in the
+removed lines and the claim lies in `[got − changed, got]`; `symbol_added` (VERIFIED) when a removed
+line defines the name. Where the overlay cannot compute these readers exactly it abstains and says so:
+
+| key | phrase |
+|---|---|
+| dir | the claim names a directory, and only a file of the same name elsewhere matches it |
+| tier | a changed path that matches the claim more closely than the one main resolved it to reads otherwise |
+| dot | with leading dots kept, the changed path the claim resolves to reads otherwise |
+| dot_tier | with leading dots kept and the closest match taken, the claim reads otherwise |
+| count | two changed paths differ only by a leading dot, which the path key drops, and counted apart the claim reads otherwise |
+| only | with leading dots kept, whether every changed path lies under the prefix reads otherwise |
+| tests | a test the added lines count is also defined in the removed lines, and a changed test is not an added one |
+| symbol | the removed lines define this name too, and a changed definition is not an added one |
+| divergent | a file header of this diff holds a character that the Python and JavaScript readers split or strip differently |
+| odd | a path here has a drive-like prefix or a final '.' segment, where base names are read differently |
+| case | a path here compares only where case outside ASCII is folded, which this overlay does not do |
+| unreproduced | this overlay does not reproduce main's reading of the diff |
+| unparsed | main's reason does not have the form this overlay reads |
+| error | this overlay failed while reading the diff |
+
+Running it:
+
+    cd web/gate/differential
+    python path2a_recall.py --corpora DIR [EXTRA.json ...] [--truth]   # recall; DIR holds the gitignored corpora
+    node check_pairs.js                                                # path2a_pairs.json + path2a_moves.json
+    python -m pytest tests/test_diffgate_path2a.py tests/test_diffgate_path2a_truth.py tests/test_port_is_current.py
+
+`path2a_pairs.json` pins 48 pairs, each for the decision it names. `path2a_moves.json` records the one
+pinned claim of `main`'s own files the overlay moves — `path1:unrepaired-typo` claim 0,
+".githiub/workflows/dependabot.yml" resolved by base name to `.github/workflows/dependabot.yml`, a
+false VERIFIED — so `path1_pairs.json` stays `main`'s record, byte for byte.
+
+**Measured**, on this file (`styxx/diffgate.py` `186d5f2c…`, reader `9b620e00…`), CPython 3.12.10 and
+Node 24.13.0 (Unicode 16); the committed tests re-derive every figure marked *pinned*.
+
+Recall (D): of `main`'s decided claims, how many the overlay withholds (`path2a_recall.py`).
+
+| corpus | sha256 (LF) | decided | withheld |
+|---|---|---|---|
+| `corpus_real.json` | `1b21418a…` | 41 | 0 |
+| `corpus_fuzz.json` | `2e80cd1d…` | 2,144 | 79 — 51 touched, 23 created, 5 deleted; all #97, and all 79 are false by the statuses the fuzz generator wrote |
+| `main`'s six pinned files | | 46 | 1 (the move above) |
+| **`main`'s committed corpora** | | **2,231** | **80 (3.6%)** |
+| `path2a_pairs.json` (the overlay's own pins) | `13ce8e87…` | 58 | 33 |
+| #161's `path2_pairs.json` (branch `fix/diffgate-path-resolution`) | `7ba272c8…` | 530 | 172 |
+| `main`'s corpora + #161's pairs | | 2,761 | 252 (9.1%); #161's head withheld 493 of 2,749 |
+
+Coverage (B), judged by truth from base/head file models (`tests/test_diffgate_path2a_truth.py`,
+*pinned*): on #161's 101 reproductions, the 5 PREREG_path2 reproductions and 1,600 generated cases,
+main decides 7,614 claims and 1,535 of them are false; 1,206 of those are attributable to #97, #121
+or #101 (a variant of `main` without the mechanism does not read them false), and **all 1,206 are
+withheld**, in Python and, wherever the port's `main` reads the claim alike (942 of them), in the
+port. The cost: 142 of 5,897 right verdicts withheld, 35 of 182 undecided ones. A wider scratch run
+over 35,000 generated cases from the design stage (not committed) read the same way: 22,885 of 22,885
+attributable false verdicts withheld, 2,633 of 123,031 right verdicts lost (2.1%). The truth test
+prints any miss with its shape. The known gaps (case-only merges with no dot, names `strip()` merges,
+multi-commit renderings, renderings over real `a/` or `b/` directories, `async def` tests `main` does
+not count, `def` in non-Python files) are listed in the NOTE.
+
+By construction (A), *pinned*: over the 5,584 committed inputs (the pinned pairs, the 3,000 fuzz pairs
+regenerated in memory, #161's reproductions and pair inputs, and a seeded 2,000-pair PATH-2a fuzz),
+both strict modes, every branch record is `main`'s but for abstentions in reach with the overlay's
+reason, in Python and in the port (11,168 port runs, 0 broken); where `main` raises, the branch
+raises the same exception. The overlay's error fallback never fires on them.
+
+Cross-port (C), *pinned*: on the committed inputs, 18,132 claims get the same record from `main`'s
+two ports, and the overlay decides all 18,132 alike, reason for reason; on the 380 claims `main`'s
+ports already read differently, 123 get different overlay decisions (reported, not asserted). A wider
+scratch run adding `corpus_real.json` and 17,000 generated cases: 124,229 of 124,229.
+
+Cost per call (Python, mean): `corpus_real.json` 7.49 ms on `main`, 7.30 ms on the branch (noise);
+`corpus_fuzz.json` 0.183 → 0.208 ms. The bookmarklet grew from 24,335 to 34,285 characters.
 
 ## What this is not
 
