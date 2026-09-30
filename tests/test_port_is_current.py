@@ -118,14 +118,45 @@ def test_there_are_pinned_pairs_to_check():
     assert len(_pairs()) >= 36, f"only {len(_pairs())} pinned pairs found"
 
 
+MOVES = DIFFERENTIAL / "path2a_moves.json"
+
+
+def _moves() -> list[dict]:
+    """PATH-2a: pinned claims of main's files that the overlay moves (NOTE_path2a_abstain_overlay_2026_09_30)."""
+    return json.loads(MOVES.read_text(encoding="utf-8"))["moves"]
+
+
+def _expected(name: str, pair: dict) -> dict:
+    """The pinned expect, with any PATH-2a move applied after checking the pinned claim still reads `from`."""
+    expect = json.loads(json.dumps(pair["expect"]))
+    for m in _moves():
+        if m["file"] == name and m["id"] == pair["id"]:
+            assert list(expect["claims"][m["claim"]]) == m["from"], f"stale move {m['id']} claim {m['claim']}"
+            expect["claims"][m["claim"]] = m["to"]
+            expect["verdict"] = m["verdict"]
+    return expect
+
+
 @pytest.mark.parametrize("name,pair", _pairs(), ids=lambda v: v if isinstance(v, str) else v.get("id", "?"))
 def test_python_matches_each_pinned_expect_block(name, pair):
     g = gate_diff_text(pair["summary"], pair["diff"], run=None, strict=False)
-    with_why = bool(pair["expect"]["claims"]) and len(pair["expect"]["claims"][0]) == 3
+    expect = _expected(name, pair)
+    with_why = bool(expect["claims"]) and len(expect["claims"][0]) == 3
     got = [[c.kind, c.verdict, str(c.why)] if with_why else [c.kind, c.verdict] for c in g.claims]
-    assert got == [list(c) for c in pair["expect"]["claims"]], f"{name}:{pair['id']}"
-    assert g.verdict == pair["expect"]["verdict"]
-    assert g.uncovered_sentences == pair["expect"]["uncovered_sentences"]
+    assert got == [list(c) for c in expect["claims"]], f"{name}:{pair['id']}"
+    assert g.verdict == expect["verdict"]
+    assert g.uncovered_sentences == expect["uncovered_sentences"]
+
+
+def test_every_path2a_move_names_a_pinned_claim_and_is_whitelisted():
+    """A move that matches nothing would pass silently; the moves file is JSON in a directory that ignores JSON."""
+    pinned = {(name, pair["id"]): pair for name, pair in _pairs()}
+    for m in _moves():
+        assert (m["file"], m["id"]) in pinned, f"path2a_moves.json names {m['file']}:{m['id']}, which is not pinned"
+        assert list(pinned[m["file"], m["id"]]["expect"]["claims"][m["claim"]]) == m["from"]
+    allowed = {l[1:].strip() for l in (DIFFERENTIAL / ".gitignore").read_text(encoding="utf-8").splitlines()
+               if l.startswith("!")}
+    assert MOVES.name in allowed
 
 
 def test_the_javascript_port_agrees_on_every_pinned_pair():

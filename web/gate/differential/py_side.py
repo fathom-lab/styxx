@@ -33,7 +33,7 @@ PINNED = "186d5f2cd791223e3612e6c890505508fdc30dd830486f91bbd5393ca26f1a78"  # s
 # a whole cycle behind without anything failing. `fetch_pr` fetches a pull request over the
 # network and is not part of the reading the port transliterates; it moves this whole-file hash
 # without changing a single verdict, and that is recorded here rather than worked around.
-CORPORA = ("corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "compat2_pairs.json", "path1_pairs.json", "declare1_pairs.json")
+CORPORA = ("corpus_real.json", "corpus_fuzz.json", "bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "compat2_pairs.json", "path1_pairs.json", "declare1_pairs.json", "path2a_pairs.json")
 
 
 def _digest(path: Path) -> str:

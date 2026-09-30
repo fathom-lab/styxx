@@ -1,0 +1,798 @@
+[
+ {
+  "id": "path2a:97-directory-claim-by-base-name",
+  "summary": "Created integrations/git/README.md.",
+  "diff": "diff --git a/README.md b/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/README.md\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#97): the claim names a directory, and only a file of the same name elsewhere matches it. main's reading: diff status 'A' for 'readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:97-directory-claim-by-base-name-touched",
+  "summary": "Updated integrations/git/README.md.",
+  "diff": "diff --git a/README.md b/README.md\n--- a/README.md\n+++ b/README.md\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#97): the claim names a directory, and only a file of the same name elsewhere matches it. main's reading: diff status 'M' for 'readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:97-shadow-deleted",
+  "summary": "Deleted README.md.",
+  "diff": "diff --git a/docs/README.md b/docs/README.md\ndeleted file mode 100644\n--- a/docs/README.md\n+++ /dev/null\n@@ -1 +0,0 @@\n-x\ndiff --git a/README.md b/README.md\n--- a/README.md\n+++ b/README.md\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#97): a changed path that matches the claim more closely than the one main resolved it to reads otherwise. main's reading: diff status 'D' for 'docs/readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:97-shadow-same-status-kept",
+  "summary": "Created README.md.",
+  "diff": "diff --git a/docs/README.md b/docs/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/docs/README.md\n@@ -0,0 +1 @@\n+x\ndiff --git a/README.md b/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/README.md\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'docs/readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:97-prereg-canonical-stays-mains",
+  "summary": "Created integrations/git/README.md.",
+  "diff": "diff --git a/README.md b/README.md\n--- a/README.md\n+++ b/README.md\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/integrations/git/README.md b/integrations/git/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/integrations/git/README.md\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "'integrations/git/README.md' is status 'M', claim wants 'A' — accusation WITHHELD pending the EXTERNAL-1 repair"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:97-prereg-reversed-touched-kept",
+  "summary": "Modified README.md.",
+  "diff": "diff --git a/integrations/git/README.md b/integrations/git/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/integrations/git/README.md\n@@ -0,0 +1 @@\n+x\ndiff --git a/README.md b/README.md\n--- a/README.md\n+++ b/README.md\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'A' for 'integrations/git/readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:97-bare-claim-by-base-name-kept",
+  "summary": "Created README.md.",
+  "diff": "diff --git a/docs/README.md b/docs/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/docs/README.md\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'docs/readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:97-suffix-before-base-name",
+  "summary": "Created git/README.md.",
+  "diff": "diff --git a/README.md b/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/README.md\n@@ -0,0 +1 @@\n+x\ndiff --git a/integrations/git/README.md b/integrations/git/README.md\n--- a/integrations/git/README.md\n+++ b/integrations/git/README.md\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#97): a changed path that matches the claim more closely than the one main resolved it to reads otherwise. main's reading: diff status 'A' for 'readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-prereg-dotfile-twins",
+  "summary": "3 files changed. Created .pr_agent.toml. Deleted pr_agent.toml. Only touches src/.",
+  "diff": "diff --git a/pr_agent.toml b/pr_agent.toml\ndeleted file mode 100644\n--- a/pr_agent.toml\n+++ /dev/null\n@@ -1 +0,0 @@\n-x = 1\ndiff --git a/.pr_agent.toml b/.pr_agent.toml\nnew file mode 100644\n--- /dev/null\n+++ b/.pr_agent.toml\n@@ -0,0 +1 @@\n+y = 2\ndiff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "CONTRADICTED withheld by PATH-2a (#121): two changed paths differ only by a leading dot, which the path key drops, and counted apart the claim reads otherwise. main's reading: diff changes 2 files, claim says 3"
+    ],
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'pr_agent.toml'"
+    ],
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "'pr_agent.toml' is status 'A', claim wants 'D' — accusation WITHHELD pending the EXTERNAL-1 repair"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['pr_agent.toml', 'github/workflows/ci.yml']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-prereg-dotfile-twins-crlf",
+  "summary": "3 files changed. Created .pr_agent.toml. Deleted pr_agent.toml. Only touches src/.",
+  "diff": "diff --git a/pr_agent.toml b/pr_agent.toml\r\ndeleted file mode 100644\r\n--- a/pr_agent.toml\r\n+++ /dev/null\r\n@@ -1 +0,0 @@\r\n-x = 1\r\ndiff --git a/.pr_agent.toml b/.pr_agent.toml\r\nnew file mode 100644\r\n--- /dev/null\r\n+++ b/.pr_agent.toml\r\n@@ -0,0 +1 @@\r\n+y = 2\r\ndiff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\r\n--- a/.github/workflows/ci.yml\r\n+++ b/.github/workflows/ci.yml\r\n@@ -1 +1 @@\r\n-o\r\n+x\r\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "CONTRADICTED withheld by PATH-2a (#121): two changed paths differ only by a leading dot, which the path key drops, and counted apart the claim reads otherwise. main's reading: diff changes 2 files, claim says 3"
+    ],
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'pr_agent.toml'"
+    ],
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "'pr_agent.toml' is status 'A', claim wants 'D' — accusation WITHHELD pending the EXTERNAL-1 repair"
+    ],
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src': ['pr_agent.toml', 'github/workflows/ci.yml']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-count-verified-on-merged-twins",
+  "summary": "2 files changed.",
+  "diff": "diff --git a/pr_agent.toml b/pr_agent.toml\n--- a/pr_agent.toml\n+++ b/pr_agent.toml\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/.pr_agent.toml b/.pr_agent.toml\nnew file mode 100644\n--- /dev/null\n+++ b/.pr_agent.toml\n@@ -0,0 +1 @@\n+x\ndiff --git a/a.py b/a.py\n--- a/a.py\n+++ b/a.py\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#121): two changed paths differ only by a leading dot, which the path key drops, and counted apart the claim reads otherwise. main's reading: diff changes 2 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-count-outside-every-reading",
+  "summary": "9 files changed.",
+  "diff": "diff --git a/pr_agent.toml b/pr_agent.toml\n--- a/pr_agent.toml\n+++ b/pr_agent.toml\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/.pr_agent.toml b/.pr_agent.toml\nnew file mode 100644\n--- /dev/null\n+++ b/.pr_agent.toml\n@@ -0,0 +1 @@\n+x\ndiff --git a/a.py b/a.py\n--- a/a.py\n+++ b/a.py\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 2 files, claim says 9"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-count-between-readings-kept",
+  "summary": "3 files changed.",
+  "diff": "diff --git a/.a.toml b/.a.toml\n--- a/.a.toml\n+++ b/.a.toml\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/a.toml b/a.toml\n--- a/a.toml\n+++ b/a.toml\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/.b.toml b/.b.toml\n--- a/.b.toml\n+++ b/.b.toml\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/b.toml b/b.toml\n--- a/b.toml\n+++ b/b.toml\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "CONTRADICTED",
+     "diff changes 2 files, claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-dot-slash-is-not-a-twin",
+  "summary": "2 files changed.",
+  "diff": "diff --git a/./src/a.py b/./src/a.py\n--- a/./src/a.py\n+++ b/./src/a.py\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/src/b.py b/src/b.py\n--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-binary-twins-without-hunks",
+  "summary": "3 files changed.",
+  "diff": "diff --git a/logo.png b/logo.png\ndeleted file mode 100644\nindex 1111111..0000000\nBinary files a/logo.png and /dev/null differ\ndiff --git a/.logo.png b/.logo.png\nnew file mode 100644\nindex 0000000..1111111\nBinary files /dev/null and b/.logo.png differ\ndiff --git a/a.py b/a.py\n--- a/a.py\n+++ b/a.py\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "CONTRADICTED withheld by PATH-2a (#121): two changed paths differ only by a leading dot, which the path key drops, and counted apart the claim reads otherwise. main's reading: diff changes 2 files, claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-created-on-the-wrong-twin",
+  "summary": "Created pr_agent.toml.",
+  "diff": "diff --git a/pr_agent.toml b/pr_agent.toml\n--- a/pr_agent.toml\n+++ b/pr_agent.toml\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/.pr_agent.toml b/.pr_agent.toml\nnew file mode 100644\n--- /dev/null\n+++ b/.pr_agent.toml\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#121): with leading dots kept, the changed path the claim resolves to reads otherwise. main's reading: diff status 'A' for 'pr_agent.toml'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-created-on-the-right-twin-kept",
+  "summary": "Created .pr_agent.toml.",
+  "diff": "diff --git a/pr_agent.toml b/pr_agent.toml\n--- a/pr_agent.toml\n+++ b/pr_agent.toml\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/.pr_agent.toml b/.pr_agent.toml\nnew file mode 100644\n--- /dev/null\n+++ b/.pr_agent.toml\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'pr_agent.toml'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-github-directory-touched",
+  "summary": "Modified github/workflows/ci.yml.",
+  "diff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#97, #121): with leading dots kept and the closest match taken, the claim reads otherwise. main's reading: diff status 'M' for 'github/workflows/ci.yml'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-bare-name-under-a-dot-directory-kept",
+  "summary": "Modified ci.yml.",
+  "diff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'github/workflows/ci.yml'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-only-github-over-dot-github",
+  "summary": "Only touches github/.",
+  "diff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#121): with leading dots kept, whether every changed path lies under the prefix reads otherwise. main's reading: all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-only-dot-github-kept",
+  "summary": "Only touches .github/.",
+  "diff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-only-bare-dotted-file",
+  "summary": "Only touches .pr_agent.toml",
+  "diff": "diff --git a/config/.pr_agent.toml b/config/.pr_agent.toml\n--- a/config/.pr_agent.toml\n+++ b/config/.pr_agent.toml\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "CONTRADICTED withheld by PATH-2a (#121): with leading dots kept, whether every changed path lies under the prefix reads otherwise. main's reading: paths outside 'pr_agent.toml': ['config/.pr_agent.toml']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-only-two-prefixes-one-dotted",
+  "summary": "Only touches src and github.",
+  "diff": "diff --git a/src/a.py b/src/a.py\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/.github/x.yml b/.github/x.yml\n--- a/.github/x.yml\n+++ b/.github/x.yml\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#121): with leading dots kept, whether every changed path lies under the prefix reads otherwise. main's reading: all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-only-outside-every-reading-kept",
+  "summary": "Only touches src and github.",
+  "diff": "diff --git a/src/a.py b/src/a.py\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/.github/x.yml b/.github/x.yml\n--- a/.github/x.yml\n+++ b/.github/x.yml\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/docs/x.md b/docs/x.md\n--- a/docs/x.md\n+++ b/docs/x.md\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'src' and 'github': ['docs/x.md']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:121-dot-dot-directory",
+  "summary": "Only touched cfg/.",
+  "diff": "diff --git a/..cfg/x.json b/..cfg/x.json\n--- a/..cfg/x.json\n+++ b/..cfg/x.json\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#121): with leading dots kept, whether every changed path lies under the prefix reads otherwise. main's reading: all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-prereg",
+  "summary": "Adds function backoff with jitter. Added 2 tests.",
+  "diff": "diff --git a/src/retry.py b/src/retry.py\n--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,1 +1,1 @@\n-def backoff(n):\n+def backoff(n, jitter=0):\ndiff --git a/tests/test_retry.py b/tests/test_retry.py\n--- a/tests/test_retry.py\n+++ b/tests/test_retry.py\n@@ -1,2 +1,2 @@\n-def test_a():\n-def test_b():\n+def test_a():  # c\n+def test_b():  # c\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): the removed lines define this name too, and a changed definition is not an added one. main's reading: added lines do define function 'backoff'"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): a test the added lines count is also defined in the removed lines, and a changed test is not an added one. main's reading: diff adds 2 test functions, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-new-beside-changed-inside",
+  "summary": "Added 1 test.",
+  "diff": "diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,1 +1,2 @@\n-def test_a():\n+def test_a(x):\n+def test_b():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "CONTRADICTED withheld by PATH-2a (#101): a test the added lines count is also defined in the removed lines, and a changed test is not an added one. main's reading: diff adds 2 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-count-outside-kept",
+  "summary": "Added 5 tests.",
+  "diff": "diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,1 +1,2 @@\n-def test_a():\n+def test_a(x):\n+def test_b():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED",
+     "diff adds 2 test functions, claim says 5"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-renamed-test-kept",
+  "summary": "Added 1 test.",
+  "diff": "diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,1 +1,1 @@\n-def test_old():\n+def test_new():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "VERIFIED",
+     "diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-async-changed-to-sync",
+  "summary": "Added 1 test.",
+  "diff": "diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,1 +1,1 @@\n-async def test_a():\n+def test_a():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): a test the added lines count is also defined in the removed lines, and a changed test is not an added one. main's reading: diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-nbsp-after-removed-def",
+  "summary": "Added 1 test.",
+  "diff": "diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,1 +1,1 @@\n-def test_a():\n+def test_a(x):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): a test the added lines count is also defined in the removed lines, and a changed test is not an added one. main's reading: diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-form-feed-after-removed-def",
+  "summary": "Added 1 test.",
+  "diff": "diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,1 +1,1 @@\n-def\ftest_a():\n+def test_a(x):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): a test the added lines count is also defined in the removed lines, and a changed test is not an added one. main's reading: diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-name-ends-early",
+  "summary": "Added 1 test.",
+  "diff": "diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,1 +1,1 @@\n-def test_a・():\n+def test_a():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): a test the added lines count is also defined in the removed lines, and a changed test is not an added one. main's reading: diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-symbol-class-changed",
+  "summary": "Added class Retry.",
+  "diff": "diff --git a/src/r.py b/src/r.py\n--- a/src/r.py\n+++ b/src/r.py\n@@ -1,1 +1,1 @@\n-class Retry:\n+class Retry(Base):\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): the removed lines define this name too, and a changed definition is not an added one. main's reading: added lines do define class 'Retry'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-symbol-fresh-kept",
+  "summary": "Added function fresh.",
+  "diff": "diff --git a/src/r.py b/src/r.py\n--- a/src/r.py\n+++ b/src/r.py\n@@ -1,1 +1,1 @@\n-def old():\n+def fresh():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'fresh'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-contradicted-symbol-untouched",
+  "summary": "Added function missing.",
+  "diff": "diff --git a/src/r.py b/src/r.py\n--- a/src/r.py\n+++ b/src/r.py\n@@ -1,1 +1,1 @@\n-def old():\n+def fresh():\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "symbol_added",
+     "CONTRADICTED",
+     "added lines do NOT define function 'missing'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:guard-divergent-header",
+  "summary": "Modified src/a.py. 1 file changed. Only touches src/.",
+  "diff": "diff --git a/src/a.py b/src/a.py\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE"
+    ],
+    [
+     "only_touches",
+     "UNCHECKABLE"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:guard-content-x85-is-not-a-header",
+  "summary": "Modified src/a.py. 1 file changed. Only touches src/.",
+  "diff": "diff --git a/src/a.py b/src/a.py\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-o\n+xy\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/a.py'"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 1 files, claim says 1"
+    ],
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:guard-drive-like-path",
+  "summary": "Modified x.py.",
+  "diff": "diff --git a/c:x.py b/c:x.py\n--- a/c:x.py\n+++ b/c:x.py\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:guard-non-ascii-siblings-kept",
+  "summary": "Modified x.py. 2 files changed.",
+  "diff": "diff --git a/日本/x.py b/日本/x.py\n--- a/日本/x.py\n+++ b/日本/x.py\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/中文/x.py b/中文/x.py\n--- a/中文/x.py\n+++ b/中文/x.py\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for '日本/x.py'"
+    ],
+    [
+     "files_changed_count",
+     "VERIFIED",
+     "diff changes 2 files, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:guard-kelvin-sign-folds",
+  "summary": "Modified key.py.",
+  "diff": "diff --git a/Key.py b/Key.py\n--- a/Key.py\n+++ b/Key.py\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'key.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:guard-case-outside-ascii",
+  "summary": "Created x.md.",
+  "diff": "diff --git a/é/x.md b/é/x.md\ndeleted file mode 100644\n--- a/é/x.md\n+++ /dev/null\n@@ -1 +0,0 @@\n-x\ndiff --git a/É/x.md b/É/x.md\nnew file mode 100644\n--- /dev/null\n+++ b/É/x.md\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#97, #121): a path here compares only where case outside ASCII is folded, which this overlay does not do. main's reading: diff status 'A' for 'é/x.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:scope-declared-claims",
+  "summary": "Refactor.\n\n```styxx\ntests_added: 2\nadds_symbol: backoff\n```\n",
+  "diff": "diff --git a/src/retry.py b/src/retry.py\n--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,1 +1,1 @@\n-def backoff(n):\n+def backoff(n, jitter=0):\ndiff --git a/tests/test_retry.py b/tests/test_retry.py\n--- a/tests/test_retry.py\n+++ b/tests/test_retry.py\n@@ -1,2 +1,2 @@\n-def test_a():\n-def test_b():\n+def test_a():  # c\n+def test_b():  # c\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): the removed lines define this name too, and a changed definition is not an added one. main's reading: added lines do define function 'backoff'"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): a test the added lines count is also defined in the removed lines, and a changed test is not an added one. main's reading: diff adds 2 test functions, claim says 2"
+    ]
+   ],
+   "uncovered_sentences": 5
+  }
+ },
+ {
+  "id": "path2a:scope-empty-diff",
+  "summary": "Created src/a.py. 2 files changed.",
+  "diff": "",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "the diff carries no file statuses and no added lines"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "the diff carries no file statuses and no added lines"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:scope-tests-pass-and-compat-untouched",
+  "summary": "All tests pass. No breaking changes. Modified src/a.py.",
+  "diff": "diff --git a/src/a.py b/src/a.py\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_pass",
+     "UNCHECKABLE",
+     "styxx.evidence (styxx-evidence/v0.2) read 0 supplied file(s), with no commit supplied, so nothing ties a report to this change — no evidence was supplied. Absence of a report is not a failing report; an unattested commit is unattested.  ||  No test REPORT was handed to the gate. It does not take the agent's word for test results, so with nothing to read it declines — absence of evidence is not a contradiction. The channel that makes this readable is a report passed with --evidence: a JUnit XML, or better a test-result attestation whose subject names the head commit. Even then no signature is checked, and the answer is VERIFIED or UNCHECKABLE — there is no accusing verdict for this claim kind."
+    ],
+    [
+     "compat_claim",
+     "UNCHECKABLE",
+     "compatibility claimed; no public top-level definition removed (python read; behaviour beyond names not checked)"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/a.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ }
+]
