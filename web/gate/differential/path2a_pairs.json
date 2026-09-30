@@ -455,7 +455,7 @@
     [
      "file_created",
      "UNCHECKABLE",
-     "VERIFIED withheld by PATH-2a (#121): with leading dots kept, the changed path the claim resolves to reads otherwise. main's reading: diff status 'A' for 'pr_agent.toml'"
+     "VERIFIED withheld by PATH-2a (#121): with leading dots kept, the earliest changed path matching the claim reads otherwise, though the closest one does not. main's reading: diff status 'A' for 'pr_agent.toml'"
     ]
    ],
    "uncovered_sentences": 0
@@ -863,5 +863,131 @@
    ],
    "uncovered_sentences": 0
   }
+ },
+ {
+  "id": "path2a:xport-accented-directory-exact",
+  "summary": "Modified café/x.md.",
+  "diff": "diff --git a/café/x.md b/café/x.md\n--- a/café/x.md\n+++ b/café/x.md\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#97, #121): the claim's path or name touches a character outside ASCII, where the Python and JavaScript readers extract it differently. main's reading: diff status 'M' for 'café/x.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  },
+  "note": "Pass 2 (C-2): Python reads the path with its accented directory, the port the ASCII tail after it; both mains verify, and both overlays withhold it as `extract`."
+ },
+ {
+  "id": "path2a:xport-accented-letter-before-a-directory",
+  "summary": "Updated `é/x.md`.",
+  "diff": "diff --git a/docs/x.md b/docs/x.md\nnew file mode 100644\n--- /dev/null\n+++ b/docs/x.md\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#97, #121): the claim's path or name touches a character outside ASCII, where the Python and JavaScript readers extract it differently. main's reading: diff status 'A' for 'docs/x.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  },
+  "note": "Pass 2 (C-2): the reviewer's shape; Python's `é/x.md` read `dir` on pass 1 and the port kept its `/x.md`."
+ },
+ {
+  "id": "path2a:xport-two-counts-of-changed-tests",
+  "summary": "Added 2 tests.",
+  "diff": "--- a/tests/test_m.py\n+++ b/tests/test_m.py\n@@ -1,6 +1,9 @@\n-def test_a():\n+﻿def test_a():\n     pass\n-def test_b():\n+﻿def test_b():\n     pass\n+def test_c():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE"
+    ]
+   ],
+   "uncovered_sentences": 0
+  },
+  "note": "Pass 2 (C-2): CPython does not count a test after a BOM and the port does, so the two mains read 1 and 3 and both CONTRADICT the claim; the port's count holds it within [got - changed, got], CPython's does not: `split`."
+ },
+ {
+  "id": "path2a:xport-only-second-prefix-outside-ascii",
+  "summary": "Only touches src and é/.",
+  "diff": "--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-o\n+x\n--- a/docs/x.py\n+++ b/docs/x.py\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE"
+    ]
+   ],
+   "uncovered_sentences": 0
+  },
+  "note": "Pass 2 (C-2): Python reads a second prefix `é/.`, the port none; both CONTRADICT, both withhold it as `extract`."
+ },
+ {
+  "id": "path2a:xport-symbol-name-with-an-accent",
+  "summary": "Adds function backoffé.",
+  "diff": "--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,2 +1,2 @@\n-def backoff(n):\n+def backoffé(n, j=0):\n     return n\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE"
+    ]
+   ],
+   "uncovered_sentences": 0
+  },
+  "note": "Pass 2 (C-2): Python reads the name `backoffé`, the port `backoff`; both verify, both withhold it as `extract`."
+ },
+ {
+  "id": "path2a:guard-absolute-drive-path-kept",
+  "summary": "Modified tools/x.py. Created src/app.py. Updated app.py.",
+  "diff": "--- C:/work/old/tools/x.py\n+++ C:/work/new/tools/x.py\n@@ -1 +1 @@\n-o\n+x\n--- /dev/null\n+++ b/src/app.py\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'c:/work/new/tools/x.py'"
+    ],
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'src/app.py'"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'A' for 'src/app.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  },
+  "note": "Pass 2 (B-5): a drive letter followed by '/' reads the same base name under every flavour, so `odd` no longer withholds the diff's other path claims."
+ },
+ {
+  "id": "path2a:guard-final-dot-segment",
+  "summary": "Modified docs/x.md.",
+  "diff": "--- a/docs/.\n+++ b/docs/.\n@@ -1 +1 @@\n-o\n+x\n--- a/docs/x.md\n+++ b/docs/x.md\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#97): a path here has a drive-like prefix or a final '.' segment, where base names are read differently. main's reading: diff status 'M' for 'docs/x.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  },
+  "note": "Pass 2 (C-1): a registered path ending in '/.' reads its base name otherwise in pathlib under both flavours, so this calibrates `odd` on CI's POSIX runners too."
  }
 ]

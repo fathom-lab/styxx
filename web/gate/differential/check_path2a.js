@@ -1,15 +1,21 @@
-// PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30): the port's half of the committed PATH-2a checks, run by
-// tests/test_diffgate_path2a.py, which writes IN (a JSON list of {id, summary, diff}) and reads OUT.
+// PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30): the port's half of the
+// committed PATH-2a checks, run by tests/test_diffgate_path2a*.py, which write IN (a JSON list of {id, summary, diff})
+// and read OUT.
 //
 //   node check_path2a.js --relation  REF IN OUT   main's port (REF, the reconstruction) against this port, both
 //                                                  strict modes: every record may differ from main's only by an
-//                                                  abstention in reach with the overlay's reason (the relation A)
+//                                                  abstention in reach with the overlay's reason (the relation A),
+//                                                  and each claim reads the same under --strict as without it
 //   node check_path2a.js --decisions REF IN OUT   per input, main's record and this port's record, for the
 //                                                  Python-vs-port comparison (C)
-//   node check_path2a.js --lockstep  IN OUT       the overlay's status-map builder against parseUnifiedDiff
+//   node check_path2a.js --records   PORT IN OUT  per input, one port's record (strict off): the truth test runs the
+//                                                  port's own counterfactual variants through it
+//   node check_path2a.js --lockstep  IN OUT       the overlay's status-map builder against parseUnifiedDiff, and its
+//                                                  counts of `def test_` sites against main's count, per line view
 //   node check_path2a.js --tables    OUT          this engine's whitespace, trim and lowercase facts
 //   node check_path2a.js --error-fallback REF IN OUT   as --decisions, with the overlay's decision function made to
 //                                                  throw: every claim in reach must abstain with the error phrase
+//   node check_path2a.js --timing    REF IN OUT   per input, milliseconds per gate call for main's port and this one
 //
 // --relation, --decisions and --lockstep take an optional last argument, the port to check (default ../diffgate.js);
 // the tests pass a planted copy there to show the checks refuse it.
@@ -23,9 +29,9 @@ const DEFAULT_PORT = path.join(__dirname, "..", "diffgate.js");
 function internals(file, extra = "") {
   // The port's top-level functions and constants, read the way a page reads the file: as one script.
   const src = fs.readFileSync(file, "utf8");
-  const names = ["gateDiffText", "parseUnifiedDiff", "_norm", "_p2aRegsRaw", "_p2aBuild", "_P2A_JS_SPACE",
-                 "_P2A_PY_BREAKS", "_P2A_DIVERGENT", "_P2A_HEADERS", "_P2A_REACH_PAIRS", "_P2A_PHRASES",
-                 "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS"];
+  const names = ["gateDiffText", "parseUnifiedDiff", "_norm", "_p2aRegsRaw", "_p2aBuild", "_p2aViews", "_p2aPairing",
+                 "_P2A_JS_SPACE", "_P2A_PY_SPACE", "_P2A_PY_BREAKS", "_P2A_DIVERGENT", "_P2A_HEADERS",
+                 "_P2A_REACH_PAIRS", "_P2A_PHRASES", "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS", "_P2A_OWN"];
   return vm.runInNewContext(src + "\n" + extra + "\n;({" + names.join(", ") + "})", {}, { filename: file });
 }
 
@@ -59,6 +65,13 @@ function relation(a, b, strict, reach, defects, phrases) {
   return bad;
 }
 
+function strictAlike(off, on) {
+  // --strict may move the gate verdict and nothing else: every claim, and every other field, reads the same.
+  const bad = [];
+  for (const k of Object.keys(off)) if (k !== "verdict" && JSON.stringify(off[k]) !== JSON.stringify(on[k])) bad.push("under --strict, " + k + " differs");
+  return bad;
+}
+
 function main(argv) {
   const mode = argv[0];
   if (mode === "--tables") {
@@ -73,12 +86,13 @@ function main(argv) {
       if ([...low].length > 1) lowerLong.push(cp);
     }
     const P = internals(DEFAULT_PORT);
+    const cps = s => [...s].map(x => x.codePointAt(0));
     fs.writeFileSync(argv[1], JSON.stringify({
       node: process.version, unicode: process.versions.unicode, whitespace: ws, trim, lower_holds_ascii: lowerAscii,
-      lower_longer: lowerLong, js_space: [...P._P2A_JS_SPACE].map(x => x.codePointAt(0)),
-      py_breaks: [...P._P2A_PY_BREAKS].map(x => x.codePointAt(0)),
-      divergent: [...P._P2A_DIVERGENT].map(x => x.codePointAt(0)), headers: P._P2A_HEADERS, reach: P._P2A_REACH_PAIRS,
-      phrases: P._P2A_PHRASES, kind_defect: P._P2A_KIND_DEFECT, directory_rule: P.P2A_DIRECTORY_BASENAME_ABSTAINS,
+      lower_longer: lowerLong, js_space: cps(P._P2A_JS_SPACE), py_space: cps(P._P2A_PY_SPACE),
+      py_breaks: cps(P._P2A_PY_BREAKS), divergent: cps(P._P2A_DIVERGENT), headers: P._P2A_HEADERS,
+      reach: P._P2A_REACH_PAIRS, phrases: P._P2A_PHRASES, kind_defect: P._P2A_KIND_DEFECT,
+      directory_rule: P.P2A_DIRECTORY_BASENAME_ABSTAINS, own: P._P2A_OWN,
     }));
     return 0;
   }
@@ -86,15 +100,17 @@ function main(argv) {
     const P = internals(path.resolve(argv[3] || DEFAULT_PORT));
     const items = JSON.parse(fs.readFileSync(argv[1], "utf8"));
     let n = 0, skipped = 0;
-    const bad = [];
+    const bad = [], counts = {};
     for (const it of items) {
-      let want;
-      try { want = [...P.parseUnifiedDiff(it.diff || "").status]; } catch (e) { skipped++; continue; }
+      let parsed;
+      try { parsed = P.parseUnifiedDiff(it.diff || ""); } catch (e) { skipped++; continue; }
       const got = [...P._p2aBuild(P._p2aRegsRaw(it.diff || ""), P._norm)];
       n++;
-      if (JSON.stringify(got) !== JSON.stringify(want)) bad.push(it.id);
+      if (JSON.stringify(got) !== JSON.stringify([...parsed.status])) bad.push(it.id);
+      const pairing = P._p2aPairing(P._p2aViews(it.diff || ""));
+      counts[it.id] = { main: (parsed.addedBlob.match(/^\s*def test_/gm) || []).length, views: pairing.map(x => x[0]) };
     }
-    fs.writeFileSync(argv[2], JSON.stringify({ checked: n, main_raises: skipped, differ: bad }));
+    fs.writeFileSync(argv[2], JSON.stringify({ checked: n, main_raises: skipped, differ: bad, counts }));
     return 0;
   }
   if (mode === "--error-fallback") {
@@ -103,6 +119,20 @@ function main(argv) {
     const items = JSON.parse(fs.readFileSync(argv[2], "utf8"));
     const out = items.map(it => ({ id: it.id, main: record(REF.gateDiffText, it, false), new: record(P.gateDiffText, it, false) }));
     fs.writeFileSync(argv[3], JSON.stringify(out));
+    return 0;
+  }
+  if (mode === "--records") {
+    const PORT = require(path.resolve(argv[1]));
+    const items = JSON.parse(fs.readFileSync(argv[2], "utf8"));
+    fs.writeFileSync(argv[3], JSON.stringify(items.map(it => ({ id: it.id, rec: record(PORT.gateDiffText, it, false) }))));
+    return 0;
+  }
+  if (mode === "--timing") {
+    const REF = require(path.resolve(argv[1]));
+    const NEW = require(DEFAULT_PORT);
+    const items = JSON.parse(fs.readFileSync(argv[2], "utf8"));
+    const ms = gate => it => { const t0 = process.hrtime.bigint(); record(gate, it, false); return Number(process.hrtime.bigint() - t0) / 1e6; };
+    fs.writeFileSync(argv[3], JSON.stringify(items.map(it => ({ id: it.id, main: ms(REF.gateDiffText)(it), new: ms(NEW.gateDiffText)(it) }))));
     return 0;
   }
   if (mode === "--relation" || mode === "--decisions") {
@@ -123,6 +153,7 @@ function main(argv) {
     const counts = { runs: 0, both_raise: 0, raise_differs: 0, broken: 0, decided: 0, abstained: 0 };
     const broken = [];
     for (const it of items) {
+      const mine = {};
       for (const strict of [false, true]) {
         const a = record(REF.gateDiffText, it, strict), b = record(NEW.gateDiffText, it, strict);
         counts.runs++;
@@ -131,17 +162,22 @@ function main(argv) {
           else { counts.raise_differs++; broken.push([it.id, strict, "raise " + a.error + " / " + b.error]); }
           continue;
         }
+        mine[strict] = b;
         const bad = relation(a, b, strict, reach, defects, P._P2A_PHRASES);
         if (bad.length) { counts.broken++; if (broken.length < 50) broken.push([it.id, strict, bad]); }
         if (!strict) a.claims.forEach((x, i) => {
           if (x.verdict === "VERIFIED" || x.verdict === "CONTRADICTED") { counts.decided++; if (b.claims[i].verdict === "UNCHECKABLE") counts.abstained++; }
         });
       }
+      if (mine[false] && mine[true]) {
+        const bad = strictAlike(mine[false], mine[true]);
+        if (bad.length) { counts.broken++; if (broken.length < 50) broken.push([it.id, "strict", bad]); }
+      }
     }
     fs.writeFileSync(argv[3], JSON.stringify({ counts, broken }));
     return 0;
   }
-  console.error("usage: node check_path2a.js --relation REF IN OUT | --decisions REF IN OUT | --lockstep IN OUT | --tables OUT");
+  console.error("usage: node check_path2a.js --relation REF IN OUT | --decisions REF IN OUT | --records PORT IN OUT | --lockstep IN OUT | --tables OUT | --error-fallback REF IN OUT | --timing REF IN OUT");
   return 2;
 }
 

@@ -218,6 +218,24 @@ def relation(a: dict, b: dict, strict: bool, phrases: dict, allow_error: bool = 
     return bad
 
 
+def strict_alike(off: dict, on: dict) -> list[str]:
+    """--strict may move the gate verdict and nothing else: the same input's claims and every other field read the
+    same with it as without it (NOTE_path2a_second_pass_2026_09_30, a plant that skipped the overlay under --strict
+    passed every check of pass 1)."""
+    return [f"under --strict, {k} differs" for k in off if k != "verdict" and off[k] != on.get(k)]
+
+
+def fake_git(name_status: str, diff: str):
+    """A stand-in for a module's `_git` that answers gate_diff's two calls from a case's own recorded output."""
+    def _git(repo, *args):
+        if args[:2] == ("diff", "--name-status"):
+            return name_status
+        if args[:1] == ("diff",):
+            return diff
+        raise AssertionError(f"unexpected git call {args!r}")
+    return _git
+
+
 def phrase_key(why: str, phrases: dict) -> str | None:
     """The overlay's phrase key in a reason it wrote, else None."""
     m = re.match(r"(?:VERIFIED|CONTRADICTED) withheld by PATH-2a \((?:#97|#121|#97, #121|#101)\): ", why)

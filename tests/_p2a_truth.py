@@ -219,3 +219,54 @@ def variant_source(main_text: str, name: str) -> str:
         assert out.count(old) == 1, f"{name}: the anchor is not in main exactly once:\n{old}"
         out = out.replace(old, new)
     return out
+
+
+# ---- the same four variants of main's port ----------------------------------------------------------------------------
+# NOTE_path2a_second_pass_2026_09_30 (B-2): the port's own false verdicts are judged in the port's own terms, by the same
+# counterfactuals built from the reconstructed port (tests/_p2a_ref.main_port_source) with anchored edits.
+
+_JS_FIND_PATH = """    for (const [p, st] of status) {
+      if (p === c || p.endsWith("/" + c) || _basename(p) === _basename(c)) return [p, st];
+    }
+    return [null, null];
+"""
+_JS_FIND_PATH_V97 = """    for (const _t of [0, 1, 2]) {
+      if (_t === 2 && c.includes("/")) break;
+      for (const [p, st] of status) {
+        if (_t === 0 ? p === c : _t === 1 ? p.endsWith("/" + c) : _basename(p) === _basename(c)) return [p, st];
+      }
+    }
+    return [null, null];
+"""
+_JS_NORM = """  let s = p.replace(/BSBS/g, "/");
+  let i = 0;
+  while (i < s.length && (s[i] === "." || s[i] === "/")) i++;   // str.lstrip("./")
+  return s.slice(i).toLowerCase();
+""".replace("BS", chr(92))
+_JS_NORM_V121 = """  return p.replace(/BSBS/g, "/").replace(/^(?:BS.?BS/)+/, "").toLowerCase();
+""".replace("BS", chr(92))
+_JS_TESTS = "            const got = (addedBlob.match(/^BSs*def test_/gm) || []).length;\n".replace("BS", chr(92))
+_JS_TESTS_V101 = ("            const _rem = new Set();\n"
+                  "            for (const [, _r] of sides.values()) for (const _l of _r) "
+                  "for (const _m of _l.matchAll(/BSs*(?:asyncBSs+)?defBSs+(test_BSw*)/g)) _rem.add(_m[1]);\n"
+                  "            const got = [...addedBlob.matchAll(/^BSs*def (test_BSw*)/gm)]"
+                  ".filter(_m => !_rem.has(_m[1])).length;\n").replace("BS", chr(92))
+_JS_SYMBOL = "            const hit = pat.test(addedBlob);\n"
+_JS_SYMBOL_V101 = ("            const hit = pat.test(addedBlob) && ![...sides.values()].some(([, _r]) => _r.some(_l => "
+                   "new RegExp(\"^BSBSs*(?:asyncBSBSs+)?(?:def|class)BSBSs+\" + _reEscape(d.name) + \"BSBSb\")"
+                   ".test(_l)));\n").replace("BS", chr(92))
+
+PORT_VARIANTS = {
+    "v97": [(_JS_FIND_PATH, _JS_FIND_PATH_V97)],
+    "v121": [(_JS_NORM, _JS_NORM_V121)],
+    "v101": [(_JS_TESTS, _JS_TESTS_V101), (_JS_SYMBOL, _JS_SYMBOL_V101)],
+}
+PORT_VARIANTS["vall"] = PORT_VARIANTS["v97"] + PORT_VARIANTS["v121"] + PORT_VARIANTS["v101"]
+
+
+def port_variant_source(main_port_text: str, name: str) -> str:
+    out = main_port_text
+    for old, new in PORT_VARIANTS[name]:
+        assert out.count(old) == 1, f"port {name}: the anchor is not in main's port exactly once:\n{old}"
+        out = out.replace(old, new)
+    return out
