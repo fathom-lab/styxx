@@ -4,7 +4,7 @@ The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: th
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` as it stands on `main` (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2,
 pull requests #113, #115, #120 and #124, plus the `fetch_pr` door; the file **7.48.0** ships),
-sha256 `186d5f2cd791223e3612e6c890505508fdc30dd830486f91bbd5393ca26f1a78` (LF line endings; a wheel
+sha256 `04ec58c3ac3c3e21fec08dab8e236899b7194fc65773b673678e2b491690c63e` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into

@@ -100,7 +100,10 @@ def main() -> int:
         lines += ["| verdict | claim | evidence |", "|---|---|---|"]
         for c in g.claims:
             mark = {"VERIFIED": "✅", "CONTRADICTED": "❌", "UNCHECKABLE": "❓"}[c.verdict]
-            lines.append(f"| {mark} {c.verdict} | {c.text[:80]} | {c.why[:100]} |")
+            # PATH-2a (NOTE_path2a_second_pass_2026_09_30): a reason the overlay wrote is shown whole, since its
+            # leading 100 characters are the withheld verdict and the phrase, and main's reading comes after them.
+            why = c.why if " withheld by PATH-2a (" in c.why else c.why[:100]
+            lines.append(f"| {mark} {c.verdict} | {c.text[:80]} | {why} |")
     else:
         lines += ["_No diff-shaped claims found. The gate checks a closed template set "
                   "(touched/created/deleted paths, added functions/tests, file counts, "
