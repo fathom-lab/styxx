@@ -1,0 +1,299 @@
+{
+ "source": "NOTE_path2_fourteenth_pass: round 13's reproductions (the regressions lens: R13.1 a name ending in a CR, R13.2 a TAB after a name holding a space, R13.3 a name holding a backslash, each in difflib's renderings with and without a/ b/, beside an earlier basename twin, through #97), this pass's own R13.2b (a TAB inside a name whose tail differs in case), and the guard lens's G13.1 (git's own bytes for a typechanged dotted directory beside its undotted twin); each with its base and head model and git's --name-status for it, recorded from a git fast-import repository",
+ "cases": [
+  {
+   "id": "R13.1-cr-created",
+   "what": "a name ending in a CR, difflib",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib/x.py\r\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\r": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\r\"\n"
+  },
+  {
+   "id": "R13.1-cr-created-noprefix",
+   "what": "a name ending in a CR, difflib",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ lib/x.py\r\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\r": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\r\"\n"
+  },
+  {
+   "id": "R13.1-cr-deleted",
+   "what": "a name ending in a CR, difflib",
+   "summary": "Deleted lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- a/lib/x.py\r\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n",
+     "lib/x.py\r": "old\n"
+    },
+    "head": {
+     "a/x.py": "2\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nD\t\"lib/x.py\\r\"\n"
+  },
+  {
+   "id": "R13.1-cr-deleted-noprefix",
+   "what": "a name ending in a CR, difflib",
+   "summary": "Deleted lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- lib/x.py\r\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n",
+     "lib/x.py\r": "old\n"
+    },
+    "head": {
+     "a/x.py": "2\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nD\t\"lib/x.py\\r\"\n"
+  },
+  {
+   "id": "R13.2-tabsp-created",
+   "what": "a TAB after a name holding a space, difflib",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/sp ace/lib/x.py\t\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "sp ace/lib/x.py\t": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"sp ace/lib/x.py\\t\"\n"
+  },
+  {
+   "id": "R13.2-tabsp-created-noprefix",
+   "what": "a TAB after a name holding a space, difflib",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ sp ace/lib/x.py\t\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "sp ace/lib/x.py\t": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"sp ace/lib/x.py\\t\"\n"
+  },
+  {
+   "id": "R13.2-tabsp-deleted",
+   "what": "a TAB after a name holding a space, difflib",
+   "summary": "Deleted lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- a/sp ace/lib/x.py\t\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n",
+     "sp ace/lib/x.py\t": "old\n"
+    },
+    "head": {
+     "a/x.py": "2\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nD\t\"sp ace/lib/x.py\\t\"\n"
+  },
+  {
+   "id": "R13.2-tabsp-deleted-noprefix",
+   "what": "a TAB after a name holding a space, difflib",
+   "summary": "Deleted lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- sp ace/lib/x.py\t\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n",
+     "sp ace/lib/x.py\t": "old\n"
+    },
+    "head": {
+     "a/x.py": "2\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nD\t\"sp ace/lib/x.py\\t\"\n"
+  },
+  {
+   "id": "R13.3-bs-created",
+   "what": "a name holding a backslash, difflib",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib\\x.py\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib\\x.py": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib\\\\x.py\"\n"
+  },
+  {
+   "id": "R13.3-bs-created-noprefix",
+   "what": "a name holding a backslash, difflib",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ lib\\x.py\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib\\x.py": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib\\\\x.py\"\n"
+  },
+  {
+   "id": "R13.3-bs-deleted",
+   "what": "a name holding a backslash, difflib",
+   "summary": "Deleted lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- a/lib\\x.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n",
+     "lib\\x.py": "old\n"
+    },
+    "head": {
+     "a/x.py": "2\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nD\t\"lib\\\\x.py\"\n"
+  },
+  {
+   "id": "R13.3-bs-deleted-noprefix",
+   "what": "a name holding a backslash, difflib",
+   "summary": "Deleted lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- lib\\x.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n",
+     "lib\\x.py": "old\n"
+    },
+    "head": {
+     "a/x.py": "2\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nD\t\"lib\\\\x.py\"\n"
+  },
+  {
+   "id": "R13.2b-tabin-created",
+   "what": "a TAB inside a name whose tail differs in case, difflib",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib/x.py\tfoo/LIB/X.PY\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\tfoo/LIB/X.PY": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\tfoo/LIB/X.PY\"\n"
+  },
+  {
+   "id": "R13.2b-tabin-created-noprefix",
+   "what": "a TAB inside a name whose tail differs in case, difflib",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ lib/x.py\tfoo/LIB/X.PY\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\tfoo/LIB/X.PY": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\tfoo/LIB/X.PY\"\n"
+  },
+  {
+   "id": "R13.2b-tabin-deleted",
+   "what": "a TAB inside a name whose tail differs in case, difflib",
+   "summary": "Deleted lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- a/lib/x.py\tfoo/LIB/X.PY\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n",
+     "lib/x.py\tfoo/LIB/X.PY": "old\n"
+    },
+    "head": {
+     "a/x.py": "2\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nD\t\"lib/x.py\\tfoo/LIB/X.PY\"\n"
+  },
+  {
+   "id": "R13.2b-tabin-deleted-noprefix",
+   "what": "a TAB inside a name whose tail differs in case, difflib",
+   "summary": "Deleted lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- lib/x.py\tfoo/LIB/X.PY\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n",
+     "lib/x.py\tfoo/LIB/X.PY": "old\n"
+    },
+    "head": {
+     "a/x.py": "2\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nD\t\"lib/x.py\\tfoo/LIB/X.PY\"\n"
+  },
+  {
+   "id": "G13.1-typechanged-dotted-directory-created",
+   "what": "git's own bytes: a typechanged dotted directory beside its undotted twin (plant N3b's case)",
+   "summary": "Created x.json.",
+   "diff": "diff --git a/.cfg/x.json b/.cfg/x.json\ndeleted file mode 100644\nindex 7898192..0000000\n--- a/.cfg/x.json\n+++ /dev/null\n@@ -1 +0,0 @@\n-a\ndiff --git a/.cfg/x.json b/.cfg/x.json\nnew file mode 120000\nindex 0000000..e870e3b\n--- /dev/null\n+++ b/.cfg/x.json\n@@ -0,0 +1 @@\n+t.json\n\\ No newline at end of file\ndiff --git a/cfg/x.json b/cfg/x.json\nindex 587be6b..975fbec 100644\n--- a/cfg/x.json\n+++ b/cfg/x.json\n@@ -1 +1 @@\n-x\n+y\n",
+   "model": {
+    "base": {
+     ".cfg/x.json": "a\n",
+     "cfg/x.json": "x\n"
+    },
+    "head": {
+     ".cfg/x.json": {
+      "link": "t.json"
+     },
+     "cfg/x.json": "y\n"
+    }
+   },
+   "name_status": "T\t.cfg/x.json\nM\tcfg/x.json\n"
+  },
+  {
+   "id": "G13.1-typechanged-dotted-directory-deleted",
+   "what": "git's own bytes: a typechanged dotted directory beside its undotted twin (plant N3b's case)",
+   "summary": "Deleted x.json.",
+   "diff": "diff --git a/.cfg/x.json b/.cfg/x.json\ndeleted file mode 120000\nindex e870e3b..0000000\n--- a/.cfg/x.json\n+++ /dev/null\n@@ -1 +0,0 @@\n-t.json\n\\ No newline at end of file\ndiff --git a/.cfg/x.json b/.cfg/x.json\nnew file mode 100644\nindex 0000000..e69de29\ndiff --git a/cfg/x.json b/cfg/x.json\nindex 587be6b..975fbec 100644\n--- a/cfg/x.json\n+++ b/cfg/x.json\n@@ -1 +1 @@\n-x\n+y\n",
+   "model": {
+    "base": {
+     ".cfg/x.json": {
+      "link": "t.json"
+     },
+     "cfg/x.json": "x\n"
+    },
+    "head": {
+     ".cfg/x.json": "",
+     "cfg/x.json": "y\n"
+    }
+   },
+   "name_status": "T\t.cfg/x.json\nM\tcfg/x.json\n"
+  }
+ ]
+}

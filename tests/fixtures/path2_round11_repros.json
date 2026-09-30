@@ -1,0 +1,358 @@
+{
+ "source": "round11_diffgate.json, the regressions lens: rv11_repros.json, the 17 aimed reproductions (real git via fast-import, Python's difflib, GNU diff 3.12), with each case's base and head file model and the truth the reviewer's model recorded (T true, F false, ? its readings disagree)",
+ "cases": [
+  {
+   "id": "A97-created-suffix-case",
+   "summary": "Created src/README.md.",
+   "diff": "diff --git a/docs/README.md b/docs/README.md\nindex 7898192..6178079 100644\n--- a/docs/README.md\n+++ b/docs/README.md\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/lib/src/readme.md b/lib/src/readme.md\nnew file mode 100644\nindex 0000000..587be6b\n--- /dev/null\n+++ b/lib/src/readme.md\n@@ -0,0 +1 @@\n+x\n",
+   "git": true,
+   "name_status": "M\tdocs/README.md\nA\tlib/src/readme.md\n",
+   "model": {
+    "base": {
+     "docs/README.md": "a\n"
+    },
+    "head": {
+     "docs/README.md": "b\n",
+     "lib/src/readme.md": "x\n"
+    }
+   },
+   "reviewer_truth": {
+    "file_created\u001fCreated src/README.md.\u001f0": "F"
+   }
+  },
+  {
+   "id": "A97-deleted-suffix-case",
+   "summary": "Deleted src/Config.py.",
+   "diff": "diff --git a/a/Config.py b/a/Config.py\nindex d00491f..0cfbf08 100644\n--- a/a/Config.py\n+++ b/a/Config.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/lib/src/config.py b/lib/src/config.py\ndeleted file mode 100644\nindex 587be6b..0000000\n--- a/lib/src/config.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-x\n",
+   "git": true,
+   "name_status": "M\ta/Config.py\nD\tlib/src/config.py\n",
+   "model": {
+    "base": {
+     "a/Config.py": "1\n",
+     "lib/src/config.py": "x\n"
+    },
+    "head": {
+     "a/Config.py": "2\n"
+    }
+   },
+   "reviewer_truth": {
+    "file_deleted\u001fDeleted src/Config.py.\u001f0": "F"
+   }
+  },
+  {
+   "id": "A97-created-suffix-case-2",
+   "summary": "Created api/Util.py.",
+   "diff": "diff --git a/a/Util.py b/a/Util.py\nindex d00491f..0cfbf08 100644\n--- a/a/Util.py\n+++ b/a/Util.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/pkg/api/util.py b/pkg/api/util.py\nnew file mode 100644\nindex 0000000..3e75765\n--- /dev/null\n+++ b/pkg/api/util.py\n@@ -0,0 +1 @@\n+new\n",
+   "git": true,
+   "name_status": "M\ta/Util.py\nA\tpkg/api/util.py\n",
+   "model": {
+    "base": {
+     "a/Util.py": "1\n",
+     "app/Api/util.py": "x\n",
+     "api/Util.py": "keep\n"
+    },
+    "head": {
+     "a/Util.py": "2\n",
+     "app/Api/util.py": "x\n",
+     "api/Util.py": "keep\n",
+     "pkg/api/util.py": "new\n"
+    }
+   },
+   "reviewer_truth": {
+    "file_created\u001fCreated api/Util.py.\u001f0": "F"
+   }
+  },
+  {
+   "id": "A97-control-samecase",
+   "summary": "Created src/readme.md.",
+   "diff": "diff --git a/docs/README.md b/docs/README.md\nindex 7898192..6178079 100644\n--- a/docs/README.md\n+++ b/docs/README.md\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/lib/src/readme.md b/lib/src/readme.md\nnew file mode 100644\nindex 0000000..587be6b\n--- /dev/null\n+++ b/lib/src/readme.md\n@@ -0,0 +1 @@\n+x\n",
+   "git": true,
+   "name_status": "M\tdocs/README.md\nA\tlib/src/readme.md\n",
+   "model": {
+    "base": {
+     "docs/README.md": "a\n"
+    },
+    "head": {
+     "docs/README.md": "b\n",
+     "lib/src/readme.md": "x\n"
+    }
+   },
+   "reviewer_truth": {
+    "file_created\u001fCreated src/readme.md.\u001f0": "?"
+   }
+  },
+  {
+   "id": "B121-difflib-noprefix-bdir",
+   "summary": "3 files changed.",
+   "diff": "--- b/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n--- x.py\n+++ x.py\n@@ -1 +1 @@\n-a\n+b\n--- .env\n+++ .env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- env\n+++ env\n@@ -1 +1 @@\n-B=1\n+B=2\n",
+   "git": false,
+   "name_status": null,
+   "model": {
+    "base": {
+     "b/x.py": "a\n",
+     "x.py": "a\n",
+     ".env": "A=1\n",
+     "env": "B=1\n"
+    },
+    "head": {
+     "b/x.py": "b\n",
+     "x.py": "b\n",
+     ".env": "A=2\n",
+     "env": "B=2\n"
+    }
+   },
+   "reviewer_truth": {
+    "files_changed_count\u001f3 files changed.\u001f0": "F"
+   }
+  },
+  {
+   "id": "B121-difflib-empty-new-file",
+   "summary": "3 files changed.",
+   "diff": "--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\n--- a/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+   "git": false,
+   "name_status": null,
+   "model": {
+    "base": {
+     ".env": "A=1\n",
+     "env": "B=1\n",
+     "x.py": "a\n"
+    },
+    "head": {
+     ".env": "A=2\n",
+     "env": "B=2\n",
+     "x.py": "b\n",
+     "pkg/__init__.py": ""
+    }
+   },
+   "reviewer_truth": {
+    "files_changed_count\u001f3 files changed.\u001f0": "F"
+   }
+  },
+  {
+   "id": "B121-gnu-per-file-empty-new-file",
+   "summary": "3 files changed.",
+   "diff": "--- a/.env\t2024-05-06 07:08:09.000000000 -0400\n+++ b/.env\t2024-05-06 07:08:09.000000000 -0400\n@@ -1 +1 @@\n-A=1\n+A=2\n--- a/env\t2024-05-06 07:08:09.000000000 -0400\n+++ b/env\t2024-05-06 07:08:09.000000000 -0400\n@@ -1 +1 @@\n-B=1\n+B=2\n--- a/x.py\t2024-05-06 07:08:09.000000000 -0400\n+++ b/x.py\t2024-05-06 07:08:09.000000000 -0400\n@@ -1 +1 @@\n-a\n+b\n",
+   "git": false,
+   "name_status": null,
+   "model": {
+    "base": {
+     ".env": "A=1\n",
+     "env": "B=1\n",
+     "x.py": "a\n"
+    },
+    "head": {
+     ".env": "A=2\n",
+     "env": "B=2\n",
+     "x.py": "b\n",
+     "pkg/__init__.py": ""
+    }
+   },
+   "reviewer_truth": {
+    "files_changed_count\u001f3 files changed.\u001f0": "F"
+   }
+  },
+  {
+   "id": "B121-difflib-noprefix-adir-delete",
+   "summary": "3 files changed.",
+   "diff": "--- a/x.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-a\n--- x.py\n+++ x.py\n@@ -1 +1 @@\n-a\n+b\n--- .env\n+++ .env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- env\n+++ env\n@@ -1 +1 @@\n-B=1\n+B=2\n",
+   "git": false,
+   "name_status": null,
+   "model": {
+    "base": {
+     "a/x.py": "a\n",
+     "x.py": "a\n",
+     ".env": "A=1\n",
+     "env": "B=1\n"
+    },
+    "head": {
+     "x.py": "b\n",
+     ".env": "A=2\n",
+     "env": "B=2\n"
+    }
+   },
+   "reviewer_truth": {
+    "files_changed_count\u001f3 files changed.\u001f0": "F"
+   }
+  },
+  {
+   "id": "B121-difflib-github-twins-empty",
+   "summary": "2 files changed.",
+   "diff": "--- a/.github/ci.yml\n+++ b/.github/ci.yml\n@@ -1 +1 @@\n-a: 1\n+a: 2\n--- a/github/ci.yml\n+++ b/github/ci.yml\n@@ -1 +1 @@\n-a: 1\n+a: 2\n",
+   "git": false,
+   "name_status": null,
+   "model": {
+    "base": {
+     ".github/ci.yml": "a: 1\n",
+     "github/ci.yml": "a: 1\n"
+    },
+    "head": {
+     ".github/ci.yml": "a: 2\n",
+     "github/ci.yml": "a: 2\n",
+     "src/__init__.py": ""
+    }
+   },
+   "reviewer_truth": {
+    "files_changed_count\u001f2 files changed.\u001f0": "F"
+   }
+  },
+  {
+   "id": "B121-control",
+   "summary": "3 files changed.",
+   "diff": "--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\n--- a/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n",
+   "git": false,
+   "name_status": null,
+   "model": {
+    "base": {
+     ".env": "A=1\n",
+     "env": "B=1\n",
+     "x.py": "a\n"
+    },
+    "head": {
+     ".env": "A=2\n",
+     "env": "B=2\n",
+     "x.py": "b\n"
+    }
+   },
+   "reviewer_truth": {
+    "files_changed_count\u001f3 files changed.\u001f0": "T"
+   }
+  },
+  {
+   "id": "A97-trailing-space-created",
+   "summary": "Created x.py.",
+   "diff": "diff --git a/lib/x.py b/lib/x.py\nindex d00491f..0cfbf08 100644\n--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/x.py  b/x.py \nnew file mode 100644\nindex 0000000..3e75765\n--- /dev/null\n+++ b/x.py \t\n@@ -0,0 +1 @@\n+new\n",
+   "git": true,
+   "name_status": "M\tlib/x.py\nA\tx.py \n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "x.py ": "new\n"
+    }
+   },
+   "reviewer_truth": {
+    "file_created\u001fCreated x.py.\u001f0": "F"
+   }
+  },
+  {
+   "id": "A97-trailing-space-deleted",
+   "summary": "Deleted util.py.",
+   "diff": "diff --git a/a/util.py b/a/util.py\nindex d00491f..0cfbf08 100644\n--- a/a/util.py\n+++ b/a/util.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/util.py  b/util.py \ndeleted file mode 100644\nindex 3367afd..0000000\n--- a/util.py \t\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "git": true,
+   "name_status": "M\ta/util.py\nD\tutil.py \n",
+   "model": {
+    "base": {
+     "a/util.py": "1\n",
+     "util.py ": "old\n"
+    },
+    "head": {
+     "a/util.py": "2\n"
+    }
+   },
+   "reviewer_truth": {
+    "file_deleted\u001fDeleted util.py.\u001f0": "F"
+   }
+  },
+  {
+   "id": "C121-difflib-trailing-space-count",
+   "summary": "2 files changed.",
+   "diff": "--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-B=1\n+B=2\n--- a/.env \n+++ b/.env \n@@ -1 +1 @@\n-A=1\n+A=2\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-C=1\n+C=2\n",
+   "git": false,
+   "name_status": null,
+   "model": {
+    "base": {
+     ".env ": "A=1\n",
+     ".env": "B=1\n",
+     "env": "C=1\n"
+    },
+    "head": {
+     ".env ": "A=2\n",
+     ".env": "B=2\n",
+     "env": "C=2\n"
+    }
+   },
+   "reviewer_truth": {
+    "files_changed_count\u001f2 files changed.\u001f0": "F"
+   }
+  },
+  {
+   "id": "C121-git-trailing-space-count",
+   "summary": "2 files changed.",
+   "diff": "diff --git a/.env b/.env\nindex 48daf64..ac5d589 100644\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-B=1\n+B=2\ndiff --git a/.env  b/.env \nindex bd2c89c..f6a0610 100644\n--- a/.env \t\n+++ b/.env \t\n@@ -1 +1 @@\n-A=1\n+A=2\ndiff --git a/env b/env\nindex 7ebef33..51f3606 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-C=1\n+C=2\n",
+   "git": true,
+   "name_status": "M\t.env\nM\t.env \nM\tenv\n",
+   "model": {
+    "base": {
+     ".env ": "A=1\n",
+     ".env": "B=1\n",
+     "env": "C=1\n"
+    },
+    "head": {
+     ".env ": "A=2\n",
+     ".env": "B=2\n",
+     "env": "C=2\n"
+    }
+   },
+   "reviewer_truth": {
+    "files_changed_count\u001f2 files changed.\u001f0": "F"
+   }
+  },
+  {
+   "id": "C121-difflib-trailing-space-created",
+   "summary": "Created .env.",
+   "diff": "--- /dev/null\n+++ b/.env \n@@ -0,0 +1 @@\n+A=2\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-C=1\n+C=2\n",
+   "git": false,
+   "name_status": null,
+   "model": {
+    "base": {
+     "env": "C=1\n"
+    },
+    "head": {
+     ".env ": "A=2\n",
+     "env": "C=2\n"
+    }
+   },
+   "reviewer_truth": {}
+  },
+  {
+   "id": "C121-difflib-trailing-space-created-json",
+   "summary": "Created .env.json.",
+   "diff": "--- /dev/null\n+++ b/.env.json \n@@ -0,0 +1 @@\n+{}\n--- a/env.json\n+++ b/env.json\n@@ -1 +1 @@\n-{}\n+{\"a\": 1}\n",
+   "git": false,
+   "name_status": null,
+   "model": {
+    "base": {
+     "env.json": "{}\n"
+    },
+    "head": {
+     ".env.json ": "{}\n",
+     "env.json": "{\"a\": 1}\n"
+    }
+   },
+   "reviewer_truth": {
+    "file_created\u001fCreated .env.json.\u001f0": "F"
+   }
+  },
+  {
+   "id": "C121-git-trailing-space-created-json",
+   "summary": "Created .env.json.",
+   "diff": "diff --git a/.env.json  b/.env.json \nnew file mode 100644\nindex 0000000..0967ef4\n--- /dev/null\n+++ b/.env.json \t\n@@ -0,0 +1 @@\n+{}\ndiff --git a/env.json b/env.json\nindex 0967ef4..cb5b2f6 100644\n--- a/env.json\n+++ b/env.json\n@@ -1 +1 @@\n-{}\n+{\"a\": 1}\n",
+   "git": true,
+   "name_status": "A\t.env.json \nM\tenv.json\n",
+   "model": {
+    "base": {
+     "env.json": "{}\n"
+    },
+    "head": {
+     ".env.json ": "{}\n",
+     "env.json": "{\"a\": 1}\n"
+    }
+   },
+   "reviewer_truth": {
+    "file_created\u001fCreated .env.json.\u001f0": "F"
+   }
+  }
+ ]
+}

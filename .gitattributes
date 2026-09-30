@@ -140,3 +140,15 @@ papers/plates/CORRECTION_sand_neighbours_pass4_2026_09_15.sworn-receipt.json -te
 papers/plates/ERRATUM_sand_survey_user_agent_2026_09_15.md -text
 papers/plates/ERRATUM_sand_survey_user_agent_2026_09_15.sworn.json -text
 papers/plates/ERRATUM_sand_survey_user_agent_2026_09_15.sworn-receipt.json -text
+
+# The bookmarklet's assembled source is BYTE-PINNED: build_bookmarklet.py --check compares it with an
+# in-memory rebuild byte for byte, and the rebuild is LF on every platform. Unpinned, a Windows
+# checkout (core.autocrlf=true) holds it CRLF and --check fails on a correct tree
+# (NOTE_path2_fourth_pass_2026_09_25, B-1). The blob is LF; this stops a checkout from changing it.
+web/gate/bookmarklet_src.js -text
+
+# NOTE_path2_eleventh_pass_2026_09_28: main's reader, vendored unchanged as the guard's reference. Both files are
+# pinned by sha256 to origin/main's styxx/diffgate.py (9b620e00...) and web/gate/diffgate.js (06688702...), byte
+# for byte; the blobs are LF, and this stops a checkout (core.autocrlf=true) from changing them.
+styxx/_diffgate_ref.py -text
+web/gate/diffgate_ref.js -text

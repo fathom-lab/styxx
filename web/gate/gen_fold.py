@@ -1,0 +1,301 @@
+"""Generate the one case fold both diffgate ports compare two header paths with (NOTE_path2_tenth_pass_2026_09_27, K-2).
+
+    py -3.14 web/gate/gen_fold.py            # writes the FOLD block of styxx/_fold.py and of web/gate/diffgate.js
+    py -3.N  web/gate/gen_fold.py --check    # compares both blocks (and, under a 16.0.0 Python, regenerates them);
+                                             # checks the fold, outside the code points 16.0.0 does not assign,
+                                             # against this Python's own str.lower(); writes nothing
+
+WHY A TABLE. Y-1 (NOTE_path2_eighth_pass) abstains the file-list claims where two header paths that differ only in
+case are one key. It asked each runtime which paths those are, through the key's own lower-casing: `str.lower()` in
+the Python, `toLowerCase()` in the port. The runtimes read different Unicode versions -- 13.0.0 (Python 3.9, 3.10),
+14.0.0 (3.11), 15.0.0 (3.12), 15.1.0 (3.13), 16.0.0 (3.14, Node 24) -- and 67 code points lower-case differently
+among them: 40 that Unicode 14.0.0 assigned with a lowercase mapping (U+2C2F, U+A7C0, U+A7D0, U+A7D6, U+A7D8,
+U+10570 to U+10595) and 27 that 16.0.0 did (U+1C89, U+A7CB, U+A7CC, U+A7DA, U+A7DC, U+10D50 to U+10D65). A diff naming
+U+10D50 and U+10D70 was one key and a collision in the port and two keys and none in Python 3.12, and every
+file-list claim, the ones about unrelated ASCII files too, abstained in the port only (round 9, regressions lens,
+blocker 2). Both ports now ask this table instead, the same string byte for byte, and neither asks its runtime.
+
+WHAT IT HOLDS. For every code point whose lowercase mapping in Unicode 16.0.0 is not itself -- read as CPython 3.14's
+`chr(c).lower()`, the full mapping, so U+0130 folds to U+0069 U+0307 -- that mapping; and one merge no mapping
+gives: U+03C2 (final sigma) folds to U+03C3, because `str.lower()` and `toLowerCase()` both lower-case U+03A3 to
+U+03C2 or U+03C3 by its context. The fold of a string is the fold of each code point.
+
+WHY IT IS SOUND ON EVERY SUPPORTED RUNTIME. Y-1 must see every pair of paths a runtime's key merges: for any runtime
+R, R.lower(a) == R.lower(b) must give fold(a) == fold(b). It does when fold(R.lower(ch)) == fold(ch) for every code
+point ch (and Sigma's two lowercases fold alike), because fold works code point by code point. That holds for every
+runtime whose lowercase mapping of a code point is either the code point itself (not yet assigned, or caseless) or
+16.0.0's mapping -- Unicode assigns a lowercase mapping with the character and has not changed one between 13.0.0 and
+16.0.0: 15.0.0's 1,433 mappings are 16.0.0's (CPython 3.12 against 3.14, exact), and every mapping 16.0.0 holds that
+13.0.0 does not is a character Unicode's Age places after 13.0 (Perl 5.38's UCD, `\\p{Present_In=13.0}`; 14.0.0 adds
+none after 14.0 that 15.0.0 lacks). The test suite checks the property against the running Python's str.lower() and
+against node's toLowerCase() for every code point. A runtime on a newer Unicode may merge paths this fold does not;
+there Y-1 reads as main's reading does (main had no Y-1).
+
+A RUNTIME NEWER THAN THE TABLE (NOTE_path2_thirteenth_pass_2026_09_29, D). CI's Node on Unicode 17.0 lower-cases 28 code
+points 17.0 assigned (U+A7CE, U+A7D2, U+A7D4, U+16EA0 to U+16EB8) that the table does not know, so a pair of paths
+differing only in one of them was one key to that runtime and two folds here. The generated block therefore carries,
+beside the fold, the set of code points Unicode 16.0.0 ASSIGNS (general category other than Cn in CPython 3.14's
+unicodedata). A header path holding a code point outside it is a path-key doubt in both ports: the file list is not
+sure, and every file-list and path claim abstains. The fold then needs soundness only on paths of assigned code points,
+which holds wherever a runtime lower-cases each code point 16.0.0 assigns as 16.0.0 does; the test suite checks, on the
+runtime it runs on, that every code point whose lower-casing merges beyond the fold is outside the assigned set
+(`unsound(..., assigned=...)` here, and the port's `toLowerCase()` in tests/test_diffgate_path2.py).
+
+WHAT IS A PREMISE, NOT A CHECK (NOTE_path2_fourteenth_pass_2026_09_29, round 13, U13.6). The tests check that premise
+only on the runtimes they run on. In a browser the bookmarklet runs on the user's engine, and nothing checks it there:
+soundness there rests on Unicode's case-pair stability policy (two characters that form a case pair keep forming one,
+and two that do not never come to), under which a later Unicode may give an assigned letter a lowercase only among code
+points 16.0.0 does not assign -- which the doubt above covers. An engine that lower-cased an assigned code point beyond
+the fold otherwise could turn a #121 count licence false (round 13 simulated one); the port does not detect it at load
+time.
+
+THE ASSIGNED SET'S ENCODING. Entries separated by ",": `G:N`, a run of N assigned code points starting G code points
+after the previous run's end (the opening run's gap counted from U+0000); every number base 36.
+
+THE ENCODING. Entries separated by ",": `S:N:D:T` is N code points from S in steps of T, each folding to itself plus
+D; `S=A.B` is the code point S folding to the string of code points A, B. Every number is base 36 (D may open with
+"-"). The string is pure ASCII and needs no escaping in either language or in a `javascript:` link. Both blocks carry
+the version and the sha256 of the string's ASCII bytes.
+"""
+from __future__ import annotations
+
+import hashlib
+import re
+import sys
+import unicodedata
+from pathlib import Path
+
+PINNED = "16.0.0"
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent.parent
+PY_FILE = ROOT / "styxx" / "_fold.py"
+JS_FILE = HERE / "diffgate.js"
+BEGIN = "FOLD TABLE GENERATED by web/gate/gen_fold.py -- do not edit by hand"
+END = "END OF THE FOLD TABLE"
+WIDTH = 96
+EXTRA = {0x3C2: chr(0x3C3)}             # final sigma: both runtimes lower-case U+03A3 to U+03C2 or U+03C3 by context
+
+
+def b36(n: int) -> str:
+    if n < 0:
+        return "-" + b36(-n)
+    digits = "0123456789abcdefghijklmnopqrstuvwxyz"
+    out = digits[n % 36]
+    n //= 36
+    while n:
+        out = digits[n % 36] + out
+        n //= 36
+    return out
+
+
+def mapping() -> dict:
+    """{code point: its fold} under this Python, which must read the pinned version."""
+    if unicodedata.unidata_version != PINNED:
+        sys.exit(f"gen_fold: this Python reads Unicode {unicodedata.unidata_version}; the fold is pinned to {PINNED} "
+                 "(run it with py -3.14)")
+    out = {c: chr(c).lower() for c in range(0x110000) if not 0xD800 <= c <= 0xDFFF and chr(c).lower() != chr(c)}
+    out.update(EXTRA)
+    return out
+
+
+def assigned_runs() -> list:
+    """[(start, length)] of the code points this Python's Unicode (the pinned version) assigns: category other than Cn."""
+    if unicodedata.unidata_version != PINNED:
+        sys.exit(f"gen_fold: this Python reads Unicode {unicodedata.unidata_version}; the assigned set is pinned to "
+                 f"{PINNED} (run it with py -3.14)")
+    runs: list = []
+    start = None
+    for c in range(0x110000):
+        if unicodedata.category(chr(c)) != "Cn":
+            if start is None:
+                start = c
+        elif start is not None:
+            runs.append((start, c - start))
+            start = None
+    if start is not None:
+        runs.append((start, 0x110000 - start))
+    return runs
+
+
+def encode_assigned(runs: list) -> str:
+    out, prev = [], 0
+    for start, n in runs:
+        out.append(f"{b36(start - prev)}:{b36(n)}")
+        prev = start + n
+    return ",".join(out)
+
+
+def decode_assigned(table: str) -> list:
+    """[(start, end)] half-open runs of assigned code points."""
+    out, prev = [], 0
+    for entry in table.split(","):
+        g, n = (int(x, 36) for x in entry.split(":"))
+        start = prev + g
+        out.append((start, start + n))
+        prev = start + n
+    return out
+
+
+def assigned_set(table: str):
+    """A predicate on code points: whether one is in the decoded assigned set."""
+    import bisect
+    runs = decode_assigned(table)
+    starts = [a for a, _b in runs]
+
+    def is_assigned(c: int) -> bool:
+        i = bisect.bisect_right(starts, c) - 1
+        return i >= 0 and c < runs[i][1]
+    return is_assigned
+
+
+def encode(m: dict) -> str:
+    entries: list = []
+    run = None                                            # [start, count, delta, step]
+    for c in sorted(m):
+        t = m[c]
+        if len(t) != 1:
+            if run:
+                entries.append(run)
+                run = None
+            entries.append((c, t))
+            continue
+        d = ord(t) - c
+        if run and run[2] == d:
+            last = run[0] + (run[1] - 1) * run[3]
+            if run[1] == 1 and c - last in (1, 2):
+                run[3] = c - last
+                run[1] += 1
+                continue
+            if c - last == run[3]:
+                run[1] += 1
+                continue
+        if run:
+            entries.append(run)
+        run = [c, 1, d, 1]
+    if run:
+        entries.append(run)
+    return ",".join(f"{b36(e[0])}=" + ".".join(b36(ord(x)) for x in e[1]) if isinstance(e, tuple)
+                    else f"{b36(e[0])}:{b36(e[1])}:{b36(e[2])}:{b36(e[3])}" for e in entries)
+
+
+def decode(table: str) -> dict:
+    out: dict = {}
+    for entry in table.split(","):
+        if "=" in entry:
+            s, targets = entry.split("=")
+            out[int(s, 36)] = "".join(chr(int(x, 36)) for x in targets.split("."))
+        else:
+            s, n, d, t = (int(x, 36) for x in entry.split(":"))
+            for i in range(n):
+                out[s + i * t] = chr(s + i * t + d)
+    return out
+
+
+def sha(t: str) -> str:
+    return hashlib.sha256(t.encode("ascii")).hexdigest()
+
+
+def chunks(t: str) -> list:
+    return [t[i:i + WIDTH] for i in range(0, len(t), WIDTH)]
+
+
+def python_block(t: str, a: str) -> list:
+    return ([f"# {BEGIN}", f'UNICODE_VERSION = "{PINNED}"', f'FOLD_SHA256 = "{sha(t)}"', "FOLD = ("]
+            + [f'    "{c}"' for c in chunks(t)] + [")", f'ASSIGNED_SHA256 = "{sha(a)}"', "ASSIGNED = ("]
+            + [f'    "{c}"' for c in chunks(a)] + [")", f"# {END}"])
+
+
+def js_block(t: str, a: str) -> list:
+    body, rest = chunks(t), chunks(a)
+    return ([f"// {BEGIN}", f'const _FOLD_UNICODE_VERSION = "{PINNED}";', f'const _FOLD_SHA256 = "{sha(t)}";',
+             "const _FOLD_TABLE ="]
+            + [f'  "{c}"' + (";" if i == len(body) - 1 else " +") for i, c in enumerate(body)]
+            + [f'const _FOLD_ASSIGNED_SHA256 = "{sha(a)}";', "const _FOLD_ASSIGNED ="]
+            + [f'  "{c}"' + (";" if i == len(rest) - 1 else " +") for i, c in enumerate(rest)]
+            + [f"// {END}"])
+
+
+def splice(path: Path, block: list) -> tuple[str, str]:
+    """(the file as it is, the file with its FOLD block replaced), in the file's own line ending."""
+    raw = path.read_bytes().decode("utf-8")
+    nl = "\r\n" if "\r\n" in raw else "\n"
+    lines = raw.split(nl)
+    starts = [i for i, x in enumerate(lines) if x.rstrip().endswith(BEGIN)]
+    ends = [i for i, x in enumerate(lines) if x.rstrip().endswith(END)]
+    if len(starts) != 1 or len(ends) != 1 or ends[0] < starts[0]:
+        sys.exit(f"gen_fold: {path} needs exactly one FOLD block")
+    return raw, nl.join(lines[:starts[0]] + block + lines[ends[0] + 1:])
+
+
+def block_of(text: str) -> str:
+    """The FOLD block of a file's text, newlines normalised."""
+    m = re.search(r"[^\n]*" + re.escape(BEGIN) + r".*?" + re.escape(END), text.replace("\r\n", "\n"), re.S)
+    return m.group(0) if m else ""
+
+
+def table_in(block: str, which: str = "fold") -> str:
+    """The table string a block carries, its chunks joined: the fold, or (`which="assigned"`) the assigned set."""
+    lines = block.split("\n")
+    heads = ("FOLD = (", "const _FOLD_TABLE =") if which == "fold" else ("ASSIGNED = (", "const _FOLD_ASSIGNED =")
+    start = next((k for k, x in enumerate(lines) if x.strip() in heads), None)
+    out: list = []
+    for x in ([] if start is None else lines[start + 1:]):
+        m = re.match(r'\s*"([^"]*)"', x)
+        if not m:
+            break
+        out.append(m.group(1))
+    return "".join(out)
+
+
+def unsound(fold_map: dict, lower, assigned=None) -> list:
+    """Code points c with fold(lower(c)) != fold(c) under a runtime's `lower`, and whether Sigma's two lowercases fold
+    alike: empty when the fold sees every merge that runtime's key makes. NOTE_path2_thirteenth_pass (D): with
+    `assigned` (a predicate on code points, the table's assigned set), a code point outside it is left out -- a path
+    holding one is a path-key doubt in both ports, so the fold need not see a merge there."""
+    def fold(s: str) -> str:
+        return s.translate(fold_map)
+    bad = [c for c in range(0x110000) if not 0xD800 <= c <= 0xDFFF and (assigned is None or assigned(c))
+           and fold(lower(chr(c))) != fold(chr(c))]
+    sig, sm, fin = chr(0x3A3), chr(0x3C3), chr(0x3C2)
+    if (len({fold(x) for x in (sig, sm, fin)}) != 1
+            or any(fold(lower(x)) != fold(x) for x in ("A" + sig, "A" + sig + "A", sig + sig + " " + sig))):
+        bad.append(0x3A3)
+    return bad
+
+
+def main(argv: list) -> int:
+    check = "--check" in argv
+    blocks = {}
+    for path in (PY_FILE, JS_FILE):
+        blocks[path] = table_in(block_of(path.read_bytes().decode("utf-8")))
+    assigned_blocks = {path: table_in(block_of(path.read_bytes().decode("utf-8")), "assigned")
+                       for path in (PY_FILE, JS_FILE)}
+    ok = True
+    if unicodedata.unidata_version == PINNED or not check:
+        t, a = encode(mapping()), encode_assigned(assigned_runs())
+        for path, block in ((PY_FILE, python_block(t, a)), (JS_FILE, js_block(t, a))):
+            before, after = splice(path, block)
+            same = before == after
+            ok = ok and same
+            if check:
+                print(f"{path.relative_to(ROOT).as_posix():<24} {'matches' if same else 'DIFFERS'}")
+            elif not same:
+                path.write_bytes(after.encode("utf-8"))
+                print(f"{path.relative_to(ROOT).as_posix():<24} written")
+    else:
+        t, a = blocks[PY_FILE], assigned_blocks[PY_FILE]
+        same = blocks[PY_FILE] == blocks[JS_FILE] and bool(t) and a == assigned_blocks[JS_FILE] and bool(a)
+        ok = ok and same
+        print(f"the two FOLD blocks carry {'the same tables' if same else 'DIFFERENT tables'} "
+              f"(this Python reads {unicodedata.unidata_version}; regenerating needs {PINNED})")
+    bad = unsound(decode(t), str.lower, assigned_set(a))
+    ok = ok and not bad
+    print(f"Unicode {PINNED}: fold sha256 {sha(t)}, {len(t)} characters, {len(decode(t))} code points; assigned set "
+          f"sha256 {sha(a)}, {len(a)} characters, {sum(e - s for s, e in decode_assigned(a))} code points; against this "
+          f"Python's str.lower() (Unicode {unicodedata.unidata_version}), outside the unassigned code points: "
+          f"{'sound' if not bad else 'UNSOUND at ' + ' '.join(f'U+{c:04X}' for c in bad[:10])}")
+    return 0 if ok or not check else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

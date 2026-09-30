@@ -1,0 +1,424 @@
+{
+ "note": "NOTE_path2_fifteenth_pass_2026_09_29 (F): round 14's reproductions (R14.1 to R14.4) with their net models and git's --name-status for each; the diffs are the bytes the reviewers read",
+ "cases": [
+  {
+   "id": "R14.1-lf-@@-created-prefix",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib/x.py\n@@\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\n@@": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\n@@\"\n",
+   "note": "difflib; the LF splits the name and the tail passes the header shape"
+  },
+  {
+   "id": "R14.1-lf-@@-created-noprefix",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ lib/x.py\n@@\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\n@@": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\n@@\"\n",
+   "note": "difflib; the LF splits the name and the tail passes the header shape"
+  },
+  {
+   "id": "R14.1-lf-@@_-0,0_+1_@@-created-prefix",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib/x.py\n@@ -0,0 +1 @@\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\n@@ -0,0 +1 @@": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\n@@ -0,0 +1 @@\"\n",
+   "note": "difflib; the LF splits the name and the tail passes the header shape"
+  },
+  {
+   "id": "R14.1-lf-@@_-0,0_+1_@@-created-noprefix",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ lib/x.py\n@@ -0,0 +1 @@\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\n@@ -0,0 +1 @@": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\n@@ -0,0 +1 @@\"\n",
+   "note": "difflib; the LF splits the name and the tail passes the header shape"
+  },
+  {
+   "id": "R14.1-lf-@@x-created-prefix",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib/x.py\n@@x\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\n@@x": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\n@@x\"\n",
+   "note": "difflib; the LF splits the name and the tail passes the header shape"
+  },
+  {
+   "id": "R14.1-lf-@@x-created-noprefix",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ lib/x.py\n@@x\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\n@@x": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\n@@x\"\n",
+   "note": "difflib; the LF splits the name and the tail passes the header shape"
+  },
+  {
+   "id": "R14.1-lf-@@_notes-created-prefix",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib/x.py\n@@ notes\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\n@@ notes": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\n@@ notes\"\n",
+   "note": "difflib; the LF splits the name and the tail passes the header shape"
+  },
+  {
+   "id": "R14.1-lf-@@_notes-created-noprefix",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ lib/x.py\n@@ notes\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py\n@@ notes": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\t\"lib/x.py\\n@@ notes\"\n",
+   "note": "difflib; the LF splits the name and the tail passes the header shape"
+  },
+  {
+   "id": "R14.1-lf-@@-deleted-prefix",
+   "summary": "Deleted lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- a/lib/x.py\n@@\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n",
+     "lib/x.py\n@@": "old\n"
+    },
+    "head": {
+     "a/x.py": "2\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nD\t\"lib/x.py\\n@@\"\n",
+   "note": "difflib; a deletion abstained at 340ddfb6 (a control)"
+  },
+  {
+   "id": "R14.1-control-real",
+   "summary": "Created lib/x.py.",
+   "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib/x.py\n@@ -0,0 +1 @@\n+new\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "lib/x.py": "new\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\tlib/x.py\n",
+   "note": "difflib; a real creation"
+  },
+  {
+   "id": "R14.2-rename-away/log-format-empty",
+   "summary": "Created src/x.py.",
+   "diff": "diff --git a/lib/x.py b/lib/x.py\nindex d00491f..0cfbf08 100644\n--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/src/x.py b/src/y.py\nsimilarity index 100%\nrename from src/x.py\nrename to src/y.py\ndiff --git a/src/x.py b/src/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/src/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "src/y.py": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\tlib/x.py\nA\tsrc/y.py\n",
+   "note": "git log-format-empty over 2 commits"
+  },
+  {
+   "id": "R14.2-rename-away/log-M-format-empty",
+   "summary": "Created src/x.py.",
+   "diff": "diff --git a/lib/x.py b/lib/x.py\nindex d00491f..0cfbf08 100644\n--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/src/x.py b/src/y.py\nsimilarity index 100%\nrename from src/x.py\nrename to src/y.py\ndiff --git a/src/x.py b/src/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/src/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "src/y.py": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\tlib/x.py\nA\tsrc/y.py\n",
+   "note": "git log-M-format-empty over 2 commits"
+  },
+  {
+   "id": "R14.2-rename-away/log-format-empty-reverse",
+   "summary": "Created src/x.py.",
+   "diff": "diff --git a/src/x.py b/src/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/src/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\ndiff --git a/lib/x.py b/lib/x.py\nindex d00491f..0cfbf08 100644\n--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/src/x.py b/src/y.py\nsimilarity index 100%\nrename from src/x.py\nrename to src/y.py\n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "src/y.py": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\tlib/x.py\nA\tsrc/y.py\n",
+   "note": "git log-format-empty-reverse over 2 commits"
+  },
+  {
+   "id": "R14.2-rename-away/format-patch",
+   "summary": "Created src/x.py.",
+   "diff": "From f833484a65c351aa41a5c767c056401abec5be41 Mon Sep 17 00:00:00 2001\nFrom: t <t@t>\nDate: Tue, 14 Nov 2023 22:13:21 +0000\nSubject: [PATCH 1/2] c1\n\n---\n src/x.py | 12 ++++++++++++\n 1 file changed, 12 insertions(+)\n create mode 100644 src/x.py\n\ndiff --git a/src/x.py b/src/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/src/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\n-- \n2.52.0.windows.1\n\n\nFrom 461347c475df2371f5fd3863b2f2d667ed83eac0 Mon Sep 17 00:00:00 2001\nFrom: t <t@t>\nDate: Tue, 14 Nov 2023 22:13:22 +0000\nSubject: [PATCH 2/2] c2\n\n---\n lib/x.py           | 2 +-\n src/{x.py => y.py} | 0\n 2 files changed, 1 insertion(+), 1 deletion(-)\n rename src/{x.py => y.py} (100%)\n\ndiff --git a/lib/x.py b/lib/x.py\nindex d00491f..0cfbf08 100644\n--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/src/x.py b/src/y.py\nsimilarity index 100%\nrename from src/x.py\nrename to src/y.py\n-- \n2.52.0.windows.1\n\n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "src/y.py": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\tlib/x.py\nA\tsrc/y.py\n",
+   "note": "git format-patch over 2 commits"
+  },
+  {
+   "id": "R14.2-rename-away/log-no-renames-format-empty",
+   "summary": "Created src/x.py.",
+   "diff": "diff --git a/lib/x.py b/lib/x.py\nindex d00491f..0cfbf08 100644\n--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/src/x.py b/src/x.py\ndeleted file mode 100644\nindex 677b772..0000000\n--- a/src/x.py\n+++ /dev/null\n@@ -1,12 +0,0 @@\n-line 0\n-line 1\n-line 2\n-line 3\n-line 4\n-line 5\n-line 6\n-line 7\n-line 8\n-line 9\n-line 10\n-line 11\ndiff --git a/src/y.py b/src/y.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/src/y.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\ndiff --git a/src/x.py b/src/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/src/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "src/y.py": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\tlib/x.py\nA\tsrc/y.py\n",
+   "note": "git log-no-renames-format-empty over 2 commits"
+  },
+  {
+   "id": "R14.2-rename-away-2/log-format-empty",
+   "summary": "Created src/x.py.",
+   "diff": "diff --git a/src/x.py b/src/y.py\nsimilarity index 100%\nrename from src/x.py\nrename to src/y.py\ndiff --git a/lib/x.py b/lib/x.py\nindex d00491f..0cfbf08 100644\n--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/src/x.py b/src/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/src/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "src/y.py": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\tlib/x.py\nA\tsrc/y.py\n",
+   "note": "git log-format-empty over 2 commits"
+  },
+  {
+   "id": "R14.2-rename-away-2/log-format-empty-reverse",
+   "summary": "Created src/x.py.",
+   "diff": "diff --git a/lib/x.py b/lib/x.py\nindex d00491f..0cfbf08 100644\n--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/src/x.py b/src/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/src/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\ndiff --git a/src/x.py b/src/y.py\nsimilarity index 100%\nrename from src/x.py\nrename to src/y.py\n",
+   "model": {
+    "base": {
+     "lib/x.py": "1\n"
+    },
+    "head": {
+     "lib/x.py": "2\n",
+     "src/y.py": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\tlib/x.py\nA\tsrc/y.py\n",
+   "note": "git log-format-empty-reverse over 2 commits"
+  },
+  {
+   "id": "R14.2-suffix/log-format-empty",
+   "summary": "Created lib/x.py.",
+   "diff": "diff --git a/pkg/lib/x.py b/pkg/lib/y.py\nsimilarity index 100%\nrename from pkg/lib/x.py\nrename to pkg/lib/y.py\ndiff --git a/a/x.py b/a/x.py\nindex d00491f..0cfbf08 100644\n--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/pkg/lib/x.py b/pkg/lib/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/pkg/lib/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "pkg/lib/y.py": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\tpkg/lib/y.py\n",
+   "note": "git log-format-empty over 2 commits"
+  },
+  {
+   "id": "R14.2-suffix/log-M-format-empty",
+   "summary": "Created lib/x.py.",
+   "diff": "diff --git a/pkg/lib/x.py b/pkg/lib/y.py\nsimilarity index 100%\nrename from pkg/lib/x.py\nrename to pkg/lib/y.py\ndiff --git a/a/x.py b/a/x.py\nindex d00491f..0cfbf08 100644\n--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/pkg/lib/x.py b/pkg/lib/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/pkg/lib/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "pkg/lib/y.py": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\tpkg/lib/y.py\n",
+   "note": "git log-M-format-empty over 2 commits"
+  },
+  {
+   "id": "R14.2-suffix/log-format-empty-reverse",
+   "summary": "Created lib/x.py.",
+   "diff": "diff --git a/a/x.py b/a/x.py\nindex d00491f..0cfbf08 100644\n--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/pkg/lib/x.py b/pkg/lib/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/pkg/lib/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\ndiff --git a/pkg/lib/x.py b/pkg/lib/y.py\nsimilarity index 100%\nrename from pkg/lib/x.py\nrename to pkg/lib/y.py\n",
+   "model": {
+    "base": {
+     "a/x.py": "1\n"
+    },
+    "head": {
+     "a/x.py": "2\n",
+     "pkg/lib/y.py": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\ta/x.py\nA\tpkg/lib/y.py\n",
+   "note": "git log-format-empty-reverse over 2 commits"
+  },
+  {
+   "id": "R14.3-dotted-rename-away/log-format-empty",
+   "summary": "Created cfg/x.json.",
+   "diff": "diff --git a/cfg/x.json b/cfg/z.json\nsimilarity index 100%\nrename from cfg/x.json\nrename to cfg/z.json\ndiff --git a/cfg/x.json b/cfg/x.json\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/cfg/x.json\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\ndiff --git a/.cfg/x.json b/.cfg/x.json\nindex 7898192..6178079 100644\n--- a/.cfg/x.json\n+++ b/.cfg/x.json\n@@ -1 +1 @@\n-a\n+b\n",
+   "model": {
+    "base": {
+     ".cfg/x.json": "a\n"
+    },
+    "head": {
+     ".cfg/x.json": "b\n",
+     "cfg/z.json": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\t.cfg/x.json\nA\tcfg/z.json\n",
+   "note": "git log-format-empty over 3 commits"
+  },
+  {
+   "id": "R14.3-dotted-rename-away/log-M-format-empty",
+   "summary": "Created cfg/x.json.",
+   "diff": "diff --git a/cfg/x.json b/cfg/z.json\nsimilarity index 100%\nrename from cfg/x.json\nrename to cfg/z.json\ndiff --git a/cfg/x.json b/cfg/x.json\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/cfg/x.json\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\ndiff --git a/.cfg/x.json b/.cfg/x.json\nindex 7898192..6178079 100644\n--- a/.cfg/x.json\n+++ b/.cfg/x.json\n@@ -1 +1 @@\n-a\n+b\n",
+   "model": {
+    "base": {
+     ".cfg/x.json": "a\n"
+    },
+    "head": {
+     ".cfg/x.json": "b\n",
+     "cfg/z.json": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\t.cfg/x.json\nA\tcfg/z.json\n",
+   "note": "git log-M-format-empty over 3 commits"
+  },
+  {
+   "id": "R14.3-dotted-rename-away/format-patch",
+   "summary": "Created cfg/x.json.",
+   "diff": "From e67e06de1b3f3b3ec5fe0abc8b554afbfe4ed1d7 Mon Sep 17 00:00:00 2001\nFrom: t <t@t>\nDate: Tue, 14 Nov 2023 22:13:21 +0000\nSubject: [PATCH 1/3] c1\n\n---\n .cfg/x.json | 2 +-\n 1 file changed, 1 insertion(+), 1 deletion(-)\n\ndiff --git a/.cfg/x.json b/.cfg/x.json\nindex 7898192..6178079 100644\n--- a/.cfg/x.json\n+++ b/.cfg/x.json\n@@ -1 +1 @@\n-a\n+b\n-- \n2.52.0.windows.1\n\n\nFrom 27cd1a8cb96b954b84a0518dc7fc4a55d167de59 Mon Sep 17 00:00:00 2001\nFrom: t <t@t>\nDate: Tue, 14 Nov 2023 22:13:22 +0000\nSubject: [PATCH 2/3] c2\n\n---\n cfg/x.json | 12 ++++++++++++\n 1 file changed, 12 insertions(+)\n create mode 100644 cfg/x.json\n\ndiff --git a/cfg/x.json b/cfg/x.json\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/cfg/x.json\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\n-- \n2.52.0.windows.1\n\n\nFrom 52c8e0a5741e362e23a81fa000e008a76b561777 Mon Sep 17 00:00:00 2001\nFrom: t <t@t>\nDate: Tue, 14 Nov 2023 22:13:23 +0000\nSubject: [PATCH 3/3] c3\n\n---\n cfg/{x.json => z.json} | 0\n 1 file changed, 0 insertions(+), 0 deletions(-)\n rename cfg/{x.json => z.json} (100%)\n\ndiff --git a/cfg/x.json b/cfg/z.json\nsimilarity index 100%\nrename from cfg/x.json\nrename to cfg/z.json\n-- \n2.52.0.windows.1\n\n",
+   "model": {
+    "base": {
+     ".cfg/x.json": "a\n"
+    },
+    "head": {
+     ".cfg/x.json": "b\n",
+     "cfg/z.json": "line 0\nline 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7\nline 8\nline 9\nline 10\nline 11\n"
+    }
+   },
+   "name_status": "M\t.cfg/x.json\nA\tcfg/z.json\n",
+   "note": "git format-patch over 3 commits"
+  },
+  {
+   "id": "R14.4-prefix-dotdot",
+   "summary": "Only touched cfg/. Updated cfg/x.json.",
+   "diff": "diff --git a/..cfg/x.json b/..cfg/x.json\nindex 7898192..6178079 100644\n--- a/..cfg/x.json\n+++ b/..cfg/x.json\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/..cfg/y.json b/..cfg/y.json\nindex 7898192..6178079 100644\n--- a/..cfg/y.json\n+++ b/..cfg/y.json\n@@ -1 +1 @@\n-a\n+b\n",
+   "model": {
+    "base": {
+     "cfg/x.json": "a\n",
+     "cfg/y.json": "a\n"
+    },
+    "head": {
+     "cfg/x.json": "b\n",
+     "cfg/y.json": "b\n"
+    }
+   },
+   "name_status": "M\tcfg/x.json\nM\tcfg/y.json\n",
+   "note": "git diff --src-prefix=a/.. --dst-prefix=b/.."
+  },
+  {
+   "id": "R14.4-prefix-dot",
+   "summary": "Only touched cfg/. Updated cfg/x.json.",
+   "diff": "diff --git a/.cfg/x.json b/.cfg/x.json\nindex 7898192..6178079 100644\n--- a/.cfg/x.json\n+++ b/.cfg/x.json\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/.cfg/y.json b/.cfg/y.json\nindex 7898192..6178079 100644\n--- a/.cfg/y.json\n+++ b/.cfg/y.json\n@@ -1 +1 @@\n-a\n+b\n",
+   "model": {
+    "base": {
+     "cfg/x.json": "a\n",
+     "cfg/y.json": "a\n"
+    },
+    "head": {
+     "cfg/x.json": "b\n",
+     "cfg/y.json": "b\n"
+    }
+   },
+   "name_status": "M\tcfg/x.json\nM\tcfg/y.json\n",
+   "note": "git diff --src-prefix=a/. --dst-prefix=b/."
+  },
+  {
+   "id": "R14.4-prefix-default",
+   "summary": "Only touched cfg/. Updated cfg/x.json.",
+   "diff": "diff --git a/cfg/x.json b/cfg/x.json\nindex 7898192..6178079 100644\n--- a/cfg/x.json\n+++ b/cfg/x.json\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/cfg/y.json b/cfg/y.json\nindex 7898192..6178079 100644\n--- a/cfg/y.json\n+++ b/cfg/y.json\n@@ -1 +1 @@\n-a\n+b\n",
+   "model": {
+    "base": {
+     "cfg/x.json": "a\n",
+     "cfg/y.json": "a\n"
+    },
+    "head": {
+     "cfg/x.json": "b\n",
+     "cfg/y.json": "b\n"
+    }
+   },
+   "name_status": "M\tcfg/x.json\nM\tcfg/y.json\n",
+   "note": "git diff --src-prefix=a/ --dst-prefix=b/"
+  }
+ ]
+}

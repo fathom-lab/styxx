@@ -1314,12 +1314,21 @@ def test_evidence_is_deterministic_over_the_same_bytes(ev):
 def test_the_evidence_leg_runs_once_per_gate_not_once_per_match(ev):
     """Same repair as the --run leg, and the same reason: every `tests_pass`
     match in one summary asks the same question about the same suite. Counted
-    by intercepting the loader rather than by reading the code."""
-    calls = {"n": 0}
+    by intercepting the loader rather than by reading the code.
+
+    NOTE_path2_eleventh_pass: the guard also runs main's reader, unchanged, as its
+    reference, and runs it without the evidence (the tests_pass verdict is the one
+    leg every evaluation shares). Main's reader consults the adjudicator even when
+    no path is supplied, so the loader is also called once with NO paths: that call
+    reads no report. What is counted is a read of the evidence named."""
+    calls = {"n": 0, "empty": 0}
     real = E.load_evidence
 
     def counting(paths):
-        calls["n"] += 1
+        if list(paths or []):
+            calls["n"] += 1
+        else:
+            calls["empty"] += 1
         return real(paths)
 
     D_ev = D.styxx.evidence if hasattr(D, "styxx") else E
@@ -1331,6 +1340,7 @@ def test_the_evidence_leg_runs_once_per_gate_not_once_per_match(ev):
         E.load_evidence = real
     assert D_ev is E
     assert calls["n"] <= 1, f"{calls['n']} evidence reads for one gate invocation"
+    assert calls["empty"] <= 1, f"{calls['empty']} empty loader calls for one gate invocation"
 
 
 @owed_wiring
