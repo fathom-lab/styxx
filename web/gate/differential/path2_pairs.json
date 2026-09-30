@@ -4678,7 +4678,8 @@
     ]
    ],
    "uncovered_sentences": 0
-  }
+  },
+  "repinned": "NOTE_path2_fourteenth_pass (round 13, C13.1): held to kind and verdict; its only_touches reason printed the runtime's key of 'docs/xⰯ.md', and U+2C2F and U+2C5F, assigned in Unicode 14.0, are neither lower-cased nor printed unescaped by Python 3.9 and 3.10 (Unicode 13.0); the verdicts read alike on every supported Python"
  },
  {
   "id": "path2:k3-a-deletion-after-an-exact-hunk-main-read-a-dashes-line-from",

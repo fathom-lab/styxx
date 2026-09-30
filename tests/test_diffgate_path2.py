@@ -1917,9 +1917,12 @@ def test_v3_the_scorer_admits_every_move_on_the_pinned_pairs_and_counts_what_g_c
     # entry where main read an earlier basename twin -- typechanged, mode-changed or retargeted paths -- and twenty-four
     # more credited to #97 and Z-4 jointly that the guard abstains on, a key two sections register or a whitespace name
     # as written)
+    # (NOTE_path2_fourteenth_pass: two more UNCHECKABLE -> VERIFIED, git's own TAB after a name holding a space and a CRLF
+    # text throughout, where #97's licence stands; and twenty-one more credited to #97 and Z-4 jointly that the guard
+    # abstains on, round 13's records: a name's own CR, TAB or backslash, a form keeping a TAB, a claim holding a backslash)
     assert {k: v for k, v in ninth.items() if not k.endswith("-> UNCHECKABLE")} == {
-        "Z-4 file_created: UNCHECKABLE -> VERIFIED": 6, "Z-4 file_touched: VERIFIED -> VERIFIED": 7}
-    assert t.attribution["attributed_by"]["#97+Z-4"] == 37 and sum(ninth.values()) > 37
+        "Z-4 file_created: UNCHECKABLE -> VERIFIED": 8, "Z-4 file_touched: VERIFIED -> VERIFIED": 7}
+    assert t.attribution["attributed_by"]["#97+Z-4"] == 58 and sum(ninth.values()) > 58
 
 
 def test_v3_raw_paths_reads_a_header_only_outside_a_hunk(scorer):
@@ -2451,15 +2454,18 @@ def test_x7_the_scorer_reads_names_by_the_same_table_with_its_own_decoder(scorer
 def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     pairs = json.loads(PAIRS.read_text(encoding="utf-8"))
     # (NOTE_path2_thirteenth_pass adds thirty-six: round 12's thirty-four reproductions, `path2:m-r12-*`, and section D's
-    # two, `path2:m-13-*`; it re-pins none)
-    assert len(pairs) == 335 and all(p["id"].startswith("path2:") for p in pairs)
+    # two, `path2:m-13-*`; it re-pins none. NOTE_path2_fourteenth_pass adds twenty-four, `path2:m-r13-*`: round 13's
+    # eighteen reproductions, G13.2's mixed licence, a claim holding a backslash, a form keeping a TAB, git's own TAB and a
+    # CRLF text throughout, both still licensed, and a Z-5 reason on an unassigned code point; it re-pins one, C13.1)
+    assert len(pairs) == 359 and all(p["id"].startswith("path2:") for p in pairs)
     # NOTE_path2_fifth_pass V-1 re-pinned four pairs and NOTE_path2_sixth_pass W-1 one; NOTE_path2_eighth_pass
     # twenty-four (Y-5 thirteen: the pairing withdraws; Y-2 four; Y-1 four; Y-3 three), each to UNCHECKABLE;
     # NOTE_path2_ninth_pass thirty-six (Z-2 sixteen, Z-1 twelve, Z-3 seven, Z-4 one), each to UNCHECKABLE;
     # NOTE_path2_tenth_pass nine (K-1: six to UNCHECKABLE, three reason-only); NOTE_path2_eleventh_pass two (the guard
     # abstaining where F-2 alone parts from main; K-5 at the sentence leaving a path both ports read alike to Z-4), each
     # to UNCHECKABLE; NOTE_path2_twelfth_pass five (#121 licensing nothing in a plain rendering), each to UNCHECKABLE;
-    # each record says so
+    # NOTE_path2_fourteenth_pass one (round 13, C13.1: the U+2C2F pair held to kind and verdict, its reason printing a
+    # runtime's key Python 3.9 and 3.10 read otherwise); each record says so
     assert sorted(p["id"] for p in pairs if "repinned" in p) == [
         "path2:101-a-bom-strip-changes-a-test",
         "path2:101-a-changed-test-and-a-same-named-new-one",
@@ -2484,6 +2490,7 @@ def test_the_pinned_pairs_read_as_expected_on_the_python_side():
         "path2:f2-limit-hit-reads-a-line-separator-as-indent",
         "path2:f3-an-ideographic-space-reindent-is-not-an-added-test",
         "path2:f3-an-nbsp-reindent-is-not-an-added-test",
+        "path2:k2-paths-that-fold-apart-read-as-before",
         "path2:k5-a-path-the-sentence-runs-into-from-a-non-ascii-character-reads-as-main-read-it",
         "path2:r1-a-bom-on-a-changed-test-beside-two-new-ones",
         "path2:r1-a-bom-on-a-changed-test-does-not-hide-a-new-one",
@@ -2538,6 +2545,7 @@ def test_the_pinned_pairs_read_as_expected_on_the_python_side():
     assert sum("NOTE_path2_ninth_pass" in p.get("repinned", "") for p in pairs) == 36
     assert sum("NOTE_path2_tenth_pass" in p.get("repinned", "") for p in pairs) == 9
     assert sum("NOTE_path2_eleventh_pass" in p.get("repinned", "") for p in pairs) == 2
+    assert sum("NOTE_path2_fourteenth_pass" in p.get("repinned", "") for p in pairs) == 1
     for p in pairs:
         g = gate_diff_text(p["summary"], p["diff"], run=None, strict=False)
         with_why = bool(p["expect"]["claims"]) and len(p["expect"]["claims"][0]) == 3
@@ -2547,7 +2555,8 @@ def test_the_pinned_pairs_read_as_expected_on_the_python_side():
         assert g.uncovered_sentences == p["expect"]["uncovered_sentences"], p["id"]
     # NOTE_path2_third_pass: no pair needs a `python_only` escape any more. The `.storybook` pair
     # needed one while the port lacked COMPAT-2; the port carries it since #126, so every pair is
-    # pinned at full width, holding the port to the reason as well as to the verdict.
+    # pinned at full width, holding the port to the reason as well as to the verdict -- but one:
+    # NOTE_path2_fourteenth_pass (C13.1) holds the U+2C2F pair to kind and verdict, as it reads on every Python.
     assert not any("python_only" in p["expect"] for p in pairs)
 
 
