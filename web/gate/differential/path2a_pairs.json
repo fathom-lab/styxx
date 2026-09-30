@@ -430,6 +430,22 @@
   }
  },
  {
+  "id": "path2a:121-dot-kept-reader-alone-abstains",
+  "summary": "Created .pr_agent.toml.",
+  "diff": "diff --git a/docs/.pr_agent.toml b/docs/.pr_agent.toml\ndeleted file mode 100644\n--- a/docs/.pr_agent.toml\n+++ /dev/null\n@@ -1 +0,0 @@\n-x\ndiff --git a/.pr_agent.toml b/.pr_agent.toml\nnew file mode 100644\n--- /dev/null\n+++ b/.pr_agent.toml\n@@ -0,0 +1 @@\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#121): with leading dots kept, the changed path the claim resolves to reads otherwise. main's reading: diff status 'A' for 'pr_agent.toml'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
   "id": "path2a:101-prereg",
   "summary": "Adds function backoff with jitter. Added 2 tests.",
   "diff": "diff --git a/src/retry.py b/src/retry.py\n--- a/src/retry.py\n+++ b/src/retry.py\n@@ -1,1 +1,1 @@\n-def backoff(n):\n+def backoff(n, jitter=0):\ndiff --git a/tests/test_retry.py b/tests/test_retry.py\n--- a/tests/test_retry.py\n+++ b/tests/test_retry.py\n@@ -1,2 +1,2 @@\n-def test_a():\n-def test_b():\n+def test_a():  # c\n+def test_b():  # c\n",
@@ -550,6 +566,22 @@
   "id": "path2a:101-name-ends-early",
   "summary": "Added 1 test.",
   "diff": "diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,1 +1,1 @@\n-def test_a・():\n+def test_a():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): a test the added lines count is also defined in the removed lines, and a changed test is not an added one. main's reading: diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:101-removed-def-only-in-python-lines",
+  "summary": "Added 1 test.",
+  "diff": "diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1,2 +1,2 @@\n x\u000b-def test_a():\n+def test_a(x):\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
@@ -714,14 +746,35 @@
  {
   "id": "path2a:guard-case-outside-ascii",
   "summary": "Created x.md.",
-  "diff": "diff --git a/é/x.md b/é/x.md\ndeleted file mode 100644\n--- a/é/x.md\n+++ /dev/null\n@@ -1 +0,0 @@\n-x\ndiff --git a/É/x.md b/É/x.md\nnew file mode 100644\n--- /dev/null\n+++ b/É/x.md\n@@ -0,0 +1 @@\n+x\n",
+  "diff": "diff --git a/docs/x.md b/docs/x.md\nnew file mode 100644\n--- /dev/null\n+++ b/docs/x.md\n@@ -0,0 +1 @@\n+x\ndiff --git a/é/x.md b/é/x.md\ndeleted file mode 100644\n--- a/é/x.md\n+++ /dev/null\n@@ -1 +0,0 @@\n-x\ndiff --git a/É/x.md b/É/x.md\nnew file mode 100644\n--- /dev/null\n+++ b/É/x.md\n@@ -0,0 +1 @@\n+x\n",
   "expect": {
    "verdict": "PASS",
    "claims": [
     [
      "file_created",
      "UNCHECKABLE",
-     "VERIFIED withheld by PATH-2a (#97, #121): a path here compares only where case outside ASCII is folded, which this overlay does not do. main's reading: diff status 'A' for 'é/x.md'"
+     "VERIFIED withheld by PATH-2a (#97, #121): a path here compares only where case outside ASCII is folded, which this overlay does not do. main's reading: diff status 'A' for 'docs/x.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:guard-divergent-header-elsewhere",
+  "summary": "Modified src/a.py. 2 files changed.",
+  "diff": "diff --git a/src/a.py b/src/a.py\n--- a/src/a.py\n+++ b/src/a.py\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/b.py b/b.py\n--- a/b.py\n+++ b/b.py\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#97, #121): a file header of this diff holds a character that the Python and JavaScript readers split or strip differently. main's reading: diff status 'M' for 'src/a.py'"
+    ],
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#121): a file header of this diff holds a character that the Python and JavaScript readers split or strip differently. main's reading: diff changes 2 files, claim says 2"
     ]
    ],
    "uncovered_sentences": 0
