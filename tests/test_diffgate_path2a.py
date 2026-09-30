@@ -91,6 +91,21 @@ def test_the_hooks_are_the_only_edits_at_the_doors():
                      "    return _p2a_abstain(g, strict, lambda: _P2aFacts(diff_text, name_status))  # PATH-2a"]
 
 
+def test_main_reconstructed_matches_every_pinned_expect_of_main(M):
+    """The pinned files of main are main's records: the reconstruction reads them exactly, moves not applied."""
+    n = 0
+    for name in R.pinned_files():
+        if name == "path2a_pairs.json":
+            continue
+        for p in json.loads((R.DIFFERENTIAL / name).read_text(encoding="utf-8")):
+            g = M.gate_diff_text(p["summary"], p["diff"])
+            width = len(p["expect"]["claims"][0]) if p["expect"]["claims"] else 3
+            assert [[c.kind, c.verdict, c.why][:width] for c in g.claims] == p["expect"]["claims"], p["id"]
+            assert (g.verdict, g.uncovered_sentences) == (p["expect"]["verdict"], p["expect"]["uncovered_sentences"])
+            n += 1
+    assert n == 54
+
+
 # ---- (A) the abstain-only relation ------------------------------------------------------------------------------------
 
 # Abstentions by (kind, phrase key) over every committed input, strict off. Pinned after review: every figure here
@@ -217,6 +232,14 @@ def test_git_door(M, tmp_path):
             a = M.gate_diff(summary, repo, "HEAD~1", "HEAD", strict=strict).to_dict()
             b = N.gate_diff(summary, repo, "HEAD~1", "HEAD", strict=strict).to_dict()
             assert R.relation(a, b, strict, PHRASES) == [], name
+        # the lockstep at the git door: the overlay's builder over --name-status is main's four-line loop
+        name_status = N._git(repo, "diff", "--name-status", "HEAD~1..HEAD")
+        want = {}
+        for line in name_status.splitlines():
+            parts = line.split("\t")
+            if len(parts) >= 2:
+                want[M._norm(parts[-1])] = parts[0][:1]
+        assert list(N._p2a_build(N._p2a_regs_git(name_status), N._norm).items()) == list(want.items()), name
         # G-P3's analogue: where main's two doors agree on the claims, the overlay decides alike at both
         text = N._git(repo, "diff", "HEAD~1..HEAD")
         rows = lambda g: [(c.kind, c.verdict, c.why) for c in g.claims]  # noqa: E731
