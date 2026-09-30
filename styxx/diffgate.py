@@ -1473,6 +1473,7 @@ _P2A_HEADERS = ("diff --git ", "--- ", "+++ ", "rename from ", "rename to ", "ne
                 "deleted file mode", "Binary files ")
 _P2A_FINE = re.compile("\r\n|[" + _P2A_PY_BREAKS + "]")
 _P2A_COARSE = re.compile("\r\n|\r|\n")
+_P2A_CR = re.compile("\r")
 _P2A_FINE_ONLY = re.compile("[\x0b\x0c\x1c\x1d\x1e\x85\u2028\u2029]")     # where the two splits above can part
 _P2A_COUNT_HEAD = re.compile("diff changes ([0-9]+) files, claim says ")
 _P2A_TESTS_HEAD = re.compile("diff adds ([0-9]+) test functions, claim says ")
@@ -1894,9 +1895,14 @@ def _p2a_pairing(views: list, alike: bool = False, extra: list = ()) -> list:
             for j, r in _p2a_sites(line, "def"):
                 e = _P2A_WORD_RUN.match(line, r).end()
                 if _p2a_wide_name(line, j, r, e):
-                    wild = True
-                elif line.startswith("test_", r):
+                    wild = True                   # every counted site pairs now: nothing more to read
+                    break
+                if line.startswith("test_", r):
                     rem.add(line[r:e])
+            if wild:
+                break
+        if wild:
+            break
     out = []
     for (added, _r), lead in zip(_p2a_distinct(views) if alike else views, _P2A_LEADS):
         got = paired = 0
@@ -1914,11 +1920,12 @@ def _p2a_distinct(views: list) -> list:
 
 def _p2a_joined(diff_text: str) -> list:
     """The removed text no line view reads as a line (NOTE_path2a_fifth_pass_2026_09_30, B-1), as more removed lines:
-    each piece after a CPython line break inside a git line (the diff split at '\\n') that starts with '-', which no
-    view reads as removed (CPython's tokenizer ends a line at a lone CR); and each run of the base side's pieces (the
-    pieces of git lines starting with '-' or ' ', in order, '+' and '\\' lines passed over, any other line ending the
-    run) joined where a piece ends in a backslash, which CPython reads as one line, each such backslash read as a
-    space, when a piece of the run is removed. Linear in the diff."""
+    each piece after a lone CR inside a git line (the diff split at '\\n') that starts with '-', which no view reads as
+    removed and CPython's tokenizer reads as a line of its own; and each run of the base side's pieces (the pieces of
+    git lines starting with '-' or ' ', in order, '+' and '\\' lines passed over, any other line ending the run) joined
+    where a piece ends in a backslash, which CPython reads as one line, each such backslash read as a space, when a
+    piece of the run is removed. The tokenizer ends a line at LF, CRLF and a lone CR only; at any other break
+    `str.splitlines` knows, the line does not parse, and the line views read those already. Linear in the diff."""
     out = []
     acc: list = []
     hit = False
@@ -1936,7 +1943,7 @@ def _p2a_joined(diff_text: str) -> list:
             acc = []
             hit = False
             continue
-        pieces = _p2a_lines(line[1:], _P2A_FINE)
+        pieces = _p2a_lines(line[1:], _P2A_CR) if "\r" in line else [line[1:]] if len(line) > 1 else []
         if head == "-":
             for piece in pieces[1:]:
                 out.append(piece)
@@ -1989,7 +1996,6 @@ def _p2a_def_runs(views: list, extra: list = ()) -> tuple:
     where its ASCII run does, so it is defined by `_p2a_defines` exactly when it is in this set."""
     out: set = set()
     seen: set = set()
-    wild = False
     for removed in _p2a_removed(views, extra):
         for line in removed:
             if line in seen:
@@ -1997,9 +2003,10 @@ def _p2a_def_runs(views: list, extra: list = ()) -> tuple:
             seen.add(line)
             for j, r in _p2a_anchored(line):
                 e = _P2A_WORD_RUN.match(line, r).end()
-                wild = wild or _p2a_wide_name(line, j, r, e)
+                if _p2a_wide_name(line, j, r, e):
+                    return out, True              # every claimed name is defined now: nothing more to read
                 out.add(line[r:e])
-    return out, wild
+    return out, False
 
 
 def _p2a_defines(views: list, name: str, extra: list = ()) -> bool:

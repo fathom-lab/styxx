@@ -270,8 +270,11 @@ PY_PLANTS = [
      '    if False:\n        return "symbol", "#101"\n'),
     ("def separator restricted to space and tab", '_P2A_COARSE_RUN = re.compile("[\\x00-\\x20\\x7f-\\U0010ffff]*")',
      '_P2A_COARSE_RUN = re.compile("[ \\t]*")'),
-    ("names paired by their full run", "                e = _P2A_WORD_RUN.match(line, r).end()\n                if _p2a_wide_name",
-     "                e = _P2A_NAME_RUN.match(line, r).end()\n                if _p2a_wide_name"),
+    ("names paired by their full run",
+     "                e = _P2A_WORD_RUN.match(line, r).end()\n                if _p2a_wide_name(line, j, r, e):\n"
+     "                    wild = True",
+     "                e = _P2A_NAME_RUN.match(line, r).end()\n                if _p2a_wide_name(line, j, r, e):\n"
+     "                    wild = True"),
     ("the scope rule's V121 reading dropped", '    if got["K", False][2] != under:', "    if False:"),
     ("U2 dropped", '    return want is not None and f._get(("merged", space, b, want), lambda: any(',
      '    return False and f._get(("merged", space, b, want), lambda: any('),
@@ -319,7 +322,9 @@ PY_PLANTS = [
      '        return self._get("joined", lambda: [])'),
     ("test names read through NFKC paired by their ASCII run", "                if _p2a_wide_name(line, j, r, e):\n                    wild = True",
      "                if False:\n                    wild = True"),
-    ("symbol names read through NFKC ignored", "                wild = wild or _p2a_wide_name(line, j, r, e)\n", ""),
+    ("symbol names read through NFKC ignored",
+     "                if _p2a_wide_name(line, j, r, e):\n                    return out, True",
+     "                if False:\n                    return out, True"),
     ("a counted name read through NFKC paired by its ASCII run",
      "            out.append(None if _P2A_WIDE.match(line, e) else line[r + 4:e])",
      "            out.append(line[r + 4:e])"),
@@ -330,7 +335,10 @@ PY_PLANTS = [
     ("the case doubt's suffix fact dropped",
      '        if f.ends(space, "wild", cw)[1] != f.ends(space, "fold", cf)[1]:\n            return True',
      "        if False:\n            return True"),
-    ("continuations never joined", "            hit = hit or head == \"-\"\n",
+    ("pieces after a lone CR dropped",
+     '        pieces = _p2a_lines(line[1:], _P2A_CR) if "\\r" in line else [line[1:]] if len(line) > 1 else []',
+     "        pieces = [line[1:]] if len(line) > 1 else []"),
+    ("continuations never joined","            hit = hit or head == \"-\"\n",
      "            hit = hit or head == \"-\"\n            acc = acc[-1:]\n"),
 ]
 # Plants that cannot change a record, said so rather than hidden: none this pass. Pass 2's one (a clause that never
@@ -437,8 +445,10 @@ JS_PLANTS = [
     ("no count seam in the port", '    seam: () => get("seam", () => _p2aSeam(f.summary)),', "    seam: () => false,"),
     ("no removed lines beyond the views in the port", '    joined: () => get("joined", () => _p2aJoined(diffText)),',
      "    joined: () => [],"),
-    ("no NFKC pairing in the port", "        if (_p2aWideName(line, j, r, e)) wild = true;\n        else if", "        if"),
-    ("no NFKC symbols in the port", "        wild = wild || _p2aWideName(line, j, r, e);\n", ""),
+    ("no NFKC pairing in the port",
+     "        if (_p2aWideName(line, j, r, e)) { wild = true; break reading; }   // every counted site pairs now\n", ""),
+    ("no NFKC symbols in the port",
+     "        if (_p2aWideName(line, j, r, e)) return [out, true];   // every claimed name is defined now\n", ""),
 ]
 
 

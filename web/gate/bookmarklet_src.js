@@ -680,7 +680,7 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 //
 // NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30,
 // NOTE_path2a_fourth_pass_2026_09_30 and NOTE_path2a_fifth_pass_2026_09_30.
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 2eaf277f71ef4580c37a9cfce0a7cf667ed26520568469d51e62500a2615f678, LF). Everything outside this block is
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 5007bcae5219157d96f63386b0b4045ff39c405e805ca9a3bb907e5e8b313b4f, LF). Everything outside this block is
 // main's port at 1cde8b82 (sha256 06688702..., LF), unchanged except that main's gateDiffText is named
 // _gateDiffTextMain (its definition and its DECLARE-1 self-call); the gateDiffText at the end of this block calls it
 // and then the overlay, once. The overlay reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason
@@ -708,6 +708,7 @@ const _P2A_OWN = 1;             // this port's main reads line view 1 (its own b
 const _P2A_HEADERS = ["diff --git ", "--- ", "+++ ", "rename from ", "rename to ", "new file mode", "deleted file mode", "Binary files "];
 const _P2A_FINE = new RegExp("\r\n|[" + _P2A_PY_BREAKS + "]");
 const _P2A_COARSE = new RegExp("\r\n|\r|\n");
+const _P2A_CR = new RegExp("\r");
 const _P2A_FINE_ONLY = new RegExp("[\u000b\u000c\u001c\u001d\u001e\u0085\u2028\u2029]");   // where the two splits can part
 const _P2A_LEAD_APART = new RegExp("[\u001c\u001d\u001e\u001f\u0085\ufeff]");   // white space of one main only
 const _P2A_SEP = "\u0000";      // joins the summary's runs and zones; never in a claimed path, name, prefix or number
@@ -1072,12 +1073,12 @@ function _p2aPairing(views, alike = false, extra = []) {
   // name read through NFKC pairs with every name (B-2); `extra`, the removed lines no view reads (B-1).
   const rem = new Set();
   let wild = false;
-  for (const removed of _p2aRemoved(views, extra)) {
+  reading: for (const removed of _p2aRemoved(views, extra)) {
     for (const line of removed) {
       for (const [j, r] of _p2aSites(line, "def")) {
         const e = _p2aRunEnd(line, r, _p2aWordUnit);
-        if (_p2aWideName(line, j, r, e)) wild = true;
-        else if (line.startsWith("test_", r)) rem.add(line.slice(r, e));
+        if (_p2aWideName(line, j, r, e)) { wild = true; break reading; }   // every counted site pairs now
+        if (line.startsWith("test_", r)) rem.add(line.slice(r, e));
       }
     }
   }
@@ -1100,9 +1101,9 @@ function _p2aDistinct(views) {
 
 function _p2aJoined(diffText) {
   // The removed text no line view reads as a line, as more removed lines, as the Python's _p2a_joined
-  // (NOTE_path2a_fifth_pass_2026_09_30, B-1): each piece after a CPython line break inside a git line that starts
-  // with "-", and each run of the base side's pieces joined where a piece ends in a backslash, the backslash read as a
-  // space, when a piece of the run is removed.
+  // (NOTE_path2a_fifth_pass_2026_09_30, B-1): each piece after a lone CR inside a git line that starts with "-", and
+  // each run of the base side's pieces joined where a piece ends in a backslash, the backslash read as a space, when a
+  // piece of the run is removed.
   const out = [];
   let acc = [], hit = false;
   const flush = () => {
@@ -1117,7 +1118,7 @@ function _p2aJoined(diffText) {
       hit = false;
       continue;
     }
-    const pieces = _p2aLines(line.slice(1), _P2A_FINE);
+    const pieces = line.includes("\r") ? _p2aLines(line.slice(1), _P2A_CR) : line.length > 1 ? [line.slice(1)] : [];
     if (head === "-") for (const piece of pieces.slice(1)) out.push(piece);
     for (const piece of pieces) {
       if (!acc.length) hit = false;
@@ -1171,19 +1172,18 @@ function _p2aDefRuns(views, extra = []) {
   // whether some such site's name is read through NFKC (_p2aWideName)]: a name of ASCII word characters can start
   // only where a site's coarse run ends, and ends where its ASCII run does.
   const out = new Set(), seen = new Set();
-  let wild = false;
   for (const removed of _p2aRemoved(views, extra)) {
     for (const line of removed) {
       if (seen.has(line)) continue;
       seen.add(line);
       for (const [j, r] of _p2aAnchored(line)) {
         const e = _p2aRunEnd(line, r, _p2aWordUnit);
-        wild = wild || _p2aWideName(line, j, r, e);
+        if (_p2aWideName(line, j, r, e)) return [out, true];   // every claimed name is defined now
         out.add(line.slice(r, e));
       }
     }
   }
-  return [out, wild];
+  return [out, false];
 }
 
 function _p2aDefines(views, name, extra = []) {
