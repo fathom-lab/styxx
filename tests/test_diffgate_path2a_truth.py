@@ -39,16 +39,19 @@ DECIDED = ("VERIFIED", "CONTRADICTED")
 # Pinned after review (Python 3.12 and 3.14 agree). A change to the overlay, the oracle or the generator moves them.
 # Pass 4 (NOTE_path2a_fourth_pass_2026_09_30, B-1): the `shape` rule withholds 43 more right verdicts here, in both
 # ports, and no attributable verdict moves: the generator writes "Only touches cfg and .cfg/app/." beside files that
-# all lie under the second prefix.
-PINNED = {"cases": 1706, "main raises": 0, "decided": 7614, "false": 1535, "attributable": 1206, "abstained": 1537,
-          "attributable abstained": 1206, "right": 5897, "right lost": 245, "undecided": 182,
-          "undecided abstained": 35, "unjudged": 0, "unjudged abstained": 0, "false other": 329,
-          "false other abstained": 51}
+# all lie under the second prefix. Pass 6 (NOTE_path2a_sixth_pass_2026_09_30, B-1): the unchanged lines withhold 16
+# more false verdicts main gives on a test or a name defined again (outside the committed V101's attribution, so under
+# "false other"), 6 right CONTRADICTEDs (a test the removed pairing already counts as changed moved into a class, beside
+# a redefinition) and 4 undecided, in each port; C-1 moves nothing here.
+PINNED = {"cases": 1706, "main raises": 0, "decided": 7614, "false": 1535, "attributable": 1206, "abstained": 1563,
+          "attributable abstained": 1206, "right": 5897, "right lost": 251, "undecided": 182,
+          "undecided abstained": 39, "unjudged": 0, "unjudged abstained": 0, "false other": 329,
+          "false other abstained": 67}
 # The port judged in its own terms: 1,100 attributable claims, of which 942 carry the same main record in Python and
 # 158 are read otherwise by Python's main (paths and names outside ASCII, which the two templates extract apart).
-PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7393, "abstained": 1398, "right": 5739, "right lost": 169,
+PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7393, "abstained": 1424, "right": 5739, "right lost": 175,
                "false": 1385, "attributable": 1100, "attributable abstained": 1100, "false other": 285,
-               "false other abstained": 7, "undecided": 269, "undecided abstained": 122}
+               "false other abstained": 23, "undecided": 269, "undecided abstained": 126}
 PINNED_GIT = {"cases": 96, "main raises": 0, "with R, C or T": 16, "decided": 63, "abstained": 14, "false": 17,
               "attributable": 14, "attributable abstained": 14, "right": 46, "right lost": 0, "false other": 3,
               "false other abstained": 0}
@@ -272,9 +275,9 @@ PY_PLANTS = [
      '_P2A_COARSE_RUN = re.compile("[ \\t]*")'),
     ("names paired by their full run",
      "                e = _P2A_WORD_RUN.match(line, r).end()\n                if _p2a_wide_name(line, j, r, e):\n"
-     "                    wild = True",
+     "                    if nfkc:",
      "                e = _P2A_NAME_RUN.match(line, r).end()\n                if _p2a_wide_name(line, j, r, e):\n"
-     "                    wild = True"),
+     "                    if nfkc:"),
     ("the scope rule's V121 reading dropped", '    if got["K", False][2] != under:', "    if False:"),
     ("U2 dropped", '    return want is not None and f._get(("merged", space, b, want), lambda: any(',
      '    return False and f._get(("merged", space, b, want), lambda: any('),
@@ -284,7 +287,7 @@ PY_PLANTS = [
     ("the overlay skipped under --strict",
      "    todo = [c for c in g.claims if (c.kind, c.verdict) in _P2A_REACH]",
      "    todo = [c for c in g.claims if (c.kind, c.verdict) in _P2A_REACH and not strict]"),
-    ("split read as keep", '    return ("split", "#101") if any(fires) else None', "    return None"),
+    ("split read as keep", '    if any(fires):\n        return "split", "#101"\n', ""),
     ("extract off for paths", "    if _p2a_extract(f, c, claimed, want):", "    if False:"),
     ("the port's reading of a wide path taken as never verified",
      "                if b and not _P2A_WIDE.search(b) and (want is None or regs[i][1] == want):",
@@ -312,16 +315,19 @@ PY_PLANTS = [
      '    if _P2A_DIGITS.fullmatch(claimed) is None or (not c.detail.get("declared") and _p2a_in_runs(f, claimed, "count")):',
      "    if False:"),
     ("symbol sites read anywhere in a removed line",
-     "            for j, r in _p2a_anchored(line):\n                e = _P2A_WORD_RUN.match(line, r).end()",
+     "            for j, r in _p2a_anchored(line):\n                e = _P2A_WORD_RUN.match(line, r).end()\n"
+     "                if _p2a_wide_name(line, j, r, e):\n                    return out, True",
      '            for j, r in _p2a_sites(line, "def") + _p2a_sites(line, "class"):\n'
-     "                e = _P2A_WORD_RUN.match(line, r).end()"),
+     "                e = _P2A_WORD_RUN.match(line, r).end()\n"
+     "                if _p2a_wide_name(line, j, r, e):\n                    return out, True"),
     # pass 5 (NOTE_path2a_fifth_pass_2026_09_30): each new rule, dropped
     ("the count seam never read", '        return self._get("seam", lambda: _p2a_seam(self.summary))',
      "        return False"),
     ("the removed lines no view reads dropped", '        return self._get("joined", lambda: _p2a_joined(self.diff_text))',
      '        return self._get("joined", lambda: [])'),
-    ("test names read through NFKC paired by their ASCII run", "                if _p2a_wide_name(line, j, r, e):\n                    wild = True",
-     "                if False:\n                    wild = True"),
+    ("test names read through NFKC paired by their ASCII run",
+     "                    if nfkc:\n                        return names, True",
+     "                    if False:\n                        return names, True"),
     ("symbol names read through NFKC ignored",
      "                if _p2a_wide_name(line, j, r, e):\n                    return out, True",
      "                if False:\n                    return out, True"),
@@ -340,6 +346,19 @@ PY_PLANTS = [
      "        pieces = [line[1:]] if len(line) > 1 else []"),
     ("continuations never joined","            hit = hit or head == \"-\"\n",
      "            hit = hit or head == \"-\"\n            acc = acc[-1:]\n"),
+    # pass 6 (NOTE_path2a_sixth_pass_2026_09_30): each new rule, dropped
+    ("C-1's rule dropped", '    if c.verdict == "CONTRADICTED" and f.apart(f.kinds()):\n        return None\n', ""),
+    ("C-1's diff part dropped", "    if _p2a_apart_diff(f, kinds):\n        return True\n", ""),
+    ("C-1's DECLARE-1 fence part dropped", '    if "styxx" in summary and (', "    if False and ("),
+    ("C-1's sentence part dropped", "    if not _P2A_BAD_RX.search(summary):\n        return False\n    low",
+     "    if True:\n        return False\n    low"),
+    ("the unchanged lines dropped",
+     '        return self._get("unchanged", lambda: _p2a_context(self.diff_text, self.fine())\n'
+     '                         + _p2a_joined(self.diff_text, " "))',
+     '        return self._get("unchanged", lambda: [])'),
+    ("a name defined again kept",
+     '    if f.redefines(name):                 # B-1 (NOTE_path2a_sixth_pass_2026_09_30)\n        return "again", "#101"\n',
+     ""),
 ]
 # Plants that cannot change a record, said so rather than hidden: none this pass. Pass 2's one (a clause that never
 # decided alone) went with the per-set comparison it sat behind (NOTE_path2a_third_pass_2026_09_30, B-2).
@@ -428,7 +447,7 @@ JS_PLANTS = [
     ("count interval shrunk", 'return (lo <= n && n <= hi) ? ["count", "#121"] : null;',
      'return (lo <= n && n < hi) ? ["count", "#121"] : null;'),
     # pass 2
-    ("no split rule", '  return fires.some(x => x) ? ["split", "#101"] : null;', "  return null;"),
+    ("no split rule", '  if (fires.some(x => x)) return ["split", "#101"];\n', ""),
     ("no extract for paths", '  if (_p2aExtract(f, c, claimed, want)) return ["extract", "#97, #121"];\n', ""),
     ("the port reading its count as CPython's", "const _P2A_OWN = 1;", "const _P2A_OWN = 0;"),
     # pass 3 (NOTE_path2a_third_pass_2026_09_30): C-2 and C-1, each as pass 2 read it
@@ -446,9 +465,18 @@ JS_PLANTS = [
     ("no removed lines beyond the views in the port", '    joined: () => get("joined", () => _p2aJoined(diffText)),',
      "    joined: () => [],"),
     ("no NFKC pairing in the port",
-     "        if (_p2aWideName(line, j, r, e)) { wild = true; break reading; }   // every counted site pairs now\n", ""),
+     "          if (nfkc) return [names, true];   // every counted site pairs now\n", ""),
     ("no NFKC symbols in the port",
      "        if (_p2aWideName(line, j, r, e)) return [out, true];   // every claimed name is defined now\n", ""),
+    # pass 6 (NOTE_path2a_sixth_pass_2026_09_30): each new rule, dropped from the port alone
+    ("no C-1 rule in the port", '  if (c.verdict === "CONTRADICTED" && f.apart(f.kinds())) return null;\n', ""),
+    ("no C-1 diff part in the port", "  if (_p2aApartDiff(f, kinds)) return true;\n", ""),
+    ("no C-1 fence part in the port", '  if (s.includes("styxx") && (', "  if (false && ("),
+    ("no unchanged lines in the port",
+     '    unchanged: () => get("unchanged", () => _p2aContext(diffText, f.coarse()).concat(_p2aJoined(diffText, " "))),',
+     "    unchanged: () => [],"),
+    ("no again rule in the port", '  if (f.redefines(name)) return ["again", "#101"];   // B-1 (NOTE_path2a_sixth_pass_2026_09_30)\n',
+     ""),
 ]
 
 
@@ -465,7 +493,9 @@ def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
     assert block.count(old) == 1, old
     planted = tmp_path / "diffgate_planted.js"
     planted.write_bytes(text.replace(block, block.replace(old, new)).encode("utf-8"))
-    items = [x for x in R.inputs(fuzz=False)]
+    # pass 6 (NOTE_path2a_sixth_pass_2026_09_30): the cross-port pins too, some of whose claims only one port reads
+    from tests.test_diffgate_path2a import XPORT_CASES
+    items = [x for x in R.inputs(fuzz=False)] + [("xport", x[0], x[1], x[2]) for x in XPORT_CASES]
     (tmp_path / "in.json").write_text(json.dumps([{"id": str(i), "summary": x[2], "diff": x[3]}
                                                   for i, x in enumerate(items)], ensure_ascii=False), encoding="utf-8")
     ref = R.main_port_path(tmp_path)
@@ -489,7 +519,33 @@ def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
                 y, jy = b["claims"][k], j["new"]["claims"][k]
                 new_disagreements += (y["verdict"], R.phrase_key(y["why"], N._P2A_PHRASES)) != \
                     (jy["verdict"], R.phrase_key(jy["why"], N._P2A_PHRASES))
+    if new_disagreements == 0:
+        # Pass 6 (NOTE_path2a_sixth_pass_2026_09_30, C-1): where the two ports' views count `def test_` sites apart, a
+        # CONTRADICTED stands in both, and a VERIFIED is read by one main only, so a plant of the port's own view
+        # (_P2A_OWN) can no longer split a claim both mains read alike. It is caught where it moves the port's own
+        # decision on a claim only its main decides so: PORT_ONLY_CASES, against the real port.
+        (tmp_path / "own.json").write_text(json.dumps(PORT_ONLY_CASES, ensure_ascii=False), encoding="utf-8")
+        for port, tag in ((R.PORT, "real"), (planted, "planted")):
+            r = subprocess.run([NODE, str(R.DIFFERENTIAL / "check_path2a.js"), "--records", str(port),
+                                str(tmp_path / "own.json"), str(tmp_path / f"own_{tag}.json")],
+                               capture_output=True, text=True)
+            assert r.returncode == 0, r.stderr[-2000:]
+        real = json.loads((tmp_path / "own_real.json").read_text(encoding="utf-8"))
+        mine = json.loads((tmp_path / "own_planted.json").read_text(encoding="utf-8"))
+        new_disagreements = sum(json.dumps(x, sort_keys=True) != json.dumps(y, sort_keys=True) for x, y in zip(real, mine))
     assert new_disagreements > 0, name
+
+
+# Claims only one main decides so (NOTE_path2a_sixth_pass_2026_09_30, C-1): a created test after U+FEFF, which the port
+# counts and CPython does not, so "Added 2 tests." is VERIFIED in the port only; the real port withholds it (`tests`: a
+# changed test is among the two).
+PORT_ONLY_CASES = [
+    {"id": "own-count-view", "summary": "Added 2 tests.",
+     "diff": ("diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n"
+              "@@ -1,2 +1,2 @@\n-def test_a():\n-    assert 0\n+def test_a():\n+    assert 1\n"
+              "diff --git a/tests/test_n.py b/tests/test_n.py\nnew file mode 100644\n--- /dev/null\n"
+              "+++ b/tests/test_n.py\n@@ -0,0 +1,2 @@\n+\ufeffdef test_new():\n+    pass\n")},
+]
 
 
 # ---- pass 5: the fourth review's #101 reproductions (continuation, lone CR, NFKC), at three doors ------------------
@@ -536,6 +592,59 @@ def test_the_fifth_reviews_definition_reproductions(monkeypatch, tmp_path):
                     ("tests", "split", "symbol"), (c["id"], door, y)
                 seen.append((c["id"], door))
     assert len(seen) == 33, seen
+
+
+# ---- pass 6: a definition again beside its own unchanged one, and a moved file's old path, at three doors ----------
+
+def test_the_sixth_reviews_reproductions(monkeypatch, tmp_path):
+    """B-1 and B-3 (NOTE_path2a_sixth_pass_2026_09_30), judged by truth at the raw door, at the git door (each case's
+    recorded --name-status) and in the port. A test defined again beside its own unchanged definition: main's verdict
+    is false by CPython's ast and not false under the ast-paired V101, and is withheld (`redefined`); 495d2204 kept it
+    at every door. A name defined again: the truth reads it undecided, and it is withheld (`again`). A claim naming a
+    moved file's old path: main's VERIFIED is right and withheld (`dir`, `dot_tier`), the known loss the README names."""
+    M = R.main_module()
+    doc = json.loads((R.ROOT / "tests" / "fixtures" / "path2a_pass6_repros.json").read_text(encoding="utf-8"))
+    cases = doc["cases"]
+    items = [{"id": c["id"], "summary": c["summary"], "diff": c["diff"]} for c in cases]
+    (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=False), encoding="utf-8")
+    if NODE is None:
+        if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
+            pytest.fail("node is not on PATH under CI; the port half of this check did not run")
+        pytest.skip("node is not on PATH; the port half of this check cannot run here")
+    main_port = _port_records(R.main_port_path(tmp_path), items, tmp_path, "main6")
+    new_port = _port_records(R.PORT, items, tmp_path, "new6")
+    seen = collections.Counter()
+    for c in cases:
+        fake = R.fake_git(c["name_status"], c["diff"])
+        for mod in (M, N):
+            monkeypatch.setattr(mod, "_git", fake)
+        doors = {"raw": (M.gate_diff_text(c["summary"], c["diff"]).to_dict(),
+                         N.gate_diff_text(c["summary"], c["diff"]).to_dict()),
+                 "git": (M.gate_diff(c["summary"], "(repo)", "base", "head").to_dict(),
+                         N.gate_diff(c["summary"], "(repo)", "base", "head").to_dict()),
+                 "port": (main_port[c["id"]], new_port[c["id"]])}
+        for door, (a, b) in doors.items():
+            if door != "port":
+                assert R.relation(a, b, False, N._P2A_PHRASES) == [], (c["id"], door)
+            keys = []
+            for i, x in enumerate(a["claims"]):
+                if x["verdict"] not in DECIDED:
+                    continue
+                t = T.truth(c["model"], x["kind"], x["detail"])
+                if c["truth"] == "false":
+                    assert T.wrong(x["verdict"], t), (c["id"], door, x, t)
+                    v = T.v101_ast(c["model"], x)
+                    assert v is not None and not T.wrong(v, t), (c["id"], door, x, v, t)
+                elif c["truth"] == "right":
+                    assert T.right(x["verdict"], t), (c["id"], door, x, t)
+                else:
+                    assert not T.right(x["verdict"], t) and not T.wrong(x["verdict"], t), (c["id"], door, x, t)
+                y = b["claims"][i]
+                assert y["verdict"] == "UNCHECKABLE", (c["id"], door, y)
+                keys.append(R.phrase_key(y["why"], N._P2A_PHRASES))
+                seen[c["truth"]] += 1
+            assert keys == c["want"], (c["id"], door, keys)
+    assert dict(seen) == {"false": 6, "undecided": 3, "right": 6}, seen
 
 
 # ---- pass 4: the fourth review's scope reproductions, judged by truth --------------------------------------------------

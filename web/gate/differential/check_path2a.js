@@ -1,5 +1,6 @@
 // PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30,
-// NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30 and NOTE_path2a_fifth_pass_2026_09_30): the port's
+// NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30 and
+// NOTE_path2a_sixth_pass_2026_09_30): the port's
 // half of the committed PATH-2a checks, run by tests/test_diffgate_path2a*.py, which write IN (a JSON list of
 // {id, summary, diff}) and read OUT.
 //
@@ -9,7 +10,12 @@
 //                                                  and each claim reads the same under --strict as without it;
 //                                                  unparsed_claims and each claim's keys are compared too
 //   node check_path2a.js --decisions REF IN OUT   per input, main's record and this port's record, for the
-//                                                  Python-vs-port comparison (C)
+//                                                  Python-vs-port comparison (C), and both gate verdicts under
+//                                                  --strict (NOTE_path2a_sixth_pass_2026_09_30, C-1, C-4)
+//   node check_path2a.js --found IN OUT            the port's _p2aFound on [words, text] pairs (A-1 of the sixth pass)
+//   node check_path2a.js --opts REF OUT            odd `opts` arguments (a getter that answers differently on a
+//                                                  second read, a Proxy counting reads, null, primitives): main's
+//                                                  record and reads against this port's (A-2 of the sixth pass)
 //   node check_path2a.js --records   PORT IN OUT  per input, one port's record (strict off): the truth test runs the
 //                                                  port's own counterfactual variants through it
 //   node check_path2a.js --lockstep  IN OUT       the overlay's status-map builder against parseUnifiedDiff, and its
@@ -43,7 +49,7 @@ function internals(file, extra = "") {
                  "_p2aJoined", "_P2A_ONE_SPACE", "_p2aSeam", "_p2aInt",
                  "_P2A_JS_SPACE", "_P2A_PY_SPACE", "_P2A_PY_BREAKS", "_P2A_DIVERGENT", "_P2A_HEADERS",
                  "_P2A_REACH_PAIRS", "_P2A_PHRASES", "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS", "_P2A_OWN",
-                 "_P2A_NEUTRAL_RANGES", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw"];
+                 "_P2A_NEUTRAL_RANGES", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw", "_p2aFound"];
   return vm.runInNewContext(src + "\n" + extra + "\n;({" + names.join(", ") + "})", {}, { filename: file });
 }
 
@@ -208,14 +214,16 @@ function main(argv) {
     const P = internals(DEFAULT_PORT);
     const items = JSON.parse(fs.readFileSync(argv[2], "utf8"));
     const out = items.map(it => {
-      let best = Infinity;
+      let best = Infinity, main = Infinity;
       for (let k = 0; k < 3; k++) {
+        const t = process.hrtime.bigint();
         const g = REF.gateDiffText(it.summary, it.diff);
         const t0 = process.hrtime.bigint();
         P._p2aAbstain(g, false, () => P._p2aFactsRaw(it.diff || "", it.summary));
         best = Math.min(best, Number(process.hrtime.bigint() - t0) / 1e6);
+        main = Math.min(main, Number(t0 - t) / 1e6);   // main's own call on the same input (sixth pass, A-1)
       }
-      return { id: it.id, overlay: best };
+      return { id: it.id, overlay: best, main };
     });
     fs.writeFileSync(argv[3], JSON.stringify(out));
     return 0;
@@ -231,7 +239,9 @@ function main(argv) {
                       tests_added: ["#101"], symbol_added: ["#101"] };
     const items = JSON.parse(fs.readFileSync(argv[2], "utf8"));
     if (mode === "--decisions") {
-      const out = items.map(it => ({ id: it.id, main: record(REF.gateDiffText, it, false), new: record(NEW.gateDiffText, it, false) }));
+      const out = items.map(it => ({ id: it.id, main: record(REF.gateDiffText, it, false), new: record(NEW.gateDiffText, it, false),
+                                      strict: { main: record(REF.gateDiffText, it, true).verdict || null,
+                                                new: record(NEW.gateDiffText, it, true).verdict || null } }));
       fs.writeFileSync(argv[3], JSON.stringify(out));
       return 0;
     }
@@ -262,7 +272,40 @@ function main(argv) {
     fs.writeFileSync(argv[3], JSON.stringify({ counts, broken }));
     return 0;
   }
-  console.error("usage: node check_path2a.js --relation REF IN OUT | --decisions REF IN OUT | --records PORT IN OUT | --lockstep IN OUT | --tables OUT | --error-fallback REF IN OUT | --timing REF IN OUT | --overlay-timing REF IN OUT | --bookmarklet MIN IN OUT | --abstain PORT IN OUT");
+  if (mode === "--found") {
+    // A-1 (NOTE_path2a_sixth_pass_2026_09_30): the port's _p2aFound on each [words, text] of IN, sorted
+    const P = internals(DEFAULT_PORT);
+    const items = JSON.parse(fs.readFileSync(argv[1], "utf8"));
+    fs.writeFileSync(argv[2], JSON.stringify(items.map(([words, text]) => [...P._p2aFound(new Set(words), text)].sort())));
+    return 0;
+  }
+  if (mode === "--opts") {
+    // A-2 (NOTE_path2a_sixth_pass_2026_09_30): main destructures `opts` once; this port reads it once, in main's order,
+    // and hands main the snapshot, so main and the overlay read one strict and the reads main makes are the same.
+    const REF = require(path.resolve(argv[1]));
+    const NEW = require(DEFAULT_PORT);
+    const S = "Modified x.py. All tests pass.";
+    const D = "diff --git a/x.py b/x.py\n--- a/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n";
+    const shapes = {
+      "a strict that answers true, then false": () => { let n = 0; return { get strict() { return n++ === 0; } }; },
+      "a strict that answers false, then true": () => { let n = 0; return { get strict() { return n++ !== 0; } }; },
+      "a Proxy that logs its reads": log => new Proxy({ strict: true }, { get(t, k) { log.push(String(k)); return t[k]; } }),
+      "null": () => null, "undefined": () => undefined, "a number": () => 7, "a string": () => "strict",
+      "strict on the prototype": () => Object.create({ strict: true }), "_declared true": () => ({ _declared: true }),
+    };
+    const out = [];
+    for (const [name, make] of Object.entries(shapes)) {
+      const logs = { main: [], new: [] };
+      const run = (gate, who) => {
+        try { return JSON.parse(JSON.stringify(gate(S, D, make(logs[who])))); } catch (e) { return { error: e.constructor.name, message: String(e.message) }; }
+      };
+      const a = run(REF.gateDiffText, "main"), b = run(NEW.gateDiffText, "new");
+      out.push({ name, same: JSON.stringify(a) === JSON.stringify(b), reads_same: JSON.stringify(logs.main) === JSON.stringify(logs.new), main: a, new: b, reads: logs });
+    }
+    fs.writeFileSync(argv[2], JSON.stringify(out));
+    return 0;
+  }
+  console.error("usage: node check_path2a.js --opts REF OUT | --relation REF IN OUT | --decisions REF IN OUT | --records PORT IN OUT | --lockstep IN OUT | --tables OUT | --error-fallback REF IN OUT | --timing REF IN OUT | --overlay-timing REF IN OUT | --bookmarklet MIN IN OUT | --abstain PORT IN OUT");
   return 2;
 }
 

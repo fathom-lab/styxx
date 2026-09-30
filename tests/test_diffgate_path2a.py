@@ -1,6 +1,6 @@
 """PATH-2a: main's diff gate, unchanged, plus an overlay that only abstains (NOTE_path2a_abstain_overlay_2026_09_30,
 NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30,
-NOTE_path2a_fifth_pass_2026_09_30).
+NOTE_path2a_fifth_pass_2026_09_30, NOTE_path2a_sixth_pass_2026_09_30).
 
 The reference in every test here is `main` itself: this checkout's `styxx/diffgate.py` and `web/gate/diffgate.js` with
 the PATH-2a block cut out and the door hooks reverted, asserted to hash to the files on `origin/main` 1cde8b82
@@ -14,10 +14,12 @@ the PATH-2a block cut out and the door hooks reverted, asserted to hash to the f
     so wherever main's two ports give claims the same kind, verdict and detail -- by position, matched across the two
     lists, or anywhere in either list -- the overlay's verdict and phrase are the same (by construction, asserted).
     Measured on the committed inputs and asserted there only: the same for claims with the same kind, verdict and
-    text, and for claims left over whose details differ but nest and lie in each other's text (a heuristic for one
-    match read two ways, the `extract` guards' work; it also pairs two different matches, and L1 is the one such
-    pairing pinned, NOTE_path2a_fifth_pass_2026_09_30, C-3); where every claim pairs so, the gate verdicts agree. The
-    constant tables the overlay leans on are pinned by enumeration on the running engines.
+    text, and for claims left over whose details differ but nest and lie in each other's text (both heuristics for
+    one match read two ways, the `extract` guards' work; each also pairs two different matches: L1 and OM1 are pinned,
+    NOTE_path2a_fifth_pass_2026_09_30, C-3, and NOTE_path2a_sixth_pass_2026_09_30, C-3). Without --strict the gate
+    verdicts agree wherever main's do (NOTE_path2a_sixth_pass_2026_09_30, C-1, by construction; asserted on the
+    committed inputs and the pinned C-1 inputs); under --strict, only the two pinned inputs split. The constant
+    tables the overlay leans on are pinned by enumeration on the running engines.
 And the static facts: the reconstruction, the self-checks over each block's source, the error fallback, the
 reproductions, the cost per call, and what must not move (the demo, the committed capsules, charon's lines, the
 bookmarklet source). Coverage (B) is in tests/test_diffgate_path2a_truth.py.
@@ -149,27 +151,33 @@ def flavour(mod) -> str:
 # pairs add the rest. Pass 5 (NOTE_path2a_fifth_pass_2026_09_30 and its corrections), on the inputs pass 4 pinned:
 # `seam` 1 (the X2 pair, `count` before), and names read through NFKC 25 (24 on the seeded PATH-2a fuzz, whose removed
 # lines write U+00A0, U+3000 or U+FEFF between `def` and the name, and #161's y5); no path claim moves. Its 20 new pairs
-# add 5 `seam`, 6 `tests`, 5 `symbol` and 4 kept declared claims.
+# add 5 `seam`, 6 `tests`, 5 `symbol` and 4 kept declared claims. Pass 6 (NOTE_path2a_sixth_pass_2026_09_30), on the
+# inputs pass 5 pinned: C-1 keeps main's CONTRADICTED where the two ports' mains may read the claims apart (`divergent`
+# counts -156 and scopes -105, `extract` scopes -154 and counts -3, `seam` -5, `tests` -83, `split` -3; almost all on
+# the seeded PATH-2a fuzz and the text-seam set), and B-1 withholds a test or a name an unchanged line defines
+# (`redefined` 15, `again` 5). Its 7 new pairs add `redefined` 2, `again` 1, `dir` 1, `dot_tier` 1 and `split` 1, a
+# CONTRADICTED kept (C-1's diff part) and a VERIFIED scope kept.
 ABSTENTIONS = {
     "windows": {
-        "decided": 12695, "main raises": 8,
+        "decided": 12703, "main raises": 8,
         "file_created:case": 3, "file_created:dir": 65, "file_created:divergent": 19, "file_created:dot": 20,
         "file_created:dot_earliest": 4, "file_created:dot_tier": 11, "file_created:extract": 48, "file_created:odd": 1,
         "file_created:tier": 9,
         "file_deleted:case": 1, "file_deleted:dir": 52, "file_deleted:divergent": 20, "file_deleted:dot": 21,
         "file_deleted:dot_earliest": 1, "file_deleted:dot_tier": 7, "file_deleted:extract": 55, "file_deleted:odd": 1,
         "file_deleted:tier": 4,
-        "file_touched:dir": 243, "file_touched:divergent": 102, "file_touched:dot": 82, "file_touched:dot_tier": 71,
+        "file_touched:dir": 244, "file_touched:divergent": 102, "file_touched:dot": 82, "file_touched:dot_tier": 72,
         "file_touched:extract": 144, "file_touched:odd": 5,
-        "files_changed_count:count": 381, "files_changed_count:divergent": 226, "files_changed_count:extract": 4,
-        "files_changed_count:seam": 6,
-        "only_touches:divergent": 108, "only_touches:extract": 158, "only_touches:only": 32, "only_touches:shape": 29,
-        "symbol_added:extract": 24, "symbol_added:symbol": 184, "tests_added:split": 3, "tests_added:tests": 428,
+        "files_changed_count:count": 381, "files_changed_count:divergent": 70, "files_changed_count:extract": 1,
+        "files_changed_count:seam": 1,
+        "only_touches:divergent": 3, "only_touches:extract": 4, "only_touches:only": 32, "only_touches:shape": 29,
+        "symbol_added:again": 6, "symbol_added:extract": 24, "symbol_added:symbol": 184,
+        "tests_added:redefined": 17, "tests_added:split": 1, "tests_added:tests": 345,
     },
 }
 # Under the POSIX flavour main reads `c:x.py` as a bare name not in the diff, so three decided drive-like claims are
 # UNCHECKABLE on main to begin with: path2a:guard-drive-like-path claim 0, and fuzz 20260930:1033 and :1590.
-ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12692, "file_touched:odd": 4}
+ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12700, "file_touched:odd": 4}
 del ABSTENTIONS["posix"]["file_created:odd"], ABSTENTIONS["posix"]["file_deleted:odd"]
 # main's own reading depends on the interpreter's Unicode tables where the inputs probe letters added in Unicode 14 and
 # 16 (#161's k2, x1 and y3 cases). Measured on CPython 3.12 (Unicode 15.0) and 3.14 (16.0); for Unicode 13.0 and 14.0
@@ -265,8 +273,10 @@ def test_lockstep_python(M, inputs):
         views = N._p2a_views(diff or "", fine)
         assert N._p2a_pairing(views)[0][0] == len(re.findall(r"^\s*def test_", blob, re.M)), iid
         # pass 4 (A-2): the facts object's shortcut (one view, counted once) gives what both views counted apart give;
-        # pass 5 (B-1): with the removed lines no view reads
-        assert N._P2aFacts(diff or "").pairing() == N._p2a_pairing(views, False, N._p2a_joined(diff or "")), iid
+        # pass 5 (B-1): with the removed lines no view reads; pass 6 (B-1): with the unchanged lines too
+        unchanged = N._p2a_context(diff or "", fine) + N._p2a_joined(diff or "", " ")
+        assert N._P2aFacts(diff or "").pairing() == \
+            N._p2a_pairing(views, False, N._p2a_joined(diff or ""), unchanged), iid
         checked += 1
     assert checked > 5000
 
@@ -281,7 +291,7 @@ def test_lockstep_port(work, inputs):
         got = rep["counts"].get(R.uid(i, row))
         if got is None:
             continue
-        mine = [g for g, _p in N._p2a_pairing(N._p2a_views(row[3] or "", N._p2a_lines(row[3] or "", N._P2A_FINE)))]
+        mine = [x[0] for x in N._p2a_pairing(N._p2a_views(row[3] or "", N._p2a_lines(row[3] or "", N._P2A_FINE)))]
         if got["views"][1] != got["main"] or got["views"] != mine:
             bad.append((row[1], got, mine))
     assert bad == [], bad[:5]
@@ -556,6 +566,9 @@ SELFCHECK_PLANTS = [
     ('_P2A_WORDISH_RX = re.compile("[" + _P2A_WORDISH + "]")', '_P2A_WORDISH_RX = re.compile("(?xi)[" + _P2A_WORDISH + "]")',
      "inline flag (?xi)"),
     ('_P2A_DIGITS = re.compile("[0-9]+")', '_P2A_DIGITS = re.compile("(?-i:[0-9]+)")', "inline flag (?-i:"),
+    # C-2 (NOTE_path2a_sixth_pass_2026_09_30): a named-character escape reads the Unicode name table when it compiles
+    ('_P2A_CR = re.compile("\\r")', '_P2A_CR = re.compile("\\\\N{LATIN SMALL LETTER A}|\\r")',
+     "named-character escape"),
 ]
 
 
@@ -578,7 +591,32 @@ JS_BANNED = ("toLowerCase", "toUpperCase", "toLocale", "localeCompare", "normali
 # C-2 (NOTE_path2a_fifth_pass_2026_09_30): identifiers that turn a string into a number through the engine's own tables
 # (StringToNumber skips the engine's white space: parseInt("\u30003", 10) is 3), refused as whole words in code, so
 # `_p2aNumbers` and a comment naming them are not; the block reads digits through `_p2aInt`
-JS_BANNED_WORDS = ("Number", "parseInt", "parseFloat", "isNaN", "isFinite")
+JS_BANNED_WORDS = ("Number", "parseInt", "parseFloat", "isNaN", "isFinite",
+                   # C-2 (NOTE_path2a_sixth_pass_2026_09_30): Math and Date convert their arguments with ToNumber, and a
+                   # typed array converts what is stored into it; the block uses a Set and conditionals instead
+                   "Math", "Date", "BigInt", "DataView", "Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array",
+                   "Uint16Array", "Int32Array", "Uint32Array", "Float16Array", "Float32Array", "Float64Array",
+                   "BigInt64Array", "BigUint64Array")
+JS_UNARY_AFTER = "(,=[:?!&|;{}<>*%~^"
+JS_UNARY_KEYWORDS = ("return", "typeof", "void", "in", "of", "case", "throw", "yield", "await", "new", "delete")
+
+
+def js_numeric_problems(dense: str) -> list:
+    """C-2 (NOTE_path2a_sixth_pass_2026_09_30): loose equality, and a unary + or - before a name, a call, a bracket or a
+    string, each of which runs StringToNumber (the engine's white space) on a string. `++` and `--` are passed over.
+    Binary arithmetic and relational operators, and the numeric parameters of built-in methods, convert a string too;
+    the scan cannot type their operands, and the block gives them numbers only (disclosed)."""
+    out = []
+    if re.search(r"(?<![=!<>])(?:==|!=)(?!=)", dense):
+        out.append("loose equality (== or !=)")
+    for m in re.finditer(r"(?<![+-])[+-](?![+=-])", dense):
+        k = m.start()
+        prev = dense[k - 1] if k else ""
+        unary = (not prev or prev in JS_UNARY_AFTER or re.search(
+            r"(?:^|[^A-Za-z0-9_$])(?:" + "|".join(JS_UNARY_KEYWORDS) + r")$", dense[:k]) is not None)
+        if unary and (dense[k + 1:k + 2] == "" or re.match(r"[A-Za-z_$(\[]", dense[k + 1:k + 2])):
+            out.append(f"unary {m.group()} before {dense[k + 1:k + 12]!r}")
+    return out
 # Identifiers a computed member access may index with: counters, positions and the block's own constant keys. A name
 # built from strings (claimed[kk]) is refused, and so is any call on a computed member (x[k](), (x[k])()).
 JS_INDEXES = {"0", "1", "2", "i", "k", "k+1", "k-1", "v", "u", "space", "c.kind", "_P2A_OWN", "out.length-1"}
@@ -672,6 +710,7 @@ def js_problems(block: str) -> list:
     out += [f"banned token {t!r} in code" for t in JS_BANNED if t in dense]
     out += [f"banned word {t!r} in code" for t in JS_BANNED_WORDS
             if re.search(r"(?<![A-Za-z0-9_$])" + t + r"(?![A-Za-z0-9_$])", dense)]
+    out += js_numeric_problems(dense)
     if "/" in dense:
         out.append("a '/' in code: a regex literal or a division")
     for s in strings:
@@ -785,12 +824,31 @@ BS = chr(92)
     ('  const ca = _p2aA(claimed), ck = _p2aK(claimed); const q = Number(claimed);', "banned word 'Number'"),
     ('  const pf = parseFloat; const ca = _p2aA(claimed), ck = _p2aK(claimed);', "banned word 'parseFloat'"),
     ('  const ca = _p2aA(claimed), ck = _p2aK(claimed); const q = isNaN(claimed);', "banned word 'isNaN'"),
+    # C-2 (NOTE_path2a_sixth_pass_2026_09_30): the sixth review's plants, each accepted by the pass-5 scan
+    (CA.rstrip(";") + "; const q = +claimed;", "unary + before"),
+    (CA.rstrip(";") + "; const q = -claimed;", "unary - before"),
+    (CA.rstrip(";") + "; const q = (+claimed);", "unary + before"),
+    (CA.rstrip(";") + "; const q = claimed == 3;", "loose equality"),
+    (CA.rstrip(";") + "; const q = claimed != 3;", "loose equality"),
+    (CA.rstrip(";") + "; const q = Math.max(claimed, 0);", "banned word 'Math'"),
+    (CA.rstrip(";") + "; const q = new Uint8Array([claimed]);", "banned word 'Uint8Array'"),
+    (CA.rstrip(";") + "; const q = new Date(claimed);", "banned word 'Date'"),
 ])
 def test_the_token_scan_refuses_the_reviews_plants(new, what):
     block = R.js_block()
     assert block.count(CA) == 1
     problems = js_problems(block.replace(CA, new))
     assert any(what in p for p in problems), problems
+
+
+@pytest.mark.parametrize("op", ["claimed * 1", "claimed - 0", "claimed < 3"])
+def test_the_token_scan_cannot_type_binary_operators(op):
+    """C-2 (NOTE_path2a_sixth_pass_2026_09_30), the disclosed limit: a binary arithmetic or relational operator on a
+    string runs StringToNumber too, and the scan cannot tell a string operand from a number. It accepts these; the
+    block gives such operators numbers only. Pinned so the README's sentence stays true."""
+    block = R.js_block()
+    assert block.count(CA) == 1
+    assert js_problems(block.replace(CA, CA.rstrip(";") + "; const q = " + op + ";")) == []
 
 
 @pytest.mark.parametrize("old,new,what", [
@@ -1141,6 +1199,21 @@ def test_the_action_shows_an_overlay_reason_whole(tmp_path, monkeypatch):
              if line.startswith("| ") and " | " in line and line.split(" | ")[1] in ("mid", "decided", "ours")}
     assert len(shown["mid"]) == 100 and len(shown["decided"]) == 100, shown
     assert shown["ours"] == rows[2][1].why
+    # I-3 (NOTE_path2a_sixth_pass_2026_09_30): an overlay reason with main's reading after its words shows the words
+    # whole and main's reading cut at 100 characters, as main cuts a reason; 300 files with 4 KB paths passed GitHub's
+    # 1 MiB step-summary limit on 495d2204.
+    long_path = ("z" * 200 + "/") * 20 + "f.py"
+    ours = N.DiffClaim(kind="file_touched", text="long", detail={}, verdict="UNCHECKABLE",
+                       why=R.reason("VERIFIED", "#97", PHRASES["dir"], f"diff status 'M' for '{long_path}'"))
+    monkeypatch.setattr(mod, "gate_diff_text", lambda *a, **k: N.DiffGate(
+        verdict="PASS", base="(diff-text)", head="(diff-text)", claims=[ours], measured=True))
+    (tmp_path / "sum.md").write_text("", encoding="utf-8")
+    mod.main()
+    table = (tmp_path / "sum.md").read_text(encoding="utf-8")
+    row = next(line for line in table.splitlines() if line.startswith("| ") and " | long | " in line)
+    shown_why = row[:-2].rsplit(" | ", 1)[1]
+    head = "VERIFIED withheld by PATH-2a (#97): " + PHRASES["dir"] + ". main's reading: "
+    assert shown_why == head + f"diff status 'M' for '{long_path}'"[:100], shown_why
     # I-3 (NOTE_path2a_fifth_pass_2026_09_30): the kind condition. A claim of a kind the overlay never moves, whose
     # reason starts with the overlay's form, is cut at 100 as main cuts it.
     other = N.DiffClaim(kind="declaration_problem", text="other", detail={}, verdict="UNCHECKABLE", why=form + "D" * 300)
@@ -1297,6 +1370,103 @@ def test_cost_per_call_port(work, tmp_path):
         assert d["overlay"] < 1000 * OVERLAY_S[1], d
 
 
+def _large_cases(scale: int = 1) -> list[dict]:
+    """A-1 (NOTE_path2a_sixth_pass_2026_09_30): summaries of about 1.2 MB whose 10,000 distinct count, path and scope
+    claims each look a token up in the summary's runs or zones, over a one-file diff (the sixth review's S1, S2 and S3,
+    the scopes verified so that C-1 does not keep them). 495d2204 scanned the summary once per token: the overlay alone
+    took about 1.0, 3.0 and 4.5 s in Python, where main's whole call takes 0.7 to 0.8 s. The port reads them at three
+    times the size, where 495d2204's cost grows further past main's."""
+    wide = chr(0xAD) * (1_000_000 * scale)
+    n = 10_000 * scale
+
+    def files(ps):
+        return "".join(f"diff --git a/{p} b/{p}\n--- a/{p}\n+++ b/{p}\n@@ -0,0 +1 @@\n+x\n" for p in ps)
+
+    return [
+        {"id": "large-counts", "summary": wide + ". " + " ".join(f"{i} files changed." for i in range(n)),
+         "diff": files([".a.py", "a.py"])},
+        {"id": "large-paths", "summary": wide + ". " + " ".join(f"Modified d{i}/x.py." for i in range(n)),
+         "diff": files(["x.py"])},
+        {"id": "large-scopes",
+         "summary": "only " + wide + ". " + " ".join(f"Only touches s{i}/ and x.py." for i in range(n)),
+         "diff": files(["x.py"])},
+    ]
+
+
+def test_cost_on_large_summaries_python(M):
+    """The overlay alone, on the large cases, within main's own call on the same input (the least of two runs each):
+    a bound relative to main, so a slower runner moves both sides."""
+    for it in _large_cases():
+        over = whole = float("inf")
+        for _ in range(2):
+            t = time.perf_counter()
+            g = M.gate_diff_text(it["summary"], it["diff"])
+            t0 = time.perf_counter()
+            N._p2a_abstain(g, False, lambda: N._P2aFacts(it["diff"], None, it["summary"]))
+            over, whole = min(over, time.perf_counter() - t0), min(whole, t0 - t)
+            assert not any(PHRASES["error"] in c.why for c in g.claims), it["id"]
+        assert over < whole, (it["id"], over, whole)
+
+
+def test_cost_on_large_summaries_port(work, tmp_path):
+    """The same in the port, within twice main's own call (the port's main is about seven times faster than CPython's,
+    so the overlay's fixed per-claim work weighs more beside it)."""
+    (tmp_path / "in.json").write_text(json.dumps(_large_cases(3), ensure_ascii=False), encoding="utf-8")
+    node("--overlay-timing", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "t.json")
+    for d in json.loads((tmp_path / "t.json").read_text(encoding="utf-8")):
+        assert d["overlay"] < 2 * d["main"], d
+
+
+def test_found_reads_what_one_scan_per_word_reads(tmp_path):
+    """A-1 (NOTE_path2a_sixth_pass_2026_09_30): `_p2a_found` reads more than _P2A_MANY words through one automaton; it
+    must give the set one scan per word gives, in both ports, so no decision moves with the number of claims."""
+    import random
+    rng = random.Random(6)
+    words_abc, text_abc = "ab./-0_" + chr(0xE9) + chr(0x3000), "ab./-0_" + chr(0xE9) + chr(0x3000) + "\x00" + chr(0x1F600)
+    cases = []
+    for _ in range(300):
+        text = "".join(rng.choice(text_abc) for _ in range(rng.randint(0, 400)))
+        words = sorted({"".join(rng.choice(words_abc) for _ in range(rng.randint(1, 6)))
+                        for _ in range(rng.randint(N._P2A_MANY + 1, 90))})
+        cases.append([words, text])
+    want = [sorted(w for w in words if w in text) for words, text in cases]
+    assert [sorted(N._p2a_found(frozenset(words), text)) for words, text in cases] == want
+    (tmp_path / "in.json").write_text(json.dumps(cases, ensure_ascii=False), encoding="utf-8")
+    node("--found", tmp_path / "in.json", tmp_path / "out.json")
+    assert json.loads((tmp_path / "out.json").read_text(encoding="utf-8")) == want
+
+
+# ---- A-2 (NOTE_path2a_sixth_pass_2026_09_30): the options, read once -------------------------------------------------
+
+def test_the_port_reads_its_options_once(work, tmp_path):
+    """The port read `opts.strict` once for main and once more for the gate verdict: a getter that answers true, then
+    false, gave main FAIL and the overlay PASS with the same claims on 495d2204. Now it reads `strict` and `_declared`
+    once, in main's order, and main reads that snapshot: every odd `opts` gives main's record, and the reads main
+    makes of a Proxy are the same."""
+    node("--opts", work / "diffgate_main_reference.js", tmp_path / "opts.json")
+    rows = json.loads((tmp_path / "opts.json").read_text(encoding="utf-8"))
+    assert len(rows) >= 9 and all(r["same"] and r["reads_same"] for r in rows), [r for r in rows if not r["same"]
+                                                                                 or not r["reads_same"]]
+
+
+def test_no_claim_moved_leaves_mains_gate_verdict(M):
+    """Where no claim moves, the record is main's object: the gate verdict is not computed again, so a `strict` whose
+    truth changes between reads reads as main read it. On 495d2204 the overlay recomputed it whenever a claim was in
+    reach (Python: main FAIL, the overlay PASS, the same claims)."""
+    class Flip:
+        def __init__(self):
+            self.n = 0
+
+        def __bool__(self):
+            self.n += 1
+            return self.n == 1
+
+    s, d = "Modified x.py. All tests pass.", "diff --git a/x.py b/x.py\n--- a/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n"
+    a = M.gate_diff_text(s, d, strict=Flip()).to_dict()
+    b = N.gate_diff_text(s, d, strict=Flip()).to_dict()
+    assert a["verdict"] == "FAIL" and b == a
+
+
 # ---- (C) cross-port ---------------------------------------------------------------------------------------------------
 
 def _seen(c):
@@ -1376,25 +1546,28 @@ def cross_port(a, b, ja, jb):
     return c, splits, every
 
 
-# Inputs where main's two gate verdicts agree and the overlay's differ (C-5, disclosed): some claim rows differ between
-# main's two ports (a line break or white space CPython reads and the port does not, which BC-1 then reads as a claim
-# with no Python file), and each port withholds a claim its own main decides. A sixth fails here.
-GATE_SPLITS_MAIN_AGREES = {
-    "path2:f2-a-vertical-tab-is-not-a-line-break", "path2:f2-a-form-feed-is-not-a-line-break",
-    "path2:f2-a-line-separator-is-not-a-line-break", "path2:f2-a-paragraph-separator-is-not-a-line-break",
-    "path2:y2-a-changed-test-beside-a-created-bom-test-under-bare-hunks"}
+# Inputs where main's two gate verdicts agree and the overlay's differ. Without --strict there are none, by
+# construction (NOTE_path2a_sixth_pass_2026_09_30, C-1: where the two ports' mains may read apart which claims can be
+# CONTRADICTED, main's CONTRADICTED stands); 495d2204 split five (pass 5's C-5, all where main's two ports decide a
+# claim apart on the diff). Under --strict a withheld VERIFIED moves a gate verdict too, and the overlay cannot see
+# which claims the other port reads: two, where `extract` withholds a right VERIFIED only the port reads (C-4).
+GATE_SPLITS_MAIN_AGREES = set()
+GATE_SPLITS_MAIN_AGREES_STRICT = {"p2a-seam:4242:335", "p2a-seam:4242:487"}
 
 
 def test_cross_port_decisions(M, inputs, work):
     node("--decisions", work / "diffgate_main_reference.js", work / "in.json", work / "dec.json")
     js = {d["id"]: d for d in json.loads((work / "dec.json").read_text(encoding="utf-8"))}
     c = collections.Counter()
-    splits, gate = [], set()
+    splits, gate, strict_gate = [], set(), set()
     for i, row in enumerate(inputs):
         j = js[R.uid(i, row)]
         try:
             a = M.gate_diff_text(row[2], row[3]).to_dict()
             b = N.gate_diff_text(row[2], row[3]).to_dict()
+            if M.gate_diff_text(row[2], row[3], strict=True).verdict == j["strict"]["main"] and \
+                    N.gate_diff_text(row[2], row[3], strict=True).verdict != j["strict"]["new"]:
+                strict_gate.add(row[1])
         except Exception:
             continue
         if "error" in j["main"] or "error" in j["new"]:
@@ -1406,10 +1579,12 @@ def test_cross_port_decisions(M, inputs, work):
         splits += [(row[0], row[1]) + s for s in found]
         if a["verdict"] == j["main"]["verdict"] and b["verdict"] != j["new"]["verdict"]:
             gate.add(row[1])
-    print("cross-port:", dict(c), "gate splits where main's gates agree:", sorted(gate))
+    print("cross-port:", dict(c), "gate splits where main's gates agree:", sorted(gate), "under --strict:",
+          sorted(strict_gate))
     assert not splits, splits[:10]
     assert c["position: kind, verdict, detail"] > 18000 and c["left over, one match: kind and verdict"] > 20
     assert gate == GATE_SPLITS_MAIN_AGREES
+    assert strict_gate == GATE_SPLITS_MAIN_AGREES_STRICT
 
 
 D_MOD = "diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n"
@@ -1424,6 +1599,8 @@ def _mod(p):
 D_FOO = ("diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1,3 @@\n-x = 0\n+x = 1\n"
          "+def foo():\n+    return 1\n")
 D_DOTC = "diff --git a/.c.py b/.c.py\ndeleted file mode 100644\n--- a/.c.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-x\n"
+D_TEST = ("diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n"
+          "@@ -1,2 +1,2 @@\n-def test_a():\n-    assert 0\n+def test_a():\n+    assert 1\n")
 D_CAFE = ("diff --git a/docs/r\u00e9sum\u00e9/index.md b/docs/r\u00e9sum\u00e9/index.md\n--- a/docs/r\u00e9sum\u00e9/index.md\n"
           "+++ b/docs/r\u00e9sum\u00e9/index.md\n@@ -1 +1 @@\n-a\n+b\n"
           "diff --git a/docs/caf\u00e9.md b/docs/caf\u00e9.md\nnew file mode 100644\n--- /dev/null\n+++ b/docs/caf\u00e9.md\n"
@@ -1434,24 +1611,29 @@ D_CAFE = ("diff --git a/docs/r\u00e9sum\u00e9/index.md b/docs/r\u00e9sum\u00e9/i
 XPORT_CASES = [
     ("R1-bom-joined-sentences", "Modified src/app.py." + chr(0xFEFF) + "Tidied up.", D_MOD,
      [("VERIFIED", None)], [("VERIFIED", None)], "PASS"),
+    # Pass 6 (NOTE_path2a_sixth_pass_2026_09_30, C-1): the sentence holds `only` and U+0085, so main's CONTRADICTED
+    # stands in both ports (it is right here: src/app.py is outside docs/)
     ("R4-nel-after-only-prefix", "Only touches docs/." + chr(0x85) + "Thanks.", D_MOD,
-     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
     ("E1-emoji-release-note", chr(0x1F680) + chr(0x1F389) + " Release prep " + chr(0x1F9F9) + chr(0x1F527)
      + ": bumped the pinned dependencies, regenerated the lockfile, fixed two flaky network timeouts in the nightly "
        "CI job, and updated docs/guide.md for the next release.", D_GUIDE, [("VERIFIED", None)], [("VERIFIED", None)],
      "PASS"),
     # C-1 (NOTE_path2a_fourth_pass_2026_09_30): one count match that CPython reads as 33 and the port as 3 (X5, X5b);
-    # ea677740 kept the Python's CONTRADICTED and withheld the port's, and the gates split FAIL / PASS
+    # ea677740 kept the Python's CONTRADICTED and withheld the port's, and the gates split FAIL / PASS. Pass 5 withheld
+    # both (`extract`). Pass 6 (C-1): main's CONTRADICTED stands in both ports, and so does the port's false one (3
+    # files did change, which only #121 hides): a cost of C-1's rule, disclosed.
     ("X5-fullwidth-digit-before-the-count", chr(0xFF13) + "3 files changed.", D_TWINS,
-     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
     ("X5b-arabic-digit-before-the-count", chr(0x663) + "3 files changed.", D_TWINS,
-     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
     # each port reads a count the other does not (X2, X3): on ea677740 the gates split PASS / FAIL. Pass 5: X2's summary
-    # holds U+0085, a count seam, so both ports withhold its counts with `seam`
+    # holds U+0085, a count seam, so both ports withheld its counts with `seam`. Pass 6 (C-1): main's CONTRADICTED
+    # stands in both, the Python's false one on X2 (3 files changed) included
     ("X2-nel-and-cjk-counts", "3 files" + chr(0x85) + "changed. " + chr(0x5171) + "5 files changed.", D_TWINS,
-     [("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
     ("X3-fullwidth-and-cjk-counts", chr(0xFF13) + " files changed. " + chr(0x5171) + "5 files changed.", D_TWINS,
-     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
     # C-2 (fourth review): the realistic X6b, two different claims each port reads from a different sentence; the
     # decisions differ, as the two claims do, and neither is paired with the other
     ("X6b-accented-directory-and-a-created-file",
@@ -1459,15 +1641,16 @@ XPORT_CASES = [
      [("VERIFIED", None)], [("UNCHECKABLE", "extract")], "PASS"),
     # C-1 (NOTE_path2a_fifth_pass_2026_09_30): each port reads a count the other does not, one of them with a clean
     # number, across a white space only one port reads or through a letter only CPython folds. main's gates are
-    # FAIL / FAIL; on 5ebe0b6b the overlay's were FAIL / PASS (X2-13, G1, G3) or PASS / FAIL (G2)
+    # FAIL / FAIL; on 5ebe0b6b the overlay's were FAIL / PASS (X2-13, G1, G3) or PASS / FAIL (G2). Pass 5 withheld both
+    # (`seam`); pass 6 (C-1) keeps main's CONTRADICTED in both, the one-port count 3 (false through #121) included
     ("X2-13-nel-and-cjk-counts", "13 files\x85changed. \u51715 files changed.", D_TWINS,
-     [("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
     ("G1-unit-separator-then-e-acute", "13\x1ffiles changed, \u00e93 files changed.", D_TWINS,
-     [("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
     ("G2-bom-then-long-s", "13\ufefffiles changed and 3 file\u017f changed.", D_TWINS,
-     [("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
     ("G3-nel-then-e-acute", "13\x85files changed, \u00e93 files changed.", D_TWINS,
-     [("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
     # I-2 (NOTE_path2a_fifth_pass_2026_09_30): a declared count, path, name and prefix whose value also occurs beside a
     # letter outside ASCII keep main's verdict in both ports (DECLARE-1 writes their sentences); the same sentences
     # undeclared are withheld (`extract`). A port-only removal of a declared skip splits the gates.
@@ -1501,14 +1684,41 @@ XPORT_CASES = [
      [("UNCHECKABLE", "case")], [], "PASS"),
     ("P5-case-suffix-only", "Modified \u00e9/d\u00e9.md.", _mod("z/\u00c9/d\u00e9.md"),
      [("UNCHECKABLE", "case")], [], "PASS"),
+    # C-1 (NOTE_path2a_sixth_pass_2026_09_30): each port reads a claim the other does not, a count or a tests claim in
+    # either place, and main's gates are FAIL / FAIL. 495d2204 withheld one port's claim and kept the other's: PASS /
+    # FAIL. Now main's CONTRADICTED stands in both ports wherever the two may read the claims apart.
+    ("C1-count-vs-tests", "13\x1cfiles changed. Added 3\ufefftests.", D_TWINS + D_TEST,
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
+    ("C1-tests-vs-count", "Added 0\x1ctests. 9\ufefffiles changed.", D_TEST,
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
+    ("C1-tests-vs-tests", "Added 0\x1ctests. Added 3\ufefftests.", D_TEST,
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
+    ("C1-tests-vs-tests-long-s", "Added 0 te\u017fts. Added 3\ufefftests.", D_TEST,
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
+    ("C1-tests-vs-tests-accents", "Add\u00e9d 0 tests. \u00e9Added 3 tests.", D_TEST,
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
+    # ... and the review's inherent case: a tests claim both ports read, beside a count only the port reads
+    ("C1-inherent", "Added 0 tests. 9\ufefffiles changed.", D_TEST,
+     [("CONTRADICTED", None)], [("CONTRADICTED", None), ("CONTRADICTED", None)], "FAIL"),
+    # ... and C-1's DECLARE-1 part: the port's `^` opens a fence after U+2028, CPython's does not, so only the port reads
+    # a declared count; the tests claim both read is CONTRADICTED (495d2204: PASS / FAIL)
+    ("C1-a-fence-only-the-port-opens", "Added 0 tests.\nx\u2028```styxx\nfiles_changed: 9\n```\n", D_TEST,
+     [("CONTRADICTED", None)], [("CONTRADICTED", None), ("CONTRADICTED", None)], "FAIL"),
+    # C-3 (NOTE_path2a_sixth_pass_2026_09_30): OM1, a false pairing of the one-match key. main's Python reads b/c.py
+    # (exact, kept), its port a/b/c.py (by base name, withheld as dir); under --strict the gates split although every
+    # claim pairs (the strict gate is C-4's case).
+    ("OM1-a-false-one-match-pairing", "Mod\u0131fied b/c.py.\ufeff`a/b/c.py` \u2014 updated",
+     _mod("b/c.py").replace("-a\n+b\n", "-x = 0\n+x = 1\n"), [("VERIFIED", None)], [("UNCHECKABLE", "dir")], "PASS",
+     [("left over, one match: kind and verdict", 0, 0, ("VERIFIED", None), ("UNCHECKABLE", "dir"))]),
 ]
 
 
 def test_cross_port_reproductions(M, tmp_path):
-    """Pass 3's C-1, pass 4's C-1 and pass 5's C-1, I-2 and C-3: the reviews' inputs whose claim text or detail differs
-    between main's two ports, and the declared values beside a letter outside ASCII. On 40bba05b R1, R4 and E1 split the
-    ports; on ea677740 X5, X5b, X2 and X3 split the gate verdicts; on 5ebe0b6b X2-13, G1, G2 and G3 did. A case may name
-    the splits it expects (L1, the one known false pairing of a measured key); every other case expects none."""
+    """Pass 3's C-1, pass 4's C-1, pass 5's C-1, I-2 and C-3, and pass 6's C-1 and C-3: the reviews' inputs whose claim
+    text or detail differs between main's two ports, and the declared values beside a letter outside ASCII. On 40bba05b
+    R1, R4 and E1 split the ports; on ea677740 X5, X5b, X2 and X3 split the gate verdicts; on 5ebe0b6b X2-13, G1, G2 and
+    G3 did; on 495d2204 the six C1 cases did. A case may name the splits it expects (L1 and OM1, the known false
+    pairings of the measured keys); every other case expects none."""
     items = [{"id": x[0], "summary": x[1], "diff": x[2]} for x in XPORT_CASES]
     (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=False), encoding="utf-8")
     ref = R.main_port_path(tmp_path)
@@ -1520,6 +1730,34 @@ def test_cross_port_reproductions(M, tmp_path):
         assert [_seen(x) for x in js[cid]["new"]["claims"]] == want_js, cid
         assert cross_port(a, b, js[cid]["main"], js[cid]["new"])[1] == (expect[0] if expect else []), cid
         assert b["verdict"] == js[cid]["new"]["verdict"] == gate, cid
+
+
+# B-2 (NOTE_path2a_sixth_pass_2026_09_30): #161's joint #121 reproductions. V121's count is false too (a submodule
+# line, an hg binary notice or a no-prefix directory main registers no file for), so under the but-for attribution
+# they are not misses; the false CONTRADICTED is kept and the right one withheld, in both ports. Operator option O-7
+# would withhold them, at the cost measured in the NOTE.
+JOINT_121 = {
+    "path2:m-121-a-submodule-line-licenses-nothing": ("FAIL", [("UNCHECKABLE", "count"), ("CONTRADICTED", None)]),
+    "path2:k4-a-dotted-twin-beside-a-submodule-line":
+        ("FAIL", [("CONTRADICTED", None), ("UNCHECKABLE", "count"), ("UNCHECKABLE", "only")]),
+    "path2:k4-a-dotted-twin-beside-an-hg-binary-notice": ("FAIL", [("CONTRADICTED", None), ("UNCHECKABLE", "count")]),
+    "path2:l-r10-np1-a-no-prefix-b-directory-beside-dotted-twins-abstains":
+        ("FAIL", [("UNCHECKABLE", "count"), ("UNCHECKABLE", "count"), ("CONTRADICTED", None)]),
+    "path2:l-r10-np2-a-no-prefix-whitespace-twin-beside-dotted-twins-abstains":
+        ("FAIL", [("UNCHECKABLE", "count"), ("UNCHECKABLE", "count"), ("CONTRADICTED", None)]),
+}
+
+
+def test_the_joint_121_reproductions_keep_mains_false_contradicted(tmp_path):
+    cases = {c["id"]: c for c in R.repro_cases()}
+    items = [{"id": k, "summary": cases[k]["summary"], "diff": cases[k]["diff"]} for k in JOINT_121]
+    (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=False), encoding="utf-8")
+    node("--decisions", R.main_port_path(tmp_path), tmp_path / "in.json", tmp_path / "out.json")
+    js = {d["id"]: d for d in json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))}
+    for k, (gate, want) in JOINT_121.items():
+        b = N.gate_diff_text(cases[k]["summary"], cases[k]["diff"]).to_dict()
+        assert (b["verdict"], [_seen(x) for x in b["claims"]]) == (gate, want), k
+        assert (js[k]["new"]["verdict"], [_seen(x) for x in js[k]["new"]["claims"]]) == (gate, want), k
 
 
 # ---- tables pinned by enumeration -------------------------------------------------------------------------------------
