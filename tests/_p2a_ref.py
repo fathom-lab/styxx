@@ -155,7 +155,8 @@ def repro_cases() -> tuple:
 
 def inputs(fuzz: bool = True) -> list[tuple[str, str, str, str]]:
     """(set, id, summary, diff) for every committed input: the pinned pairs, the regenerated fuzz corpus, the PATH-2
-    reproductions and #161's pinned-pair inputs, and the seeded PATH-2a fuzz."""
+    reproductions and #161's pinned-pair inputs, the seeded PATH-2a fuzz, and the seeded text-seam set (claims whose
+    text main's two ports build differently, NOTE_path2a_third_pass_2026_09_30)."""
     out = []
     for name in pinned_files():
         p = DIFFERENTIAL / name
@@ -166,10 +167,11 @@ def inputs(fuzz: bool = True) -> list[tuple[str, str, str, str]]:
     out += [("path2a_repros", x["id"], x["summary"], x["diff"]) for x in repro_cases()]
     if fuzz:
         try:
-            from ._p2a_cases import fuzz_pairs
+            from ._p2a_cases import fuzz_pairs, text_seam_pairs
         except ImportError:                       # imported as a top-level module by a scratch script
-            from _p2a_cases import fuzz_pairs
+            from _p2a_cases import fuzz_pairs, text_seam_pairs
         out += [("path2a_fuzz", x["id"], x["summary"], x["diff"]) for x in fuzz_pairs()]
+        out += [("path2a_seam", x["id"], x["summary"], x["diff"]) for x in text_seam_pairs()]
     return out
 
 

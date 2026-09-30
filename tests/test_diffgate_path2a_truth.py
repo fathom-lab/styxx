@@ -1,4 +1,5 @@
-"""PATH-2a coverage (B), judged by truth (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30).
+"""PATH-2a coverage (B), judged by truth (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30,
+NOTE_path2a_third_pass_2026_09_30).
 
 Truth comes from each case's base/head file model (tests/_p2a_truth.py), never from the diff. A decided claim is
 ATTRIBUTABLE when main's verdict is false by truth and a counterfactual variant of main without #97, without #121,
@@ -20,6 +21,7 @@ from __future__ import annotations
 import collections
 import functools
 import json
+import os
 import shutil
 import subprocess
 
@@ -154,6 +156,8 @@ def test_every_attributable_false_verdict_abstains_in_the_port(world, tmp_path):
     the port's own claims (its own details), and every claim the port's variants show attributable must be
     UNCHECKABLE in this port."""
     if NODE is None:
+        if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
+            pytest.fail("node is not on PATH under CI; the port half of the coverage check did not run")
         pytest.skip("node is not on PATH; the port half of the coverage check cannot run here")
     items = [{"id": str(k), "summary": it["summary"], "diff": it["diff"]} for k, (it, _a, _c) in enumerate(world)]
     (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=False), encoding="utf-8")
@@ -255,10 +259,10 @@ PY_PLANTS = [
      "    for rx in (_P2A_COARSE,):\n        ls = _p2a_lines(diff_text, rx)"),
     ("count CONTRADICTED interval shrunk", 'return ("count", "#121") if lo <= n <= hi else None',
      'return ("count", "#121") if lo <= n < hi else None'),
-    ("V97 allows a base name for a directory claim", 'if t == 2 and "/" in c and P2A_DIRECTORY_BASENAME_ABSTAINS:',
-     "if t == 2 and False:"),
-    ("V121 dropped", '    v121 = ok(_p2a_resolve(f.status("K"), f.groups("K"), ck, False))', "    v121 = True"),
-    ("V97+V121 dropped", '    vboth = ok(_p2a_resolve(f.status("K"), f.groups("K"), ck, True))', "    vboth = True"),
+    ("V97 allows a base name for a directory claim",
+     '    if "/" in c and P2A_DIRECTORY_BASENAME_ABSTAINS:\n        return None\n', "    if False:\n        return None\n"),
+    ("V121 dropped", '    v121 = ok(_p2a_resolve(f.status("K"), f.index("K"), ck, False))', "    v121 = True"),
+    ("V97+V121 dropped", '    vboth = ok(_p2a_resolve(f.status("K"), f.index("K"), ck, True))', "    vboth = True"),
     ("tests interval lower bound + 1", "g - min(g, p) <= n <= g", "g - min(g, p) + 1 <= n <= g"),
     ("symbol rule off", '    if f.defines(name):\n        return "symbol", "#101"\n',
      '    if False:\n        return "symbol", "#101"\n'),
@@ -266,8 +270,7 @@ PY_PLANTS = [
      '_P2A_COARSE_RUN = re.compile("[ \\t]*")'),
     ("names paired by their full run", "                    rem.add(line[r:_P2A_WORD_RUN.match(line, r).end()])",
      "                    rem.add(line[r:_P2A_NAME_RUN.match(line, r).end()])"),
-    ("the scope rule's V121 prefix set dropped",
-     '    if got["K", used_k, False] != got["A", used_a, False]:', "    if False:"),
+    ("the scope rule's V121 reading dropped", '    if got["K", False][1] != under:', "    if False:"),
     ("U2 dropped",
      "        if want is not None and tw is not None and len(keys[ws[i]]) > 1 and sts[ws[i]] != {want}:",
      "        if False:"),
@@ -278,24 +281,30 @@ PY_PLANTS = [
      "    todo = [c for c in g.claims if (c.kind, c.verdict) in _P2A_REACH]",
      "    todo = [c for c in g.claims if (c.kind, c.verdict) in _P2A_REACH and not strict]"),
     ("split read as keep", '    return ("split", "#101") if any(fires) else None', "    return None"),
-    ("extract off for paths", "    if _p2a_extract(f, claimed, c.text, want):", "    if False:"),
+    ("extract off for paths", "    if _p2a_extract(f, c, claimed, want):", "    if False:"),
     ("the port's reading of a wide path taken as never verified",
      "        if b and not _P2A_WIDE.search(b) and b in held and (want is None or regs[i][1] == want):",
      "        if False:"),
-    ("extract off for scopes", "    if i < 0 or _P2A_WIDE_DIV.search(c.text, i):", "    if False:"),
-    ("extract off for symbols", '    if _p2a_touches_wide(name, c.text):\n        return "extract", "#101"',
-     '    if False:\n        return "extract", "#101"'),
+    ("extract off for scopes", "    if _p2a_scope_doubt(f, d):", "    if False:"),
+    ("extract off for symbols",
+     '    if _P2A_WIDE.search(name) or (not c.detail.get("declared") and _p2a_in_runs(f, name, "name")):',
+     "    if False:"),
     ("odd reads every drive letter",
      '    return q == "." or q.endswith("/.") or (len(q) >= 2 and q[1] == ":" and (len(q) == 2 or q[2] != "/"))',
      '    return q == "." or q.endswith("/.") or (len(q) >= 2 and q[1] == ":")'),
     ("dot_earliest read as dot", '        return ("dot_earliest" if vboth else "dot"), "#121"',
      '        return "dot", "#121"'),
+    # pass 3 (NOTE_path2a_third_pass_2026_09_30)
+    ("the summary never read",
+     "        self.diff_text, self.name_status, self.summary, self._m = diff_text, name_status, summary, {}",
+     '        self.diff_text, self.name_status, self.summary, self._m = diff_text, name_status, "", {}'),
+    ("the scope's second prefix never read",
+     '            ps = [fm(x).rstrip("/.") for x in (prefixes if shaped else prefixes[:1])]',
+     '            ps = [fm(x).rstrip("/.") for x in prefixes[:1]]'),
 ]
-# Equivalent by construction, and said so rather than hidden: once the per-set comparison of V121 with main's key
-# has passed, a prefix set V121 would choose differently cannot read otherwise (a second prefix is path-shaped in a
-# space exactly when some changed path lies under it there, which the per-set comparison already compares). The
-# clause stays as the NOTE's rule; this plant is refused by the same check that shows it never decides alone.
-EQUIVALENT = {"the scope rule's V121 prefix set dropped"}
+# Plants that cannot change a record, said so rather than hidden: none this pass. Pass 2's one (a clause that never
+# decided alone) went with the per-set comparison it sat behind (NOTE_path2a_third_pass_2026_09_30, B-2).
+EQUIVALENT: set = set()
 
 
 def _planted(k, old, new):
@@ -374,14 +383,23 @@ JS_PLANTS = [
      'return (lo <= n && n < hi) ? ["count", "#121"] : null;'),
     # pass 2
     ("no split rule", '  return fires.some(x => x) ? ["split", "#101"] : null;', "  return null;"),
-    ("no extract for paths", '  if (_p2aExtract(f, claimed, c.text, want)) return ["extract", "#97, #121"];\n', ""),
+    ("no extract for paths", '  if (_p2aExtract(f, c, claimed, want)) return ["extract", "#97, #121"];\n', ""),
     ("the port reading its count as CPython's", "const _P2A_OWN = 1;", "const _P2A_OWN = 0;"),
+    # pass 3 (NOTE_path2a_third_pass_2026_09_30): C-2 and C-1, each as pass 2 read it
+    ("the port reads the claimed number from its own reason", '  let k = _P2A_DIGITS.exec(detail.n || "");',
+     "  let k = null;"),
+    ("the port reads a scope claim's text", '  if (_p2aScopeDoubt(f, d)) return ["extract", "#121"];',
+     '  if (_p2aScopeDoubt(f, d) || c.text.length >= 160) return ["extract", "#121"];'),
 ]
 
 
 @pytest.mark.parametrize("name,old,new", JS_PLANTS)
 def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
+    """Each plant must split the ports on a claim main's two ports give the same kind, verdict and detail (the key a
+    decision reads, NOTE_path2a_third_pass_2026_09_30)."""
     if NODE is None:
+        if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
+            pytest.fail("node is not on PATH under CI; the port plants did not run")
         pytest.skip("node is not on PATH; the port plants cannot run here")
     text = R.lf(R.PORT)
     block = R.js_block(text)
@@ -408,7 +426,7 @@ def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
         except Exception:                        # main's Python raises where its port does not
             continue
         for k, (x, jx) in enumerate(zip(a["claims"], j["main"]["claims"])):
-            if all(x[f] == jx[f] for f in ("kind", "verdict", "text")):
+            if all(x[f] == jx[f] for f in ("kind", "verdict", "detail")):
                 y, jy = b["claims"][k], j["new"]["claims"][k]
                 new_disagreements += (y["verdict"], R.phrase_key(y["why"], N._P2A_PHRASES)) != \
                     (jy["verdict"], R.phrase_key(jy["why"], N._P2A_PHRASES))

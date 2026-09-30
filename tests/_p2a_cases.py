@@ -382,6 +382,82 @@ def _odd_summary(rng) -> str:
     return " ".join(s)
 
 
+# ---- the text seam (NOTE_path2a_third_pass_2026_09_30, C-1) --------------------------------------------------------
+# Claims whose text main's two ports build differently while their kind, verdict and detail agree: CPython's strip()
+# and the port's trim() part on U+001C to U+001F, U+0085 and U+FEFF, so do the two sentence splitters' \s, and the text
+# is cut at 160 code points in one port and 160 UTF-16 units in the other. Modelled on the review's text-seam fuzz.
+
+EDGE = ["\ufeff", "\x1c", "\x1d", "\x1e", "\x1f", "\x85", "\u180e", "\u200b", "\xa0", "\u3000", " ", ""]
+ASTRAL = [chr(0x1F600), chr(0x1F680), chr(0x1F389), chr(0x1F525), chr(0x1D400)]
+BMP_WIDE = [chr(0x2728), chr(0xE9), chr(0x2014), chr(0x2192)]
+SEAM_FILES = ["src/app.py", "src/util.py", "docs/guide.md", "README.md", "tests/test_app.py", "config/settings.toml",
+              ".github/workflows/ci.yml", "lib/core.js"]
+
+
+def _seam_diff(files, created, deleted, tests, funcs):
+    out = []
+    for f in files:
+        if f in created:
+            body = "".join(f"+def test_n{i}():\n+    pass\n" for i in range(tests)) if f.endswith(".py") else "+x\n"
+            body += "".join(f"+def {fn}():\n+    return 1\n" for fn in funcs) if f.endswith(".py") else ""
+            k = body.count("\n") or 1
+            out.append(f"diff --git a/{f} b/{f}\nnew file mode 100644\n--- /dev/null\n+++ b/{f}\n@@ -0,0 +1,{k} @@\n{body}")
+        elif f in deleted:
+            out.append(f"diff --git a/{f} b/{f}\ndeleted file mode 100644\n--- a/{f}\n+++ /dev/null\n@@ -1 +0,0 @@\n-x\n")
+        else:
+            out.append(f"diff --git a/{f} b/{f}\n--- a/{f}\n+++ b/{f}\n@@ -1 +1 @@\n-x = 0\n+x = 1\n")
+    return "".join(out)
+
+
+def _seam_claim(rng, files, created, deleted):
+    k = rng.randrange(7)
+    f = rng.choice(files)
+    if k == 0:
+        return f"Created {rng.choice(created) if created else f}"
+    if k == 1:
+        return f"Removed {rng.choice(deleted) if deleted else f}"
+    if k == 2:
+        return f"Modified {f}"
+    if k == 3:
+        return f"Only touches {rng.choice(['src/', 'docs/', 'src', 'tests/', '.github/', 'lib/'])}"
+    if k == 4:
+        return f"{len(files) + rng.choice([0, 0, 1, -1])} files changed"
+    if k == 5:
+        return f"Added {rng.choice([0, 1, 2])} tests"
+    return f"Added function {rng.choice(['helper', 'run_all', 'parse'])}"
+
+
+@functools.lru_cache(maxsize=None)
+def text_seam_pairs(seed: int = 4242, n: int = 1000) -> tuple:
+    rng = random.Random(seed)
+    out = []
+    for i in range(n):
+        files = rng.sample(SEAM_FILES, rng.randint(1, 4))
+        created = [f for f in files if rng.random() < 0.4]
+        deleted = [f for f in files if f not in created and rng.random() < 0.3]
+        funcs = rng.sample(["helper", "run_all", "parse"], rng.randint(0, 2))
+        diff = _seam_diff(files, created, deleted, rng.choice([0, 1, 2]), funcs)
+        parts = []
+        for _ in range(rng.randint(1, 3)):
+            c = _seam_claim(rng, files, created, deleted)
+            mode = rng.randrange(5)
+            if mode == 0:
+                c = rng.choice(EDGE) + c + rng.choice(EDGE)
+            elif mode == 1:
+                c = c + "." + rng.choice(EDGE)
+            elif mode == 2:
+                pad = "".join(rng.choice(ASTRAL + BMP_WIDE) for _ in range(rng.randint(1, 30)))
+                c = pad + " " + "w" * rng.randint(60, 150) + " " + c + rng.choice([".", "", "\ufeff"])
+            elif mode == 3:
+                c = c + rng.choice(EDGE) + rng.choice(ASTRAL + BMP_WIDE + [""])
+            else:
+                c = c + "."
+            parts.append(c)
+        sep = rng.choice([" ", "\n", "", "\ufeff", "\x1f", "\x85", " \ufeff"])
+        out.append({"id": f"p2a-seam:{seed}:{i}", "summary": sep.join(parts), "diff": diff})
+    return tuple(out)
+
+
 @functools.lru_cache(maxsize=None)
 def fuzz_pairs(seed: int = 20260930, n: int = 2000) -> tuple:
     """The seeded PATH-2a fuzz: family renderings, some mutated with hazard characters, and odd-path diffs."""
