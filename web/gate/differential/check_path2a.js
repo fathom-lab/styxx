@@ -1,5 +1,5 @@
 // PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30 and
-// NOTE_path2a_third_pass_2026_09_30): the port's half of the committed PATH-2a checks, run by
+// NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30): the port's half of the committed PATH-2a checks, run by
 // tests/test_diffgate_path2a*.py, which write IN (a JSON list of {id, summary, diff}) and read OUT.
 //
 //   node check_path2a.js --relation  REF IN OUT   main's port (REF, the reconstruction) against this port, both
@@ -32,10 +32,10 @@ const DEFAULT_PORT = path.join(__dirname, "..", "diffgate.js");
 function internals(file, extra = "") {
   // The port's top-level functions and constants, read the way a page reads the file: as one script.
   const src = fs.readFileSync(file, "utf8");
-  const names = ["gateDiffText", "parseUnifiedDiff", "_norm", "_p2aRegsRaw", "_p2aBuild", "_p2aViews", "_p2aPairing",
+  const names = ["gateDiffText", "parseUnifiedDiff", "_norm", "_splitlines", "_p2aRegsRaw", "_p2aBuild", "_p2aViews", "_p2aPairing",
                  "_P2A_JS_SPACE", "_P2A_PY_SPACE", "_P2A_PY_BREAKS", "_P2A_DIVERGENT", "_P2A_HEADERS",
                  "_P2A_REACH_PAIRS", "_P2A_PHRASES", "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS", "_P2A_OWN",
-                 "_P2A_NEUTRAL", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw"];
+                 "_P2A_NEUTRAL_RANGES", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw"];
   return vm.runInNewContext(src + "\n" + extra + "\n;({" + names.join(", ") + "})", {}, { filename: file });
 }
 
@@ -101,7 +101,10 @@ function main(argv) {
       reach: P._P2A_REACH_PAIRS, phrases: P._P2A_PHRASES, kind_defect: P._P2A_KIND_DEFECT,
       directory_rule: P.P2A_DIRECTORY_BASENAME_ABSTAINS, own: P._P2A_OWN,
       // the summary's classes (NOTE_path2a_third_pass_2026_09_30): the units that are not wordish, and that are not bad
-      neutral: cps(P._P2A_NEUTRAL),
+      neutral: P._P2A_NEUTRAL_RANGES.flatMap(([a, b]) => Array.from({ length: b - a + 1 }, (_, k) => a + k)),
+      // pass 4 (NOTE_path2a_fourth_pass_2026_09_30, B-2): the neutral units this engine gives a case
+      neutral_cased: P._P2A_NEUTRAL_RANGES.flatMap(([a, b]) => Array.from({ length: b - a + 1 }, (_, k) => a + k))
+        .filter(u => { const ch = String.fromCharCode(u); return ch.toLowerCase() !== ch || ch.toUpperCase() !== ch; }),
       not_wordish: Array.from({ length: 0x10000 }, (_, u) => u).filter(u => !P._p2aWordishUnit(u)),
       not_bad: Array.from({ length: 0x10000 }, (_, u) => u).filter(u => !P._p2aBadUnit(u)),
       word_class: Array.from({ length: 0x10000 }, (_, u) => u).filter(u => /\w/.test(String.fromCharCode(u))),
@@ -116,10 +119,10 @@ function main(argv) {
     for (const it of items) {
       let parsed;
       try { parsed = P.parseUnifiedDiff(it.diff || ""); } catch (e) { skipped++; continue; }
-      const got = [...P._p2aBuild(P._p2aRegsRaw(it.diff || ""), P._norm)];
+      const got = [...P._p2aBuild(P._p2aRegsRaw(P._splitlines(it.diff || "")), P._norm)];
       n++;
       if (JSON.stringify(got) !== JSON.stringify([...parsed.status])) bad.push(it.id);
-      const pairing = P._p2aPairing(P._p2aViews(it.diff || ""));
+      const pairing = P._p2aPairing(P._p2aViews(it.diff || "", P._splitlines(it.diff || "")));
       counts[it.id] = { main: (parsed.addedBlob.match(/^\s*def test_/gm) || []).length, views: pairing.map(x => x[0]) };
     }
     fs.writeFileSync(argv[2], JSON.stringify({ checked: n, main_raises: skipped, differ: bad, counts }));

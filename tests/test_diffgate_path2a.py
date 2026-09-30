@@ -1,5 +1,5 @@
 """PATH-2a: main's diff gate, unchanged, plus an overlay that only abstains (NOTE_path2a_abstain_overlay_2026_09_30,
-NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30).
+NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30).
 
 The reference in every test here is `main` itself: this checkout's `styxx/diffgate.py` and `web/gate/diffgate.js` with
 the PATH-2a block cut out and the door hooks reverted, asserted to hash to the files on `origin/main` 1cde8b82
@@ -10,10 +10,12 @@ the PATH-2a block cut out and the door hooks reverted, asserted to hash to the f
     verdict is main's formula over the claims; each claim reads the same under --strict as without it; where main
     raises, the branch raises the same exception type.
 (C) cross-port -- a decision reads the claim's kind, verdict and detail and the door's bytes, never the claim's text;
-    wherever main's two ports give a claim the same kind, verdict and detail (by position, or matched across the two
-    lists), or the same kind, verdict and text, the overlay's verdict and phrase are the same in both, and so are they
-    where the lists are left with claims of one kind and verdict whose details differ; where every claim pairs so, the
-    gate verdicts agree; the constant tables the overlay leans on are pinned by enumeration on the running engines.
+    so wherever main's two ports give claims the same kind, verdict and detail -- by position, matched across the two
+    lists, or anywhere in either list -- the overlay's verdict and phrase are the same (by construction, asserted).
+    Measured on the committed inputs and asserted there only: the same for claims with the same kind, verdict and
+    text, and for claims left over whose details differ but nest and lie in each other's text (one match read two
+    ways, the `extract` guards' work); where every claim pairs so, the gate verdicts agree. The constant tables the overlay
+    leans on are pinned by enumeration on the running engines.
 And the static facts: the reconstruction, the self-checks over each block's source, the error fallback, the
 reproductions, the cost per call, and what must not move (the demo, the committed capsules, charon's lines, the
 bookmarklet source). Coverage (B) is in tests/test_diffgate_path2a_truth.py.
@@ -140,25 +142,28 @@ def flavour(mod) -> str:
 # NOTEs' rules before it was written down. A change to the overlay or to the inputs moves it. Pass 3
 # (NOTE_path2a_third_pass_2026_09_30) moved `symbol_added:extract` by +5 on the inputs pass 2 pinned (#161's x1
 # probes, whose name also occurs beside a letter outside ASCII); the text-seam set and the new pairs add the rest.
+# Pass 4 (NOTE_path2a_fourth_pass_2026_09_30), on the inputs pass 3 pinned: `only_touches:shape` 25 (24 of them kept
+# before, 1 `only`), and the wider neutral set keeps four claims `extract` withheld (one of them now `dir`); its 29 new
+# pairs add the rest.
 ABSTENTIONS = {
     "windows": {
-        "decided": 12646, "main raises": 8,
+        "decided": 12675, "main raises": 8,
         "file_created:case": 3, "file_created:dir": 65, "file_created:divergent": 19, "file_created:dot": 20,
-        "file_created:dot_earliest": 4, "file_created:dot_tier": 11, "file_created:extract": 49, "file_created:odd": 1,
+        "file_created:dot_earliest": 4, "file_created:dot_tier": 11, "file_created:extract": 48, "file_created:odd": 1,
         "file_created:tier": 9,
         "file_deleted:case": 1, "file_deleted:dir": 52, "file_deleted:divergent": 20, "file_deleted:dot": 21,
         "file_deleted:dot_earliest": 1, "file_deleted:dot_tier": 7, "file_deleted:extract": 55, "file_deleted:odd": 1,
         "file_deleted:tier": 4,
-        "file_touched:dir": 242, "file_touched:divergent": 102, "file_touched:dot": 82, "file_touched:dot_tier": 71,
-        "file_touched:extract": 145, "file_touched:odd": 5,
-        "files_changed_count:count": 381, "files_changed_count:divergent": 226,
-        "only_touches:divergent": 108, "only_touches:extract": 157, "only_touches:only": 33,
-        "symbol_added:extract": 25, "symbol_added:symbol": 172, "tests_added:split": 4, "tests_added:tests": 402,
+        "file_touched:dir": 243, "file_touched:divergent": 102, "file_touched:dot": 82, "file_touched:dot_tier": 71,
+        "file_touched:extract": 144, "file_touched:odd": 5,
+        "files_changed_count:count": 382, "files_changed_count:divergent": 226, "files_changed_count:extract": 4,
+        "only_touches:divergent": 108, "only_touches:extract": 158, "only_touches:only": 32, "only_touches:shape": 29,
+        "symbol_added:extract": 24, "symbol_added:symbol": 173, "tests_added:split": 4, "tests_added:tests": 403,
     },
 }
 # Under the POSIX flavour main reads `c:x.py` as a bare name not in the diff, so three decided drive-like claims are
 # UNCHECKABLE on main to begin with: path2a:guard-drive-like-path claim 0, and fuzz 20260930:1033 and :1590.
-ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12643, "file_touched:odd": 4}
+ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12672, "file_touched:odd": 4}
 del ABSTENTIONS["posix"]["file_created:odd"], ABSTENTIONS["posix"]["file_deleted:odd"]
 # main's own reading depends on the interpreter's Unicode tables where the inputs probe letters added in Unicode 14 and
 # 16 (#161's k2, x1 and y3 cases). Measured on CPython 3.12 (Unicode 15.0) and 3.14 (16.0); for Unicode 13.0 and 14.0
@@ -249,8 +254,12 @@ def test_lockstep_python(M, inputs):
             status, blob = M.parse_unified_diff(diff)
         except Exception:
             continue
-        assert list(N._p2a_build(N._p2a_regs_raw(diff or ""), N._norm).items()) == list(status.items()), iid
-        assert N._p2a_pairing(N._p2a_views(diff or ""))[0][0] == len(re.findall(r"^\s*def test_", blob, re.M)), iid
+        fine = N._p2a_lines(diff or "", N._P2A_FINE)
+        assert list(N._p2a_build(N._p2a_regs_raw(fine), N._norm).items()) == list(status.items()), iid
+        views = N._p2a_views(diff or "", fine)
+        assert N._p2a_pairing(views)[0][0] == len(re.findall(r"^\s*def test_", blob, re.M)), iid
+        # pass 4 (A-2): the facts object's shortcut (one view, counted once) gives what both views counted apart give
+        assert N._P2aFacts(diff or "").pairing() == N._p2a_pairing(views), iid
         checked += 1
     assert checked > 5000
 
@@ -265,7 +274,7 @@ def test_lockstep_port(work, inputs):
         got = rep["counts"].get(R.uid(i, row))
         if got is None:
             continue
-        mine = [g for g, _p in N._p2a_pairing(N._p2a_views(row[3] or ""))]
+        mine = [g for g, _p in N._p2a_pairing(N._p2a_views(row[3] or "", N._p2a_lines(row[3] or "", N._P2A_FINE)))]
         if got["views"][1] != got["main"] or got["views"] != mine:
             bad.append((row[1], got, mine))
     assert bad == [], bad[:5]
@@ -340,6 +349,11 @@ GIT_CASES = [
     ("count-twin", "2 files changed.", {"env.json": "1\n"}, {"env.json": "2\n", ".env.json": "3\n"}, None),
     ("non-ascii", "Modified café/x.py. 2 files changed.", {"café/x.py": "1\n", "docs/é.py": "1\n"},
      {"café/x.py": "2\n", "docs/é.py": "2\n"}, "false"),
+    # B-1 (NOTE_path2a_fourth_pass_2026_09_30): the fourth review's reproduction 3, a rename into a dotted directory,
+    # read at the git door (`--name-status` lists the new path only) and on the same bytes at the raw door
+    ("scope-shape-rename", "Only touches github and .github/workflows/.",
+     {".github/workflows/ci.yml": "a\n", "docs/x.md": "one\ntwo\nthree\nfour\nfive\n"},
+     {".github/workflows/ci.yml": "b\n", ".github/workflows/x.md": "one\ntwo\nthree\nfour\nfive\n"}, None),
 ]
 # Renames, a copy and a type change: `--name-status` then carries R, C and T entries, whose last field is the new path.
 SAME = "def a():\n    return 1\n\n\ndef b():\n    return 2\n"
@@ -424,6 +438,8 @@ def test_git_door_reproductions(tmp_path):
     assert rows("copy") == ("PASS", [("file_created", "UNCHECKABLE", None), ("file_touched", "VERIFIED", None),
                                      ("files_changed_count", "VERIFIED", None)])
     assert rows("typechange") == ("PASS", [("file_touched", "VERIFIED", None), ("files_changed_count", "VERIFIED", None)])
+    # B-1: main's VERIFIED is false (docs/x.md changed) and V121 does not read `github` as a path; ea677740 kept it
+    assert rows("scope-shape-rename") == ("PASS", [("only_touches", "UNCHECKABLE", "shape")])
 
     def raw(name):
         summary, repo = repos[name]
@@ -439,6 +455,7 @@ def test_git_door_reproductions(tmp_path):
                                                ("files_changed_count", "VERIFIED", None)])
     assert raw("line-separator") == ("PASS", [("file_touched", "UNCHECKABLE", "divergent"),
                                               ("files_changed_count", "UNCHECKABLE", "divergent")])
+    assert raw("scope-shape-rename") == ("PASS", [("only_touches", "UNCHECKABLE", "shape")])
 
 
 @pytest.mark.skipif(GIT is None, reason="git is not on PATH; the git door cannot be exercised here")
@@ -493,8 +510,14 @@ SELFCHECK_PLANTS = [
     (CLAIMED, '    claimed = claimed.encode("idna").decode("ascii")\n' + CLAIMED, "attribute .encode"),
     (CLAIMED, '    claimed = "{!r}".format(claimed)\n' + CLAIMED, "attribute .format"),
     (CLAIMED, '    claimed = eval("claimed.lower()")\n' + CLAIMED, "name eval"),
-    ("    return int(m.group(1)), int(k.group(0))\n", '    return int(m.group(1)), int(detail["n"])\n',
-     "int() of anything but a regex group"),
+    ("    return _p2a_int(m.group(1)), _p2a_int(k.group(0))\n", '    return int(m.group(1)), int(detail["n"])\n',
+     "name int"),
+    # C-3 (NOTE_path2a_fourth_pass_2026_09_30): int() reads CPython's table of decimal digits, so it is refused
+    # whatever its argument; the block reads digits from a fixed table instead
+    ("    return _p2a_int(m.group(1)), _p2a_int(k.group(0))\n", "    return int(m.group(1)), int(k.group(0))\n",
+     "name int"),
+    ("    return _p2a_int(m.group(1)), _p2a_int(k.group(0))\n",
+     "    return _p2a_int(m.group(1)), (lambda x: x)(int)(k.group(0))\n", "name int"),
     # C-3 (NOTE_path2a_third_pass_2026_09_30): the nine plants the pass-2 self-check accepted, and a few more
     (CLAIMED, "    import unicodedata as ud\n    claimed = ''.join(ch for ch in claimed if ud.category(ch) != 'Cf')\n"
      + CLAIMED, "an import"),
@@ -529,12 +552,16 @@ def test_the_selfcheck_refuses_a_planted_write(old, new, what):
     assert rep["ok"] is False and any(what in p for p in rep["problems"]), rep["problems"]
 
 
-JS_BANNED = ("toLowerCase", "toUpperCase", "toLocale", "localeCompare", "normalize(", ".trim", "trimStart", "trimEnd",
+JS_BANNED = ("toLowerCase", "toUpperCase", "toLocale", "localeCompare", "normalize", ".trim", "trimStart", "trimEnd",
              "\\p{", "Intl", ".sort(", "String.raw", "eval(", "Function(", "prototype", ".call(", ".apply(",
-             ".bind(", "Reflect", "globalThis", "require(", "import(", ".compile(", "__proto__", "constructor")
+             ".bind(", "Reflect", "globalThis", "require(", "import(", ".compile(", "__proto__", "constructor",
+             # C-3 (NOTE_path2a_fourth_pass_2026_09_30): a string method that builds a RegExp from its argument at run
+             # time, and a String object carrying a method off its prototype; the block uses .test and .exec on
+             # constant RegExps only
+             "new String(", ".match(", ".search(", ".matchAll(")
 # Identifiers a computed member access may index with: counters, positions and the block's own constant keys. A name
 # built from strings (claimed[kk]) is refused, and so is any call on a computed member (x[k](), (x[k])()).
-JS_INDEXES = {"0", "1", "2", "i", "k", "k+1", "k-1", "v", "space", "c.kind", "_P2A_OWN", "out.length-1"}
+JS_INDEXES = {"0", "1", "2", "i", "k", "k+1", "k-1", "v", "u", "space", "c.kind", "_P2A_OWN", "out.length-1"}
 JS_KEYWORDS = {"return", "of", "in", "const", "let", "var", "case", "typeof", "void", "delete", "throw", "yield",
                "await", "else", "do", "new"}
 JS_ESC = {"n": "\n", "r": "\r", "t": "\t", "v": "\v", "f": "\f", "b": "\b", "0": "\0"}
@@ -702,7 +729,7 @@ BS = chr(92)
      "class escape " + BS + "s"),
     ('  const kk = "toLower" + "Case"; const ca = _p2aA(claimed[kk]()), ck = _p2aK(claimed);',
      "computed member access indexed by 'kk'"),
-    ('  const ca = _p2aA(claimed.normalize ("NFKC")), ck = _p2aK(claimed);', "banned token 'normalize(' in code"),
+    ('  const ca = _p2aA(claimed.normalize ("NFKC")), ck = _p2aK(claimed);', "banned token 'normalize'"),
     ("  const ca = _p2aA(claimed. trim()), ck = _p2aK(claimed);", "banned token '.trim' in code"),
     ('  const i = "toLower" + "Case"; const ca = _p2aA((claimed[i])()), ck = _p2aK(claimed);',
      "a call on a parenthesised expression"),
@@ -716,6 +743,17 @@ BS = chr(92)
     ('  const ca = _p2aA(claimed.replace(new RegExp("a.b"), "")), ck = _p2aK(claimed);', "unescaped '.'"),
     ('  const ca = _p2aA(claimed.replace(new RegExp(claimed), "")), ck = _p2aK(claimed);',
      "new RegExp with an argument that is not one static string"),
+    # C-3 (NOTE_path2a_fourth_pass_2026_09_30): the fourth review's three plants, each of which the pass-3 scan accepted
+    ('  const ca = _p2aA(claimed.match("' + BS * 2 + '" + "s") ? "" : claimed), ck = _p2aK(claimed);',
+     "banned token '.match('"),
+    ('  const ca = _p2aA(claimed.search("' + BS * 2 + '" + "s") > 0 ? "" : claimed), ck = _p2aK(claimed);',
+     "banned token '.search('"),
+    ('  const w = new String(claimed); w.q = w.normalize; const ca = _p2aA(w.q("NFKC")), ck = _p2aK(claimed);',
+     "banned token 'normalize'"),
+    ('  const w = new String(claimed); w.q = w.normalize; const ca = _p2aA(w.q("NFKC")), ck = _p2aK(claimed);',
+     "banned token 'new String('"),
+    ('  const ca = _p2aA([...claimed.matchAll(new RegExp("x"))].length ? claimed : ""), ck = _p2aK(claimed);',
+     "banned token '.matchAll('"),
 ])
 def test_the_token_scan_refuses_the_reviews_plants(new, what):
     block = R.js_block()
@@ -971,6 +1009,26 @@ def test_the_action_shows_an_overlay_reason_whole(tmp_path, monkeypatch):
     why = row[:-2].rsplit(" | ", 1)[1]
     assert why.startswith("MALFORMED") and len(why) == 100, row
     assert mod._OVERLAY_KINDS == {kind for kind, _v in N._P2A_REACH}
+    # Pass 4 (NOTE_path2a_fourth_pass_2026_09_30, the integration lens): each of the three conditions is needed. A
+    # reason of a kind the overlay may move that holds the form only mid-string, and a decided claim whose reason
+    # starts with the form, are cut at 100 as main cuts them; the overlay's own reason is shown whole.
+    form = "VERIFIED withheld by PATH-2a (#97): "
+    rows = [("mid", N.DiffClaim(kind="file_touched", text="mid", detail={}, verdict="UNCHECKABLE",
+                                why="x " + form + "A" * 300)),
+            ("decided", N.DiffClaim(kind="file_touched", text="decided", detail={}, verdict="CONTRADICTED",
+                                    why=form + "B" * 300)),
+            ("ours", N.DiffClaim(kind="file_touched", text="ours", detail={}, verdict="UNCHECKABLE",
+                                 why=form + "C" * 300))]
+    fake = N.DiffGate(verdict="FAIL", base="(diff-text)", head="(diff-text)", claims=[c for _k, c in rows],
+                      measured=True)
+    monkeypatch.setattr(mod, "gate_diff_text", lambda *a, **k: fake)
+    (tmp_path / "sum.md").write_text("", encoding="utf-8")
+    mod.main()
+    table = (tmp_path / "sum.md").read_text(encoding="utf-8")
+    shown = {line.split(" | ")[1]: line[:-2].rsplit(" | ", 1)[1] for line in table.splitlines()
+             if line.startswith("| ") and " | " in line and line.split(" | ")[1] in ("mid", "decided", "ours")}
+    assert len(shown["mid"]) == 100 and len(shown["decided"]) == 100, shown
+    assert shown["ours"] == rows[2][1].why
 
 
 def test_the_port_differential_reads_mains_corpora_only():
@@ -1024,16 +1082,34 @@ def _timing_cases() -> list[dict]:
     long_line = {"id": "long-line-20000", "summary": "Added 1 test.",
                  "diff": ("--- a/tests/test_x.py\n+++ b/tests/test_x.py\n@@ -1 +1 @@\n-def test_a():\n+x "
                           + "def test_a " * 20000 + "\n")}
+
+    # A-1 (NOTE_path2a_fourth_pass_2026_09_30): the fourth review's Q1 to Q3, a summary of about 64 KB (GitHub's
+    # pull-request body limit) whose claims each met every run or zone of the summary; ea677740 took 3.8 s, 2.6 s and
+    # 0.6 s on them in Python. Q4 is the same for the count guard this pass adds.
+    one = ("diff --git a/a.py b/a.py\n--- a/a.py\n+++ b/a.py\n@@ -1 +1,2 @@\n-def foo(): pass\n"
+           "+def foo(): return 1\n+x = 1\n")
+    twins = one + "".join(f"diff --git a/{p} b/{p}\n--- a/{p}\n+++ b/{p}\n@@ -1 +1 @@\n-a\n+b\n" for p in (".env", "env"))
+
+    def fill(head, n, tail):
+        body = head * n + "\n"
+        return body + tail * ((65536 - len(body)) // len(tail))
+
+    q = [{"id": "q1-paths-by-wordish-runs", "summary": fill("Modified a.py. ", 2184, e + " "), "diff": one},
+         {"id": "q2-symbols-by-wordish-runs", "summary": fill("Added function foo. ", 1638, e + " "), "diff": one},
+         {"id": "q3-scopes-by-zones", "summary": fill("Only touches a.py. ", 1724, "only " + e + ".\n"), "diff": one},
+         {"id": "q4-counts-by-digit-runs", "summary": fill("3 files changed. ", 1900, e + "3 "), "diff": twins}]
     return [wide_def(5000, e), wide_def(50000, e), wide_def(50000, zh), files(2000, 200), same_base(2000, 200),
-            symbols(500, 50000), class_nbsp(300, 20000), long_line]
+            symbols(500, 50000), class_nbsp(300, 20000), long_line] + q
 
 
 # The overlay's own time, the least of three runs on main's record for the same input (NOTE_path2a_third_pass_2026_09_30,
 # I-2: pass 2 subtracted two single wall-clock samples of whole calls). The shapes: a `def` beside a 5,000- or
 # 50,000-code-point run, one 220 KB added line of `def test_a`, 2,000 files with 200 path claims under 50 directories and
-# under one base name, 500 symbol claims over 50,000 removed `def` lines, and 300 class claims beside NBSP runs. Bound:
-# 0.5 s in Python, 0.3 s in the port. On 40bba05b the overlay alone took 0.80 s on the one-base-name case, 38.6 s on the
-# symbols and 16.8 s on the NBSP classes in Python (CPython 3.12.10); here each takes under 0.1 s.
+# under one base name, 500 symbol claims over 50,000 removed `def` lines, 300 class claims beside NBSP runs, and 64 KB
+# summaries whose path, symbol, scope and count claims each meet thousands of runs or zones. Bound: 0.5 s in Python,
+# 0.3 s in the port. On 40bba05b the overlay alone took 0.80 s on the one-base-name case, 38.6 s on the symbols and
+# 16.8 s on the NBSP classes in Python (CPython 3.12.10); on ea677740, 3.8 s on q1. The figures at this head are in
+# NOTE_path2a_fourth_pass_2026_09_30 and the README, measured the way this test measures them.
 OVERLAY_S = (0.5, 0.3)
 
 
@@ -1067,13 +1143,29 @@ def _kvd(c):
     return c["kind"], c["verdict"], json.dumps(c["detail"], sort_keys=True)
 
 
+_READ = ("path", "name", "prefix", "prefix2", "n")
+
+
+def _one_match(x, u):
+    """Whether two claims with the same kind and verdict and different details may be one match read two ways: they
+    read the same fields, each field's two values nest (one template read on past where the other stopped), and each
+    claim's values lie in the other's text."""
+    dx, du = x["detail"] or {}, u["detail"] or {}
+    keys = [k for k in _READ if k in dx or k in du]
+    return all(isinstance(dx.get(k), str) and isinstance(du.get(k), str) and (dx[k] in du[k] or du[k] in dx[k])
+               and dx[k] in u["text"] and du[k] in x["text"] for k in keys)
+
+
 def cross_port(a, b, ja, jb):
-    """(C) for one input (NOTE_path2a_third_pass_2026_09_30, C-1). a, b: main's and the branch's Python records; ja, jb:
-    the same in the port. Returns the claim counts per key, the splits, and whether every claim pairs on kind and
-    verdict. The keys: the same position with the same (kind, verdict, detail) -- decided alike by construction, since a
-    decision reads nothing else of the claim --; the same position with the same (kind, verdict, text); claims matched
-    across the two lists by (kind, verdict, detail), in order; and, in lists of equal length, the claims left over,
-    paired in order, where main's verdicts may agree on claims whose details differ (the `extract` guard's work)."""
+    """(C) for one input (NOTE_path2a_third_pass_2026_09_30, C-1; NOTE_path2a_fourth_pass_2026_09_30, C-2). a, b:
+    main's and the branch's Python records; ja, jb: the same in the port. Returns the claim counts per key, the splits,
+    and whether every claim pairs. By construction, since a decision reads nothing of a claim but its kind, verdict and
+    detail (and the door's bytes): claims main's ports give the same (kind, verdict, detail) are decided alike, at the
+    same position, matched across the lists in order, or anywhere in either list. Measured on named sets: the same
+    position with the same (kind, verdict, text); and, in lists of equal length, the claims left over with the same kind
+    and verdict whose details differ but nest and lie in each other's text (`_one_match`: one match the two templates
+    read apart, the `extract` guards' work). Left-over claims that are not one match (two ports reading different sentences)
+    are not paired, and an input with such a claim is not one whose claims all pair."""
     c = collections.Counter()
     splits = []
     A, B, X, Y = a["claims"], b["claims"], ja["claims"], jb["claims"]
@@ -1086,6 +1178,14 @@ def cross_port(a, b, ja, jb):
                     c[key] += 1
                     if _seen(u) != _seen(v):
                         splits.append((key, k, _seen(u), _seen(v)))
+    decided = collections.defaultdict(set)
+    for side, mains, news in (("python", A, B), ("port", X, Y)):
+        for x, u in zip(mains, news):
+            decided[_kvd(x)].add((side, _seen(u)))
+    for k, got in decided.items():
+        c["any: kind, verdict, detail"] += len(got)
+        if len({s for _side, s in got}) > 1:
+            splits.append(("any: kind, verdict, detail", k, sorted(got)))
     free = list(range(len(X)))
     pairs, rest = [], []
     for n, x in enumerate(A):
@@ -1095,18 +1195,19 @@ def cross_port(a, b, ja, jb):
         else:
             free.remove(m)
             pairs.append((n, m, "matched: kind, verdict, detail"))
-    if same_len:
-        pairs += [(n, m, "left over: kind and verdict") for n, m in zip(rest, free)]
     every = same_len
+    if same_len:
+        for n, m in zip(rest, free):
+            if (A[n]["kind"], A[n]["verdict"]) == (X[m]["kind"], X[m]["verdict"]) and _one_match(A[n], X[m]):
+                pairs.append((n, m, "left over, one match: kind and verdict"))
+            else:
+                every = False
     for n, m, key in pairs:
-        if (A[n]["kind"], A[n]["verdict"]) != (X[m]["kind"], X[m]["verdict"]):
-            every = False
-            continue
         c[key] += 1
         if _seen(B[n]) != _seen(Y[m]):
             splits.append((key, n, m, _seen(B[n]), _seen(Y[m])))
     if every and b["verdict"] != jb["verdict"]:
-        splits.append(("gate verdict where every claim pairs on kind and verdict",))
+        splits.append(("gate verdict where every claim pairs",))
     return c, splits, every
 
 
@@ -1136,51 +1237,82 @@ def test_cross_port_decisions(M, inputs, work):
             continue
         counts, found, every = cross_port(a, b, j["main"], j["new"])
         c.update(counts)
-        c["inputs whose claims all pair on kind and verdict"] += every
+        c["inputs whose claims all pair"] += every
         splits += [(row[0], row[1]) + s for s in found]
         if a["verdict"] == j["main"]["verdict"] and b["verdict"] != j["new"]["verdict"]:
             gate.add(row[1])
     print("cross-port:", dict(c), "gate splits where main's gates agree:", sorted(gate))
     assert not splits, splits[:10]
-    assert c["position: kind, verdict, detail"] > 18000 and c["left over: kind and verdict"] > 20
+    assert c["position: kind, verdict, detail"] > 18000 and c["left over, one match: kind and verdict"] > 20
     assert gate == GATE_SPLITS_MAIN_AGREES
 
 
 D_MOD = "diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n"
 D_GUIDE = ("diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1 +1 @@\n"
            "-old\n+new\n") + D_MOD
-# The review's cross-port reproductions that main's own ports read with different sentence counts, so that they cannot
-# be pinned pairs (check_pairs.js compares the uncovered sentences): each port's decisions, pinned in both.
+D_TWINS = D_MOD + "".join(f"diff --git a/{p} b/{p}\n--- a/{p}\n+++ b/{p}\n@@ -1 +1 @@\n-a\n+b\n"
+                          for p in (".env", "env"))
+D_CAFE = ("diff --git a/docs/r\u00e9sum\u00e9/index.md b/docs/r\u00e9sum\u00e9/index.md\n--- a/docs/r\u00e9sum\u00e9/index.md\n"
+          "+++ b/docs/r\u00e9sum\u00e9/index.md\n@@ -1 +1 @@\n-a\n+b\n"
+          "diff --git a/docs/caf\u00e9.md b/docs/caf\u00e9.md\nnew file mode 100644\n--- /dev/null\n+++ b/docs/caf\u00e9.md\n"
+          "@@ -0,0 +1 @@\n+x\n")
+# The reviews' cross-port reproductions that main's own ports read with different claim texts, details or sentence
+# counts, so that one pinned expect cannot hold both: each port's decisions, pinned in each (want for Python, want for
+# the port), and the gate verdict both must reach.
 XPORT_CASES = [
     ("R1-bom-joined-sentences", "Modified src/app.py." + chr(0xFEFF) + "Tidied up.", D_MOD,
-     [("VERIFIED", None)]),
+     [("VERIFIED", None)], [("VERIFIED", None)], "PASS"),
     ("R4-nel-after-only-prefix", "Only touches docs/." + chr(0x85) + "Thanks.", D_MOD,
-     [("UNCHECKABLE", "extract")]),
+     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
     ("E1-emoji-release-note", chr(0x1F680) + chr(0x1F389) + " Release prep " + chr(0x1F9F9) + chr(0x1F527)
      + ": bumped the pinned dependencies, regenerated the lockfile, fixed two flaky network timeouts in the nightly "
-       "CI job, and updated docs/guide.md for the next release.", D_GUIDE, [("VERIFIED", None)]),
+       "CI job, and updated docs/guide.md for the next release.", D_GUIDE, [("VERIFIED", None)], [("VERIFIED", None)],
+     "PASS"),
+    # C-1 (NOTE_path2a_fourth_pass_2026_09_30): one count match that CPython reads as 33 and the port as 3 (X5, X5b);
+    # ea677740 kept the Python's CONTRADICTED and withheld the port's, and the gates split FAIL / PASS
+    ("X5-fullwidth-digit-before-the-count", chr(0xFF13) + "3 files changed.", D_TWINS,
+     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+    ("X5b-arabic-digit-before-the-count", chr(0x663) + "3 files changed.", D_TWINS,
+     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+    # each port reads a count the other does not (X2, X3): on ea677740 the gates split PASS / FAIL
+    ("X2-nel-and-cjk-counts", "3 files" + chr(0x85) + "changed. " + chr(0x5171) + "5 files changed.", D_TWINS,
+     [("UNCHECKABLE", "count")], [("UNCHECKABLE", "extract")], "PASS"),
+    ("X3-fullwidth-and-cjk-counts", chr(0xFF13) + " files changed. " + chr(0x5171) + "5 files changed.", D_TWINS,
+     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+    # C-2 (fourth review): the realistic X6b, two different claims each port reads from a different sentence; the
+    # decisions differ, as the two claims do, and neither is paired with the other
+    ("X6b-accented-directory-and-a-created-file",
+     "Changed the parser in `docs/r\u00e9sum\u00e9/index.md`. Added `docs/caf\u00e9.md`.", D_CAFE,
+     [("VERIFIED", None)], [("UNCHECKABLE", "extract")], "PASS"),
 ]
 
 
 def test_cross_port_reproductions(M, tmp_path):
-    """C-1: the review's inputs whose claim text differs between main's two ports. On 40bba05b each split the ports."""
-    items = [{"id": cid, "summary": s, "diff": d} for cid, s, d, _want in XPORT_CASES]
+    """Pass 3's C-1 and pass 4's C-1: the reviews' inputs whose claim text or detail differs between main's two ports.
+    On 40bba05b R1, R4 and E1 split the ports; on ea677740 X5, X5b, X2 and X3 split the gate verdicts."""
+    items = [{"id": cid, "summary": s, "diff": d} for cid, s, d, _py, _js, _gate in XPORT_CASES]
     (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=False), encoding="utf-8")
     ref = R.main_port_path(tmp_path)
     node("--decisions", ref, tmp_path / "in.json", tmp_path / "out.json")
     js = {d["id"]: d for d in json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))}
-    for cid, s, d, want in XPORT_CASES:
+    for cid, s, d, want_py, want_js, gate in XPORT_CASES:
         a, b = M.gate_diff_text(s, d).to_dict(), N.gate_diff_text(s, d).to_dict()
-        assert [_seen(x) for x in b["claims"]] == want, cid
-        assert [_seen(x) for x in js[cid]["new"]["claims"]] == want, cid
+        assert [_seen(x) for x in b["claims"]] == want_py, cid
+        assert [_seen(x) for x in js[cid]["new"]["claims"]] == want_js, cid
         assert cross_port(a, b, js[cid]["main"], js[cid]["new"])[1] == [], cid
-        assert b["verdict"] == js[cid]["new"]["verdict"], cid
+        assert b["verdict"] == js[cid]["new"]["verdict"] == gate, cid
 
 
 # ---- tables pinned by enumeration -------------------------------------------------------------------------------------
 
 def _set(s):
     return {ord(ch) for ch in s}
+
+
+def _neutral():
+    """The neutral code points, read off the Python block's regex class."""
+    rx = re.compile("[" + N._P2A_NEUTRAL + "]")
+    return {cp for cp in range(0x80, 0x10000) if rx.match(chr(cp))}
 
 
 def test_python_tables():
@@ -1195,16 +1327,23 @@ def test_python_tables():
     assert {cp for cp in range(0x110000) if chr(cp).translate(N._P2A_FOLD) != chr(cp)} == \
         set(range(65, 91)) | {0x130, 0x212A}
     assert N._P2A_OWN == 0
-    # The summary's classes (NOTE_path2a_third_pass_2026_09_30, C-1): the neutral code points and the four divergent
-    # ones are never a word character here, nor fold to an ASCII letter under re.I; the neutral ones are white space
-    # in both ports or in neither; every other code point from 0x80 up is wordish, and so is every one CPython's
-    # templates read as a word character or fold to a letter.
-    neutral = _set(N._P2A_NEUTRAL)
+    # The summary's classes (NOTE_path2a_third_pass_2026_09_30, C-1; NOTE_path2a_fourth_pass_2026_09_30, B-2): the
+    # neutral code points and the four divergent ones are never a word character here, nor fold to an ASCII letter
+    # under re.I; the neutral ones have no case, lie in the Basic Multilingual Plane (one UTF-16 unit each), and are
+    # white space in both ports or in neither; every other code point from 0x80 up is wordish, and so is every one
+    # CPython's templates read as a word character or fold to a letter.
+    neutral = _neutral()
     never_word = neutral | {0x85, 0x2028, 0x2029, 0xFEFF}
-    assert len(neutral) == 11 and not neutral & _set(N._P2A_DIVERGENT)
+    assert len(neutral) == 1828 and max(neutral) < 0x10000 and not neutral & _set(N._P2A_DIVERGENT)
     assert all(re.match(r"\w", chr(cp)) is None and not chr(cp).isalnum() for cp in never_word)
     assert all(re.match("[A-Za-z_]", chr(cp), re.I) is None for cp in never_word)
+    assert all(chr(cp).lower() == chr(cp).upper() == chr(cp).casefold() == chr(cp) for cp in neutral)
     assert all((cp in _set(N._P2A_PY_SPACE)) == (cp in _set(N._P2A_JS_SPACE)) for cp in neutral)
+    # every neutral code point assigned in Unicode 3.2 was punctuation, a symbol or a space there too, so none became
+    # a letter, a mark or a number between the versions CI's interpreters carry (the two variation selectors aside)
+    old = unicodedata.ucd_3_2_0
+    assert all(old.category(chr(cp)) == "Cn" or old.category(chr(cp))[0] in "PSZ" or cp in (0xFE0E, 0xFE0F)
+               for cp in neutral)
     wordish = {cp for cp in range(0x80, 0x110000) if N._P2A_WORDISH_RX.match(chr(cp))}
     assert wordish == set(range(0x80, 0x110000)) - never_word
     assert {cp for cp in range(0x110000) if N._P2A_BAD_RX.match(chr(cp))} == wordish | _set(N._P2A_DIVERGENT)
@@ -1228,8 +1367,8 @@ def test_port_tables_and_constants(tmp_path):
     assert t["phrases"] == N._P2A_PHRASES and t["kind_defect"] == N._P2A_KIND_DEFECT
     assert t["directory_rule"] is True and t["own"] == 1
     # the summary's classes in UTF-16 units (C-1): every unit of a surrogate pair is wordish, as its code point is
-    never_word = _set(N._P2A_NEUTRAL) | {0x85, 0x2028, 0x2029, 0xFEFF}
-    assert set(t["neutral"]) == _set(N._P2A_NEUTRAL)
+    never_word = _neutral() | {0x85, 0x2028, 0x2029, 0xFEFF}
+    assert set(t["neutral"]) == _neutral() and t["neutral_cased"] == []
     assert set(t["not_wordish"]) == set(range(0x80)) | never_word
-    assert set(t["not_bad"]) == (set(range(0x80)) - _set(N._P2A_DIVERGENT)) | _set(N._P2A_NEUTRAL)
+    assert set(t["not_bad"]) == (set(range(0x80)) - _set(N._P2A_DIVERGENT)) | _neutral()
     assert set(t["word_class"]) <= set(range(0x80)), "the port's word class reads outside ASCII"

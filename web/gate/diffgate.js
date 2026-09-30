@@ -677,8 +677,9 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 
 // === PATH-2a abstain-only overlay: BEGIN ===
 //
-// NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30 and NOTE_path2a_third_pass_2026_09_30.
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 2ffa83b8a5654b9a369d46efa119848c2c6d347ad86e42eaec5917a3ab09b5a5, LF). Everything outside this block is
+// NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30 and
+// NOTE_path2a_fourth_pass_2026_09_30.
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 dadcf7ff78409a713c2c5b4b4351a993f5f4615d21b6770ea676311118d339fa, LF). Everything outside this block is
 // main's port at 1cde8b82 (sha256 06688702..., LF), unchanged except that main's gateDiffText is named
 // _gateDiffTextMain (its definition and its DECLARE-1 self-call); the gateDiffText at the end of this block calls it
 // and then the overlay, once. The overlay reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason
@@ -696,11 +697,16 @@ const _P2A_PY_BREAKS = "\n\r\u000b\u000c\u001c\u001d\u001e\u0085\u2028\u2029";
 const _P2A_JS_SPACE = "\t\n\u000b\u000c\r \u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000\ufeff";
 const _P2A_PY_SPACE = "\t\n\u000b\u000c\r\u001c\u001d\u001e\u001f \u0085\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000";
 const _P2A_DIVERGENT = "\u000b\u000c\u001c\u001d\u001e\u001f\u0085\u2028\u2029\ufeff";
-const _P2A_NEUTRAL = "\u00a0\u2013\u2014\u2018\u2019\u201c\u201d\u2022\u2026\u2192\u3000";
+// The neutral code points (NOTE_path2a_fourth_pass_2026_09_30, B-2), as the Python's _P2A_NEUTRAL class: all in the
+// Basic Multilingual Plane, so each is one UTF-16 unit.
+const _P2A_NEUTRAL_RANGES = [[0xa0, 0xa9], [0xab, 0xac], [0xae, 0xb1], [0xb4, 0xb4], [0xb6, 0xb8], [0xbb, 0xbb], [0xbf, 0xbf], [0xd7, 0xd7], [0xf7, 0xf7], [0x1680, 0x1680], [0x2000, 0x200a], [0x2010, 0x2027], [0x202f, 0x203e], [0x2041, 0x2053], [0x2055, 0x205f], [0x20a0, 0x20bf], [0x2190, 0x23ff], [0x2500, 0x2775], [0x2794, 0x27bf], [0x2b00, 0x2b73], [0x2b76, 0x2b95], [0x2b97, 0x2bff], [0x3000, 0x3004], [0x3008, 0x3020], [0x3030, 0x3030], [0x3036, 0x3037], [0x303d, 0x303f], [0xfe0e, 0xfe19], [0xfe30, 0xfe32], [0xfe35, 0xfe4c], [0xfe50, 0xfe52], [0xfe54, 0xfe66], [0xfe68, 0xfe6b], [0xff01, 0xff0f], [0xff1a, 0xff20], [0xff3b, 0xff3e], [0xff40, 0xff40], [0xff5b, 0xff65]];
 const _P2A_OWN = 1;             // this port's main reads line view 1 (its own breaks) with its own white space
 const _P2A_HEADERS = ["diff --git ", "--- ", "+++ ", "rename from ", "rename to ", "new file mode", "deleted file mode", "Binary files "];
 const _P2A_FINE = new RegExp("\r\n|[" + _P2A_PY_BREAKS + "]");
 const _P2A_COARSE = new RegExp("\r\n|\r|\n");
+const _P2A_FINE_ONLY = new RegExp("[\u000b\u000c\u001c\u001d\u001e\u0085\u2028\u2029]");   // where the two splits can part
+const _P2A_LEAD_APART = new RegExp("[\u001c\u001d\u001e\u001f\u0085\ufeff]");   // white space of one main only
+const _P2A_SEP = "\u0000";      // joins the summary's runs and zones; never in a claimed path, name, prefix or number
 const _P2A_COUNT_HEAD = new RegExp("^diff changes ([0-9]+) files, claim says ");
 const _P2A_TESTS_HEAD = new RegExp("^diff adds ([0-9]+) test functions, claim says ");
 const _P2A_DIGITS = new RegExp("^[0-9]+$");
@@ -717,10 +723,11 @@ const _P2A_PHRASES = {
   "dot_tier": "with leading dots kept and the closest match taken, the claim reads otherwise",
   "count": "two changed paths differ only by a leading dot, which the path key drops, and counted apart the claim reads otherwise",
   "only": "with leading dots kept, whether every changed path lies under the prefix reads otherwise",
+  "shape": "with leading dots kept, no changed path has the prefix as a segment, so it is not read as a path",
   "tests": "a test the added lines count is also defined in the removed lines, and a changed test is not an added one",
   "split": "a test the added lines count is also defined in the removed lines, and the Python and JavaScript readers split or space these lines differently",
   "symbol": "the removed lines define this name too, and a changed definition is not an added one",
-  "extract": "the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name or prefix is read, so the two may extract the claim differently",
+  "extract": "the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name, prefix or number is read, so the two may extract the claim differently",
   "divergent": "a file header of this diff holds a character that the Python and JavaScript readers split or strip differently",
   "odd": "a path here has a drive-like prefix or a final '.' segment, where base names are read differently",
   "case": "a path here compares only where case outside ASCII is folded, which this overlay does not do",
@@ -735,10 +742,10 @@ function _p2aLines(text, rx) {
   return out;
 }
 
-function _p2aRegsRaw(diffText) {
+function _p2aRegsRaw(lines) {
   // (path as written, status, via) wherever parseUnifiedDiff hands a path to _norm, in its order: its loop line
-  // for line, `status.set(_norm(x), st)` read as a push; via "+" assigns, "p" (a BIN-1 flush) registers only a key
-  // not yet held. A flush is kept even where its key is already registered.
+  // for line (`lines`, the diff as _splitlines splits it), `status.set(_norm(x), st)` read as a push; via "+" assigns,
+  // "p" (a BIN-1 flush) registers only a key not yet held. A flush is kept even where its key is already registered.
   const regs = [];
   let oldPath = null;
   let pending = null;
@@ -748,7 +755,7 @@ function _p2aRegsRaw(diffText) {
       if (raw) regs.push([raw, pending.status, "p"]);
     }
   };
-  for (const line of _splitlines(diffText)) {
+  for (const line of lines) {
     if (line.startsWith("diff --git ")) {
       flush();
       pending = new _Pending(line);
@@ -770,13 +777,17 @@ function _p2aRegsRaw(diffText) {
   return regs;
 }
 
-function _p2aViews(diffText) {
-  // [[added, removed]] under CPython's line breaks and under the port's; each port's main reads one.
-  return [_P2A_FINE, _P2A_COARSE].map(rx => {
-    const ls = _p2aLines(diffText, rx);
-    return [ls.filter(x => x.startsWith("+") && !x.startsWith("+++")).map(x => x.slice(1)),
-            ls.filter(x => x.startsWith("-") && !x.startsWith("---")).map(x => x.slice(1))];
-  });
+function _p2aView(ls) {
+  return [ls.filter(x => x.startsWith("+") && !x.startsWith("+++")).map(x => x.slice(1)),
+          ls.filter(x => x.startsWith("-") && !x.startsWith("---")).map(x => x.slice(1))];
+}
+
+function _p2aViews(diffText, coarse) {
+  // [[added, removed]] under CPython's line breaks and under the port's (`coarse`, the diff as _splitlines splits it);
+  // each port's main reads one. Where the text holds no break only CPython's split reads, the two are one object.
+  const v1 = _p2aView(coarse);
+  if (!_P2A_FINE_ONLY.test(diffText)) return [v1, v1];
+  return [_p2aView(_p2aLines(diffText, _P2A_FINE)), v1];
 }
 
 function _p2aDivergent(diffText) {
@@ -925,78 +936,113 @@ const _P2A_LEADS = [_P2A_PY_SPACE, _P2A_JS_SPACE].map(s => {
 function _p2aCounted(line, lead) {
   // The ASCII name runs at the `def test_` sites of one added line that a main's count of `def test_` after white
   // space reads, where `lead` tests a unit of that main's white space: a site counts when, from the line start or the
-  // last U+2028 / U+2029 before it, only that white space precedes it.
+  // last U+2028 / U+2029 before it, only that white space precedes it. A site counts exactly where a segment's leading
+  // run ends, and a start inside a run already read reaches the same end, so each segment is read once.
   const out = [];
-  let i = line.indexOf("def test_");
-  if (i < 0) return out;
-  const starts = [];
-  for (let p = 0; p < line.length; p++) {
-    const u = line.charCodeAt(p);
-    if (u === 0x2028 || u === 0x2029) starts.push(p + 1);
+  if (!line.includes("def test_")) return out;
+  const starts = [0];
+  if (line.includes("\u2028") || line.includes("\u2029")) {
+    for (let p = 0; p < line.length; p++) {
+      const u = line.charCodeAt(p);
+      if (u === 0x2028 || u === 0x2029) starts.push(p + 1);
+    }
   }
-  let k = 0, seg = -1, reach = -1;      // the segment's start, and where its leading run ends
-  while (i >= 0) {
-    while (k < starts.length && starts[k] <= i) k++;
-    const b = k ? starts[k - 1] : 0;
-    if (b !== seg) { seg = b; reach = _p2aRunEnd(line, b, lead); }
-    if (reach >= i) out.push(line.slice(i + 4, _p2aRunEnd(line, i + 4, _p2aWordUnit)));
-    i = line.indexOf("def test_", i + 1);
+  let last = -1;
+  for (const b of starts) {
+    if (b <= last) continue;
+    const r = _p2aRunEnd(line, b, lead);
+    last = r;
+    if (line.startsWith("def test_", r)) out.push(line.slice(r + 4, _p2aRunEnd(line, r + 4, _p2aWordUnit)));
   }
   return out;
 }
 
-function _p2aPairing(views) {
+function _p2aPairing(views, alike = false) {
   // Per line view (0: CPython's breaks and white space; 1: this port's), [the number of `def test_` sites that view's
   // main counts, how many of them name a test a removed line may define after `def`], as the Python's _p2a_pairing.
   const rem = new Set();
-  for (const [, removed] of views) {
+  for (const [, removed] of _p2aDistinct(views)) {
     for (const line of removed) {
       for (const [, r] of _p2aSites(line, "def")) {
         if (line.startsWith("test_", r)) rem.add(line.slice(r, _p2aRunEnd(line, r, _p2aWordUnit)));
       }
     }
   }
-  return views.map(([added], v) => {
+  const out = (alike ? _p2aDistinct(views) : views).map(([added], v) => {
     let got = 0, paired = 0;
     for (const line of added) for (const x of _p2aCounted(line, _P2A_LEADS[v])) { got++; if (rem.has(x)) paired++; }
     return [got, paired];
   });
+  return out.length === 1 ? [out[0], out[0]] : out;
 }
 
-function _p2aDefRuns(views) {
-  // The ASCII name run at every `def` or `class` site of a removed line, in either view: a name of ASCII word
-  // characters can start only where a site's coarse run ends, and ends where its ASCII run does.
-  const out = new Set(), seen = new Set();
-  for (const [, removed] of views) {
-    for (const line of removed) {
-      if (seen.has(line)) continue;
-      seen.add(line);
+function _p2aDistinct(views) {
+  return views[0] === views[1] ? views.slice(0, 1) : views;
+}
+
+function _p2aAnchored(line) {
+  // [j, r] for each `def` or `class` of one removed line that V101's symbol check can read a definition after, as the
+  // Python's _p2a_anchored: from the line start (or a U+2028 or U+2029), a run of coarse units, optionally `async` and
+  // one or more coarse units, then the word, then one or more coarse units, which run from j to r.
+  const starts = [0];
+  if (line.includes("\u2028") || line.includes("\u2029")) {
+    for (let p = 0; p < line.length; p++) {
+      const u = line.charCodeAt(p);
+      if (u === 0x2028 || u === 0x2029) starts.push(p + 1);
+    }
+  }
+  const out = [];
+  let last = -1;
+  for (const b of starts) {
+    if (b <= last) continue;
+    const p = _p2aRunEnd(line, b, _p2aCoarseUnit);
+    last = p;
+    const at = [p];
+    if (line.startsWith("async", p)) {
+      const q = _p2aRunEnd(line, p + 5, _p2aCoarseUnit);
+      if (q > p + 5) at.push(q);
+    }
+    for (const x of at) {
       for (const w of ["def", "class"]) {
-        for (const [, r] of _p2aSites(line, w)) out.add(line.slice(r, _p2aRunEnd(line, r, _p2aWordUnit)));
+        if (!line.startsWith(w, x)) continue;
+        const j = x + w.length, r = _p2aRunEnd(line, j, _p2aCoarseUnit);
+        if (r > j) out.push([j, r]);
       }
     }
   }
   return out;
 }
 
+function _p2aDefRuns(views) {
+  // The ASCII name run at every anchored `def` or `class` site of a removed line, in either view: a name of ASCII word
+  // characters can start only where a site's coarse run ends, and ends where its ASCII run does.
+  const out = new Set(), seen = new Set();
+  for (const [, removed] of _p2aDistinct(views)) {
+    for (const line of removed) {
+      if (seen.has(line)) continue;
+      seen.add(line);
+      for (const [, r] of _p2aAnchored(line)) out.add(line.slice(r, _p2aRunEnd(line, r, _p2aWordUnit)));
+    }
+  }
+  return out;
+}
+
 function _p2aDefines(views, name) {
-  // Whether a removed line, in either view, may define `name` after `def` or `class`: the name starts where the
-  // coarse run after the word does or anywhere in it (never inside a surrogate pair), and ends where its full name
-  // run or its ASCII run ends. Read this way only for a name outside ASCII word characters.
+  // Whether a removed line, in either view, may define `name` after an anchored `def` or `class`: the name starts
+  // where the coarse run after the word does or anywhere in it (never inside a surrogate pair), and ends where its full
+  // name run or its ASCII run ends. Read this way only for a name outside ASCII word characters.
   if (!name) return false;
   const full = _p2aRunEnd(name, 0, _p2aNameUnit) === name.length;
   const word = _p2aRunEnd(name, 0, _p2aWordUnit) === name.length;
   const midPair = (s, k) => k > 0 && k < s.length && s.charCodeAt(k - 1) >= 0xd800 && s.charCodeAt(k - 1) <= 0xdbff
     && s.charCodeAt(k) >= 0xdc00 && s.charCodeAt(k) <= 0xdfff;
-  for (const [, removed] of views) {
+  for (const [, removed] of _p2aDistinct(views)) {
     for (const line of removed) {
-      for (const w of ["def", "class"]) {
-        for (const [j, r] of _p2aSites(line, w)) {
-          for (let k = j + 1; k <= r; k++) {
-            if (midPair(line, k) || !line.startsWith(name, k)) continue;
-            const e = k + name.length;
-            if ((full && _p2aRunEnd(line, e, _p2aNameUnit) === e) || (word && _p2aRunEnd(line, e, _p2aWordUnit) === e)) return true;
-          }
+      for (const [j, r] of _p2aAnchored(line)) {
+        for (let k = j + 1; k <= r; k++) {
+          if (midPair(line, k) || !line.startsWith(name, k)) continue;
+          const e = k + name.length;
+          if ((full && _p2aRunEnd(line, e, _p2aNameUnit) === e) || (word && _p2aRunEnd(line, e, _p2aWordUnit) === e)) return true;
         }
       }
     }
@@ -1006,17 +1052,21 @@ function _p2aDefines(views, name) {
 
 // The summary's checks. A unit from 0x80 up is "wordish" unless it is neutral or U+0085, U+2028, U+2029 or U+FEFF:
 // CPython's templates may read it as a word character, or fold it to an ASCII letter, where the port's read neither.
-const _P2A_NEUTRAL_UNITS = new Set([..._P2A_NEUTRAL].map(ch => ch.charCodeAt(0)));
+const _P2A_NEUTRAL_UNITS = new Uint8Array(0x10000);
+for (const [a, b] of _P2A_NEUTRAL_RANGES) _P2A_NEUTRAL_UNITS.fill(1, a, b + 1);
 const _P2A_DIV_UNITS = new Set([..._P2A_DIVERGENT].map(ch => ch.charCodeAt(0)));
-const _p2aWordishUnit = u => u >= 0x80 && !_P2A_NEUTRAL_UNITS.has(u) && u !== 0x85 && u !== 0x2028 && u !== 0x2029 && u !== 0xfeff;
+const _p2aWordishUnit = u => u >= 0x80 && _P2A_NEUTRAL_UNITS[u] === 0 && u !== 0x85 && u !== 0x2028 && u !== 0x2029 && u !== 0xfeff;
 const _p2aBadUnit = u => _P2A_DIV_UNITS.has(u) || _p2aWordishUnit(u);
 const _P2A_PATH_ASCII = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_./-\\";
 const _p2aPathUnit = u => (u < 0x80 && _P2A_PATH_ASCII.includes(String.fromCharCode(u))) || _p2aWordishUnit(u);
 const _p2aNameAnyUnit = u => _p2aWordUnit(u) || _p2aWordishUnit(u);
+const _p2aCountUnit = u => (u >= 48 && u <= 57) || _p2aWordishUnit(u);
+const _p2aRunUnit = kind => kind === "path" ? _p2aPathUnit : kind === "name" ? _p2aNameAnyUnit : _p2aCountUnit;
 const _p2aLowUnit = u => (u >= 65 && u <= 90) ? u + 32 : u;
 
 function _p2aRuns(s, inRun) {
-  // [start, end] of each maximal run of units passing inRun that holds a wordish unit.
+  // Each maximal run of units passing inRun that holds a wordish unit, joined by _P2A_SEP, which no run holds: a string
+  // that holds x, where x does not hold _P2A_SEP, exactly when some run does (NOTE_path2a_fourth_pass_2026_09_30, A-1).
   const out = [];
   let k = 0;
   while (k < s.length) {
@@ -1024,9 +1074,9 @@ function _p2aRuns(s, inRun) {
     const a = k;
     let wide = false;
     while (k < s.length && inRun(s.charCodeAt(k))) { if (_p2aWordishUnit(s.charCodeAt(k))) wide = true; k++; }
-    if (wide) out.push([a, k]);
+    if (wide) out.push(s.slice(a, k));
   }
-  return out;
+  return out.join(_P2A_SEP);
 }
 
 function _p2aFindOnly(s, a, e) {         // the earliest "only" (ASCII case) wholly inside [a, e), or -1
@@ -1063,8 +1113,9 @@ function _p2aFactsRaw(diffText, summaryText) {
   const get = (k, make) => { if (!memo.has(k)) memo.set(k, make()); return memo.get(k); };
   const f = {
     summary: String(summaryText),
-    regs: () => get("regs", () => _p2aRegsRaw(diffText)),
-    views: () => get("views", () => _p2aViews(diffText)),
+    coarse: () => get("coarse", () => _splitlines(diffText)),
+    regs: () => get("regs", () => _p2aRegsRaw(f.coarse())),
+    views: () => get("views", () => _p2aViews(diffText, f.coarse())),
     divergent: () => get("div", () => _p2aDivergent(diffText)),
     status: space => get(space, () => _p2aBuild(f.regs(), _P2A_FORMS[space][0])),
     index: space => get("index" + space, () => {
@@ -1113,24 +1164,26 @@ function _p2aFactsRaw(diffText, summaryText) {
       const size = (xs, form) => new Set(xs.map(x => form(x))).size;
       return [twin, size(ra, _p2aWA), size(ra, _p2aA), size(rk, _p2aWK), size(rk, _p2aK)];
     }),
-    pairing: () => get("pairing", () => _p2aPairing(f.views())),
+    pairing: () => get("pairing", () => _p2aPairing(f.views(), f.views()[0] === f.views()[1] && !_P2A_LEAD_APART.test(diffText))),
     defines: name => {
       if (name && _p2aRunEnd(name, 0, _p2aWordUnit) === name.length) return get("defs", () => _p2aDefRuns(f.views())).has(name);
       return get("defines:" + name, () => _p2aDefines(f.views(), name));
     },
-    runs: kind => get("runs" + kind, () => _p2aRuns(f.summary, kind === "path" ? _p2aPathUnit : _p2aNameAnyUnit)),
+    runs: kind => get("runs" + kind, () => _p2aRuns(f.summary, _p2aRunUnit(kind))),
     zones: () => get("zones", () => _p2aZones(f.summary)),
+    zoneText: () => get("zoneText", () => f.zones().map(([lo, hi]) => f.summary.slice(lo, hi)).join(_P2A_SEP)),
+    memo: get,
     scope: prefixes => get("scope:" + prefixes.length + ":" + prefixes.join("\n"), () => _p2aScope(f, prefixes)),
   };
   return f;
 }
 
 function _p2aInRuns(f, s, kind) {
-  // Whether some occurrence of s, which is ASCII, lies in the summary inside a run of path (or name) characters
-  // holding a character CPython's template may read as a word character and the port's does not.
-  if (!s) return false;
-  for (const [a, e] of f.runs(kind)) if (f.summary.slice(a, e).includes(s)) return true;
-  return false;
+  // Whether some occurrence of s, which is ASCII, lies in the summary inside a run of path (name, number) characters
+  // holding a character CPython's template may read as a word character and the port's does not. No run holds
+  // _P2A_SEP, so a string holding it lies in none.
+  if (!s || s.includes(_P2A_SEP)) return false;
+  return f.memo("in\u0000" + kind + "\u0000" + s, () => f.runs(kind).includes(s));
 }
 
 function _p2aPortMayVerify(f, claimed, want) {
@@ -1193,7 +1246,7 @@ function _p2aPath(c, f) {
 function _p2aNumbers(head, why, detail) {
   // [main's own count, the claimed number], or null. The count is read from main's reason; the number from the
   // claim's detail where that is ASCII digits (this port's main prints a number of 10**21 or more in exponent form),
-  // else from main's reason.
+  // else from main's reason. parseInt reads ASCII digits only, and each string here is nothing else.
   const m = head.exec(why);
   if (!m) return null;
   let k = _P2A_DIGITS.exec(detail.n || "");
@@ -1206,6 +1259,10 @@ function _p2aCount(c, f) {
   if (f.divergent()) return ["divergent", "#121"];
   const [twin, wa, a, lo, hi] = f.count();
   if (!twin) return null;
+  // C-1 (NOTE_path2a_fourth_pass_2026_09_30): where a digit or letter outside ASCII sits beside the number, the two
+  // ports' count templates read different numbers from one match; withheld in both, as the Python's _p2a_count.
+  const claimed = c.detail.n || "";
+  if (!_P2A_DIGITS.test(claimed) || (!c.detail.declared && _p2aInRuns(f, claimed, "count"))) return ["extract", "#121"];
   const nums = _p2aNumbers(_P2A_COUNT_HEAD, c.why, c.detail);
   if (!nums) return ["unparsed", "#121"];
   const [g, n] = nums;
@@ -1235,8 +1292,9 @@ function _p2aShaped(prefix, keys, form) {   // _prefixIsPathShaped
 const _P2A_SPACES = [["A", _p2aA, _p2aWA, _p2aStrip], ["K", _p2aK, _p2aWK, _p2aDotted]];
 
 function _p2aScope(f, prefixes) {
-  // {space|wild: [whether prefix2 reads as a path, whether every changed path lies under the prefixes that reading
-  // uses]}, in main's key space A and V121's K, with case folded (wild false) and outside ASCII a placeholder (true).
+  // {space|wild: [whether `prefix` reads as a path, whether prefix2 does, whether every changed path lies under
+  // the prefixes that reading uses]}, in main's key space A and V121's K, with case folded (wild false) and outside
+  // ASCII a placeholder (true).
   const two = prefixes.length === 2;
   const regs = f.regs();
   const out = new Map();
@@ -1246,9 +1304,10 @@ function _p2aScope(f, prefixes) {
     regs.forEach((r, i) => { if (r[2] === "+" || preKey(r[0])) keep.push(i); });
     for (const [wild, fm, forms] of [[false, form, fs], [true, wform, ws]]) {
       const paths = keep.map(i => forms[i]);
+      const lead = _p2aShaped(prefixes[0], paths, fm);
       const shaped = two && _p2aShaped(prefixes[1], paths, fm);
       const ps = (shaped ? prefixes : prefixes.slice(0, 1)).map(x => _rstrip(fm(x), "/."));
-      out.set(sp + "|" + wild, [shaped, paths.every(p => ps.some(x => _p2aInside(p, x)))]);
+      out.set(sp + "|" + wild, [lead, shaped, paths.every(p => ps.some(x => _p2aInside(p, x)))]);
     }
   }
   return out;
@@ -1261,22 +1320,25 @@ function _p2aScopeDoubt(f, d) {
   const bad = s => { for (let k = 0; k < s.length; k++) if (_p2aBadUnit(s.charCodeAt(k))) return true; return false; };
   if (bad(d.prefix) || bad(d.prefix2 || "")) return true;
   if (d.declared) return false;
-  for (const [lo, hi] of f.zones()) if (f.summary.slice(lo, hi).includes(d.prefix)) return true;
-  return false;
+  if (d.prefix.includes(_P2A_SEP)) return f.zones().some(([lo, hi]) => f.summary.slice(lo, hi).includes(d.prefix));
+  return f.memo("zone\u0000" + d.prefix, () => f.zoneText().includes(d.prefix));
 }
 
 function _p2aOnly(c, f) {
-  // Keep the claim when V121 (keys with their leading dots) reads every changed path under the prefix set it uses
-  // exactly as main does under the set main uses.
+  // Keep the claim when V121 (keys with their leading dots) reads the claim as main does: `prefix` as a path
+  // where main does, when a second prefix is claimed; and every changed path under the prefix set it uses exactly as
+  // main does under the set main uses.
   if (f.divergent()) return ["divergent", "#121"];
   const d = c.detail;
   if (_p2aScopeDoubt(f, d)) return ["extract", "#121"];
   const got = f.scope([d.prefix].concat(d.prefix2 ? [d.prefix2] : []));
-  const same = (x, y) => x[0] === y[0] && x[1] === y[1];
+  const same = (x, y) => x[0] === y[0] && x[1] === y[1] && x[2] === y[2];
   if (!same(got.get("A|false"), got.get("A|true")) || !same(got.get("K|false"), got.get("K|true"))) return ["case", "#121"];
-  const under = got.get("A|false")[1];
-  if ((under ? "VERIFIED" : "CONTRADICTED") !== c.verdict) return ["unreproduced", "#121"];
-  if (got.get("K|false")[1] !== under) return ["only", "#121"];
+  const [lead, , under] = got.get("A|false");
+  if (!lead || (under ? "VERIFIED" : "CONTRADICTED") !== c.verdict) return ["unreproduced", "#121"];
+  // B-1 (NOTE_path2a_fourth_pass_2026_09_30): V121 does not read a `prefix` only the dropped dots make a path.
+  if (d.prefix2 && !got.get("K|false")[0]) return ["shape", "#121"];
+  if (got.get("K|false")[2] !== under) return ["only", "#121"];
   return null;
 }
 

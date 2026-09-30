@@ -1,5 +1,5 @@
 """PATH-2a coverage (B), judged by truth (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30,
-NOTE_path2a_third_pass_2026_09_30).
+NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30).
 
 Truth comes from each case's base/head file model (tests/_p2a_truth.py), never from the diff. A decided claim is
 ATTRIBUTABLE when main's verdict is false by truth and a counterfactual variant of main without #97, without #121,
@@ -37,13 +37,16 @@ NODE = shutil.which("node")
 DECIDED = ("VERIFIED", "CONTRADICTED")
 
 # Pinned after review (Python 3.12 and 3.14 agree). A change to the overlay, the oracle or the generator moves them.
-PINNED = {"cases": 1706, "main raises": 0, "decided": 7614, "false": 1535, "attributable": 1206, "abstained": 1494,
-          "attributable abstained": 1206, "right": 5897, "right lost": 202, "undecided": 182,
+# Pass 4 (NOTE_path2a_fourth_pass_2026_09_30, B-1): the `shape` rule withholds 43 more right verdicts here, in both
+# ports, and no attributable verdict moves: the generator writes "Only touches cfg and .cfg/app/." beside files that
+# all lie under the second prefix.
+PINNED = {"cases": 1706, "main raises": 0, "decided": 7614, "false": 1535, "attributable": 1206, "abstained": 1537,
+          "attributable abstained": 1206, "right": 5897, "right lost": 245, "undecided": 182,
           "undecided abstained": 35, "unjudged": 0, "unjudged abstained": 0, "false other": 329,
           "false other abstained": 51}
 # The port judged in its own terms: 1,100 attributable claims, of which 942 carry the same main record in Python and
 # 158 are read otherwise by Python's main (paths and names outside ASCII, which the two templates extract apart).
-PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7393, "abstained": 1355, "right": 5739, "right lost": 126,
+PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7393, "abstained": 1398, "right": 5739, "right lost": 169,
                "false": 1385, "attributable": 1100, "attributable abstained": 1100, "false other": 285,
                "false other abstained": 7, "undecided": 269, "undecided abstained": 122}
 PINNED_GIT = {"cases": 96, "main raises": 0, "with R, C or T": 16, "decided": 63, "abstained": 14, "false": 17,
@@ -255,8 +258,7 @@ def test_every_attributable_false_verdict_abstains_at_the_git_door(monkeypatch):
 PY_PLANTS = [
     ("no divergence guard", "        return self.name_status is None and self._get(\"div\"",
      "        return False and self._get(\"div\""),
-    ("the port-only line view", "    for rx in (_P2A_FINE, _P2A_COARSE):\n        ls = _p2a_lines(diff_text, rx)",
-     "    for rx in (_P2A_COARSE,):\n        ls = _p2a_lines(diff_text, rx)"),
+    ("the port-only line view", "    v0 = _p2a_view(fine)\n", "    v0 = _p2a_view(_p2a_lines(diff_text, _P2A_COARSE))\n"),
     ("count CONTRADICTED interval shrunk", 'return ("count", "#121") if lo <= n <= hi else None',
      'return ("count", "#121") if lo <= n < hi else None'),
     ("V97 allows a base name for a directory claim",
@@ -270,7 +272,7 @@ PY_PLANTS = [
      '_P2A_COARSE_RUN = re.compile("[ \\t]*")'),
     ("names paired by their full run", "                    rem.add(line[r:_P2A_WORD_RUN.match(line, r).end()])",
      "                    rem.add(line[r:_P2A_NAME_RUN.match(line, r).end()])"),
-    ("the scope rule's V121 reading dropped", '    if got["K", False][1] != under:', "    if False:"),
+    ("the scope rule's V121 reading dropped", '    if got["K", False][2] != under:', "    if False:"),
     ("U2 dropped",
      "        if want is not None and tw is not None and len(keys[ws[i]]) > 1 and sts[ws[i]] != {want}:",
      "        if False:"),
@@ -301,6 +303,16 @@ PY_PLANTS = [
     ("the scope's second prefix never read",
      '            ps = [fm(x).rstrip("/.") for x in (prefixes if shaped else prefixes[:1])]',
      '            ps = [fm(x).rstrip("/.") for x in prefixes[:1]]'),
+    # pass 4 (NOTE_path2a_fourth_pass_2026_09_30)
+    ("V121's reading of the leading prefix's shape dropped", '    if d.get("prefix2") and not got["K", False][0]:',
+     "    if False:"),
+    ("no extract guard for counts",
+     '    if _P2A_DIGITS.fullmatch(claimed) is None or (not c.detail.get("declared") and _p2a_in_runs(f, claimed, "count")):',
+     "    if False:"),
+    ("symbol sites read anywhere in a removed line",
+     "            for _j, r in _p2a_anchored(line):\n                out.add(line[r:_P2A_WORD_RUN.match(line, r).end()])",
+     '            for _j, r in _p2a_sites(line, "def") + _p2a_sites(line, "class"):\n'
+     "                out.add(line[r:_P2A_WORD_RUN.match(line, r).end()])"),
 ]
 # Plants that cannot change a record, said so rather than hidden: none this pass. Pass 2's one (a clause that never
 # decided alone) went with the per-set comparison it sat behind (NOTE_path2a_third_pass_2026_09_30, B-2).
@@ -378,7 +390,7 @@ def test_plants_are_refused(world):
 JS_PLANTS = [
     ("no divergence guard", '    divergent: () => get("div", () => _p2aDivergent(diffText)),',
      "    divergent: () => false,"),
-    ("one line view", "  return [_P2A_FINE, _P2A_COARSE].map(rx => {", "  return [_P2A_COARSE].map(rx => {"),
+    ("one line view", "  return [_p2aView(_p2aLines(diffText, _P2A_FINE)), v1];", "  return [v1, v1];"),
     ("count interval shrunk", 'return (lo <= n && n <= hi) ? ["count", "#121"] : null;',
      'return (lo <= n && n < hi) ? ["count", "#121"] : null;'),
     # pass 2
@@ -390,6 +402,11 @@ JS_PLANTS = [
      "  let k = null;"),
     ("the port reads a scope claim's text", '  if (_p2aScopeDoubt(f, d)) return ["extract", "#121"];',
      '  if (_p2aScopeDoubt(f, d) || c.text.length >= 160) return ["extract", "#121"];'),
+    # pass 4 (NOTE_path2a_fourth_pass_2026_09_30): each new rule, dropped from the port alone
+    ("no extract guard for counts in the port",
+     '  if (!_P2A_DIGITS.test(claimed) || (!c.detail.declared && _p2aInRuns(f, claimed, "count"))) '
+     'return ["extract", "#121"];\n', ""),
+    ("no shape rule in the port", '  if (d.prefix2 && !got.get("K|false")[0]) return ["shape", "#121"];\n', ""),
 ]
 
 
@@ -431,3 +448,61 @@ def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
                 new_disagreements += (y["verdict"], R.phrase_key(y["why"], N._P2A_PHRASES)) != \
                     (jy["verdict"], R.phrase_key(jy["why"], N._P2A_PHRASES))
     assert new_disagreements > 0, name
+
+
+# ---- pass 4: the fourth review's scope reproductions, judged by truth --------------------------------------------------
+
+_GNU = ("--- a/.github/workflows/ci.yml\t2024-05-06 07:08:09.000000000 +0000\n"
+        "+++ b/.github/workflows/ci.yml\t2024-05-06 07:08:10.000000000 +0000\n@@ -1 +1 @@\n-a\n+b\n"
+        "--- a/.github/workflows/old.yml\t2024-05-06 07:08:09.000000000 +0000\n"
+        "+++ /dev/null\t1970-01-01 00:00:00.000000000 +0000\n@@ -1 +0,0 @@\n-x\n")
+_MNEMONIC = ("diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\n"
+             "--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -1 +1 @@\n-a\n+b\n"
+             "diff --git c/.github/workflows/rel.yml w/.github/workflows/rel.yml\n"
+             "--- c/.github/workflows/rel.yml\n+++ w/.github/workflows/rel.yml\n@@ -1 +1 @@\n-x\n+y\n")
+_RENAME = ("diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\nindex 7898192..6178079 100644\n"
+           "--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -1 +1 @@\n-a\n+b\n"
+           "diff --git a/docs/x.md b/.github/workflows/x.md\nsimilarity index 100%\nrename from docs/x.md\n"
+           "rename to .github/workflows/x.md\n")
+_FIVE = "one\ntwo\nthree\nfour\nfive\n"
+SCOPE_CASES = [
+    {"id": "gnu-delete-under-dotted-dir", "summary": "Only touches github and .github/workflows/.", "diff": _GNU,
+     "model": {"base": {".github/workflows/ci.yml": "a\n", ".github/workflows/old.yml": "x\n"},
+               "head": {".github/workflows/ci.yml": "b\n"}}},
+    {"id": "mnemonic-second-file", "summary": "Only touches github and .github/workflows/.", "diff": _MNEMONIC,
+     "model": {"base": {".github/workflows/ci.yml": "a\n", ".github/workflows/rel.yml": "x\n"},
+               "head": {".github/workflows/ci.yml": "b\n", ".github/workflows/rel.yml": "y\n"}}},
+    {"id": "git-rename-into-dotted-dir", "summary": "Only touches github and .github/workflows/.", "diff": _RENAME,
+     "name_status": "M\t.github/workflows/ci.yml\nR100\tdocs/x.md\t.github/workflows/x.md\n",
+     "model": {"base": {".github/workflows/ci.yml": "a\n", "docs/x.md": _FIVE},
+               "head": {".github/workflows/ci.yml": "b\n", ".github/workflows/x.md": _FIVE}}},
+]
+
+
+def test_the_fourth_reviews_scope_reproductions(monkeypatch):
+    """B-1 (NOTE_path2a_fourth_pass_2026_09_30): main reads `github` as a path only because `.github` loses its dot, and
+    a rendering fault or a rename makes its verdict false; V121 says the prefix is not a path. Each false verdict is
+    attributable and must be withheld, at the raw door and, for the rename, at the git door too. On ea677740 all four
+    readings kept main's verdict."""
+    M = R.main_module()
+    V = variants()
+    seen = []
+    for it in SCOPE_CASES:
+        doors = [("raw", lambda mod, it=it: mod.gate_diff_text(it["summary"], it["diff"]))]
+        if it.get("name_status"):
+            fake = R.fake_git(it["name_status"], it["diff"])
+            for mod in [M, N, *V.values()]:
+                monkeypatch.setattr(mod, "_git", fake)
+            doors.append(("git", lambda mod, it=it: mod.gate_diff(it["summary"], "(repo)", "base", "head")))
+        for door, run in doors:
+            a = run(M).to_dict()
+            b = run(N).to_dict()
+            assert R.relation(a, b, False, N._P2A_PHRASES) == [], (it["id"], door)
+            vs = {k: run(mod).to_dict()["claims"] for k, mod in V.items()}
+            for i, x, t, who in judge(it["model"], a["claims"], vs):
+                assert T.wrong(x["verdict"], t) and who, (it["id"], door, x, t, who)
+                y = b["claims"][i]
+                assert y["verdict"] == "UNCHECKABLE" and R.phrase_key(y["why"], N._P2A_PHRASES) == "shape", \
+                    (it["id"], door, y)
+                seen.append((it["id"], door))
+    assert len(seen) == 4, seen

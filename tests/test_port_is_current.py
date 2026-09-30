@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -163,6 +164,10 @@ def test_the_javascript_port_agrees_on_every_pinned_pair():
     """check_pairs.js, run here rather than left as a command in a README."""
     node = shutil.which("node")
     if node is None:
+        # PATH-2a (NOTE_path2a_fourth_pass_2026_09_30, I-5): a skip reads green, and this check carries the port half
+        # of path2a_pairs.json, so under CI a missing node fails, as in the PATH-2a modules
+        if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
+            pytest.fail("node is not on PATH under CI; the port was not held to the pinned pairs")
         pytest.skip("node is not on PATH; the port cannot be held to the pinned pairs here")
     r = subprocess.run([node, str(CHECK_PAIRS)], capture_output=True, text=True,
                        encoding="utf-8", errors="replace", timeout=300)

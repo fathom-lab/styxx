@@ -874,7 +874,7 @@
     [
      "file_touched",
      "UNCHECKABLE",
-     "VERIFIED withheld by PATH-2a (#97, #121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name or prefix is read, so the two may extract the claim differently. main's reading: diff status 'M' for 'café/x.md'"
+     "VERIFIED withheld by PATH-2a (#97, #121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name, prefix or number is read, so the two may extract the claim differently. main's reading: diff status 'M' for 'café/x.md'"
     ]
    ],
    "uncovered_sentences": 0
@@ -891,7 +891,7 @@
     [
      "file_touched",
      "UNCHECKABLE",
-     "VERIFIED withheld by PATH-2a (#97, #121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name or prefix is read, so the two may extract the claim differently. main's reading: diff status 'A' for 'docs/x.md'"
+     "VERIFIED withheld by PATH-2a (#97, #121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name, prefix or number is read, so the two may extract the claim differently. main's reading: diff status 'A' for 'docs/x.md'"
     ]
    ],
    "uncovered_sentences": 0
@@ -1174,7 +1174,7 @@
     [
      "only_touches",
      "UNCHECKABLE",
-     "CONTRADICTED withheld by PATH-2a (#121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name or prefix is read, so the two may extract the claim differently. main's reading: paths outside 'docs': ['src/app.py']"
+     "CONTRADICTED withheld by PATH-2a (#121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name, prefix or number is read, so the two may extract the claim differently. main's reading: paths outside 'docs': ['src/app.py']"
     ]
    ],
    "uncovered_sentences": 0
@@ -1226,6 +1226,495 @@
     ]
    ],
    "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:count-fullwidth-digit-before-the-count",
+  "note": "Pass 4 (C-1): the review's X5. CPython's \\d reads the full-width 3 and the ASCII 3 as 33, the port's \\b starts after it and reads 3; ea677740 kept CPython's CONTRADICTED and withheld the port's, so the gates split. Both withhold now.",
+  "summary": "３3 files changed.",
+  "diff": "diff --git a/.env b/.env\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/env b/env\ndeleted file mode 100644\n--- a/env\n+++ /dev/null\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:count-arabic-digit-before-the-count",
+  "note": "Pass 4 (C-1): the review's X5b, an Arabic-Indic three.",
+  "summary": "٣3 files changed.",
+  "diff": "diff --git a/.env b/.env\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/env b/env\ndeleted file mode 100644\n--- a/env\n+++ /dev/null\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:count-nel-and-cjk-counts",
+  "note": "Pass 4 (C-1): the review's X2. Each port reads a count the other does not; both withhold.",
+  "summary": "3 fileschanged. 共5 files changed.",
+  "diff": "diff --git a/.env b/.env\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/env b/env\ndeleted file mode 100644\n--- a/env\n+++ /dev/null\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE"
+    ]
+   ],
+   "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "path2a:count-fullwidth-and-cjk-counts",
+  "note": "Pass 4 (C-1): the review's X3.",
+  "summary": "３ files changed. 共5 files changed.",
+  "diff": "diff --git a/.env b/.env\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/env b/env\ndeleted file mode 100644\n--- a/env\n+++ /dev/null\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE"
+    ]
+   ],
+   "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "path2a:count-letter-beside-another-occurrence",
+  "note": "Pass 4 (C-1): both ports read the count 3 alike, and 3 also occurs beside a letter outside ASCII, so both withhold it, as for a path or a name.",
+  "summary": "3 files changed. See issue é3.",
+  "diff": "diff --git a/.env b/.env\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/env b/env\ndeleted file mode 100644\n--- a/env\n+++ /dev/null\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "CONTRADICTED withheld by PATH-2a (#121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name, prefix or number is read, so the two may extract the claim differently. main's reading: diff changes 2 files, claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 1
+  }
+ },
+ {
+  "id": "path2a:scope-shape-gnu-delete",
+  "note": "Pass 4 (B-1): the review's reproduction 1. main reads `github` as a path only because `.github` loses its dot, and the GNU rendering of a deletion registers `dev/null...`; V121 says the prefix is not a path. ea677740 kept main's false CONTRADICTED.",
+  "summary": "Only touches github and .github/workflows/.",
+  "diff": "--- a/.github/workflows/ci.yml\t2024-05-06 07:08:09.000000000 +0000\n+++ b/.github/workflows/ci.yml\t2024-05-06 07:08:10.000000000 +0000\n@@ -1 +1 @@\n-a\n+b\n--- a/.github/workflows/old.yml\t2024-05-06 07:08:09.000000000 +0000\n+++ /dev/null\t1970-01-01 00:00:00.000000000 +0000\n@@ -1 +0,0 @@\n-x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "CONTRADICTED withheld by PATH-2a (#121): with leading dots kept, no changed path has the prefix as a segment, so it is not read as a path. main's reading: paths outside 'github' and 'github/workflows': ['dev/null\\t1970-01-01 00:00:00.000000000 +0000']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:scope-shape-mnemonic",
+  "note": "Pass 4 (B-1): the review's reproduction 2, a mnemonic second header.",
+  "summary": "Only touches github and .github/workflows/.",
+  "diff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -1 +1 @@\n-a\n+b\ndiff --git c/.github/workflows/rel.yml w/.github/workflows/rel.yml\n--- c/.github/workflows/rel.yml\n+++ w/.github/workflows/rel.yml\n@@ -1 +1 @@\n-x\n+y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "CONTRADICTED withheld by PATH-2a (#121): with leading dots kept, no changed path has the prefix as a segment, so it is not read as a path. main's reading: paths outside 'github' and 'github/workflows': ['w/.github/workflows/rel.yml']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:scope-shape-rename-raw",
+  "note": "Pass 4 (B-1): the review's reproduction 3 at the raw door, on git's bytes for `git mv docs/x.md .github/workflows/x.md`; main's VERIFIED is false (docs/x.md changed).",
+  "summary": "Only touches github and .github/workflows/.",
+  "diff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\nindex 7898192..6178079 100644\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/docs/x.md b/.github/workflows/x.md\nsimilarity index 100%\nrename from docs/x.md\nrename to .github/workflows/x.md\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#121): with leading dots kept, no changed path has the prefix as a segment, so it is not read as a path. main's reading: all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:scope-shape-right-verdict-withheld",
+  "note": "Pass 4 (B-1), a disclosed cost: the same shape where main is right.",
+  "summary": "Only touches cfg and .cfg/app/.",
+  "diff": "diff --git a/.cfg/app/a.toml b/.cfg/app/a.toml\n--- a/.cfg/app/a.toml\n+++ b/.cfg/app/a.toml\n@@ -1 +1 @@\n-x = 0\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#121): with leading dots kept, no changed path has the prefix as a segment, so it is not read as a path. main's reading: all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:scope-shape-one-prefix-kept",
+  "note": "Pass 4 (B-1), a disclosed gap: with one prefix the rule does not fire; main's CONTRADICTED here is right (src/app.py is outside), and a false one needs two rendering faults.",
+  "summary": "Only touches github.",
+  "diff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'github': ['src/app.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:neutral-guillemets",
+  "note": "Pass 4 (B-2): French guillemets are neutral.",
+  "summary": "Modified «src/app.py».",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/app.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:neutral-low9-quotes",
+  "note": "Pass 4 (B-2): German low-9 quotes.",
+  "summary": "Updated „src/app.py“.",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/app.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:neutral-ideographic-comma",
+  "note": "Pass 4 (B-2): an ideographic comma between two paths.",
+  "summary": "Updated src/app.py、docs/guide.md.",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/app.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:neutral-ideographic-full-stop",
+  "note": "Pass 4 (B-2): an ideographic full stop.",
+  "summary": "Updated docs/guide.md。",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'docs/guide.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:neutral-fullwidth-parenthesis",
+  "note": "Pass 4 (B-2): a full-width parenthesis; the letters inside it are after the parenthesis, outside the path's run.",
+  "summary": "Created src/new_mod.py（新增模块）.",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'src/new_mod.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:neutral-corner-brackets",
+  "note": "Pass 4 (B-2): corner brackets.",
+  "summary": "Updated 「src/app.py」.",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/app.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:neutral-check-mark",
+  "note": "Pass 4 (B-2): a heavy check mark attached to the path.",
+  "summary": "Updated docs/guide.md✔",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'docs/guide.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:neutral-middle-dot",
+  "note": "Pass 4 (B-2): a middle dot between two paths.",
+  "summary": "Updated src/app.py·docs/guide.md.",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/app.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:neutral-symbol-fullwidth-comma",
+  "note": "Pass 4 (B-2): a full-width comma after a symbol name.",
+  "summary": "Added function parse_date，支持时区.",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'parse_date'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:neutral-scope-check-emoji",
+  "note": "Pass 4 (B-2): a check-mark emoji (U+2705) after the prefixes.",
+  "summary": "Only touches src/ and docs/ ✅",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:neutral-scope-double-arrow",
+  "note": "Pass 4 (B-2): a double arrow after the prefixes.",
+  "summary": "Only touches src/ and docs/ ⇒ no web changes.",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:wordish-scope-accented-name",
+  "note": "Pass 4 (B-2), a disclosed cost: an accented letter after `only` in the same sentence still withholds.",
+  "summary": "Only touches src/ and docs/ (reviewed by José).",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name, prefix or number is read, so the two may extract the claim differently. main's reading: all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:symbol-prose-kept",
+  "note": "Pass 4 (B-3): the removed line is prose; V101 anchors a definition at the line start.",
+  "summary": "Added class Loader.",
+  "diff": "diff --git a/docs/design.md b/docs/design.md\n--- a/docs/design.md\n+++ b/docs/design.md\n@@ -1 +1 @@\n-The class Loader is planned for v2.\n+Loader shipped in v2.\ndiff --git a/src/core.py b/src/core.py\n--- a/src/core.py\n+++ b/src/core.py\n@@ -1 +1,3 @@\n x = 1\n+class Loader:\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define class 'Loader'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:symbol-other-language-kept",
+  "note": "Pass 4 (B-3): a removed JavaScript class.",
+  "summary": "Added class Loader.",
+  "diff": "diff --git a/web/loader.js b/web/loader.js\n--- a/web/loader.js\n+++ b/web/loader.js\n@@ -1 +1 @@\n-export default class Loader {}\n+export default {}\ndiff --git a/src/core.py b/src/core.py\n--- a/src/core.py\n+++ b/src/core.py\n@@ -1 +1,3 @@\n x = 1\n+class Loader:\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define class 'Loader'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:symbol-comment-kept",
+  "note": "Pass 4 (B-3): a removed Python comment.",
+  "summary": "Added class Loader.",
+  "diff": "diff --git a/src/old.py b/src/old.py\n--- a/src/old.py\n+++ b/src/old.py\n@@ -1 +1 @@\n-# TODO: add a class Loader here\n-x = 1\n+x = 1\ndiff --git a/src/core.py b/src/core.py\n--- a/src/core.py\n+++ b/src/core.py\n@@ -1 +1,3 @@\n x = 1\n+class Loader:\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define class 'Loader'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:symbol-undef-kept",
+  "note": "Pass 4 (B-3): a removed C `#undef`.",
+  "summary": "Added function parse_cfg.",
+  "diff": "diff --git a/native/cfg.h b/native/cfg.h\n--- a/native/cfg.h\n+++ b/native/cfg.h\n@@ -1 +1 @@\n-#undef parse_cfg\n+\ndiff --git a/src/core.py b/src/core.py\n--- a/src/core.py\n+++ b/src/core.py\n@@ -1 +1,3 @@\n x = 1\n+def parse_cfg():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'parse_cfg'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:symbol-indented-method-withheld",
+  "note": "Pass 4 (B-3): an indented removed definition is still read.",
+  "summary": "Added function parse_cfg.",
+  "diff": "diff --git a/src/old.py b/src/old.py\n--- a/src/old.py\n+++ b/src/old.py\n@@ -1 +1 @@\n-class A:\n-    def parse_cfg(self):\n+class A:\n+    pass\ndiff --git a/src/core.py b/src/core.py\n--- a/src/core.py\n+++ b/src/core.py\n@@ -1 +1,3 @@\n x = 1\n+def parse_cfg():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): the removed lines define this name too, and a changed definition is not an added one. main's reading: added lines do define function 'parse_cfg'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:tests-prose-withheld",
+  "note": "Pass 4 (B-3), a disclosed cost: V101's test pairing reads `def test_` anywhere in a removed line, and so does the overlay's.",
+  "summary": "Added 1 tests.",
+  "diff": "diff --git a/docs/testing.md b/docs/testing.md\n--- a/docs/testing.md\n+++ b/docs/testing.md\n@@ -1 +1 @@\n-Write def test_roundtrip(): for each codec.\n+See the codec tests.\ndiff --git a/src/core.py b/src/core.py\n--- a/src/core.py\n+++ b/src/core.py\n@@ -1 +1,3 @@\n x = 1\n+def test_roundtrip():\n+    pass\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#101): a test the added lines count is also defined in the removed lines, and a changed test is not an added one. main's reading: diff adds 1 test functions, claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:wordish-path-another-occurrence-withholds",
+  "note": "Pass 4 (B-2): both ports read src/app.py alike in the opening sentence; the path also occurs in a run with a letter outside ASCII, which CPython's template would read on into, so both withhold it. The neutral set no longer fires on the committed pairs that made a port-only plant of the path guard split the ports, and this pair does.",
+  "summary": "Modified src/app.py. The old notes called it src/app.pyé.",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1,1 +1,1 @@\n-a\n+b\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1,4 +1,7 @@\n-import os\n-\n-def run():\n-    return 1\n+import os\n+\n+def run():\n+    return 2\n+\n+def parse_date(s):\n+    return s\ndiff --git a/src/new_mod.py b/src/new_mod.py\nnew file mode 100644\n--- /dev/null\n+++ b/src/new_mod.py\n@@ -1,0 +1,1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#97, #121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name, prefix or number is read, so the two may extract the claim differently. main's reading: diff status 'M' for 'src/app.py'"
+    ]
+   ],
+   "uncovered_sentences": 1
   }
  }
 ]
