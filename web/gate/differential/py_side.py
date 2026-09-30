@@ -55,7 +55,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "16c3fecd60253861edf8b4c65849b761b461ee0c53a9279cf842b55f1f1cf3ed"  # styxx/diffgate.py, main + PATH-2 fourteenth pass (LF)
+PINNED = "7f6912715a3d84a352d8c88d2d2080e72ee16e87117c809c0727b4ae120cb05b"  # styxx/diffgate.py, main + PATH-2 fourteenth pass (LF)
 # NOTE_path2_eleventh_pass_2026_09_28: the guard's reference, main's reader unchanged (origin/main 2a6ce0a3's
 # styxx/diffgate.py, the file 7.48.0 ships; tests/test_diffgate_guard.py pins it too).
 PINNED_REFERENCE = "9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb"  # styxx/_diffgate_ref.py (LF)

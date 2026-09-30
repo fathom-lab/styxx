@@ -1281,6 +1281,15 @@ def _backslashed(claimed: str, forms) -> bool:
     return "\\" in claimed or any("\\" in f for f in forms)
 
 
+def _tabbed(forms) -> bool:
+    """NOTE_path2_fourteenth_pass (A.2, read with A.4 and H): whether a form of the resolved entry keeps a TAB -- one git did
+    not write (git quotes a name holding a TAB, and its own terminating TAB is cut under its header), so a name's or a
+    date's. Such a form licenses nothing: kept whole it is longer than the thirteenth pass's cut one, and could match a
+    claim by suffix where the cut one did not, a licence no earlier pass granted (this pass's own recall measurement, 42
+    claims of its TAB-inside set); cut, it was round 13's R13.2."""
+    return any("\t" in f for f in forms)
+
+
 def _as_git_writes(line: str):
     """NOTE_path2_twelfth_pass (A.1): a `diff --git` header's paths as git writes them after it -- (`---` path, `+++`
     path, `rename from` path, `rename to` path), quoted where the header quotes them -- or None where the header does
@@ -2883,8 +2892,8 @@ def _kept_by_its_tier(p: str, claimed: str, forms) -> bool:
     read from (`forms`) equals it (exact), ends in "/" + it (suffix), or has its name (basename). git's paths are
     case-sensitive: a claim about `X.toml` says nothing about `.config/x.toml`, whatever the key reads."""
     key, kept = _norm(claimed), _case_kept(claimed)
-    if _backslashed(kept, forms):
-        return False                             # NOTE_path2_fourteenth_pass (A.3): a backslash is the name's
+    if _backslashed(kept, forms) or _tabbed(forms):
+        return False                             # NOTE_path2_fourteenth_pass (A.3, A.2): a backslash or a TAB is the name's
     if p == key:
         return bool(forms) and all(f == kept for f in forms)
     if p.endswith("/" + key):
@@ -2923,8 +2932,8 @@ def _precondition(repair: str, c, status: dict, sides, licence: dict | None = No
         as_read = (lic.get("forms") or {}).get(p) or []
         if lic.get("soft") or not as_read or not all(f == claimed or f.endswith("/" + claimed) for f in as_read):
             return False                         # NOTE_path2_twelfth_pass (A.2): a Z-3 doubt, or a match only in case
-        if _backslashed(claimed, as_read):
-            return False                         # NOTE_path2_fourteenth_pass (A.3): a backslash is the name's
+        if _backslashed(claimed, as_read) or _tabbed(as_read):
+            return False                         # NOTE_path2_fourteenth_pass (A.3, A.2): a backslash or a TAB is the name's
         if p in (lic.get("multi") or ()):
             return False                         # NOTE_path2_thirteenth_pass (A.1): one path read twice
         return _earliest_match(status, d["path"])[0] != p

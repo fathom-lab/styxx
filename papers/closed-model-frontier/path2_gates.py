@@ -2713,7 +2713,7 @@ def own_precondition(repair: str, c, status: dict, sides: dict, licence: dict | 
         read_as = (facts.get("forms") or {}).get(p, [])
         if not read_as or any(f != claimed and not f.endswith("/" + claimed) for f in read_as):
             return False
-        if "\\" in claimed or any("\\" in f for f in read_as):     # NOTE_path2_fourteenth_pass (A.3)
+        if "\\" in claimed or any("\\" in f or "\t" in f for f in read_as):     # NOTE_path2_fourteenth_pass (A.3, A.2)
             return False
         if p in (facts.get("multi") or set()):
             return False
@@ -2727,7 +2727,7 @@ def own_precondition(repair: str, c, status: dict, sides: dict, licence: dict | 
             p, _st = own_find_path(status, d["path"])
             read_as = (facts.get("forms") or {}).get(p, []) if p is not None else []
             key, claimed = own_key(d["path"]), own_case_kept(d["path"])
-            if p is None or not read_as or "\\" in claimed or any("\\" in f for f in read_as):
+            if p is None or not read_as or "\\" in claimed or any("\\" in f or "\t" in f for f in read_as):
                 return False                     # NOTE_path2_fourteenth_pass (A.3): a backslash is the name's
             if p == key:
                 same = [f == claimed for f in read_as]
@@ -3284,6 +3284,11 @@ RAW_CANARIES = (
     ('canary:raw-97-a-tab-inside-a-name', 'Created lib/x.py.',
      ('--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- /dev/null\n'
       '+++ b/lib/x.py\tfoo/LIB/X.PY\n' '@@ -0,0 +1 @@\n' '+new\n')),
+    # (A.2, read with A.4) a TAB inside a directory, the whole name ending in the claim: a form keeping a TAB git did not
+    # write licenses nothing, where the thirteenth pass's cut form (`q`) matched nothing
+    ('canary:raw-97-a-form-keeping-a-tab-licenses-nothing', 'Created lib/x.py.',
+     ('--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- /dev/null\n' '+++ b/q\tq/lib/x.py\n'
+      '@@ -0,0 +1 @@\n' '+new\n')),
     ('canary:raw-97-a-name-holding-a-backslash', 'Created lib/x.py.',
      ('--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- /dev/null\n' '+++ b/lib\\x.py\n'
       '@@ -0,0 +1 @@\n' '+new\n')),

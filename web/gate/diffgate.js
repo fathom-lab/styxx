@@ -13,7 +13,7 @@
  * NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27, NOTE_path2_ninth_pass_2026_09_27,
  * NOTE_path2_tenth_pass_2026_09_28, NOTE_path2_eleventh_pass_2026_09_28, NOTE_path2_twelfth_pass_2026_09_29,
  * NOTE_path2_thirteenth_pass_2026_09_29 and NOTE_path2_fourteenth_pass_2026_09_29) on the file that carries them,
- * sha256 16c3fecd60253861edf8b4c65849b761b461ee0c53a9279cf842b55f1f1cf3ed — the styxx/diffgate.py this
+ * sha256 7f6912715a3d84a352d8c88d2d2080e72ee16e87117c809c0727b4ae120cb05b — the styxx/diffgate.py this
  * branch would put on main, with the name table styxx/_xid.py carries (Unicode 15.0.0, table sha256
  * 8df68f21…, and the skew set beside it, 0b7134fd…, copied below) and the case fold styxx/_fold.py carries
  * (Unicode 16.0.0, sha256 a52cda82…, and beside it the set of code points 16.0.0 assigns, 56a413eb…, copied
@@ -836,6 +836,9 @@ function _pendingKey(pending, key) {
 // `lib\x.py` read as a slash equalled a claim naming `lib/x.py`); a claim or a form holding one licenses nothing
 const _caseKept = p => p.replace(/^(?:\.?\/)+/, "");
 const _backslashed = (claimed, forms) => claimed.includes("\\") || forms.some(f => f.includes("\\"));
+// NOTE_path2_fourteenth_pass (A.2, read with A.4 and H), as the Python's `_tabbed`: a form keeping a TAB git did not write
+// licenses nothing (kept whole it could match a claim by suffix where the thirteenth pass's cut form did not)
+const _tabbed = forms => forms.some(f => f.includes("\t"));
 function _asGitWrites(line) {
   // a `diff --git` header's paths as git writes them after it -- [`---` path, `+++` path, `rename from`, `rename to`],
   // quoted where the header quotes them -- or null where the header does not read both of its paths
@@ -1901,7 +1904,7 @@ function _keptByItsTier(p, claimed, forms) {
   // NOTE_path2_twelfth_pass (A.2, and its own differential), as the Python's `_kept_by_its_tier`: the entry a path claim
   // resolved to matches the claim as written, case kept, by the tier the resolution used.
   const key = _norm(claimed), kept = _caseKept(claimed);
-  if (!forms.length || _backslashed(kept, forms)) return false;   // NOTE_path2_fourteenth_pass (A.3)
+  if (!forms.length || _backslashed(kept, forms) || _tabbed(forms)) return false;   // NOTE_path2_fourteenth_pass (A.3, A.2)
   if (p === key) return forms.every(f => f === kept);
   if (p.endsWith("/" + key)) return forms.every(f => f.endsWith("/" + kept));
   return forms.every(f => _basename(f) === _basename(kept));
@@ -1922,7 +1925,7 @@ function _precondition(repair, c, status, sides, licence = null) {
     const claimed = _caseKept(d.path);
     const asRead = (lic.forms && lic.forms.get(p)) || [];
     if (lic.soft || !asRead.length || !asRead.every(f => f === claimed || f.endsWith("/" + claimed))) return false;
-    if (_backslashed(claimed, asRead)) return false;   // NOTE_path2_fourteenth_pass (A.3): a backslash is the name's
+    if (_backslashed(claimed, asRead) || _tabbed(asRead)) return false;   // NOTE_path2_fourteenth_pass (A.3, A.2)
     if (lic.multi && lic.multi.has(p)) return false;   // NOTE_path2_thirteenth_pass (A.1): one path read twice
     return _earliestMatch(status, d.path)[0] !== p;
   }
