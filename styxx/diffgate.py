@@ -938,6 +938,13 @@ _Y1_UNASSIGNED = ("a header path holds a code point Unicode 16.0.0 does not assi
                   "may key with another path")
 _Y1_UNCOUNTED = ("a line names a changed file no header pair counts (GNU's `Binary files ... differ`, "
                  "`Only in ...` and the like)")
+# NOTE_path2_fifteenth_pass_2026_09_29 (B, Y-6): the per-file readings (Z-5's refused files, #101's pairing, A-1, Y-5) read
+# the sides, keyed by the runtime's lower case. Where two header paths fold alike, or one holds a code point Unicode 16.0.0
+# does not assign, one runtime may merge two files' sides and another keep them apart (round 14, U14.1 to U14.3), so
+# tests_added and symbol_added abstain there, with one reason on every runtime: the doubt is read from the paths as
+# written, by the table (the reading's note `fold`).
+_Y6_WHY = ("{}, so a runtime may read two files' lines as one file's; the definitions each file adds and removes are not "
+           "read")
 _UNCOUNTED = re.compile(r"^(?:(?:Binary files|Files|Symbolic links) .+ and .+ differ|Only in .+: .+|File .+ is a .+ while file .+ is a .+)$")
 
 
@@ -967,7 +974,9 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
     typechange writes a deletion then a creation for one path); "moded" the keys whose section shows a mode change.
     NOTE_path2_fourteenth_pass (A.1, A.2, A.3, B): a form keeps a header line's CR unless the text ends every line in
     CRLF, is cut at a TAB only where git wrote it, and keeps backslashes; "keyed" is each key's earliest path before the
-    runtime lowers it (Y-1's form), which Z-5's reason prints."""
+    runtime lowers it (Y-1's form), which Z-5's reason prints.
+    NOTE_path2_fifteenth_pass (B, Y-6): `notes` also receives "fold" where two header paths fold alike or one holds a code
+    point Unicode 16.0.0 does not assign (Y-1's own text), which tests_added and symbol_added ask."""
     key = (rp or _ALL_ON).key
     status: dict[str, str] = {}
     added: list[str] = []
@@ -1017,8 +1026,10 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
             moded.add(k)
         if forms.setdefault(_case_fold(form), form) != form:
             found.setdefault("files", _Y1_COLLIDE)
+            found.setdefault("fold", _Y1_COLLIDE)                    # NOTE_path2_fifteenth_pass (B, Y-6)
         if _unassigned(form):                                        # NOTE_path2_thirteenth_pass (D)
             found.setdefault("files", _Y1_UNASSIGNED)
+            found.setdefault("fold", _Y1_UNASSIGNED)                 # NOTE_path2_fifteenth_pass (B, Y-6)
 
     def flush() -> None:
         pk = _pending_key(pending, key) if pending is not None else ""
@@ -1347,10 +1358,12 @@ def _status_notes(paths: list) -> dict:
     for p in paths:
         form = _LEADING_SLASH_SEGMENTS.sub("", p.replace("\\", "/"))
         forms.setdefault(_case_fold(form), set()).add(form)
+    # NOTE_path2_fifteenth_pass (B, Y-6): the same doubt as `fold`, which the per-file readings ask
     if any(len(v) > 1 for v in forms.values()):
-        return {"files": _Y1_COLLIDE}
+        return {"files": _Y1_COLLIDE, "fold": _Y1_COLLIDE}
     # NOTE_path2_thirteenth_pass (D): a path holding a code point Unicode 16.0.0 does not assign
-    return {"files": _Y1_UNASSIGNED} if any(_unassigned(f) for v in forms.values() for f in v) else {}
+    return ({"files": _Y1_UNASSIGNED, "fold": _Y1_UNASSIGNED} if any(_unassigned(f) for v in forms.values() for f in v)
+            else {})
 
 
 def _files_unsure(notes: dict | None):
@@ -1765,7 +1778,10 @@ def _apart_readings(sentence: str) -> tuple:
       - one of U+001C to U+001F, U+0085, U+FEFF, U+2028, U+2029, or a CR with a character after it (a mark).
     Every other character -- punctuation (the em dash of "README.md — created."), symbols, emoji, combining marks, the
     spaces both `\\s` hold -- reads alike in both ports: neither `\\w` holds it, both or neither `\\s` does, it folds to
-    nothing ASCII and ends no line.
+    nothing ASCII and ends no line. NOTE_path2_fifteenth_pass (section I, round 14 U14.4): except inside the templates'
+    bounded window `_W` (`{0,60}`), which the port counts in UTF-16 code units and Python in code points, so a run of 31
+    or more characters past U+FFFF between a verb and a path can end the two windows apart; `main` reads the same, so
+    this adds no disagreement of the branch's, and it is disclosed, not read here.
 
     A `symbol_added` claim's name is read as the Python reads it in both ports (the port takes its name from where the
     template's `name` group starts, by the table: NOTE_path2_sixth_pass W-2), so word characters inside a name read
@@ -1831,8 +1847,12 @@ def _shown(key: str) -> str:
 def _shown_written(path: str) -> str:
     """NOTE_path2_fourteenth_pass (B): a path as the diff writes it, printed the same on every runtime -- folded by the one
     table, each code point Unicode 16.0.0 does not assign printed as U+FFFD, escaped as ascii() escapes it. For a path
-    whose code points are all assigned it is `_shown` of its key (the fold of a key is the fold of its path, K-2); two
-    paths a newer runtime merges into one key differ only at unassigned code points, and print alike."""
+    whose code points are all assigned it is `_shown` of its key (the fold of a key is the fold of its path, K-2).
+    NOTE_path2_fifteenth_pass (B, and section I): the fourteenth pass said two paths a newer runtime merges into one key
+    differ only at unassigned code points and print alike; not so for U+A7D2 beside U+A7D3 or U+A7D4 beside U+A7D5 (the
+    lower-case letters were assigned in 14.0), where a runtime on 17.0 keyed the two files as one and printed whichever
+    came earlier (round 14, U14.2). Y-6 now abstains the per-file readings wherever a header path holds an unassigned
+    code point, so Z-5 never prints from such a key."""
     return ascii("".join("\ufffd" if _unassigned(ch) else ch for ch in _case_fold(path)))
 
 
@@ -2721,8 +2741,11 @@ def _evaluate_git(summary_text: str, name_status: str, diff_text: str, rp: "_Rep
     parsed, listed = _diff_notes(diff_text, facts), _status_notes(paths)
     # NOTE_path2_ninth_pass (Z-3): main keyed the same `--name-status` lines with str.splitlines() and its `_norm`.
     main_map = _main_name_status(name_status)
+    # NOTE_path2_fifteenth_pass (B, Y-6): the per-file readings read the diff text's sides, so its paths' fold doubt, and
+    # git's list's
     notes = {k: v for k, v in (("files", listed.get("files")), ("bom", parsed.get("bom")),
-                               ("differs", _status_differs(main_map, status))) if v}
+                               ("differs", _status_differs(main_map, status)),
+                               ("fold", parsed.get("fold") or listed.get("fold"))) if v}
     sides = parse_unified_diff_sides(diff_text) if rp.on("#121") else _read_diff(diff_text, None, rp)[2]
     # NOTE_path2_twelfth_pass (A.1, A.2): git's diff text read for its rendering; the file list is `--name-status`, read
     # under none of Z-3's doubts, and its paths are the forms #97 compares. NOTE_path2_thirteenth_pass (A.1): an entry
@@ -2818,6 +2841,14 @@ class _Repairs:
 
 _ALL_ON = _Repairs()
 
+# NOTE_path2_fifteenth_pass_2026_09_29 (A): the operator's backstop. #97's and #121's licences were each tightened at the
+# twelfth, thirteenth and fourteenth passes, and round 14 still found truth-judged regressions against main licensed by
+# each (a name holding an LF before a `@@` line; a file created and renamed away in `git log -p --format=`; git's `a/..`
+# prefix). They are withdrawn, not tightened again: a decided verdict only they explain abstains, naming main's verdict.
+# Their code, switches and preconditions stay -- the preconditions still pick the abstention's reason -- so a reviewed
+# change can license them again by taking them out of this tuple.
+WITHDRAWN = ("#97", "#121")
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 # NOTE_path2_eleventh_pass_2026_09_28: THE GUARD -- the licensed-difference rule at the verdict
@@ -2833,6 +2864,8 @@ _ALL_ON = _Repairs()
 #   4. a different verdict: this reading is evaluated again with each single repair switched off, and the difference is
 #      LICENSED by repair R only if R switched off gives main's verdict and R's own precondition holds on this claim
 #      (`_precondition`); licensed, the claim is kept; otherwise it is UNCHECKABLE, naming main's verdict;
+#      NOTE_path2_fifteenth_pass (A): and R is not WITHDRAWN -- a difference only a withdrawn repair explains is
+#      UNCHECKABLE with a reason of its own, naming that repair and main's verdict;
 #   5. where main raises, or makes no such claim, there is no verdict to license a difference from: UNCHECKABLE;
 #   6. the gate's verdict, and --strict, are recomputed from the final claims.
 # So no claim main decides can come out with a different verdict unless a named repair on its own precondition explains
@@ -2851,6 +2884,8 @@ _GUARD_RAISES = ("main's reading raises on this diff and gives no verdict; this 
                  "licenses a verdict where main gives none")
 _GUARD_ABSENT = ("main's reading makes no such claim of this sentence; this one gives {this}, and no named repair "
                  "licenses a verdict where main gives none")
+_GUARD_WITHDRAWN = ("main's reading gives {main} and this one {this}; {repair} explains the difference on this claim, but "
+                    "its licence is withdrawn until a reviewed change restores it, so it abstains")
 _K5_WHY = ("the two ports' templates may read this sentence apart (it holds a character at or past U+0080, or one of "
            "U+001C to U+001F), so the claim reads as main read it, and {}")
 _K5_ABSENT = "main's reading makes no such claim of it"
@@ -2918,7 +2953,9 @@ def _precondition(repair: str, c, status: dict, sides, licence: dict | None = No
     section registers (`multi`: git's typechange, a case twin, a strip()-merged pair; at the git door also a `T` or a
     mode-changed entry), and the forms compared are the header paths as written, before strip().
     NOTE_path2_fourteenth_pass (A.1 to A.3): the forms keep a name's CR, a TAB git did not write and a backslash, and
-    neither licenses a path claim whose claim or resolved entry's forms hold a backslash."""
+    neither licenses a path claim whose claim or resolved entry's forms hold a backslash.
+    NOTE_path2_fifteenth_pass (A): #97's and #121's licences are WITHDRAWN; their preconditions, unchanged, now decide only
+    which reason the guard's abstention prints."""
     d = c.detail or {}
     lic = licence or {}
     if repair == "#97":
@@ -3000,13 +3037,17 @@ def _guard(evaluate, reference, *, strict: bool, tp: list) -> DiffGate:
         if main_verdict == c.verdict:
             final.append(c)
             continue
-        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"], seen.get("licence"))
-                                    and switched_verdict(repair, key) == main_verdict for repair in REPAIRS):
+        explains = [] if main_verdict is None else [
+            repair for repair in REPAIRS
+            if _precondition(repair, c, seen["status"], seen["sides"], seen.get("licence"))
+            and switched_verdict(repair, key) == main_verdict]
+        if any(repair not in WITHDRAWN for repair in explains):
             final.append(c)                              # licensed by a named repair on its own precondition
             continue
         why = (_GUARD_RAISES.format(this=c.verdict) if ref is None else
                _GUARD_ABSENT.format(this=c.verdict) if r is None else
-               _GUARD_DIFFERS.format(main=main_verdict, this=c.verdict))
+               _GUARD_WITHDRAWN.format(main=main_verdict, this=c.verdict, repair=explains[0]) if explains else
+               _GUARD_DIFFERS.format(main=main_verdict, this=c.verdict))   # NOTE_path2_fifteenth_pass (A)
         final.append(DiffClaim(kind=c.kind, text=c.text, detail=c.detail, verdict="UNCHECKABLE", why=why))
     contradicted = any(c.verdict == "CONTRADICTED" for c in final)
     uncheckable = any(c.verdict == "UNCHECKABLE" for c in final)
@@ -3232,7 +3273,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         # whole file may not survive (Z-5).
                         unlicensed = _tests_differ(got, status, main)
                         whole = _whole_file_tests(added_blob, sides, (licence or {}).get("keyed"))   # (B)
-                        if unread:
+                        # NOTE_path2_fifteenth_pass (B, Y-6): two files a runtime may read as one
+                        fold = (notes or {}).get("fold")
+                        if fold:
+                            c.verdict, c.why = "UNCHECKABLE", f"{_Y6_WHY.format(fold)}; claim says {n}"
+                        elif unread:
                             c.verdict = "UNCHECKABLE"
                             c.why = (f"diff adds {unread} async test functions, which this template does not "
                                      f"count; claim says {n}")
@@ -3292,6 +3337,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                                      if hit else None)
                         if why_name is not None:
                             c.verdict, c.why = "UNCHECKABLE", why_name
+                        elif (notes or {}).get("fold"):             # NOTE_path2_fifteenth_pass (B, Y-6)
+                            c.verdict, c.why = "UNCHECKABLE", _Y6_WHY.format(notes["fold"])
                         elif doubt:
                             c.verdict, c.why = "UNCHECKABLE", doubt
                         elif unlicensed:

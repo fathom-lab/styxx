@@ -75,7 +75,10 @@
  * claim whose entry more than one file section registers (git writes a typechange as a deletion then a creation for one
  * path), the forms a licence compares are the header paths as written, cut only at git's or GNU's TAB and never
  * stripped, and a header path holding a code point Unicode 16.0.0 does not assign makes the file list unsure (a
- * runtime on a newer Unicode may lower-case it beyond the fold). Two
+ * runtime on a newer Unicode may lower-case it beyond the fold). The fifteenth pass withdraws #97's and #121's licences
+ * under the operator's backstop (WITHDRAWN: a decided verdict only they explain abstains, naming the reference's verdict
+ * and the withdrawal), and abstains tests_added and symbol_added where two header paths fold alike or one holds an
+ * unassigned code point, since a runtime may then read two files' lines as one file's (Y-6). Two
  * deliberate gaps remain: the structural "unparsed claims"
  * observer (styxx.claimdetect) is not ported, and --run / --evidence do not exist here — "tests
  * pass" is always UNCHECKABLE, exactly as the CLI without --run.
@@ -817,6 +820,10 @@ const _Y1_COLLIDE = "two header paths that differ only in case are one key";
 // NOTE_path2_thirteenth_pass (D), as the Python's
 const _Y1_UNASSIGNED = "a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path";
 const _Y1_UNCOUNTED = "a line names a changed file no header pair counts (GNU's `Binary files ... differ`, `Only in ...` and the like)";
+// NOTE_path2_fifteenth_pass_2026_09_29 (B, Y-6), as the Python's `_Y6_WHY`: the per-file readings read the sides, keyed by the
+// runtime's lower case; where two header paths fold alike or one holds a code point Unicode 16.0.0 does not assign,
+// tests_added and symbol_added abstain, with one reason on every runtime (the reading's note `fold`).
+const _Y6_WHY = doubt => `${doubt}, so a runtime may read two files' lines as one file's; the definitions each file adds and removes are not read`;
 const _UNCOUNTED = /^(?:(?:Binary files|Files|Symbolic links) [^\n]+ and [^\n]+ differ|Only in [^\n]+: [^\n]+|File [^\n]+ is a [^\n]+ while file [^\n]+ is a [^\n]+)$/;
 function _pendingKey(pending, key) {
   // The key of the file a `diff --git` header still waiting for its pair names, by the reading's key function
@@ -909,8 +916,8 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
     if (sectionModed) moded.add(k);
     const folded = _caseFold(form);
     if (!forms.has(folded)) forms.set(folded, form);
-    else if (forms.get(folded) !== form) note("files", _Y1_COLLIDE);
-    if (_unassigned(form)) note("files", _Y1_UNASSIGNED);                     // NOTE_path2_thirteenth_pass (D)
+    else if (forms.get(folded) !== form) { note("files", _Y1_COLLIDE); note("fold", _Y1_COLLIDE); }   // (Y-6: fifteenth pass)
+    if (_unassigned(form)) { note("files", _Y1_UNASSIGNED); note("fold", _Y1_UNASSIGNED); }   // NOTE_path2_thirteenth_pass (D)
   };
   const flush = () => {
     const pk = pending !== null ? _pendingKey(pending, key) : "";
@@ -1307,6 +1314,10 @@ function _earliestMatch(status, claimed) {
 // switch turns off one repair's own code: #97 resolves by main's loop, #121 keys every path by main's key, #101 pairs
 // nothing. The guard reads them to decide whether a difference from main's verdict is licensed.
 const REPAIRS = ["#97", "#121", "#101"];
+// NOTE_path2_fifteenth_pass_2026_09_29 (A), as the Python's WITHDRAWN: the operator's backstop -- #97's and #121's licences,
+// tightened three times each and still found licensing truth-judged regressions in round 14, are withdrawn; a decided
+// verdict only they explain abstains, naming main's. Their code, switches and preconditions stay.
+const WITHDRAWN = ["#97", "#121"];
 class _Repairs {
   constructor(off = []) {
     this.off = new Set(off);
@@ -1879,6 +1890,7 @@ function gateDiffText(summaryText, diffText, { strict = false } = {}) {
 const _GUARD_DIFFERS = (main, mine) => `main's reading gives ${main} and this one ${mine}; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains`;
 const _GUARD_RAISES = mine => `main's reading raises on this diff and gives no verdict; this one gives ${mine}, and no named repair licenses a verdict where main gives none`;
 const _GUARD_ABSENT = mine => `main's reading makes no such claim of this sentence; this one gives ${mine}, and no named repair licenses a verdict where main gives none`;
+const _GUARD_WITHDRAWN = (main, mine, repair) => `main's reading gives ${main} and this one ${mine}; ${repair} explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains`;
 const _K5_WHY = rest => `the two ports' templates may read this sentence apart (it holds a character at or past U+0080, or one of U+001C to U+001F), so the claim reads as main read it, and ${rest}`;
 const _K5_ABSENT = "main's reading makes no such claim of it";
 const _K5_RAISES = "main's reading raises on this diff";
@@ -1975,9 +1987,12 @@ function _guard(evaluate, reference, strict) {
     if (c.verdict === "UNCHECKABLE") return c;
     const mainVerdict = r === null ? null : r.verdict;    // tests_pass: UNCHECKABLE in both ports, with no --run here
     if (mainVerdict === c.verdict) return c;
-    if (mainVerdict !== null && REPAIRS.some(repair => _precondition(repair, c, seen.status, seen.sides, seen.licence)
-                                             && switchedVerdict(repair, key) === mainVerdict)) return c;   // licensed
-    const why = ref === null ? _GUARD_RAISES(c.verdict) : r === null ? _GUARD_ABSENT(c.verdict) : _GUARD_DIFFERS(mainVerdict, c.verdict);
+    const explains = mainVerdict === null ? [] : REPAIRS.filter(repair => _precondition(repair, c, seen.status, seen.sides, seen.licence)
+                                                                && switchedVerdict(repair, key) === mainVerdict);
+    if (explains.some(repair => !WITHDRAWN.includes(repair))) return c;   // licensed
+    const why = ref === null ? _GUARD_RAISES(c.verdict) : r === null ? _GUARD_ABSENT(c.verdict)
+      : explains.length ? _GUARD_WITHDRAWN(mainVerdict, c.verdict, explains[0])   // NOTE_path2_fifteenth_pass (A)
+      : _GUARD_DIFFERS(mainVerdict, c.verdict);
     return { kind: c.kind, text: c.text, detail: c.detail, verdict: "UNCHECKABLE", why };
   });
   const contradicted = claims.some(c => c.verdict === "CONTRADICTED");
@@ -2070,7 +2085,9 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
             // NOTE_path2_ninth_pass: `got`, or BC-1's answer, not main's (Z-1); a line the whole file may not survive (Z-5).
             const unlicensed = _testsDiffer(got, status, main);
             const whole = _wholeFileTests(addedBlob, sides, facts.keyed || null);   // NOTE_path2_fourteenth_pass (B)
-            if (unread) {
+            if (notes.fold) {                                             // NOTE_path2_fifteenth_pass (B, Y-6)
+              c.verdict = "UNCHECKABLE"; c.why = `${_Y6_WHY(notes.fold)}; claim says ${n}`;
+            } else if (unread) {
               c.verdict = "UNCHECKABLE"; c.why = `diff adds ${unread} async test functions, which this template does not count; claim says ${n}`;
             } else if (doubt) {
               c.verdict = "UNCHECKABLE"; c.why = `${doubt}; claim says ${n}`;
@@ -2117,6 +2134,8 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
             }
             if (whyName !== null) {
               c.verdict = "UNCHECKABLE"; c.why = whyName;
+            } else if (notes.fold) {                                      // NOTE_path2_fifteenth_pass (B, Y-6)
+              c.verdict = "UNCHECKABLE"; c.why = _Y6_WHY(notes.fold);
             } else if (doubt) {
               c.verdict = "UNCHECKABLE"; c.why = doubt;
             } else if (unlicensed) {
@@ -2232,5 +2251,5 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
   };
 }
 
-if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides, _evaluate, _Repairs, REPAIRS, _apartReadings, _precondition, _claimKeys, _guard };
+if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides, _evaluate, _Repairs, REPAIRS, WITHDRAWN, _apartReadings, _precondition, _claimKeys, _guard };
 if (typeof globalThis !== "undefined") globalThis.styxxDiffgateJS = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides };
