@@ -277,7 +277,7 @@ NOTE = ["NOTE_path2_third_pass_2026_09_25.md", "NOTE_path2_fourth_pass_2026_09_2
         "NOTE_path2_seventh_pass_2026_09_25.md", "NOTE_path2_eighth_pass_2026_09_27.md",
         "NOTE_path2_ninth_pass_2026_09_27.md", "NOTE_path2_tenth_pass_2026_09_28.md",
         "NOTE_path2_eleventh_pass_2026_09_28.md", "NOTE_path2_twelfth_pass_2026_09_29.md",
-        "NOTE_path2_thirteenth_pass_2026_09_29.md"]
+        "NOTE_path2_thirteenth_pass_2026_09_29.md", "NOTE_path2_fourteenth_pass_2026_09_29.md"]
 # The baseline is "the instrument before THIS repair". The preregistration named `87dded26`, the
 # origin/main this branch was cut from; the branch has since been rebased onto `98a5c368`, and
 # PATH-1 (#127), the COMPAT-2 port (#126) and DECLARE-1 (#129/#130) landed in between. Scored
@@ -768,8 +768,8 @@ REVERTS = {
     "Z-2": lambda m: {"_symbol_differs": lambda hit, name, name_py, name_js, status, main: None},
     "Z-3": lambda m: {"_files_differ": lambda notes: None},
     "Z-4": lambda m: {"_basename_only": lambda status, claimed, before="": None},
-    "Z-5": lambda m: {"_whole_file_tests": lambda blob, sides: None,
-                      "_whole_file_symbol": lambda name, blob, sides: None},
+    "Z-5": lambda m: {"_whole_file_tests": lambda blob, sides, keyed=None: None,
+                      "_whole_file_symbol": lambda name, blob, sides, keyed=None: None},
 }
 RULES = tuple(REVERTS)
 TABLE_RULES = ("#97", "#121", "#101")
@@ -906,6 +906,25 @@ def git_lines(diff: str) -> list:
     if lines and lines[-1] == "":
         lines.pop()
     return lines
+
+
+def own_line_ends(diff: str) -> list:
+    """NOTE_path2_fourteenth_pass_2026_09_29 (A.1), written out: each line's terminator, in `git_lines`'s order, by a walk of
+    the text -- a CR followed by an LF is one terminator, a lone CR or a lone LF one each -- and "" for a last line that
+    has none."""
+    ends: list = []
+    i = 0
+    while i < len(diff):
+        ch = diff[i]
+        if ch == "\r" and diff[i + 1:i + 2] == "\n":
+            ends.append("\r\n")
+            i += 2
+            continue
+        if ch in "\r\n":
+            ends.append(ch)
+        i += 1
+    count = len(git_lines(diff))
+    return (ends + [""] * count)[:count]
 
 
 def split_differs(diff: str) -> bool:
@@ -1353,9 +1372,8 @@ UNCOUNTED = re.compile(r"^(?:(?:Binary files|Files|Symbolic links) .+ and .+ dif
 
 
 def own_case_kept(p: str) -> str:
-    """NOTE_path2_twelfth_pass (A.2), written out: backslashes read as slashes, a leading run of `/` and `./` segments
-    dropped, and the case kept."""
-    p = p.replace("\\", "/")
+    """NOTE_path2_twelfth_pass (A.2), written out: a leading run of `/` and `./` segments dropped, and the case kept.
+    NOTE_path2_fourteenth_pass (A.3): backslashes kept as written (round 13, R13.3)."""
     while p.startswith("/") or p.startswith("./"):
         p = p[1:] if p.startswith("/") else p[2:]
     return p
@@ -1414,6 +1432,9 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
     mode_keys: set = set()
     mode_seen = False                 # `old mode`/`new mode` under the pending header
     minus_written = None              # the `---` path as written, cut at its TAB only (A.2)
+    keyed: dict = {}                  # NOTE_path2_fourteenth_pass (B): each key's earliest path before it is lowered
+    ends = own_line_ends(diff)        # (A.1) each line's terminator
+    all_crlf = not any(e not in ("", "\r\n") for e in ends)
 
     def pend_key() -> str:
         raw = pend[0] if pend[2] == "D" else pend[1]
@@ -1438,7 +1459,9 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
         while form.startswith("/") or form.startswith("./"):
             form = form[1:] if form.startswith("/") else form[2:]
         seen_as = kept.setdefault(own_key(raw_path), [])
-        as_read = form if written is None else own_case_kept(written)   # NOTE_path2_thirteenth_pass (A.2)
+        if own_key(raw_path) not in keyed:
+            keyed[own_key(raw_path)] = form                             # NOTE_path2_fourteenth_pass (B)
+        as_read = own_case_kept(written if written is not None else raw_path)   # (A.2); (A.3) backslashes kept
         if as_read not in seen_as:
             seen_as.append(as_read)
         registered[own_key(raw_path)] += 1                              # (A.1)
@@ -1490,12 +1513,14 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
             elif not own_shaped_pair(lines, k):
                 soft.append(Z3_UNSHAPED)                  # NOTE_path2_eleventh_pass (round 10, R0.2)
             old_path, cur = line[4:].strip(), None
-            minus_written = own_as_written(line[4:])
+            minus_written = own_as_written(line[4:], None if as_git is None else as_git[0],
+                                           ends[k] in ("\r", "\r\n") and not all_crlf)
             lead_old = lead_new = False
         elif line.startswith("+++ "):
             named = line[4:].split("\t")[0]
             if pend is None or as_git is None or not minus_read or (named != "/dev/null" and named != as_git[1]):
                 outside_git = True
+            plus_git = None if as_git is None else as_git[1]          # NOTE_path2_fourteenth_pass (A.2)
             as_git, minus_read = None, False
             if loose and k != plus_ok:
                 unsure(("files", LOOSE_WHY))
@@ -1517,7 +1542,7 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
                 else:
                     raw = nw[2:] if nw.startswith("b/") else nw
                     status[own_key(raw)] = "A" if old_path is None or own_dev_null(old_path) else "M"
-                    plus_written = own_as_written(line[4:])
+                    plus_written = own_as_written(line[4:], plus_git, ends[k] in ("\r", "\r\n") and not all_crlf)
                     written = plus_written[2:] if plus_written[:2] == "b/" else plus_written
                 cur, pend = own_key(raw), None
                 register(raw, written)
@@ -1577,21 +1602,21 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
         notes["differs"] = why
     if facts is not None:
         facts.update(rendered=any_header and not outside_git, soft=bool(soft), forms=kept,
-                     multi={k for k, n in registered.items() if n > 1}, moded=mode_keys)
+                     multi={k for k, n in registered.items() if n > 1}, moded=mode_keys, keyed=keyed)
     return status, added, sides, notes
 
 
-def own_as_written(header_path: str) -> str:
-    """NOTE_path2_thirteenth_pass (A.2), written out: a `---`/`+++` path as written, nothing stripped -- up to its TAB where
-    that TAB is git's (the only one, ending the line, after a name holding a space) or GNU's (the only one, a timestamp
-    straight after it); else the whole path; less a CR at the end."""
-    tabs = header_path.count("\t")
+def own_as_written(header_path: str, git_side: str | None = None, cr: bool = False) -> str:
+    """NOTE_path2_thirteenth_pass (A.2), written out: a `---`/`+++` path as written, nothing stripped.
+    NOTE_path2_fourteenth_pass (A.1, A.2): cut only at git's own TAB -- the line's only TAB, its last character, after
+    exactly the path the pending `diff --git` header writes for this side (`git_side`), which holds a space; every other
+    TAB (a name's, a date's) stays. `cr`: the line's terminator held a CR the text does not end every line with; the
+    name's, so it stays at the end."""
     cut = header_path
-    if tabs == 1:
-        name, after = header_path.split("\t")
-        if (after == "" and " " in name) or (after != "" and after[0] != " "):
-            cut = name
-    return cut[:-1] if cut[-1:] == "\r" else cut
+    if (git_side is not None and header_path.count("\t") == 1 and header_path[-1:] == "\t"
+            and header_path[:-1] == git_side and " " in git_side):
+        cut = git_side
+    return cut + "\r" if cr else cut
 
 
 def own_git_licence(text: str, status_paths: list, name_status: str | None = None) -> dict:
@@ -1609,7 +1634,7 @@ def own_git_licence(text: str, status_paths: list, name_status: str | None = Non
     typechanged = {own_key(x.split("\t")[-1]) for x in git_lines(name_status or "")
                    if len(x.split("\t")) >= 2 and x.split("\t")[0][:1] == "T"}
     return {"rendered": bool(facts["rendered"]), "soft": False, "forms": kept,
-            "multi": typechanged | facts["multi"] | facts["moded"]}
+            "multi": typechanged | facts["multi"] | facts["moded"], "keyed": facts["keyed"]}
 
 
 def own_name_status(text: str) -> dict:
@@ -1806,17 +1831,19 @@ def own_refused_files(added: list, sides: dict) -> dict:
     return out
 
 
-def own_refused_why(path) -> str:
-    where = "outside any file" if path is None else f"in {shown(path)}"      # NOTE_path2_eleventh_pass (R0.3)
+def own_refused_why(path, keyed: dict | None = None) -> str:
+    # NOTE_path2_eleventh_pass (R0.3); NOTE_path2_fourteenth_pass (B): the file's path as the diff writes it where known
+    where = ("outside any file" if path is None else
+             f"in {shown_written(keyed[path])}" if keyed and path in keyed else f"in {shown(path)}")
     return (f"an added definition line {where} {Z5_WHY}, and a file CPython refuses defines nothing; this reading "
             "reads it line by line")
 
 
-def own_whole_symbol(name: str, added: list, sides: dict):
+def own_whole_symbol(name: str, added: list, sides: dict, keyed: dict | None = None):
     refused = own_refused_files(added, sides)
     for path, (a, _r) in sides.items():
         if path in refused and any((defined(x) or ("", ""))[1] == name for x in a):
-            return own_refused_why(path)
+            return own_refused_why(path, keyed)
     if None in refused and any((defined(x) or ("", ""))[1] == name for x in own_strays(added, sides)):
         return own_refused_why(None)
     return None
@@ -1826,6 +1853,12 @@ def shown(key: str) -> str:
     """NOTE_path2_tenth_pass: a key as Z-3's reasons print it, written out -- folded by the one table, escaped as ascii()
     escapes it."""
     return ascii(own_fold(key))
+
+
+def shown_written(path: str) -> str:
+    """NOTE_path2_fourteenth_pass (B), written out: a path as the diff writes it -- folded by the one table, a code point
+    the assigned set leaves out printed as U+FFFD, escaped as ascii() escapes it."""
+    return ascii("".join(chr(0xFFFD) if own_unassigned(ch) else ch for ch in own_fold(path)))
 
 
 def own_licensed(status: dict, main: dict):
@@ -2043,7 +2076,7 @@ def own_test_doubt(added: list, sides: dict, notes: dict | None = None):
 
 
 def expected_tests(c, status: dict, added: list, sides: dict, notes: dict | None = None,
-                   main: "OwnMain | None" = None) -> tuple:
+                   main: "OwnMain | None" = None, keyed: dict | None = None) -> tuple:
     """A tests_added claim's (verdict, reason), by this file's own code."""
     n, noun = int(c.detail["n"]), c.detail.get("noun", "").lower()
     if not touches_python(status):
@@ -2063,7 +2096,7 @@ def expected_tests(c, status: dict, added: list, sides: dict, notes: dict | None
         return "UNCHECKABLE", f"{z1}; claim says {n}"
     refused = own_refused_files(added, sides)                                # Z-5
     if refused:
-        return "UNCHECKABLE", f"{own_refused_why(next(iter(refused)))}; claim says {n}"
+        return "UNCHECKABLE", f"{own_refused_why(next(iter(refused)), keyed)}; claim says {n}"
     if net == n and chg:                                   # Y-5: the pairing withdraws, it does not verify
         return "UNCHECKABLE", f"diff adds {net} test functions and changes {chg}, claim says {n}; {Y5_WHY}"
     if net == n:
@@ -2078,7 +2111,7 @@ def expected_tests(c, status: dict, added: list, sides: dict, notes: dict | None
 
 
 def expected_symbol(c, sentence: str, start: int, status: dict, added: list, sides: dict,
-                    main: "OwnMain | None" = None) -> tuple:
+                    main: "OwnMain | None" = None, keyed: dict | None = None) -> tuple:
     """A symbol_added claim's (verdict, reason), by this file's own code."""
     if not touches_python(status):
         return "UNCHECKABLE", BC1_WHY
@@ -2094,7 +2127,7 @@ def expected_symbol(c, sentence: str, start: int, status: dict, added: list, sid
     z2 = own_symbol_differs(hit, name, sentence, start, main) if main is not None else None   # NOTE_path2_ninth_pass
     if z2:
         return "UNCHECKABLE", z2
-    z5 = own_whole_symbol(name, added, sides) if hit else None                                  # Z-5
+    z5 = own_whole_symbol(name, added, sides, keyed) if hit else None                           # Z-5
     if z5:
         return "UNCHECKABLE", z5
     if hit and only_changed(name, sides, status):
@@ -2379,7 +2412,7 @@ def parse_violations(diff: str, paths, with_reading: bool = False):
         out.append("G-C7_oracle:Y-4_dev_null")
     if any(new._norm(p) != own_key(p) for p in raw_list):
         out.append("G-C7_oracle:#121_key")
-    return (out, own) if with_reading else out
+    return (out, own, own_facts) if with_reading else out
 
 
 def oracle_violations(summary: str, diff: str, paths, g, status_override: dict | None = None,
@@ -2394,8 +2427,9 @@ def oracle_violations(summary: str, diff: str, paths, g, status_override: dict |
     reads (`git_text`, git's bytes through universal newlines) and of git's `--name-status` (`name_status`); and
     Y-1's git-door reading (`_status_notes`) is held to this file's on every record's paths and a case-folded
     variant, whether or not the record can be rebuilt."""
-    out, own = parse_violations(diff, paths, with_reading=True)
+    out, own, own_facts = parse_violations(diff, paths, with_reading=True)
     status, added, sides, notes = own
+    keyed = own_facts.get("keyed")          # NOTE_path2_fourteenth_pass (B): Z-5 prints the path as the diff writes it
     main = own_main_raw(diff)
     if status_override is not None:
         status = status_override
@@ -2457,7 +2491,7 @@ def oracle_violations(summary: str, diff: str, paths, g, status_override: dict |
             out += compat_violations(c, sides)
             continue
         if c.kind == "tests_added":
-            want = expected_tests(c, status, added, sides, notes, main)
+            want = expected_tests(c, status, added, sides, notes, main, keyed)
         elif c.kind == "files_changed_count":
             want = expected_count(int(c.detail["n"]), status, notes)
         elif c.kind == "only_touches":
@@ -2470,14 +2504,14 @@ def oracle_violations(summary: str, diff: str, paths, g, status_override: dict |
             if mm is None:
                 out.append("G-C7_oracle:symbol_claim_unplaced")
                 continue
-            want = expected_symbol(c, c.text, mm.start("name"), status, added, sides, main)
+            want = expected_symbol(c, c.text, mm.start("name"), status, added, sides, main, keyed)
         else:
             k = next((i for i, (s, mm) in enumerate(sites) if s.strip()[:160] == c.text
                       and mm.group("name") == c.detail["name"] and mm.group("kind") == c.detail["kind"]), None)
             if k is None:
                 out.append("G-C7_oracle:symbol_claim_unplaced")
                 continue
-            want = expected_symbol(c, sites[k][0], sites[k][1].start("name"), status, added, sides, main)
+            want = expected_symbol(c, sites[k][0], sites[k][1].start("name"), status, added, sides, main, keyed)
             del sites[k]
         if (c.verdict, c.why) != want:
             out.append(f"G-C7_oracle:{c.kind}_claim")
@@ -2679,6 +2713,8 @@ def own_precondition(repair: str, c, status: dict, sides: dict, licence: dict | 
         read_as = (facts.get("forms") or {}).get(p, [])
         if not read_as or any(f != claimed and not f.endswith("/" + claimed) for f in read_as):
             return False
+        if "\\" in claimed or any("\\" in f for f in read_as):     # NOTE_path2_fourteenth_pass (A.3)
+            return False
         if p in (facts.get("multi") or set()):
             return False
         return any_tier(status, key) != p
@@ -2691,8 +2727,8 @@ def own_precondition(repair: str, c, status: dict, sides: dict, licence: dict | 
             p, _st = own_find_path(status, d["path"])
             read_as = (facts.get("forms") or {}).get(p, []) if p is not None else []
             key, claimed = own_key(d["path"]), own_case_kept(d["path"])
-            if p is None or not read_as:
-                return False
+            if p is None or not read_as or "\\" in claimed or any("\\" in f for f in read_as):
+                return False                     # NOTE_path2_fourteenth_pass (A.3): a backslash is the name's
             if p == key:
                 same = [f == claimed for f in read_as]
             elif p.endswith("/" + key):
@@ -3233,6 +3269,94 @@ RAW_CANARIES = (
     ("canary:raw-a-path-holding-an-unassigned-code-point", "1 file changed. 2 files changed. Only touches docs/.",
      "--- a/docs/a\ua7ceb.md\n+++ b/docs/a\ua7ceb.md\n@@ -1 +1 @@\n-x\n+y\n"
      "--- a/src/c.py\n+++ b/src/c.py\n@@ -1 +1 @@\n-x = 1\n+x = 2\n"),
+    # NOTE_path2_fourteenth_pass_2026_09_29 (round 13, R13.1 to R13.3): a name's own CR, TAB and backslash in a plain rendering,
+    # each beside an earlier basename twin, where the thirteenth pass's rules kept #97's false VERIFIED (the git door cannot
+    # rebuild them: git quotes such a name, and no safe path holds one)
+    ('canary:raw-97-a-name-ending-in-a-cr-created', 'Created lib/x.py.',
+     ('--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- /dev/null\n' '+++ b/lib/x.py\r\n'
+      '@@ -0,0 +1 @@\n' '+new\n')),
+    ('canary:raw-97-a-name-ending-in-a-cr-deleted', 'Deleted lib/x.py.',
+     ('--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- a/lib/x.py\r\n' '+++ /dev/null\n'
+      '@@ -1 +0,0 @@\n' '-old\n')),
+    ('canary:raw-97-a-plain-trailing-tab-after-a-name-holding-a-space', 'Created lib/x.py.',
+     ('--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- /dev/null\n'
+      '+++ b/sp ace/lib/x.py\t\n' '@@ -0,0 +1 @@\n' '+new\n')),
+    ('canary:raw-97-a-tab-inside-a-name', 'Created lib/x.py.',
+     ('--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- /dev/null\n'
+      '+++ b/lib/x.py\tfoo/LIB/X.PY\n' '@@ -0,0 +1 @@\n' '+new\n')),
+    ('canary:raw-97-a-name-holding-a-backslash', 'Created lib/x.py.',
+     ('--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- /dev/null\n' '+++ b/lib\\x.py\n'
+      '@@ -0,0 +1 @@\n' '+new\n')),
+    ('canary:raw-97-a-claim-holding-a-backslash', 'Created lib\\x.py.',
+     ('--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- /dev/null\n' '+++ b/lib\\x.py\n'
+      '@@ -0,0 +1 @@\n' '+new\n')),
+    # and git's own rendering of a name holding a space, whose terminating TAB git wrote: cut, and #97 still licenses
+    ('canary:raw-97-gits-own-tab-after-a-name-holding-a-space', 'Created lib/README.md.',
+     ('diff --git a/a/README.md b/a/README.md\n' '--- a/a/README.md\n' '+++ b/a/README.md\n' '@@ -1 +1 @@\n'
+      '-a\n' '+b\n' 'diff --git a/my dir/lib/README.md b/my dir/lib/README.md\n' 'new file mode 100644\n'
+      '--- /dev/null\n' '+++ b/my dir/lib/README.md\t\n' '@@ -0,0 +1 @@\n' '+hello\n')),
+    # (round 13, G13.1) #121's `multi` asked of the resolved entry, not the claim's key: git's own bytes for `.cfg/x.json`
+    # turned symlink beside `cfg/x.json` modified; the suffix claim resolves to the typechanged key
+    ('canary:raw-121-a-suffix-claim-on-a-typechanged-dotted-directory', 'Created x.json. Deleted x.json.',
+     ('diff --git a/.cfg/x.json b/.cfg/x.json\n' 'deleted file mode 100644\n' 'index 7898192..0000000\n'
+      '--- a/.cfg/x.json\n' '+++ /dev/null\n' '@@ -1 +0,0 @@\n' '-a\n'
+      'diff --git a/.cfg/x.json b/.cfg/x.json\n' 'new file mode 120000\n' 'index 0000000..e870e3b\n'
+      '--- /dev/null\n' '+++ b/.cfg/x.json\n' '@@ -0,0 +1 @@\n' '+t.json\n' '\\ No newline at end of file\n'
+      'diff --git a/cfg/x.json b/cfg/x.json\n' 'index 587be6b..975fbec 100644\n' '--- a/cfg/x.json\n'
+      '+++ b/cfg/x.json\n' '@@ -1 +1 @@\n' '-x\n' '+y\n')),
+    # (round 13, G13.2) one repair's precondition and another repair's switch license nothing: git's rename rendering, where
+    # #97 switched off gives main back but cannot license beside the rename's Z-3 doubt, and #121's precondition holds but
+    # #121 switched off does not give main back
+    ('canary:raw-a-precondition-of-one-repair-and-the-switch-of-another', 'Created .github/ci.yml.',
+     ('diff --git a/docs/ci.yml b/docs/ci.yml\n' 'index 7898192..6178079 100644\n' '--- a/docs/ci.yml\n'
+      '+++ b/docs/ci.yml\n' '@@ -1 +1 @@\n' '-a\n' '+b\n' 'diff --git a/old.py b/new.py\n'
+      'similarity index 69%\n' 'rename from old.py\n' 'rename to new.py\n' 'index 01f84f8..2edf674 100644\n'
+      '--- a/old.py\n' '+++ b/new.py\n' '@@ -7,4 +7,4 @@ l6\n' ' l7\n' ' l8\n' ' l9\n' '-l10\n'
+      '+l10 changed\n' 'diff --git a/p/.github/ci.yml b/p/.github/ci.yml\n' 'new file mode 100644\n'
+      'index 0000000..587be6b\n' '--- /dev/null\n' '+++ b/p/.github/ci.yml\n' '@@ -0,0 +1 @@\n' '+x\n'
+      'diff --git a/x/github/ci.yml b/x/github/ci.yml\n' 'new file mode 100644\n' 'index 0000000..975fbec\n'
+      '--- /dev/null\n' '+++ b/x/github/ci.yml\n' '@@ -0,0 +1 @@\n' '+y\n')),
+    # (round 13, U13.1, section B) Z-5's reason on a path holding a code point Unicode 16.0.0 does not assign, printed
+    # from the path as written (a key printed there is the runtime's own lower case)
+    ('canary:raw-z5-a-path-holding-an-unassigned-code-point', 'Added 1 test. Added function foo.',
+     ('--- a/tests/test_\ua7ce.py\n' '+++ b/tests/test_\ua7ce.py\n' '@@ -1 +1,2 @@\n' ' x = 0\n'
+      '+def\xa0test_a():\n' '--- a/src/\ua7ce.py\n' '+++ b/src/\ua7ce.py\n' '@@ -1 +1,3 @@\n' ' x = 0\n'
+      '+def foo():\n' '+def\xa0bar():\n')),
+    # (round 13, G13.3) pinned records only differential mode read, promoted so corpus mode refuses the partial drops of the
+    # thirteenth pass's licences (N2, N2b, N3, N5, N23c, N24, N26)
+    ('canary:raw-pinned-m-r12-T6', 'Deleted lib/x.sh. Created lib/x.sh.',
+     ('diff --git a/aaa/x.sh b/aaa/x.sh\n' 'index d905d9d..6a69f92 100644\n' '--- a/aaa/x.sh\n'
+      '+++ b/aaa/x.sh\n' '@@ -1 +1 @@\n' '-e\n' '+f\n' 'diff --git a/lib/x.sh b/lib/x.sh\n'
+      'deleted file mode 120000\n' 'index c7e58fc..0000000\n' '--- a/lib/x.sh\n' '+++ /dev/null\n'
+      '@@ -1 +0,0 @@\n' '-tgt\n' '\\ No newline at end of file\n' 'diff --git a/lib/x.sh b/lib/x.sh\n'
+      'new file mode 100644\n' 'index 0000000..e69de29\n')),
+    ('canary:raw-pinned-m-r12-T3', 'Created lib/x.sh.',
+     ('diff --git a/aaa/x.sh b/aaa/x.sh\n' 'index d905d9d..6a69f92 100644\n' '--- a/aaa/x.sh\n'
+      '+++ b/aaa/x.sh\n' '@@ -1 +1 @@\n' '-e\n' '+f\n' 'diff --git a/src/lib/x.sh b/src/lib/x.sh\n'
+      'deleted file mode 100644\n' 'index fa11a6a..0000000\n' '--- a/src/lib/x.sh\n' '+++ /dev/null\n'
+      '@@ -1 +0,0 @@\n' '-echo\n' 'diff --git a/src/lib/x.sh b/src/lib/x.sh\n' 'new file mode 120000\n'
+      'index 0000000..c7e58fc\n' '--- /dev/null\n' '+++ b/src/lib/x.sh\n' '@@ -0,0 +1 @@\n' '+tgt\n'
+      '\\ No newline at end of file\n')),
+    ('canary:raw-pinned-m-r12-W-nbsp-created-difflib', 'Created x.py.',
+     ('--- a/lib/x.py\n' '+++ b/lib/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- /dev/null\n' '+++ b/x.py\xa0\n'
+      '@@ -0,0 +1 @@\n' '+new\n')),
+    ('canary:raw-pinned-m-r12-W-sp-deleted-difflib-noprefix', 'Deleted util.py.',
+     ('--- a/util.py\n' '+++ a/util.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- util.py \n' '+++ /dev/null\n'
+      '@@ -1 +0,0 @@\n' '-old\n')),
+    ('canary:raw-pinned-m-d12-em-2909292-786-git', 'New Ci.yml. 7 files changed. 5 files changed. Only touches github/. 8 files changed. Only touches .env/. New .github/Ci.yml.',
+     ('diff --git a/.config/x.toml b/.config/x.toml\n' 'new file mode 100644\n' 'index 00000000..2f0133c4\n'
+      '--- /dev/null\n' '+++ b/.config/x.toml\n' '@@ -0,0 +1,2 @@\n' '+v22 = 7\n' '+v325 = 6\n'
+      'diff --git a/.github/ci.yml b/.github/ci.yml\n' 'new file mode 100644\n' 'index 00000000..50ef1877\n'
+      '--- /dev/null\n' '+++ b/.github/ci.yml\n' '@@ -0,0 +1,2 @@\n' '+v595 = 4\n' '+v45 = 9\n'
+      'diff --git a/.keep b/.keep\n' 'deleted file mode 100644\n' 'index e69de29b..00000000\n'
+      'diff --git a/config/x.toml b/config/x.toml\n' 'index 857ccd89..f98e93bd 100644\n'
+      '--- a/config/x.toml\n' '+++ b/config/x.toml\n' '@@ -1,2 +1,3 @@\n' ' v983 = 0\n' ' v80 = 7\n'
+      '+v485 = 3\n' 'diff --git a/github/ci.yml b/github/ci.yml\n' 'index 1ab9eebc..7d66da64 100644\n'
+      '--- a/github/ci.yml\n' '+++ b/github/ci.yml\n' '@@ -1,2 +1,3 @@\n' ' v103 = 7\n' ' v604 = 1\n'
+      '+v956 = 3\n' 'diff --git a/keep b/keep\n' 'index 5c2b2b77..d94d1469 100644\n' '--- a/keep\n'
+      '+++ b/keep\n' '@@ -1,2 +1,3 @@\n' ' v184 = 5\n' ' v38 = 4\n' '+v444 = 3\n'
+      'diff --git a/pkg/__init__.py b/pkg/__init__.py\n' 'deleted file mode 100644\n'
+      'index e69de29b..00000000\n')),
 )
 
 # NOTE_path2_twelfth_pass (round-11 scorer lens, blocker): the guard outcomes the canaries must reach in every run, by
