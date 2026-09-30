@@ -71,13 +71,21 @@ def test_ledger_matches_a_fresh_regeneration_from_the_receipts():
                 "the defect this repository exists to document.")
         pytest.skip("shallow clone and could not unshallow — regeneration needs full history")
 
+    committed_bytes = ledger.read_bytes()
     committed = ledger.read_text(encoding="utf-8")
     r = subprocess.run([sys.executable, str(root / "papers" / "build_ledger.py")],
                        capture_output=True, text=True, cwd=str(root))
     assert r.returncode == 0, r.stderr[-500:]
+    regenerated_bytes = ledger.read_bytes()
     regenerated = ledger.read_text(encoding="utf-8")
+    if regenerated_bytes != committed_bytes:
+        # leave the tree as we found it, byte for byte: a checkout made before
+        # `papers/LEDGER.md -text` may still hold CRLF, and restoring text would rewrite it (#186)
+        ledger.write_bytes(committed_bytes)
+    assert b"\r" not in regenerated_bytes, (
+        "build_ledger.py wrote a CR: the ledger's blob is LF and the builder must write bytes, "
+        "not platform text (#186)")
     if committed != regenerated:
-        ledger.write_text(committed, encoding="utf-8")     # leave the tree as we found it
         raise AssertionError(
             "papers/LEDGER.md does not match what papers/build_ledger.py produces from the "
             "committed receipts. Either the corpus changed and the ledger was not rebuilt, or "
