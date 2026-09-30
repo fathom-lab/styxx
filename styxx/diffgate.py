@@ -2346,8 +2346,11 @@ class _P2aFacts:
 
     def tokens(self, kind: str, words) -> frozenset:
         """Names the words the claims in reach may look up in the summary's runs of `kind` ('path', 'name', 'count')
-        or in its zones ('zone'), before any claim is read (NOTE_path2a_sixth_pass_2026_09_30, A-1)."""
-        return self._get(("tokens", kind), lambda: frozenset(w for w in words if w and _P2A_SEP not in w))
+        or in its zones ('zone'), before any claim is read (NOTE_path2a_sixth_pass_2026_09_30, A-1): those with no
+        character the two ports read apart, the only ones a claim looks up there, each text of the Basic Multilingual
+        Plane outside the surrogates, which the port reads unit by unit as this reads code points."""
+        return self._get(("tokens", kind), lambda: frozenset(
+            w for w in words if w and _P2A_SEP not in w and _P2A_BAD_RX.search(w) is None))
 
     def occurs(self, kind: str, s: str) -> bool:
         """Whether s occurs in the summary's runs of `kind`, or in its zones: for a word named by `tokens`, read from

@@ -680,7 +680,7 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 //
 // NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30,
 // NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30 and NOTE_path2a_sixth_pass_2026_09_30.
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 c861b57678e156936b01ef34544841a7cc869c263d3ed60d79de9b3e5ab0b2fe, LF). Everything outside this block is
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 427ff648f787b6fc8b7bc0e24ea84bc418ec03db28eabcf0224ac5e39453ae4f, LF). Everything outside this block is
 // main's port at 1cde8b82 (sha256 06688702..., LF), unchanged except that main's gateDiffText is named
 // _gateDiffTextMain (its definition and its DECLARE-1 self-call); the gateDiffText at the end of this block calls it
 // and then the overlay, once. The overlay reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason
@@ -1254,13 +1254,18 @@ function _p2aDefines(views, name, extra = []) {
 
 // The summary's checks. A unit from 0x80 up is "wordish" unless it is neutral or U+0085, U+2028, U+2029 or U+FEFF:
 // CPython's templates may read it as a word character, or fold it to an ASCII letter, where the port's read neither.
-const _P2A_NEUTRAL_UNITS = new Set();   // no typed array: a store into one runs ToNumber (NOTE_path2a_sixth_pass_2026_09_30, C-2)
-for (const [a, b] of _P2A_NEUTRAL_RANGES) for (let u = a; u <= b; u++) _P2A_NEUTRAL_UNITS.add(u);
+// A plain array of booleans, not a typed array: a store into a typed array runs ToNumber (NOTE_path2a_sixth_pass_2026_09_30,
+// C-2). Every index and every stored value here is a number or a boolean the block computes.
+const _p2aFlags = n => { const out = []; for (let u = 0; u < n; u++) out.push(false); return out; };   // packed
+const _P2A_NEUTRAL_UNITS = _p2aFlags(0x10000);
+for (const [a, b] of _P2A_NEUTRAL_RANGES) for (let u = a; u <= b; u++) _P2A_NEUTRAL_UNITS[u] = true;
 const _P2A_DIV_UNITS = new Set([..._P2A_DIVERGENT].map(ch => ch.charCodeAt(0)));
-const _p2aWordishUnit = u => u >= 0x80 && !_P2A_NEUTRAL_UNITS.has(u) && u !== 0x85 && u !== 0x2028 && u !== 0x2029 && u !== 0xfeff;
+const _p2aWordishUnit = u => u >= 0x80 && _P2A_NEUTRAL_UNITS[u] === false && u !== 0x85 && u !== 0x2028 && u !== 0x2029 && u !== 0xfeff;
 const _p2aBadUnit = u => _P2A_DIV_UNITS.has(u) || _p2aWordishUnit(u);
 const _P2A_PATH_ASCII = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_./-\\";
-const _p2aPathUnit = u => (u < 0x80 && _P2A_PATH_ASCII.includes(String.fromCharCode(u))) || _p2aWordishUnit(u);
+const _P2A_PATH_UNITS = _p2aFlags(0x80);
+for (let u = 0; u < 0x80; u++) _P2A_PATH_UNITS[u] = _P2A_PATH_ASCII.includes(String.fromCharCode(u));
+const _p2aPathUnit = u => (u < 0x80 && _P2A_PATH_UNITS[u] === true) || _p2aWordishUnit(u);
 const _p2aNameAnyUnit = u => _p2aWordUnit(u) || _p2aWordishUnit(u);
 const _p2aCountUnit = u => (u >= 48 && u <= 57) || _p2aWordishUnit(u);
 const _p2aRunUnit = kind => kind === "path" ? _p2aPathUnit : kind === "name" ? _p2aNameAnyUnit : _p2aCountUnit;
@@ -1308,6 +1313,8 @@ function _p2aFound(words, text) {
   // The words (non-empty, none holding _P2A_SEP) that occur in `text`, as the Python's _p2a_found: up to _P2A_MANY
   // words, one scan each; more, one read of the text through one automaton, marking each state's words once
   // (NOTE_path2a_sixth_pass_2026_09_30, A-1). Both give the same set.
+  // The words are named by `tokens`, which keeps only words with no unit the two ports read apart: each is BMP text
+  // outside the surrogates, so reading the text by UTF-16 unit finds each where the Python's code points do.
   if (words.size <= _P2A_MANY) return new Set([...words].filter(w => text.includes(w)));
   const [moves, back, hit] = _p2aAutomaton(words);
   const ends = new Map();
@@ -1317,8 +1324,16 @@ function _p2aFound(words, text) {
     ends.set(k, w);
   }
   const seen = new Set(), got = new Set();
+  const first = _p2aFlags(0x10000);   // the units a word starts with: the root's only moves
+  for (const w of words) {
+    const k = w.charCodeAt(0);
+    first[k] = true;
+  }
   let u = 0;
-  for (const ch of text) {
+  for (let i = 0; i < text.length; i++) {
+    const k = text.charCodeAt(i);
+    if (u === 0 && first[k] === false) continue;
+    const ch = text.charAt(i);
     while (u && !moves[u].has(ch)) u = back[u];
     u = moves[u].has(ch) ? moves[u].get(ch) : 0;
     for (let v = u; v && hit[v] && !seen.has(v); v = back[v]) {
@@ -1510,7 +1525,11 @@ function _p2aFactsRaw(diffText, summaryText) {
     kinds: (found = []) => get("kinds", () => new Set(found.filter(k => _P2A_ACCUSE.has(k)))),
     apart: kinds => get("apart", () => _p2aApart(f, kinds)),
     // NOTE_path2a_sixth_pass_2026_09_30, A-1: the words the claims in reach may look up in the summary's runs or zones
-    tokens: (kind, words) => get("tokens:" + kind, () => new Set(words.filter(w => w && !w.includes(_P2A_SEP)))),
+    tokens: (kind, words) => get("tokens:" + kind, () => new Set(words.filter(w => {
+      if (!w || w.includes(_P2A_SEP)) return false;
+      for (let k = 0; k < w.length; k++) if (_p2aBadUnit(w.charCodeAt(k))) return false;
+      return true;
+    }))),
     occurs: (kind, s) => {
       const text = kind === "zone" ? f.zoneText() : f.runs(kind);
       const words = memo.get("tokens:" + kind) || new Set();
