@@ -8,8 +8,8 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'integrations/git/readme.md'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -40,8 +40,8 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'src/node/app.py'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -56,8 +56,8 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'glob.ts'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -89,8 +89,8 @@
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 3 files, claim says 3"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "file_created",
@@ -99,8 +99,8 @@
     ],
     [
      "file_deleted",
-     "VERIFIED",
-     "diff status 'D' for 'pr_agent.toml'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "only_touches",
@@ -673,13 +673,13 @@
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 2 files, claim says 2"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for '.logo.png'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "file_deleted",
@@ -4017,8 +4017,8 @@
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 3 files, claim says 3"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "only_touches",
@@ -4791,17 +4791,17 @@
   "summary": "3 files changed. 2 files changed.",
   "diff": "diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..e69de29\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-old\n+new\ndiff --git a/img.png b/img.png\nindex 1111111..2222222 100644\nGIT binary patch\nliteral 5\nMcmZQzWMXCj0000\n\nliteral 5\nMcmZQzWMXCj0000\n\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 3 files, claim says 3"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
-     "CONTRADICTED",
-     "diff changes 3 files, claim says 2"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -4812,17 +4812,17 @@
   "summary": "2 files changed. 1 file changed.",
   "diff": "diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..e69de29\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-old\n+new\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 2 files, claim says 2"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
-     "CONTRADICTED",
-     "diff changes 2 files, claim says 1"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -4865,17 +4865,17 @@
   "summary": "2 files changed. 1 file changed.",
   "diff": "diff --git a/.env b/.env\nnew file mode 100644\nindex 0000000..e69de29\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-old\n+new\n\\ No newline at end of file\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 2 files, claim says 2"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
-     "CONTRADICTED",
-     "diff changes 2 files, claim says 1"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -5189,8 +5189,8 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'integrations/git/readme.md'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "file_touched",
@@ -5210,8 +5210,8 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'integrations/git/readme.md'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -5222,17 +5222,17 @@
   "summary": "3 files changed. 2 files changed.",
   "diff": "diff --git \"a/sp ace.py\" \"b/sp ace.py\"\n--- \"a/sp ace.py\"\n+++ \"b/sp ace.py\"\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/.env b/.env\nnew file mode 100644\n--- /dev/null\n+++ b/.env\n@@ -0,0 +1 @@\n+A=1\ndiff --git a/env b/env\nnew file mode 100644\n--- /dev/null\n+++ b/env\n@@ -0,0 +1 @@\n+B=1\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 3 files, claim says 3"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
-     "CONTRADICTED",
-     "diff changes 3 files, claim says 2"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -5321,8 +5321,8 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'lib/src/readme.md'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -5539,8 +5539,8 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'config/eslintrc.json'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "file_touched",
@@ -5556,12 +5556,12 @@
   "summary": "Only touches .env.",
   "diff": "diff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-A=1\n+A=2\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside '.env': ['env']"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -5572,12 +5572,12 @@
   "summary": "Only touches .github/.",
   "diff": "diff --git a/.github/x.yml b/.github/x.yml\nindex 1111111..2222222 100644\n--- a/.github/x.yml\n+++ b/.github/x.yml\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/github/z.md b/github/z.md\nindex 1111111..2222222 100644\n--- a/github/z.md\n+++ b/github/z.md\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside '.github': ['github/z.md']"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -5588,12 +5588,12 @@
   "summary": "Only touches .gitignore.",
   "diff": "diff --git a/gitignore b/gitignore\nindex 1111111..2222222 100644\n--- a/gitignore\n+++ b/gitignore\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside '.gitignore': ['gitignore']"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -5604,17 +5604,17 @@
   "summary": "3 files changed. 2 files changed.",
   "diff": "diff --git a/.env b/.env\nindex 1111111..2222222 100644\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\ndiff --git a/x.py b/x.py\nindex 1111111..2222222 100644\n--- a/x.py\n+++ b/x.py\n@@ -1 +1 @@\n-a\n+b\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 3 files, claim says 3"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
-     "CONTRADICTED",
-     "diff changes 3 files, claim says 2"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -5713,8 +5713,8 @@
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 3 files, claim says 3"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
@@ -5730,17 +5730,17 @@
   "summary": "3 files changed. 2 files changed.",
   "diff": "diff --git a/pkg/__init__.py b/pkg/__init__.py\nnew file mode 100644\nindex 0000000..e69de29\ndiff --git a/.env b/.env\nindex 1111111..2222222 100644\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-A=1\n+A=2\ndiff --git a/env b/env\nindex 1111111..2222222 100644\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-B=1\n+B=2\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 3 files, claim says 3"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
-     "CONTRADICTED",
-     "diff changes 3 files, claim says 2"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -5771,8 +5771,8 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'lib/src/readme.md'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -5959,8 +5959,8 @@
     ],
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 7 files, claim says 7"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
@@ -6112,8 +6112,8 @@
     ],
     [
      "files_changed_count",
-     "CONTRADICTED",
-     "diff changes 6 files, claim says 4"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
@@ -6127,8 +6127,8 @@
     ],
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 6 files, claim says 6"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "only_touches",
@@ -6173,8 +6173,8 @@
     ],
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'docs/.env.json'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
@@ -6215,13 +6215,13 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for '.config/x.toml'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'docs/.env.json'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -6246,8 +6246,8 @@
     ],
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 2 files, claim says 2"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -6453,7 +6453,7 @@
   "summary": "Created .github/ci.yml. Only touches .github/. 2 files changed.",
   "diff": "diff --git a/.github/ci.yml b/.github/ci.yml\ndeleted file mode 100644\nindex a8926a5..0000000\n--- a/.github/ci.yml\n+++ /dev/null\n@@ -1 +0,0 @@\n-a: 1\ndiff --git a/.github/ci.yml b/.github/ci.yml\nnew file mode 120000\nindex 0000000..6a9e185\n--- /dev/null\n+++ b/.github/ci.yml\n@@ -0,0 +1 @@\n+x.yml\n\\ No newline at end of file\ndiff --git a/github/ci.yml b/github/ci.yml\nindex 8b76663..f6f4a02 100644\n--- a/github/ci.yml\n+++ b/github/ci.yml\n@@ -1 +1 @@\n-b: 1\n+b: 2\n",
   "expect": {
-   "verdict": "FAIL",
+   "verdict": "PASS",
    "claims": [
     [
      "file_created",
@@ -6462,13 +6462,13 @@
     ],
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside '.github': ['github/ci.yml']"
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 2 files, claim says 2"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -6802,8 +6802,8 @@
    "claims": [
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 2 files, claim says 2"
+     "UNCHECKABLE",
+     "main's reading gives CONTRADICTED and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ],
     [
      "files_changed_count",
@@ -7277,8 +7277,8 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'my dir/lib/readme.md'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -7293,8 +7293,8 @@
    "claims": [
     [
      "file_created",
-     "VERIFIED",
-     "diff status 'A' for 'integrations/git/readme.md'"
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
     ]
    ],
    "uncovered_sentences": 0
@@ -7310,12 +7310,12 @@
     [
      "tests_added",
      "UNCHECKABLE",
-     "an added definition line in 'tests/test_\\ufffd.py' is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line; claim says 1"
+     "a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path, so a runtime may read two files' lines as one file's; the definitions each file adds and removes are not read; claim says 1"
     ],
     [
      "symbol_added",
      "UNCHECKABLE",
-     "an added definition line in 'src/\\ufffd.py' is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line"
+     "a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path, so a runtime may read two files' lines as one file's; the definitions each file adds and removes are not read"
     ]
    ],
    "uncovered_sentences": 0
@@ -7332,6 +7332,293 @@
      "file_created",
      "UNCHECKABLE",
      "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-R14.1-lf-@@-created-prefix",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib/x.py\n@@\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-R14.1-lf-@@-created-noprefix",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ lib/x.py\n@@\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-R14.1-lf-@@_-0,0_+1_@@-created-prefix",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib/x.py\n@@ -0,0 +1 @@\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-R14.2-rename-away/log-format-empty",
+  "summary": "Created src/x.py.",
+  "diff": "diff --git a/lib/x.py b/lib/x.py\nindex d00491f..0cfbf08 100644\n--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/src/x.py b/src/y.py\nsimilarity index 100%\nrename from src/x.py\nrename to src/y.py\ndiff --git a/src/x.py b/src/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/src/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-R14.2-rename-away-2/log-format-empty-reverse",
+  "summary": "Created src/x.py.",
+  "diff": "diff --git a/lib/x.py b/lib/x.py\nindex d00491f..0cfbf08 100644\n--- a/lib/x.py\n+++ b/lib/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/src/x.py b/src/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/src/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\ndiff --git a/src/x.py b/src/y.py\nsimilarity index 100%\nrename from src/x.py\nrename to src/y.py\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-R14.2-suffix/log-format-empty",
+  "summary": "Created lib/x.py.",
+  "diff": "diff --git a/pkg/lib/x.py b/pkg/lib/y.py\nsimilarity index 100%\nrename from pkg/lib/x.py\nrename to pkg/lib/y.py\ndiff --git a/a/x.py b/a/x.py\nindex d00491f..0cfbf08 100644\n--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\ndiff --git a/pkg/lib/x.py b/pkg/lib/x.py\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/pkg/lib/x.py\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #97 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-R14.3-dotted-rename-away/log-format-empty",
+  "summary": "Created cfg/x.json.",
+  "diff": "diff --git a/cfg/x.json b/cfg/z.json\nsimilarity index 100%\nrename from cfg/x.json\nrename to cfg/z.json\ndiff --git a/cfg/x.json b/cfg/x.json\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/cfg/x.json\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\ndiff --git a/.cfg/x.json b/.cfg/x.json\nindex 7898192..6178079 100644\n--- a/.cfg/x.json\n+++ b/.cfg/x.json\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-R14.3-dotted-rename-away/log-M-format-empty",
+  "summary": "Created cfg/x.json.",
+  "diff": "diff --git a/cfg/x.json b/cfg/z.json\nsimilarity index 100%\nrename from cfg/x.json\nrename to cfg/z.json\ndiff --git a/cfg/x.json b/cfg/x.json\nnew file mode 100644\nindex 0000000..677b772\n--- /dev/null\n+++ b/cfg/x.json\n@@ -0,0 +1,12 @@\n+line 0\n+line 1\n+line 2\n+line 3\n+line 4\n+line 5\n+line 6\n+line 7\n+line 8\n+line 9\n+line 10\n+line 11\ndiff --git a/.cfg/x.json b/.cfg/x.json\nindex 7898192..6178079 100644\n--- a/.cfg/x.json\n+++ b/.cfg/x.json\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-R14.4-prefix-dotdot",
+  "summary": "Only touched cfg/. Updated cfg/x.json.",
+  "diff": "diff --git a/..cfg/x.json b/..cfg/x.json\nindex 7898192..6178079 100644\n--- a/..cfg/x.json\n+++ b/..cfg/x.json\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/..cfg/y.json b/..cfg/y.json\nindex 7898192..6178079 100644\n--- a/..cfg/y.json\n+++ b/..cfg/y.json\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "main's reading gives VERIFIED and this one CONTRADICTED; #121 explains the difference on this claim, but its licence is withdrawn until a reviewed change restores it, so it abstains"
+    ],
+    [
+     "file_touched",
+     "UNCHECKABLE",
+     "'cfg/x.json': only a file with the same name in another directory is in the diff ('..cfg/x.json', status 'M'); #97 licenses the exact and suffix tiers only"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-R14.4-prefix-default",
+  "summary": "Only touched cfg/. Updated cfg/x.json.",
+  "diff": "diff --git a/cfg/x.json b/cfg/x.json\nindex 7898192..6178079 100644\n--- a/cfg/x.json\n+++ b/cfg/x.json\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/cfg/y.json b/cfg/y.json\nindex 7898192..6178079 100644\n--- a/cfg/y.json\n+++ b/cfg/y.json\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ],
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'cfg/x.json'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-G14.1-121-a-claim-holding-a-backslash",
+  "summary": "Created .a\\x.py.",
+  "diff": "diff --git a/.a\\x.py b/.a\\x.py\nnew file mode 100644\n--- /dev/null\n+++ b/.a\\x.py\n@@ -0,0 +1 @@\n+b\ndiff --git a/a\\x.py b/a\\x.py\n--- a/a\\x.py\n+++ b/a\\x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-G14.1-121-the-slash-claim-over-a-backslash-name",
+  "summary": "Created .a/x.py.",
+  "diff": "diff --git a/.a\\x.py b/.a\\x.py\nnew file mode 100644\n--- /dev/null\n+++ b/.a\\x.py\n@@ -0,0 +1 @@\n+b\ndiff --git a/a\\x.py b/a\\x.py\n--- a/a\\x.py\n+++ b/a\\x.py\n@@ -1 +1 @@\n-a\n+b\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-U14.1-z5-two-files-one-fold-a7cb-0264",
+  "summary": "Added function foo.",
+  "diff": "--- a/src/xɤ.py\n+++ b/src/xɤ.py\n@@ -1,2 +1,2 @@\n x = 0\n+def foo():\n--- a/src/xꟋ.py\n+++ b/src/xꟋ.py\n@@ -1,2 +1,2 @@\n x = 0\n+def bar():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "two header paths that differ only in case are one key, so a runtime may read two files' lines as one file's; the definitions each file adds and removes are not read"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-U14.1-101-count-two-files-one-fold-a7cb-0264",
+  "summary": "Added 0 tests.",
+  "diff": "diff --git a/a/b/tꟋ.py b/a/b/tꟋ.py\nindex 1111111..2222222 100644\n--- a/a/b/tꟋ.py\n+++ b/a/b/tꟋ.py\n@@ -1,2 +1,2 @@\n x = 0\n-def test_a():\n+def test_a():\ndiff --git a/a/b/tɤ.py b/a/b/tɤ.py\nnew file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/a/b/tɤ.py\n@@ -0,0 +1,1 @@\n+def foo():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "two header paths that differ only in case are one key, so a runtime may read two files' lines as one file's; the definitions each file adds and removes are not read; claim says 0"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-U14.1-101-symbol-two-files-one-fold-1c89-1c8a",
+  "summary": "Added function foo.",
+  "diff": "--- a/src/yᲉ.py\n+++ b/src/yᲉ.py\n@@ -1,2 +1,2 @@\n x = 0\n+def foo():\n--- a/src/yᲊ.py\n+++ b/src/yᲊ.py\n@@ -1,2 +1,2 @@\n x = 0\n-def foo():\n+y = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "two header paths that differ only in case are one key, so a runtime may read two files' lines as one file's; the definitions each file adds and removes are not read"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-U14.2-z5-a7d2-beside-a7d3",
+  "summary": "Added function foo. Added 1 test.",
+  "diff": "--- a/src/x꟒.py\n+++ b/src/x꟒.py\n@@ -1,2 +1,2 @@\n x = 0\n+y = 1\n--- a/src/xꟓ.py\n+++ b/src/xꟓ.py\n@@ -1,2 +1,2 @@\n x = 0\n+def foo():\n+def bar():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path, so a runtime may read two files' lines as one file's; the definitions each file adds and removes are not read"
+    ],
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path, so a runtime may read two files' lines as one file's; the definitions each file adds and removes are not read; claim says 1"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r14-U14.3-a-changed-test-beside-its-ascii-case-twin",
+  "summary": "Added 0 tests.",
+  "diff": "diff --git a/a/b/tA.py b/a/b/tA.py\nindex 1111111..2222222 100644\n--- a/a/b/tA.py\n+++ b/a/b/tA.py\n@@ -1,2 +1,2 @@\n x = 0\n-def test_a():\n+def test_a():\ndiff --git a/a/b/ta.py b/a/b/ta.py\nnew file mode 100644\nindex 0000000..1111111\n--- /dev/null\n+++ b/a/b/ta.py\n@@ -0,0 +1,1 @@\n+def foo():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "two header paths that differ only in case are one key, so a runtime may read two files' lines as one file's; the definitions each file adds and removes are not read; claim says 0"
     ]
    ],
    "uncovered_sentences": 0
