@@ -13,7 +13,7 @@
    "to": [
     "file_touched",
     "UNCHECKABLE",
-    "VERIFIED withheld by PATH-2a (#97): the claim names a directory, and only a file of the same name elsewhere matches it. main's reading: diff status 'M' for 'github/workflows/dependabot.yml'"
+    "VERIFIED withheld by PATH-2a (#97): the claim's path has a directory part, and only a changed file with the same base name in another directory matches it. main's reading: diff status 'M' for 'github/workflows/dependabot.yml'"
    ],
    "verdict": "FAIL"
   }

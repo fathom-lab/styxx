@@ -3,7 +3,7 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`04ec58c3ac3c3e21fec08dab8e236899b7194fc65773b673678e2b491690c63e` (LF line endings; a wheel
+`2ffa83b8a5654b9a369d46efa119848c2c6d347ad86e42eaec5917a3ab09b5a5` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -69,7 +69,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 04ec58c3…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 2ffa83b8…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 110 pinned pairs against their expect blocks (+ path2a_moves.json)
@@ -244,7 +244,7 @@ read differently), so the port differential over `main`'s corpora reads 0 disagr
 `.github/workflows/dependabot.yml`, a false VERIFIED — so `path1_pairs.json` stays `main`'s record,
 byte for byte.
 
-**Measured**, on this file (`styxx/diffgate.py` `04ec58c3…`, reader `9b620e00…`), CPython 3.12.10 and 3.14.2,
+**Measured**, on this file (`styxx/diffgate.py` `2ffa83b8…`, reader `9b620e00…`), CPython 3.12.10 and 3.14.2,
 Node 24.13.0 (Unicode 16). Figures marked *pinned* are asserted exactly by the committed tests; the
 rest were measured and are not asserted.
 

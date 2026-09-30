@@ -9,7 +9,7 @@
     [
      "file_created",
      "UNCHECKABLE",
-     "VERIFIED withheld by PATH-2a (#97): the claim names a directory, and only a file of the same name elsewhere matches it. main's reading: diff status 'A' for 'readme.md'"
+     "VERIFIED withheld by PATH-2a (#97): the claim's path has a directory part, and only a changed file with the same base name in another directory matches it. main's reading: diff status 'A' for 'readme.md'"
     ]
    ],
    "uncovered_sentences": 0
@@ -25,7 +25,7 @@
     [
      "file_touched",
      "UNCHECKABLE",
-     "VERIFIED withheld by PATH-2a (#97): the claim names a directory, and only a file of the same name elsewhere matches it. main's reading: diff status 'M' for 'readme.md'"
+     "VERIFIED withheld by PATH-2a (#97): the claim's path has a directory part, and only a changed file with the same base name in another directory matches it. main's reading: diff status 'M' for 'readme.md'"
     ]
    ],
    "uncovered_sentences": 0
@@ -874,7 +874,7 @@
     [
      "file_touched",
      "UNCHECKABLE",
-     "VERIFIED withheld by PATH-2a (#97, #121): the claim's path or name touches a character outside ASCII, where the Python and JavaScript readers extract it differently. main's reading: diff status 'M' for 'café/x.md'"
+     "VERIFIED withheld by PATH-2a (#97, #121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name or prefix is read, so the two may extract the claim differently. main's reading: diff status 'M' for 'café/x.md'"
     ]
    ],
    "uncovered_sentences": 0
@@ -891,7 +891,7 @@
     [
      "file_touched",
      "UNCHECKABLE",
-     "VERIFIED withheld by PATH-2a (#97, #121): the claim's path or name touches a character outside ASCII, where the Python and JavaScript readers extract it differently. main's reading: diff status 'A' for 'docs/x.md'"
+     "VERIFIED withheld by PATH-2a (#97, #121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name or prefix is read, so the two may extract the claim differently. main's reading: diff status 'A' for 'docs/x.md'"
     ]
    ],
    "uncovered_sentences": 0
@@ -989,5 +989,243 @@
    "uncovered_sentences": 0
   },
   "note": "Pass 2 (C-1): a registered path ending in '/.' reads its base name otherwise in pathlib under both flavours, so this calibrates `odd` on CI's POSIX runners too."
+ },
+ {
+  "id": "path2a:extract-curly-quotes-kept",
+  "note": "Pass 3 (B-1): curly quotes beside a path are neutral; main's two ports read the path alike, and the overlay keeps it.",
+  "summary": "Updated “web/gate/diffgate.js”.",
+  "diff": "diff --git a/web/gate/diffgate.js b/web/gate/diffgate.js\n--- a/web/gate/diffgate.js\n+++ b/web/gate/diffgate.js\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/web/gate/README.md b/web/gate/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/web/gate/README.md\n@@ -0,0 +1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'web/gate/diffgate.js'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:extract-nbsp-kept",
+  "note": "Pass 3 (B-1): a no-break space after the path.",
+  "summary": "Created web/gate/README.md for the port.",
+  "diff": "diff --git a/web/gate/diffgate.js b/web/gate/diffgate.js\n--- a/web/gate/diffgate.js\n+++ b/web/gate/diffgate.js\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/web/gate/README.md b/web/gate/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/web/gate/README.md\n@@ -0,0 +1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'web/gate/readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:extract-em-dash-kept",
+  "note": "Pass 3 (B-1): an attached em dash.",
+  "summary": "Updated web/gate/diffgate.js—the port only.",
+  "diff": "diff --git a/web/gate/diffgate.js b/web/gate/diffgate.js\n--- a/web/gate/diffgate.js\n+++ b/web/gate/diffgate.js\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/web/gate/README.md b/web/gate/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/web/gate/README.md\n@@ -0,0 +1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'web/gate/diffgate.js'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:extract-scope-em-dash-kept",
+  "note": "Pass 3 (B-1): an em dash after an only_touches prefix.",
+  "summary": "Only touches web/gate/ — the port and its README.",
+  "diff": "diff --git a/web/gate/diffgate.js b/web/gate/diffgate.js\n--- a/web/gate/diffgate.js\n+++ b/web/gate/diffgate.js\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/web/gate/README.md b/web/gate/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/web/gate/README.md\n@@ -0,0 +1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:extract-long-sentence-touched-kept",
+  "note": "Pass 3 (B-1, C-4): the path lies past character 160 of an ASCII sentence; 40bba05b withheld it in both ports.",
+  "summary": "This change reworks the retry budget for the uploader, trims the flaky network timeouts in the nightly job, renames two confusing helpers in the scheduler, bumps the pinned dependencies, and along the way updates src/retry/backoff.py to use the new clock.",
+  "diff": "diff --git a/src/retry/backoff.py b/src/retry/backoff.py\n--- a/src/retry/backoff.py\n+++ b/src/retry/backoff.py\n@@ -1,2 +1,4 @@\n import time\n+def jitter(n):\n+    return n\n x = 1\ndiff --git a/tests/test_backoff.py b/tests/test_backoff.py\nnew file mode 100644\n--- /dev/null\n+++ b/tests/test_backoff.py\n@@ -0,0 +1,2 @@\n+def test_jitter():\n+    assert True\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_touched",
+     "VERIFIED",
+     "diff status 'M' for 'src/retry/backoff.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:extract-long-sentence-created-kept",
+  "note": "Pass 3 (B-1, C-4): the same for a created path.",
+  "summary": "This change reworks the retry budget for the uploader, trims the flaky network timeouts in the nightly job, renames two confusing helpers in the scheduler, bumps the pinned dependencies, and created tests/test_backoff.py for it.",
+  "diff": "diff --git a/src/retry/backoff.py b/src/retry/backoff.py\n--- a/src/retry/backoff.py\n+++ b/src/retry/backoff.py\n@@ -1,2 +1,4 @@\n import time\n+def jitter(n):\n+    return n\n x = 1\ndiff --git a/tests/test_backoff.py b/tests/test_backoff.py\nnew file mode 100644\n--- /dev/null\n+++ b/tests/test_backoff.py\n@@ -0,0 +1,2 @@\n+def test_jitter():\n+    assert True\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'tests/test_backoff.py'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:extract-long-sentence-symbol-kept",
+  "note": "Pass 3 (B-1): the same for a symbol name.",
+  "summary": "This change reworks the retry budget for the uploader, trims the flaky network timeouts in the nightly job, renames two confusing helpers in the scheduler, bumps the pinned dependencies, and after all that this adds function jitter.",
+  "diff": "diff --git a/src/retry/backoff.py b/src/retry/backoff.py\n--- a/src/retry/backoff.py\n+++ b/src/retry/backoff.py\n@@ -1,2 +1,4 @@\n import time\n+def jitter(n):\n+    return n\n x = 1\ndiff --git a/tests/test_backoff.py b/tests/test_backoff.py\nnew file mode 100644\n--- /dev/null\n+++ b/tests/test_backoff.py\n@@ -0,0 +1,2 @@\n+def test_jitter():\n+    assert True\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "VERIFIED",
+     "added lines do define function 'jitter'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:extract-another-occurrence-withholds",
+  "note": "Pass 3 (C-1), a disclosed cost: the name `fo` also occurs inside `fo²o`, which CPython reads as one name, so both ports withhold `fo` too. Main's two ports read the two names apart (CPython `fo²o`, the port `fo`), so the reasons are not pinned.",
+  "summary": "Added function fo²o. Added function fo.",
+  "diff": "diff --git a/src/fo.py b/src/fo.py\n--- a/src/fo.py\n+++ b/src/fo.py\n@@ -1 +1,4 @@\n x = 1\n+def fo():\n+    return 1\n+def fo²o():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "symbol_added",
+     "UNCHECKABLE"
+    ],
+    [
+     "symbol_added",
+     "UNCHECKABLE"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:scope-both-dot-twins-named-kept",
+  "note": "Pass 3 (B-2): both twins are named, main and V121 both verify under the sets they use.",
+  "summary": "Only touches .github/workflows/ and github/workflows/.",
+  "diff": "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\n--- a/.github/workflows/ci.yml\n+++ b/.github/workflows/ci.yml\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/github/workflows/lint.yml b/github/workflows/lint.yml\nnew file mode 100644\n--- /dev/null\n+++ b/github/workflows/lint.yml\n@@ -0,0 +1 @@\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "VERIFIED",
+     "all changed paths under prefix"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:xport-emoji-before-only-kept",
+  "note": "Pass 3 (C-1): the review's E2. Main's two ports cut the claim text at 160 code points and 160 UTF-16 units; 40bba05b's port withheld the CONTRADICTED verdict and its Python kept it.",
+  "summary": "🚀🎉 Release prep 🧹🔧: bumped the pinned dependencies, regenerated the lockfile, fixed the two flaky network timeouts in the nightly job; this only touches docs/ in the end.",
+  "diff": "diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++ b/docs/guide.md\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "only_touches",
+     "CONTRADICTED",
+     "paths outside 'docs': ['src/app.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:xport-unit-separator-after-prefix",
+  "note": "Pass 3 (C-1): the review's R2. Python strips U+001F from the text and the port does not; both now withhold it from the summary's bytes.",
+  "summary": "Only touches docs/\u001f",
+  "diff": "diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "only_touches",
+     "UNCHECKABLE",
+     "CONTRADICTED withheld by PATH-2a (#121): the summary holds a character the Python and JavaScript readers may read differently where the claim's path, name or prefix is read, so the two may extract the claim differently. main's reading: paths outside 'docs': ['src/app.py']"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:xport-count-beyond-1e21",
+  "note": "Pass 3 (C-2): the review's N1. The port's main prints 1e+21 in its reason; with no dot twin no reading could move the count.",
+  "summary": "1000000000000000000000 files changed.",
+  "diff": "diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "CONTRADICTED"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:xport-count-beyond-1e21-twins",
+  "note": "Pass 3 (C-2): the review's N2, with a dot twin: the number is read from the claim's detail in both ports.",
+  "summary": "1000000000000000000000 files changed.",
+  "diff": "diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/.env b/.env\n--- a/.env\n+++ b/.env\n@@ -1 +1 @@\n-x = 0\n+x = 1\ndiff --git a/env b/env\n--- a/env\n+++ b/env\n@@ -1 +1 @@\n-x = 0\n+x = 1\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "files_changed_count",
+     "CONTRADICTED"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2a:xport-tests-beyond-1e21",
+  "note": "Pass 3 (C-2): the review's N3, a changed test beside a count no interval holds.",
+  "summary": "Added 1000000000000000000000 tests.",
+  "diff": "diff --git a/tests/test_a.py b/tests/test_a.py\n--- a/tests/test_a.py\n+++ b/tests/test_a.py\n@@ -1 +1 @@\n-def test_a():\n+def test_a(tmp_path):\n",
+  "expect": {
+   "verdict": "FAIL",
+   "claims": [
+    [
+     "tests_added",
+     "CONTRADICTED"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
  }
 ]

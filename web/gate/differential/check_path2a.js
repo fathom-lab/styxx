@@ -1,11 +1,12 @@
-// PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30): the port's half of the
-// committed PATH-2a checks, run by tests/test_diffgate_path2a*.py, which write IN (a JSON list of {id, summary, diff})
-// and read OUT.
+// PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30 and
+// NOTE_path2a_third_pass_2026_09_30): the port's half of the committed PATH-2a checks, run by
+// tests/test_diffgate_path2a*.py, which write IN (a JSON list of {id, summary, diff}) and read OUT.
 //
 //   node check_path2a.js --relation  REF IN OUT   main's port (REF, the reconstruction) against this port, both
 //                                                  strict modes: every record may differ from main's only by an
 //                                                  abstention in reach with the overlay's reason (the relation A),
-//                                                  and each claim reads the same under --strict as without it
+//                                                  and each claim reads the same under --strict as without it;
+//                                                  unparsed_claims and each claim's keys are compared too
 //   node check_path2a.js --decisions REF IN OUT   per input, main's record and this port's record, for the
 //                                                  Python-vs-port comparison (C)
 //   node check_path2a.js --records   PORT IN OUT  per input, one port's record (strict off): the truth test runs the
@@ -16,6 +17,8 @@
 //   node check_path2a.js --error-fallback REF IN OUT   as --decisions, with the overlay's decision function made to
 //                                                  throw: every claim in reach must abstain with the error phrase
 //   node check_path2a.js --timing    REF IN OUT   per input, milliseconds per gate call for main's port and this one
+//   node check_path2a.js --overlay-timing REF IN OUT   per input, milliseconds the overlay alone takes on main's
+//                                                  record (the least of three runs)
 //
 // --relation, --decisions and --lockstep take an optional last argument, the port to check (default ../diffgate.js);
 // the tests pass a planted copy there to show the checks refuse it.
@@ -31,14 +34,17 @@ function internals(file, extra = "") {
   const src = fs.readFileSync(file, "utf8");
   const names = ["gateDiffText", "parseUnifiedDiff", "_norm", "_p2aRegsRaw", "_p2aBuild", "_p2aViews", "_p2aPairing",
                  "_P2A_JS_SPACE", "_P2A_PY_SPACE", "_P2A_PY_BREAKS", "_P2A_DIVERGENT", "_P2A_HEADERS",
-                 "_P2A_REACH_PAIRS", "_P2A_PHRASES", "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS", "_P2A_OWN"];
+                 "_P2A_REACH_PAIRS", "_P2A_PHRASES", "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS", "_P2A_OWN",
+                 "_P2A_NEUTRAL", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw"];
   return vm.runInNewContext(src + "\n" + extra + "\n;({" + names.join(", ") + "})", {}, { filename: file });
 }
 
-function record(gate, it, strict) {
+function record(gate, it, strict, keepUnparsed = false) {
+  // unparsed_claims is kept where both sides are ports (--relation); against the Python it is dropped, since only
+  // the Python runs claimdetect.
   try {
     const d = gate(it.summary, it.diff, { strict });
-    delete d.unparsed_claims;
+    if (!keepUnparsed) delete d.unparsed_claims;
     return JSON.parse(JSON.stringify(d));
   } catch (e) {
     return { error: (e && e.constructor && e.constructor.name) || "Error" };
@@ -52,6 +58,7 @@ function relation(a, b, strict, reach, defects, phrases) {
   if (a.claims.length !== b.claims.length) return bad.concat(["claim count differs"]);
   a.claims.forEach((x, i) => {
     const y = b.claims[i];
+    if (JSON.stringify(Object.keys(x)) !== JSON.stringify(Object.keys(y))) bad.push(`claim ${i}: keys differ`);
     if (JSON.stringify([x.kind, x.text, x.detail]) !== JSON.stringify([y.kind, y.text, y.detail])) bad.push(`claim ${i}: kind, text or detail moved`);
     if (x.verdict === y.verdict) { if (x.why !== y.why) bad.push(`claim ${i}: reason moved without a verdict move`); return; }
     if (!reach.has(x.kind + "|" + x.verdict) || y.verdict !== "UNCHECKABLE") { bad.push(`claim ${i}: not an abstention in reach`); return; }
@@ -93,6 +100,11 @@ function main(argv) {
       py_breaks: cps(P._P2A_PY_BREAKS), divergent: cps(P._P2A_DIVERGENT), headers: P._P2A_HEADERS,
       reach: P._P2A_REACH_PAIRS, phrases: P._P2A_PHRASES, kind_defect: P._P2A_KIND_DEFECT,
       directory_rule: P.P2A_DIRECTORY_BASENAME_ABSTAINS, own: P._P2A_OWN,
+      // the summary's classes (NOTE_path2a_third_pass_2026_09_30): the units that are not wordish, and that are not bad
+      neutral: cps(P._P2A_NEUTRAL),
+      not_wordish: Array.from({ length: 0x10000 }, (_, u) => u).filter(u => !P._p2aWordishUnit(u)),
+      not_bad: Array.from({ length: 0x10000 }, (_, u) => u).filter(u => !P._p2aBadUnit(u)),
+      word_class: Array.from({ length: 0x10000 }, (_, u) => u).filter(u => /\w/.test(String.fromCharCode(u))),
     }));
     return 0;
   }
@@ -135,6 +147,23 @@ function main(argv) {
     fs.writeFileSync(argv[3], JSON.stringify(items.map(it => ({ id: it.id, main: ms(REF.gateDiffText)(it), new: ms(NEW.gateDiffText)(it) }))));
     return 0;
   }
+  if (mode === "--overlay-timing") {
+    const REF = require(path.resolve(argv[1]));
+    const P = internals(DEFAULT_PORT);
+    const items = JSON.parse(fs.readFileSync(argv[2], "utf8"));
+    const out = items.map(it => {
+      let best = Infinity;
+      for (let k = 0; k < 3; k++) {
+        const g = REF.gateDiffText(it.summary, it.diff);
+        const t0 = process.hrtime.bigint();
+        P._p2aAbstain(g, false, () => P._p2aFactsRaw(it.diff || "", it.summary));
+        best = Math.min(best, Number(process.hrtime.bigint() - t0) / 1e6);
+      }
+      return { id: it.id, overlay: best };
+    });
+    fs.writeFileSync(argv[3], JSON.stringify(out));
+    return 0;
+  }
   if (mode === "--relation" || mode === "--decisions") {
     const port = path.resolve(argv[4] || DEFAULT_PORT);
     const REF = require(path.resolve(argv[1]));
@@ -155,7 +184,7 @@ function main(argv) {
     for (const it of items) {
       const mine = {};
       for (const strict of [false, true]) {
-        const a = record(REF.gateDiffText, it, strict), b = record(NEW.gateDiffText, it, strict);
+        const a = record(REF.gateDiffText, it, strict, true), b = record(NEW.gateDiffText, it, strict, true);
         counts.runs++;
         if (a.error || b.error) {
           if (a.error && b.error && a.error === b.error) counts.both_raise++;
@@ -177,7 +206,7 @@ function main(argv) {
     fs.writeFileSync(argv[3], JSON.stringify({ counts, broken }));
     return 0;
   }
-  console.error("usage: node check_path2a.js --relation REF IN OUT | --decisions REF IN OUT | --records PORT IN OUT | --lockstep IN OUT | --tables OUT | --error-fallback REF IN OUT | --timing REF IN OUT");
+  console.error("usage: node check_path2a.js --relation REF IN OUT | --decisions REF IN OUT | --records PORT IN OUT | --lockstep IN OUT | --tables OUT | --error-fallback REF IN OUT | --timing REF IN OUT | --overlay-timing REF IN OUT");
   return 2;
 }
 

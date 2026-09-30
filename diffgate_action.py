@@ -11,10 +11,18 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import urllib.request
 
 from styxx.diffgate import gate_diff_text
+
+# PATH-2a (NOTE_path2a_third_pass_2026_09_30): the form of a reason the overlay writes, at its start, and the kinds
+# it may move. Written out here, not imported: this script runs against the styxx the Action installs from PyPI,
+# which may not carry the overlay (tests/test_diffgate_path2a.py pins the kinds to the module's REACH).
+_OVERLAY_WHY = re.compile(r"(?:VERIFIED|CONTRADICTED) withheld by PATH-2a \((?:#97|#121|#97, #121|#101)\): ")
+_OVERLAY_KINDS = frozenset({"file_created", "file_deleted", "file_touched", "files_changed_count", "only_touches",
+                            "tests_added", "symbol_added"})
 
 
 def api(url: str, accept: str) -> str:
@@ -102,7 +110,12 @@ def main() -> int:
             mark = {"VERIFIED": "✅", "CONTRADICTED": "❌", "UNCHECKABLE": "❓"}[c.verdict]
             # PATH-2a (NOTE_path2a_second_pass_2026_09_30): a reason the overlay wrote is shown whole, since its
             # leading 100 characters are the withheld verdict and the phrase, and main's reading comes after them.
-            why = c.why if " withheld by PATH-2a (" in c.why else c.why[:100]
+            # Only a reason the overlay wrote (NOTE_path2a_third_pass_2026_09_30, A-2): an UNCHECKABLE claim of a
+            # kind it may move, whose reason starts with its form. No reason main writes for those kinds starts so;
+            # a reason that only contains the words, such as a DECLARE-1 MALFORMED one, is cut as main cuts it.
+            ours = (c.verdict == "UNCHECKABLE" and c.kind in _OVERLAY_KINDS
+                    and _OVERLAY_WHY.match(c.why) is not None)
+            why = c.why if ours else c.why[:100]
             lines.append(f"| {mark} {c.verdict} | {c.text[:80]} | {why} |")
     else:
         lines += ["_No diff-shaped claims found. The gate checks a closed template set "

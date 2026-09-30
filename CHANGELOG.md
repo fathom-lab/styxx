@@ -34,7 +34,7 @@ operator's decision. #161's licences are not restored, and the path accusation s
 not released: `pip install styxx` (7.48.0) and this branch disagree on every PATH-2a abstention, and
 the rebuilt bookmarklet's panel text (`bookmarklet_ui.js`, not edited) still names the 7.48.0 port.
 
-**Measured** (CPython 3.12.10 and 3.14.2, Node 24.13.0; `styxx/diffgate.py` now `04ec58c3…`):
+**Measured** (CPython 3.12.10 and 3.14.2, Node 24.13.0; `styxx/diffgate.py` now `2ffa83b8…`):
 - Recall (D), `path2a_recall.py`: of `main`'s 2,231 decided claims on its committed differential
   corpora (`corpus_real.json` `1b21418a…`, `corpus_fuzz.json` `2e80cd1d…`, the six pinned files), 80
   are withheld (3.6%) under either path flavour: 79 on the fuzz corpus, all #97 and all false by the
