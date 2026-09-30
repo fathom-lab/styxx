@@ -70,7 +70,7 @@ reason, or reads one sentence more or less, is a disagreement.
     python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 186d5f2c…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 102 pinned pairs against their expect blocks (+ path2a_moves.json)
+    node check_pairs.js                  # the 103 pinned pairs against their expect blocks (+ path2a_moves.json)
 
 The pin moved twice between the last two runs of this differential, and one of those moves is a
 finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to
@@ -219,7 +219,7 @@ Running it:
     node check_pairs.js                                                # path2a_pairs.json + path2a_moves.json
     python -m pytest tests/test_diffgate_path2a.py tests/test_diffgate_path2a_truth.py tests/test_port_is_current.py
 
-`path2a_pairs.json` pins 48 pairs, each for the decision it names. `path2a_moves.json` records the one
+`path2a_pairs.json` pins 49 pairs, each for the decision it names. `path2a_moves.json` records the one
 pinned claim of `main`'s own files the overlay moves — `path1:unrepaired-typo` claim 0,
 ".githiub/workflows/dependabot.yml" resolved by base name to `.github/workflows/dependabot.yml`, a
 false VERIFIED — so `path1_pairs.json` stays `main`'s record, byte for byte.
@@ -235,7 +235,7 @@ Recall (D): of `main`'s decided claims, how many the overlay withholds (`path2a_
 | `corpus_fuzz.json` | `2e80cd1d…` | 2,144 | 79 — 51 touched, 23 created, 5 deleted; all #97, and all 79 are false by the statuses the fuzz generator wrote |
 | `main`'s six pinned files | | 46 | 1 (the move above) |
 | **`main`'s committed corpora** | | **2,231** | **80 (3.6%)** |
-| `path2a_pairs.json` (the overlay's own pins) | `13ce8e87…` | 58 | 33 |
+| `path2a_pairs.json` (the overlay's own pins) | `ff735091…` | 59 | 34 |
 | #161's `path2_pairs.json` (branch `fix/diffgate-path-resolution`) | `7ba272c8…` | 530 | 172 |
 | `main`'s corpora + #161's pairs | | 2,761 | 252 (9.1%); #161's head withheld 493 of 2,749 |
 
@@ -251,14 +251,14 @@ prints any miss with its shape. The known gaps (case-only merges with no dot, na
 multi-commit renderings, renderings over real `a/` or `b/` directories, `async def` tests `main` does
 not count, `def` in non-Python files) are listed in the NOTE.
 
-By construction (A), *pinned*: over the 5,584 committed inputs (the pinned pairs, the 3,000 fuzz pairs
+By construction (A), *pinned*: over the 5,585 committed inputs (the pinned pairs, the 3,000 fuzz pairs
 regenerated in memory, #161's reproductions and pair inputs, and a seeded 2,000-pair PATH-2a fuzz),
 both strict modes, every branch record is `main`'s but for abstentions in reach with the overlay's
-reason, in Python and in the port (11,168 port runs, 0 broken); where `main` raises, the branch
+reason, in Python and in the port (11,170 port runs, 0 broken); where `main` raises, the branch
 raises the same exception. The overlay's error fallback never fires on them.
 
-Cross-port (C), *pinned*: on the committed inputs, 18,132 claims get the same record from `main`'s
-two ports, and the overlay decides all 18,132 alike, reason for reason; on the 380 claims `main`'s
+Cross-port (C), *pinned*: on the committed inputs, 18,133 claims get the same record from `main`'s
+two ports, and the overlay decides all 18,133 alike, reason for reason; on the 380 claims `main`'s
 ports already read differently, 123 get different overlay decisions (reported, not asserted). A wider
 scratch run adding `corpus_real.json` and 17,000 generated cases: 124,229 of 124,229.
 

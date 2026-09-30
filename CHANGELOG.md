@@ -39,12 +39,12 @@ operator's decision. #161's licences are not restored, and the path accusation s
   the port wherever the port's `main` reads the claim alike; the cost is 142 of 5,897 right verdicts
   and 35 of 182 undecided ones. A scratch run over 35,000 older generated cases: 22,885 of 22,885
   withheld, 2,633 of 123,031 right verdicts lost.
-- By construction (A): 5,584 committed inputs in both strict modes, Python and port, 0 records
-  outside the relation. Cross-port (C): 18,132 of 18,132 claims `main`'s ports read alike are
+- By construction (A): 5,585 committed inputs in both strict modes, Python and port, 0 records
+  outside the relation. Cross-port (C): 18,133 of 18,133 claims `main`'s ports read alike are
   decided alike by the overlay (124,229 of 124,229 in a wider scratch run).
 - The NOTE predicted that exactly one of `main`'s 46 decided pinned claims would move, and one did:
   `path1:unrepaired-typo` claim 0. `web/gate/differential/path2a_moves.json` records it;
-  `path1_pairs.json` is not edited. `path2a_pairs.json` adds 48 pinned pairs.
+  `path1_pairs.json` is not edited. `path2a_pairs.json` adds 49 pinned pairs.
 
 **Consequences.** `--strict` fails on every new abstention. A v0.2 capsule minted on `main` over bytes
 where the overlay abstains will not reproduce on this branch; the two committed capsules and charon's

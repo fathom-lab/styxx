@@ -96,14 +96,14 @@ def test_the_hooks_are_the_only_edits_at_the_doors():
 # Abstentions by (kind, phrase key) over every committed input, strict off. Pinned after review: every figure here
 # was read against the NOTE's rules before it was written down. A change to the overlay or to the inputs moves it.
 ABSTENTIONS = {
-    "decided": 11105, "main raises": 8,
+    "decided": 11106, "main raises": 8,
     "file_created:case": 6, "file_created:dir": 71, "file_created:divergent": 19, "file_created:dot": 26,
     "file_created:dot_tier": 10, "file_created:odd": 3, "file_created:tier": 11,
     "file_deleted:case": 9, "file_deleted:dir": 62, "file_deleted:divergent": 20, "file_deleted:dot": 25,
     "file_deleted:dot_tier": 7, "file_deleted:odd": 2, "file_deleted:tier": 5,
     "file_touched:case": 28, "file_touched:dir": 270, "file_touched:divergent": 102, "file_touched:dot": 87,
     "file_touched:dot_tier": 71, "file_touched:odd": 9,
-    "files_changed_count:count": 380, "files_changed_count:divergent": 226,
+    "files_changed_count:count": 381, "files_changed_count:divergent": 226,
     "only_touches:divergent": 108, "only_touches:only": 33,
     "symbol_added:symbol": 172, "tests_added:tests": 420,
 }

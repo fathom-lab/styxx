@@ -238,6 +238,22 @@
   }
  },
  {
+  "id": "path2a:121-count-verified-range-wider-than-one",
+  "summary": "3 files changed.",
+  "diff": "diff --git a/É.md b/É.md\n--- a/É.md\n+++ b/É.md\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/Ö.md b/Ö.md\n--- a/Ö.md\n+++ b/Ö.md\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/a.toml b/a.toml\n--- a/a.toml\n+++ b/a.toml\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/.a.toml b/.a.toml\n--- a/.a.toml\n+++ b/.a.toml\n@@ -1 +1 @@\n-o\n+x\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "files_changed_count",
+     "UNCHECKABLE",
+     "VERIFIED withheld by PATH-2a (#121): two changed paths differ only by a leading dot, which the path key drops, and counted apart the claim reads otherwise. main's reading: diff changes 3 files, claim says 3"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
   "id": "path2a:121-dot-slash-is-not-a-twin",
   "summary": "2 files changed.",
   "diff": "diff --git a/./src/a.py b/./src/a.py\n--- a/./src/a.py\n+++ b/./src/a.py\n@@ -1 +1 @@\n-o\n+x\ndiff --git a/src/b.py b/src/b.py\n--- a/src/b.py\n+++ b/src/b.py\n@@ -1 +1 @@\n-o\n+x\n",
