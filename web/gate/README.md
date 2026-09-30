@@ -15,8 +15,9 @@ scaffolding; and by `NOTE_path2_third_pass_2026_09_25.md`, `NOTE_path2_fourth_pa
 `NOTE_path2_seventh_pass_2026_09_25.md`, `NOTE_path2_eighth_pass_2026_09_27.md`,
 `NOTE_path2_ninth_pass_2026_09_27.md`, `NOTE_path2_tenth_pass_2026_09_28.md`,
 `NOTE_path2_eleventh_pass_2026_09_28.md`, `NOTE_path2_twelfth_pass_2026_09_29.md`,
-`NOTE_path2_thirteenth_pass_2026_09_29.md` and `NOTE_path2_fourteenth_pass_2026_09_29.md`) on the file that carries
-them, sha256 `0b2f2c568075d8eeb8a4125e3177691ad9bd86485be6cd93484f8644fb875419` (LF line endings; a wheel
+`NOTE_path2_thirteenth_pass_2026_09_29.md`, `NOTE_path2_fourteenth_pass_2026_09_29.md` and
+`NOTE_path2_fifteenth_pass_2026_09_29.md`) on the file that carries
+them, sha256 `7ce745c4759c4602e665f964834849e51ce85edcc399a6b610639af82a209477` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares), reading names by the Unicode table `styxx/_xid.py` carries (15.0.0, table sha256
 `8df68f21…`) and abstaining on a name that meets the skew set beside it (the code points the Pythons the
@@ -57,8 +58,10 @@ as the CLI without `--run`.
 `.gitattributes` keeps its bytes, `tests/test_diffgate_guard.py` and `build_bookmarklet.py` refuse any other): the
 guard's reference (`NOTE_path2_eleventh_pass_2026_09_28`). `gateDiffText` reads every claim with it too, and keeps a
 verdict other than its verdict only where one of the three repairs, switched off alone, gives its verdict back and
-that repair's own precondition holds on the claim; else the claim is UNCHECKABLE and names its verdict. The Python
-carries the same reference, `styxx/_diffgate_ref.py`, `origin/main`'s `styxx/diffgate.py` (`9b620e00…`).
+that repair's own precondition holds on the claim; else the claim is UNCHECKABLE and names its verdict. Since the
+fifteenth pass #97's and #121's licences are withdrawn (`WITHDRAWN`): only #101 can license, and a difference only #97
+or #121 explains abstains with a reason naming the repair. The Python carries the same reference,
+`styxx/_diffgate_ref.py`, `origin/main`'s `styxx/diffgate.py` (`9b620e00…`).
 
 `bookmarklet_ui.js` — the panel: on a `github.com/OWNER/REPO/pull/N` page it reads the
 description and the diff from `api.github.com` (two unauthenticated requests, nothing else,
@@ -76,11 +79,13 @@ byte comparison reported `bookmarklet_src.js … DIFFERS`, exit 1 (NOTE_path2_fo
 B-1). Measured after the line, on this Windows checkout, with terser 5.46.0: all three `matches`,
 exit 0. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 250a4173a66c93a50138b6058536bbea140f02ea81fa5cf249d644fa91142234   84,298 chars
-    bookmarklet.href.txt  sha256 a04c2b368f6802278dad47d835d7e62ff9ea6f8403b043f0fc26ae3b2d09ec5d   84,309 chars
+    bookmarklet.min.js    sha256 5887f09484b99209b8471b31972fa76055d1e071ca889ae96c051a29e44b6a38   84,863 chars
+    bookmarklet.href.txt  sha256 80f3d1afc919a362065ebf682f73120a830bfea679c9e204ff6793f523057cb0   84,874 chars
 
-(530 characters more than the thirteenth-pass build, `51f06338…`, 83,768 characters: each line's terminator, git's own
-TAB, the TAB and backslash rules and the path Z-5 prints. The thirteenth-pass build was 4,551 more than the twelfth's,
+(565 characters more than the fourteenth-pass build, `250a4173…`, 84,298 characters: the withdrawal, its reason and
+Y-6. The fourteenth-pass build was 530 more than the thirteenth-pass build, `51f06338…`, 83,768 characters: each line's
+terminator, git's own TAB, the TAB and backslash rules and the path Z-5 prints. The thirteenth-pass build was 4,551 more
+than the twelfth's,
 `830b4ba7…`, 79,217 characters: the set of code points Unicode 16.0.0 assigns, 3,225 of them, its decoder and the
 thirteenth pass's facts. The twelfth-pass build was 1,542 more than
 the eleventh's, `ce8c5d99…`, 77,675 characters, which was 25,302 characters more than the tenth-pass build: `main`'s
@@ -125,7 +130,10 @@ case; `830b4ba7…`, 79,217 chars, the unmerged twelfth-pass cut — licenses #9
 deletion then creation for one path) and #97 on a name ending in whitespace in `difflib`'s rendering; `51f06338…`,
 83,768 chars, the unmerged thirteenth-pass cut — licenses #97 in `difflib`'s rendering on a name ending in a CR, a TAB
 after a name holding a space, a TAB inside a name and a name holding a backslash, and prints Z-5's path by the engine's
-Unicode. A bookmark that hashes to any of them is an old port; drag the new one.)
+Unicode; `250a4173…`, 84,298 chars, the unmerged fourteenth-pass cut — licenses #97 on a name holding an LF before a `@@`
+line in `difflib`'s rendering and #97 and #121 on a file created and renamed away in `git log -p --format=`, accuses
+through #121 under git's `a/..` prefix, and reads two files one runtime keys as one file per file. A bookmark that hashes
+to any of them is an old port; drag the new one.)
 
 Whatever a browser holds under that bookmark either hashes to the line above (drop the
 `javascript:` prefix) or is not this build. terser 5.46.0 produced these bytes; the same terser
@@ -146,14 +154,14 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 0b2f2c56…,
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 7ce745c4…,
                                          # styxx/_diffgate_ref.py (main's reader) to 9b620e00…,
                                          # styxx/_xid.py's name table to 8df68f21… and its skew set to 0b7134fd…,
                                          # and styxx/_fold.py's case fold to a52cda82… and its assigned set
                                          # to 56a413eb…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 413 pinned pairs against their expect blocks
+    node check_pairs.js                  # the 430 pinned pairs against their expect blocks
 
 The pin moved twice between the last two runs of this differential, and one of those moves is a
 finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to
@@ -178,7 +186,127 @@ The corpus needed them. Before PATH-1 added these, `corpus_real.json` carried ex
 what changed is not evidence, and the honest py/js comparison for PATH-1 was run separately over
 the 604-row BENCH corpus (297 `only_touches` readings, 0 disagreements).
 
-Result, 2026-09-29, this branch after the fourteenth pass (`NOTE_path2_fourteenth_pass_2026_09_29`), merged with `main`
+Result, 2026-09-30, this branch after the fifteenth pass (`NOTE_path2_fifteenth_pass_2026_09_29`), merged with `main`
+at `a4732c52` (whose `styxx/diffgate.py` is the one at `98a5c368`):
+
+    3606 pairs, 7629 claims (630 verified, 1602 contradicted, 5397 uncheckable) — 0 disagreement(s)
+    430 pinned pairs, 0 disagreement(s)
+
+The 17 pairs this pass adds (`path2:m-r14-*`) are round 14's reproductions (R14.1 to R14.4, from the bytes of
+`tests/fixtures/path2_round14_repros.json`), G14.1's claim holding a backslash and slash claim over git's header shape
+holding an unquoted backslash, and U14.1 to U14.3's per-file shapes. 31 pairs are re-pinned, every one to an abstention
+or a reason: 41 claims whose decided verdict #97 or #121 licensed now abstain naming `main`'s verdict and the repair
+(`file_created` 14, `file_deleted` 1, `files_changed_count` 22, `only_touches` 4), and two reasons move to Y-6's. (The
+commit that re-pinned them, `1a1a17cb`, says 37 claims; it is 41.)
+
+**The fifteenth pass** (the note, sections A and B). Round 14's review found truth-judged regressions against `main`
+licensed by both path repairs, each already tightened at the twelfth, thirteenth and fourteenth passes:
+- **#97**: a name holding an LF before a line starting `@@`, in `difflib`'s rendering (R14.1: the line split cut the
+  name, the tail passed the header-shape test, and "Created lib/x.py." read VERIFIED where the file is `lib/x.py\n@@`);
+  and a file created in one commit and renamed away in a later one, in git's own `git log -p --format=` (R14.2: a rename
+  section registers only its `b` side, so the created path was not `multi`).
+- **#121**: the same multi-commit shape beside a dotted twin (R14.3), and git's `--src-prefix=a/.. --dst-prefix=b/..`
+  (R14.4: `..cfg/x.json` read as a real outside path, "Only touched cfg/." CONTRADICTED where `main` verified truly).
+
+Under the operator's backstop both licences are **withdrawn**, not tightened again. `WITHDRAWN = ("#97", "#121")` in
+both ports and, as its own constant, in the scorer: the guard keeps a verdict that differs from `main`'s only where a
+repair not withdrawn explains it (its precondition holds and it alone switched off gives `main`'s verdict back). Where
+only #97 or #121 explains it, the claim is UNCHECKABLE, and the reason says so: "main's reading gives {main} and this
+one {this}; {repair} explains the difference on this claim, but its licence is withdrawn until a reviewed change
+restores it, so it abstains". The repairs' code, switches and preconditions stay: the preconditions still decide which
+reason an abstention prints, and the scorer re-derives both, so a defect in a withdrawn precondition is still refused
+(as a reason), and a later reviewed pull request can license either again by taking it out of `WITHDRAWN`. What such a
+pull request must answer before it does is in the note (A.3): R14.1's `@@` line as a doubt, every path a section names (both
+header sides, `rename`/`copy` `from` and `to`) counted toward `multi`, and a leading run of dots as a dot miss.
+
+What the repairs still do: an abstention is always kept. Where #97's resolution or #121's key finds `main`'s verdict
+wrong and abstains (a withheld path accusation, a dot miss), `main`'s false verdict is gone; what is withdrawn is a
+decided verdict that differs from `main`'s. So every final verdict, on every door and runtime, is `main`'s verdict on
+that door and runtime or UNCHECKABLE (#101, the one licence left, licenses no decided verdict other than `main`'s):
+**no claim can read worse than `main`**, by construction rather than by the sets a differential happened to hold. The
+fourteenth pass's "0 claims worse" was measured over 17 sets holding no LF-in-name and no multi-commit rendering (R14.5,
+NOTE I.1); this pass's zero does not rest on the sets.
+
+**Y-6, the per-file readings** (the note, B; round 14, U14.1 to U14.3). Z-5's refused files, #101's pairing, A-1 and
+Y-5 read each file's added and removed lines by its key, the runtime's lower case. Where two header paths fold alike by
+the one table, or one holds a code point Unicode 16.0.0 does not assign, one runtime keyed them as one file and another
+as two: new Python/port verdict disagreements on the lab's pairing (Python 3.12.10 against Node 24.13.0: `src/xɤ.py`
+beside `src/xꟋ.py`, "Added function foo." VERIFIED in the Python, UNCHECKABLE in the port), on CI's, and between
+Python 3.12 and 3.14; Z-5 printing another path on a Node on Unicode 17.0 for U+A7D2 beside U+A7D3 (U14.2); and a
+changed test beside its ASCII case twin read as added by diff order (U14.3). The reading now records the doubt as a note
+of its own (`fold`, from the paths as written, by the table, so the same on every runtime), and `tests_added` and
+`symbol_added` abstain there, before every per-file reading, with one reason in both ports.
+
+**What is measured, and how.** Round 14's reproductions are committed with their net models
+(`tests/fixtures/path2_round14_repros.json`, 26 cases: R14.1's `difflib` bytes, git's own multi-commit and prefix bytes
+for R14.2 to R14.4, and controls) and judged by the committed truth model, which now reads `only_touches` over plain
+prefixes, on the raw door, in the port and at the git door (the net diff). The same check reads 18 of them worse than
+`main` at `340ddfb6`, on the raw door and in the port (`test_the_truth_judged_check_refuses_the_fourteenth_pass_*`), and
+none at this head. A claim is judged by `main`'s detail where `main` makes it, and the branch's detail is held to
+`main`'s on every door (G14.4). The reviewers' own probes, re-run on this head in memory (`scratchpad` harness
+`run14.py`: the 16 LF probes, the six multi-commit scenarios under six git renderings each, the three prefixes, and the
+per-file shapes over eight case pairs in both orders; 138 cases), read, under Python 3.12.10 and 3.14.2 with Node
+24.13.0: 0 claims worse than `main` by truth on the raw door and in the port, 0 new Python/port disagreements in verdict
+or reason; at `340ddfb6` the same harness reads 19 worse on each door and 28 new disagreements.
+
+**Not run, and owed.** The shared drive held 56 to 97 MB free for the whole pass, under the task's 300 MB line for
+generated case data, so this pass generated no case sets: the 30,000-case three-door regression differential at fresh
+seeds, which every pass since the twelfth has run, is **not run** here and is owed before merge. The bar's clause "no
+claim worse than `main`" rests on the construction above; the clause "no new Python/JavaScript disagreement" rests on
+the committed cross-port tests, the 430 pinned pairs, the corpora below and the reviewers' probes, not on a fresh
+randomised set.
+
+**The cost is recall.** Against the fourteenth pass (`340ddfb6`), on the checked-in corpora and pairs, raw door, Python
+3.12 (`recall15.py`):
+- `corpus_real.json` (176 records, 63 claims): 2 claims abstain, both `file_created` VERIFIED licensed by #97;
+- `corpus_fuzz.json` (3,000 records, 6,798 claims): 1, a `file_created` VERIFIED licensed by #97;
+- the 430 pinned pairs (768 claims): 50 claims #97 or #121 licensed abstain (`file_created` 22, `file_deleted` 1,
+  `files_changed_count` 22, `only_touches` 5; round 14's new records among them), and Y-6 moves 8 (`symbol_added` 2 and
+  `tests_added` 1 from a decided verdict, 5 reasons).
+#101 costs recall where a test moves between classes or from a class to module level (round 14, R14.6: "Added 1 test."
+is true there by CPython's qualified names, `main` verified, the branch abstains); it licensed no worse verdict.
+
+**The cost in time.** Per call, over the same 3,606 records, one pass on this busy machine: the Python mean 4.48 ms
+(median 0.62, p95 2.18, slowest 2,441 ms on an 11.2 MB diff) against `main`'s 0.59 ms (0.17, 0.65, 227 ms), 7.6 times;
+the port 0.91 ms (median 0.21, p95 0.71, slowest 423 ms) against `main`'s port 0.15 ms, 6.1 times. (The eleventh pass's
+figures, 3.93 ms and 0.86 ms, were the last this README stated; round 14 measured 6.17 ms and 1.29 ms at `340ddfb6` on a
+busier machine.)
+
+**The bookmarklet's length.** The fifteenth-pass build (terser 5.51.2, from the npx cache) is 84,863 characters (`bookmarklet.min.js`) and the `javascript:` URL 84,874; `main`'s URL is 24,346. Firefox is understood to refuse a bookmark URL longer than 65,536 characters
+(its Places limit), where `main`'s 24,346 fits; the branch's `javascript:` URL has been over that since the eleventh
+pass. This was not exercised in a browser here (round 14, U14.6). Where it holds, paste the minified file into the
+console or a snippet instead.
+
+**Planted defects**, each committed in `X15_CANARY_PLANTS` and refused by the scorer program through the canaries
+(63 records: 49 raw-door and 14 door canaries; 15 raw canaries are new: R14.1 to R14.4, G14.1's two, G14.2's and G14.3's promoted
+records, the Y-6 shapes; and one door canary, a changed test beside its case twin, so the git door's `fold` note is
+exercised): each withdrawal lifted (#97, #121, both), the withdrawn reason dropped, #121's backslash refusal dropped
+(round 14's P1, which no canary, pair or test reached), R13.2's rule restored on the `---` side (P6), `keyed` keeping
+the latest path (P11), Y-6 dropped for either kind, and its note dropped in the reader, at the git door and from
+`--name-status`. In the port the pinned pairs refuse the withdrawal lifted (all, #97, #121), JP1, JP6 and Y-6 dropped
+for either kind. The canaries reach, on each door, an abstention only a withdrawn repair explains
+(`guard_withdrawn_#97`, `guard_withdrawn_#121`), which GUARD_OUTCOMES now requires in place of the licensed outcomes the
+thirteenth pass required. The X12 and X14 plants anchored on the guard's licence line are re-anchored and still refused;
+three X14 plants are recorded as equivalent (`X14_EQUIVALENT`: Z-5 printing the runtime's key, in both ports, and the
+path as written keeping its unassigned code points), since Y-6 abstains before Z-5 reads any path holding an unassigned
+code point or any key two paths share, and for every other path the key's fold is the path's (K-2).
+
+**Which Python enforces what.** As at the fourteenth pass the scorer runs only on a Python whose Unicode is 15.0.0 (CI's
+py3.12 job). `test_a_defect_outside_the_three_repairs_can_only_abstain[the count off by one]`, which the fourteenth
+pass's README did not name among the scorer-dependent ids (round 14, C14.3), requests the scorer only where a mutant's
+verdict passes through a licence; with #121's licence withdrawn none does, so it now runs, whole, on every CI Python.
+`test_x10_k2_the_generator_reproduces_both_blocks_from_the_pinned_version` (the fold regenerated from a real 16.0.0
+database) runs only on Python 3.14, which CI does not run: the committed blocks are compared with each other and
+hash-pinned on every Python, their regeneration is checked in this lab only (round 14, C14.5).
+
+**Not closed, and stated.** `test_x1_the_characters_the_runtimes_disagree_on_read_alike_in_both_ports` still reads the
+U+1C89 reason apart under Python 3.14; it is a strict `xfail` on a Unicode 16.0.0 Python now (C14.4), so the suite is
+not red there and a fix will be noticed. K-5's docstring said symbols and emoji read alike in both ports' templates: not
+inside the bounded window `_W`, which the port counts in UTF-16 code units, so 31 or more characters past U+FFFF between
+a verb and a path can end the two windows apart; `main` reads the same, so this is no disagreement of the branch's
+(U14.4, disclosed).
+
+Result at the fourteenth pass (`NOTE_path2_fourteenth_pass_2026_09_29`), kept as it was measured, merged with `main`
 at `a4732c52` (whose `styxx/diffgate.py` is the one at `98a5c368`):
 
     3589 pairs, 7609 claims (661 verified, 1613 contradicted, 5335 uncheckable) — 0 disagreement(s)
@@ -256,7 +384,8 @@ reads:
 
 This zero is measured on the shapes above. Round 13's shapes were outside every generator the thirteenth pass ran (its
 "0 claims worse" was measured without a name ending in a CR, a TAB-terminated name holding a space or a backslash name:
-NOTE I.5); a shape outside these sets is not measured by them.
+NOTE I.5); a shape outside these sets is not measured by them. (Round 14 found two: a name holding an LF in a plain
+rendering and git's multi-commit renderings, NOTE_path2_fifteenth_pass I.1.)
 
 **The cost is recall.** Over the regression sets' raw door under 3.12 (the 14 sets above that `recall15.py` rebuilds:
 32,500 cases, 151,680 claims; git's option renderings aside), this pass abstains on 665 claims the thirteenth pass

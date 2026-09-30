@@ -33,7 +33,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 EXPORT_LINE = ('if (typeof module !== "undefined") module.exports = { gateDiffText, parseUnifiedDiff, parseUnifiedDiffSides, '
-               '_evaluate, _Repairs, REPAIRS, _apartReadings, _precondition, _claimKeys, _guard };\n')
+               '_evaluate, _Repairs, REPAIRS, WITHDRAWN, _apartReadings, _precondition, _claimKeys, _guard };\n')
 # origin/main's web/gate/diffgate.js (2a6ce0a3), the guard's reference, byte for byte (tests/test_diffgate_guard.py pins it too)
 REF_SHA256 = "06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141"
 REF_OPEN = "const _STYXX_REF = (function () { const module = { exports: null }; const globalThis = undefined;\n"

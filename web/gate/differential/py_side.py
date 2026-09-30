@@ -8,8 +8,9 @@ on main (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2 + PATH-1 + DECLARE-1), re-cut for th
 (#97, #121, #101, as amended by AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
 NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25,
 NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27, NOTE_path2_ninth_pass_2026_09_27,
-NOTE_path2_tenth_pass_2026_09_28, NOTE_path2_eleventh_pass_2026_09_28, NOTE_path2_twelfth_pass_2026_09_29 and
-NOTE_path2_thirteenth_pass_2026_09_29) on the file that carries them, sha256
+NOTE_path2_tenth_pass_2026_09_28, NOTE_path2_eleventh_pass_2026_09_28, NOTE_path2_twelfth_pass_2026_09_29,
+NOTE_path2_thirteenth_pass_2026_09_29, NOTE_path2_fourteenth_pass_2026_09_29 and
+NOTE_path2_fifteenth_pass_2026_09_29) on the file that carries them, sha256
 PINNED below, reading names by the table styxx/_xid.py carries (PINNED_NAME_TABLE), abstaining on the skew
 set beside it (PINNED_SKEW_SET), and comparing two header paths' case by the fold styxx/_fold.py carries
 (PINNED_FOLD). Since the eleventh pass that file's verdicts pass through a guard that reads main's reader,
@@ -55,7 +56,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "0b2f2c568075d8eeb8a4125e3177691ad9bd86485be6cd93484f8644fb875419"  # styxx/diffgate.py, main + PATH-2 fourteenth pass (LF)
+PINNED = "7ce745c4759c4602e665f964834849e51ce85edcc399a6b610639af82a209477"  # styxx/diffgate.py, main + PATH-2 fifteenth pass (LF)
 # NOTE_path2_eleventh_pass_2026_09_28: the guard's reference, main's reader unchanged (origin/main 2a6ce0a3's
 # styxx/diffgate.py, the file 7.48.0 ships; tests/test_diffgate_guard.py pins it too).
 PINNED_REFERENCE = "9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb"  # styxx/_diffgate_ref.py (LF)

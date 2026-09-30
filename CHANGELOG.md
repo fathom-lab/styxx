@@ -21,13 +21,13 @@ tests read VERIFIED.
 
 **What changed.** Frozen as `papers/closed-model-frontier/PREREG_path2_resolution_2026_09_17.md`,
 `AMENDMENT_path2_resolution_2026_09_17.md` and `ERRATUM_path2_amendment_2026_09_17.md`, then repaired in
-twelve passes, each recorded in a note committed alone before its code (`NOTE_path2_third_pass` to
+thirteen passes, each recorded in a note committed alone before its code (`NOTE_path2_third_pass` to
 `NOTE_path2_seventh_pass`, `_2026_09_25`, `NOTE_path2_eighth_pass_2026_09_27`,
 `NOTE_path2_ninth_pass_2026_09_27`, `NOTE_path2_tenth_pass_2026_09_28`, `NOTE_path2_eleventh_pass_2026_09_28`,
-`NOTE_path2_twelfth_pass_2026_09_29`, `NOTE_path2_thirteenth_pass_2026_09_29` and
-`NOTE_path2_fourteenth_pass_2026_09_29`; the eighth to tenth passes' code was written before its note, and each note
-says so; the eleventh's to the fourteenth's notes were each committed alone before any of their code; this entry said
-"ten passes" at the thirteenth pass, beside eleven notes):
+`NOTE_path2_twelfth_pass_2026_09_29`, `NOTE_path2_thirteenth_pass_2026_09_29`,
+`NOTE_path2_fourteenth_pass_2026_09_29` and `NOTE_path2_fifteenth_pass_2026_09_29`; the eighth to tenth passes' code was
+written before its note, and each note says so; the eleventh's to the fifteenth's notes were each committed alone before
+any of their code; this entry said "ten passes" at the thirteenth pass, beside eleven notes):
 - #97: a path claim resolves in tiers over every entry — exact, then suffix, then basename.
 - #121: only a leading run of `/` and `./` segments leaves the key. Readings that must not move with a dot
   (BC-2's path-shape test, BC-1's "no Python file" test, COMPAT's language and scaffold tests) read the
@@ -149,10 +149,38 @@ says so; the eleventh's to the fourteenth's notes were each committed alone befo
     the same check refuses the thirteenth-pass instrument (`e1babaac`) on 16 of them, on the raw door and in the port.
   - The pinned pair whose reason printed a runtime's key holding U+2C2F is held to kind and verdict: Python 3.9 and
     3.10 (Unicode 13.0) read that key otherwise.
+- #97's and #121's licences withdrawn, and a file's lines read alone only where no runtime can merge it (the fifteenth
+  pass). Round 14's review found truth-judged regressions against `main` licensed by both path repairs, each already
+  tightened three times: #97 on a name holding an LF before a `@@` line in `difflib`'s rendering, and on a file created
+  in one commit and renamed away in a later one in `git log -p --format=`; #121 on the same multi-commit shape beside a
+  dotted twin, and on git's `--src-prefix=a/.. --dst-prefix=b/..`.
+  - Under the operator's backstop the two licences are withdrawn, not tightened again (`WITHDRAWN`, both ports and the
+    scorer): a decided verdict that differs from `main`'s and that only #97 or #121 explains is UNCHECKABLE, its reason
+    naming `main`'s verdict and the repair. The repairs' code, switches and preconditions stay (a reviewed change can
+    license either again), and an abstention is still kept, so where #97's resolution or #121's key finds `main`'s
+    verdict wrong and abstains, `main`'s false verdict is gone. Every final verdict is now `main`'s on the same door and
+    runtime, or UNCHECKABLE: no claim can read worse than `main`.
+  - Y-6: where two header paths fold alike or one holds a code point Unicode 16.0.0 does not assign, `tests_added` and
+    `symbol_added` abstain before every per-file reading (Z-5, #101's pairing, A-1, Y-5), with one reason in both ports.
+    Those readings keyed files by the runtime's lower case, so one runtime read two files' lines as one file's where
+    another read them apart: new Python/port verdict disagreements on the lab's own pairing (Python 3.12 against
+    Node 24) and CI's, Z-5 printing another path on a Node on Unicode 17.0, and a changed test beside its ASCII case
+    twin read as added by diff order.
+  - The recall this costs, against the fourteenth pass: 2 of the 63 claims of the real differential corpus and 1 of
+    6,798 fuzzed claims abstain (each a `file_created` #97 had licensed), and on the pinned pairs 50 claims #97 or #121
+    licensed and 8 of Y-6's (`web/gate/README.md`).
+  - Round 14's reproductions are committed with their net models and judged by the committed truth model, which now
+    reads `only_touches` and judges a claim by `main`'s detail; the same check refuses the fourteenth-pass instrument
+    (`340ddfb6`) on 18 of them, on the raw door and in the port.
+  - The scorer carries the withdrawal and Y-6 in its own code; its canaries (63) reach each withdrawn repair's
+    abstention on both doors, and round 14's plants (each withdrawal lifted, #121's backslash refusal dropped, R13.2's
+    rule on the `---` side, `keyed` keeping the latest path, Y-6 dropped) are refused in both modes.
 - The port follows the Python in each, and spells Python's `\s`, `\w`, `\b`, `.`, `str.strip` and `repr`
   wherever it reads a diff line. The bookmarklet is rebuilt, carrying `main`'s port whole as the guard's reference:
-  `bookmarklet.min.js` sha256 `250a4173…`, 84,298 characters (`web/gate/README.md`; at the thirteenth pass this entry
-  named `830b4ba7…`, 79,217 characters, the twelfth-pass build, where the thirteenth's was `51f06338…`, 83,768). The
+  `bookmarklet.min.js` sha256 `5887f094…`, 84,863 characters (`web/gate/README.md`; the fourteenth-pass build was
+  `250a4173…`, 84,298; at the thirteenth pass this entry named `830b4ba7…`, 79,217 characters, the twelfth-pass build,
+  where the thirteenth's was `51f06338…`, 83,768). Firefox is understood to refuse a bookmark URL longer than 65,536
+  characters, which the `javascript:` URL has exceeded since the eleventh pass (not exercised in a browser). The
   port finds its reference before the guard runs, so a page that loads `diffgate.js` without `diffgate_ref.js`
   gets an error instead of every claim read as "main raises".
 - `papers/closed-model-frontier/path2_gates.py` scores the preregistered gates: the instrument before the repair
@@ -191,9 +219,12 @@ says so; the eleventh's to the fourteenth's notes were each committed alone befo
   git door's licence facts too. At the fourteenth pass its own code reads a name's CR, git's own TAB and a backslash as
   the instrument does, and records the path Z-5 prints; its canaries (47) reach round 13's shapes, and round 13's plants
   are refused in both modes. G-C7 at the git door does not see a `T` or a mode change (its git door writes `100644`
-  only); a committed test holds that rule on every CI Python.
+  only); a committed test holds that rule on every CI Python. At the fifteenth pass its own guard withdraws #97 and
+  #121 as the instrument's does, its canaries must reach an abstention only a withdrawn repair explains on each door (in
+  place of the licensed outcomes), and it reads Y-6 with its own code and its own revert.
 
-**The review record.** Eleven rounds of repair, ten of them answering an adversarial review round, each
+**The review record.** Fourteen rounds of repair, thirteen of them answering an adversarial review round (this
+sentence still read "Eleven rounds of repair, ten of them" at the thirteenth and fourteenth passes), each
 round naming its own findings. What they found and what was done about each is in the notes; the notes also
 correct earlier notes where those were wrong, and none of the frozen documents is edited. The eighth pass
 reported 0 claims reading worse than on `main`; round 8's review measured 507 (Python 3.12) and 525 (3.14)
@@ -265,8 +296,9 @@ in a CR, a TAB after a name holding a space, a name holding a backslash. The thi
 any of those three, so its "0 claims worse" did not measure them. The fourteenth pass's rules are above. Its own
 differential ran in memory over 17 sets and 36,100 cases under each Python (165,305 raw-door, 49,826 git-door and
 165,420 port cells under 3.12; 165,239, 49,811 and 165,420 under 3.14): round 13's four families at fresh seeds, a TAB
-inside a name, CRLF-converted renderings, git's own renderings of round 12's typechange families under 24 option sets,
-and the builder's earlier generators regenerated. It reads:
+inside a name, CRLF-converted renderings, git's own renderings of round 12's typechange families under three of 24
+option sets each (3,600 renderings; this entry said "under 24 option sets" at the fourteenth pass), and the builder's
+earlier generators regenerated. It reads:
 - 0 claims worse than on `main` judged against truth, on every door under Python 3.12 and 3.14;
 - 0 new Python/port disagreements on the same input;
 - 0 raises that `main` does not have.
@@ -275,6 +307,18 @@ On the differential corpus (3,589 pairs) there are 0 disagreements, and the scor
 `c0e1e2f6`, its 47 canaries reaching round 13's shapes and a licensed outcome of #97 and #121 on each door. The recall
 this costs is measured in `web/gate/README.md`: on the regression sets' raw door, 665 claims the thirteenth pass
 decided now abstain, 644 of them its regressions and none right.
+
+Round 14's review found that zero false once more, on shapes none of the fourteenth pass's 17 sets held: judged by
+git's `--name-status`, a name holding an LF before a `@@` line in `difflib`'s rendering (8 of 16 probes) and a file
+created and renamed away in git's own multi-commit renderings (10) read worse than `main` on the raw door and in the
+port, licensed by #97 or #121, and git's `a/..` prefix read `main`'s true VERIFIED as CONTRADICTED through #121. Both
+licences had been tightened three times; under the operator's backstop they are withdrawn (above), so every final
+verdict is `main`'s or UNCHECKABLE and the "0 claims worse" clause holds by construction. The shared drive held under
+100 MB for the whole pass, so the fifteenth pass ran no fresh 30,000-case differential: that run is owed before merge.
+What it did run: round 14's reproductions on the raw door, in the port and at the git door (0 worse; 18 worse at
+`340ddfb6`), the reviewers' 138 probes re-run under Python 3.12 and 3.14 (0 worse, 0 new Python/port disagreements; 19
+worse on each door and 28 new disagreements at `340ddfb6`), the 430 pinned pairs (0 disagreements) and the differential
+corpus (3,606 pairs, 0 disagreements between the Python and the port).
 
 Not claimed, and stated: the corpus gates over the EXTERNAL-1 shelf are run separately and reported in the RESULT,
 with `path2_differential_gates.json`; nothing here reports them. The repair moves claims only where the notes say, and
