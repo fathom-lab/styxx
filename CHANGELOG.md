@@ -10,48 +10,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased] — PATH-2a: the diff gate withholds a verdict where #97, #121 or #101 can have made it wrong
 
 Branch `fix/diffgate-abstain-where-wrong`, on `main` `1cde8b82`; design in
-`papers/closed-model-frontier/NOTE_path2a_abstain_overlay_2026_09_30.md`.
+`papers/closed-model-frontier/NOTE_path2a_abstain_overlay_2026_09_30.md`, and for the second review pass
+`NOTE_path2a_second_pass_2026_09_30.md` and `NOTE_path2a_second_pass_corrections_2026_09_30.md`.
 
 **What it is.** `styxx/diffgate.py` and `web/gate/diffgate.js` each gain one marked block, an overlay
 that only abstains. `main`'s reader runs unchanged at both doors (`gate_diff_text`, `gate_diff`) and in
 the port; then, where the #97, #121 or #101 mechanism can have made a decided verdict wrong, that claim
 becomes UNCHECKABLE with the reason `{V} withheld by PATH-2a ({defect}): {phrase}. main's reading:
 {main's reason}`, and the gate verdict is recomputed with `main`'s formula. Nothing else in a record
-moves. The only edits to `main`'s text are two door hooks in the Python (`return _gate(` becomes
-`g = _gate(` plus one line) and a rename of the port's `gateDiffText` in two lines; a committed test
-cuts the blocks out, reverts the hooks and gets `main`'s two files back byte for byte (`9b620e00…`,
-`06688702…`), then uses them as the reference for every differential. If the overlay itself raises,
-every claim in reach abstains with a visible phrase.
+moves, and `--strict` moves only the gate verdict. The only edits to `main`'s text are two door hooks
+in the Python (`return _gate(` becomes `g = _gate(` plus one line) and a rename of the port's
+`gateDiffText` in two lines; a committed test cuts the blocks out, reverts the hooks and gets `main`'s
+two files back byte for byte (`9b620e00…`, `06688702…`), then uses them as the reference for every
+differential. If the overlay itself raises, every claim in reach abstains with a visible phrase. Where
+the two ports' templates read a claim's path, name or prefix apart (`extract`), or would count a
+test's lines apart (`split`), the claim abstains in both ports alike. The Action's job-summary table
+shows a reason the overlay wrote whole, so `main`'s reading stays visible.
 
 **What it does not do.** The three defects are not repaired: PATH-2a never gives VERIFIED where `main`
 was wrong, it only stops `main`'s false verdicts on these shapes from standing. PREREG_path2's G-P1
 expects VERIFIED on the reproductions, so G-P1 is not met; whether PATH-2a stands in for it is the
-operator's decision. #161's licences are not restored, and the path accusation stays withheld.
+operator's decision. #161's licences are not restored, and the path accusation stays withheld. It is
+not released: `pip install styxx` (7.48.0) and this branch disagree on every PATH-2a abstention, and
+the rebuilt bookmarklet's panel text (`bookmarklet_ui.js`, not edited) still names the 7.48.0 port.
 
-**Measured** (CPython 3.12.10 and 3.14.2, Node 24.13.0; `styxx/diffgate.py` now `186d5f2c…`):
+**Measured** (CPython 3.12.10 and 3.14.2, Node 24.13.0; `styxx/diffgate.py` now `04ec58c3…`):
 - Recall (D), `path2a_recall.py`: of `main`'s 2,231 decided claims on its committed differential
   corpora (`corpus_real.json` `1b21418a…`, `corpus_fuzz.json` `2e80cd1d…`, the six pinned files), 80
-  are withheld (3.6%): 79 on the fuzz corpus, all #97 and all false by the statuses the fuzz
-  generator wrote, and one pinned claim. With #161's `path2_pairs.json` (`7ba272c8…`): 252 of 2,761
-  (#161's head withheld 493 of 2,749).
+  are withheld (3.6%) under either path flavour: 79 on the fuzz corpus, all #97 and all false by the
+  statuses the fuzz generator wrote, and one pinned claim. With #161's `path2_pairs.json`
+  (`7ba272c8…`): 264 of 2,761 (#161's head withheld 493 of 2,749). The overlay's own 56 pinned pairs
+  are counted apart: 40 of 68 decided claims (39 of 67 under the POSIX flavour).
 - Coverage (B), judged by truth from file models on #161's reproductions, the PREREG reproductions
-  and 1,600 generated cases: 1,206 of 1,206 attributable false verdicts withheld, in Python and in
-  the port wherever the port's `main` reads the claim alike; the cost is 142 of 5,897 right verdicts
-  and 35 of 182 undecided ones. A scratch run over 35,000 older generated cases: 22,885 of 22,885
-  withheld, 2,633 of 123,031 right verdicts lost.
-- By construction (A): 5,585 committed inputs in both strict modes, Python and port, 0 records
-  outside the relation. Cross-port (C): 18,133 of 18,133 claims `main`'s ports read alike are
-  decided alike by the overlay (124,229 of 124,229 in a wider scratch run).
+  and 1,600 generated cases: at the raw door 1,206 of 1,206 attributable false verdicts withheld, at
+  a cost of 202 of 5,897 right verdicts and 35 of 182 undecided ones; in the port, judged in its own
+  terms by the same four variants built from `main`'s port, 1,100 of 1,100 (126 of 5,739 right
+  verdicts lost); at the git door, over the 96 reproductions that carry their own `--name-status`,
+  14 of 14 (none right lost). All three are pinned.
+- By construction (A): 5,592 committed inputs in both strict modes, Python and port, 0 records
+  outside the relation and none that `--strict` changes; the reviewers' and a fresh cross-port fuzz,
+  113,000 more inputs, 0 in either port. The abstention counts are pinned under both path flavours
+  and for Unicode 13.0 to 16.0.
+- Cross-port (C): 18,331 of 18,331 claims `main`'s ports give the same kind, verdict and text get the
+  same overlay verdict and phrase (asserted; 17 split on the previous head), and 345,397 of 345,397
+  on the fuzz.
+- Cost: Python +24% (committed inputs) to +37% (fuzz) per call, Node +20% to +35%; committed timing
+  tests bound the worst cases the review found (seconds to minutes on the previous head).
 - The NOTE predicted that exactly one of `main`'s 46 decided pinned claims would move, and one did:
   `path1:unrepaired-typo` claim 0. `web/gate/differential/path2a_moves.json` records it;
-  `path1_pairs.json` is not edited. `path2a_pairs.json` adds 49 pinned pairs.
+  `path1_pairs.json` is not edited. `path2a_pairs.json` adds 56 pinned pairs, and it is not one of
+  `py_side.py`'s corpora, so the port differential over `main`'s corpora reads 0 disagreements.
 
 **Consequences.** `--strict` fails on every new abstention. A v0.2 capsule minted on `main` over bytes
 where the overlay abstains will not reproduce on this branch; the two committed capsules and charon's
 two capsule-diffgate lines are unaffected (tested), and the diffgate record version stays `"v0"`. No
 receipt is regenerated; the bench scripts, the BIN, COMPAT, DECLARE and SCOPE gates, the EXTERNAL
 harnesses, capsule mint and verify, and charon could read differently if re-run. The bookmarklet is
-rebuilt: 34,285 characters (was 24,335), `bookmarklet.min.js` sha256 `c457cca3…`.
+rebuilt: 36,933 characters (was 24,335), `bookmarklet.min.js` sha256 `bfe8c047…`. CPython 3.9 to 3.11,
+which CI runs, were not available here; their Unicode tables were emulated.
 
 ## [Unreleased] — the 7.48.0 week's public text, audited: errata to [7.48.0], and corrections on main
 
