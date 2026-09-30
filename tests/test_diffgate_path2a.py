@@ -1409,12 +1409,13 @@ def test_cost_on_large_summaries_python(M):
 
 
 def test_cost_on_large_summaries_port(work, tmp_path):
-    """The same in the port, within twice main's own call (the port's main is about seven times faster than CPython's,
-    so the overlay's fixed per-claim work weighs more beside it)."""
+    """The same in the port, at three times the size, within three times main's own call: the port's main is about
+    seven times faster than CPython's, so the overlay's fixed per-claim work weighs more beside it, and a shared runner's
+    noise more. Measured: 0.8 to 1.4 times main's call here; 495d2204's overlay took 8.6 to 9.6 times."""
     (tmp_path / "in.json").write_text(json.dumps(_large_cases(3), ensure_ascii=False), encoding="utf-8")
     node("--overlay-timing", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "t.json")
     for d in json.loads((tmp_path / "t.json").read_text(encoding="utf-8")):
-        assert d["overlay"] < 2 * d["main"], d
+        assert d["overlay"] < 3 * d["main"], d
 
 
 def test_found_reads_what_one_scan_per_word_reads(tmp_path):

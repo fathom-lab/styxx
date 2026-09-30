@@ -1323,15 +1323,15 @@ function _p2aFound(words, text) {
     ends.set(k, w);
   }
   const seen = new Set(), got = new Set();
-  const first = _p2aFlags(0x10000);   // the units a word starts with: the root's only moves
+  const starts = _p2aFlags(0x10000);   // the units a word starts with: the root's only moves
   for (const w of words) {
     const k = w.charCodeAt(0);
-    first[k] = true;
+    starts[k] = true;
   }
   let u = 0;
   for (let i = 0; i < text.length; i++) {
     const k = text.charCodeAt(i);
-    if (u === 0 && first[k] === false) continue;
+    if (u === 0 && starts[k] === false) continue;
     const ch = text.charAt(i);
     while (u && !moves[u].has(ch)) u = back[u];
     u = moves[u].has(ch) ? moves[u].get(ch) : 0;
