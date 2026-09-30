@@ -781,6 +781,15 @@ def _diff_lines(text: str) -> list:
     return lines
 
 
+def _diff_line_ends(text: str) -> list:
+    """NOTE_path2_fourteenth_pass_2026_09_29 (A.1): the terminator of each line `_diff_lines(text)` returns, in order --
+    "\\r\\n", "\\r" or "\\n", and "" for a last line that has none. The split eats a CR that ends a name (`difflib` prints
+    the file `x.py<CR>` as `+++ b/x.py\\r\\n`); this is where the reader still sees it."""
+    ends = [m.group(0) for m in _DIFF_LINE_BREAK.finditer(text)]
+    n = len(_diff_lines(text))
+    return (ends + [""] * n)[:n]
+
+
 # NOTE_path2_sixth_pass_2026_09_25 (W-1): ONE hunk-aware reading of a diff. `parse_unified_diff`
 # (the status map and the added blob `got` and `hit` read) and `parse_unified_diff_sides` (the
 # per-file sides both pairings read) were two parsers that kept different lines, and neither counted a
@@ -955,7 +964,10 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
     "rendered" (the diff is git's own rendering), "soft" (the reading holds a Z-3 doubt) and "forms" (each key's paths
     as written, case kept). NOTE_path2_thirteenth_pass (A.1, A.2): "forms" are the header paths as written BEFORE
     strip(), cut only at the terminating TAB (and a CR); "multi" the keys more than one file section registers (git's
-    typechange writes a deletion then a creation for one path); "moded" the keys whose section shows a mode change."""
+    typechange writes a deletion then a creation for one path); "moded" the keys whose section shows a mode change.
+    NOTE_path2_fourteenth_pass (A.1, A.2, A.3, B): a form keeps a header line's CR unless the text ends every line in
+    CRLF, is cut at a TAB only where git wrote it, and keeps backslashes; "keyed" is each key's earliest path before the
+    runtime lowers it (Y-1's form), which Z-5's reason prints."""
     key = (rp or _ALL_ON).key
     status: dict[str, str] = {}
     added: list[str] = []
@@ -984,6 +996,7 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
     moded: set = set()
     section_moded = False                    # a mode change was read under the pending `diff --git` header
     old_written = None                       # the `---` line's path as written, cut only at its TAB (A.2)
+    keyed: dict = {}                         # NOTE_path2_fourteenth_pass (B): each key's earliest path, not lowered
 
     def register(raw_path: str, as_written: str | None = None) -> None:
         # Y-1: the key lower-cases, so two files whose paths differ only in case are one key -- one count, one
@@ -992,8 +1005,10 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
         # the port read 67 code points differently); every pair any supported runtime keys alike folds alike
         form = _LEADING_SLASH_SEGMENTS.sub("", raw_path.replace("\\", "/"))
         k = key(raw_path)
-        # NOTE_path2_thirteenth_pass (A.2): the licences compare the path as written, never stripped
-        written_form = form if as_written is None else _case_kept(as_written)
+        keyed.setdefault(k, form)
+        # NOTE_path2_thirteenth_pass (A.2): the licences compare the path as written, never stripped;
+        # NOTE_path2_fourteenth_pass (A.3): with its backslashes
+        written_form = _case_kept(raw_path if as_written is None else as_written)
         paths = kept.setdefault(k, [])
         if written_form not in paths:
             paths.append(written_form)
@@ -1016,6 +1031,9 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
             soft.append(_Z3_UNREAD)                                   # Z-3: dropped, as main dropped it
 
     lines = _diff_lines(diff_text)
+    # NOTE_path2_fourteenth_pass (A.1): a header line's CR is the name's unless the text ends every line in CRLF
+    ends = _diff_line_ends(diff_text)
+    crlf = all(e == "\r\n" for e in ends if e)
     for k, line in enumerate(lines):
         if old_left or new_left:
             head = line[:1]
@@ -1076,7 +1094,9 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
             elif not _shaped_pair(lines, k):
                 soft.append(_Z3_UNSHAPED)        # NOTE_path2_eleventh_pass (R0.2): read as a header without its shape
             old_path = line[4:].strip()
-            old_written = _path_as_written(line[4:])        # NOTE_path2_thirteenth_pass (A.2)
+            # NOTE_path2_thirteenth_pass (A.2); NOTE_path2_fourteenth_pass (A.1, A.2): git's TAB, the name's CR
+            old_written = _path_as_written(line[4:], written[0] if written is not None else None,
+                                           "\r" in ends[k] and not crlf)
             cur = None
             lead_old = lead_new = False
         elif line.startswith("+++ "):
@@ -1106,7 +1126,8 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
                 else:
                     raw = new[2:] if new.startswith("b/") else new
                     status[key(raw)] = "A" if (old_path is None or _dev_null(old_path)) else "M"
-                    new_written = _path_as_written(line[4:])
+                    new_written = _path_as_written(line[4:], written[1] if written is not None else None,
+                                                   "\r" in ends[k] and not crlf)
                     as_written = new_written[2:] if new_written.startswith("b/") else new_written
                 cur = key(raw)
                 register(raw, as_written)
@@ -1176,7 +1197,7 @@ def _read_diff(diff_text: str, notes: dict | None = None, rp: "_Repairs | None" 
         notes.update(found)
     if facts is not None:
         facts.update(rendered=git_form and headers, soft=bool(soft), forms=kept,
-                     multi={k for k, n in sections.items() if n > 1}, moded=moded)
+                     multi={k for k, n in sections.items() if n > 1}, moded=moded, keyed=keyed)
     return status, added, sides
 
 
@@ -1231,6 +1252,14 @@ def _pair_names(raw: str, key=None) -> str:
 #             NOTE_path2_thirteenth_pass_2026_09_29 (A.2): a `---`/`+++` path as written BEFORE strip(), cut only at the
 #             TAB that ends it (`_path_as_written`), so a name whose whitespace strip() drops never equals the claim, in
 #             every rendering (round 12, R12.3: `difflib`'s `+++ b/x.py ` carries no Z-3 doubt).
+#             NOTE_path2_fourteenth_pass_2026_09_29 (A.1 to A.3): that sentence was false for three characters (round 13).
+#             A CR ending a name was split off as a line end before the path was read: a header line's CR now stays in
+#             its form unless the text ends every line in CRLF (R13.1). The TAB after a name holding a space was cut in
+#             every rendering, and GNU's rule cut a TAB inside a name: only git's own terminating TAB, under git's
+#             header, is cut now (R13.2). A backslash read as a slash: forms keep it, and a claim or form holding one
+#             licenses nothing (R13.3).
+#   keyed     (NOTE_path2_fourteenth_pass, B) each key's earliest path before the runtime lowers it (Y-1's form), which
+#             Z-5's reason prints: a key is the runtime's own lower case, a path as written is the same on every runtime.
 #   multi     (NOTE_path2_thirteenth_pass, A.1) each key more than one file section registers: git writes a typechange
 #             (file to symlink, to or from a submodule, an empty file to or from a symlink) as a deletion section then a
 #             creation section for one path, and the reading keeps one status for both (round 12, R12.1 and R12.2); a
@@ -1238,9 +1267,18 @@ def _pair_names(raw: str, key=None) -> str:
 #             resolved entry is one.
 #   moded     (A.1) each key whose section shows git's `old mode`/`new mode`; the git door reads it beside `T`.
 def _case_kept(path: str) -> str:
-    """NOTE_path2_twelfth_pass (A.2): a path as #97's licence compares it -- backslashes read as slashes and a leading
-    run of `/` and `./` segments dropped, as the key drops them, and nothing lower-cased."""
-    return _LEADING_SLASH_SEGMENTS.sub("", path.replace("\\", "/"))
+    """NOTE_path2_twelfth_pass (A.2): a path as #97's licence compares it -- a leading run of `/` and `./` segments
+    dropped, as the key drops them, and nothing lower-cased. NOTE_path2_fourteenth_pass (A.3): backslashes kept as
+    written (round 13, R13.3: the file `lib\\x.py` read as a slash equalled a claim naming `lib/x.py`); the licences
+    refuse a claim or a form holding one (`_backslashed`)."""
+    return _LEADING_SLASH_SEGMENTS.sub("", path)
+
+
+def _backslashed(claimed: str, forms) -> bool:
+    """NOTE_path2_fourteenth_pass (A.3): whether a path claim or a form of its resolved entry holds a backslash. git quotes
+    a backslash, so such a form is a plain rendering's name holding one, and a claim written with one may mean either
+    path; #97 and #121 license neither."""
+    return "\\" in claimed or any("\\" in f for f in forms)
 
 
 def _as_git_writes(line: str):
@@ -1263,15 +1301,18 @@ def _as_git_writes(line: str):
     return (f'"a/{a}"' if qa else "a/" + a), (f'"b/{b}"' if qb else "b/" + b), x, y
 
 
-def _path_as_written(header_path: str) -> str:
-    """NOTE_path2_thirteenth_pass (A.2): a `---`/`+++` line's path as written, for the licences: cut only at the TAB that
-    ends it -- git's, the one TAB, at the end of the line, after a name holding a space; GNU diff's, the one TAB, with its
-    timestamp right after it (no space between) -- and a CR at the end; never stripped. Any other TAB is the name's (a
-    name ending in a TAB, which `difflib` prints as it is), so the path is kept whole and matches no claim."""
+def _path_as_written(header_path: str, git_writes: str | None = None, cr: bool = False) -> str:
+    """NOTE_path2_thirteenth_pass (A.2): a `---`/`+++` line's path as written, for the licences; never stripped.
+    NOTE_path2_fourteenth_pass (A.1, A.2): cut at a TAB only where git wrote it -- `git_writes` is the path the pending
+    `diff --git` header writes for this side (`_as_git_writes`, None outside git's rendering), the text before the one
+    TAB is that path, the path holds a space, and nothing follows the TAB. Every other TAB is the name's or a date's (a
+    name ending in or holding a TAB, which `difflib` prints as it is; GNU's timestamp, which the key holds too), and the
+    path is kept whole. `cr`: the line's terminator held a CR the text does not end every line with -- the name's own,
+    kept (round 13, R13.1 and R13.2)."""
     head, tab, rest = header_path.partition("\t")
-    if tab and "\t" not in rest and ((not rest and " " in head) or rest[:1] not in ("", " ")):
+    if tab and not rest and git_writes is not None and head == git_writes and " " in head:
         header_path = head
-    return header_path[:-1] if header_path.endswith("\r") else header_path
+    return header_path + "\r" if cr else header_path
 
 
 def _as_written(header_path: str) -> str:
@@ -1658,28 +1699,34 @@ def _refused_files(added_blob: str, sides: dict | None) -> dict:
     return out
 
 
-def _refused_why(path) -> str:
+def _refused_why(path, keyed: dict | None = None) -> str:
     """Z-5's reason. The line is not printed: repr() would ask the runtime which characters it can print; the file's key
-    prints through `_shown` (NOTE_path2_eleventh_pass, round 10 R0.3)."""
-    where = "outside any file" if path is None else f"in {_shown(path)}"
+    prints through `_shown` (NOTE_path2_eleventh_pass, round 10 R0.3). NOTE_path2_fourteenth_pass (B): the file prints
+    from its path as the diff writes it (`keyed`, the reading's earliest path for the key, before the runtime lowers it),
+    through `_shown_written`; a key is the runtime's own lower case, which a runtime on a newer Unicode than the fold's
+    reads apart (round 13, U13.1: U+A7CE printed as U+A7CF by a Node on 17.0)."""
+    if path is None:
+        where = "outside any file"
+    else:
+        where = f"in {_shown_written(keyed[path]) if keyed and path in keyed else _shown(path)}"
     return (f"an added definition line {where} is one this reading refuses and CPython may refuse too, and a file "
             "CPython refuses defines nothing; this reading reads it line by line")
 
 
-def _whole_file_tests(added_blob: str, sides: dict | None):
+def _whole_file_tests(added_blob: str, sides: dict | None, keyed: dict | None = None):
     """Z-5 for tests_added, which counts over every file: why, else None."""
     refused = _refused_files(added_blob, sides)
-    return _refused_why(next(iter(refused))) if refused else None
+    return _refused_why(next(iter(refused)), keyed) if refused else None
 
 
-def _whole_file_symbol(name: str, added_blob: str, sides: dict | None):
+def _whole_file_symbol(name: str, added_blob: str, sides: dict | None, keyed: dict | None = None):
     """Z-5 for symbol_added: why, where a file whose added lines define `name` holds a refused definition line."""
     refused = _refused_files(added_blob, sides)
     if not refused:
         return None
     for path, (added, _removed) in (sides or {}).items():
         if path in refused and any(_defines(x, name) for x in added):
-            return _refused_why(path)
+            return _refused_why(path, keyed)
     if None in refused and any(_defines(x, name) for x in _stray_lines(added_blob, sides)):
         return _refused_why(None)
     return None
@@ -1770,6 +1817,14 @@ def _shown(key: str) -> str:
     key is the runtime's lower case, which the supported runtimes read differently for 67 code points) and escaped as
     ascii() escapes it (repr() asks the runtime which characters it can print)."""
     return ascii(_case_fold(key))
+
+
+def _shown_written(path: str) -> str:
+    """NOTE_path2_fourteenth_pass (B): a path as the diff writes it, printed the same on every runtime -- folded by the one
+    table, each code point Unicode 16.0.0 does not assign printed as U+FFFD, escaped as ascii() escapes it. For a path
+    whose code points are all assigned it is `_shown` of its key (the fold of a key is the fold of its path, K-2); two
+    paths a newer runtime merges into one key differ only at unassigned code points, and print alike."""
+    return ascii("".join("�" if _unassigned(ch) else ch for ch in _case_fold(path)))
 
 
 def _licensed_against(status: dict, main: dict):
@@ -2641,7 +2696,7 @@ def _evaluate_git(summary_text: str, name_status: str, diff_text: str, rp: "_Rep
         parts = line.split("\t")
         if len(parts) >= 2:
             st, path = parts[0][:1], parts[-1]
-            status[rp.key(path)] = st           # A / M / D / R
+            status[rp.key(path)] = st           # A / M / D / R / C / T
             paths.append(path)
             forms = kept.setdefault(rp.key(path), [])
             if _case_kept(path) not in forms:
@@ -2664,7 +2719,9 @@ def _evaluate_git(summary_text: str, name_status: str, diff_text: str, rp: "_Rep
     # under none of Z-3's doubts, and its paths are the forms #97 compares. NOTE_path2_thirteenth_pass (A.1): an entry
     # whose letter is `T`, one git's diff text shows a mode change for, or a key that text registers twice, licenses nothing
     licence = {"rendered": bool(facts.get("rendered")), "soft": False, "forms": kept,
-               "multi": typechanged | set(facts.get("multi") or ()) | set(facts.get("moded") or ())}
+               "multi": typechanged | set(facts.get("multi") or ()) | set(facts.get("moded") or ()),
+               # NOTE_path2_fourteenth_pass (B): the diff text's paths before the runtime lowers them, for Z-5's reason
+               "keyed": facts.get("keyed") or {}}
     return _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base=base, head=head, main=_MainReading(diff_text, (main_map,)),
                  evidence=evidence, commit=commit,
@@ -2826,6 +2883,8 @@ def _kept_by_its_tier(p: str, claimed: str, forms) -> bool:
     read from (`forms`) equals it (exact), ends in "/" + it (suffix), or has its name (basename). git's paths are
     case-sensitive: a claim about `X.toml` says nothing about `.config/x.toml`, whatever the key reads."""
     key, kept = _norm(claimed), _case_kept(claimed)
+    if _backslashed(kept, forms):
+        return False                             # NOTE_path2_fourteenth_pass (A.3): a backslash is the name's
     if p == key:
         return bool(forms) and all(f == kept for f in forms)
     if p.endswith("/" + key):
@@ -2848,7 +2907,9 @@ def _precondition(repair: str, c, status: dict, sides, licence: dict | None = No
     by (`_kept_by_its_tier`). With no `licence` read, neither licenses.
     NOTE_path2_thirteenth_pass (A.1, A.2): neither licenses a path claim whose resolved entry is a key more than one file
     section registers (`multi`: git's typechange, a case twin, a strip()-merged pair; at the git door also a `T` or a
-    mode-changed entry), and the forms compared are the header paths as written, before strip()."""
+    mode-changed entry), and the forms compared are the header paths as written, before strip().
+    NOTE_path2_fourteenth_pass (A.1 to A.3): the forms keep a name's CR, a TAB git did not write and a backslash, and
+    neither licenses a path claim whose claim or resolved entry's forms hold a backslash."""
     d = c.detail or {}
     lic = licence or {}
     if repair == "#97":
@@ -2862,6 +2923,8 @@ def _precondition(repair: str, c, status: dict, sides, licence: dict | None = No
         as_read = (lic.get("forms") or {}).get(p) or []
         if lic.get("soft") or not as_read or not all(f == claimed or f.endswith("/" + claimed) for f in as_read):
             return False                         # NOTE_path2_twelfth_pass (A.2): a Z-3 doubt, or a match only in case
+        if _backslashed(claimed, as_read):
+            return False                         # NOTE_path2_fourteenth_pass (A.3): a backslash is the name's
         if p in (lic.get("multi") or ()):
             return False                         # NOTE_path2_thirteenth_pass (A.1): one path read twice
         return _earliest_match(status, d["path"])[0] != p
@@ -3159,7 +3222,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         # NOTE_path2_ninth_pass: `got`, or BC-1's answer, not main's (Z-1); a definition line the
                         # whole file may not survive (Z-5).
                         unlicensed = _tests_differ(got, status, main)
-                        whole = _whole_file_tests(added_blob, sides)
+                        whole = _whole_file_tests(added_blob, sides, (licence or {}).get("keyed"))   # (B)
                         if unread:
                             c.verdict = "UNCHECKABLE"
                             c.why = (f"diff adds {unread} async test functions, which this template does not "
@@ -3216,7 +3279,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         unlicensed = whole = None
                         if why_name is None:
                             unlicensed = _symbol_differs(hit, name, *_main_names(sent, m.start("name")), status, main)
-                            whole = _whole_file_symbol(name, added_blob, sides) if hit else None
+                            whole = (_whole_file_symbol(name, added_blob, sides, (licence or {}).get("keyed"))
+                                     if hit else None)
                         if why_name is not None:
                             c.verdict, c.why = "UNCHECKABLE", why_name
                         elif doubt:

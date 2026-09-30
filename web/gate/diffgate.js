@@ -11,9 +11,9 @@
  * AMENDMENT_path2_resolution_2026_09_17, NOTE_path2_third_pass_2026_09_25,
  * NOTE_path2_fourth_pass_2026_09_25, NOTE_path2_fifth_pass_2026_09_25, NOTE_path2_sixth_pass_2026_09_25,
  * NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27, NOTE_path2_ninth_pass_2026_09_27,
- * NOTE_path2_tenth_pass_2026_09_28, NOTE_path2_eleventh_pass_2026_09_28, NOTE_path2_twelfth_pass_2026_09_29 and
- * NOTE_path2_thirteenth_pass_2026_09_29) on the file that carries them, sha256
- * c3eed72edfdf2ea8cf11667e42d47259964340b87d26b7fd56f5358a60012ac3 — the styxx/diffgate.py this
+ * NOTE_path2_tenth_pass_2026_09_28, NOTE_path2_eleventh_pass_2026_09_28, NOTE_path2_twelfth_pass_2026_09_29,
+ * NOTE_path2_thirteenth_pass_2026_09_29 and NOTE_path2_fourteenth_pass_2026_09_29) on the file that carries them,
+ * sha256 16c3fecd60253861edf8b4c65849b761b461ee0c53a9279cf842b55f1f1cf3ed — the styxx/diffgate.py this
  * branch would put on main, with the name table styxx/_xid.py carries (Unicode 15.0.0, table sha256
  * 8df68f21…, and the skew set beside it, 0b7134fd…, copied below) and the case fold styxx/_fold.py carries
  * (Unicode 16.0.0, sha256 a52cda82…, and beside it the set of code points 16.0.0 assigns, 56a413eb…, copied
@@ -832,7 +832,10 @@ function _pendingKey(pending, key) {
 // key's paths as written, case kept; #97 licenses only a match on these. NOTE_path2_thirteenth_pass (A.1, A.2): `forms`
 // are the `---`/`+++` paths BEFORE strip(), cut only at the TAB that ends them (and a CR); `multi` the keys more than one
 // file section registers (git's typechange: a deletion then a creation for one path); `moded` the keys a mode change names.
-const _caseKept = p => p.replace(/\\/g, "/").replace(/^(?:\.?\/)+/, "");
+// NOTE_path2_fourteenth_pass_2026_09_29 (A.3): a path as the licences compare it keeps its backslashes (round 13, R13.3: the file
+// `lib\x.py` read as a slash equalled a claim naming `lib/x.py`); a claim or a form holding one licenses nothing
+const _caseKept = p => p.replace(/^(?:\.?\/)+/, "");
+const _backslashed = (claimed, forms) => claimed.includes("\\") || forms.some(f => f.includes("\\"));
 function _asGitWrites(line) {
   // a `diff --git` header's paths as git writes them after it -- [`---` path, `+++` path, `rename from`, `rename to`],
   // quoted where the header quotes them -- or null where the header does not read both of its paths
@@ -849,17 +852,19 @@ function _asGitWrites(line) {
   return [qa ? `"a/${a}"` : "a/" + a, qb ? `"b/${b}"` : "b/" + b, qa ? `"${a}"` : a, qb ? `"${b}"` : b];
 }
 const _asWritten = headerPath => headerPath.split("\t")[0];   // cut at the TAB git appends to a name holding a space
-// NOTE_path2_thirteenth_pass (A.2), as the Python's `_path_as_written`: a header path as the licences compare it -- cut
-// only at git's TAB (the one TAB, at the end, after a name holding a space) or GNU's (the one TAB, its timestamp right
-// after it), and a CR at the end; never stripped; any other TAB is the name's, and the path is kept whole
-function _pathAsWritten(headerPath) {
+// NOTE_path2_thirteenth_pass (A.2), as the Python's `_path_as_written`: a header path as the licences compare it; never
+// stripped. NOTE_path2_fourteenth_pass (A.1, A.2): cut at a TAB only where git wrote it -- `gitWrites` is the path the
+// pending `diff --git` header writes for this side (null outside git's rendering), the text before the one TAB is that
+// path, it holds a space, and nothing follows the TAB; every other TAB is the name's or a date's. `cr`: the line ended in
+// a CR the text does not end every line with -- the name's own, kept (round 13, R13.1 and R13.2)
+function _pathAsWritten(headerPath, gitWrites = null, cr = false) {
   const at = headerPath.indexOf("\t");
   let p = headerPath;
-  if (at >= 0) {
-    const head = headerPath.slice(0, at), rest = headerPath.slice(at + 1);
-    if (!rest.includes("\t") && ((rest === "" && head.includes(" ")) || (rest !== "" && rest[0] !== " "))) p = head;
+  if (at >= 0 && at === headerPath.length - 1 && gitWrites !== null) {
+    const head = headerPath.slice(0, at);
+    if (head === gitWrites && head.includes(" ")) p = head;
   }
-  return p.endsWith("\r") ? p.slice(0, -1) : p;
+  return cr ? p + "\r" : p;
 }
 function _readDiff(diffText, notes = null, rp = null, facts = null) {
   // NOTE_path2_eleventh_pass: `rp`, the repairs this reading applies; with #121 switched off every path is keyed by main's key.
@@ -888,11 +893,13 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
   // the `---` line's path as written
   const sections = new Map(), moded = new Set();
   let sectionModed = false, oldWritten = null;
+  const keyed = new Map();                  // NOTE_path2_fourteenth_pass (B): each key's earliest path, not lowered
   const register = (rawPath, asWritten = null) => {
     // NOTE_path2_tenth_pass (K-2): two header paths are compared by the one fold both ports carry, not toLowerCase()
     const form = rawPath.replace(/\\/g, "/").replace(/^(?:\.?\/)+/, "");
     const k = key(rawPath);
-    const writtenForm = asWritten === null ? form : _caseKept(asWritten);   // A.2: never stripped
+    if (!keyed.has(k)) keyed.set(k, form);
+    const writtenForm = _caseKept(asWritten === null ? rawPath : asWritten);   // A.2: never stripped; A.3: backslashes kept
     if (!kept.has(k)) kept.set(k, []);
     if (!kept.get(k).includes(writtenForm)) kept.get(k).push(writtenForm);
     sections.set(k, (sections.get(k) || 0) + 1);                             // A.1: a key read twice
@@ -911,6 +918,9 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
     } else if (pending !== null) soft.push(_Z3_UNREAD);                  // Z-3: dropped, as main dropped it
   };
   const lines = _splitlines(diffText || "");
+  // NOTE_path2_fourteenth_pass (A.1): a header line's CR is the name's unless the text ends every line in CRLF
+  const ends = _lineEnds(diffText || "");
+  const crlf = ends.every(e => e === "" || e === "\r\n");
   for (let k = 0; k < lines.length; k++) {
     const line = lines[k];
     if (oldLeft || newLeft) {
@@ -955,7 +965,7 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
         else note("files", _Y1_LOOSE);
       } else if (!_shapedPair(lines, k)) soft.push(_Z3_UNSHAPED);   // NOTE_path2_eleventh_pass (R0.2)
       oldPath = _pyStrip(line.slice(4));          // str.strip(), not trim() (V-2)
-      oldWritten = _pathAsWritten(line.slice(4));  // NOTE_path2_thirteenth_pass (A.2)
+      oldWritten = _pathAsWritten(line.slice(4), written !== null ? written[0] : null, ends[k].includes("\r") && !crlf);   // A.1, A.2
       cur = null;
       leadOld = false; leadNew = false;
     } else if (line.startsWith("+++ ")) {
@@ -980,7 +990,7 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
         } else {
           raw = nw.startsWith("b/") ? nw.slice(2) : nw;
           status.set(key(raw), (oldPath === null || _devNull(oldPath)) ? "A" : "M");
-          const newWritten = _pathAsWritten(line.slice(4));
+          const newWritten = _pathAsWritten(line.slice(4), written !== null ? written[1] : null, ends[k].includes("\r") && !crlf);
           asWritten = newWritten.startsWith("b/") ? newWritten.slice(2) : newWritten;
         }
         cur = key(raw);
@@ -1043,7 +1053,7 @@ function _readDiff(diffText, notes = null, rp = null, facts = null) {
   }
   if (facts !== null) {
     Object.assign(facts, { rendered: gitForm && headers, soft: soft.length > 0, forms: kept,
-                           multi: new Set([...sections].filter(([, n]) => n > 1).map(([k]) => k)), moded });
+                           multi: new Set([...sections].filter(([, n]) => n > 1).map(([k]) => k)), moded, keyed });
   }
   return { status, added, sides };
 }
@@ -1317,6 +1327,12 @@ function _splitlines(text) {
   if (lines.length && lines[lines.length - 1] === "") lines.pop();
   return lines;
 }
+function _lineEnds(text) {
+  // NOTE_path2_fourteenth_pass (A.1), as the Python's `_diff_line_ends`: each line's terminator, "" for a last line with none
+  const ends = text.match(/\r\n|\r|\n/g) || [];
+  const n = _splitlines(text).length;
+  return ends.concat(Array(n).fill("")).slice(0, n);
+}
 
 // repr() of a str, for the `why` strings the Python builds with !r.
 // NOTE_path2_fifth_pass (V-2): a non-ASCII character str.isprintable() refuses (categories C and Z,
@@ -1554,19 +1570,22 @@ function _refusedFiles(addedBlob, sides) {
   if (line !== undefined) out.set(null, line);
   return out;
 }
-function _refusedWhy(path) {
-  const where = path === null ? "outside any file" : `in ${_shown(path)}`;   // NOTE_path2_eleventh_pass (R0.3)
+function _refusedWhy(path, keyed = null) {
+  // NOTE_path2_eleventh_pass (R0.3); NOTE_path2_fourteenth_pass (B): the file prints from its path as the diff writes it
+  // (`keyed`, the reading's earliest path for the key, before the runtime lowers it), not from the runtime's key
+  const shown = path === null ? null : (keyed && keyed.has(path) ? _shownWritten(keyed.get(path)) : _shown(path));
+  const where = path === null ? "outside any file" : `in ${shown}`;
   return `an added definition line ${where} is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line`;
 }
-function _wholeFileTests(addedBlob, sides) {
+function _wholeFileTests(addedBlob, sides, keyed = null) {
   const refused = _refusedFiles(addedBlob, sides);
-  return refused.size ? _refusedWhy(refused.keys().next().value) : null;
+  return refused.size ? _refusedWhy(refused.keys().next().value, keyed) : null;
 }
-function _wholeFileSymbol(name, addedBlob, sides) {
+function _wholeFileSymbol(name, addedBlob, sides, keyed = null) {
   const refused = _refusedFiles(addedBlob, sides);
   if (!refused.size) return null;
   for (const [path, [added]] of (sides || new Map())) {
-    if (refused.has(path) && added.some(x => _defines(x, name))) return _refusedWhy(path);
+    if (refused.has(path) && added.some(x => _defines(x, name))) return _refusedWhy(path, keyed);
   }
   if (refused.has(null) && _strayLines(addedBlob, sides).some(x => _defines(x, name))) return _refusedWhy(null);
   return null;
@@ -1628,6 +1647,13 @@ function _shown(key) {
   // NOTE_path2_tenth_pass: a key as a Z-3 reason prints it, the same on every runtime -- folded by the one table and
   // escaped as Python's ascii() escapes it (repr() asks the runtime which characters it can print).
   return pyAscii(_caseFold(key));
+}
+function _shownWritten(path) {
+  // NOTE_path2_fourteenth_pass (B), as the Python's `_shown_written`: a path as the diff writes it, folded by the one table,
+  // each code point Unicode 16.0.0 does not assign printed as U+FFFD, escaped as Python's ascii() escapes it
+  let out = "";
+  for (const ch of _caseFold(path)) out += _unassigned(ch) ? "\ufffd" : ch;
+  return pyAscii(out);
 }
 function _licensedAgainst(status, main) {
   // Z-3: why this status map is not `main` up to #121's dotted keys, else null.
@@ -1875,7 +1901,7 @@ function _keptByItsTier(p, claimed, forms) {
   // NOTE_path2_twelfth_pass (A.2, and its own differential), as the Python's `_kept_by_its_tier`: the entry a path claim
   // resolved to matches the claim as written, case kept, by the tier the resolution used.
   const key = _norm(claimed), kept = _caseKept(claimed);
-  if (!forms.length) return false;
+  if (!forms.length || _backslashed(kept, forms)) return false;   // NOTE_path2_fourteenth_pass (A.3)
   if (p === key) return forms.every(f => f === kept);
   if (p.endsWith("/" + key)) return forms.every(f => f.endsWith("/" + kept));
   return forms.every(f => _basename(f) === _basename(kept));
@@ -1896,6 +1922,7 @@ function _precondition(repair, c, status, sides, licence = null) {
     const claimed = _caseKept(d.path);
     const asRead = (lic.forms && lic.forms.get(p)) || [];
     if (lic.soft || !asRead.length || !asRead.every(f => f === claimed || f.endsWith("/" + claimed))) return false;
+    if (_backslashed(claimed, asRead)) return false;   // NOTE_path2_fourteenth_pass (A.3): a backslash is the name's
     if (lic.multi && lic.multi.has(p)) return false;   // NOTE_path2_thirteenth_pass (A.1): one path read twice
     return _earliestMatch(status, d.path)[0] !== p;
   }
@@ -2039,7 +2066,7 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
             const doubt = _testDoubt(addedBlob, sides, notes);          // NOTE_path2_eighth_pass (Y-2, Y-3)
             // NOTE_path2_ninth_pass: `got`, or BC-1's answer, not main's (Z-1); a line the whole file may not survive (Z-5).
             const unlicensed = _testsDiffer(got, status, main);
-            const whole = _wholeFileTests(addedBlob, sides);
+            const whole = _wholeFileTests(addedBlob, sides, facts.keyed || null);   // NOTE_path2_fourteenth_pass (B)
             if (unread) {
               c.verdict = "UNCHECKABLE"; c.why = `diff adds ${unread} async test functions, which this template does not count; claim says ${n}`;
             } else if (doubt) {
@@ -2083,7 +2110,7 @@ function _evaluate(summaryText, diffText, { strict = false, _declared = false, r
             if (whyName === null) {
               const [namePy, nameJs] = _mainNames(sent, m.indices.groups.name[0], m.groups.name);
               unlicensed = _symbolDiffers(hit, name, namePy, nameJs, status, main);
-              whole = hit ? _wholeFileSymbol(name, addedBlob, sides) : null;
+              whole = hit ? _wholeFileSymbol(name, addedBlob, sides, facts.keyed || null) : null;
             }
             if (whyName !== null) {
               c.verdict = "UNCHECKABLE"; c.why = whyName;
