@@ -41,6 +41,14 @@ which holds wherever a runtime lower-cases each code point 16.0.0 assigns as 16.
 runtime it runs on, that every code point whose lower-casing merges beyond the fold is outside the assigned set
 (`unsound(..., assigned=...)` here, and the port's `toLowerCase()` in tests/test_diffgate_path2.py).
 
+WHAT IS A PREMISE, NOT A CHECK (NOTE_path2_fourteenth_pass_2026_09_29, round 13, U13.6). The tests check that premise
+only on the runtimes they run on. In a browser the bookmarklet runs on the user's engine, and nothing checks it there:
+soundness there rests on Unicode's case-pair stability policy (two characters that form a case pair keep forming one,
+and two that do not never come to), under which a later Unicode may give an assigned letter a lowercase only among code
+points 16.0.0 does not assign -- which the doubt above covers. An engine that lower-cased an assigned code point beyond
+the fold otherwise could turn a #121 count licence false (round 13 simulated one); the port does not detect it at load
+time.
+
 THE ASSIGNED SET'S ENCODING. Entries separated by ",": `G:N`, a run of N assigned code points starting G code points
 after the previous run's end (the opening run's gap counted from U+0000); every number base 36.
 
