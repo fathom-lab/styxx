@@ -1366,6 +1366,13 @@ def _status_notes(paths: list) -> dict:
             else {})
 
 
+def _fold_unsure(notes: dict | None):
+    """NOTE_path2_fifteenth_pass (B, Y-6): why a runtime may read two files' lines as one file's -- two header paths fold
+    alike by the table, or one holds a code point Unicode 16.0.0 does not assign -- or None; tests_added and symbol_added
+    then abstain."""
+    return (notes or {}).get("fold")
+
+
 def _files_unsure(notes: dict | None):
     """NOTE_path2_eighth_pass (Y-1): why the file list a gate reads is not sure, or None -- a count, a scope and a
     path claim then abstain."""
@@ -3274,7 +3281,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         unlicensed = _tests_differ(got, status, main)
                         whole = _whole_file_tests(added_blob, sides, (licence or {}).get("keyed"))   # (B)
                         # NOTE_path2_fifteenth_pass (B, Y-6): two files a runtime may read as one
-                        fold = (notes or {}).get("fold")
+                        fold = _fold_unsure(notes)
                         if fold:
                             c.verdict, c.why = "UNCHECKABLE", f"{_Y6_WHY.format(fold)}; claim says {n}"
                         elif unread:
@@ -3337,8 +3344,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                                      if hit else None)
                         if why_name is not None:
                             c.verdict, c.why = "UNCHECKABLE", why_name
-                        elif (notes or {}).get("fold"):             # NOTE_path2_fifteenth_pass (B, Y-6)
-                            c.verdict, c.why = "UNCHECKABLE", _Y6_WHY.format(notes["fold"])
+                        elif _fold_unsure(notes):                   # NOTE_path2_fifteenth_pass (B, Y-6)
+                            c.verdict, c.why = "UNCHECKABLE", _Y6_WHY.format(_fold_unsure(notes))
                         elif doubt:
                             c.verdict, c.why = "UNCHECKABLE", doubt
                         elif unlicensed:

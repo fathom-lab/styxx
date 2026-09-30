@@ -244,6 +244,14 @@ path-key doubt (D), read with this file's own decoding of the assigned set, pinn
 run of either mode, a licensed outcome of #97 and of #121 on each door (GUARD_OUTCOMES), a difference only two reverts
 together give back (round 12's PA), an entry matching a path claim only in case (PK), the git door's case-kept forms (PF)
 and a record `main`'s two doors read apart (PG1b).
+
+NOTE_path2_fifteenth_pass. Under the operator's backstop #97's and #121's licences are withdrawn: this file's own guard
+keeps a difference from main's verdict only where a repair not in its own WITHDRAWN explains it, and prints the
+withdrawn reason (naming the repair) where only a withdrawn one does. So a re-licence planted in the instrument keeps a
+verdict this file's guard abstains on, and a defect in a withdrawn repair's precondition moves the reason; G-C9 refuses
+both. The canaries reach a withdrawn outcome of #97 and of #121 on each door (GUARD_OUTCOMES) in place of the licensed
+outcomes, which can no longer occur. Y-6 (`fold`, the per-file readings' doubt where two header paths fold alike or one
+holds a code point the assigned set leaves out) is read with this file's own code and has its own revert.
 """
 from __future__ import annotations
 
@@ -277,7 +285,8 @@ NOTE = ["NOTE_path2_third_pass_2026_09_25.md", "NOTE_path2_fourth_pass_2026_09_2
         "NOTE_path2_seventh_pass_2026_09_25.md", "NOTE_path2_eighth_pass_2026_09_27.md",
         "NOTE_path2_ninth_pass_2026_09_27.md", "NOTE_path2_tenth_pass_2026_09_28.md",
         "NOTE_path2_eleventh_pass_2026_09_28.md", "NOTE_path2_twelfth_pass_2026_09_29.md",
-        "NOTE_path2_thirteenth_pass_2026_09_29.md", "NOTE_path2_fourteenth_pass_2026_09_29.md"]
+        "NOTE_path2_thirteenth_pass_2026_09_29.md", "NOTE_path2_fourteenth_pass_2026_09_29.md",
+        "NOTE_path2_fifteenth_pass_2026_09_29.md"]
 # The baseline is "the instrument before THIS repair". The preregistration named `87dded26`, the
 # origin/main this branch was cut from; the branch has since been rebased onto `98a5c368`, and
 # PATH-1 (#127), the COMPAT-2 port (#126) and DECLARE-1 (#129/#130) landed in between. Scored
@@ -770,13 +779,15 @@ REVERTS = {
     "Z-4": lambda m: {"_basename_only": lambda status, claimed, before="": None},
     "Z-5": lambda m: {"_whole_file_tests": lambda blob, sides, keyed=None: None,
                       "_whole_file_symbol": lambda name, blob, sides, keyed=None: None},
+    # NOTE_path2_fifteenth_pass (B): Y-6, the per-file readings read alone wherever two header paths fold alike
+    "Y-6": lambda m: {"_fold_unsure": lambda notes: None},
 }
 RULES = tuple(REVERTS)
 TABLE_RULES = ("#97", "#121", "#101")
 NINTH_PASS_RULES = ("Z-1", "Z-2", "Z-3", "Z-4", "Z-5")
 # Where two reverts patch the same name (V-1 and W-2: the definition reading), the OLDER rule's code wins:
 # W-2 was written over V-1, so V-1 reverted means the fourth pass's reading whether or not W-2 is.
-PRECEDENCE = ("Z-5", "Z-4", "Z-3", "Z-2", "Z-1", "Y-5", "Y-4", "Y-3", "Y-2", "Y-1", "A-1", "W-2", "W-1", "V-4", "V-1",
+PRECEDENCE = ("Y-6", "Z-5", "Z-4", "Z-3", "Z-2", "Z-1", "Y-5", "Y-4", "Y-3", "Y-2", "Y-1", "A-1", "W-2", "W-1", "V-4", "V-1",
               "F-3", "F-2", "R-1", "#101", "#121", "#97")
 # NOTE_path2_eighth_pass: the kinds whose verdict reads the file list (Y-1 abstains them where it is unsure).
 FILE_LIST_KINDS = ("files_changed_count", "only_touches") + PATH_KINDS
@@ -847,6 +858,10 @@ def admits(rule: str, k: str, vb: str, vn: str, why: str, diff: str = "", summar
         return gnu_null_in(diff)
     if rule == "Y-5":
         return k == "tests_added" and vn == "UNCHECKABLE"
+    # NOTE_path2_fifteenth_pass (B): Y-6 only abstains, on the two definition kinds, and only where this file's own
+    # reading holds its doubt; elsewhere it shaped nothing (another rule's revert woke it)
+    if rule == "Y-6":
+        return (vn == "UNCHECKABLE" and k in ("tests_added", "symbol_added")) or not own_read(diff)[3].get("fold")
     # NOTE_path2_ninth_pass. Each licensed-difference rule only abstains, on the kinds it reads: Z-1 tests_added, Z-2
     # symbol_added, Z-3 the file-list kinds, Z-4 the path claims, Z-5 the two definition kinds. As for Y-1, a rule whose
     # abstention the repaired claim does not show shaped nothing there (another rule's revert woke it) and is admitted
@@ -864,7 +879,9 @@ def abstention_owner(why: str, k: str = ""):
     """The eighth- or ninth-pass rule (or A-1) whose abstention a reason is, by its words, else None. NOTE_path2_twelfth_pass:
     and "guard", the eleventh pass's guard abstaining where no licence holds (its three reasons, which G-C9 re-derives)."""
     if any(why.startswith(x.split("{", 1)[0]) for x in (GUARD_DIFFERS, GUARD_RAISES, GUARD_ABSENT)):
-        return "guard"
+        return "guard"                  # (GUARD_WITHDRAWN opens as GUARD_DIFFERS does: NOTE_path2_fifteenth_pass, A)
+    if Y6_TAIL in why:
+        return "Y-6"                    # NOTE_path2_fifteenth_pass (B), before Y-1, whose words it quotes
     if any(x in why for x in (Z3_DIFFERS, Z3_APART)):
         return "Z-3"
     if Z1_WHY in why or ((Z12_BC1 in why or Z12_RAISES in why) and k == "tests_added"):
@@ -1364,6 +1381,9 @@ def own_bom_hidden(line: str):
 LOOSE_WHY = ("a `---` or `+++` line after lines no hunk count holds may be content (a SQL or Lua comment, "
              "a `++` line) or a file header")
 COLLIDE_WHY = "two header paths that differ only in case are one key"
+# NOTE_path2_fifteenth_pass (B, Y-6): the per-file readings' abstention, after the doubt's own words
+Y6_TAIL = (", so a runtime may read two files' lines as one file's; the definitions each file adds and removes are "
+           "not read")
 UNASSIGNED_WHY = ("a header path holds a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode "
                   "may key with another path")
 UNCOUNTED_WHY = ("a line names a changed file no header pair counts (GNU's `Binary files ... differ`, "
@@ -1468,9 +1488,9 @@ def own_read(diff: str, facts: dict | None = None) -> tuple:
         if mode_seen:
             mode_keys.add(own_key(raw_path))
         if forms.setdefault(own_fold(form), form) != form:              # NOTE_path2_tenth_pass (K-2)
-            unsure(("files", COLLIDE_WHY))
+            unsure(("files", COLLIDE_WHY), ("fold", COLLIDE_WHY))       # NOTE_path2_fifteenth_pass (B, Y-6)
         if own_unassigned(form):                                        # NOTE_path2_thirteenth_pass (D)
-            unsure(("files", UNASSIGNED_WHY))
+            unsure(("files", UNASSIGNED_WHY), ("fold", UNASSIGNED_WHY))
 
     def bom_dropped(raw: str, text: str) -> None:
         if text != raw and test_name(text):
@@ -2081,6 +2101,8 @@ def expected_tests(c, status: dict, added: list, sides: dict, notes: dict | None
     n, noun = int(c.detail["n"]), c.detail.get("noun", "").lower()
     if not touches_python(status):
         return "UNCHECKABLE", BC1_WHY
+    if (notes or {}).get("fold"):                                            # NOTE_path2_fifteenth_pass (B, Y-6)
+        return "UNCHECKABLE", f"{notes['fold']}{Y6_TAIL}; claim says {n}"
     got = sum(1 for x in "\n".join(added).split("\n") if test_name(x))
     chg = min(changed_tests(sides, status), got)
     net = got - chg
@@ -2111,13 +2133,15 @@ def expected_tests(c, status: dict, added: list, sides: dict, notes: dict | None
 
 
 def expected_symbol(c, sentence: str, start: int, status: dict, added: list, sides: dict,
-                    main: "OwnMain | None" = None, keyed: dict | None = None) -> tuple:
+                    main: "OwnMain | None" = None, keyed: dict | None = None, notes: dict | None = None) -> tuple:
     """A symbol_added claim's (verdict, reason), by this file's own code."""
     if not touches_python(status):
         return "UNCHECKABLE", BC1_WHY
     name, why = claimed_name(sentence, start)
     if why:
         return "UNCHECKABLE", why
+    if (notes or {}).get("fold"):                                            # NOTE_path2_fifteenth_pass (B, Y-6)
+        return "UNCHECKABLE", f"{notes['fold']}{Y6_TAIL}"
     for line in "\n".join(added).split("\n") + own_removed_lines(sides):     # Y-2
         hidden = own_bom_hidden(line)
         if hidden is not None and (defined(hidden, True) or ("", ""))[1] == name:
@@ -2375,9 +2399,11 @@ def own_status_notes(status_paths: list) -> dict:
             form = form[1:] if form.startswith("/") else form[2:]
         seen.setdefault(own_fold(form), set()).add(form)
     if any(len(v) > 1 for v in seen.values()):
-        return {"files": COLLIDE_WHY}
+        return {"files": COLLIDE_WHY, "fold": COLLIDE_WHY}             # NOTE_path2_fifteenth_pass (B, Y-6)
     # NOTE_path2_thirteenth_pass (D): a path holding a code point the assigned set leaves out
-    return {"files": UNASSIGNED_WHY} if any(own_unassigned(x) for v in seen.values() for x in v) else {}
+    if any(own_unassigned(x) for v in seen.values() for x in v):
+        return {"files": UNASSIGNED_WHY, "fold": UNASSIGNED_WHY}
+    return {}
 
 
 def parse_violations(diff: str, paths, with_reading: bool = False):
@@ -2436,7 +2462,7 @@ def oracle_violations(summary: str, diff: str, paths, g, status_override: dict |
         listed = own_status_notes(status_paths or [])        # the git door's file list is git's
         differs = own_status_differs(name_status or "", status)
         notes = {k: v for k, v in (("files", listed.get("files")), ("bom", notes.get("bom")),
-                                   ("differs", differs)) if v}
+                                   ("differs", differs), ("fold", notes.get("fold") or listed.get("fold"))) if v}
         main = OwnMain(git_text if git_text is not None else diff, (own_main_name_status(name_status or ""),))
         if new._status_differs(new._main_name_status(name_status or ""), status) != differs:
             out.append("G-C7_oracle:Z-3_status_differs")
@@ -2504,14 +2530,14 @@ def oracle_violations(summary: str, diff: str, paths, g, status_override: dict |
             if mm is None:
                 out.append("G-C7_oracle:symbol_claim_unplaced")
                 continue
-            want = expected_symbol(c, c.text, mm.start("name"), status, added, sides, main, keyed)
+            want = expected_symbol(c, c.text, mm.start("name"), status, added, sides, main, keyed, notes)
         else:
             k = next((i for i, (s, mm) in enumerate(sites) if s.strip()[:160] == c.text
                       and mm.group("name") == c.detail["name"] and mm.group("kind") == c.detail["kind"]), None)
             if k is None:
                 out.append("G-C7_oracle:symbol_claim_unplaced")
                 continue
-            want = expected_symbol(c, sites[k][0], sites[k][1].start("name"), status, added, sides, main, keyed)
+            want = expected_symbol(c, sites[k][0], sites[k][1].start("name"), status, added, sides, main, keyed, notes)
             del sites[k]
         if (c.verdict, c.why) != want:
             out.append(f"G-C7_oracle:{c.kind}_claim")
@@ -2602,6 +2628,11 @@ GUARD_RAISES = ("main's reading raises on this diff and gives no verdict; this o
                 "licenses a verdict where main gives none")
 GUARD_ABSENT = ("main's reading makes no such claim of this sentence; this one gives {this}, and no named repair "
                 "licenses a verdict where main gives none")
+# NOTE_path2_fifteenth_pass (A): the operator's backstop, written out here -- #97's and #121's licences withdrawn, and the
+# reason a difference only a withdrawn repair explains prints
+WITHDRAWN = ("#97", "#121")
+GUARD_WITHDRAWN = ("main's reading gives {main} and this one {this}; {repair} explains the difference on this claim, but "
+                   "its licence is withdrawn until a reviewed change restores it, so it abstains")
 K5_WHY = ("the two ports' templates may read this sentence apart (it holds a character at or past U+0080, or one of "
           "U+001C to U+001F), so the claim reads as main read it, and {}")
 K5_ABSENT = "main's reading makes no such claim of it"
@@ -2789,18 +2820,23 @@ def expected_guard(summary: str, before: list, main, switched, status: dict, sid
         if c.verdict == "UNCHECKABLE" or mv == c.verdict:
             out.append((c.kind, c.text, c.verdict, c.why, c.detail))
             continue
-        licence = next((repair for repair in TABLE_RULES if mv is not None
-                        and own_precondition(repair, c, status, sides, facts) and switched_verdict(repair, key) == mv),
-                       None)
+        explains = [] if mv is None else [repair for repair in TABLE_RULES
+                                          if own_precondition(repair, c, status, sides, facts)
+                                          and switched_verdict(repair, key) == mv]
+        licence = next((repair for repair in explains if repair not in WITHDRAWN), None)
         if licence is not None:
             count(f"guard_licensed_by_{licence}")
             out.append((c.kind, c.text, c.verdict, c.why, c.detail))
             continue
         count("guard_abstained")
+        if explains:                                    # NOTE_path2_fifteenth_pass (A): only a withdrawn repair explains it
+            count(f"guard_withdrawn_{explains[0]}")
         if mv is not None and any(own_precondition(repair, c, status, sides, facts) for repair in TABLE_RULES):
             count("guard_abstained_where_a_precondition_held")
         why = (GUARD_RAISES.format(this=c.verdict) if main is None else
-               GUARD_ABSENT.format(this=c.verdict) if r is None else GUARD_DIFFERS.format(main=mv, this=c.verdict))
+               GUARD_ABSENT.format(this=c.verdict) if r is None else
+               GUARD_WITHDRAWN.format(main=mv, this=c.verdict, repair=explains[0]) if explains else
+               GUARD_DIFFERS.format(main=mv, this=c.verdict))
         out.append((c.kind, c.text, "UNCHECKABLE", why, c.detail))
     return out
 
@@ -3370,9 +3406,12 @@ RAW_CANARIES = (
 # NOTE_path2_thirteenth_pass (round-12 scorer lens): and a licensed outcome of #97 and of #121 on each door -- without one, a
 # licence granted otherwise than by its own switch and precondition (PA, PK, PF) was admitted in both modes. #101 licenses
 # no verdict (its switched-off verdicts differ from its own only as UNCHECKABLE), so no canary can reach its licence.
+# NOTE_path2_fifteenth_pass (A): with #97's and #121's licences withdrawn a licensed outcome of either can no longer occur;
+# the canaries must reach, on each door, an abstention only a withdrawn repair explains (its precondition held and its
+# switch gave main's verdict back) -- so a re-licence planted in the instrument keeps a verdict there, and G-C9 refuses it.
 GUARD_OUTCOMES = {"raw": ("guard_k5_read_as_main", "guard_abstained", "guard_abstained_where_a_precondition_held",
-                          "guard_licensed_by_#97", "guard_licensed_by_#121"),
-                  "git": ("guard_k5_read_as_main", "guard_abstained", "guard_licensed_by_#97", "guard_licensed_by_#121")}
+                          "guard_withdrawn_#97", "guard_withdrawn_#121"),
+                  "git": ("guard_k5_read_as_main", "guard_abstained", "guard_withdrawn_#97", "guard_withdrawn_#121")}
 
 
 def score_canaries() -> tuple:
