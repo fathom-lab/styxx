@@ -1833,7 +1833,7 @@ def _shown_written(path: str) -> str:
     table, each code point Unicode 16.0.0 does not assign printed as U+FFFD, escaped as ascii() escapes it. For a path
     whose code points are all assigned it is `_shown` of its key (the fold of a key is the fold of its path, K-2); two
     paths a newer runtime merges into one key differ only at unassigned code points, and print alike."""
-    return ascii("".join("�" if _unassigned(ch) else ch for ch in _case_fold(path)))
+    return ascii("".join("\ufffd" if _unassigned(ch) else ch for ch in _case_fold(path)))
 
 
 def _licensed_against(status: dict, main: dict):

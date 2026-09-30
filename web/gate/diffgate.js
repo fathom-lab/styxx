@@ -13,7 +13,7 @@
  * NOTE_path2_seventh_pass_2026_09_25, NOTE_path2_eighth_pass_2026_09_27, NOTE_path2_ninth_pass_2026_09_27,
  * NOTE_path2_tenth_pass_2026_09_28, NOTE_path2_eleventh_pass_2026_09_28, NOTE_path2_twelfth_pass_2026_09_29,
  * NOTE_path2_thirteenth_pass_2026_09_29 and NOTE_path2_fourteenth_pass_2026_09_29) on the file that carries them,
- * sha256 7f6912715a3d84a352d8c88d2d2080e72ee16e87117c809c0727b4ae120cb05b — the styxx/diffgate.py this
+ * sha256 0b2f2c568075d8eeb8a4125e3177691ad9bd86485be6cd93484f8644fb875419 — the styxx/diffgate.py this
  * branch would put on main, with the name table styxx/_xid.py carries (Unicode 15.0.0, table sha256
  * 8df68f21…, and the skew set beside it, 0b7134fd…, copied below) and the case fold styxx/_fold.py carries
  * (Unicode 16.0.0, sha256 a52cda82…, and beside it the set of code points 16.0.0 assigns, 56a413eb…, copied
