@@ -18,9 +18,12 @@ import urllib.request
 from styxx.diffgate import gate_diff_text
 
 # PATH-2a (NOTE_path2a_third_pass_2026_09_30): the form of a reason the overlay writes, at its start, and the kinds
-# it may move. Written out here, not imported: this script runs against the styxx the Action installs from PyPI,
-# which may not carry the overlay (tests/test_diffgate_path2a.py pins the kinds to the module's REACH).
+# it may move. Written out here, not imported, so this script reads a styxx without the overlay too
+# (tests/test_diffgate_path2a.py pins the kinds to the module's REACH). Run as the Action runs it,
+# `python <action path>/diffgate_action.py`, it imports the styxx package beside it, at the ref the workflow names
+# (NOTE_path2a_sixth_pass_2026_09_30, I-1), not the one pip installs.
 _OVERLAY_WHY = re.compile(r"(?:VERIFIED|CONTRADICTED) withheld by PATH-2a \((?:#97|#121|#97, #121|#101)\): ")
+_OVERLAY_MAIN = ". main's reading: "
 _OVERLAY_KINDS = frozenset({"file_created", "file_deleted", "file_touched", "files_changed_count", "only_touches",
                             "tests_added", "symbol_added"})
 
@@ -113,9 +116,16 @@ def main() -> int:
             # Only a reason the overlay wrote (NOTE_path2a_third_pass_2026_09_30, A-2): an UNCHECKABLE claim of a
             # kind it may move, whose reason starts with its form. No reason main writes for those kinds starts so;
             # a reason that only contains the words, such as a DECLARE-1 MALFORMED one, is cut as main cuts it.
+            # I-3 (NOTE_path2a_sixth_pass_2026_09_30): the overlay's own words whole, and main's reading after them cut
+            # as main cuts a reason, at 100 characters, so a long path cannot carry the table past GitHub's step
+            # summary limit.
             ours = (c.verdict == "UNCHECKABLE" and c.kind in _OVERLAY_KINDS
                     and _OVERLAY_WHY.match(c.why) is not None)
-            why = c.why if ours else c.why[:100]
+            if ours:
+                head, sep, mains = c.why.partition(_OVERLAY_MAIN)
+                why = head + sep + mains[:100]
+            else:
+                why = c.why[:100]
             lines.append(f"| {mark} {c.verdict} | {c.text[:80]} | {why} |")
     else:
         lines += ["_No diff-shaped claims found. The gate checks a closed template set "

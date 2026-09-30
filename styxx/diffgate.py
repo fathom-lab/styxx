@@ -1412,7 +1412,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # === PATH-2a abstain-only overlay: BEGIN ===
 #
 # NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30,
-# NOTE_path2a_fourth_pass_2026_09_30 and NOTE_path2a_fifth_pass_2026_09_30.
+# NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30 and NOTE_path2a_sixth_pass_2026_09_30.
 # Everything outside this block is main's reader at 1cde8b82 (sha256 9b620e00..., LF), unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
@@ -1500,6 +1500,17 @@ _P2A_LEAD_APART = re.compile("[\x1c\x1d\x1e\x1f\x85\ufeff]")    # white space of
 _P2A_LEADS = (re.compile("[" + _P2A_PY_SPACE + "]*"), re.compile("[" + _P2A_JS_SPACE + "]*"))  # each main's \s run
 _P2A_FOLD = {**{cp: cp + 32 for cp in range(65, 91)}, 0x212A: "k", 0x130: "i\u0307"}
 _P2A_ASCII_LOWER = {cp: cp + 32 for cp in range(65, 91)}
+# C-1 (NOTE_path2a_sixth_pass_2026_09_30): words every match of a template that can give CONTRADICTED holds together
+# (the count template's `changed`, the scope template's `only`, the tests template's verb and `test`, the symbol
+# template's verb and kind), and every DECLARE-1 line that writes such a sentence (files_changed, only_touches,
+# tests_added, adds_symbol), read in ASCII case with the four code points CPython's IGNORECASE folds to an ASCII letter
+# read as that letter, one for one.
+_P2A_TRIGGERS = (("changed",), ("only",), ("add", "test"), ("creat", "test"),
+                 ("add", "function"), ("add", "class"), ("add", "method"), ("add", "symbol"),
+                 ("introduc", "function"), ("introduc", "class"), ("introduc", "method"), ("introduc", "symbol"))
+_P2A_TRIGGER_LOW = {**_P2A_ASCII_LOWER, 0x130: "i", 0x131: "i", 0x17F: "s", 0x212A: "k"}
+_P2A_ACCUSE = frozenset({"files_changed_count", "only_touches", "tests_added", "symbol_added"})   # may be CONTRADICTED
+_P2A_MANY = 32                     # more distinct words than this are read through one automaton, not one scan each
 _P2A_REACH = frozenset({
     ("file_created", "VERIFIED"), ("file_deleted", "VERIFIED"), ("file_touched", "VERIFIED"),
     ("files_changed_count", "VERIFIED"), ("files_changed_count", "CONTRADICTED"),
@@ -1524,7 +1535,10 @@ _P2A_PHRASES = {
               "an added one"),
     "split": ("a test the added lines count is also defined in the removed lines, and the Python and JavaScript "
               "readers split or space these lines differently"),
+    "redefined": ("a test the added lines count is also defined in an unchanged line of the diff, and a test defined "
+                  "again is not an added one"),
     "symbol": "the removed lines define this name too, and a changed definition is not an added one",
+    "again": "an unchanged line of the diff defines this name too, and a name defined again is not an added one",
     "extract": ("the summary holds a character the Python and JavaScript readers may read differently where the "
                 "claim's path, name, prefix or number is read, so the two may extract the claim differently"),
     "seam": ("the summary holds a character that only one of the Python and JavaScript readers reads as a space, or "
@@ -1878,39 +1892,48 @@ def _p2a_removed(views: list, extra: list) -> list:
     return [removed for _a, removed in _p2a_distinct(views)] + [extra]
 
 
-def _p2a_pairing(views: list, alike: bool = False, extra: list = ()) -> list:
-    """Per line view v (0: CPython's line breaks and white space, as main reads the added lines here; 1: the port's),
-    (the number of `def test_` sites that view's main counts, how many of them name a test a removed line may define
-    after `def`). A removed definition is read as the ASCII run of its name: pairing names by their sets {full name
-    run, ASCII run} is pairing them by their ASCII runs, since a full run fixes its ASCII run and a full run equal
-    to an ASCII run is all ASCII. A name read through NFKC (a code point from 0x80 up in it or before it) pairs with
-    every name: a removed one with every counted site, a counted one with every removed test
-    (NOTE_path2a_fifth_pass_2026_09_30, B-2). `extra`: the removed lines no view reads (B-1). `alike`: the two views
-    are one object and the text holds no character where the two mains' white space parts (U+001F, U+FEFF; the others
-    are line breaks of view 0), so both views count alike."""
-    rem = set()
-    wild = False
-    for removed in _p2a_removed(views, extra):
-        for line in removed:
+def _p2a_test_defs(groups: list, nfkc: bool = True) -> tuple:
+    """(the ASCII name runs of the tests the lines may define after `def`, whether some `def` there has a name read
+    through NFKC and so may define any test). A definition is read as the ASCII run of its name: pairing names by
+    their sets {full name run, ASCII run} is pairing them by their ASCII runs, since a full run fixes its ASCII run and
+    a full run equal to an ASCII run is all ASCII (NOTE_path2a_fifth_pass_2026_09_30, B-2). With `nfkc` False, a `def`
+    whose name reads through NFKC is passed over (the unchanged lines, NOTE_path2a_sixth_pass_2026_09_30, B-1)."""
+    names = set()
+    for lines in groups:
+        for line in lines:
             for j, r in _p2a_sites(line, "def"):
                 e = _P2A_WORD_RUN.match(line, r).end()
                 if _p2a_wide_name(line, j, r, e):
-                    wild = True                   # every counted site pairs now: nothing more to read
-                    break
+                    if nfkc:
+                        return names, True        # every counted site pairs now: nothing more to read
+                    continue
                 if line.startswith("test_", r):
-                    rem.add(line[r:e])
-            if wild:
-                break
-        if wild:
-            break
+                    names.add(line[r:e])
+    return names, False
+
+
+def _p2a_pairing(views: list, alike: bool = False, extra: list = (), unchanged: list = ()) -> list:
+    """Per line view v (0: CPython's line breaks and white space, as main reads the added lines here; 1: the port's),
+    (the number of `def test_` sites that view's main counts, how many of them name a test a removed line may define
+    after `def`, how many name a test a removed or an unchanged line may define). A name read through NFKC (a code point
+    from 0x80 up in it or before it) pairs with every name: a defined one with every counted site, a counted one with
+    every defined test (NOTE_path2a_fifth_pass_2026_09_30, B-2). `extra`: the removed lines no view reads (B-1).
+    `unchanged`: the unchanged lines of each view and those no view reads (NOTE_path2a_sixth_pass_2026_09_30, B-1: a
+    test defined again beside its own unchanged definition is counted by main and is not an added test). `alike`: the
+    two views are one object and the text holds no character where the two mains' white space parts (U+001F, U+FEFF;
+    the others are line breaks of view 0), so both views count alike."""
+    rem, wild = _p2a_test_defs(_p2a_removed(views, extra))
+    ctx, _nfkc = _p2a_test_defs([unchanged], False)
     out = []
     for (added, _r), lead in zip(_p2a_distinct(views) if alike else views, _P2A_LEADS):
-        got = paired = 0
+        got = paired = based = 0
         for line in added:
             for x in _p2a_counted(line, lead):
                 got += 1
-                paired += wild or (bool(rem) if x is None else x in rem)
-        out.append((got, paired))
+                p = wild or (bool(rem) if x is None else x in rem)
+                paired += p
+                based += p or (bool(ctx) if x is None else x in ctx)
+        out.append((got, paired, based))
     return out * 2 if len(out) == 1 else out
 
 
@@ -1918,20 +1941,31 @@ def _p2a_distinct(views: list) -> list:
     return views[:1] if views[0] is views[1] else views
 
 
-def _p2a_joined(diff_text: str) -> list:
+def _p2a_context(diff_text: str, fine: list) -> list:
+    """The unchanged lines (git lines starting with ' ') of each distinct line view, without the ' '
+    (NOTE_path2a_sixth_pass_2026_09_30, B-1)."""
+    out = [x[1:] for x in fine if x.startswith(" ")]
+    if not _P2A_FINE_ONLY.search(diff_text):
+        return out
+    return out + [x[1:] for x in _p2a_lines(diff_text, _P2A_COARSE) if x.startswith(" ")]
+
+
+def _p2a_joined(diff_text: str, side: str = "-") -> list:
     """The removed text no line view reads as a line (NOTE_path2a_fifth_pass_2026_09_30, B-1), as more removed lines:
     each piece after a lone CR inside a git line (the diff split at '\\n') that starts with '-', which no view reads as
     removed and CPython's tokenizer reads as a line of its own; and each run of the base side's pieces (the pieces of
     git lines starting with '-' or ' ', in order, '+' and '\\' lines passed over, any other line ending the run) joined
     where a piece ends in a backslash, which CPython reads as one line, each such backslash read as a space, when a
     piece of the run is removed. The tokenizer ends a line at LF, CRLF and a lone CR only; at any other break
-    `str.splitlines` knows, the line does not parse, and the line views read those already. Linear in the diff."""
+    `str.splitlines` knows, the line does not parse, and the line views read those already. Linear in the diff.
+    With `side` ' ', the unchanged text no view reads the same way (NOTE_path2a_sixth_pass_2026_09_30, B-1): the pieces
+    after a lone CR in lines starting with ' ', and the joined runs no piece of which is removed."""
     out = []
     acc: list = []
     hit = False
 
     def flush() -> None:
-        if len(acc) > 1 and hit:
+        if len(acc) > 1 and hit == (side == "-"):
             out.append("".join(x[:-1] + " " for x in acc[:-1]) + acc[-1])
 
     for line in diff_text.split("\n"):
@@ -1944,7 +1978,7 @@ def _p2a_joined(diff_text: str) -> list:
             hit = False
             continue
         pieces = _p2a_lines(line[1:], _P2A_CR) if "\r" in line else [line[1:]] if len(line) > 1 else []
-        if head == "-":
+        if head == side:
             for piece in pieces[1:]:
                 out.append(piece)
         for piece in pieces:
@@ -2009,6 +2043,23 @@ def _p2a_def_runs(views: list, extra: list = ()) -> tuple:
     return out, False
 
 
+def _p2a_name_defs(groups: list) -> set:
+    """The ASCII name run at every anchored `def` or `class` site of the lines whose name does not read through NFKC:
+    the names the unchanged lines define (NOTE_path2a_sixth_pass_2026_09_30, B-1)."""
+    out: set = set()
+    seen: set = set()
+    for lines in groups:
+        for line in lines:
+            if line in seen:
+                continue
+            seen.add(line)
+            for j, r in _p2a_anchored(line):
+                e = _P2A_WORD_RUN.match(line, r).end()
+                if not _p2a_wide_name(line, j, r, e):
+                    out.add(line[r:e])
+    return out
+
+
 def _p2a_defines(views: list, name: str, extra: list = ()) -> bool:
     """Whether a removed line, in either view or in `extra`, may define `name` after an anchored `def` or `class`: the
     name starts where the coarse run after the word does or anywhere in it, and ends where its full name run or its
@@ -2051,6 +2102,92 @@ def _p2a_seam(summary: str) -> bool:
                 and _P2A_ONE_RX.search(summary, a, e):
             return True
     return False
+
+
+def _p2a_found(words, text: str) -> set:
+    """The words (non-empty, none holding _P2A_SEP) that occur in `text`. Up to _P2A_MANY words, one scan each; more,
+    one read of the text through one automaton, marking each state's words once: time linear in the words and the
+    text however many words the claims name (NOTE_path2a_sixth_pass_2026_09_30, A-1). Both give the same set."""
+    if len(words) <= _P2A_MANY:
+        return {w for w in words if w in text}
+    moves, back, hit = _p2a_automaton(words)
+    ends: dict = {}
+    for w in words:
+        s = 0
+        for ch in w:
+            s = moves[s][ch]
+        ends[s] = w
+    seen: set = set()
+    got: set = set()
+    s = 0
+    for ch in text:
+        while s and ch not in moves[s]:
+            s = back[s]
+        s = moves[s].get(ch, 0)
+        t = s
+        while t and hit[t] and t not in seen:
+            seen.add(t)
+            if t in ends:
+                got.add(ends[t])
+            t = back[t]
+    return got
+
+
+def _p2a_apart_in(summary: str, low: str, a, e) -> bool:
+    return _P2A_BAD_RX.search(summary, a, e) is not None and any(
+        all(low.find(w, a, e) >= 0 for w in words) for words in _P2A_TRIGGERS)
+
+
+def _p2a_apart_diff(f: "_P2aFacts", kinds: frozenset) -> bool:
+    """Whether the two ports' mains may decide apart, on this diff, a claim of `kinds` (the kinds that can be
+    CONTRADICTED among the claims main read, which both ports read alike wherever the summary holds no C-1 seam): a
+    file header they split or strip apart (the statuses: counts, scopes, and BC-1 for tests and symbols); for a tests
+    claim, a different count of `def test_` sites (each view's own count, as main makes it); for a symbol claim, an
+    added `def` or `class` site whose line only one view reads, or whose leading white space or name the two ports'
+    `\\s` and `\\b` may read apart; and added lines that are empty to one main only where no path is registered (main's
+    no-evidence reading)."""
+    if not kinds:
+        return False
+    if _p2a_divergent(f.diff_text):
+        return True
+    views = f.views()
+    if "tests_added" in kinds and f.pairing()[0][0] != f.pairing()[1][0]:
+        return True
+    if "symbol_added" in kinds:
+        one = set(views[0][0]) ^ set(views[1][0]) if views[0] is not views[1] else set()
+        for added, _r in _p2a_distinct(views):
+            for line in added:
+                for j, r in _p2a_anchored(line):
+                    if line in one or _P2A_ONE_RX.search(line, 0, r) is not None or \
+                            _p2a_wide_name(line, j, r, _P2A_WORD_RUN.match(line, r).end()):
+                        return True
+    return not f.status("A") and (not "\n".join(views[0][0])) != (not "\n".join(views[1][0]))
+
+
+def _p2a_apart(f: "_P2aFacts", kinds: frozenset) -> bool:
+    """Whether the two ports' mains may read apart which claims can be CONTRADICTED, or decide one such claim apart
+    (NOTE_path2a_sixth_pass_2026_09_30, C-1). Where they may, the overlay withholds no CONTRADICTED verdict, so each
+    port's gate verdict without --strict is its main's; where they may not, both read the same such claims with the
+    same verdicts, and the overlay decides each alike. The summary: a sentence, as both ports end one, that holds a
+    character the two ports' templates may read apart and the words every match of such a template holds; or a
+    DECLARE-1 fence word beside a line break only one port reads, or a lone CR, after which only the port's `^` matches.
+    The diff: `_p2a_apart_diff`, read for the kinds of the claims main read; where the summary holds no seam, both
+    ports read the same claims of those kinds, so both read the same kinds."""
+    summary = f.summary
+    if _p2a_apart_diff(f, kinds):
+        return True
+    if "styxx" in summary and (_P2A_DIV_RX.search(summary) or "\r" in summary.replace("\r\n", "\n")):
+        return True
+    if not _P2A_BAD_RX.search(summary):
+        return False
+    low = summary.translate(_P2A_TRIGGER_LOW)
+    a = 0
+    for m in _P2A_CUT.finditer(summary):
+        e = m.start() if m.group() == "\n" else m.start() + 1
+        if _p2a_apart_in(summary, low, a, e):
+            return True
+        a = e + 1 if m.group() == "\n" else e
+    return _p2a_apart_in(summary, low, a, len(summary))
 
 
 def _p2a_zones(summary: str) -> list:
@@ -2190,10 +2327,36 @@ class _P2aFacts:
                     len({_p2a_WK(x) for x in rk}), len({_p2a_K(x) for x in rk}))
         return self._get("count", make)
 
+    def unchanged(self) -> list:
+        """The unchanged lines of each view, and those no view reads (NOTE_path2a_sixth_pass_2026_09_30, B-1)."""
+        return self._get("unchanged", lambda: _p2a_context(self.diff_text, self.fine())
+                         + _p2a_joined(self.diff_text, " "))
+
     def pairing(self) -> tuple:
         return self._get("pairing", lambda: _p2a_pairing(self.views(), self.views()[0] is self.views()[1]
                                                          and not _P2A_LEAD_APART.search(self.diff_text),
-                                                         self.joined()))
+                                                         self.joined(), self.unchanged()))
+
+    def kinds(self, found=()) -> frozenset:
+        """The kinds that can be CONTRADICTED among the claims main read, named before any claim is read (C-1)."""
+        return self._get("kinds", lambda: frozenset(found) & _P2A_ACCUSE)
+
+    def apart(self, kinds: frozenset) -> bool:
+        return self._get("apart", lambda: _p2a_apart(self, kinds))
+
+    def tokens(self, kind: str, words) -> frozenset:
+        """Names the words the claims in reach may look up in the summary's runs of `kind` ('path', 'name', 'count')
+        or in its zones ('zone'), before any claim is read (NOTE_path2a_sixth_pass_2026_09_30, A-1)."""
+        return self._get(("tokens", kind), lambda: frozenset(w for w in words if w and _P2A_SEP not in w))
+
+    def occurs(self, kind: str, s: str) -> bool:
+        """Whether s occurs in the summary's runs of `kind`, or in its zones: for a word named by `tokens`, read from
+        one pass over that text for all of them; for any other, by a scan of its own."""
+        text = self.zone_text() if kind == "zone" else self.runs(kind)
+        words = self._get(("tokens", kind), frozenset)
+        if s in words:
+            return s in self._get(("found", kind), lambda: _p2a_found(words, text))
+        return self._get(("in", kind, s), lambda: s in text)
 
     def defines(self, name: str) -> bool:
         runs, wild = self._get("defs", lambda: _p2a_def_runs(self.views(), self.joined()))
@@ -2202,6 +2365,11 @@ class _P2aFacts:
         if name and _P2A_WORD_RUN.fullmatch(name):
             return name in runs
         return self._get(("defines", name), lambda: _p2a_defines(self.views(), name, self.joined()))
+
+    def redefines(self, name: str) -> bool:
+        """Whether an unchanged line may define `name`, an ASCII name, after an anchored `def` or `class`."""
+        return bool(name) and _P2A_WORD_RUN.fullmatch(name) is not None and \
+            name in self._get("udefs", lambda: _p2a_name_defs([self.unchanged()]))
 
     def runs(self, kind: str) -> str:
         return self._get("runs" + kind, lambda: _p2a_runs(self.summary, _P2A_RUN_RX[kind]))
@@ -2224,7 +2392,7 @@ def _p2a_in_runs(f: "_P2aFacts", s: str, kind: str) -> bool:
     run holds _P2A_SEP, so a string holding it lies in none."""
     if not s or _P2A_SEP in s:
         return False
-    return f._get(("in", kind, s), lambda: s in f.runs(kind))
+    return f.occurs(kind, s)
 
 
 def _p2a_port_may_verify(f: "_P2aFacts", claimed: str, want) -> bool:
@@ -2430,7 +2598,7 @@ def _p2a_scope_doubt(f: "_P2aFacts", d: dict) -> bool:
         return False
     if _P2A_SEP in prefix:
         return any(f.summary.find(prefix, lo, hi) >= 0 for lo, hi in f.zones())
-    return f._get(("zone", prefix), lambda: prefix in f.zone_text())
+    return f.occurs("zone", prefix)
 
 
 def _p2a_only(c, f: "_P2aFacts"):
@@ -2464,7 +2632,7 @@ def _p2a_tests(c, f: "_P2aFacts"):
     verdict it has here (so both ports decide alike wherever their mains agree): 'tests' when every such reading
     holds the claim, 'split' when only one does."""
     counts = f.pairing()
-    if not any(p for _g, p in counts):
+    if not any(b for _g, _p, b in counts):
         return None
     nums = _p2a_numbers(_P2A_TESTS_HEAD, c.why, c.detail)
     if nums is None:
@@ -2472,11 +2640,16 @@ def _p2a_tests(c, f: "_P2aFacts"):
     got, n = nums
     if counts[_P2A_OWN][0] != got:
         return "unreproduced", "#101"
-    fires = [bool(min(g, p)) and g - min(g, p) <= n <= g for g, p in counts
+    fires = [bool(min(g, p)) and g - min(g, p) <= n <= g for g, p, _b in counts
              if (g == n) == (c.verdict == "VERIFIED")]
     if fires and all(fires):
         return "tests", "#101"
-    return ("split", "#101") if any(fires) else None
+    if any(fires):
+        return "split", "#101"
+    # B-1 (NOTE_path2a_sixth_pass_2026_09_30): the same interval with the tests the unchanged lines define paired too
+    fires = [bool(min(g, b)) and g - min(g, b) <= n <= g for g, _p, b in counts
+             if (g == n) == (c.verdict == "VERIFIED")]
+    return ("redefined", "#101") if any(fires) else None
 
 
 def _p2a_symbol(c, f: "_P2aFacts"):
@@ -2485,10 +2658,17 @@ def _p2a_symbol(c, f: "_P2aFacts"):
         return "extract", "#101"
     if f.defines(name):
         return "symbol", "#101"
+    if f.redefines(name):                 # B-1 (NOTE_path2a_sixth_pass_2026_09_30)
+        return "again", "#101"
     return None
 
 
 def _p2a_decide(c, f: "_P2aFacts"):
+    # C-1 (NOTE_path2a_sixth_pass_2026_09_30): withholding a CONTRADICTED can move a gate verdict without --strict, and
+    # where the two ports' mains may read apart which claims are CONTRADICTED, it could move one port's and not the
+    # other's. There main's CONTRADICTED stands, in both ports.
+    if c.verdict == "CONTRADICTED" and f.apart(f.kinds()):
+        return None
     if c.kind in _PATH_KINDS:
         return _p2a_path(c, f)
     if c.kind == "files_changed_count":
@@ -2514,16 +2694,23 @@ def _p2a_abstain(g: DiffGate, strict: bool, facts) -> DiffGate:
         f = facts()
         f.prime(tuple(c.detail.get("path") for c in todo if c.kind in _PATH_KINDS
                       and isinstance(c.detail.get("path"), str)))
+        for kind, field in (("path", "path"), ("name", "name"), ("count", "n"), ("zone", "prefix")):
+            f.tokens(kind, [c.detail.get(field) for c in todo if isinstance(c.detail.get(field), str)])
+        f.kinds([c.kind for c in g.claims])
         hits = [(c, _p2a_decide(c, f)) for c in todo]
     except Exception:                     # an abstain-only overlay that cannot read withholds, and says so
         hits = [(c, ("error", _P2A_KIND_DEFECT[c.kind])) for c in todo]
+    moved = False
     for c, hit in hits:
         if hit is not None:
             c.why = _p2a_reason(c.verdict, hit[1], hit[0], c.why)
             c.verdict = "UNCHECKABLE"
-    contradicted = any(c.verdict == "CONTRADICTED" for c in g.claims)
-    uncheckable = any(c.verdict == "UNCHECKABLE" for c in g.claims)
-    g.verdict = "FAIL" if (contradicted or (strict and uncheckable)) else "PASS"
+            moved = True
+    # A-2 (NOTE_path2a_sixth_pass_2026_09_30): where no claim moved, the record is main's object, untouched
+    if moved:
+        contradicted = any(c.verdict == "CONTRADICTED" for c in g.claims)
+        uncheckable = any(c.verdict == "UNCHECKABLE" for c in g.claims)
+        g.verdict = "FAIL" if (contradicted or (strict and uncheckable)) else "PASS"
     return g
 
 
@@ -2556,12 +2743,14 @@ _P2A_ATTRS_OK = frozenset({
     "verdict", "why", "kind", "detail", "claims", "a", "b", "status", "note",
     "diff_text", "name_status", "summary", "_m", "_get", "fine", "regs", "views", "divergent", "space", "odd",
     "count", "pairing", "defines", "runs", "zones", "zone_text", "scope",
-    "order", "groups", "prime", "ends", "automaton", "joined", "seam"})
+    "order", "groups", "prime", "ends", "automaton", "joined", "seam", "unchanged", "apart", "tokens", "occurs",
+    "kinds", "redefines"})
 _P2A_TYPES = frozenset({"str", "list", "dict", "set", "tuple", "frozenset", "int", "bool"})
 
 
 def _p2a_regex_problems(pattern: str) -> list:
-    """Class escapes, an unescaped '.', and inline case or Unicode flags in one static pattern."""
+    """Class escapes, a named-character escape, an unescaped '.', and inline case or Unicode flags in one static
+    pattern."""
     out = []
     i, in_class = 0, False
     while i < len(pattern):
@@ -2569,6 +2758,9 @@ def _p2a_regex_problems(pattern: str) -> list:
         if ch == "\\":
             if pattern[i + 1:i + 2] in ("w", "W", "s", "S", "b", "B", "d", "D"):
                 out.append("class escape " + pattern[i:i + 2])
+            elif pattern[i + 1:i + 2] == "N":
+                # C-2 (NOTE_path2a_sixth_pass_2026_09_30): \N{NAME} reads the Unicode name table when it compiles
+                out.append("named-character escape " + pattern[i:i + 2])
             i += 2
             continue
         if ch == "[" and not in_class:
