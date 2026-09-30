@@ -4,11 +4,13 @@ The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: th
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` as it stands on `main` (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2,
 pull requests #113, #115, #120 and #124, plus the `fetch_pr` door; the file **7.48.0** ships),
-sha256 `9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb` (LF line endings; a wheel
+sha256 `186d5f2cd791223e3612e6c890505508fdc30dd830486f91bbd5393ca26f1a78` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
-their bookmarks bar.
+their bookmarks bar. That file is `main`'s `9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb`
+reader, unchanged, plus the PATH-2a block (an overlay that only abstains; see *PATH-2a* below), and a
+committed test cuts the block out and gets `main`'s file back byte for byte, in both languages.
 
 The port was first cut from the 7.47.0 wheel (`fb2d9b3e…`) and re-cut on 2026-09-16 for issue
 #110: the 7.47.0 templates count Python `def` lines and accuse a TypeScript commit that says
@@ -63,7 +65,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 9b620e00…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 186d5f2c…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 44 pinned pairs against their expect blocks
