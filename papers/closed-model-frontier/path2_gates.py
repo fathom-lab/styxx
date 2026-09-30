@@ -3225,6 +3225,12 @@ DOOR_CANARIES = tuple((f"canary:z3-git-door-u{ord(ch):04x}",
     # exact hunk is a header pair and a phantom file to main's raw door, and nothing to main's git door
     ("canary:guard-mains-two-doors-read-apart", "1 file changed. 2 files changed.",
      "diff --git a/db/q.sql b/db/q.sql\n--- a/db/q.sql\n+++ b/db/q.sql\n@@ -1,2 +1,2 @@\n SELECT 1;\n--- users\n+++ x\n"),
+    # NOTE_path2_fifteenth_pass (B, Y-6): a changed test beside its case twin, at the git door too -- git's --name-status
+    # and its diff text both hold the two paths, and the per-file readings abstain there (a defect dropping the door's
+    # `fold` note is refused only here: no raw canary reaches `_evaluate_git`). (The door canaries `guard-licensed-by-97` and
+    # `-121` above keep their bytes; since the withdrawal they reach the withdrawn outcomes, GUARD_OUTCOMES.)
+    ("canary:guard-y6-git-door-a-changed-test-beside-its-case-twin", "Added 0 tests. Added function foo.",
+     _git_file("tests/tA.py", "M", "def test_a():", "def test_a(x):") + _git_file("tests/ta.py", "A", new="def foo():")),
 )
 
 
@@ -3398,6 +3404,91 @@ RAW_CANARIES = (
       '+++ b/keep\n' '@@ -1,2 +1,3 @@\n' ' v184 = 5\n' ' v38 = 4\n' '+v444 = 3\n'
       'diff --git a/pkg/__init__.py b/pkg/__init__.py\n' 'deleted file mode 100644\n'
       'index e69de29b..00000000\n')),
+    # NOTE_path2_fifteenth_pass_2026_09_29 (C.3): round 14's reproductions, where #97's or #121's precondition holds and
+    # its switch gives main back, so the withdrawn repair explains the difference and the guard abstains with the
+    # withdrawn reason; a re-licence keeps a false VERIFIED (or R14.4's false CONTRADICTED) that G-C9 refuses.
+    # R14.1: a name holding an LF before a `@@` line, in difflib's rendering, with and without a/ and b/
+    ('canary:raw-r14-1-lf-name-created', 'Created lib/x.py.',
+     ('--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- /dev/null\n' '+++ b/lib/x.py\n'
+      '@@\n' '@@ -0,0 +1 @@\n' '+new\n')),
+    ('canary:raw-r14-1-lf-name-created-noprefix', 'Created lib/x.py.',
+     ('--- a/x.py\n' '+++ a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- /dev/null\n' '+++ lib/x.py\n' '@@\n'
+      '@@ -0,0 +1 @@\n' '+new\n')),
+    # R14.2: git's `log -p --format=` of a file created in one commit and renamed away in a later one (#97)
+    ('canary:raw-r14-2-created-and-renamed-away', 'Created src/x.py.',
+     ('diff --git a/lib/x.py b/lib/x.py\n' 'index d00491f..0cfbf08 100644\n' '--- a/lib/x.py\n'
+      '+++ b/lib/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' 'diff --git a/src/x.py b/src/y.py\n'
+      'similarity index 100%\n' 'rename from src/x.py\n' 'rename to src/y.py\n'
+      'diff --git a/src/x.py b/src/x.py\n' 'new file mode 100644\n' 'index 0000000..677b772\n'
+      '--- /dev/null\n' '+++ b/src/x.py\n' '@@ -0,0 +1,12 @@\n' '+line 0\n' '+line 1\n' '+line 2\n'
+      '+line 3\n' '+line 4\n' '+line 5\n' '+line 6\n' '+line 7\n' '+line 8\n' '+line 9\n' '+line 10\n'
+      '+line 11\n')),
+    ('canary:raw-r14-2-created-and-renamed-away-in-commit-order', 'Created src/x.py.',
+     ('diff --git a/lib/x.py b/lib/x.py\n' 'index d00491f..0cfbf08 100644\n' '--- a/lib/x.py\n'
+      '+++ b/lib/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' 'diff --git a/src/x.py b/src/x.py\n'
+      'new file mode 100644\n' 'index 0000000..677b772\n' '--- /dev/null\n' '+++ b/src/x.py\n'
+      '@@ -0,0 +1,12 @@\n' '+line 0\n' '+line 1\n' '+line 2\n' '+line 3\n' '+line 4\n' '+line 5\n' '+line 6\n'
+      '+line 7\n' '+line 8\n' '+line 9\n' '+line 10\n' '+line 11\n' 'diff --git a/src/x.py b/src/y.py\n'
+      'similarity index 100%\n' 'rename from src/x.py\n' 'rename to src/y.py\n')),
+    ('canary:raw-r14-2-by-the-suffix-tier', 'Created lib/x.py.',
+     ('diff --git a/pkg/lib/x.py b/pkg/lib/y.py\n' 'similarity index 100%\n' 'rename from pkg/lib/x.py\n'
+      'rename to pkg/lib/y.py\n' 'diff --git a/a/x.py b/a/x.py\n' 'index d00491f..0cfbf08 100644\n'
+      '--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n'
+      'diff --git a/pkg/lib/x.py b/pkg/lib/x.py\n' 'new file mode 100644\n' 'index 0000000..677b772\n'
+      '--- /dev/null\n' '+++ b/pkg/lib/x.py\n' '@@ -0,0 +1,12 @@\n' '+line 0\n' '+line 1\n' '+line 2\n'
+      '+line 3\n' '+line 4\n' '+line 5\n' '+line 6\n' '+line 7\n' '+line 8\n' '+line 9\n' '+line 10\n'
+      '+line 11\n')),
+    # R14.3: the same beside a dotted twin (#121)
+    ('canary:raw-r14-3-beside-a-dotted-twin', 'Created cfg/x.json.',
+     ('diff --git a/cfg/x.json b/cfg/z.json\n' 'similarity index 100%\n' 'rename from cfg/x.json\n'
+      'rename to cfg/z.json\n' 'diff --git a/cfg/x.json b/cfg/x.json\n' 'new file mode 100644\n'
+      'index 0000000..677b772\n' '--- /dev/null\n' '+++ b/cfg/x.json\n' '@@ -0,0 +1,12 @@\n' '+line 0\n'
+      '+line 1\n' '+line 2\n' '+line 3\n' '+line 4\n' '+line 5\n' '+line 6\n' '+line 7\n' '+line 8\n'
+      '+line 9\n' '+line 10\n' '+line 11\n' 'diff --git a/.cfg/x.json b/.cfg/x.json\n'
+      'index 7898192..6178079 100644\n' '--- a/.cfg/x.json\n' '+++ b/.cfg/x.json\n' '@@ -1 +1 @@\n' '-a\n'
+      '+b\n')),
+    # R14.4: git's --src-prefix=a/.. --dst-prefix=b/.. (#121's only_touches accusation)
+    ('canary:raw-r14-4-gits-dotdot-prefix', 'Only touched cfg/. Updated cfg/x.json.',
+     ('diff --git a/..cfg/x.json b/..cfg/x.json\n' 'index 7898192..6178079 100644\n' '--- a/..cfg/x.json\n'
+      '+++ b/..cfg/x.json\n' '@@ -1 +1 @@\n' '-a\n' '+b\n' 'diff --git a/..cfg/y.json b/..cfg/y.json\n'
+      'index 7898192..6178079 100644\n' '--- a/..cfg/y.json\n' '+++ b/..cfg/y.json\n' '@@ -1 +1 @@\n' '-a\n'
+      '+b\n')),
+    # G14.1: #121's backslash refusal (a claim, and a form, holding one) over git's header shape
+    ('canary:raw-121-a-claim-holding-a-backslash', 'Created .a\\x.py.',
+     ('diff --git a/.a\\x.py b/.a\\x.py\n' 'new file mode 100644\n' '--- /dev/null\n' '+++ b/.a\\x.py\n'
+      '@@ -0,0 +1 @@\n' '+b\n' 'diff --git a/a\\x.py b/a\\x.py\n' '--- a/a\\x.py\n' '+++ b/a\\x.py\n'
+      '@@ -1 +1 @@\n' '-a\n' '+b\n')),
+    ('canary:raw-121-the-slash-claim-over-a-backslash-name', 'Created .a/x.py.',
+     ('diff --git a/.a\\x.py b/.a\\x.py\n' 'new file mode 100644\n' '--- /dev/null\n' '+++ b/.a\\x.py\n'
+      '@@ -0,0 +1 @@\n' '+b\n' 'diff --git a/a\\x.py b/a\\x.py\n' '--- a/a\\x.py\n' '+++ b/a\\x.py\n'
+      '@@ -1 +1 @@\n' '-a\n' '+b\n')),
+    # G14.2: R13.2's rule on the `---` side, refused in corpus mode by G-C7's licence facts
+    ('canary:raw-pinned-m-r13-R13.2-tabsp-deleted', 'Deleted lib/x.py.',
+     ('--- a/a/x.py\n' '+++ b/a/x.py\n' '@@ -1 +1 @@\n' '-1\n' '+2\n' '--- a/sp ace/lib/x.py\t\n'
+      '+++ /dev/null\n' '@@ -1 +0,0 @@\n' '-old\n')),
+    # G14.3: `keyed` keeps a key's earliest path, refused in corpus mode by G-C7's licence facts
+    ('canary:raw-pinned-y1-two-paths-that-differ-only-in-case', '2 files changed. Modified tests/Test_a.py.',
+     ('--- a/tests/Test_a.py\n' '+++ b/tests/Test_a.py\n' '@@ -1 +0,0 @@\n' '-def test_x():\n'
+      '--- a/tests/test_a.py\n' '+++ b/tests/test_a.py\n' '@@ -1 +1,2 @@\n' ' x = 0\n' '+def test_x():\n')),
+    # U14.1 to U14.3 (Y-6): two header paths one runtime keys as one file and another as two
+    ('canary:raw-y6-z5-two-files-one-fold', 'Added function foo.',
+     ('--- a/src/x\u0264.py\n' '+++ b/src/x\u0264.py\n' '@@ -1,2 +1,2 @@\n' ' x = 0\n' '+def foo():\n'
+      '--- a/src/x\ua7cb.py\n' '+++ b/src/x\ua7cb.py\n' '@@ -1,2 +1,2 @@\n' ' x = 0\n' '+def\xa0bar():\n')),
+    ('canary:raw-y6-101-count-two-files-one-fold', 'Added 0 tests.',
+     ('diff --git a/a/b/t\ua7cb.py b/a/b/t\ua7cb.py\n' 'index 1111111..2222222 100644\n'
+      '--- a/a/b/t\ua7cb.py\n' '+++ b/a/b/t\ua7cb.py\n' '@@ -1,2 +1,2 @@\n' ' x = 0\n' '-def test_a():\n'
+      '+def test_a():\n' 'diff --git a/a/b/t\u0264.py b/a/b/t\u0264.py\n' 'new file mode 100644\n'
+      'index 0000000..1111111\n' '--- /dev/null\n' '+++ b/a/b/t\u0264.py\n' '@@ -0,0 +1,1 @@\n'
+      '+def foo():\n')),
+    ('canary:raw-y6-an-unassigned-code-point-beside-its-newer-pair', 'Added function foo. Added 1 test.',
+     ('--- a/src/x\ua7d2.py\n' '+++ b/src/x\ua7d2.py\n' '@@ -1,2 +1,2 @@\n' ' x = 0\n' '+y = 1\n'
+      '--- a/src/x\ua7d3.py\n' '+++ b/src/x\ua7d3.py\n' '@@ -1,2 +1,2 @@\n' ' x = 0\n' '+def foo():\n'
+      '+def\xa0bar():\n')),
+    ('canary:raw-y6-a-changed-test-beside-its-ascii-case-twin', 'Added 0 tests.',
+     ('diff --git a/a/b/tA.py b/a/b/tA.py\n' 'index 1111111..2222222 100644\n' '--- a/a/b/tA.py\n'
+      '+++ b/a/b/tA.py\n' '@@ -1,2 +1,2 @@\n' ' x = 0\n' '-def test_a():\n' '+def test_a():\n'
+      'diff --git a/a/b/ta.py b/a/b/ta.py\n' 'new file mode 100644\n' 'index 0000000..1111111\n'
+      '--- /dev/null\n' '+++ b/a/b/ta.py\n' '@@ -0,0 +1,1 @@\n' '+def foo():\n')),
 )
 
 # NOTE_path2_twelfth_pass (round-11 scorer lens, blocker): the guard outcomes the canaries must reach in every run, by
