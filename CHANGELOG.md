@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — two tests that failed on Windows for reasons outside the code under test (#185, #186)
+
+- `tests/test_gitlab_job.py` ran the GitLab job's script with a bare `bash`. On Windows,
+  `subprocess` resolves that through CreateProcess, which searches the system directory before
+  `PATH` and starts WSL's launcher even where `shutil.which("bash")` found Git's bash; the
+  launcher exited 1 without running the script (#185). The script now runs under the bash the
+  skip condition found, a launcher under the Windows directory or the WindowsApps alias never
+  counts, Git's own bash is looked for beside `git.exe`, and the interpreter path is passed
+  quoted with forward slashes so bash does not read its backslashes as escapes. On Linux the
+  test runs as before.
+- `papers/build_ledger.py` wrote `LEDGER.md` with `write_text`, so on Windows every line of an
+  LF checkout became CRLF while `tests/test_ledger.py`, which compares text, still passed
+  (#186). The builder now writes bytes, `.gitattributes` marks `papers/LEDGER.md -text`, and the
+  test restores the file byte for byte and fails if the builder writes a CR. A checkout made
+  before this change may hold a CRLF `LEDGER.md` until `git checkout -- papers/LEDGER.md`.
+
+Each fix was mutation-checked: restoring the old line makes its test fail.
+
 ## [Unreleased] — the 7.48.0 week's public text, audited: errata to [7.48.0], and corrections on main
 
 On 2026-09-29 an audit read every public surface of the 7.48.0 week: the release notes, the PyPI
