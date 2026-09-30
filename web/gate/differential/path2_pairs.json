@@ -4662,23 +4662,19 @@
    "claims": [
     [
      "file_touched",
-     "VERIFIED",
-     "diff status 'M' for 'docs/a.md'"
+     "VERIFIED"
     ],
     [
      "only_touches",
-     "VERIFIED",
-     "all changed paths under prefix"
+     "VERIFIED"
     ],
     [
      "only_touches",
-     "CONTRADICTED",
-     "paths outside 'src': ['docs/xⱟ.md', 'docs/yⱟ.md', 'docs/a.md']"
+     "CONTRADICTED"
     ],
     [
      "files_changed_count",
-     "VERIFIED",
-     "diff changes 3 files, claim says 3"
+     "VERIFIED"
     ]
    ],
    "uncovered_sentences": 0
@@ -6946,6 +6942,395 @@
      "only_touches",
      "UNCHECKABLE",
      "the diff's file list is not certain: this reading's file list differs from main's: main's reading keys a path holding a code point Unicode 16.0.0 does not assign, which a runtime on a newer Unicode may key with another path"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.1-cr-created",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib/x.py\r\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.1-cr-created-noprefix",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ lib/x.py\r\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.1-cr-deleted",
+  "summary": "Deleted lib/x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- a/lib/x.py\r\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.1-cr-deleted-noprefix",
+  "summary": "Deleted lib/x.py.",
+  "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- lib/x.py\r\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.2-tabsp-created",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/sp ace/lib/x.py\t\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.2-tabsp-created-noprefix",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ sp ace/lib/x.py\t\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.2-tabsp-deleted",
+  "summary": "Deleted lib/x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- a/sp ace/lib/x.py\t\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.2-tabsp-deleted-noprefix",
+  "summary": "Deleted lib/x.py.",
+  "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- sp ace/lib/x.py\t\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.3-bs-created",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib\\x.py\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.3-bs-created-noprefix",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ lib\\x.py\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.3-bs-deleted",
+  "summary": "Deleted lib/x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- a/lib\\x.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.3-bs-deleted-noprefix",
+  "summary": "Deleted lib/x.py.",
+  "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- lib\\x.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.2b-tabin-created",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib/x.py\tfoo/LIB/X.PY\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.2b-tabin-created-noprefix",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ lib/x.py\tfoo/LIB/X.PY\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.2b-tabin-deleted",
+  "summary": "Deleted lib/x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- a/lib/x.py\tfoo/LIB/X.PY\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-R13.2b-tabin-deleted-noprefix",
+  "summary": "Deleted lib/x.py.",
+  "diff": "--- a/x.py\n+++ a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- lib/x.py\tfoo/LIB/X.PY\n+++ /dev/null\n@@ -1 +0,0 @@\n-old\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-G13.1-typechanged-dotted-directory-created",
+  "summary": "Created x.json.",
+  "diff": "diff --git a/.cfg/x.json b/.cfg/x.json\ndeleted file mode 100644\nindex 7898192..0000000\n--- a/.cfg/x.json\n+++ /dev/null\n@@ -1 +0,0 @@\n-a\ndiff --git a/.cfg/x.json b/.cfg/x.json\nnew file mode 120000\nindex 0000000..e870e3b\n--- /dev/null\n+++ b/.cfg/x.json\n@@ -0,0 +1 @@\n+t.json\n\\ No newline at end of file\ndiff --git a/cfg/x.json b/cfg/x.json\nindex 587be6b..975fbec 100644\n--- a/cfg/x.json\n+++ b/cfg/x.json\n@@ -1 +1 @@\n-x\n+y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-G13.1-typechanged-dotted-directory-deleted",
+  "summary": "Deleted x.json.",
+  "diff": "diff --git a/.cfg/x.json b/.cfg/x.json\ndeleted file mode 120000\nindex e870e3b..0000000\n--- a/.cfg/x.json\n+++ /dev/null\n@@ -1 +0,0 @@\n-t.json\n\\ No newline at end of file\ndiff --git a/.cfg/x.json b/.cfg/x.json\nnew file mode 100644\nindex 0000000..e69de29\ndiff --git a/cfg/x.json b/cfg/x.json\nindex 587be6b..975fbec 100644\n--- a/cfg/x.json\n+++ b/cfg/x.json\n@@ -1 +1 @@\n-x\n+y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_deleted",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-G13.2-a-precondition-of-one-repair-and-the-switch-of-another",
+  "summary": "Created .github/ci.yml.",
+  "diff": "diff --git a/docs/ci.yml b/docs/ci.yml\nindex 7898192..6178079 100644\n--- a/docs/ci.yml\n+++ b/docs/ci.yml\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/old.py b/new.py\nsimilarity index 69%\nrename from old.py\nrename to new.py\nindex 01f84f8..2edf674 100644\n--- a/old.py\n+++ b/new.py\n@@ -7,4 +7,4 @@ l6\n l7\n l8\n l9\n-l10\n+l10 changed\ndiff --git a/p/.github/ci.yml b/p/.github/ci.yml\nnew file mode 100644\nindex 0000000..587be6b\n--- /dev/null\n+++ b/p/.github/ci.yml\n@@ -0,0 +1 @@\n+x\ndiff --git a/x/github/ci.yml b/x/github/ci.yml\nnew file mode 100644\nindex 0000000..975fbec\n--- /dev/null\n+++ b/x/github/ci.yml\n@@ -0,0 +1 @@\n+y\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-a-claim-holding-a-backslash",
+  "summary": "Created lib\\x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/lib\\x.py\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-gits-own-tab-after-a-name-holding-a-space-licenses",
+  "summary": "Created lib/README.md.",
+  "diff": "diff --git a/a/README.md b/a/README.md\n--- a/a/README.md\n+++ b/a/README.md\n@@ -1 +1 @@\n-a\n+b\ndiff --git a/my dir/lib/README.md b/my dir/lib/README.md\nnew file mode 100644\n--- /dev/null\n+++ b/my dir/lib/README.md\t\n@@ -0,0 +1 @@\n+hello\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'my dir/lib/readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-a-crlf-text-throughout-licenses",
+  "summary": "Created integrations/git/README.md.",
+  "diff": "--- a/README.md\r\n+++ b/README.md\r\n@@ -1 +1 @@\r\n-a\r\n+b\r\n--- /dev/null\r\n+++ b/integrations/git/README.md\r\n@@ -0,0 +1 @@\r\n+hello\r\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "VERIFIED",
+     "diff status 'A' for 'integrations/git/readme.md'"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-U13.1-z5-on-a-path-holding-an-unassigned-code-point",
+  "summary": "Added 1 test. Added function foo.",
+  "diff": "--- a/tests/test_꟎.py\n+++ b/tests/test_꟎.py\n@@ -1 +1,2 @@\n x = 0\n+def test_a():\n--- a/src/꟎.py\n+++ b/src/꟎.py\n@@ -1 +1,3 @@\n x = 0\n+def foo():\n+def bar():\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "tests_added",
+     "UNCHECKABLE",
+     "an added definition line in 'tests/test_\\ufffd.py' is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line; claim says 1"
+    ],
+    [
+     "symbol_added",
+     "UNCHECKABLE",
+     "an added definition line in 'src/\\ufffd.py' is one this reading refuses and CPython may refuse too, and a file CPython refuses defines nothing; this reading reads it line by line"
+    ]
+   ],
+   "uncovered_sentences": 0
+  }
+ },
+ {
+  "id": "path2:m-r13-a-form-keeping-a-tab-licenses-nothing",
+  "summary": "Created lib/x.py.",
+  "diff": "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n--- /dev/null\n+++ b/q\tq/lib/x.py\n@@ -0,0 +1 @@\n+new\n",
+  "expect": {
+   "verdict": "PASS",
+   "claims": [
+    [
+     "file_created",
+     "UNCHECKABLE",
+     "main's reading gives UNCHECKABLE and this one VERIFIED; no named repair (#97's exact and suffix tiers, #121's dotted key, #101's pairing) explains the difference on this claim, so it abstains"
     ]
    ],
    "uncovered_sentences": 0

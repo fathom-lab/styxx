@@ -1778,7 +1778,8 @@ def test_v4_a_bare_dotdot_second_prefix_is_read_before_the_path_shape_test_drops
 # ─────────────────────────────── NOTE_path2_sixth_pass_2026_09_25: the scorer's admission rules
 
 def _planted(pg, monkeypatch, good: str, bad: str, tag: str) -> None:
-    src = Path(pg.new.__file__).read_bytes().decode("utf-8")
+    # NOTE_path2_fourteenth_pass (round 13, C13.4): LF, whatever the checkout holds (py_side.py and path2_gates._sha do too)
+    src = Path(pg.new.__file__).read_bytes().replace(b"\r\n", b"\n").decode("utf-8")
     assert src.count(good) == 1, good
     planted = src.replace(good, bad).encode("utf-8")
     for name in ("new", "CF"):
@@ -2965,8 +2966,8 @@ X9_DOOR = {
         '    if False:\n        return {"files": _Y1_COLLIDE}',
         "2 files changed.", _m("docs/Guide.md") + _m("docs/guide.md"), "G-C7_oracle:files_changed_count_claim"),
     "#121 reverted at the git door (P31)": (
-        "            status[rp.key(path)] = st           # A / M / D / R",
-        '            status[rp.key(path).lstrip(".")] = st           # A / M / D / R',
+        "            status[rp.key(path)] = st",
+        '            status[rp.key(path).lstrip(".")] = st',
         "3 files changed. Only touches github/ and pr_agent.toml.",
         _m(".pr_agent.toml") + _m("pr_agent.toml") + _m(".github/x.yml"), "G-C7_oracle:files_changed_count_claim"),
     "a rename keyed by its old path (P26)": (
@@ -3528,7 +3529,8 @@ def test_x10_k3_where_main_raises_every_claim_still_abstains_and_nothing_raises(
 # ── the round-9 scorer findings, and each tenth-pass rule, against a planted defect
 
 def _planted_many(pg, monkeypatch, pairs: list, tag: str) -> None:
-    src = Path(pg.new.__file__).read_bytes().decode("utf-8")
+    # NOTE_path2_fourteenth_pass (round 13, C13.4): LF, whatever the checkout holds
+    src = Path(pg.new.__file__).read_bytes().replace(b"\r\n", b"\n").decode("utf-8")
     for good, bad in pairs:
         assert src.count(good) == 1, good
         src = src.replace(good, bad)
@@ -3982,6 +3984,8 @@ X12_GIT_TAIL = ("        return _REF.gate_diff(summary_text, repo, base, head, r
                 "\n    return _guard(evaluate, reference, strict=strict, tp=tp)\n")
 X12_LICENCE = ('        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"], seen.get("licence"))\n'
                "                                    and switched_verdict(repair, key) == main_verdict for repair in REPAIRS):")
+# NOTE_path2_fourteenth_pass (A.2): git's TAB is cut only under git's own header
+X14_GOOD_TAB_X12 = '    if tab and not rest and git_writes is not None and head == git_writes and " " in head:'
 X12_CANARY_PLANTS = {
     # round-11 scorer lens, blocker: the git door's guard defects, admitted in both modes at the eleventh pass
     "PG1 the git door returns the reading unguarded": [(X12_GIT_TAIL, X12_GIT_TAIL.replace(
@@ -4041,13 +4045,11 @@ X12_CANARY_PLANTS = {
         ' (A.1): one path read twice\n',
         "")],
     "A.1 the reader counts no section twice": [(
-        "                     multi={k for k, n in sections.items() if n > 1}, moded=moded)",
-        "                     multi=set(), moded=moded)")],
+        "                     multi={k for k, n in sections.items() if n > 1}, moded=moded, keyed=keyed)",
+        "                     multi=set(), moded=moded, keyed=keyed)")],
     "A.2 the forms are the stripped names": [(
-        "        written_form = form if as_written is None else _case_kept(as_written)", "        written_form = form")],
-    "A.2 every TAB cuts a name": [(
-        '    if tab and "\\t" not in rest and ((not rest and " " in head) or rest[:1] not in ("", " ")):',
-        "    if tab:")],
+        "        written_form = _case_kept(raw_path if as_written is None else as_written)", "        written_form = form")],
+    "A.2 every TAB cuts a name": [(X14_GOOD_TAB_X12, "    if tab:")],
     "D a header path's unassigned code point is no doubt": [(
         '        if _unassigned(form):                                        # NOTE_path2_thirteenth_pass (D)\n'
         '            found.setdefault("files", _Y1_UNASSIGNED)\n', "")],
@@ -4135,3 +4137,209 @@ def test_x12_the_scorer_reads_the_licence_facts_as_the_instrument_does(scorer):
     assert len(records) > 300
     # and both answers of each occur among them, so the comparison is not of a constant
     assert {f["rendered"] for f in facts} == {True, False} and {f["soft"] for f in facts} == {True, False}
+
+
+# ---- NOTE_path2_fourteenth_pass_2026_09_29: round 13's findings ----------------------------------------------------------
+#
+# The X14 plant tests below (like the X12 ones) are refusals of the exact texts they plant: each asserts its anchor occurs
+# once in the instrument and that the scorer program refuses the planted instrument. The behavioural coverage is the
+# canaries, the pinned pairs and the truth fixtures they are refused by (round 13, G13.5).
+
+X14_TWIN = "--- a/a/x.py\n+++ b/a/x.py\n@@ -1 +1 @@\n-1\n+2\n"
+X14_GOOD_TAB = '    if tab and not rest and git_writes is not None and head == git_writes and " " in head:'
+X14_CANARY_PLANTS = {
+    # round 13, R13.1 to R13.3: the thirteenth pass's three rules restored
+    "R13.1 a header line's CR is dropped": [('    return header_path + "\\r" if cr else header_path',
+                                            "    return header_path")],
+    "R13.2 a trailing TAB after a name holding a space is cut in any rendering": [(
+        X14_GOOD_TAB, '    if tab and not rest and " " in head:')],
+    "R13.2b GNU's rule cuts a TAB inside a name": [(
+        X14_GOOD_TAB, '    if tab and "\\t" not in rest and ((not rest and " " in head) or rest[:1] not in ("", " ")):')],
+    "R13.3 a backslash reads as a slash in the forms": [(
+        '    return _LEADING_SLASH_SEGMENTS.sub("", path)\n', '    return _LEADING_SLASH_SEGMENTS.sub("", path.replace("\\\\", "/"))\n')],
+    "A.2 a form keeping a TAB licenses": [(
+        '    return any("\\t" in f for f in forms)', "    return False")],
+    "A.3 a claim holding a backslash licenses": [(
+        '    return "\\\\" in claimed or any("\\\\" in f for f in forms)', "    return False")],
+    # section B: Z-5 prints the runtime's key, or the path without its unassigned mark
+    "B Z-5 prints the runtime's key": [(
+        '        where = f"in {_shown_written(keyed[path]) if keyed and path in keyed else _shown(path)}"',
+        '        where = f"in {_shown(path)}"')],
+    "B the path as written keeps its unassigned code points": [(
+        '    return ascii("".join("\\ufffd" if _unassigned(ch) else ch for ch in _case_fold(path)))',
+        "    return ascii(_case_fold(path))")],
+    # round 13, G13.1 and G13.2: the guard lens's blockers
+    "N1 one repair's precondition and another's switch": [(X12_LICENCE,
+        '        if main_verdict is not None and any(_precondition(repair, c, seen["status"], seen["sides"], seen.get("licence")) '
+        "for repair in REPAIRS) and any(\n                                    switched_verdict(repair, key) == main_verdict "
+        "for repair in REPAIRS):")],
+    "N1' the same, spelled as a wrapper (the guard's text intact)": [(
+        "\n\ndef _guard(evaluate, reference, *, strict: bool, tp: list) -> DiffGate:",
+        "\n\n_precondition_of_one = _precondition\n\n\ndef _precondition(repair, c, status, sides, licence=None):\n"
+        "    return any(_precondition_of_one(r, c, status, sides, licence) for r in REPAIRS)\n\n\n"
+        "def _guard(evaluate, reference, *, strict: bool, tp: list) -> DiffGate:")],
+    "N3b #121's multi asked of the claim's key": [(
+        '            if p in (lic.get("multi") or ()):\n                return False                     # NOTE_path2_thirteenth_pass'
+        " (A.1): one path read twice\n",
+        '            if _norm(d["path"]) in (lic.get("multi") or ()):\n                return False                     '
+        "# NOTE_path2_thirteenth_pass (A.1): one path read twice\n")],
+    "N3b' the same, spelled as a rebinding (the multi line intact)": [(
+        "                return False                     # NOTE_path2_twelfth_pass: the entry matches the claim only in case\n",
+        "                return False                     # NOTE_path2_twelfth_pass: the entry matches the claim only in case\n"
+        '            p = _norm(d["path"])\n')],
+    # round 13, G13.3: the partial drops corpus mode admitted, refused by the promoted records
+    "N2 #97's multi only on a created claim": [(
+        '        if p in (lic.get("multi") or ()):\n            return False                         # NOTE_path2_thirteenth_pass'
+        " (A.1): one path read twice\n        return _earliest_match",
+        '        if p in (lic.get("multi") or ()) and c.kind == "file_created":\n            return False                         '
+        "# NOTE_path2_thirteenth_pass (A.1): one path read twice\n        return _earliest_match")],
+    "N2b #97's multi only where the entry reads A": [(
+        '        if p in (lic.get("multi") or ()):\n            return False                         # NOTE_path2_thirteenth_pass'
+        " (A.1): one path read twice\n        return _earliest_match",
+        '        if p in (lic.get("multi") or ()) and _st == "A":\n            return False                         '
+        "# NOTE_path2_thirteenth_pass (A.1): one path read twice\n        return _earliest_match")],
+    "N3 #97's multi asked of the claim's key": [(
+        '        if p in (lic.get("multi") or ()):\n            return False                         # NOTE_path2_thirteenth_pass'
+        " (A.1): one path read twice\n        return _earliest_match",
+        '        if key in (lic.get("multi") or ()):\n            return False                         '
+        "# NOTE_path2_thirteenth_pass (A.1): one path read twice\n        return _earliest_match")],
+    "N5 #121's exact tier compared case-folded": [(
+        "        return bool(forms) and all(f == kept for f in forms)",
+        "        return bool(forms) and all(f.lower() == kept.lower() for f in forms)")],
+    "N23c the form drops a trailing NBSP or U+3000": [(
+        '    return header_path + "\\r" if cr else header_path',
+        '    return (header_path + "\\r" if cr else header_path).rstrip("\\u00a0\\u3000")')],
+    "N24 a deletion's form is the stripped --- path": [(
+        '                    as_written = old_written[2:] if old_written.startswith("a/") else old_written',
+        '                    as_written = old_path[2:] if old_path.startswith("a/") else old_path')],
+    "N26 a section flushed without its pair is not counted": [(
+        "        sections[k] = sections.get(k, 0) + 1                        # (A.1) a key read twice",
+        "        sections[k] = sections.get(k, 0) + (1 if as_written is not None else 0)")],
+}
+
+
+@pytest.mark.parametrize("label", sorted(X14_CANARY_PLANTS))
+def test_x14_the_canaries_refuse_a_planted_defect(scorer, monkeypatch, label):
+    """Round 13 (R13.4, G13.1 to G13.3, U13.1): each planted defect is refused by the scorer program itself -- the canaries
+    every run of either mode scores (NOTE_path2_fourteenth_pass, C)."""
+    pg = scorer
+    _planted_many(pg, monkeypatch, X14_CANARY_PLANTS[label], "x14canary")
+    report, violating = pg.score_canaries()
+    assert not report["pass"] and violating, (label, report)
+
+
+def test_x14_the_canaries_pass_on_the_instrument_as_committed(scorer):
+    pg = scorer
+    report, violating = pg.score_canaries()
+    assert report["pass"] and not violating, report
+    ids = {cid for cid, _s, _d in pg.RAW_CANARIES}
+    for cid in ("canary:raw-97-a-name-ending-in-a-cr-created", "canary:raw-97-a-plain-trailing-tab-after-a-name-holding-a-space",
+                "canary:raw-97-a-tab-inside-a-name", "canary:raw-97-a-name-holding-a-backslash",
+                "canary:raw-121-a-suffix-claim-on-a-typechanged-dotted-directory",
+                "canary:raw-a-precondition-of-one-repair-and-the-switch-of-another",
+                "canary:raw-z5-a-path-holding-an-unassigned-code-point", "canary:raw-pinned-m-r12-T6"):
+        assert cid in ids, cid
+
+
+def test_x14_the_scorers_own_rules_read_a_names_cr_tab_and_backslash(scorer):
+    """R13.4: the scorer's own reading keeps a name's CR, a TAB git did not write and a backslash, and cuts git's own TAB."""
+    pg = scorer
+    assert pg.own_line_ends("a\r\nb\rc\nd") == ["\r\n", "\r", "\n", ""]
+    assert pg.own_as_written("b/sp ace/lib/x.py\t") == "b/sp ace/lib/x.py\t"
+    assert pg.own_as_written("b/sp ace/lib/x.py\t", "b/sp ace/lib/x.py") == "b/sp ace/lib/x.py"
+    assert pg.own_as_written("b/lib/x.py\tfoo/LIB/X.PY") == "b/lib/x.py\tfoo/LIB/X.PY"
+    assert pg.own_as_written("b/lib/x.py", None, True) == "b/lib/x.py\r"
+    assert pg.own_case_kept("lib\\x.py") == "lib\\x.py"
+    for diff in (X14_TWIN + "--- /dev/null\n+++ b/lib/x.py\r\n@@ -0,0 +1 @@\n+new\n",
+                 X14_TWIN.replace("\n", "\r\n") + "--- /dev/null\r\n+++ b/lib/x.py\r\r\n@@ -0,0 +1 @@\r\n+new\r\n",
+                 X14_TWIN + "--- /dev/null\n+++ b/sp ace/lib/x.py\t\n@@ -0,0 +1 @@\n+new\n"):
+        got, own = {}, {}
+        dg._diff_notes(diff, got)
+        pg.own_read(diff, own)
+        assert got == own and not any(f in ("lib/x.py", "sp ace/lib/x.py") for fs in got["forms"].values() for f in fs)
+    # a text CRLF throughout: the CR is the line ending, and the form is the name
+    got = {}
+    dg._diff_notes((X14_TWIN + "--- /dev/null\n+++ b/lib/x.py\n@@ -0,0 +1 @@\n+new\n").replace("\n", "\r\n"), got)
+    assert got["forms"]["lib/x.py"] == ["lib/x.py"]
+
+
+X14_PORT_PLANTS = {
+    "JN1 one repair's precondition and another's switch": [(
+        "    if (mainVerdict !== null && REPAIRS.some(repair => _precondition(repair, c, seen.status, seen.sides, seen.licence)\n"
+        "                                             && switchedVerdict(repair, key) === mainVerdict)) return c;   // licensed",
+        "    if (mainVerdict !== null && REPAIRS.some(repair => _precondition(repair, c, seen.status, seen.sides, seen.licence))\n"
+        "                                             && REPAIRS.some(repair => switchedVerdict(repair, key) === mainVerdict)) "
+        "return c;   // licensed")],
+    "JN3b #121's multi asked of the claim's key": [(
+        "      if (lic.multi && lic.multi.has(p)) return false;   // NOTE_path2_thirteenth_pass (A.1): one path read twice\n    }",
+        "      if (lic.multi && lic.multi.has(_norm(d.path))) return false;   // NOTE_path2_thirteenth_pass (A.1): one path read "
+        "twice\n    }")],
+    "JR13.1 a header line's CR is dropped": [('  return cr ? p + "\\r" : p;', "  return p;")],
+    "JR13.2 a trailing TAB after a name holding a space is cut in any rendering": [(
+        "  if (at >= 0 && at === headerPath.length - 1 && gitWrites !== null) {",
+        "  if (at >= 0 && at === headerPath.length - 1) {"), (
+        '    if (head === gitWrites && head.includes(" ")) p = head;', '    if (head.includes(" ")) p = head;')],
+    "JA.2 a form keeping a TAB licenses": [(
+        'const _tabbed = forms => forms.some(f => f.includes("\\t"));', "const _tabbed = forms => false;")],
+    "JR13.3 a backslash reads as a slash in the forms": [(
+        'const _caseKept = p => p.replace(/^(?:\\.?\\/)+/, "");',
+        'const _caseKept = p => p.replace(/\\\\/g, "/").replace(/^(?:\\.?\\/)+/, "");')],
+    "JB Z-5 prints the runtime's key": [(
+        "(keyed && keyed.has(path) ? _shownWritten(keyed.get(path)) : _shown(path))", "_shown(path)")],
+}
+
+
+@pytest.mark.parametrize("label", sorted(X14_PORT_PLANTS))
+def test_x14_the_pinned_pairs_refuse_a_planted_port(tmp_path, label):
+    """The port's copy of each rule, planted: the pinned pairs (check_pairs.js's reading of path2_pairs.json) disagree."""
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    src = (ROOT / "web" / "gate" / "diffgate.js").read_bytes().replace(b"\r\n", b"\n").decode("utf-8")
+    for good, bad in X14_PORT_PLANTS[label]:
+        assert src.count(good) == 1, good
+        src = src.replace(good, bad)
+    (tmp_path / "diffgate.js").write_bytes(src.encode("utf-8"))
+    (tmp_path / "diffgate_ref.js").write_bytes((ROOT / "web" / "gate" / "diffgate_ref.js").read_bytes())
+    script = ("const {gateDiffText}=require(process.argv[1]);const P=JSON.parse(require('fs').readFileSync(process.argv[2],'utf8'));"
+              "let bad=0;for(const p of P){const g=gateDiffText(p.summary,p.diff);const w=p.expect.claims.length&&p.expect.claims[0].length===3;"
+              "const got=g.claims.map(c=>w?[c.kind,c.verdict,c.why]:[c.kind,c.verdict]);"
+              "if(JSON.stringify(got)!==JSON.stringify(p.expect.claims)||g.verdict!==p.expect.verdict)bad++;}"
+              "process.stdout.write(String(bad));")
+    r = subprocess.run([node, "-e", script, str(tmp_path / "diffgate.js"), str(PAIRS)], capture_output=True, text=True,
+                       encoding="utf-8", timeout=300)
+    assert r.returncode == 0, r.stderr[-2000:]
+    assert int(r.stdout) > 0, label
+
+
+X14_Z5 = ("--- a/tests/test_\ua7ce.py\n+++ b/tests/test_\ua7ce.py\n@@ -1 +1,2 @@\n x = 0\n+def\u00a0test_a():\n"
+          "--- a/src/\ua7ce.py\n+++ b/src/\ua7ce.py\n@@ -1 +1,3 @@\n x = 0\n+def foo():\n+def\u00a0bar():\n")
+X14_Z5_WHY = ("an added definition line in {} is one this reading refuses and CPython may refuse too, and a file CPython "
+              "refuses defines nothing; this reading reads it line by line")
+
+
+def test_x14_z5_prints_the_path_as_written_on_a_simulated_newer_runtime(monkeypatch):
+    """Round 13, U13.1: a runtime on Unicode 17.0 lower-cases U+A7CE to U+A7CF, which 16.0.0 assigns neither of, so a key
+    printed there named another path than on 16.0. Z-5 prints the path as the diff writes it, each unassigned code point as
+    U+FFFD: the same reason on the lab's runtime, a simulated 17.0 Python and a simulated 17.0 port."""
+    summary = "Added 1 test. Added function foo."
+    want = [("tests_added", "UNCHECKABLE", X14_Z5_WHY.format("'tests/test_\\ufffd.py'") + "; claim says 1"),
+            ("symbol_added", "UNCHECKABLE", X14_Z5_WHY.format("'src/\\ufffd.py'"))]
+    assert _claims(summary, X14_Z5)[1] == want
+    newer = {0xA7CE: 0xA7CF}
+    real_norm = dg._norm
+    monkeypatch.setattr(dg, "_norm", lambda p: real_norm(p).translate(newer))
+    assert _claims(summary, X14_Z5)[1] == want
+    monkeypatch.undo()
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    script = ("const real=String.prototype.toLowerCase;"
+              "String.prototype.toLowerCase=function(){return real.call(this).replace(/\\ua7ce/g,'\\ua7cf');};"
+              "const B=require(process.argv[1]);const d=JSON.parse(require('fs').readFileSync(0,'utf8'));"
+              "process.stdout.write(JSON.stringify(B.gateDiffText(d[0],d[1]).claims.map(c=>[c.kind,c.verdict,c.why])));")
+    r = subprocess.run([node, "-e", script, str(XID_JS)], input=json.dumps([summary, X14_Z5]), capture_output=True,
+                       text=True, encoding="utf-8", timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+    assert [tuple(x) for x in json.loads(r.stdout)] == want
+    assert _port_claims([(summary, X14_Z5)]) == [want]
