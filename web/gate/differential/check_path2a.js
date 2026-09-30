@@ -1,6 +1,7 @@
-// PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30 and
-// NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30): the port's half of the committed PATH-2a checks, run by
-// tests/test_diffgate_path2a*.py, which write IN (a JSON list of {id, summary, diff}) and read OUT.
+// PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30,
+// NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30 and NOTE_path2a_fifth_pass_2026_09_30): the port's
+// half of the committed PATH-2a checks, run by tests/test_diffgate_path2a*.py, which write IN (a JSON list of
+// {id, summary, diff}) and read OUT.
 //
 //   node check_path2a.js --relation  REF IN OUT   main's port (REF, the reconstruction) against this port, both
 //                                                  strict modes: every record may differ from main's only by an
@@ -19,6 +20,12 @@
 //   node check_path2a.js --timing    REF IN OUT   per input, milliseconds per gate call for main's port and this one
 //   node check_path2a.js --overlay-timing REF IN OUT   per input, milliseconds the overlay alone takes on main's
 //                                                  record (the least of three runs)
+//   node check_path2a.js --bookmarklet MIN IN OUT  the minified bookmarklet (MIN) loaded in a stub page, as a browser
+//                                                  runs it: its gate against ../diffgate.js on every input, both
+//                                                  strict modes (NOTE_path2a_fifth_pass_2026_09_30, C-5)
+//   node check_path2a.js --abstain PORT IN OUT     the overlay of PORT on a record given with each input ({id,
+//                                                  summary, diff, gate}), not main's: a planted port's reading of a
+//                                                  reason main never writes (C-2)
 //
 // --relation, --decisions and --lockstep take an optional last argument, the port to check (default ../diffgate.js);
 // the tests pass a planted copy there to show the checks refuse it.
@@ -33,6 +40,7 @@ function internals(file, extra = "") {
   // The port's top-level functions and constants, read the way a page reads the file: as one script.
   const src = fs.readFileSync(file, "utf8");
   const names = ["gateDiffText", "parseUnifiedDiff", "_norm", "_splitlines", "_p2aRegsRaw", "_p2aBuild", "_p2aViews", "_p2aPairing",
+                 "_p2aJoined", "_P2A_ONE_SPACE", "_p2aSeam", "_p2aInt",
                  "_P2A_JS_SPACE", "_P2A_PY_SPACE", "_P2A_PY_BREAKS", "_P2A_DIVERGENT", "_P2A_HEADERS",
                  "_P2A_REACH_PAIRS", "_P2A_PHRASES", "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS", "_P2A_OWN",
                  "_P2A_NEUTRAL_RANGES", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw"];
@@ -108,7 +116,52 @@ function main(argv) {
       not_wordish: Array.from({ length: 0x10000 }, (_, u) => u).filter(u => !P._p2aWordishUnit(u)),
       not_bad: Array.from({ length: 0x10000 }, (_, u) => u).filter(u => !P._p2aBadUnit(u)),
       word_class: Array.from({ length: 0x10000 }, (_, u) => u).filter(u => /\w/.test(String.fromCharCode(u))),
+      // pass 5 (NOTE_path2a_fifth_pass_2026_09_30, C-1 and C-2): the count seam; the units from 0x80 up this engine's
+      // non-Unicode IGNORECASE matches against an ASCII letter (none, where CPython's matches four); and the strings the
+      // port's digit table refuses
+      one_space: cps(P._P2A_ONE_SPACE),
+      ascii_folds: Array.from({ length: 0x10000 - 0x80 }, (_, k) => k + 0x80).filter(u => /[A-Za-z]/i.test(String.fromCharCode(u))),
+      int_rejects: ["\u30003", "3\u3000", "\uff13", " 3", "3 ", "+3", "0x3", "3e1"].map(x => { try { P._p2aInt(x); return false; } catch (e) { return true; } }),
     }));
+    return 0;
+  }
+  if (mode === "--bookmarklet") {
+    // The shipped, minified bookmarklet in a stub page (window, document and location stubs), as a browser runs it:
+    // the gate it installs against this directory's port, both strict modes.
+    const noop = () => {};
+    const el = () => ({ style: {}, remove: noop, appendChild: noop, addEventListener: noop, set innerHTML(v) {},
+                        get innerHTML() { return ""; }, querySelector: () => null });
+    const ctx = { console, location: { pathname: "/o/r/pull/1", origin: "https://github.com", href: "https://github.com/o/r/pull/1" },
+                  document: { getElementById: () => null, createElement: el, body: { appendChild: noop } },
+                  fetch: () => new Promise(noop), setTimeout, clearTimeout, alert: noop, navigator: {} };
+    ctx.window = ctx;
+    vm.createContext(ctx);
+    vm.runInContext(fs.readFileSync(argv[1], "utf8"), ctx, { filename: "bookmarklet.min.js" });
+    const BM = ctx.styxxDiffgateJS;
+    if (!BM || typeof BM.gateDiffText !== "function") throw new Error("the bookmarklet installed no gate");
+    const PORT = require(DEFAULT_PORT);
+    const items = JSON.parse(fs.readFileSync(argv[2], "utf8"));
+    const rec = (g, it, strict) => { try { return JSON.stringify(g.gateDiffText(it.summary, it.diff, { strict })); } catch (e) { return "raise " + ((e && e.constructor && e.constructor.name) || "Error"); } };
+    let runs = 0, overlay = 0;
+    const differ = [];
+    for (const it of items) for (const strict of [false, true]) {
+      runs++;
+      const a = rec(BM, it, strict), b = rec(PORT, it, strict);
+      if (a.includes("withheld by PATH-2a (")) overlay++;
+      if (a !== b && differ.length < 20) differ.push([it.id, strict]);
+    }
+    fs.writeFileSync(argv[3], JSON.stringify({ runs, runs_with_overlay_reason: overlay, differ }));
+    return 0;
+  }
+  if (mode === "--abstain") {
+    const P = internals(path.resolve(argv[1]));
+    const items = JSON.parse(fs.readFileSync(argv[2], "utf8"));
+    const out = items.map(it => {
+      const g = JSON.parse(JSON.stringify(it.gate));
+      P._p2aAbstain(g, false, () => P._p2aFactsRaw(it.diff || "", it.summary));
+      return { id: it.id, rec: g };
+    });
+    fs.writeFileSync(argv[3], JSON.stringify(out));
     return 0;
   }
   if (mode === "--lockstep") {
@@ -209,7 +262,7 @@ function main(argv) {
     fs.writeFileSync(argv[3], JSON.stringify({ counts, broken }));
     return 0;
   }
-  console.error("usage: node check_path2a.js --relation REF IN OUT | --decisions REF IN OUT | --records PORT IN OUT | --lockstep IN OUT | --tables OUT | --error-fallback REF IN OUT | --timing REF IN OUT | --overlay-timing REF IN OUT");
+  console.error("usage: node check_path2a.js --relation REF IN OUT | --decisions REF IN OUT | --records PORT IN OUT | --lockstep IN OUT | --tables OUT | --error-fallback REF IN OUT | --timing REF IN OUT | --overlay-timing REF IN OUT | --bookmarklet MIN IN OUT | --abstain PORT IN OUT");
   return 2;
 }
 

@@ -1,5 +1,5 @@
 """PATH-2a coverage (B), judged by truth (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30,
-NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30).
+NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30).
 
 Truth comes from each case's base/head file model (tests/_p2a_truth.py), never from the diff. A decided claim is
 ATTRIBUTABLE when main's verdict is false by truth and a counterfactual variant of main without #97, without #121,
@@ -263,19 +263,18 @@ PY_PLANTS = [
      'return ("count", "#121") if lo <= n < hi else None'),
     ("V97 allows a base name for a directory claim",
      '    if "/" in c and P2A_DIRECTORY_BASENAME_ABSTAINS:\n        return None\n', "    if False:\n        return None\n"),
-    ("V121 dropped", '    v121 = ok(_p2a_resolve(f.status("K"), f.index("K"), ck, False))', "    v121 = True"),
-    ("V97+V121 dropped", '    vboth = ok(_p2a_resolve(f.status("K"), f.index("K"), ck, True))', "    vboth = True"),
+    ("V121 dropped", '    v121 = ok(_p2a_resolve(f, "K", ck, False))', "    v121 = True"),
+    ("V97+V121 dropped", '    vboth = ok(_p2a_resolve(f, "K", ck, True))', "    vboth = True"),
     ("tests interval lower bound + 1", "g - min(g, p) <= n <= g", "g - min(g, p) + 1 <= n <= g"),
     ("symbol rule off", '    if f.defines(name):\n        return "symbol", "#101"\n',
      '    if False:\n        return "symbol", "#101"\n'),
     ("def separator restricted to space and tab", '_P2A_COARSE_RUN = re.compile("[\\x00-\\x20\\x7f-\\U0010ffff]*")',
      '_P2A_COARSE_RUN = re.compile("[ \\t]*")'),
-    ("names paired by their full run", "                    rem.add(line[r:_P2A_WORD_RUN.match(line, r).end()])",
-     "                    rem.add(line[r:_P2A_NAME_RUN.match(line, r).end()])"),
+    ("names paired by their full run", "                e = _P2A_WORD_RUN.match(line, r).end()\n                if _p2a_wide_name",
+     "                e = _P2A_NAME_RUN.match(line, r).end()\n                if _p2a_wide_name"),
     ("the scope rule's V121 reading dropped", '    if got["K", False][2] != under:', "    if False:"),
-    ("U2 dropped",
-     "        if want is not None and tw is not None and len(keys[ws[i]]) > 1 and sts[ws[i]] != {want}:",
-     "        if False:"),
+    ("U2 dropped", '    return want is not None and f._get(("merged", space, b, want), lambda: any(',
+     '    return False and f._get(("merged", space, b, want), lambda: any('),
     ("a reason naming the wrong verdict", "            c.why = _p2a_reason(c.verdict, hit[1], hit[0], c.why)",
      '            c.why = _p2a_reason("VERIFIED", hit[1], hit[0], c.why)'),
     # pass 2
@@ -285,8 +284,8 @@ PY_PLANTS = [
     ("split read as keep", '    return ("split", "#101") if any(fires) else None', "    return None"),
     ("extract off for paths", "    if _p2a_extract(f, c, claimed, want):", "    if False:"),
     ("the port's reading of a wide path taken as never verified",
-     "        if b and not _P2A_WIDE.search(b) and b in held and (want is None or regs[i][1] == want):",
-     "        if False:"),
+     "                if b and not _P2A_WIDE.search(b) and (want is None or regs[i][1] == want):",
+     "                if False:"),
     ("extract off for scopes", "    if _p2a_scope_doubt(f, d):", "    if False:"),
     ("extract off for symbols",
      '    if _P2A_WIDE.search(name) or (not c.detail.get("declared") and _p2a_in_runs(f, name, "name")):',
@@ -310,9 +309,29 @@ PY_PLANTS = [
      '    if _P2A_DIGITS.fullmatch(claimed) is None or (not c.detail.get("declared") and _p2a_in_runs(f, claimed, "count")):',
      "    if False:"),
     ("symbol sites read anywhere in a removed line",
-     "            for _j, r in _p2a_anchored(line):\n                out.add(line[r:_P2A_WORD_RUN.match(line, r).end()])",
-     '            for _j, r in _p2a_sites(line, "def") + _p2a_sites(line, "class"):\n'
-     "                out.add(line[r:_P2A_WORD_RUN.match(line, r).end()])"),
+     "            for j, r in _p2a_anchored(line):\n                e = _P2A_WORD_RUN.match(line, r).end()",
+     '            for j, r in _p2a_sites(line, "def") + _p2a_sites(line, "class"):\n'
+     "                e = _P2A_WORD_RUN.match(line, r).end()"),
+    # pass 5 (NOTE_path2a_fifth_pass_2026_09_30): each new rule, dropped
+    ("the count seam never read", '        return self._get("seam", lambda: _p2a_seam(self.summary))',
+     "        return False"),
+    ("the removed lines no view reads dropped", '        return self._get("joined", lambda: _p2a_joined(self.diff_text))',
+     '        return self._get("joined", lambda: [])'),
+    ("test names read through NFKC paired by their ASCII run", "                if _p2a_wide_name(line, j, r, e):\n                    wild = True",
+     "                if False:\n                    wild = True"),
+    ("symbol names read through NFKC ignored", "                wild = wild or _p2a_wide_name(line, j, r, e)\n", ""),
+    ("a counted name read through NFKC paired by its ASCII run",
+     "            out.append(None if _P2A_WIDE.match(line, e) else line[r + 4:e])",
+     "            out.append(line[r + 4:e])"),
+    ("V97's suffix tier never read", '    i = f.ends(space, "key", c)[0]', "    i = -1"),
+    ("the case doubt's base-name fact dropped",
+     "        if len(bases) > 1 or (bases and _p2a_base(cf) not in bases):\n            return True",
+     "        if False:\n            return True"),
+    ("the case doubt's suffix fact dropped",
+     '        if f.ends(space, "wild", cw)[1] != f.ends(space, "fold", cf)[1]:\n            return True',
+     "        if False:\n            return True"),
+    ("continuations never joined", "            hit = hit or head == \"-\"\n",
+     "            hit = hit or head == \"-\"\n            acc = acc[-1:]\n"),
 ]
 # Plants that cannot change a record, said so rather than hidden: none this pass. Pass 2's one (a clause that never
 # decided alone) went with the per-set comparison it sat behind (NOTE_path2a_third_pass_2026_09_30, B-2).
@@ -333,6 +352,13 @@ def _pairs_catch(mod):
         rows = [[c.kind, c.verdict, c.why][:width] for c in g.claims]
         if rows != p["expect"]["claims"] or g.verdict != p["expect"]["verdict"]:
             return "pinned pair " + p["id"]
+    # pass 5 (NOTE_path2a_fifth_pass_2026_09_30): the cross-port pins' Python decisions, some of them on claims only
+    # main's Python reads (a path outside ASCII), which no pinned pair can hold for both ports
+    from tests.test_diffgate_path2a import XPORT_CASES
+    for cid, s, d, want_py, *_rest in XPORT_CASES:
+        got = [(c.verdict, R.phrase_key(c.why, N._P2A_PHRASES)) for c in mod.gate_diff_text(s, d).claims]
+        if got != want_py:
+            return "cross-port pin " + cid
     return None
 
 
@@ -407,6 +433,12 @@ JS_PLANTS = [
      '  if (!_P2A_DIGITS.test(claimed) || (!c.detail.declared && _p2aInRuns(f, claimed, "count"))) '
      'return ["extract", "#121"];\n', ""),
     ("no shape rule in the port", '  if (d.prefix2 && !got.get("K|false")[0]) return ["shape", "#121"];\n', ""),
+    # pass 5 (NOTE_path2a_fifth_pass_2026_09_30): each new rule, dropped from the port alone
+    ("no count seam in the port", '    seam: () => get("seam", () => _p2aSeam(f.summary)),', "    seam: () => false,"),
+    ("no removed lines beyond the views in the port", '    joined: () => get("joined", () => _p2aJoined(diffText)),',
+     "    joined: () => [],"),
+    ("no NFKC pairing in the port", "        if (_p2aWideName(line, j, r, e)) wild = true;\n        else if", "        if"),
+    ("no NFKC symbols in the port", "        wild = wild || _p2aWideName(line, j, r, e);\n", ""),
 ]
 
 
@@ -448,6 +480,52 @@ def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
                 new_disagreements += (y["verdict"], R.phrase_key(y["why"], N._P2A_PHRASES)) != \
                     (jy["verdict"], R.phrase_key(jy["why"], N._P2A_PHRASES))
     assert new_disagreements > 0, name
+
+
+# ---- pass 5: the fourth review's #101 reproductions (continuation, lone CR, NFKC), at three doors ------------------
+
+def test_the_fifth_reviews_definition_reproductions(monkeypatch, tmp_path):
+    """B-1 and B-2 (NOTE_path2a_fifth_pass_2026_09_30): a definition CPython reads across a backslash continuation, after
+    a lone CR inside one git line, or through NFKC. main's verdict on each is false by truth, and false only through
+    #101 as CPython reads definitions: the ast-paired V101 (tests/_p2a_truth.v101_ast) does not read it false. The
+    committed V101 reads line by line and cannot see them, so they are judged here, at the raw door, at the git door
+    (each case's recorded --name-status) and in the port, main's port judged in its own terms. On 5ebe0b6b every one was
+    kept at every door."""
+    M = R.main_module()
+    cases = json.loads((R.ROOT / "tests" / "fixtures" / "path2a_pass5_repros.json").read_text(encoding="utf-8"))["cases"]
+    items = [{"id": c["id"], "summary": c["summary"], "diff": c["diff"]} for c in cases]
+    (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=False), encoding="utf-8")
+    if NODE is None:
+        if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
+            pytest.fail("node is not on PATH under CI; the port half of this check did not run")
+        pytest.skip("node is not on PATH; the port half of this check cannot run here")
+    main_port = _port_records(R.main_port_path(tmp_path), items, tmp_path, "main5")
+    new_port = _port_records(R.PORT, items, tmp_path, "new5")
+    seen = []
+    for c in cases:
+        fake = R.fake_git(c["name_status"], c["diff"])
+        for mod in (M, N):
+            monkeypatch.setattr(mod, "_git", fake)
+        doors = {"raw": (M.gate_diff_text(c["summary"], c["diff"]).to_dict(),
+                         N.gate_diff_text(c["summary"], c["diff"]).to_dict()),
+                 "git": (M.gate_diff(c["summary"], "(repo)", "base", "head").to_dict(),
+                         N.gate_diff(c["summary"], "(repo)", "base", "head").to_dict()),
+                 "port": (main_port[c["id"]], new_port[c["id"]])}
+        for door, (a, b) in doors.items():
+            if door != "port":
+                assert R.relation(a, b, False, N._P2A_PHRASES) == [], (c["id"], door)
+            for i, x in enumerate(a["claims"]):
+                if x["verdict"] not in DECIDED:
+                    continue
+                t = T.truth(c["model"], x["kind"], x["detail"])
+                assert T.wrong(x["verdict"], t), (c["id"], door, x, t)
+                v = T.v101_ast(c["model"], x)
+                assert v is not None and not T.wrong(v, t), (c["id"], door, x, v, t)
+                y = b["claims"][i]
+                assert y["verdict"] == "UNCHECKABLE" and R.phrase_key(y["why"], N._P2A_PHRASES) in \
+                    ("tests", "split", "symbol"), (c["id"], door, y)
+                seen.append((c["id"], door))
+    assert len(seen) == 33, seen
 
 
 # ---- pass 4: the fourth review's scope reproductions, judged by truth --------------------------------------------------

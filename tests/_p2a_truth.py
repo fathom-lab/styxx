@@ -15,6 +15,7 @@ verdict for the same claim is not false.
 from __future__ import annotations
 
 import ast
+import re
 import unicodedata
 
 # ---- truth ------------------------------------------------------------------------------------------------------------
@@ -153,6 +154,30 @@ def symbol_truth(detail: dict, model: dict, status: dict):
     per_count = any(h[1].count(name) > b[1].count(name) for p, (b, h) in py.items() if p in status)
     glob = any(name in h[1] for _b, h in py.values()) and not any(name in b[1] for b, _h in py.values())
     return _judge({per_set, per_count, glob})
+
+
+def v101_ast(model: dict, claim: dict):
+    """The verdict of `main` without #101, reading definitions with CPython's parser (NOTE_path2a_fifth_pass_2026_09_30,
+    B-1 and B-2), for a decided tests or symbol claim of `main`; None where it does not apply. For `tests_added`:
+    `main`'s own count, read from its reason, less the test functions that the base and the head of the same changed
+    file both define; for `symbol_added`: `main`'s VERIFIED only where no changed file's base defines the name. The
+    names are `ast`'s, which CPython normalises with NFKC, and the claimed name is read through NFKC too. The committed
+    V101 reads the removed lines line by line, as `main` does, so it cannot see a definition CPython reads across a
+    continuation line, after a lone CR, or through NFKC; this variant can."""
+    status = changed(model)
+    py = _py(model, status)
+    if py is None or claim["verdict"] not in ("VERIFIED", "CONTRADICTED"):
+        return None
+    if claim["kind"] == "tests_added":
+        m = re.fullmatch(r"diff adds ([0-9]+) test functions, claim says ([0-9]+)", claim["why"])
+        if m is None:
+            return None
+        both = sum(len({t[0] for t in h[0]} & {t[0] for t in b[0]}) for p, (b, h) in py.items() if p in status)
+        return "VERIFIED" if int(m.group(1)) - both == int(m.group(2)) else "CONTRADICTED"
+    if claim["kind"] == "symbol_added" and claim["verdict"] == "VERIFIED":
+        name = unicodedata.normalize("NFKC", claim["detail"]["name"])
+        return "CONTRADICTED" if any(name in b[1] for p, (b, _h) in py.items() if p in status) else "VERIFIED"
+    return None
 
 
 def truth(model: dict, kind: str, detail: dict):

@@ -1,5 +1,6 @@
 """PATH-2a: main's diff gate, unchanged, plus an overlay that only abstains (NOTE_path2a_abstain_overlay_2026_09_30,
-NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30).
+NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30,
+NOTE_path2a_fifth_pass_2026_09_30).
 
 The reference in every test here is `main` itself: this checkout's `styxx/diffgate.py` and `web/gate/diffgate.js` with
 the PATH-2a block cut out and the door hooks reverted, asserted to hash to the files on `origin/main` 1cde8b82
@@ -13,9 +14,10 @@ the PATH-2a block cut out and the door hooks reverted, asserted to hash to the f
     so wherever main's two ports give claims the same kind, verdict and detail -- by position, matched across the two
     lists, or anywhere in either list -- the overlay's verdict and phrase are the same (by construction, asserted).
     Measured on the committed inputs and asserted there only: the same for claims with the same kind, verdict and
-    text, and for claims left over whose details differ but nest and lie in each other's text (one match read two
-    ways, the `extract` guards' work); where every claim pairs so, the gate verdicts agree. The constant tables the overlay
-    leans on are pinned by enumeration on the running engines.
+    text, and for claims left over whose details differ but nest and lie in each other's text (a heuristic for one
+    match read two ways, the `extract` guards' work; it also pairs two different matches, and L1 is the one such
+    pairing pinned, NOTE_path2a_fifth_pass_2026_09_30, C-3); where every claim pairs so, the gate verdicts agree. The
+    constant tables the overlay leans on are pinned by enumeration on the running engines.
 And the static facts: the reconstruction, the self-checks over each block's source, the error fallback, the
 reproductions, the cost per call, and what must not move (the demo, the committed capsules, charon's lines, the
 bookmarklet source). Coverage (B) is in tests/test_diffgate_path2a_truth.py.
@@ -144,10 +146,13 @@ def flavour(mod) -> str:
 # probes, whose name also occurs beside a letter outside ASCII); the text-seam set and the new pairs add the rest.
 # Pass 4 (NOTE_path2a_fourth_pass_2026_09_30), on the inputs pass 3 pinned: `only_touches:shape` 25 (24 of them kept
 # before, 1 `only`), and the wider neutral set keeps four claims `extract` withheld (one of them now `dir`); its 29 new
-# pairs add the rest.
+# pairs add the rest. Pass 5 (NOTE_path2a_fifth_pass_2026_09_30 and its corrections), on the inputs pass 4 pinned:
+# `seam` 1 (the X2 pair, `count` before), and names read through NFKC 25 (24 on the seeded PATH-2a fuzz, whose removed
+# lines write U+00A0, U+3000 or U+FEFF between `def` and the name, and #161's y5); no path claim moves. Its 20 new pairs
+# add 5 `seam`, 6 `tests`, 5 `symbol` and 4 kept declared claims.
 ABSTENTIONS = {
     "windows": {
-        "decided": 12675, "main raises": 8,
+        "decided": 12695, "main raises": 8,
         "file_created:case": 3, "file_created:dir": 65, "file_created:divergent": 19, "file_created:dot": 20,
         "file_created:dot_earliest": 4, "file_created:dot_tier": 11, "file_created:extract": 48, "file_created:odd": 1,
         "file_created:tier": 9,
@@ -156,14 +161,15 @@ ABSTENTIONS = {
         "file_deleted:tier": 4,
         "file_touched:dir": 243, "file_touched:divergent": 102, "file_touched:dot": 82, "file_touched:dot_tier": 71,
         "file_touched:extract": 144, "file_touched:odd": 5,
-        "files_changed_count:count": 382, "files_changed_count:divergent": 226, "files_changed_count:extract": 4,
+        "files_changed_count:count": 381, "files_changed_count:divergent": 226, "files_changed_count:extract": 4,
+        "files_changed_count:seam": 6,
         "only_touches:divergent": 108, "only_touches:extract": 158, "only_touches:only": 32, "only_touches:shape": 29,
-        "symbol_added:extract": 24, "symbol_added:symbol": 173, "tests_added:split": 4, "tests_added:tests": 403,
+        "symbol_added:extract": 24, "symbol_added:symbol": 184, "tests_added:split": 3, "tests_added:tests": 428,
     },
 }
 # Under the POSIX flavour main reads `c:x.py` as a bare name not in the diff, so three decided drive-like claims are
 # UNCHECKABLE on main to begin with: path2a:guard-drive-like-path claim 0, and fuzz 20260930:1033 and :1590.
-ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12672, "file_touched:odd": 4}
+ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12692, "file_touched:odd": 4}
 del ABSTENTIONS["posix"]["file_created:odd"], ABSTENTIONS["posix"]["file_deleted:odd"]
 # main's own reading depends on the interpreter's Unicode tables where the inputs probe letters added in Unicode 14 and
 # 16 (#161's k2, x1 and y3 cases). Measured on CPython 3.12 (Unicode 15.0) and 3.14 (16.0); for Unicode 13.0 and 14.0
@@ -258,8 +264,9 @@ def test_lockstep_python(M, inputs):
         assert list(N._p2a_build(N._p2a_regs_raw(fine), N._norm).items()) == list(status.items()), iid
         views = N._p2a_views(diff or "", fine)
         assert N._p2a_pairing(views)[0][0] == len(re.findall(r"^\s*def test_", blob, re.M)), iid
-        # pass 4 (A-2): the facts object's shortcut (one view, counted once) gives what both views counted apart give
-        assert N._P2aFacts(diff or "").pairing() == N._p2a_pairing(views), iid
+        # pass 4 (A-2): the facts object's shortcut (one view, counted once) gives what both views counted apart give;
+        # pass 5 (B-1): with the removed lines no view reads
+        assert N._P2aFacts(diff or "").pairing() == N._p2a_pairing(views, False, N._p2a_joined(diff or "")), iid
         checked += 1
     assert checked > 5000
 
@@ -287,8 +294,9 @@ def _repo(tmp_path, name, base, head, quotepath=None):
     d.mkdir()
 
     def git(*a):
-        return subprocess.run([GIT, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "core.autocrlf=false", *a],
-                              cwd=d, capture_output=True, check=True).stdout
+        # I-6 (NOTE_path2a_fifth_pass_2026_09_30): core.longpaths, so a long pytest temp path works on Windows too
+        return subprocess.run([GIT, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "core.autocrlf=false",
+                               "-c", "core.longpaths=true", *a], cwd=d, capture_output=True, check=True).stdout
 
     git("init", "-q")
     if quotepath is not None:
@@ -312,8 +320,9 @@ def _tree_repo(tmp_path, name, base, head, config=()):
     d.mkdir()
 
     def git(*a, data=None):
-        return subprocess.run([GIT, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "core.autocrlf=false", *a],
-                              cwd=d, input=data, capture_output=True, check=True).stdout.decode().strip()
+        return subprocess.run([GIT, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "core.autocrlf=false",
+                               "-c", "core.longpaths=true", *a], cwd=d, input=data, capture_output=True,
+                              check=True).stdout.decode().strip()
 
     git("init", "-q")
     for k, v in config:
@@ -540,6 +549,13 @@ SELFCHECK_PLANTS = [
     (CLAIMED, "    claimed = str([claimed])\n" + CLAIMED, "str() of a value"),
     (CLAIMED, "    claimed = unicodedata.normalize('NFKC', claimed)\n" + CLAIMED, "name unicodedata"),
     (CLAIMED, "    claimed = json.dumps(claimed)\n" + CLAIMED, "name json, not one the block binds or may read"),
+    # C-2 (NOTE_path2a_fifth_pass_2026_09_30): flag groups whose case or Unicode flag is not the leading letter, which
+    # the pass-4 check accepted; (?si) reads the case table (K matches U+212A)
+    ('_P2A_COARSE = re.compile("\\r\\n|\\r|\\n")', '_P2A_COARSE = re.compile("(?si)\\r\\n|\\r|\\n")', "inline flag (?si)"),
+    ('_P2A_DIGITS = re.compile("[0-9]+")', '_P2A_DIGITS = re.compile("(?mi:[0-9]+)")', "inline flag (?mi:"),
+    ('_P2A_WORDISH_RX = re.compile("[" + _P2A_WORDISH + "]")', '_P2A_WORDISH_RX = re.compile("(?xi)[" + _P2A_WORDISH + "]")',
+     "inline flag (?xi)"),
+    ('_P2A_DIGITS = re.compile("[0-9]+")', '_P2A_DIGITS = re.compile("(?-i:[0-9]+)")', "inline flag (?-i:"),
 ]
 
 
@@ -559,6 +575,10 @@ JS_BANNED = ("toLowerCase", "toUpperCase", "toLocale", "localeCompare", "normali
              # time, and a String object carrying a method off its prototype; the block uses .test and .exec on
              # constant RegExps only
              "new String(", ".match(", ".search(", ".matchAll(")
+# C-2 (NOTE_path2a_fifth_pass_2026_09_30): identifiers that turn a string into a number through the engine's own tables
+# (StringToNumber skips the engine's white space: parseInt("\u30003", 10) is 3), refused as whole words in code, so
+# `_p2aNumbers` and a comment naming them are not; the block reads digits through `_p2aInt`
+JS_BANNED_WORDS = ("Number", "parseInt", "parseFloat", "isNaN", "isFinite")
 # Identifiers a computed member access may index with: counters, positions and the block's own constant keys. A name
 # built from strings (claimed[kk]) is refused, and so is any call on a computed member (x[k](), (x[k])()).
 JS_INDEXES = {"0", "1", "2", "i", "k", "k+1", "k-1", "v", "u", "space", "c.kind", "_P2A_OWN", "out.length-1"}
@@ -611,6 +631,9 @@ def js_regex_problems(pattern: str) -> list:
             in_class = False
         elif ch == "." and not in_class:
             out.append("unescaped '.'")
+        elif ch == "(" and not in_class and pattern[i + 1:i + 2] == "?" and re.match(r"[A-Za-z-]", pattern[i + 2:i + 3]):
+            # C-2 (NOTE_path2a_fifth_pass_2026_09_30): regex modifiers, `(?i:...)`, live in V8 13.6
+            out.append("regex modifiers " + pattern[i:i + 3])
         i += 1
     return out
 
@@ -647,6 +670,8 @@ def js_problems(block: str) -> list:
     dense = re.sub(r"\s+", lambda m: " " if (0 < m.start() and m.end() < len(raw) and word.match(raw[m.start() - 1])
                                                 and word.match(raw[m.end()])) else "", raw)
     out += [f"banned token {t!r} in code" for t in JS_BANNED if t in dense]
+    out += [f"banned word {t!r} in code" for t in JS_BANNED_WORDS
+            if re.search(r"(?<![A-Za-z0-9_$])" + t + r"(?![A-Za-z0-9_$])", dense)]
     if "/" in dense:
         out.append("a '/' in code: a regex literal or a division")
     for s in strings:
@@ -754,12 +779,71 @@ BS = chr(92)
      "banned token 'new String('"),
     ('  const ca = _p2aA([...claimed.matchAll(new RegExp("x"))].length ? claimed : ""), ck = _p2aK(claimed);',
      "banned token '.matchAll('"),
+    # C-2 (NOTE_path2a_fifth_pass_2026_09_30): the fifth review's plants, each of which the pass-4 scan accepted
+    ('  const ca = _p2aA(claimed.split(new RegExp("(?i:k)")).join("k")), ck = _p2aK(claimed);', "regex modifiers (?i"),
+    ('  const ca = _p2aA(claimed), ck = _p2aK(claimed); const q = parseInt(claimed, 10);', "banned word 'parseInt'"),
+    ('  const ca = _p2aA(claimed), ck = _p2aK(claimed); const q = Number(claimed);', "banned word 'Number'"),
+    ('  const pf = parseFloat; const ca = _p2aA(claimed), ck = _p2aK(claimed);', "banned word 'parseFloat'"),
+    ('  const ca = _p2aA(claimed), ck = _p2aK(claimed); const q = isNaN(claimed);', "banned word 'isNaN'"),
 ])
 def test_the_token_scan_refuses_the_reviews_plants(new, what):
     block = R.js_block()
     assert block.count(CA) == 1
     problems = js_problems(block.replace(CA, new))
     assert any(what in p for p in problems), problems
+
+
+@pytest.mark.parametrize("old,new,what", [
+    # C-2 (NOTE_path2a_fifth_pass_2026_09_30): the fifth review's plants in place
+    ('new RegExp("\\r\\n|\\r|\\n")', 'new RegExp("(?i:\\r\\n|\\r|\\n)")', "regex modifiers (?i"),
+    ("  return [_p2aInt(m[1]), _p2aInt(k[0])];", "  return [parseInt(m[1], 10), parseInt(k[0], 10)];",
+     "banned word 'parseInt'"),
+    ("  return [_p2aInt(m[1]), _p2aInt(k[0])];", "  return [Number(m[1]), Number(k[0])];", "banned word 'Number'"),
+])
+def test_the_token_scan_refuses_the_fifth_reviews_plants_in_place(old, new, what):
+    block = R.js_block()
+    assert block.count(old) == 1, old
+    problems = js_problems(block.replace(old, new))
+    assert any(what in p for p in problems), problems
+
+
+D_TWINS_HEAD = ("diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n"
+                + "".join(f"diff --git a/{p} b/{p}\n--- a/{p}\n+++ b/{p}\n@@ -1 +1 @@\n-a\n+b\n" for p in (".env", "env")))
+
+
+def test_a_widened_count_head_reads_no_digit_table(M, tmp_path):
+    """C-2 (NOTE_path2a_fifth_pass_2026_09_30): the review widened the count head to `([^,]+)` and the port's parseInt
+    read "\u30003" as 3. The digits are read through fixed tables in both ports now: a widened head meets a digit
+    outside the table and raises, and the error fallback withholds (a reason main never writes, given by hand)."""
+    def fresh():
+        g = M.gate_diff_text("3 files changed.", D_TWINS_HEAD)
+        assert [(c.kind, c.verdict, c.why) for c in g.claims] == [
+            ("files_changed_count", "CONTRADICTED", "diff changes 2 files, claim says 3")]
+        g.claims[0].why = "diff changes " + chr(0x3000) + "2 files, claim says 3"
+        return g
+
+    rec = fresh().to_dict()
+    text = R.lf(R.INSTRUMENT)
+    block = R.py_block(text)
+    old = '_P2A_COUNT_HEAD = re.compile("diff changes ([0-9]+) files, claim says ")'
+    assert block.count(old) == 1
+    mod = R.module_from(text.replace(block, block.replace(old, old.replace("[0-9]+", "[^,]+"))), "_p2a_plant_head")
+    for m, key in ((N, "unparsed"), (mod, "error")):
+        x = fresh()
+        m._p2a_abstain(x, False, lambda m=m: m._P2aFacts(D_TWINS_HEAD, None, "3 files changed."))
+        assert x.claims[0].verdict == "UNCHECKABLE" and R.phrase_key(x.claims[0].why, PHRASES) == key, (key, x.claims[0].why)
+    js = R.lf(R.PORT)
+    jblock = R.js_block(js)
+    jold = 'new RegExp("^diff changes ([0-9]+) files, claim says ")'
+    assert jblock.count(jold) == 1
+    planted = tmp_path / "diffgate_widened.js"
+    planted.write_bytes(js.replace(jblock, jblock.replace(jold, jold.replace("[0-9]+", "[^,]+"))).encode("utf-8"))
+    (tmp_path / "in.json").write_text(json.dumps([{"id": "w", "summary": "3 files changed.", "diff": D_TWINS_HEAD,
+                                                   "gate": rec}], ensure_ascii=False), encoding="utf-8")
+    for port, key in ((R.PORT, "unparsed"), (planted, "error")):
+        node("--abstain", port, tmp_path / "in.json", tmp_path / "out.json")
+        c = json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))[0]["rec"]["claims"][0]
+        assert c["verdict"] == "UNCHECKABLE" and R.phrase_key(c["why"], PHRASES) == key, (port, c["why"])
 
 
 # ---- the error fallback -----------------------------------------------------------------------------------------------
@@ -977,6 +1061,34 @@ def test_build_bookmarklet_check(tmp_path):
     assert r.returncode == 0 and "matches" in r.stdout, r.stdout + r.stderr
 
 
+def test_the_shipped_bookmarklet_is_the_build_the_readme_names():
+    """C-5 = I-4 (NOTE_path2a_fifth_pass_2026_09_30): no terser needed. The minified file hashes to the README's line, and
+    the href is `javascript:` + that file, so whatever a browser holds either hashes to the line or is not this build."""
+    import hashlib
+    gate = R.ROOT / "web" / "gate"
+    mini = (gate / "bookmarklet.min.js").read_bytes().decode("utf-8")
+    href = (gate / "bookmarklet.href.txt").read_bytes().decode("utf-8")
+    assert href == "javascript:" + mini
+    readme = R.lf(gate / "README.md")
+    m = re.search(r"^    bookmarklet\.min\.js    sha256 ([0-9a-f]{64})   ([0-9,]+) chars$", readme, re.M)
+    h = re.search(r"^    bookmarklet\.href\.txt  sha256 ([0-9a-f]{64})   ([0-9,]+) chars$", readme, re.M)
+    assert m and h, "the README no longer names the shipped build in the form this test reads"
+    assert hashlib.sha256(mini.encode("utf-8")).hexdigest() == m.group(1) and len(mini) == int(m.group(2).replace(",", ""))
+    assert hashlib.sha256(href.encode("utf-8")).hexdigest() == h.group(1) and len(href) == int(h.group(2).replace(",", ""))
+
+
+def test_the_shipped_bookmarklet_runs_the_port(tmp_path):
+    """C-5 = I-4: the minified bytes users install, loaded in a stub page as a browser runs them, give the port's record
+    on every pinned pair, both strict modes, and the overlay's reasons appear. Under CI a missing node fails."""
+    pairs = json.loads((R.DIFFERENTIAL / "path2a_pairs.json").read_text(encoding="utf-8"))
+    (tmp_path / "in.json").write_text(json.dumps([{"id": p["id"], "summary": p["summary"], "diff": p["diff"]}
+                                                  for p in pairs], ensure_ascii=False), encoding="utf-8")
+    node("--bookmarklet", R.ROOT / "web" / "gate" / "bookmarklet.min.js", tmp_path / "in.json", tmp_path / "out.json")
+    rep_ = json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))
+    assert rep_["differ"] == [] and rep_["runs"] == 2 * len(pairs), rep_
+    assert rep_["runs_with_overlay_reason"] > 100, rep_
+
+
 def test_the_action_shows_an_overlay_reason_whole(tmp_path, monkeypatch):
     """A-5: the Action's job-summary table cut every reason at 100 characters, which never reached main's reading
     in a reason the overlay wrote."""
@@ -1029,6 +1141,16 @@ def test_the_action_shows_an_overlay_reason_whole(tmp_path, monkeypatch):
              if line.startswith("| ") and " | " in line and line.split(" | ")[1] in ("mid", "decided", "ours")}
     assert len(shown["mid"]) == 100 and len(shown["decided"]) == 100, shown
     assert shown["ours"] == rows[2][1].why
+    # I-3 (NOTE_path2a_fifth_pass_2026_09_30): the kind condition. A claim of a kind the overlay never moves, whose
+    # reason starts with the overlay's form, is cut at 100 as main cuts it.
+    other = N.DiffClaim(kind="declaration_problem", text="other", detail={}, verdict="UNCHECKABLE", why=form + "D" * 300)
+    monkeypatch.setattr(mod, "gate_diff_text", lambda *a, **k: N.DiffGate(
+        verdict="PASS", base="(diff-text)", head="(diff-text)", claims=[other], measured=True))
+    (tmp_path / "sum.md").write_text("", encoding="utf-8")
+    mod.main()
+    table = (tmp_path / "sum.md").read_text(encoding="utf-8")
+    row = next(line for line in table.splitlines() if line.startswith("| ") and " | other | " in line)
+    assert len(row[:-2].rsplit(" | ", 1)[1]) == 100, row
 
 
 def test_the_port_differential_reads_mains_corpora_only():
@@ -1098,8 +1220,31 @@ def _timing_cases() -> list[dict]:
          {"id": "q2-symbols-by-wordish-runs", "summary": fill("Added function foo. ", 1638, e + " "), "diff": one},
          {"id": "q3-scopes-by-zones", "summary": fill("Only touches a.py. ", 1724, "only " + e + ".\n"), "diff": one},
          {"id": "q4-counts-by-digit-runs", "summary": fill("3 files changed. ", 1900, e + "3 "), "diff": twins}]
+
+    # NOTE_path2a_fifth_pass_2026_09_30, A-1: deep paths. 5ebe0b6b stored every suffix of every key: 0.50 s and 766 MB
+    # for one 40 KB path, 0.69 s and 799 MB for 100 paths of 4 KB (the overlay alone, CPython 3.12.10).
+    def deep(depth, k, summary):
+        paths = ["a/" * depth + f"f{i}.py" for i in range(k)] + ["README.md"]
+        return {"id": f"deep-{depth}-{k}", "summary": summary,
+                "diff": "".join(f"--- a/{p}\n+++ b/{p}\n@@ -1 +1 @@\n-x\n+y\n" for p in paths)}
+
+    # A-2: claims against a wide base-name group. On 5ebe0b6b, 6.1 s (4,369 identical claims over 3,000 directories
+    # outside ASCII), 19.3 s (3,000 distinct claims whose base name is outside ASCII) and 0.22 s.
+    def wide(k, claim, path):
+        return {"id": f"wide-{claim(0)}-{k}", "summary": " ".join(claim(i) for i in range(k)),
+                "diff": "".join(f"--- a/{path(j)}\n+++ b/{path(j)}\n@@ -1 +1 @@\n-x\n+y\n" for j in range(3000))}
+
+    a = [deep(20000, 1, "Modified f0.py. Modified README.md. Created README.md."),
+         deep(2000, 100, "Modified f0.py. Modified README.md. Created README.md."),
+         wide(4369, lambda i: "Modified x.py.", lambda j: f"{e}{j}/x.py"),
+         wide(3000, lambda i: f"Modified y{i}/d{e}.py.", lambda j: f"x{j}/d{e}.py"),
+         wide(3000, lambda i: f"Modified q{i}{e}/x.py.", lambda j: f"{e}{j}/x.py"),
+         wide(200, lambda i: f"Modified __init__.py for p{i}.", lambda j: f"pkgs/p{j}{e}/__init__.py"),
+         wide(4000, lambda i: f"Modified e{i}/x.py.", lambda j: f"d{j}/x.py"),
+         {"id": "dots-40000", "summary": "Modified f0.py. 5 files changed. Only touches f0.py.",
+          "diff": "--- a/" + "./" * 40000 + "f0.py\n+++ b/" + "./" * 40000 + "f0.py\n@@ -1 +1 @@\n-x\n+y\n"}]
     return [wide_def(5000, e), wide_def(50000, e), wide_def(50000, zh), files(2000, 200), same_base(2000, 200),
-            symbols(500, 50000), class_nbsp(300, 20000), long_line] + q
+            symbols(500, 50000), class_nbsp(300, 20000), long_line] + q + a
 
 
 # The overlay's own time, the least of three runs on main's record for the same input (NOTE_path2a_third_pass_2026_09_30,
@@ -1123,6 +1268,26 @@ def test_cost_per_call_python(M):
             best = min(best, time.perf_counter() - t0)
             assert not any(PHRASES["error"] in c.why for c in g.claims), it["id"]   # a failing overlay is fast too
         assert best < OVERLAY_S[0], (it["id"], best)
+
+
+OVERLAY_MB = 64
+
+
+def test_peak_memory_python(M):
+    """A-1 (NOTE_path2a_fifth_pass_2026_09_30): the overlay's peak memory on every timing case, by tracemalloc. On
+    5ebe0b6b the deep-path cases peaked at 766 MB and 799 MB (every suffix of every key), and under a 1,024 MB cap the
+    overlay's own MemoryError withheld a right VERIFIED with the error phrase."""
+    import tracemalloc
+    for it in _timing_cases():
+        g = M.gate_diff_text(it["summary"], it["diff"])
+        tracemalloc.start()
+        try:
+            N._p2a_abstain(g, False, lambda: N._P2aFacts(it["diff"], None, it["summary"]))
+            peak = tracemalloc.get_traced_memory()[1]
+        finally:
+            tracemalloc.stop()
+        assert not any(PHRASES["error"] in c.why for c in g.claims), it["id"]
+        assert peak < OVERLAY_MB * 2 ** 20, (it["id"], peak)
 
 
 def test_cost_per_call_port(work, tmp_path):
@@ -1252,6 +1417,13 @@ D_GUIDE = ("diff --git a/docs/guide.md b/docs/guide.md\n--- a/docs/guide.md\n+++
            "-old\n+new\n") + D_MOD
 D_TWINS = D_MOD + "".join(f"diff --git a/{p} b/{p}\n--- a/{p}\n+++ b/{p}\n@@ -1 +1 @@\n-a\n+b\n"
                           for p in (".env", "env"))
+def _mod(p):
+    return f"diff --git a/{p} b/{p}\n--- a/{p}\n+++ b/{p}\n@@ -1 +1 @@\n-a\n+b\n"
+
+
+D_FOO = ("diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1,3 @@\n-x = 0\n+x = 1\n"
+         "+def foo():\n+    return 1\n")
+D_DOTC = "diff --git a/.c.py b/.c.py\ndeleted file mode 100644\n--- a/.c.py\n+++ /dev/null\n@@ -1 +0,0 @@\n-x\n"
 D_CAFE = ("diff --git a/docs/r\u00e9sum\u00e9/index.md b/docs/r\u00e9sum\u00e9/index.md\n--- a/docs/r\u00e9sum\u00e9/index.md\n"
           "+++ b/docs/r\u00e9sum\u00e9/index.md\n@@ -1 +1 @@\n-a\n+b\n"
           "diff --git a/docs/caf\u00e9.md b/docs/caf\u00e9.md\nnew file mode 100644\n--- /dev/null\n+++ b/docs/caf\u00e9.md\n"
@@ -1274,9 +1446,10 @@ XPORT_CASES = [
      [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
     ("X5b-arabic-digit-before-the-count", chr(0x663) + "3 files changed.", D_TWINS,
      [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
-    # each port reads a count the other does not (X2, X3): on ea677740 the gates split PASS / FAIL
+    # each port reads a count the other does not (X2, X3): on ea677740 the gates split PASS / FAIL. Pass 5: X2's summary
+    # holds U+0085, a count seam, so both ports withhold its counts with `seam`
     ("X2-nel-and-cjk-counts", "3 files" + chr(0x85) + "changed. " + chr(0x5171) + "5 files changed.", D_TWINS,
-     [("UNCHECKABLE", "count")], [("UNCHECKABLE", "extract")], "PASS"),
+     [("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
     ("X3-fullwidth-and-cjk-counts", chr(0xFF13) + " files changed. " + chr(0x5171) + "5 files changed.", D_TWINS,
      [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
     # C-2 (fourth review): the realistic X6b, two different claims each port reads from a different sentence; the
@@ -1284,22 +1457,68 @@ XPORT_CASES = [
     ("X6b-accented-directory-and-a-created-file",
      "Changed the parser in `docs/r\u00e9sum\u00e9/index.md`. Added `docs/caf\u00e9.md`.", D_CAFE,
      [("VERIFIED", None)], [("UNCHECKABLE", "extract")], "PASS"),
+    # C-1 (NOTE_path2a_fifth_pass_2026_09_30): each port reads a count the other does not, one of them with a clean
+    # number, across a white space only one port reads or through a letter only CPython folds. main's gates are
+    # FAIL / FAIL; on 5ebe0b6b the overlay's were FAIL / PASS (X2-13, G1, G3) or PASS / FAIL (G2)
+    ("X2-13-nel-and-cjk-counts", "13 files\x85changed. \u51715 files changed.", D_TWINS,
+     [("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+    ("G1-unit-separator-then-e-acute", "13\x1ffiles changed, \u00e93 files changed.", D_TWINS,
+     [("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+    ("G2-bom-then-long-s", "13\ufefffiles changed and 3 file\u017f changed.", D_TWINS,
+     [("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+    ("G3-nel-then-e-acute", "13\x85files changed, \u00e93 files changed.", D_TWINS,
+     [("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+    # I-2 (NOTE_path2a_fifth_pass_2026_09_30): a declared count, path, name and prefix whose value also occurs beside a
+    # letter outside ASCII keep main's verdict in both ports (DECLARE-1 writes their sentences); the same sentences
+    # undeclared are withheld (`extract`). A port-only removal of a declared skip splits the gates.
+    ("D-declared-count", "```styxx\nfiles_changed: 7\n```\nSee ticket \u00e97.", D_TWINS,
+     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
+    ("D-declared-path", "```styxx\nfile_touched: src/app.py\n```\nSee src/app.py\u00e9 too.", D_MOD,
+     [("VERIFIED", None)], [("VERIFIED", None)], "PASS"),
+    ("D-declared-name", "```styxx\nadds_symbol: foo\n```\nSee foo\u00e9 too.", D_FOO,
+     [("VERIFIED", None)], [("VERIFIED", None)], "PASS"),
+    ("D-declared-prefix", "```styxx\nonly_touches: src\n```\nWe only \u00e9dited src.", D_MOD,
+     [("VERIFIED", None)], [("VERIFIED", None)], "PASS"),
+    ("U-undeclared-count", "7 files changed. See ticket \u00e97.", D_TWINS,
+     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+    ("U-undeclared-path", "Modified src/app.py. See src/app.py\u00e9 too.", D_MOD,
+     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+    ("U-undeclared-name", "Adds function foo. See foo\u00e9 too.", D_FOO,
+     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+    ("U-undeclared-prefix", "Only touches src. We only \u00e9dited src.", D_MOD,
+     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+    # C-3 (NOTE_path2a_fifth_pass_2026_09_30): the one known false pairing of the measured one-match key. main's Python
+    # reads ['..c.py', '.c.py'] and its port ['..c.py', '..c.py'] (the port's `^` after U+2028); the left-over claims
+    # nest and each lies in the other's text, so the key pairs two different matches, whose decisions differ as the
+    # claims do. The split is expected here and nowhere else.
+    ("L1-a-false-one-match-pairing", 'Tidied.\x85- ".c.py" \u2014 updated\u2028- "..c.py" -- updated.', D_DOTC,
+     [("UNCHECKABLE", "dot"), ("VERIFIED", None)], [("UNCHECKABLE", "dot"), ("UNCHECKABLE", "dot")], "PASS",
+     [("left over, one match: kind and verdict", 1, 1, ("VERIFIED", None), ("UNCHECKABLE", "dot"))]),
+    # A-2 (NOTE_path2a_fifth_pass_2026_09_30): the case doubt's base-name fact alone decides, then its suffix fact alone.
+    # main's Python verifies each by base name or suffix after lower(); its port reads no claim (a base name outside
+    # ASCII), so these pin the Python's decision, and the plants test reads them too.
+    ("P5-case-base-name-only", "Modified y/d\u00e9.md.", _mod("x/d\u00c9.md"),
+     [("UNCHECKABLE", "case")], [], "PASS"),
+    ("P5-case-suffix-only", "Modified \u00e9/d\u00e9.md.", _mod("z/\u00c9/d\u00e9.md"),
+     [("UNCHECKABLE", "case")], [], "PASS"),
 ]
 
 
 def test_cross_port_reproductions(M, tmp_path):
-    """Pass 3's C-1 and pass 4's C-1: the reviews' inputs whose claim text or detail differs between main's two ports.
-    On 40bba05b R1, R4 and E1 split the ports; on ea677740 X5, X5b, X2 and X3 split the gate verdicts."""
-    items = [{"id": cid, "summary": s, "diff": d} for cid, s, d, _py, _js, _gate in XPORT_CASES]
+    """Pass 3's C-1, pass 4's C-1 and pass 5's C-1, I-2 and C-3: the reviews' inputs whose claim text or detail differs
+    between main's two ports, and the declared values beside a letter outside ASCII. On 40bba05b R1, R4 and E1 split the
+    ports; on ea677740 X5, X5b, X2 and X3 split the gate verdicts; on 5ebe0b6b X2-13, G1, G2 and G3 did. A case may name
+    the splits it expects (L1, the one known false pairing of a measured key); every other case expects none."""
+    items = [{"id": x[0], "summary": x[1], "diff": x[2]} for x in XPORT_CASES]
     (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=False), encoding="utf-8")
     ref = R.main_port_path(tmp_path)
     node("--decisions", ref, tmp_path / "in.json", tmp_path / "out.json")
     js = {d["id"]: d for d in json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))}
-    for cid, s, d, want_py, want_js, gate in XPORT_CASES:
+    for cid, s, d, want_py, want_js, gate, *expect in XPORT_CASES:
         a, b = M.gate_diff_text(s, d).to_dict(), N.gate_diff_text(s, d).to_dict()
         assert [_seen(x) for x in b["claims"]] == want_py, cid
         assert [_seen(x) for x in js[cid]["new"]["claims"]] == want_js, cid
-        assert cross_port(a, b, js[cid]["main"], js[cid]["new"])[1] == [], cid
+        assert cross_port(a, b, js[cid]["main"], js[cid]["new"])[1] == (expect[0] if expect else []), cid
         assert b["verdict"] == js[cid]["new"]["verdict"] == gate, cid
 
 
@@ -1349,6 +1568,27 @@ def test_python_tables():
     assert {cp for cp in range(0x110000) if N._P2A_BAD_RX.match(chr(cp))} == wordish | _set(N._P2A_DIVERGENT)
     assert {cp for cp in range(0x80, 0x110000)
             if re.match(r"\w", chr(cp)) or re.match("[A-Za-z_]", chr(cp), re.I)} <= wordish
+    # C-1 (NOTE_path2a_fifth_pass_2026_09_30 and its corrections): the count seam reads the white space only one port
+    # reads, in a run of either port's, and 'file' spelled with a code point CPython's IGNORECASE folds to i or s. The
+    # four such code points, the letters each folds to, and that no word of the count holds k, the fourth's letter
+    # (the port's IGNORECASE folds none: test_port_tables_and_constants).
+    folds = {cp: {x for x in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" if re.match(x, chr(cp), re.I)}
+             for cp in range(0x80, 0x110000) if re.match("[A-Za-z]", chr(cp), re.I)}
+    assert folds == {0x130: {"i", "I"}, 0x131: {"i", "I"}, 0x17F: {"s", "S"}, 0x212A: {"k", "K"}}
+    words = re.search(r"\\s\+(files\?\\s\+\(\?:were\\s\+\)\?changed)", R.lf(R.INSTRUMENT)).group(1)
+    assert set(words.lower()) & set("iks") == {"i", "s"}, words
+    assert _set(N._P2A_ONE_SPACE) == _set(N._P2A_PY_SPACE) ^ _set(N._P2A_JS_SPACE)
+    assert _set(N._P2A_ANY_SPACE) == _set(N._P2A_PY_SPACE) | _set(N._P2A_JS_SPACE)
+    for s, want in (("13\x1ffiles changed", True), ("\ufeffCreated a.py.", False), ("3 files\x85changed.", True),
+                    ("files\u2028\x1fwere changed", True), ("fixed\x1fwith care", False), ("3\x1f\x1f", False),
+                    ("f\u0131les", True),
+                    ("File\u017f", True), ("\u212a files changed", False), ("x\x85y", False)):
+        assert N._p2a_seam(s) is want, (s, want)
+    # C-2: the digit table reads ASCII digits only
+    for x in ("\u30003", "3\u3000", "\uff13", " 3", "3 ", "+3", "0x3", "3e1", "\u0663"):
+        with pytest.raises(KeyError):
+            N._p2a_int(x)
+    assert N._p2a_int("0123456789") == 123456789
 
 
 def test_port_tables_and_constants(tmp_path):
@@ -1372,3 +1612,7 @@ def test_port_tables_and_constants(tmp_path):
     assert set(t["not_wordish"]) == set(range(0x80)) | never_word
     assert set(t["not_bad"]) == (set(range(0x80)) - _set(N._P2A_DIVERGENT)) | _neutral()
     assert set(t["word_class"]) <= set(range(0x80)), "the port's word class reads outside ASCII"
+    # C-1 and C-2 (NOTE_path2a_fifth_pass_2026_09_30)
+    assert set(t["one_space"]) == _set(N._P2A_ONE_SPACE)
+    assert t["ascii_folds"] == [], "this engine's non-Unicode IGNORECASE folds a code point from 0x80 up to ASCII"
+    assert all(t["int_rejects"]), "the port's digit table read a string that is not ASCII digits"

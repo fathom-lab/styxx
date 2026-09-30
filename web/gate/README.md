@@ -3,7 +3,7 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`dadcf7ff78409a713c2c5b4b4351a993f5f4615d21b6770ea676311118d339fa` (LF line endings; a wheel
+`2eaf277f71ef4580c37a9cfce0a7cf667ed26520568469d51e62500a2615f678` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -42,8 +42,8 @@ and the never-read count to the page.
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 eeb0c29826a00bd12547dad32458d0b99fa07b9ec7785a104ba2b6abc7e8718d   40,419 chars
-    bookmarklet.href.txt  sha256 17bafc4a32e136c4ba251edd49d3cba1756398866fbdb127c6a50491ef8c1222   40,430 chars
+    bookmarklet.min.js    sha256 1fcef10bf1baa313c90da95b409b364bb06e3827606cc143e394f2f71a61a40e   44,117 chars
+    bookmarklet.href.txt  sha256 732de47e8046a88ac693add798287bbedb92d7aca30344bdecc8f29219b8b712   44,128 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file;
@@ -70,7 +70,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to dadcf7ff…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 2eaf277f…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 153 pinned pairs against their expect blocks (+ path2a_moves.json)
@@ -277,7 +277,7 @@ The port half of the PATH-2a tests, and `test_port_is_current`'s check of the po
 `.github/workflows/dependabot.yml`, a false VERIFIED — so `path1_pairs.json` stays `main`'s record,
 byte for byte.
 
-**Measured**, on this file (`styxx/diffgate.py` `dadcf7ff…`, reader `9b620e00…`). Figures marked *pinned* are
+**Measured**, on this file (`styxx/diffgate.py` `2eaf277f…`, reader `9b620e00…`). Figures marked *pinned* are
 asserted exactly by the committed tests, and hold on CPython 3.12.10 (Unicode 15.0) and 3.14.2 (16.0); the rest
 were measured on CPython 3.12.10 and Node 24.13.0 (Unicode 16) and are not asserted.
 

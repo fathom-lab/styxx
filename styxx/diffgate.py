@@ -1411,8 +1411,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 
 # === PATH-2a abstain-only overlay: BEGIN ===
 #
-# NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30 and
-# NOTE_path2a_fourth_pass_2026_09_30.
+# NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30,
+# NOTE_path2a_fourth_pass_2026_09_30 and NOTE_path2a_fifth_pass_2026_09_30.
 # Everything outside this block is main's reader at 1cde8b82 (sha256 9b620e00..., LF), unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
@@ -1441,6 +1441,14 @@ _P2A_PY_SPACE = ("\t\n\x0b\x0c\r\x1c\x1d\x1e\x1f \x85\xa0\u1680\u2000\u2001\u200
 _P2A_JS_SPACE = ("\t\n\x0b\x0c\r \xa0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a"
                  "\u2028\u2029\u202f\u205f\u3000\ufeff")         # the port's \s and trim(); tests pin it
 _P2A_DIVERGENT = "\x0b\x0c\x1c\x1d\x1e\x1f\x85\u2028\u2029\ufeff"       # where the two ports' readers part
+# Where the two ports' count templates can read a count apart that neither port reads beside a digit
+# (NOTE_path2a_fifth_pass_2026_09_30, C-1; NOTE_path2a_fifth_pass_corrections_2026_09_30): the white space only one of
+# them reads (\s, here CPython's U+001C to U+001F and U+0085, there U+FEFF), in a run of either port's white space
+# between a character that can end a number or a word of the count (an ASCII digit, e, s, or U+017F) and one that can
+# begin one (c, f or w); and 'file' spelled with a code point CPython's IGNORECASE folds to i (U+0130, U+0131) or s
+# (U+017F), where the port's folds none. U+212A folds to k, which no word of the count holds. Tests pin each set.
+_P2A_ONE_SPACE = "\x1c\x1d\x1e\x1f\x85\ufeff"
+_P2A_ANY_SPACE = _P2A_PY_SPACE + "\ufeff"
 # Code points from 0x80 up that neither port's templates read as a word character or fold to an ASCII letter, that
 # have no case, and that both read alike as white space or not (NOTE_path2a_fourth_pass_2026_09_30, B-2): the
 # punctuation and symbols of the Basic Multilingual Plane's punctuation, arrow, operator, technical, box, shape,
@@ -1470,6 +1478,9 @@ _P2A_COUNT_HEAD = re.compile("diff changes ([0-9]+) files, claim says ")
 _P2A_TESTS_HEAD = re.compile("diff adds ([0-9]+) test functions, claim says ")
 _P2A_DIGITS = re.compile("[0-9]+")
 _P2A_DIV_RX = re.compile("[" + _P2A_DIVERGENT + "]")
+_P2A_ONE_RX = re.compile("[" + _P2A_ONE_SPACE + "]")
+_P2A_ANY_SPACE_RX = re.compile("[" + _P2A_ANY_SPACE + "]+")
+_P2A_FILE_FOLD_RX = re.compile("[Ff][\u0130\u0131][Ll][Ee]|[Ff][Ii\u0130\u0131][Ll][Ee]\u017f")
 _P2A_WIDE = re.compile("[\x80-\U0010ffff]")                              # a code point outside ASCII
 _P2A_WORDISH_RX = re.compile("[" + _P2A_WORDISH + "]")
 _P2A_BAD_RX = re.compile("[" + _P2A_DIVERGENT + _P2A_WORDISH + "]")      # a character the two ports may read apart
@@ -1515,6 +1526,8 @@ _P2A_PHRASES = {
     "symbol": "the removed lines define this name too, and a changed definition is not an added one",
     "extract": ("the summary holds a character the Python and JavaScript readers may read differently where the "
                 "claim's path, name, prefix or number is read, so the two may extract the claim differently"),
+    "seam": ("the summary holds a character that only one of the Python and JavaScript readers reads as a space, or "
+             "as a letter, where a count is read, so the two may read different counts"),
     "divergent": ("a file header of this diff holds a character that the Python and JavaScript readers split "
                   "or strip differently"),
     "odd": "a path here has a drive-like prefix or a final '.' segment, where base names are read differently",
@@ -1614,9 +1627,14 @@ def _p2a_strip(s: str) -> str:            # main's key before lower()
 
 def _p2a_dotted(s: str) -> str:           # PREREG_path2 R-121's key before lower(): ^(?:\.?/)+ removed
     s = _p2a_bs(s)
-    while s.startswith(("./", "/")):
-        s = s[2:] if s.startswith("./") else s[1:]
-    return s
+    i = 0                                 # one scan, one slice (NOTE_path2a_fifth_pass_2026_09_30, A-3)
+    while True:
+        if s.startswith("./", i):
+            i = i + 2
+        elif s.startswith("/", i):
+            i = i + 1
+        else:
+            return s[i:]
 
 
 def _p2a_run(s: str) -> str:              # the leading dots and slashes main drops and R-121 keeps
@@ -1695,28 +1713,117 @@ def _p2a_scan(m: dict, c: str, tiered: bool):
     return None
 
 
-def _p2a_resolve(m: dict, index: tuple, c: str, tiered: bool):
-    """(key, status) main's find_path returns (tiered=False), or V97's: exact, then suffix, then base name. With a
-    non-empty base name, the keys that match the claim at some tier are exactly the keys of its base name, so main
-    takes the earliest of those; V97 takes the claim itself, else the earliest key ending in '/' + the claim, else
-    (only for a bare claim) the earliest key of its base name."""
-    groups, suffix = index
+def _p2a_resolve(f: "_P2aFacts", space: str, c: str, tiered: bool):
+    """(key, status) main's find_path returns (tiered=False), or V97's: exact, then suffix, then base name, over the
+    status map of `space`. With a non-empty base name, the keys that match the claim at some tier are exactly the keys
+    of its base name, so main takes the earliest of those; V97 takes the claim itself, else the earliest key ending
+    in '/' + the claim (read through the claims' tree, `_p2a_ends`), else (only for a bare claim) the earliest key of
+    its base name."""
+    m = f.status(space)
     b = _p2a_base(c)
     if not b:
         return _p2a_scan(m, c, tiered)
-    cand = groups.get(b)
+    cand = f.groups(space).get(b)
     if not cand:
         return None
     if not tiered:
         return cand[0], m[cand[0]]
     if c in m:
         return c, m[c]
-    p = suffix.get(c)
-    if p is not None:
+    i = f.ends(space, "key", c)[0]
+    if i >= 0:
+        p = f.order(space)[i]
         return p, m[p]
     if "/" in c and P2A_DIRECTORY_BASENAME_ABSTAINS:
         return None
     return cand[0], m[cand[0]]
+
+
+def _p2a_tree(claims) -> dict:
+    """The claims' '/'-segments, read from their ends, as nested dicts; under the key None, the claim ending there."""
+    root: dict = {}
+    for c in claims:
+        node = root
+        segs = c.split("/")
+        k = len(segs)
+        while k > 0:
+            k = k - 1
+            node = node.setdefault(segs[k], {})
+        node[None] = c
+    return root
+
+
+def _p2a_ends(texts: list, claims) -> dict:
+    """{c: [the index of the earliest text that ends in '/' + c, or -1; how many texts do]} for each c of `claims`. A
+    text ends in '/' + c exactly when its '/'-segments end in c's and it has at least one more, so each text is read
+    from its end one segment at a time through the claims' tree, and only while the segments read so far end some
+    claim's: time linear in the texts and the claims, memory linear in the claims. No text's suffixes are stored
+    (NOTE_path2a_fifth_pass_2026_09_30, A-1)."""
+    root = _p2a_tree(claims)
+    out = {c: [-1, 0] for c in claims}
+    for i, p in enumerate(texts):
+        node = root
+        j = len(p)
+        k = p.rfind("/")
+        while k >= 0:
+            node = node.get(p[k + 1:j])
+            if node is None:
+                break
+            c = node.get(None)
+            if c is not None:
+                got = out[c]
+                if got[0] < 0:
+                    got[0] = i
+                got[1] = got[1] + 1
+            j = k
+            k = p.rfind("/", 0, j)
+    return out
+
+
+def _p2a_automaton(words) -> tuple:
+    """An Aho-Corasick automaton over `words` (non-empty strings): per state, its moves, its fallback, and whether a
+    word ends there or at a fallback of it. Built in time linear in the words (NOTE_path2a_fifth_pass_2026_09_30, A-2)."""
+    moves: list = [{}]
+    hit = [False]
+    for w in words:
+        s = 0
+        for ch in w:
+            t = moves[s].get(ch)
+            if t is None:
+                t = len(moves)
+                moves.append({})
+                hit.append(False)
+                moves[s][ch] = t
+            s = t
+        hit[s] = True
+    back = [0] * len(moves)
+    queue = [t for _ch, t in moves[0].items()]
+    k = 0
+    while k < len(queue):
+        s = queue[k]
+        k = k + 1
+        for ch, t in moves[s].items():
+            u = back[s]
+            while u and ch not in moves[u]:
+                u = back[u]
+            v = moves[u].get(ch, 0)
+            back[t] = v
+            hit[t] = hit[t] or hit[v]
+            queue.append(t)
+    return moves, back, hit
+
+
+def _p2a_holds(auto: tuple, text: str) -> bool:
+    """Whether some word of the automaton occurs in `text`, read once, code point by code point."""
+    moves, back, hit = auto
+    s = 0
+    for ch in text:
+        while s and ch not in moves[s]:
+            s = back[s]
+        s = moves[s].get(ch, 0)
+        if hit[s]:
+            return True
+    return False
 
 
 def _p2a_sites(line: str, word: str) -> list:
@@ -1753,36 +1860,96 @@ def _p2a_counted(line: str, lead) -> list:
         r = lead.match(line, b).end()
         last = r
         if line.startswith("def test_", r):
-            out.append(line[r + 4:_P2A_WORD_RUN.match(line, r + 4).end()])
+            e = _P2A_WORD_RUN.match(line, r + 4).end()
+            out.append(None if _P2A_WIDE.match(line, e) else line[r + 4:e])
     return out
 
 
-def _p2a_pairing(views: list, alike: bool = False) -> list:
+def _p2a_wide_name(line: str, j, r, e) -> bool:
+    """Whether the coarse run [j, r) after a `def` or `class`, or the character that ends the ASCII name run [r, e),
+    is a code point from 0x80 up: CPython reads such a name through NFKC, so it may be any name, ASCII or not
+    (NOTE_path2a_fifth_pass_2026_09_30, B-2). The runs of distinct sites never overlap, so reading them is linear."""
+    return _P2A_WIDE.search(line, j, r) is not None or _P2A_WIDE.match(line, e) is not None
+
+
+def _p2a_removed(views: list, extra: list) -> list:
+    """The removed lines of each distinct line view, and the removed lines no view reads (`_p2a_joined`)."""
+    return [removed for _a, removed in _p2a_distinct(views)] + [extra]
+
+
+def _p2a_pairing(views: list, alike: bool = False, extra: list = ()) -> list:
     """Per line view v (0: CPython's line breaks and white space, as main reads the added lines here; 1: the port's),
     (the number of `def test_` sites that view's main counts, how many of them name a test a removed line may define
     after `def`). A removed definition is read as the ASCII run of its name: pairing names by their sets {full name
     run, ASCII run} is pairing them by their ASCII runs, since a full run fixes its ASCII run and a full run equal
-    to an ASCII run is all ASCII. `alike`: the two views are one object and the text holds no character where the two
-    mains' white space parts (U+001F, U+FEFF; the others are line breaks of view 0), so both views count alike."""
+    to an ASCII run is all ASCII. A name read through NFKC (a code point from 0x80 up in it or before it) pairs with
+    every name: a removed one with every counted site, a counted one with every removed test
+    (NOTE_path2a_fifth_pass_2026_09_30, B-2). `extra`: the removed lines no view reads (B-1). `alike`: the two views
+    are one object and the text holds no character where the two mains' white space parts (U+001F, U+FEFF; the others
+    are line breaks of view 0), so both views count alike."""
     rem = set()
-    for _a, removed in _p2a_distinct(views):
+    wild = False
+    for removed in _p2a_removed(views, extra):
         for line in removed:
-            for _j, r in _p2a_sites(line, "def"):
-                if line.startswith("test_", r):
-                    rem.add(line[r:_P2A_WORD_RUN.match(line, r).end()])
+            for j, r in _p2a_sites(line, "def"):
+                e = _P2A_WORD_RUN.match(line, r).end()
+                if _p2a_wide_name(line, j, r, e):
+                    wild = True
+                elif line.startswith("test_", r):
+                    rem.add(line[r:e])
     out = []
     for (added, _r), lead in zip(_p2a_distinct(views) if alike else views, _P2A_LEADS):
         got = paired = 0
         for line in added:
             for x in _p2a_counted(line, lead):
                 got += 1
-                paired += x in rem
+                paired += wild or (bool(rem) if x is None else x in rem)
         out.append((got, paired))
     return out * 2 if len(out) == 1 else out
 
 
 def _p2a_distinct(views: list) -> list:
     return views[:1] if views[0] is views[1] else views
+
+
+def _p2a_joined(diff_text: str) -> list:
+    """The removed text no line view reads as a line (NOTE_path2a_fifth_pass_2026_09_30, B-1), as more removed lines:
+    each piece after a CPython line break inside a git line (the diff split at '\\n') that starts with '-', which no
+    view reads as removed (CPython's tokenizer ends a line at a lone CR); and each run of the base side's pieces (the
+    pieces of git lines starting with '-' or ' ', in order, '+' and '\\' lines passed over, any other line ending the
+    run) joined where a piece ends in a backslash, which CPython reads as one line, each such backslash read as a
+    space, when a piece of the run is removed. Linear in the diff."""
+    out = []
+    acc: list = []
+    hit = False
+
+    def flush() -> None:
+        if len(acc) > 1 and hit:
+            out.append("".join(x[:-1] + " " for x in acc[:-1]) + acc[-1])
+
+    for line in diff_text.split("\n"):
+        head = line[:1]
+        if head == "+" or head == "\\":
+            continue
+        if head != "-" and head != " ":
+            flush()
+            acc = []
+            hit = False
+            continue
+        pieces = _p2a_lines(line[1:], _P2A_FINE)
+        if head == "-":
+            for piece in pieces[1:]:
+                out.append(piece)
+        for piece in pieces:
+            if not acc:
+                hit = False
+            acc.append(piece)
+            hit = hit or head == "-"
+            if not piece.endswith("\\"):
+                flush()
+                acc = []
+    flush()
+    return out
 
 
 def _p2a_anchored(line: str) -> list:
@@ -1815,31 +1982,36 @@ def _p2a_anchored(line: str) -> list:
     return out
 
 
-def _p2a_def_runs(views: list) -> set:
-    """The ASCII name run at every anchored `def` or `class` site of a removed line, in either view. A name of ASCII
+def _p2a_def_runs(views: list, extra: list = ()) -> tuple:
+    """(the ASCII name run at every anchored `def` or `class` site of a removed line, in either view or in `extra`;
+    whether some such site's name is read through NFKC, `_p2a_wide_name`, and so may be any name). A name of ASCII
     word characters can start only where a site's coarse run ends (the positions inside the run are coarse), and ends
     where its ASCII run does, so it is defined by `_p2a_defines` exactly when it is in this set."""
     out: set = set()
     seen: set = set()
-    for _a, removed in _p2a_distinct(views):
+    wild = False
+    for removed in _p2a_removed(views, extra):
         for line in removed:
             if line in seen:
                 continue
             seen.add(line)
-            for _j, r in _p2a_anchored(line):
-                out.add(line[r:_P2A_WORD_RUN.match(line, r).end()])
-    return out
+            for j, r in _p2a_anchored(line):
+                e = _P2A_WORD_RUN.match(line, r).end()
+                wild = wild or _p2a_wide_name(line, j, r, e)
+                out.add(line[r:e])
+    return out, wild
 
 
-def _p2a_defines(views: list, name: str) -> bool:
-    """Whether a removed line, in either view, may define `name` after an anchored `def` or `class`: the name starts
-    where the coarse run after the word does or anywhere in it, and ends where its full name run or its ASCII run
-    ends. Read this way only for a name outside ASCII word characters; the others are looked up in `_p2a_def_runs`."""
+def _p2a_defines(views: list, name: str, extra: list = ()) -> bool:
+    """Whether a removed line, in either view or in `extra`, may define `name` after an anchored `def` or `class`: the
+    name starts where the coarse run after the word does or anywhere in it, and ends where its full name run or its
+    ASCII run ends. Read this way only for a name outside ASCII word characters; the others are looked up in
+    `_p2a_def_runs`."""
     if not name:
         return False
     full = _P2A_NAME_RUN.fullmatch(name) is not None
     word = _P2A_WORD_RUN.fullmatch(name) is not None
-    for _a, removed in _p2a_distinct(views):
+    for removed in _p2a_removed(views, extra):
         for line in removed:
             for j, r in _p2a_anchored(line):
                 k = line.find(name, j + 1, r + len(name))
@@ -1857,6 +2029,21 @@ def _p2a_runs(summary: str, run_rx) -> str:
     as a word character and the port's does not, joined by _P2A_SEP, which no run holds: a string that holds s, where
     s does not hold _P2A_SEP, exactly when some run does (NOTE_path2a_fourth_pass_2026_09_30, A-1)."""
     return _P2A_SEP.join(m.group() for m in run_rx.finditer(summary) if _P2A_WORDISH_RX.search(m.group()))
+
+
+def _p2a_seam(summary: str) -> bool:
+    """Whether the summary holds a count seam (_P2A_ONE_SPACE, _P2A_FILE_FOLD_RX): read in one pass over the maximal runs
+    of either port's white space, and only where a white space of one port alone occurs at all."""
+    if _P2A_FILE_FOLD_RX.search(summary):
+        return True
+    if not _P2A_ONE_RX.search(summary):
+        return False
+    for m in _P2A_ANY_SPACE_RX.finditer(summary):
+        a, e = m.start(), m.end()
+        if a > 0 and e < len(summary) and summary[a - 1] in "0123456789EeSs\u017f" and summary[e] in "CcFfWw" \
+                and _P2A_ONE_RX.search(summary, a, e):
+            return True
+    return False
 
 
 def _p2a_zones(summary: str) -> list:
@@ -1906,20 +2093,56 @@ class _P2aFacts:
     def status(self, space: str) -> dict:
         return self._get(space, lambda: _p2a_build(self.regs(), _P2A_FORMS[space][0]))
 
-    def index(self, space: str) -> tuple:
-        """The status map's keys by base name, and each suffix after a '/' of a key with the earliest key ending in
-        it, in main's order."""
+    def order(self, space: str) -> list:
+        """The status map's keys, in main's order."""
+        return self._get("order" + space, lambda: [p for p in self.status(space)])
+
+    def groups(self, space: str) -> dict:
+        """The status map's keys by base name, in main's order."""
         def make():
             groups: dict = {}
-            suffix: dict = {}
             for p in self.status(space):
                 groups.setdefault(_p2a_base(p), []).append(p)
-                k = p.find("/")
-                while k >= 0:
-                    suffix.setdefault(p[k + 1:], p)
-                    k = p.find("/", k + 1)
-            return groups, suffix
-        return self._get("index" + space, make)
+            return groups
+        return self._get("groups" + space, make)
+
+    def prime(self, paths: tuple) -> tuple:
+        """Names the claimed paths of the claims in reach, before any claim is read (NOTE_path2a_fifth_pass_2026_09_30,
+        A-1): the claims' tree (`_p2a_ends`) holds their forms. A claim not named here is read on its own."""
+        return self._get("claimed", lambda: paths)
+
+    def ends(self, space: str, which: str, c: str) -> list:
+        """`_p2a_ends` for the claim form c of `space` over the status map's keys ("key", c a fold form) or over every
+        registration's fold ("fold") or wild ("wild") form: [the earliest index, how many end in '/' + c]."""
+        form = _P2A_FORMS[space][1 if which == "wild" else 0]
+        if which == "key":
+            texts = self.order(space)
+        else:
+            texts = self.space(space)[1 if which == "wild" else 0]
+        got = self._get(("ends", space, which), lambda: _p2a_ends(
+            texts, {form(x) for x in self._get("claimed", tuple)}))
+        if c in got:
+            return got[c]
+        return self._get(("ends", space, which, c), lambda: _p2a_ends(texts, {c})[c])
+
+    def automaton(self, want) -> tuple:
+        """`_p2a_automaton` over the ASCII base names (a wild form without a placeholder) of main's registrations,
+        those with status `want` when it is given."""
+        def make():
+            regs = self.regs()
+            words = set()
+            for i, w in enumerate(self.space("A")[1]):
+                b = _p2a_base(w)
+                if b and not _P2A_WIDE.search(b) and (want is None or regs[i][1] == want):
+                    words.add(b)
+            return _p2a_automaton(words)
+        return self._get(("automaton", want), make)
+
+    def joined(self) -> list:
+        return self._get("joined", lambda: _p2a_joined(self.diff_text))
+
+    def seam(self) -> bool:
+        return self._get("seam", lambda: _p2a_seam(self.summary))
 
     def space(self, space: str) -> tuple:
         """Per registration, its fold and wild forms; per wild form, the fold forms and the statuses registered under
@@ -1962,12 +2185,16 @@ class _P2aFacts:
 
     def pairing(self) -> tuple:
         return self._get("pairing", lambda: _p2a_pairing(self.views(), self.views()[0] is self.views()[1]
-                                                         and not _P2A_LEAD_APART.search(self.diff_text)))
+                                                         and not _P2A_LEAD_APART.search(self.diff_text),
+                                                         self.joined()))
 
     def defines(self, name: str) -> bool:
+        runs, wild = self._get("defs", lambda: _p2a_def_runs(self.views(), self.joined()))
+        if wild:
+            return True
         if name and _P2A_WORD_RUN.fullmatch(name):
-            return name in self._get("defs", lambda: _p2a_def_runs(self.views()))
-        return self._get(("defines", name), lambda: _p2a_defines(self.views(), name))
+            return name in runs
+        return self._get(("defines", name), lambda: _p2a_defines(self.views(), name, self.joined()))
 
     def runs(self, kind: str) -> str:
         return self._get("runs" + kind, lambda: _p2a_runs(self.summary, _P2A_RUN_RX[kind]))
@@ -1997,14 +2224,10 @@ def _p2a_port_may_verify(f: "_P2aFacts", claimed: str, want) -> bool:
     """For a claimed path holding a code point from 0x80 up: whether the port's reading of it could be VERIFIED. The
     port's template reads only ASCII, so its path is a part of this one, and a path main verifies ends in the base name
     of some registration with the claimed status. So it is enough that some such registration has an ASCII base name
-    (its wild form holds no placeholder) that the claimed path, folded, holds."""
+    (its wild form holds no placeholder) that the claimed path, folded, holds: one read of it through the automaton of
+    those base names, memoised per claimed path (NOTE_path2a_fifth_pass_2026_09_30, A-2)."""
     held = _p2a_fold(_p2a_bs(claimed))
-    regs = f.regs()
-    for i, w in enumerate(f.space("A")[1]):
-        b = _p2a_base(w)
-        if b and not _P2A_WIDE.search(b) and b in held and (want is None or regs[i][1] == want):
-            return True
-    return False
+    return f._get(("port", held, want), lambda: _p2a_holds(f.automaton(want), held))
 
 
 def _p2a_extract(f: "_P2aFacts", c, claimed: str, want) -> bool:
@@ -2021,18 +2244,42 @@ def _p2a_case_doubt(f: "_P2aFacts", space: str, claimed: str, want) -> bool:
     claimed, so a runtime's lower() could merge them into a key that reads otherwise. A tier holds only within one
     base name, and the wild form keeps every '/', so only the claim's base-name group is read; and in it, only the
     registrations whose fold form holds a code point from 0x80 up: for the others the fold form is the wild form and
-    no other registration shares it, so neither U1 nor U2 can hold."""
+    no other registration shares it, so neither U1 nor U2 can hold. Memoised per fold form (the wild form is a function
+    of it) and status (NOTE_path2a_fifth_pass_2026_09_30, A-2)."""
+    cf = _P2A_FORMS[space][0](claimed)
+    return f._get(("case", space, cf, want), lambda: _p2a_case(f, space, claimed, want))
+
+
+def _p2a_case(f: "_P2aFacts", space: str, claimed: str, want) -> bool:
+    """`_p2a_case_doubt` without a scan of the group per claim (NOTE_path2a_fifth_pass_2026_09_30, A-2). In the group G
+    of the claim's wild base name b, a fold match implies a wild match at the same tier, so the wild tier of a
+    registration is never above its fold tier, and U1 holds exactly when (1) some fold base name in G is not the
+    claim's, or (2) a registration with the claim's wild form has another fold form, or (3) more registrations end in
+    '/' + the wild form than in '/' + the fold form. (1) is one set per group, (2) the per-wild-form fold sets, (3)
+    two reads through the claims' tree; U2 is one flag per group and status. An empty base name keeps the scan."""
     form, wform = _P2A_FORMS[space]
     fs, ws, keys, sts, wide_by_base, wide = f.space(space)
     cw, cf = wform(claimed), form(claimed)
     b = _p2a_base(cw)
-    for i in (wide_by_base.get(b, ()) if b else wide):
-        tw = _p2a_tier(ws[i], cw)
-        if tw != _p2a_tier(fs[i], cf):
+    if not b:
+        for i in wide:
+            tw = _p2a_tier(ws[i], cw)
+            if tw != _p2a_tier(fs[i], cf):
+                return True
+            if want is not None and tw is not None and len(keys[ws[i]]) > 1 and sts[ws[i]] != {want}:
+                return True
+        return False
+    group = wide_by_base.get(b, ())
+    if cw != cf:                          # a claim in ASCII compares alike under both forms with every registration
+        bases = f._get(("bases", space, b), lambda: {_p2a_base(fs[i]) for i in group})
+        if len(bases) > 1 or (bases and _p2a_base(cf) not in bases):
             return True
-        if want is not None and tw is not None and len(keys[ws[i]]) > 1 and sts[ws[i]] != {want}:
+        if cw in keys and keys[cw] != {cf}:
             return True
-    return False
+        if f.ends(space, "wild", cw)[1] != f.ends(space, "fold", cf)[1]:
+            return True
+    return want is not None and f._get(("merged", space, b, want), lambda: any(
+        len(keys[ws[i]]) > 1 and sts[ws[i]] != {want} for i in group))
 
 
 def _p2a_path(c, f: "_P2aFacts"):
@@ -2051,12 +2298,12 @@ def _p2a_path(c, f: "_P2aFacts"):
     def ok(r) -> bool:
         return r is not None and (want is None or r[1] == want)
 
-    if not ok(_p2a_resolve(f.status("A"), f.index("A"), ca, False)):
+    if not ok(_p2a_resolve(f, "A", ca, False)):
         return "unreproduced", "#97"
-    r97 = _p2a_resolve(f.status("A"), f.index("A"), ca, True)
+    r97 = _p2a_resolve(f, "A", ca, True)
     v97 = ok(r97)
-    v121 = ok(_p2a_resolve(f.status("K"), f.index("K"), ck, False))
-    vboth = ok(_p2a_resolve(f.status("K"), f.index("K"), ck, True))
+    v121 = ok(_p2a_resolve(f, "K", ck, False))
+    vboth = ok(_p2a_resolve(f, "K", ck, True))
     if v97 and v121 and vboth:
         return None
     if v121 and not v97:
@@ -2097,9 +2344,15 @@ def _p2a_count(c, f: "_P2aFacts"):
     twin, wa, a, lo, hi = f.count()
     if not twin:
         return None
+    # C-1 (NOTE_path2a_fifth_pass_2026_09_30): a count one port reads and the other does not, from a white space only
+    # one of them reads or a letter only CPython folds, can be read cleanly by that port alone; so where the summary
+    # holds such a character anywhere, every count read from the summary is withheld, in both ports, ahead of the
+    # guard below, so that both ports name the same phrase whichever count each reads.
+    if not c.detail.get("declared") and f.seam():
+        return "seam", "#121"
     # C-1 (NOTE_path2a_fourth_pass_2026_09_30): the count template reads its number after `\b`, so where a digit or
-    # letter outside ASCII sits beside it CPython's `\d` and `\b` read one number and the port's another (a full-width 3 then "3": 33
-    # in CPython, 3 in the port). Withheld in both ports, as for a path or a name.
+    # letter outside ASCII sits beside it CPython's `\d` and `\b` read one number and the port's another (a full-width 3
+    # then "3": 33 in CPython, 3 in the port). Withheld in both ports, as for a path or a name.
     claimed = c.detail.get("n") or ""
     if _P2A_DIGITS.fullmatch(claimed) is None or (not c.detail.get("declared") and _p2a_in_runs(f, claimed, "count")):
         return "extract", "#121"
@@ -2252,6 +2505,8 @@ def _p2a_abstain(g: DiffGate, strict: bool, facts) -> DiffGate:
         return g
     try:
         f = facts()
+        f.prime(tuple(c.detail.get("path") for c in todo if c.kind in _PATH_KINDS
+                      and isinstance(c.detail.get("path"), str)))
         hits = [(c, _p2a_decide(c, f)) for c in todo]
     except Exception:                     # an abstain-only overlay that cannot read withholds, and says so
         hits = [(c, ("error", _P2A_KIND_DEFECT[c.kind])) for c in todo]
@@ -2292,8 +2547,9 @@ _P2A_ATTRS_OK = frozenset({
     "add", "append", "pop", "get", "items", "setdefault",
     "compile", "match", "fullmatch", "search", "finditer", "sub", "group", "start", "end", "join",
     "verdict", "why", "kind", "detail", "claims", "a", "b", "status", "note",
-    "diff_text", "name_status", "summary", "_m", "_get", "fine", "regs", "views", "divergent", "index", "space", "odd",
-    "count", "pairing", "defines", "runs", "zones", "zone_text", "scope"})
+    "diff_text", "name_status", "summary", "_m", "_get", "fine", "regs", "views", "divergent", "space", "odd",
+    "count", "pairing", "defines", "runs", "zones", "zone_text", "scope",
+    "order", "groups", "prime", "ends", "automaton", "joined", "seam"})
 _P2A_TYPES = frozenset({"str", "list", "dict", "set", "tuple", "frozenset", "int", "bool"})
 
 
@@ -2314,8 +2570,14 @@ def _p2a_regex_problems(pattern: str) -> list:
             in_class = False
         elif ch == "." and not in_class:
             out.append("unescaped '.'")
-        elif ch == "(" and pattern[i + 1:i + 2] == "?" and pattern[i + 2:i + 3] in ("i", "u", "L", "a"):
-            out.append("inline flag " + pattern[i:i + 3])
+        elif ch == "(" and not in_class and pattern[i + 1:i + 2] == "?":
+            # NOTE_path2a_fifth_pass_2026_09_30, C-2: a flag group (`(?si)`, `(?mi:...)`, `(?-i:...)`) with a case or
+            # Unicode flag in any position, not only the leading one
+            j = i + 2
+            while j < len(pattern) and pattern[j] in "aiLmsux-":
+                j += 1
+            if j > i + 2 and pattern[j:j + 1] in (":", ")") and any(x in pattern[i + 2:j] for x in "iuLa"):
+                out.append("inline flag " + pattern[i:j + 1])
         i += 1
     return out
 
