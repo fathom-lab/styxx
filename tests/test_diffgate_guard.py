@@ -246,11 +246,29 @@ def _stub_evaluate(on, switched, status=None, sides=None, apart=None, licence=No
 
 
 @pytest.mark.parametrize("repair", ["#97", "#121", "#101"])
-def test_the_reproductions_stay_repaired_under_the_guard(repair):
-    """Each difference from main on a reproduction is licensed by its own repair: the guarded gate is the reading."""
+def test_the_reproductions_stay_repaired_under_the_guard(repair, monkeypatch):
+    """Each difference from main on a reproduction is explained by its own repair. NOTE_path2_fifteenth_pass (A): #97's and
+    #121's licences are withdrawn, so each decided verdict of theirs that differs from main's abstains, naming main's
+    verdict and the repair, and every other claim is the reading's; with the withdrawal lifted (the machinery a reviewed
+    change would license them with again) the guarded gate is the reading, as before."""
     p = PAIRS[REPRO[repair]]
-    assert _full(dg.gate_diff_text(p["summary"], p["diff"])) == \
-        _full(dg._evaluate_text(p["summary"], p["diff"], dg._ALL_ON))
+    reading = _full(dg._evaluate_text(p["summary"], p["diff"], dg._ALL_ON))
+    final = _full(dg.gate_diff_text(p["summary"], p["diff"]))
+    main = ref.gate_diff_text(p["summary"], p["diff"]).claims
+    theirs = dict(zip(dg._claim_keys(main), main))
+    keys = dg._claim_keys(dg._evaluate_text(p["summary"], p["diff"], dg._ALL_ON).claims)
+    withdrawn = 0
+    for key, r, f in zip(keys, reading, final):
+        mv = theirs[key].verdict
+        if r[2] in ("UNCHECKABLE", mv):
+            assert f == r, key
+        else:
+            assert repair in dg.WITHDRAWN and f[2] == "UNCHECKABLE", key
+            assert f[3] == dg._GUARD_WITHDRAWN.format(main=mv, this=r[2], repair=repair), key
+            withdrawn += 1
+    assert bool(withdrawn) == (repair in dg.WITHDRAWN)
+    monkeypatch.setattr(dg, "WITHDRAWN", ())
+    assert _full(dg.gate_diff_text(p["summary"], p["diff"])) == reading
 
 
 def test_a_difference_no_named_repair_explains_abstains_and_names_mains_verdict():
@@ -264,11 +282,19 @@ def test_a_difference_no_named_repair_explains_abstains_and_names_mains_verdict(
     assert all(y.startswith("main's reading gives UNCHECKABLE and this one VERIFIED; no named repair") for *_x, y in moved)
 
 
-def test_a_licence_needs_the_switch_and_the_precondition():
+def test_a_licence_needs_the_switch_and_the_precondition(monkeypatch):
     mine, theirs = _claim("files_changed_count", "VERIFIED", n="2"), _claim("files_changed_count", "CONTRADICTED", n="2")
     switched = {"#97": _stub_gate(mine), "#121": _stub_gate(theirs), "#101": _stub_gate(mine)}
     reference = lambda: _stub_gate(theirs)  # noqa: E731
-    # #121 switched off gives main's verdict, and a dotted key is in the file list: licensed, kept
+    # NOTE_path2_fifteenth_pass (A): #121's licence is withdrawn -- its switch and precondition explain the difference, and
+    # the claim abstains naming main's verdict and #121
+    g = dg._guard(_stub_evaluate(_stub_gate(mine), switched, status={".env": "A", "env": "A"}), reference,
+                  strict=False, tp=[])
+    assert [(c.verdict, c.why) for c in g.claims] == [("UNCHECKABLE", dg._GUARD_WITHDRAWN.format(
+        main="CONTRADICTED", this="VERIFIED", repair="#121"))]
+    # the machinery, with the withdrawal lifted: #121 switched off gives main's verdict, and a dotted key is in the file
+    # list: licensed, kept
+    monkeypatch.setattr(dg, "WITHDRAWN", ())
     g = dg._guard(_stub_evaluate(_stub_gate(mine), switched, status={".env": "A", "env": "A"}), reference,
                   strict=False, tp=[])
     assert [c.verdict for c in g.claims] == ["VERIFIED"]
@@ -283,7 +309,7 @@ def test_a_licence_needs_the_switch_and_the_precondition():
     assert [c.verdict for c in g.claims] == ["UNCHECKABLE"]
 
 
-def test_one_repairs_switch_and_another_repairs_precondition_license_nothing():
+def test_one_repairs_switch_and_another_repairs_precondition_license_nothing(monkeypatch):
     """NOTE_path2_fourteenth_pass_2026_09_29 (round 13, G13.2): a licence is ONE repair whose switch gives main's verdict back
     AND whose own precondition holds. Here #97's switch gives main back but #97's precondition fails (a count is no path
     claim), and #121's precondition holds (a dotted key) but its switch does not give main back: the guard abstains. A
@@ -294,18 +320,35 @@ def test_one_repairs_switch_and_another_repairs_precondition_license_nothing():
                   strict=False, tp=[])
     assert [(c.verdict, c.why) for c in g.claims] == [("UNCHECKABLE", dg._GUARD_DIFFERS.format(
         main="CONTRADICTED", this="VERIFIED"))]
-    # and the same stub with #121's switch giving main back is licensed: the abstention above is the pairing's, not the stub's
+    # and the same stub with #121's switch giving main back is explained by #121: withdrawn (NOTE_path2_fifteenth_pass, A),
+    # so it abstains naming #121, and with the withdrawal lifted it is licensed -- the abstention above is the pairing's
     switched["#121"] = _stub_gate(theirs)
+    g = dg._guard(_stub_evaluate(_stub_gate(mine), switched, status={".env": "A", "env": "A"}), lambda: _stub_gate(theirs),
+                  strict=False, tp=[])
+    assert [(c.verdict, c.why) for c in g.claims] == [("UNCHECKABLE", dg._GUARD_WITHDRAWN.format(
+        main="CONTRADICTED", this="VERIFIED", repair="#121"))]
+    monkeypatch.setattr(dg, "WITHDRAWN", ())
     g = dg._guard(_stub_evaluate(_stub_gate(mine), switched, status={".env": "A", "env": "A"}), lambda: _stub_gate(theirs),
                   strict=False, tp=[])
     assert [c.verdict for c in g.claims] == ["VERIFIED"]
 
 
-def test_the_tightened_licences_on_stubs():
+def test_the_tightened_licences_on_stubs(monkeypatch):
     """NOTE_path2_twelfth_pass (A.1, A.2): #121 licenses only in git's own rendering, and on a path claim only where the
     resolved entry matches the claim case kept by its tier; #97 only on a case-kept exact or suffix match and never beside
-    a Z-3 doubt. Each stub has the switch giving main's verdict back, so only the precondition decides."""
+    a Z-3 doubt. Each stub has the switch giving main's verdict back, so only the precondition decides.
+    NOTE_path2_fifteenth_pass (A): the licences are withdrawn; with the withdrawal as committed, a precondition that holds
+    names its repair in the abstention's reason, and the machinery is asked below with the withdrawal lifted."""
     twins = {".env": "A", "env": "A"}
+    mine0, theirs0 = _claim("files_changed_count", "VERIFIED", n="2"), _claim("files_changed_count", "CONTRADICTED", n="2")
+    sw0 = {"#97": _stub_gate(mine0), "#121": _stub_gate(theirs0), "#101": _stub_gate(mine0)}
+    plain0 = {"rendered": False, "soft": False, "forms": {k: [k] for k in twins}}
+    for licence, why in ((None, dg._GUARD_WITHDRAWN.format(main="CONTRADICTED", this="VERIFIED", repair="#121")),
+                         (plain0, dg._GUARD_DIFFERS.format(main="CONTRADICTED", this="VERIFIED"))):
+        g = dg._guard(_stub_evaluate(_stub_gate(mine0), sw0, status=twins, licence=licence), lambda: _stub_gate(theirs0),
+                      strict=False, tp=[])
+        assert [(c.verdict, c.why) for c in g.claims] == [("UNCHECKABLE", why)]
+    monkeypatch.setattr(dg, "WITHDRAWN", ())
     mine, theirs = _claim("files_changed_count", "VERIFIED", n="2"), _claim("files_changed_count", "CONTRADICTED", n="2")
     switched = {"#97": _stub_gate(mine), "#121": _stub_gate(theirs), "#101": _stub_gate(mine)}
 
@@ -342,12 +385,13 @@ def test_the_tightened_licences_on_stubs():
         "VERIFIED"
 
 
-def test_the_guard_asks_one_switched_off_repair_at_a_time():
+def test_the_guard_asks_one_switched_off_repair_at_a_time(monkeypatch):
     """NOTE_path2_thirteenth_pass (round 12, PA): a licence is one repair switched off giving main's verdict back on its
     own precondition. The stub refuses any other question, so a guard that asked two or three repairs reverted together
     fails here by that rule, not by an unpacking error."""
     mine, theirs = _claim("files_changed_count", "VERIFIED", n="2"), _claim("files_changed_count", "CONTRADICTED", n="2")
     switched = {"#97": _stub_gate(mine), "#121": _stub_gate(theirs), "#101": _stub_gate(mine)}
+    monkeypatch.setattr(dg, "WITHDRAWN", ())           # the machinery (NOTE_path2_fifteenth_pass, A)
     g = dg._guard(_stub_evaluate(_stub_gate(mine), switched, status={".env": "A", "env": "A"}),
                   lambda: _stub_gate(theirs), strict=False, tp=[])
     assert [c.verdict for c in g.claims] == ["VERIFIED"]
@@ -466,6 +510,10 @@ const stub = (on, switched, keys) => (rp, out) => {
 const mine = claim("files_changed_count", "VERIFIED", "s.", { n: "2" }), theirs = claim("files_changed_count", "CONTRADICTED", "s.", { n: "2" });
 const out = {};
 const sw = { "#97": gate(mine), "#121": gate(theirs), "#101": gate(mine) };
+// NOTE_path2_fifteenth_pass (A): as committed, #121's licence is withdrawn; below, the machinery with the withdrawal lifted
+out.withdrawn = B._guard(stub(gate(mine), sw, [".env", "env"]), () => gate(theirs), false).claims.map(c => [c.verdict, c.why]);
+out.withdrawn_as = [...B.WITHDRAWN];
+B.WITHDRAWN.splice(0, B.WITHDRAWN.length);
 out.licensed = B._guard(stub(gate(mine), sw, [".env", "env"]), () => gate(theirs), false).claims.map(c => c.verdict);
 out.no_precondition = B._guard(stub(gate(mine), sw, ["env", "x"]), () => gate(theirs), false).claims.map(c => [c.verdict, c.why]);
 const sw2 = { "#97": gate(mine), "#121": gate(mine), "#101": gate(mine) };
@@ -497,6 +545,9 @@ def test_the_ports_guard_reads_as_the_pythons_on_the_same_stubs():
                        timeout=120)
     assert r.returncode == 0, r.stderr[-2000:]
     out = json.loads(r.stdout)
+    assert out["withdrawn_as"] == list(dg.WITHDRAWN) == ["#97", "#121"]
+    assert out["withdrawn"] == [["UNCHECKABLE", dg._GUARD_WITHDRAWN.format(main="CONTRADICTED", this="VERIFIED",
+                                                                          repair="#121")]]
     assert out["licensed"] == ["VERIFIED"]
     assert out["no_precondition"] == [["UNCHECKABLE", dg._GUARD_DIFFERS.format(main="CONTRADICTED", this="VERIFIED")]]
     assert out["no_switch"] == ["UNCHECKABLE"]
@@ -550,7 +601,12 @@ def test_k5_reads_the_sentence_not_every_non_ascii_character():
     assert dg._apart_readings("éadded function foo.") == (True, True)          # a word character outside the name
     g = dg.gate_diff_text("integrations/git/README.md — created.", PAIRS["path2:97-two-readmes"]["diff"])
     m = ref.gate_diff_text("integrations/git/README.md — created.", PAIRS["path2:97-two-readmes"]["diff"])
-    assert [(c.kind, c.verdict) for c in g.claims if c.kind == "file_created"] == [("file_created", "VERIFIED")]
+    b = dg._evaluate_text("integrations/git/README.md — created.", PAIRS["path2:97-two-readmes"]["diff"], dg._ALL_ON)
+    # K-5 does not read this sentence as main did: the reading's #97 VERIFIED reaches the guard, which abstains only
+    # because #97's licence is withdrawn (NOTE_path2_fifteenth_pass, A) -- the reason says so, not K-5's
+    assert [(c.kind, c.verdict) for c in b.claims if c.kind == "file_created"] == [("file_created", "VERIFIED")]
+    assert [(c.kind, c.verdict, c.why) for c in g.claims if c.kind == "file_created"] == [(
+        "file_created", "UNCHECKABLE", dg._GUARD_WITHDRAWN.format(main="UNCHECKABLE", this="VERIFIED", repair="#97"))]
     assert [(c.kind, c.verdict) for c in m.claims if c.kind == "file_created"] == [("file_created", "UNCHECKABLE")]
 
 
@@ -588,7 +644,9 @@ def test_the_git_door_is_guarded_against_mains_git_door_on_the_same_range(tmp_pa
 
     monkeypatch.setattr(dg._REF, "gate_diff", recorded)
     g = dg.gate_diff("2 files changed.", tmp_path, "HEAD~1", "HEAD")
-    assert [(c.kind, c.verdict) for c in g.claims] == [("files_changed_count", "VERIFIED")]     # #121, licensed
+    # #121 explains the difference; its licence is withdrawn (NOTE_path2_fifteenth_pass, A)
+    assert [(c.kind, c.verdict, c.why) for c in g.claims] == [("files_changed_count", "UNCHECKABLE", dg._GUARD_WITHDRAWN.format(
+        main="CONTRADICTED", this="VERIFIED", repair="#121"))]
     assert seen == [("2 files changed.", tmp_path, "HEAD~1", "HEAD",
                      {"run": None, "strict": False, "evidence": None, "commit": None})]
 
@@ -597,7 +655,8 @@ def test_the_git_door_is_guarded_against_mains_git_door_on_the_same_range(tmp_pa
 #
 # Stated (NOTE_path2_eleventh_pass, B): for every claim, the final verdict is main's, or UNCHECKABLE, or this reading's own
 # licensed by one named repair -- #97, #121 or #101 -- whose precondition holds on the claim and whose switch, alone, gives
-# main's verdict back. Held here claim by claim over every committed corpus (the pinned pairs of every file, and the
+# main's verdict back. NOTE_path2_fifteenth_pass (A): a repair in WITHDRAWN (#97, #121) licenses nothing, so the licence
+# can only be #101's, which licenses no decided verdict other than main's. Held here claim by claim over every committed corpus (the pinned pairs of every file, and the
 # differential corpora where a checkout has built them) and a seeded randomised set; the scratch harness of this round
 # runs the same check over every reviewer's harness set and more than 10,000 fresh cases.
 
@@ -630,7 +689,7 @@ def guarantee_violations(summary: str, diff: str, module=dg) -> tuple:
         if not (mv is not None and c.verdict == b.verdict
                 and any(switched[r].get(key) is not None and switched[r][key].verdict == mv
                         and module._precondition(r, b, seen["status"], seen["sides"], seen["licence"])
-                        for r in dg.REPAIRS)):
+                        for r in dg.REPAIRS if r not in ("#97", "#121"))):
             bad.append((key, c.verdict, mv))
     if final.verdict != ("FAIL" if any(c.verdict == "CONTRADICTED" for c in final.claims) else "PASS"):
         bad.append(("gate verdict", final.verdict, None))
@@ -793,7 +852,7 @@ MUTANTS = {
                                          '    return sum(1 for line in added_blob.split("\\n") if _test_name(line, True))'),
     "BC-1: every diff holds Python": ("    return any(_undotted(p).lower().endswith(_PY_SUFFIXES) for p in status)",
                                       "    return True"),
-    "A-1: an added async test no longer abstains": ("                        if unread:", "                        if False:"),
+    "A-1: an added async test no longer abstains": ("                        elif unread:", "                        elif False:"),
     "the count off by one": ('                        c.verdict = "VERIFIED" if n == len(status) else "CONTRADICTED"',
                              '                        c.verdict = "VERIFIED" if n == len(status) + 1 else "CONTRADICTED"'),
     "only_touches containment by string prefix": ("    return path == pref or path.startswith(pref + \"/\")",
@@ -817,10 +876,11 @@ def test_a_defect_outside_the_three_repairs_can_only_abstain(label, request):
     the defect can only take a verdict away. Without the guard the same defect gives verdicts none of those is.
 
     NOTE_path2_twelfth_pass: except where the defect passes through a licence -- the eleventh pass's section B.3, stated
-    and now met: over git-rendered dotfile twins, "4 files changed." beside a count off by one reads VERIFIED, and with
+    and met: over git-rendered dotfile twins, "4 files changed." beside a count off by one reads VERIFIED, and with
     #121 switched off the same defect reads 3 files as not 4, CONTRADICTED, main's verdict by coincidence, so #121's
-    licence carries the defect's verdict. The guard cannot see that; the scorer's reading oracle (G-C7) does, and each
-    such record is held to it here."""
+    licence carried the defect's verdict. The guard cannot see that; the scorer's reading oracle (G-C7) does, and each
+    such record is held to it here. NOTE_path2_fifteenth_pass (A): #121's licence is withdrawn, so no defect passes
+    through it now; only #101's could carry one, and it licenses no decided verdict other than main's."""
     mutant = _mutant(*MUTANTS[label], tag=label.split(":")[0].replace(" ", "_").replace("-", "_"))
     live = unguarded_new = 0
     through: list = []
@@ -844,7 +904,7 @@ def test_a_defect_outside_the_three_repairs_can_only_abstain(label, request):
                             for r in dg.REPAIRS for g in [mutant._evaluate_text(summary, diff, mutant._Repairs({r}))]}
                 assert any(mutant._precondition(r, b, seen["status"], seen["sides"], seen["licence"])
                            and getattr(switched[r].get(key), "verdict", None) == theirs[key].verdict
-                           for r in dg.REPAIRS), (label, pid, key, c.verdict, allowed)
+                           for r in dg.REPAIRS if r not in mutant.WITHDRAWN), (label, pid, key, c.verdict, allowed)
                 through.append((pid, summary, diff))
             live += c.verdict != getattr(clean_by.get(key), "verdict", None)
             unguarded_new += b.verdict not in allowed
@@ -878,7 +938,11 @@ R13 = json.loads((ROOT / "tests" / "fixtures" / "path2_round12_repros.json").rea
 # a TAB inside a name and a backslash, in `difflib`'s renderings, through #97; and git's own bytes for a typechanged dotted
 # directory beside its undotted twin (G13.1) -- with each model and git's --name-status for it
 R14 = json.loads((ROOT / "tests" / "fixtures" / "path2_round13_repros.json").read_text(encoding="utf-8"))["cases"]
-TRUTH_CASES = R11 + R12 + R13 + R14
+# NOTE_path2_fifteenth_pass_2026_09_29 (F): round 14's reproductions -- a name holding an LF before a `@@` line in `difflib`'s
+# rendering (R14.1), a file created and renamed away in git's own multi-commit renderings through #97 and #121 (R14.2,
+# R14.3), and git's `a/..` prefix (R14.4) -- each with its net model and git's --name-status for it
+R15 = json.loads((ROOT / "tests" / "fixtures" / "path2_round14_repros.json").read_text(encoding="utf-8"))["cases"]
+TRUTH_CASES = R11 + R12 + R13 + R14 + R15
 # the twelfth pass's instrument (0f559a87) reads 30 of the 34 worse than main on the raw door: every typechange under git's
 # default diff.submodule (under diff.submodule=log the Submodule line's doubt already stopped #97) and every whitespace name;
 # not the two controls
@@ -929,9 +993,17 @@ def _written(path: str) -> str:
 
 
 def _truth(kind: str, detail: dict, status: dict):
-    """T, F or ? (the readings a writer may mean disagree) for one claim, or None for a kind this model does not judge."""
+    """T, F or ? (the readings a writer may mean disagree) for one claim, or None for a kind this model does not judge.
+    NOTE_path2_fifteenth_pass (F): and `only_touches` over prefixes written as plain relative paths (round 14's R14.4):
+    every path the model changes lies at or under one of them."""
     if kind == "files_changed_count":
         return _judge({len(status) == int(detail["n"])})
+    if kind == "only_touches":
+        # (a sentence-final period is not the path's, as the templates' readers drop it)
+        prefs = [_written(detail[k]).rstrip("/.") for k in ("prefix", "prefix2") if isinstance(detail.get(k), str)]
+        if not prefs or any(not x or x.startswith(".") or "\\" in detail.get("prefix", "") for x in prefs):
+            return None
+        return _judge({all(any(q == x or q.startswith(x + "/") for x in prefs) for q in status)})
     if kind in ("file_created", "file_deleted", "file_touched"):
         claimed = _written(detail["path"])
         want = {"file_created": "A", "file_deleted": "D"}.get(kind)
@@ -943,16 +1015,34 @@ def _truth(kind: str, detail: dict, status: dict):
 
 
 def _worse(final: list, main: list, status: dict) -> list:
-    """Claims (kind, text, occurrence) whose final verdict is false by truth where main's was not."""
+    """Claims (kind, text, occurrence) whose final verdict is false by truth where main's was not.
+    NOTE_path2_fifteenth_pass (round 14, G14.4): a claim is judged by main's own detail where main makes it (the path, the
+    count, the prefix main read from the sentence), not by the branch's, so a reading that rewrote its detail to the entry
+    it resolved is judged on what the summary claimed; `_detail_moves` holds the two details equal."""
     def wrong(verdict, t):
         return (verdict == "VERIFIED" and t == "F") or (verdict == "CONTRADICTED" and t == "T")
     theirs = dict(zip(_claim_keys_of(main), main))
     out = []
     for key, (kind, verdict, detail) in zip(_claim_keys_of(final), final):
-        t = _truth(kind, detail, status)
         m = theirs.get(key)
+        t = _truth(kind, m[2] if m is not None else detail, status)
         if t is not None and wrong(verdict, t) and not (m is not None and wrong(m[1], t)):
             out.append((key, verdict, None if m is None else m[1], t))
+    return out
+
+
+TRUTH_READS = ("path", "n", "prefix", "prefix2")
+TRUTH_KINDS = ("files_changed_count", "only_touches", "file_created", "file_deleted", "file_touched")
+
+
+def _detail_moves(final: list, main: list) -> list:
+    """NOTE_path2_fifteenth_pass (G14.4): paired claims whose detail truth reads (path, count, prefixes) is not main's."""
+    theirs = dict(zip(_claim_keys_of(main), main))
+    out = []
+    for key, (kind, _verdict, detail) in zip(_claim_keys_of(final), final):
+        m = theirs.get(key)
+        if m is not None and kind in TRUTH_KINDS and any(detail.get(k) != m[2].get(k) for k in TRUTH_READS):
+            out.append((key, {k: detail.get(k) for k in TRUTH_READS}, {k: m[2].get(k) for k in TRUTH_READS}))
     return out
 
 
@@ -990,6 +1080,7 @@ def test_the_reproductions_read_no_worse_than_main_against_truth_on_the_raw_door
     final = _as_rows(dg.gate_diff_text(case["summary"], case["diff"]))
     main = _as_rows(ref.gate_diff_text(case["summary"], case["diff"]))
     assert not _worse(final, main, status), (case["id"], _worse(final, main, status))
+    assert not _detail_moves(final, main), (case["id"], _detail_moves(final, main))
 
 
 def test_the_truth_judged_check_refuses_the_eleventh_pass_instrument():
@@ -1048,7 +1139,7 @@ def test_the_truth_model_reads_gits_letters_for_every_round_12_model():
     """The model's statuses are git's own --name-status for the same trees, T included (recorded when the fixture was
     built from repositories with those modes); the two controls, a mode change and a symlink retarget, are M.
     NOTE_path2_fourteenth_pass (F): and round 13's models, whose names git quotes (a CR, a TAB, a backslash)."""
-    for case in R13 + R14:
+    for case in R13 + R14 + R15:
         listed = {}
         for line in case["name_status"].splitlines():
             parts = line.split("\t")
@@ -1109,6 +1200,59 @@ def test_the_truth_judged_check_refuses_the_thirteenth_pass_port(tmp_path):
     assert len(worse) == R14_WORSE_AT_E1BABAAC, worse
 
 
+# NOTE_path2_fifteenth_pass (F), calibration: the fourteenth pass's instrument (340ddfb6) reads this many of round 14's
+# reproductions worse than main by the truth above, on the raw door and in the port -- every `difflib` creation of a name
+# holding an LF before a `@@` line (8), git's multi-commit renderings of a file created and renamed away through #97 (7)
+# and #121 (2), and git's `a/..` prefix (1); not the deletions, `format-patch`, `--no-renames` or the controls
+R15_WORSE_AT_340DDFB6 = 18
+
+
+def test_the_truth_judged_check_refuses_the_fourteenth_pass_instrument():
+    mod = _instrument_at("340ddfb6", "fourteenth_pass")
+    worse = _worse_at(mod, R15)
+    assert len(worse) == R15_WORSE_AT_340DDFB6, worse
+    assert not any("control" in x or "format-patch" in x or "no-renames" in x or "deleted" in x for x in worse), worse
+
+
+def test_the_truth_judged_check_refuses_the_fourteenth_pass_port(tmp_path):
+    """The same calibration in the port: 340ddfb6's web/gate/diffgate.js reads the same reproductions worse than main's
+    port, and this pass's port none (the test below)."""
+    node = shutil.which("node")
+    if node is None:
+        pytest.skip("node is not on PATH")
+    for name in ("diffgate.js", "diffgate_ref.js"):
+        r = subprocess.run(["git", "-C", str(ROOT), "show", f"340ddfb6:web/gate/{name}"], capture_output=True)
+        if r.returncode:
+            pytest.skip("commit 340ddfb6 is not in this clone")
+        (tmp_path / name).write_bytes(r.stdout)
+    script = ("const B = require(process.argv[1]), M = require(process.argv[2]);"
+              "const P = JSON.parse(require('fs').readFileSync(0, 'utf8'));"
+              "const rows = g => g.claims.map(c => [c.kind, c.verdict, Object.assign({}, c.detail || {}, {_text: c.text})]);"
+              "process.stdout.write(JSON.stringify(P.map(([s, d]) => [rows(B.gateDiffText(s, d)), rows(M.gateDiffText(s, d))])));")
+    r = subprocess.run([node, "-e", script, str(tmp_path / "diffgate.js"), str(REF_JS)],
+                       input=json.dumps([[c["summary"], c["diff"]] for c in R15]),
+                       capture_output=True, text=True, encoding="utf-8", timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+    worse = [case["id"] for case, (final, main) in zip(R15, json.loads(r.stdout))
+             if _worse([tuple(x) for x in final], [tuple(x) for x in main], _truth_status(case["model"]))]
+    assert len(worse) == R15_WORSE_AT_340DDFB6, worse
+
+
+def test_the_truth_judged_check_reads_what_the_summary_claimed_not_the_branchs_detail():
+    """Round 14, G14.4: a reading that rewrote a claim's detail path to the entry it resolved is judged on main's detail
+    (what the sentence claimed), and `_detail_moves` names the rewrite. On R13.1's CR name: status {a/x.py: M,
+    lib/x.py<CR>: A}; a VERIFIED "Created lib/x.py." whose detail was rewritten to the CR path is still worse."""
+    case = next(c for c in R14 if c["id"] == "R13.1-cr-created")
+    status = _truth_status(case["model"])
+    main = _as_rows(ref.gate_diff_text(case["summary"], case["diff"]))
+    assert [m[1] for m in main] == ["UNCHECKABLE"]
+    rewritten = [(main[0][0], "VERIFIED", dict(main[0][2], path="lib/x.py\r"))]
+    assert _worse(rewritten, main, status), "judged by the branch's own detail"
+    assert _detail_moves(rewritten, main) == [(("file_created", main[0][2]["_text"], 0),
+                                               {"path": "lib/x.py\r", "n": None, "prefix": None, "prefix2": None},
+                                               {"path": "lib/x.py", "n": None, "prefix": None, "prefix2": None})]
+
+
 def test_the_reproductions_read_no_worse_than_main_against_truth_in_the_port():
     node = shutil.which("node")
     if node is None:
@@ -1125,6 +1269,7 @@ def test_the_reproductions_read_no_worse_than_main_against_truth_in_the_port():
         status = _truth_status(case["model"])
         final, main = [tuple(x) for x in final], [tuple(x) for x in main]
         assert not _worse(final, main, status), (case["id"], _worse(final, main, status))
+        assert not _detail_moves(final, main), (case["id"], _detail_moves(final, main))
 
 
 def _fast_import_path(path: str) -> bytes:
@@ -1185,6 +1330,7 @@ def test_the_reproductions_read_no_worse_than_main_against_truth_at_the_git_door
         final = _as_rows(dg.gate_diff(case["summary"], repo, f"b{i}", f"h{i}"))
         main = _as_rows(ref.gate_diff(case["summary"], repo, f"b{i}", f"h{i}"))
         assert not _worse(final, main, status), (case["id"], _worse(final, main, status))
+        assert not _detail_moves(final, main), (case["id"], _detail_moves(final, main))
 
 
 # The property, against the scorer's reverts: the instrument's final claims are the scorer's own guard's, claim for claim.
