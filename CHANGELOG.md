@@ -21,12 +21,13 @@ tests read VERIFIED.
 
 **What changed.** Frozen as `papers/closed-model-frontier/PREREG_path2_resolution_2026_09_17.md`,
 `AMENDMENT_path2_resolution_2026_09_17.md` and `ERRATUM_path2_amendment_2026_09_17.md`, then repaired in
-ten passes, each recorded in a note committed alone before its code (`NOTE_path2_third_pass` to
+twelve passes, each recorded in a note committed alone before its code (`NOTE_path2_third_pass` to
 `NOTE_path2_seventh_pass`, `_2026_09_25`, `NOTE_path2_eighth_pass_2026_09_27`,
 `NOTE_path2_ninth_pass_2026_09_27`, `NOTE_path2_tenth_pass_2026_09_28`, `NOTE_path2_eleventh_pass_2026_09_28`,
-`NOTE_path2_twelfth_pass_2026_09_29` and `NOTE_path2_thirteenth_pass_2026_09_29`; the eighth to tenth passes' code was
-written before its note, and each note says so; the eleventh's to the thirteenth's notes were each committed alone
-before any of their code):
+`NOTE_path2_twelfth_pass_2026_09_29`, `NOTE_path2_thirteenth_pass_2026_09_29` and
+`NOTE_path2_fourteenth_pass_2026_09_29`; the eighth to tenth passes' code was written before its note, and each note
+says so; the eleventh's to the fourteenth's notes were each committed alone before any of their code; this entry said
+"ten passes" at the thirteenth pass, beside eleven notes):
 - #97: a path claim resolves in tiers over every entry — exact, then suffix, then basename.
 - #121: only a leading run of `/` and `./` segments leaves the key. Readings that must not move with a dot
   (BC-2's path-shape test, BC-1's "no Python file" test, COMPAT's language and scaffold tests) read the
@@ -126,11 +127,34 @@ before any of their code):
   - The truth model the committed tests judge by reads a mode per path and git's `T` letter; round 12's 34 reproductions
     are judged on the raw door, in the port and at the git door, and the same check refuses the twelfth-pass instrument
     on 30 of them.
+- A name's own CR, TAB and backslash, and a reason read from the name as written (the fourteenth pass). Round 13's review
+  built its models with `git fast-import` and read 617 claim cells worse than `main` on the raw door and 617 in the port,
+  under each Python (0 at the git door), every one a created or deleted claim #97 licensed in a `difflib` rendering
+  without dates, beside an earlier basename twin, where the form the licence compares was not the name as written.
+  - A `---`/`+++` line's CR stays in that form unless the text ends every line in CRLF: the reader split a name's own CR
+    off as a line end before it read the path (`difflib` prints the file `x.py<CR>` as `+++ b/x.py\r\n`).
+  - Only git's own terminating TAB is cut (under git's header, after the path it writes, holding a space, nothing after
+    it): the thirteenth pass cut a trailing TAB after a name holding a space in every rendering, and GNU's rule cut a TAB
+    inside a name. A form that keeps a TAB git did not write licenses nothing.
+  - The forms keep backslashes, and #97 and #121 license no path claim a backslash touches: the file `lib\x.py` read as
+    `lib/x.py`.
+  - Each can only turn a verdict into an abstention (NOTE A.4); this pass's own recall measurement found that keeping a
+    TAB alone did not (42 claims decided where the thirteenth pass abstained), hence the TAB rule above.
+  - Z-5's reason prints the file as the diff writes it, folded, each code point Unicode 16.0.0 does not assign as
+    U+FFFD: it printed the runtime's key, which a runtime on Unicode 17.0 reads otherwise (U+A7CE lowered to U+A7CF).
+  - The scorer carried the same three rules and could not refuse them; it reads each as the instrument now does, with
+    canaries for every shape, and round 13's guard plants (one repair's precondition beside another's switch; #121's
+    `multi` asked of the claim's key; the partial drops corpus mode admitted) are committed and refused.
+  - Round 13's 18 reproductions are judged by the committed truth model on the raw door, in the port and at the git door;
+    the same check refuses the thirteenth-pass instrument (`e1babaac`) on 16 of them, on the raw door and in the port.
+  - The pinned pair whose reason printed a runtime's key holding U+2C2F is held to kind and verdict: Python 3.9 and
+    3.10 (Unicode 13.0) read that key otherwise.
 - The port follows the Python in each, and spells Python's `\s`, `\w`, `\b`, `.`, `str.strip` and `repr`
   wherever it reads a diff line. The bookmarklet is rebuilt, carrying `main`'s port whole as the guard's reference:
-  `bookmarklet.min.js` sha256 `830b4ba7…`, 79,217 characters (`web/gate/README.md`). The port finds its reference
-  before the guard runs, so a page that loads `diffgate.js` without `diffgate_ref.js` gets an error instead of every
-  claim read as "main raises".
+  `bookmarklet.min.js` sha256 `250a4173…`, 84,298 characters (`web/gate/README.md`; at the thirteenth pass this entry
+  named `830b4ba7…`, 79,217 characters, the twelfth-pass build, where the thirteenth's was `51f06338…`, 83,768). The
+  port finds its reference before the guard runs, so a page that loads `diffgate.js` without `diffgate_ref.js`
+  gets an error instead of every claim read as "main raises".
 - `papers/closed-model-frontier/path2_gates.py` scores the preregistered gates: the instrument before the repair
   against the instrument after it, claim by claim, every moved claim attributed by counterfactual (the scorer's own
   copy of the instrument, with one rule reverted, must give the baseline claim back) and admitted only if every rule
@@ -164,7 +188,10 @@ before any of their code):
   canaries reach none fails. A licence read off the repairs reverted together (round 12's PA), #121's tier-kept path
   licence dropped (PK), the git door's forms lower-cased (PF) and the git door's reference read off `main`'s raw door
   (PG1b) are each refused by the scorer program in both modes, as is each rule of this pass dropped. G-C7 compares the
-  git door's licence facts too.
+  git door's licence facts too. At the fourteenth pass its own code reads a name's CR, git's own TAB and a backslash as
+  the instrument does, and records the path Z-5 prints; its canaries (47) reach round 13's shapes, and round 13's plants
+  are refused in both modes. G-C7 at the git door does not see a `T` or a mode change (its git door writes `100644`
+  only); a committed test holds that rule on every CI Python.
 
 **The review record.** Eleven rounds of repair, ten of them answering an adversarial review round, each
 round naming its own findings. What they found and what was done about each is in the notes; the notes also
@@ -231,6 +258,24 @@ canaries reaching a licensed outcome of #97 and #121 on each door. The recall th
 `web/gate/README.md`: on the regression sets' raw door, 4,934 claims the twelfth pass decided now abstain, 774 of them its
 regressions and 4,133 in the set built around code points Unicode 16.0.0 does not assign.
 
+Round 13's review found that zero false once more: judged by git's `--name-status` over models built with
+`git fast-import`, it read 617 claim cells worse than `main` on the raw door and 617 in the port under each Python (0 at
+the git door), every one a created or deleted claim #97 licensed in a `difflib` rendering without dates: a name ending
+in a CR, a TAB after a name holding a space, a name holding a backslash. The thirteenth pass's generators never wrote
+any of those three, so its "0 claims worse" did not measure them. The fourteenth pass's rules are above. Its own
+differential ran in memory over 17 sets and 36,100 cases under each Python (165,305 raw-door, 49,826 git-door and
+165,420 port cells under 3.12; 165,239, 49,811 and 165,420 under 3.14): round 13's four families at fresh seeds, a TAB
+inside a name, CRLF-converted renderings, git's own renderings of round 12's typechange families under 24 option sets,
+and the builder's earlier generators regenerated. It reads:
+- 0 claims worse than on `main` judged against truth, on every door under Python 3.12 and 3.14;
+- 0 new Python/port disagreements on the same input;
+- 0 raises that `main` does not have.
+
+On the differential corpus (3,589 pairs) there are 0 disagreements, and the scorer's differential mode exits 0 at
+`c0e1e2f6`, its 47 canaries reaching round 13's shapes and a licensed outcome of #97 and #121 on each door. The recall
+this costs is measured in `web/gate/README.md`: on the regression sets' raw door, 665 claims the thirteenth pass
+decided now abstain, 644 of them its regressions and none right.
+
 Not claimed, and stated: the corpus gates over the EXTERNAL-1 shelf are run separately and reported in the RESULT,
 with `path2_differential_gates.json`; nothing here reports them. The repair moves claims only where the notes say, and
 the limits it leaves are listed in the sixth to ninth-pass notes, section F, and the eleventh's, section B: among
@@ -252,10 +297,13 @@ are compared as text rather than under NFKC, GNU header paths keep their timesta
 quotes, a lone CR or a backslash continuation still hides a definition from both readings, the port's claim templates
 still read the description with JavaScript's classes, a changed file named only by a `Submodule` line or an svn or hg
 binary notice is counted by neither reading, the path key is still each runtime's lower case, every file-list and path
-claim of a diff whose header path holds a code point Unicode 16.0.0 does not assign abstains, a name holding a TAB
-followed by other characters, printed by a tool that neither quotes it nor appends a timestamp, is read as GNU's
-timestamp after a name, under Python 3.14 one reason of a symbol claim meeting U+1C89 reads apart between the Python and
-the port (both UNCHECKABLE, as at the twelfth pass), and #128's modes 2, 3, 5 and 6 are not repaired. PATH-2 is not in 7.48.0, which ships `main`'s file.
+claim of a diff whose header path holds a code point Unicode 16.0.0 does not assign abstains, a path claim whose header
+path keeps a CR, a TAB git did not write or a backslash is licensed by neither #97 nor #121, under Python 3.14 one reason
+of a symbol claim meeting U+1C89 reads apart between the Python and the port (both UNCHECKABLE, as at the twelfth pass),
+a branch reason printing a path the JavaScript engine's Unicode does not know can read apart where the Python is newer
+than the engine (verdicts alike; not on the lab's or CI's pairings), PATH-2 supports Python 3.9 to 3.14 (3.15 reads
+Unicode 17.0 names, which Y-3, K-5 and `main`'s name reading do not yet cover), in a browser the fold's soundness
+rests on Unicode's case-pair stability policy rather than a check, and #128's modes 2, 3, 5 and 6 are not repaired. PATH-2 is not in 7.48.0, which ships `main`'s file.
 
 ## [Unreleased] — styxx 7.48.0 on Zenodo, as the next version of the software record
 
