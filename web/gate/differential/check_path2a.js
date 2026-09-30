@@ -8,6 +8,8 @@
 //                                                  Python-vs-port comparison (C)
 //   node check_path2a.js --lockstep  IN OUT       the overlay's status-map builder against parseUnifiedDiff
 //   node check_path2a.js --tables    OUT          this engine's whitespace, trim and lowercase facts
+//   node check_path2a.js --error-fallback REF IN OUT   as --decisions, with the overlay's decision function made to
+//                                                  throw: every claim in reach must abstain with the error phrase
 //
 // --relation, --decisions and --lockstep take an optional last argument, the port to check (default ../diffgate.js);
 // the tests pass a planted copy there to show the checks refuse it.
@@ -18,13 +20,13 @@ const vm = require("vm");
 
 const DEFAULT_PORT = path.join(__dirname, "..", "diffgate.js");
 
-function internals(file) {
+function internals(file, extra = "") {
   // The port's top-level functions and constants, read the way a page reads the file: as one script.
   const src = fs.readFileSync(file, "utf8");
   const names = ["gateDiffText", "parseUnifiedDiff", "_norm", "_p2aRegsRaw", "_p2aBuild", "_P2A_JS_SPACE",
                  "_P2A_PY_BREAKS", "_P2A_DIVERGENT", "_P2A_HEADERS", "_P2A_REACH_PAIRS", "_P2A_PHRASES",
                  "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS"];
-  return vm.runInNewContext(src + "\n;({" + names.join(", ") + "})", {}, { filename: file });
+  return vm.runInNewContext(src + "\n" + extra + "\n;({" + names.join(", ") + "})", {}, { filename: file });
 }
 
 function record(gate, it, strict) {
@@ -93,6 +95,14 @@ function main(argv) {
       if (JSON.stringify(got) !== JSON.stringify(want)) bad.push(it.id);
     }
     fs.writeFileSync(argv[2], JSON.stringify({ checked: n, main_raises: skipped, differ: bad }));
+    return 0;
+  }
+  if (mode === "--error-fallback") {
+    const REF = require(path.resolve(argv[1]));
+    const P = internals(DEFAULT_PORT, '_p2aDecide = function () { throw new Error("planted"); };');
+    const items = JSON.parse(fs.readFileSync(argv[2], "utf8"));
+    const out = items.map(it => ({ id: it.id, main: record(REF.gateDiffText, it, false), new: record(P.gateDiffText, it, false) }));
+    fs.writeFileSync(argv[3], JSON.stringify(out));
     return 0;
   }
   if (mode === "--relation" || mode === "--decisions") {

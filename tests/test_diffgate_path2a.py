@@ -353,6 +353,80 @@ def test_error_fallback(M, monkeypatch):
     assert seen > 100
 
 
+def test_error_fallback_port(work):
+    node("--error-fallback", work / "diffgate_main_reference.js", work / "in.json", work / "err.json")
+    seen = 0
+    for d in json.loads((work / "err.json").read_text(encoding="utf-8")):
+        if "error" in d["main"]:
+            continue
+        assert R.relation(d["main"], d["new"], False, PHRASES, allow_error=True) == [], d["id"]
+        for x, y in zip(d["main"]["claims"], d["new"]["claims"]):
+            if (x["kind"], x["verdict"]) in R.REACH:
+                seen += 1
+                assert y["verdict"] == "UNCHECKABLE" and R.phrase_key(y["why"], PHRASES) == "error", d["id"]
+    assert seen > 1000
+
+
+# ---- the checks refuse what they exist to refuse ----------------------------------------------------------------------
+
+def _twins(M):
+    c = next(x for x in R.repro_cases() if x["id"] == "prereg:121-dotfile-twins")
+    return M.gate_diff_text(c["summary"], c["diff"]).to_dict(), N.gate_diff_text(c["summary"], c["diff"]).to_dict()
+
+
+def _mutants(b):
+    """Planted branch records, each outside the relation in one way."""
+    def m(f):
+        x = json.loads(json.dumps(b))
+        f(x)
+        return x
+    err = R.reason("VERIFIED", "#97, #121", PHRASES["error"], "diff status 'A' for 'pr_agent.toml'")
+    return {
+        "detail moved": m(lambda x: x["claims"][1]["detail"].update(path="x")),
+        "text moved": m(lambda x: x["claims"][1].update(text="x")),
+        "reason moved alone": m(lambda x: x["claims"][1].update(why="x")),
+        "verdict moved to an accusation": m(lambda x: x["claims"][1].update(verdict="CONTRADICTED")),
+        "UNCHECKABLE decided": m(lambda x: x["claims"][2].update(verdict="VERIFIED")),
+        "abstention without main's reason": m(lambda x: x["claims"][1].update(
+            verdict="UNCHECKABLE", why=R.reason("VERIFIED", "#97", PHRASES["dir"], "x"))),
+        "abstention naming another verdict": m(lambda x: x["claims"][1].update(
+            verdict="UNCHECKABLE", why=R.reason("CONTRADICTED", "#97", PHRASES["dir"],
+                                                "diff status 'A' for 'pr_agent.toml'"))),
+        "error phrase": m(lambda x: x["claims"][1].update(verdict="UNCHECKABLE", why=err)),
+        "gate verdict not recomputed": m(lambda x: x.update(verdict="PASS")),
+        "a field moved": m(lambda x: x.update(uncovered_sentences=x["uncovered_sentences"] + 1)),
+        "a claim dropped": m(lambda x: x["claims"].pop()),
+    }
+
+
+def test_the_relation_refuses_planted_records(M):
+    a, b = _twins(M)
+    assert R.relation(a, b, False, PHRASES) == []
+    for name, x in _mutants(b).items():
+        assert R.relation(a, x, False, PHRASES) != [], name
+
+
+PORT_PLANTS = [
+    ('      c.verdict = "UNCHECKABLE";', '      c.verdict = "CONTRADICTED";'),
+    ("      c.why = _p2aReason(c.verdict, hit[1], hit[0], c.why);", "      c.why = _p2aReason(c.verdict, hit[1], hit[0], \"\");"),
+    ('  g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";', ""),
+    ("    if (hit !== null) {", "    c.detail = {};\n    if (hit !== null) {"),
+]
+
+
+@pytest.mark.parametrize("old,new", PORT_PLANTS)
+def test_the_port_relation_refuses_a_planted_port(old, new, work, tmp_path):
+    text = R.lf(R.PORT)
+    block = R.js_block(text)
+    assert block.count(old) == 1, old
+    planted = tmp_path / "diffgate_planted.js"
+    planted.write_bytes(text.replace(block, block.replace(old, new)).encode("utf-8"))
+    pairs = json.loads((R.DIFFERENTIAL / "path2a_pairs.json").read_text(encoding="utf-8"))
+    (tmp_path / "in.json").write_text(json.dumps(pairs, ensure_ascii=False), encoding="utf-8")
+    node("--relation", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "rel.json", planted)
+    assert json.loads((tmp_path / "rel.json").read_text(encoding="utf-8"))["counts"]["broken"] > 0
+
+
 # ---- the reproductions and what must not move -------------------------------------------------------------------------
 
 def reason(v, d, k, why):
