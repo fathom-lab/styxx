@@ -55,7 +55,9 @@ A bookmark that hashes to any of these is an old port; drag the new one. The pan
 
 Whatever a browser holds under that bookmark either hashes to the first line (drop the
 `javascript:` prefix) or is not this build. terser 5.46.0 produced these bytes, and rebuilds
-`main`'s 24,335-char build from `main`'s sources byte for byte.
+`main`'s 24,335-char build from `main`'s sources byte for byte. (`build_bookmarklet.py`'s docstring, which is `main`'s
+text and is not edited here, names terser 5.51.2: the version that built `main`'s bookmarklet. Its `--check` writes
+`bookmarklet_src.js` before it compares, so run it on a copy; the committed test does.)
 
 `differential/` — the test. Read on.
 
@@ -74,7 +76,7 @@ reason, or reads one sentence more or less, is a disagreement.
     python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 33a9d7b2…
     node js_side.js
     python differential.py
-    node check_pairs.js                  # the 153 pinned pairs against their expect blocks (+ path2a_moves.json)
+    node check_pairs.js                  # the 185 pinned pairs against their expect blocks (+ path2a_moves.json)
 
 The pin moved twice between the last two runs of this differential, and one of those moves is a
 finding rather than a routine bump. COMPAT-2 (#124) changed the compat reading and the port had to
@@ -175,7 +177,8 @@ the release is not the file the port claims to be, and the header of `diffgate.j
 `NOTE_path2a_second_pass_2026_09_30.md` and `NOTE_path2a_second_pass_corrections_2026_09_30.md`; for the third
 `NOTE_path2a_third_pass_2026_09_30.md`; for the fourth `NOTE_path2a_fourth_pass_2026_09_30.md`; for the fifth
 `NOTE_path2a_fifth_pass_2026_09_30.md` and `NOTE_path2a_fifth_pass_corrections_2026_09_30.md`; for the sixth
-`NOTE_path2a_sixth_pass_2026_09_30.md`). `main`'s reader runs
+`NOTE_path2a_sixth_pass_2026_09_30.md` and `NOTE_path2a_sixth_pass_departures_2026_09_30.md`; for the seventh
+`NOTE_path2a_seventh_pass_2026_09_30.md`). `main`'s reader runs
 unchanged — at the raw door, at the git door and in this port — and then the block reads each decided claim once more.
 Where the #97 mechanism (the earliest entry in diff order matching by exact path, suffix or base name), the #121
 mechanism (`_norm`'s `lstrip("./")`, which gives `.x` and `x` one key) or the #101 mechanism (a changed `def` counted
@@ -252,18 +255,27 @@ a gate verdict is FAIL exactly when a CONTRADICTED is left, so the overlay moves
 CONTRADICTED. Where `main`'s two ports may read apart which claims can be CONTRADICTED, or decide such a claim apart,
 withholding one could move one port's gate verdict and not the other's; there the overlay withholds no CONTRADICTED,
 in either port, and each port's gate verdict without `--strict` is its own `main`'s. That is the case (`apart`) when
-(1) a sentence, as both ports end one, holds a wordish or divergent code point and the words every match of a template
-that can give CONTRADICTED holds together — `changed`; `only`; `add` or `creat` with `test`; `add` or `introduc` with
-`function`, `class`, `method` or `symbol` — read in ASCII case with U+0130 and U+0131 as `i`, U+017F as `s` and U+212A
-as `k` (the DECLARE-1 keys `files_changed`, `only_touches`, `tests_added` and `adds_symbol` hold them too); (2) the
-summary holds `styxx` (a DECLARE-1 fence, found by `^`, which the port's `m` flag also matches after CR, U+2028 and
-U+2029) and a divergent code point or a lone CR; or (3) among the kinds of claims `main` read, the diff may make the
-two `main`s decide one apart: a file header they split or strip apart; for a tests claim, the two line views' own
-counts of `def test_` sites differ; for a symbol claim, an added `def` or `class` site on a line only one view reads,
-or with a white space of one port alone before the name, or with a name read through NFKC; and added lines empty to
-one `main` only where no path is registered. Everywhere else both `main`s read the same such claims with the same
-verdicts and the overlay decides each alike, so the two gate verdicts agree wherever `main`'s do: a proof, not a
-measurement, up to the fold lemma below. It costs coverage there: a false CONTRADICTED of #121 or #101 that the fifth
+(1) a sentence, as both ports end one, holds a wordish or divergent code point and the words a match of a template
+that can give CONTRADICTED holds, in the template's order — `file` before `changed`; `only` before `touch`, `modif` or
+`chang`; `add` or `creat` before `test`; `add` or `introduc` before `function`, `class` or `method` — or one of the
+DECLARE-1 keys `files_changed`, `only_touches`, `tests_added` and `adds_symbol` (a key's line writes the sentence), read
+in ASCII case with U+0130 and U+0131 as `i`, U+017F as `s` and U+212A as `k` (the seventh pass's B-1: the sixth read
+the words in any order, and `only` or `changed` alone, so one decorated sentence anywhere in a summary, "Thanks to José
+for the review; only a typo fix otherwise.", kept every CONTRADICTED); (2) the summary holds `styxx` (a DECLARE-1
+fence, found by `^`, which the port's `m` flag also matches after CR, U+2028 and U+2029) and a divergent code point or
+a lone CR; or (3) among the kinds of claims `main` read, the diff may make the two `main`s decide one apart: a file
+header they split or strip apart; for a count claim, two changed paths that differ only in case outside ASCII and a
+claimed number in the range [#WA, #A] the two `main`s may count, since each runtime's own case tables merge such keys
+or not (the seventh pass's C-1: CPython 3.12, on Unicode 15, and Node 24, on Unicode 16, count `src/` U+A7DC `.py`
+and `src/` U+019B `.py` apart); for a tests claim, the two line views' own counts of `def test_` sites differ; for a
+symbol claim, an added `def` or `class` site on a line only one view reads, or with a white space of one port alone
+before the name, or whose ASCII name run is a claimed name followed by a code point from 0x80 up, which CPython's `\b`
+may read as a word character (the seventh pass's B-3; the sixth read any name through NFKC here, which neither `main`
+does); and added lines empty to one `main` only where no path is registered. Everywhere else both `main`s read the same
+such claims with the same verdicts and the overlay decides each alike, so the two gate verdicts agree wherever
+`main`'s do: a proof, not a measurement, up to the fold lemma below (each runtime's lowercase maps only U+0130 and
+U+212A to text holding ASCII), whatever Unicode version each runtime's case tables carry. A test patches the port's
+engine to fold one pair no runtime folds yet and asserts it. It costs coverage there: a false CONTRADICTED of #121 or #101 that the fifth
 pass withheld stands, in both ports (the pinned cross-port cases X2, X2-13, X3, X5, X5b, G1, G2 and G3 each keep one
 port's false count), and `main`'s two ports may already disagree on such inputs. Under `--strict` a withheld VERIFIED
 moves a gate verdict too, and a claim one port's `main` reads alone can be withheld on that port only; `apart` does not
@@ -286,7 +298,12 @@ Basic Multilingual Plane's punctuation, currency, arrow, operator, technical, bo
 CJK-punctuation and full-width-punctuation blocks (connector punctuation, digits and letters left out), the white
 space both ports share, and the emoji variation selectors. None of them is a word character or has a case in either
 port, none folds to an ASCII letter, each is white space in both ports or in neither, and each one Unicode 3.2 knew
-was punctuation, a symbol or a space there too — all pinned by enumeration on every runtime the tests run. Declared
+was punctuation, a symbol or a space there too — all pinned by enumeration on every runtime the tests run. In the
+summary, the emoji of five pictograph blocks (U+1F300 to U+1F64F, U+1F680 to U+1F6FF, U+1F900 to U+1F9FF, U+1FA70 to
+U+1FAFF; operator option O-11, taken in the seventh pass) are read as U+2190, a neutral code point, whether the string
+holds one code point or the two surrogates the port's string holds: none of them is a word character or white space
+for either port's templates, folds to an ASCII letter or has a case, and the tests pin that and the two regexes that
+read them by enumeration too. Declared
 (DECLARE-1) claims skip the summary test: their sentence is written from a value both ports read only when it is
 ASCII.
 
@@ -326,7 +343,7 @@ Running it, from the repository root:
 The port half of the PATH-2a tests, and `test_port_is_current`'s check of the port against the pinned pairs, need
 `node`; without it they skip locally and fail under `CI` or `GITHUB_ACTIONS`. `path2a_recall.py` prints three totals:
 `main`'s committed corpora (the figure below), the overlay's own pins, and `main`'s corpora with any extra files.
-`path2a_pairs.json` pins 126 pairs, each for the decision it names (18 of them pin kind and verdict only, where
+`path2a_pairs.json` pins 131 pairs, each for the decision it names (18 of them pin kind and verdict only, where
 `main`'s two ports print different reasons); it is not one of `py_side.py`'s corpora (some of its pairs are inputs
 `main`'s own two ports read differently), so the port differential over `main`'s corpora reads 0 disagreements.
 `path2a_moves.json` records the one pinned claim of `main`'s own files the overlay moves —
@@ -348,11 +365,12 @@ POSIX path flavour, so the figures are given under both where they differ.
 | `corpus_fuzz.json` | `2e80cd1d…` | 2,144 | 79 — 51 touched, 22 created and 5 deleted `dir`, 1 created `tier`; all #97, and all 79 are false by the statuses the fuzz generator wrote |
 | `main`'s six pinned files | | 46 | 1 (the move above) |
 | **`main`'s committed corpora** | | **2,231** | **80 (3.6%)**, both flavours |
-| `path2a_pairs.json` (the overlay's own pins, built to abstain) | `831931bd…` | 140 (Windows), 139 (POSIX) | 67 (Windows), 66 (POSIX) |
+| `path2a_pairs.json` (the overlay's own pins, built to abstain) | `eaee99cf…` | 147 (Windows), 146 (POSIX) | 71 (Windows), 70 (POSIX) |
 | #161's `path2_pairs.json` (branch `fix/diffgate-path-resolution`) | `7ba272c8…` | 530 | 184 |
 | `main`'s corpora + #161's pairs | | 2,761 | 264 (9.6%); #161's head withheld 493 of 2,749 |
 
-Five fewer are withheld on #161's pairs than at the previous head: C-1 keeps eight CONTRADICTEDs there (three counts and
+No figure on `main`'s corpora or #161's pairs moved at the seventh pass. At the sixth, five fewer were withheld on
+#161's pairs than at the fifth: C-1 keeps eight CONTRADICTEDs there (three counts and
 four scopes under a divergent header, one `split`), and `redefined` withholds three VERIFIED tests claims. The count
 seam and C-1 move nothing on `main`'s corpora. The only real-world #97 record in `main`'s
 corpora, `corpus_real` pr98 ("integrations/git/README.md — created."), is left as `main` has it: neither of its two
@@ -365,8 +383,8 @@ the mechanism (V97, V121, V101, or all three) does not read it false.
 
 | door | cases | main decides | false | attributable | withheld | right verdicts lost | undecided withheld |
 |---|---|---|---|---|---|---|---|
-| raw door (Python) | 1,706 | 7,614 | 1,535 | 1,206 | **1,206** | 251 of 5,897 | 39 of 182 |
-| the port, in its own terms (variants built from `main`'s port) | 1,706 | 7,393 | 1,385 | 1,100 | **1,100** | 175 of 5,739 | 126 of 269 |
+| raw door (Python) | 1,706 | 7,614 | 1,535 | 1,206 | **1,206** | 247 of 5,897 | 39 of 182 |
+| the port, in its own terms (variants built from `main`'s port) | 1,706 | 7,393 | 1,385 | 1,100 | **1,100** | 171 of 5,739 | 126 of 269 |
 | git door (Python), the reproductions with their own `--name-status` | 96 | 63 | 17 | 14 | **14** | 0 of 46 | — |
 
 The cases are #161's 101 reproductions, the 5 PREREG_path2 reproductions and 1,600 generated cases. In
@@ -395,8 +413,21 @@ joint #121 reproductions (`m-121-a-submodule-line-licenses-nothing`, `k4-a-dotte
 V121's count is false there too (a submodule line, an hg binary notice or a no-prefix directory `main` registers no
 file for), so under the but-for attribution they are not misses; they are pinned, both ports. Operator option O-7
 (withhold a CONTRADICTED count above `main`'s count wherever a dot twin exists) would withhold them, at 289 right
-CONTRADICTEDs for 41 false ones in the builder's world and 215 for 38 in the review's.
+CONTRADICTEDs for 41 false ones in the builder's world and 215 for 38 in the review's. The seventh review's narrower
+rule (a dot twin, `main`'s count below the claimed number, and a change marker `main` registers no file for: a
+`Submodule` line, a binary notice it does not key, or a header with no `---`/`+++` pair it keys) is operator option
+O-13, not measured.
 The truth test prints any miss with its shape.
+
+The truth worlds' summaries are ASCII, so the seventh pass also read them with a decorated sentence appended — "## 🧪
+Tests added", "Thanks to José for the review; only a typo fix otherwise." and "Behaviour is unchanged for naïve
+callers." (measured): in the builder's 1,600 generated cases 1,193 of 1,193 attributable claims are withheld under
+each, at 236 of 5,842 right verdicts lost, as without one (the sixth pass's head withheld 979, keeping every
+attributable CONTRADICTED); in the sixth review's git-built world every attributable claim at all five renderings under
+each (raw 619, `--no-renames` 748, `-U0` 619, `--no-prefix` 620, git door 610), 0 count misses judged by name-status
+lines; in the port, the count and tests CONTRADICTEDs withheld are 227 and 79 with a decoration or without (0 and 0 with
+one at the sixth pass's head). C-1's case-pair clause keeps 6 CONTRADICTEDs in each port's truth world (4 counts, 2 of
+them false through neither defect and 2 right, and 2 right scopes), no attributable one: the pins above moved by those.
 
 **Where "attributable" is narrower than the definition.** With a single `only_touches` prefix that is a path for
 `main` only through its dropped dots, V121 abstains ("is not a path") and the overlay keeps `main`'s verdict: a
@@ -408,31 +439,37 @@ too (operator option O-10) would cost 141, 95 and 239 right verdicts in the thre
 fourth review's figures). The other known gaps
 (case-only merges with no dot, names `strip()` merges, multi-commit renderings, renderings over real `a/` or `b/`
 directories, `async def` tests `main` does not count, `def` in non-Python files, and joint shapes where #121 is one of
-two causes) are listed in the NOTEs.
+two causes) are listed in the NOTEs. One more is #161's off-tree prefix family (`v4-*` and `f4`): `main` reads a scope
+prefix through `rstrip("/.")`, so "Only touches docs/.." is read as `docs` though `docs/..` is the repository root, and
+`main`'s CONTRADICTED there is false; #161 withholds these as #121, but the mechanism is none of the three defects
+(V121 models `lstrip("./")`), and the overlay keeps them.
 
 Coverage was also measured on the third review's two independent truth worlds (2,000 and 6,000 cases built by
 real git, each read at the git door, at the raw door on git's bytes and at the raw door on a second rendering;
 two truth oracles; the builder's variants plus an ast-paired #101 variant; measured, not pinned): 0 attributable false verdicts kept at any door, in Python or in the port; right verdicts lost 297 and 785 at the raw doors, 75 and 210 at the git door, 297 and 780 in the port, as at `ea677740`. That ast-paired variant paired definitions line by line, so those worlds held none of the fifth review's shapes; the fourth review's own world T (600 cases built by real git, at `5ebe0b6b`) found them, and they are covered as above.
 
-Per phrase, on the raw door's truth world (measured): how often each fires, and whether `main`'s verdict
-was false, right or undecided there.
+Per phrase and per `main`'s verdict, on the raw door's truth world at this head (measured; the seventh review's B-4
+asked for the split): how often each fires, and whether `main`'s verdict was false, right or undecided there.
 
-| key | fired | false (attributable) | right | undecided |
-|---|---|---|---|---|
-| count | 407 | 370 (366) | 37 | 0 |
-| dir | 423 | 404 (404) | 18 | 1 |
-| dot | 183 | 177 (177) | 6 | 0 |
-| dot_earliest | 6 | 1 (1) | 5 | 0 |
-| dot_tier | 111 | 107 (107) | 4 | 0 |
-| tier | 17 | 12 (12) | 1 | 4 |
-| case | 2 | 2 (2) | 0 | 0 |
-| only | 11 | 9 (9) | 2 | 0 |
-| shape | 43 | 0 (0) | 43 | 0 |
-| tests | 132 | 54 (51) | 53 | 25 |
-| redefined | 22 | 15 (0) | 6 | 1 |
-| symbol | 35 | 30 (30) | 0 | 5 |
-| again | 4 | 1 (0) | 0 | 3 |
-| extract | 167 | 91 (47) | 76 | 0 |
+| key | `main`'s verdict | fired | false (attributable) | right | undecided |
+|---|---|---|---|---|---|
+| count | CONTRADICTED | 241 | 206 (204) | 35 | 0 |
+| count | VERIFIED | 162 | 162 (162) | 0 | 0 |
+| dir | VERIFIED | 423 | 404 (404) | 18 | 1 |
+| dot | VERIFIED | 183 | 177 (177) | 6 | 0 |
+| dot_earliest | VERIFIED | 6 | 1 (1) | 5 | 0 |
+| dot_tier | VERIFIED | 111 | 107 (107) | 4 | 0 |
+| tier | VERIFIED | 17 | 12 (12) | 1 | 4 |
+| case | VERIFIED | 2 | 2 (2) | 0 | 0 |
+| only | VERIFIED | 11 | 9 (9) | 2 | 0 |
+| shape | CONTRADICTED | 41 | 0 (0) | 41 | 0 |
+| tests | CONTRADICTED | 66 | 20 (17) | 33 | 13 |
+| tests | VERIFIED | 66 | 34 (34) | 20 | 12 |
+| redefined | CONTRADICTED | 13 | 6 (0) | 6 | 1 |
+| redefined | VERIFIED | 9 | 9 (0) | 0 | 0 |
+| symbol | VERIFIED | 35 | 30 (30) | 0 | 5 |
+| again | VERIFIED | 4 | 1 (0) | 0 | 3 |
+| extract | VERIFIED | 167 | 91 (47) | 76 | 0 |
 
 The costs, as the independent worlds read them (measured on the third review's world A, 2,000 cases, and world
 B, 6,000 cases; "right lost" is a right verdict of `main` withheld):
@@ -442,7 +479,12 @@ B, 6,000 cases; "right lost" is a right verdict of `main` withheld):
   non-ASCII test names share their ASCII run, or a removed line of prose or of another language holds `def test_`
   (V101's pairing reads it there too). Right verdicts lost: world A 162 of 2,331 at the raw door (7.0%)
   and 69 of 1,244 at the git door (5.5%); world B 472 of 6,939 (6.8%) and 195 of 3,669 (5.3%). The builder's own
-  world above loses 53. Operator option O-8 (pair by ASCII run only when the name is all ASCII) is not taken.
+  world above loses 53. Operator option O-8 (pair by ASCII run only when the name is all ASCII) is not taken. Split by
+  `main`'s verdict, `tests` withholds more right verdicts than false ones on CONTRADICTED in both truth worlds (the
+  builder's 33 right, 20 false; the sixth review's git-built world, raw door, 49 right, 35 false) and the reverse on
+  VERIFIED (20 right, 34 false; 18 right, 44 false); much of the CONTRADICTED cost falls where the committed V101 reads
+  `main`'s CONTRADICTED too. Operator option O-14 (keep a CONTRADICTED tests claim where every paired site is an
+  anchored `def` on both sides, so the net count is exact) is not taken.
 - `redefined` pairs a counted test with an unchanged definition of the same name anywhere in the diff, blind to classes
   and files, as `tests` is: in the builder's world 15 false, 6 right (a test moved into a class, which the removed
   pairing already counts as changed, beside a redefinition) and 1 undecided; in the sixth review's git world, 8 right
@@ -458,7 +500,11 @@ B, 6,000 cases; "right lost" is a right verdict of `main` withheld):
   detection it withholds a claim naming a moved file's old path, which git writes under its new path only, though
   `main`'s VERIFIED there is right: the sixth review counted 43 of 3,277 right verdicts (1.3%) in its 900-case world
   (`dir` 22, `dot` 9, `dot_tier` 12), at the raw door and at the git door alike, and none under `--no-renames`. The
-  review's pair is pinned as a known loss.
+  review's pair is pinned as a known loss. It also withholds a claim naming a dot-directory file in a monorepo
+  (`.vscode/settings.json` over `apps/api/.vscode/settings.json`): V121 and V97+V121 verify it, and V97 alone fails
+  because it still drops the leading dot (#121). The seventh review found that shape in all 4 right verdicts among
+  `dir`'s 33 firings on the Claude Code, Devin and Cursor PRs of the EXTERNAL-1 shelf (29 false caught), and 6 in the
+  builder's world; operator option O-15 (keep a `dir` claim that V121 and V97+V121 both verify) is not taken.
 - `shape` fired 43 times in the builder's world, every time on a right CONTRADICTED ("Only touches cfg and .cfg/app/."
   beside files that all lie under the second prefix), and never in worlds A and B. In the fourth review's world T
   (600 cases built by real git, at `5ebe0b6b`) it fired 35 times: 33 withheld right CONTRADICTEDs, and the 2 false
@@ -472,8 +518,16 @@ B, 6,000 cases; "right lost" is a right verdict of `main` withheld):
 - C-1 keeps, on the committed inputs, 509 CONTRADICTED decisions in Python and 538 in the port that the fifth pass
   withheld (`divergent` counts 156 and 154, scopes 105 and 101; `extract` scopes 154 and 155, counts 3 and 3; `tests` 83
   and 117; `seam` 5; `split` 3), nearly all on the seeded PATH-2a fuzz and the text-seam set, whose summaries and diffs
-  are built from those characters; none in the truth worlds, none on `main`'s corpora, and on #161's reproductions 8,
-  none of them false through #97, #121 or #101 (two headers the two `main`s split apart, and one right CONTRADICTED).
+  are built from those characters. At the seventh pass its ordered triggers withhold 11 `tests` CONTRADICTEDs it kept
+  there, and its case-pair clause keeps 11 more `count` CONTRADICTEDs (seeded fuzz whose paths differ in one letter
+  outside ASCII; it would keep 12 without its range) and 6 in each truth world, none attributable. None on `main`'s
+  corpora; none of the truth worlds' attributable claims, decorated or not (above). On #161's reproductions it keeps
+  10, none of them false through #97, #121 or #101: 7 under a header or separator the two `main`s split apart
+  (`f2-a-separator-before-a-header-shape-adds-no-file`, a count and a scope; `v2-a-reason-prints-a-path-as-python-repr-does`;
+  `k-canary-z3-a-path-holding-u0085` and `-u2028`, a count and a scope each), the tests claims of
+  `f2-a-context-line-holding-a-separator-adds-nothing` and `x1-the-name-table-is-unicode-15-for-both-ports-a-katakana-middle-dot`
+  (false by their names, which `redefined` would withhold, outside the committed V101's attribution), and `y2`'s, which
+  is right. (The sixth pass's README said 8; it was these 10.)
 - The NFKC rule reads every removed line of every file, not only Python definitions: a `def` followed by a run of
   white space and code points from 0x80 up that holds one, or a name whose ASCII run ends at one, pairs every counted
   test, and a `def` or `class` reached from the line start through such code points defines every claimed name. So
@@ -486,27 +540,34 @@ B, 6,000 cases; "right lost" is a right verdict of `main` withheld):
   differs between the ports: a name that also occurs elsewhere next to a letter outside ASCII is withheld (#161's
   `x1` probes, "Added function fo²o. … Added function fo."). An `only_touches` claim is withheld wherever a
   wordish or divergent code point follows `only` in its sentence: an accented name ("reviewed by José"), or an emoji
-  outside the Basic Multilingual Plane ("Only touches docs/ 🎉"; operator option O-11 would read those pictographs
-  as neutral). Punctuation and symbols of the Basic Multilingual Plane — guillemets, low-9 quotes, CJK and
+  outside the Basic Multilingual Plane and the five pictograph blocks O-11 reads as neutral (at the seventh pass "Only
+  touches docs/ 🎉" no longer withholds; U+1F7E0, a coloured circle, still does). Punctuation and symbols of the Basic Multilingual Plane — guillemets, low-9 quotes, CJK and
   full-width punctuation, ✔, ✅, ·, §, ⇒ — withhold nothing; each of those shapes is a pinned pair. In Chinese,
   Japanese or Korean prose written without spaces, a path joined to the text ("这个更新让README.md变得…",
   "snap/snapcraft.yaml를") lies in a wordish run, and one such mention withholds every claim on that path in the
   summary: on the EXTERNAL-1 shelf's real agent PRs (13,089 decided claims, the fourth review's run at `5ebe0b6b`),
   `extract` fired 7 times, caught no false verdict, and withheld 4 right and 3 undecided ones, all so.
 
-By construction (A): over the 6,662 committed inputs (the pinned pairs, the 3,000 fuzz pairs regenerated in memory,
+By construction (A): over the 6,667 committed inputs (the pinned pairs, the 3,000 fuzz pairs regenerated in memory,
 #161's reproductions and pair inputs, a seeded 2,000-pair PATH-2a fuzz and a seeded 1,000-input text-seam set), both
 strict modes, every branch record is `main`'s but for abstentions in reach with the overlay's reason, each claim
 reads the same with `--strict` as without it, and where `main` raises the branch raises the same exception — in
-Python and in the port (13,324 port runs, 0 broken; the relation compares `unparsed_claims` and each claim's keys
+Python and in the port (13,334 port runs, 0 broken; the relation compares `unparsed_claims` and each claim's keys
 too); the per-key abstention counts are *pinned* for both path flavours and for Unicode 13.0 and 14.0 (emulated by
-re-reading the inputs with their five Unicode 14 letters mapped to code points no version assigns), 15.0 and 16.0;
-Unicode 15.1 (CPython 3.13) was not measured and fails the test by name. The four PATH-2a test modules pass on
-CPython 3.12.10 and 3.14.2 at this head. At this head (measured, CPython 3.12.10 and Node 24.13.0): the sixth review's
-hostile generator at two seeds (40,000 inputs), a mixed count, tests, symbol and scope seam set (20,000) and the fifth
-pass's count-seam set (20,000), 160,000 Python runs in both strict modes and 160,000 in the port, 0 outside the
-relation, every raise the same, the error phrase never; the minified bookmarklet in a stub page equal to this port on
-40,000 runs (2,606 of them carrying an overlay reason). At the fifth pass's head: the reviews' own generators (`gen4`
+re-reading the inputs with their five Unicode 14 letters mapped to code points no version assigns), 15.0, 15.1 (the
+committed inputs hold no code point assigned in 15.0 or 15.1: the sixth integration review's inventory) and 16.0.
+The four PATH-2a test modules pass on CPython 3.12.10 at this head. CPython 3.14.2 here has neither pytest nor numpy,
+so the reconstruction, self-check, table, relation, cross-port, reproduction and newer-engine tests were run there
+through a stand-in runner that stubs pytest and loads `styxx` as a bare package (all 13 pass, on Unicode 16.0). At this head (measured,
+CPython 3.12.10 and Node 24.13.0): the sixth review's hostile generator at two seeds (40,000 inputs), its `hx` and
+`gen7` generators (12,000 and 20,000), a mixed count, tests, symbol and scope seam set (20,000), the fifth pass's
+count-seam set (20,000), the sixth review's case-pair generator `gen8` (10,000, twice: as the runtimes stand, and with
+the port's engine patched to fold a later version's pair) and the builder's truth world under five decorations (8,000):
+140,000 inputs, 279,986 Python runs in both strict modes and 279,986 in the port (the other 14 raise in `main` and
+raise alike), 0 outside the relation, the error phrase never; the minified bookmarklet in a stub page equal to this port on 60,000 runs (10,230
+of them carrying an overlay reason). At the sixth pass's head the review's own differential found 0 outside the
+relation on 214,272 Python 3.12 runs, 155,678 Python 3.14 runs, 210,866 port runs, 181,626 bookmarklet runs and 45,200
+real-git runs. At the fifth pass's head: the reviews' own generators (`gen4`
 at two seeds, `gen`, `gen_tok`, `gen_real`; 34,000 inputs) and a count-seam generator (20,000 inputs over dot-twin
 diffs), 108,000 Python runs in both strict modes and 108,000 in the port, 0 outside the relation, every raise the same
 (the 238 runs where `main` raises), the error phrase never; the minified bookmarklet in a stub page equal to this port
@@ -537,7 +598,7 @@ verdict, text) is a heuristic as well: in 4 of 180,000 fuzz inputs of the sixth 
 of one sentence ("Added 1 tests; Added 5 new tests." read as one claim each, different ones). Left-over claims that are not one match
 (each port reading a different sentence, as in "Changed the parser in `docs/résumé/index.md`. Added
 `docs/café.md`.") are not paired, and their decisions may differ, as the claims do. At this head, on the committed
-inputs and on the 80,000 fuzz inputs above: 0 splits under the by-construction keys and under the measured keys (L1
+inputs and on the 140,000 fuzz inputs above: 0 splits under the by-construction keys and under the measured keys (L1
 and OM1 are cross-port cases, not committed inputs), and without `--strict` 0 gate splits where `main`'s gates agree,
 whether or not every claim pairs (C-1 above; the fifth review's count reproductions X2-13, G1, G2 and G3 and the sixth
 review's C1 inputs, which split the gates at `5ebe0b6b` and `495d2204`, are pinned cross-port cases with one gate
@@ -554,11 +615,15 @@ That paragraph and the one before it describe the fifth pass's head. At this hea
 overlay add no gate disagreement where `main`'s two gate verdicts agree: 0 on the committed inputs (the five above
 included), 0 on the sixth review's hostile generator at two seeds (40,000 inputs; 179 and 195 at `495d2204`), 0 on a
 mixed count, tests, symbol and scope seam set (20,000; 954 at `495d2204`), 0 on the fifth pass's count-seam set
-(20,000). Under `--strict`, where a claim one port's `main` reads alone is withheld on that port, the gates still
-split: the two committed inputs `p2a-seam:4242:335` and `:487` ("Modified lib/core.jsé", "Removed lib/core.jsé": only
+(20,000); and, at the seventh pass, 0 on the sixth review's `hx` and `gen7` (32,000), 0 on the builder's world under
+five decorations (8,000), and 0 on its case-pair generator `gen8` (10,000), where `fcd3ce6a` split 250 on CPython 3.12
+and Node 24 and 309 with the port's engine patched to fold a later pair (C-1 above; a committed test asserts it on 1,500 such inputs with the
+patched engine). Under `--strict`, where a claim one
+port's `main` reads alone is withheld on that port, the gates still split: the two committed inputs `p2a-seam:4242:335` and `:487` ("Modified lib/core.jsé", "Removed lib/core.jsé": only
 the port's `main` reads `lib/core.js`, VERIFIED, and `extract` withholds it), pinned; 171 and 195 of the hostile
 inputs (as at `495d2204`), 741 of the mixed seam set (690 at `495d2204`: `redefined` withholds one-port VERIFIED tests
-claims there), 791 of the count-seam set (as at `495d2204`). An abstain-only rule cannot balance these: a decision
+claims there), 791 of the count-seam set (as at `495d2204`; at the seventh pass with a receipt kept, A-3), 2 of the 12,000
+`hx` inputs and 34 of the 20,000 `gen7` inputs. An abstain-only rule cannot balance these: a decision
 must read the same under `--strict` as without it, and withholding nothing in such a sentence would keep every false
 VERIFIED of the path kinds in any sentence holding an accented path. The bookmarklet calls the gate without
 `--strict`. Operator option O-9 (abstain in both ports wherever either port's reading fires) is not taken.
@@ -600,17 +665,19 @@ that all share the base name `__init__.py` with 200 path claims, 500 symbol clai
 thousands of runs or zones, one path of 40 KB and 100 paths of 4 KB, 3,000 directories or base names outside ASCII
 under 3,000 to 4,369 claims, 4,000 distinct ASCII claims over 3,000 files of one base name, and a run of 40,000 `./` —
 each under 0.5 s in Python and 0.3 s here, and under 64 MB of peak memory in Python (`tracemalloc`). Measured the
-test's way at this head (CPython 3.12.10): 3,000 distinct claims over a base name outside ASCII 0.186 s, 4,000
-distinct ASCII claims over one base name 0.162 s, the symbols case 0.147 s, the rest 0.1 s or less; peak memory 14.1 MB
-at most. In Node the slowest case (4,000 distinct ASCII claims) takes 95 ms. At `5ebe0b6b` the overlay took 0.50 s
+test's way at this head (CPython 3.12.10): 3,000 distinct claims over a base name outside ASCII 0.166 s, the symbols
+case 0.153 s, 4,000 distinct ASCII claims over one base name 0.132 s, the rest 0.1 s or less; peak memory 14.2 MB at
+most. In Node the slowest case (4,000 distinct ASCII claims) takes 76 ms. At `5ebe0b6b` the overlay took 0.50 s
 and 766 MB on the one 40 KB path, 6.1 s on 4,369 claims over 3,000 directories and 19.3 s on 3,000 distinct claims over
 a base name outside ASCII.
 
 The overlay reads the summary's runs and zones once for all the claims' tokens (the sixth review's A-1: at `495d2204`
 each distinct count, path, name or scope prefix scanned the summary again, so the cost grew as claims times summary
 length). Three more timing tests bound it on summaries of 1.2 MB with 10,000 distinct count, path and scope claims
-(3.6 MB and 30,000 in the port), relative to `main`'s own call on the same input: the overlay alone within `main`'s
-call in Python and within three times it in the port. Whole calls, least of two, `main` → `495d2204` → this head:
+(3.6 MB and 30,000 in the port), relative to `main`'s own call on the same input: the overlay alone within 1.5 times
+`main`'s call in Python (within it at the sixth pass; the seventh review's I-1: the overlay's loops are Python where
+`main`'s are mostly C regex, so a slower interpreter moves the overlay more, and CI's 3.9 to 3.11 were not available
+here) and within three times it in the port. Whole calls, least of two, `main` → `495d2204` → the sixth pass's head:
 
 | input | Python | Node |
 |---|---|---|
@@ -622,7 +689,22 @@ call in Python and within three times it in the port. Whole calls, least of two,
 | 30,000 scopes, 3.9 MB | 2.12 → 38.93 → 3.19 s (×1.51) | 426 → 3,565 → 902 ms (×2.1) |
 
 The overlay alone there: 0.18 to 0.34 s and 0.55 to 1.13 s in Python, 65 to 142 ms and 235 to 605 ms in Node; it grows
-with the input, not with claims times the summary.
+with the input, not with claims times the summary. At this head (CPython 3.12.10, least of two): 10,000 counts 0.67 →
+0.84 s (×1.25), paths 0.81 → 1.04 s (×1.29), scopes 0.70 → 1.04 s (×1.48); the overlay alone 0.23 to 0.49 of `main`'s
+call (Linux CPython 3.12.3 read 0.35 to 0.65 at the sixth pass's head). In Node, at three times the size, 0.92 to 1.34
+of `main`'s call.
+
+Peak memory on summaries of many distinct long tokens (the seventh review's A-1). At `fcd3ce6a` one matching automaton
+held every named token whenever more than 32 were named, even over an empty text: the review's 10,000 path claims of
+60-character directories (0.82 MB) took 157 MB at the overlay's peak in Python, where `main`'s call takes 8.5 MB, and
+the port aborted under a 64 MB heap (the review's cap was 100 MB) where `main`'s port needs less than 16 MB. Now the
+text is read as its distinct pieces between the characters a token never holds, an empty text builds nothing, and one
+automaton holds at most 65,536 characters of tokens (or a sixteenth of the text): 12.1 MB in Python, and under a 24 MB
+heap in Node. Two committed tests bound it: 3,000 distinct 110-digit counts over a dot twin, with an empty text and with
+each number in a wordish run, within 32 MB in Python (0.4 and 16.5 MB; `main`'s call 2.6 and 2.8 MB; `fcd3ce6a` 68.1
+and 68.5 MB), and the counts at 6,000 with the review's input under a 64 MB heap in Node, for `main`'s port and this
+one. The port also builds its key forms as one joined string: appended code point by code point, a 70-character path
+was a chain of pieces V8 keeps until it is read whole, and 10,000 such claims retained 38 MB.
 
 A whole call on a large diff costs more than the corpus figures suggest, because the overlay reads the diff again (the
 line views, the lone-CR pieces, the removed definitions), linearly. On the fourth review's large inputs, the least of
@@ -641,9 +723,12 @@ measured again. The sixth review measured more line-heavy shapes at `495d2204` (
 1,000,000-line `+a`/`-a` diff ×2.35 in Python; `-a\rb` lines ×2.82; 150,000 lines of removed definitions with CR
 pieces and backslash continuations (3.3 MB) ×5.58 in Python and ×6.15 in Node; one 2.8 MB line of U+2028-separated
 `def test_a():` sites ×3.46 in Python and ×8.2 in Node (×9.3 at a third of the size); peak memory on the 1,000,000-line
-diff 61 → 112 MB, and 69 → 175 MB with VT in the added lines, since both line views are built. The ranges to expect on
-such diffs are up to about ×9 in Node and about 2.5 times the peak memory in Python; the second line view is still
-built eagerly. The bookmarklet grew from 24,335 (`main`) to 48,227 characters.
+diff 61 → 112 MB, and 69 → 175 MB with VT in the added lines, since both line views are built. The seventh review
+measured one more at `fcd3ce6a`: a single added line of U+2028-separated ` def test_x(): pass` segments (a space after
+each U+2028) under "Added 1 tests.", ×13 to ×17 in Node and ×7 to ×8 in Python, linear in the size (from 3.2 → 55.6 ms
+at 50,000 segments to 20.2 → 314.8 ms at 400,000 in Node). The ranges to expect on such diffs are up to about ×17 in
+Node and ×8 in Python, and about 2.5 times the peak memory in Python; the second line view is still built eagerly. The
+bookmarklet grew from 24,335 (`main`) to 49,888 characters.
 
 ## What this is not
 
