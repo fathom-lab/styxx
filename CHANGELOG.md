@@ -15,7 +15,8 @@ Branch `fix/diffgate-abstain-where-wrong`, on `main` `1cde8b82`; design in
 `NOTE_path2a_third_pass_2026_09_30.md`, for the fourth `NOTE_path2a_fourth_pass_2026_09_30.md`, for the fifth
 `NOTE_path2a_fifth_pass_2026_09_30.md` and `NOTE_path2a_fifth_pass_corrections_2026_09_30.md`, for the sixth
 `NOTE_path2a_sixth_pass_2026_09_30.md` and `NOTE_path2a_sixth_pass_departures_2026_09_30.md`, for the seventh
-`NOTE_path2a_seventh_pass_2026_09_30.md`, and for the eighth `NOTE_path2a_eighth_pass_2026_10_01.md`: what the passes
+`NOTE_path2a_seventh_pass_2026_09_30.md`, and for the eighth `NOTE_path2a_eighth_pass_2026_10_01.md` and
+`NOTE_path2a_eighth_pass_corrections_2026_10_01.md`: what the passes
 leave open is listed there, in the README's *PATH-2a* section
 and under **Disclosed** and **Open for the operator** below.
 

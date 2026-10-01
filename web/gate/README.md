@@ -178,7 +178,8 @@ the release is not the file the port claims to be, and the header of `diffgate.j
 `NOTE_path2a_third_pass_2026_09_30.md`; for the fourth `NOTE_path2a_fourth_pass_2026_09_30.md`; for the fifth
 `NOTE_path2a_fifth_pass_2026_09_30.md` and `NOTE_path2a_fifth_pass_corrections_2026_09_30.md`; for the sixth
 `NOTE_path2a_sixth_pass_2026_09_30.md` and `NOTE_path2a_sixth_pass_departures_2026_09_30.md`; for the seventh
-`NOTE_path2a_seventh_pass_2026_09_30.md`; for the eighth `NOTE_path2a_eighth_pass_2026_10_01.md`). `main`'s reader runs
+`NOTE_path2a_seventh_pass_2026_09_30.md`; for the eighth `NOTE_path2a_eighth_pass_2026_10_01.md` and
+`NOTE_path2a_eighth_pass_corrections_2026_10_01.md`). `main`'s reader runs
 unchanged — at the raw door, at the git door and in this port — and then the block reads each decided claim once more.
 Where the #97 mechanism (the earliest entry in diff order matching by exact path, suffix or base name), the #121
 mechanism (`_norm`'s `lstrip("./")`, which gives `.x` and `x` one key) or the #101 mechanism (a changed `def` counted
