@@ -500,6 +500,8 @@ JS_PLANTS = [
     ("no claimed-name clause in the port",
      "          if (e < line.length && line.charCodeAt(e) >= 0x80 && names.has(line.slice(r, e))) return true;\n", ""),
     ("no count trigger in the port", '[["file", "changed"], ["only", "touch"]', '[["only", "touch"]'),
+    ("the port's scope trigger read as 'only' alone", '["only", "touch"], ["only", "modif"], ["only", "chang"],',
+     '["only"],'),
     ("no O-11 in the port", "    summary: String(summaryText).split(_P2A_EMOJI_RX).join(_P2A_EMOJI_AS),",
      "    summary: String(summaryText),"),
     ("no piece lookup in the port", "  const got = new Set([...words].filter(w => pieces.has(w)));", "  const got = new Set();"),
