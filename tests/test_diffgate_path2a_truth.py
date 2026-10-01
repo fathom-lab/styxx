@@ -45,16 +45,21 @@ DECIDED = ("VERIFIED", "CONTRADICTED")
 # a redefinition) and 4 undecided, in each port; C-1 moves nothing here. Pass 7 (NOTE_path2a_seventh_pass_2026_09_30,
 # C-1): the case-pair clause keeps 6 CONTRADICTEDs in each port where two changed paths differ in one letter outside
 # ASCII and a claimed count lies in the range the two mains may count (4 counts, 2 of them false through neither defect
-# and 2 right; 2 right scopes); no attributable verdict moves. The tighter trigger (B-1) moves nothing here.
-PINNED = {"cases": 1706, "main raises": 0, "decided": 7614, "false": 1535, "attributable": 1206, "abstained": 1557,
-          "attributable abstained": 1206, "right": 5897, "right lost": 247, "undecided": 182,
+# and 2 right; 2 right scopes); no attributable verdict moves. The tighter trigger (B-1) moves nothing here. Pass 8
+# (NOTE_path2a_eighth_pass_2026_10_01, B-1): a count claim in [#CA, #A] beside two paths that differ only in case
+# outside ASCII is withheld in both ports, whatever its verdict (`case_count`: 26 false verdicts main gives by merging
+# the two paths' case, outside the three defects, 13 CONTRADICTED and 13 VERIFIED, and 4 right CONTRADICTEDs), and the
+# CONTRADICTEDs the case-pair clause kept are decided (2 false counts withheld as `count`, 2 right scopes as `shape`):
+# +34 withheld, +28 false other, +6 right lost, in each port; no attributable verdict moves. B-2 moves nothing here.
+PINNED = {"cases": 1706, "main raises": 0, "decided": 7614, "false": 1535, "attributable": 1206, "abstained": 1591,
+          "attributable abstained": 1206, "right": 5897, "right lost": 253, "undecided": 182,
           "undecided abstained": 39, "unjudged": 0, "unjudged abstained": 0, "false other": 329,
-          "false other abstained": 65}
+          "false other abstained": 93}
 # The port judged in its own terms: 1,100 attributable claims, of which 942 carry the same main record in Python and
 # 158 are read otherwise by Python's main (paths and names outside ASCII, which the two templates extract apart).
-PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7393, "abstained": 1418, "right": 5739, "right lost": 171,
+PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7393, "abstained": 1452, "right": 5739, "right lost": 177,
                "false": 1385, "attributable": 1100, "attributable abstained": 1100, "false other": 285,
-               "false other abstained": 21, "undecided": 269, "undecided abstained": 126}
+               "false other abstained": 49, "undecided": 269, "undecided abstained": 126}
 PINNED_GIT = {"cases": 96, "main raises": 0, "with R, C or T": 16, "decided": 63, "abstained": 14, "false": 17,
               "attributable": 14, "attributable abstained": 14, "right": 46, "right lost": 0, "false other": 3,
               "false other abstained": 0}
@@ -361,19 +366,26 @@ PY_PLANTS = [
     ("a name defined again kept",
      '    if f.redefines(name):                 # B-1 (NOTE_path2a_sixth_pass_2026_09_30)\n        return "again", "#101"\n',
      ""),
-    # pass 7 (NOTE_path2a_seventh_pass_2026_09_30): each new rule, dropped or loosened
-    ("C-1's case-pair clause dropped",
-     "        if wa != a and any(_P2A_DIGITS.fullmatch(n) is None or wa <= _p2a_int(n) <= a for n in f.ns()):",
-     "        if False:"),
+    # pass 7 (NOTE_path2a_seventh_pass_2026_09_30): each new rule, dropped or loosened (its case-pair clause and its
+    # ordered triggers went at pass 8; their plants are replaced by pass 8's below)
     ("B-3's claimed-name clause dropped",
      "                    if _P2A_WIDE.match(line, e) is not None and line[r:e] in names:\n                        return True\n",
      ""),
-    ("the count trigger dropped", '_P2A_TRIGGERS = (("file", "changed"), ("only", "touch")',
-     '_P2A_TRIGGERS = (("only", "touch")'),
-    ("the scope trigger read as 'only' alone", '("only", "touch"), ("only", "modif"), ("only", "chang"),',
-     '("only",),'),
     ("O-11 off", "        self.summary = _P2A_EMOJI_RX.sub(_P2A_EMOJI_AS, summary)", "        self.summary = summary"),
     ("a token that is a piece not looked up", "    got = {w for w in words if w in pieces}\n", "    got = set()\n"),
+    # pass 8 (NOTE_path2a_eighth_pass_2026_10_01): each new rule, dropped or loosened
+    ("C-1's line-break clause dropped", "                if _p2a_open(line):\n                    return True\n", ""),
+    ("B-1's case-count clause dropped",
+     "    if ca < a and (_P2A_DIGITS.fullmatch(claimed) is None or ca <= _p2a_int(claimed) <= a):",
+     "    if False:"),
+    ("B-1's case classes read as one placeholder",
+     "            wide = any(_P2A_NEVER_RX.match(x) is None and x not in _P2A_CASE for x in col)",
+     "            wide = True"),
+    ("B-1's scripts without case read as cased", "                if _P2A_NEVER_RX.match(k[i]) is None:",
+     "                if True:"),
+    ("B-2's count window dropped", '_P2A_WINDOWS = (("file", "count"), ', "_P2A_WINDOWS = ("),
+    ("B-2's window without the character before the match", "    x = i - 1 if i > a else a\n", "    x = i\n"),
+    ("B-2's tests window without its noun", "                    y = r.end() + len(noun) + 3", "                    pass"),
 ]
 # Plants that cannot change a record, said so rather than hidden: none this pass. Pass 2's one (a clause that never
 # decided alone) went with the per-set comparison it sat behind (NOTE_path2a_third_pass_2026_09_30, B-2).
@@ -493,18 +505,21 @@ JS_PLANTS = [
      "    unchanged: () => [],"),
     ("no again rule in the port", '  if (f.redefines(name)) return ["again", "#101"];   // B-1 (NOTE_path2a_sixth_pass_2026_09_30)\n',
      ""),
-    # pass 7 (NOTE_path2a_seventh_pass_2026_09_30): each new rule, dropped from the port alone
-    ("no case-pair clause in the port",
-     "    if (wa !== a && [...f.ns()].some(n => !_P2A_DIGITS.test(n) || (wa <= _p2aInt(n) && _p2aInt(n) <= a))) return true;",
-     "    if (false) return true;"),
+    # pass 7 (NOTE_path2a_seventh_pass_2026_09_30): each new rule, dropped from the port alone (its case-pair clause and
+    # its ordered triggers went at pass 8; their plants are replaced by pass 8's below)
     ("no claimed-name clause in the port",
      "          if (e < line.length && line.charCodeAt(e) >= 0x80 && names.has(line.slice(r, e))) return true;\n", ""),
-    ("no count trigger in the port", '[["file", "changed"], ["only", "touch"]', '[["only", "touch"]'),
-    ("the port's scope trigger read as 'only' alone", '["only", "touch"], ["only", "modif"], ["only", "chang"],',
-     '["only"],'),
     ("no O-11 in the port", "    summary: String(summaryText).split(_P2A_EMOJI_RX).join(_P2A_EMOJI_AS),",
      "    summary: String(summaryText),"),
     ("no piece lookup in the port", "  const got = new Set([...words].filter(w => pieces.has(w)));", "  const got = new Set();"),
+    # pass 8 (NOTE_path2a_eighth_pass_2026_10_01): each new rule, dropped from the port alone
+    ("no line-break clause in the port", "        if (_p2aOpen(line)) return true;\n", ""),
+    ("no case-count clause in the port",
+     '  if (ca < a && (!_P2A_DIGITS.test(claimed) || (ca <= _p2aInt(claimed) && _p2aInt(claimed) <= a))) return ["case_count", "#121"];\n',
+     ""),
+    ("the port's case classes read as one placeholder", "const read = (ch, i) => (w[i] !== ", "const read = (ch, i) => (true || w[i] !== "),
+    ("no count window in the port", 'const _P2A_WINDOWS = [["file", "count"], ', "const _P2A_WINDOWS = ["),
+    ("the port's window without the character before the match", "  const x = i > a ? i - 1 : a;", "  const x = i;"),
 ]
 
 
@@ -731,3 +746,63 @@ def test_the_fourth_reviews_scope_reproductions(monkeypatch):
                     (it["id"], door, y)
                 seen.append((it["id"], door))
     assert len(seen) == 4, seen
+
+
+# ---- pass 8: the seventh review's two transforms of the builder's world ----------------------------------------------
+
+def _transformed(how: str) -> list:
+    """NOTE_path2a_eighth_pass_2026_10_01, B-1 and B-2, the seventh review's transforms of the generated cases: `cjk2`
+    adds two changed docs whose names differ at CJK code points only (no case: 8eead84f read them as a case pair and kept
+    every CONTRADICTED beside a count claim), and a right count sentence where main reads no count claim; `insent`
+    writes "(naive)" with an i-diaeresis after each word of a tests or count claim, inside the claim's own sentence but
+    outside the window a template's match can cover (8eead84f kept every #121 count and #101 tests CONTRADICTED so)."""
+    import random
+    import re
+    rng = random.Random(7)
+    out = []
+    for c in C.families(SEED, PER_FAMILY):
+        c = json.loads(json.dumps(c))
+        if how == "cjk2":
+            for p in ("docs/zh/" + chr(0x5B89) + chr(0x88C5) + ".md", "docs/zh/" + chr(0x914D) + chr(0x7F6E) + ".md"):
+                c["model"]["base"][p] = "a\n"
+                c["model"]["head"][p] = "b\n"
+            c["diff"] = C.render(c["model"]["base"], c["model"]["head"], c["style"], rng)
+            try:
+                a = R.main_module().gate_diff_text(c["summary"], c["diff"]).to_dict()
+            except Exception:
+                a = {"claims": [{"kind": "files_changed_count"}]}
+            if not any(x["kind"] == "files_changed_count" for x in a["claims"]):
+                c["summary"] = c["summary"] + f"\n{len(T.changed(c['model']))} files changed."
+        else:
+            c["summary"] = re.sub(r"(\b(?:tests?|files? changed)\b)", r"\1 (na" + chr(0xEF) + "ve)", c["summary"])
+        out.append(c)
+    return out
+
+
+@pytest.mark.parametrize("how", ["cjk2", "insent"])
+def test_the_seventh_reviews_transforms_keep_no_attributable_verdict(how):
+    """Every attributable false verdict withheld in Python on the transformed world. On 8eead84f the seventh review
+    counted 19 kept under `cjk2` (16 tests and 3 count CONTRADICTEDs) and 213 under `insent` (every count and 16 of 17
+    tests CONTRADICTEDs)."""
+    M = R.main_module()
+    V = variants()
+    counts = collections.Counter()
+    misses = []
+    for it in _transformed(how):
+        try:
+            a = M.gate_diff_text(it["summary"], it["diff"]).to_dict()
+        except Exception:
+            continue
+        vs = {}
+        for k, mod in V.items():
+            try:
+                vs[k] = mod.gate_diff_text(it["summary"], it["diff"]).to_dict()["claims"]
+            except Exception:
+                vs[k] = None
+        b = N.gate_diff_text(it["summary"], it["diff"]).to_dict()
+        assert R.relation(a, b, False, N._P2A_PHRASES) == [], it["id"]
+        tally(counts, misses, it, judge(it["model"], a["claims"], vs), b["claims"])
+    print(how, json.dumps(dict(counts), indent=1))
+    for m in misses[:20]:
+        print("MISS", json.dumps(m, ensure_ascii=True))
+    assert counts["attributable"] > 900 and misses == []

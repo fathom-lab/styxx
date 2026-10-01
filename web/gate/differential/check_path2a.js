@@ -56,7 +56,7 @@ function internals(file, extra = "") {
                  "_P2A_JS_SPACE", "_P2A_PY_SPACE", "_P2A_PY_BREAKS", "_P2A_DIVERGENT", "_P2A_HEADERS",
                  "_P2A_REACH_PAIRS", "_P2A_PHRASES", "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS", "_P2A_OWN",
                  "_P2A_NEUTRAL_RANGES", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw", "_p2aFound",
-                 "_P2A_EMOJI_RX", "_P2A_EMOJI_AS"];
+                 "_P2A_EMOJI_RX", "_P2A_EMOJI_AS", "_P2A_LOWER_RUNS", "_P2A_NEVER_RANGES", "_p2aCaseCount"];
   // A name the port does not define reads undefined, so the checker also loads the ports of earlier passes (the
   // seventh pass runs its new pins against fcd3ce6a's port this way)
   const pick = names.map(n => n + ": typeof " + n + ' === "undefined" ? undefined : ' + n);
@@ -159,6 +159,14 @@ function main(argv) {
         }),
       emoji_as: P._P2A_EMOJI_AS,
       int_rejects: ["\u30003", "3\u3000", "\uff13", " 3", "3 ", "+3", "0x3", "3e1"].map(x => { try { P._p2aInt(x); return false; } catch (e) { return true; } }),
+      // pass 8 (NOTE_path2a_eighth_pass_2026_10_01, B-1): this engine's single-code-point lowercase mappings from 0x80
+      // up (U+0130 and U+212A aside), and the port's static case tables, which the test holds to them and to the Python's
+      lower_map: Array.from({ length: 0x110000 - 0x80 }, (_, k) => k + 0x80).filter(cp => (cp < 0xd800 || cp > 0xdfff)
+        && cp !== 0x130 && cp !== 0x212a).flatMap(cp => {
+        const ch = String.fromCodePoint(cp), low = ch.toLowerCase();
+        return low === ch ? [] : [[cp, [...low].length === 1 ? low.codePointAt(0) : -1]];
+      }),
+      lower_runs: P._P2A_LOWER_RUNS, never_ranges: P._P2A_NEVER_RANGES,
     }));
     return 0;
   }

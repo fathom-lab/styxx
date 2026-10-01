@@ -162,9 +162,17 @@ def flavour(mod) -> str:
 # fuzz), O-11 reads pictograph emoji as neutral, so 13 path VERIFIEDs are no longer `extract` (the text-seam set and one
 # fuzz input), and the case-pair clause keeps 11 count CONTRADICTEDs (`count`; seeded fuzz whose paths differ in one
 # letter outside ASCII). Its 5 new pairs add `tests` 4 and keep a CONTRADICTED tests claim (the case pair).
+# Pass 8 (NOTE_path2a_eighth_pass_2026_10_01), on the inputs pass 7 pinned: B-1 withholds a count claim in [#CA, #A]
+# wherever two changed paths differ only in case outside ASCII, whatever its verdict (`case_count` 42: 22 CONTRADICTEDs
+# the case-pair clause kept and 13 VERIFIEDs, one of them `count` before, on the seeded PATH-2a fuzz; #161's six k2
+# reproductions, Unicode 14 and 16 case pairs; the pass-7 case-pair pair), and no longer keeps a CONTRADICTED for them,
+# so 5 more counts are withheld by the dot-twin rule (`count`) and the pair's tests claim (`tests`); B-2 reads the
+# window a match can cover, so 5 scope CONTRADICTEDs of the text-seam set whose sentence holds such a character only
+# outside it are decided, and withheld (`extract`: one follows `only`). Its 5 new pairs add 8 decided claims: `count`
+# 1 and `tests` 2, and two CONTRADICTED tests claims kept (a `def` ending its line; a name running into an accent).
 ABSTENTIONS = {
     "windows": {
-        "decided": 12710, "main raises": 8,
+        "decided": 12718, "main raises": 8,
         "file_created:case": 3, "file_created:dir": 65, "file_created:divergent": 19, "file_created:dot": 20,
         "file_created:dot_earliest": 4, "file_created:dot_tier": 11, "file_created:extract": 43, "file_created:odd": 1,
         "file_created:tier": 9,
@@ -173,16 +181,17 @@ ABSTENTIONS = {
         "file_deleted:tier": 4,
         "file_touched:dir": 244, "file_touched:divergent": 102, "file_touched:dot": 82, "file_touched:dot_tier": 72,
         "file_touched:extract": 139, "file_touched:odd": 5,
-        "files_changed_count:count": 370, "files_changed_count:divergent": 70, "files_changed_count:extract": 1,
+        "files_changed_count:case_count": 42,
+        "files_changed_count:count": 375, "files_changed_count:divergent": 70, "files_changed_count:extract": 1,
         "files_changed_count:seam": 1,
-        "only_touches:divergent": 3, "only_touches:extract": 4, "only_touches:only": 32, "only_touches:shape": 29,
+        "only_touches:divergent": 3, "only_touches:extract": 9, "only_touches:only": 32, "only_touches:shape": 29,
         "symbol_added:again": 6, "symbol_added:extract": 24, "symbol_added:symbol": 184,
-        "tests_added:redefined": 17, "tests_added:split": 1, "tests_added:tests": 360,
+        "tests_added:redefined": 17, "tests_added:split": 1, "tests_added:tests": 363,
     },
 }
 # Under the POSIX flavour main reads `c:x.py` as a bare name not in the diff, so three decided drive-like claims are
 # UNCHECKABLE on main to begin with: path2a:guard-drive-like-path claim 0, and fuzz 20260930:1033 and :1590.
-ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12707, "file_touched:odd": 4}
+ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12715, "file_touched:odd": 4}
 del ABSTENTIONS["posix"]["file_created:odd"], ABSTENTIONS["posix"]["file_deleted:odd"]
 # main's own reading depends on the interpreter's Unicode tables where the inputs probe letters added in Unicode 14 and
 # 16 (#161's k2, x1 and y3 cases). Measured on CPython 3.12 (Unicode 15.0) and 3.14 (16.0); for Unicode 13.0 and 14.0
@@ -316,6 +325,8 @@ def _repo(tmp_path, name, base, head, quotepath=None):
                                "-c", "core.longpaths=true", *a], cwd=d, capture_output=True, check=True).stdout
 
     git("init", "-q")
+    # I-6 (NOTE_path2a_eighth_pass_2026_10_01): kept in the repository, so main's own _git, which passes no -c, reads it
+    git("config", "core.longpaths", "true")
     if quotepath is not None:
         git("config", "core.quotepath", quotepath)
     for side in (base, head):
@@ -342,6 +353,7 @@ def _tree_repo(tmp_path, name, base, head, config=()):
                               check=True).stdout.decode().strip()
 
     git("init", "-q")
+    git("config", "core.longpaths", "true")       # I-6 of the eighth pass, as in _repo
     for k, v in config:
         git("config", k, v)
     parent = None
@@ -516,6 +528,7 @@ def test_selfcheck_p2a_only_abstains():
 
 
 CLAIMED = "    ca, ck = _p2a_A(claimed), _p2a_K(claimed)\n"
+MOVED = "            moved = True\n"
 SELFCHECK_PLANTS = [
     ('            c.verdict = "UNCHECKABLE"\n', '            c.verdict = "VERIFIED"\n', "verdict literal"),
     ('            c.verdict = "UNCHECKABLE"\n', '            c.verdict = "UNCHECKABLE"\n            c.detail["x"] = 1\n',
@@ -576,6 +589,21 @@ SELFCHECK_PLANTS = [
     # C-2 (NOTE_path2a_sixth_pass_2026_09_30): a named-character escape reads the Unicode name table when it compiles
     ('_P2A_CR = re.compile("\\r")', '_P2A_CR = re.compile("\\\\N{LATIN SMALL LETTER A}|\\r")',
      "named-character escape"),
+    # A-1 (NOTE_path2a_eighth_pass_2026_10_01): the seventh review's three plants, each of which the pass-7 check
+    # accepted (a record field reached through a `for` target), and the same reached through `:=`, a call's result, a
+    # name bound from another, an augmented store and a helper's parameter
+    (MOVED, MOVED + "            for cl in (g.claims,):\n                cl.pop()\n", ".pop() on what may hold"),
+    (MOVED, MOVED + '            for dd in (c.detail,):\n                dd["n"] = "9"\n', "item store into what may hold"),
+    (MOVED, MOVED + '            for dd in (c.detail,):\n                dd.setdefault("zz", 1)\n',
+     ".setdefault() on what may hold"),
+    (MOVED, MOVED + '            (dd := c.detail)["n"] = "9"\n', "item store into what may hold"),
+    (MOVED, MOVED + "            [x.clear() for x in [c.detail]]\n", ".clear() on what may hold"),
+    (MOVED, MOVED + '            x = [c.detail]\n            y = x[0]\n            y["n"] = "9"\n',
+     "item store into what may hold"),
+    (MOVED, MOVED + "            cl = g.claims\n            cl += [c]\n", "augmented store into cl"),
+    (MOVED, MOVED + '            _p2a_reason(c.detail, "", "dir", "")["n"] = "9"\n', "item store into what may hold"),
+    (MOVED, MOVED + '            def _poke(d):\n                d["n"] = "9"\n            _poke(c.detail)\n',
+     "item store into what may hold"),
 ]
 
 
@@ -603,7 +631,10 @@ JS_BANNED_WORDS = ("Number", "parseInt", "parseFloat", "isNaN", "isFinite",
                    # typed array converts what is stored into it; the block uses a Set and conditionals instead
                    "Math", "Date", "BigInt", "DataView", "Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array",
                    "Uint16Array", "Int32Array", "Uint32Array", "Float16Array", "Float32Array", "Float64Array",
-                   "BigInt64Array", "BigUint64Array")
+                   "BigInt64Array", "BigUint64Array",
+                   # A-2 (NOTE_path2a_eighth_pass_2026_10_01): Object.assign, Object.defineProperty and a Proxy write a
+                   # record's fields without a store the store scan reads
+                   "Object", "Proxy")
 JS_UNARY_AFTER = "(,=[:?!&|;{}<>*%~^"
 JS_UNARY_KEYWORDS = ("return", "typeof", "void", "in", "of", "case", "throw", "yield", "await", "new", "delete")
 
@@ -761,6 +792,253 @@ def js_problems(block: str) -> list:
             out.append("a call on a computed member")
     if re.search(r"\)\(|\]\)\(", dense):
         out.append("a call on a parenthesised expression")
+    return out + js_store_problems(dense, strings)
+
+
+# A-2 (NOTE_path2a_eighth_pass_2026_10_01): the port block's store scan. What it reads, on the same dense code:
+# - every store into a member by name (`x.y =`, `x.y += 1`, `x.y++`) is one of `c.why = ...`, `c.verdict =
+#   "UNCHECKABLE"` and `g.verdict = (...) ? "FAIL" : "PASS"`, inside _p2aAbstain; no `delete`;
+# - every store into a computed member (`x[i] = v`, `x[i]++`) and every call of a mutating method (`push`, `pop`,
+#   `splice`, `shift`, `unshift`, `set`, `add`, `fill`, `delete`, `clear`, `reverse`, `copyWithin`) is on a chain that
+#   starts at a name the block made itself and then reads only `[...]` and `.get(...)` (no `.claims`, `.detail` or other
+#   field): a name every binding of which, in its top-level function (or at the block's top level), is an array literal,
+#   `new Map(...)`, `new Set(...)`, `_p2aFlags(...)`, or such a chain from such a name, that is no parameter there, and
+#   none of whose bindings mentions `.claims` or `.detail`;
+# - no value stored that way holds `.claims` or a detail itself (`push(c.detail)`), nor `g` in _p2aAbstain.
+# What it does not do: follow a value through a parameter, or type an expression. The Python block's self-check is the
+# precise one (_p2a_holder); this scan keeps the port's stores to the shapes the Python block's check allows.
+JS_MUTATORS = ("push", "pop", "splice", "shift", "unshift", "set", "add", "fill", "delete", "clear", "reverse",
+               "copyWithin")
+JS_STORE = r"(?:=(?![=>])|[-+*/%&|^]=|\*\*=|<<=|>>>?=|&&=|\|\|=|\?\?=|\+\+|--)"
+JS_NAME = r"[A-Za-z_$][\w$]*"
+JS_HOLDS = re.compile(r"\.(?:claims|detail)(?![\w$.\[])")
+
+
+def _js_close(dense: str, i: int) -> int:
+    """The index just past the bracket that closes the one at dense[i]."""
+    pairs = {"(": ")", "[": "]", "{": "}"}
+    depth, j = 0, i
+    while True:
+        if dense[j] in pairs:
+            depth += 1
+        elif dense[j] in ")]}":
+            depth -= 1
+            if depth == 0:
+                return j + 1
+        j += 1
+
+
+def _js_open(dense: str, j: int) -> int:
+    """The index of the bracket that opens the one closing just before j."""
+    depth, i = 0, j - 1
+    while True:
+        if dense[i] in ")]}":
+            depth += 1
+        elif dense[i] in "([{":
+            depth -= 1
+            if depth == 0:
+                return i
+        i -= 1
+
+
+def _js_chain_start(dense: str, k: int) -> int:
+    """Where the member chain that ends just before k (at a '.' or '[') starts, read backward: a name continues it
+    only through a '.' before it, and a bracketed group only where a '.', '[' or '(' follows it."""
+    j = k
+    while j > 0:
+        if re.match(r"[\w$]", dense[j - 1]):
+            while j > 0 and re.match(r"[\w$]", dense[j - 1]):
+                j -= 1
+            if j > 0 and dense[j - 1] == ".":
+                j -= 1
+                continue
+            break
+        if dense[j - 1] in ")]" and dense[j:j + 1] in (".", "[", "("):
+            j = _js_open(dense, j)
+            continue
+        break
+    return j
+
+
+def _js_scopes(dense: str) -> list:
+    """(start, end) of each top-level function of the block: `function NAME(...) {...}` and `const NAME = ...;` whose
+    value holds a function (`=>`)."""
+    out, i, depth = [], 0, 0
+    while i < len(dense):
+        if depth == 0 and (i == 0 or not re.match(r"[\w$]", dense[i - 1])):
+            m = re.match(r"function " + JS_NAME + r"\(", dense[i:])
+            if m:
+                p = _js_close(dense, i + m.end() - 1)
+                e = _js_close(dense, p)
+                out.append((i, e))
+                i = e
+                continue
+            m = re.match(r"const " + JS_NAME + "=", dense[i:])
+            if m:
+                e = i + m.end()
+                d = 0
+                while e < len(dense) and not (d == 0 and dense[e] == ";"):
+                    d += {"(": 1, "[": 1, "{": 1, ")": -1, "]": -1, "}": -1}.get(dense[e], 0)
+                    e += 1
+                if "=>" in dense[i:e]:
+                    out.append((i, e + 1))
+                    i = e + 1
+                    continue
+        depth += {"(": 1, "[": 1, "{": 1, ")": -1, "]": -1, "}": -1}.get(dense[i], 0)
+        i += 1
+    return out
+
+
+def _js_expr_end(dense: str, i: int) -> int:
+    """Where the expression starting at i ends: a ',', ';' or closing bracket at its own depth."""
+    d = 0
+    while i < len(dense):
+        ch = dense[i]
+        if d == 0 and (ch in ",;" or ch in ")]}"):
+            return i
+        d += {"(": 1, "[": 1, "{": 1, ")": -1, "]": -1, "}": -1}.get(ch, 0)
+        i += 1
+    return i
+
+
+def _js_bindings(text: str) -> tuple:
+    """({name: [init text or None for a binding that is not a plain one]}, {parameter names}) of one scope's text."""
+    binds: dict = {}
+    params: set = set()
+    for m in re.finditer(r"(?<![\w$])(?:const|let|var)(?= |\[|\{)", text):
+        i = m.end()
+        while True:
+            if text[i] == " ":
+                i += 1
+            if text[i] in "[{":
+                j = _js_close(text, i)
+                for n in re.findall(JS_NAME, text[i:j]):
+                    binds.setdefault(n, []).append(None)
+            else:
+                n = re.match(JS_NAME, text[i:]).group()
+                j = i + len(n)
+                if text[j:j + 1] != "=":
+                    binds.setdefault(n, []).append(None)       # for (const x of y), let x;
+            if text[j:j + 1] == "=":
+                e = _js_expr_end(text, j + 1)
+                if text[i] not in "[{":
+                    binds.setdefault(n, []).append(text[j + 1:e])
+                j = e
+            if text[j:j + 1] != ",":
+                break
+            i = j + 1
+    for m in re.finditer(r"(?<![\w$.])(" + JS_NAME + r")=(?![=>])", text):
+        if not re.search(r"(?<![\w$])(?:const|let|var) $", text[:m.start()]):
+            binds.setdefault(m.group(1), []).append(text[m.end():_js_expr_end(text, m.end())])
+    for m in re.finditer(r"function " + JS_NAME + r"\(", text):
+        params.update(re.findall(JS_NAME, text[m.end():_js_close(text, m.end() - 1) - 1]))
+    for m in re.finditer(r"\)=>", text):
+        params.update(re.findall(JS_NAME, text[_js_open(text, m.start() + 1) + 1:m.start()]))
+    for m in re.finditer(r"(?<![\w$.])(" + JS_NAME + r")=>", text):
+        params.add(m.group(1))
+    return binds, params
+
+
+def js_store_problems(dense: str, strings: list) -> list:
+    """The store scan (A-2 of NOTE_path2a_eighth_pass_2026_10_01); see the comment above JS_MUTATORS."""
+    out = []
+    scopes = _js_scopes(dense)
+    top = dense
+    for a, e in reversed(scopes):
+        top = top[:a] + " " * (e - a) + top[e:]
+    facts = {None: _js_bindings(top)}
+    for a, e in scopes:
+        facts[a] = _js_bindings(dense[a:e])
+    abstain = next((a, e) for a, e in scopes if dense.startswith("function _p2aAbstain(", a))
+
+    def scope_of(k):
+        return next((a for a, e in scopes if a <= k < e), None)
+
+    def fresh(name, at, seen=()):
+        """Every binding of `name` a value the block made; a chain back to a name already being read adds none."""
+        if name in seen:
+            return True
+        for sc in (scope_of(at), None):
+            binds, params = facts[sc]
+            if name in binds or name in params:
+                if name in params:
+                    return False
+                for init in binds[name]:
+                    if init is None or JS_HOLDS.search(init) or ".claims" in init or ".detail" in init:
+                        return False
+                    if re.match(r"(?:\[|new Map\(|new Set\(|_p2aFlags\()", init):
+                        continue
+                    m = re.match(JS_NAME, init)
+                    if not (m and steps_ok(init, m.end(), len(init)) and fresh(m.group(), at, seen + (name,))):
+                        return False
+                return True
+        return False
+
+    def steps_ok(text, i, end):
+        while i < end:
+            if text[i] == "[":
+                i = _js_close(text, i)
+            elif text.startswith(".get(", i):
+                i = _js_close(text, i + 4)
+            else:
+                return False
+        return True
+
+    def string_is(tok, value):
+        m = re.fullmatch(r"S(\d+)", tok)
+        return m is not None and js_string(strings[int(m.group(1))]) == value
+
+    # stores into a member by name
+    for m in re.finditer(r"\.(" + JS_NAME + r")(" + JS_STORE + r")", dense):
+        start = _js_chain_start(dense, m.start())
+        target, op = dense[start:m.start() + 1 + len(m.group(1))], m.group(2)
+        rhs = dense[m.end():_js_expr_end(dense, m.end())]
+        inside = abstain[0] <= m.start() < abstain[1]
+        ok = inside and op == "=" and (
+            target == "c.why"
+            or (target == "c.verdict" and string_is(rhs, "UNCHECKABLE"))
+            or (target == "g.verdict" and re.fullmatch(r"\(.*\)\?(S\d+):(S\d+)", rhs) is not None
+                and {js_string(strings[int(x[1:])]) for x in re.fullmatch(r"\(.*\)\?(S\d+):(S\d+)", rhs).groups()}
+                == {"FAIL", "PASS"}))
+        if not ok:
+            out.append(f"store into a member: {target}{op}")
+    for m in re.finditer(r"(?:\+\+|--)(" + JS_NAME + r"(?:\.[\w$]+|\[[^\]]*\])*\.[\w$]+)(?![\w$.(\[])", dense):
+        out.append(f"store into a member: {m.group()}")
+    if re.search(r"(?<![\w$.])delete(?![\w$])", dense):
+        out.append("a delete")
+    # stores into a computed member, and mutating calls
+    sites = []
+    for m in re.finditer(r"\](" + JS_STORE + r")", dense):
+        i = _js_open(dense, m.start() + 1)
+        before = re.search(JS_NAME + "$", dense[:i])
+        if not (before and before.group() not in JS_KEYWORDS) and dense[i - 1:i] not in ("]", ")"):
+            continue                              # an array literal or a destructuring pattern, not a member
+        start = _js_chain_start(dense, i)
+        sites.append(("store", start, i, m.start() + 1, dense[m.end():_js_expr_end(dense, m.end())]))
+    for m in re.finditer(r"(?:\+\+|--)(" + JS_NAME + r")\[", dense):
+        sites.append(("store", m.start() + 2, m.end() - 1, _js_close(dense, m.end() - 1), ""))
+    for m in re.finditer(r"\.(" + "|".join(JS_MUTATORS) + r")\(", dense):
+        start = _js_chain_start(dense, m.start())
+        args = dense[m.end():_js_close(dense, m.end() - 1) - 1]
+        sites.append(("call ." + m.group(1), start, m.start(), m.start(), args))
+    for what, start, root_end, end, value in sites:
+        root = re.match(JS_NAME, dense[start:])
+        chain = dense[start:end]
+        if root is None:
+            out.append(f"{what} on {chain[:40]}, which does not start at a name")
+            continue
+        if what == "store" and start + root.end() != root_end:
+            out.append(f"store into {chain[:40]}, a member of a member")
+            continue
+        if what != "store" and not steps_ok(dense, start + root.end(), end):
+            out.append(f"{what} on {chain[:40]}, which reads a field")
+            continue
+        if not fresh(root.group(), start):
+            out.append(f"{what} on {chain[:40]}, whose name the block did not make")
+            continue
+        if JS_HOLDS.search(value) or (abstain[0] <= start < abstain[1]
+                                      and re.search(r"(?<![\w$.])g(?![\w$])", value)):
+            out.append(f"{what} on {chain[:40]} stores a record field")
     return out
 
 
@@ -869,6 +1147,40 @@ def test_the_token_scan_refuses_the_fifth_reviews_plants_in_place(old, new, what
     block = R.js_block()
     assert block.count(old) == 1, old
     problems = js_problems(block.replace(old, new))
+    assert any(what in p for p in problems), problems
+
+
+JS_MOVED = '      c.verdict = "UNCHECKABLE";\n      moved = true;\n'
+
+
+@pytest.mark.parametrize("plant,what", [
+    # A-2 (NOTE_path2a_eighth_pass_2026_10_01): the seventh review's plant, which the pass-7 scan and the committed
+    # --relation inputs both passed, and the other ways to write the record the store scan reads
+    ('if (todo.length > 400) c.text = c.text + " ";', "store into a member: c.text="),
+    ("g.claims.push(c);", "call .push on g.claims, which reads a field"),
+    ('c.detail.n = "9";', "store into a member: c.detail.n="),
+    ("delete c.detail.n;", "a delete"),
+    ('const d = c.detail; d.n = "9";', "store into a member: d.n="),
+    ("const d = c.detail; const k = 0; d[k] = 1;", "whose name the block did not make"),
+    ("const a = [g.claims]; a[0].push(c);", "whose name the block did not make"),
+    ("[g.claims][0].push(c);", "which does not start at a name"),
+    ("Object.assign(c, {});", "banned word 'Object'"),
+    ('c.why += "";', "store into a member: c.why+="),
+    ("g.claims.length = 0;", "store into a member: g.claims.length="),
+    ("const q = g.claims; q.splice(0);", "whose name the block did not make"),
+    ("hits.pop();", "whose name the block did not make"),
+    ('todo[0].verdict = "PASS";', "store into a member: todo[0].verdict="),
+    ("c.detail.n++;", "store into a member: c.detail.n++"),
+    ("++c.detail.n;", "store into a member: ++c.detail.n"),
+    ("const out = []; out.push(c.detail);", "stores a record field"),
+    ('c.verdict = "PASS";', "store into a member: c.verdict="),
+    ('g.verdict = "PASS";', "store into a member: g.verdict="),
+    ("const m2 = new Map(); m2.set(0, g.claims); m2.get(0).push(c);", "stores a record field"),
+])
+def test_the_store_scan_refuses_planted_stores(plant, what):
+    block = R.js_block()
+    assert block.count(JS_MOVED) == 1
+    problems = js_problems(block.replace(JS_MOVED, JS_MOVED + "      " + plant + "\n"))
     assert any(what in p for p in problems), problems
 
 
@@ -1336,18 +1648,25 @@ def _timing_cases() -> list[dict]:
 # 16.8 s on the NBSP classes in Python (CPython 3.12.10); on ea677740, 3.8 s on q1. The figures at this head are in
 # NOTE_path2a_fourth_pass_2026_09_30 and the README, measured the way this test measures them.
 OVERLAY_S = (0.5, 0.3)
+# I-1 (NOTE_path2a_eighth_pass_2026_10_01): the bound is relative to main's own call on the same input too, so a slower
+# runner (CI's CPython 3.9 and 3.10, a shared Linux machine) moves both sides: the overlay alone within the larger of the
+# absolute figure above and OVERLAY_TIMES times main's call (the least of three runs each).
+OVERLAY_TIMES = 5
 
 
 def test_cost_per_call_python(M):
+    """The overlay alone on each timing case, within max(0.5 s, 5 times main's call). Measured at this head in
+    NOTE_path2a_eighth_pass_2026_10_01's report and the README (the slowest cases at about 3 times main's call)."""
     for it in _timing_cases():
-        best = float("inf")
+        best = whole = float("inf")
         for _ in range(3):
+            t = time.perf_counter()
             g = M.gate_diff_text(it["summary"], it["diff"])
             t0 = time.perf_counter()
             N._p2a_abstain(g, False, lambda: N._P2aFacts(it["diff"], None, it["summary"]))
-            best = min(best, time.perf_counter() - t0)
+            best, whole = min(best, time.perf_counter() - t0), min(whole, t0 - t)
             assert not any(PHRASES["error"] in c.why for c in g.claims), it["id"]   # a failing overlay is fast too
-        assert best < OVERLAY_S[0], (it["id"], best)
+        assert best < max(OVERLAY_S[0], OVERLAY_TIMES * whole), (it["id"], best, whole)
 
 
 OVERLAY_MB = 64
@@ -1374,7 +1693,7 @@ def test_cost_per_call_port(work, tmp_path):
     (tmp_path / "in.json").write_text(json.dumps(_timing_cases(), ensure_ascii=False), encoding="utf-8")
     node("--overlay-timing", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "t.json")
     for d in json.loads((tmp_path / "t.json").read_text(encoding="utf-8")):
-        assert d["overlay"] < 1000 * OVERLAY_S[1], d
+        assert d["overlay"] < max(1000 * OVERLAY_S[1], OVERLAY_TIMES * d["main"]), d
 
 
 def _large_cases(scale: int = 1) -> list[dict]:
@@ -1404,9 +1723,10 @@ def test_cost_on_large_summaries_python(M):
     """The overlay alone, on the large cases, within 1.5 times main's own call on the same input (the least of two runs
     each): a bound relative to main, so a slower runner moves both sides. The overlay's loops are Python where main's
     are mostly C regex, so a slower interpreter moves the overlay more (NOTE_path2a_seventh_pass_2026_09_30, I-1):
-    measured 0.22 to 0.40 of main's call on CPython 3.14.2 and 0.27 to 0.56 on 3.12.10 (Windows), 0.35 to 0.65 on
-    3.12.3 (Linux, the sixth review); 1.5 leaves room for CI's 3.9 to 3.11, which were not available here. 495d2204
-    took 2.5 to 7.5 times main's call."""
+    measured at the eighth pass's head 0.21 to 0.47 of main's call on CPython 3.12.10 and 0.19 to 0.32 on 3.14.2
+    (Windows, one run each; such ratios move by about a tenth between runs: NOTE_path2a_eighth_pass_2026_10_01, I-4),
+    0.35 to 0.65 on 3.12.3 (Linux, the sixth review, at its head); 1.5 leaves room for CI's 3.9 to 3.11, which were not
+    available here. 495d2204 took 2.5 to 7.5 times main's call."""
     for it in _large_cases():
         over = whole = float("inf")
         for _ in range(2):
@@ -1417,6 +1737,52 @@ def test_cost_on_large_summaries_python(M):
             over, whole = min(over, time.perf_counter() - t0), min(whole, t0 - t)
             assert not any(PHRASES["error"] in c.why for c in g.claims), it["id"]
         assert over < 1.5 * whole, (it["id"], over, whole)
+
+
+def _large_relation_python(mod, M) -> list:
+    bad = []
+    for it in _large_cases():
+        recs = {}
+        for strict in (False, True):
+            a = M.gate_diff_text(it["summary"], it["diff"], strict=strict).to_dict()
+            b = mod.gate_diff_text(it["summary"], it["diff"], strict=strict).to_dict()
+            bad += [(it["id"], strict, x) for x in R.relation(a, b, strict, PHRASES)]
+            recs[strict] = b
+        bad += [(it["id"], "strict", x) for x in R.strict_alike(recs[False], recs[True])]
+    return bad
+
+
+def test_the_relation_on_large_summaries_python(M):
+    """A-1 (NOTE_path2a_eighth_pass_2026_10_01): the large cases push 10,000 claims each through the overlay, and the
+    timing tests never compared their records with main's: the seventh review planted `g.claims.pop()` behind
+    `len(todo) > 400` and every committed test passed. The relation, both strict modes, on them; and that plant (and
+    one that rewrites claim text) is refused here as well as by the self-check."""
+    assert _large_relation_python(N, M) == []
+    text = R.lf(R.INSTRUMENT)
+    block = R.py_block(text)
+    anchor = '            c.verdict = "UNCHECKABLE"\n            moved = True\n'
+    assert block.count(anchor) == 1
+    for name, plant in (("drop", "            if len(todo) > 400:\n                g.claims.pop()\n"),):
+        mod = R.module_from(text.replace(block, block.replace(anchor, anchor + plant)), "_p2a_plant_large_" + name)
+        assert _large_relation_python(mod, M) != [], name
+
+
+def test_the_relation_on_large_summaries_port(work, tmp_path):
+    """The same in the port, at three times the size (30,000 claims a case), with the seventh review's port plant (each
+    claim's text gains a trailing space behind `todo.length > 400`), which --relation on the committed inputs passed."""
+    (tmp_path / "in.json").write_text(json.dumps(_large_cases(3), ensure_ascii=False), encoding="utf-8")
+    node("--relation", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "rel.json")
+    rep = json.loads((tmp_path / "rel.json").read_text(encoding="utf-8"))
+    assert rep["broken"] == [] and rep["counts"]["broken"] == 0 and rep["counts"]["runs"] == 6, rep["counts"]
+    text = R.lf(R.PORT)
+    block = R.js_block(text)
+    anchor = '      c.verdict = "UNCHECKABLE";\n      moved = true;\n'
+    assert block.count(anchor) == 1
+    planted = tmp_path / "diffgate_planted.js"
+    planted.write_bytes(text.replace(block, block.replace(
+        anchor, anchor + '      if (todo.length > 400) c.text = c.text + " ";\n')).encode("utf-8"))
+    node("--relation", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "rel2.json", planted)
+    assert json.loads((tmp_path / "rel2.json").read_text(encoding="utf-8"))["counts"]["broken"] > 0
 
 
 def test_cost_on_large_summaries_port(work, tmp_path):
@@ -1698,6 +2064,17 @@ D_ZH = ("diff --git a/docs/zh.md b/docs/zh.md\n--- a/docs/zh.md\n+++ b/docs/zh.m
         + "".join(chr(x) for x in (0x4F7F, 0x7528)) + " def " + "".join(chr(x) for x in (0x5B9A, 0x4E49, 0x51FD, 0x6570))
         + "\n")
 JOSE = "\n\nThanks to Jos" + chr(0xE9) + " for the review; only a typo fix otherwise."
+# Pass 8 (NOTE_path2a_eighth_pass_2026_10_01): a changed test beside a new one (truth: 1 test added), and src/m.py with
+# the given added lines
+D_TEST_ONE = ("diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n"
+              "@@ -1,2 +1,5 @@\n-def test_a(x):\n-    assert x\n+def test_a(x, y):\n+    assert x\n+\n+def test_b():\n"
+              "+    assert 1\n")
+
+
+def D_LINES(lines):
+    return ("diff --git a/src/m.py b/src/m.py\n--- a/src/m.py\n+++ b/src/m.py\n@@ -1 +1,%d @@\n-x = 0\n" % len(lines)
+            + "".join("+" + x + "\n" for x in lines))
+
 D_CAFE = ("diff --git a/docs/r\u00e9sum\u00e9/index.md b/docs/r\u00e9sum\u00e9/index.md\n--- a/docs/r\u00e9sum\u00e9/index.md\n"
           "+++ b/docs/r\u00e9sum\u00e9/index.md\n@@ -1 +1 @@\n-a\n+b\n"
           "diff --git a/docs/caf\u00e9.md b/docs/caf\u00e9.md\nnew file mode 100644\n--- /dev/null\n+++ b/docs/caf\u00e9.md\n"
@@ -1826,12 +2203,34 @@ XPORT_CASES = [
      [("UNCHECKABLE", "tests")], [("UNCHECKABLE", "tests")], "PASS"),
     ("O11-split-surrogates", "Added 1 test " + chr(0xD83E) + chr(0xDDEA) + ".", D_TEST_ADDED,
      [("UNCHECKABLE", "tests")], [("UNCHECKABLE", "tests")], "PASS"),
-    # ... and the words in the template's order beside an accented letter, or beside an emoji outside the five blocks,
-    # where the two ports' templates may read the claims apart: main's CONTRADICTED stands
-    ("B1-ordered-words-kept", "Added 1 test. Jos" + chr(0xE9) + " added 1 test too.", D_TEST_ADDED,
+    # ... and the words in the template's order beside an accented letter, or beside an emoji outside the five blocks:
+    # pass 7 kept main's CONTRADICTED; pass 8 (B-2) reads the window a match can cover, and these characters lie
+    # outside it (the accent before the `\b` character of `added`, the emoji after the one past `test`), so both ports'
+    # mains read the same claims and the false tests verdicts are withheld in both
+    ("B1-ordered-words-outside-the-window", "Added 1 test. Jos" + chr(0xE9) + " added 1 test too.", D_TEST_ADDED,
+     [("UNCHECKABLE", "tests"), ("UNCHECKABLE", "tests")], [("UNCHECKABLE", "tests"), ("UNCHECKABLE", "tests")], "PASS"),
+    ("O11-another-block-outside-the-window", "Added 1 test " + chr(0x1F7E0) + ".", D_TEST_ADDED,
+     [("UNCHECKABLE", "tests")], [("UNCHECKABLE", "tests")], "PASS"),
+    # ... and O-11 inside a window: a pictograph emoji right after a claimed name, which neither port reads as a word
+    # character, is neutral, so the false tests verdict beside it is withheld (with the emoji read as wordish, the window
+    # would hold it and keep main's CONTRADICTED: the plant that drops O-11 in one port is caught here)
+    ("O11-emoji-after-a-name", "Adds function foo" + chr(0x1F9EA) + ". Added 1 test.", D_TEST_ONE,
+     [("CONTRADICTED", None), ("UNCHECKABLE", "tests")], [("CONTRADICTED", None), ("UNCHECKABLE", "tests")], "FAIL"),
+    # ... and inside the window, where the two ports' templates do read the claims apart: main's CONTRADICTED stands
+    # (pass 8, B-2: a name or a prefix that runs into a letter outside ASCII, a test count only the port reads)
+    ("B2-in-window-name-runs-on", "Adds function foo\xe9. Added 1 test.", D_TEST_ONE,
      [("CONTRADICTED", None), ("CONTRADICTED", None)], [("CONTRADICTED", None), ("CONTRADICTED", None)], "FAIL"),
-    ("O11-another-block-kept", "Added 1 test " + chr(0x1F7E0) + ".", D_TEST_ADDED,
-     [("CONTRADICTED", None)], [("CONTRADICTED", None)], "FAIL"),
+    ("B2-in-window-prefix", "Only touches docs/\xe9 and src/. Added 1 test.", D_TEST_ONE,
+     [("CONTRADICTED", None), ("CONTRADICTED", None)], [("CONTRADICTED", None), ("CONTRADICTED", None)], "FAIL"),
+    ("B2-in-window-test-count", "Added 1 test\xe9. 3 files changed.", _mod(".env") + _mod("env") + D_TEST_ONE,
+     [("CONTRADICTED", None)], [("CONTRADICTED", None), ("CONTRADICTED", None)], "FAIL"),
+    # ... the character just before the verb (its `\b`: CPython reads no claim, the port reads one), and one inside the
+    # optional noun after `tests` (CPython reads no noun, the port reads `cases`, a case not being a function)
+    ("B2-wordish-before-the-verb", "Added 1 test. " + chr(0xE9) + "Added 3 tests.", D_TEST_ONE,
+     [("CONTRADICTED", None)], [("CONTRADICTED", None), ("CONTRADICTED", None)], "FAIL"),
+    ("B2-noun-in-the-window", "Added 1 tests cases" + chr(0xE9) + ". 3 files changed.",
+     _mod(".env") + _mod("env") + D_TEST_ONE,
+     [("CONTRADICTED", None), ("CONTRADICTED", None)], [("UNCHECKABLE", None), ("CONTRADICTED", None)], "FAIL"),
     # B-3: an added def whose name runs into an accented letter, or a CJK line holding `def`, that no claim names: both
     # mains read the symbol claim by regex, so they cannot decide it apart there, and the false tests verdict is
     # withheld (fcd3ce6a kept it). Where the claimed name is that run, CPython's \b reads the accented letter as a word
@@ -1850,7 +2249,50 @@ XPORT_CASES = [
     # stands wherever two paths differ only in case outside ASCII. Which count each port reads depends on its runtime,
     # so this case pins that the overlay moves no claim in either port ("main") and the gate both reach.
     ("C1-a-unicode-16-case-pair", "2 files changed. Added 0 tests.",
-     _mod("src/" + chr(0xA7DC) + ".py") + _mod("src/" + chr(0x19B) + ".py") + D_TEST, "main", "main", "FAIL"),
+     _mod("src/" + chr(0xA7DC) + ".py") + _mod("src/" + chr(0x19B) + ".py") + D_TEST,
+     [("UNCHECKABLE", "case_count"), ("UNCHECKABLE", "tests")], [("UNCHECKABLE", "case_count"), ("UNCHECKABLE", "tests")],
+     "PASS"),
+    # Pass 8 (NOTE_path2a_eighth_pass_2026_10_01), C-1: main's symbol regex reads `\s+` across the joined added lines,
+    # so a `def` that ends its line is read with the name on the next one, where the two ports' \s and \b part: main's
+    # Python and port decide the symbol claim apart and agree on FAIL; 8eead84f withheld the tests or count
+    # CONTRADICTED in both and split the gates (PASS / FAIL or FAIL / PASS). Now main's CONTRADICTED stands in both.
+    ("C1-xl-unit-separator", "Adds function foo. Added 0 tests.", D_TEST + D_LINES(["x = 1", "def", "\x1ffoo():"]),
+     [("VERIFIED", None), ("CONTRADICTED", None)], [("CONTRADICTED", None), ("CONTRADICTED", None)], "FAIL"),
+    ("C1-xl-bom", "Adds function foo. Added 0 tests.", D_TEST + D_LINES(["x = 1", "def", "\ufefffoo():"]),
+     [("CONTRADICTED", None), ("CONTRADICTED", None)], [("VERIFIED", None), ("CONTRADICTED", None)], "FAIL"),
+    ("C1-xl-e-acute", "Adds function foo. Added 0 tests.", D_TEST + D_LINES(["def", "foo\xe9():"]),
+     [("CONTRADICTED", None), ("CONTRADICTED", None)], [("VERIFIED", None), ("CONTRADICTED", None)], "FAIL"),
+    ("C1-xl-count", "Adds function foo. 3 files changed.", _mod(".env") + _mod("env") + D_LINES(["def", "\x1ffoo():"]),
+     [("VERIFIED", None), ("CONTRADICTED", None)], [("CONTRADICTED", None), ("CONTRADICTED", None)], "FAIL"),
+    # B-1: two changed paths that differ outside ASCII but not in case (CJK, Cyrillic, two accented letters) no longer
+    # keep main's CONTRADICTED; 8eead84f kept the false tests verdict (a changed test, #101) in both ports
+    ("B1-cjk-names", "3 files changed. Added 1 test.", _mod("docs/zh/\u5b89\u88c5.md") + _mod("docs/zh/\u914d\u7f6e.md")
+     + D_TEST_ONE, [("VERIFIED", None), ("UNCHECKABLE", "tests")], [("VERIFIED", None), ("UNCHECKABLE", "tests")], "PASS"),
+    ("B1-cyrillic-names", "3 files changed. Added 1 test.",
+     _mod("x/\u0424\u0430\u0431\u0416\u0435.os") + _mod("x/\u0424\u0430\u0431\u0417\u0430.os") + D_TEST_ONE,
+     [("VERIFIED", None), ("UNCHECKABLE", "tests")], [("VERIFIED", None), ("UNCHECKABLE", "tests")], "PASS"),
+    ("B1-two-accents", "3 files changed. Added 1 test.", _mod("i18n/caf\xe9.txt") + _mod("i18n/caf\xe8.txt")
+     + D_TEST_ONE, [("VERIFIED", None), ("UNCHECKABLE", "tests")], [("VERIFIED", None), ("UNCHECKABLE", "tests")], "PASS"),
+    # ... and a case pair (E acute, both cases): the count claim in [#CA, #A] is withheld in both ports, whatever its
+    # verdict, with the new phrase; 8eead84f kept every CONTRADICTED
+    ("B1-a-latin-case-pair", "3 files changed. Added 1 test.", _mod("src/\xc9.py") + _mod("src/\xe9.py") + D_TEST_ONE,
+     [("UNCHECKABLE", "case_count"), ("UNCHECKABLE", "tests")],
+     [("UNCHECKABLE", "case_count"), ("UNCHECKABLE", "tests")], "PASS"),
+    # B-2: a letter outside ASCII in the claim's own sentence, outside the window a template's match can cover
+    ("B2-naive-inputs", "Added 1 test for na\xefve inputs.", D_TEST_ONE, [("UNCHECKABLE", "tests")],
+     [("UNCHECKABLE", "tests")], "PASS"),
+    ("B2-joses-parser", "Added 1 test for Jos\xe9's parser.", D_TEST_ONE, [("UNCHECKABLE", "tests")],
+     [("UNCHECKABLE", "tests")], "PASS"),
+    ("B2-cjk-word", "Added 1 test for \u7528\u6237 login.", D_TEST_ONE, [("UNCHECKABLE", "tests")],
+     [("UNCHECKABLE", "tests")], "PASS"),
+    ("B2-count-cafe", "2 files changed (caf\xe9 config).", _mod(".env") + _mod("env"), [("UNCHECKABLE", "count")],
+     [("UNCHECKABLE", "count")], "PASS"),
+    ("B2-count-thanks", "2 files changed, thanks to Jos\xe9.", _mod(".env") + _mod("env"), [("UNCHECKABLE", "count")],
+     [("UNCHECKABLE", "count")], "PASS"),
+    ("B2-new-button", chr(0x1F195) + " Added 1 test.", D_TEST_ONE, [("UNCHECKABLE", "tests")], [("UNCHECKABLE", "tests")],
+     "PASS"),
+    ("B2-keycap", "1\ufe0f\u20e3 Added 1 test.", D_TEST_ONE, [("UNCHECKABLE", "tests")], [("UNCHECKABLE", "tests")],
+     "PASS"),
 ]
 
 
@@ -1943,6 +2385,56 @@ def test_no_gate_split_where_main_agrees_on_a_newer_engine(M, tmp_path):
     assert splits == [], splits[:10]
 
 
+def _line_break_items(seed: int = 8, n: int = 600) -> list[dict]:
+    """C-1 (NOTE_path2a_eighth_pass_2026_10_01): the seventh review's `genxl` shape. An added `def`, `class` or `async
+    def` line followed only by white space of either port, the name on a later added line after a run of such white
+    space (U+001F and U+0085 are CPython's alone, U+FEFF the port's), the name running on into a letter outside ASCII or
+    not, beside a claim the overlay withholds: a changed test under "Added 0 tests", or a dot twin under "3 files
+    changed"."""
+    import random
+    r = random.Random(seed)
+    seps = ["", " ", "\t", chr(0x1F), chr(0xFEFF), chr(0xA0), chr(0x3000), chr(0x0B), chr(0x0C), chr(0x1C), chr(0x85)]
+    tails = ["():", "(x):", chr(0xE9) + "():", chr(0xE9), ":", " = 1", chr(0x105C0) + "():", chr(0x301) + "():", "_x():",
+             ""]
+    out = []
+    for i in range(n):
+        name = r.choice(["foo", "Foo", "helper"])
+        lines = [r.choice(["", "  "]) + r.choice(["def", "class", "async def"])
+                 + "".join(r.choice(seps) for _ in range(r.randint(0, 2)))]
+        lines += ["".join(r.choice(seps) for _ in range(r.randint(1, 2))) for _ in range(r.randint(0, 2))]
+        lines.append("".join(r.choice(seps) for _ in range(r.randint(0, 2))) + name + r.choice(tails))
+        tests = r.random() < 0.5
+        sents = [r.choice(["Adds function %s", "Added class %s", "Introduces method %s"]) % name,
+                 "Added 0 tests" if tests else "3 files changed"]
+        r.shuffle(sents)
+        out.append({"id": f"xl:{seed}:{i}", "summary": ". ".join(sents) + ".",
+                    "diff": (D_TEST if tests else _mod(".env") + _mod("env")) + D_LINES(lines)})
+    return out
+
+
+def test_no_gate_split_where_main_agrees_across_a_line_break(M, tmp_path):
+    """C-1 (NOTE_path2a_eighth_pass_2026_10_01), the seventh review's blocker: main's symbol regex reads `\\s+` across
+    the joined added lines, so where a `def` ends its line the two ports' mains may decide the symbol claim apart; there
+    the overlay must withhold no CONTRADICTED. Without --strict, the overlay's gate verdicts agree wherever main's do.
+    On 8eead84f the review's generator split 538 of 4,000 such inputs on CPython 3.12 and Node 24."""
+    items = _line_break_items()
+    (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=True), encoding="utf-8")
+    node("--decisions", R.main_port_path(tmp_path), tmp_path / "in.json", tmp_path / "out.json")
+    js = {d["id"]: d for d in json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))}
+    splits, apart = [], 0
+    for it in items:
+        a = M.gate_diff_text(it["summary"], it["diff"]).to_dict()
+        b = N.gate_diff_text(it["summary"], it["diff"]).to_dict()
+        j = js[it["id"]]
+        mine = [x["verdict"] for x in a["claims"] if x["kind"] == "symbol_added"]
+        theirs = [x["verdict"] for x in j["main"]["claims"] if x["kind"] == "symbol_added"]
+        apart += mine != theirs
+        if a["verdict"] == j["main"]["verdict"] and b["verdict"] != j["new"]["verdict"]:
+            splits.append(it["id"])
+    assert apart > 100, apart                     # the shape is live: main's two ports decide the symbol claim apart
+    assert splits == [], splits[:10]
+
+
 # B-2 (NOTE_path2a_sixth_pass_2026_09_30): #161's joint #121 reproductions. V121's count is false too (a submodule
 # line, an hg binary notice or a no-prefix directory main registers no file for), so under the but-for attribution
 # they are not misses; the false CONTRADICTED is kept and the right one withheld, in both ports. Operator option O-7
@@ -1981,6 +2473,26 @@ def _neutral():
     """The neutral code points, read off the Python block's regex class."""
     rx = re.compile("[" + N._P2A_NEUTRAL + "]")
     return {cp for cp in range(0x80, 0x10000) if rx.match(chr(cp))}
+
+
+def _case_table(runs) -> dict:
+    """{code point: its lowercase} from (start, end, step, delta) runs."""
+    return {cp: cp + d for lo, hi, step, d in runs for cp in range(lo, hi + 1, step)}
+
+
+def _assert_case_tables(table: dict, never: set, here: dict, version: str):
+    """B-1 (NOTE_path2a_eighth_pass_2026_10_01): a runtime's lowercase mappings `here` against the static tables."""
+    targets = set(table.values())
+    assert not never & (set(table) | targets), "a code point of a block with no case is in the case table"
+    assert not set(table) & targets, "a lowercase of the table is also mapped"
+    for cp, d in here.items():
+        assert cp not in never and d not in never, (hex(cp), hex(d))
+        if cp in table:
+            assert table[cp] == d, (hex(cp), hex(d), hex(table[cp]))
+    if version.startswith("16."):
+        assert here == table, sorted(set(here) ^ set(table))[:10]
+    elif int(version.split(".")[0]) < 16:
+        assert set(here) <= set(table), sorted(set(here) - set(table))[:10]
 
 
 def test_python_tables():
@@ -2052,6 +2564,20 @@ def test_python_tables():
     assert {cp for cp in range(0x10000, 0x110000) if N._P2A_EMOJI_RX.fullmatch(chr(cp))} == emoji
     assert {cp for cp in range(0x10000, 0x110000) if N._P2A_EMOJI_RX.fullmatch(halves(cp))} == emoji
     assert not any(N._P2A_EMOJI_RX.search(chr(cp)) for cp in range(0x10000))
+    # B-1 (NOTE_path2a_eighth_pass_2026_10_01): the static case tables against this runtime's lowercase. Every mapping
+    # from 0x80 up (U+0130 and U+212A aside, which the fold form reads) is to one code point, joins two code points the
+    # table gives one class (or one the table does not hold, which a later version may add), and touches no code point of
+    # the blocks with no case; on Unicode 16 the table is exactly this runtime's mappings, on an older one it holds them.
+    table = _case_table(N._P2A_LOWER_RUNS)
+    never = {cp for cp in range(0x80, 0x110000) if N._P2A_NEVER_RX.match(chr(cp))}
+    here = {}
+    for cp in range(0x80, 0x110000):
+        low = chr(cp).lower()
+        if cp not in (0x130, 0x212A) and low != chr(cp):
+            assert len(low) == 1, hex(cp)
+            here[cp] = ord(low)
+    _assert_case_tables(table, never, here, unicodedata.unidata_version)
+    assert {ord(k): ord(v) for k, v in N._P2A_CASE.items()} == {**table, **{d: d for d in table.values()}}
     # C-2: the digit table reads ASCII digits only
     for x in ("\u30003", "3\u3000", "\uff13", " 3", "3 ", "+3", "0x3", "3e1", "\u0663"):
         with pytest.raises(KeyError):
@@ -2090,4 +2616,10 @@ def test_port_tables_and_constants(tmp_path):
     assert set(t["emoji_matched"]) == emoji and t["emoji_units_matched"] == [] and t["emoji_flagged"] == []
     assert t["emoji_as"] == N._P2A_EMOJI_AS
     assert t["ascii_folds"] == [], "this engine's non-Unicode IGNORECASE folds a code point from 0x80 up to ASCII"
+    # B-1 (NOTE_path2a_eighth_pass_2026_10_01): the port's case tables are the Python's, and hold this engine's lowercase
+    assert [tuple(x) for x in t["lower_runs"]] == list(N._P2A_LOWER_RUNS)
+    never = {cp for a, b in t["never_ranges"] for cp in range(a, b + 1)}
+    assert never == {cp for cp in range(0x80, 0x110000) if N._P2A_NEVER_RX.match(chr(cp))}
+    assert all(d >= 0 for _cp, d in t["lower_map"]), "this engine lowers a code point from 0x80 up to more than one"
+    _assert_case_tables(_case_table(N._P2A_LOWER_RUNS), never, {cp: d for cp, d in t["lower_map"]}, t["unicode"])
     assert all(t["int_rejects"]), "the port's digit table read a string that is not ASCII digits"
