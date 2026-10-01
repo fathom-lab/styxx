@@ -679,7 +679,7 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 //
 // NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30,
 // NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30 and NOTE_path2a_sixth_pass_2026_09_30.
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 33a9d7b2615932718e8e36a1017a1094652b737d416c0b5ec2ea19080e96f608, LF). Everything outside this block is
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 40bb973b3cfce08c48e25b202c311be9664f6eacaee55d7003021e808d5e1eb9, LF). Everything outside this block is
 // main's port at 1cde8b82 (sha256 06688702..., LF), unchanged except that main's gateDiffText is named
 // _gateDiffTextMain (its definition and its DECLARE-1 self-call); the gateDiffText at the end of this block calls it
 // and then the overlay, once. The overlay reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason
@@ -739,6 +739,7 @@ const _P2A_PHRASES = {
   "divergent": "a file header of this diff holds a character that the Python and JavaScript readers split or strip differently",
   "odd": "a path here has a drive-like prefix or a final '.' segment, where base names are read differently",
   "case": "a path here compares only where case outside ASCII is folded, which this overlay does not do",
+  "case_count": "two changed paths differ only in case outside ASCII, which the Python and JavaScript readers' case tables may merge or keep apart, so the two may count the files differently",
   "unreproduced": "this overlay does not reproduce main's reading of the diff",
   "unparsed": "main's reason does not have the form this overlay reads",
   "error": "this overlay failed while reading the diff"
@@ -746,8 +747,7 @@ const _P2A_PHRASES = {
 
 function _p2aLines(text, rx) {
   const out = text.split(rx);
-  if (out.length && out[out.length - 1] === "") out.pop();
-  return out;
+  return (out.length && out[out.length - 1] === "") ? out.slice(0, out.length - 1) : out;
 }
 
 function _p2aRegsRaw(lines) {
@@ -868,6 +868,46 @@ const _p2aWA = s => _p2aWild(_p2aStrip(s));
 const _p2aWK = s => _p2aWild(_p2aDotted(s));
 const _P2A_FORMS = { A: [_p2aA, _p2aWA], K: [_p2aK, _p2aWK] };
 
+// B-1 (NOTE_path2a_eighth_pass_2026_10_01): which code points from 0x80 up some runtime's lowercase may merge, as the
+// Python's _P2A_LOWER_RUNS (start, end, step, delta: every code point whose lowercase is another single code point in
+// Unicode 16.0, U+0130 and U+212A aside) and _P2A_NEVER_RX (scripts and symbols with no case, and the neutral ranges).
+const _P2A_LOWER_RUNS = [[0xc0, 0xd6, 1, 32], [0xd8, 0xde, 1, 32], [0x100, 0x12e, 2, 1], [0x132, 0x136, 2, 1], [0x139, 0x147, 2, 1], [0x14a, 0x176, 2, 1], [0x178, 0x178, 1, -121], [0x179, 0x17d, 2, 1], [0x181, 0x181, 1, 210], [0x182, 0x184, 2, 1], [0x186, 0x186, 1, 206], [0x187, 0x187, 1, 1], [0x189, 0x18a, 1, 205], [0x18b, 0x18b, 1, 1], [0x18e, 0x18e, 1, 79], [0x18f, 0x18f, 1, 202], [0x190, 0x190, 1, 203], [0x191, 0x191, 1, 1], [0x193, 0x193, 1, 205], [0x194, 0x194, 1, 207], [0x196, 0x196, 1, 211], [0x197, 0x197, 1, 209], [0x198, 0x198, 1, 1], [0x19c, 0x19c, 1, 211], [0x19d, 0x19d, 1, 213], [0x19f, 0x19f, 1, 214], [0x1a0, 0x1a4, 2, 1], [0x1a6, 0x1a6, 1, 218], [0x1a7, 0x1a7, 1, 1], [0x1a9, 0x1a9, 1, 218], [0x1ac, 0x1ac, 1, 1], [0x1ae, 0x1ae, 1, 218], [0x1af, 0x1af, 1, 1], [0x1b1, 0x1b2, 1, 217], [0x1b3, 0x1b5, 2, 1], [0x1b7, 0x1b7, 1, 219], [0x1b8, 0x1b8, 1, 1], [0x1bc, 0x1bc, 1, 1], [0x1c4, 0x1c4, 1, 2], [0x1c5, 0x1c5, 1, 1], [0x1c7, 0x1c7, 1, 2], [0x1c8, 0x1c8, 1, 1], [0x1ca, 0x1ca, 1, 2], [0x1cb, 0x1db, 2, 1], [0x1de, 0x1ee, 2, 1], [0x1f1, 0x1f1, 1, 2], [0x1f2, 0x1f4, 2, 1], [0x1f6, 0x1f6, 1, -97], [0x1f7, 0x1f7, 1, -56], [0x1f8, 0x21e, 2, 1], [0x220, 0x220, 1, -130], [0x222, 0x232, 2, 1], [0x23a, 0x23a, 1, 10795], [0x23b, 0x23b, 1, 1], [0x23d, 0x23d, 1, -163], [0x23e, 0x23e, 1, 10792], [0x241, 0x241, 1, 1], [0x243, 0x243, 1, -195], [0x244, 0x244, 1, 69], [0x245, 0x245, 1, 71], [0x246, 0x24e, 2, 1], [0x370, 0x372, 2, 1], [0x376, 0x376, 1, 1], [0x37f, 0x37f, 1, 116], [0x386, 0x386, 1, 38], [0x388, 0x38a, 1, 37], [0x38c, 0x38c, 1, 64], [0x38e, 0x38f, 1, 63], [0x391, 0x3a1, 1, 32], [0x3a3, 0x3ab, 1, 32], [0x3cf, 0x3cf, 1, 8], [0x3d8, 0x3ee, 2, 1], [0x3f4, 0x3f4, 1, -60], [0x3f7, 0x3f7, 1, 1], [0x3f9, 0x3f9, 1, -7], [0x3fa, 0x3fa, 1, 1], [0x3fd, 0x3ff, 1, -130], [0x400, 0x40f, 1, 80], [0x410, 0x42f, 1, 32], [0x460, 0x480, 2, 1], [0x48a, 0x4be, 2, 1], [0x4c0, 0x4c0, 1, 15], [0x4c1, 0x4cd, 2, 1], [0x4d0, 0x52e, 2, 1], [0x531, 0x556, 1, 48], [0x10a0, 0x10c5, 1, 7264], [0x10c7, 0x10c7, 1, 7264], [0x10cd, 0x10cd, 1, 7264], [0x13a0, 0x13ef, 1, 38864], [0x13f0, 0x13f5, 1, 8], [0x1c89, 0x1c89, 1, 1], [0x1c90, 0x1cba, 1, -3008], [0x1cbd, 0x1cbf, 1, -3008], [0x1e00, 0x1e94, 2, 1], [0x1e9e, 0x1e9e, 1, -7615], [0x1ea0, 0x1efe, 2, 1], [0x1f08, 0x1f0f, 1, -8], [0x1f18, 0x1f1d, 1, -8], [0x1f28, 0x1f2f, 1, -8], [0x1f38, 0x1f3f, 1, -8], [0x1f48, 0x1f4d, 1, -8], [0x1f59, 0x1f5f, 2, -8], [0x1f68, 0x1f6f, 1, -8], [0x1f88, 0x1f8f, 1, -8], [0x1f98, 0x1f9f, 1, -8], [0x1fa8, 0x1faf, 1, -8], [0x1fb8, 0x1fb9, 1, -8], [0x1fba, 0x1fbb, 1, -74], [0x1fbc, 0x1fbc, 1, -9], [0x1fc8, 0x1fcb, 1, -86], [0x1fcc, 0x1fcc, 1, -9], [0x1fd8, 0x1fd9, 1, -8], [0x1fda, 0x1fdb, 1, -100], [0x1fe8, 0x1fe9, 1, -8], [0x1fea, 0x1feb, 1, -112], [0x1fec, 0x1fec, 1, -7], [0x1ff8, 0x1ff9, 1, -128], [0x1ffa, 0x1ffb, 1, -126], [0x1ffc, 0x1ffc, 1, -9], [0x2126, 0x2126, 1, -7517], [0x212b, 0x212b, 1, -8262], [0x2132, 0x2132, 1, 28], [0x2160, 0x216f, 1, 16], [0x2183, 0x2183, 1, 1], [0x24b6, 0x24cf, 1, 26], [0x2c00, 0x2c2f, 1, 48], [0x2c60, 0x2c60, 1, 1], [0x2c62, 0x2c62, 1, -10743], [0x2c63, 0x2c63, 1, -3814], [0x2c64, 0x2c64, 1, -10727], [0x2c67, 0x2c6b, 2, 1], [0x2c6d, 0x2c6d, 1, -10780], [0x2c6e, 0x2c6e, 1, -10749], [0x2c6f, 0x2c6f, 1, -10783], [0x2c70, 0x2c70, 1, -10782], [0x2c72, 0x2c72, 1, 1], [0x2c75, 0x2c75, 1, 1], [0x2c7e, 0x2c7f, 1, -10815], [0x2c80, 0x2ce2, 2, 1], [0x2ceb, 0x2ced, 2, 1], [0x2cf2, 0x2cf2, 1, 1], [0xa640, 0xa66c, 2, 1], [0xa680, 0xa69a, 2, 1], [0xa722, 0xa72e, 2, 1], [0xa732, 0xa76e, 2, 1], [0xa779, 0xa77b, 2, 1], [0xa77d, 0xa77d, 1, -35332], [0xa77e, 0xa786, 2, 1], [0xa78b, 0xa78b, 1, 1], [0xa78d, 0xa78d, 1, -42280], [0xa790, 0xa792, 2, 1], [0xa796, 0xa7a8, 2, 1], [0xa7aa, 0xa7aa, 1, -42308], [0xa7ab, 0xa7ab, 1, -42319], [0xa7ac, 0xa7ac, 1, -42315], [0xa7ad, 0xa7ad, 1, -42305], [0xa7ae, 0xa7ae, 1, -42308], [0xa7b0, 0xa7b0, 1, -42258], [0xa7b1, 0xa7b1, 1, -42282], [0xa7b2, 0xa7b2, 1, -42261], [0xa7b3, 0xa7b3, 1, 928], [0xa7b4, 0xa7c2, 2, 1], [0xa7c4, 0xa7c4, 1, -48], [0xa7c5, 0xa7c5, 1, -42307], [0xa7c6, 0xa7c6, 1, -35384], [0xa7c7, 0xa7c9, 2, 1], [0xa7cb, 0xa7cb, 1, -42343], [0xa7cc, 0xa7cc, 1, 1], [0xa7d0, 0xa7d0, 1, 1], [0xa7d6, 0xa7da, 2, 1], [0xa7dc, 0xa7dc, 1, -42561], [0xa7f5, 0xa7f5, 1, 1], [0xff21, 0xff3a, 1, 32], [0x10400, 0x10427, 1, 40], [0x104b0, 0x104d3, 1, 40], [0x10570, 0x1057a, 1, 39], [0x1057c, 0x1058a, 1, 39], [0x1058c, 0x10592, 1, 39], [0x10594, 0x10595, 1, 39], [0x10c80, 0x10cb2, 1, 64], [0x10d50, 0x10d65, 1, 32], [0x118a0, 0x118bf, 1, 32], [0x16e40, 0x16e5f, 1, 32], [0x1e900, 0x1e921, 1, 34]];
+const _P2A_NEVER_RANGES = [[0x590, 0x8ff], [0x900, 0x109f], [0x1100, 0x139f], [0x1400, 0x1c7f], [0x2e80, 0x2fff], [0x3000, 0x9fff], [0xa000, 0xa63f], [0xa6a0, 0xa6ff], [0xa800, 0xab2f], [0xabc0, 0xd7ff], [0xf900, 0xfaff], [0xfb1d, 0xfdff], [0xfe70, 0xfefe], [0xff66, 0xffdc], [0x20000, 0x3ffff]].concat(_P2A_NEUTRAL_RANGES);
+const _P2A_CASE = new Map();
+for (const [lo, hi, step, delta] of _P2A_LOWER_RUNS) {
+  for (let cp = lo; cp <= hi; cp += step) {
+    _P2A_CASE.set(String.fromCodePoint(cp), String.fromCodePoint(cp + delta));
+    _P2A_CASE.set(String.fromCodePoint(cp + delta), String.fromCodePoint(cp + delta));
+  }
+}
+const _p2aNever = ch => { const u = ch.codePointAt(0); return _P2A_NEVER_RANGES.some(([a, b]) => a <= u && u <= b); };
+
+function _p2aCaseCount(forms) {
+  // #CA, as the Python's _p2a_case_count (B-1 of NOTE_path2a_eighth_pass_2026_10_01): how many keys main's count reads
+  // over the fold forms when every two code points some runtime's lowercase may merge are merged, read by code point:
+  // at each position from 0x80 up of a group of forms with one wild form, a code point with no case is read as itself,
+  // and the others as their case class, or all as one placeholder where some form holds a code point of neither table.
+  const groups = new Map();
+  for (const x of forms) {
+    const w = _p2aWild(x);
+    if (!groups.has(w)) groups.set(w, []);
+    groups.get(w).push(x);
+  }
+  let n = 0;
+  for (const [wild, xs] of groups) {
+    if (xs.length < 2) { n += 1; continue; }
+    const keys = xs.map(x => [...x]);
+    const w = [...wild];
+    const open = _p2aFlags(w.length);    // the positions where some form holds a code point of neither table
+    w.forEach((ch, i) => {
+      if (ch === "\ufffd" && keys.some(k => !_p2aNever(k[i]) && !_P2A_CASE.has(k[i]))) open[i] = true;
+    });
+    const read = (ch, i) => (w[i] !== "\ufffd" || _p2aNever(ch)) ? ch : open[i] ? "\ufffd" : _P2A_CASE.get(ch);
+    n += new Set(keys.map(k => k.map(read).join(""))).size;
+  }
+  return n;
+}
+
 function _p2aBase(p) {                   // main's _basename
   const q = _rstrip(p, "/");
   return q.slice(q.lastIndexOf("/") + 1);
@@ -949,9 +989,11 @@ function _p2aEnds(texts, claims) {
   // Map c -> [the index of the earliest text that ends in "/" + c, or -1; how many texts do], as the Python's
   // _p2a_ends: each text read from its end one segment at a time through the claims' tree, only while the segments read
   // so far end some claim's (NOTE_path2a_fifth_pass_2026_09_30, A-1).
+  // The two figures are kept in two Maps of numbers and joined at the end, so no array read out of a Map is stored into
+  // (the store scan, A-2 of NOTE_path2a_eighth_pass_2026_10_01).
   const root = _p2aTree(claims);
-  const out = new Map();
-  for (const c of claims) out.set(c, [-1, 0]);
+  const earliest = new Map(), many = new Map();
+  for (const c of claims) { earliest.set(c, -1); many.set(c, 0); }
   texts.forEach((p, i) => {
     let node = root, j = p.length;
     for (let k = p.lastIndexOf("/"); k >= 0; k = k > 0 ? p.lastIndexOf("/", k - 1) : -1) {
@@ -959,13 +1001,14 @@ function _p2aEnds(texts, claims) {
       if (node === undefined) break;
       const c = node.get(null);
       if (c !== undefined) {
-        const got = out.get(c);
-        if (got[0] < 0) got[0] = i;
-        got[1] += 1;
+        if (earliest.get(c) < 0) earliest.set(c, i);
+        many.set(c, many.get(c) + 1);
       }
       j = k;
     }
   });
+  const out = new Map();
+  for (const c of claims) out.set(c, [earliest.get(c), many.get(c)]);
   return out;
 }
 
@@ -987,7 +1030,8 @@ function _p2aAutomaton(words) {
     }
     hit[k] = true;
   }
-  const back = moves.map(() => 0);
+  const back = [];                       // a fresh array, so the store scan reads back[i] as a store into the block's own
+  for (let z = 0; z < moves.length; z++) back.push(0);
   const queue = [...moves[0].values()];
   for (const k of queue) {               // level by level; the queue grows as it is read
     for (const [ch, i] of moves[k]) {
@@ -1206,6 +1250,30 @@ function _p2aAnchored(line) {
   return out;
 }
 
+function _p2aOpen(line) {
+  // Whether one added line is, from its start (or a U+2028 or U+2029), a run of either port's white space, `def` or
+  // `class`, and a run of either port's white space to its end, as the Python's _p2a_open (C-1 of
+  // NOTE_path2a_eighth_pass_2026_10_01): main's symbol regex runs on the joined added lines, so its white space after
+  // the word spans the line break, and the name it reads lies on a later line, where the two ports may read it apart.
+  const starts = [0];
+  if (line.includes("\u2028") || line.includes("\u2029")) {
+    for (let p = 0; p < line.length; p++) {
+      const u = line.charCodeAt(p);
+      if (u === 0x2028 || u === 0x2029) starts.push(p + 1);
+    }
+  }
+  let last = -1;
+  for (const b of starts) {
+    if (b <= last) continue;
+    const p = _p2aRunEnd(line, b, _p2aSpaceUnit);
+    last = p;
+    for (const w of ["def", "class"]) {
+      if (line.startsWith(w, p) && _p2aRunEnd(line, p + w.length, _p2aSpaceUnit) === line.length) return true;
+    }
+  }
+  return false;
+}
+
 function _p2aNameDefs(groups) {
   // The ASCII name run at every anchored `def` or `class` site of the lines whose name does not read through NFKC, as
   // the Python's _p2a_name_defs: the names the unchanged lines define (NOTE_path2a_sixth_pass_2026_09_30, B-1).
@@ -1316,10 +1384,128 @@ function _p2aSeam(s) {
   return false;
 }
 
-// C-1 (NOTE_path2a_sixth_pass_2026_09_30; NOTE_path2a_seventh_pass_2026_09_30, B-1): the words every match of a template
-// that can give CONTRADICTED holds, in the order the template holds them, and the DECLARE-1 keys whose lines write such
-// a sentence, each a word of its own, as the Python's _P2A_TRIGGERS.
-const _P2A_TRIGGERS = [["file", "changed"], ["only", "touch"], ["only", "modif"], ["only", "chang"], ["add", "test"], ["creat", "test"], ["add", "function"], ["add", "class"], ["add", "method"], ["introduc", "function"], ["introduc", "class"], ["introduc", "method"], ["files_changed"], ["only_touches"], ["tests_added"], ["adds_symbol"]];
+// C-1 (NOTE_path2a_sixth_pass_2026_09_30; NOTE_path2a_eighth_pass_2026_10_01, B-2): the DECLARE-1 keys whose lines
+// write a sentence a template that can give CONTRADICTED reads, each a word of its own, and the leading word of each such
+// template with the window its match can cover (_p2aWindow), as the Python's _P2A_KEYS and _P2A_WINDOWS.
+const _P2A_KEYS = ["files_changed", "only_touches", "tests_added", "adds_symbol"];
+const _P2A_WINDOWS = [["file", "count"], ["add", "tests"], ["creat", "tests"], ["add", "symbol"], ["introduc", "symbol"], ["only", "scope"]];
+const _P2A_NOUNS = ["case", "file", "scenario", "suite", "class", "function", "method"];
+const _P2A_ANY_SPACE_UNITS = new Set([..._P2A_PY_SPACE + "\ufeff"].map(ch => ch.charCodeAt(0)));
+const _p2aSpaceUnit = u => _P2A_ANY_SPACE_UNITS.has(u);
+
+function _p2aWindow(s, low, kind, i, n, a, e) {
+  // [x, y), the units a match of the template `kind` whose leading word (n units) is at i can read in either port, within
+  // the sentence [a, e), or null where neither port's template can match there, as the Python's _p2a_window (B-2 of
+  // NOTE_path2a_eighth_pass_2026_10_01): runs read by the union of both ports' classes, the literal words in `low`, the
+  // unit before the match and the unit after its last word.
+  const at = (w, j) => j + w.length <= e && low.startsWith(w, j);
+  const run = (j, test) => { let k = j; while (k < e && test(s.charCodeAt(k))) k++; return k > j ? k : null; };
+  const skip = (j, w) => at(w, j) ? run(j + w.length, _p2aSpaceUnit) : null;
+  const quote = j => (j < e && (s.charAt(j) === "`" || s.charAt(j) === "\"" || s.charAt(j) === "'")) ? j + 1 : j;
+  const filesIn = j => {
+    const k = at("files", j) ? skip(j, "files") : skip(j, "file");
+    if (k === null) return j;
+    for (const w of ["in", "under"]) { const x = skip(k, w); if (x !== null) return x; }
+    return j;
+  };
+  const nameEnd = j => run(quote(j), _p2aNameAnyUnit);
+  if (kind === "count") {                // \b(?<n>\d+)\s+files?\s+(?:were\s+)?changed, `file` at i
+    let k = i;
+    while (k > a && _p2aSpaceUnit(s.charCodeAt(k - 1))) k--;
+    let m = k;
+    while (m > a && _p2aCountUnit(s.charCodeAt(m - 1))) m--;
+    if (k === i || m === k) return null;
+    const r = run(at("s", i + 4) ? i + 5 : i + 4, _p2aSpaceUnit);
+    if (r === null) return null;
+    const x = m > a ? m - 1 : a;
+    const w = skip(r, "were");
+    if (w !== null && at("changed", w)) return [x, w + 7];
+    return at("changed", r) ? [x, r + 7] : null;
+  }
+  let r = kind === "scope" ? run(i + n, _p2aSpaceUnit) : run(i + n, _p2aNameAnyUnit);
+  if (r === null) return null;
+  const x = i > a ? i - 1 : a;
+  if (kind === "tests") {                // \s+(?<n>\d+)\s+(?:new\s+)?tests?\b(?:\s+(?<noun>...)\b)?
+    r = run(r, _p2aSpaceUnit);
+    r = r === null ? null : run(r, _p2aCountUnit);
+    r = r === null ? null : run(r, _p2aSpaceUnit);
+    if (r === null) return null;
+    let j = r;
+    const w = skip(j, "new");
+    if (w !== null && at("test", w)) j = w;
+    if (!at("test", j)) return null;
+    j = at("s", j + 4) ? j + 5 : j + 4;
+    let y = j + 1;
+    const t = run(j, _p2aSpaceUnit);
+    if (t !== null) for (const noun of _P2A_NOUNS) if (at(noun, t)) y = t + noun.length + 3;
+    return [x, y < e ? y : e];
+  }
+  if (kind === "symbol") {               // \s+(?:(?:a|an|the|new)\s+){0,2}(?<kind>...)\s+(?:(?:named|called)\s+)?NAME
+    r = run(r, _p2aSpaceUnit);
+    if (r === null) return null;
+    let j = r;
+    for (let k = 0; k < 2; k++) {
+      let w = null;
+      for (const art of ["the", "new", "an", "a"]) if (w === null) w = skip(j, art);
+      if (w === null) break;
+      j = w;
+    }
+    let w = null;
+    for (const word of ["function", "class", "method"]) if (w === null) w = skip(j, word);
+    if (w === null) return null;
+    let y = nameEnd(w);
+    for (const word of ["named", "called"]) {
+      let later = skip(w, word);
+      later = later === null ? null : nameEnd(later);
+      if (later !== null) y = later;
+    }
+    return y === null ? null : [x, y < e ? y + 1 : e];
+  }
+  // scope: \s+(?:touch|modif|chang)\w+\s+(?:files?\s+(?:in|under)\s+)?[`"']?(?<prefix>...)[`"']?(?:,?\s+and\s+...)?
+  let j = r, w = null;
+  for (const verb of ["touch", "modif", "chang"]) if (w === null && at(verb, j)) w = run(j + verb.length, _p2aNameAnyUnit);
+  w = w === null ? null : run(w, _p2aSpaceUnit);
+  if (w === null) return null;
+  const p = run(quote(filesIn(w)), _p2aPathUnit);
+  if (p === null) return null;
+  let y = p + 1;
+  j = quote(p);
+  j = (j < e && s.charAt(j) === ",") ? j + 1 : j;
+  let t = run(j, _p2aSpaceUnit);
+  t = t === null ? null : skip(t, "and");
+  if (t !== null) {
+    const q = run(quote(filesIn(t)), _p2aPathUnit);
+    if (q !== null) y = q + 2;
+  }
+  return [x, y < e ? y : e];
+}
+
+function _p2aApartIn(s, low, a, e) {
+  // Whether the sentence [a, e) holds a unit the two ports' templates may read apart inside the window of a match of a
+  // template that can give CONTRADICTED, or a DECLARE-1 key and such a unit anywhere, as the Python's _p2a_apart_in (B-2
+  // of NOTE_path2a_eighth_pass_2026_10_01). Each word's windows are read in order, the earliest such unit at or after a
+  // window's start found once for all of them.
+  let bad = false;
+  for (let k = a; k < e && !bad; k++) if (_p2aBadUnit(s.charCodeAt(k))) bad = true;
+  if (!bad) return false;
+  const seg = low.slice(a, e);
+  for (const key of _P2A_KEYS) if (seg.includes(key)) return true;
+  for (const [word, kind] of _P2A_WINDOWS) {
+    let nb = -1;
+    for (let o = seg.indexOf(word); o >= 0; o = seg.indexOf(word, o + 1)) {
+      const i = a + o;
+      if (kind !== "count" && i > 0 && _p2aWordUnit(s.charCodeAt(i - 1))) continue;
+      const w = _p2aWindow(s, low, kind, i, word.length, a, e);
+      if (w === null) continue;
+      if (nb < w[0]) {
+        nb = e;
+        for (let k = w[0]; k < e; k++) if (_p2aBadUnit(s.charCodeAt(k))) { nb = k; break; }
+      }
+      if (nb < w[1]) return true;
+    }
+  }
+  return false;
+}
 const _P2A_ACCUSE = new Set(["files_changed_count", "only_touches", "tests_added", "symbol_added"]);   // may be CONTRADICTED
 const _P2A_MANY = 32;           // more distinct words than this are read through one automaton, not one scan each
 // A-1 (NOTE_path2a_seventh_pass_2026_09_30): one automaton holds words of at most this many units, or a sixteenth of the
@@ -1419,17 +1605,11 @@ function _p2aApartDiff(f, kinds) {
   // among the claims main read), as the Python's _p2a_apart_diff: a file header they split or strip apart; for a tests
   // claim, a different count of `def test_` sites; for a symbol claim, an added `def` or `class` site whose line only one
   // view reads, or whose leading white space the two ports may read apart, or whose ASCII name run is a claimed name
-  // followed by a unit from 0x80 up (B-3 of the seventh pass); added lines empty to one main only where no path is
-  // registered; for a count claim, two registrations that differ only in case outside ASCII (C-1 of the seventh pass).
+  // followed by a unit from 0x80 up (B-3 of the seventh pass), or that ends its line with only coarse units after the word
+  // (_p2aOpen, C-1 of the eighth pass); added lines empty to one main only where no path is registered. A count claim
+  // two runtimes' case tables may decide apart is withheld in both ports by _p2aCount (B-1 of the eighth pass).
   if (!kinds.size) return false;
   if (_p2aDivergent(f.diffText)) return true;
-  // C-1 (NOTE_path2a_seventh_pass_2026_09_30): two registrations that differ only in case outside ASCII, which each
-  // runtime's own case tables may merge or not, so each main counts some number in [#WA, #A]: a claimed number in that
-  // range may be decided apart; one outside it is CONTRADICTED by every main
-  if (kinds.has("files_changed_count")) {
-    const [, wa, a] = f.count();
-    if (wa !== a && [...f.ns()].some(n => !_P2A_DIGITS.test(n) || (wa <= _p2aInt(n) && _p2aInt(n) <= a))) return true;
-  }
   const views = f.views();
   if (kinds.has("tests_added") && f.pairing()[0][0] !== f.pairing()[1][0]) return true;
   if (kinds.has("symbol_added")) {
@@ -1443,6 +1623,7 @@ function _p2aApartDiff(f, kinds) {
     const oneSpace = new Set([..._P2A_ONE_SPACE].map(ch => ch.charCodeAt(0)));
     for (const [added] of _p2aDistinct(views)) {
       for (const line of added) {
+        if (_p2aOpen(line)) return true;
         for (const [j, r] of _p2aAnchored(line)) {
           if (one.has(line)) return true;
           for (let k = 0; k < r; k++) if (oneSpace.has(line.charCodeAt(k))) return true;
@@ -1469,18 +1650,7 @@ function _p2aApart(f, kinds) {
   for (let k = 0; k < s.length && !bad; k++) if (_p2aBadUnit(s.charCodeAt(k))) bad = true;
   if (!bad) return false;
   const low = _p2aTriggerLow(s);
-  const apartIn = (a, e) => {
-    let b = false;
-    for (let k = a; k < e && !b; k++) if (_p2aBadUnit(s.charCodeAt(k))) b = true;
-    if (!b) return false;
-    // B-1 (NOTE_path2a_seventh_pass_2026_09_30): one trigger's words in its order, from its leading word's earliest place
-    const seg = low.slice(a, e);
-    for (const words of _P2A_TRIGGERS) {
-      const i = seg.indexOf(words[0]);
-      if (i >= 0 && (words.length === 1 || seg.indexOf(words[1], i + 1) >= 0)) return true;
-    }
-    return false;
-  };
+  const apartIn = (a, e) => _p2aApartIn(s, low, a, e);
   let a = 0;
   for (let k = 0; k < s.length; k++) {
     const ch = s[k];
@@ -1596,7 +1766,9 @@ function _p2aFactsRaw(diffText, summaryText) {
         if (runs.get(w) !== run) twin = true;
       }
       const size = (xs, form) => new Set(xs.map(x => form(x))).size;
-      return [twin, size(ra, _p2aWA), size(ra, _p2aA), size(rk, _p2aWK), size(rk, _p2aK)];
+      // B-1 (NOTE_path2a_eighth_pass_2026_10_01): #CA, read only where #WA is below #A, else #A
+      const wa = size(ra, _p2aWA), forms = new Set(ra.map(x => _p2aA(x)));
+      return [twin, wa, forms.size, size(rk, _p2aWK), size(rk, _p2aK), wa < forms.size ? _p2aCaseCount(forms) : forms.size];
     }),
     // NOTE_path2a_sixth_pass_2026_09_30, B-1: the unchanged lines of each view, and those no view reads
     unchanged: () => get("unchanged", () => _p2aContext(diffText, f.coarse()).concat(_p2aJoined(diffText, " "))),
@@ -1605,25 +1777,23 @@ function _p2aFactsRaw(diffText, summaryText) {
     kinds: (found = []) => get("kinds", () => new Set(found.filter(k => _P2A_ACCUSE.has(k)))),
     // B-3 (NOTE_path2a_seventh_pass_2026_09_30): the names of the symbol claims main read, named before any claim is read
     names: (found = []) => get("names", () => new Set(found.filter(x => typeof x === "string"))),
-    // C-1 (NOTE_path2a_seventh_pass_2026_09_30): the numbers of the count claims main read, named before any claim is read
-    ns: (found = []) => get("ns", () => new Set(found.map(x => typeof x === "string" ? x : ""))),
     apart: kinds => get("apart", () => _p2aApart(f, kinds)),
     // NOTE_path2a_sixth_pass_2026_09_30, A-1: the words the claims in reach may look up in the summary's runs or zones
-    tokens: (kind, words) => get("tokens:" + kind, () => new Set(words.filter(w => {
+    tokens: (kind, named) => get("tokens:" + kind, () => new Set(named.filter(w => {
       if (!w || w.includes(_P2A_SEP)) return false;
       for (let k = 0; k < w.length; k++) if (_p2aBadUnit(w.charCodeAt(k))) return false;
       return true;
     }))),
     occurs: (kind, s) => {
       const text = kind === "zone" ? f.zoneText() : f.runs(kind);
-      const words = memo.get("tokens:" + kind) || new Set();
-      if (words.has(s)) return get("found:" + kind, () => _p2aFound(words, text)).has(s);
+      const named = memo.get("tokens:" + kind) || new Set();
+      if (named.has(s)) return get("found:" + kind, () => _p2aFound(named, text)).has(s);
       return get("in\u0000" + kind + "\u0000" + s, () => text.includes(s));
     },
     defines: name => {
-      const [runs, wild] = get("defs", () => _p2aDefRuns(f.views(), f.joined()));
+      const [defRuns, wild] = get("defs", () => _p2aDefRuns(f.views(), f.joined()));
       if (wild) return true;
-      if (name && _p2aRunEnd(name, 0, _p2aWordUnit) === name.length) return runs.has(name);
+      if (name && _p2aRunEnd(name, 0, _p2aWordUnit) === name.length) return defRuns.has(name);
       return get("defines:" + name, () => _p2aDefines(f.views(), name, f.joined()));
     },
     // NOTE_path2a_sixth_pass_2026_09_30, B-1: whether an unchanged line may define `name`, an ASCII name
@@ -1751,14 +1921,18 @@ function _p2aInt(digits) {
 
 function _p2aCount(c, f) {
   if (f.divergent()) return ["divergent", "#121"];
-  const [twin, wa, a, lo, hi] = f.count();
+  const [twin, wa, a, lo, hi, ca] = f.count();
+  // B-1 (NOTE_path2a_eighth_pass_2026_10_01): two changed paths that differ only in case outside ASCII, which each
+  // runtime's case tables merge or not: a claimed number in [#CA, #A] may be decided apart by the two ports' mains, so it
+  // is withheld in both, whatever its verdict, as the Python's _p2a_count
+  const claimed = c.detail.n || "";
+  if (ca < a && (!_P2A_DIGITS.test(claimed) || (ca <= _p2aInt(claimed) && _p2aInt(claimed) <= a))) return ["case_count", "#121"];
   if (!twin) return null;
   // C-1 (NOTE_path2a_fifth_pass_2026_09_30): a count one port reads cleanly and the other does not read, from a white
   // space only one of them reads or a letter only CPython folds; withheld in both, ahead of the guard below, wherever the summary holds one.
   if (!c.detail.declared && f.seam()) return ["seam", "#121"];
   // C-1 (NOTE_path2a_fourth_pass_2026_09_30): where a digit or letter outside ASCII sits beside the number, the two
   // ports' count templates read different numbers from one match; withheld in both, as the Python's _p2a_count.
-  const claimed = c.detail.n || "";
   if (!_P2A_DIGITS.test(claimed) || (!c.detail.declared && _p2aInRuns(f, claimed, "count"))) return ["extract", "#121"];
   const nums = _p2aNumbers(_P2A_COUNT_HEAD, c.why, c.detail);
   if (!nums) return ["unparsed", "#121"];
@@ -1896,7 +2070,6 @@ function _p2aAbstain(g, strict, facts) {
     f.tokens("zone", str(todo.map(c => c.detail.prefix)));
     f.kinds(g.claims.map(c => c.kind));
     f.names(g.claims.filter(c => c.kind === "symbol_added" && c.detail).map(c => c.detail.name));
-    f.ns(g.claims.filter(c => c.kind === "files_changed_count" && c.detail).map(c => c.detail.n));
     hits = todo.map(c => [c, _p2aDecide(c, f)]);
   } catch (e) {                          // an abstain-only overlay that cannot read withholds, and says so
     hits = todo.map(c => [c, ["error", _P2A_KIND_DEFECT[c.kind]]]);

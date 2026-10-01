@@ -1501,17 +1501,74 @@ _P2A_LEAD_APART = re.compile("[\x1c\x1d\x1e\x1f\x85\ufeff]")    # white space of
 _P2A_LEADS = (re.compile("[" + _P2A_PY_SPACE + "]*"), re.compile("[" + _P2A_JS_SPACE + "]*"))  # each main's \s run
 _P2A_FOLD = {**{cp: cp + 32 for cp in range(65, 91)}, 0x212A: "k", 0x130: "i\u0307"}
 _P2A_ASCII_LOWER = {cp: cp + 32 for cp in range(65, 91)}
-# C-1 (NOTE_path2a_sixth_pass_2026_09_30; NOTE_path2a_seventh_pass_2026_09_30, B-1): the words every match of a
-# template that can give CONTRADICTED holds, in the order the template holds them (the count template's `file` before
-# `changed`; the scope template's `only` before `touch`, `modif` or `chang`; the tests template's verb before `test`;
-# the symbol template's verb before its kind), and the DECLARE-1 keys whose lines write such a sentence, each a word of
-# its own; read in ASCII case with the four code points CPython's IGNORECASE folds to an ASCII letter read as that
-# letter, one for one.
-_P2A_TRIGGERS = (("file", "changed"), ("only", "touch"), ("only", "modif"), ("only", "chang"),
-                 ("add", "test"), ("creat", "test"), ("add", "function"), ("add", "class"), ("add", "method"),
-                 ("introduc", "function"), ("introduc", "class"), ("introduc", "method"),
-                 ("files_changed",), ("only_touches",), ("tests_added",), ("adds_symbol",))
+# B-1 (NOTE_path2a_eighth_pass_2026_10_01): which code points from 0x80 up some runtime's lower() may merge, read from
+# static tables. _P2A_LOWER_RUNS: (start, end, step, delta), every code point from 0x80 up whose lower() is another
+# single code point in Unicode 16.0 (U+0130 and U+212A aside, which the fold form already reads), lowered by `delta`.
+# Its class is that lowercase; a lowercase of the table is its own class. A code point of _P2A_NEVER_RX (scripts and
+# symbols with no case) no runtime's lower() maps, or maps to. Any other code point (one a later version may give a
+# case, as Unicode 16 gave U+A7DC the lowercase U+019B) may pair with any code point not in _P2A_NEVER_RX. Two code
+# points of the table with different classes are never merged: a case mapping, once given, is not changed. Tests pin
+# each table against lower() on every runtime they run.
+_P2A_LOWER_RUNS = (
+    (0xC0, 0xD6, 1, 32), (0xD8, 0xDE, 1, 32), (0x100, 0x12E, 2, 1), (0x132, 0x136, 2, 1), (0x139, 0x147, 2, 1),
+    (0x14A, 0x176, 2, 1), (0x178, 0x178, 1, -121), (0x179, 0x17D, 2, 1), (0x181, 0x181, 1, 210),
+    (0x182, 0x184, 2, 1), (0x186, 0x186, 1, 206), (0x187, 0x187, 1, 1), (0x189, 0x18A, 1, 205), (0x18B, 0x18B, 1, 1),
+    (0x18E, 0x18E, 1, 79), (0x18F, 0x18F, 1, 202), (0x190, 0x190, 1, 203), (0x191, 0x191, 1, 1),
+    (0x193, 0x193, 1, 205), (0x194, 0x194, 1, 207), (0x196, 0x196, 1, 211), (0x197, 0x197, 1, 209),
+    (0x198, 0x198, 1, 1), (0x19C, 0x19C, 1, 211), (0x19D, 0x19D, 1, 213), (0x19F, 0x19F, 1, 214),
+    (0x1A0, 0x1A4, 2, 1), (0x1A6, 0x1A6, 1, 218), (0x1A7, 0x1A7, 1, 1), (0x1A9, 0x1A9, 1, 218), (0x1AC, 0x1AC, 1, 1),
+    (0x1AE, 0x1AE, 1, 218), (0x1AF, 0x1AF, 1, 1), (0x1B1, 0x1B2, 1, 217), (0x1B3, 0x1B5, 2, 1),
+    (0x1B7, 0x1B7, 1, 219), (0x1B8, 0x1B8, 1, 1), (0x1BC, 0x1BC, 1, 1), (0x1C4, 0x1C4, 1, 2), (0x1C5, 0x1C5, 1, 1),
+    (0x1C7, 0x1C7, 1, 2), (0x1C8, 0x1C8, 1, 1), (0x1CA, 0x1CA, 1, 2), (0x1CB, 0x1DB, 2, 1), (0x1DE, 0x1EE, 2, 1),
+    (0x1F1, 0x1F1, 1, 2), (0x1F2, 0x1F4, 2, 1), (0x1F6, 0x1F6, 1, -97), (0x1F7, 0x1F7, 1, -56), (0x1F8, 0x21E, 2, 1),
+    (0x220, 0x220, 1, -130), (0x222, 0x232, 2, 1), (0x23A, 0x23A, 1, 10795), (0x23B, 0x23B, 1, 1),
+    (0x23D, 0x23D, 1, -163), (0x23E, 0x23E, 1, 10792), (0x241, 0x241, 1, 1), (0x243, 0x243, 1, -195),
+    (0x244, 0x244, 1, 69), (0x245, 0x245, 1, 71), (0x246, 0x24E, 2, 1), (0x370, 0x372, 2, 1), (0x376, 0x376, 1, 1),
+    (0x37F, 0x37F, 1, 116), (0x386, 0x386, 1, 38), (0x388, 0x38A, 1, 37), (0x38C, 0x38C, 1, 64),
+    (0x38E, 0x38F, 1, 63), (0x391, 0x3A1, 1, 32), (0x3A3, 0x3AB, 1, 32), (0x3CF, 0x3CF, 1, 8), (0x3D8, 0x3EE, 2, 1),
+    (0x3F4, 0x3F4, 1, -60), (0x3F7, 0x3F7, 1, 1), (0x3F9, 0x3F9, 1, -7), (0x3FA, 0x3FA, 1, 1),
+    (0x3FD, 0x3FF, 1, -130), (0x400, 0x40F, 1, 80), (0x410, 0x42F, 1, 32), (0x460, 0x480, 2, 1),
+    (0x48A, 0x4BE, 2, 1), (0x4C0, 0x4C0, 1, 15), (0x4C1, 0x4CD, 2, 1), (0x4D0, 0x52E, 2, 1), (0x531, 0x556, 1, 48),
+    (0x10A0, 0x10C5, 1, 7264), (0x10C7, 0x10C7, 1, 7264), (0x10CD, 0x10CD, 1, 7264), (0x13A0, 0x13EF, 1, 38864),
+    (0x13F0, 0x13F5, 1, 8), (0x1C89, 0x1C89, 1, 1), (0x1C90, 0x1CBA, 1, -3008), (0x1CBD, 0x1CBF, 1, -3008),
+    (0x1E00, 0x1E94, 2, 1), (0x1E9E, 0x1E9E, 1, -7615), (0x1EA0, 0x1EFE, 2, 1), (0x1F08, 0x1F0F, 1, -8),
+    (0x1F18, 0x1F1D, 1, -8), (0x1F28, 0x1F2F, 1, -8), (0x1F38, 0x1F3F, 1, -8), (0x1F48, 0x1F4D, 1, -8),
+    (0x1F59, 0x1F5F, 2, -8), (0x1F68, 0x1F6F, 1, -8), (0x1F88, 0x1F8F, 1, -8), (0x1F98, 0x1F9F, 1, -8),
+    (0x1FA8, 0x1FAF, 1, -8), (0x1FB8, 0x1FB9, 1, -8), (0x1FBA, 0x1FBB, 1, -74), (0x1FBC, 0x1FBC, 1, -9),
+    (0x1FC8, 0x1FCB, 1, -86), (0x1FCC, 0x1FCC, 1, -9), (0x1FD8, 0x1FD9, 1, -8), (0x1FDA, 0x1FDB, 1, -100),
+    (0x1FE8, 0x1FE9, 1, -8), (0x1FEA, 0x1FEB, 1, -112), (0x1FEC, 0x1FEC, 1, -7), (0x1FF8, 0x1FF9, 1, -128),
+    (0x1FFA, 0x1FFB, 1, -126), (0x1FFC, 0x1FFC, 1, -9), (0x2126, 0x2126, 1, -7517), (0x212B, 0x212B, 1, -8262),
+    (0x2132, 0x2132, 1, 28), (0x2160, 0x216F, 1, 16), (0x2183, 0x2183, 1, 1), (0x24B6, 0x24CF, 1, 26),
+    (0x2C00, 0x2C2F, 1, 48), (0x2C60, 0x2C60, 1, 1), (0x2C62, 0x2C62, 1, -10743), (0x2C63, 0x2C63, 1, -3814),
+    (0x2C64, 0x2C64, 1, -10727), (0x2C67, 0x2C6B, 2, 1), (0x2C6D, 0x2C6D, 1, -10780), (0x2C6E, 0x2C6E, 1, -10749),
+    (0x2C6F, 0x2C6F, 1, -10783), (0x2C70, 0x2C70, 1, -10782), (0x2C72, 0x2C72, 1, 1), (0x2C75, 0x2C75, 1, 1),
+    (0x2C7E, 0x2C7F, 1, -10815), (0x2C80, 0x2CE2, 2, 1), (0x2CEB, 0x2CED, 2, 1), (0x2CF2, 0x2CF2, 1, 1),
+    (0xA640, 0xA66C, 2, 1), (0xA680, 0xA69A, 2, 1), (0xA722, 0xA72E, 2, 1), (0xA732, 0xA76E, 2, 1),
+    (0xA779, 0xA77B, 2, 1), (0xA77D, 0xA77D, 1, -35332), (0xA77E, 0xA786, 2, 1), (0xA78B, 0xA78B, 1, 1),
+    (0xA78D, 0xA78D, 1, -42280), (0xA790, 0xA792, 2, 1), (0xA796, 0xA7A8, 2, 1), (0xA7AA, 0xA7AA, 1, -42308),
+    (0xA7AB, 0xA7AB, 1, -42319), (0xA7AC, 0xA7AC, 1, -42315), (0xA7AD, 0xA7AD, 1, -42305),
+    (0xA7AE, 0xA7AE, 1, -42308), (0xA7B0, 0xA7B0, 1, -42258), (0xA7B1, 0xA7B1, 1, -42282),
+    (0xA7B2, 0xA7B2, 1, -42261), (0xA7B3, 0xA7B3, 1, 928), (0xA7B4, 0xA7C2, 2, 1), (0xA7C4, 0xA7C4, 1, -48),
+    (0xA7C5, 0xA7C5, 1, -42307), (0xA7C6, 0xA7C6, 1, -35384), (0xA7C7, 0xA7C9, 2, 1), (0xA7CB, 0xA7CB, 1, -42343),
+    (0xA7CC, 0xA7CC, 1, 1), (0xA7D0, 0xA7D0, 1, 1), (0xA7D6, 0xA7DA, 2, 1), (0xA7DC, 0xA7DC, 1, -42561),
+    (0xA7F5, 0xA7F5, 1, 1), (0xFF21, 0xFF3A, 1, 32), (0x10400, 0x10427, 1, 40), (0x104B0, 0x104D3, 1, 40),
+    (0x10570, 0x1057A, 1, 39), (0x1057C, 0x1058A, 1, 39), (0x1058C, 0x10592, 1, 39), (0x10594, 0x10595, 1, 39),
+    (0x10C80, 0x10CB2, 1, 64), (0x10D50, 0x10D65, 1, 32), (0x118A0, 0x118BF, 1, 32), (0x16E40, 0x16E5F, 1, 32),
+    (0x1E900, 0x1E921, 1, 34))
+_P2A_NEVER_RX = re.compile("[\u0590-\u08ff\u0900-\u109f\u1100-\u139f\u1400-\u1c7f\u2e80-\u2fff\u3000-\u9fff"
+                           "\ua000-\ua63f\ua6a0-\ua6ff\ua800-\uab2f\uabc0-\ud7ff\uf900-\ufaff\ufb1d-\ufdff\ufe70-\ufefe"
+                           "\uff66-\uffdc\U00020000-\U0003ffff" + _P2A_NEUTRAL + "]")
+# C-1 (NOTE_path2a_sixth_pass_2026_09_30; NOTE_path2a_eighth_pass_2026_10_01, B-2): the summary's sentences are read
+# for a match of a template that can give CONTRADICTED, by the window such a match can cover in either port
+# (`_p2a_window`), and for the DECLARE-1 keys whose lines write such a sentence, each a word of its own; the words read
+# in ASCII case with the four code points CPython's IGNORECASE folds to an ASCII letter read as that letter, one for one.
+_P2A_KEYS = ("files_changed", "only_touches", "tests_added", "adds_symbol")
 _P2A_TRIGGER_LOW = {**_P2A_ASCII_LOWER, 0x130: "i", 0x131: "i", 0x17F: "s", 0x212A: "k"}
+_P2A_SPACE_RUN = re.compile("[" + _P2A_ANY_SPACE + "]+")                  # a run of either port's white space
+_P2A_ASCII_WORD = re.compile("[A-Za-z0-9_]")                              # \w in both ports: no \b before it
+_P2A_DIGITISH = re.compile("[0-9" + _P2A_WORDISH + "]")                    # a character either port's \d may read
+_P2A_NOUNS = ("case", "file", "scenario", "suite", "class", "function", "method")
+_P2A_QUOTES = "`\"'"
 # O-11 (NOTE_path2a_seventh_pass_2026_09_30, B-1): the emoji of five pictograph blocks (U+1F300 to U+1F64F, U+1F680 to
 # U+1F6FF, U+1F900 to U+1F9FF, U+1FA70 to U+1FAFF), as one code point or as the two surrogates the port's string holds
 # for it, are read in the summary as one neutral code point (U+2190): neither port's templates read them as a word
@@ -1561,6 +1618,8 @@ _P2A_PHRASES = {
                   "or strip differently"),
     "odd": "a path here has a drive-like prefix or a final '.' segment, where base names are read differently",
     "case": "a path here compares only where case outside ASCII is folded, which this overlay does not do",
+    "case_count": ("two changed paths differ only in case outside ASCII, which the Python and JavaScript readers' case "
+                   "tables may merge or keep apart, so the two may count the files differently"),
     "unreproduced": "this overlay does not reproduce main's reading of the diff",
     "unparsed": "main's reason does not have the form this overlay reads",
     "error": "this overlay failed while reading the diff",
@@ -1696,6 +1755,46 @@ def _p2a_WK(s: str) -> str:
 
 
 _P2A_FORMS = {"A": (_p2a_A, _p2a_WA), "K": (_p2a_K, _p2a_WK)}
+
+
+def _p2a_case_table() -> dict:
+    """{code point: its case class} for every code point of _P2A_LOWER_RUNS and every lowercase it names."""
+    out: dict = {}
+    for lo, hi, step, delta in _P2A_LOWER_RUNS:
+        for cp in range(lo, hi + 1, step):
+            out[chr(cp)] = chr(cp + delta)
+            out[chr(cp + delta)] = chr(cp + delta)
+    return out
+
+
+_P2A_CASE = _p2a_case_table()
+
+
+def _p2a_case_count(forms: set):
+    """#CA (B-1 of NOTE_path2a_eighth_pass_2026_10_01): how many keys main's count reads over the fold forms `forms` when
+    every two code points some runtime's lower() may merge are merged, a lower bound of every runtime's count. Forms
+    with one wild form have one length and differ only from 0x80 up; at each such position a code point of
+    _P2A_NEVER_RX is read as itself, and the others as their case class, or all as one placeholder where some form holds
+    a code point of neither table there (it may pair with any of them). Linear in the forms' length."""
+    groups: dict = {}
+    for x in forms:
+        groups.setdefault(_P2A_WIDE.sub("\ufffd", x), []).append(x)
+    n = 0
+    for wild, xs in groups.items():
+        if len(xs) < 2:
+            n = n + 1
+            continue
+        keys = [list(x) for x in xs]
+        for i, ch in enumerate(wild):
+            if ch != "\ufffd":
+                continue
+            col = [k[i] for k in keys]
+            wide = any(_P2A_NEVER_RX.match(x) is None and x not in _P2A_CASE for x in col)
+            for k in keys:
+                if _P2A_NEVER_RX.match(k[i]) is None:
+                    k[i] = "\ufffd" if wide else _P2A_CASE[k[i]]
+        n = n + len({"".join(k) for k in keys})
+    return n
 
 
 def _p2a_base(p: str) -> str:             # the port's _basename; Path(p).name agrees unless _p2a_odd(p)
@@ -2037,6 +2136,30 @@ def _p2a_anchored(line: str) -> list:
     return out
 
 
+def _p2a_open(line: str) -> bool:
+    """Whether one added line is, from its start (or, a superset, a U+2028 or U+2029, where the port's `^` also
+    matches), a run of either port's white space, `def` or `class`, and a run of either port's white space to its end
+    (C-1 of NOTE_path2a_eighth_pass_2026_10_01): main's symbol regex `^\\s*(?:def|class)\\s+NAME\\b` runs on the
+    joined added lines, so its `\\s+` spans the line break there, and the name it reads lies on a later line, where the
+    two ports' `\\s` and `\\b` may read it apart. A start inside a run already read reaches the same word: linear."""
+    starts = [0]
+    if "\u2028" in line or "\u2029" in line:
+        starts += [m.end() for m in _P2A_SEG.finditer(line)]
+    last = -1
+    for b in starts:
+        if b <= last:
+            continue
+        r = _P2A_SPACE_RUN.match(line, b)
+        p = b if r is None else r.end()
+        last = p
+        for w in ("def", "class"):
+            if line.startswith(w, p):
+                r = _P2A_SPACE_RUN.match(line, p + len(w))
+                if (p + len(w) if r is None else r.end()) == len(line):
+                    return True
+    return False
+
+
 def _p2a_def_runs(views: list, extra: list = ()) -> tuple:
     """(the ASCII name run at every anchored `def` or `class` site of a removed line, in either view or in `extra`;
     whether some such site's name is read through NFKC, `_p2a_wide_name`, and so may be any name). A name of ASCII
@@ -2182,16 +2305,171 @@ def _p2a_found(words, text: str) -> set:
     return got
 
 
+def _p2a_skip(s: str, low: str, j, e, word: str):
+    """Where a run of either port's white space ends that follows `word` at j, or None."""
+    if not low.startswith(word, j, e):
+        return None
+    r = _P2A_SPACE_RUN.match(s, j + len(word), e)
+    return None if r is None else r.end()
+
+
+def _p2a_files_in(s: str, low: str, j, e):
+    """j past the scope template's optional `files? (in|under) `, else j."""
+    k = _p2a_skip(s, low, j, e, "files") if low.startswith("files", j, e) else _p2a_skip(s, low, j, e, "file")
+    if k is None:
+        return j
+    for w in ("in", "under"):
+        x = _p2a_skip(s, low, k, e, w)
+        if x is not None:
+            return x
+    return j
+
+
+def _p2a_name_end(s: str, j, e):
+    """The end of a name run (either port's \\w) at j, past one optional quote, or None."""
+    q = j + 1 if j < e and s[j] in _P2A_QUOTES else j
+    r = _P2A_NAME_RUN_ANY.match(s, q, e)
+    return None if r is None else r.end()
+
+
+def _p2a_window(s: str, low: str, kind: str, i, n, a, e):
+    """B-2 of NOTE_path2a_eighth_pass_2026_10_01: [x, y), the characters a match of the template `kind` whose leading
+    word (n characters) is at i can read in either port, within the sentence [a, e), or None where neither port's
+    template can match there. A superset of both: runs read by the union of both ports' classes (white space: either
+    port's; \\w and \\d: ASCII or wordish; a path: ASCII path characters or wordish), the literal words in `low`, and the
+    character before the match (its `\\b`) and after its last word (a trailing `\\b`, or a name or path that runs on).
+    Each port's sentence lies inside one of these sentences."""
+    sp, wd, dg, pt = _P2A_SPACE_RUN, _P2A_NAME_RUN_ANY, _P2A_COUNT_RUN, _P2A_PATH_RUN
+    if kind == "count":                   # \b(?P<n>\d+)\s+files?\s+(?:were\s+)?changed, `file` at i
+        k = i
+        while k > a and s[k - 1] in _P2A_ANY_SPACE:
+            k = k - 1
+        m = k
+        while m > a and _P2A_DIGITISH.match(s, m - 1) is not None:
+            m = m - 1
+        if k == i or m == k:
+            return None
+        j = i + 5 if low.startswith("s", i + 4, e) else i + 4
+        r = sp.match(s, j, e)
+        if r is None:
+            return None
+        w = _p2a_skip(s, low, r.end(), e, "were")
+        if w is not None and low.startswith("changed", w, e):
+            return (m - 1 if m > a else a), w + 7
+        return ((m - 1 if m > a else a), r.end() + 7) if low.startswith("changed", r.end(), e) else None
+    r = wd.match(s, i + n, e)             # add\w+, creat\w+, introduc\w+; `only` is followed by \s+ instead
+    if kind == "scope":
+        r = sp.match(s, i + n, e)
+    if r is None:
+        return None
+    x = i - 1 if i > a else a
+    if kind == "tests":                   # \s+(?P<n>\d+)\s+(?:new\s+)?tests?\b(?:\s+(?P<noun>...)\b)?
+        r = sp.match(s, r.end(), e)
+        r = None if r is None else dg.match(s, r.end(), e)
+        r = None if r is None else sp.match(s, r.end(), e)
+        if r is None:
+            return None
+        j = r.end()
+        w = _p2a_skip(s, low, j, e, "new")
+        if w is not None and low.startswith("test", w, e):
+            j = w
+        if not low.startswith("test", j, e):
+            return None
+        j = j + 5 if low.startswith("s", j + 4, e) else j + 4
+        y = j + 1
+        r = sp.match(s, j, e)
+        if r is not None:
+            for noun in _P2A_NOUNS:
+                if low.startswith(noun, r.end(), e):
+                    y = r.end() + len(noun) + 3          # an optional "s" or "es", and the \b after it
+        return x, (y if y < e else e)
+    if kind == "symbol":                  # \s+(?:(?:a|an|the|new)\s+){0,2}(?P<kind>...)\s+(?:(?:named|called)\s+)?NAME
+        r = sp.match(s, r.end(), e)
+        if r is None:
+            return None
+        j = r.end()
+        k = 0
+        while k < 2:
+            w = None
+            for art in ("the", "new", "an", "a"):
+                if w is None:
+                    w = _p2a_skip(s, low, j, e, art)
+            if w is None:
+                break
+            j = w
+            k = k + 1
+        w = None
+        for word in ("function", "class", "method"):
+            if w is None:
+                w = _p2a_skip(s, low, j, e, word)
+        if w is None:
+            return None
+        y = _p2a_name_end(s, w, e)
+        for word in ("named", "called"):
+            later = _p2a_skip(s, low, w, e, word)
+            later = None if later is None else _p2a_name_end(s, later, e)
+            if later is not None:
+                y = later
+        return None if y is None else (x, (y + 1 if y < e else e))
+    # scope: \s+(?:touch|modif|chang)\w+\s+(?:files?\s+(?:in|under)\s+)?[`"']?(?P<prefix>[\w./\\-]+)[`"']?
+    #        (?:,?\s+and\s+(?:files?\s+(?:in|under)\s+)?[`"']?(?P<prefix2>...)[`"']?)?
+    j = r.end()
+    w = None
+    for verb in ("touch", "modif", "chang"):
+        if w is None and low.startswith(verb, j, e):
+            w = wd.match(s, j + len(verb), e)
+    w = None if w is None else sp.match(s, w.end(), e)
+    if w is None:
+        return None
+    j = _p2a_files_in(s, low, w.end(), e)
+    j = j + 1 if j < e and s[j] in _P2A_QUOTES else j
+    r = pt.match(s, j, e)
+    if r is None:
+        return None
+    j = r.end()
+    y = j + 1
+    j = j + 1 if j < e and s[j] in _P2A_QUOTES else j
+    j = j + 1 if j < e and s[j] == "," else j
+    w = sp.match(s, j, e)
+    w = None if w is None else _p2a_skip(s, low, w.end(), e, "and")
+    if w is not None:
+        j = _p2a_files_in(s, low, w, e)
+        j = j + 1 if j < e and s[j] in _P2A_QUOTES else j
+        r = pt.match(s, j, e)
+        if r is not None:
+            y = r.end() + 2                               # an optional closing quote, and the character after
+    return x, (y if y < e else e)
+
+
+_P2A_WINDOWS = (("file", "count"), ("add", "tests"), ("creat", "tests"), ("add", "symbol"), ("introduc", "symbol"),
+                ("only", "scope"))
+
+
 def _p2a_apart_in(summary: str, low: str, a, e) -> bool:
-    """Whether the sentence [a, e) holds a character the two ports' templates may read apart and the words of one
-    trigger in its order: the earliest occurrence of its leading word, then one of the other after it (B-1 of the
-    seventh pass). A match of a template holds them so, so a sentence holding such a match holds them so."""
+    """Whether the sentence [a, e) holds a character the two ports' templates may read apart inside the window of a
+    match of a template that can give CONTRADICTED (`_p2a_window`), or a DECLARE-1 key and such a character anywhere
+    (B-2 of NOTE_path2a_eighth_pass_2026_10_01; the sentence and the seventh pass's ordered words before it). A
+    leading word after an ASCII word character has no `\\b` in either port. Each word's windows are read in order, the
+    earliest such character at or after a window's start found once for all of them, so the sentence is read in linear
+    time."""
     if _P2A_BAD_RX.search(summary, a, e) is None:
         return False
-    for words in _P2A_TRIGGERS:
-        i = low.find(words[0], a, e)
-        if i >= 0 and (len(words) == 1 or low.find(words[1], i + 1, e) >= 0):
+    for key in _P2A_KEYS:
+        if low.find(key, a, e) >= 0:
             return True
+    for word, kind in _P2A_WINDOWS:
+        nb = -1
+        i = low.find(word, a, e)
+        while i >= 0:
+            if kind == "count" or i == 0 or _P2A_ASCII_WORD.match(summary, i - 1) is None:
+                w = _p2a_window(summary, low, kind, i, len(word), a, e)
+                if w is not None:
+                    if nb < w[0]:
+                        m = _P2A_BAD_RX.search(summary, w[0], e)
+                        nb = e if m is None else m.start()
+                    if nb < w[1]:
+                        return True
+            i = low.find(word, i + 1, e)
     return False
 
 
@@ -2203,19 +2481,15 @@ def _p2a_apart_diff(f: "_P2aFacts", kinds: frozenset) -> bool:
     added `def` or `class` site whose line only one view reads, or whose leading white space the two ports' `\\s` may
     read apart, or whose ASCII name run is a claimed name followed by a code point from 0x80 up, which
     CPython's `\\b` may read as a word character and the port's does not (NOTE_path2a_seventh_pass_2026_09_30, B-3: both
-    mains read the name by regex, never through NFKC); and added lines that are empty to one main only where no path is
-    registered (main's no-evidence reading). For a count claim, two registrations that differ only in case outside
-    ASCII (#WA below #A): the two mains' keys merge them by each runtime's own case tables, which differ between
-    Unicode versions, so each main counts some number in [#WA, #A], and two may give a claimed number in that range
-    different verdicts (seventh pass, C-1). A number outside it is CONTRADICTED by every main."""
+    mains read the name by regex, never through NFKC), or that ends its line with only coarse characters after the word
+    (`_p2a_open`: the regex's `\\s+` spans the line break, so the name main reads lies on a later line, which the
+    two ports may read apart; NOTE_path2a_eighth_pass_2026_10_01, C-1); and added lines that are empty to one main only
+    where no path is registered (main's no-evidence reading). A count claim two runtimes' case tables may decide apart
+    is withheld in both ports by `_p2a_count` (eighth pass, B-1), so it is not read here."""
     if not kinds:
         return False
     if _p2a_divergent(f.diff_text):
         return True
-    if "files_changed_count" in kinds:
-        wa, a = f.count()[1], f.count()[2]
-        if wa != a and any(_P2A_DIGITS.fullmatch(n) is None or wa <= _p2a_int(n) <= a for n in f.ns()):
-            return True
     views = f.views()
     if "tests_added" in kinds and f.pairing()[0][0] != f.pairing()[1][0]:
         return True
@@ -2224,6 +2498,8 @@ def _p2a_apart_diff(f: "_P2aFacts", kinds: frozenset) -> bool:
         one = set(views[0][0]) ^ set(views[1][0]) if views[0] is not views[1] else set()
         for added, _r in _p2a_distinct(views):
             for line in added:
+                if _p2a_open(line):
+                    return True
                 for _j, r in _p2a_anchored(line):
                     if line in one or _P2A_ONE_RX.search(line, 0, r) is not None:
                         return True
@@ -2384,7 +2660,8 @@ class _P2aFacts:
         return self._get("odd", lambda: any(_p2a_odd(x) for sp in ("A", "K") for x in self.space(sp)[0]))
 
     def count(self) -> tuple:
-        """(a possible twin, #WA and #A over main's registrations, #WK and #K over V121's)."""
+        """(a possible twin, #WA and #A over main's registrations, #WK and #K over V121's, #CA over main's: B-1 of
+        NOTE_path2a_eighth_pass_2026_10_01, read only where #WA is below #A, else #A)."""
         def make():
             regs = self.regs()
             ra = [r[0] for r in regs if r[2] == "+" or _p2a_strip(r[0])]
@@ -2394,8 +2671,9 @@ class _P2aFacts:
             for raw in ra:
                 if runs.setdefault(_p2a_WA(raw), _p2a_run(raw)) != _p2a_run(raw):
                     twin = True
-            return (twin, len({_p2a_WA(x) for x in ra}), len({_p2a_A(x) for x in ra}),
-                    len({_p2a_WK(x) for x in rk}), len({_p2a_K(x) for x in rk}))
+            wa, forms = len({_p2a_WA(x) for x in ra}), {_p2a_A(x) for x in ra}
+            return (twin, wa, len(forms), len({_p2a_WK(x) for x in rk}), len({_p2a_K(x) for x in rk}),
+                    _p2a_case_count(forms) if wa < len(forms) else len(forms))
         return self._get("count", make)
 
     def unchanged(self) -> list:
@@ -2411,10 +2689,6 @@ class _P2aFacts:
     def kinds(self, found=()) -> frozenset:
         """The kinds that can be CONTRADICTED among the claims main read, named before any claim is read (C-1)."""
         return self._get("kinds", lambda: frozenset(found) & _P2A_ACCUSE)
-
-    def ns(self, found=()) -> frozenset:
-        """The numbers of the count claims main read, named before any claim is read (C-1 of the seventh pass)."""
-        return self._get("ns", lambda: frozenset(x if isinstance(x, str) else "" for x in found))
 
     def names(self, found=()) -> frozenset:
         """The names of the symbol claims main read, named before any claim is read (B-3 of the seventh pass)."""
@@ -2598,7 +2872,14 @@ def _p2a_numbers(head, why: str, detail: dict):
 def _p2a_count(c, f: "_P2aFacts"):
     if f.divergent():
         return "divergent", "#121"
-    twin, wa, a, lo, hi = f.count()
+    twin, wa, a, lo, hi, ca = f.count()
+    # B-1 (NOTE_path2a_eighth_pass_2026_10_01): two changed paths that differ only in case outside ASCII, which each
+    # runtime's own case tables merge into one key or not, so each runtime's main counts some number in [#CA, #A]. A
+    # claimed number in that range may be decided apart by the two ports' mains; it is withheld in both, whatever its
+    # verdict, so the claims both may still accuse are decided alike. A number outside it is CONTRADICTED by every main.
+    claimed = c.detail.get("n") or ""
+    if ca < a and (_P2A_DIGITS.fullmatch(claimed) is None or ca <= _p2a_int(claimed) <= a):
+        return "case_count", "#121"
     if not twin:
         return None
     # C-1 (NOTE_path2a_fifth_pass_2026_09_30): a count one port reads and the other does not, from a white space only
@@ -2610,7 +2891,6 @@ def _p2a_count(c, f: "_P2aFacts"):
     # C-1 (NOTE_path2a_fourth_pass_2026_09_30): the count template reads its number after `\b`, so where a digit or
     # letter outside ASCII sits beside it CPython's `\d` and `\b` read one number and the port's another (a full-width 3
     # then "3": 33 in CPython, 3 in the port). Withheld in both ports, as for a path or a name.
-    claimed = c.detail.get("n") or ""
     if _P2A_DIGITS.fullmatch(claimed) is None or (not c.detail.get("declared") and _p2a_in_runs(f, claimed, "count")):
         return "extract", "#121"
     nums = _p2a_numbers(_P2A_COUNT_HEAD, c.why, c.detail)
@@ -2780,8 +3060,7 @@ def _p2a_abstain(g: DiffGate, strict: bool, facts) -> DiffGate:
             f.tokens(kind, [c.detail.get(field) for c in todo if isinstance(c.detail.get(field), str)])
         f.kinds([c.kind for c in g.claims])
         f.names([c.detail.get("name") for c in g.claims if c.kind == "symbol_added" and isinstance(c.detail, dict)])
-        f.ns([c.detail.get("n") for c in g.claims if c.kind == "files_changed_count" and isinstance(c.detail, dict)])
-        hits =[(c, _p2a_decide(c, f)) for c in todo]
+        hits = [(c, _p2a_decide(c, f)) for c in todo]
     except Exception:                     # an abstain-only overlay that cannot read withholds, and says so
         hits = [(c, ("error", _P2A_KIND_DEFECT[c.kind])) for c in todo]
     moved = False
@@ -2811,11 +3090,11 @@ _P2A_MUTATORS = frozenset({"append", "extend", "insert", "pop", "popitem", "remo
                            "setdefault", "sort", "reverse", "__setitem__", "__setattr__", "__delitem__"})
 _P2A_RECORD = frozenset({"verdict", "why", "kind", "text", "detail", "claims"})
 _P2A_RE_CALLS = frozenset({"compile", "match", "fullmatch", "search", "findall", "finditer", "split", "sub", "subn"})
-_P2A_CHECKERS = frozenset({"selfcheck_p2a_only_abstains", "_p2a_regex_problems"})   # not run on a claim
+_P2A_CHECKERS = frozenset({"selfcheck_p2a_only_abstains", "_p2a_regex_problems", "_p2a_holder"})   # not run on a claim
 # Besides the names the block binds, a block function may read only these: builtins that read no Unicode table, and
 # main's names the block uses. A module, `getattr`, `operator`, `builtins` or `unicodedata` is refused by name.
 _P2A_NAMES_OK = frozenset({"len", "set", "list", "dict", "tuple", "frozenset", "any", "all", "min", "max",
-                           "enumerate", "zip", "range", "bool", "isinstance", "str", "Exception",
+                           "enumerate", "zip", "range", "bool", "isinstance", "str", "Exception", "chr",
                            "re", "_Pending", "PATH1_EXTENSIONS", "_PATH_KINDS", "DiffGate"})
 # ... and read only these attributes: the str, list, dict and set methods the block calls (none reads a Unicode
 # table: every strip and split carries its characters), the regex methods, and the fields of the record, of main's
@@ -2828,7 +3107,7 @@ _P2A_ATTRS_OK = frozenset({
     "diff_text", "name_status", "summary", "_m", "_get", "fine", "regs", "views", "divergent", "space", "odd",
     "count", "pairing", "defines", "runs", "zones", "zone_text", "scope",
     "order", "groups", "prime", "ends", "automaton", "joined", "seam", "unchanged", "apart", "tokens", "occurs",
-    "kinds", "redefines", "names", "ns"})
+    "kinds", "redefines", "names"})
 _P2A_TYPES = frozenset({"str", "list", "dict", "set", "tuple", "frozenset", "int", "bool"})
 
 
@@ -2863,6 +3142,180 @@ def _p2a_regex_problems(pattern: str) -> list:
                 out.append("inline flag " + pattern[i:j + 1])
         i += 1
     return out
+
+
+def _p2a_holder(tree):
+    """A-1 (NOTE_path2a_eighth_pass_2026_10_01): `holds(expr)`, whether an expression of the block may evaluate to one of
+    the record's containers (`g.claims`, a claim's `detail`) or to a container that may hold one, so that a mutating
+    call or an item store on it could move the record. Read from the block's source, to a fixed point, with no type:
+    - `X.claims` and `X.detail` hold one; an element of either (a claim, a scalar) does not, nor does `.get` or `.items`
+      read off a detail;
+    - a name holds one wherever any binding of it in its function does: an assignment, an annotated or augmented one,
+      `:=`, a `for` or comprehension target over what holds one (not over `X.claims` or a detail themselves, whose
+      elements are claims and keys), a `with ... as`, or a parameter at any call of the block's functions or of the
+      facts' methods; a name bound to `X.detail` (or to such a name) is a detail, whose reads give scalars;
+    - a call holds one where its function, its receiver or an argument does, or where it calls a block function that
+      may return one; `self._m` does where something stored into it does; tuples, lists, sets, dicts, comprehensions,
+      lambdas, conditionals and `+` where a part does.
+    `len`, `isinstance`, `any`, `all` and `bool` give scalars. A function defined inside another, and a lambda, read
+    the names of the outermost function they lie in, so a closure is read with it."""
+    cont = ("claims", "detail")
+    defs: dict = {}
+    fn_of: dict = {}                          # node -> the outermost function it lies in, whose names it reads
+    near: dict = {}                           # node -> the function it lies in directly
+    scope: dict = {}                          # id(function) -> the outermost function it lies in
+
+    def walk(node, fn, at):
+        for ch in ast.iter_child_nodes(node):
+            fn_of[ch] = fn
+            near[ch] = at
+            if isinstance(ch, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                defs.setdefault(ch.name, []).append(ch)
+                scope[id(ch)] = ch if fn is None else fn
+                walk(ch, ch if fn is None else fn, ch)
+            else:
+                walk(ch, fn, at)
+
+    walk(tree, None, None)
+    methods = {d.name for c in tree.body if isinstance(c, ast.ClassDef) for d in c.body
+               if isinstance(d, (ast.FunctionDef, ast.AsyncFunctionDef))}
+    alias: set = set()
+    detail: set = set()
+    rets: set = set()
+    slot = [False]
+
+    def key(node, name):
+        return id(fn_of.get(node)), name
+
+    def is_det(e):
+        return (isinstance(e, ast.Attribute) and e.attr == "detail") or \
+            (isinstance(e, ast.Name) and key(e, e.id) in detail)
+
+    def holds(e):
+        if isinstance(e, ast.Attribute):
+            if e.attr in cont:
+                return True
+            if e.attr == "_m" and isinstance(e.value, ast.Name) and e.value.id == "self":
+                return slot[0]
+            return holds(e.value)
+        if isinstance(e, ast.Name):
+            return key(e, e.id) in alias
+        if isinstance(e, ast.Subscript):
+            if (isinstance(e.value, ast.Attribute) and e.value.attr == "claims") or is_det(e.value):
+                return False
+            return holds(e.value)
+        if isinstance(e, ast.Call):
+            f = e.func
+            if isinstance(f, ast.Name) and f.id in ("len", "isinstance", "any", "all", "bool"):
+                return False
+            if isinstance(f, ast.Attribute) and f.attr in ("get", "items") and is_det(f.value):
+                return False
+            name = f.id if isinstance(f, ast.Name) else f.attr if isinstance(f, ast.Attribute) else None
+            return name in rets or holds(f) or any(holds(x) for x in e.args) or \
+                any(holds(k.value) for k in e.keywords)
+        if isinstance(e, (ast.Tuple, ast.List, ast.Set)):
+            return any(holds(x) for x in e.elts)
+        if isinstance(e, ast.Dict):
+            return any(holds(x) for x in list(e.keys) + list(e.values) if x is not None)
+        if isinstance(e, (ast.Starred, ast.NamedExpr)):
+            return holds(e.value)
+        if isinstance(e, ast.IfExp):
+            return holds(e.body) or holds(e.orelse)
+        if isinstance(e, ast.BoolOp):
+            return any(holds(x) for x in e.values)
+        if isinstance(e, ast.BinOp):
+            return holds(e.left) or holds(e.right)
+        if isinstance(e, (ast.ListComp, ast.SetComp, ast.GeneratorExp)):
+            return holds(e.elt)
+        if isinstance(e, ast.DictComp):
+            return holds(e.key) or holds(e.value)
+        if isinstance(e, ast.Lambda):
+            return holds(e.body)
+        return False
+
+    def names(t):
+        if isinstance(t, ast.Name):
+            return [t]
+        if isinstance(t, (ast.Tuple, ast.List)):
+            return [n for x in t.elts for n in names(x)]
+        if isinstance(t, (ast.Starred, ast.Subscript)):
+            return names(t.value)
+        return []
+
+    def bind(t, v, over):
+        """Bind the names of target t from value v (`over`: t takes v's elements)."""
+        if over:
+            if (isinstance(v, ast.Attribute) and v.attr in cont) or is_det(v) or not holds(v):
+                return
+            for n in names(t):
+                alias.add(key(n, n.id))
+        elif isinstance(t, ast.Name) and is_det(v):
+            alias.add(key(t, t.id))
+            detail.add(key(t, t.id))
+        elif holds(v):
+            for n in names(t):
+                alias.add(key(n, n.id))
+
+    def params(d):
+        a = d.args
+        return [x.arg for x in a.posonlyargs + a.args], [x.arg for x in a.kwonlyargs], a.vararg or a.kwarg
+
+    def bind_param(d, name, v):
+        k = (id(scope[id(d)]), name)
+        if is_det(v):
+            alias.add(k)
+            detail.add(k)
+        elif holds(v):
+            alias.add(k)
+
+    while True:
+        before = (len(alias), len(detail), len(rets), slot[0])
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                for t in node.targets:
+                    bind(t, node.value, False)
+            elif isinstance(node, (ast.AnnAssign, ast.AugAssign)) and node.value is not None:
+                bind(node.target, node.value, False)
+            elif isinstance(node, ast.NamedExpr):
+                bind(node.target, node.value, False)
+            elif isinstance(node, (ast.For, ast.AsyncFor, ast.comprehension)):
+                bind(node.target, node.iter, True)
+            elif isinstance(node, ast.withitem) and node.optional_vars is not None:
+                bind(node.optional_vars, node.context_expr, False)
+            elif isinstance(node, ast.Return) and node.value is not None and holds(node.value):
+                d = near.get(node)
+                if d is not None:
+                    rets.add(d.name)
+            if isinstance(node, ast.Assign) and holds(node.value) and any(
+                    isinstance(t, ast.Subscript) and isinstance(t.value, ast.Attribute) and t.value.attr == "_m"
+                    for t in node.targets):
+                slot[0] = True
+            if isinstance(node, ast.Call):
+                f = node.func
+                if isinstance(f, ast.Name):
+                    callees, skip = defs.get(f.id, []), 0
+                elif isinstance(f, ast.Attribute) and f.attr in methods:
+                    callees, skip = defs.get(f.attr, []), 1
+                else:
+                    callees, skip = [], 0
+                for d in callees:
+                    pos, kwo, rest = params(d)
+                    pos = pos[skip:] if len(pos) >= skip else []
+                    starred = any(isinstance(v, ast.Starred) for v in node.args)
+                    every = (starred and any(holds(v) for v in node.args)) or \
+                        any(holds(v) for v in node.args[len(pos):]) or \
+                        any(holds(kw.value) for kw in node.keywords if kw.arg not in pos + kwo) or \
+                        (rest is not None and any(holds(v) for v in node.args))
+                    for p in (pos + kwo if every else []):
+                        alias.add((id(scope[id(d)]), p))
+                    for i, v in enumerate(node.args):
+                        if not isinstance(v, ast.Starred) and i < len(pos):
+                            bind_param(d, pos[i], v)
+                    for kw in node.keywords:
+                        if kw.arg in pos + kwo:
+                            bind_param(d, kw.arg, kw.value)
+        if (len(alias), len(detail), len(rets), slot[0]) == before:
+            return holds
 
 
 def selfcheck_p2a_only_abstains(source: str | None = None) -> dict:
@@ -2927,15 +3380,11 @@ def selfcheck_p2a_only_abstains(source: str | None = None) -> dict:
 
     problems = []
     judged: set = set()                       # Attribute / Subscript store targets an Assign accounted for
-    aliases = set()                           # local names bound to a record field (d = c.detail)
 
     def bad(node, what):
         problems.append(f"line {node.lineno}: {what}")
 
-    for node in ast.walk(tree):
-        if (isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name)
-                and isinstance(node.value, ast.Attribute) and node.value.attr in _P2A_RECORD):
-            aliases.add(node.targets[0].id)
+    holds = _p2a_holder(tree)
     for node in ast.walk(tree):
         where = owner(node)
         checker = bool(_P2A_CHECKERS & set(where))
@@ -2944,6 +3393,8 @@ def selfcheck_p2a_only_abstains(source: str | None = None) -> dict:
         if isinstance(node, (ast.AugAssign, ast.AnnAssign)) and not isinstance(node.target, ast.Name):
             bad(node, "augmented or annotated store into an attribute or item")
             judged.add(id(node.target))
+        if isinstance(node, ast.AugAssign) and isinstance(node.target, ast.Name) and holds(node.target):
+            bad(node, f"augmented store into {node.target.id}, which may hold a record field (a list grows in place)")
         if isinstance(node, ast.Assign):
             for tgt in node.targets:
                 for t in (tgt.elts if isinstance(tgt, ast.Tuple) else [tgt]):
@@ -2969,8 +3420,8 @@ def selfcheck_p2a_only_abstains(source: str | None = None) -> dict:
                         v = t.value
                         if not (isinstance(v.value, ast.Name) and v.value.id == "self" and v.attr == "_m"):
                             bad(t, f"item store into .{v.attr}")
-                    elif isinstance(t, ast.Subscript) and isinstance(t.value, ast.Name) and t.value.id in aliases:
-                        bad(t, f"item store into {t.value.id}, a record field")
+                    elif isinstance(t, ast.Subscript) and holds(t.value):
+                        bad(t, "item store into what may hold a record field")
         if isinstance(node, (ast.Attribute, ast.Subscript)) and not isinstance(node.ctx, ast.Load) \
                 and id(node) not in judged:
             bad(node, "attribute or item stored or deleted outside a plain assignment")
@@ -3007,8 +3458,8 @@ def selfcheck_p2a_only_abstains(source: str | None = None) -> dict:
                 bad(node, f".{f.attr}() without an explicit argument")
             if f.attr in _P2A_MUTATORS and isinstance(f.value, ast.Attribute) and f.value.attr in _P2A_RECORD:
                 bad(node, f".{f.value.attr}.{f.attr}()")
-            if f.attr in _P2A_MUTATORS and isinstance(f.value, ast.Name) and f.value.id in aliases:
-                bad(node, f"{f.value.id}.{f.attr}(), a record field")
+            if f.attr in _P2A_MUTATORS and holds(f.value):
+                bad(node, f".{f.attr}() on what may hold a record field")
             if isinstance(f.value, ast.Name) and f.value.id == "re" and f.attr in _P2A_RE_CALLS:
                 pat = static(node.args[0]) if node.args else None
                 if pat is None:
