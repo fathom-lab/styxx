@@ -1491,6 +1491,7 @@ _P2A_COUNT_RUN = re.compile("[0-9" + _P2A_WORDISH + "]+")                 # char
 _P2A_RUN_RX = {"path": _P2A_PATH_RUN, "name": _P2A_NAME_RUN_ANY, "count": _P2A_COUNT_RUN}
 _P2A_DIGIT = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9}
 _P2A_SEP = "\x00"                  # joins the summary's runs and zones; never in a claimed path, name, prefix or number
+_P2A_PIECE_CUT = re.compile("[" + _P2A_SEP + _P2A_DIVERGENT + _P2A_WORDISH + "]+")   # ends the pieces a token lies in
 _P2A_CUT = re.compile("\n|[.!?][ \t\r]")          # where both ports end a sentence: a line break, or '.!?' + a space
 _P2A_COARSE_RUN = re.compile("[\x00-\x20\x7f-\U0010ffff]*")              # controls, space, DEL, from 0x80 up
 _P2A_WORD_RUN = re.compile("[A-Za-z0-9_]*")                              # an ASCII name run
@@ -1500,17 +1501,30 @@ _P2A_LEAD_APART = re.compile("[\x1c\x1d\x1e\x1f\x85\ufeff]")    # white space of
 _P2A_LEADS = (re.compile("[" + _P2A_PY_SPACE + "]*"), re.compile("[" + _P2A_JS_SPACE + "]*"))  # each main's \s run
 _P2A_FOLD = {**{cp: cp + 32 for cp in range(65, 91)}, 0x212A: "k", 0x130: "i\u0307"}
 _P2A_ASCII_LOWER = {cp: cp + 32 for cp in range(65, 91)}
-# C-1 (NOTE_path2a_sixth_pass_2026_09_30): words every match of a template that can give CONTRADICTED holds together
-# (the count template's `changed`, the scope template's `only`, the tests template's verb and `test`, the symbol
-# template's verb and kind), and every DECLARE-1 line that writes such a sentence (files_changed, only_touches,
-# tests_added, adds_symbol), read in ASCII case with the four code points CPython's IGNORECASE folds to an ASCII letter
-# read as that letter, one for one.
-_P2A_TRIGGERS = (("changed",), ("only",), ("add", "test"), ("creat", "test"),
-                 ("add", "function"), ("add", "class"), ("add", "method"), ("add", "symbol"),
-                 ("introduc", "function"), ("introduc", "class"), ("introduc", "method"), ("introduc", "symbol"))
+# C-1 (NOTE_path2a_sixth_pass_2026_09_30; NOTE_path2a_seventh_pass_2026_09_30, B-1): the words every match of a
+# template that can give CONTRADICTED holds, in the order the template holds them (the count template's `file` before
+# `changed`; the scope template's `only` before `touch`, `modif` or `chang`; the tests template's verb before `test`;
+# the symbol template's verb before its kind), and the DECLARE-1 keys whose lines write such a sentence, each a word of
+# its own; read in ASCII case with the four code points CPython's IGNORECASE folds to an ASCII letter read as that
+# letter, one for one.
+_P2A_TRIGGERS = (("file", "changed"), ("only", "touch"), ("only", "modif"), ("only", "chang"),
+                 ("add", "test"), ("creat", "test"), ("add", "function"), ("add", "class"), ("add", "method"),
+                 ("introduc", "function"), ("introduc", "class"), ("introduc", "method"),
+                 ("files_changed",), ("only_touches",), ("tests_added",), ("adds_symbol",))
 _P2A_TRIGGER_LOW = {**_P2A_ASCII_LOWER, 0x130: "i", 0x131: "i", 0x17F: "s", 0x212A: "k"}
+# O-11 (NOTE_path2a_seventh_pass_2026_09_30, B-1): the emoji of five pictograph blocks (U+1F300 to U+1F64F, U+1F680 to
+# U+1F6FF, U+1F900 to U+1F9FF, U+1FA70 to U+1FAFF), as one code point or as the two surrogates the port's string holds
+# for it, are read in the summary as one neutral code point (U+2190): neither port's templates read them as a word
+# character or white space, or fold them to an ASCII letter, and none has a case. Tests pin each property by
+# enumeration. Both ports replace the same code points, so both read the same summary.
+_P2A_EMOJI_RX = re.compile("[\U0001f300-\U0001f64f\U0001f680-\U0001f6ff\U0001f900-\U0001f9ff\U0001fa70-\U0001faff]"
+                           "|\ud83c[\udf00-\udfff]|\ud83d[\udc00-\ude4f\ude80-\udeff]|\ud83e[\udd00-\uddff\ude70-\udeff]")
+_P2A_EMOJI_AS = "\u2190"
 _P2A_ACCUSE = frozenset({"files_changed_count", "only_touches", "tests_added", "symbol_added"})   # may be CONTRADICTED
 _P2A_MANY = 32                     # more distinct words than this are read through one automaton, not one scan each
+# A-1 (NOTE_path2a_seventh_pass_2026_09_30): one automaton holds words of at most this many characters, or a sixteenth
+# of the text it reads if that is more, so its memory is bounded and its time stays linear.
+_P2A_BUDGET = 1 << 16
 _P2A_REACH = frozenset({
     ("file_created", "VERIFIED"), ("file_deleted", "VERIFIED"), ("file_touched", "VERIFIED"),
     ("files_changed_count", "VERIFIED"), ("files_changed_count", "CONTRADICTED"),
@@ -2104,12 +2118,9 @@ def _p2a_seam(summary: str) -> bool:
     return False
 
 
-def _p2a_found(words, text: str) -> set:
-    """The words (non-empty, none holding _P2A_SEP) that occur in `text`. Up to _P2A_MANY words, one scan each; more,
-    one read of the text through one automaton, marking each state's words once: time linear in the words and the
-    text however many words the claims name (NOTE_path2a_sixth_pass_2026_09_30, A-1). Both give the same set."""
-    if len(words) <= _P2A_MANY:
-        return {w for w in words if w in text}
+def _p2a_marked(words: list, text: str) -> set:
+    """The words (distinct, non-empty) that occur in `text`, read once through one automaton over them, marking each
+    state's words once (NOTE_path2a_sixth_pass_2026_09_30, A-1)."""
     moves, back, hit = _p2a_automaton(words)
     ends: dict = {}
     for w in words:
@@ -2133,9 +2144,55 @@ def _p2a_found(words, text: str) -> set:
     return got
 
 
+def _p2a_found(words, text: str) -> set:
+    """The words (named by `tokens`: non-empty, none holding _P2A_SEP or a character of _P2A_BAD_RX) that occur in
+    `text`. Such a word lies, where it occurs, inside one piece of the text between such characters, so the text is
+    read as its distinct pieces (NOTE_path2a_seventh_pass_2026_09_30, A-1): an empty text, or one with no piece, reads
+    no word; a word that is a piece is found by lookup; a word no shorter than the longest piece, and not one, is not
+    there. The rest: up to _P2A_MANY words, one scan each; more, through automata of at most _P2A_BUDGET characters
+    of words, or a sixteenth of the pieces' length if that is more, each reading the pieces once (sixth pass, A-1):
+    memory bounded, time linear in the words and the text. Every way gives the same set."""
+    if not text or not words:
+        return set()
+    pieces = set(_P2A_PIECE_CUT.split(text))
+    longest = 0
+    for p in pieces:
+        longest = len(p) if len(p) > longest else longest
+    if not longest:
+        return set()
+    got = {w for w in words if w in pieces}
+    rest = [w for w in words if w not in pieces and len(w) < longest]
+    if not rest:
+        return got
+    joined = _P2A_SEP.join(pieces)
+    if len(rest) <= _P2A_MANY:
+        return got | {w for w in rest if w in joined}
+    limit = _P2A_BUDGET if _P2A_BUDGET > len(joined) >> 4 else len(joined) >> 4
+    batch: list = []
+    size = 0
+    for w in rest:
+        batch.append(w)
+        size = size + len(w)
+        if size >= limit:
+            got = got | _p2a_marked(batch, joined)
+            batch = []
+            size = 0
+    if batch:
+        got = got | _p2a_marked(batch, joined)
+    return got
+
+
 def _p2a_apart_in(summary: str, low: str, a, e) -> bool:
-    return _P2A_BAD_RX.search(summary, a, e) is not None and any(
-        all(low.find(w, a, e) >= 0 for w in words) for words in _P2A_TRIGGERS)
+    """Whether the sentence [a, e) holds a character the two ports' templates may read apart and the words of one
+    trigger in its order: the earliest occurrence of its leading word, then one of the other after it (B-1 of the
+    seventh pass). A match of a template holds them so, so a sentence holding such a match holds them so."""
+    if _P2A_BAD_RX.search(summary, a, e) is None:
+        return False
+    for words in _P2A_TRIGGERS:
+        i = low.find(words[0], a, e)
+        if i >= 0 and (len(words) == 1 or low.find(words[1], i + 1, e) >= 0):
+            return True
+    return False
 
 
 def _p2a_apart_diff(f: "_P2aFacts", kinds: frozenset) -> bool:
@@ -2143,23 +2200,35 @@ def _p2a_apart_diff(f: "_P2aFacts", kinds: frozenset) -> bool:
     CONTRADICTED among the claims main read, which both ports read alike wherever the summary holds no C-1 seam): a
     file header they split or strip apart (the statuses: counts, scopes, and BC-1 for tests and symbols); for a tests
     claim, a different count of `def test_` sites (each view's own count, as main makes it); for a symbol claim, an
-    added `def` or `class` site whose line only one view reads, or whose leading white space or name the two ports'
-    `\\s` and `\\b` may read apart; and added lines that are empty to one main only where no path is registered (main's
-    no-evidence reading)."""
+    added `def` or `class` site whose line only one view reads, or whose leading white space the two ports' `\\s` may
+    read apart, or whose ASCII name run is a claimed name followed by a code point from 0x80 up, which
+    CPython's `\\b` may read as a word character and the port's does not (NOTE_path2a_seventh_pass_2026_09_30, B-3: both
+    mains read the name by regex, never through NFKC); and added lines that are empty to one main only where no path is
+    registered (main's no-evidence reading). For a count claim, two registrations that differ only in case outside
+    ASCII (#WA below #A): the two mains' keys merge them by each runtime's own case tables, which differ between
+    Unicode versions, so each main counts some number in [#WA, #A], and two may give a claimed number in that range
+    different verdicts (seventh pass, C-1). A number outside it is CONTRADICTED by every main."""
     if not kinds:
         return False
     if _p2a_divergent(f.diff_text):
         return True
+    if "files_changed_count" in kinds:
+        wa, a = f.count()[1], f.count()[2]
+        if wa != a and any(_P2A_DIGITS.fullmatch(n) is None or wa <= _p2a_int(n) <= a for n in f.ns()):
+            return True
     views = f.views()
     if "tests_added" in kinds and f.pairing()[0][0] != f.pairing()[1][0]:
         return True
     if "symbol_added" in kinds:
+        names = f.names()
         one = set(views[0][0]) ^ set(views[1][0]) if views[0] is not views[1] else set()
         for added, _r in _p2a_distinct(views):
             for line in added:
-                for j, r in _p2a_anchored(line):
-                    if line in one or _P2A_ONE_RX.search(line, 0, r) is not None or \
-                            _p2a_wide_name(line, j, r, _P2A_WORD_RUN.match(line, r).end()):
+                for _j, r in _p2a_anchored(line):
+                    if line in one or _P2A_ONE_RX.search(line, 0, r) is not None:
+                        return True
+                    e = _P2A_WORD_RUN.match(line, r).end()
+                    if _P2A_WIDE.match(line, e) is not None and line[r:e] in names:
                         return True
     return not f.status("A") and (not "\n".join(views[0][0])) != (not "\n".join(views[1][0]))
 
@@ -2213,7 +2282,9 @@ class _P2aFacts:
     """What the overlay reads, from the door's own bytes, computed once per diff when a claim needs it."""
 
     def __init__(self, diff_text: str, name_status: str | None = None, summary: str = ""):
-        self.diff_text, self.name_status, self.summary, self._m = diff_text, name_status, summary, {}
+        # O-11 (NOTE_path2a_seventh_pass_2026_09_30, B-1): the summary is read with its pictograph emoji neutral
+        self.diff_text, self.name_status, self._m = diff_text, name_status, {}
+        self.summary = _P2A_EMOJI_RX.sub(_P2A_EMOJI_AS, summary)
 
     def _get(self, k, make):
         if k not in self._m:
@@ -2340,6 +2411,14 @@ class _P2aFacts:
     def kinds(self, found=()) -> frozenset:
         """The kinds that can be CONTRADICTED among the claims main read, named before any claim is read (C-1)."""
         return self._get("kinds", lambda: frozenset(found) & _P2A_ACCUSE)
+
+    def ns(self, found=()) -> frozenset:
+        """The numbers of the count claims main read, named before any claim is read (C-1 of the seventh pass)."""
+        return self._get("ns", lambda: frozenset(x if isinstance(x, str) else "" for x in found))
+
+    def names(self, found=()) -> frozenset:
+        """The names of the symbol claims main read, named before any claim is read (B-3 of the seventh pass)."""
+        return self._get("names", lambda: frozenset(x for x in found if isinstance(x, str)))
 
     def apart(self, kinds: frozenset) -> bool:
         return self._get("apart", lambda: _p2a_apart(self, kinds))
@@ -2700,7 +2779,9 @@ def _p2a_abstain(g: DiffGate, strict: bool, facts) -> DiffGate:
         for kind, field in (("path", "path"), ("name", "name"), ("count", "n"), ("zone", "prefix")):
             f.tokens(kind, [c.detail.get(field) for c in todo if isinstance(c.detail.get(field), str)])
         f.kinds([c.kind for c in g.claims])
-        hits = [(c, _p2a_decide(c, f)) for c in todo]
+        f.names([c.detail.get("name") for c in g.claims if c.kind == "symbol_added" and isinstance(c.detail, dict)])
+        f.ns([c.detail.get("n") for c in g.claims if c.kind == "files_changed_count" and isinstance(c.detail, dict)])
+        hits =[(c, _p2a_decide(c, f)) for c in todo]
     except Exception:                     # an abstain-only overlay that cannot read withholds, and says so
         hits = [(c, ("error", _P2A_KIND_DEFECT[c.kind])) for c in todo]
     moved = False
@@ -2747,7 +2828,7 @@ _P2A_ATTRS_OK = frozenset({
     "diff_text", "name_status", "summary", "_m", "_get", "fine", "regs", "views", "divergent", "space", "odd",
     "count", "pairing", "defines", "runs", "zones", "zone_text", "scope",
     "order", "groups", "prime", "ends", "automaton", "joined", "seam", "unchanged", "apart", "tokens", "occurs",
-    "kinds", "redefines"})
+    "kinds", "redefines", "names", "ns"})
 _P2A_TYPES = frozenset({"str", "list", "dict", "set", "tuple", "frozenset", "int", "bool"})
 
 

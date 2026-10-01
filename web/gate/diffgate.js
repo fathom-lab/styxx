@@ -679,7 +679,7 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 //
 // NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30,
 // NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30 and NOTE_path2a_sixth_pass_2026_09_30.
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 427ff648f787b6fc8b7bc0e24ea84bc418ec03db28eabcf0224ac5e39453ae4f, LF). Everything outside this block is
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 33a9d7b2615932718e8e36a1017a1094652b737d416c0b5ec2ea19080e96f608, LF). Everything outside this block is
 // main's port at 1cde8b82 (sha256 06688702..., LF), unchanged except that main's gateDiffText is named
 // _gateDiffTextMain (its definition and its DECLARE-1 self-call); the gateDiffText at the end of this block calls it
 // and then the overlay, once. The overlay reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason
@@ -834,18 +834,32 @@ function _p2aRun(s) {                    // the leading dots and slashes main dr
 }
 
 function _p2aFold(s) {                   // ASCII case, and the two code points whose lowercase holds ASCII
-  let out = "";
-  for (const ch of s) {
-    const o = ch.codePointAt(0);
-    out += (o >= 65 && o <= 90) ? String.fromCharCode(o + 32) : o === 0x212a ? "k" : o === 0x130 ? "i\u0307" : ch;
+  // A string with nothing to fold is returned as it is; any other is joined once, not appended to code point by code
+  // point: an appended string is a chain of pieces this engine keeps until it is read whole, about 2 KB for a
+  // 70-character path, and the forms are kept as keys (A-1 of the seventh pass). U+212A and U+0130 are one unit each.
+  let k = 0;
+  while (k < s.length) {
+    const u = s.charCodeAt(k);
+    if ((u >= 65 && u <= 90) || u === 0x212a || u === 0x130) break;
+    k++;
   }
-  return out;
+  if (k === s.length) return s;
+  const out = [s.slice(0, k)];
+  for (const ch of s.slice(k)) {
+    const o = ch.codePointAt(0);
+    out.push((o >= 65 && o <= 90) ? String.fromCharCode(o + 32) : o === 0x212a ? "k" : o === 0x130 ? "i\u0307" : ch);
+  }
+  return out.join("");
 }
 
 function _p2aWild(s) {                   // every code point outside ASCII read as one placeholder
-  let out = "";
-  for (const ch of _p2aFold(s)) out += ch.codePointAt(0) < 128 ? ch : "\ufffd";
-  return out;
+  const f = _p2aFold(s);
+  let k = 0;
+  while (k < f.length && f.charCodeAt(k) < 128) k++;
+  if (k === f.length) return f;
+  const out = [f.slice(0, k)];
+  for (const ch of f.slice(k)) out.push(ch.codePointAt(0) < 128 ? ch : "\ufffd");
+  return out.join("");
 }
 
 const _p2aA = s => _p2aFold(_p2aStrip(s));
@@ -1302,19 +1316,24 @@ function _p2aSeam(s) {
   return false;
 }
 
-// C-1 (NOTE_path2a_sixth_pass_2026_09_30): the words every match of a template that can give CONTRADICTED holds together,
-// as the Python's _P2A_TRIGGERS.
-const _P2A_TRIGGERS = [["changed"], ["only"], ["add", "test"], ["creat", "test"], ["add", "function"], ["add", "class"], ["add", "method"], ["add", "symbol"], ["introduc", "function"], ["introduc", "class"], ["introduc", "method"], ["introduc", "symbol"]];
+// C-1 (NOTE_path2a_sixth_pass_2026_09_30; NOTE_path2a_seventh_pass_2026_09_30, B-1): the words every match of a template
+// that can give CONTRADICTED holds, in the order the template holds them, and the DECLARE-1 keys whose lines write such
+// a sentence, each a word of its own, as the Python's _P2A_TRIGGERS.
+const _P2A_TRIGGERS = [["file", "changed"], ["only", "touch"], ["only", "modif"], ["only", "chang"], ["add", "test"], ["creat", "test"], ["add", "function"], ["add", "class"], ["add", "method"], ["introduc", "function"], ["introduc", "class"], ["introduc", "method"], ["files_changed"], ["only_touches"], ["tests_added"], ["adds_symbol"]];
 const _P2A_ACCUSE = new Set(["files_changed_count", "only_touches", "tests_added", "symbol_added"]);   // may be CONTRADICTED
 const _P2A_MANY = 32;           // more distinct words than this are read through one automaton, not one scan each
+// A-1 (NOTE_path2a_seventh_pass_2026_09_30): one automaton holds words of at most this many units, or a sixteenth of the
+// text it reads if that is more, as the Python's _P2A_BUDGET
+const _P2A_BUDGET = 65536;
+// O-11 (NOTE_path2a_seventh_pass_2026_09_30, B-1): the emoji of five pictograph blocks (U+1F300 to U+1F64F, U+1F680 to
+// U+1F6FF, U+1F900 to U+1F9FF, U+1FA70 to U+1FAFF), the two surrogates this engine's string holds for each, are read in
+// the summary as one neutral unit (U+2190), as the Python's _P2A_EMOJI_RX reads them as one code point or two surrogates
+const _P2A_EMOJI_RX = new RegExp("\ud83c[\udf00-\udfff]|\ud83d[\udc00-\ude4f\ude80-\udeff]|\ud83e[\udd00-\uddff\ude70-\udeff]");
+const _P2A_EMOJI_AS = "\u2190";
 
-function _p2aFound(words, text) {
-  // The words (non-empty, none holding _P2A_SEP) that occur in `text`, as the Python's _p2a_found: up to _P2A_MANY
-  // words, one scan each; more, one read of the text through one automaton, marking each state's words once
-  // (NOTE_path2a_sixth_pass_2026_09_30, A-1). Both give the same set.
-  // The words are named by `tokens`, which keeps only words with no unit the two ports read apart: each is BMP text
-  // outside the surrogates, so reading the text by UTF-16 unit finds each where the Python's code points do.
-  if (words.size <= _P2A_MANY) return new Set([...words].filter(w => text.includes(w)));
+function _p2aMarked(words, text) {
+  // The words (distinct, non-empty) that occur in `text`, as the Python's _p2a_marked: one automaton over them, the text
+  // read once, each state's words marked once (NOTE_path2a_sixth_pass_2026_09_30, A-1).
   const [moves, back, hit] = _p2aAutomaton(words);
   const ends = new Map();
   for (const w of words) {
@@ -1343,6 +1362,49 @@ function _p2aFound(words, text) {
   return got;
 }
 
+function _p2aFound(words, text) {
+  // The words (named by `tokens`: non-empty, none holding _P2A_SEP or a unit _p2aBadUnit reads) that occur in `text`, as
+  // the Python's _p2a_found (NOTE_path2a_seventh_pass_2026_09_30, A-1): such a word lies inside one piece of the text
+  // between such units, so the text is read as its distinct pieces; an empty text, or one with no piece, reads no word;
+  // a word that is a piece is found by lookup; a word no shorter than the longest piece, and not one, is not there; the
+  // rest one scan each up to _P2A_MANY, else through automata of at most _P2A_BUDGET units of words, or a sixteenth of
+  // the pieces' length if that is more, each reading the pieces once. Each word is BMP text outside the surrogates, so
+  // reading by UTF-16 unit finds each where the Python's code points do. Every way gives the same set.
+  if (!text || !words.size) return new Set();
+  const pieces = new Set();
+  let a = 0;
+  for (let k = 0; k <= text.length; k++) {
+    if (k === text.length || text.charCodeAt(k) === 0 || _p2aBadUnit(text.charCodeAt(k))) {
+      if (k > a) pieces.add(text.slice(a, k));
+      a = k + 1;
+    }
+  }
+  let longest = 0;
+  for (const p of pieces) if (p.length > longest) longest = p.length;
+  if (!longest) return new Set();
+  const got = new Set([...words].filter(w => pieces.has(w)));
+  const rest = [...words].filter(w => !pieces.has(w) && w.length < longest);
+  if (!rest.length) return got;
+  const joined = [...pieces].join(_P2A_SEP);
+  if (rest.length <= _P2A_MANY) {
+    for (const w of rest) if (joined.includes(w)) got.add(w);
+    return got;
+  }
+  const limit = _P2A_BUDGET > (joined.length >> 4) ? _P2A_BUDGET : (joined.length >> 4);
+  let batch = [], size = 0;
+  for (const w of rest) {
+    batch.push(w);
+    size += w.length;
+    if (size >= limit) {
+      for (const x of _p2aMarked(batch, joined)) got.add(x);
+      batch = [];
+      size = 0;
+    }
+  }
+  if (batch.length) for (const x of _p2aMarked(batch, joined)) got.add(x);
+  return got;
+}
+
 function _p2aTriggerLow(s) {             // ASCII case, and the four code points CPython's IGNORECASE folds to ASCII
   const out = [];
   for (let k = 0; k < s.length; k++) {
@@ -1356,13 +1418,22 @@ function _p2aApartDiff(f, kinds) {
   // Whether the two ports' mains may decide apart, on this diff, a claim of `kinds` (the kinds that can be CONTRADICTED
   // among the claims main read), as the Python's _p2a_apart_diff: a file header they split or strip apart; for a tests
   // claim, a different count of `def test_` sites; for a symbol claim, an added `def` or `class` site whose line only one
-  // view reads, or whose leading white space or name the two ports may read apart; added lines empty to one main only
-  // where no path is registered.
+  // view reads, or whose leading white space the two ports may read apart, or whose ASCII name run is a claimed name
+  // followed by a unit from 0x80 up (B-3 of the seventh pass); added lines empty to one main only where no path is
+  // registered; for a count claim, two registrations that differ only in case outside ASCII (C-1 of the seventh pass).
   if (!kinds.size) return false;
   if (_p2aDivergent(f.diffText)) return true;
+  // C-1 (NOTE_path2a_seventh_pass_2026_09_30): two registrations that differ only in case outside ASCII, which each
+  // runtime's own case tables may merge or not, so each main counts some number in [#WA, #A]: a claimed number in that
+  // range may be decided apart; one outside it is CONTRADICTED by every main
+  if (kinds.has("files_changed_count")) {
+    const [, wa, a] = f.count();
+    if (wa !== a && [...f.ns()].some(n => !_P2A_DIGITS.test(n) || (wa <= _p2aInt(n) && _p2aInt(n) <= a))) return true;
+  }
   const views = f.views();
   if (kinds.has("tests_added") && f.pairing()[0][0] !== f.pairing()[1][0]) return true;
   if (kinds.has("symbol_added")) {
+    const names = f.names();
     const one = new Set();
     if (views[0] !== views[1]) {
       const a = new Set(views[0][0]), b = new Set(views[1][0]);
@@ -1373,8 +1444,12 @@ function _p2aApartDiff(f, kinds) {
     for (const [added] of _p2aDistinct(views)) {
       for (const line of added) {
         for (const [j, r] of _p2aAnchored(line)) {
-          if (one.has(line) || _p2aWideName(line, j, r, _p2aRunEnd(line, r, _p2aWordUnit))) return true;
+          if (one.has(line)) return true;
           for (let k = 0; k < r; k++) if (oneSpace.has(line.charCodeAt(k))) return true;
+          // B-3 (NOTE_path2a_seventh_pass_2026_09_30): a claimed name whose ASCII run a code point from 0x80 up ends,
+          // where CPython's \b may read a word character and this engine's does not
+          const e = _p2aRunEnd(line, r, _p2aWordUnit);
+          if (e < line.length && line.charCodeAt(e) >= 0x80 && names.has(line.slice(r, e))) return true;
         }
       }
     }
@@ -1398,8 +1473,13 @@ function _p2aApart(f, kinds) {
     let b = false;
     for (let k = a; k < e && !b; k++) if (_p2aBadUnit(s.charCodeAt(k))) b = true;
     if (!b) return false;
+    // B-1 (NOTE_path2a_seventh_pass_2026_09_30): one trigger's words in its order, from its leading word's earliest place
     const seg = low.slice(a, e);
-    return _P2A_TRIGGERS.some(words => words.every(w => seg.includes(w)));
+    for (const words of _P2A_TRIGGERS) {
+      const i = seg.indexOf(words[0]);
+      if (i >= 0 && (words.length === 1 || seg.indexOf(words[1], i + 1) >= 0)) return true;
+    }
+    return false;
   };
   let a = 0;
   for (let k = 0; k < s.length; k++) {
@@ -1446,7 +1526,8 @@ function _p2aFactsRaw(diffText, summaryText) {
   const memo = new Map();
   const get = (k, make) => { if (!memo.has(k)) memo.set(k, make()); return memo.get(k); };
   const f = {
-    summary: String(summaryText),
+    // O-11 (NOTE_path2a_seventh_pass_2026_09_30, B-1): the summary is read with its pictograph emoji neutral
+    summary: String(summaryText).split(_P2A_EMOJI_RX).join(_P2A_EMOJI_AS),
     diffText,
     coarse: () => get("coarse", () => _splitlines(diffText)),
     regs: () => get("regs", () => _p2aRegsRaw(f.coarse())),
@@ -1522,6 +1603,10 @@ function _p2aFactsRaw(diffText, summaryText) {
     pairing: () => get("pairing", () => _p2aPairing(f.views(), f.views()[0] === f.views()[1] && !_P2A_LEAD_APART.test(diffText), f.joined(), f.unchanged())),
     // C-1: the kinds that can be CONTRADICTED among the claims main read, named before any claim is read
     kinds: (found = []) => get("kinds", () => new Set(found.filter(k => _P2A_ACCUSE.has(k)))),
+    // B-3 (NOTE_path2a_seventh_pass_2026_09_30): the names of the symbol claims main read, named before any claim is read
+    names: (found = []) => get("names", () => new Set(found.filter(x => typeof x === "string"))),
+    // C-1 (NOTE_path2a_seventh_pass_2026_09_30): the numbers of the count claims main read, named before any claim is read
+    ns: (found = []) => get("ns", () => new Set(found.map(x => typeof x === "string" ? x : ""))),
     apart: kinds => get("apart", () => _p2aApart(f, kinds)),
     // NOTE_path2a_sixth_pass_2026_09_30, A-1: the words the claims in reach may look up in the summary's runs or zones
     tokens: (kind, words) => get("tokens:" + kind, () => new Set(words.filter(w => {
@@ -1810,6 +1895,8 @@ function _p2aAbstain(g, strict, facts) {
     f.tokens("count", str(todo.map(c => c.detail.n)));
     f.tokens("zone", str(todo.map(c => c.detail.prefix)));
     f.kinds(g.claims.map(c => c.kind));
+    f.names(g.claims.filter(c => c.kind === "symbol_added" && c.detail).map(c => c.detail.name));
+    f.ns(g.claims.filter(c => c.kind === "files_changed_count" && c.detail).map(c => c.detail.n));
     hits = todo.map(c => [c, _p2aDecide(c, f)]);
   } catch (e) {                          // an abstain-only overlay that cannot read withholds, and says so
     hits = todo.map(c => [c, ["error", _P2A_KIND_DEFECT[c.kind]]]);

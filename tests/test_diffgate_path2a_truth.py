@@ -42,16 +42,19 @@ DECIDED = ("VERIFIED", "CONTRADICTED")
 # all lie under the second prefix. Pass 6 (NOTE_path2a_sixth_pass_2026_09_30, B-1): the unchanged lines withhold 16
 # more false verdicts main gives on a test or a name defined again (outside the committed V101's attribution, so under
 # "false other"), 6 right CONTRADICTEDs (a test the removed pairing already counts as changed moved into a class, beside
-# a redefinition) and 4 undecided, in each port; C-1 moves nothing here.
-PINNED = {"cases": 1706, "main raises": 0, "decided": 7614, "false": 1535, "attributable": 1206, "abstained": 1563,
-          "attributable abstained": 1206, "right": 5897, "right lost": 251, "undecided": 182,
+# a redefinition) and 4 undecided, in each port; C-1 moves nothing here. Pass 7 (NOTE_path2a_seventh_pass_2026_09_30,
+# C-1): the case-pair clause keeps 6 CONTRADICTEDs in each port where two changed paths differ in one letter outside
+# ASCII and a claimed count lies in the range the two mains may count (4 counts, 2 of them false through neither defect
+# and 2 right; 2 right scopes); no attributable verdict moves. The tighter trigger (B-1) moves nothing here.
+PINNED = {"cases": 1706, "main raises": 0, "decided": 7614, "false": 1535, "attributable": 1206, "abstained": 1557,
+          "attributable abstained": 1206, "right": 5897, "right lost": 247, "undecided": 182,
           "undecided abstained": 39, "unjudged": 0, "unjudged abstained": 0, "false other": 329,
-          "false other abstained": 67}
+          "false other abstained": 65}
 # The port judged in its own terms: 1,100 attributable claims, of which 942 carry the same main record in Python and
 # 158 are read otherwise by Python's main (paths and names outside ASCII, which the two templates extract apart).
-PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7393, "abstained": 1424, "right": 5739, "right lost": 175,
+PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7393, "abstained": 1418, "right": 5739, "right lost": 171,
                "false": 1385, "attributable": 1100, "attributable abstained": 1100, "false other": 285,
-               "false other abstained": 23, "undecided": 269, "undecided abstained": 126}
+               "false other abstained": 21, "undecided": 269, "undecided abstained": 126}
 PINNED_GIT = {"cases": 96, "main raises": 0, "with R, C or T": 16, "decided": 63, "abstained": 14, "false": 17,
               "attributable": 14, "attributable abstained": 14, "right": 46, "right lost": 0, "false other": 3,
               "false other abstained": 0}
@@ -302,9 +305,8 @@ PY_PLANTS = [
     ("dot_earliest read as dot", '        return ("dot_earliest" if vboth else "dot"), "#121"',
      '        return "dot", "#121"'),
     # pass 3 (NOTE_path2a_third_pass_2026_09_30)
-    ("the summary never read",
-     "        self.diff_text, self.name_status, self.summary, self._m = diff_text, name_status, summary, {}",
-     '        self.diff_text, self.name_status, self.summary, self._m = diff_text, name_status, "", {}'),
+    ("the summary never read", "        self.summary = _P2A_EMOJI_RX.sub(_P2A_EMOJI_AS, summary)",
+     '        self.summary = ""'),
     ("the scope's second prefix never read",
      '            ps = [fm(x).rstrip("/.") for x in (prefixes if shaped else prefixes[:1])]',
      '            ps = [fm(x).rstrip("/.") for x in prefixes[:1]]'),
@@ -359,6 +361,19 @@ PY_PLANTS = [
     ("a name defined again kept",
      '    if f.redefines(name):                 # B-1 (NOTE_path2a_sixth_pass_2026_09_30)\n        return "again", "#101"\n',
      ""),
+    # pass 7 (NOTE_path2a_seventh_pass_2026_09_30): each new rule, dropped or loosened
+    ("C-1's case-pair clause dropped",
+     "        if wa != a and any(_P2A_DIGITS.fullmatch(n) is None or wa <= _p2a_int(n) <= a for n in f.ns()):",
+     "        if False:"),
+    ("B-3's claimed-name clause dropped",
+     "                    if _P2A_WIDE.match(line, e) is not None and line[r:e] in names:\n                        return True\n",
+     ""),
+    ("the count trigger dropped", '_P2A_TRIGGERS = (("file", "changed"), ("only", "touch")',
+     '_P2A_TRIGGERS = (("only", "touch")'),
+    ("the scope trigger read as 'only' alone", '("only", "touch"), ("only", "modif"), ("only", "chang"),',
+     '("only",),'),
+    ("O-11 off", "        self.summary = _P2A_EMOJI_RX.sub(_P2A_EMOJI_AS, summary)", "        self.summary = summary"),
+    ("a token that is a piece not looked up", "    got = {w for w in words if w in pieces}\n", "    got = set()\n"),
 ]
 # Plants that cannot change a record, said so rather than hidden: none this pass. Pass 2's one (a clause that never
 # decided alone) went with the per-set comparison it sat behind (NOTE_path2a_third_pass_2026_09_30, B-2).
@@ -382,9 +397,10 @@ def _pairs_catch(mod):
     # pass 5 (NOTE_path2a_fifth_pass_2026_09_30): the cross-port pins' Python decisions, some of them on claims only
     # main's Python reads (a path outside ASCII), which no pinned pair can hold for both ports
     from tests.test_diffgate_path2a import XPORT_CASES
+    from tests.test_diffgate_path2a import _want
     for cid, s, d, want_py, *_rest in XPORT_CASES:
         got = [(c.verdict, R.phrase_key(c.why, N._P2A_PHRASES)) for c in mod.gate_diff_text(s, d).claims]
-        if got != want_py:
+        if got != _want(want_py, R.main_module().gate_diff_text(s, d).to_dict()):
             return "cross-port pin " + cid
     return None
 
@@ -477,6 +493,16 @@ JS_PLANTS = [
      "    unchanged: () => [],"),
     ("no again rule in the port", '  if (f.redefines(name)) return ["again", "#101"];   // B-1 (NOTE_path2a_sixth_pass_2026_09_30)\n',
      ""),
+    # pass 7 (NOTE_path2a_seventh_pass_2026_09_30): each new rule, dropped from the port alone
+    ("no case-pair clause in the port",
+     "    if (wa !== a && [...f.ns()].some(n => !_P2A_DIGITS.test(n) || (wa <= _p2aInt(n) && _p2aInt(n) <= a))) return true;",
+     "    if (false) return true;"),
+    ("no claimed-name clause in the port",
+     "          if (e < line.length && line.charCodeAt(e) >= 0x80 && names.has(line.slice(r, e))) return true;\n", ""),
+    ("no count trigger in the port", '[["file", "changed"], ["only", "touch"]', '[["only", "touch"]'),
+    ("no O-11 in the port", "    summary: String(summaryText).split(_P2A_EMOJI_RX).join(_P2A_EMOJI_AS),",
+     "    summary: String(summaryText),"),
+    ("no piece lookup in the port", "  const got = new Set([...words].filter(w => pieces.has(w)));", "  const got = new Set();"),
 ]
 
 
@@ -497,7 +523,7 @@ def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
     from tests.test_diffgate_path2a import XPORT_CASES
     items = [x for x in R.inputs(fuzz=False)] + [("xport", x[0], x[1], x[2]) for x in XPORT_CASES]
     (tmp_path / "in.json").write_text(json.dumps([{"id": str(i), "summary": x[2], "diff": x[3]}
-                                                  for i, x in enumerate(items)], ensure_ascii=False), encoding="utf-8")
+                                                  for i, x in enumerate(items)], ensure_ascii=True), encoding="utf-8")
     ref = R.main_port_path(tmp_path)
     r = subprocess.run([NODE, str(R.DIFFERENTIAL / "check_path2a.js"), "--decisions", str(ref),
                         str(tmp_path / "in.json"), str(tmp_path / "out.json"), str(planted)],

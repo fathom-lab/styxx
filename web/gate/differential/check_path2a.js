@@ -1,6 +1,6 @@
 // PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30,
-// NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30 and
-// NOTE_path2a_sixth_pass_2026_09_30): the port's
+// NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30,
+// NOTE_path2a_sixth_pass_2026_09_30 and NOTE_path2a_seventh_pass_2026_09_30): the port's
 // half of the committed PATH-2a checks, run by tests/test_diffgate_path2a*.py, which write IN (a JSON list of
 // {id, summary, diff}) and read OUT.
 //
@@ -12,7 +12,13 @@
 //   node check_path2a.js --decisions REF IN OUT   per input, main's record and this port's record, for the
 //                                                  Python-vs-port comparison (C), and both gate verdicts under
 //                                                  --strict (NOTE_path2a_sixth_pass_2026_09_30, C-1, C-4)
-//   node check_path2a.js --found IN OUT            the port's _p2aFound on [words, text] pairs (A-1 of the sixth pass)
+//   node check_path2a.js --decisions-newer-engine REF IN OUT   as --decisions, on an engine whose case tables hold one
+//                                                  pair this one's lack (U+A7CE and U+A7CF, unassigned through Unicode
+//                                                  16, standing in for a later version's pair): main's two ports may
+//                                                  then key a pair of paths apart (NOTE_path2a_seventh_pass_2026_09_30,
+//                                                  C-1)
+//   node check_path2a.js --found IN OUT            the port's _p2aFound on [words, text] pairs (A-1 of the sixth and
+//                                                  seventh passes)
 //   node check_path2a.js --opts REF OUT            odd `opts` arguments (a getter that answers differently on a
 //                                                  second read, a Proxy counting reads, null, primitives): main's
 //                                                  record and reads against this port's (A-2 of the sixth pass)
@@ -49,8 +55,12 @@ function internals(file, extra = "") {
                  "_p2aJoined", "_P2A_ONE_SPACE", "_p2aSeam", "_p2aInt",
                  "_P2A_JS_SPACE", "_P2A_PY_SPACE", "_P2A_PY_BREAKS", "_P2A_DIVERGENT", "_P2A_HEADERS",
                  "_P2A_REACH_PAIRS", "_P2A_PHRASES", "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS", "_P2A_OWN",
-                 "_P2A_NEUTRAL_RANGES", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw", "_p2aFound"];
-  return vm.runInNewContext(src + "\n" + extra + "\n;({" + names.join(", ") + "})", {}, { filename: file });
+                 "_P2A_NEUTRAL_RANGES", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw", "_p2aFound",
+                 "_P2A_EMOJI_RX", "_P2A_EMOJI_AS"];
+  // A name the port does not define reads undefined, so the checker also loads the ports of earlier passes (the
+  // seventh pass runs its new pins against fcd3ce6a's port this way)
+  const pick = names.map(n => n + ": typeof " + n + ' === "undefined" ? undefined : ' + n);
+  return vm.runInNewContext(src + "\n" + extra + "\n;({" + pick.join(", ") + "})", {}, { filename: file });
 }
 
 function record(gate, it, strict, keepUnparsed = false) {
@@ -95,6 +105,15 @@ function strictAlike(off, on) {
 
 function main(argv) {
   const mode = argv[0];
+  if (mode === "--decisions-newer-engine") {
+    // C-1 (NOTE_path2a_seventh_pass_2026_09_30): the patch is made before either port is loaded, so main's reader in
+    // both reads it; the overlay's block calls neither method.
+    const lower = String.prototype.toLowerCase, upper = String.prototype.toUpperCase;
+    String.prototype.toLowerCase = function () { return lower.call(this).split("\ua7ce").join("\ua7cf"); };
+    String.prototype.toUpperCase = function () { return upper.call(this).split("\ua7cf").join("\ua7ce"); };
+    if ("\ua7ce".toLowerCase() !== "\ua7cf" || "\ua7ce".toLowerCase() === "\ua7ce") throw new Error("the patch did not take");
+    return main(["--decisions"].concat(argv.slice(1)));
+  }
   if (mode === "--tables") {
     const ws = [], trim = [], lowerAscii = [], lowerLong = [];
     for (let cp = 0; cp <= 0x10ffff; cp++) {
@@ -127,6 +146,18 @@ function main(argv) {
       // port's digit table refuses
       one_space: cps(P._P2A_ONE_SPACE),
       ascii_folds: Array.from({ length: 0x10000 - 0x80 }, (_, k) => k + 0x80).filter(u => /[A-Za-z]/i.test(String.fromCharCode(u))),
+      // pass 7 (NOTE_path2a_seventh_pass_2026_09_30, O-11): the pictograph emoji, two units each in this engine's strings
+      emoji_matched: Array.from({ length: 0x100000 }, (_, k) => k + 0x10000).filter(cp => {
+        const m = P._P2A_EMOJI_RX.exec(String.fromCodePoint(cp));
+        return m !== null && m.index === 0 && m[0].length === 2;
+      }),
+      emoji_units_matched: Array.from({ length: 0x10000 }, (_, u) => u).filter(u => P._P2A_EMOJI_RX.test(String.fromCharCode(u))),
+      emoji_flagged: [[0x1f300, 0x1f64f], [0x1f680, 0x1f6ff], [0x1f900, 0x1f9ff], [0x1fa70, 0x1faff]]
+        .flatMap(([a, b]) => Array.from({ length: b - a + 1 }, (_, k) => a + k)).filter(cp => {
+          const ch = String.fromCodePoint(cp);
+          return /\w/.test(ch) || /\s/.test(ch) || ch.toLowerCase() !== ch || ch.toUpperCase() !== ch;
+        }),
+      emoji_as: P._P2A_EMOJI_AS,
       int_rejects: ["\u30003", "3\u3000", "\uff13", " 3", "3 ", "+3", "0x3", "3e1"].map(x => { try { P._p2aInt(x); return false; } catch (e) { return true; } }),
     }));
     return 0;
@@ -305,7 +336,7 @@ function main(argv) {
     fs.writeFileSync(argv[2], JSON.stringify(out));
     return 0;
   }
-  console.error("usage: node check_path2a.js --opts REF OUT | --relation REF IN OUT | --decisions REF IN OUT | --records PORT IN OUT | --lockstep IN OUT | --tables OUT | --error-fallback REF IN OUT | --timing REF IN OUT | --overlay-timing REF IN OUT | --bookmarklet MIN IN OUT | --abstain PORT IN OUT");
+  console.error("usage: node check_path2a.js --opts REF OUT | --relation REF IN OUT | --decisions REF IN OUT | --decisions-newer-engine REF IN OUT | --records PORT IN OUT | --lockstep IN OUT | --tables OUT | --error-fallback REF IN OUT | --timing REF IN OUT | --overlay-timing REF IN OUT | --bookmarklet MIN IN OUT | --abstain PORT IN OUT");
   return 2;
 }
 

@@ -3,7 +3,7 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`427ff648f787b6fc8b7bc0e24ea84bc418ec03db28eabcf0224ac5e39453ae4f` (LF line endings; a wheel
+`33a9d7b2615932718e8e36a1017a1094652b737d416c0b5ec2ea19080e96f608` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -42,14 +42,15 @@ and the never-read count to the page.
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 7dd3628eaab4347887976f3933d23a3b3e22d06d06037f216612f359a482549f   48,227 chars
-    bookmarklet.href.txt  sha256 b8f792da22a3601b3027a615c7dee95816585fe62d36d504ecd36eeecff46edd   48,238 chars
+    bookmarklet.min.js    sha256 98b1f5ad2ef7740024d56a87a99053ab844a1a2eae3a4c284dc413d8db5daab2   49,888 chars
+    bookmarklet.href.txt  sha256 529b02e51e38bc48048d85e1e0cf67747d9ae7d08033d449048e415a22362138   49,899 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file;
 `1be19a65…`, 24,335 chars, `main` at `1cde8b82` before PATH-2a, whose README still named an older
 `54dca73a…`, 21,632 chars; `c457cca3…`, 34,285 chars, PATH-2a's pass 1; `bfe8c047…`, 36,933 chars, its pass 2;
-`c726c904…`, 38,763 chars, its pass 3; `eeb0c298…`, 40,419 chars, its pass 4; `185352f8…`, 44,199 chars, its pass 5.
+`c726c904…`, 38,763 chars, its pass 3; `eeb0c298…`, 40,419 chars, its pass 4; `185352f8…`, 44,199 chars, its pass 5;
+`7dd3628e…`, 48,227 chars, its pass 6.
 A bookmark that hashes to any of these is an old port; drag the new one. The panel text still names the 7.48.0 port; see *PATH-2a* below.)
 
 Whatever a browser holds under that bookmark either hashes to the first line (drop the
@@ -70,7 +71,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 427ff648…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 33a9d7b2…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 153 pinned pairs against their expect blocks (+ path2a_moves.json)
@@ -333,7 +334,7 @@ The port half of the PATH-2a tests, and `test_port_is_current`'s check of the po
 `.github/workflows/dependabot.yml`, a false VERIFIED — so `path1_pairs.json` stays `main`'s record,
 byte for byte.
 
-**Measured**, on this file (`styxx/diffgate.py` `427ff648…`, reader `9b620e00…`). Figures marked *pinned* are
+**Measured**, on this file (`styxx/diffgate.py` `33a9d7b2…`, reader `9b620e00…`). Figures marked *pinned* are
 asserted exactly by the committed tests, and hold on CPython 3.12.10 (Unicode 15.0) and 3.14.2 (16.0); the rest
 were measured on CPython 3.12.10 and Node 24.13.0 (Unicode 16) and are not asserted.
 
