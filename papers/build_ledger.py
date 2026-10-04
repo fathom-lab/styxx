@@ -182,5 +182,8 @@ emit("*A lab that only publishes what worked is reporting a filtered sample of i
 
 
 OUT = ROOT / "LEDGER.md"
-OUT.write_text("\n".join(_LINES) + "\n", encoding="utf-8")
+# Bytes, not text: write_text turns each "\n" into "\r\n" on Windows, which rewrote every line of
+# an LF checkout while the regeneration check (which reads text) still passed (#186). The blob is
+# LF, and .gitattributes keeps the checkout LF too (papers/LEDGER.md -text).
+OUT.write_bytes(("\n".join(_LINES) + "\n").encode("utf-8"))
 print(f"wrote {OUT} ({len(_LINES)} lines)")

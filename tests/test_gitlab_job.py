@@ -9,6 +9,7 @@ passes; the JSON artifact is written either way.
 """
 import json
 import os
+import shlex
 import shutil
 import subprocess
 import sys
@@ -19,6 +20,42 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 JOB = ROOT / "integrations" / "gitlab" / "diffgate.gitlab-ci.yml"
 yaml = pytest.importorskip("yaml")
+
+
+def _bash():
+    """The bash that runs the job's script, as a full path, or None when there is none.
+
+    A bare "bash" is the wrong name to hand subprocess on Windows (#185): CreateProcess searches
+    the system directory before PATH, so it starts WSL's launcher (System32\\bash.exe) even where
+    shutil.which("bash") found Git's bash, and the launcher can exit 1 without running a line.
+    So the script runs under the path found here, and a launcher under the Windows directory or
+    the WindowsApps alias never counts as bash. On Windows, Git's own bash is looked for beside
+    git.exe when the one on PATH is a launcher.
+    """
+    found = shutil.which("bash")
+    if os.name != "nt":
+        return found
+
+    def usable(p):
+        if not p:
+            return False
+        low = str(Path(p).resolve()).lower()
+        windir = str(Path(os.environ.get("SystemRoot", r"C:\Windows")).resolve()).lower()
+        return not (low.startswith(windir + os.sep) or os.sep + "windowsapps" + os.sep in low)
+
+    if usable(found):
+        return found
+    git = shutil.which("git")
+    if git:
+        for parent in Path(git).resolve().parents:
+            for rel in (("bin", "bash.exe"), ("usr", "bin", "bash.exe")):
+                cand = parent.joinpath(*rel)
+                if cand.is_file() and usable(cand):
+                    return str(cand)
+    return None
+
+
+BASH = _bash()
 
 
 def _git(cwd, *args):
@@ -57,12 +94,15 @@ def _run_job(work, base, head, description):
                CI_MERGE_REQUEST_DIFF_BASE_SHA=base, CI_COMMIT_SHA=head,
                CI_PIPELINE_SOURCE="merge_request_event", PYTHONPATH=str(ROOT))
     lines = [l for l in job["script"] if not l.startswith("pip install")]
-    script = "set -e\n" + "\n".join(lines).replace("python -m", f"{sys.executable} -m") + "\n"
-    return subprocess.run(["bash", "-c", script], cwd=work, env=env, capture_output=True,
+    # bash reads the backslashes of a Windows path as escapes, so the interpreter is passed with
+    # forward slashes and quoted (#185); on POSIX this is the path as it was.
+    python = shlex.quote(Path(sys.executable).as_posix())
+    script = "set -e\n" + "\n".join(lines).replace("python -m", f"{python} -m") + "\n"
+    return subprocess.run([BASH, "-c", script], cwd=work, env=env, capture_output=True,
                           text=True, encoding="utf-8", errors="replace")
 
 
-@pytest.mark.skipif(shutil.which("bash") is None, reason="the job's script needs bash")
+@pytest.mark.skipif(BASH is None, reason="the job's script needs bash (WSL's launcher does not count)")
 def test_a_lying_description_fails_the_job_with_the_lies_named(mr_repo):
     work, base, head = mr_repo
     r = _run_job(work, base, head, "Refactored src/retry.py. Added 3 tests. Only touches files under src/.")
@@ -73,7 +113,7 @@ def test_a_lying_description_fails_the_job_with_the_lies_named(mr_repo):
     assert report["verdict"] == "FAIL"
 
 
-@pytest.mark.skipif(shutil.which("bash") is None, reason="the job's script needs bash")
+@pytest.mark.skipif(BASH is None, reason="the job's script needs bash (WSL's launcher does not count)")
 def test_an_honest_description_passes_the_job(mr_repo):
     work, base, head = mr_repo
     r = _run_job(work, base, head, "Modified src/retry.py, adds function retry_once, added 1 test. 2 files changed.")
