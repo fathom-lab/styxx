@@ -1860,7 +1860,7 @@ def test_cost_on_large_summaries_python(M):
     """The overlay alone, on the large cases, within 1.5 times main's own call on the same input (the least of two runs
     each): a bound relative to main, so a slower runner moves both sides. The overlay's loops are Python where main's
     are mostly C regex, so a slower interpreter moves the overlay more (NOTE_path2a_seventh_pass_2026_09_30, I-1):
-    measured at the eighth pass's head 0.21 to 0.47 of main's call on CPython 3.12.10 and 0.19 to 0.32 on 3.14.2
+    measured at the ninth pass's head 0.10 to 0.51 of main's call on CPython 3.12.10 and 0.10 to 0.33 on 3.14.2
     (Windows, one run each; such ratios move by about a tenth between runs: NOTE_path2a_eighth_pass_2026_10_01, I-4),
     0.35 to 0.65 on 3.12.3 (Linux, the sixth review, at its head); 1.5 leaves room for CI's 3.9 to 3.11, which were not
     available here. 495d2204 took 2.5 to 7.5 times main's call."""
@@ -1925,7 +1925,7 @@ def test_the_relation_on_large_summaries_port(work, tmp_path):
 def test_cost_on_large_summaries_port(work, tmp_path):
     """The same in the port, at three times the size, within three times main's own call: the port's main is about
     seven times faster than CPython's, so the overlay's fixed per-claim work weighs more beside it, and a shared runner's
-    noise more. Measured: 0.8 to 1.4 times main's call here; 495d2204's overlay took 8.6 to 9.6 times."""
+    noise more. Measured at the ninth pass's head: 0.42 to 1.38 times main's call; 495d2204's overlay took 8.6 to 9.6."""
     (tmp_path / "in.json").write_text(json.dumps(_large_cases(3), ensure_ascii=False), encoding="utf-8")
     node("--overlay-timing", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "t.json")
     for d in json.loads((tmp_path / "t.json").read_text(encoding="utf-8")):
