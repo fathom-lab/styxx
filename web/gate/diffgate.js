@@ -687,7 +687,7 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
 // covered
 // (NOTE_path2a_eleventh_pass_2026_10_05).
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 011538d50a5a4ed393fdaf6ef2470a7f26575568687cda9847fe9ceaf542ca76, LF). Everything outside this block is
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 fb0af26c8b61797467bec85ce3b3614dba4b567a73a2f1187954fbd019537bc0, LF). Everything outside this block is
 // main's port at 1cde8b82 (sha256 06688702..., LF), unchanged except that main's gateDiffText is named
 // _gateDiffTextMain (its definition and its DECLARE-1 self-call); the gateDiffText at the end of this block calls it
 // and then the overlay, once. The overlay reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason

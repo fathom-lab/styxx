@@ -2227,7 +2227,9 @@ def test_the_relation_on_large_summaries_port(work, tmp_path):
     for anchor, plant, moves in (
             ("  const out = [];\n  for (const [i, c] of todo) {\n",
              '  if (todo.length > 400) for (const x of seen.claims) { x.text = x.text + " "; x.why = x.why + " "; }\n', False),
-            ("  let moved = false;\n", '  if (pending.size > 400) for (const x of claims) x.text = x.text + " ";\n', True)):
+            # NOTE_path2a_eleventh_pass_2026_10_05: APPLY's write loop, which now reads by index
+            ("  for (let k = 0; k < n; k++) {\n    const c = claims[k];\n",
+             '  if (n > 400) for (const x of claims) x.text = x.text + " ";\n', True)):
         assert block.count(anchor) == 1
         planted.write_bytes(text.replace(block, block.replace(anchor, plant + anchor)).encode("utf-8"))
         node("--relation", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "rel2.json", planted)
