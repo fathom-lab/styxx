@@ -123,7 +123,7 @@ inputs and on 160,000 adversarial inputs, in both ports and both strict modes.
   the overlay reads the diff again in two line views: up to ×9.8 in Python and ×36 in Node on one added line of tens
   of thousands of separator-joined pieces, and ×9 to ×16 in Python (×20 in Node) on 80,000 unchanged definition
   lines, where `main`'s call takes milliseconds.
-- Size: the pull request's diff is 15,324 lines by `git diff origin/main...HEAD | wc -l` (14,535 at the ninth pass;
+- Size: the pull request's diff is 15,289 lines by `git diff origin/main...HEAD | wc -l` (14,535 at the ninth pass;
   GitHub serves a pull-request diff up to 20,000 lines, and above that the repository's own diffgate job prints DID NOT
   RUN and exits 0).
 
