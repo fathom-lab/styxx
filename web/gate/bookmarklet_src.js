@@ -684,7 +684,10 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // two ports' mains might read the claims apart: a CONTRADICTED in reach is decided by its kind's rule.
 // NOTE_path2a_tenth_pass_2026_10_05 splits the block in two, as the Python's: DECIDE (_p2aDecisions, every rule and
 // reader below) is given a copy of main's claims and returns plain data; APPLY (_p2aApply) is the only code here that
-// touches main's record, and the record can only gain abstentions, whatever the rest of the block does.
+// touches main's record, and the record can only gain abstentions, for any DECIDE that uses what it is handed as
+// data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
+// covered
+// (NOTE_path2a_eleventh_pass_2026_10_05).
 // The port's half of the PATH-2a block in styxx/diffgate.py (sha256 011538d50a5a4ed393fdaf6ef2470a7f26575568687cda9847fe9ceaf542ca76, LF). Everything outside this block is
 // main's port at 1cde8b82 (sha256 06688702..., LF), unchanged except that main's gateDiffText is named
 // _gateDiffTextMain (its definition and its DECLARE-1 self-call); the gateDiffText at the end of this block calls it
@@ -1795,7 +1798,8 @@ function _p2aOnly(c, f) {
   if (!same(got.get("A|false"), got.get("A|true")) || !same(got.get("K|false"), got.get("K|true"))) return ["case", "#121"];
   const [lead, , under] = got.get("A|false");
   if (!lead || (under ? "VERIFIED" : "CONTRADICTED") !== c.verdict) return ["unreproduced", "#121"];
-  // B-1 (NOTE_path2a_fourth_pass_2026_09_30): V121 does not read a `prefix` only the dropped dots make a path.
+  // B-1 (NOTE_path2a_fourth_pass_2026_09_30): V121 does not read a `prefix` only the dropped dots make a path. With
+  // one prefix the verdict is kept; one rendering fault can make a CONTRADICTED there false (operator option O-10).
   if (d.prefix2 && !got.get("K|false")[0]) return ["shape", "#121"];
   if (got.get("K|false")[2] !== under) return ["only", "#121"];
   return null;
@@ -1857,57 +1861,79 @@ function _p2aDecisions(seen, facts) {
   return out;
 }
 
+// APPLY (_p2aApply; NOTE_path2a_tenth_pass_2026_10_05): the only code of this block that touches main's record `g`.
+// It hands `decide` a copy and takes from what comes back only an array of 3-element arrays of a number that is the
+// index of a claim in reach, a key of _P2A_PHRASES other than APPLY's own two (`error`, `malformed`: DECIDE never
+// names them) and a tag of that claim's kind; what it keeps is the table's own phrase and tag. Anything else `decide`
+// returned is ignored. If it throws, every claim in reach is withheld with the phrase `error`; if it returns something
+// that is not an array, with `malformed`. For a `decide` that uses what it is handed as data and calls what it is
+// given, whatever data it returns, the record leaves here as main's but for claims in reach turned UNCHECKABLE with a
+// reason of the fixed form, and the gate verdict is main's formula over the final claims.
+// NOTE_path2a_eleventh_pass_2026_10_05: after DECIDE returns, APPLY calls no method an object or an array inherits.
+// DECIDE reaches what every object and every array inherits from its argument, and at 16daa725 a phrase put on the
+// one, or an `includes`, `some` or `push` put on the other, rewrote the record. So APPLY reads by index on arrays it or
+// main built, compares with ===, tests an array with the Array.isArray it took when the module loaded, finds a phrase
+// key in a list of the table's own keys read at load, and stores only into elements it filled before DECIDE ran. Not
+// covered, as in the Python: code that reaches around its argument (an inherited method patched and left so into a
+// later call, where main's own reader meets it before APPLY does; a function built from a string).
+const _p2aIsArray = Array.isArray;
+const _P2A_DECIDE_KEYS = [];
+for (const k in _P2A_PHRASES) if (k !== "error" && k !== "malformed") _P2A_DECIDE_KEYS.push(k);
+
 function _p2aApply(g, strict, decide) {
-  // APPLY (NOTE_path2a_tenth_pass_2026_10_05): the only code of this block that touches main's record `g`. `decide`
-  // is called on a copy and may do anything to it; whatever it returns or throws, the record leaves here as main's
-  // but for claims in reach turned UNCHECKABLE with a reason of the fixed form, and the gate verdict is main's formula
-  // over the final claims. A decision is taken only as a 3-element array of a number that is the index of a claim in
-  // reach, a key of _P2A_PHRASES and a tag of that claim's kind; what is kept of it is the record's own claim, the
-  // table's own phrase and the tag, a string. Anything else `decide` returned is ignored. If it throws, every claim in
-  // reach is withheld with the phrase `error`; if it returns something that is not an array, with `malformed`.
-  const claims = g.claims;
-  const pending = new Map();
-  claims.forEach((c, i) => { if (_P2A_REACH.has(c.kind + "|" + c.verdict)) pending.set(i, c); });
-  if (!pending.size) return g;           // nothing in reach: no copy, no call, and the record is main's object
-  let plan = [], fallback = null;
+  const claims = g.claims, n = claims.length;
+  const reach = [], pickPhrase = [], pickTag = [];   // one element per claim, each filled before DECIDE runs
+  let any = false, fallback = null, moved = false;
+  for (let k = 0; k < n; k++) {
+    reach.push(_P2A_REACH.has(claims[k].kind + "|" + claims[k].verdict));
+    pickPhrase.push(null);
+    pickTag.push(null);
+    any = any || reach[k];
+  }
+  if (!any) return g;                    // nothing in reach: no copy, no call, and the record is main's object
   try {                                  // everything `decide` made is read here, before anything is written
-    const got = decide({ claims: claims.map(c => {
-      const detail = {};
-      for (const k of _P2A_FIELDS) {
-        const v = c.detail[k];
-        if (typeof v === "string" || typeof v === "boolean") detail[k] = v;
+    const copies = [];
+    for (let k = 0; k < n; k++) {
+      const c = claims[k], detail = {};
+      for (let u = 0; u < _P2A_FIELDS.length; u++) {
+        const v = _P2A_FIELDS[u], x = c.detail[v];
+        if (typeof x === "string" || typeof x === "boolean") detail[v] = x;
       }
-      return { kind: c.kind, verdict: c.verdict, why: c.why, detail };
-    }) });
-    if (!Array.isArray(got)) fallback = "malformed";
-    else {
-      for (let k = 0; k < got.length; k++) {
-        const d = got[k];
-        if (!Array.isArray(d) || d.length !== 3) continue;
-        const i = d[0], key = d[1], tag = d[2];
-        if (typeof i !== "number" || typeof key !== "string" || typeof tag !== "string") continue;
-        const c = pending.get(i);
-        if (c === undefined) continue;
-        const phrase = _P2A_PHRASES[key];
-        if (typeof phrase === "string" && _P2A_TAGS[c.kind].includes(tag)) plan.push([c, phrase, tag]);
-      }
+      copies.push({ kind: c.kind, verdict: c.verdict, why: c.why, detail });
+    }
+    const got = decide({ claims: copies });
+    if (!_p2aIsArray(got)) fallback = "malformed";
+    else for (let k = 0; k < got.length; k++) {
+      const d = got[k];
+      if (!_p2aIsArray(d) || d.length !== 3) continue;
+      const i = d[0], key = d[1], tag = d[2];
+      if (typeof i !== "number" || typeof key !== "string" || typeof tag !== "string") continue;
+      if (!(i >= 0 && i < n && i % 1 === 0) || !reach[i] || pickPhrase[i] !== null) continue;
+      const c = claims[i], tags = _P2A_TAGS[c.kind];
+      let phrase = null, own = null;
+      for (let u = 0; u < _P2A_DECIDE_KEYS.length; u++) if (_P2A_DECIDE_KEYS[u] === key) phrase = _P2A_PHRASES[key];
+      for (let u = 0; u < tags.length; u++) if (tags[u] === tag) own = tags[u];
+      if (phrase !== null && own !== null) { pickPhrase[i] = phrase; pickTag[i] = own; }
     }
   } catch (e) {                          // an abstain-only overlay that cannot read withholds, and says so
     fallback = "error";
   }
-  if (fallback !== null) plan = [...pending.values()].map(c => [c, _P2A_PHRASES[fallback], _P2A_KIND_DEFECT[c.kind]]);
-  let moved = false;
-  for (const [c, phrase, tag] of plan) {
-    if (_P2A_REACH.has(c.kind + "|" + c.verdict)) {   // still decided: a second decision for one claim is ignored
-      c.why = `${c.verdict} withheld by PATH-2a (${tag}): ${phrase}. main's reading: ${c.why}`;
-      c.verdict = "UNCHECKABLE";
-      moved = true;
-    }
+  for (let k = 0; k < n; k++) {
+    const c = claims[k];
+    if (!reach[k] || (fallback === null && pickPhrase[k] === null)) continue;
+    const phrase = fallback === null ? pickPhrase[k] : _P2A_PHRASES[fallback];
+    const tag = fallback === null ? pickTag[k] : _P2A_KIND_DEFECT[c.kind];
+    c.why = `${c.verdict} withheld by PATH-2a (${tag}): ${phrase}. main's reading: ${c.why}`;
+    c.verdict = "UNCHECKABLE";
+    moved = true;
   }
   // A-2 (NOTE_path2a_sixth_pass_2026_09_30): where no claim moved, the record is main's object, untouched
   if (moved) {
-    const contradicted = claims.some(c => c.verdict === "CONTRADICTED");
-    const uncheckable = claims.some(c => c.verdict === "UNCHECKABLE");
+    let contradicted = false, uncheckable = false;
+    for (let k = 0; k < n; k++) {
+      contradicted = contradicted || claims[k].verdict === "CONTRADICTED";
+      uncheckable = uncheckable || claims[k].verdict === "UNCHECKABLE";
+    }
     g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";
   }
   return g;
