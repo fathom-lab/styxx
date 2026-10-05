@@ -3,7 +3,7 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`011538d50a5a4ed393fdaf6ef2470a7f26575568687cda9847fe9ceaf542ca76` (LF line endings; a wheel
+`fb0af26c8b61797467bec85ce3b3614dba4b567a73a2f1187954fbd019537bc0` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -173,12 +173,13 @@ the release is not the file the port claims to be, and the header of `diffgate.j
 ## PATH-2a: abstaining where #97, #121 or #101 can make a verdict wrong
 
 `styxx/diffgate.py` and `diffgate.js` each carry one block between the markers
-`=== PATH-2a abstain-only overlay: BEGIN ===` and `... END ===`. The record of how it got here is ten notes under
+`=== PATH-2a abstain-only overlay: BEGIN ===` and `... END ===`. The record of how it got here is eleven notes under
 `papers/closed-model-frontier/`, one per review pass, each committed before its code: `NOTE_path2a_abstain_overlay_2026_09_30.md`,
 then `NOTE_path2a_second_pass_…` to `NOTE_path2a_seventh_pass_2026_09_30.md`, `NOTE_path2a_eighth_pass_2026_10_01.md`,
-`NOTE_path2a_ninth_pass_2026_10_04.md` and `NOTE_path2a_tenth_pass_2026_10_05.md`, with the corrections and departures
-notes beside the second, fifth, sixth, eighth, ninth and tenth. This section describes the block as it is now and gives figures measured at this head; what earlier heads
-measured is in those notes.
+`NOTE_path2a_ninth_pass_2026_10_04.md`, `NOTE_path2a_tenth_pass_2026_10_05.md` and
+`NOTE_path2a_eleventh_pass_2026_10_05.md`, with the corrections and departures notes beside the second, fifth, sixth,
+eighth, ninth, tenth and eleventh. This section describes the block as it is now and gives figures measured at this
+head; what earlier heads measured is in those notes.
 
 `main`'s reader runs unchanged — at the raw door, at the git door and in this port — and then the block reads each
 decided claim once more. Where the #97 mechanism (the earliest entry in diff order matching by exact path, suffix or
@@ -194,18 +195,24 @@ you have `main`'s two files back, sha for sha; `tests/test_diffgate_path2a.py` d
 uses the result as its reference.
 
 **Why nothing else can move: DECIDE and APPLY.** Since the tenth pass the block is two parts, in both ports. DECIDE
-(`_p2a_decisions`; `_p2aDecisions` here) holds every rule and every reader. It is given a copy made for it — a fresh
+(`_p2a_decisions`; `_p2aDecisions` here) holds every rule and every reader. It is given a copy made for it — one
 object per claim carrying the claim's kind, verdict and reason and, of its detail, the strings and booleans of the six
-fields a rule reads (`path`, `n`, `name`, `prefix`, `prefix2`, `declared`); not the claim's text — and it returns plain
-data, a list of (claim index, phrase key, defect tag). APPLY (`_p2a_apply`, `_p2aApply`; some forty lines) is the only
-code of the block that touches the record. It takes a decision only if the index is that of a claim in reach, the
-phrase is a key of the fixed table below and the tag is one of that claim's kind's; for a decision it takes it writes
-exactly two fields, the reason in the form above and the verdict; a second decision for one claim finds it no longer
-decided and is ignored, as is everything else DECIDE returned; then it recomputes the gate verdict. If DECIDE raises,
-every claim in reach is withheld with the phrase `error`; if it returns something that is not a list, with
-`malformed`. So the record leaves APPLY as `main`'s but for abstentions in reach **whatever DECIDE does**: the
-block's own, one edited by mistake, or one written to do harm. What that does not cover is said under *What holds
-bar A, and the lints* below: APPLY itself, and code that reaches the record by other means than its argument.
+fields a rule reads (`path`, `n`, `name`, `prefix`, `prefix2`, `declared`); not the claim's text; in Python instances
+of two classes of the block's own with `__slots__` and no method (since the eleventh pass: before, each copy was a
+`main` `DiffClaim`), here plain objects — and it returns plain data, a list of (claim index, phrase key, defect tag).
+APPLY (`_p2a_apply`, `_p2aApply`; fifty to sixty lines) is the only code of the block that touches the record. It takes
+a decision only if the result is a list (in Python exactly a list, and the decision exactly a tuple of an `int` and two
+`str`s, so that no method of a subclass runs in APPLY), the index is that of a claim in reach, the phrase is a key of
+the fixed table below other than APPLY's own `error` and `malformed`, and the tag is one of that claim's kind's; for a
+decision it takes it writes exactly two fields, the reason in the form above and the verdict; a second decision for
+one claim is ignored, as is everything else DECIDE returned; then it recomputes the gate verdict. If DECIDE raises an
+`Exception` (here: throws anything), every claim in reach is withheld with the phrase `error`; if it returns something
+that is not a list, with `malformed`; in Python a `BaseException` that is not an `Exception` (`KeyboardInterrupt`,
+`SystemExit`, `GeneratorExit`) goes up from the door with nothing written, where this port would withhold. So the
+record leaves APPLY as `main`'s but for abstentions in reach, whatever data DECIDE returns, **for a DECIDE that uses
+what it is handed as data and calls the `facts` function it is given** — the block's own, or one edited by mistake.
+Code that reaches around that by reflection is not covered; *What holds bar A, and the lints* below says what that
+is.
 
 **The three defects are not repaired.** PATH-2a never gives VERIFIED where `main` was wrong; it only
 stops `main`'s false verdicts on these shapes from standing, and says which verdict it withheld and
@@ -384,13 +391,16 @@ byte for byte. Both files and the three fixtures under `tests/fixtures` are writ
 
 ### Measured at this head
 
-On this file (`styxx/diffgate.py` `011538d5…`, reader `9b620e00…`), on CPython 3.12.10 (Unicode 15.0) and Node 24.13.0
-(Unicode 16) unless a line says otherwise. A figure marked *pinned* is asserted exactly by a committed test; the rest
-were measured once by the builder of the tenth pass, at this head, with scripts kept in its scratch, and are not
-asserted. The tenth pass changed no decision: the records at this head equal the ninth pass's (`c69b161b`) on the
-committed inputs and on the 160,000 adversarial inputs below, in both ports and both strict modes. Figures credited to
-a *probe* were measured before the ninth pass's code, on its parent with the switch's call site disabled, and not
-again; figures credited to a *reviewer* were measured by a reviewer of the ninth pass at `c69b161b`, and not again.
+On this file (`styxx/diffgate.py` `fb0af26c…`, reader `9b620e00…`), on CPython 3.12.10 (Unicode 15.0) and Node 24.13.0
+(Unicode 16) unless a line says otherwise. A figure marked *pinned* is asserted exactly by a committed test. The
+rest were measured once, with scripts kept in the builder's scratch, and are not asserted: by the builder of the
+eleventh pass at this head where a line says *measured at this head*, otherwise by the builder of the tenth pass at
+its head, `16daa725`. Those carry over: the eleventh pass changed what DECIDE is handed and how APPLY reads, and no
+decision, and the records at this head equal `16daa725`'s on every input read again (the committed inputs in both
+ports and both strict modes, the 20,400-input decorated world of *Coverage* in both ports, and the adversarial sets
+named below). The tenth pass in turn changed no decision against the ninth (`c69b161b`). Figures credited to a
+*probe* were measured before the ninth pass's code, on its parent with the switch's call site disabled, and not
+again; figures credited to a *reviewer* were measured by the reviewer named, at the head named, and not again.
 
 **(A) By construction.** Each record is `main`'s but for abstentions in reach with the overlay's reason, each claim
 reads the same with `--strict` as without it, and where `main` raises the branch raises the same exception.
@@ -407,16 +417,26 @@ reads the same with `--strict` as without it, and where `main` raises the branch
   (*pinned*). `tests_pass` is outside the overlay's reach, and APPLY takes no decision for a claim outside reach: the
   eighth integration review's plant, set where the decisions are computed, asks for an abstention on every
   `tests_pass` VERIFIED (1,866 times over that run) and the record does not move (*pinned*).
-- APPLY against DECIDE functions written to do harm, 26 in Python and 24 in the port: ones that change, empty and
-  grow their copy; return nothing, a number, a string, a mapping, their own argument or a list of junk; return indices
-  out of range, negative, fractional, boolean or as strings; return one index twice with different phrases; return
-  phrases and tags outside the fixed sets, or another kind's tag; return decisions for every claim outside reach, or
-  for every index; raise; and, in Python, a list or tuple subclass that raises or lies when read, a key whose hash
-  raises and an index that claims to equal every index, in the port a decision whose field throws when read and a
-  Proxy that answers differently on each read. Each over #161's reproductions, every other one with a sentence `main`
-  reads as a `tests_pass` claim, in both strict modes (958 runs each in Python, 962 in the port): 0 records outside
-  the relation; the record is `main`'s, untouched, wherever APPLY should ignore everything; every claim in reach is
-  withheld with `error` where DECIDE raises and with `malformed` where it returns no list (*pinned*).
+- APPLY against DECIDE functions written to break it, 32 in Python and 29 in the port beside the block's own (the
+  tenth pass's text said 26 and 24, counting the block's own in each): ones that change, empty and grow their copy;
+  return nothing, a number, a string, a mapping, their own argument or a list of junk; return indices out of range,
+  negative, fractional, boolean or as strings; return one index twice with different phrases; return phrases and tags
+  outside the fixed sets, another kind's tag, or only APPLY's own `error` and `malformed`; return decisions for every
+  claim outside reach, or for every index; raise; in Python, a list, tuple, int or str subclass (one that raises or
+  lies when read, a key whose hash raises, an index that claims to equal every index, the block's own decisions in
+  subclassed containers), and four that patch the class of their copy, reached by `type()` (a property on `verdict`, a
+  `__setattr__`, a property that swallows the reason, a `__setattr__` on the container's class); in the port a decision
+  whose field throws when read, a Proxy that answers differently on each read, and five that patch, in the realm the
+  record was built in, what every object or array inherits (a phrase on the one, `includes`, `some`, `push` and
+  `Array.isArray` on the other). Each over #161's reproductions, every other one with a sentence `main` reads as a
+  `tests_pass` claim, in both strict modes (958 runs each in Python, on records of the module's own classes, and 962
+  in the port): 0 records outside the relation; the record is `main`'s, untouched, wherever APPLY should ignore
+  everything; every claim in reach is withheld with `error` where DECIDE raises and with `malformed` where it returns
+  no list (*pinned*). The four class patches again through both Python doors, with the module's DECIDE replaced, both
+  strict modes (1,150 runs each): 0 outside the relation, and with the class left patched the next call gives `main`'s
+  record where nothing is in reach (*pinned*). Against `16daa725`'s files, the three class patches of the claims put
+  945 or 946 of 958 Python runs outside the relation, and four of the port's five patches 200 to 604 of 962 runs; the
+  fifth, and the `error` and `malformed` cases, there fail what they assert of the record.
 - The ninth construction review's fourteen plants (five in Python, nine in the port), each of which dropped, added or
   rewrote claims of `main`'s record at `c69b161b` while every static check passed, set where the decisions are
   computed: 0 records outside the relation on the reproductions (*pinned*; the same test, run on `c69b161b`'s two
@@ -432,7 +452,7 @@ reads the same with `--strict` as without it, and where `main` raises the branch
   set of 10,000, a line-break set of 4,000, case-skew, emoji and DECLARE-1 sets of 9,000, and a truth world under ten
   decorations, 16,000): 319,986 Python runs and 320,000 port runs in both strict modes, 0 outside the relation, every
   raise `main`'s (7 inputs in Python, 18 in the port), no fallback phrase. 19,000 of them were read again with the
-  port's engine patched to fold a pair no runtime folds yet, for bar C below. All of it was read again at this head,
+  port's engine patched to fold a pair no runtime folds yet, for bar C below. All of it was read again at `16daa725`,
   beside `c69b161b`'s two files: every count the same, and no record differing from the ninth pass's in either port.
 - The EXTERNAL-1 shelf of agent pull requests (the AIDev dataset's `pr_commit_details`: one row per file per commit),
   one body per pull request id against the diff the committed harness's own `reconstruct` rebuilds from all of that
@@ -483,7 +503,7 @@ file for). They are *pinned*, both ports. Operator option O-13 (a dot twin, `mai
 and a change marker `main` registers no file for) would withhold them and is not taken; neither is O-7, its wider
 form.
 
-Per phrase and per `main`'s verdict, on the raw door's truth world (measured at this head): how often each fires, and
+Per phrase and per `main`'s verdict, on the raw door's truth world (measured at `16daa725`): how often each fires, and
 whether `main`'s verdict was false, right or undecided there. `case_count`'s false verdicts are `main`'s case merges,
 outside the three defects.
 
@@ -529,7 +549,7 @@ definition lies outside the hunk's context lines, at any context width; `-U0`, w
 extreme. The fact is not in the diff. In the truth world above, at git's default three lines of context, the head
 keeps 8 false tests verdicts of this kind, 4 of them CONTRADICTED (false accusations) and 4 VERIFIED, and 6 more at
 context 0 and 1 (2 CONTRADICTED, 4 VERIFIED), against 12 it withholds as `redefined` (a ninth-pass reviewer's
-count, by CPython's `ast` over the base and head files; measured again at this head). They are not misses under the
+count, by CPython's `ast` over the base and head files; measured again at `16daa725`). They are not misses under the
 bar's attribution, since the committed V101 pairs by removed lines and reads them false too; under the ast-paired
 V101 of the definition reproductions they would be. Withholding every tests claim on a modified file would close the
 gap at the cost of the recall the rule exists to keep; that trade is not taken.
@@ -539,7 +559,8 @@ seed (300 per family), each summary under seventeen decorations — a byte-order
 line separator; accents before and inside a claim's sentence; emoji in and outside O-11's ranges before a claim and
 right after its last token; CJK text; a long lead-in; the whole summary as one sentence; markdown; U+0085, U+2028 or
 a form feed as sentence breaks; zero-width and bidi characters; quotes; back slashes; a mix — 20,400 inputs (a
-ninth-pass reviewer's world; measured again at this head). Every attributable false verdict is withheld in both
+ninth-pass reviewer's world; measured again at `16daa725`, and at this head its records equal that head's in both
+ports). Every attributable false verdict is withheld in both
 ports, 12,559 of 12,559 in Python and 11,521 of 11,521 in the port, at 4,358 of 61,777 right verdicts lost in Python
 (7.1%) and 3,897 of 61,942 in the port (6.3%). By decoration the right verdicts lost in Python run from 3.0% (a long
 lead-in) and 3.4% (plain) to 10.5% (an accent inside the sentence), 11.2% (an emoji right after the last token: flags,
@@ -571,9 +592,9 @@ and per `main`'s verdict, what was withheld there (Python; the port in brackets)
 | extract | CONTRADICTED | 65 (150) | 2,101 (2,218) | 0 (0) |
 | extract | VERIFIED | 1,300 (349) | 842 (233) | 60 (866) |
 
-Five cells withhold more right verdicts than false ones: `extract` on CONTRADICTED, by far the largest once summaries
-are decorated; `shape` on CONTRADICTED; `tests` on CONTRADICTED; `dot_earliest`; and `case`. The `extract` cell is
-mostly one loss, older than the ninth pass: a scope claim that shares its sentence with an accented letter, a CJK
+Five cells of this table withhold more right verdicts than false ones: `extract` on CONTRADICTED, by far the largest
+once summaries are decorated; `shape` on CONTRADICTED; `tests` on CONTRADICTED; `dot_earliest`; and `case`. The
+`extract` cell is mostly one loss, older than the ninth pass: a scope claim that shares its sentence with an accented letter, a CJK
 character or an emoji outside O-11's ranges after the word `only` is withheld in both ports whatever its truth.
 "Only touches docs/ — thanks José!" over changes to `src/app.py` and `docs/guide.md` is CONTRADICTED by `main`, rightly,
 in both ports, and is withheld (`extract`) in both; "Only touches docs/. Thanks." stays CONTRADICTED. No rule changes
@@ -581,15 +602,38 @@ for these: `dot_earliest` and `shape` are what bar B requires as worded (some va
 `extract` and `case` are where the two ports' templates or case tables may part, and the trades are the operator
 options already listed.
 
-**Where "attributable" is narrower than the definition.** With a single `only_touches` prefix that is a path for
-`main` only through its dropped dots, V121 abstains ("is not a path") and the overlay keeps `main`'s verdict: a
-VERIFIED there is already withheld (`only`), and a kept CONTRADICTED is false only when every changed file lies under
-the dotted directory while `main` lists a path outside it, which needs two independent faults in how the diff was
-rendered. The other known gaps (case-only merges with no dot, names `strip()` merges, multi-commit renderings,
-renderings over real `a/` or `b/` directories, `async def` tests `main` does not count, `def` in non-Python files,
-joint shapes where #121 is one of two causes, and #161's off-tree prefix family, where `main` reads "Only touches
-docs/.." as `docs` through `rstrip("/.")`) are none of the three mechanisms or are not reachable by an abstain-only
-rule; the notes list them.
+`seam` has no row because it never fires on that world: 0 times in either port (measured at this head), since its
+decorations put no white space of one port alone between the end of one word of a count and the start of the next.
+It does fire on worlds of the tenth coverage reviewer's own, and there two cells outside the five withhold more right
+verdicts than false ones (the reviewer's figures, at `16daa725`): `seam` on CONTRADICTED, 89 right against 54 false in
+Python and 50 against 32 in the port on the builder's four families under seventeen other decorations (seed 51005,
+4,080 inputs), and 80 against 60, 40 against 20 and 36 against 27 at the git door on renderings by real git (seed
+2027); and `redefined` on VERIFIED there, 39 right against 0 false. `seam` withholds a right CONTRADICTED count
+whatever number is claimed, so it can turn a right FAIL into PASS: "7 files changed. Changes" then U+001F and "were
+small." over `.env`, `env` and `src/a.py` is CONTRADICTED by `main`, rightly, and withheld (`seam`) in both ports. The `case_count` CONTRADICTED row of the table
+(110 false against 27 right in Python, 113 against 28 in the port) is the other figure the operator weighs with these
+under O-16, which would drop the summary-side guards from both ports; a narrower `seam`, only for a claimed number
+between `main`'s count and the count with the twins apart (the range the count rule already reads), is listed beside
+it. Neither is taken.
+
+**Where "attributable" is narrower than the definition: a kept gap** (operator option O-10). With a single
+`only_touches` prefix that is a path for `main` only through its dropped dots, V121 abstains ("is not a path") and the
+overlay keeps `main`'s verdict: a VERIFIED there is already withheld (`only`), and a kept CONTRADICTED is false when
+every changed file lies under the dotted directory while `main` lists a path outside it. One rendering fault is enough
+for that, not two, as this paragraph said up to the tenth pass: git's own `git diff --no-prefix` over a repository
+whose top directory is `b/` (or `a/`) and holds `.b/` (or `.a/`) beside another directory. `main` strips the real
+`b/`, keys `.b/z.py` as `b/z.py` (#121), reads `b` as a path and accuses "paths outside 'b'" where every changed file
+lies under `b/`; V121 does not read it false, so the accusation is attributable under the committed definition, and it
+stands, gate FAIL. The tenth coverage reviewer built four such repositories with git (a modified, a created and a
+sentence-scoped case under `b/`, a deletion under `a/`); the truth tests pin them as four kept attributable
+CONTRADICTEDs in Python and four in the port (*pinned*), so that a change that closes or widens the gap moves the pin.
+By the lead's direction no rule changed in the eleventh pass. For the operator, unmeasured: the reviewer's narrow rule
+(`shape` also for a single prefix that is a path for `main` and not for V121 when `main`'s key for the prefix is `a`
+or `b`, the only keys a no-prefix strip can hide), or a trigger on `diff --git` headers that carry one path on both
+sides with no `a/` `b/` split. The other known gaps (case-only merges with no dot, names `strip()` merges,
+multi-commit renderings, `async def` tests `main` does not count, `def` in non-Python files, joint shapes where #121
+is one of two causes, and #161's off-tree prefix family, where `main` reads "Only touches docs/.." as `docs` through
+`rstrip("/.")`) are none of the three mechanisms or are not reachable by an abstain-only rule; the notes list them.
 
 **(D) Recall**: of `main`'s decided claims, how many the overlay withholds (`path2a_recall.py`, measured). `main`
 reads `Path(p).name`, and a drive-like name such as `c:x.py` reads otherwise under the Windows and the POSIX path
@@ -609,7 +653,7 @@ Every abstention on `main`'s corpora is on synthetic input: the only real-world 
 ("integrations/git/README.md — created."), is left as `main` has it, since neither of its two records is a false
 decided verdict. On the committed inputs as a whole (above) the overlay withholds 2,633 of 12,718 in Python; most of
 those inputs are fuzz built from the characters the rules read.
-On the EXTERNAL-1 shelf (69,054 agent pull requests, each read once by its id; measured at this head, the database
+On the EXTERNAL-1 shelf (69,054 agent pull requests, each read once by its id; measured at `16daa725`, the database
 opened read-only): 7,836 hold a decided claim in reach, 12,785 such claims in Python, of which the overlay withholds
 161 (1.3%): 149 path claims by `dir` or `tier`, 1 by `dot`, 4 by `extract`, and 7 tests claims (`redefined` 6, `tests`
 1). `main`'s gate FAILs on 87 of those pull requests, and the overlay moves 3 gate verdicts. In the port, 161 of 12,768.
@@ -703,7 +747,7 @@ of the lost being "Only touches docs/." then U+0085 and "Thanks." over a change 
 
 On the decorated truth world of *Coverage* the exchange runs the other way, and the operator confirms the decision on
 both numbers. Against the parent head `3bdc3bc4`, on those 20,400 inputs at the Python raw door (a ninth-pass
-reviewer's measurement; measured again at this head): the removal withholds 903 more of `main`'s false CONTRADICTEDs
+reviewer's measurement; measured again at `16daa725`): the removal withholds 903 more of `main`'s false CONTRADICTEDs
 and loses 1,812 more right ones (right CONTRADICTEDs withheld 1,232 → 3,044 of 46,437; right verdicts of either kind
 2,546 → 4,358 of 61,777, 4.1% → 7.1%), 1,397 of the 1,812 through `extract` on a scope claim. It also confirms the
 decision's ground more widely than the two pinned decorations do: the parent head kept 796 of that world's 12,559
@@ -721,22 +765,51 @@ seeded sets pass, and the patched-engine set's figures equal one of its two pinn
 ### What holds bar A, and the lints
 
 Bar A does not rest on a check of the block's source. It rests on APPLY, and on tests of what APPLY must withstand
-(*By construction* above): functions written to do harm handed to it in both ports, the ninth construction review's
-plants set where the decisions are computed, and a count of the decisions it takes. Three things are outside that
-construction and are held otherwise:
+(*By construction* above): DECIDE functions written to break it, handed to it in both ports and through both Python
+doors, the ninth construction review's plants set where the decisions are computed, and a count of the decisions it
+takes.
 
-- **APPLY itself, and the door's call of it.** An edit of `_p2a_apply`, `_p2a_abstain` or the two hook lines of the
-  Python, or of `_p2aApply`, `_p2aAbstain` or this port's `gateDiffText`, is an edit of the code that writes `main`'s
-  record. Those lines are pinned as text, one hash per port (`test_the_code_that_touches_the_record_is_the_pinned_text`),
-  so that such an edit fails a test that names what moved; the byte pins of the whole file fail on a comment anywhere
-  and do not single it out. A mutation check of this pass planted eleven edits in each port's APPLY or DECIDE (a
+**What is claimed, and where it stops** (the lead's statement of the boundary, recorded in the eleventh note). Bar A
+by construction is claimed for a DECIDE that uses what it is handed as data and calls the `facts` function it is
+given, whatever data it returns. It is not claimed for code that reaches around that through reflection: a class
+reached by `type()`, a function's `__globals__` or closure, a frame, `sys.modules` or `gc`, or a built-in patched
+through what every object or array inherits. No guard inside one Python interpreter or one JavaScript realm can close
+those, and DECIDE is the lab's own code, so the hostile tests guard against an honest mistake in it, not an attacker.
+Within that boundary, what the eleventh pass changed:
+
+- **In Python, nothing reachable from DECIDE's argument as data is `main`'s.** At `16daa725` each copy was a `main`
+  `DiffClaim`, the class of every claim in the record, so a DECIDE that set a property or a `__setattr__` on
+  `type(seen.claims[0])` ran its code in APPLY's own two stores on the record (CONTRADICTED became VERIFIED, FAIL became
+  PASS, at both doors, and the patch stayed for later calls), and the container's `__init__` held the module in its
+  `__globals__`. The copies are now of two classes of the block's own with `__slots__` and no method, built by
+  attribute stores; a patch of them, through `type()`, reaches DECIDE's own copies and nothing else. Committed cases
+  assert it at APPLY and at both doors.
+- **In the port, after DECIDE returns APPLY calls no method an object or array inherits.** DECIDE reaches those from
+  its argument, and at `16daa725`, in one realm (as in a page), a phrase put on what every object inherits, an
+  `includes` or a `some` or a `push` put on what every array inherits rewrote the record or the gate verdict. APPLY now
+  reads by index on arrays it or `main` built, compares with `===`, tests an array with the `Array.isArray` it took
+  when the module loaded, finds a phrase key in a list of the table's own keys read at load, and stores only into
+  elements it filled before DECIDE ran. Its cost was measured against `16daa725`'s APPLY (*Cost*): no slower.
+- **Not covered, and pinned as such.** DECIDE's second argument is the door's `facts`; in Python its `__globals__` is
+  the module. A DECIDE that takes `main`'s `DiffClaim` from there and patches it moves the record, and a committed test
+  asserts that it does (`test_a_decide_that_reaches_the_module_through_facts_is_the_stated_limit`), so that a change
+  that closes the route is noticed and this sentence moves with it. In the port, a patch of what objects or arrays
+  inherit that is left in place reaches the next call's `main` reader before it reaches APPLY, and a function built
+  from a string reaches whatever a page's script can; neither is covered.
+
+Two things inside the boundary are held otherwise:
+
+- **APPLY itself, and the door's call of it.** An edit of `_p2a_apply`, the copy's two classes, `_p2a_abstain` or the
+  two hook lines of the Python, or of `_p2aApply`, the tools it takes at load, `_p2aAbstain` or this port's
+  `gateDiffText`, is an edit of the code that writes `main`'s record. Those lines are pinned as text, one hash per port
+  (`test_the_code_that_touches_the_record_is_the_pinned_text`, 80 lines at most, 75 before the eleventh pass), so that
+  such an edit fails a test that names what moved; the byte pins of the whole file fail on a comment anywhere and do
+  not single it out. A mutation check of the tenth pass planted eleven edits in each port's APPLY or DECIDE (a
   decision taken for any index, written twice, with any phrase or any tag; the record or a claim's detail handed to
   DECIDE; no `try`; a non-list ignored; the gate verdict not recomputed; a copy returned; a tag APPLY refuses): each
-  fails a behaviour test as well as the pin.
+  failed a behaviour test as well as the pin; the eleventh pass's mutation check is in its corrections note.
 - **A DECIDE whose decisions APPLY refuses.** An ignored decision keeps `main`'s verdict. The count of decisions taken
   (above) and the coverage tests hold that.
-- **Code that reaches the record by other means than DECIDE's argument**: a frame object, a module's globals, a
-  patched built-in. Nothing here covers that, and nothing is claimed.
 
 **The lints.** `selfcheck_p2a_asks_no_runtime` (Python, with `ast`) and the port's token scan (in the test module)
 are lints against an honest future edit, not proofs against a hostile one. What they guard is the premise of bar C,
@@ -748,14 +821,17 @@ extending them once more.
 
 The Python lint: no import; no flag group holding `i`, `u`, `L` or `a` in any position; only names the block binds
 or a short list of builtins and `main`'s names (`int` is refused by name, since it reads CPython's table of decimal
-digits, except as the type `isinstance` tests); only a short list of attributes (so no dunder and no unlisted
-method); `re` only as `re.<function>(<static pattern>)`, with no class escape, no named-character escape and no
-unescaped `.`; no strip or split without its characters; no `str()`, `repr`, `format`, `!r`, `getattr` or `eval`; ASCII
-source.
+digits, except as `T` in `type(x) is T`, the one form in which `type` is allowed); only a short list of attributes
+(so no dunder and no unlisted method); `re` only as `re.<function>(<static pattern>)`, with no class escape, no
+named-character escape and no unescaped `.`; no strip or split without its characters; no `str()`, `repr`, `format`,
+`!r`, `getattr` or `eval`, and, since the eleventh pass, no `%`-formatting of a string literal (`'%s' % ([x],)` reads
+`repr` as `%r` does; the block formats with `%` nowhere); ASCII source.
 
 The port's scan reads the block's code outside strings and comments, with white space removed between tokens and,
 since the tenth pass, a Unicode escape read as the character it spells: an escape in code can only be part of a name,
-and at `c69b161b` `toLowerCase` written with `\u0061` passed every rule. A backslash left in code is refused. The
+and at `c69b161b` `toLowerCase` written with `\u0061` passed every rule. A backslash left in code is refused. Since
+the eleventh pass it reads each `${…}` of a template literal as code: up to then a template was read whole as a
+string, so `${Number(x)}` or `${x == 3}` met no rule (C-3 and I-4 of the tenth reviews; eleven plants). The
 scan refuses `normalize`, `toLowerCase`, `trim` and their kin anywhere and whatever the form of the call (an optional
 call or chain included), `new String(`, `.match(`, `.search(` and `.matchAll(`, regex literals and regex modifiers,
 `==` and `!=`, a unary `+` or `-` before a name, a call, a bracket or a string, `~`, `|`, `&`, `^`, `<<` and, except
@@ -769,7 +845,10 @@ are refused by name, a table of functions indexed by a computed key is not. An a
 through data. In Python, an f-string of a list, which reads `repr`. In the port, a binary `*`, `-`, `%` or relational
 operator, or `++` and `--`, on a string, each of which converts with the engine's white space (committed tests pin
 that the scan accepts `claimed * 1` and `t++`); the block gives such operators numbers only. The numeric parameters of
-built-in methods. None of this is chased: the lints are there so that an honest edit that reaches for `lower()` or
+built-in methods. In the port, a call of one of `main`'s own helpers that asks the engine (`_hasRealExtension` and
+`_norm` lowercase, `_prefixIsPathShaped` trims): the port's scan has no list of the names the block may read, as the
+Python lint has, and the block's comments name such helpers as the ones its own functions mirror (C-4 of the tenth
+cross-port review; the Python lint refuses the analogues). None of this is chased: the lints are there so that an honest edit that reaches for `lower()` or
 `trim()` is stopped by name, and the transliteration itself is held by the cross-port tests.
 
 ### Cost
@@ -780,7 +859,12 @@ input, the least of three runs (two on the large summaries), on a machine other 
 - **Per call.** On `main`'s corpora (one `path2a_recall.py` run): `corpus_fuzz.json` 0.204 → 0.234 ms a pair (+15%),
   `corpus_real.json` 7.92 → 7.89 ms. The copy APPLY hands DECIDE takes 5.5 to 5.8 ms for 10,000 claims in Python and 9
   to 10 ms for 30,000 in the port, beside calls of `main` that take 630 to 750 ms and 200 to 290 ms on those
-  summaries; where no claim is in reach nothing is copied.
+  summaries; where no claim is in reach nothing is copied. The eleventh pass's APPLY (slotted copies in Python; reads
+  by index and no inherited method after DECIDE in the port), measured at this head alone against `16daa725`'s on
+  records of 1,000, 10,000 and 30,000 claims in reach, the least of seven runs: in the port 0.28, 2.6 and 9.6 ms against
+  0.34, 4.2 and 11.1 with a DECIDE that returns nothing, and 0.35, 3.4 and 9.9 against 0.91, 7.4 and 25.1 with one that
+  returns a decision for every claim; in Python 0.34, 4.1 and 17.9 ms against 0.73, 5.5 and 22.7, and 0.8, 14.3 and
+  68.5 against 1.1, 14.0 and 55.0 (the last pair within the run-to-run spread of this machine).
 - **At import**, measured again at this head, since the ninth construction review disputed the earlier figure. The
   module body, executed in one process 25 times in turn with `main`'s, the regex cache purged before each run: 27.5 ms
   (least) and 35.1 ms (median) against `main`'s 5.1 and 6.4 on CPython 3.12.10, ×5.4; 28.0 and 33.0 against 5.3 and
@@ -829,6 +913,13 @@ input, the least of three runs (two on the large summaries), on a machine other 
 | 400,000 lines, `-a` and `+a` in turn (1.2 MB) | 240 → 340 ms (×1.4) | 46 → 112 ms (×2.5) | 23 → 43 MB |
 | one 5.8 MB added line of `def ` | 61 → 96 ms (×1.6) | 6.7 → 4.2 ms (×0.6) | not measured |
 | 80,000 unchanged `def test_` lines and one added test (1.4 MB) | 36 → 323 ms (×9.0; ×16 on 3.14.2) | 6.9 → 138 ms (×20) | 5 → 24 MB |
+| one 1 MB added line of `def test_` repeated, beside a removed line of `def ` repeated (a tenth-pass reviewer's) | 17 → 182 ms (×10.5) | ×17 | not measured |
+
+The tenth construction reviewer, over about 70 scaling families against `main`'s whole call, found the overlay linear
+in both ports; one family grows a little faster than `main` without growing faster than linear: scope claims in a
+summary of many zones, from 1,000 to 16,000 claims, where the overlay alone moves from 0.08 to 0.13 of `main`'s call in
+Python (exponents 1.12 to 1.34 against `main`'s 0.99 to 1.05) and from 0.15 to 0.20 in Node. The reviewer's other
+largest constant factors on line-heavy diffs were ×8.5 in Python and ×24 in Node on one shape of many context lines.
 
 - **`main`'s own call is not bounded** on a description that holds one unbroken run of thousands of word characters:
   its path template backtracks cubically there, in both ports, with no overlay involved (a probe's measurement before
@@ -836,8 +927,8 @@ input, the least of three runs (two on the large summaries), on a machine other 
   Node). That is none of the three defects and this branch does not touch `main`'s reader; the bounds above are
   relative to that call, and no committed input or timing case holds such a run.
 
-The bookmarklet grew from 24,335 characters (`main`) to 52,937 (51,838 before APPLY was set apart; 56,575 before the
-switch went).
+The bookmarklet grew from 24,335 characters (`main`) to 53,246 (52,937 before APPLY stopped calling inherited
+methods; 51,838 before APPLY was set apart; 56,575 before the switch went).
 
 ## What this is not
 
