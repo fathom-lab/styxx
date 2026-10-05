@@ -787,6 +787,71 @@ def test_the_fourth_reviews_scope_reproductions(monkeypatch):
     assert len(seen) == 4, seen
 
 
+# ---- pass 11: the tenth coverage review's single-prefix cases, kept (operator option O-10) ----------------------------
+
+def _np_mod(top, path, old, new, before, after):
+    """One modified file as git's own `diff --no-prefix` renders it: no a/ b/ split, so a real top directory `top`
+    leads the path on both sides (the tenth coverage review built these four cases with git)."""
+    p = f"{top}/{path}"
+    return (f"diff --git {p} {p}\nindex {before}..{after} 100644\n--- {p}\n+++ {p}\n@@ -1 +1 @@\n-{old}\n+{new}\n")
+
+
+_NP_CREATED = ("diff --git b/.b/new.py b/.b/new.py\nnew file mode 100644\nindex 0000000..407de30\n--- /dev/null\n"
+               "+++ b/.b/new.py\n@@ -0,0 +1 @@\n+x = 2\n")
+_NP_DELETED = ("diff --git a/.a/z.py a/.a/z.py\ndeleted file mode 100644\nindex 7d4290a..0000000\n--- a/.a/z.py\n"
+               "+++ /dev/null\n@@ -1 +0,0 @@\n-x = 1\n"
+               "diff --git a/docs/guide.md a/docs/guide.md\ndeleted file mode 100644\nindex 7898192..0000000\n"
+               "--- a/docs/guide.md\n+++ /dev/null\n@@ -1 +0,0 @@\n-a\n")
+NO_PREFIX_CASES = [
+    {"id": "np-b-dotb", "summary": "Only touches b.",
+     "diff": _np_mod("b", ".b/z.py", "x = 1", "x = 2", "7d4290a", "407de30")
+     + _np_mod("b", "github/y.py", "y = 1", "y = 2", "a003ef7", "47643d4"),
+     "model": {"base": {"b/.b/z.py": "x = 1\n", "b/github/y.py": "y = 1\n"},
+               "head": {"b/.b/z.py": "x = 2\n", "b/github/y.py": "y = 2\n"}}},
+    {"id": "np-b-dotb-created", "summary": "Only modifies files in b.",
+     "diff": _NP_CREATED + _np_mod("b", "github/y.py", "y = 1", "y = 2", "a003ef7", "47643d4"),
+     "model": {"base": {"b/github/y.py": "y = 1\n"}, "head": {"b/.b/new.py": "x = 2\n", "b/github/y.py": "y = 2\n"}}},
+    {"id": "np-b-dotb-sentence", "summary": "This change only touches b, nothing else.",
+     "diff": _np_mod("b", ".b/z.py", "x = 1", "x = 2", "7d4290a", "407de30")
+     + _np_mod("b", "docs/guide.md", "a", "b", "7898192", "6178079"),
+     "model": {"base": {"b/.b/z.py": "x = 1\n", "b/docs/guide.md": "a\n"},
+               "head": {"b/.b/z.py": "x = 2\n", "b/docs/guide.md": "b\n"}}},
+    {"id": "np-a-dota-deleted", "summary": "Only touches a.", "diff": _NP_DELETED,
+     "model": {"base": {"a/.a/z.py": "x = 1\n", "a/docs/guide.md": "a\n"}, "head": {}}},
+]
+# The attributable false verdicts the overlay keeps there, in Python and in the port: one per case, each a scope
+# CONTRADICTED. A change that closes the gap (O-10 taken) or widens it moves this pin.
+KEPT_SINGLE_PREFIX = (4, 4)
+
+
+def test_the_tenth_reviews_single_prefix_cases_are_kept_and_counted(tmp_path):
+    """B-2 of the tenth coverage review (NOTE_path2a_eleventh_pass_2026_10_05, section 5; operator option O-10). Over
+    git's own `diff --no-prefix` of a repository whose top directory `b/` (or `a/`) holds `.b/` (or `.a/`), main
+    strips the real `b/`, keys `.b/z.py` as `b/z.py` (#121), reads `b` as a path and accuses "paths outside 'b'" where
+    every changed file lies under `b/`. V121 says the prefix is not a path, so the false CONTRADICTED is attributable,
+    and the overlay keeps it: one rendering fault suffices, where the README up to the tenth pass said two were needed.
+    By the lead's direction no rule changes in that pass; the four are pinned as known kept attributable claims."""
+    M = R.main_module()
+    V = variants()
+    kept = []
+    for it in NO_PREFIX_CASES:
+        a = M.gate_diff_text(it["summary"], it["diff"]).to_dict()
+        b = N.gate_diff_text(it["summary"], it["diff"]).to_dict()
+        assert R.relation(a, b, False, N._P2A_PHRASES) == [], it["id"]
+        vs = {k: mod.gate_diff_text(it["summary"], it["diff"]).to_dict()["claims"] for k, mod in V.items()}
+        counts, misses = collections.Counter(), []
+        tally(counts, misses, it, judge(it["model"], a["claims"], vs), b["claims"])
+        assert counts["attributable"] == 1 and len(misses) == 1, (it["id"], dict(counts))
+        assert (misses[0]["kind"], misses[0]["main"], sorted(misses[0]["fixed by"])) == \
+            ("only_touches", "CONTRADICTED", ["v121", "vall"]), misses[0]
+        assert a["verdict"] == b["verdict"] == "FAIL", it["id"]
+        kept.append(it["id"])
+    port_counts, port_misses, _rows = _port_truth(NO_PREFIX_CASES, tmp_path)
+    assert all((m["kind"], m["main"]) == ("only_touches", "CONTRADICTED") for m in port_misses), port_misses
+    assert (len(kept), len(port_misses)) == KEPT_SINGLE_PREFIX, (kept, port_counts)
+    assert port_counts["attributable"] == len(port_misses), port_counts
+
+
 # ---- passes 8 and 9: the reviews' transforms of the builder's world ---------------------------------------------------
 
 def _transformed(how: str) -> list:

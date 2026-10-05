@@ -52,7 +52,7 @@ import sys
 import time
 import types
 import unicodedata
-from contextlib import redirect_stdout
+from contextlib import contextmanager, redirect_stdout
 
 import pytest
 
@@ -62,7 +62,9 @@ from tests import _p2a_ref as R
 NODE = shutil.which("node")
 GIT = shutil.which("git")
 CHECK = R.DIFFERENTIAL / "check_path2a.js"
-PHRASES = N._P2A_PHRASES
+# A copy of the phrase table taken before any test runs a DECIDE, so that a DECIDE that writes the module's own table
+# cannot make the relation accept what it wrote (A-3 of the tenth construction review, NOTE_path2a_eleventh_pass_2026_10_05)
+PHRASES = dict(N._P2A_PHRASES)
 DECIDED = ("VERIFIED", "CONTRADICTED")
 
 
@@ -563,7 +565,7 @@ LINT_PLANTS = [
     (CLAIMED, "    claimed = repr(claimed)\n" + CLAIMED, "name repr"),
     (CLAIMED, '    claimed = f"{claimed!r}"\n' + CLAIMED, "!r or !a conversion"),
     (CLAIMED, '    claimed = f"{claimed!a}"\n' + CLAIMED, "!r or !a conversion"),
-    (CLAIMED, '    claimed = "%r" % (claimed,)\n' + CLAIMED, "%r or %a formatting"),
+    (CLAIMED, '    claimed = "%r" % (claimed,)\n' + CLAIMED, "%-formatting of a string literal"),
     (CLAIMED, '    claimed = getattr(claimed, "lo" + "wer")()\n' + CLAIMED, "name getattr"),
     (CLAIMED, '    claimed = claimed.encode("idna").decode("ascii")\n' + CLAIMED, "attribute .encode"),
     (CLAIMED, '    claimed = "{!r}".format(claimed)\n' + CLAIMED, "attribute .format"),
@@ -608,9 +610,18 @@ LINT_PLANTS = [
     # C-2 (NOTE_path2a_sixth_pass_2026_09_30): a named-character escape reads the Unicode name table when it compiles
     ('_P2A_CR = re.compile("\\r")', '_P2A_CR = re.compile("\\\\N{LATIN SMALL LETTER A}|\\r")',
      "named-character escape"),
-    # NOTE_path2a_tenth_pass_2026_10_05: `int` may be named as the type isinstance tests (APPLY does), and only there
-    (CLAIMED, "    q = isinstance(int(claimed), int)\n" + CLAIMED, "name int"),
-    (CLAIMED, "    q = isinstance(claimed, (str, int)) and [int][0](claimed)\n" + CLAIMED, "name int"),
+    # NOTE_path2a_eleventh_pass_2026_10_05: APPLY tests exact types, so `type` may be called only as type(x) is T or
+    # type(x) is not T, T a builtin type, and `int` named only as that T (at the tenth pass: as the type isinstance tests)
+    (CLAIMED, "    q = type(claimed) is int and int(claimed)\n" + CLAIMED, "name int"),
+    (CLAIMED, "    q = isinstance(claimed, int)\n" + CLAIMED, "name int"),
+    (CLAIMED, "    q = type(claimed) is not [int][0]\n" + CLAIMED, "name int"),
+    (CLAIMED, "    q = type(claimed)\n" + CLAIMED, "name type"),
+    (CLAIMED, "    q = type(claimed) == str\n" + CLAIMED, "name type"),
+    (CLAIMED, "    q = type(claimed, (), {})\n" + CLAIMED, "name type"),
+    (CLAIMED, "    q = type(claimed) is type(ca)\n" + CLAIMED, "name type"),
+    # A-6 of the tenth construction review: '%s' of a container reads repr as %r does
+    (CLAIMED, '    claimed = "%s" % ([claimed],)\n' + CLAIMED, "%-formatting of a string literal"),
+    (CLAIMED, '    claimed = "%s/%s" % (claimed, claimed)\n' + CLAIMED, "%-formatting of a string literal"),
 ]
 
 
@@ -735,36 +746,87 @@ def js_bitwise_problems(dense: str) -> list:
     return out
 
 
+def _js_skip_string(src: str, i: int) -> int:
+    """The index after the string literal that opens at src[i] (a quote or a backtick, whose `${...}` it steps over)."""
+    q, j = src[i], i + 1
+    while src[j] != q:
+        if src[j] == BS:
+            j += 2
+        elif q == "`" and src.startswith("${", j):
+            j = _js_close(src, j + 2) + 1
+        else:
+            j += 1
+    return j + 1
+
+
+def _js_close(src: str, i: int) -> int:
+    """The index of the `}` that closes a template substitution whose code starts at src[i]."""
+    depth = 1
+    while True:
+        ch = src[i]
+        if ch in "\"'`":
+            i = _js_skip_string(src, i)
+            continue
+        depth += {"{": 1, "}": -1}.get(ch, 0)
+        if depth == 0:
+            return i
+        i += 1
+
+
+def js_lex(src: str, strings: list) -> str:
+    """The block's code outside comments, each string literal written S<n> with its body in `strings`. A template
+    literal is written T<n> for each run of its text, and each of its `${...}` substitutions is read as code, in
+    brackets after a `+` (NOTE_path2a_eleventh_pass_2026_10_05, C-3 and I-4 of the tenth reviews: up to the tenth pass
+    a template was read whole as a string, so code inside `${...}` met no rule)."""
+    code, i = [], 0
+    while i < len(src):
+        ch = src[i]
+        if src.startswith("//", i):
+            j = src.find("\n", i)
+            i = len(src) if j < 0 else j
+            continue
+        if src.startswith("/*", i):
+            i = src.index("*/", i) + 2
+            continue
+        if ch in "\"'":
+            j = _js_skip_string(src, i)
+            strings.append(src[i + 1:j - 1])
+            code.append("S%d" % (len(strings) - 1))
+            i = j
+            continue
+        if ch == "`":
+            j = start = i + 1
+            while src[j] != "`":
+                if src[j] == BS:
+                    j += 2
+                elif src.startswith("${", j):
+                    strings.append(src[start:j])
+                    end = _js_close(src, j + 2)
+                    code.append("T%d+(" % (len(strings) - 1) + js_lex(src[j + 2:end], strings) + ")+")
+                    j = start = end + 1
+                else:
+                    j += 1
+            strings.append(src[start:j])
+            code.append("T%d" % (len(strings) - 1))
+            i = j + 1
+            continue
+        code.append(ch)
+        i += 1
+    return "".join(code)
+
+
 def js_problems(block: str) -> list:
     """The port block's token scan (NOTE_path2a_third_pass_2026_09_30, C-3), a lint. Code is read outside strings and
     comments, with a Unicode escape read as the character it spells (an escape in code can only be part of a name:
     NOTE_path2a_tenth_pass_2026_10_05) and white space removed except between two identifier characters, so
-    `a . b (` reads `a.b(`: banned calls anywhere; no regex literal (no '/' in code); `RegExp` only as
+    `a . b (` reads `a.b(`, and a template's `${...}` read as code (js_lex): banned calls anywhere; no regex literal (no '/' in code); `RegExp` only as
     `new RegExp(<one static string>)` -- string literals and top-level constants joined by `+` -- whose decoded value
     holds no class escape, no '.' outside a class, and no flags; a computed member access only with a listed index
     expression and no string in the brackets, and never called; no call on a parenthesised expression; no bitwise
     operator. It reads names, so it does not see a name built at run time, and it types nothing."""
     out = [f"banned token {t!r}" for t in JS_BANNED if t in block]
-    code, strings, i = [], [], 0
-    while i < len(block):
-        ch = block[i]
-        if block.startswith("//", i):
-            i = block.index("\n", i)
-            continue
-        if block.startswith("/*", i):
-            i = block.index("*/", i) + 2
-            continue
-        if ch in "\"'`":
-            j = i + 1
-            while block[j] != ch:
-                j += 2 if block[j] == "\\" else 1
-            strings.append(block[i + 1:j])
-            code.append("S%d" % (len(strings) - 1) if ch != "`" else "T%d" % (len(strings) - 1))
-            i = j + 1
-            continue
-        code.append(ch)
-        i += 1
-    raw = JS_CODE_ESCAPE.sub(lambda m: chr(min(int(m.group(1) or m.group(2), 16), 0x10FFFF)), "".join(code))
+    strings = []
+    raw = JS_CODE_ESCAPE.sub(lambda m: chr(min(int(m.group(1) or m.group(2), 16), 0x10FFFF)), js_lex(block, strings))
     if "\\" in raw:
         out.append("a backslash in code outside a string")
     word = re.compile(r"[A-Za-z0-9_$]")
@@ -957,6 +1019,37 @@ def test_the_token_scan_reads_escaped_names_and_refuses_bitwise_operators(new, w
     assert any(what in p for p in problems), problems
 
 
+@pytest.mark.parametrize("new,what", [
+    # C-3 and I-4 of the tenth reviews (NOTE_path2a_eleventh_pass_2026_10_05): code inside a template's `${...}`, each
+    # of which the tenth pass's scan passed and refused outside a template
+    (CA.rstrip(";") + "; const q = `${Number(claimed)}`;", "banned word 'Number'"),
+    (CA.rstrip(";") + "; const q = `n=${parseInt(claimed, 10)}`;", "banned word 'parseInt'"),
+    (CA.rstrip(";") + "; const q = `${+claimed}`;", "unary + before"),
+    (CA.rstrip(";") + "; const q = `${claimed == 3}`;", "loose equality"),
+    (CA.rstrip(";") + "; const q = `${Math.max(claimed, 0)}`;", "banned word 'Math'"),
+    (CA.rstrip(";") + "; const q = `${claimed | 0}`;", "bitwise operator '|'"),
+    (CA.rstrip(";") + '; const k2 = "toLower" + "Case"; const q = `${claimed[k2]()}`;',
+     "computed member access indexed by 'k2'"),
+    (CA.rstrip(";") + "; const q = `${Object.keys(claimed)}`;", "banned word 'Object'"),
+    (CA.rstrip(";") + "; const q = `${claimed.split(/x/).length}`;", "a '/' in code"),
+    (CA.rstrip(";") + "; const q = `a${`b${Number(claimed)}`}c`;", "banned word 'Number'"),
+    (CA.rstrip(";") + '; const q = `a${claimed ? "}" : `${-claimed}`}`;', "unary - before"),
+])
+def test_the_token_scan_reads_code_inside_a_template(new, what):
+    block = R.js_block()
+    assert block.count(CA) == 1
+    problems = js_problems(block.replace(CA, new))
+    assert any(what in p for p in problems), problems
+
+
+def test_the_token_scan_reads_the_blocks_own_template_as_code():
+    """APPLY's reason is the block's one template: its four substitutions are read as code, and pass."""
+    strings = []
+    code = js_lex("x = `${c.verdict} withheld (${tag}): ${phrase}. main's: ${c.why}`;", strings)
+    assert code == "x = T0+(c.verdict)+T1+(tag)+T2+(phrase)+T3+(c.why)+T4;", code
+    assert strings == ["", " withheld (", "): ", ". main's: ", ""]
+
+
 def test_the_token_scan_passes_an_increment_of_a_string():
     """The disclosed limit, beside the binary operators above: `++` and `--` convert a string too, and the scan cannot
     tell a string from a counter. Pinned so the README's sentence stays true."""
@@ -1013,19 +1106,21 @@ def test_a_widened_count_head_reads_no_digit_table(M, tmp_path):
 # block's own DECIDE returns, since a decision it refused would be a silent miss.
 
 APPLY_SHA = {
-    "python": "e7938ac7cec1ab55ae086cfe7eb782ba118442c1ddf5d8b3a4b81ca650cd0c92",
-    "port": "f53b58fc3f321f6d56d84093203843f8d3992b5236a2d84f49951c0a1c57079b",
+    "python": "803c83e2f3a386265d5b203ea36ef3b0b7b8a58ed8fec8596fa4a0c43ac2d892",
+    "port": "2ee400057779b16bf84996fca6f19a26c42c9452ddf2037f8c281833eaec2143",
 }
 
 
 def _apply_text(port: str) -> str:
-    """The lines of a block that hold main's live record: APPLY and the doors' call of it (in the port, down to the
-    block's end: the `gateDiffText` that calls main and then the overlay)."""
+    """The lines of a block that build what DECIDE is handed or hold main's live record: in Python the copy's two
+    classes, APPLY and the doors' call of it; in the port APPLY's tools taken at load, APPLY, and down to the block's
+    end (the `gateDiffText` that calls main and then the overlay). NOTE_path2a_eleventh_pass_2026_10_05 widened both
+    to take in the copy's classes and APPLY's tools."""
     if port == "python":
         block = R.py_block()
-        return block[block.index("def _p2a_apply("):block.index("_P2A_MARK = ")]
+        return block[block.index("class _P2aClaim:"):block.index("_P2A_MARK = ")]
     block = R.js_block()
-    return block[block.index("function _p2aApply("):]
+    return block[block.index("const _p2aIsArray = "):]
 
 
 @pytest.mark.parametrize("port", ["python", "port"])
@@ -1046,16 +1141,22 @@ def test_the_code_that_touches_the_record_is_the_pinned_text(port):
         block = R.js_block()
         assert block.count("_p2aApply(") == 2 and block.count("_p2aAbstain(") == 2
         assert block.count("_gateDiffTextMain(") == 2          # the door's two calls of main's port
-    assert text.count("\n") <= 75, "the code that touches the record no longer reads on one screen"
+    # 80 lines since NOTE_path2a_eleventh_pass_2026_10_05 (75 before): the port's APPLY reads by index and fills its
+    # arrays before DECIDE runs, so that nothing after DECIDE calls an inherited method
+    assert text.count("\n") <= 80, "the code that touches the record no longer reads on one screen"
 
 
 ALL_TAGS = ("#97", "#121", "#97, #121", "#101")
 
 
 def _wreck(seen):
-    """Change, empty and grow everything DECIDE is given."""
+    """Change, empty and grow everything DECIDE is given (a copy has no `text` slot; trying to add one is part of it)."""
     for c in seen.claims:
-        c.verdict, c.kind, c.why, c.text = "CONTRADICTED", "tests_pass", "rewritten", "rewritten"
+        c.verdict, c.kind, c.why = "CONTRADICTED", "tests_pass", "rewritten"
+        try:
+            c.text = "rewritten"
+        except AttributeError:
+            pass
         c.detail.clear()
         c.detail["path"] = "x"
         c.detail = None
@@ -1123,6 +1224,72 @@ def _generator():
     yield (0, "unreproduced", "#97")
 
 
+# NOTE_path2a_eleventh_pass_2026_10_05: APPLY takes exact types, so a subclass of list, tuple, int or str is not taken,
+# whatever it holds
+class _ListOfDecisions(list):
+    pass
+
+
+class _DecisionTuple(tuple):
+    pass
+
+
+class _Index(int):
+    pass
+
+
+class _Text(str):
+    pass
+
+
+def _subclassed(s, d):
+    """The block's own decisions, each given four times, with its tuple, its index, its key or its tag a subclass."""
+    return lambda seen: [x for i, k, t in _honest(s, d)(seen)
+                         for x in (_DecisionTuple((i, k, t)), (_Index(i), k, t), (i, _Text(k), t), (i, k, _Text(t)))]
+
+
+# The tenth reviews' blocker (NOTE_path2a_eleventh_pass_2026_10_05, A-1, B-1, C-1, I-1): a DECIDE that uses only its
+# argument and patches the class of its copy. At 16daa725 that class was main's DiffClaim, the class of every claim in
+# the record, so APPLY's own stores ran the patch on the record; now it is the block's own _P2aClaim. The patches stay
+# for the rest of the test (later copies are built under them) and _classes_restored undoes them.
+def _set_verdict_property(seen):
+    type(seen.claims[0]).verdict = property(lambda c: "VERIFIED", lambda c, v: None)
+
+
+def _set_setattr(seen):
+    type(seen.claims[0]).__setattr__ = lambda c, k, v: object.__setattr__(
+        c, k, "VERIFIED" if (k == "verdict" and v == "UNCHECKABLE") else ("any text DECIDE likes" if k == "why" else v))
+
+
+def _set_swallowed_reason(seen):
+    type(seen.claims[0]).why = property(lambda c: "", lambda c, v: None)
+
+
+def _set_container_setattr(seen):
+    type(seen).__setattr__ = lambda o, k, v: object.__setattr__(o, k, v[:1] if k == "claims" else v)
+
+
+CLASS_ATTACKS = {
+    "a property on verdict of its claims' class": _set_verdict_property,
+    "a __setattr__ on its claims' class": _set_setattr,
+    "a property on its claims' class that swallows the reason": _set_swallowed_reason,
+    "a __setattr__ on its container's class": _set_container_setattr,
+}
+
+
+def _class_attack(attack, every=False):
+    """A DECIDE that runs one of the attacks above on its copy, then returns a decision for every claim (`every`) or
+    the block's own decisions."""
+    def make(s, d):
+        def decide(seen):
+            attack(seen)
+            if every:
+                return [(i, "unreproduced", N._P2A_KIND_DEFECT.get(c.kind, "#97")) for i, c in enumerate(seen.claims)]
+            return _honest(s, d)(seen)
+        return decide
+    return make
+
+
 # name -> (what the record must then be, the phrase where every claim in reach is withheld, a maker of `decide`).
 # "same": main's record, untouched (APPLY ignored everything); "all": every claim in reach withheld, with the phrase;
 # "relation": inside the abstain-only relation, and no more is said.
@@ -1147,7 +1314,8 @@ HOSTILE = {
         (i, "unreproduced", t) for i in (-1, len(seen.claims), len(seen.claims) + 1, 10 ** 9, 0.5, 0.0, 1.0,
                                          float("nan"), float("inf"), True, False, "0", "1", None, (0,))
         for t in ALL_TAGS]),
-    "one index twice, with two phrases": ("all", "error", lambda s, d: lambda seen: _each(
+    # NOTE_path2a_eleventh_pass_2026_10_05: `error` is APPLY's own and ignored, so the second phrase stands
+    "one index twice, with two phrases": ("all", "unparsed", lambda s, d: lambda seen: _each(
         seen, _in_reach, lambda i, c: [(i, k, N._P2A_KIND_DEFECT[c.kind]) for k in ("error", "unparsed", "dir")])),
     "phrases outside the fixed set": ("same", None, lambda s, d: lambda seen: _each(
         seen, lambda c: True, lambda i, c: [(i, k, N._P2A_KIND_DEFECT.get(c.kind, "#97"))
@@ -1162,14 +1330,33 @@ HOSTILE = {
     "raises": ("all", "error", lambda s, d: _raiser(RuntimeError("planted"))),
     "raises a KeyError": ("all", "error", lambda s, d: _raiser(KeyError("dir"))),
     "changes its copy, then raises": ("all", "error", lambda s, d: _raiser(TypeError("planted"), wreck=True)),
-    "a list that raises when it is read": ("all", "error", lambda s, d: lambda seen: _ListThatRaises(
+    # NOTE_path2a_eleventh_pass_2026_10_05: exact types. A list subclass is not a list (`malformed`); a tuple, index or
+    # key of a subclass is ignored, so no method of it runs in APPLY. At the tenth pass these four were read through
+    # isinstance and fell back with `error`, or (the last) were taken.
+    "a list that raises when it is read": ("all", "malformed", lambda s, d: lambda seen: _ListThatRaises(
         [(0, "unreproduced", "#97")])),
-    "a tuple that lies about its length": ("all", "error", lambda s, d: lambda seen: [_TupleThatLies((0, "dir", "#97", 4))]),
-    "a phrase key whose hash raises": ("all", "error", lambda s, d: lambda seen: _each(
+    "a tuple that lies about its length": ("same", None, lambda s, d: lambda seen: [_TupleThatLies((0, "dir", "#97", 4))]),
+    "a phrase key whose hash raises": ("same", None, lambda s, d: lambda seen: _each(
         seen, _in_reach, lambda i, c: [(i, _KeyWhoseHashRaises("dir"), N._P2A_KIND_DEFECT[c.kind])])),
-    "an index that says it equals every index": ("relation", None, lambda s, d: lambda seen: [
+    "an index that says it equals every index": ("same", None, lambda s, d: lambda seen: [
         (_IndexEqualToAll(5), "unreproduced", x) for x in ALL_TAGS]),
+    "a list subclass of the block's own decisions": ("all", "malformed", lambda s, d: lambda seen: _ListOfDecisions(
+        _honest(s, d)(seen))),
+    "the block's own decisions with a subclassed tuple, index, key or tag": ("same", None, _subclassed),
+    # A-4 of the tenth construction review: `error` and `malformed` are APPLY's own and never taken from DECIDE
+    "only the phrases APPLY keeps for its own fallbacks": ("same", None, lambda s, d: lambda seen: _each(
+        seen, _in_reach, lambda i, c: [(i, k, N._P2A_KIND_DEFECT[c.kind]) for k in ("error", "malformed")])),
+    # the tenth reviews' blocker: the class of the copy patched through the copy itself
+    "a property on verdict of its claims' class, then a decision for every index": (
+        "all", "unreproduced", _class_attack(_set_verdict_property, every=True)),
+    "a __setattr__ on its claims' class, then the block's own decisions": (
+        "relation", None, _class_attack(_set_setattr)),
+    "a property on its claims' class that swallows the reason, then the block's own decisions": (
+        "relation", None, _class_attack(_set_swallowed_reason)),
+    "a __setattr__ on its container's class, then a decision for every index": (
+        "relation", None, _class_attack(_set_container_setattr, every=True)),
 }
+
 
 
 def _hostile_inputs() -> list:
@@ -1180,9 +1367,36 @@ def _hostile_inputs() -> list:
             for n, c in enumerate(R.repro_cases())]
 
 
+def _own(g0):
+    """main's record built of this module's own classes, as the doors hand it to APPLY. The tenth pass's hostile test
+    handed APPLY records of the reference module's classes, so a DECIDE that patched the class of its copy (then this
+    module's DiffClaim) could not reach them there, while it moved the record at both doors (the tenth reviews)."""
+    g = N.DiffGate(**vars(copy.deepcopy(g0)))
+    g.claims = [N.DiffClaim(**vars(c)) for c in g.claims]
+    return g
+
+
+@contextmanager
+def _classes_restored():
+    """Undo whatever a DECIDE of a test did to the copy's classes and to main's two record classes."""
+    classes = (N._P2aClaim, N._P2aSeen, N.DiffClaim, N.DiffGate)
+    saved = [dict(vars(cls)) for cls in classes]
+    try:
+        yield
+    finally:
+        for cls, was in zip(classes, saved):
+            for k in [k for k in vars(cls) if k not in was]:
+                delattr(cls, k)
+            for k, v in was.items():
+                if vars(cls).get(k) is not v and k not in ("__dict__", "__weakref__"):
+                    setattr(cls, k, v)
+        assert [dict(vars(cls)) for cls in classes] == saved
+
+
 @pytest.fixture(scope="module")
 def mains(M):
-    """main's live record for each of those inputs, in both strict modes, and the same as a dict."""
+    """main's live record for each of those inputs, in both strict modes, built of this module's own classes, and the
+    same as a dict."""
     out = []
     for _id, summary, diff in _hostile_inputs():
         for strict in (False, True):
@@ -1190,7 +1404,7 @@ def mains(M):
                 g = M.gate_diff_text(summary, diff, strict=strict)
             except Exception:
                 continue
-            out.append((summary, diff, strict, g, g.to_dict()))
+            out.append((summary, diff, strict, _own(g), g.to_dict()))
     assert sum(any(c.kind == "tests_pass" for c in x[3].claims) for x in out) > 400
     return out
 
@@ -1202,22 +1416,23 @@ def test_a_hostile_decide_cannot_leave_the_relation(name, mains):
     gate verdict is main's formula, and APPLY returns the record it was given."""
     want, phrase, make = HOSTILE[name]
     runs = same = in_reach = withheld = 0
-    for summary, diff, strict, g0, a in mains:
-        g = copy.deepcopy(g0)
-        ret = N._p2a_apply(g, strict, make(summary, diff))
-        b = g.to_dict()
-        assert ret is g, "APPLY returns the record it was given"
-        assert R.relation(a, b, strict, PHRASES, allow_error=True) == [], (name, summary[:60])
-        runs += 1
-        same += a == b
-        for x, y in zip(a["claims"], b["claims"]):
-            if (x["kind"], x["verdict"]) in R.REACH:
-                in_reach += 1
-                if y["verdict"] != x["verdict"]:
-                    withheld += 1
-                    assert phrase is None or R.phrase_key(y["why"], PHRASES) == phrase, (name, y["why"])
-        if name == "the block's own DECIDE":
-            assert b == N.gate_diff_text(summary, diff, strict=strict).to_dict()
+    with _classes_restored():
+        for summary, diff, strict, g0, a in mains:
+            g = copy.deepcopy(g0)
+            ret = N._p2a_apply(g, strict, make(summary, diff))
+            b = g.to_dict()
+            assert ret is g, "APPLY returns the record it was given"
+            assert R.relation(a, b, strict, PHRASES, allow_error=True) == [], (name, summary[:60])
+            runs += 1
+            same += a == b
+            for x, y in zip(a["claims"], b["claims"]):
+                if (x["kind"], x["verdict"]) in R.REACH:
+                    in_reach += 1
+                    if y["verdict"] != x["verdict"]:
+                        withheld += 1
+                        assert phrase is None or R.phrase_key(y["why"], PHRASES) == phrase, (name, y["why"])
+            if name == "the block's own DECIDE":
+                assert b == N.gate_diff_text(summary, diff, strict=strict).to_dict()
     assert runs > 900 and in_reach > 1000, (runs, in_reach)
     assert {"same": same == runs, "all": withheld == in_reach, "relation": withheld > 0}[want], (same, withheld, in_reach)
 
@@ -1242,14 +1457,95 @@ def test_what_apply_does_not_catch_leaves_the_record_as_main_made_it(mains):
     assert seen_reach > 50
 
 
+ORIGINAL_DECIDE = N._p2a_decisions
+
+
+def _git_door_inputs() -> list:
+    """The reproductions that carry their own `--name-status`, every other one with a `tests_pass` sentence."""
+    cases = [c for c in R.repro_cases() if c.get("name_status")]
+    return [(c["summary"] + (" All tests pass." if n % 2 else ""), c["diff"], c["name_status"]) for n, c in enumerate(cases)]
+
+
+def _door_runs(M, monkeypatch, decide):
+    """Both doors with this module's DECIDE replaced by `decide(seen, facts)`, both strict modes, against main: the
+    records outside the relation, the runs, and the claims withheld."""
+    monkeypatch.setattr(N, "_p2a_decisions", decide)
+    broken, runs, withheld = [], 0, 0
+    doors = [("raw", s, d, None) for _i, s, d in _hostile_inputs()] + [("git", s, d, ns) for s, d, ns in _git_door_inputs()]
+    for door, summary, diff, ns in doors:
+        if door == "git":
+            fake = R.fake_git(ns, diff)
+            monkeypatch.setattr(M, "_git", fake)
+            monkeypatch.setattr(N, "_git", fake)
+        for strict in (False, True):
+            run = ((lambda m: m.gate_diff_text(summary, diff, strict=strict)) if door == "raw" else
+                   (lambda m: m.gate_diff(summary, "(repo)", "base", "head", strict=strict)))
+            try:
+                a = run(M).to_dict()
+            except Exception:
+                continue
+            b = run(N).to_dict()
+            runs += 1
+            bad = R.relation(a, b, strict, PHRASES, allow_error=True)
+            if bad:
+                broken.append((door, strict, summary[:50], bad[:2]))
+            withheld += sum(x["verdict"] != y["verdict"] for x, y in zip(a["claims"], b["claims"]))
+    monkeypatch.setattr(N, "_p2a_decisions", ORIGINAL_DECIDE)
+    return broken, runs, withheld
+
+
+@pytest.mark.parametrize("name", sorted(CLASS_ATTACKS))
+def test_a_decide_that_patches_its_copys_class_cannot_move_the_record_at_either_door(name, M, monkeypatch):
+    """The tenth reviews' blocker at the doors, on records of this module's own classes: the module's DECIDE replaced
+    by one that patches the class of its copy (reached by type()), then decides as the block does. At 16daa725 the
+    copy's class was main's DiffClaim, and the reviewers counted 580 of 958 raw-door runs and 42 of 192 git-door runs
+    outside the relation for a __setattr__ like the one here. The patch is left in place for the next call, as a
+    DECIDE that did this would leave it: that call must give main's record where nothing is in reach, and stay inside
+    the relation where something is."""
+    attack = CLASS_ATTACKS[name]
+    with _classes_restored():
+        broken, runs, withheld = _door_runs(M, monkeypatch, lambda seen, facts: (attack(seen), ORIGINAL_DECIDE(seen, facts))[1])
+        assert broken == [], (name, len(broken), broken[:3])
+        assert runs > 1100 and withheld > 0, (runs, withheld)
+        # the next call, the class still patched and the module's own DECIDE back
+        summary = "Updated src/app.py. All tests pass."          # main reads it unmeasured: nothing in reach
+        assert N.gate_diff_text(summary, "").to_dict() == M.gate_diff_text(summary, "").to_dict()
+        one = D_TWINS_HEAD.split("diff --git a/.env")[0]
+        for summary, diff in [("Updated src/app.py. 1 files changed.", one)] + [
+                (c["summary"], c["diff"]) for c in R.repro_cases()[:60]]:
+            a = M.gate_diff_text(summary, diff).to_dict()
+            assert R.relation(a, N.gate_diff_text(summary, diff).to_dict(), False, PHRASES, allow_error=True) == [], summary
+
+
+def test_a_decide_that_reaches_the_module_through_facts_is_the_stated_limit(M, monkeypatch):
+    """The limit README and NOTE_path2a_eleventh_pass_2026_10_05 state: bar A by construction covers a DECIDE that
+    uses what it is handed as data and calls the `facts` it is given, not one that reaches around that by reflection.
+    `facts.__globals__` is this module; a DECIDE that takes main's DiffClaim from there and patches it moves the record,
+    and nothing APPLY does can stop it. Asserted to leave the relation, so that a change that closes this route is
+    noticed: then this test fails, and the README's sentence on what bar A does not cover moves with it."""
+    def decide(seen, facts):
+        facts.__globals__["DiffClaim"].__setattr__ = lambda c, k, v: object.__setattr__(
+            c, k, "VERIFIED" if (k == "verdict" and v == "UNCHECKABLE") else v)
+        return ORIGINAL_DECIDE(seen, facts)
+
+    with _classes_restored():
+        broken, runs, _withheld = _door_runs(M, monkeypatch, decide)
+    assert runs > 1100 and len(broken) > 100, (runs, len(broken))
+    assert N.gate_diff_text("Updated src/app.py. All tests pass.", "").to_dict() == \
+        M.gate_diff_text("Updated src/app.py. All tests pass.", "").to_dict()
+
+
 def test_a_hostile_decide_cannot_leave_the_relation_port(work, tmp_path):
     """The same in the port: check_path2a.js --hostile hands _p2aApply main's record and each DECIDE of its own list
-    (ones that change their copy, return junk, a Proxy that answers differently on each read, or throw)."""
+    (ones that change their copy, return junk, a Proxy that answers differently on each read, or throw; and, with the
+    record built by the port's own main in the realm DECIDE runs in, ones that patch what every object or array
+    inherits: NOTE_path2a_eleventh_pass_2026_10_05)."""
     items = [{"id": i, "summary": s, "diff": d} for i, s, d in _hostile_inputs()]
     (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=True), encoding="utf-8")
     node("--hostile", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "hostile.json")
     out = json.loads((tmp_path / "hostile.json").read_text(encoding="utf-8"))
-    assert len(out) >= 24 and {v["want"] for v in out.values()} == {"same", "all", "relation"}
+    assert len(out) >= 30 and {v["want"] for v in out.values()} == {"same", "all", "relation"}
+    assert sum(bool(v.get("realm")) for v in out.values()) >= 5
     for name, v in out.items():
         c = v["counts"]
         assert c["broken"] == 0 and c["not_returned"] == 0 and c["threw"] == 0, (name, c, v["examples"])
@@ -1457,20 +1753,20 @@ def test_a_planted_strict_skip_is_refused(M, inputs):
     assert caught, "the strict check did not refuse an overlay that skips itself under --strict"
 
 
-JS_WHY = "      c.why = `${c.verdict} withheld by PATH-2a (${tag}): ${phrase}. main's reading: ${c.why}`;"
-JS_REACH = '  claims.forEach((c, i) => { if (_P2A_REACH.has(c.kind + "|" + c.verdict)) pending.set(i, c); });'
+JS_WHY = "    c.why = `${c.verdict} withheld by PATH-2a (${tag}): ${phrase}. main's reading: ${c.why}`;"
+JS_REACH = '    reach.push(_P2A_REACH.has(claims[k].kind + "|" + claims[k].verdict));'
 # Edits of APPLY itself, which the relation must refuse (the pin of APPLY's text names each of them too)
 PORT_PLANTS = [
-    ('      c.verdict = "UNCHECKABLE";', '      c.verdict = "CONTRADICTED";'),
+    ('    c.verdict = "UNCHECKABLE";', '    c.verdict = "CONTRADICTED";'),
     (JS_WHY, JS_WHY.replace("${c.why}`;", "`;")),
     ('    g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";', ""),
-    ('      c.verdict = "UNCHECKABLE";', '      c.verdict = "UNCHECKABLE";\n      c.detail = {};'),
+    ('    c.verdict = "UNCHECKABLE";', '    c.verdict = "UNCHECKABLE";\n    c.detail = {};'),
     # Integration-1: the overlay skipped under --strict
-    (JS_REACH, JS_REACH.replace("c.verdict)) pending", "c.verdict) && !strict) pending")),
+    (JS_REACH, JS_REACH.replace("verdict));", "verdict) && !strict);")),
     # I-1 (NOTE_path2a_third_pass_2026_09_30): the review's two mutants, which pass 2's --relation could not see
     ('    g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";',
      '    g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";\n    g.unparsed_claims = claims.map(c => c.text);'),
-    ("      c.verdict = \"UNCHECKABLE\";", "      c.verdict = \"UNCHECKABLE\";\n      c.main_verdict = c.verdict;"),
+    ("    c.verdict = \"UNCHECKABLE\";", "    c.verdict = \"UNCHECKABLE\";\n    c.main_verdict = c.verdict;"),
     # NOTE_path2a_tenth_pass_2026_10_05: a reason of another form
     (JS_WHY, JS_WHY.replace("withheld by PATH-2a", "withheld by PATH-2a,")),
 ]

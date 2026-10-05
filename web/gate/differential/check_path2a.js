@@ -1,7 +1,7 @@
 // PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30,
 // NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30,
-// NOTE_path2a_sixth_pass_2026_09_30, NOTE_path2a_seventh_pass_2026_09_30, NOTE_path2a_ninth_pass_2026_10_04 and
-// NOTE_path2a_tenth_pass_2026_10_05): the port's
+// NOTE_path2a_sixth_pass_2026_09_30, NOTE_path2a_seventh_pass_2026_09_30, NOTE_path2a_ninth_pass_2026_10_04,
+// NOTE_path2a_tenth_pass_2026_10_05 and NOTE_path2a_eleventh_pass_2026_10_05): the port's
 // half of the committed PATH-2a checks, run by tests/test_diffgate_path2a*.py, which write IN (a JSON list of
 // {id, summary, diff}) and read OUT.
 //
@@ -42,9 +42,11 @@
 //   node check_path2a.js --hostile REF IN OUT      this port's APPLY (_p2aApply) on main's record with DECIDE functions
 //                                                  written to do harm: ones that change their copy, return junk, indices
 //                                                  out of range or twice, phrases and tags outside the fixed sets,
-//                                                  decisions for claims outside reach, or throw. Per function: runs,
-//                                                  records outside the relation, records equal to main's, claims in
-//                                                  reach and withheld, by phrase (NOTE_path2a_tenth_pass_2026_10_05)
+//                                                  decisions for claims outside reach, or throw; and, on a record the
+//                                                  port's own main builds in the realm DECIDE runs in, ones that patch
+//                                                  what every object or array inherits (eleventh pass). Per function:
+//                                                  runs, records outside the relation, records equal to main's, claims
+//                                                  in reach and withheld, by phrase (NOTE_path2a_tenth_pass_2026_10_05)
 //
 // --relation, --decisions and --lockstep take an optional last argument, the port to check (default ../diffgate.js);
 // the tests pass a planted copy there to show the checks refuse it.
@@ -63,7 +65,7 @@ function internals(file, extra = "") {
                  "_P2A_JS_SPACE", "_P2A_PY_SPACE", "_P2A_PY_BREAKS", "_P2A_DIVERGENT", "_P2A_HEADERS",
                  "_P2A_REACH_PAIRS", "_P2A_PHRASES", "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS", "_P2A_OWN",
                  "_P2A_NEUTRAL_RANGES", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw", "_p2aFound",
-                 "_p2aApply", "_p2aDecisions", "_P2A_TAGS", "_P2A_FIELDS",
+                 "_p2aApply", "_p2aDecisions", "_P2A_TAGS", "_P2A_FIELDS", "_gateDiffTextMain", "_p2aRealm",
                  "_P2A_EMOJI_RX", "_P2A_EMOJI_AS", "_P2A_LOWER_RUNS", "_P2A_NEVER_RANGES", "_p2aCaseCount"];
   // A name the port does not define reads undefined, so the checker also loads the ports of earlier passes (the
   // seventh pass runs its new pins against fcd3ce6a's port this way)
@@ -158,7 +160,8 @@ const HOSTILE = {
       for (const t of ALL_TAGS) out.push([i, "unreproduced", t]);
     return out;
   } },
-  "one index twice, with two phrases": { want: "all", phrase: "error", make: P => seen =>
+  // NOTE_path2a_eleventh_pass_2026_10_05: `error` is APPLY's own and ignored, so the second phrase stands
+  "one index twice, with two phrases": { want: "all", phrase: "unparsed", make: P => seen =>
     forEach(seen, c => inReach(P, c), (c, i) => [[i, "error", P._P2A_KIND_DEFECT[c.kind]], [i, "unparsed", P._P2A_KIND_DEFECT[c.kind]], [i, "dir", P._P2A_KIND_DEFECT[c.kind]]]) },
   "phrases outside the fixed set": { want: "same", make: P => seen =>
     forEach(seen, () => true, (c, i) => ["nope", "", "DIR", " dir", "__proto__", "constructor", "toString", "hasOwnProperty", "valueOf", "length"]
@@ -166,6 +169,9 @@ const HOSTILE = {
   "tags outside the fixed sets, and another kind's tag": { want: "same", make: P => seen =>
     forEach(seen, () => true, (c, i) => ["#1", "", "#97,#121", "#121, #97", " #97", "97", "__proto__", "length", "0"]
       .concat(ALL_TAGS.filter(t => !(P._P2A_TAGS[c.kind] || []).includes(t))).map(t => [i, "unreproduced", t])) },
+  // A-4 of the tenth construction review: `error` and `malformed` are APPLY's own and never taken from DECIDE
+  "only the phrases APPLY keeps for its own fallbacks": { want: "same", make: P => seen =>
+    forEach(seen, c => inReach(P, c), (c, i) => [[i, "error", P._P2A_KIND_DEFECT[c.kind]], [i, "malformed", P._P2A_KIND_DEFECT[c.kind]]]) },
   "decisions for every claim outside reach": { want: "same", make: P => seen =>
     forEach(seen, c => !inReach(P, c), (c, i) => ALL_TAGS.map(t => [i, "unreproduced", t])) },
   "a decision for every index, with every tag": { want: "all", phrase: "unreproduced", make: () => seen =>
@@ -194,7 +200,51 @@ const HOSTILE = {
     });
     return out;
   } },
+  // C-2 of the tenth cross-port review (NOTE_path2a_eleventh_pass_2026_10_05): with `realm`, the record is built by the
+  // port's own main in the realm DECIDE runs in, as in a page, and DECIDE patches what every object or array there
+  // inherits, reached from its argument. At 16daa725 APPLY read the phrase table with an inherited lookup, checked tags
+  // with `includes`, kept its plan with `push` and computed the gate with `some`, so each of these moved the record.
+  // The harness restores the realm after each run.
+  "a phrase put on what every object inherits": { want: "same", realm: true, make: P => seen => {
+    Object.getPrototypeOf(seen).zz = "anything DECIDE likes";
+    return forEach(seen, c => inReach(P, c), (c, i) => [[i, "zz", P._P2A_KIND_DEFECT[c.kind]]]);
+  } },
+  "an includes that accepts any tag": { want: "same", realm: true, make: P => seen => {
+    Object.getPrototypeOf(seen.claims).includes = () => true;
+    return forEach(seen, c => inReach(P, c), (c, i) => [[i, "unreproduced", "any tag DECIDE likes"]]);
+  } },
+  "a some that answers false, after the block's own decisions": { want: "relation", realm: true, make: (P, it) => seen => {
+    const out = honest(P, it)(seen);
+    Object.getPrototypeOf(seen.claims).some = () => false;
+    return out;
+  } },
+  "a push that rewrites the claims it is handed, after the block's own decisions": { want: "relation", realm: true, make: (P, it) => seen => {
+    const out = honest(P, it)(seen);
+    const proto = Object.getPrototypeOf(seen.claims), push = proto.push;
+    proto.push = function (...xs) {
+      for (const x of xs) for (const y of (Array.isArray(x) ? x : [x])) if (y && typeof y === "object" && "verdict" in y) { y.verdict = "VERIFIED"; y.why = "rewritten"; }
+      return push.apply(this, xs);
+    };
+    return out;
+  } },
+  "an Array.isArray that says yes to anything": { want: "all", phrase: "malformed", realm: true, make: () => seen => {
+    seen.claims.constructor.isArray = () => true;
+    return { length: 1, 0: [0, "unreproduced", "#97"] };
+  } },
 };
+
+function realmSnapshot(R) {
+  // the own properties of what every object and array inherits, and of the Array constructor, in the port's realm
+  return [R.O, R.A, R.Arr].map(o => [o, Reflect.ownKeys(o).map(k => [k, Object.getOwnPropertyDescriptor(o, k)])]);
+}
+
+function realmRestore(snap) {
+  for (const [o, props] of snap) {
+    const keep = new Set(props.map(([k]) => k));
+    for (const k of Reflect.ownKeys(o)) if (!keep.has(k)) delete o[k];
+    for (const [k, d] of props) Object.defineProperty(o, k, d);
+  }
+}
 
 function main(argv) {
   const mode = argv[0];
@@ -306,12 +356,14 @@ function main(argv) {
   if (mode === "--hostile") {
     const REF = require(path.resolve(argv[1]));
     const port = path.resolve(argv[4] || DEFAULT_PORT);
-    const P = internals(port);
+    const P = internals(port, "var _p2aRealm = { O: Object.prototype, A: Array.prototype, Arr: Array };");
     const NEW = require(port);
     const reach = new Set(P._P2A_REACH_PAIRS.map(p => p[0] + "|" + p[1]));
-    const defects = P._P2A_TAGS;
+    // copies of the tables taken before any DECIDE runs, so that a DECIDE that writes the port's own tables cannot make
+    // the relation accept what it wrote (A-3 of the tenth construction review)
+    const defects = JSON.parse(JSON.stringify(P._P2A_TAGS)), phrasesAtLoad = JSON.parse(JSON.stringify(P._P2A_PHRASES));
     const items = JSON.parse(fs.readFileSync(argv[2], "utf8"));
-    const keyOf = why => { for (const [k, p] of Object.entries(P._P2A_PHRASES)) if (why.includes("): " + p + ". main's reading: ")) return k; return null; };
+    const keyOf = why => { for (const [k, p] of Object.entries(phrasesAtLoad)) if (why.includes("): " + p + ". main's reading: ")) return k; return null; };
     const out = {};
     for (const [name, h] of Object.entries(HOSTILE)) {
       const c = { runs: 0, broken: 0, same: 0, not_returned: 0, threw: 0, in_reach: 0, withheld: 0, unlike_the_port: 0, decisions: 0 };
@@ -319,16 +371,18 @@ function main(argv) {
       for (const it of items) for (const strict of [false, true]) {
         let a;
         try { a = JSON.parse(JSON.stringify(REF.gateDiffText(it.summary, it.diff, { strict }))); } catch (e) { continue; }
-        const g = REF.gateDiffText(it.summary, it.diff, { strict });
+        const g = h.realm ? P._gateDiffTextMain(it.summary, it.diff, { strict }) : REF.gateDiffText(it.summary, it.diff, { strict });
         let ret;
         const decide = h.make(P, it);
         // for the block's own DECIDE, how many decisions it returned: APPLY must take every one
         const spy = name === "the block's own DECIDE" ? seen => { const got = decide(seen); c.decisions += got.length; return got; } : decide;
+        const snap = h.realm ? realmSnapshot(P._p2aRealm) : null;
         try { ret = P._p2aApply(g, strict, spy); } catch (e) { c.threw++; }
+        if (snap) realmRestore(snap);
         const b = JSON.parse(JSON.stringify(g));
         c.runs++;
         if (ret !== g) c.not_returned++;
-        const bad = relation(a, b, strict, reach, defects, P._P2A_PHRASES, true);
+        const bad = relation(a, b, strict, reach, defects, phrasesAtLoad, true);
         if (bad.length) { c.broken++; if (examples.length < 5) examples.push([it.id, strict, bad]); }
         if (JSON.stringify(a) === JSON.stringify(b)) c.same++;
         a.claims.forEach((x, i) => {
@@ -338,7 +392,7 @@ function main(argv) {
         });
         if (name === "the block's own DECIDE" && JSON.stringify(b) !== JSON.stringify(NEW.gateDiffText(it.summary, it.diff, { strict }))) c.unlike_the_port++;
       }
-      out[name] = { want: h.want, phrase: h.phrase || null, counts: c, phrases, examples };
+      out[name] = { want: h.want, phrase: h.phrase || null, realm: !!h.realm, counts: c, phrases, examples };
     }
     fs.writeFileSync(argv[3], JSON.stringify(out));
     return 0;
