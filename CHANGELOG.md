@@ -147,9 +147,9 @@ names; the tenth changed none against the ninth, on the committed inputs and on 
   lines, where `main`'s call takes milliseconds. The eleventh pass's APPLY, measured alone against `16daa725`'s on
   records of 1,000 to 30,000 claims in reach: no slower in either port (in the port 9.6 against 11.1 ms for 30,000
   claims and no decision, 9.9 against 25.1 with one for every claim).
-- Size: the pull request's diff is 15,289 lines by `git diff origin/main...HEAD | wc -l` (14,535 at the ninth pass;
-  GitHub serves a pull-request diff up to 20,000 lines, and above that the repository's own diffgate job prints DID NOT
-  RUN and exits 0).
+- Size: the pull request's diff is 16,285 lines by `git diff origin/main...HEAD | wc -l` (15,289 at the tenth pass and
+  14,535 at the ninth; GitHub serves a pull-request diff up to 20,000 lines, and above that the repository's own
+  diffgate job prints DID NOT RUN and exits 0).
 
 **Disclosed.**
 - The removal's cost. A CONTRADICTED the switch kept is decided by the rules now, and some of those were right: on
