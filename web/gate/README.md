@@ -431,10 +431,12 @@ reads the same with `--strict` as without it, and where `main` raises the branch
   `Array.isArray` on the other). Each over #161's reproductions, every other one with a sentence `main` reads as a
   `tests_pass` claim, in both strict modes (958 runs each in Python, on records of the module's own classes, and 962
   in the port): 0 records outside the relation; the record is `main`'s, untouched, wherever APPLY should ignore
-  everything; every claim in reach is withheld with `error` where DECIDE raises and with `malformed` where it returns
-  no list (*pinned*). The four class patches again through both Python doors, with the module's DECIDE replaced, both
-  strict modes (1,150 runs each): 0 outside the relation, and with the class left patched the next call gives `main`'s
-  record where nothing is in reach (*pinned*). Against `16daa725`'s files, the three class patches of the claims put
+  everything; every claim in reach is withheld with `error` where DECIDE raises (an `Exception`, in Python) and with
+  `malformed` where it returns no list (*pinned*). The four class patches again through both Python doors, with the
+  module's DECIDE replaced, both strict modes (1,150 runs each): 0 outside the relation, and with the class left
+  patched the next call gives `main`'s record where nothing is in reach (*pinned*). The stated limit, through the same
+  doors: a DECIDE that takes `main`'s `DiffClaim` from the door's `facts.__globals__` and patches it puts 1,010 of the
+  1,150 runs outside the relation, and a committed test asserts that such runs exist (*What holds bar A* below). Against `16daa725`'s files, the three class patches of the claims put
   945 or 946 of 958 Python runs outside the relation, and four of the port's five patches 200 to 604 of 962 runs; the
   fifth, and the `error` and `malformed` cases, there fail what they assert of the record.
 - The ninth construction review's fourteen plants (five in Python, nine in the port), each of which dropped, added or
@@ -454,6 +456,10 @@ reads the same with `--strict` as without it, and where `main` raises the branch
   raise `main`'s (7 inputs in Python, 18 in the port), no fallback phrase. 19,000 of them were read again with the
   port's engine patched to fold a pair no runtime folds yet, for bar C below. All of it was read again at `16daa725`,
   beside `c69b161b`'s two files: every count the same, and no record differing from the ninth pass's in either port.
+  Six of those sets were read again at this head beside `16daa725`'s two files (62,000 inputs: the 20,000 of one
+  hostile set, 12,000 and 9,000 of two more, the 4,000 of the line-break set, 8,000 of the decorated truth world, and
+  the 9,000 of the case-skew, emoji and DECLARE-1 sets under the patched engine): no record differs from the tenth pass's in either port,
+  and 0 of 124,000 Python runs and 0 of 106,000 port runs lie outside the relation (*measured at this head*).
 - The EXTERNAL-1 shelf of agent pull requests (the AIDev dataset's `pr_commit_details`: one row per file per commit),
   one body per pull request id against the diff the committed harness's own `reconstruct` rebuilds from all of that
   id's rows (one group per file, with the net status of `_fold_statuses`): 69,054 read (of 71,104 ids with a body
@@ -865,14 +871,16 @@ input, the least of three runs (two on the large summaries), on a machine other 
   0.34, 4.2 and 11.1 with a DECIDE that returns nothing, and 0.35, 3.4 and 9.9 against 0.91, 7.4 and 25.1 with one that
   returns a decision for every claim; in Python 0.34, 4.1 and 17.9 ms against 0.73, 5.5 and 22.7, and 0.8, 14.3 and
   68.5 against 1.1, 14.0 and 55.0 (the last pair within the run-to-run spread of this machine).
-- **At import**, measured again at this head, since the ninth construction review disputed the earlier figure. The
-  module body, executed in one process 25 times in turn with `main`'s, the regex cache purged before each run: 27.5 ms
-  (least) and 35.1 ms (median) against `main`'s 5.1 and 6.4 on CPython 3.12.10, ×5.4; 28.0 and 33.0 against 5.3 and
-  6.4 on 3.14.2, ×5.3. `import styxx.diffgate` in a fresh interpreter, with the standard-library modules it imports
-  and `styxx.declare` already loaded and the bytecode cached, nine runs in turn: 67 ms (least) and 75 ms (median)
-  against 18 and 20 on 3.12.10, ×3.8; 76 and 80 against 21 and 23 on 3.14.2, ×3.7. So a start costs about 50 ms more
-  than on `main`, at every CLI, hook and Action start. Most of it is the block's 26 patterns over wide character
-  classes (29 ms when compiled one by one). The reviewer measured ×5.7 to ×6.8 for the module body, and 106 to 158 ms
+- **At import** (*measured at this head*, the tenth pass's method). The module body, executed in one process 25 times
+  in turn with `main`'s, the regex cache purged before each run: 30.3 ms (least) and 34.6 ms (median) against
+  `main`'s 5.1 and 6.2 on CPython 3.12.10, ×5.9 of the leasts and ×5.6 of the medians; 25.9 and 27.8 against 4.7 and
+  5.4 on 3.14.2, ×5.5 and ×5.1. `import styxx.diffgate` in a fresh interpreter, with the standard-library modules it
+  imports and `styxx.declare` already loaded and the bytecode cached, nine runs in turn: 62 ms (least) and 71 ms
+  (median) against 18 and 19 on 3.12.10, ×3.4 and ×3.7; 70 and 75 against 20 and 20 on 3.14.2, ×3.5 and ×3.7. The
+  tenth pass's head measured ×5.4 and ×3.8 on 3.12.10 the same way; the eleventh pass added two classes and a frozen
+  set, so the spread is the machine's. So a start costs about 50 ms more than on `main`, at every CLI, hook and
+  Action start. Most of it is the block's 26 patterns over wide character classes (19 to 20 ms when compiled one by
+  one). The reviewer of the ninth pass measured ×5.7 to ×6.8 for the module body, and 106 to 158 ms
   against 31 to 38 in a fresh interpreter, on a busier machine; the earlier text's "27 to 30 ms against `main`'s 6" was
   the module body alone. Compiling the classes on demand would spare a start that meets no claim in reach; that is a
   change of the block and is not made in this pass.

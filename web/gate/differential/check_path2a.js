@@ -40,7 +40,7 @@
 //                                                  summary, diff, gate}), not main's: a planted port's reading of a
 //                                                  reason main never writes (C-2)
 //   node check_path2a.js --hostile REF IN OUT      this port's APPLY (_p2aApply) on main's record with DECIDE functions
-//                                                  written to do harm: ones that change their copy, return junk, indices
+//                                                  written to break it: ones that change their copy, return junk, indices
 //                                                  out of range or twice, phrases and tags outside the fixed sets,
 //                                                  decisions for claims outside reach, or throw; and, on a record the
 //                                                  port's own main builds in the realm DECIDE runs in, ones that patch
@@ -116,7 +116,7 @@ function strictAlike(off, on) {
   return bad;
 }
 
-// NOTE_path2a_tenth_pass_2026_10_05: DECIDE functions written to do harm, for --hostile. Each maker gets the port's
+// NOTE_path2a_tenth_pass_2026_10_05: DECIDE functions written to break APPLY, for --hostile. Each maker gets the port's
 // internals and the input and returns what APPLY is handed as `decide`. `want` says what the record must then be:
 // "same" (main's, untouched: APPLY ignored everything), "all" (every claim in reach withheld, with `phrase`), or
 // "relation" (inside the abstain-only relation, no more is said).

@@ -12,9 +12,11 @@ the PATH-2a block cut out and the door hooks reverted, asserted to hash to the f
     verdict is main's formula over the claims; each claim reads the same under --strict as without it; where main
     raises, the branch raises the same exception type. The same with a run leg, a test report and a commit handed to
     both doors, where main decides `tests_pass` claims, which are outside REACH. Since the tenth pass the relation
-    holds at run time whatever the rules do: they run on a copy (DECIDE) and one short function writes the record
-    (APPLY). Functions written to do harm are handed to APPLY in both ports, the ninth review's plants are planted
-    where the decisions are computed, and the text of the lines that touch the record is pinned.
+    holds at run time for any DECIDE that uses what it is handed as data and calls what it is given: the rules run on
+    a copy (DECIDE) and one short function writes the record (APPLY). Code that reaches around that by reflection is
+    not covered (NOTE_path2a_eleventh_pass_2026_10_05), and one such route is pinned as leaving the relation. DECIDE
+    functions written to break APPLY are handed to it in both ports and through both Python doors, the ninth review's
+    plants are planted where the decisions are computed, and the text of the lines that touch the record is pinned.
 (C) cross-port, as the ninth pass restates it -- a decision reads the claim's kind, verdict and detail, main's counts
     and the door's bytes, never the claim's text, through code that asks no runtime a Unicode question. So
     (i) wherever main's two ports give claims the same kind, verdict and detail -- by position, matched across the two
@@ -1100,8 +1102,11 @@ def test_a_widened_count_head_reads_no_digit_table(M, tmp_path):
 # ---- bar A at run time: DECIDE and APPLY (NOTE_path2a_tenth_pass_2026_10_05) ---------------------------------------
 #
 # The rules run on a copy (DECIDE) and one short function writes the record (APPLY), so the abstain-only relation does
-# not rest on what the rules do: it holds for ANY function handed to APPLY as `decide`. The tests below hand it
-# functions written to do harm, in both ports; plant the ninth construction review's edits where the decisions are
+# not rest on what the rules do: it holds for any function handed to APPLY as `decide` that uses what it is handed as
+# data and calls what it is given, whatever data it returns (NOTE_path2a_eleventh_pass_2026_10_05: not for code that
+# reaches around its argument by reflection, a class reached by type(), a function's __globals__, a frame, a patched
+# built-in; the tests guard against an honest mistake, not an attacker). The tests below hand it functions written
+# to break it, in both ports; plant the ninth construction review's edits where the decisions are
 # computed; pin the text of the few lines that do touch the record; and check that APPLY takes every decision the
 # block's own DECIDE returns, since a decision it refused would be a silent miss.
 
@@ -1411,9 +1416,10 @@ def mains(M):
 
 @pytest.mark.parametrize("name", sorted(HOSTILE))
 def test_a_hostile_decide_cannot_leave_the_relation(name, mains):
-    """Bar A by construction at run time, in Python: APPLY against a DECIDE written to do harm. Whatever it does to its
-    copy, returns or raises, the record is main's but for abstentions in reach with a reason of the fixed form, the
-    gate verdict is main's formula, and APPLY returns the record it was given."""
+    """Bar A by construction at run time, in Python: APPLY against a DECIDE written to break it. Whatever it does to
+    its copy, the copy's classes included (since NOTE_path2a_eleventh_pass_2026_10_05, on records of this module's own
+    classes), returns or raises, the record is main's but for abstentions in reach with a reason of the fixed form,
+    the gate verdict is main's formula, and APPLY returns the record it was given."""
     want, phrase, make = HOSTILE[name]
     runs = same = in_reach = withheld = 0
     with _classes_restored():

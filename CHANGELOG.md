@@ -137,8 +137,8 @@ names; the tenth changed none against the ninth, on the committed inputs and on 
   flavours; with #161's `path2_pairs.json` 280 of 2,761 (10.1%); the overlay's own 136 pinned pairs 90 of 155 (89 of
   154 under the POSIX flavour). On the EXTERNAL-1 shelf 161 of 12,785 decided claims in reach (1.3%); the four
   committed variants of `main` read 152 of the 12,785 otherwise, and all 152 are withheld.
-- Cost: the module body takes ×5.4 `main`'s to execute (27.5 ms against 5.1), and a fresh interpreter's import about
-  50 ms more than on `main` (67 ms against 18); +15% a call on `main`'s fuzz corpus; APPLY's copy 5.5 to 5.8 ms for
+- Cost: the module body takes ×5.9 `main`'s to execute (30.3 ms against 5.1, least of 25; ×5.4 at the tenth pass's
+  head the same way), and a fresh interpreter's import about 45 to 50 ms more than on `main` (62 ms against 18); +15% a call on `main`'s fuzz corpus; APPLY's copy 5.5 to 5.8 ms for
   10,000 claims; the committed timing cases' slowest overlay 0.161 s (CPython 3.12.10), 0.132 s (3.14.2) and 50 ms
   (Node), each bounded by the larger of an absolute figure and five times `main`'s own call; 0.10 to 0.47 of `main`'s
   call on summaries of 10,000 claims (0.48 to 1.42 in Node at three times the size). Line-heavy diffs cost more, since
@@ -245,12 +245,16 @@ harnesses, capsule mint and verify, and charon could read differently if re-run.
 rebuilt: 53,246 characters (24,335 on `main`), `bookmarklet.min.js` sha256 `3659b422…` (terser 5.46.0), checked in CI
 without terser (its hash against the README's line) and in a stub page against the port. CPython 3.14.2 here has no
 pytest and no numpy of its own; the three PATH-2a modules ran there under real pytest 9.0.3 (3.12's pure-Python
-packages on `PYTHONPATH`, `styxx` registered as a bare package): 455 passed, as on 3.12.10. Process slips on record: the fifth
+packages on `PYTHONPATH`, `styxx` registered as a bare package): 487 passed, as on 3.12.10. Process slips on record: the fifth
 pass's corrections note uses a word the project's text rules forbid, as an ordinal, in one sentence (a committed note,
 not edited); the eighth pass ran `sed -i` on `styxx/diffgate.py`, against the task's rule (a byte comparison showed no
 other change); the ninth pass wrote one scratch script through a shell heredoc that halved its backslashes and broke
 an uncommitted test file, rebuilt before any commit; the tenth pass wrote three scratch scripts through heredocs
-again, two of which failed before writing anything and one of which wrote a scratch driver that did not parse.
+again, two of which failed before writing anything and one of which wrote a scratch driver that did not parse; the
+eleventh pass's note uses that word three times (twice in the lead's phrase for DECIDE's argument, once quoting the
+reviews' verdict; a committed note, not edited), one of its code commits carried it in a comment that the next commit
+rewords, both because the word check ran after the commit in one chained command, and two of its scratch edits
+went through a shell heredoc again, each failing its own assertion before writing anything.
 
 ## [Unreleased] — two tests that failed on Windows for reasons outside the code under test (#185, #186)
 
