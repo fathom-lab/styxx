@@ -1172,17 +1172,26 @@ HOSTILE = {
 }
 
 
+def _hostile_inputs() -> list:
+    """#161's reproductions; every other one with a sentence main reads as a `tests_pass` claim, a kind the overlay has
+    no tag for, so that an APPLY that looked a decision up for a claim outside reach would be seen (a mutation check
+    of this pass found that, without such a claim, the test could not tell that edit from the head)."""
+    return [(c["id"], c["summary"] + (" All tests pass." if n % 2 else ""), c["diff"])
+            for n, c in enumerate(R.repro_cases())]
+
+
 @pytest.fixture(scope="module")
 def mains(M):
-    """main's live record for each of #161's reproductions, in both strict modes, and the same as a dict."""
+    """main's live record for each of those inputs, in both strict modes, and the same as a dict."""
     out = []
-    for c in R.repro_cases():
+    for _id, summary, diff in _hostile_inputs():
         for strict in (False, True):
             try:
-                g = M.gate_diff_text(c["summary"], c["diff"], strict=strict)
+                g = M.gate_diff_text(summary, diff, strict=strict)
             except Exception:
                 continue
-            out.append((c["summary"], c["diff"], strict, g, g.to_dict()))
+            out.append((summary, diff, strict, g, g.to_dict()))
+    assert sum(any(c.kind == "tests_pass" for c in x[3].claims) for x in out) > 400
     return out
 
 
@@ -1236,7 +1245,7 @@ def test_what_apply_does_not_catch_leaves_the_record_as_main_made_it(mains):
 def test_a_hostile_decide_cannot_leave_the_relation_port(work, tmp_path):
     """The same in the port: check_path2a.js --hostile hands _p2aApply main's record and each DECIDE of its own list
     (ones that change their copy, return junk, a Proxy that answers differently on each read, or throw)."""
-    items = [{"id": c["id"], "summary": c["summary"], "diff": c["diff"]} for c in R.repro_cases()]
+    items = [{"id": i, "summary": s, "diff": d} for i, s, d in _hostile_inputs()]
     (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=True), encoding="utf-8")
     node("--hostile", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "hostile.json")
     out = json.loads((tmp_path / "hostile.json").read_text(encoding="utf-8"))
