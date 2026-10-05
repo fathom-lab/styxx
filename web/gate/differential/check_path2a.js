@@ -1,6 +1,6 @@
 // PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30,
 // NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30,
-// NOTE_path2a_sixth_pass_2026_09_30 and NOTE_path2a_seventh_pass_2026_09_30): the port's
+// NOTE_path2a_sixth_pass_2026_09_30, NOTE_path2a_seventh_pass_2026_09_30 and NOTE_path2a_ninth_pass_2026_10_04): the port's
 // half of the committed PATH-2a checks, run by tests/test_diffgate_path2a*.py, which write IN (a JSON list of
 // {id, summary, diff}) and read OUT.
 //

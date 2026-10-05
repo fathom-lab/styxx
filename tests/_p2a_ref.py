@@ -248,3 +248,98 @@ def phrase_key(why: str, phrases: dict) -> str | None:
         if rest.startswith(p + ". main's reading: "):
             return k
     return None
+
+
+# ---- the cross-port bar (C), as NOTE_path2a_ninth_pass_2026_10_04 restates it --------------------------------------
+
+FALLBACKS = ("unreproduced", "unparsed", "error")     # phrases for a reading the overlay failed to reproduce or make
+
+
+def final(c: dict, phrases: dict) -> tuple:
+    """A claim as bar C compares two final lists: kind, verdict and detail, and, where the overlay wrote the reason,
+    its phrase key and defect tag. Not the text and not main's own reason: main's two ports cut and strip a claim's
+    text differently and print some reasons differently, and the overlay copies main's reason verbatim."""
+    key = phrase_key(c["why"], phrases)
+    tag = c["why"].split(" withheld by PATH-2a (", 1)[1].split("): ", 1)[0] if key else None
+    return c["kind"], c["verdict"], json.dumps(c["detail"], sort_keys=True), key, tag
+
+
+def how_lists_differ(a: list, x: list):
+    """None where main's two claim lists are the same (one length; the same kind, verdict and detail at each
+    position). Else the side that parts them: "description" (another length, or a kind or a detail apart: the two
+    ports read different claims from the description) or "diff" (the same kinds and details, a verdict apart: the two
+    ports decide one claim apart on the diff)."""
+    def kd(c):
+        return c["kind"], json.dumps(c["detail"], sort_keys=True)
+    if len(a) != len(x) or any(kd(c) != kd(u) for c, u in zip(a, x)):
+        return "description"
+    return None if all(c["verdict"] == u["verdict"] for c, u in zip(a, x)) else "diff"
+
+
+def bar_c(rows: list, phrases: dict) -> tuple:
+    """Bar C over rows {id, a, b, ja, jb, strict}: main's and the branch's Python records, the same in the port, and
+    under --strict the four gate verdicts in that order; a row with "raises" is one where a main raises, and is only
+    counted. Returns (counts, broken, ids).
+    C(ii), `broken`: an input where main's two lists are the same and the two final lists, or the two gate verdicts in
+    either strict mode, are not; and any claim either port withheld with a fallback phrase.
+    C(iii), `counts`: the inputs where main's lists differ, by side, and on them how often the two gate verdicts differ
+    under main and under the overlay, in each strict mode; `ids` names the inputs where main's gates agree and the
+    overlay's do not."""
+    import collections
+    c = collections.Counter({k: 0 for k in ("inputs", "a main raises", "lists equal", "lists equal, a claim withheld",
+                                            "lists differ, description side", "lists differ, diff side")})
+    for mode in ("no --strict", "--strict"):
+        for k in ("gates differ under main", "gates differ under the overlay", "main agrees, the overlay differs",
+                  "main differs, the overlay agrees"):
+            c[mode + ": " + k] = 0
+    broken, ids = [], {"no --strict": [], "--strict": []}
+    for r in rows:
+        c["inputs"] += 1
+        if r.get("raises"):
+            c["a main raises"] += 1
+            continue
+        A, B, X, Y = (r[k]["claims"] for k in ("a", "b", "ja", "jb"))
+        for port, news in (("python", B), ("port", Y)):
+            if any(phrase_key(y["why"], phrases) in FALLBACKS for y in news):
+                broken.append((r["id"], port + ": a fallback phrase"))
+        gates = {"no --strict": (r["a"]["verdict"], r["ja"]["verdict"], r["b"]["verdict"], r["jb"]["verdict"]),
+                 "--strict": tuple(r["strict"])}
+        how = how_lists_differ(A, X)
+        if how is None:
+            c["lists equal"] += 1
+            c["lists equal, a claim withheld"] += any(phrase_key(y["why"], phrases) for y in B)
+            if [final(y, phrases) for y in B] != [final(y, phrases) for y in Y]:
+                broken.append((r["id"], "the final lists differ where main's two lists are the same"))
+            for mode, (ma, mj, na, nj) in gates.items():
+                if ma != mj or na != nj:
+                    broken.append((r["id"], mode + ": the gate verdicts differ where main's two lists are the same"))
+            continue
+        c["lists differ, " + how + " side"] += 1
+        for mode, (ma, mj, na, nj) in gates.items():
+            c[mode + ": gates differ under main"] += ma != mj
+            c[mode + ": gates differ under the overlay"] += na != nj
+            c[mode + ": main differs, the overlay agrees"] += ma != mj and na == nj
+            if ma == mj and na != nj:
+                c[mode + ": main agrees, the overlay differs"] += 1
+                ids[mode].append(r["id"])
+    return dict(c), broken, ids
+
+
+def bar_c_rows(main_mod, new_mod, items: list, js: dict) -> list:
+    """The rows `bar_c` reads, for items {id, summary, diff} and the port's --decisions output keyed by id."""
+    rows = []
+    for it in items:
+        j = js[it["id"]]
+        try:
+            a = main_mod.gate_diff_text(it["summary"], it["diff"]).to_dict()
+            sa = main_mod.gate_diff_text(it["summary"], it["diff"], strict=True).verdict
+        except Exception:
+            a = None
+        if a is None or "error" in j["main"]:
+            rows.append({"id": it["id"], "raises": True})
+            continue
+        b = new_mod.gate_diff_text(it["summary"], it["diff"]).to_dict()
+        sb = new_mod.gate_diff_text(it["summary"], it["diff"], strict=True).verdict
+        rows.append({"id": it["id"], "a": a, "b": b, "ja": j["main"], "jb": j["new"],
+                     "strict": (sa, j["strict"]["main"], sb, j["strict"]["new"])})
+    return rows

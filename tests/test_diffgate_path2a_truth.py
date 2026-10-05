@@ -1,5 +1,6 @@
 """PATH-2a coverage (B), judged by truth (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30,
-NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30).
+NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30; the later
+passes' notes are named where their tests are).
 
 Truth comes from each case's base/head file model (tests/_p2a_truth.py), never from the diff. A decided claim is
 ATTRIBUTABLE when main's verdict is false by truth and a counterfactual variant of main without #97, without #121,
@@ -51,6 +52,9 @@ DECIDED = ("VERIFIED", "CONTRADICTED")
 # the two paths' case, outside the three defects, 13 CONTRADICTED and 13 VERIFIED, and 4 right CONTRADICTEDs), and the
 # CONTRADICTEDs the case-pair clause kept are decided (2 false counts withheld as `count`, 2 right scopes as `shape`):
 # +34 withheld, +28 false other, +6 right lost, in each port; no attributable verdict moves. B-2 moves nothing here.
+# Pass 9 (NOTE_path2a_ninth_pass_2026_10_04): the C-1 switch is removed, and no figure here moves. The switch did keep
+# attributable verdicts under a U+FEFF before the summary, or a sentence naming styxx beside U+2028, which main's two
+# ports read as they read the plain summary: the transformed worlds at the end of this module.
 PINNED = {"cases": 1706, "main raises": 0, "decided": 7614, "false": 1535, "attributable": 1206, "abstained": 1591,
           "attributable abstained": 1206, "right": 5897, "right lost": 253, "undecided": 182,
           "undecided abstained": 39, "unjudged": 0, "unjudged abstained": 0, "false other": 329,
@@ -165,16 +169,16 @@ def _port_records(port_path, items, tmp_path, tag):
     return {d["id"]: d["rec"] for d in json.loads(out.read_text(encoding="utf-8"))}
 
 
-def test_every_attributable_false_verdict_abstains_in_the_port(world, tmp_path):
-    """In the port's own terms (B-2): main's port and the four variants built from it read each case, truth judges
-    the port's own claims (its own details), and every claim the port's variants show attributable must be
-    UNCHECKABLE in this port."""
+def _port_truth(cases, tmp_path):
+    """The port judged in its own terms over cases {id, summary, diff, model}: main's port and the four variants built
+    from it read each case, truth judges the port's own claims (its own details), and `tally` counts what this port
+    withholds. Returns (counts, misses, the judged claims per case, None where main's port raises)."""
     if NODE is None:
         if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
             pytest.fail("node is not on PATH under CI; the port half of the coverage check did not run")
         pytest.skip("node is not on PATH; the port half of the coverage check cannot run here")
-    items = [{"id": str(k), "summary": it["summary"], "diff": it["diff"]} for k, (it, _a, _c) in enumerate(world)]
-    (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=False), encoding="utf-8")
+    items = [{"id": str(k), "summary": it["summary"], "diff": it["diff"]} for k, it in enumerate(cases)]
+    (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=True), encoding="utf-8")
     main_port = _port_records(R.main_port_path(tmp_path), items, tmp_path, "main")
     new_port = _port_records(R.PORT, items, tmp_path, "new")
     var = {}
@@ -183,13 +187,13 @@ def test_every_attributable_false_verdict_abstains_in_the_port(world, tmp_path):
         p.write_bytes(T.port_variant_source(R.main_port_source(), v).encode("utf-8"))
         var[v] = _port_records(p, items, tmp_path, v)
     counts = collections.Counter({k: 0 for k in ("cases", "main raises")})
-    misses = []
-    same_as_python = collections.Counter()
-    for k, (it, a, _claims) in enumerate(world):
+    misses, rows = [], []
+    for k, it in enumerate(cases):
         counts["cases"] += 1
         jm = main_port[str(k)]
         if "error" in jm:
             counts["main raises"] += 1
+            rows.append(None)
             continue
         vs = {}
         for v in T.PORT_VARIANTS:
@@ -200,17 +204,61 @@ def test_every_attributable_false_verdict_abstains_in_the_port(world, tmp_path):
                        [(c["kind"], c["text"], c["detail"]) for c in jm["claims"]], (v, it["id"])
         judged = judge(it["model"], jm["claims"], vs)
         tally(counts, misses, it, judged, new_port[str(k)]["claims"])
-        if a is not None:
+        rows.append(judged)
+    return dict(counts), misses, rows
+
+
+def test_every_attributable_false_verdict_abstains_in_the_port(world, tmp_path):
+    """In the port's own terms (B-2): main's port and the four variants built from it read each case, truth judges
+    the port's own claims (its own details), and every claim the port's variants show attributable must be
+    UNCHECKABLE in this port."""
+    counts, misses, rows = _port_truth([it for it, _a, _c in world], tmp_path)
+    same_as_python = collections.Counter()
+    for (_it, a, _claims), judged in zip(world, rows):
+        if a is not None and judged is not None:
             for i, x, _t, who in judged:
                 if who:
                     same = i < len(a["claims"]) and all(a["claims"][i][f] == x[f]
                                                         for f in ("kind", "verdict", "why", "text", "detail"))
                     same_as_python["same main record in Python" if same else "Python's main reads it otherwise"] += 1
-    print("port truth:", json.dumps(dict(counts), indent=1), dict(same_as_python))
+    print("port truth:", json.dumps(counts, indent=1), dict(same_as_python))
     for m in misses:
         print("MISS", json.dumps(m, ensure_ascii=True))
     assert misses == []
-    assert dict(counts) == PINNED_PORT
+    assert counts == PINNED_PORT
+
+
+# P-2 (NOTE_path2a_ninth_pass_2026_10_04): file models, written by hand from each case's diff, for the three of #161's
+# reproductions on which the port's main alone gives a false tests verdict through #101: it counts the `def test_` that
+# follows a U+FEFF (JavaScript's white space, not CPython's) beside a changed test. The fixture carries no model for
+# them, so the pinned port truth above never judged them, and up to the eighth pass the C-1 switch kept the port's
+# false CONTRADICTED on each (the two views count apart there).
+_T_A = "def test_a():\n    pass\n"
+PORT_161_MODELS = {
+    "path2:r1-a-bom-on-a-changed-test-does-not-hide-a-new-one": {
+        "base": {"tests/test_bom.py": _T_A},
+        "head": {"tests/test_bom.py": chr(0xFEFF) + _T_A + "def test_b():\n    pass\n"}},
+    "path2:r1-a-bom-on-a-changed-test-beside-two-new-ones": {
+        "base": {"tests/test_bom.py": _T_A},
+        "head": {"tests/test_bom.py": chr(0xFEFF) + _T_A + "def test_b():\n    pass\ndef test_c():\n    pass\n"}},
+    "path2:y2-a-changed-test-beside-a-created-bom-test-under-bare-hunks": {
+        "base": {"tests/test_a.py": "def test_old():\n    pass\n"},
+        "head": {"tests/test_a.py": "def test_old(tmp_path):\n    pass\n",
+                 "tests/test_b.py": chr(0xFEFF) + "def test_new():\n    pass\n"}},
+}
+
+
+def test_the_port_withholds_its_attributable_verdicts_on_161s_bom_reproductions(tmp_path):
+    """Judged by truth, in the port's own terms: four of the port's verdicts on these three inputs are false through
+    #101 (a counted `def test_` is a changed test), and each is withheld; the port's three other decided verdicts
+    there are right, and one of them is lost (y2's count of 0 against one new test, `split`)."""
+    cases = [dict(c, model=PORT_161_MODELS[c["id"]]) for c in R.repro_cases() if c["id"] in PORT_161_MODELS]
+    assert len(cases) == 3
+    counts, misses, _rows = _port_truth(cases, tmp_path)
+    print("port truth on #161's BOM reproductions:", json.dumps(counts))
+    assert misses == []
+    assert (counts["attributable"], counts["attributable abstained"]) == (4, 4), counts
+    assert (counts["right"], counts["right lost"]) == (3, 1), counts
 
 
 def test_every_attributable_false_verdict_abstains_at_the_git_door(monkeypatch):
@@ -354,11 +402,6 @@ PY_PLANTS = [
     ("continuations never joined","            hit = hit or head == \"-\"\n",
      "            hit = hit or head == \"-\"\n            acc = acc[-1:]\n"),
     # pass 6 (NOTE_path2a_sixth_pass_2026_09_30): each new rule, dropped
-    ("C-1's rule dropped", '    if c.verdict == "CONTRADICTED" and f.apart(f.kinds()):\n        return None\n', ""),
-    ("C-1's diff part dropped", "    if _p2a_apart_diff(f, kinds):\n        return True\n", ""),
-    ("C-1's DECLARE-1 fence part dropped", '    if "styxx" in summary and (', "    if False and ("),
-    ("C-1's sentence part dropped", "    if not _P2A_BAD_RX.search(summary):\n        return False\n    low",
-     "    if True:\n        return False\n    low"),
     ("the unchanged lines dropped",
      '        return self._get("unchanged", lambda: _p2a_context(self.diff_text, self.fine())\n'
      '                         + _p2a_joined(self.diff_text, " "))',
@@ -366,15 +409,12 @@ PY_PLANTS = [
     ("a name defined again kept",
      '    if f.redefines(name):                 # B-1 (NOTE_path2a_sixth_pass_2026_09_30)\n        return "again", "#101"\n',
      ""),
-    # pass 7 (NOTE_path2a_seventh_pass_2026_09_30): each new rule, dropped or loosened (its case-pair clause and its
-    # ordered triggers went at pass 8; their plants are replaced by pass 8's below)
-    ("B-3's claimed-name clause dropped",
-     "                    if _P2A_WIDE.match(line, e) is not None and line[r:e] in names:\n                        return True\n",
-     ""),
+    # pass 7 (NOTE_path2a_seventh_pass_2026_09_30): each new rule that is still there, dropped or loosened (its
+    # case-pair clause and ordered triggers went at pass 8, and its claimed-name clause at pass 9, with the switch)
     ("O-11 off", "        self.summary = _P2A_EMOJI_RX.sub(_P2A_EMOJI_AS, summary)", "        self.summary = summary"),
     ("a token that is a piece not looked up", "    got = {w for w in words if w in pieces}\n", "    got = set()\n"),
-    # pass 8 (NOTE_path2a_eighth_pass_2026_10_01): each new rule, dropped or loosened
-    ("C-1's line-break clause dropped", "                if _p2a_open(line):\n                    return True\n", ""),
+    # pass 8 (NOTE_path2a_eighth_pass_2026_10_01): each new rule that is still there, dropped or loosened (its
+    # line-break clause and its windows went at pass 9, with the switch)
     ("B-1's case-count clause dropped",
      "    if ca < a and (_P2A_DIGITS.fullmatch(claimed) is None or ca <= _p2a_int(claimed) <= a):",
      "    if False:"),
@@ -383,9 +423,6 @@ PY_PLANTS = [
      "            wide = True"),
     ("B-1's scripts without case read as cased", "                if _P2A_NEVER_RX.match(k[i]) is None:",
      "                if True:"),
-    ("B-2's count window dropped", '_P2A_WINDOWS = (("file", "count"), ', "_P2A_WINDOWS = ("),
-    ("B-2's window without the character before the match", "    x = i - 1 if i > a else a\n", "    x = i\n"),
-    ("B-2's tests window without its noun", "                    y = r.end() + len(noun) + 3", "                    pass"),
 ]
 # Plants that cannot change a record, said so rather than hidden: none this pass. Pass 2's one (a clause that never
 # decided alone) went with the per-set comparison it sat behind (NOTE_path2a_third_pass_2026_09_30, B-2).
@@ -409,10 +446,9 @@ def _pairs_catch(mod):
     # pass 5 (NOTE_path2a_fifth_pass_2026_09_30): the cross-port pins' Python decisions, some of them on claims only
     # main's Python reads (a path outside ASCII), which no pinned pair can hold for both ports
     from tests.test_diffgate_path2a import XPORT_CASES
-    from tests.test_diffgate_path2a import _want
     for cid, s, d, want_py, *_rest in XPORT_CASES:
         got = [(c.verdict, R.phrase_key(c.why, N._P2A_PHRASES)) for c in mod.gate_diff_text(s, d).claims]
-        if got != _want(want_py, R.main_module().gate_diff_text(s, d).to_dict()):
+        if got != want_py:
             return "cross-port pin " + cid
     return None
 
@@ -497,29 +533,20 @@ JS_PLANTS = [
     ("no NFKC symbols in the port",
      "        if (_p2aWideName(line, j, r, e)) return [out, true];   // every claimed name is defined now\n", ""),
     # pass 6 (NOTE_path2a_sixth_pass_2026_09_30): each new rule, dropped from the port alone
-    ("no C-1 rule in the port", '  if (c.verdict === "CONTRADICTED" && f.apart(f.kinds())) return null;\n', ""),
-    ("no C-1 diff part in the port", "  if (_p2aApartDiff(f, kinds)) return true;\n", ""),
-    ("no C-1 fence part in the port", '  if (s.includes("styxx") && (', "  if (false && ("),
     ("no unchanged lines in the port",
      '    unchanged: () => get("unchanged", () => _p2aContext(diffText, f.coarse()).concat(_p2aJoined(diffText, " "))),',
      "    unchanged: () => [],"),
     ("no again rule in the port", '  if (f.redefines(name)) return ["again", "#101"];   // B-1 (NOTE_path2a_sixth_pass_2026_09_30)\n',
      ""),
-    # pass 7 (NOTE_path2a_seventh_pass_2026_09_30): each new rule, dropped from the port alone (its case-pair clause and
-    # its ordered triggers went at pass 8; their plants are replaced by pass 8's below)
-    ("no claimed-name clause in the port",
-     "          if (e < line.length && line.charCodeAt(e) >= 0x80 && names.has(line.slice(r, e))) return true;\n", ""),
+    # pass 7 (NOTE_path2a_seventh_pass_2026_09_30): each new rule that is still there, dropped from the port alone
     ("no O-11 in the port", "    summary: String(summaryText).split(_P2A_EMOJI_RX).join(_P2A_EMOJI_AS),",
      "    summary: String(summaryText),"),
     ("no piece lookup in the port", "  const got = new Set([...words].filter(w => pieces.has(w)));", "  const got = new Set();"),
-    # pass 8 (NOTE_path2a_eighth_pass_2026_10_01): each new rule, dropped from the port alone
-    ("no line-break clause in the port", "        if (_p2aOpen(line)) return true;\n", ""),
+    # pass 8 (NOTE_path2a_eighth_pass_2026_10_01): each new rule that is still there, dropped from the port alone
     ("no case-count clause in the port",
      '  if (ca < a && (!_P2A_DIGITS.test(claimed) || (ca <= _p2aInt(claimed) && _p2aInt(claimed) <= a))) return ["case_count", "#121"];\n',
      ""),
     ("the port's case classes read as one placeholder", "const read = (ch, i) => (w[i] !== ", "const read = (ch, i) => (true || w[i] !== "),
-    ("no count window in the port", 'const _P2A_WINDOWS = [["file", "count"], ', "const _P2A_WINDOWS = ["),
-    ("the port's window without the character before the match", "  const x = i > a ? i - 1 : a;", "  const x = i;"),
 ]
 
 
@@ -563,10 +590,10 @@ def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
                 new_disagreements += (y["verdict"], R.phrase_key(y["why"], N._P2A_PHRASES)) != \
                     (jy["verdict"], R.phrase_key(jy["why"], N._P2A_PHRASES))
     if new_disagreements == 0:
-        # Pass 6 (NOTE_path2a_sixth_pass_2026_09_30, C-1): where the two ports' views count `def test_` sites apart, a
-        # CONTRADICTED stands in both, and a VERIFIED is read by one main only, so a plant of the port's own view
-        # (_P2A_OWN) can no longer split a claim both mains read alike. It is caught where it moves the port's own
-        # decision on a claim only its main decides so: PORT_ONLY_CASES, against the real port.
+        # A plant of the port's own view (_P2A_OWN) moves a decision only where the two line views count `def test_`
+        # sites apart, and there main's two ports mostly give the tests claim different verdicts, so it may split no
+        # claim both mains read alike on these inputs. It is caught where it moves the port's own decision on a claim
+        # only its main decides so: PORT_ONLY_CASES, against the real port (NOTE_path2a_sixth_pass_2026_09_30).
         (tmp_path / "own.json").write_text(json.dumps(PORT_ONLY_CASES, ensure_ascii=False), encoding="utf-8")
         for port, tag in ((R.PORT, "real"), (planted, "planted")):
             r = subprocess.run([NODE, str(R.DIFFERENTIAL / "check_path2a.js"), "--records", str(port),
@@ -579,7 +606,7 @@ def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
     assert new_disagreements > 0, name
 
 
-# Claims only one main decides so (NOTE_path2a_sixth_pass_2026_09_30, C-1): a created test after U+FEFF, which the port
+# Claims only one main decides so (NOTE_path2a_sixth_pass_2026_09_30): a created test after U+FEFF, which the port
 # counts and CPython does not, so "Added 2 tests." is VERIFIED in the port only; the real port withholds it (`tests`: a
 # changed test is among the two).
 PORT_ONLY_CASES = [
@@ -748,14 +775,18 @@ def test_the_fourth_reviews_scope_reproductions(monkeypatch):
     assert len(seen) == 4, seen
 
 
-# ---- pass 8: the seventh review's two transforms of the builder's world ----------------------------------------------
+# ---- passes 8 and 9: the reviews' transforms of the builder's world ---------------------------------------------------
 
 def _transformed(how: str) -> list:
-    """NOTE_path2a_eighth_pass_2026_10_01, B-1 and B-2, the seventh review's transforms of the generated cases: `cjk2`
-    adds two changed docs whose names differ at CJK code points only (no case: 8eead84f read them as a case pair and kept
-    every CONTRADICTED beside a count claim), and a right count sentence where main reads no count claim; `insent`
-    writes "(naive)" with an i-diaeresis after each word of a tests or count claim, inside the claim's own sentence but
-    outside the window a template's match can cover (8eead84f kept every #121 count and #101 tests CONTRADICTED so)."""
+    """The reviews' transforms of the generated cases. NOTE_path2a_eighth_pass_2026_10_01, B-1 and B-2 (the seventh
+    review's): `cjk2` adds two changed docs whose names differ at CJK code points only (no case: 8eead84f read them as a
+    case pair and kept every CONTRADICTED beside a count claim), and a right count sentence where main reads no count
+    claim; `insent` writes "(naive)" with an i-diaeresis after each word of a tests or count claim, inside the claim's
+    own sentence but away from where its number is read (8eead84f kept every #121 count and #101 tests CONTRADICTED
+    so). NOTE_path2a_ninth_pass_2026_10_04, P-4 (the eighth coverage review's lead, which a probe reproduced): `bom`
+    writes U+FEFF before the summary, as a summary file saved with a byte-order mark reaches the CLI, and `styxx`
+    appends a sentence naming styxx beside U+2028; main's two ports read both as they read the plain summary, and at
+    3bdc3bc4 the C-1 switch kept 139 and 214 attributable false CONTRADICTEDs under them, in each port."""
     import random
     import re
     rng = random.Random(7)
@@ -773,22 +804,33 @@ def _transformed(how: str) -> list:
                 a = {"claims": [{"kind": "files_changed_count"}]}
             if not any(x["kind"] == "files_changed_count" for x in a["claims"]):
                 c["summary"] = c["summary"] + f"\n{len(T.changed(c['model']))} files changed."
-        else:
+        elif how == "insent":
             c["summary"] = re.sub(r"(\b(?:tests?|files? changed)\b)", r"\1 (na" + chr(0xEF) + "ve)", c["summary"])
+        elif how == "bom":
+            c["summary"] = chr(0xFEFF) + c["summary"]
+        else:
+            assert how == "styxx", how
+            c["summary"] = c["summary"] + "\nChecked with styxx." + chr(0x2028) + "Thanks."
         out.append(c)
     return out
 
 
-@pytest.mark.parametrize("how", ["cjk2", "insent"])
-def test_the_seventh_reviews_transforms_keep_no_attributable_verdict(how):
-    """Every attributable false verdict withheld in Python on the transformed world. On 8eead84f the seventh review
-    counted 19 kept under `cjk2` (16 tests and 3 count CONTRADICTEDs) and 213 under `insent` (every count and 16 of 17
-    tests CONTRADICTEDs)."""
+# The attributable false verdicts of each transformed world, in Python and in the port: every one is withheld.
+TRANSFORMED = {"cjk2": (1073, 969), "insent": (1193, 1087), "bom": (1175, 1087), "styxx": (1193, 1087)}
+
+
+@pytest.mark.parametrize("how", sorted(TRANSFORMED))
+def test_the_reviews_transforms_keep_no_attributable_verdict(how, tmp_path):
+    """Every attributable false verdict withheld on the transformed world, in Python and, judged in its own terms, in
+    the port. On 8eead84f the seventh review counted 19 kept under `cjk2` (16 tests and 3 count CONTRADICTEDs) and 213
+    under `insent` (every count and 16 of 17 tests CONTRADICTEDs); on 3bdc3bc4 a probe counted 139 kept under `bom` and
+    214 under `styxx`, in each port."""
     M = R.main_module()
     V = variants()
     counts = collections.Counter()
     misses = []
-    for it in _transformed(how):
+    cases = _transformed(how)
+    for it in cases:
         try:
             a = M.gate_diff_text(it["summary"], it["diff"]).to_dict()
         except Exception:
@@ -802,7 +844,9 @@ def test_the_seventh_reviews_transforms_keep_no_attributable_verdict(how):
         b = N.gate_diff_text(it["summary"], it["diff"]).to_dict()
         assert R.relation(a, b, False, N._P2A_PHRASES) == [], it["id"]
         tally(counts, misses, it, judge(it["model"], a["claims"], vs), b["claims"])
-    print(how, json.dumps(dict(counts), indent=1))
-    for m in misses[:20]:
+    port_counts, port_misses, _rows = _port_truth(cases, tmp_path)
+    print(how, "python:", json.dumps(dict(counts)), "port:", json.dumps(port_counts))
+    for m in (misses + port_misses)[:20]:
         print("MISS", json.dumps(m, ensure_ascii=True))
-    assert counts["attributable"] > 900 and misses == []
+    assert misses == [] and port_misses == []
+    assert (counts["attributable"], port_counts["attributable"]) == TRANSFORMED[how]

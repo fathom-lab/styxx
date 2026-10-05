@@ -3,7 +3,7 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`40bb973b3cfce08c48e25b202c311be9664f6eacaee55d7003021e808d5e1eb9` (LF line endings; a wheel
+`cb99a68594e8595e381a755e64cf729190f5e05e785d17fd87056031987d0aae` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -42,8 +42,8 @@ and the never-read count to the page.
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 f873dc6a9cc65179a1355f2d1c0130c383e50d92c97497e593e8b2f9ebb5183a   56,575 chars
-    bookmarklet.href.txt  sha256 d0133602b703ab181fff6c81617f8e77234de5fa7b2dd2dd2fee8261a9e5beb8   56,586 chars
+    bookmarklet.min.js    sha256 c72ae2db89bd381e3075df1fe5bdf016703536bda8184e843bdc607dc4322861   51,838 chars
+    bookmarklet.href.txt  sha256 10204b2777c7332e01d34c0aae45ff43b7aeb30529fa15ba3705b4ce21f4309e   51,849 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file;
