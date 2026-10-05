@@ -1860,38 +1860,36 @@ function _p2aDecisions(seen, facts) {
   return out;
 }
 
-// APPLY's own tools (NOTE_path2a_eleventh_pass_2026_10_05), taken when the module loads. After DECIDE returns, APPLY
-// calls no method an object or an array inherits: DECIDE reaches what every object and every array inherits from its
-// argument, and at 16daa725 a phrase put on the one, or an `includes`, `some` or `push` put on the other, rewrote the
-// record. So APPLY reads by index on arrays it or main built, compares with ===, finds a phrase key in this list of
-// the table's own keys (APPLY's two fallback phrases left out: DECIDE never names them), and stores only into
-// elements it filled before DECIDE ran. Not covered, as in the Python: code that reaches around its argument (an inherited method patched
-// and left so into a later call, where main's own reader meets it before APPLY does; a function built from a string).
+// APPLY (_p2aApply; NOTE_path2a_tenth_pass_2026_10_05): the only code of this block that touches main's record `g`.
+// It hands `decide` a copy and takes from what comes back only an array of 3-element arrays of a number that is the
+// index of a claim in reach, a key of _P2A_PHRASES other than APPLY's own two (`error`, `malformed`: DECIDE never
+// names them) and a tag of that claim's kind; what it keeps is the table's own phrase and tag. Anything else `decide`
+// returned is ignored. If it throws, every claim in reach is withheld with the phrase `error`; if it returns something
+// that is not an array, with `malformed`. For a `decide` that uses what it is handed as data and calls what it is
+// given, whatever data it returns, the record leaves here as main's but for claims in reach turned UNCHECKABLE with a
+// reason of the fixed form, and the gate verdict is main's formula over the final claims.
+// NOTE_path2a_eleventh_pass_2026_10_05: after DECIDE returns, APPLY calls no method an object or an array inherits.
+// DECIDE reaches what every object and every array inherits from its argument, and at 16daa725 a phrase put on the
+// one, or an `includes`, `some` or `push` put on the other, rewrote the record. So APPLY reads by index on arrays it or
+// main built, compares with ===, tests an array with the Array.isArray it took when the module loaded, finds a phrase
+// key in a list of the table's own keys read at load, and stores only into elements it filled before DECIDE ran. Not
+// covered, as in the Python: code that reaches around its argument (an inherited method patched and left so into a
+// later call, where main's own reader meets it before APPLY does; a function built from a string).
 const _p2aIsArray = Array.isArray;
 const _P2A_DECIDE_KEYS = [];
 for (const k in _P2A_PHRASES) if (k !== "error" && k !== "malformed") _P2A_DECIDE_KEYS.push(k);
 
 function _p2aApply(g, strict, decide) {
-  // APPLY (NOTE_path2a_tenth_pass_2026_10_05): the only code of this block that touches main's record `g`. It hands
-  // `decide` a copy and takes from what comes back only an array of 3-element arrays of a number that is the index of
-  // a claim in reach, a key of _P2A_PHRASES other than APPLY's own two, and a tag of that claim's kind; what is kept
-  // is the table's own phrase and tag. Anything else `decide` returned is ignored. If it throws, every claim in reach
-  // is withheld with the phrase `error`; if it returns something that is not an array, with `malformed`. For a
-  // `decide` that uses what it is handed as data and calls what it is given, whatever data it returns, the record
-  // leaves here as main's but for claims in reach turned UNCHECKABLE with a reason of the fixed form, and the gate
-  // verdict is main's formula over the final claims; code that reaches around its argument is not covered (above).
   const claims = g.claims, n = claims.length;
   const reach = [], pickPhrase = [], pickTag = [];   // one element per claim, each filled before DECIDE runs
-  let any = false;
+  let any = false, fallback = null, moved = false;
   for (let k = 0; k < n; k++) {
-    const c = claims[k];
-    reach.push(_P2A_REACH.has(c.kind + "|" + c.verdict));
+    reach.push(_P2A_REACH.has(claims[k].kind + "|" + claims[k].verdict));
     pickPhrase.push(null);
     pickTag.push(null);
     any = any || reach[k];
   }
   if (!any) return g;                    // nothing in reach: no copy, no call, and the record is main's object
-  let fallback = null;
   try {                                  // everything `decide` made is read here, before anything is written
     const copies = [];
     for (let k = 0; k < n; k++) {
@@ -1904,24 +1902,21 @@ function _p2aApply(g, strict, decide) {
     }
     const got = decide({ claims: copies });
     if (!_p2aIsArray(got)) fallback = "malformed";
-    else {
-      for (let k = 0; k < got.length; k++) {
-        const d = got[k];
-        if (!_p2aIsArray(d) || d.length !== 3) continue;
-        const i = d[0], key = d[1], tag = d[2];
-        if (typeof i !== "number" || typeof key !== "string" || typeof tag !== "string") continue;
-        if (!(i >= 0 && i < n && i % 1 === 0) || !reach[i] || pickPhrase[i] !== null) continue;
-        const c = claims[i], tags = _P2A_TAGS[c.kind];
-        let phrase = null, own = null;
-        for (let u = 0; u < _P2A_DECIDE_KEYS.length; u++) if (_P2A_DECIDE_KEYS[u] === key) phrase = _P2A_PHRASES[key];
-        for (let u = 0; u < tags.length; u++) if (tags[u] === tag) own = tags[u];
-        if (phrase !== null && own !== null) { pickPhrase[i] = phrase; pickTag[i] = own; }
-      }
+    else for (let k = 0; k < got.length; k++) {
+      const d = got[k];
+      if (!_p2aIsArray(d) || d.length !== 3) continue;
+      const i = d[0], key = d[1], tag = d[2];
+      if (typeof i !== "number" || typeof key !== "string" || typeof tag !== "string") continue;
+      if (!(i >= 0 && i < n && i % 1 === 0) || !reach[i] || pickPhrase[i] !== null) continue;
+      const c = claims[i], tags = _P2A_TAGS[c.kind];
+      let phrase = null, own = null;
+      for (let u = 0; u < _P2A_DECIDE_KEYS.length; u++) if (_P2A_DECIDE_KEYS[u] === key) phrase = _P2A_PHRASES[key];
+      for (let u = 0; u < tags.length; u++) if (tags[u] === tag) own = tags[u];
+      if (phrase !== null && own !== null) { pickPhrase[i] = phrase; pickTag[i] = own; }
     }
   } catch (e) {                          // an abstain-only overlay that cannot read withholds, and says so
     fallback = "error";
   }
-  let moved = false;
   for (let k = 0; k < n; k++) {
     const c = claims[k];
     if (!reach[k] || (fallback === null && pickPhrase[k] === null)) continue;

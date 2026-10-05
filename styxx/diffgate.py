@@ -2805,7 +2805,7 @@ def _p2a_decisions(seen: "_P2aSeen", facts) -> list:
 
 
 # What DECIDE is handed (NOTE_path2a_eleventh_pass_2026_10_05): instances of these two classes, the block's own, with
-# __slots__ and no method, built by attribute stores. Nothing reachable from DECIDE's first argument as data is then
+# __slots__ and no method, built by attribute stores. Nothing reachable from the copy DECIDE is handed, as data, is then
 # main's: at 16daa725 each copy was a main DiffClaim, so a DECIDE that patched type(seen.claims[0]) ran its code in
 # APPLY's stores on the record, and the container's __init__ held this module in its __globals__. A patch of these two
 # classes reaches DECIDE's own copies only. Each copy holds the claim's kind, verdict and reason and the strings and
