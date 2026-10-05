@@ -209,9 +209,11 @@ def relation(a: dict, b: dict, strict: bool, phrases: dict, allow_error: bool = 
         allowed = {reason(x["verdict"], d, p, x["why"]) for d in DEFECTS[x["kind"]] for p in phrases.values()}
         if y["why"] not in allowed:
             bad.append(f"claim {i}: reason is not the overlay's form")
-        elif not allow_error and y["why"].startswith(f"{x['verdict']} withheld by PATH-2a (") and \
-                y["why"].split("): ", 1)[1].startswith(phrases["error"] + "."):
-            bad.append(f"claim {i}: the overlay's error fallback fired")
+        elif not allow_error and y["why"].startswith(f"{x['verdict']} withheld by PATH-2a ("):
+            said = y["why"].split("): ", 1)[1]
+            for k in ("error", "malformed"):      # APPLY's two fallbacks: DECIDE raised, or returned no list
+                if k in phrases and said.startswith(phrases[k] + "."):
+                    bad.append(f"claim {i}: the overlay's {k} fallback fired")
     cl = b["claims"]
     want = "FAIL" if (any(c["verdict"] == "CONTRADICTED" for c in cl)
                       or (strict and any(c["verdict"] == "UNCHECKABLE" for c in cl))) else "PASS"
@@ -252,7 +254,8 @@ def phrase_key(why: str, phrases: dict) -> str | None:
 
 # ---- the cross-port bar (C), as NOTE_path2a_ninth_pass_2026_10_04 restates it --------------------------------------
 
-FALLBACKS = ("unreproduced", "unparsed", "error")     # phrases for a reading the overlay failed to reproduce or make
+# phrases for a reading the overlay failed to reproduce or make (`malformed`: NOTE_path2a_tenth_pass_2026_10_05)
+FALLBACKS = ("unreproduced", "unparsed", "error", "malformed")
 
 
 def final(c: dict, phrases: dict) -> tuple:

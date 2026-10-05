@@ -1,6 +1,7 @@
 // PATH-2a (NOTE_path2a_abstain_overlay_2026_09_30, NOTE_path2a_second_pass_2026_09_30,
 // NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30,
-// NOTE_path2a_sixth_pass_2026_09_30, NOTE_path2a_seventh_pass_2026_09_30 and NOTE_path2a_ninth_pass_2026_10_04): the port's
+// NOTE_path2a_sixth_pass_2026_09_30, NOTE_path2a_seventh_pass_2026_09_30, NOTE_path2a_ninth_pass_2026_10_04 and
+// NOTE_path2a_tenth_pass_2026_10_05): the port's
 // half of the committed PATH-2a checks, run by tests/test_diffgate_path2a*.py, which write IN (a JSON list of
 // {id, summary, diff}) and read OUT.
 //
@@ -38,6 +39,12 @@
 //   node check_path2a.js --abstain PORT IN OUT     the overlay of PORT on a record given with each input ({id,
 //                                                  summary, diff, gate}), not main's: a planted port's reading of a
 //                                                  reason main never writes (C-2)
+//   node check_path2a.js --hostile REF IN OUT      this port's APPLY (_p2aApply) on main's record with DECIDE functions
+//                                                  written to do harm: ones that change their copy, return junk, indices
+//                                                  out of range or twice, phrases and tags outside the fixed sets,
+//                                                  decisions for claims outside reach, or throw. Per function: runs,
+//                                                  records outside the relation, records equal to main's, claims in
+//                                                  reach and withheld, by phrase (NOTE_path2a_tenth_pass_2026_10_05)
 //
 // --relation, --decisions and --lockstep take an optional last argument, the port to check (default ../diffgate.js);
 // the tests pass a planted copy there to show the checks refuse it.
@@ -56,6 +63,7 @@ function internals(file, extra = "") {
                  "_P2A_JS_SPACE", "_P2A_PY_SPACE", "_P2A_PY_BREAKS", "_P2A_DIVERGENT", "_P2A_HEADERS",
                  "_P2A_REACH_PAIRS", "_P2A_PHRASES", "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS", "_P2A_OWN",
                  "_P2A_NEUTRAL_RANGES", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw", "_p2aFound",
+                 "_p2aApply", "_p2aDecisions", "_P2A_TAGS", "_P2A_FIELDS",
                  "_P2A_EMOJI_RX", "_P2A_EMOJI_AS", "_P2A_LOWER_RUNS", "_P2A_NEVER_RANGES", "_p2aCaseCount"];
   // A name the port does not define reads undefined, so the checker also loads the ports of earlier passes (the
   // seventh pass runs its new pins against fcd3ce6a's port this way)
@@ -75,7 +83,7 @@ function record(gate, it, strict, keepUnparsed = false) {
   }
 }
 
-function relation(a, b, strict, reach, defects, phrases) {
+function relation(a, b, strict, reach, defects, phrases, allowFallback = false) {
   const bad = [];
   for (const k of Object.keys(a)) if (k !== "verdict" && k !== "claims" && JSON.stringify(a[k]) !== JSON.stringify(b[k])) bad.push("field " + k + " moved");
   if (JSON.stringify(Object.keys(a)) !== JSON.stringify(Object.keys(b))) bad.push("record keys differ");
@@ -89,7 +97,10 @@ function relation(a, b, strict, reach, defects, phrases) {
     const allowed = new Set();
     for (const d of defects[x.kind]) for (const p of Object.values(phrases)) allowed.add(`${x.verdict} withheld by PATH-2a (${d}): ${p}. main's reading: ${x.why}`);
     if (!allowed.has(y.why)) bad.push(`claim ${i}: reason is not the overlay's form`);
-    else if (y.why.split("): ").slice(1).join("): ").startsWith(phrases.error + ".")) bad.push(`claim ${i}: the overlay's error fallback fired`);
+    else if (!allowFallback) {
+      const said = y.why.split("): ").slice(1).join("): ");
+      for (const k of ["error", "malformed"]) if (phrases[k] && said.startsWith(phrases[k] + ".")) bad.push(`claim ${i}: the overlay's ${k} fallback fired`);
+    }
   });
   const want = (b.claims.some(c => c.verdict === "CONTRADICTED") || (strict && b.claims.some(c => c.verdict === "UNCHECKABLE"))) ? "FAIL" : "PASS";
   if (b.verdict !== want) bad.push("gate verdict is not main's formula over the claims");
@@ -102,6 +113,88 @@ function strictAlike(off, on) {
   for (const k of Object.keys(off)) if (k !== "verdict" && JSON.stringify(off[k]) !== JSON.stringify(on[k])) bad.push("under --strict, " + k + " differs");
   return bad;
 }
+
+// NOTE_path2a_tenth_pass_2026_10_05: DECIDE functions written to do harm, for --hostile. Each maker gets the port's
+// internals and the input and returns what APPLY is handed as `decide`. `want` says what the record must then be:
+// "same" (main's, untouched: APPLY ignored everything), "all" (every claim in reach withheld, with `phrase`), or
+// "relation" (inside the abstain-only relation, no more is said).
+const ALL_TAGS = ["#97", "#121", "#97, #121", "#101"];
+const inReach = (P, c) => P._P2A_REACH_PAIRS.some(p => p[0] === c.kind && p[1] === c.verdict);
+const honest = (P, it) => seen => P._p2aDecisions(seen, () => P._p2aFactsRaw(it.diff || "", it.summary));
+const wreck = seen => {
+  for (const c of seen.claims) {
+    c.verdict = "CONTRADICTED"; c.kind = "tests_pass"; c.why = "rewritten"; c.text = "rewritten";
+    c.detail.path = "x"; c.detail.n = "9"; delete c.detail.declared; c.detail = null;
+  }
+  seen.claims.length = 0;
+  seen.claims.push({ kind: "files_changed_count", verdict: "VERIFIED", why: "", detail: {} });
+  seen.claims = null;
+};
+const forEach = (seen, pick, make) => {
+  const out = [];
+  seen.claims.forEach((c, i) => { if (pick(c, i)) for (const d of make(c, i)) out.push(d); });
+  return out;
+};
+const HOSTILE = {
+  "the block's own DECIDE": { want: "relation", make: honest },
+  "changes, empties and grows its copy, decides nothing": { want: "same", make: () => seen => { wreck(seen); return []; } },
+  "decides, then changes its copy": { want: "relation", make: (P, it) => seen => { const out = honest(P, it)(seen); wreck(seen); return out; } },
+  "flips every verdict of its copy, then decides": { want: "relation", make: (P, it) => seen => {
+    for (const c of seen.claims) c.verdict = c.verdict === "VERIFIED" ? "CONTRADICTED" : "VERIFIED";
+    return honest(P, it)(seen);
+  } },
+  "returns nothing": { want: "all", phrase: "malformed", make: () => () => undefined },
+  "returns null": { want: "all", phrase: "malformed", make: () => () => null },
+  "returns a number": { want: "all", phrase: "malformed", make: () => () => 7 },
+  "returns a string": { want: "all", phrase: "malformed", make: () => () => "dir" },
+  "returns a mapping that looks like a list": { want: "all", phrase: "malformed", make: () => () => ({ length: 1, 0: [0, "dir", "#97"] }) },
+  "returns its own argument": { want: "all", phrase: "malformed", make: () => seen => seen },
+  "returns a list of junk": { want: "same", make: () => seen => [undefined, null, 7, "x", {}, [], [0], [0, "dir"], [0, "dir", "#97", 1],
+    [[0], "dir", "#97"], ["0", "dir", "#97"], [0, 1, 2], [0, "dir", 97], [0, ["dir"], "#97"], seen, seen.claims, [seen.claims[0], "dir", "#97"]] },
+  "returns the claims of its copy": { want: "same", make: () => seen => seen.claims },
+  "indices out of range, negative, fractional, boolean and as strings": { want: "same", make: () => seen => {
+    const n = seen.claims.length, out = [];
+    for (const i of [-1, n, n + 1, 1e9, 0.5, n - 0.5, NaN, Infinity, -Infinity, true, false, "0", "1", null, undefined, [0], {}])
+      for (const t of ALL_TAGS) out.push([i, "unreproduced", t]);
+    return out;
+  } },
+  "one index twice, with two phrases": { want: "all", phrase: "error", make: P => seen =>
+    forEach(seen, c => inReach(P, c), (c, i) => [[i, "error", P._P2A_KIND_DEFECT[c.kind]], [i, "unparsed", P._P2A_KIND_DEFECT[c.kind]], [i, "dir", P._P2A_KIND_DEFECT[c.kind]]]) },
+  "phrases outside the fixed set": { want: "same", make: P => seen =>
+    forEach(seen, () => true, (c, i) => ["nope", "", "DIR", " dir", "__proto__", "constructor", "toString", "hasOwnProperty", "valueOf", "length"]
+      .map(k => [i, k, P._P2A_KIND_DEFECT[c.kind] || "#97"])) },
+  "tags outside the fixed sets, and another kind's tag": { want: "same", make: P => seen =>
+    forEach(seen, () => true, (c, i) => ["#1", "", "#97,#121", "#121, #97", " #97", "97", "__proto__", "length", "0"]
+      .concat(ALL_TAGS.filter(t => !(P._P2A_TAGS[c.kind] || []).includes(t))).map(t => [i, "unreproduced", t])) },
+  "decisions for every claim outside reach": { want: "same", make: P => seen =>
+    forEach(seen, c => !inReach(P, c), (c, i) => ALL_TAGS.map(t => [i, "unreproduced", t])) },
+  "a decision for every index, with every tag": { want: "all", phrase: "unreproduced", make: () => seen =>
+    forEach(seen, () => true, (c, i) => ALL_TAGS.map(t => [i, "unreproduced", t])) },
+  "throws": { want: "all", phrase: "error", make: () => () => { throw new Error("planted"); } },
+  "throws something that is no error": { want: "all", phrase: "error", make: () => () => { throw null; } },
+  "changes its copy, then throws": { want: "all", phrase: "error", make: () => seen => { wreck(seen); throw new TypeError("planted"); } },
+  "a decision whose phrase throws when read": { want: "all", phrase: "error", make: () => () => {
+    const d = [0, "dir", "#97"];
+    Object.defineProperty(d, 1, { get() { throw new Error("planted"); } });
+    return [[0, "unreproduced", "#97"], d];
+  } },
+  "a list that throws when its length is read": { want: "all", phrase: "error", make: () => () =>
+    new Proxy([], { get(t, k) { if (k === "length") throw new Error("planted"); return t[k]; } }) },
+  "a decision that answers differently each time it is read": { want: "relation", make: P => seen => {
+    const out = [];
+    seen.claims.forEach((c, i) => {
+      let n = 0;
+      out.push(new Proxy([i, "unreproduced", "#97"], { get(t, k) {
+        if (k === "length") return 3;
+        if (k === "0") return n++ ? "rewritten" : i;
+        if (k === "1") return n++ % 2 ? "unreproduced" : "nope";
+        if (k === "2") return (P._P2A_TAGS[c.kind] || ["#97"])[0];
+        return t[k];
+      } }));
+    });
+    return out;
+  } },
+};
 
 function main(argv) {
   const mode = argv[0];
@@ -132,6 +225,7 @@ function main(argv) {
       lower_longer: lowerLong, js_space: cps(P._P2A_JS_SPACE), py_space: cps(P._P2A_PY_SPACE),
       py_breaks: cps(P._P2A_PY_BREAKS), divergent: cps(P._P2A_DIVERGENT), headers: P._P2A_HEADERS,
       reach: P._P2A_REACH_PAIRS, phrases: P._P2A_PHRASES, kind_defect: P._P2A_KIND_DEFECT,
+      tags: P._P2A_TAGS, fields: P._P2A_FIELDS,
       directory_rule: P.P2A_DIRECTORY_BASENAME_ABSTAINS, own: P._P2A_OWN,
       // the summary's classes (NOTE_path2a_third_pass_2026_09_30): the units that are not wordish, and that are not bad
       neutral: P._P2A_NEUTRAL_RANGES.flatMap(([a, b]) => Array.from({ length: b - a + 1 }, (_, k) => a + k)),
@@ -206,6 +300,46 @@ function main(argv) {
       P._p2aAbstain(g, false, () => P._p2aFactsRaw(it.diff || "", it.summary));
       return { id: it.id, rec: g };
     });
+    fs.writeFileSync(argv[3], JSON.stringify(out));
+    return 0;
+  }
+  if (mode === "--hostile") {
+    const REF = require(path.resolve(argv[1]));
+    const port = path.resolve(argv[4] || DEFAULT_PORT);
+    const P = internals(port);
+    const NEW = require(port);
+    const reach = new Set(P._P2A_REACH_PAIRS.map(p => p[0] + "|" + p[1]));
+    const defects = P._P2A_TAGS;
+    const items = JSON.parse(fs.readFileSync(argv[2], "utf8"));
+    const keyOf = why => { for (const [k, p] of Object.entries(P._P2A_PHRASES)) if (why.includes("): " + p + ". main's reading: ")) return k; return null; };
+    const out = {};
+    for (const [name, h] of Object.entries(HOSTILE)) {
+      const c = { runs: 0, broken: 0, same: 0, not_returned: 0, threw: 0, in_reach: 0, withheld: 0, unlike_the_port: 0, decisions: 0 };
+      const phrases = {}, examples = [];
+      for (const it of items) for (const strict of [false, true]) {
+        let a;
+        try { a = JSON.parse(JSON.stringify(REF.gateDiffText(it.summary, it.diff, { strict }))); } catch (e) { continue; }
+        const g = REF.gateDiffText(it.summary, it.diff, { strict });
+        let ret;
+        const decide = h.make(P, it);
+        // for the block's own DECIDE, how many decisions it returned: APPLY must take every one
+        const spy = name === "the block's own DECIDE" ? seen => { const got = decide(seen); c.decisions += got.length; return got; } : decide;
+        try { ret = P._p2aApply(g, strict, spy); } catch (e) { c.threw++; }
+        const b = JSON.parse(JSON.stringify(g));
+        c.runs++;
+        if (ret !== g) c.not_returned++;
+        const bad = relation(a, b, strict, reach, defects, P._P2A_PHRASES, true);
+        if (bad.length) { c.broken++; if (examples.length < 5) examples.push([it.id, strict, bad]); }
+        if (JSON.stringify(a) === JSON.stringify(b)) c.same++;
+        a.claims.forEach((x, i) => {
+          if (!reach.has(x.kind + "|" + x.verdict)) return;
+          c.in_reach++;
+          if (b.claims[i] && b.claims[i].verdict !== x.verdict) { c.withheld++; const k = String(keyOf(b.claims[i].why)); phrases[k] = (phrases[k] || 0) + 1; }
+        });
+        if (name === "the block's own DECIDE" && JSON.stringify(b) !== JSON.stringify(NEW.gateDiffText(it.summary, it.diff, { strict }))) c.unlike_the_port++;
+      }
+      out[name] = { want: h.want, phrase: h.phrase || null, counts: c, phrases, examples };
+    }
     fs.writeFileSync(argv[3], JSON.stringify(out));
     return 0;
   }
@@ -344,7 +478,7 @@ function main(argv) {
     fs.writeFileSync(argv[2], JSON.stringify(out));
     return 0;
   }
-  console.error("usage: node check_path2a.js --opts REF OUT | --relation REF IN OUT | --decisions REF IN OUT | --decisions-newer-engine REF IN OUT | --records PORT IN OUT | --lockstep IN OUT | --tables OUT | --error-fallback REF IN OUT | --timing REF IN OUT | --overlay-timing REF IN OUT | --bookmarklet MIN IN OUT | --abstain PORT IN OUT");
+  console.error("usage: node check_path2a.js --opts REF OUT | --relation REF IN OUT | --decisions REF IN OUT | --decisions-newer-engine REF IN OUT | --records PORT IN OUT | --lockstep IN OUT | --tables OUT | --error-fallback REF IN OUT | --timing REF IN OUT | --overlay-timing REF IN OUT | --bookmarklet MIN IN OUT | --abstain PORT IN OUT | --hostile REF IN OUT");
   return 2;
 }
 

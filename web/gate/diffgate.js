@@ -681,7 +681,10 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30 and NOTE_path2a_sixth_pass_2026_09_30;
 // NOTE_path2a_ninth_pass_2026_10_04 removes the switch of passes six to eight that kept a CONTRADICTED where the
 // two ports' mains might read the claims apart: a CONTRADICTED in reach is decided by its kind's rule.
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 cb99a68594e8595e381a755e64cf729190f5e05e785d17fd87056031987d0aae, LF). Everything outside this block is
+// NOTE_path2a_tenth_pass_2026_10_05 splits the block in two, as the Python's: DECIDE (_p2aDecisions, every rule and
+// reader below) is given a copy of main's claims and returns plain data; APPLY (_p2aApply) is the only code here that
+// touches main's record, and the record can only gain abstentions, whatever the rest of the block does.
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 011538d50a5a4ed393fdaf6ef2470a7f26575568687cda9847fe9ceaf542ca76, LF). Everything outside this block is
 // main's port at 1cde8b82 (sha256 06688702..., LF), unchanged except that main's gateDiffText is named
 // _gateDiffTextMain (its definition and its DECLARE-1 self-call); the gateDiffText at the end of this block calls it
 // and then the overlay, once. The overlay reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason
@@ -722,6 +725,11 @@ const _P2A_WIDE = new RegExp("[\u0080-\uffff]");
 const _P2A_REACH_PAIRS = [["file_created", "VERIFIED"], ["file_deleted", "VERIFIED"], ["file_touched", "VERIFIED"], ["files_changed_count", "VERIFIED"], ["files_changed_count", "CONTRADICTED"], ["only_touches", "VERIFIED"], ["only_touches", "CONTRADICTED"], ["tests_added", "VERIFIED"], ["tests_added", "CONTRADICTED"], ["symbol_added", "VERIFIED"]];
 const _P2A_REACH = new Set(_P2A_REACH_PAIRS.map(p => p[0] + "|" + p[1]));
 const _P2A_KIND_DEFECT = {"file_created": "#97, #121", "file_deleted": "#97, #121", "file_touched": "#97, #121", "files_changed_count": "#121", "only_touches": "#121", "tests_added": "#101", "symbol_added": "#101"};
+// The defect tags a decision may carry, per kind, and the fields of a claim's detail that a rule reads: DECIDE's copy
+// of a claim carries no other field, and not its text.
+const _P2A_PATH_TAGS = ["#97", "#121", "#97, #121"];
+const _P2A_TAGS = {"file_created": _P2A_PATH_TAGS, "file_deleted": _P2A_PATH_TAGS, "file_touched": _P2A_PATH_TAGS, "files_changed_count": ["#121"], "only_touches": ["#121"], "tests_added": ["#101"], "symbol_added": ["#101"]};
+const _P2A_FIELDS = ["path", "n", "name", "prefix", "prefix2", "declared"];
 const _P2A_PHRASES = {
   "dir": "the claim's path has a directory part, and only a changed file with the same base name in another directory matches it",
   "tier": "a changed path that matches the claim more closely than the one main resolved it to reads otherwise",
@@ -744,7 +752,8 @@ const _P2A_PHRASES = {
   "case_count": "two changed paths differ only in case outside ASCII, which the Python and JavaScript readers' case tables may merge or keep apart, so the two may count the files differently",
   "unreproduced": "this overlay does not reproduce main's reading of the diff",
   "unparsed": "main's reason does not have the form this overlay reads",
-  "error": "this overlay failed while reading the diff"
+  "error": "this overlay failed while reading the diff",
+  "malformed": "this overlay's decisions did not come back as a list, so none of them was applied"
 };
 
 function _p2aLines(text, rx) {
@@ -1825,43 +1834,87 @@ function _p2aDecide(c, f) {
   return _p2aSymbol(c, f);
 }
 
-function _p2aReason(verdict, defect, key, why) {
-  return `${verdict} withheld by PATH-2a (${defect}): ${_P2A_PHRASES[key]}. main's reading: ${why}`;
+function _p2aDecisions(seen, facts) {
+  // DECIDE (NOTE_path2a_tenth_pass_2026_10_05): every rule and reader of this block, run on a copy. Returns plain
+  // data, [[claim index, phrase key, defect tag], ...], for the claims in reach it would withhold. It is never given
+  // main's record.
+  const todo = [];
+  seen.claims.forEach((c, i) => { if (_P2A_REACH.has(c.kind + "|" + c.verdict)) todo.push([i, c]); });
+  const f = facts();
+  const cs = todo.map(x => x[1]);
+  f.prime(cs.filter(c => _PATH_KINDS.has(c.kind) && typeof c.detail.path === "string").map(c => c.detail.path));
+  const str = xs => xs.filter(v => typeof v === "string");
+  f.tokens("path", str(cs.map(c => c.detail.path)));
+  f.tokens("name", str(cs.map(c => c.detail.name)));
+  f.tokens("count", str(cs.map(c => c.detail.n)));
+  f.tokens("zone", str(cs.map(c => c.detail.prefix)));
+  const out = [];
+  for (const [i, c] of todo) {
+    const hit = _p2aDecide(c, f);
+    if (hit !== null) out.push([i, hit[0], hit[1]]);
+  }
+  return out;
 }
 
-function _p2aAbstain(g, strict, facts) {
-  // Turn a decided verdict UNCHECKABLE where #97, #121 or #101 can have made it wrong, then recompute the gate
-  // verdict with main's own formula. Nothing else in the record moves.
-  const todo = g.claims.filter(c => _P2A_REACH.has(c.kind + "|" + c.verdict));
-  if (!todo.length) return g;
-  let hits;
-  try {
-    const f = facts();
-    f.prime(todo.filter(c => _PATH_KINDS.has(c.kind) && typeof c.detail.path === "string").map(c => c.detail.path));
-    const str = xs => xs.filter(v => typeof v === "string");
-    f.tokens("path", str(todo.map(c => c.detail.path)));
-    f.tokens("name", str(todo.map(c => c.detail.name)));
-    f.tokens("count", str(todo.map(c => c.detail.n)));
-    f.tokens("zone", str(todo.map(c => c.detail.prefix)));
-    hits = todo.map(c => [c, _p2aDecide(c, f)]);
+function _p2aApply(g, strict, decide) {
+  // APPLY (NOTE_path2a_tenth_pass_2026_10_05): the only code of this block that touches main's record `g`. `decide`
+  // is called on a copy and may do anything to it; whatever it returns or throws, the record leaves here as main's
+  // but for claims in reach turned UNCHECKABLE with a reason of the fixed form, and the gate verdict is main's formula
+  // over the final claims. A decision is taken only as a 3-element array of a number that is the index of a claim in
+  // reach, a key of _P2A_PHRASES and a tag of that claim's kind; what is kept of it is the record's own claim, the
+  // table's own phrase and the tag, a string. Anything else `decide` returned is ignored. If it throws, every claim in
+  // reach is withheld with the phrase `error`; if it returns something that is not an array, with `malformed`.
+  const claims = g.claims;
+  const pending = new Map();
+  claims.forEach((c, i) => { if (_P2A_REACH.has(c.kind + "|" + c.verdict)) pending.set(i, c); });
+  if (!pending.size) return g;           // nothing in reach: no copy, no call, and the record is main's object
+  let plan = [], fallback = null;
+  try {                                  // everything `decide` made is read here, before anything is written
+    const got = decide({ claims: claims.map(c => {
+      const detail = {};
+      for (const k of _P2A_FIELDS) {
+        const v = c.detail[k];
+        if (typeof v === "string" || typeof v === "boolean") detail[k] = v;
+      }
+      return { kind: c.kind, verdict: c.verdict, why: c.why, detail };
+    }) });
+    if (!Array.isArray(got)) fallback = "malformed";
+    else {
+      for (let k = 0; k < got.length; k++) {
+        const d = got[k];
+        if (!Array.isArray(d) || d.length !== 3) continue;
+        const i = d[0], key = d[1], tag = d[2];
+        if (typeof i !== "number" || typeof key !== "string" || typeof tag !== "string") continue;
+        const c = pending.get(i);
+        if (c === undefined) continue;
+        const phrase = _P2A_PHRASES[key];
+        if (typeof phrase === "string" && _P2A_TAGS[c.kind].includes(tag)) plan.push([c, phrase, tag]);
+      }
+    }
   } catch (e) {                          // an abstain-only overlay that cannot read withholds, and says so
-    hits = todo.map(c => [c, ["error", _P2A_KIND_DEFECT[c.kind]]]);
+    fallback = "error";
   }
+  if (fallback !== null) plan = [...pending.values()].map(c => [c, _P2A_PHRASES[fallback], _P2A_KIND_DEFECT[c.kind]]);
   let moved = false;
-  for (const [c, hit] of hits) {
-    if (hit !== null) {
-      c.why = _p2aReason(c.verdict, hit[1], hit[0], c.why);
+  for (const [c, phrase, tag] of plan) {
+    if (_P2A_REACH.has(c.kind + "|" + c.verdict)) {   // still decided: a second decision for one claim is ignored
+      c.why = `${c.verdict} withheld by PATH-2a (${tag}): ${phrase}. main's reading: ${c.why}`;
       c.verdict = "UNCHECKABLE";
       moved = true;
     }
   }
   // A-2 (NOTE_path2a_sixth_pass_2026_09_30): where no claim moved, the record is main's object, untouched
   if (moved) {
-    const contradicted = g.claims.some(c => c.verdict === "CONTRADICTED");
-    const uncheckable = g.claims.some(c => c.verdict === "UNCHECKABLE");
+    const contradicted = claims.some(c => c.verdict === "CONTRADICTED");
+    const uncheckable = claims.some(c => c.verdict === "UNCHECKABLE");
     g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";
   }
   return g;
+}
+
+function _p2aAbstain(g, strict, facts) {
+  // What the door calls on main's result: APPLY, over DECIDE reading the door's bytes through `facts`.
+  return _p2aApply(g, strict, seen => _p2aDecisions(seen, facts));
 }
 
 function gateDiffText(summaryText, diffText, opts = {}) {

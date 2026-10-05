@@ -1415,6 +1415,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # NOTE_path2a_fourth_pass_2026_09_30, NOTE_path2a_fifth_pass_2026_09_30 and NOTE_path2a_sixth_pass_2026_09_30;
 # NOTE_path2a_ninth_pass_2026_10_04 removes the switch of passes six to eight that kept a CONTRADICTED where the
 # two ports' mains might read the claims apart: a CONTRADICTED in reach is decided by its kind's rule.
+# NOTE_path2a_tenth_pass_2026_10_05 splits the block in two. DECIDE (`_p2a_decisions`: every rule and reader below) is
+# given a copy of main's claims and the door's bytes and returns plain data, a list of (claim index, phrase key,
+# defect tag). APPLY (`_p2a_apply`) is the only code here that touches main's record: it takes a decision only for a
+# claim in reach, with a phrase and a tag of the fixed sets, writes the reason and the verdict, and recomputes the gate
+# verdict by main's formula. So the record can only gain abstentions, whatever the rest of the block does.
 # Everything outside this block is main's reader at 1cde8b82 (sha256 9b620e00..., LF), unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
@@ -1580,6 +1585,13 @@ _P2A_REACH = frozenset({
 _P2A_KIND_DEFECT = {"file_created": "#97, #121", "file_deleted": "#97, #121", "file_touched": "#97, #121",
                     "files_changed_count": "#121", "only_touches": "#121", "tests_added": "#101",
                     "symbol_added": "#101"}
+# The defect tags a decision may carry, per kind, each mapped to itself: APPLY writes the table's own string.
+_P2A_PATH_TAGS = {"#97": "#97", "#121": "#121", "#97, #121": "#97, #121"}
+_P2A_TAGS = {"file_created": _P2A_PATH_TAGS, "file_deleted": _P2A_PATH_TAGS, "file_touched": _P2A_PATH_TAGS,
+             "files_changed_count": {"#121": "#121"}, "only_touches": {"#121": "#121"},
+             "tests_added": {"#101": "#101"}, "symbol_added": {"#101": "#101"}}
+# The fields of a claim's detail that a rule reads; DECIDE's copy of a claim carries no other, and not its text.
+_P2A_FIELDS = frozenset({"path", "n", "name", "prefix", "prefix2", "declared"})
 _P2A_PHRASES = {
     "dir": ("the claim's path has a directory part, and only a changed file with the same base name in another "
             "directory matches it"),
@@ -1613,6 +1625,7 @@ _P2A_PHRASES = {
     "unreproduced": "this overlay does not reproduce main's reading of the diff",
     "unparsed": "main's reason does not have the form this overlay reads",
     "error": "this overlay failed while reading the diff",
+    "malformed": "this overlay's decisions did not come back as a list, so none of them was applied",
 }
 
 
@@ -2762,29 +2775,72 @@ def _p2a_decide(c, f: "_P2aFacts"):
     return _p2a_symbol(c, f)
 
 
-def _p2a_reason(verdict: str, defect: str, key: str, why: str) -> str:
-    return f"{verdict} withheld by PATH-2a ({defect}): {_P2A_PHRASES[key]}. main's reading: {why}"
+class _P2aSeen:
+    """What DECIDE is given: a copy of each claim of main's result, in order. Each copy holds the claim's kind, verdict
+    and reason and the strings and booleans of the detail fields a rule reads (_P2A_FIELDS); not its text. Nothing in
+    it is shared with the record, so nothing DECIDE does to it reaches the record."""
+
+    def __init__(self, claims: list):
+        self.claims = claims
 
 
-def _p2a_abstain(g: DiffGate, strict: bool, facts) -> DiffGate:
-    """Turn a decided verdict UNCHECKABLE where #97, #121 or #101 can have made it wrong, then recompute the gate
-    verdict with main's own formula. Nothing else in the record moves."""
-    todo = [c for c in g.claims if (c.kind, c.verdict) in _P2A_REACH]
-    if not todo:
-        return g
-    try:
-        f = facts()
-        f.prime(tuple(c.detail.get("path") for c in todo if c.kind in _PATH_KINDS
-                      and isinstance(c.detail.get("path"), str)))
-        for kind, field in (("path", "path"), ("name", "name"), ("count", "n"), ("zone", "prefix")):
-            f.tokens(kind, [c.detail.get(field) for c in todo if isinstance(c.detail.get(field), str)])
-        hits = [(c, _p2a_decide(c, f)) for c in todo]
-    except Exception:                     # an abstain-only overlay that cannot read withholds, and says so
-        hits = [(c, ("error", _P2A_KIND_DEFECT[c.kind])) for c in todo]
-    moved = False
-    for c, hit in hits:
+def _p2a_decisions(seen: "_P2aSeen", facts) -> list:
+    """DECIDE (NOTE_path2a_tenth_pass_2026_10_05): every rule and reader of this block, run on a copy. Returns plain
+    data, [(claim index, phrase key, defect tag), ...], for the claims in reach it would withhold. It is never given
+    main's record."""
+    todo = [(i, c) for i, c in enumerate(seen.claims) if (c.kind, c.verdict) in _P2A_REACH]
+    f = facts()
+    f.prime(tuple(c.detail.get("path") for _i, c in todo if c.kind in _PATH_KINDS
+                  and isinstance(c.detail.get("path"), str)))
+    for kind, read in (("path", "path"), ("name", "name"), ("count", "n"), ("zone", "prefix")):
+        f.tokens(kind, [c.detail.get(read) for _i, c in todo if isinstance(c.detail.get(read), str)])
+    out = []
+    for i, c in todo:
+        hit = _p2a_decide(c, f)
         if hit is not None:
-            c.why = _p2a_reason(c.verdict, hit[1], hit[0], c.why)
+            out.append((i, hit[0], hit[1]))
+    return out
+
+
+def _p2a_apply(g: DiffGate, strict: bool, decide) -> DiffGate:
+    """APPLY (NOTE_path2a_tenth_pass_2026_10_05): the only code of this block that touches main's record `g`.
+    `decide` is called on a copy and may do anything to it; whatever it returns or raises, the record leaves here as
+    main's but for claims in reach turned UNCHECKABLE with a reason of the fixed form, and the gate verdict is main's
+    formula over the final claims. A decision is taken only as a 3-tuple of an integer that is the index of a claim in
+    reach, a key of _P2A_PHRASES and a tag of that claim's kind; what is kept of it is the record's own claim and the
+    tables' own strings. Anything else `decide` returned is ignored. If it raises, every claim in reach is withheld
+    with the phrase `error`; if it returns something that is not a list, with `malformed`."""
+    pending = {i: c for i, c in enumerate(g.claims) if (c.kind, c.verdict) in _P2A_REACH}
+    if not pending:
+        return g                              # nothing in reach: no copy, no call, and the record is main's object
+    plan, fallback = [], None
+    try:                                      # everything `decide` made is read here, before anything is written
+        got = decide(_P2aSeen([DiffClaim(c.kind, "", {k: v for k, v in c.detail.items() if k in _P2A_FIELDS
+                                                      and isinstance(v, (str, bool))}, c.verdict, c.why)
+                               for c in g.claims]))
+        if not isinstance(got, list):
+            fallback = "malformed"
+        else:
+            for d in got:
+                if not (isinstance(d, tuple) and len(d) == 3):
+                    continue
+                i, key, tag = d
+                if isinstance(i, bool) or not (isinstance(i, int) and isinstance(key, str) and isinstance(tag, str)):
+                    continue
+                c = pending.get(i)
+                if c is None:
+                    continue
+                phrase, own = _P2A_PHRASES.get(key), _P2A_TAGS[c.kind].get(tag)
+                if phrase is not None and own is not None:
+                    plan.append((c, phrase, own))
+    except Exception:                         # an abstain-only overlay that cannot read withholds, and says so
+        fallback = "error"
+    if fallback is not None:
+        plan = [(c, _P2A_PHRASES[fallback], _P2A_KIND_DEFECT[c.kind]) for c in pending.values()]
+    moved = False
+    for c, phrase, tag in plan:
+        if (c.kind, c.verdict) in _P2A_REACH:     # still decided: a second decision for one claim is ignored
+            c.why = f"{c.verdict} withheld by PATH-2a ({tag}): {phrase}. main's reading: {c.why}"
             c.verdict = "UNCHECKABLE"
             moved = True
     # A-2 (NOTE_path2a_sixth_pass_2026_09_30): where no claim moved, the record is main's object, untouched
@@ -2793,6 +2849,11 @@ def _p2a_abstain(g: DiffGate, strict: bool, facts) -> DiffGate:
         uncheckable = any(c.verdict == "UNCHECKABLE" for c in g.claims)
         g.verdict = "FAIL" if (contradicted or (strict and uncheckable)) else "PASS"
     return g
+
+
+def _p2a_abstain(g: DiffGate, strict: bool, facts) -> DiffGate:
+    """What the two doors call on main's result: APPLY, over DECIDE reading the door's bytes through `facts`."""
+    return _p2a_apply(g, strict, lambda seen: _p2a_decisions(seen, facts))
 
 
 _P2A_MARK = "# === PATH-2a abstain-only overlay: "          # + "BEGIN ===" / "END ===", never written whole here
@@ -2804,23 +2865,19 @@ _P2A_BANNED_ATTRS = frozenset({"lower", "upper", "casefold", "swapcase", "title"
                                "normalize", "I", "IGNORECASE", "U", "UNICODE", "L", "LOCALE", "__dict__", "format",
                                "format_map", "encode", "decode"})
 _P2A_ARGLESS = frozenset({"strip", "lstrip", "rstrip", "split", "rsplit"})
-_P2A_MUTATORS = frozenset({"append", "extend", "insert", "pop", "popitem", "remove", "clear", "update",
-                           "setdefault", "sort", "reverse", "__setitem__", "__setattr__", "__delitem__"})
-_P2A_RECORD = frozenset({"verdict", "why", "kind", "text", "detail", "claims"})
 _P2A_RE_CALLS = frozenset({"compile", "match", "fullmatch", "search", "findall", "finditer", "split", "sub", "subn"})
-_P2A_CHECKERS = frozenset({"selfcheck_p2a_only_abstains", "_p2a_regex_problems", "_p2a_holder",
-                           "_p2a_shape_problems"})          # not run on a claim
+_P2A_CHECKERS = frozenset({"selfcheck_p2a_asks_no_runtime", "_p2a_regex_problems"})     # not run on a claim
 # Besides the names the block binds, a block function may read only these: builtins that read no Unicode table, and
 # main's names the block uses. A module, `getattr`, `operator`, `builtins` or `unicodedata` is refused by name.
 _P2A_NAMES_OK = frozenset({"len", "set", "list", "dict", "tuple", "frozenset", "any", "all", "min", "max",
                            "enumerate", "zip", "range", "bool", "isinstance", "str", "Exception", "chr",
-                           "re", "_Pending", "PATH1_EXTENSIONS", "_PATH_KINDS", "DiffGate"})
+                           "re", "_Pending", "PATH1_EXTENSIONS", "_PATH_KINDS", "DiffGate", "DiffClaim"})
 # ... and read only these attributes: the str, list, dict and set methods the block calls (none reads a Unicode
 # table: every strip and split carries its characters), the regex methods, and the fields of the record, of main's
 # _Pending and of the facts object. A dunder, `__getattribute__` or any method not listed is refused.
 _P2A_ATTRS_OK = frozenset({
     "startswith", "endswith", "find", "rfind", "replace", "translate", "strip", "lstrip", "rstrip", "split", "rsplit",
-    "add", "append", "pop", "get", "items", "setdefault",
+    "add", "append", "pop", "get", "items", "values", "setdefault",
     "compile", "match", "fullmatch", "search", "finditer", "sub", "group", "start", "end", "join",
     "verdict", "why", "kind", "detail", "claims", "a", "b", "status", "note",
     "diff_text", "name_status", "summary", "_m", "_get", "fine", "regs", "views", "divergent", "space", "odd",
@@ -2863,327 +2920,21 @@ def _p2a_regex_problems(pattern: str) -> list:
     return out
 
 
-def _p2a_holder(tree):
-    """A-1 (NOTE_path2a_eighth_pass_2026_10_01): `holds(expr)`, whether an expression of the block may evaluate to one of
-    the record's containers (`g.claims`, a claim's `detail`) or to a container that may hold one, so that a mutating
-    call or an item store on it could move the record. Read from the block's source, to a fixed point, with no type:
-    - `X.claims` and `X.detail` hold one; an element of either (a claim, a scalar) does not, nor does `.get` or `.items`
-      read off a detail;
-    - a name holds one wherever any binding of it in its function does: an assignment, an annotated or augmented one,
-      `:=`, a `for` or comprehension target over what holds one (not over `X.claims` or a detail themselves, whose
-      elements are claims and keys), a `with ... as`, or a parameter at any call of the block's functions or of the
-      facts' methods; a name bound to `X.detail` (or to such a name) is a detail, whose reads give scalars;
-    - a call holds one where its function, its receiver or an argument does, or where it calls a block function that
-      may return one; `self._m` does where something stored into it does; tuples, lists, sets, dicts, comprehensions,
-      lambdas, conditionals and `+` where a part does.
-    `len`, `isinstance`, `any`, `all` and `bool` give scalars. A function defined inside another, and a lambda, read
-    the names of the outermost function they lie in, so a closure is read with it."""
-    cont = ("claims", "detail")
-    defs: dict = {}
-    fn_of: dict = {}                          # node -> the outermost function it lies in, whose names it reads
-    near: dict = {}                           # node -> the function it lies in directly
-    scope: dict = {}                          # id(function) -> the outermost function it lies in
+def selfcheck_p2a_asks_no_runtime(source: str | None = None) -> dict:
+    """Lints over the PATH-2a block's own source, read with `ast`, against an honest future edit that would ask the
+    runtime a Unicode question (bar C leans on the block asking none). They are not a proof against a hostile edit: a
+    name built from strings, an alias carried through data or an f-string of a list passes them. That the overlay can
+    only abstain is not checked here at all; it holds at run time, in `_p2a_apply`
+    (NOTE_path2a_tenth_pass_2026_10_05).
 
-    def walk(node, fn, at):
-        for ch in ast.iter_child_nodes(node):
-            fn_of[ch] = fn
-            near[ch] = at
-            if isinstance(ch, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                defs.setdefault(ch.name, []).append(ch)
-                scope[id(ch)] = ch if fn is None else fn
-                walk(ch, ch if fn is None else fn, ch)
-            else:
-                walk(ch, fn, at)
-
-    walk(tree, None, None)
-    methods = {d.name for c in tree.body if isinstance(c, ast.ClassDef) for d in c.body
-               if isinstance(d, (ast.FunctionDef, ast.AsyncFunctionDef))}
-    alias: set = set()
-    detail: set = set()
-    rets: set = set()
-    slot = [False]
-
-    def key(node, name):
-        return id(fn_of.get(node)), name
-
-    def is_det(e):
-        return (isinstance(e, ast.Attribute) and e.attr == "detail") or \
-            (isinstance(e, ast.Name) and key(e, e.id) in detail)
-
-    def holds(e):
-        if isinstance(e, ast.Attribute):
-            if e.attr in cont:
-                return True
-            if e.attr == "_m" and isinstance(e.value, ast.Name) and e.value.id == "self":
-                return slot[0]
-            return holds(e.value)
-        if isinstance(e, ast.Name):
-            return key(e, e.id) in alias
-        if isinstance(e, ast.Subscript):
-            if (isinstance(e.value, ast.Attribute) and e.value.attr == "claims") or is_det(e.value):
-                return False
-            return holds(e.value)
-        if isinstance(e, ast.Call):
-            f = e.func
-            if isinstance(f, ast.Name) and f.id in ("len", "isinstance", "any", "all", "bool"):
-                return False
-            if isinstance(f, ast.Attribute) and f.attr in ("get", "items") and is_det(f.value):
-                return False
-            name = f.id if isinstance(f, ast.Name) else f.attr if isinstance(f, ast.Attribute) else None
-            return name in rets or holds(f) or any(holds(x) for x in e.args) or \
-                any(holds(k.value) for k in e.keywords)
-        if isinstance(e, (ast.Tuple, ast.List, ast.Set)):
-            return any(holds(x) for x in e.elts)
-        if isinstance(e, ast.Dict):
-            return any(holds(x) for x in list(e.keys) + list(e.values) if x is not None)
-        if isinstance(e, (ast.Starred, ast.NamedExpr)):
-            return holds(e.value)
-        if isinstance(e, ast.IfExp):
-            return holds(e.body) or holds(e.orelse)
-        if isinstance(e, ast.BoolOp):
-            return any(holds(x) for x in e.values)
-        if isinstance(e, ast.BinOp):
-            return holds(e.left) or holds(e.right)
-        if isinstance(e, (ast.ListComp, ast.SetComp, ast.GeneratorExp)):
-            return holds(e.elt)
-        if isinstance(e, ast.DictComp):
-            return holds(e.key) or holds(e.value)
-        if isinstance(e, ast.Lambda):
-            return holds(e.body)
-        return False
-
-    def names(t):
-        if isinstance(t, ast.Name):
-            return [t]
-        if isinstance(t, (ast.Tuple, ast.List)):
-            return [n for x in t.elts for n in names(x)]
-        if isinstance(t, (ast.Starred, ast.Subscript)):
-            return names(t.value)
-        return []
-
-    def bind(t, v, over):
-        """Bind the names of target t from value v (`over`: t takes v's elements)."""
-        if over:
-            if (isinstance(v, ast.Attribute) and v.attr in cont) or is_det(v) or not holds(v):
-                return
-            for n in names(t):
-                alias.add(key(n, n.id))
-        elif isinstance(t, ast.Name) and is_det(v):
-            alias.add(key(t, t.id))
-            detail.add(key(t, t.id))
-        elif holds(v):
-            for n in names(t):
-                alias.add(key(n, n.id))
-
-    def params(d):
-        a = d.args
-        return [x.arg for x in a.posonlyargs + a.args], [x.arg for x in a.kwonlyargs], a.vararg or a.kwarg
-
-    def bind_param(d, name, v):
-        k = (id(scope[id(d)]), name)
-        if is_det(v):
-            alias.add(k)
-            detail.add(k)
-        elif holds(v):
-            alias.add(k)
-
-    while True:
-        before = (len(alias), len(detail), len(rets), slot[0])
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Assign):
-                for t in node.targets:
-                    bind(t, node.value, False)
-            elif isinstance(node, (ast.AnnAssign, ast.AugAssign)) and node.value is not None:
-                bind(node.target, node.value, False)
-            elif isinstance(node, ast.NamedExpr):
-                bind(node.target, node.value, False)
-            elif isinstance(node, (ast.For, ast.AsyncFor, ast.comprehension)):
-                bind(node.target, node.iter, True)
-            elif isinstance(node, ast.withitem) and node.optional_vars is not None:
-                bind(node.optional_vars, node.context_expr, False)
-            elif isinstance(node, ast.Return) and node.value is not None and holds(node.value):
-                d = near.get(node)
-                if d is not None:
-                    rets.add(d.name)
-            if isinstance(node, ast.Assign) and holds(node.value) and any(
-                    isinstance(t, ast.Subscript) and isinstance(t.value, ast.Attribute) and t.value.attr == "_m"
-                    for t in node.targets):
-                slot[0] = True
-            if isinstance(node, ast.Call):
-                f = node.func
-                if isinstance(f, ast.Name):
-                    callees, skip = defs.get(f.id, []), 0
-                elif isinstance(f, ast.Attribute) and f.attr in methods:
-                    callees, skip = defs.get(f.attr, []), 1
-                else:
-                    callees, skip = [], 0
-                for d in callees:
-                    pos, kwo, rest = params(d)
-                    pos = pos[skip:] if len(pos) >= skip else []
-                    starred = any(isinstance(v, ast.Starred) for v in node.args)
-                    every = (starred and any(holds(v) for v in node.args)) or \
-                        any(holds(v) for v in node.args[len(pos):]) or \
-                        any(holds(kw.value) for kw in node.keywords if kw.arg not in pos + kwo) or \
-                        (rest is not None and any(holds(v) for v in node.args))
-                    for p in (pos + kwo if every else []):
-                        alias.add((id(scope[id(d)]), p))
-                    for i, v in enumerate(node.args):
-                        if not isinstance(v, ast.Starred) and i < len(pos):
-                            bind_param(d, pos[i], v)
-                    for kw in node.keywords:
-                        if kw.arg in pos + kwo:
-                            bind_param(d, kw.arg, kw.value)
-        if (len(alias), len(detail), len(rets), slot[0]) == before:
-            return holds
-
-
-def _p2a_shape_problems(tree) -> list:
-    """I-1 (NOTE_path2a_ninth_pass_2026_10_04): (line, what) wherever `_p2a_abstain` could write a claim outside the
-    overlay's own set, read from the block's source with no type. `_P2A_REACH` is bound once, at the block's top level,
-    as a frozenset of (kind, verdict) pairs over the seven kinds the overlay decides and the two decided verdicts, and
-    the block holds no `global` or `nonlocal`. In `_p2a_abstain`: `g` is the parameter and is bound nowhere else;
-    `todo` is bound once, by a statement of the function's own body, as `[c for c in g.claims if (c.kind, c.verdict)
-    in _P2A_REACH]` (more conditions may narrow it), and is read only as what a comprehension iterates or under `not`;
-    every binding of `hits` is `[(c, ...) for c in todo]`, and `hits` is read only as what the one `for c, hit in
-    hits` iterates; every store into `.why`, and every store of a constant into `.verdict`, is on that loop's claim
-    variable, inside the loop; and that variable is bound nowhere else but as a comprehension's own target."""
-    out = []
-    kinds = ("file_created", "file_deleted", "file_touched", "files_changed_count", "only_touches", "tests_added",
-             "symbol_added")
-    stores = [n for n in ast.walk(tree) if isinstance(n, ast.Name) and n.id == "_P2A_REACH"
-              and not isinstance(n.ctx, ast.Load)]
-    top = [s for s in tree.body if isinstance(s, ast.Assign) and len(s.targets) == 1
-           and isinstance(s.targets[0], ast.Name) and s.targets[0].id == "_P2A_REACH"]
-    ok = len(stores) == 1 and len(top) == 1
-    if ok:
-        v = top[0].value
-        ok = (isinstance(v, ast.Call) and isinstance(v.func, ast.Name) and v.func.id == "frozenset"
-              and len(v.args) == 1 and not v.keywords and isinstance(v.args[0], ast.Set)
-              and all(isinstance(e, ast.Tuple) and len(e.elts) == 2
-                      and all(isinstance(x, ast.Constant) for x in e.elts)
-                      and e.elts[0].value in kinds and e.elts[1].value in ("VERIFIED", "CONTRADICTED")
-                      for e in v.args[0].elts))
-    if not ok:
-        out.append((1, "_P2A_REACH is not bound once, as a frozenset of pairs over the overlay's kinds"))
-    for node in ast.walk(tree):
-        if isinstance(node, (ast.Global, ast.Nonlocal)):
-            out.append((node.lineno, "a global or nonlocal statement"))
-    fns = [s for s in tree.body if isinstance(s, ast.FunctionDef) and s.name == "_p2a_abstain"]
-    if len(fns) != 1:
-        return out + [(1, "_p2a_abstain is not defined once at the block's top level")]
-    fn = fns[0]
-    up: dict = {}
-    scoped: set = set()                       # the names a comprehension binds as its own target
-    for node in ast.walk(fn):
-        for ch in ast.iter_child_nodes(node):
-            up[ch] = node
-        if isinstance(node, ast.comprehension):
-            for n in ast.walk(node.target):
-                scoped.add(id(n))
-    loops = [n for n in ast.walk(fn) if isinstance(n, ast.For) and isinstance(n.iter, ast.Name) and n.iter.id == "hits"]
-    loop = loops[0] if len(loops) == 1 else None
-    if loop is None or not (isinstance(loop.target, ast.Tuple) and len(loop.target.elts) == 2
-                            and all(isinstance(e, ast.Name) for e in loop.target.elts)):
-        return out + [(fn.lineno, "_p2a_abstain does not hold exactly one `for c, hit in hits`")]
-    claim = loop.target.elts[0]
-
-    def reach_shape(v):
-        if not (isinstance(v, ast.ListComp) and len(v.generators) == 1 and isinstance(v.elt, ast.Name)):
-            return False
-        gen = v.generators[0]
-        if not (isinstance(gen.target, ast.Name) and gen.target.id == v.elt.id and not gen.is_async
-                and isinstance(gen.iter, ast.Attribute) and gen.iter.attr == "claims"
-                and isinstance(gen.iter.value, ast.Name) and gen.iter.value.id == "g"):
-            return False
-        tests = []
-        for t in gen.ifs:
-            tests += t.values if isinstance(t, ast.BoolOp) and isinstance(t.op, ast.And) else [t]
-        return any(isinstance(t, ast.Compare) and len(t.ops) == 1 and isinstance(t.ops[0], ast.In)
-                   and isinstance(t.comparators[0], ast.Name) and t.comparators[0].id == "_P2A_REACH"
-                   and isinstance(t.left, ast.Tuple) and len(t.left.elts) == 2
-                   and all(isinstance(e, ast.Attribute) and isinstance(e.value, ast.Name)
-                           and e.value.id == gen.target.id for e in t.left.elts)
-                   and [e.attr for e in t.left.elts] == ["kind", "verdict"] for t in tests)
-
-    def hits_shape(v):
-        return (isinstance(v, ast.ListComp) and len(v.generators) == 1 and not v.generators[0].is_async
-                and isinstance(v.generators[0].target, ast.Name) and isinstance(v.generators[0].iter, ast.Name)
-                and v.generators[0].iter.id == "todo" and isinstance(v.elt, ast.Tuple) and len(v.elt.elts) == 2
-                and isinstance(v.elt.elts[0], ast.Name) and v.elt.elts[0].id == v.generators[0].target.id)
-
-    def plain(node):
-        """The assignment that binds this name alone, or None."""
-        a = up.get(node)
-        return a if isinstance(a, ast.Assign) and len(a.targets) == 1 and a.targets[0] is node else None
-
-    def within(node, outer):
-        while node in up:
-            node = up[node]
-            if node is outer:
-                return True
-        return False
-
-    todo_n = hits_n = 0
-    for node in ast.walk(fn):
-        if isinstance(node, ast.Name) and not isinstance(node.ctx, ast.Load):
-            name = node.id
-        elif isinstance(node, ast.arg):
-            name = node.arg
-        elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) and node is not fn:
-            name = node.name
-        elif isinstance(node, ast.ExceptHandler):
-            name = node.name
-        else:
-            name = None
-        if name == "g" and not (isinstance(node, ast.arg) and up.get(node) is fn.args):
-            out.append((node.lineno, "g bound again in _p2a_abstain"))
-        elif name == "todo":
-            a = plain(node)
-            todo_n = todo_n + 1
-            if a is None or id(node) in scoped or a not in fn.body or not reach_shape(a.value):
-                out.append((node.lineno, "todo bound other than as the claims of g.claims in reach"))
-        elif name == "hits":
-            a = plain(node)
-            hits_n = hits_n + 1
-            if a is None or id(node) in scoped or not hits_shape(a.value):
-                out.append((node.lineno, "hits bound other than by a comprehension over todo"))
-        elif name == claim.id and node is not claim and id(node) not in scoped:
-            out.append((node.lineno, "the claim variable of the abstain loop bound again"))
-        if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
-            above = up.get(node)
-            if node.id == "hits" and not (above is loop and loop.iter is node):
-                out.append((node.lineno, "hits read other than by the abstain loop"))
-            if node.id == "todo" and not ((isinstance(above, ast.comprehension) and above.iter is node)
-                                          or (isinstance(above, ast.UnaryOp) and isinstance(above.op, ast.Not))):
-                out.append((node.lineno, "todo read other than as what a comprehension iterates"))
-        if isinstance(node, ast.Assign):
-            for tgt in node.targets:
-                for t in (tgt.elts if isinstance(tgt, ast.Tuple) else [tgt]):
-                    if isinstance(t, ast.Attribute) and (t.attr == "why" or (
-                            t.attr == "verdict" and isinstance(node.value, ast.Constant))):
-                        if not (isinstance(t.value, ast.Name) and t.value.id == claim.id and within(node, loop)):
-                            out.append((t.lineno, f"store into .{t.attr} of a claim the abstain loop does not hold"))
-    if todo_n != 1 or hits_n < 1:
-        out.append((fn.lineno, "todo is not bound exactly once, or hits is never bound"))
-    return out
-
-
-def selfcheck_p2a_only_abstains(source: str | None = None) -> dict:
-    """Re-derive from the PATH-2a block's own source, with `ast`, that the overlay can only abstain and reads no
-    Unicode table at run time.
-
-    Checked: every attribute store is `c.verdict = "UNCHECKABLE"`, `c.why = ...` or `g.verdict = FAIL/PASS` inside
-    `_p2a_abstain`, or `self.*` inside `_P2aFacts.__init__`, and the two claim stores are on a claim of `todo`, the
-    claims of `g.claims` in reach (`_p2a_shape_problems`); no subscript store into an attribute except `self._m`;
-    no mutating call on a record field; no augmented, annotated or deleted attribute; no import; every name read is one
-    the block binds or on a short list (builtins that read no table, main's names the block uses), and every attribute
-    read is on a short list of methods and fields, so a module, a dunder or an unlisted method is refused; `re` is only
-    ever called as `re.<function>(<static pattern>)`; no attribute read off a builtin type (`str.split`); no case,
-    Unicode-table, path or locale call, and no call that reads one indirectly (repr, format, !r, %r, getattr, eval,
-    encode, int(), whose digits are CPython's table); every strip and split carries its characters (none, `None` or a
-    keyword is refused); every regex static, with no class escape, no unescaped '.', and no case or Unicode flag. The
-    self-check's own functions (`_P2A_CHECKERS`) are exempt from the name, attribute and call rules, not from the
-    store rules.
+    Checked: no import; every name read is one the block binds or on a short list (builtins that read no table, main's
+    names the block uses), and every attribute read is on a short list of methods and fields, so a module, a dunder or
+    an unlisted method is refused; `re` is only ever called as `re.<function>(<static pattern>)`; no attribute read off
+    a builtin type (`str.split`); no case, Unicode-table, path or locale call, and no call that reads one indirectly
+    (repr, format, !r, %r, getattr, eval, encode, int(), whose digits are CPython's table; `int` may only be named as
+    the type `isinstance` tests); every strip and split carries its characters (none, `None` or a keyword is refused);
+    every regex static, with no class escape, no unescaped '.', and no case or Unicode flag; the block is ASCII. The
+    lint's own functions (`_P2A_CHECKERS`) are exempt from the name, attribute and call rules.
     `source` is the module text (default: this file)."""
     if source is None:
         with open(__file__, encoding="utf-8") as fh:
@@ -3231,58 +2982,27 @@ def selfcheck_p2a_only_abstains(source: str | None = None) -> dict:
             bound.add(node.arg)
 
     problems = []
-    judged: set = set()                       # Attribute / Subscript store targets an Assign accounted for
 
     def bad(node, what):
         problems.append(f"line {node.lineno}: {what}")
 
-    holds = _p2a_holder(tree)
-    problems.extend(f"line {n}: {what}" for n, what in _p2a_shape_problems(tree))
+    def tested_type(node):
+        """`int` named only as the type `isinstance(x, int)` tests, alone or in a tuple of types: no digit is read."""
+        up = parent.get(node)
+        types = up if isinstance(up, ast.Tuple) else node
+        call = parent.get(types)
+        return (isinstance(call, ast.Call) and isinstance(call.func, ast.Name) and call.func.id == "isinstance"
+                and len(call.args) == 2 and not call.keywords and call.args[1] is types)
+
     for node in ast.walk(tree):
-        where = owner(node)
-        checker = bool(_P2A_CHECKERS & set(where))
         if isinstance(node, (ast.Import, ast.ImportFrom)):
             bad(node, "an import")
-        if isinstance(node, (ast.AugAssign, ast.AnnAssign)) and not isinstance(node.target, ast.Name):
-            bad(node, "augmented or annotated store into an attribute or item")
-            judged.add(id(node.target))
-        if isinstance(node, ast.AugAssign) and isinstance(node.target, ast.Name) and holds(node.target):
-            bad(node, f"augmented store into {node.target.id}, which may hold a record field (a list grows in place)")
-        if isinstance(node, ast.Assign):
-            for tgt in node.targets:
-                for t in (tgt.elts if isinstance(tgt, ast.Tuple) else [tgt]):
-                    judged.add(id(t))
-                    if isinstance(t, ast.Attribute):
-                        base = t.value.id if isinstance(t.value, ast.Name) else None
-                        if base == "self" and where[:2] == ["__init__", "_P2aFacts"]:
-                            continue
-                        if where[:1] != ["_p2a_abstain"]:
-                            bad(t, f"store into .{t.attr} outside _p2a_abstain")
-                        elif t.attr == "why":
-                            continue
-                        elif t.attr == "verdict" and isinstance(node.value, ast.Constant):
-                            if node.value.value != "UNCHECKABLE":
-                                bad(t, f"verdict literal {node.value.value!r}")
-                        elif (t.attr == "verdict" and base == "g" and isinstance(node.value, ast.IfExp)
-                              and {getattr(node.value.body, "value", None),
-                                   getattr(node.value.orelse, "value", None)} == {"FAIL", "PASS"}):
-                            continue
-                        else:
-                            bad(t, f"store into .{t.attr}")
-                    elif isinstance(t, ast.Subscript) and isinstance(t.value, ast.Attribute):
-                        v = t.value
-                        if not (isinstance(v.value, ast.Name) and v.value.id == "self" and v.attr == "_m"):
-                            bad(t, f"item store into .{v.attr}")
-                    elif isinstance(t, ast.Subscript) and holds(t.value):
-                        bad(t, "item store into what may hold a record field")
-        if isinstance(node, (ast.Attribute, ast.Subscript)) and not isinstance(node.ctx, ast.Load) \
-                and id(node) not in judged:
-            bad(node, "attribute or item stored or deleted outside a plain assignment")
-        if checker:
+        if _P2A_CHECKERS & set(owner(node)):
             continue
         if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
             if node.id in _P2A_BANNED_NAMES:
-                bad(node, f"name {node.id}")
+                if not (node.id == "int" and tested_type(node)):
+                    bad(node, f"name {node.id}")
             elif node.id not in bound and node.id not in _P2A_NAMES_OK:
                 bad(node, f"name {node.id}, not one the block binds or may read")
             if node.id == "re":
@@ -3309,10 +3029,6 @@ def selfcheck_p2a_only_abstains(source: str | None = None) -> dict:
             if f.attr in _P2A_ARGLESS and (not node.args or node.keywords or any(
                     isinstance(a, ast.Constant) and a.value is None for a in node.args)):
                 bad(node, f".{f.attr}() without an explicit argument")
-            if f.attr in _P2A_MUTATORS and isinstance(f.value, ast.Attribute) and f.value.attr in _P2A_RECORD:
-                bad(node, f".{f.value.attr}.{f.attr}()")
-            if f.attr in _P2A_MUTATORS and holds(f.value):
-                bad(node, f".{f.attr}() on what may hold a record field")
             if isinstance(f.value, ast.Name) and f.value.id == "re" and f.attr in _P2A_RE_CALLS:
                 pat = static(node.args[0]) if node.args else None
                 if pat is None:
@@ -3324,10 +3040,11 @@ def selfcheck_p2a_only_abstains(source: str | None = None) -> dict:
     if not all(ord(ch) < 128 for ch in block):
         problems.append("the block holds a character outside ASCII")
     return {"ok": not problems, "problems": problems,
-            "checked": ["attribute and item stores", "the claims _p2a_abstain may write", "record-field mutators",
-                        "imports", "names read",
-                        "attributes read", "re used only as re.<function>", "banned names and attributes",
-                        "indirect table reads", "argument-less strip and split", "static regexes", "ASCII source"]}
+            "checked": ["imports", "names read", "attributes read", "re used only as re.<function>",
+                        "banned names and attributes", "indirect table reads", "argument-less strip and split",
+                        "static regexes", "ASCII source"],
+            "not_checked": ["that the overlay only abstains: _p2a_apply holds that at run time",
+                            "names built at run time, aliases carried through data, an f-string of a list"]}
 
 # === PATH-2a abstain-only overlay: END ===
 

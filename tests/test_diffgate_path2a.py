@@ -1,7 +1,7 @@
 """PATH-2a: main's diff gate, unchanged, plus an overlay that only abstains (NOTE_path2a_abstain_overlay_2026_09_30,
 NOTE_path2a_second_pass_2026_09_30, NOTE_path2a_third_pass_2026_09_30, NOTE_path2a_fourth_pass_2026_09_30,
 NOTE_path2a_fifth_pass_2026_09_30, NOTE_path2a_sixth_pass_2026_09_30, NOTE_path2a_seventh_pass_2026_09_30,
-NOTE_path2a_eighth_pass_2026_10_01, NOTE_path2a_ninth_pass_2026_10_04).
+NOTE_path2a_eighth_pass_2026_10_01, NOTE_path2a_ninth_pass_2026_10_04, NOTE_path2a_tenth_pass_2026_10_05).
 
 The reference in every test here is `main` itself: this checkout's `styxx/diffgate.py` and `web/gate/diffgate.js` with
 the PATH-2a block cut out and the door hooks reverted, asserted to hash to the files on `origin/main` 1cde8b82
@@ -11,7 +11,10 @@ the PATH-2a block cut out and the door hooks reverted, asserted to hash to the f
     main's except that a decided verdict in REACH may become UNCHECKABLE with the overlay's reason, and the gate
     verdict is main's formula over the claims; each claim reads the same under --strict as without it; where main
     raises, the branch raises the same exception type. The same with a run leg, a test report and a commit handed to
-    both doors, where main decides `tests_pass` claims, which are outside REACH.
+    both doors, where main decides `tests_pass` claims, which are outside REACH. Since the tenth pass the relation
+    holds at run time whatever the rules do: they run on a copy (DECIDE) and one short function writes the record
+    (APPLY). Functions written to do harm are handed to APPLY in both ports, the ninth review's plants are planted
+    where the decisions are computed, and the text of the lines that touch the record is pinned.
 (C) cross-port, as the ninth pass restates it -- a decision reads the claim's kind, verdict and detail, main's counts
     and the door's bytes, never the claim's text, through code that asks no runtime a Unicode question. So
     (i) wherever main's two ports give claims the same kind, verdict and detail -- by position, matched across the two
@@ -27,13 +30,15 @@ the PATH-2a block cut out and the door hooks reverted, asserted to hash to the f
     one match read two ways, the `extract` guards' work; each also pairs two different matches: L1 and OM1 are pinned,
     NOTE_path2a_fifth_pass_2026_09_30, C-3, and NOTE_path2a_sixth_pass_2026_09_30, C-3). The constant tables the
     overlay leans on are pinned by enumeration on the running engines.
-And the static facts: the reconstruction, the self-checks over each block's source, the error fallback, the
+And the static facts: the reconstruction, the lints over each block's source (against an honest edit that would ask
+the runtime a Unicode question; not proofs, and nothing about what the block may write), the error fallback, the
 reproductions, the cost per call, and what must not move (the demo, the committed capsules, charon's lines, the
 bookmarklet source). Coverage (B) is in tests/test_diffgate_path2a_truth.py.
 """
 from __future__ import annotations
 
 import collections
+import copy
 import functools
 import importlib.util
 import io
@@ -535,29 +540,24 @@ def test_a_planted_git_door_mirror_is_refused(M, tmp_path):
     assert caught == ["rename", "copy"], caught
 
 
-# ---- the self-checks --------------------------------------------------------------------------------------------------
+# ---- the lints over each block's source ------------------------------------------------------------------------------
+#
+# NOTE_path2a_tenth_pass_2026_10_05: these are lints against an honest future edit that would ask the runtime a Unicode
+# question, which bar C(i) leans on the block not doing. They are not proofs against a hostile edit, and they say
+# nothing about what the block may write: that the overlay only abstains holds at run time, in APPLY (the section
+# after the next). The record-write checks of passes one to nine, and their plants, are gone.
 
-def test_selfcheck_p2a_only_abstains():
-    rep = N.selfcheck_p2a_only_abstains()
+def test_the_python_block_passes_its_lints():
+    rep = N.selfcheck_p2a_asks_no_runtime()
     assert rep["ok"] is True, rep["problems"]
+    assert any("only abstains" in x for x in rep["not_checked"])
 
 
 CLAIMED = "    ca, ck = _p2a_A(claimed), _p2a_K(claimed)\n"
-MOVED = "            moved = True\n"
-HITS = "        hits = [(c, _p2a_decide(c, f)) for c in todo]\n"
-TODO = "    todo = [c for c in g.claims if (c.kind, c.verdict) in _P2A_REACH]\n"
-BEFORE_LOOP = "    moved = False\n"
-REACH_END = '    ("tests_added", "VERIFIED"), ("tests_added", "CONTRADICTED"), ("symbol_added", "VERIFIED")})\n'
-SELFCHECK_PLANTS = [
-    ('            c.verdict = "UNCHECKABLE"\n', '            c.verdict = "VERIFIED"\n', "verdict literal"),
-    ('            c.verdict = "UNCHECKABLE"\n', '            c.verdict = "UNCHECKABLE"\n            c.detail["x"] = 1\n',
-     "item store into .detail"),
-    ('    todo = [c for c in g.claims', '    g.claims.append(None)\n    todo = [c for c in g.claims', ".claims.append"),
-    ('    claimed = c.detail["path"]\n', '    claimed = c.detail["path"]\n    c.text = claimed\n', "outside _p2a_abstain"),
+LINT_PLANTS = [
     ("def _p2a_fold(s: str) -> str:", "def _p2a_fold(s: str) -> str:\n    s = s.lower()", "attribute .lower"),
     ('_P2A_COARSE = re.compile("\\r\\n|\\r|\\n")', '_P2A_COARSE = re.compile("\\\\s+")', "class escape"),
     ("    return s.replace(\"\\\\\", \"/\")", "    return s.replace(\"\\\\\", \"/\").strip()", "without an explicit argument"),
-    ("    d = c.detail\n", "    d = c.detail\n    d[\"prefix\"] = \"\"\n", "record field"),
     ("    return s.translate(_P2A_FOLD)\n", "    return s.translate(_P2A_FOLD).casefold()\n", "attribute .casefold"),
     # C-4: calls that read a Unicode table indirectly
     (CLAIMED, "    claimed = repr(claimed)\n" + CLAIMED, "name repr"),
@@ -608,59 +608,18 @@ SELFCHECK_PLANTS = [
     # C-2 (NOTE_path2a_sixth_pass_2026_09_30): a named-character escape reads the Unicode name table when it compiles
     ('_P2A_CR = re.compile("\\r")', '_P2A_CR = re.compile("\\\\N{LATIN SMALL LETTER A}|\\r")',
      "named-character escape"),
-    # A-1 (NOTE_path2a_eighth_pass_2026_10_01): the seventh review's three plants, each of which the pass-7 check
-    # accepted (a record field reached through a `for` target), and the same reached through `:=`, a call's result, a
-    # name bound from another, an augmented store and a helper's parameter
-    (MOVED, MOVED + "            for cl in (g.claims,):\n                cl.pop()\n", ".pop() on what may hold"),
-    (MOVED, MOVED + '            for dd in (c.detail,):\n                dd["n"] = "9"\n', "item store into what may hold"),
-    (MOVED, MOVED + '            for dd in (c.detail,):\n                dd.setdefault("zz", 1)\n',
-     ".setdefault() on what may hold"),
-    (MOVED, MOVED + '            (dd := c.detail)["n"] = "9"\n', "item store into what may hold"),
-    (MOVED, MOVED + "            [x.clear() for x in [c.detail]]\n", ".clear() on what may hold"),
-    (MOVED, MOVED + '            x = [c.detail]\n            y = x[0]\n            y["n"] = "9"\n',
-     "item store into what may hold"),
-    (MOVED, MOVED + "            cl = g.claims\n            cl += [c]\n", "augmented store into cl"),
-    (MOVED, MOVED + '            _p2a_reason(c.detail, "", "dir", "")["n"] = "9"\n', "item store into what may hold"),
-    (MOVED, MOVED + '            def _poke(d):\n                d["n"] = "9"\n            _poke(c.detail)\n',
-     "item store into what may hold"),
-    # I-1 (NOTE_path2a_ninth_pass_2026_10_04): the eighth integration review's plant, which withheld a `tests_pass`
-    # VERIFIED beside a count claim and passed the pass-8 check and every committed test, and the other ways to write a
-    # claim outside the overlay's own set (`todo`, the claims of g.claims in reach)
-    (HITS, HITS + '        hits = hits + [(c, ("tests", "#101")) for c in g.claims if c.kind == "tests_pass" and '
-     'c.verdict == "VERIFIED"\n                       and any(x.kind == "files_changed_count" for x in g.claims)]\n',
-     "hits bound other than by a comprehension over todo"),
-    (HITS, HITS + '        hits.extend((c, ("tests", "#101")) for c in g.claims if c.kind == "tests_pass")\n',
-     "hits read other than by the abstain loop"),
-    (HITS, HITS + '        hits.append((g.claims[0], ("tests", "#101")))\n', "hits read other than by the abstain loop"),
-    (HITS, HITS + "        more = hits\n", "hits read other than by the abstain loop"),
-    (HITS, "        hits = [(c, _p2a_decide(c, f)) for c in g.claims]\n",
-     "hits bound other than by a comprehension over todo"),
-    (HITS, "        hits = [(g.claims[0], _p2a_decide(c, f)) for c in todo]\n",
-     "hits bound other than by a comprehension over todo"),
-    (TODO, TODO + '    todo = todo + [c for c in g.claims if c.kind == "tests_pass"]\n',
-     "todo bound other than as the claims of g.claims in reach"),
-    (TODO, '    todo = [c for c in g.claims if c.verdict in ("VERIFIED", "CONTRADICTED")]\n',
-     "todo bound other than as the claims of g.claims in reach"),
-    (TODO, TODO + "    todo.extend(c for c in g.claims)\n", "todo read other than as what a comprehension iterates"),
-    (TODO, TODO + "    g = g\n", "g bound again in _p2a_abstain"),
-    (TODO, '    global _P2A_REACH\n    _P2A_REACH = _P2A_REACH | {("tests_pass", "VERIFIED")}\n' + TODO,
-     "_P2A_REACH is not bound once"),
-    (REACH_END, REACH_END.replace("})\n", ', ("tests_pass", "VERIFIED")})\n'), "_P2A_REACH is not bound once"),
-    (BEFORE_LOOP, BEFORE_LOOP + '    for c in g.claims:\n        c.verdict = "UNCHECKABLE"\n',
-     "store into .verdict of a claim the abstain loop does not hold"),
-    (BEFORE_LOOP, BEFORE_LOOP + '    g.claims[0].why = ""\n', "store into .why of a claim the abstain loop does not hold"),
-    (MOVED, MOVED + '            c = g.claims[0]\n            c.why = ""\n',
-     "the claim variable of the abstain loop bound again"),
-    (MOVED, MOVED + "    for c, hit in hits:\n        c.why = c.why\n", "does not hold exactly one"),
+    # NOTE_path2a_tenth_pass_2026_10_05: `int` may be named as the type isinstance tests (APPLY does), and only there
+    (CLAIMED, "    q = isinstance(int(claimed), int)\n" + CLAIMED, "name int"),
+    (CLAIMED, "    q = isinstance(claimed, (str, int)) and [int][0](claimed)\n" + CLAIMED, "name int"),
 ]
 
 
-@pytest.mark.parametrize("old,new,what", SELFCHECK_PLANTS)
-def test_the_selfcheck_refuses_a_planted_write(old, new, what):
+@pytest.mark.parametrize("old,new,what", LINT_PLANTS)
+def test_the_python_lints_refuse_a_planted_read(old, new, what):
     text = R.lf(R.INSTRUMENT)
     block = R.py_block(text)
     assert block.count(old) == 1, old
-    rep = N.selfcheck_p2a_only_abstains(text.replace(block, block.replace(old, new)))
+    rep = N.selfcheck_p2a_asks_no_runtime(text.replace(block, block.replace(old, new)))
     assert rep["ok"] is False and any(what in p for p in rep["problems"]), rep["problems"]
 
 
@@ -680,8 +639,7 @@ JS_BANNED_WORDS = ("Number", "parseInt", "parseFloat", "isNaN", "isFinite",
                    "Math", "Date", "BigInt", "DataView", "Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array",
                    "Uint16Array", "Int32Array", "Uint32Array", "Float16Array", "Float32Array", "Float64Array",
                    "BigInt64Array", "BigUint64Array",
-                   # A-2 (NOTE_path2a_eighth_pass_2026_10_01): Object.assign, Object.defineProperty and a Proxy write a
-                   # record's fields without a store the store scan reads
+                   # Object and Proxy reach a method or a field by a computed name
                    "Object", "Proxy")
 JS_UNARY_AFTER = "(,=[:?!&|;{}<>*%~^"
 JS_UNARY_KEYWORDS = ("return", "typeof", "void", "in", "of", "case", "throw", "yield", "await", "new", "delete")
@@ -705,7 +663,8 @@ def js_numeric_problems(dense: str) -> list:
     return out
 # Identifiers a computed member access may index with: counters, positions and the block's own constant keys. A name
 # built from strings (claimed[kk]) is refused, and so is any call on a computed member (x[k](), (x[k])()).
-JS_INDEXES = {"0", "1", "2", "i", "k", "k+1", "k-1", "v", "u", "space", "c.kind", "_P2A_OWN", "out.length-1"}
+JS_INDEXES = {"0", "1", "2", "i", "k", "k+1", "k-1", "v", "u", "space", "c.kind", "_P2A_OWN", "out.length-1",
+              "key", "fallback"}      # the last two: APPLY's lookups in the phrase table
 JS_KEYWORDS = {"return", "of", "in", "const", "let", "var", "case", "typeof", "void", "delete", "throw", "yield",
                "await", "else", "do", "new"}
 JS_ESC = {"n": "\n", "r": "\r", "t": "\t", "v": "\v", "f": "\f", "b": "\b", "0": "\0"}
@@ -762,13 +721,29 @@ def js_regex_problems(pattern: str) -> list:
     return out
 
 
+JS_CODE_ESCAPE = re.compile(r"\\u\{([0-9A-Fa-f]{1,6})\}|\\u([0-9A-Fa-f]{4})")
+
+
+def js_bitwise_problems(dense: str) -> list:
+    """C-6 of the ninth cross-port review: `~`, `|`, `&`, `^`, `<<` and `>>` convert a string operand with the engine's
+    white space, as a unary `+` does. The block uses none of them but `>>` on a `.length`, a number."""
+    out = []
+    for m in re.finditer(r"~|<<|>>>?|\^|(?<![|&])[|&](?![|&])", dense):
+        if m.group().startswith(">>") and dense[:m.start()].endswith(".length"):
+            continue
+        out.append(f"bitwise operator {m.group()!r}")
+    return out
+
+
 def js_problems(block: str) -> list:
-    """The port block's token scan (NOTE_path2a_third_pass_2026_09_30, C-3). Code is read outside strings and comments
-    with white space removed except between two identifier characters, so `a . b (` reads `a.b(`: banned calls
-    anywhere; no regex literal (no '/' in code); `RegExp` only as `new RegExp(<one static string>)` -- string literals
-    and top-level constants joined by `+` -- whose decoded value holds no class escape, no '.' outside a class, and
-    no flags; a computed member access only with a listed index expression and no string in the brackets, and never
-    called; no call on a parenthesised expression."""
+    """The port block's token scan (NOTE_path2a_third_pass_2026_09_30, C-3), a lint. Code is read outside strings and
+    comments, with a Unicode escape read as the character it spells (an escape in code can only be part of a name:
+    NOTE_path2a_tenth_pass_2026_10_05) and white space removed except between two identifier characters, so
+    `a . b (` reads `a.b(`: banned calls anywhere; no regex literal (no '/' in code); `RegExp` only as
+    `new RegExp(<one static string>)` -- string literals and top-level constants joined by `+` -- whose decoded value
+    holds no class escape, no '.' outside a class, and no flags; a computed member access only with a listed index
+    expression and no string in the brackets, and never called; no call on a parenthesised expression; no bitwise
+    operator. It reads names, so it does not see a name built at run time, and it types nothing."""
     out = [f"banned token {t!r}" for t in JS_BANNED if t in block]
     code, strings, i = [], [], 0
     while i < len(block):
@@ -789,7 +764,9 @@ def js_problems(block: str) -> list:
             continue
         code.append(ch)
         i += 1
-    raw = "".join(code)
+    raw = JS_CODE_ESCAPE.sub(lambda m: chr(min(int(m.group(1) or m.group(2), 16), 0x10FFFF)), "".join(code))
+    if "\\" in raw:
+        out.append("a backslash in code outside a string")
     word = re.compile(r"[A-Za-z0-9_$]")
     dense = re.sub(r"\s+", lambda m: " " if (0 < m.start() and m.end() < len(raw) and word.match(raw[m.start() - 1])
                                                 and word.match(raw[m.end()])) else "", raw)
@@ -797,6 +774,7 @@ def js_problems(block: str) -> list:
     out += [f"banned word {t!r} in code" for t in JS_BANNED_WORDS
             if re.search(r"(?<![A-Za-z0-9_$])" + t + r"(?![A-Za-z0-9_$])", dense)]
     out += js_numeric_problems(dense)
+    out += js_bitwise_problems(dense)
     if "/" in dense:
         out.append("a '/' in code: a regex literal or a division")
     for s in strings:
@@ -840,306 +818,6 @@ def js_problems(block: str) -> list:
             out.append("a call on a computed member")
     if re.search(r"\)\(|\]\)\(", dense):
         out.append("a call on a parenthesised expression")
-    return out + js_store_problems(dense, strings)
-
-
-# A-2 (NOTE_path2a_eighth_pass_2026_10_01): the port block's store scan. What it reads, on the same dense code:
-# - every store into a member by name (`x.y =`, `x.y += 1`, `x.y++`) is one of `c.why = ...`, `c.verdict =
-#   "UNCHECKABLE"` and `g.verdict = (...) ? "FAIL" : "PASS"`, inside _p2aAbstain; no `delete`;
-# - every store into a computed member (`x[i] = v`, `x[i]++`) and every call of a mutating method (`push`, `pop`,
-#   `splice`, `shift`, `unshift`, `set`, `add`, `fill`, `delete`, `clear`, `reverse`, `copyWithin`) is on a chain that
-#   starts at a name the block made itself and then reads only `[...]` and `.get(...)` (no `.claims`, `.detail` or other
-#   field): a name every binding of which, in its top-level function (or at the block's top level), is an array literal,
-#   `new Map(...)`, `new Set(...)`, `_p2aFlags(...)`, or such a chain from such a name, that is no parameter there, and
-#   none of whose bindings mentions `.claims` or `.detail`;
-# - no value stored that way holds `.claims` or a detail itself (`push(c.detail)`), nor `g` in _p2aAbstain.
-# What it does not do: follow a value through a parameter, or type an expression. The Python block's self-check is the
-# precise one (_p2a_holder); this scan keeps the port's stores to the shapes the Python block's check allows.
-JS_MUTATORS = ("push", "pop", "splice", "shift", "unshift", "set", "add", "fill", "delete", "clear", "reverse",
-               "copyWithin")
-JS_STORE = r"(?:=(?![=>])|[-+*/%&|^]=|\*\*=|<<=|>>>?=|&&=|\|\|=|\?\?=|\+\+|--)"
-JS_NAME = r"[A-Za-z_$][\w$]*"
-JS_HOLDS = re.compile(r"\.(?:claims|detail)(?![\w$.\[])")
-
-
-def _js_close(dense: str, i: int) -> int:
-    """The index just past the bracket that closes the one at dense[i]."""
-    pairs = {"(": ")", "[": "]", "{": "}"}
-    depth, j = 0, i
-    while True:
-        if dense[j] in pairs:
-            depth += 1
-        elif dense[j] in ")]}":
-            depth -= 1
-            if depth == 0:
-                return j + 1
-        j += 1
-
-
-def _js_open(dense: str, j: int) -> int:
-    """The index of the bracket that opens the one closing just before j."""
-    depth, i = 0, j - 1
-    while True:
-        if dense[i] in ")]}":
-            depth += 1
-        elif dense[i] in "([{":
-            depth -= 1
-            if depth == 0:
-                return i
-        i -= 1
-
-
-def _js_chain_start(dense: str, k: int) -> int:
-    """Where the member chain that ends just before k (at a '.' or '[') starts, read backward: a name continues it
-    only through a '.' before it, and a bracketed group only where a '.', '[' or '(' follows it."""
-    j = k
-    while j > 0:
-        if re.match(r"[\w$]", dense[j - 1]):
-            while j > 0 and re.match(r"[\w$]", dense[j - 1]):
-                j -= 1
-            if j > 0 and dense[j - 1] == ".":
-                j -= 1
-                continue
-            break
-        if dense[j - 1] in ")]" and dense[j:j + 1] in (".", "[", "("):
-            j = _js_open(dense, j)
-            continue
-        break
-    return j
-
-
-def _js_scopes(dense: str) -> list:
-    """(start, end) of each top-level function of the block: `function NAME(...) {...}` and `const NAME = ...;` whose
-    value holds a function (`=>`)."""
-    out, i, depth = [], 0, 0
-    while i < len(dense):
-        if depth == 0 and (i == 0 or not re.match(r"[\w$]", dense[i - 1])):
-            m = re.match(r"function " + JS_NAME + r"\(", dense[i:])
-            if m:
-                p = _js_close(dense, i + m.end() - 1)
-                e = _js_close(dense, p)
-                out.append((i, e))
-                i = e
-                continue
-            m = re.match(r"const " + JS_NAME + "=", dense[i:])
-            if m:
-                e = i + m.end()
-                d = 0
-                while e < len(dense) and not (d == 0 and dense[e] == ";"):
-                    d += {"(": 1, "[": 1, "{": 1, ")": -1, "]": -1, "}": -1}.get(dense[e], 0)
-                    e += 1
-                if "=>" in dense[i:e]:
-                    out.append((i, e + 1))
-                    i = e + 1
-                    continue
-        depth += {"(": 1, "[": 1, "{": 1, ")": -1, "]": -1, "}": -1}.get(dense[i], 0)
-        i += 1
-    return out
-
-
-def _js_expr_end(dense: str, i: int) -> int:
-    """Where the expression starting at i ends: a ',', ';' or closing bracket at its own depth."""
-    d = 0
-    while i < len(dense):
-        ch = dense[i]
-        if d == 0 and (ch in ",;" or ch in ")]}"):
-            return i
-        d += {"(": 1, "[": 1, "{": 1, ")": -1, "]": -1, "}": -1}.get(ch, 0)
-        i += 1
-    return i
-
-
-def _js_bindings(text: str) -> tuple:
-    """({name: [init text or None for a binding that is not a plain one]}, {parameter names}) of one scope's text."""
-    binds: dict = {}
-    params: set = set()
-    for m in re.finditer(r"(?<![\w$])(?:const|let|var)(?= |\[|\{)", text):
-        i = m.end()
-        while True:
-            if text[i] == " ":
-                i += 1
-            if text[i] in "[{":
-                j = _js_close(text, i)
-                for n in re.findall(JS_NAME, text[i:j]):
-                    binds.setdefault(n, []).append(None)
-            else:
-                n = re.match(JS_NAME, text[i:]).group()
-                j = i + len(n)
-                if text[j:j + 1] != "=":
-                    binds.setdefault(n, []).append(None)       # for (const x of y), let x;
-            if text[j:j + 1] == "=":
-                e = _js_expr_end(text, j + 1)
-                if text[i] not in "[{":
-                    binds.setdefault(n, []).append(text[j + 1:e])
-                j = e
-            if text[j:j + 1] != ",":
-                break
-            i = j + 1
-    for m in re.finditer(r"(?<![\w$.])(" + JS_NAME + r")=(?![=>])", text):
-        if not re.search(r"(?<![\w$])(?:const|let|var) $", text[:m.start()]):
-            binds.setdefault(m.group(1), []).append(text[m.end():_js_expr_end(text, m.end())])
-    for m in re.finditer(r"function " + JS_NAME + r"\(", text):
-        params.update(re.findall(JS_NAME, text[m.end():_js_close(text, m.end() - 1) - 1]))
-    for m in re.finditer(r"\)=>", text):
-        params.update(re.findall(JS_NAME, text[_js_open(text, m.start() + 1) + 1:m.start()]))
-    for m in re.finditer(r"(?<![\w$.])(" + JS_NAME + r")=>", text):
-        params.add(m.group(1))
-    return binds, params
-
-
-def js_abstain_problems(dense: str, abstain: tuple, strings: list) -> list:
-    """I-1 (NOTE_path2a_ninth_pass_2026_10_04): the claims _p2aAbstain may write, as the Python block's
-    _p2a_shape_problems reads them, on the same dense code. `todo` is bound once, as `g.claims.filter(c =>
-    _P2A_REACH.has(c.kind + "|" + c.verdict))` (a further `&&` condition may narrow it), and is read only as
-    `!todo.length`, `todo.filter(` and `todo.map(`; `hits` is declared once, bound only as `todo.map(c => [c, ...])`,
-    and read only by the one `for (const [c, hit] of hits)`; the stores into `c.why` and `c.verdict` lie inside that
-    loop, whose body binds no other `c`; and `_P2A_REACH` is built once from `_P2A_REACH_PAIRS` and read only through
-    `.has(`. Before this an arrow function's own `c` could carry the two stores to any claim of `g.claims`."""
-    out = []
-    fn = dense[abstain[0]:abstain[1]]
-
-    def word(n):
-        return r"(?<![\w$.])" + re.escape(n) + r"(?![\w$])"
-
-    def count(rx, text=fn):
-        return len(re.findall(rx, text))
-
-    m = re.search(r"(?<![\w$])const todo=", fn)
-    init = fn[m.end():_js_expr_end(fn, m.end())] if m else ""
-    t = re.fullmatch(r"g\.claims\.filter\(c=>_P2A_REACH\.has\(c\.kind\+S(\d+)\+c\.verdict\)(?:&&[^|?]*)?\)", init)
-    if not (t and js_string(strings[int(t.group(1))]) == "|" and count(word("todo") + r"=(?![=>])") == 1):
-        out.append("todo is not bound once, as the claims of g.claims in reach")
-    if count(word("todo")) != 1 + count(r"!todo\.length(?![\w$])") + count(word("todo") + r"\.(?:filter|map)\("):
-        out.append("todo is read other than as !todo.length, todo.filter( or todo.map(")
-    binds = 0
-    for m in re.finditer(word("hits") + r"=(?![=>])", fn):
-        binds += 1
-        init = fn[m.end():_js_expr_end(fn, m.end())]
-        arg = init[len("todo.map("):-1]
-        if not (init.startswith("todo.map(") and _js_close(init, len("todo.map")) == len(init)
-                and arg.startswith("c=>[c,") and _js_close(arg, 3) == len(arg)):
-            out.append("hits is bound other than as todo.map(c => [c, ...])")
-    loop = "for(const[c,hit]of hits){"
-    if count(r"(?<![\w$])let hits;") != 1 or fn.count(loop) != 1 or binds < 1:
-        return out + ["hits is not declared once, bound, and read by exactly one for (const [c, hit] of hits)"]
-    if count(word("hits")) != 2 + binds:
-        out.append("hits is read other than by the abstain loop")
-    s = fn.index(loop) + len(loop) - 1
-    e = _js_close(fn, s)
-    for m in re.finditer(r"(?<![\w$.])c\.(?:why|verdict)" + JS_STORE, fn):
-        if not s < m.start() < e:
-            out.append("a store into c.why or c.verdict outside the abstain loop")
-    body_binds, body_params = _js_bindings(fn[s:e])
-    if "c" in body_binds or "c" in body_params:
-        out.append("the abstain loop's body binds c again")
-    if count(r"const _P2A_REACH=new Set\(_P2A_REACH_PAIRS\.map\(p=>p\[0\]\+S\d+\+p\[1\]\)\);", dense) != 1 \
-            or count(word("_P2A_REACH"), dense) != 1 + count(word("_P2A_REACH") + r"\.has\(", dense) \
-            or count(word("_P2A_REACH_PAIRS"), dense) != 2:
-        out.append("_P2A_REACH is read other than through .has(, or built other than once from _P2A_REACH_PAIRS")
-    return out
-
-
-def js_store_problems(dense: str, strings: list) -> list:
-    """The store scan (A-2 of NOTE_path2a_eighth_pass_2026_10_01); see the comment above JS_MUTATORS."""
-    out = []
-    scopes = _js_scopes(dense)
-    top = dense
-    for a, e in reversed(scopes):
-        top = top[:a] + " " * (e - a) + top[e:]
-    facts = {None: _js_bindings(top)}
-    for a, e in scopes:
-        facts[a] = _js_bindings(dense[a:e])
-    abstain = next((a, e) for a, e in scopes if dense.startswith("function _p2aAbstain(", a))
-    out += js_abstain_problems(dense, abstain, strings)
-
-    def scope_of(k):
-        return next((a for a, e in scopes if a <= k < e), None)
-
-    def fresh(name, at, seen=()):
-        """Every binding of `name` a value the block made; a chain back to a name already being read adds none."""
-        if name in seen:
-            return True
-        for sc in (scope_of(at), None):
-            binds, params = facts[sc]
-            if name in binds or name in params:
-                if name in params:
-                    return False
-                for init in binds[name]:
-                    if init is None or JS_HOLDS.search(init) or ".claims" in init or ".detail" in init:
-                        return False
-                    if re.match(r"(?:\[|new Map\(|new Set\(|_p2aFlags\()", init):
-                        continue
-                    m = re.match(JS_NAME, init)
-                    if not (m and steps_ok(init, m.end(), len(init)) and fresh(m.group(), at, seen + (name,))):
-                        return False
-                return True
-        return False
-
-    def steps_ok(text, i, end):
-        while i < end:
-            if text[i] == "[":
-                i = _js_close(text, i)
-            elif text.startswith(".get(", i):
-                i = _js_close(text, i + 4)
-            else:
-                return False
-        return True
-
-    def string_is(tok, value):
-        m = re.fullmatch(r"S(\d+)", tok)
-        return m is not None and js_string(strings[int(m.group(1))]) == value
-
-    # stores into a member by name
-    for m in re.finditer(r"\.(" + JS_NAME + r")(" + JS_STORE + r")", dense):
-        start = _js_chain_start(dense, m.start())
-        target, op = dense[start:m.start() + 1 + len(m.group(1))], m.group(2)
-        rhs = dense[m.end():_js_expr_end(dense, m.end())]
-        inside = abstain[0] <= m.start() < abstain[1]
-        ok = inside and op == "=" and (
-            target == "c.why"
-            or (target == "c.verdict" and string_is(rhs, "UNCHECKABLE"))
-            or (target == "g.verdict" and re.fullmatch(r"\(.*\)\?(S\d+):(S\d+)", rhs) is not None
-                and {js_string(strings[int(x[1:])]) for x in re.fullmatch(r"\(.*\)\?(S\d+):(S\d+)", rhs).groups()}
-                == {"FAIL", "PASS"}))
-        if not ok:
-            out.append(f"store into a member: {target}{op}")
-    for m in re.finditer(r"(?:\+\+|--)(" + JS_NAME + r"(?:\.[\w$]+|\[[^\]]*\])*\.[\w$]+)(?![\w$.(\[])", dense):
-        out.append(f"store into a member: {m.group()}")
-    if re.search(r"(?<![\w$.])delete(?![\w$])", dense):
-        out.append("a delete")
-    # stores into a computed member, and mutating calls
-    sites = []
-    for m in re.finditer(r"\](" + JS_STORE + r")", dense):
-        i = _js_open(dense, m.start() + 1)
-        before = re.search(JS_NAME + "$", dense[:i])
-        if not (before and before.group() not in JS_KEYWORDS) and dense[i - 1:i] not in ("]", ")"):
-            continue                              # an array literal or a destructuring pattern, not a member
-        start = _js_chain_start(dense, i)
-        sites.append(("store", start, i, m.start() + 1, dense[m.end():_js_expr_end(dense, m.end())]))
-    for m in re.finditer(r"(?:\+\+|--)(" + JS_NAME + r")\[", dense):
-        sites.append(("store", m.start() + 2, m.end() - 1, _js_close(dense, m.end() - 1), ""))
-    for m in re.finditer(r"\.(" + "|".join(JS_MUTATORS) + r")\(", dense):
-        start = _js_chain_start(dense, m.start())
-        args = dense[m.end():_js_close(dense, m.end() - 1) - 1]
-        sites.append(("call ." + m.group(1), start, m.start(), m.start(), args))
-    for what, start, root_end, end, value in sites:
-        root = re.match(JS_NAME, dense[start:])
-        chain = dense[start:end]
-        if root is None:
-            out.append(f"{what} on {chain[:40]}, which does not start at a name")
-            continue
-        if what == "store" and start + root.end() != root_end:
-            out.append(f"store into {chain[:40]}, a member of a member")
-            continue
-        if what != "store" and not steps_ok(dense, start + root.end(), end):
-            out.append(f"{what} on {chain[:40]}, which reads a field")
-            continue
-        if not fresh(root.group(), start):
-            out.append(f"{what} on {chain[:40]}, whose name the block did not make")
-            continue
-        if JS_HOLDS.search(value) or (abstain[0] <= start < abstain[1]
-                                      and re.search(r"(?<![\w$.])g(?![\w$])", value)):
-            out.append(f"{what} on {chain[:40]} stores a record field")
     return out
 
 
@@ -1251,68 +929,40 @@ def test_the_token_scan_refuses_the_fifth_reviews_plants_in_place(old, new, what
     assert any(what in p for p in problems), problems
 
 
-JS_MOVED = '      c.verdict = "UNCHECKABLE";\n      moved = true;\n'
-
-
-@pytest.mark.parametrize("plant,what", [
-    # A-2 (NOTE_path2a_eighth_pass_2026_10_01): the seventh review's plant, which the pass-7 scan and the committed
-    # --relation inputs both passed, and the other ways to write the record the store scan reads
-    ('if (todo.length > 400) c.text = c.text + " ";', "store into a member: c.text="),
-    ("g.claims.push(c);", "call .push on g.claims, which reads a field"),
-    ('c.detail.n = "9";', "store into a member: c.detail.n="),
-    ("delete c.detail.n;", "a delete"),
-    ('const d = c.detail; d.n = "9";', "store into a member: d.n="),
-    ("const d = c.detail; const k = 0; d[k] = 1;", "whose name the block did not make"),
-    ("const a = [g.claims]; a[0].push(c);", "whose name the block did not make"),
-    ("[g.claims][0].push(c);", "which does not start at a name"),
-    ("Object.assign(c, {});", "banned word 'Object'"),
-    ('c.why += "";', "store into a member: c.why+="),
-    ("g.claims.length = 0;", "store into a member: g.claims.length="),
-    ("const q = g.claims; q.splice(0);", "whose name the block did not make"),
-    ("hits.pop();", "whose name the block did not make"),
-    ('todo[0].verdict = "PASS";', "store into a member: todo[0].verdict="),
-    ("c.detail.n++;", "store into a member: c.detail.n++"),
-    ("++c.detail.n;", "store into a member: ++c.detail.n"),
-    ("const out = []; out.push(c.detail);", "stores a record field"),
-    ('c.verdict = "PASS";', "store into a member: c.verdict="),
-    ('g.verdict = "PASS";', "store into a member: g.verdict="),
-    ("const m2 = new Map(); m2.set(0, g.claims); m2.get(0).push(c);", "stores a record field"),
+@pytest.mark.parametrize("new,what", [
+    # A-2 of the ninth construction review (NOTE_path2a_tenth_pass_2026_10_05): a Unicode escape inside an identifier
+    # hid the name from every rule of the scan at c69b161b; the scan reads the name the escape spells
+    ("  const ca = _p2aA(claimed.toLowerC" + BS + "u0061se()), ck = _p2aK(claimed);", "banned token 'toLowerCase' in code"),
+    ("  const ca = _p2aA(claimed.n" + BS + 'u{6f}rmalize("NFKC")), ck = _p2aK(claimed);', "banned token 'normalize' in code"),
+    ("  const ca = _p2aA(claimed." + BS + "u0074rim()), ck = _p2aK(claimed);", "banned token '.trim' in code"),
+    (CA.rstrip(";") + "; const q = " + BS + "u004eumber(claimed);", "banned word 'Number'"),
+    (CA.rstrip(";") + "; const q = " + BS + "u{4f}bject.keys(claimed);", "banned word 'Object'"),
+    ("  const ca = _p2aA(claimed.to" + BS + "x4cowerCase()), ck = _p2aK(claimed);", "a backslash in code outside a string"),
+    # the name rules read a banned name whatever the form of the call
+    ("  const ca = _p2aA(claimed.toLowerCase?.()), ck = _p2aK(claimed);", "banned token 'toLowerCase' in code"),
+    ("  const ca = _p2aA(claimed?.trim()), ck = _p2aK(claimed);", "banned token '.trim' in code"),
+    # C-6 of the ninth cross-port review: operators that convert a string as a unary + does
+    (CA.rstrip(";") + '; const q = ~~claimed ? claimed : "";', "bitwise operator '~'"),
+    (CA.rstrip(";") + "; const q = (claimed | 0);", "bitwise operator '|'"),
+    (CA.rstrip(";") + "; const q = claimed & 1;", "bitwise operator '&'"),
+    (CA.rstrip(";") + "; const q = claimed ^ 1;", "bitwise operator '^'"),
+    (CA.rstrip(";") + "; const q = claimed << 1;", "bitwise operator '<<'"),
+    (CA.rstrip(";") + "; const q = claimed >> 1;", "bitwise operator '>>'"),
+    (CA.rstrip(";") + "; const q = claimed >>> 1;", "bitwise operator '>>>'"),
 ])
-def test_the_store_scan_refuses_planted_stores(plant, what):
+def test_the_token_scan_reads_escaped_names_and_refuses_bitwise_operators(new, what):
     block = R.js_block()
-    assert block.count(JS_MOVED) == 1
-    problems = js_problems(block.replace(JS_MOVED, JS_MOVED + "      " + plant + "\n"))
+    assert block.count(CA) == 1
+    problems = js_problems(block.replace(CA, new))
     assert any(what in p for p in problems), problems
 
 
-JS_HITS = "    hits = todo.map(c => [c, _p2aDecide(c, f)]);\n"
-JS_TODO = '  const todo = g.claims.filter(c => _P2A_REACH.has(c.kind + "|" + c.verdict));\n'
-JS_BEFORE_LOOP = "  let moved = false;\n"
-
-
-@pytest.mark.parametrize("old,new,what", [
-    # I-1 (NOTE_path2a_ninth_pass_2026_10_04): the port's side of the eighth integration review's plant. The pass-8 scan
-    # read `c.verdict = "UNCHECKABLE"` anywhere in _p2aAbstain as the overlay's own store, whatever `c` was
-    (JS_MOVED, JS_MOVED + '      g.claims.forEach(c => { c.verdict = "UNCHECKABLE"; });\n',
-     "the abstain loop's body binds c again"),
-    (JS_BEFORE_LOOP, JS_BEFORE_LOOP + '  for (const c of g.claims) c.verdict = "UNCHECKABLE";\n',
-     "a store into c.why or c.verdict outside the abstain loop"),
-    (JS_HITS, JS_HITS + '    hits = hits.concat(g.claims.filter(c => c.kind === "tests_pass").map(c => [c, ["tests", '
-     '"#101"]]));\n', "hits is bound other than as todo.map"),
-    (JS_HITS, JS_HITS.replace(";\n", '.concat(g.claims.map(c => [c, ["tests", "#101"]]));\n'),
-     "hits is bound other than as todo.map"),
-    (JS_HITS, "    hits = g.claims.map(c => [c, _p2aDecide(c, f)]);\n", "hits is bound other than as todo.map"),
-    (JS_HITS, "    hits = todo.map(c => [g.claims[0], _p2aDecide(c, f)]);\n", "hits is bound other than as todo.map"),
-    (JS_HITS, JS_HITS + '    hits.push([g.claims[0], ["tests", "#101"]]);\n', "hits is read other than by the abstain loop"),
-    (JS_TODO, JS_TODO.replace("));\n", ') || c.kind === "tests_pass");\n'), "todo is not bound once"),
-    (JS_TODO, JS_TODO + "  todo.push(g.claims[0]);\n", "todo is read other than as"),
-    (JS_TODO, '  _P2A_REACH.add("tests_pass|VERIFIED");\n' + JS_TODO, "_P2A_REACH is read other than through .has("),
-])
-def test_the_store_scan_refuses_a_write_outside_the_abstain_loop(old, new, what):
+def test_the_token_scan_passes_an_increment_of_a_string():
+    """The disclosed limit, beside the binary operators above: `++` and `--` convert a string too, and the scan cannot
+    tell a string from a counter. Pinned so the README's sentence stays true."""
     block = R.js_block()
-    assert block.count(old) == 1, old
-    problems = js_problems(block.replace(old, new))
-    assert any(what in p for p in problems), problems
+    assert block.count(CA) == 1
+    assert js_problems(block.replace(CA, CA.rstrip(";") + "; let t = claimed; t++;")) == []
 
 
 D_TWINS_HEAD = ("diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1 @@\n-x = 0\n+x = 1\n"
@@ -1352,6 +1002,354 @@ def test_a_widened_count_head_reads_no_digit_table(M, tmp_path):
         node("--abstain", port, tmp_path / "in.json", tmp_path / "out.json")
         c = json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))[0]["rec"]["claims"][0]
         assert c["verdict"] == "UNCHECKABLE" and R.phrase_key(c["why"], PHRASES) == key, (port, c["why"])
+
+
+# ---- bar A at run time: DECIDE and APPLY (NOTE_path2a_tenth_pass_2026_10_05) ---------------------------------------
+#
+# The rules run on a copy (DECIDE) and one short function writes the record (APPLY), so the abstain-only relation does
+# not rest on what the rules do: it holds for ANY function handed to APPLY as `decide`. The tests below hand it
+# functions written to do harm, in both ports; plant the ninth construction review's edits where the decisions are
+# computed; pin the text of the few lines that do touch the record; and check that APPLY takes every decision the
+# block's own DECIDE returns, since a decision it refused would be a silent miss.
+
+APPLY_SHA = {
+    "python": "e7938ac7cec1ab55ae086cfe7eb782ba118442c1ddf5d8b3a4b81ca650cd0c92",
+    "port": "f53b58fc3f321f6d56d84093203843f8d3992b5236a2d84f49951c0a1c57079b",
+}
+
+
+def _apply_text(port: str) -> str:
+    """The lines of a block that hold main's live record: APPLY and the doors' call of it (in the port, down to the
+    block's end: the `gateDiffText` that calls main and then the overlay)."""
+    if port == "python":
+        block = R.py_block()
+        return block[block.index("def _p2a_apply("):block.index("_P2A_MARK = ")]
+    block = R.js_block()
+    return block[block.index("function _p2aApply("):]
+
+
+@pytest.mark.parametrize("port", ["python", "port"])
+def test_the_code_that_touches_the_record_is_the_pinned_text(port):
+    """APPLY is not covered by the construction: it is the construction. An edit of it, of `_p2a_abstain` or of the
+    port's `gateDiffText` fails here by name (the byte pins of the whole file fail on a comment anywhere, so they do
+    not single such an edit out). To move the pin, read the edit as an edit of the one function that writes main's
+    record, then set the hash this failure prints."""
+    text = _apply_text(port)
+    assert R.sha(text) == APPLY_SHA[port], f"the code that touches main's record moved ({port}): {R.sha(text)}"
+    if port == "python":
+        src = R.lf(R.INSTRUMENT)
+        block = R.py_block(src)
+        # the record reaches the block through the two hooks only, and APPLY through _p2a_abstain only
+        assert src.count("_p2a_abstain(") == 3 and block.count("_p2a_abstain(") == 1
+        assert src.count("_p2a_apply(") == 2 and block.count("_p2a_apply(") == 2
+    else:
+        block = R.js_block()
+        assert block.count("_p2aApply(") == 2 and block.count("_p2aAbstain(") == 2
+        assert block.count("_gateDiffTextMain(") == 2          # the door's two calls of main's port
+    assert text.count("\n") <= 75, "the code that touches the record no longer reads on one screen"
+
+
+ALL_TAGS = ("#97", "#121", "#97, #121", "#101")
+
+
+def _wreck(seen):
+    """Change, empty and grow everything DECIDE is given."""
+    for c in seen.claims:
+        c.verdict, c.kind, c.why, c.text = "CONTRADICTED", "tests_pass", "rewritten", "rewritten"
+        c.detail.clear()
+        c.detail["path"] = "x"
+        c.detail = None
+    seen.claims.clear()
+    seen.claims.append(N.DiffClaim("files_changed_count", "", {}, "VERIFIED", ""))
+    seen.claims = None
+    return []
+
+
+def _honest(summary, diff):
+    return lambda seen: N._p2a_decisions(seen, lambda: N._P2aFacts(diff or "", None, summary))
+
+
+def _each(seen, pick, make):
+    return [d for i, c in enumerate(seen.claims) if pick(c) for d in make(i, c)]
+
+
+def _in_reach(c):
+    return (c.kind, c.verdict) in R.REACH
+
+
+def _flipped(summary, diff):
+    def decide(seen):
+        for c in seen.claims:
+            c.verdict = "CONTRADICTED" if c.verdict == "VERIFIED" else "VERIFIED"
+        return _honest(summary, diff)(seen)
+    return decide
+
+
+def _raiser(exc, wreck=False):
+    def decide(seen):
+        if wreck:
+            _wreck(seen)
+        raise exc
+    return decide
+
+
+class _ListThatRaises(list):
+    def __iter__(self):
+        raise RuntimeError("planted")
+
+
+class _TupleThatLies(tuple):
+    def __len__(self):
+        return 3
+
+    def __iter__(self):
+        return iter((0, "dir"))                 # two values where three are unpacked
+
+
+class _KeyWhoseHashRaises(str):
+    def __hash__(self):
+        raise RuntimeError("planted")
+
+
+class _IndexEqualToAll(int):
+    def __hash__(self):
+        return 0
+
+    def __eq__(self, other):
+        return True
+
+
+def _generator():
+    yield (0, "unreproduced", "#97")
+
+
+# name -> (what the record must then be, the phrase where every claim in reach is withheld, a maker of `decide`).
+# "same": main's record, untouched (APPLY ignored everything); "all": every claim in reach withheld, with the phrase;
+# "relation": inside the abstain-only relation, and no more is said.
+HOSTILE = {
+    "the block's own DECIDE": ("relation", None, _honest),
+    "changes, empties and grows its copy, decides nothing": ("same", None, lambda s, d: _wreck),
+    "decides, then changes its copy": ("relation", None, lambda s, d: lambda seen: (_honest(s, d)(seen), _wreck(seen))[0]),
+    "flips every verdict of its copy, then decides": ("relation", None, _flipped),
+    "returns nothing": ("all", "malformed", lambda s, d: lambda seen: None),
+    "returns a number": ("all", "malformed", lambda s, d: lambda seen: 7),
+    "returns a string": ("all", "malformed", lambda s, d: lambda seen: "dir"),
+    "returns a mapping": ("all", "malformed", lambda s, d: lambda seen: {0: (0, "dir", "#97")}),
+    "returns a tuple, not a list": ("all", "malformed", lambda s, d: lambda seen: ((0, "unreproduced", "#97"),)),
+    "returns a generator": ("all", "malformed", lambda s, d: lambda seen: _generator()),
+    "returns its own argument": ("all", "malformed", lambda s, d: lambda seen: seen),
+    "returns a list of junk": ("same", None, lambda s, d: lambda seen: [
+        None, 7, "x", {}, [], (), (0,), (0, "dir"), (0, "dir", "#97", 1), [0, "dir", "#97"], ((0,), "dir", "#97"),
+        ("0", "dir", "#97"), (0, 1, 2), (0, "dir", 97), (0, ["dir"], "#97"), (0, "dir", ["#97"]), seen, seen.claims,
+        (seen.claims[0], "dir", "#97")]),
+    "returns the claims of its copy": ("same", None, lambda s, d: lambda seen: seen.claims),
+    "indices out of range, negative, fractional, boolean and as strings": ("same", None, lambda s, d: lambda seen: [
+        (i, "unreproduced", t) for i in (-1, len(seen.claims), len(seen.claims) + 1, 10 ** 9, 0.5, 0.0, 1.0,
+                                         float("nan"), float("inf"), True, False, "0", "1", None, (0,))
+        for t in ALL_TAGS]),
+    "one index twice, with two phrases": ("all", "error", lambda s, d: lambda seen: _each(
+        seen, _in_reach, lambda i, c: [(i, k, N._P2A_KIND_DEFECT[c.kind]) for k in ("error", "unparsed", "dir")])),
+    "phrases outside the fixed set": ("same", None, lambda s, d: lambda seen: _each(
+        seen, lambda c: True, lambda i, c: [(i, k, N._P2A_KIND_DEFECT.get(c.kind, "#97"))
+                                            for k in ("nope", "", "DIR", " dir", "error ", "__class__", "get")])),
+    "tags outside the fixed sets, and another kind's tag": ("same", None, lambda s, d: lambda seen: _each(
+        seen, lambda c: True, lambda i, c: [(i, "unreproduced", x) for x in ("#1", "", "#97,#121", "#121, #97", " #97", "97")
+                                            + tuple(x for x in ALL_TAGS if x not in R.DEFECTS.get(c.kind, ()))])),
+    "decisions for every claim outside reach": ("same", None, lambda s, d: lambda seen: _each(
+        seen, lambda c: not _in_reach(c), lambda i, c: [(i, "unreproduced", x) for x in ALL_TAGS])),
+    "a decision for every index, with every tag": ("all", "unreproduced", lambda s, d: lambda seen: _each(
+        seen, lambda c: True, lambda i, c: [(i, "unreproduced", x) for x in ALL_TAGS])),
+    "raises": ("all", "error", lambda s, d: _raiser(RuntimeError("planted"))),
+    "raises a KeyError": ("all", "error", lambda s, d: _raiser(KeyError("dir"))),
+    "changes its copy, then raises": ("all", "error", lambda s, d: _raiser(TypeError("planted"), wreck=True)),
+    "a list that raises when it is read": ("all", "error", lambda s, d: lambda seen: _ListThatRaises(
+        [(0, "unreproduced", "#97")])),
+    "a tuple that lies about its length": ("all", "error", lambda s, d: lambda seen: [_TupleThatLies((0, "dir", "#97", 4))]),
+    "a phrase key whose hash raises": ("all", "error", lambda s, d: lambda seen: _each(
+        seen, _in_reach, lambda i, c: [(i, _KeyWhoseHashRaises("dir"), N._P2A_KIND_DEFECT[c.kind])])),
+    "an index that says it equals every index": ("relation", None, lambda s, d: lambda seen: [
+        (_IndexEqualToAll(5), "unreproduced", x) for x in ALL_TAGS]),
+}
+
+
+@pytest.fixture(scope="module")
+def mains(M):
+    """main's live record for each of #161's reproductions, in both strict modes, and the same as a dict."""
+    out = []
+    for c in R.repro_cases():
+        for strict in (False, True):
+            try:
+                g = M.gate_diff_text(c["summary"], c["diff"], strict=strict)
+            except Exception:
+                continue
+            out.append((c["summary"], c["diff"], strict, g, g.to_dict()))
+    return out
+
+
+@pytest.mark.parametrize("name", sorted(HOSTILE))
+def test_a_hostile_decide_cannot_leave_the_relation(name, mains):
+    """Bar A by construction at run time, in Python: APPLY against a DECIDE written to do harm. Whatever it does to its
+    copy, returns or raises, the record is main's but for abstentions in reach with a reason of the fixed form, the
+    gate verdict is main's formula, and APPLY returns the record it was given."""
+    want, phrase, make = HOSTILE[name]
+    runs = same = in_reach = withheld = 0
+    for summary, diff, strict, g0, a in mains:
+        g = copy.deepcopy(g0)
+        ret = N._p2a_apply(g, strict, make(summary, diff))
+        b = g.to_dict()
+        assert ret is g, "APPLY returns the record it was given"
+        assert R.relation(a, b, strict, PHRASES, allow_error=True) == [], (name, summary[:60])
+        runs += 1
+        same += a == b
+        for x, y in zip(a["claims"], b["claims"]):
+            if (x["kind"], x["verdict"]) in R.REACH:
+                in_reach += 1
+                if y["verdict"] != x["verdict"]:
+                    withheld += 1
+                    assert phrase is None or R.phrase_key(y["why"], PHRASES) == phrase, (name, y["why"])
+        if name == "the block's own DECIDE":
+            assert b == N.gate_diff_text(summary, diff, strict=strict).to_dict()
+    assert runs > 900 and in_reach > 1000, (runs, in_reach)
+    assert {"same": same == runs, "all": withheld == in_reach, "relation": withheld > 0}[want], (same, withheld, in_reach)
+
+
+def test_what_apply_does_not_catch_leaves_the_record_as_main_made_it(mains):
+    """APPLY's `try` is `except Exception`, as the overlay's always was: a KeyboardInterrupt in DECIDE goes up, and
+    nothing has been written when it does."""
+    def interrupt(seen):
+        _wreck(seen)
+        raise KeyboardInterrupt
+
+    seen_reach = 0
+    for _summary, _diff, strict, g0, a in mains[:200]:
+        g = copy.deepcopy(g0)
+        if not any((c.kind, c.verdict) in R.REACH for c in g.claims):
+            assert N._p2a_apply(g, strict, interrupt) is g      # nothing in reach: DECIDE is not called at all
+        else:
+            seen_reach += 1
+            with pytest.raises(KeyboardInterrupt):
+                N._p2a_apply(g, strict, interrupt)
+        assert g.to_dict() == a
+    assert seen_reach > 50
+
+
+def test_a_hostile_decide_cannot_leave_the_relation_port(work, tmp_path):
+    """The same in the port: check_path2a.js --hostile hands _p2aApply main's record and each DECIDE of its own list
+    (ones that change their copy, return junk, a Proxy that answers differently on each read, or throw)."""
+    items = [{"id": c["id"], "summary": c["summary"], "diff": c["diff"]} for c in R.repro_cases()]
+    (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=True), encoding="utf-8")
+    node("--hostile", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "hostile.json")
+    out = json.loads((tmp_path / "hostile.json").read_text(encoding="utf-8"))
+    assert len(out) >= 24 and {v["want"] for v in out.values()} == {"same", "all", "relation"}
+    for name, v in out.items():
+        c = v["counts"]
+        assert c["broken"] == 0 and c["not_returned"] == 0 and c["threw"] == 0, (name, c, v["examples"])
+        assert c["runs"] > 900 and c["in_reach"] > 1000, (name, c)
+        assert {"same": c["same"] == c["runs"], "all": c["withheld"] == c["in_reach"],
+                "relation": c["withheld"] > 0}[v["want"]], (name, c)
+        if v["phrase"]:
+            assert v["phrases"] == {v["phrase"]: c["in_reach"]}, (name, v["phrases"])
+    own = out["the block's own DECIDE"]
+    assert own["counts"]["unlike_the_port"] == 0 and own["counts"]["decisions"] == own["counts"]["withheld"]
+    assert not set(own["phrases"]) & set(R.FALLBACKS), own["phrases"]
+
+
+def test_apply_takes_every_decision_the_blocks_decide_returns(M, inputs):
+    """APPLY ignores a decision it does not take, which would leave main's verdict standing in silence. On the
+    committed inputs the block's own DECIDE returns one decision per claim it withholds, each for a claim in reach,
+    and APPLY takes them all."""
+    n = 0
+    for _sname, iid, summary, diff in inputs:
+        try:
+            g = M.gate_diff_text(summary, diff)
+        except Exception:
+            continue
+        log = []
+
+        def spy(seen, log=log, s=summary, d=diff):
+            log.append(_honest(s, d)(seen))
+            return log[-1]
+
+        before = [c.verdict for c in g.claims]
+        N._p2a_apply(g, False, spy)
+        for out in log:
+            assert all(type(x) is tuple and len(x) == 3 for x in out), iid
+            assert [i for i, (v, c) in enumerate(zip(before, g.claims)) if c.verdict != v] == [x[0] for x in out], iid
+            n += len(out)
+    assert n > 2500, n
+
+
+def _decision_site(block: str, python: bool) -> tuple:
+    """Where a block computes its decisions: the one line that builds the facts, and the claims the function it lies
+    in is given, as that function's own parameter spells them. At c69b161b that function was `_p2a_abstain` and those
+    claims were main's record; here it is DECIDE and they are a copy."""
+    found = list(re.finditer(r"^( +)f = facts\(\)\n" if python else r"^( +)const f = facts\(\);\n", block, re.M))
+    assert len(found) == 1, "the block builds its facts on one line"
+    heads = list(re.finditer(r"^def (\w+)\((\w+)" if python else r"^function (\w+)\((\w+)", block[:found[0].start()], re.M))
+    return found[0], heads[-1].group(2)
+
+
+# A-1 of the ninth construction review: five ways to carry the record's claims past the pass-9 self-check's alias
+# reader. At c69b161b each, planted where the facts are built, dropped or added a claim of main's record while the
+# self-check passed.
+NINTH_REVIEW_PLANTS_PY = {
+    "a default argument": "def _d(x=G):\n    x.append(x[0])\n_d()\n",
+    "a lambda default": "(lambda x=G: x.pop())()\n",
+    "*args": "def _k(*a):\n    a[0].pop()\n_k(G)\n",
+    "**kwargs": "def _kw(**kw):\n    kw['x'].append(kw['x'][0])\n_kw(x=G)\n",
+    "a class attribute": "class _K:\n    b = G\n_K.b.pop()\n",
+}
+
+
+@pytest.mark.parametrize("name", sorted(NINTH_REVIEW_PLANTS_PY))
+def test_the_ninth_reviews_python_plants_cannot_move_the_record(name, M):
+    text = R.lf(R.INSTRUMENT)
+    block = R.py_block(text)
+    site, given = _decision_site(block, python=True)
+    plant = "".join(site.group(1) + line + "\n" for line in
+                    NINTH_REVIEW_PLANTS_PY[name].replace("G", given + ".claims").rstrip("\n").split("\n"))
+    mod = R.module_from(text.replace(block, block[:site.start()] + plant + block[site.start():]), "_p2a_plant_ninth")
+    runs = 0
+    for c in R.repro_cases():
+        for strict in (False, True):
+            try:
+                a = M.gate_diff_text(c["summary"], c["diff"], strict=strict).to_dict()
+            except Exception:
+                continue
+            b = mod.gate_diff_text(c["summary"], c["diff"], strict=strict).to_dict()
+            assert R.relation(a, b, strict, PHRASES, allow_error=True) == [], (name, c["id"])
+            runs += 1
+    assert runs > 900
+
+
+# A-2 of the same review: nine ways past the pass-9 store scan of the port.
+NINTH_REVIEW_PLANTS_JS = {
+    "a member as a for-of target": 'for (G[0].verdict of ["CONTRADICTED"]) {}',
+    "a member as a for-in target": "for (G[0].text in { rewritten: 1 }) {}",
+    "an optional call of pop": "G.pop?.();",
+    "an optional call of push": "G.push?.(G[0]);",
+    "an optional call of reverse": "G.reverse?.();",
+    "an escaped member store": "G[0]." + chr(92) + 'u0076erdict = "CONTRADICTED";',
+    "an escaped mutator": "G.p" + chr(92) + "u006fp();",
+    "an escaped Object.assign": chr(92) + 'u004fbject.assign(G[0], { verdict: "CONTRADICTED", why: "rewritten" });',
+    "a helper that hides .claims": "const pick = x => x.claims; const cl = [pick(P)][0]; cl.pop();",
+}
+
+
+@pytest.mark.parametrize("name", sorted(NINTH_REVIEW_PLANTS_JS))
+def test_the_ninth_reviews_port_plants_cannot_move_the_record(name, work, tmp_path):
+    text = R.lf(R.PORT)
+    block = R.js_block(text)
+    site, given = _decision_site(block, python=False)
+    plant = site.group(1) + NINTH_REVIEW_PLANTS_JS[name].replace("G", given + ".claims").replace("P", given) + "\n"
+    planted = tmp_path / "diffgate_planted.js"
+    planted.write_bytes(text.replace(block, block[:site.start()] + plant + block[site.start():]).encode("utf-8"))
+    items = [{"id": c["id"], "summary": c["summary"], "diff": c["diff"]} for c in R.repro_cases()]
+    (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=True), encoding="utf-8")
+    node("--relation", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "rel.json", planted)
+    rel = json.loads((tmp_path / "rel.json").read_text(encoding="utf-8"))
+    assert rel["counts"]["broken"] == 0 and rel["counts"]["raise_differs"] == 0, rel["broken"][:3]
+    assert rel["counts"]["runs"] > 900 and rel["counts"]["abstained"] > 100, rel["counts"]
 
 
 # ---- the error fallback -----------------------------------------------------------------------------------------------
@@ -1436,9 +1434,9 @@ def test_a_planted_strict_skip_is_refused(M, inputs):
     refuses it."""
     text = R.lf(R.INSTRUMENT)
     block = R.py_block(text)
-    old = "    todo = [c for c in g.claims if (c.kind, c.verdict) in _P2A_REACH]\n"
+    old = "    pending = {i: c for i, c in enumerate(g.claims) if (c.kind, c.verdict) in _P2A_REACH}\n"
     assert block.count(old) == 1
-    mod = R.module_from(text.replace(block, block.replace(old, old[:-2] + " and not strict]\n")), "_p2a_plant_strict")
+    mod = R.module_from(text.replace(block, block.replace(old, old[:-2] + " and not strict}\n")), "_p2a_plant_strict")
     caught = []
     for sname, iid, summary, diff in inputs[:600]:
         try:
@@ -1450,18 +1448,22 @@ def test_a_planted_strict_skip_is_refused(M, inputs):
     assert caught, "the strict check did not refuse an overlay that skips itself under --strict"
 
 
+JS_WHY = "      c.why = `${c.verdict} withheld by PATH-2a (${tag}): ${phrase}. main's reading: ${c.why}`;"
+JS_REACH = '  claims.forEach((c, i) => { if (_P2A_REACH.has(c.kind + "|" + c.verdict)) pending.set(i, c); });'
+# Edits of APPLY itself, which the relation must refuse (the pin of APPLY's text names each of them too)
 PORT_PLANTS = [
     ('      c.verdict = "UNCHECKABLE";', '      c.verdict = "CONTRADICTED";'),
-    ("      c.why = _p2aReason(c.verdict, hit[1], hit[0], c.why);", "      c.why = _p2aReason(c.verdict, hit[1], hit[0], \"\");"),
-    ('  g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";', ""),
-    ("    if (hit !== null) {", "    c.detail = {};\n    if (hit !== null) {"),
+    (JS_WHY, JS_WHY.replace("${c.why}`;", "`;")),
+    ('    g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";', ""),
+    ('      c.verdict = "UNCHECKABLE";', '      c.verdict = "UNCHECKABLE";\n      c.detail = {};'),
     # Integration-1: the overlay skipped under --strict
-    ('  const todo = g.claims.filter(c => _P2A_REACH.has(c.kind + "|" + c.verdict));',
-     '  const todo = g.claims.filter(c => _P2A_REACH.has(c.kind + "|" + c.verdict) && !strict);'),
+    (JS_REACH, JS_REACH.replace("c.verdict)) pending", "c.verdict) && !strict) pending")),
     # I-1 (NOTE_path2a_third_pass_2026_09_30): the review's two mutants, which pass 2's --relation could not see
-    ('  g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";',
-     '  g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";\n  g.unparsed_claims = g.claims.map(c => c.text);'),
+    ('    g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";',
+     '    g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";\n    g.unparsed_claims = claims.map(c => c.text);'),
     ("      c.verdict = \"UNCHECKABLE\";", "      c.verdict = \"UNCHECKABLE\";\n      c.main_verdict = c.verdict;"),
+    # NOTE_path2a_tenth_pass_2026_10_05: a reason of another form
+    (JS_WHY, JS_WHY.replace("withheld by PATH-2a", "withheld by PATH-2a,")),
 ]
 
 
@@ -1892,34 +1894,39 @@ def _large_relation_python(mod, M) -> list:
 def test_the_relation_on_large_summaries_python(M):
     """A-1 (NOTE_path2a_eighth_pass_2026_10_01): the large cases push 10,000 claims each through the overlay, and the
     timing tests never compared their records with main's: the seventh review planted `g.claims.pop()` behind
-    `len(todo) > 400` and every committed test passed. The relation, both strict modes, on them; and that plant (and
-    one that rewrites claim text) is refused here as well as by the self-check."""
+    `len(todo) > 400` and every committed test passed. The relation, both strict modes, on them. Since the tenth pass
+    that plant, set where the decisions are computed, drops a claim of DECIDE's copy and cannot move the record; set in
+    APPLY, the one function that holds the record, it is refused here (and by the pin of APPLY's text)."""
     assert _large_relation_python(N, M) == []
     text = R.lf(R.INSTRUMENT)
     block = R.py_block(text)
-    anchor = '            c.verdict = "UNCHECKABLE"\n            moved = True\n'
-    assert block.count(anchor) == 1
-    for name, plant in (("drop", "            if len(todo) > 400:\n                g.claims.pop()\n"),):
-        mod = R.module_from(text.replace(block, block.replace(anchor, anchor + plant)), "_p2a_plant_large_" + name)
-        assert _large_relation_python(mod, M) != [], name
+    for anchor, plant, moves in (
+            ("    out = []\n    for i, c in todo:\n", "    if len(todo) > 400:\n        seen.claims.pop()\n", False),
+            ("    moved = False\n", "    if len(pending) > 400:\n        g.claims.pop()\n", True)):
+        assert block.count(anchor) == 1
+        mod = R.module_from(text.replace(block, block.replace(anchor, plant + anchor)), "_p2a_plant_large")
+        assert (_large_relation_python(mod, M) != []) is moves, anchor
 
 
 def test_the_relation_on_large_summaries_port(work, tmp_path):
     """The same in the port, at three times the size (30,000 claims a case), with the seventh review's port plant (each
-    claim's text gains a trailing space behind `todo.length > 400`), which --relation on the committed inputs passed."""
+    claim's text gains a trailing space behind `todo.length > 400`), which --relation on the committed inputs passed:
+    set where the decisions are computed it rewrites DECIDE's copy and moves nothing; set in APPLY it is refused."""
     (tmp_path / "in.json").write_text(json.dumps(_large_cases(3), ensure_ascii=False), encoding="utf-8")
     node("--relation", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "rel.json")
     rep = json.loads((tmp_path / "rel.json").read_text(encoding="utf-8"))
     assert rep["broken"] == [] and rep["counts"]["broken"] == 0 and rep["counts"]["runs"] == 6, rep["counts"]
     text = R.lf(R.PORT)
     block = R.js_block(text)
-    anchor = '      c.verdict = "UNCHECKABLE";\n      moved = true;\n'
-    assert block.count(anchor) == 1
     planted = tmp_path / "diffgate_planted.js"
-    planted.write_bytes(text.replace(block, block.replace(
-        anchor, anchor + '      if (todo.length > 400) c.text = c.text + " ";\n')).encode("utf-8"))
-    node("--relation", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "rel2.json", planted)
-    assert json.loads((tmp_path / "rel2.json").read_text(encoding="utf-8"))["counts"]["broken"] > 0
+    for anchor, plant, moves in (
+            ("  const out = [];\n  for (const [i, c] of todo) {\n",
+             '  if (todo.length > 400) for (const x of seen.claims) { x.text = x.text + " "; x.why = x.why + " "; }\n', False),
+            ("  let moved = false;\n", '  if (pending.size > 400) for (const x of claims) x.text = x.text + " ";\n', True)):
+        assert block.count(anchor) == 1
+        planted.write_bytes(text.replace(block, block.replace(anchor, plant + anchor)).encode("utf-8"))
+        node("--relation", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "rel2.json", planted)
+        assert (json.loads((tmp_path / "rel2.json").read_text(encoding="utf-8"))["counts"]["broken"] > 0) is moves, anchor
 
 
 def test_cost_on_large_summaries_port(work, tmp_path):
@@ -2131,8 +2138,9 @@ def test_the_relation_holds_with_a_run_leg_and_a_test_report_at_both_doors(M, tm
     `commit=`, the only arguments under which main decides a `tests_pass` claim, a kind outside REACH: the eighth
     integration review planted an abstention on a `tests_pass` VERIFIED beside a count claim, and every test passed.
     Here main verifies `tests_pass` through the run leg and through a report at both doors, leaves it UNCHECKABLE where
-    the report does not name the commit, and the branch's record is main's but for abstentions in reach; the review's
-    plant is refused here as well as by the self-check."""
+    the report does not name the commit, and the branch's record is main's but for abstentions in reach. The review's
+    plant, moved to where the decisions are computed, asks for an abstention on every `tests_pass` VERIFIED: APPLY takes
+    no decision for a claim outside reach, so the record is what it was (NOTE_path2a_tenth_pass_2026_10_05)."""
     green = tmp_path / "green.xml"
     green.write_bytes(GREEN_REPORT.encode("utf-8"))
     broken, seen = _tests_pass_relation(N, M, str(green), monkeypatch)
@@ -2145,19 +2153,29 @@ def test_the_relation_holds_with_a_run_leg_and_a_test_report_at_both_doors(M, tm
         assert seen[f"{door}: a claim withheld beside a tests_pass claim"] >= beside, (door, seen)
     text = R.lf(R.INSTRUMENT)
     block = R.py_block(text)
-    assert block.count(HITS) == 1
-    plant = HITS + ('        hits = hits + [(c, ("tests", "#101")) for c in g.claims if c.kind == "tests_pass" and '
-                    'c.verdict == "VERIFIED"\n                       and any(x.kind == "files_changed_count" for x in g.claims)]\n')
-    mod = R.module_from(text.replace(block, block.replace(HITS, plant)), "_p2a_plant_tests_pass")
-    planted, _seen = _tests_pass_relation(mod, M, str(green), monkeypatch, until_broken=True)
-    assert planted and "tests_pass VERIFIED -> UNCHECKABLE is not an abstention in reach" in str(planted[0][-1]), planted[:2]
+    old = "    out = []\n    for i, c in todo:\n"
+    assert block.count(old) == 1
+    plant = ('    out = [(i, "tests", "#101") for i, c in enumerate(seen.claims) if c.kind == "tests_pass" and '
+             'c.verdict == "VERIFIED"]\n    _P2A_PLANTED.append(len(out))\n    for i, c in todo:\n')
+    mod = R.module_from(text.replace(block, block.replace(old, plant)), "_p2a_plant_tests_pass")
+    mod._P2A_PLANTED = []
+    planted, seen_planted = _tests_pass_relation(mod, M, str(green), monkeypatch)
+    assert planted == [] and seen_planted == seen, planted[:2]
+    assert sum(mod._P2A_PLANTED) > 1500, "the plant did not ask for an abstention on the tests_pass claims"
 
 
 # ---- (C) cross-port ---------------------------------------------------------------------------------------------------
 
 def _seen(c):
-    """A claim's verdict as the overlay left it, and its phrase key when the overlay wrote the reason."""
-    return c["verdict"], R.phrase_key(c["why"], PHRASES)
+    """A claim's verdict as the overlay left it and, when the overlay wrote the reason, its phrase key and its defect
+    tag: the decision bar C(i) compares (I-3 of the ninth integration review: the tag was not read)."""
+    key = R.phrase_key(c["why"], PHRASES)
+    return c["verdict"], key, (c["why"].split(" withheld by PATH-2a (", 1)[1].split("): ", 1)[0] if key else None)
+
+
+def _said(c):
+    """The verdict and the phrase key, as the pinned decisions of the cross-port cases are written."""
+    return _seen(c)[:2]
 
 
 def _kvd(c):
@@ -2289,7 +2307,7 @@ def engine_unicode() -> str:
 # a pin is keyed by the interpreter's Unicode version, the path flavour main reads base names with, and the Unicode
 # version of the port's engine; each was measured on the runtime it names (CPython 3.12.10 and 3.14.2, Node 24.13.0, the
 # other path flavour by `Path` read as that pure flavour). On a runtime not measured here the test checks that the
-# figures lie near the measured ones, and prints them.
+# figures lie near the pin nearest to it (`_nearest_pin`), and prints them.
 BAR_C_KEYS = ("inputs", "a main raises", "lists equal", "lists equal, a claim withheld",
               "lists differ, description side", "lists differ, diff side",
               "no --strict: gates differ under main", "no --strict: gates differ under the overlay",
@@ -2333,6 +2351,21 @@ GATES_APART_UNDER_THE_OVERLAY_ONLY = {
 }
 
 
+def _nearest_pin(name: str, pins: dict, runtime: tuple) -> tuple:
+    """The measured figures a runtime without a pin is held near (C-3 and I-2 of the ninth reviews: at c69b161b this
+    was whichever pin sorted ahead, so the newer-engine set failed on an engine below Unicode 16 for no fault of the
+    code). The pin for the running interpreter's Unicode version, where there is one. The newer-engine set turns on
+    something else: whether the two runtimes fold U+A7DC alike (Unicode 16 gave it a lowercase), so it takes the
+    16.0.0 row where both do or neither does, and the 15.0.0 row where only the engine does. Exercised under emulation
+    with an engine reporting Unicode 15.1 and one reporting 17, beside CPython 3.12.10 and 3.14.2."""
+    py, fl, engine = runtime
+    same = [k for k in sorted(pins) if k[1] == fl]
+    if name == "newer engine":
+        alike = (int(py.split(".")[0]) >= 16) == (int(engine) >= 16)
+        return pins[next(k for k in same if k[0] == ("16.0.0" if alike else "15.0.0"))]
+    return pins[next((k for k in same if k[0] == py), same[0])]
+
+
 def _bar_c(name, rows, fl, floor):
     """Assert C(ii) on the rows, that the equal side is not vacuous, and the pinned C(iii) figures of the set `name`."""
     counts, broken, ids = R.bar_c(rows, PHRASES)
@@ -2345,7 +2378,7 @@ def _bar_c(name, rows, fl, floor):
     if runtime in pins:
         assert got == pins[runtime], dict(zip(BAR_C_KEYS, got))
     else:
-        ref = next((pins[k] for k in sorted(pins) if k[1] == fl), None)
+        ref = _nearest_pin(name, pins, runtime)
         assert all(abs(g - p) <= max(10, p // 10) for g, p in zip(got, ref)), (
             f"bar C(iii) on {name}, on a runtime not measured ({runtime}), is far from the measured figures: "
             f"{dict(zip(BAR_C_KEYS, got))}")
@@ -2380,6 +2413,13 @@ D_TWINS = D_MOD + "".join(f"diff --git a/{p} b/{p}\n--- a/{p}\n+++ b/{p}\n@@ -1 
                           for p in (".env", "env"))
 def _mod(p):
     return f"diff --git a/{p} b/{p}\n--- a/{p}\n+++ b/{p}\n@@ -1 +1 @@\n-a\n+b\n"
+
+
+def _new(p):
+    return f"diff --git a/{p} b/{p}\nnew file mode 100644\n--- /dev/null\n+++ b/{p}\n@@ -0,0 +1 @@\n+x\n"
+
+
+D_DOT_TWINS = _mod(".env") + _mod("env") + _mod("src/app.py")
 
 
 D_FOO = ("diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n@@ -1 +1,3 @@\n-x = 0\n+x = 1\n"
@@ -2481,7 +2521,7 @@ XPORT_CASES = [
     # claims do. The split is expected here and nowhere else.
     ("L1-a-false-one-match-pairing", 'Tidied.\x85- ".c.py" — updated - "..c.py" -- updated.', D_DOTC,
      [("UNCHECKABLE", "dot"), ("VERIFIED", None)], [("UNCHECKABLE", "dot"), ("UNCHECKABLE", "dot")], "PASS",
-     [("left over, one match: kind and verdict", 1, 1, ("VERIFIED", None), ("UNCHECKABLE", "dot"))]),
+     [("left over, one match: kind and verdict", 1, 1, ("VERIFIED", None, None), ("UNCHECKABLE", "dot", "#121"))]),
     # A-2 (NOTE_path2a_fifth_pass_2026_09_30): the case doubt's base-name fact alone decides, then its suffix fact alone.
     # main's Python verifies each by base name or suffix after lower(); its port reads no claim (a base name outside
     # ASCII), so these pin the Python's decision, and the plants test reads them too.
@@ -2516,7 +2556,7 @@ XPORT_CASES = [
     # claim pairs (the strict gate is C-4's case).
     ("OM1-a-false-one-match-pairing", "Modıfied b/c.py.﻿`a/b/c.py` — updated",
      _mod("b/c.py").replace("-a\n+b\n", "-x = 0\n+x = 1\n"), [("VERIFIED", None)], [("UNCHECKABLE", "dir")], "PASS",
-     [("left over, one match: kind and verdict", 0, 0, ("VERIFIED", None), ("UNCHECKABLE", "dir"))]),
+     [("left over, one match: kind and verdict", 0, 0, ("VERIFIED", None, None), ("UNCHECKABLE", "dir", "#97"))]),
     # Pass 7 (NOTE_path2a_seventh_pass_2026_09_30), B-1: a sentence elsewhere in the summary holding an accented letter
     # or a pictograph emoji beside a word of a template; main's false tests or count verdict is withheld in both ports
     ("B1-jose", "Added 1 test." + JOSE, D_TEST_ADDED, [("UNCHECKABLE", "tests")], [("UNCHECKABLE", "tests")], "PASS"),
@@ -2655,6 +2695,39 @@ XPORT_CASES = [
      [("UNCHECKABLE", "again")], [("UNCHECKABLE", "again")], "PASS"),
     ("P9-a-test-after-a-line-separator", "Added 0 tests.", D_TEST + D_LINES(["x = 1 def test_new():"]),
      [("UNCHECKABLE", "split")], [("UNCHECKABLE", "split")], "PASS"),
+    # C-2 of the ninth cross-port review (NOTE_path2a_tenth_pass_2026_10_05): ten two-line inputs, each of which tells
+    # one single-character slip in ONE port from this head (XPORT_PLANTS below; at c69b161b eleven such edits passed
+    # every committed behaviour test). What each rests on: the placeholder form read by code point, not by UTF-16
+    # unit (T1); a drive-like name whose letter is two units (T2); the backslash in a path run (T3); the digit 0 in a
+    # count run (T4); a sentence ended by `!` and by `.` then a tab, so that a later accent is outside the claim's zone
+    # (T5, T6); the count seam's `w`, its `e` and `file` spelled with a long s (T7 to T9, where main's Python reads a
+    # second count the port does not); U+007F between `def` and a name (T10, one edit in each port).
+    ("T1-astral-and-bmp-directories-share-a-placeholder", "Created app.py.",
+     _new(chr(0xE9) + "/app.py") + _mod(chr(0x1F600) + "/app.py"),
+     [("UNCHECKABLE", "case")], [("UNCHECKABLE", "case")], "PASS"),
+    ("T2-a-drive-like-name-whose-letter-is-astral", "Modified x.py.", _mod("src/x.py") + _mod(chr(0x10400) + ":y.py"),
+     [("UNCHECKABLE", "odd")], [("UNCHECKABLE", "odd")], "PASS"),
+    ("T3-a-backslash-joins-a-path-run", "Modified app.py.\nNotes: " + chr(0xE9) + chr(92) + "app.py", _mod("app.py"),
+     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+    ("T4-a-zero-in-a-count-run", "30 files changed.\nNotes: " + chr(0xE9) + "30", D_DOT_TWINS,
+     [("UNCHECKABLE", "extract")], [("UNCHECKABLE", "extract")], "PASS"),
+    ("T5-a-sentence-ends-at-a-bang", "Only touches docs! Thanks to Jos" + chr(0xE9) + " for docs.", _mod("docs/a.md"),
+     [("VERIFIED", None)], [("VERIFIED", None)], "PASS"),
+    ("T6-a-sentence-ends-at-a-dot-and-a-tab", "Only touches docs.\tThanks to Jos" + chr(0xE9) + " for docs.",
+     _mod("docs/a.md"), [("VERIFIED", None)], [("VERIFIED", None)], "PASS"),
+    ("T7-a-count-seam-before-were", "3 files changed.\nAlso 3 files\x1fwere changed.", D_DOT_TWINS,
+     [("UNCHECKABLE", "seam"), ("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+    ("T8-a-count-seam-after-file", "3 files changed.\nAlso 1 file\x1fchanged.", D_DOT_TWINS,
+     [("UNCHECKABLE", "seam"), ("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+    ("T9-files-spelled-with-a-long-s", "3 files changed.\nAlso 2 file" + chr(0x17F) + " changed.", D_DOT_TWINS,
+     [("UNCHECKABLE", "seam"), ("UNCHECKABLE", "seam")], [("UNCHECKABLE", "seam")], "PASS"),
+    ("T10-del-between-def-and-a-name", "Adds function helper.",
+     "diff --git a/m.py b/m.py\n--- a/m.py\n+++ b/m.py\n@@ -1 +1 @@\n-def\x7fhelper():\n+def helper():\n",
+     [("UNCHECKABLE", "symbol")], [("UNCHECKABLE", "symbol")], "PASS"),
+    # I-3 of the ninth integration review: a directory claim both ports withhold as `dir`, so that a port naming
+    # another of the kind's tags for it is told (the tag is compared where the two ports' pinned decisions are equal)
+    ("T11-a-directory-claim-resolved-by-base-name", "Modified docs/README.md.", _mod("README.md"),
+     [("UNCHECKABLE", "dir")], [("UNCHECKABLE", "dir")], "PASS"),
 ]
 # main's own reading of each cross-port case, pinned beside the overlay's: one letter per claim (V, C, U; `?` where the
 # verdict moves with the runtime's Unicode version) for the Python and for the port, then the two gate verdicts.
@@ -2692,7 +2765,77 @@ XPORT_MAIN = {
     "P9-a-removed-def-after-a-line-separator": "V/V PASS/PASS",
     "P9-an-unchanged-def-after-a-paragraph-separator": "V/V PASS/PASS",
     "P9-a-test-after-a-line-separator": "C/C FAIL/FAIL",
+    "T1-astral-and-bmp-directories-share-a-placeholder": "V/V PASS/PASS",
+    "T2-a-drive-like-name-whose-letter-is-astral": "V/V PASS/PASS", "T3-a-backslash-joins-a-path-run": "V/V PASS/PASS",
+    "T4-a-zero-in-a-count-run": "C/C FAIL/FAIL", "T5-a-sentence-ends-at-a-bang": "V/V PASS/PASS",
+    "T6-a-sentence-ends-at-a-dot-and-a-tab": "V/V PASS/PASS", "T7-a-count-seam-before-were": "CC/C FAIL/FAIL",
+    "T8-a-count-seam-after-file": "CC/C FAIL/FAIL", "T9-files-spelled-with-a-long-s": "CV/C FAIL/FAIL",
+    "T10-del-between-def-and-a-name": "V/V PASS/PASS", "T11-a-directory-claim-resolved-by-base-name": "V/V PASS/PASS",
 }
+# One-character slips in ONE port, each named with the cross-port case that tells it from this head: (the port, the
+# case, the text, its replacement). C-2 of the ninth cross-port review planted the eleven of T1 to T10 at c69b161b and
+# every committed behaviour test passed; the last is I-3's, a tag only the port names otherwise.
+XPORT_PLANTS = [
+    ("port", "T1-astral-and-bmp-directories-share-a-placeholder",
+     '  for (const ch of f.slice(k)) out.push(ch.codePointAt(0) < 128 ? ch : "' + chr(92) + 'ufffd");\n',
+     '  for (const ch of f.slice(k).split("")) out.push(ch.codePointAt(0) < 128 ? ch : "' + chr(92) + 'ufffd");\n'),
+    ("port", "T2-a-drive-like-name-whose-letter-is-astral",
+     "  const cps = Array.from(q.slice(0, 6)).slice(0, 3);\n", '  const cps = q.slice(0, 3).split("");\n'),
+    ("port", "T3-a-backslash-joins-a-path-run", "0123456789_./-" + chr(92) * 2 + '";', '0123456789_./-";'),
+    ("port", "T4-a-zero-in-a-count-run", "const _p2aCountUnit = u => (u >= 48 && u <= 57) || _p2aWordishUnit(u);",
+     "const _p2aCountUnit = u => (u >= 49 && u <= 57) || _p2aWordishUnit(u);"),
+    ("port", "T5-a-sentence-ends-at-a-bang", '(ch === "." || ch === "!" || ch === "?")', '(ch === "." || ch === "?")'),
+    ("port", "T6-a-sentence-ends-at-a-dot-and-a-tab",
+     '(s[k + 1] === " " || s[k + 1] === "' + chr(92) + 't" || s[k + 1] === "' + chr(92) + 'r")',
+     '(s[k + 1] === " " || s[k + 1] === "' + chr(92) + 'r")'),
+    ("port", "T7-a-count-seam-before-were", '"CcFfWw".includes(s.charAt(k))', '"CcFf".includes(s.charAt(k))'),
+    ("port", "T8-a-count-seam-after-file", '"0123456789EeSs' + chr(92) + 'u017f".includes(s.charAt(a - 1))',
+     '"0123456789Ss' + chr(92) + 'u017f".includes(s.charAt(a - 1))'),
+    ("port", "T9-files-spelled-with-a-long-s",
+     "[Ll][Ee]|[Ff][Ii" + chr(92) + "u0130" + chr(92) + "u0131][Ll][Ee]" + chr(92) + 'u017f");', '[Ll][Ee]");'),
+    ("port", "T10-del-between-def-and-a-name", "const _p2aCoarseUnit = u => u <= 0x20 || u === 0x7f || u >= 0x80;",
+     "const _p2aCoarseUnit = u => u <= 0x20 || u >= 0x80;"),
+    ("python", "T10-del-between-def-and-a-name",
+     '_P2A_COARSE_RUN = re.compile("[' + chr(92) + "x00-" + chr(92) + "x20" + chr(92) + "x7f-" + chr(92) + 'U0010ffff]*")',
+     '_P2A_COARSE_RUN = re.compile("[' + chr(92) + "x00-" + chr(92) + "x20" + chr(92) + "x80-" + chr(92) + 'U0010ffff]*")'),
+    ("port", "T11-a-directory-claim-resolved-by-base-name",
+     '  if (v121 && !v97) return [r97 === null ? "dir" : "tier", "#97"];',
+     '  if (v121 && !v97) return [r97 === null ? "dir" : "tier", "#121"];'),
+]
+
+
+@pytest.mark.parametrize("which,cid,old,new", XPORT_PLANTS, ids=[f"{p[0]}: {p[1]}" for p in XPORT_PLANTS])
+def test_a_one_port_slip_is_told_by_its_cross_port_case(which, cid, old, new, tmp_path):
+    """Bar C rests on a transliteration held by tests. Each edit here changes one character class or one rule in one
+    port alone; planted, it changes what that port decides (verdict, phrase or tag) on the case it is named with, whose
+    pin in XPORT_CASES therefore fails."""
+    _cid, summary, diff, want_py, want_js = next(x for x in XPORT_CASES if x[0] == cid)[:5]
+    if which == "python":
+        text = R.lf(R.INSTRUMENT)
+        block = R.py_block(text)
+        assert block.count(old) == 1, old
+        mod = R.module_from(text.replace(block, block.replace(old, new)), "_p2a_plant_xport")
+        head = [_seen(x) for x in N.gate_diff_text(summary, diff).to_dict()["claims"]]
+        got = [_seen(x) for x in mod.gate_diff_text(summary, diff).to_dict()["claims"]]
+        want = want_py
+    else:
+        text = R.lf(R.PORT)
+        block = R.js_block(text)
+        assert block.count(old) == 1, old
+        planted = tmp_path / "diffgate_planted.js"
+        planted.write_bytes(text.replace(block, block.replace(old, new)).encode("utf-8"))
+        (tmp_path / "in.json").write_text(json.dumps([{"id": cid, "summary": summary, "diff": diff}], ensure_ascii=True),
+                                          encoding="utf-8")
+        seen = {}
+        for name, port in (("head", R.PORT), ("planted", planted)):
+            node("--records", port, tmp_path / "in.json", tmp_path / (name + ".json"))
+            rec = json.loads((tmp_path / (name + ".json")).read_text(encoding="utf-8"))[0]["rec"]
+            seen[name] = [_seen(x) for x in rec["claims"]]
+        head, got, want = seen["head"], seen["planted"], want_js
+    assert [x[:2] for x in head] == want, "the case's pin is this head's decision"
+    assert got != head, f"the planted {which} decides {cid} as the head does"
+
+
 
 
 
@@ -2713,8 +2856,10 @@ def test_cross_port_reproductions(M, tmp_path):
                                  a["verdict"], js[cid]["main"]["verdict"])
         pin = XPORT_MAIN[cid]
         assert len(mains) == len(pin) and all(p in ("?", m) for p, m in zip(pin, mains)), (cid, mains)
-        assert [_seen(x) for x in b["claims"]] == want_py, cid
-        assert [_seen(x) for x in js[cid]["new"]["claims"]] == want_js, cid
+        assert [_said(x) for x in b["claims"]] == want_py, cid
+        assert [_said(x) for x in js[cid]["new"]["claims"]] == want_js, cid
+        if want_py == want_js:                  # ... and where the two ports decide alike they name one defect
+            assert [_seen(x) for x in b["claims"]] == [_seen(x) for x in js[cid]["new"]["claims"]], cid
         assert cross_port(a, b, js[cid]["main"], js[cid]["new"])[1] == (expect[0] if expect else []), cid
         assert [b["verdict"], js[cid]["new"]["verdict"]] == (gate.split("/") if "/" in gate else [gate, gate]), cid
     counts, broken, _ids = R.bar_c(R.bar_c_rows(M, N, items, js), PHRASES)
@@ -2868,8 +3013,8 @@ def test_the_port_withholds_its_own_false_tests_verdicts_on_161s_reproductions(t
     js = _decisions(tmp_path, items)
     for k, (gate, want, js_gate, js_want) in PORT_161.items():
         b = N.gate_diff_text(cases[k]["summary"], cases[k]["diff"]).to_dict()
-        assert (b["verdict"], [_seen(x) for x in b["claims"]]) == (gate, want), k
-        assert (js[k]["new"]["verdict"], [_seen(x) for x in js[k]["new"]["claims"]]) == (js_gate, js_want), k
+        assert (b["verdict"], [_said(x) for x in b["claims"]]) == (gate, want), k
+        assert (js[k]["new"]["verdict"], [_said(x) for x in js[k]["new"]["claims"]]) == (js_gate, js_want), k
         assert js[k]["main"]["verdict"] == "FAIL", k
 
 
@@ -2897,8 +3042,8 @@ def test_the_joint_121_reproductions_keep_mains_false_contradicted(tmp_path):
     js = {d["id"]: d for d in json.loads((tmp_path / "out.json").read_text(encoding="utf-8"))}
     for k, (gate, want) in JOINT_121.items():
         b = N.gate_diff_text(cases[k]["summary"], cases[k]["diff"]).to_dict()
-        assert (b["verdict"], [_seen(x) for x in b["claims"]]) == (gate, want), k
-        assert (js[k]["new"]["verdict"], [_seen(x) for x in js[k]["new"]["claims"]]) == (gate, want), k
+        assert (b["verdict"], [_said(x) for x in b["claims"]]) == (gate, want), k
+        assert (js[k]["new"]["verdict"], [_said(x) for x in js[k]["new"]["claims"]]) == (gate, want), k
 
 
 # ---- tables pinned by enumeration -------------------------------------------------------------------------------------
@@ -3037,6 +3182,12 @@ def test_port_tables_and_constants(tmp_path):
     assert t["headers"] == list(N._P2A_HEADERS)
     assert {tuple(x) for x in t["reach"]} == set(N._P2A_REACH) == set(R.REACH)
     assert t["phrases"] == N._P2A_PHRASES and t["kind_defect"] == N._P2A_KIND_DEFECT
+    # APPLY's fixed sets (NOTE_path2a_tenth_pass_2026_10_05): the tags a kind's decision may carry, each mapped to
+    # itself in the Python, and the detail fields DECIDE's copy carries; the same in both ports and in the reference
+    assert {k: tuple(v) for k, v in t["tags"].items()} == R.DEFECTS == {k: tuple(v) for k, v in N._P2A_TAGS.items()}
+    assert all(k == v for tags in N._P2A_TAGS.values() for k, v in tags.items())
+    assert all(N._P2A_KIND_DEFECT[k] in v for k, v in N._P2A_TAGS.items()) and set(N._P2A_TAGS) == set(N._P2A_KIND_DEFECT)
+    assert sorted(t["fields"]) == sorted(N._P2A_FIELDS) == ["declared", "n", "name", "path", "prefix", "prefix2"]
     assert t["directory_rule"] is True and t["own"] == 1
     # the summary's classes in UTF-16 units (C-1): every unit of a surrogate pair is wordish, as its code point is
     never_word = _neutral() | {0x85, 0x2028, 0x2029, 0xFEFF}
