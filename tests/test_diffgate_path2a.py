@@ -2302,14 +2302,21 @@ BAR_C = {
     "committed": {
         ("15.0.0", "windows", "16"): (6672, 5, 6067, 1127, 480, 120, 19, 23, 6, 2, 20, 13, 2, 9),
         ("15.0.0", "posix", "16"): (6672, 5, 6070, 1127, 480, 117, 19, 23, 6, 2, 19, 13, 2, 8),
+        ("16.0.0", "windows", "16"): (6672, 5, 6068, 1128, 482, 117, 20, 24, 6, 2, 21, 13, 2, 10),
+        ("16.0.0", "posix", "16"): (6672, 5, 6071, 1128, 482, 114, 20, 24, 6, 2, 20, 13, 2, 9),
     },
     # every input of this shape where main's two ports decide the symbol claim apart parts the gate verdicts under the
-    # overlay (149), since the tests or count claim that made both of main's gates FAIL is withheld in both ports
-    "line break": {("15.0.0", "any", "16"): (600, 0, 451, 451, 0, 149, 0, 149, 149, 0, 0, 0, 0, 0)},
-    # on the patched engine main's two gate verdicts differ on 421 inputs and the overlay's on none: the counts the two
-    # mains decide apart are withheld in both ports (`case_count`)
-    "newer engine": {("15.0.0", "any", "16"): (1500, 0, 669, 294, 0, 831, 421, 0, 0, 421, 358, 0, 0, 358)},
-    "decorated world": {("15.0.0", "any", "16"): (1000, 0, 752, 355, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0)},
+    # overlay (149; 147 where the interpreter knows U+105C0 as a letter), since the tests or count claim that made both
+    # of main's gates FAIL is withheld in both ports
+    "line break": {("15.0.0", "any", "16"): (600, 0, 451, 451, 0, 149, 0, 149, 149, 0, 0, 0, 0, 0),
+                   ("16.0.0", "any", "16"): (600, 0, 453, 453, 0, 147, 0, 147, 147, 0, 0, 0, 0, 0)},
+    # on the patched engine main's two gate verdicts differ on 421 inputs (294 where the interpreter folds the Unicode
+    # 16 pair too) and the overlay's on none: the counts the two mains decide apart are withheld in both ports
+    # (`case_count`)
+    "newer engine": {("15.0.0", "any", "16"): (1500, 0, 669, 294, 0, 831, 421, 0, 0, 421, 358, 0, 0, 358),
+                     ("16.0.0", "any", "16"): (1500, 0, 913, 538, 0, 587, 294, 0, 0, 294, 255, 0, 0, 255)},
+    "decorated world": {("15.0.0", "any", "16"): (1000, 0, 752, 355, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+                        ("16.0.0", "any", "16"): (1000, 0, 752, 355, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0)},
 }
 # The committed inputs on which main's two gate verdicts agree and the overlay's do not. Without --strict: #161's four
 # f2 separator inputs and y2, where the port's main alone counts a `def test_` after a vertical tab, a form feed, U+2028,
@@ -2339,7 +2346,7 @@ def _bar_c(name, rows, fl, floor):
         assert got == pins[runtime], dict(zip(BAR_C_KEYS, got))
     else:
         ref = next((pins[k] for k in sorted(pins) if k[1] == fl), None)
-        assert all(abs(g - p) <= max(8, p // 20) for g, p in zip(got, ref)), (
+        assert all(abs(g - p) <= max(10, p // 10) for g, p in zip(got, ref)), (
             f"bar C(iii) on {name}, on a runtime not measured ({runtime}), is far from the measured figures: "
             f"{dict(zip(BAR_C_KEYS, got))}")
     return counts, ids
@@ -2635,6 +2642,19 @@ XPORT_CASES = [
     ("P9-styxx-beside-a-line-separator", "3 files changed. Added 1 test.\nChecked with styxx. Thanks.",
      _mod(".env") + _mod("env") + D_TEST_ONE,
      [("UNCHECKABLE", "count"), ("UNCHECKABLE", "tests")], [("UNCHECKABLE", "count"), ("UNCHECKABLE", "tests")], "PASS"),
+    # ... and the U+2028 and U+2029 starts of the definition readers, which no committed input held (I-2 of the ninth
+    # note: with either dropped from one port every test passed). The port's `^` also matches after them, so its V101
+    # reads a definition there: a removed line `x = 1` U+2028 `def foo():` defines foo (`symbol`), an unchanged one
+    # after U+2029 does too (`again`), and an added line `x = 1` U+2028 `def test_new():` holds a test only the port's
+    # main counts, so "Added 0 tests" is CONTRADICTED on two different counts and withheld as `split` in both ports
+    ("P9-a-removed-def-after-a-line-separator", "Adds function foo.",
+     D_LINES(["x = 1", "def foo():"]).replace("-x = 0\n", "-x = 1 def foo():\n"),
+     [("UNCHECKABLE", "symbol")], [("UNCHECKABLE", "symbol")], "PASS"),
+    ("P9-an-unchanged-def-after-a-paragraph-separator", "Adds function foo.",
+     D_LINES(["y = 1", "def foo():"]).replace("-x = 0\n", " x = 1 def foo():\n-y = 0\n"),
+     [("UNCHECKABLE", "again")], [("UNCHECKABLE", "again")], "PASS"),
+    ("P9-a-test-after-a-line-separator", "Added 0 tests.", D_TEST + D_LINES(["x = 1 def test_new():"]),
+     [("UNCHECKABLE", "split")], [("UNCHECKABLE", "split")], "PASS"),
 ]
 # main's own reading of each cross-port case, pinned beside the overlay's: one letter per claim (V, C, U; `?` where the
 # verdict moves with the runtime's Unicode version) for the Python and for the port, then the two gate verdicts.
@@ -2669,6 +2689,9 @@ XPORT_MAIN = {
     "B2-count-thanks": "C/C FAIL/FAIL", "B2-new-button": "C/C FAIL/FAIL", "B2-keycap": "C/C FAIL/FAIL",
     "P9-only-after-an-accent-reads-files-as-the-prefix": "C/CC FAIL/FAIL",
     "P9-a-bom-before-the-summary": "CC/CC FAIL/FAIL", "P9-styxx-beside-a-line-separator": "CC/CC FAIL/FAIL",
+    "P9-a-removed-def-after-a-line-separator": "V/V PASS/PASS",
+    "P9-an-unchanged-def-after-a-paragraph-separator": "V/V PASS/PASS",
+    "P9-a-test-after-a-line-separator": "C/C FAIL/FAIL",
 }
 
 

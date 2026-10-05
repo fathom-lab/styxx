@@ -423,6 +423,13 @@ PY_PLANTS = [
      "            wide = True"),
     ("B-1's scripts without case read as cased", "                if _P2A_NEVER_RX.match(k[i]) is None:",
      "                if True:"),
+    # pass 9 (NOTE_path2a_ninth_pass_2026_10_04, I-2): the U+2028 and U+2029 starts of the two definition readers, which
+    # passed every test when dropped; the cross-port cases P9-a-removed-def-, P9-an-unchanged-def- and P9-a-test-after-
+    # hold them now
+    ("the counted tests read without the U+2028 and U+2029 starts", "        r = lead.match(line, b).end()\n",
+     "        if b:\n            continue\n        r = lead.match(line, b).end()\n"),
+    ("the definitions read without the U+2028 and U+2029 starts", "        p = _P2A_COARSE_RUN.match(line, b).end()\n",
+     "        if b:\n            continue\n        p = _P2A_COARSE_RUN.match(line, b).end()\n"),
 ]
 # Plants that cannot change a record, said so rather than hidden: none this pass. Pass 2's one (a clause that never
 # decided alone) went with the per-set comparison it sat behind (NOTE_path2a_third_pass_2026_09_30, B-2).
@@ -547,6 +554,11 @@ JS_PLANTS = [
      '  if (ca < a && (!_P2A_DIGITS.test(claimed) || (ca <= _p2aInt(claimed) && _p2aInt(claimed) <= a))) return ["case_count", "#121"];\n',
      ""),
     ("the port's case classes read as one placeholder", "const read = (ch, i) => (w[i] !== ", "const read = (ch, i) => (true || w[i] !== "),
+    # pass 9 (NOTE_path2a_ninth_pass_2026_10_04, I-2): the U+2028 and U+2029 starts, dropped from the port alone
+    ("the port's counted tests without the U+2028 and U+2029 starts", "    const r = _p2aRunEnd(line, b, lead);\n",
+     "    if (b) continue;\n    const r = _p2aRunEnd(line, b, lead);\n"),
+    ("the port's definitions without the U+2028 and U+2029 starts", "    const p = _p2aRunEnd(line, b, _p2aCoarseUnit);\n",
+     "    if (b) continue;\n    const p = _p2aRunEnd(line, b, _p2aCoarseUnit);\n"),
 ]
 
 
