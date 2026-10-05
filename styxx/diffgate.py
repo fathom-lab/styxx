@@ -1419,7 +1419,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # given a copy of main's claims and the door's bytes and returns plain data, a list of (claim index, phrase key,
 # defect tag). APPLY (`_p2a_apply`) is the only code here that touches main's record: it takes a decision only for a
 # claim in reach, with a phrase and a tag of the fixed sets, writes the reason and the verdict, and recomputes the gate
-# verdict by main's formula. So the record can only gain abstentions, whatever the rest of the block does.
+# verdict by main's formula. So the record can only gain abstentions, for any DECIDE that uses what it is handed as
+# data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
+# function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
+# the block's own slotted classes, so nothing of main's is reachable from it as data.
 # Everything outside this block is main's reader at 1cde8b82 (sha256 9b620e00..., LF), unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
@@ -2718,8 +2721,10 @@ def _p2a_only(c, f: "_P2aFacts"):
         return "unreproduced", "#121"
     # B-1 (NOTE_path2a_fourth_pass_2026_09_30): V121 does not read a `prefix` that only the dropped dots make a
     # path ("github" beside `.github/`), and says "is not a path (#110)". With a second prefix claimed, main's verdict
-    # there can be false while the two under-readings agree; with one prefix, a false verdict there needs two
-    # independent rendering faults besides #121, and the recall it would cost is measured in the NOTE.
+    # there can be false while the two under-readings agree. With one prefix the verdict is kept, and a false
+    # CONTRADICTED there needs one rendering fault, not two (NOTE_path2a_eleventh_pass_2026_10_05, B-2): git's own
+    # `diff --no-prefix` over a repository whose top directory `a/` or `b/` holds `.a/` or `.b/`. Operator option O-10;
+    # the truth tests pin four such kept claims.
     if d.get("prefix2") and not got["K", False][0]:
         return "shape", "#121"
     if got["K", False][2] != under:
@@ -2775,19 +2780,16 @@ def _p2a_decide(c, f: "_P2aFacts"):
     return _p2a_symbol(c, f)
 
 
-class _P2aSeen:
-    """What DECIDE is given: a copy of each claim of main's result, in order. Each copy holds the claim's kind, verdict
-    and reason and the strings and booleans of the detail fields a rule reads (_P2A_FIELDS); not its text. Nothing in
-    it is shared with the record, so nothing DECIDE does to it reaches the record."""
-
-    def __init__(self, claims: list):
-        self.claims = claims
-
-
 def _p2a_decisions(seen: "_P2aSeen", facts) -> list:
     """DECIDE (NOTE_path2a_tenth_pass_2026_10_05): every rule and reader of this block, run on a copy. Returns plain
     data, [(claim index, phrase key, defect tag), ...], for the claims in reach it would withhold. It is never given
-    main's record."""
+    main's record.
+
+    What bar A by construction covers (NOTE_path2a_eleventh_pass_2026_10_05): a DECIDE that uses what it is handed as
+    data and calls the `facts` it is given, whatever data it returns. It does not cover code that reaches around that
+    by reflection: a class reached by type(), a function's __globals__ or closure (`facts.__globals__` is this
+    module), a frame, sys.modules, gc. No guard inside one interpreter can close those; DECIDE is the lab's own code,
+    and the hostile tests guard against an honest mistake in it, not an attacker."""
     todo = [(i, c) for i, c in enumerate(seen.claims) if (c.kind, c.verdict) in _P2A_REACH]
     f = facts()
     f.prime(tuple(c.detail.get("path") for _i, c in todo if c.kind in _PATH_KINDS
@@ -2802,30 +2804,57 @@ def _p2a_decisions(seen: "_P2aSeen", facts) -> list:
     return out
 
 
+# What DECIDE is handed (NOTE_path2a_eleventh_pass_2026_10_05): instances of these two classes, the block's own, with
+# __slots__ and no method, built by attribute stores. Nothing reachable from DECIDE's first argument as data is then
+# main's: at 16daa725 each copy was a main DiffClaim, so a DECIDE that patched type(seen.claims[0]) ran its code in
+# APPLY's stores on the record, and the container's __init__ held this module in its __globals__. A patch of these two
+# classes reaches DECIDE's own copies only. Each copy holds the claim's kind, verdict and reason and the strings and
+# booleans of the detail fields a rule reads (_P2A_FIELDS); not its text.
+class _P2aClaim:
+    __slots__ = ("kind", "verdict", "why", "detail")
+
+
+class _P2aSeen:
+    __slots__ = ("claims",)
+
+
+_P2A_APPLY_OWN = frozenset({"error", "malformed"})     # APPLY's own fallback phrases: never taken from DECIDE
+
+
 def _p2a_apply(g: DiffGate, strict: bool, decide) -> DiffGate:
-    """APPLY (NOTE_path2a_tenth_pass_2026_10_05): the only code of this block that touches main's record `g`.
-    `decide` is called on a copy and may do anything to it; whatever it returns or raises, the record leaves here as
-    main's but for claims in reach turned UNCHECKABLE with a reason of the fixed form, and the gate verdict is main's
-    formula over the final claims. A decision is taken only as a 3-tuple of an integer that is the index of a claim in
-    reach, a key of _P2A_PHRASES and a tag of that claim's kind; what is kept of it is the record's own claim and the
-    tables' own strings. Anything else `decide` returned is ignored. If it raises, every claim in reach is withheld
-    with the phrase `error`; if it returns something that is not a list, with `malformed`."""
+    """APPLY (NOTE_path2a_tenth_pass_2026_10_05): the only code of this block that touches main's record `g`. It hands
+    `decide` a copy and takes from what comes back only a list (exactly a list) of 3-tuples (exactly tuples) of an int
+    that is the index of a claim in reach, a str key of _P2A_PHRASES other than APPLY's own two, and a str tag of that
+    claim's kind (NOTE_path2a_eleventh_pass_2026_10_05: exact types, so no subclass's method runs here); what is kept
+    is the record's own claim and the tables' own strings. Anything else `decide` returned is ignored. If it raises an
+    Exception, every claim in reach is withheld with the phrase `error`; if it returns something that is not a list,
+    with `malformed`; a BaseException that is not an Exception (KeyboardInterrupt, SystemExit, GeneratorExit) goes up
+    with nothing written. For a `decide` that uses what it is handed as data and calls what it is given, whatever data
+    it returns, the record leaves here as main's but for claims in reach turned UNCHECKABLE with a reason of the fixed
+    form, and the gate verdict is main's formula over the final claims. Code that reaches around its argument by
+    reflection (see _p2a_decisions) is not covered."""
     pending = {i: c for i, c in enumerate(g.claims) if (c.kind, c.verdict) in _P2A_REACH}
     if not pending:
         return g                              # nothing in reach: no copy, no call, and the record is main's object
     plan, fallback = [], None
     try:                                      # everything `decide` made is read here, before anything is written
-        got = decide(_P2aSeen([DiffClaim(c.kind, "", {k: v for k, v in c.detail.items() if k in _P2A_FIELDS
-                                                      and isinstance(v, (str, bool))}, c.verdict, c.why)
-                               for c in g.claims]))
-        if not isinstance(got, list):
+        copies = []
+        for c in g.claims:
+            p = _P2aClaim()
+            p.kind, p.verdict, p.why = c.kind, c.verdict, c.why
+            p.detail = {k: v for k, v in c.detail.items() if k in _P2A_FIELDS and (type(v) is str or type(v) is bool)}
+            copies.append(p)
+        seen = _P2aSeen()
+        seen.claims = copies
+        got = decide(seen)
+        if type(got) is not list:
             fallback = "malformed"
         else:
             for d in got:
-                if not (isinstance(d, tuple) and len(d) == 3):
+                if type(d) is not tuple or len(d) != 3:
                     continue
                 i, key, tag = d
-                if isinstance(i, bool) or not (isinstance(i, int) and isinstance(key, str) and isinstance(tag, str)):
+                if type(i) is not int or type(key) is not str or type(tag) is not str or key in _P2A_APPLY_OWN:
                     continue
                 c = pending.get(i)
                 if c is None:
@@ -2871,7 +2900,7 @@ _P2A_CHECKERS = frozenset({"selfcheck_p2a_asks_no_runtime", "_p2a_regex_problems
 # main's names the block uses. A module, `getattr`, `operator`, `builtins` or `unicodedata` is refused by name.
 _P2A_NAMES_OK = frozenset({"len", "set", "list", "dict", "tuple", "frozenset", "any", "all", "min", "max",
                            "enumerate", "zip", "range", "bool", "isinstance", "str", "Exception", "chr",
-                           "re", "_Pending", "PATH1_EXTENSIONS", "_PATH_KINDS", "DiffGate", "DiffClaim"})
+                           "re", "_Pending", "PATH1_EXTENSIONS", "_PATH_KINDS", "DiffGate"})
 # ... and read only these attributes: the str, list, dict and set methods the block calls (none reads a Unicode
 # table: every strip and split carries its characters), the regex methods, and the fields of the record, of main's
 # _Pending and of the facts object. A dunder, `__getattribute__` or any method not listed is refused.
@@ -2924,15 +2953,16 @@ def selfcheck_p2a_asks_no_runtime(source: str | None = None) -> dict:
     """Lints over the PATH-2a block's own source, read with `ast`, against an honest future edit that would ask the
     runtime a Unicode question (bar C leans on the block asking none). They are not a proof against a hostile edit: a
     name built from strings, an alias carried through data or an f-string of a list passes them. That the overlay can
-    only abstain is not checked here at all; it holds at run time, in `_p2a_apply`
-    (NOTE_path2a_tenth_pass_2026_10_05).
+    only abstain is not checked here at all; it holds at run time, in `_p2a_apply`, for a DECIDE that uses what it is
+    handed as data (NOTE_path2a_tenth_pass_2026_10_05, NOTE_path2a_eleventh_pass_2026_10_05).
 
     Checked: no import; every name read is one the block binds or on a short list (builtins that read no table, main's
     names the block uses), and every attribute read is on a short list of methods and fields, so a module, a dunder or
     an unlisted method is refused; `re` is only ever called as `re.<function>(<static pattern>)`; no attribute read off
     a builtin type (`str.split`); no case, Unicode-table, path or locale call, and no call that reads one indirectly
-    (repr, format, !r, %r, getattr, eval, encode, int(), whose digits are CPython's table; `int` may only be named as
-    the type `isinstance` tests); every strip and split carries its characters (none, `None` or a keyword is refused);
+    (repr, format, !r, %-formatting of a string literal, getattr, eval, encode, int(), whose digits are CPython's
+    table; `type` may only be called as `type(x) is T` or `type(x) is not T` for a builtin type T, and `int` named only
+    as that T); every strip and split carries its characters (none, `None` or a keyword is refused);
     every regex static, with no class escape, no unescaped '.', and no case or Unicode flag; the block is ASCII. The
     lint's own functions (`_P2A_CHECKERS`) are exempt from the name, attribute and call rules.
     `source` is the module text (default: this file)."""
@@ -2986,13 +3016,20 @@ def selfcheck_p2a_asks_no_runtime(source: str | None = None) -> dict:
     def bad(node, what):
         problems.append(f"line {node.lineno}: {what}")
 
+    def exact_test(cmp):
+        """`type(x) is T` or `type(x) is not T`, T a builtin type named by itself: reads the object's own type, no
+        table and no method of the object (NOTE_path2a_eleventh_pass_2026_10_05)."""
+        return (isinstance(cmp, ast.Compare) and len(cmp.ops) == 1 and isinstance(cmp.ops[0], (ast.Is, ast.IsNot))
+                and isinstance(cmp.left, ast.Call) and isinstance(cmp.left.func, ast.Name)
+                and cmp.left.func.id == "type" and len(cmp.left.args) == 1 and not cmp.left.keywords
+                and isinstance(cmp.comparators[0], ast.Name) and cmp.comparators[0].id in _P2A_TYPES)
+
     def tested_type(node):
-        """`int` named only as the type `isinstance(x, int)` tests, alone or in a tuple of types: no digit is read."""
+        """`type` called only as the left side of an exact test, and `int` named only as its right side."""
         up = parent.get(node)
-        types = up if isinstance(up, ast.Tuple) else node
-        call = parent.get(types)
-        return (isinstance(call, ast.Call) and isinstance(call.func, ast.Name) and call.func.id == "isinstance"
-                and len(call.args) == 2 and not call.keywords and call.args[1] is types)
+        if node.id == "type":
+            return isinstance(up, ast.Call) and up.func is node and exact_test(parent.get(up))
+        return exact_test(up) and up.comparators[0] is node
 
     for node in ast.walk(tree):
         if isinstance(node, (ast.Import, ast.ImportFrom)):
@@ -3001,7 +3038,7 @@ def selfcheck_p2a_asks_no_runtime(source: str | None = None) -> dict:
             continue
         if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
             if node.id in _P2A_BANNED_NAMES:
-                if not (node.id == "int" and tested_type(node)):
+                if not (node.id in ("int", "type") and tested_type(node)):
                     bad(node, f"name {node.id}")
             elif node.id not in bound and node.id not in _P2A_NAMES_OK:
                 bad(node, f"name {node.id}, not one the block binds or may read")
@@ -3020,8 +3057,10 @@ def selfcheck_p2a_asks_no_runtime(source: str | None = None) -> dict:
         if isinstance(node, ast.FormattedValue) and node.conversion in (ord("r"), ord("a")):
             bad(node, "an f-string !r or !a conversion")
         if (isinstance(node, ast.BinOp) and isinstance(node.op, ast.Mod) and isinstance(node.left, ast.Constant)
-                and isinstance(node.left.value, str) and ("%r" in node.left.value or "%a" in node.left.value)):
-            bad(node, "%r or %a formatting")
+                and isinstance(node.left.value, str)):
+            # A-6 (NOTE_path2a_eleventh_pass_2026_10_05): '%s' % ([x],) reads repr as %r does; the block formats with
+            # % nowhere, so every %-formatting of a string literal is refused
+            bad(node, "%-formatting of a string literal (%r, %a, or %s of a container read repr)")
         if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "str":
             bad(node, "str() of a value, which can read repr")
         if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
@@ -3043,7 +3082,8 @@ def selfcheck_p2a_asks_no_runtime(source: str | None = None) -> dict:
             "checked": ["imports", "names read", "attributes read", "re used only as re.<function>",
                         "banned names and attributes", "indirect table reads", "argument-less strip and split",
                         "static regexes", "ASCII source"],
-            "not_checked": ["that the overlay only abstains: _p2a_apply holds that at run time",
+            "not_checked": ["that the overlay only abstains: _p2a_apply holds that at run time, for a DECIDE that "
+                            "uses what it is handed as data",
                             "names built at run time, aliases carried through data, an f-string of a list"]}
 
 # === PATH-2a abstain-only overlay: END ===
