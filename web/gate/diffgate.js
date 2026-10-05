@@ -1001,7 +1001,7 @@ function _p2aEnds(texts, claims) {
   // _p2a_ends: each text read from its end one segment at a time through the claims' tree, only while the segments read
   // so far end some claim's (NOTE_path2a_fifth_pass_2026_09_30, A-1).
   // The two figures are kept in two Maps of numbers and joined at the end, so no array read out of a Map is stored into
-  // (the store scan, A-2 of NOTE_path2a_eighth_pass_2026_10_01).
+  // (a shape the eighth pass's store scan asked for; the scan went at the tenth pass, and the shape stays).
   const root = _p2aTree(claims);
   const earliest = new Map(), many = new Map();
   for (const c of claims) { earliest.set(c, -1); many.set(c, 0); }
@@ -1041,7 +1041,7 @@ function _p2aAutomaton(words) {
     }
     hit[k] = true;
   }
-  const back = [];                       // a fresh array, so the store scan reads back[i] as a store into the block's own
+  const back = [];                       // a fresh array of the block's own (the eighth pass's store scan asked for it)
   for (let z = 0; z < moves.length; z++) back.push(0);
   const queue = [...moves[0].values()];
   for (const k of queue) {               // level by level; the queue grows as it is read
