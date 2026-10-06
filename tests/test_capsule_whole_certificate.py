@@ -215,6 +215,18 @@ def test_the_receipts_are_re_read_in_the_order_the_certificate_lists_them(tmp_pa
     assert {e["receipt_ref"].split(":")[0] for e in payload["certificate"]["ledger"]} == {"z.json"}
 
 
+def test_the_page_around_the_payload_is_reported_never_assumed(clean, tmp_path):
+    """Layer 2 reads the payload, not the script that draws it. It says whether the page is the
+    one this styxx renders for that payload; an edited page is named NOT CHECKED."""
+    assert any(c.startswith("the page") for c in verify_capsule(clean)["compared"])
+    edited = tmp_path / "edited.capsule.html"
+    edited.write_text(clean.read_text(encoding="utf-8").replace(
+        "<main>", "<main><p>Reviewed and approved.</p>", 1), encoding="utf-8")
+    rep = verify_capsule(edited)
+    assert rep["ok"] is True
+    assert any(n.startswith("the page around the payload") for n in rep["not_checked"])
+
+
 @pytest.mark.parametrize("where", ["absolute", "climbing"])
 def test_a_capsule_that_names_a_path_writes_nothing_outside_the_verifier(clean, tmp_path, where,
                                                                          monkeypatch):
