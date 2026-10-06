@@ -637,7 +637,7 @@ def test_the_python_lints_refuse_a_planted_read(old, new, what):
 
 
 JS_BANNED = ("toLowerCase", "toUpperCase", "toLocale", "localeCompare", "normalize", ".trim", "trimStart", "trimEnd",
-             "\\p{", "Intl", ".sort(", "String.raw", "eval(", "Function(", "prototype", ".call(", ".apply(",
+             "\\p{", "Intl", ".sort(", ".toSorted(", "String.raw", "eval(", "Function(", "prototype", ".call(", ".apply(",
              ".bind(", "Reflect", "globalThis", "require(", "import(", ".compile(", "__proto__", "constructor",
              # C-3 (NOTE_path2a_fourth_pass_2026_09_30): a string method that builds a RegExp from its argument at run
              # time, and a String object carrying a method off its prototype; the block uses .test and .exec on
@@ -895,6 +895,7 @@ def test_the_port_block_passes_its_token_scan():
     ('new RegExp("\\r\\n|\\r|\\n")', 'new RegExp("\\\\s")'),
     ("const _p2aBs = s => s.split(", "const _p2aBs = s => s.replace(/x/, \"\").split("),
     ("const out = text.split(rx);", "const out = text.split(rx).sort();"),
+    ("const out = text.split(rx);", "const out = text.split(rx).toSorted();"),   # C-4 of the eleventh cross-port review
     # C-4: a table read through a computed name
     ("  const ca = _p2aA(claimed), ck = _p2aK(claimed);",
      "  const ca = _p2aA(claimed[\"toLower\" + \"Case\"]()), ck = _p2aK(claimed);"),
@@ -1111,8 +1112,10 @@ def test_a_widened_count_head_reads_no_digit_table(M, tmp_path):
 # block's own DECIDE returns, since a decision it refused would be a silent miss.
 
 APPLY_SHA = {
-    "python": "803c83e2f3a386265d5b203ea36ef3b0b7b8a58ed8fec8596fa4a0c43ac2d892",
-    "port": "2ee400057779b16bf84996fca6f19a26c42c9452ddf2037f8c281833eaec2143",
+    # NOTE_path2a_twelfth_pass_2026_10_05: the Python's docstring says when APPLY reads `strict` (A-1); the port lists
+    # the keys DECIDE may name literally and fills its per-claim arrays by index, not by an inherited `push` (A-2)
+    "python": "10fc2ee8c4ebe24c713846061d4bec118fae6e41c0cfc73952c50c068f1df822",
+    "port": "d4a5956032589ccf72ccbfc1fe80e58ec9b45a6de84eeaf1ca3c1d7dc43a5008",
 }
 
 
@@ -1541,17 +1544,29 @@ def test_a_decide_that_reaches_the_module_through_facts_is_the_stated_limit(M, m
         M.gate_diff_text("Updated src/app.py. All tests pass.", "").to_dict()
 
 
+def test_the_copys_classes_define_no_method():
+    """I-4 of the eleventh integration review (NOTE_path2a_twelfth_pass_2026_10_05): the C-1 fix of the eleventh pass,
+    held by name as well as by the text pin. A function of the module defined on either class (an `__init__` above
+    all) would hold the module in its `__globals__`, reachable from DECIDE's argument through type()."""
+    for cls in (N._P2aClaim, N._P2aSeen):
+        own = {k: v for k, v in vars(cls).items() if k not in cls.__slots__}
+        assert "__init__" not in own, cls
+        assert [k for k, v in own.items() if callable(v) or isinstance(v, (staticmethod, classmethod, property))] == [], cls
+
+
 def test_a_hostile_decide_cannot_leave_the_relation_port(work, tmp_path):
     """The same in the port: check_path2a.js --hostile hands _p2aApply main's record and each DECIDE of its own list
     (ones that change their copy, return junk, a Proxy that answers differently on each read, or throw; and, with the
     record built by the port's own main in the realm DECIDE runs in, ones that patch what every object or array
-    inherits: NOTE_path2a_eleventh_pass_2026_10_05)."""
+    inherits: NOTE_path2a_eleventh_pass_2026_10_05; and a `push` left patched before APPLY runs, or a key the page put
+    on what every object inherits before the port loaded: NOTE_path2a_twelfth_pass_2026_10_05, each failing on
+    ee82d2f3)."""
     items = [{"id": i, "summary": s, "diff": d} for i, s, d in _hostile_inputs()]
     (tmp_path / "in.json").write_text(json.dumps(items, ensure_ascii=True), encoding="utf-8")
     node("--hostile", work / "diffgate_main_reference.js", tmp_path / "in.json", tmp_path / "hostile.json")
     out = json.loads((tmp_path / "hostile.json").read_text(encoding="utf-8"))
     assert len(out) >= 30 and {v["want"] for v in out.values()} == {"same", "all", "relation"}
-    assert sum(bool(v.get("realm")) for v in out.values()) >= 5
+    assert sum(bool(v.get("realm")) for v in out.values()) >= 7     # two since NOTE_path2a_twelfth_pass_2026_10_05
     for name, v in out.items():
         c = v["counts"]
         assert c["broken"] == 0 and c["not_returned"] == 0 and c["threw"] == 0, (name, c, v["examples"])
@@ -1760,7 +1775,7 @@ def test_a_planted_strict_skip_is_refused(M, inputs):
 
 
 JS_WHY = "    c.why = `${c.verdict} withheld by PATH-2a (${tag}): ${phrase}. main's reading: ${c.why}`;"
-JS_REACH = '    reach.push(_P2A_REACH.has(claims[k].kind + "|" + claims[k].verdict));'
+JS_REACH = '    reach[k] = _P2A_REACH.has(claims[k].kind + "|" + claims[k].verdict);'     # by index since pass 12
 # Edits of APPLY itself, which the relation must refuse (the pin of APPLY's text names each of them too)
 PORT_PLANTS = [
     ('    c.verdict = "UNCHECKABLE";', '    c.verdict = "CONTRADICTED";'),
@@ -1768,7 +1783,7 @@ PORT_PLANTS = [
     ('    g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";', ""),
     ('    c.verdict = "UNCHECKABLE";', '    c.verdict = "UNCHECKABLE";\n    c.detail = {};'),
     # Integration-1: the overlay skipped under --strict
-    (JS_REACH, JS_REACH.replace("verdict));", "verdict) && !strict);")),
+    (JS_REACH, JS_REACH.replace("verdict);", "verdict) && !strict;")),
     # I-1 (NOTE_path2a_third_pass_2026_09_30): the review's two mutants, which pass 2's --relation could not see
     ('    g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";',
      '    g.verdict = (contradicted || (strict && uncheckable)) ? "FAIL" : "PASS";\n    g.unparsed_claims = claims.map(c => c.text);'),
@@ -3502,6 +3517,8 @@ def test_port_tables_and_constants(tmp_path):
     assert all(N._P2A_KIND_DEFECT[k] in v for k, v in N._P2A_TAGS.items()) and set(N._P2A_TAGS) == set(N._P2A_KIND_DEFECT)
     assert sorted(t["fields"]) == sorted(N._P2A_FIELDS) == ["declared", "n", "name", "path", "prefix", "prefix2"]
     assert t["directory_rule"] is True and t["own"] == 1
+    # A-2 (NOTE_path2a_twelfth_pass_2026_10_05): the port's literal list of the keys DECIDE may name is the table's own
+    assert t["decide_keys"] == [k for k in N._P2A_PHRASES if k not in N._P2A_APPLY_OWN]
     # the summary's classes in UTF-16 units (C-1): every unit of a surrogate pair is wordish, as its code point is
     never_word = _neutral() | {0x85, 0x2028, 0x2029, 0xFEFF}
     assert set(t["neutral"]) == _neutral() and t["neutral_cased"] == []

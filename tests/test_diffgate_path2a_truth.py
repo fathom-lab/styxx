@@ -819,36 +819,84 @@ NO_PREFIX_CASES = [
     {"id": "np-a-dota-deleted", "summary": "Only touches a.", "diff": _NP_DELETED,
      "model": {"base": {"a/.a/z.py": "x = 1\n", "a/docs/guide.md": "a\n"}, "head": {}}},
 ]
-# The attributable false verdicts the overlay keeps there, in Python and in the port: one per case, each a scope
-# CONTRADICTED. A change that closes the gap (O-10 taken) or widens it moves this pin.
-KEPT_SINGLE_PREFIX = (4, 4)
 
 
-def test_the_tenth_reviews_single_prefix_cases_are_kept_and_counted(tmp_path):
-    """B-2 of the tenth coverage review (NOTE_path2a_eleventh_pass_2026_10_05, section 5; operator option O-10). Over
-    git's own `diff --no-prefix` of a repository whose top directory `b/` (or `a/`) holds `.b/` (or `.a/`), main
-    strips the real `b/`, keys `.b/z.py` as `b/z.py` (#121), reads `b` as a path and accuses "paths outside 'b'" where
-    every changed file lies under `b/`. V121 says the prefix is not a path, so the false CONTRADICTED is attributable,
-    and the overlay keeps it: one rendering fault suffices, where the README up to the tenth pass said two were needed.
-    By the lead's direction no rule changes in that pass; the four are pinned as known kept attributable claims."""
+def _git_file(st, p, old, new, before, after):
+    """One file of a one-line change as git prints it, with its a/ b/ split (status M, A or D)."""
+    body = {"M": f"index {before}..{after} 100644\n--- a/{p}\n+++ b/{p}\n@@ -1 +1 @@\n-{old}\n+{new}\n",
+            "A": f"new file mode 100644\nindex 0000000..{after}\n--- /dev/null\n+++ b/{p}\n@@ -0,0 +1 @@\n+{new}\n",
+            "D": f"deleted file mode 100644\nindex {before}..0000000\n--- a/{p}\n+++ /dev/null\n@@ -1 +0,0 @@\n-{old}\n"}
+    return f"diff --git a/{p} b/{p}\n" + body[st]
+
+
+# Pass 12 (NOTE_path2a_twelfth_pass_2026_10_05, B-1): the eleventh coverage review's four cases, built with git. Each
+# `diff` is what `git diff --relative=TOP` prints, and what the git door reads with `name_status` from the repository's
+# subdirectory TOP under diff.relative=true; the model's paths are the repository's.
+RELATIVE_CASES = [
+    {"id": "rel-docs-modified", "summary": "Only touches docs.", "name_status": "M\t.docs/conf.py\nM\tguide.md\n",
+     "diff": _git_file("M", ".docs/conf.py", "x = 1", "x = 2", "7d4290a", "407de30")
+     + _git_file("M", "guide.md", "a", "b", "7898192", "6178079"),
+     "model": {"base": {"docs/.docs/conf.py": "x = 1\n", "docs/guide.md": "a\n"},
+               "head": {"docs/.docs/conf.py": "x = 2\n", "docs/guide.md": "b\n"}}},
+    {"id": "rel-docs-created", "summary": "This change only modifies files in docs.",
+     "name_status": "A\t.docs/new.py\nM\tguide.md\n",
+     "diff": _git_file("A", ".docs/new.py", "", "x = 2", "", "407de30")
+     + _git_file("M", "guide.md", "a", "b", "7898192", "6178079"),
+     "model": {"base": {"docs/guide.md": "a\n"}, "head": {"docs/.docs/new.py": "x = 2\n", "docs/guide.md": "b\n"}}},
+    {"id": "rel-config-deleted", "summary": "Only touches config, nothing else.",
+     "name_status": "D\t.config/old.toml\nM\tapp.toml\n",
+     "diff": _git_file("D", ".config/old.toml", "a = 1", "", "1337a53", "")
+     + _git_file("M", "app.toml", "a = 1", "a = 2", "1337a53", "e7cabca"),
+     "model": {"base": {"config/.config/old.toml": "a = 1\n", "config/app.toml": "a = 1\n"},
+               "head": {"config/app.toml": "a = 2\n"}}},
+    {"id": "rel-vscode", "summary": "Only changes vscode.", "name_status": "M\t.vscode/settings.json\nM\textension.ts\n",
+     "diff": _git_file("M", ".vscode/settings.json", "{}", "{ }", "0967ef4", "ffcd441")
+     + _git_file("M", "extension.ts", "a", "b", "7898192", "6178079"),
+     "model": {"base": {"vscode/.vscode/settings.json": "{}\n", "vscode/extension.ts": "a\n"},
+               "head": {"vscode/.vscode/settings.json": "{ }\n", "vscode/extension.ts": "b\n"}}},
+]
+# The attributable false verdicts the overlay keeps, per door: one per case, each a scope CONTRADICTED (the raw door
+# and the port read the four no-prefix and the four --relative cases, the git door the four --relative ones). A change
+# that closes the gap (O-10 taken) or widens it moves this pin.
+KEPT_SINGLE_PREFIX = {"raw": 8, "port": 8, "git": 4}
+
+
+def test_the_single_prefix_family_is_kept_and_counted(tmp_path, monkeypatch):
+    """B-2 of the tenth coverage review and B-1 of the eleventh (NOTE_path2a_eleventh_pass_2026_10_05 section 5,
+    NOTE_path2a_twelfth_pass_2026_10_05 section 2; operator option O-10). A rendering drops a leading directory D that
+    holds `.D/`, for any D: git's own `diff --no-prefix` over a top directory `b/` (or `a/`), `diff --relative=D`, or
+    the git door on D under diff.relative=true. main keys `.D/x` as `D/x` (#121), reads D as a path and accuses "paths
+    outside 'D'" where every changed file lies under D. V121 says the prefix is not a path, so the false CONTRADICTED is
+    attributable, and the overlay keeps it, gate FAIL in both strict modes. By the lead's direction no rule changes;
+    the kept claims are pinned per door."""
     M = R.main_module()
     V = variants()
-    kept = []
-    for it in NO_PREFIX_CASES:
-        a = M.gate_diff_text(it["summary"], it["diff"]).to_dict()
-        b = N.gate_diff_text(it["summary"], it["diff"]).to_dict()
-        assert R.relation(a, b, False, N._P2A_PHRASES) == [], it["id"]
-        vs = {k: mod.gate_diff_text(it["summary"], it["diff"]).to_dict()["claims"] for k, mod in V.items()}
+    kept = collections.Counter()
+    for door, it in [("raw", x) for x in NO_PREFIX_CASES + RELATIVE_CASES] + [("git", x) for x in RELATIVE_CASES]:
+        if door == "git":
+            for mod in [M, N, *V.values()]:
+                monkeypatch.setattr(mod, "_git", R.fake_git(it["name_status"], it["diff"]))
+
+        def run(mod, strict=False, door=door, it=it):
+            if door == "git":
+                return mod.gate_diff(it["summary"], "(repo)", "base", "head", strict=strict).to_dict()
+            return mod.gate_diff_text(it["summary"], it["diff"], strict=strict).to_dict()
+
+        for strict in (False, True):
+            a, b = run(M, strict), run(N, strict)
+            assert R.relation(a, b, strict, N._P2A_PHRASES) == [] and a["verdict"] == b["verdict"] == "FAIL", it["id"]
+        a, b = run(M), run(N)
         counts, misses = collections.Counter(), []
-        tally(counts, misses, it, judge(it["model"], a["claims"], vs), b["claims"])
-        assert counts["attributable"] == 1 and len(misses) == 1, (it["id"], dict(counts))
+        tally(counts, misses, it, judge(it["model"], a["claims"], {k: run(mod)["claims"] for k, mod in V.items()}),
+              b["claims"])
+        assert counts["attributable"] == 1 and len(misses) == 1, (door, it["id"], dict(counts))
         assert (misses[0]["kind"], misses[0]["main"], sorted(misses[0]["fixed by"])) == \
             ("only_touches", "CONTRADICTED", ["v121", "vall"]), misses[0]
-        assert a["verdict"] == b["verdict"] == "FAIL", it["id"]
-        kept.append(it["id"])
-    port_counts, port_misses, _rows = _port_truth(NO_PREFIX_CASES, tmp_path)
+        kept[door] += 1
+    port_counts, port_misses, _rows = _port_truth(NO_PREFIX_CASES + RELATIVE_CASES, tmp_path)
     assert all((m["kind"], m["main"]) == ("only_touches", "CONTRADICTED") for m in port_misses), port_misses
-    assert (len(kept), len(port_misses)) == KEPT_SINGLE_PREFIX, (kept, port_counts)
+    kept["port"] = len(port_misses)
+    assert dict(kept) == KEPT_SINGLE_PREFIX, (dict(kept), port_counts)
     assert port_counts["attributable"] == len(port_misses), port_counts
 
 

@@ -57,7 +57,7 @@ const vm = require("vm");
 
 const DEFAULT_PORT = path.join(__dirname, "..", "diffgate.js");
 
-function internals(file, extra = "") {
+function internals(file, extra = "", pre = "") {
   // The port's top-level functions and constants, read the way a page reads the file: as one script.
   const src = fs.readFileSync(file, "utf8");
   const names = ["gateDiffText", "parseUnifiedDiff", "_norm", "_splitlines", "_p2aRegsRaw", "_p2aBuild", "_p2aViews", "_p2aPairing",
@@ -66,11 +66,14 @@ function internals(file, extra = "") {
                  "_P2A_REACH_PAIRS", "_P2A_PHRASES", "_P2A_KIND_DEFECT", "P2A_DIRECTORY_BASENAME_ABSTAINS", "_P2A_OWN",
                  "_P2A_NEUTRAL_RANGES", "_p2aWordishUnit", "_p2aBadUnit", "_p2aAbstain", "_p2aFactsRaw", "_p2aFound",
                  "_p2aApply", "_p2aDecisions", "_P2A_TAGS", "_P2A_FIELDS", "_gateDiffTextMain", "_p2aRealm",
-                 "_P2A_EMOJI_RX", "_P2A_EMOJI_AS", "_P2A_LOWER_RUNS", "_P2A_NEVER_RANGES", "_p2aCaseCount"];
+                 "_P2A_EMOJI_RX", "_P2A_EMOJI_AS", "_P2A_LOWER_RUNS", "_P2A_NEVER_RANGES", "_p2aCaseCount", "_P2A_DECIDE_KEYS"];
   // A name the port does not define reads undefined, so the checker also loads the ports of earlier passes (the
   // seventh pass runs its new pins against fcd3ce6a's port this way)
   const pick = names.map(n => n + ": typeof " + n + ' === "undefined" ? undefined : ' + n);
-  return vm.runInNewContext(src + "\n" + extra + "\n;({" + pick.join(", ") + "})", {}, { filename: file });
+  // `pre` runs in the realm as a script of its own before the port loads, as a page's script before the bookmarklet
+  const ctx = vm.createContext({});
+  if (pre) vm.runInContext(pre, ctx);
+  return vm.runInContext(src + "\n" + extra + "\n;({" + pick.join(", ") + "})", ctx, { filename: file });
 }
 
 function record(gate, it, strict, keepUnparsed = false) {
@@ -231,6 +234,16 @@ const HOSTILE = {
     seen.claims.constructor.isArray = () => true;
     return { length: 1, 0: [0, "unreproduced", "#97"] };
   } },
+  // A-2 of the eleventh construction review (NOTE_path2a_twelfth_pass_2026_10_05): a patch left in place from an
+  // earlier call (`before`, run after main's record is built and before APPLY), or made by the page before the port
+  // loads (`pre`; compared with main's record as that realm's own main built it). At ee82d2f3 APPLY filled its
+  // per-claim arrays with `push` and listed the keys DECIDE may name with for-in over the phrase table.
+  "a push left patched to drop a lone null, with the block's own decisions": { want: "relation", realm: true,
+    before: R => { const push = R.A.push; R.A.push = function (...xs) { return xs.length === 1 && xs[0] === null ? this.length : push.apply(this, xs); }; },
+    make: honest },
+  "a key the page put on what every object inherits before the port loaded": { want: "same", realm: true,
+    pre: 'Object.prototype.zz = "a phrase the page left behind";',
+    make: P => seen => forEach(seen, c => inReach(P, c), (c, i) => [[i, "zz", P._P2A_KIND_DEFECT[c.kind]]]) },
 };
 
 function realmSnapshot(R) {
@@ -275,7 +288,7 @@ function main(argv) {
       lower_longer: lowerLong, js_space: cps(P._P2A_JS_SPACE), py_space: cps(P._P2A_PY_SPACE),
       py_breaks: cps(P._P2A_PY_BREAKS), divergent: cps(P._P2A_DIVERGENT), headers: P._P2A_HEADERS,
       reach: P._P2A_REACH_PAIRS, phrases: P._P2A_PHRASES, kind_defect: P._P2A_KIND_DEFECT,
-      tags: P._P2A_TAGS, fields: P._P2A_FIELDS,
+      tags: P._P2A_TAGS, fields: P._P2A_FIELDS, decide_keys: P._P2A_DECIDE_KEYS,
       directory_rule: P.P2A_DIRECTORY_BASENAME_ABSTAINS, own: P._P2A_OWN,
       // the summary's classes (NOTE_path2a_third_pass_2026_09_30): the units that are not wordish, and that are not bad
       neutral: P._P2A_NEUTRAL_RANGES.flatMap(([a, b]) => Array.from({ length: b - a + 1 }, (_, k) => a + k)),
@@ -368,16 +381,19 @@ function main(argv) {
     for (const [name, h] of Object.entries(HOSTILE)) {
       const c = { runs: 0, broken: 0, same: 0, not_returned: 0, threw: 0, in_reach: 0, withheld: 0, unlike_the_port: 0, decisions: 0 };
       const phrases = {}, examples = [];
+      const Q = h.pre ? internals(port, "var _p2aRealm = { O: Object.prototype, A: Array.prototype, Arr: Array };", h.pre) : P;
       for (const it of items) for (const strict of [false, true]) {
         let a;
         try { a = JSON.parse(JSON.stringify(REF.gateDiffText(it.summary, it.diff, { strict }))); } catch (e) { continue; }
-        const g = h.realm ? P._gateDiffTextMain(it.summary, it.diff, { strict }) : REF.gateDiffText(it.summary, it.diff, { strict });
+        const g = h.realm ? Q._gateDiffTextMain(it.summary, it.diff, { strict }) : REF.gateDiffText(it.summary, it.diff, { strict });
+        if (h.pre) a = JSON.parse(JSON.stringify(g));
         let ret;
-        const decide = h.make(P, it);
+        const decide = h.make(Q, it);
         // for the block's own DECIDE, how many decisions it returned: APPLY must take every one
         const spy = name === "the block's own DECIDE" ? seen => { const got = decide(seen); c.decisions += got.length; return got; } : decide;
-        const snap = h.realm ? realmSnapshot(P._p2aRealm) : null;
-        try { ret = P._p2aApply(g, strict, spy); } catch (e) { c.threw++; }
+        const snap = h.realm ? realmSnapshot(Q._p2aRealm) : null;
+        if (h.before) h.before(Q._p2aRealm);
+        try { ret = Q._p2aApply(g, strict, spy); } catch (e) { c.threw++; }
         if (snap) realmRestore(snap);
         const b = JSON.parse(JSON.stringify(g));
         c.runs++;
