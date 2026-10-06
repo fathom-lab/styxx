@@ -32,7 +32,7 @@ import json
 import re
 import sys
 import tempfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import List, Optional
 
 # The v0.13 UNCOVERED band appends ", N uncovered" to a verdict string. That suffix is a
@@ -68,6 +68,12 @@ def _sha256(b: bytes) -> str:
 
 def _b64(b: bytes) -> str:
     return base64.b64encode(b).decode("ascii")
+
+
+def _bare_name(name) -> bool:
+    """A file name with no directory part on any platform: no separator, no drive, not . or .."""
+    return (isinstance(name, str) and name not in ("", ".", "..") and "\x00" not in name
+            and PurePosixPath(name).name == name and PureWindowsPath(name).name == name)
 
 
 # ---------------------------------------------------------------------------------
@@ -200,6 +206,13 @@ def verify_capsule(path: Path) -> dict:
         want = (cert.get("receipts_sha256") or {}).get(r["name"])
         if _sha256(rb) != want:
             problems.append(f"receipt {r['name']!r} bytes != certificate hash")
+    # The re-run writes the embedded bytes under the names the capsule gives them, so a name
+    # must be a bare file name. A path (absolute, or climbing with ..) would write the capsule's
+    # bytes wherever it points, outside the temporary directory, on the reader's machine.
+    for name in [payload["document"]["name"]] + [r["name"] for r in payload["receipts"]]:
+        if not _bare_name(name):
+            problems.append(f"name {name!r} is not a bare file name; nothing was written and "
+                            f"the verifier was not re-run")
 
     live = None
     cmp: dict = {"not_checked": [], "stated": [], "compared": []}

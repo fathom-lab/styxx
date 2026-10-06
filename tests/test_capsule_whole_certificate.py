@@ -202,8 +202,8 @@ def test_d3_mint_fields_are_printed_as_stated_never_as_verified(clean, tmp_path,
 
 
 def test_the_receipts_are_re_read_in_the_order_the_certificate_lists_them(tmp_path):
-    """Two receipts carry the same value; receipt_ref names the one the certifier read earlier. The
-    capsule stores receipts sorted by name, so verifying in that order would move the ref."""
+    """Two receipts carry the same value; receipt_ref names the one the certifier read earlier.
+    The capsule stores receipts sorted by name, so verifying in that order would move the ref."""
     src = _mint(tmp_path / "order", "The run scored 0.75 accuracy over 40 items.\n",
                 receipts={"z.json": RECEIPT, "a.json": RECEIPT})
     rep = verify_capsule(src)
@@ -213,6 +213,34 @@ def test_the_receipts_are_re_read_in_the_order_the_certificate_lists_them(tmp_pa
     payload = json.loads(html[i:html.index(_END, i)])
     assert [r["name"] for r in payload["receipts"]] == ["a.json", "z.json"]
     assert {e["receipt_ref"].split(":")[0] for e in payload["certificate"]["ledger"]} == {"z.json"}
+
+
+@pytest.mark.parametrize("where", ["absolute", "climbing"])
+def test_a_capsule_that_names_a_path_writes_nothing_outside_the_verifier(clean, tmp_path, where,
+                                                                         monkeypatch):
+    """The re-run writes each embedded file under the name the capsule gives it. Until
+    2026-10-05 a receipt named with an absolute path (or ../) was written there, on the reader's
+    machine, with bytes the capsule chose."""
+    import tempfile
+    (tmp_path / "t").mkdir()
+    monkeypatch.setattr(tempfile, "tempdir", str(tmp_path / "t"))   # the re-run's temp dirs
+    if where == "absolute":
+        target = tmp_path / "outside" / "written_by_verify.json"
+        target.parent.mkdir()
+        name = str(target)
+    else:
+        target = tmp_path / "t" / "written_by_verify.json"
+        name = "../written_by_verify.json"
+
+    def named(p):
+        old = p["receipts"][0]["name"]
+        p["receipts"][0]["name"] = name
+        c = p["certificate"]
+        c["receipts_sha256"] = {name: c["receipts_sha256"][old]}
+    rep = verify_capsule(_forge(clean, tmp_path / "named.capsule.html", named))
+    assert rep["ok"] is False and rep["live_verdict"] is None
+    assert any("is not a bare file name" in p for p in rep["problems"])
+    assert not target.exists()
 
 
 # ---------------------------------------------------------------- D2: the command prints it all
