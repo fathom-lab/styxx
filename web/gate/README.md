@@ -178,7 +178,7 @@ the release is not the file the port claims to be, and the header of `diffgate.j
 then `NOTE_path2a_second_pass_…` to `NOTE_path2a_seventh_pass_2026_09_30.md`, `NOTE_path2a_eighth_pass_2026_10_01.md`,
 `NOTE_path2a_ninth_pass_2026_10_04.md`, and `NOTE_path2a_tenth_pass_2026_10_05.md` to
 `NOTE_path2a_twelfth_pass_2026_10_05.md`, with the corrections and departures notes beside the second, fifth, sixth,
-eighth, ninth, tenth and eleventh. This section describes the block as it is now and gives figures measured at this
+and eighth to twelfth. This section describes the block as it is now and gives figures measured at this
 head; what earlier heads measured is in those notes.
 
 `main`'s reader runs unchanged — at the raw door, at the git door and in this port — and then the block reads each
@@ -467,18 +467,21 @@ reads the same with `--strict` as without it, and where `main` raises the branch
   raise `main`'s (7 inputs in Python, 18 in the port), no fallback phrase. 19,000 of them were read again with the
   port's engine patched to fold a pair no runtime folds yet, for bar C below. All of it was read again at `16daa725`,
   beside `c69b161b`'s two files: every count the same, and no record differing from the ninth pass's in either port.
-  Six of those sets were read again at this head beside `16daa725`'s two files (62,000 inputs: the 20,000 of one
-  hostile set, 12,000 and 9,000 of two more, the 4,000 of the line-break set, 8,000 of the decorated truth world, and
-  the 9,000 of the case-skew, emoji and DECLARE-1 sets under the patched engine): no record differs from the tenth pass's in either port,
-  and 0 of 124,000 Python runs and 0 of 106,000 port runs lie outside the relation (*measured at this head*).
+  Six of those sets were read again at `ee82d2f3` beside `16daa725`'s two files, and at this head beside
+  `ee82d2f3`'s (62,000 inputs: the 20,000 of one hostile set, 12,000 and 9,000 of two more, the 4,000 of the
+  line-break set, 8,000 of the decorated truth world, and the 9,000 of the case-skew, emoji and DECLARE-1 sets under
+  the patched engine): each time no record differs from the earlier head's in either port, and 0 of 124,000 Python
+  runs and 0 of 106,000 port runs lie outside the relation (*measured at this head*).
 - The EXTERNAL-1 shelf of agent pull requests (the AIDev dataset's `pr_commit_details`: one row per file per commit),
   one body per pull request id against the diff the committed harness's own `reconstruct` rebuilds from all of that
   id's rows (one group per file, with the net status of `_fold_statuses`): 69,054 read (of 71,104 ids with a body
   that is not blank, 2,003 have no file row with a name and 47 are skipped, their rebuilt diff over 3 MB), 138,108
   Python runs in both strict modes: 0 outside the relation, no raise. `main`'s parser reads 69,053 of the rebuilt
   diffs back as the folded listing, the harness's own check of its reconstruction.
-- The minified bookmarklet, loaded in a stub page, equals this port on 20,000 runs (9,000 hostile inputs and the
-  1,000-input decorated world, both strict modes; 3,048 carry an overlay reason) and on every pinned pair (*pinned*).
+- The minified bookmarklet, loaded in a stub page, equals this port on 14,308 runs (the 6,672 committed inputs and
+  #161's 482 reproductions with the `tests_pass` sentence on every other one, both strict modes; 3,350 carry an
+  overlay reason; *measured at this head*, on this head's build) and on every pinned pair (*pinned*). The tenth pass
+  measured its own build the same way on 20,000 runs.
 
 **(B) Coverage**, judged by truth from base/head file models (`tests/test_diffgate_path2a_truth.py`). A decided claim
 is attributable when `main`'s verdict is false and a variant of `main` without the mechanism (V97, V121, V101, or all
@@ -655,7 +658,10 @@ Neither rule offered in the eleventh pass closes `--relative` (a narrow `shape` 
 `a` or `b`; a trigger on `diff --git` headers with no `a/` `b/` split): its prefix is any directory, and its headers
 keep the split. The general rule does: withhold every single-prefix CONTRADICTED that V121 reads as not a path. Its
 cost, the eleventh coverage reviewer's figures at `ee82d2f3`, each a right verdict withheld: 98 per port on the
-committed truth world, and no false one; 155 in Python and 145 in the port on one decorated world (seed 11101), 144
+committed truth world, and no false one (planted in both ports at this head: right verdicts lost 253 → 351 in Python
+and 177 → 275 in the port, claims withheld +98 in each, no other count moved, and the single-prefix pins fail;
+*measured at this head*); 155 in
+Python and 145 in the port on one decorated world (seed 11101), 144
 and 147 on another (seed 11102); 58, 58 and 19 at the git door on renderings by real git (seed 11103). Not taken; the
 operator decides. The other known gaps (case-only merges with no dot, names `strip()` merges,
 multi-commit renderings, `async def` tests `main` does not count, `def` in non-Python files, joint shapes where #121

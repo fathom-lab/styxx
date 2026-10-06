@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 Branch `fix/diffgate-abstain-where-wrong`, on `main` `43b3b608`. Twelve review passes; each has a note under
 `papers/closed-model-frontier/` (`NOTE_path2a_abstain_overlay_2026_09_30.md`, `NOTE_path2a_second_pass_…` to
-`NOTE_path2a_twelfth_pass_2026_10_05.md`, with corrections and departures notes beside seven of them), committed
+`NOTE_path2a_twelfth_pass_2026_10_05.md`, with corrections and departures notes beside eight of them), committed
 before its code. The notes are the record of how the design moved and of what each earlier head measured; this entry and the
 README's *PATH-2a* section describe the code as it is and give figures measured at this head.
 
@@ -112,8 +112,9 @@ the ninth, on the committed inputs and on 160,000 adversarial inputs.
   overlay withholds 2,633 of the 12,718 claims `main`'s Python decides there and 2,590 of the 12,526 its port
   decides), at the git door, with a run leg, a test report and a commit handed to both doors, on the 160,000
   adversarial inputs (319,986 Python runs and 320,000 port runs), and, in Python, on the 69,054 pull requests of the
-  EXTERNAL-1 shelf (138,108 runs). No fallback phrase fired. The rebuilt bookmarklet equals the port on 20,000 runs
-  in a stub page.
+  EXTERNAL-1 shelf (138,108 runs). No fallback phrase fired. The bookmarklet rebuilt in the twelfth pass equals the
+  port in a stub page on 14,308 runs (the committed inputs and #161's reproductions, both strict modes), measured at
+  this head; the tenth pass's 20,000 runs were of its own build.
 - Coverage (B), judged by truth from file models, but-for attribution: every attributable false verdict withheld,
   1,206 of 1,206 at the raw door, 1,100 of 1,100 in the port judged in its own terms, 14 of 14 at the git door, at
   253 of 5,897, 177 of 5,739 and 0 of 46 right verdicts lost; the same under four transforms of the generated world
@@ -158,9 +159,9 @@ the ninth, on the committed inputs and on 160,000 adversarial inputs.
   `ee82d2f3`'s within the run-to-run spread. The eleventh construction reviewer found the overlay linear in both ports
   on ten families, with the branch's whole call at ×5.4 (Python) and ×4.8 (Node) of `main`'s on dot-twin-heavy diffs
   and ×12 and ×8.8 on one 1 MB added line of `def test_x(): pass; ` (the README has the figures).
-- Size: the pull request's diff is 16,285 lines by `git diff origin/main...HEAD | wc -l` (15,289 at the tenth pass and
-  14,535 at the ninth; GitHub serves a pull-request diff up to 20,000 lines, and above that the repository's own
-  diffgate job prints DID NOT RUN and exits 0).
+- Size: the pull request's diff is 00,000 lines by `git diff origin/main...HEAD | wc -l` (16,285 at the eleventh pass,
+  15,289 at the tenth and 14,535 at the ninth; GitHub serves a pull-request diff up to 20,000 lines, and above that the
+  repository's own diffgate job prints DID NOT RUN and exits 0).
 
 **Disclosed.**
 - The removal's cost. A CONTRADICTED the switch kept is decided by the rules now, and some of those were right: on
