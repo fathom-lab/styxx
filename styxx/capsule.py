@@ -28,6 +28,7 @@ import argparse
 import base64
 import datetime as _dt
 import hashlib
+import html as _html
 import json
 import re
 import sys
@@ -481,14 +482,18 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict) -> dict:
 # ---------------------------------------------------------------------------------
 
 def _render_html(payload: dict) -> str:
-    cert = payload["certificate"]
-    verdict = cert.get("verdict", "?")
+    # The verdict is NOT written into the page at mint (2026-10-05). The badge used to carry it
+    # from the moment the page opened and the script only recoloured it, so with one doctored
+    # byte the red TAMPERED banner sat under a badge that still read OATH-HELD and cards that
+    # still read "verified N", and a page whose script never ran (scripts off, or no WebCrypto
+    # on plain http) read OATH-HELD and "checking integrity" forever. The badge now starts
+    # neutral; only the script writes the certificate's verdict, after every embedded hash has
+    # matched, and a mismatch writes TAMPERED on the badge itself.
     payload_json = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
-    title = f"OATH Capsule — {payload['document']['name']}"
+    title = _html.escape(f"OATH Capsule — {payload['document']['name']}")
     return (_TEMPLATE
             .replace("__TITLE__", title)
-            .replace("__VERDICT__", verdict)
-            .replace("__PIP__", payload["verifier"]["pip"])
+            .replace("__PIP__", _html.escape(str(payload["verifier"]["pip"])))
             .replace("__PAYLOAD__", payload_json))
 
 
@@ -505,9 +510,12 @@ header{padding:18px 24px;border-bottom:1px solid var(--rule);position:sticky;top
 background:var(--paper);z-index:5}
 .badge{display:inline-block;padding:4px 14px;border-radius:2px;font-weight:700;
 letter-spacing:.08em}
+.badge.pending{background:#241830;color:var(--mute)}
 .badge.held{background:var(--ok);color:#123}.badge.failed{background:var(--bad);color:#210}
+.badge.warn{background:var(--warn);color:#321}
 .badge.tampered{background:#f33;color:#fff}
 .meta{color:var(--mute);font-size:12px;margin-top:6px}
+.notrun{background:var(--warn);color:#321;padding:12px 24px;font-weight:700;margin-top:6px}
 main{max-width:1080px;margin:0 auto;padding:24px}
 h2{font-size:13px;letter-spacing:.14em;color:var(--sig);text-transform:uppercase;
 margin:28px 0 10px}
@@ -530,12 +538,17 @@ color:var(--mute);font-size:12px;max-width:1080px;margin-left:auto;margin-right:
 .legend span{margin-right:14px}
 #tamper{display:none;background:#f33;color:#fff;padding:14px 24px;font-weight:700}
 </style></head><body>
-<div id="tamper">TAMPERED — embedded bytes do not match this capsule's certificate. Nothing
-below can be trusted.</div>
+<noscript><div class="notrun">THIS PAGE DID NOT RUN. Scripts are off, so it checked nothing
+and shows no verdict. Check the capsule with layer 2: pip install __PIP__, then
+python -m styxx.capsule verify on this file.</div></noscript>
+<div id="tamper">TAMPERED — embedded bytes do not match this capsule's certificate. Its
+verdict, counts and bands are not shown, because they do not describe these bytes.</div>
 <header>
-  <span class="badge" id="verdict">__VERDICT__</span>
-  <span class="badge" id="integrity" style="background:#241830;color:var(--mute)">checking
-  integrity…</span>
+  <span class="badge pending" id="verdict">checking…</span>
+  <span class="badge pending" id="integrity">integrity not checked yet</span>
+  <div class="meta" id="pending">No verdict yet: this page shows one only after it has
+  re-hashed every embedded byte. If this line stays, its check did not run; use layer 2,
+  below.</div>
   <div class="meta" id="meta"></div>
 </header>
 <main>
@@ -554,90 +567,134 @@ python -m styxx.capsule verify this_file.html</pre>
 <footer id="foot"></footer>
 <script type="application/json" id="oath-capsule">__PAYLOAD__</script>
 <script>
-(async () => {
-  const P = JSON.parse(document.getElementById('oath-capsule').textContent);
-  const C = P.certificate;
-  const b64b = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-  const hex = b => [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
-  const sha = async u8 => hex(await crypto.subtle.digest('SHA-256', u8));
+(() => {
   const vb = document.getElementById('verdict');
-  vb.className = 'badge ' + (C.verdict === 'OATH-HELD' ? 'held' : 'failed');
-  document.getElementById('meta').textContent =
-    P.document.name + ' · capsule ' + P.spec + ' · minted ' + P.created +
-    ' · verifier styxx ' + P.verifier.styxx_version;
-  document.querySelectorAll('main pre.doc')[1] &&
-    (document.querySelectorAll('main pre.doc')[1].textContent =
-     'pip install ' + P.verifier.pip + '\n' +
-     'python -m styxx.capsule verify ' + location.pathname.split('/').pop());
-
-  // integrity: every embedded byte vs the certificate
-  let tampered = false;
-  const docBytes = b64b(P.document.b64);
-  if (await sha(docBytes) !== C.document_sha256) tampered = true;
-  const rt = document.getElementById('receipts');
-  for (const r of P.receipts) {
-    const h = await sha(b64b(r.b64));
-    const want = (C.receipts_sha256 || {})[r.name];
-    const ok = h === want;
-    if (!ok) tampered = true;
-    rt.insertAdjacentHTML('beforeend',
-      `<tr><td>${r.name}</td><td class="hash">${h}</td>` +
-      `<td class="${ok?'match':'mismatch'}">${ok?'matches certificate':'MISMATCH'}</td></tr>`);
-  }
   const ib = document.getElementById('integrity');
-  if (tampered) {
-    document.getElementById('tamper').style.display = 'block';
-    ib.textContent = 'INTEGRITY: FAILED'; ib.className = 'badge tampered';
-  } else {
+  const pend = document.getElementById('pending');
+  let settled = false;
+  // The page says it did not check, rather than leaving "checking…" up forever.
+  const notChecked = why => {
+    if (settled) return;
+    settled = true;
+    vb.textContent = 'NOT CHECKED'; vb.className = 'badge warn';
+    ib.textContent = 'integrity: not checked'; ib.className = 'badge pending';
+    pend.textContent = 'THIS PAGE DID NOT FINISH ITS CHECK: ' + why + '. It shows no ' +
+      'verdict. Check the capsule with layer 2, below.';
+    pend.className = 'notrun';
+  };
+  const timer = setTimeout(() => notChecked('it had not finished after 10 seconds'), 10000);
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  (async () => {
+    const P = JSON.parse(document.getElementById('oath-capsule').textContent);
+    const C = P.certificate;
+    const subtle = (typeof crypto === 'object' && crypto) ? crypto.subtle : undefined;
+    if (!subtle) {
+      notChecked('this browser gives the page no WebCrypto, which it offers only to a page ' +
+                 'opened from a file, from localhost or over https');
+      return;
+    }
+    const b64b = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+    const hex = b => [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+    const sha = async u8 => hex(await subtle.digest('SHA-256', u8));
+    document.getElementById('meta').textContent =
+      P.document.name + ' · capsule ' + P.spec + ' · minted ' + P.created +
+      ' · verifier styxx ' + P.verifier.styxx_version + ' (as stated by the minter)';
+    document.querySelectorAll('main pre.doc')[1] &&
+      (document.querySelectorAll('main pre.doc')[1].textContent =
+       'pip install ' + P.verifier.pip + '\n' +
+       'python -m styxx.capsule verify ' + location.pathname.split('/').pop());
+
+    // integrity: every embedded byte vs the certificate
+    let tampered = false;
+    const docBytes = b64b(P.document.b64);
+    if (await sha(docBytes) !== C.document_sha256) tampered = true;
+    const rows = [];
+    for (const r of P.receipts) {
+      const h = await sha(b64b(r.b64));
+      const ok = h === (C.receipts_sha256 || {})[r.name];
+      if (!ok) tampered = true;
+      rows.push(`<tr><td>${esc(r.name)}</td><td class="hash">${h}</td>` +
+        `<td class="${ok?'match':'mismatch'}">${ok?'matches certificate':'MISMATCH'}</td></tr>`);
+    }
+    if (settled) return;          // the timeout has already said this page did not finish
+    const text = new TextDecoder('utf-8').decode(docBytes);
+    const footText =
+      'What this page checks, offline: that these exact bytes are the bytes the certificate ' +
+      'hashed (SHA-256, recomputed in your browser). It draws the verdict and the bands from ' +
+      'the certificate only when they match. It re-runs nothing, and it cannot prove its own ' +
+      'script honest. Layer 2 re-runs the real verifier over the embedded bytes, compares the ' +
+      'whole certificate with what it re-derives, and prints as stated by the minter, not ' +
+      'checked, what bytes cannot show: when, and with which styxx, this capsule was minted. ' +
+      'What neither proves: that the receipts truthfully record reality (that chain lives in ' +
+      'repository provenance), or who minted this capsule (nothing in it is signed). A capsule ' +
+      'is a portable binding, not a portable oath of origin. Nothing crosses unseen.';
+    if (tampered) {
+      settled = true; clearTimeout(timer);
+      document.getElementById('receipts').insertAdjacentHTML('beforeend', rows.join(''));
+      document.getElementById('foot').textContent = footText;
+      document.getElementById('tamper').style.display = 'block';
+      vb.textContent = 'TAMPERED'; vb.className = 'badge tampered';
+      ib.textContent = 'INTEGRITY: FAILED'; ib.className = 'badge tampered';
+      pend.textContent = 'The certificate does not describe these bytes, so its verdict, ' +
+        'counts and bands are not shown. The document below is the embedded text, unmarked.';
+      document.getElementById('cards').innerHTML =
+        '<div class="card"><b>not drawn</b><span>the certificate does not describe these ' +
+        'bytes</span></div>';
+      document.getElementById('doc').textContent = text;
+      return;
+    }
+
+    // everything the page draws from the certificate is built BEFORE the verdict is shown, so
+    // a certificate the script cannot read ends in NOT CHECKED, never in a half-drawn verdict
+    const verdict = String(C.verdict);
+    const es = C.epistemics_summary || {}; const v = (es.verified)||{};
+    const vm = v.value_match || {}; const dv = v.derived || {};
+    const obl = (vm.obligated_integer_filter_ran||0)+(vm.obligated_integer_filter_na||0)
+              +(dv.obligated||0);
+    const tot = v.total || C.counts.VERIFIED || 0;
+    const cards = [
+      ['verdict', verdict],
+      ['verified', C.counts.VERIFIED],
+      ['abstained', C.counts.ABSTAIN],
+      ['accused', C.counts.UNGROUNDED],
+      ['volunteered share', tot ? Math.round(100*(tot-obl)/tot)+'%' : '—'],
+    ];
+    const cardsHtml = cards.map(
+      ([k,val]) => `<div class="card"><b>${esc(val)}</b><span>${k}</span></div>`).join('');
+
+    // paint the document: per-line, per-token bands from the ledger
+    const lines = text.split(/\r\n|\n/);
+    const byLine = {};
+    for (const e of (C.ledger||[])) (byLine[e.line] = byLine[e.line]||[]).push(e);
+    const cls = e => e.status==='UNGROUNDED' ? 'un' : e.status==='ABSTAIN' ? 'ab'
+      : (e.epistemics && e.epistemics.obligated) ? 'vo' : 'vv';
+    const out = lines.map((ln, i) => {
+      const es2 = (byLine[i+1]||[]).slice().sort((a,b)=>(b.col||0)-(a.col||0));
+      let s = ln;
+      for (const e of es2) {
+        const t = String(e.token);
+        const at = (typeof e.col === 'number' && s.startsWith(t, e.col)) ? e.col : s.indexOf(t);
+        if (at < 0) continue;
+        s = s.slice(0, at) + '\u0001' + cls(e) + '\u0002' + t + '\u0003' + s.slice(at + t.length);
+      }
+      return esc(s)
+        .replace(/\u0001(vo|vv|ab|un)\u0002/g, '<span class="tok $1">')
+        .replace(/\u0003/g, '</span>');
+    });
+
+    settled = true; clearTimeout(timer);
+    document.getElementById('receipts').insertAdjacentHTML('beforeend', rows.join(''));
+    document.getElementById('foot').textContent = footText;
     ib.textContent = 'integrity: all hashes match'; ib.className = 'badge';
     ib.style.background = 'rgba(183,228,199,.15)'; ib.style.color = 'var(--ok)';
-  }
-
-  // boundary cards from the certificate itself
-  const es = C.epistemics_summary || {}; const v = (es.verified)||{};
-  const vm = v.value_match || {}; const dv = v.derived || {};
-  const obl = (vm.obligated_integer_filter_ran||0)+(vm.obligated_integer_filter_na||0)
-            +(dv.obligated||0);
-  const tot = v.total || C.counts.VERIFIED || 0;
-  const cards = [
-    ['verdict', C.verdict],
-    ['verified', C.counts.VERIFIED],
-    ['abstained', C.counts.ABSTAIN],
-    ['accused', C.counts.UNGROUNDED],
-    ['volunteered share', tot ? Math.round(100*(tot-obl)/tot)+'%' : '—'],
-  ];
-  document.getElementById('cards').innerHTML = cards.map(
-    ([k,val]) => `<div class="card"><b>${val}</b><span>${k}</span></div>`).join('');
-
-  // paint the document: per-line, per-token bands from the ledger
-  const text = new TextDecoder('utf-8').decode(docBytes);
-  const lines = text.split(/\r\n|\n/);
-  const byLine = {};
-  for (const e of (C.ledger||[])) (byLine[e.line] = byLine[e.line]||[]).push(e);
-  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const cls = e => e.status==='UNGROUNDED' ? 'un' : e.status==='ABSTAIN' ? 'ab'
-    : (e.epistemics && e.epistemics.obligated) ? 'vo' : 'vv';
-  const out = lines.map((ln, i) => {
-    const es2 = (byLine[i+1]||[]).slice().sort((a,b)=>(b.col||0)-(a.col||0));
-    let s = ln;
-    for (const e of es2) {
-      const t = String(e.token);
-      const at = (typeof e.col === 'number' && s.startsWith(t, e.col)) ? e.col : s.indexOf(t);
-      if (at < 0) continue;
-      s = s.slice(0, at) + '\u0001' + cls(e) + '\u0002' + t + '\u0003' + s.slice(at + t.length);
-    }
-    return esc(s)
-      .replace(/\u0001(vo|vv|ab|un)\u0002/g, '<span class="tok $1">')
-      .replace(/\u0003/g, '</span>');
-  });
-  document.getElementById('doc').innerHTML = out.join('\n');
-
-  document.getElementById('foot').textContent =
-    'What this capsule proves: these exact bytes are what the certificate attested, and the ' +
-    'bands above are drawn faithfully from it (layer 1); the verdict is reproducible by ' +
-    're-running the real verifier over the embedded bytes (layer 2). What it does not prove: ' +
-    'that the receipts truthfully record reality — that chain lives in repository provenance. ' +
-    'A capsule is a portable binding, not a portable oath of origin. Nothing crosses unseen.';
+    vb.textContent = verdict;
+    vb.className = 'badge ' + (verdict === 'OATH-HELD' ? 'held'
+      : /^OATH-HELD,/.test(verdict) ? 'warn' : 'failed');
+    pend.textContent = 'Every embedded byte matches the certificate, so its verdict is shown. ' +
+      'This page re-runs nothing; layer 2, below, re-derives the verdict.';
+    document.getElementById('cards').innerHTML = cardsHtml;
+    document.getElementById('doc').innerHTML = out.join('\n');
+  })().catch(e => notChecked('its script failed (' + ((e && e.message) || e) + ')'));
 })();
 </script>
 </body></html>
