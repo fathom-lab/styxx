@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Layer 2 of a v0.1 capsule compares the WHOLE certificate, and says what it cannot check.
+"""Layer 2 of a v0.1 capsule compares the WHOLE certificate and the page, and says what it cannot
+check.
 
 On 2026-10-05 a check of the lab's own published capsule found that `capsule verify` compared a
 chosen few fields: the verdict by class (the ", N uncovered" suffix stripped), the counts, and the
@@ -10,22 +11,33 @@ printed, exactly like the genuine one while the page drew the edited values:
   document holds a number nothing checked;
 * D2: an advisory computed about a moved verdict string, never printed by the v0.1 command;
 * D3: a ledger row deleted, a receipt_ref repointed, rows marked obligated, the epistemics summary
-  rewritten, the mint time and minting version rewritten.
+  rewritten.
 
-Each test below fails on 43b3b608 and passes with the repair. The rule they pin: a field the
-certificate carries must re-derive from the embedded bytes; a field the installed certify writes
-and the certificate lacks is printed NOT CHECKED by name with the installed verifier's value; the
-mint environment is printed as stated by the minter, never as verified.
+A review of the earlier repair found more that verified like the genuine capsule: a
+decoy payload in an HTML comment (layer 2 read it, the browser drew the other one), values
+re-typed (30.0 and false for 30 and 0, a row on line `true`), fields nested in the receipt
+binding or the payload, a free-text install line, a certificate posing as older than the band
+while keeping a field certify wrote later, and a ledger in another order. The earlier repair had also
+let `capsule create` mint certificates with no `col`, whose pages painted other numbers.
+
+Each test below fails on 43b3b608 or on the earlier repair (daa05b66) and passes here. The rule they
+pin: a field the certificate carries must re-derive from the embedded bytes, type for type; a field
+the installed certify writes and the certificate lacks is NOT CHECKED by name, unless the
+certificate itself shows it is not that old; the page must be the page a styxx renders for exactly
+this payload; the mint environment is printed as stated by the minter, never as verified.
 """
 from __future__ import annotations
 
+import base64
+import hashlib
 import json
 import subprocess
 from pathlib import Path
 
 import pytest
 
-from styxx.capsule import _BEGIN, _END, SPEC, create_capsule, main, verify_capsule
+from styxx.capsule import (_BEGIN, _END, SPEC, _render_html, create_capsule, main,
+                           verify_capsule)
 from styxx.certify import certify_doc
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -34,7 +46,7 @@ CLEAN = "The run scored 0.75 accuracy over 40 items.\n"
 UNCOVERED = "The run scored 0.75 accuracy over 40 items. It was wrong on 12.\n"
 
 
-def _mint(tmp_path, text, receipts=None, name="d"):
+def _mint(tmp_path, text, receipts=None, name="d", cert_edit=None):
     tmp_path.mkdir(parents=True, exist_ok=True)
     doc = tmp_path / f"{name}.md"
     doc.write_text(text, encoding="utf-8")
@@ -44,6 +56,8 @@ def _mint(tmp_path, text, receipts=None, name="d"):
         rp.write_text(json.dumps(obj), encoding="utf-8")
         rps.append(rp)
     cert = certify_doc(doc, rps)
+    if cert_edit:
+        cert_edit(cert)
     cp = tmp_path / f"{name}.certificate.json"
     cp.write_text(json.dumps(cert), encoding="utf-8")
     out = tmp_path / f"{name}.capsule.html"
@@ -51,14 +65,17 @@ def _mint(tmp_path, text, receipts=None, name="d"):
     return out
 
 
-def _forge(src, dst, edit):
-    html = src.read_text(encoding="utf-8")
+def _payload_of(path):
+    html = path.read_text(encoding="utf-8")
     i = html.index(_BEGIN) + len(_BEGIN)
-    j = html.index(_END, i)
-    payload = json.loads(html[i:j])
+    return json.loads(html[i:html.index(_END, i)])
+
+
+def _forge(src, dst, edit):
+    """What a forger does: edit the payload, then render the page this styxx renders for it."""
+    payload = _payload_of(src)
     edit(payload)
-    dst.write_text(html[:i] + json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
-                   + html[j:], encoding="utf-8")
+    dst.write_text(_render_html(payload), encoding="utf-8")
     return dst
 
 
@@ -76,6 +93,14 @@ def test_the_fixtures_are_what_the_tests_assume(clean, uncovered):
     a, b = verify_capsule(clean), verify_capsule(uncovered)
     assert a["ok"] and b["ok"], (a["problems"], b["problems"])
     assert a["verdict"] == "OATH-HELD" and b["verdict"] == "OATH-HELD, 1 uncovered"
+    assert a["not_checked"] == [] and b["not_checked"] == []
+
+
+def _fails_on(src, tmp_path, edit, needle):
+    rep = verify_capsule(_forge(src, tmp_path / f"{edit.__name__}.capsule.html", edit))
+    assert rep["ok"] is False, f"{edit.__name__} verified"
+    assert any(needle in p for p in rep["problems"]), rep["problems"]
+    return rep
 
 
 # ---------------------------------------------------------------- D1: the coverage band
@@ -103,31 +128,56 @@ def test_d1_a_suffix_alone_cannot_be_added_or_dropped(clean, uncovered, tmp_path
         assert any(p.startswith("verdict not reproduced") for p in rep["problems"])
 
 
-def test_d1_a_forger_posing_as_an_old_certificate_is_shown_the_live_coverage(uncovered, tmp_path):
-    """Deleting the band's fields and the suffix makes the certificate look older than the band.
-    That is not a failure (an older certify really wrote such certificates), but the reader is
-    told, by name, what was not checked and what the installed verifier finds instead."""
-    def edit(p):
-        c = p["certificate"]
-        c["verdict"] = "OATH-HELD"
-        for k in ("uncovered", "uncovered_items", "uncovered_excluded_by_rule", "uncovered_policy"):
-            del c[k]
-    rep = verify_capsule(_forge(uncovered, tmp_path / "old.capsule.html", edit))
-    assert rep["ok"] is True
+_BAND = ("uncovered", "uncovered_items", "uncovered_excluded_by_rule", "uncovered_policy")
+
+
+def _pose_as_pre_band(c):
+    c["verdict"] = "OATH-HELD"
+    for k in _BAND:
+        del c[k]
+
+
+def test_d1_a_pre_band_pose_that_keeps_a_later_field_fails(uncovered, tmp_path):
+    """The band arrived on 2026-09-01, receipt_binding on 2026-09-05. A certificate carrying the
+    binding and not the band was issued by no certify: the band was deleted. Until this repair it
+    verified with ok True and the lines a genuinely old capsule prints (review finding, forge3)."""
+    def kept_binding(p):
+        _pose_as_pre_band(p["certificate"])
+    rep = _fails_on(uncovered, tmp_path, kept_binding, "no certify issued that combination")
+    assert any(p.startswith("certificate.uncovered is absent") and "receipt_binding" in p
+               for p in rep["problems"])
+    assert any(p.startswith("verdict not reproduced") for p in rep["problems"])
+
+
+def test_d1_a_pre_band_pose_that_names_the_installed_certify_fails(uncovered, tmp_path):
+    """Deleting the binding too leaves verifier_sha256 naming the installed certify.py, which
+    writes the band."""
+    def same_issuer(p):
+        _pose_as_pre_band(p["certificate"])
+        del p["certificate"]["receipt_binding"]
+    _fails_on(uncovered, tmp_path, same_issuer, "names the installed certify.py")
+
+
+def test_d1_a_pose_with_nothing_to_date_it_is_shown_the_live_coverage(uncovered, tmp_path):
+    """What remains: delete the band and the binding and restate the issuer's hash, and the
+    certificate is shaped like one issued between 2026-08-30 and 2026-09-01, which really exist.
+    It verifies, with the reader told by name what was not checked and what the installed verifier
+    finds instead, and create_capsule refuses to mint from it."""
+    def old_issuer(p):
+        _pose_as_pre_band(p["certificate"])
+        del p["certificate"]["receipt_binding"]
+        p["certificate"]["verifier_sha256"] = p["verifier"]["sha256"] = "1" * 64
+    rep = verify_capsule(_forge(uncovered, tmp_path / "old.capsule.html", old_issuer))
+    assert rep["ok"] is True, rep["problems"]
     assert rep["live_verdict"] == "OATH-HELD, 1 uncovered"
     nc = "\n".join(rep["not_checked"])
     assert "coverage suffix" in nc and "certificate.uncovered:" in nc and "installed verifier: 1" in nc
     assert any("coverage suffix" in a and "line 1 '12'" in a for a in rep["advisory"])
     assert "verdict class" in rep["compared"] and "verdict" not in rep["compared"]
+    assert rep["mint_refusals"]
 
 
 # ---------------------------------------------------------------- D3: every field, both ways
-
-def _fails_on(src, tmp_path, edit, needle):
-    rep = verify_capsule(_forge(src, tmp_path / f"{edit.__name__}.capsule.html", edit))
-    assert rep["ok"] is False, f"{edit.__name__} verified"
-    assert any(needle in p for p in rep["problems"]), rep["problems"]
-
 
 def test_d3_a_deleted_ledger_row_fails(clean, tmp_path):
     def deleted_row(p):
@@ -140,6 +190,13 @@ def test_d3_an_added_ledger_row_fails(clean, tmp_path):
         row = dict(p["certificate"]["ledger"][0], line=9)
         p["certificate"]["ledger"].append(row)
     _fails_on(clean, tmp_path, added_row, "ledger row not reproduced: line 9")
+
+
+def test_d3_a_reordered_ledger_fails(clean, tmp_path):
+    """certify writes rows in document order; an honest mint never carries another."""
+    def reordered(p):
+        p["certificate"]["ledger"].reverse()
+    _fails_on(clean, tmp_path, reordered, "ledger rows are not in the order")
 
 
 def test_d3_a_repointed_receipt_ref_fails(clean, tmp_path):
@@ -175,23 +232,83 @@ def test_d3_a_receipt_the_capsule_does_not_carry_fails(clean, tmp_path):
     _fails_on(clean, tmp_path, phantom, "receipts_sha256 not reproduced")
 
 
-def test_d3_a_receipt_binding_digest_fails(tmp_path):
-    src = _mint(tmp_path / "rb", CLEAN)
-    html = src.read_text(encoding="utf-8")
-    assert '"receipt_binding"' in html
-
+def test_d3_a_receipt_binding_digest_fails(clean, tmp_path):
     def digest(p):
         p["certificate"]["receipt_binding"]["receipts"][0]["content_sha256"] = "0" * 64
-    _fails_on(src, tmp_path, digest, "receipt_binding content_sha256 of 'r.json' not reproduced")
+    _fails_on(clean, tmp_path, digest, "receipt_binding content_sha256 of 'r.json' not reproduced")
+
+
+# ---------------------------------------------------------------- types: 1 is not 1.0 or true
+
+def test_re_typed_counts_and_band_fail(clean, tmp_path):
+    """Python's == says 30 == 30.0 and 0 == False; the page prints 'false' on the cards."""
+    def retyped(p):
+        c = p["certificate"]
+        c["counts"] = {"VERIFIED": float(c["counts"]["VERIFIED"]), "ABSTAIN": False,
+                       "UNGROUNDED": False}
+        c["uncovered"] = False
+    rep = _fails_on(clean, tmp_path, retyped, "counts not reproduced")
+    assert any(p.startswith("uncovered not reproduced") for p in rep["problems"])
+
+
+def test_a_row_on_line_true_is_not_the_row_on_line_1(clean, tmp_path):
+    """(true, token, 0) aligned with (1, token, 0) and true != 1 is False, so the row passed
+    while the page filed it under no line and left its number unpainted."""
+    def line_true(p):
+        p["certificate"]["ledger"][0]["line"] = True
+    _fails_on(clean, tmp_path, line_true, "ledger row not reproduced: line true")
+
+
+def test_a_re_typed_flag_inside_a_row_fails(clean, tmp_path):
+    def flag_as_int(p):
+        for e in p["certificate"]["ledger"]:
+            e["epistemics"]["obligated"] = int(e["epistemics"]["obligated"])
+    _fails_on(clean, tmp_path, flag_as_int, "epistemics embedded")
+
+
+# ---------------------------------------------------------------- nested fields, the payload
+
+@pytest.mark.parametrize("where", ["binding", "binding_row", "document", "receipt", "verifier"])
+def test_a_field_no_styxx_writes_fails_at_any_depth(clean, tmp_path, where):
+    def nested(p):
+        rb = p["certificate"]["receipt_binding"]
+        {"binding": lambda: rb.__setitem__("attested_by", "external auditor"),
+         "binding_row": lambda: rb["receipts"][0].__setitem__("signature", "ab" * 32),
+         "document": lambda: p["document"].__setitem__("note", "reviewed by an auditor"),
+         "receipt": lambda: p["receipts"][0].__setitem__("provenance", "signed by the lab"),
+         "verifier": lambda: p["verifier"].__setitem__("signed", True)}[where]()
+    needle = {"binding": "receipt_binding.attested_by", "binding_row": "].signature",
+              "document": "payload.document.note", "receipt": "payload.receipts[0].provenance",
+              "verifier": "payload.verifier.signed"}[where]
+    _fails_on(clean, tmp_path, nested, needle)
+
+
+def test_the_install_line_must_be_the_one_create_writes(clean, tmp_path):
+    """The page tells its reader which package checks it; a forged one pointed elsewhere."""
+    def pip(p):
+        p["verifier"]["pip"] = "styxx-capsule-tools==" + p["verifier"]["styxx_version"]
+    _fails_on(clean, tmp_path, pip, "payload.verifier.pip 'styxx-capsule-tools")
+
+
+def test_the_binding_s_repository_facts_must_be_a_combination_certify_writes(clean, tmp_path):
+    """No repository at mint, yet a head, every receipt committed, and no blob: the review's T4."""
+    def repo_claims(p):
+        rb = p["certificate"]["receipt_binding"]
+        rb["head"], rb["all_receipts_committed"] = "a" * 40, True
+        for r in rb["receipts"]:
+            r["committed"], r["path"] = True, "papers/forged/r.json"
+    rep = _fails_on(clean, tmp_path, repo_claims, "no repository at mint and names a head")
+    assert any("is not a combination certify writes" in p for p in rep["problems"])
 
 
 def test_d3_mint_fields_are_printed_as_stated_never_as_verified(clean, tmp_path, capsys):
     def mint_env(p):
         p["created"] = "2020-01-01T00:00:00Z"
         p["verifier"]["styxx_version"] = "1.0.0"
+        p["verifier"]["pip"] = "styxx==1.0.0"
     forged = _forge(clean, tmp_path / "mint.capsule.html", mint_env)
     rep = verify_capsule(forged)
-    assert rep["ok"] is True                     # nothing in the bytes can contradict them
+    assert rep["ok"] is True, rep["problems"]   # nothing in the bytes can contradict them
     st = "\n".join(rep["stated"])
     assert "created 2020-01-01T00:00:00Z" in st and "styxx_version 1.0.0" in st
     assert main(["verify", str(forged)]) == 0
@@ -208,24 +325,49 @@ def test_the_receipts_are_re_read_in_the_order_the_certificate_lists_them(tmp_pa
                 receipts={"z.json": RECEIPT, "a.json": RECEIPT})
     rep = verify_capsule(src)
     assert rep["ok"] is True, rep["problems"]
-    html = src.read_text(encoding="utf-8")
-    i = html.index(_BEGIN) + len(_BEGIN)
-    payload = json.loads(html[i:html.index(_END, i)])
+    payload = _payload_of(src)
     assert [r["name"] for r in payload["receipts"]] == ["a.json", "z.json"]
     assert {e["receipt_ref"].split(":")[0] for e in payload["certificate"]["ledger"]} == {"z.json"}
 
 
-def test_the_page_around_the_payload_is_reported_never_assumed(clean, tmp_path):
-    """Layer 2 reads the payload, not the script that draws it. It says whether the page is the
-    one this styxx renders for that payload; an edited page is named NOT CHECKED."""
+# ---------------------------------------------------------------- the page around the payload
+
+def test_an_edited_page_fails(clean, tmp_path):
+    """Layer 2 used to name an edited page NOT CHECKED and pass; every capsule minted before
+    2026-10-05 printed the same line, so an edited one could not be told from a genuine one."""
     assert any(c.startswith("the page") for c in verify_capsule(clean)["compared"])
     edited = tmp_path / "edited.capsule.html"
     edited.write_text(clean.read_text(encoding="utf-8").replace(
         "<main>", "<main><p>Reviewed and approved.</p>", 1), encoding="utf-8")
     rep = verify_capsule(edited)
-    assert rep["ok"] is True
-    assert any(n.startswith("the page around the payload") for n in rep["not_checked"])
+    assert rep["ok"] is False
+    assert any(p.startswith("the page around the payload is not the page any styxx renders")
+               for p in rep["problems"])
 
+
+def _with_decoy(html, genuine_json):
+    k = html.index("<body>") + len("<body>")
+    return html[:k] + "<!-- " + _BEGIN + genuine_json + _END + " -->" + html[k:]
+
+
+def test_a_decoy_payload_in_a_comment_fails(clean, tmp_path):
+    """Layer 2 found the payload by text, so it read a genuine payload hidden in an HTML comment
+    while the browser, which skips comments, drew a forged one placed after it."""
+    html = clean.read_text(encoding="utf-8")
+    i = html.index(_BEGIN) + len(_BEGIN)
+    genuine_json = html[i:html.index(_END, i)]
+    p = _payload_of(clean)
+    doc = base64.b64decode(p["document"]["b64"]).replace(b"0.75", b"0.95")
+    p["document"]["b64"] = base64.b64encode(doc).decode("ascii")
+    p["certificate"]["document_sha256"] = hashlib.sha256(doc).hexdigest()
+    forged = tmp_path / "decoy.capsule.html"
+    forged.write_text(_with_decoy(_render_html(p), genuine_json), encoding="utf-8")
+    rep = verify_capsule(forged)
+    assert rep["ok"] is False
+    assert any("not the page any styxx renders" in x for x in rep["problems"])
+
+
+# ---------------------------------------------------------------- names, crashes
 
 @pytest.mark.parametrize("where", ["absolute", "climbing"])
 def test_a_capsule_that_names_a_path_writes_nothing_outside_the_verifier(clean, tmp_path, where,
@@ -253,6 +395,24 @@ def test_a_capsule_that_names_a_path_writes_nothing_outside_the_verifier(clean, 
     assert rep["ok"] is False and rep["live_verdict"] is None
     assert any("is not a bare file name" in p for p in rep["problems"])
     assert not target.exists()
+
+
+def test_a_name_this_system_cannot_hold_fails_without_a_traceback(clean, tmp_path):
+    def named(p):
+        p["receipts"][0]["name"] = "r<1>.json"
+        c = p["certificate"]
+        c["receipts_sha256"] = {"r<1>.json": c["receipts_sha256"]["r.json"]}
+    rep = verify_capsule(_forge(clean, tmp_path / "lt.capsule.html", named))
+    assert rep["ok"] is False
+
+
+def test_a_v01_page_relabelled_v02_fails_cleanly(clean, tmp_path):
+    """The v0.2 path indexed payload['summary'] directly: a traceback, not a list of problems."""
+    def relabel(p):
+        p["spec"] = "styxx-oath/capsule/v0.2"
+    forged = _forge(clean, tmp_path / "v02.capsule.html", relabel)
+    rep = verify_capsule(forged)
+    assert rep["ok"] is False and any("payload.summary" in p for p in rep["problems"])
 
 
 # ---------------------------------------------------------------- D2: the command prints it all
@@ -283,13 +443,58 @@ def test_d2_the_command_exits_nonzero_when_a_carried_field_does_not_reproduce(un
     assert "CAPSULE FAILS VERIFICATION" in out and "uncovered not reproduced" in out
 
 
+# ---------------------------------------------------------------- the mint gate
+
+def _strip_rows(field):
+    def edit(cert):
+        for e in cert["ledger"]:
+            del e[field]
+    return edit
+
+
+def _june_shaped(cert):
+    """A certificate shaped like those issued before 2026-08-24: no column, no epistemics, no
+    band, no binding, another certify.py."""
+    for e in cert["ledger"]:
+        del e["col"], e["epistemics"]
+    for k in _BAND + ("epistemics_summary", "receipt_binding"):
+        del cert[k]
+    cert["verifier_sha256"] = "1" * 64
+
+
+@pytest.mark.parametrize("edit,why", [
+    (_strip_rows("col"), "does not verify"),             # a later field dates it: verify fails
+    (_strip_rows("epistemics"), "does not verify"),
+    (_june_shaped, "verifies only with what its page draws from NOT CHECKED"),
+])
+def test_create_refuses_a_certificate_whose_rows_lack_what_the_page_draws_from(tmp_path, edit,
+                                                                               why):
+    """The 2026-09-01 refusal (commit 0f9b9e3f) kept pre-column certificates from being minted;
+    the earlier round of this repair let them through, and their pages painted other numbers. A
+    capsule already minted from one still verifies, with the fields NOT CHECKED."""
+    d = tmp_path / "m"
+    with pytest.raises(SystemExit) as e:
+        _mint(d, CLEAN, cert_edit=edit)
+    msg = str(e.value)
+    assert f"REFUSED: the minted capsule {why}" in msg and "certificate.ledger[]." in msg
+    assert not (d / "d.capsule.html").exists()
+
+
+def test_certify_s_own_binding_failure_block_still_mints_and_verifies(tmp_path):
+    """certify writes this block when binding fails, and promises the failure never blocks a
+    certificate (R7). Its digests are NOT CHECKED; the receipts' bytes still are, by hash."""
+    def failed(cert):
+        rb = cert["receipt_binding"]
+        cert["receipt_binding"] = {"schema": rb["schema"], "content_rule": rb["content_rule"],
+                                   "head": None, "all_receipts_committed": False, "receipts": [],
+                                   "note": "binding failed: OSError: probe"}
+    cap = _mint(tmp_path / "bf", CLEAN, cert_edit=failed)
+    rep = verify_capsule(cap)
+    assert rep["ok"] is True, rep["problems"]
+    assert any("binding failed at mint" in n for n in rep["not_checked"])
+
+
 # ---------------------------------------------------------------- the committed capsules
-
-def _payload_of(path):
-    html = path.read_text(encoding="utf-8")
-    i = html.index(_BEGIN) + len(_BEGIN)
-    return json.loads(html[i:html.index(_END, i)])
-
 
 def _committed_v01():
     try:
