@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [7.48.1] — 2026-10-06 — security repair: a capsule chose where its verifier wrote files, and now every name it gives must be a bare file name
+## [7.48.1] — 2026-10-06 — security repair: a capsule or an audited certificate chose where styxx wrote files, and now every name it gives must be a bare file name
 
 A patch release: one security repair, the version bump that `conformance/sworn/` moves with, and
 what merged on `main` after 7.48.0. Upgrade with `pip install -U styxx==7.48.1`. For anyone who
@@ -19,8 +19,11 @@ carried them; entries written at this cut say so in their opening line.
 - `python -m styxx.capsule verify` (OATH Capsule v0.1) and `styxx.charon`'s re-run of a capsule
   wrote the capsule's embedded document and receipts under names the capsule chose, so a capsule
   could write bytes of its author's choosing to any path the user running the verifier can write.
-  Affected: 7.47.0 and 7.48.0; `styxx.charon` is in 7.48.0 only. Advisory GHSA-XXXX-XXXX-XXXX. What
-  was wrong, the repair and the workaround until you can upgrade are in the entry below.
+  `python -m styxx.corpus_audit`, re-deriving a certificate over its receipts' bytes at the issuing
+  commit, wrote them the same way under receipt names the audited certificate gave. Affected: 7.47.0
+  and 7.48.0 through the capsule verifier; 7.48.0 through charon and corpus_audit. Advisory
+  GHSA-XXXX-XXXX-XXXX. What was wrong, the repair and the workaround until you can upgrade are in
+  the entry below.
 
 **In the package since 7.48.0**
 - `python -m styxx.islands` gains `--island-z`, and `--demo` reads its list at `island_z=3` and
@@ -43,10 +46,11 @@ carried them; entries written at this cut say so in their opening line.
   says the block is abridged and that the drift's cause is not established. Its links still point
   at the v7.48.0 tag.
 
-### Security: a capsule chose where its verifier wrote files (GHSA-XXXX-XXXX-XXXX)
+### Security: a capsule or an audited certificate chose where styxx wrote files (GHSA-XXXX-XXXX-XXXX)
 
-**`styxx/capsule.py`, `styxx/charon.py`, `tests/test_capsule_bare_names.py` (NEW); commit 76e9dcc5,
-cherry-picked from dc50c191. Written at this cut from that commit.**
+**`styxx/capsule.py`, `styxx/charon.py`, `tests/test_capsule_bare_names.py` (NEW); commit 76e9dcc5.
+`styxx/corpus_audit.py`, `tests/test_corpus_audit_bare_names.py` (NEW); commit d8b856a1, after the review
+of this release found the same write there. Written at this cut from those commits.**
 
 - **What was wrong.** A v0.1 OATH capsule (`styxx-oath/capsule/v0.1`) embeds its document and its
   receipts as bytes, each under a name. `python -m styxx.capsule verify FILE` re-runs the certifier
@@ -56,29 +60,39 @@ cherry-picked from dc50c191. Written at this cut from that commit.**
   could create or overwrite any file the user running the verifier can write, with bytes the
   capsule's author chose. The hash checks did not stop it, because the capsule also carries the
   certificate those bytes are checked against. `styxx.charon`'s re-run of a v0.1 capsule (in
-  `ingest`, `verify` and `derive`) wrote the same way.
+  `ingest`, `verify` and `derive`) wrote the same way. So did `python -m styxx.corpus_audit` with
+  history on (the default for a full clone): to re-certify a certificate over the bytes its
+  receipts had at the issuing commit, it wrote those bytes under the receipt names the audited
+  certificate gives, so auditing a repository someone else wrote could write outside its
+  temporary directory.
 - **Affected releases.** 7.47.0 and 7.48.0, through `python -m styxx.capsule verify`
   (`styxx.capsule.verify_capsule`), which has been in the package since 2026-08-31; and 7.48.0,
-  through `styxx.charon`. Creating a capsule is not affected: it writes under the names of the
-  files you hand it.
+  through `styxx.charon` and `styxx.corpus_audit`. Creating a capsule is not affected: it writes
+  under the names of the files you hand it.
 - **The repair.** Every embedded name must be a bare file name under POSIX and Windows rules alike:
   no separator, no drive, not `.` or `..`, no control character, no trailing dot or space, and no
   Windows device name. No two names may be the same file on a case-insensitive file system.
   Otherwise `verify` reports the name as a problem, writes nothing and does not re-run the
   certifier, so the capsule fails; charon records `live_error: unsafe_embedded_name` and writes
-  nothing. The ten v0.1 capsules committed under `papers/` carry only names the rule accepts, and
+  nothing; corpus_audit writes nothing, re-derives nothing for that certificate and says why in
+  its `stands_reason`. The ten v0.1 capsules committed under `papers/` carry only names the rule accepts, and
   all ten still verify.
 - **What to do.** Upgrade: `pip install -U styxx==7.48.1`. Until you can, verify only capsules from
   a source you trust, or verify them in a throwaway environment (a container, a virtual machine or
   a disposable account) where a file written anywhere does no harm. The same holds for running
-  `python -m styxx.charon` over capsules you did not make.
+  `python -m styxx.charon` over capsules you did not make, and `python -m styxx.corpus_audit` over
+  a repository you did not write (or run it with `--history off`).
 - **The tests.** `tests/test_capsule_bare_names.py` refuses an absolute receipt name, a `../`
   receipt name and a `../` document name with nothing written; holds charon to writing nothing
   where a forged capsule points; refuses two names that differ only in case; and pins the rule on
   7 names it accepts and 19 it refuses. Run against 43b3b608, the commit this release branched
   from, the four tests of a name that escapes (absolute receipt, `../` receipt, `../` document,
   charon) fail, the 26 cases that pin the rule fail because the rule is not there, and the
-  honest-capsule and case-collision tests pass (on Windows).
+  honest-capsule and case-collision tests pass (on Windows). `tests/test_corpus_audit_bare_names.py`
+  audits a throwaway repository whose certificate names a receipt `../../` out of the temporary
+  directory, and one with an absolute name: nothing is written outside it. Run against 76e9dcc5 the
+  climbing case fails; the absolute case passes there too, because that name never resolves to
+  bytes at the issuing commit.
 - **What it does not say.** That the certifier is safe to run over arbitrary bytes. Verifying a
   capsule still re-runs the installed certifier over the embedded document and receipts; that is
   the design. This repair bounds where those bytes are written.
