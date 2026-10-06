@@ -22,7 +22,7 @@ carried them; entries written at this cut say so in their opening line.
   `python -m styxx.corpus_audit`, re-deriving a certificate over its receipts' bytes at the issuing
   commit, wrote them the same way under receipt names the audited certificate gave. Affected: 7.47.0
   and 7.48.0 through the capsule verifier; 7.48.0 through charon and corpus_audit. Advisory
-  GHSA-XXXX-XXXX-XXXX. What was wrong, the repair and the workaround until you can upgrade are in
+  GHSA-h5xv-4344-f62r. What was wrong, the repair and the workaround until you can upgrade are in
   the entry below.
 
 **In the package since 7.48.0**
@@ -50,7 +50,7 @@ carried them; entries written at this cut say so in their opening line.
   says the block is abridged and that the drift's cause is not established. Its links still point
   at the v7.48.0 tag.
 
-### Security: a capsule or an audited certificate chose where styxx wrote files (GHSA-XXXX-XXXX-XXXX)
+### Security: a capsule or an audited certificate chose where styxx wrote files (GHSA-h5xv-4344-f62r)
 
 **`styxx/capsule.py`, `styxx/charon.py`, `tests/test_capsule_bare_names.py` (NEW); commit 76e9dcc5.
 `styxx/corpus_audit.py`, `tests/test_corpus_audit_bare_names.py` (NEW); commit d8b856a1, after the review
