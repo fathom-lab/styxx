@@ -34,6 +34,10 @@ carried them; entries written at this cut say so in their opening line.
 - The #125 packet repair, the errata and corrections from the 7.48.0 audit, 7.48.0's Zenodo record,
   the sworn action's docs (#164), and two tests that failed on Windows for reasons outside the code
   under test (#185, #186).
+- `SECURITY.md` said releases reach PyPI through Trusted Publishing with PEP 740 attestations.
+  They do not: `publish.yml` uploads with an API token held as a repository secret and sets
+  `attestations: false`. The file now says so, and its steps for checking a release compare
+  SHA-256 sums only. Written at this cut.
 
 **Cutting this release**
 - `styxx/_version.py` is 7.48.1 (e2b31742), and `CITATION.cff` gives `version` 7.48.1 and
