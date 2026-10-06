@@ -78,7 +78,8 @@ def test_charon_does_not_write_where_a_capsule_points(tmp_path, own_tempdir):
     target.parent.mkdir()
     line = charon.derive_capsule(_forged(tmp_path, receipt_name=str(target)), tmp_path)
     assert not target.exists()
-    assert "OATH-HELD" not in json.dumps(line.get("verdict"))
+    assert line["verdict"] == "UNRESOLVED"
+    assert "unsafe_embedded_name" in line["counts"]["reason"]
 
 
 def test_two_names_that_meet_on_a_case_insensitive_file_system_are_refused(tmp_path, own_tempdir):
