@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased] — PATH-2a: the diff gate withholds a verdict where #97, #121 or #101 can have made it wrong
 
-Branch `fix/diffgate-abstain-where-wrong`, on `main` `43b3b608`. Eleven review passes; each has a note under
+Branch `fix/diffgate-abstain-where-wrong`, on `main` `43b3b608`. Twelve review passes; each has a note under
 `papers/closed-model-frontier/` (`NOTE_path2a_abstain_overlay_2026_09_30.md`, `NOTE_path2a_second_pass_…` to
-`NOTE_path2a_eleventh_pass_2026_10_05.md`, with corrections and departures notes beside seven of them), committed
+`NOTE_path2a_twelfth_pass_2026_10_05.md`, with corrections and departures notes beside seven of them), committed
 before its code. The notes are the record of how the design moved and of what each earlier head measured; this entry and the
 README's *PATH-2a* section describe the code as it is and give figures measured at this head.
 
@@ -42,7 +42,9 @@ against an honest mistake, not an attacker. The eleventh pass closed the one rou
 inside that boundary: in Python each copy was a `main` `DiffClaim`, so a DECIDE that patched the class of its copy
 rewrote the record at both doors; the copies are now of two slotted classes of the block's own with no method. In the
 port, after DECIDE returns, APPLY now calls no method an object or array inherits (it reads by index and takes
-`Array.isArray` when the module loads), since a DECIDE reaches those from its argument. The `facts.__globals__` route
+`Array.isArray` when the module loads), since a DECIDE reaches those from its argument; since the twelfth pass it lists
+the keys DECIDE may name literally and fills its per-claim arrays by index, not by `push`, so that a `push` or an
+enumerable key a page left on what arrays or objects inherit no longer reaches its work before DECIDE. The `facts.__globals__` route
 is committed as a test that leaves the relation, pinned as the stated limit. Up to the ninth pass it rested on scans of the block's source (a Python self-check that followed
 aliases, a store scan of the port); each review found another way round them, the ninth through a default argument,
 `*args`, a class attribute, a `for … of` target, an optional call and a Unicode escape inside a name. They are
@@ -84,21 +86,24 @@ is not bound to the release: it runs `python <action path>/diffgate_action.py`, 
 beside the script at the ref the workflow names, so this repository's own `diffgate` job runs the overlay on this
 branch and a workflow on `fathom-lab/styxx@main` will run it once this merges.
 
-**The bars, measured at this head** (`styxx/diffgate.py` `fb0af26c…`; CPython 3.12.10, Node 24.13.0 and the Windows
+**The bars, measured at this head** (`styxx/diffgate.py` `4cded2e3…`; CPython 3.12.10, Node 24.13.0 and the Windows
 path flavour unless said: the README gives the POSIX figures where they differ, and says for each figure whether a
-committed test pins it). The eleventh pass changed no decision: the records equal the tenth pass's (`16daa725`) on
-the committed inputs and on the 20,400-input decorated world, in both ports, and on the adversarial sets the README
-names; the tenth changed none against the ninth, on the committed inputs and on 160,000 adversarial inputs.
+committed test pins it). The twelfth pass changed no decision: the records equal the eleventh pass's (`ee82d2f3`) on
+the committed inputs, in both ports and both strict modes, and on the adversarial sets the README names; the eleventh
+changed none against the tenth (`16daa725`), there and on the 20,400-input decorated world, and the tenth none against
+the ninth, on the committed inputs and on 160,000 adversarial inputs.
 - By construction (A), at run time. DECIDE functions written to break APPLY are handed to it in DECIDE's place, 32 in
-  Python and 29 in the port beside the block's own (the tenth pass's figures, 26 and 24, counted the block's own):
+  Python and 31 in the port beside the block's own (the tenth pass's figures, 26 and 24, counted the block's own):
   ones that change, empty and grow their copy, return junk, indices out of range or twice, phrases and tags outside
   the fixed sets or APPLY's own two, decisions for claims outside reach, or raise; subclasses of list, tuple, int and
   str; a Proxy that answers differently on each read; four that patch the class of their copy, in Python, and five
-  that patch what every object or array inherits, in the port, in the realm the record was built in. No record
-  outside the abstain-only relation, in 958 and 962 runs each; the four class patches again through both Python doors
-  (1,150 runs each), and the next call with the class still patched gives `main`'s record where nothing is in reach.
-  Against `16daa725`'s files the three patches of the claims' class put 945 or 946 of 958 Python runs outside the
-  relation, and four of the port's five patches 200 to 604 of 962. The
+  that patch what every object or array inherits, in the port, in the realm the record was built in, and two more
+  there since the twelfth pass (a `push` left patched before APPLY runs; a key a page put on what every object
+  inherits before the port loaded). No record outside the abstain-only relation, in 958 and 962 runs each (measured;
+  the tests assert more than 900); the four class patches again through both Python doors (1,150 runs each), and the
+  next call with the class still patched gives `main`'s record where nothing is in reach. Against `16daa725`'s files
+  the three patches of the claims' class put 945 or 946 of 958 Python runs outside the relation, and four of the
+  port's five patches 200 to 604 of 962; against `ee82d2f3`'s port the twelfth pass's two cases put 604 of 962 each. The
   ninth construction review's fourteen plants, each of which dropped, added or rewrote claims of `main`'s record while
   every static check passed, move nothing when set where the decisions are computed; the same test fails on all
   fourteen against the ninth pass's two files. APPLY takes every decision the block's DECIDE returns (2,633 of 2,633
@@ -115,9 +120,10 @@ names; the tenth changed none against the ninth, on the committed inputs and on 
   in both ports. On a ninth-pass reviewer's world of 20,400 decorated summaries, measured again here: 12,559 of 12,559
   in Python and 11,521 of 11,521 in the port, at 7.1% and 6.3% of the right verdicts. #161's five joint #121
   reproductions keep `main`'s false CONTRADICTED count (V121's count is false there too): pinned, operator option
-  O-13. Four single-prefix scope accusations over `git diff --no-prefix` of a repository whose top directory is `a/`
-  or `b/` and holds its dot twin (the tenth coverage reviewer's) are attributable and kept, in both ports: pinned as
-  known kept, operator option O-10, no rule changed.
+  O-13. Single-prefix scope accusations over any rendering that drops a leading directory `D` holding `.D/` (git's
+  `--no-prefix` over a top directory `a/` or `b/`, `--relative=D`, `diff.relative=true` at the git door) are
+  attributable and kept: the tenth and eleventh coverage reviewers' eight cases, built with git, are pinned as known
+  kept at the raw door (8), in the port (8) and at the git door (4); operator option O-10, no rule changed.
 - Cross-port (C), as restated: (i) wherever `main`'s two ports give a claim the same kind, verdict and detail, the
   overlay gives it the same decision and the same phrase in both; (ii) on every input where `main`'s two ports read
   the same claim list, the two final lists and the two gate verdicts are the same, in both strict modes; (iii) where
@@ -138,15 +144,20 @@ names; the tenth changed none against the ninth, on the committed inputs and on 
   154 under the POSIX flavour). On the EXTERNAL-1 shelf 161 of 12,785 decided claims in reach (1.3%); the four
   committed variants of `main` read 152 of the 12,785 otherwise, and all 152 are withheld.
 - Cost: the module body takes ×5.9 `main`'s to execute (30.3 ms against 5.1, least of 25; ×5.4 at the tenth pass's
-  head the same way), and a fresh interpreter's import about 45 to 50 ms more than on `main` (62 ms against 18); +15% a call on `main`'s fuzz corpus; APPLY's copy 5.5 to 5.8 ms for
-  10,000 claims; the committed timing cases' slowest overlay 0.161 s (CPython 3.12.10), 0.132 s (3.14.2) and 50 ms
-  (Node), each bounded by the larger of an absolute figure and five times `main`'s own call; 0.10 to 0.47 of `main`'s
+  head the same way), and a fresh interpreter's import about 45 to 50 ms more than on `main` (62 ms against 18), both
+  measured at `ee82d2f3`. The tenth pass's figures, not measured again: +15% a call on `main`'s fuzz corpus; APPLY's
+  copy 5.5 to 5.8 ms for 10,000 claims (then of `DiffClaim` copies); the committed timing cases' slowest overlay
+  0.161 s (CPython 3.12.10), 0.132 s (3.14.2) and 50 ms (Node), each bounded by a committed test by the larger of an
+  absolute figure and five times `main`'s own call; 0.10 to 0.47 of `main`'s
   call on summaries of 10,000 claims (0.48 to 1.42 in Node at three times the size). Line-heavy diffs cost more, since
   the overlay reads the diff again in two line views: up to ×9.8 in Python and ×36 in Node on one added line of tens
   of thousands of separator-joined pieces, and ×9 to ×16 in Python (×20 in Node) on 80,000 unchanged definition
   lines, where `main`'s call takes milliseconds. The eleventh pass's APPLY, measured alone against `16daa725`'s on
   records of 1,000 to 30,000 claims in reach: no slower in either port (in the port 9.6 against 11.1 ms for 30,000
-  claims and no decision, 9.9 against 25.1 with one for every claim).
+  claims and no decision, 9.9 against 25.1 with one for every claim); the twelfth pass's port APPLY against
+  `ee82d2f3`'s within the run-to-run spread. The eleventh construction reviewer found the overlay linear in both ports
+  on ten families, with the branch's whole call at ×5.4 (Python) and ×4.8 (Node) of `main`'s on dot-twin-heavy diffs
+  and ×12 and ×8.8 on one 1 MB added line of `def test_x(): pass; ` (the README has the figures).
 - Size: the pull request's diff is 16,285 lines by `git diff origin/main...HEAD | wc -l` (15,289 at the tenth pass and
   14,535 at the ninth; GitHub serves a pull-request diff up to 20,000 lines, and above that the repository's own
   diffgate job prints DID NOT RUN and exits 0).
@@ -166,21 +177,31 @@ names; the tenth changed none against the ninth, on the committed inputs and on 
 - What the construction does not cover. Code that reaches around DECIDE's argument by reflection: a class reached by
   `type()`, a function's `__globals__` or closure (in Python the door's `facts.__globals__` is the module: a committed
   test asserts that a DECIDE taking `main`'s `DiffClaim` from there moves the record), a frame, `sys.modules`, `gc`, a
-  built-in patched through what every object or array inherits (in the port, one left patched into a later call meets
-  `main`'s own reader before APPLY), a function built from a string. APPLY itself, the copy's classes, the doors' call
-  of it and the two hooks: their text is pinned, so an edit of them fails a test that names it. A decision APPLY
-  refuses keeps `main`'s verdict: a committed test counts that it refuses none of the block's own. In Python a
-  `BaseException` that is not an `Exception` from DECIDE leaves the door with nothing written, where the port
-  withholds. The lints read names and type nothing: a name built at run time, an alias carried through data, an
+  built-in patched through what every object or array inherits (in the port, one left patched into a later call can
+  meet APPLY's own work before DECIDE, a `Set`'s `has` or an index store, as well as `main`'s own reader; up to the
+  eleventh pass this entry said it meets `main`'s reader before APPLY), a function built from a string. APPLY itself,
+  the copy's classes, the doors' call of it and the two hooks: their text is pinned, so an edit of them fails a test
+  that names it. A decision APPLY refuses keeps `main`'s verdict: a committed test counts that it refuses none of the
+  block's own. In Python a `BaseException` that is not an `Exception` from DECIDE leaves the door with nothing written,
+  where the port withholds; and where APPLY withholds `main`'s only CONTRADICTED it reads `strict` as a truth value
+  where `main` did not, so a `strict` whose truth value raises (outside the `bool` the signature names) raises at the
+  door where `main` returned FAIL. The lints read names and type nothing: a name built at run time, an alias carried through data, an
   f-string of a list, in the port a binary arithmetic or relational operator or `++` on a string, and in the port a
   call of one of `main`'s own helpers that asks the engine pass them; the block gives such operators numbers only.
 - A single `only_touches` prefix that is a path for `main` only through its dropped dots keeps `main`'s CONTRADICTED,
-  and one rendering fault can make it false (git's own `--no-prefix` output over a top directory `a/` or `b/` that holds
-  its dot twin), not two as the README said up to the tenth pass; four such cases are pinned as kept (O-10).
+  and any rendering that drops a leading directory `D` holding `.D/` can make it false, for any `D`: git's own
+  `--no-prefix` over a top directory `a/` or `b/`, `git diff --relative=D` or `format-patch --relative` at the raw
+  door, `diff.relative=true` at the git door with `D` as the repository. The eleventh pass bounded it to the keys a
+  no-prefix strip can hide; neither rule it offered closes `--relative`. Eight cases are pinned as kept: 8 claims at
+  the raw door, 8 in the port, 4 at the git door (O-10). The general rule (withhold every single-prefix CONTRADICTED that V121 reads as not a path) closes the
+  family at the eleventh coverage reviewer's cost of 98 right verdicts per port on the committed truth world and no
+  false one, and 144 to 155 per port on two decorated worlds; not taken.
 - `seam` withholds a right CONTRADICTED count whatever number is claimed, and on the tenth coverage reviewer's own
   worlds it withholds more right than false CONTRADICTEDs (89 against 54 in Python on one, 80 against 60 on another),
   as `redefined` does on VERIFIED there (39 against 0); the decorated world of the README's table holds no seam. These
-  figures, with `case_count` on CONTRADICTED (110 false against 27 right there), are carried into O-16.
+  figures, with `case_count` on CONTRADICTED (110 false against 27 right there), are carried into O-16, and so are two
+  cells that tip on the eleventh coverage reviewer's worlds: `extract` on VERIFIED (192 false against 204 right in
+  Python on one) and `case_count` on CONTRADICTED (27 against 32 on another).
 - The EXTERNAL-1 shelf figures of the ninth pass are replaced, and its judged figures withdrawn. That pass's tally
   counted runs of rows, not pull requests (nine ids lie in runs that do not touch, so some were read twice), and it
   took one row's status for a file's where the table holds one row per file per commit, which `external1_harness.py`
@@ -227,10 +248,13 @@ names; the tenth changed none against the ninth, on the committed inputs and on 
 differences of bar C(iii), under `--strict` too. The boundary of bar A as the lead restated it on 2026-10-05 (what
 reflection reaches is not covered). Operator options O-1 to O-15, as the notes and the README disclose them (among
 them O-13 for #161's five joint #121 reproductions and O-7, its wider form; O-9 for the `--strict` differences; O-12,
-`shape` on VERIFIED only; O-14 and O-15), with O-10 now carrying the four single-prefix cases and the reviewer's narrow
-rule for them, unmeasured; and O-16, not taken: dropping the summary-side guards (`seam`, and `extract` for an ASCII
-token in odd company) from both ports, which bar C(i) and C(ii) do not need, now with the seam figures above and a
-narrower `seam` beside it. Whether APPLY should catch a `BaseException` that is not an `Exception`. The pull-request body: the pass-8 body fails this repository's own body-against-diff job
+`shape` on VERIFIED only; O-14 and O-15), with O-10 now carrying the family of renderings that drop a leading
+directory, its eight pinned cases and the general rule with the reviewer's measured cost; and O-16, not taken:
+dropping the summary-side guards (`seam`, and `extract` for an ASCII token in odd company) from both ports, which bar
+C(i) and C(ii) do not need, now with the seam figures above, the two further cells and a narrower `seam` beside it.
+Whether APPLY should catch a `BaseException` that is not an `Exception`, and the Python APPLY's second reading of
+`strict`. The pull request's diff size against GitHub's 20,000 lines (merge, trim, or read DID NOT RUN on this
+pull request as a red flag). The pull-request body: the pass-8 body fails this repository's own body-against-diff job
 now that the diff is under GitHub's line limit, so it is to be replaced before or with the push. The bar C pins for
 CI's Node, after the earliest CI run. The rename and
 `-U0` gaps. Whether the Action should import the released package. Whether the diff-side divergence of `main`'s two
