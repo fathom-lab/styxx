@@ -7,6 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — `capsule verify` compares the whole certificate, and a minted page shows no verdict it has not checked
+
+On 2026-10-05 a check of the lab's own published v0.1 capsule found that both verification layers
+could be satisfied by a capsule whose certificate said something its bytes do not.
+
+- Layer 2 (`python -m styxx.capsule verify`) re-ran `certify_doc` on the embedded bytes but
+  compared only the verdict class (the `, N uncovered` suffix stripped), the counts, and the status
+  of each embedded ledger row, one way. A certificate edited to report 0 uncovered, a deleted ledger
+  row, a repointed `receipt_ref`, rows marked obligated, a rewritten epistemics summary, and a
+  rewritten mint time or minting version all verified like the genuine capsule. It now compares
+  every field `certify_doc` writes: the verdict string, the counts, the uncovered band, the
+  epistemics summary, `receipts_sha256` both ways, the receipt-binding digests, and the ledger,
+  `ungrounded` and `abstained` in both directions with every field of every row. Receipts are
+  re-read in the order the certificate lists them, since `receipt_ref` names the earliest read.
+- A field the installed certify writes and the certificate lacks is printed `NOT CHECKED` by name,
+  with the value the installed verifier finds. A certificate that predates the uncovered band is
+  compared by verdict class, and the live suffix and the live uncovered spans are printed. A field
+  the certificate carries that the installed certify does not write fails. The mint time, the
+  minting styxx version, `verifier_sha256` and the receipt binding's repository facts are printed as
+  stated by the minter, never as verified. Whether the page around the payload is the page this
+  styxx renders is reported too.
+- The v0.1 branch of the command never printed the advisory `verify_capsule` computed. It now
+  prints every advisory, `NOT CHECKED` field and stated field, and its `VERIFIED` line names what
+  was compared. It exits 0 only when every carried field reproduces.
+- The re-run wrote embedded files under the names the capsule gives them, so a capsule naming a
+  receipt with an absolute path or `../` had those bytes written there. A name with a directory part
+  is now refused, and nothing is written.
+- Layer 1: the minted page carried the verdict as the badge's static text, so one doctored byte
+  showed the TAMPERED banner under a badge still reading OATH-HELD, and a page whose script never
+  ran read OATH-HELD forever. A newly minted page's badge starts as `checking…`; only the script
+  writes the verdict, after every hash matched; a mismatch writes TAMPERED on the badge and draws
+  nothing from the certificate; a noscript block, a WebCrypto check and a timeout say the page did
+  not check and point to layer 2. Committed capsules keep the page they were minted with.
+
+All ten committed v0.1 capsules still verify; none was edited. What neither layer checks, by
+design: nothing in a capsule is signed, so anyone can mint an honest capsule over other text.
+
 ## [Unreleased] — two tests that failed on Windows for reasons outside the code under test (#185, #186)
 
 - `tests/test_gitlab_job.py` ran the GitLab job's script with a bare `bash`. On Windows,
