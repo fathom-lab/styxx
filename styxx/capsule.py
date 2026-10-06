@@ -9,8 +9,11 @@ the READER runs:
 * Layer 1, any browser, offline: WebCrypto re-hashes every embedded byte against the
   certificate and paints every token with its epistemic band. Tamper-evidence in one second.
 * Layer 2, one command: ``python -m styxx.capsule verify FILE`` re-runs the real verifier
-  over the embedded bytes and compares verdict, counts, and the full ledger. Reproducibility,
-  not assertion.
+  over the embedded bytes and compares the whole certificate with what it re-derives: the
+  verdict string, the counts, the coverage band, the epistemics summary and the ledger in both
+  directions, every field of every row. What it cannot re-derive from the bytes (when, and with
+  which styxx, the capsule was minted; where the receipts were committed) it prints as stated by
+  the minter, never as verified. Reproducibility, not assertion.
 
 Creation refuses to lie: a capsule cannot be minted unless every hash matches and the
 certificate re-verifies live. What no layer proves — that receipts truthfully record
@@ -35,8 +38,14 @@ from typing import List, Optional
 # The v0.13 UNCOVERED band appends ", N uncovered" to a verdict string. That suffix is a
 # COVERAGE report travelling in the headline, not a verdict change: `counts["UNGROUNDED"]` is
 # untouched and no token's status moved (styxx.corpus_audit.verdict_class learned this on
-# 2026-09-01, when bucketing on the whole string put 131 certificates in neither class). Layer 2
-# compares verdict CLASSES for the same reason; the strings are still reported side by side.
+# 2026-09-01, when bucketing on the whole string put 131 certificates in neither class).
+#
+# Layer 2 compares the verdict by CLASS only for a certificate that predates the band (it carries
+# no `uncovered` field, so its verdict could never carry the suffix), and says so as NOT CHECKED.
+# Until 2026-10-05 it compared the class for EVERY certificate and never compared `uncovered`, so
+# a certificate edited to drop the suffix and report 0 uncovered verified like a clean one while
+# its document held a number nothing checked. A certificate that carries the band is compared
+# string for string.
 _UNCOVERED_SUFFIX = re.compile(r",\s*\d+\s+uncovered\s*$")
 
 
@@ -145,7 +154,7 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
             + "\n".join(f"  - {p}" for p in problems[:6])
             + (f"\n  ... and {len(problems) - 6} more" if len(problems) > 6 else "")
             + "\n\nIf the ledger diverges on every token, this certificate predates the "
-              "current ledger schema. Re-certify the document first (the verdict is "
+              "current ledger schema. Re-certify the document (the verdict is "
               "expected to be unchanged; a re-issue is a new commit and the drift is "
               "tracked), then mint again.")
     return out
@@ -167,7 +176,7 @@ def verify_capsule(path: Path) -> dict:
         return {"ok": False, "stage": "parse", "error": f"no capsule payload: {e}",
                 "problems": [f"no capsule payload: {e}"]}
 
-    # spec dispatch — the v0.1 path below stays exactly as shipped
+    # spec dispatch; the v0.1 path below compares the whole certificate since 2026-10-05
     spec = payload.get("spec")
     if spec == SPEC_V02:
         return _verify_capsule_v02(html, payload)
@@ -193,41 +202,265 @@ def verify_capsule(path: Path) -> dict:
             problems.append(f"receipt {r['name']!r} bytes != certificate hash")
 
     live = None
+    cmp: dict = {"not_checked": [], "stated": [], "compared": []}
     if not problems:
+        # The receipts are handed to the certifier in the order the certificate lists them,
+        # which is the order its certifier read them in: when a value appears in more than one
+        # receipt, `receipt_ref` names the earliest read, so the order is part of what the certificate
+        # says. The capsule stores the receipts sorted by name, so their order there is not it.
+        listed = [n for n in (cert.get("receipts_sha256") or {}) if n in recs]
+        order = listed + sorted(n for n in recs if n not in listed)
         with tempfile.TemporaryDirectory() as td:
             d = Path(td) / payload["document"]["name"]
             d.write_bytes(doc_bytes)
             rps = []
-            for name, rb in recs.items():
+            for name in order:
                 rp = Path(td) / name
-                rp.write_bytes(rb)
+                rp.write_bytes(recs[name])
                 rps.append(rp)
             live = certify_doc(d, rps)
-        if _verdict_class(live["verdict"]) != _verdict_class(cert["verdict"]):
-            problems.append(f"verdict not reproduced: live {live['verdict']} "
-                            f"vs embedded {cert['verdict']}")
-        elif live["verdict"] != cert["verdict"]:
-            advisory.append(f"verdict string moved without a class change: live {live['verdict']!r} "
-                            f"vs embedded {cert['verdict']!r} — a coverage suffix the installed "
-                            f"verifier appends; not a verdict change")
-        if live["counts"] != cert["counts"]:
-            problems.append(f"counts not reproduced: live {live['counts']} "
-                            f"vs embedded {cert['counts']}")
+        cmp = _compare_certificate_v01(cert, live, payload)
+        problems.extend(cmp["problems"])
+        advisory.extend(cmp["advisory"])
+        # The page around the payload (layer 1's script and text) is not part of the
+        # certificate and nothing here re-runs it. Say whether it is the page this styxx renders
+        # for this payload; when it is not, what it draws was not checked by this command.
+        try:
+            same_page = _render_html(payload) == html
+        except Exception:   # noqa: BLE001: a payload the renderer cannot read is simply not ours
+            same_page = False
+        if same_page:
+            cmp["compared"].append("the page (the page this styxx renders for this payload)")
         else:
-            stored = {(e["line"], e.get("col"), str(e["token"])): e["status"]
-                      for e in cert.get("ledger", [])}
-            fresh = {(e["line"], e.get("col"), str(e["token"])): e["status"]
-                     for e in live.get("ledger", [])}
-            for k, s in sorted(stored.items()):
-                if fresh.get(k) != s:
-                    problems.append(f"ledger divergence at line {k[0]} token {k[2]!r}: "
-                                    f"embedded {s} vs live {fresh.get(k)}")
+            cmp["not_checked"].append(
+                "the page around the payload: it is not the page this styxx renders for this "
+                "payload (an older styxx minted it, or it was edited), so what its script draws "
+                "was not checked; this command checks the payload")
     return {"ok": not problems, "problems": problems, "advisory": advisory,
+            "not_checked": cmp["not_checked"], "stated": cmp["stated"],
+            "compared": cmp["compared"],
             "verdict": cert.get("verdict"), "counts": cert.get("counts"),
             "live_verdict": None if live is None else live.get("verdict"),
             "document": payload["document"]["name"],
             "spec": payload.get("spec"),
             "reproduced_at": None if live is None else "installed verifier"}
+
+
+# Layer 2 of a v0.1 capsule compares the WHOLE certificate. Until 2026-10-05 it compared a chosen
+# few fields (the verdict class, the counts, and the status of each embedded ledger row, one way),
+# so a certificate edited anywhere else (its coverage band, a deleted ledger row, a repointed
+# receipt_ref, the obligated flags, the epistemics summary) verified exactly like the genuine one
+# while the page drew the edited values. The rule now: what the page shows from the certificate,
+# layer 2 re-derives and compares, or names as not checked.
+#
+# Every field certify_doc writes is a function of the document and receipt bytes at the installed
+# verifier, so it is re-derived and compared, except these, which describe the minting
+# environment and cannot be re-derived from the bytes: the hash of the certify.py that issued the
+# certificate, and the receipt_binding block's repository facts (head, paths, blobs, committed
+# flags). Those are printed as stated by the minter, never as verified.
+_CERT_MINT_FIELDS = ("verifier_sha256", "receipt_binding")
+# Every certificate any styxx has issued carries these; one without them is not a certificate.
+_CERT_REQUIRED = ("verdict", "counts", "ledger", "document_sha256", "receipts_sha256")
+# Row lists, compared row by row in both directions, every field of every row.
+_CERT_ROW_LISTS = ("ledger", "ungrounded", "abstained")
+# The receipt_binding fields that ARE functions of the embedded receipt bytes.
+_BINDING_BYTE_FIELDS = ("raw_sha256", "content_sha256")
+_PAYLOAD_FIELDS = ("spec", "created", "document", "receipts", "certificate", "verifier")
+_PAYLOAD_VERIFIER_FIELDS = ("sha256", "styxx_version", "pip")
+
+
+def _short(v, n: int = 200) -> str:
+    s = repr(v) if isinstance(v, str) else json.dumps(v, ensure_ascii=False, sort_keys=True)
+    return s if len(s) <= n else f"{s[:n]}... ({len(s)} chars)"
+
+
+def _rows_by_key(rows: list) -> dict:
+    """Rows keyed (line, token, k): the k-th row with that line and token, in ledger order.
+
+    `col` is deliberately not in the key, so a certificate whose rows lack a field still aligns
+    row for row and that field is reported missing rather than every row being reported lost."""
+    seen: dict = {}
+    out: dict = {}
+    for e in rows:
+        base = (e.get("line"), str(e.get("token")))
+        k = seen.get(base, 0)
+        seen[base] = k + 1
+        out[base + (k,)] = e
+    return out
+
+
+def _compare_rows(name: str, stored, fresh: list, problems: List[str],
+                  not_checked: List[str]) -> None:
+    if not isinstance(stored, list) or not all(isinstance(e, dict) for e in stored):
+        problems.append(f"{name} not reproduced: the embedded {name} is not a list of rows")
+        return
+    s, f = _rows_by_key(stored), _rows_by_key(fresh)
+    missing: dict = {}
+    for k, e in s.items():
+        if k not in f:
+            problems.append(f"{name} row not reproduced: line {k[0]} token {k[1]!r} (embedded "
+                            f"{e.get('status', 'row')}) is not a row at the installed verifier")
+            continue
+        le = f[k]
+        for fld, lv in le.items():
+            if fld not in e:
+                missing[fld] = missing.get(fld, 0) + 1
+            elif e[fld] != lv:
+                problems.append(f"{name} divergence at line {k[0]} token {k[1]!r}: {fld} embedded "
+                                f"{_short(e[fld])} vs live {_short(lv)}")
+        for fld in e:
+            if fld not in le:
+                problems.append(f"{name} divergence at line {k[0]} token {k[1]!r}: the row carries "
+                                f"{fld!r}, which the installed verifier does not write")
+    for k, le in f.items():
+        if k not in s:
+            problems.append(f"{name} omits a row the installed verifier finds: line {k[0]} token "
+                            f"{k[1]!r} (live {le.get('status', 'row')})")
+    for fld, n in missing.items():
+        not_checked.append(f"certificate.{name}[].{fld}: absent from {n} of {len(s)} row(s); the "
+                           f"installed certify writes it, a certificate from an older certify "
+                           f"does not")
+
+
+def _compare_certificate_v01(cert: dict, live: dict, payload: dict) -> dict:
+    """Compare an embedded certificate with the one certify_doc re-derives from the embedded
+    bytes. A field both carry must be equal. A field the installed certify writes and the
+    certificate lacks is NOT CHECKED, by name, with the value the installed verifier finds (an
+    older certify did not write it; a forger who deletes a field to pose as old gains only that
+    line). A field the certificate carries and the installed certify does not write cannot be
+    reproduced, so it fails. Mint-environment fields are listed as stated."""
+    problems: List[str] = []
+    advisory: List[str] = []
+    not_checked: List[str] = []
+    stated: List[str] = []
+    compared: List[str] = []
+
+    for k in _CERT_REQUIRED:
+        if k not in cert:
+            problems.append(f"certificate.{k} is missing: every certificate carries it")
+
+    # the verdict: the whole string, except for a certificate that predates the uncovered band
+    ev, lv = cert.get("verdict"), live["verdict"]
+    if "verdict" in cert:
+        if ev == lv:
+            compared.append("verdict")
+        elif ("uncovered" not in cert and isinstance(ev, str) and _verdict_class(ev) == ev
+              and _verdict_class(lv) == ev):
+            compared.append("verdict class")
+            items = live.get("uncovered_items") or []
+            where = "; ".join(f"line {u.get('line')} {u.get('token')!r} ({u.get('reason')})"
+                              for u in items[:10]) + (" ..." if len(items) > 10 else "")
+            not_checked.append(
+                f"the verdict's coverage suffix: this certificate carries no `uncovered` field "
+                f"(it predates the uncovered band), so its verdict {ev!r} was compared by class "
+                f"only; the installed verifier's verdict is {lv!r}")
+            advisory.append(
+                f"verdict string moved without a class change: live {lv!r} vs embedded {ev!r}, a "
+                f"coverage suffix the installed verifier appends to a certificate that predates "
+                f"the band. The installed verifier finds {len(items)} numeric span(s) nothing "
+                f"checked: {where}")
+        else:
+            problems.append(f"verdict not reproduced: live {lv} vs embedded {ev}")
+
+    for k, lval in live.items():
+        if k == "verdict" or k in _CERT_ROW_LISTS or k in _CERT_MINT_FIELDS:
+            continue
+        if k not in cert:
+            if k not in _CERT_REQUIRED:
+                not_checked.append(f"certificate.{k}: not carried; the installed certify writes "
+                                   f"it, a certificate from an older certify does not (installed "
+                                   f"verifier: {_short(lval, 160)})")
+        elif cert[k] != lval:
+            if isinstance(lval, list) and isinstance(cert[k], list):
+                js = lambda x: json.dumps(x, ensure_ascii=False, sort_keys=True)  # noqa: E731
+                only_live = [x for x in lval if js(x) not in {js(y) for y in cert[k]}]
+                only_cert = [x for x in cert[k] if js(x) not in {js(y) for y in lval}]
+                problems.append(f"{k} not reproduced: {len(cert[k])} embedded vs {len(lval)} "
+                                f"live; only live {_short(only_live)}; only embedded "
+                                f"{_short(only_cert)}")
+            else:
+                problems.append(f"{k} not reproduced: live {_short(lval)} vs embedded "
+                                f"{_short(cert[k])}")
+        else:
+            compared.append(k)
+    for k in cert:
+        if k not in live and k not in _CERT_MINT_FIELDS:
+            problems.append(f"certificate.{k} cannot be reproduced: the installed certify does "
+                            f"not write it")
+
+    for name in _CERT_ROW_LISTS:
+        if name not in live:
+            continue
+        if name not in cert:
+            if name not in _CERT_REQUIRED:
+                not_checked.append(f"certificate.{name}: not carried; the installed certify "
+                                   f"writes it, a certificate from an older certify does not")
+            continue
+        before = len(problems)
+        _compare_rows(name, cert[name], live[name], problems, not_checked)
+        if len(problems) == before:
+            compared.append(f"{name} ({len(live[name])} rows, both directions, every field)")
+
+    # the minting environment: stated, never verified
+    vs, lvs = cert.get("verifier_sha256"), live.get("verifier_sha256")
+    stated.append(f"certificate.verifier_sha256 {vs} (the certify.py that issued it; the "
+                  f"installed certify.py is "
+                  f"{'the same file' if vs == lvs else lvs})")
+    rb, lrb = cert.get("receipt_binding"), live.get("receipt_binding") or {}
+    if "receipt_binding" not in cert:
+        not_checked.append("certificate.receipt_binding: not carried; the installed certify "
+                           "writes it (receipt digests, and the repository head, paths and "
+                           "committed flags at mint)")
+    elif not isinstance(rb, dict):
+        problems.append("certificate.receipt_binding is not an object")
+    else:
+        for k in ("schema", "content_rule"):
+            if k not in rb:
+                not_checked.append(f"certificate.receipt_binding.{k}: not carried")
+            elif rb[k] != lrb.get(k):
+                problems.append(f"receipt_binding.{k} not reproduced: live {_short(lrb.get(k))} "
+                                f"vs embedded {_short(rb[k])}")
+        rows = rb.get("receipts")
+        lrows = {r.get("name"): r for r in (lrb.get("receipts") or [])}
+        if not isinstance(rows, list) or not all(isinstance(r, dict) for r in rows):
+            problems.append("receipt_binding.receipts not reproduced: not a list of receipts")
+        else:
+            names = [r.get("name") for r in rows]
+            if sorted(map(str, names)) != sorted(map(str, lrows)):
+                problems.append(f"receipt_binding.receipts not reproduced: names {names} vs the "
+                                f"embedded receipts {sorted(lrows)}")
+            for r in rows:
+                lr = lrows.get(r.get("name")) or {}
+                for k in _BINDING_BYTE_FIELDS:
+                    if k not in r:
+                        not_checked.append(f"certificate.receipt_binding.receipts"
+                                           f"[{r.get('name')!r}].{k}: not carried")
+                    elif r[k] != lr.get(k):
+                        problems.append(f"receipt_binding {k} of {r.get('name')!r} not "
+                                        f"reproduced: live {lr.get(k)} vs embedded {r[k]}")
+            compared.append("receipt_binding digests")
+            stated.append(
+                f"certificate.receipt_binding: head {rb.get('head')}, all_receipts_committed "
+                f"{rb.get('all_receipts_committed')}; "
+                + "; ".join(f"{r.get('name')} path {r.get('path')} committed {r.get('committed')}"
+                            for r in rows)
+                + (f"; note {rb.get('note')!r}" if rb.get("note") else ""))
+
+    ver = payload.get("verifier") or {}
+    stated.append(f"created {payload.get('created')} (when the capsule was minted)")
+    stated.append(f"verifier.styxx_version {ver.get('styxx_version')}, pip "
+                  f"{ver.get('pip')} (the styxx the minter ran)")
+    if ver.get("sha256") != vs:
+        advisory.append(f"payload.verifier.sha256 {ver.get('sha256')} differs from "
+                        f"certificate.verifier_sha256 {vs}; a minter copies one into the other")
+    for k in payload:
+        if k not in _PAYLOAD_FIELDS:
+            not_checked.append(f"payload.{k}: a field this verifier does not know")
+    for k in ver:
+        if k not in _PAYLOAD_VERIFIER_FIELDS:
+            not_checked.append(f"payload.verifier.{k}: a field this verifier does not know")
+    return {"problems": problems, "advisory": advisory, "not_checked": not_checked,
+            "stated": stated, "compared": compared}
 
 
 # ---------------------------------------------------------------------------------
@@ -993,7 +1226,7 @@ def create_capsule_sworn(doc: Path, manifest: Optional[Path], receipt: Path, out
 
 def _verify_capsule_sworn(html: str, payload: dict) -> dict:
     """Layer 2: re-run styxx.sworn over the sealed bytes. INSTRUMENT SKEW is named apart from
-    tamper — the first is the instrument having moved, the second is the bytes having moved."""
+    tamper — one is the instrument having moved, the other is the bytes having moved."""
     from styxx.sworn import Manifest, issue_receipt, verify
 
     problems: List[str] = []
@@ -1228,9 +1461,20 @@ def main(argv=None) -> int:
     else:
         print(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
         print(f"embedded verdict: {rep.get('verdict')}  counts {rep.get('counts')}")
+        if rep.get("live_verdict") is not None and rep.get("live_verdict") != rep.get("verdict"):
+            print(f"installed verifier's verdict: {rep.get('live_verdict')}")
+        for adv in rep.get("advisory", []):
+            print(f"  advisory: {adv}")
+        for nc in rep.get("not_checked", []):
+            print(f"  NOT CHECKED: {nc}")
+        for st in rep.get("stated", []):
+            print(f"  stated by the minter, not checked: {st}")
         if rep["ok"]:
-            print("VERIFIED: bytes match the certificate and the verdict reproduces at "
-                  "the installed verifier.")
+            nc = len(rep.get("not_checked", []))
+            print("VERIFIED: the embedded bytes match the certificate's hashes, and the "
+                  "installed verifier re-derives what the certificate says of them: "
+                  + ", ".join(rep.get("compared", [])) + "."
+                  + (f" {nc} item(s) NOT CHECKED, listed above." if nc else ""))
             return 0
     print("CAPSULE FAILS VERIFICATION:")
     for p_ in rep.get("problems", []):
