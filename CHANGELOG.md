@@ -159,7 +159,7 @@ the ninth, on the committed inputs and on 160,000 adversarial inputs.
   `ee82d2f3`'s within the run-to-run spread. The eleventh construction reviewer found the overlay linear in both ports
   on ten families, with the branch's whole call at ×5.4 (Python) and ×4.8 (Node) of `main`'s on dot-twin-heavy diffs
   and ×12 and ×8.8 on one 1 MB added line of `def test_x(): pass; ` (the README has the figures).
-- Size: the pull request's diff is 00,000 lines by `git diff origin/main...HEAD | wc -l` (16,285 at the eleventh pass,
+- Size: the pull request's diff is 16,724 lines by `git diff origin/main...HEAD | wc -l` (16,285 at the eleventh pass,
   15,289 at the tenth and 14,535 at the ninth; GitHub serves a pull-request diff up to 20,000 lines, and above that the
   repository's own diffgate job prints DID NOT RUN and exits 0).
 
