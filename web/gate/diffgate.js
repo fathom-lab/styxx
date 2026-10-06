@@ -687,7 +687,7 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
 // covered
 // (NOTE_path2a_eleventh_pass_2026_10_05).
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 fb0af26c8b61797467bec85ce3b3614dba4b567a73a2f1187954fbd019537bc0, LF). Everything outside this block is
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 4cded2e3fd7d901163d204032cf0e8a37970615a6cc6ef9f28050c98db92f63b, LF). Everything outside this block is
 // main's port at 1cde8b82 (sha256 06688702..., LF), unchanged except that main's gateDiffText is named
 // _gateDiffTextMain (its definition and its DECLARE-1 self-call); the gateDiffText at the end of this block calls it
 // and then the overlay, once. The overlay reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason
@@ -1798,7 +1798,8 @@ function _p2aOnly(c, f) {
   const [lead, , under] = got.get("A|false");
   if (!lead || (under ? "VERIFIED" : "CONTRADICTED") !== c.verdict) return ["unreproduced", "#121"];
   // B-1 (NOTE_path2a_fourth_pass_2026_09_30): V121 does not read a `prefix` only the dropped dots make a path. With
-  // one prefix the verdict is kept; one rendering fault can make a CONTRADICTED there false (operator option O-10).
+  // one prefix the verdict is kept; any rendering that drops a leading directory D holding `.D/` (`--no-prefix` over
+  // `a/` or `b/`, `--relative=D`) can make a CONTRADICTED there false (NOTE_path2a_twelfth_pass_2026_10_05; O-10).
   if (d.prefix2 && !got.get("K|false")[0]) return ["shape", "#121"];
   if (got.get("K|false")[2] !== under) return ["only", "#121"];
   return null;
@@ -1872,21 +1873,23 @@ function _p2aDecisions(seen, facts) {
 // DECIDE reaches what every object and every array inherits from its argument, and at 16daa725 a phrase put on the
 // one, or an `includes`, `some` or `push` put on the other, rewrote the record. So APPLY reads by index on arrays it or
 // main built, compares with ===, tests an array with the Array.isArray it took when the module loaded, finds a phrase
-// key in a list of the table's own keys read at load, and stores only into elements it filled before DECIDE ran. Not
-// covered, as in the Python: code that reaches around its argument (an inherited method patched and left so into a
-// later call, where main's own reader meets it before APPLY does; a function built from a string).
+// key in a literal list of the keys DECIDE may name, and stores only into elements it filled, by index and not by an
+// inherited `push`, before DECIDE ran (NOTE_path2a_twelfth_pass_2026_10_05, A-2). Not covered, as in the Python: code
+// that reaches around its argument, as an inherited method or index setter patched and left so into a later call
+// does, which can meet APPLY's own work before DECIDE (a Set's `has`, an index store) as well as main's reader; a
+// function built from a string.
 const _p2aIsArray = Array.isArray;
-const _P2A_DECIDE_KEYS = [];
-for (const k in _P2A_PHRASES) if (k !== "error" && k !== "malformed") _P2A_DECIDE_KEYS.push(k);
+const _P2A_DECIDE_KEYS = ["dir", "tier", "dot", "dot_earliest", "dot_tier", "count", "only", "shape", "tests", "split",
+  "redefined", "symbol", "again", "extract", "seam", "divergent", "odd", "case", "case_count", "unreproduced", "unparsed"];
 
 function _p2aApply(g, strict, decide) {
   const claims = g.claims, n = claims.length;
   const reach = [], pickPhrase = [], pickTag = [];   // one element per claim, each filled before DECIDE runs
   let any = false, fallback = null, moved = false;
   for (let k = 0; k < n; k++) {
-    reach.push(_P2A_REACH.has(claims[k].kind + "|" + claims[k].verdict));
-    pickPhrase.push(null);
-    pickTag.push(null);
+    reach[k] = _P2A_REACH.has(claims[k].kind + "|" + claims[k].verdict);
+    pickPhrase[k] = null;
+    pickTag[k] = null;
     any = any || reach[k];
   }
   if (!any) return g;                    // nothing in reach: no copy, no call, and the record is main's object

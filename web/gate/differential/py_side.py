@@ -25,7 +25,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "fb0af26c8b61797467bec85ce3b3614dba4b567a73a2f1187954fbd019537bc0"  # styxx/diffgate.py: main's 9b620e00 reader + the PATH-2a block (LF)
+PINNED = "4cded2e3fd7d901163d204032cf0e8a37970615a6cc6ef9f28050c98db92f63b"  # styxx/diffgate.py: main's 9b620e00 reader + the PATH-2a block (LF)
 # The pin moved twice in one step and both moves are deliberate. COMPAT-2 (#124) changed the
 # compat reading, so the port had to follow it; and `fetch_pr` landed on main after the previous
 # pin was written, which is why this script has been REFUSING TO RUN on main ever since -- the

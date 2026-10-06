@@ -2721,10 +2721,11 @@ def _p2a_only(c, f: "_P2aFacts"):
         return "unreproduced", "#121"
     # B-1 (NOTE_path2a_fourth_pass_2026_09_30): V121 does not read a `prefix` that only the dropped dots make a
     # path ("github" beside `.github/`), and says "is not a path (#110)". With a second prefix claimed, main's verdict
-    # there can be false while the two under-readings agree. With one prefix the verdict is kept, and a false
-    # CONTRADICTED there needs one rendering fault, not two (NOTE_path2a_eleventh_pass_2026_10_05, B-2): git's own
-    # `diff --no-prefix` over a repository whose top directory `a/` or `b/` holds `.a/` or `.b/`. Operator option O-10;
-    # the truth tests pin four such kept claims.
+    # there can be false while the two under-readings agree. With one prefix the verdict is kept, and any rendering
+    # that drops a leading directory D holding `.D/` can make a CONTRADICTED there false, for any D
+    # (NOTE_path2a_twelfth_pass_2026_10_05, B-1): `diff --no-prefix` over a top directory `a/` or `b/`,
+    # `diff --relative=D`, `format-patch --relative`, `diff.relative=true` with D as the repository. Operator option
+    # O-10; the truth tests pin such kept claims at each door.
     if d.get("prefix2") and not got["K", False][0]:
         return "shape", "#121"
     if got["K", False][2] != under:
@@ -2832,7 +2833,8 @@ def _p2a_apply(g: DiffGate, strict: bool, decide) -> DiffGate:
     with nothing written. For a `decide` that uses what it is handed as data and calls what it is given, whatever data
     it returns, the record leaves here as main's but for claims in reach turned UNCHECKABLE with a reason of the fixed
     form, and the gate verdict is main's formula over the final claims. Code that reaches around its argument by
-    reflection (see _p2a_decisions) is not covered."""
+    reflection (see _p2a_decisions) is not covered. Where it withholds main's only CONTRADICTED, it reads `strict` as
+    a truth value where main short-circuited (NOTE_path2a_twelfth_pass_2026_10_05, A-1)."""
     pending = {i: c for i, c in enumerate(g.claims) if (c.kind, c.verdict) in _P2A_REACH}
     if not pending:
         return g                              # nothing in reach: no copy, no call, and the record is main's object
