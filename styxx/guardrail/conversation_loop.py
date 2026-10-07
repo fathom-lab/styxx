@@ -6,7 +6,7 @@ A drop-in calibrated conversation-loop detector. Pure Python, no
 embeddings, no model weights — runs anywhere (server, edge, Pyodide
 browser).
 
-Second instrument shipped after the *Every Mind Leaves Vitals*
+The lab's second instrument shipped after the *Every Mind Leaves Vitals*
 position paper (Rodabaugh, 2026, DOI 10.5281/zenodo.19777921). Confirms
 the K=1 phase-transition signature on a fifth instrument under the
 same measurement protocol — making the count 5-for-5.

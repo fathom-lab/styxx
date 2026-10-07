@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Calibrated plan-action gap detection weights v0 — seventh cognometric
-instrument. Fourth instrument shipped under the call from *Every Mind
+instrument. The lab's fourth instrument under the call from *Every Mind
 Leaves Vitals* (Rodabaugh, 2026, DOI 10.5281/zenodo.19777921).
 
 Detects when an agent states a plan, then takes actions that diverge
@@ -203,7 +203,7 @@ CALIBRATION_NOTES: Dict = {
     "instrument_number": 7,
     "instrument_called_in": (
         "Every Mind Leaves Vitals (Rodabaugh, 2026, "
-        "DOI 10.5281/zenodo.19777921). Fourth instrument shipped under "
+        "DOI 10.5281/zenodo.19777921). The lab's fourth instrument under "
         "that paper's call for #4-#9. (Sycophancy + conversation-loop "
         "+ deception preceded.)"
     ),

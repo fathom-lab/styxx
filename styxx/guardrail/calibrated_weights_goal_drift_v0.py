@@ -2,7 +2,7 @@
 """
 Calibrated goal-drift detection weights v0 — ninth and FINAL cognometric
 instrument in the *Every Mind Leaves Vitals* call (Rodabaugh, 2026,
-DOI 10.5281/zenodo.19777921). Sixth and last instrument shipped under
+DOI 10.5281/zenodo.19777921). The lab's sixth and last instrument under
 that paper's call.
 
 Detects multi-turn goal drift: an agent receives a goal at session

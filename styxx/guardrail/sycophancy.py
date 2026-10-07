@@ -5,7 +5,7 @@ styxx.guardrail.sycophancy — the fourth cognometric instrument.
 A drop-in calibrated sycophancy detector. Pure Python, no logprobs,
 no model weights — runs anywhere (server, edge, Pyodide browser).
 
-First instrument shipped after the *Every Mind Leaves Vitals* position
+Shipped after the *Every Mind Leaves Vitals* position
 paper (Rodabaugh, 2026, DOI 10.5281/zenodo.19777921), which called for
 instruments #4–#9 to extend cognometry beyond hallucination, refusal,
 and tool-call drift. Confirms the phase-transition signature on a

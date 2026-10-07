@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Calibrated overconfidence detection weights v0 — eighth cognometric
-instrument. Fifth instrument shipped under the call from *Every Mind
+instrument. The lab's fifth instrument under the call from *Every Mind
 Leaves Vitals* (Rodabaugh, 2026, DOI 10.5281/zenodo.19777921).
 
 Detects responses written in an overconfident epistemic register —
