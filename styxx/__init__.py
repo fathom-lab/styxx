@@ -4,7 +4,7 @@ styxx — nothing crosses unseen.
 
 a fathom lab product.
 
-The first drop-in cognitive vitals monitor for LLM agents. Reads an
+A drop-in cognitive vitals monitor for LLM agents. Reads an
 agent's internal state in real time using signals available on any
 LLM with a logprob interface (entropy, logprob, top-2 margin),
 calibrated cross-architecture on the Fathom Cognitive Atlas v0.3.
@@ -674,7 +674,7 @@ from .thought import (
     ATLAS_VERSION,
 )
 
-# 3.1.0a1 — the first dynamical-systems model of LLM cognition.
+# 3.1.0a1 — a dynamical-systems model of LLM cognition.
 # Once you have a measurable state vector (Thought), you can fit a
 # dynamical system to it and predict / simulate / control cognitive
 # trajectories. CognitiveDynamics is the linear-Gaussian v0:
@@ -703,7 +703,7 @@ from .dynamics import (
 # for backward compatibility — they're just not in ``__all__``, so
 # ``from styxx import *`` and tab-completion stay focused on the real
 # product surface.
-# 7.1.0: cognometric reward signal for RLHF — first reward calibrated
+# 7.1.0: cognometric reward signal for RLHF — a reward calibrated
 # against cognitive failure modes instead of human approval.
 from .reward import (
     fathom_reward,

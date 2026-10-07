@@ -2,7 +2,7 @@
 """
 benchmarks/cognitive_bench/run_multi_vendor.py
 
-CognitiveBench v0 — the first public cross-vendor cognitive audit.
+CognitiveBench v0 — a public cross-vendor cognitive audit.
 
 Runs the same fake-entity fabrication battery against every major
 production LLM we have access to:
@@ -222,7 +222,7 @@ def render_leaderboard(all_results: Dict[str, Dict]) -> str:
     lines = []
     lines.append("# CognitiveBench v0")
     lines.append("")
-    lines.append("**First public cross-vendor cognitive audit of "
+    lines.append("**A public cross-vendor cognitive audit of "
                  "production LLMs.**")
     lines.append("")
     lines.append(f"Battery: 50 fake-entity prompts "

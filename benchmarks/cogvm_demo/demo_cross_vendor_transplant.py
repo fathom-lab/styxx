@@ -14,8 +14,8 @@ What this proves (or disproves) in one run:
 
 If the transplanted direction changes Qwen's behavior in the
 expected direction (more/less refusal) and is not merely noise, we
-have the first public demonstration of **residual-stream concept
-transfer across model vendors**.
+have a demonstration of **residual-stream concept transfer across
+model vendors**.
 
 Three sweeps, same unsafe prompt:
   1. Baseline (no steering) — Qwen's factory behavior.

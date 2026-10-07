@@ -4,7 +4,7 @@ benchmarks/darkcity_csv/analyze.py
 
 CSV-to-P&L correlation on real DarkCity agent decisions.
 
-The first public analysis correlating Styxx proxy cognitive vitals
+An analysis correlating Styxx proxy cognitive vitals
 (surface text-heuristic, styxx.anthropic_hack.text_features) with
 real economic outcomes in a live autonomous-agent environment.
 
@@ -271,7 +271,7 @@ def render_report(result: Dict, rows: List[Dict]) -> str:
                  "`adversarial` vs `refusal`, do those labels actually "
                  "track the economic reward the agent earned? If yes, "
                  "cognitive labels are load-bearing on real P&L — "
-                 "first public evidence of that link.")
+                 "evidence of that link.")
     lines.append("- If no features survive Bonferroni: either the "
                  "signal isn't in surface text (need tier-1 residual "
                  "probes) or n is too small.")

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""End-to-end test of the hallucination detector with the v1 behavioral
+"""End-to-end test of the fabrication-risk gate with the v1 behavioral
 confab probe. Runs a small battery of fake-entity prompts against
 Llama-3.2-1B-Instruct and reports:
 

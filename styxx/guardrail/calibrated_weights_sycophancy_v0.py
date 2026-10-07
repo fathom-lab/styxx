@@ -258,9 +258,9 @@ CALIBRATION_NOTES: Dict = {
         "show sycophancy is widespread across RLHF'd LMs. Wei et al., "
         "Simple synthetic data reduces sycophancy in language models "
         "(arXiv:2308.03958, 2023). Both establish the phenomenon and "
-        "evaluation methodology. Neither ships a calibrated text-only "
-        "detector. styxx v0 is the first such detector with a published "
-        "calibration fingerprint."
+        "evaluation methodology. styxx v0 is a calibrated text-only "
+        "detector with a published calibration fingerprint; whether "
+        "others shipped one earlier was not surveyed."
     ),
     "reproducer": "scripts/sycophancy_train_v0.py (seed=0, deterministic)",
     "v0_1_robustness_experiment": (
