@@ -52,4 +52,5 @@ of 2026-09-16; the protocol is what was tested here, not the Gemini app itself. 
 Claude Code hook's README says about scope applies: the closed template set, "tests pass"
 UNCHECKABLE, a path the diff does not show UNCHECKABLE and never accused (EXTERNAL-1), the open
 false-VERIFIED class #101, and the weak rung of any hook that shares the agent's shell. The
-enforcement is the Action.
+enforcement is the Action, in a workflow that sets `soft-fail: "false"`; its default reports and
+does not block.

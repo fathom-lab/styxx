@@ -2,14 +2,29 @@ name: "styxx diffgate"
 description: >-
   Your agent's PR summary cannot lie about its diff. Extracts diff-shaped claims from the
   PR body (or push commit message) and verifies each against the actual diff — checkout-free,
-  via the GitHub API. Exits nonzero on a contradicted claim, with the lie named in the job
-  summary and as an annotation. It judges a CLOSED template set (touched/created/deleted
+  via the GitHub API. By default it reports and does not block: every verdict goes in the job
+  summary and a contradicted claim is named as an annotation, but the job fails on it only if
+  you set soft-fail: "false". It does not block by default because no kind of accusation it
+  still makes has been measured clearing the 0.95 precision floor the lab set for accusing.
+  The papers and receipts named here are under papers/closed-model-frontier/. A path claim
+  the diff does not show is no longer accused: the 100 accusations EXTERNAL-1 sampled from
+  71,016 eligible external agent-authored PRs, 85 of them path claims, measured precision 0.23
+  (23 upheld by a blind three-seat panel) against a preregistered 0.95 floor (2026-08-31,
+  RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md, receipts
+  external1_adjudication.json and external1_summary.json), and a repaired path accuser
+  measured 0.16 on a held-out sample (V14, 2026-09-01,
+  RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md, receipt v14_adjudication.json),
+  so that accusation is reported UNCHECKABLE until a held-out repair clears the floor. Of the
+  kinds that still accuse, only_touches is the one with a measured precision: 0.25, 2 of 8
+  accusations correct across 299 only_touches claims in 568 AIDev PRs (PATH-1, 2026-09-17,
+  RESULT_path1_only_touches_repair_2026_09_17.md), re-derived by SCOPE-1 (2026-09-18,
+  RESULT_scope1_ABANDONED_2026_09_18.md, receipt scope1_footprint.json) against
+  styxx/diffgate.py at sha256 9b620e00…, the reader in 7.48.0 and 7.48.1; @main runs that
+  reader under the PATH-2a overlay, which can withhold a verdict and never adds an accusation.
+  No committed RESULT states a precision for the other kinds that accuse (tests_added,
+  symbol_added, files_changed_count). It judges a CLOSED template set (touched/created/deleted
   paths, added functions and tests, file counts, only-touches scopes, tests-pass); prose
-  outside it is never scored, and that limit is the reason to trust the verdicts it does
-  give. What it will not do: accuse a path claim the diff does not show. That accusation
-  was measured at precision 0.23 against a preregistered 0.95 floor on 71,016 external
-  agent-authored PRs (EXTERNAL-1, 2026-08-31) and is reported UNCHECKABLE until a held-out
-  repair clears the floor. The sweep harness is committed
+  outside it is never scored. The sweep harness is committed
   (scripts/diffgate_validation_sweep.py) so you can re-run our numbers rather than take our
   word for them; the README says which of our own earlier numbers that harness withdrew.
 author: "Fathom Lab"
@@ -19,13 +34,23 @@ branding:
 
 inputs:
   strict:
-    description: "UNCHECKABLE claims (e.g. 'tests pass' with no way to run them) also fail the gate"
+    description: >-
+      UNCHECKABLE claims (e.g. 'tests pass' with no way to run them) also fail the gate. The job
+      fails on them only when soft-fail is "false".
     required: false
     default: "false"
   soft-fail:
-    description: "report everything, never fail the job (adoption ramp)"
+    description: >-
+      Only an explicit "false" blocks. The value is compared case-insensitively with surrounding
+      whitespace stripped. "true" (the default) reports: every verdict goes in the job summary
+      and the annotations, and the gate's verdicts never fail the job; an install or runtime
+      error still can. "false" blocks: the job fails on a contradicted claim, and with strict on
+      an UNCHECKABLE one too. Any other value, the empty string included, reports as "true" does
+      and prints a warning naming the value. The default was "false" until the change recorded
+      in CHANGELOG.md ("the GitHub Action reports by default"); set soft-fail: "false" to keep a
+      blocking check.
     required: false
-    default: "false"
+    default: "true"
   styxx-version:
     description: >-
       styxx version spec to install. The floor is deliberate. Every release before
