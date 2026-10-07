@@ -1022,7 +1022,7 @@ def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: byte
         return out
 
     # The text the script shows, and where each of its lines starts in it.
-    bom = 1 if text.startswith("﻿") else 0
+    bom = 1 if text.startswith("\ufeff") else 0
     shown = text[bom:]
     lines = _PAGE_V01_LEGACY_SPLIT.split(shown)
     starts = [0] + [mm.end() for mm in _PAGE_V01_LEGACY_SPLIT.finditer(shown)]
@@ -2162,8 +2162,8 @@ is the one that checks the build the receipt names.</div>
 # receipt name, the verdict, the issuer's hash, a binding path), and until review round 3 they
 # were printed as they came, so a forgery could move the cursor up and erase its own NOT CHECKED
 # lines or failure list from the reader's screen while stdout still held them.
-_UNPRINTABLE = re.compile("[\x00-\x1f\x7f-\x9f؜‎‏  ‪-‮"
-                          "⁦-⁩]")
+_UNPRINTABLE = re.compile("[\x00-\x1f\x7f-\x9f\u061c\u200e\u200f\u2028\u2029\u202a-\u202e"
+                          "\u2066-\u2069]")
 
 
 def _printable(line) -> str:

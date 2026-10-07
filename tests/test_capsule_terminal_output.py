@@ -27,8 +27,8 @@ ROOT = Path(__file__).resolve().parent.parent
 RECEIPT = {"eval": {"accuracy": 0.75, "items": 40}}
 CLEAN = "The run scored 0.75 accuracy over 40 items.\n"
 ESC = "\x1b[1A\x1b[2K\r"            # cursor up a line, erase it, carriage return
-RAW = re.compile("[\x00-\x09\x0b-\x1f\x7f-\x9f؜‎‏  "
-                 "‪-‮⁦-⁩]")
+RAW = re.compile("[\x00-\x09\x0b-\x1f\x7f-\x9f\u061c\u200e\u200f\u2028\u2029"
+                 "\u202a-\u202e\u2066-\u2069]")
 
 
 @pytest.fixture(scope="module")
@@ -78,7 +78,7 @@ def _v01_edit(where):
         elif where == "c1_name":            # a C1 control-sequence introducer is a bare name
             p["document"]["name"] = c["document"] = "d\x9b2K.md"
         elif where == "bidi_name":          # so is a right-to-left override
-            p["document"]["name"] = c["document"] = "d‮dm.txt"
+            p["document"]["name"] = c["document"] = "d\u202edm.txt"
         elif where == "binding_path":
             c["receipt_binding"]["receipts"][0]["path"] = ESC + "r.json"
     edit.__name__ = where
