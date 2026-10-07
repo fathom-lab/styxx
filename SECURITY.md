@@ -14,20 +14,29 @@ end-of-life — please upgrade.
 
 ## Reporting a vulnerability
 
-Please report suspected security issues privately by email to
-**security@fathomlab.io**.
+Please report suspected security issues privately through GitHub's
+private vulnerability reporting for this repository:
 
-If you prefer encryption, attach a public key in your first message and
-we will reply on the same key. We will acknowledge within 72 hours,
-provide a triage assessment within 7 days, and coordinate a fix and
-disclosure on a timeline appropriate to the severity. We will not file
-a CVE without informing you first, and we will credit reporters who
-want credit.
+**<https://github.com/fathom-lab/styxx/security/advisories/new>**
+
+(the same form is behind **Report a vulnerability** on the repository's
+**Security** tab). A report filed there is private: GitHub shows it to
+you and the repository's maintainers, not to the public.
+
+**If you emailed a report to the address this file used to name,
+please send it again through the link above.** That address's domain
+has no mail-exchange (MX) record and serves a parked page, so we cannot
+confirm that mail sent there arrived.
+
+We will acknowledge within 72 hours, provide a triage assessment within
+7 days, and coordinate a fix and disclosure on a timeline appropriate to
+the severity. We will not file a CVE before informing you, and we
+will credit reporters who want credit.
 
 Please do **not** open public GitHub issues for security-sensitive
 reports. If you believe a public issue is the right venue (for example,
-a clearly low-severity hygiene issue), say so explicitly in your email
-and we'll move quickly.
+a clearly low-severity hygiene issue), say so explicitly in your private
+report and we'll move quickly.
 
 ## Supply-chain posture
 
@@ -68,7 +77,8 @@ This is the open MIT protocol's reference implementation. Trust signals:
    assets attached to the GitHub Release, and the hashes its notes give.
 
 If anything in steps 2–3 doesn't line up, do not install the artifact.
-Report the discrepancy to **security@fathomlab.io** immediately.
+Report the discrepancy immediately through
+[private vulnerability reporting](https://github.com/fathom-lab/styxx/security/advisories/new).
 
 ## What we will not do
 

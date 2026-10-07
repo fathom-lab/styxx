@@ -63,7 +63,8 @@ message. `git commit --no-verify` skips it, an agent can edit `.pre-commit-confi
 pre-commit hooks are installed per clone by the person, never by the diff. It is the habit, not
 the enforcement. The enforcement is the same gate run where the agent's shell cannot reach: the
 GitHub Action (`uses: fathom-lab/styxx@main`, checkout-free, reads the PR body and diff from the
-API) and the CLI on a checkout you control.
+API) and the CLI on a checkout you control. The Action enforces only with `soft-fail: "false"`:
+its default reports and does not block (see the README's GitHub Action row for why).
 
 ## The same gate, other doors
 
