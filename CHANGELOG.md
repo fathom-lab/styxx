@@ -7,6 +7,93 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
+
+**`styxx/capsule.py` and `styxx/charon.py`; tests in `tests/test_capsule_no_traceback.py`.** 7.49.0
+left #196 open: its entry named two classes that still ended `python -m styxx.capsule verify` in a
+traceback, and the issue names three. Each now ends in `CAPSULE FAILS VERIFICATION`, with a problem
+that names it, and exit 1, and `styxx.charon` derives an UNRESOLVED or not-reproduced line for it.
+
+- A stated `styxx_version` of thousands of digits ended verify in a ValueError (Python reads at
+  most 4300 digits as an integer by default, and the limit is the verifying environment's to set).
+  create writes styxx's own version there; a stated version longer than 64 characters is now a
+  payload problem, before anything reads it.
+- An `ungrounded` row that is a list ended verify in a TypeError while naming the fields that
+  differ from the ledger's UNGROUNDED rows. A row that is not an object is now named as such.
+- A v0.1 payload whose spec says v0.2, and a receipt whose bytes are not JSON with its hash restated
+  in the certificate, already failed with a problem in 7.49.0's verify (`payload.summary is not an
+  embedded file`; `the installed verifier could not re-run on the embedded bytes
+  (JSONDecodeError: ...)`). The tests pin both, with the command's output and charon's line.
+- A receipt named with a character Windows refuses, such as `r<1>.json`, failed on Windows with
+  the OSError of the write, while a POSIX verifier wrote it and re-ran the certifier: the verdict
+  depended on the verifier's system. The name rule is now the same on every system (next).
+
+**The name rule is the same on every system.** Before anything is written, `verify` refuses a
+document or receipt name that holds `<`, `>`, `"`, `|`, `?` or `*` (Windows refuses them, POSIX
+writes them), that holds a lone surrogate (Windows writes one; UTF-8 cannot encode it, so a POSIX
+verifier's write raised UnicodeEncodeError), or that is longer than 255 UTF-16 code units or 255
+UTF-8 bytes (the name limits of NTFS and of ext4), on every system, with a problem that says why
+and that it is refused everywhere so that a capsule's verdict does not depend on the verifier's.
+Two names that are one file on HFS+, canonically equivalent spellings such as an NFC `é` and an `e`
+with a combining accent, are now refused with a problem that names HFS+, as two names differing
+only in case already were.
+`capsule create` refuses such a name before reading anything; until now a POSIX system minted the
+capsule, and its own verify then removed it with a hint that blamed the ledger schema. The rules
+7.48.1 shipped (GHSA-h5xv-4344-f62r) are unchanged, messages included.
+- `styxx.corpus_audit` reads the same rule (`_bare_name`) before it writes a certificate's names
+  to re-derive its sworn bytes, so it refuses these names too. None of the 598 distinct names the
+  243 committed certificates give (receipts, documents and the files they are named for) is
+  refused by the new rule.
+- Not repaired: what the verifier's own system cannot write under a name the rule allows. Windows
+  without long paths enabled (the default) cannot write a path longer than 260 characters, so a
+  name of a couple of hundred characters under a long temporary directory fails there, with a
+  problem that names that limit as the system's and says to verify where the files can be written,
+  and verifies elsewhere.
+
+**The sweep.** The 600 mutations 7.49.0's entry describes were not committed. The new tests mutate
+every field of a minted v0.1, v0.2 and sworn payload in turn (a value in its place, its deletion,
+and for an object a field no minter writes) around the page this styxx renders for it, and assert
+that verify returns a report, that the command prints it on a strict UTF-8 stream and exits 0
+exactly when it is ok, that charon's line can be digested and written, and that the line is
+UNRESOLVED or not reproduced whenever verify failed. Around the v0.1 page every mutation is refused
+but one: a binding block with no note, which bind_at_mint writes in a repository with no commit. By
+default each field takes five of the nineteen values (1,848 mutations); `STYXX_CAPSULE_SWEEP=full`
+puts every value in every field (6,059 mutations), and both pass. A wider probe outside the suite,
+each mutation around every page that renders it and spliced into the minted one, with hashes and
+bindings restated so it reaches the code behind them, and pages a JSON decoder cannot read (9,372
+cases), finds an uncaught exception at origin/main (566f7769) in 47 combinations of spec, caller
+(verify, the command, charon's derive, the line's digest), exception and message, and in none on
+this branch. What it found, each now a named problem:
+- v0.2: a binding that is not an object (AttributeError); a gate record JCS cannot canonicalise,
+  such as NaN or Infinity (ValueError); summary or diff bytes bound to their hash that are not
+  UTF-8 (UnicodeDecodeError); instrument skew beside a verifier block that is not an object.
+- sworn: a receipt, its document or its verifier block that is not an object (AttributeError); a
+  receipt JCS cannot canonicalise (ValueError).
+- Every spec: a payload nested deeper than the JSON decoder recurses (RecursionError). A payload
+  nested more than 64 levels deep is now refused at parse; every committed payload is nested 5
+  levels deep at most.
+- The command: a lone surrogate in a printed field, and a character the terminal's encoding cannot
+  write (a cp1252 pipe on Windows), ended it in a UnicodeEncodeError. Both are printed as escapes.
+- charon: a v0.2 binding value that is not text (TypeError); a stated version that is not text,
+  recorded on the line, could not be digested (NaN) or was refused (an object with a key outside
+  ASCII), and is now recorded as null; a lone surrogate in a verdict or a problem made a line that
+  could be derived but neither digested nor written, and is now written as its escape. Should verify
+  ever raise, the line is UNRESOLVED and names the exception's class.
+
+**Not repaired: slow, not a traceback.** certify searches a line again for each number on it, so
+a document of many numbers on one line takes verify (and create, and charon) a time that grows with
+the square of their count: 500 numbers took 0.4 seconds here, 1,000 took 1.4 and 2,000 took 5.3,
+and the probe's 50,000 did not finish in 20 minutes. The repair belongs in `styxx/certify.py`,
+which this change does not touch.
+
+**What did not change.** Every refusal stands: the mutations the probe's v0.1 run verifies on this
+branch are a subset of those it verifies at origin/main, which also verifies a name of 260 UTF-8
+bytes and stated versions of 65 characters and of 4,300 digits. The thirteen committed capsules give
+the same report and the same output under this change as at origin/main (twelve verify; the v0.2
+handoff capsule fails under both). Re-deriving `papers/charon/charon.log.jsonl` gives every one of
+its 257 lines the same status, classes and changed fields under both. `styxx/certify.py`,
+`styxx/sworn.py`, `styxx/corpus_audit.py` and the diff gate are not touched.
+
 ## [Unreleased] — styxx 7.49.0 on Zenodo, as the next version of the software record
 
 styxx 7.49.0 is deposited on Zenodo as **10.5281/zenodo.23221755**, a new version of the styxx software
