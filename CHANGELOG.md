@@ -40,10 +40,12 @@ the record's line stays true of what it describes.
   model card". `papers/oath-economy/PREREG_model_card_certification_2026_07_02.md` (lines 6-7) quotes
   the moonshots rung as it read before; it is a frozen PREREG and is not edited.
 - `styxx/guardrail/`: the sycophancy instrument (#4) called itself the earliest instrument shipped
-  under the *Every Mind Leaves Vitals* call, a call addressed to the field, in its weights docstring,
-  its `CALIBRATION_NOTES["instrument_called_in"]` (lines 3, 42 and 213), its module docstring (line 8)
-  and the package comment (`__init__.py` line 54). Other answers to the call were never surveyed; the
-  note now says so, and the 2026-09-29 pass had corrected `prior_art_context` in the same dict. The
+  under the *Every Mind Leaves Vitals* call, a call addressed to the field: in the docstring of
+  `calibrated_weights_sycophancy_v0.py` (lines 3 and 42), in its
+  `CALIBRATION_NOTES["instrument_called_in"]` (line 213), in the module docstring of `sycophancy.py`
+  (line 8) and in the package comment (`__init__.py` line 54). Other answers to the call were never
+  surveyed; the note now says so, and the 2026-09-29 pass had corrected `prior_art_context` in the
+  same dict. The
   instruments after it (#5 to #9) counted themselves under the same call, "second" to "sixth and last",
   a count that presupposed the withdrawn one; they now count the lab's own instruments, in
   `__init__.py` (lines 62, 94, 105 and 117), the `calibrated_weights_*_v0.py` docstrings and three
