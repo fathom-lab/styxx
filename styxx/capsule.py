@@ -1107,13 +1107,19 @@ def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: byte
     another band, or on a number the certificate bands otherwise) fails the capsule, with its row
     and its cause. A certificate band the script leaves undrawn is an omission: the page shows
     that number plain and paints nothing false, so it is returned to be printed as an advisory.
-    The script's own run under node agreed with this on all 410 honest older pages tried on
-    2026-10-06 (305 with omissions, 36 with a false band), and does in the tests.
+    A band the certificate puts there and the script draws twice (a second row of that token and
+    kind falling back onto it, its own number then left plain) is that band, nested in itself,
+    and the second row is an omission. The script's own run under node agrees with this rule in
+    the tests, and on the honest older pages counted in the CHANGELOG.
 
     Until review round 4 an omission failed the capsule too, while the CHANGELOG described the
     rule as failing only misplaced bands: of 208 honest capsules styxx 7.47.0 mints over the
     documents committed here, 25 failed, 24 of them for omissions alone, most on a U+2212 minus.
-    The band markers and markup in receipt names still fail outright."""
+    Until review round 5 a band drawn twice failed as one the certificate does not put there,
+    though nothing false is painted: 13 of 300 honest capsules 7.48.1 minted over random
+    documents, and the one of those 25 still failing (FINDING_p1_third_quarantine_2026_08_08, an
+    abstained -45 written twice, once with U+2212). The band markers and markup in receipt names
+    still fail outright."""
     out: List[str] = []
     for r in payload["receipts"]:
         if any(c in r["name"] for c in "<&"):
@@ -1268,19 +1274,32 @@ def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: byte
     def where(e):
         return (want[id(e)][0], want[id(e)][2]) if id(e) in want else None
 
-    for k, m in (seen - meant).items():
+    # A band the certificate puts there, drawn twice (the script's fallback lands a second row
+    # of that token and kind on it), nests one span in another of the same kind: the number shows
+    # its own band, and the row's own number is left plain, an omission. Until review round 5 the
+    # second drawing failed as a band the certificate does not put there, though the page paints
+    # nothing false (review round 4, compatibility lens: 13 of 300 honest 7.48.1 mints, and the
+    # one of 209 honest 7.47.0 mints over the documents committed here that failed).
+    for k, m in seen.items():
+        if meant[k]:
+            continue
         for e in own(k, seen_by, where)[:m]:
             w = want.get(id(e))
             out.append(f"the page (minted before 2026-10-05) draws the {_BAND_WORDS[_band(e)]} "
                        f"band of {e.get('token')!r} (certificate line {json.dumps(e.get('line'))}, "
                        f"column {json.dumps(e.get('col'))}) where the certificate puts no such "
                        f"band: {cause(e, drawn[id(e)], w)}")
+    twice = {k for k, m in seen.items() if meant[k] and m > meant[k]}
     omitted: List[str] = []
     for k, m in (meant - seen).items():
         for e in own(k, meant_by, lambda e: drawn.get(id(e)))[:m]:
+            d = drawn.get(id(e))
             omitted.append(f"line {json.dumps(e.get('line'))} {e.get('token')!r} "
                            f"({_BAND_WORDS[_band(e)]}; "
-                           f"{cause(e, drawn.get(id(e)), want.get(id(e)))})")
+                           f"{cause(e, d, want.get(id(e)))}"
+                           + ("; it draws the row over the band of the same kind the certificate "
+                              "puts on that number, so that band is drawn twice"
+                              if d is not None and band_key(e, d) in twice else "") + ")")
     if len(out) > 24:
         out = out[:24] + [f"... and {len(out) - 24} more band(s) the page draws where the "
                           f"certificate puts no such band"]

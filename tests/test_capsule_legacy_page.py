@@ -178,6 +178,19 @@ FAITHFUL = [
     "\ufeff# Report\n\nThe run scored 0.75 accuracy over 40 items.\n",
     "\ufeffThe run scored 0.75 accuracy over 40 items.\n",
 ]
+# Review round 4 (compatibility lens, major): a second row of the same token and kind whose
+# column the script misreads falls back onto the earlier one, so the script draws that number's
+# band twice, one span nested in the other, and leaves the second number plain. The page
+# paints nothing false, yet layer 2 failed it as a band the certificate does not put there: 13
+# of 300 honest capsules 7.48.1 minted over random documents, and the lab's own
+# FINDING_p1_third_quarantine_2026_08_08 minted by 7.47.0 and by 7.48.1 (an abstained -45, the
+# second written with U+2212). The BOM and emoji documents are the review's twin documents; the
+# U+2212 one has the lab document's shape.
+TWICE = [
+    "\ufeffThe run had 40 items and 40 more.\n",                         # a BOM
+    "\U0001F600 The run had 40 items and 40 more.\n",                    # an astral character
+    "It fell to -12 and then to \u221212 again over 40 items.\n",        # an abstained U+2212
+]
 
 
 def _omissions(rep):
@@ -227,6 +240,34 @@ def test_an_honest_older_page_verifies_where_its_script_draws_every_band_right(t
     assert not _omissions(rep), rep["advisory"]
 
 
+@pytest.mark.parametrize("text", TWICE)
+def test_a_band_drawn_twice_on_one_number_verifies_and_names_the_number_left_plain(tmp_path,
+                                                                                   text):
+    rep = verify_capsule(_legacy(tmp_path, text))
+    assert rep["ok"] is True, rep["problems"]
+    om = _omissions(rep)
+    assert len(om) == 1 and "shows 1 number(s) with no band" in om[0], rep["advisory"]
+    token = "'-12'" if "−" in text else "'40'"
+    assert f"line 1 {token} (" in om[0], om
+    assert "it draws the row over the band of the same kind the certificate puts on that " \
+           "number, so that band is drawn twice" in om[0], om
+    assert any(c.startswith("the page (the page styxx rendered before") and "no band" in c
+               for c in rep["compared"]), rep["compared"]
+
+
+def test_a_band_drawn_twice_over_a_number_banded_otherwise_still_fails(tmp_path):
+    """Drawing twice is not a pass by itself: where the certificate bands that number another
+    way, the drawn band is false however often it is drawn. Here certify's line 2 holds two
+    abstained 41s, and the script, which does not split at the vertical tab, draws both on the 41
+    of certify's line 3, which the certificate accuses."""
+    text = "Intro\x0b41 runs, 41 runs\nThe run scored 0.75 accuracy over 40 items and 41 runs.\n"
+    rep = verify_capsule(_legacy(tmp_path, text))
+    assert rep["ok"] is False
+    drawn = [p for p in rep["problems"]
+             if p.startswith("the page (minted before 2026-10-05) draws the abstained band of '41'")]
+    assert len(drawn) == 2, rep["problems"]
+
+
 _LEGACY_HARNESS = r"""
 'use strict';
 const fs = require('fs'), vm = require('vm');
@@ -271,13 +312,17 @@ def _band_of(e):
     return "vo" if (e.get("epistemics") or {}).get("obligated") else "vv"
 
 
-@pytest.mark.parametrize("text", WRONG + OMITTED + FAITHFUL + [
+@pytest.mark.parametrize("text", WRONG + OMITTED + FAITHFUL + TWICE + [
     "\U0001F600 40 then 4 of them: the run scored 0.75 accuracy over 40 items.\n",
+    "Intro\x0b41 runs, 41 runs\nThe run scored 0.75 accuracy over 40 items and 41 runs.\n",
 ])
 def test_layer_2_says_what_the_older_page_s_own_script_draws(tmp_path, text):
     """The older page's own script, run under node: layer 2 passes the capsule exactly when that
     script draws no band where certify does not put that number with that band, and prints an
-    omission exactly when the script leaves a number of the certificate unbanded."""
+    omission exactly when the script leaves a number of the certificate unbanded. Bands are
+    compared as a reader sees them, a set: a span nested in another with the same text, offset and
+    band is that band drawn twice (until review round 5 they were counted, and layer 2 failed a
+    band drawn twice as a false one)."""
     import shutil
     from collections import Counter
     node = shutil.which("node")
@@ -303,11 +348,14 @@ def test_layer_2_says_what_the_older_page_s_own_script_draws(tmp_path, text):
                    for at in [starts[e["line"] - 1] + e["col"] - bom])
     got = Counter(tuple(s) for s in drawn["spans"])
     assert drawn["shown"] == shown
+    assert max(want.values()) == 1          # certify puts one row at a place
     rep = verify_capsule(cap)
-    false_bands = got - want
+    false_bands = set(got) - set(want)
     assert rep["ok"] is (not false_bands), (text, drawn["spans"], want, rep["problems"])
     if rep["ok"]:
-        assert bool(_omissions(rep)) is (got != want), (text, drawn["spans"], want)
+        assert bool(_omissions(rep)) is bool(set(want) - set(got)), (text, drawn["spans"], want)
+    if text in TWICE:
+        assert max(got.values()) == 2, drawn["spans"]     # the script did draw a band twice
 
 
 def test_the_older_page_fails_where_its_columns_would_move_a_band(tmp_path):
