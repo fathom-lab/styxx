@@ -82,6 +82,32 @@ def test_the_gate_readme_names_the_same_instrument():
     )
 
 
+def test_the_gate_readme_names_the_pin_py_side_holds():
+    """The README's run book says which hash `py_side.py` refuses to run without. It named `cb99a685…` long after the
+    pin had moved to `4cded2e3…` (step zero, item 6, of the 2026-10-06 study), so it is held to the script's PINNED."""
+    m = re.search(r"python py_side\.py +# refuses to run unless styxx/diffgate\.py hashes to ([0-9a-f]{8,64})…",
+                  GATE_README.read_text(encoding="utf-8"))
+    assert m, "web/gate/README.md no longer names py_side.py's pin in the form this test reads"
+    pinned = re.search(r'^PINNED\s*=\s*"([0-9a-f]{64})"', PY_SIDE.read_text(encoding="utf-8"), re.M).group(1)
+    assert pinned.startswith(m.group(1)), (
+        f"web/gate/README.md says py_side.py refuses to run unless the file hashes to {m.group(1)}…; it pins {pinned}")
+
+
+def test_the_gate_readme_names_the_pinned_pair_counts():
+    """The README says how many pinned pairs `node check_pairs.js` checks and how many `path2a_pairs.json` pins. The
+    check_pairs.js count went stale once (153 named while 180 were read, NOTE_path2a_seventh_pass_2026_09_30, I-3);
+    both are held to the files `check_pairs.js` reads."""
+    body = GATE_README.read_text(encoding="utf-8")
+    m = re.search(r"node check_pairs\.js +# the ([0-9,]+) pinned pairs", body)
+    assert m, "web/gate/README.md no longer states check_pairs.js's count in the form this test reads"
+    assert int(m.group(1).replace(",", "")) == len(_pairs()), (
+        f"web/gate/README.md says check_pairs.js checks {m.group(1)} pinned pairs; it reads {len(_pairs())}")
+    p2a = re.search(r"`path2a_pairs\.json` pins ([0-9,]+) pairs", body)
+    assert p2a, "web/gate/README.md no longer states path2a_pairs.json's count in the form this test reads"
+    n = len(json.loads((DIFFERENTIAL / "path2a_pairs.json").read_text(encoding="utf-8")))
+    assert int(p2a.group(1).replace(",", "")) == n, f"the README says path2a_pairs.json pins {p2a.group(1)}; it pins {n}"
+
+
 # ---- (3): the corpus cannot be silently swallowed ---------------------------------------------
 
 @pytest.mark.parametrize("name", pairs_files_named_by_check_pairs())

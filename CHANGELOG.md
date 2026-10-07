@@ -212,6 +212,24 @@ after 2026-08-30, carrying another issuer's hash, has the shape of one issued th
 the older page it verifies with those fields NOT CHECKED and the live verdict printed beside its
 own (around the current page it fails).
 
+## [Unreleased] — web/gate/README.md: the run book's pin, measured at the head, and held to it by a test
+
+Step zero, item 6, of the 2026-10-06 study asked that `web/gate/README.md` name the committed bookmarklet's real
+sha256 and the real count of pinned pairs. Measured at `origin/main` 3ea3cac7: both already were.
+`bookmarklet.min.js` hashes to `6bf6121a…` (53,371 characters) and `bookmarklet.href.txt` to `5498fed7…` (53,382), as
+the README says and `test_the_shipped_bookmarklet_is_the_build_the_readme_names` asserts; `node check_pairs.js` reads
+190 pinned pairs in seven files, and `path2a_pairs.json` pins 136, as the README says. What was not true:
+
+- The differential's run book said `py_side.py` refuses to run unless `styxx/diffgate.py` hashes to `cb99a685…`.
+  Its pin is the file the README names at its top (`4cded2e3…` when this was measured, `09867056…` after #201); the line now says so, and the line above it no
+  longer says the differential runs on 7.48.0's file (`py_side.py` refuses that file).
+- The 2026-09-18 result said the `.gitignore` "names these five as exceptions". That was true then; it names eight
+  now, and the sentence says both.
+
+`tests/test_port_is_current.py` now holds the run book's pin to `py_side.py`'s `PINNED`, and the two pinned-pair
+counts to the files (`check_pairs.js`'s count was once stale, 153 named while 180 were read). The pin test fails on
+`origin/main`'s README and passes here; the count tests pass on both. No code changed.
+
 ## [Unreleased] — CONTRADICTED is printed as CONTRADICTED, with its reason, not as LIE
 
 The demo, the bookmarklet and the hooks printed a CONTRADICTED verdict as `[LIE]`, and the demo closed with
