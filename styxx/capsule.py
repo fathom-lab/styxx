@@ -540,8 +540,19 @@ def _same(a, b) -> bool:
 
 
 def _short(v, n: int = 200) -> str:
-    s = repr(v) if isinstance(v, str) else json.dumps(v, ensure_ascii=False, sort_keys=True)
+    try:
+        s = repr(v) if isinstance(v, str) else json.dumps(v, ensure_ascii=False, sort_keys=True)
+    except (ValueError, TypeError, RecursionError):
+        # nested deeper than Python recurses (#196): a value no certify or minter writes
+        return f"(a {type(v).__name__} nested too deeply to print)"
     return s if len(s) <= n else f"{s[:n]}... ({len(s)} chars)"
+
+
+def _obj_in(d, k) -> dict:
+    """d[k] where d and d[k] are objects, else an empty one: what no minter writes is read as
+    absent, and fails where its absence fails."""
+    v = d.get(k) if isinstance(d, dict) else None
+    return v if isinstance(v, dict) else {}
 
 
 def _canonical_b64(s) -> Optional[bytes]:
@@ -2150,25 +2161,49 @@ def _verify_capsule_v02(html: str, payload: dict) -> dict:
     except ValueError as e:
         result["problems"] = [f"embedded bytes are not base64: {e}"]
         return result
-    if _sha256(summary_bytes) != (binding.get("summary") or {}).get("value"):
+    # Each binding is an object carrying a value; a binding that is text, a list or a number, and
+    # a gate record JCS cannot canonicalise (NaN, Infinity, nesting deeper than Python recurses),
+    # ended verify in a traceback until #196. Each is a binding that does not hold.
+    bound = lambda k: _obj_in(binding, k).get("value")  # noqa: E731
+    if _sha256(summary_bytes) != bound("summary"):
         problems.append("summary bytes != binding.summary")
-    if _sha256(diff_bytes) != (binding.get("diff") or {}).get("value"):
+    if _sha256(diff_bytes) != bound("diff"):
         problems.append("diff bytes != binding.diff")
-    if _gate_binding_hash(gate) != (binding.get("gate") or {}).get("value"):
-        problems.append("gate record != binding.gate (sha256-jcs)")
+    try:
+        gate_hash = _gate_binding_hash(gate)
+    except (ValueError, TypeError, RecursionError) as e:
+        problems.append(f"gate record != binding.gate (sha256-jcs): the record cannot be "
+                        f"canonicalised ({type(e).__name__}: {str(e)[:120]})")
+    else:
+        if gate_hash != bound("gate"):
+            problems.append("gate record != binding.gate (sha256-jcs)")
     if problems:
         result["problems"] = problems
         return result
 
     # stage: re-execution — the decisive leg. run=None, strict=False, always.
     result["stage"] = "reproduced"
-    live = gate_diff_text(summary_bytes.decode("utf-8"), diff_bytes.decode("utf-8"),
-                          run=None, strict=False).to_dict()
+    try:
+        texts = (summary_bytes.decode("utf-8"), diff_bytes.decode("utf-8"))
+    except UnicodeDecodeError as e:
+        # create_capsule_diffgate embeds text it read as UTF-8; bytes bound to their hash that
+        # are not UTF-8 ended verify in a traceback until #196
+        result["problems"] = [f"the embedded summary or diff is not UTF-8 text, which is what "
+                              f"create_capsule_diffgate embeds ({e.reason} at byte {e.start}); "
+                              f"the gate was not re-run"]
+        return result
+    try:
+        live = gate_diff_text(texts[0], texts[1], run=None, strict=False).to_dict()
+    except Exception as e:  # noqa: BLE001 - text the installed gate cannot read fails, by name
+        result["problems"] = [f"the installed diffgate could not re-run on the embedded text "
+                              f"({type(e).__name__}: {str(e)[:160]})"]
+        return result
     if live.get("diffgate") != gate.get("diffgate"):
+        pip = _obj_in(payload, "verifier").get("pip", "styxx")
         problems.append(
             f"INSTRUMENT SKEW: installed diffgate {live.get('diffgate')!r} vs embedded "
-            f"{gate.get('diffgate')!r} — reproduce under `pip install "
-            f"{payload.get('verifier', {}).get('pip', 'styxx')}` before treating this "
+            f"{_short(gate.get('diffgate'), 80)} — reproduce under `pip install "
+            f"{pip if isinstance(pip, str) else _short(pip, 80)}` before treating this "
             "as tamper")
     else:
         try:
