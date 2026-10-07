@@ -25,6 +25,107 @@ the README says and `test_the_shipped_bookmarklet_is_the_build_the_readme_names`
 counts to the files (`check_pairs.js`'s count was once stale, 153 named while 180 were read). The pin test fails on
 `origin/main`'s README and passes here; the count tests pass on both. No code changed.
 
+## [Unreleased] — the GitHub Action reports by default; blocking is opt-in with `soft-fail: "false"`
+
+**This changes behaviour for anyone who relied on the default.** `action.yml`'s `soft-fail` input
+defaulted to `"false"`, so a repository that added `uses: fathom-lab/styxx@main` got a check that
+failed on every contradicted claim. It now defaults to `"true"`: the Action writes every verdict to
+the job summary, names each contradicted claim in an annotation, and passes. To keep a blocking
+check, set the input explicitly:
+
+```yaml
+- uses: fathom-lab/styxx@main
+  with:
+    soft-fail: "false"
+```
+
+**How the value is read.** Only an explicit `"false"` blocks. `diffgate_action.py` compares the
+value case-insensitively with surrounding whitespace stripped, so `"false"` and `"False "` block and
+`"true"`, `" true"` and `"TRUE"` report. An unset `STYXX_SOFT_FAIL` reads as `"true"`, the input's
+default, so the default is the same when the script runs outside `action.yml`. Every other value,
+the empty string included, reports as `"true"` does, and the script prints a warning naming the
+value it did not recognise. Before this change every value but `true` in some casing blocked, so
+`" true"`, `"yes"`, `"0"` and the empty string blocked; they now report, the last three with that
+warning. In report mode the gate's verdicts never fail the job; an install or runtime error still
+can. `strict: true` still makes an UNCHECKABLE claim a failure, and the job fails on it only with
+`soft-fail: "false"`.
+
+This repository's own `.github/workflows/diffgate.yml` already sets `soft-fail: "false"` (and
+`strict: "false"`) explicitly on its `uses: ./` step, so the lab's own check keeps blocking.
+`tests/test_diffgate_action.py` finds that step by its own `uses: ./` line, not by a comment that
+mentions it, and fails if the step stops setting `soft-fail: "false"`. Other tests there pin the
+input's default, the script's fallback when the variable is unset, and how it reads `""`,
+`" true"`, `"TRUE"`, `"yes"`, `"0"`, `"False "` and `"false"`.
+
+**Why.** No kind of accusation the instrument still makes has been measured clearing the 0.95
+precision floor the lab set for accusing, and a check that fails someone else's pull request by
+default should already have cleared it. What the Action runs: `python <action path>/diffgate_action.py`
+imports the `styxx` package beside the script, at the ref the workflow names, not the one pip
+installs (`NOTE_path2a_sixth_pass_2026_09_30.md`, I-1). Its reader is `styxx/diffgate.py` at sha256
+`9b620e00…`, the file in the `v7.48.0` and `v7.48.1` tags. At `@main` that reader runs under the
+PATH-2a overlay (the whole file is sha256 `4cded2e3…`), which can move a VERIFIED or CONTRADICTED
+verdict to UNCHECKABLE and never adds an accusation. The figures, every file under
+`papers/closed-model-frontier/`:
+
+- **Path claims no longer accuse.** `file_created`, `file_deleted` and `file_touched` are reported
+  UNCHECKABLE (`WITHHOLD_PATH_ACCUSATION = True` in `styxx/diffgate.py`).
+  - **EXTERNAL-1** (2026-08-31): a blind three-seat panel upheld 23 of 100 sampled accusations,
+    precision **0.23**, against a preregistered floor of **0.95**, over 71,016 eligible
+    agent-authored pull requests from AIDev
+    (`RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md`; receipts
+    `external1_adjudication.json` for the 23 of 100 and `external1_summary.json` for the 71,016).
+    85 of the 100 were path claims (`file_created` 36, `file_touched` 28, `file_deleted` 21; the
+    rest `only_touches` 7, `tests_added` 6, `files_changed_count` 2), counted from
+    `external1_packet.json`, whose accusation arm is ids `E1-000` to `E1-099`
+    (`RESULT_compat2_surface_and_panel_2026_09_16.md` describes the builder's id order).
+  - **V14** (2026-09-01), the later measurement: after two repairs, a fresh blind panel upheld 16
+    of 100 held-out path accusations, precision **0.16** against the same 0.95 floor
+    (`RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md`; receipt
+    `v14_adjudication.json`), and the accusation stayed withheld.
+- **`only_touches` still accuses, at precision 0.25.** **PATH-1** (2026-09-17) took it from 0.18
+  to **0.25**: 2 of 8 accusations correct across the 299 `only_touches` claims in BENCH-2's 568
+  reachable AIDev pull requests (`RESULT_path1_only_touches_repair_2026_09_17.md`; the eleven
+  adjudications it starts from are in `bench2_audit.json`). **SCOPE-1** (2026-09-18), the later
+  receipt, re-derived it end to end from re-fetched diffs against `9b620e00…`, the reader above: 8
+  accusations, and the 2 it would keep are exactly the two known correct
+  (`RESULT_scope1_ABANDONED_2026_09_18.md`; receipt `scope1_footprint.json`). No receipt
+  re-measures it with the PATH-2a overlay on.
+- **`tests_added`, `symbol_added` and `files_changed_count` still accuse, and no committed RESULT
+  states a precision for them.** EXTERNAL-5 checked BC-2's surviving accusations against the live
+  pull requests and says it gives no precision for the instrument (its G-E5-4), so none of its
+  figures is used here.
+
+The default can be revisited when a held-out measurement shows the accusing kinds clearing the
+floor.
+
+**What else changed with it.** `action.yml`'s description no longer says the Action exits nonzero on
+a contradicted claim; it states the default, the opt-in, and the reason with the figures above. The
+`strict` and `soft-fail` input descriptions say how the two combine and how the value is read, and
+`soft-fail`'s says that in report mode the gate's verdicts never fail the job while an install or
+runtime error still can. The job summary says which mode the run was in and gives the figures above
+with links; the UNMEASURED summary and the closing soft-fail warning name `soft-fail: "false"` as the
+way to fail the job. The README's CI snippet and its GitHub Action row say the Action reports by
+default and how the value is read, with the figures and receipts, and the row's `action.yml` link
+now points at `main` (what `@main` runs) instead of the `v7.48.0` copy; both edits stay on their
+lines, so `zenodo/MANIFEST.json`'s line citations hold. The pre-commit, Codex and Gemini CLI hook
+READMEs, which called the Action "the enforcement", now say it enforces only with
+`soft-fail: "false"`.
+
+## [Unreleased] — the security contact was an email address the lab cannot confirm receives mail; reports now go through GitHub
+
+**Security.** `SECURITY.md` told reporters to email an address in two places: the reporting section
+and the last step of *Verifying a release*. The address's domain has no mail-exchange (MX) record
+and serves a parked page, so the lab cannot confirm that mail sent there arrived. GitHub private
+vulnerability reporting was enabled for `fathom-lab/styxx` on 2026-10-06, and both places now send
+reporters to <https://github.com/fathom-lab/styxx/security/advisories/new>. The file no longer names
+the address, and asks anyone who wrote to it to send the report again through GitHub private
+reporting. The offer to reply on a reporter's public key belonged to the email channel and goes
+with it; the acknowledgement and triage times are unchanged.
+
+The README's two links to the security policy pointed at the `v7.48.0` copy, which still names the
+old address; they now point at `main`. The READMEs PyPI shows for 7.48.0 and 7.48.1 keep their tag
+links, and the `SECURITY.md` inside those tags is unchanged, until the next release.
+
 ## [Unreleased] — styxx 7.48.1 on Zenodo, as the next version of the software record
 
 styxx 7.48.1 is deposited on Zenodo as **10.5281/zenodo.23200977**, a new version of the styxx software
