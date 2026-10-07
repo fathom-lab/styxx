@@ -38,6 +38,27 @@ REPORTED_ODD = ("WARNING: styxx diffgate found failures but STYXX_SOFT_FAIL has 
 BLOCKED = 'styxx diffgate: FAIL, and STYXX_SOFT_FAIL is "false", so the job fails.'
 NOT_RECOGNISED = "which is neither \"true\" nor \"false\""
 NO_REPORT = "without writing a FAIL report: that is an error, not a verdict"
+# The mode line the job prints on every run, PASS included, so that a variable that never reached
+# the job (a Protected one on an unprotected branch, say) shows as "not set" in the log.
+MODE = "styxx diffgate mode: STYXX_SOFT_FAIL "
+REPORTS = ", so this job reports and the gate's verdicts do not fail it."
+MODE_UNSET = MODE + "is not set" + REPORTS + " A variable marked Protected reaches a merge request pipeline"
+MODE_TRUE = MODE + 'reads as "true"' + REPORTS
+MODE_ODD = MODE + "has a value this job does not recognise" + REPORTS
+MODE_FALSE = MODE + 'is "false", so a FAIL verdict fails this job.'
+
+
+def _mode(soft_fail):
+    """The mode line the job should print for this value of STYXX_SOFT_FAIL (None: unset)."""
+    if soft_fail is None:
+        return MODE_UNSET
+    v = soft_fail.strip().lower()
+    return MODE_FALSE if v == "false" else MODE_TRUE if v == "true" else MODE_ODD
+
+
+def _one_mode_line(stdout, soft_fail):
+    assert stdout.count(MODE) == 1, stdout
+    assert _mode(soft_fail) in stdout, stdout
 
 
 def _bash():
@@ -110,9 +131,11 @@ def mr_repo(tmp_path):
     return work, base, head
 
 
-def _run_job(work, base, head, description, soft_fail=None, strict=False):
+def _run_job(work, base, head, description, soft_fail=None, strict=False, gate=None):
     """Run the job's script lines under bash. ``soft_fail`` None leaves STYXX_SOFT_FAIL unset;
-    ``strict`` adds --strict to the styxx.diffgate line, the edit the README describes."""
+    ``strict`` adds --strict to the styxx.diffgate line, the edit the README describes; ``gate``,
+    a script path and its arguments, stands in for the whole styxx.diffgate command (a CLI that
+    exits without the report its exit promises)."""
     job = _job()
     assert job["rules"][0]["if"] == '$CI_PIPELINE_SOURCE == "merge_request_event"'
     env = dict(os.environ, CI_MERGE_REQUEST_DESCRIPTION=description,
@@ -126,11 +149,16 @@ def _run_job(work, base, head, description, soft_fail=None, strict=False):
     if strict:
         assert script.count(" --out diffgate.json") == 1
         script = script.replace(" --out diffgate.json", " --strict --out diffgate.json")
+    if gate is not None:
+        stub = "python " + " ".join(shlex.quote(str(a)) for a in gate)
+        script, n = re.subn(r"(?m)^python -m styxx\.diffgate [^\n]* --out diffgate\.json(?= \|\| styxx_gate=\$\?$)",
+                            lambda _: stub, script)
+        assert n == 1, script
     # bash reads the backslashes of a Windows path as escapes, so the interpreter is passed with
     # forward slashes and quoted (#185); on POSIX this is the path as it was. The job names it
     # `python` twice, at the start of a line: the gate, and the reading of STYXX_SOFT_FAIL.
     python = shlex.quote(Path(sys.executable).as_posix())
-    script, n = re.subn(r"(?m)^python(?= -)", lambda _: python, script)
+    script, n = re.subn(r"(?m)^python(?= )", lambda _: python, script)
     assert n == 2, script
     return subprocess.run([BASH, "-c", "set -e\n" + script + "\n"], cwd=work, env=env,
                           capture_output=True, text=True, encoding="utf-8", errors="replace")
@@ -149,6 +177,7 @@ def test_by_default_a_lying_description_is_reported_with_the_lies_named_and_the_
     assert "[CONTRADICTED:only_touches]" in r.stdout and "tests/test_retry.py" in r.stdout
     assert REPORTED in r.stdout and REPORTED_ODD not in r.stdout
     assert NOT_RECOGNISED not in r.stdout      # unset is the default, not a value
+    _one_mode_line(r.stdout, None)
     assert _report(work)["verdict"] == "FAIL"
 
 
@@ -160,17 +189,23 @@ def test_with_soft_fail_false_a_lying_description_fails_the_job_with_the_lies_na
     assert "FAIL" in r.stdout and "[CONTRADICTED:tests_added]" in r.stdout
     assert "[CONTRADICTED:only_touches]" in r.stdout and "tests/test_retry.py" in r.stdout
     assert BLOCKED in r.stdout and PASSES not in r.stdout
+    _one_mode_line(r.stdout, "false")
     assert _report(work)["verdict"] == "FAIL"
 
 
 @needs_bash
-@pytest.mark.parametrize("soft_fail", [None, "false"])
-def test_an_honest_description_passes_the_job(mr_repo, soft_fail):
+@pytest.mark.parametrize("soft_fail", [None, "true", "false"])
+def test_an_honest_description_passes_the_job_and_the_log_names_the_mode(mr_repo, soft_fail):
+    """A PASS run prints the mode it ran in too: a STYXX_SOFT_FAIL "false" that never reached the
+    job (a variable marked Protected, on a merge request whose branches are not both protected)
+    shows as "not set" on every run, not only on a run that FAILs."""
     work, base, head = mr_repo
     r = _run_job(work, base, head, HONEST, soft_fail=soft_fail)
     assert r.returncode == 0, r.stdout + r.stderr
     assert r.stdout.startswith("PASS")
     assert "WARNING" not in r.stdout
+    _one_mode_line(r.stdout, soft_fail)
+    assert ("marked Protected" in r.stdout) is (soft_fail is None)
     assert _report(work)["verdict"] == "PASS"
 
 
@@ -211,6 +246,8 @@ def test_how_the_soft_fail_value_is_read(mr_repo, value, blocks, warned):
     assert (PASSES in r.stdout) is (not blocks)
     assert (REPORTED in r.stdout) is (not blocks and not warned)
     assert (REPORTED_ODD in r.stdout) is (not blocks and warned)
+    _one_mode_line(r.stdout, value)
+    assert (MODE_FALSE in r.stdout) is blocks and (MODE_ODD in r.stdout) is warned
     assert _report(work)["verdict"] == "FAIL"
 
 
@@ -223,6 +260,7 @@ def test_strict_makes_an_uncheckable_claim_a_failure_that_blocks_only_with_soft_
     assert r.stdout.startswith("FAIL") and "contradicted=0" in r.stdout
     assert "[UNCHECKABLE:tests_pass]" in r.stdout
     assert (REPORTED in r.stdout) is (rc == 0) and (BLOCKED in r.stdout) is (rc == 1)
+    _one_mode_line(r.stdout, soft_fail)
     assert _report(work)["verdict"] == "FAIL"
 
 
@@ -239,7 +277,52 @@ def test_a_gate_that_errors_fails_the_job_in_either_mode_and_a_stale_report_is_n
     assert r.returncode == 1, r.stdout + r.stderr
     assert "styxx diffgate exited 1 " + NO_REPORT in r.stdout
     assert PASSES not in r.stdout and BLOCKED not in r.stdout
+    _one_mode_line(r.stdout, soft_fail)
     assert not (work / "diffgate.json").exists()
+
+
+STUB_GATE = '''import json, sys
+verdict, code = sys.argv[1], int(sys.argv[2])
+if verdict != "none":
+    with open("diffgate.json", "w", encoding="utf-8") as f:
+        json.dump({"diffgate": "v0", "verdict": verdict}, f)
+print("stub gate: verdict", verdict, "exit", code)
+sys.exit(code)
+'''
+
+
+@needs_bash
+@pytest.mark.parametrize("soft_fail", [None, "false"])
+@pytest.mark.parametrize("verdict, code, rc, error", [
+    ("PASS", 0, 0, None),                    # the CLI's PASS: exit 0 with a PASS report
+    ("none", 0, 1, "exited 0 without writing a PASS report"),
+    ("FAIL", 0, 1, "exited 0 without writing a PASS report"),
+    ("PASS", 1, 1, "exited 1 without writing a FAIL report"),
+    ("none", 2, 2, "exited 2 without writing a matching report"),
+    ("FAIL", 2, 2, "exited 2 without writing a matching report"),
+])
+def test_a_gate_whose_report_does_not_match_its_exit_fails_the_job_in_either_mode(
+        mr_repo, soft_fail, verdict, code, rc, error):
+    """Only an exit 0 with a PASS report passes as a PASS, and only an exit 1 with a FAIL report is
+    read as a FAIL verdict. A CLI that exits 0 and writes nothing (a shadowed or altered one; the
+    released CLI writes --out before it returns) is an error, not a PASS, and so is any other
+    pairing, in either mode. A PASS report an earlier run left behind is removed before the gate
+    runs, so it cannot stand in for this run's."""
+    work, base, head = mr_repo
+    stub = work.parent / "stub_gate.py"
+    stub.write_text(STUB_GATE, encoding="utf-8")
+    (work / "diffgate.json").write_text(json.dumps({"diffgate": "v0", "verdict": "PASS"}), encoding="utf-8")
+    r = _run_job(work, base, head, LYING, soft_fail=soft_fail,
+                 gate=[stub.as_posix(), verdict, code])
+    assert r.returncode == rc, r.stdout + r.stderr
+    assert f"stub gate: verdict {verdict} exit {code}" in r.stdout
+    _one_mode_line(r.stdout, soft_fail)
+    if error is None:
+        assert "that is an error, not a verdict" not in r.stdout
+    else:
+        assert f"styxx diffgate {error}: that is an error, not a verdict" in r.stdout
+    assert PASSES not in r.stdout and BLOCKED not in r.stdout
+    assert (work / "diffgate.json").exists() is (verdict != "none")
 
 
 def test_the_job_never_expands_the_description_through_the_shell():
