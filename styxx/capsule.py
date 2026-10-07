@@ -9,8 +9,15 @@ the READER runs:
 * Layer 1, any browser, offline: WebCrypto re-hashes every embedded byte against the
   certificate and paints every token with its epistemic band. Tamper-evidence in one second.
 * Layer 2, one command: ``python -m styxx.capsule verify FILE`` re-runs the real verifier
-  over the embedded bytes and compares verdict, counts, and the full ledger. Reproducibility,
-  not assertion.
+  over the embedded bytes and compares the whole certificate with what it re-derives, type for
+  type: the verdict string (its class only, for a certificate that predates the uncovered band),
+  the counts, the coverage band, the epistemics summary and the ledger in both directions and in
+  order, every field of every row. It checks that the page around the payload is the page a
+  styxx renders for exactly that payload, so what a browser draws is what was compared. What it
+  cannot re-derive from the bytes (when, and with which styxx, the capsule was minted; the
+  repository head and paths the receipts were committed at) it prints as stated by the minter,
+  never as verified; a field an older certify did not write it prints as NOT CHECKED, by name.
+  Every line it prints shows control characters as escapes. Reproducibility, not assertion.
 
 Creation refuses to lie: a capsule cannot be minted unless every hash matches and the
 certificate re-verifies live. What no layer proves — that receipts truthfully record
@@ -23,20 +30,33 @@ from __future__ import annotations
 
 import argparse
 import base64
+import bisect
 import datetime as _dt
 import hashlib
+import html as _html
 import json
+import platform
 import re
 import sys
 import tempfile
+import unicodedata
+from collections import Counter
 from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import List, Optional
 
 # The v0.13 UNCOVERED band appends ", N uncovered" to a verdict string. That suffix is a
 # COVERAGE report travelling in the headline, not a verdict change: `counts["UNGROUNDED"]` is
 # untouched and no token's status moved (styxx.corpus_audit.verdict_class learned this on
-# 2026-09-01, when bucketing on the whole string put 131 certificates in neither class). Layer 2
-# compares verdict CLASSES for the same reason; the strings are still reported side by side.
+# 2026-09-01, when bucketing on the whole string put 131 certificates in neither class).
+#
+# Layer 2 compares the verdict by CLASS only for a certificate that predates the band (it carries
+# no `uncovered` field and nothing certify began writing later, and does not name the installed
+# certify.py as its issuer, so its verdict could never carry the suffix), and says so as NOT
+# CHECKED.
+# Until 2026-10-05 it compared the class for EVERY certificate and never compared `uncovered`, so
+# a certificate edited to drop the suffix and report 0 uncovered verified like a clean one while
+# its document held a number nothing checked. A certificate that carries the band is compared
+# string for string.
 _UNCOVERED_SUFFIX = re.compile(r",\s*\d+\s+uncovered\s*$")
 
 
@@ -116,6 +136,18 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
     doc_bytes = doc.read_text(encoding="utf-8").encode("utf-8")
     cert_obj = json.loads(cert.read_text(encoding="utf-8"))
 
+    # 0. under the name it was certified as. Layer 2 compares certificate.document (certify writes
+    # the document's file name) with the name the capsule gives the document, which is this file's,
+    # so a renamed copy cannot verify. Until review round 3 that surfaced as a refusal after the
+    # mint, with a hint that blamed the ledger schema.
+    if cert_obj.get("document") != doc.name:
+        named = cert_obj.get("document")
+        raise SystemExit(
+            f"REFUSED: the certificate was issued for a document named {named!r}, and this one is "
+            f"named {doc.name!r}. A capsule carries the document under the name it is given, and "
+            f"layer 2 compares that name with certificate.document, so a renamed copy does not "
+            f"verify. Mint from a file named {named!r}, or re-certify {doc.name!r}.")
+
     # 1. the certificate must describe THESE bytes
     if _sha256(doc_bytes) != cert_obj.get("document_sha256"):
         raise SystemExit("REFUSED: document bytes do not match certificate.document_sha256")
@@ -174,6 +206,16 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
     # Re-verifying what we just wrote is the only gate that cannot drift away from the
     # verifier, because it IS the verifier. On failure the file is removed rather than
     # left on disk — a broken capsule that exists will eventually be sent to someone.
+    #
+    # Verification passing is not the whole gate. Around the page every styxx rendered before
+    # 2026-10-05, layer 2 prints a field an older certify did not write as NOT CHECKED and still
+    # passes, so that capsules already minted keep verifying; a new capsule is not minted from a
+    # certificate whose ledger rows lack a field the page draws its bands from (col, status,
+    # epistemics), or whose verdict is not the installed verifier's string. Around the page this
+    # function renders, those refusals (`mint_refusals`) fail verify itself, since no styxx mints
+    # that page from such a certificate. That keeps the 2026-09-01 refusal of pre-column
+    # certificates, which the earlier round of the 2026-10-05 repair had let through, minting
+    # pages that painted other numbers.
     report = verify_capsule(out)
     if not report.get("ok"):
         problems = report.get("problems") or [report.get("error", "unknown")]
@@ -182,10 +224,10 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
             "REFUSED: the minted capsule does not verify, so it was not kept.\n"
             + "\n".join(f"  - {p}" for p in problems[:6])
             + (f"\n  ... and {len(problems) - 6} more" if len(problems) > 6 else "")
-            + "\n\nIf the ledger diverges on every token, this certificate predates the "
-              "current ledger schema. Re-certify the document first (the verdict is "
-              "expected to be unchanged; a re-issue is a new commit and the drift is "
-              "tracked), then mint again.")
+            + "\n\nIf the ledger's rows lack fields, or it diverges on every token, this "
+              "certificate predates the current ledger schema. Re-certify the document "
+              "(the verdict is expected to be unchanged; a re-issue is a new commit and the "
+              "drift is tracked), then mint again.")
     return out
 
 
@@ -194,9 +236,13 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
 # ---------------------------------------------------------------------------------
 
 def verify_capsule(path: Path) -> dict:
-    from styxx.certify import certify_doc
-
-    html = path.read_text(encoding="utf-8")
+    try:
+        html = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as e:
+        # a file that is not UTF-8 text ended in a traceback here until review round 3
+        return {"ok": False, "stage": "parse",
+                "problems": [f"the capsule file could not be read as UTF-8 text "
+                             f"({type(e).__name__}: {str(e)[:160]})"]}
     try:
         i = html.index(_BEGIN) + len(_BEGIN)
         j = html.index(_END, i)
@@ -204,8 +250,10 @@ def verify_capsule(path: Path) -> dict:
     except (ValueError, json.JSONDecodeError) as e:
         return {"ok": False, "stage": "parse", "error": f"no capsule payload: {e}",
                 "problems": [f"no capsule payload: {e}"]}
+    if not isinstance(payload, dict):
+        return {"ok": False, "stage": "parse", "problems": ["the capsule payload is not an object"]}
 
-    # spec dispatch — the v0.1 path below stays exactly as shipped
+    # spec dispatch; the v0.1 path compares the whole certificate and the page since 2026-10-05
     spec = payload.get("spec")
     if spec == SPEC_V02:
         return _verify_capsule_v02(html, payload)
@@ -215,74 +263,1132 @@ def verify_capsule(path: Path) -> dict:
         return {"ok": False, "stage": "spec",
                 "problems": [f"unknown capsule spec {spec!r} — this verifier knows "
                              f"{SPEC}, {SPEC_V02} and {SPEC_SWORN}"]}
+    return _verify_capsule_v01(html, payload)
+
+
+def _verify_capsule_v01(html: str, payload: dict) -> dict:
+    from styxx.certify import certify_doc
 
     problems: List[str] = []
     advisory: List[str] = []
-    cert = payload["certificate"]
-    doc_bytes = base64.b64decode(payload["document"]["b64"])
+    cmp: dict = {"not_checked": [], "stated": [], "compared": [], "mint_refusals": []}
+    live = None
+    doc = payload.get("document") if isinstance(payload.get("document"), dict) else {}
+    cert = payload.get("certificate") if isinstance(payload.get("certificate"), dict) else {}
+
+    def report() -> dict:
+        return {"ok": not problems, "problems": problems, "advisory": advisory,
+                "not_checked": cmp["not_checked"], "stated": cmp["stated"],
+                "compared": cmp["compared"], "mint_refusals": cmp["mint_refusals"],
+                "verdict": cert.get("verdict"), "counts": cert.get("counts"),
+                "live_verdict": None if live is None else live.get("verdict"),
+                "document": doc.get("name"), "spec": payload.get("spec"),
+                "reproduced_at": None if live is None else "installed verifier"}
+
+    # the payload's own shape: what no minter writes fails before anything is decoded or written
+    shape = _payload_problems_v01(payload)
+    if shape:
+        problems.extend(shape)
+        return report()
+    doc_bytes = base64.b64decode(doc["b64"])
     if _sha256(doc_bytes) != cert.get("document_sha256"):
         problems.append("document bytes != certificate.document_sha256")
+    rsha = cert.get("receipts_sha256") if isinstance(cert.get("receipts_sha256"), dict) else {}
     recs = {}
     for r in payload["receipts"]:
         rb = base64.b64decode(r["b64"])
         recs[r["name"]] = rb
-        want = (cert.get("receipts_sha256") or {}).get(r["name"])
+        want = rsha.get(r["name"])
         if _sha256(rb) != want:
             problems.append(f"receipt {r['name']!r} bytes != certificate hash")
     problems.extend(_unsafe_names(payload))
 
-    live = None
     if not problems:
+        # The receipts are handed to the certifier in the order the certificate lists them,
+        # which is the order its certifier read them in: when a value appears in more than one
+        # receipt, `receipt_ref` names the earliest read, so the order is part of what the
+        # certificate says. The capsule stores the receipts sorted by name, so their order
+        # there is not it.
+        listed = [n for n in rsha if n in recs]
+        order = listed + sorted(n for n in recs if n not in listed)
         with tempfile.TemporaryDirectory() as td:
-            d = Path(td) / payload["document"]["name"]
-            d.write_bytes(doc_bytes)
-            rps = []
-            for name, rb in recs.items():
-                rp = Path(td) / name
-                rp.write_bytes(rb)
-                rps.append(rp)
-            live = certify_doc(d, rps)
-        if _verdict_class(live["verdict"]) != _verdict_class(cert["verdict"]):
-            problems.append(f"verdict not reproduced: live {live['verdict']} "
-                            f"vs embedded {cert['verdict']}")
-        elif live["verdict"] != cert["verdict"]:
-            advisory.append(f"verdict string moved without a class change: live {live['verdict']!r} "
-                            f"vs embedded {cert['verdict']!r} — a coverage suffix the installed "
-                            f"verifier appends; not a verdict change")
-        if live["counts"] != cert["counts"]:
-            problems.append(f"counts not reproduced: live {live['counts']} "
-                            f"vs embedded {cert['counts']}")
+            try:
+                d = Path(td) / doc["name"]
+                d.write_bytes(doc_bytes)
+                rps = []
+                for name in order:
+                    rp = Path(td) / name
+                    rp.write_bytes(recs[name])
+                    rps.append(rp)
+            except OSError as e:
+                # a name this system cannot hold (on Windows, one with < or : in it)
+                problems.append(f"the embedded files could not be written under their names "
+                                f"here ({type(e).__name__}: {e}), so the verifier was not re-run")
+            else:
+                try:
+                    live = certify_doc(d, rps)
+                except Exception as e:  # noqa: BLE001 - bytes the certifier cannot read fail
+                    problems.append(f"the installed verifier could not re-run on the embedded "
+                                    f"bytes ({type(e).__name__}: {str(e)[:160]})")
+    if live is not None:
+        # the certificate as certify's own command writes it: through JSON, so a tuple is a list
+        # and every number has the type a reader of the file sees
+        live = json.loads(json.dumps(live, ensure_ascii=False))
+        cmp = _compare_certificate_v01(cert, live, payload, recs)
+        problems.extend(cmp["problems"])
+        advisory.extend(cmp["advisory"])
+        if cmp["problems"]:
+            advisory.extend(_unicode_note(doc_bytes))
+
+    # The page around the payload is what a reader's browser runs. It must be the page some
+    # styxx renders for exactly this payload, or what it shows was never checked by anything.
+    _check_page_v01(html, payload, cert, live if not problems else None, doc_bytes, problems,
+                    advisory, cmp["compared"], cmp["mint_refusals"])
+    return report()
+
+
+def _unicode_note(doc_bytes: bytes) -> List[str]:
+    """An advisory for a certificate that does not reproduce over a document holding characters
+    this Python's Unicode database does not assign.
+
+    certify finds numbers with `\\d` and `\\w`, which follow the Unicode database of the Python
+    that runs it, and since 2026-10-05 the uncovered band is compared. A document holding a digit
+    newer than the verifier's database is read differently by a styxx under another Python: review
+    round 4 (compatibility lens) minted Sunuwar digits (Unicode 16.0) with 7.48.1 under Python
+    3.12, and this layer 2 failed that honest capsule under 3.14, and the reverse, with text that
+    reads like an edited certificate. Where the verifier's database is the older one it can name
+    the characters; where it is the newer one it cannot tell, and the CHANGELOG says so."""
+    try:
+        text = doc_bytes.decode("utf-8")
+    except UnicodeDecodeError:
+        return []
+    odd = sorted({c for c in text if unicodedata.category(c) == "Cn"})
+    if not odd:
+        return []
+    return [f"the document holds {', '.join(f'U+{ord(c):04X}' for c in odd[:6])}"
+            f"{' and more' if len(odd) > 6 else ''}, which this Python's Unicode database "
+            f"({unicodedata.unidata_version}, Python {platform.python_version()}) does not "
+            f"assign. certify reads digits and letters by that database, so a styxx under a "
+            f"Python with a later one can read such a character as a digit or a letter: if this "
+            f"capsule was minted there, the differences below can come from that rather than "
+            f"from an edit. It fails here either way; verify it under a Python whose Unicode "
+            f"database is the minter's or later"]
+
+
+# ---------------------------------------------------------------------------------
+# layer 2 of a v0.1 capsule: the payload, the whole certificate, and the page
+# ---------------------------------------------------------------------------------
+#
+# Until 2026-10-05 layer 2 compared a chosen few fields (the verdict class, the counts, and the
+# status of each embedded ledger row, one way), so a certificate edited anywhere else verified
+# exactly like the genuine one while the page drew the edited values. A second round of that
+# repair (after its review) closed what the earlier round left: a decoy payload the browser never
+# reads, values re-typed (1.0 for 1, true for 1), fields nested inside the receipt binding or the
+# payload, a free-text install line the page shows, a certificate whose band was deleted while
+# fields certify wrote later stayed, and the page drawing a band where the certificate puts none.
+# A third round (after the second review) closed a committed flag naming a blob of other bytes,
+# minter-chosen text reaching the terminal raw, fields every certify writes passing as NOT
+# CHECKED, an install line taken from the stated version, and a rule that failed honest older
+# pages by the characters their documents hold rather than by what their script draws.
+#
+# The rule: what the page shows from the payload, layer 2 re-derives and compares, or names as not
+# checked. Every field certify_doc writes is a function of the document and receipt bytes at the
+# installed verifier, so it is re-derived and compared, type for type, except these, which
+# describe the minting environment and cannot be re-derived from the bytes: the hash of the
+# certify.py that issued the certificate, and the receipt binding's repository facts (head, paths,
+# committed flags). Those are printed as stated by the minter, never as verified, after checking
+# they are a combination certify writes; a committed flag's blob is the one repository fact that
+# is a function of the bytes, and it is compared with the embedded receipt.
+_CERT_MINT_FIELDS = ("verifier_sha256", "receipt_binding")
+# Every certificate any styxx has issued carries these, and every ledger (and ungrounded) row
+# carries the row fields: the earliest certify (9ed6f3b5, 2026-06-10) already wrote each of them.
+# One missing was removed, whoever issued the certificate. Until review round 3 only five were
+# required, so with the issuer's hash moved off the installed certify.py, deleting `status` from
+# the accused rows was printed NOT CHECKED and verified, while both pages painted those numbers
+# verified.
+_CERT_REQUIRED = ("verdict", "counts", "ledger", "document_sha256", "receipts_sha256",
+                  "verifier_sha256", "oath", "prereg", "document", "ungrounded", "abstained")
+_ROW_REQUIRED = ("line", "token", "value", "decimals", "context", "status", "receipt_ref")
+# what every certify writes into verifier_sha256: the sha-256 of its own certify.py, in hex
+_SHA256_HEX = re.compile(r"[0-9a-f]{64}")
+# Row lists, compared row by row in both directions and in order, every field of every row.
+_CERT_ROW_LISTS = ("ledger", "ungrounded", "abstained")
+# The fields certify began writing after its earliest certificates, in the order it began writing
+# them (`git log -S` on styxx/certify.py). A certificate carrying one of them was issued by a
+# certify that wrote every one listed before it, so an earlier one missing beside it was removed.
+# Measured on 2026-10-07 over the 253 certificates committed here (243 files: 213 named
+# *.certificate.json and 30 named CERT_*.json; and 10 capsules): every one of them obeys this
+# order. Until review round 5 this said 223, leaving out the 30 CERT_*.json files.
+_CERT_GENERATIONS = (
+    ("2026-08-24", ("ledger[].col",)),
+    ("2026-08-30", ("ledger[].epistemics",)),
+    ("2026-08-30", ("epistemics_summary",)),     # 26 minutes after the per-row field
+    ("2026-09-01", ("uncovered", "uncovered_items", "uncovered_excluded_by_rule",
+                    "uncovered_policy")),
+    ("2026-09-05", ("receipt_binding",)),
+)
+# A row field certify writes on some rows only, and the change that began writing it: since 7e70cb4e
+# (OATH v0.3, 2026-06-10, 56 minutes after the earliest certify) every certify writes
+# binding_context on each table row. A certificate dated later by a generation field (all of
+# which certify began writing after it) lacks it only where it was removed. Measured on
+# 2026-10-07 over the 228 committed certificates whose document and receipts resolve (204
+# *.certificate.json and 24 CERT_*.json): none lacks it on a row where the installed certify
+# writes it. Until review round 4 its absence was NOT
+# CHECKED with the words "a certificate from an older certify does not".
+_ROW_FIELDS_SINCE = {"binding_context": ("2026-06-10", "7e70cb4e")}
+
+
+def _since(name: str) -> Optional[str]:
+    """The day certify began writing a field (`uncovered`, `ledger[].col`, `ungrounded[].col`)."""
+    row = name.split("[].", 1)[1] if "[]." in name else None
+    for date, fields in _CERT_GENERATIONS:
+        if name in fields or (row is not None and f"ledger[].{row}" in fields):
+            return date
+    return _ROW_FIELDS_SINCE[row][0] if row in _ROW_FIELDS_SINCE else None
+
+
+# The receipt binding block and its rows, as styxx.receipt_binding.bind_at_mint writes them (and
+# certify's own fallback when binding fails). `note` is the only optional key.
+_BINDING_FIELDS = ("schema", "content_rule", "head", "all_receipts_committed", "receipts")
+_BINDING_ROW_FIELDS = ("name", "path", "raw_sha256", "content_sha256", "blob", "committed")
+_BINDING_BYTE_FIELDS = ("raw_sha256", "content_sha256")
+_GIT_ID = re.compile(r"[0-9a-f]{40}(?:[0-9a-f]{24})?")
+_PAYLOAD_FIELDS = ("spec", "created", "document", "receipts", "certificate", "verifier")
+_PAYLOAD_FILE_FIELDS = ("name", "b64")
+_PAYLOAD_VERIFIER_FIELDS = ("sha256", "styxx_version", "pip")
+# what create_capsule writes into `created` and `verifier.styxx_version`
+_CREATED = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z")
+_VERSION = re.compile(r"\d+(?:\.\d+){1,3}(?:(?:a|b|rc)\d+)?(?:\.post\d+)?(?:\.dev\d+)?")
+
+
+def _same(a, b) -> bool:
+    """JSON equality that keeps types: true is not 1, 1.0 is not 1, and key order is ignored.
+
+    Python's == says 1 == 1.0 == True, so until 2026-10-05 a certificate whose counts were
+    re-typed (30.0, false) or whose row said `line: true` compared equal, while the page drew the
+    re-typed values (a row on line `true` is drawn on no line at all)."""
+    if type(a) is not type(b):
+        return False
+    if isinstance(a, dict):
+        return a.keys() == b.keys() and all(_same(a[k], b[k]) for k in a)
+    if isinstance(a, list):
+        return len(a) == len(b) and all(_same(x, y) for x, y in zip(a, b))
+    if isinstance(a, float) and a != a:
+        return b != b
+    return a == b
+
+
+def _short(v, n: int = 200) -> str:
+    s = repr(v) if isinstance(v, str) else json.dumps(v, ensure_ascii=False, sort_keys=True)
+    return s if len(s) <= n else f"{s[:n]}... ({len(s)} chars)"
+
+
+def _canonical_b64(s) -> Optional[bytes]:
+    """The bytes of a base64 string create_capsule could have written, else None. Python's
+    decoder skips characters outside the alphabet and a browser's atob throws on them, so a
+    string that is not canonical would be read differently by the two layers."""
+    if not isinstance(s, str):
+        return None
+    try:
+        b = base64.b64decode(s, validate=True)
+    except (ValueError, TypeError):
+        return None
+    return b if _b64(b) == s else None
+
+
+def _payload_problems_v01(payload: dict) -> List[str]:
+    """What no minter writes into a v0.1 payload. A field at any level that create_capsule does not
+    write fails: until 2026-10-05 only the top level was looked at, so a note on the document or a
+    provenance claim on a receipt travelled in the capsule unremarked."""
+    out: List[str] = []
+    for k in payload:
+        if k not in _PAYLOAD_FIELDS:
+            out.append(f"payload.{k}: a field create_capsule does not write")
+    for k in _PAYLOAD_FIELDS:
+        if k not in payload:
+            out.append(f"payload.{k} is missing: create_capsule writes it")
+    files = [("payload.document", payload.get("document"))]
+    recs = payload.get("receipts")
+    if not isinstance(recs, list):
+        out.append("payload.receipts is not a list")
+    else:
+        files += [(f"payload.receipts[{n}]", r) for n, r in enumerate(recs)]
+        names = [r.get("name") for r in recs if isinstance(r, dict)]
+        if len(set(map(str, names))) != len(names):
+            out.append(f"payload.receipts names a receipt more than once: {names}")
+    for where, f in files:
+        if not isinstance(f, dict):
+            out.append(f"{where} is not an object")
+            continue
+        for k in f:
+            if k not in _PAYLOAD_FILE_FIELDS:
+                out.append(f"{where}.{k}: a field create_capsule does not write")
+        if not isinstance(f.get("name"), str):
+            out.append(f"{where}.name is not a string")
+        if _canonical_b64(f.get("b64")) is None:
+            out.append(f"{where}.b64 is not the base64 create_capsule writes")
+    if not isinstance(payload.get("certificate"), dict):
+        out.append("payload.certificate is not an object")
+    ver = payload.get("verifier")
+    if not isinstance(ver, dict):
+        out.append("payload.verifier is not an object")
+    else:
+        for k in ver:
+            if k not in _PAYLOAD_VERIFIER_FIELDS:
+                out.append(f"payload.verifier.{k}: a field create_capsule does not write")
+        v = ver.get("styxx_version")
+        if not (isinstance(v, str) and _VERSION.fullmatch(v)):
+            out.append(f"payload.verifier.styxx_version {_short(v)} is not a styxx version")
+        # The page prints this line as the command that installs layer 2. create_capsule writes
+        # exactly "styxx==" and the version; anything else would have the page tell its reader to
+        # install some other package to check it.
+        elif ver.get("pip") != f"styxx=={v}":
+            out.append(f"payload.verifier.pip {_short(ver.get('pip'))} is not 'styxx=={v}', the "
+                       f"install line create_capsule writes and the page shows")
+    c = payload.get("created")
+    if not (isinstance(c, str) and _CREATED.fullmatch(c) and _a_time(c)):
+        out.append(f"payload.created {_short(c)} is not the UTC time create_capsule writes")
+    return out
+
+
+def _a_time(c: str) -> bool:
+    """A time a clock can show: the digit shape alone let 9999-99-99T99:99:99Z through, and the
+    page printed it as the mint time."""
+    try:
+        _dt.datetime.strptime(c, "%Y-%m-%dT%H:%M:%SZ")
+    except ValueError:
+        return False
+    return True
+
+
+def _row_key(e: dict) -> tuple:
+    # typed, so a row on line `true` or `1.0` is not the row on line 1
+    return (json.dumps(e.get("line")), json.dumps(e.get("token"), ensure_ascii=False))
+
+
+def _at(e: dict) -> str:
+    return f"line {json.dumps(e.get('line'))} token {e.get('token')!r}"
+
+
+def _rows_by_key(rows: list) -> dict:
+    """Rows keyed (line, token, k), typed: the k-th row with that line and token, in ledger order.
+
+    `col` is deliberately not in the key, so a certificate whose rows lack a field still aligns
+    row for row and that field is reported missing rather than every row being reported lost."""
+    seen: dict = {}
+    out: dict = {}
+    for e in rows:
+        base = _row_key(e)
+        k = seen.get(base, 0)
+        seen[base] = k + 1
+        out[base + (k,)] = e
+    return out
+
+
+def _compare_rows(name: str, stored, fresh: list, problems: List[str], fields: dict) -> None:
+    """Row by row, both ways and in order. `fields` gathers, for each field the installed verifier
+    writes in a matched row, [rows lacking it, rows carrying it, rows in the list]."""
+    if not isinstance(stored, list) or not all(isinstance(e, dict) for e in stored):
+        problems.append(f"{name} not reproduced: the embedded {name} is not a list of rows")
+        return
+    s, f = _rows_by_key(stored), _rows_by_key(fresh)
+    for k, e in s.items():
+        if k not in f:
+            problems.append(f"{name} row not reproduced: {_at(e)} (embedded "
+                            f"{e.get('status', 'row')}) is not a row at the installed verifier")
+            continue
+        le = f[k]
+        for fld, lv in le.items():
+            slot = fields.setdefault(f"{name}[].{fld}", [0, 0, len(s)])
+            slot[0 if fld not in e else 1] += 1
+            if fld not in e:
+                continue
+            if not _same(e[fld], lv):
+                problems.append(f"{name} divergence at {_at(e)}: {fld} embedded "
+                                f"{_short(e[fld])} vs live {_short(lv)}")
+        for fld in e:
+            if fld not in le:
+                problems.append(f"{name} divergence at {_at(e)}: the row carries {fld!r}, which "
+                                f"the installed verifier does not write")
+    for k, le in f.items():
+        if k not in s:
+            problems.append(f"{name} omits a row the installed verifier finds: {_at(le)} (live "
+                            f"{le.get('status', 'row')})")
+    if set(s) == set(f) and list(s) != list(f):
+        problems.append(f"{name} rows are not in the order the installed verifier writes them "
+                        f"(document order)")
+
+
+def _presence(cert: dict, field: str) -> tuple:
+    """(carried in full, carried at all) for a generation field; a row field is carried in full
+    when every ledger row carries it."""
+    if field.startswith("ledger[]."):
+        k = field[len("ledger[]."):]
+        ledger = cert.get("ledger")
+        rows = [e for e in ledger if isinstance(e, dict)] if isinstance(ledger, list) else []
+        n = sum(k in e for e in rows)
+        return n == len(rows), n > 0
+    return field in cert, field in cert
+
+
+def _shown_generation(cert: dict) -> Optional[tuple]:
+    """(index, date, field) of the latest generation field the certificate carries, else None."""
+    shown = [g for g, (_, fields) in enumerate(_CERT_GENERATIONS)
+             if any(_presence(cert, f)[1] for f in fields)]
+    if not shown:
+        return None
+    top = max(shown)
+    top_date, top_fields = _CERT_GENERATIONS[top]
+    return top, top_date, next(f for f in top_fields if _presence(cert, f)[1])
+
+
+def _generation_problems(cert: dict) -> dict:
+    """{field: problem} for every dated field missing beside one certify began writing later."""
+    shown = _shown_generation(cert)
+    if shown is None:
+        return {}
+    top, top_date, carried = shown
+    out = {}
+    for g in range(top + 1):
+        date, fields = _CERT_GENERATIONS[g]
+        for f in fields:
+            if _presence(cert, f)[0]:
+                continue
+            when = (f"in the same change that began writing {f}" if g == top else
+                    f"on {top_date}, after it began writing {f} on {date}")
+            out[f] = (f"certificate.{f} is absent{' from some rows' if '[]' in f else ''}, but "
+                      f"the certificate carries certificate.{carried}, which certify began "
+                      f"writing {when}: no certify issued that combination, so a field was "
+                      f"removed")
+    return out
+
+
+def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) -> dict:
+    """Compare an embedded certificate with the one certify_doc re-derives from the embedded
+    bytes. A field both carry must be equal, type for type. A field the installed certify writes
+    and the certificate lacks is NOT CHECKED, by name, with the value the installed verifier finds
+    and the day certify began writing it, unless the certificate shows it is not that old: it
+    carries a field certify began writing later, or names the installed certify.py as its issuer.
+    Then the missing field fails. A field the certificate carries and the installed certify does
+    not write cannot be reproduced, so it fails. `ungrounded` must be the ledger's UNGROUNDED rows,
+    copied, as every certify writes it. Mint-environment fields are listed as stated."""
+    problems: List[str] = []
+    advisory: List[str] = []
+    not_checked: List[str] = []
+    stated: List[str] = []
+    compared: List[str] = []
+    # what create_capsule refuses to mint even though verify passes: a ledger missing fields the
+    # page draws its bands from, or a verdict compared by class only
+    mint_refusals: List[str] = []
+
+    for k in _CERT_REQUIRED:
+        if k not in cert:
+            problems.append(f"certificate.{k} is missing: every certificate carries it")
+    vs, lvs = cert.get("verifier_sha256"), live.get("verifier_sha256")
+    same_issuer = isinstance(vs, str) and vs == lvs
+    # The issuer's hash is stated, not checked, but its form is fixed: until review round 3 it
+    # could be absent, null, an object or free text (terminal escapes included) and still verify.
+    if "verifier_sha256" in cert and not (isinstance(vs, str) and _SHA256_HEX.fullmatch(vs)):
+        problems.append(f"certificate.verifier_sha256 {_short(vs, 80)} is not the 64 lowercase "
+                        f"hex digits every certify writes there")
+    pv = (payload.get("verifier") or {}).get("sha256")
+    if not _same(pv, vs):
+        problems.append(f"payload.verifier.sha256 {_short(pv, 80)} is not "
+                        f"certificate.verifier_sha256 {_short(vs, 80)}; create_capsule copies "
+                        f"one into the other")
+    removed = _generation_problems(cert)
+    problems.extend(removed.values())
+    shown = _shown_generation(cert)
+
+    def absent_field(name: str, what: str) -> None:
+        if name in removed:
+            return                  # already failed, with the field that dates the certificate
+        if same_issuer:
+            problems.append(f"certificate.{name} is {what}, but the certificate names the "
+                            f"installed certify.py (verifier_sha256 {vs}) as its issuer, and that "
+                            f"file writes it: a field was removed")
         else:
-            stored = {(e["line"], e.get("col"), str(e["token"])): e["status"]
-                      for e in cert.get("ledger", [])}
-            fresh = {(e["line"], e.get("col"), str(e["token"])): e["status"]
-                     for e in live.get("ledger", [])}
-            for k, s in sorted(stored.items()):
-                if fresh.get(k) != s:
-                    problems.append(f"ledger divergence at line {k[0]} token {k[2]!r}: "
-                                    f"embedded {s} vs live {fresh.get(k)}")
-    return {"ok": not problems, "problems": problems, "advisory": advisory,
-            "verdict": cert.get("verdict"), "counts": cert.get("counts"),
-            "live_verdict": None if live is None else live.get("verdict"),
-            "document": payload["document"]["name"],
-            "spec": payload.get("spec"),
-            "reproduced_at": None if live is None else "installed verifier"}
+            # Said with the day certify began writing it, which the certificate does not post-date
+            # (else it failed above); until review round 4 this read "a certificate from an older
+            # certify does not", which was false for a field the certificate's own age shows.
+            since = _since(name)
+            not_checked.append(
+                f"certificate.{name}: {what}; " +
+                (f"certify began writing it on {since}, and nothing in this certificate dates it "
+                 f"later" if since else "the installed certify writes it, and nothing in this "
+                                        "certificate shows which certify issued it"))
+
+    # `ungrounded` is the ledger's UNGROUNDED rows, copied: every certify since the earliest
+    # (9ed6f3b5) writes it so, and all 253 certificates committed here carry it so. Until review
+    # round 4 its rows were compared only with the installed verifier's, so where the ledger's
+    # own rows carry a field the installed certify writes, deleting it from the copies was
+    # printed NOT CHECKED and verified.
+    led, ung = cert.get("ledger"), cert.get("ungrounded")
+    if isinstance(led, list) and isinstance(ung, list):
+        copies = [e for e in led if isinstance(e, dict) and e.get("status") == "UNGROUNDED"]
+        if not _same(ung, copies):
+            at = next((n for n, (a, b) in enumerate(zip(ung, copies)) if not _same(a, b)),
+                      min(len(ung), len(copies)))
+            a = ung[at] if at < len(ung) else None
+            b = copies[at] if at < len(copies) else None
+            fields = sorted({k for k in (a or {}) if not isinstance(b, dict) or k not in b or
+                             not _same(a[k], b[k])} |
+                            {k for k in (b or {}) if not isinstance(a, dict) or k not in a})
+            problems.append(
+                f"certificate.ungrounded is not the ledger's UNGROUNDED rows as the ledger carries "
+                f"them ({len(ung)} row(s) vs {len(copies)}; row {at} differs"
+                + (f" in {', '.join(map(repr, fields))}" if fields else "")
+                + "): every certify writes it as a copy of those rows")
+
+    # the verdict: the whole string, except for a certificate that predates the uncovered band
+    ev, lv = cert.get("verdict"), live["verdict"]
+    if "verdict" in cert:
+        if _same(ev, lv):
+            compared.append("verdict")
+        elif ("uncovered" not in cert and not removed and not same_issuer
+              and isinstance(ev, str) and _verdict_class(ev) == ev and _verdict_class(lv) == ev):
+            compared.append("verdict class")
+            mint_refusals.append(f"the verdict {ev!r} is not the installed verifier's {lv!r}")
+            items = live.get("uncovered_items") or []
+            where = "; ".join(f"line {u.get('line')} {u.get('token')!r} ({u.get('reason')})"
+                              for u in items[:10]) + (" ..." if len(items) > 10 else "")
+            not_checked.append(
+                f"the verdict's coverage suffix: this certificate carries no `uncovered` field "
+                f"(it predates the uncovered band), so its verdict {ev!r} was compared by class "
+                f"only; the installed verifier's verdict is {lv!r}")
+            advisory.append(
+                f"verdict string moved without a class change: live {lv!r} vs embedded {ev!r}, a "
+                f"coverage suffix the installed verifier appends to a certificate that predates "
+                f"the band. The installed verifier finds {len(items)} numeric span(s) nothing "
+                f"checked: {where}")
+        else:
+            problems.append(f"verdict not reproduced: live {_short(lv)} vs embedded {_short(ev)}")
+
+    for k, lval in live.items():
+        if k == "verdict" or k in _CERT_ROW_LISTS or k in _CERT_MINT_FIELDS:
+            continue
+        if k not in cert:
+            if k not in _CERT_REQUIRED:
+                absent_field(k, f"not carried (installed verifier: {_short(lval, 160)})")
+        elif not _same(cert[k], lval):
+            if k == "document" and isinstance(cert[k], str) and isinstance(lval, str):
+                # certify writes the document's file name; the re-run's file has the capsule's
+                problems.append(f"certificate.document {cert[k]!r} is not the name this capsule "
+                                f"gives its document ({lval!r}): the certificate was issued for a "
+                                f"file of that name, and the capsule carries it under another (a "
+                                f"renamed copy). Mint from a file named as certified, or "
+                                f"re-certify the file under its new name")
+            elif isinstance(lval, list) and isinstance(cert[k], list):
+                js = lambda x: json.dumps(x, ensure_ascii=False, sort_keys=True)  # noqa: E731
+                only_live = [x for x in lval if js(x) not in {js(y) for y in cert[k]}]
+                only_cert = [x for x in cert[k] if js(x) not in {js(y) for y in lval}]
+                problems.append(f"{k} not reproduced: {len(cert[k])} embedded vs {len(lval)} "
+                                f"live; only live {_short(only_live)}; only embedded "
+                                f"{_short(only_cert)}")
+            else:
+                problems.append(f"{k} not reproduced: live {_short(lval)} vs embedded "
+                                f"{_short(cert[k])}")
+        else:
+            compared.append(k)
+    for k in cert:
+        if k not in live and k not in _CERT_MINT_FIELDS:
+            problems.append(f"certificate.{k} cannot be reproduced: the installed certify does "
+                            f"not write it")
+    # The page draws its volunteered-share card from the summary. A certificate whose rows carry
+    # epistemics and which lacks it exists (two are committed, from the 26 minutes between those
+    # changes on 2026-08-30), so verify names it NOT CHECKED, but create does not mint from it.
+    if "epistemics_summary" in live and "epistemics_summary" not in cert:
+        mint_refusals.append("certificate.epistemics_summary is absent, and the page draws its "
+                             "volunteered share from it")
+
+    for name in _CERT_ROW_LISTS:
+        if name not in live:
+            continue
+        if name not in cert:
+            if name not in _CERT_REQUIRED:
+                absent_field(name, "not carried")
+            continue
+        before = len(problems)
+        fields: dict = {}
+        _compare_rows(name, cert[name], live[name], problems, fields)
+        unchecked = 0
+        for fld, (n, carried, total) in fields.items():
+            if not n or fld in removed:
+                continue            # carried by every row, or already failed with its date
+            if fld.split("[].", 1)[1] in _ROW_REQUIRED:
+                problems.append(f"certificate.{fld} is absent from {n} of {total} row(s): every "
+                                f"certify writes it in every row, so it was removed")
+            elif carried:
+                problems.append(f"certificate.{fld} is absent from {n} row(s) and carried by "
+                                f"{carried}, where the installed verifier writes it in all of "
+                                f"them: no certify writes it into some of those rows and not "
+                                f"others, so it was removed")
+            elif shown is not None and (_since(fld) or shown[1]) < shown[1]:
+                # a field certify wrote before the day this certificate's own fields date it to
+                row = fld.split("[].", 1)[1]
+                origin = (f" ({_ROW_FIELDS_SINCE[row][1]})" if row in _ROW_FIELDS_SINCE else "")
+                problems.append(f"certificate.{fld} is absent from {n} of {total} row(s), where "
+                                f"the installed verifier writes it; certify has written it there "
+                                f"since {_since(fld)}{origin}, and the certificate carries "
+                                f"certificate.{shown[2]}, which certify began writing on "
+                                f"{shown[1]}: no certify issued that combination, so it was "
+                                f"removed")
+            else:
+                unchecked += 1
+                absent_field(fld, f"absent from {n} of {total} row(s)")
+                draws = name == "ledger" and fld.split("[].", 1)[1] in ("col", "epistemics")
+                mint_refusals.append(f"certificate.{fld} is absent from {n} of {total} row(s)"
+                                     + (", and the page draws each band from its row" if draws
+                                        else ", and the installed certify writes it"))
+        if len(problems) == before:
+            # "every field" only when no field of these rows went unchecked (review round 3)
+            compared.append(f"{name} ({len(live[name])} rows, both directions, in order, "
+                            + ("every field)" if not unchecked else
+                               f"every field it carries; {unchecked} field(s) NOT CHECKED, "
+                               f"listed)"))
+
+    # the minting environment: stated, never verified
+    stated.append(f"certificate.verifier_sha256 {vs} (the certify.py that issued it; the "
+                  f"installed certify.py is "
+                  f"{'the same file' if same_issuer else lvs})")
+    if "receipt_binding" not in cert:
+        absent_field("receipt_binding", "not carried (receipt digests, and the repository head, "
+                                        "paths and committed flags at mint)")
+    else:
+        _compare_binding(cert["receipt_binding"], live.get("receipt_binding") or {}, recs,
+                         problems, not_checked, stated, compared)
+
+    ver = payload.get("verifier") or {}
+    stated.append(f"created {payload.get('created')} (when the capsule was minted)")
+    stated.append(f"verifier.styxx_version {ver.get('styxx_version')}, pip "
+                  f"{ver.get('pip')} (the styxx the minter ran)")
+    sv = ver.get("styxx_version")
+    if isinstance(sv, str) and _version_key(sv) and _version_key(sv) < _version_key(_LAYER2_FLOOR):
+        advisory.append(f"the capsule states it was minted with styxx {sv}, below "
+                        f"{_LAYER2_FLOOR}, the release whose layer 2 compares the whole "
+                        f"certificate and the page: a styxx below it passes certificates this one "
+                        f"fails, so check a capsule with styxx>={_LAYER2_FLOOR}, not with the "
+                        f"version it states")
+    return {"problems": problems, "advisory": advisory, "not_checked": not_checked,
+            "stated": stated, "compared": compared, "mint_refusals": mint_refusals}
+
+
+def _binding_path_problem(path) -> Optional[str]:
+    """Why `path` is not one bind_at_mint writes, else None.
+
+    bind_at_mint writes the path of the file the receipt RESOLVES to, relative to the repository
+    root, in POSIX form (Repo.rel_or_none: Path.resolve, os.path.relpath, as_posix, and None for
+    anything outside the root), beside the name the receipt was given. Through a symlink on POSIX
+    (latest.json -> run_0042.json) or an 8.3 short name on Windows (RECEIP~1.JSO) the path ends in
+    another name than the receipt's, so nothing ties the two: until review round 4 a path had to
+    end in the receipt's name, which failed those honest capsules and made create refuse its own
+    certify's output. The pair is printed as stated."""
+    if not isinstance(path, str):
+        return "is not a string"
+    parts = path.split("/")
+    if (PurePosixPath(path).is_absolute() or PureWindowsPath(path).drive or "\\" in path
+            or any(p in ("", ".", "..") for p in parts)):
+        return "is not a relative POSIX path inside the repository"
+    if any(ord(c) < 32 or 127 <= ord(c) < 160 for c in path):
+        return "holds a control character"
+    return None
+
+
+def _compare_binding(rb, lrb: dict, recs: dict, problems: List[str], not_checked: List[str],
+                     stated: List[str], compared: List[str]) -> None:
+    """The receipt binding: its digests are functions of the receipt bytes and are compared; its
+    repository facts are stated, after checking they are a combination bind_at_mint writes. One
+    of those facts is also a function of the bytes and is compared: bind_at_mint marks a receipt
+    committed only when the blob at head is the receipt's bytes (as they are, or with LF or CRLF
+    line ends), and writes that blob. Until review round 3 only the blob's form was checked, so a
+    certificate certified over edited bytes and given an honest mint's head, paths and blobs
+    verified exactly like that mint."""
+    from styxx.receipt_binding import git_blob_id
+    if not isinstance(rb, dict):
+        problems.append("certificate.receipt_binding is not an object")
+        return
+    before = len(problems)
+    for k in rb:
+        if k not in _BINDING_FIELDS and k != "note":
+            problems.append(f"certificate.receipt_binding.{k}: a field certify does not write")
+    for k in _BINDING_FIELDS:
+        if k not in rb:
+            problems.append(f"certificate.receipt_binding.{k} is missing: certify writes it in "
+                            f"every binding block")
+    for k in ("schema", "content_rule"):
+        if k in rb and not _same(rb[k], lrb.get(k)):
+            problems.append(f"receipt_binding.{k} not reproduced: live {_short(lrb.get(k))} "
+                            f"vs embedded {_short(rb[k])}")
+    rows = rb.get("receipts")
+    if not isinstance(rows, list) or not all(isinstance(r, dict) for r in rows):
+        problems.append("receipt_binding.receipts not reproduced: not a list of receipts")
+        return
+    for r in rows:
+        for k in r:
+            if k not in _BINDING_ROW_FIELDS:
+                problems.append(f"certificate.receipt_binding.receipts[{r.get('name')!r}].{k}: a "
+                                f"field certify does not write")
+        for k in _BINDING_ROW_FIELDS:
+            if k not in r:
+                problems.append(f"certificate.receipt_binding.receipts[{r.get('name')!r}].{k} is "
+                                f"missing: certify writes it for every receipt")
+    # what bind_at_mint can write: no path, blob or committed flag without a head; a blob exactly
+    # when committed; all_receipts_committed exactly when every receipt is; and a note only in
+    # one of three forms, each where it writes it ("no receipts" with no rows; "no repository at
+    # mint: ..." with no head; certify's own "binding failed: ..." with neither)
+    head, note, allc = rb.get("head"), rb.get("note"), rb.get("all_receipts_committed")
+    if head is not None and not (isinstance(head, str) and _GIT_ID.fullmatch(head)):
+        problems.append(f"receipt_binding.head {_short(head)} is not a commit id")
+    if note is not None and not isinstance(note, str):
+        problems.append("receipt_binding.note is not a string")
+    elif note is None:
+        if rows == []:
+            problems.append("receipt_binding lists no receipts and carries no note; certify "
+                            "writes the note 'no receipts' there")
+    elif note.startswith("no repository at mint: "):
+        if head is not None:
+            problems.append("receipt_binding says there was no repository at mint and names a head")
+    elif note.startswith("binding failed: "):
+        if rows or head is not None:
+            problems.append("receipt_binding.note says the binding failed at mint, and the block "
+                            "names a head or receipts; certify's fallback carries neither")
+    elif note == "no receipts":
+        if rows:
+            problems.append(f"receipt_binding.note says there were no receipts, and the block "
+                            f"lists {len(rows)}")
+    else:
+        problems.append(f"receipt_binding.note {_short(note, 80)} is not a note certify writes")
+    for r in rows:
+        blob, committed, path = r.get("blob"), r.get("committed"), r.get("path")
+        # bind_at_mint writes the receipt's file name; a list or an object here ended verify in a
+        # TypeError (unhashable) until review round 4
+        if "name" in r and not isinstance(r.get("name"), str):
+            problems.append(f"receipt_binding row name {_short(r.get('name'), 80)} is not a "
+                            f"string; certify writes the receipt's file name there")
+        if (not isinstance(committed, bool)
+                or (blob is not None and not (isinstance(blob, str) and _GIT_ID.fullmatch(blob)))
+                or committed != (blob is not None)
+                or (head is None and (path is not None or committed))):
+            problems.append(f"receipt_binding row {r.get('name')!r} (path {_short(path)}, blob "
+                            f"{_short(blob)}, committed {_short(committed)}, head {_short(head)}) "
+                            f"is not a combination certify writes")
+        why = None if path is None else _binding_path_problem(path)
+        if why:
+            problems.append(f"receipt_binding path {_short(path)} of {r.get('name')!r} is not a "
+                            f"repository path certify writes: it {why}")
+        raw = recs.get(r.get("name")) if isinstance(r.get("name"), str) else None
+        if committed is True and isinstance(blob, str) and raw is not None:
+            lf = raw.replace(b"\r\n", b"\n")
+            if blob not in {git_blob_id(raw), git_blob_id(lf),
+                            git_blob_id(lf.replace(b"\n", b"\r\n"))}:
+                problems.append(f"receipt_binding row {r.get('name')!r} says it was committed as "
+                                f"blob {blob}, which is not the git blob of the embedded receipt's "
+                                f"bytes (as they are, or with LF or CRLF line ends); certify "
+                                f"marks a receipt committed only when the blob at head is those "
+                                f"bytes")
+    if not _same(allc, bool(rows) and all(r.get("committed") is True for r in rows)):
+        problems.append(f"receipt_binding.all_receipts_committed {_short(allc)} does not follow "
+                        f"from its rows")
+
+    if isinstance(note, str) and note.startswith("binding failed:") and rows == []:
+        # certify's own fallback (R7: a binding failure never blocks a certificate)
+        not_checked.append(f"certificate.receipt_binding digests: the block says its binding "
+                           f"failed at mint ({note!r}), so it carries none; the receipts' bytes "
+                           f"are compared through receipts_sha256")
+    else:
+        names = [r.get("name") for r in rows]
+        lnames = [r.get("name") for r in (lrb.get("receipts") or [])]
+        if not _same(names, lnames):
+            problems.append(f"receipt_binding.receipts not reproduced: names {names} vs the "
+                            f"embedded receipts {lnames}")
+        lrows = {r.get("name"): r for r in (lrb.get("receipts") or [])}
+        for r in rows:
+            lr = (lrows.get(r["name"]) if isinstance(r.get("name"), str) else None) or {}
+            for k in _BINDING_BYTE_FIELDS:
+                if k in r and not _same(r[k], lr.get(k)):
+                    problems.append(f"receipt_binding {k} of {r.get('name')!r} not "
+                                    f"reproduced: live {lr.get(k)} vs embedded {r[k]}")
+        if len(problems) == before:
+            compared.append("receipt_binding digests")
+    # The head, the paths and the commits behind them cannot be checked from the bytes: a capsule
+    # carries no repository. A blob is printed beside its flag; it names the receipt's own bytes.
+    stated.append(
+        f"certificate.receipt_binding: head {head}, all_receipts_committed {allc}; "
+        + "; ".join(f"{r.get('name')} path {r.get('path')} committed {r.get('committed')}"
+                    + (f" blob {r.get('blob')}" if r.get("blob") is not None else "")
+                    for r in rows)
+        + (f"; note {note!r}" if note else ""))
+
+
+# The page before 2026-10-05 marks its bands with U+0001 to U+0003 before escaping, so the same
+# characters in a document open a band no row gives, wherever they sit: those fail outright. Its
+# script splits lines only where this pattern matches, while certify splits as str.splitlines()
+# (form feed, vertical tab, U+001C to U+001E, NEL, U+2028, U+2029 as well); those are mapped.
+_PAGE_V01_LEGACY_MARKERS = re.compile("[\x01-\x03]")
+_PAGE_V01_LEGACY_SPLIT = re.compile("\r\n|\n")
+
+
+def _check_page_v01(html: str, payload: dict, cert: dict, live: Optional[dict], doc_bytes,
+                    problems: List[str], advisory: List[str], compared: List[str],
+                    mint_refusals: List[str]) -> None:
+    """The page must be what some styxx renders for exactly this payload.
+
+    The payload is located by text; a browser locates it as an element, skipping comments. Until
+    2026-10-05 a page carrying a second, decoy payload inside an HTML comment ahead of the real
+    one verified the decoy while the browser drew the other, and the output was the genuine
+    capsule's byte for byte. Re-rendering the payload and requiring the page to equal it closes
+    every variant of that: an edited script, a decoy, a moved payload. Two renderers exist: this
+    one, and the one every styxx used before 2026-10-05 (styxx._capsule_page_v01_legacy). For the
+    older page, whose script reads documents differently from certify, the drawing is re-derived
+    here (_legacy_page_problems).
+
+    This page is rendered only by create_capsule, which refuses a certificate verify would pass
+    with what the page draws from NOT CHECKED (`mint_refusals`). So around this page each of those
+    refusals is a failure: no styxx mints it from that certificate. Until review round 4 they were
+    NOT CHECKED around this page too, and a certificate posing as older than the uncovered band
+    verified while the page painted a green OATH-HELD over a number nothing checked. NOT CHECKED
+    stays for the older page, which honest capsules of that age carry. A later certify that writes
+    a field this one does not must keep the pages this renderer minted verifying: it treats this
+    renderer as an older one, as this module treats the page before it."""
+    from styxx._capsule_page_v01_legacy import render_html_v01_legacy
+
+    # A leading byte-order mark and the line ends (read_text folds CRLF and CR) are transport, and
+    # so are line feeds after the page's last byte: a browser shows nothing of either. Until
+    # review round 5 one trailing newline added or removed failed an honest capsule as edited.
+    page = (html[1:] if html.startswith("\ufeff") else html).rstrip("\n")
+
+    def renders(fn) -> bool:
+        try:
+            return fn(payload).rstrip("\n") == page
+        except Exception:   # noqa: BLE001 - a payload a renderer cannot read is not its page
+            return False
+
+    if renders(_render_html):
+        if mint_refusals:
+            problems.extend(
+                f"the page is the one create_capsule renders, and create_capsule refuses this "
+                f"certificate ({r}), so no styxx minted this page around it" for r in mint_refusals)
+            return
+        compared.append("the page (the page this styxx renders for this payload)")
+        return
+    if not renders(render_html_v01_legacy):
+        problems.append("the page around the payload is not the page any styxx renders for this "
+                        "payload: it was edited after minting (a script, a decoy payload, a "
+                        "moved element), so what a browser shows was not checked")
+        return
+    if live is None:
+        return           # the payload did not verify; its drawing is moot
+    found, omitted = _legacy_page_problems(payload, cert, live, doc_bytes)
+    if found:
+        problems.extend(found)
+        return
+    compared.append("the page (the page styxx rendered before 2026-10-05 for this payload; it "
+                    "draws no band where the certificate puts none"
+                    + (f", and shows {len(omitted)} number(s) the certificate bands with no band, "
+                       f"listed in an advisory)" if omitted else ")"))
+    # Its install line is the minter's stated version (review round 3, forgery lens): a forger
+    # chooses this page to have it name a styxx that passes the forgery. Nothing in layer 2 can
+    # change what the page says; the reader of layer 2 is told.
+    advisory.append(f"this capsule carries the page styxx minted before 2026-10-05: its badge "
+                    f"shows the certificate's verdict as fixed text before any check, and still "
+                    f"shows it when a byte is doctored or the script does not run, and its layer-2 "
+                    f"box tells its reader to pip install {payload['verifier']['pip']}, the "
+                    f"version its minter states. Every styxx below {_LAYER2_FLOOR}, 7.48.0 and "
+                    f"7.48.1 among them, passes forgeries this one fails (a certificate edited to "
+                    f"report 0 uncovered among them), so check it with styxx>={_LAYER2_FLOOR}. A "
+                    f"capsule minted with this styxx shows a verdict only after its hashes match, "
+                    f"and its layer-2 box names that floor.")
+    if omitted:
+        advisory.append(f"the page (minted before 2026-10-05) shows {len(omitted)} number(s) with "
+                        f"no band where the certificate bands them, and draws no band in their "
+                        f"place: " + "; ".join(omitted[:12])
+                        + (f"; ... and {len(omitted) - 12} more" if len(omitted) > 12 else ""))
+
+
+def _u16(s: str) -> str:
+    """The string as a browser holds it: one character per UTF-16 code unit."""
+    b = s.encode("utf-16-le", "surrogatepass")
+    return "".join(chr(b[i] | (b[i + 1] << 8)) for i in range(0, len(b), 2))
+
+
+def _band(e: dict) -> str:
+    if e.get("status") == "UNGROUNDED":
+        return "un"
+    if e.get("status") == "ABSTAIN":
+        return "ab"
+    ep = e.get("epistemics")
+    return "vo" if isinstance(ep, dict) and ep.get("obligated") else "vv"
+
+
+_BAND_WORDS = {"un": "accused", "ab": "abstained", "vo": "verified, obligated",
+               "vv": "verified, volunteered"}
+# certify's line breaks (str.splitlines) at which the older page's script does not split; a capsule
+# document holds no carriage return, since certify reads it with universal newlines
+_SPLITLINES_ONLY = "\x0b\x0c\x1c\x1d\x1e\x85\u2028\u2029"
+
+
+def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: bytes) -> tuple:
+    """(problems, omitted): where the page styxx minted before 2026-10-05 would draw a band the
+    certificate does not put there, and the numbers it would show with no band.
+
+    Its script drops a leading byte-order mark (a default TextDecoder does; Python keeps it) and
+    splits the document at \\n and \\r\\n only, while certify splits as str.splitlines, so a row
+    after a form feed, U+2028 or the like is looked for on another line. It reads `col` as a
+    UTF-16 index and falls back to the token's earliest occurrence on the line, so an astral
+    character, a BOM or a U+2212 minus can move a band to another number or drop it. It marks
+    bands with U+0001 to U+0003, so those characters in the document draw bands no row gives; and
+    it writes receipt names into the page unescaped. Each is re-derived here from the payload.
+
+    What a reader sees is compared, band for band (line, offset, token, kind): a band the
+    certificate does not put there (a row drawn on another line, on another number, across
+    another band, or on a number the certificate bands otherwise) fails the capsule, with its row
+    and its cause. A certificate band the script leaves undrawn is an omission: the page shows
+    that number plain and paints nothing false, so it is returned to be printed as an advisory.
+    A band the certificate puts there and the script draws twice (a second row of that token and
+    kind falling back onto it, its own number then left plain) is that band, nested in itself,
+    and the second row is an omission. The script's own run under node agrees with this rule in
+    the tests, and on the honest older pages counted in the CHANGELOG.
+
+    Until review round 4 an omission failed the capsule too, while the CHANGELOG described the
+    rule as failing only misplaced bands: of 208 honest capsules styxx 7.47.0 mints over the
+    documents committed here, 25 failed, 24 of them for omissions alone, most on a U+2212 minus.
+    Until review round 5 a band drawn twice failed as one the certificate does not put there,
+    though nothing false is painted: 13 of 300 honest capsules 7.48.1 minted over random
+    documents, and the one of those 25 still failing (FINDING_p1_third_quarantine_2026_08_08, an
+    abstained -45 written twice, once with U+2212). The band markers and markup in receipt names
+    still fail outright."""
+    out: List[str] = []
+    for r in payload["receipts"]:
+        if any(c in r["name"] for c in "<&"):
+            out.append(f"the page (minted before 2026-10-05) writes receipt names into its HTML "
+                       f"unescaped, and {r['name']!r} holds markup (< or &), so the page would "
+                       f"not show that name")
+    # Its 'volunteered share' card reads epistemics_summary and, without one, counts every
+    # verified number volunteered. Where the certificate's own rows say otherwise, the card
+    # contradicts them (review round 2, f8: deleting the summary moved the card from 34% to 100%).
+    if "epistemics_summary" not in cert:
+        obligated = sum(1 for e in cert.get("ledger") or [] if isinstance(e, dict)
+                        and e.get("status") == "VERIFIED" and isinstance(e.get("epistemics"), dict)
+                        and e["epistemics"].get("obligated") is True)
+        if obligated:
+            out.append(f"the page (minted before 2026-10-05) draws its volunteered share from "
+                       f"certificate.epistemics_summary, which this certificate lacks, so it shows "
+                       f"every verified number volunteered while {obligated} of its verified "
+                       f"ledger rows say obligated")
+    text = doc_bytes.decode("utf-8")
+    m = _PAGE_V01_LEGACY_MARKERS.search(text)
+    if m:
+        out.append(f"the page (minted before 2026-10-05) cannot draw this document as certify "
+                   f"reads it: it holds U+{ord(m.group(0)):04X} on line "
+                   f"{text.count(chr(10), 0, m.start()) + 1}, which its script reads as its own "
+                   f"band marker")
+        return out, []
+
+    # The text the script shows, and where each of its lines starts in it.
+    bom = 1 if text.startswith("\ufeff") else 0
+    shown = text[bom:]
+    lines = _PAGE_V01_LEGACY_SPLIT.split(shown)
+    starts = [0] + [mm.end() for mm in _PAGE_V01_LEGACY_SPLIT.finditer(shown)]
+    # Where certify's lines start in the text it read (str.splitlines, ends kept).
+    cstarts, pos = [], 0
+    for chunk in text.splitlines(keepends=True):
+        cstarts.append(pos)
+        pos += len(chunk)
+    breaks = [(p, c) for p, c in enumerate(text) if c in _SPLITLINES_ONLY]
+
+    def mapped(n, c):
+        """certify's (line n, code point column c) as (the script's line, code point offset)."""
+        if type(n) is not int or type(c) is not int or not 1 <= n <= len(cstarts):
+            return None
+        q = cstarts[n - 1] + c - bom
+        k = bisect.bisect_right(starts, q) - 1
+        return k + 1, q - starts[k]
+
+    def split_by(n) -> str:
+        """The line breaks certify split at, and the script did not, before certify's line n."""
+        cut = cstarts[n - 1] if type(n) is int and 1 <= n <= len(cstarts) else len(text)
+        found = sorted({c for p, c in breaks if p < cut})
+        return ", ".join(f"U+{ord(c):04X}" for c in found)
+
+    rows = [e for e in cert.get("ledger") or [] if isinstance(e, dict)]
+    emb, liv = _rows_by_key(rows), _rows_by_key(live.get("ledger") or [])
+    # where the certificate puts each number: the script's line, the code point offset in it, and
+    # the UTF-16 offset in it (by the installed verifier's column; certify always writes one, and
+    # the rows were compared above)
+    want: dict = {}
+    for key, e in emb.items():
+        at = mapped((liv.get(key) or {}).get("line"), (liv.get(key) or {}).get("col"))
+        if at is not None:
+            want[id(e)] = (at[0], at[1], len(_u16(lines[at[0] - 1][:at[1]])))
+    # Where the script draws each row: byLine[e.line], in descending column order, at `col` when
+    # the token starts there in the line as already marked, else at the token's earliest
+    # occurrence in it. Each unit is a UTF-16 code unit and its offset in the line, or None for a
+    # marker the script inserted, so a band is known by the units it wraps.
+    drawn: dict = {}
+    by_line: dict = {}
+    for e in rows:
+        if type(e.get("line")) is int:
+            by_line.setdefault(e["line"], []).append(e)
+    for i, es in by_line.items():
+        if not 1 <= i <= len(lines):
+            continue            # the script has no such line: those rows are drawn nowhere
+        units = [(c, k) for k, c in enumerate(_u16(lines[i - 1]))]
+        for e in sorted(es, key=lambda e: -(e["col"] if type(e.get("col")) is int else 0)):
+            s = "".join(c for c, _ in units)
+            t = _u16(str(e.get("token")))
+            col = e.get("col")
+            at = col if type(col) is int and col >= 0 and s.startswith(t, col) else s.find(t)
+            if at < 0 or not t:
+                continue
+            wrapped = units[at:at + len(t)]
+            units = (units[:at] + [(c, None) for c in "\x01" + _band(e) + "\x02"] + wrapped
+                     + [("\x03", None)] + units[at + len(t):])
+            offs = [k for _, k in wrapped]
+            whole = None not in offs and offs == list(range(offs[0], offs[0] + len(offs)))
+            drawn[id(e)] = (i, offs[0] if whole else None)
+
+    # What a reader sees is the bands, not which row drew each: a band is its line, its UTF-16
+    # offset (None when the script drew it across a marker of a band it drew before), its token
+    # and its kind. The page draws a band falsely where it draws one the certificate does not put
+    # there (a row moved onto another number, or onto a number the certificate bands otherwise);
+    # it omits one where it leaves a certificate band undrawn. A row drawn on another number that
+    # the certificate bands the same way paints nothing false: the two pages look alike.
+    def band_key(e, at):
+        return at[0], at[1], str(e.get("token")), _band(e)
+
+    seen: Counter = Counter()
+    seen_by: dict = {}
+    for e in rows:
+        if id(e) in drawn:
+            k = band_key(e, drawn[id(e)])
+            seen[k] += 1
+            seen_by.setdefault(k, []).append(e)
+    meant: Counter = Counter()
+    meant_by: dict = {}
+    for e in emb.values():
+        if id(e) in want:
+            k = band_key(e, (want[id(e)][0], want[id(e)][2]))
+            meant[k] += 1
+            meant_by.setdefault(k, []).append(e)
+
+    def own(k, by, at_of):
+        """The rows behind band k, those not at their own place ahead of the rest."""
+        return sorted(by[k], key=lambda e: at_of(e) is not None and band_key(e, at_of(e)) == k)
+
+    def cause(e, d, w) -> str:
+        n = e.get("line")
+        if w is None:
+            return "the certificate places that number nowhere the page can show"
+        if d is None:
+            if type(n) is not int or not 1 <= n <= len(lines):
+                return (f"the script has no line {json.dumps(n)}"
+                        + (f"; certify also splits at {split_by(n)}" if split_by(n) else ""))
+            if "\u2212" in lines[w[0] - 1][w[1]:w[1] + len(str(e.get("token")))]:
+                return "the document writes it with U+2212, which certify reads as '-'"
+            if w[0] != n:
+                return f"it sits on the script's line {w[0]}; certify also splits at {split_by(n)}"
+            return f"the script does not find its token on its line {n}"
+        if d[0] != w[0]:
+            return (f"the script draws its row on its line {d[0]}, and the certificate's number "
+                    f"sits on its line {w[0]}: "
+                    + (f"certify splits lines at {split_by(n)} as well, and the script at line "
+                       f"feeds only" if split_by(n) else "the script's lines are not certify's"))
+        why = []
+        line_w = lines[w[0] - 1]
+        if any(ord(c) > 0xFFFF for c in line_w[:w[1]]):
+            why.append("an astral character before it is one code point to certify and two "
+                       "UTF-16 units to the script")
+        if bom and w[0] == 1:
+            why.append("certify counts the byte-order mark the script drops")
+        if "\u2212" in line_w[w[1]:w[1] + len(str(e.get("token")))]:
+            why.append("the document writes it with U+2212, which certify reads as '-'")
+        why.append("the script falls back to the token's earliest occurrence on the line"
+                   if d[1] is not None else "the script draws it across a band it drew before")
+        return (f"the script draws its row at UTF-16 offset {'?' if d[1] is None else d[1]} of "
+                f"its line {d[0]}, and the certificate's number starts at offset {w[2]}: "
+                + "; ".join(why))
+
+    def where(e):
+        return (want[id(e)][0], want[id(e)][2]) if id(e) in want else None
+
+    # A band the certificate puts there, drawn twice (the script's fallback lands a second row
+    # of that token and kind on it), nests one span in another of the same kind: the number shows
+    # its own band, and the row's own number is left plain, an omission. Until review round 5 the
+    # second drawing failed as a band the certificate does not put there, though the page paints
+    # nothing false (review round 4, compatibility lens: 13 of 300 honest 7.48.1 mints, and the
+    # one of 209 honest 7.47.0 mints over the documents committed here that failed).
+    for k, m in seen.items():
+        if meant[k]:
+            continue
+        for e in own(k, seen_by, where)[:m]:
+            w = want.get(id(e))
+            out.append(f"the page (minted before 2026-10-05) draws the {_BAND_WORDS[_band(e)]} "
+                       f"band of {e.get('token')!r} (certificate line {json.dumps(e.get('line'))}, "
+                       f"column {json.dumps(e.get('col'))}) where the certificate puts no such "
+                       f"band: {cause(e, drawn[id(e)], w)}")
+    twice = {k for k, m in seen.items() if meant[k] and m > meant[k]}
+    omitted: List[str] = []
+    for k, m in (meant - seen).items():
+        for e in own(k, meant_by, lambda e: drawn.get(id(e)))[:m]:
+            d = drawn.get(id(e))
+            omitted.append(f"line {json.dumps(e.get('line'))} {e.get('token')!r} "
+                           f"({_BAND_WORDS[_band(e)]}; "
+                           f"{cause(e, d, want.get(id(e)))}"
+                           + ("; it draws the row over the band of the same kind the certificate "
+                              "puts on that number, so that band is drawn twice"
+                              if d is not None and band_key(e, d) in twice else "") + ")")
+    if len(out) > 24:
+        out = out[:24] + [f"... and {len(out) - 24} more band(s) the page draws where the "
+                          f"certificate puts no such band"]
+    return out, omitted
+
 
 
 # ---------------------------------------------------------------------------------
 # the rendered capsule (layer 1 lives here, inline, zero external requests)
 # ---------------------------------------------------------------------------------
 
+# The page's install line names this floor, written into its template (_TEMPLATE, twice in the
+# HTML and once as FLOOR in its script): 7.49.0, the next minor release after 7.48.1, which will
+# carry this layer 2 (the whole-certificate comparison and the page check). Until review round 3
+# the line was built from the minter's stated version, which a forger chooses and which can name
+# a styxx that passes forged certificates (PyPI 7.48.0 passes the D1 forgery). verify advises
+# when a capsule states a version below the floor. That repairs only this page: the page every
+# styxx rendered before it still names the stated version, a forger can choose that page for a
+# new payload, and pip still installs a yanked release pinned exactly (PEP 592). verify tells its
+# reader so (review round 4); what the older page says cannot be changed. Changing the floor
+# changes every page this renderer produces, so a later change keeps this renderer for the pages
+# it minted, as styxx._capsule_page_v01_legacy keeps the one before it.
+_LAYER2_FLOOR = "7.49.0"
+
+
+def _version_key(v: str) -> tuple:
+    """Order on the versions _VERSION accepts: the release numbers, then a pre-release or a
+    development release before the release itself, a post-release after it."""
+    m = re.fullmatch(r"(\d+(?:\.\d+){1,3})((?:a|b|rc)\d+)?(\.post\d+)?(\.dev\d+)?", v)
+    if not m:
+        return ()
+    rel = tuple(int(x) for x in m.group(1).split("."))
+    rel += (0,) * (4 - len(rel))
+    early = bool(m.group(2)) or (bool(m.group(4)) and not m.group(3))
+    return rel + (0 if early else 1,)
+
+
 def _render_html(payload: dict) -> str:
-    cert = payload["certificate"]
-    verdict = cert.get("verdict", "?")
-    payload_json = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
-    title = f"OATH Capsule — {payload['document']['name']}"
-    return (_TEMPLATE
-            .replace("__TITLE__", title)
-            .replace("__VERDICT__", verdict)
-            .replace("__PIP__", payload["verifier"]["pip"])
-            .replace("__PAYLOAD__", payload_json))
+    # The verdict is NOT written into the page at mint (2026-10-05). The badge used to carry it
+    # from the moment the page opened and the script only recoloured it, so with one doctored
+    # byte the red TAMPERED banner sat under a badge that still read OATH-HELD and cards that
+    # still read "verified N", and a page whose script never ran (scripts off, or no WebCrypto
+    # on plain http) read OATH-HELD and "checking integrity" forever. The badge now starts
+    # neutral; only the script writes the certificate's verdict, after every embedded hash has
+    # matched, and a mismatch writes TAMPERED on the badge itself.
+    #
+    # Every "<" in the payload is written as <, so no text inside it can open or close an
+    # element, and the placeholders are filled in one pass, so a document name cannot carry one.
+    payload_json = json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
+    fill = {"TITLE": _html.escape(f"OATH Capsule — {payload['document']['name']}"),
+            "PAYLOAD": payload_json}
+    return re.sub(r"__(TITLE|PAYLOAD)__", lambda m: fill[m.group(1)], _TEMPLATE)
 
 
 _TEMPLATE = r"""<!DOCTYPE html>
@@ -298,9 +1404,12 @@ header{padding:18px 24px;border-bottom:1px solid var(--rule);position:sticky;top
 background:var(--paper);z-index:5}
 .badge{display:inline-block;padding:4px 14px;border-radius:2px;font-weight:700;
 letter-spacing:.08em}
+.badge.pending{background:#241830;color:var(--mute)}
 .badge.held{background:var(--ok);color:#123}.badge.failed{background:var(--bad);color:#210}
+.badge.warn{background:var(--warn);color:#321}
 .badge.tampered{background:#f33;color:#fff}
 .meta{color:var(--mute);font-size:12px;margin-top:6px}
+.notrun{background:var(--warn);color:#321;padding:12px 24px;font-weight:700;margin-top:6px}
 main{max-width:1080px;margin:0 auto;padding:24px}
 h2{font-size:13px;letter-spacing:.14em;color:var(--sig);text-transform:uppercase;
 margin:28px 0 10px}
@@ -323,12 +1432,17 @@ color:var(--mute);font-size:12px;max-width:1080px;margin-left:auto;margin-right:
 .legend span{margin-right:14px}
 #tamper{display:none;background:#f33;color:#fff;padding:14px 24px;font-weight:700}
 </style></head><body>
-<div id="tamper">TAMPERED — embedded bytes do not match this capsule's certificate. Nothing
-below can be trusted.</div>
+<noscript><div class="notrun">THIS PAGE DID NOT RUN. Scripts are off, so it checked nothing
+and shows no verdict. Check the capsule with layer 2: pip install "styxx>=7.49.0", then
+python -m styxx.capsule verify on this file.</div></noscript>
+<div id="tamper">TAMPERED — embedded bytes do not match this capsule's certificate. Its
+verdict, counts and bands are not shown, because they do not describe these bytes.</div>
 <header>
-  <span class="badge" id="verdict">__VERDICT__</span>
-  <span class="badge" id="integrity" style="background:#241830;color:var(--mute)">checking
-  integrity…</span>
+  <span class="badge pending" id="verdict">checking…</span>
+  <span class="badge pending" id="integrity">integrity not checked yet</span>
+  <div class="meta" id="pending">No verdict yet: this page shows one only after it has
+  re-hashed every embedded byte. If this line stays, its check did not run; use layer 2,
+  below.</div>
   <div class="meta" id="meta"></div>
 </header>
 <main>
@@ -341,96 +1455,192 @@ below can be trusted.</div>
   <h2>receipts — byte integrity</h2><table id="receipts"><tr><th>receipt</th>
   <th>sha-256 (recomputed in your browser)</th><th></th></tr></table>
   <h2>re-run it yourself (layer 2 — the real verifier)</h2>
-  <pre class="doc">pip install __PIP__
+  <pre class="doc">pip install "styxx>=7.49.0"
 python -m styxx.capsule verify this_file.html</pre>
 </main>
 <footer id="foot"></footer>
 <script type="application/json" id="oath-capsule">__PAYLOAD__</script>
 <script>
-(async () => {
-  const P = JSON.parse(document.getElementById('oath-capsule').textContent);
-  const C = P.certificate;
-  const b64b = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-  const hex = b => [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
-  const sha = async u8 => hex(await crypto.subtle.digest('SHA-256', u8));
+(() => {
   const vb = document.getElementById('verdict');
-  vb.className = 'badge ' + (C.verdict === 'OATH-HELD' ? 'held' : 'failed');
-  document.getElementById('meta').textContent =
-    P.document.name + ' · capsule ' + P.spec + ' · minted ' + P.created +
-    ' · verifier styxx ' + P.verifier.styxx_version;
-  document.querySelectorAll('main pre.doc')[1] &&
-    (document.querySelectorAll('main pre.doc')[1].textContent =
-     'pip install ' + P.verifier.pip + '\n' +
-     'python -m styxx.capsule verify ' + location.pathname.split('/').pop());
-
-  // integrity: every embedded byte vs the certificate
-  let tampered = false;
-  const docBytes = b64b(P.document.b64);
-  if (await sha(docBytes) !== C.document_sha256) tampered = true;
-  const rt = document.getElementById('receipts');
-  for (const r of P.receipts) {
-    const h = await sha(b64b(r.b64));
-    const want = (C.receipts_sha256 || {})[r.name];
-    const ok = h === want;
-    if (!ok) tampered = true;
-    rt.insertAdjacentHTML('beforeend',
-      `<tr><td>${r.name}</td><td class="hash">${h}</td>` +
-      `<td class="${ok?'match':'mismatch'}">${ok?'matches certificate':'MISMATCH'}</td></tr>`);
-  }
   const ib = document.getElementById('integrity');
-  if (tampered) {
-    document.getElementById('tamper').style.display = 'block';
-    ib.textContent = 'INTEGRITY: FAILED'; ib.className = 'badge tampered';
-  } else {
+  const pend = document.getElementById('pending');
+  let settled = false;
+  // The page says it did not check, rather than leaving "checking…" up forever.
+  const notChecked = why => {
+    if (settled) return;
+    settled = true;
+    vb.textContent = 'NOT CHECKED'; vb.className = 'badge warn';
+    ib.textContent = 'integrity: not checked'; ib.className = 'badge pending';
+    pend.textContent = 'THIS PAGE DID NOT FINISH ITS CHECK: ' + why + '. It shows no ' +
+      'verdict. Check the capsule with layer 2, below.';
+    pend.className = 'notrun';
+  };
+  const timer = setTimeout(() => notChecked('it had not finished after 10 seconds'), 10000);
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  (async () => {
+    const P = JSON.parse(document.getElementById('oath-capsule').textContent);
+    const C = P.certificate;
+    const subtle = (typeof crypto === 'object' && crypto) ? crypto.subtle : undefined;
+    if (!subtle) {
+      notChecked('this browser gives the page no WebCrypto, which it offers only to a page ' +
+                 'opened from a file, from localhost or over https');
+      return;
+    }
+    const b64b = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+    const hex = b => [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+    const sha = async u8 => hex(await subtle.digest('SHA-256', u8));
+    const ver = String(P.verifier.styxx_version);
+    // The styxx a reader installs to check this capsule in full: 7.49.0, the next minor release
+    // after 7.48.1, which will carry this repair (layer 2's whole-certificate comparison and its
+    // page check). Set here in the template, never taken from the payload, whose stated version
+    // the minter chooses; an older styxx passes certificates this one fails.
+    const FLOOR = '7.49.0';
+    document.getElementById('meta').textContent =
+      P.document.name + ' · capsule ' + P.spec + ' · minted ' + P.created +
+      ' · verifier styxx ' + ver + ' (as stated by the minter)';
+    document.querySelectorAll('main pre.doc')[1] &&
+      (document.querySelectorAll('main pre.doc')[1].textContent =
+       'pip install "styxx>=' + FLOOR + '"\n' +
+       'python -m styxx.capsule verify ' + location.pathname.split('/').pop());
+
+    // integrity: every embedded byte vs the certificate
+    let tampered = false;
+    const docBytes = b64b(P.document.b64);
+    if (await sha(docBytes) !== C.document_sha256) tampered = true;
+    const rows = [];
+    for (const r of P.receipts) {
+      const h = await sha(b64b(r.b64));
+      const ok = h === (C.receipts_sha256 || {})[r.name];
+      if (!ok) tampered = true;
+      rows.push(`<tr><td>${esc(r.name)}</td><td class="hash">${h}</td>` +
+        `<td class="${ok?'match':'mismatch'}">${ok?'matches certificate':'MISMATCH'}</td></tr>`);
+    }
+    if (settled) return;          // the timeout has already said this page did not finish
+    // the text as certify reads it: a byte-order mark is kept, as Python keeps it
+    const text = new TextDecoder('utf-8', { ignoreBOM: true }).decode(docBytes);
+    const footText =
+      'What this page checks, offline: that these exact bytes are the bytes the certificate ' +
+      'hashed (SHA-256, recomputed in your browser). It draws the verdict and the bands from ' +
+      'the certificate only when they match, and each band only where its ledger row says the ' +
+      'number is. It re-runs nothing, and it cannot prove its own script honest. Layer 2 ' +
+      're-runs the real verifier over the embedded bytes, compares the whole certificate with ' +
+      'what it re-derives, checks that this page is the page styxx renders for them, and ' +
+      'prints as stated by the minter, not checked, what bytes cannot show: when, and with ' +
+      'which styxx, this capsule was minted. What neither proves: that the receipts ' +
+      'truthfully record reality (that chain lives in repository provenance), or who minted ' +
+      'this capsule (nothing in it is signed). A capsule is a portable binding, not a ' +
+      'portable oath of origin. Nothing crosses unseen.';
+    const unmarked = (badge, why, cardWhy) => {
+      settled = true; clearTimeout(timer);
+      document.getElementById('receipts').insertAdjacentHTML('beforeend', rows.join(''));
+      document.getElementById('foot').textContent = footText;
+      vb.textContent = badge;
+      pend.textContent = why; pend.className = 'notrun';
+      document.getElementById('cards').innerHTML =
+        '<div class="card"><b>not drawn</b><span>' + cardWhy + '</span></div>';
+      document.getElementById('doc').textContent = text;
+    };
+    if (tampered) {
+      unmarked('TAMPERED', 'The certificate does not describe these bytes, so its verdict, ' +
+        'counts and bands are not shown. The document below is the embedded text, unmarked.',
+        'the certificate does not describe these bytes');
+      vb.className = 'badge tampered';
+      ib.textContent = 'INTEGRITY: FAILED'; ib.className = 'badge tampered';
+      document.getElementById('tamper').style.display = 'block';
+      return;
+    }
+
+    // everything the page draws from the certificate is built BEFORE the verdict is shown, so
+    // a certificate the script cannot read ends in NOT CHECKED, never in a half-drawn verdict
+    const verdict = String(C.verdict);
+    const es = C.epistemics_summary || {}; const v = (es.verified)||{};
+    const vm = v.value_match || {}; const dv = v.derived || {};
+    const obl = (vm.obligated_integer_filter_ran||0)+(vm.obligated_integer_filter_na||0)
+              +(dv.obligated||0);
+    const tot = v.total || C.counts.VERIFIED || 0;
+    // without a summary the share is unknown, not 100%: no obligated count was read
+    const hasEs = !!C.epistemics_summary && typeof C.epistemics_summary === 'object';
+    const cards = [
+      ['verdict', verdict],
+      ['verified', C.counts.VERIFIED],
+      ['abstained', C.counts.ABSTAIN],
+      ['accused', C.counts.UNGROUNDED],
+      ['volunteered share', hasEs && tot ? Math.round(100*(tot-obl)/tot)+'%' : '—'],
+    ];
+    const cardsHtml = cards.map(
+      ([k,val]) => `<div class="card"><b>${esc(val)}</b><span>${k}</span></div>`).join('');
+
+    // Paint the document at certify's own coordinates. certify reads the text with universal
+    // newlines and splits it as Python's str.splitlines() does (form feed, U+2028 and the rest
+    // included); `line` counts those lines from 1 and `col` counts code points, with U+2212
+    // read as '-'. Each band is a span element built from text, so no character in the document
+    // can open one. A row whose token is not at its line and column is never moved to another
+    // number: the page then draws no verdict and no bands.
+    const parts = text.split(/(\r\n|[\n\r\v\f\x1c\x1d\x1e\x85\u2028\u2029])/);
+    const ledger = Array.isArray(C.ledger) ? C.ledger : [];
+    const byLine = new Map();
+    for (const e of ledger) {
+      if (!e || !Number.isInteger(e.line)) continue;
+      if (!byLine.has(e.line)) byLine.set(e.line, []);
+      byLine.get(e.line).push(e);
+    }
+    // A band is read from the row itself, or the row is not drawn: a row with no status, a status
+    // this page does not know, or a verified row with no obligation flag used to fall through to
+    // a verified band, so an accused number stripped of its status was painted verified.
+    const band = e => e.status==='UNGROUNDED' ? 'un' : e.status==='ABSTAIN' ? 'ab'
+      : (e.status==='VERIFIED' && e.epistemics && typeof e.epistemics.obligated === 'boolean')
+        ? (e.epistemics.obligated ? 'vo' : 'vv') : '';
+    const at = e => Number.isInteger(e.col) ? e.col : -1;
+    const segs = [];
+    let placed = 0;
+    for (let k = 0; k < parts.length; k += 2) {
+      const cps = Array.from(parts[k]);
+      const norm = cps.map(c => c === '\u2212' ? '-' : c);
+      let pos = 0;
+      for (const e of (byLine.get(k / 2 + 1) || []).slice().sort((a, b) => at(a) - at(b))) {
+        const t = Array.from(String(e.token)); const c = at(e);
+        if (!band(e) || c < pos || !t.length ||
+            norm.slice(c, c + t.length).join('') !== t.join('')) continue;
+        if (c > pos) segs.push(['', cps.slice(pos, c).join('')]);
+        segs.push([band(e), cps.slice(c, c + t.length).join('')]);
+        pos = c + t.length; placed++;
+      }
+      if (pos < cps.length) segs.push(['', cps.slice(pos).join('')]);
+      if (k + 1 < parts.length) segs.push(['', parts[k + 1]]);
+    }
+    if (placed !== ledger.length) {
+      unmarked('NOT CHECKED', 'The certificate does not fit these bytes: ' +
+        (ledger.length - placed) + ' of its ' + ledger.length + ' ledger rows do not sit at ' +
+        'their recorded line and column, or carry no band this page can read. Its verdict, ' +
+        'counts and bands are not shown; check the capsule with layer 2, below.',
+        'the ledger does not fit these bytes');
+      vb.className = 'badge warn';
+      ib.textContent = 'integrity: all hashes match'; ib.className = 'badge';
+      return;
+    }
+    const nodes = segs.map(([c, s]) => {
+      if (!c) return document.createTextNode(s);
+      const sp = document.createElement('span');
+      sp.className = 'tok ' + c; sp.textContent = s;
+      return sp;
+    });
+
+    settled = true; clearTimeout(timer);
+    document.getElementById('receipts').insertAdjacentHTML('beforeend', rows.join(''));
+    document.getElementById('foot').textContent = footText;
     ib.textContent = 'integrity: all hashes match'; ib.className = 'badge';
     ib.style.background = 'rgba(183,228,199,.15)'; ib.style.color = 'var(--ok)';
-  }
-
-  // boundary cards from the certificate itself
-  const es = C.epistemics_summary || {}; const v = (es.verified)||{};
-  const vm = v.value_match || {}; const dv = v.derived || {};
-  const obl = (vm.obligated_integer_filter_ran||0)+(vm.obligated_integer_filter_na||0)
-            +(dv.obligated||0);
-  const tot = v.total || C.counts.VERIFIED || 0;
-  const cards = [
-    ['verdict', C.verdict],
-    ['verified', C.counts.VERIFIED],
-    ['abstained', C.counts.ABSTAIN],
-    ['accused', C.counts.UNGROUNDED],
-    ['volunteered share', tot ? Math.round(100*(tot-obl)/tot)+'%' : '—'],
-  ];
-  document.getElementById('cards').innerHTML = cards.map(
-    ([k,val]) => `<div class="card"><b>${val}</b><span>${k}</span></div>`).join('');
-
-  // paint the document: per-line, per-token bands from the ledger
-  const text = new TextDecoder('utf-8').decode(docBytes);
-  const lines = text.split(/\r\n|\n/);
-  const byLine = {};
-  for (const e of (C.ledger||[])) (byLine[e.line] = byLine[e.line]||[]).push(e);
-  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const cls = e => e.status==='UNGROUNDED' ? 'un' : e.status==='ABSTAIN' ? 'ab'
-    : (e.epistemics && e.epistemics.obligated) ? 'vo' : 'vv';
-  const out = lines.map((ln, i) => {
-    const es2 = (byLine[i+1]||[]).slice().sort((a,b)=>(b.col||0)-(a.col||0));
-    let s = ln;
-    for (const e of es2) {
-      const t = String(e.token);
-      const at = (typeof e.col === 'number' && s.startsWith(t, e.col)) ? e.col : s.indexOf(t);
-      if (at < 0) continue;
-      s = s.slice(0, at) + '\u0001' + cls(e) + '\u0002' + t + '\u0003' + s.slice(at + t.length);
-    }
-    return esc(s)
-      .replace(/\u0001(vo|vv|ab|un)\u0002/g, '<span class="tok $1">')
-      .replace(/\u0003/g, '</span>');
-  });
-  document.getElementById('doc').innerHTML = out.join('\n');
-
-  document.getElementById('foot').textContent =
-    'What this capsule proves: these exact bytes are what the certificate attested, and the ' +
-    'bands above are drawn faithfully from it (layer 1); the verdict is reproducible by ' +
-    're-running the real verifier over the embedded bytes (layer 2). What it does not prove: ' +
-    'that the receipts truthfully record reality — that chain lives in repository provenance. ' +
-    'A capsule is a portable binding, not a portable oath of origin. Nothing crosses unseen.';
+    vb.textContent = verdict;
+    vb.className = 'badge ' + (verdict === 'OATH-HELD' ? 'held'
+      : /^OATH-HELD,/.test(verdict) ? 'warn' : 'failed');
+    pend.textContent = 'Every embedded byte matches the certificate, so its verdict is shown. ' +
+      'This page re-runs nothing; layer 2, below, re-derives the verdict.';
+    document.getElementById('cards').innerHTML = cardsHtml;
+    const docEl = document.getElementById('doc');
+    docEl.textContent = '';
+    for (const n of nodes) docEl.appendChild(n);
+  })().catch(e => notChecked('its script failed (' + ((e && e.message) || e) + ')'));
 })();
 </script>
 </body></html>
@@ -845,16 +2055,29 @@ def _verify_capsule_v02(html: str, payload: dict) -> dict:
         result["problems"] = ["ambiguous payload: marker occurs more than once"]
         return result
 
-    gate = payload.get("gate") or {}
-    binding = payload.get("binding") or {}
+    obj = lambda k: payload.get(k) if isinstance(payload.get(k), dict) else {}  # noqa: E731
+    gate = obj("gate")
+    binding = obj("binding")
     result["verdict"] = gate.get("verdict")
-    result["summary"] = (payload.get("summary") or {}).get("name")
-    result["diff"] = (payload.get("diff") or {}).get("name")
+    result["summary"] = obj("summary").get("name")
+    result["diff"] = obj("diff").get("name")
 
     # stage: binding — every embedded byte vs its sealed hash
     result["stage"] = "binding"
-    summary_bytes = base64.b64decode(payload["summary"]["b64"])
-    diff_bytes = base64.b64decode(payload["diff"]["b64"])
+    # a payload without the two embedded files fails here rather than in a traceback (2026-10-05)
+    for k in ("summary", "diff"):
+        f = payload.get(k)
+        if not isinstance(f, dict) or not isinstance(f.get("b64"), str):
+            problems.append(f"payload.{k} is not an embedded file (an object with b64)")
+    if problems:
+        result["problems"] = problems
+        return result
+    try:
+        summary_bytes = base64.b64decode(payload["summary"]["b64"])
+        diff_bytes = base64.b64decode(payload["diff"]["b64"])
+    except ValueError as e:
+        result["problems"] = [f"embedded bytes are not base64: {e}"]
+        return result
     if _sha256(summary_bytes) != (binding.get("summary") or {}).get("value"):
         problems.append("summary bytes != binding.summary")
     if _sha256(diff_bytes) != (binding.get("diff") or {}).get("value"):
@@ -1032,7 +2255,7 @@ def create_capsule_sworn(doc: Path, manifest: Optional[Path], receipt: Path, out
 
 def _verify_capsule_sworn(html: str, payload: dict) -> dict:
     """Layer 2: re-run styxx.sworn over the sealed bytes. INSTRUMENT SKEW is named apart from
-    tamper — the first is the instrument having moved, the second is the bytes having moved."""
+    tamper — one is the instrument having moved, the other is the bytes having moved."""
     from styxx.sworn import Manifest, issue_receipt, verify
 
     problems: List[str] = []
@@ -1198,6 +2421,24 @@ is the one that checks the build the receipt names.</div>
 """
 
 
+# What `verify` must never hand a terminal raw: C0 controls (escape, carriage return, a line feed
+# inside a value), DEL and the C1 controls, the line and paragraph separators, and the
+# bidirectional marks and overrides. Every one of them can come from the capsule (a document or
+# receipt name, the verdict, the issuer's hash, a binding path), and until review round 3 they
+# were printed as they came, so a forgery could move the cursor up and erase its own NOT CHECKED
+# lines or failure list from the reader's screen while stdout still held them.
+_UNPRINTABLE = re.compile("[\x00-\x1f\x7f-\x9f\u061c\u200e\u200f\u2028\u2029\u202a-\u202e"
+                          "\u2066-\u2069]")
+
+
+def _printable(line) -> str:
+    """The line with each character above shown as a visible escape (\\x1b, \\u202e)."""
+    def esc(m):
+        c = ord(m.group(0))
+        return f"\\x{c:02x}" if c < 0x100 else f"\\u{c:04x}"
+    return _UNPRINTABLE.sub(esc, str(line))
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(
         prog="styxx.capsule",
@@ -1241,39 +2482,51 @@ def main(argv=None) -> int:
         return 0
 
     rep = verify_capsule(Path(a.capsule))
+    say = lambda line: print(_printable(line))  # noqa: E731 - every line, whatever it quotes
     if rep.get("spec") == SPEC_SWORN:
-        print(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
-        print(f"sealed verdict: {rep.get('verdict')}  counts {rep.get('counts')}")
+        say(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
+        say(f"sealed verdict: {rep.get('verdict')}  counts {rep.get('counts')}")
         for adv in rep.get("advisory", []):
-            print(f"  advisory: {adv}")
+            say(f"  advisory: {adv}")
         if rep["ok"]:
-            print("VERIFIED: the sealed bytes re-derive the sealed verdict core at the installed "
-                  "instrument.")
-            print(f"  {rep.get('label')}")
+            say("VERIFIED: the sealed bytes re-derive the sealed verdict core at the installed "
+                "instrument.")
+            say(f"  {rep.get('label')}")
             return 0
-        print("CAPSULE FAILS VERIFICATION:")
+        say("CAPSULE FAILS VERIFICATION:")
         for p_ in rep.get("problems", []):
-            print(f"  - {p_}")
+            say(f"  - {p_}")
         return 1
     if rep.get("spec") == SPEC_V02:
-        print(f"capsule: {rep.get('summary')} + {rep.get('diff')}  spec {rep.get('spec')}")
-        print(f"embedded gate verdict: {rep.get('verdict')}")
+        say(f"capsule: {rep.get('summary')} + {rep.get('diff')}  spec {rep.get('spec')}")
+        say(f"embedded gate verdict: {rep.get('verdict')}")
         for adv in rep.get("advisory", []):
-            print(f"  advisory: {adv}")
+            say(f"  advisory: {adv}")
         if rep["ok"]:
-            print("VERIFIED: bytes match their bindings and the gate record re-derives "
-                  "at the installed instrument.")
+            say("VERIFIED: bytes match their bindings and the gate record re-derives "
+                "at the installed instrument.")
             return 0
     else:
-        print(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
-        print(f"embedded verdict: {rep.get('verdict')}  counts {rep.get('counts')}")
+        say(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
+        say(f"embedded verdict: {rep.get('verdict')}  counts {rep.get('counts')}")
+        if rep.get("live_verdict") is not None and rep.get("live_verdict") != rep.get("verdict"):
+            say(f"installed verifier's verdict: {rep.get('live_verdict')}")
+        for adv in rep.get("advisory", []):
+            say(f"  advisory: {adv}")
+        for nc in rep.get("not_checked", []):
+            say(f"  NOT CHECKED: {nc}")
+        for st in rep.get("stated", []):
+            say(f"  stated by the minter, not checked: {st}")
         if rep["ok"]:
-            print("VERIFIED: bytes match the certificate and the verdict reproduces at "
-                  "the installed verifier.")
+            nc = len(rep.get("not_checked", []))
+            say("VERIFIED: the embedded bytes match the certificate's hashes, and the "
+                "installed verifier re-derives what the certificate says of them: "
+                + ", ".join(rep.get("compared", [])) + "."
+                + (f" {nc} item(s) NOT CHECKED, listed above." if nc else ""))
             return 0
-    print("CAPSULE FAILS VERIFICATION:")
+    say("CAPSULE FAILS VERIFICATION:")
     for p_ in rep.get("problems", []):
-        print(f"  - {p_}")
+        say(f"  - {p_}")
     return 1
 
 

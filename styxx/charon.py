@@ -271,12 +271,25 @@ def derive_sworn(sidecar_path: Path, repo: Path) -> dict:
 
 def _capsule_payload(path: Path) -> Optional[dict]:
     from styxx import capsule as _cap
-    html = path.read_text(encoding="utf-8")
+    try:
+        html = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:                         # not UTF-8 text: no payload to read
+        return None
     try:
         i = html.index(_cap._BEGIN) + len(_cap._BEGIN)
         j = html.index(_cap._END, i)
-        return json.loads(html[i:j])
+        payload = json.loads(html[i:j])
     except (ValueError, json.JSONDecodeError):
+        return None
+    # a payload that is not an object is no payload (a JSON list here ended derive in a traceback)
+    return payload if isinstance(payload, dict) else None
+
+
+def _b64_sha256(s) -> Optional[str]:
+    """The sha-256 of base64 text's bytes, or None when it is not base64 text."""
+    try:
+        return _sha256(base64.b64decode(s))
+    except (ValueError, TypeError):                    # binascii.Error is a ValueError
         return None
 
 
@@ -284,7 +297,11 @@ def _capsule_live_v01(payload: dict) -> Tuple[Optional[str], Optional[dict]]:
     """The same pure function the capsule verifier runs: certify_doc over the embedded bytes."""
     from styxx.certify import certify_doc
     from styxx.capsule import _unsafe_names
-    if _unsafe_names(payload):                          # never write where the capsule points
+    try:
+        unsafe = _unsafe_names(payload)
+    except (AttributeError, TypeError):                 # a document or receipt that is not an object
+        return None, {"live_error": "malformed_payload"}
+    if unsafe:                                          # never write where the capsule points
         return None, {"live_error": "unsafe_embedded_name"}
     try:
         doc_bytes = base64.b64decode(payload["document"]["b64"])
@@ -333,14 +350,20 @@ def derive_capsule(path: Path, repo: Path) -> dict:
     kind = "capsule-diffgate" if spec == _cap.SPEC_V02 else "capsule-oath"
     problems = [str(x) for x in (rep.get("problems") or [])]
     binding_broken = any(("!=" in p and "binding" in p) or "bytes !=" in p or "ambiguous" in p for p in problems)
+    # Parts that are not what a minter writes (a receipt list that is text, a certificate that is a
+    # number, base64 that is not) are read as absent: they ended derive in a traceback until review
+    # round 4, and verify has already failed the capsule on them.
+    obj = lambda k: payload.get(k) if isinstance(payload.get(k), dict) else {}  # noqa: E731
     if spec == _cap.SPEC_V02:
-        gate = payload.get("gate") or {}
-        binding = payload.get("binding") or {}
+        gate = obj("gate")
+        binding = obj("binding")
         shas = sorted({v.get("value") for v in binding.values() if isinstance(v, dict) and v.get("value")})
         recorded = str(gate.get("verdict"))
     else:
-        cert = payload.get("certificate") or {}
-        shas = sorted({_sha256(base64.b64decode(r["b64"])) for r in payload.get("receipts") or [] if r.get("b64")})
+        cert = obj("certificate")
+        recs = payload.get("receipts") if isinstance(payload.get("receipts"), list) else []
+        shas = sorted({h for r in recs if isinstance(r, dict) and r.get("b64")
+                       for h in [_b64_sha256(r["b64"])] if h})
         recorded = str(cert.get("verdict"))
     if binding_broken:
         out = _unresolved(kind, path.name, rel, "capsule_binding: " + problems[0][:160], raw_id,
@@ -357,7 +380,7 @@ def derive_capsule(path: Path, repo: Path) -> dict:
     counts["recorded_verdict"] = recorded
     counts["problems"] = len(problems)
     counts["problems_detail"] = [p[:160] for p in problems[:3]]
-    counts["pinned_verifier_version"] = (payload.get("verifier") or {}).get("styxx_version")
+    counts["pinned_verifier_version"] = obj("verifier").get("styxx_version")
     klass = live if spec == _cap.SPEC_V02 else verdict_class(live)
     if spec == _cap.SPEC_V02 and live not in ("PASS", "FAIL"):
         klass = "UNRESOLVED"

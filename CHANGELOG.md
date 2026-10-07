@@ -7,6 +7,211 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — `capsule verify` compares the whole certificate and the page, and a minted page shows no verdict it has not checked (#190 to #197)
+
+On 2026-10-05 a check of the lab's own published v0.1 capsule found that both verification layers
+could be satisfied by a capsule whose certificate said something its bytes do not. Four rounds of
+review of the repair found more of the same kind. All of it is repaired here except what is marked
+not repaired below: chiefly, the page every styxx rendered before this change still tells its
+reader to install the styxx its minter states, and around that page a forged certificate posing
+as older than the uncovered band still verifies.
+
+- Layer 2 (`python -m styxx.capsule verify`) re-ran `certify_doc` on the embedded bytes but
+  compared only the verdict class (the `, N uncovered` suffix stripped), the counts, and the status
+  of each embedded ledger row, one way. A certificate edited to report 0 uncovered, a deleted ledger
+  row, a repointed `receipt_ref`, rows marked obligated and a rewritten epistemics summary all
+  verified like the genuine capsule. It now compares every field `certify_doc` writes, type for
+  type, so `30.0`, `false` and a row on line `true` no longer pass for `30`, `0` and line 1: the
+  verdict string, the counts, the uncovered band, the epistemics summary, `receipts_sha256`, the
+  receipt-binding digests, and the ledger, `ungrounded` and `abstained` in both directions, in
+  order, every field of every row. Receipts are re-read in the order the certificate lists them,
+  since `receipt_ref` names the earliest read.
+- The fields the earliest certify (9ed6f3b5, 2026-06-10) already wrote must be present whoever
+  issued the certificate: `oath`, `prereg`, `document`, `verifier_sha256`, `ungrounded` and
+  `abstained`, and `status`, `receipt_ref`, `value`, `decimals` and `context` in every ledger and
+  `ungrounded` row. With the issuer's hash moved, deleting `status` from the accused rows used to
+  verify with a NOT CHECKED line, while both pages painted those numbers verified. A row field
+  some rows carry and others lack, where the installed verifier writes it in all of them, fails.
+  A row list with a field NOT CHECKED no longer reads "every field". `ungrounded` must be the
+  ledger's UNGROUNDED rows, copied, as every certify writes it (all 253 committed certificates
+  carry it so: 213 `*.certificate.json` files, 30 `CERT_*.json` files and 10 capsules): deleting `col` and `epistemics` from those copies while the ledger carries both
+  used to verify with two NOT CHECKED lines. `binding_context`, written on every table row since
+  7e70cb4e (2026-06-10), fails where it is absent from a certificate its own fields date later.
+- The page around the payload must now be the page a styxx renders for exactly that payload: the
+  current page, or the one every styxx rendered before this change, kept verbatim in
+  `styxx/_capsule_page_v01_legacy.py` (all ten committed v0.1 capsules carry it). Layer 2 found the
+  payload by text, so a genuine payload hidden in an HTML comment was verified while the browser
+  drew a forged one placed after it, and the output was the genuine capsule's. An edited page now
+  fails. The current page is rendered only by `capsule create`, which refuses some certificates
+  verify would pass with fields NOT CHECKED (below), so around that page each such refusal is a
+  failure: no styxx mints it around such a certificate. A certificate posing as older than the
+  uncovered band used to verify around it while the page painted a green OATH-HELD over a number
+  nothing checked.
+- For the older page, layer 2 re-derives what its script draws on the script's own split (line
+  feeds only, a leading BOM dropped, `col` read as a UTF-16 index, the token's earliest occurrence
+  on the line as fallback) and compares it with the certificate band for band (line, offset,
+  token, kind). A band the certificate does not put there fails the capsule, row by row, with its
+  cause: a line break certify splits at and the script does not, an astral character, a BOM, a
+  U+2212 minus, the fallback, or a band drawn across another. A certificate band the script leaves
+  undrawn fails nothing: the page shows that number plain and paints nothing false, and `verify`
+  prints an advisory naming each such number, its kind and its cause. A certificate band the
+  script draws twice (a second row of that token and kind falls back onto it, one span nested in
+  another of the same kind, and that row's own number is left plain) is that band, and the second
+  row is such an omission; the advisory says the band is drawn twice. The capsule also fails where
+  the volunteered-share card would contradict the rows (a certificate with obligated rows and no
+  `epistemics_summary`), and a document holding that script's band markers, U+0001 to U+0003, or a
+  receipt name holding markup, fails outright. The page's own script, run under node, agrees with
+  this on every honest older page tried, a nested span read as a span: 410 from the third review
+  (50 minted by 7.47.0 and 7.48.1 over the lab's documents, all of which verify with an omission
+  advisory; and 360 over random documents, of which 69 draw every band, 264 verify with an
+  omission advisory and 27 fail), 300 minted by 7.48.1 over random documents in the fourth (100,
+  174 and 26), and the 209 below. Until the fifth round a band drawn twice failed as one the
+  certificate does not put there (22 of those 710 honest pages, and one of the 209), and the node
+  count that said it agreed read a nested span as markup, so a band drawn twice counted as false
+  on both sides.
+- A field the installed certify writes and the certificate lacks is printed `NOT CHECKED` by name,
+  with the value the installed verifier finds and the day certify began writing it, unless the
+  certificate shows it is not that old: it carries a field certify began writing later (per-row
+  `col` on 2026-08-24, per-row `epistemics` and then `epistemics_summary` on 2026-08-30, the
+  uncovered band on 2026-09-01, `receipt_binding` on 2026-09-05; all 253 committed certificates
+  follow that order), or it names the installed `certify.py` as its issuer. Then the missing field
+  fails. A certificate that predates the band is compared by verdict class, and the live suffix and
+  the live uncovered spans are printed. A field no styxx writes fails at any depth: in the
+  certificate, in the receipt binding and its rows, and in the payload's document, receipts and
+  verifier.
+- The v0.1 page printed the payload's free-text `verifier.pip` as the command that installs
+  layer 2. In a v0.1 capsule it must now be `styxx==` and the stated version, and the page shows
+  neither: its install line names a floor written into its template, `pip install "styxx>=7.49.0"`,
+  the next minor release, which will carry this repair (a test fails a release cut below it). A stated
+  version can name a styxx that passes forged certificates. `verify` advises when a capsule states
+  a version below the floor. Until `styxx/_version.py` says 7.49.0, every capsule this code mints
+  states 7.48.1 and so carries that advisory against the code that minted it, and its page names a
+  floor PyPI does not yet serve: this change ships with the 7.49.0 bump, not ahead of it.
+- **Not repaired: the older page names the minter's version, and a pose verifies around it.** This
+  is unchanged here and waits on the operator. The floor is written only into the page this styxx
+  renders. The page every styxx rendered before it still tells its reader to `pip install styxx==`
+  the version its minter states; layer 2 accepts that page for any payload, since honest capsules
+  carry it, so a forger can choose it. The D1 forgery posed as older than the uncovered band (the
+  verdict's suffix, the `uncovered` fields and `receipt_binding` removed, another issuer's hash,
+  stated version 7.48.0, so the page says `pip install styxx==7.48.0`) exits 0 around that page:
+  PyPI 7.48.0 and 7.48.1 print three lines (the capsule, its verdict, VERIFIED), and this change
+  prints the installed verifier's verdict beside the embedded one, six NOT CHECKED lines and three
+  advisories. Around the current page the same pose fails. pip still
+  installs a yanked release pinned exactly, so a yank would not stop that install. `verify` says,
+  for every capsule carrying the older page, that its install line is the minter's stated version,
+  that every styxx below 7.49.0 passes forgeries this one fails, and to check with
+  `styxx>=7.49.0`. A reader who follows the page's own line is not protected, and a reader of this
+  `verify` who does not read its NOT CHECKED lines is not either. Updating GHSA-h5xv-4344-f62r or
+  opening an advisory, shipping this comparison in a 7.48.x release, or failing the older page
+  wherever the verdict is compared by class only (which would fail honest capsules of that age) is
+  the operator's decision.
+- **Not repaired: the v0.2 and sworn pages' install lines.** The v0.2 (agent-handoff) page still
+  prints `pip install` and the payload's free-text `verifier.pip`, and the sworn page names it as
+  what to install before layer 2; `verify` checks neither (a v0.2 or sworn capsule whose
+  `verifier.pip` names another package verifies here). #195 and this change cover v0.1 only.
+- The mint time, the minting styxx version, `verifier_sha256` and the receipt binding's repository
+  head and paths are printed as stated by the minter and never fail on their values; their form
+  must be one `create_capsule` and certify write: a real UTC time, 64 lowercase hex digits copied
+  into `payload.verifier.sha256`, a relative POSIX path inside the repository (with no `..`, drive
+  or control character; it need not end in the receipt's name, since certify writes the path of the
+  file a receipt resolves to, through a symlink or an 8.3 short name), a note in one of the forms
+  certify writes, where it writes it (the reason after `no repository at mint: ` is the minter's
+  free text, printed as stated). A rewritten mint time or version is printed, not caught. One
+  repository fact is a function of the bytes and is compared: a receipt marked committed must name
+  the git blob of its embedded bytes (as they are, or with LF or CRLF line ends). A certificate
+  certified over edited receipt bytes and given an honest repository mint's head, paths and blobs
+  used to verify with the honest mint's output. Each blob is printed in the stated line.
+- `verify` printed strings a capsule's minter chose (names, the verdict, the issuer's hash, binding
+  paths) as they came, so terminal escape sequences in them could rub the NOT CHECKED lines or the
+  failure list off the reader's screen while stdout still held them. Every line it prints, for v0.1,
+  v0.2 and sworn capsules, now shows control characters, line and paragraph separators and
+  bidirectional overrides as escapes.
+- What exit 0 means, as an erratum to the v0.1 spec (which says layer 2 proves the embedded
+  certificate is exactly what the verifier produces): every field `certify_doc` writes that the
+  certificate carries reproduces, and the page is a page a styxx renders for the payload; a field
+  an older certificate lacks is listed as NOT CHECKED instead. A consequence: if a later certify
+  rewords a constant it writes (`oath` and `prereg`, unchanged since 2026-06-10; the
+  `uncovered_policy` text, unchanged since 2026-09-01), every capsule carrying the old wording fails
+  until it is re-minted.
+- The v0.1 branch of the command never printed the advisory `verify_capsule` computed. It now
+  prints every advisory, `NOT CHECKED` field and stated field, and its `VERIFIED` line names what
+  was compared.
+- Layer 2 compares `certificate.document`, the file name certify wrote, with the name the capsule
+  gives its document, so a capsule of a renamed copy, which 7.48.0 and 7.48.1 mint and verify, now
+  fails. `verify` says so (a renamed copy: mint from a file named as certified, or re-certify it
+  under the new name), and `capsule create` refuses such a file before minting, naming both names,
+  instead of blaming the ledger schema.
+- `capsule create` re-runs layer 2 on what it wrote, and now also refuses a certificate whose rows
+  lack a field the page draws its bands from (`col`, `epistemics`), which lacks the
+  `epistemics_summary` the page draws its volunteered share from, or whose verdict string is not
+  the installed verifier's. Of the 228 committed certificates whose document and receipts resolve
+  (204 `*.certificate.json` files and 24 `CERT_*.json` files), 7.48.1 mints 21: 8 still mint; 11
+  whose rows lack `epistemics` and 2 whose rows carry it without an `epistemics_summary` (issued
+  in the 26 minutes between those changes on 2026-08-30) are now refused (re-certify, then mint).
+  The 207 it refuses are still refused (all 24 `CERT_*.json` among them).
+  certify's own binding-failed block still mints, with its digests NOT CHECKED.
+- The re-run writing embedded files where a capsule's names point is not repaired here: 7.48.1
+  shipped that repair (GHSA-h5xv-4344-f62r), and this change keeps its bare-name rule and its
+  messages as released. New here: a name the system cannot hold, bytes the certifier cannot read,
+  a capsule file that is not UTF-8, a v0.1 payload relabelled v0.2, a payload that is not a JSON
+  object, a receipt binding row whose name is not a string, and receipts, a certificate or a
+  verifier that are not what create writes now fail with a problem instead of a traceback, in
+  `verify`, and give an UNRESOLVED or not-reproduced line in `styxx.charon` instead of one. A sweep
+  of 600 such single-field mutations under both pages finds no traceback in either. Not repaired
+  here: two classes the fourth review found still end `verify` in a traceback, exiting 1, so this
+  change does not close #196: a stated `styxx_version` of thousands of digits, and an `ungrounded` row that is a
+  list.
+- Layer 1: the minted page carried the verdict as the badge's static text, so one doctored byte
+  showed the TAMPERED banner under a badge still reading OATH-HELD, and a page whose script never
+  ran read OATH-HELD forever. A newly minted page's badge starts as `checking…`; only the script
+  writes the verdict, after every hash matched; a mismatch writes TAMPERED on the badge and draws
+  nothing from the certificate; a noscript block, a WebCrypto check and a timeout say the page did
+  not check and point to layer 2. Its script also drew bands where the certificate puts none: it
+  split lines only at line feeds (certify splits as `str.splitlines`, form feed included), read
+  `col` as a UTF-16 index and fell back to the token's earliest occurrence on the line, and built
+  bands from the characters U+0001 to U+0003, so those characters in a document opened one. It now
+  splits and counts as certify does, builds each band as an element from text, and shows no verdict
+  and no bands when a row is not where its ledger says or carries no band it can read (no status,
+  an unknown one, a verified row with no obligation flag). Without an `epistemics_summary` its
+  volunteered-share card reads a dash, not 100%. Committed capsules keep the page they were minted
+  with.
+
+**Compatibility.** All ten committed v0.1 capsules still verify, and none was edited; each now also
+prints an advisory that it states a styxx below 7.49.0 and that its page's install line is that
+stated version. Honest capsules styxx 7.47.0 mints (certify, then create) over the documents and
+receipts of 209 committed certificates: 7.48.1 verifies all 209, and so does this change. 25 of
+them print an advisory naming the numbers their page shows with no band, most of them written
+with a U+2212 minus; in one (FINDING_p1_third_quarantine_2026_08_08) the script draws an abstained
+-45 twice and leaves the second, written with U+2212, plain. Before the fifth review round this
+change failed that one. A byte-order mark, CRLF or CR-only line ends, and line feeds added after
+the page or the last one removed, are transport and verify; until that round a trailing newline
+added or removed failed as an edited page. What 7.48.1 verifies and this change fails: a capsule
+whose page was edited; a capsule of a renamed copy; a capsule whose older page draws a band the
+certificate does not put there, or whose volunteered-share card contradicts its rows (two
+committed certificates have that shape, and 7.48.1 mints both; no committed capsule does); a
+capsule around the current page that carries a certificate `create` refuses (no release has
+rendered that page); a capsule minted under a Python whose Unicode database differs from the
+verifier's, over a document holding a character the two read differently, where only the
+uncovered band moves (where the counts move, 7.48.1 fails it too; below); and every forgery named
+above.
+
+The uncovered band, now compared, and the ledger depend on the Unicode database of the Python that
+runs certify, since it finds numbers with `\d` and `\w`. A document holding a character one
+database assigns and the other does not can certify differently under each: the fourth review
+minted Sunuwar digits (Unicode 16.0) with 7.48.1 under Python 3.12, where they are unassigned and
+the capsule reads `OATH-HELD`, and this change failed it under Python 3.14, where they are digits
+and one is uncovered; 7.48.1, which compares the verdict by class only, passes it there. Where the
+verifier's database is the older one, `verify` now names the characters it leaves unassigned and
+its Unicode and Python versions in an advisory beside the failure; where it is the newer one it
+cannot tell, and says nothing more.
+
+What neither layer checks, by design: nothing in a capsule is signed, so anyone can mint an honest
+capsule over other text; the repository head and paths a binding names are stated, not checked,
+since a capsule carries no repository; and a certificate stripped of every field certify wrote
+after 2026-08-30, carrying another issuer's hash, has the shape of one issued that week, so around
+the older page it verifies with those fields NOT CHECKED and the live verdict printed beside its
+own (around the current page it fails).
+
 ## [Unreleased] — web/gate/README.md: the run book's pin, measured at the head, and held to it by a test
 
 Step zero, item 6, of the 2026-10-06 study asked that `web/gate/README.md` name the committed bookmarklet's real
