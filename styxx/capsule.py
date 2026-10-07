@@ -393,6 +393,23 @@ _CERT_GENERATIONS = (
                     "uncovered_policy")),
     ("2026-09-05", ("receipt_binding",)),
 )
+# A row field certify writes on some rows only, and the change that began writing it: since 7e70cb4e
+# (OATH v0.3, 2026-06-10, 56 minutes after the earliest certify) every certify writes
+# binding_context on each table row. A certificate dated later by a generation field (all of
+# which certify began writing after it) lacks it only where it was removed. Measured on
+# 2026-10-06 over the committed certificates whose document and receipts resolve: none lacks it
+# on a row where the installed certify writes it. Until review round 4 its absence was NOT
+# CHECKED with the words "a certificate from an older certify does not".
+_ROW_FIELDS_SINCE = {"binding_context": ("2026-06-10", "7e70cb4e")}
+
+
+def _since(name: str) -> Optional[str]:
+    """The day certify began writing a field (`uncovered`, `ledger[].col`, `ungrounded[].col`)."""
+    row = name.split("[].", 1)[1] if "[]." in name else None
+    for date, fields in _CERT_GENERATIONS:
+        if name in fields or (row is not None and f"ledger[].{row}" in fields):
+            return date
+    return _ROW_FIELDS_SINCE[row][0] if row in _ROW_FIELDS_SINCE else None
 # The receipt binding block and its rows, as styxx.receipt_binding.bind_at_mint writes them (and
 # certify's own fallback when binding fails). `note` is the only optional key.
 _BINDING_FIELDS = ("schema", "content_rule", "head", "all_receipts_committed", "receipts")
@@ -577,15 +594,23 @@ def _presence(cert: dict, field: str) -> tuple:
     return field in cert, field in cert
 
 
-def _generation_problems(cert: dict) -> dict:
-    """{field: problem} for every dated field missing beside one certify began writing later."""
+def _shown_generation(cert: dict) -> Optional[tuple]:
+    """(index, date, field) of the latest generation field the certificate carries, else None."""
     shown = [g for g, (_, fields) in enumerate(_CERT_GENERATIONS)
              if any(_presence(cert, f)[1] for f in fields)]
     if not shown:
-        return {}
+        return None
     top = max(shown)
     top_date, top_fields = _CERT_GENERATIONS[top]
-    carried = next(f for f in top_fields if _presence(cert, f)[1])
+    return top, top_date, next(f for f in top_fields if _presence(cert, f)[1])
+
+
+def _generation_problems(cert: dict) -> dict:
+    """{field: problem} for every dated field missing beside one certify began writing later."""
+    shown = _shown_generation(cert)
+    if shown is None:
+        return {}
+    top, top_date, carried = shown
     out = {}
     for g in range(top + 1):
         date, fields = _CERT_GENERATIONS[g]
@@ -605,10 +630,11 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
     """Compare an embedded certificate with the one certify_doc re-derives from the embedded
     bytes. A field both carry must be equal, type for type. A field the installed certify writes
     and the certificate lacks is NOT CHECKED, by name, with the value the installed verifier finds
-    (an older certify did not write it), unless the certificate shows it is not that old: it
+    and the day certify began writing it, unless the certificate shows it is not that old: it
     carries a field certify began writing later, or names the installed certify.py as its issuer.
     Then the missing field fails. A field the certificate carries and the installed certify does
-    not write cannot be reproduced, so it fails. Mint-environment fields are listed as stated."""
+    not write cannot be reproduced, so it fails. `ungrounded` must be the ledger's UNGROUNDED rows,
+    copied, as every certify writes it. Mint-environment fields are listed as stated."""
     problems: List[str] = []
     advisory: List[str] = []
     not_checked: List[str] = []
@@ -635,6 +661,7 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
                         f"one into the other")
     removed = _generation_problems(cert)
     problems.extend(removed.values())
+    shown = _shown_generation(cert)
 
     def absent_field(name: str, what: str) -> None:
         if name in removed:
@@ -644,8 +671,37 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
                             f"installed certify.py (verifier_sha256 {vs}) as its issuer, and that "
                             f"file writes it: a field was removed")
         else:
-            not_checked.append(f"certificate.{name}: {what}; the installed certify writes it, a "
-                               f"certificate from an older certify does not")
+            # Said with the day certify began writing it, which the certificate does not post-date
+            # (else it failed above); until review round 4 this read "a certificate from an older
+            # certify does not", which was false for a field the certificate's own age shows.
+            since = _since(name)
+            not_checked.append(
+                f"certificate.{name}: {what}; " +
+                (f"certify began writing it on {since}, and nothing in this certificate dates it "
+                 f"later" if since else "the installed certify writes it, and nothing in this "
+                                        "certificate shows which certify issued it"))
+
+    # `ungrounded` is the ledger's UNGROUNDED rows, copied: every certify since the earliest
+    # (9ed6f3b5) writes it so, and all 223 certificates committed here carry it so. Until review
+    # round 4 its rows were compared only with the installed verifier's, so where the ledger's
+    # own rows carry a field the installed certify writes, deleting it from the copies was
+    # printed NOT CHECKED and verified.
+    led, ung = cert.get("ledger"), cert.get("ungrounded")
+    if isinstance(led, list) and isinstance(ung, list):
+        copies = [e for e in led if isinstance(e, dict) and e.get("status") == "UNGROUNDED"]
+        if not _same(ung, copies):
+            at = next((n for n, (a, b) in enumerate(zip(ung, copies)) if not _same(a, b)),
+                      min(len(ung), len(copies)))
+            a = ung[at] if at < len(ung) else None
+            b = copies[at] if at < len(copies) else None
+            fields = sorted({k for k in (a or {}) if not isinstance(b, dict) or k not in b or
+                             not _same(a[k], b[k])} |
+                            {k for k in (b or {}) if not isinstance(a, dict) or k not in a})
+            problems.append(
+                f"certificate.ungrounded is not the ledger's UNGROUNDED rows as the ledger carries "
+                f"them ({len(ung)} row(s) vs {len(copies)}; row {at} differs"
+                + (f" in {', '.join(map(repr, fields))}" if fields else "")
+                + "): every certify writes it as a copy of those rows")
 
     # the verdict: the whole string, except for a certificate that predates the uncovered band
     ev, lv = cert.get("verdict"), live["verdict"]
@@ -730,11 +786,23 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
                                 f"{carried}, where the installed verifier writes it in all of "
                                 f"them: no certify writes it into some of those rows and not "
                                 f"others, so it was removed")
+            elif shown is not None and (_since(fld) or shown[1]) < shown[1]:
+                # a field certify wrote before the day this certificate's own fields date it to
+                row = fld.split("[].", 1)[1]
+                origin = (f" ({_ROW_FIELDS_SINCE[row][1]})" if row in _ROW_FIELDS_SINCE else "")
+                problems.append(f"certificate.{fld} is absent from {n} of {total} row(s), where "
+                                f"the installed verifier writes it; certify has written it there "
+                                f"since {_since(fld)}{origin}, and the certificate carries "
+                                f"certificate.{shown[2]}, which certify began writing on "
+                                f"{shown[1]}: no certify issued that combination, so it was "
+                                f"removed")
             else:
                 unchecked += 1
                 absent_field(fld, f"absent from {n} of {total} row(s)")
-                mint_refusals.append(f"certificate.{fld} is absent from {n} of {total} row(s), "
-                                     f"and the page draws each band from its row")
+                draws = name == "ledger" and fld.split("[].", 1)[1] in ("col", "epistemics")
+                mint_refusals.append(f"certificate.{fld} is absent from {n} of {total} row(s)"
+                                     + (", and the page draws each band from its row" if draws
+                                        else ", and the installed certify writes it"))
         if len(problems) == before:
             # "every field" only when no field of these rows went unchecked (review round 3)
             compared.append(f"{name} ({len(live[name])} rows, both directions, in order, "

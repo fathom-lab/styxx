@@ -114,6 +114,14 @@ def _fails_on(src, tmp_path, edit, needle):
     return rep
 
 
+def _fails_on_legacy(src, tmp_path, edit, needle):
+    """_fails_on around the older page, where a field NOT CHECKED does not fail by itself."""
+    rep = verify_capsule(_forge_legacy(src, tmp_path / f"{edit.__name__}.capsule.html", edit))
+    assert rep["ok"] is False, f"{edit.__name__} verified"
+    assert any(needle in p for p in rep["problems"]), rep["problems"]
+    return rep
+
+
 # ---------------------------------------------------------------- D1: the coverage band
 
 def test_d1_a_certificate_edited_to_report_no_uncovered_number_fails(uncovered, tmp_path):
@@ -824,6 +832,60 @@ def test_a_row_field_some_rows_carry_and_others_lack_fails(tmp_path):
         _moved_issuer(p)
         del p["certificate"]["ledger"][0]["binding_context"]
     _fails_on(src, tmp_path, partial, "certificate.ledger[].binding_context is absent from 1 row")
+
+
+# Review round 3 (forgery lens, minor): row fields outside the dated and the always-written sets
+# could be deleted and verify, with a NOT CHECKED line saying an older certify does not write them.
+# binding_context has been written on every table row since 7e70cb4e (2026-06-10), and every
+# certify writes `ungrounded` as copies of the ledger's UNGROUNDED rows, so deleting col and
+# epistemics from those copies while the ledger carries both was an edit, not an age.
+
+def test_binding_context_deleted_from_a_dated_certificate_fails(tmp_path):
+    src = _mint(tmp_path / "table", TABLE)
+
+    def no_context(p):
+        _moved_issuer(p)
+        for e in p["certificate"]["ledger"]:
+            del e["binding_context"]
+    rep = _fails_on_legacy(src, tmp_path, no_context, "certificate.ledger[].binding_context is "
+                                                      "absent from 2 of 2 row(s)")
+    msg = [x for x in rep["problems"] if "binding_context" in x][0]
+    assert "2026-06-10" in msg and "certificate.receipt_binding" in msg, msg
+
+
+def test_a_certificate_with_nothing_to_date_it_names_the_day_certify_began_each_field(tmp_path):
+    """Around the older page, a June-shaped certificate still verifies; each NOT CHECKED line says
+    when certify began writing the field, never that an older certify does not."""
+    src = _mint(tmp_path / "table", TABLE)
+
+    def june(p):
+        _june_shaped(p["certificate"])
+        for e in p["certificate"]["ledger"]:
+            del e["binding_context"]
+        p["verifier"]["sha256"] = p["certificate"]["verifier_sha256"]
+    rep = verify_capsule(_forge_legacy(src, tmp_path / "june.capsule.html", june))
+    assert rep["ok"] is True, rep["problems"]
+    nc = rep["not_checked"]
+    assert any(n.startswith("certificate.ledger[].binding_context") and "2026-06-10" in n
+               for n in nc), nc
+    assert any(n.startswith("certificate.ledger[].col") and "2026-08-24" in n for n in nc), nc
+    assert not any("an older certify does not" in n for n in nc), nc
+
+
+ACCUSED = "The run scored 0.95 accuracy over 40 items.\n"
+
+
+def test_ungrounded_rows_stripped_of_what_their_ledger_rows_carry_fail(tmp_path):
+    src = _mint(tmp_path / "accused", ACCUSED)
+    assert len(_payload_of(src)["certificate"]["ungrounded"]) == 1
+
+    def stripped(p):
+        _moved_issuer(p)
+        for e in p["certificate"]["ungrounded"]:
+            del e["col"], e["epistemics"]
+    rep = _fails_on_legacy(src, tmp_path, stripped, "certificate.ungrounded is not the ledger's "
+                                                    "UNGROUNDED rows")
+    assert not any("ungrounded[]" in n for n in rep["not_checked"]), rep["not_checked"]
 
 
 def test_a_row_list_with_fields_not_checked_never_reads_every_field(tmp_path):
