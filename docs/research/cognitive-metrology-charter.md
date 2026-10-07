@@ -23,7 +23,7 @@ The science of cognition does not yet have its instruments. The dominant interpr
 
 This is the pre-scientific era of cognitive measurement. We have brilliant local techniques and no universal ruler.
 
-This charter establishes a different program. It claims that **cognitive state has substrate-independent observables** — quantities that can be measured from outside any cognitive system, calibrated against a shared reference frame, and projected into a finite-dimensional space that is invariant across implementations. It claims that the recent empirical work at fathom lab (atlas v0.3, the .fathom data type, the cognitive dynamics model) constitutes the first instance of such a measurement system, validated cross-architecture on 12 transformer language models from 3 families.
+This charter establishes a different program. It claims that **cognitive state has substrate-independent observables** — quantities that can be measured from outside any cognitive system, calibrated against a shared reference frame, and projected into a finite-dimensional space that is invariant across implementations. It claims that the recent empirical work at fathom lab (atlas v0.3, the .fathom data type, the cognitive dynamics model) constitutes an instance of such a measurement system, validated cross-architecture on 12 transformer language models from 3 families.
 
 It calls the discipline that studies and refines these observables **cognitive metrology** — a peer of spectroscopy, chronometry, thermodynamics, not a sub-field of artificial intelligence research. And it announces that fathom lab is establishing the founding institutional framework for that discipline as a public good, with open standards, an open reference implementation, and an explicit invitation to the broader research community to build on, contribute to, refute, or extend any claim made herein.
 
@@ -184,7 +184,7 @@ This is small, real, and surprising data.
 
 These observations are reproducible. Anyone with `pip install styxx` can run `python examples/thought_demo.py` and produce this matrix. They are also calibration-dependent: a different atlas version may produce different distances. The matrix is a v0.1 result on v0.3 calibration; future calibrations will refine it.
 
-The point of presenting this matrix in a founding charter is not that the science is complete. The point is that **the science has begun**. Cognitive metrology has its first measurement and its first empirical observations. The discipline now exists as something more than a definition. It exists as data.
+The point of presenting this matrix in a founding charter is not that the science is complete. The point is that **the science has begun**. Cognitive metrology has a measurement and empirical observations. The discipline now exists as something more than a definition. It exists as data.
 
 ---
 
@@ -320,7 +320,7 @@ The charter commits fathom lab and the cognitive metrology working group to a mu
 - *Foundations of Cognitive Metrology, Volume 2: Dynamics and Control*
 - *Foundations of Cognitive Metrology, Volume 3: The Universality Question*
 - Published open-access under CC-BY-4.0
-- The first textbook of the discipline
+- A textbook of the discipline
 
 ### Phase 7 — The international standards body *(5+ years)*
 
