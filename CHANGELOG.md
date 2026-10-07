@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the leaderboard `styxx leaderboard` prints says what Baseline-019 measured, without the priority claim `critique.py` withdrew
+
+`papers/NOTE_prior_art_credit_2026_09_29.md` section 3 withdrew an unpriced ordinal priority claim from
+`styxx/critique.py`'s docstring, which since reads "It passed the styxx gauntlet's v3 detection bars".
+The same claim stayed in the Baseline-019 row of `LEADERBOARD.md`, in its packaged copy
+`styxx/_data/LEADERBOARD.md` (what `styxx leaderboard` prints, and what the wheel carries), and in two
+comments in `styxx/__init__.py`. The description of the 7.49.0 software record on Zenodo,
+10.5281/zenodo.23221755, lists that as one of its stale lines, and
+`release/NOTE_zenodo_software_v7_49_0_provenance.md` names it (item 6). This entry withdraws it on
+`main`. The 7.49.0 record, its deposited tree and the released 7.49.0 packages keep the old text, so
+the record's line stays true of what it describes.
+
+- `LEADERBOARD.md` and `styxx/_data/LEADERBOARD.md`, still byte-identical: the Baseline-019 row's
+  heading says it "passed the v3 bars, 4/4", and its notes say "It passed the styxx gauntlet's v3
+  detection bars, 4/4", the note's wording for `critique.py`. The same kind of claim is withdrawn from
+  two more rows. Baseline-014's heading and notes no longer rank its D2 clearance of both confound bars
+  against every method (three ordinal phrases; "an n=1 demonstration" replaces the last). Baseline-016's
+  notes no longer call its two threshold crossings achievements nobody had reached; the table's own
+  Baseline-014 row, committed 16 minutes earlier (2391971f before f828b168), had already cleared D2
+  against the length oracle at 0.116. No number in the table changes.
+- `styxx/__init__.py`: the comments on the critique detector's import and its `__all__` entry say it
+  passed the gauntlet's v3 bars. The module docstring of `tests/test_critique_detector.py` says the same.
+- `docs/research/cognitive-metrology-charter.md` (lines 26, 187 and 323) and
+  `docs/governance/VISION_MOONSHOTS.md` (line 16): four more ordinal priority sentences of the same
+  kind, never priced, that the 2026-09-29 pass missed, although it corrected the charter in three other
+  places. They now read "an instance of such a measurement system", "a measurement and empirical
+  observations", "A textbook of the discipline" and "publish an OATH-HELD (or honestly OATH-FAILED)
+  model card".
+- `tests/test_leaderboard_no_priority_claim.py`, new: the printed Baseline-019 row says it passed,
+  4/4; the Baseline-014, -016 and -019 rows carry no ordinal claim; the root and packaged leaderboards
+  are the same bytes, which only a manual copy kept in step before; the critique detector's comments in
+  `styxx/__init__.py` carry no ordinal. Three of its four tests fail on 566f7769.
+- Kept, because each ranks the lab's work only against its own runs or records its own history and says
+  nothing about anyone else's: Baseline-008's and -009's notes on the order the lab ran its own
+  submissions (which says which version of the bars scored each), Baseline-011's count within one
+  session, the invitation under the classification table, the count of the lab's own failed baselines
+  before Baseline-019 in `styxx/compliance/eu_ai_act.py` and `styxx/compliance/nist_ai_rmf.py`, and
+  orderings inside the package's own history (`styxx/__init__.py` near the `recover` import,
+  `styxx/eval.py`, `styxx/gates.py`, `styxx/watch.py`, `styxx/cognometrics.py`).
+- Not changed: the "to date" superlatives in the Baseline-011 and Baseline-016 rows, which later rows of
+  the same table supersede. They rank rows within the table and claim no priority, so they are stale
+  rather than withdrawn here. Released `CHANGELOG.md` entries, `submissions/`, frozen papers, and the
+  copies under `zenodo/` and `release/` are not edited.
+
 ## [Unreleased] — styxx 7.49.0 on Zenodo, as the next version of the software record
 
 styxx 7.49.0 is deposited on Zenodo as **10.5281/zenodo.23221755**, a new version of the styxx software
