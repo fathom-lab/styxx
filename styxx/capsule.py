@@ -769,13 +769,16 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
             "stated": stated, "compared": compared, "mint_refusals": mint_refusals}
 
 
-def _binding_path_problem(path, name) -> Optional[str]:
-    """Why `path` is not one bind_at_mint writes for a receipt named `name`, else None.
+def _binding_path_problem(path) -> Optional[str]:
+    """Why `path` is not one bind_at_mint writes, else None.
 
-    bind_at_mint writes the receipt's path relative to the repository root, in POSIX form
-    (Repo.rel_or_none: os.path.relpath, as_posix, and None for anything outside the root), so it
-    ends in the receipt's own name. That name can differ only in case, where a case-insensitive file
-    system resolves the name to the case on disk."""
+    bind_at_mint writes the path of the file the receipt RESOLVES to, relative to the repository
+    root, in POSIX form (Repo.rel_or_none: Path.resolve, os.path.relpath, as_posix, and None for
+    anything outside the root), beside the name the receipt was given. Through a symlink on POSIX
+    (latest.json -> run_0042.json) or an 8.3 short name on Windows (RECEIP~1.JSO) the path ends in
+    another name than the receipt's, so nothing ties the two: until review round 4 a path had to
+    end in the receipt's name, which failed those honest capsules and made create refuse its own
+    certify's output. The pair is printed as stated."""
     if not isinstance(path, str):
         return "is not a string"
     parts = path.split("/")
@@ -784,8 +787,6 @@ def _binding_path_problem(path, name) -> Optional[str]:
         return "is not a relative POSIX path inside the repository"
     if any(ord(c) < 32 or 127 <= ord(c) < 160 for c in path):
         return "holds a control character"
-    if not isinstance(name, str) or parts[-1].casefold() != name.casefold():
-        return f"does not end in the receipt's name {_short(name)}"
     return None
 
 
@@ -867,7 +868,7 @@ def _compare_binding(rb, lrb: dict, recs: dict, problems: List[str], not_checked
             problems.append(f"receipt_binding row {r.get('name')!r} (path {_short(path)}, blob "
                             f"{_short(blob)}, committed {_short(committed)}, head {_short(head)}) "
                             f"is not a combination certify writes")
-        why = None if path is None else _binding_path_problem(path, r.get("name"))
+        why = None if path is None else _binding_path_problem(path)
         if why:
             problems.append(f"receipt_binding path {_short(path)} of {r.get('name')!r} is not a "
                             f"repository path certify writes: it {why}")

@@ -609,15 +609,77 @@ def test_a_forged_receipt_given_an_honest_mint_s_repository_facts_fails(tmp_path
 
 
 @pytest.mark.parametrize("path", ["/etc/r.json", "papers\\r.json", "papers/../r.json", "C:/r.json",
-                                  "papers/other.json", "papers/\x1b[2Kr.json", "papers//r.json"])
-def test_a_binding_path_must_be_a_repository_path_ending_in_the_receipt_s_name(clean, tmp_path,
-                                                                              path):
+                                  "papers/\x1b[2Kr.json", "papers//r.json"])
+def test_a_binding_path_must_be_a_relative_posix_path_in_the_repository(clean, tmp_path, path):
     recs = _receipt_bytes(clean)
 
     def pathed(p):
         _as_committed(p, lambda r: _blob(recs[r["name"]]))
         p["certificate"]["receipt_binding"]["receipts"][0]["path"] = path
     _fails_on(clean, tmp_path, pathed, "is not a repository path certify writes")
+
+
+# Review round 3 (compatibility lens, major): bind_at_mint writes the path of the file a receipt
+# resolves to (Repo.rel resolves it), and the name the receipt was given. Through a symlink on
+# POSIX (latest.json -> run_0042.json) or an 8.3 short name on Windows (RECEIP~1.JSO) they end
+# differently, and the rule that the path end in the name failed those honest capsules, and made
+# create refuse its own certify's output.
+
+def test_a_binding_path_that_ends_in_another_name_verifies_and_both_are_printed(clean, tmp_path):
+    recs = _receipt_bytes(clean)
+
+    def resolved(p):
+        _as_committed(p, lambda r: _blob(recs[r["name"]]))
+        p["certificate"]["receipt_binding"]["receipts"][0]["path"] = "runs/run_0042.json"
+    rep = verify_capsule(_forge(clean, tmp_path / "resolved.capsule.html", resolved))
+    assert rep["ok"] is True, rep["problems"]
+    assert any("r.json path runs/run_0042.json committed True" in s for s in rep["stated"]), \
+        rep["stated"]
+
+
+def _another_name_for(target):
+    """A second name for `target` that resolves to it: a symlink where the system allows one, or
+    the Windows 8.3 short name; None when neither exists here."""
+    import os
+    link = target.with_name("latest.json")
+    try:
+        os.symlink(target, link)
+        return link
+    except (OSError, NotImplementedError, AttributeError):
+        pass
+    if os.name == "nt":
+        import ctypes
+        buf = ctypes.create_unicode_buffer(1024)
+        if ctypes.windll.kernel32.GetShortPathNameW(str(target), buf, 1024):
+            short = Path(buf.value)
+            if short.name != target.name:
+                return short
+    return None
+
+
+def test_a_receipt_given_by_another_name_is_certified_minted_and_verified(tmp_path):
+    import shutil
+    if not shutil.which("git"):
+        pytest.skip("git is not on PATH")
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _git(repo, "init", "-q")
+    target = repo / "receipt_long_name_run.json"
+    target.write_text(json.dumps(RECEIPT), encoding="utf-8")
+    (repo / "d.md").write_text(CLEAN, encoding="utf-8")
+    _git(repo, "add", "receipt_long_name_run.json", "d.md")
+    _git(repo, "commit", "-q", "-m", "receipt")
+    other = _another_name_for(target)
+    if other is None:
+        pytest.skip("this system gives a file no second name (no symlink, no 8.3 short name)")
+    cert = certify_doc(repo / "d.md", [other])
+    row = cert["receipt_binding"]["receipts"][0]
+    assert row["name"] == other.name and row["path"] == "receipt_long_name_run.json", row
+    cp = repo / "d.certificate.json"
+    cp.write_text(json.dumps(cert), encoding="utf-8")
+    cap = create_capsule(repo / "d.md", [other], cp, tmp_path / "d.capsule.html")
+    rep = verify_capsule(cap)
+    assert rep["ok"] is True, rep["problems"]
 
 
 @pytest.mark.parametrize("name", [["r.json"], {"n": "r.json"}, 7, None])
