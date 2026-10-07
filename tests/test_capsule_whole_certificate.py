@@ -829,6 +829,43 @@ def test_a_file_that_is_not_utf8_fails_without_a_traceback(clean, tmp_path, caps
     assert line["verdict"] == "UNRESOLVED"
 
 
+@pytest.mark.parametrize("edit", ["payload_list", "receipts_text", "receipt_text", "b64_object",
+                                  "b64_not_base64", "certificate_text", "verifier_list"])
+def test_charon_reads_a_malformed_capsule_as_unresolved_without_a_traceback(clean, tmp_path,
+                                                                           edit):
+    """Review round 3 (compatibility lens, minor): verify answered a payload that is not an object
+    with a problem, while charon.derive_capsule on the same file ended in a traceback. So did a
+    v0.1 payload whose receipts, certificate or verifier is not what create_capsule writes. Each
+    now gives a line that is UNRESOLVED or, where the embedded bytes still certify, not
+    reproduced."""
+    from styxx import charon
+    f = tmp_path / f"{edit}.capsule.html"
+    if edit == "payload_list":
+        html = clean.read_text(encoding="utf-8")
+        i = html.index(_BEGIN) + len(_BEGIN)
+        f.write_text(html[:i] + "[1, 2]" + html[html.index(_END, i):], encoding="utf-8")
+    else:
+        def change(p):
+            if edit == "receipts_text":
+                p["receipts"] = "r.json"
+            elif edit == "receipt_text":
+                p["receipts"][0] = "r.json"
+            elif edit == "b64_object":
+                p["receipts"][0]["b64"] = {"name": "r.json"}
+            elif edit == "b64_not_base64":
+                p["receipts"][0]["b64"] = "\x1b[2K"
+            elif edit == "certificate_text":
+                p["certificate"] = "x"
+            else:
+                p["verifier"] = ["r.json"]
+        _forge(clean, f, change)
+    assert verify_capsule(f)["ok"] is False
+    line = charon.derive_capsule(f, tmp_path)
+    assert line["verdict"] == "UNRESOLVED" or line["reproduced"] is False, line
+    if edit in ("payload_list", "receipts_text", "receipt_text", "b64_object", "b64_not_base64"):
+        assert line["verdict"] == "UNRESOLVED", line
+
+
 @pytest.mark.parametrize("created", ["9999-99-99T99:99:99Z", "2026-02-30T12:00:00Z",
                                      "2026-10-06T24:00:00Z"])
 def test_a_mint_time_no_clock_shows_fails(clean, tmp_path, created):
