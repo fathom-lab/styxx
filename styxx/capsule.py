@@ -2367,11 +2367,16 @@ def _verify_capsule_sworn(html: str, payload: dict) -> dict:
 
     problems: List[str] = []
     advisory: List[str] = []
-    rec = payload.get("receipt") or {}
+    # A receipt, document or verifier block that is not an object is read as absent, and fails
+    # where its absence fails: text or a list there ended verify in a traceback until #196.
+    rec = _obj_in(payload, "receipt")
     out = {"ok": False, "spec": SPEC_SWORN,
-           "document": (payload.get("document") or {}).get("name"),
+           "document": _obj_in(payload, "document").get("name"),
            "verdict": rec.get("document_verdict"), "counts": rec.get("counts"),
            "problems": problems, "advisory": advisory, "label": _SWORN_LABEL}
+    if not isinstance(payload.get("receipt"), dict):
+        problems.append("payload.receipt is not an object: create_capsule_sworn embeds the "
+                        "receipt styxx.sworn issued")
 
     try:
         doc_bytes = base64.b64decode((payload["document"])["b64"], validate=True)
@@ -2380,7 +2385,7 @@ def _verify_capsule_sworn(html: str, payload: dict) -> dict:
         return out
     if _sha256(doc_bytes) != (payload["document"]).get("sha256"):
         problems.append("document bytes != payload document.sha256 (tamper)")
-    if _sha256(doc_bytes) != (rec.get("document") or {}).get("inline_sha256"):
+    if _sha256(doc_bytes) != _obj_in(rec, "document").get("inline_sha256"):
         problems.append("document bytes != receipt document.inline_sha256 (tamper)")
 
     # the sealed browser verifier must be the one inlined in the page, byte for byte
@@ -2412,33 +2417,41 @@ def _verify_capsule_sworn(html: str, payload: dict) -> dict:
     if man_obj is not None:
         try:
             man = Manifest.from_dict(man_obj)
-        except SystemExit as e:
-            problems.append(f"the sealed manifest does not load: {e}")
+        except (SystemExit, Exception) as e:  # noqa: BLE001 - a manifest it cannot load fails
+            problems.append(f"the sealed manifest does not load: {str(e)[:200]}")
     if rec.get("manifest_digest") != (man.digest_or_none() if man is not None else None):
         problems.append("the receipt's manifest_digest is not the sealed manifest's (tamper)")
 
     try:
-        live = verify(doc_bytes, name=(rec.get("document") or {}).get("name", ""),
+        live = verify(doc_bytes, name=_obj_in(rec, "document").get("name", ""),
                       manifest=man, commit=rec.get("commit"))
         live_rec = issue_receipt(live)
-    except SystemExit as e:
-        problems.append(f"the sealed bytes do not verify at the installed instrument: {e}")
+    except (SystemExit, Exception) as e:  # noqa: BLE001 - what the instrument refuses fails
+        problems.append(f"the sealed bytes do not verify at the installed instrument: "
+                        f"{str(e)[:200]}")
+        return out
+    try:
+        sealed_core = _sworn_core_sha256(rec)
+    except (ValueError, TypeError, RecursionError) as e:
+        # NaN, Infinity or a value JCS does not define, in the receipt (#196)
+        problems.append(f"the receipt cannot be canonicalised, so its verdict core has no digest "
+                        f"({type(e).__name__}: {str(e)[:120]})")
         return out
 
-    sealed_build = (rec.get("verifier") or {}).get("sworn_sha256")
+    sealed_build = _obj_in(rec, "verifier").get("sworn_sha256")
     live_build = (live_rec.get("verifier") or {}).get("sworn_sha256")
     same_build = sealed_build == live_build
     if not same_build:
         advisory.append("INSTRUMENT SKEW: the receipt was issued by styxx.sworn "
                         f"{str(sealed_build)[:12]} and this is {str(live_build)[:12]}")
-    if _sworn_core_sha256(live_rec) != _sworn_core_sha256(rec):
+    if _sworn_core_sha256(live_rec) != sealed_core:
         problems.append(
             "the verdict core does not re-derive from the sealed bytes"
             + (" — and the instrument moved, so this is SKEW, not tamper" if not same_build
                else " under the same build, which is tamper")
             + f" (live {live['document_verdict']} {live['counts']} vs sealed "
               f"{rec.get('document_verdict')} {rec.get('counts')})")
-    if payload.get("core_sha256") != _sworn_core_sha256(rec):
+    if payload.get("core_sha256") != sealed_core:
         problems.append("the sealed core_sha256 is not the receipt's own (tamper) — layer 1 "
                         "compares against it")
 
