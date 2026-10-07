@@ -76,10 +76,42 @@ def _b64(b: bytes) -> str:
     return base64.b64encode(b).decode("ascii")
 
 
+# Re-running the certifier writes the embedded document and receipts into a temporary
+# directory under the names the capsule gives them. The capsule chooses those names, so a name
+# must be one that can only mean a file directly inside that directory, under POSIX and under
+# Windows rules alike: no separator, no drive, no "." or "..", no control character, no trailing
+# dot or space (Windows drops them, so two names could meet in one file), and no Windows device.
+_WINDOWS_DEVICES = {"con", "prn", "aux", "nul", "conin$", "conout$"}
+
+
 def _bare_name(name) -> bool:
-    """A file name with no directory part on any platform: no separator, no drive, not . or .."""
-    return (isinstance(name, str) and name not in ("", ".", "..") and "\x00" not in name
-            and PurePosixPath(name).name == name and PureWindowsPath(name).name == name)
+    if not isinstance(name, str) or name in ("", ".", ".."):
+        return False
+    if any(c in name for c in "/\\:") or any(ord(c) < 32 for c in name):
+        return False
+    if name != name.rstrip(" ."):
+        return False
+    if PurePosixPath(name).name != name or PureWindowsPath(name).name != name:
+        return False
+    stem = name.split(".", 1)[0].rstrip(" ").lower()
+    if stem in _WINDOWS_DEVICES or (len(stem) == 4 and stem[:3] in ("com", "lpt")
+                                    and stem[3] in "0123456789¹²³"):
+        return False
+    return True
+
+
+def _unsafe_names(payload: dict) -> List[str]:
+    """Problems with the file names a v0.1 payload asks the verifier to write; empty when all are safe."""
+    names = [(payload.get("document") or {}).get("name")]
+    names += [(r or {}).get("name") for r in payload.get("receipts") or []]
+    out = [f"embedded name {n!r} is not a bare file name; nothing was written and the "
+           f"certifier was not re-run" for n in names if not _bare_name(n)]
+    if not out:
+        folded = [n.casefold() for n in names]
+        if len(set(folded)) != len(folded):
+            out.append("two embedded names are the same file on a case-insensitive file system; "
+                       "nothing was written and the certifier was not re-run")
+    return out
 
 
 # ---------------------------------------------------------------------------------
@@ -247,13 +279,7 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
         want = rsha.get(r["name"])
         if _sha256(rb) != want:
             problems.append(f"receipt {r['name']!r} bytes != certificate hash")
-    # The re-run writes the embedded bytes under the names the capsule gives them, so a name
-    # must be a bare file name. A path (absolute, or climbing with ..) would write the capsule's
-    # bytes wherever it points, outside the temporary directory, on the reader's machine.
-    for name in [doc["name"]] + [r["name"] for r in payload["receipts"]]:
-        if not _bare_name(name):
-            problems.append(f"name {name!r} is not a bare file name; nothing was written and "
-                            f"the verifier was not re-run")
+    problems.extend(_unsafe_names(payload))
 
     if not problems:
         # The receipts are handed to the certifier in the order the certificate lists them,

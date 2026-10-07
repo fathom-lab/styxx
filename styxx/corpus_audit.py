@@ -264,6 +264,13 @@ def _binding_for(repo, cert_path: Path, cert: dict, resolved: dict, doc: Path) -
         sworn, why = _rb.sworn_bytes_at_issue(repo, cert_path, cl, resolved)
     except _rb.RepoUnavailable as e:
         sworn, why = None, str(e)[:200]
+    if sworn is not None:
+        # The receipt names come from the audited certificate; write only bare file names.
+        from styxx.capsule import _bare_name
+        names = [doc.name] + list(sworn["receipts"])
+        if not all(_bare_name(n) for n in names) or len({n.casefold() for n in names}) != len(names):
+            sworn, why = None, ("a name the certificate gives is not a bare file name; "
+                                "nothing was written and nothing was re-derived")
     if sworn is None:
         cl["stands_reason"] = why
     else:
