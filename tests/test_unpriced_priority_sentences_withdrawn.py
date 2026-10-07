@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 """Unpriced priority sentences withdrawn after the leaderboard pass, held here.
 
-papers/NOTE_prior_art_credit_2026_09_29.md keeps a sentence that says or implies the lab did
-something before others only if a survey under a frozen procedure priced it. None of these was
-priced.
+papers/NOTE_prior_art_credit_2026_09_29.md keeps a sentence that says or implies nobody else did
+something, that the lab did it before others, or that it is the only one, only if a survey under a
+frozen procedure priced it. None of these was priced.
 
 The guardrail instruments: the sycophancy instrument called itself the earliest instrument shipped
 under the *Every Mind Leaves Vitals* call, a call addressed to the field, and the next five counted
 themselves under that call as if the count covered everyone who answered it. Other answers were
 never surveyed. The sycophancy instrument now says so, and the later ones count the lab's own.
+
+The field-lacks and only-one sentences: three documents under docs/research/ said the field had no
+instruments, no ruler, or no signal during generation, and four docstrings called a comparison,
+a control surface or a method the only one.
 
 The ordinal is stored reversed, as tests/test_leaderboard_no_priority_claim.py stores it, so this
 file does not spell it either.
@@ -95,3 +99,57 @@ def test_the_scan_sees_the_withdrawn_shapes():
         assert unscoped_counts_under_the_call(text), text
     assert unscoped_counts_under_the_call("the lab's second\ninstrument under that call") == []
     assert unscoped_counts_under_the_call("a fifth\ninstrument under the same measurement protocol") == []
+
+
+def _flat(rel: str) -> str:
+    return re.sub(r"\s+", " ", (ROOT / rel).read_text(encoding="utf-8"))
+
+
+# (file, sentences withdrawn, wording that replaced them)
+_FIELD_LACKS = [
+    ("docs/research/fathom-spec-v0.md",
+     ["Every other interpretability representation —", "None of them survive a vendor swap"],
+     ["never surveyed, and it is withdrawn."]),
+    ("docs/research/cognitive-metrology-charter.md",
+     ["The science of cognition does not yet have its instruments.",
+      "The field has tools but no measurements.", "no universal ruler",
+      "This is the pre-scientific era of cognitive measurement."],
+     ["None of that was surveyed, and it is withdrawn under the rule of "
+      "`papers/NOTE_prior_art_credit_2026_09_29.md`",
+      "Whether one already exists elsewhere was not surveyed."]),
+    ("docs/research/cognitive-dynamics-v0.md",
+     ["there's no feedback signal to use *during* generation", "the missing piece"],
+     ["Reading and steering state during it was done earlier (Zou et al., 2023; see §1)."]),
+    ("styxx/cogvm.py",
+     ["Every production LLM interface today", "the only available control surface"],
+     ["prompt-level alignment as the control surface they expose"]),
+    ("styxx/guardrail/drift.py",
+     ["the only published text-adjacent baseline"],
+     ["Outperforms a published text-adjacent baseline", "others were not surveyed."]),
+    ("styxx/guardrail/calibrated_weights_drift_v1.py",
+     ["Only published comparable", "the only published baseline"],
+     ["A published comparable (other baselines were not surveyed)", "clears that baseline"]),
+    ("styxx/adapters/anthropic.py",
+     ["the only way to get logprob-equivalent signal", "The closest reconstruction"],
+     ["one way to get logprob-equivalent signal on the Anthropic API",
+      "A reconstruction of logprob-equivalent signal without API support."]),
+]
+
+
+def test_the_field_lacks_and_only_one_sentences_stay_withdrawn():
+    for rel, withdrawn, replaced_by in _FIELD_LACKS:
+        text = _flat(rel)
+        for sentence in withdrawn:
+            # case-sensitive: a withdrawal note may name the sentence it withdrew in lower case
+            assert sentence not in text, (rel, sentence)
+        for wording in replaced_by:
+            assert wording in text, (rel, wording)
+
+
+def test_what_the_drift_docstrings_measured_stays():
+    for rel in ("styxx/guardrail/drift.py", "styxx/guardrail/calibrated_weights_drift_v1.py"):
+        text = _flat(rel)
+        for number in ("2601.05214", "0.716-0.721"):
+            assert number in text, (rel, number)
+    assert "Glaive 2,411 samples" in _flat("styxx/guardrail/calibrated_weights_drift_v1.py")
+    assert "Our 0.943 on BFCL v3" in _flat("styxx/guardrail/calibrated_weights_drift_v1.py")

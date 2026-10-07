@@ -31,8 +31,8 @@ supported via `styxx.Anthropic(mode=...)`:
   - mode="consensus":  N-sample ensemble (default N=5). Re-runs the
     call N-1 additional times at `ensemble_temperature` and computes
     empirical per-token entropy + agreement from the resulting
-    samples. Cost: N× tokens per call. The closest reconstruction of
-    logprob-equivalent signal available without API support.
+    samples. Cost: N× tokens per call. A reconstruction of
+    logprob-equivalent signal without API support.
 
   - mode="companion":  Routes the prompt through an open-weight
     classifier (`styxx.anthropic_hack.companion`) and attaches its
@@ -175,7 +175,7 @@ class AnthropicWithVitals:
             If >1, every messages.create() call runs N samples at temperature
             ensemble_temperature, aligns their completions, and computes
             empirical per-token entropy + agreement. This reconstructs a
-            styxx Vitals object with a real 4-phase trajectory — the only
+            styxx Vitals object with a real 4-phase trajectory — one
             way to get logprob-equivalent signal on the Anthropic API (which
             does not expose per-token logprobs as of 2026-04).
             Cost: N× tokens per call. Recommended: 3 for cheap ensemble,

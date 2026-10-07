@@ -214,10 +214,10 @@ fit metadata, and a UUID identifying the model.
 
 Most of "AI safety in production" today consists of **post-hoc**
 interventions: filter the output, retry on failure, re-prompt with
-guardrails. None of these can prevent failures at generation time
-because there's no feedback signal to use *during* generation.
+guardrails. None of these acts *during* generation. Reading and
+steering state during it was done earlier (Zou et al., 2023; see §1).
 
-A cognitive dynamics model is the missing piece. Once you can predict
+A cognitive dynamics model adds prediction. Once you can predict
 that a given action in the current state will produce a hallucination
 attractor, you can choose a different action. Once you can simulate
 forward 5 steps, you can pick the action that minimizes long-horizon
