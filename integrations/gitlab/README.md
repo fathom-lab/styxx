@@ -25,8 +25,11 @@ report; keeps the JSON report as a job artifact whether the job passed or failed
 
 The job reports by default, as the GitHub Action does: every verdict goes to the job log and to
 `diffgate.json`, each contradicted claim is named in the log, and the gate's verdicts never fail
-the job. When the gate says FAIL, the log ends with a warning that the job passed anyway and how
-to make it fail. Only STYXX_SOFT_FAIL set to "false" blocks: the job then fails on a
+the job. When the gate says FAIL, the job prints a warning after the gate's output that the job
+passes anyway, and how to make it fail. GitLab then shows the job as passed: the Action writes
+annotations and a job summary, but this job reports only in its log and the `diffgate.json`
+artifact, so the merge request's pipeline status does not show what the gate found. Only
+STYXX_SOFT_FAIL set to "false" blocks: the job then fails on a
 CONTRADICTED claim. Set it wherever GitLab reads CI/CD variables (the project's or group's
 settings, the pipeline's top-level `variables:`, or the job's own):
 
