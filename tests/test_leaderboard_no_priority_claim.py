@@ -78,15 +78,14 @@ def test_baseline_014_and_016_rows_claim_no_ordinal_achievement():
     assert "(1) D2 length-delta crosses 0.10 (0.103); (2) BOTH D4 deltas above 0.10" in row_016
 
 
-def test_baseline_008_heading_states_the_bars_without_an_ordinal():
-    # The heading set the row apart from Baseline-007's length artifact with an achievement
-    # ordinal; it now says which bars scored it. The notes keep the order the lab ran its own
-    # submissions under each version of the bars.
+def test_baseline_008_row_states_the_bars_without_an_ordinal():
+    # The heading and the notes set the row apart from Baseline-007's length artifact with an
+    # achievement ordinal; both now say which bars scored it.
     row = _row(_printed(), "Baseline-008")
     heading = row.split("|")[1]
     assert "*(embedding similarity — tested under v2 bars; pre-stated prediction validated)*" in heading
-    assert not _ORDINAL_RX.search(heading), heading
-    assert "non-trivial detection submission tested under v2 bars (D1+D2+D3)" in row
+    assert not _ORDINAL_RX.search(row), row
+    assert "| Detection submission tested under v2 bars (D1+D2+D3). Pre-stated" in row
     assert "D1=0.805 ✓ / D2=0.928 ✓ / D1-len=0.015 ✗ / D1-cap=0.102 ✓" in row
 
 
