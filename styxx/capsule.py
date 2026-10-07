@@ -411,6 +411,8 @@ def _since(name: str) -> Optional[str]:
         if name in fields or (row is not None and f"ledger[].{row}" in fields):
             return date
     return _ROW_FIELDS_SINCE[row][0] if row in _ROW_FIELDS_SINCE else None
+
+
 # The receipt binding block and its rows, as styxx.receipt_binding.bind_at_mint writes them (and
 # certify's own fallback when binding fails). `note` is the only optional key.
 _BINDING_FIELDS = ("schema", "content_rule", "head", "all_receipts_committed", "receipts")
