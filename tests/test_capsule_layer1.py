@@ -338,6 +338,50 @@ def test_the_template_names_the_floor_and_the_floor_is_the_module_s():
     assert "__PIP__" not in _TEMPLATE
 
 
+def _changelog_heads():
+    from pathlib import Path
+    text = (Path(__file__).resolve().parent.parent / "CHANGELOG.md").read_text(encoding="utf-8")
+    return re.findall(r"^## \[([^\]]+)\]", text, re.M)
+
+
+def _release_below_floor(version, heads):
+    """Why releasing `version` with these CHANGELOG sections would ship pages naming a floor above
+    it, else None. It is a release once the top section is one, or once the version is one no
+    section names yet (the bump comes before the section is renamed)."""
+    from styxx.capsule import _LAYER2_FLOOR, _version_key
+    cut = heads[0] != "Unreleased" or version not in heads
+    if not cut or _version_key(version) >= _version_key(_LAYER2_FLOOR):
+        return None
+    return (f"styxx {version} is being released, and the pages it mints tell their reader to "
+            f"install styxx>={_LAYER2_FLOOR}: release it as {_LAYER2_FLOOR} or later, or lower "
+            f"the floor in styxx/capsule.py (_LAYER2_FLOOR and _TEMPLATE) to a release that "
+            f"carries this layer 2")
+
+
+def test_a_release_cut_carries_the_floor_its_pages_name():
+    """Review round 3 (compatibility lens, minor): the floor is written into the template and
+    nothing tied it to the version released, so a cut of this code as 7.48.2 would ship pages
+    whose install line names no published release, and would advise every reader of its own
+    mints that the styxx minting them is below the floor."""
+    from styxx._version import __version__
+    heads = _changelog_heads()
+    assert heads, "CHANGELOG.md has no '## [...]' sections"
+    problem = _release_below_floor(__version__, heads)
+    assert problem is None, problem
+
+
+@pytest.mark.parametrize("version,heads,bites", [
+    ("7.48.1", ["Unreleased", "7.48.1", "7.48.0"], False),     # this branch, unreleased
+    ("7.48.2", ["Unreleased", "7.48.1", "7.48.0"], True),      # bumped below the floor
+    ("7.48.2", ["7.48.2", "7.48.1"], True),                    # cut below the floor
+    ("7.49.0", ["Unreleased", "7.48.1"], False),               # bumped to the floor
+    ("7.49.0", ["7.49.0", "7.48.1"], False),                   # cut at the floor
+    ("7.50.1", ["Unreleased", "7.50.1", "7.49.0"], False),     # later work
+])
+def test_the_release_guard_bites_only_a_cut_below_the_floor(version, heads, bites):
+    assert (_release_below_floor(version, heads) is not None) is bites
+
+
 def test_the_page_names_the_floor_not_the_stated_version(minted):
     p = _payload(minted)
     p["verifier"]["styxx_version"], p["verifier"]["pip"] = "0.1", "styxx==0.1"
