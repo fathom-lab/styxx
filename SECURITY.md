@@ -34,18 +34,17 @@ and we'll move quickly.
 This is the open MIT protocol's reference implementation. Trust signals:
 
 - **Source of truth:** [`fathom-lab/styxx`](https://github.com/fathom-lab/styxx) on GitHub.
-- **Releases on PyPI** are built and published exclusively by GitHub Actions
-  in this repository, via [PyPI Trusted Publishing][tp]
-  (OIDC, no API tokens). The workflow that does this is
-  [`.github/workflows/publish.yml`](.github/workflows/publish.yml).
+- **Releases on PyPI** are built and published by GitHub Actions in this
+  repository when a version tag is pushed. The workflow that does this is
+  [`.github/workflows/publish.yml`](.github/workflows/publish.yml). It uploads
+  with a PyPI API token held as a repository secret; [PyPI Trusted
+  Publishing][tp] (OIDC, no long-lived token) is not set up yet.
 - **Both an sdist (`*.tar.gz`) and a wheel (`*.whl`)** are published for every
   tagged release. Source distributions allow downstream packagers
   (conda-forge, distros, vendor SBOM tooling) to build from source.
-- **PEP 740 attestations** are produced and uploaded alongside each
-  artifact, signed via Sigstore through the GitHub Actions OIDC
-  identity. This binds each artifact to the exact commit and workflow
-  run that produced it. PyPI surfaces these as a verified-publishing
-  badge on the release page.
+- **PEP 740 attestations are not produced yet** (the publish step sets
+  `attestations: false`; they need Trusted Publishing). Until they are,
+  check an artifact by its SHA-256, as below.
 - **Tagged releases** correspond 1:1 to GitHub Releases that include
   the same artifacts attached as release assets, so an artifact
   fetched from PyPI can be cross-checked against the GitHub Release
@@ -65,10 +64,10 @@ This is the open MIT protocol's reference implementation. Trust signals:
 
 1. Note the published version, e.g. `7.1.1`.
 2. Find the matching GitHub Release: `https://github.com/fathom-lab/styxx/releases/tag/v7.1.1`.
-3. Compare the `*.whl` and `*.tar.gz` SHA-256 sums between PyPI and the GitHub Release.
-4. Confirm the PEP 740 attestation on PyPI points at the same workflow run linked from the GitHub Release.
+3. Compare the `*.whl` and `*.tar.gz` SHA-256 sums between PyPI, the
+   assets attached to the GitHub Release, and the hashes its notes give.
 
-If anything in steps 2–4 doesn't line up, do not install the artifact.
+If anything in steps 2–3 doesn't line up, do not install the artifact.
 Report the discrepancy to **security@fathomlab.io** immediately.
 
 ## What we will not do

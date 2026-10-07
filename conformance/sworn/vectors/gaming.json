@@ -148,7 +148,7 @@
    }
   },
   {
-   "id": "0e76a07c1668a83bdcf7661210a2b9e6c6100a6b0f899fe750a56d2fe04c0062",
+   "id": "0efd0a035b7f3db1abe3561a8cd9dab0f52fddaf5166f9d3c41de464acf56d2b",
    "family": "gaming",
    "sources": [
     "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
@@ -161,7 +161,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "f3ecc5cc2fb96ac0da01891d40ab265eb1d7b98977819659877bb7a6476567ef",
+    "receipt": "66d66f0be0f3832d8ed50d5580dd8b3b9bd57f4d9b1d64a099c307c6da9a84c5",
     "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
     "sidecar": null,
     "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
@@ -173,35 +173,6 @@
      "status": "FAILED",
      "digest_match": false,
      "verdict_reproduces": false
-    }
-   }
-  },
-  {
-   "id": "16fdf89e101b02a2802171839dd4ee5b8b334535951dc17612780b15cf9cb5f8",
-   "family": "gaming",
-   "sources": [
-    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "269242a3a74fa21e84bb553b2171b4c2b951657d17bb5a070995644830bb6d4b",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": true
     }
    }
   },
@@ -323,35 +294,6 @@
    }
   },
   {
-   "id": "213ee3e364a5486d78f7caec80792b7cb1684f2e080fda51b23f38e31f8bb25a",
-   "family": "gaming",
-   "sources": [
-    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "1ccb2b8f08822a0d7a2188e53c6365aec74c22cbf3c3bfc0dbab7f13141aed69",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": true
-    }
-   }
-  },
-  {
    "id": "214d3c8fd9e41a2f5ec1e2d9e7de794ea614d95596c437356a287d9e9b51f21f",
    "family": "gaming",
    "sources": [
@@ -468,6 +410,35 @@
      "sworn_total": 2,
      "narrative_sentences": null,
      "sentence_share": null
+    }
+   }
+  },
+  {
+   "id": "2821ff68bdcece51e05685d4680ad3e8b1a547b0495120aa85df523fa1859b10",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "54f25b8a4e7cd7fb6910706c2fed75f129ff5ccf3803b64803020c9a6584eb3c",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
     }
    }
   },
@@ -666,7 +637,34 @@
    }
   },
   {
-   "id": "493bdbe9a569308ab3a3fe176fae184721ffc7edcdf57212f3d7e04e2f0fc1d6",
+   "id": "398ba2540e536fbcdc4918c70aed677b3df180e5bc84de452ae437bca278191a",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [],
+   "inputs": {
+    "receipt": "abd77460fabe3ac9d5c438d9d9fe36dfc6dd841c77245cd688ea2191aeb8c036",
+    "document": null,
+    "sidecar": "392cefd883e327de05db5cdc8e8621883231ca0b00cccf2f23eb207d13bf4650",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "495a7eb8a1cc8f71190cbe49f08052cf2af7f013d8ed182dc60b580c0ceec645",
    "family": "gaming",
    "sources": [
     "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
@@ -679,7 +677,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "6b94ec41fde15023ba94eca49f8fb4061eec88c9b5f6bb5694b1198a1763e76f",
+    "receipt": "c9657bb7bce5b1a88aacd969bda4ed35222c9a15c8a00833df223d22807d6a3d",
     "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
     "sidecar": null,
     "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
@@ -690,7 +688,7 @@
     "check": {
      "status": "FAILED",
      "digest_match": false,
-     "verdict_reproduces": false
+     "verdict_reproduces": true
     }
    }
   },
@@ -865,35 +863,6 @@
    }
   },
   {
-   "id": "5e426f9bceb603dbd325e6b5b8c2f87ac2220fc74d87307336752d09a65057a8",
-   "family": "gaming",
-   "sources": [
-    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "16ab3980bf276d919c3e03e5081511ed84a764e9dbf432ba458fffd82e86c6c0",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
    "id": "6239f6b514c944d2f21b6b1f164bf867b11b6ce2d8f9308c06dff7674687c7d0",
    "family": "gaming",
    "sources": [
@@ -1002,6 +971,35 @@
    }
   },
   {
+   "id": "63b89616fdcfa4aeee022eb9cd592bf60ce7382cff17963e3a0fc954ddd9b88a",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "521323e27c275f0aad12e09d5884b8d692038f190630f205ef01535c68fc1c99",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
    "id": "6ba9f3fd15bf2c5d9f5b3ac6e92e42d2b10aaf2decbb479f5f46d7cab256a09c",
    "family": "gaming",
    "sources": [
@@ -1066,6 +1064,35 @@
    ],
    "inputs": {
     "receipt": "e57872d487678087013891a25341d1bf7cb4f2cb5862822241db7b4d96942dad",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "73f32aef8f063e148b7caeead4bf1f97654e2d6ee39a0f2421a3099d7dd6e760",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "d3657a58f1ac9ce9c2272412c693d08bc79e4641ef4dfa93c74b3d4a7958437a",
     "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
     "sidecar": null,
     "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
@@ -1636,6 +1663,35 @@
    }
   },
   {
+   "id": "b45baf251205893da069347b5442718500afc8f7cfa7a6ada14106754dd42aa9",
+   "family": "gaming",
+   "sources": [
+    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "c4eaa5efc1821684cb050e0e0276cb6165e5d96c1bf64e416ddd27ec3768e16e",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
    "id": "c11d1401cd2e4ef91eaaf4e7997cc31028f966a680816730a1335f337616d124",
    "family": "gaming",
    "sources": [
@@ -2088,35 +2144,6 @@
    }
   },
   {
-   "id": "e12f211a4e0cf7986b4747409196526f97117e6848f1ea00807e514da00ef1f5",
-   "family": "gaming",
-   "sources": [
-    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "c5701a76382f7ea41968a9992781d30589d8f9037f702f758d81a39ca8c1e925",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
    "id": "efa002fa5612598d8df1372d128c9f7e36774e910c78f980e9973946a9ec6336",
    "family": "gaming",
    "sources": [
@@ -2211,33 +2238,6 @@
      "sworn_total": 1,
      "narrative_sentences": 0,
      "sentence_share": 1.0
-    }
-   }
-  },
-  {
-   "id": "f31cd02962942ef22bc65b52b8244fc107ef4ff67c57d1d59e62aa58608b977b",
-   "family": "gaming",
-   "sources": [
-    "tests/test_sworn.py::TestGamingLensFromTheAttackPass::test_a_tampered_receipt_fails_and_never_crashes_or_refuses"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [],
-   "inputs": {
-    "receipt": "c5a818642740af57a4bb5428639d9396bf510b9bb132834d8802aea8783a4d5f",
-    "document": null,
-    "sidecar": "392cefd883e327de05db5cdc8e8621883231ca0b00cccf2f23eb207d13bf4650",
-    "manifest": null,
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": false
     }
    }
   },
