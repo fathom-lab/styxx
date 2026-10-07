@@ -416,8 +416,9 @@ _CERT_ROW_LISTS = ("ledger", "ungrounded", "abstained")
 # The fields certify began writing after its earliest certificates, in the order it began writing
 # them (`git log -S` on styxx/certify.py). A certificate carrying one of them was issued by a
 # certify that wrote every one listed before it, so an earlier one missing beside it was removed.
-# Measured on 2026-10-06 over the 223 certificates committed here (213 files and 10 capsules):
-# every one of them obeys this order.
+# Measured on 2026-10-07 over the 253 certificates committed here (243 files: 213 named
+# *.certificate.json and 30 named CERT_*.json; and 10 capsules): every one of them obeys this
+# order. Until review round 5 this said 223, leaving out the 30 CERT_*.json files.
 _CERT_GENERATIONS = (
     ("2026-08-24", ("ledger[].col",)),
     ("2026-08-30", ("ledger[].epistemics",)),
@@ -430,8 +431,9 @@ _CERT_GENERATIONS = (
 # (OATH v0.3, 2026-06-10, 56 minutes after the earliest certify) every certify writes
 # binding_context on each table row. A certificate dated later by a generation field (all of
 # which certify began writing after it) lacks it only where it was removed. Measured on
-# 2026-10-06 over the committed certificates whose document and receipts resolve: none lacks it
-# on a row where the installed certify writes it. Until review round 4 its absence was NOT
+# 2026-10-07 over the 228 committed certificates whose document and receipts resolve (204
+# *.certificate.json and 24 CERT_*.json): none lacks it on a row where the installed certify
+# writes it. Until review round 4 its absence was NOT
 # CHECKED with the words "a certificate from an older certify does not".
 _ROW_FIELDS_SINCE = {"binding_context": ("2026-06-10", "7e70cb4e")}
 
@@ -717,7 +719,7 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
                                         "certificate shows which certify issued it"))
 
     # `ungrounded` is the ledger's UNGROUNDED rows, copied: every certify since the earliest
-    # (9ed6f3b5) writes it so, and all 223 certificates committed here carry it so. Until review
+    # (9ed6f3b5) writes it so, and all 253 certificates committed here carry it so. Until review
     # round 4 its rows were compared only with the installed verifier's, so where the ledger's
     # own rows carry a field the installed certify writes, deleting it from the copies was
     # printed NOT CHECKED and verified.
