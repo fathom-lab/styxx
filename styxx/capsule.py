@@ -14,9 +14,10 @@ the READER runs:
   the counts, the coverage band, the epistemics summary and the ledger in both directions and in
   order, every field of every row. It checks that the page around the payload is the page a
   styxx renders for exactly that payload, so what a browser draws is what was compared. What it
-  cannot re-derive from the bytes (when, and with which styxx, the capsule was minted; where the
-  receipts were committed) it prints as stated by the minter, never as verified; a field an
-  older certify did not write it prints as NOT CHECKED, by name. Reproducibility, not assertion.
+  cannot re-derive from the bytes (when, and with which styxx, the capsule was minted; the
+  repository head and paths the receipts were committed at) it prints as stated by the minter,
+  never as verified; a field an older certify did not write it prints as NOT CHECKED, by name.
+  Every line it prints shows control characters as escapes. Reproducibility, not assertion.
 
 Creation refuses to lie: a capsule cannot be minted unless every hash matches and the
 certificate re-verifies live. What no layer proves — that receipts truthfully record
@@ -353,14 +354,19 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
 # reads, values re-typed (1.0 for 1, true for 1), fields nested inside the receipt binding or the
 # payload, a free-text install line the page shows, a certificate whose band was deleted while
 # fields certify wrote later stayed, and the page drawing a band where the certificate puts none.
+# A third round (after the second review) closed a committed flag naming a blob of other bytes,
+# minter-chosen text reaching the terminal raw, fields every certify writes passing as NOT
+# CHECKED, an install line taken from the stated version, and a rule that failed honest older
+# pages by the characters their documents hold rather than by what their script draws.
 #
 # The rule: what the page shows from the payload, layer 2 re-derives and compares, or names as not
 # checked. Every field certify_doc writes is a function of the document and receipt bytes at the
 # installed verifier, so it is re-derived and compared, type for type, except these, which
 # describe the minting environment and cannot be re-derived from the bytes: the hash of the
 # certify.py that issued the certificate, and the receipt binding's repository facts (head, paths,
-# blobs, committed flags). Those are printed as stated by the minter, never as verified, after
-# checking they are a combination certify writes.
+# committed flags). Those are printed as stated by the minter, never as verified, after checking
+# they are a combination certify writes; a committed flag's blob is the one repository fact that
+# is a function of the bytes, and it is compared with the embedded receipt.
 _CERT_MINT_FIELDS = ("verifier_sha256", "receipt_binding")
 # Every certificate any styxx has issued carries these, and every ledger (and ungrounded) row
 # carries the row fields: the earliest certify (9ed6f3b5, 2026-06-10) already wrote each of them.
