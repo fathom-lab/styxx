@@ -15,7 +15,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/styxx.svg?color=ff2330&label=pypi&style=flat-square)](https://pypi.org/project/styxx/)
 [![Python](https://img.shields.io/pypi/pyversions/styxx.svg?color=ff2330&label=python&style=flat-square)](https://pypi.org/project/styxx/)
-[![License](https://img.shields.io/pypi/l/styxx.svg?color=ff2330&label=license&style=flat-square)](https://github.com/fathom-lab/styxx/blob/v7.48.0/LICENSE)
+[![License](https://img.shields.io/pypi/l/styxx.svg?color=ff2330&label=license&style=flat-square)](https://github.com/fathom-lab/styxx/blob/v7.49.0/LICENSE)
 [![tests](https://github.com/fathom-lab/styxx/actions/workflows/test.yml/badge.svg)](https://github.com/fathom-lab/styxx/actions/workflows/test.yml)
 [![Spec](https://img.shields.io/badge/spec_v1.0-10.5281%2Fzenodo.19746215-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19746215)
 [![Concept](https://img.shields.io/badge/concept_DOI-always--latest-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19326174)
@@ -47,7 +47,7 @@ by a stranger from committed bytes, within the verifier's measured limits (the O
 exam, a released module recalled after an internal red team broke it six ways, a priority claim
 retracted after an external methods audit, and four independent negatives against our own published prediction —
 twice on real human brain data we downloaded to test it. Every one of those is in
-[CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/CHANGELOG.md) and [papers/](https://github.com/fathom-lab/styxx/tree/v7.48.0/papers) with the receipt attached. That is not
+[CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/CHANGELOG.md) and [papers/](https://github.com/fathom-lab/styxx/tree/v7.49.0/papers) with the receipt attached. That is not
 humility as branding; it is the only reason the passes mean anything.
 
 ---
@@ -81,8 +81,8 @@ verdict: FAIL — 3 claim(s) CONTRADICTED by the diff, each with its reason abov
 ```
 
 Zero receipts, zero cooperation from the agent that wrote the summary, no checkout.
-**It reports by default and does not block:** the check fails on a contradicted claim only if you set `soft-fail: "false"` under `with:` (compared case-insensitively, surrounding whitespace stripped; `true` reports, and so does any other value, with a warning naming it). No kind of accusation it still makes has been measured clearing the 0.95 precision floor the lab set: the path accusation is withheld, after the 100 accusations [EXTERNAL-1](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md) sampled from 71,016 external agent-authored pull requests, 85 of them path claims, measured precision 0.23 (receipts [`external1_adjudication.json`](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/external1_adjudication.json), [`external1_summary.json`](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/external1_summary.json)) and a repaired path accuser measured 0.16 held out ([V14](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md), receipt [`v14_adjudication.json`](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/v14_adjudication.json)); `only_touches`, the one kind still accusing with a measured precision, is at 0.25 ([PATH-1](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_path1_only_touches_repair_2026_09_17.md), re-derived by [SCOPE-1](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_scope1_ABANDONED_2026_09_18.md), receipt [`scope1_footprint.json`](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/scope1_footprint.json)). The same gate on every commit before it lands:
-[`integrations/git/commit-msg`](https://github.com/fathom-lab/styxx/blob/v7.48.0/integrations/git/README.md), one file, the message vs the staged diff. Prose outside the closed template set is never judged,
+**It reports by default and does not block:** the check fails on a contradicted claim only if you set `soft-fail: "false"` under `with:` (compared case-insensitively, surrounding whitespace stripped; `true` reports, and so does any other value, with a warning naming it). No kind of accusation it still makes has been measured clearing the 0.95 precision floor the lab set: the path accusation is withheld, after the 100 accusations [EXTERNAL-1](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md) sampled from 71,016 external agent-authored pull requests, 85 of them path claims, measured precision 0.23 (receipts [`external1_adjudication.json`](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/external1_adjudication.json), [`external1_summary.json`](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/external1_summary.json)) and a repaired path accuser measured 0.16 held out ([V14](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md), receipt [`v14_adjudication.json`](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/v14_adjudication.json)); `only_touches`, the one kind still accusing with a measured precision, is at 0.25, measured on the 7.48.x reader, before the PATH-2a overlay, and not re-measured with it ([PATH-1](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_path1_only_touches_repair_2026_09_17.md), re-derived by [SCOPE-1](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_scope1_ABANDONED_2026_09_18.md), receipt [`scope1_footprint.json`](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/scope1_footprint.json)). The same gate on every commit before it lands:
+[`integrations/git/commit-msg`](https://github.com/fathom-lab/styxx/blob/v7.49.0/integrations/git/README.md), one file, the message vs the staged diff. Prose outside the closed template set is never judged,
 and the CLI prints what it checks when it finds nothing — though DECIDE-1 (below) found most of that silence is extraction failing, not scope.
 
 **The zero-false-accusation claim that stood here is withdrawn, and here is what replaced it.**
@@ -96,10 +96,10 @@ repository; one is a commit whose message discusses the very document it is repo
 in. That commit was made the same day this paragraph was rewritten.
 
 Mention-versus-use is not a quirk of this gate. The same defect is documented in the OATH
-verifier in [RECON_oath_external_reach](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md)
+verifier in [RECON_oath_external_reach](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RECON_oath_external_reach_2026_08_26.md)
 and was found in the ledger's own classifier on the same day — three instruments, written months
 apart for unrelated jobs, all reading a line and calling it a claim. Historic false accusations
-are named in [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/CHANGELOG.md) with the regression test that closed each one. **These
+are named in [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/CHANGELOG.md) with the regression test that closed each one. **These
 four were never repaired** — the path-claim accusation that made them is disabled (below), so the command above no longer reproduces them as accusations, and after two failed repair cycles no fix is owed: the class is retired as an accuser
 and kept as an observer. They are stated here rather than behind a number, because a headline
 that keeps asserting itself in the present tense is how the old one went wrong.
@@ -114,9 +114,9 @@ correctly — put the observed precision at **0.23**. The preregistered conseque
 same day: `file_created` / `file_deleted` / `file_touched` now return `UNCHECKABLE` with the
 accusation *withheld*, and four tests that pinned real catches are marked `xfail(strict=True)` so
 no repair can land silently. The V13 repair recovered 34.6% of the false accusations
-against a 66.7% bar and **also failed**; V14 then cleared that bar (0.6975) and scored **0.16** held-out precision against the same 0.95 floor, so this lab is not repairing the class again ([RESULT_v14](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md)). Counts, symbol and prefix claims are unaffected and still
+against a 66.7% bar and **also failed**; V14 then cleared that bar (0.6975) and scored **0.16** held-out precision against the same 0.95 floor, so this lab is not repairing the class again ([RESULT_v14](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md)). Counts, symbol and prefix claims are unaffected and still
 accuse. The full record, including two corrections to our own diagnosis, is in
-[RESULT_external1_the_gate_fails_in_the_wild](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md).
+[RESULT_external1_the_gate_fails_in_the_wild](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md).
 
 **2026-09-18 — the abstention was not restraint, and the accusations that remain are mostly
 wrong.** `file_touched` stopped accusing in August. `only_touches` did not, and this week it was
@@ -127,7 +127,7 @@ changing `appservice/package.json` was called a liar for saying it only modified
 `Assert.NotNull` was read as a file path; one pull request was accused because its author typed
 `.githiub`. All nine are named, with the instrument's own reason strings, in
 [issue #128](https://github.com/fathom-lab/styxx/issues/128) and
-[RESULT_bench2_INVALID](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_bench2_INVALID_2026_09_17.md).
+[RESULT_bench2_INVALID](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_bench2_INVALID_2026_09_17.md).
 
 Two attempts to build a benchmark that would have caught this **both voided themselves** on their
 own blocking audit gates, and the second one is what found the nine. Their datasets are published
@@ -137,7 +137,7 @@ nobody took ours on trust. `bench_reproduce.py` regenerates them, or scores your
 
 And the sentence this project has been repeating — that abstaining is principled restraint — is
 **overturned by our own measurement**.
-[DECIDE-1](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_decide1_decidable_fraction_2026_09_17.md) read 100
+[DECIDE-1](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_decide1_decidable_fraction_2026_09_17.md) read 100
 claims by hand with no oracle and found **76 of them decidable from the diff — 71% weighted to the corpus's mix of claim kinds**, while the gate
 returns a verdict on 5.7% of `only_touches`. Most of the silence is extraction failing, not the
 domain being ambiguous. A repair landed two of the six known causes and moved precision from 0.18
@@ -187,17 +187,17 @@ matched random frames do 0.0), **two directions wide at its core**, **nameless**
 directions match no human concept category, permutation p 0.8031), and **switch-like** —
 legibility is flat across most of the rotation and turns vertical only near alignment. Which
 is why representational-similarity scores never predicted readability: slope measures cannot
-see a switch. The scope is one target pair: a ten-model cohort shared the frame with no island ([B47](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/disjoint-worlds/FINDING_b47_no_islands_2026_08_06.md)), and on human brain data the switch did not transfer ([H1b](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/first-afference/FINDING_h1b_no_unreadable_minds_2026_08_06.md)), so we do not claim the model result generalizes.
+see a switch. The scope is one target pair: a ten-model cohort shared the frame with no island ([B47](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/disjoint-worlds/FINDING_b47_no_islands_2026_08_06.md)), and on human brain data the switch did not transfer ([H1b](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/first-afference/FINDING_h1b_no_unreadable_minds_2026_08_06.md)), so we do not claim the model result generalizes.
 
 Nine sealed acts, every verdict computed from gates frozen in git before the run, and the whole
-chain [replicates on a laptop CPU](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/disjoint-worlds/REPLICATE_legibility.md) — the
+chain [replicates on a laptop CPU](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/disjoint-worlds/REPLICATE_legibility.md) — the
 cheapest check takes four seconds. `styxx.islands` generalizes the measurement past language
 models: hand it any cohort over a shared item set (activations, fMRI betas over shared stimuli,
 MEG epochs) and it reports islands, the cliff, and whether a low-rank correction rescues them.
 It refuses below eight members and refuses a knee read off a noise curve, because an instrument
 that cannot refuse cannot be trusted.
 
-We also [staked a public, falsifiable prediction](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/disjoint-worlds/PREDICTION_h1_human_islands_2026_08_06.md)
+We also [staked a public, falsifiable prediction](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/disjoint-worlds/PREDICTION_h1_human_islands_2026_08_06.md)
 that human cross-subject brain decoding will show the same structure — frozen before the data
 exists, with the branch where we are wrong written before the rest. Four independent negatives followed the same day,
 two of them our own measurements on human brain data; the prediction records them, is not formally falsified at n = 8, and says nobody should read it as live.
@@ -239,7 +239,7 @@ before it reaches a user. the drop-in is one line: `from styxx import OpenAI` (s
 text-heuristic vitals — the Anthropic API exposes no logprobs). the base install carries no torch,
 no GPU requirement, and no LLM in the loop for the core instruments — the calibrated detectors are
 small logistic regressions over hand-built features (numpy + scikit-learn), scoring in
-sub-millisecond CPU time. MIT, open at the core, forever ([OPEN_CORE.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/docs/governance/OPEN_CORE.md)).
+sub-millisecond CPU time. MIT, open at the core, forever ([OPEN_CORE.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/docs/governance/OPEN_CORE.md)).
 
 ## install
 
@@ -251,7 +251,7 @@ that gets the full core: the profiler, the nine calibrated instruments, the agen
 primitives, the auditors. optional extras pull heavier stacks only when you ask:
 `styxx[nli]` (DeBERTa NLI models for the 9-signal hallucination pipeline and `deception_v2`),
 `styxx[hf]` (audit HuggingFace classifiers), `styxx[mcp]` (the MCP server —
-14 tools over stdio, see [styxx/mcp/README.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/styxx/mcp/README.md)),
+14 tools over stdio, see [styxx/mcp/README.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/styxx/mcp/README.md)),
 `styxx[tier1]` (residual-stream instruments, open weights).
 
 ## quickstart
@@ -264,7 +264,7 @@ python examples/knowsay_endpoint.py questions.jsonl \
     --api-key-env OPENAI_API_KEY --out datasheet.json
 ```
 
-The script is in the repository, not the wheel ([examples/knowsay_endpoint.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/examples/knowsay_endpoint.py)). `questions.jsonl` is `{"q": ..., "gold": ...}` per line. The script runs the arc's frozen
+The script is in the repository, not the wheel ([examples/knowsay_endpoint.py](https://github.com/fathom-lab/styxx/blob/v7.49.0/examples/knowsay_endpoint.py)). `questions.jsonl` is `{"q": ..., "gold": ...}` per line. The script runs the arc's frozen
 two-turn protocol (answer → content-free challenge → revised answer) and scores it with
 `styxx.knowsay.datasheet` — the same byte-identical challenge behind every published receipt,
 so your number lands on the published ladder (frontier free text measured at 0.53; multiple
@@ -335,42 +335,42 @@ committed reproducer, calibration file, or paper in this repo. text-register ins
 text *sounds*, not whether it is true; each ships its construct ceiling inline
 (`CALIBRATION_NOTES` on the weights, `scope_caveat` on the advice), and `score_all` omits the
 register instruments on wordless input rather than folding an artifact into the score
-(see [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/CHANGELOG.md)).
+(see [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/CHANGELOG.md)).
 
 | instrument | what it reads | headline (receipt) |
 |---|---|---|
 | **register — how the text sounds. calibrated LR, CPU, no LLM in the loop.** | | |
-| `@trust` / `guardrail.check` | hallucination vs grounding passage | HaluEval-QA AUC 0.998 ± 0.001, TruthfulQA 0.994 ± 0.006, 8-benchmark CV — two failures (DROP 0.424, FinanceBench 0.492) published, not hidden ([scripts/compete_hhem_halueval.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/scripts/compete_hhem_halueval.py), [CHANGELOG](https://github.com/fathom-lab/styxx/blob/v7.48.0/CHANGELOG.md#400--2026-04-23)) |
-| `refuse_check` | refusal, cross-model | XSTest-v2 0.976 on GPT-4, trained on Llama-3.2-1B refusals, held-out — documented failure mode (Mistral-instruct, lecturing register) published ([benchmarks/refusal_xstest_heldout_v2.json](https://github.com/fathom-lab/styxx/blob/v7.48.0/benchmarks/refusal_xstest_heldout_v2.json), [CHANGELOG](https://github.com/fathom-lab/styxx/blob/v7.48.0/CHANGELOG.md)) |
-| `drift_check` | tool call vs stated intent, per-schema | BFCL v3 0.943 ± 0.009, 5-fold CV, text-only ([benchmarks/drift_calibrated_v1.json](https://github.com/fathom-lab/styxx/blob/v7.48.0/benchmarks/drift_calibrated_v1.json), [scripts/drift_calibrated_v1.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/scripts/drift_calibrated_v1.py)) |
-| `sycoph_check` | yielding-to-flatter vs evidence-first | 0.972 ± 0.005, 5-fold CV; declared FPR ≈0.30 on restrained-technical text ([calibrated_weights_sycophancy_v0.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/styxx/guardrail/calibrated_weights_sycophancy_v0.py)) |
-| `loop_check` | cross-turn stagnation | 0.9995 ± 0.001, 5-fold CV ([calibrated_weights_loop_v0.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/styxx/guardrail/calibrated_weights_loop_v0.py)) |
-| `deception_check` | lexical deception *signature* — NOT a lie detector | 0.956 ± 0.024 in-corpus; collapses to 0.59 on TruthfulQA without a reference — routed via NLI `deception_v2` (0.818) when you supply one ([calibrated_weights_deception_v0.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/styxx/guardrail/calibrated_weights_deception_v0.py)) |
-| plan-action gap | stated plan vs emitted action, content level | 0.9225 ± 0.032, 5-fold CV ([benchmarks/cognometry_fingerprint_atlas_v0.json](https://github.com/fathom-lab/styxx/blob/v7.48.0/benchmarks/cognometry_fingerprint_atlas_v0.json)) |
-| overconfidence register | epistemic register — NOT a truth detector | 0.7702 ± 0.065, lowest in the suite, shipped at that number rather than gamed ([calibrated_weights_overconfidence_v0.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/styxx/guardrail/calibrated_weights_overconfidence_v0.py)) |
-| goal-drift | multi-turn intent migration from anchor | 0.9645 ± 0.029, 5-fold CV ([benchmarks/cognometry_fingerprint_atlas_v0.json](https://github.com/fathom-lab/styxx/blob/v7.48.0/benchmarks/cognometry_fingerprint_atlas_v0.json)) |
+| `@trust` / `guardrail.check` | hallucination vs grounding passage | HaluEval-QA AUC 0.998 ± 0.001, TruthfulQA 0.994 ± 0.006, 8-benchmark CV — two failures (DROP 0.424, FinanceBench 0.492) published, not hidden ([scripts/compete_hhem_halueval.py](https://github.com/fathom-lab/styxx/blob/v7.49.0/scripts/compete_hhem_halueval.py), [CHANGELOG](https://github.com/fathom-lab/styxx/blob/v7.49.0/CHANGELOG.md#400--2026-04-23)) |
+| `refuse_check` | refusal, cross-model | XSTest-v2 0.976 on GPT-4, trained on Llama-3.2-1B refusals, held-out — documented failure mode (Mistral-instruct, lecturing register) published ([benchmarks/refusal_xstest_heldout_v2.json](https://github.com/fathom-lab/styxx/blob/v7.49.0/benchmarks/refusal_xstest_heldout_v2.json), [CHANGELOG](https://github.com/fathom-lab/styxx/blob/v7.49.0/CHANGELOG.md)) |
+| `drift_check` | tool call vs stated intent, per-schema | BFCL v3 0.943 ± 0.009, 5-fold CV, text-only ([benchmarks/drift_calibrated_v1.json](https://github.com/fathom-lab/styxx/blob/v7.49.0/benchmarks/drift_calibrated_v1.json), [scripts/drift_calibrated_v1.py](https://github.com/fathom-lab/styxx/blob/v7.49.0/scripts/drift_calibrated_v1.py)) |
+| `sycoph_check` | yielding-to-flatter vs evidence-first | 0.972 ± 0.005, 5-fold CV; declared FPR ≈0.30 on restrained-technical text ([calibrated_weights_sycophancy_v0.py](https://github.com/fathom-lab/styxx/blob/v7.49.0/styxx/guardrail/calibrated_weights_sycophancy_v0.py)) |
+| `loop_check` | cross-turn stagnation | 0.9995 ± 0.001, 5-fold CV ([calibrated_weights_loop_v0.py](https://github.com/fathom-lab/styxx/blob/v7.49.0/styxx/guardrail/calibrated_weights_loop_v0.py)) |
+| `deception_check` | lexical deception *signature* — NOT a lie detector | 0.956 ± 0.024 in-corpus; collapses to 0.59 on TruthfulQA without a reference — routed via NLI `deception_v2` (0.818) when you supply one ([calibrated_weights_deception_v0.py](https://github.com/fathom-lab/styxx/blob/v7.49.0/styxx/guardrail/calibrated_weights_deception_v0.py)) |
+| plan-action gap | stated plan vs emitted action, content level | 0.9225 ± 0.032, 5-fold CV ([benchmarks/cognometry_fingerprint_atlas_v0.json](https://github.com/fathom-lab/styxx/blob/v7.49.0/benchmarks/cognometry_fingerprint_atlas_v0.json)) |
+| overconfidence register | epistemic register — NOT a truth detector | 0.7702 ± 0.065, lowest in the suite, shipped at that number rather than gamed ([calibrated_weights_overconfidence_v0.py](https://github.com/fathom-lab/styxx/blob/v7.49.0/styxx/guardrail/calibrated_weights_overconfidence_v0.py)) |
+| goal-drift | multi-turn intent migration from anchor | 0.9645 ± 0.029, 5-fold CV ([benchmarks/cognometry_fingerprint_atlas_v0.json](https://github.com/fathom-lab/styxx/blob/v7.49.0/benchmarks/cognometry_fingerprint_atlas_v0.json)) |
 | **grounded — tracks the model's belief, not its register. sampling-based.** | | |
-| `grounded_honesty` | stated claim vs the model's own resampled belief | pre-registered AUC 0.966 where the text-only axis reads 0.498 = chance ([papers/grounded-honesty-axis/SYNTHESIS_grounded_honesty_arc_2026_05_28.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/grounded-honesty-axis/SYNTHESIS_grounded_honesty_arc_2026_05_28.md)) |
-| `detect_context_injection` | cross-context divergence, poisoned sessions | AUC 0.875 under system_lie attack, pre-registered ([papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md)) |
-| `single_pass_confab` / `span_confab` | confabulation from token logits, one forward pass | span gate AUC 0.991 on gpt-4o-mini, matching N=10 resampling ([papers/grounded-honesty-axis/SYNTHESIS_detection_locus_2026_05_30.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/grounded-honesty-axis/SYNTHESIS_detection_locus_2026_05_30.md)) |
+| `grounded_honesty` | stated claim vs the model's own resampled belief | pre-registered AUC 0.966 where the text-only axis reads 0.498 = chance ([papers/grounded-honesty-axis/SYNTHESIS_grounded_honesty_arc_2026_05_28.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/grounded-honesty-axis/SYNTHESIS_grounded_honesty_arc_2026_05_28.md)) |
+| `detect_context_injection` | cross-context divergence, poisoned sessions | AUC 0.875 under system_lie attack, pre-registered ([papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/grounded-honesty-axis/FINDING_injection_gap_closure_2026_05_29.md)) |
+| `single_pass_confab` / `span_confab` | confabulation from token logits, one forward pass | span gate AUC 0.991 on gpt-4o-mini, matching N=10 resampling ([papers/grounded-honesty-axis/SYNTHESIS_detection_locus_2026_05_30.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/grounded-honesty-axis/SYNTHESIS_detection_locus_2026_05_30.md)) |
 | **meaning — concept geometry, catches damage output still hides.** | | |
-| `meaning_diff` / `meaning_agreement` | did two models mean the same thing? migration / quantization / fine-tune QA, zero labels | DistilGPT-2 ↔ GPT-2 = 0.978 on real models; localizes broken concepts at AUC 0.85 on real targeted poisoning ([RESULT_llm_breadth](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/ai-human-alignment/en/RESULT_llm_breadth_2026_06_03.md), [papers/ai-human-alignment/README.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/ai-human-alignment/README.md)) |
-| `Conscience` / `crossmind` | borrowed value-axis read on another model's hidden state — cooperative monitor, not adversarial defense | catch 0.85 (17 of 20 caves) at a realized false-alarm rate of 0.20, double its 0.10 target, under a frozen gate ([FINDING_mount_regime](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/conscience-mount/FINDING_mount_regime_2026_06_13.md)); the arc closed NEGATIVE-RESULT: it buys no adversarial robustness and never reached a clean preregistered establish ([papers/INDEX.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/INDEX.md)); apex run 13/13, AUROC 0.995, p=0.001 ([papers/showcase-viz/FINDING_says_yes_knows_no_v3_2026_06_11.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/showcase-viz/FINDING_says_yes_knows_no_v3_2026_06_11.md)) |
+| `meaning_diff` / `meaning_agreement` | did two models mean the same thing? migration / quantization / fine-tune QA, zero labels | DistilGPT-2 ↔ GPT-2 = 0.978 on real models; localizes broken concepts at AUC 0.85 on real targeted poisoning ([RESULT_llm_breadth](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/ai-human-alignment/en/RESULT_llm_breadth_2026_06_03.md), [papers/ai-human-alignment/README.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/ai-human-alignment/README.md)) |
+| `Conscience` / `crossmind` | borrowed value-axis read on another model's hidden state — cooperative monitor, not adversarial defense | catch 0.85 (17 of 20 caves) at a realized false-alarm rate of 0.20, double its 0.10 target, under a frozen gate ([FINDING_mount_regime](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/conscience-mount/FINDING_mount_regime_2026_06_13.md)); the arc closed NEGATIVE-RESULT: it buys no adversarial robustness and never reached a clean preregistered establish ([papers/INDEX.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/INDEX.md)); apex run 13/13, AUROC 0.995, p=0.001 ([papers/showcase-viz/FINDING_says_yes_knows_no_v3_2026_06_11.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/showcase-viz/FINDING_says_yes_knows_no_v3_2026_06_11.md)) |
 | **auditors — instruments pointed at instruments.** | | |
-| `validate_probe` | is an oversight probe reading the concept or a surface artifact? | caught our own 0.98 truth-probe as a surface artifact ([papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md)) |
-| `audit_confound` | is a classifier's score riding a confound? verdicts with CIs | flagged our own `overconfidence_v0` as length-threshold-biased, condemned referenceless `deception_v0` ([papers/grounded-honesty-axis/NOTE_confound_audit_2026_06_25.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/grounded-honesty-axis/NOTE_confound_audit_2026_06_25.md)) |
-| `audit_hf_model` + `validate_against_ground_truth` | one-call confound audit of any HF text classifier, with a synthetic-artifact gate | our own original report card did NOT replicate on real labels — the gate exists because of it ([papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact_2026_06_27.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact_2026_06_27.md)) |
-| `certify` (OATH) + `corpus_audit` | extract every numeric claim in a document, verify against its receipts, emit a machine-checkable certificate — and re-certify the *entire* published corpus on demand | hardened across preregistered versions — at v0.6.2 (7.28.0) tamper-catch 0.304 → 0.319 with false-verify 0.184 → 0.166 on a battery grown to 3287 mutants, including a self-caught false accusation fixed under its own prereg; re-measured at 7.45.0, a one-digit mutation of 3951 VERIFIED claims leaves 2696 unaccused (0.6824), 604 of them VERIFIED against an unrelated leaf — the false-attestation channel is open; `python -m styxx.corpus_audit papers/` turns the verifier on every claim styxx has ever shipped ([CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/CHANGELOG.md)) |
-| `attest` / `verify_attestation` | signed receipts for what an agent claimed vs what the substrate read | verifier hardened against its own artifact — RCE fix, 7.17.1 ([SECURITY.md](https://github.com/fathom-lab/styxx/blob/main/SECURITY.md), [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/CHANGELOG.md)) |
+| `validate_probe` | is an oversight probe reading the concept or a surface artifact? | caught our own 0.98 truth-probe as a surface artifact ([papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md)) |
+| `audit_confound` | is a classifier's score riding a confound? verdicts with CIs | flagged our own `overconfidence_v0` as length-threshold-biased, condemned referenceless `deception_v0` ([papers/grounded-honesty-axis/NOTE_confound_audit_2026_06_25.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/grounded-honesty-axis/NOTE_confound_audit_2026_06_25.md)) |
+| `audit_hf_model` + `validate_against_ground_truth` | one-call confound audit of any HF text classifier, with a synthetic-artifact gate | our own original report card did NOT replicate on real labels — the gate exists because of it ([papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact_2026_06_27.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact_2026_06_27.md)) |
+| `certify` (OATH) + `corpus_audit` | extract every numeric claim in a document, verify against its receipts, emit a machine-checkable certificate — and re-certify the *entire* published corpus on demand | hardened across preregistered versions — at v0.6.2 (7.28.0) tamper-catch 0.304 → 0.319 with false-verify 0.184 → 0.166 on a battery grown to 3287 mutants, including a self-caught false accusation fixed under its own prereg; re-measured at 7.45.0, a one-digit mutation of 3951 VERIFIED claims leaves 2696 unaccused (0.6824), 604 of them VERIFIED against an unrelated leaf — the false-attestation channel is open; `python -m styxx.corpus_audit papers/` turns the verifier on every claim styxx has ever shipped ([CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/CHANGELOG.md)) |
+| `attest` / `verify_attestation` | signed receipts for what an agent claimed vs what the substrate read | verifier hardened against its own artifact — RCE fix, 7.17.1 ([SECURITY.md](https://github.com/fathom-lab/styxx/blob/main/SECURITY.md), [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/CHANGELOG.md)) |
 | **the trust stack — verification as the product. one command seals agent work or refuses it.** | | |
-| **GitHub Action** | `uses: fathom-lab/styxx@main` — every PR body gated against its actual diff, checkout-free, job-summary table + annotations. **Reports by default and does not block:** only an explicit `soft-fail: "false"` (compared case-insensitively, surrounding whitespace stripped) fails the check on a contradicted claim, and on an UNCHECKABLE one only if `strict: true` is set too; `true` reports, and so does any other value, with a warning naming it. Why: no kind of accusation it still makes has been measured clearing the 0.95 precision floor the lab set. The path accusation is withheld: the 100 accusations EXTERNAL-1 sampled from 71,016 external agent-authored pull requests, 85 of them path claims, measured precision 0.23 ([EXTERNAL-1](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md), receipts [`external1_adjudication.json`](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/external1_adjudication.json) and [`external1_summary.json`](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/external1_summary.json)), and a repaired path accuser measured 0.16 on a held-out sample ([V14](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md), receipt [`v14_adjudication.json`](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/v14_adjudication.json)). Of the kinds that still accuse, `only_touches` is the one with a measured precision: 0.25, 2 of 8 accusations correct ([PATH-1](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_path1_only_touches_repair_2026_09_17.md), re-derived by [SCOPE-1](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_scope1_ABANDONED_2026_09_18.md), receipt [`scope1_footprint.json`](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/scope1_footprint.json)); no committed RESULT states one for `tests_added`, `symbol_added` or `files_changed_count`. This repo runs it on itself with `soft-fail: "false"`: if we ever lie about a diff, our own product fails our own build | [action.yml](https://github.com/fathom-lab/styxx/blob/main/action.yml) · [.github/workflows/diffgate.yml](https://github.com/fathom-lab/styxx/blob/v7.48.0/.github/workflows/diffgate.yml) |
-| `seal` / `verify_seal` | the trust seal for agent deliverables: every numeric claim OATH-certified, every referenced prereg re-scored through its FROZEN gates block, the composite content-hashed — `python -m styxx.seal DOC.md receipts...` exits 0/1 as a CI gate; SEALED / VACUOUS (said loudly) / REFUSED with the failing claim named | in production since birth: every finding in the nine-act island arc (b37–b46) ships sealed, including its INVALIDs ([papers/disjoint-worlds/](https://github.com/fathom-lab/styxx/tree/v7.48.0/papers/disjoint-worlds)) |
-| `Experiment` (protocol) | the research loop as enforceable machinery: scoring REFUSED unless the prereg is committed in git; gates parse from the frozen document (no API exists to pass a bar at scoring time); verdicts walk the frozen outcome table — the agent reports the verdict, it does not choose it; smoke is INVALID by type | born the week it earned itself: two same-day INVALIDs (b34 v1/v2) honored by convention, then made machinery ([CHANGELOG](https://github.com/fathom-lab/styxx/blob/v7.48.0/CHANGELOG.md)) |
-| `Witness` | the measured-boundary harness: every deployable instrument behind a registry carrying its receipt-backed operating point and measured blindspots, CI-pinned to the receipts; no steer method exists (read ≠ write is measured); `self_verify` always refuses with the receipt | [papers/SYNTHESIS_connection_of_minds_2026_08_01.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/SYNTHESIS_connection_of_minds_2026_08_01.md) §9, synthesis re-sealed OATH-HELD 81/13/0 |
+| **GitHub Action** | `uses: fathom-lab/styxx@main` — every PR body gated against its actual diff, checkout-free, job-summary table + annotations. **Reports by default and does not block:** only an explicit `soft-fail: "false"` (compared case-insensitively, surrounding whitespace stripped) fails the check on a contradicted claim, and on an UNCHECKABLE one only if `strict: true` is set too; `true` reports, and so does any other value, with a warning naming it. Why: no kind of accusation it still makes has been measured clearing the 0.95 precision floor the lab set. The path accusation is withheld: the 100 accusations EXTERNAL-1 sampled from 71,016 external agent-authored pull requests, 85 of them path claims, measured precision 0.23 ([EXTERNAL-1](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md), receipts [`external1_adjudication.json`](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/external1_adjudication.json) and [`external1_summary.json`](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/external1_summary.json)), and a repaired path accuser measured 0.16 on a held-out sample ([V14](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md), receipt [`v14_adjudication.json`](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/v14_adjudication.json)). Of the kinds that still accuse, `only_touches` is the one with a measured precision: 0.25, 2 of 8 accusations correct, measured on the 7.48.x reader, before the PATH-2a overlay, and not re-measured with it ([PATH-1](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_path1_only_touches_repair_2026_09_17.md), re-derived by [SCOPE-1](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_scope1_ABANDONED_2026_09_18.md), receipt [`scope1_footprint.json`](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/scope1_footprint.json)); no committed RESULT states one for `tests_added`, `symbol_added` or `files_changed_count`. This repo runs it on itself with `soft-fail: "false"`: if we ever lie about a diff, our own product fails our own build | [action.yml](https://github.com/fathom-lab/styxx/blob/main/action.yml) · [.github/workflows/diffgate.yml](https://github.com/fathom-lab/styxx/blob/v7.49.0/.github/workflows/diffgate.yml) |
+| `seal` / `verify_seal` | the trust seal for agent deliverables: every numeric claim OATH-certified, every referenced prereg re-scored through its FROZEN gates block, the composite content-hashed — `python -m styxx.seal DOC.md receipts...` exits 0/1 as a CI gate; SEALED / VACUOUS (said loudly) / REFUSED with the failing claim named | in production since birth: every finding in the nine-act island arc (b37–b46) ships sealed, including its INVALIDs ([papers/disjoint-worlds/](https://github.com/fathom-lab/styxx/tree/v7.49.0/papers/disjoint-worlds)) |
+| `Experiment` (protocol) | the research loop as enforceable machinery: scoring REFUSED unless the prereg is committed in git; gates parse from the frozen document (no API exists to pass a bar at scoring time); verdicts walk the frozen outcome table — the agent reports the verdict, it does not choose it; smoke is INVALID by type | born the week it earned itself: two same-day INVALIDs (b34 v1/v2) honored by convention, then made machinery ([CHANGELOG](https://github.com/fathom-lab/styxx/blob/v7.49.0/CHANGELOG.md)) |
+| `Witness` | the measured-boundary harness: every deployable instrument behind a registry carrying its receipt-backed operating point and measured blindspots, CI-pinned to the receipts; no steer method exists (read ≠ write is measured); `self_verify` always refuses with the receipt | [papers/SYNTHESIS_connection_of_minds_2026_08_01.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/SYNTHESIS_connection_of_minds_2026_08_01.md) §9, synthesis re-sealed OATH-HELD 81/13/0 |
 | **runtime — agent-side primitives.** | | |
-| `gate` | pre-flight refuse/confabulate verdict before you pay for the call | [docs/gate.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/docs/gate.md) |
+| `gate` | pre-flight refuse/confabulate verdict before you pay for the call | [docs/gate.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/docs/gate.md) |
 | `preflight` / `recover_posture` / `run_doctor` | draft audit · posture recovery across compaction · install health | offline, deterministic, no API key |
-| `audit_claim` / `agent_audit` / `extract_claims` | deterministic checks of an agent's self-report against the repo — a CLOSED template set (version / tag / file-contains / pdf shapes; the ceiling is the construct) — one-line CI merge gate (`styxx audit-claims pr_body.md`) | dogfooded on its own session reports; caught a real authoring error — and the 2026-07-04 dogfood caught both a breadth overclaim in this very row and a false-accusation bug on dynamic-version repos, both fixed ([tests/test_audit.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/tests/test_audit.py)) |
+| `audit_claim` / `agent_audit` / `extract_claims` | deterministic checks of an agent's self-report against the repo — a CLOSED template set (version / tag / file-contains / pdf shapes; the ceiling is the construct) — one-line CI merge gate (`styxx audit-claims pr_body.md`) | dogfooded on its own session reports; caught a real authoring error — and the 2026-07-04 dogfood caught both a breadth overclaim in this very row and a false-accusation bug on dynamic-version repos, both fixed ([tests/test_audit.py](https://github.com/fathom-lab/styxx/blob/v7.49.0/tests/test_audit.py)) |
 
 what these are not: the register instruments cannot verify facts, read minds, or detect a confident
 lie with specifics. deception_v0 without a reference is a signature detector and says so. the
@@ -413,22 +413,22 @@ log. api: `styxx.token_ledger(path, tokenizer=None, rework_tokens=None)`.
 ## the discipline
 
 the differentiator is not any single AUC — it is that this repo attacks its own numbers before you
-can. the rigor gate ([scripts/rigor_gate.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/scripts/rigor_gate.py) +
-[tests/test_rigor_gate.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/tests/test_rigor_gate.py)) makes CI **block** any committed result whose
+can. the rigor gate ([scripts/rigor_gate.py](https://github.com/fathom-lab/styxx/blob/v7.49.0/scripts/rigor_gate.py) +
+[tests/test_rigor_gate.py](https://github.com/fathom-lab/styxx/blob/v7.49.0/tests/test_rigor_gate.py)) makes CI **block** any committed result whose
 verdict claims a win without an attached CI / permutation-p / disclosure — it would have caught two
 of our own overclaims, so now it can't happen. the same culture produced the public
 self-falsifications above: the ground-truth substrate artifact
-([papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact_2026_06_27.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact_2026_06_27.md)),
+([papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact_2026_06_27.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/grounded-honesty-axis/FINDING_groundtruth_substrate_artifact_2026_06_27.md)),
 the probe validator catching our own probe
-([papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md)),
+([papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/grounded-honesty-axis/NOTE_probe_orthogonality_2026_06_24.md)),
 and the below-chance benchmark rows left in the tables. OATH certificates
 (`styxx.certify`) make the practice portable: every numeric claim in a document is extracted,
 checked against its receipt, and stamped — and `styxx.corpus_audit` runs that verifier across the
 *whole* published corpus on demand, so styxx's own integrity is a number you regenerate yourself,
 not a promise we make. it is deliberately strict enough to flag styxx's own outstanding provenance
 gaps; a verifier you cannot turn on its authors is not one. the standing rules live in
-[papers/research-integrity-protocol.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/research-integrity-protocol.md); the standing
-challenge to beat our published floor lives in [LEADERBOARD.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/LEADERBOARD.md), though the arc it scores closed NEGATIVE and its curated folklore corpus collapsed ([papers/INDEX.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/INDEX.md)), which the board does not yet say — external
+[papers/research-integrity-protocol.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/research-integrity-protocol.md); the standing
+challenge to beat our published floor lives in [LEADERBOARD.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/LEADERBOARD.md), though the arc it scores closed NEGATIVE and its curated folklore corpus collapsed ([papers/INDEX.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/INDEX.md)), which the board does not yet say — external
 submissions are CI-re-run against the locked benchmark, and if the re-run doesn't match your
 submitted scores, the discrepancy is reported.
 
@@ -438,15 +438,15 @@ the same discipline, turned on substrate probes themselves. `python -m styxx.lad
 four-rung adversarial ladder every honesty-probe robustness claim should survive — **calibration
 poisoning → probe-parity attribution → static subspace erasure → adaptive re-fit erasure** — each
 rung a frozen, pre-registered attack arc with its receipts committed
-([styxx/ladder.py](https://github.com/fathom-lab/styxx/blob/v7.48.0/styxx/ladder.py)). the parity rung is the mandatory line item: *how much of your
+([styxx/ladder.py](https://github.com/fathom-lab/styxx/blob/v7.49.0/styxx/ladder.py)). the parity rung is the mandatory line item: *how much of your
 probe's "robustness" is just probe capacity?* — a control we had not run on our own work until this rung.
 we ran it on ours; it demoted our own flagship attribution (median capacity share 0.8379, computed
 live from the receipts every time the CLI runs, never quoted from memory). current standings on the
 honesty construct: the read survived both erasure rungs — the eraser that converged watched the
 signal relocate, and the eraser that chased never converged
-([the receipts](https://github.com/fathom-lab/styxx/tree/v7.48.0/papers/calib-poison-general), figure:
-[erasure_bound_fork.png](https://raw.githubusercontent.com/fathom-lab/styxx/v7.48.0/papers/calib-poison-general/erasure_bound_fork.png)). every rung re-runs
-on an 8GB consumer GPU, and [REPLICATIONS.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/REPLICATIONS.md) pays named credit to the first
+([the receipts](https://github.com/fathom-lab/styxx/tree/v7.49.0/papers/calib-poison-general), figure:
+[erasure_bound_fork.png](https://raw.githubusercontent.com/fathom-lab/styxx/v7.49.0/papers/calib-poison-general/erasure_bound_fork.png)). every rung re-runs
+on an 8GB consumer GPU, and [REPLICATIONS.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/REPLICATIONS.md) pays named credit to the first
 external re-run of each — more for breaking one than for confirming it.
 
 ### the oath is a contract, not a detector
@@ -457,7 +457,7 @@ against 140 repositories across seven filename conventions instead of two, the f
 rate is at most `0.2596`, published as an upper bound — roughly three quarters or more of what it accuses outside this lab are real claims. the
 original finding replicates on its own query and nowhere else, so it was a fact about one
 filename, not about external writing ([the measurement that withdraws
-it](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/closed-model-frontier/RESULT_oath_external_corpus_2026_08_27.md)).
+it](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_oath_external_corpus_2026_08_27.md)).
 
 worse, and newer: of external tokens the verifier **verified**, a blind panel called only about
 half of them claims at all. the rest are command-line flags, link labels and hardware specs
@@ -478,7 +478,7 @@ python -m styxx.oathready YOUR_DOC.md results.json
 it lists every number in your document, says whether it grounds in a receipt, flags the ones that
 "verify" against an array index by coincidence, and tells you what to change. non-zero exit only
 on accusations — silence is honest and never fails. the rules, each learned by getting it wrong,
-are in [OATH_CONTRACT.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/OATH_CONTRACT.md), including the limits: a document can keep this
+are in [OATH_CONTRACT.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/OATH_CONTRACT.md), including the limits: a document can keep this
 contract perfectly and still be completely wrong.
 
 binding a document's numbers to machine-readable results is older than OATH: Inline XBRL (2013),
@@ -491,21 +491,21 @@ knitr and Sweave, and showyourwork! (2021) did it for filings and papers, and
 
 | | |
 |---|---|
-| changelog | [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/CHANGELOG.md) |
-| contributing | [CONTRIBUTING.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/CONTRIBUTING.md) |
+| changelog | [CHANGELOG.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/CHANGELOG.md) |
+| contributing | [CONTRIBUTING.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/CONTRIBUTING.md) |
 | security policy | [SECURITY.md](https://github.com/fathom-lab/styxx/blob/main/SECURITY.md) |
-| open-core pledge | [OPEN_CORE.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/docs/governance/OPEN_CORE.md) |
-| full API reference | [REFERENCE.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/docs/REFERENCE.md) · [docs/](https://github.com/fathom-lab/styxx/tree/v7.48.0/docs) |
-| **the ledger** | [papers/LEDGER.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/LEDGER.md) — every cycle we ran and how many we lost, generated from the receipts and regenerated by a test. Start here if you want to know whether to trust anything else |
-| research | [papers/](https://github.com/fathom-lab/styxx/tree/v7.48.0/papers) — pre-registrations, findings, and the negatives · headline arc: [the island, bridged and dissected](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/disjoint-worlds/REPLICATE_legibility.md) (nine sealed acts, replicates on a laptop) |
-| arXiv (staged) | three submissions prepared, each carrying its OATH certificate and receipts as ancillary files — frame-locality, the know-say gap, the connection of minds ([papers/arxiv/SUBMIT.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/arxiv/SUBMIT.md)) |
+| open-core pledge | [OPEN_CORE.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/docs/governance/OPEN_CORE.md) |
+| full API reference | [REFERENCE.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/docs/REFERENCE.md) · [docs/](https://github.com/fathom-lab/styxx/tree/v7.49.0/docs) |
+| **the ledger** | [papers/LEDGER.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/LEDGER.md) — every cycle we ran and how many we lost, generated from the receipts and regenerated by a test. Start here if you want to know whether to trust anything else |
+| research | [papers/](https://github.com/fathom-lab/styxx/tree/v7.49.0/papers) — pre-registrations, findings, and the negatives · headline arc: [the island, bridged and dissected](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/disjoint-worlds/REPLICATE_legibility.md) (nine sealed acts, replicates on a laptop) |
+| arXiv (staged) | three submissions prepared, each carrying its OATH certificate and receipts as ancillary files — frame-locality, the know-say gap, the connection of minds ([papers/arxiv/SUBMIT.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/arxiv/SUBMIT.md)) |
 | site | [styxx-org.netlify.app](https://styxx-org.netlify.app) · live activation read: [/live](https://styxx-org.netlify.app/live.html) |
 | playground | [fathom.darkflobi.com/cognometry/try](https://fathom.darkflobi.com/cognometry/try) — the real detector, in-browser via Pyodide, no install |
 | DOI (concept, always-latest) | [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174) |
 | DOI (spec v1.0) | [10.5281/zenodo.19746215](https://doi.org/10.5281/zenodo.19746215) |
-| DOI (*Every Mind Leaves Vitals*) | [10.5281/zenodo.19777921](https://doi.org/10.5281/zenodo.19777921) — central claims bounded or falsified by a scope erratum (2026-06-21) in the [repo copy](https://github.com/fathom-lab/styxx/blob/v7.48.0/papers/every-mind-leaves-vitals.md) |
+| DOI (*Every Mind Leaves Vitals*) | [10.5281/zenodo.19777921](https://doi.org/10.5281/zenodo.19777921) — central claims bounded or falsified by a scope erratum (2026-06-21) in the [repo copy](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/every-mind-leaves-vitals.md) |
 | citation | [CITATION.cff](https://github.com/fathom-lab/styxx/blob/main/CITATION.cff) · software concept DOI [10.5281/zenodo.19758618](https://doi.org/10.5281/zenodo.19758618) |
-| patents | [PATENTS.md](https://github.com/fathom-lab/styxx/blob/v7.48.0/PATENTS.md) — US provisionals 64/020,489 · 64/021,113 · 64/026,964 |
+| patents | [PATENTS.md](https://github.com/fathom-lab/styxx/blob/v7.49.0/PATENTS.md) — US provisionals 64/020,489 · 64/021,113 · 64/026,964 |
 | issues | [github.com/fathom-lab/styxx/issues](https://github.com/fathom-lab/styxx/issues) |
 
 ## license
