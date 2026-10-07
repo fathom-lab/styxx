@@ -258,3 +258,13 @@ def test_the_job_leaves_soft_fail_unset_so_a_pipeline_or_project_variable_reache
     assert "STYXX_SOFT_FAIL" not in (job.get("variables") or {})
     text = JOB.read_text(encoding="utf-8")
     assert re.search(r'(?m)^    # STYXX_SOFT_FAIL: "false"', text)
+
+
+def test_the_docs_say_the_job_reports_by_default():
+    readme = (ROOT / "integrations" / "gitlab" / "README.md").read_text(encoding="utf-8")
+    header = JOB.read_text(encoding="utf-8").split("\ndiffgate:", 1)[0]
+    for text in (readme, header):
+        flat = " ".join(text.replace("#", " ").split())
+        assert "reports by default" in flat
+        assert 'Only STYXX_SOFT_FAIL set to "false" blocks' in flat
+        assert "The job fails only on a CONTRADICTED claim" not in flat

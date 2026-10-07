@@ -3,8 +3,8 @@
 The GitHub Action reads a PR body against a PR diff with no checkout. GitLab hands a merge
 request pipeline the same two things another way: the description in
 `CI_MERGE_REQUEST_DESCRIPTION`, the diff as the range between `CI_MERGE_REQUEST_DIFF_BASE_SHA`
-and `CI_COMMIT_SHA` on the job's checkout. So the door is the CLI, unchanged, in a job of eight
-lines. `diffgate.gitlab-ci.yml` next to this file is that job; include it or paste it:
+and `CI_COMMIT_SHA` on the job's checkout. So the door is the CLI, unchanged, in one short job.
+`diffgate.gitlab-ci.yml` next to this file is that job; include it or paste it:
 
 ```yaml
 include:
@@ -15,10 +15,66 @@ What it does, line by line: runs on merge request pipelines only; installs the r
 `styxx` (floor 7.44.2, the same floor the Action pins and for the same reason — every earlier
 release let `only touches <prefix>` verify against an unreadable diff); fetches the diff base so
 a shallow clone still has it; writes the description to a file with `printf '%s'`, so the text
-never passes through a shell expansion; runs `python -m styxx.diffgate` on that file against
-`--base $CI_MERGE_REQUEST_DIFF_BASE_SHA --head $CI_COMMIT_SHA`; keeps the JSON report as a job
-artifact whether it passed or failed. The job fails only on a CONTRADICTED claim (the CLI exits
-1 on FAIL, 0 on PASS). Add `--strict` to the last line to fail on UNCHECKABLE claims too.
+never passes through a shell expansion; removes any `diffgate.json` an earlier run left in the
+build directory; runs `python -m styxx.diffgate` on that file against
+`--base $CI_MERGE_REQUEST_DIFF_BASE_SHA --head $CI_COMMIT_SHA`, writing `diffgate.json`; decides
+the job's exit from `STYXX_SOFT_FAIL`, the CLI's exit code (1 on FAIL, 0 on PASS) and that
+report; keeps the JSON report as a job artifact whether the job passed or failed.
+
+## It reports by default; blocking is opt-in
+
+The job reports by default, as the GitHub Action does: every verdict goes to the job log and to
+`diffgate.json`, each contradicted claim is named in the log, and the gate's verdicts never fail
+the job. When the gate says FAIL, the log ends with a warning that the job passed anyway and how
+to make it fail. Only STYXX_SOFT_FAIL set to "false" blocks: the job then fails on a
+CONTRADICTED claim. Set it wherever GitLab reads CI/CD variables (the project's or group's
+settings, the pipeline's top-level `variables:`, or the job's own):
+
+```yaml
+include:
+  - remote: https://raw.githubusercontent.com/fathom-lab/styxx/main/integrations/gitlab/diffgate.gitlab-ci.yml
+
+diffgate:
+  variables:
+    STYXX_SOFT_FAIL: "false"
+```
+
+or, in a pasted copy, uncomment the job's `# STYXX_SOFT_FAIL: "false"` line. The job does not set
+the variable itself: in GitLab a job's own `variables:` outrank the pipeline's top-level ones, so
+a default written into the job would silently override a pipeline that sets it. Unset reads as
+`"true"`.
+
+**How the value is read**, the way the Action reads its `soft-fail` input: compared
+case-insensitively with surrounding whitespace stripped, so `"false"` and `"False "` block and
+`"true"`, `" true"` and `"TRUE"` report. Every other value, the empty string included, reports
+as `"true"` does, and the job prints a warning naming the value it did not recognise.
+
+**`--strict`.** Add `--strict` to the `python -m styxx.diffgate` line to make an UNCHECKABLE
+claim a failure too; the job fails on it only when `STYXX_SOFT_FAIL` is `"false"`.
+
+**Errors are not verdicts.** In either mode the job fails on an install error, on a failed fetch
+of the diff base, and on a gate that exits without writing a FAIL report (a head the checkout
+does not have, say). Reporting swallows the gate's verdicts, not its errors.
+
+**Why it does not block by default.** No kind of accusation the gate still makes has been
+measured clearing the 0.95 precision floor the lab set for accusing, and a check that fails
+someone else's merge request by default should already have cleared it. Path claims are no
+longer accused: EXTERNAL-1 measured 0.23 against a preregistered 0.95 floor
+([RESULT](../../papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md),
+receipt `external1_adjudication.json`) and a repaired path accuser measured 0.16 on a held-out
+sample ([V14](../../papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md),
+receipt `v14_adjudication.json`). Of the kinds that still accuse, `only_touches` is the one with
+a measured precision, 0.25
+([PATH-1](../../papers/closed-model-frontier/RESULT_path1_only_touches_repair_2026_09_17.md),
+re-derived by [SCOPE-1](../../papers/closed-model-frontier/RESULT_scope1_ABANDONED_2026_09_18.md),
+receipt `scope1_footprint.json`). The CHANGELOG entry "the GitHub Action reports by default"
+gives the figures in full.
+
+**Before this change the job failed on every CONTRADICTED claim by default.** A pipeline that
+includes the job from `main` reports from its next run; to keep it blocking, set
+`STYXX_SOFT_FAIL: "false"`. A copy pasted before the change keeps blocking until it is replaced.
+
+## What it prints
 
 What the CLI prints in the job log when the description lies (the README demo, run locally
 against a checkout the same way the job runs it):
@@ -32,16 +88,27 @@ never read: 0 of 5 sentences — prose outside the closed template set is listed
   [UNCHECKABLE:tests_pass] no --run command supplied; the gate does not take the agent's word for test results
 ```
 
+By default the job then prints `WARNING: styxx diffgate found failures but STYXX_SOFT_FAIL is on,
+as it is by default, so the job passes; set STYXX_SOFT_FAIL to "false" to fail it.` and passes;
+with `STYXX_SOFT_FAIL` `"false"` it prints that the job fails, and fails.
+
+## What is tested, and what is not
+
 `tests/test_gitlab_job.py` parses the job file, runs its `script` lines in a temporary
 repository with the four `CI_*` variables set the way GitLab sets them (the release already
-installed, so the `pip install` line is skipped), and checks a lying description fails the job
-with the lies named and an honest one passes. That is the mechanics of the job, tested here; a
-run on GitLab itself is not something this repository has done, and the first one that fails on
-a variable name is worth an issue.
+installed, so the `pip install` line is skipped), and checks: by default a lying description is
+reported with the lies named and the job passes; with `STYXX_SOFT_FAIL` `"false"` it fails the
+job; ten values of the variable are read as above, each the way the Action's reader reads it;
+`--strict` fails the job on an UNCHECKABLE claim only with the opt-in; a gate that errors fails
+the job in either mode, and a stale `diffgate.json` is not read as its verdict; an honest
+description passes. That is the mechanics of the job, tested here under bash; a run on GitLab
+itself is not something this repository has done, and a run there that fails on a variable name
+or on the multi-line script step is worth an issue.
 
 Everything the Action's README says about scope applies: the closed template set, "tests pass"
 UNCHECKABLE without `--evidence`, a path the diff does not show UNCHECKABLE and never accused
-(EXTERNAL-1), the open false-VERIFIED class #101. Rung: this is CI, the enforcement door — the
-agent's shell cannot reach the runner — with the usual caveat that a description edited after
-the pipeline ran is a new description; GitLab reruns merge request pipelines on new commits, not
-on description edits, so gate on push and read the description at merge time.
+(EXTERNAL-1), the open false-VERIFIED class #101. Rung: this is CI — the agent's shell cannot
+reach the runner — and it enforces only with `STYXX_SOFT_FAIL` `"false"`; by default it reports.
+The usual caveat holds: a description edited after the pipeline ran is a new description; GitLab
+reruns merge request pipelines on new commits, not on description edits, so gate on push and read
+the description at merge time.
