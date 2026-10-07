@@ -71,10 +71,10 @@ uncovered_sentences, the never-read list in order, and every claim as
 (kind, verdict, why, text, detail) in order. A port that gets the verdict right for the wrong
 reason, or reads one sentence more or less, is a disagreement.
 
-    cd web/gate/differential             # on a checkout carrying #113 and #115 (or 7.48.0)
+    cd web/gate/differential             # on a checkout whose styxx/diffgate.py is the file named above
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to cb99a685…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 4cded2e3…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 190 pinned pairs against their expect blocks (+ path2a_moves.json)
@@ -107,7 +107,8 @@ Result, 2026-09-18, this branch at the COMPAT-2 reading plus PATH-1:
     3220 pairs, 6933 claims (606 verified, 1616 contradicted, 4711 uncheckable) — 0 disagreement(s)
 
 The 3,220 are the 3,176 below plus 44 pinned pairs committed as JSON (the `.gitignore` here
-ignores generated JSON and names these five as exceptions): `bc1_pairs.json`, the four pairs BC-2
+ignores generated JSON and then named these five as exceptions; it names eight now, the seven pinned-pair files
+`check_pairs.js` reads and `path2a_moves.json`): `bc1_pairs.json`, the four pairs BC-2
 owes the differential (a TypeScript commit saying "Added 2 tests", "adds a method to reload",
 "only modifies the footer", two prefixes), also checked on the Python side by
 `tests/test_diffgate_bc1.py`; and `compat_pairs.json`, nineteen more — the compatibility

@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — web/gate/README.md: the run book's pin, measured at the head, and held to it by a test
+
+Step zero, item 6, of the 2026-10-06 study asked that `web/gate/README.md` name the committed bookmarklet's real
+sha256 and the real count of pinned pairs. Measured at `origin/main` 3ea3cac7: both already were.
+`bookmarklet.min.js` hashes to `6bf6121a…` (53,371 characters) and `bookmarklet.href.txt` to `5498fed7…` (53,382), as
+the README says and `test_the_shipped_bookmarklet_is_the_build_the_readme_names` asserts; `node check_pairs.js` reads
+190 pinned pairs in seven files, and `path2a_pairs.json` pins 136, as the README says. What was not true:
+
+- The differential's run book said `py_side.py` refuses to run unless `styxx/diffgate.py` hashes to `cb99a685…`.
+  Its pin is `4cded2e3…`, the file the README names at its top; the line now says so, and the line above it no
+  longer says the differential runs on 7.48.0's file (`py_side.py` refuses that file).
+- The 2026-09-18 result said the `.gitignore` "names these five as exceptions". That was true then; it names eight
+  now, and the sentence says both.
+
+`tests/test_port_is_current.py` now holds the run book's pin to `py_side.py`'s `PINNED`, and the two pinned-pair
+counts to the files (`check_pairs.js`'s count was once stale, 153 named while 180 were read). The pin test fails on
+`origin/main`'s README and passes here; the count tests pass on both. No code changed.
+
 ## [Unreleased] — styxx 7.48.1 on Zenodo, as the next version of the software record
 
 styxx 7.48.1 is deposited on Zenodo as **10.5281/zenodo.23200977**, a new version of the styxx software
