@@ -26,7 +26,10 @@ the record's line stays true of what it describes.
   against every method (three ordinal phrases; "an n=1 demonstration" replaces the last). Baseline-016's
   notes no longer call its two threshold crossings achievements nobody had reached; the table's own
   Baseline-014 row, committed 16 minutes earlier (2391971f before f828b168), had already cleared D2
-  against the length oracle at 0.116. No number in the table changes.
+  against the length oracle at 0.116. Baseline-008's heading and notes set it apart from Baseline-007
+  with an achievement ordinal; both now say it was tested under v2 bars. No number in the table
+  changes. "How to submit" step 3 now tells a submitter to copy `LEADERBOARD.md` over
+  `styxx/_data/LEADERBOARD.md`, which the new byte-identity test requires.
 - `styxx/__init__.py`: the comments on the critique detector's import and its `__all__` entry say it
   passed the gauntlet's v3 bars. The module docstring of `tests/test_critique_detector.py` says the same.
 - `docs/research/cognitive-metrology-charter.md` (lines 26, 187 and 323) and
@@ -34,22 +37,59 @@ the record's line stays true of what it describes.
   kind, never priced, that the 2026-09-29 pass missed, although it corrected the charter in three other
   places. They now read "an instance of such a measurement system", "a measurement and empirical
   observations", "A textbook of the discipline" and "publish an OATH-HELD (or honestly OATH-FAILED)
-  model card".
+  model card". `papers/oath-economy/PREREG_model_card_certification_2026_07_02.md` (lines 6-7) quotes
+  the moonshots rung as it read before; it is a frozen PREREG and is not edited.
+- `styxx/guardrail/`: the sycophancy instrument (#4) called itself the earliest instrument shipped
+  under the *Every Mind Leaves Vitals* call, a call addressed to the field, in its weights docstring,
+  its `CALIBRATION_NOTES["instrument_called_in"]` (lines 3, 42 and 213), its module docstring (line 8)
+  and the package comment (`__init__.py` line 54). Other answers to the call were never surveyed; the
+  note now says so, and the 2026-09-29 pass had corrected `prior_art_context` in the same dict. The
+  instruments after it (#5 to #9) counted themselves under the same call, "second" to "sixth and last",
+  a count that presupposed the withdrawn one; they now count the lab's own instruments, in
+  `__init__.py` (lines 62, 94, 105 and 117), the `calibrated_weights_*_v0.py` docstrings and three
+  `instrument_called_in` strings, and the module docstrings of `conversation_loop.py`, `deception.py`,
+  `plan_action.py`, `overconfidence.py` and `goal_drift.py`. No weight or number changes.
+- Field-lacks and only-one sentences of the kind the note's rule covers, never priced:
+  `docs/research/fathom-spec-v0.md` (lines 29-35: every other interpretability representation fails a
+  vendor swap), `docs/research/cognitive-metrology-charter.md` (lines 22 and 24: the science of
+  cognition has no instruments, the field has no measurements and no universal ruler, which with line
+  26 read as the lab's work being the earliest such system), `docs/research/cognitive-dynamics-v0.md`
+  (lines 217-220: no feedback signal during generation, against the same file's credit to
+  representation engineering, Zou et al., 2023), `styxx/cogvm.py` (lines 28-29: prompt-level alignment
+  as "the only available control surface"), `styxx/guardrail/drift.py` (line 46) and
+  `styxx/guardrail/calibrated_weights_drift_v1.py` (lines 50-55: Healy et al. 2026 as "the only
+  published" baseline), and `styxx/adapters/anthropic.py` (lines 34-35 and 178: the sampling ensemble
+  as "the closest" reconstruction and "the only way" to logprob-equivalent signal). Each is withdrawn
+  or narrowed; every number stays.
 - `tests/test_leaderboard_no_priority_claim.py`, new: the printed Baseline-019 row says it passed,
-  4/4; the Baseline-014, -016 and -019 rows carry no ordinal claim; the root and packaged leaderboards
-  are the same bytes, which only a manual copy kept in step before; the critique detector's comments in
-  `styxx/__init__.py` carry no ordinal. Three of its four tests fail on 566f7769.
+  4/4; the Baseline-008, -014, -016 and -019 rows carry no ordinal claim; the root and packaged
+  leaderboards are the same bytes, which only a manual copy kept in step before, and a mismatch names
+  the copy command; step 3 says to copy; the critique detector's comments in `styxx/__init__.py` carry
+  no ordinal. Five of its six tests fail on 566f7769.
+  `tests/test_unpriced_priority_sentences_withdrawn.py`, new: the guardrail notes and a scan of
+  `styxx/guardrail/` that finds all 22 withdrawn counts at 566f7769 and none now; the 15 withdrawn
+  field-lacks and only-one sentences stay out and their replacements stay in. Four of its six tests
+  fail on 566f7769.
 - Kept, because each ranks the lab's work only against its own runs or records its own history and says
-  nothing about anyone else's: Baseline-008's and -009's notes on the order the lab ran its own
-  submissions (which says which version of the bars scored each), Baseline-011's count within one
-  session, the invitation under the classification table, the count of the lab's own failed baselines
-  before Baseline-019 in `styxx/compliance/eu_ai_act.py` and `styxx/compliance/nist_ai_rmf.py`, and
-  orderings inside the package's own history (`styxx/__init__.py` near the `recover` import,
-  `styxx/eval.py`, `styxx/gates.py`, `styxx/watch.py`, `styxx/cognometrics.py`).
+  nothing about anyone else's: Baseline-009's notes on the order the lab ran its own submissions (which
+  says which version of the bars scored it), Baseline-011's count within one session, the invitation
+  under the classification table, the count of the lab's own failed baselines before Baseline-019 in
+  `styxx/compliance/eu_ai_act.py` and `styxx/compliance/nist_ai_rmf.py`, the confirmations of the
+  lab's own predictions on its own instruments (`styxx/guardrail/refusal.py` line 32,
+  `calibrated_weights_sycophancy_v0.py` line 253), where the lab identified its own failure mode
+  (`calibrated_weights_overconfidence_v0.py` line 241), and orderings inside the package's own history
+  (`styxx/__init__.py` near the `recover` import, `styxx/eval.py`, `styxx/gates.py`, `styxx/watch.py`,
+  `styxx/cognometrics.py`, `styxx/analytics.py` line 150, `styxx/hooks.py` line 27).
 - Not changed: the "to date" superlatives in the Baseline-011 and Baseline-016 rows, which later rows of
   the same table supersede. They rank rows within the table and claim no priority, so they are stale
-  rather than withdrawn here. Released `CHANGELOG.md` entries, `submissions/`, frozen papers, and the
-  copies under `zenodo/` and `release/` are not edited.
+  rather than withdrawn here. Released `CHANGELOG.md` entries are not edited: [6.8.0], [6.7.0],
+  [6.6.0], [6.5.0], [6.4.0] and [6.3.0] carry the instrument counts, [6.0.0] the only-published
+  baseline and [3.1.0a1] the missing-piece sentence. Frozen papers carry copies too and are not edited:
+  `papers/cognitive-metrology-v1.md` (lines 36, 40 and 42, the charter's preamble),
+  `papers/cognometry-manifesto.md` (line 167) and `papers/every-mind-leaves-vitals.md` (line 70). So do
+  `benchmarks/cognometry_fingerprint_atlas_v0.json` (line 319), a dated record, and
+  `scripts/osf_deposit_v6.py` (line 76), a deposit script. `submissions/` and the copies under
+  `zenodo/` and `release/` are not edited.
 
 ## [Unreleased] — styxx 7.49.0 on Zenodo, as the next version of the software record
 
