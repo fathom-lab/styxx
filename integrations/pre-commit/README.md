@@ -29,8 +29,8 @@ styxx diffgate (the commit message vs the staged diff).......................Fai
 - exit code: 1
 
 [ok ] file_touched         diff status 'M' for 'src/retry.py'
-  [LIE] tests_added          diff adds 1 test functions, claim says 3
-  [LIE] only_touches         paths outside 'src': ['tests/test_retry.py']
+  [CONTRADICTED] tests_added          diff adds 1 test functions, claim says 3
+  [CONTRADICTED] only_touches         paths outside 'src': ['tests/test_retry.py']
 styxx diffgate: FAIL — 2 claim(s) in the message contradict the staged diff. fix the message or the diff; `git commit --no-verify` overrides.
 ```
 
@@ -63,7 +63,8 @@ message. `git commit --no-verify` skips it, an agent can edit `.pre-commit-confi
 pre-commit hooks are installed per clone by the person, never by the diff. It is the habit, not
 the enforcement. The enforcement is the same gate run where the agent's shell cannot reach: the
 GitHub Action (`uses: fathom-lab/styxx@main`, checkout-free, reads the PR body and diff from the
-API) and the CLI on a checkout you control.
+API) and the CLI on a checkout you control. The Action enforces only with `soft-fail: "false"`:
+its default reports and does not block (see the README's GitHub Action row for why).
 
 ## The same gate, other doors
 

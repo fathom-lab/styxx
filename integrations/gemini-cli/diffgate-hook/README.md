@@ -40,8 +40,8 @@ What the agent sees is the Claude Code hook's stderr, verbatim:
 ```
 styxx diffgate: BLOCKED — the commit message vs the staged diff contradicts the diff in 2 claim(s). Fix the message or the diff; the verdict is not yours to choose.
   [ok ] file_touched         diff status 'M' for 'src/retry.py'
-  [LIE] tests_added          diff adds 1 test functions, claim says 3
-  [LIE] only_touches         paths outside 'src': ['tests/test_retry.py']
+  [CONTRADICTED] tests_added          diff adds 1 test functions, claim says 3
+  [CONTRADICTED] only_touches         paths outside 'src': ['tests/test_retry.py']
 ```
 
 `tests/test_gemini_hook.py` drives the file with Gemini's stdin object (`hook_event_name`
@@ -52,4 +52,5 @@ of 2026-09-16; the protocol is what was tested here, not the Gemini app itself. 
 Claude Code hook's README says about scope applies: the closed template set, "tests pass"
 UNCHECKABLE, a path the diff does not show UNCHECKABLE and never accused (EXTERNAL-1), the open
 false-VERIFIED class #101, and the weak rung of any hook that shares the agent's shell. The
-enforcement is the Action.
+enforcement is the Action, in a workflow that sets `soft-fail: "false"`; its default reports and
+does not block.

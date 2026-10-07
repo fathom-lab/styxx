@@ -164,6 +164,170 @@ after 2026-08-30, carrying another issuer's hash, has the shape of one issued th
 the older page it verifies with those fields NOT CHECKED and the live verdict printed beside its
 own (around the current page it fails).
 
+## [Unreleased] — CONTRADICTED is printed as CONTRADICTED, with its reason, not as LIE
+
+The demo, the bookmarklet and the hooks printed a CONTRADICTED verdict as `[LIE]`, and the demo closed with
+"this summary would fail your CI with each lie named". A CONTRADICTED verdict says the diff does not show what a
+template read in a sentence; it says nothing about why the sentence was written, and the kind that accuses most often
+here, `only_touches`, was measured at 0.25 after its partial repair (README). Step zero, item 2, of the 2026-10-06
+study. Each surface now prints the verdict's own name and the reason beside it; nothing reads differently.
+
+- **Demo** (`python -m styxx.diffgate --demo`). Before: `[LIE] tests_added          diff adds 1 test functions, claim
+  says 3` and `verdict: FAIL — this summary would fail your CI with each lie named.` After: `[CONTRADICTED]
+  tests_added          diff adds 1 test functions, claim says 3` and `verdict: FAIL — 3 claim(s) CONTRADICTED by the
+  diff, each with its reason above.` The README's copy of that output follows it.
+- **Bookmarklet** (`web/gate/bookmarklet_ui.js`). The panel's line for a contradicted claim reads `[CONTRADICTED] kind
+  reason` instead of `[LIE] kind reason`. Rebuilt with terser 5.46.0: `bookmarklet.min.js` sha256 `5843f53d…`, 53,380
+  characters (was `6bf6121a…`, 53,371), named in `web/gate/README.md`.
+- **Hooks** (`styxx.diffgate_hook` and `integrations/git/commit-msg`, the Claude Code / Codex / Gemini CLI
+  `pretool.py`, Cursor's `before_shell.py`). Each claim line reads `[CONTRADICTED] kind reason` instead of `[LIE] kind
+  reason`; `[ok ]` and `[ ? ]` are unchanged, and so are the exit codes and the BLOCKED / FAIL lines. The six
+  integration READMEs quote the new lines.
+- **The Action** already printed `❌ CONTRADICTED` with the reason in the job summary and in its `::error::`
+  annotation, and its output is unchanged. Its `action.yml` description said "with the lie named"; it now says the
+  claim is printed as CONTRADICTED with its reason.
+- **Pins.** The edit is outside the PATH-2a block, so the reader the PATH-2a tests rebuild by cutting the block out
+  is no longer 7.48.0's `9b620e00…`: `tests/_p2a_ref.py` pins it at `68873068…` (that file with the demo's label),
+  with the reason in a comment. The whole file is `09867056…` (LF), named in `web/gate/differential/py_side.py`,
+  `web/gate/diffgate.js` and `web/gate/README.md`. The PATH-2a modules re-ran every differential against the new
+  reader, and the withholding relation holds; no pinned verdict moved.
+- **Tests.** `tests/test_contradicted_label.py` holds the demo's lines and closing sentence, the absence of a LIE
+  label from every surface that prints a verdict (the shipped bookmarklet included) and from the documents that quote
+  them; the five hook test modules assert `[CONTRADICTED]` where they asserted `[LIE]`. On `origin/main` the new module
+  fails (the demo, the six surfaces and the eight documents carry the label) and it passes here.
+
+## [Unreleased] — the GitHub Action reports by default; blocking is opt-in with `soft-fail: "false"`
+
+**This changes behaviour for anyone who relied on the default.** `action.yml`'s `soft-fail` input
+defaulted to `"false"`, so a repository that added `uses: fathom-lab/styxx@main` got a check that
+failed on every contradicted claim. It now defaults to `"true"`: the Action writes every verdict to
+the job summary, names each contradicted claim in an annotation, and passes. To keep a blocking
+check, set the input explicitly:
+
+```yaml
+- uses: fathom-lab/styxx@main
+  with:
+    soft-fail: "false"
+```
+
+**How the value is read.** Only an explicit `"false"` blocks. `diffgate_action.py` compares the
+value case-insensitively with surrounding whitespace stripped, so `"false"` and `"False "` block and
+`"true"`, `" true"` and `"TRUE"` report. An unset `STYXX_SOFT_FAIL` reads as `"true"`, the input's
+default, so the default is the same when the script runs outside `action.yml`. Every other value,
+the empty string included, reports as `"true"` does, and the script prints a warning naming the
+value it did not recognise. Before this change every value but `true` in some casing blocked, so
+`" true"`, `"yes"`, `"0"` and the empty string blocked; they now report, the last three with that
+warning. In report mode the gate's verdicts never fail the job; an install or runtime error still
+can. `strict: true` still makes an UNCHECKABLE claim a failure, and the job fails on it only with
+`soft-fail: "false"`.
+
+This repository's own `.github/workflows/diffgate.yml` already sets `soft-fail: "false"` (and
+`strict: "false"`) explicitly on its `uses: ./` step, so the lab's own check keeps blocking.
+`tests/test_diffgate_action.py` finds that step by its own `uses: ./` line, not by a comment that
+mentions it, and fails if the step stops setting `soft-fail: "false"`. Other tests there pin the
+input's default, the script's fallback when the variable is unset, and how it reads `""`,
+`" true"`, `"TRUE"`, `"yes"`, `"0"`, `"False "` and `"false"`.
+
+**Why.** No kind of accusation the instrument still makes has been measured clearing the 0.95
+precision floor the lab set for accusing, and a check that fails someone else's pull request by
+default should already have cleared it. What the Action runs: `python <action path>/diffgate_action.py`
+imports the `styxx` package beside the script, at the ref the workflow names, not the one pip
+installs (`NOTE_path2a_sixth_pass_2026_09_30.md`, I-1). Its reader is `styxx/diffgate.py` at sha256
+`9b620e00…`, the file in the `v7.48.0` and `v7.48.1` tags. At `@main` that reader runs under the
+PATH-2a overlay (the whole file is sha256 `4cded2e3…`), which can move a VERIFIED or CONTRADICTED
+verdict to UNCHECKABLE and never adds an accusation. The figures, every file under
+`papers/closed-model-frontier/`:
+
+- **Path claims no longer accuse.** `file_created`, `file_deleted` and `file_touched` are reported
+  UNCHECKABLE (`WITHHOLD_PATH_ACCUSATION = True` in `styxx/diffgate.py`).
+  - **EXTERNAL-1** (2026-08-31): a blind three-seat panel upheld 23 of 100 sampled accusations,
+    precision **0.23**, against a preregistered floor of **0.95**, over 71,016 eligible
+    agent-authored pull requests from AIDev
+    (`RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md`; receipts
+    `external1_adjudication.json` for the 23 of 100 and `external1_summary.json` for the 71,016).
+    85 of the 100 were path claims (`file_created` 36, `file_touched` 28, `file_deleted` 21; the
+    rest `only_touches` 7, `tests_added` 6, `files_changed_count` 2), counted from
+    `external1_packet.json`, whose accusation arm is ids `E1-000` to `E1-099`
+    (`RESULT_compat2_surface_and_panel_2026_09_16.md` describes the builder's id order).
+  - **V14** (2026-09-01), the later measurement: after two repairs, a fresh blind panel upheld 16
+    of 100 held-out path accusations, precision **0.16** against the same 0.95 floor
+    (`RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md`; receipt
+    `v14_adjudication.json`), and the accusation stayed withheld.
+- **`only_touches` still accuses, at precision 0.25.** **PATH-1** (2026-09-17) took it from 0.18
+  to **0.25**: 2 of 8 accusations correct across the 299 `only_touches` claims in BENCH-2's 568
+  reachable AIDev pull requests (`RESULT_path1_only_touches_repair_2026_09_17.md`; the eleven
+  adjudications it starts from are in `bench2_audit.json`). **SCOPE-1** (2026-09-18), the later
+  receipt, re-derived it end to end from re-fetched diffs against `9b620e00…`, the reader above: 8
+  accusations, and the 2 it would keep are exactly the two known correct
+  (`RESULT_scope1_ABANDONED_2026_09_18.md`; receipt `scope1_footprint.json`). No receipt
+  re-measures it with the PATH-2a overlay on.
+- **`tests_added`, `symbol_added` and `files_changed_count` still accuse, and no committed RESULT
+  states a precision for them.** EXTERNAL-5 checked BC-2's surviving accusations against the live
+  pull requests and says it gives no precision for the instrument (its G-E5-4), so none of its
+  figures is used here.
+
+The default can be revisited when a held-out measurement shows the accusing kinds clearing the
+floor.
+
+**What else changed with it.** `action.yml`'s description no longer says the Action exits nonzero on
+a contradicted claim; it states the default, the opt-in, and the reason with the figures above. The
+`strict` and `soft-fail` input descriptions say how the two combine and how the value is read, and
+`soft-fail`'s says that in report mode the gate's verdicts never fail the job while an install or
+runtime error still can. The job summary says which mode the run was in and gives the figures above
+with links; the UNMEASURED summary and the closing soft-fail warning name `soft-fail: "false"` as the
+way to fail the job. The README's CI snippet and its GitHub Action row say the Action reports by
+default and how the value is read, with the figures and receipts, and the row's `action.yml` link
+now points at `main` (what `@main` runs) instead of the `v7.48.0` copy; both edits stay on their
+lines, so `zenodo/MANIFEST.json`'s line citations hold. The pre-commit, Codex and Gemini CLI hook
+READMEs, which called the Action "the enforcement", now say it enforces only with
+`soft-fail: "false"`.
+
+## [Unreleased] — the security contact was an email address the lab cannot confirm receives mail; reports now go through GitHub
+
+**Security.** `SECURITY.md` told reporters to email an address in two places: the reporting section
+and the last step of *Verifying a release*. The address's domain has no mail-exchange (MX) record
+and serves a parked page, so the lab cannot confirm that mail sent there arrived. GitHub private
+vulnerability reporting was enabled for `fathom-lab/styxx` on 2026-10-06, and both places now send
+reporters to <https://github.com/fathom-lab/styxx/security/advisories/new>. The file no longer names
+the address, and asks anyone who wrote to it to send the report again through GitHub private
+reporting. The offer to reply on a reporter's public key belonged to the email channel and goes
+with it; the acknowledgement and triage times are unchanged.
+
+The README's two links to the security policy pointed at the `v7.48.0` copy, which still names the
+old address; they now point at `main`. The READMEs PyPI shows for 7.48.0 and 7.48.1 keep their tag
+links, and the `SECURITY.md` inside those tags is unchanged, until the next release.
+
+## [Unreleased] — styxx 7.48.1 on Zenodo, as the next version of the software record
+
+styxx 7.48.1 is deposited on Zenodo as **10.5281/zenodo.23200977**, a new version of the styxx software
+concept record **10.5281/zenodo.19758618**, made from 7.48.0's record (10.5281/zenodo.23042251). Zenodo
+recorded it at 2026-10-07T02:12:37Z (22:12 on 2026-10-06 at UTC-4), and the concept DOI now resolves to it.
+The record holds three files: the v7.48.1 tag's tree as a zip (commit b4294218;
+`git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.48.1/ v7.48.1` reproduces it, md5
+438ed1bd56ffb8cda4e95c82ec7fe20c) and the wheel and sdist PyPI serves for 7.48.1. Its related identifiers
+link 7.48.0 (isNewVersionOf), advisory GHSA-h5xv-4344-f62r (isDocumentedBy), the Cognometric Fingerprint
+Specification v1.0 (10.5281/zenodo.19746215, isSupplementTo), the Fathom research series
+(10.5281/zenodo.19326174, isPartOf), the GitHub release, the PyPI page and the tagged tree. Nothing merged
+after the tag is in it.
+
+- `release/`: the draft receipt and the deposit receipt (`zenodo-draft-receipt-software-v7.48.1.json`,
+  `zenodo-deposit-receipt-software-v7.48.1.json`), the metadata as sent and as published
+  (`zenodo-metadata-software-v7.48.1.json`, `zenodo-metadata-software-v7.48.1-as-published.json`), and
+  the public record as read back after the publish (`zenodo-record-software-v7.48.1-readback.json`).
+- `scripts/zenodo_deposit_software_v7_48_1.py` makes the draft and cannot publish it.
+  `scripts/zenodo_publish_software_v7_48_1.py` publishes only the draft the draft receipt names, after
+  re-reading it from Zenodo's side, and then reads the record back. Unlike 7.48.0's, it checks the licence
+  with every other metadata field. The two scripts' git blobs have the sha256 the deposit receipt pins.
+- `release/NOTE_zenodo_software_v7_48_1_provenance.md` says what the receipts and logs show and what they
+  do not. They do not record who ran either script or who authorized the publish, which was recorded 21
+  seconds after the draft receipt was written. Just after the publish, doi.org redirected the DOI to
+  `zenodo.org/doi/…` rather than straight to the record.
+- `zenodo/MANIFEST.json`: the 19758618 entry names 7.48.1 as the latest version, a new entry records
+  10.5281/zenodo.23200977, and the 23042251 entry says it was superseded. No `cited_in` line moves.
+- Not changed: `CITATION.cff` and `README.md`, because no sentence in them became false. `CITATION.cff`
+  line 34 names 7.48.0's version DOI beside the concept DOI, which is still true of 7.48.0; whether it
+  should name 7.48.1's is the operator's call. `zenodo/README.md` still describes the 7.48.0 flow only.
+
 ## [Unreleased] — PATH-2a: the diff gate withholds a verdict where #97, #121 or #101 can have made it wrong
 
 Branch `fix/diffgate-abstain-where-wrong`, on `main` `43b3b608`. Twelve review passes; each has a note under

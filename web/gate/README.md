@@ -3,15 +3,17 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`4cded2e3fd7d901163d204032cf0e8a37970615a6cc6ef9f28050c98db92f63b` (LF line endings; a wheel
+`09867056957082f129985591f5ed048021e85ed48627e73854494b4a1e6e2b3a` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
 their bookmarks bar. That file is `main`'s reader (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2, pull requests
-#113, #115, #120 and #124, plus the `fetch_pr` door), unchanged — the file **7.48.0** ships, sha256
-`9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb` — plus the PATH-2a block (an
+#113, #115, #120 and #124, plus the `fetch_pr` door) — the file **7.48.0** ships, sha256
+`9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb`, with one change outside any reading
+path: its `--demo` prints a CONTRADICTED verdict as CONTRADICTED, not LIE (sha256
+`68873068c0a665c2f5a2c40e2ca4d1e2cfccf28318f6f8d6fc03087d51fcdcc1`) — plus the PATH-2a block (an
 overlay that only abstains, not yet released; see *PATH-2a* below), and a committed test cuts the
-block out and gets `main`'s file back byte for byte, in both languages.
+block out and gets that reader back byte for byte, in both languages.
 
 The port was first cut from the 7.47.0 wheel (`fb2d9b3e…`) and re-cut on 2026-09-16 for issue
 #110: the 7.47.0 templates count Python `def` lines and accuse a TypeScript commit that says
@@ -35,15 +37,15 @@ as the CLI without `--run`.
 
 `bookmarklet_ui.js` — the panel: on a `github.com/OWNER/REPO/pull/N` page it reads the
 description and the diff from `api.github.com` (two unauthenticated requests, nothing else,
-nothing stored, nothing sent anywhere) and pins `[ok ]` / `[LIE]` / `[ ? ]` lines, the verdict
+nothing stored, nothing sent anywhere) and pins `[ok ]` / `[CONTRADICTED]` / `[ ? ]` lines, each with its reason, the verdict
 and the never-read count to the page.
 
 `build_bookmarklet.py` — assembles the two into `bookmarklet_src.js`, minifies with
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 6bf6121af7a77addcf725afcba1f044b027087554e3ead73ab1b2e8c4332638b   53,371 chars
-    bookmarklet.href.txt  sha256 5498fed746a7b3d87e10206ac05fe69777d40138388d0c4a1869b9aa85e8b693   53,382 chars
+    bookmarklet.min.js    sha256 5843f53d0a982216ecffa0919c044c8d49966c68e5310d319a3509306f5fbdf3   53,380 chars
+    bookmarklet.href.txt  sha256 77d7a002a259019ee50a4e65bd7464628d3560511982bbb425187c40d5bf45fc   53,391 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file;
@@ -51,7 +53,8 @@ and the never-read count to the page.
 `54dca73a…`, 21,632 chars; `c457cca3…`, 34,285 chars, PATH-2a's pass 1; `bfe8c047…`, 36,933 chars, its pass 2;
 `c726c904…`, 38,763 chars, its pass 3; `eeb0c298…`, 40,419 chars, its pass 4; `185352f8…`, 44,199 chars, its pass 5;
 `7dd3628e…`, 48,227 chars, its pass 6; `98b1f5ad…`, 49,888 chars, its pass 7; `f873dc6a…`, 56,575 chars, its pass 8;
-`c72ae2db…`, 51,838 chars, its pass 9; `e550ecbd…`, 52,937 chars, its pass 10; `3659b422…`, 53,246 chars, its pass 11.
+`c72ae2db…`, 51,838 chars, its pass 9; `e550ecbd…`, 52,937 chars, its pass 10; `3659b422…`, 53,246 chars, its pass 11;
+`6bf6121a…`, 53,371 chars, PATH-2a as merged (#187), whose panel labelled a CONTRADICTED verdict LIE.
 A bookmark that hashes to any of these is an old port; drag the new one. The panel text still names the 7.48.0 port; see *PATH-2a* below.)
 
 Whatever a browser holds under that bookmark either hashes to the first line (drop the
@@ -395,7 +398,8 @@ byte for byte. Both files and the three fixtures under `tests/fixtures` are writ
 
 ### Measured at this head
 
-On this file (`styxx/diffgate.py` `4cded2e3…`, reader `9b620e00…`), on CPython 3.12.10 (Unicode 15.0) and Node 24.13.0
+On the file PATH-2a merged (`styxx/diffgate.py` `4cded2e3…`, reader `9b620e00…`; the figures marked *pinned* are re-asserted
+on every later file by the committed tests, and the measured ones were not re-run when the demo's label changed), on CPython 3.12.10 (Unicode 15.0) and Node 24.13.0
 (Unicode 16) unless a line says otherwise. A figure marked *pinned* is asserted exactly by a committed test. The
 rest were measured once, with scripts kept in the builder's scratch, and are not asserted: by the builder of the
 twelfth pass at this head where a line says *measured at this head*, by the builder of the eleventh pass at its head,

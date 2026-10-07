@@ -1,8 +1,8 @@
 """PATH-2a test helpers (not collected; NOTE_path2a_abstain_overlay_2026_09_30).
 
 `main` here is not a vendored copy. It is this checkout's own `styxx/diffgate.py` and `web/gate/diffgate.js` with
-the PATH-2a block cut out and the door hooks reverted -- the reconstruction -- asserted to hash to the files on
-`origin/main` 1cde8b82. Every differential in the PATH-2a tests runs against that reconstruction, so the reference
+the PATH-2a block cut out and the door hooks reverted -- the reconstruction -- asserted to hash to the reader pinned
+below (origin/main 1cde8b82's, then that file with the demo's CONTRADICTED label, fix/contradicted-not-lie). Every differential in the PATH-2a tests runs against that reconstruction, so the reference
 cannot drift from the reader the branch actually carries.
 """
 from __future__ import annotations
@@ -22,7 +22,11 @@ PORT = ROOT / "web" / "gate" / "diffgate.js"
 DIFFERENTIAL = ROOT / "web" / "gate" / "differential"
 FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 
-MAIN_PY_SHA = "9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb"   # origin/main 1cde8b82, LF
+# origin/main 1cde8b82 was 9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb (7.48.0's file).
+# fix/contradicted-not-lie changed the reader outside the block, in `_demo` only (CONTRADICTED is printed by its name,
+# not as LIE), so the reconstruction is re-pinned to that file, LF. No reading path moved: the PATH-2a modules
+# re-run every differential against it.
+MAIN_PY_SHA = "68873068c0a665c2f5a2c40e2ca4d1e2cfccf28318f6f8d6fc03087d51fcdcc1"
 MAIN_JS_SHA = "06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
