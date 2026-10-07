@@ -44,8 +44,17 @@ def _row(text: str, name: str) -> str:
 
 def test_the_root_and_packaged_leaderboards_are_the_same_bytes():
     # The CLI prints the packaged copy; the repository links the root one. A withdrawal made in one
-    # and not the other would leave the claim in whichever copy a reader opens.
-    assert ROOT_COPY.read_bytes() == PKG_COPY.read_bytes()
+    # and not the other would leave the claim in whichever copy a reader opens. A submission PR
+    # that edits only the root file, as "How to submit" step 3 used to read, fails here.
+    assert ROOT_COPY.read_bytes() == PKG_COPY.read_bytes(), (
+        "LEADERBOARD.md and styxx/_data/LEADERBOARD.md differ; "
+        "run: cp LEADERBOARD.md styxx/_data/LEADERBOARD.md")
+
+
+def test_the_submission_instructions_say_to_copy_the_root_file_over_the_packaged_one():
+    text = ROOT_COPY.read_text(encoding="utf-8")
+    assert ("3. **Open a PR** adding one row to the table below, then copy `LEADERBOARD.md` over "
+            "`styxx/_data/LEADERBOARD.md`") in text
 
 
 def test_baseline_019_row_states_the_measured_pass_without_an_ordinal():
@@ -67,6 +76,18 @@ def test_baseline_014_and_016_rows_claim_no_ordinal_achievement():
     assert "**D2 partition CLEARS both v3 confound bars**" in row_014
     assert "**But this is an n=1 demonstration that signal genuinely orthogonal" in row_014
     assert "(1) D2 length-delta crosses 0.10 (0.103); (2) BOTH D4 deltas above 0.10" in row_016
+
+
+def test_baseline_008_heading_states_the_bars_without_an_ordinal():
+    # The heading set the row apart from Baseline-007's length artifact with an achievement
+    # ordinal; it now says which bars scored it. The notes keep the order the lab ran its own
+    # submissions under each version of the bars.
+    row = _row(_printed(), "Baseline-008")
+    heading = row.split("|")[1]
+    assert "*(embedding similarity — tested under v2 bars; pre-stated prediction validated)*" in heading
+    assert not _ORDINAL_RX.search(heading), heading
+    assert "non-trivial detection submission tested under v2 bars (D1+D2+D3)" in row
+    assert "D1=0.805 ✓ / D2=0.928 ✓ / D1-len=0.015 ✗ / D1-cap=0.102 ✓" in row
 
 
 def test_the_init_comments_on_the_critique_detector_claim_no_ordinal():
