@@ -799,13 +799,17 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
                       min(len(ung), len(copies)))
             a = ung[at] if at < len(ung) else None
             b = copies[at] if at < len(copies) else None
-            fields = sorted({k for k in (a or {}) if not isinstance(b, dict) or k not in b or
-                             not _same(a[k], b[k])} |
-                            {k for k in (b or {}) if not isinstance(a, dict) or k not in a})
+            # A row that is not an object has no fields to name: a list there ended verify in a
+            # TypeError (sorting its items, or hashing them) until #196.
+            ka = set(a) if isinstance(a, dict) else set()
+            kb = set(b) if isinstance(b, dict) else set()
+            fields = sorted(k for k in ka | kb if k not in ka or k not in kb
+                            or not _same(a[k], b[k]))
             problems.append(
                 f"certificate.ungrounded is not the ledger's UNGROUNDED rows as the ledger carries "
                 f"them ({len(ung)} row(s) vs {len(copies)}; row {at} differs"
                 + (f" in {', '.join(map(repr, fields))}" if fields else "")
+                + (", and is not an object" if at < len(ung) and not isinstance(a, dict) else "")
                 + "): every certify writes it as a copy of those rows")
 
     # the verdict: the whole string, except for a certificate that predates the uncovered band
