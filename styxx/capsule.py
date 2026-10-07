@@ -90,9 +90,10 @@ _WINDOWS_DEVICES = {"con", "prn", "aux", "nul", "conin$", "conout$"}
 # Nor a name some system's file system refuses where another writes it (#196). POSIX writes
 # r<1>.json and Windows refuses it, so until this change the verifier re-ran the certifier on Linux
 # and failed with an OSError on Windows: a capsule's verdict depended on the verifier's system. A
-# lone surrogate is the reverse (Windows writes it; a POSIX system cannot encode it, and the write
-# raised UnicodeEncodeError). NTFS holds a name of at most 255 UTF-16 code units, ext4 one of at
-# most 255 UTF-8 bytes. Each such name is refused on every system.
+# lone surrogate is the reverse: Windows writes it, and UTF-8 cannot encode it, so on POSIX the
+# write raised UnicodeEncodeError (or, from U+DC80 to U+DCFF, wrote other bytes). NTFS holds a name
+# of at most 255 UTF-16 code units, ext4 one of at most 255 UTF-8 bytes. Each such name is refused
+# on every system.
 _WINDOWS_RESERVED = '<>"|?*'
 _NAME_MAX = 255
 
@@ -103,7 +104,7 @@ def _portable_name_problem(name: str) -> Optional[str]:
     if held:
         return f"holds {', '.join(map(repr, held))}, which Windows refuses in a file name"
     if any(0xD800 <= ord(c) <= 0xDFFF for c in name):
-        return "holds a lone surrogate, which a POSIX file system cannot encode"
+        return "holds a lone surrogate, which UTF-8, and so a POSIX file name, cannot encode"
     n8, n16 = len(name.encode("utf-8")), len(name.encode("utf-16-le")) // 2
     if n8 > _NAME_MAX or n16 > _NAME_MAX:
         return (f"is {n8} UTF-8 bytes and {n16} UTF-16 code units long, and a file name holds at "
@@ -148,18 +149,25 @@ def _unsafe_names(payload: dict) -> List[str]:
                        f"on every system, so that a capsule's verdict does not depend on the "
                        f"verifier's; nothing was written and the certifier was not re-run")
     if not out:
+        folded = [n.casefold() for n in names]
+        if len(set(folded)) != len(folded):
+            out.append("two embedded names are the same file on a case-insensitive file system; "
+                       "nothing was written and the certifier was not re-run")
+    if not out:
         # HFS+ stores a name decomposed, so two canonically equivalent names (an NFC é and an e
         # with a combining accent) are one file there, as two names differing in case are on NTFS
         folded = [_name_fold(n) for n in names]
         if len(set(folded)) != len(folded):
-            out.append("two embedded names are the same file on a case-insensitive file system "
-                       "(or, differing only in Unicode normalization, on HFS+); nothing was "
-                       "written and the certifier was not re-run")
+            out.append("two embedded names are the same file on HFS+, which stores names "
+                       "decomposed: they differ only in Unicode normalization, or in it and case; "
+                       "the pair is refused on every system; nothing was written and the "
+                       "certifier was not re-run")
     return out
 
 
 def _name_fold(name: str) -> str:
-    """The canonical caseless form of a name (Unicode 3.13, D145): NFD(casefold(NFD(name)))."""
+    """The canonical caseless form of a name (the Unicode Standard, section 3.13, D145):
+    NFD(casefold(NFD(name)))."""
     return unicodedata.normalize("NFD", unicodedata.normalize("NFD", name).casefold())
 
 
