@@ -281,6 +281,112 @@ reviews' verdict; a committed note, not edited), one of its code commits carried
 rewords, both because the word check ran after the commit in one chained command, and two of its scratch edits
 went through a shell heredoc again, each failing its own assertion before writing anything.
 
+## [Unreleased] — prior art credited, and the priority sentences that were not earned
+
+A landscape synthesis dated 2026-09-28, checked by a critic pass, found that neighbours did parts of
+this lab's work earlier. PR-MCI (Gong, Pinna, Bian, Zhang; arXiv 2601.04886, 2026-01-08) measured
+description-versus-code inconsistency on 23,247 AIDev agent pull requests, with 974 hand-labelled
+ones, about seven months before the diff gate existed. AgentLiar (Daksh Jain per its account name,
+2026-05-20) shipped a GitHub Action checking an agent's completion claim against its file changes about ten weeks before
+it, and Swarm Orchestrator (Brad Kinnard, v10.0.0, 2026-05-23, self-reported) gated AI-written pull
+requests on their diffs with a hash-chained ledger. DeerFlow rendered a report with action claims
+and no receipt citations UNVERIFIED (RFC #4651 revision 2, published in the RFC thread by
+2026-08-04; merged in #5076 2026-08-29) before sworn's `UNSWORN`, and Proof-Carrying Agent Actions
+(2026-06-02) told a moved checker from a moved result before charon. The operator approved these
+corrections on 2026-09-29. The synthesis was single agents through a summarising web reader, with
+no frozen procedure and no human review, so everything here corrects toward less. No frozen
+document, receipt, certificate, sworn file, sidecar or log is edited, and no released entry below
+is edited. The record, sentence by sentence, is `papers/NOTE_prior_art_credit_2026_09_29.md`.
+
+**Corrected in place.** `styxx/analytics.py` (primitives "nobody else has shipped"; no other
+observability tool computes a personality profile), `styxx/dashboard.py`, `styxx/forecast.py`,
+`styxx/intercept.py` (docstring and demo banner), `styxx/probe.py` ("Nobody offers this"),
+`styxx/verify.py` ("the answer no one else can") and `styxx/hallucination.py` (production tooling
+had no per-token reader): each unsurveyed priority sentence is withdrawn in the docstring that made
+it, and representation engineering (Zou et al., 2023) or semantic entropy (Farquhar et al., 2024),
+both already cited in this repository, is named where it applies. `examples/synth_preference_pairs.py`
+stops printing "nobody else can build this". `styxx/declare.py` credits the declared-claim
+neighbours with dates: NabaOS (2026-03-09), DeerFlow's receipt citations, readback (2026-09-13),
+commitlint-scope (2026-05-25), Swarm Orchestrator (2026-08-18) and Agent Trace (2026-01).
+`styxx/admissibility.py`, `styxx/adapters/guardrails.py` and the capsule skill
+(`integrations/openclaw/styxx-capsule/SKILL.md`) drop charter words about the lab's own work, and
+the skill credits Swarm Orchestrator's verifier-carrying bundles. The Inspect eval's README and
+`eval.yaml`, `docs/research/cognitive-dynamics-v0.md` and `docs/research/cognitive-metrology-charter.md`
+drop unsurveyed priority claims. `README.md`, `web/gate/README.md`, `sworn/README.md` and
+`benchmarks/silent_pass/CORPUS.md` gain a section saying who did this earlier, with dates.
+A second search of `styxx/`, `docs/`, `README.md`, `sworn/`, `web/gate/`, `benchmarks/` and
+`examples/` withdrew the priority sentences it found still standing: the package docstring and
+two comments in `styxx/__init__.py` ("the first drop-in cognitive vitals monitor", "the first
+dynamical-systems model", "first reward calibrated"), `styxx/dynamics.py` ("the first cognitive
+dynamics model in the field", and the field having no state variable), `styxx/reward.py`,
+`styxx/sae.py`, `styxx/d_axis.py`, `styxx/cognometrics.py` (an interpretation string),
+`styxx/critique.py` ("the first method to PASS" the gauntlet's v3 bars) and
+`styxx/attack/universal_suffixes_v0.json` ("the first cognometric universal adversarial
+perturbation", an interpretation string; both found by the 2026-09-29 audit),
+`styxx/guardrail/__init__.py` ("first text-only detector to beat" a baseline),
+`styxx/guardrail/calibrated_weights_sycophancy_v0.py` (its `prior_art_context`),
+`styxx/verify.py` ("the problem AI has never been able to solve since Turing"), `styxx/ladder.py`
+and `README.md` ("the rung nobody runs on their own work"; "the control almost nobody runs"),
+`styxx/reflex.py` (a user's pitch, now marked as unsurveyed), `docs/tier3_design.md` ("the first
+runtime", "a new computational primitive"), `docs/research/cognitive-dynamics-v0.md` and
+`docs/research/cognitive-metrology-charter.md` (four more sentences),
+`examples/advanced/styxx_demo.ipynb`, and the scripts that would print a priority claim again
+(`benchmarks/cognitive_bench/run_multi_vendor.py`, `benchmarks/cogvm_demo/`,
+`benchmarks/darkcity_csv/analyze.py`). `benchmarks/hallucination_test/test_e2e.py`,
+`benchmarks/truthfulqa_benchmark.py` and `benchmarks/causal_patching/train_behavioral_confab.py`
+drop a phrase the lab's charter forbids for its own gate and call it a fabrication-risk gate.
+
+**Notes beside frozen documents.** `papers/closed-model-frontier/NOTE_prior_art_credit_2026_09_29.md`:
+the evidence leg's "we know of no one who pointed it at prose and measured what happened" (PR-MCI;
+DOCER, 2023; iComment, 2007), its conjunction (AgentLiar, Swarm Orchestrator, backcheck
+2026-08-04, DeerFlow), and "we can find none that verify the sentence is true" (backcheck,
+DeerFlow); the 2026-08-31 prior-art plan's gap sentences, its capsule sentence and its "nearest
+neighbour"; BENCH-1's "no PR-level benchmark" (PR-MCI's 974 labelled PRs); the "nobody" sentences
+in DECIDE-1, COMPAT-2 (cargo-semver-checks, japicmp, revapi) and the collateral census; the
+certified OATH survey's negative result (statcheck, PR-MCI, Deterministic Integrity Gates
+2026-06-08, metacheck 2026-08-16); and the credits DECLARE-1 and the capsule lacked.
+`papers/sworn/NOTE_prior_art_credit_2026_09_29.md`: the second-question sentence is retired
+(metacheck), and the survey's surviving sentence is at most a residual (DeerFlow's zero-citation
+verdict; Inline XBRL, 2013; showyourwork!, 2021; VeriFin, 2026-08-10).
+`papers/charon/NOTE_prior_art_credit_2026_09_29.md`: SKEW versus DRIFT (Proof-Carrying Agent
+Actions §8.3), signed chained receipts (Microsoft agent-governance-toolkit, 2026-04-27), Swarm
+Orchestrator's ledger and re-derivation. `papers/NOTE_prior_art_credit_2026_09_29.md`: the plan of
+record's claim-ledger sentence, the 2026-08-21 recon's "four things … no one else appears to" hold
+(Gallaba et al. 2018, CI-Odor 2019, Zampetti et al. 2020, CD-Linter 2020, Aïdasso et al.
+2025-09-17), the honesty thesis's missing MASK (2025) and Liars' Bench (2025), and 30 further
+priority sentences outside the landscape's lanes, withdrawn as never priced.
+
+**Released entries whose priority sentences are withdrawn, not edited.** [0.1.0a3]: "four
+creative primitives that no other tool in the space ships", and the `styxx personality` bullet's
+"no other tool in the observability space" sentences. [3.1.0a1]: "nobody had a calibrated,
+cross-architecture, real-time readout of cognitive state. We do.", the sentence withdrawn from
+`docs/research/cognitive-dynamics-v0.md` on this branch. [3.5.0]: the three priority claims in its
+headline list (a runtime for residual-stream control, a multi-vendor direction library, a
+cross-vendor cognitive audit); representation engineering, which the same entry cites, steered
+residual streams earlier. [3.5.1]: the priority claim in its opening line. [6.2.0]: the priority
+claim for `styxx.profile`. [7.1.0]: "Nobody else can build this because nobody else has both
+forward and inverse cognometry shipped." [7.7.10]: the priority claim for the EU AI Act Article 15
+bridge, in the heading and the bullet. [7.12.0] and [7.15.0]: use cases "nobody has a tool for".
+Each is withdrawn as a priority claim because no survey priced it; the measurements in those
+entries stand on their own receipts.
+
+**Not edited, and why.** `styxx/sworn.py`, `charon.py`, `capsule.py`, `certify.py`, `diffgate.py`,
+`evidence.py`, `claimdetect.py`, `attestation.py` and `corpus_audit.py`: their bytes are digested
+into sworn receipts, conformance vectors and charon lines, and `web/gate` pins `diffgate.py`, so a
+docstring edit would move digests that committed receipts name. `release/`, `zenodo/`, `arxiv/`,
+`drafts/`, the outreach and deposit scripts in `scripts/`, and the result records
+`benchmarks/cognitive_bench/results/cognitivebench_v0.md`, `benchmarks/darkcity_csv/runs/v0/report.md`
+and `benchmarks/truthfulqa_report.md` are copies of what was said and carry the same claims, read
+the same way.
+
+**Owed.** A frozen-procedure survey pricing the diff gate's conjunction and re-pricing sworn's
+surviving sentence, with an independent re-fetch; a human-reviewed pass over the landscape's
+closest rows. Before the open ci-audit pull requests merge, their documents must credit CD-Linter,
+Gallaba et al., Zampetti et al., CI-Odor, Aïdasso et al., the pseudo-tested-methods line,
+Alshammari et al., ShellCheck SC2312 and actionlint, Swarm Orchestrator's defect-injection oracle
+and `--challenges`, backcheck's *qualified* verdict and i-dont-believe-you. styxx 7.48.0 carries no
+PEP 740 provenance; a release after this one should.
+
 ## [7.48.1] — 2026-10-06 — security repair: a capsule or an audited certificate chose where styxx wrote files, and now every name it gives must be a bare file name
 
 A patch release: one security repair, the version bump that `conformance/sworn/` moves with, and

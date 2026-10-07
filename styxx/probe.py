@@ -18,8 +18,8 @@ styxx.probe — cognitive red-teaming.
 
 Pen testing for AI cognition. Which prompts cause confidence
 collapse? Which inputs trigger adversarial cascades? Which sessions
-produce hallucination clusters? Nobody offers this. styxx already
-has the detection capability — probe() packages it as a service.
+produce fabrication clusters? (A sentence saying nobody offers this was
+withdrawn 2026-09-29: never surveyed.) probe() packages styxx's reads.
 
 1.4.0+.
 """

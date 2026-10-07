@@ -10,7 +10,7 @@ Why v1 is necessary
 The v0 confab probe scored AUC 1.0 but only because it detected
 "the prompt asks about a fake entity." It does NOT tell you whether
 the MODEL fabricated content — just that the model was ASKED to
-fabricate. A production hallucination detector needs the second
+fabricate. A production fabrication-risk gate needs the second
 signal.
 
 Method

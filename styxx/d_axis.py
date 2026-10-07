@@ -11,8 +11,8 @@ chosen token in unembedding space. Low D (near 0.0 or negative)
 means the model's internal state diverges from its output — it's
 "saying something other than what it thinks."
 
-This is the honesty axis. It's the first cognitive measurement that
-reads from the model's WEIGHTS rather than from the API response.
+This is the honesty axis. It's the styxx measurement that reads
+from the model's WEIGHTS rather than from the API response.
 It requires loading the model locally (open-weight only), but the
 computation itself is trivial: one forward pass, one cosine
 similarity, per token.
