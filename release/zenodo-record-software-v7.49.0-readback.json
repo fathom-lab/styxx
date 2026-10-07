@@ -1,0 +1,190 @@
+{
+  "created": "2026-10-07T19:47:39.455552+00:00",
+  "modified": "2026-10-07T19:47:39.909251+00:00",
+  "id": 23221755,
+  "conceptrecid": "19758618",
+  "doi": "10.5281/zenodo.23221755",
+  "conceptdoi": "10.5281/zenodo.19758618",
+  "doi_url": "https://doi.org/10.5281/zenodo.23221755",
+  "metadata": {
+    "title": "styxx v7.49.0 — security repair: capsule verify passed v0.1 capsules whose certificate was edited to say what their bytes do not, and now compares the whole certificate; the diff gate withholds verdicts its known defects can make wrong",
+    "doi": "10.5281/zenodo.23221755",
+    "publication_date": "2026-10-07",
+    "description": "<p>This version continues the styxx software record (v6.2.0, the reference implementation of the Cognometric Fingerprint Specification v1.0, <a href=\"https://doi.org/10.5281/zenodo.19746215\">10.5281/zenodo.19746215</a>; its deposited foundations outline predates the 2026-06-21 scope note, D5 in <code>zenodo/MANIFEST.json</code>) and belongs to the Fathom research series (<a href=\"https://doi.org/10.5281/zenodo.19326174\">10.5281/zenodo.19326174</a>).</p>\n\n<p><strong>styxx v7.49.0</strong>, released 2026-10-07: a minor release led by a security repair.\nThis record holds the Python package exactly as published on PyPI and the source tree at the git\ntag <code>v7.49.0</code> (commit <code>c6e00da02673ec6a2e84919f17f56a2e4435a8c9</code>). It is a\nversion in the styxx software concept record\n<a href=\"https://doi.org/10.5281/zenodo.19758618\">10.5281/zenodo.19758618</a>, which resolves to\nthe latest version. styxx 7.48.1, the release before this one, is\n<a href=\"https://doi.org/10.5281/zenodo.23200977\">10.5281/zenodo.23200977</a> in the same concept\n(released 2026-10-06).</p>\n\n<p>The release carries a security repair to how <code>python -m styxx.capsule verify</code> checks\na v0.1 OATH capsule, the diff gate's PATH-2a overlay, the GitHub Action's new default, and what\nelse merged on <code>main</code> after 7.48.1. The next five sections, from the security repair to\ncutting this release, are condensed from the <code>## [7.49.0]</code> section of\n<code>CHANGELOG.md</code> in this tree, where the full entries are. Every number in them is as that\nsection prints it, and each line keeps the limits its source states. The list of stale or wrong\nlines after them comes from that section, from the <code>## [7.48.1]</code> section (for the\nEXTERNAL-1 packet), from <code>zenodo/MANIFEST.json</code> (its open defects and its entry for this\nconcept), and from the files each line names, as they stand at the tag. The last two sections\ndescribe this deposit: what it holds, and each file's size, sha256 and md5, computed from the\ndeposited bytes, with the source bundle's file count taken from the tag's tree.</p>\n\n<p><strong>Security: capsule verify passed v0.1 capsules whose certificate was edited to say what\ntheir bytes do not\n(<a href=\"https://github.com/fathom-lab/styxx/security/advisories/GHSA-3g8h-qcfm-25xw\">GHSA-3g8h-qcfm-25xw</a>)</strong></p>\n<ul>\n<li><strong>What was wrong.</strong> Layer 2 of a v0.1 OATH capsule, <code>python -m styxx.capsule\nverify</code>, re-runs <code>certify</code> on the embedded document and receipts. Before this\nrelease it checked the document and receipt hashes and compared only the verdict (from 7.48.0 by\nclass, its <code>, N uncovered</code> suffix stripped), the counts and the status of each ledger\nrow the certificate carries, and it read the payload by text without checking the page around it,\nso a capsule whose certificate was edited to say what its bytes do not verified. Run at the cut\nfrom the v7.47.0, v7.48.0 and v7.48.1 tag trees, each over capsules it minted itself: a\ncertificate edited to report 0 uncovered (the D1 forgery), a deleted ledger row, a row's\n<code>receipt_ref</code> pointed at another receipt, a row's epistemics flag flipped, and a\ngenuine payload hidden in an HTML comment ahead of one whose document reads otherwise all verify\nunder 7.48.0 and 7.48.1. 7.47.0's certify writes no uncovered band, so D1 has nothing to edit in\nits own capsules; 7.47.0 verifies the other four, and verifies D1 applied to a capsule a later\nstyxx minted, whose honest form it fails. 7.49.0 fails every one of them.</li>\n<li><strong>Affected releases.</strong> 7.47.0, 7.48.0 and 7.48.1. For anyone who verifies\ncapsules made by someone else, upgrading is the fix.</li>\n<li><strong>The repair.</strong> <code>verify</code> now compares every field\n<code>certify_doc</code> writes, type for type: the verdict string, the counts, the uncovered\nband, the epistemics summary, <code>receipts_sha256</code>, the receipt-binding digests, and the\nledger, <code>ungrounded</code> and <code>abstained</code> in both directions, in order, every\nfield of every row. The page around the payload must be the page a styxx renders for exactly that\npayload: the current page, or the one every styxx rendered before this change, kept verbatim in\n<code>styxx/_capsule_page_v01_legacy.py</code>. An edited page now fails. A field an older certificate\nlacks is printed <code>NOT CHECKED</code> by name, and every advisory is printed. A capsule of a\nrenamed copy now fails. A newly minted page shows a verdict only after its hashes match, and its\ninstall line names <code>styxx&gt;=7.49.0</code>, not the minter's version. All ten committed\nv0.1 capsules still verify, each with an advisory that it states a styxx below 7.49.0. The\nbare-name rule for a capsule's embedded names, 7.48.1's repair for GHSA-h5xv-4344-f62r, is kept\nas released.</li>\n<li><strong>What to do.</strong> Upgrade: <code>pip install -U styxx==7.49.0</code>. Until you can,\nan exit 0 from 7.47.0, 7.48.0 or 7.48.1 says only that the payload it read, which need not be the\none a browser draws, carries bytes matching its certificate's hashes, and that the verdict (by\nclass in 7.48.0 and 7.48.1), the counts and the status of each row the certificate carries\nreproduce. To rely on a document's numbers, certify the document and receipts you mean to rely on\nyourself (<code>python -m styxx.certify DOC RECEIPTS...</code>) and read that certificate, not the\ncapsule's or its page.</li>\n<li><strong>What 7.49.0 does not close.</strong> By the operator's decision, 7.49.0 still accepts\nthe page every styxx rendered before it, since honest capsules carry it. Around that page, the D1\nforgery posed as older than the uncovered band (the band fields and the receipt binding deleted,\nanother issuer's hash) exits 0, and 7.49.0 prints the installed verifier's verdict beside the\nembedded one, six NOT CHECKED lines and three advisories, one naming the number nothing checked and\none saying every styxx below 7.49.0 passes forgeries 7.49.0 fails. Around the page 7.49.0 mints,\nthe same pose fails. The older page tells its reader to pip install the payload's\n<code>verifier.pip</code>, which the minter chooses, and 7.47.0, 7.48.0 and 7.48.1 each pass this\npose around either page. The v0.2 and sworn pages' install lines are not repaired. Two classes a\nreview found still end <code>verify</code> in a traceback, so #196 stays open. Nothing in a capsule\nis signed.</li>\n</ul>\n\n<p><strong>The diff gate: PATH-2a withholds the verdicts its three known defects can make\nwrong</strong></p>\n<ul>\n<li>For users of <code>python -m styxx.diffgate</code>, <code>gate_diff_text</code>,\n<code>gate_diff</code>, the commit-msg and agent hooks: where the #97, #121 or #101 mechanism\ncan have made a VERIFIED or CONTRADICTED verdict wrong, the claim is now UNCHECKABLE, and its\nreason names the verdict withheld, the defect and the reading without the overlay. The overlay\nnever adds an accusation and never makes a verdict VERIFIED; the three defects are not repaired.\nOn the lab's committed corpora it withholds 80 of 2,231 decided claims (3.6%).\n<code>--strict</code> fails on each new abstention, as on any UNCHECKABLE.</li>\n<li>PREREG_path2's G-P1 expects VERIFIED on the reproductions, so G-P1 is not met. The path\naccusation stays withheld.</li>\n<li>A contradicted claim is printed as <code>[CONTRADICTED]</code> with its reason, not as\n<code>[LIE]</code>, in the demo, the hooks and the bookmarklet, and the demo's closing line says\nhow many claims the diff contradicts. Records, verdicts and exit codes are unchanged.</li>\n</ul>\n\n<p><strong>The GitHub Action reports by default</strong></p>\n<ul>\n<li><code>soft-fail</code> defaults to <code>\"true\"</code>: every verdict goes in the job summary,\neach contradicted claim is named in an annotation, and the gate's verdicts never fail the job.\nOnly an explicit <code>soft-fail: \"false\"</code> blocks. This changes behaviour for anyone who\nrelied on the default, which was <code>\"false\"</code>.</li>\n<li>Why: no kind of accusation the instrument still makes has been measured clearing the 0.95\nprecision floor the lab set for accusing. Path claims are reported UNCHECKABLE: EXTERNAL-1\n(2026-08-31) measured precision 0.23 against a preregistered floor of 0.95, a blind three-seat\npanel upholding 23 of 100 sampled accusations, and V14 (2026-09-01) measured 0.16 on held-out path\naccusations. <code>only_touches</code> still accuses, at precision 0.25 (PATH-1, 2026-09-17: 2 of\n8 accusations correct). No receipt re-measures it with the PATH-2a overlay on.\n<code>tests_added</code>, <code>symbol_added</code> and\n<code>files_changed_count</code> still accuse, and no committed RESULT states a precision for\nthem.</li>\n<li>The Action imports the <code>styxx</code> package beside its script, at the ref the workflow\nnames, not the one pip installs, so <code>@main</code> and a workflow pinned to this release's tag\nboth run PATH-2a. This repository's own <code>.github/workflows/diffgate.yml</code> sets\n<code>soft-fail: \"false\"</code>, so the lab's own check keeps blocking.</li>\n</ul>\n\n<p><strong>Also in this release</strong></p>\n<ul>\n<li>For users who verify capsules, beyond the security repair: <code>verify</code> escapes control\ncharacters in what it prints, and a sweep of 600 malformed single-field mutations now ends in a\nproblem, not a traceback (in <code>styxx.charon</code>, in an UNRESOLVED or not-reproduced line).\n<code>capsule create</code> refuses some certificates older styxx issued (re-certify, then\nmint).</li>\n<li>Priority sentences that no survey priced are withdrawn from docstrings and printed strings in\nthe package and from the docs, and the prior art is credited with dates\n(<code>papers/NOTE_prior_art_credit_2026_09_29.md</code>). With them go the priority claims and\ncharter words that 7.48.1's record listed as stale, in the docstrings of\n<code>styxx/__init__.py</code>, <code>forecast.py</code>, <code>intercept.py</code>,\n<code>critique.py</code> and <code>hallucination.py</code>, in\n<code>attack/universal_suffixes_v0.json</code>, <code>adapters/guardrails.py</code> and\n<code>admissibility.py</code>, and in <code>README.md</code>.</li>\n<li>In the repository, not the wheel: <code>SECURITY.md</code> sends reports through GitHub private\nvulnerability reporting instead of an email address the lab cannot confirm receives mail; 7.48.1's\nZenodo record (10.5281/zenodo.23200977), with its receipts in <code>release/</code> and the two\nscripts that made it in <code>scripts/</code>; and <code>web/gate/README.md</code>'s run-book pin,\nheld to <code>py_side.py</code> by a test.</li>\n<li>What did not change: <code>styxx/certify.py</code>, <code>styxx/sworn.py</code> and\n<code>styxx/corpus_audit.py</code> are the files 7.48.1 shipped, so certify, sworn and\ncorpus_audit read as they did. Outside the PATH-2a block and the printed label the diff gate reads\nas 7.48.1 did.</li>\n</ul>\n\n<p><strong>Cutting this release</strong></p>\n<ul>\n<li><code>styxx/_version.py</code> is 7.49.0 (<code>3e8722cb</code>), the floor the capsule page\nnames for layer 2 (<code>_LAYER2_FLOOR</code> and <code>const FLOOR</code> in\n<code>styxx/capsule.py</code>), and <code>CITATION.cff</code> gives <code>version</code> 7.49.0 and\n<code>date-released</code> 2026-10-07 (<code>25d35543</code>).</li>\n<li><code>conformance/sworn/</code> was regenerated for the version stamp (<code>3e8722cb</code>):\n15 vectors took new ids, 0 moved, and no expected outcome changed; still 3620 vectors, 20 families\nand 3981 blobs. That CI passes on the regenerated set was not observed at the cut.</li>\n<li><code>README.md</code>, which becomes the PyPI page, was audited at this cut against the tree\nit ships with: its 89 tag-pinned links now name v7.49.0 instead of v7.48.0\n(<code>0a4c479e</code>), on the same lines, and no other line changed.\n<code>web/gate/README.md</code>'s PATH-2a section now says 7.49.0 ships it\n(<code>7a418e2b</code>); its opening paragraph still says otherwise (below).</li>\n</ul>\n\n<p><strong>Known stale or wrong lines in the deposited tree</strong></p>\n<ul>\n<li>Two entries of the <code>## [7.49.0]</code> section, kept whole from\n<code>[Unreleased]</code>, carry wording that does not hold at the tag. The PATH-2a entry says it\nis not released, which the cut made stale. The Action entry gives the whole of\n<code>styxx/diffgate.py</code> as sha256 <code>4cded2e3…</code>, which #201 made stale before the\ncut. At the tag that file is <code>09867056…</code> (LF), as\n<code>web/gate/differential/py_side.py</code> pins it. Both entries, and the description in\n<code>action.yml</code>, also give <code>9b620e00…</code> as the reader the overlay runs over;\nsince #201 that reader is <code>68873068…</code> (<code>9b620e00…</code> with the demo's\nCONTRADICTED label), as <code>tests/_p2a_ref.py</code> pins it. Where the PATH-2a entry says\n<code>pip install styxx</code> (7.48.0), 7.48.1 was already on PyPI when PATH-2a merged to\n<code>main</code> (by the upload time in 7.48.1's record under <code>release/</code>).</li>\n<li>The PATH-2a entry calls whether PATH-2a stands in for G-P1 the operator's decision; the\noperator took it on 2026-10-06\n(<code>papers/closed-model-frontier/AMENDMENT_path2_withholding_2026_10_06.md</code>): G-P1 is not\nmet, withholding is accepted as what lands now and not as the repair, and #97, #101 and #121 stay\nopen. <code>web/gate/README.md</code>'s PATH-2a section still calls G-P1 the operator's decision, and says the operator\nconfirms the switch's removal at merge. The entry's \"Open for the operator\" paragraph still lists\nG-P1, the switch's removal and bar A's boundary, which the amendment decides.</li>\n<li><code>web/gate/README.md</code>'s opening paragraph calls the PATH-2a block not yet released,\nand its drift section, <code>web/gate/differential/py_side.py</code> and the headers of\n<code>web/gate/diffgate.js</code> and <code>web/gate/bookmarklet_src.js</code> still speak of\n7.48.0 as not yet shipped. The bookmarklet's panel text (<code>web/gate/bookmarklet_ui.js</code>)\nstill calls its port the 7.48.0 one, as <code>web/gate/README.md</code> says.</li>\n<li>The header comment of <code>.github/workflows/diffgate.yml</code> says the instrument is the\nreleased package; the Action imports the <code>styxx</code> package beside its script, at the ref\nthe workflow names (above).</li>\n<li><code>sworn/README.md</code> and <code>sworn/action.yml</code> still give\n<code>styxx==7.48.0</code> as the way to install the released <code>styxx.sworn</code>;\nGHSA-h5xv-4344-f62r and GHSA-3g8h-qcfm-25xw both name 7.48.0 as affected.</li>\n<li><code>styxx/_data/LEADERBOARD.md</code>, which the styxx leaderboard command prints (the root\n<code>LEADERBOARD.md</code> is the same file), and two comments in <code>styxx/__init__.py</code>\nstill carry the ordinal priority claim for Baseline-019's pass of the gauntlet's v3 bars that\n<code>styxx/critique.py</code>'s docstring withdrew. The bullet above on withdrawn priority\nsentences holds for the sentences <code>papers/NOTE_prior_art_credit_2026_09_29.md</code> records,\nnot for every string the package prints.</li>\n<li><code>README.md</code> labels 10.5281/zenodo.19326174, the concept record of the Fathom\nresearch-paper series, as the always-latest DOI in its badge row and link table (open defects D3\nand D4 in <code>zenodo/MANIFEST.json</code>). Its citation row names the software concept DOI,\n10.5281/zenodo.19758618.</li>\n<li><code>CITATION.cff</code> names the software concept DOI, but GitHub's \"Cite this repository\"\nprompt renders its <code>preferred-citation</code>, the position paper 10.5281/zenodo.19777921,\nwhich predates that paper's 2026-06-21 scope erratum (D2 in <code>zenodo/MANIFEST.json</code>).\nWhether the prompt should cite the software is left to the maintainer.</li>\n<li>The committed EXTERNAL-1 packet,\n<code>papers/closed-model-frontier/external1_packet.json</code>, still carries the id leak. Since\n#125 its builder, <code>external1_packet.py</code>, numbers items by their shuffled position by\ndefault, and its <code>build --as-published</code> mode writes the pre-repair numbering on purpose,\nleak included, because the committed packet, key and digest are receipts; that mode has been shown\nonly on a synthetic ledger and shelf, not run on the real ones. Whether any adjudicator used the\nleak cannot be re-tested.</li>\n<li><code>zenodo/README.md</code> still describes the 7.48.0 deposit flow only.</li>\n<li><code>zenodo/MANIFEST.json</code> names 7.48.1 (10.5281/zenodo.23200977) as the latest version\nof this concept; this record supersedes that line.</li>\n</ul>\n\n<p><strong>Not in this deposit</strong></p>\n<p>This record holds the tagged tree and the two files PyPI serves for 7.49.0, and nothing else.\nWork merged to the default branch after the tag is not in it.</p>\n\n<p><strong>Files in this record</strong></p>\n<ul>\n<li><code>styxx-v7.49.0-source-bundle.zip</code>: the source tree at tag <code>v7.49.0</code>: <code>git archive --format=zip --prefix=styxx-7.49.0/ v7.49.0</code> run with <code>core.autocrlf=false</code>, so each of its 6094 files is byte-identical to its git blob (checked by blob id); the zip comment carries the commit id. 276179193 bytes; sha256 <code>aef9945a67204ea89ece4e69cb8074a75abbeb7fa9385fba646ec7e55437485b</code>; md5 <code>b6f174e73d8b83182edf0f2b5e4745d0</code></li>\n<li><code>styxx-7.49.0-py3-none-any.whl</code>: the wheel, as published on PyPI (sha256 checked against PyPI). 8101703 bytes; sha256 <code>272f5cb384088888ede45044a4d51f24e81001278148f4555e3045440c22d01b</code>; md5 <code>3eafa8d101253cfe304eab200d03ae8e</code></li>\n<li><code>styxx-7.49.0.tar.gz</code>: the sdist, as published on PyPI (sha256 checked against PyPI). 8761703 bytes; sha256 <code>a45e74c20766d952830c6f7eda7d5d4f220c8626632e58b4def29d742f13e9e2</code>; md5 <code>60dbcf0d480220da3de29ed2810759cd</code></li>\n</ul>\n<p>Each file in the wheel outside its <code>.dist-info</code> directory, and each file in the sdist other than the build metadata its build generates (<code>PKG-INFO</code>, <code>setup.cfg</code> and <code>styxx.egg-info/</code>), is byte-identical to the tag's blob at the same path. <code>.github/workflows/publish.yml</code> at the tag uploads with <code>attestations: false</code>, so check the wheel and the sdist by the SHA-256 sums above, as <code>SECURITY.md</code> says.</p>\n<p>Reproduce the source bundle's contents from a clone: <code>git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.49.0/ v7.49.0</code>. Every file it holds then equals its git blob; the zip's own sha256 can differ with the git and zlib versions that write it. Without <code>core.autocrlf=false</code> on a machine that sets it, git converts text files to CRLF inside the archive and the file contents differ.</p>",
+    "access_right": "open",
+    "creators": [
+      {
+        "name": "Rodabaugh, Alexander",
+        "affiliation": "Fathom Intelligence"
+      }
+    ],
+    "keywords": [
+      "llm",
+      "agent",
+      "agent-observability",
+      "cognitive",
+      "cognitive-profiler",
+      "cognometric-fingerprint",
+      "refusal-detection",
+      "tool-call-drift",
+      "sycophancy-detection",
+      "interpretability",
+      "ai-safety",
+      "langsmith",
+      "datadog",
+      "fathom",
+      "spec-v1.0"
+    ],
+    "related_identifiers": [
+      {
+        "identifier": "https://github.com/fathom-lab/styxx/releases/tag/v7.49.0",
+        "relation": "isSupplementTo",
+        "resource_type": "software",
+        "scheme": "url"
+      },
+      {
+        "identifier": "https://github.com/fathom-lab/styxx/tree/c6e00da02673ec6a2e84919f17f56a2e4435a8c9",
+        "relation": "isDerivedFrom",
+        "resource_type": "software",
+        "scheme": "url"
+      },
+      {
+        "identifier": "https://pypi.org/project/styxx/7.49.0/",
+        "relation": "isSupplementTo",
+        "resource_type": "software",
+        "scheme": "url"
+      },
+      {
+        "identifier": "https://github.com/fathom-lab/styxx/security/advisories/GHSA-3g8h-qcfm-25xw",
+        "relation": "isDocumentedBy",
+        "scheme": "url"
+      },
+      {
+        "identifier": "10.5281/zenodo.23200977",
+        "relation": "isNewVersionOf",
+        "resource_type": "software",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.5281/zenodo.19746215",
+        "relation": "isSupplementTo",
+        "resource_type": "publication-workingpaper",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.5281/zenodo.19326174",
+        "relation": "isPartOf",
+        "resource_type": "publication-preprint",
+        "scheme": "doi"
+      }
+    ],
+    "version": "7.49.0",
+    "language": "eng",
+    "resource_type": {
+      "title": "Software",
+      "type": "software"
+    },
+    "license": {
+      "id": "mit-license"
+    },
+    "relations": {
+      "version": [
+        {
+          "index": 3,
+          "is_last": true,
+          "parent": {
+            "pid_type": "recid",
+            "pid_value": "19758618"
+          }
+        }
+      ]
+    },
+    "notes": "Software concept DOI (all versions): 10.5281/zenodo.19758618. Released 2026-10-07 as styxx 7.49.0 on PyPI (PyPI records the upload at 2026-10-07T12:43Z, UTC); git tag v7.49.0 at commit c6e00da02673ec6a2e84919f17f56a2e4435a8c9. Security advisory GHSA-3g8h-qcfm-25xw: https://github.com/fathom-lab/styxx/security/advisories/GHSA-3g8h-qcfm-25xw. styxx 7.48.1, the release before this one, is 10.5281/zenodo.23200977 in this concept."
+  },
+  "title": "styxx v7.49.0 — security repair: capsule verify passed v0.1 capsules whose certificate was edited to say what their bytes do not, and now compares the whole certificate; the diff gate withholds verdicts its known defects can make wrong",
+  "links": {
+    "self": "https://zenodo.org/api/records/23221755",
+    "self_html": "https://zenodo.org/records/23221755",
+    "preview_html": "https://zenodo.org/records/23221755?preview=1",
+    "doi": "https://doi.org/10.5281/zenodo.23221755",
+    "self_doi": "https://doi.org/10.5281/zenodo.23221755",
+    "self_doi_html": "https://zenodo.org/doi/10.5281/zenodo.23221755",
+    "reserve_doi": "https://zenodo.org/api/records/23221755/draft/pids/doi",
+    "parent": "https://zenodo.org/api/records/19758618",
+    "parent_html": "https://zenodo.org/records/19758618",
+    "parent_doi": "https://doi.org/10.5281/zenodo.19758618",
+    "parent_doi_html": "https://zenodo.org/doi/10.5281/zenodo.19758618",
+    "self_iiif_manifest": "https://zenodo.org/api/iiif/record:23221755/manifest",
+    "self_iiif_sequence": "https://zenodo.org/api/iiif/record:23221755/sequence/default",
+    "files": "https://zenodo.org/api/records/23221755/files",
+    "media_files": "https://zenodo.org/api/records/23221755/media-files",
+    "archive": "https://zenodo.org/api/records/23221755/files-archive",
+    "archive_media": "https://zenodo.org/api/records/23221755/media-files-archive",
+    "latest": "https://zenodo.org/api/records/23221755/versions/latest",
+    "latest_html": "https://zenodo.org/records/23221755/latest",
+    "versions": "https://zenodo.org/api/records/23221755/versions",
+    "draft": "https://zenodo.org/api/records/23221755/draft",
+    "access_links": "https://zenodo.org/api/records/23221755/access/links",
+    "access_grants": "https://zenodo.org/api/records/23221755/access/grants",
+    "access_users": "https://zenodo.org/api/records/23221755/access/users",
+    "access_request": "https://zenodo.org/api/records/23221755/access/request",
+    "access": "https://zenodo.org/api/records/23221755/access",
+    "communities": "https://zenodo.org/api/records/23221755/communities",
+    "communities-suggestions": "https://zenodo.org/api/records/23221755/communities-suggestions",
+    "request_deletion": "https://zenodo.org/api/records/23221755/request-deletion",
+    "file_modification": "https://zenodo.org/api/records/23221755/file-modification",
+    "quota_increase": "https://zenodo.org/api/records/23221755/quota-increase",
+    "requests": "https://zenodo.org/api/records/23221755/requests"
+  },
+  "updated": "2026-10-07T19:47:39.909251+00:00",
+  "recid": "23221755",
+  "revision": 3,
+  "files": [
+    {
+      "id": "92ef0d73-976f-4513-aacd-d8adf5dedd70",
+      "key": "styxx-v7.49.0-source-bundle.zip",
+      "size": 276179193,
+      "checksum": "md5:b6f174e73d8b83182edf0f2b5e4745d0",
+      "links": {
+        "self": "https://zenodo.org/api/records/23221755/files/styxx-v7.49.0-source-bundle.zip/content"
+      }
+    },
+    {
+      "id": "4fa9452e-9dea-4f9f-acd1-fb7f4ab4f180",
+      "key": "styxx-7.49.0.tar.gz",
+      "size": 8761703,
+      "checksum": "md5:60dbcf0d480220da3de29ed2810759cd",
+      "links": {
+        "self": "https://zenodo.org/api/records/23221755/files/styxx-7.49.0.tar.gz/content"
+      }
+    },
+    {
+      "id": "b7ac1203-eb5d-423d-95fa-bc9f2aa909a8",
+      "key": "styxx-7.49.0-py3-none-any.whl",
+      "size": 8101703,
+      "checksum": "md5:3eafa8d101253cfe304eab200d03ae8e",
+      "links": {
+        "self": "https://zenodo.org/api/records/23221755/files/styxx-7.49.0-py3-none-any.whl/content"
+      }
+    }
+  ],
+  "swh": {},
+  "owners": [
+    {
+      "id": "1591968"
+    }
+  ],
+  "status": "published",
+  "stats": {
+    "downloads": 21,
+    "unique_downloads": 18,
+    "views": 89,
+    "unique_views": 80,
+    "version_downloads": 0,
+    "version_unique_downloads": 0,
+    "version_unique_views": 0,
+    "version_views": 0
+  },
+  "state": "done",
+  "submitted": true
+}
