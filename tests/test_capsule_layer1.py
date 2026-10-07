@@ -15,8 +15,9 @@ split the document only at \\n (certify splits as str.splitlines, form feed incl
 as a UTF-16 index, fell back to the token's earliest occurrence, built its spans from the characters
 U+0001 to U+0003 (so those characters in a document opened a band), and printed the free-text
 install line from the payload. The page now splits as certify does, counts code points, builds
-each band as an element from text, refuses to move a row, and builds the install line from the
-version.
+each band as an element from text, and refuses to move a row. A review of that round found the
+install line built from the minter's stated version, so the page names a floor set in its
+template instead.
 
 The behaviour tests run the page's own script under node with a small DOM stub; where node is
 absent they skip loudly. The template tests need nothing.
@@ -122,12 +123,12 @@ def test_no_text_in_the_payload_can_open_or_close_an_element(tmp_path):
     assert html.count(_BEGIN) == 1
 
 
-def test_the_install_line_is_built_from_the_version_never_from_the_free_text(minted):
+def test_the_install_line_is_never_built_from_the_free_text(minted):
     p = _payload(minted)
     p["verifier"]["pip"] = "styxx-capsule-tools==" + p["verifier"]["styxx_version"]
     page = _render_html(p)
     assert "styxx-capsule-tools" not in page.replace(json.dumps(p["verifier"]["pip"]), "")
-    assert "pip install styxx==" + p["verifier"]["styxx_version"] in page
+    assert 'pip install "styxx>=7.49.0"' in page    # the floor; see the tests at the end
 
 
 # ---------------------------------------------------------------- the page, run
@@ -280,11 +281,12 @@ def test_a_row_that_is_not_at_its_column_is_never_moved_to_another_number(minted
     assert s["painted"] == 0 and "verified" not in s["cards"]
 
 
-def test_the_page_shows_the_install_line_for_the_version_not_the_payload_s_text(minted, tmp_path):
+def test_the_page_never_shows_the_payload_s_install_text(minted, tmp_path):
     def pip(p):
         p["verifier"]["pip"] = "styxx-capsule-tools==7.48.0"
     s = _run(tmp_path, _splice(minted, tmp_path / "pip.capsule.html", pip))
-    assert s["install"].startswith("pip install styxx==") and "capsule-tools" not in s["install"]
+    assert s["install"].startswith('pip install "styxx>=7.49.0"')
+    assert "capsule-tools" not in s["install"]
 
 
 # ---------------------------------------------------------------- rows the page has no band for
@@ -316,3 +318,37 @@ def test_a_certificate_without_its_epistemics_summary_shows_no_volunteered_share
     s = _run(tmp_path, _splice(minted, tmp_path / "nosum.capsule.html", change))
     assert s["verdict"]["text"] == "OATH-HELD"
     assert "<b>—</b><span>volunteered share</span>" in s["cards"], s["cards"]
+
+
+# ---------------------------------------------------------------- the install line is a floor
+#
+# Review round 2 (forgery lens, major): the page built its install line from the minter's stated
+# version, so this branch's own mints told their reader to install PyPI 7.48.0, under which the
+# D1 forgery verifies, and a capsule stating styxx 0.1 told its reader to install 0.1. The page
+# now names a floor set in its template, the release that carries this repair, whatever the
+# payload states.
+
+FLOOR_LINE = 'pip install "styxx>=7.49.0"'
+
+
+def test_the_template_names_the_floor_and_the_floor_is_the_module_s():
+    from styxx.capsule import _LAYER2_FLOOR, _TEMPLATE
+    assert _LAYER2_FLOOR == "7.49.0"
+    assert _TEMPLATE.count(FLOOR_LINE) == 2 and "const FLOOR = '7.49.0';" in _TEMPLATE
+    assert "__PIP__" not in _TEMPLATE
+
+
+def test_the_page_names_the_floor_not_the_stated_version(minted):
+    p = _payload(minted)
+    p["verifier"]["styxx_version"], p["verifier"]["pip"] = "0.1", "styxx==0.1"
+    page = _render_html(p)
+    i = page.index(_BEGIN)
+    shown = page[:i] + page[page.index(_END, i):]
+    assert shown.count(FLOOR_LINE) == 2 and "styxx==" not in shown
+
+
+def test_the_page_s_script_writes_the_floor(minted, tmp_path):
+    def stated_old(p):
+        p["verifier"]["styxx_version"], p["verifier"]["pip"] = "0.1", "styxx==0.1"
+    s = _run(tmp_path, _splice(minted, tmp_path / "old.capsule.html", stated_old))
+    assert s["install"].splitlines()[0] == FLOOR_LINE, s["install"]

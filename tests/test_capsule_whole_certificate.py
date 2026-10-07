@@ -745,3 +745,21 @@ def test_a_certificate_without_its_epistemics_summary_is_not_minted(tmp_path):
         _mint(d, CLEAN, cert_edit=no_summary)
     assert "certificate.epistemics_summary" in str(e.value)
     assert not (d / "d.capsule.html").exists()
+
+
+# ---------------------------------------------------------------- the stated version and the floor
+
+@pytest.mark.parametrize("version,below", [("0.1", True), ("7.48.0", True), ("7.48.1", True),
+                                           ("7.49.0rc1", True), ("7.49.0", False),
+                                           ("7.49.0.post1", False), ("7.50", False)])
+def test_verify_advises_when_the_stated_version_is_below_the_floor(clean, tmp_path, version, below):
+    """The stated version is printed as stated; below the floor, layer 2 also says that a styxx of
+    that version passes certificates this one fails (PyPI 7.48.0 passes the D1 forgery)."""
+    def stated(p):
+        p["verifier"]["styxx_version"], p["verifier"]["pip"] = version, f"styxx=={version}"
+    rep = verify_capsule(_forge(clean, tmp_path / "v.capsule.html", stated))
+    assert rep["ok"] is True, rep["problems"]
+    floor = [a for a in rep["advisory"] if "styxx>=7.49.0" in a]
+    assert bool(floor) is below, rep["advisory"]
+    if below:
+        assert f"styxx {version}" in floor[0]

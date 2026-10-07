@@ -716,6 +716,13 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
     stated.append(f"created {payload.get('created')} (when the capsule was minted)")
     stated.append(f"verifier.styxx_version {ver.get('styxx_version')}, pip "
                   f"{ver.get('pip')} (the styxx the minter ran)")
+    sv = ver.get("styxx_version")
+    if isinstance(sv, str) and _version_key(sv) and _version_key(sv) < _version_key(_LAYER2_FLOOR):
+        advisory.append(f"the capsule states it was minted with styxx {sv}, below "
+                        f"{_LAYER2_FLOOR}, the release whose layer 2 compares the whole "
+                        f"certificate and the page: a styxx below it passes certificates this one "
+                        f"fails, so check a capsule with styxx>={_LAYER2_FLOOR}, not with the "
+                        f"version it states")
     return {"problems": problems, "advisory": advisory, "not_checked": not_checked,
             "stated": stated, "compared": compared, "mint_refusals": mint_refusals}
 
@@ -993,11 +1000,27 @@ def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: byte
 # the rendered capsule (layer 1 lives here, inline, zero external requests)
 # ---------------------------------------------------------------------------------
 
-def _pip_of(payload: dict) -> str:
-    """The install line the page shows, built from the version alone: until 2026-10-05 the page
-    printed payload.verifier.pip, free text a forger could point at another package."""
-    v = (payload.get("verifier") or {}).get("styxx_version")
-    return f"styxx=={v}" if isinstance(v, str) and _VERSION.fullmatch(v) else "styxx"
+# The page's install line names this floor, written into its template (_TEMPLATE, twice in the
+# HTML and once as FLOOR in its script): 7.49.0, the next minor release after 7.48.1, which will
+# carry this layer 2 (the whole-certificate comparison and the page check). Until review round 3
+# the line was built from the minter's stated version, which a forger chooses and which can name
+# a styxx that passes forged certificates (PyPI 7.48.0 passes the D1 forgery). verify advises
+# when a capsule states a version below the floor. Changing it changes every page this renderer
+# produces, so a later change keeps this renderer for the pages it minted, as
+# styxx._capsule_page_v01_legacy keeps the one before it.
+_LAYER2_FLOOR = "7.49.0"
+
+
+def _version_key(v: str) -> tuple:
+    """Order on the versions _VERSION accepts: the release numbers, then a pre-release or a
+    development release before the release itself, a post-release after it."""
+    m = re.fullmatch(r"(\d+(?:\.\d+){1,3})((?:a|b|rc)\d+)?(\.post\d+)?(\.dev\d+)?", v)
+    if not m:
+        return ()
+    rel = tuple(int(x) for x in m.group(1).split("."))
+    rel += (0,) * (4 - len(rel))
+    early = bool(m.group(2)) or (bool(m.group(4)) and not m.group(3))
+    return rel + (0 if early else 1,)
 
 
 def _render_html(payload: dict) -> str:
@@ -1013,9 +1036,8 @@ def _render_html(payload: dict) -> str:
     # element, and the placeholders are filled in one pass, so a document name cannot carry one.
     payload_json = json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
     fill = {"TITLE": _html.escape(f"OATH Capsule — {payload['document']['name']}"),
-            "PIP": _html.escape(_pip_of(payload)),
             "PAYLOAD": payload_json}
-    return re.sub(r"__(TITLE|PIP|PAYLOAD)__", lambda m: fill[m.group(1)], _TEMPLATE)
+    return re.sub(r"__(TITLE|PAYLOAD)__", lambda m: fill[m.group(1)], _TEMPLATE)
 
 
 _TEMPLATE = r"""<!DOCTYPE html>
@@ -1060,7 +1082,7 @@ color:var(--mute);font-size:12px;max-width:1080px;margin-left:auto;margin-right:
 #tamper{display:none;background:#f33;color:#fff;padding:14px 24px;font-weight:700}
 </style></head><body>
 <noscript><div class="notrun">THIS PAGE DID NOT RUN. Scripts are off, so it checked nothing
-and shows no verdict. Check the capsule with layer 2: pip install __PIP__, then
+and shows no verdict. Check the capsule with layer 2: pip install "styxx>=7.49.0", then
 python -m styxx.capsule verify on this file.</div></noscript>
 <div id="tamper">TAMPERED — embedded bytes do not match this capsule's certificate. Its
 verdict, counts and bands are not shown, because they do not describe these bytes.</div>
@@ -1082,7 +1104,7 @@ verdict, counts and bands are not shown, because they do not describe these byte
   <h2>receipts — byte integrity</h2><table id="receipts"><tr><th>receipt</th>
   <th>sha-256 (recomputed in your browser)</th><th></th></tr></table>
   <h2>re-run it yourself (layer 2 — the real verifier)</h2>
-  <pre class="doc">pip install __PIP__
+  <pre class="doc">pip install "styxx>=7.49.0"
 python -m styxx.capsule verify this_file.html</pre>
 </main>
 <footer id="foot"></footer>
@@ -1118,14 +1140,17 @@ python -m styxx.capsule verify this_file.html</pre>
     const hex = b => [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
     const sha = async u8 => hex(await subtle.digest('SHA-256', u8));
     const ver = String(P.verifier.styxx_version);
-    const pip = /^\d+(\.\d+){1,3}((a|b|rc)\d+)?(\.post\d+)?(\.dev\d+)?$/.test(ver)
-      ? 'styxx==' + ver : 'styxx';
+    // The styxx a reader installs to check this capsule in full: 7.49.0, the next minor release
+    // after 7.48.1, which will carry this repair (layer 2's whole-certificate comparison and its
+    // page check). Set here in the template, never taken from the payload, whose stated version
+    // the minter chooses; an older styxx passes certificates this one fails.
+    const FLOOR = '7.49.0';
     document.getElementById('meta').textContent =
       P.document.name + ' · capsule ' + P.spec + ' · minted ' + P.created +
       ' · verifier styxx ' + ver + ' (as stated by the minter)';
     document.querySelectorAll('main pre.doc')[1] &&
       (document.querySelectorAll('main pre.doc')[1].textContent =
-       'pip install ' + pip + '\n' +
+       'pip install "styxx>=' + FLOOR + '"\n' +
        'python -m styxx.capsule verify ' + location.pathname.split('/').pop());
 
     // integrity: every embedded byte vs the certificate
