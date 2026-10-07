@@ -7,7 +7,124 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased] — `capsule verify` compares the whole certificate and the page, and a minted page shows no verdict it has not checked (#190 to #197)
+## [7.49.0] — 2026-10-07 — security repair: `capsule verify` passed v0.1 capsules whose certificate was edited to say what their bytes do not, and now compares the whole certificate; the diff gate withholds verdicts its known defects can make wrong
+
+A minor release: a security repair to how `python -m styxx.capsule verify` checks a v0.1 OATH
+capsule, the diff gate's PATH-2a overlay, the GitHub Action's new default, and what else merged on
+`main` after 7.48.1. Upgrade with `pip install -U styxx==7.49.0`. For anyone who verifies capsules
+made by someone else, upgrading is the fix. The entries headed `[Unreleased]` until this cut are
+kept whole below, in the order this file carried them; entries written at this cut say so in their
+opening line.
+
+**Security: capsule verification (GHSA-XXXX-XXXX-XXXX)**
+- Layer 2 of a v0.1 capsule, `python -m styxx.capsule verify`, re-runs `certify` on the embedded
+  document and receipts. Before this release it compared only the verdict (from 7.48.0 by class,
+  its `, N uncovered` suffix stripped), the counts and the status of each ledger row the
+  certificate carries, and it read the payload by text without checking the page around it, so a
+  capsule whose certificate was edited to say what its bytes do not verified. Run at this cut from
+  the v7.47.0, v7.48.0 and v7.48.1 tag trees, each over capsules it minted itself: a certificate
+  edited to report 0 uncovered (the D1 forgery), a deleted ledger row, a row's `receipt_ref`
+  pointed at another receipt, a row's epistemics flag flipped, and a genuine payload hidden in an
+  HTML comment ahead of one whose document reads otherwise all verify under 7.48.0 and 7.48.1.
+  7.47.0's certify writes no uncovered band, so D1 has nothing to edit in its own capsules; 7.47.0
+  verifies the other four, and verifies D1 applied to a capsule a later styxx minted, whose honest
+  form it fails. 7.49.0 fails every one of them. Affected: 7.47.0, 7.48.0 and 7.48.1.
+- Not closed, by the operator's decision: 7.49.0 still accepts the page every styxx rendered before
+  it, since honest capsules carry it. Around that page, the D1 forgery posed as older than the
+  uncovered band (the band fields and the receipt binding deleted, another issuer's hash) exits 0,
+  and 7.49.0 prints the installed verifier's verdict beside the embedded one, six NOT CHECKED lines
+  and three advisories that name the uncovered number and say to check with `styxx>=7.49.0`.
+  Around the page 7.49.0 mints, the same pose fails. The older page tells its reader to
+  `pip install styxx==` the version its minter states, and 7.47.0, 7.48.0 and 7.48.1 each pass
+  forgeries 7.49.0 fails, this pose among them.
+- Until you can upgrade: an exit 0 from 7.47.0, 7.48.0 or 7.48.1 says only that the payload it read,
+  which need not be the one a browser draws, carries bytes matching its certificate's hashes, and
+  that the verdict (by class in 7.48.0 and 7.48.1), the counts and the status of each row the
+  certificate carries reproduce. To rely on a document's numbers, certify the document and receipts
+  you mean to rely on yourself (`python -m styxx.certify DOC RECEIPTS...`) and read that
+  certificate, not the capsule's or its page.
+
+**For users of the diff gate** (`python -m styxx.diffgate`, `gate_diff_text`, `gate_diff`, the
+commit-msg and agent hooks)
+- PATH-2a: where the #97, #121 or #101 mechanism can have made a VERIFIED or CONTRADICTED verdict
+  wrong, the claim is now UNCHECKABLE, and its reason names the verdict withheld, the defect and the
+  reading without the overlay. The overlay never adds an accusation and never makes a verdict
+  VERIFIED; the three defects are not repaired. On the lab's committed corpora it withholds 80 of
+  2,231 decided claims (3.6%; entry below). `--strict` fails on each new abstention, as on any
+  UNCHECKABLE.
+- A contradicted claim is printed as `[CONTRADICTED]` with its reason, not as `[LIE]`, in the demo,
+  the hooks and the bookmarklet, and the demo's closing line says how many claims the diff
+  contradicts. Records, verdicts and exit codes are unchanged.
+
+**For users of the GitHub Action** (`uses: fathom-lab/styxx@...`)
+- It reports by default. `soft-fail` defaults to `"true"`: every verdict goes in the job summary,
+  each contradicted claim is named in an annotation, and the gate's verdicts never fail the job.
+  Only an explicit `soft-fail: "false"` blocks. A workflow on `@main` has run with this default
+  since it merged; the reasons and figures are in the entry below.
+- The Action imports the `styxx` package beside its script, at the ref the workflow names, not the
+  one pip installs, so `@main` and a workflow pinned to this release's tag both run PATH-2a.
+
+**For users who verify capsules**, beyond the security repair: `verify` compares every field
+certify writes, type for type, and prints by name each field an older certificate lacks
+(`NOT CHECKED`), the fields it takes as stated by the minter, and every advisory; it escapes control
+characters in what it prints; a sweep of 600 malformed single-field mutations now ends in a
+problem, not a traceback, and in `styxx.charon` in an UNRESOLVED or not-reproduced line (two
+classes a review found still end `verify` in a traceback, so #196 stays open). A newly minted page shows a verdict only after its hashes match, and its install line names
+`styxx>=7.49.0`, not the minter's version. A capsule of a renamed copy now fails, and
+`capsule create` refuses some certificates older styxx issued (re-certify, then mint). All ten
+committed v0.1 capsules still verify, each with an advisory that it states a styxx below 7.49.0.
+The v0.2 and sworn pages' install lines are not repaired.
+
+**What did not change.** `styxx/certify.py`, `styxx/sworn.py` and `styxx/corpus_audit.py` are the
+files 7.48.1 shipped, so certify, sworn and corpus_audit read as they did. Outside the PATH-2a block
+and the printed label the diff gate reads as 7.48.1 did, and the path accusation stays withheld.
+Nothing in a capsule is signed.
+
+**Also in this release**
+- Priority sentences that no survey priced are withdrawn from docstrings and printed strings in the
+  package and from the docs, and the prior art is credited with dates (entry below).
+- In the repository, not the wheel: `SECURITY.md` sends reports through GitHub private
+  vulnerability reporting instead of an email address the lab cannot confirm receives mail;
+  7.48.1's Zenodo record (10.5281/zenodo.23200977); and `web/gate/README.md`'s run-book pin, held
+  to `py_side.py` by a test.
+
+**Cutting this release**
+- `styxx/_version.py` is 7.49.0 (3e8722cb), the floor the capsule page names for layer 2
+  (`_LAYER2_FLOOR` and `const FLOOR` in `styxx/capsule.py`), and `CITATION.cff` gives `version`
+  7.49.0 and `date-released` 2026-10-07 (25d35543).
+- `conformance/sworn/` was regenerated for the version stamp (3e8722cb; entry below): 15 vectors
+  took new ids, 0 moved, and no expected outcome changed.
+- `README.md`, which becomes the PyPI page, was audited at this cut against the tree it ships with.
+  Its 89 tag-pinned links now name v7.49.0 instead of v7.48.0 (0a4c479e), on the same lines, so
+  `zenodo/MANIFEST.json`'s line citations hold; no other line changed.
+- `web/gate/README.md` said PATH-2a was not released; it now says 7.49.0 ships it (7a418e2b).
+
+### conformance/sworn regenerated for 7.49.0: the version stamp gave the same fifteen vectors new ids and moved no expected outcome
+
+**`conformance/sworn/` (seven files) and `styxx/_version.py`; commit 3e8722cb. Written at this cut
+from that commit.**
+
+- **Why.** The verdict-receipt digest covers `verifier.styxx_version`, so bumping
+  `styxx/_version.py` turns C7, `test_the_committed_set_regenerates_to_its_own_digest`, red, as at
+  7.48.0 and 7.48.1.
+- **The set reproduced before anything was regenerated.** In the release worktree (win32, CPython
+  3.12.10, a CRLF checkout under `core.autocrlf=true`; the set's directory is `-text`), at
+  `origin/main` d390ddcb with the version still 7.48.1, `gen_vectors.py --check` regenerated the
+  committed digest `8c0a58b2…` and printed "CHECK OK".
+- **What moved.** The in-place run after the bump found 0 moved vectors, 15 dropped and 15 added,
+  all in mode `receipt_check` (`cli` 1, `gaming` 7, `receipt_v1` 4, `rules` 3), from the same tests
+  as at 7.48.1. Each dropped vector equals an added one in every field once their receipt blobs are
+  compared without `verifier.styxx_version` and `digest`, and the 15 blobs out equal the 15 in as
+  multisets under that comparison. `observer.json` moved 15 rows to the new ids, unchanged as a
+  multiset. In `index.json` only the four family digests, the blobs digest, `set_sha256` and
+  `provenance.styxx_version` changed. Still 3620 vectors, 20 families and 3981 blobs. Afterwards
+  `--check` reproduces `4138dabc…` and `--replay` passes 3620 of 3620; `tests/test_sworn*.py` with
+  the differential, challenge and capsule-sworn tests give 1237 passed and 1 skipped.
+- **What it does not say:** that CI passes on the regenerated set (not observed here), or that the
+  set is more correct than it was. No committed receipt, certificate, sworn document, capsule or
+  charon log was touched.
+
+### `capsule verify` compares the whole certificate and the page, and a minted page shows no verdict it has not checked (#190 to #197)
 
 On 2026-10-05 a check of the lab's own published v0.1 capsule found that both verification layers
 could be satisfied by a capsule whose certificate said something its bytes do not. Four rounds of
@@ -212,7 +329,7 @@ after 2026-08-30, carrying another issuer's hash, has the shape of one issued th
 the older page it verifies with those fields NOT CHECKED and the live verdict printed beside its
 own (around the current page it fails).
 
-## [Unreleased] — web/gate/README.md: the run book's pin, measured at the head, and held to it by a test
+### web/gate/README.md: the run book's pin, measured at the head, and held to it by a test
 
 Step zero, item 6, of the 2026-10-06 study asked that `web/gate/README.md` name the committed bookmarklet's real
 sha256 and the real count of pinned pairs. Measured at `origin/main` 3ea3cac7: both already were.
@@ -230,7 +347,7 @@ the README says and `test_the_shipped_bookmarklet_is_the_build_the_readme_names`
 counts to the files (`check_pairs.js`'s count was once stale, 153 named while 180 were read). The pin test fails on
 `origin/main`'s README and passes here; the count tests pass on both. No code changed.
 
-## [Unreleased] — CONTRADICTED is printed as CONTRADICTED, with its reason, not as LIE
+### CONTRADICTED is printed as CONTRADICTED, with its reason, not as LIE
 
 The demo, the bookmarklet and the hooks printed a CONTRADICTED verdict as `[LIE]`, and the demo closed with
 "this summary would fail your CI with each lie named". A CONTRADICTED verdict says the diff does not show what a
@@ -262,7 +379,7 @@ study. Each surface now prints the verdict's own name and the reason beside it; 
   them; the five hook test modules assert `[CONTRADICTED]` where they asserted `[LIE]`. On `origin/main` the new module
   fails (the demo, the six surfaces and the eight documents carry the label) and it passes here.
 
-## [Unreleased] — the GitHub Action reports by default; blocking is opt-in with `soft-fail: "false"`
+### the GitHub Action reports by default; blocking is opt-in with `soft-fail: "false"`
 
 **This changes behaviour for anyone who relied on the default.** `action.yml`'s `soft-fail` input
 defaulted to `"false"`, so a repository that added `uses: fathom-lab/styxx@main` got a check that
@@ -348,7 +465,7 @@ lines, so `zenodo/MANIFEST.json`'s line citations hold. The pre-commit, Codex an
 READMEs, which called the Action "the enforcement", now say it enforces only with
 `soft-fail: "false"`.
 
-## [Unreleased] — the security contact was an email address the lab cannot confirm receives mail; reports now go through GitHub
+### the security contact was an email address the lab cannot confirm receives mail; reports now go through GitHub
 
 **Security.** `SECURITY.md` told reporters to email an address in two places: the reporting section
 and the last step of *Verifying a release*. The address's domain has no mail-exchange (MX) record
@@ -363,7 +480,7 @@ The README's two links to the security policy pointed at the `v7.48.0` copy, whi
 old address; they now point at `main`. The READMEs PyPI shows for 7.48.0 and 7.48.1 keep their tag
 links, and the `SECURITY.md` inside those tags is unchanged, until the next release.
 
-## [Unreleased] — styxx 7.48.1 on Zenodo, as the next version of the software record
+### styxx 7.48.1 on Zenodo, as the next version of the software record
 
 styxx 7.48.1 is deposited on Zenodo as **10.5281/zenodo.23200977**, a new version of the styxx software
 concept record **10.5281/zenodo.19758618**, made from 7.48.0's record (10.5281/zenodo.23042251). Zenodo
@@ -394,7 +511,7 @@ after the tag is in it.
   line 34 names 7.48.0's version DOI beside the concept DOI, which is still true of 7.48.0; whether it
   should name 7.48.1's is the operator's call. `zenodo/README.md` still describes the 7.48.0 flow only.
 
-## [Unreleased] — PATH-2a: the diff gate withholds a verdict where #97, #121 or #101 can have made it wrong
+### PATH-2a: the diff gate withholds a verdict where #97, #121 or #101 can have made it wrong
 
 Branch `fix/diffgate-abstain-where-wrong`, on `main` `43b3b608`. Twelve review passes; each has a note under
 `papers/closed-model-frontier/` (`NOTE_path2a_abstain_overlay_2026_09_30.md`, `NOTE_path2a_second_pass_…` to
@@ -668,7 +785,7 @@ reviews' verdict; a committed note, not edited), one of its code commits carried
 rewords, both because the word check ran after the commit in one chained command, and two of its scratch edits
 went through a shell heredoc again, each failing its own assertion before writing anything.
 
-## [Unreleased] — prior art credited, and the priority sentences that were not earned
+### prior art credited, and the priority sentences that were not earned
 
 A landscape synthesis dated 2026-09-28, checked by a critic pass, found that neighbours did parts of
 this lab's work earlier. PR-MCI (Gong, Pinna, Bian, Zhang; arXiv 2601.04886, 2026-01-08) measured
