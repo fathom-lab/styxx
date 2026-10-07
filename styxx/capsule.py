@@ -312,7 +312,7 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
         # the certificate as certify's own command writes it: through JSON, so a tuple is a list
         # and every number has the type a reader of the file sees
         live = json.loads(json.dumps(live, ensure_ascii=False))
-        cmp = _compare_certificate_v01(cert, live, payload)
+        cmp = _compare_certificate_v01(cert, live, payload, recs)
         problems.extend(cmp["problems"])
         advisory.extend(cmp["advisory"])
 
@@ -554,7 +554,7 @@ def _generation_problems(cert: dict) -> dict:
     return out
 
 
-def _compare_certificate_v01(cert: dict, live: dict, payload: dict) -> dict:
+def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) -> dict:
     """Compare an embedded certificate with the one certify_doc re-derives from the embedded
     bytes. A field both carry must be equal, type for type. A field the installed certify writes
     and the certificate lacks is NOT CHECKED, by name, with the value the installed verifier finds
@@ -664,8 +664,8 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict) -> dict:
         absent_field("receipt_binding", "not carried (receipt digests, and the repository head, "
                                         "paths and committed flags at mint)")
     else:
-        _compare_binding(cert["receipt_binding"], live.get("receipt_binding") or {}, problems,
-                         not_checked, stated, compared)
+        _compare_binding(cert["receipt_binding"], live.get("receipt_binding") or {}, recs,
+                         problems, not_checked, stated, compared)
 
     ver = payload.get("verifier") or {}
     stated.append(f"created {payload.get('created')} (when the capsule was minted)")
@@ -678,10 +678,36 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict) -> dict:
             "stated": stated, "compared": compared, "mint_refusals": mint_refusals}
 
 
-def _compare_binding(rb, lrb: dict, problems: List[str], not_checked: List[str],
+def _binding_path_problem(path, name) -> Optional[str]:
+    """Why `path` is not one bind_at_mint writes for a receipt named `name`, else None.
+
+    bind_at_mint writes the receipt's path relative to the repository root, in POSIX form
+    (Repo.rel_or_none: os.path.relpath, as_posix, and None for anything outside the root), so it
+    ends in the receipt's own name. That name can differ only in case, where a case-insensitive file
+    system resolves the name to the case on disk."""
+    if not isinstance(path, str):
+        return "is not a string"
+    parts = path.split("/")
+    if (PurePosixPath(path).is_absolute() or PureWindowsPath(path).drive or "\\" in path
+            or any(p in ("", ".", "..") for p in parts)):
+        return "is not a relative POSIX path inside the repository"
+    if any(ord(c) < 32 or 127 <= ord(c) < 160 for c in path):
+        return "holds a control character"
+    if not isinstance(name, str) or parts[-1].casefold() != name.casefold():
+        return f"does not end in the receipt's name {_short(name)}"
+    return None
+
+
+def _compare_binding(rb, lrb: dict, recs: dict, problems: List[str], not_checked: List[str],
                      stated: List[str], compared: List[str]) -> None:
     """The receipt binding: its digests are functions of the receipt bytes and are compared; its
-    repository facts are stated, after checking they are a combination bind_at_mint writes."""
+    repository facts are stated, after checking they are a combination bind_at_mint writes. One
+    of those facts is also a function of the bytes and is compared: bind_at_mint marks a receipt
+    committed only when the blob at head is the receipt's bytes (as they are, or with LF or CRLF
+    line ends), and writes that blob. Until review round 3 only the blob's form was checked, so a
+    certificate certified over edited bytes and given an honest mint's head, paths and blobs
+    verified exactly like that mint."""
+    from styxx.receipt_binding import git_blob_id
     if not isinstance(rb, dict):
         problems.append("certificate.receipt_binding is not an object")
         return
@@ -711,23 +737,54 @@ def _compare_binding(rb, lrb: dict, problems: List[str], not_checked: List[str],
                 problems.append(f"certificate.receipt_binding.receipts[{r.get('name')!r}].{k} is "
                                 f"missing: certify writes it for every receipt")
     # what bind_at_mint can write: no path, blob or committed flag without a head; a blob exactly
-    # when committed; all_receipts_committed exactly when every receipt is
+    # when committed; all_receipts_committed exactly when every receipt is; and a note only in
+    # one of three forms, each where it writes it ("no receipts" with no rows; "no repository at
+    # mint: ..." with no head; certify's own "binding failed: ..." with neither)
     head, note, allc = rb.get("head"), rb.get("note"), rb.get("all_receipts_committed")
     if head is not None and not (isinstance(head, str) and _GIT_ID.fullmatch(head)):
         problems.append(f"receipt_binding.head {_short(head)} is not a commit id")
     if note is not None and not isinstance(note, str):
         problems.append("receipt_binding.note is not a string")
-    if isinstance(note, str) and note.startswith("no repository at mint") and head is not None:
-        problems.append("receipt_binding says there was no repository at mint and names a head")
+    elif note is None:
+        if rows == []:
+            problems.append("receipt_binding lists no receipts and carries no note; certify "
+                            "writes the note 'no receipts' there")
+    elif note.startswith("no repository at mint: "):
+        if head is not None:
+            problems.append("receipt_binding says there was no repository at mint and names a head")
+    elif note.startswith("binding failed: "):
+        if rows or head is not None:
+            problems.append("receipt_binding.note says the binding failed at mint, and the block "
+                            "names a head or receipts; certify's fallback carries neither")
+    elif note == "no receipts":
+        if rows:
+            problems.append(f"receipt_binding.note says there were no receipts, and the block "
+                            f"lists {len(rows)}")
+    else:
+        problems.append(f"receipt_binding.note {_short(note, 80)} is not a note certify writes")
     for r in rows:
         blob, committed, path = r.get("blob"), r.get("committed"), r.get("path")
-        if (not isinstance(committed, bool) or (path is not None and not isinstance(path, str))
+        if (not isinstance(committed, bool)
                 or (blob is not None and not (isinstance(blob, str) and _GIT_ID.fullmatch(blob)))
                 or committed != (blob is not None)
                 or (head is None and (path is not None or committed))):
             problems.append(f"receipt_binding row {r.get('name')!r} (path {_short(path)}, blob "
                             f"{_short(blob)}, committed {_short(committed)}, head {_short(head)}) "
                             f"is not a combination certify writes")
+        why = None if path is None else _binding_path_problem(path, r.get("name"))
+        if why:
+            problems.append(f"receipt_binding path {_short(path)} of {r.get('name')!r} is not a "
+                            f"repository path certify writes: it {why}")
+        raw = recs.get(r.get("name")) if isinstance(r.get("name"), str) else None
+        if committed is True and isinstance(blob, str) and raw is not None:
+            lf = raw.replace(b"\r\n", b"\n")
+            if blob not in {git_blob_id(raw), git_blob_id(lf),
+                            git_blob_id(lf.replace(b"\n", b"\r\n"))}:
+                problems.append(f"receipt_binding row {r.get('name')!r} says it was committed as "
+                                f"blob {blob}, which is not the git blob of the embedded receipt's "
+                                f"bytes (as they are, or with LF or CRLF line ends); certify "
+                                f"marks a receipt committed only when the blob at head is those "
+                                f"bytes")
     if not _same(allc, bool(rows) and all(r.get("committed") is True for r in rows)):
         problems.append(f"receipt_binding.all_receipts_committed {_short(allc)} does not follow "
                         f"from its rows")
@@ -752,9 +809,12 @@ def _compare_binding(rb, lrb: dict, problems: List[str], not_checked: List[str],
                                     f"reproduced: live {lr.get(k)} vs embedded {r[k]}")
         if len(problems) == before:
             compared.append("receipt_binding digests")
+    # The head, the paths and the commits behind them cannot be checked from the bytes: a capsule
+    # carries no repository. A blob is printed beside its flag; it names the receipt's own bytes.
     stated.append(
         f"certificate.receipt_binding: head {head}, all_receipts_committed {allc}; "
         + "; ".join(f"{r.get('name')} path {r.get('path')} committed {r.get('committed')}"
+                    + (f" blob {r.get('blob')}" if r.get("blob") is not None else "")
                     for r in rows)
         + (f"; note {note!r}" if note else ""))
 

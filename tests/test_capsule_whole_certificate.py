@@ -516,3 +516,115 @@ def test_every_committed_v01_capsule_still_verifies(rel):
         assert any(n.startswith("certificate.uncovered:") for n in rep["not_checked"])
     if "receipt_binding" not in carried:
         assert any(n.startswith("certificate.receipt_binding:") for n in rep["not_checked"])
+
+
+# ---------------------------------------------------------------- the binding's repository facts
+#
+# Review round 2 (forgery, blocker): bind_at_mint marks a receipt committed, with its blob, only
+# when the blob at head IS the receipt's bytes (as they are, or with LF or CRLF line ends). The
+# blob is therefore a function of the embedded bytes, but layer 2 checked only its form, so a
+# certificate certified over edited bytes and given the repository facts of an honest mint (a
+# real head, the real path and the real committed blob) verified with output identical to the
+# honest mint's.
+
+def _blob(b: bytes) -> str:
+    from styxx.receipt_binding import git_blob_id
+    return git_blob_id(b)
+
+
+def _as_committed(p, blob_of):
+    """The binding a mint inside a repository writes, with each row's blob chosen by blob_of."""
+    rb = p["certificate"]["receipt_binding"]
+    rb.pop("note", None)
+    rb["head"] = "a" * 40
+    for r in rb["receipts"]:
+        r["path"], r["committed"], r["blob"] = "papers/" + r["name"], True, blob_of(r)
+    rb["all_receipts_committed"] = True
+
+
+def _receipt_bytes(capsule):
+    return {r["name"]: base64.b64decode(r["b64"]) for r in _payload_of(capsule)["receipts"]}
+
+
+def test_a_committed_receipt_must_name_the_blob_of_its_embedded_bytes(clean, tmp_path):
+    def blob_of_other_bytes(p):
+        _as_committed(p, lambda r: _blob(json.dumps({"eval": {"accuracy": 0.95}}).encode()))
+    _fails_on(clean, tmp_path, blob_of_other_bytes, "is not the git blob of the embedded receipt")
+
+
+@pytest.mark.parametrize("form", ["as embedded", "LF", "CRLF"])
+def test_a_committed_receipt_naming_its_own_blob_verifies_and_the_blob_is_printed(clean, tmp_path,
+                                                                                 form):
+    recs = _receipt_bytes(clean)
+
+    def own_blob(r):
+        b = recs[r["name"]].replace(b"\r\n", b"\n")
+        return _blob({"as embedded": recs[r["name"]], "LF": b,
+                      "CRLF": b.replace(b"\n", b"\r\n")}[form])
+
+    rep = verify_capsule(_forge(clean, tmp_path / "own.capsule.html",
+                                lambda p: _as_committed(p, own_blob)))
+    assert rep["ok"] is True, rep["problems"]
+    assert any(f"blob {own_blob({'name': 'r.json'})}" in s for s in rep["stated"]), rep["stated"]
+
+
+def _git(repo, *args):
+    subprocess.run(["git", "-C", str(repo), "-c", "user.name=t", "-c", "user.email=t@t",
+                    "-c", "core.autocrlf=false", *args], check=True, capture_output=True)
+
+
+def test_a_forged_receipt_given_an_honest_mint_s_repository_facts_fails(tmp_path):
+    """The review's f9, end to end: an honest mint inside a repository, then the receipt edited,
+    certified outside it, and given the honest binding's head, paths, blobs and committed flags."""
+    import shutil
+    if not shutil.which("git"):
+        pytest.skip("git is not on PATH")
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    _git(repo, "init", "-q")
+    (repo / "r.json").write_text(json.dumps(RECEIPT), encoding="utf-8")
+    (repo / "d.md").write_text(CLEAN, encoding="utf-8")
+    _git(repo, "add", "r.json", "d.md")
+    _git(repo, "commit", "-q", "-m", "receipt")
+    cert = certify_doc(repo / "d.md", [repo / "r.json"])
+    assert cert["receipt_binding"]["all_receipts_committed"] is True
+    cp = repo / "d.certificate.json"
+    cp.write_text(json.dumps(cert), encoding="utf-8")
+    honest = create_capsule(repo / "d.md", [repo / "r.json"], cp, tmp_path / "honest.capsule.html")
+    assert verify_capsule(honest)["ok"] is True
+
+    edited = {"eval": {"accuracy": 0.75, "items": 40, "reviewed": 1}}
+    forged = _mint(tmp_path / "outside", CLEAN, receipts={"r.json": edited})
+    real = cert["receipt_binding"]
+
+    def borrow(p):
+        rb = p["certificate"]["receipt_binding"]
+        rb.pop("note", None)
+        rb["head"], rb["all_receipts_committed"] = real["head"], True
+        for r, h in zip(rb["receipts"], real["receipts"]):
+            r["path"], r["blob"], r["committed"] = h["path"], h["blob"], h["committed"]
+    rep = verify_capsule(_forge(forged, tmp_path / "forged.capsule.html", borrow))
+    assert rep["ok"] is False
+    assert any("is not the git blob of the embedded receipt" in p for p in rep["problems"])
+
+
+@pytest.mark.parametrize("path", ["/etc/r.json", "papers\\r.json", "papers/../r.json", "C:/r.json",
+                                  "papers/other.json", "papers/\x1b[2Kr.json", "papers//r.json"])
+def test_a_binding_path_must_be_a_repository_path_ending_in_the_receipt_s_name(clean, tmp_path,
+                                                                              path):
+    recs = _receipt_bytes(clean)
+
+    def pathed(p):
+        _as_committed(p, lambda r: _blob(recs[r["name"]]))
+        p["certificate"]["receipt_binding"]["receipts"][0]["path"] = path
+    _fails_on(clean, tmp_path, pathed, "is not a repository path certify writes")
+
+
+@pytest.mark.parametrize("note", ["no receipts", "reviewed by the lab", "binding failed: x"])
+def test_a_binding_note_must_be_one_certify_writes_where_it_writes_it(clean, tmp_path, note):
+    recs = _receipt_bytes(clean)
+
+    def noted(p):
+        _as_committed(p, lambda r: _blob(recs[r["name"]]))
+        p["certificate"]["receipt_binding"]["note"] = note
+    _fails_on(clean, tmp_path, noted, "receipt_binding.note")
