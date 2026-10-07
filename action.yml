@@ -2,8 +2,8 @@ name: "styxx diffgate"
 description: >-
   Your agent's PR summary cannot lie about its diff. Extracts diff-shaped claims from the
   PR body (or push commit message) and verifies each against the actual diff — checkout-free,
-  via the GitHub API. Exits nonzero on a contradicted claim, with the lie named in the job
-  summary and as an annotation. It judges a CLOSED template set (touched/created/deleted
+  via the GitHub API. Exits nonzero on a contradicted claim, printed as CONTRADICTED with its
+  reason in the job summary and as an annotation. It judges a CLOSED template set (touched/created/deleted
   paths, added functions and tests, file counts, only-touches scopes, tests-pass); prose
   outside it is never scored, and that limit is the reason to trust the verdicts it does
   give. What it will not do: accuse a path claim the diff does not show. That accusation

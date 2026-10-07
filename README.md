@@ -66,12 +66,12 @@ the summary the agent wrote:
   Added 3 tests covering the retry path. Only touches files under src/. All tests pass.
 
   [ok ] file_touched         diff status 'M' for 'src/retry.py'
-  [LIE] symbol_added         added lines do NOT define function 'backoff'
-  [LIE] tests_added          diff adds 1 test functions, claim says 3
-  [LIE] only_touches         paths outside 'src': ['config/settings.yml', 'tests/test_retry.py']
+  [CONTRADICTED] symbol_added         added lines do NOT define function 'backoff'
+  [CONTRADICTED] tests_added          diff adds 1 test functions, claim says 3
+  [CONTRADICTED] only_touches         paths outside 'src': ['config/settings.yml', 'tests/test_retry.py']
   [ ? ] tests_pass           ... No test REPORT was handed to the gate. It does not take the agent's word for test results ...
 
-verdict: FAIL — this summary would fail your CI with each lie named.
+verdict: FAIL — 3 claim(s) CONTRADICTED by the diff, each with its reason above.
 ```
 
 **In CI, one line:**

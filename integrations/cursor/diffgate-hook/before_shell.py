@@ -131,7 +131,7 @@ def main() -> int:
     g = gate_diff_text(message, diff)
     if not g.measured:
         return _answer("allow")      # nothing to read against; not this hook's call to block
-    marks = {"VERIFIED": "ok ", "CONTRADICTED": "LIE", "UNCHECKABLE": " ? "}
+    marks = {"VERIFIED": "ok ", "CONTRADICTED": "CONTRADICTED", "UNCHECKABLE": " ? "}
     lines = [f"  [{marks[c.verdict]}] {c.kind:20s} {c.why}" for c in g.claims]
     what = "commit message vs the staged diff" if kind == "commit" else "PR body vs the diff against its base"
     if g.verdict == "FAIL":

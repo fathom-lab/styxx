@@ -4,7 +4,7 @@
     styxx-diffgate-commit-msg .git/COMMIT_EDITMSG      # what git and pre-commit both run
 
 Reads the commit message (git's `#` commentary stripped) against `git diff --cached` with
-styxx.diffgate, prints each diff-shaped claim as [ok ] / [LIE] / [ ? ], and exits 1 on a
+styxx.diffgate, prints each diff-shaped claim as [ok ] / [CONTRADICTED] / [ ? ] with its reason, and exits 1 on a
 CONTRADICTED claim so the commit is refused. Nothing else is judged: prose outside the closed
 template set (touched / created / deleted paths, "N files changed", "added N tests", "adds
 function X", "only touches prefix/", "tests pass") is never read, and the summary line says how
@@ -32,7 +32,7 @@ def gate_message(message: str, cwd: str = ".") -> int:
         ["git", "diff", "--cached", "--no-color", "--no-ext-diff", "--no-renames"],
         cwd=cwd, capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
     g = gate_diff_text(message, diff)
-    marks = {"VERIFIED": "ok ", "CONTRADICTED": "LIE", "UNCHECKABLE": " ? "}
+    marks = {"VERIFIED": "ok ", "CONTRADICTED": "CONTRADICTED", "UNCHECKABLE": " ? "}
     for c in g.claims:
         print(f"  [{marks[c.verdict]}] {c.kind:20s} {c.why}")
     if not g.measured:

@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — CONTRADICTED is printed as CONTRADICTED, with its reason, not as LIE
+
+The demo, the bookmarklet and the hooks printed a CONTRADICTED verdict as `[LIE]`, and the demo closed with
+"this summary would fail your CI with each lie named". A CONTRADICTED verdict says the diff does not show what a
+template read in a sentence; it says nothing about why the sentence was written, and the kind that accuses most often
+here, `only_touches`, was measured at 0.25 after its partial repair (README). Step zero, item 2, of the 2026-10-06
+study. Each surface now prints the verdict's own name and the reason beside it; nothing reads differently.
+
+- **Demo** (`python -m styxx.diffgate --demo`). Before: `[LIE] tests_added          diff adds 1 test functions, claim
+  says 3` and `verdict: FAIL — this summary would fail your CI with each lie named.` After: `[CONTRADICTED]
+  tests_added          diff adds 1 test functions, claim says 3` and `verdict: FAIL — 3 claim(s) CONTRADICTED by the
+  diff, each with its reason above.` The README's copy of that output follows it.
+- **Bookmarklet** (`web/gate/bookmarklet_ui.js`). The panel's line for a contradicted claim reads `[CONTRADICTED] kind
+  reason` instead of `[LIE] kind reason`. Rebuilt with terser 5.46.0: `bookmarklet.min.js` sha256 `5843f53d…`, 53,380
+  characters (was `6bf6121a…`, 53,371), named in `web/gate/README.md`.
+- **Hooks** (`styxx.diffgate_hook` and `integrations/git/commit-msg`, the Claude Code / Codex / Gemini CLI
+  `pretool.py`, Cursor's `before_shell.py`). Each claim line reads `[CONTRADICTED] kind reason` instead of `[LIE] kind
+  reason`; `[ok ]` and `[ ? ]` are unchanged, and so are the exit codes and the BLOCKED / FAIL lines. The six
+  integration READMEs quote the new lines.
+- **The Action** already printed `❌ CONTRADICTED` with the reason in the job summary and in its `::error::`
+  annotation, and its output is unchanged. Its `action.yml` description said "with the lie named"; it now says the
+  claim is printed as CONTRADICTED with its reason.
+- **Pins.** The edit is outside the PATH-2a block, so the reader the PATH-2a tests rebuild by cutting the block out
+  is no longer 7.48.0's `9b620e00…`: `tests/_p2a_ref.py` pins it at `68873068…` (that file with the demo's label),
+  with the reason in a comment. The whole file is `09867056…` (LF), named in `web/gate/differential/py_side.py`,
+  `web/gate/diffgate.js` and `web/gate/README.md`. The PATH-2a modules re-ran every differential against the new
+  reader, and the withholding relation holds; no pinned verdict moved.
+- **Tests.** `tests/test_contradicted_label.py` holds the demo's lines and closing sentence, the absence of a LIE
+  label from every surface that prints a verdict (the shipped bookmarklet included) and from the documents that quote
+  them; the five hook test modules assert `[CONTRADICTED]` where they asserted `[LIE]`. On `origin/main` the new module
+  fails (the demo, the six surfaces and the eight documents carry the label) and it passes here.
+
 ## [Unreleased] — styxx 7.48.1 on Zenodo, as the next version of the software record
 
 styxx 7.48.1 is deposited on Zenodo as **10.5281/zenodo.23200977**, a new version of the styxx software

@@ -7,7 +7,8 @@ Install (one file, no build step; needs `pip install styxx`):
 
 Then every `git commit` reads the message you (or your agent) wrote against
 `git diff --cached` with styxx.diffgate, prints each diff-shaped claim as
-[ok ] / [LIE] / [ ? ], and refuses the commit on a CONTRADICTED claim.
+[ok ] / [CONTRADICTED] / [ ? ] with its reason, and refuses the commit on a
+CONTRADICTED claim.
 Nothing else is judged: prose outside the closed template set (touched /
 created / deleted paths, "N files changed", "added N tests", "adds function
 X", "only touches prefix/", "tests pass") is never read. "tests pass" is
@@ -39,7 +40,7 @@ def main() -> int:
         ["git", "diff", "--cached", "--no-color", "--no-ext-diff", "--no-renames"],
         capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
     g = gate_diff_text(message, diff)
-    marks = {"VERIFIED": "ok ", "CONTRADICTED": "LIE", "UNCHECKABLE": " ? "}
+    marks = {"VERIFIED": "ok ", "CONTRADICTED": "CONTRADICTED", "UNCHECKABLE": " ? "}
     for c in g.claims:
         print(f"  [{marks[c.verdict]}] {c.kind:20s} {c.why}")
     if not g.measured:

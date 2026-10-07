@@ -1423,7 +1423,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
 # function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
 # the block's own slotted classes, so nothing of main's is reachable from it as data.
-# Everything outside this block is main's reader at 1cde8b82 (sha256 9b620e00..., LF), unchanged; the two doors call
+# Everything outside this block is main's reader (sha256 68873068..., LF: 1cde8b82's 9b620e00... with the demo's
+# CONTRADICTED label, fix/contradicted-not-lie), unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
 # where #97, #121 or #101 can have made it wrong:
@@ -3194,11 +3195,14 @@ def _demo() -> int:
     print("what the diff actually shows: retry.py +retry_once, settings.yml timeout "
           "30->5, one new test\n")
     g = gate_diff_text(_DEMO_SUMMARY, _DEMO_DIFF)
+    # The verdict is printed by its own name, with its reason: CONTRADICTED says the diff does not show what the
+    # template read in the sentence, and nothing about why the sentence was written (step zero, item 2).
     for c in g.claims:
-        mark = {"VERIFIED": "ok ", "CONTRADICTED": "LIE", "UNCHECKABLE": " ? "}[c.verdict]
+        mark = {"VERIFIED": "ok ", "CONTRADICTED": "CONTRADICTED", "UNCHECKABLE": " ? "}[c.verdict]
         print(f"  [{mark}] {c.kind:20s} {c.why}")
-    print(f"\nverdict: {g.verdict} — this summary would fail your CI with each lie "
-          "named.\n(demo always exits 0; point it at real work: "
+    n = sum(1 for c in g.claims if c.verdict == "CONTRADICTED")
+    print(f"\nverdict: {g.verdict} — {n} claim(s) CONTRADICTED by the diff, each with its reason above."
+          "\n(demo always exits 0; point it at real work: "
           "python -m styxx.diffgate SUMMARY.md --repo . --base main)")
     return 0
 
