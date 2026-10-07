@@ -628,3 +628,28 @@ def test_a_binding_note_must_be_one_certify_writes_where_it_writes_it(clean, tmp
         _as_committed(p, lambda r: _blob(recs[r["name"]]))
         p["certificate"]["receipt_binding"]["note"] = note
     _fails_on(clean, tmp_path, noted, "receipt_binding.note")
+
+
+# ---------------------------------------------------------------- the issuer's hash
+#
+# Review round 2 (forgery lens, blocker): certificate.verifier_sha256 could be absent, null, an
+# object or free text, and the certificate still verified, printing it as stated. Every certify
+# since the earliest (9ed6f3b5, 2026-06-10) writes it as 64 lowercase hex digits, and
+# create_capsule copies it into payload.verifier.sha256.
+
+@pytest.mark.parametrize("value", ["absent", None, {"sha256": "0" * 64}, "A" * 64, "0" * 63])
+def test_the_issuer_s_hash_must_have_the_form_every_certify_writes(clean, tmp_path, value):
+    def issuer(p):
+        c = p["certificate"]
+        if value == "absent":
+            del c["verifier_sha256"]
+        else:
+            c["verifier_sha256"] = value
+        p["verifier"]["sha256"] = c.get("verifier_sha256")
+    _fails_on(clean, tmp_path, issuer, "certificate.verifier_sha256")
+
+
+def test_the_payload_s_copy_of_the_issuer_s_hash_must_be_the_certificate_s(clean, tmp_path):
+    def copy(p):
+        p["verifier"]["sha256"] = "1" * 64
+    _fails_on(clean, tmp_path, copy, "payload.verifier.sha256")

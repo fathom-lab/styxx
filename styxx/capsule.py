@@ -344,7 +344,10 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
 # checking they are a combination certify writes.
 _CERT_MINT_FIELDS = ("verifier_sha256", "receipt_binding")
 # Every certificate any styxx has issued carries these; one without them is not a certificate.
-_CERT_REQUIRED = ("verdict", "counts", "ledger", "document_sha256", "receipts_sha256")
+_CERT_REQUIRED = ("verdict", "counts", "ledger", "document_sha256", "receipts_sha256",
+                  "verifier_sha256")
+# what every certify writes into verifier_sha256: the sha-256 of its own certify.py, in hex
+_SHA256_HEX = re.compile(r"[0-9a-f]{64}")
 # Row lists, compared row by row in both directions and in order, every field of every row.
 _CERT_ROW_LISTS = ("ledger", "ungrounded", "abstained")
 # The fields certify began writing after its earliest certificates, in the order it began writing
@@ -576,6 +579,16 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
             problems.append(f"certificate.{k} is missing: every certificate carries it")
     vs, lvs = cert.get("verifier_sha256"), live.get("verifier_sha256")
     same_issuer = isinstance(vs, str) and vs == lvs
+    # The issuer's hash is stated, not checked, but its form is fixed: until review round 3 it
+    # could be absent, null, an object or free text (terminal escapes included) and still verify.
+    if "verifier_sha256" in cert and not (isinstance(vs, str) and _SHA256_HEX.fullmatch(vs)):
+        problems.append(f"certificate.verifier_sha256 {_short(vs, 80)} is not the 64 lowercase "
+                        f"hex digits every certify writes there")
+    pv = (payload.get("verifier") or {}).get("sha256")
+    if not _same(pv, vs):
+        problems.append(f"payload.verifier.sha256 {_short(pv, 80)} is not "
+                        f"certificate.verifier_sha256 {_short(vs, 80)}; create_capsule copies "
+                        f"one into the other")
     removed = _generation_problems(cert)
     problems.extend(removed.values())
 
@@ -671,9 +684,6 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
     stated.append(f"created {payload.get('created')} (when the capsule was minted)")
     stated.append(f"verifier.styxx_version {ver.get('styxx_version')}, pip "
                   f"{ver.get('pip')} (the styxx the minter ran)")
-    if ver.get("sha256") != vs:
-        advisory.append(f"payload.verifier.sha256 {ver.get('sha256')} differs from "
-                        f"certificate.verifier_sha256 {vs}; a minter copies one into the other")
     return {"problems": problems, "advisory": advisory, "not_checked": not_checked,
             "stated": stated, "compared": compared, "mint_refusals": mint_refusals}
 
@@ -1983,6 +1993,24 @@ is the one that checks the build the receipt names.</div>
 """
 
 
+# What `verify` must never hand a terminal raw: C0 controls (escape, carriage return, a line feed
+# inside a value), DEL and the C1 controls, the line and paragraph separators, and the
+# bidirectional marks and overrides. Every one of them can come from the capsule (a document or
+# receipt name, the verdict, the issuer's hash, a binding path), and until review round 3 they
+# were printed as they came, so a forgery could move the cursor up and erase its own NOT CHECKED
+# lines or failure list from the reader's screen while stdout still held them.
+_UNPRINTABLE = re.compile("[\x00-\x1f\x7f-\x9f؜‎‏  ‪-‮"
+                          "⁦-⁩]")
+
+
+def _printable(line) -> str:
+    """The line with each character above shown as a visible escape (\\x1b, \\u202e)."""
+    def esc(m):
+        c = ord(m.group(0))
+        return f"\\x{c:02x}" if c < 0x100 else f"\\u{c:04x}"
+    return _UNPRINTABLE.sub(esc, str(line))
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(
         prog="styxx.capsule",
@@ -2026,50 +2054,51 @@ def main(argv=None) -> int:
         return 0
 
     rep = verify_capsule(Path(a.capsule))
+    say = lambda line: print(_printable(line))  # noqa: E731 - every line, whatever it quotes
     if rep.get("spec") == SPEC_SWORN:
-        print(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
-        print(f"sealed verdict: {rep.get('verdict')}  counts {rep.get('counts')}")
+        say(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
+        say(f"sealed verdict: {rep.get('verdict')}  counts {rep.get('counts')}")
         for adv in rep.get("advisory", []):
-            print(f"  advisory: {adv}")
+            say(f"  advisory: {adv}")
         if rep["ok"]:
-            print("VERIFIED: the sealed bytes re-derive the sealed verdict core at the installed "
-                  "instrument.")
-            print(f"  {rep.get('label')}")
+            say("VERIFIED: the sealed bytes re-derive the sealed verdict core at the installed "
+                "instrument.")
+            say(f"  {rep.get('label')}")
             return 0
-        print("CAPSULE FAILS VERIFICATION:")
+        say("CAPSULE FAILS VERIFICATION:")
         for p_ in rep.get("problems", []):
-            print(f"  - {p_}")
+            say(f"  - {p_}")
         return 1
     if rep.get("spec") == SPEC_V02:
-        print(f"capsule: {rep.get('summary')} + {rep.get('diff')}  spec {rep.get('spec')}")
-        print(f"embedded gate verdict: {rep.get('verdict')}")
+        say(f"capsule: {rep.get('summary')} + {rep.get('diff')}  spec {rep.get('spec')}")
+        say(f"embedded gate verdict: {rep.get('verdict')}")
         for adv in rep.get("advisory", []):
-            print(f"  advisory: {adv}")
+            say(f"  advisory: {adv}")
         if rep["ok"]:
-            print("VERIFIED: bytes match their bindings and the gate record re-derives "
-                  "at the installed instrument.")
+            say("VERIFIED: bytes match their bindings and the gate record re-derives "
+                "at the installed instrument.")
             return 0
     else:
-        print(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
-        print(f"embedded verdict: {rep.get('verdict')}  counts {rep.get('counts')}")
+        say(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
+        say(f"embedded verdict: {rep.get('verdict')}  counts {rep.get('counts')}")
         if rep.get("live_verdict") is not None and rep.get("live_verdict") != rep.get("verdict"):
-            print(f"installed verifier's verdict: {rep.get('live_verdict')}")
+            say(f"installed verifier's verdict: {rep.get('live_verdict')}")
         for adv in rep.get("advisory", []):
-            print(f"  advisory: {adv}")
+            say(f"  advisory: {adv}")
         for nc in rep.get("not_checked", []):
-            print(f"  NOT CHECKED: {nc}")
+            say(f"  NOT CHECKED: {nc}")
         for st in rep.get("stated", []):
-            print(f"  stated by the minter, not checked: {st}")
+            say(f"  stated by the minter, not checked: {st}")
         if rep["ok"]:
             nc = len(rep.get("not_checked", []))
-            print("VERIFIED: the embedded bytes match the certificate's hashes, and the "
-                  "installed verifier re-derives what the certificate says of them: "
-                  + ", ".join(rep.get("compared", [])) + "."
-                  + (f" {nc} item(s) NOT CHECKED, listed above." if nc else ""))
+            say("VERIFIED: the embedded bytes match the certificate's hashes, and the "
+                "installed verifier re-derives what the certificate says of them: "
+                + ", ".join(rep.get("compared", [])) + "."
+                + (f" {nc} item(s) NOT CHECKED, listed above." if nc else ""))
             return 0
-    print("CAPSULE FAILS VERIFICATION:")
+    say("CAPSULE FAILS VERIFICATION:")
     for p_ in rep.get("problems", []):
-        print(f"  - {p_}")
+        say(f"  - {p_}")
     return 1
 
 
