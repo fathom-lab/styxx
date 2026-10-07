@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import bisect
 import datetime as _dt
 import hashlib
 import html as _html
@@ -887,9 +888,12 @@ def _compare_binding(rb, lrb: dict, recs: dict, problems: List[str], not_checked
         + (f"; note {note!r}" if note else ""))
 
 
-# The marks the page before 2026-10-05 read differently from certify: its private band markers,
-# and every line break str.splitlines() honours beyond \n (it split only at \n and \r\n).
-_PAGE_V01_LEGACY_MISREAD = re.compile("[\x01-\x03\r\x0b\x0c\x1c-\x1e\x85\u2028\u2029]")
+# The page before 2026-10-05 marks its bands with U+0001 to U+0003 before escaping, so the same
+# characters in a document open a band no row gives, wherever they sit: those fail outright. Its
+# script splits lines only where this pattern matches, while certify splits as str.splitlines()
+# (form feed, vertical tab, U+001C to U+001E, NEL, U+2028, U+2029 as well); those are mapped.
+_PAGE_V01_LEGACY_MARKERS = re.compile("[\x01-\x03]")
+_PAGE_V01_LEGACY_SPLIT = re.compile("\r\n|\n")
 
 
 def _check_page_v01(html: str, payload: dict, cert: dict, live: Optional[dict], doc_bytes,
@@ -954,12 +958,20 @@ def _band(e: dict) -> str:
 def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: bytes) -> List[str]:
     """Where the page styxx minted before 2026-10-05 would draw this certificate wrong.
 
-    Its script splits the document at \\n and \\r\\n only, while certify splits as str.splitlines
-    (form feed, U+2028 and five more), so rows land on other lines; it reads `col` as a UTF-16
-    index and falls back to the token's earliest occurrence on the line, so an astral character or a
-    U+2212 minus moves a band to another number or drops it; it marks bands with U+0001 to U+0003,
-    so those characters in the document draw bands no row gives; and it writes receipt names into
-    the page unescaped. Each is re-derived here from the payload, and any one fails."""
+    Its script drops a leading byte-order mark (a default TextDecoder does; Python keeps it) and
+    splits the document at \\n and \\r\\n only, while certify splits as str.splitlines, so a row
+    after a form feed, U+2028 or the like is looked for on another line. It reads `col` as a
+    UTF-16 index and falls back to the token's earliest occurrence on the line, so an astral
+    character, a BOM or a U+2212 minus can move a band to another number or drop it. It marks
+    bands with U+0001 to U+0003, so those characters in the document draw bands no row gives; and
+    it writes receipt names into the page unescaped. Each is re-derived here from the payload, and
+    any one fails.
+
+    Until review round 3 any of those line breaks, or a BOM, failed the capsule wherever it sat,
+    though the script draws every band right when it sits after the last row. Now certify's
+    lines are mapped onto the script's, and the comparison is per line: what the script draws on
+    each of its lines against where the certificate puts each number on it. The band markers and
+    markup in receipt names still fail outright."""
     out: List[str] = []
     for r in payload["receipts"]:
         if any(c in r["name"] for c in "<&"):
@@ -979,40 +991,73 @@ def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: byte
                        f"every verified number volunteered while {obligated} of its verified "
                        f"ledger rows say obligated")
     text = doc_bytes.decode("utf-8")
-    m = _PAGE_V01_LEGACY_MISREAD.search(text)
-    if m or text.startswith("\ufeff"):
-        at = m.start() if m else 0
+    m = _PAGE_V01_LEGACY_MARKERS.search(text)
+    if m:
         out.append(f"the page (minted before 2026-10-05) cannot draw this document as certify "
-                   f"reads it: it holds U+{ord(text[at]):04X} on line "
-                   f"{text.count(chr(10), 0, at) + 1}, which its script reads differently")
+                   f"reads it: it holds U+{ord(m.group(0)):04X} on line "
+                   f"{text.count(chr(10), 0, m.start()) + 1}, which its script reads as its own "
+                   f"band marker")
         return out
-    lines = text.split("\n")
-    emb, liv = _rows_by_key(cert.get("ledger") or []), _rows_by_key(live.get("ledger") or [])
-    by_line: dict = {}
+
+    # The text the script shows, and where each of its lines starts in it.
+    bom = 1 if text.startswith("﻿") else 0
+    shown = text[bom:]
+    lines = _PAGE_V01_LEGACY_SPLIT.split(shown)
+    starts = [0] + [mm.end() for mm in _PAGE_V01_LEGACY_SPLIT.finditer(shown)]
+    # Where certify's lines start in the text it read (str.splitlines, ends kept).
+    cstarts, pos = [], 0
+    for chunk in text.splitlines(keepends=True):
+        cstarts.append(pos)
+        pos += len(chunk)
+
+    def mapped(n, c):
+        """certify's (line n, code point column c) as (the script's line, code point offset)."""
+        if type(n) is not int or type(c) is not int or not 1 <= n <= len(cstarts):
+            return None
+        q = cstarts[n - 1] + c - bom
+        k = bisect.bisect_right(starts, q) - 1
+        return k + 1, q - starts[k]
+
+    rows = [e for e in cert.get("ledger") or [] if isinstance(e, dict)]
+    emb, liv = _rows_by_key(rows), _rows_by_key(live.get("ledger") or [])
+    # what the script draws on its line i: the rows whose `line` is i (byLine[e.line])
+    drawn_on: dict = {}
+    for e in rows:
+        if type(e.get("line")) is int:
+            drawn_on.setdefault(e["line"], []).append(e)
+    # where the certificate puts each number, on the script's lines (by the installed verifier's
+    # column; certify always writes one, and the rows were compared above)
+    want_on: dict = {}
     for key, e in emb.items():
-        by_line.setdefault(e.get("line"), []).append((e, liv[key]))
-    for n, pairs in sorted(by_line.items()):
-        line = lines[n - 1]
+        le = liv.get(key) or {}
+        at = mapped(le.get("line"), le.get("col"))
+        if at is not None:
+            want_on.setdefault(at[0], []).append((at[1], len(str(le.get("token"))), e))
+    for i in sorted(set(drawn_on) | set(want_on)):
+        if not 1 <= i <= len(lines):
+            continue        # a row naming a line the script does not have is drawn nowhere;
+            #                 where the certificate puts it is a line below, and fails there
+        line = lines[i - 1]
         drawn = _u16(line)
-        for e in sorted((e for e, _ in pairs), key=lambda e: -(e.get("col") or 0)):
+        for e in sorted(drawn_on.get(i, []), key=lambda e: -(e.get("col") or 0)):
             t = _u16(str(e.get("token")))
             col = e.get("col")
-            at = col if isinstance(col, int) and drawn.startswith(t, col) else drawn.find(t)
+            at = (col if type(col) is int and col >= 0 and drawn.startswith(t, col)
+                  else drawn.find(t))
             if at >= 0:
                 drawn = drawn[:at] + "\x01" + _band(e) + "\x02" + t + "\x03" + drawn[at + len(t):]
-        if not all(isinstance(le.get("col"), int) for _, le in pairs):
-            continue     # no installed column to draw against (certify always writes one)
         want = _u16(line)
-        for e, le in sorted(pairs, key=lambda p: -p[1]["col"]):
-            c, w = le["col"], len(le["token"])
-            a, z = len(_u16(line[:c])), len(_u16(line[:c + w]))
+        for o, w, e in sorted(want_on.get(i, []), key=lambda x: -x[0]):
+            a, z = len(_u16(line[:o])), len(_u16(line[:o + w]))
             want = want[:a] + "\x01" + _band(e) + "\x02" + want[a:z] + "\x03" + want[z:]
         if drawn != want:
-            toks = ", ".join(repr(e.get("token")) for e, _ in pairs)
-            out.append(f"the page (minted before 2026-10-05) draws line {n} differently from the "
-                       f"certificate: its script places a band for {toks} on another number, or "
-                       f"on none")
+            toks = ", ".join(repr(e.get("token")) for e in
+                             drawn_on.get(i, []) + [e for _, _, e in want_on.get(i, [])])
+            out.append(f"the page (minted before 2026-10-05) draws line {i} differently from the "
+                       f"certificate (its lines split at line feeds only): its script places a "
+                       f"band for {toks} on another number, or on none")
     return out
+
 
 
 # ---------------------------------------------------------------------------------
