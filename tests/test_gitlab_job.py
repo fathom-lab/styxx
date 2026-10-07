@@ -351,3 +351,22 @@ def test_the_docs_say_the_job_reports_by_default():
         assert "reports by default" in flat
         assert 'Only STYXX_SOFT_FAIL set to "false" blocks' in flat
         assert "The job fails only on a CONTRADICTED claim" not in flat
+
+
+def test_the_docs_warn_that_a_protected_variable_does_not_reach_a_merge_request_pipeline():
+    """GitLab hands a protected variable to a merge request pipeline only when its source and
+    target branches are both protected branches of the same project and the project allows it
+    (docs.gitlab.com, merge request pipelines, "Control access to protected variables and
+    runners"); otherwise the job reads it as unset and reports. Someone who set STYXX_SOFT_FAIL
+    in settings to keep blocking would lose blocking without a word, so the README, the job's
+    header and the CHANGELOG entry each say so, and say what to do instead."""
+    readme = (ROOT / "integrations" / "gitlab" / "README.md").read_text(encoding="utf-8")
+    header = JOB.read_text(encoding="utf-8").split("\ndiffgate:", 1)[0]
+    changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    entry = changelog.split("## [Unreleased] — the GitLab job reports by default", 1)[1].split("\n## ", 1)[0]
+    for text in (readme, header, entry):
+        flat = " ".join(text.replace("#", " ").replace("`", "").split())
+        assert "marked Protected" in flat
+        assert "reaches a merge request pipeline only when its source and target branches are both protected" in flat
+        assert "never from a fork" in flat
+        assert "leave Protect cleared or set the variable in .gitlab-ci.yml" in flat

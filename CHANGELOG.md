@@ -25,9 +25,17 @@ diffgate:
     STYXX_SOFT_FAIL: "false"
 ```
 
-or in the project's or group's CI/CD variables, or in the pipeline's top-level `variables:`. In
-report mode GitLab shows the job as passed: the job has no annotations or job summary, only its log
-and the artifact, so the merge request's pipeline status does not show what the gate found.
+or in the project's or group's CI/CD variables, or in the pipeline's top-level `variables:`. A
+variable marked Protected in the project's or group's settings reaches a merge request pipeline
+only when its source and target branches are both protected branches of the same project and a
+maintainer has selected "Allow merge request pipelines to access protected variables and
+runners", and never from a fork; on an ordinary merge request from a feature branch the job reads
+it as unset and reports. So leave Protect cleared or set the variable in .gitlab-ci.yml. Every
+run, PASS included, prints one line naming the mode it ran in (`styxx diffgate mode:
+STYXX_SOFT_FAIL is not set, so this job reports ...`, with the Protected caveat), so a variable
+that never arrived shows in the log. In report mode GitLab shows the job as passed: the job has no
+annotations or job summary, only its log and the artifact, so the merge request's pipeline status
+does not show what the gate found.
 
 **How the value is read**, as `diffgate_action.py`'s `_soft_fail` reads `soft-fail`: compared
 case-insensitively with surrounding whitespace stripped, so `"false"` and `"False "` block and
@@ -40,11 +48,14 @@ to the `styxx.diffgate` line still makes an UNCHECKABLE claim a failure, and the
 only with `STYXX_SOFT_FAIL` `"false"`; the job has no strict variable, as it had none before.
 
 **Errors still fail the job.** The step that reads the variable takes only an exit 1 with a
-`diffgate.json` whose verdict is FAIL as the gate's verdict. Any other nonzero exit, or an exit 1
-that left no FAIL report (the CLI raising on a head the checkout does not have, for one), fails the
-job in either mode. Before the gate runs, the job removes a `diffgate.json` an earlier run left in
-the build directory, so a stale report is not read as this run's verdict. An install error or a
-failed fetch of the diff base fails the job as before.
+`diffgate.json` whose verdict is FAIL as a FAIL verdict, and only an exit 0 with a PASS report as a
+PASS. Any other exit, an exit 1 that left no FAIL report (the CLI raising on a head the checkout
+does not have, for one), or an exit 0 that left no PASS report, fails the job in either mode. The
+released CLI writes its report before it returns, so the exit-0 check changes nothing for it; a
+shadowed or altered CLI that exits 0 and writes nothing, which passed the job before, now fails
+it. Before the gate runs, the job removes a `diffgate.json` an earlier run left in the build
+directory, so a stale report is not read as this run's verdict. An install error or a failed
+fetch of the diff base fails the job as before.
 
 **Why.** The Action's reason: no kind of accusation the gate still makes has been measured clearing
 the 0.95 precision floor the lab set for accusing, and a check that fails someone else's merge
@@ -55,25 +66,36 @@ Action's entry gives (path claims withheld after EXTERNAL-1 measured 0.23 and V1
 `tests_added`, `symbol_added` or `files_changed_count`).
 
 **What changed with it.** The job's header comment and `integrations/gitlab/README.md` say the job
-reports by default, how to make it block, how the value is read, that errors fail it in either
-mode, where a reported finding shows, and why. The README's line telling the reader to add
-`--strict` "to the last line" now names the `styxx.diffgate` line, and its rung paragraph says the
-job enforces only with the opt-in. `README.md` and `docs/` do not mention the GitLab job, so no line
-there changed.
+reports by default, how to make it block, where a Protected variable does not arrive, that every
+run names its mode, how the value is read, that errors fail it in either mode, where a reported
+finding shows, and why. The README's line telling the reader to add `--strict` "to the last line"
+now names the `styxx.diffgate` line, and its rung paragraph says the job enforces only with the
+opt-in. `README.md` and `docs/` do not mention the GitLab job, so no line there changed. The Cursor
+hook's README said the enforcement is "the same gate in CI"; it now says, as the pre-commit, Codex
+and Gemini CLI READMEs do, that CI enforces only with its opt-in (the Action's `soft-fail:
+"false"`, this job's `STYXX_SOFT_FAIL: "false"`).
 
 **Tests.** `tests/test_gitlab_job.py` runs the job's script lines under bash in a temporary
 repository. By default a lying description is reported with the lies named and the job passes; with
 `STYXX_SOFT_FAIL` `"false"` it fails; ten values are read as above, each also checked against the
 Action's `_soft_fail`; `--strict` fails the job on an UNCHECKABLE claim only with the opt-in; a gate
 that errors fails the job unset, `"true"` and `"false"` alike, with a stale FAIL report in the
-directory; the job leaves the variable unset; the README and the header comment say the job reports
-by default. Against `origin/main`'s job file the job's exit codes differ where the default changed
-and nowhere else that was run: a lying description exits 1 there and 0 here when the variable is
-unset, `"true"`, `"yes"` or empty, and a `--strict` run on an UNCHECKABLE claim exits 1 there and 0
-here when it is unset; under `"false"` both exit 1, an honest description exits 0 in both, and a
-head the checkout does not have exits 1 in both. Each guard was mutation-checked: dropping the
-`rm -f`, dropping the report check, the strip or the lowercasing each makes three tests fail. The
-job has not been run on GitLab itself.
+directory; a stand-in for the CLI whose report does not match its exit (exit 0 with no report or a
+FAIL one, exit 1 with a PASS one, exit 2) fails the job unset and `"false"`, with a stale PASS report
+in the directory; every run, PASS included, prints the one mode line its value calls for; the job
+leaves the variable unset; the README and the header comment say the job reports by default, and
+they and this entry carry the Protected caveat. Against `origin/main`'s job file the job's exit
+codes differ where the default changed, where an exit 0 left no PASS report, and nowhere else that
+was run: a lying description exits 1 there and 0 here when the variable is unset, `"true"`, `"yes"`
+or empty, and a `--strict` run on an UNCHECKABLE claim exits 1 there and 0 here when it is unset; a
+stand-in CLI that exits 0 with no report or a FAIL report exits 0 there and 1 here, unset and
+`"false"` alike; under `"false"` a lying description exits 1 in both, an honest description exits 0
+in both, a head the checkout does not have exits 1 in both, and a stand-in that exits 1 with a PASS
+report, or 2, exits the same in both. Each guard was mutation-checked, each mutant run on its own
+against the full module: dropping the `rm -f` makes 7 tests fail, dropping the report check 9, the
+strip 3, the lowercasing 3, reading no report on exit 0 4, printing no mode line on a PASS run 9,
+naming an unset variable as `"true"` without the Protected caveat 10, and a default that blocks 10.
+The job has not been run on GitLab itself.
 
 ## [Unreleased] — styxx 7.49.0 on Zenodo, as the next version of the software record
 
