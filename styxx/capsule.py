@@ -2573,9 +2573,10 @@ is the one that checks the build the receipt names.</div>
 # bidirectional marks and overrides. Every one of them can come from the capsule (a document or
 # receipt name, the verdict, the issuer's hash, a binding path), and until review round 3 they
 # were printed as they came, so a forgery could move the cursor up and erase its own NOT CHECKED
-# lines or failure list from the reader's screen while stdout still held them.
+# lines or failure list from the reader's screen while stdout still held them. A lone surrogate
+# (JSON can write one, valid UTF-8 cannot) ended the command in a UnicodeEncodeError (#196).
 _UNPRINTABLE = re.compile("[\x00-\x1f\x7f-\x9f\u061c\u200e\u200f\u2028\u2029\u202a-\u202e"
-                          "\u2066-\u2069]")
+                          "\u2066-\u2069\ud800-\udfff]")
 
 
 def _printable(line) -> str:
@@ -2584,6 +2585,18 @@ def _printable(line) -> str:
         c = ord(m.group(0))
         return f"\\x{c:02x}" if c < 0x100 else f"\\u{c:04x}"
     return _UNPRINTABLE.sub(esc, str(line))
+
+
+def _say(line) -> None:
+    """Print a line as _printable shows it. A character the terminal's encoding cannot write (a
+    document name in another script, on a Windows pipe) is written as its escape: it ended the
+    command in a UnicodeEncodeError (#196)."""
+    text = _printable(line)
+    try:
+        print(text)
+    except UnicodeEncodeError:
+        enc = getattr(sys.stdout, "encoding", None) or "utf-8"
+        print(text.encode(enc, "backslashreplace").decode(enc, "replace"))
 
 
 def main(argv=None) -> int:
@@ -2629,7 +2642,7 @@ def main(argv=None) -> int:
         return 0
 
     rep = verify_capsule(Path(a.capsule))
-    say = lambda line: print(_printable(line))  # noqa: E731 - every line, whatever it quotes
+    say = _say                     # every line, whatever it quotes
     if rep.get("spec") == SPEC_SWORN:
         say(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
         say(f"sealed verdict: {rep.get('verdict')}  counts {rep.get('counts')}")
