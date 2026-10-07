@@ -519,6 +519,7 @@ _PAYLOAD_VERIFIER_FIELDS = ("sha256", "styxx_version", "pip")
 # what create_capsule writes into `created` and `verifier.styxx_version`
 _CREATED = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z")
 _VERSION = re.compile(r"\d+(?:\.\d+){1,3}(?:(?:a|b|rc)\d+)?(?:\.post\d+)?(?:\.dev\d+)?")
+_VERSION_MAX = 64
 
 
 def _same(a, b) -> bool:
@@ -599,6 +600,13 @@ def _payload_problems_v01(payload: dict) -> List[str]:
         v = ver.get("styxx_version")
         if not (isinstance(v, str) and _VERSION.fullmatch(v)):
             out.append(f"payload.verifier.styxx_version {_short(v)} is not a styxx version")
+        # A release number of thousands of digits ended verify in a ValueError until #196: Python
+        # reads at most 4300 digits as an integer by default, and the limit is the verifying
+        # environment's to set. create_capsule writes styxx's own version, a few characters long.
+        elif len(v) > _VERSION_MAX:
+            out.append(f"payload.verifier.styxx_version is {len(v)} characters long "
+                       f"({_short(v, 40)}); create_capsule writes the minter's styxx version "
+                       f"there, and this verifier reads one of at most {_VERSION_MAX}")
         # The page prints this line as the command that installs layer 2. create_capsule writes
         # exactly "styxx==" and the version; anything else would have the page tell its reader to
         # install some other package to check it.
