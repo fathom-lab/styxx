@@ -452,7 +452,7 @@ from .forecast import CognitiveForecaster, ForecastResult, ForecastGate, horizon
 from .intercept import CognitiveIntercept, should_intercept, simulate_intercept, InterceptReport
 from .temperature import measure_temperature, aggregate_temperature, TruthMap, demo_temperature
 from .verify import verify, Verdict
-from .critique import critique_detector, CritiqueDetector  # 7.7.10: first-PASS detector
+from .critique import critique_detector, CritiqueDetector  # 7.7.10: Baseline-019, passed the gauntlet's v3 bars
 from .audit import audit_claim, ClaimAudit  # 7.7.13: productized single-call honesty audit
 from .audit import audit_session, SessionAudit  # 7.7.13: multi-claim session-level audit
 from .audit import retrieval_check, RetrievalVerdict  # 7.7.15: retrieval arm (external-grounding lever)
@@ -850,7 +850,7 @@ __all__ = [
     # synthetic preference-pair generation via inverse cognometry (7.1.0+)
     "craft_preference_pair", "generate_preference_pairs",
 
-    # 7.7.10: critique-mode misconception detector (Baseline-019 first-PASS)
+    # 7.7.10: critique-mode misconception detector (Baseline-019, passed the gauntlet's v3 bars)
     "critique_detector", "CritiqueDetector",
 
     # 7.7.13: productized single-call honesty audit (spellchecker for AI output)
