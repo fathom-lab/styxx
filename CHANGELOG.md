@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the security contact was a mailbox that did not exist; reports now go through GitHub
+
+**Security.** `SECURITY.md` told reporters to email an address on a domain with no mail (MX) record,
+in two places: the reporting section and the last step of *Verifying a release*. Nothing sent there
+reached anyone. GitHub private vulnerability reporting was enabled for `fathom-lab/styxx` on
+2026-10-06, and both places now send reporters to
+<https://github.com/fathom-lab/styxx/security/advisories/new>. The file no longer names the address,
+and says plainly that it reached no one, so anyone who wrote to it knows to send the report again.
+The offer to reply on a reporter's public key belonged to the email channel and goes with it; the
+acknowledgement and triage times are unchanged.
+
+The README's two links to the security policy pointed at the `v7.48.0` copy, which still names the
+dead address; they now point at `main`. The READMEs PyPI shows for 7.48.0 and 7.48.1 keep their tag
+links, and the `SECURITY.md` inside those tags is unchanged, until the next release.
+
 ## [Unreleased] — PATH-2a: the diff gate withholds a verdict where #97, #121 or #101 can have made it wrong
 
 Branch `fix/diffgate-abstain-where-wrong`, on `main` `43b3b608`. Twelve review passes; each has a note under
