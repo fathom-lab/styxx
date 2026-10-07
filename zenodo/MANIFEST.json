@@ -119,7 +119,7 @@
         "README.md:507"
       ],
       "deposited_files": [],
-      "notes": "Named by CITATION.cff line 33 since 2026-09-29 (defect D1 resolved). Latest version: 7.49.0, 10.5281/zenodo.23221755 (release/zenodo-deposit-receipt-software-v7.49.0.json, concept_latest_after_publish), since 2026-10-07; the versions before it are 7.48.1, 10.5281/zenodo.23200977 (release/zenodo-deposit-receipt-software-v7.48.1.json), and 7.48.0, 10.5281/zenodo.23042251 (release/zenodo-deposit-receipt-software-v7.48.0.json)."
+      "notes": "Named by CITATION.cff line 33 since 2026-09-29 (defect D1 resolved). Latest version: 7.49.0, 10.5281/zenodo.23221755 (release/zenodo-deposit-receipt-software-v7.49.0.json, concept_latest_after_publish), since 2026-10-07. The concept holds three versions before it (release/zenodo-record-software-v7.49.0-readback.json: relations.version index 3, counted from 0): 7.48.1, 10.5281/zenodo.23200977 (release/zenodo-deposit-receipt-software-v7.48.1.json); 7.48.0, 10.5281/zenodo.23042251 (release/zenodo-deposit-receipt-software-v7.48.0.json); and 6.2.0, 10.5281/zenodo.19758619 (release/zenodo-deposit-receipt-software-v6.2.0.json)."
     },
     {
       "doi": "10.5281/zenodo.19502715",
