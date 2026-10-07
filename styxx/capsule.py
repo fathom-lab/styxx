@@ -301,11 +301,16 @@ def verify_capsule(path: Path) -> dict:
         i = html.index(_BEGIN) + len(_BEGIN)
         j = html.index(_END, i)
         payload = json.loads(html[i:j])
-    except (ValueError, json.JSONDecodeError) as e:
-        return {"ok": False, "stage": "parse", "error": f"no capsule payload: {e}",
-                "problems": [f"no capsule payload: {e}"]}
+    except (ValueError, json.JSONDecodeError, RecursionError) as e:
+        # RecursionError: JSON nested deeper than the decoder recurses, which ended verify in a
+        # traceback until #196
+        return {"ok": False, "stage": "parse", "error": f"no capsule payload: {str(e)[:200]}",
+                "problems": [f"no capsule payload: {type(e).__name__}: {str(e)[:200]}"]}
     if not isinstance(payload, dict):
         return {"ok": False, "stage": "parse", "problems": ["the capsule payload is not an object"]}
+    deep = _payload_depth_problem(payload)
+    if deep:
+        return {"ok": False, "stage": "parse", "problems": [deep]}
 
     # spec dispatch; the v0.1 path compares the whole certificate and the page since 2026-10-05
     spec = payload.get("spec")
@@ -318,6 +323,28 @@ def verify_capsule(path: Path) -> dict:
                 "problems": [f"unknown capsule spec {spec!r} — this verifier knows "
                              f"{SPEC}, {SPEC_V02} and {SPEC_SWORN}"]}
     return _verify_capsule_v01(html, payload)
+
+
+# Every payload a minter writes is nested at most 5 levels deep (the 13 capsules committed here,
+# v0.1 and v0.2 alike, measured on 2026-10-07; a sworn payload's receipt adds a level or two). A
+# payload nested far deeper reached code that recurses once per level (the type-keeping
+# comparison, JCS, printing a value) and could end verify in a RecursionError (#196). So a
+# payload nested more than this is refused before anything reads it.
+_PAYLOAD_DEPTH_MAX = 64
+
+
+def _payload_depth_problem(payload) -> Optional[str]:
+    """A problem when the payload nests objects and lists more than _PAYLOAD_DEPTH_MAX deep."""
+    stack = [(payload, 1)]
+    while stack:
+        x, d = stack.pop()
+        if isinstance(x, (dict, list)):
+            if d > _PAYLOAD_DEPTH_MAX:
+                return (f"the capsule payload nests objects and lists more than "
+                        f"{_PAYLOAD_DEPTH_MAX} levels deep; no minter writes one nested more "
+                        f"than a few, and nothing in it was read")
+            stack.extend((y, d + 1) for y in (x.values() if isinstance(x, dict) else x))
+    return None
 
 
 def _verify_capsule_v01(html: str, payload: dict) -> dict:
