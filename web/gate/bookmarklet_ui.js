@@ -33,7 +33,7 @@
   const body = meta.body || "";
   const g = G.gateDiffText(body, diff);
   const col = {VERIFIED:"#78e296", CONTRADICTED:"#ff605c", UNCHECKABLE:"#687a76"};
-  const mark = {VERIFIED:"[ok ]", CONTRADICTED:"[LIE]", UNCHECKABLE:"[ ? ]"};
+  const mark = {VERIFIED:"[ok ]", CONTRADICTED:"[CONTRADICTED]", UNCHECKABLE:"[ ? ]"};
   let out = "";
   if (!body.trim()) out += `<div style="color:#687a76">the description is empty — nothing to gate.</div>`;
   for (const c of g.claims) out += `<div style="color:${col[c.verdict]}">  ${mark[c.verdict]} ${esc(c.kind.padEnd(20))} ${esc(c.why)}</div>`;

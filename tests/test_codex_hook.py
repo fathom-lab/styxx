@@ -58,8 +58,8 @@ def test_a_lying_commit_from_codex_is_blocked_with_exit_2_and_the_lies_on_stderr
     r = _codex(staged_repo, "Bash", {"command": 'git commit -m "Refactored src/retry.py. Added 3 tests. Only touches files under src/."'})
     assert r.returncode == 2
     assert "BLOCKED" in r.stderr
-    assert "[LIE] tests_added" in r.stderr and "claim says 3" in r.stderr
-    assert "[LIE] only_touches" in r.stderr and "tests/test_retry.py" in r.stderr
+    assert "[CONTRADICTED] tests_added" in r.stderr and "claim says 3" in r.stderr
+    assert "[CONTRADICTED] only_touches" in r.stderr and "tests/test_retry.py" in r.stderr
 
 
 def test_an_honest_commit_from_codex_passes(staged_repo):

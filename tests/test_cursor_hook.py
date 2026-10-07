@@ -60,8 +60,8 @@ def test_a_lying_commit_message_is_denied_with_the_lies_in_agent_message(staged_
     out = _hook(staged_repo, 'git commit -m "Refactored src/retry.py. Added 3 tests. Only touches files under src/."')
     assert out["permission"] == "deny"
     assert "BLOCKED" in out["user_message"]
-    assert "[LIE] tests_added" in out["agent_message"] and "claim says 3" in out["agent_message"]
-    assert "[LIE] only_touches" in out["agent_message"] and "tests/test_retry.py" in out["agent_message"]
+    assert "[CONTRADICTED] tests_added" in out["agent_message"] and "claim says 3" in out["agent_message"]
+    assert "[CONTRADICTED] only_touches" in out["agent_message"] and "tests/test_retry.py" in out["agent_message"]
     assert "[ok ] file_touched" in out["agent_message"]
 
 

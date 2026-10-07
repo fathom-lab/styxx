@@ -52,8 +52,8 @@ def _run(repo, message):
 def test_a_lying_message_is_refused_with_the_lies_named(staged_repo):
     r = _run(staged_repo, "Refactored src/retry.py. Added 3 tests. Only touches files under src/.")
     assert r.returncode == 1
-    assert "[LIE] tests_added" in r.stdout and "claim says 3" in r.stdout
-    assert "[LIE] only_touches" in r.stdout and "tests/test_retry.py" in r.stdout
+    assert "[CONTRADICTED] tests_added" in r.stdout and "claim says 3" in r.stdout
+    assert "[CONTRADICTED] only_touches" in r.stdout and "tests/test_retry.py" in r.stdout
     assert "[ok ] file_touched" in r.stdout
     assert "--no-verify" in r.stdout
 
@@ -67,7 +67,7 @@ def test_an_honest_message_is_allowed(staged_repo):
 def test_no_diff_shaped_claim_passes_on_scope_silently(staged_repo):
     r = _run(staged_repo, "tidy up the retry path")
     assert r.returncode == 0
-    assert "LIE" not in r.stdout and "PASS" not in r.stdout
+    assert "CONTRADICTED" not in r.stdout and "LIE" not in r.stdout and "PASS" not in r.stdout
 
 
 def test_git_commentary_lines_are_not_read(staged_repo):
