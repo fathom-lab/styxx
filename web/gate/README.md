@@ -228,11 +228,11 @@ why. PREREG_path2's G-P1 (on #161's branch) expects VERIFIED on the reproduction
 meet G-P1: whether it stands in for it is the operator's decision. `--strict` fails on every new
 abstention, as on any UNCHECKABLE.
 
-**Not released.** PyPI's 7.48.0 carries `main`'s reader without the block, so `python -m styxx.diffgate`
-from `pip install styxx` disagrees with this checkout (and with the rebuilt bookmarklet) on every PATH-2a
-abstention. The bookmarklet's panel text (`bookmarklet_ui.js`, not edited here) still calls it the 7.48.0
-port and points to `pip install styxx` to reproduce; reproduce a PATH-2a reading from a checkout of this
-branch instead.
+**Released in 7.49.0.** PyPI's 7.48.0 and 7.48.1 carry `main`'s reader without the block, so `python -m styxx.diffgate`
+from either disagrees with this checkout (and with the rebuilt bookmarklet) on every PATH-2a abstention. 7.49.0
+ships the block: its `styxx/diffgate.py` hashes, line ends normalised, to `py_side.py`'s `PINNED`. The bookmarklet's
+panel text (`bookmarklet_ui.js`, not edited here) still calls it the 7.48.0 port and points to `pip install styxx`
+to reproduce, which gives a PATH-2a reading once 7.49.0 is what pip installs.
 
 **The GitHub Action runs the styxx beside it, not PyPI's.** `action.yml` installs styxx from PyPI and then runs
 `python "${{ github.action_path }}/diffgate_action.py"`; Python puts the script's own directory at the head of `sys.path`,
