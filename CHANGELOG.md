@@ -7,6 +7,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the GitLab job reports by default; blocking is opt-in with `STYXX_SOFT_FAIL: "false"`
+
+**This changes behaviour for anyone who relied on the default.** The GitLab job,
+`integrations/gitlab/diffgate.gitlab-ci.yml`, failed on every CONTRADICTED claim. It now reports,
+as the GitHub Action has by default since #199 (the entry "the GitHub Action reports by default",
+under [7.49.0]): every verdict goes to the job log and to the `diffgate.json` artifact, each
+contradicted claim is named in the log, and the gate's verdicts never fail the job. A pipeline that
+includes the job by its `main` URL, as the integration's README shows, reports from its next merge
+request pipeline after this merges, with nothing changed on its side. A copy pasted into a
+`.gitlab-ci.yml` keeps blocking until it is replaced. To keep a blocking job, set the variable on
+the job
+
+```yaml
+diffgate:
+  variables:
+    STYXX_SOFT_FAIL: "false"
+```
+
+or in the project's or group's CI/CD variables, or in the pipeline's top-level `variables:`. In
+report mode GitLab shows the job as passed: the job has no annotations or job summary, only its log
+and the artifact, so the merge request's pipeline status does not show what the gate found.
+
+**How the value is read**, as `diffgate_action.py`'s `_soft_fail` reads `soft-fail`: compared
+case-insensitively with surrounding whitespace stripped, so `"false"` and `"False "` block and
+`"true"`, `" true"` and `"TRUE"` report. Unset reads as `"true"`. Every other value, the empty
+string included, reports as `"true"` does, and the job prints a warning naming the value. The job
+does not set the variable in its own `variables:`: there it would outrank a pipeline's top-level
+`variables:` and silently override a pipeline that sets it, so the default lives in the script
+instead, with a commented-out `STYXX_SOFT_FAIL: "false"` line for a pasted copy. `--strict` added
+to the `styxx.diffgate` line still makes an UNCHECKABLE claim a failure, and the job fails on it
+only with `STYXX_SOFT_FAIL` `"false"`; the job has no strict variable, as it had none before.
+
+**Errors still fail the job.** The step that reads the variable takes only an exit 1 with a
+`diffgate.json` whose verdict is FAIL as the gate's verdict. Any other nonzero exit, or an exit 1
+that left no FAIL report (the CLI raising on a head the checkout does not have, for one), fails the
+job in either mode. Before the gate runs, the job removes a `diffgate.json` an earlier run left in
+the build directory, so a stale report is not read as this run's verdict. An install error or a
+failed fetch of the diff base fails the job as before.
+
+**Why.** The Action's reason: no kind of accusation the gate still makes has been measured clearing
+the 0.95 precision floor the lab set for accusing, and a check that fails someone else's merge
+request by default should already have cleared it. The job installs the released `styxx` and runs
+its CLI, so it reads with the reader that release ships; the figures and receipts are the ones the
+Action's entry gives (path claims withheld after EXTERNAL-1 measured 0.23 and V14 0.16;
+`only_touches` at 0.25 by PATH-1, re-derived by SCOPE-1; no committed RESULT states a precision for
+`tests_added`, `symbol_added` or `files_changed_count`).
+
+**What changed with it.** The job's header comment and `integrations/gitlab/README.md` say the job
+reports by default, how to make it block, how the value is read, that errors fail it in either
+mode, where a reported finding shows, and why. The README's line telling the reader to add
+`--strict` "to the last line" now names the `styxx.diffgate` line, and its rung paragraph says the
+job enforces only with the opt-in. `README.md` and `docs/` do not mention the GitLab job, so no line
+there changed.
+
+**Tests.** `tests/test_gitlab_job.py` runs the job's script lines under bash in a temporary
+repository. By default a lying description is reported with the lies named and the job passes; with
+`STYXX_SOFT_FAIL` `"false"` it fails; ten values are read as above, each also checked against the
+Action's `_soft_fail`; `--strict` fails the job on an UNCHECKABLE claim only with the opt-in; a gate
+that errors fails the job unset, `"true"` and `"false"` alike, with a stale FAIL report in the
+directory; the job leaves the variable unset; the README and the header comment say the job reports
+by default. Against `origin/main`'s job file the job's exit codes differ where the default changed
+and nowhere else that was run: a lying description exits 1 there and 0 here when the variable is
+unset, `"true"`, `"yes"` or empty, and a `--strict` run on an UNCHECKABLE claim exits 1 there and 0
+here when it is unset; under `"false"` both exit 1, an honest description exits 0 in both, and a
+head the checkout does not have exits 1 in both. Each guard was mutation-checked: dropping the
+`rm -f`, dropping the report check, the strip or the lowercasing each makes three tests fail. The
+job has not been run on GitLab itself.
+
 ## [Unreleased] — styxx 7.49.0 on Zenodo, as the next version of the software record
 
 styxx 7.49.0 is deposited on Zenodo as **10.5281/zenodo.23221755**, a new version of the styxx software
