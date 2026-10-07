@@ -16,11 +16,12 @@ made by someone else, upgrading is the fix. The entries headed `[Unreleased]` un
 kept whole below, in the order this file carried them; entries written at this cut say so in their
 opening line.
 
-**Security: capsule verification (GHSA-XXXX-XXXX-XXXX)**
+**Security: capsule verification (GHSA-3g8h-qcfm-25xw)**
 - Layer 2 of a v0.1 capsule, `python -m styxx.capsule verify`, re-runs `certify` on the embedded
-  document and receipts. Before this release it compared only the verdict (from 7.48.0 by class,
-  its `, N uncovered` suffix stripped), the counts and the status of each ledger row the
-  certificate carries, and it read the payload by text without checking the page around it, so a
+  document and receipts. Before this release it checked the document and receipt hashes and
+  compared only the verdict (from 7.48.0 by class, its `, N uncovered` suffix stripped), the counts
+  and the status of each ledger row the certificate carries, and it read the payload by text
+  without checking the page around it, so a
   capsule whose certificate was edited to say what its bytes do not verified. Run at this cut from
   the v7.47.0, v7.48.0 and v7.48.1 tag trees, each over capsules it minted itself: a certificate
   edited to report 0 uncovered (the D1 forgery), a deleted ledger row, a row's `receipt_ref`
@@ -33,10 +34,10 @@ opening line.
   it, since honest capsules carry it. Around that page, the D1 forgery posed as older than the
   uncovered band (the band fields and the receipt binding deleted, another issuer's hash) exits 0,
   and 7.49.0 prints the installed verifier's verdict beside the embedded one, six NOT CHECKED lines
-  and three advisories that name the uncovered number and say to check with `styxx>=7.49.0`.
-  Around the page 7.49.0 mints, the same pose fails. The older page tells its reader to
-  `pip install styxx==` the version its minter states, and 7.47.0, 7.48.0 and 7.48.1 each pass
-  forgeries 7.49.0 fails, this pose among them.
+  and three advisories, one naming the number nothing checked and one saying every styxx below
+  7.49.0 passes forgeries 7.49.0 fails. Around the page 7.49.0 mints, the same pose fails. The older
+  page tells its reader to pip install the payload's `verifier.pip`, which the minter chooses, and
+  7.47.0, 7.48.0 and 7.48.1 each pass this pose around either page.
 - Until you can upgrade: an exit 0 from 7.47.0, 7.48.0 or 7.48.1 says only that the payload it read,
   which need not be the one a browser draws, carries bytes matching its certificate's hashes, and
   that the verdict (by class in 7.48.0 and 7.48.1), the counts and the status of each row the
@@ -69,7 +70,8 @@ certify writes, type for type, and prints by name each field an older certificat
 (`NOT CHECKED`), the fields it takes as stated by the minter, and every advisory; it escapes control
 characters in what it prints; a sweep of 600 malformed single-field mutations now ends in a
 problem, not a traceback, and in `styxx.charon` in an UNRESOLVED or not-reproduced line (two
-classes a review found still end `verify` in a traceback, so #196 stays open). A newly minted page shows a verdict only after its hashes match, and its install line names
+classes a review found still end `verify` in a traceback, so #196 stays open). A newly minted
+page shows a verdict only after its hashes match, and its install line names
 `styxx>=7.49.0`, not the minter's version. A capsule of a renamed copy now fails, and
 `capsule create` refuses some certificates older styxx issued (re-certify, then mint). All ten
 committed v0.1 capsules still verify, each with an advisory that it states a styxx below 7.49.0.
