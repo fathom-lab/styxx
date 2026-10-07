@@ -283,6 +283,9 @@ def _capsule_payload(path: Path) -> Optional[dict]:
 def _capsule_live_v01(payload: dict) -> Tuple[Optional[str], Optional[dict]]:
     """The same pure function the capsule verifier runs: certify_doc over the embedded bytes."""
     from styxx.certify import certify_doc
+    from styxx.capsule import _unsafe_names
+    if _unsafe_names(payload):                          # never write where the capsule points
+        return None, {"live_error": "unsafe_embedded_name"}
     try:
         doc_bytes = base64.b64decode(payload["document"]["b64"])
         with tempfile.TemporaryDirectory() as td:
