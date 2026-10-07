@@ -69,7 +69,8 @@ def test_every_committed_v01_capsule_carries_the_older_page_and_it_draws_faithfu
     assert rep["ok"] is True, rep["problems"]
     assert any(c.startswith("the page (the page styxx rendered before 2026-10-05")
                for c in rep["compared"])
-    assert any("badge shows the certificate's verdict as fixed text" in a for a in rep["advisory"])
+    assert any("badge shows the certificate's verdict as fixed text" in a
+               and "tells its reader to pip install styxx==" in a for a in rep["advisory"])
     assert not any(n.startswith("the page") for n in rep["not_checked"])
 
 
@@ -96,6 +97,26 @@ def test_a_decoy_payload_on_a_committed_capsule_fails(tmp_path):
     rep = verify_capsule(forged)
     assert rep["ok"] is False
     assert any("not the page any styxx renders" in x for x in rep["problems"])
+
+
+def test_layer_2_says_the_older_page_s_install_line_is_the_minter_s(tmp_path, capsys):
+    """Review round 3 (forgery lens, major): the older page's layer-2 box tells its reader to
+    pip install the styxx its minter states, so a forger who chooses that page has it name a
+    release that passes the forgery (PyPI 7.48.0 and 7.48.1 pass a certificate edited to report 0
+    uncovered). Layer 2 cannot change what the page says; it tells its own reader."""
+    from styxx.capsule import main
+
+    cap = _legacy(tmp_path, CLEAN)
+    p = _payload_of(cap)
+    p["verifier"]["styxx_version"], p["verifier"]["pip"] = "7.48.0", "styxx==7.48.0"
+    cap.write_text(render_html_v01_legacy(p), encoding="utf-8")
+    rep = verify_capsule(cap)
+    assert rep["ok"] is True, rep["problems"]
+    adv = [a for a in rep["advisory"] if "badge shows the certificate's verdict" in a]
+    assert adv and "tells its reader to pip install styxx==7.48.0" in adv[0], rep["advisory"]
+    assert "7.48.0 and 7.48.1" in adv[0] and "styxx>=7.49.0" in adv[0], adv
+    assert main(["verify", str(cap)]) == 0
+    assert "pip install styxx==7.48.0, the version its minter states" in capsys.readouterr().out
 
 
 def test_an_honest_older_page_over_a_plain_document_verifies(tmp_path):

@@ -1047,10 +1047,18 @@ def _check_page_v01(html: str, payload: dict, cert: dict, live: Optional[dict], 
                     "draws no band where the certificate puts none"
                     + (f", and shows {len(omitted)} number(s) the certificate bands with no band, "
                        f"listed in an advisory)" if omitted else ")"))
-    advisory.append("this capsule carries the page styxx minted before 2026-10-05: its badge "
-                    "shows the certificate's verdict as fixed text before any check, and still "
-                    "shows it when a byte is doctored or the script does not run. A capsule "
-                    "minted with this styxx shows a verdict only after its hashes match.")
+    # Its install line is the minter's stated version (review round 3, forgery lens): a forger
+    # chooses this page to have it name a styxx that passes the forgery. Nothing in layer 2 can
+    # change what the page says; the reader of layer 2 is told.
+    advisory.append(f"this capsule carries the page styxx minted before 2026-10-05: its badge "
+                    f"shows the certificate's verdict as fixed text before any check, and still "
+                    f"shows it when a byte is doctored or the script does not run, and its layer-2 "
+                    f"box tells its reader to pip install {payload['verifier']['pip']}, the "
+                    f"version its minter states. Every styxx below {_LAYER2_FLOOR}, 7.48.0 and "
+                    f"7.48.1 among them, passes forgeries this one fails (a certificate edited to "
+                    f"report 0 uncovered among them), so check it with styxx>={_LAYER2_FLOOR}. A "
+                    f"capsule minted with this styxx shows a verdict only after its hashes match, "
+                    f"and its layer-2 box names that floor.")
     if omitted:
         advisory.append(f"the page (minted before 2026-10-05) shows {len(omitted)} number(s) with "
                         f"no band where the certificate bands them, and draws no band in their "
@@ -1287,9 +1295,12 @@ def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: byte
 # carry this layer 2 (the whole-certificate comparison and the page check). Until review round 3
 # the line was built from the minter's stated version, which a forger chooses and which can name
 # a styxx that passes forged certificates (PyPI 7.48.0 passes the D1 forgery). verify advises
-# when a capsule states a version below the floor. Changing it changes every page this renderer
-# produces, so a later change keeps this renderer for the pages it minted, as
-# styxx._capsule_page_v01_legacy keeps the one before it.
+# when a capsule states a version below the floor. That repairs only this page: the page every
+# styxx rendered before it still names the stated version, a forger can choose that page for a
+# new payload, and pip still installs a yanked release pinned exactly (PEP 592). verify tells its
+# reader so (review round 4); what the older page says cannot be changed. Changing the floor
+# changes every page this renderer produces, so a later change keeps this renderer for the pages
+# it minted, as styxx._capsule_page_v01_legacy keeps the one before it.
 _LAYER2_FLOOR = "7.49.0"
 
 
