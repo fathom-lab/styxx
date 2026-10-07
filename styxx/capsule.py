@@ -204,22 +204,21 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
     # verifier, because it IS the verifier. On failure the file is removed rather than
     # left on disk — a broken capsule that exists will eventually be sent to someone.
     #
-    # Verification passing is not the whole gate. Layer 2 prints a field an older certify did not
-    # write as NOT CHECKED and still passes, so that capsules already minted keep verifying; a new
-    # capsule is not minted from a certificate whose ledger rows lack a field the page draws its
-    # bands from (col, status, epistemics), or whose verdict is not the installed verifier's
-    # string. That keeps the 2026-09-01 refusal of pre-column certificates, which the earlier round
-    # of the 2026-10-05 repair had let through, minting pages that painted other numbers.
+    # Verification passing is not the whole gate. Around the page every styxx rendered before
+    # 2026-10-05, layer 2 prints a field an older certify did not write as NOT CHECKED and still
+    # passes, so that capsules already minted keep verifying; a new capsule is not minted from a
+    # certificate whose ledger rows lack a field the page draws its bands from (col, status,
+    # epistemics), or whose verdict is not the installed verifier's string. Around the page this
+    # function renders, those refusals (`mint_refusals`) fail verify itself, since no styxx mints
+    # that page from such a certificate. That keeps the 2026-09-01 refusal of pre-column
+    # certificates, which the earlier round of the 2026-10-05 repair had let through, minting
+    # pages that painted other numbers.
     report = verify_capsule(out)
-    why = "does not verify"
-    if report.get("ok") and report.get("mint_refusals"):
-        why = "verifies only with what its page draws from NOT CHECKED"
-        report = dict(report, ok=False, problems=report["mint_refusals"])
     if not report.get("ok"):
         problems = report.get("problems") or [report.get("error", "unknown")]
         out.unlink(missing_ok=True)
         raise SystemExit(
-            f"REFUSED: the minted capsule {why}, so it was not kept.\n"
+            "REFUSED: the minted capsule does not verify, so it was not kept.\n"
             + "\n".join(f"  - {p}" for p in problems[:6])
             + (f"\n  ... and {len(problems) - 6} more" if len(problems) > 6 else "")
             + "\n\nIf the ledger's rows lack fields, or it diverges on every token, this "
@@ -339,7 +338,7 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
     # The page around the payload is what a reader's browser runs. It must be the page some
     # styxx renders for exactly this payload, or what it shows was never checked by anything.
     _check_page_v01(html, payload, cert, live if not problems else None, doc_bytes, problems,
-                    advisory, cmp["compared"])
+                    advisory, cmp["compared"], cmp["mint_refusals"])
     return report()
 
 
@@ -925,7 +924,8 @@ _PAGE_V01_LEGACY_SPLIT = re.compile("\r\n|\n")
 
 
 def _check_page_v01(html: str, payload: dict, cert: dict, live: Optional[dict], doc_bytes,
-                    problems: List[str], advisory: List[str], compared: List[str]) -> None:
+                    problems: List[str], advisory: List[str], compared: List[str],
+                    mint_refusals: List[str]) -> None:
     """The page must be what some styxx renders for exactly this payload.
 
     The payload is located by text; a browser locates it as an element, skipping comments. Until
@@ -935,7 +935,16 @@ def _check_page_v01(html: str, payload: dict, cert: dict, live: Optional[dict], 
     every variant of that: an edited script, a decoy, a moved payload. Two renderers exist: this
     one, and the one every styxx used before 2026-10-05 (styxx._capsule_page_v01_legacy). For the
     older page, whose script reads documents differently from certify, the drawing is re-derived
-    here (_legacy_page_problems)."""
+    here (_legacy_page_problems).
+
+    This page is rendered only by create_capsule, which refuses a certificate verify would pass
+    with what the page draws from NOT CHECKED (`mint_refusals`). So around this page each of those
+    refusals is a failure: no styxx mints it from that certificate. Until review round 4 they were
+    NOT CHECKED around this page too, and a certificate posing as older than the uncovered band
+    verified while the page painted a green OATH-HELD over a number nothing checked. NOT CHECKED
+    stays for the older page, which honest capsules of that age carry. A later certify that writes
+    a field this one does not must keep the pages this renderer minted verifying: it treats this
+    renderer as an older one, as this module treats the page before it."""
     from styxx._capsule_page_v01_legacy import render_html_v01_legacy
 
     page = html[1:] if html.startswith("\ufeff") else html
@@ -947,6 +956,11 @@ def _check_page_v01(html: str, payload: dict, cert: dict, live: Optional[dict], 
             return False
 
     if renders(_render_html):
+        if mint_refusals:
+            problems.extend(
+                f"the page is the one create_capsule renders, and create_capsule refuses this "
+                f"certificate ({r}), so no styxx minted this page around it" for r in mint_refusals)
+            return
         compared.append("the page (the page this styxx renders for this payload)")
         return
     if not renders(render_html_v01_legacy):

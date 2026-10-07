@@ -79,6 +79,17 @@ def _forge(src, dst, edit):
     return dst
 
 
+def _forge_legacy(src, dst, edit):
+    """The same, around the page every styxx rendered before 2026-10-05, stating the last styxx
+    that rendered it (an honest page of that kind states a styxx below 7.49.0)."""
+    from styxx._capsule_page_v01_legacy import render_html_v01_legacy
+    payload = _payload_of(src)
+    payload["verifier"]["styxx_version"], payload["verifier"]["pip"] = "7.48.0", "styxx==7.48.0"
+    edit(payload)
+    dst.write_text(render_html_v01_legacy(payload), encoding="utf-8")
+    return dst
+
+
 @pytest.fixture(scope="module")
 def clean(tmp_path_factory):
     return _mint(tmp_path_factory.mktemp("clean"), CLEAN)
@@ -158,16 +169,19 @@ def test_d1_a_pre_band_pose_that_names_the_installed_certify_fails(uncovered, tm
     _fails_on(uncovered, tmp_path, same_issuer, "names the installed certify.py")
 
 
+def _old_issuer(p):
+    _pose_as_pre_band(p["certificate"])
+    del p["certificate"]["receipt_binding"]
+    p["certificate"]["verifier_sha256"] = p["verifier"]["sha256"] = "1" * 64
+
+
 def test_d1_a_pose_with_nothing_to_date_it_is_shown_the_live_coverage(uncovered, tmp_path):
     """What remains: delete the band and the binding and restate the issuer's hash, and the
-    certificate is shaped like one issued between 2026-08-30 and 2026-09-01, which really exist.
-    It verifies, with the reader told by name what was not checked and what the installed verifier
-    finds instead, and create_capsule refuses to mint from it."""
-    def old_issuer(p):
-        _pose_as_pre_band(p["certificate"])
-        del p["certificate"]["receipt_binding"]
-        p["certificate"]["verifier_sha256"] = p["verifier"]["sha256"] = "1" * 64
-    rep = verify_capsule(_forge(uncovered, tmp_path / "old.capsule.html", old_issuer))
+    certificate is shaped like one issued between 2026-08-30 and 2026-09-01, which really exist,
+    in capsules carrying the page styxx rendered before 2026-10-05. Around that page it verifies,
+    with the reader told by name what was not checked and what the installed verifier finds
+    instead, and create_capsule refuses to mint from it."""
+    rep = verify_capsule(_forge_legacy(uncovered, tmp_path / "old.capsule.html", _old_issuer))
     assert rep["ok"] is True, rep["problems"]
     assert rep["live_verdict"] == "OATH-HELD, 1 uncovered"
     nc = "\n".join(rep["not_checked"])
@@ -175,6 +189,21 @@ def test_d1_a_pose_with_nothing_to_date_it_is_shown_the_live_coverage(uncovered,
     assert any("coverage suffix" in a and "line 1 '12'" in a for a in rep["advisory"])
     assert "verdict class" in rep["compared"] and "verdict" not in rep["compared"]
     assert rep["mint_refusals"]
+
+
+def test_d1_the_same_pose_around_the_page_this_styxx_renders_fails(uncovered, tmp_path, capsys):
+    """Review round 3 (forgery lens, major): around the page this styxx renders, the same pose
+    verified with exit 0, and the page painted a green OATH-HELD over a number nothing checked
+    (the genuine page shows 'OATH-HELD, 1 uncovered'). No styxx mints that page from that
+    certificate: create_capsule, the only renderer of it, refuses it. So around it every refusal
+    create applies is a failure."""
+    forged = _forge(uncovered, tmp_path / "old_head.capsule.html", _old_issuer)
+    rep = verify_capsule(forged)
+    assert rep["ok"] is False
+    assert any("create_capsule refuses" in p and "'OATH-HELD, 1 uncovered'" in p
+               for p in rep["problems"]), rep["problems"]
+    assert main(["verify", str(forged)]) == 1
+    assert "CAPSULE FAILS VERIFICATION" in capsys.readouterr().out
 
 
 # ---------------------------------------------------------------- D3: every field, both ways
@@ -465,7 +494,8 @@ def _june_shaped(cert):
 @pytest.mark.parametrize("edit,why", [
     (_strip_rows("col"), "does not verify"),             # a later field dates it: verify fails
     (_strip_rows("epistemics"), "does not verify"),
-    (_june_shaped, "verifies only with what its page draws from NOT CHECKED"),
+    # around the page create renders, a refusal is a failure (review round 3, forgery lens)
+    (_june_shaped, "does not verify"),
 ])
 def test_create_refuses_a_certificate_whose_rows_lack_what_the_page_draws_from(tmp_path, edit,
                                                                                why):
@@ -801,7 +831,7 @@ def test_a_row_list_with_fields_not_checked_never_reads_every_field(tmp_path):
         _june_shaped(p["certificate"])
         p["verifier"]["sha256"] = p["certificate"]["verifier_sha256"]
     src = _mint(tmp_path / "src", CLEAN)
-    rep = verify_capsule(_forge(src, tmp_path / "june.capsule.html", june_shaped))
+    rep = verify_capsule(_forge_legacy(src, tmp_path / "june.capsule.html", june_shaped))
     assert rep["ok"] is True, rep["problems"]
     ledger = [c for c in rep["compared"] if c.startswith("ledger (")]
     assert ledger and "every field)" not in ledger[0] and "NOT CHECKED" in ledger[0], ledger
