@@ -23,10 +23,10 @@ private vulnerability reporting for this repository:
 **Security** tab). A report filed there is private: GitHub shows it to
 you and the repository's maintainers, not to the public.
 
-**If you emailed a report to the address this file used to name, we
-never received it.** That address is on a domain with no mail (MX)
-record, so nothing sent to it reached anyone. Please send the report
-again through the link above.
+**If you emailed a report to the address this file used to name,
+please send it again through the link above.** That address's domain
+has no mail-exchange (MX) record and serves a parked page, so we cannot
+confirm that mail sent there arrived.
 
 We will acknowledge within 72 hours, provide a triage assessment within
 7 days, and coordinate a fix and disclosure on a timeline appropriate to

@@ -58,19 +58,19 @@ its GitHub Action row say the Action reports by default, with the receipts, and 
 pre-commit, Codex and Gemini CLI hook READMEs, which called the Action "the enforcement", now say it
 enforces only with `soft-fail: "false"`.
 
-## [Unreleased] — the security contact was a mailbox that did not exist; reports now go through GitHub
+## [Unreleased] — the security contact was an email address the lab cannot confirm receives mail; reports now go through GitHub
 
-**Security.** `SECURITY.md` told reporters to email an address on a domain with no mail (MX) record,
-in two places: the reporting section and the last step of *Verifying a release*. Nothing sent there
-reached anyone. GitHub private vulnerability reporting was enabled for `fathom-lab/styxx` on
-2026-10-06, and both places now send reporters to
-<https://github.com/fathom-lab/styxx/security/advisories/new>. The file no longer names the address,
-and says plainly that it reached no one, so anyone who wrote to it knows to send the report again.
-The offer to reply on a reporter's public key belonged to the email channel and goes with it; the
-acknowledgement and triage times are unchanged.
+**Security.** `SECURITY.md` told reporters to email an address in two places: the reporting section
+and the last step of *Verifying a release*. The address's domain has no mail-exchange (MX) record
+and serves a parked page, so the lab cannot confirm that mail sent there arrived. GitHub private
+vulnerability reporting was enabled for `fathom-lab/styxx` on 2026-10-06, and both places now send
+reporters to <https://github.com/fathom-lab/styxx/security/advisories/new>. The file no longer names
+the address, and asks anyone who wrote to it to send the report again through GitHub private
+reporting. The offer to reply on a reporter's public key belonged to the email channel and goes
+with it; the acknowledgement and triage times are unchanged.
 
 The README's two links to the security policy pointed at the `v7.48.0` copy, which still names the
-dead address; they now point at `main`. The READMEs PyPI shows for 7.48.0 and 7.48.1 keep their tag
+old address; they now point at `main`. The READMEs PyPI shows for 7.48.0 and 7.48.1 keep their tag
 links, and the `SECURITY.md` inside those tags is unchanged, until the next release.
 
 ## [Unreleased] — styxx 7.48.1 on Zenodo, as the next version of the software record
