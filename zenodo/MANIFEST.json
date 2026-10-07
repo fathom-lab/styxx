@@ -49,7 +49,7 @@
     {
       "id": "D3",
       "file": "README.md",
-      "line": 478,
+      "line": 504,
       "current_text": "| DOI (concept, always-latest) | [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174) |",
       "surrounding_claim": "listed in the repo's own link table directly above the spec DOI, in a table of styxx project links",
       "defect": "19326174 IS a concept DOI, but it is the concept record of the Fathom research-paper series (v19, v20, v22, v23, v24, v26, v27, v28, v30, v31, v32, v33, v34 ...), not of the styxx software. Presenting it in a project link table as the 'always-latest' DOI implies it resolves to the current software release; it resolves to the most recent PAPER in the chain. The software concept DOI is 10.5281/zenodo.19758618.",
@@ -90,7 +90,7 @@
       "status": "NO_LOCAL_COUNTERPART",
       "cited_in": [
         "README.md:21",
-        "README.md:478",
+        "README.md:504",
         "many papers"
       ],
       "deposited_files": [],
@@ -116,7 +116,7 @@
       "status": "NO_LOCAL_COUNTERPART",
       "cited_in": [
         "CITATION.cff:33",
-        "README.md:481"
+        "README.md:507"
       ],
       "deposited_files": [],
       "notes": "Named by CITATION.cff line 33 since 2026-09-29 (defect D1 resolved). Latest version: 7.48.0, 10.5281/zenodo.23042251 (release/zenodo-deposit-receipt-software-v7.48.0.json)."
@@ -177,7 +177,7 @@
       "status": "DIVERGED",
       "cited_in": [
         "README.md:20",
-        "README.md:479",
+        "README.md:505",
         "CITATION.cff:57"
       ],
       "deposited_files": [
@@ -272,7 +272,7 @@
       "cited_in": [
         "CITATION.cff:46",
         "CITATION.cff:47",
-        "README.md:480"
+        "README.md:506"
       ],
       "deposited_files": [
         {

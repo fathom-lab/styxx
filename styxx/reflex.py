@@ -23,6 +23,10 @@ styxx.reflex — the cognitive reflex arc.
     > catching myself. the model develops a flinch.
     —Xendro, 2026-04-11 (the first external styxx user)
 
+The pitch's priority claims are the user's and were never surveyed:
+reading and steering a model's internal state during generation is
+older (representation engineering, Zou et al., 2023).
+
 This module turns that pitch into runnable code. It ships with v0.1.0a1
 as an *agent-cooperative* reflex: the caller drives the stream loop,
 and styxx handles classification, callback dispatch, and rewind

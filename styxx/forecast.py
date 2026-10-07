@@ -2,10 +2,14 @@
 """
 styxx.forecast -- predictive cognitive failure from partial trajectories.
 
-The first system that predicts LLM cognitive failure BEFORE it happens.
+Forecasts, from a partial trajectory, the state a generation will reach.
 
-Every AI safety system today is reactive: generate output, then check.
-This module reads the first 5-15 tokens of a generation and forecasts
+An earlier version of this docstring claimed priority and called every
+other AI safety system reactive. Neither sentence was surveyed, and both
+were withdrawn on 2026-09-29: reading and steering a model's internal
+state while it generates predates this module (representation
+engineering, Zou et al., 2023, which this repository's CHANGELOG cites).
+See papers/NOTE_prior_art_credit_2026_09_29.md. This module reads the first 5-15 tokens of a generation and forecasts
 what the cognitive state will be at token 25+. Hallucination, refusal
 spirals, and adversarial compliance leave measurable signatures in the
 early trajectory -- entropy volatility, logprob curvature, margin
