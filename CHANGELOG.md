@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the GitHub Action reports by default; blocking is opt-in with `soft-fail: "false"`
+
+**This changes behaviour for anyone who relied on the default.** `action.yml`'s `soft-fail` input
+defaulted to `"false"`, so a repository that added `uses: fathom-lab/styxx@main` got a check that
+failed on every contradicted claim. It now defaults to `"true"`: the Action writes every verdict to
+the job summary, names each contradicted claim in an annotation, and passes. `diffgate_action.py`
+reads an unset `STYXX_SOFT_FAIL` the same way, so the default is the same when the script runs
+outside `action.yml`. To keep a blocking check, set the input explicitly:
+
+```yaml
+- uses: fathom-lab/styxx@main
+  with:
+    soft-fail: "false"
+```
+
+`strict: true` still makes an UNCHECKABLE claim a failure, and the job fails on it only with
+`soft-fail: "false"`. This repository's own `.github/workflows/diffgate.yml` already sets
+`soft-fail: "false"` (and `strict: "false"`) explicitly, so the lab's own check keeps blocking; a
+new test in `tests/test_diffgate_action.py` reads that file and fails if it stops doing so, and
+others pin the input's default and the script's fallback.
+
+**Why.** On pull requests this lab did not write, the gate's accusations measured precision far
+below the floor the lab set for accusing:
+
+- **EXTERNAL-1** (2026-08-31): a blind three-seat panel upheld 23 of 100 sampled accusations,
+  precision **0.23**, against a preregistered floor of **0.95**, over 71,016 eligible agent-authored
+  pull requests from AIDev
+  (`papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md`;
+  receipts `papers/closed-model-frontier/external1_adjudication.json` and
+  `papers/closed-model-frontier/external1_summary.json`).
+- **EXTERNAL-2** (2026-09-16): with the path accusations withheld, the 7.47.0 wheel still made 665
+  accusations on that corpus (`only_touches` 341, `tests_added` 184, `files_changed_count` 75,
+  `symbol_added` 65), and **549 of them (82.6%) could not be right by construction**
+  (`papers/closed-model-frontier/RESULT_external2_live_accusations_2026_09_16.md`; receipt
+  `papers/closed-model-frontier/external2_summary.json`). EXTERNAL-2 is a census of the
+  instrument's output, not an adjudication, and states no precision.
+
+A check that fails someone else's pull request by default should already have cleared the floor
+its makers set. The default can be revisited when a held-out measurement shows the accusing kinds
+clearing it.
+
+**What else changed with it.** `action.yml`'s description no longer says the Action exits nonzero on
+a contradicted claim; it states the default, the opt-in, and the reason with the paths above, and
+the `strict` and `soft-fail` input descriptions say how the two combine. The job summary says
+which mode the run was in and links EXTERNAL-1's RESULT; the UNMEASURED summary and the closing
+soft-fail warning name `soft-fail: "false"` as the way to fail the job. The README's CI snippet and
+its GitHub Action row say the Action reports by default, with the receipts, and the row's
+`action.yml` link now points at `main` (what `@main` runs) instead of the `v7.48.0` copy. The
+pre-commit, Codex and Gemini CLI hook READMEs, which called the Action "the enforcement", now say it
+enforces only with `soft-fail: "false"`.
+
 ## [Unreleased] — the security contact was a mailbox that did not exist; reports now go through GitHub
 
 **Security.** `SECURITY.md` told reporters to email an address on a domain with no mail (MX) record,
