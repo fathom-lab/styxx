@@ -131,6 +131,18 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
     doc_bytes = doc.read_text(encoding="utf-8").encode("utf-8")
     cert_obj = json.loads(cert.read_text(encoding="utf-8"))
 
+    # 0. under the name it was certified as. Layer 2 compares certificate.document (certify writes
+    # the document's file name) with the name the capsule gives the document, which is this file's,
+    # so a renamed copy cannot verify. Until review round 3 that surfaced as a refusal after the
+    # mint, with a hint that blamed the ledger schema.
+    if cert_obj.get("document") != doc.name:
+        named = cert_obj.get("document")
+        raise SystemExit(
+            f"REFUSED: the certificate was issued for a document named {named!r}, and this one is "
+            f"named {doc.name!r}. A capsule carries the document under the name it is given, and "
+            f"layer 2 compares that name with certificate.document, so a renamed copy does not "
+            f"verify. Mint from a file named {named!r}, or re-certify {doc.name!r}.")
+
     # 1. the certificate must describe THESE bytes
     if _sha256(doc_bytes) != cert_obj.get("document_sha256"):
         raise SystemExit("REFUSED: document bytes do not match certificate.document_sha256")
@@ -644,7 +656,14 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
             if k not in _CERT_REQUIRED:
                 absent_field(k, f"not carried (installed verifier: {_short(lval, 160)})")
         elif not _same(cert[k], lval):
-            if isinstance(lval, list) and isinstance(cert[k], list):
+            if k == "document" and isinstance(cert[k], str) and isinstance(lval, str):
+                # certify writes the document's file name; the re-run's file has the capsule's
+                problems.append(f"certificate.document {cert[k]!r} is not the name this capsule "
+                                f"gives its document ({lval!r}): the certificate was issued for a "
+                                f"file of that name, and the capsule carries it under another (a "
+                                f"renamed copy). Mint from a file named as certified, or "
+                                f"re-certify the file under its new name")
+            elif isinstance(lval, list) and isinstance(cert[k], list):
                 js = lambda x: json.dumps(x, ensure_ascii=False, sort_keys=True)  # noqa: E731
                 only_live = [x for x in lval if js(x) not in {js(y) for y in cert[k]}]
                 only_cert = [x for x in cert[k] if js(x) not in {js(y) for y in lval}]

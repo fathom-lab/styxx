@@ -763,3 +763,37 @@ def test_verify_advises_when_the_stated_version_is_below_the_floor(clean, tmp_pa
     assert bool(floor) is below, rep["advisory"]
     if below:
         assert f"styxx {version}" in floor[0]
+
+
+# ---------------------------------------------------------------- a renamed copy
+#
+# Review round 2 (both lenses, major and minor): layer 2 compares certificate.document, which
+# certify writes as the document's file name, with the name the capsule gives its document. A
+# capsule of an honest copy under another name, which 7.48.0 minted and verified, now fails, and
+# create's refusal blamed the ledger schema. The comparison stays; the messages name the rename.
+
+def test_a_renamed_copy_fails_and_verify_names_the_rename(clean, tmp_path):
+    def renamed(p):
+        p["document"]["name"] = "d_for_readers.md"
+    rep = _fails_on(clean, tmp_path, renamed, "certificate.document 'd.md' is not the name")
+    msg = [p for p in rep["problems"] if p.startswith("certificate.document")][0]
+    assert "'d_for_readers.md'" in msg and "renamed copy" in msg
+
+
+def test_create_refuses_a_renamed_copy_and_says_so(tmp_path):
+    d = tmp_path / "ren"
+    d.mkdir()
+    doc = d / "report.md"
+    doc.write_text(CLEAN, encoding="utf-8")
+    rec = d / "r.json"
+    rec.write_text(json.dumps(RECEIPT), encoding="utf-8")
+    cp = d / "report.certificate.json"
+    cp.write_text(json.dumps(certify_doc(doc, [rec])), encoding="utf-8")
+    copy = d / "report_v2.md"
+    copy.write_bytes(doc.read_bytes())
+    with pytest.raises(SystemExit) as e:
+        create_capsule(copy, [rec], cp, d / "report_v2.capsule.html")
+    msg = str(e.value)
+    assert "'report.md'" in msg and "'report_v2.md'" in msg and "renamed" in msg
+    assert "ledger schema" not in msg
+    assert not (d / "report_v2.capsule.html").exists()
