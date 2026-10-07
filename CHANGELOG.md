@@ -113,7 +113,129 @@ Alshammari et al., ShellCheck SC2312 and actionlint, Swarm Orchestrator's defect
 and `--challenges`, backcheck's *qualified* verdict and i-dont-believe-you. styxx 7.48.0 carries no
 PEP 740 provenance; a release after this one should.
 
-## [Unreleased] — two tests that failed on Windows for reasons outside the code under test (#185, #186)
+## [7.48.1] — 2026-10-06 — security repair: a capsule or an audited certificate chose where styxx wrote files, and now every name it gives must be a bare file name
+
+A patch release: one security repair, the version bump that `conformance/sworn/` moves with, and
+what merged on `main` after 7.48.0. Upgrade with `pip install -U styxx==7.48.1`. For anyone who
+verifies capsules made by someone else, or runs `styxx.charon` over them, upgrading is the fix.
+The entries headed `[Unreleased]` until this cut are kept whole below, in the order this file
+carried them; entries written at this cut say so in their opening line.
+
+**Security**
+- `python -m styxx.capsule verify` (OATH Capsule v0.1) and `styxx.charon`'s re-run of a capsule
+  wrote the capsule's embedded document and receipts under names the capsule chose, so a capsule
+  could write bytes of its author's choosing to any path the user running the verifier can write.
+  `python -m styxx.corpus_audit`, re-deriving a certificate over its receipts' bytes at the issuing
+  commit, wrote them the same way under receipt names the audited certificate gave. Affected: 7.47.0
+  and 7.48.0 through the capsule verifier; 7.48.0 through charon and corpus_audit. Advisory
+  GHSA-h5xv-4344-f62r. What was wrong, the repair and the workaround until you can upgrade are in
+  the entry below.
+
+**In the package since 7.48.0**
+- `python -m styxx.islands` gains `--island-z`, and `--demo` reads its list at `island_z=3` and
+  prints the rule it used (#93). The library default stays 1.0.
+- The PyPI description gives each AUC to the instrument that earned it.
+
+**In the repository, not the wheel**
+- The #125 packet repair, the errata and corrections from the 7.48.0 audit, 7.48.0's Zenodo record,
+  the sworn action's docs (#164), and two tests that failed on Windows for reasons outside the code
+  under test (#185, #186).
+- `SECURITY.md` said releases reach PyPI through Trusted Publishing with PEP 740 attestations.
+  They do not: `publish.yml` uploads with an API token held as a repository secret and sets
+  `attestations: false`. The file now says so, and its steps for checking a release compare
+  SHA-256 sums only. Written at this cut.
+
+**Cutting this release**
+- `styxx/_version.py` is 7.48.1 (e2b31742), and `CITATION.cff` gives `version` 7.48.1 and
+  `date-released` 2026-10-06 (3fc2c852).
+- `conformance/sworn/` was regenerated for the version stamp (e2b31742; entry below): 15 vectors
+  took new ids, 0 moved, and no expected outcome changed.
+- `README.md`, which becomes the PyPI page, was audited at this cut against the tree it ships with.
+  One line changed (2770cd70): the note under the islands demo said a drift of about 0.005 could
+  change which clique members fall under the island cut, which #93 made untrue for `--demo`; it now
+  says the block is abridged and that the drift's cause is not established. Its links still point
+  at the v7.48.0 tag.
+
+### Security: a capsule or an audited certificate chose where styxx wrote files (GHSA-h5xv-4344-f62r)
+
+**`styxx/capsule.py`, `styxx/charon.py`, `tests/test_capsule_bare_names.py` (NEW); commit 76e9dcc5.
+`styxx/corpus_audit.py`, `tests/test_corpus_audit_bare_names.py` (NEW); commit d8b856a1, after the review
+of this release found the same write there. Written at this cut from those commits.**
+
+- **What was wrong.** A v0.1 OATH capsule (`styxx-oath/capsule/v0.1`) embeds its document and its
+  receipts as bytes, each under a name. `python -m styxx.capsule verify FILE` re-runs the certifier
+  by writing those bytes to `Path(tempdir) / name`, and the capsule supplies the name. A path
+  joined to an absolute name is that absolute name, and `..` climbs out, so an absolute name or a
+  `../` name was written outside the temporary directory: verifying a capsule someone else made
+  could create or overwrite any file the user running the verifier can write, with bytes the
+  capsule's author chose. The hash checks did not stop it, because the capsule also carries the
+  certificate those bytes are checked against. `styxx.charon`'s re-run of a v0.1 capsule (in
+  `ingest`, `verify` and `derive`) wrote the same way. So did `python -m styxx.corpus_audit` with
+  history on (the default for a full clone): to re-certify a certificate over the bytes its
+  receipts had at the issuing commit, it wrote those bytes under the receipt names the audited
+  certificate gives, so auditing a repository someone else wrote could write outside its
+  temporary directory.
+- **Affected releases.** 7.47.0 and 7.48.0, through `python -m styxx.capsule verify`
+  (`styxx.capsule.verify_capsule`), which has been in the package since 2026-08-31; and 7.48.0,
+  through `styxx.charon` and `styxx.corpus_audit`. Creating a capsule is not affected: it writes
+  under the names of the files you hand it.
+- **The repair.** Every embedded name must be a bare file name under POSIX and Windows rules alike:
+  no separator, no drive, not `.` or `..`, no control character, no trailing dot or space, and no
+  Windows device name. No two names may be the same file on a case-insensitive file system.
+  Otherwise `verify` reports the name as a problem, writes nothing and does not re-run the
+  certifier, so the capsule fails; charon records `live_error: unsafe_embedded_name` and writes
+  nothing; corpus_audit writes nothing, re-derives nothing for that certificate and says why in
+  its `stands_reason`. The ten v0.1 capsules committed under `papers/` carry only names the rule accepts, and
+  all ten still verify.
+- **What to do.** Upgrade: `pip install -U styxx==7.48.1`. Until you can, verify only capsules from
+  a source you trust, or verify them in a throwaway environment (a container, a virtual machine or
+  a disposable account) where a file written anywhere does no harm. The same holds for running
+  `python -m styxx.charon` over capsules you did not make, and `python -m styxx.corpus_audit` over
+  a repository you did not write (or run it with `--history off`).
+- **The tests.** `tests/test_capsule_bare_names.py` refuses an absolute receipt name, a `../`
+  receipt name and a `../` document name with nothing written; holds charon to writing nothing
+  where a forged capsule points; refuses two names that differ only in case; and pins the rule on
+  7 names it accepts and 19 it refuses. Run against 43b3b608, the commit this release branched
+  from, the four tests of a name that escapes (absolute receipt, `../` receipt, `../` document,
+  charon) fail, the 26 cases that pin the rule fail because the rule is not there, and the
+  honest-capsule and case-collision tests pass (on Windows). `tests/test_corpus_audit_bare_names.py`
+  audits a throwaway repository whose certificate names a receipt `../../` out of the temporary
+  directory, and one with an absolute name: nothing is written outside it. Run against 76e9dcc5 the
+  climbing case fails; the absolute case passes there too, because that name never resolves to
+  bytes at the issuing commit.
+- **What it does not say.** That the certifier is safe to run over arbitrary bytes. Verifying a
+  capsule still re-runs the installed certifier over the embedded document and receipts; that is
+  the design. This repair bounds where those bytes are written.
+
+### conformance/sworn regenerated for 7.48.1: the version stamp gave the same fifteen vectors new ids and moved no expected outcome
+
+**`conformance/sworn/` (seven files) and `styxx/_version.py`; commit e2b31742. Written at this cut
+from that commit.**
+
+- **Why.** The verdict-receipt digest covers `verifier.styxx_version`, so bumping
+  `styxx/_version.py` turns C7, `test_the_committed_set_regenerates_to_its_own_digest`, red. The
+  7.48.0 cut did the same step and recorded it in
+  `papers/sworn/NOTE_sworn_conformance_regenerated_for_7_48_0_2026_09_25.md`.
+- **The set reproduced before anything was regenerated.** In the release worktree (win32, CPython
+  3.12.10, a CRLF checkout under `core.autocrlf=true`; the set's directory is `-text`), with the
+  capsule repair applied and the version still 7.48.0, `gen_vectors.py --check` regenerated the
+  committed digest `05e64577…` and printed "CHECK OK".
+- **What moved.** After the bump, `--check` drifted to `8c0a58b2…` in the families `cli`, `gaming`,
+  `receipt_v1` and `rules` and in `blobs.json`, every count unchanged. The in-place run found 0
+  moved vectors, 15 dropped and 15 added, all in mode `receipt_check` (`cli` 1, `gaming` 7,
+  `receipt_v1` 4, `rules` 3), from the same tests as at 7.48.0. Each dropped vector equals an added
+  one in every field once their receipt blobs are compared without `verifier.styxx_version` and
+  `digest`, and the 15 blobs out equal the 15 in as multisets under that comparison.
+  `observer.json` moved 15 rows to the new ids, unchanged as a multiset. In `index.json` only the
+  four family digests, the blobs digest, `set_sha256` and `provenance.styxx_version` changed. Still
+  3620 vectors, 20 families and 3981 blobs. Afterwards `--check` and `--replay` exit 0, with 3620
+  of 3620 replaying, and `tests/test_sworn*.py` with the two differential tests give 1203 passed and
+  1 skipped.
+- **What it does not say:** that CI passes on the regenerated set (not observed here), or that the
+  set is more correct than it was. No committed receipt, certificate, sworn document, capsule or
+  charon log was touched.
+
+### two tests that failed on Windows for reasons outside the code under test (#185, #186)
 
 - `tests/test_gitlab_job.py` ran the GitLab job's script with a bare `bash`. On Windows,
   `subprocess` resolves that through CreateProcess, which searches the system directory before
@@ -131,7 +253,7 @@ PEP 740 provenance; a release after this one should.
 
 Each fix was mutation-checked: restoring the old line makes its test fail.
 
-## [Unreleased] — the 7.48.0 week's public text, audited: errata to [7.48.0], and corrections on main
+### the 7.48.0 week's public text, audited: errata to [7.48.0], and corrections on main
 
 On 2026-09-29 an audit read every public surface of the 7.48.0 week: the release notes, the PyPI
 page, the Zenodo record, `main`, the open and merged pull requests, and the lab's channel posts. This
@@ -218,7 +340,7 @@ script would break a receipt, and both are already in history. Removing them nee
 which is the operator's call. `web/gate/README.md`'s drift section and
 `web/gate/differential/py_side.py` still say 7.48.0 has not shipped; #161 rewrites both files.
 
-## [Unreleased] — styxx 7.48.0 on Zenodo, as the next version of the software record
+### styxx 7.48.0 on Zenodo, as the next version of the software record
 
 styxx 7.48.0 is deposited on Zenodo as **10.5281/zenodo.23042251**, a new version of the styxx software
 concept record **10.5281/zenodo.19758618**, whose previous version was v6.2.0 (10.5281/zenodo.19758619,
@@ -242,7 +364,7 @@ result held back from publication and no unreleased work.
   `release/NOTE_zenodo_software_v7_48_0_provenance.md` says who ran it and how, which the draft receipt's
   `publish_step` does not.
 
-## [Unreleased] — the sworn action's docs stop saying styxx.sworn is in no release (#164)
+### the sworn action's docs stop saying styxx.sworn is in no release (#164)
 
 `sworn/action.yml` (the `styxx-source` input) and `sworn/README.md` said `styxx.sworn` is not in any
 release; publishing 7.48.0 made that false. The default is unchanged: the action installs styxx from
@@ -251,7 +373,7 @@ as the reason, and names `styxx==7.48.0` as the way to install the release inste
 `sworn/examples/sworn.yml` said it too; the audit entry above corrects it. *(Added 2026-09-29: #164
 merged without an entry.)*
 
-## [Unreleased] — the blind packet's ids stop carrying the arm (#125), and the islands demo reads its own cohort (#93)
+### the blind packet's ids stop carrying the arm (#125), and the islands demo reads its own cohort (#93)
 
 **#125.** `papers/closed-model-frontier/external1_packet.py` numbered items `E1-000..` in arm order
 and shuffled afterwards, so an id told an adjudicator which arm its item came from without the

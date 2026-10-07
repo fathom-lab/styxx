@@ -178,7 +178,7 @@ cohort of 8 minds over 120 shared items — nothing labelled
     ISLAND                0.1636   <- found from frame geometry alone
 ```
 
-Numbers from one machine (Python 3.12, numpy 2.4, Windows). The same seeded cohort moves by up to about 0.005 across builds, enough to change which clique members fall under the island cut ([#93](https://github.com/fathom-lab/styxx/issues/93)).
+Abridged from `--demo` on one machine (Python 3.12, numpy 2.4, Windows). The same seeded cohort's affinities have differed by up to about 0.005 between machines, cause not established; `--demo` lists islands at `island_z=3` and prints the rule it used ([#93](https://github.com/fathom-lab/styxx/issues/93)).
 
 Independently trained models converge on a shared concept geometry — and a model can sit
 *mostly inside* it and still be unreadable. We took the barrier apart under preregistered
