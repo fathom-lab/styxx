@@ -23,10 +23,11 @@ report; keeps the JSON report as a job artifact whether the job passed or failed
 
 ## It reports by default; blocking is opt-in
 
-The job reports by default, as the GitHub Action does: every verdict goes to the job log and to
-`diffgate.json`, each contradicted claim is named in the log, and the gate's verdicts never fail
-the job. When the gate says FAIL, the job prints a warning after the gate's output that the job
-passes anyway, and how to make it fail. GitLab then shows the job as passed: the Action writes
+The job reports by default, as the GitHub Action does, and the gate's verdicts never fail the
+job. The gate's verdict, its claim counts and each CONTRADICTED or UNCHECKABLE claim go to the
+job log; every claim's verdict, VERIFIED included, goes to `diffgate.json`. When the gate says
+FAIL, the job prints a warning after the gate's output that the job passes anyway, and how to
+make it fail. GitLab then shows the job as passed: the Action writes
 annotations and a job summary, but this job reports only in its log and the `diffgate.json`
 artifact, so the merge request's pipeline status does not show what the gate found. Only
 STYXX_SOFT_FAIL set to "false" blocks: the job then fails on a
@@ -127,10 +128,12 @@ job; ten values of the variable are read as above, each the way the Action's rea
 the job in either mode, and a stale `diffgate.json` is not read as its verdict; a stand-in for the
 CLI whose report does not match its exit (exit 0 with no report or a FAIL one, exit 1 with a PASS
 one, exit 2) fails the job in either mode; an honest description passes; every run, PASS
-included, prints the one mode line its value calls for; and this README, the job's header and
-the CHANGELOG entry carry the Protected caveat. That is the mechanics of the job, tested here under bash; a run on GitLab
-itself is not something this repository has done, and a run there that fails on a variable name
-or on the multi-line script step is worth an issue.
+included, prints the one mode line its value calls for; a description with a VERIFIED, a
+CONTRADICTED and an UNCHECKABLE claim puts the last two in the log and all three in
+`diffgate.json`, and this README, the job's header and the CHANGELOG entry say so; and they
+carry the Protected caveat. That is the mechanics of the job, tested here under bash; a run on
+GitLab itself is not something this repository has done, and a run there that fails on a
+variable name or on the multi-line script step is worth an issue.
 
 Everything the Action's README says about scope applies: the closed template set, "tests pass"
 UNCHECKABLE without `--evidence`, a path the diff does not show UNCHECKABLE and never accused

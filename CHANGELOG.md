@@ -12,8 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 **This changes behaviour for anyone who relied on the default.** The GitLab job,
 `integrations/gitlab/diffgate.gitlab-ci.yml`, failed on every CONTRADICTED claim. It now reports,
 as the GitHub Action has by default since #199 (the entry "the GitHub Action reports by default",
-under [7.49.0]): every verdict goes to the job log and to the `diffgate.json` artifact, each
-contradicted claim is named in the log, and the gate's verdicts never fail the job. A pipeline that
+under [7.49.0]), and the gate's verdicts never fail the job: the gate's verdict, its claim counts
+and each CONTRADICTED or UNCHECKABLE claim go to the job log, and every claim's verdict, VERIFIED
+included, goes to the `diffgate.json` artifact. A pipeline that
 includes the job by its `main` URL, as the integration's README shows, reports from its next merge
 request pipeline after this merges, with nothing changed on its side. A copy pasted into a
 `.gitlab-ci.yml` keeps blocking until it is replaced. To keep a blocking job, set the variable on
@@ -82,9 +83,12 @@ Action's `_soft_fail`; `--strict` fails the job on an UNCHECKABLE claim only wit
 that errors fails the job unset, `"true"` and `"false"` alike, with a stale FAIL report in the
 directory; a stand-in for the CLI whose report does not match its exit (exit 0 with no report or a
 FAIL one, exit 1 with a PASS one, exit 2) fails the job unset and `"false"`, with a stale PASS report
-in the directory; every run, PASS included, prints the one mode line its value calls for; the job
-leaves the variable unset; the README and the header comment say the job reports by default, and
-they and this entry carry the Protected caveat. Against `origin/main`'s job file the job's exit
+in the directory; every run, PASS included, prints the one mode line its value calls for; a
+description with a VERIFIED, a CONTRADICTED and an UNCHECKABLE claim puts the last two in the log
+and all three in `diffgate.json`, unset and `"false"` alike, and the README, the header comment
+and this entry say so; the job leaves the variable unset; the README and the header comment say
+the job reports by default, and they and this entry carry the Protected caveat. Against
+`origin/main`'s job file the job's exit
 codes differ where the default changed, where an exit 0 left no PASS report, and nowhere else that
 was run: a lying description exits 1 there and 0 here when the variable is unset, `"true"`, `"yes"`
 or empty, and a `--strict` run on an UNCHECKABLE claim exits 1 there and 0 here when it is unset; a

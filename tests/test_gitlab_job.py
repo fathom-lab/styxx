@@ -31,6 +31,8 @@ yaml = pytest.importorskip("yaml")
 
 LYING = "Refactored src/retry.py. Added 3 tests. Only touches files under src/."
 HONEST = "Modified src/retry.py, adds function retry_once, added 1 test. 2 files changed."
+# One claim of each verdict: file_touched VERIFIED, tests_added CONTRADICTED, tests_pass UNCHECKABLE.
+MIXED = "Refactored src/retry.py. Added 3 tests. All tests pass."
 PASSES = 'so the job passes; set STYXX_SOFT_FAIL to "false" to fail it.'
 REPORTED = "WARNING: styxx diffgate found failures but STYXX_SOFT_FAIL is on, as it is by default, " + PASSES
 REPORTED_ODD = ("WARNING: styxx diffgate found failures but STYXX_SOFT_FAIL has a value this job does not "
@@ -209,6 +211,25 @@ def test_an_honest_description_passes_the_job_and_the_log_names_the_mode(mr_repo
     assert _report(work)["verdict"] == "PASS"
 
 
+@needs_bash
+@pytest.mark.parametrize("soft_fail", [None, "false"])
+def test_the_log_names_each_contradicted_or_uncheckable_claim_and_the_artifact_holds_every_verdict(
+        mr_repo, soft_fail):
+    """The job has no job summary: the CLI prints the gate's verdict, its claim counts and each
+    claim that is not VERIFIED, and only diffgate.json carries every claim's verdict. The Action's
+    job summary lists every claim; this job's log does not, so its docs must not say it does."""
+    work, base, head = mr_repo
+    r = _run_job(work, base, head, MIXED, soft_fail=soft_fail)
+    assert r.returncode == (1 if soft_fail == "false" else 0), r.stdout + r.stderr
+    assert re.search(r"(?m)^FAIL +claims=3 contradicted=1 uncheckable=1\b", r.stdout), r.stdout
+    assert "[CONTRADICTED:tests_added]" in r.stdout and "[UNCHECKABLE:tests_pass]" in r.stdout
+    assert "[VERIFIED" not in r.stdout and "file_touched" not in r.stdout
+    _one_mode_line(r.stdout, soft_fail)
+    verdicts = {c["kind"]: c["verdict"] for c in _report(work)["claims"]}
+    assert verdicts == {"file_touched": "VERIFIED", "tests_added": "CONTRADICTED",
+                        "tests_pass": "UNCHECKABLE"}
+
+
 def _action_soft_fail():
     spec = importlib.util.spec_from_file_location("_diffgate_action_for_gitlab", ROOT / "diffgate_action.py")
     mod = importlib.util.module_from_spec(spec)
@@ -370,3 +391,20 @@ def test_the_docs_warn_that_a_protected_variable_does_not_reach_a_merge_request_
         assert "reaches a merge request pipeline only when its source and target branches are both protected" in flat
         assert "never from a fork" in flat
         assert "leave Protect cleared or set the variable in .gitlab-ci.yml" in flat
+
+
+def test_the_docs_say_what_goes_to_the_log_and_what_to_the_artifact():
+    """The README, the job's header and the CHANGELOG entry once said every verdict goes to the job
+    log, a line copied from the Action, whose job summary lists every claim. This job's log holds
+    the gate's verdict, its claim counts and each CONTRADICTED or UNCHECKABLE claim; every claim's
+    verdict, VERIFIED included, is in diffgate.json (the MIXED run above checks it)."""
+    readme = (ROOT / "integrations" / "gitlab" / "README.md").read_text(encoding="utf-8")
+    header = JOB.read_text(encoding="utf-8").split("\ndiffgate:", 1)[0]
+    changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    entry = changelog.split("## [Unreleased] \u2014 the GitLab job reports by default", 1)[1].split("\n## ", 1)[0]
+    for text in (readme, header, entry):
+        flat = " ".join(text.replace("#", " ").replace("`", "").split())
+        assert "every verdict goes to the job log" not in flat
+        assert "each contradicted claim is named in the log" not in flat
+        assert "its claim counts and each CONTRADICTED or UNCHECKABLE claim go to the" in flat
+        assert re.search(r"every claim's verdict, VERIFIED included, goes to (the )?diffgate\.json", flat)

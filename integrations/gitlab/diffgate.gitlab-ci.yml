@@ -11,21 +11,23 @@
 # UNCHECKABLE, never accused (EXTERNAL-1). Same instrument, same verdicts, same withholding as the
 # GitHub Action and the CLI.
 #
-# It reports by default, as the GitHub Action does: every verdict goes to the job log and to the
-# diffgate.json artifact, and the gate's verdicts never fail the job. Only STYXX_SOFT_FAIL set to
-# "false" blocks: then the job fails on a CONTRADICTED claim, and on an UNCHECKABLE one too if
-# --strict is added to the styxx.diffgate line. Set it in the project's CI/CD variables, in the
-# pipeline's variables, or in this job's. A variable marked Protected in the project's or group's
-# settings reaches a merge request pipeline only when its source and target branches are both
-# protected branches of the same project and a maintainer has allowed merge request pipelines to
-# access protected variables, and never from a fork; anywhere else the job sees it unset and
-# reports, so leave Protect cleared or set the variable in .gitlab-ci.yml. The value is compared
-# case-insensitively with surrounding whitespace stripped; unset reads as "true"; every other
-# value, the empty string included, reports as "true" does, with a warning naming it. Every run
-# prints the mode it ran in. An install error, or a gate whose report does not match its exit (a
-# PASS report for 0, a FAIL report for 1), fails the job either way. It does not block by default because
-# no kind of accusation the gate still makes has been measured clearing the 0.95 precision floor
-# the lab set for accusing (CHANGELOG.md, "the GitHub Action reports by default").
+# It reports by default, as the GitHub Action does, and the gate's verdicts never fail the job.
+# The gate's verdict, its claim counts and each CONTRADICTED or UNCHECKABLE claim go to the job
+# log; every claim's verdict, VERIFIED included, goes to the diffgate.json artifact. Only
+# STYXX_SOFT_FAIL set to "false" blocks: then the job fails on a CONTRADICTED claim, and on an
+# UNCHECKABLE one too if --strict is added to the styxx.diffgate line. Set it in the project's
+# CI/CD variables, in the pipeline's variables, or in this job's. A variable marked Protected in
+# the project's or group's settings reaches a merge request pipeline only when its source and
+# target branches are both protected branches of the same project and a maintainer has allowed
+# merge request pipelines to access protected variables, and never from a fork; anywhere else the
+# job sees it unset and reports, so leave Protect cleared or set the variable in .gitlab-ci.yml.
+# The value is compared case-insensitively with surrounding whitespace stripped; unset reads as
+# "true"; every other value, the empty string included, reports as "true" does, with a warning
+# naming it. Every run prints the mode it ran in. An install error, or a gate whose report does
+# not match its exit (a PASS report for 0, a FAIL report for 1), fails the job either way. It
+# does not block by default because no kind of accusation the gate still makes has been measured
+# clearing the 0.95 precision floor the lab set for accusing (CHANGELOG.md, "the GitHub Action
+# reports by default").
 
 diffgate:
   image: python:3.12
