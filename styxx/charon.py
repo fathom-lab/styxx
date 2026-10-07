@@ -271,7 +271,10 @@ def derive_sworn(sidecar_path: Path, repo: Path) -> dict:
 
 def _capsule_payload(path: Path) -> Optional[dict]:
     from styxx import capsule as _cap
-    html = path.read_text(encoding="utf-8")
+    try:
+        html = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:                         # not UTF-8 text: no payload to read
+        return None
     try:
         i = html.index(_cap._BEGIN) + len(_cap._BEGIN)
         j = html.index(_cap._END, i)

@@ -233,7 +233,13 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
 # ---------------------------------------------------------------------------------
 
 def verify_capsule(path: Path) -> dict:
-    html = path.read_text(encoding="utf-8")
+    try:
+        html = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as e:
+        # a file that is not UTF-8 text ended in a traceback here until review round 3
+        return {"ok": False, "stage": "parse",
+                "problems": [f"the capsule file could not be read as UTF-8 text "
+                             f"({type(e).__name__}: {str(e)[:160]})"]}
     try:
         i = html.index(_BEGIN) + len(_BEGIN)
         j = html.index(_END, i)
@@ -481,9 +487,19 @@ def _payload_problems_v01(payload: dict) -> List[str]:
             out.append(f"payload.verifier.pip {_short(ver.get('pip'))} is not 'styxx=={v}', the "
                        f"install line create_capsule writes and the page shows")
     c = payload.get("created")
-    if not (isinstance(c, str) and _CREATED.fullmatch(c)):
+    if not (isinstance(c, str) and _CREATED.fullmatch(c) and _a_time(c)):
         out.append(f"payload.created {_short(c)} is not the UTC time create_capsule writes")
     return out
+
+
+def _a_time(c: str) -> bool:
+    """A time a clock can show: the digit shape alone let 9999-99-99T99:99:99Z through, and the
+    page printed it as the mint time."""
+    try:
+        _dt.datetime.strptime(c, "%Y-%m-%dT%H:%M:%SZ")
+    except ValueError:
+        return False
+    return True
 
 
 def _row_key(e: dict) -> tuple:

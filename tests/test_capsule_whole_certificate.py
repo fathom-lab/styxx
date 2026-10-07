@@ -797,3 +797,28 @@ def test_create_refuses_a_renamed_copy_and_says_so(tmp_path):
     assert "'report.md'" in msg and "'report_v2.md'" in msg and "renamed" in msg
     assert "ledger schema" not in msg
     assert not (d / "report_v2.capsule.html").exists()
+
+
+# ---------------------------------------------------------------- review round 2 minors
+
+def test_a_file_that_is_not_utf8_fails_without_a_traceback(clean, tmp_path, capsys):
+    """D9 left one case: verify_capsule read the file outside any guard, so one 0xFF byte ended in
+    UnicodeDecodeError, in the command and in charon."""
+    from styxx import charon
+    bad = tmp_path / "bad.capsule.html"
+    bad.write_bytes(clean.read_bytes().replace(b"<title>", b"<title>\xff", 1))
+    rep = verify_capsule(bad)
+    assert rep["ok"] is False and rep["stage"] == "parse"
+    assert any("UTF-8" in p for p in rep["problems"]), rep["problems"]
+    assert main(["verify", str(bad)]) == 1
+    assert "CAPSULE FAILS VERIFICATION" in capsys.readouterr().out
+    line = charon.derive_capsule(bad, tmp_path)
+    assert line["verdict"] == "UNRESOLVED"
+
+
+@pytest.mark.parametrize("created", ["9999-99-99T99:99:99Z", "2026-02-30T12:00:00Z",
+                                     "2026-10-06T24:00:00Z"])
+def test_a_mint_time_no_clock_shows_fails(clean, tmp_path, created):
+    def when(p):
+        p["created"] = created
+    _fails_on(clean, tmp_path, when, "payload.created")
