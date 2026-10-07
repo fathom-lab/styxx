@@ -304,7 +304,8 @@ def test_layer_2_says_what_the_older_page_s_own_script_draws(tmp_path, text):
     got = Counter(tuple(s) for s in drawn["spans"])
     assert drawn["shown"] == shown
     rep = verify_capsule(cap)
-    assert rep["ok"] is not (got - want), (text, drawn["spans"], want, rep["problems"])
+    false_bands = got - want
+    assert rep["ok"] is (not false_bands), (text, drawn["spans"], want, rep["problems"])
     if rep["ok"]:
         assert bool(_omissions(rep)) is (got != want), (text, drawn["spans"], want)
 
