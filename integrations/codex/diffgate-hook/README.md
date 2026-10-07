@@ -40,8 +40,8 @@ What the agent sees is the Claude Code hook's stderr, verbatim:
 ```
 styxx diffgate: BLOCKED — the commit message vs the staged diff contradicts the diff in 2 claim(s). Fix the message or the diff; the verdict is not yours to choose.
   [ok ] file_touched         diff status 'M' for 'src/retry.py'
-  [LIE] tests_added          diff adds 1 test functions, claim says 3
-  [LIE] only_touches         paths outside 'src': ['tests/test_retry.py']
+  [CONTRADICTED] tests_added          diff adds 1 test functions, claim says 3
+  [CONTRADICTED] only_touches         paths outside 'src': ['tests/test_retry.py']
 ```
 
 `tests/test_codex_hook.py` drives the file with Codex's stdin object — its extra fields

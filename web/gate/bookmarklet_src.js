@@ -688,7 +688,7 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
 // covered
 // (NOTE_path2a_eleventh_pass_2026_10_05).
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 4cded2e3fd7d901163d204032cf0e8a37970615a6cc6ef9f28050c98db92f63b, LF). Everything outside this block is
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 09867056957082f129985591f5ed048021e85ed48627e73854494b4a1e6e2b3a, LF). Everything outside this block is
 // main's port at 1cde8b82 (sha256 06688702..., LF), unchanged except that main's gateDiffText is named
 // _gateDiffTextMain (its definition and its DECLARE-1 self-call); the gateDiffText at the end of this block calls it
 // and then the overlay, once. The overlay reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason
@@ -1996,7 +1996,7 @@ if (typeof globalThis !== "undefined") globalThis.styxxDiffgateJS = { gateDiffTe
   const body = meta.body || "";
   const g = G.gateDiffText(body, diff);
   const col = {VERIFIED:"#78e296", CONTRADICTED:"#ff605c", UNCHECKABLE:"#687a76"};
-  const mark = {VERIFIED:"[ok ]", CONTRADICTED:"[LIE]", UNCHECKABLE:"[ ? ]"};
+  const mark = {VERIFIED:"[ok ]", CONTRADICTED:"[CONTRADICTED]", UNCHECKABLE:"[ ? ]"};
   let out = "";
   if (!body.trim()) out += `<div style="color:#687a76">the description is empty — nothing to gate.</div>`;
   for (const c of g.claims) out += `<div style="color:${col[c.verdict]}">  ${mark[c.verdict]} ${esc(c.kind.padEnd(20))} ${esc(c.why)}</div>`;

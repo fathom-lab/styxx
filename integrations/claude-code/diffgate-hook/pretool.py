@@ -124,7 +124,7 @@ def main() -> int:
         print("styxx diffgate hook: `pip install styxx` to gate commit messages and PR bodies (allowed through)", file=sys.stderr)
         return 0
     g = gate_diff_text(message, diff)
-    marks = {"VERIFIED": "ok ", "CONTRADICTED": "LIE", "UNCHECKABLE": " ? "}
+    marks = {"VERIFIED": "ok ", "CONTRADICTED": "CONTRADICTED", "UNCHECKABLE": " ? "}
     lines = [f"  [{marks[c.verdict]}] {c.kind:20s} {c.why}" for c in g.claims]
     what = "commit message vs the staged diff" if kind == "commit" else "PR body vs the diff against its base"
     if not g.measured:

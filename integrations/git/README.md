@@ -12,8 +12,8 @@ cp integrations/git/commit-msg .git/hooks/commit-msg && chmod +x .git/hooks/comm
 ```
 $ git commit -m "Refactored src/retry.py. Added 3 tests. Only touches files under src/."
   [ok ] file_touched         diff status 'M' for 'src/retry.py'
-  [LIE] tests_added          diff adds 1 test functions, claim says 3
-  [LIE] only_touches         paths outside 'src': ['tests/test_retry.py']
+  [CONTRADICTED] tests_added          diff adds 1 test functions, claim says 3
+  [CONTRADICTED] only_touches         paths outside 'src': ['tests/test_retry.py']
 styxx diffgate: FAIL — 2 claim(s) in the message contradict the staged diff. fix the message or the diff; `git commit --no-verify` overrides.
 ```
 
