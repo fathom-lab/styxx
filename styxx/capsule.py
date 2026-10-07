@@ -87,9 +87,38 @@ def _b64(b: bytes) -> str:
 # Windows rules alike: no separator, no drive, no "." or "..", no control character, no trailing
 # dot or space (Windows drops them, so two names could meet in one file), and no Windows device.
 _WINDOWS_DEVICES = {"con", "prn", "aux", "nul", "conin$", "conout$"}
+# Nor a name some system's file system refuses where another writes it (#196). POSIX writes
+# r<1>.json and Windows refuses it, so until this change the verifier re-ran the certifier on Linux
+# and failed with an OSError on Windows: a capsule's verdict depended on the verifier's system. A
+# lone surrogate is the reverse (Windows writes it; a POSIX system cannot encode it, and the write
+# raised UnicodeEncodeError). NTFS holds a name of at most 255 UTF-16 code units, ext4 one of at
+# most 255 UTF-8 bytes. Each such name is refused on every system.
+_WINDOWS_RESERVED = '<>"|?*'
+_NAME_MAX = 255
+
+
+def _portable_name_problem(name: str) -> Optional[str]:
+    """Why a file name is one some system's file system refuses, else None."""
+    held = [c for c in _WINDOWS_RESERVED if c in name]
+    if held:
+        return f"holds {', '.join(map(repr, held))}, which Windows refuses in a file name"
+    if any(0xD800 <= ord(c) <= 0xDFFF for c in name):
+        return "holds a lone surrogate, which a POSIX file system cannot encode"
+    n8, n16 = len(name.encode("utf-8")), len(name.encode("utf-16-le")) // 2
+    if n8 > _NAME_MAX or n16 > _NAME_MAX:
+        return (f"is {n8} UTF-8 bytes and {n16} UTF-16 code units long, and a file name holds at "
+                f"most {_NAME_MAX} of either on some system (UTF-16 code units on NTFS, bytes on "
+                f"ext4)")
+    return None
 
 
 def _bare_name(name) -> bool:
+    return _bare_shape(name) and _portable_name_problem(name) is None
+
+
+def _bare_shape(name) -> bool:
+    """The rule 7.48.1 shipped (GHSA-h5xv-4344-f62r): a name that can only mean a file directly
+    inside the directory, under POSIX and Windows path rules alike."""
     if not isinstance(name, str) or name in ("", ".", ".."):
         return False
     if any(c in name for c in "/\\:") or any(ord(c) < 32 for c in name):
@@ -109,14 +138,29 @@ def _unsafe_names(payload: dict) -> List[str]:
     """Problems with the file names a v0.1 payload asks the verifier to write; empty when all are safe."""
     names = [(payload.get("document") or {}).get("name")]
     names += [(r or {}).get("name") for r in payload.get("receipts") or []]
-    out = [f"embedded name {n!r} is not a bare file name; nothing was written and the "
-           f"certifier was not re-run" for n in names if not _bare_name(n)]
+    out = []
+    for n in names:
+        if not _bare_shape(n):
+            out.append(f"embedded name {n!r} is not a bare file name; nothing was written and the "
+                       f"certifier was not re-run")
+        elif _portable_name_problem(n):
+            out.append(f"embedded name {_short(n, 120)} {_portable_name_problem(n)}; it is refused "
+                       f"on every system, so that a capsule's verdict does not depend on the "
+                       f"verifier's; nothing was written and the certifier was not re-run")
     if not out:
-        folded = [n.casefold() for n in names]
+        # HFS+ stores a name decomposed, so two canonically equivalent names (an NFC é and an e
+        # with a combining accent) are one file there, as two names differing in case are on NTFS
+        folded = [_name_fold(n) for n in names]
         if len(set(folded)) != len(folded):
-            out.append("two embedded names are the same file on a case-insensitive file system; "
-                       "nothing was written and the certifier was not re-run")
+            out.append("two embedded names are the same file on a case-insensitive file system "
+                       "(or, differing only in Unicode normalization, on HFS+); nothing was "
+                       "written and the certifier was not re-run")
     return out
+
+
+def _name_fold(name: str) -> str:
+    """The canonical caseless form of a name (Unicode 3.13, D145): NFD(casefold(NFD(name)))."""
+    return unicodedata.normalize("NFD", unicodedata.normalize("NFD", name).casefold())
 
 
 # ---------------------------------------------------------------------------------
@@ -127,6 +171,16 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
     """Mint a capsule — refusing, loudly, to mint one that lies."""
     from styxx.certify import certify_doc
     from styxx._version import __version__
+
+    # A name verify refuses on every system is refused here, before anything is read or written:
+    # until #196 a POSIX system minted r<1>.json, and the capsule was then removed with a hint that
+    # blamed the ledger schema.
+    for n in [doc.name] + [r.name for r in receipts]:
+        why = _portable_name_problem(n)
+        if why:
+            raise SystemExit(f"REFUSED: the file name {_short(n, 120)} {why}. verify refuses "
+                             f"such a name on every system, so that a capsule's verdict does not "
+                             f"depend on the verifier's; rename the file and certify it again.")
 
     # The certificate hashes the document as certify_doc READ it — read_text with universal
     # newlines, re-encoded UTF-8 — so on a CRLF checkout the on-disk bytes are NOT what the
@@ -320,10 +374,16 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
                     rp = Path(td) / name
                     rp.write_bytes(recs[name])
                     rps.append(rp)
-            except OSError as e:
-                # a name this system cannot hold (on Windows, one with < or : in it)
+            except (OSError, ValueError) as e:
+                # Every name a system refuses is refused above, on every system (#196); what is
+                # left is the verifier's own environment, such as a temporary directory whose path
+                # and a long name exceed the 260 characters Windows allows without long paths.
                 problems.append(f"the embedded files could not be written under their names "
-                                f"here ({type(e).__name__}: {e}), so the verifier was not re-run")
+                                f"here ({type(e).__name__}: {str(e)[:200]}), so the verifier was "
+                                f"not re-run. The names pass the rule verify applies on every "
+                                f"system, so this is a limit of this one (on Windows without long "
+                                f"paths, a path of more than 260 characters): verify the capsule "
+                                f"where its files can be written")
             else:
                 try:
                     live = certify_doc(d, rps)
