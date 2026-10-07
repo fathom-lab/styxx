@@ -1018,11 +1018,14 @@ def _check_page_v01(html: str, payload: dict, cert: dict, live: Optional[dict], 
     renderer as an older one, as this module treats the page before it."""
     from styxx._capsule_page_v01_legacy import render_html_v01_legacy
 
-    page = html[1:] if html.startswith("\ufeff") else html
+    # A leading byte-order mark and the line ends (read_text folds CRLF and CR) are transport, and
+    # so are line feeds after the page's last byte: a browser shows nothing of either. Until
+    # review round 5 one trailing newline added or removed failed an honest capsule as edited.
+    page = (html[1:] if html.startswith("\ufeff") else html).rstrip("\n")
 
     def renders(fn) -> bool:
         try:
-            return fn(payload) == page
+            return fn(payload).rstrip("\n") == page
         except Exception:   # noqa: BLE001 - a payload a renderer cannot read is not its page
             return False
 

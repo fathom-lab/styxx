@@ -404,6 +404,28 @@ def test_a_decoy_payload_in_a_comment_fails(clean, tmp_path):
     assert any("not the page any styxx renders" in x for x in rep["problems"])
 
 
+@pytest.mark.parametrize("page", ["current", "older"])
+@pytest.mark.parametrize("how", ["one added", "two added", "the last removed", "CRLF, one added"])
+def test_line_feeds_after_the_page_are_transport(clean, tmp_path, page, how):
+    """Review round 4 (compatibility lens): an honest capsule with one trailing newline added or
+    removed failed as edited after minting, while a BOM, CRLF and CR-only line ends verified; a
+    browser shows nothing of either. Text after the page that is not a line feed still fails."""
+    from styxx._capsule_page_v01_legacy import render_html_v01_legacy
+    html = (_render_html if page == "current" else render_html_v01_legacy)(_payload_of(clean))
+    assert html.endswith("\n")
+    body = {"one added": html + "\n", "two added": html + "\n\n",
+            "the last removed": html.rstrip("\n"),
+            "CRLF, one added": (html + "\n").replace("\n", "\r\n")}[how]
+    cap = tmp_path / "t.capsule.html"
+    cap.write_bytes(body.encode("utf-8"))
+    rep = verify_capsule(cap)
+    assert rep["ok"] is True, rep["problems"]
+    cap.write_bytes((html + " \n").encode("utf-8"))
+    rep = verify_capsule(cap)
+    assert rep["ok"] is False
+    assert any("not the page any styxx renders" in x for x in rep["problems"]), rep["problems"]
+
+
 # ---------------------------------------------------------------- names, crashes
 
 @pytest.mark.parametrize("where", ["absolute", "climbing"])
