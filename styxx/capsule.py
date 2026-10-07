@@ -38,6 +38,7 @@ import json
 import re
 import sys
 import tempfile
+from collections import Counter
 from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import List, Optional
 
@@ -1038,16 +1039,23 @@ def _check_page_v01(html: str, payload: dict, cert: dict, live: Optional[dict], 
         return
     if live is None:
         return           # the payload did not verify; its drawing is moot
-    found = _legacy_page_problems(payload, cert, live, doc_bytes)
+    found, omitted = _legacy_page_problems(payload, cert, live, doc_bytes)
     if found:
         problems.extend(found)
         return
     compared.append("the page (the page styxx rendered before 2026-10-05 for this payload; it "
-                    "draws every ledger row where the certificate puts it)")
+                    "draws no band where the certificate puts none"
+                    + (f", and shows {len(omitted)} number(s) the certificate bands with no band, "
+                       f"listed in an advisory)" if omitted else ")"))
     advisory.append("this capsule carries the page styxx minted before 2026-10-05: its badge "
                     "shows the certificate's verdict as fixed text before any check, and still "
                     "shows it when a byte is doctored or the script does not run. A capsule "
                     "minted with this styxx shows a verdict only after its hashes match.")
+    if omitted:
+        advisory.append(f"the page (minted before 2026-10-05) shows {len(omitted)} number(s) with "
+                        f"no band where the certificate bands them, and draws no band in their "
+                        f"place: " + "; ".join(omitted[:12])
+                        + (f"; ... and {len(omitted) - 12} more" if len(omitted) > 12 else ""))
 
 
 def _u16(s: str) -> str:
@@ -1065,8 +1073,16 @@ def _band(e: dict) -> str:
     return "vo" if isinstance(ep, dict) and ep.get("obligated") else "vv"
 
 
-def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: bytes) -> List[str]:
-    """Where the page styxx minted before 2026-10-05 would draw this certificate wrong.
+_BAND_WORDS = {"un": "accused", "ab": "abstained", "vo": "verified, obligated",
+               "vv": "verified, volunteered"}
+# certify's line breaks (str.splitlines) at which the older page's script does not split; a capsule
+# document holds no carriage return, since certify reads it with universal newlines
+_SPLITLINES_ONLY = "\x0b\x0c\x1c\x1d\x1e\x85\u2028\u2029"
+
+
+def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: bytes) -> tuple:
+    """(problems, omitted): where the page styxx minted before 2026-10-05 would draw a band the
+    certificate does not put there, and the numbers it would show with no band.
 
     Its script drops a leading byte-order mark (a default TextDecoder does; Python keeps it) and
     splits the document at \\n and \\r\\n only, while certify splits as str.splitlines, so a row
@@ -1074,14 +1090,20 @@ def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: byte
     UTF-16 index and falls back to the token's earliest occurrence on the line, so an astral
     character, a BOM or a U+2212 minus can move a band to another number or drop it. It marks
     bands with U+0001 to U+0003, so those characters in the document draw bands no row gives; and
-    it writes receipt names into the page unescaped. Each is re-derived here from the payload, and
-    any one fails.
+    it writes receipt names into the page unescaped. Each is re-derived here from the payload.
 
-    Until review round 3 any of those line breaks, or a BOM, failed the capsule wherever it sat,
-    though the script draws every band right when it sits after the last row. Now certify's
-    lines are mapped onto the script's, and the comparison is per line: what the script draws on
-    each of its lines against where the certificate puts each number on it. The band markers and
-    markup in receipt names still fail outright."""
+    What a reader sees is compared, band for band (line, offset, token, kind): a band the
+    certificate does not put there (a row drawn on another line, on another number, across
+    another band, or on a number the certificate bands otherwise) fails the capsule, with its row
+    and its cause. A certificate band the script leaves undrawn is an omission: the page shows
+    that number plain and paints nothing false, so it is returned to be printed as an advisory.
+    The script's own run under node agreed with this on all 410 honest older pages tried on
+    2026-10-06 (305 with omissions, 36 with a false band), and does in the tests.
+
+    Until review round 4 an omission failed the capsule too, while the CHANGELOG described the
+    rule as failing only misplaced bands: of 208 honest capsules styxx 7.47.0 mints over the
+    documents committed here, 25 failed, 24 of them for omissions alone, most on a U+2212 minus.
+    The band markers and markup in receipt names still fail outright."""
     out: List[str] = []
     for r in payload["receipts"]:
         if any(c in r["name"] for c in "<&"):
@@ -1107,7 +1129,7 @@ def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: byte
                    f"reads it: it holds U+{ord(m.group(0)):04X} on line "
                    f"{text.count(chr(10), 0, m.start()) + 1}, which its script reads as its own "
                    f"band marker")
-        return out
+        return out, []
 
     # The text the script shows, and where each of its lines starts in it.
     bom = 1 if text.startswith("\ufeff") else 0
@@ -1119,6 +1141,7 @@ def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: byte
     for chunk in text.splitlines(keepends=True):
         cstarts.append(pos)
         pos += len(chunk)
+    breaks = [(p, c) for p, c in enumerate(text) if c in _SPLITLINES_ONLY]
 
     def mapped(n, c):
         """certify's (line n, code point column c) as (the script's line, code point offset)."""
@@ -1128,45 +1151,130 @@ def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: byte
         k = bisect.bisect_right(starts, q) - 1
         return k + 1, q - starts[k]
 
+    def split_by(n) -> str:
+        """The line breaks certify split at, and the script did not, before certify's line n."""
+        cut = cstarts[n - 1] if type(n) is int and 1 <= n <= len(cstarts) else len(text)
+        found = sorted({c for p, c in breaks if p < cut})
+        return ", ".join(f"U+{ord(c):04X}" for c in found)
+
     rows = [e for e in cert.get("ledger") or [] if isinstance(e, dict)]
     emb, liv = _rows_by_key(rows), _rows_by_key(live.get("ledger") or [])
-    # what the script draws on its line i: the rows whose `line` is i (byLine[e.line])
-    drawn_on: dict = {}
+    # where the certificate puts each number: the script's line, the code point offset in it, and
+    # the UTF-16 offset in it (by the installed verifier's column; certify always writes one, and
+    # the rows were compared above)
+    want: dict = {}
+    for key, e in emb.items():
+        at = mapped((liv.get(key) or {}).get("line"), (liv.get(key) or {}).get("col"))
+        if at is not None:
+            want[id(e)] = (at[0], at[1], len(_u16(lines[at[0] - 1][:at[1]])))
+    # Where the script draws each row: byLine[e.line], in descending column order, at `col` when
+    # the token starts there in the line as already marked, else at the token's earliest
+    # occurrence in it. Each unit is a UTF-16 code unit and its offset in the line, or None for a
+    # marker the script inserted, so a band is known by the units it wraps.
+    drawn: dict = {}
+    by_line: dict = {}
     for e in rows:
         if type(e.get("line")) is int:
-            drawn_on.setdefault(e["line"], []).append(e)
-    # where the certificate puts each number, on the script's lines (by the installed verifier's
-    # column; certify always writes one, and the rows were compared above)
-    want_on: dict = {}
-    for key, e in emb.items():
-        le = liv.get(key) or {}
-        at = mapped(le.get("line"), le.get("col"))
-        if at is not None:
-            want_on.setdefault(at[0], []).append((at[1], len(str(le.get("token"))), e))
-    for i in sorted(set(drawn_on) | set(want_on)):
+            by_line.setdefault(e["line"], []).append(e)
+    for i, es in by_line.items():
         if not 1 <= i <= len(lines):
-            continue        # a row naming a line the script does not have is drawn nowhere;
-            #                 where the certificate puts it is a line below, and fails there
-        line = lines[i - 1]
-        drawn = _u16(line)
-        for e in sorted(drawn_on.get(i, []), key=lambda e: -(e.get("col") or 0)):
+            continue            # the script has no such line: those rows are drawn nowhere
+        units = [(c, k) for k, c in enumerate(_u16(lines[i - 1]))]
+        for e in sorted(es, key=lambda e: -(e["col"] if type(e.get("col")) is int else 0)):
+            s = "".join(c for c, _ in units)
             t = _u16(str(e.get("token")))
             col = e.get("col")
-            at = (col if type(col) is int and col >= 0 and drawn.startswith(t, col)
-                  else drawn.find(t))
-            if at >= 0:
-                drawn = drawn[:at] + "\x01" + _band(e) + "\x02" + t + "\x03" + drawn[at + len(t):]
-        want = _u16(line)
-        for o, w, e in sorted(want_on.get(i, []), key=lambda x: -x[0]):
-            a, z = len(_u16(line[:o])), len(_u16(line[:o + w]))
-            want = want[:a] + "\x01" + _band(e) + "\x02" + want[a:z] + "\x03" + want[z:]
-        if drawn != want:
-            toks = ", ".join(repr(e.get("token")) for e in
-                             drawn_on.get(i, []) + [e for _, _, e in want_on.get(i, [])])
-            out.append(f"the page (minted before 2026-10-05) draws line {i} differently from the "
-                       f"certificate (its lines split at line feeds only): its script places a "
-                       f"band for {toks} on another number, or on none")
-    return out
+            at = col if type(col) is int and col >= 0 and s.startswith(t, col) else s.find(t)
+            if at < 0 or not t:
+                continue
+            wrapped = units[at:at + len(t)]
+            units = (units[:at] + [(c, None) for c in "\x01" + _band(e) + "\x02"] + wrapped
+                     + [("\x03", None)] + units[at + len(t):])
+            offs = [k for _, k in wrapped]
+            whole = None not in offs and offs == list(range(offs[0], offs[0] + len(offs)))
+            drawn[id(e)] = (i, offs[0] if whole else None)
+
+    # What a reader sees is the bands, not which row drew each: a band is its line, its UTF-16
+    # offset (None when the script drew it across a marker of a band it drew before), its token
+    # and its kind. The page draws a band falsely where it draws one the certificate does not put
+    # there (a row moved onto another number, or onto a number the certificate bands otherwise);
+    # it omits one where it leaves a certificate band undrawn. A row drawn on another number that
+    # the certificate bands the same way paints nothing false: the two pages look alike.
+    def band_key(e, at):
+        return at[0], at[1], str(e.get("token")), _band(e)
+
+    seen: Counter = Counter()
+    seen_by: dict = {}
+    for e in rows:
+        if id(e) in drawn:
+            k = band_key(e, drawn[id(e)])
+            seen[k] += 1
+            seen_by.setdefault(k, []).append(e)
+    meant: Counter = Counter()
+    meant_by: dict = {}
+    for e in emb.values():
+        if id(e) in want:
+            k = band_key(e, (want[id(e)][0], want[id(e)][2]))
+            meant[k] += 1
+            meant_by.setdefault(k, []).append(e)
+
+    def own(k, by, at_of):
+        """The rows behind band k, those not at their own place ahead of the rest."""
+        return sorted(by[k], key=lambda e: at_of(e) is not None and band_key(e, at_of(e)) == k)
+
+    def cause(e, d, w) -> str:
+        n = e.get("line")
+        if w is None:
+            return "the certificate places that number nowhere the page can show"
+        if d is None:
+            if type(n) is not int or not 1 <= n <= len(lines):
+                return (f"the script has no line {json.dumps(n)}"
+                        + (f"; certify also splits at {split_by(n)}" if split_by(n) else ""))
+            if "\u2212" in lines[w[0] - 1][w[1]:w[1] + len(str(e.get("token")))]:
+                return "the document writes it with U+2212, which certify reads as '-'"
+            if w[0] != n:
+                return f"it sits on the script's line {w[0]}; certify also splits at {split_by(n)}"
+            return f"the script does not find its token on its line {n}"
+        if d[0] != w[0]:
+            return (f"the script draws its row on its line {d[0]}, and the certificate's number "
+                    f"sits on its line {w[0]}: "
+                    + (f"certify splits lines at {split_by(n)} as well, and the script at line "
+                       f"feeds only" if split_by(n) else "the script's lines are not certify's"))
+        why = []
+        line_w = lines[w[0] - 1]
+        if any(ord(c) > 0xFFFF for c in line_w[:w[1]]):
+            why.append("an astral character before it is one code point to certify and two "
+                       "UTF-16 units to the script")
+        if bom and w[0] == 1:
+            why.append("certify counts the byte-order mark the script drops")
+        if "\u2212" in line_w[w[1]:w[1] + len(str(e.get("token")))]:
+            why.append("the document writes it with U+2212, which certify reads as '-'")
+        why.append("the script falls back to the token's earliest occurrence on the line"
+                   if d[1] is not None else "the script draws it across a band it drew before")
+        return (f"the script draws its row at UTF-16 offset {'?' if d[1] is None else d[1]} of "
+                f"its line {d[0]}, and the certificate's number starts at offset {w[2]}: "
+                + "; ".join(why))
+
+    def where(e):
+        return (want[id(e)][0], want[id(e)][2]) if id(e) in want else None
+
+    for k, m in (seen - meant).items():
+        for e in own(k, seen_by, where)[:m]:
+            w = want.get(id(e))
+            out.append(f"the page (minted before 2026-10-05) draws the {_BAND_WORDS[_band(e)]} "
+                       f"band of {e.get('token')!r} (certificate line {json.dumps(e.get('line'))}, "
+                       f"column {json.dumps(e.get('col'))}) where the certificate puts no such "
+                       f"band: {cause(e, drawn[id(e)], w)}")
+    omitted: List[str] = []
+    for k, m in (meant - seen).items():
+        for e in own(k, meant_by, lambda e: drawn.get(id(e)))[:m]:
+            omitted.append(f"line {json.dumps(e.get('line'))} {e.get('token')!r} "
+                           f"({_BAND_WORDS[_band(e)]}; "
+                           f"{cause(e, drawn.get(id(e)), want.get(id(e)))})")
+    if len(out) > 24:
+        out = out[:24] + [f"... and {len(out) - 24} more band(s) the page draws where the "
+                          f"certificate puts no such band"]
+    return out, omitted
 
 
 

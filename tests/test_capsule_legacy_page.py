@@ -10,8 +10,9 @@ page to equal it.
 
 That page's script reads documents differently from certify: it splits lines only at \\n, reads
 `col` as a UTF-16 index and falls back to the token's earliest occurrence, marks bands with U+0001
-to U+0003, and writes receipt names into its HTML unescaped. Where any of that would draw this
-certificate wrong, layer 2 now fails the capsule instead of vouching for its page.
+to U+0003, and writes receipt names into its HTML unescaped. Where any of that would draw a band
+where the certificate does not put that number, layer 2 now fails the capsule instead of vouching
+for its page; where it would only leave a number unbanded, layer 2 says which, as an advisory.
 """
 from __future__ import annotations
 
@@ -118,14 +119,33 @@ def test_the_older_page_fails_a_document_holding_its_band_markers(tmp_path):
 # band right when the character sits after the last row (and a BOM costs nothing where the
 # script's fallback lands on the same number). Honest capsules minted by 7.48.0 failed. Layer 2
 # now maps certify's lines onto the script's line-feed split, drops the BOM as its TextDecoder
-# does, and lets the per-line comparison decide.
+# does, and compares where the script draws each row with where the certificate puts it.
+#
+# Review round 3 (compatibility lens, major): that comparison also failed the capsule where the
+# script draws a row nowhere, though the page then shows the number plain and paints nothing
+# false. Of 208 honest capsules styxx 7.47.0 mints over the documents committed here, 25 failed,
+# 24 of them for such omissions alone (most on a U+2212 minus). An omission is now printed as an
+# advisory, row by row; a band drawn where the certificate does not put that number still fails.
 
-MOVED = [
+WRONG = [
+    # a BOM; the script's fallback then lands its 4 inside the 40, and swaps the two 40s
+    "\ufeff40 then 4 of them: the run scored 0.75 accuracy over 40 items.\n",
+    # a form feed: certify's line 3 is the script's line 2, and the script finds line 3's numbers
+    # on its own line 3, which is certify's line 4
+    "a\x0cb\nThe run scored 0.75 accuracy over 40 items.\nWe saw 40 items and 0.75 too.\n",
+    # a vertical tab: the script draws certify's line-2 41 (abstained) on the 41 of certify's line
+    # 3, which the certificate accuses, so the page paints an accused number abstained
+    "Intro\x0b41 runs\nThe run scored 0.75 accuracy over 40 items and 41 runs.\n",
+]
+OMITTED = [
     "Totals\x0cThe run scored 0.75 accuracy over 40 items.\n",        # a form feed before the rows
     "a\x0bb\nThe run scored 0.75 accuracy over 40 items.\n",          # a vertical tab, a line above
     "Note\u2028The run scored 0.75 accuracy over 40 items.\n",        # U+2028 before the rows
-    "\ufeff40 then 4 of them: the run scored 0.75 accuracy over 40 items.\n",   # a BOM; the
-    # script's fallback then lands its 4 inside the 40
+    "The run scored \u22120.75 accuracy over 40 items.\n",            # an accused U+2212 minus
+    "The run scored 0.75 accuracy over 40 items.\nIt reached \u22126 and 0.75 again.\n",
+    # a vertical tab: the script draws certify's line-3 row on the 41 of certify's line 4, which
+    # the certificate bands the same way (abstained), so the page shows nothing false there
+    "Intro\x0bnote\nit took 41 days\nit took 41 days\n",
 ]
 FAITHFUL = [
     "The run scored 0.75 accuracy over 40 items.\x0cAppendix follows.\n",
@@ -139,12 +159,43 @@ FAITHFUL = [
 ]
 
 
-@pytest.mark.parametrize("text", MOVED)
+def _omissions(rep):
+    return [a for a in rep["advisory"] if "with no band where the certificate bands them" in a]
+
+
+@pytest.mark.parametrize("text", WRONG)
 def test_the_older_page_fails_where_a_line_break_or_a_bom_moves_a_band(tmp_path, text):
     rep = verify_capsule(_legacy(tmp_path, text))
     assert rep["ok"] is False
-    assert any(p.startswith("the page (minted before 2026-10-05) draws line")
-               for p in rep["problems"]), rep["problems"]
+    assert any(p.startswith("the page (minted before 2026-10-05) draws the ")
+               and "(certificate line " in p for p in rep["problems"]), rep["problems"]
+
+
+def test_a_band_moved_to_another_line_names_the_line_break(tmp_path):
+    rep = verify_capsule(_legacy(tmp_path, WRONG[1]))
+    moved = [p for p in rep["problems"] if "the script draws its row on its line 3, and the "
+                                           "certificate's number sits on its line 2" in p]
+    assert moved and all("U+000C" in p for p in moved), rep["problems"]
+
+
+@pytest.mark.parametrize("text", OMITTED)
+def test_an_older_page_that_shows_a_number_plain_verifies_and_says_which(tmp_path, text):
+    rep = verify_capsule(_legacy(tmp_path, text))
+    assert rep["ok"] is True, rep["problems"]
+    om = _omissions(rep)
+    assert len(om) == 1, rep["advisory"]
+    if "\u2212" in text:
+        assert "U+2212" in om[0], om
+    else:       # the line break certify splits at and the script does not is named
+        assert "certify also splits at U+" in om[0] or "certify splits lines at U+" in om[0], om
+    assert any(c.startswith("the page (the page styxx rendered before") and "no band" in c
+               for c in rep["compared"]), rep["compared"]
+
+
+def test_an_accused_number_shown_plain_is_named_as_accused(tmp_path):
+    rep = verify_capsule(_legacy(tmp_path, OMITTED[3]))
+    assert rep["ok"] is True, rep["problems"]
+    assert "line 1 '-0.75' (accused; the document writes it with U+2212" in _omissions(rep)[0]
 
 
 @pytest.mark.parametrize("text", FAITHFUL)
@@ -152,6 +203,7 @@ def test_an_honest_older_page_verifies_where_its_script_draws_every_band_right(t
     rep = verify_capsule(_legacy(tmp_path, text))
     assert rep["ok"] is True, rep["problems"]
     assert any(c.startswith("the page (the page styxx rendered before") for c in rep["compared"])
+    assert not _omissions(rep), rep["advisory"]
 
 
 _LEGACY_HARNESS = r"""
@@ -174,13 +226,15 @@ const ctx = vm.createContext({ document, location: { pathname: '/d.capsule.html'
 (async () => {
   vm.runInContext(code[0].replace('(async () => {', 'globalThis.__p = (async () => {'), ctx);
   await ctx.__p;
-  // every band the page drew: its text and the code point where it starts in the shown text
+  // every band the page drew: its text, the code point where it starts in the shown text, and
+  // its band
   const unesc = s => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
   const spans = [], stack = []; let shown = '';
   for (const part of els.doc.innerHTML.split(/(<span class="tok \w+">|<\/span>)/)) {
-    if (part.startsWith('<span')) stack.push(Array.from(shown).length);
-    else if (part === '</span>') { const at = stack.pop();
-      spans.push([Array.from(shown).slice(at).join(''), at]); }
+    const open = part.match(/^<span class="tok (\w+)">$/);
+    if (open) stack.push([Array.from(shown).length, open[1]]);
+    else if (part === '</span>') { const [at, cls] = stack.pop();
+      spans.push([Array.from(shown).slice(at).join(''), at, cls]); }
     else shown += unesc(part);
   }
   console.log(JSON.stringify({ spans, shown }));
@@ -188,14 +242,23 @@ const ctx = vm.createContext({ document, location: { pathname: '/d.capsule.html'
 """
 
 
-@pytest.mark.parametrize("text", MOVED + FAITHFUL + [
+def _band_of(e):
+    if e["status"] == "UNGROUNDED":
+        return "un"
+    if e["status"] == "ABSTAIN":
+        return "ab"
+    return "vo" if (e.get("epistemics") or {}).get("obligated") else "vv"
+
+
+@pytest.mark.parametrize("text", WRONG + OMITTED + FAITHFUL + [
     "\U0001F600 40 then 4 of them: the run scored 0.75 accuracy over 40 items.\n",
-    "The run scored \u22120.75 accuracy over 40 items.\n",
 ])
 def test_layer_2_says_what_the_older_page_s_own_script_draws(tmp_path, text):
     """The older page's own script, run under node: layer 2 passes the capsule exactly when that
-    script draws every band where certify puts its number."""
+    script draws no band where certify does not put that number with that band, and prints an
+    omission exactly when the script leaves a number of the certificate unbanded."""
     import shutil
+    from collections import Counter
     node = shutil.which("node")
     if not node:
         pytest.skip("node is not on PATH; the page's script cannot be run here")
@@ -214,11 +277,15 @@ def test_layer_2_says_what_the_older_page_s_own_script_draws(tmp_path, text):
     for ln in whole.splitlines(keepends=True):
         starts.append(off)
         off += len(ln)
-    want = sorted((shown[at:at + len(e["token"])], at) for e in p["certificate"]["ledger"]
-                  for at in [starts[e["line"] - 1] + e["col"] - bom])
-    faithful = sorted(tuple(s) for s in drawn["spans"]) == want
+    want = Counter((shown[at:at + len(e["token"])], at, _band_of(e))
+                   for e in p["certificate"]["ledger"]
+                   for at in [starts[e["line"] - 1] + e["col"] - bom])
+    got = Counter(tuple(s) for s in drawn["spans"])
     assert drawn["shown"] == shown
-    assert verify_capsule(cap)["ok"] is faithful, (text, drawn["spans"], want)
+    rep = verify_capsule(cap)
+    assert rep["ok"] is not (got - want), (text, drawn["spans"], want, rep["problems"])
+    if rep["ok"]:
+        assert bool(_omissions(rep)) is (got != want), (text, drawn["spans"], want)
 
 
 def test_the_older_page_fails_where_its_columns_would_move_a_band(tmp_path):
@@ -227,8 +294,8 @@ def test_the_older_page_fails_where_its_columns_would_move_a_band(tmp_path):
     rep = verify_capsule(_legacy(tmp_path, "\U0001F600 40 then 4 of them: the run scored 0.75 "
                                            "accuracy over 40 items.\n"))
     assert rep["ok"] is False
-    assert any(p.startswith("the page (minted before 2026-10-05) draws line 1 differently")
-               for p in rep["problems"]), rep["problems"]
+    assert any(p.startswith("the page (minted before 2026-10-05) draws the ")
+               and "an astral character before it" in p for p in rep["problems"]), rep["problems"]
 
 
 def test_the_older_page_fails_a_receipt_name_it_would_write_as_markup(tmp_path):
