@@ -11,10 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 On 2026-10-05 a check of the lab's own published v0.1 capsule found that both verification layers
 could be satisfied by a capsule whose certificate said something its bytes do not. Four rounds of
-review of the repair found more of the same kind. All of it is repaired here but one: the page every
-styxx rendered before this change still tells its reader to install the styxx its minter states,
-and around that page a forged certificate posing as older than the uncovered band still verifies
-(below).
+review of the repair found more of the same kind. All of it is repaired here except what is marked
+not repaired below: chiefly, the page every styxx rendered before this change still tells its
+reader to install the styxx its minter states, and around that page a forged certificate posing
+as older than the uncovered band still verifies.
 
 - Layer 2 (`python -m styxx.capsule verify`) re-ran `certify_doc` on the embedded bytes but
   compared only the verdict class (the `, N uncovered` suffix stripped), the counts, and the status
@@ -114,8 +114,9 @@ and around that page a forged certificate posing as older than the uncovered ban
   must be one `create_capsule` and certify write: a real UTC time, 64 lowercase hex digits copied
   into `payload.verifier.sha256`, a relative POSIX path inside the repository (with no `..`, drive
   or control character; it need not end in the receipt's name, since certify writes the path of the
-  file a receipt resolves to, through a symlink or an 8.3 short name), a note certify writes where
-  it writes it. A rewritten mint time or version is printed, not caught. One
+  file a receipt resolves to, through a symlink or an 8.3 short name), a note in one of the forms
+  certify writes, where it writes it (the reason after `no repository at mint: ` is the minter's
+  free text, printed as stated). A rewritten mint time or version is printed, not caught. One
   repository fact is a function of the bytes and is compared: a receipt marked committed must name
   the git blob of its embedded bytes (as they are, or with LF or CRLF line ends). A certificate
   certified over edited receipt bytes and given an honest repository mint's head, paths and blobs
@@ -156,7 +157,10 @@ and around that page a forged certificate posing as older than the uncovered ban
   object, a receipt binding row whose name is not a string, and receipts, a certificate or a
   verifier that are not what create writes now fail with a problem instead of a traceback, in
   `verify`, and give an UNRESOLVED or not-reproduced line in `styxx.charon` instead of one. A sweep
-  of 600 such single-field mutations under both pages finds no traceback in either.
+  of 600 such single-field mutations under both pages finds no traceback in either. Not repaired
+  here: two classes the fourth review found still end `verify` in a traceback, exiting 1, so this
+  change does not close #196: a stated `styxx_version` of thousands of digits, and an `ungrounded` row that is a
+  list.
 - Layer 1: the minted page carried the verdict as the badge's static text, so one doctored byte
   showed the TAMPERED banner under a badge still reading OATH-HELD, and a page whose script never
   ran read OATH-HELD forever. A newly minted page's badge starts as `checking…`; only the script
