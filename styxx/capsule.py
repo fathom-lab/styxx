@@ -343,9 +343,15 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
 # blobs, committed flags). Those are printed as stated by the minter, never as verified, after
 # checking they are a combination certify writes.
 _CERT_MINT_FIELDS = ("verifier_sha256", "receipt_binding")
-# Every certificate any styxx has issued carries these; one without them is not a certificate.
+# Every certificate any styxx has issued carries these, and every ledger (and ungrounded) row
+# carries the row fields: the earliest certify (9ed6f3b5, 2026-06-10) already wrote each of them.
+# One missing was removed, whoever issued the certificate. Until review round 3 only five were
+# required, so with the issuer's hash moved off the installed certify.py, deleting `status` from
+# the accused rows was printed NOT CHECKED and verified, while both pages painted those numbers
+# verified.
 _CERT_REQUIRED = ("verdict", "counts", "ledger", "document_sha256", "receipts_sha256",
-                  "verifier_sha256")
+                  "verifier_sha256", "oath", "prereg", "document", "ungrounded", "abstained")
+_ROW_REQUIRED = ("line", "token", "value", "decimals", "context", "status", "receipt_ref")
 # what every certify writes into verifier_sha256: the sha-256 of its own certify.py, in hex
 _SHA256_HEX = re.compile(r"[0-9a-f]{64}")
 # Row lists, compared row by row in both directions and in order, every field of every row.
@@ -491,7 +497,9 @@ def _rows_by_key(rows: list) -> dict:
     return out
 
 
-def _compare_rows(name: str, stored, fresh: list, problems: List[str], absent: dict) -> None:
+def _compare_rows(name: str, stored, fresh: list, problems: List[str], fields: dict) -> None:
+    """Row by row, both ways and in order. `fields` gathers, for each field the installed verifier
+    writes in a matched row, [rows lacking it, rows carrying it, rows in the list]."""
     if not isinstance(stored, list) or not all(isinstance(e, dict) for e in stored):
         problems.append(f"{name} not reproduced: the embedded {name} is not a list of rows")
         return
@@ -503,9 +511,11 @@ def _compare_rows(name: str, stored, fresh: list, problems: List[str], absent: d
             continue
         le = f[k]
         for fld, lv in le.items():
+            slot = fields.setdefault(f"{name}[].{fld}", [0, 0, len(s)])
+            slot[0 if fld not in e else 1] += 1
             if fld not in e:
-                absent.setdefault(f"{name}[].{fld}", [0, len(s)])[0] += 1
-            elif not _same(e[fld], lv):
+                continue
+            if not _same(e[fld], lv):
                 problems.append(f"{name} divergence at {_at(e)}: {fld} embedded "
                                 f"{_short(e[fld])} vs live {_short(lv)}")
         for fld in e:
@@ -650,6 +660,12 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
         if k not in live and k not in _CERT_MINT_FIELDS:
             problems.append(f"certificate.{k} cannot be reproduced: the installed certify does "
                             f"not write it")
+    # The page draws its volunteered-share card from the summary. A certificate whose rows carry
+    # epistemics and which lacks it exists (two are committed, from the 26 minutes between those
+    # changes on 2026-08-30), so verify names it NOT CHECKED, but create does not mint from it.
+    if "epistemics_summary" in live and "epistemics_summary" not in cert:
+        mint_refusals.append("certificate.epistemics_summary is absent, and the page draws its "
+                             "volunteered share from it")
 
     for name in _CERT_ROW_LISTS:
         if name not in live:
@@ -659,15 +675,31 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
                 absent_field(name, "not carried")
             continue
         before = len(problems)
-        absent: dict = {}
-        _compare_rows(name, cert[name], live[name], problems, absent)
-        for fld, (n, total) in absent.items():
-            absent_field(fld, f"absent from {n} of {total} row(s)")
-            mint_refusals.append(f"certificate.{fld} is absent from {n} of {total} row(s), and "
-                                 f"the page draws each band from its row")
+        fields: dict = {}
+        _compare_rows(name, cert[name], live[name], problems, fields)
+        unchecked = 0
+        for fld, (n, carried, total) in fields.items():
+            if not n or fld in removed:
+                continue            # carried by every row, or already failed with its date
+            if fld.split("[].", 1)[1] in _ROW_REQUIRED:
+                problems.append(f"certificate.{fld} is absent from {n} of {total} row(s): every "
+                                f"certify writes it in every row, so it was removed")
+            elif carried:
+                problems.append(f"certificate.{fld} is absent from {n} row(s) and carried by "
+                                f"{carried}, where the installed verifier writes it in all of "
+                                f"them: no certify writes it into some of those rows and not "
+                                f"others, so it was removed")
+            else:
+                unchecked += 1
+                absent_field(fld, f"absent from {n} of {total} row(s)")
+                mint_refusals.append(f"certificate.{fld} is absent from {n} of {total} row(s), "
+                                     f"and the page draws each band from its row")
         if len(problems) == before:
-            compared.append(f"{name} ({len(live[name])} rows, both directions, in order, every "
-                            f"field)")
+            # "every field" only when no field of these rows went unchecked (review round 3)
+            compared.append(f"{name} ({len(live[name])} rows, both directions, in order, "
+                            + ("every field)" if not unchecked else
+                               f"every field it carries; {unchecked} field(s) NOT CHECKED, "
+                               f"listed)"))
 
     # the minting environment: stated, never verified
     stated.append(f"certificate.verifier_sha256 {vs} (the certify.py that issued it; the "
@@ -908,6 +940,18 @@ def _legacy_page_problems(payload: dict, cert: dict, live: dict, doc_bytes: byte
             out.append(f"the page (minted before 2026-10-05) writes receipt names into its HTML "
                        f"unescaped, and {r['name']!r} holds markup (< or &), so the page would "
                        f"not show that name")
+    # Its 'volunteered share' card reads epistemics_summary and, without one, counts every
+    # verified number volunteered. Where the certificate's own rows say otherwise, the card
+    # contradicts them (review round 2, f8: deleting the summary moved the card from 34% to 100%).
+    if "epistemics_summary" not in cert:
+        obligated = sum(1 for e in cert.get("ledger") or [] if isinstance(e, dict)
+                        and e.get("status") == "VERIFIED" and isinstance(e.get("epistemics"), dict)
+                        and e["epistemics"].get("obligated") is True)
+        if obligated:
+            out.append(f"the page (minted before 2026-10-05) draws its volunteered share from "
+                       f"certificate.epistemics_summary, which this certificate lacks, so it shows "
+                       f"every verified number volunteered while {obligated} of its verified "
+                       f"ledger rows say obligated")
     text = doc_bytes.decode("utf-8")
     m = _PAGE_V01_LEGACY_MISREAD.search(text)
     if m or text.startswith("\ufeff"):
@@ -1139,12 +1183,14 @@ python -m styxx.capsule verify this_file.html</pre>
     const obl = (vm.obligated_integer_filter_ran||0)+(vm.obligated_integer_filter_na||0)
               +(dv.obligated||0);
     const tot = v.total || C.counts.VERIFIED || 0;
+    // without a summary the share is unknown, not 100%: no obligated count was read
+    const hasEs = !!C.epistemics_summary && typeof C.epistemics_summary === 'object';
     const cards = [
       ['verdict', verdict],
       ['verified', C.counts.VERIFIED],
       ['abstained', C.counts.ABSTAIN],
       ['accused', C.counts.UNGROUNDED],
-      ['volunteered share', tot ? Math.round(100*(tot-obl)/tot)+'%' : '—'],
+      ['volunteered share', hasEs && tot ? Math.round(100*(tot-obl)/tot)+'%' : '—'],
     ];
     const cardsHtml = cards.map(
       ([k,val]) => `<div class="card"><b>${esc(val)}</b><span>${k}</span></div>`).join('');
@@ -1163,8 +1209,12 @@ python -m styxx.capsule verify this_file.html</pre>
       if (!byLine.has(e.line)) byLine.set(e.line, []);
       byLine.get(e.line).push(e);
     }
+    // A band is read from the row itself, or the row is not drawn: a row with no status, a status
+    // this page does not know, or a verified row with no obligation flag used to fall through to
+    // a verified band, so an accused number stripped of its status was painted verified.
     const band = e => e.status==='UNGROUNDED' ? 'un' : e.status==='ABSTAIN' ? 'ab'
-      : (e.epistemics && e.epistemics.obligated) ? 'vo' : 'vv';
+      : (e.status==='VERIFIED' && e.epistemics && typeof e.epistemics.obligated === 'boolean')
+        ? (e.epistemics.obligated ? 'vo' : 'vv') : '';
     const at = e => Number.isInteger(e.col) ? e.col : -1;
     const segs = [];
     let placed = 0;
@@ -1174,7 +1224,8 @@ python -m styxx.capsule verify this_file.html</pre>
       let pos = 0;
       for (const e of (byLine.get(k / 2 + 1) || []).slice().sort((a, b) => at(a) - at(b))) {
         const t = Array.from(String(e.token)); const c = at(e);
-        if (c < pos || !t.length || norm.slice(c, c + t.length).join('') !== t.join('')) continue;
+        if (!band(e) || c < pos || !t.length ||
+            norm.slice(c, c + t.length).join('') !== t.join('')) continue;
         if (c > pos) segs.push(['', cps.slice(pos, c).join('')]);
         segs.push([band(e), cps.slice(c, c + t.length).join('')]);
         pos = c + t.length; placed++;
@@ -1185,8 +1236,9 @@ python -m styxx.capsule verify this_file.html</pre>
     if (placed !== ledger.length) {
       unmarked('NOT CHECKED', 'The certificate does not fit these bytes: ' +
         (ledger.length - placed) + ' of its ' + ledger.length + ' ledger rows do not sit at ' +
-        'their recorded line and column. Its verdict, counts and bands are not shown; check ' +
-        'the capsule with layer 2, below.', 'the ledger does not fit these bytes');
+        'their recorded line and column, or carry no band this page can read. Its verdict, ' +
+        'counts and bands are not shown; check the capsule with layer 2, below.',
+        'the ledger does not fit these bytes');
       vb.className = 'badge warn';
       ib.textContent = 'integrity: all hashes match'; ib.className = 'badge';
       return;

@@ -130,3 +130,19 @@ def test_the_older_page_fails_a_receipt_name_it_would_write_as_markup(tmp_path):
     rep = verify_capsule(_legacy(tmp_path, CLEAN, receipt_name="r&#46;json"))
     assert rep["ok"] is False
     assert any("holds markup" in p for p in rep["problems"]), rep["problems"]
+
+
+def test_the_older_page_fails_where_its_volunteered_share_card_would_contradict_the_rows(tmp_path):
+    """Review round 2 (forgery lens, f8): the older page draws its 'volunteered share' card from
+    epistemics_summary, and without one it shows every verified number volunteered. Deleting the
+    summary from the committed obligate1 capsule moved the card from 34% to 100% and verified, with
+    one NOT CHECKED line. Where the certificate's own rows say some verified numbers are obligated,
+    that card contradicts them, so the capsule fails."""
+    src = ROOT / "papers" / "closed-model-frontier" / "RESULT_obligate1_does_not_ship_2026_08_31.capsule.html"
+    p = _payload_of(src)
+    del p["certificate"]["epistemics_summary"]
+    forged = tmp_path / "f8.capsule.html"
+    forged.write_text(render_html_v01_legacy(p), encoding="utf-8")
+    rep = verify_capsule(forged)
+    assert rep["ok"] is False
+    assert any("volunteered share" in x for x in rep["problems"]), rep["problems"]

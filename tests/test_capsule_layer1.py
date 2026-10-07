@@ -285,3 +285,34 @@ def test_the_page_shows_the_install_line_for_the_version_not_the_payload_s_text(
         p["verifier"]["pip"] = "styxx-capsule-tools==7.48.0"
     s = _run(tmp_path, _splice(minted, tmp_path / "pip.capsule.html", pip))
     assert s["install"].startswith("pip install styxx==") and "capsule-tools" not in s["install"]
+
+
+# ---------------------------------------------------------------- rows the page has no band for
+#
+# Review round 2 (forgery lens, major): a row with no `status`, or one the page does not know,
+# fell through to a verified band, so accused numbers were painted verified. A verified row with
+# no `epistemics` was painted volunteered, and a certificate with no epistemics_summary showed every
+# verified number volunteered on its card. The page now draws a row only with a band it can read
+# from that row; otherwise it shows NOT CHECKED and no verdict, and the card says '—'.
+
+@pytest.mark.parametrize("edit", ["no_status", "unknown_status", "no_epistemics"])
+def test_a_row_without_a_band_the_page_can_read_is_not_drawn(minted, tmp_path, edit):
+    def change(p):
+        e = p["certificate"]["ledger"][0]
+        if edit == "no_status":
+            del e["status"]
+        elif edit == "unknown_status":
+            e["status"] = "VERIFIED-BY-HAND"
+        else:
+            del e["epistemics"]
+    s = _run(tmp_path, _splice(minted, tmp_path / f"{edit}.capsule.html", change))
+    assert s["verdict"] == {"text": "NOT CHECKED", "cls": "badge warn"}
+    assert s["painted"] == 0 and "verified" not in s["cards"]
+
+
+def test_a_certificate_without_its_epistemics_summary_shows_no_volunteered_share(minted, tmp_path):
+    def change(p):
+        del p["certificate"]["epistemics_summary"]
+    s = _run(tmp_path, _splice(minted, tmp_path / "nosum.capsule.html", change))
+    assert s["verdict"]["text"] == "OATH-HELD"
+    assert "<b>—</b><span>volunteered share</span>" in s["cards"], s["cards"]

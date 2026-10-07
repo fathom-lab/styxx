@@ -653,3 +653,95 @@ def test_the_payload_s_copy_of_the_issuer_s_hash_must_be_the_certificate_s(clean
     def copy(p):
         p["verifier"]["sha256"] = "1" * 64
     _fails_on(clean, tmp_path, copy, "payload.verifier.sha256")
+
+
+# ---------------------------------------------------------------- fields every certify writes
+#
+# Review round 2 (forgery lens, major): with the issuer's hash moved off the installed certify.py
+# (free: it is stated, not checked), deleting `status` from the accused rows was NOT CHECKED, not a
+# failure, on every committed capsule with no other edit, and both pages then painted the accused
+# numbers verified. Every certify since the earliest (9ed6f3b5, 2026-06-10) writes status,
+# receipt_ref, value, decimals and context in every ledger and ungrounded row, and oath, prereg,
+# document, ungrounded and abstained at the top level, so their absence is an edit whoever issued
+# the certificate. A row field that some rows carry and others lack, where the installed verifier
+# writes it in all of them, is an edit too.
+
+def _moved_issuer(p):
+    p["certificate"]["verifier_sha256"] = p["verifier"]["sha256"] = "1" * 64
+
+
+@pytest.mark.parametrize("field", ["status", "receipt_ref", "value", "decimals", "context"])
+def test_a_row_field_every_certify_writes_cannot_be_deleted(clean, tmp_path, field):
+    def deleted(p):
+        _moved_issuer(p)
+        del p["certificate"]["ledger"][0][field]
+    _fails_on(clean, tmp_path, deleted, f"certificate.ledger[].{field} is absent from 1 of 2")
+
+
+@pytest.mark.parametrize("field", ["oath", "prereg", "document", "ungrounded", "abstained"])
+def test_a_top_level_field_every_certify_writes_cannot_be_deleted(clean, tmp_path, field):
+    def deleted(p):
+        _moved_issuer(p)
+        del p["certificate"][field]
+    _fails_on(clean, tmp_path, deleted, f"certificate.{field} is missing")
+
+
+def test_the_review_s_status_deletion_on_a_committed_capsule_fails():
+    """f1: the accused rows of the committed obligate1 capsule lose `status`, in the ledger and in
+    `ungrounded`, under the page that capsule carries. Before this repair it verified."""
+    from styxx._capsule_page_v01_legacy import render_html_v01_legacy
+    src = ROOT / "papers" / "closed-model-frontier" / "RESULT_obligate1_does_not_ship_2026_08_31.capsule.html"
+    p = _payload_of(src)
+    for name in ("ledger", "ungrounded"):
+        for e in p["certificate"][name]:
+            if e.get("status") == "UNGROUNDED":
+                del e["status"]
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        forged = Path(td) / "f1.capsule.html"
+        forged.write_text(render_html_v01_legacy(p), encoding="utf-8")
+        rep = verify_capsule(forged)
+    assert rep["ok"] is False
+    assert any(x.startswith("certificate.ledger[].status is absent from 3 of 57")
+               for x in rep["problems"]), rep["problems"]
+
+
+TABLE = "| run | accuracy | items |\n|---|---|---|\n| a | 0.75 | 40 |\n"
+
+
+def test_a_row_field_some_rows_carry_and_others_lack_fails(tmp_path):
+    """binding_context is written only on table rows; a table row without it, beside one with it,
+    was removed."""
+    src = _mint(tmp_path / "table", TABLE)
+    assert all("binding_context" in e for e in _payload_of(src)["certificate"]["ledger"])
+
+    def partial(p):
+        _moved_issuer(p)
+        del p["certificate"]["ledger"][0]["binding_context"]
+    _fails_on(src, tmp_path, partial, "certificate.ledger[].binding_context is absent from 1 row")
+
+
+def test_a_row_list_with_fields_not_checked_never_reads_every_field(tmp_path):
+    def june_shaped(p):
+        _june_shaped(p["certificate"])
+        p["verifier"]["sha256"] = p["certificate"]["verifier_sha256"]
+    src = _mint(tmp_path / "src", CLEAN)
+    rep = verify_capsule(_forge(src, tmp_path / "june.capsule.html", june_shaped))
+    assert rep["ok"] is True, rep["problems"]
+    ledger = [c for c in rep["compared"] if c.startswith("ledger (")]
+    assert ledger and "every field)" not in ledger[0] and "NOT CHECKED" in ledger[0], ledger
+
+
+def test_a_certificate_without_its_epistemics_summary_is_not_minted(tmp_path):
+    """The page draws its volunteered-share card from epistemics_summary. A certificate whose rows
+    carry epistemics and which lacks the summary exists (two are committed, from the 26 minutes
+    between the two changes on 2026-08-30), so verify prints it NOT CHECKED; create refuses it."""
+    def no_summary(cert):
+        for k in _BAND + ("epistemics_summary", "receipt_binding"):
+            del cert[k]
+        cert["verifier_sha256"] = "1" * 64
+    d = tmp_path / "m"
+    with pytest.raises(SystemExit) as e:
+        _mint(d, CLEAN, cert_edit=no_summary)
+    assert "certificate.epistemics_summary" in str(e.value)
+    assert not (d / "d.capsule.html").exists()
