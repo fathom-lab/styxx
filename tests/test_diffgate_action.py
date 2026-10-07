@@ -116,3 +116,68 @@ def test_the_action_pins_a_version_that_has_the_bypass_fix():
     m = re.search(r'default:\s*"styxx>=(\d+)\.(\d+)\.(\d+)"', y)
     assert m, "action.yml must pin a minimum styxx version"
     assert tuple(int(g) for g in m.groups()) >= (7, 44, 0)
+
+
+# ---- the default reports; only an explicit soft-fail: "false" blocks ----
+#
+# action.yml's soft-fail input defaulted to "false", so a repository that added the Action got a
+# check that failed on every accusation. On pull requests this lab did not write the accusations
+# measured precision 0.23 against a preregistered 0.95 floor
+# (papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md), so the
+# default now reports and a repository opts in to blocking. These pin the default, the script's
+# own fallback, and that the lab's own check still blocks.
+
+CONTRADICTED_DIFF = ("diff --git a/styxx/x.py b/styxx/x.py\n--- a/styxx/x.py\n"
+                     "+++ b/styxx/x.py\n@@\n+def test_a(): pass\n")
+
+
+def _input_block(yml: str, name: str) -> str:
+    """The lines of one input in action.yml, from `  name:` to the next two-space key."""
+    import re
+
+    m = re.search(rf"(?m)^  {re.escape(name)}:\n((?:^(?:    .*)?\n)*)", yml)
+    assert m, f"action.yml has no `{name}` input"
+    return m.group(1)
+
+
+def test_the_action_reports_by_default():
+    import re
+
+    y = (ACTION.parent / "action.yml").read_text(encoding="utf-8")
+    m = re.search(r'(?m)^    default:\s*"([^"]*)"', _input_block(y, "soft-fail"))
+    assert m, "the soft-fail input must state its default"
+    assert m.group(1) == "true"
+
+
+def test_the_script_reports_when_soft_fail_is_unset(env, monkeypatch, capsys):
+    """Run outside action.yml (STYXX_SOFT_FAIL unset), the script's default matches the input's."""
+    mod = load_action()
+    monkeypatch.setattr(mod, "api", lambda url, accept: CONTRADICTED_DIFF)
+    assert mod.main() == 0
+    out = capsys.readouterr().out
+    assert "::error title=styxx diffgate - contradicted claim::" in out
+    assert 'soft-fail: "false"' in out
+    written = (env / "sum.md").read_text(encoding="utf-8")
+    assert "soft-fail is on (the default)" in written
+
+
+def test_soft_fail_false_still_fails_on_a_contradiction(env, monkeypatch):
+    assert run(monkeypatch, CONTRADICTED_DIFF, soft=False) == 1
+    written = (env / "sum.md").read_text(encoding="utf-8")
+    assert 'sets `soft-fail: "false"`' in written
+
+
+def test_soft_fail_true_reports_a_contradiction_and_passes(env, monkeypatch):
+    assert run(monkeypatch, CONTRADICTED_DIFF, soft=True) == 0
+
+
+def test_the_labs_own_check_still_blocks():
+    """This repository's diffgate job opts in to blocking explicitly, so the new default does not
+    change it. Read, never written: no branch here may touch .github/."""
+    import re
+
+    wf = ACTION.parent / ".github" / "workflows" / "diffgate.yml"
+    text = wf.read_text(encoding="utf-8")
+    step = text[text.index("uses: ./"):]
+    assert re.search(r'(?m)^\s+soft-fail:\s*"false"\s*$', step), (
+        "the lab's own diffgate job must set soft-fail: \"false\" or it stops blocking")

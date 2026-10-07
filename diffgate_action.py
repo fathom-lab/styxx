@@ -6,6 +6,11 @@ with ``styxx.diffgate.gate_diff_text``, writes a job-summary table, emits ::erro
 annotations for contradictions, and exits per the gate verdict and the strict/soft-fail
 inputs. Supports ``pull_request`` (body vs PR diff) and ``push`` (head commit message vs
 compare diff). Anything else: reports and passes.
+
+soft-fail defaults to "true", in action.yml and here when STYXX_SOFT_FAIL is unset: the job
+reports and exits 0, and fails only for a workflow that sets ``soft-fail: "false"``. The reason,
+with its receipts, is in action.yml's description and the CHANGELOG entry "the GitHub Action
+reports by default".
 """
 from __future__ import annotations
 
@@ -46,7 +51,8 @@ def _write_summary(lines) -> None:
 
 def main() -> int:
     strict = os.environ.get("STYXX_STRICT", "false").lower() == "true"
-    soft = os.environ.get("STYXX_SOFT_FAIL", "false").lower() == "true"
+    # The default reports (action.yml's soft-fail input is "true"); only an explicit "false" blocks.
+    soft = os.environ.get("STYXX_SOFT_FAIL", "true").lower() == "true"
     event_name = os.environ.get("GITHUB_EVENT_NAME", "")
     event = json.loads(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8").read())
 
@@ -102,7 +108,8 @@ def main() -> int:
                         "verified. A PASS here would mean *nothing contradicted "
                         "the summary* — which is true of any summary when there "
                         "is no diff to read.", "",
-                        "_Set `strict: true` to fail the job on this._"])
+                        "_Set `strict: true` and `soft-fail: \"false\"` to fail the job "
+                        "on this._"])
         return 1 if (strict and not soft) else 0
 
     lines = ["## styxx diffgate — the summary vs the diff", "",
@@ -135,12 +142,21 @@ def main() -> int:
     # corpora". The README withdrew that claim (re-run at 7.46.0 the committed sweep
     # found four, all false accusations), and a footer that kept asserting it on every
     # gated PR in every adopter's repo was the same present-tense mistake one level down.
-    lines += ["", "_A ❓ fails only with `strict: true`. A path claim the diff does not show "
-              "is reported ❓ UNCHECKABLE, not accused: that accusation was measured at "
+    # Which of the two the job did is said here, because the default changed: soft-fail is "true"
+    # unless the workflow sets it to "false" (action.yml; CHANGELOG "the GitHub Action reports by
+    # default").
+    mode = ("_soft-fail is on (the default), so this check reports and does not fail the job; a "
+            "workflow that sets `soft-fail: \"false\"` fails it on a ❌, and on a ❓ only with "
+            "`strict: true`. " if soft else
+            "_This workflow sets `soft-fail: \"false\"`, so the job fails on a ❌, and on a ❓ only "
+            "with `strict: true`. ")
+    lines += ["", mode + "A path claim the diff does not show is reported ❓ UNCHECKABLE, not "
+              "accused: the accusations EXTERNAL-1 sampled, most of them of that kind, measured "
               "precision 0.23 against a preregistered 0.95 floor on 71,016 external "
-              "agent-authored PRs (EXTERNAL-1, 2026-08-31) and is withheld until a held-out "
-              "repair clears the floor. The withdrawn zero-false-accusation claim, and what "
-              "replaced it, are in the "
+              "agent-authored PRs ([EXTERNAL-1](https://github.com/fathom-lab/styxx/blob/main/"
+              "papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md), "
+              "2026-08-31), and that accusation is withheld until a held-out repair clears the "
+              "floor. The withdrawn zero-false-accusation claim, and what replaced it, are in the "
               "[styxx README](https://github.com/fathom-lab/styxx/blob/main/README.md)._"]
     _write_summary(lines)
 
@@ -159,7 +175,8 @@ def main() -> int:
     if failing and not soft:
         return 1
     if failing and soft:
-        print("::warning::styxx diffgate found failures but soft-fail is on")
+        print("::warning::styxx diffgate found failures but soft-fail is on (the default), so "
+              "the job passes; set soft-fail: \"false\" to fail it")
     return 0
 
 

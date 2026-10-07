@@ -2,14 +2,22 @@ name: "styxx diffgate"
 description: >-
   Your agent's PR summary cannot lie about its diff. Extracts diff-shaped claims from the
   PR body (or push commit message) and verifies each against the actual diff — checkout-free,
-  via the GitHub API. Exits nonzero on a contradicted claim, with the lie named in the job
-  summary and as an annotation. It judges a CLOSED template set (touched/created/deleted
+  via the GitHub API. By default it reports and does not block: every verdict goes in the job
+  summary and a contradicted claim is named as an annotation, but the job fails on it only if
+  you set soft-fail: "false". It does not block by default because on pull requests this lab
+  did not write, its accusations have measured precision well below the floor the lab set:
+  0.23 (23 of 100 sampled accusations upheld by a blind panel) against a preregistered 0.95
+  floor on 71,016 external agent-authored PRs (EXTERNAL-1, 2026-08-31,
+  papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md,
+  receipt external1_adjudication.json); and once the path accusations were withheld, 549 of
+  the 665 accusations the 7.47.0 wheel still made on that corpus could not be right by
+  construction (EXTERNAL-2, 2026-09-16,
+  papers/closed-model-frontier/RESULT_external2_live_accusations_2026_09_16.md, receipt
+  external2_summary.json). It judges a CLOSED template set (touched/created/deleted
   paths, added functions and tests, file counts, only-touches scopes, tests-pass); prose
-  outside it is never scored, and that limit is the reason to trust the verdicts it does
-  give. What it will not do: accuse a path claim the diff does not show. That accusation
-  was measured at precision 0.23 against a preregistered 0.95 floor on 71,016 external
-  agent-authored PRs (EXTERNAL-1, 2026-08-31) and is reported UNCHECKABLE until a held-out
-  repair clears the floor. The sweep harness is committed
+  outside it is never scored. What it will not do: accuse a path claim the diff does not
+  show. Most of the accusations EXTERNAL-1 sampled were of that kind, and it is reported
+  UNCHECKABLE until a held-out repair clears the floor. The sweep harness is committed
   (scripts/diffgate_validation_sweep.py) so you can re-run our numbers rather than take our
   word for them; the README says which of our own earlier numbers that harness withdrew.
 author: "Fathom Lab"
@@ -19,13 +27,19 @@ branding:
 
 inputs:
   strict:
-    description: "UNCHECKABLE claims (e.g. 'tests pass' with no way to run them) also fail the gate"
+    description: >-
+      UNCHECKABLE claims (e.g. 'tests pass' with no way to run them) also fail the gate. The job
+      fails on them only when soft-fail is "false".
     required: false
     default: "false"
   soft-fail:
-    description: "report everything, never fail the job (adoption ramp)"
+    description: >-
+      "true" (the default): report every verdict in the job summary and as annotations, and never
+      fail the job. "false": fail the job on a contradicted claim, and with strict on an
+      UNCHECKABLE one too. The default was "false" until the change recorded in CHANGELOG.md
+      ("the GitHub Action reports by default"); set soft-fail: "false" to keep a blocking check.
     required: false
-    default: "false"
+    default: "true"
   styxx-version:
     description: >-
       styxx version spec to install. The floor is deliberate. Every release before
