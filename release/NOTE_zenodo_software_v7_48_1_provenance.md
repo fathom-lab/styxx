@@ -60,7 +60,7 @@ those working-copy bytes hash differently.
   the tag (CHANGELOG `[7.48.1]`, `zenodo/MANIFEST.json`, `CITATION.cff` and the tree);
 - the title, description, notes and keywords against the charter words;
 - that the public text holds none of six unreleased-content markers. The markers live in a local
-  file that is not committed, and the draft receipt records only its sha256 and the count.
+  file that is not committed; the draft receipt records its file name, its sha256 and the count, and no marker.
 
 Then, from Zenodo:
 - The concept's latest version was 23042251 (7.48.0), as the lab's receipts say, and the concept
@@ -118,19 +118,23 @@ scripts and an offline self-test against a fake Zenodo (81 checks passed) also r
 outputs were written before the draft receipt. Neither those outputs nor the two logs are committed.
 
 **The token and the markers.** Both receipts give the token source as `--token-file ([ZENODO]
-zenodo_token)`, with no path and no value. The markers file appears in a receipt only as a sha256 and
-a count. Neither of the two exposures that the 7.48.0 note records is repeated in these files.
+zenodo_token)`, with no path and no value. The markers file appears in a receipt as its file name, a sha256
+and a count, and no marker. Neither of the two exposures that the 7.48.0 note records is repeated in these files.
 
 **What these files do not show.**
-- Who ran either script, the command lines beyond what the logs print, or who authorized the
-  publish. The draft receipt's `publish_step` names the operator, after reading the draft. The
-  publish was recorded 21 seconds after the draft receipt was written, and nothing here shows whether
-  anyone read the draft in the browser in between.
+- Who ran either script, or who authorized the publish. The receipts do not record it. Stated
+  here, outside the receipts: on 2026-10-06 the operator decided that 7.48.1 be added to Zenodo as
+  the next version of this record, and the lab's lead ran both scripts in one sitting on that decision.
+  The publish was recorded 21 seconds after the draft receipt was written, so nobody read the draft in
+  the browser in between, although the draft receipt's `publish_step` text says the operator would.
+  The publish script's own re-check of the draft against the local files and metadata stood in for
+  that reading.
 - That the deposited tree is free of stale text. The record's description lists the stale or wrong
   lines it knows of in the tree at the tag. One of them is `zenodo/MANIFEST.json` naming 7.48.0 as
   the concept's latest version, which the change that adds this note updates.
 - Anything merged after the tag. None of it is in the record.
-- Use of the record. The read-back's `stats` are Zenodo's counters at 02:12:38Z.
+- Use of the record. The read-back's `stats` were read just after the publish; its `version_*`
+  counters are 0.
 
 Zenodo lets a published record's metadata be edited in place and keeps no public prior revision. Any
 later edit is therefore committed here as a new dated file, and these files stay as they are.
