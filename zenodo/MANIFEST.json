@@ -2,8 +2,8 @@
   "schema": "fathom/zenodo-manifest/v1",
   "generated": "2026-09-01",
   "generated_from_commit": "0f9b9e3ff96c15839bff39ab4bbf06bca0aa6619",
-  "updated": "2026-10-06",
-  "updated_in": "150121ea (#166: the 7.48.0 software version), the 2026-09-29 audit corrections (line references re-pointed; D1 note; the 23042251 notes), and #198 (the 7.48.1 software version, 10.5281/zenodo.23200977)",
+  "updated": "2026-10-07",
+  "updated_in": "150121ea (#166: the 7.48.0 software version), the 2026-09-29 audit corrections (line references re-pointed; D1 note; the 23042251 notes), #198 (the 7.48.1 software version, 10.5281/zenodo.23200977), and branch release/zenodo-software-v7.49.0 (the 7.49.0 software version, 10.5281/zenodo.23221755)",
   "what_this_is": "One entry per Zenodo deposit this repository cites. It exists because the deposits live outside the release path: nothing in this repo fails when a deposited file is later edited here, so the repo and the permanent record drift apart silently. tests/test_zenodo_manifest.py is the mechanism that was missing.",
   "what_this_is_not": "This manifest was built entirely from inside the repository. No Zenodo API call was made and no deposit page was fetched. Every statement about what a remote record CONTAINS is either (a) quoted from a deposit receipt this repo committed at deposit time, or (b) marked UNCHECKABLE. Where a receipt exists it is named in `evidence`. Absence of a receipt is not evidence that a deposit is wrong; it means we cannot check it from here.",
   "hashing_note": "Two hashes are recorded per text file. `sha256_local_bytes` is the sha256 of the bytes in THIS checkout; on Windows with core.autocrlf=true those bytes are CRLF, and the same file checked out on Linux CI is LF, so that hash is NOT portable. `sha256_lf_normalized` (CRLF collapsed to LF before hashing) is the portable content identity and is what the drift test asserts on. This is the same failure the repo's own .gitattributes records for styxx/centroids/*.json, where a CRLF-rendered pin broke an LF CI checkout. For binary files (pdf, png, zip) normalization is meaningless and would corrupt the file, so only `sha256_local_bytes` is recorded and asserted.",
@@ -119,7 +119,7 @@
         "README.md:507"
       ],
       "deposited_files": [],
-      "notes": "Named by CITATION.cff line 33 since 2026-09-29 (defect D1 resolved). Latest version: 7.48.1, 10.5281/zenodo.23200977 (release/zenodo-deposit-receipt-software-v7.48.1.json, concept_latest_after_publish), since 2026-10-06; the version before it is 7.48.0, 10.5281/zenodo.23042251 (release/zenodo-deposit-receipt-software-v7.48.0.json)."
+      "notes": "Named by CITATION.cff line 33 since 2026-09-29 (defect D1 resolved). Latest version: 7.49.0, 10.5281/zenodo.23221755 (release/zenodo-deposit-receipt-software-v7.49.0.json, concept_latest_after_publish), since 2026-10-07; the versions before it are 7.48.1, 10.5281/zenodo.23200977 (release/zenodo-deposit-receipt-software-v7.48.1.json), and 7.48.0, 10.5281/zenodo.23042251 (release/zenodo-deposit-receipt-software-v7.48.0.json)."
     },
     {
       "doi": "10.5281/zenodo.19502715",
@@ -627,7 +627,18 @@
       "status": "NO_LOCAL_COUNTERPART",
       "cited_in": [],
       "deposited_files": [],
-      "notes": "The deposited zip is not in the repo; its contents are the tagged tree. `git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.48.1/ v7.48.1` reproduces it byte for byte on git 2.52.0.windows.1 (md5 438ed1bd56ffb8cda4e95c82ec7fe20c). Sizes, sha256 and md5 of the three files are in the receipts; the wheel and sdist sha256 are the ones PyPI serves for 7.48.1. Zenodo stores the MIT license as 'mit-license'. The metadata as sent and as published, and the public record as read back after the publish, are in release/; release/NOTE_zenodo_software_v7_48_1_provenance.md says how it was published and what the receipts do not show. No citation surface names this version DOI; CITATION.cff and README.md name the concept DOI."
+      "notes": "The deposited zip is not in the repo; its contents are the tagged tree. `git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.48.1/ v7.48.1` reproduces it byte for byte on git 2.52.0.windows.1 (md5 438ed1bd56ffb8cda4e95c82ec7fe20c). Sizes, sha256 and md5 of the three files are in the receipts; the wheel and sdist sha256 are the ones PyPI serves for 7.48.1. Zenodo stores the MIT license as 'mit-license'. The metadata as sent and as published, and the public record as read back after the publish, are in release/; release/NOTE_zenodo_software_v7_48_1_provenance.md says how it was published and what the receipts do not show. No citation surface names this version DOI; CITATION.cff and README.md name the concept DOI. Superseded as the concept's latest version by 7.49.0, 10.5281/zenodo.23221755, on 2026-10-07 (release/zenodo-deposit-receipt-software-v7.49.0.json)."
+    },
+    {
+      "doi": "10.5281/zenodo.23221755",
+      "kind": "VERSION",
+      "kind_evidence": "release/zenodo-deposit-receipt-software-v7.49.0.json (deposit_id 23221755, software_doi, version 7.49.0, concept_recid 19758618); release/zenodo-record-software-v7.49.0-readback.json (conceptrecid 19758618; relations.version index 3, is_last true)",
+      "points_at": "styxx v7.49.0: three files - styxx-v7.49.0-source-bundle.zip (git archive of tag v7.49.0, commit c6e00da0, with core.autocrlf=false), and the PyPI wheel and sdist. Published 2026-10-07T19:47:39Z (UTC; 15:47 at UTC-4) as a new version of concept 10.5281/zenodo.19758618 made from 7.48.1 (10.5281/zenodo.23200977, isNewVersionOf); related identifiers also link the spec v1.0 (10.5281/zenodo.19746215, isSupplementTo), the Fathom research series (10.5281/zenodo.19326174, isPartOf) and advisory GHSA-3g8h-qcfm-25xw (isDocumentedBy).",
+      "chain": "concept 10.5281/zenodo.19758618",
+      "status": "NO_LOCAL_COUNTERPART",
+      "cited_in": [],
+      "deposited_files": [],
+      "notes": "The deposited zip is not in the repo; its contents are the tagged tree. `git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.49.0/ v7.49.0` reproduces it byte for byte on git 2.52.0.windows.1 (md5 b6f174e73d8b83182edf0f2b5e4745d0). Sizes, sha256 and md5 of the three files are in the receipts; the wheel and sdist sha256 are the ones PyPI serves for 7.49.0. Zenodo stores the MIT license as 'mit-license'. The metadata as sent and as published, and the public record as read back after the publish, are in release/; release/NOTE_zenodo_software_v7_49_0_provenance.md says how it was published and what the receipts do not show. No citation surface names this version DOI; CITATION.cff and README.md name the concept DOI."
     }
   ],
   "open_questions": [

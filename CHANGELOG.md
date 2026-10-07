@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — styxx 7.49.0 on Zenodo, as the next version of the software record
+
+styxx 7.49.0 is deposited on Zenodo as **10.5281/zenodo.23221755**, a new version of the styxx software
+concept record **10.5281/zenodo.19758618**, made from 7.48.1's record (10.5281/zenodo.23200977). Zenodo
+recorded it at 2026-10-07T19:47:39Z (15:47 at UTC-4), and the concept DOI now resolves to it. The record
+holds three files: the v7.49.0 tag's tree as a zip (commit c6e00da0;
+`git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.49.0/ v7.49.0` reproduces it, md5
+b6f174e73d8b83182edf0f2b5e4745d0) and the wheel and sdist PyPI serves for 7.49.0. Its related identifiers
+link 7.48.1 (isNewVersionOf), advisory GHSA-3g8h-qcfm-25xw (isDocumentedBy), the Cognometric Fingerprint
+Specification v1.0 (10.5281/zenodo.19746215, isSupplementTo), the Fathom research series
+(10.5281/zenodo.19326174, isPartOf), the GitHub release, the PyPI page and the tagged tree. Nothing merged
+after the tag is in it.
+
+- `release/`: the draft receipt and the deposit receipt (`zenodo-draft-receipt-software-v7.49.0.json`,
+  `zenodo-deposit-receipt-software-v7.49.0.json`), the metadata as sent and as published
+  (`zenodo-metadata-software-v7.49.0.json`, `zenodo-metadata-software-v7.49.0-as-published.json`), and
+  the public record as read back after the publish (`zenodo-record-software-v7.49.0-readback.json`).
+- `scripts/zenodo_deposit_software_v7_49_0.py` makes the draft and cannot publish it.
+  `scripts/zenodo_publish_software_v7_49_0.py` publishes only the draft the draft receipt names, after
+  re-reading it from Zenodo's side, and then reads the record back. Both are adapted from 7.48.1's; the
+  publish script also records a doi.org redirect to Zenodo's DOI page as such
+  (`points_at_zenodo_doi_page`). The two scripts' git blobs have the sha256 the deposit receipt pins.
+- `release/NOTE_zenodo_software_v7_49_0_provenance.md` says what the receipts and logs show and what they
+  do not. They do not record who ran either script or who authorized the publish, which was recorded 22
+  seconds after the draft receipt was written. Just after the publish, doi.org redirected the DOI to
+  `zenodo.org/doi/…` rather than straight to the record. The record's description lists eleven stale or
+  wrong lines in the deposited tree, and the note names them by topic; this entry's change updates one of
+  them, `zenodo/MANIFEST.json` naming 7.48.1 as the latest version.
+- `zenodo/MANIFEST.json`: the 19758618 entry names 7.49.0 as the latest version, a new entry records
+  10.5281/zenodo.23221755, and the 23200977 entry says it was superseded. No `cited_in` line moves.
+- Not changed: `CITATION.cff` and `README.md`, because no sentence in them became false. `CITATION.cff`
+  line 34 names 7.48.0's version DOI beside the concept DOI, which is still true of 7.48.0; whether it
+  should name 7.49.0's is the operator's call. `zenodo/README.md` still describes the 7.48.0 flow only.
+
 ## [7.49.0] — 2026-10-07 — security repair: `capsule verify` passed v0.1 capsules whose certificate was edited to say what their bytes do not, and now compares the whole certificate; the diff gate withholds verdicts its known defects can make wrong
 
 A minor release: a security repair to how `python -m styxx.capsule verify` checks a v0.1 OATH
