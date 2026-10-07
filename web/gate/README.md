@@ -77,7 +77,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout whose styxx/diffgate.py is the file named above
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 4cded2e3…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 09867056…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 190 pinned pairs against their expect blocks (+ path2a_moves.json)

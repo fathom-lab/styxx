@@ -16,7 +16,7 @@ the README says and `test_the_shipped_bookmarklet_is_the_build_the_readme_names`
 190 pinned pairs in seven files, and `path2a_pairs.json` pins 136, as the README says. What was not true:
 
 - The differential's run book said `py_side.py` refuses to run unless `styxx/diffgate.py` hashes to `cb99a685…`.
-  Its pin is `4cded2e3…`, the file the README names at its top; the line now says so, and the line above it no
+  Its pin is the file the README names at its top (`4cded2e3…` when this was measured, `09867056…` after #201); the line now says so, and the line above it no
   longer says the differential runs on 7.48.0's file (`py_side.py` refuses that file).
 - The 2026-09-18 result said the `.gitignore` "names these five as exceptions". That was true then; it names eight
   now, and the sentence says both.
