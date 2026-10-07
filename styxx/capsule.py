@@ -35,9 +35,11 @@ import datetime as _dt
 import hashlib
 import html as _html
 import json
+import platform
 import re
 import sys
 import tempfile
+import unicodedata
 from collections import Counter
 from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import List, Optional
@@ -335,12 +337,42 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
         cmp = _compare_certificate_v01(cert, live, payload, recs)
         problems.extend(cmp["problems"])
         advisory.extend(cmp["advisory"])
+        if cmp["problems"]:
+            advisory.extend(_unicode_note(doc_bytes))
 
     # The page around the payload is what a reader's browser runs. It must be the page some
     # styxx renders for exactly this payload, or what it shows was never checked by anything.
     _check_page_v01(html, payload, cert, live if not problems else None, doc_bytes, problems,
                     advisory, cmp["compared"], cmp["mint_refusals"])
     return report()
+
+
+def _unicode_note(doc_bytes: bytes) -> List[str]:
+    """An advisory for a certificate that does not reproduce over a document holding characters
+    this Python's Unicode database does not assign.
+
+    certify finds numbers with `\\d` and `\\w`, which follow the Unicode database of the Python
+    that runs it, and since 2026-10-05 the uncovered band is compared. A document holding a digit
+    newer than the verifier's database is read differently by a styxx under another Python: review
+    round 4 (compatibility lens) minted Sunuwar digits (Unicode 16.0) with 7.48.1 under Python
+    3.12, and this layer 2 failed that honest capsule under 3.14, and the reverse, with text that
+    reads like an edited certificate. Where the verifier's database is the older one it can name
+    the characters; where it is the newer one it cannot tell, and the CHANGELOG says so."""
+    try:
+        text = doc_bytes.decode("utf-8")
+    except UnicodeDecodeError:
+        return []
+    odd = sorted({c for c in text if unicodedata.category(c) == "Cn"})
+    if not odd:
+        return []
+    return [f"the document holds {', '.join(f'U+{ord(c):04X}' for c in odd[:6])}"
+            f"{' and more' if len(odd) > 6 else ''}, which this Python's Unicode database "
+            f"({unicodedata.unidata_version}, Python {platform.python_version()}) does not "
+            f"assign. certify reads digits and letters by that database, so a styxx under a "
+            f"Python with a later one can read such a character as a digit or a letter: if this "
+            f"capsule was minted there, the differences below can come from that rather than "
+            f"from an edit. It fails here either way; verify it under a Python whose Unicode "
+            f"database is the minter's or later"]
 
 
 # ---------------------------------------------------------------------------------

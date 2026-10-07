@@ -426,6 +426,32 @@ def test_line_feeds_after_the_page_are_transport(clean, tmp_path, page, how):
     assert any("not the page any styxx renders" in x for x in rep["problems"]), rep["problems"]
 
 
+def test_a_certificate_that_does_not_reproduce_over_a_character_unassigned_here_says_so(tmp_path):
+    """Review round 4 (compatibility lens): certify reads digits and letters by the Unicode
+    database of the Python that runs it, so an honest capsule minted under a Python with a later
+    database can fail under an older one, with text that reads like an edited certificate. Where
+    the document holds a character this Python leaves unassigned (U+0378 is unassigned in every
+    Unicode version so far), a failing comparison is printed with that database's version."""
+    import unicodedata
+    text = "The run scored 0.75 accuracy over 40 items, code ͸.\n"
+    honest = _mint(tmp_path / "u", text)
+    rep = verify_capsule(honest)
+    assert rep["ok"] is True, rep["problems"]
+    assert not any("Unicode database" in a for a in rep["advisory"]), rep["advisory"]
+
+    def edit(p):
+        p["certificate"]["counts"]["VERIFIED"] += 1
+    rep = verify_capsule(_forge(honest, tmp_path / "e.capsule.html", edit))
+    assert rep["ok"] is False
+    note = [a for a in rep["advisory"] if "Unicode database" in a]
+    assert len(note) == 1 and "U+0378" in note[0], rep["advisory"]
+    assert f"({unicodedata.unidata_version}, Python " in note[0], note
+    # a document holding no such character gets no such line
+    rep = verify_capsule(_forge(_mint(tmp_path / "c", CLEAN), tmp_path / "c2.capsule.html", edit))
+    assert rep["ok"] is False
+    assert not any("Unicode database" in a for a in rep["advisory"]), rep["advisory"]
+
+
 # ---------------------------------------------------------------- names, crashes
 
 @pytest.mark.parametrize("where", ["absolute", "climbing"])
