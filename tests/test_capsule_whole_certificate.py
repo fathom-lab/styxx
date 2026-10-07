@@ -620,6 +620,19 @@ def test_a_binding_path_must_be_a_repository_path_ending_in_the_receipt_s_name(c
     _fails_on(clean, tmp_path, pathed, "is not a repository path certify writes")
 
 
+@pytest.mark.parametrize("name", [["r.json"], {"n": "r.json"}, 7, None])
+def test_a_binding_row_whose_name_is_not_a_string_fails_without_a_traceback(clean, tmp_path, name,
+                                                                            capsys):
+    """Review round 3 (forgery lens, minor): a list or an object as a binding row's name ended
+    verify in 'TypeError: unhashable type', after the names-mismatch problem was recorded."""
+    def named(p):
+        p["certificate"]["receipt_binding"]["receipts"][0]["name"] = name
+    rep = _fails_on(clean, tmp_path, named, "receipt_binding row")
+    assert any("name" in p and "is not a string" in p for p in rep["problems"]), rep["problems"]
+    assert main(["verify", str(tmp_path / "named.capsule.html")]) == 1
+    assert "CAPSULE FAILS VERIFICATION" in capsys.readouterr().out
+
+
 @pytest.mark.parametrize("note", ["no receipts", "reviewed by the lab", "binding failed: x"])
 def test_a_binding_note_must_be_one_certify_writes_where_it_writes_it(clean, tmp_path, note):
     recs = _receipt_bytes(clean)

@@ -855,6 +855,11 @@ def _compare_binding(rb, lrb: dict, recs: dict, problems: List[str], not_checked
         problems.append(f"receipt_binding.note {_short(note, 80)} is not a note certify writes")
     for r in rows:
         blob, committed, path = r.get("blob"), r.get("committed"), r.get("path")
+        # bind_at_mint writes the receipt's file name; a list or an object here ended verify in a
+        # TypeError (unhashable) until review round 4
+        if "name" in r and not isinstance(r.get("name"), str):
+            problems.append(f"receipt_binding row name {_short(r.get('name'), 80)} is not a "
+                            f"string; certify writes the receipt's file name there")
         if (not isinstance(committed, bool)
                 or (blob is not None and not (isinstance(blob, str) and _GIT_ID.fullmatch(blob)))
                 or committed != (blob is not None)
@@ -893,7 +898,7 @@ def _compare_binding(rb, lrb: dict, recs: dict, problems: List[str], not_checked
                             f"embedded receipts {lnames}")
         lrows = {r.get("name"): r for r in (lrb.get("receipts") or [])}
         for r in rows:
-            lr = lrows.get(r.get("name")) or {}
+            lr = (lrows.get(r["name"]) if isinstance(r.get("name"), str) else None) or {}
             for k in _BINDING_BYTE_FIELDS:
                 if k in r and not _same(r[k], lr.get(k)):
                     problems.append(f"receipt_binding {k} of {r.get('name')!r} not "
