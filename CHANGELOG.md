@@ -47,12 +47,19 @@ problem that names HFS+ and the pair, as two names differing only in case alread
 canonically equivalent spellings, such as an NFC `é` and an `e` with a combining accent, and
 spellings that differ by a code point HFS+ ignores when it compares names (U+200C to U+200F,
 U+202A to U+202E, U+206A to U+206F and U+FEFF, from Apple's Technical Note TN1150; no HFS+ volume
-was run here).
-`capsule create` refuses each such name, a name the 7.48.1 rule refuses, and each such pair,
-before reading anything, and names the name or the pair. Until now a POSIX system minted and kept
-a capsule naming `r<1>.json`, which a Windows verifier failed; and a name or pair verify refuses
-on every system was found only by the verify after the mint, whose refusal blamed the ledger
-schema. The rules 7.48.1 shipped (GHSA-h5xv-4344-f62r) are unchanged, messages included.
+was run here). The case and HFS+ pair rules follow the verifying Python's Unicode database, as
+certify's reading of digits does: a pair of letters whose case is defined in a later Unicode
+version than that database's is refused only by a verifier that knows them (U+A7CC and U+A7CD,
+from Unicode 16.0, fold to one name under Python 3.14 and to two under Python 3.12).
+`capsule create` refuses each such name, a name the 7.48.1 rule refuses, each such pair, and a
+name given to two different files (two receipts in two directories, or a receipt named as the
+document is), before reading anything, and names the name or the pair. Until now a POSIX system
+minted and kept a capsule naming `r<1>.json`, which a Windows verifier failed; a name or pair
+verify refuses on every system was found only by the verify after the mint, whose refusal blamed
+the ledger schema; and two receipts under one name were read, then refused as bytes that do not
+match the certificate (or, where a path did not exist, ended create in FileNotFoundError). One
+receipt given twice by its path is still one receipt. The rules 7.48.1 shipped
+(GHSA-h5xv-4344-f62r) are unchanged, messages included.
 - `styxx.corpus_audit` reads the same single-name rule (`_bare_name`) before it writes a
   certificate's names to re-derive its sworn bytes, so it refuses these names too; it pairs names
   by case only. Over `git ls-files '*.certificate.json'` (213 certificates; 729 distinct names,
@@ -60,11 +67,18 @@ schema. The rules 7.48.1 shipped (GHSA-h5xv-4344-f62r) are unchanged, messages i
   name and no pair is refused by the new rules, and no name holds `~`. Over every tracked JSON
   file whose top level holds a `receipts_sha256` object (249 files, 573 distinct names) the same
   holds; the five names there that are refused hold `/`, and the 7.48.1 rule refuses them.
-- Not repaired: what the verifier's own system cannot write under a name the rule allows. Windows
-  without long paths enabled (the default) cannot write a path longer than 260 characters, so a
-  name of a couple of hundred characters under a long temporary directory fails there, with a
-  problem that names that limit as the system's and says to verify where the files can be written,
-  and verifies elsewhere.
+- Every name the rule allows is written on every system. Without the extended-length prefix,
+  Windows without long paths (its default) refuses a path of more than 260 characters, so during
+  review a capsule naming a receipt of 226 characters, certified as a POSIX minter certifies it,
+  failed on this repository's Windows box (the write raised FileNotFoundError under a temporary
+  directory of ordinary length) and verified on POSIX: one capsule, two verdicts, as with
+  `r<1>.json`. `verify`, `create`'s re-run and charon now write the embedded files in a
+  temporary directory named on Windows under that prefix (`\\?\`), which holds every name the rule
+  allows whatever the length of the directory's path. A capsule naming a receipt of 250
+  characters is minted, verifies and is reproduced by charon on that box with long paths off,
+  under a temporary directory whose path and the name pass 260 characters. A write that still
+  fails (a full disk, a temporary directory the verifier may not write in) fails by name, with a
+  problem that says it is the verifier's temporary directory that refused the files.
 
 **The sweep.** The 600 mutations 7.49.0's entry describes were not committed. The new tests mutate
 every field of a minted v0.1, v0.2 and sworn payload in turn (a value in its place, its deletion,
@@ -78,18 +92,21 @@ but one: a binding block with no note, which bind_at_mint writes in a repository
 rather than checks, as 7.49.0 designed, so mutations of those verify too.) By
 default each field takes five of the nineteen values (1,848 mutations); `STYXX_CAPSULE_SWEEP=full`
 puts every value in every field (6,059 mutations), and both pass. A wider probe outside the suite,
-each mutation around every page that renders it and spliced into the minted one, with hashes and
-bindings restated so it reaches the code behind them, and pages a JSON decoder cannot read (9,372
-cases), finds an uncaught exception at origin/main (566f7769) in 47 combinations of spec, caller
-(verify, the command, charon's derive, the line's digest), exception and message, and in none on
-this branch. What it found, each now a named problem:
+run before review at 36c78e28 (its scripts were not kept), each mutation around every page that
+renders it and spliced into the minted one, with hashes and bindings restated so it reaches the
+code behind them, and pages a JSON decoder cannot read (9,372 cases), found an uncaught exception
+at origin/main (566f7769) in 47 combinations of spec, caller (verify, the command, charon's
+derive, the line's digest), exception and message, and in none at 36c78e28. The review probes,
+which are kept, carry that claim for this tree (below). What it found, each now a named problem:
 - v0.2: a binding that is not an object (AttributeError); a gate record JCS cannot canonicalise,
   such as NaN or Infinity (ValueError); summary or diff bytes bound to their hash that are not
   UTF-8 (UnicodeDecodeError); instrument skew beside a verifier block that is not an object.
 - sworn: a receipt that is not an object, or a document or verifier block in it that is not one
   (AttributeError), each now named as not an object; an empty verifier block, or none, still
-  verifies with the INSTRUMENT SKEW advisory it gave at origin/main. A receipt JCS cannot
-  canonicalise (ValueError).
+  verifies with the INSTRUMENT SKEW advisory it gave at origin/main. A verifier block that is
+  null, false, 0, an empty string or an empty list verified at origin/main with that advisory,
+  read as absent, and now fails by name too: styxx.sworn always writes an object there, so this
+  adds a refusal. A receipt JCS cannot canonicalise (ValueError).
 - Every spec: a payload nested deeper than the JSON decoder recurses (RecursionError). A payload
   nested more than 64 levels deep is now refused at parse; every committed payload is nested 5
   levels deep at most.
@@ -115,12 +132,19 @@ this change does not touch.
 
 **What did not change.** Every refusal stands: the mutations the probe's v0.1 run verifies on this
 branch are a subset of those it verifies at origin/main, which also verifies a name of 260 UTF-8
-bytes and stated versions of 65 characters and of 4,300 digits. The review's own probe, re-run on
-the final tree (4,962 cases of mutations across fields, hostile embedded bytes behind restated
+bytes and stated versions of 65 characters and of 4,300 digits. Review 1's probe, re-run on
+this tree (4,962 cases of mutations across fields, hostile embedded bytes behind restated
 hashes, hostile names and page damage, and 488 cases of hostile content behind honest hashes),
 finds no exception and no wrong exit code under this change, and no case that verifies under it
 and fails or raises at origin/main; the 74 cases it refuses here and verifies at origin/main are
-payloads nested more than 64 levels deep. The thirteen committed capsules give the same report
+payloads nested more than 64 levels deep. Review 2's probe, re-run on this tree (172
+capsules a forger builds around hostile documents, receipts, names, summaries, diffs and sworn
+receipts, each certificate, gate record or core re-derived or restated), finds no exception and no
+wrong exit code or line under this change; the cases it verifies at origin/main and refuses here
+are the new name rules (the 8.3 form, an NFC and NFD pair, a pair differing by U+200C), and no case
+verifies here and fails at origin/main. The name rules, the depth bound, the stated version of
+more than 64 characters and the sworn verifier blocks above are the refusals this change adds;
+none is removed. The thirteen committed capsules give the same report
 and the same output under this change as at origin/main (twelve verify; the v0.2 handoff capsule
 fails under both). Re-deriving `papers/charon/charon.log.jsonl` gives every one of
 its 257 lines the same status, classes and changed fields under both. `styxx/certify.py`,
