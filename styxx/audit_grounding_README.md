@@ -3,8 +3,8 @@
 ## The problem it addresses
 AI now produces claims — papers, eval reports, dashboards, model self-reports — faster than anyone can check
 them. The load-bearing question is the oldest one in science: does every number trace to a result, and does the
-language stay within what the data actually shows? Almost no one checks this mechanically, and it is exactly
-where errors and overclaims hide.
+language stay within what the data actually shows? An untraced number is exactly where errors and overclaims
+hide. Mechanical checks of reported numbers predate this tool (statcheck, Nuijten et al., 2016, recomputes p-values).
 
 ## What it does
 `audit_grounding(text, sources)` — **deterministic, no LLM, no web:**

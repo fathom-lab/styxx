@@ -248,10 +248,10 @@ CALIBRATION_NOTES: Dict = {
     "prior_art_context": (
         "Goal drift in long-horizon agents is observed empirically "
         "in AgentBench (Liu et al. 2023) and ToolLLM long-horizon "
-        "evaluations as a major failure mode, but is not formalized "
-        "as a calibrated detection task. Most agent-eval pipelines "
-        "score whether the FINAL output meets the goal, not whether "
-        "the trajectory STAYED ANCHORED. styxx v0 fills that gap."
+        "evaluations as a major failure mode. styxx v0 is a "
+        "calibrated text-only detector of whether the trajectory "
+        "STAYED ANCHORED. Whether others formalized it as a "
+        "calibrated detection task earlier was not surveyed."
     ),
     "reproducer": "scripts/goal_drift_train_v0.py (seed=0, deterministic)",
     "v1_roadmap": [

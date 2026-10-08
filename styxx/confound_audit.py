@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """styxx.audit_confound — confound-robustness audit + auto-guard for ANY text-scoring instrument.
 
-The question every deployed classifier / guardrail / probe should answer but almost none do: *is my score
+The question every deployed classifier / guardrail / probe should answer: *is my score
 secretly riding a confound?* A toxicity classifier that keys on length, a sentiment model that keys on
 punctuation, an overconfidence guardrail that keys on terseness — each separates its training corpus while
 silently failing in deployment whenever the confound and the construct come apart.

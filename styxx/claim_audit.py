@@ -3,9 +3,9 @@
 
 The discipline that catches overclaims, automated. A write-up, a model's self-report, or an LLM-generated
 summary is full of numbers — RSA values, CIs, p-values, percentages, fold-changes. Each one should be
-*traceable to a committed result*. Almost no one checks this mechanically, and it is exactly where overclaims
-hide: a percentage computed against the wrong baseline, a CI that doesn't exist in any output, a "3x" with no
-ratio behind it, a headline number that was never actually measured.
+*traceable to a committed result*. Mechanical checks of reported numbers predate this one (statcheck,
+Nuijten et al., 2016, recomputes p-values). An untraced number is exactly where overclaims hide: a percentage
+computed against the wrong baseline, a CI in no output, a "3x" with no ratio behind it, a number never measured.
 
 `audit_grounding` answers it deterministically — no LLM judge, no web. Given a claim (text) and its sources
 (result JSONs / dicts / numbers), it extracts every statistical number and classifies each:

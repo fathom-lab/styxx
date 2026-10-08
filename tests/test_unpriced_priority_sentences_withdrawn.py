@@ -12,7 +12,11 @@ never surveyed. The sycophancy instrument now says so, and the later ones count 
 
 The field-lacks and only-one sentences: three documents under docs/research/ said the field had no
 instruments, no ruler, or no signal during generation, and four docstrings called a comparison,
-a control surface or a method the only one.
+a control surface or a method the only one. Three more guardrail instruments said in their
+`prior_art_context` that no one had shipped or formalized what they detect and that styxx v0
+"fills that gap", the sentence the 2026-09-29 pass narrowed in sycophancy's; the grounding and
+confound audits said almost no one checks what they check; the CVP specification said a component
+typically has no way to ask what CVP carries.
 
 The ordinal is stored reversed, as tests/test_leaderboard_no_priority_claim.py stores it, so this
 file does not spell it either.
@@ -75,6 +79,39 @@ def test_the_later_instruments_count_only_the_labs_own():
         assert not _ORDINAL_RX.search(called_in), (module.__name__, called_in)
 
 
+# the phrasings the 2026-10-07 scan's earlier pass missed: a gap the lab filled, a task nobody
+# formalized, a check almost no one runs, a capability typical systems lack
+_GAP_RX = re.compile(
+    r"\b(?:fills? (?:that|this|the) gap|clos(?:es|ing) (?:this|that) gap|aware of no|"
+    r"not (?:yet )?formali[sz]ed|almost (?:no one|nobody|none)|rarely the|"
+    r"most agent-eval pipelines|typically has no)\b", re.IGNORECASE)
+
+
+def test_the_gap_filling_prior_art_notes_say_what_was_not_surveyed():
+    from styxx.guardrail import (calibrated_weights_goal_drift_v0, calibrated_weights_loop_v0,
+                                 calibrated_weights_plan_action_v0)
+    expected = {
+        calibrated_weights_loop_v0: (
+            "styxx v0 is a calibrated text-only detector with a published calibration fingerprint "
+            "for this failure mode; whether others shipped one earlier was not surveyed.",
+            ("AgentBench 2023", "ReAct 2022")),
+        calibrated_weights_plan_action_v0: (
+            "Whether others formalized it as a calibrated detection task earlier, and what other "
+            "agent-eval pipelines check, was not surveyed.",
+            ("ReAct (Yao et al. 2022)", "AgentBench (Liu et al. 2023)")),
+        calibrated_weights_goal_drift_v0: (
+            "Whether others formalized it as a calibrated detection task earlier was not surveyed.",
+            ("AgentBench (Liu et al. 2023)", "ToolLLM")),
+    }
+    for module, (phrase, credits) in expected.items():
+        prior = module.CALIBRATION_NOTES["prior_art_context"]
+        assert phrase in prior, (module.__name__, prior)
+        for credit in credits:
+            assert credit in prior, (module.__name__, credit)
+        assert not _GAP_RX.search(prior), (module.__name__, _GAP_RX.search(prior).group(0))
+        assert not _ORDINAL_RX.search(prior), (module.__name__, prior)
+
+
 def test_no_guardrail_source_counts_instruments_under_the_call_unscoped():
     hits = {}
     for path in sorted(GUARDRAIL.glob("*.py")):
@@ -133,7 +170,39 @@ _FIELD_LACKS = [
      ["the only way to get logprob-equivalent signal", "The closest reconstruction"],
      ["one way to get logprob-equivalent signal on the Anthropic API",
       "A reconstruction of logprob-equivalent signal without API support."]),
+    ("styxx/guardrail/calibrated_weights_loop_v0.py",
+     ["We are aware of no calibrated text-only detector", "styxx v0 fills that gap."],
+     ["whether others \" \"shipped one earlier was not surveyed."]),
+    ("styxx/guardrail/calibrated_weights_plan_action_v0.py",
+     ["but is not formalized as a", "Most agent-eval pipelines check", "rarely the",
+      "styxx v0 fills that gap with a"],
+     ["styxx v0 is a calibrated \" \"text-only detector of the alignment between plan and"]),
+    ("styxx/guardrail/calibrated_weights_goal_drift_v0.py",
+     ["but is not formalized", "Most agent-eval pipelines", "styxx v0 fills that gap."],
+     ["\"calibrated text-only detector of whether the trajectory \""]),
+    ("styxx/claim_audit.py",
+     ["Almost no one checks this mechanically"],
+     ["Mechanical checks of reported numbers predate this one (statcheck, Nuijten et al., 2016, "
+      "recomputes p-values)."]),
+    ("styxx/audit_grounding_README.md",
+     ["Almost no one checks this mechanically"],
+     ["Mechanical checks of reported numbers predate this tool (statcheck, Nuijten et al., 2016, "
+      "recomputes p-values)."]),
+    ("styxx/confound_audit.py",
+     ["should answer but almost none do"],
+     ["should answer: *is my score secretly riding a confound?*"]),
+    ("docs/cvp/CVP-1.0-specification.md",
+     ["it typically has no principled way to ask", "CVP closes this gap."],
+     ["it may need a principled way to ask",
+      "CVP is one way to carry that signal; whether other protocols carry one was not surveyed."]),
 ]
+
+# the files where the scan's gap vocabulary found a withdrawn sentence; none may carry it again
+_GAP_FILES = ("styxx/guardrail/calibrated_weights_loop_v0.py",
+              "styxx/guardrail/calibrated_weights_plan_action_v0.py",
+              "styxx/guardrail/calibrated_weights_goal_drift_v0.py",
+              "styxx/claim_audit.py", "styxx/audit_grounding_README.md", "styxx/confound_audit.py",
+              "docs/cvp/CVP-1.0-specification.md")
 
 
 def test_the_field_lacks_and_only_one_sentences_stay_withdrawn():
@@ -144,6 +213,11 @@ def test_the_field_lacks_and_only_one_sentences_stay_withdrawn():
             assert sentence not in text, (rel, sentence)
         for wording in replaced_by:
             assert wording in text, (rel, wording)
+
+
+def test_no_gap_or_almost_no_one_sentence_returns():
+    hits = {rel: _GAP_RX.findall(_flat(rel)) for rel in _GAP_FILES}
+    assert {rel: found for rel, found in hits.items() if found} == {}
 
 
 def test_what_the_drift_docstrings_measured_stays():

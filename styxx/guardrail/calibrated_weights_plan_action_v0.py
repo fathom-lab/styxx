@@ -260,11 +260,11 @@ CALIBRATION_NOTES: Dict = {
     "prior_art_context": (
         "Plan-action gap as an agentic failure mode is observed in "
         "ReAct (Yao et al. 2022) and AgentBench (Liu et al. 2023) "
-        "long-horizon evaluations but is not formalized as a "
-        "calibrated detection task. Most agent-eval pipelines check "
-        "EITHER plan validity OR action correctness, rarely the "
-        "alignment between the two. styxx v0 fills that gap with a "
-        "calibrated text-only detector."
+        "long-horizon evaluations. styxx v0 is a calibrated "
+        "text-only detector of the alignment between plan and "
+        "action. Whether others formalized it as a calibrated "
+        "detection task earlier, and what other agent-eval "
+        "pipelines check, was not surveyed."
     ),
     "reproducer": "scripts/plan_action_train_v0.py (seed=0, deterministic)",
     "v1_roadmap": [
