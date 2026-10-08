@@ -360,12 +360,41 @@ def test_a_sworn_receipt_edited_with_its_core_restated_fails_without_a_traceback
     f = _write(tmp_path / "c.capsule.html", sworn, change)
     rep = verify_capsule(f)
     assert isinstance(rep["problems"], list)
-    if edit in ("counts_nan", "document_text"):
-        # (the verifier block is outside the core, an INSTRUMENT SKEW advisory; the document
-        # name is what styxx.sworn re-derives the core under, so a restated core carries it)
-        assert rep["ok"] is False, rep
+    needle = {"counts_nan": "the receipt cannot be canonicalised, so its verdict core has no digest",
+              "document_text": "payload.receipt.document is not an object",
+              "verifier_text": "payload.receipt.verifier is not an object"}.get(edit)
+    if needle:
+        # (name_list: the document name is what styxx.sworn re-derives the core under, so a core
+        # restated over a name that is a list re-derives, and the page verifies here as it does
+        # at origin/main)
+        assert rep["ok"] is False and any(needle in p for p in rep["problems"]), rep
     code, out = _command(f)
     assert code == (0 if rep["ok"] else 1)
+
+
+@pytest.mark.parametrize("value", ["x", [1], 7, "absent", {}])
+def test_a_sworn_receipt_verifier_block_that_is_not_an_object_fails_by_name(sworn, tmp_path,
+                                                                            value):
+    """The verifier block is outside the verdict core, so a block read as absent gave only an
+    INSTRUMENT SKEW advisory and verified: text, a list or a number there printed VERIFIED, exit
+    0, where origin/main ended in a traceback. Now each fails by name. An empty block, or none,
+    reads as it did at origin/main: an advisory that the build is not named."""
+    def edit(p):
+        if value == "absent":
+            del p["receipt"]["verifier"]
+        else:
+            p["receipt"]["verifier"] = value
+    f = _write(tmp_path / "v.capsule.html", sworn, edit)
+    rep = verify_capsule(f)
+    code, out = _command(f)
+    assert any("INSTRUMENT SKEW: the receipt was issued by styxx.sworn None" in a
+               for a in rep["advisory"]), rep
+    if isinstance(value, dict) or value == "absent":
+        assert rep["ok"] is True and code == 0, rep
+    else:
+        assert rep["ok"] is False and code == 1 and "CAPSULE FAILS VERIFICATION" in out
+        assert any("payload.receipt.verifier is not an object: styxx.sworn writes its build "
+                   "there" in p for p in rep["problems"]), rep["problems"]
 
 
 @pytest.mark.parametrize("depth", [65, 900, 100000])
