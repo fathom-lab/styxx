@@ -94,7 +94,9 @@ _WINDOWS_DEVICES = {"con", "prn", "aux", "nul", "conin$", "conout$"}
 # lone surrogate is the reverse: Windows writes it, and UTF-8 cannot encode it, so on POSIX the
 # write raised UnicodeEncodeError (or, from U+DC80 to U+DCFF, wrote other bytes). NTFS holds a name
 # of at most 255 UTF-16 code units, ext4 one of at most 255 UTF-8 bytes. Each such name is refused
-# on every system.
+# on every system. A file system with a stricter limit can still refuse a name this allows (HFS+
+# stores a name decomposed in at most 255 UTF-16 code units; eCryptfs's encrypted names hold about
+# 143 bytes); the write then fails by name, as a temporary directory that refused the files.
 _WINDOWS_RESERVED = '<>"|?*'
 _NAME_MAX = 255
 # Nor a name another file answers to on some file system. Where NTFS generates 8.3 short names (the
@@ -518,9 +520,10 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
                     rp.write_bytes(recs[name])
                     rps.append(rp)
             except (OSError, ValueError) as e:
-                # Every name some system refuses is refused above, on every system, and on Windows
-                # the directory is named under the extended-length prefix, which holds every name
-                # the rule allows (#196). What is left is the temporary directory itself.
+                # The names Windows, NTFS's or ext4's limit, or UTF-8 refuse are refused above, on
+                # every system, and on Windows the directory is named under the extended-length
+                # prefix, which holds every name the rule allows (#196). What is left is the temporary directory itself, or a
+                # file system with a stricter limit than the rule's (HFS+, eCryptfs).
                 problems.append(f"the embedded files could not be written under their names "
                                 f"here ({type(e).__name__}: {str(e)[:200]}), so the verifier was "
                                 f"not re-run. The names pass the rule verify applies on every "

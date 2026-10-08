@@ -376,14 +376,15 @@ def test_create_refuses_two_files_given_under_one_name_before_reading_anything(t
     assert not (tmp_path / "d.capsule.html").exists()
 
 
-def test_a_receipt_name_of_250_characters_verifies_on_every_system(tmp_path, monkeypatch):
+def test_a_receipt_name_of_250_characters_verifies_under_a_path_past_260_characters(tmp_path,
+                                                                                  monkeypatch):
     """The rule allows a name of up to 255 UTF-16 code units and 255 UTF-8 bytes. Windows without
     long paths (its default) refuses a path of more than 260 characters unless the path carries
     the extended-length prefix, so until #196 review round 2 a capsule naming a receipt of 226
     characters failed on this repository's Windows box, under a temporary directory of ordinary
     length, and verified on POSIX: one capsule, two verdicts, as with r<1>.json. The re-runs of
     create, verify and charon now write under that prefix on Windows, so the capsule is minted,
-    verifies and reproduces here as anywhere, under a temporary directory whose path and the name
+    verifies and reproduces here as on POSIX, under a temporary directory whose path and the name
     pass 260 characters."""
     import tempfile
     from styxx import receipt_binding as rb
