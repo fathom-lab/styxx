@@ -2461,9 +2461,10 @@ def _verify_capsule_sworn(html: str, payload: dict) -> dict:
         problems.append("payload.receipt is not an object: create_capsule_sworn embeds the "
                         "receipt styxx.sworn issued")
     # A block styxx.sworn writes that is here and is not an object fails by name. The verifier
-    # block is outside the verdict core, so read as absent it gave only an INSTRUMENT SKEW
-    # advisory, and a receipt whose verifier is text verified (origin/main ended it in a
-    # traceback). An empty block, or none, still reads as it always did.
+    # block is outside the verdict core, so read as absent it would give only an INSTRUMENT SKEW
+    # advisory, and a receipt whose verifier is text would verify (origin/main ended it in a
+    # traceback; review 1 of #196 caught the branch verifying it). An empty block, or none, still
+    # reads as it always did.
     for k, what in (("document", "the document's name and hash"), ("verifier", "its build")):
         if k in rec and not isinstance(rec[k], dict):
             problems.append(f"payload.receipt.{k} is not an object: styxx.sworn writes {what} "
