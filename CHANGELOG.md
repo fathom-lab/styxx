@@ -24,12 +24,14 @@ the record's line stays true of what it describes.
   detection bars, 4/4", the note's wording for `critique.py`. The same kind of claim is withdrawn from
   two more rows. Baseline-014's heading and notes no longer rank its D2 clearance of both confound bars
   against every method (three ordinal phrases; "an n=1 demonstration" replaces the last). Baseline-016's
-  notes no longer call its two threshold crossings achievements nobody had reached; the table's own
-  Baseline-014 row, committed 16 minutes earlier (2391971f before f828b168), had already cleared D2
-  against the length oracle at 0.116. Baseline-008's heading and notes set it apart from Baseline-007
-  with an achievement ordinal; both now say it was tested under v2 bars. No number in the table
-  changes. "How to submit" step 3 now tells a submitter to copy `LEADERBOARD.md` over
-  `styxx/_data/LEADERBOARD.md`, which the new byte-identity test requires.
+  notes no longer call its two threshold crossings achievements nobody had reached, and the table
+  contradicts both: its own Baseline-014 row, committed 16 minutes earlier (2391971f before f828b168),
+  had already cleared D2 against the length oracle at 0.116, and Baseline-007, -008 and -011 had
+  already passed D4, which since 7.7.9 needs both partitions to clear the bar (`styxx/gauntlet.py`
+  lines 414-416; d8f48432 and 0bb61786, both before f828b168). Baseline-008's heading and notes set
+  it apart from Baseline-007 with an achievement ordinal; both now say it was tested under v2 bars.
+  No number in the table changes. "How to submit" step 3 now tells a submitter to copy
+  `LEADERBOARD.md` over `styxx/_data/LEADERBOARD.md`, which the new byte-identity test requires.
 - `styxx/__init__.py`: the comments on the critique detector's import and its `__all__` entry say it
   passed the gauntlet's v3 bars. The module docstring of `tests/test_critique_detector.py` says the same.
 - `docs/research/cognitive-metrology-charter.md` (lines 26, 187 and 323) and
@@ -63,15 +65,32 @@ the record's line stays true of what it describes.
   published" baseline), and `styxx/adapters/anthropic.py` (lines 34-35 and 178: the sampling ensemble
   as "the closest" reconstruction and "the only way" to logprob-equivalent signal). Each is withdrawn
   or narrowed; every number stays.
+- Seven more of that kind, which the scan missed because its vocabulary lacked ("aware of no",
+  "fills that gap", "not formalized", "almost no one"): the `prior_art_context` of
+  `styxx/guardrail/calibrated_weights_loop_v0.py` (lines 250-252: "We are aware of no calibrated
+  text-only detector ... styxx v0 fills that gap"), `calibrated_weights_plan_action_v0.py` (lines
+  263-267) and `calibrated_weights_goal_drift_v0.py` (lines 251-254), both "not formalized as a
+  calibrated detection task", what "most agent-eval pipelines" check, and "styxx v0 fills that gap".
+  They now say what styxx v0 is and that earlier work was not surveyed, the way the 2026-09-29 pass
+  narrowed sycophancy's; their citations stay. `styxx/claim_audit.py` (line 6) and
+  `styxx/audit_grounding_README.md` (line 6): "Almost no one checks this mechanically", withdrawn,
+  with statcheck (Nuijten et al., 2016), which recomputes reported p-values, credited.
+  `styxx/confound_audit.py` (line 4): "should answer but almost none do", withdrawn.
+  `docs/cvp/CVP-1.0-specification.md` (lines 92 and 98): a component "typically has no principled
+  way to ask" and "CVP closes this gap", now "may need a principled way to ask" and "CVP is one way
+  to carry that signal; whether other protocols carry one was not surveyed." Line counts and numbers
+  stay.
 - `tests/test_leaderboard_no_priority_claim.py`, new: the printed Baseline-019 row says it passed,
   4/4; the Baseline-008, -014, -016 and -019 rows carry no ordinal claim; the root and packaged
   leaderboards are the same bytes, which only a manual copy kept in step before, and a mismatch names
   the copy command; step 3 says to copy; the critique detector's comments in `styxx/__init__.py` carry
   no ordinal. Five of its six tests fail on 566f7769.
-  `tests/test_unpriced_priority_sentences_withdrawn.py`, new: the guardrail notes and a scan of
-  `styxx/guardrail/` that finds all 22 withdrawn counts at 566f7769 and none now; the 15 withdrawn
-  field-lacks and only-one sentences stay out and their replacements stay in. Four of its six tests
-  fail on 566f7769.
+  `tests/test_unpriced_priority_sentences_withdrawn.py`, new: the guardrail notes, including the three
+  `prior_art_context` strings and their citations, and a scan of `styxx/guardrail/` that finds all 22
+  withdrawn counts at 566f7769 and none now, with nearby rewordings checked to register; the 29
+  withdrawn field-lacks, gap and only-one phrases stay out and their replacements stay in; a
+  case-insensitive gap vocabulary finds nothing in the seven files above; the drift docstrings call no
+  baseline the only one. Seven of its nine tests fail on 566f7769.
 - Kept, because each ranks the lab's work only against its own runs or records its own history and says
   nothing about anyone else's: Baseline-009's notes on the order the lab ran its own submissions (which
   says which version of the bars scored it), Baseline-011's count within one session, the invitation
@@ -81,7 +100,13 @@ the record's line stays true of what it describes.
   `calibrated_weights_sycophancy_v0.py` line 253), where the lab identified its own failure mode
   (`calibrated_weights_overconfidence_v0.py` line 241), and orderings inside the package's own history
   (`styxx/__init__.py` near the `recover` import, `styxx/eval.py`, `styxx/gates.py`, `styxx/watch.py`,
-  `styxx/cognometrics.py`, `styxx/analytics.py` line 150, `styxx/hooks.py` line 27).
+  `styxx/cognometrics.py`, `styxx/analytics.py` line 150, `styxx/hooks.py` line 27). Also kept, for
+  their own reasons: `styxx/confound_audit.py` line 9 ("the only way you can answer it cleanly") is a
+  claim about method, a decorrelated corpus, and ranks no one's tool; `styxx/audit.py` line 303 calls
+  web retrieval "the one signal" among the package's levers that catches a stable false belief, and
+  the retrieval model it names is someone else's; `docs/research/cognitive-metrology-charter.md` line
+  424 says what named frameworks (the NIST AI RMF and the EU AI Act among them) do not specify,
+  which a reader can check against them.
 - Not changed: the "to date" superlatives in the Baseline-011 and Baseline-016 rows, which later rows of
   the same table supersede. They rank rows within the table and claim no priority, so they are stale
   rather than withdrawn here. Released `CHANGELOG.md` entries are not edited: [6.8.0], [6.7.0],
