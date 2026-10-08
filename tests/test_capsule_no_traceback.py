@@ -54,16 +54,27 @@ def _b64(b: bytes) -> str:
     return base64.b64encode(b).decode("ascii")
 
 
+def _no_repository(self, path):
+    from styxx.receipt_binding import RepoUnavailable
+    raise RepoUnavailable(f"{path} is not inside a git repository")
+
+
 @pytest.fixture(scope="module")
 def v01(tmp_path_factory):
+    """Minted outside any repository wherever pytest keeps its temporary files, as on CI: inside
+    one, bind_at_mint states a head and paths, which verify states rather than checks, so the
+    sweep's mutations of them verified there and nowhere else."""
+    from styxx import receipt_binding as rb
     d = tmp_path_factory.mktemp("v01")
     doc = d / "d.md"
     doc.write_text(TEXT, encoding="utf-8")
     rp = d / "r.json"
     rp.write_text(json.dumps(RECEIPT), encoding="utf-8")
     cp = d / "d.certificate.json"
-    cp.write_text(json.dumps(certify_doc(doc, [rp])), encoding="utf-8")
-    return create_capsule(doc, [rp], cp, d / "d.capsule.html")
+    with pytest.MonkeyPatch.context() as mp:
+        mp.setattr(rb.Repo, "__init__", _no_repository)
+        cp.write_text(json.dumps(certify_doc(doc, [rp])), encoding="utf-8")
+        return create_capsule(doc, [rp], cp, d / "d.capsule.html")
 
 
 @pytest.fixture(scope="module")
@@ -480,10 +491,7 @@ def test_no_single_field_mutation_ends_in_a_traceback(which, request, tmp_path, 
     diffgate_mod = importlib.import_module("styxx.diffgate")
     sworn_mod = importlib.import_module("styxx.sworn")
     rb = importlib.import_module("styxx.receipt_binding")
-
-    def no_repository(self, path):
-        raise rb.RepoUnavailable(f"{path} is not inside a git repository")
-    monkeypatch.setattr(rb.Repo, "__init__", no_repository)
+    monkeypatch.setattr(rb.Repo, "__init__", _no_repository)
 
     def once(fn, key_of):
         seen = {}
