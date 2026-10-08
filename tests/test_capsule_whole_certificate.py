@@ -763,6 +763,14 @@ def test_a_receipt_given_by_another_name_is_certified_minted_and_verified(tmp_pa
     assert row["name"] == other.name and row["path"] == "receipt_long_name_run.json", row
     cp = repo / "d.certificate.json"
     cp.write_text(json.dumps(cert), encoding="utf-8")
+    if other.name != "latest.json":
+        # #196: a name of the 8.3 short-name form holding "~" is refused by verify on every
+        # system, since NTFS opens another file under it where it generates short names; so
+        # create refuses to mint it, before reading anything. certify still binds the receipt.
+        with pytest.raises(SystemExit, match="has the form of an 8.3 short name"):
+            create_capsule(repo / "d.md", [other], cp, tmp_path / "d.capsule.html")
+        assert not (tmp_path / "d.capsule.html").exists()
+        return
     cap = create_capsule(repo / "d.md", [other], cp, tmp_path / "d.capsule.html")
     rep = verify_capsule(cap)
     assert rep["ok"] is True, rep["problems"]
