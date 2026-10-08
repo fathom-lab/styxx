@@ -96,10 +96,19 @@ _WINDOWS_DEVICES = {"con", "prn", "aux", "nul", "conin$", "conout$"}
 # on every system.
 _WINDOWS_RESERVED = '<>"|?*'
 _NAME_MAX = 255
+# Nor a name another file answers to on some file system. Where NTFS generates 8.3 short names (a
+# Windows system volume does by default), it gives abcdefghijkl.json the short name ABCDEF~1.JSO
+# and opens that file under either name, in any case: a capsule naming both wrote one file there
+# and two elsewhere, so its certifier re-ran over other receipts there and the verdict depended on
+# the verifier's system (#196, review round 1, measured on this repository's Windows box). Every
+# short name Windows generates holds "~" in a base of at most 8 characters, with an extension of
+# at most 3, so a name of that form holding "~" is refused on every system.
+_SHORT_NAME_FORM = re.compile(r"[^.]{1,8}(?:\.[^.]{1,3})?")
 
 
 def _portable_name_problem(name: str) -> Optional[str]:
-    """Why a file name is one some system's file system refuses, else None."""
+    """Why a file name is one some system's file system refuses, or opens as another file's, else
+    None."""
     held = [c for c in _WINDOWS_RESERVED if c in name]
     if held:
         return f"holds {', '.join(map(repr, held))}, which Windows refuses in a file name"
@@ -110,6 +119,10 @@ def _portable_name_problem(name: str) -> Optional[str]:
         return (f"is {n8} UTF-8 bytes and {n16} UTF-16 code units long, and a file name holds at "
                 f"most {_NAME_MAX} of either on some system (UTF-16 code units on NTFS, bytes on "
                 f"ext4)")
+    if "~" in name and _SHORT_NAME_FORM.fullmatch(name):
+        return ("has the form of an 8.3 short name holding '~' (as ABCDEF~1.JSO is the short "
+                "name of abcdefghijkl.json), and where NTFS generates short names it opens "
+                "another file under such a name")
     return None
 
 
@@ -148,27 +161,48 @@ def _unsafe_names(payload: dict) -> List[str]:
             out.append(f"embedded name {_short(n, 120)} {_portable_name_problem(n)}; it is refused "
                        f"on every system, so that a capsule's verdict does not depend on the "
                        f"verifier's; nothing was written and the certifier was not re-run")
-    if not out:
-        folded = [n.casefold() for n in names]
-        if len(set(folded)) != len(folded):
-            out.append("two embedded names are the same file on a case-insensitive file system; "
-                       "nothing was written and the certifier was not re-run")
-    if not out:
-        # HFS+ stores a name decomposed, so two canonically equivalent names (an NFC é and an e
-        # with a combining accent) are one file there, as two names differing in case are on NTFS
-        folded = [_name_fold(n) for n in names]
-        if len(set(folded)) != len(folded):
-            out.append("two embedded names are the same file on HFS+, which stores names "
-                       "decomposed: they differ only in Unicode normalization, or in it and case; "
-                       "the pair is refused on every system; nothing was written and the "
-                       "certifier was not re-run")
+    pair = None if out else _same_file_pair(names)
+    if pair and pair[0] == "case":
+        out.append("two embedded names are the same file on a case-insensitive file system; "
+                   "nothing was written and the certifier was not re-run")
+    elif pair:
+        out.append(f"two embedded names, {_short(pair[1], 60)} and {_short(pair[2], 60)}, are "
+                   f"the same file on {_HFS_PLUS}: they differ only in Unicode normalization, in "
+                   f"such a code point, or in these and case; the pair is refused on every "
+                   f"system; nothing was written and the certifier was not re-run")
     return out
 
 
+# HFS+ stores a name decomposed, so two canonically equivalent names (an NFC é and an e with a
+# combining accent) are one file there, as two names differing in case are on NTFS. And it ignores
+# these code points when it compares two names (Apple, Technical Note TN1150, "HFS Plus Volume
+# Format"), so r<U+200C>.json and r.json are one file there too; that is read from the note, not
+# run on an HFS+ volume.
+_HFS_IGNORED = re.compile("[\u200c-\u200f\u202a-\u202e\u206a-\u206f\ufeff]")
+_HFS_PLUS = ("HFS+, which stores names decomposed and ignores some code points when it compares "
+             "them")
+
+
 def _name_fold(name: str) -> str:
-    """The canonical caseless form of a name (the Unicode Standard, section 3.13, D145):
-    NFD(casefold(NFD(name)))."""
-    return unicodedata.normalize("NFD", unicodedata.normalize("NFD", name).casefold())
+    """The form in which two names are one file on HFS+: the canonical caseless form (the Unicode
+    Standard, section 3.13, D145: NFD(casefold(NFD(name)))) of the name without the code points
+    HFS+ ignores when it compares names."""
+    return unicodedata.normalize(
+        "NFD", unicodedata.normalize("NFD", _HFS_IGNORED.sub("", name)).casefold())
+
+
+def _same_file_pair(names: List[str]):
+    """The first two names that are one file on some file system, and which file system:
+    ("case", a, b) for two names a case-insensitive file system holds as one (a name given twice
+    among them), ("hfs", a, b) for two only HFS+ holds as one; else None."""
+    for kind, fold in (("case", str.casefold), ("hfs", _name_fold)):
+        seen = {}
+        for n in names:
+            k = fold(n)
+            if k in seen:
+                return kind, seen[k], n
+            seen[k] = n
+    return None
 
 
 # ---------------------------------------------------------------------------------
@@ -180,15 +214,28 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
     from styxx.certify import certify_doc
     from styxx._version import __version__
 
-    # A name verify refuses on every system is refused here, before anything is read or written:
-    # until #196 a POSIX system minted r<1>.json, and the capsule was then removed with a hint that
-    # blamed the ledger schema.
-    for n in [doc.name] + [r.name for r in receipts]:
-        why = _portable_name_problem(n)
+    # A name, or a pair of names, verify refuses is refused here, before anything is read or
+    # written. Until #196 a POSIX system minted and kept a capsule naming r<1>.json, which a
+    # Windows verifier failed; and a name or pair verify refuses on every system was found only
+    # by the verify after the mint, whose refusal then blamed the ledger schema.
+    names = [doc.name] + [r.name for r in receipts]
+    for n in names:
+        why = (None if _bare_shape(n) else
+               "is not a bare file name under POSIX and Windows rules alike (it holds a "
+               "separator, a drive, a control character or a trailing dot or space, or is a "
+               "Windows device)") or _portable_name_problem(n)
         if why:
             raise SystemExit(f"REFUSED: the file name {_short(n, 120)} {why}. verify refuses "
                              f"such a name on every system, so that a capsule's verdict does not "
                              f"depend on the verifier's; rename the file and certify it again.")
+    pair = _same_file_pair(list(dict.fromkeys(names)))
+    if pair:
+        kind, a, b = pair
+        where = "a case-insensitive file system" if kind == "case" else _HFS_PLUS
+        raise SystemExit(f"REFUSED: the file names {_short(a, 120)} and {_short(b, 120)} are one "
+                         f"file on {where}, so a verifier there would write one file for the two. "
+                         f"verify refuses the pair on every system; rename one of the files and "
+                         f"certify again.")
 
     # The certificate hashes the document as certify_doc READ it — read_text with universal
     # newlines, re-encoded UTF-8 — so on a CRLF checkout the on-disk bytes are NOT what the

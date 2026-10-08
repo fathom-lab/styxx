@@ -218,9 +218,11 @@ def test_a_receipt_name_windows_refuses_is_refused_on_every_system(v01, tmp_path
 def test_the_name_rule_is_the_same_on_every_system():
     """The rule is a function of the name alone: nothing in it asks which system runs it."""
     refused = ["r<1>.json", "a>b", 'a"b', "a|b", "a?b", "a*b", "\ud800.json", "x" * 256,
-               "\u00e9" * 128, "\U0001F600" * 64]
+               "\u00e9" * 128, "\U0001F600" * 64,
+               "ABCDEF~1.JSO", "abcdef~1.jso", "RECEIP~1.JSO", "ABCDEF~1", "AB12F3~1.JSO", "~"]
     held = ["r.json", "x" * 255, "\u00e9" * 127, "\U0001F600" * 63, "r(1).json", "r[1].json",
-            "r#1.json", "caf\u00e9.json"]
+            "r#1.json", "caf\u00e9.json", "r~1.json", "notes~draft.md", "abcdefghi~.jso",
+            "abcdefghijkl.json"]
     for n in refused:
         assert not C._bare_name(n) and C._portable_name_problem(n), n
     for n in held:
@@ -230,12 +232,17 @@ def test_the_name_rule_is_the_same_on_every_system():
 @pytest.mark.parametrize("names, needle", [
     (("\u00e9.json", "e\u0301.json"), "the same file on HFS+"),
     (("\u00c9.json", "e\u0301.json"), "the same file on HFS+"),
+    (("r\u200c.json", "r.json"), "the same file on HFS+"),
+    (("r\ufeff.json", "R.json"), "the same file on HFS+"),
+    (("abcdefghijkl.json", "ABCDEF~1.JSO"), "has the form of an 8.3 short name"),
     (("R.json", "r.JSON"), "the same file on a case-insensitive file system")])
 def test_two_names_one_file_system_holds_as_one_file_are_refused(v01, tmp_path, names,
                                                                  needle):
     """HFS+ stores names decomposed, so an NFC and an NFD spelling are one file there, as two
     spellings in different case are on NTFS: the later write would replace the earlier there and
-    not on ext4. The case-insensitive pair keeps the message 7.48.1 gave it."""
+    not on ext4. HFS+ also ignores some code points when it compares names (Apple TN1150), and
+    NTFS opens a file under its 8.3 short name. The case-insensitive pair keeps the message 7.48.1
+    gave it."""
     def two(p):
         a, b = names
         rb = base64.b64decode(p["receipts"][0]["b64"])
@@ -244,16 +251,106 @@ def test_two_names_one_file_system_holds_as_one_file_are_refused(v01, tmp_path, 
     _fails(_write(tmp_path / "two.capsule.html", v01, two), needle, tmp_path)
 
 
+def test_a_long_name_and_its_short_name_are_refused_on_every_system(tmp_path, monkeypatch):
+    """Two receipts certified as two files (in two directories, or on a system that generates no
+    8.3 short names), abcdefghijkl.json and ABCDEF~1.JSO. Where NTFS generates short names the
+    verifier wrote them as one file, re-ran the certifier over the second receipt twice, and
+    failed with 'verdict not reproduced', which a reader takes for tamper; elsewhere the capsule
+    verified. Now verify, create and charon refuse the short-name form on every system, before
+    anything is written."""
+    import tempfile
+    from styxx import receipt_binding as rb
+    from styxx._version import __version__
+    monkeypatch.setattr(rb.Repo, "__init__", _no_repository)
+    long_, short = "abcdefghijkl.json", "ABCDEF~1.JSO"
+    (tmp_path / "a").mkdir()
+    (tmp_path / "b").mkdir()
+    doc = tmp_path / "d.md"
+    doc.write_text(TEXT, encoding="utf-8")
+    ra, rb_ = tmp_path / "a" / long_, tmp_path / "b" / short
+    ra.write_text(json.dumps({"eval": {"accuracy": 0.75}}), encoding="utf-8")
+    rb_.write_text(json.dumps({"eval": {"items": 40}}), encoding="utf-8")
+    cert = certify_doc(doc, [ra, rb_])
+    cp = tmp_path / "d.certificate.json"
+    cp.write_text(json.dumps(cert), encoding="utf-8")
+    with pytest.raises(SystemExit) as e:
+        create_capsule(doc, [ra, rb_], cp, tmp_path / "d.capsule.html")
+    assert "'ABCDEF~1.JSO' has the form of an 8.3 short name" in str(e.value)
+
+    payload = {"spec": C.SPEC, "created": "2026-10-07T00:00:00Z",
+               "document": {"name": "d.md", "b64": _b64(TEXT.encode("utf-8"))},
+               "receipts": [{"name": n, "b64": _b64(p.read_bytes())}
+                            for n, p in sorted([(long_, ra), (short, rb_)])],
+               "certificate": cert,
+               "verifier": {"sha256": cert.get("verifier_sha256"), "styxx_version": __version__,
+                            "pip": f"styxx=={__version__}"}}
+    t = tmp_path / "t"
+    t.mkdir()
+    monkeypatch.setattr(tempfile, "tempdir", str(t))
+    page = tmp_path / "x.capsule.html"
+    page.write_text(C._render_html(payload), encoding="utf-8")
+    rep, line = _fails(page, "'ABCDEF~1.JSO' has the form of an 8.3 short name", tmp_path)
+    assert not any("not reproduced" in p for p in rep["problems"]), rep["problems"]
+    assert "unsafe_embedded_name" in line["counts"]["reason"]
+    assert not list(t.rglob("*")), "a file was written"
+
+
 def test_create_refuses_a_name_windows_refuses_before_reading_anything(tmp_path):
-    """No file of that name can exist on Windows, so create checks the name before anything else.
-    Until #196 a POSIX system minted such a capsule, and its own verify then removed it with a
-    hint that blamed the ledger schema."""
+    """No file of that name can exist on Windows, so create checks the name before anything else
+    (none of the paths given exists, so reading any of them would raise). Until #196 a POSIX
+    system minted and kept such a capsule, and a Windows verifier failed it."""
     with pytest.raises(SystemExit) as e:
         create_capsule(tmp_path / "d.md", [tmp_path / "r<1>.json"], tmp_path / "c.json",
                        tmp_path / "d.capsule.html")
     assert "'r<1>.json'" in str(e.value) and "Windows refuses" in str(e.value)
     assert "ledger schema" not in str(e.value)
     assert not (tmp_path / "d.capsule.html").exists()
+
+
+@pytest.mark.parametrize("names, needle", [
+    (("R.json", "r.json"), "one file on a case-insensitive file system"),
+    (("\u00e9.json", "e\u0301.json"), "one file on HFS+"),
+    (("r\u200c.json", "r.json"), "one file on HFS+"),
+    (("d.md", "D.MD"), "one file on a case-insensitive file system")])
+def test_create_refuses_a_pair_of_names_one_file_system_holds_as_one_before_reading_anything(
+        tmp_path, names, needle):
+    """Two receipts kept in two directories (or the document and a receipt) whose names verify
+    refuses as a pair: until #196 create minted the capsule, and its own verify then removed it
+    with a hint that blamed the ledger schema. Now create refuses first, naming the pair."""
+    a, b = names
+    doc = tmp_path / a if a == "d.md" else tmp_path / "d.md"
+    receipts = [tmp_path / "x" / b] if a == "d.md" else [tmp_path / "x" / a, tmp_path / "y" / b]
+    with pytest.raises(SystemExit) as e:
+        create_capsule(doc, receipts, tmp_path / "c.json", tmp_path / "d.capsule.html")
+    msg = str(e.value)
+    assert needle in msg and repr(a) in msg and repr(b) in msg, msg
+    assert "ledger schema" not in msg
+    assert not (tmp_path / "d.capsule.html").exists()
+
+
+@pytest.mark.parametrize("name", ["con.json", "nul.md", "x.json."])
+def test_create_refuses_a_name_that_is_not_bare_before_reading_anything(tmp_path, name):
+    """The 7.48.1 rule verify applies, checked at create too: a name verify refuses was found
+    only after the mint, and its refusal blamed the ledger schema."""
+    with pytest.raises(SystemExit) as e:
+        create_capsule(tmp_path / "d.md", [tmp_path / "x" / name], tmp_path / "c.json",
+                       tmp_path / "d.capsule.html")
+    assert "is not a bare file name" in str(e.value) and "ledger schema" not in str(e.value)
+
+
+def test_create_still_takes_one_receipt_given_twice(tmp_path):
+    """A receipt path given twice is one name, not a pair, as before."""
+    doc = tmp_path / "d.md"
+    doc.write_text(TEXT, encoding="utf-8")
+    rp = tmp_path / "r.json"
+    rp.write_text(json.dumps(RECEIPT), encoding="utf-8")
+    cp = tmp_path / "d.certificate.json"
+    with pytest.MonkeyPatch.context() as mp:
+        from styxx import receipt_binding as rb
+        mp.setattr(rb.Repo, "__init__", _no_repository)
+        cp.write_text(json.dumps(certify_doc(doc, [rp])), encoding="utf-8")
+        out = create_capsule(doc, [rp, rp], cp, tmp_path / "d.capsule.html")
+        assert verify_capsule(out)["ok"]
 
 
 # ---------------------------------------------------------------- the two 7.49.0 named
