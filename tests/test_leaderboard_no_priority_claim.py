@@ -5,7 +5,8 @@ papers/NOTE_prior_art_credit_2026_09_29.md section 3 withdrew an unpriced ordina
 from styxx/critique.py's docstring, which now says the detector passed the styxx gauntlet's v3
 detection bars. The same claim stayed in the Baseline-019 row of LEADERBOARD.md (the packaged copy
 is what the CLI prints and the wheel carries), in two comments in styxx/__init__.py, and in the
-same kind of claim on the Baseline-014 and Baseline-016 rows. These tests hold the withdrawal.
+same kind of claim on the Baseline-008, Baseline-014 and Baseline-016 rows. These tests hold the
+withdrawal.
 
 The ordinal is stored reversed, as scripts/zenodo_deposit_software_v7_49_0.py stores the charter's
 words, so this file does not spell it either.
