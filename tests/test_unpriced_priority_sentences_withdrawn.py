@@ -31,13 +31,15 @@ GUARDRAIL = ROOT / "styxx" / "guardrail"
 
 _ORDINAL = "tsrif"[::-1]
 _ORDINAL_RX = re.compile(r"(?<![a-z0-9])" + _ORDINAL + r"(?![a-z0-9])", re.IGNORECASE)
-# "<ordinal> [and last] [calibrated cognometric] instrument [shipped] under|after" the call, the
-# paper or its publication, after comment markers and line breaks are folded to single spaces.
-# "a fifth instrument under the same measurement protocol" counts the lab's own instruments and
-# is not matched.
+# "<ordinal> [and last|final] [up to two words] instrument [up to two words] under|after|to answer|
+# answering|in answer to|in response to" the call, the paper or its publication, after comment
+# markers and line breaks are folded to single spaces. "a fifth instrument under the same
+# measurement protocol" counts the lab's own instruments and is not matched. The scan finds the
+# same 22 sites at 566f7769 as the narrower pattern it replaced, and none now.
 _UNDER_THE_CALL_RX = re.compile(
-    r"\b(" + _ORDINAL + r"|second|third|fourth|fifth|sixth)(?: and last)?"
-    r"(?: calibrated cognometric)? instrument (?:shipped )?(?:under|after) "
+    r"\b(" + _ORDINAL + r"|second|third|fourth|fifth|sixth)(?: and (?:last|final))?"
+    r"(?: [a-z-]+){0,2} instrument (?:[a-z-]+ ){0,2}?"
+    r"(?:under|after|to answer|answering|in answer to|in response to) "
     r"(?:the call|that call|that paper's call|the \*Every Mind|the position paper|publication)",
     re.IGNORECASE)
 
@@ -132,7 +134,11 @@ def test_the_scan_sees_the_withdrawn_shapes():
                  "# detector. Sixth and last instrument shipped under the call from",
                  '        "DOI 10.5281/zenodo.19777921). Third instrument shipped under "\n'
                  '        "that paper\'s call for #4-#9."',
-                 "Vitals*, the second\ninstrument under that paper's call for #4-#9."):
+                 "Vitals*, the second\ninstrument under that paper's call for #4-#9.",
+                 # nearby rewordings the narrower pattern let through
+                 "# detector. Fifth instrument released under the call from",
+                 "# detector. The fifth instrument to answer the call from",
+                 "the sixth and final cognometric instrument answering the call"):
         assert unscoped_counts_under_the_call(text), text
     assert unscoped_counts_under_the_call("the lab's second\ninstrument under that call") == []
     assert unscoped_counts_under_the_call("a fifth\ninstrument under the same measurement protocol") == []
@@ -227,3 +233,12 @@ def test_what_the_drift_docstrings_measured_stays():
             assert number in text, (rel, number)
     assert "Glaive 2,411 samples" in _flat("styxx/guardrail/calibrated_weights_drift_v1.py")
     assert "Our 0.943 on BFCL v3" in _flat("styxx/guardrail/calibrated_weights_drift_v1.py")
+
+
+def test_the_drift_docstrings_call_no_baseline_the_only_one():
+    # case-insensitive, any spelling of the withdrawn claim: "the only", "only published", ...
+    # ("only one tool" per benchmark sample is a fact about the data and is not matched)
+    only_rx = re.compile(r"\bthe only\b|\bonly (?:published|comparable|baseline)\b", re.IGNORECASE)
+    for rel in ("styxx/guardrail/drift.py", "styxx/guardrail/calibrated_weights_drift_v1.py"):
+        found = only_rx.findall(_flat(rel))
+        assert found == [], (rel, found)
