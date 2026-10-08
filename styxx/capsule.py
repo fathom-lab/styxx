@@ -207,6 +207,12 @@ def _same_file_pair(names: List[str]):
     return None
 
 
+# Both folds read the verifying Python's Unicode database, as certify's reading of digits does
+# (_unicode_note): a pair of letters whose case is defined in a later Unicode version than that
+# database's (U+A7CC and U+A7CD are a pair from Unicode 16.0) is refused only by a verifier that
+# knows them.
+
+
 def _rerun_dir() -> tempfile.TemporaryDirectory:
     """A new temporary directory, removed on exit, for writing the embedded files and re-running
     the certifier over them.
@@ -1095,10 +1101,11 @@ def _binding_path_problem(path) -> Optional[str]:
     bind_at_mint writes the path of the file the receipt RESOLVES to, relative to the repository
     root, in POSIX form (Repo.rel_or_none: Path.resolve, os.path.relpath, as_posix, and None for
     anything outside the root), beside the name the receipt was given. Through a symlink on POSIX
-    (latest.json -> run_0042.json) or an 8.3 short name on Windows (RECEIP~1.JSO) the path ends in
-    another name than the receipt's, so nothing ties the two: until review round 4 a path had to
-    end in the receipt's name, which failed those honest capsules and made create refuse its own
-    certify's output. The pair is printed as stated."""
+    (latest.json -> run_0042.json) the path ends in another name than the receipt's, so nothing
+    ties the two: until review round 4 a path had to end in the receipt's name, which failed those
+    honest capsules and made create refuse its own certify's output. (An 8.3 short name on Windows,
+    RECEIP~1.JSO, did the same; since #196 a name of that form is refused as a name, at create and
+    at verify.) The pair is printed as stated."""
     if not isinstance(path, str):
         return "is not a string"
     parts = path.split("/")
