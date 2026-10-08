@@ -557,13 +557,16 @@ def test_a_sworn_receipt_edited_with_its_core_restated_fails_without_a_traceback
     assert code == (0 if rep["ok"] else 1)
 
 
-@pytest.mark.parametrize("value", ["x", [1], 7, "absent", {}])
+@pytest.mark.parametrize("value", ["x", [1], 7, None, False, 0, "", [], "absent", {}])
 def test_a_sworn_receipt_verifier_block_that_is_not_an_object_fails_by_name(sworn, tmp_path,
                                                                             value):
     """The verifier block is outside the verdict core, so a block read as absent gave only an
     INSTRUMENT SKEW advisory and verified: text, a list or a number there printed VERIFIED, exit
-    0, where origin/main ended in a traceback. Now each fails by name. An empty block, or none,
-    reads as it did at origin/main: an advisory that the build is not named."""
+    0, where origin/main ended in a traceback. Now each fails by name. So does a block that is
+    null, false, 0, an empty string or an empty list, which origin/main read as absent and
+    verified with that advisory: styxx.sworn writes an object there, so this is a refusal added,
+    not one removed. An empty block, or none, reads as it did at origin/main: an advisory that the
+    build is not named."""
     def edit(p):
         if value == "absent":
             del p["receipt"]["verifier"]
