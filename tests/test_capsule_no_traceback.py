@@ -464,6 +464,16 @@ def test_a_stated_version_of_64_characters_is_read(v01, tmp_path):
     assert not any("characters long" in p for p in rep["problems"]), rep["problems"]
 
 
+def test_a_stated_version_of_65_characters_fails_by_name(v01, tmp_path):
+    """One character past the bound: the version is refused by its length, not read."""
+    v = "7." + "1" * 63
+
+    def stated(p):
+        p["verifier"]["styxx_version"], p["verifier"]["pip"] = v, f"styxx=={v}"
+    _fails(_write(tmp_path / "v65.capsule.html", v01, stated, C._render_html),
+           "payload.verifier.styxx_version is 65 characters long", tmp_path)
+
+
 @pytest.mark.parametrize("rows", [[["a", 1]], [[["a"]]], ["xy"], [None], [{"line": 1}, ["z", 2]]])
 def test_an_ungrounded_row_that_is_not_an_object_fails_by_name(v01, tmp_path, rows):
     """A list row ended verify in a TypeError (sorting its items, or hashing them)."""
@@ -600,6 +610,54 @@ def test_a_payload_nested_too_deeply_fails_at_parse(v01, tmp_path, depth):
     code, out = _command(f)
     assert code == 1 and "CAPSULE FAILS VERIFICATION" in out
     assert _line(f, tmp_path)["verdict"] == "UNRESOLVED"
+
+
+def _depth(x) -> int:
+    """How many objects and lists deep `x` nests, the payload itself counted as level 1."""
+    if not isinstance(x, (dict, list)):
+        return 0
+    return 1 + max((_depth(y) for y in (x.values() if isinstance(x, dict) else x)), default=0)
+
+
+@pytest.mark.parametrize("levels", [64, 65])
+def test_a_payload_nested_exactly_64_levels_passes_the_depth_check_and_65_does_not(v01, tmp_path,
+                                                                                    levels):
+    """The payload is level 1 and its certificate level 2, so levels - 2 lists under
+    certificate.x nest it exactly `levels` deep. At 64 the payload gets past the depth check (it
+    still fails, on a field no minter writes); at 65 it is refused at parse."""
+    head, payload, tail = _split(v01)
+    n = levels - 2
+    body = json.dumps(payload).replace('"certificate": {',
+                                       '"certificate": {"x": ' + "[" * n + "]" * n + ", ", 1)
+    assert _depth(json.loads(body)) == levels
+    f = tmp_path / "edge.capsule.html"
+    f.write_text(head + body + tail, encoding="utf-8")
+    rep = verify_capsule(f)
+    deep = [p for p in rep["problems"] if "more than 64 levels deep" in p]
+    assert rep["ok"] is False
+    if levels == 64:
+        assert deep == [] and rep.get("stage") != "parse", rep
+        assert any("certificate.x cannot be reproduced" in p for p in rep["problems"]), rep
+    else:
+        assert deep and rep["stage"] == "parse", rep
+    code, out = _command(f)
+    assert code == 1 and "CAPSULE FAILS VERIFICATION" in out, out[-600:]
+    line = _line(f, tmp_path)
+    assert line["verdict"] == "UNRESOLVED" or line["reproduced"] is False, line
+
+
+def test_the_depth_check_counts_objects_and_lists_alike():
+    def nest(k):                                       # k levels, a list and an object in turn
+        x = 0
+        for i in range(k):
+            x = {"a": x} if i % 2 else [x]
+        return x
+    for k in (1, 63, 64):
+        assert _depth(nest(k)) == k and C._payload_depth_problem(nest(k)) is None, k
+    for k in (65, 66, 1000):
+        assert "more than 64 levels deep" in C._payload_depth_problem(nest(k)), k
+    assert C._payload_depth_problem({"wide": [0] * 100000, "t": "x" * 1000}) is None
+    assert C._payload_depth_problem(7) is None
 
 
 def test_a_lone_surrogate_is_printed_as_an_escape(v01, tmp_path):
