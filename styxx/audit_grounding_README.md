@@ -1,10 +1,10 @@
 # styxx.audit_grounding — is this claim backed by its data?
 
 ## The problem it addresses
-AI now produces claims — papers, eval reports, dashboards, model self-reports — faster than anyone can check
-them. The load-bearing question is the oldest one in science: does every number trace to a result, and does the
-language stay within what the data actually shows? An untraced number is exactly where errors and overclaims
-hide. Mechanical checks of reported numbers predate this tool (statcheck, Nuijten et al., 2016, recomputes p-values).
+AI now produces claims — papers, eval reports, dashboards, model self-reports — faster than anyone can check them. The load-bearing question is the
+oldest one in science: does every number trace to a result, and does the language stay within what the data actually shows? An untraced number is
+exactly where errors and overclaims hide. Mechanical checks of reported numbers predate this tool: statcheck (Nuijten et al., 2016) recomputes p-values,
+and Deterministic Integrity Gates (Nam, Jeong, Kim, arXiv 2606.09500, 2026-06-08) reconciles a manuscript's numbers against locked analysis tables.
 
 ## What it does
 `audit_grounding(text, sources)` — **deterministic, no LLM, no web:**

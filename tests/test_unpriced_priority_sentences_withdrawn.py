@@ -188,12 +188,14 @@ _FIELD_LACKS = [
      ["\"calibrated text-only detector of whether the trajectory \""]),
     ("styxx/claim_audit.py",
      ["Almost no one checks this mechanically"],
-     ["Mechanical checks of reported numbers predate this one (statcheck, Nuijten et al., 2016, "
-      "recomputes p-values)."]),
+     ["Mechanical checks of reported numbers predate this one: statcheck (Nuijten et al., 2016) "
+      "recomputes p-values, and Deterministic Integrity Gates (Nam, Jeong, Kim, arXiv 2606.09500, "
+      "2026-06-08) reconciles a manuscript's numbers against locked analysis tables."]),
     ("styxx/audit_grounding_README.md",
      ["Almost no one checks this mechanically"],
-     ["Mechanical checks of reported numbers predate this tool (statcheck, Nuijten et al., 2016, "
-      "recomputes p-values)."]),
+     ["Mechanical checks of reported numbers predate this tool: statcheck (Nuijten et al., 2016) "
+      "recomputes p-values, and Deterministic Integrity Gates (Nam, Jeong, Kim, arXiv 2606.09500, "
+      "2026-06-08) reconciles a manuscript's numbers against locked analysis tables."]),
     ("styxx/confound_audit.py",
      ["should answer but almost none do"],
      ["should answer: *is my score secretly riding a confound?*"]),
