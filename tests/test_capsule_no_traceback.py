@@ -535,6 +535,107 @@ def test_a_name_the_terminal_cannot_encode_is_printed_as_an_escape(v01, tmp_path
     assert b"document \\u4e2d\\u6587.md" in out.buffer.getvalue()
 
 
+# ---------------------------------------------------------------- what the installed code raises
+
+def test_charon_names_an_exception_verify_raises(v01, tmp_path, monkeypatch):
+    """verify answers hostile bytes with problems; should it ever raise, charon's line is
+    UNRESOLVED and names the exception's class instead of ending derive."""
+    def boom(path):
+        raise ValueError("raised inside verify")
+    monkeypatch.setattr(C, "verify_capsule", boom)
+    line = _line(v01, v01.parent)
+    assert line["verdict"] == "UNRESOLVED"
+    assert line["counts"]["reason"] == "capsule_verify_raised: ValueError"
+
+
+@pytest.mark.parametrize("exc", [ValueError, RecursionError, OSError])
+def test_a_v02_gate_that_raises_on_the_embedded_text_fails_by_name(v02, tmp_path, monkeypatch,
+                                                                   exc):
+    import importlib
+    diffgate_mod = importlib.import_module("styxx.diffgate")
+
+    def boom(*a, **k):
+        raise exc("raised inside the gate")
+    monkeypatch.setattr(diffgate_mod, "gate_diff_text", boom)
+    rep = verify_capsule(v02)
+    assert rep["ok"] is False
+    assert rep["problems"] == [f"the installed diffgate could not re-run on the embedded text "
+                               f"({exc.__name__}: raised inside the gate)"]
+    code, out = _command(v02)
+    assert code == 1 and "CAPSULE FAILS VERIFICATION" in out
+    line = _line(v02, v02.parent)
+    assert line["verdict"] == "UNRESOLVED" or line["reproduced"] is False, line
+
+
+@pytest.mark.parametrize("exc", [ValueError, KeyError, SystemExit])
+def test_a_sworn_manifest_that_does_not_load_fails_by_name(sworn, monkeypatch, exc):
+    from styxx.sworn import Manifest
+
+    def boom(d):
+        raise exc("raised loading the manifest")
+    monkeypatch.setattr(Manifest, "from_dict", staticmethod(boom))
+    rep = verify_capsule(sworn)
+    assert rep["ok"] is False
+    assert any(p.startswith("the sealed manifest does not load: ") and "raised loading" in p
+               for p in rep["problems"]), rep["problems"]
+    code, out = _command(sworn)
+    assert code == 1 and "CAPSULE FAILS VERIFICATION" in out
+
+
+@pytest.mark.parametrize("exc", [ValueError, TypeError, SystemExit])
+def test_sworn_bytes_the_installed_instrument_refuses_fail_by_name(sworn, monkeypatch, exc):
+    import importlib
+    sworn_mod = importlib.import_module("styxx.sworn")
+
+    def boom(*a, **k):
+        raise exc("raised inside styxx.sworn")
+    monkeypatch.setattr(sworn_mod, "verify", boom)
+    rep = verify_capsule(sworn)
+    assert rep["ok"] is False
+    assert any(p.startswith("the sealed bytes do not verify at the installed instrument: ")
+               and "raised inside styxx.sworn" in p for p in rep["problems"]), rep["problems"]
+    code, out = _command(sworn)
+    assert code == 1 and "CAPSULE FAILS VERIFICATION" in out
+
+
+@pytest.mark.parametrize("exc", [OSError, ValueError])
+def test_v01_files_this_system_cannot_write_fail_by_name(v01, tmp_path, monkeypatch, exc):
+    """A name the rule allows that the verifier's own system still cannot write (on Windows
+    without long paths, a path over 260 characters): the problem says the limit is this
+    system's, and nothing is re-run."""
+    import importlib
+    certify_mod = importlib.import_module("styxx.certify")
+    ran = []
+    monkeypatch.setattr(certify_mod, "certify_doc", lambda *a, **k: ran.append(a))
+
+    def refuse(self, data):
+        raise exc("this system refuses the write")
+    monkeypatch.setattr(Path, "write_bytes", refuse)
+    rep = verify_capsule(v01)
+    assert rep["ok"] is False and not ran
+    assert any(p.startswith("the embedded files could not be written under their names here "
+                            f"({exc.__name__}: this system refuses the write)")
+               and "verify the capsule where its files can be written" in p
+               for p in rep["problems"]), rep["problems"]
+    code, out = _command(v01)
+    assert code == 1 and "CAPSULE FAILS VERIFICATION" in out
+    line = _line(v01, v01.parent)
+    assert line["verdict"] == "UNRESOLVED" or line["reproduced"] is False, line
+
+
+@pytest.mark.parametrize("stated, recorded", [(7, None), (float("nan"), None),
+                                              ({"\u00e9": 1}, None), (["7.48.1"], None),
+                                              ("7.48.1", "7.48.1")])
+def test_charon_records_a_stated_version_only_when_it_is_text(v01, tmp_path, stated, recorded):
+    """A version that is not text could not be digested (NaN) or was refused (an object with a
+    key outside ASCII); charon records it as null and still derives the line."""
+    def edit(p):
+        p["verifier"]["styxx_version"] = stated
+    f = _write(tmp_path / "pin.capsule.html", v01, edit)
+    line = _line(f, tmp_path)
+    assert line["counts"]["pinned_verifier_version"] == recorded
+
+
 # ---------------------------------------------------------------- the sweep
 
 # Values put in place of one field of the payload at a time (and each field is also deleted, and
