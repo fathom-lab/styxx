@@ -340,11 +340,13 @@ def test_create_refuses_a_name_that_is_not_bare_before_reading_anything(tmp_path
 
 
 def test_create_still_takes_one_receipt_given_twice(tmp_path):
-    """A receipt path given twice is one name, not a pair, as before."""
+    """A receipt path given twice is one name, not a pair, as before; so is one file given by
+    two spellings of its path."""
     doc = tmp_path / "d.md"
     doc.write_text(TEXT, encoding="utf-8")
     rp = tmp_path / "r.json"
     rp.write_text(json.dumps(RECEIPT), encoding="utf-8")
+    (tmp_path / "sub").mkdir()
     cp = tmp_path / "d.certificate.json"
     with pytest.MonkeyPatch.context() as mp:
         from styxx import receipt_binding as rb
@@ -352,6 +354,26 @@ def test_create_still_takes_one_receipt_given_twice(tmp_path):
         cp.write_text(json.dumps(certify_doc(doc, [rp])), encoding="utf-8")
         out = create_capsule(doc, [rp, rp], cp, tmp_path / "d.capsule.html")
         assert verify_capsule(out)["ok"]
+        out = create_capsule(doc, [rp, tmp_path / "sub" / ".." / "r.json"], cp,
+                             tmp_path / "e.capsule.html")
+        assert verify_capsule(out)["ok"]
+
+
+@pytest.mark.parametrize("given", [("a/result.json", "b/result.json"), ("x/d.md",)])
+def test_create_refuses_two_files_given_under_one_name_before_reading_anything(tmp_path, given):
+    """Two different files under one name (two receipts in two directories, or a receipt named as
+    the document is) are a name given twice, which verify refuses. Until #196 review round 2
+    create read both and then refused with a message that blamed the receipt's bytes, or raised
+    FileNotFoundError on a path that did not exist. None of these paths exists, so reading any
+    of them would raise."""
+    with pytest.raises(SystemExit) as e:
+        create_capsule(tmp_path / "d.md", [tmp_path / g for g in given], tmp_path / "c.json",
+                       tmp_path / "d.capsule.html")
+    msg = str(e.value)
+    name = given[0].split("/")[1]
+    assert f"the name {name!r} is given to two of the files to embed" in msg, msg
+    assert "do not match" not in msg and "ledger schema" not in msg
+    assert not (tmp_path / "d.capsule.html").exists()
 
 
 def test_a_receipt_name_of_250_characters_verifies_on_every_system(tmp_path, monkeypatch):

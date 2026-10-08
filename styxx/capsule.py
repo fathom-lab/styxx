@@ -258,7 +258,27 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
             raise SystemExit(f"REFUSED: the file name {_short(n, 120)} {why}. verify refuses "
                              f"such a name on every system, so that a capsule's verdict does not "
                              f"depend on the verifier's; rename the file and certify it again.")
-    pair = _same_file_pair(list(dict.fromkeys(names)))
+    # One receipt given twice by its path is one receipt, as before. Two files given under one
+    # name are a name given twice, which verify refuses: until #196 review round 2 create read
+    # both and then refused with a message that blamed the bytes, or raised on a path that did
+    # not exist. The document keeps its own place: a capsule holds it apart from the receipts.
+    given, seen = [doc], set()
+    for r in receipts:
+        try:
+            key = (r.name, os.path.realpath(r))
+        except (OSError, ValueError):
+            key = (r.name, str(r))
+        if key not in seen:
+            seen.add(key)
+            given.append(r)
+    pair = _same_file_pair([p.name for p in given])
+    if pair and pair[1] == pair[2]:
+        twice = [str(p) for p in given if p.name == pair[1]][:2]
+        raise SystemExit(f"REFUSED: the name {_short(pair[1], 120)} is given to two of the files "
+                         f"to embed ({_short(twice[0], 160)} and {_short(twice[1], 160)}), and a "
+                         f"capsule holds one file under each name, so a verifier would write one "
+                         f"over the other. verify refuses a name given twice on every system; "
+                         f"give each file its own name and certify again.")
     if pair:
         kind, a, b = pair
         where = "a case-insensitive file system" if kind == "case" else _HFS_PLUS
