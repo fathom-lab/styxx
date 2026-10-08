@@ -65,20 +65,25 @@ receipt given twice by its path is still one receipt. The rules 7.48.1 shipped
   by case only. Over `git ls-files '*.certificate.json'` (213 certificates; 729 distinct names,
   counting each receipt name, each `document` and the file each certificate is named for), no
   name and no pair is refused by the new rules, and no name holds `~`. Over every tracked JSON
-  file whose top level holds a `receipts_sha256` object (249 files, 573 distinct names) the same
-  holds; the five names there that are refused hold `/`, and the 7.48.1 rule refuses them.
-- Every name the rule allows is written on every system. Without the extended-length prefix,
-  Windows without long paths (its default) refuses a path of more than 260 characters, so during
-  review a capsule naming a receipt of 226 characters, certified as a POSIX minter certifies it,
-  failed on this repository's Windows box (the write raised FileNotFoundError under a temporary
-  directory of ordinary length) and verified on POSIX: one capsule, two verdicts, as with
-  `r<1>.json`. `verify`, `create`'s re-run and charon now write the embedded files in a
-  temporary directory named on Windows under that prefix (`\\?\`), which holds every name the rule
-  allows whatever the length of the directory's path. A capsule naming a receipt of 250
-  characters is minted, verifies and is reproduced by charon on that box with long paths off,
-  under a temporary directory whose path and the name pass 260 characters. A write that still
-  fails (a full disk, a temporary directory the verifier may not write in) fails by name, with a
-  problem that says it is the verifier's temporary directory that refused the files.
+  file whose top level holds a `receipts_sha256` object (249 files, 573 distinct receipt and
+  document names) the same holds; the five names there that are refused hold `/`, and the 7.48.1
+  rule refuses them.
+- Every name the rule allows is written on NTFS, ext4 and APFS, whose limits the rule takes.
+  Without the extended-length prefix, Windows without long paths (its default) refuses a path of
+  more than 260 characters, so during review a capsule naming a receipt of 226 characters,
+  certified as a POSIX minter certifies it, failed on this repository's Windows box (the write
+  raised FileNotFoundError under a temporary directory of ordinary length) and verified on POSIX:
+  one capsule, two verdicts, as with `r<1>.json`. `verify`, `create`'s re-run and charon now
+  write the embedded files in a temporary directory named on Windows under that prefix (`\\?\`),
+  which holds every name the rule allows whatever the length of the directory's path. A capsule
+  naming a receipt of 250 characters is minted, verifies and is reproduced by charon on that box
+  with long paths off, under a temporary directory whose path and the name pass 260 characters.
+  A write that still fails (a full disk, a temporary directory the verifier may not write in)
+  fails by name, with a problem that says it is the verifier's temporary directory that refused
+  the files. A file system with a stricter limit than the rule's fails such a name with that
+  problem: HFS+, which stores a name decomposed in at most 255 UTF-16 code units (TN1150), so
+  `ΐ` (U+0390) 127 times, which the rule allows at 127 units, is 381 there; and eCryptfs, whose
+  encrypted names hold about 143 bytes. No HFS+ or eCryptfs volume was run here.
 
 **The sweep.** The 600 mutations 7.49.0's entry describes were not committed. The new tests mutate
 every field of a minted v0.1, v0.2 and sworn payload in turn (a value in its place, its deletion,
@@ -109,7 +114,9 @@ which are kept, carry that claim for this tree (below). What it found, each now 
   adds a refusal. A receipt JCS cannot canonicalise (ValueError).
 - Every spec: a payload nested deeper than the JSON decoder recurses (RecursionError). A payload
   nested more than 64 levels deep is now refused at parse; every committed payload is nested 5
-  levels deep at most.
+  levels deep at most. The check stacks only objects and lists, never the values in them: on a v0.1
+  capsule holding a field of 5,000,000 zeros, verify's peak traced memory is 80 MiB here and at
+  origin/main, and charon's derive 131 MiB on both.
 - The command: a lone surrogate in a printed field, and a character the terminal's encoding cannot
   write (a cp1252 pipe on Windows), ended it in a UnicodeEncodeError. Both are printed as escapes.
 - charon: a v0.2 binding value that is not text (TypeError); a stated version that is not text,
