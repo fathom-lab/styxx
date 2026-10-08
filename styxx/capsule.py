@@ -96,8 +96,9 @@ _WINDOWS_DEVICES = {"con", "prn", "aux", "nul", "conin$", "conout$"}
 # on every system.
 _WINDOWS_RESERVED = '<>"|?*'
 _NAME_MAX = 255
-# Nor a name another file answers to on some file system. Where NTFS generates 8.3 short names (a
-# Windows system volume does by default), it gives abcdefghijkl.json the short name ABCDEF~1.JSO
+# Nor a name another file answers to on some file system. Where NTFS generates 8.3 short names (the
+# volume of the Windows box this was measured on does, temporary directory included), it gives
+# abcdefghijkl.json the short name ABCDEF~1.JSO
 # and opens that file under either name, in any case: a capsule naming both wrote one file there
 # and two elsewhere, so its certifier re-ran over other receipts there and the verdict depended on
 # the verifier's system (#196, review round 1, measured on this repository's Windows box). Every
