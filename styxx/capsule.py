@@ -193,7 +193,7 @@ def _name_fold(name: str) -> str:
 
 
 def _same_file_pair(names: List[str]):
-    """The first two names that are one file on some file system, and which file system:
+    """The earliest pair of names that are one file on some file system, and which file system:
     ("case", a, b) for two names a case-insensitive file system holds as one (a name given twice
     among them), ("hfs", a, b) for two only HFS+ holds as one; else None."""
     for kind, fold in (("case", str.casefold), ("hfs", _name_fold)):

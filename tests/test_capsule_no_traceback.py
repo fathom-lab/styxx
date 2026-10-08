@@ -316,7 +316,8 @@ def test_create_refuses_a_pair_of_names_one_file_system_holds_as_one_before_read
         tmp_path, names, needle):
     """Two receipts kept in two directories (or the document and a receipt) whose names verify
     refuses as a pair: until #196 create minted the capsule, and its own verify then removed it
-    with a hint that blamed the ledger schema. Now create refuses first, naming the pair."""
+    with a hint that blamed the ledger schema. Now create refuses before reading anything, naming
+    the pair."""
     a, b = names
     doc = tmp_path / a if a == "d.md" else tmp_path / "d.md"
     receipts = [tmp_path / "x" / b] if a == "d.md" else [tmp_path / "x" / a, tmp_path / "y" / b]
@@ -457,7 +458,8 @@ def test_a_sworn_receipt_edited_with_its_core_restated_fails_without_a_traceback
     f = _write(tmp_path / "c.capsule.html", sworn, change)
     rep = verify_capsule(f)
     assert isinstance(rep["problems"], list)
-    needle = {"counts_nan": "the receipt cannot be canonicalised, so its verdict core has no digest",
+    needle = {"counts_nan": "the receipt cannot be canonicalised, so its verdict core has no "
+                            "digest",
               "document_text": "payload.receipt.document is not an object",
               "verifier_text": "payload.receipt.verifier is not an object"}.get(edit)
     if needle:
