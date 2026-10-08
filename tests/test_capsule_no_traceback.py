@@ -354,6 +354,70 @@ def test_create_still_takes_one_receipt_given_twice(tmp_path):
         assert verify_capsule(out)["ok"]
 
 
+def test_a_receipt_name_of_250_characters_verifies_on_every_system(tmp_path, monkeypatch):
+    """The rule allows a name of up to 255 UTF-16 code units and 255 UTF-8 bytes. Windows without
+    long paths (its default) refuses a path of more than 260 characters unless the path carries
+    the extended-length prefix, so until #196 review round 2 a capsule naming a receipt of 226
+    characters failed on this repository's Windows box, under a temporary directory of ordinary
+    length, and verified on POSIX: one capsule, two verdicts, as with r<1>.json. The re-runs of
+    create, verify and charon now write under that prefix on Windows, so the capsule is minted,
+    verifies and reproduces here as anywhere, under a temporary directory whose path and the name
+    pass 260 characters."""
+    import tempfile
+    from styxx import receipt_binding as rb
+    monkeypatch.setattr(rb.Repo, "__init__", _no_repository)
+    name = "run_" + "x" * 241 + ".json"
+    assert len(name) == 250 and C._bare_name(name)
+    long_tmp = tmp_path / ("t" * 60)
+    long_tmp.mkdir()
+    monkeypatch.setattr(tempfile, "tempdir", str(long_tmp))
+    assert len(str(long_tmp / "tmp12345678" / name)) > 260
+    # the minter's own files, under the prefix on Windows as a POSIX minter needs none
+    src = Path("\\\\?\\" + str(tmp_path)) if os.name == "nt" else tmp_path
+    doc, rp, cp = src / "d.md", src / name, src / "d.certificate.json"
+    doc.write_text(TEXT, encoding="utf-8")
+    rp.write_text(json.dumps(RECEIPT), encoding="utf-8")
+    try:
+        cp.write_text(json.dumps(certify_doc(doc, [rp])), encoding="utf-8")
+        out = create_capsule(doc, [rp], cp, tmp_path / "d.capsule.html")
+    finally:
+        rp.unlink()     # pytest's own clean-up of tmp_path does not use the prefix
+    rep = verify_capsule(out)
+    assert rep["ok"] is True and rep["live_verdict"] == rep["verdict"], rep["problems"]
+    code, text = _command(out)
+    assert code == 0 and "CAPSULE FAILS VERIFICATION" not in text
+    line = _line(out, tmp_path)
+    assert line["reproduced"] is True and line["verdict"] == rep["verdict"], line
+    assert not list(long_tmp.iterdir()), "a re-run's temporary directory was left behind"
+
+
+@pytest.mark.skipif(os.name != "nt", reason="the extended-length prefix is a Windows path form")
+@pytest.mark.parametrize("temp, want", [
+    ("C:\\Temp", "\\\\?\\C:\\Temp"),
+    ("C:/Temp/sub/..", "\\\\?\\C:\\Temp"),
+    ("\\\\server\\share\\tmp", "\\\\?\\UNC\\server\\share\\tmp"),
+    ("\\\\?\\C:\\Temp", "\\\\?\\C:\\Temp")])
+def test_the_rerun_directory_is_named_under_the_extended_length_prefix(monkeypatch, temp, want):
+    """On Windows the re-run's directory is made under the extended-length form of the
+    temporary directory (a share under \\\\?\\UNC\\), and in the one Windows names when that form
+    cannot be made, as before."""
+    import tempfile
+    made = []
+
+    class Made:
+        def __init__(self, dir=None):
+            if dir is not None and fail:
+                raise OSError("the prefixed form cannot be made")
+            made.append(dir)
+    monkeypatch.setattr(tempfile, "gettempdir", lambda: temp)
+    monkeypatch.setattr(tempfile, "TemporaryDirectory", Made)
+    fail = False
+    C._rerun_dir()
+    fail = True
+    C._rerun_dir()
+    assert made == [want, None]
+
+
 # ---------------------------------------------------------------- the two 7.49.0 named
 
 @pytest.mark.parametrize("digits", [4300, 5000])
@@ -602,9 +666,9 @@ def test_sworn_bytes_the_installed_instrument_refuses_fail_by_name(sworn, monkey
 
 @pytest.mark.parametrize("exc", [OSError, ValueError])
 def test_v01_files_this_system_cannot_write_fail_by_name(v01, tmp_path, monkeypatch, exc):
-    """A name the rule allows that the verifier's own system still cannot write (on Windows
-    without long paths, a path over 260 characters): the problem says the limit is this
-    system's, and nothing is re-run."""
+    """Names the rule allows that the verifier's temporary directory still refuses (a full disk,
+    a directory it may not write in): the problem says what refused them is that directory, not
+    the capsule, and nothing is re-run."""
     import importlib
     certify_mod = importlib.import_module("styxx.certify")
     ran = []
@@ -617,7 +681,9 @@ def test_v01_files_this_system_cannot_write_fail_by_name(v01, tmp_path, monkeypa
     assert rep["ok"] is False and not ran
     assert any(p.startswith("the embedded files could not be written under their names here "
                             f"({exc.__name__}: this system refuses the write)")
-               and "verify the capsule where its files can be written" in p
+               and "what refused them is this verifier's temporary directory" in p
+               and "verify the capsule where its temporary directory can hold the files" in p
+               and "260" not in p
                for p in rep["problems"]), rep["problems"]
     code, out = _command(v01)
     assert code == 1 and "CAPSULE FAILS VERIFICATION" in out

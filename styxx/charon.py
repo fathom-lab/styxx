@@ -87,7 +87,6 @@ import importlib
 import json
 import re as _re
 import sys
-import tempfile
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -314,7 +313,7 @@ def _b64_sha256(s) -> Optional[str]:
 def _capsule_live_v01(payload: dict) -> Tuple[Optional[str], Optional[dict]]:
     """The same pure function the capsule verifier runs: certify_doc over the embedded bytes."""
     from styxx.certify import certify_doc
-    from styxx.capsule import _unsafe_names
+    from styxx.capsule import _rerun_dir, _unsafe_names
     try:
         unsafe = _unsafe_names(payload)
     except (AttributeError, TypeError):                 # a document or receipt that is not an object
@@ -323,7 +322,9 @@ def _capsule_live_v01(payload: dict) -> Tuple[Optional[str], Optional[dict]]:
         return None, {"live_error": "unsafe_embedded_name"}
     try:
         doc_bytes = base64.b64decode(payload["document"]["b64"])
-        with tempfile.TemporaryDirectory() as td:
+        # the directory the capsule verifier writes in: on Windows under the extended-length
+        # prefix, so a long name the rule allows is written there as on POSIX (#196)
+        with _rerun_dir() as td:
             d = Path(td) / payload["document"]["name"]
             d.write_bytes(doc_bytes)
             rps = []

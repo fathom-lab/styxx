@@ -35,6 +35,7 @@ import datetime as _dt
 import hashlib
 import html as _html
 import json
+import os
 import platform
 import re
 import sys
@@ -206,6 +207,34 @@ def _same_file_pair(names: List[str]):
     return None
 
 
+def _rerun_dir() -> tempfile.TemporaryDirectory:
+    """A new temporary directory, removed on exit, for writing the embedded files and re-running
+    the certifier over them.
+
+    On Windows its path carries the extended-length prefix (\\\\?\\), so every name the rule
+    allows is written whatever the length of the temporary directory's path and whether or not
+    the system enables long paths. Without the prefix, Windows without long paths (its default)
+    refuses a path of more than 260 characters, so until #196 review round 2 a capsule naming a
+    receipt of 226 characters failed on this repository's Windows box and verified on POSIX: its
+    verdict depended on the verifier's system, as with r<1>.json. The prefix also switches off
+    Windows' rewriting of a name (dropping trailing dots and spaces, mapping device names); the
+    rule refuses each such name before anything is written."""
+    if os.name != "nt":
+        return tempfile.TemporaryDirectory()
+    base = os.path.abspath(tempfile.gettempdir())
+    if base.startswith(("\\\\?\\", "\\\\.\\")):
+        pass
+    elif base.startswith("\\\\"):                      # a share: \\server\share\...
+        base = "\\\\?\\UNC\\" + base[2:]
+    else:
+        base = "\\\\?\\" + base
+    try:
+        return tempfile.TemporaryDirectory(dir=base)
+    except OSError:
+        # a temporary directory the prefix cannot name: the one Windows names, as before
+        return tempfile.TemporaryDirectory()
+
+
 # ---------------------------------------------------------------------------------
 # create
 # ---------------------------------------------------------------------------------
@@ -275,7 +304,7 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
         raise SystemExit(f"REFUSED: certificate names receipts not provided: {sorted(missing)}")
 
     # 2. the certificate must be REPRODUCIBLE at the live verifier, right now
-    with tempfile.TemporaryDirectory() as td:
+    with _rerun_dir() as td:
         d = Path(td) / doc.name
         d.write_bytes(doc_bytes)
         rps = []
@@ -448,7 +477,7 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
         # there is not it.
         listed = [n for n in rsha if n in recs]
         order = listed + sorted(n for n in recs if n not in listed)
-        with tempfile.TemporaryDirectory() as td:
+        with _rerun_dir() as td:
             try:
                 d = Path(td) / doc["name"]
                 d.write_bytes(doc_bytes)
@@ -458,15 +487,16 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
                     rp.write_bytes(recs[name])
                     rps.append(rp)
             except (OSError, ValueError) as e:
-                # Every name a system refuses is refused above, on every system (#196); what is
-                # left is the verifier's own environment, such as a temporary directory whose path
-                # and a long name exceed the 260 characters Windows allows without long paths.
+                # Every name some system refuses is refused above, on every system, and on Windows
+                # the directory is named under the extended-length prefix, which holds every name
+                # the rule allows (#196). What is left is the temporary directory itself.
                 problems.append(f"the embedded files could not be written under their names "
                                 f"here ({type(e).__name__}: {str(e)[:200]}), so the verifier was "
                                 f"not re-run. The names pass the rule verify applies on every "
-                                f"system, so this is a limit of this one (on Windows without long "
-                                f"paths, a path of more than 260 characters): verify the capsule "
-                                f"where its files can be written")
+                                f"system, so what refused them is this verifier's temporary "
+                                f"directory (a full disk, a directory it may not write in, or a "
+                                f"file system with stricter rules than the rule's): verify the "
+                                f"capsule where its temporary directory can hold the files")
             else:
                 try:
                     live = certify_doc(d, rps)
