@@ -446,15 +446,20 @@ _PAYLOAD_DEPTH_MAX = 64
 
 def _payload_depth_problem(payload) -> Optional[str]:
     """A problem when the payload nests objects and lists more than _PAYLOAD_DEPTH_MAX deep."""
+    if not isinstance(payload, (dict, list)):
+        return None
+    # Only objects and lists go on the stack, never the numbers and text in them: stacking every
+    # value took verify's peak traced memory, on a field of 5,000,000 zeros, from origin/main's
+    # 80 MiB to 370 MiB (#196).
     stack = [(payload, 1)]
     while stack:
         x, d = stack.pop()
-        if isinstance(x, (dict, list)):
-            if d > _PAYLOAD_DEPTH_MAX:
-                return (f"the capsule payload nests objects and lists more than "
-                        f"{_PAYLOAD_DEPTH_MAX} levels deep; no minter writes one nested more "
-                        f"than a few, and nothing in it was read")
-            stack.extend((y, d + 1) for y in (x.values() if isinstance(x, dict) else x))
+        if d > _PAYLOAD_DEPTH_MAX:
+            return (f"the capsule payload nests objects and lists more than "
+                    f"{_PAYLOAD_DEPTH_MAX} levels deep; no minter writes one nested more "
+                    f"than a few, and nothing in it was read")
+        stack.extend((y, d + 1) for y in (x.values() if isinstance(x, dict) else x)
+                     if isinstance(y, (dict, list)))
     return None
 
 
