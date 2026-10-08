@@ -27,18 +27,18 @@ The job reports by default, as the GitHub Action does, and the gate's verdicts n
 job. The gate's verdict, its claim counts and each CONTRADICTED or UNCHECKABLE claim go to the
 job log; every claim's verdict, VERIFIED included, goes to `diffgate.json`. When the gate says
 FAIL, the job prints a warning after the gate's output that the job passes anyway, and how to
-make it fail. GitLab then shows the job as passed: the Action writes
-annotations and a job summary, but this job reports only in its log and the `diffgate.json`
-artifact, so the merge request's pipeline status does not show what the gate found. Only
-STYXX_SOFT_FAIL set to "false" blocks: the job then fails on a
-CONTRADICTED claim. Set it wherever GitLab reads CI/CD variables (the project's or group's
-settings, the pipeline's top-level `variables:`, or the job's own). In the settings, mind
-**Protect variable**: a variable marked Protected reaches a merge request pipeline only when its
-source and target branches are both protected branches of the same project and a maintainer has
-selected "Allow merge request pipelines to access protected variables and runners", and never
-from a fork (GitLab's docs, merge request pipelines, "Control access to protected variables and
-runners"). On an ordinary merge request from a feature branch it never arrives, the job reads it
-as unset, and it reports. So leave Protect cleared or set the variable in .gitlab-ci.yml, as here:
+make it fail. GitLab then shows the job as passed: the Action writes annotations and a job
+summary, but this job reports only in its log and the `diffgate.json` artifact, so the merge
+request's pipeline status does not show what the gate found. Only STYXX_SOFT_FAIL set to "false"
+blocks: the job then fails on a CONTRADICTED claim. Set it wherever GitLab reads CI/CD variables
+(the project's or group's settings, the pipeline's top-level `variables:`, or the job's own). In
+the settings, mind **Protect variable**: a variable marked Protected reaches a merge request
+pipeline only when its source and target branches are both protected branches of the same project
+and a maintainer has selected "Allow merge request pipelines to access protected variables and
+runners", and never from a fork (GitLab's docs, merge request pipelines, "Control access to
+protected variables and runners"). On an ordinary merge request from a feature branch it never
+arrives, the job reads it as unset, and it reports. So leave Protect cleared or set the variable
+in .gitlab-ci.yml, as here:
 
 ```yaml
 include:
@@ -54,11 +54,13 @@ the variable itself: in GitLab a job's own `variables:` outrank the pipeline's t
 a default written into the job would silently override a pipeline that sets it. Unset reads as
 `"true"`.
 
-**Every run names its mode.** After the gate's output the job prints one line saying which mode
-it ran in, on a PASS run too: `styxx diffgate mode: STYXX_SOFT_FAIL is "false", so a FAIL verdict
-fails this job.` when it blocks, and `... is not set, so this job reports and the gate's verdicts
-do not fail it.` when the variable did not arrive, followed by the Protected caveat above. A job
-that should block and says "not set" is missing its variable.
+**Every run that reaches the gate names its mode.** After the gate's output the job prints one
+line saying which mode it ran in, on a PASS run too: `styxx diffgate mode: STYXX_SOFT_FAIL is
+"false", so a FAIL verdict fails this job.` when it blocks, and `... is not set, so this job
+reports and the gate's verdicts do not fail it.` when the variable did not arrive, followed by the
+Protected caveat above. A job that should block and says "not set" is missing its variable. A run
+that stops before the gate, on a failed install or fetch, prints no mode line and fails the job in
+either mode.
 
 **How the value is read**, the way the Action reads its `soft-fail` input: compared
 case-insensitively with surrounding whitespace stripped, so `"false"` and `"False "` block and
@@ -127,13 +129,13 @@ job; ten values of the variable are read as above, each the way the Action's rea
 `--strict` fails the job on an UNCHECKABLE claim only with the opt-in; a gate that errors fails
 the job in either mode, and a stale `diffgate.json` is not read as its verdict; a stand-in for the
 CLI whose report does not match its exit (exit 0 with no report or a FAIL one, exit 1 with a PASS
-one, exit 2) fails the job in either mode; an honest description passes; every run, PASS
-included, prints the one mode line its value calls for; a description with a VERIFIED, a
-CONTRADICTED and an UNCHECKABLE claim puts the last two in the log and all three in
-`diffgate.json`, and this README, the job's header and the CHANGELOG entry say so; and they
-carry the Protected caveat. That is the mechanics of the job, tested here under bash; a run on
-GitLab itself is not something this repository has done, and a run there that fails on a
-variable name or on the multi-line script step is worth an issue.
+one, exit 2) fails the job in either mode; an honest description passes; every run the module
+makes, PASS included, prints the one mode line its value calls for; a description with a VERIFIED,
+a CONTRADICTED and an UNCHECKABLE claim puts the last two in the log and all three in
+`diffgate.json`, and this README, the job's header and the CHANGELOG entry say so; and they carry
+the Protected caveat. That is the mechanics of the job, tested here under bash; a run on GitLab
+itself is not something this repository has done, and a run there that fails on a variable name or
+on the multi-line script step is worth an issue.
 
 Everything the Action's README says about scope applies: the closed template set, "tests pass"
 UNCHECKABLE without `--evidence`, a path the diff does not show UNCHECKABLE and never accused
