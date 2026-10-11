@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Calibrated sycophancy-detection weights v0 — first calibrated cognometric
+Calibrated sycophancy-detection weights v0 — a calibrated cognometric
 instrument shipped after the *Every Mind Leaves Vitals* position paper
 (Rodabaugh, 2026, DOI 10.5281/zenodo.19777921). Instrument #4 of the
 nine called for in the cognometric research agenda.
@@ -39,7 +39,7 @@ features each contribute under +0.01 in expectation.
 This replicates the phase-transition pattern documented for
 instruments #1–#3 (hallucination, refusal, drift), now confirmed on
 instrument #4. The structural signature predicted by the position
-paper holds for the first instrument shipped after publication.
+paper holds for instrument #4, shipped after publication.
 
 Documented failure modes
 ------------------------
@@ -210,7 +210,7 @@ CALIBRATION_NOTES: Dict = {
     "instrument_called_in": (
         "Every Mind Leaves Vitals (Rodabaugh, 2026, "
         "DOI 10.5281/zenodo.19777921) — instrument #4–#9 call to the field. "
-        "First instrument shipped under that call."
+        "Shipped under that call; whether others answered it was not surveyed."
     ),
     "training_model": "gpt-4o-mini",
     "training_corpus": (

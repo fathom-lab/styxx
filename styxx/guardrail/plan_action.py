@@ -6,7 +6,7 @@ A drop-in calibrated plan-action gap detector. Pure Python, no
 embeddings, no model weights — runs anywhere (server, edge, Pyodide
 browser).
 
-Fourth instrument shipped under the call from *Every Mind Leaves
+The lab's fourth instrument under the call from *Every Mind Leaves
 Vitals* (Rodabaugh, 2026, DOI 10.5281/zenodo.19777921). Confirms the
 K=1 phase-transition signature on a seventh instrument under the same
 measurement protocol — making the count 7-for-7.

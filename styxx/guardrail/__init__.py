@@ -51,7 +51,7 @@ from .refusal import refuse_check, RefusalVerdict  # noqa: F401
 # partially fix the documented arg_swap failure mode (0.66 -> 0.76).
 from .drift import drift_check, DriftVerdict  # noqa: F401
 # Fourth cognometric instrument (v0): text-only sycophancy detector.
-# First instrument shipped after the *Every Mind Leaves Vitals* position
+# Shipped after the *Every Mind Leaves Vitals* position
 # paper (DOI 10.5281/zenodo.19777921). Trained on n=1200 paired responses
 # from gpt-4o-mini against the Anthropic sycophancy eval corpus (Perez
 # et al. 2022). 5-fold CV AUC 0.9720 ± 0.0052. Phase-transition signature
@@ -59,7 +59,7 @@ from .drift import drift_check, DriftVerdict  # noqa: F401
 # superlative_density (AUC 0.500 -> 0.9354, delta +0.4354).
 from .sycophancy import sycoph_check, SycophancyVerdict  # noqa: F401
 # Fifth cognometric instrument (v0): cross-turn conversation-loop detector.
-# Second instrument shipped under the call from *Every Mind Leaves Vitals*.
+# The lab's second instrument under the call from *Every Mind Leaves Vitals*.
 # Trained on n=200 paired (loop/progress) multi-turn conversations from
 # gpt-4o-mini, 4 agent turns each. 5-fold CV AUC 0.9995 ± 0.0010.
 # Phase-transition signature replicates: critical_K=1 on
@@ -91,7 +91,7 @@ from .deception_v2 import (  # noqa: F401
     DEFAULT_DECEPTION_V2_THRESHOLD, CALIBRATION_FINGERPRINT_V2,
 )
 # Seventh cognometric instrument (v0): cross-section plan-action gap
-# detector. Fourth instrument shipped under the call from *Every Mind
+# detector. The lab's fourth instrument under the call from *Every Mind
 # Leaves Vitals*. Sibling to drift (instrument #3) — drift catches a
 # malformed tool call against schema; plan-action gap catches when the
 # agent's stated intent and emitted action diverge at the content
@@ -102,7 +102,7 @@ from .deception_v2 import (  # noqa: F401
 # instruments showing K=1 phase transition under same protocol.
 from .plan_action import plan_action_check, PlanActionVerdict  # noqa: F401
 # Eighth cognometric instrument (v0): text-only overconfidence-register
-# detector. Fifth instrument shipped under the call from *Every Mind
+# detector. The lab's fifth instrument under the call from *Every Mind
 # Leaves Vitals*. Scores epistemic register (commitment, hedging,
 # sourcing) — NOT truth. Trained on n=200 paired (calibrated/
 # overconfident) responses from gpt-4o-mini under stance-level
@@ -114,7 +114,7 @@ from .plan_action import plan_action_check, PlanActionVerdict  # noqa: F401
 # phase transition under the same measurement protocol.
 from .overconfidence import overconf_check, OverconfidenceVerdict  # noqa: F401
 # Ninth and FINAL cognometric instrument (v0): multi-turn goal-drift
-# detector. Sixth and last instrument shipped under the call from
+# detector. The lab's sixth and last instrument under the call from
 # *Every Mind Leaves Vitals*. Sibling to conversation-loop (#5) — both
 # are multi-turn, but loop measures stagnation while goal drift
 # measures dispersion (movement away from the goal anchor). Trained

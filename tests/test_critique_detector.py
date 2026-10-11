@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Unit tests for styxx.critique — the critique-mode misconception detector.
 
-Forensic note: styxx/critique.py is the Baseline-019 first-PASS detector
-(D1-D4 bars, dark-core benchmark) and was previously untested at the unit
+Forensic note: styxx/critique.py is the Baseline-019 detector (it passed the
+D1-D4 bars on the dark-core benchmark) and was previously untested at the unit
 level; tests/test_cli_critique.py covers the unrelated `styxx critique` CLI
 command. These tests do NOT re-litigate the benchmark measurement history
 (that arc is published record in the module docstring); they pin the
