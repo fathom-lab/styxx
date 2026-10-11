@@ -47,12 +47,12 @@ Per-source AUC (pooled CV predictions, drift-labeled splits only):
   irrelevance and live_irrelevance are single-class (all drift),
   so AUC is undefined — reported as positive-only recall instead.
 
-Only published comparable: Healy et al. 2026 ("Internal Representations
-as Indicators of Hallucinations in Agent Tool Selection," arXiv:2601.
-05214) reports AUC 0.716-0.721 on Glaive 2,411 samples using
-hidden-state features. Our 0.943 on BFCL v3 with text-only 23-feature
-LR clears the only published baseline while being black-box compatible
-(works on any closed model - OpenAI, Anthropic, Gemini).
+A published comparable (other baselines were not surveyed): Healy et
+al. 2026 ("Internal Representations as Indicators of Hallucinations in
+Agent Tool Selection," arXiv:2601.05214) reports AUC 0.716-0.721 on
+Glaive 2,411 samples using hidden-state features. Our 0.943 on BFCL v3
+with text-only 23-feature LR clears that baseline while being black-box
+compatible (works on any closed model - OpenAI, Anthropic, Gemini).
 
 Documented remaining failure modes:
   1. arg_swap at 0.76 (up from 0.66 via arg_order_inversion but still

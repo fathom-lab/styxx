@@ -8,7 +8,7 @@ A drop-in calibrated multi-turn goal-drift detector. Pure Python, no
 embeddings, no model weights — runs anywhere (server, edge, Pyodide
 browser).
 
-Sixth and last instrument shipped under that paper's call.
+The lab's sixth and last instrument under that paper's call.
 **9-for-9** on cognometric instruments showing K=1 phase-transition
 signature under the same measurement protocol — the prediction is
 now empirically held across the complete 9-instrument suite the

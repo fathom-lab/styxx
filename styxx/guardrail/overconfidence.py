@@ -6,7 +6,7 @@ A drop-in calibrated overconfidence detector. Pure Python, no
 embeddings, no model weights — runs anywhere (server, edge, Pyodide
 browser).
 
-Fifth instrument shipped under the call from *Every Mind Leaves
+The lab's fifth instrument under the call from *Every Mind Leaves
 Vitals* (Rodabaugh, 2026, DOI 10.5281/zenodo.19777921). Confirms the
 K=1 phase-transition signature on an eighth instrument under the
 same measurement protocol — making the count 8-for-8.

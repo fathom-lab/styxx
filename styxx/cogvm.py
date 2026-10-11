@@ -25,8 +25,8 @@ invariants. Those belong to v1+.
 
 Why this file exists
 --------------------
-Every production LLM interface today is: raw text in, raw text out.
-Prompt-level alignment is the only available control surface, and it
+Many production LLM interfaces are raw text in, raw text out, with
+prompt-level alignment as the control surface they expose, and it
 is opaque and unauditable. Residual-level interventions are auditable,
 composable, and formally describable. A program is a machine-checkable
 specification of what an agent must and must not think.

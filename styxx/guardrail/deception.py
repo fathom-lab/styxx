@@ -23,7 +23,7 @@ See `calibrated_weights_deception_v0.CALIBRATION_NOTES.scope_warning`
 for the full disclosure.
 ============================================================================
 
-Third instrument shipped under the call from *Every Mind Leaves Vitals*
+The lab's third instrument under the call from *Every Mind Leaves Vitals*
 (Rodabaugh, 2026, DOI 10.5281/zenodo.19777921). 6-for-6 on cognometric
 instruments showing K=1 phase-transition signature under the same
 measurement protocol.
