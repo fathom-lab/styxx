@@ -172,3 +172,33 @@ jobs:
 
           print("core-minimal: numpy-only surface imports and runs OK")
           PY
+
+  typecheck-js:
+    # packages/styxx-js has carried `"typecheck": "tsc --noEmit"` in its
+    # package.json since the package existed, and nothing ever ran it -- not
+    # this workflow, not the test suite, not a hook. A type error in the shipped
+    # TypeScript would have surfaced only for whoever next ran the script by
+    # hand. It is clean today (2026-09-20); this job is what makes that a fact
+    # about every future commit rather than about one afternoon. No npm cache
+    # step on purpose: the telescope job's `cache: 'pip'` post-step failed 138
+    # times in a row for want of a file to hash, and a cache miss is cheaper
+    # than that class of failure. tests/test_ci_runs_the_js_typecheck.py holds
+    # this job in place.
+    name: styxx-js typecheck (tsc --noEmit)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install the package's own dependencies from its lockfile
+        run: npm ci
+        working-directory: packages/styxx-js
+
+      - name: Typecheck
+        run: npm run typecheck
+        working-directory: packages/styxx-js
