@@ -128,6 +128,36 @@ the record's line stays true of what it describes.
   `scripts/osf_deposit_v6.py` (line 76), a deposit script. `submissions/` and the copies under `zenodo/`
   and `release/` are not edited.
 
+## [Unreleased] — NOTE: the HANDOFF capsule reproduces under its minting build; a record that names no build cannot say so
+
+A measurement, with no code or test change: phase 0 of the design the operator approved on 2026-10-11 for item 3
+of step zero of the 2026-10-06 study (every diffgate record names its build and runtime).
+`papers/closed-model-frontier/NOTE_handoff_capsule_reproduces_under_its_minting_build_2026_10_11.md` records, from
+git objects, why `HANDOFF_capsule_v02_2026_08_31.capsule.html` fails `python -m styxx.capsule verify` with
+`gate.claims not reproduced` and why `papers/charon/charon.log.jsonl` line seq 95 has held `reproduced: false`
+since 2026-09-03.
+
+- **Measured.** The capsule's record reproduces on every key under `styxx/diffgate.py` at the commit the capsule
+  was committed at (`f6d469c4`), at every later change of that file up to `c10da759`, and under the `v7.47.0`
+  tag's file; it stops reproducing at `4c90d9cf`, which is not an ancestor of that tag, and does not reproduce at
+  the head. One field moved: claim 3 (`tests_pass`, UNCHECKABLE on both sides), key `why`, from `no --run command
+  supplied; the gate does not take the agent's word for test results` to the evidence leg's reason. DOGFOOD
+  reproduces at every one of those commits. The NOTE carries the bisect table (LF and CRLF sha256 of the file at
+  each commit), the two strings, the probes with their commands and outputs, and what it does not show.
+- **Read.** In substance this is instrument skew: the bytes re-running the record are not the bytes that wrote
+  it, and the sealed inputs did not move. The verifier cannot say so from the record, which has eleven keys and
+  names no build; the payload's pin names a version, and one version string has named two different
+  `diffgate.py` files (the tag's, which reproduces, and the log writer's, which does not).
+- **The decision it records** (the operator's, 2026-10-11, O3 of that design): HANDOFF stays an advisory in the
+  verifier and its classification lives in the NOTE. Once the verifier compares a record's identity apart from
+  its content (phase 1), a record that names no build and does not reproduce gets the same problem line plus an
+  advisory that the failure cannot be told apart from instrument skew or an edit from the record alone, never a
+  SKEW problem, which would move line 95 and fail the stranger's ferry-log step. The same decisions keep
+  `"diffgate": "v0"` as the format key with `build` and `runtime` keys beside it (O1) and leave `sys.version`
+  out of sealed records and charon lines (O9); none of that code is in this change.
+- **Not touched.** The capsule, DOGFOOD, the charon log (no line rewritten or appended), every module and test.
+  `verify` says today what it said at 7.49.0, and HANDOFF still exits 1.
+
 ## [Unreleased] — styxx 7.49.0 on Zenodo, as the next version of the software record
 
 styxx 7.49.0 is deposited on Zenodo as **10.5281/zenodo.23221755**, a new version of the styxx software
