@@ -68,7 +68,7 @@ receipt given twice by its path is still one receipt. The rules 7.48.1 shipped
   file whose top level holds a `receipts_sha256` object (249 files, 573 distinct receipt and
   document names) the same holds; the five names there that are refused hold `/`, and the 7.48.1
   rule refuses them.
-- Every name the rule allows is written on NTFS, ext4 and APFS, whose limits the rule takes.
+- Every name the rule allows is written on NTFS and ext4, whose limits the rule takes.
   Without the extended-length prefix, Windows without long paths (its default) refuses a path of
   more than 260 characters, so during review a capsule naming a receipt of 226 characters,
   certified as a POSIX minter certifies it, failed on this repository's Windows box (the write
