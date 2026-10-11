@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Calibrated deception-signature weights v0 — sixth cognometric instrument.
-Third instrument shipped under the call from *Every Mind Leaves Vitals*
+The lab's third instrument under the call from *Every Mind Leaves Vitals*
 (Rodabaugh, 2026, DOI 10.5281/zenodo.19777921).
 
 ============================================================================
@@ -221,7 +221,7 @@ CALIBRATION_NOTES: Dict = {
     "instrument_number": 6,
     "instrument_called_in": (
         "Every Mind Leaves Vitals (Rodabaugh, 2026, "
-        "DOI 10.5281/zenodo.19777921). Third instrument shipped under "
+        "DOI 10.5281/zenodo.19777921). The lab's third instrument under "
         "that paper's call for #4-#9. (Sycophancy v0 + conversation-loop v0 "
         "preceded.)"
     ),

@@ -2,7 +2,7 @@
 """
 Calibrated conversation-loop detection weights v0 — fifth cognometric
 instrument. Shipped within 48h of the position paper *Every Mind Leaves
-Vitals* (Rodabaugh, 2026, DOI 10.5281/zenodo.19777921), the second
+Vitals* (Rodabaugh, 2026, DOI 10.5281/zenodo.19777921), the lab's second
 instrument under that paper's call for #4-#9.
 
 Trained on n=200 paired multi-turn conversations generated from
@@ -200,8 +200,8 @@ CALIBRATION_NOTES: Dict = {
     "instrument_number": 5,
     "instrument_called_in": (
         "Every Mind Leaves Vitals (Rodabaugh, 2026, "
-        "DOI 10.5281/zenodo.19777921) — second instrument shipped under "
-        "that paper's call for #4-#9. (Sycophancy v0 was first.)"
+        "DOI 10.5281/zenodo.19777921) — the lab's second instrument under "
+        "that paper's call for #4-#9, after sycophancy v0."
     ),
     "training_model": "gpt-4o-mini",
     "training_corpus": (
@@ -247,9 +247,9 @@ CALIBRATION_NOTES: Dict = {
         "Conversation-loop / repetitive-output detection is a known "
         "concern in agentic LLM literature (Liu et al., AgentBench 2023; "
         "Yao et al., ReAct 2022 documented degradation on long horizons). "
-        "We are aware of no calibrated text-only detector with a "
-        "published calibration fingerprint for this specific failure "
-        "mode. styxx v0 fills that gap."
+        "styxx v0 is a calibrated text-only detector with a published "
+        "calibration fingerprint for this failure mode; whether others "
+        "shipped one earlier was not surveyed."
     ),
     "reproducer": "scripts/loop_train_v0.py (seed=0, deterministic)",
     "v1_roadmap": [

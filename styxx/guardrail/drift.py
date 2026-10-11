@@ -43,10 +43,10 @@ Methodology:
     via mutation + irrelevance-called). 5-fold stratified CV AUC 0.943
     +/- 0.009 (pooled 0.943). [v6.0 baseline: 0.916 +/- 0.004.]
 
-    Outperforms the only published text-adjacent baseline (Healy et al.
+    Outperforms a published text-adjacent baseline (Healy et al.
     2026, arXiv:2601.05214, AUC 0.716-0.721 with hidden-state features
-    on Glaive). Our detector is black-box compatible - works on any
-    closed model (OpenAI, Anthropic, Gemini) with no internal access.
+    on Glaive); others were not surveyed. Black-box compatible - works
+    on any closed model (OpenAI, Anthropic, Gemini) with no internal access.
 
     See `calibrated_weights_drift_v1.CALIBRATION_NOTES` for the
     per-drift-type AUC table and documented failure modes.

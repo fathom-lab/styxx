@@ -2,7 +2,7 @@
 """
 Calibrated goal-drift detection weights v0 — ninth and FINAL cognometric
 instrument in the *Every Mind Leaves Vitals* call (Rodabaugh, 2026,
-DOI 10.5281/zenodo.19777921). Sixth and last instrument shipped under
+DOI 10.5281/zenodo.19777921). The lab's sixth and last instrument under
 that paper's call.
 
 Detects multi-turn goal drift: an agent receives a goal at session
@@ -248,10 +248,10 @@ CALIBRATION_NOTES: Dict = {
     "prior_art_context": (
         "Goal drift in long-horizon agents is observed empirically "
         "in AgentBench (Liu et al. 2023) and ToolLLM long-horizon "
-        "evaluations as a major failure mode, but is not formalized "
-        "as a calibrated detection task. Most agent-eval pipelines "
-        "score whether the FINAL output meets the goal, not whether "
-        "the trajectory STAYED ANCHORED. styxx v0 fills that gap."
+        "evaluations as a major failure mode. styxx v0 is a "
+        "calibrated text-only detector of whether the trajectory "
+        "STAYED ANCHORED. Whether others formalized it as a "
+        "calibrated detection task earlier was not surveyed."
     ),
     "reproducer": "scripts/goal_drift_train_v0.py (seed=0, deterministic)",
     "v1_roadmap": [

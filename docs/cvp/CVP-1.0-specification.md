@@ -89,13 +89,13 @@ Appendix C. Economic Layer (Non-Normative)
 
 Modern agentic systems compose many models, tools, and services into
 workflows where one component's output is another component's input.
-When component B receives work from component A, it typically has no
+When component B receives work from component A, it may need a
 principled way to ask: *"Was A reasoning, retrieving, confabulating,
 refusing, being jailbroken, or writing fiction when it produced
 this?"* In the absence of such a signal, B must either trust A
 blindly or re-verify everything from scratch.
 
-CVP closes this gap. It defines a minimal, signed, versioned envelope
+CVP is one way to carry that signal; whether other protocols carry one was not surveyed. It defines a minimal, signed, versioned envelope
 that lets A tell B — in a vocabulary both sides already understand —
 what cognitive mode produced the attached work, how confident A was,
 and whether A's own gate check passed.

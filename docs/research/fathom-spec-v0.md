@@ -26,13 +26,13 @@ The thesis is direct:
 > JSON is the format for data.  
 > .fathom is the format for thoughts.
 
-Every other interpretability representation — SAE features,
-activation vectors, attention maps, embedding vectors — is
-**model-specific**: tied to a particular weight set, architecture,
-or training run. None of them survive a vendor swap. A Thought is
-designed to survive every swap, by construction, because the
-eigenvalue projection is calibrated to be cross-architecture
-invariant on the atlas v0.3 corpus.
+SAE features, activation vectors, attention maps and embedding
+vectors are **model-specific**: each is tied to a particular weight
+set, architecture, or training run. This paragraph said that every
+other interpretability representation fails a vendor swap; that was
+never surveyed, and it is withdrawn. A Thought is designed to survive
+every swap, by construction, because the eigenvalue projection is
+calibrated to be cross-architecture invariant on the atlas v0.3 corpus.
 
 ---
 

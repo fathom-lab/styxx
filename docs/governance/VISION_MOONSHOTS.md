@@ -13,7 +13,7 @@ Generalize OATH from research docs to any numeric-claim artifact: model cards, b
 compliance filings, public statistics. The certificate format becomes to claims what TLS is to
 transport: not "trust us" — "re-run it." Mature form: assertion infrastructure for the web;
 models that emit receipts inline; regulators who verify by execution, not by reading.
-**RUNG:** certify one PUBLIC model card against its published eval receipts; publish the first
+**RUNG:** certify one PUBLIC model card against its published eval receipts; publish an
 OATH-HELD (or honestly OATH-FAILED) model card, with the binding gaps mapped.
 
 ## M2 — The Passport Office for Minds
