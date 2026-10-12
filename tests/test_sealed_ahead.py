@@ -354,7 +354,19 @@ def test_http_archive_streams_retries_and_reads_404():
 
     def gone(req, timeout):
         raise urllib.error.HTTPError(req.full_url, 404, "nope", {}, None)
-    assert pool.HttpArchive(opener=gone, sleep=lambda s: None).fetch("2026-10-15-0", list)["status"] == "404"
+    paused = []
+    got = pool.HttpArchive(opener=gone, sleep=paused.append).fetch("2026-10-15-0", list)
+    assert got["status"] == "404" and got["attempts"] == 2 and paused == [60.0]     # asked twice, then a 404
+
+    blips = []
+
+    def blip(req, timeout):                       # a passing 404, then the hour
+        blips.append(1)
+        if len(blips) == 1:
+            raise urllib.error.HTTPError(req.full_url, 404, "nope", {}, None)
+        return _Resp(body)
+    got = pool.HttpArchive(opener=blip, sleep=lambda s: None).fetch("2026-10-15-0", lambda l: sum(1 for _ in l))
+    assert got["status"] == "ok" and got["result"] == 4
 
     def cut(req, timeout):
         return _Resp(body[: len(body) // 2])
@@ -472,6 +484,13 @@ def test_accuse_outcomes(routes, expect, n_calls):
     assert o["outcome"] == expect and len(web.calls) == n_calls
 
 
+def test_accuse_does_not_read_an_oversized_diff(monkeypatch):
+    monkeypatch.setattr(accuse, "MAX_BYTES", 1000)
+    gh, _ = github({API1: api_pr(), PULL1: ONE_FILE_DIFF + b"+z = 3\n" * 200})
+    o, _ = accuse.accuse_one(rec_of(), gh, GATE, FETCH_PULL)
+    assert o["outcome"] == "DIFF_UNAVAILABLE" and o["http_status"] == "too_large"
+
+
 def test_accuse_uses_a_pre_trim_body_as_opened_and_the_compare_route():
     rec = rec_of(full={"title": "Tests", "body": "Added 2 tests for the parser."})
     url = f"https://github.com/acme/app/compare/{'b' * 40}...{'a' * 40}.diff"
@@ -499,6 +518,11 @@ def test_github_retries_5xx_waits_out_a_rate_limit_and_refuses_other_hosts():
         gh.get("https://example.com/x.diff", "text/plain")
     gh, _ = github({API1: [503, 503, 503, 503]})
     assert gh.get(API1, "x")["status"] == "failed"
+    clock = Clock()
+    gh, web = github({API1: [(403, {"Retry-After": "90"}), api_pr()]}, clock=clock)     # a secondary limit
+    assert gh.get(API1, "x")["status"] == 200 and clock.slept == [90.0]
+    gh, _ = github({API1: [(403, {})]})                                                   # a plain refusal
+    assert gh.get(API1, "x")["status"] == 403
 
 
 def test_rate_limiter_holds_the_hourly_budget_across_restarts(tmp_path):
@@ -852,6 +876,32 @@ def test_bundle_writes_the_digests_and_a_manifest(tmp_path):
     for name, sha in m["files"].items():
         assert common.sha256_hex((tmp_path / "pub" / name).read_bytes()) == sha
     assert not (tmp_path / "pub" / "outcomes.jsonl").exists() and not (tmp_path / "pub" / "inputs").exists()
+
+
+def test_command_lines_run_offline(tmp_path, capsys):
+    d, s, digests, b, drawn = lab_world(tmp_path)
+    pool.write_pool(str(tmp_path / "pooldir"), d)
+    pp = tmp_path / "params.json"
+    pp.write_text(json.dumps(P2), encoding="utf-8")
+    rc = accuse.main(["summarize", "--params", str(pp), "--pool", str(tmp_path / "pooldir" / "pool.jsonl"),
+                      "--out", str(tmp_path / "lab"), "--styxx-path", str(ROOT)])
+    assert rc == 0
+    acc_file = tmp_path / "lab" / "accusations.json"
+    assert json.loads(acc_file.read_text(encoding="utf-8"))["accusations_sha256"] == s["accusations_sha256"]
+    args = ["--params", str(pp), "--accusations", str(acc_file), "--header", b["header"],
+            "--coinbase-hex", b["coinbase"], "--merkle-branch", ",".join(b["branch"])]
+    assert draw.main(args + ["--tip-height", "970505", "--out", str(tmp_path / "draw.json")]) == 0
+    assert json.loads((tmp_path / "draw.json").read_text(encoding="utf-8"))["drawn"] == drawn["drawn"]
+    assert draw.main(args + ["--tip-height", "970501"]) == 2
+    assert "TOO_FEW_CONFIRMATIONS" in capsys.readouterr().out
+    assert stranger.main(["bundle", "--params", str(pp), "--pool-dir", str(tmp_path / "pooldir"),
+                          "--accuse-dir", str(tmp_path / "lab"), "--draw", str(tmp_path / "draw.json"),
+                          "--out", str(tmp_path / "pub")]) == 0
+    bad = dict(P2, gate=dict(P2["gate"], sha256="0" * 64))
+    pp.write_text(json.dumps(bad), encoding="utf-8")
+    assert accuse.main(["summarize", "--params", str(pp), "--pool", str(tmp_path / "pooldir" / "pool.jsonl"),
+                        "--out", str(tmp_path / "lab")]) == 2
+    assert "REFUSED" in capsys.readouterr().out
 
 
 # ================================================================ the words

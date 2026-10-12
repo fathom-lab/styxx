@@ -315,6 +315,8 @@ def main(argv=None) -> int:
     if a.cmd == "bundle":
         print(json.dumps(bundle(a.params, a.pool_dir, a.accuse_dir, a.draw, a.out), indent=1))
         return 0
+    if a.cmd in ("accuse", "draw") and not a.out:
+        ap.error("--out is required: the re-run keeps its ledger and its rate stamps there")
     params = common.load_params(a.params)
     if a.expect_params_sha256 and common.params_sha256(params) != a.expect_params_sha256:
         print(f"REFUSED: the parameters hash to {common.params_sha256(params)}, not {a.expect_params_sha256}")

@@ -79,6 +79,7 @@ API = "https://api.github.com"
 WEB = "https://github.com"
 FINAL = ("GATED", "EMPTY_BODY", "HEAD_MOVED", "PR_GONE", "PR_UNAVAILABLE", "DIFF_GONE", "DIFF_UNAVAILABLE",
          "GATE_ERROR")
+MAX_BYTES = 20_000_000          # a response larger than this is not read: DIFF_UNAVAILABLE (too_large)
 _WITHHELD = re.compile(r"^(VERIFIED|CONTRADICTED) withheld by PATH-2a \(")
 _SHA = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 
@@ -199,8 +200,10 @@ class GitHub:
     def get(self, url: str, accept: str) -> dict:
         if not (url.startswith(API + "/") or url.startswith(WEB + "/")):
             raise Refused(f"not a host the grant names: {url}")
-        attempts, last = 0, ""
-        for wait in (0,) + self.backoff:
+        attempts, last, rate_pauses = 0, "", 0
+        waits = [0] + list(self.backoff)
+        while waits:
+            wait = waits.pop(0)
             if wait:
                 self.sleep(wait)
             self.limiter.acquire()
@@ -209,18 +212,24 @@ class GitHub:
             req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": accept})
             try:
                 with self.opener(req, timeout=self.timeout) as resp:
-                    body = resp.read()
+                    body = resp.read(MAX_BYTES + 1)
+                    if len(body) > MAX_BYTES:
+                        return {"status": "too_large", "attempts": attempts, "url": url}
                     return {"status": 200, "body": body, "attempts": attempts, "url": url}
             except urllib.error.HTTPError as e:
                 hdr = e.headers or {}
-                if e.code in (403, 429) and (e.code == 429 or str(hdr.get("X-RateLimit-Remaining")) == "0"):
-                    reset = hdr.get("X-RateLimit-Reset")
-                    pause = max(1.0, float(reset) - self.clock()) if reset else float(hdr.get("Retry-After") or 60)
-                    if pause > self.max_rate_wait:
+                limited = (e.code == 429 or str(hdr.get("X-RateLimit-Remaining")) == "0"
+                           or hdr.get("Retry-After") is not None)        # primary or secondary limit
+                if e.code in (403, 429) and limited:
+                    ra, reset = hdr.get("Retry-After"), hdr.get("X-RateLimit-Reset")
+                    pause = (float(ra) if ra is not None
+                             else max(1.0, float(reset) - self.clock()) if reset else 60.0)
+                    rate_pauses += 1
+                    if pause > self.max_rate_wait or rate_pauses > 3:
                         return {"status": "rate_limited", "attempts": attempts, "url": url}
                     self.log(f"  GitHub rate limit; waiting {pause:.0f}s")
                     self.sleep(pause)
-                    last = f"HTTP {e.code} rate limited"
+                    waits.insert(0, 0)                   # ask again now; the pause was the wait
                     continue
                 if e.code >= 500:
                     last = f"HTTP {e.code}"

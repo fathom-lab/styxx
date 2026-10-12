@@ -116,14 +116,19 @@ class HttpArchive:
     """GH Archive over HTTP: one request at a time, retried with backoff, no credentials."""
 
     def __init__(self, timeout: float = 30.0, backoff=(10, 60, 300), sleep=time.sleep, opener=None,
-                 log=print):
+                 log=print, recheck_404_after: float = 60.0):
         self.timeout, self.backoff, self.sleep, self.log = timeout, tuple(backoff), sleep, log
         self.opener = opener or urllib.request.urlopen
+        self.recheck_404_after = recheck_404_after
 
     def fetch(self, hour: str, consume) -> dict:
+        """One hour. A 404 is asked again once after a pause before it is reported, so a passing
+        CDN miss does not become a gap; any other failure is retried with the backoff."""
         url = common.hour_url(hour)
-        attempts, last = 0, ""
-        for wait in (0,) + self.backoff:
+        attempts, last, seen_404 = 0, "", False
+        waits = list((0,) + self.backoff)
+        while waits:
+            wait = waits.pop(0)
             if wait:
                 self.sleep(wait)
             attempts += 1
@@ -135,7 +140,11 @@ class HttpArchive:
                         "attempts": attempts, "url": url}
             except urllib.error.HTTPError as e:
                 if e.code == 404:
-                    return {"status": "404", "attempts": attempts, "url": url}
+                    if seen_404:
+                        return {"status": "404", "attempts": attempts, "url": url}
+                    seen_404 = True
+                    waits = [self.recheck_404_after]
+                    continue
                 last = f"HTTP {e.code}"
             except (urllib.error.URLError, http.client.HTTPException, OSError, EOFError, zlib.error,
                     ValueError) as e:
