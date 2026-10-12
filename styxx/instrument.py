@@ -179,8 +179,11 @@ def _cut(value) -> str:
 
 
 def _text_field(obj: dict, field: str) -> Tuple[bool, Optional[str]]:
+    """``(True, value)`` for a string of at most _MAX_VALUE characters; ``(True, None)`` for null and for the
+    empty string, which says nothing and is read as null (it must not differ from a named value and then
+    print as ``unknown``); ``(False, None)`` for anything else."""
     v = obj.get(field)
-    if v is None:
+    if v is None or v == "":
         return True, None
     if isinstance(v, str) and len(v) <= _MAX_VALUE:
         return True, v
@@ -213,7 +216,7 @@ def read_identity(record) -> Tuple[Optional[dict], List[str]]:
     128 characters nor null, or lists modules otherwise than as at most 16 ``[name, sha]`` pairs (name
     ``^[a-z_.]{1,64}$``, sha 64 lowercase hex or null): read as unnamed, with each ``why`` naming the key
     and quoting the value cut short. Otherwise ``({"build": {...} | None, "runtime": {...} | None}, [])``
-    with every known field present and null where the record says nothing."""
+    with every known field present and null where the record says nothing (a null, or an empty string)."""
     if not isinstance(record, dict):
         return None, []
     present = [k for k in IDENTITY_KEYS if k in record]
@@ -243,7 +246,7 @@ def read_identity(record) -> Tuple[Optional[dict], List[str]]:
             if ok and modules is not None:
                 styxx = b.get("styxx")
                 identity["build"] = {"schema": BUILD_SCHEMA, "reader": reader,
-                                     "styxx": styxx if isinstance(styxx, str) else None,
+                                     "styxx": styxx if isinstance(styxx, str) and styxx else None,
                                      "modules": modules}
     if "runtime" in record:
         r = record["runtime"]
@@ -260,7 +263,7 @@ def read_identity(record) -> Tuple[Optional[dict], List[str]]:
                 fields[f] = v
             else:
                 floor = r.get("case_floor")
-                fields["case_floor"] = floor if isinstance(floor, str) else None
+                fields["case_floor"] = floor if isinstance(floor, str) and floor else None
                 identity["runtime"] = fields
     if unreadable:
         return None, unreadable

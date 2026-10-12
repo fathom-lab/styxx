@@ -2216,14 +2216,40 @@ def _live_identity(live: dict) -> dict:
     return ident if ident is not None else _instrument.record_identity(getattr(_dg, "__file__", None))
 
 
+def _charon_reads_as_broken_binding(text: str) -> bool:
+    """styxx.charon.derive_capsule reads a problem holding `ambiguous`, `bytes !=`, or `!=` beside `binding`
+    as a broken binding and derives the line UNRESOLVED. A SKEW line must never read so (the amendment's
+    wording constraint (b)), so every token of the record's choosing that a problem quotes passes this test
+    first: the identity as instrument.describe writes it, a module name inside a differing field, the
+    implementation, the version, the pin's version string. instrument._label and instrument.describe write
+    no `!` or `=`, so of the three only the word is left to refuse."""
+    return "ambiguous" in text.lower() or "!=" in text
+
+
+_UNQUOTED_NAME = "a name this verifier does not quote"
+
+
 def _charon_quotable(text: str) -> str:
-    """A recorded identity, as a problem line may quote it. styxx.charon.derive_capsule reads a problem
-    holding `ambiguous`, `bytes !=`, or `!=` beside `binding` as a broken binding, and an identity a
-    minter chose must not turn a SKEW line UNRESOLVED; instrument.describe writes no `!` or `=`, so only
-    the word is left to refuse."""
-    if "ambiguous" in text.lower() or "!=" in text:
-        return "an instrument whose recorded name this verifier does not quote (it reads like a broken binding)"
+    """A recorded identity (instrument.describe), as a problem line may quote it. The replacement holds
+    neither the word nor `binding`, so charon's rule has nothing to read in the replacement itself."""
+    if _charon_reads_as_broken_binding(text):
+        return ("an instrument whose recorded name this verifier does not quote (charon reads the name as a "
+                "broken seal)")
     return text
+
+
+def _charon_quotable_name(text: str) -> str:
+    """One recorded token (a module name, an implementation, a version), as a problem line may quote it."""
+    return "(%s)" % _UNQUOTED_NAME if _charon_reads_as_broken_binding(text) else text
+
+
+def _charon_quotable_field(field: str) -> str:
+    """A differing field name as the SKEW line prints it. The name inside `build.modules[...]` is the
+    record's own (the reader admits any `^[a-z_.]{1,64}$`), so it is quoted as a token; every other field
+    name is the reader's."""
+    if field.startswith("build.modules[") and field.endswith("]"):
+        return "build.modules[%s]" % _charon_quotable_name(field[len("build.modules["):-1])
+    return field
 
 
 def create_capsule_diffgate(summary: Path, diff: Path, out: Path,
@@ -2371,19 +2397,26 @@ def _identity_outcome(d: dict, recorded, live_identity, unreadable: List[str], p
             advisory.append(
                 f"the gate record names its instrument incompletely (unknown: {unknown}), so this "
                 "failure cannot be told apart from INSTRUMENT SKEW or an edit from the record alone: "
-                f"it was made by {made_by}; to classify it, re-run it under that instrument")
+                f"it was made by {made_by}, and the payload's pin {pin_text} is outside every binding and "
+                "names a version, not a build; to classify it, re-run it under that instrument")
         return
-    fields = ", ".join(d["differs"])
     if reproduced:
         advisory.append(
-            f"reproduced under another instrument (differs: {fields}): the content did not depend on "
-            f"the difference for these bytes; made by {made_by}, re-run here by {here}")
+            f"reproduced under another instrument (differs: {', '.join(d['differs'])}): the content did not "
+            f"depend on the difference for these bytes; made by {made_by}, re-run here by {here}")
         return
-    # the pin comes from the sealed record, never from the payload's unsealed pin
+    # The problem quotes tokens of the record's choosing beside the identity: a module name inside a
+    # differing field, the implementation, the version, the pin's version string. Each passes the rule
+    # the identity passed above (_charon_reads_as_broken_binding): a minter who names a module `ambiguous`
+    # must not turn the line UNRESOLVED. The pin comes from the sealed record, never from the payload's
+    # unsealed pin; a version string charon would misread leaves the pin unwritten.
+    fields = ", ".join(_charon_quotable_field(f) for f in d["differs"])
     b = recorded.get("build") if isinstance(recorded.get("build"), dict) else {}
     r = recorded.get("runtime") if isinstance(recorded.get("runtime"), dict) else {}
     styxx_v = _instrument._label(b.get("styxx")) if isinstance(b.get("styxx"), str) else None
-    on = f"{_instrument._label(r.get('implementation'))} {_instrument._label(r.get('version'))}"
+    if styxx_v is not None and _charon_reads_as_broken_binding(styxx_v):
+        styxx_v = None
+    on = " ".join(_charon_quotable_name(_instrument._label(r.get(k))) for k in ("implementation", "version"))
     hint = (f"`pip install styxx=={styxx_v}` on {on}" if styxx_v
             else f"the styxx whose styxx.diffgate the record names, on {on}")
     problems.insert(0,
