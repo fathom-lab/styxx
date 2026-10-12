@@ -1051,6 +1051,13 @@ def _load_receipt(path_or_dict, arm: Optional[str], min_grid: int) -> dict:
 # the per-model fit
 # ---------------------------------------------------------------------------------------------------
 
+def _bar_text(bar: float) -> str:
+    """The bar as printed: two decimals when they are the bar exactly, else every digit it has, so that a
+    bar of 0.401 never prints as the standard 0.40."""
+    s = f"{float(bar):.2f}"
+    return s if float(s) == float(bar) else repr(float(bar))
+
+
 def screen(compare_d0: dict, recall_d0: dict, bar: float = SCREEN_BAR) -> dict:
     """The capability screen at D0: both normalised accuracies >= bar, both guards passed, both cells in
     exact balance.
@@ -1065,9 +1072,9 @@ def screen(compare_d0: dict, recall_d0: dict, bar: float = SCREEN_BAR) -> dict:
     reasons = []
     c, r = compare_d0["acc_norm"], recall_d0["acc_norm"]
     if not (c >= bar):
-        reasons.append(f"compare normalised {c:+.3f} < bar {bar:.2f}")
+        reasons.append(f"compare normalised {c:+.3f} < bar {_bar_text(bar)}")
     if not (r >= bar):
-        reasons.append(f"recall normalised {r:+.3f} < bar {bar:.2f}")
+        reasons.append(f"recall normalised {r:+.3f} < bar {_bar_text(bar)}")
     for fam, cell in (("compare", compare_d0), ("recall", recall_d0)):
         g = cell.get("guard_ok")
         if g is None:
@@ -1386,7 +1393,7 @@ def fit_model(rec: dict, idx: Optional[np.ndarray] = None, n_resamples: Optional
     ctrl_out["windowed"] = ({f"{fam}:{d}": float(win[fam][d]["acc_norm"]) for fam in win for d in win[fam]}
                             if win else None)
     if cfg["screen_bar"] != SCREEN_BAR:
-        flags.append(f"NONSTANDARD_BAR@{cfg['screen_bar']:.2f}")
+        flags.append(f"NONSTANDARD_BAR@{_bar_text(cfg['screen_bar'])}")
     if cfg["guard"]["nonstandard"]:
         flags.append("NONSTANDARD_GUARD")
     if not cfg["pairing_declared"]:
@@ -2041,7 +2048,7 @@ def _row_lines(row: dict) -> List[str]:
     dtype = cfg.get("dtype") or "--"
     ctx = cfg.get("ctx")
     ctx_s = ("--" if ctx is None else str(ctx)) + ("*" if cfg.get("ctx_is_training_length") else "")
-    scr = ("PASS" if row["screen"]["pass"] else "FAIL") + f"@{row['screen']['bar']:.2f}".replace("@0.", "@.")
+    scr = ("PASS" if row["screen"]["pass"] else "FAIL") + ("@" + _bar_text(row["screen"]["bar"])).replace("@0.", "@.")
     copied = f" [{cfg['copied_from']}]" if cfg.get("copied_from") else ""
     head = f"{row['model'][:22]:<22} {fam:<6} {str(params)[:7]:<7} {str(dtype)[:6]:<6} {ctx_s:<8} {scr:<8}"
     pad = " " * len(head)
@@ -2134,8 +2141,15 @@ def datasheet(sheet: dict, selftest_result: Optional[dict] = None, prereg_verdic
             out.append("note: " + res["family_aggregates_note"])
         out.append("verdict: " + (f"{prereg_verdict['verdict']} (styxx.protocol, prereg {prereg_verdict['prereg_commit'][:8]})"
                                   if prereg_verdict else "unscored: no committed prereg"))
-        out.append(f"reported numbers on this sheet: {len(rows) * 3} horizons and {len(rows)} dissociation intervals "
-                   f"beside the one family number")
+        # what the sheet prints as a number: a horizon a row does not read (screen failed, c(D0) <= 0, no
+        # scores) and a dissociation without a point are not reported numbers, and neither is an empty
+        # family set's minimum
+        n_h = sum(1 for r in rows for h in r["horizon"].values()
+                  if h.get("status") not in ("NOT_ESTIMABLE", "NOT_RECORDED"))
+        n_d = sum(1 for r in rows if r["dissociation"].get("point") is not None)
+        fam_s = "the one family number" if mind is not None else "0 family numbers (the family set is empty)"
+        out.append(f"reported numbers on this sheet: {n_h} horizon{'' if n_h == 1 else 's'} and {n_d} dissociation "
+                   f"interval{'' if n_d == 1 else 's'} beside {fam_s}")
     out.append("")
     out.append("each cell: chance-normalised accuracy under the row's readout; 95% paired item-bootstrap intervals, "
                "guard, balance and AUROC per cell in the receipt; * = trained context, no positional limit; "

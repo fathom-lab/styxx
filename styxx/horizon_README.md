@@ -101,7 +101,7 @@ Models fitted together on one seed share their resamples (red team M9).
 | `cells[...].exact_balance`, `label_counts` | the answer counts per cell; a cell out of exact balance reads `BALANCE_BROKEN@family:D`, a D0 half `BALANCE_BROKEN@family:D0/screen` or `/denominator`; a screen half out of balance also fails the screen, and a denominator half out of balance is flagged only |
 | `cells[...].ci_lo, ci_hi` | 2.5th / 97.5th percentile of the paired item bootstrap (B = 2000, seed 20261011); a resample count under 40 is refused, from a receipt or a call, because a 95% percentile interval needs one replicate expected in each 2.5% tail |
 | `cells[...].guard_ok`, `auroc`, `c_auc` | the readout's guard; the rank AUROC of the scores (log-odds against the label, or the one-versus-rest AUROC averaged over the three slots, the runner's statistic) and `c_auc = 2·AUROC − 1` |
-| `screen` | at D0: both normalised accuracies ≥ the bar (0.40), both guards passed, both cells in exact balance, read on one half of the D0 items (stratified by label so each half keeps exact balance); the horizon's denominator c(D0) is read on the other half (M4). The row prints `PASS@.40` / `FAIL@.40`; a bar other than 0.40 reads `NONSTANDARD_BAR@b`, and a bar outside (0, 1) is refused |
+| `screen` | at D0: both normalised accuracies ≥ the bar (0.40), both guards passed, both cells in exact balance, read on one half of the D0 items (stratified by label so each half keeps exact balance); the horizon's denominator c(D0) is read on the other half (M4). The row prints `PASS@.40` / `FAIL@.40`; a bar other than 0.40 reads `NONSTANDARD_BAR@b` (b printed with every digit it has when two decimals would round it: 0.401 prints `NONSTANDARD_BAR@0.401` and `PASS@.401`, never `.40`), and a bar outside (0, 1) is refused |
 | `horizon[family]` | `tau = frac · c(D0)` with `frac` 0.5 (`config.horizon_frac`, refused outside (0, 1)); the smallest D ≥ D0 at which the piecewise-linear interpolant of c in log2 D reaches tau. `bracket` is the grid pair the crossing sits in and is the measurement; `point` is the interpolated convention and prints second (m5). No grid value below tau: `CENSORED`, printed `> 1024 (none inside the tested range)`. c(D0) ≤ 0: `NOT_ESTIMABLE` |
 | `horizon[...].ci_lo, ci_hi, f_cens` | percentiles of the finite replicate crossings and the censored fraction; `f_cens > 0.025` censors the upper end (`> 1024`); `f_cens > 0.5` prints the point censored. `native_point` is the crossing in the model's own tokens, interpolated from `config.native_D` means |
 | `horizon.compare_auc` | the same fit on `c_auc(D)` (F1c): a horizon in c absent from c_auc reads `CALIBRATION_ARTEFACT_SUSPECTED` — a drifting prior on one answer moves an accuracy and leaves a rank statistic alone |
@@ -141,6 +141,12 @@ BEFORE the ablation exclusion (M1), so it can fail. `attention_family_min_dissoc
 the per-replicate minimum over the family set on the shared resample (M3, M9); receipts whose pairings
 or item counts differ cannot share the stream, and the sheet then says the family interval is not
 paired.
+
+The sheet's last count line, `reported numbers on this sheet: H horizons and D dissociation intervals
+beside the one family number`, counts what the sheet prints as a number: a horizon a row does not read (a
+failed screen, c(D0) at or below chance, no scores for `c_auc`) and a dissociation without a point are not
+counted, and an empty family set prints `0 family numbers`. A sheet of nine rows that all fail the screen
+reads 0, 0 and 0.
 
 **An empty family set, and ABSTAIN.** The counts — `n_models`, `n_family_screened` (screened before the
 ablation exclusion) and `n_attention_screen_pass` (the family set) — are finite in every case. The family

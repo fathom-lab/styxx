@@ -233,6 +233,16 @@ def test_a_screen_fail_row_prints_no_horizon_no_ratio_and_no_dissociation(selfte
     sheet = H.fit_zoo([H.load_receipt(rec)])
     assert sheet["result"]["per_model"]["dissoc"]["screenfail"] is None
     assert sheet["result"]["family_excluded_reasons"]["screenfail"].startswith("SCREEN_FAIL")
+    # review 3: the count line counted three horizons and one dissociation for every row, printed or not
+    full = H.datasheet(sheet, selftest_result=selftest_result)
+    assert ("reported numbers on this sheet: 0 horizons and 0 dissociation intervals beside 0 family numbers "
+            "(the family set is empty)") in full
+    ok = H.synthetic_receipt("screened", H._planted_curve(128.0), RECALL_FLAT, 600, 9, arch_family="ATTN",
+                             n_resamples=200, controls={"ablated": {"compare": {16: (0.02, None)}}})
+    both = H.fit_zoo([H.load_receipt(rec), H.load_receipt(ok)])
+    assert both["result"]["family_set"] == ["screened"]
+    assert ("reported numbers on this sheet: 3 horizons and 1 dissociation interval beside the one family number"
+            in H.datasheet(both, selftest_result=selftest_result))
 
 
 def test_the_compare_readout_its_chance_and_its_guard_are_read_from_the_receipt(selftest_result):
@@ -340,11 +350,27 @@ def test_the_screen_bar_is_printed_validated_and_flagged(selftest_result):
     assert "PASS@.30" in text
     rec["config"]["screen_bar"] = 0.40
     assert "PASS@.40" in H.datasheet(H.fit_model(H.load_receipt(rec)), selftest_result=selftest_result)
+    # review 3: a bar of 0.401 printed as the standard bar's ".40" on the row and in the flag
+    rec["config"]["screen_bar"] = 0.401
+    row = H.fit_model(H.load_receipt(rec))
+    assert "NONSTANDARD_BAR@0.401" in row["flags"]
+    text = H.datasheet(row, selftest_result=selftest_result)
+    assert "PASS@.401" in text and "@.40 " not in text and "NONSTANDARD_BAR@0.40 " not in text
+    rng = np.random.default_rng(4)
+    c40 = H.cell_summary("compare", **_slot_args(H.synthetic_cell("compare", 0.40, 300, rng)))
+    r90 = H.cell_summary("recall", **_slot_args(H.synthetic_cell("recall", 0.90, 300, rng)))
+    assert f"{c40['acc_norm']:+.3f}" == "+0.400"
+    assert "compare normalised +0.400 < bar 0.401" in H.screen(c40, r90, 0.401)["reasons"]
+    assert H.screen(c40, r90, 0.30)["pass"] and H._bar_text(0.4) == "0.40"
     rec["config"]["guard"] = {"max_slot_fraction": 0.95}
     assert "NONSTANDARD_GUARD" in H.fit_model(H.load_receipt(rec))["flags"]
     rec["config"]["guard"] = {"max_slot_fraction": 0.2}
     with pytest.raises(H.HorizonRefusal, match="max_slot_fraction"):
         H.load_receipt(rec)
+
+
+def _slot_args(cell):
+    return {"labels": cell["target_slot"], "predictions": cell["pred_slot"], "scores": cell["scores"]}
 
 
 def test_a_declared_slot_bound_is_the_bound_the_guard_applies():
