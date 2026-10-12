@@ -351,3 +351,33 @@ here.
 Nothing else is confirmed or changed here: the items, seed, slices, codes, scoring, screen rule, bars, model list,
 order and §10's limits are as sections 1 to 12 state them. The run follows §11: `--check` (item 2), then
 `python run_zoo_d0_screen.py` with no flag, once (item 3).
+
+## 14. The operator's permission to rerun after the partial log, 2026-10-12
+
+**Status: appended after section 13, before the rerun. No zoo item has been scored for this screen, and
+`zoo_d0_screen.json` does not exist.** Sections 1 to 13 stay as committed; this section adds a record and changes no
+rule.
+
+The run that §13 describes started at acd5b1e9 on 2026-10-12 and stopped before any zoo item was scored. M1's wrapper
+equivalence on the pilot2 items had run and matched the committed pilot2 receipt (max |Δ score| 0.0 on all four
+cells, no non-tie disagreement, two near ties exempt on recall/ablated) and was appended to
+`zoo_d0_screen.partial.jsonl`; the run then stopped with `KeyError: 'max_abs_score_diff'` while printing that line.
+T's equivalence did not run. As §12.5 says, the runner appended an error event and wrote `zoo_d0_screen_refusal.json`.
+The partial log holds 3 lines, sha256 `c33cd06c098f145b4589658c37664e5d89756ce3802867fe963c6d6b52e8c7ba`; the refusal
+file's sha256 is `d533482951916cbd214cff2db434c5e79e571696883fc9e473cba192602e7872`. Both stay on disk, untracked. The
+print line was repaired at 240a3453; no rule, bar, item, score or status changed there.
+
+Under §12.5 the partial log makes a rerun the operator's call. On 2026-10-12, after that log, the operator allowed the
+rerun in chat. This record is written by the agent that runs the screen, from the orchestrating session's relay of
+that permission; the chat itself is not quoted here.
+
+- The rerun is `run_zoo_d0_screen.py --operator-allows-rerun-after-partial`, once, with this note committed and
+  unchanged at HEAD. Its receipt records the old log's sha256 and line count (`runtime.prior_partial_log`), and its
+  events follow the old three lines in the same log, which the runner never truncates.
+- M1's logged equivalence is a check, not zoo data. The rerun repeats the equivalence on M1 and T before any zoo item
+  is scored, and refuses if either fails, as §6 says.
+- The permission covers this one rerun. A stop outside a model's own row is not patched and rerun under it; a row's own
+  NOT_SCREENABLE or NOT_RUN label (§12.2) is a result, and the run goes on past it.
+
+Nothing else is changed here: the items, seed, slices, codes, scoring, screen rule, bars, model list, order and §10's
+limits are as sections 1 to 13 state them.
