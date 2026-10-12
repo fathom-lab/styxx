@@ -326,3 +326,28 @@ The items, seed, slices, codes, scoring, screen rule, bars, model list, order an
 code-slice reading of §3 (the zoo's 72 codes are the tail of v3's `main_test`, where every eligible code lies, and are
 disjoint from every code any v3 run planted, which the review recomputed independently) is still the operator's to
 confirm before the run. This addendum does not sign it.
+
+## 13. The operator's confirmation, 2026-10-12, before any data
+
+**Status: appended after section 12, before the run. No model has been loaded for this screen, no zoo item has been
+scored, and `zoo_d0_screen.json` does not exist.** Sections 1 to 12 stay as committed; this section adds a record and
+changes no rule.
+
+On 2026-10-12 the operator confirmed in chat the two points held for him before the run. This record is written by the
+agent that runs the screen, from the orchestrating session's relay of that confirmation; the chat itself is not quoted
+here.
+
+- **(a) The code-slice reading of §3, as §12.7 states it.** The zoo's 72 codes (12 exemplar, 60 test) are the last 72
+  of v3's `main_test` pool in the seeded order of v3's `partition_codes` (seed 20261011), the pool where every eligible
+  code lies. v3's main set is closed (format line NOT_STARTED, final) and was never generated, so no main-set code was
+  ever planted. Disjointness from every code a v3 run planted is asserted by sha256 against the lists the committed
+  smoke, 1011-pilot and pilot2 receipts carry, with v3's `assert_disjoint_from_prior`, before any model is loaded; the
+  zoo's code list goes into its receipt.
+- **(b) The two fp32-reference bars of §12.4.** On the Llama, Qwen and Gemma rows: right padding in the fp32 CPU
+  reference moves none of the three name log-probs by more than 1e-3, else NOT_SCREENABLE__right_padding; and the fp16
+  name log-probs on the GPU lie within 0.5 nats of the fp32 reference on the same two prompts, else
+  NOT_SCREENABLE__fp16_fidelity.
+
+Nothing else is confirmed or changed here: the items, seed, slices, codes, scoring, screen rule, bars, model list,
+order and §10's limits are as sections 1 to 12 state them. The run follows §11: `--check` (item 2), then
+`python run_zoo_d0_screen.py` with no flag, once (item 3).
