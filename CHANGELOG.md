@@ -40,22 +40,42 @@ particular experiment.
 - The verdict is re-scored from the frozen table over the recorded numbers (`score_frozen`, the
   body of `Experiment.score` with no disk and no git, with the composition check and a totality
   enumeration of the outcome table); the sworn core re-derives over the carried snapshot
-  (`SnapshotTree`); the charon line's `entry_id` re-derives from its core; the anchor's memo is
-  the memo its kind and digest imply (`check_anchor_offline`, the pure half of `clock.check_line`).
+  (`SnapshotTree`), in the terminal and in the page; the sworn receipt's verdict and counts must
+  be its own spans' tally (`receipt_tally_problem`, which a test runs over every sworn receipt
+  committed in the repository); the charon line's `entry_id` re-derives from its core; the
+  anchor's memo is the memo its kind and digest imply (`check_anchor_offline`, the pure half of
+  `clock.check_line`).
+- The page re-derives the sworn spans itself: `styxx/_data/sworn_verify.js`, the second
+  implementation of `styxx.sworn` held to the sworn conformance vectors, is inlined unchanged and
+  given the carried snapshot through a resolver that reads entries as `SnapshotTree` does, so a
+  number typed into a span that the receipt leaf does not hold, with the sworn receipt re-pointed
+  and re-digested, reads FAILS at L4 in the browser as it does in the terminal, and the browser
+  never prints `INTERNALLY CONSISTENT (offline)` over it.
 - `build` reads the repository at named commits and never the working tree, and refuses by name:
   an inconsistent chain (each failing link's problem listed), a path that is not
-  repository-relative POSIX, a payload holding a token-shaped string, a drive-letter or home path,
-  an interpreter version string, a worktree name or a word the lab never prints, an oversize page;
-  a written file that does not verify is not kept. The payload names `styxx_version` and the
-  module digests only (operator decision O9 of 2026-10-11).
+  repository-relative POSIX, a token-shaped string, a drive-letter or home path, an interpreter
+  version string or a worktree name anywhere in the minted bytes, a word the lab never prints in
+  what the lab writes for the capsule (the page, the payload's own fields, the stated facts, the
+  public clocks, the RESULT and the run note; carried history such as the frozen PREREG is carried
+  as is and scanned for leaks only; a hit is named by its place in the list, never echoed), and an
+  oversize page; a written file that does not verify is not kept. The scan reads decoded text, so
+  an escaped line feed after a one-letter word is not a drive letter. The payload names
+  `styxx_version` and the module digests only (operator decision O9 of 2026-10-11).
+- Under `--repo`, a commit the clone lacks reads NOT-CHECKED with the reason (fetch it and read
+  again), and a path absent at a commit the clone has reads DIFFERS: the public repository holds
+  no such object there.
 - The tests build the chain from synthetic fixtures, which is the disclosed whole-file forger and
   passes every offline link, as the label says; a digest battery flips exactly the link that owns
   the bytes (a mutated slot is caught by nothing offline, and the test says where it is checked);
   a semantic battery re-builds CONSISTENT capsules with one link made false and asserts that link
   alone flips, which a verifier whose logic past the hashes is constant would fail; controls that
-  must not fire (`created`, key order, the charon timestamp and note); the browser layer and the
-  installed layer agree under node on the clean capsule and on both batteries; the CLI round trip
-  over a temporary repository with `--repo`, including a rebuilt log reading DIFFERS at L5.
+  must not fire (`created`, key order, the charon timestamp and note); the browser layer, run
+  under node, agrees with the installed layer link by link on the clean capsule and on every
+  member of both batteries, the three L4 members of the semantic battery included (an edited sworn
+  verdict, a span value the receipt does not hold, a snapshot entry that is another receipt), and
+  on numeric, quote and hash spans over the snapshot; the CLI round trip over a temporary
+  repository with `--repo`, including a rebuilt log reading DIFFERS at L5 and a forger that names
+  the clone's commits with paths absent at them reading DIFFERS.
 - Not in this phase: dispatch from the existing capsule command, a charon kind for the new
   profile, the stranger step, the specimen. The existing capsule profiles are unchanged.
 

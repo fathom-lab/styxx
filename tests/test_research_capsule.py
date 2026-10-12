@@ -8,7 +8,9 @@ it — which is the disclosed limit (a forger controlling the whole file passes 
 pinned below as a test and not hidden. The load-bearing tests are the two batteries: a digest
 mutation flips exactly the link that owns the bytes, and a re-built CONSISTENT capsule with one
 link made false flips exactly that link (the hash-blind verifier the red team named, F1, would
-pass the digest battery and fail this one). Controls that must NOT fire sit beside them.
+pass the digest battery and fail this one). Controls that must NOT fire sit beside them. The
+page's own script (layer 1, run under node) is held to the installed verifier (layer 2) link by
+link on the clean capsule and on every member of both batteries, the sworn span values included.
 """
 from __future__ import annotations
 
@@ -25,7 +27,7 @@ import pytest
 from styxx import charon, clock, sworn
 from styxx import research_capsule as rc
 from styxx.research_capsule import (FAILS, HOLDS, LABEL, ONLINE, SIZE_CAP, SPEC, STATED, SUMMARY_FAILS,
-                                    SUMMARY_OK, build, check_payload, compose, datasheet, render_html,
+                                    SUMMARY_OK, build, compose, datasheet, render_html,
                                     score_frozen, verify)
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -72,6 +74,15 @@ def _result_bytes(receipt_path: str) -> bytes:
             f"## What this does not say\n\nOne task, two seeds, no interval.\n").encode("utf-8")
 
 
+def _result_every_kind(receipt_path: str, receipt: bytes) -> bytes:
+    """A RESULT whose spans are numeric, quote and hash over the snapshot, so the browser's
+    snapshot resolver is exercised on more than one kind."""
+    return (f"# RESULT — synthetic, every kind — 2026-10-11\n\nSworn at `{COMMIT[:12]}`.\n"
+            f'<sworn r="path:{receipt_path}#/metrics/gap" k="numeric">The gap was 0.3122.</sworn> '
+            f'<sworn r="path:{receipt_path}#/config/task" k="quote">The task was `synthetic`.</sworn> '
+            f'<sworn r="path:{receipt_path}" k="hash">The receipt is {sworn._sha256(receipt)}.</sworn>\n').encode("utf-8")
+
+
 def _sworn_trio(result_bytes: bytes, tree_files: dict, commit: str = COMMIT):
     side = sworn.to_sidecar(result_bytes, "RESULT_x.md", commit)
     tree = sworn.SnapshotTree.from_memory(sworn.MemoryTree(tree_files, commit))
@@ -114,7 +125,8 @@ def _inputs(**kw) -> dict:
     metrics = kw.pop("metrics", {"gap": 0.3122, "dev": 0.0048})
     receipt = kw.pop("receipt_bytes", None) or _receipt_bytes(metrics)
     receipt_path = "papers/x/x_result.json"
-    result = _result_bytes(receipt_path)
+    result_fn = kw.pop("result_fn", None)
+    result = result_fn(receipt_path, receipt) if result_fn else _result_bytes(receipt_path)
     side, rec, core = _sworn_trio(result, {receipt_path: receipt})
     entry = _charon_entry(side, rec, core, "papers/x/RESULT_x.md", HEADER)
     prereg = PREREG.encode("utf-8")
@@ -281,34 +293,44 @@ def test_the_synthetic_chain_is_a_forger_and_passes_every_offline_link_with_the_
 
 # ------------------------------------------------------------------ battery (a): digest mutations
 
-@pytest.mark.parametrize("where,needle,link", [
+DIGEST_BYTES = [
     ("prereg", b"FROZEN before data", "L0"),             # outside the gates block: L3 keeps its table
     ("receipt", b"synthetic", "L2"),                     # inside a config string: metrics unchanged
     ("runner", b"synthetic runner", "L2"),
     ("run_note", b"exit 0", "L2"),
     ("result", b"no interval", "L4"),                    # narrative, outside every span
-])
-def test_a_digest_mutation_flips_exactly_the_link_that_owns_the_bytes(minted, tmp_path, where, needle, link):
+]
+
+
+def _digest_mutant(minted: Path, out: Path, where: str, needle: bytes) -> Path:
     p = _payload(minted)
     a = p["artifacts"]
     target = {"prereg": a["prereg"], "receipt": a["receipts"][0], "runner": a["runners"][0],
               "run_note": a["run_note"], "result": a["result"]}[where]
     _flip_b64(target, needle)
-    cap = _reseal(minted, p, tmp_path / "t.research.html")
+    return _reseal(minted, p, out)
+
+
+@pytest.mark.parametrize("where,needle,link", DIGEST_BYTES)
+def test_a_digest_mutation_flips_exactly_the_link_that_owns_the_bytes(minted, tmp_path, where, needle, link):
+    cap = _digest_mutant(minted, tmp_path / "t.research.html", where, needle)
     rep = verify(cap)
     assert _fails(rep) == {link}, [(l["id"], l["problems"]) for l in rep["links"]]
     assert rep["payload"]["core_sha256_ok"] is False and rep["ok"] is False
     assert any(x.startswith(SUMMARY_FAILS) for x in datasheet(rep))
 
 
-@pytest.mark.parametrize("edit,link", [
+FIELD_EDITS = [
     (lambda a: a["anchors"][0].__setitem__("digest", "0" * 64), "L1"),            # memo no longer kind+digest
     (lambda a: a["anchors"][0].__setitem__("memo", a["anchors"][0]["memo"][:-1] + "0"), "L1"),
     (lambda a: a["charon"]["entry"].__setitem__("entry_id", "0" * 64), "L5"),
     (lambda a: a["charon"].__setitem__("head_at_seq", "0" * 64), "L5"),
     (lambda a: a["sworn_receipt"].__setitem__("digest", "0" * 64), "L4"),
     (lambda a: a["prereg"].__setitem__("gates_sha256", "0" * 64), "L0"),
-])
+]
+
+
+@pytest.mark.parametrize("edit,link", FIELD_EDITS)
 def test_a_field_mutation_flips_exactly_its_link(minted, tmp_path, edit, link):
     p = _payload(minted)
     edit(p["artifacts"])
@@ -337,13 +359,17 @@ def test_a_digest_mutation_inside_the_gates_block_flips_L0_and_the_dependent_L3(
 
 # --------------------------------------------------------- battery (b): semantic mutations, consistent
 
-def test_semantic_L1_a_consistent_memo_of_another_kind_is_not_a_sealed_prereg(tmp_path):
+def _inputs_other_kind() -> dict:
     inp = _inputs()
     digest = sworn._sha256(PREREG.encode("utf-8"))
     inp["anchors"] = [{"n": 7, "kind": "sealed-canaries", "digest": digest,
                        "memo": clock.memo("sealed-canaries", digest), "tx": "6" * 87, "slot": 1,
                        "block_time": "2026-10-11T20:15:00Z"}]
-    rep = verify(_write_consistent(tmp_path, inp))
+    return inp
+
+
+def test_semantic_L1_a_consistent_memo_of_another_kind_is_not_a_sealed_prereg(tmp_path):
+    rep = verify(_write_consistent(tmp_path, _inputs_other_kind()))
     assert _fails(rep) == {"L1"} and rep["payload"]["core_sha256_ok"] and rep["payload"]["page_ok"]
     assert any("UNANCHORED" in p for p in next(l for l in rep["links"] if l["id"] == "L1")["problems"])
 
@@ -369,73 +395,178 @@ def test_semantic_L3_a_metric_that_crosses_a_bar_while_the_gates_map_stays_fails
     assert _fails(rep) == {"L3"}
 
 
-def test_semantic_L4_a_sworn_receipt_whose_verdict_was_edited_fails_only_L4(tmp_path):
-    inp = _inputs()
-    rec = dict(inp["sworn_receipt"])
-    rec["document_verdict"] = "SWORN-FAILED"
+def _redigest(rec: dict) -> dict:
     body = {k: v for k, v in rec.items() if k not in sworn._RECEIPT_OUTSIDE_DIGEST}
     rec["digest"] = sworn._sha256(sworn._jcs(body).encode("utf-8"))
+    return rec
+
+
+def _inputs_verdict_edited(**kw) -> dict:
+    """The sworn receipt's document_verdict edited and re-digested; the charon line agrees."""
+    inp = _inputs(**kw)
+    rec = _redigest(dict(inp["sworn_receipt"], document_verdict="SWORN-FAILED"))
     inp["sworn_receipt"] = rec
-    # the charon line agrees with the edited receipt, so L5 stays consistent
     inp["charon"]["entry"] = _charon_entry(inp["sidecar"], rec, inp["_core"], "papers/x/RESULT_x.md", HEADER,
                                            verdict="SWORN-FAILED", verdict_class="FAILED")
-    rep = verify(_write_consistent(tmp_path, inp))
-    assert _fails(rep) == {"L4"}, [(l["id"], l["problems"]) for l in rep["links"]]
+    return inp
 
 
-def test_semantic_L4_a_snapshot_entry_that_is_another_receipt_fails_L4_and_the_line_that_named_it(tmp_path):
+def _inputs_repointed(old: bytes, new: bytes, **kw) -> dict:
+    """The forger types a value the receipt does not hold: the RESULT is rewritten, given its own
+    sidecar, and the carried sworn receipt keeps its spans and verdict and is re-pointed at the new
+    document (both digests) and re-digested; the charon line names the new document."""
+    inp = _inputs(**kw)
+    result = inp["result"]["bytes"]
+    assert old in result
+    result = result.replace(old, new)
+    side = sworn.to_sidecar(result, "RESULT_x.md", COMMIT)
+    rec = dict(inp["sworn_receipt"])
+    rec["document"] = dict(rec["document"], inline_sha256=sworn._sha256(result),
+                           canonical_sha256=sworn._sha256(side["text"].encode("utf-8")))
+    rec = _redigest(rec)
+    inp.update(sidecar=side, sworn_receipt=rec, result={"path": "papers/x/RESULT_x.md", "bytes": result})
+    inp["charon"]["entry"] = _charon_entry(side, rec, inp["_core"], "papers/x/RESULT_x.md", HEADER,
+                                           subject={"name": "RESULT_x.md", "path": "papers/x/RESULT_x.md",
+                                                    "sha256": sworn._sha256(result)})
+    return inp
+
+
+def _inputs_snapshot_swapped() -> dict:
+    """A snapshot entry that is another receipt, carried as the run's receipt too."""
     inp = _inputs()
     other = _receipt_bytes({"gap": 0.20, "dev": 0.0048})
     inp["snapshot"]["entries"]["papers/x/x_result.json"] = {"mode": "100644", "size": len(other),
                                                             "sha256": sworn._sha256(other), "bytes": other}
     inp["receipts"][0]["bytes"] = other               # L2 agrees with the snapshot; L3 scores the same row
+    return inp
+
+
+def test_semantic_L4_a_sworn_receipt_whose_verdict_was_edited_fails_only_L4(tmp_path):
+    rep = verify(_write_consistent(tmp_path, _inputs_verdict_edited()))
+    assert _fails(rep) == {"L4"}, [(l["id"], l["problems"]) for l in rep["links"]]
+    l4 = next(l for l in rep["links"] if l["id"] == "L4")
+    assert any("its own spans tally SWORN-HELD" in p for p in l4["problems"])
+
+
+def test_semantic_L4_a_span_value_the_receipt_does_not_hold_fails_only_L4(tmp_path):
+    """ATTACK F1's span-value member: the RESULT prints 0.9122 where the receipt leaf is 0.3122,
+    and the carried sworn receipt still says HELD, re-pointed and re-digested. Every digest agrees;
+    only re-deriving the span against the snapshot leaf sees it."""
+    inp = _inputs_repointed(b"The gap was 0.3122.", b"The gap was 0.9122.")
     rep = verify(_write_consistent(tmp_path, inp))
+    assert _fails(rep) == {"L4"}, [(l["id"], l["problems"]) for l in rep["links"]]
+    assert rep["payload"]["core_sha256_ok"] and rep["payload"]["page_ok"]
+    l4 = next(l for l in rep["links"] if l["id"] == "L4")
+    assert any("live SWORN-FAILED" in p for p in l4["problems"])
+
+
+def test_semantic_L4_a_snapshot_entry_that_is_another_receipt_fails_L4_and_the_line_that_named_it(tmp_path):
+    rep = verify(_write_consistent(tmp_path, _inputs_snapshot_swapped()))
     # L5 sees it too, honestly: the carried line's receipt set names the receipt the spans read
     assert _fails(rep) == {"L4", "L5"}, [(l["id"], l["problems"]) for l in rep["links"]]
 
 
-def test_semantic_L5_a_line_about_another_document_fails_only_L5(tmp_path):
+def test_the_tally_rule_reads_the_receipt_alone_and_holds_on_every_committed_sworn_receipt():
+    inp = _inputs()
+    assert rc.receipt_tally_problem(inp["sworn_receipt"]) is None
+    edited = dict(inp["sworn_receipt"], document_verdict="SWORN-FAILED")
+    assert "its own spans tally SWORN-HELD" in rc.receipt_tally_problem(edited)
+    recount = dict(inp["sworn_receipt"], counts=dict(inp["sworn_receipt"]["counts"], HELD=1, FAILED=1))
+    assert "not its spans' tally" in rc.receipt_tally_problem(recount)
+    committed = sorted((ROOT / "papers").rglob("*.sworn-receipt.json")) if (ROOT / "papers").is_dir() else []
+    if not committed:
+        pytest.skip("no committed sworn receipt in this tree")
+    bad = [(p.name, rc.receipt_tally_problem(json.loads(p.read_text(encoding="utf-8")))) for p in committed]
+    assert [b for b in bad if b[1]] == []
+
+
+def _inputs_line_about_another_document() -> dict:
     inp = _inputs()
     inp["charon"]["entry"] = _charon_entry(inp["sidecar"], inp["sworn_receipt"], inp["_core"], "papers/x/RESULT_x.md",
                                            HEADER, subject={"name": "RESULT_x.md", "path": "papers/x/RESULT_x.md",
                                                             "sha256": "0" * 64})
-    rep = verify(_write_consistent(tmp_path, inp))
+    return inp
+
+
+def _inputs_receipt_set_omits() -> dict:
+    inp = _inputs()
+    inp["charon"]["entry"] = _charon_entry(inp["sidecar"], inp["sworn_receipt"], inp["_core"], "papers/x/RESULT_x.md",
+                                           HEADER, receipts={"n": 0, "sha256": [], "cited": None, "vacuous": False})
+    return inp
+
+
+def _two_fences() -> str:
+    return PREREG + "\n```gates\n{}\n```\n"
+
+
+def _write_two_fences(tmp: Path, name: str = "two.research.html") -> Path:
+    """Built around compose's refusal: the PREREG carries a second gates fence, re-sealed."""
+    two = _two_fences().encode("utf-8")
+    digest = sworn._sha256(two)
+    payload = compose({k: v for k, v in _inputs().items() if k != "_core"}, created=TS)
+    payload["artifacts"]["prereg"]["b64"] = base64.b64encode(two).decode("ascii")
+    payload["artifacts"]["prereg"]["sha256"] = digest
+    payload["artifacts"]["anchors"][0].update(digest=digest, memo=clock.memo("sealed-prereg", digest))
+    payload["core_sha256"] = rc._core_sha256(payload)
+    out = tmp / name
+    out.write_bytes(render_html(payload).encode("utf-8"))
+    return out
+
+
+def _edit_label(p: dict) -> None:
+    p["label"] = p["label"].replace("passes every offline link", "is caught")
+
+
+def test_semantic_L5_a_line_about_another_document_fails_only_L5(tmp_path):
+    rep = verify(_write_consistent(tmp_path, _inputs_line_about_another_document()))
     assert _fails(rep) == {"L5"}, [(l["id"], l["problems"]) for l in rep["links"]]
 
 
 def test_semantic_L5_a_receipt_set_that_omits_the_run_receipt_fails_only_L5(tmp_path):
-    inp = _inputs()
-    inp["charon"]["entry"] = _charon_entry(inp["sidecar"], inp["sworn_receipt"], inp["_core"], "papers/x/RESULT_x.md",
-                                           HEADER, receipts={"n": 0, "sha256": [], "cited": None, "vacuous": False})
-    rep = verify(_write_consistent(tmp_path, inp))
+    rep = verify(_write_consistent(tmp_path, _inputs_receipt_set_omits()))
     assert _fails(rep) == {"L5"}
 
 
 def test_semantic_L0_a_second_gates_fence_fails_L0_and_the_dependent_L3(tmp_path):
     inp = _inputs()
-    two = PREREG + "\n```gates\n{}\n```\n"
-    inp["prereg"]["bytes"] = two.encode("utf-8")
-    digest = sworn._sha256(two.encode("utf-8"))
+    two = _two_fences().encode("utf-8")
+    inp["prereg"]["bytes"] = two
+    digest = sworn._sha256(two)
     inp["anchors"][0].update(digest=digest, memo=clock.memo("sealed-prereg", digest))
     with pytest.raises(SystemExit, match="prereg_gates"):
         compose({k: v for k, v in inp.items() if k != "_core"}, created=TS)
     # built around the refusal, the verifier names both: L0 (two blocks) and L3, which has no table
-    payload = compose({k: v for k, v in _inputs().items() if k != "_core"}, created=TS)
-    payload["artifacts"]["prereg"]["b64"] = base64.b64encode(two.encode("utf-8")).decode("ascii")
-    payload["artifacts"]["prereg"]["sha256"] = digest
-    payload["artifacts"]["anchors"][0].update(digest=digest, memo=clock.memo("sealed-prereg", digest))
-    payload["core_sha256"] = rc._core_sha256(payload)
-    out = tmp_path / "two.research.html"
-    out.write_bytes(render_html(payload).encode("utf-8"))
-    rep = verify(out)
+    rep = verify(_write_two_fences(tmp_path))
     assert _fails(rep) == {"L0", "L3"}
 
 
 def test_semantic_L6_an_edited_label_fails_only_L6(tmp_path):
-    def edit(p):
-        p["label"] = p["label"].replace("passes every offline link", "is caught")
-    rep = verify(_write_consistent(tmp_path, _inputs(), mutate=edit))
+    rep = verify(_write_consistent(tmp_path, _inputs(), mutate=_edit_label))
     assert _fails(rep) == {"L6"}
+
+
+# every member of the semantic battery, by name: (what is made false, the links it flips, the capsule)
+SEMANTIC = [
+    ("L0 a second gates fence", {"L0", "L3"}, lambda tmp, n: _write_two_fences(tmp, n)),
+    ("L1 a memo of another kind", {"L1"}, lambda tmp, n: _write_consistent(tmp, _inputs_other_kind(), name=n)),
+    ("L2 a smoke receipt", {"L2"}, lambda tmp, n: _write_consistent(
+        tmp, _inputs(receipt_bytes=_receipt_bytes({"gap": 0.3122, "dev": 0.0048}, smoke=True)), name=n)),
+    ("L3 another row's verdict", {"L3"}, lambda tmp, n: _write_consistent(
+        tmp, _inputs(receipt_bytes=_receipt_bytes({"gap": 0.3122, "dev": 0.0048}, verdict="EFFECT_ABSENT")), name=n)),
+    ("L3 a metric across a bar", {"L3"}, lambda tmp, n: _write_consistent(
+        tmp, _inputs(receipt_bytes=_receipt_bytes({"gap": 0.10, "dev": 0.0048}, verdict="EFFECT_HOLDS",
+                                                  gates={"G_A": True, "G_B": True})), name=n)),
+    ("L4 an edited sworn verdict", {"L4"}, lambda tmp, n: _write_consistent(tmp, _inputs_verdict_edited(), name=n)),
+    ("L4 a span value the receipt does not hold", {"L4"}, lambda tmp, n: _write_consistent(
+        tmp, _inputs_repointed(b"The gap was 0.3122.", b"The gap was 0.9122."), name=n)),
+    ("L4 a snapshot entry that is another receipt", {"L4", "L5"},
+     lambda tmp, n: _write_consistent(tmp, _inputs_snapshot_swapped(), name=n)),
+    ("L5 a line about another document", {"L5"},
+     lambda tmp, n: _write_consistent(tmp, _inputs_line_about_another_document(), name=n)),
+    ("L5 a receipt set without the run's receipt", {"L5"},
+     lambda tmp, n: _write_consistent(tmp, _inputs_receipt_set_omits(), name=n)),
+    ("L6 an edited label", {"L6"}, lambda tmp, n: _write_consistent(tmp, _inputs(), mutate=_edit_label, name=n)),
+]
 
 
 # ------------------------------------------------------------------- controls that must not fire
@@ -553,14 +684,79 @@ def test_no_house_word_in_the_module_the_tests_the_page_or_the_datasheet(minted)
     rx = rc._HOUSE_RX
     for f in (ROOT / "styxx" / "research_capsule.py", Path(__file__)):
         assert rx.search(f.read_text(encoding="utf-8")) is None, f
-    assert rx.search(_page_outside_payload(minted)) is None
+    html = minted.read_text(encoding="utf-8")
+    # what the page prints; the inlined verifier is the package's code (sworn_verify.js carries the
+    # ordinal as a variable name) and is sealed by digest, not scanned for words
+    assert rx.search(rc._without_verifier(html)) is None
+    assert rx.search(rc._JS_RESEARCH) is None
     assert rx.search("\n".join(datasheet(verify(minted)))) is None
-    for word in ("levon", "yranoitulover", "gnikaerbdnuorg", "hguorhtkaerb", "eno rebmun"):
-        assert rx.search("a " + word[::-1] + " claim")              # the scanner sees each
+    assert len(rc._HOUSE_WORDS) == 8
+    for word in rc._HOUSE_WORDS:
+        assert rx.search("a " + word + " claim")                    # the scanner sees each
     # and never a stronger summary than the settled one
     page = _page_outside_payload(minted).lower()
     for banned in ("verified", "immutable", "proof of", "sealed before the run"):
         assert banned not in page
+
+
+def test_the_eighth_house_word_is_the_ordinal_the_lab_holds():
+    assert rc._HOUSE_WORDS[7] == "tsrif"[::-1]
+    lab = ROOT / "tests" / "test_unpriced_priority_sentences_withdrawn.py"
+    if not lab.exists():
+        pytest.skip("the lab's ordinal test is absent from this tree")
+    held = re.search(r'_ORDINAL = "(\w+)"\[::-1\]', lab.read_text(encoding="utf-8"))
+    assert held and held.group(1)[::-1] == rc._HOUSE_WORDS[7]
+
+
+_ORD = "tsrif"[::-1]
+
+
+@pytest.mark.parametrize("where", ["stated", "run_note"])
+def test_build_refuses_the_ordinal_in_what_the_lab_writes_and_never_echoes_it(tmp_path, where):
+    inp = _inputs()
+    inp.pop("_core")
+    if where == "stated":
+        inp["stated"]["note"] = f"the {_ORD} seed ran"
+    else:
+        inp["run_note"] = {"path": "papers/x/x_RUN_NOTE.md", "bytes": RUN_NOTE + f"the {_ORD} seed ran\n".encode()}
+    with pytest.raises(SystemExit) as e:
+        build(inp, tmp_path / "no.research.html", created=TS)
+    msg = str(e.value.code)
+    assert "REFUSED disclosure" in msg and "entry 8 of 8" in msg
+    assert rc._HOUSE_RX.search(msg) is None
+
+
+def test_carried_history_is_scanned_for_leaks_and_not_for_the_house_words(tmp_path):
+    """A frozen PREREG and a runner are history: one that prints the ordinal in a sentence the
+    lab wrote before the list (the pMNIST PREREG does, at its line 55) is carried as is; a leak in
+    history is still refused."""
+    inp = _inputs()
+    inp.pop("_core")
+    prereg = (PREREG + f"\nThe anchor digits were {_ORD} typed from the prose.\n").encode("utf-8")
+    digest = sworn._sha256(prereg)
+    inp["prereg"]["bytes"] = prereg
+    inp["anchors"][0].update(digest=digest, memo=clock.memo("sealed-prereg", digest))
+    inp["runners"] = [{"path": "papers/x/run_x.py", "bytes": RUNNER + f"# the {_ORD} seed\n".encode()}]
+    cap = build(inp, tmp_path / "h.research.html", created=TS)
+    assert verify(cap)["ok"]
+    inp["runners"] = [{"path": "papers/x/run_x.py", "bytes": RUNNER + b"# C:\\Users\\someone\\run\n"}]
+    with pytest.raises(SystemExit, match="drive-letter path"):
+        build(inp, tmp_path / "no.research.html", created=TS)
+
+
+def test_the_disclosure_scan_reads_decoded_strings_not_json_escapes():
+    honest = {"artifacts": {"sidecar": {"text": "Let the gap be g:\nthen the bar"}}}
+    assert rc.disclosure_hits(honest) == []
+    assert any("drive-letter" in h for h in rc.disclosure_hits({"stated": {"note": "C:\\Users\\someone"}}))
+    # a carried JSON artifact is read as its decoded strings too
+    ok = json.dumps({"note": "g:\nthen"}).encode("utf-8")
+    assert b"g:\\n" in ok
+    leak = json.dumps({"note": "C:\\Users\\someone"}).encode("utf-8")
+
+    def art(data):
+        return {"artifacts": {"receipts": [{"name": "r.json", "b64": base64.b64encode(data).decode()}]}}
+    assert rc.disclosure_hits(art(ok)) == []
+    assert any(h.startswith("artifacts/receipts[0]/r.json: a drive-letter path") for h in rc.disclosure_hits(art(leak)))
 
 
 # -------------------------------------------------------------------------- the pure re-score
@@ -761,6 +957,36 @@ def test_the_cli_builds_from_the_repository_at_named_commits_and_repo_reads_matc
     assert "DIFFERS FROM THE REPOSITORY" in capsys.readouterr().out
 
 
+def test_repo_reads_tell_a_commit_the_clone_lacks_from_a_path_absent_at_a_commit_it_has(chain_repo, minted,
+                                                                                         tmp_path, capsys):
+    repo, prereg_commit, at = chain_repo
+    # the synthetic forger's commits are not in this clone: NOT-CHECKED, and the reason says so
+    rep = verify(minted, repo=repo)
+    blob_rows = [r for r in rep["repo"]["rows"] if r["link"] in ("L0", "L2", "L4")]
+    assert blob_rows and all(r["reading"] == rc.NOT_CHECKED for r in blob_rows)
+    assert all(r["detail"].startswith("commit_absent: the clone has no commit with this id") for r in blob_rows)
+    # a forger naming commits the clone HAS, with paths absent at them: DIFFERS, not NOT-CHECKED
+    inp = _inputs()
+    inp.pop("_core")
+    inp["experiment"]["at_commit"] = at
+    inp["prereg"].update(blob_commit=prereg_commit, path="papers/y/PREREG_x.md")
+    inp["runners"] = [{"path": "papers/y/run_x.py", "bytes": RUNNER}]
+    forged = build(inp, tmp_path / "f.research.html", created=TS)
+    assert verify(forged)["ok"]                                      # every offline link holds
+    rep = verify(forged, repo=repo)
+    rows = {(r["link"], r["path"]): r for r in rep["repo"]["rows"]}
+    for key in (("L0", "papers/y/PREREG_x.md"), ("L2", "papers/y/run_x.py")):
+        assert rows[key]["reading"] == rc.DIFFERS, rows[key]
+        assert rows[key]["detail"].startswith("path_absent: the clone has commit"), rows[key]
+    # the snapshot still names a commit the clone lacks, and reads NOT-CHECKED beside them
+    assert rows[("L4", "papers/x/x_result.json")]["reading"] == rc.NOT_CHECKED
+    assert rows[("L2", "papers/x/x_result.json")]["reading"] == rc.MATCHES
+    assert rep["ok"] is False
+    assert rc.main(["verify", str(forged), "--repo", str(repo)]) == 1
+    out = capsys.readouterr().out
+    assert "DIFFERS: papers/y/PREREG_x.md" in out and "DIFFERS FROM THE REPOSITORY" in out
+
+
 def test_the_cli_build_refuses_to_read_the_working_tree(chain_repo, tmp_path, capsys):
     repo, prereg_commit, at = chain_repo
     (repo / "papers" / "x" / "x_RUN_NOTE.md").write_bytes(RUN_NOTE + b"edited after the commit\n")
@@ -817,39 +1043,115 @@ def test_layer_1_agrees_with_layer_2_on_the_clean_capsule(minted):
     assert "verified" not in l1["summary"].lower()
 
 
-@pytest.mark.parametrize("where,needle,link", [
-    ("prereg", b"FROZEN before data", "L0"),
-    ("receipt", b"synthetic", "L2"),
-    ("result", b"no interval", "L4"),
-])
-def test_layer_1_agrees_with_layer_2_on_digest_mutations(minted, tmp_path, where, needle, link):
-    p = _payload(minted)
-    a = p["artifacts"]
-    _flip_b64({"prereg": a["prereg"], "receipt": a["receipts"][0], "result": a["result"]}[where], needle)
-    cap = _reseal(minted, p, tmp_path / "t.research.html")
+def _agree(l1: dict, rep: dict, name: str) -> None:
+    for l in rep["links"]:
+        assert l1["links"][l["id"]]["offline"] == l["offline"], (name, l["id"], l1["links"][l["id"]], l["problems"])
+
+
+@pytest.mark.parametrize("where,needle,link", DIGEST_BYTES)
+def test_layer_1_agrees_with_layer_2_on_every_byte_mutation(minted, tmp_path, where, needle, link):
+    cap = _digest_mutant(minted, tmp_path / "t.research.html", where, needle)
     l1, rep = _layer1(cap), verify(cap)
     assert l1["summary"].startswith(SUMMARY_FAILS)
-    for l in rep["links"]:
-        assert l1["links"][l["id"]]["offline"] == l["offline"], (l["id"], l1["links"][l["id"]], l["problems"])
+    _agree(l1, rep, where)
     assert l1["links"][link]["offline"] == FAILS
 
 
-def test_layer_1_agrees_with_layer_2_on_semantic_mutations(tmp_path):
-    cases = {
-        "L3": _inputs(receipt_bytes=_receipt_bytes({"gap": 0.3122, "dev": 0.0048}, verdict="EFFECT_ABSENT")),
-        "L2": _inputs(receipt_bytes=_receipt_bytes({"gap": 0.3122, "dev": 0.0048}, smoke=True)),
-    }
-    inp = _inputs()
-    inp["charon"]["entry"] = _charon_entry(inp["sidecar"], inp["sworn_receipt"], inp["_core"], "papers/x/RESULT_x.md",
-                                           HEADER, subject={"name": "RESULT_x.md", "path": "papers/x/RESULT_x.md",
-                                                            "sha256": "0" * 64})
-    cases["L5"] = inp
-    for link, inputs in cases.items():
-        cap = _write_consistent(tmp_path, inputs, name=f"{link}.research.html")
+@pytest.mark.parametrize("edit,link", FIELD_EDITS)
+def test_layer_1_agrees_with_layer_2_on_every_field_mutation(minted, tmp_path, edit, link):
+    p = _payload(minted)
+    edit(p["artifacts"])
+    cap = _reseal(minted, p, tmp_path / "t.research.html")
+    l1, rep = _layer1(cap), verify(cap)
+    assert _fails(rep) == {link}
+    assert l1["summary"].startswith(SUMMARY_FAILS)
+    _agree(l1, rep, link)
+
+
+def test_layer_1_agrees_with_layer_2_on_a_byte_inside_the_gates_block(minted, tmp_path):
+    p = _payload(minted)
+    _flip_b64(p["artifacts"]["prereg"], b'"value": 0.15')
+    cap = _reseal(minted, p, tmp_path / "t.research.html")
+    l1, rep = _layer1(cap), verify(cap)
+    assert "L0" in _fails(rep)
+    _agree(l1, rep, "gates block")
+
+
+def test_layer_1_agrees_with_layer_2_on_the_controls(minted, tmp_path):
+    def created(p):
+        p["created"] = "2030-01-01T00:00:00Z"
+
+    def note(p):
+        p["artifacts"]["charon"]["entry"].update(timestamp="2030-01-01T00:00:00Z", note="re-ferried")
+    for name, edit, sort_keys in (("created", created, True), ("note", note, True), ("key order", None, False)):
+        p = _payload(minted)
+        if edit:
+            edit(p)
+        else:
+            p = {k: p[k] for k in reversed(list(p))}
+        cap = _reseal(minted, p, tmp_path / f"{name}.research.html", sort_keys=sort_keys)
         l1, rep = _layer1(cap), verify(cap)
-        assert _fails(rep) == {link}
-        for l in rep["links"]:
-            assert l1["links"][l["id"]]["offline"] == l["offline"], (link, l["id"], l1["links"][l["id"]])
+        assert _fails(rep) == set(), name
+        _agree(l1, rep, name)
+        if name == "note":          # outside the line's entry_id, inside the payload digest: both say so
+            assert rep["payload"]["core_sha256_ok"] is False and "core_sha256 does not re-derive" in l1["summary"]
+        else:
+            assert rep["ok"] and l1["summary"].startswith(SUMMARY_OK), (name, l1["summary"])
+
+
+def test_layer_1_agrees_with_layer_2_on_the_slot_neither_catches_offline(minted, tmp_path):
+    p = _payload(minted)
+    p["artifacts"]["anchors"][0]["slot"] += 1
+    cap = _reseal(minted, p, tmp_path / "t.research.html")
+    l1, rep = _layer1(cap), verify(cap)
+    assert _fails(rep) == set()
+    _agree(l1, rep, "slot")
+    # both summaries fail on the payload digest alone, and the browser says which
+    assert l1["summary"].startswith(SUMMARY_FAILS) and "core_sha256 does not re-derive" in l1["summary"]
+
+
+@pytest.mark.parametrize("name,links,make", SEMANTIC, ids=[s[0] for s in SEMANTIC])
+def test_layer_1_agrees_with_layer_2_on_every_semantic_mutation(tmp_path, name, links, make):
+    """Every member of the semantic battery, the three L4 members included: the browser reads each
+    link as the installed layer does, and never prints the consistent summary over a false link."""
+    cap = make(tmp_path, "s.research.html")
+    l1, rep = _layer1(cap), verify(cap)
+    assert _fails(rep) == links, (name, [(l["id"], l["problems"]) for l in rep["links"]])
+    _agree(l1, rep, name)
+    assert l1["summary"].startswith(SUMMARY_FAILS) and l1["summary_class"] == "summary bad", (name, l1["summary"])
+    if name == "L4 a span value the receipt does not hold":
+        assert "live SWORN-FAILED" in l1["links"]["L4"]["checked"], l1["links"]["L4"]
+    if name == "L4 an edited sworn verdict":
+        assert "its own spans tally SWORN-HELD" in l1["links"]["L4"]["checked"], l1["links"]["L4"]
+
+
+def test_layer_1_re_derives_every_span_kind_over_the_snapshot(tmp_path):
+    """numeric, quote and hash spans resolved through the page's snapshot resolver: both layers
+    hold on the honest chain and both fail L4 alone when a quoted needle is one the leaf lacks."""
+    clean = _write_consistent(tmp_path, _inputs(result_fn=_result_every_kind), name="kinds.research.html")
+    l1, rep = _layer1(clean), verify(clean)
+    assert rep["ok"], [(l["id"], l["problems"]) for l in rep["links"]]
+    l4 = next(l for l in rep["links"] if l["id"] == "L4")
+    assert any("SWORN-HELD {'HELD': 3," in c for c in l4["checked"]), l4["checked"]
+    assert l1["summary"].startswith(SUMMARY_OK), l1
+    assert all(v["offline"] == HOLDS for v in l1["links"].values())
+    assert "the sworn core re-derives here over the carried snapshot: SWORN-HELD" in l1["links"]["L4"]["checked"]
+    forged = _write_consistent(tmp_path, _inputs_repointed(b"`synthetic`", b"`synthetiq`", result_fn=_result_every_kind),
+                               name="kinds-forged.research.html")
+    l1, rep = _layer1(forged), verify(forged)
+    assert _fails(rep) == {"L4"}
+    assert l1["links"]["L4"]["offline"] == FAILS and l1["summary"].startswith(SUMMARY_FAILS)
+    assert all(l1["links"][l["id"]]["offline"] == l["offline"] for l in rep["links"])
+
+
+def test_layer_1_and_layer_2_resolve_alike_when_the_sidecar_commit_is_not_the_snapshot_commit(tmp_path):
+    """A snapshot taken at another commit resolves nothing (commit_absent); both layers fail L4."""
+    def move(p):
+        p["artifacts"]["snapshot"]["commit"] = "d" * 40
+    cap = _write_consistent(tmp_path, _inputs(), mutate=move, name="moved.research.html")
+    l1, rep = _layer1(cap), verify(cap)
+    assert "L4" in _fails(rep)
+    assert all(l1["links"][l["id"]]["offline"] == l["offline"] for l in rep["links"])
 
 
 def test_the_page_before_its_script_runs_claims_nothing(minted):
@@ -859,4 +1161,8 @@ def test_the_page_before_its_script_runs_claims_nothing(minted):
     # the inlined verifier is the installed one and is sealed by digest in the payload
     p = _payload(minted)
     assert p["verifier_js"]["sha256"] == sworn._sha256(rc._JS.encode("utf-8"))
-    assert rc._JS in minted.read_text(encoding="utf-8")
+    html = minted.read_text(encoding="utf-8")
+    assert rc._JS in html
+    # the sworn layer is the package's second implementation, inlined byte for byte (LF), not edited
+    sworn_js = (ROOT / "styxx" / "_data" / "sworn_verify.js").read_bytes().decode("utf-8").replace("\r\n", "\n")
+    assert sworn_js in html and rc._JS_RESEARCH in html
