@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — PREREG: the permuted-MNIST headline under held-out permutations, new seeds and a 3x budget, sealed as a git blob before any run
+
+**`papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md`, `run_pmnist_robustness.py`,
+`tests/test_pmnist_robustness.py`; `papers/checksum/SEALS_2026_09_13.md` row 7.** The arc's headline (+0.3122 on
+permuted MNIST, `pmnist_ablation_result.json`) rests on two seeds, one pixel permutation and a 4000-step budget with
+no convergence control, and the 2026-09-02 entry below ("The arc's headline survives its own confound; the
+permuted-MNIST re-run is the owed next preregistration") was never supported by a receipt on this benchmark. This
+preregistration freezes, before any run, the measurement that gives the headline an interval or takes it away, and
+the untied control beside it on the same bars the sealed 2026-09-02 PREREG froze.
+
+- **Ten gates, thirteen rows, total** over 1,024 assignments, scored through `styxx.protocol` over the whole receipt.
+  The positive control is the rotating arm's floor (0.85 over 18 runs, a collapsed FREE run counted as 0); the gap
+  must reproduce on three seeds the receipt never ran (2, 3, 4 on permutation 1234, bar 0.15) before robustness is
+  read; the robustness gates read five held-out permutations only (mean gap 0.15; the permutation interval's lower
+  end above 0 and above the committed WIDENS bar, 0.05); the gap at three times the budget (12,000 steps, bar 0.15);
+  and REAL2 within 0.03 of FREE or of CLAMPED on held-out permutation average, with the recovery fraction's interval
+  the number the sentence prints, because at 15 runs per arm the 0.03 bars sit at 1.1 to 1.5 standard errors and
+  the ROTATION-versus-PARTIAL suffix is a label.
+- **Permutations no one chose.** The five held-out pixel permutations are the top 32 bits of
+  sha256(`<beacon hex>:perm:k`), k = 1..5, where the beacon is the block hash of the slot that seals this file
+  (row 7 of SEALS, frozen at `3598e59d`, blob `2068e673...`): the 45 held-out trainings cannot precede the block that
+  named their inputs. The sha256-of-tag list (`3584514041`, `27380109`, `2994719670`, `3317084913`, `2856893334`) is
+  the labelled fallback if the operator declines the anchor; a fallback run says so in every leaf and in the RESULT.
+- **The receipt's own seeds enter no gate.** Seeds 0 and 1 on permutation 1234 are re-run as the determinism check
+  (`anchor_max_abs_dev`, reported); the headline's own permutation is outside every permutation-averaged gate.
+- **Plumbing that is checked, not described.** The runner imports `run_pmnist_ablation.py` and
+  `run_pmnist_untied.py` verbatim and refuses before data unless their LF-normalised bytes hash to the committed
+  blobs (`c8d7cdfb...`, `caf276da...`; the Windows working copy of the untied runner carries CRLF and hashes
+  differently while running the same code), `_mnist.npz` hashes to `98d68505...`, the PREREG on disk hashes to the
+  sealed blob, the three arms share RNG state and every non-SSM tensor at seeds 0-4, `Experiment.check_metrics()`
+  resolves every gate path on the receipt shape, CUDA is available and 6 GiB are free. One leaf per run, an
+  append-only hash-chained leaf log, `--smoke` INVALID by type, three nights of about 18 GPU-hours measured
+  (`--night 1|2|3`, nights 2 and 3 refusing without the beacon or the declared fallback), `--aggregate`.
+- **Written without knowledge of the sealed untied receipt** (`pmnist_untied_result.json`, run 2026-10-11, unread);
+  section 7 of the PREREG predicts under each verdict it can carry. No run, no smoke and no GPU use in this change;
+  the smoke and the nights wait on the operator's approval and the card.
+- Tests, on CPU with no data: the gates block through the lab's scanner with every assignment reaching a row;
+  `Experiment` scoring each verdict; the hash checks refusing a mutated runner copy; the derivation deterministic;
+  the aggregate arithmetic on synthetic leaves, degeneracy by arm and every plumbing zero; the data pin refusing a
+  different file; SEALS row 7 equal to the committed blob; the banned-word scan over the three files.
+
+
 ## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
 
 **`styxx/capsule.py` and `styxx/charon.py`; tests in `tests/test_capsule_no_traceback.py`.** 7.49.0
