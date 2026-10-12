@@ -124,6 +124,24 @@ exists to catch while remaining fully dangerous to the defender. Correct in firs
 on a repository you own; never on a stranger's branch. Prefer ``--evidence``, which reads
 bytes and executes nothing.
 
+THE RECORD NAMES ITS INSTRUMENT
+-------------------------------
+
+``DiffGate.to_dict()`` writes the eleven content keys in their v0 order, ``"diffgate": "v0"``
+still the format key of the content, and then two identity keys, ``build`` and ``runtime``
+(AMENDMENT_capsule_v02_instrument_identity_2026_10_11; ``styxx.instrument`` defines both).
+``build`` names the bytes that wrote the record: the sha256 of this file and of the modules a
+record's content depends on, each over the file's bytes with CRLF read as LF, and the styxx
+version string, recorded and never compared. ``runtime`` names what ran it: the interpreter's
+implementation and version, ``unicodedata.unidata_version`` and a case-table floor. No path and
+no ``sys.version`` is written. The identity is computed once per process, at the earliest
+record, and copied into every record. It is not a field of ``DiffGate``, so nothing that builds
+or edits a gate (the PATH-2a overlay included) can set it. The file is this module's own
+``__file__``, captured at import, never a module looked up by name. A record names its
+instrument; it does not prove it: a stale ``.pyc`` or a module patched at run time breaks the
+link, and a file that cannot be read is null, never a guess. ``--out`` writes the identity, and
+the CLI's last line names it.
+
 CLI::
 
     python -m styxx.diffgate SUMMARY.md --repo . --base main --head HEAD \
@@ -933,6 +951,11 @@ def selfcheck_tests_pass_never_accuses(source: str | None = None) -> dict:
 
 
 from .declare import declaration_pass as _declaration_pass
+from . import instrument as _instrument
+
+# The file whose bytes `build` names: this reader's own, captured at import, never looked up by name. A reader
+# built from a string names a null sha unless its builder says which file it reads as (tests/_p2a_ref.module_from).
+_IDENTITY_FILE = globals().get("__file__")
 
 
 @dataclass
@@ -973,15 +996,19 @@ class DiffGate:
     why_unmeasured: str = ""
 
     def to_dict(self):
-        return {"diffgate": "v0", "verdict": self.verdict, "base": self.base,
-                "head": self.head,
-                "claims": [c.__dict__ for c in self.claims],
-                "uncovered_sentences": self.uncovered_sentences,
-                "sentences_total": self.sentences_total,
-                "uncovered_texts": self.uncovered_texts,
-                "unparsed_claims": self.unparsed_claims,
-                "measured": self.measured,
-                "why_unmeasured": self.why_unmeasured}
+        d = {"diffgate": "v0", "verdict": self.verdict, "base": self.base,
+             "head": self.head,
+             "claims": [c.__dict__ for c in self.claims],
+             "uncovered_sentences": self.uncovered_sentences,
+             "sentences_total": self.sentences_total,
+             "uncovered_texts": self.uncovered_texts,
+             "unparsed_claims": self.unparsed_claims,
+             "measured": self.measured,
+             "why_unmeasured": self.why_unmeasured}
+        # then the instrument that wrote them, `build` and `runtime`: computed once per process, a fresh copy
+        # here, and never a field of this class (the module docstring, THE RECORD NAMES ITS INSTRUMENT)
+        d.update(_instrument.record_identity(_IDENTITY_FILE))
+        return d
 
 
 def _git(repo, *args) -> str:
@@ -3309,6 +3336,8 @@ def _report(g: "DiffGate", out: str | None) -> int:
     if not g.claims:
         print("\nno diff-shaped claims found — silence is scope, not weakness:")
         print(_WHAT_IT_CHECKS)
+    # last, the instrument that wrote this record, as --out records it (ASCII: a Windows pipe is cp1252)
+    print(f"instrument: {_instrument.describe(_instrument.record_identity(_IDENTITY_FILE))}")
     return 0 if g.verdict == "PASS" else 1
 
 
