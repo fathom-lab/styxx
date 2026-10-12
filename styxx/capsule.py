@@ -35,6 +35,7 @@ import datetime as _dt
 import hashlib
 import html as _html
 import json
+import os
 import platform
 import re
 import sys
@@ -87,9 +88,55 @@ def _b64(b: bytes) -> str:
 # Windows rules alike: no separator, no drive, no "." or "..", no control character, no trailing
 # dot or space (Windows drops them, so two names could meet in one file), and no Windows device.
 _WINDOWS_DEVICES = {"con", "prn", "aux", "nul", "conin$", "conout$"}
+# Nor a name some system's file system refuses where another writes it (#196). POSIX writes
+# r<1>.json and Windows refuses it, so until this change the verifier re-ran the certifier on Linux
+# and failed with an OSError on Windows: a capsule's verdict depended on the verifier's system. A
+# lone surrogate is the reverse: Windows writes it, and UTF-8 cannot encode it, so on POSIX the
+# write raised UnicodeEncodeError (or, from U+DC80 to U+DCFF, wrote other bytes). NTFS holds a name
+# of at most 255 UTF-16 code units, ext4 one of at most 255 UTF-8 bytes. Each such name is refused
+# on every system. A file system with a stricter limit can still refuse a name this allows (HFS+
+# stores a name decomposed in at most 255 UTF-16 code units; eCryptfs's encrypted names hold about
+# 143 bytes); the write then fails by name, as a temporary directory that refused the files.
+_WINDOWS_RESERVED = '<>"|?*'
+_NAME_MAX = 255
+# Nor a name another file answers to on some file system. Where NTFS generates 8.3 short names (the
+# volume of the Windows box this was measured on does, temporary directory included), it gives
+# abcdefghijkl.json the short name ABCDEF~1.JSO
+# and opens that file under either name, in any case: a capsule naming both wrote one file there
+# and two elsewhere, so its certifier re-ran over other receipts there and the verdict depended on
+# the verifier's system (#196, review round 1, measured on this repository's Windows box). Every
+# short name Windows generates holds "~" in a base of at most 8 characters, with an extension of
+# at most 3, so a name of that form holding "~" is refused on every system.
+_SHORT_NAME_FORM = re.compile(r"[^.]{1,8}(?:\.[^.]{1,3})?")
+
+
+def _portable_name_problem(name: str) -> Optional[str]:
+    """Why a file name is one some system's file system refuses, or opens as another file's, else
+    None."""
+    held = [c for c in _WINDOWS_RESERVED if c in name]
+    if held:
+        return f"holds {', '.join(map(repr, held))}, which Windows refuses in a file name"
+    if any(0xD800 <= ord(c) <= 0xDFFF for c in name):
+        return "holds a lone surrogate, which UTF-8, and so a POSIX file name, cannot encode"
+    n8, n16 = len(name.encode("utf-8")), len(name.encode("utf-16-le")) // 2
+    if n8 > _NAME_MAX or n16 > _NAME_MAX:
+        return (f"is {n8} UTF-8 bytes and {n16} UTF-16 code units long, and a file name holds at "
+                f"most {_NAME_MAX} of either on some system (UTF-16 code units on NTFS, bytes on "
+                f"ext4)")
+    if "~" in name and _SHORT_NAME_FORM.fullmatch(name):
+        return ("has the form of an 8.3 short name holding '~' (as ABCDEF~1.JSO is the short "
+                "name of abcdefghijkl.json), and where NTFS generates short names it opens "
+                "another file under such a name")
+    return None
 
 
 def _bare_name(name) -> bool:
+    return _bare_shape(name) and _portable_name_problem(name) is None
+
+
+def _bare_shape(name) -> bool:
+    """The rule 7.48.1 shipped (GHSA-h5xv-4344-f62r): a name that can only mean a file directly
+    inside the directory, under POSIX and Windows path rules alike."""
     if not isinstance(name, str) or name in ("", ".", ".."):
         return False
     if any(c in name for c in "/\\:") or any(ord(c) < 32 for c in name):
@@ -109,14 +156,91 @@ def _unsafe_names(payload: dict) -> List[str]:
     """Problems with the file names a v0.1 payload asks the verifier to write; empty when all are safe."""
     names = [(payload.get("document") or {}).get("name")]
     names += [(r or {}).get("name") for r in payload.get("receipts") or []]
-    out = [f"embedded name {n!r} is not a bare file name; nothing was written and the "
-           f"certifier was not re-run" for n in names if not _bare_name(n)]
-    if not out:
-        folded = [n.casefold() for n in names]
-        if len(set(folded)) != len(folded):
-            out.append("two embedded names are the same file on a case-insensitive file system; "
-                       "nothing was written and the certifier was not re-run")
+    out = []
+    for n in names:
+        if not _bare_shape(n):
+            out.append(f"embedded name {n!r} is not a bare file name; nothing was written and the "
+                       f"certifier was not re-run")
+        elif _portable_name_problem(n):
+            out.append(f"embedded name {_short(n, 120)} {_portable_name_problem(n)}; it is refused "
+                       f"on every system, so that a capsule's verdict does not depend on the "
+                       f"verifier's; nothing was written and the certifier was not re-run")
+    pair = None if out else _same_file_pair(names)
+    if pair and pair[0] == "case":
+        out.append("two embedded names are the same file on a case-insensitive file system; "
+                   "nothing was written and the certifier was not re-run")
+    elif pair:
+        out.append(f"two embedded names, {_short(pair[1], 60)} and {_short(pair[2], 60)}, are "
+                   f"the same file on {_HFS_PLUS}: they differ only in Unicode normalization, in "
+                   f"such a code point, or in these and case; the pair is refused on every "
+                   f"system; nothing was written and the certifier was not re-run")
     return out
+
+
+# HFS+ stores a name decomposed, so two canonically equivalent names (an NFC é and an e with a
+# combining accent) are one file there, as two names differing in case are on NTFS. And it ignores
+# these code points when it compares two names (Apple, Technical Note TN1150, "HFS Plus Volume
+# Format"), so r<U+200C>.json and r.json are one file there too; that is read from the note, not
+# run on an HFS+ volume.
+_HFS_IGNORED = re.compile("[\u200c-\u200f\u202a-\u202e\u206a-\u206f\ufeff]")
+_HFS_PLUS = ("HFS+, which stores names decomposed and ignores some code points when it compares "
+             "them")
+
+
+def _name_fold(name: str) -> str:
+    """The form in which two names are one file on HFS+: the canonical caseless form (the Unicode
+    Standard, section 3.13, D145: NFD(casefold(NFD(name)))) of the name without the code points
+    HFS+ ignores when it compares names."""
+    return unicodedata.normalize(
+        "NFD", unicodedata.normalize("NFD", _HFS_IGNORED.sub("", name)).casefold())
+
+
+def _same_file_pair(names: List[str]):
+    """The earliest pair of names that are one file on some file system, and which file system:
+    ("case", a, b) for two names a case-insensitive file system holds as one (a name given twice
+    among them), ("hfs", a, b) for two only HFS+ holds as one; else None."""
+    for kind, fold in (("case", str.casefold), ("hfs", _name_fold)):
+        seen = {}
+        for n in names:
+            k = fold(n)
+            if k in seen:
+                return kind, seen[k], n
+            seen[k] = n
+    return None
+
+
+# Both folds read the verifying Python's Unicode database, as certify's reading of digits does
+# (_unicode_note): a pair of letters whose case is defined in a later Unicode version than that
+# database's (U+A7CC and U+A7CD are a pair from Unicode 16.0) is refused only by a verifier that
+# knows them.
+
+
+def _rerun_dir() -> tempfile.TemporaryDirectory:
+    """A new temporary directory, removed on exit, for writing the embedded files and re-running
+    the certifier over them.
+
+    On Windows its path carries the extended-length prefix (\\\\?\\), so every name the rule
+    allows is written whatever the length of the temporary directory's path and whether or not
+    the system enables long paths. Without the prefix, Windows without long paths (its default)
+    refuses a path of more than 260 characters, so until #196 review round 2 a capsule naming a
+    receipt of 226 characters failed on this repository's Windows box and verified on POSIX: its
+    verdict depended on the verifier's system, as with r<1>.json. The prefix also switches off
+    Windows' rewriting of a name (dropping trailing dots and spaces, mapping device names); the
+    rule refuses each such name before anything is written."""
+    if os.name != "nt":
+        return tempfile.TemporaryDirectory()
+    base = os.path.abspath(tempfile.gettempdir())
+    if base.startswith(("\\\\?\\", "\\\\.\\")):
+        pass
+    elif base.startswith("\\\\"):                      # a share: \\server\share\...
+        base = "\\\\?\\UNC\\" + base[2:]
+    else:
+        base = "\\\\?\\" + base
+    try:
+        return tempfile.TemporaryDirectory(dir=base)
+    except OSError:
+        # a temporary directory the prefix cannot name: the one Windows names, as before
+        return tempfile.TemporaryDirectory()
 
 
 # ---------------------------------------------------------------------------------
@@ -127,6 +251,49 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
     """Mint a capsule — refusing, loudly, to mint one that lies."""
     from styxx.certify import certify_doc
     from styxx._version import __version__
+
+    # A name, or a pair of names, verify refuses is refused here, before anything is read or
+    # written. Until #196 a POSIX system minted and kept a capsule naming r<1>.json, which a
+    # Windows verifier failed; and a name or pair verify refuses on every system was found only
+    # by the verify after the mint, whose refusal then blamed the ledger schema.
+    names = [doc.name] + [r.name for r in receipts]
+    for n in names:
+        why = (None if _bare_shape(n) else
+               "is not a bare file name under POSIX and Windows rules alike (it holds a "
+               "separator, a drive, a control character or a trailing dot or space, or is a "
+               "Windows device)") or _portable_name_problem(n)
+        if why:
+            raise SystemExit(f"REFUSED: the file name {_short(n, 120)} {why}. verify refuses "
+                             f"such a name on every system, so that a capsule's verdict does not "
+                             f"depend on the verifier's; rename the file and certify it again.")
+    # One receipt given twice by its path is one receipt, as before. Two files given under one
+    # name are a name given twice, which verify refuses: until #196 review round 2 create read
+    # both and then refused with a message that blamed the bytes, or raised on a path that did
+    # not exist. The document keeps its own place: a capsule holds it apart from the receipts.
+    given, seen = [doc], set()
+    for r in receipts:
+        try:
+            key = (r.name, os.path.realpath(r))
+        except (OSError, ValueError):
+            key = (r.name, str(r))
+        if key not in seen:
+            seen.add(key)
+            given.append(r)
+    pair = _same_file_pair([p.name for p in given])
+    if pair and pair[1] == pair[2]:
+        twice = [str(p) for p in given if p.name == pair[1]][:2]
+        raise SystemExit(f"REFUSED: the name {_short(pair[1], 120)} is given to two of the files "
+                         f"to embed ({_short(twice[0], 160)} and {_short(twice[1], 160)}), and a "
+                         f"capsule holds one file under each name, so a verifier would write one "
+                         f"over the other. verify refuses a name given twice on every system; "
+                         f"give each file its own name and certify again.")
+    if pair:
+        kind, a, b = pair
+        where = "a case-insensitive file system" if kind == "case" else _HFS_PLUS
+        raise SystemExit(f"REFUSED: the file names {_short(a, 120)} and {_short(b, 120)} are one "
+                         f"file on {where}, so a verifier there would write one file for the two. "
+                         f"verify refuses the pair on every system; rename one of the files and "
+                         f"certify again.")
 
     # The certificate hashes the document as certify_doc READ it — read_text with universal
     # newlines, re-encoded UTF-8 — so on a CRLF checkout the on-disk bytes are NOT what the
@@ -165,7 +332,7 @@ def create_capsule(doc: Path, receipts: List[Path], cert: Path, out: Path) -> Pa
         raise SystemExit(f"REFUSED: certificate names receipts not provided: {sorted(missing)}")
 
     # 2. the certificate must be REPRODUCIBLE at the live verifier, right now
-    with tempfile.TemporaryDirectory() as td:
+    with _rerun_dir() as td:
         d = Path(td) / doc.name
         d.write_bytes(doc_bytes)
         rps = []
@@ -247,11 +414,16 @@ def verify_capsule(path: Path) -> dict:
         i = html.index(_BEGIN) + len(_BEGIN)
         j = html.index(_END, i)
         payload = json.loads(html[i:j])
-    except (ValueError, json.JSONDecodeError) as e:
-        return {"ok": False, "stage": "parse", "error": f"no capsule payload: {e}",
-                "problems": [f"no capsule payload: {e}"]}
+    except (ValueError, json.JSONDecodeError, RecursionError) as e:
+        # RecursionError: JSON nested deeper than the decoder recurses, which ended verify in a
+        # traceback until #196
+        return {"ok": False, "stage": "parse", "error": f"no capsule payload: {str(e)[:200]}",
+                "problems": [f"no capsule payload: {type(e).__name__}: {str(e)[:200]}"]}
     if not isinstance(payload, dict):
         return {"ok": False, "stage": "parse", "problems": ["the capsule payload is not an object"]}
+    deep = _payload_depth_problem(payload)
+    if deep:
+        return {"ok": False, "stage": "parse", "problems": [deep]}
 
     # spec dispatch; the v0.1 path compares the whole certificate and the page since 2026-10-05
     spec = payload.get("spec")
@@ -264,6 +436,33 @@ def verify_capsule(path: Path) -> dict:
                 "problems": [f"unknown capsule spec {spec!r} — this verifier knows "
                              f"{SPEC}, {SPEC_V02} and {SPEC_SWORN}"]}
     return _verify_capsule_v01(html, payload)
+
+
+# Every payload a minter writes is nested at most 5 levels deep (the 13 capsules committed here,
+# v0.1 and v0.2 alike, measured on 2026-10-07; a sworn payload's receipt adds a level or two). A
+# payload nested far deeper reached code that recurses once per level (the type-keeping
+# comparison, JCS, printing a value) and could end verify in a RecursionError (#196). So a
+# payload nested more than this is refused before anything reads it.
+_PAYLOAD_DEPTH_MAX = 64
+
+
+def _payload_depth_problem(payload) -> Optional[str]:
+    """A problem when the payload nests objects and lists more than _PAYLOAD_DEPTH_MAX deep."""
+    if not isinstance(payload, (dict, list)):
+        return None
+    # Only objects and lists go on the stack, never the numbers and text in them: stacking every
+    # value took verify's peak traced memory, on a field of 5,000,000 zeros, from origin/main's
+    # 80 MiB to 370 MiB (#196).
+    stack = [(payload, 1)]
+    while stack:
+        x, d = stack.pop()
+        if d > _PAYLOAD_DEPTH_MAX:
+            return (f"the capsule payload nests objects and lists more than "
+                    f"{_PAYLOAD_DEPTH_MAX} levels deep; no minter writes one nested more "
+                    f"than a few, and nothing in it was read")
+        stack.extend((y, d + 1) for y in (x.values() if isinstance(x, dict) else x)
+                     if isinstance(y, (dict, list)))
+    return None
 
 
 def _verify_capsule_v01(html: str, payload: dict) -> dict:
@@ -311,7 +510,7 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
         # there is not it.
         listed = [n for n in rsha if n in recs]
         order = listed + sorted(n for n in recs if n not in listed)
-        with tempfile.TemporaryDirectory() as td:
+        with _rerun_dir() as td:
             try:
                 d = Path(td) / doc["name"]
                 d.write_bytes(doc_bytes)
@@ -320,10 +519,18 @@ def _verify_capsule_v01(html: str, payload: dict) -> dict:
                     rp = Path(td) / name
                     rp.write_bytes(recs[name])
                     rps.append(rp)
-            except OSError as e:
-                # a name this system cannot hold (on Windows, one with < or : in it)
+            except (OSError, ValueError) as e:
+                # The names Windows, NTFS's or ext4's limit, or UTF-8 refuse are refused above, on
+                # every system, and on Windows the directory is named under the extended-length
+                # prefix, which holds every name the rule allows (#196). What is left is the temporary directory itself, or a
+                # file system with a stricter limit than the rule's (HFS+, eCryptfs).
                 problems.append(f"the embedded files could not be written under their names "
-                                f"here ({type(e).__name__}: {e}), so the verifier was not re-run")
+                                f"here ({type(e).__name__}: {str(e)[:200]}), so the verifier was "
+                                f"not re-run. The names pass the rule verify applies on every "
+                                f"system, so what refused them is this verifier's temporary "
+                                f"directory (a full disk, a directory it may not write in, or a "
+                                f"file system with stricter rules than the rule's): verify the "
+                                f"capsule where its temporary directory can hold the files")
             else:
                 try:
                     live = certify_doc(d, rps)
@@ -459,6 +666,7 @@ _PAYLOAD_VERIFIER_FIELDS = ("sha256", "styxx_version", "pip")
 # what create_capsule writes into `created` and `verifier.styxx_version`
 _CREATED = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z")
 _VERSION = re.compile(r"\d+(?:\.\d+){1,3}(?:(?:a|b|rc)\d+)?(?:\.post\d+)?(?:\.dev\d+)?")
+_VERSION_MAX = 64
 
 
 def _same(a, b) -> bool:
@@ -479,8 +687,19 @@ def _same(a, b) -> bool:
 
 
 def _short(v, n: int = 200) -> str:
-    s = repr(v) if isinstance(v, str) else json.dumps(v, ensure_ascii=False, sort_keys=True)
+    try:
+        s = repr(v) if isinstance(v, str) else json.dumps(v, ensure_ascii=False, sort_keys=True)
+    except (ValueError, TypeError, RecursionError):
+        # nested deeper than Python recurses (#196): a value no certify or minter writes
+        return f"(a {type(v).__name__} nested too deeply to print)"
     return s if len(s) <= n else f"{s[:n]}... ({len(s)} chars)"
+
+
+def _obj_in(d, k) -> dict:
+    """d[k] where d and d[k] are objects, else an empty one: what no minter writes is read as
+    absent, and fails where its absence fails."""
+    v = d.get(k) if isinstance(d, dict) else None
+    return v if isinstance(v, dict) else {}
 
 
 def _canonical_b64(s) -> Optional[bytes]:
@@ -539,6 +758,13 @@ def _payload_problems_v01(payload: dict) -> List[str]:
         v = ver.get("styxx_version")
         if not (isinstance(v, str) and _VERSION.fullmatch(v)):
             out.append(f"payload.verifier.styxx_version {_short(v)} is not a styxx version")
+        # A release number of thousands of digits ended verify in a ValueError until #196: Python
+        # reads at most 4300 digits as an integer by default, and the limit is the verifying
+        # environment's to set. create_capsule writes styxx's own version, a few characters long.
+        elif len(v) > _VERSION_MAX:
+            out.append(f"payload.verifier.styxx_version is {len(v)} characters long "
+                       f"({_short(v, 40)}); create_capsule writes the minter's styxx version "
+                       f"there, and this verifier reads one of at most {_VERSION_MAX}")
         # The page prints this line as the command that installs layer 2. create_capsule writes
         # exactly "styxx==" and the version; anything else would have the page tell its reader to
         # install some other package to check it.
@@ -731,13 +957,17 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
                       min(len(ung), len(copies)))
             a = ung[at] if at < len(ung) else None
             b = copies[at] if at < len(copies) else None
-            fields = sorted({k for k in (a or {}) if not isinstance(b, dict) or k not in b or
-                             not _same(a[k], b[k])} |
-                            {k for k in (b or {}) if not isinstance(a, dict) or k not in a})
+            # A row that is not an object has no fields to name: a list there ended verify in a
+            # TypeError (sorting its items, or hashing them) until #196.
+            ka = set(a) if isinstance(a, dict) else set()
+            kb = set(b) if isinstance(b, dict) else set()
+            fields = sorted(k for k in ka | kb if k not in ka or k not in kb
+                            or not _same(a[k], b[k]))
             problems.append(
                 f"certificate.ungrounded is not the ledger's UNGROUNDED rows as the ledger carries "
                 f"them ({len(ung)} row(s) vs {len(copies)}; row {at} differs"
                 + (f" in {', '.join(map(repr, fields))}" if fields else "")
+                + (", and is not an object" if at < len(ung) and not isinstance(a, dict) else "")
                 + "): every certify writes it as a copy of those rows")
 
     # the verdict: the whole string, except for a certificate that predates the uncovered band
@@ -879,10 +1109,11 @@ def _binding_path_problem(path) -> Optional[str]:
     bind_at_mint writes the path of the file the receipt RESOLVES to, relative to the repository
     root, in POSIX form (Repo.rel_or_none: Path.resolve, os.path.relpath, as_posix, and None for
     anything outside the root), beside the name the receipt was given. Through a symlink on POSIX
-    (latest.json -> run_0042.json) or an 8.3 short name on Windows (RECEIP~1.JSO) the path ends in
-    another name than the receipt's, so nothing ties the two: until review round 4 a path had to
-    end in the receipt's name, which failed those honest capsules and made create refuse its own
-    certify's output. The pair is printed as stated."""
+    (latest.json -> run_0042.json) the path ends in another name than the receipt's, so nothing
+    ties the two: until review round 4 a path had to end in the receipt's name, which failed those
+    honest capsules and made create refuse its own certify's output. (An 8.3 short name on Windows,
+    RECEIP~1.JSO, did the same; since #196 a name of that form is refused as a name, at create and
+    at verify.) The pair is printed as stated."""
     if not isinstance(path, str):
         return "is not a string"
     parts = path.split("/")
@@ -2078,25 +2309,49 @@ def _verify_capsule_v02(html: str, payload: dict) -> dict:
     except ValueError as e:
         result["problems"] = [f"embedded bytes are not base64: {e}"]
         return result
-    if _sha256(summary_bytes) != (binding.get("summary") or {}).get("value"):
+    # Each binding is an object carrying a value; a binding that is text, a list or a number, and
+    # a gate record JCS cannot canonicalise (NaN, Infinity, nesting deeper than Python recurses),
+    # ended verify in a traceback until #196. Each is a binding that does not hold.
+    bound = lambda k: _obj_in(binding, k).get("value")  # noqa: E731
+    if _sha256(summary_bytes) != bound("summary"):
         problems.append("summary bytes != binding.summary")
-    if _sha256(diff_bytes) != (binding.get("diff") or {}).get("value"):
+    if _sha256(diff_bytes) != bound("diff"):
         problems.append("diff bytes != binding.diff")
-    if _gate_binding_hash(gate) != (binding.get("gate") or {}).get("value"):
-        problems.append("gate record != binding.gate (sha256-jcs)")
+    try:
+        gate_hash = _gate_binding_hash(gate)
+    except (ValueError, TypeError, RecursionError) as e:
+        problems.append(f"gate record != binding.gate (sha256-jcs): the record cannot be "
+                        f"canonicalised ({type(e).__name__}: {str(e)[:120]})")
+    else:
+        if gate_hash != bound("gate"):
+            problems.append("gate record != binding.gate (sha256-jcs)")
     if problems:
         result["problems"] = problems
         return result
 
     # stage: re-execution — the decisive leg. run=None, strict=False, always.
     result["stage"] = "reproduced"
-    live = gate_diff_text(summary_bytes.decode("utf-8"), diff_bytes.decode("utf-8"),
-                          run=None, strict=False).to_dict()
+    try:
+        texts = (summary_bytes.decode("utf-8"), diff_bytes.decode("utf-8"))
+    except UnicodeDecodeError as e:
+        # create_capsule_diffgate embeds text it read as UTF-8; bytes bound to their hash that
+        # are not UTF-8 ended verify in a traceback until #196
+        result["problems"] = [f"the embedded summary or diff is not UTF-8 text, which is what "
+                              f"create_capsule_diffgate embeds ({e.reason} at byte {e.start}); "
+                              f"the gate was not re-run"]
+        return result
+    try:
+        live = gate_diff_text(texts[0], texts[1], run=None, strict=False).to_dict()
+    except Exception as e:  # noqa: BLE001 - text the installed gate cannot read fails, by name
+        result["problems"] = [f"the installed diffgate could not re-run on the embedded text "
+                              f"({type(e).__name__}: {str(e)[:160]})"]
+        return result
     if live.get("diffgate") != gate.get("diffgate"):
+        pip = _obj_in(payload, "verifier").get("pip", "styxx")
         problems.append(
             f"INSTRUMENT SKEW: installed diffgate {live.get('diffgate')!r} vs embedded "
-            f"{gate.get('diffgate')!r} — reproduce under `pip install "
-            f"{payload.get('verifier', {}).get('pip', 'styxx')}` before treating this "
+            f"{_short(gate.get('diffgate'), 80)} — reproduce under `pip install "
+            f"{pip if isinstance(pip, str) else _short(pip, 80)}` before treating this "
             "as tamper")
     else:
         try:
@@ -2260,11 +2515,25 @@ def _verify_capsule_sworn(html: str, payload: dict) -> dict:
 
     problems: List[str] = []
     advisory: List[str] = []
-    rec = payload.get("receipt") or {}
+    # A receipt, document or verifier block that is not an object is read as absent, and fails
+    # where its absence fails: text or a list there ended verify in a traceback until #196.
+    rec = _obj_in(payload, "receipt")
     out = {"ok": False, "spec": SPEC_SWORN,
-           "document": (payload.get("document") or {}).get("name"),
+           "document": _obj_in(payload, "document").get("name"),
            "verdict": rec.get("document_verdict"), "counts": rec.get("counts"),
            "problems": problems, "advisory": advisory, "label": _SWORN_LABEL}
+    if not isinstance(payload.get("receipt"), dict):
+        problems.append("payload.receipt is not an object: create_capsule_sworn embeds the "
+                        "receipt styxx.sworn issued")
+    # A block styxx.sworn writes that is here and is not an object fails by name. The verifier
+    # block is outside the verdict core, so read as absent it would give only an INSTRUMENT SKEW
+    # advisory, and a receipt whose verifier is text would verify (origin/main ended it in a
+    # traceback; review 1 of #196 caught the branch verifying it). An empty block, or none, still
+    # reads as it always did.
+    for k, what in (("document", "the document's name and hash"), ("verifier", "its build")):
+        if k in rec and not isinstance(rec[k], dict):
+            problems.append(f"payload.receipt.{k} is not an object: styxx.sworn writes {what} "
+                            f"there")
 
     try:
         doc_bytes = base64.b64decode((payload["document"])["b64"], validate=True)
@@ -2273,7 +2542,7 @@ def _verify_capsule_sworn(html: str, payload: dict) -> dict:
         return out
     if _sha256(doc_bytes) != (payload["document"]).get("sha256"):
         problems.append("document bytes != payload document.sha256 (tamper)")
-    if _sha256(doc_bytes) != (rec.get("document") or {}).get("inline_sha256"):
+    if _sha256(doc_bytes) != _obj_in(rec, "document").get("inline_sha256"):
         problems.append("document bytes != receipt document.inline_sha256 (tamper)")
 
     # the sealed browser verifier must be the one inlined in the page, byte for byte
@@ -2305,33 +2574,41 @@ def _verify_capsule_sworn(html: str, payload: dict) -> dict:
     if man_obj is not None:
         try:
             man = Manifest.from_dict(man_obj)
-        except SystemExit as e:
-            problems.append(f"the sealed manifest does not load: {e}")
+        except (SystemExit, Exception) as e:  # noqa: BLE001 - a manifest it cannot load fails
+            problems.append(f"the sealed manifest does not load: {str(e)[:200]}")
     if rec.get("manifest_digest") != (man.digest_or_none() if man is not None else None):
         problems.append("the receipt's manifest_digest is not the sealed manifest's (tamper)")
 
     try:
-        live = verify(doc_bytes, name=(rec.get("document") or {}).get("name", ""),
+        live = verify(doc_bytes, name=_obj_in(rec, "document").get("name", ""),
                       manifest=man, commit=rec.get("commit"))
         live_rec = issue_receipt(live)
-    except SystemExit as e:
-        problems.append(f"the sealed bytes do not verify at the installed instrument: {e}")
+    except (SystemExit, Exception) as e:  # noqa: BLE001 - what the instrument refuses fails
+        problems.append(f"the sealed bytes do not verify at the installed instrument: "
+                        f"{str(e)[:200]}")
+        return out
+    try:
+        sealed_core = _sworn_core_sha256(rec)
+    except (ValueError, TypeError, RecursionError) as e:
+        # NaN, Infinity or a value JCS does not define, in the receipt (#196)
+        problems.append(f"the receipt cannot be canonicalised, so its verdict core has no digest "
+                        f"({type(e).__name__}: {str(e)[:120]})")
         return out
 
-    sealed_build = (rec.get("verifier") or {}).get("sworn_sha256")
+    sealed_build = _obj_in(rec, "verifier").get("sworn_sha256")
     live_build = (live_rec.get("verifier") or {}).get("sworn_sha256")
     same_build = sealed_build == live_build
     if not same_build:
         advisory.append("INSTRUMENT SKEW: the receipt was issued by styxx.sworn "
                         f"{str(sealed_build)[:12]} and this is {str(live_build)[:12]}")
-    if _sworn_core_sha256(live_rec) != _sworn_core_sha256(rec):
+    if _sworn_core_sha256(live_rec) != sealed_core:
         problems.append(
             "the verdict core does not re-derive from the sealed bytes"
             + (" — and the instrument moved, so this is SKEW, not tamper" if not same_build
                else " under the same build, which is tamper")
             + f" (live {live['document_verdict']} {live['counts']} vs sealed "
               f"{rec.get('document_verdict')} {rec.get('counts')})")
-    if payload.get("core_sha256") != _sworn_core_sha256(rec):
+    if payload.get("core_sha256") != sealed_core:
         problems.append("the sealed core_sha256 is not the receipt's own (tamper) — layer 1 "
                         "compares against it")
 
@@ -2426,9 +2703,10 @@ is the one that checks the build the receipt names.</div>
 # bidirectional marks and overrides. Every one of them can come from the capsule (a document or
 # receipt name, the verdict, the issuer's hash, a binding path), and until review round 3 they
 # were printed as they came, so a forgery could move the cursor up and erase its own NOT CHECKED
-# lines or failure list from the reader's screen while stdout still held them.
+# lines or failure list from the reader's screen while stdout still held them. A lone surrogate
+# (JSON can write one, valid UTF-8 cannot) ended the command in a UnicodeEncodeError (#196).
 _UNPRINTABLE = re.compile("[\x00-\x1f\x7f-\x9f\u061c\u200e\u200f\u2028\u2029\u202a-\u202e"
-                          "\u2066-\u2069]")
+                          "\u2066-\u2069\ud800-\udfff]")
 
 
 def _printable(line) -> str:
@@ -2437,6 +2715,18 @@ def _printable(line) -> str:
         c = ord(m.group(0))
         return f"\\x{c:02x}" if c < 0x100 else f"\\u{c:04x}"
     return _UNPRINTABLE.sub(esc, str(line))
+
+
+def _say(line) -> None:
+    """Print a line as _printable shows it. A character the terminal's encoding cannot write (a
+    document name in another script, on a Windows pipe) is written as its escape: it ended the
+    command in a UnicodeEncodeError (#196)."""
+    text = _printable(line)
+    try:
+        print(text)
+    except UnicodeEncodeError:
+        enc = getattr(sys.stdout, "encoding", None) or "utf-8"
+        print(text.encode(enc, "backslashreplace").decode(enc, "replace"))
 
 
 def main(argv=None) -> int:
@@ -2482,7 +2772,7 @@ def main(argv=None) -> int:
         return 0
 
     rep = verify_capsule(Path(a.capsule))
-    say = lambda line: print(_printable(line))  # noqa: E731 - every line, whatever it quotes
+    say = _say                     # every line, whatever it quotes
     if rep.get("spec") == SPEC_SWORN:
         say(f"capsule: {rep.get('document')}  spec {rep.get('spec')}")
         say(f"sealed verdict: {rep.get('verdict')}  counts {rep.get('counts')}")

@@ -38,6 +38,248 @@ record says why. No main-set item was generated or scored, and no gates-block ve
   and model tests skip when the cached files are absent.
 - `papers/LEDGER.md` regenerated: the corpus gained a preregistration with a gates block.
 
+## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
+
+**`styxx/capsule.py` and `styxx/charon.py`; tests in `tests/test_capsule_no_traceback.py`.** 7.49.0
+left #196 open: its entry named two classes that still ended `python -m styxx.capsule verify` in a
+traceback, and the issue names three. Each now ends in `CAPSULE FAILS VERIFICATION`, with a problem
+that names it, and exit 1, and `styxx.charon` derives an UNRESOLVED or not-reproduced line for it.
+
+- A stated `styxx_version` of thousands of digits ended verify in a ValueError (Python reads at
+  most 4300 digits as an integer by default, and the limit is the verifying environment's to set).
+  create writes styxx's own version there; a stated version longer than 64 characters is now a
+  payload problem, before anything reads it.
+- An `ungrounded` row that is a list ended verify in a TypeError while naming the fields that
+  differ from the ledger's UNGROUNDED rows. A row that is not an object is now named as such.
+- A v0.1 payload whose spec says v0.2, and a receipt whose bytes are not JSON with its hash restated
+  in the certificate, already failed with a problem in 7.49.0's verify (`payload.summary is not an
+  embedded file`; `the installed verifier could not re-run on the embedded bytes
+  (JSONDecodeError: ...)`). The tests pin both, with the command's output and charon's line.
+- A receipt named with a character Windows refuses, such as `r<1>.json`, failed on Windows with
+  the OSError of the write, while a POSIX verifier wrote it and re-ran the certifier: the verdict
+  depended on the verifier's system. The name rule is now the same on every system (next).
+
+**The name rule is the same on every system.** Before anything is written, `verify` refuses a
+document or receipt name that holds `<`, `>`, `"`, `|`, `?` or `*` (Windows refuses them, POSIX
+writes them), that holds a lone surrogate (Windows writes one; UTF-8 cannot encode it, so a POSIX
+verifier's write raised UnicodeEncodeError), that is longer than 255 UTF-16 code units or 255
+UTF-8 bytes (the name limits of NTFS and of ext4), or that has the form of an 8.3 short name
+holding `~` (a base of at most eight characters holding `~`, and an extension of at most three),
+on every system, with a problem that says why and that it is refused everywhere so that a
+capsule's verdict does not depend on the verifier's. Where NTFS generates short names (the volume
+holding this repository's Windows box's temporary directory does), it opens `abcdefghijkl.json`
+under `ABCDEF~1.JSO` as well. A capsule certified over two receipts of those names, kept as two
+files, failed during review on this repository's Windows box with `verdict not reproduced`, which
+reads as tamper, and verifies where the two names are two files. A short-name form is refused even
+alone, where it meets no other file: on a Windows box without symlinks, 7.49.0's test of a receipt
+given by another name minted a capsule naming the receipt `RECEIP~1.JSO`, and it now asserts that
+create refuses it (certify still binds the receipt under that name). Two names that are one file on HFS+ are now refused with a
+problem that names HFS+ and the pair, as two names differing only in case already were:
+canonically equivalent spellings, such as an NFC `é` and an `e` with a combining accent, and
+spellings that differ by a code point HFS+ ignores when it compares names (U+200C to U+200F,
+U+202A to U+202E, U+206A to U+206F and U+FEFF, from Apple's Technical Note TN1150; no HFS+ volume
+was run here). The case and HFS+ pair rules follow the verifying Python's Unicode database, as
+certify's reading of digits does: a pair of letters whose case is defined in a later Unicode
+version than that database's is refused only by a verifier that knows them (U+A7CC and U+A7CD,
+from Unicode 16.0, fold to one name under Python 3.14 and to two under Python 3.12).
+`capsule create` refuses each such name, a name the 7.48.1 rule refuses, each such pair, and a
+name given to two different files (two receipts in two directories, or a receipt named as the
+document is), before reading anything, and names the name or the pair. Until now a POSIX system
+minted and kept a capsule naming `r<1>.json`, which a Windows verifier failed; a name or pair
+verify refuses on every system was found only by the verify after the mint, whose refusal blamed
+the ledger schema; and two receipts under one name were read, then refused as bytes that do not
+match the certificate (or, where a path did not exist, ended create in FileNotFoundError). One
+receipt given twice by its path is still one receipt. The rules 7.48.1 shipped
+(GHSA-h5xv-4344-f62r) are unchanged, messages included.
+- `styxx.corpus_audit` reads the same single-name rule (`_bare_name`) before it writes a
+  certificate's names to re-derive its sworn bytes, so it refuses these names too; it pairs names
+  by case only. Over `git ls-files '*.certificate.json'` (213 certificates; 729 distinct names,
+  counting each receipt name, each `document` and the file each certificate is named for), no
+  name and no pair is refused by the new rules, and no name holds `~`. Over every tracked JSON
+  file whose top level holds a `receipts_sha256` object (249 files, 573 distinct receipt and
+  document names) the same holds; the five names there that are refused hold `/`, and the 7.48.1
+  rule refuses them.
+- Every name the rule allows is written on NTFS and ext4, whose limits the rule takes.
+  Without the extended-length prefix, Windows without long paths (its default) refuses a path of
+  more than 260 characters, so during review a capsule naming a receipt of 226 characters,
+  certified as a POSIX minter certifies it, failed on this repository's Windows box (the write
+  raised FileNotFoundError under a temporary directory of ordinary length) and verified on POSIX:
+  one capsule, two verdicts, as with `r<1>.json`. `verify`, `create`'s re-run and charon now
+  write the embedded files in a temporary directory named on Windows under that prefix (`\\?\`),
+  which holds every name the rule allows whatever the length of the directory's path. A capsule
+  naming a receipt of 250 characters is minted, verifies and is reproduced by charon on that box
+  with long paths off, under a temporary directory whose path and the name pass 260 characters.
+  A write that still fails (a full disk, a temporary directory the verifier may not write in)
+  fails by name, with a problem that says it is the verifier's temporary directory that refused
+  the files. A file system with a stricter limit than the rule's fails such a name with that
+  problem: HFS+, which stores a name decomposed in at most 255 UTF-16 code units (TN1150), so
+  `ΐ` (U+0390) 127 times, which the rule allows at 127 units, is 381 there; and eCryptfs, whose
+  encrypted names hold about 143 bytes. No HFS+ or eCryptfs volume was run here.
+
+**The sweep.** The 600 mutations 7.49.0's entry describes were not committed. The new tests mutate
+every field of a minted v0.1, v0.2 and sworn payload in turn (a value in its place, its deletion,
+and for an object a field no minter writes) around the page this styxx renders for it, and assert
+that verify returns a report, that the command prints it on a strict UTF-8 stream and exits 0
+exactly when it is ok, that charon's line can be digested and written, and that the line is
+UNRESOLVED or not reproduced whenever verify failed. The v0.1 fixture is minted outside any
+repository, as on CI, wherever pytest keeps its files. Around its page every mutation is refused
+but one: a binding block with no note, which bind_at_mint writes in a repository with no commit.
+(Minted inside a repository, bind_at_mint states a head and receipt paths, which verify states
+rather than checks, as 7.49.0 designed, so mutations of those verify too.) By
+default each field takes five of the nineteen values (1,848 mutations); `STYXX_CAPSULE_SWEEP=full`
+puts every value in every field (6,059 mutations), and both pass. A wider probe outside the suite,
+run before review at 36c78e28 (its scripts were not kept), each mutation around every page that
+renders it and spliced into the minted one, with hashes and bindings restated so it reaches the
+code behind them, and pages a JSON decoder cannot read (9,372 cases), found an uncaught exception
+at origin/main (566f7769) in 47 combinations of spec, caller (verify, the command, charon's
+derive, the line's digest), exception and message, and in none at 36c78e28. The review probes,
+which are kept, carry that claim for this tree (below). What it found, each now a named problem:
+- v0.2: a binding that is not an object (AttributeError); a gate record JCS cannot canonicalise,
+  such as NaN or Infinity (ValueError); summary or diff bytes bound to their hash that are not
+  UTF-8 (UnicodeDecodeError); instrument skew beside a verifier block that is not an object.
+- sworn: a receipt that is not an object, or a document or verifier block in it that is not one
+  (AttributeError), each now named as not an object; an empty verifier block, or none, still
+  verifies with the INSTRUMENT SKEW advisory it gave at origin/main. A verifier block that is
+  null, false, 0, an empty string or an empty list verified at origin/main with that advisory,
+  read as absent, and now fails by name too: styxx.sworn always writes an object there, so this
+  adds a refusal. A receipt JCS cannot canonicalise (ValueError).
+- Every spec: a payload nested deeper than the JSON decoder recurses (RecursionError). A payload
+  nested more than 64 levels deep is now refused at parse; every committed payload is nested 5
+  levels deep at most. The check stacks only objects and lists, never the values in them: on a v0.1
+  capsule holding a field of 5,000,000 zeros, verify's peak traced memory is 80 MiB here and at
+  origin/main, and charon's derive 131 MiB on both.
+- The command: a lone surrogate in a printed field, and a character the terminal's encoding cannot
+  write (a cp1252 pipe on Windows), ended it in a UnicodeEncodeError. Both are printed as escapes.
+- charon: a v0.2 binding value that is not text (TypeError); a stated version that is not text,
+  recorded on the line, could not be digested (NaN) or was refused (an object with a key outside
+  ASCII), and is now recorded as null; a lone surrogate in a verdict or a problem made a line that
+  could be derived but neither digested nor written, and is now written as its escape. Should verify
+  ever raise, the line is UNRESOLVED and names the exception's class.
+
+**Not repaired: slow, not a traceback.** certify searches a line again for each number on it, so
+a document of many numbers on one line takes verify (and create, and charon) a time that grows with
+the square of their count: 500 numbers took 0.4 seconds here, 1,000 took 1.4 and 2,000 took 5.3,
+and the probe's 50,000 did not finish in 20 minutes. The repair belongs in `styxx/certify.py`,
+which this change does not touch. The v0.2 path is slower still on one long word: the diff gate
+takes a time that grows with about the cube of a one-word summary's length (1,000 characters took
+1.3 seconds here, 2,000 took 13.6 and 4,000 took 98.5, while 400 short words take no measurable
+time), and a v0.2 capsule whose summary is one word of 200,000 characters, its binding restated,
+did not finish verify in five minutes during review, here or at origin/main. charon runs the gate
+twice. The repair belongs in `styxx/diffgate.py`, which is pinned by whole-file hashes and which
+this change does not touch.
+
+**What did not change.** Every refusal stands: the mutations the probe's v0.1 run verifies on this
+branch are a subset of those it verifies at origin/main, which also verifies a name of 260 UTF-8
+bytes and stated versions of 65 characters and of 4,300 digits. Review 1's probe, re-run on
+this tree (4,962 cases of mutations across fields, hostile embedded bytes behind restated
+hashes, hostile names and page damage, and 488 cases of hostile content behind honest hashes),
+finds no exception and no wrong exit code under this change, and no case that verifies under it
+and fails or raises at origin/main; the 74 cases it refuses here and verifies at origin/main are
+payloads nested more than 64 levels deep. Review 2's probe, re-run on this tree (172
+capsules a forger builds around hostile documents, receipts, names, summaries, diffs and sworn
+receipts, each certificate, gate record or core re-derived or restated), finds no exception and no
+wrong exit code or line under this change; the cases it verifies at origin/main and refuses here
+are the new name rules (the 8.3 form, an NFC and NFD pair, a pair differing by U+200C), and no case
+verifies here and fails at origin/main. The name rules, the depth bound, the stated version of
+more than 64 characters and the sworn verifier blocks above are the refusals this change adds;
+none is removed. The thirteen committed capsules give the same report
+and the same output under this change as at origin/main (twelve verify; the v0.2 handoff capsule
+fails under both). Re-deriving `papers/charon/charon.log.jsonl` gives every one of
+its 257 lines the same status, classes and changed fields under both. `styxx/certify.py`,
+`styxx/sworn.py`, `styxx/corpus_audit.py` and the diff gate are not touched.
+
+## [Unreleased] — the GitLab job reports by default; blocking is opt-in with `STYXX_SOFT_FAIL: "false"`
+
+**This changes behaviour for anyone who relied on the default.** The GitLab job,
+`integrations/gitlab/diffgate.gitlab-ci.yml`, failed on every CONTRADICTED claim. It now reports,
+as the GitHub Action has by default since #199 (the entry "the GitHub Action reports by default",
+under [7.49.0]), and the gate's verdicts never fail the job: the gate's verdict, its claim counts
+and each CONTRADICTED or UNCHECKABLE claim go to the job log, and every claim's verdict, VERIFIED
+included, goes to the `diffgate.json` artifact. A pipeline that includes the job by its `main` URL,
+as the integration's README shows, reports from its next merge request pipeline after this merges,
+with nothing changed on its side. A copy pasted into a `.gitlab-ci.yml` keeps blocking until it is
+replaced. To keep a blocking job, set the variable on the job
+
+```yaml
+diffgate:
+  variables:
+    STYXX_SOFT_FAIL: "false"
+```
+
+or in the project's or group's CI/CD variables, or in the pipeline's top-level `variables:`. A
+variable marked Protected in the project's or group's settings reaches a merge request pipeline
+only when its source and target branches are both protected branches of the same project and a
+maintainer has selected "Allow merge request pipelines to access protected variables and
+runners", and never from a fork; on an ordinary merge request from a feature branch the job reads
+it as unset and reports. So leave Protect cleared or set the variable in .gitlab-ci.yml. Every run
+that reaches the gate, PASS included, prints one line naming the mode it ran in (`styxx diffgate
+mode: STYXX_SOFT_FAIL is not set, so this job reports ...`, with the Protected caveat), so a
+variable that never arrived shows in the log. In report mode GitLab shows the job as passed: the job
+has no annotations or job summary, only its log and the artifact, so the merge request's pipeline
+status does not show what the gate found.
+
+**How the value is read**, as `diffgate_action.py`'s `_soft_fail` reads `soft-fail`: compared
+case-insensitively with surrounding whitespace stripped, so `"false"` and `"False "` block and
+`"true"`, `" true"` and `"TRUE"` report. Unset reads as `"true"`. Every other value, the empty
+string included, reports as `"true"` does, and the job prints a warning naming the value. The job
+does not set the variable in its own `variables:`: there it would outrank a pipeline's top-level
+`variables:` and silently override a pipeline that sets it, so the default lives in the script
+instead, with a commented-out `STYXX_SOFT_FAIL: "false"` line for a pasted copy. `--strict` added
+to the `styxx.diffgate` line still makes an UNCHECKABLE claim a failure, and the job fails on it
+only with `STYXX_SOFT_FAIL` `"false"`; the job has no strict variable, as it had none before.
+
+**Errors still fail the job.** The step that reads the variable takes only an exit 1 with a
+`diffgate.json` whose verdict is FAIL as a FAIL verdict, and only an exit 0 with a PASS report as a
+PASS. Any other exit, an exit 1 that left no FAIL report (the CLI raising on a head the checkout
+does not have, for one), or an exit 0 that left no PASS report, fails the job in either mode. The
+released CLI writes its report before it returns, so the exit-0 check changes nothing for it; a
+shadowed or altered CLI that exits 0 and writes nothing, which passed the job before, now fails
+it. Before the gate runs, the job removes a `diffgate.json` an earlier run left in the build
+directory, so a stale report is not read as this run's verdict. An install error or a failed
+fetch of the diff base fails the job as before.
+
+**Why.** The Action's reason: no kind of accusation the gate still makes has been measured clearing
+the 0.95 precision floor the lab set for accusing, and a check that fails someone else's merge
+request by default should already have cleared it. The job installs the released `styxx` and runs
+its CLI, so it reads with the reader that release ships; the figures and receipts are the ones the
+Action's entry gives (path claims withheld after EXTERNAL-1 measured 0.23 and V14 0.16;
+`only_touches` at 0.25 by PATH-1, re-derived by SCOPE-1; no committed RESULT states a precision for
+`tests_added`, `symbol_added` or `files_changed_count`).
+
+**What changed with it.** The job's header comment and `integrations/gitlab/README.md` say the job
+reports by default, how to make it block, where a Protected variable does not arrive, that every run
+that reaches the gate names its mode, how the value is read, that errors fail it in either mode,
+where a reported finding shows, and why. The README's line telling the reader to add `--strict` "to
+the last line" now names the `styxx.diffgate` line, and its rung paragraph says the job enforces
+only with the opt-in. `README.md` and `docs/` do not mention the GitLab job, so no line there
+changed. The Cursor hook's README said the enforcement is "the same gate in CI"; it now says, as the
+pre-commit, Codex and Gemini CLI READMEs do, that CI enforces only with its opt-in (the Action's
+`soft-fail: "false"`, this job's `STYXX_SOFT_FAIL: "false"`).
+
+**Tests.** `tests/test_gitlab_job.py` runs the job's script lines under bash in a temporary
+repository. By default a lying description is reported with the lies named and the job passes; with
+`STYXX_SOFT_FAIL` `"false"` it fails; ten values are read as above, each also checked against the
+Action's `_soft_fail`; `--strict` fails the job on an UNCHECKABLE claim only with the opt-in; a gate
+that errors fails the job unset, `"true"` and `"false"` alike, with a stale FAIL report in the
+directory; a stand-in for the CLI whose report does not match its exit (exit 0 with no report or a
+FAIL one, exit 1 with a PASS one, exit 2) fails the job unset and `"false"`, with a stale PASS report
+in the directory; every run the module makes, PASS included, prints the one mode line its value
+calls for; a description with a VERIFIED, a CONTRADICTED and an UNCHECKABLE claim puts the last two
+in the log and all three in `diffgate.json`, unset and `"false"` alike, and the README, the header
+comment and this entry say so; the job leaves the variable unset; the README and the header comment
+say the job reports by default, and they and this entry carry the Protected caveat. Against
+`origin/main`'s job file the job's exit codes differ where the default changed, where an exit 0 left
+no PASS report, and nowhere else that was run: a lying description exits 1 there and 0 here when the
+variable is unset, `"true"`, `"yes"` or empty, and a `--strict` run on an UNCHECKABLE claim exits 1
+there and 0 here when it is unset; a stand-in CLI that exits 0 with no report or a FAIL report exits
+0 there and 1 here, unset and `"false"` alike; under `"false"` a lying description exits 1 in both,
+an honest description exits 0 in both, a head the checkout does not have exits 1 in both, and a
+stand-in that exits 1 with a PASS report, or 2, exits the same in both. Each guard was
+mutation-checked, each mutant run on its own against the full module: dropping the `rm -f` makes 7
+tests fail, dropping the report check 9, the strip 3, the lowercasing 3, reading no report on exit 0
+4, printing no mode line on a PASS run 9, naming an unset variable as `"true"` without the Protected
+caveat 11, and a default that blocks 11. The job has not been run on GitLab itself.
+
 ## [Unreleased] — the leaderboard `styxx leaderboard` prints says what Baseline-019 measured, without the priority claim `critique.py` withdrew
 
 `papers/NOTE_prior_art_credit_2026_09_29.md` section 3 withdrew an unpriced ordinal priority claim from

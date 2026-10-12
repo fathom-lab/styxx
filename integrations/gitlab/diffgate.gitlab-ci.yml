@@ -6,10 +6,28 @@
 # or copy the job below into your .gitlab-ci.yml. It runs on merge request pipelines only, reads
 # the description GitLab hands the job in CI_MERGE_REQUEST_DESCRIPTION (never through a shell
 # expansion — the file is written with printf '%s'), and gates it against the diff between the
-# merge request's diff base and its head. The job fails only on a CONTRADICTED claim; a sentence
-# outside the closed template set is never judged, "tests pass" is UNCHECKABLE without evidence,
-# and a path the diff does not show is UNCHECKABLE, never accused (EXTERNAL-1). Same instrument,
-# same verdicts, same withholding as the GitHub Action and the CLI.
+# merge request's diff base and its head. A sentence outside the closed template set is never
+# judged, "tests pass" is UNCHECKABLE without evidence, and a path the diff does not show is
+# UNCHECKABLE, never accused (EXTERNAL-1). Same instrument, same verdicts, same withholding as the
+# GitHub Action and the CLI.
+#
+# It reports by default, as the GitHub Action does, and the gate's verdicts never fail the job.
+# The gate's verdict, its claim counts and each CONTRADICTED or UNCHECKABLE claim go to the job
+# log; every claim's verdict, VERIFIED included, goes to the diffgate.json artifact. Only
+# STYXX_SOFT_FAIL set to "false" blocks: then the job fails on a CONTRADICTED claim, and on an
+# UNCHECKABLE one too if --strict is added to the styxx.diffgate line. Set it in the project's
+# CI/CD variables, in the pipeline's variables, or in this job's. A variable marked Protected in
+# the project's or group's settings reaches a merge request pipeline only when its source and
+# target branches are both protected branches of the same project and a maintainer has allowed
+# merge request pipelines to access protected variables, and never from a fork; anywhere else the
+# job sees it unset and reports, so leave Protect cleared or set the variable in .gitlab-ci.yml.
+# The value is compared case-insensitively with surrounding whitespace stripped; unset reads as
+# "true"; every other value, the empty string included, reports as "true" does, with a warning
+# naming it. Every run that reaches the gate prints the mode it ran in. An install error, or a
+# gate whose report does not match its exit (a PASS report for 0, a FAIL report for 1), fails the
+# job either way. It does not block by default because no kind of accusation the gate still makes
+# has been measured clearing the 0.95 precision floor the lab set for accusing (CHANGELOG.md, "the
+# GitHub Action reports by default").
 
 diffgate:
   image: python:3.12
@@ -18,11 +36,56 @@ diffgate:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
   variables:
     GIT_DEPTH: "0"
+    # STYXX_SOFT_FAIL: "false"    # uncomment to fail the job on a CONTRADICTED claim
   script:
     - pip install --quiet "styxx>=7.44.2"
     - git fetch --quiet origin "$CI_MERGE_REQUEST_DIFF_BASE_SHA"
     - printf '%s' "$CI_MERGE_REQUEST_DESCRIPTION" > mr_description.md
-    - python -m styxx.diffgate mr_description.md --repo . --base "$CI_MERGE_REQUEST_DIFF_BASE_SHA" --head "$CI_COMMIT_SHA" --out diffgate.json
+    - rm -f diffgate.json
+    - |
+      styxx_gate=0
+      python -m styxx.diffgate mr_description.md --repo . --base "$CI_MERGE_REQUEST_DIFF_BASE_SHA" --head "$CI_COMMIT_SHA" --out diffgate.json || styxx_gate=$?
+      python - "$styxx_gate" <<'STYXX_SOFT_FAIL_READ'
+      import json, os, sys
+      gate = int(sys.argv[1])
+      raw = os.environ.get("STYXX_SOFT_FAIL")
+      value = "true" if raw is None else raw.strip().lower()
+      if value not in ("true", "false"):
+          print(f"WARNING: STYXX_SOFT_FAIL is {raw!r}, which is neither \"true\" nor \"false\" (compared "
+                "case-insensitively, surrounding whitespace stripped), so this job reports and does not "
+                "fail. Set STYXX_SOFT_FAIL to \"false\" to fail it.")
+      if value == "false":
+          print("styxx diffgate mode: STYXX_SOFT_FAIL is \"false\", so a FAIL verdict fails this job.")
+      elif raw is None:
+          print("styxx diffgate mode: STYXX_SOFT_FAIL is not set, so this job reports and the gate's "
+                "verdicts do not fail it. A variable marked Protected reaches a merge request pipeline "
+                "only when its source and target branches are both protected branches of the same "
+                "project and the project allows merge request pipelines to access protected variables; "
+                "anywhere else this job sees it unset.")
+      else:
+          state = "reads as \"true\"" if value == "true" else "has a value this job does not recognise"
+          print(f"styxx diffgate mode: STYXX_SOFT_FAIL {state}, so this job reports and the gate's "
+                "verdicts do not fail it.")
+      want = {0: "PASS", 1: "FAIL"}.get(gate)
+      try:
+          with open("diffgate.json", encoding="utf-8") as f:
+              verdict = json.load(f).get("verdict")
+      except Exception:
+          verdict = None
+      if want is None or verdict != want:
+          print(f"styxx diffgate exited {gate} without writing a {want or 'matching'} report: that is an "
+                "error, not a verdict, and it fails the job whatever STYXX_SOFT_FAIL says.")
+          sys.exit(gate or 1)
+      if gate == 0:
+          sys.exit(0)
+      if value == "false":
+          print("styxx diffgate: FAIL, and STYXX_SOFT_FAIL is \"false\", so the job fails.")
+          sys.exit(1)
+      why = ("is on, as it is by default" if value == "true" else
+             "has a value this job does not recognise (named above), so it reports as it does by default")
+      print(f"WARNING: styxx diffgate found failures but STYXX_SOFT_FAIL {why}, so the job passes; set "
+            "STYXX_SOFT_FAIL to \"false\" to fail it.")
+      STYXX_SOFT_FAIL_READ
   artifacts:
     when: always
     paths:

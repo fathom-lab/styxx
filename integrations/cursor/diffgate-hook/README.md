@@ -55,4 +55,6 @@ temporary repository: a lying `-m` and a lying heredoc denied with the lies name
 message allowed, non-git commands and claim-free messages allowed, unparseable stdin allowed.
 
 Rung: weak, and said so. This hook shares a shell with the agent that wrote the message. It is
-the habit; the enforcement is the same gate in CI where the agent's shell cannot reach.
+the habit; the enforcement is the same gate in CI where the agent's shell cannot reach, and CI
+enforces only with its opt-in (the Action's `soft-fail: "false"`, the GitLab job's
+`STYXX_SOFT_FAIL: "false"`); by default both report and do not block.

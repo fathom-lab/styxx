@@ -87,7 +87,6 @@ import importlib
 import json
 import re as _re
 import sys
-import tempfile
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -189,6 +188,21 @@ def _ascii_keys(obj) -> bool:
     return True
 
 
+def _utf8_text(obj):
+    """The derived line with every lone surrogate written as its escape. JSON can write one (an
+    artifact's verdict, a problem quoting a capsule's field) and UTF-8 cannot, so the line could
+    be derived and then neither digested nor written (#196). Text without one is unchanged."""
+    if isinstance(obj, str):
+        if any(0xD800 <= ord(c) <= 0xDFFF for c in obj):
+            return obj.encode("utf-8", "backslashreplace").decode("utf-8")
+        return obj
+    if isinstance(obj, list):
+        return [_utf8_text(x) for x in obj]
+    if isinstance(obj, dict):
+        return {_utf8_text(k): _utf8_text(v) for k, v in obj.items()}
+    return obj
+
+
 def _write_lines_lf(path: Path, lines: List[str], append: bool) -> None:
     with open(path, "a" if append else "w", encoding="utf-8", newline="\n") as fh:
         for ln in lines:
@@ -279,10 +293,13 @@ def _capsule_payload(path: Path) -> Optional[dict]:
         i = html.index(_cap._BEGIN) + len(_cap._BEGIN)
         j = html.index(_cap._END, i)
         payload = json.loads(html[i:j])
-    except (ValueError, json.JSONDecodeError):
+    except (ValueError, json.JSONDecodeError, RecursionError):
         return None
-    # a payload that is not an object is no payload (a JSON list here ended derive in a traceback)
-    return payload if isinstance(payload, dict) else None
+    # a payload that is not an object is no payload (a JSON list here ended derive in a traceback),
+    # and neither is one nested deeper than the capsule verifier reads (#196)
+    if not isinstance(payload, dict) or _cap._payload_depth_problem(payload):
+        return None
+    return payload
 
 
 def _b64_sha256(s) -> Optional[str]:
@@ -296,7 +313,7 @@ def _b64_sha256(s) -> Optional[str]:
 def _capsule_live_v01(payload: dict) -> Tuple[Optional[str], Optional[dict]]:
     """The same pure function the capsule verifier runs: certify_doc over the embedded bytes."""
     from styxx.certify import certify_doc
-    from styxx.capsule import _unsafe_names
+    from styxx.capsule import _rerun_dir, _unsafe_names
     try:
         unsafe = _unsafe_names(payload)
     except (AttributeError, TypeError):                 # a document or receipt that is not an object
@@ -305,7 +322,9 @@ def _capsule_live_v01(payload: dict) -> Tuple[Optional[str], Optional[dict]]:
         return None, {"live_error": "unsafe_embedded_name"}
     try:
         doc_bytes = base64.b64decode(payload["document"]["b64"])
-        with tempfile.TemporaryDirectory() as td:
+        # the directory the capsule verifier writes in: on Windows under the extended-length
+        # prefix, so a long name the rule allows is written there as on POSIX (#196)
+        with _rerun_dir() as td:
             d = Path(td) / payload["document"]["name"]
             d.write_bytes(doc_bytes)
             rps = []
@@ -346,8 +365,12 @@ def derive_capsule(path: Path, repo: Path) -> dict:
     spec = payload.get("spec")
     if spec not in (_cap.SPEC, _cap.SPEC_V02):
         return _unresolved("capsule-oath", path.name, rel, "unknown_capsule_spec: %r" % spec, raw_id)
-    rep = _cap.verify_capsule(path)
     kind = "capsule-diffgate" if spec == _cap.SPEC_V02 else "capsule-oath"
+    try:
+        rep = _cap.verify_capsule(path)
+    except Exception as e:                             # noqa: BLE001 - recorded on the line, never raised
+        # verify answers hostile bytes with problems; should it raise, the line says so (#196)
+        return _unresolved(kind, path.name, rel, "capsule_verify_raised: %s" % type(e).__name__, raw_id)
     problems = [str(x) for x in (rep.get("problems") or [])]
     binding_broken = any(("!=" in p and "binding" in p) or "bytes !=" in p or "ambiguous" in p for p in problems)
     # Parts that are not what a minter writes (a receipt list that is text, a certificate that is a
@@ -357,7 +380,9 @@ def derive_capsule(path: Path, repo: Path) -> dict:
     if spec == _cap.SPEC_V02:
         gate = obj("gate")
         binding = obj("binding")
-        shas = sorted({v.get("value") for v in binding.values() if isinstance(v, dict) and v.get("value")})
+        # a value that is not text (a list, NaN) ended derive in a TypeError until #196
+        shas = sorted({v.get("value") for v in binding.values()
+                       if isinstance(v, dict) and isinstance(v.get("value"), str) and v.get("value")})
         recorded = str(gate.get("verdict"))
     else:
         cert = obj("certificate")
@@ -380,7 +405,10 @@ def derive_capsule(path: Path, repo: Path) -> dict:
     counts["recorded_verdict"] = recorded
     counts["problems"] = len(problems)
     counts["problems_detail"] = [p[:160] for p in problems[:3]]
-    counts["pinned_verifier_version"] = obj("verifier").get("styxx_version")
+    # the version as stated, when it is text: an object there could carry a key outside ASCII,
+    # which ended derive in a refusal (#196), and a number NaN, which no line can canonicalise
+    pinned = obj("verifier").get("styxx_version")
+    counts["pinned_verifier_version"] = pinned if isinstance(pinned, str) else None
     klass = live if spec == _cap.SPEC_V02 else verdict_class(live)
     if spec == _cap.SPEC_V02 and live not in ("PASS", "FAIL"):
         klass = "UNRESOLVED"
@@ -445,6 +473,7 @@ def derive(path: Path, repo: Path) -> dict:
         d = derive_certificate(path, repo)
     else:
         raise SystemExit("REFUSED: %s is not a sworn sidecar, a capsule or a certificate" % name)
+    d = _utf8_text(d)
     if not _ascii_keys(d["counts"]):
         raise SystemExit("REFUSED: a count key outside ASCII cannot be canonicalised (%s)" % name)
     return d
