@@ -957,6 +957,93 @@ def test_an_error_outside_a_row_leaves_a_record_and_a_refusal_before_the_start_l
     assert rec["refused"] is True and rec["reason"] == "not committed" and rec["partial_log"] is None
 
 
+def test_the_equivalence_line_names_the_four_cells_and_skips_the_load_record():
+    cell = {"n": 48, "max_abs_score_diff": 0.0, "pred_agree": 48, "pred_disagree_non_tie": 0, "exempt_near_ties": 0, "ok": True}
+    eq = {f"{f}/{v}": dict(cell) for f in Z.FAMILIES for v in Z.VARIANTS}
+    eq["ok"] = True
+    eq["load"] = {"model_type": "mamba", "fp32_reference": {"ran": True}}       # the run at acd5b1e9 stopped here: KeyError
+    line = Z.equivalence_log_line("M1", eq)
+    assert line.startswith("  wrapper equivalence M1: compare/plain max|d| 0.00e+00 disagree 0") and line.endswith("-> ok")
+    assert all(k in line for k in ("compare/ablated", "recall/plain", "recall/ablated")) and "load" not in line
+    eq["recall/ablated"] = dict(cell, max_abs_score_diff=0.5, pred_disagree_non_tie=3, ok=False)
+    eq["ok"] = False
+    assert "recall/ablated max|d| 5.00e-01 disagree 3" in Z.equivalence_log_line("T", eq)
+    assert Z.equivalence_log_line("T", eq).endswith("-> FAILED")
+
+
+def test_the_run_goes_end_to_end_on_cpu_with_every_gpu_step_stubbed(syn, tmp_path, monkeypatch):
+    """The run's own code around the GPU steps: the result, the M1 and T equivalence lines (the run at acd5b1e9 stopped
+    on the line with a KeyError once M1's load record sat beside the cells), every row branch, the partial log, the
+    receipt and the summary. The loads, the forwards and the device are stubbed; nothing touches a GPU."""
+    torch = pytest.importorskip("torch")
+    receipt, log = tmp_path / "zoo_d0_screen.json", tmp_path / "zoo_d0_screen.partial.jsonl"
+    monkeypatch.setattr(Z, "RECEIPT", receipt)
+    monkeypatch.setattr(Z, "PARTIAL_LOG", log)
+    monkeypatch.setattr(Z, "REFUSAL_RECEIPT", tmp_path / "zoo_d0_screen_refusal.json")
+    monkeypatch.setitem(Z._STATE, "run_started", False)
+    monkeypatch.setenv("HF_HUB_OFFLINE", "1")
+    monkeypatch.setattr(Z, "git_facts", lambda: {"head": "0" * 40})
+    monkeypatch.setattr(Z, "require_committed", lambda git: None)
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(R, "record_versions", lambda res: res["config"].setdefault("versions", {"stub": True}))
+    monkeypatch.setattr(R, "release", lambda redteam=None, tag="": 0)
+    monkeypatch.setattr(Z, "peak_mb", lambda: 0.0)
+    rng = np.random.default_rng(0)
+    monkeypatch.setattr(R, "next_token_scores_batch", lambda path, model, seqs, ids: rng.normal(size=(len(seqs), 3)))
+    monkeypatch.setattr(R, "recall_loglik_batch", lambda path, model, seqs, cands: rng.normal(size=len(seqs)))
+
+    asserted = Z.model_tokenizer_asserts(syn.tok, syn.prep, [])
+    rows = []
+    for repo, group, role in Z.MODELS:
+        mt = "mamba" if "mamba" in repo else "gpt_neox" if "pythia" in repo else "llama"
+        rows.append({"repo": repo, "group": group, "v3_role": role, "status": "READY", "reason": None, "revision": "r",
+                     "family": {"family": "DECAY_SSM" if mt == "mamba" else "ATTENTION", "model_type": mt},
+                     "tokenizer": asserted["record"], "_seqs": asserted["_seqs"], "_cands": asserted["_cands"],
+                     "_name_ids": asserted["_name_ids"], "_prompt_sha256": asserted["_prompt_sha256"], "_tok": syn.tok})
+    k = [r["repo"] for r in rows].index("Qwen/Qwen2.5-3B-Instruct")
+    rows[k] = dict({a: b for a, b in rows[k].items() if not a.startswith("_")}, status=Z.STATUS_NOT_CACHED, reason="no cached snapshot")
+    fail = {"Qwen/Qwen2.5-3B": Z.NotScreenable("fp16 off the reference", Z.STATUS_FP16_FIDELITY),
+            "google/gemma-2-2b-it": RuntimeError("device lost")}
+
+    def load(row, prep, red, tag, record=None):
+        info = record if record is not None else {}
+        info.update(model_type=row["family"]["model_type"], fp16_fidelity={"max_abs_name_logprob_diff": np.float64(0.75), "ok": False})
+        if record is not None and row["repo"] in fail:
+            raise fail[row["repo"]]
+        return object(), object(), info
+
+    def equivalence(arm, path, model, tok, prep2, rec):
+        cell = {"n": 48, "max_abs_score_diff": 0.0, "pred_agree": 48, "pred_disagree_non_tie": 0, "exempt_near_ties": 0, "ok": True}
+        return dict({f"{f}/{v}": dict(cell) for f in Z.FAMILIES for v in Z.VARIANTS}, ok=True)
+
+    monkeypatch.setattr(Z, "load_for_scoring", load)
+    monkeypatch.setattr(Z, "wrapper_equivalence", equivalence)
+    cpu = {"prep": syn.prep, "lists": syn.lists, "redteam": {"balance_by_distance": {}}, "disjointness": {"stub": True},
+           "pilot2": {"prep": None, "items_sha256": "x", "prompts_matched": 192}, "rows": rows,
+           "identical_bytes": {"identical": True}, "receipts": {"pilot2": {}}, "seconds": 0.0}
+    monkeypatch.setattr(Z, "cpu_phase", lambda log=print: cpu)
+
+    lines = []
+    assert Z.run_screen(log=lines.append) == 0
+    text = chr(10).join(lines)
+    assert "wrapper equivalence M1: compare/plain max|d| 0.00e+00 disagree 0" in text and "wrapper equivalence T:" in text
+    res = json.loads(receipt.read_text(encoding="utf-8"))
+    st = {repo: m["status"] for repo, m in res["models"].items()}
+    assert list(st) == [m[0] for m in Z.MODELS]
+    assert st["Qwen/Qwen2.5-3B"] == Z.STATUS_FP16_FIDELITY and st["google/gemma-2-2b-it"] == Z.STATUS_ERROR
+    assert st["Qwen/Qwen2.5-3B-Instruct"] == Z.STATUS_NOT_CACHED and sum(v == Z.STATUS_SCREENED for v in st.values()) == 10
+    assert res["models"]["Qwen/Qwen2.5-3B"]["load"]["fp16_fidelity"]["max_abs_name_logprob_diff"] == 0.75
+    assert "device lost" in res["models"]["google/gemma-2-2b-it"]["error_traceback"]
+    assert res["wrapper_equivalence"]["M1"]["ok"] and res["wrapper_equivalence"]["T"]["load"]["model_type"] == "gpt_neox"
+    assert res["summary"]["base"]["M_screened"] == 7 and res["summary"]["instruct"]["M_screened"] == 3
+    for g in Z.GROUPS:
+        assert res["summary"][g]["sentence"] in text
+    events = [json.loads(x)["event"] for x in log.read_text(encoding="utf-8").splitlines()]
+    assert events[0] == "run_start" and events.count("wrapper_equivalence") == 2
+    assert events.count("model") == 12                                   # the NOT_CACHED row is settled before the run: receipt only
+    assert events[-1] == "receipt_written"
+
+
 # -- refusals and discipline -----------------------------------------------------------------------------------
 
 def test_the_run_refuses_when_the_receipt_exists_or_the_text_is_not_committed(tmp_path, monkeypatch):

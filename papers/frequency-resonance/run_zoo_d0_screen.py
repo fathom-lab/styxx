@@ -637,6 +637,15 @@ def wrapper_equivalence(arm: str, path: str, model, tok, prep2: dict, rec: dict)
     return out
 
 
+def equivalence_log_line(arm: str, eq: dict) -> str:
+    """The printed line of one arm's wrapper equivalence: the four scored cells by name. The arm's load record and its
+    ok flag sit beside the cells in the same dict and are not cells (the run at acd5b1e9 iterated every key, met the
+    load record, and stopped with a KeyError after M1's equivalence had passed and been logged)."""
+    cells = ", ".join(f"{k} max|d| {eq[k]['max_abs_score_diff']:.2e} disagree {eq[k]['pred_disagree_non_tie']}"
+                      for k in (f"{family}/{variant}" for family in FAMILIES for variant in VARIANTS))
+    return f"  wrapper equivalence {arm}: {cells} -> {'ok' if eq['ok'] else 'FAILED'}"
+
+
 def alone_name_logprobs(path: str, model, seqs: list, name_ids: list) -> list:
     """Each item's three name log-probs at its last position, each item run alone (batch of one)."""
     torch = R._torch()
@@ -1158,8 +1167,7 @@ def run_screen(log=print, allow_after_partial: bool = False) -> int:
         eq["load"] = info
         res["wrapper_equivalence"][arm] = eq
         append_partial({"event": "wrapper_equivalence", "arm": arm, "result": eq})
-        log(f"  wrapper equivalence {arm}: " + ", ".join(f"{k} max|d| {v['max_abs_score_diff']:.2e} disagree {v['pred_disagree_non_tie']}"
-                                                       for k, v in eq.items() if k != "ok") + f" -> {'ok' if eq['ok'] else 'FAILED'}")
+        log(equivalence_log_line(arm, eq))
         if not eq["ok"]:
             raise Refusal(f"the wrapper does not reproduce the committed pilot2 per-item outputs on {arm}: {eq}")
     res["runtime"]["wrapper_equivalence_seconds"] = round(time.time() - t0, 1)
