@@ -299,9 +299,9 @@ def test_pool_cache_resumes_without_refetching_final_hours(tmp_path):
     hours = synthetic_hours()
     del hours["2026-10-15-2"]
     arch = FakeArchive(hours)
-    first = pool.derive(params(), TABLE, arch, now=lambda: datetime(2026, 10, 15, 4, tzinfo=UTC),
+    early = pool.derive(params(), TABLE, arch, now=lambda: datetime(2026, 10, 15, 4, tzinfo=UTC),
                         cache_dir=str(tmp_path), log=lambda *_: None)
-    assert first["meta"]["status"] == "INCOMPLETE"
+    assert early["meta"]["status"] == "INCOMPLETE"
     arch2 = FakeArchive(synthetic_hours())
     second = pool.derive(params(), TABLE, arch2, now=LATE, cache_dir=str(tmp_path), log=lambda *_: None)
     assert arch2.calls == ["2026-10-15-2"] and second["meta"]["status"] == "COMPLETE"
@@ -579,3 +579,125 @@ def test_stable_outcomes_ignore_fetch_times_only():
     gh, _ = github({API1: api_pr(body="4 files changed in this PR."), PULL1: ONE_FILE_DIFF})
     o3, _ = accuse.accuse_one(rec_of(), gh, GATE, FETCH_PULL)
     assert common.canon(accuse.stable(o1)) != common.canon(accuse.stable(o3))
+
+
+# ================================================================ draw
+
+draw = _load("draw")
+import hashlib  # noqa: E402
+import struct  # noqa: E402
+
+# Two real mainnet headers, heights 0 and 1, and their ids as every explorer prints them.
+GENESIS = ("0100000000000000000000000000000000000000000000000000000000000000000000003ba3edfd7a7b12b27ac72c3e67768f"
+           "617fc81bc3888a51323a9fb8aa4b1e5e4a29ab5f49ffff001d1dac2b7c")
+GENESIS_ID = "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
+BLOCK1 = ("010000006fe28c0ab6f1b372c1a6a246ae63f74f931e8365e15a089c68d6190000000000982051fd1e4ba744bbbe680e1fee1467"
+          "7ba1a3c3540bf7b1cdb606e857233e0e61bc6649ffff001d01e36299")
+BLOCK1_ID = "00000000839a8e6886ab5951d76f411475428afc90947ee320161bbf18eb6048"
+
+
+def _d(b):
+    return hashlib.sha256(hashlib.sha256(b).digest()).digest()
+
+
+def test_real_headers_verify_and_chain():
+    h = draw.verify_header(GENESIS, GENESIS_ID)
+    assert h["pow_ok"] and h["time"] == 1231006505 and h["bits"] == "1d00ffff"
+    assert draw.verify_chain([GENESIS, BLOCK1]) == [GENESIS_ID, BLOCK1_ID]
+    with pytest.raises(draw.Refused) as e:
+        draw.verify_header(GENESIS, BLOCK1_ID)
+    assert e.value.code == "HEADER_INVALID"
+    tampered = GENESIS[:-8] + "00000000"                        # another nonce: the work no longer holds
+    with pytest.raises(draw.Refused, match="above the target"):
+        draw.verify_header(tampered)
+    with pytest.raises(draw.Refused, match="does not follow"):
+        draw.verify_chain([BLOCK1, GENESIS])
+
+
+def synthetic_block(height=970500, when=None, extra_txids=3, script_override=None):
+    """A segwit coinbase carrying `height` (BIP34), a merkle tree over it and fake txids, and an 80-byte
+    header over that root with the easiest target, ground to a valid nonce. Synthetic, not a mainnet block."""
+    script = script_override if script_override is not None else (
+        bytes([3]) + height.to_bytes(3, "little") + b"\x08sealed-ahead")
+    out_script = bytes.fromhex("0014") + b"\x11" * 20
+    tx = (b"\x02\x00\x00\x00" + b"\x00\x01" + b"\x01" + b"\x00" * 32 + b"\xff\xff\xff\xff"
+          + bytes([len(script)]) + script + b"\xff\xff\xff\xff"
+          + b"\x01" + (625_000_000).to_bytes(8, "little") + bytes([len(out_script)]) + out_script
+          + b"\x01\x20" + b"\x00" * 32 + b"\x00\x00\x00\x00")
+    stripped = tx[:4] + tx[6:-38] + tx[-4:]
+    leaves = [_d(stripped)] + [hashlib.sha256(bytes([i])).digest() for i in range(extra_txids)]
+    level, branch, pos = leaves, [], 0
+    while len(level) > 1:
+        if len(level) % 2:
+            level = level + [level[-1]]
+        branch.append(level[pos ^ 1])
+        level = [_d(level[i] + level[i + 1]) for i in range(0, len(level), 2)]
+        pos //= 2
+    when = when if when is not None else int(common.parse_utc(T1).timestamp()) + 86400
+    for nonce in range(1000):
+        hdr = struct.pack("<I32s32sIII", 0x20000000, b"\x07" * 32, level[0], when, 0x207FFFFF, nonce)
+        if draw.parse_header(hdr.hex())["pow_ok"]:
+            break
+    return {"header": hdr.hex(), "id": _d(hdr)[::-1].hex(), "coinbase": tx.hex(),
+            "branch": [b[::-1].hex() for b in branch], "txid": _d(stripped)[::-1].hex()}
+
+
+def test_bip34_height_is_proved_from_the_coinbase_and_its_branch():
+    b = synthetic_block()
+    cb = draw.parse_coinbase(b["coinbase"])
+    assert cb == {"txid": b["txid"], "height": 970500, "segwit": True}
+    assert draw.verify_height(b["header"], b["coinbase"], b["branch"], 970500)["proof"] == "bip34+merkle"
+    with pytest.raises(draw.Refused, match="says height 970500"):
+        draw.verify_height(b["header"], b["coinbase"], b["branch"], 970501)
+    with pytest.raises(draw.Refused, match="merkle root"):
+        draw.verify_height(b["header"], b["coinbase"], list(reversed(b["branch"])), 970500)
+    bad = synthetic_block(script_override=b"\x6a\x01\x00")
+    with pytest.raises(draw.Refused, match="BIP34"):
+        draw.parse_coinbase(bad["coinbase"])
+
+
+def _acc(n_items):
+    from styxx.beacon import pool_sha256
+    items = [[f"{i:064x}", f"200#{i}", "tests_added"] for i in range(n_items)]
+    return {"status": "COMPLETE", "items": items, "accusations_sha256": pool_sha256([tuple(i) for i in items])}
+
+
+def test_draw_is_styxx_beacon_select_and_nothing_else():
+    from styxx import beacon
+    acc, b = _acc(10), synthetic_block()
+    rec = draw.draw(acc["items"], acc["accusations_sha256"], b["id"], 4)
+    expect = beacon.select(b["id"], 4, [tuple(i) for i in acc["items"]])
+    assert rec["status"] == "DRAWN" and rec["drawn"] == [e[0] for e in expect]
+    assert rec["drawn_sha256"] == common.canon_sha256(rec["drawn"])
+    assert rec == draw.draw(acc["items"], acc["accusations_sha256"], b["id"].upper(), 4)
+    assert rec["beacon_module_lf_sha256"] == common.lf_sha256(Path(beacon.__file__).read_bytes())
+    assert draw.draw(acc["items"], acc["accusations_sha256"], b["id"], 11)["status"] == "SIZING_FAILURE"
+    with pytest.raises(draw.Refused) as e:
+        draw.draw(acc["items"][1:], acc["accusations_sha256"], b["id"], 4)
+    assert e.value.code == "SET_DIGEST_MISMATCH"
+
+
+def test_checked_draw_refuses_each_broken_precondition_by_name():
+    p, acc, b = params(), _acc(5), synthetic_block()
+    ok = draw.checked_draw(p, acc, b["header"], 970500, 970505, b["id"], b["coinbase"], b["branch"],
+                           anchor_time="2026-10-15T12:00:00Z")
+    assert ok["status"] == "DRAWN" and len(ok["drawn"]) == 3 and ok["height_proof"]["proof"] == "bip34+merkle"
+    cases = [
+        (dict(height=970499), "HEIGHT_NOT_THE_PLANS"),
+        (dict(tip_height=970504), "TOO_FEW_CONFIRMATIONS"),
+        (dict(anchor_time="2026-10-16T02:00:00Z"), "SET_NOT_ANCHORED_BEFORE"),
+        (dict(block_id=GENESIS_ID), "HEADER_INVALID"),
+    ]
+    for over, code in cases:
+        kw = dict(height=970500, tip_height=970505, block_id=b["id"], anchor_time="2026-10-15T12:00:00Z")
+        kw.update(over)
+        with pytest.raises(draw.Refused) as e:
+            draw.checked_draw(p, acc, b["header"], kw["height"], kw["tip_height"], kw["block_id"],
+                              anchor_time=kw["anchor_time"])
+        assert e.value.code == code
+    early = synthetic_block(when=int(common.parse_utc(T1).timestamp()) - 60)
+    with pytest.raises(draw.Refused) as e:
+        draw.checked_draw(p, acc, early["header"], 970500, 970505)
+    assert e.value.code == "BLOCK_NOT_AFTER_WINDOW"
+    unordered = draw.checked_draw(p, acc, b["header"], 970500, 970505)
+    assert unordered["order"].startswith("not checked")
