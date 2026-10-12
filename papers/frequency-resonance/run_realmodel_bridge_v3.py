@@ -11,9 +11,11 @@ Arms: M1 = state-spaces/mamba-1.4b-hf (A = -exp(A_log) real and strictly negativ
 asserted in every layer) and T = EleutherAI/pythia-1.4b. Byte-identical prompts, identical token ids.
 
   python run_realmodel_bridge_v3.py --smoke [--arms T|M1,T]
-      24 items, D in {16, 1024}, T only by default (PREREG section 12 item 11). INVALID-only by the gates
-      block. Measures runtime per distance and extrapolates the main run; above 4 hours the receipt reads
-      INVALID__budget and the main run refuses to start.
+      24 items, D in {16, 1024}, T only by default (PREREG section 12 item 11); --arms M1,T times the slow
+      arm as well. Smoke items come from their own seed (1016) and their own reserved slice of the sentence
+      order and of the code pool, disjoint from the main set and from the pilot: the smoke scores no
+      main-set item. INVALID-only by the gates block. Measures runtime per distance and extrapolates the
+      main run; above 4 hours the receipt reads INVALID__budget and the main run refuses to start.
   python run_realmodel_bridge_v3.py --pilot
       the section-9 format pilot: 48 items at D0, seed 1011, codes and sentences disjoint from the main
       set, both arms, both answer formats. Written to realmodel_bridge_v3_pilot.json. Licenses nothing.
@@ -57,6 +59,7 @@ N_PER_CELL = 600
 N_SMOKE, N_PILOT = 24, 48
 SMOKE_DISTANCES = (16, 1024)
 SEED_ITEMS, SEED_PILOT, SEED_BOOT = 20261011, 1011, 20261011
+SEED_SMOKE = 1016                         # the smoke's own items: never a main-set or pilot item
 N_BOOT = 2000
 SCREEN_BAR = 0.40
 GUARD_YES_RANGE = (0.20, 0.80)
@@ -67,16 +70,19 @@ MAX_PROMPT_TOKENS = 2000
 FREE_GPU_MIN_BYTES = 6 * 1024 ** 3
 BUDGET_HOURS = 4.0
 BATCH_MAX = 16
-BATCH_TOKENS_M1 = 3000          # the transformers slow path materialises [B, 4096, L, 16] fp32 twice; B*L is bounded
+SCAN_CHUNK_TOKENS = 1024        # M1: the slow path's four [B, 4096, L, 16] fp32 tensors are materialised per chunk of L with
+                                # B * chunk <= this (about 1 GiB); the arithmetic per element is the reference's, asserted
 CHANCE = {"compare": 0.5, "recall": 1.0 / 3.0}
 FORMATS = {"yes_no": (" Yes", " No"), "true_false": (" True", " False")}
 N_EXEMPLARS = 4
 EXEMPLAR_Q_SLOTS = (0, 1, 2, 0)          # PREREG section 4: recall exemplars query slots 1, 2, 3 and 1
 EXEMPLAR_LABELS = (True, False, True, False)
 POOL_CAP = 150_000                        # eligible sentences read from the train split, in file order
-PILOT_RESERVE = 4000                      # tail of the main shuffled order, reserved for the pilot
+PILOT_RESERVE = 4000                      # tail of the seeded sentence order, reserved for the pilot
+SMOKE_RESERVE = 3000                      # the slice before that tail, reserved for the smoke; main = everything before both
 N_EXEMPLAR_CODES = N_EXEMPLARS * 3
 N_PILOT_TEST_CODES = 60
+N_SMOKE_TEST_CODES = 60
 LOGODDS_TIE = 1e-3
 FP32_TOL = 1e-3
 PAD_ID = 0                                # never read: right padding, logits taken at each item's own last position
@@ -215,16 +221,21 @@ def read_wikitext_sentences(cap: int = POOL_CAP) -> tuple:
     return out, prov
 
 
-def split_orders(n: int, seed_main: int = SEED_ITEMS, seed_pilot: int = SEED_PILOT,
-                 reserve: int = PILOT_RESERVE) -> tuple:
-    """Main order = a seeded permutation minus its tail; pilot order = that tail, reshuffled by the pilot seed.
-    Disjoint by construction, so no sentence can serve both the pilot and the main set."""
-    if n <= reserve + 1:
-        raise Refusal(f"sentence pool too small ({n}) for a pilot reserve of {reserve}")
+def split_orders(n: int, seed_main: int = SEED_ITEMS, seed_pilot: int = SEED_PILOT, seed_smoke: int = SEED_SMOKE,
+                 reserve: int = PILOT_RESERVE, smoke_reserve: int = SMOKE_RESERVE) -> tuple:
+    """One seeded permutation of the sentence indices, cut in three: main = everything before the two reserved
+    slices; smoke = the slice before the tail, reshuffled by the smoke seed; pilot = the tail, reshuffled by the
+    pilot seed. Disjoint by construction, so no sentence can serve two of the main set, the smoke and the pilot.
+    Returns (main, smoke, pilot)."""
+    if n <= reserve + smoke_reserve + 1:
+        raise Refusal(f"sentence pool too small ({n}) for a pilot reserve of {reserve} and a smoke reserve of {smoke_reserve}")
     perm = np.random.default_rng(seed_main).permutation(n)
-    main, tail = perm[:-reserve], perm[-reserve:]
+    main = perm[:-(reserve + smoke_reserve)]
+    smoke_slice = perm[-(reserve + smoke_reserve):-reserve]
+    tail = perm[-reserve:]
+    smoke = smoke_slice[np.random.default_rng(seed_smoke).permutation(smoke_reserve)]
     pilot = tail[np.random.default_rng(seed_pilot).permutation(reserve)]
-    return main, pilot
+    return main, smoke, pilot
 
 
 class SentencePool:
@@ -302,16 +313,18 @@ def eligible_codes(tok: Tok) -> tuple:
 
 
 def partition_codes(codes: list, seed: int = SEED_ITEMS) -> dict:
-    """Disjoint pools: main exemplars, main test, pilot exemplars, pilot test."""
+    """Disjoint pools: main exemplars, pilot exemplars, pilot test, smoke exemplars, smoke test, main test (the rest)."""
     rng = np.random.default_rng(seed)
     order = [codes[i] for i in rng.permutation(len(codes))]
     a = N_EXEMPLAR_CODES
     b = a + N_EXEMPLAR_CODES
     c = b + N_PILOT_TEST_CODES
-    if len(order) < c + 3 * 10:
+    d = c + N_EXEMPLAR_CODES
+    e = d + N_SMOKE_TEST_CODES
+    if len(order) < e + 3 * 10:
         raise Refusal(f"code pool too small ({len(order)})")
     return {"main_exemplar": order[:a], "pilot_exemplar": order[a:b], "pilot_test": order[b:c],
-            "main_test": order[c:]}
+            "smoke_exemplar": order[c:d], "smoke_test": order[d:e], "main_test": order[e:]}
 
 
 def code_block(codes) -> str:
@@ -478,7 +491,8 @@ def assert_balance(items: list, exemplars: list) -> dict:
 
 
 def assert_fillers(cells: dict, exemplars: list, pilot_used: set | None = None) -> dict:
-    """No sentence reused across items (and the pilot); no digit, name or 'code' in any filler or neutral."""
+    """No sentence reused across items (nor one the smoke or the pilot used); no digit, name or 'code' in any
+    filler or neutral. pilot_used: sentence indices the earlier smoke and pilot receipts record."""
     seen, dup, bad = {}, [], []
     for D, items in cells.items():
         for it in items:
@@ -488,7 +502,7 @@ def assert_fillers(cells: dict, exemplars: list, pilot_used: set | None = None) 
                         dup.append((i, seen[i], (D, it["idx"], key)))
                     seen[i] = (D, it["idx"], key)
                     if pilot_used and i in pilot_used:
-                        dup.append((i, "pilot", (D, it["idx"], key)))
+                        dup.append((i, "smoke/pilot", (D, it["idx"], key)))
             for key in ("filler", "neutral"):
                 v = filler_violations(it[key])
                 if v:
@@ -628,8 +642,8 @@ def walk_outcomes(spec: dict, fired: dict) -> str | None:
 # ---------------------------------------------------------------------------------------------------
 
 def batch_size_for(arm: str, L: int) -> int:
-    if arm == "M1":
-        return max(1, min(BATCH_MAX, BATCH_TOKENS_M1 // max(1, L)))
+    """Batches of 16 for both arms (PREREG section 4, Batching). M1's slow path fits at 16 because the scan's
+    [B, 4096, L, 16] tensors are materialised per chunk of L (install_chunked_scan), not for the whole sequence."""
     return BATCH_MAX
 
 
@@ -708,6 +722,93 @@ def load_arm_cpu_fp32(repo_id: str):
     model.eval()
     return model, {"repo": repo_id, "revision": path.name if path is not None else None,
                    "from_local_snapshot": path is not None, "load_seconds_cpu_fp32": round(time.time() - t0, 2)}
+
+
+_ORIG_SLOW_FORWARD = None
+
+
+def chunked_slow_forward(self, input_states, cache_params=None, cache_position=None, attention_mask=None):
+    """transformers' MambaMixer.slow_forward with the discretised tensors materialised per chunk of the sequence.
+
+    The reference (modeling_mamba.py, 4.57) builds discrete_A, discrete_B and deltaB_u as [B, D_inner, L, N] fp32
+    for the whole sequence — B * L MiB on mamba-1.4b-hf, 20 GiB at B = 16 and L = 1250 — and then loops over L.
+    This copy computes the same three tensors for a slice [s, e) of L at a time and runs the same loop over that
+    slice: every element of every tensor is the same expression of the same inputs, and the loop body is the
+    reference's, so the outputs are the reference's (asserted on CPU fp32 by check_chunked_scan_equivalence).
+    Anything this runner never uses (a cache, mambapy training) is handed to the original.
+    """
+    if cache_params is not None or (getattr(self, "use_mambapy", False) and self.training):
+        return _ORIG_SLOW_FORWARD(self, input_states, cache_params, cache_position, attention_mask)
+    torch = _torch()
+    nn = torch.nn
+    batch_size, seq_len, _ = input_states.shape
+    dtype = input_states.dtype
+    projected_states = self.in_proj(input_states).transpose(1, 2)                     # [B, 2 * D_inner, L]
+    hidden_states, gate = projected_states.chunk(2, dim=1)
+    if attention_mask is not None:
+        hidden_states = hidden_states * attention_mask.unsqueeze(1)
+    ssm_state = torch.zeros((batch_size, self.intermediate_size, self.ssm_state_size),
+                            device=hidden_states.device, dtype=dtype)
+    hidden_states = self.act(self.conv1d(hidden_states)[..., :seq_len])              # [B, D_inner, L]
+    if attention_mask is not None:
+        hidden_states = hidden_states * attention_mask.unsqueeze(1)
+    ssm_parameters = self.x_proj(hidden_states.transpose(1, 2))
+    time_step, Bm, Cm = torch.split(ssm_parameters, [self.time_step_rank, self.ssm_state_size, self.ssm_state_size], dim=-1)
+    discrete_time_step = self.dt_proj(time_step)                                      # [B, L, D_inner]
+    discrete_time_step = nn.functional.softplus(discrete_time_step).transpose(1, 2)   # [B, D_inner, L]
+    A = -torch.exp(self.A_log.float())                                                # [D_inner, N]
+    chunk = max(1, SCAN_CHUNK_TOKENS // batch_size)
+    scan_outputs = []
+    for s in range(0, seq_len, chunk):
+        e = min(seq_len, s + chunk)
+        dt_c = discrete_time_step[:, :, s:e, None]
+        discrete_A = torch.exp(A[None, :, None, :] * dt_c)                             # [B, D_inner, e-s, N]
+        discrete_B = dt_c * Bm[:, None, s:e, :].float()
+        deltaB_u = discrete_B * hidden_states[:, :, s:e, None].float()
+        for i in range(e - s):
+            ssm_state = discrete_A[:, :, i, :] * ssm_state + deltaB_u[:, :, i, :]
+            scan_output = torch.matmul(ssm_state.to(dtype), Cm[:, s + i, :].unsqueeze(-1))
+            scan_outputs.append(scan_output[:, :, 0])
+        del discrete_A, discrete_B, deltaB_u
+    scan_output = torch.stack(scan_outputs, dim=-1)                                   # [B, D_inner, L]
+    scan_output = scan_output + (hidden_states * self.D[None, :, None])
+    scan_output = (scan_output * self.act(gate))
+    return self.out_proj(scan_output.transpose(1, 2))
+
+
+def install_chunked_scan() -> dict:
+    """Replace MambaMixer.slow_forward by the chunked copy; record whether the fused kernels would bypass it."""
+    global _ORIG_SLOW_FORWARD
+    from transformers.models.mamba import modeling_mamba as mm
+    if _ORIG_SLOW_FORWARD is None:
+        _ORIG_SLOW_FORWARD = mm.MambaMixer.slow_forward
+    mm.MambaMixer.slow_forward = chunked_slow_forward
+    fast = all(getattr(mm, nm, None) is not None for nm in
+               ("selective_state_update", "selective_scan_fn", "causal_conv1d_fn", "causal_conv1d_update", "mamba_inner_fn"))
+    return {"installed": True, "scan_chunk_tokens": SCAN_CHUNK_TOKENS, "transformers_fast_path_available": bool(fast),
+            "note": "fused mamba-ssm kernels present: cuda forwards bypass slow_forward and the dt_proj hook never fires, "
+                    "so the mechanism diagnostic is skipped" if fast else "slow path in use on every device"}
+
+
+def check_chunked_scan_equivalence(model, tok: Tok, item: dict, exemplars: list, fmt: str) -> dict:
+    """The chunked scan reproduces the reference slow_forward on one short prompt (last-position logits)."""
+    torch = _torch()
+    from transformers.models.mamba import modeling_mamba as mm
+    device = next(model.parameters()).device
+    s = compositional_ids(tok, prompt_parts(item, exemplars, "compare", fmt))
+    ids, _ = pad_batch([s], device)
+    with torch.no_grad():
+        mm.MambaMixer.slow_forward = _ORIG_SLOW_FORWARD
+        try:
+            h0 = model.backbone(input_ids=ids, use_cache=False).last_hidden_state
+        finally:
+            mm.MambaMixer.slow_forward = chunked_slow_forward
+        h1 = model.backbone(input_ids=ids, use_cache=False).last_hidden_state
+        l0 = _lm_head(model)(h0[0, len(s) - 1]).float()
+        l1 = _lm_head(model)(h1[0, len(s) - 1]).float()
+    return {"max_abs_logit_diff": float((l1 - l0).abs().max()), "max_abs_hidden_diff": float((h1 - h0).abs().max()),
+            "prompt_tokens": len(s), "scan_chunk_tokens": SCAN_CHUNK_TOKENS, "chunks": math.ceil(len(s) / SCAN_CHUNK_TOKENS),
+            "dtype": str(next(model.parameters()).dtype), "device": str(device)}
 
 
 def assert_mamba_A(model) -> dict:
@@ -966,25 +1067,26 @@ def release(model):
 # ---------------------------------------------------------------------------------------------------
 
 def prepare_items(tok_gen: Tok, n: int, distances, seed: int, which: str, fmts, sentences: list | None = None):
-    """Code pools, exemplars, sentence pool and the per-distance cells. which = 'main' or 'pilot'."""
+    """Code pools, exemplars, sentence pool and the per-distance cells. which = 'main', 'smoke' or 'pilot'."""
+    if which not in ("main", "smoke", "pilot"):
+        raise Refusal(f"prepare_items: which must be main, smoke or pilot, got {which!r}")
     codes, codes_len = eligible_codes(tok_gen)
     pools = partition_codes(codes)
     if sentences is None:
         sentences, prov = read_wikitext_sentences()
     else:
         prov = {"source": "caller-supplied sentences", "eligible_sentences": len(sentences)}
-    main_order, pilot_order = split_orders(len(sentences))
-    if which == "main":
-        pool = SentencePool(sentences, main_order)
-        ex_codes, test_codes = pools["main_exemplar"], pools["main_test"]
-    else:
-        pool = SentencePool(sentences, pilot_order)
-        ex_codes, test_codes = pools["pilot_exemplar"], pools["pilot_test"]
+    orders = dict(zip(("main", "smoke", "pilot"), split_orders(len(sentences))))
+    pool = SentencePool(sentences, orders[which])
+    ex_codes, test_codes = pools[f"{which}_exemplar"], pools[f"{which}_test"]
     exemplars = build_exemplars(ex_codes, np.random.default_rng(seed))
     cells = {D: build_items(n, D, seed, pool, test_codes, exemplars, tok_gen, fmts=fmts) for D in distances}
+    both = PILOT_RESERVE + SMOKE_RESERVE
     return {"cells": cells, "exemplars": exemplars, "pool": pool, "codes_len": codes_len, "code_pool_size": len(codes),
             "pools": {k: len(v) for k, v in pools.items()}, "sentence_provenance": prov,
-            "sentence_region": {"main": f"perm[:-{PILOT_RESERVE}]", "pilot": f"perm[-{PILOT_RESERVE}:]", "which": which},
+            "sentence_region": {"main": f"perm[:-{both}]", "smoke": f"perm[-{both}:-{PILOT_RESERVE}] reshuffled by seed {SEED_SMOKE}",
+                                "pilot": f"perm[-{PILOT_RESERVE}:] reshuffled by seed {SEED_PILOT}", "which": which,
+                                "seed": seed},
             "n_sentences": len(sentences)}
 
 
@@ -1020,7 +1122,7 @@ def base_receipt(mode: str, fmt: str, n: int, distances, arms) -> dict:
                        "seeds": {"items": SEED_ITEMS, "pilot": SEED_PILOT, "bootstrap": SEED_BOOT},
                        "answer_format": fmt, "answer_tokens": list(FORMATS.get(fmt, ())), "distances": list(distances),
                        "D0": D0, "D1": D1, "n_per_cell": n, "screen_bar": SCREEN_BAR, "guard": {"yes_rate": list(GUARD_YES_RANGE), "max_slot_fraction": GUARD_SLOT_MAX},
-                       "ablated_bar": ABLATED_BAR, "window_W": WINDOW_W, "batch_max": BATCH_MAX, "batch_tokens_M1": BATCH_TOKENS_M1,
+                       "ablated_bar": ABLATED_BAR, "window_W": WINDOW_W, "batch_max": BATCH_MAX, "scan_chunk_tokens_M1": SCAN_CHUNK_TOKENS,
                        "free_gpu_min_bytes": FREE_GPU_MIN_BYTES, "budget_hours": BUDGET_HOURS, "names": list(NAMES),
                        "n_exemplars": N_EXEMPLARS},
             "pilot": None, "acc_raw": {}, "acc_norm": {}, "guard": {}, "controls": {"ablated": {}, "windowed": {"W": WINDOW_W}},
@@ -1057,17 +1159,23 @@ def write_json(path: Path, obj) -> None:
         raise RuntimeError(f"write failed: {path}")
 
 
-def evaluate_arm(arm: str, res: dict, prep: dict, toks: dict, fmt: str, distances, keep: dict, do_mech: bool, do_windowed: bool) -> None:
-    """Load one arm, run its asserts, score every cell, release it. keep[(arm, family, D)] = per-item correctness."""
+def load_arm_with_asserts(arm: str, res: dict, prep: dict, tok: Tok, fmt: str, items0: list):
+    """Free-GPU check, CPU fp32 load, the fp32 asserts of section 12 (items 1, 6, 10 and the chunked-scan
+    equivalence for M1), the free-GPU check again, the fp16 move, the reported fp16 right-padding difference.
+    Returns (model on cuda, mechanism_allowed)."""
     red = res["redteam"]
-    tok = toks[arm]
-    ans = red["answer_token_ids"][arm][fmt]
     require_free_gpu(red, arm)
+    if arm == "M1":
+        red["chunked_scan"] = install_chunked_scan()
     model, info = load_arm_cpu_fp32(ARMS[arm])
     res["config"]["revisions"][arm] = info
-    items0 = prep["cells"][distances[0]]
+    mech_ok = True
     if arm == "M1":
         red["mamba_A_real_and_negative_every_layer"] = assert_mamba_A(model)
+        red["chunked_scan_equivalence_fp32_cpu"] = ce = check_chunked_scan_equivalence(model, tok, items0[0], prep["exemplars"], fmt)
+        if ce["max_abs_logit_diff"] > FP32_TOL:
+            raise Refusal(f"M1: the chunked scan differs from the reference slow_forward by {ce['max_abs_logit_diff']:.2e} > {FP32_TOL}")
+        mech_ok = not red["chunked_scan"]["transformers_fast_path_available"]
     red.setdefault("right_padding_fp32_cpu", {})[arm] = rp = check_right_padding(arm, model, tok, items0, prep["exemplars"], fmt)
     if rp["max_abs_logit_diff"] > FP32_TOL:
         raise Refusal(f"{arm}: right-padding changes the last-position logits by {rp['max_abs_logit_diff']:.2e} > {FP32_TOL}")
@@ -1080,7 +1188,19 @@ def evaluate_arm(arm: str, res: dict, prep: dict, toks: dict, fmt: str, distance
     model = to_gpu_fp16(model)
     res["runtime"].setdefault(arm, {})["to_gpu_seconds"] = round(time.time() - t0, 2)
     red.setdefault("right_padding_fp16_gpu_reported", {})[arm] = check_right_padding(arm, model, tok, items0, prep["exemplars"], fmt)
-    mech = MechanismHook(model) if (arm == "M1" and do_mech) else None
+    return model, mech_ok
+
+
+def evaluate_arm(arm: str, res: dict, prep: dict, toks: dict, fmt: str, distances, keep: dict, do_mech: bool, do_windowed: bool) -> None:
+    """Load one arm, run its asserts, score every cell, release it. keep[(arm, family, D)] = per-item correctness."""
+    red = res["redteam"]
+    tok = toks[arm]
+    ans = red["answer_token_ids"][arm][fmt]
+    items0 = prep["cells"][distances[0]]
+    model, mech_ok = load_arm_with_asserts(arm, res, prep, tok, fmt, items0)
+    mech = MechanismHook(model) if (arm == "M1" and do_mech and mech_ok) else None
+    if arm == "M1" and do_mech and not mech_ok:
+        res["mechanism"]["M1"] = {"status": "NOT_RUN", "reason": red["chunked_scan"]["note"]}
     try:
         for D in distances:
             items = prep["cells"][D]
@@ -1163,12 +1283,16 @@ def run_smoke(arms) -> int:
     fmt = answer_format_from_prereg(PREREG.read_text(encoding="utf-8"))
     fmt = "yes_no" if fmt == "PENDING_PILOT" else fmt
     toks = {a: load_tokenizer(ARMS[a]) for a in ARMS}
-    prep = prepare_items(toks["T"], N_SMOKE, SMOKE_DISTANCES, SEED_ITEMS, "main", fmts=(fmt,))
+    prep = prepare_items(toks["T"], N_SMOKE, SMOKE_DISTANCES, SEED_SMOKE, "smoke", fmts=(fmt,))
     res = base_receipt("smoke", fmt, N_SMOKE, SMOKE_DISTANCES, arms)
     record_versions(res)
+    res["config"]["seeds"]["smoke"] = SEED_SMOKE
     res["config"]["code_pools"] = prep["pools"]
     res["config"]["filler_pool"] = prep["sentence_provenance"]
+    res["config"]["sentence_region"] = prep["sentence_region"]
     res["redteam"] = tokenizer_level_asserts(prep, toks, fmt)
+    res["sentence_indices_used"] = sorted(prep["pool"].used)
+    res["smoke_items"] = "seed 1016, the smoke's own reserved slice of the sentence order and of the code pool: no main-set or pilot item is generated or scored here"
     keep = {}
     t0 = time.time()
     for arm in arms:
@@ -1203,17 +1327,8 @@ def run_pilot() -> int:
     t0 = time.time()
     for arm in ARMS:
         tok = toks[arm]
-        require_free_gpu(red, arm)
-        model, info = load_arm_cpu_fp32(ARMS[arm])
-        res["config"]["revisions"][arm] = info
         items = prep["cells"][D0]
-        if arm == "M1":
-            red["mamba_A_real_and_negative_every_layer"] = assert_mamba_A(model)
-        red.setdefault("right_padding_fp32_cpu", {})[arm] = rp = check_right_padding(arm, model, tok, items, prep["exemplars"], "yes_no")
-        if rp["max_abs_logit_diff"] > FP32_TOL:
-            raise Refusal(f"{arm}: right-padding changes the last-position logits by {rp['max_abs_logit_diff']:.2e}")
-        require_free_gpu(red, arm + "_to_cuda")
-        model = to_gpu_fp16(model)
+        model, _mech_ok = load_arm_with_asserts(arm, res, prep, tok, "yes_no", items)
         try:
             for fmt in FORMATS:
                 ans = red["answer_token_ids"][arm][fmt]
@@ -1263,7 +1378,7 @@ def run_main() -> int:
     print(f"MAIN: n={N_PER_CELL} distances={DISTANCES} format={fmt} arms={list(ARMS)}", flush=True)
     toks = {a: load_tokenizer(ARMS[a]) for a in ARMS}
     pilot = json.loads(PILOT_RECEIPT.read_text(encoding="utf-8")) if PILOT_RECEIPT.exists() else {"status": "not run"}
-    pilot_used = set(pilot.get("sentence_indices_used") or [])
+    pilot_used = set(pilot.get("sentence_indices_used") or []) | set(smoke.get("sentence_indices_used") or [])
     prep = prepare_items(toks["T"], N_PER_CELL, DISTANCES, SEED_ITEMS, "main", fmts=(fmt,))
     res = base_receipt("main", fmt, N_PER_CELL, DISTANCES, list(ARMS))
     record_versions(res)
@@ -1272,7 +1387,9 @@ def run_main() -> int:
     res["config"]["sentence_region"] = prep["sentence_region"]
     res["pilot"] = {k: v for k, v in pilot.items() if k != "sentence_indices_used"}
     res["redteam"] = tokenizer_level_asserts(prep, toks, fmt, pilot_used)
-    res["redteam"]["smoke"] = {"receipt": SMOKE_RECEIPT.name, "verdict": smoke.get("verdict"), "budget": budget}
+    res["redteam"]["smoke"] = {"receipt": SMOKE_RECEIPT.name, "verdict": smoke.get("verdict"), "budget": budget,
+                               "arms_run": (smoke.get("config") or {}).get("arms_run")}
+    res["redteam"]["no_sentence_shared_with_smoke_or_pilot"] = {"checked_against": len(pilot_used), "ok": True}
     skeleton = dict(res)
     skeleton["result"] = {k: 0.0 for k in ("plumbing_ok", "screen_min_norm_acc_D0", "guard_ok_D0", "ablated_max_norm_acc", "between_D1", "between_D1_ci_lo", "within_M1")}
     bad = {k: v for k, v in exp.check_metrics(skeleton).items() if not v["usable"]}
