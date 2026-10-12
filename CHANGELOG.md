@@ -43,10 +43,11 @@ takes the "names no build or runtime" row below. Phase 2 makes the writer carry 
   own file and never a module looked up by name, so a reader built from a string names a null sha;
   the other modules are found with `importlib.util.find_spec`, which executes nothing. `runtime`:
   `implementation`, `version`, `unicode` (`unicodedata.unidata_version`) and `case_floor` (a label from
-  three case pairs a browser can run too; recorded, never compared). Compared: `build.reader`,
-  `build.modules` by name, `runtime.implementation`, `runtime.version`, `runtime.unicode`. A null equals
-  nothing, so neither "same" nor skew is ever claimed from an unnamed field; anything this runtime
-  cannot know is null, never a guess; no path is written. An identity that is not an object, names an
+  six case pairs in three Unicode-version groups, 13.0, 14.0 and 16.0, that a browser can run too;
+  recorded, never compared). Compared: `build.reader`, `build.modules` by name, `runtime.implementation`,
+  `runtime.version`, `runtime.unicode`. A null equals nothing, so neither "same" nor skew is ever claimed
+  from an unnamed field, and an empty string is read as null; anything this runtime cannot know is null,
+  never a guess; no path is written. An identity that is not an object, names an
   unknown schema, holds a compared value that is not a string of at most 128 characters or null, or
   lists modules otherwise than as at most 16 `[name, sha]` pairs is read as unnamed with a quoted
   reason, never a traceback. `python -m styxx.instrument` prints the identity this install would verify
@@ -67,10 +68,14 @@ takes the "names no build or runtime" row below. Phase 2 makes the writer carry 
   recorded identity> — reproduce under that instrument (...) before reading the lines below as an
   edit`**, a problem placed ahead of the field lines, which stay, with the pin taken from the sealed
   record's `build.styxx`, and an advisory that a release installing another `styxx.diffgate` sha than
-  the record names is not the minter's build; an incomplete identity (a null compared field), the two
-  unnamed advisories naming the unknown fields. Problem texts carry the recorded identity and the
-  differing field names and never a value of the live identity; a recorded name charon would read as a
-  broken binding (`ambiguous`, `!=`) is not quoted in a problem. The format-key mismatch stays
+  the record names is not the minter's build; an incomplete identity (a null compared field, or an
+  empty string, read as null), the two unnamed advisories naming the unknown fields, the failing one
+  naming the payload's pin as a version, not a build, as the unnamed one does. Problem texts carry the
+  recorded identity and the differing field names and never a value of the live identity; a recorded
+  name charon would read as a broken binding (`ambiguous`, `!=`) is not quoted in a problem, whether it
+  is the identity, a module name inside a differing field (the reader admits any `^[a-z_.]{1,64}$`), the
+  implementation, the version or the pin's version string, which then goes unwritten: a minter who
+  chooses the words cannot turn a SKEW line UNRESOLVED in charon. The format-key mismatch stays
   INSTRUMENT SKEW with no field comparison. The result gains `gate_identity` (`recorded`, `live`,
   `state`, `differs`, `unknown`, `pin`) and `skew`; no key is removed or retyped. At mint, R5 compares
   the content keys only, so a `--gate` written by another build or runtime is accepted when its content
