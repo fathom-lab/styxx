@@ -1,28 +1,40 @@
 # -*- coding: utf-8 -*-
-"""run_realmodel_bridge_v3.py -- frozen by PREREG_realmodel_bridge_v3_2026_10_11.
+"""run_realmodel_bridge_v3.py -- frozen by PREREG_realmodel_bridge_v3_2026_10_11 (with amendment 17.2).
 
 THE REAL-MODEL BRIDGE, ATTEMPT THREE. v1 was uninterpretable (recall at ceiling, compare at chance in
 130M models); v2 was degenerate (a constant responder scored the label base rate and cleared the floor,
 RESULT_realmodel_bridge_2026_07_24.md). v3 does what that RESULT asked for: few-shot exemplars, exact
-per-cell label balance (a constant responder scores exactly chance), a capability screen at the shortest
+per-cell balance (a constant responder scores exactly chance), a capability screen at the shortest
 distance, a degeneracy guard, chance-normalized metrics, and a paired item-bootstrap interval.
+
+Amendment 17.2 (the operator's one bounded redesign, the last): the compare readout is argmax-shaped like
+recall. The question is "Which name has the largest code: alpha, gamma or delta?" and the answer is scored
+over the three name tokens at the next position; the correct slot is exactly balanced per cell, so there is
+no Yes-prior to drift and a constant responder scores exactly chance; the guard is max-slot <= 0.80 in both
+families. Exemplar names (sigma, theta, omega) are disjoint from the test names; C_abl runs at every
+distance; C_near and C_overwrite are reported controls at D1; the receipt carries per-item bits and
+scores, sha256 lists of prompts, codes and sentences, and the prefix-nesting flag.
 
 Arms: M1 = state-spaces/mamba-1.4b-hf (A = -exp(A_log) real and strictly negative on the loaded weights,
 asserted in every layer) and T = EleutherAI/pythia-1.4b. Byte-identical prompts, identical token ids.
 
-  python run_realmodel_bridge_v3.py --smoke [--arms T|M1,T]
-      24 items, D in {16, 1024}, T only by default (PREREG section 12 item 11); --arms M1,T times the slow
-      arm as well. Smoke items come from their own seed (1016) and their own reserved slice of the sentence
-      order and of the code pool, disjoint from the main set and from the pilot: the smoke scores no
-      main-set item. INVALID-only by the gates block. Measures runtime per distance and extrapolates the
-      main run; above 4 hours the receipt reads INVALID__budget and the main run refuses to start.
+  python run_realmodel_bridge_v3.py --smoke [--arms M1,T]
+      24 items, D in {16, 1024}, both arms by default (amendment 17.2: the budget extrapolation needs the
+      slow arm timed). Smoke items come from their own seed (1016) and their own reserved slice of the
+      sentence order and of the code pool: the smoke scores no main-set or pilot item. INVALID-only by the
+      gates block. Measures runtime per distance and extrapolates the main run; above 4 hours the receipt
+      reads INVALID__budget and the main run refuses to start.
   python run_realmodel_bridge_v3.py --pilot
-      the section-9 format pilot: 48 items at D0, seed 1011, codes and sentences disjoint from the main
-      set, both arms, both answer formats. Written to realmodel_bridge_v3_pilot.json. Licenses nothing.
+      the amendment-17.2 pilot: 48 items at D0, seed 1012, its own reserved slice of the sentence order and
+      of the code pool, disjoint from the 1011 pilot, the smoke and the main region (asserted by sha256
+      lists), both arms, the redesigned compare readout and recall, C_abl at D0 reported. Written to
+      realmodel_bridge_v3_pilot2.json. Licenses nothing; its one permitted effect is the format line.
   python run_realmodel_bridge_v3.py
-      the main run. Refuses without: a committed PREREG, a chosen answer format in the PREREG, a smoke
-      receipt whose budget is inside 4 hours, every tokenizer-level red-team assert, and >= 6 GB of free
-      GPU memory before each load. One arm resident at a time.
+      the main run. Refuses without: a committed PREREG whose format line names this readout, a smoke
+      receipt written by this readout with both arms timed and a budget inside 4 hours, a pilot2 receipt
+      that cleared both arms, every tokenizer-level red-team assert, the model-level asserts of BOTH arms
+      before any cell is scored, and >= 6 GB of free GPU memory before each load. One arm resident at a
+      time. NOT run by the builder: it needs the seal and the operator's anchor.
 
 The pure parts (items, balance, fillers, metrics, bootstrap, budget) import only numpy, so the unit
 tests run on CPU with no model; torch and transformers are imported inside the functions that touch one.
@@ -36,6 +48,7 @@ import json
 import math
 import os
 import re
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -47,22 +60,26 @@ ROOT = HERE.parent.parent
 PREREG = HERE / "PREREG_realmodel_bridge_v3_2026_10_11.md"
 RECEIPT = HERE / "realmodel_bridge_v3_result.json"
 SMOKE_RECEIPT = HERE / "realmodel_bridge_v3_smoke.json"
-PILOT_RECEIPT = HERE / "realmodel_bridge_v3_pilot.json"
+PILOT1_RECEIPT = HERE / "realmodel_bridge_v3_pilot.json"      # the section-9 pilot (seed 1011); read, never written
+PILOT2_RECEIPT = HERE / "realmodel_bridge_v3_pilot2.json"     # the amendment-17.2 pilot (seed 1012)
 REFUSAL_RECEIPT = HERE / "realmodel_bridge_v3_refusal.json"
 
 ARMS = {"M1": "state-spaces/mamba-1.4b-hf", "T": "EleutherAI/pythia-1.4b"}
-NAMES = ("alpha", "bravo", "delta")
+NAMES = ("alpha", "gamma", "delta")           # test names: each " "+name is one NeoX token (" bravo" is two; amendment 17.2)
+EXEMPLAR_NAMES = ("sigma", "theta", "omega")  # exemplar names, disjoint from the test names (amendment 17.2, zoo F1 fix a)
+READOUT = "argmax_largest"                    # the amendment-17.2 compare readout; the only one this runner scores
+RETIRED_FORMATS = ("yes_no", "true_false")    # the section-9 formats: both failed the 1011 pilot (amendment 17.1)
 FAMILIES = ("compare", "recall")
+VARIANTS = ("plain", "ablated", "windowed", "near", "overwrite")
 DISTANCES = (16, 64, 256, 1024)
 D0, D1 = 16, 1024
 N_PER_CELL = 600
 N_SMOKE, N_PILOT = 24, 48
 SMOKE_DISTANCES = (16, 1024)
-SEED_ITEMS, SEED_PILOT, SEED_BOOT = 20261011, 1011, 20261011
+SEED_ITEMS, SEED_PILOT, SEED_PILOT2, SEED_BOOT = 20261011, 1011, 1012, 20261011
 SEED_SMOKE = 1016                         # the smoke's own items: never a main-set or pilot item
 N_BOOT = 2000
 SCREEN_BAR = 0.40
-GUARD_YES_RANGE = (0.20, 0.80)
 GUARD_SLOT_MAX = 0.80
 ABLATED_BAR = 0.16
 WINDOW_W = 128
@@ -72,21 +89,25 @@ BUDGET_HOURS = 4.0
 BATCH_MAX = 16
 SCAN_CHUNK_TOKENS = 1024        # M1: the slow path's four [B, 4096, L, 16] fp32 tensors are materialised per chunk of L with
                                 # B * chunk <= this (about 1 GiB); the arithmetic per element is the reference's, asserted
-CHANCE = {"compare": 0.5, "recall": 1.0 / 3.0}
-FORMATS = {"yes_no": (" Yes", " No"), "true_false": (" True", " False")}
+CHANCE = {"compare": 1.0 / 3.0, "recall": 1.0 / 3.0}
 N_EXEMPLARS = 4
-EXEMPLAR_Q_SLOTS = (0, 1, 2, 0)          # PREREG section 4: recall exemplars query slots 1, 2, 3 and 1
-EXEMPLAR_LABELS = (True, False, True, False)
+EXEMPLAR_Q_SLOTS = (0, 1, 2, 0)           # PREREG section 4: recall exemplars query slots 1, 2, 3 and 1
+EXEMPLAR_MAX_SLOTS = (1, 0, 2, 1)         # amendment 17.2: the slot of the largest code in each compare exemplar
+CODE_MAX_PLANTED = 8999                   # amendment 17.2: planted codes <= 8999 so that a larger code exists for C_overwrite
 POOL_CAP = 150_000                        # eligible sentences read from the train split, in file order
-PILOT_RESERVE = 4000                      # tail of the seeded sentence order, reserved for the pilot
-SMOKE_RESERVE = 3000                      # the slice before that tail, reserved for the smoke; main = everything before both
+PILOT_RESERVE = 4000                      # tail of the seeded sentence order, reserved for the 1011 pilot
+SMOKE_RESERVE = 3000                      # the slice before that tail, reserved for the smoke
+PILOT2_RESERVE = 3000                     # the slice before the smoke's, reserved for the 1012 pilot; main = everything before all three
 N_EXEMPLAR_CODES = N_EXEMPLARS * 3
 N_PILOT_TEST_CODES = 60
 N_SMOKE_TEST_CODES = 60
-LOGODDS_TIE = 1e-3
+N_PILOT2_TEST_CODES = 60
+MARGIN_TIE = 1e-3
 FP32_TOL = 1e-3
 PAD_ID = 0                                # never read: right padding, logits taken at each item's own last position
 FORMAT_LINE_RE = re.compile(r"^Answer format chosen \(written before sealing\): (\S+)\s*$", re.M)
+FORMAT_LINE_VALUES = RETIRED_FORMATS + ("PENDING_PILOT", "NOT_STARTED", READOUT)
+PILOT_OUTCOMES = ("CLEARED_BOTH", "CLEARED_T_ONLY", "CLEARED_M1_ONLY", "NEITHER")
 
 
 class Refusal(RuntimeError):
@@ -148,8 +169,11 @@ def load_tokenizer(repo_id: str) -> Tok:
 
 _SENT_SPLIT = re.compile(r"(?<=[.!?])\s+(?=[A-Z])")
 _SENT_OK = re.compile(r"^[A-Za-z][A-Za-z ,;:'\"()\-]*[.!?]$")
+# _SENT_BAD defines the pool itself and is kept exactly as the committed smoke and 1011-pilot receipts had it, so
+# that their sentence indices still name the same sentences (pool identity). The names of amendment 17.2 are
+# excluded at draw time instead (SentencePool.draw skips them, consuming nothing a filler could use).
 _SENT_BAD = re.compile(r"\d|alpha|bravo|delta|code|<unk>", re.I)
-_FILLER_BAD = re.compile(r"\d|alpha|bravo|delta|code", re.I)
+_FILLER_BAD = re.compile(r"\d|" + "|".join(NAMES + EXEMPLAR_NAMES) + r"|code", re.I)
 MIN_WORDS, MAX_WORDS = 6, 40
 
 
@@ -200,6 +224,10 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+def sha256_text(s: str) -> str:
+    return hashlib.sha256(s.encode("utf-8")).hexdigest()
+
+
 def read_wikitext_sentences(cap: int = POOL_CAP) -> tuple:
     """Eligible sentences from the cached train split, in file order, up to cap. Returns (sentences, provenance)."""
     try:
@@ -222,42 +250,54 @@ def read_wikitext_sentences(cap: int = POOL_CAP) -> tuple:
 
 
 def split_orders(n: int, seed_main: int = SEED_ITEMS, seed_pilot: int = SEED_PILOT, seed_smoke: int = SEED_SMOKE,
-                 reserve: int = PILOT_RESERVE, smoke_reserve: int = SMOKE_RESERVE) -> tuple:
-    """One seeded permutation of the sentence indices, cut in three: main = everything before the two reserved
-    slices; smoke = the slice before the tail, reshuffled by the smoke seed; pilot = the tail, reshuffled by the
-    pilot seed. Disjoint by construction, so no sentence can serve two of the main set, the smoke and the pilot.
-    Returns (main, smoke, pilot)."""
-    if n <= reserve + smoke_reserve + 1:
-        raise Refusal(f"sentence pool too small ({n}) for a pilot reserve of {reserve} and a smoke reserve of {smoke_reserve}")
+                 seed_pilot2: int = SEED_PILOT2, reserve: int = PILOT_RESERVE, smoke_reserve: int = SMOKE_RESERVE,
+                 pilot2_reserve: int = PILOT2_RESERVE) -> dict:
+    """One seeded permutation of the sentence indices, cut in four: pilot = the tail (reshuffled by the pilot seed);
+    smoke = the slice before it (reshuffled by the smoke seed); pilot2 = the slice before that (reshuffled by the
+    pilot2 seed); main = everything before the three reserved slices. The pilot and smoke slices are exactly the
+    ones the committed 1011-pilot and smoke receipts drew from; the pilot2 slice is carved from what was the main
+    region's tail, before any main-set item exists. Disjoint by construction. Returns {main, pilot2, smoke, pilot}."""
+    total = reserve + smoke_reserve + pilot2_reserve
+    if n <= total + 1:
+        raise Refusal(f"sentence pool too small ({n}) for reserves of {reserve} + {smoke_reserve} + {pilot2_reserve}")
     perm = np.random.default_rng(seed_main).permutation(n)
-    main = perm[:-(reserve + smoke_reserve)]
+    main = perm[:-total]
+    pilot2_slice = perm[-total:-(reserve + smoke_reserve)]
     smoke_slice = perm[-(reserve + smoke_reserve):-reserve]
     tail = perm[-reserve:]
-    smoke = smoke_slice[np.random.default_rng(seed_smoke).permutation(smoke_reserve)]
-    pilot = tail[np.random.default_rng(seed_pilot).permutation(reserve)]
-    return main, smoke, pilot
+    return {"main": main,
+            "pilot2": pilot2_slice[np.random.default_rng(seed_pilot2).permutation(pilot2_reserve)],
+            "smoke": smoke_slice[np.random.default_rng(seed_smoke).permutation(smoke_reserve)],
+            "pilot": tail[np.random.default_rng(seed_pilot).permutation(reserve)]}
 
 
 class SentencePool:
-    """Eligible sentences drawn without replacement in a fixed order; every draw is recorded."""
+    """Eligible sentences drawn without replacement in a fixed order; every draw is recorded. A sentence
+    containing a test name, an exemplar name, a digit or 'code' is skipped at draw time (recorded in `skipped`)."""
 
-    def __init__(self, sentences: list, order):
+    def __init__(self, sentences: list, order, bad=_FILLER_BAD):
         self.sentences = sentences
         self.order = [int(i) for i in order]
+        self.bad = bad
         self.cursor = 0
         self.used = []
+        self.skipped = []
 
     def draw(self) -> int:
-        if self.cursor >= len(self.order):
-            raise Refusal("sentence pool exhausted — raise POOL_CAP")
-        i = self.order[self.cursor]
-        self.cursor += 1
-        self.used.append(i)
-        return i
+        while True:
+            if self.cursor >= len(self.order):
+                raise Refusal("sentence pool exhausted — raise POOL_CAP")
+            i = self.order[self.cursor]
+            self.cursor += 1
+            if self.bad.search(self.sentences[i]):
+                self.skipped.append(i)
+                continue
+            self.used.append(i)
+            return i
 
     def fill(self, target: int, measure, max_tries: int = 64) -> tuple:
         """Distinct sentences joined by single spaces, cut at a word boundary so that measure(text) == target
-        exactly. Every sentence drawn is consumed, used or not. Returns (text, [sentence indices])."""
+        exactly. Every sentence drawn is consumed, used or not. Returns (text, [sentence indices], [parts])."""
         parts, used, tries = [], [], 0
         while True:
             i = self.draw()
@@ -289,16 +329,16 @@ class SentencePool:
         text = " ".join(parts)
         if measure(text) != target:
             raise Refusal("filler measure drifted after joining — tokenizer not compositional on this text")
-        return text, used
+        return text, used, parts
 
 
 def filler_violations(text: str) -> list:
-    """Digits, the three names and the word 'code' (as substrings, case-insensitive) are never in a filler."""
+    """Digits, the six names and the word 'code' (as substrings, case-insensitive) are never in a filler."""
     return sorted(set(m.group(0).lower() for m in _FILLER_BAD.finditer(text)))
 
 
 # ---------------------------------------------------------------------------------------------------
-# codes, exemplars, items (PREREG section 4)
+# codes, exemplars, items (PREREG section 4 as amended by 17.2)
 # ---------------------------------------------------------------------------------------------------
 
 def code_token_lengths(tok: Tok) -> dict:
@@ -313,7 +353,8 @@ def eligible_codes(tok: Tok) -> tuple:
 
 
 def partition_codes(codes: list, seed: int = SEED_ITEMS) -> dict:
-    """Disjoint pools: main exemplars, pilot exemplars, pilot test, smoke exemplars, smoke test, main test (the rest)."""
+    """Disjoint pools. The slices the committed receipts used (main exemplars, pilot exemplars and test, smoke
+    exemplars and test) are unchanged; the pilot2 pools are carved from what was the main test pool's head."""
     rng = np.random.default_rng(seed)
     order = [codes[i] for i in rng.permutation(len(codes))]
     a = N_EXEMPLAR_CODES
@@ -321,62 +362,108 @@ def partition_codes(codes: list, seed: int = SEED_ITEMS) -> dict:
     c = b + N_PILOT_TEST_CODES
     d = c + N_EXEMPLAR_CODES
     e = d + N_SMOKE_TEST_CODES
-    if len(order) < e + 3 * 10:
+    f = e + N_EXEMPLAR_CODES
+    g = f + N_PILOT2_TEST_CODES
+    if len(order) < g + 3 * 10:
         raise Refusal(f"code pool too small ({len(order)})")
     return {"main_exemplar": order[:a], "pilot_exemplar": order[a:b], "pilot_test": order[b:c],
-            "smoke_exemplar": order[c:d], "smoke_test": order[d:e], "main_test": order[e:]}
+            "smoke_exemplar": order[c:d], "smoke_test": order[d:e],
+            "pilot2_exemplar": order[e:f], "pilot2_test": order[f:g], "main_test": order[g:]}
 
 
-def code_block(codes) -> str:
-    return " ".join(f"The {NAMES[j]} code is {codes[j]}." for j in range(3))
+def code_block(codes, names=NAMES) -> str:
+    return " ".join(f"The {names[j]} code is {codes[j]}." for j in range(3))
+
+
+def question_text(family: str, q_slot: int, names=NAMES) -> str:
+    if family == "compare":
+        return f"Question: Which name has the largest code: {names[0]}, {names[1]} or {names[2]}? Answer:"
+    return f"Question: What is the {names[q_slot]} code? Answer:"
+
+
+def replant_sentence(slot: int, code: str, names=NAMES) -> str:
+    return f"The {names[slot]} code is now {code}."
+
+
+def arrange_codes(three: list, max_slot: int, rng) -> list:
+    """The numerically largest of three distinct codes at max_slot, the other two in seeded order."""
+    srt = sorted(three, key=int)
+    rest = [srt[0], srt[1]]
+    if int(rng.integers(0, 2)):
+        rest = rest[::-1]
+    out = [None, None, None]
+    out[max_slot] = srt[2]
+    for s in range(3):
+        if s != max_slot:
+            out[s] = rest.pop(0)
+    return out
 
 
 def build_exemplars(exemplar_codes: list, rng) -> list:
-    """Four blocks, zero filler, two Yes / two No, recall slots 1, 2, 3, 1."""
+    """Four blocks with the exemplar names, zero filler: recall queries slots (1, 2, 3, 1); the largest code sits at
+    slots (2, 1, 3, 2), so the queried code is the largest in one exemplar of four and no slot is the answer twice
+    in a row by construction."""
     if len(exemplar_codes) < N_EXEMPLAR_CODES:
         raise Refusal("not enough exemplar codes")
     exs = []
     for j in range(N_EXEMPLARS):
-        codes = list(exemplar_codes[3 * j: 3 * j + 3])
-        q = EXEMPLAR_Q_SLOTS[j]
-        label = EXEMPLAR_LABELS[j]
-        others = [s for s in range(3) if s != q]
-        claimed = q if label else int(rng.choice(others))
-        exs.append({"codes": codes, "q_slot": q, "label": bool(label), "claimed_slot": claimed})
+        codes = arrange_codes(list(exemplar_codes[3 * j: 3 * j + 3]), EXEMPLAR_MAX_SLOTS[j], rng)
+        exs.append({"codes": codes, "q_slot": EXEMPLAR_Q_SLOTS[j], "max_slot": EXEMPLAR_MAX_SLOTS[j]})
     return exs
 
 
-def exemplar_text(ex: dict, family: str, fmt: str) -> str:
-    cb = code_block(ex["codes"])
-    name = NAMES[ex["q_slot"]]
+def exemplar_text(ex: dict, family: str) -> str:
+    cb = code_block(ex["codes"], EXEMPLAR_NAMES)
+    q = question_text(family, ex["q_slot"], EXEMPLAR_NAMES)
     if family == "compare":
-        yes, no = FORMATS[fmt]
-        claimed = ex["codes"][ex["claimed_slot"]]
-        return f"{cb}\nQuestion: Is the {name} code {claimed}? Answer:{yes if ex['label'] else no}"
-    return f"{cb}\nQuestion: What is the {name} code? Answer: {ex['codes'][ex['q_slot']]}"
+        return f"{cb}\n{q} {EXEMPLAR_NAMES[ex['max_slot']]}"
+    return f"{cb}\n{q} {ex['codes'][ex['q_slot']]}"
 
 
 _PERMS = list(itertools.permutations(range(N_EXEMPLARS)))
+_TRANSPOSITIONS = ((1, 0, 2), (2, 1, 0), (0, 2, 1))
+_PERMS3 = list(itertools.permutations(range(3)))
+# the last exemplar's compare answer slot decides which exemplar is last: slot 0 -> exemplar 2, slot 2 -> exemplar 3,
+# slot 1 -> exemplar 1 or 4 (alternating); its recall query slot then follows EXEMPLAR_Q_SLOTS
+_LAST_EX_BY_COMPARE_SLOT = {0: (1,), 2: (2,), 1: (0, 3)}
+_RECALL_SLOT_BY_COMPARE_SLOT = {s: EXEMPLAR_Q_SLOTS[exs[0]] for s, exs in _LAST_EX_BY_COMPARE_SLOT.items()}
 
 
-def permutation_with_last(rng, exemplars: list, last_yes: bool) -> list:
-    ok = [p for p in _PERMS if exemplars[p[-1]]["label"] == last_yes]
+def permutation_with_last(rng, last_ex: int) -> list:
+    ok = [p for p in _PERMS if p[-1] == last_ex]
     return list(ok[int(rng.integers(0, len(ok)))])
 
 
 def design_rows(n: int, rng) -> list:
-    """Exactly balanced rows: label x queried slot x claimed slot x last-exemplar-Yes. n must be a multiple of 24."""
-    if n % 24 != 0 or n <= 0:
-        raise Refusal(f"n per cell must be a positive multiple of 24 for exact balance, got {n}")
-    per = n // 24
+    """Exactly balanced rows (amendment 17.2). n must be a positive multiple of 6. Per cell, exactly n/3 items have
+    each slot as the largest code's slot, as the recall-queried slot, as the last exemplar's compare answer slot and
+    as the last exemplar's recall query slot; the last exemplar's compare answer slot equals the correct slot on
+    exactly n/3 items and its recall query slot equals the queried slot on exactly n/3 items; the overwrite slot
+    is never the correct slot and each (correct, overwrite) pair occurs n/6 times. Built in blocks of three:
+    last = pi(j), correct = pi(tau(j)), queried = f(pi(tau'(j))) with tau, tau' transpositions and f the map from
+    the last exemplar's compare slot to its recall slot; tau' = tau on about one block in three, so the count of
+    items whose queried slot is the correct slot is near n/3 (reported, not exact: 600 is not a multiple of 9)."""
+    if n <= 0 or n % 6 != 0:
+        raise Refusal(f"n per cell must be a positive multiple of 6 for exact balance, got {n}")
+    blocks = n // 3
+    same = int(round(blocks / 3.0))
     rows = []
-    for q in range(3):
-        others = [s for s in range(3) if s != q]
-        for label in (True, False):
-            for claimed in ([q, q] if label else others):
-                for last_yes in (True, False):
-                    rows.extend({"label": label, "q_slot": q, "claimed_slot": claimed, "last_yes": last_yes}
-                                for _ in range(per))
+    for b in range(blocks):
+        pi = _PERMS3[int(rng.integers(0, len(_PERMS3)))]
+        ti = int(rng.integers(0, 3))
+        tau = _TRANSPOSITIONS[ti]
+        tau2 = tau if b < same else _TRANSPOSITIONS[(ti + 1 + int(rng.integers(0, 2))) % 3]
+        for j in range(3):
+            last_c = pi[j]
+            exs = _LAST_EX_BY_COMPARE_SLOT[last_c]
+            last_ex = exs[0] if len(exs) == 1 else exs[b % 2]
+            rows.append({"max_slot": pi[tau[j]], "q_slot": _RECALL_SLOT_BY_COMPARE_SLOT[pi[tau2[j]]],
+                         "last_ex": last_ex})
+    counters = {m: 0 for m in range(3)}
+    for r in rows:
+        m = r["max_slot"]
+        r["ow_slot"] = (m + 1 + counters[m] % 2) % 3
+        counters[m] += 1
     order = rng.permutation(len(rows))
     return [rows[i] for i in order]
 
@@ -386,22 +473,33 @@ def in_situ_len(tok: Tok, text: str) -> int:
     return len(tok.encode("x\n\n" + text)) - len(tok.encode("x\n\n"))
 
 
-def prompt_parts(item: dict, exemplars: list, family: str, fmt: str, ablated: bool = False) -> tuple:
-    """(a, b, c): exemplars + blank line + code block (or the neutral text) | ' ' + filler | newline + question."""
-    exs = "\n\n".join(exemplar_text(exemplars[k], family, fmt) for k in item["perm"])
-    head = item["neutral"] if ablated else code_block(item["codes"])
-    a = exs + "\n\n" + head
-    b = " " + item["filler"]
-    name = NAMES[item["q_slot"]]
-    if family == "compare":
-        c = f"\nQuestion: Is the {name} code {item['codes'][item['claimed_slot']]}? Answer:"
-    else:
-        c = f"\nQuestion: What is the {name} code? Answer:"
-    return a, b, c
+def prompt_parts(item: dict, exemplars: list, family: str, variant: str = "plain") -> tuple:
+    """(a, b, c): exemplars + blank line + head | ' ' + filler | newline + question.
+    plain / windowed: head = the code block.  ablated: head = the neutral text (C_abl).
+    near (D1 only): head = the item's own filler, a blank line, then the code block; b = a 16-token filler, so the
+    codes stand 16 tokens before the question while the exemplars stand where they do at D1 (C_near).
+    overwrite (D1 only): head = the code block; b = the item's filler with its tail replaced so that its last
+    sentence re-plants the overwrite slot's name with a larger code (C_overwrite)."""
+    exs = "\n\n".join(exemplar_text(exemplars[k], family) for k in item["perm"])
+    cb = code_block(item["codes"])
+    c = "\n" + question_text(family, item["q_slot"])
+    if variant in ("plain", "windowed"):
+        return exs + "\n\n" + cb, " " + item["filler"], c
+    if variant == "ablated":
+        return exs + "\n\n" + item["neutral"], " " + item["filler"], c
+    if variant == "near":
+        return exs + "\n\n" + item["filler"] + "\n\n" + cb, " " + item["near_filler"], c
+    if variant == "overwrite":
+        return exs + "\n\n" + cb, " " + item["ow_filler"], c
+    raise Refusal(f"unknown prompt variant {variant!r}")
 
 
-def prompt_text(item: dict, exemplars: list, family: str, fmt: str, ablated: bool = False) -> str:
-    return "".join(prompt_parts(item, exemplars, family, fmt, ablated))
+def prompt_text(item: dict, exemplars: list, family: str, variant: str = "plain") -> str:
+    return "".join(prompt_parts(item, exemplars, family, variant))
+
+
+def item_variants(item: dict) -> tuple:
+    return ("plain", "ablated", "near", "overwrite") if item["D"] == D1 and "ow_filler" in item else ("plain", "ablated")
 
 
 def compositional_ids(tok: Tok, parts: tuple) -> list | None:
@@ -411,26 +509,55 @@ def compositional_ids(tok: Tok, parts: tuple) -> list | None:
     return whole if whole == joined else None
 
 
-def item_is_exact(item: dict, exemplars: list, tok: Tok, D: int, fmts) -> bool:
-    """D-exactness and compositionality for both families and every answer format, plain and ablated."""
-    for fmt in fmts:
-        for family in FAMILIES:
-            parts = prompt_parts(item, exemplars, family, fmt)
-            ids = compositional_ids(tok, parts)
-            if ids is None or len(tok.encode(parts[1])) != D:
+def item_is_exact(item: dict, exemplars: list, tok: Tok, D: int) -> bool:
+    """D-exactness and compositionality for both families, every variant the item carries."""
+    for family in FAMILIES:
+        parts = prompt_parts(item, exemplars, family)
+        ids = compositional_ids(tok, parts)
+        if ids is None or len(tok.encode(parts[1])) != D:
+            return False
+        abl = tok.encode(prompt_text(item, exemplars, family, "ablated"))
+        tail = tok.encode(parts[1]) + tok.encode(parts[2])
+        if len(abl) != len(ids) or abl[-len(tail):] != tail:
+            return False
+        if "ow_filler" in item:
+            near = prompt_parts(item, exemplars, family, "near")
+            if compositional_ids(tok, near) is None or len(tok.encode(near[1])) != D0:
                 return False
-            abl = tok.encode(prompt_text(item, exemplars, family, fmt, ablated=True))
-            tail = tok.encode(parts[1]) + tok.encode(parts[2])
-            if len(abl) != len(ids) or abl[-len(tail):] != tail:
+            ow = prompt_parts(item, exemplars, family, "overwrite")
+            if compositional_ids(tok, ow) is None or len(tok.encode(ow[1])) != D:
                 return False
     return True
 
 
+def overwrite_filler(parts: list, replant: str, D: int, pool: SentencePool, measure) -> tuple:
+    """The item's own filler sentences with the tail dropped until the re-plant sentence fits as the last sentence
+    inside exactly D tokens; a fresh fill from the pool closes any gap before the re-plant. Returns
+    (text, head_text, [sentence indices drawn for the gap])."""
+    parts = list(parts)
+    while parts and measure(" ".join(parts + [replant])) > D:
+        parts.pop()
+    gap = D - measure(" ".join(parts + [replant]))
+    used = []
+    if gap > 0:
+        top, used, _ = pool.fill(gap, measure)
+        parts = parts + [top]
+    head = " ".join(parts)
+    text = " ".join(parts + [replant])
+    if measure(text) != D:
+        raise Refusal(f"overwrite filler is {measure(text)} tokens, not {D}")
+    return text, head, used
+
+
 def build_items(n: int, D: int, seed: int, pool: SentencePool, test_codes: list, exemplars: list,
-                tok: Tok, fmts=("yes_no", "true_false"), max_attempts: int = 8) -> list:
-    """n exactly balanced items at distance D. Fillers and neutral texts come from the pool without replacement."""
+                tok: Tok, max_attempts: int = 8) -> list:
+    """n exactly balanced items at distance D. Fillers and neutral texts come from the pool without replacement.
+    At D1 every item also carries the C_near filler and the C_overwrite filler and code."""
     rng = np.random.default_rng(seed + D)
     rows = design_rows(n, rng)
+    plantable = np.asarray([c for c in test_codes if int(c) <= CODE_MAX_PLANTED], dtype=object)
+    if len(plantable) < 3:
+        raise Refusal("fewer than three plantable codes (<= %d) in the test pool" % CODE_MAX_PLANTED)
     items = []
 
     def filler_measure(t: str) -> int:
@@ -440,16 +567,30 @@ def build_items(n: int, D: int, seed: int, pool: SentencePool, test_codes: list,
         return in_situ_len(tok, t)
 
     for k, row in enumerate(rows):
-        codes = [str(c) for c in rng.choice(np.asarray(test_codes, dtype=object), size=3, replace=False)]
-        perm = permutation_with_last(rng, exemplars, row["last_yes"])
+        three = [str(c) for c in rng.choice(plantable, size=3, replace=False)]
+        codes = arrange_codes(three, row["max_slot"], rng)
+        perm = permutation_with_last(rng, row["last_ex"])
         target_neutral = in_situ_len(tok, code_block(codes))
+        ow_code = None
+        if D == D1:
+            larger = [c for c in test_codes if int(c) > int(codes[row["max_slot"]])]
+            if not larger:
+                raise Refusal(f"item {k} at D={D}: no code in the test pool is larger than {codes[row['max_slot']]} (C_overwrite)")
+            ow_code = str(larger[int(rng.integers(0, len(larger)))])
         for _attempt in range(max_attempts):
-            filler, f_used = pool.fill(D, filler_measure)
-            neutral, n_used = pool.fill(target_neutral, neutral_measure)
-            item = {"idx": k, "D": D, "codes": codes, "q_slot": row["q_slot"], "label": bool(row["label"]),
-                    "claimed_slot": row["claimed_slot"], "last_yes": bool(row["last_yes"]), "perm": perm,
+            filler, f_used, f_parts = pool.fill(D, filler_measure)
+            neutral, n_used, _ = pool.fill(target_neutral, neutral_measure)
+            item = {"idx": k, "D": D, "codes": codes, "q_slot": row["q_slot"], "max_slot": row["max_slot"],
+                    "last_ex": row["last_ex"], "perm": perm, "ow_slot": row["ow_slot"],
                     "filler": filler, "filler_sentences": f_used, "neutral": neutral, "neutral_sentences": n_used}
-            if item_is_exact(item, exemplars, tok, D, fmts):
+            if D == D1:
+                near, near_used, _ = pool.fill(D0, filler_measure)
+                replant = replant_sentence(row["ow_slot"], ow_code)
+                ow_text, ow_head, ow_used = overwrite_filler(f_parts, replant, D, pool, filler_measure)
+                item.update({"near_filler": near, "near_sentences": near_used, "ow_code": ow_code,
+                             "ow_filler": ow_text, "ow_filler_head": ow_head, "ow_replant": replant,
+                             "ow_sentences": ow_used})
+            if item_is_exact(item, exemplars, tok, D):
                 break
         else:
             raise Refusal(f"item {k} at D={D}: no exact filler in {max_attempts} attempts")
@@ -458,55 +599,87 @@ def build_items(n: int, D: int, seed: int, pool: SentencePool, test_codes: list,
 
 
 # ---------------------------------------------------------------------------------------------------
-# red-team asserts on the items (PREREG section 12, asserts 2-5 and 7)
+# red-team asserts on the items (PREREG section 12, asserts 2-5 and 7, as amended by 17.2)
 # ---------------------------------------------------------------------------------------------------
 
 def balance_counts(items: list, exemplars: list) -> dict:
-    """Counts computed from the items themselves (the last exemplar's answer is read off the permutation)."""
+    """Counts computed from the items themselves (the last exemplar's slots are read off the permutation)."""
     n = len(items)
+    last_c = [exemplars[it["perm"][-1]]["max_slot"] for it in items]
+    last_r = [exemplars[it["perm"][-1]]["q_slot"] for it in items]
+    pairs = {f"{m}{y}": 0 for m in range(3) for y in range(3) if y != m}
+    for it in items:
+        key = f"{it['max_slot']}{it['ow_slot']}"
+        if key in pairs:
+            pairs[key] += 1
     c = {"n": n,
-         "label_true": sum(1 for it in items if it["label"]),
-         "claimed_slot": [sum(1 for it in items if it["claimed_slot"] == s) for s in range(3)],
+         "max_slot": [sum(1 for it in items if it["max_slot"] == s) for s in range(3)],
          "q_slot": [sum(1 for it in items if it["q_slot"] == s) for s in range(3)],
-         "last_exemplar_yes": sum(1 for it in items if exemplars[it["perm"][-1]]["label"]),
-         "true_by_q_slot": [sum(1 for it in items if it["label"] and it["q_slot"] == s) for s in range(3)],
-         "claim_consistent": all((it["claimed_slot"] == it["q_slot"]) == it["label"] for it in items),
-         "codes_distinct": all(len(set(it["codes"])) == 3 for it in items)}
+         "last_exemplar": [sum(1 for it in items if it["perm"][-1] == j) for j in range(N_EXEMPLARS)],
+         "last_exemplar_compare_slot": [sum(1 for s in last_c if s == k) for k in range(3)],
+         "last_exemplar_recall_slot": [sum(1 for s in last_r if s == k) for k in range(3)],
+         "last_compare_slot_is_correct": sum(1 for it, s in zip(items, last_c) if s == it["max_slot"]),
+         "last_recall_slot_is_queried": sum(1 for it, s in zip(items, last_r) if s == it["q_slot"]),
+         "queried_is_largest": sum(1 for it in items if it["q_slot"] == it["max_slot"]),
+         "ow_slot": [sum(1 for it in items if it["ow_slot"] == s) for s in range(3)],
+         "ow_pairs": pairs,
+         "ow_never_correct": all(it["ow_slot"] != it["max_slot"] for it in items),
+         "largest_at_max_slot": all(max(it["codes"], key=int) == it["codes"][it["max_slot"]] for it in items),
+         "codes_distinct": all(len(set(it["codes"])) == 3 for it in items),
+         "codes_plantable": all(int(c) <= CODE_MAX_PLANTED for it in items for c in it["codes"]),
+         "perms_valid": all(sorted(it["perm"]) == list(range(N_EXEMPLARS)) for it in items)}
+    if items and "ow_code" in items[0]:
+        c["ow_code_larger_than_all"] = all(int(it["ow_code"]) > max(int(x) for x in it["codes"]) for it in items)
+        c["ow_replant_names_ow_slot"] = all(it["ow_replant"] == replant_sentence(it["ow_slot"], it["ow_code"]) for it in items)
+        c["ow_filler_ends_with_replant"] = all(it["ow_filler"] == (it["ow_filler_head"] + " " + it["ow_replant"]).strip() for it in items)
     return c
 
 
-def expected_balance(n: int) -> dict:
-    return {"label_true": n // 2, "claimed_slot": [n // 3] * 3, "q_slot": [n // 3] * 3,
-            "last_exemplar_yes": n // 2, "true_by_q_slot": [n // 6] * 3,
-            "claim_consistent": True, "codes_distinct": True}
+def expected_balance(n: int, with_overwrite: bool = False) -> dict:
+    third, sixth = n // 3, n // 6
+    want = {"max_slot": [third] * 3, "q_slot": [third] * 3, "last_exemplar": [sixth, third, third, sixth],
+            "last_exemplar_compare_slot": [third] * 3, "last_exemplar_recall_slot": [third] * 3,
+            "last_compare_slot_is_correct": third, "last_recall_slot_is_queried": third,
+            "ow_slot": [third] * 3, "ow_pairs": {f"{m}{y}": sixth for m in range(3) for y in range(3) if y != m},
+            "ow_never_correct": True, "largest_at_max_slot": True, "codes_distinct": True, "codes_plantable": True,
+            "perms_valid": True}
+    if with_overwrite:
+        want.update({"ow_code_larger_than_all": True, "ow_replant_names_ow_slot": True, "ow_filler_ends_with_replant": True})
+    return want
 
 
 def assert_balance(items: list, exemplars: list) -> dict:
     got = balance_counts(items, exemplars)
-    want = expected_balance(len(items))
-    bad = {k: (got[k], want[k]) for k in want if got[k] != want[k]}
+    want = expected_balance(len(items), with_overwrite=bool(items) and "ow_code" in items[0])
+    bad = {k: (got.get(k), want[k]) for k in want if got.get(k) != want[k]}
     if bad:
         raise Refusal(f"exact balance failed: {bad}")
     return got
 
 
-def assert_fillers(cells: dict, exemplars: list, pilot_used: set | None = None) -> dict:
-    """No sentence reused across items (nor one the smoke or the pilot used); no digit, name or 'code' in any
-    filler or neutral. pilot_used: sentence indices the earlier smoke and pilot receipts record."""
+_SENTENCE_KEYS = ("filler_sentences", "neutral_sentences", "near_sentences", "ow_sentences")
+_TEXT_KEYS = ("filler", "neutral", "near_filler", "ow_filler_head")
+
+
+def assert_fillers(cells: dict, exemplars: list, prior_used: set | None = None) -> dict:
+    """No sentence reused across items (nor one an earlier receipt records); no digit, name or 'code' in any
+    filler text (the re-plant sentence of C_overwrite is excluded from the check by construction: it is not filler).
+    prior_used: sentence indices the smoke and the pilots used."""
     seen, dup, bad = {}, [], []
     for D, items in cells.items():
         for it in items:
-            for key in ("filler_sentences", "neutral_sentences"):
-                for i in it[key]:
+            for key in _SENTENCE_KEYS:
+                for i in it.get(key, ()):
                     if i in seen:
                         dup.append((i, seen[i], (D, it["idx"], key)))
                     seen[i] = (D, it["idx"], key)
-                    if pilot_used and i in pilot_used:
+                    if prior_used and i in prior_used:
                         dup.append((i, "smoke/pilot", (D, it["idx"], key)))
-            for key in ("filler", "neutral"):
-                v = filler_violations(it[key])
-                if v:
-                    bad.append((D, it["idx"], key, v))
+            for key in _TEXT_KEYS:
+                if key in it:
+                    v = filler_violations(it[key])
+                    if v:
+                        bad.append((D, it["idx"], key, v))
     if dup:
         raise Refusal(f"filler sentence reused: {dup[:5]}{' ...' if len(dup) > 5 else ''}")
     if bad:
@@ -515,25 +688,23 @@ def assert_fillers(cells: dict, exemplars: list, pilot_used: set | None = None) 
         json.dumps(sorted(seen)).encode("utf-8")).hexdigest()}
 
 
-def assert_prompts(cells: dict, exemplars: list, toks: dict, fmt: str, codes_len: dict) -> dict:
-    """Identical ids across tokenizers on every prompt, <= 2000 tokens, equal-length candidate codes."""
+def assert_prompts(cells: dict, exemplars: list, toks: dict, codes_len: dict) -> dict:
+    """Identical ids across tokenizers on every prompt of every variant, <= 2000 tokens, equal-length codes."""
     n_prompts, max_len = 0, 0
     names = list(toks)
     for D, items in cells.items():
         for it in items:
-            variants = []
             for family in FAMILIES:
-                for ablated in (False, True):
-                    variants.append(prompt_text(it, exemplars, family, fmt, ablated))
-            for text in variants:
-                ids = {nm: toks[nm].encode(text) for nm in names}
-                ref = ids[names[0]]
-                for nm in names[1:]:
-                    if ids[nm] != ref:
-                        raise Refusal(f"token ids differ between {names[0]} and {nm} on a prompt at D={D}, item {it['idx']}")
-                n_prompts += 1
-                max_len = max(max_len, len(ref) + codes_len[names[0]])   # + the candidate appended for recall
-            for c in it["codes"]:
+                for variant in item_variants(it):
+                    text = prompt_text(it, exemplars, family, variant)
+                    ids = {nm: toks[nm].encode(text) for nm in names}
+                    ref = ids[names[0]]
+                    for nm in names[1:]:
+                        if ids[nm] != ref:
+                            raise Refusal(f"token ids differ between {names[0]} and {nm} on a prompt at D={D}, item {it['idx']}")
+                    n_prompts += 1
+                    max_len = max(max_len, len(ref) + codes_len[names[0]])   # + the candidate appended for recall
+            for c in it["codes"] + ([it["ow_code"]] if "ow_code" in it else []):
                 for nm in names:
                     if len(toks[nm].encode(" " + c)) != codes_len[nm]:
                         raise Refusal(f"candidate code {c} has a different token length in {nm}")
@@ -542,22 +713,34 @@ def assert_prompts(cells: dict, exemplars: list, toks: dict, fmt: str, codes_len
     return {"prompts_checked": n_prompts, "max_prompt_tokens": max_len, "tokenizers": names}
 
 
-def answer_token_ids(tok: Tok, fmt: str) -> dict:
+def name_token_ids(tok: Tok, names=NAMES) -> dict:
+    """' '+name must be one token for every name (the three-way answer set is scored at one position)."""
     out = {}
-    for s in FORMATS[fmt]:
-        ids = tok.encode(s)
+    for nm in names:
+        ids = tok.encode(" " + nm)
         if len(ids) != 1:
-            raise Refusal(f"answer token {s!r} is not a single token in {tok.name}: {ids}")
-        out[s] = ids[0]
+            raise Refusal(f"answer name {' ' + nm!r} is not a single token in {tok.name}: {ids}")
+        out[nm] = ids[0]
+    if len(set(out.values())) != len(names):
+        raise Refusal("answer names share a token")
     return out
 
 
-FORMAT_LINE_VALUES = tuple(FORMATS) + ("PENDING_PILOT", "NOT_STARTED")
+def assert_replant_lengths(tok: Tok, codes: list) -> int:
+    """The re-plant sentence has one token length for every slot and every code of the eligible pool it is given
+    (names are single tokens, pool codes equal length)."""
+    sample = sorted(set(codes), key=int)
+    sample = sample[::max(1, len(sample) // 40)] + sample[-3:]
+    lens = {len(tok.encode(" " + replant_sentence(s, c))) for s in range(3) for c in sample}
+    if len(lens) != 1:
+        raise Refusal(f"the re-plant sentence has several token lengths in {tok.name}: {sorted(lens)}")
+    return lens.pop()
 
 
 def answer_format_from_prereg(text: str) -> str:
-    """The last 'Answer format chosen' line wins: section 9 freezes PENDING_PILOT; a dated amendment sets yes_no or
-    true_false, or NOT_STARTED when both formats failed the pilot (section 9: the run is not started)."""
+    """The last 'Answer format chosen' line wins: section 9 freezes PENDING_PILOT; amendment 17.1 set NOT_STARTED
+    when both section-9 formats failed the 1011 pilot; amendment 17.3 sets the redesigned readout if the 1012 pilot
+    clears both arms, else NOT_STARTED (final)."""
     found = FORMAT_LINE_RE.findall(text)
     if not found:
         raise Refusal("the PREREG has no 'Answer format chosen (written before sealing):' line")
@@ -568,7 +751,7 @@ def answer_format_from_prereg(text: str) -> str:
 
 
 # ---------------------------------------------------------------------------------------------------
-# metrics (PREREG sections 5-7)
+# metrics (PREREG sections 5-7, as amended by 17.2: both families argmax over three slots, chance 1/3)
 # ---------------------------------------------------------------------------------------------------
 
 def norm_acc(raw: float, chance: float) -> float:
@@ -595,28 +778,47 @@ def auroc(scores, labels) -> float | None:
     return float((ranks[y].sum() - n_pos * (n_pos + 1) / 2.0) / (n_pos * n_neg))
 
 
-def compare_cell_summary(logodds, labels) -> dict:
-    lo = np.asarray(logodds, dtype=float)
-    y = np.asarray(labels, dtype=bool)
-    pred_yes = lo > 0.0                                   # ties (exactly 0) break toward No
-    correct = pred_yes == y
-    raw = float(correct.mean())
-    yes_rate = float(pred_yes.mean())
-    return {"n": int(len(y)), "acc_raw": raw, "acc_norm": norm_acc(raw, CHANCE["compare"]),
-            "yes_rate": yes_rate, "guard_ok": bool(GUARD_YES_RANGE[0] <= yes_rate <= GUARD_YES_RANGE[1]),
-            "auroc": auroc(lo, y), "near_ties": int((np.abs(lo) < LOGODDS_TIE).sum()),
-            "_correct": correct}
+def ovr_auroc(scores3, targets) -> float | None:
+    """One-versus-rest AUROC averaged over the three slots: the slot's score against 'this slot is correct'.
+    0.5 for any constant responder (identical score vectors on every item)."""
+    s = np.asarray(scores3, dtype=float)
+    t = np.asarray(targets, dtype=int)
+    vals = [auroc(s[:, k], t == k) for k in range(3)]
+    if any(v is None for v in vals):
+        return None
+    return float(np.mean(vals))
 
 
-def recall_cell_summary(pred_slots, q_slots) -> dict:
-    p = np.asarray(pred_slots, dtype=int)
-    q = np.asarray(q_slots, dtype=int)
-    correct = p == q
+def argmax_cell_summary(scores3, targets, ow_slots=None) -> dict:
+    """One cell of either family: scores3 [n, 3] (compare: log p of each name token at the answer position; recall:
+    summed log-likelihood of each candidate code), targets [n] the correct slot. Prediction = argmax (an exact tie
+    resolves to the lowest slot index and is counted). margin = score of the correct slot minus the best other
+    slot: the three-way analogue of the Yes/No log-odds, stored per item."""
+    s = np.asarray(scores3, dtype=float)
+    t = np.asarray(targets, dtype=int)
+    if s.ndim != 2 or s.shape[1] != 3 or len(t) != len(s):
+        raise Refusal(f"cell scores have shape {s.shape} for {len(t)} targets")
+    pred = s.argmax(axis=1)
+    correct = pred == t
     raw = float(correct.mean())
-    fr = [float((p == s).mean()) for s in range(3)]
-    return {"n": int(len(q)), "acc_raw": raw, "acc_norm": norm_acc(raw, CHANCE["recall"]),
-            "slot_fractions": fr, "max_slot_fraction": max(fr), "guard_ok": bool(max(fr) <= GUARD_SLOT_MAX),
-            "_correct": correct}
+    fr = [float((pred == k).mean()) for k in range(3)]
+    own = s[np.arange(len(t)), t]
+    others = s.copy()
+    others[np.arange(len(t)), t] = -np.inf
+    margin = own - others.max(axis=1)
+    out = {"n": int(len(t)), "acc_raw": raw, "acc_norm": norm_acc(raw, 1.0 / 3.0),
+           "slot_fractions": fr, "max_slot_fraction": max(fr), "guard_ok": bool(max(fr) <= GUARD_SLOT_MAX),
+           "margin_mean": float(margin.mean()), "margin_median": float(np.median(margin)),
+           "near_ties": int((np.abs(margin) < MARGIN_TIE).sum()), "ovr_auroc": ovr_auroc(s, t),
+           "_per_item": {"correct": [int(x) for x in correct], "pred_slot": [int(x) for x in pred],
+                         "target_slot": [int(x) for x in t], "scores": [[float(v) for v in row] for row in s],
+                         "margin": [float(x) for x in margin]},
+           "_correct": correct}
+    if ow_slots is not None:
+        o = np.asarray(ow_slots, dtype=int)
+        out["overwrite_follow_rate"] = float((pred == o).mean())
+        out["_per_item"]["pred_is_overwrite"] = [int(x) for x in (pred == o)]
+    return out
 
 
 def paired_bootstrap(c_T, c_M1, r_T, r_M1, n_resamples: int = N_BOOT, seed: int = SEED_BOOT) -> dict:
@@ -630,7 +832,8 @@ def paired_bootstrap(c_T, c_M1, r_T, r_M1, n_resamples: int = N_BOOT, seed: int 
     means = s[idx].mean(axis=1)
     lo, hi = np.percentile(means, [2.5, 97.5])
     return {"point": float(s.mean()), "ci_lo": float(lo), "ci_hi": float(hi), "resamples": int(n_resamples),
-            "seed": int(seed), "n_items": int(n), "method": "paired item bootstrap, percentile 2.5/97.5"}
+            "seed": int(seed), "n_items": int(n), "method": "paired item bootstrap, percentile 2.5/97.5",
+            "weights": {"compare": w_c, "recall": w_r}}
 
 
 def walk_outcomes(spec: dict, fired: dict) -> str | None:
@@ -655,9 +858,11 @@ def extrapolate_budget(timings: dict, n: int = N_PER_CELL, distances=DISTANCES, 
     """From per-batch seconds measured at the smoke's two distances, the main run's total.
 
     timings: {arm: {D: {"L": max seq len, "s_per_batch": {"compare": x, "recall": y}}}} for the timed arms.
-    Seconds per batch at an unmeasured distance are linear in L between the two measured points. Passes:
-    compare + 3 recall per cell at four distances, the same again for C_abl at D0 and D1, and for T the
-    windowed control at D0 and D1. Arms with no timing are listed, not guessed.
+    Seconds per batch at an unmeasured distance are linear in L between the two measured points. Passes per
+    cell: compare 1 + recall 3, for the plain and the ablated variant at every distance (amendment 17.2: C_abl
+    everywhere), for T the windowed control at D0 and D1, and at D1 the two compare-only controls C_near and
+    C_overwrite for both arms. Both arms must be timed (amendment 17.2, review minor c): an untimed arm makes
+    the verdict OK_PARTIAL and the main run refuses on it.
     """
     out = {"budget_hours": budget_hours, "n_per_cell": n, "per_arm": {}, "arms_timed": sorted(timings),
            "arms_untimed": sorted(a for a in ARMS if a not in timings)}
@@ -673,11 +878,12 @@ def extrapolate_budget(timings: dict, n: int = N_PER_CELL, distances=DISTANCES, 
             L = by_d[d_lo]["L"] + t * (by_d[d_hi]["L"] - by_d[d_lo]["L"])
             B = batch_size_for(arm, int(round(L)))
             n_batches = math.ceil(n / B)
-            sec = 0.0
-            for kind, passes in (("compare", 1), ("recall", 3)):
-                s = by_d[d_lo]["s_per_batch"][kind] + t * (by_d[d_hi]["s_per_batch"][kind] - by_d[d_lo]["s_per_batch"][kind])
-                reps = 1 + (1 if D in (D0, D1) else 0) + (1 if (arm == "T" and D in (D0, D1)) else 0)
-                sec += s * passes * n_batches * reps
+            s = {kind: by_d[d_lo]["s_per_batch"][kind] + t * (by_d[d_hi]["s_per_batch"][kind] - by_d[d_lo]["s_per_batch"][kind])
+                 for kind in ("compare", "recall")}
+            reps = 2 + (1 if (arm == "T" and D in (D0, D1)) else 0)        # plain + ablated (+ windowed for T)
+            sec = (s["compare"] * 1 + s["recall"] * 3) * n_batches * reps
+            if D == D1:
+                sec += s["compare"] * 1 * n_batches * 2                      # C_near + C_overwrite, compare only
             rows[str(D)] = {"L": round(L), "batch_size": B, "batches_per_pass": n_batches, "seconds": round(sec, 1)}
             arm_total += sec
         out["per_arm"][arm] = {"by_distance": rows, "seconds": round(arm_total, 1), "hours": round(arm_total / 3600, 3)}
@@ -794,12 +1000,12 @@ def install_chunked_scan() -> dict:
                     "so the mechanism diagnostic is skipped" if fast else "slow path in use on every device"}
 
 
-def check_chunked_scan_equivalence(model, tok: Tok, item: dict, exemplars: list, fmt: str) -> dict:
+def check_chunked_scan_equivalence(model, tok: Tok, item: dict, exemplars: list) -> dict:
     """The chunked scan reproduces the reference slow_forward on one short prompt (last-position logits)."""
     torch = _torch()
     from transformers.models.mamba import modeling_mamba as mm
     device = next(model.parameters()).device
-    s = compositional_ids(tok, prompt_parts(item, exemplars, "compare", fmt))
+    s = compositional_ids(tok, prompt_parts(item, exemplars, "compare"))
     ids, _ = pad_batch([s], device)
     with torch.no_grad():
         mm.MambaMixer.slow_forward = _ORIG_SLOW_FORWARD
@@ -871,9 +1077,9 @@ def window_mask(L: int, lengths: list, exemplar_lens: list, W: int | None, dtype
     return out
 
 
-def compare_logodds_batch(arm: str, model, seqs: list, yes_id: int, no_id: int, exemplar_lens=None, W=None, mech=None, spans=None):
-    """log p(yes) - log p(no) at each item's own last position. Right padding, no attention mask.
-    spans: the items' filler spans [start, end), handed to the mechanism hook when one is given."""
+def next_token_scores_batch(arm: str, model, seqs: list, cand_ids: list, exemplar_lens=None, W=None, mech=None, spans=None):
+    """[B, 3] log p of each candidate token at each item's own last position (the compare readout). Right padding,
+    no attention mask. spans: the items' filler spans [start, end), handed to the mechanism hook when one is given."""
     torch = _torch()
     device = next(model.parameters()).device
     ids, lengths = pad_batch(seqs, device)
@@ -887,7 +1093,7 @@ def compare_logodds_batch(arm: str, model, seqs: list, yes_id: int, no_id: int, 
         pos = torch.tensor([n - 1 for n in lengths], device=device)
         hl = h[torch.arange(len(seqs), device=device), pos]
         lp = torch.log_softmax(_logits(model, hl), dim=-1)
-        out = (lp[:, yes_id] - lp[:, no_id]).cpu().numpy()
+        out = lp[:, torch.tensor(list(cand_ids), device=device)].cpu().numpy()
         if mech is not None:
             mech.end()
     return out
@@ -987,53 +1193,57 @@ class MechanismHook:
             h.remove()
 
 
-def run_cell(arm: str, model, tok: Tok, items: list, exemplars: list, family: str, fmt: str, D: int,
-             ans_ids: dict, codes_len: int, ablated: bool = False, W=None, mech=None, batch_size: int | None = None) -> dict:
-    """One (arm, family, distance) cell, plain / ablated / windowed. Returns the summary plus timing."""
+_TIMING_KEYS = ("seconds", "batches", "batch_size", "max_seq_len")
+
+
+def run_cell(arm: str, model, tok: Tok, items: list, exemplars: list, family: str, D: int, name_ids: list,
+             codes_len: int, variant: str = "plain", W=None, mech=None, batch_size: int | None = None) -> dict:
+    """One (arm, family, distance, variant) cell. Returns the summary (with the private per-item block) plus timing.
+    compare: the three name tokens' log p at the answer position, target = the largest code's slot.
+    recall: the three candidate codes' summed log-likelihood, target = the queried slot."""
     t0 = time.time()
+    if variant == "windowed" and W is None:
+        raise Refusal("the windowed variant needs W")
     seqs, a_lens, spans = [], [], []
     for it in items:
-        parts = prompt_parts(it, exemplars, family, fmt, ablated)
+        parts = prompt_parts(it, exemplars, family, variant)
         ids = compositional_ids(tok, parts)
         if ids is None:
-            raise Refusal(f"prompt not compositional at scoring time: D={D} item {it['idx']} {family} ablated={ablated}")
+            raise Refusal(f"prompt not compositional at scoring time: D={D} item {it['idx']} {family} {variant}")
         a_len = len(tok.encode(parts[0]))
         seqs.append(ids)
         a_lens.append(a_len)
-        spans.append((a_len, a_len + D))
+        spans.append((a_len, a_len + len(tok.encode(parts[1]))))
     cb_len = len(tok.encode(code_block(items[0]["codes"])))
     exemplar_lens = [a - cb_len for a in a_lens]
     L = max(len(s) for s in seqs) + (codes_len if family == "recall" else 0)
     B = batch_size or batch_size_for(arm, L)
     n_batches = 0
-    windowed = W is not None
+    windowed = variant == "windowed"
     mech_rows, med_rows, frac_rows = [], [], []
+    scores = np.zeros((len(seqs), 3), dtype=float)
     if family == "compare":
-        yes_s, no_s = FORMATS[fmt]
-        lo = []
+        use_mech = mech is not None and variant == "plain"
         for i in range(0, len(seqs), B):
-            use_mech = mech is not None and not ablated
-            lo.append(compare_logodds_batch(arm, model, seqs[i:i + B], ans_ids[yes_s], ans_ids[no_s],
-                                            exemplar_lens[i:i + B] if windowed else None, W,
-                                            mech if use_mech else None, spans[i:i + B] if use_mech else None))
+            scores[i:i + B] = next_token_scores_batch(arm, model, seqs[i:i + B], name_ids,
+                                                     exemplar_lens[i:i + B] if windowed else None, W,
+                                                     mech if use_mech else None, spans[i:i + B] if use_mech else None)
             if use_mech:
                 mech_rows.append(mech.filler_sums(spans[i:i + B]))
                 med, frac = mech.channel_summaries()
                 med_rows.append(med)
                 frac_rows.append(frac)
             n_batches += 1
-        logodds = np.concatenate(lo)
-        summary = compare_cell_summary(logodds, [it["label"] for it in items])
-        summary["logodds_mean_abs"] = float(np.abs(logodds).mean())
+        targets = [it["max_slot"] for it in items]
     else:
-        lls = np.zeros((len(seqs), 3), dtype=float)
         for slot in range(3):
             cands = [tok.encode(" " + it["codes"][slot]) for it in items]
             for i in range(0, len(seqs), B):
-                lls[i:i + B, slot] = recall_loglik_batch(arm, model, seqs[i:i + B], cands[i:i + B],
-                                                         exemplar_lens[i:i + B] if windowed else None, W)
+                scores[i:i + B, slot] = recall_loglik_batch(arm, model, seqs[i:i + B], cands[i:i + B],
+                                                            exemplar_lens[i:i + B] if windowed else None, W)
                 n_batches += 1
-        summary = recall_cell_summary(lls.argmax(axis=1), [it["q_slot"] for it in items])
+        targets = [it["q_slot"] for it in items]
+    summary = argmax_cell_summary(scores, targets, [it["ow_slot"] for it in items] if variant == "overwrite" else None)
     summary["seconds"] = round(time.time() - t0, 2)
     summary["batches"] = n_batches
     summary["batch_size"] = B
@@ -1059,11 +1269,11 @@ def run_cell(arm: str, model, tok: Tok, items: list, exemplars: list, family: st
     return summary
 
 
-def check_right_padding(arm: str, model, tok: Tok, items: list, exemplars: list, fmt: str) -> dict:
+def check_right_padding(arm: str, model, tok: Tok, items: list, exemplars: list) -> dict:
     """Two items: logits at the last position alone vs inside a right-padded batch (section 12 item 10)."""
     torch = _torch()
     device = next(model.parameters()).device
-    seqs = [compositional_ids(tok, prompt_parts(it, exemplars, "compare", fmt)) for it in items[:2]]
+    seqs = [compositional_ids(tok, prompt_parts(it, exemplars, "compare")) for it in items[:2]]
     with torch.no_grad():
         alone = []
         for s in seqs:
@@ -1080,11 +1290,11 @@ def check_right_padding(arm: str, model, tok: Tok, items: list, exemplars: list,
             "device": str(device)}
 
 
-def check_window_equivalence(model, tok: Tok, item: dict, exemplars: list, fmt: str) -> dict:
+def check_window_equivalence(model, tok: Tok, item: dict, exemplars: list) -> dict:
     """W = inf mask reproduces the unmasked Pythia logits on one short prompt (section 12 item 6)."""
     torch = _torch()
     device = next(model.parameters()).device
-    parts = prompt_parts(item, exemplars, "compare", fmt)
+    parts = prompt_parts(item, exemplars, "compare")
     s = compositional_ids(tok, parts)
     ids, lengths = pad_batch([s], device)
     with torch.no_grad():
@@ -1126,68 +1336,196 @@ def release(redteam: dict | None = None, tag: str = "") -> int:
 # items for a run
 # ---------------------------------------------------------------------------------------------------
 
-def prepare_items(tok_gen: Tok, n: int, distances, seed: int, which: str, fmts, sentences: list | None = None):
-    """Code pools, exemplars, sentence pool and the per-distance cells. which = 'main', 'smoke' or 'pilot'."""
-    if which not in ("main", "smoke", "pilot"):
-        raise Refusal(f"prepare_items: which must be main, smoke or pilot, got {which!r}")
+REGIONS = ("main", "smoke", "pilot", "pilot2")
+
+
+def prepare_items(tok_gen: Tok, n: int, distances, seed: int, which: str, sentences: list | None = None):
+    """Code pools, exemplars, sentence pool and the per-distance cells. which = 'main', 'smoke', 'pilot' or 'pilot2'."""
+    if which not in REGIONS:
+        raise Refusal(f"prepare_items: which must be one of {REGIONS}, got {which!r}")
     codes, codes_len = eligible_codes(tok_gen)
     pools = partition_codes(codes)
     if sentences is None:
         sentences, prov = read_wikitext_sentences()
     else:
         prov = {"source": "caller-supplied sentences", "eligible_sentences": len(sentences)}
-    orders = dict(zip(("main", "smoke", "pilot"), split_orders(len(sentences))))
+    orders = split_orders(len(sentences))
     pool = SentencePool(sentences, orders[which])
     ex_codes, test_codes = pools[f"{which}_exemplar"], pools[f"{which}_test"]
     exemplars = build_exemplars(ex_codes, np.random.default_rng(seed))
-    cells = {D: build_items(n, D, seed, pool, test_codes, exemplars, tok_gen, fmts=fmts) for D in distances}
-    both = PILOT_RESERVE + SMOKE_RESERVE
+    cells = {D: build_items(n, D, seed, pool, test_codes, exemplars, tok_gen) for D in distances}
+    total = PILOT_RESERVE + SMOKE_RESERVE + PILOT2_RESERVE
     return {"cells": cells, "exemplars": exemplars, "pool": pool, "codes_len": codes_len, "code_pool_size": len(codes),
-            "pools": {k: len(v) for k, v in pools.items()}, "sentence_provenance": prov,
-            "sentence_region": {"main": f"perm[:-{both}]", "smoke": f"perm[-{both}:-{PILOT_RESERVE}] reshuffled by seed {SEED_SMOKE}",
+            "pools": {k: len(v) for k, v in pools.items()}, "code_pools": pools, "sentence_provenance": prov,
+            "sentence_region": {"main": f"perm[:-{total}]",
+                                "pilot2": f"perm[-{total}:-{PILOT_RESERVE + SMOKE_RESERVE}] reshuffled by seed {SEED_PILOT2}",
+                                "smoke": f"perm[-{PILOT_RESERVE + SMOKE_RESERVE}:-{PILOT_RESERVE}] reshuffled by seed {SEED_SMOKE}",
                                 "pilot": f"perm[-{PILOT_RESERVE}:] reshuffled by seed {SEED_PILOT}", "which": which,
                                 "seed": seed},
-            "n_sentences": len(sentences)}
+            "region_indices": set(int(i) for i in orders[which]), "n_sentences": len(sentences), "sentences": sentences}
 
 
 def items_digest(cells: dict) -> str:
     return hashlib.sha256(json.dumps({str(D): v for D, v in cells.items()}, sort_keys=True).encode("utf-8")).hexdigest()
 
 
-def tokenizer_level_asserts(prep: dict, toks: dict, fmt: str, pilot_used: set | None = None) -> dict:
-    """Section 12 asserts 2, 3, 4, 5, 7 — before any model is loaded."""
+def hash_lists(prep: dict) -> dict:
+    """sha256 lists of every prompt (per family, distance and variant, in item order), of every code the run
+    plants (test, overwrite and exemplar codes; sorted by hash) and of every sentence the pool handed out (sorted
+    by hash) — so that a later run excludes by list, not by regeneration (intervene M7)."""
+    cells, exemplars = prep["cells"], prep["exemplars"]
+    prompts = {}
+    for family in FAMILIES:
+        prompts[family] = {}
+        for D, items in cells.items():
+            prompts[family][str(D)] = {}
+            for variant in item_variants(items[0]):
+                prompts[family][str(D)][variant] = [sha256_text(prompt_text(it, exemplars, family, variant)) for it in items]
+    codes = set()
+    for items in cells.values():
+        for it in items:
+            codes.update(it["codes"])
+            if "ow_code" in it:
+                codes.add(it["ow_code"])
+    exemplar_codes = {c for e in exemplars for c in e["codes"]}
+    sentences = sorted(set(prep["pool"].used))
+    return {"prompts": prompts,
+            "codes_test": sorted(sha256_text(c) for c in codes),
+            "codes_exemplar": sorted(sha256_text(c) for c in exemplar_codes),
+            "sentences": sorted(sha256_text(prep["sentences"][i]) for i in sentences),
+            "n_prompts": sum(len(v) for fam in prompts.values() for d in fam.values() for v in d.values()),
+            "n_codes_test": len(codes), "n_codes_exemplar": len(exemplar_codes), "n_sentences": len(sentences),
+            "hash": "sha256 of the UTF-8 text; prompts in item order per cell; codes and sentences sorted by hash"}
+
+
+def tokenizer_level_asserts(prep: dict, toks: dict, prior_used: set | None = None) -> dict:
+    """Section 12 asserts 2, 3, 4, 5, 7 (as amended) — before any model is loaded."""
     red = {}
     red["balance_by_distance"] = {str(D): assert_balance(items, prep["exemplars"]) for D, items in prep["cells"].items()}
-    red["fillers"] = assert_fillers(prep["cells"], prep["exemplars"], pilot_used)
+    red["fillers"] = assert_fillers(prep["cells"], prep["exemplars"], prior_used)
+    red["fillers"]["sentences_skipped_for_a_name"] = len(prep["pool"].skipped)
     codes_len = {nm: prep["codes_len"] for nm in toks}
     for nm, t in toks.items():
         lens = set(len(t.encode(" " + c)) for items in prep["cells"].values() for it in items for c in it["codes"])
         if lens != {prep["codes_len"]}:
             raise Refusal(f"candidate codes have token lengths {sorted(lens)} in {nm}")
-    red["prompts"] = assert_prompts(prep["cells"], prep["exemplars"], toks, fmt, codes_len)
-    red["answer_token_ids"] = {nm: {f: answer_token_ids(t, f) for f in FORMATS} for nm, t in toks.items()}
+    red["prompts"] = assert_prompts(prep["cells"], prep["exemplars"], toks, codes_len)
+    red["name_token_ids"] = {nm: {"test": name_token_ids(t, NAMES), "exemplar": name_token_ids(t, EXEMPLAR_NAMES)} for nm, t in toks.items()}
+    if set(NAMES) & set(EXEMPLAR_NAMES):
+        raise Refusal("exemplar names are not disjoint from the test names")
+    red["names_disjoint"] = True
+    region_codes = prep["code_pools"][f"{prep['sentence_region']['which']}_test"]
+    red["replant_sentence_tokens"] = {nm: assert_replant_lengths(t, region_codes) for nm, t in toks.items()}
     red["code_token_length"] = prep["codes_len"]
     red["items_sha256"] = items_digest(prep["cells"])
+    region = prep["region_indices"]
+    outside = [i for i in prep["pool"].used if i not in region]
+    if outside:
+        raise Refusal(f"{len(outside)} sentences drawn outside the {prep['sentence_region']['which']} region")
+    red["sentences_inside_region"] = True
     return red
+
+
+# ---------------------------------------------------------------------------------------------------
+# disjointness against the committed receipts (sha256 lists; amendment 17.2)
+# ---------------------------------------------------------------------------------------------------
+
+def read_receipt(path: Path) -> dict | None:
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def assert_pool_identity(prep: dict, receipt: dict, name: str) -> None:
+    """The committed receipt's pool (parquet sha256s, cap, eligible count) is this run's pool, so its sentence
+    indices still name the same sentences."""
+    fp = (receipt.get("config") or {}).get("filler_pool") or {}
+    mine = prep["sentence_provenance"]
+    if fp.get("sha256") != mine.get("sha256") or fp.get("eligible_sentences") != mine.get("eligible_sentences") \
+            or fp.get("pool_cap") != mine.get("pool_cap"):
+        raise Refusal(f"the {name} receipt's sentence pool differs from this run's (parquet sha256, cap or eligible count); "
+                      f"its sentence indices cannot be mapped and the exclusion by list is refused")
+
+
+def prior_sentences_and_codes(prep: dict, receipts: dict) -> dict:
+    """Sentence indices and sha256s, and code sha256s, that the given committed receipts record. A receipt written
+    by this readout carries sha256 lists directly (items.sha256); the smoke and 1011-pilot receipts carry sentence
+    indices and drew their codes from the pool partition's reserved slices, which this runner keeps unchanged."""
+    out = {"sentence_indices": set(), "sentence_sha256": set(), "code_sha256": set(), "receipts": {}}
+    sents = prep["sentences"]
+    for name, rec in receipts.items():
+        if rec is None:
+            out["receipts"][name] = "absent"
+            continue
+        assert_pool_identity(prep, rec, name)
+        idx = set(int(i) for i in rec.get("sentence_indices_used") or [])
+        out["sentence_indices"] |= idx
+        out["sentence_sha256"] |= {sha256_text(sents[i]) for i in idx}
+        lists = (rec.get("items") or {}).get("sha256") or {}
+        out["sentence_sha256"] |= set(lists.get("sentences") or [])
+        out["code_sha256"] |= set(lists.get("codes_test") or []) | set(lists.get("codes_exemplar") or [])
+        region = (rec.get("config") or {}).get("sentence_region", {}).get("which") or rec.get("mode")
+        if region in ("smoke", "pilot"):
+            for pool in (f"{region}_exemplar", f"{region}_test"):
+                out["code_sha256"] |= {sha256_text(c) for c in prep["code_pools"][pool]}
+        out["receipts"][name] = {"sentence_indices": len(idx), "items_sha256": (rec.get("redteam") or {}).get("items_sha256"),
+                                 "runner_sha256": (rec.get("config") or {}).get("runner_sha256"), "region": region}
+    return out
+
+
+def assert_disjoint_from_prior(prep: dict, lists: dict, prior: dict) -> dict:
+    """This run shares no sentence (by index and by sha256) and no code (by sha256) with the committed receipts."""
+    used = set(prep["pool"].used)
+    si = used & prior["sentence_indices"]
+    ss = set(lists["sentences"]) & prior["sentence_sha256"]
+    cs = (set(lists["codes_test"]) | set(lists["codes_exemplar"])) & prior["code_sha256"]
+    if si or ss or cs:
+        raise Refusal(f"this run shares with a committed receipt: {len(si)} sentence indices, {len(ss)} sentence hashes, {len(cs)} code hashes")
+    return {"ok": True, "prior_sentence_indices": len(prior["sentence_indices"]), "prior_sentence_sha256": len(prior["sentence_sha256"]),
+            "prior_code_sha256": len(prior["code_sha256"]), "this_run_sentences": len(used),
+            "this_run_codes": lists["n_codes_test"] + lists["n_codes_exemplar"], "receipts": prior["receipts"]}
 
 
 # ---------------------------------------------------------------------------------------------------
 # orchestration
 # ---------------------------------------------------------------------------------------------------
 
-def base_receipt(mode: str, fmt: str, n: int, distances, arms) -> dict:
+def git_facts() -> dict:
+    """HEAD and the PREREG's committed blob sha256 (the seal is over the blob, never the working copy)."""
+    out = {"head": None, "prereg_blob_sha256": None, "prereg_working_copy_differs_from_head": None}
+    try:
+        head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=str(ROOT), capture_output=True, text=True, timeout=30)
+        if head.returncode == 0:
+            out["head"] = head.stdout.strip()
+        rel = PREREG.relative_to(ROOT).as_posix()
+        blob = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=str(ROOT), capture_output=True, timeout=30)
+        if blob.returncode == 0:
+            out["prereg_blob_sha256"] = hashlib.sha256(blob.stdout).hexdigest()
+            out["prereg_working_copy_differs_from_head"] = blob.stdout.replace(b"\r\n", b"\n") != PREREG.read_bytes().replace(b"\r\n", b"\n")
+    except (OSError, subprocess.TimeoutExpired, ValueError) as e:
+        out["error"] = str(e)
+    return out
+
+
+def base_receipt(mode: str, n: int, distances, arms) -> dict:
     return {"prereg": PREREG.name, "mode": mode, "smoke": mode == "smoke",
             "config": {"checkpoints": dict(ARMS), "arms_run": list(arms), "revisions": {},
                        "runner": Path(__file__).name, "runner_sha256": sha256_file(Path(__file__).resolve()),
+                       "git": git_facts(),
                        "dtype": "float16 on cuda (weights loaded fp32 on CPU for the fp32 asserts, then half)",
-                       "seeds": {"items": SEED_ITEMS, "pilot": SEED_PILOT, "bootstrap": SEED_BOOT},
-                       "answer_format": fmt, "answer_tokens": list(FORMATS.get(fmt, ())), "distances": list(distances),
-                       "D0": D0, "D1": D1, "n_per_cell": n, "screen_bar": SCREEN_BAR, "guard": {"yes_rate": list(GUARD_YES_RANGE), "max_slot_fraction": GUARD_SLOT_MAX},
+                       "seeds": {"items": SEED_ITEMS, "pilot": SEED_PILOT, "pilot2": SEED_PILOT2, "smoke": SEED_SMOKE, "bootstrap": SEED_BOOT},
+                       "readout": READOUT, "answer_format": READOUT, "retired_formats": list(RETIRED_FORMATS),
+                       "compare_question": question_text("compare", 0), "recall_question": question_text("recall", 0),
+                       "names": {"test": list(NAMES), "exemplar": list(EXEMPLAR_NAMES)},
+                       "exemplar_slots": {"recall_query": list(EXEMPLAR_Q_SLOTS), "compare_answer": list(EXEMPLAR_MAX_SLOTS)},
+                       "chance": dict(CHANCE), "distances": list(distances),
+                       "D0": D0, "D1": D1, "n_per_cell": n, "screen_bar": SCREEN_BAR, "guard": {"max_slot_fraction": GUARD_SLOT_MAX},
                        "ablated_bar": ABLATED_BAR, "window_W": WINDOW_W, "batch_max": BATCH_MAX, "scan_chunk_tokens_M1": SCAN_CHUNK_TOKENS,
-                       "free_gpu_min_bytes": FREE_GPU_MIN_BYTES, "budget_hours": BUDGET_HOURS, "names": list(NAMES),
-                       "n_exemplars": N_EXEMPLARS},
-            "pilot": None, "acc_raw": {}, "acc_norm": {}, "guard": {}, "controls": {"ablated": {}, "windowed": {"W": WINDOW_W}},
-            "result": {}, "bootstrap": None, "mechanism": {},
+                       "code_max_planted": CODE_MAX_PLANTED,
+                       "free_gpu_min_bytes": FREE_GPU_MIN_BYTES, "budget_hours": BUDGET_HOURS, "n_exemplars": N_EXEMPLARS},
+            "pilot": None, "acc_raw": {}, "acc_norm": {}, "guard": {},
+            "controls": {"ablated": {}, "windowed": {"W": WINDOW_W}, "near": {}, "overwrite": {}},
+            "result": {}, "bootstrap": None, "mechanism": {}, "per_item": {}, "items": {},
             "exploratory": {"status": "M3_NOT_RUN",
                             "reason": "decision 2 default: no M3 arm; state-spaces/mamba3-siso-1.5b is not runnable on Windows as shipped (Triton, mamba-ssm absent) and was not approved"},
             "redteam": {}, "runtime": {}}
@@ -1200,6 +1538,28 @@ def record_versions(res: dict) -> None:
                                  "numpy": np.__version__, "python": sys.version.split()[0]}
     if torch.cuda.is_available():
         res["config"]["gpu"] = torch.cuda.get_device_name(0)
+
+
+def record_items(res: dict, prep: dict) -> None:
+    res["config"]["code_pools"] = prep["pools"]
+    res["config"]["filler_pool"] = prep["sentence_provenance"]
+    res["config"]["sentence_region"] = prep["sentence_region"]
+    res["sentence_indices_used"] = sorted(prep["pool"].used)
+    res["sentence_indices_skipped_for_a_name"] = sorted(prep["pool"].skipped)
+    res["items"] = {"sha256": hash_lists(prep),
+                    "prefix_nested_across_distances": False,
+                    "code_paired_across_distances": False,
+                    "nesting_note": "items are generated per distance from the item seed plus D: the filler at D = 16 is not the head of "
+                                    "any other distance's filler and the codes are drawn afresh per distance; an item is shared across "
+                                    "the two families, every variant and both arms at one distance only (zoo section 8 item 3)",
+                    "names": {"test": list(NAMES), "exemplar": list(EXEMPLAR_NAMES), "disjoint": not (set(NAMES) & set(EXEMPLAR_NAMES))},
+                    "controls_at_D1": {"near": "the item's own filler stands between the exemplars and the code block; a fresh 16-token "
+                                               "filler stands between the block and the question (C_near, compare only)",
+                                       "overwrite": "the item's filler keeps its head; its last sentence is 'The {name} code is now {code}.' "
+                                                    "for a name that is not the correct slot and a code larger than all three; scored "
+                                                    "against the original correct slot; the fraction answering the re-planted name is "
+                                                    "reported (C_overwrite, compare only)"},
+                    "ablated_at_every_distance": True}
 
 
 def strip_private(d):
@@ -1215,50 +1575,100 @@ def strip_private(d):
 
 
 def write_json(path: Path, obj) -> None:
-    path.write_text(json.dumps(strip_private(obj), indent=2), encoding="utf-8")
-    if not path.exists() or path.stat().st_size == 0:
+    """UTF-8 without BOM, LF newlines on every platform (review minor a), one trailing newline."""
+    data = (json.dumps(strip_private(obj), indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+    with open(path, "wb") as f:
+        f.write(data)
+    if not path.exists() or path.stat().st_size != len(data):
         raise RuntimeError(f"write failed: {path}")
 
 
-def load_arm_with_asserts(arm: str, res: dict, prep: dict, tok: Tok, fmt: str, items0: list):
-    """Free-GPU check, CPU fp32 load, the fp32 asserts of section 12 (items 1, 6, 10 and the chunked-scan
-    equivalence for M1), the free-GPU check again, the fp16 move, the reported fp16 right-padding difference.
-    Returns (model on cuda, mechanism_allowed)."""
+def model_level_asserts(arm: str, res: dict, prep: dict, tok: Tok, items0: list) -> None:
+    """CPU fp32: section 12 items 1, 6 and 10 and the chunked-scan equivalence for M1. The model is dropped after.
+    Run for EVERY arm before any cell of any arm is scored (review minor b)."""
     red = res["redteam"]
-    require_free_gpu(red, arm)
     if arm == "M1":
         red["chunked_scan"] = install_chunked_scan()
     model, info = load_arm_cpu_fp32(ARMS[arm])
     res["config"]["revisions"][arm] = info
-    mech_ok = True
+    try:
+        if arm == "M1":
+            red["mamba_A_real_and_negative_every_layer"] = assert_mamba_A(model)
+            red["chunked_scan_equivalence_fp32_cpu"] = ce = check_chunked_scan_equivalence(model, tok, items0[0], prep["exemplars"])
+            if ce["max_abs_logit_diff"] > FP32_TOL:
+                raise Refusal(f"M1: the chunked scan differs from the reference slow_forward by {ce['max_abs_logit_diff']:.2e} > {FP32_TOL}")
+        red.setdefault("right_padding_fp32_cpu", {})[arm] = rp = check_right_padding(arm, model, tok, items0, prep["exemplars"])
+        if rp["max_abs_logit_diff"] > FP32_TOL:
+            raise Refusal(f"{arm}: right-padding changes the last-position logits by {rp['max_abs_logit_diff']:.2e} > {FP32_TOL}")
+        if arm == "T":
+            red["windowed_mask_W_inf_equivalence_fp32_cpu"] = we = check_window_equivalence(model, tok, items0[0], prep["exemplars"])
+            if we["max_abs_logit_diff"] > FP32_TOL:
+                raise Refusal(f"T: the W=inf mask changes the logits by {we['max_abs_logit_diff']:.2e} > {FP32_TOL}")
+    finally:
+        model = None
+        release()
+
+
+def preflight_all_arms(arms, res: dict, prep: dict, toks: dict, items0: list) -> None:
+    """Every arm's model-level asserts, in order, before any scoring; the order and the clock are recorded."""
+    t0 = time.time()
+    done = []
+    for arm in arms:
+        model_level_asserts(arm, res, prep, toks[arm], items0)
+        done.append(arm)
+        print(f"  model-level asserts held for {arm} ({time.time() - t0:.0f}s)", flush=True)
+    res["redteam"]["model_level_asserts_before_any_scoring"] = {"arms": done, "seconds": round(time.time() - t0, 1), "ok": True}
+
+
+def load_arm_for_scoring(arm: str, res: dict, prep: dict, tok: Tok, items0: list):
+    """Free-GPU check, CPU fp32 load (the asserts already ran in preflight), free-GPU check again, the fp16 move,
+    the reported fp16 right-padding difference. Returns (model on cuda, mechanism_allowed)."""
+    red = res["redteam"]
+    if "model_level_asserts_before_any_scoring" not in red or arm not in red["model_level_asserts_before_any_scoring"]["arms"]:
+        raise Refusal(f"{arm} is being loaded for scoring before its model-level asserts ran")
+    require_free_gpu(red, arm)
     if arm == "M1":
-        red["mamba_A_real_and_negative_every_layer"] = assert_mamba_A(model)
-        red["chunked_scan_equivalence_fp32_cpu"] = ce = check_chunked_scan_equivalence(model, tok, items0[0], prep["exemplars"], fmt)
-        if ce["max_abs_logit_diff"] > FP32_TOL:
-            raise Refusal(f"M1: the chunked scan differs from the reference slow_forward by {ce['max_abs_logit_diff']:.2e} > {FP32_TOL}")
-        mech_ok = not red["chunked_scan"]["transformers_fast_path_available"]
-    red.setdefault("right_padding_fp32_cpu", {})[arm] = rp = check_right_padding(arm, model, tok, items0, prep["exemplars"], fmt)
-    if rp["max_abs_logit_diff"] > FP32_TOL:
-        raise Refusal(f"{arm}: right-padding changes the last-position logits by {rp['max_abs_logit_diff']:.2e} > {FP32_TOL}")
-    if arm == "T":
-        red["windowed_mask_W_inf_equivalence_fp32_cpu"] = we = check_window_equivalence(model, tok, items0[0], prep["exemplars"], fmt)
-        if we["max_abs_logit_diff"] > FP32_TOL:
-            raise Refusal(f"T: the W=inf mask changes the logits by {we['max_abs_logit_diff']:.2e} > {FP32_TOL}")
+        red["chunked_scan"] = install_chunked_scan()
+    model, info = load_arm_cpu_fp32(ARMS[arm])
+    res["config"]["revisions"][arm] = {**res["config"]["revisions"].get(arm, {}), **info}
+    mech_ok = not red["chunked_scan"]["transformers_fast_path_available"] if arm == "M1" else True
     require_free_gpu(red, arm + "_to_cuda")
     t0 = time.time()
     model = to_gpu_fp16(model)
     res["runtime"].setdefault(arm, {})["to_gpu_seconds"] = round(time.time() - t0, 2)
-    red.setdefault("right_padding_fp16_gpu_reported", {})[arm] = check_right_padding(arm, model, tok, items0, prep["exemplars"], fmt)
+    red.setdefault("right_padding_fp16_gpu_reported", {})[arm] = check_right_padding(arm, model, tok, items0, prep["exemplars"])
     return model, mech_ok
 
 
-def evaluate_arm(arm: str, res: dict, prep: dict, toks: dict, fmt: str, distances, keep: dict, do_mech: bool, do_windowed: bool) -> None:
-    """Load one arm, run its asserts, score every cell, release it. keep[(arm, family, D)] = per-item correctness."""
+def _store_cell(res: dict, arm: str, family: str, D: int, variant: str, s: dict, keep: dict | None = None) -> None:
+    per_item = s.pop("_per_item")
+    correct = s.pop("_correct")
+    mech = s.pop("_mechanism", None)
+    res["per_item"].setdefault(arm, {}).setdefault(family, {}).setdefault(str(D), {})[variant] = per_item
+    res["runtime"].setdefault(arm, {}).setdefault(str(D), {})[family if variant == "plain" else f"{variant}_{family}"] = {k: s[k] for k in _TIMING_KEYS}
+    summary = {k: v for k, v in s.items() if k not in _TIMING_KEYS}
+    if variant == "plain":
+        if keep is not None:
+            keep[(arm, family, D)] = correct
+        if mech is not None:
+            res["mechanism"].setdefault(arm, {})[str(D)] = mech
+        res["acc_raw"].setdefault(arm, {}).setdefault(family, {})[str(D)] = s["acc_raw"]
+        res["acc_norm"].setdefault(arm, {}).setdefault(family, {})[str(D)] = s["acc_norm"]
+        res["guard"].setdefault(arm, {}).setdefault(family, {})[str(D)] = {k: v for k, v in summary.items() if k not in ("acc_raw", "acc_norm")}
+    elif variant == "windowed":
+        res["controls"]["windowed"].setdefault(arm, {}).setdefault(family, {})[str(D)] = summary
+    else:
+        res["controls"][variant].setdefault(arm, {}).setdefault(family, {})[str(D)] = summary
+
+
+def evaluate_arm(arm: str, res: dict, prep: dict, toks: dict, distances, keep: dict, do_mech: bool, do_windowed: bool,
+                 do_controls: bool = True) -> None:
+    """Load one arm, score every cell and control, release it. keep[(arm, family, D)] = per-item correctness."""
     red = res["redteam"]
     tok = toks[arm]
-    ans = red["answer_token_ids"][arm][fmt]
+    name_ids = [red["name_token_ids"][arm]["test"][nm] for nm in NAMES]
     items0 = prep["cells"][distances[0]]
-    model, mech_ok = load_arm_with_asserts(arm, res, prep, tok, fmt, items0)
+    model, mech_ok = load_arm_for_scoring(arm, res, prep, tok, items0)
     mech = MechanismHook(model) if (arm == "M1" and do_mech and mech_ok) else None
     if arm == "M1" and do_mech and not mech_ok:
         res["mechanism"]["M1"] = {"status": "NOT_RUN", "reason": red["chunked_scan"]["note"]}
@@ -1266,29 +1676,25 @@ def evaluate_arm(arm: str, res: dict, prep: dict, toks: dict, fmt: str, distance
         for D in distances:
             items = prep["cells"][D]
             for family in FAMILIES:
-                s = run_cell(arm, model, tok, items, prep["exemplars"], family, fmt, D, ans, prep["codes_len"], mech=mech)
-                keep[(arm, family, D)] = s.pop("_correct")
-                if "_mechanism" in s:
-                    res["mechanism"].setdefault(arm, {})[str(D)] = s.pop("_mechanism")
-                res["acc_raw"].setdefault(arm, {}).setdefault(family, {})[str(D)] = s["acc_raw"]
-                res["acc_norm"].setdefault(arm, {}).setdefault(family, {})[str(D)] = s["acc_norm"]
-                res["guard"].setdefault(arm, {}).setdefault(family, {})[str(D)] = {k: v for k, v in s.items() if k not in ("acc_raw", "acc_norm", "seconds", "batches", "batch_size", "max_seq_len")}
-                res["runtime"][arm].setdefault(str(D), {})[family] = {k: s[k] for k in ("seconds", "batches", "batch_size", "max_seq_len")}
-                print(f"    {arm} {family:7} D={D:>4}: raw {s['acc_raw']:.3f} norm {s['acc_norm']:+.3f} guard {s['guard_ok']} ({s['seconds']:.0f}s, {s['batches']} batches of {s['batch_size']})", flush=True)
-            if D in (D0, D1):
-                for family in FAMILIES:
-                    s = run_cell(arm, model, tok, items, prep["exemplars"], family, fmt, D, ans, prep["codes_len"], ablated=True)
-                    s.pop("_correct")
-                    res["controls"]["ablated"].setdefault(arm, {}).setdefault(family, {})[str(D)] = s
-                    res["runtime"][arm][str(D)][f"ablated_{family}"] = {k: s[k] for k in ("seconds", "batches", "batch_size", "max_seq_len")}
-                    print(f"    {arm} {family:7} D={D:>4} ABLATED: norm {s['acc_norm']:+.3f} ({s['seconds']:.0f}s)", flush=True)
-                if arm == "T" and do_windowed:
-                    for family in FAMILIES:
-                        s = run_cell(arm, model, tok, items, prep["exemplars"], family, fmt, D, ans, prep["codes_len"], W=WINDOW_W)
-                        s.pop("_correct")
-                        res["controls"]["windowed"].setdefault("T", {}).setdefault(family, {})[str(D)] = s
-                        res["runtime"][arm][str(D)][f"windowed_{family}"] = {k: s[k] for k in ("seconds", "batches", "batch_size", "max_seq_len")}
-                        print(f"    T  {family:7} D={D:>4} WINDOWED W={WINDOW_W}: norm {s['acc_norm']:+.3f} ({s['seconds']:.0f}s)", flush=True)
+                s = run_cell(arm, model, tok, items, prep["exemplars"], family, D, name_ids, prep["codes_len"], mech=mech)
+                print(f"    {arm} {family:7} D={D:>4}: raw {s['acc_raw']:.3f} norm {s['acc_norm']:+.3f} max-slot {s['max_slot_fraction']:.2f} "
+                      f"guard {s['guard_ok']} ({s['seconds']:.0f}s, {s['batches']} batches of {s['batch_size']})", flush=True)
+                _store_cell(res, arm, family, D, "plain", s, keep)
+                if do_controls:
+                    s = run_cell(arm, model, tok, items, prep["exemplars"], family, D, name_ids, prep["codes_len"], variant="ablated")
+                    print(f"    {arm} {family:7} D={D:>4} ABLATED: norm {s['acc_norm']:+.3f} max-slot {s['max_slot_fraction']:.2f} ({s['seconds']:.0f}s)", flush=True)
+                    _store_cell(res, arm, family, D, "ablated", s)
+                if do_controls and arm == "T" and do_windowed and D in (D0, D1):
+                    s = run_cell(arm, model, tok, items, prep["exemplars"], family, D, name_ids, prep["codes_len"], variant="windowed", W=WINDOW_W)
+                    print(f"    T  {family:7} D={D:>4} WINDOWED W={WINDOW_W}: norm {s['acc_norm']:+.3f} ({s['seconds']:.0f}s)", flush=True)
+                    _store_cell(res, arm, family, D, "windowed", s)
+            if do_controls and D == D1 and "ow_filler" in items[0]:
+                s = run_cell(arm, model, tok, items, prep["exemplars"], "compare", D, name_ids, prep["codes_len"], variant="near")
+                print(f"    {arm} compare D={D:>4} NEAR (codes 16 tokens before the question): norm {s['acc_norm']:+.3f} ({s['seconds']:.0f}s)", flush=True)
+                _store_cell(res, arm, "compare", D, "near", s)
+                s = run_cell(arm, model, tok, items, prep["exemplars"], "compare", D, name_ids, prep["codes_len"], variant="overwrite")
+                print(f"    {arm} compare D={D:>4} OVERWRITE: norm vs original {s['acc_norm']:+.3f}, follows the re-plant {s['overwrite_follow_rate']:.2f} ({s['seconds']:.0f}s)", flush=True)
+                _store_cell(res, arm, "compare", D, "overwrite", s)
     finally:
         if mech is not None:
             mech.remove()
@@ -1298,11 +1704,14 @@ def evaluate_arm(arm: str, res: dict, prep: dict, toks: dict, fmt: str, distance
 
 
 def gate_metrics(res: dict, keep: dict) -> dict:
-    """The eight gate metrics plus within_T (section 7); plumbing_ok is 1.0 because every refusal fires earlier."""
+    """The eight gate metrics plus within_T (section 7); plumbing_ok is 1.0 because every refusal fires earlier.
+    ablated_max_norm_acc is over D0 and D1 as the frozen gate reads it; the all-distance maximum is reported beside it."""
     an = res["acc_norm"]
     screen = min(an[arm][fam][str(D0)] for arm in ("M1", "T") for fam in FAMILIES)
     guard_ok = all(res["guard"][arm][fam][str(D0)]["guard_ok"] for arm in ("M1", "T") for fam in FAMILIES)
-    abl = max(res["controls"]["ablated"][arm][fam][str(D)]["acc_norm"] for arm in ("M1", "T") for fam in FAMILIES for D in (D0, D1))
+    abl_cells = res["controls"]["ablated"]
+    abl = max(abl_cells[arm][fam][str(D)]["acc_norm"] for arm in ("M1", "T") for fam in FAMILIES for D in (D0, D1))
+    abl_all = max(abl_cells[arm][fam][d]["acc_norm"] for arm in ("M1", "T") for fam in FAMILIES for d in abl_cells[arm][fam])
     C = {arm: {D: an[arm]["compare"][str(D)] for D in (D0, D1)} for arm in ("M1", "T")}
     R = {arm: {D: an[arm]["recall"][str(D)] for D in (D0, D1)} for arm in ("M1", "T")}
     between = (C["T"][D1] - C["M1"][D1]) - (R["T"][D1] - R["M1"][D1])
@@ -1314,8 +1723,8 @@ def gate_metrics(res: dict, keep: dict) -> dict:
         raise Refusal(f"bootstrap point estimate {boot['point']} differs from between_D1 {between}")
     res["bootstrap"] = boot
     return {"plumbing_ok": 1.0, "screen_min_norm_acc_D0": screen, "guard_ok_D0": 1.0 if guard_ok else 0.0,
-            "ablated_max_norm_acc": abl, "between_D1": between, "between_D1_ci_lo": boot["ci_lo"],
-            "within_M1": within_M1, "within_T": within_T}
+            "ablated_max_norm_acc": abl, "ablated_max_norm_acc_all_distances": abl_all, "between_D1": between,
+            "between_D1_ci_lo": boot["ci_lo"], "within_M1": within_M1, "within_T": within_T}
 
 
 def smoke_timings(res: dict, arms) -> dict:
@@ -1341,25 +1750,23 @@ def load_experiment():
 
 
 def run_smoke(arms) -> int:
-    print(f"SMOKE: n={N_SMOKE} distances={SMOKE_DISTANCES} arms={arms} — INVALID-only by the gates block", flush=True)
+    print(f"SMOKE: n={N_SMOKE} distances={SMOKE_DISTANCES} arms={arms} readout={READOUT} — INVALID-only by the gates block", flush=True)
     exp = load_experiment()
-    fmt = answer_format_from_prereg(PREREG.read_text(encoding="utf-8"))
-    fmt = "yes_no" if fmt in ("PENDING_PILOT", "NOT_STARTED") else fmt
+    answer_format_from_prereg(PREREG.read_text(encoding="utf-8"))
     toks = {a: load_tokenizer(ARMS[a]) for a in ARMS}
-    prep = prepare_items(toks["T"], N_SMOKE, SMOKE_DISTANCES, SEED_SMOKE, "smoke", fmts=(fmt,))
-    res = base_receipt("smoke", fmt, N_SMOKE, SMOKE_DISTANCES, arms)
+    prep = prepare_items(toks["T"], N_SMOKE, SMOKE_DISTANCES, SEED_SMOKE, "smoke")
+    res = base_receipt("smoke", N_SMOKE, SMOKE_DISTANCES, arms)
     record_versions(res)
-    res["config"]["seeds"]["smoke"] = SEED_SMOKE
-    res["config"]["code_pools"] = prep["pools"]
-    res["config"]["filler_pool"] = prep["sentence_provenance"]
-    res["config"]["sentence_region"] = prep["sentence_region"]
-    res["redteam"] = tokenizer_level_asserts(prep, toks, fmt)
-    res["sentence_indices_used"] = sorted(prep["pool"].used)
+    record_items(res, prep)
+    prior = prior_sentences_and_codes(prep, {"pilot": read_receipt(PILOT1_RECEIPT), "pilot2": read_receipt(PILOT2_RECEIPT)})
+    res["redteam"] = tokenizer_level_asserts(prep, toks, prior["sentence_indices"])
+    res["redteam"]["disjoint_from_committed_receipts"] = assert_disjoint_from_prior(prep, res["items"]["sha256"], prior)
     res["smoke_items"] = "seed 1016, the smoke's own reserved slice of the sentence order and of the code pool: no main-set or pilot item is generated or scored here"
     keep = {}
     t0 = time.time()
+    preflight_all_arms(arms, res, prep, toks, prep["cells"][SMOKE_DISTANCES[0]])
     for arm in arms:
-        evaluate_arm(arm, res, prep, toks, fmt, SMOKE_DISTANCES, keep, do_mech=(arm == "M1"), do_windowed=True)
+        evaluate_arm(arm, res, prep, toks, SMOKE_DISTANCES, keep, do_mech=(arm == "M1"), do_windowed=True)
     res["runtime"]["total_seconds"] = round(time.time() - t0, 1)
     res["budget"] = extrapolate_budget(smoke_timings(res, arms))
     v = exp.score(res, smoke=True)
@@ -1373,90 +1780,127 @@ def run_smoke(arms) -> int:
     return 0
 
 
-def run_pilot() -> int:
-    print(f"PILOT: n={N_PILOT} at D0={D0}, seed {SEED_PILOT}, both arms, both formats — licenses nothing", flush=True)
-    toks = {a: load_tokenizer(ARMS[a]) for a in ARMS}
-    prep = prepare_items(toks["T"], N_PILOT, (D0,), SEED_PILOT, "pilot", fmts=tuple(FORMATS))
-    res = base_receipt("pilot", "both", N_PILOT, (D0,), list(ARMS))
-    record_versions(res)
-    res["config"]["code_pools"] = prep["pools"]
-    res["config"]["filler_pool"] = prep["sentence_provenance"]
-    res["config"]["sentence_region"] = prep["sentence_region"]
-    res["redteam"] = tokenizer_level_asserts(prep, toks, "yes_no")
-    res["redteam"]["prompts_true_false"] = assert_prompts(prep["cells"], prep["exemplars"], toks, "true_false", {nm: prep["codes_len"] for nm in toks})
-    res["sentence_indices_used"] = sorted(prep["pool"].used)
-    res["by_format"] = {}
-    red = res["redteam"]
-    t0 = time.time()
-    for arm in ARMS:
-        tok = toks[arm]
-        items = prep["cells"][D0]
-        model, _mech_ok = load_arm_with_asserts(arm, res, prep, tok, "yes_no", items)
-        try:
-            for fmt in FORMATS:
-                ans = red["answer_token_ids"][arm][fmt]
-                s = run_cell(arm, model, tok, items, prep["exemplars"], "compare", fmt, D0, ans, prep["codes_len"])
-                s.pop("_correct")
-                res["by_format"].setdefault(fmt, {}).setdefault(arm, {})["compare"] = s
-                print(f"    {arm} compare [{fmt}]: raw {s['acc_raw']:.3f} norm {s['acc_norm']:+.3f} yes_rate {s['yes_rate']:.2f} guard {s['guard_ok']}", flush=True)
-            s = run_cell(arm, model, tok, items, prep["exemplars"], "recall", "yes_no", D0, red["answer_token_ids"][arm]["yes_no"], prep["codes_len"])
-            s.pop("_correct")
-            res["by_format"].setdefault("recall", {})[arm] = s
-            print(f"    {arm} recall: raw {s['acc_raw']:.3f} norm {s['acc_norm']:+.3f} guard {s['guard_ok']}", flush=True)
-        finally:
-            model = None
-            release(red, arm)
-    res["runtime"]["total_seconds"] = round(time.time() - t0, 1)
+def arm_clears(res: dict, arm: str) -> dict:
+    """The section-6 screen on the pilot's D0 cells: both families at or above the bar and both guards passed."""
+    out = {}
+    for fam in FAMILIES:
+        g = res["guard"][arm][fam][str(D0)]
+        out[fam] = {"acc_norm": res["acc_norm"][arm][fam][str(D0)], "guard_ok": g["guard_ok"],
+                    "clears": bool(res["acc_norm"][arm][fam][str(D0)] >= SCREEN_BAR and g["guard_ok"])}
+    out["clears"] = all(out[fam]["clears"] for fam in FAMILIES)
+    return out
 
-    def passes(fmt):
-        return all(res["by_format"][fmt][a]["compare"]["acc_norm"] >= SCREEN_BAR and res["by_format"][fmt][a]["compare"]["guard_ok"] for a in ARMS)
-    if passes("yes_no"):
-        rec = "yes_no"
-    elif passes("true_false"):
-        rec = "true_false"
-    else:
-        rec = "NEITHER — both formats fail the pilot; the run is not started and the record says so (section 9)"
-    res["format_recommendation"] = rec
-    res["pilot_rule"] = ("section 9: the default ' Yes'/' No' stays unless either arm's compare normalized accuracy is below "
-                         f"{SCREEN_BAR} or fails the guard; then the one switch to ' True'/' False'; the chosen format is entered in "
-                         "the PREREG as a dated amendment before the seal; these numbers license nothing")
-    write_json(PILOT_RECEIPT, res)
-    print(f"\n===== PILOT FORMAT RECOMMENDATION: {rec} =====\nwrote {PILOT_RECEIPT.name}", flush=True)
+
+def pilot_outcome(cleared: dict) -> str:
+    if cleared["M1"] and cleared["T"]:
+        return "CLEARED_BOTH"
+    if cleared["T"]:
+        return "CLEARED_T_ONLY"
+    if cleared["M1"]:
+        return "CLEARED_M1_ONLY"
+    return "NEITHER"
+
+
+def run_pilot() -> int:
+    print(f"PILOT 2 (amendment 17.2): n={N_PILOT} at D0={D0}, seed {SEED_PILOT2}, both arms, readout {READOUT} — licenses nothing", flush=True)
+    if PILOT2_RECEIPT.exists():
+        raise Refusal(f"{PILOT2_RECEIPT.name} exists: the amendment-17.2 pilot runs exactly once; a committed receipt is never regenerated")
+    answer_format_from_prereg(PREREG.read_text(encoding="utf-8"))
+    toks = {a: load_tokenizer(ARMS[a]) for a in ARMS}
+    prep = prepare_items(toks["T"], N_PILOT, (D0,), SEED_PILOT2, "pilot2")
+    res = base_receipt("pilot2", N_PILOT, (D0,), list(ARMS))
+    record_versions(res)
+    record_items(res, prep)
+    prior = prior_sentences_and_codes(prep, {"smoke": read_receipt(SMOKE_RECEIPT), "pilot": read_receipt(PILOT1_RECEIPT)})
+    if prior["receipts"].get("pilot") == "absent" or prior["receipts"].get("smoke") == "absent":
+        raise Refusal("the committed smoke and 1011-pilot receipts are needed for the disjointness assert")
+    res["redteam"] = tokenizer_level_asserts(prep, toks, prior["sentence_indices"])
+    res["redteam"]["disjoint_from_committed_receipts"] = assert_disjoint_from_prior(prep, res["items"]["sha256"], prior)
+    res["redteam"]["main_region_disjoint"] = {"by_construction": "the pilot2 slice is cut from the seeded sentence order before the "
+                                                                "main region is read; every sentence drawn lies inside it (asserted); "
+                                                                "the pilot2 code pools are cut before the main test pool",
+                                              "sentences_inside_pilot2_region": True}
+    keep = {}
+    t0 = time.time()
+    items0 = prep["cells"][D0]
+    preflight_all_arms(list(ARMS), res, prep, toks, items0)
+    res["runtime"]["preflight_seconds"] = round(time.time() - t0, 1)
+    t1 = time.time()
+    for arm in ARMS:
+        evaluate_arm(arm, res, prep, toks, (D0,), keep, do_mech=False, do_windowed=False, do_controls=True)
+    res["runtime"]["scoring_seconds"] = round(time.time() - t1, 1)
+    res["runtime"]["total_seconds"] = round(time.time() - t0, 1)
+    res["screen"] = {arm: arm_clears(res, arm) for arm in ARMS}
+    cleared = {arm: res["screen"][arm]["clears"] for arm in ARMS}
+    outcome = pilot_outcome(cleared)
+    res["pilot_outcome"] = outcome
+    res["format_line_to_enter"] = READOUT if outcome == "CLEARED_BOTH" else "NOT_STARTED"
+    res["pilot_rule"] = (f"amendment 17.2: the one bounded redesign, the last; if both arms clear the {SCREEN_BAR} screen (compare and "
+                         f"recall normalized accuracy at D0) and the max-slot <= {GUARD_SLOT_MAX} guard, the format line is set to "
+                         f"'{READOUT}' and the main run may proceed only after the seal and the operator's anchor; otherwise the format "
+                         f"line is set to NOT_STARTED (final) and the behavioural route is closed by the operator's rule; these numbers "
+                         f"license nothing else")
+    write_json(PILOT2_RECEIPT, res)
+    for arm in ARMS:
+        sc = res["screen"][arm]
+        print(f"  {arm}: compare {sc['compare']['acc_norm']:+.3f} guard {sc['compare']['guard_ok']} | recall {sc['recall']['acc_norm']:+.3f} "
+              f"guard {sc['recall']['guard_ok']} -> {'clears' if sc['clears'] else 'fails'}", flush=True)
+    print(f"\n===== PILOT OUTCOME: {outcome} (format line to enter: {res['format_line_to_enter']}) =====\nwrote {PILOT2_RECEIPT.name}", flush=True)
     return 0
+
+
+def check_format_for_main(fmt: str) -> None:
+    """The main run starts only when the PREREG's format line names this readout (amendment 17.2)."""
+    if fmt == "PENDING_PILOT":
+        raise Refusal("the PREREG's answer format still reads PENDING_PILOT: the main run is not started")
+    if fmt == "NOT_STARTED":
+        raise Refusal("the PREREG records NOT_STARTED on its format line: the main run is not started "
+                      f"(see {PILOT1_RECEIPT.name}, {PILOT2_RECEIPT.name} and the dated amendments in the PREREG)")
+    if fmt in RETIRED_FORMATS:
+        raise Refusal(f"the PREREG's format line names {fmt!r}, a readout amendment 17.2 retired; this runner scores only {READOUT!r}")
+    if fmt != READOUT:
+        raise Refusal(f"the PREREG's format line names {fmt!r}; this runner scores {READOUT!r}")
+
+
+def check_smoke_for_main(smoke: dict | None) -> dict:
+    """A smoke written by this readout, inside the 4-hour rule, with BOTH arms timed (amendment 17.2, review minor c)."""
+    if smoke is None:
+        raise Refusal(f"no smoke receipt ({SMOKE_RECEIPT.name}); the smoke runs before the main set and measures the budget")
+    if (smoke.get("config") or {}).get("readout") != READOUT:
+        raise Refusal(f"the smoke receipt was not written by the {READOUT!r} readout: run --smoke --arms M1,T under this runner before the main set")
+    budget = smoke.get("budget") or {}
+    if budget.get("exceeds_budget"):
+        raise Refusal(f"the smoke's extrapolated total is {budget.get('total_hours_timed_arms')} h, above {BUDGET_HOURS} h: INVALID__budget")
+    if budget.get("arms_untimed") or sorted(budget.get("arms_timed") or []) != sorted(ARMS):
+        raise Refusal(f"the smoke timed {budget.get('arms_timed')} only; amendment 17.2 requires --arms M1,T for the budget extrapolation")
+    return budget
 
 
 def run_main() -> int:
     exp = load_experiment()
     text = PREREG.read_text(encoding="utf-8")
     fmt = answer_format_from_prereg(text)
-    if fmt == "PENDING_PILOT":
-        raise Refusal("the PREREG's answer format still reads PENDING_PILOT: run --pilot, enter the format as a dated amendment, seal, then run")
-    if fmt == "NOT_STARTED":
-        raise Refusal("the PREREG records that both answer formats failed the section-9 pilot: the main run is not started "
-                      f"(see {PILOT_RECEIPT.name} and the dated amendment in the PREREG)")
-    if not SMOKE_RECEIPT.exists():
-        raise Refusal(f"no smoke receipt ({SMOKE_RECEIPT.name}); the smoke runs before the main set and measures the budget")
-    smoke = json.loads(SMOKE_RECEIPT.read_text(encoding="utf-8"))
-    budget = smoke.get("budget") or {}
-    if budget.get("exceeds_budget"):
-        raise Refusal(f"the smoke's extrapolated total is {budget.get('total_hours_timed_arms')} h, above {BUDGET_HOURS} h: INVALID__budget")
-    if budget.get("arms_untimed"):
-        print(f"  note: the smoke timed {budget.get('arms_timed')} only; {budget.get('arms_untimed')} untimed (section 12 item 11 froze the smoke as T only)", flush=True)
-    print(f"MAIN: n={N_PER_CELL} distances={DISTANCES} format={fmt} arms={list(ARMS)}", flush=True)
+    check_format_for_main(fmt)
+    smoke = read_receipt(SMOKE_RECEIPT)
+    budget = check_smoke_for_main(smoke)
+    pilot2 = read_receipt(PILOT2_RECEIPT)
+    if pilot2 is None or pilot2.get("pilot_outcome") != "CLEARED_BOTH":
+        raise Refusal(f"{PILOT2_RECEIPT.name} is absent or did not clear both arms: the main run is not started")
+    print(f"MAIN: n={N_PER_CELL} distances={DISTANCES} readout={fmt} arms={list(ARMS)}", flush=True)
     toks = {a: load_tokenizer(ARMS[a]) for a in ARMS}
-    pilot = json.loads(PILOT_RECEIPT.read_text(encoding="utf-8")) if PILOT_RECEIPT.exists() else {"status": "not run"}
-    pilot_used = set(pilot.get("sentence_indices_used") or []) | set(smoke.get("sentence_indices_used") or [])
-    prep = prepare_items(toks["T"], N_PER_CELL, DISTANCES, SEED_ITEMS, "main", fmts=(fmt,))
-    res = base_receipt("main", fmt, N_PER_CELL, DISTANCES, list(ARMS))
+    prep = prepare_items(toks["T"], N_PER_CELL, DISTANCES, SEED_ITEMS, "main")
+    res = base_receipt("main", N_PER_CELL, DISTANCES, list(ARMS))
     record_versions(res)
-    res["config"]["code_pools"] = prep["pools"]
-    res["config"]["filler_pool"] = prep["sentence_provenance"]
-    res["config"]["sentence_region"] = prep["sentence_region"]
-    res["pilot"] = {k: v for k, v in pilot.items() if k != "sentence_indices_used"}
-    res["redteam"] = tokenizer_level_asserts(prep, toks, fmt, pilot_used)
+    record_items(res, prep)
+    prior = prior_sentences_and_codes(prep, {"smoke": smoke, "pilot": read_receipt(PILOT1_RECEIPT), "pilot2": pilot2})
+    res["pilot"] = {"pilot_1011": {k: v for k, v in (read_receipt(PILOT1_RECEIPT) or {}).items() if k in ("by_format", "format_recommendation", "redteam")},
+                    "pilot_1012": {k: v for k, v in pilot2.items() if k in ("acc_raw", "acc_norm", "guard", "controls", "screen", "pilot_outcome", "format_line_to_enter")}}
+    res["redteam"] = tokenizer_level_asserts(prep, toks, prior["sentence_indices"])
+    res["redteam"]["disjoint_from_committed_receipts"] = assert_disjoint_from_prior(prep, res["items"]["sha256"], prior)
     res["redteam"]["smoke"] = {"receipt": SMOKE_RECEIPT.name, "verdict": smoke.get("verdict"), "budget": budget,
-                               "arms_run": (smoke.get("config") or {}).get("arms_run")}
-    res["redteam"]["no_sentence_shared_with_smoke_or_pilot"] = {"checked_against": len(pilot_used), "ok": True}
+                               "arms_run": (smoke.get("config") or {}).get("arms_run"),
+                               "runner_sha256": (smoke.get("config") or {}).get("runner_sha256"),
+                               "runner_matches_this_run": (smoke.get("config") or {}).get("runner_sha256") == res["config"]["runner_sha256"]}
     skeleton = dict(res)
     skeleton["result"] = {k: 0.0 for k in ("plumbing_ok", "screen_min_norm_acc_D0", "guard_ok_D0", "ablated_max_norm_acc", "between_D1", "between_D1_ci_lo", "within_M1")}
     bad = {k: v for k, v in exp.check_metrics(skeleton).items() if not v["usable"]}
@@ -1464,8 +1908,9 @@ def run_main() -> int:
         raise Refusal(f"gate metric paths the receipt will not carry: {bad}")
     keep = {}
     t0 = time.time()
+    preflight_all_arms(list(ARMS), res, prep, toks, prep["cells"][DISTANCES[0]])
     for arm in ARMS:
-        evaluate_arm(arm, res, prep, toks, fmt, DISTANCES, keep, do_mech=(arm == "M1"), do_windowed=True)
+        evaluate_arm(arm, res, prep, toks, DISTANCES, keep, do_mech=(arm == "M1"), do_windowed=True)
         res["runtime"]["elapsed_after_" + arm] = round(time.time() - t0, 1)
     res["runtime"]["total_seconds"] = round(time.time() - t0, 1)
     res["runtime"]["over_budget_4h"] = bool(res["runtime"]["total_seconds"] > BUDGET_HOURS * 3600)
@@ -1483,8 +1928,8 @@ def run_main() -> int:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--smoke", action="store_true", help="24 items, D in {16, 1024}; INVALID-only; measures the budget")
-    ap.add_argument("--pilot", action="store_true", help="the section-9 format pilot at D0; writes its own receipt")
-    ap.add_argument("--arms", default="T", help="smoke only: T (default, as frozen) or M1,T to time the slow arm too")
+    ap.add_argument("--pilot", action="store_true", help="the amendment-17.2 pilot at D0 (seed 1012); writes realmodel_bridge_v3_pilot2.json")
+    ap.add_argument("--arms", default="M1,T", help="smoke only: M1,T (default; the budget needs both arms timed) or T for a plumbing-only pass")
     args = ap.parse_args(argv)
     if args.smoke and args.pilot:
         ap.error("--smoke and --pilot are separate runs")
