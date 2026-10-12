@@ -11,14 +11,15 @@ and unnamed through mint and verify, with the three wording constraints, (b) aga
 the words (a module named `ambiguous`, an implementation, a version, a styxx string holding it, with and
 without a styxx.diffgate sha); a record naming its runtime and no build, differing on the runtime, read
 as SKEW with the unknown fields listed and no sha pointed at; a trailing newline in a module name or sha
-refused (review 2); R5 never comparing identity; the page's meta line; and `python -m styxx.instrument`.
+refused (review 2); the advisories quoting a recorded identity as read while the SKEW problem withholds
+it, and the format-key line reading the payload's pin as before this phase (the amendment's third dated
+section); R5 never comparing identity; the page's meta line; and `python -m styxx.instrument`.
 
 The record writer (styxx/diffgate.py) names nothing in this phase, so a record that carries an
 identity here is made by wrapping gate_diff_text; phase 2 makes the writer carry it.
 """
 from __future__ import annotations
 
-import base64
 import contextlib
 import copy
 import hashlib
@@ -644,6 +645,90 @@ def test_the_format_key_mismatch_stays_skew_with_no_field_comparison(tmp_path):
     assert len(rep["problems"]) == 1 and rep["problems"][0].startswith("INSTRUMENT SKEW: installed diffgate 'v0'")
     assert rep["gate_identity"]["state"] == "unnamed" and _identity_advisories(rep) == []
 
+
+@pytest.mark.parametrize("hostile", [
+    pytest.param({"build__styxx": "7.49.0+ambiguous"}, id="styxx-string"),
+    pytest.param({"runtime__implementation": "ambiguous"}, id="implementation"),
+])
+def test_the_advisories_quote_the_recorded_identity_as_read_and_only_the_skew_problem_withholds_it(
+        tmp_path, monkeypatch, hostile):
+    """The erratum's rule 5 and the amendment's third dated section: withholding is in the problem text only.
+    A recorded identity holding the word is quoted as describe writes it in the advisory for a record that
+    reproduced under another instrument (D-ok) and in the one for an incomplete identity that does not
+    reproduce (I-fail), as the command's `instrument: recorded` line quotes it; the SKEW problem over the
+    same record withholds it. charon reads no advisory, so a capsule holding the word only in an advisory
+    never derives UNRESOLVED. From fd274520 through 225785ad both advisories withheld it too."""
+    minter = _identity(**hostile)
+    as_read = I.describe(minter)
+    assert C._charon_reads_as_broken_binding(as_read)
+    _under(monkeypatch, minter)
+    out = _mint(tmp_path, name="dok")
+    _under(monkeypatch, Y)
+    rep = verify_capsule(out)                                                # D-ok: an advisory, no problem
+    assert rep["ok"] is True and rep["problems"] == [] and rep["gate_identity"]["state"] == "differs"
+    adv = _identity_advisories(rep)
+    assert len(adv) == 1 and adv[0].startswith("reproduced under another instrument (differs: ")
+    assert adv[0].endswith(f"; made by {as_read}, re-run here by {I.describe(Y)}")
+    assert C._UNQUOTED_NAME not in adv[0] and "recorded name this verifier does not quote" not in adv[0]
+    code, text = _command(out)
+    assert code == 0 and f"instrument: recorded {as_read}; re-run here by {I.describe(Y)}" in text
+    line = charon.derive(out, tmp_path)
+    assert line["verdict"] != "UNRESOLVED" and line["reproduced"] is True
+    _edit_and_reseal(out)
+    rep = verify_capsule(out)                                                # SKEW: the problem withholds it
+    assert rep["ok"] is False and rep["skew"] is True
+    assert ("it was made by an instrument whose recorded name this verifier does not quote (charon reads the "
+            "name as a broken seal)") in rep["problems"][0]
+    for p in rep["problems"]:
+        assert "ambiguous" not in p.lower(), p
+
+    incomplete = _identity(runtime__unicode=None, **hostile)
+    as_read = I.describe(incomplete)
+    assert C._charon_reads_as_broken_binding(as_read) and as_read.endswith(", Unicode unknown")
+    _under(monkeypatch, incomplete)
+    out = _mint(tmp_path, name="ifail")
+    _edit_and_reseal(out)
+    rep = verify_capsule(out)                                                # I-fail: content lines, an advisory
+    assert rep["ok"] is False and rep["skew"] is False and rep["gate_identity"]["state"] == "incomplete"
+    assert rep["problems"] and all(p.startswith("gate.") for p in rep["problems"])
+    adv = _identity_advisories(rep)
+    assert len(adv) == 1 and adv[0].startswith("the gate record names its instrument incompletely "
+                                               "(unknown: runtime.unicode), so this failure cannot be told "
+                                               "apart from INSTRUMENT SKEW or an edit from the record alone: "
+                                               f"it was made by {as_read}, and the payload's pin ")
+    assert "recorded name this verifier does not quote" not in adv[0]
+    line = charon.derive(out, tmp_path)
+    assert line["verdict"] != "UNRESOLVED" and line["reproduced"] is False
+
+
+_NO_PIN = object()
+
+
+@pytest.mark.parametrize("pin, written", [
+    pytest.param(_NO_PIN, "styxx", id="no-pin-key"),
+    pytest.param(None, "null", id="null"),
+    pytest.param("styxx==7.49.0", "styxx==7.49.0", id="string"),
+    pytest.param(7, "7", id="number"),
+])
+def test_the_format_key_line_reads_the_payloads_pin_as_before_this_phase(tmp_path, pin, written):
+    """The erratum's rule 6 and the amendment's third dated section: the format-key SKEW line is origin/main's
+    line, with the payload's unsealed pin read by origin/main's expression, `verifier.get("pip", "styxx")`:
+    no `pip` key reads `styxx`, a string is written as it is, and any other value as `_short` writes it
+    (`null` for null). From fd274520 through 225785ad a null pin read `styxx`."""
+    out = _mint(tmp_path)
+    html, i, j, p = _payload(out)
+    p["gate"]["diffgate"] = "v-fake"
+    p["binding"]["gate"]["value"] = _gate_binding_hash(p["gate"])
+    if pin is _NO_PIN:
+        del p["verifier"]["pip"]
+    else:
+        p["verifier"]["pip"] = pin
+    _rewrite(out, html, i, j, p)
+    rep = verify_capsule(out)
+    assert rep["ok"] is False and rep["skew"] is True and rep["gate_identity"]["state"] == "unnamed"
+    assert rep["problems"] == ["INSTRUMENT SKEW: installed diffgate 'v0' vs embedded 'v-fake' — reproduce "
+                               f"under `pip install {written}` before treating this as tamper"]
+    assert rep["gate_identity"]["pin"] == (pin if isinstance(pin, str) else None)
 
 # ----------------------------------------------------------------------------------- 10. R5
 
