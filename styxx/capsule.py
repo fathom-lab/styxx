@@ -2380,7 +2380,9 @@ def _identity_outcome(d: dict, recorded, live_identity, unreadable: List[str], p
                 f"{pin_text} is outside every binding and names a version, not a build; to classify "
                 "it, re-run it under the diffgate.py its minter ran")
         return
-    made_by = _charon_quotable(_instrument.describe(recorded))
+    # the recorded identity as describe writes it; only the SKEW problem below passes it through the
+    # quoting rule, because charon reads problems and never advisories (the erratum's rule 5)
+    recorded_as_read = _instrument.describe(recorded)
     if d["state"] == "same":
         if not reproduced:
             advisory.append(
@@ -2399,13 +2401,13 @@ def _identity_outcome(d: dict, recorded, live_identity, unreadable: List[str], p
             advisory.append(
                 f"the gate record names its instrument incompletely (unknown: {unknown}), so this "
                 "failure cannot be told apart from INSTRUMENT SKEW or an edit from the record alone: "
-                f"it was made by {made_by}, and the payload's pin {pin_text} is outside every binding and "
-                "names a version, not a build; to classify it, re-run it under that instrument")
+                f"it was made by {recorded_as_read}, and the payload's pin {pin_text} is outside every "
+                "binding and names a version, not a build; to classify it, re-run it under that instrument")
         return
     if reproduced:
         advisory.append(
             f"reproduced under another instrument (differs: {', '.join(d['differs'])}): the content did not "
-            f"depend on the difference for these bytes; made by {made_by}, re-run here by {here}")
+            f"depend on the difference for these bytes; made by {recorded_as_read}, re-run here by {here}")
         return
     # The problem quotes tokens of the record's choosing beside the identity: a module name inside a
     # differing or unknown field, the implementation, the version, the pin's version string. Each passes
@@ -2415,6 +2417,7 @@ def _identity_outcome(d: dict, recorded, live_identity, unreadable: List[str], p
     # field null on either side is listed after the differing ones (a record that names its runtime and
     # no build differs on the runtime), and the hint points only at what the record names: the pin, else
     # the styxx.diffgate sha, else nothing but the runtime.
+    made_by = _charon_quotable(recorded_as_read)
     fields = ", ".join(_charon_quotable_field(f) for f in d["differs"])
     if d["unknown"]:
         fields += "; unknown: " + ", ".join(_charon_quotable_field(f) for f in d["unknown"])
@@ -2535,7 +2538,7 @@ def _verify_capsule_v02(html: str, payload: dict) -> dict:
     if live.get("diffgate") != gate.get("diffgate"):
         # a format key other than the content's is INSTRUMENT SKEW with no field comparison, as before
         result["skew"] = True
-        pip = pip if pip is not None else "styxx"
+        pip = _obj_in(payload, "verifier").get("pip", "styxx")
         problems.append(
             f"INSTRUMENT SKEW: installed diffgate {live.get('diffgate')!r} vs embedded "
             f"{_short(gate.get('diffgate'), 80)} — reproduce under `pip install "
