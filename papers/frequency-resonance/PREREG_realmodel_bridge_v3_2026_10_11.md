@@ -382,3 +382,74 @@ carried open since 2026-07-24. The bars are frozen either way.
 
 None yet. The pilot's outcome (§9) and the operator's signature of PLAN §2 (any departure from a default)
 are entered here before the seal, each dated, each stating that no bar moved.
+
+### 17.1 Amendment, before any data (2026-10-11) — the smoke, the pilot, and why the main run is not started
+
+**No bar moved; nothing above §17 is edited.** This entry records the two runs §§9, 11 and 12 (item 11) call
+for before the seal, and the one effect §9 lets them have. Runner: `run_realmodel_bridge_v3.py` at commit
+`9b54d8d2` (sha256 `45dd70df…`, recorded in each receipt as `config.runner_sha256`). The operator decisions
+of PLAN §2 remain unsigned; the defaults are what was built and run.
+
+**The smoke** (`realmodel_bridge_v3_smoke.json`). Run as `--smoke --arms M1,T`: 24 items at D ∈ {16, 1024},
+both arms, so that the slow arm's runtime is measured — a superset of §12 item 11's T-only smoke, INVALID-only
+either way. Verdict by the gates block: `INVALID__smoke_plumbing_only` (prereg commit `333712d5`, gates
+sha256 `a21aa51d…`). The smoke's items come from a seed of their own (1016) and from reserved slices of the
+sentence order and of the code pool that the main set and the pilot never touch: no main-set item was
+generated or scored (the frozen text fixes no smoke seed; the runner's choice is recorded here). Every assert
+of §12 held and is in `redteam`: `A = −exp(A_log)` real and strictly negative in all 48 layers (max −0.0039);
+identical token ids for M1 and T on 192 prompts; exact balance per cell; 1,113 sentences used, none twice,
+none with a digit, a name or "code"; " Yes" 6279 / " No" 1621 / " True" 11793 / " False" 16708 single
+tokens; 8,828 two-token codes; longest prompt 1,210 tokens; the W = ∞ mask reproduces the unmasked logits
+(max |Δ| 0.0, fp32); right-padding max |Δlogit| 3.4e−5 (M1) and 6.1e−4 (T) in fp32, with the fp16-on-GPU
+difference (0.039, 0.165) reported, not gated; 6.85–6.90 GiB free before each load and after each release.
+The runner runs M1 at batch 16 through a copy of transformers' `slow_forward` whose discretised tensors are
+materialised per chunk of the sequence; it reproduces the reference to max |Δlogit| 0.0 in fp32
+(`redteam.chunked_scan_equivalence_fp32_cpu`). Budget (§11), per batch of 16: M1 11.7 s at D = 1024 and
+2.3 s at D = 16, T 1.2 s and 0.2 s; extrapolated main run 1.635 h (M1 1.436, T 0.199), inside the 4-hour
+rule, so not `INVALID__budget`. The smoke's accuracies are plumbing numbers on 24 items and are not read.
+
+**The pilot** (`realmodel_bridge_v3_pilot.json`, §9). 48 items at D0 = 16, item seed 1011, codes and
+sentences disjoint from the main set and from the smoke (171 sentences used, none shared), both arms, both
+answer formats, exact balance (24/24; 16/16/16; 16/16/16; 24/24; 8/8/8), the same asserts held (A as above;
+chunked scan 0.0; W = ∞ 0.0; right-padding fp32 2.3e−5 / 6.0e−4). Compare: normalized accuracy against the
+0.40 bar, answer rate against the [0.20, 0.80] guard, AUROC of the log-odds against the label; recall is
+format-free:
+
+| arm | " Yes" / " No" | " True" / " False" | recall |
+|---|---|---|---|
+| M1 | −0.042 (raw 0.479); Yes-rate 0.94, **guard failed**; AUROC 0.38 | −0.167 (raw 0.417); True-rate 0.92, **guard failed**; AUROC 0.37 | +0.656 (raw 0.771); slot fractions 0.52 / 0.17 / 0.31; guard passed |
+| T | +0.083 (raw 0.542); Yes-rate 0.42, guard passed; AUROC 0.56 | +0.042 (raw 0.521); True-rate 0.56, guard passed; AUROC 0.53 | +0.969 (raw 0.979); 0.35 / 0.31 / 0.33; guard passed |
+
+Under the default format M1's compare is below the bar and fails the guard, so the one switch §9 permits
+applies; under " True" / " False" M1's compare is again below the bar and again fails the guard, and T's
+compare is below the bar under both formats. Both formats fail the pilot. §9: "If both formats fail the
+pilot, the run is not started and the record says so." The record says so:
+
+Answer format chosen (written before sealing): NOT_STARTED
+
+The runner reads that line and refuses the main run with that reason. **No main-set item has been generated
+or scored.** Nothing is sealed; whether to seal a preregistration whose run does not start is the operator's
+(decision 5). The pilot's numbers license nothing (§9): they are not a verdict of the gates block, not an
+ABSTAIN, and no RESULT is written from them. What they say, on 48 items at the shortest distance, is that
+neither 1.4 B base model answered the few-shot comparison question above the bar this document froze — T's
+raw 0.542 and M1's 0.479 sit more than two standard errors (0.072 at n = 48) under the raw 0.70 the bar
+means — while both recalled the planted code well above its bar (M1 raw 0.771, T 0.979). PLAN §1.1 put the
+chance of this at about one in two before anything ran.
+
+**What follows is the operator's.** §9 permits one bounded adjustment and it has been used. Any further change
+— another answer format, more exemplars, another prompt, another scale, another probe — is a different
+instrument and a new preregistration with its own pilot, not an amendment of this one. The bars here are
+frozen whether or not a successor is written, and this document stands as the record of the attempt. Nothing
+is posted (decision 6).
+
+**Runner defects the smoke found before any data, fixed as commits on this branch, none touching a number:**
+the slow path's whole-sequence `[B, 4096, L, 16]` tensors had forced M1 to batch 2 at D = 1024, eight times
+the batches §4 assumes — the sequence-chunked scan restores batch 16 and is asserted equal to the reference
+(`b6672234`); under a half model the Mamba backbone's `last_hidden_state` is fp32 (`residual_in_fp32`), so
+the head is applied in its own dtype (`65397781`); the release path emptied the allocator cache while a
+reference to the model was alive, and the §11 free-memory check refused the second arm at 4.28 GiB — every
+reference is dropped before the cache is emptied (`6c21580b`). Reported, not gated, and added after the
+smoke showed the frozen mechanism headline (§5, the slowest channel's surviving signal) reading −0.0 at both
+distances because the per-token slowest channel is one whose Δ ≈ 0: two companions per layer, the median
+channel's filler-summed log|λ| and the fraction of channels still above 0.5 (`9b54d8d2`); on the smoke's 24
+items they read −0.0034 → −0.0845 (best layer) and 0.466 → 0.056 from D = 16 to D = 1024.
