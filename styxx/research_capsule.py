@@ -57,7 +57,12 @@ THREAT MODEL — what a dishonest lab can still do, and what the capsule says ab
     wallets defeats the count;
   * edit a bar after the seal, report another row's verdict, type a number the receipt does not
     hold, swap the receipt after the RESULT swore to it, rebuild the charon line: CAUGHT offline,
-    by L0, L3, L4, L2/L4/L5 and L5 respectively — each flips exactly its own reading;
+    by L0, L3, L4, L2/L4/L5 and L5 respectively — each flips exactly its own reading. L4 holds
+    only when every sworn span re-derives HELD over the carried snapshot: a typed number reads
+    FAILS there whether the carried sworn receipt lies about it (says HELD) or says SWORN-FAILED
+    honestly, and a span read against no leaf (UNRESOLVED, which ``styxx.sworn``'s document rule
+    still calls SWORN-HELD) or a RESULT that swears nothing reads FAILS too, so ``build`` refuses
+    all of them by name;
   * regenerate a committed receipt in place: VISIBLE only by public read (L2b/L4b) or by charon
     re-verify; offline the capsule carries whichever bytes were built in;
   * rebuild the ferry log with this line and a different past: the capsule pins INCLUSION at seq
@@ -76,12 +81,13 @@ absolute path, no drive letter, no home directory, no worktree name, no host nam
 no signature. ``verifier`` names ``styxx_version`` and the module digests only. A payload holding
 a token-shaped string is refused at build, by name. The scan reads decoded text: every string of
 the payload and of each carried JSON artifact as its parsed value, never its JSON escape (an
-escaped line feed after a one-letter word is not a drive letter), and every other artifact as its
-bytes. The words the lab never prints are scanned over what the lab writes for the capsule (the
-page outside its inlined verifier, the payload's own fields, the stated facts, the public clocks,
-the RESULT and the run note) and not over carried history (the frozen PREREG, receipts, runners,
-the snapshot, the sworn receipt, the charon line, the anchor lines): a receipt is history and is
-carried as is, and a sealed PREREG cannot be reworded. A hit is named by its place in the list,
+escaped line feed after a one-letter word is not a drive letter), every pair of a repeated key
+included (``json.loads`` keeps only the last), and every other artifact as its bytes. The words
+the lab never prints are scanned over what the lab writes for the capsule (the page outside its
+inlined verifier, the payload's own fields, the stated facts, the public clocks, the RESULT and
+the run note) and not over carried history (the frozen PREREG, receipts, runners, the snapshot,
+the sworn receipt, the charon line, the anchor lines): a receipt is history and is carried as
+is, and a sealed PREREG cannot be reworded. A hit is named by its place in the list,
 never by echoing the word.
 
 CLI::
@@ -237,8 +243,9 @@ LINKS = (
      "that the bars were sensible (the PREREG's power_basis, printed beside each gate, is the lab's "
      "statement)"),
     ("L4", "the RESULT sworn to the receipt",
-     "every number inside a sworn span equals the receipt leaf it names, re-derived over the carried "
-     "snapshot; the author could not choose what the receipt says",
+     "every number inside a sworn span equals the receipt leaf it names: every span reads HELD, none "
+     "FAILED, MALFORMED or UNRESOLVED, re-derived over the carried snapshot; the author could not "
+     "choose what the receipt says",
      "that the narrative outside the spans is true; that the right sentences were bound; that the "
      "snapshot is the commit's tree (L4b, public read)"),
     ("L5", "the ferry-log line",
@@ -528,7 +535,8 @@ def receipt_tally_problem(srec) -> Optional[str]:
     """Why a sworn receipt's ``document_verdict``, ``counts``, ``sworn_total`` and ``unresolved``
     are not its own spans' tally under ``styxx.sworn``'s document rule, or None. A receipt whose
     spans all read HELD cannot say SWORN-FAILED. Read from the receipt alone, so the browser layer
-    and this one apply the same rule; a test reads every sworn receipt committed in this repository."""
+    and this one apply the same rule; a test reads every sworn receipt committed under ``papers/``,
+    chosen by its schema field and not by its file name."""
     if not isinstance(srec, dict):
         return "the sworn receipt is not an object"
     spans, counts = srec.get("spans"), srec.get("counts")
@@ -552,6 +560,27 @@ def receipt_tally_problem(srec) -> Optional[str]:
         return (f"it says {srec.get('document_verdict')!r} and its own spans tally {want} "
                 f"{jcs(tally)}")
     return None
+
+
+def _all_held_problem(core: dict) -> Optional[str]:
+    """Why a re-derived sworn core is not one whose every span reads HELD, or None. L4 proves that
+    every number inside a sworn span equals the leaf it names, which is more than the document
+    rule: SWORN-HELD reports only that none FAILED (an UNRESOLVED span was read against no leaf),
+    SWORN-FAILED is an honest receipt saying a span did not hold, and UNSWORN swears nothing. The
+    page applies the same rule to the core it re-derives."""
+    counts = core.get("counts") if isinstance(core.get("counts"), dict) else {}
+    total = sum(v for v in counts.values() if isinstance(v, int) and not isinstance(v, bool))
+    held = counts.get("HELD", 0)
+    verdict = core.get("document_verdict")
+    if verdict == "SWORN-HELD" and total > 0 and held == total:
+        return None
+    if total == 0:
+        return f"the RESULT swears nothing ({verdict}): no span is read against a leaf"
+    parts = [f"{k} {v}" for k, v in counts.items() if k != "HELD" and v]
+    parts.append(f"the document reads {verdict}")
+    return (f"{held} of {total} sworn spans read HELD ({'; '.join(parts)}): a FAILED span prints "
+            f"what its leaf does not hold, an UNRESOLVED span was read against no leaf, and a capsule "
+            f"carries a RESULT whose every span holds")
 
 
 # ------------------------------------------------------------------------------------ compose
@@ -959,7 +988,13 @@ def check_payload(payload: dict, html: Optional[str] = None) -> dict:
         if data is None or _sha256(data) != e.get("sha256"):
             L4.bad(f"snapshot entry {p} does not decode to the bytes its sha256 names")
             continue
-        tree_entries[p] = {"mode": e.get("mode"), "size": e.get("size"), "sha256": e.get("sha256"),
+        size = e.get("size")
+        if isinstance(size, bool) or not isinstance(size, int) or size != len(data):
+            # an integer as written, and the byte count: the page reads the same (a 102.0 or a "102"
+            # is not a size), so neither layer hands a confused type to the resolver
+            L4.bad(f"snapshot entry {p} size {size!r} is not the integer byte count {len(data)}")
+            continue
+        tree_entries[p] = {"mode": e.get("mode"), "size": size, "sha256": e.get("sha256"),
                            "bytes": data}
     if result_bytes is not None and side is not None and srec is not None:
         doc = srec.get("document") if isinstance(srec.get("document"), dict) else {}
@@ -972,6 +1007,11 @@ def check_payload(payload: dict, html: Optional[str] = None) -> dict:
         L4.check(side.get("commit") == snap_commit,
                  f"the sidecar's commit is the snapshot's ({str(snap_commit)[:12]})",
                  f"sidecar names {side.get('commit')!r}")
+        raw_spans = side.get("spans") if isinstance(side.get("spans"), list) else []
+        off_bad = [i for i, s in enumerate(raw_spans) if isinstance(s, dict) and not all(
+            isinstance(s.get(k), int) and not isinstance(s.get(k), bool) for k in ("start", "end"))]
+        L4.check(not off_bad, "the sidecar's span offsets are integers as written",
+                 f"span(s) {off_bad} carry an offset that is not an integer")
         try:
             loaded = _sworn.load_sidecar(side)
             L4.check(_sworn.render(loaded) == result_bytes, "the sidecar renders to the RESULT bytes "
@@ -1000,6 +1040,10 @@ def check_payload(payload: dict, html: Optional[str] = None) -> dict:
                                                  "tamper" if not same_build else " under the same build")
                       + f" (live {live['document_verdict']} {live['counts']} vs carried "
                         f"{srec.get('document_verdict')} {srec.get('counts')})"))
+            held_why = _all_held_problem(live)
+            L4.check(held_why is None, f"every sworn span reads HELD against the leaf it names "
+                                       f"({live['counts'].get('HELD', 0)} of {live.get('sworn_total')})",
+                     held_why or "")
             chk = _sworn.verify_receipt(srec, sidecar=loaded, tree=tree)
             L4.check(chk.get("status") == "VERIFIED" and chk.get("digest_match"),
                      "the sworn receipt's digest and verdict re-derive (styxx.sworn verify_receipt)",
@@ -1141,12 +1185,31 @@ def _without_verifier(html: str) -> str:
     return page if i < 0 or j < 0 else page[:i + len(_JS_BEGIN)] + page[j:]
 
 
+class _Pairs(list):
+    """A JSON object as every (key, value) pair it was written with, a repeated key included, so a
+    value that a later duplicate hides from ``json.loads`` is still scanned."""
+
+
+def _items(x) -> List[Tuple[Any, Any]]:
+    if isinstance(x, _Pairs):
+        return list(x)
+    return list(x.items()) if isinstance(x, dict) else []
+
+
+def _all_pairs(text: str):
+    """Parsed JSON with every object as ``_Pairs``; None when the text is not JSON."""
+    try:
+        return json.loads(text, object_pairs_hook=_Pairs)
+    except (ValueError, RecursionError):
+        return None
+
+
 def _decoded_lines(x, out: List[str], skip_b64: bool = True) -> None:
     """Every key and string value of a parsed JSON value as decoded text, one line each, a string
-    value beside its key (``key: value``); base64 bodies are left to the artifact walk, which
-    scans them decoded."""
-    if isinstance(x, dict):
-        for k, v in x.items():
+    value beside its key (``key: value``), every pair of a repeated key included; base64 bodies
+    are left to the artifact walk, which scans them decoded."""
+    if isinstance(x, (dict, _Pairs)):
+        for k, v in _items(x):
             if skip_b64 and k == "b64":
                 out.append(str(k))
             elif isinstance(v, str):
@@ -1168,44 +1231,67 @@ def _decoded_text(x) -> str:
 
 
 def _artifact_text(data: bytes) -> str:
-    """A carried artifact as text to scan: a JSON artifact as its decoded keys and strings (an
-    escape is read as the character it stands for), anything else as its bytes."""
+    """A carried artifact as text to scan: a JSON artifact as its decoded keys and strings, every
+    pair of a repeated key included (an escape is read as the character it stands for), anything
+    else as its bytes."""
     try:
-        obj = json.loads(data.decode("utf-8"))
-    except (ValueError, UnicodeDecodeError, RecursionError):
+        text = data.decode("utf-8")
+    except UnicodeDecodeError:
         return data.decode("utf-8", "replace")
+    obj = _all_pairs(text)
+    if obj is None:
+        return text
     lines: List[str] = []
     _decoded_lines(obj, lines, skip_b64=False)
     return "\n".join(lines)
 
 
+def _payload_view(payload: dict, html: Optional[str]):
+    """The payload as the page writes it, every pair of a repeated key included, when the page is
+    given and its payload parses; else the parsed payload."""
+    if html is not None:
+        i = html.find(_BEGIN)
+        j = html.find(_END, i + len(_BEGIN)) if i >= 0 else -1
+        if i >= 0 and j >= 0:
+            view = _all_pairs(html[i + len(_BEGIN):j])
+            if isinstance(view, _Pairs):
+                return view
+    return payload
+
+
 def _scan_text(payload: dict, html: Optional[str]) -> List[Tuple[str, str, bool, bool]]:
     """(where, text, scan for leaks, scan for the house words): the page outside the payload
     (leaks over all of it, the words over what it prints), the payload's decoded strings without
-    their base64, and every decoded artifact. Carried history is scanned for leaks only."""
+    their base64, and every decoded artifact, a value behind a repeated key included. Carried
+    history is scanned for leaks only."""
     out: List[Tuple[str, str, bool, bool]] = []
     if html is not None:
         out.append(("the page", _outside_payload(html), True, False))
         out.append(("the page", _without_verifier(html), False, True))
-    art = payload.get("artifacts") if isinstance(payload.get("artifacts"), dict) else {}
-    own = {k: v for k, v in payload.items() if k != "artifacts"}
-    own["artifacts"] = {k: v for k, v in art.items() if k not in _HISTORY_ARTIFACTS}
+    top = _items(_payload_view(payload, html))
+    art = [kv for k, v in top if k == "artifacts" for kv in _items(v)]
+    own = _Pairs([kv for kv in top if kv[0] != "artifacts"]
+                 + [("artifacts", _Pairs(kv for kv in art if kv[0] not in _HISTORY_ARTIFACTS))])
     out.append(("the payload", _decoded_text(own), True, True))
-    out.append(("the payload", _decoded_text({k: v for k, v in art.items() if k in _HISTORY_ARTIFACTS}),
+    out.append(("the payload", _decoded_text(_Pairs(kv for kv in art if kv[0] in _HISTORY_ARTIFACTS)),
                 True, False))
 
     def walk(x, where, house):
-        if isinstance(x, dict):
-            if isinstance(x.get("b64"), str):
-                data = _b64d(x["b64"])
-                if data is not None:
-                    out.append((f"{where}/{x.get('name', '?')}", _artifact_text(data), True, house))
-            for k, v in x.items():
+        if isinstance(x, (dict, _Pairs)):
+            kv = _items(x)
+            names = [v for k, v in kv if k == "name"]
+            for k, v in kv:
+                if k == "b64" and isinstance(v, str):
+                    data = _b64d(v)
+                    if data is not None:
+                        out.append((f"{where}/{names[-1] if names else '?'}", _artifact_text(data),
+                                    True, house))
+            for k, v in kv:
                 walk(v, f"{where}/{k}", house)
         elif isinstance(x, list):
             for i, v in enumerate(x):
                 walk(v, f"{where}[{i}]", house)
-    for k, v in art.items():
+    for k, v in art:
         walk(v, f"artifacts/{k}", k not in _HISTORY_ARTIFACTS)
     return out
 
@@ -1649,7 +1735,10 @@ __CARDS__
 
 # The browser verifier (layer 1). It re-derives every digest, the memo, the gates re-score, the
 # sidecar render, the sworn receipt's own digest and tally, the sworn verdict core over the carried
-# snapshot, the charon entry_id and the payload core from the carried bytes. The sworn core is
+# snapshot (every span HELD, as _all_held_problem rules), the charon entry_id and the payload core
+# from the carried bytes. Where an integer is required (a span offset, a snapshot size) it reads
+# the payload through a typed parse that keeps a float literal apart, as Python's json does,
+# because JSON.parse writes 102.0 as 102. The sworn core is
 # re-derived by styxx/_data/sworn_verify.js, the second implementation of styxx.sworn held to the
 # sworn conformance vectors, inlined verbatim; that file resolves no path: span (it has no tree),
 # so the page gives it the carried snapshot through a resolver that reads entries as
@@ -1689,27 +1778,32 @@ function jcs(x){
   if(Array.isArray(x))return "["+x.map(jcs).join(",")+"]";
   if(typeof x==="object"){var ks=Object.keys(x).sort();return "{"+ks.map(function(k){return JSON.stringify(k)+":"+jcs(x[k]);}).join(",")+"}";}
   throw new Error("not JCS-serializable");}
-function parseStrict(text){
-  var i=0,n=text.length;
+// strict by default (duplicate and non-ASCII keys refused); with opts.typed it reads any JSON as
+// JSON.parse does (a repeated key's last value wins, into an object with no prototype) and hands
+// each number's literal to opts.num, so a 102.0 can be told from a 102 as Python's json tells them
+function parseStrict(text,opts){
+  var i=0,n=text.length,typed=!!(opts&&opts.typed),num=opts&&opts.num;
   function ws(){while(i<n&&(text[i]===" "||text[i]==="\t"||text[i]==="\n"||text[i]==="\r"))i++;}
-  function fail(m){throw new Error("gates block is not valid strict JSON: "+m+" at "+i);}
+  function fail(m){throw new Error((typed?"the payload":"gates block")+" is not valid strict JSON: "+m+" at "+i);}
   function str(){if(text[i]!=='"')fail("expected string");i++;var out="";
-    while(i<n){var c=text[i++];if(c==='"')return out;
+    while(i<n){var j=i;while(j<n){var cc=text.charCodeAt(j);if(cc===34||cc===92||cc<32)break;j++;}
+      if(j>i){out+=text.slice(i,j);i=j;continue;}
+      var c=text[i++];if(c==='"')return out;
       if(c==="\\"){var e=text[i++];if(e==="u"){var h=text.substr(i,4);if(!/^[0-9a-fA-F]{4}$/.test(h))fail("bad escape");out+=String.fromCharCode(parseInt(h,16));i+=4;}
         else{var map={'"':'"',"\\":"\\","/":"/",b:"\b",f:"\f",n:"\n",r:"\r",t:"\t"};if(!(e in map))fail("bad escape");out+=map[e];}}
       else{if(c.charCodeAt(0)<32)fail("control character in string");out+=c;}}
     fail("unterminated string");}
   function val(){ws();var c=text[i];
     if(c==='"')return str();
-    if(c==="{"){i++;var o={};ws();if(text[i]==="}"){i++;return o;}
-      for(;;){ws();var k=str();if(!/^[\x00-\x7f]*$/.test(k))fail("non-ASCII key "+JSON.stringify(k));
-        if(Object.prototype.hasOwnProperty.call(o,k))fail("duplicate key "+JSON.stringify(k));
+    if(c==="{"){i++;var o=typed?Object.create(null):{};ws();if(text[i]==="}"){i++;return o;}
+      for(;;){ws();var k=str();if(!typed&&!/^[\x00-\x7f]*$/.test(k))fail("non-ASCII key "+JSON.stringify(k));
+        if(!typed&&Object.prototype.hasOwnProperty.call(o,k))fail("duplicate key "+JSON.stringify(k));
         ws();if(text[i]!==":")fail("expected :");i++;o[k]=val();ws();
         if(text[i]===","){i++;continue;}if(text[i]==="}"){i++;return o;}fail("expected , or }");}}
     if(c==="["){i++;var a=[];ws();if(text[i]==="]"){i++;return a;}
       for(;;){a.push(val());ws();if(text[i]===","){i++;continue;}if(text[i]==="]"){i++;return a;}fail("expected , or ]");}}
     if(text.substr(i,4)==="true"){i+=4;return true;}if(text.substr(i,5)==="false"){i+=5;return false;}if(text.substr(i,4)==="null"){i+=4;return null;}
-    var m=/^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?/.exec(text.substr(i));if(!m)fail("unexpected token");i+=m[0].length;return Number(m[0]);}
+    var m=/^-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?/.exec(text.substr(i));if(!m)fail("unexpected token");i+=m[0].length;return num?num(m[0]):Number(m[0]);}
   var v=val();ws();if(i!==n)fail("trailing data");return v;}
 function selectGates(text){
   var lines=text.split("\n"),spans=[],pos=0;
@@ -1775,6 +1869,15 @@ function tallyProblem(r){var spans=r.spans,counts=r.counts;
   var want=r.document_malformed?"SWORN-FAILED":total===0?"UNSWORN":((counts.FAILED||0)===0&&(counts.MALFORMED||0)===0)?"SWORN-HELD":"SWORN-FAILED";
   if(r.document_verdict!==want)return "it says "+JSON.stringify(r.document_verdict)+" and its own spans tally "+want+" "+jcs(tally);
   return null;}
+// research_capsule._all_held_problem: L4 holds only when every sworn span reads HELD
+function allHeldProblem(core){var counts=(core.counts&&typeof core.counts==="object")?core.counts:{},total=0;
+  Object.keys(counts).forEach(function(k){if(typeof counts[k]==="number"&&Number.isInteger(counts[k]))total+=counts[k];});
+  var held=counts.HELD||0,verdict=core.document_verdict;
+  if(verdict==="SWORN-HELD"&&total>0&&held===total)return null;
+  if(total===0)return "the RESULT swears nothing ("+verdict+"): no span is read against a leaf";
+  var parts=Object.keys(counts).filter(function(k){return k!=="HELD"&&counts[k];}).map(function(k){return k+" "+counts[k];});
+  parts.push("the document reads "+verdict);
+  return held+" of "+total+" sworn spans read HELD ("+parts.join("; ")+"): a FAILED span prints what its leaf does not hold, an UNRESOLVED span was read against no leaf, and a capsule carries a RESULT whose every span holds";}
 function portableCore(r){var o={};Object.keys(r).forEach(function(k){if(["digest","timestamp","coverage","coverage_sha256","verifier"].indexOf(k)<0)o[k]=r[k];});return o;}
 function truthy(x){if(x===null||x===undefined||x===false||x===0||x==="")return false;if(Array.isArray(x))return x.length>0;if(typeof x==="object")return Object.keys(x).length>0;return true;}
 // styxx.sworn.verify(sidecar=..., tree=SnapshotTree(...)) in this browser: the sidecar's own checks
@@ -1807,7 +1910,12 @@ function swornCoreHere(side,tree,snapCommit){
   if(jcs(seen)!==jcs(want))throw new Error("re-scanning the rendered sidecar does not reproduce its spans");
   var emb=side.manifest||{},man=(truthy(emb.receipts)||truthy(emb.authored_sha256))?SW.api.jsonPlain(JSON.stringify(emb)):null;
   return SW.overSnapshot(tree,snapCommit,side.commit,function(){return SW.api.swornVerify(raw,man,{name:side.document.name,commit:side.commit});});}
-var P=JSON.parse(document.getElementById("oath-capsule").textContent);
+var PTEXT=document.getElementById("oath-capsule").textContent,P=JSON.parse(PTEXT);
+// the same payload with each number kept as Python's json reads it: a literal with a fraction or an
+// exponent is a float there and FLOAT here, never an integer; read only where an integer is required
+var FLOAT={},PT=null;try{PT=parseStrict(PTEXT,{typed:true,num:function(lit){return /[.eE]/.test(lit)?FLOAT:Number(lit);}});}catch(e){PT=null;}
+function typedAt(path){var o=PT;for(var i=0;i<path.length;i++){if(o===null||typeof o!=="object"||!Object.prototype.hasOwnProperty.call(o,path[i]))return undefined;o=o[path[i]];}return o;}
+function intLit(x){return typeof x==="number"&&Number.isInteger(x);}
 var A=P.artifacts||{},X=P.experiment||{},S=Object.assign({receipt:0,metrics:"/metrics",verdict:"/verdict",gates:"/gates",smoke:"/config/smoke"},X.score||{});
 var links={};["L0","L1","L1b","L2","L3","L4","L5","L6"].forEach(function(k){links[k]={ok:[],bad:[]};});
 function chk(L,cond,text,why){if(cond)links[L].ok.push(text);else links[L].bad.push(text+(why?" — "+why:""));return !!cond;}
@@ -1860,13 +1968,19 @@ else{var metrics=pointer(runObj,S.metrics),recV=pointer(runObj,S.verdict),recG=p
     catch(e){links.L3.bad.push("re-scoring refused — "+e.message);}}}
 // L4
 var res=A.result||{},side=A.sidecar,srec=A.sworn_receipt,resBytes=art("L4",res,"the RESULT");
-var snapOk=true,snapTree={};Object.keys(entries).forEach(function(p){var e=entries[p];var d;try{d=b64(e.b64);}catch(x){d=null;}if(!d||sha256(d)!==e.sha256){snapOk=false;links.L4.bad.push("snapshot entry "+p+" does not decode to the bytes its sha256 names");}
-  else snapTree[p]={mode:e.mode,size:e.size,bytes:d};});
+var snapTree={};Object.keys(entries).forEach(function(p){var e=entries[p];var d;try{d=b64(e.b64);}catch(x){d=null;}if(!d||sha256(d)!==e.sha256){links.L4.bad.push("snapshot entry "+p+" does not decode to the bytes its sha256 names");return;}
+  var sz=typedAt(["artifacts","snapshot","entries",p,"size"]);
+  if(!intLit(sz)||sz!==d.length){links.L4.bad.push("snapshot entry "+p+" size "+JSON.stringify(e.size)+" is not the integer byte count "+d.length);return;}
+  snapTree[p]={mode:e.mode,size:sz,bytes:d};});
 if(resBytes&&side&&srec){var doc=srec.document||{};
   chk("L4",sha256(resBytes)===doc.inline_sha256,"the RESULT bytes hash to the sworn receipt's document.inline_sha256","the carried RESULT is not the document the receipt was issued over");
   var tallyWhy=tallyProblem(srec);
   chk("L4",tallyWhy===null,"the sworn receipt's document_verdict and counts are its own spans' tally",tallyWhy||"");
   chk("L4",side.commit===snap.commit,"the sidecar's commit is the snapshot's ("+String(snap.commit).slice(0,12)+")","sidecar names "+side.commit);
+  var tsp=typedAt(["artifacts","sidecar","spans"]),offBad=[];
+  (Array.isArray(side.spans)?side.spans:[]).forEach(function(s,i){var t=Array.isArray(tsp)?tsp[i]:undefined;
+    if(s&&typeof s==="object"&&!Array.isArray(s)&&!(t&&typeof t==="object"&&intLit(t.start)&&intLit(t.end)))offBad.push(i);});
+  chk("L4",offBad.length===0,"the sidecar's span offsets are integers as written","span(s) "+JSON.stringify(offBad)+" carry an offset that is not an integer");
   try{chk("L4",sha256(renderSidecar(side))===sha256(resBytes),"the sidecar renders to the RESULT bytes byte for byte","it renders other bytes");}catch(e){links.L4.bad.push("the sidecar could not be rendered — "+e.message);}
   (side.spans||[]).forEach(function(s){var r=String(s.receipt||"");if(r.slice(0,5)==="path:"){var target=r.slice(5).split("#")[0];chk("L4",target in entries,"span target "+target+" is in the snapshot","no snapshot entry; the span could only be UNRESOLVED");}});
   var body={};Object.keys(srec).forEach(function(k){if(["digest","timestamp","coverage","coverage_sha256"].indexOf(k)<0)body[k]=srec[k];});
@@ -1875,8 +1989,10 @@ if(resBytes&&side&&srec){var doc=srec.document||{};
   (srec.spans||[]).forEach(function(s){var r=String(s.receipt||"");if(r.slice(0,5)==="path:"&&s.verdict!=="UNRESOLVED"){var target=r.slice(5).split("#")[0],e=entries[target];
     chk("L4",!!e&&e.sha256===s.resolved_sha256,"span @"+s.at+" resolved_sha256 is the snapshot entry's for "+target,"the receipt resolved other bytes");}});
   try{var swCore=swornCoreHere(side,snapTree,snap.commit),swWant=shaText(jcs(portableCore(srec)));
-    chk("L4",SW.api.coreDigest(swCore)===swWant,"the sworn core re-derives here over the carried snapshot: "+swCore.document_verdict+" "+JSON.stringify(swCore.counts)+" (every span value read against the leaf it names by the inlined sworn_verify.js)",
-        "the live core differs (live "+swCore.document_verdict+" "+JSON.stringify(swCore.counts)+" vs carried "+srec.document_verdict+" "+JSON.stringify(srec.counts)+")");}
+    chk("L4",SW.api.coreDigest(swCore)===swWant,"the sworn core re-derives here over the carried snapshot: "+swCore.document_verdict+" "+JSON.stringify(swCore.counts)+" (each span adjudicated again by the inlined sworn_verify.js)",
+        "the live core differs (live "+swCore.document_verdict+" "+JSON.stringify(swCore.counts)+" vs carried "+srec.document_verdict+" "+JSON.stringify(srec.counts)+")");
+    var heldWhy=allHeldProblem(swCore);
+    chk("L4",heldWhy===null,"every sworn span reads HELD against the leaf it names ("+(swCore.counts.HELD||0)+" of "+swCore.sworn_total+")",heldWhy||"");}
   catch(e){links.L4.bad.push("the sworn core could not be re-derived here — "+e.message);}
   links.L4.ok.push("not here: whether the sworn build the receipt names is the installed one (layer 2 prints INSTRUMENT SKEW)");}
 else{if(!side)links.L4.bad.push("no sidecar is carried");if(!srec)links.L4.bad.push("no sworn receipt is carried");}

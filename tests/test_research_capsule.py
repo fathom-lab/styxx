@@ -10,7 +10,8 @@ mutation flips exactly the link that owns the bytes, and a re-built CONSISTENT c
 link made false flips exactly that link (the hash-blind verifier the red team named, F1, would
 pass the digest battery and fail this one). Controls that must NOT fire sit beside them. The
 page's own script (layer 1, run under node) is held to the installed verifier (layer 2) link by
-link on the clean capsule and on every member of both batteries, the sworn span values included.
+link on the clean capsule and on every member of both batteries, the sworn span values included,
+and on fields whose JSON type is not the one the instrument reads.
 """
 from __future__ import annotations
 
@@ -389,10 +390,23 @@ def test_semantic_L3_a_verdict_from_another_row_of_the_table_fails_only_L3(tmp_p
     assert any("EFFECT_HOLDS" in p and "EFFECT_ABSENT" in p for p in l3["problems"])
 
 
-def test_semantic_L3_a_metric_that_crosses_a_bar_while_the_gates_map_stays_fails_only_L3(tmp_path):
+def _result_gap_010(receipt_path: str, receipt: bytes) -> bytes:
+    """The RESULT swears the gap the receipt below records (0.10), so its spans hold and only the
+    re-score sees the crossed bar. Until review 2 this member swore 0.3122 against a 0.10 leaf
+    and was an honest SWORN-FAILED at L4 too, which L4 then read HOLDS."""
+    return _result_bytes(receipt_path).replace(b"The gap was 0.3122.", b"The gap was 0.10.")
+
+
+def _inputs_metric_across_a_bar() -> dict:
     receipt = _receipt_bytes({"gap": 0.10, "dev": 0.0048}, verdict="EFFECT_HOLDS", gates={"G_A": True, "G_B": True})
-    rep = verify(_write_consistent(tmp_path, _inputs(receipt_bytes=receipt)))
-    assert _fails(rep) == {"L3"}
+    inp = _inputs(receipt_bytes=receipt, result_fn=_result_gap_010)
+    assert inp["sworn_receipt"]["document_verdict"] == "SWORN-HELD"
+    return inp
+
+
+def test_semantic_L3_a_metric_that_crosses_a_bar_while_the_gates_map_stays_fails_only_L3(tmp_path):
+    rep = verify(_write_consistent(tmp_path, _inputs_metric_across_a_bar()))
+    assert _fails(rep) == {"L3"}, [(l["id"], l["problems"]) for l in rep["links"]]
 
 
 def _redigest(rec: dict) -> dict:
@@ -441,6 +455,70 @@ def _inputs_snapshot_swapped() -> dict:
     return inp
 
 
+def _result_failed_honestly(receipt_path: str, receipt: bytes) -> bytes:
+    """The RESULT types 0.9122 where the leaf holds 0.3122, and its own sworn receipt says so
+    honestly: SWORN-FAILED, re-derivable, the charon line agreeing."""
+    return _result_bytes(receipt_path).replace(b"The gap was 0.3122.", b"The gap was 0.9122.")
+
+
+def _result_rn_unresolved(receipt_path: str, receipt: bytes) -> bytes:
+    """A second span names r1 and no manifest carries it: UNRESOLVED (manifest_absent), which the
+    sworn document rule still reads SWORN-HELD, and no leaf is read for 0.9999."""
+    return (b"# RESULT\n\n" + f'<sworn r="path:{receipt_path}#/metrics/gap" k="numeric">The gap was '
+            f'0.3122.</sworn>\n'.encode("utf-8") + b'<sworn r="r1" k="numeric">The dev was 0.9999.</sworn>\n')
+
+
+def _result_prereg_unresolved(receipt_path: str, receipt: bytes) -> bytes:
+    """A prereg: span whose digest the snapshot does not hold: UNRESOLVED (prereg_not_in_tree)."""
+    return (b"# RESULT\n\n" + f'<sworn r="path:{receipt_path}#/metrics/gap" k="numeric">The gap was '
+            f'0.3122.</sworn>\n<sworn r="prereg:{"e" * 64}" k="quote">The bar was frozen at '
+            f'`0.99`.</sworn>\n'.encode("utf-8"))
+
+
+def _result_unsworn(receipt_path: str, receipt: bytes) -> bytes:
+    return b"# RESULT\n\nThe gap was 0.9122. Nothing here is sworn.\n"
+
+
+NOT_ALL_HELD = [
+    ("an honest SWORN-FAILED receipt", _result_failed_honestly, "SWORN-FAILED", "FAILED 1"),
+    ("an UNRESOLVED rN span", _result_rn_unresolved, "SWORN-HELD", "UNRESOLVED 1"),
+    ("an UNRESOLVED prereg span", _result_prereg_unresolved, "SWORN-HELD", "UNRESOLVED 1"),
+]
+
+
+@pytest.mark.parametrize("name,result_fn,carried,count", NOT_ALL_HELD, ids=[x[0] for x in NOT_ALL_HELD])
+def test_semantic_L4_a_RESULT_whose_spans_do_not_all_hold_fails_only_L4_and_build_refuses_it(
+        tmp_path, name, result_fn, carried, count):
+    """Review 2's major: the carried sworn receipt is HONEST here (its core re-derives, its tally
+    is its spans'), and still a span did not hold against a leaf, or was read against none. L4
+    proves every number inside a sworn span equals the leaf it names, so it reads FAILS."""
+    inp = _inputs(result_fn=result_fn)
+    assert inp["sworn_receipt"]["document_verdict"] == carried
+    rep = verify(_write_consistent(tmp_path, inp))
+    assert _fails(rep) == {"L4"}, [(l["id"], l["problems"]) for l in rep["links"]]
+    assert rep["payload"]["core_sha256_ok"] and rep["payload"]["page_ok"]
+    l4 = next(l for l in rep["links"] if l["id"] == "L4")
+    assert [p for p in l4["problems"] if "sworn spans read HELD" in p and count in p], l4["problems"]
+    assert len(l4["problems"]) == 1, l4["problems"]
+    assert any(c.startswith("the sworn core re-derives over the snapshot") for c in l4["checked"])
+    inp.pop("_core")
+    with pytest.raises(SystemExit) as e:
+        build(inp, tmp_path / "no.research.html", created=TS)
+    msg = str(e.value.code)
+    assert "REFUSED inconsistent_chain" in msg and "L4" in msg and "sworn spans read HELD" in msg
+    assert not (tmp_path / "no.research.html").exists()
+
+
+def test_semantic_L4_a_RESULT_that_swears_nothing_fails_L4_by_name(tmp_path):
+    inp = _inputs(result_fn=_result_unsworn)
+    assert inp["sworn_receipt"]["document_verdict"] == "UNSWORN"
+    rep = verify(_write_consistent(tmp_path, inp))
+    l4 = next(l for l in rep["links"] if l["id"] == "L4")
+    assert any("the RESULT swears nothing (UNSWORN)" in p for p in l4["problems"]), l4["problems"]
+    # the charon line's receipt set is empty too: L5 names it from its side
+    assert _fails(rep) == {"L4", "L5"}, [(l["id"], l["problems"]) for l in rep["links"]]
+
+
 def test_semantic_L4_a_sworn_receipt_whose_verdict_was_edited_fails_only_L4(tmp_path):
     rep = verify(_write_consistent(tmp_path, _inputs_verdict_edited()))
     assert _fails(rep) == {"L4"}, [(l["id"], l["problems"]) for l in rep["links"]]
@@ -473,10 +551,23 @@ def test_the_tally_rule_reads_the_receipt_alone_and_holds_on_every_committed_swo
     assert "its own spans tally SWORN-HELD" in rc.receipt_tally_problem(edited)
     recount = dict(inp["sworn_receipt"], counts=dict(inp["sworn_receipt"]["counts"], HELD=1, FAILED=1))
     assert "not its spans' tally" in rc.receipt_tally_problem(recount)
-    committed = sorted((ROOT / "papers").rglob("*.sworn-receipt.json")) if (ROOT / "papers").is_dir() else []
+    # every sworn receipt committed under papers/, chosen by its schema field and not its file name
+    # (the measurement dry run names its receipts *.receipt.json)
+    committed = []
+    marker = b"styxx.sworn.verdict-receipt/v"
+    for p in sorted((ROOT / "papers").rglob("*.json")) if (ROOT / "papers").is_dir() else []:
+        data = p.read_bytes()
+        if marker not in data:
+            continue
+        try:
+            obj = json.loads(data.decode("utf-8"))
+        except (ValueError, UnicodeDecodeError):
+            continue
+        if isinstance(obj, dict) and obj.get("schema") in sworn.RECEIPT_SCHEMAS:
+            committed.append((p, obj))
     if not committed:
         pytest.skip("no committed sworn receipt in this tree")
-    bad = [(p.name, rc.receipt_tally_problem(json.loads(p.read_text(encoding="utf-8")))) for p in committed]
+    bad =[(p.name, rc.receipt_tally_problem(obj)) for p, obj in committed]
     assert [b for b in bad if b[1]] == []
 
 
@@ -553,14 +644,20 @@ SEMANTIC = [
         tmp, _inputs(receipt_bytes=_receipt_bytes({"gap": 0.3122, "dev": 0.0048}, smoke=True)), name=n)),
     ("L3 another row's verdict", {"L3"}, lambda tmp, n: _write_consistent(
         tmp, _inputs(receipt_bytes=_receipt_bytes({"gap": 0.3122, "dev": 0.0048}, verdict="EFFECT_ABSENT")), name=n)),
-    ("L3 a metric across a bar", {"L3"}, lambda tmp, n: _write_consistent(
-        tmp, _inputs(receipt_bytes=_receipt_bytes({"gap": 0.10, "dev": 0.0048}, verdict="EFFECT_HOLDS",
-                                                  gates={"G_A": True, "G_B": True})), name=n)),
+    ("L3 a metric across a bar", {"L3"}, lambda tmp, n: _write_consistent(tmp, _inputs_metric_across_a_bar(), name=n)),
     ("L4 an edited sworn verdict", {"L4"}, lambda tmp, n: _write_consistent(tmp, _inputs_verdict_edited(), name=n)),
     ("L4 a span value the receipt does not hold", {"L4"}, lambda tmp, n: _write_consistent(
         tmp, _inputs_repointed(b"The gap was 0.3122.", b"The gap was 0.9122."), name=n)),
     ("L4 a snapshot entry that is another receipt", {"L4", "L5"},
      lambda tmp, n: _write_consistent(tmp, _inputs_snapshot_swapped(), name=n)),
+    ("L4 an honest SWORN-FAILED receipt", {"L4"},
+     lambda tmp, n: _write_consistent(tmp, _inputs(result_fn=_result_failed_honestly), name=n)),
+    ("L4 an UNRESOLVED rN span", {"L4"},
+     lambda tmp, n: _write_consistent(tmp, _inputs(result_fn=_result_rn_unresolved), name=n)),
+    ("L4 an UNRESOLVED prereg span", {"L4"},
+     lambda tmp, n: _write_consistent(tmp, _inputs(result_fn=_result_prereg_unresolved), name=n)),
+    ("L4 a RESULT that swears nothing", {"L4", "L5"},
+     lambda tmp, n: _write_consistent(tmp, _inputs(result_fn=_result_unsworn), name=n)),
     ("L5 a line about another document", {"L5"},
      lambda tmp, n: _write_consistent(tmp, _inputs_line_about_another_document(), name=n)),
     ("L5 a receipt set without the run's receipt", {"L5"},
@@ -757,6 +854,37 @@ def test_the_disclosure_scan_reads_decoded_strings_not_json_escapes():
         return {"artifacts": {"receipts": [{"name": "r.json", "b64": base64.b64encode(data).decode()}]}}
     assert rc.disclosure_hits(art(ok)) == []
     assert any(h.startswith("artifacts/receipts[0]/r.json: a drive-letter path") for h in rc.disclosure_hits(art(leak)))
+
+
+def test_the_disclosure_scan_reads_every_value_of_a_repeated_key(minted):
+    """json.loads keeps a repeated key's last value; the scan reads every pair, in a carried JSON
+    artifact and in the page's own payload, so a leak or a word behind a duplicate is not hidden."""
+    bs = "\\"
+    leak = json.dumps("C:" + bs + "Users" + bs + "someone")
+    dup = ('{"note": ' + leak + ', "note": "ok"}').encode("utf-8")
+    assert json.loads(dup) == {"note": "ok"}
+    art = {"artifacts": {"receipts": [{"name": "r.json", "b64": base64.b64encode(dup).decode()}]}}
+    assert any(h.startswith("artifacts/receipts[0]/r.json: a drive-letter path") for h in rc.disclosure_hits(art))
+    # a repeated name or b64 key: every body is decoded and scanned
+    two = {"artifacts": {"runners": [{"name": "a.py", "b64": base64.b64encode(b"x").decode()}]}}
+    assert json.dumps(two).endswith('"}]}}')
+    page = (rc._BEGIN + json.dumps(two)[:-4] + ', "b64": "' + base64.b64encode(b"/home/someone/x").decode()
+            + '"}]}}' + rc._END)
+    assert any(h.startswith("artifacts/runners[0]/a.py: a home directory path") for h in rc.disclosure_hits(two, page))
+    # the payload read from the page: a duplicate inside stated hides neither a path nor a word
+    html = minted.read_text(encoding="utf-8")
+    m = PAYLOAD_RE.search(html)
+    body = m.group(1)
+    assert body.count('"stated": {') == 1
+    forged = body.replace('"stated": {', '"stated": {"note": ' + leak + ', "note": "ok", "word": "the '
+                          + _ORD + ' seed", "word": "a seed", ', 1)
+    payload = json.loads(forged)
+    assert payload["stated"]["note"] == "ok" and payload["stated"]["word"] == "a seed"
+    page = html[:m.start(1)] + forged + html[m.end(1):]
+    hits = rc.disclosure_hits(payload, page)
+    assert any(h.startswith("the payload: a drive-letter path") for h in hits), hits
+    assert any(h.startswith("the payload: a word the lab never prints (entry 8 of 8") for h in hits), hits
+    assert rc.disclosure_hits(payload) == []                      # the parsed payload alone hides both
 
 
 # -------------------------------------------------------------------------- the pure re-score
@@ -1112,8 +1240,9 @@ def test_layer_1_agrees_with_layer_2_on_the_slot_neither_catches_offline(minted,
 
 @pytest.mark.parametrize("name,links,make", SEMANTIC, ids=[s[0] for s in SEMANTIC])
 def test_layer_1_agrees_with_layer_2_on_every_semantic_mutation(tmp_path, name, links, make):
-    """Every member of the semantic battery, the three L4 members included: the browser reads each
-    link as the installed layer does, and never prints the consistent summary over a false link."""
+    """Every member of the semantic battery, each L4 member included (a lying receipt, an honest
+    SWORN-FAILED one, UNRESOLVED spans, a RESULT that swears nothing): the browser reads each link
+    as the installed layer does, and never prints the consistent summary over a false link."""
     cap = make(tmp_path, "s.research.html")
     l1, rep = _layer1(cap), verify(cap)
     assert _fails(rep) == links, (name, [(l["id"], l["problems"]) for l in rep["links"]])
@@ -1123,6 +1252,10 @@ def test_layer_1_agrees_with_layer_2_on_every_semantic_mutation(tmp_path, name, 
         assert "live SWORN-FAILED" in l1["links"]["L4"]["checked"], l1["links"]["L4"]
     if name == "L4 an edited sworn verdict":
         assert "its own spans tally SWORN-HELD" in l1["links"]["L4"]["checked"], l1["links"]["L4"]
+    if name in ("L4 an honest SWORN-FAILED receipt", "L4 an UNRESOLVED rN span", "L4 an UNRESOLVED prereg span"):
+        assert "sworn spans read HELD" in l1["links"]["L4"]["checked"], l1["links"]["L4"]
+    if name == "L4 a RESULT that swears nothing":
+        assert "the RESULT swears nothing (UNSWORN)" in l1["links"]["L4"]["checked"], l1["links"]["L4"]
 
 
 def test_layer_1_re_derives_every_span_kind_over_the_snapshot(tmp_path):
@@ -1152,6 +1285,66 @@ def test_layer_1_and_layer_2_resolve_alike_when_the_sidecar_commit_is_not_the_sn
     l1, rep = _layer1(cap), verify(cap)
     assert "L4" in _fails(rep)
     assert all(l1["links"][l["id"]]["offline"] == l["offline"] for l in rep["links"])
+
+
+def _span0(p: dict) -> dict:
+    return p["artifacts"]["sidecar"]["spans"][0]
+
+
+def _entry0(p: dict) -> dict:
+    return next(iter(p["artifacts"]["snapshot"]["entries"].values()))
+
+
+# a field whose JSON type is not the one the instrument reads: JSON.parse writes 102.0 as 102, so the
+# page reads these through a typed parse of its payload that keeps a float literal apart
+TYPE_CONFUSED = [
+    ("a span start written as a float", lambda p: _span0(p).__setitem__("start", float(_span0(p)["start"]))),
+    ("a span end written as a float", lambda p: _span0(p).__setitem__("end", float(_span0(p)["end"]))),
+    ("a snapshot size written as a float", lambda p: _entry0(p).__setitem__("size", float(_entry0(p)["size"]))),
+    ("a snapshot size written as a string", lambda p: _entry0(p).__setitem__("size", str(_entry0(p)["size"]))),
+    ("a snapshot size written as a list", lambda p: _entry0(p).__setitem__("size", [_entry0(p)["size"]])),
+    ("a snapshot size that is not the byte count", lambda p: _entry0(p).__setitem__("size", _entry0(p)["size"] - 1)),
+]
+
+
+@pytest.mark.parametrize("name,mutate", TYPE_CONFUSED, ids=[x[0] for x in TYPE_CONFUSED])
+def test_a_type_confused_field_fails_L4_alone(tmp_path, name, mutate):
+    cap = _write_consistent(tmp_path, _inputs(), mutate=mutate, name="t.research.html")
+    rep = verify(cap)
+    assert _fails(rep) == {"L4"}, (name, [(l["id"], l["problems"]) for l in rep["links"]])
+    assert rep["payload"]["core_sha256_ok"] and rep["payload"]["page_ok"]
+    l4 = next(l for l in rep["links"] if l["id"] == "L4")
+    assert not any("could not be read" in p for p in l4["problems"]), l4["problems"]   # named, not a TypeError
+
+
+@pytest.mark.parametrize("name,mutate", TYPE_CONFUSED, ids=[x[0] for x in TYPE_CONFUSED])
+def test_layer_1_agrees_with_layer_2_on_a_type_confused_field(tmp_path, name, mutate):
+    cap = _write_consistent(tmp_path, _inputs(), mutate=mutate, name="t.research.html")
+    l1, rep = _layer1(cap), verify(cap)
+    _agree(l1, rep, name)
+    assert l1["links"]["L4"]["offline"] == FAILS
+    assert l1["summary"].startswith(SUMMARY_FAILS) and l1["summary_class"] == "summary bad", (name, l1["summary"])
+
+
+def test_an_exponent_literal_offset_is_a_float_in_both_layers(minted, tmp_path):
+    """Written by hand into the page: ``102e0`` parses to the same number in both languages and
+    leaves the payload digest unchanged, and it is a float to Python's json, so neither layer
+    reads it as an offset."""
+    html = minted.read_text(encoding="utf-8")
+    m = PAYLOAD_RE.search(html)
+    body = m.group(1)
+    at = body.index('"sidecar": {')
+    s = body.index('"start": ', at) + len('"start": ')
+    e = s + len(re.match(r"\d+", body[s:]).group(0))
+    cap = tmp_path / "e.research.html"
+    cap.write_bytes((html[:m.start(1)] + body[:e] + "e0" + body[e:] + html[m.end(1):]).encode("utf-8"))
+    rep = verify(cap)
+    assert rep["payload"]["core_sha256_ok"] is True and _fails(rep) == {"L4"}
+    assert any("carry an offset that is not an integer" in p
+               for p in next(l for l in rep["links"] if l["id"] == "L4")["problems"])
+    l1 = _layer1(cap)
+    _agree(l1, rep, "exponent")
+    assert l1["summary"].startswith(SUMMARY_FAILS) and "core_sha256" not in l1["summary"]
 
 
 def test_the_page_before_its_script_runs_claims_nothing(minted):
