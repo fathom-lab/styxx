@@ -26,17 +26,19 @@ local snapshot with `local_files_only=True` and `HF_HUB_OFFLINE=1`; no model was
 - The plan's sentences, as the receipt builds them: "At D0, under v3's argmax readout in fp16, 2 of 8 screened base
   models could perform the compare task and 7 of 8 the recall task (C_abl above 0.16 in 0 of the 2 compare passes and
   0 of the 7 recall passes); n = 48 items per family per model, a pilot-class screen that licenses nothing." The
-  instruct group's: 3 of 5 screened instruct models, given raw text without a chat template, could perform the compare
-  task and 5 of 5 the recall task, with no C_abl flag. By family: base decay SSM 2 screened, 0 compare, 1 recall; base
-  attention 6 screened, 2 compare, 6 recall; instruct attention 5 screened, 3 compare, 5 recall.
+  instruct group's: "At D0, under v3's argmax readout in fp16, 3 of 5 screened instruct models, given raw text without a
+  chat template, could perform the compare task and 5 of 5 the recall task (C_abl above 0.16 in 0 of the 3 compare
+  passes and 0 of the 5 recall passes); n = 48 items per family per model, a pilot-class screen that licenses nothing."
+  By family: base decay SSM 2 screened, 0 compare, 1 recall; base attention 6 screened, 2 compare, 6 recall; instruct
+  attention 5 screened, 3 compare, 5 recall.
 - An observation at n = 48, not a ranking and not a causal claim: the five compare passes are the four checkpoints
   named 3B (`meta-llama/Llama-3.2-3B`, `Qwen/Qwen2.5-3B` and their instruct twins) and `google/gemma-2-2b-it`; no other
   checkpoint named below 3B passes compare. Two of the five sit one item over the bar: `Qwen/Qwen2.5-3B` and
   `google/gemma-2-2b-it` read +0.406 (29 of 48 correct; 28 would read +0.375 and fail). Size is confounded with data,
   recipe, tokenizer and tuning, as the family label is, and nothing here attributes a pass or a fail to it.
 - What it is for: readiness for a ~3B bridge. If the operator commissions one, under its own preregistration, the
-  screen says which cached checkpoints performed v3's two tasks at D0 under v3's format; it proposes none, and
-  amendment 17.3's format line for v3 (NOT_STARTED, final) is untouched.
+  screen says which cached checkpoints performed v3's two tasks at D0 under v3's format, in fp16; it proposes none,
+  and amendment 17.3's format line for v3 (NOT_STARTED, final) is untouched.
 - What it cannot show (the plan's section 10): nothing about distance; no causal claim; nothing about deployed honesty
   or any capability beyond these two tasks under this format; not v3's verdict, and M1's and T's rows are a
   re-measurement on new items beside the pilot2 receipt; a fail reads "did not perform under v3's format, in fp16";
