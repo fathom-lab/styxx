@@ -64,6 +64,11 @@ threshold-free curve are then "not recorded", the screen cannot pass (a constant
 ran must not admit a row to a family set), and the sheet says so. A flat `items` list of records
 (`family, distance, item, control` and the cell keys) is accepted in place of `per_item`.
 
+A receipt the reader cannot take is refused, never ended in a traceback: `config.D0`, the bootstrap's
+`n_resamples` and `seed`, and a `native_D` distance must be integers (`seed` non-negative), `bootstrap`
+and `seeds` must be objects, and anything else malformed is refused with the error it raised. `fit` and
+`sheet` exit 2 on a refusal.
+
 ### The bridge-v3 runner's receipt, read by arm
 
 `--arm M1` reads `per_item[arm][family][D][variant]` as the runner writes it from its amendment 17.2:
@@ -94,7 +99,7 @@ Models fitted together on one seed share their resamples (red team M9).
 |---|---|
 | `cells[family][D].acc_norm` | `(acc − chance) / (1 − chance)` under the row's readout; a constant responder under exact balance is exactly 0 |
 | `cells[...].exact_balance`, `label_counts` | the answer counts per cell; a cell out of exact balance reads `BALANCE_BROKEN@family:D`, a D0 half `BALANCE_BROKEN@family:D0/screen` or `/denominator`; a screen half out of balance also fails the screen, and a denominator half out of balance is flagged only |
-| `cells[...].ci_lo, ci_hi` | 2.5th / 97.5th percentile of the paired item bootstrap (B = 2000, seed 20261011) |
+| `cells[...].ci_lo, ci_hi` | 2.5th / 97.5th percentile of the paired item bootstrap (B = 2000, seed 20261011); a resample count under 40 is refused, from a receipt or a call, because a 95% percentile interval needs one replicate expected in each 2.5% tail |
 | `cells[...].guard_ok`, `auroc`, `c_auc` | the readout's guard; the rank AUROC of the scores (log-odds against the label, or the one-versus-rest AUROC averaged over the three slots, the runner's statistic) and `c_auc = 2·AUROC − 1` |
 | `screen` | at D0: both normalised accuracies ≥ the bar (0.40), both guards passed, both cells in exact balance, read on one half of the D0 items (stratified by label so each half keeps exact balance); the horizon's denominator c(D0) is read on the other half (M4). The row prints `PASS@.40` / `FAIL@.40`; a bar other than 0.40 reads `NONSTANDARD_BAR@b`, and a bar outside (0, 1) is refused |
 | `horizon[family]` | `tau = frac · c(D0)` with `frac` 0.5 (`config.horizon_frac`, refused outside (0, 1)); the smallest D ≥ D0 at which the piecewise-linear interpolant of c in log2 D reaches tau. `bracket` is the grid pair the crossing sits in and is the measurement; `point` is the interpolated convention and prints second (m5). No grid value below tau: `CENSORED`, printed `> 1024 (none inside the tested range)`. c(D0) ≤ 0: `NOT_ESTIMABLE` |

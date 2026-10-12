@@ -168,7 +168,7 @@ def test_horizon_frac_must_lie_strictly_between_0_and_1(frac):
     # frac 1.5 used to put the crossing at k = 0 and read c[-1]: bracket (1024, 16)
     with pytest.raises(H.HorizonRefusal, match="horizon_frac"):
         H.crossing([0.9, 0.6, 0.3, 0.1], frac=frac)
-    rec = H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 2, n_resamples=20)
+    rec = H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 2, n_resamples=40)
     rec["config"]["horizon_frac"] = frac
     with pytest.raises(H.HorizonRefusal, match="horizon_frac"):
         H.load_receipt(rec)
@@ -236,11 +236,11 @@ def test_a_screen_fail_row_prints_no_horizon_no_ratio_and_no_dissociation(selfte
 
 
 def test_the_compare_readout_its_chance_and_its_guard_are_read_from_the_receipt(selftest_result):
-    arg = H.load_receipt(H.synthetic_receipt("a", H._planted_curve(128.0), RECALL_FLAT, 60, 3, n_resamples=20))
+    arg = H.load_receipt(H.synthetic_receipt("a", H._planted_curve(128.0), RECALL_FLAT, 60, 3, n_resamples=40))
     assert arg["config"]["readouts"] == {"compare": "argmax_largest", "recall": "argmax_code"}
     assert arg["config"]["chance"] == {"compare": pytest.approx(1 / 3), "recall": pytest.approx(1 / 3)}
     assert arg["config"]["readout_source"]["compare"] == "declared"
-    yn = H.load_receipt(H.synthetic_receipt("y", H._planted_curve(128.0), RECALL_FLAT, 60, 3, n_resamples=20,
+    yn = H.load_receipt(H.synthetic_receipt("y", H._planted_curve(128.0), RECALL_FLAT, 60, 3, n_resamples=40,
                                             readout="yes_no"))
     assert yn["config"]["chance"]["compare"] == 0.5 and yn["cells"]["compare"][16]["yes_rate"] is not None
     row = H.fit_model(arg)
@@ -248,7 +248,7 @@ def test_the_compare_readout_its_chance_and_its_guard_are_read_from_the_receipt(
     assert ("readout: compare argmax_largest (declared; chance 1/3; guard largest slot share <= 0.80) | "
             "recall argmax_code") in text
     # a declared chance that is not 1/k of the readout: the retired yes/no chance on an argmax receipt
-    bad = H.synthetic_receipt("b", H._planted_curve(128.0), RECALL_FLAT, 60, 3, n_resamples=20)
+    bad = H.synthetic_receipt("b", H._planted_curve(128.0), RECALL_FLAT, 60, 3, n_resamples=40)
     bad["config"]["chance"]["compare"] = 0.5
     with pytest.raises(H.HorizonRefusal, match="chance under exact balance"):
         H.load_receipt(bad)
@@ -257,7 +257,7 @@ def test_the_compare_readout_its_chance_and_its_guard_are_read_from_the_receipt(
     with pytest.raises(H.HorizonRefusal, match="not a readout this instrument scores"):
         H.load_receipt(bad)
     # undeclared: the keys decide, and the sheet says the readout was inferred
-    und = H.synthetic_receipt("u", H._planted_curve(128.0), RECALL_FLAT, 60, 3, n_resamples=20)
+    und = H.synthetic_receipt("u", H._planted_curve(128.0), RECALL_FLAT, 60, 3, n_resamples=40)
     for k in ("readout", "chance"):
         und["config"].pop(k)
     got = H.load_receipt(und)
@@ -410,7 +410,7 @@ def test_the_replicate_auroc_is_the_auroc_of_each_resample():
 @pytest.mark.parametrize("readout", ["argmax_largest", "yes_no"])
 def test_the_replicate_c_auc_on_the_identity_resample_is_the_cell_s_own(readout):
     # the replicate path (vectorised, every slot) must agree with the point path on the unresampled items
-    rec = H.load_receipt(H.synthetic_receipt("m", [0.6, 0.5, 0.4, 0.3], RECALL_FLAT, 120, 12, n_resamples=20,
+    rec = H.load_receipt(H.synthetic_receipt("m", [0.6, 0.5, 0.4, 0.3], RECALL_FLAT, 120, 12, n_resamples=40,
                                              readout=readout, sample=True))
     for fam in H.FAMILIES:
         cell = rec["cells"][fam][64]
@@ -723,21 +723,94 @@ def test_the_flat_item_list_and_the_cell_block_give_the_same_row():
     (lambda r: r["config"].update(readout=None, readouts={"compare": "argmax_code"}), "not one the instrument scores"),
 ])
 def test_malformed_receipts_are_refused_by_name(edit, match):
-    rec = H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 23, n_resamples=20)
+    rec = H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 23, n_resamples=40)
     edit(rec)
     with pytest.raises(H.HorizonRefusal, match=match):
         H.load_receipt(rec)
 
 
+@pytest.mark.parametrize("edit,match", [
+    (lambda c: c.update(D0="x"), r"config\.D0 must be an integer"),
+    (lambda c: c.update(D0=16.5), r"config\.D0 must be an integer"),
+    (lambda c: c.update(seeds=[1]), r"config\.seeds must map"),
+    (lambda c: c.update(bootstrap=5), r"config\.bootstrap must be a JSON object"),
+    (lambda c: c["bootstrap"].update(n_resamples="many"), r"config\.bootstrap\.n_resamples must be an integer"),
+    (lambda c: c["bootstrap"].update(n_resamples=-5), r"n_resamples is -5; .* at least 40"),
+    (lambda c: c["bootstrap"].update(n_resamples=0), r"n_resamples is 0; .* at least 40"),
+    (lambda c: c["bootstrap"].update(n_resamples=1), r"n_resamples is 1; .* at least 40"),
+    (lambda c: c["bootstrap"].update(n_resamples=True), r"n_resamples must be an integer"),
+    (lambda c: c["bootstrap"].update(seed=-1), r"config\.bootstrap\.seed must be a non-negative integer"),
+    (lambda c: c["bootstrap"].update(seed="s"), r"config\.bootstrap\.seed must be an integer"),
+    (lambda c: (c["bootstrap"].pop("seed"), c.update(seeds={"bootstrap": [3]})), r"config\.seeds\.bootstrap must be"),
+    (lambda c: c.update(native_D={"x": {"mean": 1}}), r"config\.native_D distance must be an integer"),
+])
+def test_a_malformed_config_field_is_refused_by_name_never_in_a_traceback(edit, match, tmp_path, capsys):
+    # review 3: these ended in ValueError / AttributeError tracebacks, and 0 or 1 resamples printed an
+    # "interval" (none, or a point that excluded its own estimate)
+    rec = H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 23, n_resamples=40)
+    edit(rec["config"])
+    with pytest.raises(H.HorizonRefusal, match=match):
+        H.load_receipt(rec)
+    p = tmp_path / "horizon_bad.json"
+    p.write_text(json.dumps(rec), encoding="utf-8")
+    assert H.main(["fit", "--receipt", str(p)]) == 2
+    err = capsys.readouterr().err
+    assert err.startswith("REFUSED: ") and "Traceback" not in err
+
+
+def test_the_resample_count_and_the_seed_of_a_call_are_checked_as_a_receipt_s_are(tmp_path, capsys):
+    rec = H.load_receipt(H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 23, n_resamples=40))
+    for b in (0, 1, 39, -5):
+        with pytest.raises(H.HorizonRefusal, match="at least 40"):
+            H.fit_model(rec, n_resamples=b)
+        with pytest.raises(H.HorizonRefusal, match="at least 40"):
+            H.fit_zoo([rec], n_resamples=b)
+    with pytest.raises(H.HorizonRefusal, match="at least 40"):
+        H.fit_model(rec, idx=np.zeros((1, 60), dtype=int))
+    with pytest.raises(H.HorizonRefusal, match="non-negative"):
+        H.fit_model(rec, seed=-1)
+    with pytest.raises(H.HorizonRefusal, match="at least 40"):
+        H.selftest(n_resamples=1)
+    assert H.fit_model(rec, n_resamples=40)["n_resamples"] == 40
+    p = tmp_path / "horizon_ok.json"
+    p.write_text(json.dumps(H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 23, n_resamples=40)),
+                 encoding="utf-8")
+    for argv in (["fit", "--receipt", str(p), "--n-resamples", "1"], ["fit", "--receipt", str(p), "--seed", "-1"],
+                 ["selftest", "--n-resamples", "0"]):
+        assert H.main(argv) == 2
+        err = capsys.readouterr().err
+        assert err.startswith("REFUSED: ") and "Traceback" not in err
+
+
+@pytest.mark.parametrize("edit,match", [
+    (lambda r: r.update(controls=[1, 2]), "controls must map"),
+    (lambda r: r["per_item"]["compare"]["16"].update(scores="abc"), "scores"),
+    (lambda r: r["per_item"]["compare"]["64"].update(margin=[{"x": 1}] * 60), "a malformed receipt|margin"),
+])
+def test_anything_else_malformed_in_a_receipt_is_still_a_refusal(edit, match):
+    rec = H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 23, n_resamples=40)
+    edit(rec)
+    with pytest.raises(H.HorizonRefusal, match=match):
+        H.load_receipt(rec)
+    raw = _v3_receipt(n=48, distances=(16, 64))
+    raw["config"]["checkpoints"] = ["M1"]
+    with pytest.raises(H.HorizonRefusal, match="config.checkpoints must map"):
+        H.load_receipt(raw, arm="M1")
+    raw = _v3_receipt(n=48, distances=(16, 64))
+    raw["controls_per_item"] = {"M1": [1]}
+    with pytest.raises(H.HorizonRefusal, match="controls_per_item must map"):
+        H.load_receipt(raw, arm="M1")
+
+
 def test_a_yes_no_cell_whose_predictions_disagree_with_its_log_odds_is_refused():
-    rec = H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 23, n_resamples=20, readout="yes_no")
+    rec = H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 23, n_resamples=40, readout="yes_no")
     rec["per_item"]["compare"]["16"]["prediction"] = [not p for p in rec["per_item"]["compare"]["16"]["prediction"]]
     with pytest.raises(H.HorizonRefusal, match="disagree with the sign"):
         H.load_receipt(rec)
 
 
 def test_cells_of_unequal_size_are_refused_under_item_pairing_and_accepted_when_declared_independent():
-    rec = H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 24, n_resamples=20)
+    rec = H.synthetic_receipt("m", H._planted_curve(128.0), RECALL_FLAT, 60, 24, n_resamples=40)
     rng = np.random.default_rng(0)
     rec["per_item"]["compare"]["64"] = H.synthetic_cell("compare", 0.6, 42, rng)
     with pytest.raises(H.HorizonRefusal, match="differ in item count"):
@@ -747,7 +820,7 @@ def test_cells_of_unequal_size_are_refused_under_item_pairing_and_accepted_when_
         H.fit_model(H.load_receipt(rec))
     rec["config"]["pairing"] = "independent"
     row = H.fit_model(H.load_receipt(rec))
-    assert row["pairing"] == "independent" and row["horizon"]["compare"]["n_resamples"] == 20
+    assert row["pairing"] == "independent" and row["horizon"]["compare"]["n_resamples"] == 40
 
 
 def test_rows_are_json_without_nan(tmp_path):

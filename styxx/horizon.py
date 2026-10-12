@@ -142,6 +142,7 @@ GUARD_SLOT_MAX = 0.80
 ABLATED_BAR = 0.16
 FRAC = 0.5
 N_BOOT = 2000
+MIN_RESAMPLES = 40            # a 95% percentile interval: one replicate expected in each 2.5% tail
 SEED_BOOT = 20261011
 LOGODDS_TIE = 1e-3            # |log-odds| or |margin| below this is a near tie (the runner's MARGIN_TIE)
 NEAR_FORMAT_DECAY = 0.5       # c_near(D1) / c(D0) below this: the format itself decays with distance
@@ -509,6 +510,38 @@ def _log2_grid(grid: Sequence[int]) -> np.ndarray:
     return np.log2(g)
 
 
+def _as_int(v, what: str) -> int:
+    """An integer field of a receipt or a call: an int, an integral float or an integer string, else refused."""
+    if not isinstance(v, bool):
+        if isinstance(v, (int, np.integer)):
+            return int(v)
+        if isinstance(v, (float, np.floating)) and math.isfinite(float(v)) and float(v).is_integer():
+            return int(v)
+        if isinstance(v, str):
+            try:
+                return int(v.strip())
+            except ValueError:
+                pass
+    raise HorizonRefusal(f"{what} must be an integer, got {v!r}")
+
+
+def _check_resamples(b, what: str = "n_resamples") -> int:
+    """The bootstrap's resample count: an integer of at least MIN_RESAMPLES. Fewer cannot hold a 95%
+    percentile interval (one resample prints a point as its interval; none prints no interval at all)."""
+    b = _as_int(b, what)
+    if b < MIN_RESAMPLES:
+        raise HorizonRefusal(f"{what} is {b}; a 95% percentile interval needs at least {MIN_RESAMPLES} resamples "
+                             f"(one replicate expected in each 2.5% tail)")
+    return b
+
+
+def _check_seed(v, what: str = "seed") -> int:
+    v = _as_int(v, what)
+    if v < 0:
+        raise HorizonRefusal(f"{what} must be a non-negative integer, got {v}")
+    return v
+
+
 def _check_frac(frac) -> float:
     try:
         f = float(frac)
@@ -795,7 +828,7 @@ def _config_from(raw: dict, where: str, min_grid: int = 2) -> dict:
         _log2_grid(grid)
     elif not grid or grid[0] <= 0:
         raise HorizonRefusal(f"{where}: config.distances must be positive integers, got {grid}")
-    d0 = int(cfg.get("D0", grid[0]))
+    d0 = _as_int(cfg.get("D0", grid[0]), f"{where}: config.D0")
     if d0 != grid[0]:
         raise HorizonRefusal(f"{where}: D0 {d0} is not the smallest grid distance {grid[0]}")
     try:
@@ -854,19 +887,33 @@ def _config_from(raw: dict, where: str, min_grid: int = 2) -> dict:
         pairing, p_src = "items", "assumed, undeclared"
     if pairing not in PAIRINGS:
         raise HorizonRefusal(f"{where}: config.pairing must be one of {PAIRINGS}")
-    boot = cfg.get("bootstrap") or {}
-    seeds = cfg.get("seeds") or {}
+    boot = cfg.get("bootstrap")
+    boot = {} if boot is None else boot
+    if not isinstance(boot, dict):
+        raise HorizonRefusal(f"{where}: config.bootstrap must be a JSON object ({{n_resamples, seed}}), "
+                             f"got {type(boot).__name__}")
+    seeds = cfg.get("seeds")
+    seeds = {} if seeds is None else seeds
+    if not isinstance(seeds, dict):
+        raise HorizonRefusal(f"{where}: config.seeds must map a name to a seed, got {type(seeds).__name__}")
+    if "n_resamples" in boot:
+        n_res = _check_resamples(boot["n_resamples"], f"{where}: config.bootstrap.n_resamples")
+    else:
+        n_res = _check_resamples(cfg.get("n_resamples", N_BOOT), f"{where}: config.n_resamples")
+    if "seed" in boot:
+        seed = _check_seed(boot["seed"], f"{where}: config.bootstrap.seed")
+    else:
+        seed = _check_seed(seeds.get("bootstrap", SEED_BOOT), f"{where}: config.seeds.bootstrap")
     native = cfg.get("native_D")
     if native is not None:
         if not isinstance(native, dict):
             raise HorizonRefusal(f"{where}: config.native_D must map distance -> {{min, mean, max}}")
-        native = {int(k): v for k, v in native.items()}
+        native = {_as_int(k, f"{where}: a config.native_D distance"): v for k, v in native.items()}
     return {"grid": grid, "D0": d0, "screen_bar": bar, "frac": frac, "pairing": pairing,
             "pairing_source": p_src, "pairing_declared": p_src != "assumed, undeclared",
             "readouts_declared": declared, "chance_declared": chance_decl, "guard": gs,
             "d0_split": bool(cfg.get("d0_split", True)),
-            "n_resamples": int(boot.get("n_resamples", cfg.get("n_resamples", N_BOOT))),
-            "seed": int(boot.get("seed", seeds.get("bootstrap", SEED_BOOT))),
+            "n_resamples": n_res, "seed": seed,
             "native_D": native, "dtype": cfg.get("dtype"), "params": cfg.get("params"),
             "ctx": cfg.get("ctx", cfg.get("max_position_embeddings")),
             "ctx_is_training_length": bool(cfg.get("ctx_is_training_length", False)),
@@ -887,7 +934,18 @@ def load_receipt(path_or_dict, arm: Optional[str] = None, min_grid: int = 2) -> 
     ``per_item[arm][family][D]`` as the cell itself with ``controls_per_item[arm]``. A v3 receipt without
     ``per_item[arm]`` is refused with that sentence, not read as zeros. ``min_grid`` is the number of
     distances a receipt must carry; 2 for a horizon, 1 to read the cells of a D0-only pilot.
+
+    A receipt the reader cannot take is refused (:class:`HorizonRefusal`), never ended in a traceback: the
+    fields it checks are refused by name, and anything else malformed is refused with the error it raised.
     """
+    try:
+        return _load_receipt(path_or_dict, arm, min_grid)
+    except (TypeError, ValueError, AttributeError, KeyError, IndexError) as e:
+        where = str(path_or_dict) if isinstance(path_or_dict, (str, os.PathLike)) else "<dict>"
+        raise HorizonRefusal(f"{where}: a malformed receipt ({type(e).__name__}: {e})") from e
+
+
+def _load_receipt(path_or_dict, arm: Optional[str], min_grid: int) -> dict:
     if isinstance(path_or_dict, (str, os.PathLike)):
         p = str(path_or_dict)
         try:
@@ -919,10 +977,15 @@ def load_receipt(path_or_dict, arm: Optional[str] = None, min_grid: int = 2) -> 
                 f"interval, which this fitter does not do silently.")
         cfg = _config_from(raw, where, min_grid)
         cells, controls = _cells_from_block(per_item[arm], f"{where}.per_item[{arm}]", cfg)
-        ctrl_raw = (raw.get("controls_per_item") or {}).get(arm) or {}
+        cpi = raw.get("controls_per_item")
+        ctrl_raw = (cpi.get(arm) if isinstance(cpi, dict) else cpi) or {}
+        if not isinstance(ctrl_raw, dict):
+            raise HorizonRefusal(f"{where}: controls_per_item must map arm -> {{control: cells}}")
         for k, v in ctrl_raw.items():
             _merge_controls(controls, k, v, f"{where}.controls_per_item[{arm}].{k}", cfg)
         checkpoints = (raw.get("config") or {}).get("checkpoints") or {}
+        if not isinstance(checkpoints, dict):
+            raise HorizonRefusal(f"{where}: config.checkpoints must map arm -> model name")
         model = checkpoints.get(arm, arm)
         cfg["copied_from"] = cfg.get("copied_from") or f"v3 receipt arm {arm}"
         arch = raw.get("arch_family", {}).get(arm) if isinstance(raw.get("arch_family"), dict) else None
@@ -939,6 +1002,8 @@ def load_receipt(path_or_dict, arm: Optional[str] = None, min_grid: int = 2) -> 
         cfg = _config_from(raw, where, min_grid)
         if "per_item" in raw:
             cells, controls = _cells_from_block(raw["per_item"], f"{where}.per_item", cfg)
+            if not isinstance(raw.get("controls") or {}, dict):
+                raise HorizonRefusal(f"{where}: controls must map a control name -> {{family: {{D: cell}}}}")
             for k, v in (raw.get("controls") or {}).items():
                 _merge_controls(controls, k, v, f"{where}.controls.{k}", cfg)
         elif "items" in raw:
@@ -1115,8 +1180,8 @@ def fit_model(rec: dict, idx: Optional[np.ndarray] = None, n_resamples: Optional
     d0 = cfg["D0"]
     frac = cfg["frac"]
     chance = cfg["chance"]
-    B = int(n_resamples if n_resamples is not None else cfg["n_resamples"])
-    seed = int(seed if seed is not None else cfg["seed"])
+    B = _check_resamples(n_resamples if n_resamples is not None else cfg["n_resamples"])
+    seed = _check_seed(seed if seed is not None else cfg["seed"])
     cells = rec["cells"]
     pairing = cfg["pairing"]
     n_by = {(f, d): cells[f][d]["n"] for f in FAMILIES for d in grid}
@@ -1139,7 +1204,7 @@ def fit_model(rec: dict, idx: Optional[np.ndarray] = None, n_resamples: Optional
 
     if pairing == "items":
         shared = idx if idx is not None else _resample_matrix(n, B, seed)
-        B = int(shared.shape[0])
+        B = _check_resamples(shared.shape[0], "the shared index matrix's resample count")
 
         def cell_idx(fam: str, d: int, cell: dict) -> np.ndarray:
             return shared
@@ -1379,7 +1444,8 @@ def fit_zoo(recs: Sequence[dict], exclude: Sequence[str] = (), n_resamples: Opti
     names = [r["model"] for r in recs]
     if len(set(names)) != len(names):
         raise HorizonRefusal(f"fit_zoo: duplicate model names {sorted(n for n in names if names.count(n) > 1)}")
-    B = int(n_resamples if n_resamples is not None else max(r["config"]["n_resamples"] for r in recs))
+    B = _check_resamples(n_resamples if n_resamples is not None else max(r["config"]["n_resamples"] for r in recs))
+    seed = _check_seed(seed)
     pairings = {r["config"]["pairing"] for r in recs}
     sigs = {_n_signature(r) for r in recs}
     pairable = len(pairings) == 1 and next(iter(pairings)) in ("items", "distance") and len(sigs) == 1
@@ -1781,6 +1847,7 @@ def selftest(n: int = 2400, n_resamples: int = 400, seed: int = SEED_BOOT, cover
     those four values cross at about 203, so the plants here are built FROM the rule and the planted
     number and the fitter's model agree by construction.
     """
+    n_resamples = _check_resamples(n_resamples)
     checks: List[dict] = []
     n_cov, need_cov = _SELFTEST_COVERAGE
     if coverage_seeds is not None:
