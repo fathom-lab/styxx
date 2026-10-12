@@ -7,6 +7,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — charon's verifier names its runtime: verifier scheme `styxx.charon/verifier/v1`, module shas over LF bytes and the runtime inside the digest (identity phase 3)
+
+**Phase 3 of the design the operator approved on 2026-10-11**, after phases 0 to 2 (#207, #212, #217). It
+touches four files: `papers/charon/AMENDMENT_charon_verifier_names_its_runtime_2026_10_12.md` (new,
+committed alone, ahead of the code), `styxx/charon.py`, `tests/test_charon_instrument.py` (new) and this
+file. The charon spec is not edited. No committed capsule, receipt, conformance vector or charon line is
+touched, and no line is appended to the log.
+
+- **New lines carry the verifier scheme `styxx.charon/verifier/v1`.** A line's `verifier` is `scheme`,
+  `styxx_version`, `modules`, `runtime` and `digest`.
+  - Each module sha is over the file's bytes with CRLF read as LF. This extends E15 to module bytes:
+    `_module_pair` hashed raw bytes, so line seq 89 names `styxx.diffgate` by its CRLF rendering
+    (`405b7d42…`; the LF rendering of that blob is `4e6f6550…`).
+  - `runtime` is `styxx.instrument.runtime()` restricted to `implementation`, `version` and `unicode`, the
+    three fields the capsule reader compares.
+  - `digest` is sha256 over `JCS({"modules": …, "runtime": …})`. The scheme and the version string are on
+    the line, inside `entry_id`, and outside `digest`.
+  - No `sys.version` is written (the operator's O9), and no path.
+- **`capsule-diffgate` hashes three more modules**, after its five: `styxx.instrument`, `styxx.declare` and
+  `styxx.attestation`. The other kinds keep their module names and order.
+- **`verify` names what moved.** The statuses and the status rule are unchanged (`same_build` is digest
+  equality), so `styxx.stranger` and its tests need no edit.
+  - Each row gains `verifier_scheme` (`v1`, `legacy` or `unknown`), `verifier_moved`, `runtime_recorded`
+    and `runtime_now`. `verifier_moved` is `[]`, `["modules"]`, `["runtime"]`, `["modules", "runtime"]`,
+    `["legacy"]` or `["unattributed"]`, and null on a TAMPER row, which is not re-derived.
+  - The report gains `by_verifier_part` beside `by_status`. `verifier_builds_recorded` prefixes each sha of
+    a scheme-v1 line with `lf:`, so a raw sha and an LF sha are never counted as one build.
+  - The CLI prints a `verifier moved:` line, and `verifier=` on every row it prints.
+  - A verdict the interpreter or its Unicode database moved, under the same module bytes, now reads SKEW
+    `["runtime"]`, not DRIFT. DRIFT means the core moved under the same module bytes and the same runtime.
+    The report's note says so.
+- **Legacy lines.** Every line of the committed log is legacy: no scheme, raw-byte shas, no runtime, and a
+  digest over the module list alone. No fresh digest can equal one, so a legacy line never reads SAME_LINE
+  again (accepted, the design's risk 6), and never DRIFT. Re-derived on this tree, all 257 read
+  MOVED_VERIFIER `["legacy"]`. On the parent they read MOVED_VERIFIER already (SAME_LINE 0,
+  MOVED_VERIFIER 257).
+- **A verifier no writer wrote ends `verify` in a reading, never a traceback.** On the parent, `verify`
+  raised in three cases, chained line or not:
+  - a module pair whose name is not text raised `TypeError` (unhashable) in the build tally;
+  - a module pair whose sha is not text raised `TypeError`;
+  - a `digest` that is not text raised `TypeError` in the row's digest prefix.
+
+  A re-chained line with no `digest` raised `KeyError`. Now such a pair is not counted, a digest that is not
+  text prints as empty, and the line reads `legacy`, `unknown` or a moved part.
+- **Tests.** `tests/test_charon_instrument.py` (new) holds the design's list:
+  - a fresh line's verifier, including that a CRLF copy of a module hashes as its LF copy;
+  - the three added modules;
+  - every reading under a monkeypatched derive, runtime and module hash;
+  - a legacy-shaped line never reading SAME_LINE, even with the LF shas;
+  - lines seq 89 and 95 re-derived from the working tree, moving no compared key and reading
+    MOVED_VERIFIER `["legacy"]`;
+  - the 257 lines written before the amendment being legacy;
+  - the note and `by_verifier_part`;
+  - hostile verifiers, chained and not.
+
+  Eight mutations of `styxx/charon.py` were each caught by it: the raw module sha, a digest over the modules
+  alone, the set without the three modules, no legacy reading, no `lf:` prefix, the runtime not compared,
+  and both robustness guards removed. `tests/test_charon.py` and `tests/test_stranger.py` are not edited.
+
 ## [Unreleased] — a diffgate record names the build and runtime that wrote it: `build` and `runtime` after the eleven content keys (identity phase 2)
 
 **Phase 2 of the design the operator approved on 2026-10-11**, after phase 1 below. The operator waived
