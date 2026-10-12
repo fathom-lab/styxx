@@ -622,3 +622,66 @@ is a different instrument and a new preregistration (§17.1, last paragraph), no
 The eight gates, their metrics, ops and values; the outcome table; n = 600; D ∈ {16, 64, 256, 1024}; the arms; the
 item seed 20261011 and bootstrap seed; the budget rule; the discipline of §15; decision 6 (nothing posted). The
 preregistration remains unsealed and unsigned (PLAN §2); the defaults are what is built.
+
+### 17.3 Amendment, before any data (2026-10-11) — the seed-1012 pilot: NEITHER arm clears; the format line is NOT_STARTED, final; the behavioural route is closed by the operator's rule
+
+**No bar moved; nothing above §17 is edited.** This entry records the one pilot §17.2.4 pre-stated and applies its
+rule. Receipt `realmodel_bridge_v3_pilot2.json`, written by `run_realmodel_bridge_v3.py` at commit `21d05cb9`
+(`config.runner_sha256` `24e8c3ba…`), HEAD `315d1fb1` at run time, PREREG blob sha256 `f6dc759f…` (this document with
+§17.2, working copy identical to the blob, recorded in `config.git`). Console log kept beside the branch, not in the
+repository. Run 23:34–23:36 on 2026-10-11: 47 s of CPU asserts, 72 s of GPU scoring, 119 s in all — inside the 15
+GPU-minutes.
+
+**Items and asserts.** 48 items at D0 = 16, seed 1012, from the reserved pilot2 slice and code pools of §17.2.4: 140
+sentences used (one pool sentence skipped for containing a name), 50 test and 12 exemplar codes, 192 prompts (two
+families × two variants × 48), longest 225 tokens, identical ids for M1 and T on every prompt. Disjointness from the
+committed smoke and 1011-pilot receipts asserted by sha256 lists: none of this run's 140 sentence indices or hashes is
+among their 1,284, none of its 62 code hashes among their 144 (`redteam.disjoint_from_committed_receipts`), and every
+sentence drawn lies inside the pilot2 slice. Every balance count of §17.2.1 exact: 16/16/16 for the correct slot, the
+queried slot and both last-exemplar slots; 8/16/16/8 for which exemplar is last; 16 for each coincidence; 8 per
+(correct, overwrite) pair; the queried-is-largest count 16. Names single tokens (alpha 9765, gamma 17356, delta 18687;
+sigma 40009, theta 39116, omega 40639); the re-plant sentence 8 tokens in both tokenizers. Model-level asserts of
+**both** arms held before any cell was scored (§17.2.3 b; 47.3 s): `A = −exp(A_log)` real and strictly negative in all
+48 layers (max −0.0039); chunked scan equal to the reference slow_forward (max |Δlogit| 0.0 on 223 tokens);
+right-padding fp32 2.0e−5 (M1) and 3.9e−4 (T), with fp16-on-GPU 0.057 / 0.082 reported; the W = ∞ mask reproduces the
+unmasked logits (0.0); 6.90 / 6.85 GiB free before each load, 6.85 after each release.
+
+**Numbers** (48 items at D0; normalized against chance 1/3; the guard is max-slot ≤ 0.80; AUROC is the one-versus-rest
+mean of §17.2.1; the ablated cells are C_abl at D0, reported):
+
+| arm | compare (argmax over alpha / gamma / delta) | compare, C_abl | recall | recall, C_abl |
+|---|---|---|---|---|
+| M1 | raw 0.292, **−0.062**; answers gamma on 44 of 48 (slots 0.08 / 0.92 / 0.00), **guard failed**; AUROC 0.449; mean margin −0.47 | 0.000 (gamma 0.98) | raw 0.875, **+0.812**; slots 0.40 / 0.29 / 0.31, guard passed; AUROC 0.977 | −0.156 |
+| T | raw 0.333, **0.000**; answers gamma on all 48 (0.00 / 1.00 / 0.00), **guard failed**; AUROC 0.535; mean margin −0.30 | −0.031 (gamma 0.71) | raw 0.917, **+0.875**; slots 0.33 / 0.25 / 0.42, guard passed; AUROC 0.999 | −0.094 |
+
+**The rule applied.** An arm clears iff compare and recall are both ≥ 0.40 with both guards passed (§17.2.4). M1: compare
+−0.062, guard failed → fails. T: compare 0.000, guard failed → fails. `pilot_outcome = NEITHER`. The operator's rule
+(§17.2): a second failed pilot closes the behavioural route. The record says so:
+
+Answer format chosen (written before sealing): NOT_STARTED
+
+That line is final. The runner reads it and refuses the main run with that reason; it also refuses on
+`pilot_outcome ≠ CLEARED_BOTH` and on the absence of a smoke written by this readout (none was run: no GPU time was
+spent beyond the pilot). **No main-set item has been generated or scored.** Nothing is sealed; whether to seal a
+preregistration whose run does not start remains the operator's (decision 5). Nothing is posted (decision 6).
+
+**What the record may say, at pilot strength (48 items, D0 only).** Under a four-shot prompt, neither 1.4 B base model
+performed a three-way magnitude comparison of three codes planted 16 tokens earlier: both answered the middle option on
+nearly every item, and the ranking of the three name scores carried no information about which code was largest
+(one-versus-rest AUROC 0.449 and 0.535, where 0.5 is a constant responder) — so this is not a calibration artefact of
+the readout that a threshold could fix, as the Yes-prior of §17.1 might have been; it is the operation not being
+performed. Both models recalled the planted code (raw 0.875 and 0.917, normalized +0.81 and +0.88), as in the 1011
+pilot (+0.66 and +0.97). Across the two pilots, three readouts of the compare operation (Yes/No, True/False,
+three-way largest) have failed in both arms at the shortest distance while recall cleared its bar each time. That is a
+sentence about the instrument — few-shot compare probes on ≤ 1.4 B base models — printed at reported strength; nothing
+about how deployed decay or attention models behave with distance was measured, and the arc's July results stay what
+each already says it is (§1). The behavioural bridge is closed; the only open bridge is the profiler route
+(`NEXT_AFTER_V3.md` §3.1, `STATE_OF_THE_ARC_v2.md` Q2 Design B), which is a different instrument, a download or a
+training run, and the operator's decision.
+
+**What this entry leaves in place.** Every bar; the gates block; §17.2's receipt fields and generator rules, which the
+runner implements and the pilot receipt carries (per-item bits, slots, scores and margins; the sha256 lists; the
+nesting flag; the exemplar names; C_abl at D0 as run and at every distance in the design; C_near and C_overwrite as
+built and tested, unrun because the design has no D1 data). The forward pointer §15 owes
+(`RESULT_realmodel_bridge_2026_07_24.md`, `papers/SYNTHESIS_program_2026_07_24.md` item 3) reads "attempt three: not
+started; two pilots, both NEITHER" and lands in the merge that carries this document.
