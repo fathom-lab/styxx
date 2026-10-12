@@ -790,7 +790,7 @@ gate verdicts agree and the overlay's do not; `main`'s two gates differ on the r
 | committed inputs, CPython 3.12, Windows path flavour (*pinned*) | 6,672 | 6,133 (1,151) | 478 + 58 | 8 / 9 (1) | 13 / 10 (2) |
 | the same, POSIX path flavour (*pinned*) | 6,672 | 6,136 (1,151) | 478 + 55 | 8 / 9 (1) | 12 / 10 (2) |
 | the same, CPython 3.14.2, Windows flavour (*pinned*) | 6,672 | 6,134 (1,152) | 480 + 55 | 9 / 10 (1) | 14 / 10 (2) |
-| the 84 cross-port cases (each *pinned* by itself) | 84 | 49 (39) | 29 + 6 | 0 / 14 (14) | 0 / 4 (4) |
+| the 84 cross-port cases (each *pinned* by itself; two read alike since #205) | 84 | 51 (39) | 29 + 4 | 0 / 12 (12) | 0 / 4 (4) |
 | a `def` that ends its line, 600 seeded inputs (*pinned*) | 600 | 556 (342) | 0 + 44 | 0 / 44 (44) | 0 / 0 |
 | a case pair only the patched engine folds, 1,500 seeded inputs (*pinned*) | 1,500 | 669 (294) | 0 + 831 | 421 / 0 | 358 / 0 |
 | a truth world under decorations, 1,000 seeded inputs (*pinned*) | 1,000 | 752 (355) | 248 + 0 | 0 / 0 | 0 / 0 |
