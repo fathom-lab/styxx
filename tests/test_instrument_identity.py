@@ -7,7 +7,9 @@ hold; find_spec executing nothing; every state of `delta`, and that hostile iden
 raised on; the two committed capsules keeping their outcomes to the character charon recorded
 (DOGFOOD ok with no problem, HANDOFF its one problem) with one advisory each, and charon lines seq 89
 and 95 re-deriving with no compared key moved; synthetic identities exercising SKEW, same, incomplete
-and unnamed through mint and verify, with the three wording constraints; R5 never comparing identity;
+and unnamed through mint and verify, with the three wording constraints, (b) against a minter who chooses
+the words (a module named `ambiguous`, an implementation, a version, a styxx string holding it); R5 never
+comparing identity;
 the page's meta line; and `python -m styxx.instrument`.
 
 The record writer (styxx/diffgate.py) names nothing in this phase, so a record that carries an
@@ -349,6 +351,20 @@ def test_read_identity_normalises_what_it_reads_and_names_nothing_for_a_bare_rec
     ident, un = I.read_identity(rec)
     assert un == [] and ident == X                       # unknown fields dropped, known ones kept
     assert I.content_keys(rec) == []
+    # an empty string says nothing: read as null, so it is unknown, never a value that differs and then
+    # prints as `unknown` in a SKEW line
+    empty = {"diffgate": "v0", **copy.deepcopy(X)}
+    empty["build"]["reader"] = ""
+    empty["build"]["styxx"] = ""
+    empty["runtime"]["implementation"] = ""
+    empty["runtime"]["case_floor"] = ""
+    ident, un = I.read_identity(empty)
+    assert un == [] and ident["build"]["reader"] is None and ident["build"]["styxx"] is None
+    assert ident["runtime"]["implementation"] is None and ident["runtime"]["case_floor"] is None
+    d = I.delta(ident, X)
+    assert d["state"] == "incomplete" and d["differs"] == []
+    assert d["unknown"] == ["build.reader", "runtime.implementation"]
+    assert I.describe(ident) == "unknown sha unknown (styxx unknown) on unknown 3.12.10, Unicode 15.0.0"
     assert I.content_keys({"diffgate": "v0", "verdict": "PASS", "build": {}, "x": 1, "runtime": {}}) == ["verdict", "x"]
 
 
@@ -363,6 +379,17 @@ def test_describe_is_ascii_only_and_never_writes_what_charon_reads_as_a_broken_b
     assert "ambiguous" in text                           # letters pass; the capsule refuses the word in a problem
     assert C._charon_quotable(text).startswith("an instrument whose recorded name this verifier does not quote")
     assert C._charon_quotable(I.describe(X)) == I.describe(X)
+    # the same rule for every token a SKEW line quotes beside the identity, and no replacement holds what
+    # charon reads (the word, or `binding` beside `!=`)
+    assert C._charon_quotable_name("ambiguous") == "(a name this verifier does not quote)"
+    assert C._charon_quotable_name("Ambiguous-3.12") == "(a name this verifier does not quote)"
+    assert C._charon_quotable_name("cpython") == "cpython" and C._charon_quotable_name("unknown") == "unknown"
+    assert C._charon_quotable_field("build.modules[ambiguous]") == "build.modules[(a name this verifier does not quote)]"
+    assert C._charon_quotable_field("build.modules[styxx.diffgate]") == "build.modules[styxx.diffgate]"
+    assert C._charon_quotable_field("runtime.version") == "runtime.version"
+    for t in (C._charon_quotable(text), C._charon_quotable_name("ambiguous"),
+              C._charon_quotable_field("build.modules[ambiguous]")):
+        assert not C._charon_reads_as_broken_binding(t) and "binding" not in t, t
 
 
 # ------------------------------------------------------- 6. the two committed capsules, charon
@@ -489,7 +516,59 @@ def test_an_incomplete_identity_with_an_edit_is_i_fail_never_skew(tmp_path, monk
                                                "(unknown: build.modules[styxx.declare]), so this failure cannot be "
                                                "told apart from INSTRUMENT SKEW or an edit from the record alone")
     assert I.describe(x_null) in adv[0]
+    assert ("the payload's pin 'styxx==7.49.0' is outside every binding and names a version, not a build"
+            in adv[0])
     assert charon.derive(out, tmp_path)["verdict"] != "UNRESOLVED"
+
+
+@pytest.mark.parametrize("hostile", [
+    pytest.param({"module": "ambiguous"}, id="module-name"),
+    pytest.param({"runtime__implementation": "ambiguous"}, id="implementation"),
+    pytest.param({"module": "bytes_ambiguous", "runtime__implementation": "Ambiguous",
+                  "runtime__version": "3.12-ambiguous", "build__styxx": "7.49.0+ambiguous",
+                  "build__reader": "ambiguous.reader"}, id="every-token"),
+])
+def test_a_skew_line_quotes_no_recorded_token_charon_reads_as_a_broken_binding(tmp_path, monkeypatch, hostile):
+    """Constraint (b) against a minter who chooses the words (review 1 of phase 1). `ambiguous` is a module
+    name the reader admits (`^[a-z_.]{1,64}$`), an implementation, a version and a styxx version string;
+    the SKEW line names the field and the recorded identity without quoting the token, keeps the field
+    lines, and charon reads the capsule as not reproduced, never UNRESOLVED."""
+    minter = _identity(**{k: v for k, v in hostile.items() if k != "module"})
+    if "module" in hostile:
+        minter["build"]["modules"].append([hostile["module"], "0" * 64])
+    _under(monkeypatch, minter)
+    out = _mint(tmp_path)                                 # R7's self-verify: the same identity, ok
+    _edit_and_reseal(out)
+    _under(monkeypatch, Y)
+    rep = verify_capsule(out)
+    assert rep["ok"] is False and rep["skew"] is True and rep["gate_identity"]["state"] == "differs"
+    skew = rep["problems"][0]
+    assert skew.startswith("INSTRUMENT SKEW: the gate record does not reproduce here and names another "
+                           "instrument (differs: ")
+    for p in rep["problems"]:
+        assert "ambiguous" not in p.lower() and "!=" not in p, p
+    if "module" in hostile:
+        assert "build.modules[(a name this verifier does not quote)]" in skew
+        assert f"build.modules[{hostile['module']}]" in rep["gate_identity"]["differs"]   # the result keeps it
+    if "runtime__implementation" in hostile:
+        assert "on (a name this verifier does not quote)" in skew
+    if "build__styxx" in hostile:
+        assert "pip install" not in skew and "the styxx whose styxx.diffgate the record names, on" in skew
+        assert not any(a.startswith("the SKEW line's pin") for a in rep["advisory"])
+    else:
+        assert "`pip install styxx==7.49.0` on" in skew
+    made_by = I.describe(minter)                          # holds the word when the implementation or reader does
+    if C._charon_reads_as_broken_binding(made_by):
+        assert "it was made by an instrument whose recorded name this verifier does not quote" in skew
+    else:
+        assert f"it was made by {made_by}" in skew
+    assert any(p.startswith("gate.claims not reproduced") for p in rep["problems"][1:])
+    line = charon.derive(out, tmp_path)
+    assert line["verdict"] != "UNRESOLVED" and line["reproduced"] is False
+    assert line["counts"]["problems"] == len(rep["problems"])
+    assert line["counts"]["problems_detail"][0].startswith("INSTRUMENT SKEW")
+    code, text = _command(out)
+    assert code == 1 and "  - INSTRUMENT SKEW" in text and "CAPSULE FAILS VERIFICATION" in text
 
 
 def test_the_format_key_mismatch_stays_skew_with_no_field_comparison(tmp_path):
