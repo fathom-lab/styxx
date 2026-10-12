@@ -47,6 +47,104 @@ record says why. No main-set item was generated or scored, and no gates-block ve
   plan's runs only when `BRIDGE_V3_PLAN_PATH` names that plan, which lives outside the repository.
 - `papers/LEDGER.md` regenerated: the corpus gained a preregistration with a gates block.
 
+## [Unreleased] — the research capsule, Phase A: one HTML file carries the chain of one preregistered experiment and prints three readings per link
+
+**`styxx/research_capsule.py` (new); tests in `tests/test_research_capsule.py`.** Spec id
+`styxx-oath/capsule/research/v0.1`. Builder and verifier only, no specimen: the pMNIST untied
+RESULT does not exist yet, and the design that orders this build (`next/capsule-chain/DESIGN.md`,
+red-teamed in its `ATTACK.md`, 2026-10-11) puts the specimen in a later phase, after anchor #2
+reads ANCHORED and the receipt is opened by another track. The profile knows nothing about any
+particular experiment.
+
+- One file, under 1.5 MB, carries for one experiment: the PREREG bytes (exactly one ```gates block,
+  by `styxx.protocol`'s scanner), the anchor line(s) in `styxx.clock`'s `anchors.jsonl` format, the
+  receipt JSON(s), the runner source(s), the RESULT with its sidecar and sworn receipt, a snapshot
+  of every `path:` target the RESULT swears through so the spans resolve with no git, the
+  `styxx.charon` entry WITH its seq (inclusion at seq, never the head, which moves with every
+  honest ingest), a committed run note, and the list of independent public clocks. `created` sits
+  outside the payload digest, as the sworn and charon rules have it.
+- Three readings per link, never two: HOLDS / FAILS offline, a pure function of the carried bytes,
+  re-derived by the page in the browser (an inlined verifier, sealed by digest, no network) and by
+  `python -m styxx.research_capsule verify`; CHECKABLE-ONLINE with the exact public read a stranger
+  would make, which `verify --repo CLONE` turns into MATCHES / DIFFERS / NOT-CHECKED and `verify
+  --network` into CONFIRMED-ON-CHAIN / CONTRADICTED / UNAVAILABLE-NOW with the clock's own status
+  word beside it, availability never read as contradiction; STATED-BY-THE-LAB for what nothing
+  checks. The summary line is `INTERNALLY CONSISTENT (offline)`, never the word `styxx.sworn` uses
+  for receipt re-derivation, and the label sits on the page and in every terminal report: a forger
+  controlling the whole file passes every offline link.
+- For the anchor the page prints `block_time − run_end` with its sign and the sentence that the
+  chain orders the PREREG before the receipt's reading, not before the run; the wallet is printed
+  as a constant inside the file with two out-of-band places to confirm it; the `--network` read
+  counts the wallet's listed sealed-prereg memos through the anchor's slot, a lower bound a
+  stranger can hold against the SEALS table.
+- The verdict is re-scored from the frozen table over the recorded numbers (`score_frozen`, the
+  body of `Experiment.score` with no disk and no git, with the composition check and a totality
+  enumeration of the outcome table); the sworn core re-derives over the carried snapshot
+  (`SnapshotTree`), in the terminal and in the page; the sworn receipt's verdict and counts must be
+  its own spans' tally (`receipt_tally_problem`, which a test runs over every sworn receipt
+  committed under `papers/`, chosen by its schema field and not its file name); the charon line's
+  `entry_id` re-derives from its core; the anchor's memo is the memo its kind and digest imply
+  (`check_anchor_offline`, the pure half of `clock.check_line`).
+- The page re-derives the sworn spans itself: `styxx/_data/sworn_verify.js`, the second
+  implementation of `styxx.sworn` held to the sworn conformance vectors, is inlined unchanged and
+  given the carried snapshot through a resolver that reads entries as `SnapshotTree` does, so a
+  number typed into a span that the receipt leaf does not hold, with the sworn receipt re-pointed
+  and re-digested, reads FAILS at L4 in the browser as it does in the terminal, and the browser
+  never prints `INTERNALLY CONSISTENT (offline)` over it.
+- L4 holds only when every sworn span reads HELD against the leaf it names, in both layers. A
+  RESULT whose honest sworn receipt says SWORN-FAILED, one with an UNRESOLVED span (which the sworn
+  document rule still calls SWORN-HELD: an rN span no manifest carries, a `prereg:` digest the
+  snapshot lacks), and one that swears nothing read FAILS at L4, and `build` refuses each by name.
+- Where an instrument reads an integer, both layers require an integer as written, and the page
+  reads it through a typed parse of its payload that keeps a float literal apart, as Python's
+  `json` does, because `JSON.parse` writes `102.0` as `102`: a span offset, a snapshot entry's size
+  (which must also be the entry's byte count) and the sworn receipt's counts, `sworn_total` and
+  `unresolved` at L4; an anchor's slot at L1; `experiment.score.receipt` at L2, which the terminal
+  no longer reads as 0 when it is not an integer. A value of another JSON type in any of these
+  fails its link in both layers, by name in the terminal. The agreement tests write each field as a
+  float, several also as a string, a list, a bool or null, and a sweep rewrites every integer
+  literal of a clean page as `N.0` by hand, which moves no digest: both layers read every link
+  alike on each.
+- A time on the page must name a time that exists: an anchor's `block_time` (L1) and a public
+  clock's `stated` time (L1b) are `YYYY-MM-DDTHH:MM:SSZ` in ASCII digits with no February 30, month
+  13, hour 24, second 60 or year 0, in both layers. Such a value ends in a named problem and never
+  in a traceback, and `build` refuses it by name, as it refuses a `stated.run_ended_utc` that names
+  no time. The page applies the terminal's public-clock rule word for word: a `name`, `binds` or
+  `read` that Python's `str.strip` leaves empty, or a `does_not_prove` that is not text, fails L1b.
+- `build` reads the repository at named commits and never the working tree, and refuses by name: an
+  inconsistent chain (each failing link's problem listed), a path that is not repository-relative
+  POSIX, a token-shaped string, a drive-letter or home path, an interpreter version string or a
+  worktree name anywhere in the minted bytes, a word the lab never prints in what the lab writes
+  for the capsule (the page outside its inlined verifier, the payload's own fields, the stated
+  facts, the public clocks, the RESULT and the run note; carried history such as the frozen PREREG
+  is carried as is and scanned for leaks only; a hit is named by its place in the list, never
+  echoed), and an oversize page; a written file that does not verify is not kept. The scan reads
+  decoded text, so an escaped line feed after a one-letter word is not a drive letter, and it reads
+  every pair of a repeated JSON key, in a carried artifact and in the page's own payload, so a
+  value that `json.loads` drops is still scanned. The payload names `styxx_version` and the module
+  digests only (operator decision O9 of 2026-10-11).
+- Under `--repo`, a commit the clone lacks reads NOT-CHECKED with the reason (fetch it and read
+  again), and a path absent at a commit the clone has reads DIFFERS: the public repository holds no
+  such object there.
+- The tests build the chain from synthetic fixtures, which is the disclosed whole-file forger and
+  passes every offline link, as the label says; a digest battery flips exactly the link that owns
+  the bytes (a mutated slot is caught by nothing offline, and the test says where it is checked); a
+  semantic battery re-builds CONSISTENT capsules with one link made false and asserts that link
+  alone flips, which a verifier whose logic past the hashes is constant would fail; controls that
+  must not fire (`created`, key order, the charon timestamp and note); the browser layer, run under
+  node, agrees with the installed layer link by link on the clean capsule and on every member of
+  both batteries, the seven L4 members of the semantic battery included (an edited sworn verdict, a
+  span value the receipt does not hold, a snapshot entry that is another receipt, an honest
+  SWORN-FAILED receipt, an UNRESOLVED rN span, an UNRESOLVED `prereg:` span, a RESULT that swears
+  nothing), on numeric, quote and hash spans over the snapshot, on every integer the instruments
+  read written with another JSON type or miscounted, on every integer literal of a clean page
+  written as a float, on an anchor line that is not an object, on public clocks of the wrong shape
+  and on times that name no time; the CLI round trip over a temporary repository with `--repo`,
+  including a rebuilt log reading DIFFERS at L5 and a forger that names the clone's commits with
+  paths absent at them reading DIFFERS.
+- Not in this phase: dispatch from the existing capsule command, a charon kind for the new profile,
+  the stranger step, the specimen. The existing capsule profiles are unchanged.
+
 ## [Unreleased] — capsule v0.2 layer 2 compares a record's instrument identity apart from its content; `styxx.instrument` names the build and runtime a diffgate record is written and re-run under
 
 **Phase 1 of the design the operator approved on 2026-10-11** (item 3 of step zero of the 2026-10-06
