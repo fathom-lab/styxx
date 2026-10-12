@@ -17,8 +17,11 @@ and the format-key line reading the payload's pin and quoting the sealed format 
 (the amendment's third and fourth dated sections, and the erratum's rule 6); R5 never comparing identity;
 the page's meta line; and `python -m styxx.instrument`.
 
-The record writer (styxx/diffgate.py) names nothing in this phase, so a record that carries an
-identity here is made by wrapping gate_diff_text; phase 2 makes the writer carry it.
+The record writer (styxx/diffgate.py) named nothing in phase 1, so a record that carries a chosen
+identity here is made by wrapping gate_diff_text. Since phase 2 the writer carries this box's own
+identity (tests/test_diffgate_record_identity.py), the wrapper replaces it, and a capsule minted here
+without the wrapper names this verifier's own instrument: the format-key lines below read `same`, and
+R5's bare supplied gate is the live record with its identity keys taken out.
 """
 from __future__ import annotations
 
@@ -99,7 +102,8 @@ Y = _identity(module__styxx_diffgate="f" * 64, runtime__version="9.99.1", runtim
 
 
 class _Carrying:
-    """The record the writer will produce from phase 2 on: the eleven content keys, then the identity."""
+    """The writer's record with a chosen identity in place of its own: the eleven content keys, then the
+    identity (since phase 2 the writer's own keys are there, in the same places, and are replaced)."""
 
     def __init__(self, g, identity):
         self._g, self._id = g, identity
@@ -645,7 +649,9 @@ def test_the_format_key_mismatch_stays_skew_with_no_field_comparison(tmp_path):
     rep = verify_capsule(out)
     assert rep["ok"] is False and rep["skew"] is True
     assert len(rep["problems"]) == 1 and rep["problems"][0].startswith("INSTRUMENT SKEW: installed diffgate 'v0'")
-    assert rep["gate_identity"]["state"] == "unnamed" and _identity_advisories(rep) == []
+    # minted and verified on one box since phase 2: the record names this verifier's own instrument, and the
+    # format-key branch compares no field and adds no identity advisory
+    assert rep["gate_identity"]["state"] == "same" and _identity_advisories(rep) == []
 
 
 @pytest.mark.parametrize("hostile", [
@@ -739,7 +745,7 @@ def test_the_format_key_line_reads_the_payloads_pin_as_before_this_phase(tmp_pat
         p["verifier"]["pip"] = pin
     _rewrite(out, html, i, j, p)
     rep = verify_capsule(out)
-    assert rep["ok"] is False and rep["skew"] is True and rep["gate_identity"]["state"] == "unnamed"
+    assert rep["ok"] is False and rep["skew"] is True and rep["gate_identity"]["state"] == "same"   # since phase 2
     assert rep["problems"] == ["INSTRUMENT SKEW: installed diffgate 'v0' vs embedded 'v-fake' — reproduce "
                                f"under `pip install {written}` before treating this as tamper"]
     assert rep["gate_identity"]["pin"] == (pin if isinstance(pin, str) else None)
@@ -769,7 +775,7 @@ def test_the_format_key_line_quotes_the_sealed_format_key_as_before_this_phase(t
     p["binding"]["gate"]["value"] = _gate_binding_hash(p["gate"])
     _rewrite(out, html, i, j, p)
     rep = verify_capsule(out)
-    assert rep["ok"] is False and rep["skew"] is True and rep["gate_identity"]["state"] == "unnamed"
+    assert rep["ok"] is False and rep["skew"] is True and rep["gate_identity"]["state"] == "same"   # since phase 2
     assert rep["problems"] == [f"INSTRUMENT SKEW: installed diffgate 'v0' vs embedded {key!r} — reproduce "
                                f"under `pip install {pin}` before treating this as tamper"]
     line = charon.derive(out, tmp_path)
@@ -840,8 +846,11 @@ def test_a_recorded_module_name_is_kept_as_read_everywhere_but_the_skew_problem(
 def test_r5_never_compares_identity_and_names_the_fields_when_a_diverging_gate_names_another_instrument(tmp_path):
     from styxx.diffgate import gate_diff_text
     live = gate_diff_text(SUMMARY, DIFF, run=None, strict=False).to_dict()
-    assert I.IDENTITY_KEYS[0] not in live                 # the writer names nothing in this phase
-    out = _mint(tmp_path, gate=live, name="bare")
+    assert list(live)[-2:] == list(I.IDENTITY_KEYS)       # the writer names its instrument since phase 2
+    bare = {k: v for k, v in live.items() if k not in I.IDENTITY_KEYS}   # a gate written before phase 2
+    out = _mint(tmp_path, gate=bare, name="bare")
+    assert _payload(out)[3]["gate"] == live               # sealed with the minter's identity all the same
+    out = _mint(tmp_path, gate=live, name="same")
     assert _payload(out)[3]["gate"] == live
     other_runtime = {**live, **Y}
     out = _mint(tmp_path, gate=other_runtime, name="other")
@@ -856,8 +865,12 @@ def test_r5_never_compares_identity_and_names_the_fields_when_a_diverging_gate_n
     assert "names another instrument (differs: build.modules[styxx.diffgate]," in msg
     assert "runtime.version, runtime.unicode)" in msg and "9.99.1" not in msg
     with pytest.raises(SystemExit) as e:
-        _mint(tmp_path, gate=stale, name="stale2")
+        _mint(tmp_path, gate={k: v for k, v in stale.items() if k not in I.IDENTITY_KEYS}, name="stale2")
     assert "names another instrument" not in str(e.value)  # a diverging gate naming nothing: as before
+    with pytest.raises(SystemExit) as e:
+        _mint(tmp_path, gate=stale, name="stale3")
+    assert "does not reproduce from these bytes" in str(e.value)
+    assert "names another instrument" not in str(e.value)  # one naming this minter's own instrument: the same
     with pytest.raises(SystemExit, match="unknown diffgate version"):
         _mint(tmp_path, gate={**live, "diffgate": "v1"}, name="v1")
 
