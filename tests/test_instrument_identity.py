@@ -13,8 +13,9 @@ without a styxx.diffgate sha); a record naming its runtime and no build, differi
 as SKEW with the unknown fields listed and no sha pointed at; a trailing newline in a module name or sha
 refused (review 2); the advisories quoting a recorded identity as read while the SKEW problem withholds
 it, a recorded module name kept as read in the advisories' field lists, the result and the R5 refusal,
-and the format-key line reading the payload's pin as before this phase (the amendment's third and fourth
-dated sections); R5 never comparing identity; the page's meta line; and `python -m styxx.instrument`.
+and the format-key line reading the payload's pin and quoting the sealed format key as before this phase
+(the amendment's third and fourth dated sections, and the erratum's rule 6); R5 never comparing identity;
+the page's meta line; and `python -m styxx.instrument`.
 
 The record writer (styxx/diffgate.py) names nothing in this phase, so a record that carries an
 identity here is made by wrapping gate_diff_text; phase 2 makes the writer carry it.
@@ -703,10 +704,13 @@ def test_the_advisories_quote_the_recorded_identity_as_read_and_only_the_skew_pr
 
 
 _NO_PIN = object()
+_NO_VERIFIER = object()
 
 
 @pytest.mark.parametrize("pin, written", [
     pytest.param(_NO_PIN, "styxx", id="no-pin-key"),
+    pytest.param(_NO_VERIFIER, "styxx", id="no-verifier-block"),
+    pytest.param(("verifier", "styxx==7.49.0"), "styxx", id="verifier-not-an-object"),
     pytest.param(None, "null", id="null"),
     pytest.param("styxx==7.49.0", "styxx==7.49.0", id="string"),
     pytest.param(7, "7", id="number"),
@@ -714,9 +718,11 @@ _NO_PIN = object()
 ])
 def test_the_format_key_line_reads_the_payloads_pin_as_before_this_phase(tmp_path, pin, written):
     """The erratum's rule 6 and the amendment's third dated section: the format-key SKEW line is origin/main's
-    line, with the payload's unsealed pin read by origin/main's expression, `verifier.get("pip", "styxx")`:
-    no `pip` key reads `styxx`, a string is written as it is, and any other value as `_short` writes it
-    (`null` for null). From fd274520 through 225785ad a null pin read `styxx`. The quoting rule does not
+    line, with the payload's unsealed pin read by origin/main's expression,
+    `_obj_in(payload, "verifier").get("pip", "styxx")`: no `pip` key reads `styxx`, and so does a payload with
+    no `verifier` block or one that is not an object, which `_obj_in` reads as an empty object; a string is
+    written as it is, and any other value as `_short` writes it (`null` for null). From fd274520 through
+    225785ad a null pin read `styxx`. The quoting rule does not
     cover this line, so a pin holding the word still makes charon derive the capsule UNRESOLVED, as on
     origin/main; any other pin leaves it not reproduced."""
     out = _mint(tmp_path)
@@ -725,6 +731,10 @@ def test_the_format_key_line_reads_the_payloads_pin_as_before_this_phase(tmp_pat
     p["binding"]["gate"]["value"] = _gate_binding_hash(p["gate"])
     if pin is _NO_PIN:
         del p["verifier"]["pip"]
+    elif pin is _NO_VERIFIER:
+        del p["verifier"]
+    elif isinstance(pin, tuple):
+        p["verifier"] = pin[1]
     else:
         p["verifier"]["pip"] = pin
     _rewrite(out, html, i, j, p)
@@ -735,6 +745,35 @@ def test_the_format_key_line_reads_the_payloads_pin_as_before_this_phase(tmp_pat
     assert rep["gate_identity"]["pin"] == (pin if isinstance(pin, str) else None)
     line = charon.derive(out, tmp_path)
     if "ambiguous" in written:
+        assert line["verdict"] == "UNRESOLVED"
+    else:
+        assert line["verdict"] != "UNRESOLVED" and line["reproduced"] is False
+
+
+@pytest.mark.parametrize("key, unresolved", [
+    pytest.param("v-fake", False, id="another-key"),
+    pytest.param("v0-ambiguous", True, id="key-holding-the-word"),
+    pytest.param("v0 != binding", True, id="key-holding-bang-equals-beside-binding"),
+])
+def test_the_format_key_line_quotes_the_sealed_format_key_as_before_this_phase(tmp_path, key, unresolved):
+    """The erratum's rule 6: the quoting rule does not cover the format-key SKEW line. Besides the payload's
+    unsealed pin, the line quotes a token of the record's choosing that is sealed, `gate.diffgate`, as `_short`
+    writes it, as on origin/main, so a re-sealed format key holding the word, or `!=` beside `binding`, makes
+    charon derive the capsule UNRESOLVED through this line, as on origin/main; any other key leaves it not
+    reproduced. Older than this phase and left with the operator, with the pin."""
+    out = _mint(tmp_path)
+    html, i, j, p = _payload(out)
+    pin = p["verifier"]["pip"]
+    assert isinstance(pin, str) and not C._charon_reads_as_broken_binding(pin)
+    p["gate"]["diffgate"] = key
+    p["binding"]["gate"]["value"] = _gate_binding_hash(p["gate"])
+    _rewrite(out, html, i, j, p)
+    rep = verify_capsule(out)
+    assert rep["ok"] is False and rep["skew"] is True and rep["gate_identity"]["state"] == "unnamed"
+    assert rep["problems"] == [f"INSTRUMENT SKEW: installed diffgate 'v0' vs embedded {key!r} — reproduce "
+                               f"under `pip install {pin}` before treating this as tamper"]
+    line = charon.derive(out, tmp_path)
+    if unresolved:
         assert line["verdict"] == "UNRESOLVED"
     else:
         assert line["verdict"] != "UNRESOLVED" and line["reproduced"] is False
