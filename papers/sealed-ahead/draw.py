@@ -212,8 +212,10 @@ def draw(items: list, accusations_sha256: str, block_id: str, n: int) -> dict:
         return rec
     chosen = beacon.select(block_id, n, items)
     ids = [c[0] for c in chosen]
-    rec.update({"status": "DRAWN", "drawn": ids, "drawn_items": [list(c) for c in chosen],
-                "drawn_sha256": common.canon_sha256(ids)})
+    # Only the accusation ids, which are digests: the record never lists which pull requests were drawn,
+    # so publishing it prints no accusation against a named repository. The panel's packet is built
+    # locally from the accusation set.
+    rec.update({"status": "DRAWN", "drawn": ids, "drawn_sha256": common.canon_sha256(ids)})
     return rec
 
 

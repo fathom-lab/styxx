@@ -12,7 +12,7 @@ The study of 2026-10-06 (`STUDY_where_styxx_goes_next_2026_10_06.md`, section 2.
 | The draw | `draw.py` | the accusation set; one Bitcoin block | `draw.json` | `stranger.py draw` |
 | The check | `stranger.py` | the parameters and the published digests | a report per stage | itself |
 
-`common.py` holds the canonical bytes, the hour names and the parameters' validation. The tests are `tests/test_sealed_ahead.py` (69, no network).
+`common.py` holds the canonical bytes, the hour names and the parameters' validation. The tests are `tests/test_sealed_ahead.py` (70, no network).
 
 ## What a 2026 GH Archive event carries
 

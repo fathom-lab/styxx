@@ -117,8 +117,16 @@ def check_pool(params: dict, table: dict, published: dict, archive, now=None, lo
         "pool_sha256": meta["pool_sha256"] == published.get("pool_sha256"),
         "hours": not hours_differ,
     }
-    verdict = "AGREES" if all(checks.values()) else "MISMATCH"
-    return {"stage": "pool", "verdict": verdict, "checks": checks,
+    mine_open = [h["hour"] for h in meta["hours"] if h["status"] not in pool.FINAL]
+    if all(checks.values()):
+        verdict = "AGREES"
+    elif (checks["params_sha256"] and checks["identity_rules_sha256"]
+          and (mine_open or published.get("status") != "COMPLETE")
+          and all(d["mine"] not in pool.FINAL for d in hours_differ)):
+        verdict = "CANNOT_CONFIRM"            # an hour this side could not read yet, or the lab is not done
+    else:
+        verdict = "MISMATCH"
+    return {"stage": "pool", "verdict": verdict, "checks": checks, "open_hours_here": mine_open,
             "pool_sha256": meta["pool_sha256"], "published_pool_sha256": published.get("pool_sha256"),
             "records": meta["records"], "hours_differ": hours_differ, "compressed_bytes_differ": bytes_differ,
             "published_gaps": gaps, "gaps_now_available": now_available, "_records": mine["records"]}
@@ -126,14 +134,23 @@ def check_pool(params: dict, table: dict, published: dict, archive, now=None, lo
 
 # ---------------------------------------------------------------- accuse
 
+def _when(s):
+    """An API or ledger timestamp, or None when absent or in a shape this does not read."""
+    if not isinstance(s, str):
+        return None
+    try:
+        return common.parse_utc(s[:19] + "Z" if len(s) > 20 and s[19] in ".+" else s)
+    except ValueError:
+        return None
+
+
 def classify_row(lab: dict, mine: dict) -> tuple:
     """(category, reason) for one pool key: MATCH, DRIFT, UNREPRODUCIBLE or INCONSISTENT."""
     lo, mo = lab["outcome"], mine["outcome"]
     same_inputs = all(lab[k] == mine[k] for k in ("title_sha256", "body_sha256", "diff_sha256"))
-    changed_since = (mine.get("pr_updated_at") is not None and lab.get("body_fetched_at") is not None
-                     and common.parse_utc(mine["pr_updated_at"]) > common.parse_utc(lab["body_fetched_at"]))
-    unchanged_since = (mine.get("pr_updated_at") is not None and lab.get("body_fetched_at") is not None
-                       and not changed_since)
+    updated, read_at = _when(mine.get("pr_updated_at")), _when(lab.get("body_fetched_at"))
+    changed_since = updated is not None and read_at is not None and updated > read_at
+    unchanged_since = updated is not None and read_at is not None and not changed_since
     if lo == "GATED":
         if mo == "GATED":
             if same_inputs:

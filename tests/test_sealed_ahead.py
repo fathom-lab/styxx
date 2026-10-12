@@ -693,6 +693,7 @@ def test_draw_is_styxx_beacon_select_and_nothing_else():
     expect = beacon.select(b["id"], 4, [tuple(i) for i in acc["items"]])
     assert rec["status"] == "DRAWN" and rec["drawn"] == [e[0] for e in expect]
     assert rec["drawn_sha256"] == common.canon_sha256(rec["drawn"])
+    assert "200#" not in json.dumps(rec)                     # the record names no pull request
     assert rec == draw.draw(acc["items"], acc["accusations_sha256"], b["id"].upper(), 4)
     assert rec["beacon_module_lf_sha256"] == common.lf_sha256(Path(beacon.__file__).read_bytes())
     assert draw.draw(acc["items"], acc["accusations_sha256"], b["id"], 11)["status"] == "SIZING_FAILURE"
@@ -785,6 +786,20 @@ def test_stranger_pool_refuses_a_forged_digest_and_names_a_differing_hour(tmp_pa
     more["2026-10-15-1"].append(ev(150, ref="codex/z", number=9, created="2026-10-15T01:30:00Z"))
     sec = stranger.check_pool(P2, TABLE, d["meta"], FakeArchive(more), now=LATE, log=QUIET)
     assert sec["verdict"] == "MISMATCH" and [h["hour"] for h in sec["hours_differ"]] == ["2026-10-15-1"]
+    flaky = synthetic_hours()
+    flaky["2026-10-15-2"] = "fail"                       # this side could not read an hour: not a contradiction
+    sec = stranger.check_pool(P2, TABLE, d["meta"], FakeArchive(flaky), now=LATE, log=QUIET)
+    assert sec["verdict"] == "CANNOT_CONFIRM" and sec["open_hours_here"] == ["2026-10-15-2"]
+    gone = synthetic_hours()
+    del gone["2026-10-15-2"]                              # an hour the lab read now answers 404: contradicted
+    assert stranger.check_pool(P2, TABLE, d["meta"], FakeArchive(gone), now=LATE,
+                               log=QUIET)["verdict"] == "MISMATCH"
+
+
+def test_api_timestamps_are_read_with_or_without_fractions():
+    assert stranger._when("2026-10-12T10:00:00Z") == datetime(2026, 10, 12, 10, tzinfo=UTC)
+    assert stranger._when("2026-10-12T10:00:00.123Z") == datetime(2026, 10, 12, 10, tzinfo=UTC)
+    assert stranger._when("yesterday") is None and stranger._when(None) is None
 
 
 def test_stranger_pool_replays_published_gaps_and_reports_one_that_answers_now():
