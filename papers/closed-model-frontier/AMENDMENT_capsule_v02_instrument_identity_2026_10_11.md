@@ -259,3 +259,15 @@ ahead of `incomplete` since `0383daef`, the module's earliest commit.
 
 Neither change in `fd4036b3` touches the SKEW problem or a content line, and the measurement of the
 second section re-derives at `4c8079fa`.
+
+## ERRATUM — 2026-10-12, a fourth section: what the tests held at `4c8079fa`
+
+The sections above are not edited. The third section says that `tests/test_instrument_identity.py` holds
+rules 5 and 6 of the quoting erratum from `4c8079fa`. At `4c8079fa` the file held what `fd4036b3` changed:
+the recorded identity quoted as read in the two advisories while the SKEW problem withholds it, and the
+format-key line for a missing pin, a null, a string and a number. It did not hold the rest of the two
+rules: a recorded module name kept as read in the advisories' field lists, in the result's
+`gate_identity.recorded` and `gate_identity.unknown` (its `differs` was held already) and in the R5
+refusal at mint, and a payload pin holding the word making charon derive the capsule UNRESOLVED through
+the format-key line. `f0a7720e` holds those. The reader at `225785ad` behaved the same way on each of them
+(the new cases pass against its `styxx/`), and no test held that behaviour before `f0a7720e`.
