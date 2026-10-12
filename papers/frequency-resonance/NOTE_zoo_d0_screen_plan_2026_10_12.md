@@ -222,3 +222,107 @@ filler lengths, revision, dtype, attention implementation, raw and normalized ac
 margins, near ties, the screen, the C_abl flag, seconds, peak GPU MB), `per_item` (bits, predicted and correct slots,
 the three scores and the margin, per model, family and variant), `summary` (the counts and the §9 sentences, per group),
 `redteam`, `runtime`.
+
+## 12. Addendum, 2026-10-12: corrections after the review, written before any data
+
+**Status: appended after the review of commits 48de301e and c217b07c. No model has been loaded for this screen, no
+zoo item has been scored, and `zoo_d0_screen.json` does not exist.** Sections 1 to 11 stay as committed; where this
+section differs from them, this section is the plan.
+
+### 12.1 The fp16 load: no cast after it
+
+§7 says the Llama, Qwen and Gemma rows "load in fp16 on CPU (every parameter asserted fp16) and move". The runner at
+c217b07c also called `half()` after `from_pretrained(dtype=float16)`. That call changed no parameter, but it cast the
+rotary `inv_freq` buffer from fp32 to fp16, which transformers' own fp16 load does not do (transformers 4.57.3; the
+review's angle error at the zoo's longest native prompt, 271 tokens, is at most 0.0655 rad, on gemma-2). The call is
+removed: these ten rows run as transformers runs them in fp16. Every parameter is still asserted fp16, and the receipt
+records per model the dtype of every `inv_freq` buffer and the count of floating buffers per dtype, after the load and
+after the move to the GPU. The three rows on v3's own path keep v3's `to_gpu_fp16` (`half()`, then cuda), so pythia's
+`inv_freq` is fp16 as it was in pilot2 and T's row stays comparable with pilot2; that is recorded too.
+
+### 12.2 The status labels
+
+A row's status is exactly one of these, and the receipt lists them under `config.statuses`:
+
+| status | when |
+|---|---|
+| SCREENED | every cell scored |
+| NOT_CACHED | §2: the snapshot is incomplete |
+| NOT_SCREENABLE | a §4 or §5 assert, or a model-level assert not named below (fused Mamba kernels present, the chunked scan off v3's reference, parameters not of the loaded dtype) |
+| NOT_SCREENABLE__fp16_nonfinite | §7: a non-finite score |
+| NOT_SCREENABLE__right_padding | §7's fp16 bar, v3's fp32 bar on v3's own path, or the fp32 reference's bar of 12.4 |
+| NOT_SCREENABLE__fp16_fidelity | 12.4 |
+| NOT_RUN__free_gpu | §7: under 6 GiB free before a load or a move |
+| NOT_RUN__memory | §7: CUDA out of memory at batch 1; also CUDA out of memory while the model moves to the GPU |
+| NOT_RUN__error | named here for the plan: any other exception during a model's load or scoring, recorded with its type, message and traceback; the row is not screened and the run goes on |
+
+The runner at c217b07c wrote NOT_SCREENABLE without the suffixes §7 names, and recorded an out-of-memory error during
+the move as NOT_RUN__error; it now writes the labels above.
+
+### 12.3 The sentence
+
+§9's N = 0 variant ("no cached model performed the compare task") is withdrawn. It is wider than what is measured:
+Phi-3.5 is cached and excluded, NOT_SCREENABLE and NOT_RUN rows are not measured, and the instruct group saw raw text.
+The counts are always of the M screened models of one group. §8 says the count of flagged passes is printed beside
+each count; the sentence the runner built at c217b07c left it out, and now carries it. Per group, the generated
+sentence is
+
+> At D0, under v3's argmax readout in fp16, {N of M, or none of the M} screened {group} models could perform the
+> compare task and {K of M, or none of the M} the recall task (C_abl above 0.16 in F_c of the N compare passes and
+> F_r of the K recall passes); n = 48 items per family per model, a pilot-class screen that licenses nothing.
+
+The parenthesis names only the nonzero pass counts and is left out when both are zero. The instruct group's sentence
+reads "screened instruct models, given raw text without a chat template,". When M = 0 the sentence says that no
+{group} model was screened, with every row listed beside it. "in fp16" is there because every row runs in fp16; §10's
+reading of a failure ("did not perform under v3's format") stands, in fp16.
+
+### 12.4 An fp32 CPU reference for the Llama, Qwen and Gemma rows
+
+The plan's fp16 checks were finite scores and an fp16 right-padding bar. A finite but degraded fp16 forward on a
+bf16-trained checkpoint (`horizon-zoo/ATTACK.md` M8) would have been read as a model that did not perform. The box has
+31.5 GiB of RAM, and each of these ten checkpoints fits on the CPU in fp32 (about 12 GiB at most, Llama-3.2-3B). Per
+row, before its fp16 load:
+
+1. If available RAM is at least 1.2 × the checkpoint's fp32 bytes (counted from its safetensors headers) + 1 GiB, the
+   checkpoint is loaded in fp32 on the CPU by transformers' own load (gemma-2 eager), the only model resident, every
+   parameter asserted fp32.
+2. Right padding in fp32 on the same two compare prompts §7 uses: the three name log-probs alone and inside a padded
+   batch differ by at most 1e-3 (v3's fp32 bar), else NOT_SCREENABLE__right_padding. The full-vocabulary logit
+   difference is recorded. §7's fp16 bar of 0.25 stays as well.
+3. The two prompts' alone name log-probs are kept as the reference, and the fp32 model is dropped before the fp16 load.
+4. Once the fp16 model is on the GPU, the same two prompts' alone name log-probs must lie within 0.5 nats of the
+   reference (the largest of the 2 × 3 differences), else NOT_SCREENABLE__fp16_fidelity. 0.5 is five times §7's
+   estimate of fp16 noise on these readouts and well under the whole-nat moves of a damaged forward. The differences
+   and the argmax agreement are recorded.
+5. If RAM is short or cannot be read, the reference is not run, the row is still scored, and the receipt says why; a
+   failure on that row reads "did not perform in fp16".
+
+On the three rows of v3's own path the fp32 model is already on the CPU (§7). Its alone name log-probs on the same two
+prompts are recorded and compared with the fp16 ones, without a gate, so that M1 and T stay under pilot2's conditions;
+mamba-130m's row is recorded the same way. Cost: one more CPU load and a few CPU forwards per row, about a minute for a
+3 B model.
+
+### 12.5 The partial log, and errors outside a row
+
+The run at c217b07c wrote nothing until the receipt. Now, from the point the run loads a model (the M1 and T
+equivalence), every event is appended to `zoo_d0_screen.partial.jsonl` (UTF-8, LF, flushed and synced) before any of
+it is printed: the run's start, each arm's equivalence result, each model's row and per-item bits, any refusal or
+error, and the receipt's sha256 once it is written. The runner never truncates it. A run refuses while it exists
+unless the operator passes `--operator-allows-rerun-after-partial`; the new receipt then records the old log's sha256
+and line count, and the new events follow the old ones. An exception outside a model's row (during the M1 and T
+equivalence, say) writes `zoo_d0_screen_refusal.json` with its type and traceback instead of escaping without a record.
+
+### 12.6 Smaller corrections
+
+- §11 item 3's committed-and-unchanged check also covers the three v3 receipts the run reads
+  (`realmodel_bridge_v3_smoke.json`, `realmodel_bridge_v3_pilot.json`, `realmodel_bridge_v3_pilot2.json`): they supply
+  the disjointness lists and the wrapper's per-item reference.
+- §3 says the native length of every filler is recorded per model and per item; the runner recorded the minimum, mean
+  and maximum only. It now records the per-item list as well.
+
+### 12.7 What this addendum does not change
+
+The items, seed, slices, codes, scoring, screen rule, bars, model list, order and §10's limits are unchanged. The
+code-slice reading of §3 (the zoo's 72 codes are the tail of v3's `main_test`, where every eligible code lies, and are
+disjoint from every code any v3 run planted, which the review recomputed independently) is still the operator's to
+confirm before the run. This addendum does not sign it.
