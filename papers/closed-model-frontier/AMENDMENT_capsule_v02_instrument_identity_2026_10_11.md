@@ -220,3 +220,42 @@ reads INSTRUMENT SKEW with nothing in the SKEW line charon misreads, and charon 
 was minted under, or minted with no identity, the same summary derives UNRESOLVED too: the reading comes
 from the content line, whose text and charon's rule this phase does not change. What rule 4 supports is
 its opening clause: the SKEW line never makes charon derive a capsule UNRESOLVED.
+
+## ERRATUM — 2026-10-12, a third section: rules 1, 5 and 6 of the quoting erratum, and its opening
+
+The sections above are not edited. Here "the quoting erratum" is the section headed `what the INSTRUMENT
+SKEW problem quotes, as the reader applies it`. A red-team check of `225785ad` found that its rules 5 and
+6 did not hold for the reader it describes, and that its rule 1 and its opening say less, or other, than
+the code and its history. The reader was brought to rules 5 and 6 in `fd4036b3`, and
+`tests/test_instrument_identity.py` holds both from `4c8079fa`.
+
+**Rule 5, "Withholding is in the problem text only."** It did not hold at `b18e0549`, which appended it,
+or at any commit through `225785ad`. `_identity_outcome` passed the recorded identity through the quoting
+rule once and wrote the result into the SKEW problem and into two advisories, the one for a record that
+reproduced under another instrument and the one for an incomplete identity that does not reproduce, so a
+recorded identity holding the word was written as the replacement text in all three. From `fd4036b3` the
+two advisories quote the recorded identity as `styxx.instrument.describe` writes it, as the command's
+`instrument: recorded` line does, and the SKEW problem is the only text the identity comparison writes
+that withholds a token. Rule 5 holds as written.
+
+**Rule 6, the format-key line "as before".** From `fd274520`, the reader's earliest commit, through
+`225785ad`, the format-key line wrote `pip install styxx` for a payload whose `verifier.pip` is null,
+where `origin/main` writes `pip install null`. `origin/main` reads the pin as
+`_obj_in(payload, "verifier").get("pip", "styxx")`: only a missing key reads `styxx`, a string is written
+as it is, and any other value as the reader's `_short` writes it (`null` for a null). From `fd4036b3` the
+line reads the pin by that expression, and for a missing key, a null, a string and a number it is
+`origin/main`'s line to the character. That code path also sets the result's `skew`, a key
+`origin/main`'s result does not have.
+
+**Rule 1, a null sha.** In the identity line the sha slot reads `sha unknown`, not `unknown`, when the
+record names no sha for its reader: a null sha, a null reader, or a reader its module list does not
+name. Every other null value is written `unknown`.
+
+**The opening.** The quoting erratum says two review rounds changed the reader and that item 3 now
+differs from the code in two places. Both differences are older than the review rounds. `fd274520`
+already withheld a recorded identity holding the word, and review 1 widened the rule to a module name,
+the implementation, the version and the pin in `fc749119`. `styxx.instrument.delta` has read `differs`
+ahead of `incomplete` since `0383daef`, the module's earliest commit.
+
+Neither change in `fd4036b3` touches the SKEW problem or a content line, and the measurement of the
+second section re-derives at `4c8079fa`.
