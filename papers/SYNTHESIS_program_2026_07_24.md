@@ -95,3 +95,6 @@ Mamba/LinOSS checkpoint under `resonance_profiler`).
 3. **Arc B falsification:** finish the relational-load dose-response; then the real-model rung — run the
    resonance profiler on a trained SSM checkpoint. That is the step that either opens the bridge to real
    models or closes it.
+
+   Forward pointer (2026-10-12): attempt three: not started; two pilots, both NEITHER —
+   `papers/frequency-resonance/RESULT_realmodel_bridge_v3_not_started_2026_10_12.md`.
