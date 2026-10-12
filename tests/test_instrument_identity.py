@@ -12,8 +12,9 @@ the words (a module named `ambiguous`, an implementation, a version, a styxx str
 without a styxx.diffgate sha); a record naming its runtime and no build, differing on the runtime, read
 as SKEW with the unknown fields listed and no sha pointed at; a trailing newline in a module name or sha
 refused (review 2); the advisories quoting a recorded identity as read while the SKEW problem withholds
-it, and the format-key line reading the payload's pin as before this phase (the amendment's third dated
-section); R5 never comparing identity; the page's meta line; and `python -m styxx.instrument`.
+it, a recorded module name kept as read in the advisories' field lists, the result and the R5 refusal,
+and the format-key line reading the payload's pin as before this phase (the amendment's third and fourth
+dated sections); R5 never comparing identity; the page's meta line; and `python -m styxx.instrument`.
 
 The record writer (styxx/diffgate.py) names nothing in this phase, so a record that carries an
 identity here is made by wrapping gate_diff_text; phase 2 makes the writer carry it.
@@ -709,12 +710,15 @@ _NO_PIN = object()
     pytest.param(None, "null", id="null"),
     pytest.param("styxx==7.49.0", "styxx==7.49.0", id="string"),
     pytest.param(7, "7", id="number"),
+    pytest.param("styxx-ambiguous", "styxx-ambiguous", id="string-holding-the-word"),
 ])
 def test_the_format_key_line_reads_the_payloads_pin_as_before_this_phase(tmp_path, pin, written):
     """The erratum's rule 6 and the amendment's third dated section: the format-key SKEW line is origin/main's
     line, with the payload's unsealed pin read by origin/main's expression, `verifier.get("pip", "styxx")`:
     no `pip` key reads `styxx`, a string is written as it is, and any other value as `_short` writes it
-    (`null` for null). From fd274520 through 225785ad a null pin read `styxx`."""
+    (`null` for null). From fd274520 through 225785ad a null pin read `styxx`. The quoting rule does not
+    cover this line, so a pin holding the word still makes charon derive the capsule UNRESOLVED, as on
+    origin/main; any other pin leaves it not reproduced."""
     out = _mint(tmp_path)
     html, i, j, p = _payload(out)
     p["gate"]["diffgate"] = "v-fake"
@@ -729,6 +733,68 @@ def test_the_format_key_line_reads_the_payloads_pin_as_before_this_phase(tmp_pat
     assert rep["problems"] == ["INSTRUMENT SKEW: installed diffgate 'v0' vs embedded 'v-fake' — reproduce "
                                f"under `pip install {written}` before treating this as tamper"]
     assert rep["gate_identity"]["pin"] == (pin if isinstance(pin, str) else None)
+    line = charon.derive(out, tmp_path)
+    if "ambiguous" in written:
+        assert line["verdict"] == "UNRESOLVED"
+    else:
+        assert line["verdict"] != "UNRESOLVED" and line["reproduced"] is False
+
+
+def test_a_recorded_module_name_is_kept_as_read_everywhere_but_the_skew_problem(tmp_path, monkeypatch):
+    """The rest of the quoting erratum's rule 5 and the last sentence of its rule 6, with a module the reader
+    admits named `ambiguous`: the advisories' field lists (D-ok's differing fields, I-ok's and I-fail's
+    unknown fields), the result's gate_identity (`recorded`, `differs`, `unknown`) and the R5 refusal at
+    mint keep the name as read; only the SKEW problem withholds it. charon reads no advisory, so none of the
+    capsules that hold the name only in an advisory derives UNRESOLVED."""
+    hostile = _identity()
+    hostile["build"]["modules"].append(["ambiguous", "0" * 64])
+    field = "build.modules[ambiguous]"
+    _under(monkeypatch, hostile)
+    out = _mint(tmp_path, name="dok")
+    _under(monkeypatch, Y)
+    rep = verify_capsule(out)                                                # D-ok
+    assert rep["ok"] is True and rep["gate_identity"]["state"] == "differs"
+    assert rep["gate_identity"]["recorded"] == hostile and field in rep["gate_identity"]["differs"]
+    adv = _identity_advisories(rep)
+    assert rep["gate_identity"]["differs"] == ["build.modules[styxx.diffgate]", field, "runtime.version",
+                                              "runtime.unicode"]
+    assert len(adv) == 1 and adv[0].startswith("reproduced under another instrument (differs: "
+                                               f"build.modules[styxx.diffgate], {field}, runtime.version, "
+                                               "runtime.unicode): ")
+    assert C._UNQUOTED_NAME not in adv[0]
+    assert charon.derive(out, tmp_path)["verdict"] != "UNRESOLVED"
+    _edit_and_reseal(out)
+    rep = verify_capsule(out)                                                # SKEW
+    assert rep["skew"] is True and field in rep["gate_identity"]["differs"]
+    assert "build.modules[(a name this verifier does not quote)]" in rep["problems"][0]
+    assert all("ambiguous" not in p.lower() for p in rep["problems"])
+
+    incomplete = _identity()
+    incomplete["build"]["modules"].append(["ambiguous", None])
+    _under(monkeypatch, incomplete)
+    out = _mint(tmp_path, name="inc")
+    rep = verify_capsule(out)                                                # I-ok
+    assert rep["ok"] is True and rep["gate_identity"]["state"] == "incomplete"
+    assert rep["gate_identity"]["unknown"] == [field]
+    adv = _identity_advisories(rep)
+    assert len(adv) == 1 and adv[0].startswith(f"the gate record names its instrument incompletely (unknown: {field}); ")
+    _edit_and_reseal(out)
+    rep = verify_capsule(out)                                                # I-fail
+    assert rep["ok"] is False and rep["skew"] is False and rep["gate_identity"]["unknown"] == [field]
+    adv = _identity_advisories(rep)
+    assert len(adv) == 1 and adv[0].startswith(f"the gate record names its instrument incompletely (unknown: {field}), ")
+    assert C._UNQUOTED_NAME not in adv[0]
+    assert charon.derive(out, tmp_path)["verdict"] != "UNRESOLVED"
+
+    from styxx.diffgate import gate_diff_text                                # R5, at mint
+    monkeypatch.undo()                        # this box's own identity, which lists no such module
+    stale = gate_diff_text("Added styxx/other.py entirely.\n", DIFF, run=None, strict=False).to_dict()
+    other = copy.deepcopy(Y)
+    other["build"]["modules"].append(["ambiguous", "0" * 64])
+    with pytest.raises(SystemExit) as e:
+        _mint(tmp_path, gate={**stale, **other}, name="stale")
+    assert "names another instrument (differs: " in str(e.value) and field in str(e.value)
+
 
 # ----------------------------------------------------------------------------------- 10. R5
 
