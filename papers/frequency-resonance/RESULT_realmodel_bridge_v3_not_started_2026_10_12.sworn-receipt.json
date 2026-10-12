@@ -1,0 +1,1287 @@
+{
+ "schema": "styxx.sworn.verdict-receipt/v1",
+ "format": "sworn/0.1",
+ "document": {
+  "name": "RESULT_realmodel_bridge_v3_not_started_2026_10_12.md",
+  "inline_sha256": "7899774c084fbd2116346a3ec093213cb8d09a68c8544a665cc55611b8c48437",
+  "canonical_sha256": "e0522b92bdd681fb38a3865882a4cae726972ff3572a4985987afba3b61a836b"
+ },
+ "commit": "d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1",
+ "manifest_digest": null,
+ "spans": [
+  {
+   "at": 1872,
+   "start": 1872,
+   "end": 1937,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/redteam/mamba_A_real_and_negative_every_layer/layers",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "48",
+    "printed": "48",
+    "receipt": "48",
+    "receipt_rounded": "48",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 2088,
+   "start": 1939,
+   "end": 1962,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/redteam/mamba_A_real_and_negative_every_layer/max_A",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "−0.0039",
+    "printed": "-0.0039",
+    "receipt": "-0.0039034681394696236",
+    "receipt_rounded": "-0.0039",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 2376,
+   "start": 2079,
+   "end": 2097,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_smoke.json#/budget/n_per_cell",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "600",
+    "printed": "600",
+    "receipt": "600",
+    "receipt_rounded": "600",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "63b08c3df3536961de4f339beb68ea371ec7324d04885c522a8e16d0fe8eda86",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 3061,
+   "start": 2651,
+   "end": 2693,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_smoke.json#/verdict",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 28,
+    "haystack_bytes": 28,
+    "occurrences": 1
+   },
+   "resolved_sha256": "63b08c3df3536961de4f339beb68ea371ec7324d04885c522a8e16d0fe8eda86",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 3325,
+   "start": 2814,
+   "end": 2829,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_smoke.json#/budget/total_hours_timed_arms",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1.635",
+    "printed": "1.635",
+    "receipt": "1.635",
+    "receipt_rounded": "1.635",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "63b08c3df3536961de4f339beb68ea371ec7324d04885c522a8e16d0fe8eda86",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 3650,
+   "start": 3014,
+   "end": 3022,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/recall/M1/n",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "48",
+    "printed": "48",
+    "receipt": "48",
+    "receipt_rounded": "48",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 3793,
+   "start": 3040,
+   "end": 3044,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/config/seeds/pilot",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1011",
+    "printed": "1011",
+    "receipt": "1011",
+    "receipt_rounded": "1011",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 4633,
+   "start": 3766,
+   "end": 3774,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/M1/compare/acc_norm",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "−0.042",
+    "printed": "-0.042",
+    "receipt": "-0.04166666666666663",
+    "receipt_rounded": "-0.042",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 4776,
+   "start": 3777,
+   "end": 3781,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/M1/compare/yes_rate",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.94",
+    "printed": "0.94",
+    "receipt": "0.9375",
+    "receipt_rounded": "0.94",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 4915,
+   "start": 3784,
+   "end": 3788,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/M1/compare/auroc",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.38",
+    "printed": "0.38",
+    "receipt": "0.3845486111111111",
+    "receipt_rounded": "0.38",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 5051,
+   "start": 3791,
+   "end": 3799,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/M1/compare/acc_norm",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "−0.167",
+    "printed": "-0.167",
+    "receipt": "-0.16666666666666663",
+    "receipt_rounded": "-0.167",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 5198,
+   "start": 3802,
+   "end": 3806,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/M1/compare/yes_rate",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.92",
+    "printed": "0.92",
+    "receipt": "0.9166666666666666",
+    "receipt_rounded": "0.92",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 5341,
+   "start": 3809,
+   "end": 3813,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/M1/compare/auroc",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.37",
+    "printed": "0.37",
+    "receipt": "0.3689236111111111",
+    "receipt_rounded": "0.37",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 5481,
+   "start": 3816,
+   "end": 3821,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/recall/M1/acc_norm",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.656",
+    "printed": "0.656",
+    "receipt": "0.65625",
+    "receipt_rounded": "0.656",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 5619,
+   "start": 3830,
+   "end": 3835,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/T/compare/acc_norm",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.083",
+    "printed": "0.083",
+    "receipt": "0.08333333333333326",
+    "receipt_rounded": "0.083",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 5758,
+   "start": 3838,
+   "end": 3842,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/T/compare/yes_rate",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.42",
+    "printed": "0.42",
+    "receipt": "0.4166666666666667",
+    "receipt_rounded": "0.42",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 5896,
+   "start": 3845,
+   "end": 3849,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/T/compare/auroc",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.56",
+    "printed": "0.56",
+    "receipt": "0.5625",
+    "receipt_rounded": "0.56",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 6031,
+   "start": 3852,
+   "end": 3857,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/T/compare/acc_norm",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.042",
+    "printed": "0.042",
+    "receipt": "0.04166666666666674",
+    "receipt_rounded": "0.042",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 6174,
+   "start": 3860,
+   "end": 3864,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/T/compare/yes_rate",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.56",
+    "printed": "0.56",
+    "receipt": "0.5625",
+    "receipt_rounded": "0.56",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 6316,
+   "start": 3867,
+   "end": 3871,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/T/compare/auroc",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.53",
+    "printed": "0.53",
+    "receipt": "0.5260416666666666",
+    "receipt_rounded": "0.53",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 6455,
+   "start": 3874,
+   "end": 3879,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/recall/T/acc_norm",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.969",
+    "printed": "0.969",
+    "receipt": "0.9687499999999998",
+    "receipt_rounded": "0.969",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 7057,
+   "start": 4353,
+   "end": 4376,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/recall/M1/acc_raw",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.771",
+    "printed": "0.771",
+    "receipt": "0.7708333333333334",
+    "receipt_rounded": "0.771",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 7208,
+   "start": 4381,
+   "end": 4405,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/recall/T/acc_raw",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.979",
+    "printed": "0.979",
+    "receipt": "0.9791666666666666",
+    "receipt_rounded": "0.979",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 7452,
+   "start": 4503,
+   "end": 4563,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/format_recommendation",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 39,
+    "haystack_bytes": 98,
+    "occurrences": 1
+   },
+   "resolved_sha256": "1be199215828077999260081b1d1c54dfb414509992486ef4472e447320f4e11",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 8028,
+   "start": 4964,
+   "end": 5039,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/compare_question",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 73,
+    "haystack_bytes": 73,
+    "occurrences": 1
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 8537,
+   "start": 5355,
+   "end": 5368,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/guard/max_slot_fraction",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.80",
+    "printed": "0.80",
+    "receipt": "0.8",
+    "receipt_rounded": "0.80",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 9096,
+   "start": 5787,
+   "end": 5802,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/screen_bar",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.40",
+    "printed": "0.40",
+    "receipt": "0.4",
+    "receipt_rounded": "0.40",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 9500,
+   "start": 6077,
+   "end": 6085,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/n_per_cell",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "48",
+    "printed": "48",
+    "receipt": "48",
+    "receipt_rounded": "48",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 9640,
+   "start": 6103,
+   "end": 6107,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/seeds/pilot2",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1012",
+    "printed": "1012",
+    "receipt": "1012",
+    "receipt_rounded": "1012",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 9924,
+   "start": 6271,
+   "end": 6295,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/redteam/disjoint_from_committed_receipts/this_run_sentences",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "140",
+    "printed": "140",
+    "receipt": "140",
+    "receipt_rounded": "140",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 10121,
+   "start": 6312,
+   "end": 6346,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/redteam/disjoint_from_committed_receipts/prior_sentence_indices",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1,284",
+    "printed": "1284",
+    "receipt": "1284",
+    "receipt_rounded": "1284",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 10336,
+   "start": 6367,
+   "end": 6380,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/runtime/total_seconds",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "119.4",
+    "printed": "119.4",
+    "receipt": "119.4",
+    "receipt_rounded": "119.4",
+    "fractional_digits": 1,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 10478,
+   "start": 6391,
+   "end": 6403,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/runtime/scoring_seconds",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "72.1",
+    "printed": "72.1",
+    "receipt": "72.1",
+    "receipt_rounded": "72.1",
+    "fractional_digits": 1,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 10669,
+   "start": 6462,
+   "end": 6540,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/runner_sha256",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 64,
+    "haystack_bytes": 64,
+    "occurrences": 1
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 10868,
+   "start": 6546,
+   "end": 6671,
+   "receipt": "path:papers/frequency-resonance/run_realmodel_bridge_v3.py",
+   "kind": "hash",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "stated": "24e8c3ba8a3344f4e13ca41bce30d8cfa9cec53beffc00719c78c96b55c6987f",
+    "receipt_sha256": "24e8c3ba8a3344f4e13ca41bce30d8cfa9cec53beffc00719c78c96b55c6987f"
+   },
+   "resolved_sha256": "24e8c3ba8a3344f4e13ca41bce30d8cfa9cec53beffc00719c78c96b55c6987f",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 11240,
+   "start": 6831,
+   "end": 6839,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_norm/M1/compare/16",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "−0.062",
+    "printed": "-0.062",
+    "receipt": "-0.06249999999999994",
+    "receipt_rounded": "-0.062",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 11370,
+   "start": 6842,
+   "end": 6847,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_raw/M1/compare/16",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.292",
+    "printed": "0.292",
+    "receipt": "0.2916666666666667",
+    "receipt_rounded": "0.292",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 11496,
+   "start": 6850,
+   "end": 6854,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/M1/compare/16/slot_fractions/1",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.92",
+    "printed": "0.92",
+    "receipt": "0.9166666666666666",
+    "receipt_rounded": "0.92",
+    "fractional_digits": 2,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 11636,
+   "start": 6857,
+   "end": 6862,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/M1/compare/16/ovr_auroc",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.449",
+    "printed": "0.449",
+    "receipt": "0.44921875",
+    "receipt_rounded": "0.449",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 11770,
+   "start": 6865,
+   "end": 6870,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/controls/ablated/M1/compare/16/acc_norm",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.000",
+    "printed": "0.000",
+    "receipt": "0.0",
+    "receipt_rounded": "0.000",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 11914,
+   "start": 6873,
+   "end": 6878,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_norm/M1/recall/16",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.812",
+    "printed": "0.812",
+    "receipt": "0.8125",
+    "receipt_rounded": "0.812",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 12040,
+   "start": 6881,
+   "end": 6886,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/M1/recall/16/ovr_auroc",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.977",
+    "printed": "0.977",
+    "receipt": "0.9772135416666666",
+    "receipt_rounded": "0.977",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 12173,
+   "start": 6889,
+   "end": 6897,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/controls/ablated/M1/recall/16/acc_norm",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "−0.156",
+    "printed": "-0.156",
+    "receipt": "-0.15624999999999997",
+    "receipt_rounded": "-0.156",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 12325,
+   "start": 6906,
+   "end": 6911,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_norm/T/compare/16",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.000",
+    "printed": "0.000",
+    "receipt": "0.0",
+    "receipt_rounded": "0.000",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 12451,
+   "start": 6914,
+   "end": 6919,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_raw/T/compare/16",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.333",
+    "printed": "0.333",
+    "receipt": "0.3333333333333333",
+    "receipt_rounded": "0.333",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 12576,
+   "start": 6922,
+   "end": 6925,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/T/compare/16/slot_fractions/1",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1.0",
+    "printed": "1.0",
+    "receipt": "1.0",
+    "receipt_rounded": "1.0",
+    "fractional_digits": 1,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 12714,
+   "start": 6928,
+   "end": 6933,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/T/compare/16/ovr_auroc",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.535",
+    "printed": "0.535",
+    "receipt": "0.5345052083333334",
+    "receipt_rounded": "0.535",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 12847,
+   "start": 6936,
+   "end": 6944,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/controls/ablated/T/compare/16/acc_norm",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "−0.031",
+    "printed": "-0.031",
+    "receipt": "-0.03124999999999997",
+    "receipt_rounded": "-0.031",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 12993,
+   "start": 6947,
+   "end": 6952,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_norm/T/recall/16",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.875",
+    "printed": "0.875",
+    "receipt": "0.8749999999999998",
+    "receipt_rounded": "0.875",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 13118,
+   "start": 6955,
+   "end": 6960,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/T/recall/16/ovr_auroc",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.999",
+    "printed": "0.999",
+    "receipt": "0.9986979166666666",
+    "receipt_rounded": "0.999",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 13250,
+   "start": 6963,
+   "end": 6971,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/controls/ablated/T/recall/16/acc_norm",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "−0.094",
+    "printed": "-0.094",
+    "receipt": "-0.09374999999999999",
+    "receipt_rounded": "-0.094",
+    "fractional_digits": 3,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 14336,
+   "start": 7915,
+   "end": 7936,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/pilot_outcome",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 7,
+    "haystack_bytes": 7,
+    "occurrences": 1
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 14470,
+   "start": 7941,
+   "end": 7980,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/format_line_to_enter",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 11,
+    "haystack_bytes": 11,
+    "occurrences": 1
+   },
+   "resolved_sha256": "fc8840f5273b205f553bb022773d3d68d8147e3a03e5936f71f036f78a7742a0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 14691,
+   "start": 8047,
+   "end": 8107,
+   "receipt": "path:papers/frequency-resonance/PREREG_realmodel_bridge_v3_2026_10_11.md#L661",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 58,
+    "haystack_bytes": 58,
+    "occurrences": 1
+   },
+   "resolved_sha256": "4ee95277654c9d34617b24c04e485a7e5db8c8b2718b5fead91b63f4087d823c",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 18723,
+   "start": 11972,
+   "end": 12065,
+   "receipt": "path:papers/frequency-resonance/CERT_realmodel_bridge.json#/document_sha256",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 64,
+    "haystack_bytes": 64,
+    "occurrences": 1
+   },
+   "resolved_sha256": "a0ba9602d9ae9c27d3b0121f5a8a9904c08eb10740dde33d3b109e7737babb90",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  },
+  {
+   "at": 18930,
+   "start": 12074,
+   "end": 12175,
+   "receipt": "path:papers/frequency-resonance/RESULT_realmodel_bridge_2026_07_24.md",
+   "kind": "hash",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "stated": "6d9bf383e50360c36cae0e277e35b8a0e2b6e67f94797addd7c340ffdea8cda7",
+    "receipt_sha256": "6d9bf383e50360c36cae0e277e35b8a0e2b6e67f94797addd7c340ffdea8cda7"
+   },
+   "resolved_sha256": "6d9bf383e50360c36cae0e277e35b8a0e2b6e67f94797addd7c340ffdea8cda7",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1; authorship unchecked"
+   }
+  }
+ ],
+ "counts": {
+  "HELD": 56,
+  "FAILED": 0,
+  "UNRESOLVED": 0,
+  "MALFORMED": 0,
+  "WITHHELD": 0
+ },
+ "sworn_total": 56,
+ "unresolved": 0,
+ "document_verdict": "SWORN-HELD",
+ "document_malformed": null,
+ "rungs": {
+  "committed": 56
+ },
+ "verifier": {
+  "styxx_version": "7.49.0",
+  "sworn_sha256": "7e4602472010497a69a050995485efec4ee42b30c8ed4a2b7be545c0c5a84526",
+  "rounding": "ROUND_HALF_EVEN",
+  "decisions": {
+   "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
+   "code_span": "inline backtick spans match runs of equal length on the same line; an unmatched run is literal",
+   "tag_grammar": "exactly `<sworn r=\"…\" k=\"…\">` with single spaces, double quotes, lowercase, and `</sworn>`; any other tag-shaped candidate (`<sworn`/`</sworn` followed by a non-name byte) is MALFORMED, never narrative",
+   "lexical_malformed_refuses_sidecar": "a document with tag_syntax/nesting/stray_closer/unclosed has no canonical text, and a zero-byte span has no representable offsets; both can be verified inline but a sidecar is refused, and a sidecar carrying either shape is refused on load",
+   "sworn_total_counts_malformed": "sworn_total includes MALFORMED; UNSWORN is reserved for a document with no tag-shaped candidate at all",
+   "document_malformed_is_failed": "unbalanced fences or undecodable UTF-8 yield SWORN-FAILED with document_malformed set, never UNSWORN",
+   "empty_span": "an inner text of zero bytes, or only ASCII whitespace, is MALFORMED for every kind",
+   "number_grammar": "the span is cut into MAXIMAL tokens of [\\w.,+-−%/±:]; exactly one token may carry a digit and, after stripping trailing . , : it must be entirely one number: [-+−]?(digits with optional ,thousands)(.digits)?%? or .digits%?. Any other digit-bearing token (r1, v0.1, STRUCT-1, sha256, 1e-5, 3/4, 2026-09-01, 0.55-0.60, ±0.02, ٣) is MALFORMED — no identifier whitelist, no date/sha/version scrub, no partial extraction possible by construction. `42%` is the number 42 and no conversion happens; `0.55.` is 0.55; `23,247.` is 23247",
+   "rounding": "the receipt scalar is a Decimal from the JSON text, quantized to the printed fractional digits with ROUND_HALF_EVEN, compared as Decimal (never a float)",
+   "numeric_leaf": "the addressed value must be a JSON number (read as Decimal from its own digits); a string, bool, null, NaN, Infinity, array or object is MALFORMED — a string that happens to spell a number is not parsed, that would be a guess",
+   "numeric_address": "numeric reads the receipt as JSON with numbers as Decimal; bytes that are not UTF-8 JSON are MALFORMED receipt_not_json (the author named a fragment or scalar inside bytes it could read); a duplicated key ON the pointer path is MALFORMED pointer_ambiguous, a duplicate off the path is irrelevant; the address is the JSON pointer, or the root when there is none; a line-anchored slice must itself be one JSON number",
+   "needle": "for quote and absent, the stated string is the content of exactly ONE inline backtick code span inside the sworn text, bytes verbatim, no trimming; a needle of zero bytes or only ASCII whitespace is MALFORMED",
+   "quote_pointer": "quote against a JSON pointer compares the needle with a string leaf's UTF-8 bytes",
+   "hash_token": "the stated hash is exactly one run of 64 hex characters in the span; any run of 32/40/96/128 hex, or two 64-runs, is MALFORMED",
+   "line_anchor": "#L13 / #L13-L20 are 1-based, inclusive, split on LF only, CR retained, interior newlines kept, the final line's terminating LF excluded; a line past EOF is MALFORMED; a trailing LF does not begin an empty last line",
+   "rn_grammar": "^r[1-9][0-9]*$, optionally followed by the same `#` fragment grammar path: takes — `/`-pointer (RFC 6901) or Ln[-Lm] — since v0.2 R1; absent and hash over a fragment are MALFORMED exactly as over a partial path:",
+   "hidden_commitment": "since v0.2 R2: a tag-shaped candidate inside an HTML comment (`<!--` … `-->`, scanned outside fences and code spans, comments never nesting, an unterminated comment running to end of document) is MALFORMED hidden_commitment — never HELD, never narrative; it counts in sworn_total and makes the document SWORN-FAILED",
+   "short_needle": "since v0.2 R3: a quote needle under 16 bytes searched over a WHOLE receipt is MALFORMED short_needle; a quote against a JSON-pointer string leaf or a line anchor is exempt (the author narrowed the haystack by naming it), and absent is exempt (a short absent needle over a complete object is the stronger oath); occurrences of a quote needle in its haystack are counted into detail, report-only",
+   "length_cap": "since v0.2 R4: the inner text is capped at 300 Unicode code points; a pure function of bytes because invalid UTF-8 is document-MALFORMED first",
+   "rung": "since v0.2 R6: a manifest/0.2 declares rung L1 (a local hook sharing a filesystem and a shell with the agent — weak) or L2 (a runner that minted after the turn ended and the agent could not write to); L3 (signed, verified) is reserved and refused; a manifest/0.1, or a 0.2 with no rung, resolves at rung `undeclared`, never at L2; an unknown or reserved rung string makes every rN span UNRESOLVED rung_unknown — the verifier declining to see a manifest that claims what it cannot check, never an accusation against the author",
+   "provenance": "since v0.2 R7: every span verdict carries `provenance` — for rN {harness, rung, kind_of_source}; for path: and prereg: the literal `committed object at <commit>; authorship unchecked` — and the receipt carries a `rungs` count; nothing verifies a rung, the verifier prints what the manifest declared",
+   "receipt_v1": "since v0.2 R9: the receipt digest covers the core WITHOUT coverage; coverage travels beside it under coverage_sha256; verify_receipt re-derives the core and reports coverage_reproduces separately (advisory); a /v0 receipt is compared on its core minus coverage minus verifier, its digest still checked over its full body, and the note says so",
+   "path_grammar": "relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no glob metacharacter (* ? [ ]), no leading ':' (git pathspec magic) — a path names ONE committed file, never a set the verifier would pick from; split at the FIRST #; fragment is `/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]",
+   "prereg_search": "the tree at the sidecar's commit, blobs only, memoised per commit",
+   "manifest_bytes": "standard base64; an entry whose bytes do not hash to its sha256 is UNRESOLVED",
+   "author_minted": "kind_of_source in {agent_output, agent_file_write, agent_message}, or a receipt sha256 listed in the manifest's authored_sha256 (every byte-object the agent produced this turn, recorded by the harness), is MALFORMED receipt_author_minted; a kind outside the closed vocabulary is MALFORMED kind_of_source_unknown; complete missing from an rN used with absent is UNRESOLVED manifest_no_completeness, complete:false is MALFORMED",
+   "coverage": "since v0.2 R8 the ESTIMATE IS WITHDRAWN: the denominator instrument (styxx.claimdetect, STRUCT-1) is a diff-claim detector measured on agent pull-request prose and by its own docstring never reads result-shaped sentences as claims, so across the twelve committed sworn receipts at 320b303 it printed 0.6667-1.0 while counting 0-8 of tens of narrative sentences; the block is now schema sworn/coverage/1 carrying sworn_total, narrative_sentences (diffgate's splitter `(?<=[.!?])\\s+|\\n+` over canonical text minus sworn spans minus fenced regions, non-empty), sentence_share = sworn_total / (sworn_total + narrative_sentences) — a FLOOR that treats every narrative sentence as load-bearing and so cannot flatter — and diff_claim_sentences / diff_claim_share from STRUCT-1 labelled with its idiom and ceiling; 0/0 is null; ALWAYS advisory; never a measurement of bound recall",
+   "exit_codes": "verify exits 0 for EVERY document verdict — SWORN-HELD, SWORN-FAILED, UNSWORN, document-level MALFORMED — because sworn reports and never gates; a refusal (undecodable document, a sidecar that cannot round-trip or carries an unknown shape, a manifest that disagrees with the embedded one) is SystemExit('REFUSED: …'), exit status 1, nothing written; check exits 1 when a receipt does not re-derive",
+   "html_comments": "v0.1 recognised a tag inside an HTML comment like any other and named the hidden commitment as owed; v0.2 R2 closes it — see `hidden_commitment`"
+  }
+ },
+ "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
+ "digest": "0dec8ac0d75106adb5561213eeaba4a8f43c4265db21a71c180ab6e242f9cbae",
+ "coverage": {
+  "schema": "sworn/coverage/1",
+  "advisory": true,
+  "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
+  "sworn_total": 56,
+  "narrative_sentences": 219,
+  "sentence_share": 0.2036,
+  "diff_claim_sentences": 1,
+  "diff_claim_share": 0.9825,
+  "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
+  "unsworn_claims": [
+   {
+    "start": 12636,
+    "end": 12733,
+    "text": "working note `STATE_OF_THE_ARC_v2.md`: run the resonance profiler shipped in `styxx/resonance.py`"
+   }
+  ],
+  "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
+  "claimdetect_version": "struct-1/2026-08-30"
+ },
+ "coverage_sha256": "b11cb53cf571b141c2fd8f764913846ea5f934d90235d6c0b9e859d6fe0f3691",
+ "timestamp": "2026-10-12T10:03:43Z"
+}
