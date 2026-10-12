@@ -365,7 +365,10 @@ def test_seals_row_7b_seals_the_correction_row_8_is_withdrawn_and_the_memos_are_
     from styxx.clock import memo
     rows = _seal_rows()
     r7, r7b, r8 = rows["7"], rows["7b"], rows["8"]
-    assert list(rows)[-3:] == ["7", "7b", "8"]
+    # 7b sits right after 7, as 3b and 6b sit after 3 and 6, and row 8 comes later; SEALS is append-only and
+    # shared, so a row another track appends after 8 leaves this standing
+    keys = list(rows)
+    assert keys.index("7b") == keys.index("7") + 1 < keys.index("8"), keys
     assert ROW7_SHA256 in r7 and "`3598e59d`" in r7 and REL_PREREG in r7 and ROW8_SHA256 not in r7
     assert "nights 2 and 3 of the run do not start before this row reads ANCHORED" in r7
     assert ROW7B_SHA256 in r7b and "`d90da693`" in r7b and REL_CORRECTION in r7b and "`sealed-prereg`" in r7b
@@ -376,7 +379,8 @@ def test_seals_row_7b_seals_the_correction_row_8_is_withdrawn_and_the_memos_are_
     assert tail and head.endswith("or the labelled sha256-of-tag fallback is declared")
     assert "row 8 is not to be anchored, its memo is struck from the list" in tail
     memos = [ln.strip() for ln in SEALS.read_text(encoding="utf-8").splitlines() if ln.startswith("    styxx ")]
-    assert memos[-2:] == [memo("sealed-prereg", ROW7_SHA256), memo("sealed-prereg", ROW7B_SHA256)]
+    m7, m7b = memo("sealed-prereg", ROW7_SHA256), memo("sealed-prereg", ROW7B_SHA256)
+    assert m7 in memos and m7b in memos and memos.index(m7b) == memos.index(m7) + 1, memos
     assert memo("sealed-prereg", ROW8_SHA256) not in memos and len(memos) == len(set(memos))
     raw = SEALS.read_bytes()
     assert b"\r" not in raw and not raw.startswith(b"\xef\xbb\xbf")
