@@ -567,3 +567,97 @@ anchor-permutation runs after anything. No reading of the sealed untied receipt.
 
 Banned-word and BOM scan of this file, the runner and the tests: `tests/test_pmnist_robustness.py` reads the lab's
 own BANNED tuple (`scripts/zenodo_publish_v7_48_0.py`) and asserts zero hits.
+
+---
+
+## 15. Amendment, before any data (2026-10-12)
+
+Appended under the §15 heading that §12 names; the text above this heading is not edited. It is the blob sealed as
+`papers/checksum/SEALS_2026_09_13.md` row 7, byte for byte: the leading 56,960 bytes of this file's blob hash to
+`2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e` (`tests/test_pmnist_robustness.py` asserts it).
+No run, no smoke and no leaf exists, and no anchor of row 7 is recorded (`papers/charon/anchors.jsonl` does not
+exist in this tree). The entry answers the lab's review of 2026-10-11. **No bar moves**: no gate, value, operator,
+metric path, row, arm, seed, count, permutation derivation, threshold or schedule changes, and the gates block's
+sha256 as `styxx.protocol` computes it (`gates_sha256`) is
+`578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854` before and after this section. The author of this
+entry has not opened the sealed untied receipt either.
+
+**15.1 Seeds 0 and 1 enter one gated metric (correction).** Two sentences above are wrong as written: the opening
+section's "those two enter no gated metric (§4)" and §3's "they feed `anchor_max_abs_dev` (reported) and **no gated
+metric**"; so is the last clause of `G_C_anchor`'s power basis ("seeds 0 and 1 are the receipt's own and enter no
+gate"), which sits inside the frozen block and stays as it is. The six re-run trainings (FREE, CLAMPED and REAL2 at
+seeds 0 and 1 on permutation 1234) are 4000-step runs, and `degenerate_fraction` (§4) is degenerate 4000-step runs
+over 60, all of them; the runner counts them (its pool for that metric is every 4000-step leaf at H = 64). They
+enter exactly one gated metric, `degenerate_fraction` (`G_D_stable`), and no other: not the floor and not
+`anchor_gap_newseed` (both read anchor seeds 2, 3, 4), not any permutation-averaged gate (held-out permutations
+only), not `gap_long` (its own 12,000-step runs). This is kept, not changed in code: `G_D_stable` is a validity gate
+over every training the design runs, and dropping six runs from it would let a collapse of the re-run go uncounted.
+For the order of operations: whoever reads the sealed receipt before the run knows the final accuracies of those six
+trainings (the committed `run_pmnist_untied.py` writes `test_acc` per arm and seed), up to device nondeterminism —
+six of the sixty-five, not the "two" the opening section says — and so could foresee at most 6 of the 60 runs that
+`degenerate_fraction` counts. The bar stays at 0.10.
+
+**15.2 Rounding before scoring.** Every gated metric is computed in double precision from the leaves and written to
+`result.<name>` rounded once to four decimals (Python `round(x, 4)`; a value that sits half-way in decimal is
+decided by its binary double, as `round` decides it); `Experiment.score` compares the rounded number. A metric within
+0.00005 of a bar is therefore decided by its rounded value: `real2_minus_clamped_perm_mean` = 0.03004 is written 0.03
+and passes `<= 0.03`; `gap_perm_mean` = 0.14996 is written 0.15 and passes `>= 0.15`; `gap_perm_ci_lo` = 0.00004 is
+written 0.0 and fails `> 0.0`. `degenerate_fraction` is k/60 and `plumbing_ok` is 0 or 1, so the rounding cannot move
+either across its bar. A final accuracy is a count over 10,000 test images, a multiple of 0.0001, so a leaf's
+four-decimal `final_acc` loses nothing. The convention is the committed untied runner's (`round(..., 4)` on every
+metric before `Experiment.score`). The non-finite rule of §9.7 applies before the rounding. Reported numbers are
+rounded the same way (the bootstrap's two variances to six decimals).
+
+**15.3 What is committed, and the order of writes.** With the RESULT, in its commit: every leaf
+(`pmnist_robustness_runs/p*.json`), the leaf log (`pmnist_robustness_runs/leaf_chain.jsonl`) and the receipt
+(`pmnist_robustness_result.json`). The receipt inlines every leaf under `runs` and carries the numbers on its own;
+the leaves and the log are committed so that the receipt's `leaf_chain` block can be re-derived from bytes. Not
+committed: `_mnist.npz` (gitignored, §1), the smoke receipt (`pmnist_robustness_smoke.json`, gitignored by the lab's
+`papers/**/*_smoke.json` rule; INVALID by type) and a leaf's temporary file (`*.tmp` in the leaf directory,
+gitignored). The leaf directory is marked `-text` in `.gitattributes`, so no checkout rewrites a leaf that the log
+names by its sha256, and the aggregate hashes each leaf with CRLF folded to LF (a leaf as written holds no CR byte),
+the rule §1 applies to the imported runners. Order of writes: the runner appends the log line for a leaf and fsyncs
+it, then writes the leaf to `<leaf>.tmp`, fsyncs it, and renames it into place. A crash between the two leaves a log
+line with no leaf: the night re-runs that run, the log carries a second line for the name, and the receipt lists it
+under `leaf_chain.rewrites`, visible and not fatal. (Written the other way round, a crash between the two left a leaf
+the log never named, which reads `plumbing_ok` = 0 until the leaf is deleted by hand and the run redone, with no
+trace in the log.) A log whose last line is torn (a crash inside the append) is refused by name the next time it is
+read; nothing repairs it silently, and the RESULT reports any repair made by hand. §8's "loses at most one run"
+holds.
+
+**15.4 The order of the pre-run checks.** The §9.4 list is unchanged; this is the order it runs in. Before torch is
+imported: a night 2 or 3 without `--beacon`, `--anchors` or `--fallback-perms` is refused; items 1–3 (the two runner
+blobs, the data pin, this file's blob, `Experiment` and `check_metrics()`); the smoke receipt's presence; item 6 (the
+derivation; `--anchors` is verified over the network here); the night's projected schedule and its refusals (§8).
+Then the committed runners are imported (a box without torch is refused by name, not by a traceback), the committed
+constants are checked, and item 7 (CUDA available and at least 6 GiB free) runs before any tensor is placed on the
+device: `R.redteam()`'s scan check (item 4), the earliest tensor the run puts on the card, comes after the guard,
+then item 5 (construction on CPU). The smoke runs the same order without the night-only steps.
+
+**15.5 This file's seal.** Appending this section changes the blob, so the digest changes. The digest of this file
+as amended is `papers/checksum/SEALS_2026_09_13.md` row 8, frozen at the commit that adds this section. Row 7
+(`2068e673…`, frozen at `3598e59d`) is this file before this section and is superseded: it is not to be anchored,
+and its memo is not in that file's memo list. Wherever the text above names this file's blob digest (the opening
+lines; §3's "blob sha256 of this file" and "this file's digest"; §9.4 item 3's "the sealed blob"; §9.7's
+`prereg_blob_sha256`), it means row 8's digest. The beacon of §3 is the block hash of the slot of the earliest
+confirmed memo `styxx sealed-prereg <row 8's digest>`; a memo carrying row 7's digest draws nothing, and if one
+exists the RESULT records it. `run_pmnist_robustness.py` carries row 8's digest as `PREREG_BLOB_SHA256`, so
+`--anchors` takes the beacon from row 8's line only, and every leaf and the receipt carry it as
+`prereg_blob_sha256`. `styxx.protocol.Experiment` records as `prereg_commit` the commit that added this file
+(`3598e59d`; it reads `git log --diff-filter=A`), not the commit of this section; the bytes a receipt was scored
+under are named by `prereg_blob_sha256`.
+
+**15.6 Why an appended section and not a new file.** §12 says an amendment before the seal is a dated entry under a
+§15 heading, and that after the seal there are no amendments, only a new PREREG. Row 7 is in SEALS (`689ee88c`), but
+`SEALS_2026_09_13.md` defines a seal by the earliest confirmed memo carrying the digest, and none is recorded; in
+that file's sense this entry precedes the seal. Read strictly, with the row as the seal, this file as amended is the
+new PREREG that §12 asks for: a new digest, a new row and its own anchor, with the text above this heading carried
+byte for byte and the reason for each change stated here. Decision 2 (three seeds per held-out permutation) is not
+reopened. A change after row 8 is anchored, or after any leaf exists, is a new PREREG under a new name.
+
+**15.7 Night 3 and `--accept-schedule`.** At the 18.0-minute refusal threshold night 3's 27 runs project 8.1 h, as
+the §8 table prints, which is over the 8.0-hour window; night 3 therefore refuses without `--accept-schedule`
+whenever the smoke projects more than 17.78 minutes per 4000-step run (8.0 × 60 / 27). Nights 1 and 2 are 24
+run-equivalents each (a 12,000-step run counts three), 7.2 h at 18.0 minutes; their window refusal would need over
+20 minutes per run, where the per-run threshold has already refused. The operator should expect the prompt on night
+3 near the threshold; no threshold moves.
