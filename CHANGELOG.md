@@ -65,7 +65,7 @@ the untied control beside it on the same bars the sealed 2026-09-02 PREREG froze
   sealed blob, `Experiment.check_metrics()` resolves every gate path on the receipt shape, CUDA is available and 6 GiB
   are free (checked before any tensor is placed on the card), and the three arms share RNG state and every non-SSM
   tensor at seeds 0-4. One leaf per run, an append-only hash-chained leaf log (a torn log is refused before a night
-  trains its first run), every leaf and receipt written as strict JSON (a non-finite loss as null, flagged by
+  trains any run), every leaf and receipt written as strict JSON (a non-finite loss as null, flagged by
   `nonfinite_loss`), `--smoke` INVALID by type, three nights of about 18 GPU-hours measured (`--night 1|2|3`,
   nights 2 and 3 refusing without the beacon or the declared fallback), `--aggregate`.
 - **Written without knowledge of the sealed untied receipt** (`pmnist_untied_result.json`, run 2026-10-11, unread);
