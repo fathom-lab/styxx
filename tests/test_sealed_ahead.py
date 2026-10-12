@@ -1,0 +1,360 @@
+# -*- coding: utf-8 -*-
+"""papers/sealed-ahead: population, pool, accuse, draw and stranger on synthetic GH Archive lines.
+
+No network: every fetch here is a fake that serves bytes built in the test. The gate is the
+checkout's styxx.diffgate, named by its own LF sha256, so these tests exercise the real gate.
+"""
+from __future__ import annotations
+
+import gzip
+import importlib.util
+import io
+import json
+import sys
+import urllib.error
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+SA = ROOT / "papers" / "sealed-ahead"
+sys.path.insert(0, str(ROOT))
+
+
+def _load(name):
+    key = "sealed_ahead_" + name
+    mod = sys.modules.get(key)
+    if mod is None:
+        spec = importlib.util.spec_from_file_location(key, SA / f"{name}.py")
+        mod = importlib.util.module_from_spec(spec)
+        sys.modules[key] = mod
+        spec.loader.exec_module(mod)
+    return mod
+
+
+common = _load("common")
+population = _load("population")
+pool = _load("pool")
+
+UTC = timezone.utc
+T0 = "2026-10-15T00:00:00Z"
+T1 = "2026-10-15T03:00:00Z"
+TABLE = population.load_identity_table()
+
+# The operative rules of identity_table.json, pinned: editing a rule must be a visible act.
+RULES_SHA256_PIN = "2fce0c15763231ef7a32a59e1e93091c286258136dd7782ed79dc84da6c6ad66"
+
+
+def params(**over):
+    p = {
+        "schema": common.PARAMS_SCHEMA,
+        "t0": T0,
+        "t1": T1,
+        "identity_rules_sha256": population.rules_sha256(TABLE),
+        "young_days": 30,
+        "ceiling_hour": common.ceiling_hour_for(common.parse_utc(T0), 30),
+        "account_id_ceiling": 5000,
+        "repo_id_ceiling": 9000,
+        "excluded_owners": ["fathom-lab"],
+        "excluded_actor_logins": ["lab-operator"],
+        "max_prs_per_repo": None,
+        "max_prs_per_actor": None,
+        "gap_grace_hours": 24,
+        "gate": {"module": "styxx.diffgate", "sha256": "0" * 64, "styxx_version": "7.49.0", "run": None,
+                 "strict": False},
+        "fetch": {"body_source": "payload_else_api", "diff_source": "pull", "rate_limit_per_hour": 50,
+                  "require_unmoved_head": True},
+        "draw": {"n": 3, "bitcoin_height": 970500, "min_confirmations": 6},
+    }
+    p.update(over)
+    return p
+
+
+def ev(eid, *, login="someone", actor_id=100, repo_id=200, repo="acme/app", number=1, ref="feature/x",
+       action="opened", created="2026-10-15T00:10:00Z", head_sha="a" * 40, base_sha="b" * 40,
+       typ="PullRequestEvent", full=None):
+    """A GH Archive event shaped like the trimmed 2026 payload; `full` adds a pre-trim pull_request object."""
+    pr = {"base": {"ref": "main", "repo": {"id": repo_id, "name": repo, "url": "u"}, "sha": base_sha},
+          "head": {"ref": ref, "repo": {"id": repo_id, "name": repo, "url": "u"}, "sha": head_sha},
+          "id": 10 ** 9 + int(eid), "number": number, "url": "u"}
+    if full is not None:
+        pr.update(full)
+    return {"actor": {"id": actor_id, "login": login, "display_login": login, "gravatar_id": "", "url": "u",
+                      "avatar_url": "u"},
+            "created_at": created, "id": str(eid),
+            "payload": {"action": action, "number": number, "pull_request": pr},
+            "public": True, "repo": {"id": repo_id, "name": repo, "url": "u"}, "type": typ}
+
+
+def lines_of(events) -> bytes:
+    return b"".join(json.dumps(e).encode("utf-8") + b"\n" for e in events)
+
+
+def gz(data: bytes, members: int = 1) -> bytes:
+    if members == 1:
+        return gzip.compress(data)
+    cut = len(data) // 2
+    return gzip.compress(data[:cut]) + gzip.compress(data[cut:])
+
+
+# ================================================================ common
+
+def test_hour_names_are_not_padded_and_padding_is_refused():
+    t = datetime(2026, 10, 5, 3, tzinfo=UTC)
+    assert common.hour_name(t) == "2026-10-05-3"
+    assert common.hour_url("2026-10-05-3") == "https://data.gharchive.org/2026-10-05-3.json.gz"
+    assert common.hour_name(datetime(2026, 10, 5, 12, tzinfo=UTC)) == "2026-10-05-12"
+    assert common.parse_hour_name("2026-10-05-3") == t
+    with pytest.raises(ValueError, match="pads the hour"):
+        common.parse_hour_name("2026-10-05-03")
+    with pytest.raises(ValueError):
+        common.parse_hour_name("2026-10-05-24")
+    with pytest.raises(ValueError):
+        common.hour_name(t + timedelta(minutes=5))
+
+
+def test_hours_between_is_half_open_and_ordered():
+    hs = common.hours_between(common.parse_utc("2026-10-15T22:00:00Z"), common.parse_utc("2026-10-16T02:00:00Z"))
+    assert hs == ["2026-10-15-22", "2026-10-15-23", "2026-10-16-0", "2026-10-16-1"]
+    with pytest.raises(ValueError):
+        common.hours_between(common.parse_utc(T1), common.parse_utc(T0))
+
+
+def test_params_validate_and_refuse():
+    assert common.validate_params(params()) == []
+    bad = params(ceiling_hour="2026-09-15-00")
+    assert any("ceiling_hour" in p for p in common.validate_params(bad))
+    assert any("unknown keys" in p for p in common.validate_params({**params(), "snapshot": "x"}))
+    f = dict(params()["fetch"], rate_limit_per_hour=51)
+    assert any("rate_limit" in p for p in common.validate_params(params(fetch=f)))
+    f = dict(params()["fetch"], require_unmoved_head=False)
+    assert any("require_unmoved_head" in p for p in common.validate_params(params(fetch=f)))
+
+
+def test_lf_sha256_folds_crlf_only():
+    assert common.lf_sha256(b"a\r\nb\n") == common.sha256_hex(b"a\nb\n")
+    assert common.lf_sha256(b"a\rb") == common.sha256_hex(b"a\rb")
+
+
+# ================================================================ population
+
+def test_identity_rules_are_pinned():
+    assert population.rules_sha256(TABLE) == RULES_SHA256_PIN
+    for r in TABLE["admitted"]:
+        assert r["evidence"], r["rule"]
+
+
+def test_identity_matching():
+    rules = population.rules_of(TABLE)
+    ids = lambda login, ref: [r["rule"] for r in population.match_identity(login, ref, rules)]
+    assert ids("Copilot", "copilot/fix-1") == ["login:copilot"]
+    assert ids("copilot", "main") == ["login:copilot"]                  # logins compare without ASCII case
+    assert ids("someone", "claude/fix-db") == ["prefix:claude/"]
+    assert ids("someone", "Claude/fix-db") == []                       # prefixes compare exactly
+    assert ids("someone", "feature/claude/x") == []
+    assert ids("devin-ai-integration[bot]", "codex/x") == ["login:devin", "prefix:codex/"]
+    assert ids("dependabot[bot]", "dependabot/npm/x") == []
+
+
+def ctx(**over):
+    return population.Context(params(**over), TABLE)
+
+
+def test_classify_admits_a_trimmed_agent_pr_and_records_what_it_needs():
+    kind, rec = population.classify(ev(7, login="Copilot", actor_id=42, ref="copilot/fix"), ctx(), "2026-10-15-0")
+    assert kind == "admit"
+    assert rec["event_id"] == "7" and rec["repo_id"] == 200 and rec["number"] == 1
+    assert rec["head_sha"] == "a" * 40 and rec["base_sha"] == "b" * 40
+    assert rec["opened_at"] == "2026-10-15T00:10:00Z" and rec["hour"] == "2026-10-15-0"
+    assert rec["family"] == "copilot" and rec["rules"] == ["login:copilot"]
+    assert rec["as_opened"] is None                                     # a 2026 payload carries no body
+
+
+def test_classify_keeps_a_pre_trim_body_as_opened():
+    e = ev(8, ref="cursor/x", full={"title": "Fix", "body": "3 files changed"})
+    kind, rec = population.classify(e, ctx(), "2026-10-15-0")
+    assert kind == "admit" and rec["as_opened"] == {"title": "Fix", "body": "3 files changed"}
+
+
+@pytest.mark.parametrize("event,expect", [
+    (ev(1, action="merged", ref="claude/x"), ("skip", "not_opened")),
+    (ev(1, typ="PushEvent"), ("skip", "not_pr_event")),
+    (ev(1, ref="feature/x"), ("skip", "not_agent")),
+    (ev(1, ref="claude/x", head_sha="zz"), ("exclude", "missing_fields:head_sha")),
+    (ev(1, ref="claude/x", repo="fathom-lab/styxx"), ("exclude", "excluded_owner")),
+    (ev(1, ref="claude/x", login="Lab-Operator"), ("exclude", "excluded_actor")),
+    (ev(1, ref="claude/x", actor_id=5001), ("exclude", "account_too_young")),
+    (ev(1, ref="claude/x", repo_id=9001), ("exclude", "repo_too_young")),
+    (ev(1, ref="claude/x", created="2026-10-15T03:00:00Z"), ("exclude", "created_at_outside_window")),
+    (ev(1, ref="claude/x", created="2026-10-14T23:59:59Z"), ("exclude", "created_at_outside_window")),
+])
+def test_classify_reasons(event, expect):
+    assert population.classify(event, ctx(), "2026-10-15-0") == expect
+
+
+def test_ceilings_take_the_largest_ids_of_any_event():
+    evs = [ev(1, actor_id=10, repo_id=30, typ="PushEvent"), ev(2, actor_id=99, repo_id=5), ev(3, actor_id=7)]
+    assert population.id_ceilings(evs) == {"events": 3, "account_id_ceiling": 99, "repo_id_ceiling": 200}
+
+
+def test_fields_census_names_keysets_not_actors():
+    c = population.fields_census([ev(1, ref="claude/x"), ev(2, action="merged"), ev(3, typ="PushEvent")])
+    assert c["pr_actions"] == {"merged": 1, "opened": 1}
+    assert c["pr_body"] == {"no_body": 2}
+    assert c["keysets"]["pull_request"] == [('["base", "head", "id", "number", "url"]', 2)]
+    assert "someone" not in json.dumps(c)
+
+
+def test_bad_lines_are_counted_and_hashed_not_kept():
+    raw = [b'{"type": "PushEvent", "id": "1"}\n', b"{not json\n", b"[1,2]\n", b"\n"]
+    out = population.scan_lines(raw, ctx(), "2026-10-15-0")
+    assert out["events"] == 1 and out["bad_json_lines"] == 2
+    assert out["bad_json_lines_sha256"] == common.sha256_hex(b"{not json\n[1,2]")
+
+
+def test_context_refuses_a_table_the_params_do_not_name():
+    with pytest.raises(ValueError, match="rules digest"):
+        population.Context(params(identity_rules_sha256="f" * 64), TABLE)
+
+
+# ================================================================ pool
+
+class FakeArchive:
+    """Serves synthetic hours as gzip bytes through pool.stream_gzip_lines; 404s and failures on demand."""
+
+    def __init__(self, hours: dict, members: int = 1):
+        self.hours, self.members, self.calls = hours, members, []
+
+    def fetch(self, hour, consume):
+        self.calls.append(hour)
+        v = self.hours.get(hour, 404)
+        if v == 404:
+            return {"status": "404", "attempts": 1, "url": common.hour_url(hour)}
+        if v == "fail":
+            return {"status": "failed", "attempts": 4, "url": common.hour_url(hour), "error": "HTTP 503"}
+        result, sha, n = pool.stream_gzip_lines(io.BytesIO(gz(lines_of(v), self.members)), consume)
+        return {"status": "ok", "result": result, "compressed_sha256": sha, "compressed_bytes": n, "attempts": 1,
+                "url": common.hour_url(hour)}
+
+
+LATE = lambda: datetime(2026, 10, 20, tzinfo=UTC)          # long after the window: a 404 is a gap
+
+
+def synthetic_hours():
+    return {
+        "2026-10-15-0": [ev(11, ref="claude/a", number=1, created="2026-10-15T00:01:00Z"),
+                         ev(9, ref="codex/b", number=2, repo_id=201, repo="acme/two", created="2026-10-15T00:02:00Z"),
+                         ev(12, ref="feature/x", number=3), ev(13, typ="PushEvent")],
+        "2026-10-15-1": [ev(105, ref="claude/a", number=1, created="2026-10-15T01:00:00Z"),   # same PR: dedup
+                         ev(100, login="Copilot", ref="copilot/c", number=4, created="2026-10-15T01:05:00Z")],
+        "2026-10-15-2": [ev(1000, ref="cursor/d", number=5, created="2026-10-15T02:00:00Z")],
+    }
+
+
+def test_pool_dedups_orders_by_event_id_and_digests():
+    d = pool.derive(params(), TABLE, FakeArchive(synthetic_hours()), now=LATE, log=lambda *_: None)
+    recs, meta = d["records"], d["meta"]
+    assert [r["event_id"] for r in recs] == ["9", "11", "100", "1000"]           # integer order, not text
+    assert meta["duplicates"] == 1 and meta["records"] == 4 and meta["status"] == "COMPLETE"
+    assert meta["pool_sha256"] == common.sha256_hex(b"".join(common.canon(r) + b"\n" for r in recs))
+    assert meta["families_for_sizing"] == {"claude": 1, "codex": 1, "copilot": 1, "cursor": 1}
+    assert [h["admitted"] for h in meta["hours"]] == [2, 2, 1]
+
+
+def test_pool_is_the_same_whatever_the_line_order_or_gzip_members():
+    a = pool.derive(params(), TABLE, FakeArchive(synthetic_hours()), now=LATE, log=lambda *_: None)
+    rev = {h: list(reversed(v)) for h, v in synthetic_hours().items()}
+    b = pool.derive(params(), TABLE, FakeArchive(rev, members=2), now=LATE, log=lambda *_: None)
+    assert a["meta"]["pool_sha256"] == b["meta"]["pool_sha256"]
+
+
+def test_pool_lists_a_404_as_a_gap_only_after_the_grace():
+    hours = synthetic_hours()
+    del hours["2026-10-15-1"]
+    late = pool.derive(params(), TABLE, FakeArchive(hours), now=LATE, log=lambda *_: None)["meta"]
+    assert late["status"] == "COMPLETE" and late["gaps"] == ["2026-10-15-1"]
+    soon = pool.derive(params(), TABLE, FakeArchive(hours), now=lambda: datetime(2026, 10, 15, 6, tzinfo=UTC),
+                       log=lambda *_: None)["meta"]
+    assert soon["status"] == "INCOMPLETE" and soon["open_hours"] == [{"hour": "2026-10-15-1", "status": "not_yet"}]
+
+
+def test_pool_is_incomplete_when_an_hour_fails():
+    hours = synthetic_hours()
+    hours["2026-10-15-2"] = "fail"
+    meta = pool.derive(params(), TABLE, FakeArchive(hours), now=LATE, log=lambda *_: None)["meta"]
+    assert meta["status"] == "INCOMPLETE" and meta["open_hours"] == [{"hour": "2026-10-15-2", "status": "failed"}]
+
+
+def test_pool_caps_per_repository_then_per_account():
+    hours = {"2026-10-15-0": [ev(i, ref="claude/x", number=i, created="2026-10-15T00:30:00Z") for i in range(1, 6)]
+             + [ev(50, ref="claude/y", number=1, repo_id=300, repo="acme/three", created="2026-10-15T00:40:00Z")]}
+    d = pool.derive(params(max_prs_per_repo=2), TABLE, FakeArchive(hours), now=LATE, log=lambda *_: None)
+    assert [r["event_id"] for r in d["records"]] == ["1", "2", "50"] and d["meta"]["capped_by_repo"] == 3
+    d = pool.derive(params(max_prs_per_actor=1), TABLE, FakeArchive(hours), now=LATE, log=lambda *_: None)
+    assert [r["event_id"] for r in d["records"]] == ["1"] and d["meta"]["capped_by_actor"] == 5
+
+
+def test_pool_cache_resumes_without_refetching_final_hours(tmp_path):
+    hours = synthetic_hours()
+    del hours["2026-10-15-2"]
+    arch = FakeArchive(hours)
+    first = pool.derive(params(), TABLE, arch, now=lambda: datetime(2026, 10, 15, 4, tzinfo=UTC),
+                        cache_dir=str(tmp_path), log=lambda *_: None)
+    assert first["meta"]["status"] == "INCOMPLETE"
+    arch2 = FakeArchive(synthetic_hours())
+    second = pool.derive(params(), TABLE, arch2, now=LATE, cache_dir=str(tmp_path), log=lambda *_: None)
+    assert arch2.calls == ["2026-10-15-2"] and second["meta"]["status"] == "COMPLETE"
+    fresh = pool.derive(params(), TABLE, FakeArchive(synthetic_hours()), now=LATE, log=lambda *_: None)
+    assert second["meta"]["pool_sha256"] == fresh["meta"]["pool_sha256"]
+    meta = pool.write_pool(str(tmp_path / "out"), second)
+    assert pool.read_pool(str(tmp_path / "out" / "pool.jsonl")) == second["records"]
+    assert meta["derivation_sha256"] == fresh["meta"]["derivation_sha256"]
+
+
+def test_pool_cache_refuses_an_edited_hour(tmp_path):
+    pool.derive(params(), TABLE, FakeArchive(synthetic_hours()), now=LATE, cache_dir=str(tmp_path),
+                log=lambda *_: None)
+    p = tmp_path / "hours" / "2026-10-15-0.json"
+    e = json.loads(p.read_text(encoding="utf-8"))
+    e["records"] = e["records"][1:]
+    p.write_text(json.dumps(e), encoding="utf-8")
+    with pytest.raises(ValueError, match="do not hash"):
+        pool.derive(params(), TABLE, FakeArchive(synthetic_hours()), now=LATE, cache_dir=str(tmp_path),
+                    log=lambda *_: None)
+
+
+class _Resp(io.BytesIO):
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        self.close()
+
+
+def test_http_archive_streams_retries_and_reads_404():
+    body = gz(lines_of(synthetic_hours()["2026-10-15-0"]))
+    calls, sleeps = [], []
+
+    def opener(req, timeout):
+        calls.append(req.full_url)
+        assert req.get_header("User-agent") == pool.USER_AGENT and timeout == 30.0
+        assert "Authorization" not in req.headers
+        if len(calls) == 1:
+            raise urllib.error.HTTPError(req.full_url, 503, "busy", {}, None)
+        return _Resp(body)
+    arch = pool.HttpArchive(opener=opener, sleep=sleeps.append, log=lambda *_: None)
+    got = arch.fetch("2026-10-15-0", lambda lines: sum(1 for _ in lines))
+    assert got["status"] == "ok" and got["result"] == 4 and got["attempts"] == 2 and sleeps == [10]
+    assert calls[0] == "https://data.gharchive.org/2026-10-15-0.json.gz"
+    assert got["compressed_sha256"] == common.sha256_hex(body) and got["compressed_bytes"] == len(body)
+
+    def gone(req, timeout):
+        raise urllib.error.HTTPError(req.full_url, 404, "nope", {}, None)
+    assert pool.HttpArchive(opener=gone, sleep=lambda s: None).fetch("2026-10-15-0", list)["status"] == "404"
+
+    def cut(req, timeout):
+        return _Resp(body[: len(body) // 2])
+    got = pool.HttpArchive(opener=cut, sleep=lambda s: None, log=lambda *_: None).fetch(
+        "2026-10-15-0", lambda lines: sum(1 for _ in lines))
+    assert got["status"] == "failed" and got["attempts"] == 4
