@@ -36,6 +36,9 @@ def _load(name):
 common = _load("common")
 population = _load("population")
 pool = _load("pool")
+import styxx.diffgate as _dg  # noqa: E402  -- the checkout's gate, named by its own LF sha256
+
+GATE_SHA = common.lf_sha256(Path(_dg.__file__).read_bytes())
 
 UTC = timezone.utc
 T0 = "2026-10-15T00:00:00Z"
@@ -61,7 +64,7 @@ def params(**over):
         "max_prs_per_repo": None,
         "max_prs_per_actor": None,
         "gap_grace_hours": 24,
-        "gate": {"module": "styxx.diffgate", "sha256": "0" * 64, "styxx_version": "7.49.0", "run": None,
+        "gate": {"module": "styxx.diffgate", "sha256": GATE_SHA, "styxx_version": "7.49.0", "run": None,
                  "strict": False},
         "fetch": {"body_source": "payload_else_api", "diff_source": "pull", "rate_limit_per_hour": 50,
                   "require_unmoved_head": True},
@@ -363,9 +366,6 @@ def test_http_archive_streams_retries_and_reads_404():
 # ================================================================ accuse
 
 accuse = _load("accuse")
-import styxx.diffgate as _dg  # noqa: E402  -- the checkout's gate, named below by its own LF sha256
-
-GATE_SHA = common.lf_sha256(Path(_dg.__file__).read_bytes())
 GATE = accuse.load_gate(GATE_SHA)
 FETCH_PULL = params()["fetch"]
 FETCH_COMPARE = dict(FETCH_PULL, diff_source="compare")
@@ -408,9 +408,9 @@ class FakeWeb:
 
 
 def api_pr(number=1, head="a" * 40, title="Fix the parser", body="3 files changed in this PR.",
-           full_name="acme/app"):
+           full_name="acme/app", updated_at="2000-01-01T00:00:00Z"):
     return json.dumps({"number": number, "title": title, "body": body, "head": {"sha": head},
-                       "base": {"repo": {"full_name": full_name}}}).encode("utf-8")
+                       "base": {"repo": {"full_name": full_name}}, "updated_at": updated_at}).encode("utf-8")
 
 
 def rec_of(eid=7, number=1, **kw):
@@ -701,3 +701,170 @@ def test_checked_draw_refuses_each_broken_precondition_by_name():
     assert e.value.code == "BLOCK_NOT_AFTER_WINDOW"
     unordered = draw.checked_draw(p, acc, b["header"], 970500, 970505)
     assert unordered["order"].startswith("not checked")
+
+
+# ================================================================ stranger
+
+stranger = _load("stranger")
+QUIET = lambda *_: None
+P2 = params(draw=dict(params()["draw"], n=2))
+
+
+def routes(**over):
+    """The web as the lab saw it: two accusing records, one moved head, one gated without claims."""
+    r = {
+        "https://api.github.com/repositories/201/pulls/2": api_pr(number=2, full_name="acme/two",
+                                                                  body="Added 2 tests for the parser."),
+        "https://github.com/acme/two/pull/2.diff": ONE_FILE_DIFF,
+        API1: api_pr(), PULL1: ONE_FILE_DIFF,
+        "https://api.github.com/repositories/200/pulls/4": api_pr(number=4, head="c" * 40),
+        "https://api.github.com/repositories/200/pulls/5": api_pr(number=5, body="Refactor the parser."),
+        "https://github.com/acme/app/pull/5.diff": ONE_FILE_DIFF,
+    }
+    r.update(over)
+    return r
+
+
+def lab_world(tmp_path, hours=None):
+    d = pool.derive(P2, TABLE, FakeArchive(hours or synthetic_hours()), now=LATE, log=QUIET)
+    gh, _ = github(routes())
+    s = accuse.run(P2, d["records"], str(tmp_path / "lab"), GATE, gh, log=QUIET)
+    digests = json.loads((tmp_path / "lab" / "outcome_digests.json").read_text(encoding="utf-8"))
+    b = synthetic_block()
+    drawn = draw.checked_draw(P2, s, b["header"], 970500, 970505, b["id"])
+    return d, s, digests, b, drawn
+
+
+def test_stranger_agrees_end_to_end_from_public_bytes_only(tmp_path):
+    d, s, digests, b, drawn = lab_world(tmp_path)
+    assert s["by_outcome"] == {"GATED": 3, "HEAD_MOVED": 1} and s["accusations"] == 2 and drawn["status"] == "DRAWN"
+    assert "accusations_by_kind" not in json.dumps(digests) and "CONTRADICTED" not in json.dumps(digests)
+    sec = stranger.check_pool(P2, TABLE, d["meta"], FakeArchive(synthetic_hours()), now=LATE, log=QUIET)
+    assert sec["verdict"] == "AGREES" and sec["pool_sha256"] == d["meta"]["pool_sha256"]
+    gh, _ = github(routes())
+    acc = stranger.check_accuse(P2, sec["_records"], digests, GATE, gh, str(tmp_path / "mine"), False, log=QUIET)
+    assert acc["verdict"] == "AGREES" and acc["categories"] == {"MATCH": 4}
+    assert acc["accusations_sha256"] == s["accusations_sha256"]
+    dr = stranger.check_draw(P2, acc["_summary"], drawn, b["header"], 970505)
+    assert dr["verdict"] == "AGREES" and dr["drawn_sha256"] == drawn["drawn_sha256"]
+    forged = dict(drawn, drawn=list(reversed(drawn["drawn"])))
+    assert stranger.check_draw(P2, acc["_summary"], forged, b["header"], 970505)["verdict"] == "MISMATCH"
+    assert stranger._exit_code("AGREES") == 0
+
+
+def test_stranger_pool_refuses_a_forged_digest_and_names_a_differing_hour(tmp_path):
+    d = pool.derive(P2, TABLE, FakeArchive(synthetic_hours()), now=LATE, log=QUIET)
+    forged = dict(d["meta"], pool_sha256="f" * 64)
+    assert stranger.check_pool(P2, TABLE, forged, FakeArchive(synthetic_hours()), now=LATE,
+                               log=QUIET)["verdict"] == "MISMATCH"
+    more = synthetic_hours()
+    more["2026-10-15-1"].append(ev(150, ref="codex/z", number=9, created="2026-10-15T01:30:00Z"))
+    sec = stranger.check_pool(P2, TABLE, d["meta"], FakeArchive(more), now=LATE, log=QUIET)
+    assert sec["verdict"] == "MISMATCH" and [h["hour"] for h in sec["hours_differ"]] == ["2026-10-15-1"]
+
+
+def test_stranger_pool_replays_published_gaps_and_reports_one_that_answers_now():
+    hours = synthetic_hours()
+    del hours["2026-10-15-1"]
+    lab = pool.derive(P2, TABLE, FakeArchive(hours), now=LATE, log=QUIET)
+    assert lab["meta"]["gaps"] == ["2026-10-15-1"]
+    full = pool.derive(P2, TABLE, FakeArchive(synthetic_hours()), now=LATE, log=QUIET)
+    sec = stranger.check_pool(P2, TABLE, lab["meta"], FakeArchive(synthetic_hours(), members=2), now=LATE,
+                              log=QUIET)
+    assert sec["verdict"] == "AGREES"
+    assert sec["gaps_now_available"] == [{"hour": "2026-10-15-1", "admitted": 2,
+                                          "admitted_sha256": full["meta"]["hours"][1]["admitted_sha256"],
+                                          "pool_sha256_with_it": full["meta"]["pool_sha256"]}]
+    assert sec["compressed_bytes_differ"] == ["2026-10-15-0", "2026-10-15-2"]   # rebuilt files, same records
+
+
+def _stranger_accuse(tmp_path, digests, d, **over):
+    gh, _ = github(routes(**over))
+    return stranger.check_accuse(P2, d["records"], digests, GATE, gh, str(tmp_path / "mine"), False, log=QUIET)
+
+
+def test_stranger_accuse_tells_drift_from_a_contradicted_record(tmp_path):
+    d, s, digests, _, _ = lab_world(tmp_path)
+    later = _stranger_accuse(tmp_path / "a", digests, d,
+                             **{API1: api_pr(body="2 files changed.", updated_at="2099-01-01T00:00:00Z")})
+    assert later["verdict"] == "CANNOT_CONFIRM" and later["categories"] == {"DRIFT": 1, "MATCH": 3}
+    assert stranger._exit_code(later["verdict"]) == 1
+    quiet_edit = _stranger_accuse(tmp_path / "b", digests, d, **{API1: api_pr(body="2 files changed.")})
+    assert quiet_edit["verdict"] == "MISMATCH" and quiet_edit["categories"]["INCONSISTENT"] == 1
+    moved_lie = _stranger_accuse(tmp_path / "c", digests, d,
+                                 **{"https://api.github.com/repositories/200/pulls/4": api_pr(number=4),
+                                    "https://github.com/acme/app/pull/4.diff": ONE_FILE_DIFF})
+    [row] = moved_lie["listed"]
+    assert moved_lie["verdict"] == "MISMATCH" and row["lab"] == "HEAD_MOVED" and row["category"] == "INCONSISTENT"
+    assert stranger._exit_code(moved_lie["verdict"]) == 2
+
+
+def test_stranger_accuse_catches_another_gate_and_a_forged_set_digest(tmp_path):
+    d, s, digests, _, _ = lab_world(tmp_path)
+
+    class Silent:
+        identity = GATE.identity
+
+        def run(self, summary, diff):
+            g = GATE.run(summary, diff)
+            g.claims = []
+            return g
+    gh, _ = github(routes())
+    sec = stranger.check_accuse(P2, d["records"], digests, Silent(), gh, str(tmp_path / "g"), False, log=QUIET)
+    assert sec["verdict"] == "MISMATCH" and {r["why"] for r in sec["listed"]} == {
+        "the same title, body and diff gave other claims: not the plan's gate"}
+    forged = dict(digests, accusations_sha256="e" * 64)
+    sec = _stranger_accuse(tmp_path / "f", forged, d)
+    assert sec["verdict"] == "MISMATCH" and sec["checks"]["accusations_sha256"] is False
+    pruned = dict(digests, rows=digests["rows"][1:])
+    assert _stranger_accuse(tmp_path / "p", pruned, d)["verdict"] == "MISMATCH"
+
+
+@pytest.mark.parametrize("lab,mine,cat", [
+    ({"outcome": "EMPTY_BODY"}, {"outcome": "GATED", "body_sha256": "x", "pr_updated_at": "2099-01-01T00:00:00Z"},
+     "DRIFT"),
+    ({"outcome": "EMPTY_BODY"}, {"outcome": "GATED", "body_sha256": "x", "pr_updated_at": "2000-01-01T00:00:00Z"},
+     "INCONSISTENT"),
+    ({"outcome": "PR_GONE", "body_fetched_at": None}, {"outcome": "GATED", "body_sha256": "x"}, "INCONSISTENT"),
+    ({"outcome": "GATED"}, {"outcome": "PR_GONE"}, "UNREPRODUCIBLE"),
+    ({"outcome": "GATED"}, {"outcome": "HEAD_MOVED"}, "UNREPRODUCIBLE"),
+    ({"outcome": "HEAD_MOVED"}, {"outcome": "EMPTY_BODY", "body_sha256": "y",
+                                 "pr_updated_at": "2099-01-01T00:00:00Z"}, "DRIFT"),
+    ({"outcome": "HEAD_MOVED"}, {"outcome": "HEAD_MOVED", "body_sha256": "z"}, "MATCH"),
+    ({"outcome": "GATED", "diff_sha256": "d1"}, {"outcome": "GATED", "diff_sha256": "d2", "body_sha256": "q"},
+     "INCONSISTENT"),
+])
+def test_classify_row(lab, mine, cat):
+    base = {"title_sha256": "t", "body_sha256": "b", "diff_sha256": "d", "claims_sha256": "c",
+            "body_fetched_at": "2026-10-16T00:00:00Z", "pr_updated_at": None}
+    assert stranger.classify_row({**base, **lab}, {**base, **mine})[0] == cat
+
+
+def test_bundle_writes_the_digests_and_a_manifest(tmp_path):
+    d, s, digests, b, drawn = lab_world(tmp_path)
+    pool.write_pool(str(tmp_path / "pooldir"), d)
+    (tmp_path / "params.json").write_text(json.dumps(P2), encoding="utf-8")
+    (tmp_path / "draw.json").write_text(json.dumps(drawn), encoding="utf-8")
+    m = stranger.bundle(str(tmp_path / "params.json"), str(tmp_path / "pooldir"), str(tmp_path / "lab"),
+                        str(tmp_path / "draw.json"), str(tmp_path / "pub"))
+    assert set(m["files"]) == {"plan_params.json", "pool_meta.json", "outcome_digests.json", "draw.json"}
+    assert m["params_sha256"] == common.params_sha256(P2)
+    for name, sha in m["files"].items():
+        assert common.sha256_hex((tmp_path / "pub" / name).read_bytes()) == sha
+    assert not (tmp_path / "pub" / "outcomes.jsonl").exists() and not (tmp_path / "pub" / "inputs").exists()
+
+
+# ================================================================ the words
+
+def test_no_banned_word_in_this_directory_or_this_file():
+    banned = ["fir" + "st", "nov" + "el", "revolution" + "ary", "ground" + "breaking", "break" + "through",
+              "tamper" + "-proof", "self" + "-verifying", "hallucination" + " detector"]
+    import re as _re
+    pat = _re.compile(r"\b(" + "|".join(_re.escape(w) for w in banned) + r")", _re.I)
+    hits = []
+    for p in sorted(SA.iterdir()) + [Path(__file__)]:
+        if p.is_file():
+            for i, line in enumerate(p.read_text(encoding="utf-8").splitlines(), 1):
+                if pat.search(line):
+                    hits.append(f"{p.name}:{i}")
+    assert hits == []

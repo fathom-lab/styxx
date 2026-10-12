@@ -331,6 +331,7 @@ def accuse_one(rec: dict, gh: GitHub, gate: Gate, fetch: dict, require_unmoved_h
         inp["head_at_fetch"] = head_now
         inp["head_moved"] = head_now != rec["head_sha"]
         inp["repo_now"] = full_name
+        inp["pr_updated_at"] = pr.get("updated_at") if isinstance(pr.get("updated_at"), str) else None
         if payload is None:
             title, body = api_title, api_body
             inp["body_source"] = "api_now"
@@ -381,13 +382,37 @@ def _now():
 # ---------------------------------------------------------------- the set
 
 STABLE_DROP = ("fetch",)
+VOLATILE_INPUTS = ("body_fetched_at", "pr_updated_at")
 
 
 def stable(outcome: dict) -> dict:
-    """What a stranger's re-run must reproduce: everything but fetch times and attempts."""
+    """What a re-run over unchanged pull requests must reproduce: everything but times and attempts."""
     s = {k: v for k, v in outcome.items() if k not in STABLE_DROP}
-    s["inputs"] = {k: v for k, v in outcome.get("inputs", {}).items() if k != "body_fetched_at"}
+    s["inputs"] = {k: v for k, v in outcome.get("inputs", {}).items() if k not in VOLATILE_INPUTS}
     return s
+
+
+def digest_row(o: dict) -> dict:
+    """One outcome as a stranger may see it published: the outcome, the inputs' digests, a digest of
+    the claims, and two times. No claim, verdict or accusation count is readable from it."""
+    inp = o.get("inputs", {})
+    return {"pool_key": o["pool_key"], "outcome": o["outcome"],
+            "title_sha256": inp.get("title_sha256"), "body_sha256": inp.get("body_sha256"),
+            "diff_sha256": inp.get("diff_sha256"),
+            "claims_sha256": common.canon_sha256(o["claims"]) if o.get("outcome") == "GATED" else None,
+            "stable_sha256": common.canon_sha256(stable(o)),
+            "body_fetched_at": inp.get("body_fetched_at"), "pr_updated_at": inp.get("pr_updated_at")}
+
+
+def outcome_digests(pool_records: list, outcomes_by_key: dict, summary: dict) -> dict:
+    """The publishable form of a run: per pool key a digest row, plus the run's digests. The pool keys
+    are public already (anyone derives the pool); nothing here says which records were accused."""
+    order = sorted(pool_records, key=lambda r: int(r["event_id"]))
+    rows = [digest_row(outcomes_by_key[k]) for k in (f"{r['repo_id']}#{r['number']}" for r in order)
+            if k in outcomes_by_key]
+    return {"schema": "styxx.sealed-ahead/outcome-digests/v0", "status": summary["status"],
+            "outcomes_sha256": summary["outcomes_sha256"], "accusations_sha256": summary["accusations_sha256"],
+            "accusations": summary["accusations"], "gate": summary.get("gate"), "rows": rows}
 
 
 def accusation_items(outcomes: list) -> list:
@@ -488,9 +513,18 @@ def run(params: dict, pool_records: list, out_dir: str, gate: Gate, gh: GitHub, 
         if i % 25 == 0 or i == len(todo):
             log(f"  {i}/{len(todo)} this run; {gh.requests} requests; waited {gh.limiter.waited:.0f}s for the rate")
     s = summarize(pool_records, done, gate.identity, loaded_styxx_closure())
-    with open(os.path.join(out_dir, "accusations.json"), "wb") as fh:
-        fh.write((json.dumps(s, indent=1, ensure_ascii=False, sort_keys=True) + "\n").encode("utf-8"))
+    _write_json(os.path.join(out_dir, "accusations.json"), s)
+    _write_json(os.path.join(out_dir, "outcome_digests.json"), outcome_digests(pool_records, done, s))
     return s
+
+
+def _write_json(path: str, obj) -> None:
+    data = (json.dumps(obj, indent=1, ensure_ascii=False, sort_keys=True) + "\n").encode("utf-8")
+    with open(path, "wb") as fh:
+        fh.write(data)
+    with open(path, "rb") as fh:
+        if fh.read() != data:
+            raise OSError(f"write did not land: {path}")
 
 
 def main(argv=None) -> int:
@@ -514,8 +548,10 @@ def main(argv=None) -> int:
         print(f"REFUSED: {e}")
         return 2
     if a.cmd == "summarize":
-        s = summarize(records, read_outcomes(os.path.join(a.out, "outcomes.jsonl")), gate.identity,
-                      loaded_styxx_closure())
+        done = read_outcomes(os.path.join(a.out, "outcomes.jsonl"))
+        s = summarize(records, done, gate.identity, loaded_styxx_closure())
+        _write_json(os.path.join(a.out, "accusations.json"), s)
+        _write_json(os.path.join(a.out, "outcome_digests.json"), outcome_digests(records, done, s))
     else:
         lim = RateLimiter(params["fetch"]["rate_limit_per_hour"], state_path=os.path.join(a.out, "rate_stamps.txt"))
         os.makedirs(a.out, exist_ok=True)

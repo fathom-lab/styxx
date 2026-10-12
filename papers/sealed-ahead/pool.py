@@ -278,7 +278,7 @@ def derive(params: dict, table: dict, archive, now=None, cache_dir=None, skip_ho
         "fields_census": merge_census(census),
     }
     meta["derivation_sha256"] = common.canon_sha256({k: v for k, v in meta.items() if k != "fields_census"})
-    return {"records": records, "meta": meta, "fetch_log": fetch_log}
+    return {"records": records, "meta": meta, "fetch_log": fetch_log, "entries": entries}
 
 
 def _hour_path(cache_dir: str, hour: str) -> str:

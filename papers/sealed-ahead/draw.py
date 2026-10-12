@@ -34,7 +34,7 @@ What draw refuses, each by name:
   SIZING_FAILURE           fewer accusations than n: no draw, published as a sizing failure
 
 The order the plan needs is: the window closes (t1), the accusation set is derived and its digest
-anchored, then the named block is mined. If the block came first, whoever derived the set could
+anchored, then the named block is mined. If the block came earlier, whoever derived the set could
 have seen the hash before fixing the set; the anchor-time check exists for that. Without an anchor
 time the record says the order was not checked.
 
@@ -251,7 +251,7 @@ def checked_draw(params: dict, accusations: dict, header_hex: str, height: int, 
     return rec
 
 
-# ---------------------------------------------------------------- explorers (network; operator's word first)
+# ---------------------------------------------------------------- explorers (network; the operator's word before use)
 
 def _get(url: str, opener=None) -> str:
     opener = opener or urllib.request.urlopen
@@ -290,7 +290,7 @@ def main(argv=None) -> int:
     ap.add_argument("--coinbase-hex")
     ap.add_argument("--merkle-branch", default="")
     ap.add_argument("--anchor-time")
-    ap.add_argument("--fetch", action="store_true", help="read the block from two explorers (operator's word first)")
+    ap.add_argument("--fetch", action="store_true", help="read the block from two explorers (needs the operator's word)")
     ap.add_argument("--out")
     a = ap.parse_args(argv)
     params = common.load_params(a.params)
