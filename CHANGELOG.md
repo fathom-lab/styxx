@@ -55,10 +55,22 @@ particular experiment.
   RESULT whose honest sworn receipt says SWORN-FAILED, one with an UNRESOLVED span (which the sworn
   document rule still calls SWORN-HELD: an rN span no manifest carries, a `prereg:` digest the
   snapshot lacks), and one that swears nothing read FAILS at L4, and `build` refuses each by name.
-  Where the instrument needs an integer (a span offset; a snapshot entry's size, which must also be
-  the entry's byte count), the page reads its payload through a typed parse that keeps a float
-  literal apart, as Python's `json` does, because `JSON.parse` writes `102.0` as `102`; a
-  type-confused field fails L4 in both layers, by name in the terminal.
+- Where an instrument reads an integer, both layers require an integer as written, and the page
+  reads it through a typed parse of its payload that keeps a float literal apart, as Python's
+  `json` does, because `JSON.parse` writes `102.0` as `102`: a span offset, a snapshot entry's size
+  (which must also be the entry's byte count) and the sworn receipt's counts, `sworn_total` and
+  `unresolved` at L4; an anchor's slot at L1; `experiment.score.receipt` at L2, which the terminal
+  no longer reads as 0 when it is not an integer. A value of another JSON type in any of these
+  fails its link in both layers, by name in the terminal. The agreement tests write each field as a
+  float, several also as a string, a list, a bool or null, and a sweep rewrites every integer
+  literal of a clean page as `N.0` by hand, which moves no digest: both layers read every link
+  alike on each.
+- A time on the page must name a time that exists: an anchor's `block_time` (L1) and a public
+  clock's `stated` time (L1b) are `YYYY-MM-DDTHH:MM:SSZ` in ASCII digits with no February 30, month
+  13, hour 24, second 60 or year 0, in both layers. Such a value ends in a named problem and never
+  in a traceback, and `build` refuses it by name, as it refuses a `stated.run_ended_utc` that names
+  no time. The page applies the terminal's public-clock rule word for word: a `name`, `binds` or
+  `read` that Python's `str.strip` leaves empty, or a `does_not_prove` that is not text, fails L1b.
 - `build` reads the repository at named commits and never the working tree, and refuses by name: an
   inconsistent chain (each failing link's problem listed), a path that is not repository-relative
   POSIX, a token-shaped string, a drive-letter or home path, an interpreter version string or a
@@ -84,10 +96,12 @@ particular experiment.
   both batteries, the seven L4 members of the semantic battery included (an edited sworn verdict, a
   span value the receipt does not hold, a snapshot entry that is another receipt, an honest
   SWORN-FAILED receipt, an UNRESOLVED rN span, an UNRESOLVED `prereg:` span, a RESULT that swears
-  nothing), on numeric, quote and hash spans over the snapshot, and on span offsets and snapshot
-  sizes written as floats, strings or lists or miscounted; the CLI round trip over a temporary
-  repository with `--repo`, including a rebuilt log reading DIFFERS at L5 and a forger that names
-  the clone's commits with paths absent at them reading DIFFERS.
+  nothing), on numeric, quote and hash spans over the snapshot, on every integer the instruments
+  read written with another JSON type or miscounted, on every integer literal of a clean page
+  written as a float, on an anchor line that is not an object, on public clocks of the wrong shape
+  and on times that name no time; the CLI round trip over a temporary repository with `--repo`,
+  including a rebuilt log reading DIFFERS at L5 and a forger that names the clone's commits with
+  paths absent at them reading DIFFERS.
 - Not in this phase: dispatch from the existing capsule command, a charon kind for the new profile,
   the stranger step, the specimen. The existing capsule profiles are unchanged.
 

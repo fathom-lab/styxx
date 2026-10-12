@@ -10,8 +10,10 @@ mutation flips exactly the link that owns the bytes, and a re-built CONSISTENT c
 link made false flips exactly that link (the hash-blind verifier the red team named, F1, would
 pass the digest battery and fail this one). Controls that must NOT fire sit beside them. The
 page's own script (layer 1, run under node) is held to the installed verifier (layer 2) link by
-link on the clean capsule and on every member of both batteries, the sworn span values included,
-and on fields whose JSON type is not the one the instrument reads.
+link on the clean capsule and on every member of both batteries, the sworn span values included;
+on every integer literal of the clean page written as a float literal (``N.0``, which no digest
+sees); on fields written with another JSON type where an integer is read; and on the shapes of the
+anchor lines, the public clocks and their times.
 """
 from __future__ import annotations
 
@@ -544,6 +546,21 @@ def test_semantic_L4_a_snapshot_entry_that_is_another_receipt_fails_L4_and_the_l
     assert _fails(rep) == {"L4", "L5"}, [(l["id"], l["problems"]) for l in rep["links"]]
 
 
+def _tracked_json_under_papers() -> list:
+    """Every ``*.json`` under ``papers/`` that git tracks. A checkout may hold a runner's output
+    untracked beside the PREREG that seals it, and the suite never opens it; with no git (an
+    unpacked source tree), every one on disk except that runner's output name."""
+    papers = ROOT / "papers"
+    if not papers.is_dir():
+        return []
+    if shutil.which("git") is not None:
+        p = subprocess.run(["git", "-C", str(ROOT), "ls-files", "-z", "--", "papers"], capture_output=True)
+        if p.returncode == 0:
+            names = [n for n in p.stdout.decode("utf-8", "replace").split("\0") if n.endswith(".json")]
+            return sorted(f for f in (ROOT / n for n in names) if f.is_file())
+    return sorted(f for f in papers.rglob("*.json") if f.name != "pmnist_untied_result.json")
+
+
 def test_the_tally_rule_reads_the_receipt_alone_and_holds_on_every_committed_sworn_receipt():
     inp = _inputs()
     assert rc.receipt_tally_problem(inp["sworn_receipt"]) is None
@@ -551,11 +568,17 @@ def test_the_tally_rule_reads_the_receipt_alone_and_holds_on_every_committed_swo
     assert "its own spans tally SWORN-HELD" in rc.receipt_tally_problem(edited)
     recount = dict(inp["sworn_receipt"], counts=dict(inp["sworn_receipt"]["counts"], HELD=1, FAILED=1))
     assert "not its spans' tally" in rc.receipt_tally_problem(recount)
+    # a count is an integer as written, and the verdict is the spans' tally
+    floated = dict(inp["sworn_receipt"], counts=dict(inp["sworn_receipt"]["counts"], HELD=2.0))
+    assert rc.receipt_tally_problem(floated) == ("its counts hold a value that is not an integer as "
+                                                 "written (HELD)")
+    assert "its sworn_total is not an integer as written" == rc.receipt_tally_problem(
+        dict(inp["sworn_receipt"], sworn_total=True))
     # every sworn receipt committed under papers/, chosen by its schema field and not its file name
-    # (the measurement dry run names its receipts *.receipt.json)
+    # (the measurement dry run names its receipts *.receipt.json); tracked files only
     committed = []
     marker = b"styxx.sworn.verdict-receipt/v"
-    for p in sorted((ROOT / "papers").rglob("*.json")) if (ROOT / "papers").is_dir() else []:
+    for p in _tracked_json_under_papers():
         data = p.read_bytes()
         if marker not in data:
             continue
@@ -1133,9 +1156,10 @@ def test_the_cli_build_refuses_to_read_the_working_tree(chain_repo, tmp_path, ca
 
 # ------------------------------------------------------------------------- layer 1 under node
 
-_NODE_SHIM = r"""
+_NODE_RUN = r"""
 const fs=require('fs');
-const html=fs.readFileSync(process.argv[1],'utf8');
+function run(file){
+const html=fs.readFileSync(file,'utf8');
 const payload=html.match(/<script type="application\/json" id="oath-capsule">([\s\S]*?)<\/script>/)[1];
 const js=html.match(/<script id="research-verify">([\s\S]*?)<\/script>/)[1];
 const els={};
@@ -1147,8 +1171,10 @@ global.document={
 new Function(js)();
 const out={summary:el("summary").textContent,summary_class:el("summary").className,links:{}};
 ["L0","L1","L1b","L2","L3","L4","L5","L6"].forEach(k=>{out.links[k]={offline:el("offline:"+k).textContent,checked:el("checked:"+k).textContent};});
-console.log(JSON.stringify(out));
+return out;}
 """
+_NODE_SHIM = _NODE_RUN + "console.log(JSON.stringify(run(process.argv[1])));\n"
+_NODE_SHIM_MANY = _NODE_RUN + "console.log(JSON.stringify(JSON.parse(fs.readFileSync(process.argv[1],'utf8')).map(run)));\n"
 
 
 def _layer1(cap: Path) -> dict:
@@ -1158,6 +1184,24 @@ def _layer1(cap: Path) -> dict:
                        errors="replace", timeout=60)
     assert p.returncode == 0, p.stderr
     return json.loads(p.stdout)
+
+
+def _layer1_many(caps: list, tmp: Path) -> list:
+    """Layer 1 over many capsules in one node process, in order."""
+    if shutil.which("node") is None:
+        pytest.skip("node is not on PATH")
+    listing = tmp / "layer1_files.json"
+    listing.write_text(json.dumps([str(c) for c in caps]), encoding="utf-8")
+    p = subprocess.run(["node", "-e", _NODE_SHIM_MANY, str(listing)], capture_output=True, text=True,
+                       encoding="utf-8", errors="replace", timeout=600)
+    assert p.returncode == 0, p.stderr
+    out = json.loads(p.stdout)
+    assert len(out) == len(caps)
+    return out
+
+
+def _l1_fails(l1: dict) -> set:
+    return {k for k, v in l1["links"].items() if v["offline"] == FAILS}
 
 
 def test_layer_1_agrees_with_layer_2_on_the_clean_capsule(minted):
@@ -1295,35 +1339,237 @@ def _entry0(p: dict) -> dict:
     return next(iter(p["artifacts"]["snapshot"]["entries"].values()))
 
 
+def _srec(p: dict) -> dict:
+    return p["artifacts"]["sworn_receipt"]
+
+
+def _anchor0(p: dict) -> dict:
+    return p["artifacts"]["anchors"][0]
+
+
+def _run_receipt_second(p: dict, index) -> None:
+    """The run's receipt carried second and named by ``index``: a JS array reads 1, "1" and true
+    alike, Python's json does not."""
+    r = p["artifacts"]["receipts"]
+    r[0], r[1] = r[1], r[0]
+    p["experiment"]["score"]["receipt"] = index
+
+
+_RUN = {"L2", "L3", "L5"}       # no run receipt: L2 names it, L3 has nothing to score, L5 no receipt to find
+
 # a field whose JSON type is not the one the instrument reads: JSON.parse writes 102.0 as 102, so the
-# page reads these through a typed parse of its payload that keeps a float literal apart
+# page reads every integer the instruments read through a typed parse of its payload that keeps a
+# float literal apart, as Python's json does. (name, mutation, the links it flips); a control flips none
 TYPE_CONFUSED = [
-    ("a span start written as a float", lambda p: _span0(p).__setitem__("start", float(_span0(p)["start"]))),
-    ("a span end written as a float", lambda p: _span0(p).__setitem__("end", float(_span0(p)["end"]))),
-    ("a snapshot size written as a float", lambda p: _entry0(p).__setitem__("size", float(_entry0(p)["size"]))),
-    ("a snapshot size written as a string", lambda p: _entry0(p).__setitem__("size", str(_entry0(p)["size"]))),
-    ("a snapshot size written as a list", lambda p: _entry0(p).__setitem__("size", [_entry0(p)["size"]])),
-    ("a snapshot size that is not the byte count", lambda p: _entry0(p).__setitem__("size", _entry0(p)["size"] - 1)),
+    ("a span start written as a float", lambda p: _span0(p).__setitem__("start", float(_span0(p)["start"])), {"L4"}),
+    ("a span end written as a float", lambda p: _span0(p).__setitem__("end", float(_span0(p)["end"])), {"L4"}),
+    ("a snapshot size written as a float", lambda p: _entry0(p).__setitem__("size", float(_entry0(p)["size"])), {"L4"}),
+    ("a snapshot size written as a string", lambda p: _entry0(p).__setitem__("size", str(_entry0(p)["size"])), {"L4"}),
+    ("a snapshot size written as a list", lambda p: _entry0(p).__setitem__("size", [_entry0(p)["size"]]), {"L4"}),
+    ("a snapshot size that is not the byte count", lambda p: _entry0(p).__setitem__("size", _entry0(p)["size"] - 1),
+     {"L4"}),
+    ("a sworn count written as a float", lambda p: _srec(p)["counts"].__setitem__("HELD", 2.0), {"L4"}),
+    ("a sworn count of zero written as a float", lambda p: _srec(p)["counts"].__setitem__("FAILED", 0.0), {"L4"}),
+    ("the sworn total written as a float", lambda p: _srec(p).__setitem__("sworn_total", 2.0), {"L4"}),
+    ("the sworn unresolved count written as a float", lambda p: _srec(p).__setitem__("unresolved", 0.0), {"L4"}),
+    ("an anchor slot written as a float", lambda p: _anchor0(p).__setitem__("slot", float(_anchor0(p)["slot"])), {"L1"}),
+    ("an anchor slot written as true", lambda p: _anchor0(p).__setitem__("slot", True), {"L1"}),
+    ("an anchor slot written as a string", lambda p: _anchor0(p).__setitem__("slot", str(_anchor0(p)["slot"])), {"L1"}),
+    ("the run receipt's index written as a float", lambda p: p["experiment"]["score"].__setitem__("receipt", 0.0), _RUN),
+    ("the run receipt's index written as null", lambda p: p["experiment"]["score"].__setitem__("receipt", None), _RUN),
+    ("the run receipt carried second, its index written 1.0", lambda p: _run_receipt_second(p, 1.0), _RUN),
+    ("the run receipt carried second, its index written as a string", lambda p: _run_receipt_second(p, "1"), _RUN),
+    ("the run receipt carried second, its index written as true", lambda p: _run_receipt_second(p, True), _RUN),
+    ("control: the run receipt carried second, its index written 1", lambda p: _run_receipt_second(p, 1), set()),
 ]
 
 
-@pytest.mark.parametrize("name,mutate", TYPE_CONFUSED, ids=[x[0] for x in TYPE_CONFUSED])
-def test_a_type_confused_field_fails_L4_alone(tmp_path, name, mutate):
+@pytest.mark.parametrize("name,mutate,links", TYPE_CONFUSED, ids=[x[0] for x in TYPE_CONFUSED])
+def test_a_type_confused_field_fails_exactly_its_links_by_name(tmp_path, name, mutate, links):
     cap = _write_consistent(tmp_path, _inputs(), mutate=mutate, name="t.research.html")
     rep = verify(cap)
-    assert _fails(rep) == {"L4"}, (name, [(l["id"], l["problems"]) for l in rep["links"]])
+    assert _fails(rep) == links, (name, [(l["id"], l["problems"]) for l in rep["links"]])
     assert rep["payload"]["core_sha256_ok"] and rep["payload"]["page_ok"]
-    l4 = next(l for l in rep["links"] if l["id"] == "L4")
-    assert not any("could not be read" in p for p in l4["problems"]), l4["problems"]   # named, not a TypeError
+    problems = [p for l in rep["links"] for p in l["problems"]]
+    assert not any("Error:" in p for p in problems), problems        # named, never a TypeError
+    assert rep["ok"] is (not links)
+    if links:
+        assert any("integer" in p or "byte count" in p for p in problems), problems
 
 
-@pytest.mark.parametrize("name,mutate", TYPE_CONFUSED, ids=[x[0] for x in TYPE_CONFUSED])
-def test_layer_1_agrees_with_layer_2_on_a_type_confused_field(tmp_path, name, mutate):
+@pytest.mark.parametrize("name,mutate,links", TYPE_CONFUSED, ids=[x[0] for x in TYPE_CONFUSED])
+def test_layer_1_agrees_with_layer_2_on_a_type_confused_field(tmp_path, name, mutate, links):
     cap = _write_consistent(tmp_path, _inputs(), mutate=mutate, name="t.research.html")
     l1, rep = _layer1(cap), verify(cap)
     _agree(l1, rep, name)
-    assert l1["links"]["L4"]["offline"] == FAILS
-    assert l1["summary"].startswith(SUMMARY_FAILS) and l1["summary_class"] == "summary bad", (name, l1["summary"])
+    assert _l1_fails(l1) == links
+    if links:
+        assert l1["summary"].startswith(SUMMARY_FAILS) and l1["summary_class"] == "summary bad", (name, l1["summary"])
+    else:
+        assert l1["summary"].startswith(SUMMARY_OK), (name, l1["summary"])
+
+
+def _int_literals(body: str) -> list:
+    """(start, end, key) of every integer literal outside a string in a JSON text; key is the
+    nearest object key written before it."""
+    out, i, n, key = [], 0, len(body), None
+    while i < n:
+        c = body[i]
+        if c == '"':
+            j = i + 1
+            while body[j] != '"':
+                j += 2 if body[j] == "\\" else 1
+            k = j + 1
+            while k < n and body[k] in " \t\r\n":
+                k += 1
+            if k < n and body[k] == ":":
+                key = json.loads(body[i:j + 1])
+            i = j + 1
+        elif c == "-" or c in "0123456789":
+            j = i + 1
+            while j < n and body[j] in "0123456789+-.eE":
+                j += 1
+            if re.fullmatch(r"-?[0-9]+", body[i:j]):
+                out.append((i, j, key))
+            i = j
+        else:
+            i += 1
+    return out
+
+
+def test_every_integer_literal_written_as_a_float_reads_alike_in_both_layers(minted, tmp_path):
+    """Review 3's sweep: each integer literal of the clean page rewritten ``N.0`` by hand. JCS writes
+    both the same, so no digest moves; where an instrument reads an integer, both layers fail that
+    link (by name in the terminal), and everywhere else both hold. Never a traceback."""
+    html = minted.read_text(encoding="utf-8")
+    m = PAYLOAD_RE.search(html)
+    body = m.group(1)
+    lits = _int_literals(body)
+    assert len(lits) >= 30, len(lits)
+    caps, reps = [], []
+    for k, (i, j, key) in enumerate(lits):
+        cap = tmp_path / f"f{k:02d}.research.html"
+        cap.write_bytes((html[:m.start(1)] + body[:j] + ".0" + body[j:] + html[m.end(1):]).encode("utf-8"))
+        rep = verify(cap)
+        assert rep["payload"]["core_sha256_ok"] is True, key
+        problems = [p for l in rep["links"] for p in l["problems"]]
+        assert not any("Error:" in p for p in problems), (key, problems)
+        caps.append(cap)
+        reps.append(rep)
+    failing = {key for (_i, _j, key), rep in zip(lits, reps) if _fails(rep)}
+    # the integers the instruments read: span offsets, the snapshot size, the sworn receipt's counts,
+    # sworn_total and unresolved, the anchor slot, the run receipt's index
+    assert {"start", "end", "size", "HELD", "FAILED", "sworn_total", "unresolved", "slot",
+            "receipt"} <= failing, failing
+    l1s = _layer1_many(caps, tmp_path)
+    split = [(key, sorted(_fails(rep)), sorted(_l1_fails(l1)))
+             for (_i, _j, key), rep, l1 in zip(lits, reps, l1s) if _fails(rep) != _l1_fails(l1)]
+    assert split == []
+    for (_i, _j, key), rep, l1 in zip(lits, reps, l1s):
+        if _fails(rep):
+            assert l1["summary"].startswith(SUMMARY_FAILS), (key, l1["summary"])
+
+
+# a field written in a shape one layer reads and the other did not, or a time that fits the format
+# and names no time: (name, mutation, the links it flips)
+def _clock0(p: dict) -> dict:
+    return p["artifacts"]["public_clocks"][0]
+
+
+_FULLWIDTH = "\uff12\uff10\uff12\uff16-10-11T20:15:00Z"
+SHAPES = [
+    ("an anchor line that is not an object", lambda p: p["artifacts"]["anchors"].__setitem__(0, "a line"), {"L1"}),
+    ("an anchor block_time on February 30", lambda p: _anchor0(p).__setitem__("block_time", "2026-02-30T20:15:00Z"),
+     {"L1"}),
+    ("an anchor block_time at hour 24", lambda p: _anchor0(p).__setitem__("block_time", "2026-10-11T24:00:00Z"), {"L1"}),
+    ("an anchor block_time at second 60", lambda p: _anchor0(p).__setitem__("block_time", "2026-10-11T23:59:60Z"),
+     {"L1"}),
+    ("an anchor block_time in year 0", lambda p: _anchor0(p).__setitem__("block_time", "0000-10-11T20:15:00Z"), {"L1"}),
+    ("an anchor block_time in fullwidth digits", lambda p: _anchor0(p).__setitem__("block_time", _FULLWIDTH), {"L1"}),
+    ("control: an anchor block_time in year 50", lambda p: _anchor0(p).__setitem__("block_time", "0050-10-11T20:15:00Z"),
+     set()),
+    ("control: an anchor block_time on a leap day", lambda p: _anchor0(p).__setitem__("block_time", "2024-02-29T20:15:00Z"),
+     set()),
+    ("a public clock stated in month 13", lambda p: _clock0(p).__setitem__("stated", "2026-13-01T00:00:00Z"), {"L1b"}),
+    ("a public clock stated in fullwidth digits", lambda p: _clock0(p).__setitem__("stated", _FULLWIDTH), {"L1b"}),
+    ("a public clock with an empty name", lambda p: _clock0(p).__setitem__("name", ""), {"L1b"}),
+    ("a public clock whose binds is ideographic space", lambda p: _clock0(p).__setitem__("binds", "\u3000"), {"L1b"}),
+    ("a public clock whose read is an information separator", lambda p: _clock0(p).__setitem__("read", "\x1c"),
+     {"L1b"}),
+    ("a public clock whose does_not_prove is a number", lambda p: _clock0(p).__setitem__("does_not_prove", 5), {"L1b"}),
+    ("a public clock whose does_not_prove is null", lambda p: _clock0(p).__setitem__("does_not_prove", None), {"L1b"}),
+    ("control: a public clock whose name is a byte order mark", lambda p: _clock0(p).__setitem__("name", "\ufeff"),
+     set()),
+    ("control: a stated run end on February 30", lambda p: p["stated"].__setitem__("run_ended_utc", "2026-02-30T18:54:26Z"),
+     set()),
+]
+
+
+@pytest.mark.parametrize("name,mutate,links", SHAPES, ids=[x[0] for x in SHAPES])
+def test_a_shape_or_an_impossible_time_fails_exactly_its_link_by_name(tmp_path, name, mutate, links):
+    cap = _write_consistent(tmp_path, _inputs(), mutate=mutate, name="s.research.html")
+    rep = verify(cap)                                              # never a traceback
+    assert _fails(rep) == links, (name, [(l["id"], l["problems"]) for l in rep["links"]])
+    assert rep["payload"]["core_sha256_ok"] and rep["payload"]["page_ok"]
+    assert rep["ok"] is (not links)
+    if "stated run end" in name:
+        l1 = next(l for l in rep["links"] if l["id"] == "L1")
+        assert any("the stated run end '2026-02-30T18:54:26Z' is not an ISO-8601 UTC time that exists" in f
+                   for f in l1["stated"]["facts"]), l1["stated"]["facts"]
+
+
+@pytest.mark.parametrize("name,mutate,links", SHAPES, ids=[x[0] for x in SHAPES])
+def test_layer_1_agrees_with_layer_2_on_a_shape_or_an_impossible_time(tmp_path, name, mutate, links):
+    cap = _write_consistent(tmp_path, _inputs(), mutate=mutate, name="s.research.html")
+    l1, rep = _layer1(cap), verify(cap)
+    _agree(l1, rep, name)
+    assert _l1_fails(l1) == links
+    if links:
+        assert l1["summary"].startswith(SUMMARY_FAILS), (name, l1["summary"])
+        for lid in links & {"L1b"}:              # the page names the public clock's problem word for word
+            for p in next(l for l in rep["links"] if l["id"] == lid)["problems"]:
+                assert p.split(" — ", 1)[-1] in l1["links"][lid]["checked"], (name, p, l1["links"][lid])
+    else:
+        assert l1["summary"].startswith(SUMMARY_OK), (name, l1["summary"])
+
+
+@pytest.mark.parametrize("where,edit", [
+    ("anchor", lambda i: i["anchors"][0].__setitem__("block_time", "2026-02-30T20:15:00Z")),
+    ("public_clock", lambda i: i["public_clocks"][0].__setitem__("stated", "2026-02-30T00:00:00Z")),
+    ("stated", lambda i: i["stated"].__setitem__("run_ended_utc", "2026-02-30T18:54:26Z")),
+])
+def test_build_refuses_a_time_that_does_not_exist_by_name(tmp_path, where, edit):
+    inp = _inputs()
+    inp.pop("_core")
+    edit(inp)
+    with pytest.raises(SystemExit) as e:
+        build(inp, tmp_path / "no.research.html", created=TS)
+    msg = str(e.value.code)
+    assert "an ISO-8601 UTC time that exists" in msg, msg
+    assert {"anchor": "REFUSED inconsistent_chain", "public_clock": "REFUSED public_clock",
+            "stated": "REFUSED stated"}[where] in msg
+    assert not (tmp_path / "no.research.html").exists()
+
+
+def test_parse_iso_names_only_a_time_that_exists():
+    assert rc._parse_iso("2026-10-11T20:15:00Z") is not None
+    assert rc._parse_iso("2024-02-29T00:00:00Z") is not None
+    assert rc._parse_iso("0050-01-01T00:00:00Z") is not None
+    for s in ("2026-02-30T00:00:00Z", "2026-13-01T00:00:00Z", "2026-00-10T00:00:00Z", "2026-10-00T00:00:00Z",
+              "2026-10-11T24:00:00Z", "2026-10-11T23:60:00Z", "2026-10-11T23:59:60Z", "0000-01-01T00:00:00Z",
+              _FULLWIDTH, "2026-10-11 20:15:00Z", "2026-10-11T20:15:00", None, 5):
+        assert rc._parse_iso(s) is None, s
+
+
+def test_the_page_blank_class_is_python_str_isspace():
+    """The page's public-clock rule calls a string blank as Python's ``str.strip`` does; its class
+    is written out, since ``String.prototype.trim`` strips another set."""
+    m = re.search(r"var PYWS=/\^\[(.*?)\]\*\$/;", rc._JS_RESEARCH)
+    assert m, "PYWS not found in the page script"
+    rx = re.compile("[" + m.group(1) + "]")
+    page = {c for c in range(0x110000) if rx.fullmatch(chr(c))}
+    py = {c for c in range(0x110000) if chr(c).isspace()}
+    assert page == py, (sorted(page - py), sorted(py - page))
 
 
 def test_an_exponent_literal_offset_is_a_float_in_both_layers(minted, tmp_path):

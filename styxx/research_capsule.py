@@ -171,7 +171,10 @@ _MODULES = ("styxx.research_capsule", "styxx.protocol", "styxx.sworn", "styxx.ch
             "styxx.attestation")
 _HEX64 = re.compile(r"[0-9a-f]{64}")
 _COMMIT = re.compile(r"[0-9a-f]{40}|[0-9a-f]{64}")
-_ISO = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z")
+# ASCII digits only: Python's \d also matches a fullwidth digit, which strptime then reads, and
+# the page's regex does not
+_ISO = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z")
+_ISO_WHAT = "an ISO-8601 UTC time that exists (YYYY-MM-DDTHH:MM:SSZ)"
 _JS_BEGIN = '<script id="research-verify">'
 _WALLET_NOTE = ("the wallet the anchor is checked against is a constant inside this file; confirm "
                 "the address at github.com/fathom-lab/styxx (styxx/clock.py CREATOR, the README) and "
@@ -336,9 +339,21 @@ def _pointer(obj, ptr: str) -> Tuple[Any, Optional[str]]:
 
 
 def _parse_iso(s) -> Optional[_dt.datetime]:
+    """The time a ``YYYY-MM-DDTHH:MM:SSZ`` string names, or None: a string that fits the format
+    but names no time (February 30, month 13, hour 24, second 60, year 0) is None too, so it ends
+    in a named problem and never in a traceback; the page applies the same rule."""
     if not isinstance(s, str) or not _ISO.fullmatch(s):
         return None
-    return _dt.datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=_dt.timezone.utc)
+    try:
+        return _dt.datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=_dt.timezone.utc)
+    except ValueError:
+        return None
+
+
+def _int_as_written(v) -> bool:
+    """An integer as Python's ``json`` reads it: an int literal, not a float literal (``2.0``,
+    ``2e0``) and not a bool. The page reads the same through its typed parse (``intLit``)."""
+    return isinstance(v, int) and not isinstance(v, bool)
 
 
 def _signed_delta(later: _dt.datetime, earlier: _dt.datetime) -> str:
@@ -497,11 +512,11 @@ def check_anchor_offline(line: dict) -> dict:
                    detail="the line's recorded memo is not the memo its kind and digest imply")
         return out
     slot = line.get("slot")
-    if "slot" in line and (isinstance(slot, bool) or not isinstance(slot, int) or slot < 0):
-        out.update(status="MALFORMED_LINE", detail="slot is not a non-negative integer")
+    if "slot" in line and (not _int_as_written(slot) or slot < 0):
+        out.update(status="MALFORMED_LINE", detail="slot is not a non-negative integer as written")
         return out
     if "block_time" in line and _parse_iso(line["block_time"]) is None:
-        out.update(status="MALFORMED_LINE", detail="block_time is not ISO-8601 UTC (YYYY-MM-DDTHH:MM:SSZ)")
+        out.update(status="MALFORMED_LINE", detail=f"block_time is not {_ISO_WHAT}")
         return out
     out["status"] = "SHAPE_OK"
     return out
@@ -519,14 +534,14 @@ def _clock_reading(status: str) -> str:
 
 # ------------------------------------------------------------------- the sworn receipt, alone
 
-def _tally_verdict(counts: dict, malformed) -> str:
-    """``styxx.sworn.verify``'s document rule over a counts map."""
-    total = sum(v for v in counts.values() if isinstance(v, int) and not isinstance(v, bool))
+def _tally_verdict(tally: dict, malformed) -> str:
+    """``styxx.sworn.verify``'s document rule over a tally of span verdicts."""
+    total = sum(v for v in tally.values() if _int_as_written(v))
     if malformed:
         return "SWORN-FAILED"
     if total == 0:
         return "UNSWORN"
-    if counts.get("FAILED", 0) == 0 and counts.get("MALFORMED", 0) == 0:
+    if tally.get("FAILED", 0) == 0 and tally.get("MALFORMED", 0) == 0:
         return "SWORN-HELD"
     return "SWORN-FAILED"
 
@@ -534,14 +549,23 @@ def _tally_verdict(counts: dict, malformed) -> str:
 def receipt_tally_problem(srec) -> Optional[str]:
     """Why a sworn receipt's ``document_verdict``, ``counts``, ``sworn_total`` and ``unresolved``
     are not its own spans' tally under ``styxx.sworn``'s document rule, or None. A receipt whose
-    spans all read HELD cannot say SWORN-FAILED. Read from the receipt alone, so the browser layer
-    and this one apply the same rule; a test reads every sworn receipt committed under ``papers/``,
-    chosen by its schema field and not by its file name."""
+    spans all read HELD cannot say SWORN-FAILED. Every count, ``sworn_total`` and ``unresolved``
+    is an integer as written (a ``2.0`` is not a count; JCS writes it ``2``, so no digest shows
+    it), and the verdict is derived from the spans' tally. Read from the receipt alone, so the
+    browser layer and this one apply the same rule; a test reads every sworn receipt committed
+    under ``papers/``, chosen by its schema field and not by its file name."""
     if not isinstance(srec, dict):
         return "the sworn receipt is not an object"
     spans, counts = srec.get("spans"), srec.get("counts")
     if not isinstance(spans, list) or not isinstance(counts, dict):
         return "the sworn receipt carries no spans list or no counts object"
+    # the value is not echoed: a float literal and an integer print alike once parsed
+    not_int = sorted(k for k, v in counts.items() if not _int_as_written(v))
+    if not_int:
+        return f"its counts hold a value that is not an integer as written ({', '.join(not_int)})"
+    for k in ("sworn_total", "unresolved"):
+        if k in srec and not _int_as_written(srec[k]):
+            return f"its {k} is not an integer as written"
     tally: Dict[str, int] = {}
     for s in spans:
         v = s.get("verdict") if isinstance(s, dict) else None
@@ -555,7 +579,7 @@ def receipt_tally_problem(srec) -> Optional[str]:
         return f"its sworn_total {srec['sworn_total']!r} is not its {total} spans"
     if "unresolved" in srec and srec["unresolved"] != counts.get("UNRESOLVED", 0):
         return f"its unresolved {srec['unresolved']!r} is not its UNRESOLVED count"
-    want = _tally_verdict(counts, srec.get("document_malformed"))
+    want = _tally_verdict(tally, srec.get("document_malformed"))
     if srec.get("document_verdict") != want:
         return (f"it says {srec.get('document_verdict')!r} and its own spans tally {want} "
                 f"{jcs(tally)}")
@@ -586,13 +610,16 @@ def _all_held_problem(core: dict) -> Optional[str]:
 # ------------------------------------------------------------------------------------ compose
 
 def _public_clock_problem(c) -> Optional[str]:
+    """Why a public clock entry cannot be printed, or None. The page's ``clockProblem`` is the same
+    rule, word for word: blank is what ``str.strip`` removes (``str.isspace``), which the page
+    holds as an explicit class because ``String.prototype.trim`` strips another set."""
     if not isinstance(c, dict):
         return "is not an object"
     for k in ("name", "binds", "read"):
         if not isinstance(c.get(k), str) or not c[k].strip():
-            return f"has no string {k!r}"
+            return f"has no non-blank string {k!r}"
     if c.get("stated") is not None and _parse_iso(c.get("stated")) is None:
-        return "has a stated time that is not ISO-8601 UTC (YYYY-MM-DDTHH:MM:SSZ)"
+        return f"has a stated time that is not {_ISO_WHAT}"
     if "does_not_prove" in c and not isinstance(c["does_not_prove"], str):
         return "has a does_not_prove that is not text"
     return None
@@ -708,6 +735,9 @@ def compose(inputs: dict, created: Optional[str] = None) -> dict:
     for k, v in stated.items():
         if not isinstance(k, str) or not k.isascii() or isinstance(v, (dict, list)):
             _refuse("stated", f"stated.{k!r} must be an ASCII key with a scalar value")
+    if "run_ended_utc" in stated and _parse_iso(stated["run_ended_utc"]) is None:
+        # the one stated fact the capsule computes with (block_time − run_end)
+        _refuse("stated", f"stated.run_ended_utc {stated['run_ended_utc']!r} is not {_ISO_WHAT}")
 
     payload = {
         "spec": SPEC,
@@ -842,7 +872,7 @@ def check_payload(payload: dict, html: Optional[str] = None) -> dict:
             L1.check(a.get("digest") == pr.get("sha256"),
                      f"anchor #{a.get('n')} digest is the PREREG's sha256 (L0)",
                      "the sealed digest is not the carried PREREG's")
-        if isinstance(a.get("tx"), str):
+        if isinstance(a, dict) and isinstance(a.get("tx"), str):
             L1.reads.append(f"getTransaction {a['tx']} at {' or '.join(_clock.RPCS)} (memo, fee payer, "
                             f"slot {a.get('slot')}, blockTime {a.get('block_time')})")
     L1.reads.append(f"python -m styxx.clock verify {art.get('anchors_path')}   # the lab's checker, "
@@ -870,8 +900,10 @@ def check_payload(payload: dict, html: Optional[str] = None) -> dict:
                                 f"precedes the run's stated end; a seal bounds the digest's existence "
                                 f"from above and orders nothing else; {_ORDER_NOTE}")
         elif bt is not None:
-            L1.facts.append(f"anchor #{a.get('n')} block_time {a.get('block_time')}; no run end is "
-                            f"stated, so block_time − run_end cannot be printed; {_ORDER_NOTE}")
+            why = ("no run end is stated" if "run_ended_utc" not in stated else
+                   f"the stated run end {stated['run_ended_utc']!r} is not {_ISO_WHAT}")
+            L1.facts.append(f"anchor #{a.get('n')} block_time {a.get('block_time')}; {why}, so "
+                            f"block_time − run_end cannot be printed; {_ORDER_NOTE}")
     L1.facts.append(_WALLET_NOTE)
 
     # ---------------------------------------------------------------- L1b public clocks
@@ -892,9 +924,15 @@ def check_payload(payload: dict, html: Optional[str] = None) -> dict:
     snap = art.get("snapshot") if isinstance(art.get("snapshot"), dict) else {}
     entries = snap.get("entries") if isinstance(snap.get("entries"), dict) else {}
     receipts = art.get("receipts") if isinstance(art.get("receipts"), list) else []
-    run_idx = score.get("receipt") if isinstance(score.get("receipt"), int) else 0
+    run_idx = score.get("receipt")
+    if not _int_as_written(run_idx):
+        # named, never read as 0: a JS array reads an index written 1.0 or "1" as 1, and Python's json
+        # reads neither as an integer, so a confused index would split the layers
+        L2.bad(f"experiment.score.receipt is {run_idx!r}, which is not an integer as written")
+        run_idx = None
     run_receipt_obj = None
-    run_receipt = receipts[run_idx] if 0 <= run_idx < len(receipts) and isinstance(receipts[run_idx], dict) else None
+    run_receipt = (receipts[run_idx] if run_idx is not None and 0 <= run_idx < len(receipts)
+                   and isinstance(receipts[run_idx], dict) else None)
     L2.check(run_receipt is not None, "the run's receipt is carried", "experiment.score.receipt names no "
                                                                       "carried receipt")
     for i, r in enumerate(receipts):
@@ -1858,9 +1896,15 @@ function pointer(obj,ptr){if(ptr==="")return obj;if(ptr[0]!=="/")return undefine
   for(var i=0;i<toks.length;i++){var t=toks[i].replace(/~1/g,"/").replace(/~0/g,"~");if(cur===null||typeof cur!=="object")return undefined;
     if(Array.isArray(cur)){if(!/^\d+$/.test(t)||+t>=cur.length)return undefined;cur=cur[+t];}else{if(!(t in cur))return undefined;cur=cur[t];}}return cur;}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
-function tallyProblem(r){var spans=r.spans,counts=r.counts;
+// research_capsule.receipt_tally_problem; tr is the same receipt from the typed parse, where every
+// count, sworn_total and unresolved must be an integer as written (a 2.0 is not a count)
+function tallyProblem(r,tr){var spans=r.spans,counts=r.counts;
   if(!Array.isArray(spans)||!counts||typeof counts!=="object"||Array.isArray(counts))return "the sworn receipt carries no spans list or no counts object";
-  var tally={};for(var i=0;i<spans.length;i++){var v=spans[i]&&spans[i].verdict;if(typeof v!=="string")return "a span of the sworn receipt carries no verdict";tally[v]=(tally[v]||0)+1;}
+  var t=(tr&&typeof tr==="object")?tr:{},tc=(t.counts&&typeof t.counts==="object")?t.counts:{};
+  var notInt=Object.keys(counts).filter(function(k){return !(Object.prototype.hasOwnProperty.call(tc,k)&&intLit(tc[k]));}).sort();
+  if(notInt.length)return "its counts hold a value that is not an integer as written ("+notInt.join(", ")+")";
+  var ik=["sworn_total","unresolved"];for(var j=0;j<ik.length;j++)if(Object.prototype.hasOwnProperty.call(r,ik[j])&&!intLit(t[ik[j]]))return "its "+ik[j]+" is not an integer as written";
+  var tally=Object.create(null);for(var i=0;i<spans.length;i++){var v=spans[i]&&spans[i].verdict;if(typeof v!=="string")return "a span of the sworn receipt carries no verdict";tally[v]=(tally[v]||0)+1;}
   var ck=Object.keys(counts),tk=Object.keys(tally);
   if(tk.some(function(k){return !Object.prototype.hasOwnProperty.call(counts,k);})||ck.some(function(k){return counts[k]!==(tally[k]||0);}))return "its counts "+jcs(counts)+" are not its spans' tally "+jcs(tally);
   var total=0;tk.forEach(function(k){total+=tally[k];});
@@ -1868,6 +1912,20 @@ function tallyProblem(r){var spans=r.spans,counts=r.counts;
   if(Object.prototype.hasOwnProperty.call(r,"unresolved")&&r.unresolved!==(counts.UNRESOLVED||0))return "its unresolved "+JSON.stringify(r.unresolved)+" is not its UNRESOLVED count";
   var want=r.document_malformed?"SWORN-FAILED":total===0?"UNSWORN":((counts.FAILED||0)===0&&(counts.MALFORMED||0)===0)?"SWORN-HELD":"SWORN-FAILED";
   if(r.document_verdict!==want)return "it says "+JSON.stringify(r.document_verdict)+" and its own spans tally "+want+" "+jcs(tally);
+  return null;}
+// research_capsule._parse_iso: the format in ASCII digits and a time that exists (no February 30,
+// month 13, hour 24, second 60 or year 0); setUTCFullYear, because Date.UTC reads a year 0-99 as 19xx
+function isoOk(s){if(typeof s!=="string"||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$/.test(s))return false;
+  var y=+s.slice(0,4),mo=+s.slice(5,7),d=+s.slice(8,10),h=+s.slice(11,13),mi=+s.slice(14,16),se=+s.slice(17,19),t=new Date(0);
+  t.setUTCFullYear(y,mo-1,d);t.setUTCHours(h,mi,se,0);
+  return y>=1&&t.getUTCFullYear()===y&&t.getUTCMonth()===mo-1&&t.getUTCDate()===d&&t.getUTCHours()===h&&t.getUTCMinutes()===mi&&t.getUTCSeconds()===se;}
+// research_capsule._public_clock_problem, word for word. PYWS is str.isspace's set, what Python's
+// str.strip removes; String.prototype.trim strips another (U+FEFF in, U+001C-U+001F and U+0085 out)
+var PYWS=/^[\t\n\x0b\x0c\r\x1c-\x1f \x85\xa0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]*$/;
+function clockProblem(c){if(!c||typeof c!=="object"||Array.isArray(c))return "is not an object";
+  var ks=["name","binds","read"];for(var i=0;i<ks.length;i++){var v=c[ks[i]];if(typeof v!=="string"||PYWS.test(v))return "has no non-blank string '"+ks[i]+"'";}
+  if(c.stated!==null&&c.stated!==undefined&&!isoOk(c.stated))return "has a stated time that is not an ISO-8601 UTC time that exists (YYYY-MM-DDTHH:MM:SSZ)";
+  if(Object.prototype.hasOwnProperty.call(c,"does_not_prove")&&typeof c.does_not_prove!=="string")return "has a does_not_prove that is not text";
   return null;}
 // research_capsule._all_held_problem: L4 holds only when every sworn span reads HELD
 function allHeldProblem(core){var counts=(core.counts&&typeof core.counts==="object")?core.counts:{},total=0;
@@ -1935,18 +1993,24 @@ if(prBytes){prText=dec(prBytes);try{gatesText=selectGates(prText);links.L0.ok.pu
 var anchors=Array.isArray(A.anchors)?A.anchors:[],KINDS=["sworn-receipt","sealed-prereg","sealed-canaries","charon-head"];
 var sealed=anchors.filter(function(a){return a&&a.kind==="sealed-prereg";});
 chk("L1",sealed.length>0,"the capsule carries a sealed-prereg anchor line","no sealed-prereg line is carried (UNANCHORED)");
-anchors.forEach(function(a){var okShape=a&&typeof a.kind==="string"&&KINDS.indexOf(a.kind)>=0&&typeof a.digest==="string"&&/^[0-9a-f]{64}$/.test(a.digest)&&typeof a.tx==="string"&&a.tx;
+anchors.forEach(function(a,i){var obj=!!a&&typeof a==="object"&&!Array.isArray(a);
+  var okShape=obj&&typeof a.kind==="string"&&KINDS.indexOf(a.kind)>=0&&typeof a.digest==="string"&&/^[0-9a-f]{64}$/.test(a.digest)&&typeof a.tx==="string"&&a.tx;
   var memoOk=okShape&&(!("memo" in a)||a.memo==="styxx "+a.kind+" "+a.digest);
-  var slotOk=!a||!("slot" in a)||(typeof a.slot==="number"&&a.slot>=0&&Math.floor(a.slot)===a.slot);
-  var timeOk=!a||!("block_time" in a)||/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(a.block_time);
-  chk("L1",okShape&&memoOk&&slotOk&&timeOk,"anchor #"+(a&&a.n)+" ("+(a&&a.kind)+") memo = kind + digest, slot and block_time well-formed","MALFORMED_LINE");
+  var ts=typedAt(["artifacts","anchors",i,"slot"]),slotOk=!obj||!("slot" in a)||(intLit(ts)&&ts>=0);
+  var timeOk=!obj||!("block_time" in a)||isoOk(a.block_time);
+  chk("L1",okShape&&memoOk&&slotOk&&timeOk,"anchor #"+(obj?a.n:undefined)+" ("+(obj?a.kind:undefined)+") memo = kind + digest, slot and block_time well-formed","MALFORMED_LINE");
   if(okShape&&memoOk&&a.kind==="sealed-prereg")chk("L1",a.digest===pr.sha256,"anchor #"+a.n+" digest is the PREREG's sha256 (L0)","the sealed digest is not the carried PREREG's");});
 // L1b
 var clocks=Array.isArray(A.public_clocks)?A.public_clocks:[];
-clocks.forEach(function(c,i){chk("L1b",c&&typeof c.name==="string"&&typeof c.binds==="string"&&typeof c.read==="string"&&(c.stated==null||/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(c.stated)),"public clock "+(i+1)+" is well-formed","malformed");});
+clocks.forEach(function(c,i){var why=clockProblem(c);chk("L1b",why===null,"public clock "+(i+1)+" is well-formed",why||"");});
 if(!clocks.length)links.L1b.ok.push("no public clock is listed (nothing to check offline)");
 // L2
-var snap=A.snapshot||{},entries=snap.entries||{},receipts=Array.isArray(A.receipts)?A.receipts:[],runReceipt=receipts[S.receipt]||null,runObj=null;
+var snap=A.snapshot||{},entries=snap.entries||{},receipts=Array.isArray(A.receipts)?A.receipts:[];
+// experiment.score.receipt as research_capsule reads it: an integer as written, else named (never
+// an index of 1.0, "1" or true, which JS reads and Python does not)
+var TSC=typedAt(["experiment","score"]),runIdx=(TSC&&typeof TSC==="object"&&!Array.isArray(TSC)&&Object.prototype.hasOwnProperty.call(TSC,"receipt"))?TSC.receipt:0;
+if(!intLit(runIdx)){links.L2.bad.push("experiment.score.receipt is "+JSON.stringify(S.receipt)+", which is not an integer as written");runIdx=null;}
+var rr=(runIdx!==null&&runIdx>=0&&runIdx<receipts.length)?receipts[runIdx]:null,runReceipt=(rr&&typeof rr==="object"&&!Array.isArray(rr))?rr:null,runObj=null;
 chk("L2",!!runReceipt,"the run's receipt is carried","experiment.score.receipt names no carried receipt");
 receipts.forEach(function(r,i){var data=art("L2",r,"receipt "+i);if(!data)return;var obj;try{obj=parseStrict(dec(data));}catch(e){links.L2.bad.push("receipt "+r.name+" is not strict JSON — "+e.message);return;}
   var ent=entries[r.path];
@@ -1974,7 +2038,7 @@ var snapTree={};Object.keys(entries).forEach(function(p){var e=entries[p];var d;
   snapTree[p]={mode:e.mode,size:sz,bytes:d};});
 if(resBytes&&side&&srec){var doc=srec.document||{};
   chk("L4",sha256(resBytes)===doc.inline_sha256,"the RESULT bytes hash to the sworn receipt's document.inline_sha256","the carried RESULT is not the document the receipt was issued over");
-  var tallyWhy=tallyProblem(srec);
+  var tallyWhy=tallyProblem(srec,typedAt(["artifacts","sworn_receipt"]));
   chk("L4",tallyWhy===null,"the sworn receipt's document_verdict and counts are its own spans' tally",tallyWhy||"");
   chk("L4",side.commit===snap.commit,"the sidecar's commit is the snapshot's ("+String(snap.commit).slice(0,12)+")","sidecar names "+side.commit);
   var tsp=typedAt(["artifacts","sidecar","spans"]),offBad=[];
