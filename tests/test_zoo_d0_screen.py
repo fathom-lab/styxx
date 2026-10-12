@@ -170,7 +170,8 @@ def test_constants_are_the_plans():
                    "`--operator-allows-rerun-after-partial`", "`zoo_d0_screen.partial.jsonl`"):
         assert phrase in sec12, phrase
     assert Z.PARTIAL_LOG.name == "zoo_d0_screen.partial.jsonl"
-    table = re.findall(r"^\| (base|instruct) \| `([^`]+)`", note, re.M)
+    sec2 = note[note.index("## 2. Models"):note.index("## 3. The items")]          # section 15's results table repeats the rows
+    table = re.findall(r"^\| (base|instruct) \| `([^`]+)`", sec2, re.M)
     assert [(g, r) for r, g, _ in Z.MODELS] == [(g, r) for g, r in table]
     assert len(Z.MODELS) == 13 and "microsoft/Phi-3.5-mini-instruct" in Z.EXCLUDED and "microsoft/Phi-3.5-mini-instruct" in note
     for repo, _, role in Z.MODELS:
@@ -1102,3 +1103,53 @@ def test_the_lab_never_prints_these_words():
         assert not raw.startswith(b"\xef\xbb\xbf"), f"{p.name} has a BOM"
         hits = [h.group(0) for h in banned.finditer(raw.decode("utf-8"))]
         assert not hits, f"{p.name}: {hits}"
+
+
+# -- the committed record: the receipt, the partial log and the crashed attempt's refusal file ------------------
+
+def test_the_committed_record_checks_out_byte_for_byte():
+    """NOTE sections 14 and 15 name the receipt and the crashed attempt's refusal file by sha256, and the receipt names
+    the crashed attempt's log by the sha256 of its leading lines (runtime.prior_partial_log). All three files are
+    committed and pinned -text, so each hash a reader checks is a hash of the committed bytes on any checkout."""
+    import hashlib
+
+    receipt = PAPER / "zoo_d0_screen.json"
+    log = PAPER / "zoo_d0_screen.partial.jsonl"
+    refusal = PAPER / "zoo_d0_screen_refusal.json"
+    if not all(p.exists() for p in (receipt, log, refusal)):
+        pytest.skip("the zoo receipt and the crashed attempt's record are not in this checkout")
+
+    def sha(b):
+        return hashlib.sha256(b).hexdigest()
+
+    raw_receipt, raw_log, raw_refusal = receipt.read_bytes(), log.read_bytes(), refusal.read_bytes()
+    for p, raw in ((receipt, raw_receipt), (log, raw_log), (refusal, raw_refusal)):
+        assert b"\r\n" not in raw and not raw.startswith(b"\xef\xbb\xbf"), f"{p.name}: not the LF bytes the hashes name"
+    note = NOTE.read_text(encoding="utf-8")
+    sec14 = note[note.index("## 14. "):note.index("## 15. ")]
+    sec15 = note[note.index("## 15. "):]
+    assert sha(raw_receipt) in sec15 and sha(raw_refusal) in sec14
+
+    res = json.loads(raw_receipt.decode("utf-8"))
+    prior = res["runtime"]["prior_partial_log"]
+    lines = raw_log.split(b"\n")
+    assert lines[-1] == b""                                                    # every event ends in LF
+    head = b"".join(x + b"\n" for x in lines[:prior["lines"]])
+    assert prior["lines"] == 3 and sha(head) == prior["sha256"] and prior["sha256"] in sec14
+    crashed = json.loads(raw_refusal.decode("utf-8"))
+    assert crashed["refused"] is False and crashed["error"] == "KeyError: 'max_abs_score_diff'"
+    assert crashed["partial_log"] == prior
+
+    events = [json.loads(x) for x in raw_log.decode("utf-8").splitlines()]
+    assert [e["event"] for e in events[:3]] == ["run_start", "wrapper_equivalence", "error"]
+    assert events[3]["event"] == "run_start" and events[3]["prior_partial_log"] == prior
+    assert [e["arm"] for e in events if e["event"] == "wrapper_equivalence"] == ["M1", "M1", "T"]
+    assert [e["repo"] for e in events if e["event"] == "model"] == list(res["models"]) == [m[0] for m in Z.MODELS]
+    assert events[-1]["event"] == "receipt_written" and events[-1]["sha256"] == sha(raw_receipt)
+
+    flat = re.sub(r"\s*\n>\s*", " ", sec15)                                    # the blockquoted sentences, unwrapped
+    for g in Z.GROUPS:
+        assert res["summary"][g]["sentence"] in flat, g
+    pinned = {x.strip() for x in (ROOT / ".gitattributes").read_text(encoding="utf-8").splitlines()}
+    for p in (receipt, log, refusal):
+        assert f"papers/frequency-resonance/{p.name} -text" in pinned, p.name
