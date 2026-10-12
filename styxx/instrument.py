@@ -55,8 +55,8 @@ CASE_PROBES = (
 
 _MAX_VALUE = 128          # a compared value is a string of at most this many characters, or null
 _MAX_MODULES = 16
-_MODULE_NAME = re.compile(r"^[a-z_.]{1,64}$")
-_SHA256 = re.compile(r"^[0-9a-f]{64}$")
+_MODULE_NAME = re.compile(r"^[a-z_.]{1,64}\Z")   # \Z, not $: $ matches before one trailing newline too
+_SHA256 = re.compile(r"^[0-9a-f]{64}\Z")
 _QUOTE = 80               # any quoted value is cut to this many characters
 _LABEL = re.compile(r"[^A-Za-z0-9._+-]")
 
@@ -191,7 +191,9 @@ def _text_field(obj: dict, field: str) -> Tuple[bool, Optional[str]]:
 
 
 def _read_modules(value) -> Optional[List[list]]:
-    """At most _MAX_MODULES ``[name, sha]`` pairs with distinct names, or None when unreadable."""
+    """At most _MAX_MODULES ``[name, sha]`` pairs with distinct names, each name and sha matched whole
+    (``fullmatch`` on a ``\\Z``-anchored rule: ``match`` against ``$`` read ``"foo\\n"``, 65 characters
+    with a control character, as a name), or None when unreadable."""
     if not isinstance(value, list) or len(value) > _MAX_MODULES:
         return None
     out, seen = [], set()
@@ -199,9 +201,9 @@ def _read_modules(value) -> Optional[List[list]]:
         if not isinstance(pair, (list, tuple)) or len(pair) != 2:
             return None
         name, sha = pair
-        if not isinstance(name, str) or not _MODULE_NAME.match(name) or name in seen:
+        if not isinstance(name, str) or not _MODULE_NAME.fullmatch(name) or name in seen:
             return None
-        if sha is not None and not (isinstance(sha, str) and _SHA256.match(sha)):
+        if sha is not None and not (isinstance(sha, str) and _SHA256.fullmatch(sha)):
             return None
         seen.add(name)
         out.append([name, sha])
@@ -214,7 +216,8 @@ def read_identity(record) -> Tuple[Optional[dict], List[str]]:
     ``(None, [])`` when the record carries no identity key. ``(None, [why, ...])`` when an identity key
     is not an object, names an unknown schema, holds a compared value that is neither a string of at most
     128 characters nor null, or lists modules otherwise than as at most 16 ``[name, sha]`` pairs (name
-    ``^[a-z_.]{1,64}$``, sha 64 lowercase hex or null): read as unnamed, with each ``why`` naming the key
+    ``^[a-z_.]{1,64}$``, sha 64 lowercase hex or null, each matched whole: a trailing newline is one
+    character too many): read as unnamed, with each ``why`` naming the key
     and quoting the value cut short. Otherwise ``({"build": {...} | None, "runtime": {...} | None}, [])``
     with every known field present and null where the record says nothing (a null, or an empty string)."""
     if not isinstance(record, dict):
