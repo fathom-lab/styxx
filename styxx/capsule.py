@@ -2218,11 +2218,14 @@ def _live_identity(live: dict) -> dict:
 
 def _charon_reads_as_broken_binding(text: str) -> bool:
     """styxx.charon.derive_capsule reads a problem holding `ambiguous`, `bytes !=`, or `!=` beside `binding`
-    as a broken binding and derives the line UNRESOLVED. A SKEW line must never read so (the amendment's
-    wording constraint (b)), so every token of the record's choosing that a problem quotes passes this test
-    before it is written: the identity as instrument.describe writes it, a module name inside a differing
-    field, the implementation, the version, the pin's version string. instrument._label and instrument.describe write
-    no `!` or `=`, so of the three only the word is left to refuse."""
+    as a broken binding and derives the line UNRESOLVED. The identity comparison's SKEW line must never
+    read so (the amendment's wording constraint (b)), so every token of the record's choosing that it
+    quotes passes this test before it is written: the identity as instrument.describe writes it, a module
+    name inside a differing field, the implementation, the version, the pin's version string.
+    The format-key SKEW line is outside the rule (the erratum's rule 6): it quotes the sealed format key
+    and the payload's pin as origin/main does, so either one holding the word still makes charon derive
+    the capsule UNRESOLVED, as on origin/main. instrument._label and instrument.describe write no `!` or
+    `=`, so of the three only the word is left to refuse."""
     return "ambiguous" in text.lower() or "!=" in text
 
 
