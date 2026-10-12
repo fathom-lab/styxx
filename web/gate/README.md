@@ -3,17 +3,22 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`09867056957082f129985591f5ed048021e85ed48627e73854494b4a1e6e2b3a` (LF line endings; a wheel
+`ce067ec94fc820b6258bf550bd1c1ce8fe664bf01f8ef0f1de3a7cde99f92c64` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
 their bookmarks bar. That file is `main`'s reader (BC-2 + COMPAT-1 + BIN-2 + COMPAT-2, pull requests
 #113, #115, #120 and #124, plus the `fetch_pr` door) — the file **7.48.0** ships, sha256
-`9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb`, with one change outside any reading
+`9b620e00a19464589308a987819894ae7cc3c111c66a5f8a457a84b8a6c604eb`, with two changes outside any reading
 path: its `--demo` prints a CONTRADICTED verdict as CONTRADICTED, not LIE (sha256
-`68873068c0a665c2f5a2c40e2ca4d1e2cfccf28318f6f8d6fc03087d51fcdcc1`) — plus the PATH-2a block (an
+`68873068c0a665c2f5a2c40e2ca4d1e2cfccf28318f6f8d6fc03087d51fcdcc1`), and its record names the
+instrument that wrote it, two keys `build` and `runtime` after the eleven content keys, with no
+content key moved (sha256
+`4eb3d6f03f81a0b08153d329ce00a9e5e8cfe5b0952d6e86451b3084bb444130`) — plus the PATH-2a block (an
 overlay that only abstains, not yet released; see *PATH-2a* below), and a committed test cuts the
-block out and gets that reader back byte for byte, in both languages.
+block out and gets that reader back byte for byte, in both languages. The port's record carries the
+eleven content keys and no identity: the differential compares named fields, so a Python record of
+thirteen keys and a port record of eleven compare as they did.
 
 The port was first cut from the 7.47.0 wheel (`fb2d9b3e…`) and re-cut on 2026-09-16 for issue
 #110: the 7.47.0 templates count Python `def` lines and accuse a TypeScript commit that says
@@ -77,7 +82,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout whose styxx/diffgate.py is the file named above
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 09867056…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to ce067ec9…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 190 pinned pairs against their expect blocks (+ path2a_moves.json)
@@ -400,7 +405,8 @@ byte for byte. Both files and the three fixtures under `tests/fixtures` are writ
 ### Measured at this head
 
 On the file PATH-2a merged (`styxx/diffgate.py` `4cded2e3…`, reader `9b620e00…`; the figures marked *pinned* are re-asserted
-on every later file by the committed tests, and the measured ones were not re-run when the demo's label changed), on CPython 3.12.10 (Unicode 15.0) and Node 24.13.0
+on every later file by the committed tests, and the measured ones were not re-run when the demo's label changed or when
+the record came to name its instrument), on CPython 3.12.10 (Unicode 15.0) and Node 24.13.0
 (Unicode 16) unless a line says otherwise. A figure marked *pinned* is asserted exactly by a committed test. The
 rest were measured once, with scripts kept in the builder's scratch, and are not asserted: by the builder of the
 twelfth pass at this head where a line says *measured at this head*, by the builder of the eleventh pass at its head,
