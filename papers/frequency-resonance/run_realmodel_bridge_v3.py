@@ -552,14 +552,18 @@ def answer_token_ids(tok: Tok, fmt: str) -> dict:
     return out
 
 
+FORMAT_LINE_VALUES = tuple(FORMATS) + ("PENDING_PILOT", "NOT_STARTED")
+
+
 def answer_format_from_prereg(text: str) -> str:
-    """The last 'Answer format chosen' line wins: section 9 freezes PENDING_PILOT, a dated amendment sets it."""
+    """The last 'Answer format chosen' line wins: section 9 freezes PENDING_PILOT; a dated amendment sets yes_no or
+    true_false, or NOT_STARTED when both formats failed the pilot (section 9: the run is not started)."""
     found = FORMAT_LINE_RE.findall(text)
     if not found:
         raise Refusal("the PREREG has no 'Answer format chosen (written before sealing):' line")
     fmt = found[-1]
-    if fmt not in FORMATS and fmt != "PENDING_PILOT":
-        raise Refusal(f"the PREREG's answer format line reads {fmt!r}, not yes_no / true_false / PENDING_PILOT")
+    if fmt not in FORMAT_LINE_VALUES:
+        raise Refusal(f"the PREREG's answer format line reads {fmt!r}, not one of {FORMAT_LINE_VALUES}")
     return fmt
 
 
@@ -867,8 +871,9 @@ def window_mask(L: int, lengths: list, exemplar_lens: list, W: int | None, dtype
     return out
 
 
-def compare_logodds_batch(arm: str, model, seqs: list, yes_id: int, no_id: int, exemplar_lens=None, W=None, mech=None):
-    """log p(yes) - log p(no) at each item's own last position. Right padding, no attention mask."""
+def compare_logodds_batch(arm: str, model, seqs: list, yes_id: int, no_id: int, exemplar_lens=None, W=None, mech=None, spans=None):
+    """log p(yes) - log p(no) at each item's own last position. Right padding, no attention mask.
+    spans: the items' filler spans [start, end), handed to the mechanism hook when one is given."""
     torch = _torch()
     device = next(model.parameters()).device
     ids, lengths = pad_batch(seqs, device)
@@ -877,7 +882,7 @@ def compare_logodds_batch(arm: str, model, seqs: list, yes_id: int, no_id: int, 
         mask = window_mask(ids.shape[1], lengths, exemplar_lens, W, next(model.parameters()).dtype, device)
     with torch.no_grad():
         if mech is not None:
-            mech.begin()
+            mech.begin(spans)
         h = _hidden(arm, model, ids, mask)
         pos = torch.tensor([n - 1 for n in lengths], device=device)
         hl = h[torch.arange(len(seqs), device=device), pos]
@@ -917,7 +922,14 @@ class MechanismHook:
     dt_proj's output is pre-softplus; Delta = softplus(out); A = -exp(A_log) is [D_inner, N]; the slowest
     channel's |lambda| at a token is exp(max_d Delta[d] * max_n A[d, n]). Summed over an item's filler span,
     it is the deployed analogue of the toy's mag_max^gap.
+
+    The per-token slowest channel is typically one whose Delta is near zero, which neither decays nor writes, so
+    that frozen headline sits near 0 at every distance; two reported companions per layer say more: the median
+    channel's log|lambda| summed over the filler, and the fraction of channels whose surviving signal over the
+    filler is still >= 0.5. All three are reported, none gated (section 5).
     """
+
+    HALF = math.log(0.5)
 
     def __init__(self, model):
         torch = _torch()
@@ -926,18 +938,25 @@ class MechanismHook:
         self.A_max = [(-torch.exp(l.mixer.A_log.float())).amax(dim=1).detach() for l in self.layers]   # [D_inner]
         self.handles = [l.mixer.dt_proj.register_forward_hook(self._make(i)) for i, l in enumerate(self.layers)]
         self.active = False
+        self.spans = None
         self.store = {}
+        self.store_ch = {}
 
     def _make(self, i):
         def hook(_module, _inp, out):
             if not self.active:
                 return
             dt = self.torch.nn.functional.softplus(out.float())                   # [B, L, D_inner]
-            self.store[i] = (dt * self.A_max[i].to(dt.device)[None, None, :]).amax(dim=-1).detach()  # [B, L]
+            v = dt * self.A_max[i].to(dt.device)[None, None, :]                   # per-token log|lambda| per channel
+            self.store[i] = v.amax(dim=-1).detach()                                # [B, L]
+            if self.spans is not None:
+                self.store_ch[i] = self.torch.stack([v[b, s:e, :].sum(dim=0) for b, (s, e) in enumerate(self.spans)]).detach()  # [B, D_inner]
         return hook
 
-    def begin(self):
+    def begin(self, spans: list | None = None):
         self.store = {}
+        self.store_ch = {}
+        self.spans = spans
         self.active = True
 
     def end(self):
@@ -951,6 +970,17 @@ class MechanismHook:
             for b, (s, e) in enumerate(spans):
                 out[i, b] = float(v[b, s:e].sum())
         return out
+
+    def channel_summaries(self) -> tuple:
+        """([n_layers, B] median over channels of the filler-summed log|lambda|, [n_layers, B] fraction of channels
+        with filler-summed log|lambda| >= log 0.5), from the spans given to begin()."""
+        med = np.zeros((len(self.layers), len(self.spans)), dtype=float)
+        frac = np.zeros_like(med)
+        for i in range(len(self.layers)):
+            v = self.store_ch[i].cpu().numpy()                                     # [B, D_inner]
+            med[i] = np.median(v, axis=1)
+            frac[i] = (v >= self.HALF).mean(axis=1)
+        return med, frac
 
     def remove(self):
         for h in self.handles:
@@ -977,16 +1007,20 @@ def run_cell(arm: str, model, tok: Tok, items: list, exemplars: list, family: st
     B = batch_size or batch_size_for(arm, L)
     n_batches = 0
     windowed = W is not None
-    mech_rows = []
+    mech_rows, med_rows, frac_rows = [], [], []
     if family == "compare":
         yes_s, no_s = FORMATS[fmt]
         lo = []
         for i in range(0, len(seqs), B):
+            use_mech = mech is not None and not ablated
             lo.append(compare_logodds_batch(arm, model, seqs[i:i + B], ans_ids[yes_s], ans_ids[no_s],
                                             exemplar_lens[i:i + B] if windowed else None, W,
-                                            mech if (mech is not None and not ablated) else None))
-            if mech is not None and not ablated:
+                                            mech if use_mech else None, spans[i:i + B] if use_mech else None))
+            if use_mech:
                 mech_rows.append(mech.filler_sums(spans[i:i + B]))
+                med, frac = mech.channel_summaries()
+                med_rows.append(med)
+                frac_rows.append(frac)
             n_batches += 1
         logodds = np.concatenate(lo)
         summary = compare_cell_summary(logodds, [it["label"] for it in items])
@@ -1007,10 +1041,21 @@ def run_cell(arm: str, model, tok: Tok, items: list, exemplars: list, family: st
     if mech_rows:
         m = np.concatenate(mech_rows, axis=1)                              # [n_layers, n_items]
         by_layer = m.mean(axis=1)
-        summary["_mechanism"] = {"by_layer_mean_log_surviving": [float(x) for x in by_layer],
+        med = np.concatenate(med_rows, axis=1).mean(axis=1)                # [n_layers]
+        frac = np.concatenate(frac_rows, axis=1).mean(axis=1)              # [n_layers]
+        summary["_mechanism"] = {"definition": "per layer, over each item's filler span: slowest = sum of the per-token max over "
+                                               "channels of Delta*max_n A (the frozen headline, section 5); median_channel = median "
+                                               "over channels of the filler-summed Delta*max_n A; frac_channels_surviving_half = "
+                                               "fraction of channels with filler-summed Delta*max_n A >= log 0.5; all means over items",
+                                 "by_layer_mean_log_surviving": [float(x) for x in by_layer],
                                  "slowest_layer_log_surviving": float(by_layer.max()),
                                  "slowest_layer_surviving": float(math.exp(by_layer.max())),
-                                 "slowest_layer": int(by_layer.argmax())}
+                                 "slowest_layer": int(by_layer.argmax()),
+                                 "by_layer_median_channel_log_surviving": [float(x) for x in med],
+                                 "median_channel_log_surviving_max_over_layers": float(med.max()),
+                                 "median_channel_log_surviving_mean_over_layers": float(med.mean()),
+                                 "by_layer_frac_channels_surviving_half": [float(x) for x in frac],
+                                 "frac_channels_surviving_half_mean_over_layers": float(frac.mean())}
     return summary
 
 
@@ -1133,6 +1178,7 @@ def tokenizer_level_asserts(prep: dict, toks: dict, fmt: str, pilot_used: set | 
 def base_receipt(mode: str, fmt: str, n: int, distances, arms) -> dict:
     return {"prereg": PREREG.name, "mode": mode, "smoke": mode == "smoke",
             "config": {"checkpoints": dict(ARMS), "arms_run": list(arms), "revisions": {},
+                       "runner": Path(__file__).name, "runner_sha256": sha256_file(Path(__file__).resolve()),
                        "dtype": "float16 on cuda (weights loaded fp32 on CPU for the fp32 asserts, then half)",
                        "seeds": {"items": SEED_ITEMS, "pilot": SEED_PILOT, "bootstrap": SEED_BOOT},
                        "answer_format": fmt, "answer_tokens": list(FORMATS.get(fmt, ())), "distances": list(distances),
@@ -1298,7 +1344,7 @@ def run_smoke(arms) -> int:
     print(f"SMOKE: n={N_SMOKE} distances={SMOKE_DISTANCES} arms={arms} — INVALID-only by the gates block", flush=True)
     exp = load_experiment()
     fmt = answer_format_from_prereg(PREREG.read_text(encoding="utf-8"))
-    fmt = "yes_no" if fmt == "PENDING_PILOT" else fmt
+    fmt = "yes_no" if fmt in ("PENDING_PILOT", "NOT_STARTED") else fmt
     toks = {a: load_tokenizer(ARMS[a]) for a in ARMS}
     prep = prepare_items(toks["T"], N_SMOKE, SMOKE_DISTANCES, SEED_SMOKE, "smoke", fmts=(fmt,))
     res = base_receipt("smoke", fmt, N_SMOKE, SMOKE_DISTANCES, arms)
@@ -1385,6 +1431,9 @@ def run_main() -> int:
     fmt = answer_format_from_prereg(text)
     if fmt == "PENDING_PILOT":
         raise Refusal("the PREREG's answer format still reads PENDING_PILOT: run --pilot, enter the format as a dated amendment, seal, then run")
+    if fmt == "NOT_STARTED":
+        raise Refusal("the PREREG records that both answer formats failed the section-9 pilot: the main run is not started "
+                      f"(see {PILOT_RECEIPT.name} and the dated amendment in the PREREG)")
     if not SMOKE_RECEIPT.exists():
         raise Refusal(f"no smoke receipt ({SMOKE_RECEIPT.name}); the smoke runs before the main set and measures the budget")
     smoke = json.loads(SMOKE_RECEIPT.read_text(encoding="utf-8"))

@@ -429,13 +429,17 @@ def test_batch_size_bounds():
 
 def test_answer_format_line_last_one_wins():
     text = PREREG.read_text(encoding="utf-8")
-    assert R.answer_format_from_prereg(text) == "PENDING_PILOT"
-    amended = text + "\n## 17.1 Amendment\n\nAnswer format chosen (written before sealing): true_false\n"
+    frozen = text.split("## 17. Amendments")[0]                 # section 9's own line, before any amendment
+    assert R.answer_format_from_prereg(frozen) == "PENDING_PILOT"
+    amended = frozen + "\n## 17.1 Amendment\n\nAnswer format chosen (written before sealing): true_false\n"
     assert R.answer_format_from_prereg(amended) == "true_false"
+    assert R.answer_format_from_prereg(frozen + "\nAnswer format chosen (written before sealing): NOT_STARTED\n") == "NOT_STARTED"
     with pytest.raises(R.Refusal):
         R.answer_format_from_prereg(text + "\nAnswer format chosen (written before sealing): maybe\n")
     with pytest.raises(R.Refusal):
         R.answer_format_from_prereg("no such line")
+    # the document as it stands: PENDING_PILOT while no amendment has been entered, else what the amendment says
+    assert R.answer_format_from_prereg(text) in R.FORMAT_LINE_VALUES
 
 
 def test_strip_private_and_numpy_types(tmp_path):
@@ -457,6 +461,8 @@ def test_base_receipt_has_the_prereg_layout():
     assert R.SEED_SMOKE not in (R.SEED_ITEMS, R.SEED_PILOT)
     assert set(res["controls"]) == {"ablated", "windowed"}
     assert res["config"]["scan_chunk_tokens_M1"] == R.SCAN_CHUNK_TOKENS and res["config"]["batch_max"] == 16
+    assert res["config"]["runner"] == RUNNER.name and res["config"]["runner_sha256"] == R.sha256_file(RUNNER)
+    assert re.fullmatch(r"[0-9a-f]{64}", res["config"]["runner_sha256"])
 
 
 def test_the_lab_never_prints_these_words():
@@ -607,6 +613,9 @@ def test_mamba_code_path_on_cpu_with_130m():
         assert s["n"] == 8 and len(s["_correct"]) == 8 and s["batches"] == 2
         assert len(s["_mechanism"]["by_layer_mean_log_surviving"]) == 24
         assert s["_mechanism"]["slowest_layer_log_surviving"] <= 0.0
+        assert len(s["_mechanism"]["by_layer_median_channel_log_surviving"]) == 24
+        assert s["_mechanism"]["median_channel_log_surviving_max_over_layers"] <= s["_mechanism"]["slowest_layer_log_surviving"] + 1e-9
+        assert all(0.0 <= f <= 1.0 for f in s["_mechanism"]["by_layer_frac_channels_surviving_half"])
         s = R.run_cell("M1", model, tok, items[:8], exemplars, "recall", "yes_no", 16, ans, codes_len, batch_size=4)
         assert s["n"] == 8 and sum(s["slot_fractions"]) == pytest.approx(1.0) and s["batches"] == 6
         s = R.run_cell("M1", model, tok, items[:8], exemplars, "compare", "yes_no", 16, ans, codes_len, ablated=True, batch_size=4)
