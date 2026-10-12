@@ -93,9 +93,9 @@ def lines_of(events) -> bytes:
 
 def gz(data: bytes, members: int = 1) -> bytes:
     if members == 1:
-        return gzip.compress(data)
+        return gzip.compress(data, mtime=0)            # mtime fixed: gzip stamps the clock otherwise
     cut = len(data) // 2
-    return gzip.compress(data[:cut]) + gzip.compress(data[cut:])
+    return gzip.compress(data[:cut], mtime=0) + gzip.compress(data[cut:], mtime=0)
 
 
 # ================================================================ common
@@ -358,3 +358,224 @@ def test_http_archive_streams_retries_and_reads_404():
     got = pool.HttpArchive(opener=cut, sleep=lambda s: None, log=lambda *_: None).fetch(
         "2026-10-15-0", lambda lines: sum(1 for _ in lines))
     assert got["status"] == "failed" and got["attempts"] == 4
+
+
+# ================================================================ accuse
+
+accuse = _load("accuse")
+import styxx.diffgate as _dg  # noqa: E402  -- the checkout's gate, named below by its own LF sha256
+
+GATE_SHA = common.lf_sha256(Path(_dg.__file__).read_bytes())
+GATE = accuse.load_gate(GATE_SHA)
+FETCH_PULL = params()["fetch"]
+FETCH_COMPARE = dict(FETCH_PULL, diff_source="compare")
+
+ONE_FILE_DIFF = (b"diff --git a/src/app.py b/src/app.py\n--- a/src/app.py\n+++ b/src/app.py\n"
+                 b"@@ -1,2 +1,3 @@\n x = 1\n+y = 2\n")
+
+
+class Clock:
+    def __init__(self, t=1_800_000_000.0):
+        self.t, self.slept = t, []
+
+    def __call__(self):
+        return self.t
+
+    def sleep(self, s):
+        self.slept.append(s)
+        self.t += s
+
+
+class FakeWeb:
+    """github.com and api.github.com as a dict of URL -> bytes | HTTP status | list of those."""
+
+    def __init__(self, routes):
+        self.routes, self.calls = routes, []
+
+    def __call__(self, req, timeout):
+        url = req.full_url
+        self.calls.append(url)
+        assert "Authorization" not in req.headers and req.get_header("User-agent") == accuse.USER_AGENT
+        v = self.routes.get(url, 404)
+        if isinstance(v, list):
+            v = v.pop(0)
+        if isinstance(v, tuple):
+            code, headers = v
+            raise urllib.error.HTTPError(url, code, "x", headers, None)
+        if isinstance(v, int):
+            raise urllib.error.HTTPError(url, v, "x", {}, None)
+        return _Resp(v)
+
+
+def api_pr(number=1, head="a" * 40, title="Fix the parser", body="3 files changed in this PR.",
+           full_name="acme/app"):
+    return json.dumps({"number": number, "title": title, "body": body, "head": {"sha": head},
+                       "base": {"repo": {"full_name": full_name}}}).encode("utf-8")
+
+
+def rec_of(eid=7, number=1, **kw):
+    kind, rec = population.classify(ev(eid, ref="claude/x", number=number, **kw), ctx(), "2026-10-15-0")
+    assert kind == "admit"
+    return rec
+
+
+def github(routes, per_hour=50, clock=None):
+    clock = clock or Clock()
+    web = FakeWeb(routes)
+    lim = accuse.RateLimiter(per_hour, clock=clock, sleep=clock.sleep)
+    return accuse.GitHub(lim, opener=web, sleep=clock.sleep, log=lambda *_: None, clock=clock), web
+
+
+API1 = "https://api.github.com/repositories/200/pulls/1"
+PULL1 = "https://github.com/acme/app/pull/1.diff"
+
+
+def test_gate_digest_matching():
+    assert accuse.match_digest(b"a\nb\n", common.sha256_hex(b"a\nb\n")) == "bytes"
+    assert accuse.match_digest(b"a\r\nb\r\n", common.sha256_hex(b"a\nb\n")) == "lf"
+    assert accuse.match_digest(b"a\nb\n", "0" * 64) is None
+    with pytest.raises(accuse.Refused, match="not the frozen gate"):
+        accuse.load_gate("0" * 64)
+    assert GATE.identity["sha256"] == GATE_SHA and GATE.identity["unidata_version"]
+
+
+def test_accuse_gates_an_unmoved_head_and_names_the_accusation():
+    gh, web = github({API1: api_pr(), PULL1: ONE_FILE_DIFF})
+    o, inputs = accuse.accuse_one(rec_of(), gh, GATE, FETCH_PULL)
+    assert web.calls == [API1, PULL1]
+    assert o["outcome"] == "GATED" and o["inputs"]["body_source"] == "api_now"
+    assert o["inputs"]["head_moved"] is False and o["inputs"]["diff_sha256"] == common.sha256_hex(ONE_FILE_DIFF)
+    [c] = o["claims"]
+    assert (c["kind"], c["verdict"]) == ("files_changed_count", "CONTRADICTED")
+    assert o["accusations"] == [c["accusation_id"]]
+    assert inputs["body"] == "3 files changed in this PR." and inputs["diff_sha256"] == o["inputs"]["diff_sha256"]
+
+
+def test_accuse_never_judges_a_moved_head_and_spends_one_request():
+    gh, web = github({API1: api_pr(head="c" * 40), PULL1: ONE_FILE_DIFF})
+    o, inputs = accuse.accuse_one(rec_of(), gh, GATE, FETCH_PULL)
+    assert o["outcome"] == "HEAD_MOVED" and web.calls == [API1] and inputs is None
+
+
+@pytest.mark.parametrize("routes,expect,n_calls", [
+    ({API1: 404}, "PR_GONE", 1),
+    ({API1: 451}, "PR_UNAVAILABLE", 1),
+    ({API1: api_pr(body="   ")}, "EMPTY_BODY", 1),
+    ({API1: api_pr(body=None)}, "EMPTY_BODY", 1),
+    ({API1: api_pr()}, "DIFF_GONE", 2),
+    ({API1: api_pr(), PULL1: 406}, "DIFF_UNAVAILABLE", 2),
+    ({API1: b"<html>not json</html>"}, "PR_UNAVAILABLE", 1),
+])
+def test_accuse_outcomes(routes, expect, n_calls):
+    gh, web = github(routes)
+    o, _ = accuse.accuse_one(rec_of(), gh, GATE, FETCH_PULL)
+    assert o["outcome"] == expect and len(web.calls) == n_calls
+
+
+def test_accuse_uses_a_pre_trim_body_as_opened_and_the_compare_route():
+    rec = rec_of(full={"title": "Tests", "body": "Added 2 tests for the parser."})
+    url = f"https://github.com/acme/app/compare/{'b' * 40}...{'a' * 40}.diff"
+    gh, web = github({url: ONE_FILE_DIFF})
+    o, _ = accuse.accuse_one(rec, gh, GATE, FETCH_COMPARE)
+    assert web.calls == [url] and o["inputs"]["body_source"] == "payload_as_opened"
+    assert [(c["kind"], c["verdict"]) for c in o["claims"]] == [("tests_added", "CONTRADICTED")]
+
+
+def test_accuse_follows_a_renamed_repository_by_id():
+    gh, web = github({API1: api_pr(full_name="acme/renamed"),
+                      "https://github.com/acme/renamed/pull/1.diff": ONE_FILE_DIFF})
+    o, _ = accuse.accuse_one(rec_of(), gh, GATE, FETCH_PULL)
+    assert o["outcome"] == "GATED" and o["inputs"]["repo_now"] == "acme/renamed"
+
+
+def test_github_retries_5xx_waits_out_a_rate_limit_and_refuses_other_hosts():
+    clock = Clock()
+    limited = (403, {"X-RateLimit-Remaining": "0", "X-RateLimit-Reset": str(int(clock.t) + 100)})
+    gh, web = github({API1: [503, limited, api_pr()]}, clock=clock)
+    r = gh.get(API1, "application/vnd.github+json")
+    assert r["status"] == 200 and r["attempts"] == 3 and len(web.calls) == 3
+    assert clock.slept[0] == 30 and 60 <= clock.slept[1] <= 100
+    with pytest.raises(accuse.Refused, match="not a host"):
+        gh.get("https://example.com/x.diff", "text/plain")
+    gh, _ = github({API1: [503, 503, 503, 503]})
+    assert gh.get(API1, "x")["status"] == "failed"
+
+
+def test_rate_limiter_holds_the_hourly_budget_across_restarts(tmp_path):
+    clock = Clock()
+    state = str(tmp_path / "stamps.txt")
+    lim = accuse.RateLimiter(3, clock=clock, sleep=clock.sleep, state_path=state)
+    for _ in range(3):
+        lim.acquire()
+        clock.t += 1
+    assert clock.slept == []
+    again = accuse.RateLimiter(3, clock=clock, sleep=clock.sleep, state_path=state)   # a restart
+    again.acquire()
+    assert len(clock.slept) == 1 and 3590 < clock.slept[0] <= 3600.5
+    times = [float(x) for x in Path(state).read_text().split()]
+    assert len(times) == 4 and times[3] - times[0] >= 3600
+
+
+def _outcome_with_claims(gate_claims, eid="7", number=1):
+    class G:
+        def run(self, summary, diff):
+            return _dg.DiffGate(verdict="FAIL", base="x", head="y", claims=gate_claims, sentences_total=3)
+    rec = rec_of(eid=int(eid), number=number)
+    return dict(accuse.gate_outcome(rec, G(), "t", "b", b""), pool_key=f"200#{number}", event_id=eid,
+                schema=accuse.OUTCOME_SCHEMA, inputs={}, fetch=[])
+
+
+def test_overlay_withholding_is_recorded_and_never_an_accusation():
+    withheld = _dg.DiffClaim(kind="files_changed_count", text="2 files changed", detail={"n": 2},
+                             verdict="UNCHECKABLE",
+                             why="CONTRADICTED withheld by PATH-2a (#121): two changed paths differ. main's reading: x")
+    accused = _dg.DiffClaim(kind="tests_added", text="added 2 tests", detail={"n": 2}, verdict="CONTRADICTED",
+                            why="diff adds 0")
+    o = _outcome_with_claims([withheld, accused])
+    assert [c["withheld_from"] for c in o["claims"]] == ["CONTRADICTED", None]
+    assert len(o["accusations"]) == 1 and o["claims"][1]["accusation_id"] == o["accusations"][0]
+
+
+def test_accusation_items_are_ordered_by_event_id_and_digested_by_the_beacon():
+    from styxx.beacon import pool_sha256
+    mk = lambda kind: _dg.DiffClaim(kind=kind, text=kind, detail={}, verdict="CONTRADICTED", why="w")
+    a = _outcome_with_claims([mk("tests_added"), mk("symbol_added")], eid="100", number=1)
+    b = _outcome_with_claims([mk("only_touches")], eid="9", number=2)
+    items = accuse.accusation_items([a, b])
+    assert [i[2] for i in items] == ["only_touches", "tests_added", "symbol_added"]
+    assert all(isinstance(x, str) for i in items for x in i)
+    s = accuse.summarize([rec_of(eid=100, number=1), rec_of(eid=9, number=2)], {"200#1": a, "200#2": b})
+    assert s["status"] == "COMPLETE" and s["accusations"] == 3
+    assert s["accusations_sha256"] == pool_sha256(items)
+    a["claims"][0]["text"] = "edited"
+    with pytest.raises(ValueError, match="does not re-derive"):
+        accuse.accusation_items([a, b])
+
+
+def test_run_resumes_after_a_failed_fetch_and_never_drops_a_record(tmp_path):
+    recs = [rec_of(eid=7, number=1), rec_of(eid=8, number=2)]
+    api2 = "https://api.github.com/repositories/200/pulls/2"
+    gh, web = github({API1: api_pr(), PULL1: ONE_FILE_DIFF, api2: [503, 503, 503, 503]})
+    s = accuse.run(params(), recs, str(tmp_path), GATE, gh, log=lambda *_: None)
+    assert s["status"] == "INCOMPLETE" and s["by_outcome"] == {"FETCH_FAILED": 1, "GATED": 1}
+    assert (tmp_path / "inputs" / "200_1.json").exists()
+    gh2, web2 = github({api2: api_pr(number=2, body="Only touches docs/ here."),
+                        "https://github.com/acme/app/pull/2.diff": ONE_FILE_DIFF})
+    s2 = accuse.run(params(), recs, str(tmp_path), GATE, gh2, log=lambda *_: None)
+    assert web2.calls == [api2, "https://github.com/acme/app/pull/2.diff"]       # record 1 is not fetched again
+    assert s2["status"] == "COMPLETE" and s2["accusations"] == 2       # a count in #1, only_touches in #2
+    assert s2["accusations_by_kind"] == {"files_changed_count": 1, "only_touches": 1}
+    text = (tmp_path / "accusations.json").read_text(encoding="utf-8")
+    assert "family" not in text and "acme" not in text
+
+
+def test_stable_outcomes_ignore_fetch_times_only():
+    gh, _ = github({API1: api_pr(), PULL1: ONE_FILE_DIFF})
+    o1, _ = accuse.accuse_one(rec_of(), gh, GATE, FETCH_PULL)
+    gh, _ = github({API1: api_pr(), PULL1: ONE_FILE_DIFF}, clock=Clock(1_900_000_000.0))
+    o2, _ = accuse.accuse_one(rec_of(), gh, GATE, FETCH_PULL)
+    o2["inputs"]["body_fetched_at"] = "2030-01-01T00:00:00Z"
+    assert common.canon(accuse.stable(o1)) == common.canon(accuse.stable(o2))
+    gh, _ = github({API1: api_pr(body="4 files changed in this PR."), PULL1: ONE_FILE_DIFF})
+    o3, _ = accuse.accuse_one(rec_of(), gh, GATE, FETCH_PULL)
+    assert common.canon(accuse.stable(o1)) != common.canon(accuse.stable(o3))
