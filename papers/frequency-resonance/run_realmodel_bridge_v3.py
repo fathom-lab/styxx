@@ -1061,13 +1061,20 @@ def to_gpu_fp16(model):
     return model
 
 
-def release(model):
+def release(redteam: dict | None = None, tag: str = "") -> int:
+    """Give an arm's memory back to the device. The caller drops every reference to the model (and to any
+    hook holding its layers) BEFORE calling this: the first smoke emptied the cache while evaluate_arm's own
+    reference was still alive, the allocator kept the weights, and the free-GPU check refused the next arm."""
     torch = _torch()
-    del model
     import gc
     gc.collect()
     if torch.cuda.is_available():
+        torch.cuda.synchronize()
         torch.cuda.empty_cache()
+    free = free_gpu_bytes()
+    if redteam is not None:
+        redteam.setdefault("free_gpu_bytes_after_release", {})[tag] = free
+    return free
 
 
 # ---------------------------------------------------------------------------------------------------
@@ -1239,7 +1246,9 @@ def evaluate_arm(arm: str, res: dict, prep: dict, toks: dict, fmt: str, distance
     finally:
         if mech is not None:
             mech.remove()
-        release(model)
+        mech = None
+        model = None
+        release(red, arm)
 
 
 def gate_metrics(res: dict, keep: dict) -> dict:
@@ -1349,7 +1358,8 @@ def run_pilot() -> int:
             res["by_format"].setdefault("recall", {})[arm] = s
             print(f"    {arm} recall: raw {s['acc_raw']:.3f} norm {s['acc_norm']:+.3f} guard {s['guard_ok']}", flush=True)
         finally:
-            release(model)
+            model = None
+            release(red, arm)
     res["runtime"]["total_seconds"] = round(time.time() - t0, 1)
 
     def passes(fmt):
