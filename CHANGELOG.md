@@ -35,15 +35,15 @@ the untied control beside it on the same bars the sealed 2026-09-02 PREREG froze
 - **The receipt's own seeds enter one gated metric by value.** Seeds 0 and 1 on permutation 1234 are re-run as the
   determinism check (`anchor_max_abs_dev`, reported); as 4000-step runs their values count in `degenerate_fraction`
   (`G_D_stable`, at most 6 of its 60) and in no other gated metric, and like every leaf the six re-run leaves also
-  count toward `G_P_plumbing` (present, read back, imports, data, PREREG). The headline's own permutation is outside
-  every permutation-averaged gate. The PREREG as sealed in row 7 said they enter no gated metric; its section 15
-  corrects it. Section 15.1 itself overstates in three places, and the RESULT is to repeat each correction because
-  the sealed text stays: its "and no other" holds for the values only; `G_D_stable` counts the sixty 4000-step runs,
-  not "every training the design runs" (section 4 leaves the five 12,000-step runs out); and its correction of the
-  opening's "two" to six is wrong, because four of the six final accuracies in the sealed untied receipt (FREE and
-  CLAMPED at seeds 0 and 1) are already public in `pmnist_ablation_result.json`. A reader of that receipt learns two
-  new numbers, REAL2 at seeds 0 and 1, as the opening says; the opening was wrong only in saying they enter no gated
-  metric.
+  count toward `G_P_plumbing` (present, read back, imports, data, PREREG, preflight, curves). The headline's own
+  permutation is outside every permutation-averaged gate. The PREREG as sealed in row 7 said they enter no gated
+  metric; its section 15 corrects it. Section 15.1 itself overstates in three places, and the RESULT is to repeat
+  each correction because the sealed text stays: its "and no other" holds for the values only; `G_D_stable` counts
+  the sixty 4000-step runs, not "every training the design runs" (section 4 leaves the five 12,000-step runs out);
+  and its correction of the opening's "two" to six overstates. The sealed untied receipt does hold six final
+  accuracies, but four of them (FREE and CLAMPED at seeds 0 and 1) are already public in
+  `pmnist_ablation_result.json`, so a reader of that receipt learns two new numbers, REAL2 at seeds 0 and 1, as the
+  opening says; the opening was wrong only in saying they enter no gated metric.
 - **Amended before any data, no bar moved** (PREREG section 15, 2026-10-12, after the lab's review). Appended to the
   sealed bytes, which stand unedited above it (the leading 56,960 bytes of the amended blob are row 7's blob, and the
   gates block's sha256 is unchanged, `578924f8...`): the seeds-0/1 correction; gated metrics rounded to four decimals
