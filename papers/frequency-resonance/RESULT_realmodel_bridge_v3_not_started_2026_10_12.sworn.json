@@ -1,0 +1,351 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "d0411b2d5c6384ed00fd2ebe9b63e4591b0b56c1",
+ "document": {
+  "name": "RESULT_realmodel_bridge_v3_not_started_2026_10_12.md",
+  "sha256": "e0522b92bdd681fb38a3865882a4cae726972ff3572a4985987afba3b61a836b"
+ },
+ "text": "# RESULT — the real-model bridge, attempt three, was NOT STARTED: two pilots, both NEITHER; the behavioural route is closed\n\n**Status: NOT_STARTED, final.** No main-set item was generated or scored, so the preregistration's gates block never\nran and no verdict string exists. The route was closed by a rule the operator set before the second pilot ran\n(amendment 17.2), not by a gate.\n\nFathom Lab · 2026-10-12 · Preregistration: `PREREG_realmodel_bridge_v3_2026_10_11.md`, with amendments 17.1, 17.2 and\n17.3 (unsealed and unsigned; the judge's defaults are what was built). Runner: `run_realmodel_bridge_v3.py`. Receipts:\n`realmodel_bridge_v3_smoke.json` (plumbing, not read), `realmodel_bridge_v3_pilot.json` (pilot one) and\n`realmodel_bridge_v3_pilot2.json` (pilot two). Every pilot number below is sworn to those receipts at the commit this\ndocument's sidecar names; the two tables are built from sworn cells.\n\n## What was attempted\n\nThe arc's controlled results say that a pure-decay channel recalls one planted fact at every gap the lab measured,\nbut did not learn to compare a fact with a claim far away, while a rotating channel did\n(`RESULT_consistency_oscillation_2026_07_23.md`, `RESULT_consistency_horizon_2026_07_24.md`,\n`RESULT_recall_horizon_2026_07_24.md`). Two earlier attempts to look for that dissociation in deployed language\nmodels ended ABSTAIN (`RESULT_realmodel_bridge_2026_07_24.md`): recall at ceiling beside compare at chance, then a\nconstant responder scoring the label base rate. Attempt three was built to the design that RESULT named: a few-shot\nformat, exact label balance, a degeneracy guard, and a capability screen at the shortest distance before any distance\nis read.\n\nThe arms were `state-spaces/mamba-1.4b-hf` (M1) and `EleutherAI/pythia-1.4b` (T), an attention model of the same\nscale with the same tokenizer. M1's recurrence is\nreal and strictly negative in all 48 layers of the loaded weights\n(largest entry −0.0039):\npure decay, the clamped arm of the lab's own ablation shipped as a language model. The main run would have scored\n600 items per cell,\nthree planted four-digit codes per item, recall and compare over the same items at four distances from 16 to 1,024\ntokens of distinct wikitext filler, under eight gates. The screen asks both operations to reach 0.40 normalized\naccuracy at the shortest distance (D0, 16 tokens) in both arms, with the degeneracy guard passed, before any slope\nmay be read. Section 9 allowed one bounded format pilot at D0 before the seal.\n\n## The smoke: plumbing only\n\nThe smoke (24 items at 16 and 1,024 tokens, on its own seed and reserved slices, both arms) returned\nthe verdict `INVALID__smoke_plumbing_only`,\nas the gates block requires of a smoke, with every red-team assert of section 12 held, and it measured the main run at\n1.635 GPU-hours,\ninside the four-hour rule. Its accuracies are plumbing numbers on a handful of items and are not read here.\n\n## Pilot one: both answer formats fail (amendment 17.1)\n\nPilot one ran on\n48 items\nat D0, item seed\n1011,\ncodes and sentences disjoint from the main set and the smoke, both arms, exact balance. Its compare question was a\nclaim check, \"Question: Is the {name} code {claimed}? Answer:\", read as the sign of log p(\" Yes\") − log p(\" No\") and\nagain with \" True\" / \" False\"; a false claim named one of the other two planted codes. Recall took the argmax over the\nthree planted codes. Normalized accuracy is (a − chance) / (1 − chance), with chance one half for this compare and one\nthird for recall; the bar is 0.40, and the guard asks the compare answer rate to sit inside [0.20, 0.80].\n\n| arm | compare, Yes/No | Yes-rate | AUROC | compare, True/False | True-rate | AUROC | recall |\n|---|---|---|---|---|---|---|---|\n| M1 | −0.042 | 0.94 | 0.38 | −0.167 | 0.92 | 0.37 | 0.656 |\n| T | 0.083 | 0.42 | 0.56 | 0.042 | 0.56 | 0.53 | 0.969 |\n\nAll compare and recall cells are normalized accuracy. The Mamba arm answered Yes on nearly every item and failed the\nguard, then answered True on nearly every item and failed it again. The Pythia arm's answers varied and passed the\nguard, but its compare stayed far under the bar in both formats, and its log-odds carried almost no information about\nthe label (an AUROC of one half is a responder that ignores the label). Both arms recalled the planted code: raw recall\n0.771 for the Mamba arm and\n0.979 for the Pythia arm.\nSection 9 lets one failed format switch to the other once; both failed, and the receipt records\nthe recommendation `NEITHER — both formats fail the pilot`.\nAmendment 17.1 wrote NOT_STARTED on the format line.\n\n## The operator's one redesign, pre-stated as the last (amendment 17.2)\n\nThe operator then approved one bounded redesign of the compare readout and stated in advance that a second failed\npilot closes the behavioural route. The redesigned compare is argmax-shaped like recall, so no Yes-prior exists to\ndrift: the receipt records the question as\n`Question: Which name has the largest code: alpha, gamma or delta? Answer:`,\nscored as the argmax over the three name tokens, correct iff the chosen name holds the numerically largest of the\nthree planted codes, with exact balance over the correct slot. A constant responder scores exactly zero normalized in\nboth families, and the compare guard becomes recall's: no one answer on more than\n0.80 of items.\nThe test names became alpha, gamma and delta because \" bravo\" is two NeoX tokens; the exemplars use sigma, theta and\nomega, disjoint from them. What \"compare\" measures changed with the readout, and 17.2 says so: the claim check asked a\nfact against a later claim, the three-way question asks a fact against the other facts. The pre-stated rule: an arm\nclears iff at D0 its compare and its recall are both at or above\n0.40 normalized\nwith both guards passed; if both arms clear, the document is sealed, anchored and smoked before a main run; otherwise\nthe format line reads NOT_STARTED, final, and the route is closed. No bar moved.\n\n## Pilot two: neither arm clears (amendment 17.3)\n\nPilot two ran once, on\n48 items\nat D0, item seed\n1012,\nboth arms, with both arms' model-level asserts held before any cell was scored. Its sentences and codes are disjoint\nfrom both committed receipts by sha256 list:\n140 sentences of its own,\nnone among the\n1,284 the smoke and pilot one used.\nThe whole run took\n119.4 seconds,\nof which\n72.1 seconds\non the GPU. The receipt names the runner that wrote it by\nits sha256, `24e8c3ba8a3344f4e13ca41bce30d8cfa9cec53beffc00719c78c96b55c6987f`,\nand the runner in the tree this document is sworn at hashes to `24e8c3ba8a3344f4e13ca41bce30d8cfa9cec53beffc00719c78c96b55c6987f`.\n\n| arm | compare | raw | gamma share | AUROC | compare, codes removed | recall | AUROC | recall, codes removed |\n|---|---|---|---|---|---|---|---|---|\n| M1 | −0.062 | 0.292 | 0.92 | 0.449 | 0.000 | 0.812 | 0.977 | −0.156 |\n| T | 0.000 | 0.333 | 1.0 | 0.535 | −0.031 | 0.875 | 0.999 | −0.094 |\n\nCompare, recall and the two codes-removed columns are normalized accuracy against chance one third; the gamma share is\nthe fraction of items answered with the middle name; AUROC is the one-versus-rest mean over the three slots, where one\nhalf is a constant responder. Both arms answered gamma on nearly every item (the Pythia arm on every one) and failed\nthe guard. The name scores carried no measurable information about which code was largest (AUROC near one half),\nso this is not a calibration artefact a threshold could move, as the Yes-prior of pilot one might have been: the\noperation was not performed. Both arms recalled the planted code, and with the code sentences removed both families\nsat at or below chance in both arms, so the recall numbers read the planted codes and not priors.\n\n## The rule applied, and the closure\n\nThe Mamba arm's compare is below the bar and fails the guard; so is the Pythia arm's. The receipt records\nthe outcome `NEITHER`\nand\nthe format line to enter, `NOT_STARTED`,\nand amendment 17.3 enters it as the document's last format line:\n`Answer format chosen (written before sealing): NOT_STARTED`.\nThat line is final. The runner reads the last such line and refuses the main run: on 2026-10-12, at the commit before\nthis document, `python run_realmodel_bridge_v3.py` exited 2 with \"the PREREG records NOT_STARTED on its format line:\nthe main run is not started\", and `--pilot` exited 2 because the pilot-two receipt exists; the refusal note each run\nwrites was deleted and never committed.\n\nBy the operator's rule of amendment 17.2, a second failed pilot closes the behavioural route, and it is closed. This\nis not an ABSTAIN of the gates block: the block never ran, and the PREREG's own closing condition (\"A third ABSTAIN\ncloses the behavioural route\", section 14) was never reached; the stricter rule the operator set before pilot two\nclosed it earlier. Nothing is sealed: whether to seal a preregistration whose run does not start is the operator's\n(decision 5). Nothing has been posted (decision 6).\n\n## What this establishes, at pilot strength\n\n- At 16 tokens, given four exemplars, two 1.4 B base models — `mamba-1.4b-hf` and `pythia-1.4b` — recall a planted\n  four-digit code well above the frozen bar, in both pilots.\n- Neither performs the compare operation above the bar under either readout design: the claim check, in two answer\n  formats, and the three-way choice of the largest code. The compare answers collapse — the Mamba arm's onto one token\n  under the claim check, both arms' onto one slot under the three-way choice — and where the Pythia arm's claim-check\n  answers varied, they did not measurably track the label.\n- That is a sentence about an instrument: few-shot compare probes on these two models at the shortest distance. Each\n  pilot is 48 items, and section 9 says pilot numbers license nothing beyond the record of the attempt.\n\n## What it does not establish\n\n- Nothing about decay versus attention. The between-model contrast of section 7 was never computed, and both arms\n  failed the same way.\n- Nothing about distance. No item farther than 16 tokens was scored outside the smoke's plumbing pass, which is not\n  read.\n- Nothing about deployed models beyond these two checkpoints. Other scales, instruction-tuned models, other families,\n  other prompts, more exemplars and a written-out chain of reasoning were not tried; any of them is a different\n  instrument and a new preregistration (amendment 17.1, last paragraph).\n- Nothing for or against the arc's controlled-SSM results, which stay what each RESULT already says.\n- Nothing about honesty in language models, and nothing about importance. Section 14 of the preregistration: \"No\n  outcome bears on honesty in LLMs, frontier models, human cognition, or importance\".\n\n## Two defects in the record, found while writing this\n\n1. **Amendment 17.1 cites three runner commits by hashes that are not on the branch.** One commit message on the\n   branch carried a word the lab never prints. It was reworded on 2026-10-11 by rewriting the branch from that commit\n   on, after 17.1 had been committed, and 17.1's text kept the hashes it was written with. On the branch, `65397781`\n   is `93b59521`, `6c21580b` is `424c847a`, and `9b54d8d2` — the commit 17.1 names as the runner that wrote the smoke\n   and pilot-one receipts — is `e28a2d72`. Each pair has identical trees (`git diff` between them is empty), and the\n   runner blob at `e28a2d72` has the sha256 `45dd70df…` that both receipts record as `config.runner_sha256`. The\n   earlier hashes resolve only in the clone where the rewrite ran. The PREREG's frozen text is not edited; the mapping\n   is printed here.\n2. **The forward pointer section 15 owes is not written.** Section 15 asks for a pointer to this RESULT in\n   `RESULT_realmodel_bridge_2026_07_24.md` and in `papers/SYNTHESIS_program_2026_07_24.md` item 3, in the same\n   commit. The July RESULT is certified: its certificate binds the document by\n   the field document_sha256, `6d9bf383e50360c36cae0e277e35b8a0e2b6e67f94797addd7c340ffdea8cda7`,\n   and the document in the tree hashes to `6d9bf383e50360c36cae0e277e35b8a0e2b6e67f94797addd7c340ffdea8cda7`,\n   so an edit would leave the certificate naming bytes the file no longer holds. The synthesis's bytes are recorded in\n   `papers/closed-model-frontier/oath_v11_baseline_ledger.json`. The pointer stays owed; whether it lands as an edit\n   with a fresh certificate or as a note beside each document is the operator's call.\n\n## Forward state\n\nThe behavioural bridge is closed. The only open bridge is the profiler route — named Design B under Q2 in the lab's\nworking note `STATE_OF_THE_ARC_v2.md`: run the resonance profiler shipped in `styxx/resonance.py`\n(`INSTRUMENT_resonance_profiler_2026_07_23.md`) on a published oscillatory checkpoint, the step\n`papers/SYNTHESIS_program_2026_07_24.md` item 3 says \"either opens the bridge to real models or closes it\". It needs\nan adapter and a checkpoint. No oscillatory language-model checkpoint is cached on this box, and the LinOSS\nrepository publishes code with no checkpoint (section 3 of the preregistration), so the route needs a download or a\ntraining run; the operator has approved neither. Until one runs, the July statement stands: the\nrecall-versus-comparison dissociation is a controlled-SSM result, and the bridge to deployed models is open, with\none behavioural instrument now spent.\n\nThe runner's plumbing — exact balance computed from the items, the controls, per-item scores, sha256 exclusion lists,\nthe asserts before any scoring — is reusable by a successor preregistration. This document's bars are not reusable\nas if they had been met.\n\n---\n\n*Two models that keep the code and do not weigh it. The instrument asked a question these models do not answer at\nthis scale, and the record says that before it says anything about rhythm.*\n",
+ "spans": [
+  {
+   "start": 1872,
+   "end": 1937,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/redteam/mamba_A_real_and_negative_every_layer/layers",
+   "kind": "numeric"
+  },
+  {
+   "start": 1939,
+   "end": 1962,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/redteam/mamba_A_real_and_negative_every_layer/max_A",
+   "kind": "numeric"
+  },
+  {
+   "start": 2079,
+   "end": 2097,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_smoke.json#/budget/n_per_cell",
+   "kind": "numeric"
+  },
+  {
+   "start": 2651,
+   "end": 2693,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_smoke.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 2814,
+   "end": 2829,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_smoke.json#/budget/total_hours_timed_arms",
+   "kind": "numeric"
+  },
+  {
+   "start": 3014,
+   "end": 3022,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/recall/M1/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 3040,
+   "end": 3044,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/config/seeds/pilot",
+   "kind": "numeric"
+  },
+  {
+   "start": 3766,
+   "end": 3774,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/M1/compare/acc_norm",
+   "kind": "numeric"
+  },
+  {
+   "start": 3777,
+   "end": 3781,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/M1/compare/yes_rate",
+   "kind": "numeric"
+  },
+  {
+   "start": 3784,
+   "end": 3788,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/M1/compare/auroc",
+   "kind": "numeric"
+  },
+  {
+   "start": 3791,
+   "end": 3799,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/M1/compare/acc_norm",
+   "kind": "numeric"
+  },
+  {
+   "start": 3802,
+   "end": 3806,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/M1/compare/yes_rate",
+   "kind": "numeric"
+  },
+  {
+   "start": 3809,
+   "end": 3813,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/M1/compare/auroc",
+   "kind": "numeric"
+  },
+  {
+   "start": 3816,
+   "end": 3821,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/recall/M1/acc_norm",
+   "kind": "numeric"
+  },
+  {
+   "start": 3830,
+   "end": 3835,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/T/compare/acc_norm",
+   "kind": "numeric"
+  },
+  {
+   "start": 3838,
+   "end": 3842,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/T/compare/yes_rate",
+   "kind": "numeric"
+  },
+  {
+   "start": 3845,
+   "end": 3849,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/yes_no/T/compare/auroc",
+   "kind": "numeric"
+  },
+  {
+   "start": 3852,
+   "end": 3857,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/T/compare/acc_norm",
+   "kind": "numeric"
+  },
+  {
+   "start": 3860,
+   "end": 3864,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/T/compare/yes_rate",
+   "kind": "numeric"
+  },
+  {
+   "start": 3867,
+   "end": 3871,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/true_false/T/compare/auroc",
+   "kind": "numeric"
+  },
+  {
+   "start": 3874,
+   "end": 3879,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/recall/T/acc_norm",
+   "kind": "numeric"
+  },
+  {
+   "start": 4353,
+   "end": 4376,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/recall/M1/acc_raw",
+   "kind": "numeric"
+  },
+  {
+   "start": 4381,
+   "end": 4405,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/by_format/recall/T/acc_raw",
+   "kind": "numeric"
+  },
+  {
+   "start": 4503,
+   "end": 4563,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot.json#/format_recommendation",
+   "kind": "quote"
+  },
+  {
+   "start": 4964,
+   "end": 5039,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/compare_question",
+   "kind": "quote"
+  },
+  {
+   "start": 5355,
+   "end": 5368,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/guard/max_slot_fraction",
+   "kind": "numeric"
+  },
+  {
+   "start": 5787,
+   "end": 5802,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/screen_bar",
+   "kind": "numeric"
+  },
+  {
+   "start": 6077,
+   "end": 6085,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/n_per_cell",
+   "kind": "numeric"
+  },
+  {
+   "start": 6103,
+   "end": 6107,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/seeds/pilot2",
+   "kind": "numeric"
+  },
+  {
+   "start": 6271,
+   "end": 6295,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/redteam/disjoint_from_committed_receipts/this_run_sentences",
+   "kind": "numeric"
+  },
+  {
+   "start": 6312,
+   "end": 6346,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/redteam/disjoint_from_committed_receipts/prior_sentence_indices",
+   "kind": "numeric"
+  },
+  {
+   "start": 6367,
+   "end": 6380,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/runtime/total_seconds",
+   "kind": "numeric"
+  },
+  {
+   "start": 6391,
+   "end": 6403,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/runtime/scoring_seconds",
+   "kind": "numeric"
+  },
+  {
+   "start": 6462,
+   "end": 6540,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/config/runner_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 6546,
+   "end": 6671,
+   "receipt": "path:papers/frequency-resonance/run_realmodel_bridge_v3.py",
+   "kind": "hash"
+  },
+  {
+   "start": 6831,
+   "end": 6839,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_norm/M1/compare/16",
+   "kind": "numeric"
+  },
+  {
+   "start": 6842,
+   "end": 6847,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_raw/M1/compare/16",
+   "kind": "numeric"
+  },
+  {
+   "start": 6850,
+   "end": 6854,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/M1/compare/16/slot_fractions/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 6857,
+   "end": 6862,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/M1/compare/16/ovr_auroc",
+   "kind": "numeric"
+  },
+  {
+   "start": 6865,
+   "end": 6870,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/controls/ablated/M1/compare/16/acc_norm",
+   "kind": "numeric"
+  },
+  {
+   "start": 6873,
+   "end": 6878,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_norm/M1/recall/16",
+   "kind": "numeric"
+  },
+  {
+   "start": 6881,
+   "end": 6886,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/M1/recall/16/ovr_auroc",
+   "kind": "numeric"
+  },
+  {
+   "start": 6889,
+   "end": 6897,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/controls/ablated/M1/recall/16/acc_norm",
+   "kind": "numeric"
+  },
+  {
+   "start": 6906,
+   "end": 6911,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_norm/T/compare/16",
+   "kind": "numeric"
+  },
+  {
+   "start": 6914,
+   "end": 6919,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_raw/T/compare/16",
+   "kind": "numeric"
+  },
+  {
+   "start": 6922,
+   "end": 6925,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/T/compare/16/slot_fractions/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 6928,
+   "end": 6933,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/T/compare/16/ovr_auroc",
+   "kind": "numeric"
+  },
+  {
+   "start": 6936,
+   "end": 6944,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/controls/ablated/T/compare/16/acc_norm",
+   "kind": "numeric"
+  },
+  {
+   "start": 6947,
+   "end": 6952,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/acc_norm/T/recall/16",
+   "kind": "numeric"
+  },
+  {
+   "start": 6955,
+   "end": 6960,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/guard/T/recall/16/ovr_auroc",
+   "kind": "numeric"
+  },
+  {
+   "start": 6963,
+   "end": 6971,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/controls/ablated/T/recall/16/acc_norm",
+   "kind": "numeric"
+  },
+  {
+   "start": 7915,
+   "end": 7936,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/pilot_outcome",
+   "kind": "quote"
+  },
+  {
+   "start": 7941,
+   "end": 7980,
+   "receipt": "path:papers/frequency-resonance/realmodel_bridge_v3_pilot2.json#/format_line_to_enter",
+   "kind": "quote"
+  },
+  {
+   "start": 8047,
+   "end": 8107,
+   "receipt": "path:papers/frequency-resonance/PREREG_realmodel_bridge_v3_2026_10_11.md#L661",
+   "kind": "quote"
+  },
+  {
+   "start": 11972,
+   "end": 12065,
+   "receipt": "path:papers/frequency-resonance/CERT_realmodel_bridge.json#/document_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 12074,
+   "end": 12175,
+   "receipt": "path:papers/frequency-resonance/RESULT_realmodel_bridge_2026_07_24.md",
+   "kind": "hash"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

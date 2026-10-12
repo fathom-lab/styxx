@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the real-model bridge, attempt three: NOT STARTED, two pilots both NEITHER, the behavioural route closed
+
+`papers/frequency-resonance/PREREG_realmodel_bridge_v3_2026_10_11.md` preregistered a recall-versus-comparison probe of
+`state-spaces/mamba-1.4b-hf` (pure decay: `A = −exp(A_log)` real and strictly negative in all 48 layers of the loaded
+weights) against `EleutherAI/pythia-1.4b`, built to the design the July ABSTAIN named (few-shot format, exact
+balance, a degeneracy guard, a capability screen at the shortest distance). Its main run never started, and the
+record says why. No main-set item was generated or scored, and no gates-block verdict exists.
+
+- The smoke (`realmodel_bridge_v3_smoke.json`): `INVALID__smoke_plumbing_only` by the gates block, every red-team
+  assert held, the main run budgeted at 1.635 GPU-hours under the design it smoked (amendment 17.2.3(c) extrapolates
+  the same per-batch timings to 2.22 hours under the redesigned passes; both are inside the four-hour rule).
+- Pilot one (`realmodel_bridge_v3_pilot.json`, seed 1011, amendment 17.1): 48 items at 16 tokens. The claim-check
+  compare fails the 0.40 screen in both arms under both answer formats (the Mamba arm says Yes on 0.94 of items and
+  True on 0.92, failing the guard); recall clears in both. The format line reads NOT_STARTED.
+- Pilot two (`realmodel_bridge_v3_pilot2.json`, seed 1012, amendments 17.2 and 17.3): the operator's one bounded
+  redesign, an argmax-shaped three-way compare ("which name has the largest code"), pre-stated as the last. Both arms
+  answer the middle name on nearly every item (compare normalized −0.062 and 0.000, guard failed; one-versus-rest
+  AUROC 0.449 and 0.535); recall 0.812 and 0.875. Outcome NEITHER: the format line reads NOT_STARTED, final, and the
+  operator's rule closes the behavioural route.
+- `papers/frequency-resonance/RESULT_realmodel_bridge_v3_not_started_2026_10_12.md`, sworn at d0411b2d (56 of 56
+  spans held, sidecar and receipt beside it, pinned `-text`): what the two pilots establish at pilot strength (two
+  1.4 B base models recall a planted code at 16 tokens and perform neither compare readout), what they do not
+  (nothing about decay versus attention, distance, other deployed models, honesty or importance), two defects in
+  the record (amendment 17.1 cites three runner commits by pre-reword hashes, mapped in the RESULT; the forward
+  pointer section 15 owes was not written in the RESULT's commit, and the RESULT leaves its form to the operator),
+  and the forward state: the profiler on an oscillatory checkpoint is the only open bridge and needs a download or a
+  training run the operator has not approved.
+- The forward pointer section 15 owes is written in this merge, which is where amendment 17.3 says it lands, in the
+  form the operator chose on 2026-10-12. `papers/SYNTHESIS_program_2026_07_24.md` item 3 gains it as an appended
+  paragraph (no certificate binds that document, and the digest of its extracted number tokens that
+  `papers/closed-model-frontier/oath_v11_baseline_ledger.json` records is unchanged), and
+  `papers/frequency-resonance/NOTE_realmodel_bridge_forward_pointer_2026_10_12.md` carries it beside
+  `RESULT_realmodel_bridge_2026_07_24.md`, which `CERT_realmodel_bridge.json` certifies and which is not edited.
+  Both read "attempt three: not started; two pilots, both NEITHER" and name the attempt-three RESULT.
+- `papers/frequency-resonance/run_realmodel_bridge_v3.py` refuses the main run on the format line and a second
+  pilot on the committed receipt. `tests/test_realmodel_bridge_v3.py` runs on CPU with no checkpoint; the tokenizer
+  and model tests skip when the cached files are absent, and the test that compares the gates block with the judged
+  plan's runs only when `BRIDGE_V3_PLAN_PATH` names that plan, which lives outside the repository.
+- `papers/LEDGER.md` regenerated: the corpus gained a preregistration with a gates block.
+
 ## [Unreleased] — PREREG: the permuted-MNIST headline under held-out permutations, new seeds and a 3x budget, sealed as a git blob before any run, with a CORRECTION sealed beside it before any data
 
 **`papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md`,
