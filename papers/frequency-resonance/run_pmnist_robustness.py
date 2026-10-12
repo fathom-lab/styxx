@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""run_pmnist_robustness.py -- frozen by PREREG_pmnist_robustness_2026_10_11 (sealed blob 2068e673...).
+"""run_pmnist_robustness.py -- frozen by PREREG_pmnist_robustness_2026_10_11 (sealed blob 18aa265c..., SEALS row 8).
 
 Builds on the two committed runners WITHOUT editing them:
   * run_pmnist_ablation.py  (R): data, FREE and CLAMPED arms, the training loop, the evaluation, the scan red team
@@ -29,6 +29,7 @@ import hashlib
 import io
 import json
 import math
+import os
 import re
 import sys
 import time
@@ -40,9 +41,10 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 
 PREREG = HERE / "PREREG_pmnist_robustness_2026_10_11.md"
-# the sha256 of the git blob of the PREREG as committed (SEALS_2026_09_13.md row 7); the PREREG on disk,
+# the sha256 of the git blob of the PREREG as amended before any data (its section 15; SEALS_2026_09_13.md row 8,
+# frozen at 98072bed; row 7, 2068e673..., is the same file before section 15 and is superseded); the PREREG on disk,
 # LF-normalised, must hash to this or the runner refuses before data (section 9.4 item 3)
-PREREG_BLOB_SHA256 = "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e"
+PREREG_BLOB_SHA256 = "18aa265c248fff55f49e71286f7e8baa2c54a9fc0e81dde3f397b83656776a72"
 # LF-normalised git blobs of the imported runners, as frozen in the PREREG's section 1
 FROZEN_RUNNERS = {
     "run_pmnist_ablation.py": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
@@ -103,6 +105,14 @@ def sha256_bytes(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
 
 
+def _shown(p: Path) -> str:
+    """A path as a receipt prints it: relative to the repository when inside it, so no receipt carries a home path."""
+    try:
+        return Path(p).resolve().relative_to(ROOT).as_posix()
+    except ValueError:
+        return Path(p).name
+
+
 def lf_sha256(path: Path) -> str:
     """The sha256 of the file's bytes with CRLF folded to LF: equal to the git blob of an LF-stored file on
     any checkout (SEALS_2026_09_13.md names the CRLF trap; ATTACK.md F1 measured it on run_pmnist_untied.py)."""
@@ -129,7 +139,7 @@ def assert_frozen_runners(freq_dir: Path = HERE) -> dict:
 def check_data_pin(path: Path = DATA_FILE) -> dict:
     p = Path(path)
     got = sha256_bytes(p.read_bytes()) if p.exists() else None
-    return {"path": str(p), "sha256": got, "pinned": DATA_SHA256, "bytes": p.stat().st_size if p.exists() else None,
+    return {"path": _shown(p), "sha256": got, "pinned": DATA_SHA256, "bytes": p.stat().st_size if p.exists() else None,
             "ok": got == DATA_SHA256}
 
 
@@ -144,7 +154,7 @@ def assert_data_pin(path: Path = DATA_FILE) -> dict:
 def check_prereg_bytes(path: Path = PREREG) -> dict:
     p = Path(path)
     got = lf_sha256(p) if p.exists() else None
-    return {"path": str(p), "lf_sha256": got, "sealed": PREREG_BLOB_SHA256, "ok": got == PREREG_BLOB_SHA256}
+    return {"path": _shown(p), "lf_sha256": got, "sealed": PREREG_BLOB_SHA256, "ok": got == PREREG_BLOB_SHA256}
 
 
 def assert_prereg_bytes(path: Path = PREREG) -> dict:
@@ -570,12 +580,17 @@ def aggregate_leaves(leaves: list[dict], perms: list[int] | None, derivation: st
 # ----------------------------------------------------------------------------------------------- torch side
 
 def _load_runners():
+    """Import the two committed runners (they import torch). Called only after every check that needs no torch has
+    passed (PREREG section 15.4); a box without torch is refused by name, not by a traceback."""
     if str(HERE) not in sys.path:
         sys.path.insert(0, str(HERE))
     if str(ROOT) not in sys.path:
         sys.path.insert(0, str(ROOT))
-    import run_pmnist_ablation as R      # noqa: E402  (reads --smoke from sys.argv)
-    import run_pmnist_untied as U        # noqa: E402
+    try:
+        import run_pmnist_ablation as R      # noqa: E402  (reads --smoke from sys.argv)
+        import run_pmnist_untied as U        # noqa: E402
+    except ImportError as e:
+        raise Refusal(f"the committed runners do not import here ({type(e).__name__}: {e}); they need torch") from e
     return R, U
 
 
@@ -624,8 +639,9 @@ def assert_rng_sharing(R, U, seeds=range(5)) -> dict:
     return out
 
 
-def preflight(R, U, *, want_gpu: bool = True) -> dict:
-    """Refuse before data if any check of PREREG section 9.4 fails; everything here rides in every leaf."""
+def preflight_pure() -> dict:
+    """PREREG section 9.4 items 1-3, with no torch imported: the two runner blobs, the data pin, the sealed PREREG,
+    and styxx.protocol's own checks (Experiment constructs, no vacuous gate, check_metrics resolves every path)."""
     sys.path.insert(0, str(ROOT))
     from styxx.protocol import Experiment, PrologueError, GateSpecError
     pre = {"imports": assert_frozen_runners(HERE), "data": assert_data_pin(DATA_FILE), "prereg": assert_prereg_bytes(PREREG)}
@@ -640,20 +656,34 @@ def preflight(R, U, *, want_gpu: bool = True) -> dict:
     if unusable:
         raise Refusal(f"check_metrics: these gate paths do not resolve on the receipt shape: {unusable}")
     pre.update({"prereg_commit": exp.prereg_commit, "gates_sha256": exp.gates_sha256, "check_metrics_ok": True})
+    return pre
+
+
+def preflight_torch(R, U, pre: dict, *, want_gpu: bool = True) -> dict:
+    """PREREG section 9.4 items 7, 4 and 5, in that order (section 15.4): the GPU guard runs before any tensor is
+    placed on the device, and R.redteam()'s scan check is the earliest tensor the run puts on the card."""
     for k, v in COMMITTED.items():
         if getattr(R, k) != v:
             raise Refusal(f"R.{k} = {getattr(R, k)!r}, committed value {v!r}")
-    R.redteam()
-    U.redteam()
+    pre["gpu"] = require_gpu() if want_gpu else gpu_info()
+    try:
+        R.redteam()
+        U.redteam()
+    except AssertionError as e:
+        raise Refusal(f"the committed red team failed: {e}") from e
     pf, pc, pr = R.nparams(True), R.nparams(False), U.nparams(U.RealClassifier())
     if pr != pf or abs(pf - pc) / pf > 0.002:
         raise Refusal(f"parameter counts free={pf} clamped={pc} real2={pr}")
     pre["params"] = {"free": pf, "clamped": pc, "real2": pr}
     pre["rng_sharing"] = assert_rng_sharing(R, U)
-    pre["gpu"] = require_gpu() if want_gpu else gpu_info()
     pre["smoke"] = bool(R.SMOKE)
     pre["preflight_ok"] = True
     return pre
+
+
+def preflight(R, U, *, want_gpu: bool = True) -> dict:
+    """Refuse before data if any check of PREREG section 9.4 fails; everything here rides in every leaf."""
+    return preflight_torch(R, U, preflight_pure(), want_gpu=want_gpu)
 
 
 class _Recorder:
@@ -744,21 +774,49 @@ def one_run(R, U, r: dict, data, pre: dict, derivation: str | None, beacon: str 
 
 
 def _read_chain() -> list[dict]:
+    """The leaf log, line by line. A torn last line (a crash inside an append) is refused by name, never repaired
+    silently (PREREG section 15.3)."""
     if not CHAIN_FILE.exists():
         return []
-    return [json.loads(ln) for ln in CHAIN_FILE.read_text(encoding="utf-8").splitlines() if ln.strip()]
+    text = CHAIN_FILE.read_text(encoding="utf-8")
+    if text and not text.endswith("\n"):
+        raise Refusal(f"{CHAIN_FILE.name} does not end in a newline: its last append was torn; repair it by hand and "
+                      f"report the repair in the RESULT")
+    out = []
+    for i, ln in enumerate(text.splitlines(), 1):
+        if not ln.strip():
+            continue
+        try:
+            out.append(json.loads(ln))
+        except json.JSONDecodeError as e:
+            raise Refusal(f"{CHAIN_FILE.name} line {i} does not parse ({e.msg}); repair it by hand and report the "
+                          f"repair in the RESULT") from e
+    return out
+
+
+def _fsynced_write(path: Path, data: bytes, mode: str) -> None:
+    with open(path, mode) as fh:
+        fh.write(data)
+        fh.flush()
+        os.fsync(fh.fileno())
 
 
 def write_leaf(r: dict, leaf: dict) -> Path:
+    """PREREG section 15.3: the log line is appended and fsynced, then the leaf is written to <leaf>.tmp, fsynced and
+    renamed into place. A crash between the two leaves a log line with no leaf; the night re-runs that run and the
+    receipt lists the name under leaf_chain.rewrites. No crash leaves a leaf that the log does not name."""
     RUNS_DIR.mkdir(exist_ok=True)
     raw = json.dumps(leaf, indent=1).encode("utf-8")
     path = leaf_path(r)
-    path.write_bytes(raw)
     entries = _read_chain()
     prev = entries[-1]["entry_id"] if entries else "0" * 64
     e = chain_entry(prev, leaf_name(r), sha256_bytes(raw), len(entries) + 1, _now())
-    with CHAIN_FILE.open("a", encoding="utf-8") as fh:
-        fh.write(json.dumps(e) + "\n")
+    _fsynced_write(CHAIN_FILE, (json.dumps(e) + "\n").encode("utf-8"), "ab")
+    tmp = path.with_name(path.name + ".tmp")
+    _fsynced_write(tmp, raw, "wb")
+    os.replace(tmp, path)
+    if path.read_bytes() != raw:
+        raise Refusal(f"{path.name} does not read back as written")
     return path
 
 
@@ -775,18 +833,16 @@ def _data_for(R, perm: int, h: int, cache: dict):
 
 
 def run_night(args) -> int:
-    R, U = _load_runners()
-    if R.SMOKE:
-        raise Refusal("--smoke and --night together: a night is never a smoke")
-    pre = preflight(R, U)
-    sel = resolve_perms(args.beacon, args.anchors, args.fallback_perms)
-    if args.night in (2, 3) and sel["perms"] is None:
+    """PREREG section 15.4's order: every check that needs no torch, then the runners, the GPU guard, the red team."""
+    if args.night in (2, 3) and not (args.beacon or args.anchors or args.fallback_perms):
         raise Refusal(f"night {args.night} runs the held-out permutations: give --beacon <hex> from a styxx.clock "
                       f"verify line reading ANCHORED for this PREREG, --anchors <anchors.jsonl>, or --fallback-perms")
+    pre = preflight_pure()
     if not SMOKE_JSON.exists():
         raise Refusal(f"{SMOKE_JSON.name} is absent: run --smoke before a night (it measures the per-run time)")
     smoke_rec = json.loads(SMOKE_JSON.read_text(encoding="utf-8"))
     per_4000 = float(smoke_rec["projected_min_per_4000"])
+    sel = resolve_perms(args.beacon, args.anchors, args.fallback_perms)
     todo = [r for r in schedule(args.night, sel["perms"], args.width) if not leaf_path(r).exists()]
     hours = sum(per_run_minutes(r, per_4000) for r in todo) / 60.0
     print(f"night {args.night}{' (width stage)' if args.width else ''}: {len(todo)} runs to do, projected {hours:.1f} h "
@@ -799,6 +855,10 @@ def run_night(args) -> int:
         if hours > NIGHT_HOURS_REFUSE:
             raise Refusal(f"this night projects {hours:.1f} h, over the {NIGHT_HOURS_REFUSE} h window; re-run with "
                           f"--accept-schedule to proceed (leaves persist; a spilled night is finished the next)")
+    R, U = _load_runners()
+    if R.SMOKE:
+        raise Refusal("--smoke and --night together: a night is never a smoke")
+    pre = preflight_torch(R, U, pre)
     cache: dict = {}
     for r in todo:
         print(f"--- perm {r['perm']} {r['arm']} seed {r['seed']} steps {r['steps']} h {r['h']} ---", flush=True)
@@ -812,12 +872,13 @@ def run_night(args) -> int:
 
 
 def smoke(args) -> int:
+    pre = preflight_pure()
     R, U = _load_runners()
     if not R.SMOKE:
         raise Refusal("run_pmnist_ablation did not see --smoke on the command line")
     sys.path.insert(0, str(ROOT))
     from styxx.protocol import Experiment
-    pre = preflight(R, U)
+    pre = preflight_torch(R, U, pre)
     exp = Experiment(PREREG, repo_root=ROOT)
     low = min(fallback_perms())
     plan = [_run(ANCHOR_PERM, "free", 0, R.STEPS), _run(ANCHOR_PERM, "clamped", 0, R.STEPS),
@@ -845,7 +906,9 @@ def aggregate(args) -> int:
     from styxx.protocol import Experiment, PrologueError, GateSpecError
     leaves = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(RUNS_DIR.glob("p*.json"))] if RUNS_DIR.exists() else []
     leaves = [l for l in leaves if not l.get("smoke")]
-    current = {p.name: sha256_bytes(p.read_bytes()) for p in sorted(RUNS_DIR.glob("p*.json"))} if RUNS_DIR.exists() else {}
+    # each leaf hashed with CRLF folded to LF (a leaf as written holds no CR byte), so a checkout made before the -text
+    # pin of section 15.3 still matches the log: the rule section 1 applies to the imported runners
+    current = ({p.name: lf_sha256(p) for p in sorted(RUNS_DIR.glob("p*.json"))} if RUNS_DIR.exists() else {})
     chain = verify_chain(_read_chain(), current)
     sel = resolve_perms(args.beacon, args.anchors, args.fallback_perms)
     if sel["derivation"] is None:

@@ -8,8 +8,13 @@ copy, which is the trap SEALS names); the permutation derivation is deterministi
 fallback list equals the one the PREREG prints; the aggregate arithmetic on synthetic leaves gives the hand-computed
 numbers, counts a collapsed FREE run as 0 in the floor, excludes a collapsed decay run from the gap, maps a missing
 leaf, a foreign import hash, a read-back mismatch and a non-finite metric to plumbing_ok = 0; the _mnist.npz pin
-refuses a different file; the sealed digest in SEALS row 7 is the committed blob's; and none of the three files
-prints the words the lab never prints. Nothing here loads a checkpoint, reads the data or touches the card.
+refuses a different file; the PREREG's section 15 is appended to the row-7 bytes and moves no gate; the sealed digest
+in SEALS row 8 is the committed blob's, row 7 stands unedited and only row 8's memo is listed; the leaf log is written
+before its leaf and a torn log is refused by name; the GPU guard runs before the red team touches the device; every
+refusal that needs no torch happens with torch unimportable; the leaves, the log and the receipt are committable and
+byte-pinned; and none of the three files prints the words the lab never prints. Nothing here loads a checkpoint,
+reads the data or touches the card, and nothing here needs a GPU, torch, _mnist.npz or a path outside the checkout:
+a test that needs one of them skips when it is absent.
 """
 from __future__ import annotations
 
@@ -32,7 +37,12 @@ PREREG = FREQ / "PREREG_pmnist_robustness_2026_10_11.md"
 RUNNER = FREQ / "run_pmnist_robustness.py"
 SEALS = ROOT / "papers" / "checksum" / "SEALS_2026_09_13.md"
 TEST_FILE = Path(__file__).resolve()
-LIVE_DATA = Path(r"C:/Users/heyzo/clawd/styxx/papers/frequency-resonance/_mnist.npz")
+REL_PREREG = "papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md"
+# SEALS row 7: the PREREG before its section 15 (frozen at 3598e59d), superseded by row 8 and never to be anchored
+ROW7_SHA256 = "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e"
+ROW7_BYTES = 56960
+# the gates block's sha256 as styxx.protocol computes it, before and after section 15
+GATES_SHA256 = "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
 
 
 def _load_runner():
@@ -224,9 +234,11 @@ def test_data_pin_refuses_a_different_file(tmp_path):
     with pytest.raises(RB.Refusal, match="absent"):
         RB.assert_data_pin(tmp_path / "missing.npz")
     assert RB.check_data_pin(bad)["ok"] is False
-    if LIVE_DATA.exists():                                  # the 2026-07-23 bytes, when this box has them
-        d = RB.assert_data_pin(LIVE_DATA)
+    assert RB.check_data_pin(bad)["path"] == bad.name        # a path outside the checkout is printed by name only
+    if RB.DATA_FILE.exists():                               # the 2026-07-23 bytes, when copied beside the runner
+        d = RB.assert_data_pin(RB.DATA_FILE)
         assert d["ok"] and d["bytes"] == 11507660
+        assert d["path"] == "papers/frequency-resonance/_mnist.npz"
 
 
 def test_prereg_bytes_check_refuses_an_edited_copy(tmp_path):
@@ -245,20 +257,65 @@ def _git(*args):
     return r.stdout
 
 
+def _seal_rows() -> dict:
+    rows = {}
+    for ln in SEALS.read_text(encoding="utf-8").splitlines():
+        m = re.match(r"^\| (\d+b?) \| ", ln)
+        if m:
+            assert m.group(1) not in rows, f"SEALS row {m.group(1)} appears twice"
+            rows[m.group(1)] = ln
+    return rows
+
+
 def test_the_sealed_digest_is_the_committed_blob_and_the_disk_copy_lf_normalised():
-    rel = "papers/frequency-resonance/" + PREREG.name
+    assert RB.check_prereg_bytes(PREREG)["ok"], "the PREREG on disk (LF-normalised) is not the sealed bytes"
+    row = _seal_rows()["8"]
+    assert PREREG.name in row and RB.PREREG_BLOB_SHA256 in row
     env = dict(os.environ, MSYS_NO_PATHCONV="1")
-    r = subprocess.run(["git", "-C", str(ROOT), "rev-parse", f"HEAD:{rel}"], capture_output=True, timeout=60, env=env)
+    r = subprocess.run(["git", "-C", str(ROOT), "rev-parse", f"HEAD:{REL_PREREG}"], capture_output=True, timeout=60,
+                       env=env)
     if r.returncode != 0:
         pytest.skip("the PREREG is not in HEAD here")
-    blob_id = r.stdout.decode().strip()
-    blob = _git("cat-file", "blob", blob_id)
+    blob = _git("cat-file", "blob", r.stdout.decode().strip())
     assert hashlib.sha256(blob).hexdigest() == RB.PREREG_BLOB_SHA256, "the committed PREREG is not the sealed bytes"
-    assert RB.check_prereg_bytes(PREREG)["ok"], "the PREREG on disk (LF-normalised) is not the sealed bytes"
-    seals = SEALS.read_text(encoding="utf-8")
-    row = [ln for ln in seals.splitlines() if ln.startswith("| 7 |")]
-    assert len(row) == 1 and PREREG.name in row[0] and RB.PREREG_BLOB_SHA256 in row[0]
-    assert "`3598e59d`" in row[0]
+    # row 8's "frozen at" commit holds exactly these bytes (skipped on a clone too shallow to hold that commit)
+    frozen_at = [c.strip().strip("`") for c in row.split("|")][4]
+    assert re.fullmatch(r"[0-9a-f]{8}", frozen_at), row
+    r = subprocess.run(["git", "-C", str(ROOT), "cat-file", "-p", f"{frozen_at}:{REL_PREREG}"], capture_output=True,
+                       timeout=60, env=env)
+    if r.returncode != 0:
+        pytest.skip(f"commit {frozen_at} is not in this clone")
+    assert hashlib.sha256(r.stdout).hexdigest() == RB.PREREG_BLOB_SHA256
+
+
+def test_section_15_is_appended_to_the_row_7_bytes_and_moves_no_gate():
+    lf = PREREG.read_bytes().replace(b"\r\n", b"\n")
+    assert hashlib.sha256(lf[:ROW7_BYTES]).hexdigest() == ROW7_SHA256, "the text above section 15 is not row 7's blob"
+    tail = lf[ROW7_BYTES:].decode("utf-8")
+    assert tail.startswith("\n---\n\n## 15. Amendment, before any data (2026-10-12)\n")
+    assert "```" not in tail and "<!--" not in tail                 # no second fence, nothing hidden
+    assert "56,960" in tail and ROW7_SHA256 in tail and GATES_SHA256 in tail
+    from styxx.protocol import _select_gates_block
+    block = _select_gates_block(PREREG.read_text(encoding="utf-8"))
+    assert hashlib.sha256(block.encode("utf-8")).hexdigest() == GATES_SHA256
+    assert _select_gates_block(lf[:ROW7_BYTES].decode("utf-8")) == block
+    assert ROW7_SHA256 != RB.PREREG_BLOB_SHA256 and hashlib.sha256(lf).hexdigest() == RB.PREREG_BLOB_SHA256
+
+
+def test_seals_row_8_supersedes_row_7_which_stands_unedited_and_only_row_8_is_a_memo():
+    from styxx.clock import memo
+    rows = _seal_rows()
+    r7, r8 = rows["7"], rows["8"]
+    assert list(rows)[-2:] == ["7", "8"]
+    assert ROW7_SHA256 in r7 and "`3598e59d`" in r7 and REL_PREREG in r7 and RB.PREREG_BLOB_SHA256 not in r7
+    assert RB.PREREG_BLOB_SHA256 in r8 and REL_PREREG in r8 and "`sealed-prereg`" in r8 and ROW7_SHA256 not in r8
+    assert "supersedes row 7" in r8 and "not to be anchored" in r8
+    memos = [ln.strip() for ln in SEALS.read_text(encoding="utf-8").splitlines() if ln.startswith("    styxx ")]
+    assert memo("sealed-prereg", RB.PREREG_BLOB_SHA256) in memos
+    assert memo("sealed-prereg", ROW7_SHA256) not in memos
+    assert memos[-1] == memo("sealed-prereg", RB.PREREG_BLOB_SHA256)
+    raw = SEALS.read_bytes()
+    assert b"\r" not in raw and not raw.startswith(b"\xef\xbb\xbf")
 
 
 # -- permutations ----------------------------------------------------------------------------------------
@@ -586,16 +643,184 @@ def test_the_lab_never_prints_these_words():
         assert not hits, f"{p.name}: {hits}"
 
 
+# the runner as a script with torch made unimportable (sys.modules["torch"] = None): whatever this box has installed,
+# a step that reaches for torch fails, so a refusal seen here happened before torch, and no card is ever touched
+_NO_TORCH = ("import runpy, sys; sys.modules['torch'] = None; sys.argv = sys.argv[1:]; "
+             "runpy.run_path(sys.argv[0], run_name='__main__')")
+
+
+def _cli_without_torch(*argv):
+    return subprocess.run([sys.executable, "-c", _NO_TORCH, str(RUNNER), *argv], capture_output=True, text=True,
+                          timeout=120, cwd=str(ROOT),
+                          env=dict(os.environ, PYTHONDONTWRITEBYTECODE="1", CUDA_VISIBLE_DEVICES=""))
+
+
 def test_cli_derive_perms_prints_the_fallback_without_touching_torch():
-    r = subprocess.run([sys.executable, str(RUNNER), "--derive-perms"], capture_output=True, text=True, timeout=120,
-                       env=dict(os.environ, PYTHONDONTWRITEBYTECODE="1"))
+    r = _cli_without_torch("--derive-perms")
     assert r.returncode == 0, r.stderr
     lines = r.stdout.strip().splitlines()
     assert [int(ln.split()[1]) for ln in lines[:5]] == RB.FALLBACK_PERMS
     assert "sha256-of-tag fallback" in lines[5]
-    r = subprocess.run([sys.executable, str(RUNNER), "--derive-perms", "--beacon", "d" * 64], capture_output=True,
-                       text=True, timeout=120, env=dict(os.environ, PYTHONDONTWRITEBYTECODE="1"))
-    assert r.returncode == 0 and [int(ln.split()[1]) for ln in r.stdout.strip().splitlines()[:5]] == RB.derive_perms("d" * 64)
-    r = subprocess.run([sys.executable, str(RUNNER), "--night", "2"], capture_output=True, text=True, timeout=120,
-                       env=dict(os.environ, PYTHONDONTWRITEBYTECODE="1", CUDA_VISIBLE_DEVICES=""))
-    assert r.returncode == 2 and "refused:" in r.stderr
+    r = _cli_without_torch("--derive-perms", "--beacon", "d" * 64)
+    assert r.returncode == 0, r.stderr
+    assert [int(ln.split()[1]) for ln in r.stdout.strip().splitlines()[:5]] == RB.derive_perms("d" * 64)
+
+
+def test_cli_refuses_by_name_before_torch_is_imported():
+    # a night on held-out permutations with no derivation: refused before anything else
+    r = _cli_without_torch("--night", "2")
+    assert r.returncode == 2 and "refused: night 2 runs the held-out permutations" in r.stderr, r.stderr
+    assert "Traceback" not in r.stderr
+    # night 1 and the smoke: refused at a check that needs no torch (the data pin or the smoke receipt on a box
+    # without them), or, on a box that has both, at the torch import itself -- by name, never a traceback
+    for argv in (("--night", "1"), ("--smoke",)):
+        r = _cli_without_torch(*argv)
+        assert r.returncode == 2 and "refused:" in r.stderr, (argv, r.stderr)
+        assert "Traceback" not in r.stderr
+        if not RB.DATA_FILE.exists():
+            assert "_mnist.npz" in r.stderr and "absent" in r.stderr, r.stderr
+
+
+# -- section 15.4: the GPU guard before the red team touches the device --------------------------------------
+
+class _FakeR:
+    BATCH, LR, WD, T_LEN, N_BLK, H, D_SSM = 64, 3e-3, 0.01, 784, 3, 64, 64
+    SMOKE = False
+
+    def __init__(self, calls):
+        self.calls = calls
+
+    def redteam(self):
+        self.calls.append("R.redteam")
+
+    def nparams(self, free):
+        return 101002 if free else 100810
+
+
+class _FakeU:
+    def __init__(self, calls):
+        self.calls = calls
+
+    def redteam(self):
+        self.calls.append("U.redteam")
+
+    def RealClassifier(self):
+        return "real2"
+
+    def nparams(self, m):
+        return 101002
+
+
+def test_the_gpu_guard_runs_before_the_red_team_touches_the_device(monkeypatch):
+    calls = []
+
+    def guard_refuses():
+        calls.append("guard")
+        raise RB.Refusal("CUDA is not available")
+    monkeypatch.setattr(RB, "require_gpu", guard_refuses)
+    monkeypatch.setattr(RB, "assert_rng_sharing", lambda R, U: calls.append("rng") or {})
+    with pytest.raises(RB.Refusal, match="CUDA"):
+        RB.preflight_torch(_FakeR(calls), _FakeU(calls), {})
+    assert calls == ["guard"]                                # nothing reached the red team
+    calls.clear()
+    monkeypatch.setattr(RB, "require_gpu", lambda: calls.append("guard") or {"cuda": True})
+    pre = RB.preflight_torch(_FakeR(calls), _FakeU(calls), {})
+    assert calls == ["guard", "R.redteam", "U.redteam", "rng"]
+    assert pre["preflight_ok"] is True and pre["params"] == {"free": 101002, "clamped": 100810, "real2": 101002}
+    # a committed constant that moved is refused before the guard
+    calls.clear()
+    bad = _FakeR(calls)
+    bad.LR = 1e-3
+    with pytest.raises(RB.Refusal, match="R.LR"):
+        RB.preflight_torch(bad, _FakeU(calls), {})
+    assert calls == []
+    # a failing committed red team is a refusal by name, not an AssertionError
+    calls.clear()
+    failing = _FakeR(calls)
+
+    def boom():
+        raise AssertionError("scan!=seq (1.0e+00)")
+    failing.redteam = boom
+    with pytest.raises(RB.Refusal, match="scan!=seq"):
+        RB.preflight_torch(failing, _FakeU(calls), {})
+
+
+# -- section 15.3: the leaf log before the leaf, and a torn log refused -------------------------------------
+
+def _tmp_runs(monkeypatch, tmp_path):
+    runs = tmp_path / "pmnist_robustness_runs"
+    monkeypatch.setattr(RB, "RUNS_DIR", runs)
+    monkeypatch.setattr(RB, "CHAIN_FILE", runs / "leaf_chain.jsonl")
+    return runs
+
+
+def test_the_log_line_is_written_before_the_leaf_and_a_crash_between_them_reads_as_a_rewrite(monkeypatch, tmp_path):
+    runs = _tmp_runs(monkeypatch, tmp_path)
+    perms = RB.fallback_perms()
+    sched = RB.full_schedule(perms)
+    r0, r1 = sched[0], sched[1]
+    p = RB.write_leaf(r0, _leaf(r0, 0.92))
+    assert p == runs / RB.leaf_name(r0) and not list(runs.glob("*.tmp"))
+    entries = RB._read_chain()
+    assert len(entries) == 1 and entries[0]["sha256"] == hashlib.sha256(p.read_bytes()).hexdigest()
+    assert b"\r" not in p.read_bytes() and b"\r" not in RB.CHAIN_FILE.read_bytes()
+    # a crash after the log line and before the rename: the log names a leaf that is not there
+    class PowerCut(Exception):
+        pass
+    real_replace = os.replace
+
+    def crash(src, dst):
+        raise PowerCut(f"{src} -> {dst}")
+    monkeypatch.setattr(RB.os, "replace", crash)
+    with pytest.raises(PowerCut):
+        RB.write_leaf(r1, _leaf(r1, 0.90))
+    monkeypatch.setattr(RB.os, "replace", real_replace)
+    assert not RB.leaf_path(r1).exists() and len(RB._read_chain()) == 2
+    assert [q.name for q in runs.glob("p*.json")] == [RB.leaf_name(r0)]   # the .tmp is not a leaf to the aggregate
+    # the night re-runs it: a second line for the name, visible as a rewrite, and the chain verifies
+    RB.write_leaf(r1, _leaf(r1, 0.91))
+    current = {q.name: RB.lf_sha256(q) for q in runs.glob("p*.json")}
+    v = RB.verify_chain(RB._read_chain(), current)
+    assert v["ok"] and v["rewrites"] == [RB.leaf_name(r1)] and v["entries"] == 3
+    # a CRLF copy of a leaf (a checkout without the -text pin) still matches the log, LF-normalised
+    q = RB.leaf_path(r0)
+    q.write_bytes(q.read_bytes().replace(b"\n", b"\r\n"))
+    current = {q.name: RB.lf_sha256(q) for q in runs.glob("p*.json")}
+    assert RB.verify_chain(RB._read_chain(), current)["ok"]
+
+
+def test_a_torn_leaf_log_is_refused_by_name(monkeypatch, tmp_path):
+    runs = _tmp_runs(monkeypatch, tmp_path)
+    r0 = RB.schedule(1)[0]
+    RB.write_leaf(r0, _leaf(r0, 0.92))
+    good = RB.CHAIN_FILE.read_bytes()
+    RB.CHAIN_FILE.write_bytes(good + good[:40])                   # an append cut short
+    with pytest.raises(RB.Refusal, match="torn"):
+        RB._read_chain()
+    with pytest.raises(RB.Refusal, match="torn"):
+        RB.write_leaf(RB.schedule(1)[1], _leaf(RB.schedule(1)[1], 0.9))
+    RB.CHAIN_FILE.write_bytes(good + b"{not json}\n")
+    with pytest.raises(RB.Refusal, match="line 2 does not parse"):
+        RB._read_chain()
+    assert [q.name for q in runs.glob("p*.json")] == [RB.leaf_name(r0)]
+
+
+# -- section 15.3: what is committed -------------------------------------------------------------------------
+
+def test_the_leaves_the_log_and_the_receipt_are_committable_and_pinned_and_the_rest_is_ignored():
+    base = "papers/frequency-resonance/"
+    leaf = base + "pmnist_robustness_runs/p1234_free_s0_4000_h64.json"
+    expect_ignored = {leaf: False, base + "pmnist_robustness_runs/leaf_chain.jsonl": False,
+                      base + "pmnist_robustness_result.json": False, leaf + ".tmp": True,
+                      base + "pmnist_robustness_smoke.json": True, base + "_mnist.npz": True}
+    for path, ignored in expect_ignored.items():
+        try:
+            r = subprocess.run(["git", "-C", str(ROOT), "check-ignore", "-q", "--no-index", path], capture_output=True,
+                               timeout=60)
+        except OSError:
+            pytest.skip("git is not available here")
+        if r.returncode not in (0, 1):
+            pytest.skip(f"git check-ignore failed here: {r.stderr[:200]!r}")
+        assert (r.returncode == 0) is ignored, path
+    out = _git("check-attr", "text", "--", leaf, base + "pmnist_robustness_runs/leaf_chain.jsonl").decode()
+    assert out.count("text: unset") == 2, out
