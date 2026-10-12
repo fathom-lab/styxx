@@ -105,8 +105,17 @@ def main_port_source() -> str:
 
 
 def module_from(source: str, name: str):
-    """Execute `source` as the module styxx.<name>, so `from .declare import ...` resolves in the package."""
+    """Execute `source` as the module styxx.<name>, so `from .declare import ...` resolves in the package.
+
+    A module built from a string has no file to hash; it is given the file of styxx.diffgate as imported, so every
+    comparison here compares what readers read. A record's `build` names its reader's file (`_IDENTITY_FILE`), which
+    for a string-built module is a path that does not exist, a null sha: without this, every whole-record comparison
+    between the reconstruction and the module would report `build` moved. The identity is computed at the earliest
+    `to_dict`, so the alias lands before it is read. This is the only place a reader is built from a string
+    (tests/test_diffgate_record_identity.py holds that), so no plant built another way compares an identity of its
+    own."""
     import styxx  # noqa: F401  (the package the relative import resolves in)
+    import styxx.diffgate  # noqa: F401  (the module whose file the reader built here reads as)
     full = "styxx." + name
     mod = types.ModuleType(full)
     mod.__package__ = "styxx"
@@ -117,6 +126,7 @@ def module_from(source: str, name: str):
     except BaseException:
         sys.modules.pop(full, None)
         raise
+    mod._IDENTITY_FILE = sys.modules["styxx.diffgate"].__file__
     return mod
 
 
