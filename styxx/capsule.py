@@ -2356,9 +2356,11 @@ def _identity_outcome(d: dict, recorded, live_identity, unreadable: List[str], p
     SKEW, a problem placed ahead of the content lines, which stay. Every other outcome is an advisory:
     a record that names nothing (every capsule minted before records named their instrument), one that
     names its instrument incompletely, one that reproduced under another instrument, and one that names
-    this verifier's own build and runtime and does not reproduce under them. Problem texts carry the
-    recorded identity and the differing field names, never a value of the live identity, which goes in
-    the result and in advisories (charon reads problems, never advisories)."""
+    this verifier's own build and runtime and does not reproduce under them. A record that names part of
+    its instrument and differs on a named field is SKEW too (instrument.delta reads differs ahead of
+    incomplete): its line lists the unknown fields, and its hint points at no sha the record does not
+    carry. Problem texts carry the recorded identity and the differing field names, never a value of the
+    live identity, which goes in the result and in advisories (charon reads problems, never advisories)."""
     here = _instrument.describe(live_identity)
     reproduced = not problems
     for u in unreadable:
@@ -2406,19 +2408,32 @@ def _identity_outcome(d: dict, recorded, live_identity, unreadable: List[str], p
             f"depend on the difference for these bytes; made by {made_by}, re-run here by {here}")
         return
     # The problem quotes tokens of the record's choosing beside the identity: a module name inside a
-    # differing field, the implementation, the version, the pin's version string. Each passes the rule
-    # the identity passed above (_charon_reads_as_broken_binding): a minter who names a module `ambiguous`
-    # must not turn the line UNRESOLVED. The pin comes from the sealed record, never from the payload's
-    # unsealed pin; a version string charon would misread leaves the pin unwritten.
+    # differing or unknown field, the implementation, the version, the pin's version string. Each passes
+    # the rule the identity passed above (_charon_reads_as_broken_binding): a minter who names a module
+    # `ambiguous` must not turn the line UNRESOLVED. The pin comes from the sealed record, never from the
+    # payload's unsealed pin; a version string charon would misread leaves the pin unwritten. A compared
+    # field null on either side is listed after the differing ones (a record that names its runtime and
+    # no build differs on the runtime), and the hint points only at what the record names: the pin, else
+    # the styxx.diffgate sha, else nothing but the runtime.
     fields = ", ".join(_charon_quotable_field(f) for f in d["differs"])
+    if d["unknown"]:
+        fields += "; unknown: " + ", ".join(_charon_quotable_field(f) for f in d["unknown"])
     b = recorded.get("build") if isinstance(recorded.get("build"), dict) else {}
     r = recorded.get("runtime") if isinstance(recorded.get("runtime"), dict) else {}
-    styxx_v = _instrument._label(b.get("styxx")) if isinstance(b.get("styxx"), str) else None
+    styxx_raw = b.get("styxx") if isinstance(b.get("styxx"), str) and b.get("styxx") else None
+    styxx_v = _instrument._label(styxx_raw) if styxx_raw else None
     if styxx_v is not None and _charon_reads_as_broken_binding(styxx_v):
         styxx_v = None
+    reader_sha = _instrument._modules_by_name(b).get(_instrument.READER)
     on = " ".join(_charon_quotable_name(_instrument._label(r.get(k))) for k in ("implementation", "version"))
-    hint = (f"`pip install styxx=={styxx_v}` on {on}" if styxx_v
-            else f"the styxx whose styxx.diffgate the record names, on {on}")
+    if styxx_v:
+        hint = f"`pip install styxx=={styxx_v}` on {on}"
+    elif isinstance(reader_sha, str):
+        hint = f"the styxx whose styxx.diffgate the record names, on {on}"
+    elif styxx_raw:
+        hint = f"a build the record names only by a version this verifier does not quote, on {on}"
+    else:
+        hint = f"the record names no build, only the runtime {on}"
     problems.insert(0,
                     f"INSTRUMENT SKEW: the gate record does not reproduce here and names another "
                     f"instrument (differs: {fields}); it was made by {made_by} — reproduce under that "
