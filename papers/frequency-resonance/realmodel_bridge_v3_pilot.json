@@ -1,0 +1,552 @@
+{
+  "prereg": "PREREG_realmodel_bridge_v3_2026_10_11.md",
+  "mode": "pilot",
+  "smoke": false,
+  "config": {
+    "checkpoints": {
+      "M1": "state-spaces/mamba-1.4b-hf",
+      "T": "EleutherAI/pythia-1.4b"
+    },
+    "arms_run": [
+      "M1",
+      "T"
+    ],
+    "revisions": {
+      "M1": {
+        "repo": "state-spaces/mamba-1.4b-hf",
+        "revision": "6e46eae61c27280517feef46f536d16b91076f08",
+        "from_local_snapshot": true,
+        "load_seconds_cpu_fp32": 0.11
+      },
+      "T": {
+        "repo": "EleutherAI/pythia-1.4b",
+        "revision": "fedc38a16eea3bd36a96b906d78d11d2ce18ed79",
+        "from_local_snapshot": true,
+        "load_seconds_cpu_fp32": 1.43
+      }
+    },
+    "runner": "run_realmodel_bridge_v3.py",
+    "runner_sha256": "45dd70dfa158f166673e250b93f1e37a3c672195888ed9ac1c761a97723bce47",
+    "dtype": "float16 on cuda (weights loaded fp32 on CPU for the fp32 asserts, then half)",
+    "seeds": {
+      "items": 20261011,
+      "pilot": 1011,
+      "bootstrap": 20261011
+    },
+    "answer_format": "both",
+    "answer_tokens": [],
+    "distances": [
+      16
+    ],
+    "D0": 16,
+    "D1": 1024,
+    "n_per_cell": 48,
+    "screen_bar": 0.4,
+    "guard": {
+      "yes_rate": [
+        0.2,
+        0.8
+      ],
+      "max_slot_fraction": 0.8
+    },
+    "ablated_bar": 0.16,
+    "window_W": 128,
+    "batch_max": 16,
+    "scan_chunk_tokens_M1": 1024,
+    "free_gpu_min_bytes": 6442450944,
+    "budget_hours": 4.0,
+    "names": [
+      "alpha",
+      "bravo",
+      "delta"
+    ],
+    "n_exemplars": 4,
+    "versions": {
+      "torch": "2.5.1+cu121",
+      "transformers": "4.57.3",
+      "numpy": "2.4.4",
+      "python": "3.12.10"
+    },
+    "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "code_pools": {
+      "main_exemplar": 12,
+      "pilot_exemplar": 12,
+      "pilot_test": 60,
+      "smoke_exemplar": 12,
+      "smoke_test": 60,
+      "main_test": 8672
+    },
+    "filler_pool": {
+      "source": "wikitext-103-raw-v1 train split, hub parquet cache",
+      "files": [
+        "train-00000-of-00002.parquet",
+        "train-00001-of-00002.parquet"
+      ],
+      "sha256": [
+        "74da360f23826045b3e6ac6375411fdb15f003030aa74f2596ed08b857cb9212",
+        "ba090ac30dbf5461e8dcbdd1a1b8e6f3cf9c2c756d64f0c1220450acd514f720"
+      ],
+      "pool_cap": 150000,
+      "eligible_sentences": 150000
+    },
+    "sentence_region": {
+      "main": "perm[:-7000]",
+      "smoke": "perm[-7000:-4000] reshuffled by seed 1016",
+      "pilot": "perm[-4000:] reshuffled by seed 1011",
+      "which": "pilot",
+      "seed": 1011
+    }
+  },
+  "pilot": null,
+  "acc_raw": {},
+  "acc_norm": {},
+  "guard": {},
+  "controls": {
+    "ablated": {},
+    "windowed": {
+      "W": 128
+    }
+  },
+  "result": {},
+  "bootstrap": null,
+  "mechanism": {},
+  "exploratory": {
+    "status": "M3_NOT_RUN",
+    "reason": "decision 2 default: no M3 arm; state-spaces/mamba3-siso-1.5b is not runnable on Windows as shipped (Triton, mamba-ssm absent) and was not approved"
+  },
+  "redteam": {
+    "balance_by_distance": {
+      "16": {
+        "n": 48,
+        "label_true": 24,
+        "claimed_slot": [
+          16,
+          16,
+          16
+        ],
+        "q_slot": [
+          16,
+          16,
+          16
+        ],
+        "last_exemplar_yes": 24,
+        "true_by_q_slot": [
+          8,
+          8,
+          8
+        ],
+        "claim_consistent": true,
+        "codes_distinct": true
+      }
+    },
+    "fillers": {
+      "sentences_used": 171,
+      "used_sha256": "6351908b85637557c40a94cc643d71637e56c78dbd6b4bbbdb0936f314fcdbc1"
+    },
+    "prompts": {
+      "prompts_checked": 192,
+      "max_prompt_tokens": 202,
+      "tokenizers": [
+        "M1",
+        "T"
+      ]
+    },
+    "answer_token_ids": {
+      "M1": {
+        "yes_no": {
+          " Yes": 6279,
+          " No": 1621
+        },
+        "true_false": {
+          " True": 11793,
+          " False": 16708
+        }
+      },
+      "T": {
+        "yes_no": {
+          " Yes": 6279,
+          " No": 1621
+        },
+        "true_false": {
+          " True": 11793,
+          " False": 16708
+        }
+      }
+    },
+    "code_token_length": 2,
+    "items_sha256": "12ca7f444a967080420917f7c221a7bd547b5bbf38331922fedc3c6d8a36bf01",
+    "prompts_true_false": {
+      "prompts_checked": 192,
+      "max_prompt_tokens": 202,
+      "tokenizers": [
+        "M1",
+        "T"
+      ]
+    },
+    "free_gpu_bytes_before_load": {
+      "M1": 7411335168,
+      "M1_to_cuda": 7411335168,
+      "T": 7354712064,
+      "T_to_cuda": 7354712064
+    },
+    "chunked_scan": {
+      "installed": true,
+      "scan_chunk_tokens": 1024,
+      "transformers_fast_path_available": false,
+      "note": "slow path in use on every device"
+    },
+    "mamba_A_real_and_negative_every_layer": {
+      "ok": true,
+      "layers": 48,
+      "max_A": -0.0039034681394696236,
+      "min_A": -43657.01171875
+    },
+    "chunked_scan_equivalence_fp32_cpu": {
+      "max_abs_logit_diff": 0.0,
+      "max_abs_hidden_diff": 0.0,
+      "prompt_tokens": 199,
+      "scan_chunk_tokens": 1024,
+      "chunks": 1,
+      "dtype": "torch.float32",
+      "device": "cpu"
+    },
+    "right_padding_fp32_cpu": {
+      "M1": {
+        "max_abs_logit_diff": 2.288818359375e-05,
+        "per_item": [
+          2.288818359375e-05,
+          1.52587890625e-05
+        ],
+        "dtype": "torch.float32",
+        "device": "cpu"
+      },
+      "T": {
+        "max_abs_logit_diff": 0.0005950927734375,
+        "per_item": [
+          0.0005950927734375,
+          0.000370025634765625
+        ],
+        "dtype": "torch.float32",
+        "device": "cpu"
+      }
+    },
+    "right_padding_fp16_gpu_reported": {
+      "M1": {
+        "max_abs_logit_diff": 0.046875,
+        "per_item": [
+          0.0390625,
+          0.046875
+        ],
+        "dtype": "torch.float16",
+        "device": "cuda:0"
+      },
+      "T": {
+        "max_abs_logit_diff": 0.33203125,
+        "per_item": [
+          0.27392578125,
+          0.33203125
+        ],
+        "dtype": "torch.float16",
+        "device": "cuda:0"
+      }
+    },
+    "free_gpu_bytes_after_release": {
+      "M1": 7354712064,
+      "T": 7354712064
+    },
+    "windowed_mask_W_inf_equivalence_fp32_cpu": {
+      "max_abs_logit_diff": 0.0,
+      "prompt_tokens": 199,
+      "dtype": "torch.float32",
+      "device": "cpu"
+    }
+  },
+  "runtime": {
+    "M1": {
+      "to_gpu_seconds": 1.71
+    },
+    "T": {
+      "to_gpu_seconds": 1.44
+    },
+    "total_seconds": 88.3
+  },
+  "sentence_indices_used": [
+    186,
+    294,
+    1078,
+    1118,
+    1594,
+    2236,
+    3615,
+    3810,
+    5918,
+    6550,
+    9171,
+    10719,
+    10909,
+    11259,
+    11912,
+    12003,
+    15145,
+    16330,
+    16557,
+    16741,
+    18586,
+    19993,
+    20202,
+    21154,
+    21479,
+    22034,
+    22966,
+    24604,
+    25394,
+    25433,
+    26099,
+    26240,
+    27126,
+    27604,
+    29114,
+    29775,
+    30100,
+    31247,
+    36350,
+    36530,
+    38652,
+    38810,
+    40008,
+    40039,
+    40107,
+    40238,
+    42046,
+    43707,
+    43985,
+    44279,
+    45210,
+    48228,
+    48253,
+    49813,
+    51960,
+    52988,
+    54366,
+    55952,
+    56524,
+    56527,
+    56710,
+    58330,
+    58920,
+    61036,
+    61347,
+    62864,
+    62970,
+    63408,
+    63868,
+    63920,
+    65585,
+    69495,
+    70122,
+    70609,
+    71357,
+    72437,
+    73877,
+    74270,
+    75518,
+    75751,
+    76584,
+    76755,
+    77220,
+    77245,
+    77956,
+    79655,
+    79795,
+    81367,
+    83216,
+    83284,
+    83512,
+    84504,
+    85220,
+    85362,
+    86955,
+    88153,
+    89818,
+    90138,
+    92281,
+    93231,
+    93347,
+    93754,
+    93792,
+    94170,
+    95040,
+    95580,
+    96604,
+    96649,
+    96652,
+    99165,
+    99232,
+    99685,
+    100948,
+    101252,
+    102128,
+    102546,
+    103022,
+    103424,
+    104363,
+    104735,
+    105147,
+    105386,
+    106379,
+    107843,
+    108461,
+    108524,
+    110674,
+    111919,
+    112384,
+    112648,
+    114500,
+    114615,
+    118719,
+    119531,
+    120517,
+    120532,
+    121008,
+    121628,
+    122003,
+    123602,
+    126306,
+    126706,
+    127116,
+    127154,
+    128099,
+    128566,
+    128637,
+    128841,
+    129405,
+    129741,
+    130623,
+    132168,
+    132580,
+    133900,
+    134816,
+    135262,
+    135301,
+    136086,
+    136896,
+    137457,
+    140909,
+    141287,
+    141350,
+    141384,
+    142284,
+    142717,
+    144062,
+    145011,
+    145916,
+    146012,
+    146044
+  ],
+  "by_format": {
+    "yes_no": {
+      "M1": {
+        "compare": {
+          "n": 48,
+          "acc_raw": 0.4791666666666667,
+          "acc_norm": -0.04166666666666663,
+          "yes_rate": 0.9375,
+          "guard_ok": false,
+          "auroc": 0.3845486111111111,
+          "near_ties": 0,
+          "logodds_mean_abs": 0.6695963740348816,
+          "seconds": 6.74,
+          "batches": 3,
+          "batch_size": 16,
+          "max_seq_len": 200
+        }
+      },
+      "T": {
+        "compare": {
+          "n": 48,
+          "acc_raw": 0.5416666666666666,
+          "acc_norm": 0.08333333333333326,
+          "yes_rate": 0.4166666666666667,
+          "guard_ok": true,
+          "auroc": 0.5625,
+          "near_ties": 0,
+          "logodds_mean_abs": 0.3623046875,
+          "seconds": 0.73,
+          "batches": 3,
+          "batch_size": 16,
+          "max_seq_len": 200
+        }
+      }
+    },
+    "true_false": {
+      "M1": {
+        "compare": {
+          "n": 48,
+          "acc_raw": 0.4166666666666667,
+          "acc_norm": -0.16666666666666663,
+          "yes_rate": 0.9166666666666666,
+          "guard_ok": false,
+          "auroc": 0.3689236111111111,
+          "near_ties": 0,
+          "logodds_mean_abs": 0.6648762822151184,
+          "seconds": 6.56,
+          "batches": 3,
+          "batch_size": 16,
+          "max_seq_len": 200
+        }
+      },
+      "T": {
+        "compare": {
+          "n": 48,
+          "acc_raw": 0.5208333333333334,
+          "acc_norm": 0.04166666666666674,
+          "yes_rate": 0.5625,
+          "guard_ok": true,
+          "auroc": 0.5260416666666666,
+          "near_ties": 1,
+          "logodds_mean_abs": 0.2890625,
+          "seconds": 0.73,
+          "batches": 3,
+          "batch_size": 16,
+          "max_seq_len": 200
+        }
+      }
+    },
+    "recall": {
+      "M1": {
+        "n": 48,
+        "acc_raw": 0.7708333333333334,
+        "acc_norm": 0.65625,
+        "slot_fractions": [
+          0.5208333333333334,
+          0.16666666666666666,
+          0.3125
+        ],
+        "max_slot_fraction": 0.5208333333333334,
+        "guard_ok": true,
+        "seconds": 19.95,
+        "batches": 9,
+        "batch_size": 16,
+        "max_seq_len": 201
+      },
+      "T": {
+        "n": 48,
+        "acc_raw": 0.9791666666666666,
+        "acc_norm": 0.9687499999999998,
+        "slot_fractions": [
+          0.3541666666666667,
+          0.3125,
+          0.3333333333333333
+        ],
+        "max_slot_fraction": 0.3541666666666667,
+        "guard_ok": true,
+        "seconds": 2.08,
+        "batches": 9,
+        "batch_size": 16,
+        "max_seq_len": 201
+      }
+    }
+  },
+  "format_recommendation": "NEITHER \u2014 both formats fail the pilot; the run is not started and the record says so (section 9)",
+  "pilot_rule": "section 9: the default ' Yes'/' No' stays unless either arm's compare normalized accuracy is below 0.4 or fails the guard; then the one switch to ' True'/' False'; the chosen format is entered in the PREREG as a dated amendment before the seal; these numbers license nothing"
+}
