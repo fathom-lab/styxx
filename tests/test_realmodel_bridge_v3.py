@@ -18,7 +18,8 @@ What is checked, against PREREG_realmodel_bridge_v3_2026_10_11.md as amended by 
 
 The item generator is exercised with a GPT-2-style word tokenizer and a synthetic sentence pool, so the
 tests need neither torch nor the wikitext cache. A CPU-only exercise of the Mamba code path on the cached
-state-spaces/mamba-130m-hf runs only when BRIDGE_V3_CPU_MODEL_TEST=1 is set.
+state-spaces/mamba-130m-hf runs only when BRIDGE_V3_CPU_MODEL_TEST=1 is set. The gates block is compared with
+the judged plan's only when BRIDGE_V3_PLAN_PATH names that plan, which lives outside the repository.
 """
 from __future__ import annotations
 
@@ -430,9 +431,13 @@ def test_gates_block_parses_and_every_assignment_reaches_a_row():
 
 
 def test_gates_block_is_verbatim_from_the_plan_when_the_plan_is_present():
-    plan = Path("C:/Users/heyzo/clawd/wt/_frequency_2026_10_11/PLAN_next_experiment.md")
-    if not plan.exists():
-        pytest.skip("the judged plan is not on this machine")
+    # The judged plan is a working note outside the repository; name its path in BRIDGE_V3_PLAN_PATH to run this.
+    where = os.environ.get("BRIDGE_V3_PLAN_PATH", "").strip()
+    if not where:
+        pytest.skip("set BRIDGE_V3_PLAN_PATH to the judged PLAN_next_experiment.md to compare its gates block")
+    plan = Path(where)
+    if not plan.is_file():
+        pytest.skip("BRIDGE_V3_PLAN_PATH names no file on this machine")
     from styxx.protocol import _select_gates_block
     assert _select_gates_block(plan.read_text(encoding="utf-8")) == _select_gates_block(PREREG.read_text(encoding="utf-8"))
 
