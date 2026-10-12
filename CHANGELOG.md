@@ -49,8 +49,9 @@ takes the "names no build or runtime" row below. Phase 2 makes the writer carry 
   from an unnamed field, and an empty string is read as null; anything this runtime cannot know is null,
   never a guess; no path is written. An identity that is not an object, names an
   unknown schema, holds a compared value that is not a string of at most 128 characters or null, or
-  lists modules otherwise than as at most 16 `[name, sha]` pairs is read as unnamed with a quoted
-  reason, never a traceback. `python -m styxx.instrument` prints the identity this install would verify
+  lists modules otherwise than as at most 16 `[name, sha]` pairs (a name `^[a-z_.]{1,64}$`, a sha of 64
+  lowercase hex or null, each matched whole: a trailing newline is refused) is read as unnamed with a
+  quoted reason, never a traceback. `python -m styxx.instrument` prints the identity this install would verify
   under (`schema`, `styxx_version`, `build`, `runtime`, `loaded_from`), ASCII only.
 - **What `capsule verify` now compares.** For a v0.2 capsule the per-key reproduction runs over the
   content keys only, with the same texts as before (`gate.<key> not reproduced: ...`; `unparsed_claims`
@@ -66,9 +67,14 @@ takes the "names no build or runtime" row below. Phase 2 makes the writer carry 
   naming the differing fields; **a different instrument and not reproducing, `INSTRUMENT SKEW: the gate
   record does not reproduce here and names another instrument (differs: ...); it was made by <the
   recorded identity> — reproduce under that instrument (...) before reading the lines below as an
-  edit`**, a problem placed ahead of the field lines, which stay, with the pin taken from the sealed
-  record's `build.styxx`, and an advisory that a release installing another `styxx.diffgate` sha than
-  the record names is not the minter's build; an incomplete identity (a null compared field, or an
+  edit`**, a problem placed ahead of the field lines, which stay; a compared field null on either side is
+  listed after the differing ones (`differs: ...; unknown: ...`), so a record that names its runtime and
+  no build, and differs on the runtime, is SKEW with what it does not name listed; the hint holds the pin
+  taken from the sealed record's `build.styxx`, or, with none, the styxx whose `styxx.diffgate` sha the
+  record names, or, with neither, that the record names no build and only its runtime (a version string
+  this verifier does not quote and no sha: a build named only by that version); with a pin, an advisory
+  that a release installing another `styxx.diffgate` sha than the record names is not the minter's
+  build; an incomplete identity (a null compared field, or an
   empty string, read as null), the two unnamed advisories naming the unknown fields, the failing one
   naming the payload's pin as a version, not a build, as the unnamed one does. Problem texts carry the
   recorded identity and the differing field names and never a value of the live identity; a recorded
