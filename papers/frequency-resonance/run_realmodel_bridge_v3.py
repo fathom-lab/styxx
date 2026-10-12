@@ -804,8 +804,8 @@ def check_chunked_scan_equivalence(model, tok: Tok, item: dict, exemplars: list,
         finally:
             mm.MambaMixer.slow_forward = chunked_slow_forward
         h1 = model.backbone(input_ids=ids, use_cache=False).last_hidden_state
-        l0 = _lm_head(model)(h0[0, len(s) - 1]).float()
-        l1 = _lm_head(model)(h1[0, len(s) - 1]).float()
+        l0 = _logits(model, h0[0, len(s) - 1])
+        l1 = _logits(model, h1[0, len(s) - 1])
     return {"max_abs_logit_diff": float((l1 - l0).abs().max()), "max_abs_hidden_diff": float((h1 - h0).abs().max()),
             "prompt_tokens": len(s), "scan_chunk_tokens": SCAN_CHUNK_TOKENS, "chunks": math.ceil(len(s) / SCAN_CHUNK_TOKENS),
             "dtype": str(next(model.parameters()).dtype), "device": str(device)}
@@ -827,6 +827,14 @@ def assert_mamba_A(model) -> dict:
 
 def _lm_head(model):
     return getattr(model, "lm_head", None) or model.embed_out
+
+
+def _logits(model, h):
+    """fp32 logits of the LM head at the given hidden rows. The Mamba backbone keeps its residual stream in
+    fp32 (residual_in_fp32) so last_hidden_state is fp32 under a half model; transformers' own
+    MambaForCausalLM.forward casts to the head's dtype before the matmul, and so does this (found by the smoke)."""
+    head = _lm_head(model)
+    return head(h.to(head.weight.dtype)).float()
 
 
 def _hidden(arm: str, model, ids, mask4d=None):
@@ -873,7 +881,7 @@ def compare_logodds_batch(arm: str, model, seqs: list, yes_id: int, no_id: int, 
         h = _hidden(arm, model, ids, mask)
         pos = torch.tensor([n - 1 for n in lengths], device=device)
         hl = h[torch.arange(len(seqs), device=device), pos]
-        lp = torch.log_softmax(_lm_head(model)(hl).float(), dim=-1)
+        lp = torch.log_softmax(_logits(model, hl), dim=-1)
         out = (lp[:, yes_id] - lp[:, no_id]).cpu().numpy()
         if mech is not None:
             mech.end()
@@ -897,7 +905,7 @@ def recall_loglik_batch(arm: str, model, prompts: list, cands: list, exemplar_le
         pos = torch.tensor([[len(p) - 1 + j for j in range(n_c)] for p in prompts], device=device)   # [B, n_c]
         rows = torch.arange(len(seqs), device=device)[:, None]
         hl = h[rows, pos]                                                     # [B, n_c, H]
-        lp = torch.log_softmax(_lm_head(model)(hl).float(), dim=-1)           # [B, n_c, V]
+        lp = torch.log_softmax(_logits(model, hl), dim=-1)           # [B, n_c, V]
         tgt = torch.tensor(cands, device=device)                              # [B, n_c]
         ll = lp.gather(-1, tgt[:, :, None])[:, :, 0].sum(-1)
     return ll.cpu().numpy()
@@ -1016,12 +1024,12 @@ def check_right_padding(arm: str, model, tok: Tok, items: list, exemplars: list,
         for s in seqs:
             ids, _ = pad_batch([s], device)
             h = _hidden(arm, model, ids)
-            alone.append(_lm_head(model)(h[0, len(s) - 1]).float())
+            alone.append(_logits(model, h[0, len(s) - 1]))
         ids, lengths = pad_batch(seqs, device, extra=24)
         h = _hidden(arm, model, ids)
         diffs = []
         for i, n in enumerate(lengths):
-            batched = _lm_head(model)(h[i, n - 1]).float()
+            batched = _logits(model, h[i, n - 1])
             diffs.append(float((batched - alone[i]).abs().max()))
     return {"max_abs_logit_diff": max(diffs), "per_item": diffs, "dtype": str(next(model.parameters()).dtype),
             "device": str(device)}
@@ -1038,8 +1046,8 @@ def check_window_equivalence(model, tok: Tok, item: dict, exemplars: list, fmt: 
         h0 = _hidden("T", model, ids)
         mask = window_mask(ids.shape[1], lengths, [len(tok.encode(parts[0]))], None, next(model.parameters()).dtype, device)
         h1 = _hidden("T", model, ids, mask)
-        l0 = _lm_head(model)(h0[0, len(s) - 1]).float()
-        l1 = _lm_head(model)(h1[0, len(s) - 1]).float()
+        l0 = _logits(model, h0[0, len(s) - 1])
+        l1 = _logits(model, h1[0, len(s) - 1])
     return {"max_abs_logit_diff": float((l1 - l0).abs().max()), "prompt_tokens": len(s),
             "dtype": str(next(model.parameters()).dtype), "device": str(device)}
 
