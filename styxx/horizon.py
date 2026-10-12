@@ -107,7 +107,7 @@ import os
 import re
 import struct
 import sys
-from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -1990,7 +1990,7 @@ def _row_lines(row: dict) -> List[str]:
 
     def iv(d):
         if d.get("point") is None:
-            return "not estimable"
+            return "not estimable" + (" (screen failed)" if str(d.get("reason", "")).startswith("SCREEN_FAIL") else "")
         lo = "--" if d.get("ci_lo") is None else f"{d['ci_lo']:+.2f}"
         hi = "--" if d.get("ci_hi") is None else f"{d['ci_hi']:+.2f}"
         return f"{d['point']:+.2f} [{lo}, {hi}]"

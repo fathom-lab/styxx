@@ -93,7 +93,7 @@ Models fitted together on one seed share their resamples (red team M9).
 | field | rule |
 |---|---|
 | `cells[family][D].acc_norm` | `(acc − chance) / (1 − chance)` under the row's readout; a constant responder under exact balance is exactly 0 |
-| `cells[...].exact_balance`, `label_counts` | the answer counts per cell; a cell out of exact balance reads `BALANCE_BROKEN@family:D`, and a D0 half out of balance fails the screen |
+| `cells[...].exact_balance`, `label_counts` | the answer counts per cell; a cell out of exact balance reads `BALANCE_BROKEN@family:D`, a D0 half `BALANCE_BROKEN@family:D0/screen` or `/denominator`; a screen half out of balance also fails the screen, and a denominator half out of balance is flagged only |
 | `cells[...].ci_lo, ci_hi` | 2.5th / 97.5th percentile of the paired item bootstrap (B = 2000, seed 20261011) |
 | `cells[...].guard_ok`, `auroc`, `c_auc` | the readout's guard; the rank AUROC of the scores (log-odds against the label, or the one-versus-rest AUROC averaged over the three slots, the runner's statistic) and `c_auc = 2·AUROC − 1` |
 | `screen` | at D0: both normalised accuracies ≥ the bar (0.40), both guards passed, both cells in exact balance, read on one half of the D0 items (stratified by label so each half keeps exact balance); the horizon's denominator c(D0) is read on the other half (M4). The row prints `PASS@.40` / `FAIL@.40`; a bar other than 0.40 reads `NONSTANDARD_BAR@b`, and a bar outside (0, 1) is refused |

@@ -227,7 +227,8 @@ def test_a_screen_fail_row_prints_no_horizon_no_ratio_and_no_dissociation(selfte
     h_line = next(l for l in text.splitlines() if "H_compare:" in l)
     assert "not estimable (screen failed)" in h_line and "~" not in h_line.split("H_compare:")[1]
     r_line = next(l for l in text.splitlines() if "ratio_min compare" in l)
-    assert r_line.split("ratio_min")[1].count("not estimable") == 3 and not re.search(r"[+-]\d?\.\d\d", r_line)
+    assert r_line.split("ratio_min")[1].count("not estimable (screen failed)") == 3
+    assert not re.search(r"[+-]\d?\.\d\d", r_line)
     assert "screen failed: compare normalised" in text
     sheet = H.fit_zoo([H.load_receipt(rec)])
     assert sheet["result"]["per_model"]["dissoc"]["screenfail"] is None
@@ -344,6 +345,32 @@ def test_the_screen_bar_is_printed_validated_and_flagged(selftest_result):
     rec["config"]["guard"] = {"max_slot_fraction": 0.2}
     with pytest.raises(H.HorizonRefusal, match="max_slot_fraction"):
         H.load_receipt(rec)
+
+
+def test_a_declared_slot_bound_is_the_bound_the_guard_applies():
+    # review 2: a guard that read the runner's 0.80 whatever config.guard declared passed every test
+    def slot_cell():
+        # 600 items in exact balance; slot 0 takes every item of label 0 and 170 of each other label, spread
+        # so that each stratified D0 half also puts 0.90 of its answers on slot 0
+        y = np.repeat([0, 1, 2], 200)
+        p = np.where((y == 0) | (np.arange(600) % 20 >= 3), 0, y)
+        return {"target_slot": y.tolist(), "pred_slot": p.tolist()}
+
+    cell = slot_cell()
+    for bound, ok in ((0.95, True), (0.80, False)):
+        got = H.cell_summary("compare", cell["target_slot"], cell["pred_slot"], readout="argmax_largest",
+                             guard_spec=H._guard_spec({"max_slot_fraction": bound}))
+        assert got["max_slot_fraction"] == pytest.approx(0.90) and got["guard_ok"] is ok
+    for bound, ok in ((0.95, True), (0.80, False)):
+        rec = H.synthetic_receipt("m", H._planted_curve(203.0), RECALL_FLAT, 600, 8, n_resamples=50)
+        rec["config"]["guard"] = {"max_slot_fraction": bound}
+        rec["per_item"]["compare"]["16"] = slot_cell()
+        rec["per_item"]["compare"]["64"] = slot_cell()
+        row = H.fit_model(H.load_receipt(rec))
+        assert row["cells"]["compare"][64]["guard_ok"] is ok and row["cells"]["compare"][16]["guard_ok"] is ok
+        assert any(r.startswith("compare guard failed (largest slot share 0.90)")
+                   for r in row["screen"]["reasons"]) is not ok
+        assert ("DEGENERATE@compare:64" in " ".join(row["flags"])) is not ok
 
 
 def test_an_undeclared_pairing_is_printed_as_assumed(selftest_result):
