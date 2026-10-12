@@ -597,7 +597,7 @@ def test_a_skew_line_quotes_no_recorded_token_charon_reads_as_a_broken_binding(t
     if "module" in hostile:
         minter["build"]["modules"].append([hostile["module"], "0" * 64])
     _under(monkeypatch, minter)
-    out = _mint(tmp_path)                                 # R7's self-verify: the same identity, ok
+    out = _mint(tmp_path)                                 # R7's own re-check: the same identity, ok
     _edit_and_reseal(out)
     _under(monkeypatch, Y)
     rep = verify_capsule(out)
