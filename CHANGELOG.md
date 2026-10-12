@@ -7,6 +7,97 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — capsule v0.2 layer 2 compares a record's instrument identity apart from its content; `styxx.instrument` names the build and runtime a diffgate record is written and re-run under
+
+**Phase 1 of the design the operator approved on 2026-10-11** (item 3 of step zero of the 2026-10-06
+study: every diffgate record names its build and runtime), after phase 0's NOTE below. Five files:
+`papers/closed-model-frontier/AMENDMENT_capsule_v02_instrument_identity_2026_10_11.md` (new, committed
+alone ahead of the code; the spec is not edited), `styxx/instrument.py` (new), `styxx/capsule.py`,
+`tests/test_instrument_identity.py` (new) and this file. The record writer, `styxx/diffgate.py`, is not
+touched: a record still has its eleven keys and names nothing, so every capsule this reader verifies
+takes the "names no build or runtime" row below. Phase 2 makes the writer carry the identity.
+
+- **The amendment** states, against `SPEC_oath_capsule_v02_2026_08_31.md` (lines 21-24 and 105-115):
+  the record may carry `build` and `runtime` after its eleven content keys, with `"diffgate": "v0"`
+  still the format key and R2 unchanged; layer 2 compares every content key and the identity apart, a
+  third named softening beside the two the spec names; a record that does not reproduce and names a
+  different instrument is INSTRUMENT SKEW (`ok: false`), and one that names none, or not all of one,
+  cannot be classified from its own bytes, which the verifier says; R5 never compares identity keys;
+  layer 1 displays the recorded identity and proves only that it is the one sealed; the content is a
+  pure function of (summary bytes, diff bytes) under the instrument the record names, and the runtime
+  is part of the instrument; `binding.gate` differs between honest mints on two runtimes, so
+  deduplicate by content; and the disclosure: a capsule carries the interpreter's implementation and
+  version, the Unicode database version, a case-table floor label, the styxx version string and five
+  module names with the sha256 of each module's bytes, and no `sys.version` (the operator's decision
+  O9), no path, no host, no user, no locale, no operating system. The Unicode-16 witness it cites was
+  re-measured for it on 2026-10-11 with the modules at `f469f25b` staged under an empty `__init__.py`:
+  the summary `U+11BF3 files changed.` over a one-file diff reads PASS with no claim under CPython
+  3.12.10 (Unicode 15.0.0) and FAIL under CPython 3.14.2 (Unicode 16.0.0) with `files_changed_count`
+  CONTRADICTED, `diff changes 1 files, claim says 3`.
+- **`styxx.instrument`** (new) defines the identity, reads one, compares two and prints one line. `build`:
+  `schema` (`styxx.diffgate/instrument/v1`), `reader` (`styxx.diffgate`), `styxx` (the version string,
+  recorded and never compared: one version string has named two readers) and `modules`, ordered
+  `[name, sha256]` pairs over `styxx.diffgate`, `styxx.instrument`, `styxx.declare`, `styxx.evidence`
+  and `styxx.claimdetect`, each sha256 over the file's bytes with CRLF read as LF (a lone CR kept), the
+  rule `web/gate/differential/py_side.py` and charon's `_content_sha256` follow; the reader hashes its
+  own file and never a module looked up by name, so a reader built from a string names a null sha;
+  the other modules are found with `importlib.util.find_spec`, which executes nothing. `runtime`:
+  `implementation`, `version`, `unicode` (`unicodedata.unidata_version`) and `case_floor` (a label from
+  three case pairs a browser can run too; recorded, never compared). Compared: `build.reader`,
+  `build.modules` by name, `runtime.implementation`, `runtime.version`, `runtime.unicode`. A null equals
+  nothing, so neither "same" nor skew is ever claimed from an unnamed field; anything this runtime
+  cannot know is null, never a guess; no path is written. An identity that is not an object, names an
+  unknown schema, holds a compared value that is not a string of at most 128 characters or null, or
+  lists modules otherwise than as at most 16 `[name, sha]` pairs is read as unnamed with a quoted
+  reason, never a traceback. `python -m styxx.instrument` prints the identity this install would verify
+  under (`schema`, `styxx_version`, `build`, `runtime`, `loaded_from`), ASCII only.
+- **What `capsule verify` now compares.** For a v0.2 capsule the per-key reproduction runs over the
+  content keys only, with the same texts as before (`gate.<key> not reproduced: ...`; `unparsed_claims`
+  stays advisory). The identity the record names is then compared with the instrument that re-ran it:
+  the identity the live record carries, or, while the writer names nothing, the one computed over the
+  imported `styxx.diffgate`. Outcomes: the record names nothing and reproduced, an advisory that it
+  reproduced here under the named live instrument and does not say which instrument minted it; names
+  nothing and did not reproduce, the problem lines unchanged plus an advisory that the failure cannot be
+  told apart from INSTRUMENT SKEW or an edit from the record alone, naming the payload's unsealed pin
+  as a version, not a build; unreadable, an advisory `gate.<key> is not an identity this verifier reads
+  (...); read as unnamed`, then read as absent; same instrument, nothing, or, not reproducing, an
+  advisory that what moved is not the instrument; a different instrument and reproduced, an advisory
+  naming the differing fields; **a different instrument and not reproducing, `INSTRUMENT SKEW: the gate
+  record does not reproduce here and names another instrument (differs: ...); it was made by <the
+  recorded identity> — reproduce under that instrument (...) before reading the lines below as an
+  edit`**, a problem placed ahead of the field lines, which stay, with the pin taken from the sealed
+  record's `build.styxx`, and an advisory that a release installing another `styxx.diffgate` sha than
+  the record names is not the minter's build; an incomplete identity (a null compared field), the two
+  unnamed advisories naming the unknown fields. Problem texts carry the recorded identity and the
+  differing field names and never a value of the live identity; a recorded name charon would read as a
+  broken binding (`ambiguous`, `!=`) is not quoted in a problem. The format-key mismatch stays
+  INSTRUMENT SKEW with no field comparison. The result gains `gate_identity` (`recorded`, `live`,
+  `state`, `differs`, `unknown`, `pin`) and `skew`; no key is removed or retyped. At mint, R5 compares
+  the content keys only, so a `--gate` written by another build or runtime is accepted when its content
+  reproduces; a diverging one that names another instrument is refused with the fields named.
+- **What prints.** After `embedded gate verdict:` the command prints one line, `instrument: recorded
+  <the recorded identity, or "not named (pin ...)">; re-run here by <the live identity>`, each identity
+  as `styxx.diffgate <sha10> (styxx <version>) on <implementation> <version>, Unicode <unicode>`, ASCII
+  only, through the same escaping as every other line. The page's meta line appends `gate made by
+  <reader> <sha10> on <implementation> <version>, Unicode <unicode> (sealed in binding.gate; this page
+  re-runs nothing)` when the record carries the identity as strings, set through `textContent`, and the
+  footer says layer 2 compares the identity apart; committed pages keep their own template, and a page
+  minted in this phase shows nothing new because its record names nothing.
+- **No committed capsule, receipt or charon line moved.** `DOGFOOD_session_2026_08_31.capsule.html`
+  verifies with `ok`, no problem, exit 0, and one new advisory; `HANDOFF_capsule_v02_2026_08_31.capsule.html`
+  fails with its one problem, `gate.claims not reproduced: ...`, to the character charon line seq 95
+  recorded in `counts.problems_detail`, exit 1, and one new advisory, never a SKEW problem (the operator's
+  decision O3: its classification is phase 0's NOTE). `papers/charon/charon.log.jsonl` lines seq 89 and
+  95 re-derive with no compared key moved, because charon reads `problems` and `ok` and never
+  `advisory`; no line is rewritten or appended. Sworn receipts and the conformance vectors are
+  untouched (`styxx.sworn` imports nothing from the diff gate). `tests/test_instrument_identity.py`
+  holds all of this, and `tests/test_capsule_v02.py`, `test_capsule.py`, `test_capsule_no_traceback.py`,
+  `test_capsule_whole_certificate.py`, `test_charon.py`, `test_stranger.py` and
+  `test_diffgate_path2a.py` pass unedited.
+- **Not in this phase.** The writer naming its instrument (phase 2, which moves the #201 pin set), the
+  Unicode-16 fixture (2b), charon's verifier naming its runtime (3), the Action (4) and the bookmarklet
+  panel (5). `web/gate/*` and `styxx/diffgate.py` are not touched.
+
 ## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
 
 **`styxx/capsule.py` and `styxx/charon.py`; tests in `tests/test_capsule_no_traceback.py`.** 7.49.0
