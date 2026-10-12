@@ -192,28 +192,41 @@ def flavour(mod) -> str:
 # `extract` scopes +145 and counts +3, `seam` +5, `tests` +74, `redefined` +6, `split` +4), nearly all on the seeded
 # PATH-2a fuzz and the text-seam set, whose summaries and diffs are built from the characters the switch read; no
 # VERIFIED moves, and nothing withheld before is kept now.
+# #205 (fix/diffgate-205-206), on the inputs pass 9 pinned: main's reading moved and no overlay rule did. main abstains
+# on the `def` counts over an added line holding a character of _READ_APART, so 260 claims it decided are decided no
+# more (243 on the seeded PATH-2a fuzz, 16 PATH-2 reproductions, the pinned pair p6-split-where-the-views-count-alike,
+# whose `split` goes with it). A form feed no longer cuts a line, so a form-feed re-indent of an existing function or
+# test is counted by main and withheld as a space re-indent is (`symbol` +8: v1-a-form-feed-reindented-function-is-
+# changed, v1-a-form-feed-separated-changed-function-pairs and six fuzz claims; `tests` +2 on f2-a-form-feed-is-not-a-
+# line-break), and a context line no longer forges a removed or an added test (`tests` -1 and `redefined` +1 on
+# 101-removed-def-only-in-python-lines, `redefined` -2 on f2-a-context-line-holding-a-separator-adds-nothing; on the fuzz
+# `tests` -5 net, `split` 0 net, `again` -1). A header the Python reads whole moves which claims `divergent` holds:
+# created -4, deleted +1, touched -1, scopes 0 net, counts +1 (v2-a-binary-header-holding-a-line-separator-registers-its-
+# file and v2-a-binary-deletion-line-holding-a-line-separator among them). main raises on three inputs, not four: two
+# PATH-2 reproductions read a split only the old cut made, and fuzz 20260930:692 (`+++ /dev/null` with no `---`) now
+# raises in the Python as it did in the port.
 ABSTENTIONS = {
     "windows": {
-        "decided": 12718, "main raises": 8,
-        "file_created:case": 3, "file_created:dir": 65, "file_created:divergent": 19, "file_created:dot": 20,
+        "decided": 12458, "main raises": 6,
+        "file_created:case": 3, "file_created:dir": 65, "file_created:divergent": 15, "file_created:dot": 20,
         "file_created:dot_earliest": 4, "file_created:dot_tier": 11, "file_created:extract": 43, "file_created:odd": 1,
         "file_created:tier": 9,
-        "file_deleted:case": 1, "file_deleted:dir": 52, "file_deleted:divergent": 20, "file_deleted:dot": 21,
+        "file_deleted:case": 1, "file_deleted:dir": 52, "file_deleted:divergent": 21, "file_deleted:dot": 21,
         "file_deleted:dot_earliest": 1, "file_deleted:dot_tier": 7, "file_deleted:extract": 52, "file_deleted:odd": 1,
         "file_deleted:tier": 4,
-        "file_touched:dir": 244, "file_touched:divergent": 102, "file_touched:dot": 82, "file_touched:dot_tier": 72,
+        "file_touched:dir": 244, "file_touched:divergent": 101, "file_touched:dot": 82, "file_touched:dot_tier": 72,
         "file_touched:extract": 139, "file_touched:odd": 5,
         "files_changed_count:case_count": 42,
-        "files_changed_count:count": 375, "files_changed_count:divergent": 226, "files_changed_count:extract": 4,
+        "files_changed_count:count": 375, "files_changed_count:divergent": 227, "files_changed_count:extract": 4,
         "files_changed_count:seam": 6,
         "only_touches:divergent": 108, "only_touches:extract": 154, "only_touches:only": 32, "only_touches:shape": 29,
-        "symbol_added:again": 6, "symbol_added:extract": 24, "symbol_added:symbol": 184,
-        "tests_added:redefined": 23, "tests_added:split": 5, "tests_added:tests": 437,
+        "symbol_added:again": 5, "symbol_added:extract": 24, "symbol_added:symbol": 192,
+        "tests_added:redefined": 22, "tests_added:split": 4, "tests_added:tests": 433,
     },
 }
 # Under the POSIX flavour main reads `c:x.py` as a bare name not in the diff, so three decided drive-like claims are
 # UNCHECKABLE on main to begin with: path2a:guard-drive-like-path claim 0, and fuzz 20260930:1033 and :1590.
-ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12715, "file_touched:odd": 4}
+ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12455, "file_touched:odd": 4}
 del ABSTENTIONS["posix"]["file_created:odd"], ABSTENTIONS["posix"]["file_deleted:odd"]
 # main's own reading depends on the interpreter's Unicode tables where the inputs probe letters added in Unicode 14 and
 # 16 (#161's k2, x1 and y3 cases). Measured on CPython 3.12 (Unicode 15.0) and 3.14 (16.0); for Unicode 13.0 and 14.0
@@ -296,25 +309,32 @@ def test_abstain_only_port(work):
     assert rep["broken"] == [] and rep["counts"]["broken"] == 0 and rep["counts"]["raise_differs"] == 0
     assert rep["counts"]["runs"] > 10000
     if engine_unicode() == "16":                  # measured on Node 24.13.0: what this port withholds of what its main decides
-        assert (rep["counts"]["decided"], rep["counts"]["abstained"]) == (12526, 2590), rep["counts"]
+        # #205 (fix/diffgate-205-206): (12526, 2590) before; the port's main abstains on the `def` counts over an added
+        # line holding a character of _READ_APART, and the overlay's view 0 is the port's own cut, so the overlay
+        # withholds less where the two mains now read a diff alike
+        assert (rep["counts"]["decided"], rep["counts"]["abstained"]) == (12264, 2538), rep["counts"]
 
 
 def test_lockstep_python(M, inputs):
     """The overlay's status-map builder, keyed by main's _norm, is main's parse_unified_diff map, order included; and
-    its count of `def test_` sites in line view 0 is main's count of `^\\s*def test_` over main's added lines."""
+    its count of `def test_` sites in line view 0 is main's count of `^\\s*def test_` over main's added lines. Since #205
+    (fix/diffgate-205-206) main cuts the diff at git's line ends and so does the overlay's line view: the lines here
+    are that cut (_P2A_COARSE, held to main's _git_lines below), no longer CPython's str.splitlines()."""
     checked = 0
     for _s, iid, _summary, diff in inputs:
         try:
             status, blob = M.parse_unified_diff(diff)
         except Exception:
             continue
-        fine = N._p2a_lines(diff or "", N._P2A_FINE)
-        assert list(N._p2a_build(N._p2a_regs_raw(fine), N._norm).items()) == list(status.items()), iid
-        views = N._p2a_views(diff or "", fine)
+        lines = N._p2a_lines(diff or "", N._P2A_COARSE)
+        assert lines == M._git_lines(diff or ""), iid
+        assert list(N._p2a_build(N._p2a_regs_raw(lines), N._norm).items()) == list(status.items()), iid
+        views = N._p2a_views(lines)
         assert N._p2a_pairing(views)[0][0] == len(re.findall(r"^\s*def test_", blob, re.M)), iid
         # pass 4 (A-2): the facts object's shortcut (one view, counted once) gives what both views counted apart give;
-        # pass 5 (B-1): with the removed lines no view reads; pass 6 (B-1): with the unchanged lines too
-        unchanged = N._p2a_context(diff or "", fine) + N._p2a_joined(diff or "", " ")
+        # pass 5 (B-1): with the removed lines no view reads; pass 6 (B-1): with the unchanged lines too; #205: on a
+        # text holding U+2028 or U+2029, where only the port's `^` also matches, the shortcut is not taken (R4)
+        unchanged = N._p2a_context(lines) + N._p2a_joined(diff or "", " ")
         assert N._P2aFacts(diff or "").pairing() == \
             N._p2a_pairing(views, False, N._p2a_joined(diff or ""), unchanged), iid
         checked += 1
@@ -331,7 +351,7 @@ def test_lockstep_port(work, inputs):
         got = rep["counts"].get(R.uid(i, row))
         if got is None:
             continue
-        mine = [x[0] for x in N._p2a_pairing(N._p2a_views(row[3] or "", N._p2a_lines(row[3] or "", N._P2A_FINE)))]
+        mine = [x[0] for x in N._p2a_pairing(N._p2a_views(N._p2a_lines(row[3] or "", N._P2A_COARSE)))]   # #205
         if got["views"][1] != got["main"] or got["views"] != mine:
             bad.append((row[1], got, mine))
     assert bad == [], bad[:5]
@@ -456,11 +476,12 @@ def test_git_door(M, tmp_path):
             assert R.relation(a, b, strict, PHRASES) == [], name
             mine[strict] = b
         assert R.strict_alike(mine[False], mine[True]) == [], name
-        # the lockstep at the git door: the overlay's builder over --name-status is main's four-line loop
+        # the lockstep at the git door: the overlay's builder over --name-status is main's four-line loop, which cuts
+        # the listing at git's line ends since #205 (`docs/a<U+2028>b.md` of the line-separator repository is one path)
         name_status = N._git(repo, "diff", "--name-status", "HEAD~1..HEAD")
-        seen.update(line[:1] for line in name_status.splitlines())
+        seen.update(line[:1] for line in M._git_lines(name_status))
         want = {}
-        for line in name_status.splitlines():
+        for line in M._git_lines(name_status):
             parts = line.split("\t")
             if len(parts) >= 2:
                 want[M._norm(parts[-1])] = parts[0][:1]
@@ -535,7 +556,7 @@ def test_a_planted_git_door_mirror_is_refused(M, tmp_path):
             continue
         name_status = N._git(repo, "diff", "--name-status", "HEAD~1..HEAD")
         want = {}
-        for line in name_status.splitlines():
+        for line in M._git_lines(name_status):
             parts = line.split("\t")
             if len(parts) >= 2:
                 want[M._norm(parts[-1])] = parts[0][:1]
@@ -2644,18 +2665,26 @@ BAR_C_KEYS = ("inputs", "a main raises", "lists equal", "lists equal, a claim wi
               "--strict: main agrees, the overlay differs", "--strict: main differs, the overlay agrees")
 BAR_C = {
     # the Windows flavour holds three more inputs on the diff side: main's Python decides a drive-like claim (`c:x.py`)
-    # there that its port, and its Python under the POSIX flavour, leave UNCHECKABLE
+    # there that its port, and its Python under the POSIX flavour, leave UNCHECKABLE. #205 (fix/diffgate-205-206): main's
+    # two ports now cut a diff alike and abstain alike over the characters they read apart, so on every row the diff
+    # side shrinks (120 -> 58 on CPython 3.12's Windows row), the inputs a main raises on go from 5 to 3, and the
+    # gates part under the overlay alone on y2 only without --strict (six inputs before). Measured on CPython 3.12.10
+    # and 3.14.2, Node 24.13.0
     "committed": {
-        ("15.0.0", "windows", "16"): (6672, 5, 6067, 1127, 480, 120, 19, 23, 6, 2, 20, 13, 2, 9),
-        ("15.0.0", "posix", "16"): (6672, 5, 6070, 1127, 480, 117, 19, 23, 6, 2, 19, 13, 2, 8),
-        ("16.0.0", "windows", "16"): (6672, 5, 6068, 1128, 482, 117, 20, 24, 6, 2, 21, 13, 2, 10),
-        ("16.0.0", "posix", "16"): (6672, 5, 6071, 1128, 482, 114, 20, 24, 6, 2, 20, 13, 2, 9),
+        ("15.0.0", "windows", "16"): (6672, 3, 6133, 1151, 478, 58, 8, 9, 1, 0, 13, 10, 2, 5),
+        ("15.0.0", "posix", "16"): (6672, 3, 6136, 1151, 478, 55, 8, 9, 1, 0, 12, 10, 2, 4),
+        ("16.0.0", "windows", "16"): (6672, 3, 6134, 1152, 480, 55, 9, 10, 1, 0, 14, 10, 2, 6),
+        ("16.0.0", "posix", "16"): (6672, 3, 6137, 1152, 480, 52, 9, 10, 1, 0, 13, 10, 2, 5),
     },
     # every input of this shape where main's two ports decide the symbol claim apart parts the gate verdicts under the
-    # overlay (149; 147 where the interpreter knows U+105C0 as a letter), since the tests or count claim that made both
-    # of main's gates FAIL is withheld in both ports
-    "line break": {("15.0.0", "any", "16"): (600, 0, 451, 451, 0, 149, 0, 149, 149, 0, 0, 0, 0, 0),
-                   ("16.0.0", "any", "16"): (600, 0, 453, 453, 0, 147, 0, 147, 147, 0, 0, 0, 0, 0)},
+    # overlay, since the tests or count claim that made both of main's gates FAIL is withheld in both ports. Before
+    # #205 that was 149 (147 where the interpreter knows U+105C0 as a letter): the shape's separators U+000B, U+000C,
+    # U+001C, U+001F and U+0085 parted main's two ports. Since #205 main reads them alike (it abstains over all but the
+    # form feed, which both cut nowhere and read as white space), and what still parts the two is U+FEFF, the port's
+    # \s alone, and a name running on into a letter outside ASCII, which only the Python's \b reads as part of the name
+    # (44 in all; 52 where the interpreter knows U+105C0 as a letter too)
+    "line break": {("15.0.0", "any", "16"): (600, 0, 556, 342, 0, 44, 0, 44, 44, 0, 0, 0, 0, 0),
+                   ("16.0.0", "any", "16"): (600, 0, 548, 334, 0, 52, 0, 52, 52, 0, 0, 0, 0, 0)},
     # on the patched engine main's two gate verdicts differ on 421 inputs (294 where the interpreter folds the Unicode
     # 16 pair too) and the overlay's on none: the counts the two mains decide apart are withheld in both ports
     # (`case_count`)
@@ -2664,17 +2693,13 @@ BAR_C = {
     "decorated world": {("15.0.0", "any", "16"): (1000, 0, 752, 355, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0),
                         ("16.0.0", "any", "16"): (1000, 0, 752, 355, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0)},
 }
-# The committed inputs on which main's two gate verdicts agree and the overlay's do not. Without --strict: #161's four
-# f2 separator inputs and y2, where the port's main alone counts a `def test_` after a vertical tab, a form feed, U+2028,
-# U+2029 or U+FEFF and its two false verdicts are withheld (PASS) while the Python's right CONTRADICTED stands (FAIL);
-# and f2's context line, the other way round. Under --strict: two text-seam inputs where only the port's main reads a
-# path claim, which `extract` withholds there.
+# The committed inputs on which main's two gate verdicts agree and the overlay's do not. Without --strict: y2, where the
+# port's main alone counts a `def test_` after U+FEFF and its two false verdicts are withheld (PASS) while the Python's
+# right CONTRADICTED stands (FAIL). #161's four f2 separator inputs (a vertical tab, a form feed, U+2028 or U+2029
+# before `def test_a`) and f2's context line were here too until #205: main's two ports read them alike now (PORT_161).
+# Under --strict: two text-seam inputs where only the port's main reads a path claim, which `extract` withholds there.
 GATES_APART_UNDER_THE_OVERLAY_ONLY = {
-    "no --strict": {"path2:f2-a-vertical-tab-is-not-a-line-break", "path2:f2-a-form-feed-is-not-a-line-break",
-                    "path2:f2-a-line-separator-is-not-a-line-break",
-                    "path2:f2-a-paragraph-separator-is-not-a-line-break",
-                    "path2:f2-a-context-line-holding-a-separator-adds-nothing",
-                    "path2:y2-a-changed-test-beside-a-created-bom-test-under-bare-hunks"},
+    "no --strict": {"path2:y2-a-changed-test-beside-a-created-bom-test-under-bare-hunks"},
     "--strict": {"p2a-seam:4242:335", "p2a-seam:4242:487"},
 }
 
@@ -2958,14 +2983,17 @@ XPORT_CASES = [
     # so a `def` that ends its line is read with the name on the next one, where the two ports' \s and \b part: main's
     # Python and port decide the symbol claim apart (the diff side of C(iii)) and agree on FAIL through the tests or
     # count claim, which is false (#101, #121) and withheld in both. The gates then part on the symbol claim alone
+    # #205 (fix/diffgate-205-206): an added line holding U+001F, which only the Python's \s reads, now makes main
+    # abstain on both `def` claims in both ports, so the pair that parted here is read alike (were "VC/CC FAIL/FAIL",
+    # [VERIFIED, `tests`] and [CONTRADICTED, `tests`], PASS/FAIL; and for C1-xl-count VC/CC, PASS/FAIL)
     ("C1-xl-unit-separator", "Adds function foo. Added 0 tests.", D_TEST + D_LINES(["x = 1", "def", "\x1ffoo():"]),
-     [("VERIFIED", None), ("UNCHECKABLE", "tests")], [("CONTRADICTED", None), ("UNCHECKABLE", "tests")], "PASS/FAIL"),
+     [("UNCHECKABLE", None), ("UNCHECKABLE", None)], [("UNCHECKABLE", None), ("UNCHECKABLE", None)], "PASS"),
     ("C1-xl-bom", "Adds function foo. Added 0 tests.", D_TEST + D_LINES(["x = 1", "def", "﻿foo():"]),
      [("CONTRADICTED", None), ("UNCHECKABLE", "tests")], [("VERIFIED", None), ("UNCHECKABLE", "tests")], "FAIL/PASS"),
     ("C1-xl-e-acute", "Adds function foo. Added 0 tests.", D_TEST + D_LINES(["def", "foo\xe9():"]),
      [("CONTRADICTED", None), ("UNCHECKABLE", "tests")], [("VERIFIED", None), ("UNCHECKABLE", "tests")], "FAIL/PASS"),
     ("C1-xl-count", "Adds function foo. 3 files changed.", _mod(".env") + _mod("env") + D_LINES(["def", "\x1ffoo():"]),
-     [("VERIFIED", None), ("UNCHECKABLE", "count")], [("CONTRADICTED", None), ("UNCHECKABLE", "count")], "PASS/FAIL"),
+     [("UNCHECKABLE", None), ("UNCHECKABLE", "count")], [("UNCHECKABLE", None), ("UNCHECKABLE", "count")], "PASS"),
     # B-1: two changed paths that differ outside ASCII but not in case (CJK, Cyrillic, two accented letters): the count
     # is decided as before and the changed test's false verdict (#101) is withheld in both ports
     ("B1-cjk-names", "3 files changed. Added 1 test.", _mod("docs/zh/安装.md") + _mod("docs/zh/配置.md")
@@ -3021,8 +3049,11 @@ XPORT_CASES = [
     ("P9-an-unchanged-def-after-a-paragraph-separator", "Adds function foo.",
      D_LINES(["y = 1", "def foo():"]).replace("-x = 0\n", " x = 1 def foo():\n-y = 0\n"),
      [("UNCHECKABLE", "again")], [("UNCHECKABLE", "again")], "PASS"),
+    # #205 (fix/diffgate-205-206): main abstains on the count in both ports now, an added line holding U+2028, so
+    # the claim never reaches the overlay (it was CONTRADICTED by both mains on two counts, and `split`); the starts
+    # after U+2028 and U+2029 in the counted tests are held by the lockstep since (test_diffgate_path2a_truth.py)
     ("P9-a-test-after-a-line-separator", "Added 0 tests.", D_TEST + D_LINES(["x = 1 def test_new():"]),
-     [("UNCHECKABLE", "split")], [("UNCHECKABLE", "split")], "PASS"),
+     [("UNCHECKABLE", None)], [("UNCHECKABLE", None)], "PASS"),
     # C-2 of the ninth cross-port review (NOTE_path2a_tenth_pass_2026_10_05): ten two-line inputs, each of which tells
     # one single-character slip in ONE port from this head (XPORT_PLANTS below; at c69b161b eleven such edits passed
     # every committed behaviour test). What each rests on: the placeholder form read by code point, not by UTF-16
@@ -3083,8 +3114,8 @@ XPORT_MAIN = {
     "B2-wordish-before-the-verb": "C/CC FAIL/FAIL", "B2-noun-in-the-window": "CC/UC FAIL/FAIL",
     "B3-an-accented-def-elsewhere": "VC/VC FAIL/FAIL", "B3-a-cjk-line-holding-def": "VC/VC FAIL/FAIL",
     "B3-the-claimed-name-runs-on": "CC/VC FAIL/FAIL", "C1-a-unicode-16-case-pair": "?C/?C FAIL/FAIL",
-    "C1-xl-unit-separator": "VC/CC FAIL/FAIL", "C1-xl-bom": "CC/VC FAIL/FAIL", "C1-xl-e-acute": "CC/VC FAIL/FAIL",
-    "C1-xl-count": "VC/CC FAIL/FAIL", "B1-cjk-names": "VC/VC FAIL/FAIL", "B1-cyrillic-names": "VC/VC FAIL/FAIL",
+    "C1-xl-unit-separator": "UU/UU PASS/PASS", "C1-xl-bom": "CC/VC FAIL/FAIL", "C1-xl-e-acute": "CC/VC FAIL/FAIL",
+    "C1-xl-count": "UC/UC FAIL/FAIL", "B1-cjk-names": "VC/VC FAIL/FAIL", "B1-cyrillic-names": "VC/VC FAIL/FAIL",
     "B1-two-accents": "VC/VC FAIL/FAIL", "B1-a-latin-case-pair": "CC/CC FAIL/FAIL", "B2-naive-inputs": "C/C FAIL/FAIL",
     "B2-joses-parser": "C/C FAIL/FAIL", "B2-cjk-word": "C/C FAIL/FAIL", "B2-count-cafe": "C/C FAIL/FAIL",
     "B2-count-thanks": "C/C FAIL/FAIL", "B2-new-button": "C/C FAIL/FAIL", "B2-keycap": "C/C FAIL/FAIL",
@@ -3092,7 +3123,7 @@ XPORT_MAIN = {
     "P9-a-bom-before-the-summary": "CC/CC FAIL/FAIL", "P9-styxx-beside-a-line-separator": "CC/CC FAIL/FAIL",
     "P9-a-removed-def-after-a-line-separator": "V/V PASS/PASS",
     "P9-an-unchanged-def-after-a-paragraph-separator": "V/V PASS/PASS",
-    "P9-a-test-after-a-line-separator": "C/C FAIL/FAIL",
+    "P9-a-test-after-a-line-separator": "U/U PASS/PASS",
     "T1-astral-and-bmp-directories-share-a-placeholder": "V/V PASS/PASS",
     "T2-a-drive-like-name-whose-letter-is-astral": "V/V PASS/PASS", "T3-a-backslash-joins-a-path-run": "V/V PASS/PASS",
     "T4-a-zero-in-a-count-run": "C/C FAIL/FAIL", "T5-a-sentence-ends-at-a-bang": "V/V PASS/PASS",
@@ -3281,7 +3312,7 @@ def _decorated_world_items(seed: int = 20261004, per_family: int = 250) -> list[
 
 
 SETS = {"newer engine": (_newer_engine_items, "--decisions-newer-engine", 250),
-        "line break": (_line_break_items, "--decisions", 400),
+        "line break": (_line_break_items, "--decisions", 300),     # 400 until #205 moved the set (BAR_C)
         "decorated world": (_decorated_world_items, "--decisions", 300)}
 
 
@@ -3308,31 +3339,46 @@ def test_bar_c_on_the_seeded_sets(name, M, tmp_path):
         apart = sum(1 for r in rows if [(x["verdict"], x["why"]) for x in r["a"]["claims"] if x["kind"] == "files_changed_count"]
                     != [(x["verdict"], x["why"]) for x in r["ja"]["claims"] if x["kind"] == "files_changed_count"])
         assert apart > 300, apart
-    if name == "line break":                      # the shape is live: main's two ports decide the symbol claim apart
-        assert counts["lists differ, diff side"] > 100, counts
+    if name == "line break":
+        # #205: what still parts main's two ports on this shape is U+FEFF, the port's \s alone, and a name running on
+        # into a letter outside ASCII (U+00E9, and U+105C0 where the interpreter knows it as a letter), which only the
+        # Python's \b reads as part of the name (#182's neighbourhood); no separator #205 reads alike parts them now
+        by_id = {it["id"]: it["diff"] for it in items}
+        apart = [r["id"] for r in rows if not r.get("raises")
+                 and R.how_lists_differ(r["a"]["claims"], r["ja"]["claims"]) == "diff"]
+        runs_on = re.compile("(?:foo|Foo|helper)([^\x00-\x7f])")
+        assert apart and all(chr(0xFEFF) in by_id[i] or any(m.group(1).isalnum() for m in runs_on.finditer(by_id[i]))
+                             for i in apart), apart
+        assert len(apart) == counts["lists differ, diff side"]
 
 
 # The port's decisions on #161's reproductions where its main alone counts a `def test_` after U+FEFF, a vertical tab, a
 # form feed, U+2028 or U+2029 (P-2 of NOTE_path2a_ninth_pass_2026_10_04). Up to the eighth pass the switch kept the
 # port's false tests CONTRADICTEDs here (#101: a changed test counted as added), and no committed test read the port on
-# these ids. Per id: the Python's gate verdict and decisions, then the port's.
+# these ids. Per id: the Python's gate verdict and decisions, then the port's. #205 (fix/diffgate-205-206): the four f2
+# inputs are read alike by main's two ports now. After a vertical tab, U+2028 or U+2029 main abstains on both tests
+# claims in both ports (the port's main PASSes there, `MAIN_PASSES_SINCE_205`); after a form feed both mains count the
+# changed test, as a space re-indent, and the overlay withholds both claims in both ports (the Python FAILed on its
+# CONTRADICTED before: [VERIFIED, CONTRADICTED] with the old cut).
 PORT_161 = {
     "path2:r1-a-bom-on-a-changed-test-does-not-hide-a-new-one":
         ("FAIL", [("CONTRADICTED", None), ("VERIFIED", None)], "FAIL", [("CONTRADICTED", None), ("UNCHECKABLE", "tests")]),
     "path2:r1-a-bom-on-a-changed-test-beside-two-new-ones":
         ("FAIL", [("CONTRADICTED", None), ("VERIFIED", None)], "FAIL", [("CONTRADICTED", None), ("UNCHECKABLE", "tests")]),
     "path2:f2-a-vertical-tab-is-not-a-line-break":
-        ("FAIL", [("VERIFIED", None), ("CONTRADICTED", None)], "PASS", [("UNCHECKABLE", "tests"), ("UNCHECKABLE", "tests")]),
+        ("PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)], "PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)]),
     "path2:f2-a-form-feed-is-not-a-line-break":
-        ("FAIL", [("VERIFIED", None), ("CONTRADICTED", None)], "PASS", [("UNCHECKABLE", "tests"), ("UNCHECKABLE", "tests")]),
+        ("PASS", [("UNCHECKABLE", "tests"), ("UNCHECKABLE", "tests")], "PASS", [("UNCHECKABLE", "tests"), ("UNCHECKABLE", "tests")]),
     "path2:f2-a-line-separator-is-not-a-line-break":
-        ("FAIL", [("VERIFIED", None), ("CONTRADICTED", None)], "PASS", [("UNCHECKABLE", "tests"), ("UNCHECKABLE", "tests")]),
+        ("PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)], "PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)]),
     "path2:f2-a-paragraph-separator-is-not-a-line-break":
-        ("FAIL", [("VERIFIED", None), ("CONTRADICTED", None)], "PASS", [("UNCHECKABLE", "tests"), ("UNCHECKABLE", "tests")]),
+        ("PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)], "PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)]),
     "path2:y2-a-changed-test-beside-a-created-bom-test-under-bare-hunks":
         ("FAIL", [("UNCHECKABLE", "split"), ("UNCHECKABLE", "tests"), ("CONTRADICTED", None)],
          "PASS", [("UNCHECKABLE", "split"), ("UNCHECKABLE", "tests"), ("UNCHECKABLE", "tests")]),
 }
+MAIN_PASSES_SINCE_205 = {"path2:f2-a-vertical-tab-is-not-a-line-break", "path2:f2-a-line-separator-is-not-a-line-break",
+                         "path2:f2-a-paragraph-separator-is-not-a-line-break"}
 
 
 def test_the_port_withholds_its_own_false_tests_verdicts_on_161s_reproductions(tmp_path):
@@ -3343,7 +3389,7 @@ def test_the_port_withholds_its_own_false_tests_verdicts_on_161s_reproductions(t
         b = N.gate_diff_text(cases[k]["summary"], cases[k]["diff"]).to_dict()
         assert (b["verdict"], [_said(x) for x in b["claims"]]) == (gate, want), k
         assert (js[k]["new"]["verdict"], [_said(x) for x in js[k]["new"]["claims"]]) == (js_gate, js_want), k
-        assert js[k]["main"]["verdict"] == "FAIL", k
+        assert js[k]["main"]["verdict"] == ("PASS" if k in MAIN_PASSES_SINCE_205 else "FAIL"), k
 
 
 # B-2 (NOTE_path2a_sixth_pass_2026_09_30): #161's joint #121 reproductions. V121's count is false too (a submodule

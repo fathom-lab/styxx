@@ -3,8 +3,10 @@
 `main` here is not a vendored copy. It is this checkout's own `styxx/diffgate.py` and `web/gate/diffgate.js` with
 the PATH-2a block cut out and the door hooks reverted -- the reconstruction -- asserted to hash to the reader pinned
 below (origin/main 1cde8b82's, then that file with the demo's CONTRADICTED label, fix/contradicted-not-lie, then that
-file with the record naming its instrument, identity phase 2). Every differential in the PATH-2a tests runs against
-that reconstruction, so the reference cannot drift from the reader the branch actually carries.
+file with the record naming its instrument, identity phase 2, then that file with #205's reading, fix/diffgate-205-206)
+and to the port pinned below (1cde8b82's, then that file with #205's and #206's reading). Every differential in the
+PATH-2a tests runs against that reconstruction, so the reference cannot drift from the reader the branch actually
+carries.
 """
 from __future__ import annotations
 
@@ -31,8 +33,15 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # outside the block again: `to_dict` appends `build` and `runtime` after the eleven content keys, and `_report` prints
 # an `instrument:` line last. No content key moved, so the reconstruction is re-pinned to that file, LF, and every
 # differential here runs against it unedited, with the reader's file given by `module_from` (below).
-MAIN_PY_SHA = "4eb3d6f03f81a0b08153d329ce00a9e5e8cfe5b0952d6e86451b3084bb444130"
-MAIN_JS_SHA = "06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141"
+# 4eb3d6f03f81a0b08153d329ce00a9e5e8cfe5b0952d6e86451b3084bb444130 was that file. fix/diffgate-205-206 changed the
+# reader outside the block on reading paths, unlike the two changes above: #205 cuts every piece of git output at git's
+# line ends (`_git_lines`, four sites, both doors), and the `def` counts and the compatibility reading abstain over a
+# line holding a character of `_READ_APART`. main's port moved with it, which no change since PATH-2a merged had done
+# (06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141 was 1cde8b82's): the same abstention, its two
+# header patterns read as the Python's, and #206's count. So relation (A), the lockstep and bar C run against the new
+# main in both languages, and every figure they pin was measured again on it.
+MAIN_PY_SHA = "cf443499cb2c73272043d4815f9ce054eed8c1a09323d5adaba21fd695302332"
+MAIN_JS_SHA = "31d0376c68b988f505c46e9b1e683bced862e5c5dd2142d4a44a49b4a1726121"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
 _MARK = "=== PATH-2a abstain-only overlay: "
@@ -143,6 +152,23 @@ def main_port_path(tmp: Path) -> Path:
 
 
 # ---- inputs -------------------------------------------------------------------------------------------------------
+
+# The moves files, in the order check_pairs.js and tests/test_port_is_current.py apply them: the overlay's moves of
+# main's pinned claims (PATH-2a), then the pinned claims main's line reading moved (#205, fix/diffgate-205-206).
+MOVES_FILES = ("path2a_moves.json", "issue205_moves.json")
+
+
+def moved_expect(name: str, pair: dict) -> dict:
+    """A pinned pair's expect block with every move of it applied in order, each `from` checked before it applies."""
+    expect = json.loads(json.dumps(pair["expect"]))
+    for f in MOVES_FILES:
+        for m in json.loads((DIFFERENTIAL / f).read_text(encoding="utf-8"))["moves"]:
+            if m["file"] == name and m["id"] == pair["id"]:
+                assert list(expect["claims"][m["claim"]]) == m["from"], f"stale move {m['id']} claim {m['claim']}"
+                expect["claims"][m["claim"]] = m["to"]
+                expect["verdict"] = m["verdict"]
+    return expect
+
 
 def pinned_files() -> list[str]:
     m = re.search(r"for \(const name of \[(.*?)\]", lf(DIFFERENTIAL / "check_pairs.js"), re.S)

@@ -12,7 +12,8 @@ verifier 7.49.0 ships, which loops over its own eleven keys, finds every one of 
 committed v0.2 capsules verify to the same result as under a writer that names nothing (phase 1), and
 charon lines seq 89 and 95 re-derive with no compared key moved; and, where the history is there, the
 content keys byte for byte against origin/main's styxx/diffgate.py on every committed input at both
-doors, with ``_report``'s lines and ``--out``'s bytes unchanged but for the identity.
+doors that #205 does not read anew (the rest are counted; #205 moved them by design), with ``_report``'s lines and
+``--out``'s bytes unchanged but for the identity.
 """
 from __future__ import annotations
 
@@ -355,12 +356,26 @@ def _same(a, b, run) -> str | None:
     return None
 
 
+# #205 (fix/diffgate-205-206) moved the reading of a diff holding one of these, by design: the Python cut git output at
+# them with str.splitlines() and now cuts it at git's line ends, and the `def` counts and the compatibility reading
+# abstain over a line holding one of them but U+000C. #206 moved a declared count written outside ASCII, which this
+# comparison cannot see: the parent's file is built in this checkout's package, so it reads this styxx.declare.
+_MOVED_BY_205 = re.compile("[\x0b\x0c\x1c-\x1f\x85\u2028\u2029]")
+LEFT_OUT_BY_205 = 592     # raw-door inputs of R.inputs() (6,672); no git-door fixture with a listing holds one
+
+
 def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(parent, monkeypatch):
     """The pinned pairs, the regenerated 3,000-pair fuzz corpus, the PATH-2a reproductions with their seeded fuzz and
     text-seam sets, at the raw door in both strict modes; and every PATH-2a fixture that carries its own
-    --name-status at the git door, in both strict modes."""
-    bad, runs = [], 0
+    --name-status at the git door, in both strict modes. Identity phase 2's guarantee was every committed input; since
+    #205 it is every one whose diff (and listing) holds none of the characters #205 reads anew (`_MOVED_BY_205`), and
+    the inputs left out are counted, so the scope cannot widen unseen. tests/test_diffgate_issue205_206.py holds what
+    #205 moved on the rest."""
+    bad, runs, left_out = [], 0, 0
     for row in R.inputs():
+        if _MOVED_BY_205.search(row[3] or ""):
+            left_out += 1
+            continue
         for strict in (False, True):
             why = _same(parent, N, lambda m, s=row[2], d=row[3], k=strict: m.gate_diff_text(s, d, strict=k))
             runs += 1
@@ -370,6 +385,9 @@ def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(par
     for name in ("path2a_repros.json", "path2a_pass5_repros.json", "path2a_pass6_repros.json"):
         for c in json.loads((FIXTURES / name).read_text(encoding="utf-8"))["cases"]:
             if not c.get("name_status"):
+                continue
+            if _MOVED_BY_205.search(c["diff"] + c["name_status"]):
+                left_out += 1
                 continue
             fake = R.fake_git(c["name_status"], c["diff"])
             monkeypatch.setattr(parent, "_git", fake)
@@ -381,7 +399,8 @@ def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(par
                 if why:
                     bad.append((name, c["id"], strict, why))
     assert bad == [], bad[:5]
-    assert runs > 13000 and git_runs > 200, (runs, git_runs)
+    assert runs > 12000 and git_runs > 200, (runs, git_runs)       # 13,344 runs before #205 left 592 inputs out
+    assert left_out == LEFT_OUT_BY_205, left_out
 
 
 def test_report_and_out_are_the_parents_but_for_the_identity(parent, tmp_path):

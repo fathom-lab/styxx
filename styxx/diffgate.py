@@ -379,6 +379,35 @@ _COMPAT_MAX_NAMED = 5
 _DIFF_GIT = re.compile(r'^diff --git (?:"a/(?P<qa>(?:[^"\\]|\\.)*)"|a/(?P<a>.*?)) (?:"b/(?P<qb>(?:[^"\\]|\\.)*)"|b/(?P<b>.*))$')
 _BINARY_LINE = re.compile(r"^Binary files (?P<a>.+?) and (?P<b>.+?) differ$")
 
+# #205. Git ends a diff line at LF only: a form feed, U+000B, U+001C-U+001E, U+0085, U+2028 and U+2029 are content.
+# str.splitlines() also breaks at each of them, so a line `+<FF>def test_a():` was cut in two and its definition
+# dropped. Every piece of git output is now cut here, where the port's _splitlines cuts it: CRLF, a lone CR (both ports
+# cut there; git does not, and that one is #176's) and LF. On a text holding none of the characters above this is
+# str.splitlines() exactly, a trailing break and "" included.
+_GIT_LINE_END = re.compile("\r\n|\r|\n")
+
+
+def _git_lines(text: str) -> list:
+    out = _GIT_LINE_END.split(text)
+    if out and out[-1] == "":
+        out.pop()
+    return out
+
+
+# #205. Once a line is whole, these characters still part the readers: CPython refuses each of them in source outside
+# a string or a comment; the Python's and the port's `\s` (U+001C-U+001F, U+0085), `^` and `.` (U+2028, U+2029) read
+# all of them but U+000B apart, and on U+000B both read an indentation CPython refuses. U+001F is no str.splitlines()
+# break, but a form feed before it used to hide it. A count of `def` lines over a line that holds one abstains, in both
+# ports, naming the character (`_read_apart`). U+FEFF is left out: the cut does not change how either reader reads it,
+# and it heads line one of every file saved with a byte-order mark.
+_READ_APART = re.compile("[\x0b\x1c-\x1f\x85\u2028\u2029]")
+
+
+def _read_apart(text: str) -> str | None:
+    """`U+XXXX` for the leftmost character of _READ_APART in `text`, or None when it holds none (#205)."""
+    m = _READ_APART.search(text)
+    return None if m is None else f"U+{ord(m.group()):04X}"
+
 
 def _header_paths(line: str) -> tuple[str, str]:
     """`diff --git a/X b/Y` -> (X, Y). Same-name headers split at the middle; the rest by regex."""
@@ -442,7 +471,7 @@ def parse_unified_diff_sides(diff_text: str) -> dict:
         if pending is not None and pending.path():
             sides.setdefault(pending.path(), ([], []))
 
-    for line in diff_text.splitlines():
+    for line in _git_lines(diff_text):                  # #205: git's line ends, not str.splitlines()
         if line.startswith("diff --git "):
             flush()
             pending = _Pending(line)
@@ -548,6 +577,14 @@ def _compat_reading(sides: dict | None) -> tuple[str, str, dict]:
     if not langs:
         return ("UNCHECKABLE", "compatibility claimed; no language this reading covers in the diff "
                                "(python, js/ts, go, rust, java)", dict(empty))
+    # #205: a changed line holding a character the two readers read apart (files in order, each file's added lines
+    # then its removed lines) leaves no definition read; the verdict was UNCHECKABLE already, only the reason moves.
+    for added, removed in sides.values():
+        for line in added + removed:
+            apart = _read_apart(line)
+            if apart:
+                return ("UNCHECKABLE", f"compatibility claimed; a changed line holds {apart}, which the Python and "
+                                       f"JavaScript readers read apart, so no definition was read (#205)", dict(empty))
     sig = f"; {len(changed)} signature(s) changed" if changed else ""
     detail = {"removed": [{"path": p, "language": l, "name": n, "surface": sf} for p, l, n, sf in dropped],
               "languages": langs,
@@ -1038,7 +1075,7 @@ def parse_unified_diff(diff_text: str) -> tuple[dict[str, str], str]:
         if pending is not None and pending.path() and pending.path() not in status:
             status[pending.path()] = pending.status
 
-    for line in diff_text.splitlines():
+    for line in _git_lines(diff_text):                  # #205: git's line ends, not str.splitlines()
         if line.startswith("diff --git "):
             flush()
             pending = _Pending(line)
@@ -1105,13 +1142,13 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
     repo = Path(repo)
     name_status = _git(repo, "diff", "--name-status", f"{base}..{head}")
     status: dict[str, str] = {}
-    for line in name_status.splitlines():
+    for line in _git_lines(name_status):                # #205: a path may hold U+0085, U+2028, U+2029 raw
         parts = line.split("\t")
         if len(parts) >= 2:
             st, path = parts[0][:1], parts[-1]
             status[_norm(path)] = st            # A / M / D / R
     diff_text = _git(repo, "diff", f"{base}..{head}")
-    added_lines = [l[1:] for l in diff_text.splitlines()
+    added_lines = [l[1:] for l in _git_lines(diff_text)          # #205
                    if l.startswith("+") and not l.startswith("+++")]
     added_blob = "\n".join(added_lines)
     g = _gate(summary_text, status, added_blob, run=run, strict=strict,
@@ -1227,6 +1264,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 evidence=evidence, commit=commit, run=run, repo=repo))
         return _tp[0]
 
+    # #205: the `def` counts below abstain over an added line holding a character the two readers read apart. Read
+    # once per call; the DECLARE-1 pass gets the same added lines, so a declared count and a prose one abstain alike.
+    apart = _read_apart(added_blob)
+    apart_why = (f"an added line holds {apart}, which CPython refuses in source and the Python and JavaScript readers "
+                 f"read apart; this template counts `def` lines (#205)") if apart else None
     claims: list[DiffClaim] = []
     sentences = re.split(r"(?<=[.!?])\s+|\n+", summary_text)
     covered = set()
@@ -1291,6 +1333,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         c.verdict = "UNCHECKABLE"           # BC-1 repair 1
                         c.why = ("no Python file in the diff; this template counts "
                                  "`def` lines (#110)")
+                    elif apart_why:
+                        c.verdict, c.why = "UNCHECKABLE", apart_why  # #205
                     else:
                         got = len(re.findall(r"^\s*def test_", added_blob, re.M))
                         if got == n:
@@ -1311,6 +1355,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         c.verdict = "UNCHECKABLE"           # BC-1 repair 1
                         c.why = ("no Python file in the diff; this template counts "
                                  "`def` lines (#110)")
+                    elif apart_why:
+                        c.verdict, c.why = "UNCHECKABLE", apart_why  # #205
                     else:
                         pat = (r"^\s*(?:def|class)\s+" + re.escape(d["name"]) + r"\b")
                         hit = bool(re.search(pat, added_blob, re.M))
@@ -1450,9 +1496,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
 # function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
 # the block's own slotted classes, so nothing of main's is reachable from it as data.
-# Everything outside this block is main's reader (sha256 4eb3d6f0..., LF: 68873068..., which is 1cde8b82's
+# Everything outside this block is main's reader (sha256 cf443499..., LF: 4eb3d6f0..., which is 1cde8b82's
 # 9b620e00... with the demo's CONTRADICTED label, fix/contradicted-not-lie, plus the record naming its instrument,
-# identity phase 2), unchanged; the two doors call
+# identity phase 2; then #205, fix/diffgate-205-206, moved reading paths: every piece of git output is cut at git's
+# line ends, and the `def` counts and the compatibility reading abstain over a line the two readers read apart),
+# unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
 # where #97, #121 or #101 can have made it wrong:
@@ -1507,13 +1555,14 @@ _P2A_WORDISH = ("\x80-\x84\x86-\x9f\xaa\xad\xb2\xb3\xb5\xb9\xba\xbc-\xbe\xc0-\xd
                 "\u27c0-\u2aff\u2b74\u2b75\u2b96\u2c00-\u2fff\u3005-\u3007\u3021-\u302f\u3031-\u3035\u3038-\u303c"
                 "\u3040-\ufe0d\ufe1a-\ufe2f\ufe33\ufe34\ufe4d-\ufe4f\ufe53\ufe67\ufe6c-\ufefe\uff00\uff10-\uff19"
                 "\uff21-\uff3a\uff3f\uff41-\uff5a\uff66-\U0010ffff")
-_P2A_OWN = 0                    # this port's main reads line view 0 (CPython's breaks) with CPython's \s
+# This port's main reads line view 0 with CPython's \s. Since #205 view 0 is the diff cut at git's line ends
+# (_P2A_COARSE, main's _git_lines), as view 1 is: until then it was cut at CPython's str.splitlines() breaks.
+_P2A_OWN = 0
 _P2A_HEADERS = ("diff --git ", "--- ", "+++ ", "rename from ", "rename to ", "new file mode",
                 "deleted file mode", "Binary files ")
-_P2A_FINE = re.compile("\r\n|[" + _P2A_PY_BREAKS + "]")
-_P2A_COARSE = re.compile("\r\n|\r|\n")
+_P2A_FINE = re.compile("\r\n|[" + _P2A_PY_BREAKS + "]")     # str.splitlines(): read by _p2a_divergent only, since #205
+_P2A_COARSE = re.compile("\r\n|\r|\n")                      # both mains' line cut, since #205; tests pin it to main's
 _P2A_CR = re.compile("\r")
-_P2A_FINE_ONLY = re.compile("[\x0b\x0c\x1c\x1d\x1e\x85\u2028\u2029]")     # where the two splits above can part
 _P2A_COUNT_HEAD = re.compile("diff changes ([0-9]+) files, claim says ")
 _P2A_TESTS_HEAD = re.compile("diff adds ([0-9]+) test functions, claim says ")
 _P2A_DIGITS = re.compile("[0-9]+")
@@ -1670,9 +1719,9 @@ def _p2a_lines(text: str, rx) -> list:
 
 def _p2a_regs_raw(lines: list) -> list:
     """(path as written, status, via) wherever parse_unified_diff hands a path to _norm, in its order: its loop
-    line for line (`lines`, the diff split at CPython's line breaks), `status[_norm(x)] = st` read as an append; via
-    '+' assigns, 'p' (a BIN-1 flush) registers only a key not yet held. A flush is kept even where its key is already
-    registered."""
+    line for line (`lines`, the diff cut where main's _git_lines cuts it, #205), `status[_norm(x)] = st` read as an
+    append; via '+' assigns, 'p' (a BIN-1 flush) registers only a key not yet held. A flush is kept even where its key
+    is already registered."""
     regs: list = []
     old_path = None
     pending = None
@@ -1708,7 +1757,7 @@ def _p2a_regs_raw(lines: list) -> list:
 
 def _p2a_regs_git(name_status: str) -> list:
     regs = []
-    for line in _p2a_lines(name_status, _P2A_FINE):
+    for line in _p2a_lines(name_status, _P2A_COARSE):     # as main's gate_diff cuts it (#205)
         parts = line.split("\t")
         if len(parts) >= 2:
             regs.append((parts[-1], parts[0][:1], "+"))
@@ -1720,16 +1769,18 @@ def _p2a_view(lines: list) -> tuple:
             [x[1:] for x in lines if x.startswith("-") and not x.startswith("---")])
 
 
-def _p2a_views(diff_text: str, fine: list) -> list:
-    """[(added, removed)] under CPython's line breaks (`fine`, the diff split at them) and under the port's; each
-    port's main reads one. Where the text holds no break only CPython's split reads, the two are one object."""
-    v0 = _p2a_view(fine)
-    if not _P2A_FINE_ONLY.search(diff_text):
-        return [v0, v0]
-    return [v0, _p2a_view(_p2a_lines(diff_text, _P2A_COARSE))]
+def _p2a_views(lines: list) -> list:
+    """[(added, removed)] of line view 0 (the Python's main) and line view 1 (the port's main). Since #205 both mains
+    cut the diff at git's line ends (`lines`), so the two views are one object; what still parts the two mains' counts
+    is their white space and the port's `^` after U+2028 and U+2029 (_p2a_pairing)."""
+    v = _p2a_view(lines)
+    return [v, v]
 
 
 def _p2a_divergent(diff_text: str) -> bool:
+    # Unchanged by #205. A header line holding one of these is still read apart (str.strip() against trim()). A piece
+    # CPython's breaks would cut out of a line is read by no main since #205, and git never writes one that starts a
+    # header; it is kept as caution, and withholds on that raw-door text only.
     if not _P2A_DIV_RX.search(diff_text):
         return False
     for line in _p2a_lines(diff_text, _P2A_COARSE):
@@ -2003,17 +2054,18 @@ def _p2a_sites(line: str, word: str) -> list:
     return out
 
 
-def _p2a_counted(line: str, lead) -> list:
+def _p2a_counted(line: str, lead, seg: bool = False) -> list:
     """The ASCII name runs at the `def test_` sites of one added line that a main's count of `def test_` after
     white space reads, where `lead` matches a run of that main's white space: a site counts when, from the line
-    start or the last U+2028 / U+2029 before it (where the port's `^` also matches), only that run precedes it.
-    Line view 0 holds no U+2028 or U+2029, so for CPython's count only the line start is read. A site counts exactly
+    start, or with `seg` (the port's count, whose `^` also matches there) from the last U+2028 / U+2029 before it,
+    only that run precedes it. CPython's `^` under re.M matches at the line start only, and since #205 line view 0 is
+    cut where git cuts and may hold U+2028 or U+2029, so the Python's count is read without `seg`. A site counts exactly
     where a segment's leading run ends (`d` is no white space), and a start inside a run already read reaches the same
     end, so each segment is read once, never each `def test_` of the line (NOTE_path2a_fourth_pass_2026_09_30, A-2)."""
     if "def test_" not in line:
         return []
     starts = [0]
-    if "\u2028" in line or "\u2029" in line:
+    if seg and ("\u2028" in line or "\u2029" in line):
         starts += [m.end() for m in _P2A_SEG.finditer(line)]
     out = []
     last = -1
@@ -2061,22 +2113,23 @@ def _p2a_test_defs(groups: list, nfkc: bool = True) -> tuple:
 
 
 def _p2a_pairing(views: list, alike: bool = False, extra: list = (), unchanged: list = ()) -> list:
-    """Per line view v (0: CPython's line breaks and white space, as main reads the added lines here; 1: the port's),
-    (the number of `def test_` sites that view's main counts, how many of them name a test a removed line may define
-    after `def`, how many name a test a removed or an unchanged line may define). A name read through NFKC (a code point
-    from 0x80 up in it or before it) pairs with every name: a defined one with every counted site, a counted one with
-    every defined test (NOTE_path2a_fifth_pass_2026_09_30, B-2). `extra`: the removed lines no view reads (B-1).
-    `unchanged`: the unchanged lines of each view and those no view reads (NOTE_path2a_sixth_pass_2026_09_30, B-1: a
-    test defined again beside its own unchanged definition is counted by main and is not an added test). `alike`: the
-    two views are one object and the text holds no character where the two mains' white space parts (U+001F, U+FEFF;
-    the others are line breaks of view 0), so both views count alike."""
+    """Per line view v (0: the Python's main, CPython's white space and `^`; 1: the port's: its white space, and its `^`
+    after U+2028 and U+2029 too), (the number of `def test_` sites that view's main counts, how many of them name a
+    test a removed line may define after `def`, how many name a test a removed or an unchanged line may define). A
+    name read through NFKC (a code point from 0x80 up in it or before it) pairs with every name: a defined one with
+    every counted site, a counted one with every defined test (NOTE_path2a_fifth_pass_2026_09_30, B-2). `extra`: the
+    removed lines no view reads (B-1). `unchanged`: the unchanged lines of each view and those no view reads
+    (NOTE_path2a_sixth_pass_2026_09_30, B-1: a test defined again beside its own unchanged definition is counted by
+    main and is not an added test). `alike`: the two views are one object and the text holds no character where the
+    two mains' white space parts (U+001C to U+001F, U+0085, U+FEFF) and no U+2028 or U+2029, where only the port's
+    `^` matches (#205: the views are one cut since then), so both views count alike."""
     rem, wild = _p2a_test_defs(_p2a_removed(views, extra))
     ctx, _nfkc = _p2a_test_defs([unchanged], False)
     out = []
-    for (added, _r), lead in zip(_p2a_distinct(views) if alike else views, _P2A_LEADS):
+    for v, ((added, _r), lead) in enumerate(zip(_p2a_distinct(views) if alike else views, _P2A_LEADS)):
         got = paired = based = 0
         for line in added:
-            for x in _p2a_counted(line, lead):
+            for x in _p2a_counted(line, lead, v == 1):
                 got += 1
                 p = wild or (bool(rem) if x is None else x in rem)
                 paired += p
@@ -2089,13 +2142,10 @@ def _p2a_distinct(views: list) -> list:
     return views[:1] if views[0] is views[1] else views
 
 
-def _p2a_context(diff_text: str, fine: list) -> list:
-    """The unchanged lines (git lines starting with ' ') of each distinct line view, without the ' '
-    (NOTE_path2a_sixth_pass_2026_09_30, B-1)."""
-    out = [x[1:] for x in fine if x.startswith(" ")]
-    if not _P2A_FINE_ONLY.search(diff_text):
-        return out
-    return out + [x[1:] for x in _p2a_lines(diff_text, _P2A_COARSE) if x.startswith(" ")]
+def _p2a_context(lines: list) -> list:
+    """The unchanged lines (git lines starting with ' ') of the line view, without the ' '
+    (NOTE_path2a_sixth_pass_2026_09_30, B-1); one view since #205."""
+    return [x[1:] for x in lines if x.startswith(" ")]
 
 
 def _p2a_joined(diff_text: str, side: str = "-") -> list:
@@ -2105,7 +2155,8 @@ def _p2a_joined(diff_text: str, side: str = "-") -> list:
     git lines starting with '-' or ' ', in order, '+' and '\\' lines passed over, any other line ending the run) joined
     where a piece ends in a backslash, which CPython reads as one line, each such backslash read as a space, when a
     piece of the run is removed. The tokenizer ends a line at LF, CRLF and a lone CR only; at any other break
-    `str.splitlines` knows, the line does not parse, and the line views read those already. Linear in the diff.
+    `str.splitlines` knows, the line does not parse, and the line views read it whole (since #205 neither view cuts
+    there). Linear in the diff.
     With `side` ' ', the unchanged text no view reads the same way (NOTE_path2a_sixth_pass_2026_09_30, B-1): the pieces
     after a lone CR in lines starting with ' ', and the joined runs no piece of which is removed."""
     out = []
@@ -2348,16 +2399,17 @@ class _P2aFacts:
             self._m[k] = make()
         return self._m[k]
 
-    def fine(self) -> list:
-        return self._get("fine", lambda: _p2a_lines(self.diff_text, _P2A_FINE))
+    def lines(self) -> list:
+        """The diff cut where main cuts it, at git's line ends (#205)."""
+        return self._get("lines", lambda: _p2a_lines(self.diff_text, _P2A_COARSE))
 
     def regs(self) -> list:
         if self.name_status is not None:
             return self._get("regs", lambda: _p2a_regs_git(self.name_status))
-        return self._get("regs", lambda: _p2a_regs_raw(self.fine()))
+        return self._get("regs", lambda: _p2a_regs_raw(self.lines()))
 
     def views(self) -> list:
-        return self._get("views", lambda: _p2a_views(self.diff_text, self.fine()))
+        return self._get("views", lambda: _p2a_views(self.lines()))
 
     def divergent(self) -> bool:
         return self.name_status is None and self._get("div", lambda: _p2a_divergent(self.diff_text))
@@ -2459,12 +2511,13 @@ class _P2aFacts:
 
     def unchanged(self) -> list:
         """The unchanged lines of each view, and those no view reads (NOTE_path2a_sixth_pass_2026_09_30, B-1)."""
-        return self._get("unchanged", lambda: _p2a_context(self.diff_text, self.fine())
+        return self._get("unchanged", lambda: _p2a_context(self.lines())
                          + _p2a_joined(self.diff_text, " "))
 
     def pairing(self) -> tuple:
         return self._get("pairing", lambda: _p2a_pairing(self.views(), self.views()[0] is self.views()[1]
-                                                         and not _P2A_LEAD_APART.search(self.diff_text),
+                                                         and not _P2A_LEAD_APART.search(self.diff_text)
+                                                         and not _P2A_SEG.search(self.diff_text),   # #205
                                                          self.joined(), self.unchanged()))
 
     def tokens(self, kind: str, words) -> frozenset:
@@ -2940,7 +2993,7 @@ _P2A_ATTRS_OK = frozenset({
     "add", "append", "pop", "get", "items", "values", "setdefault",
     "compile", "match", "fullmatch", "search", "finditer", "sub", "group", "start", "end", "join",
     "verdict", "why", "kind", "detail", "claims", "a", "b", "status", "note",
-    "diff_text", "name_status", "summary", "_m", "_get", "fine", "regs", "views", "divergent", "space", "odd",
+    "diff_text", "name_status", "summary", "_m", "_get", "lines", "regs", "views", "divergent", "space", "odd",
     "count", "pairing", "defines", "runs", "zones", "zone_text", "scope",
     "order", "groups", "prime", "ends", "automaton", "joined", "seam", "unchanged", "tokens", "occurs",
     "redefines"})
