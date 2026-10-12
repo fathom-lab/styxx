@@ -201,11 +201,19 @@ def test_wikitext_line_normalisation_and_split():
 
 
 def test_split_orders_are_disjoint_and_seeded():
-    main, pilot = R.split_orders(10000, reserve=1000)
-    assert len(main) == 9000 and len(pilot) == 1000
-    assert not set(main.tolist()) & set(pilot.tolist())
-    main2, pilot2 = R.split_orders(10000, reserve=1000)
-    assert main.tolist() == main2.tolist() and pilot.tolist() == pilot2.tolist()
+    main, smoke, pilot = R.split_orders(10000, reserve=1000, smoke_reserve=500)
+    assert len(main) == 8500 and len(smoke) == 500 and len(pilot) == 1000
+    sets = [set(x.tolist()) for x in (main, smoke, pilot)]
+    for a, b in itertools.combinations(sets, 2):
+        assert not a & b
+    assert sets[0] | sets[1] | sets[2] == set(range(10000))
+    main2, smoke2, pilot2 = R.split_orders(10000, reserve=1000, smoke_reserve=500)
+    assert main.tolist() == main2.tolist() and smoke.tolist() == smoke2.tolist() and pilot.tolist() == pilot2.tolist()
+    # the smoke and pilot slices are reshuffled by their own seeds, so a different seed gives a different order of the same set
+    _, smoke3, _ = R.split_orders(10000, reserve=1000, smoke_reserve=500, seed_smoke=R.SEED_SMOKE + 1)
+    assert set(smoke3.tolist()) == sets[1] and smoke3.tolist() != smoke.tolist()
+    with pytest.raises(R.Refusal):
+        R.split_orders(R.PILOT_RESERVE + R.SMOKE_RESERVE)
 
 
 # -- prompts ---------------------------------------------------------------------------------------------
@@ -246,7 +254,12 @@ def test_candidate_codes_equal_length_and_pools_disjoint():
     sets = {k: set(v) for k, v in pools.items()}
     for a, b in itertools.combinations(sets, 2):
         assert not sets[a] & sets[b]
+    assert set(pools) == {"main_exemplar", "pilot_exemplar", "pilot_test", "smoke_exemplar", "smoke_test", "main_test"}
     assert len(pools["main_exemplar"]) == 12 and len(pools["pilot_exemplar"]) == 12 and len(pools["pilot_test"]) == 60
+    assert len(pools["smoke_exemplar"]) == 12 and len(pools["smoke_test"]) == 60
+    assert sum(len(v) for v in pools.values()) == 9000
+    with pytest.raises(R.Refusal):
+        R.prepare_items(tok, 24, (16,), 1, "scratch", fmts=("yes_no",), sentences=make_sentences(8000))
 
 
 def test_exemplar_text_formats():
@@ -394,18 +407,23 @@ def test_budget_extrapolation():
     assert d16["batch_size"] == 16 and d16["batches_per_pass"] == 38
     assert d16["seconds"] == pytest.approx(0.2 * 4 * 38 * 3, abs=0.2)          # main + ablated + windowed at D0
     t["M1"] = {16: {"L": 230, "s_per_batch": {"compare": 2.0, "recall": 2.0}},
-               1024: {"L": 1250, "s_per_batch": {"compare": 30.0, "recall": 30.0}}}
+               1024: {"L": 1250, "s_per_batch": {"compare": 8.0, "recall": 8.0}}}
     b = R.extrapolate_budget(t)
-    assert b["arms_untimed"] == [] and b["exceeds_budget"] and b["verdict"] == "INVALID__budget"
-    assert b["per_arm"]["M1"]["by_distance"]["1024"]["batch_size"] == R.batch_size_for("M1", 1250)
+    assert b["arms_untimed"] == [] and not b["exceeds_budget"] and b["verdict"] == "OK"
+    d1024 = b["per_arm"]["M1"]["by_distance"]["1024"]
+    assert d1024["batch_size"] == R.batch_size_for("M1", 1250) == 16 and d1024["batches_per_pass"] == 38
+    assert d1024["seconds"] == pytest.approx(8.0 * 4 * 38 * 2, abs=0.2)        # main + ablated at D1, no windowed for M1
+    t["M1"][1024]["s_per_batch"] = {"compare": 60.0, "recall": 60.0}
+    b = R.extrapolate_budget(t)
+    assert b["exceeds_budget"] and b["verdict"] == "INVALID__budget" and b["total_hours_timed_arms"] > 4.0
     with pytest.raises(R.Refusal):
         R.extrapolate_budget({"T": {16: t["T"][16]}})
 
 
 def test_batch_size_bounds():
     assert R.batch_size_for("T", 1250) == 16
-    assert 1 <= R.batch_size_for("M1", 1250) <= 16
-    assert R.batch_size_for("M1", 1250) * 1250 <= R.BATCH_TOKENS_M1
+    assert R.batch_size_for("M1", 1250) == 16 == R.BATCH_MAX           # PREREG section 4: batches of 16 for both arms
+    assert R.SCAN_CHUNK_TOKENS // R.BATCH_MAX >= 1                      # the chunk of L the scan materialises at B = 16
     assert R.batch_size_for("M1", 10) == 16
 
 
@@ -436,7 +454,9 @@ def test_base_receipt_has_the_prereg_layout():
     assert res["exploratory"]["status"] == "M3_NOT_RUN"
     assert res["config"]["screen_bar"] == 0.40 and res["config"]["n_per_cell"] == 600
     assert res["config"]["seeds"] == {"items": 20261011, "pilot": 1011, "bootstrap": 20261011}
+    assert R.SEED_SMOKE not in (R.SEED_ITEMS, R.SEED_PILOT)
     assert set(res["controls"]) == {"ablated", "windowed"}
+    assert res["config"]["scan_chunk_tokens_M1"] == R.SCAN_CHUNK_TOKENS and res["config"]["batch_max"] == 16
 
 
 def test_the_lab_never_prints_these_words():
@@ -498,18 +518,62 @@ def test_neox_tokenizer_on_the_real_wikitext_pool_when_cached():
     if R.snapshot_dir("wikitext", kind="datasets") is None:
         pytest.skip("wikitext-103-raw-v1 is not cached here")
     pytest.importorskip("pyarrow")
-    sents, prov = R.read_wikitext_sentences(cap=6000)
-    assert prov["eligible_sentences"] == 6000 and len(prov["sha256"]) == 2
+    sents, prov = R.read_wikitext_sentences(cap=10000)
+    assert prov["eligible_sentences"] == 10000 and len(prov["sha256"]) == 2
     assert all(R.eligible_sentence(s) for s in sents)
     prep = R.prepare_items(toks["T"], 24, (16, 1024), R.SEED_ITEMS, "main", fmts=("yes_no",), sentences=sents)
     red = R.tokenizer_level_asserts(prep, toks, "yes_no")
     assert red["code_token_length"] == 2 and red["prompts"]["max_prompt_tokens"] <= R.MAX_PROMPT_TOKENS
     assert red["balance_by_distance"]["16"]["label_true"] == 12
+    smoke = R.prepare_items(toks["T"], 24, (16, 1024), R.SEED_SMOKE, "smoke", fmts=("yes_no",), sentences=sents)
     pilot = R.prepare_items(toks["T"], 24, (16,), R.SEED_PILOT, "pilot", fmts=("yes_no", "true_false"), sentences=sents)
-    assert not set(pilot["pool"].used) & set(prep["pool"].used)
-    main_codes = {c for items in prep["cells"].values() for it in items for c in it["codes"]} | {c for e in prep["exemplars"] for c in e["codes"]}
-    pilot_codes = {c for items in pilot["cells"].values() for it in items for c in it["codes"]} | {c for e in pilot["exemplars"] for c in e["codes"]}
-    assert not main_codes & pilot_codes
+    used = {k: set(p["pool"].used) for k, p in (("main", prep), ("smoke", smoke), ("pilot", pilot))}
+    for a, b in itertools.combinations(used, 2):
+        assert not used[a] & used[b], (a, b)
+    # the main run's reuse assert, fed the smoke's and the pilot's sentences, passes on disjoint pools and refuses on overlap
+    R.assert_fillers(prep["cells"], prep["exemplars"], used["smoke"] | used["pilot"])
+    with pytest.raises(R.Refusal, match="smoke/pilot"):
+        R.assert_fillers(prep["cells"], prep["exemplars"], {next(iter(used["main"]))})
+
+    def codes_of(p):
+        return {c for items in p["cells"].values() for it in items for c in it["codes"]} | {c for e in p["exemplars"] for c in e["codes"]}
+    cs = {k: codes_of(p) for k, p in (("main", prep), ("smoke", smoke), ("pilot", pilot))}
+    for a, b in itertools.combinations(cs, 2):
+        assert not cs[a] & cs[b], (a, b)
+    assert smoke["sentence_region"]["which"] == "smoke" and smoke["sentence_region"]["seed"] == R.SEED_SMOKE
+
+
+# -- the chunked scan against transformers' own slow_forward, on a tiny random mixer (CPU, no checkpoint) ---
+
+def test_chunked_scan_equals_reference_slow_forward_on_a_random_mixer():
+    torch = pytest.importorskip("torch")
+    pytest.importorskip("transformers")
+    from transformers.models.mamba import modeling_mamba as mm
+    from transformers import MambaConfig
+    cfg = MambaConfig(hidden_size=24, intermediate_size=48, state_size=16, conv_kernel=4, time_step_rank=4, num_hidden_layers=1, vocab_size=64)
+    torch.manual_seed(0)
+    mixer = mm.MambaMixer(cfg, layer_idx=0).eval()
+    ref = mm.MambaMixer.slow_forward                       # the reference, before any install
+    old_chunk = R.SCAN_CHUNK_TOKENS
+    try:
+        info = R.install_chunked_scan()
+        assert info["installed"] and mm.MambaMixer.slow_forward is R.chunked_slow_forward
+        for B, L, chunk_tokens in ((1, 37, 8), (3, 37, 8), (2, 5, 1024), (4, 64, 4)):
+            R.SCAN_CHUNK_TOKENS = chunk_tokens             # several chunks per sequence, a single chunk, one token per chunk
+            x = torch.randn(B, L, cfg.hidden_size)
+            with torch.no_grad():
+                y_ref = ref(mixer, x)
+                y_new = R.chunked_slow_forward(mixer, x)
+                y_mod = mixer(x)                           # the module's forward now routes through the installed copy
+            assert y_ref.shape == y_new.shape == (B, L, cfg.hidden_size)
+            assert float((y_ref - y_new).abs().max()) <= 1e-6, (B, L, chunk_tokens)
+            assert float((y_ref - y_mod).abs().max()) <= 1e-6
+        # the original is kept and anything with a cache goes to it
+        assert R._ORIG_SLOW_FORWARD is ref
+    finally:
+        R.SCAN_CHUNK_TOKENS = old_chunk
+        mm.MambaMixer.slow_forward = ref
+        R._ORIG_SLOW_FORWARD = None
 
 
 # -- optional: the Mamba code path on CPU with the cached 130m checkpoint (opt in; never on cuda) ----------
@@ -524,12 +588,16 @@ def test_mamba_code_path_on_cpu_with_130m():
     os.environ["HF_HUB_OFFLINE"] = "1"
     os.environ["CUDA_VISIBLE_DEVICES"] = ""
     tok = R.load_tokenizer("state-spaces/mamba-130m-hf")
+    cs = R.install_chunked_scan()
+    assert cs["installed"] and not cs["transformers_fast_path_available"]
     model, info = R.load_arm_cpu_fp32("state-spaces/mamba-130m-hf")
     assert next(model.parameters()).device.type == "cpu" and info["from_local_snapshot"]
     a = R.assert_mamba_A(model)
     assert a["ok"] and a["layers"] == 24 and a["max_A"] < 0
     cells, exemplars, _, codes_len = make_cells(tok, 24, (16,), n_sent=2000)
     items = cells[16]
+    ce = R.check_chunked_scan_equivalence(model, tok, items[0], exemplars, "yes_no")
+    assert ce["max_abs_logit_diff"] <= 1e-5 and ce["chunks"] >= 1, ce
     rp = R.check_right_padding("M1", model, tok, items, exemplars, "yes_no")
     assert rp["max_abs_logit_diff"] <= R.FP32_TOL, rp
     ans = R.answer_token_ids(tok, "yes_no")
