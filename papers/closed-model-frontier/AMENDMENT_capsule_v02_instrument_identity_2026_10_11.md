@@ -206,3 +206,17 @@ record names, in this order:
 - `the record names no build, only the runtime <implementation> <version>`, otherwise.
 
 The payload's unsealed pin is never the SKEW line's hint.
+
+## ERRATUM — 2026-10-12, later the same day: rule 4 above holds for the SKEW line, not for the capsule
+
+The sections above are not edited. Rule 4 of the erratum above ends "charon reads the capsule as not
+reproduced". That holds only when no other problem of the capsule holds what charon reads as a broken
+binding, and rule 6 names the lines that can: a content line quotes the content as before, and the diff
+gate's own reason for a bare file name absent from the diff holds the word `ambiguous`. Measured on
+2026-10-12 at `47e33ef6`: a summary that adds `Modified helpers.py to tidy the imports.` over a diff that
+does not touch `helpers.py`, minted under one identity, edited, re-sealed and verified under another,
+reads INSTRUMENT SKEW with nothing in the SKEW line charon misreads, and charon derives it UNRESOLVED from its
+`gate.claims not reproduced` line. Edited and re-sealed the same way and verified under the identity it
+was minted under, or minted with no identity, the same summary derives UNRESOLVED too: the reading comes
+from the content line, whose text and charon's rule this phase does not change. What rule 4 supports is
+its opening clause: the SKEW line never makes charon derive a capsule UNRESOLVED.
