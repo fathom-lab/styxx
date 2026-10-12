@@ -930,8 +930,9 @@ def load_receipt(path_or_dict, arm: Optional[str] = None, min_grid: int = 2) -> 
     (a flat list), with ``controls`` (``{ablated|near|overwrite|windowed: {family: {D: cell}}}``). The
     bridge-v3 receipt, with ``arm`` given: ``per_item[arm][family][D][variant]`` as the runner writes it
     from its amendment 17.2 (the plain variant is the curve, the others the controls; ``config.readout``,
-    ``config.chance``, ``config.guard`` and ``items.prefix_nested_across_distances`` are read), or
-    ``per_item[arm][family][D]`` as the cell itself with ``controls_per_item[arm]``. A v3 receipt without
+    ``config.chance``, ``config.guard`` and ``items.prefix_nested_across_distances`` are read), or, a
+    shape no runner writes, ``per_item[arm][family][D]`` as the cell itself with ``controls_per_item[arm]``
+    (the shape this module read before it read the runner's). A v3 receipt without
     ``per_item[arm]`` is refused with that sentence, not read as zeros. ``min_grid`` is the number of
     distances a receipt must carry; 2 for a horizon, 1 to read the cells of a D0-only pilot.
 

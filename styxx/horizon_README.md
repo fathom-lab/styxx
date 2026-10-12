@@ -74,11 +74,13 @@ and `seeds` must be objects, and anything else malformed is refused with the err
 `--arm M1` reads `per_item[arm][family][D][variant]` as the runner writes it from its amendment 17.2:
 the `plain` variant is the curve; `ablated`, `near`, `overwrite` and `windowed` are the controls (with
 `pred_is_overwrite`, the overwrite cell prints the fraction that follows the re-plant). `config.readout`,
-`config.chance`, `config.guard` and `items.prefix_nested_across_distances` are read. The older shape
-(`per_item[arm][family][D]` as the cell, with `controls_per_item[arm]`) is read too. A receipt without
-`per_item[arm]` is refused with the sentence naming decision Z4, never read as zeros. A receipt whose grid
-has one distance — the amendment-17.2 pilot, 48 items at D0 — has cells and no curve: `load_receipt(...,
-min_grid=1)` reads the cells, and `fit` refuses the row with that sentence. The test file reads the
+`config.chance`, `config.guard` and `items.prefix_nested_across_distances` are read. A shape no runner
+writes is accepted too: `per_item[arm][family][D]` as the cell itself, with `controls_per_item[arm]`, the
+shape this module read before it read the runner's. A receipt without `per_item[arm]` is refused with the
+sentence naming decision Z4, never read as zeros. A receipt whose grid has one distance — the
+amendment-17.2 pilot, 48 items at D0 — has cells and no curve: `load_receipt(..., min_grid=1)` reads the
+cells, and `fit --arm` refuses it with "the grid [16] has 1 distance(s); a horizon needs at least 2. The
+cells of such a receipt can be read (min_grid=1); a curve cannot". The test file reads the
 committed pilot receipt's per-item bits and reproduces, cell by cell, the accuracy, slot shares, guard,
 one-versus-rest AUROC, margin and near-tie count the runner recorded beside them, and the screen it
 applied; it is skipped where that receipt is not in the checkout.

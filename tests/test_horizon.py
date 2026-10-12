@@ -399,6 +399,23 @@ def test_a_declared_slot_bound_is_the_bound_the_guard_applies():
         assert ("DEGENERATE@compare:64" in " ".join(row["flags"])) is not ok
 
 
+def test_the_mean_margin_is_the_target_score_minus_the_best_other_score():
+    # review 3: margin_mean was pinned only by the pilot2 test, which skips on a CI box; a margin scored
+    # against the predicted slot instead of the target passed every other test (PREREG 17.2.1's definition)
+    rng = np.random.default_rng(17)
+    cell = H.synthetic_cell("compare", 0.5, 300, rng)
+    S, y = np.asarray(cell["scores"]), np.asarray(cell["target_slot"])
+    want = [S[i, y[i]] - max(S[i, j] for j in range(3) if j != y[i]) for i in range(len(y))]
+    assert min(want) < 0 < max(want)          # right answers and wrong ones, so the two definitions differ
+    got = H.cell_summary("compare", **_slot_args(cell))
+    assert got["margin_mean"] == pytest.approx(float(np.mean(want)), abs=1e-12)
+    assert got["near_ties"] == sum(abs(w) < H.LOGODDS_TIE for w in want)
+    rec = H.synthetic_receipt("m", [0.9, 0.5, 0.4, 0.3], RECALL_FLAT, 300, 17, n_resamples=40)
+    rec["per_item"]["compare"]["64"] = cell
+    row = H.fit_model(H.load_receipt(rec))
+    assert row["cells"]["compare"][64]["margin_mean"] == pytest.approx(float(np.mean(want)), abs=1e-12)
+
+
 def test_an_undeclared_pairing_is_printed_as_assumed(selftest_result):
     rec = H.synthetic_receipt("silent", H._planted_curve(128.0), RECALL_FLAT, 600, 10, n_resamples=50)
     rec["config"].pop("pairing")
@@ -525,7 +542,7 @@ def test_the_bridge_v3_runner_s_receipt_is_read_by_arm_in_the_shape_it_is_writte
     # the two arms fitted together on one seed share their resamples
     sheet = H.fit_zoo([rec, H.load_receipt(raw, arm="T")], n_resamples=100)
     assert sheet["result"]["shared_resample"] is True and sheet["result"]["pairing"] == ["distance"]
-    # the older shape: per_item[arm][family][D] is the cell itself
+    # a shape no runner writes, accepted too: per_item[arm][family][D] is the cell itself
     old = {"config": raw["config"], "per_item": {"M1": {f: {d: v["plain"] for d, v in by_d.items()}
                                                          for f, by_d in raw["per_item"]["M1"].items()}}}
     assert H.load_receipt(old, arm="M1")["cells"]["compare"][64]["acc_norm"] == rec["cells"]["compare"][64]["acc_norm"]
