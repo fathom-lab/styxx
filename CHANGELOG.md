@@ -7,12 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased] — PREREG: the permuted-MNIST headline under held-out permutations, new seeds and a 3x budget, sealed as a git blob before any run
+## [Unreleased] — PREREG: the permuted-MNIST headline under held-out permutations, new seeds and a 3x budget, sealed as a git blob before any run and amended before any data
 
 **`papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md`, `run_pmnist_robustness.py`,
-`tests/test_pmnist_robustness.py`; `papers/checksum/SEALS_2026_09_13.md` row 7.** The arc's headline (+0.3122 on
-permuted MNIST, `pmnist_ablation_result.json`) rests on two seeds, one pixel permutation and a 4000-step budget with
-no convergence control, and the 2026-09-02 entry below ("The arc's headline survives its own confound; the
+`tests/test_pmnist_robustness.py`; `papers/checksum/SEALS_2026_09_13.md` rows 7 and 8.** The arc's headline (+0.3122
+on permuted MNIST, `pmnist_ablation_result.json`) rests on two seeds, one pixel permutation and a 4000-step budget
+with no convergence control, and the 2026-09-02 entry below ("The arc's headline survives its own confound; the
 permuted-MNIST re-run is the owed next preregistration") was never supported by a receipt on this benchmark. This
 preregistration freezes, before any run, the measurement that gives the headline an interval or takes it away, and
 the untied control beside it on the same bars the sealed 2026-09-02 PREREG froze.
@@ -26,28 +26,45 @@ the untied control beside it on the same bars the sealed 2026-09-02 PREREG froze
   the number the sentence prints, because at 15 runs per arm the 0.03 bars sit at 1.1 to 1.5 standard errors and
   the ROTATION-versus-PARTIAL suffix is a label.
 - **Permutations no one chose.** The five held-out pixel permutations are the top 32 bits of
-  sha256(`<beacon hex>:perm:k`), k = 1..5, where the beacon is the block hash of the slot that seals this file
-  (row 7 of SEALS, frozen at `3598e59d`, blob `2068e673...`): the 45 held-out trainings cannot precede the block that
-  named their inputs. The sha256-of-tag list (`3584514041`, `27380109`, `2994719670`, `3317084913`, `2856893334`) is
-  the labelled fallback if the operator declines the anchor; a fallback run says so in every leaf and in the RESULT.
-- **The receipt's own seeds enter no gate.** Seeds 0 and 1 on permutation 1234 are re-run as the determinism check
-  (`anchor_max_abs_dev`, reported); the headline's own permutation is outside every permutation-averaged gate.
+  sha256(`<beacon hex>:perm:k`), k = 1..5, where the beacon is the block hash of the slot that seals this file as
+  amended (SEALS row 8, frozen at `98072bed`, blob `18aa265c...`; row 7, blob `2068e673...` frozen at `3598e59d`, is
+  the same file before its section 15 and is superseded, never to be anchored): the 45 held-out trainings cannot
+  precede the block that named their inputs. The sha256-of-tag list (`3584514041`, `27380109`, `2994719670`,
+  `3317084913`, `2856893334`) is the labelled fallback if the operator declines the anchor; a fallback run says so in
+  every leaf and in the RESULT.
+- **The receipt's own seeds enter one validity gate and nothing else.** Seeds 0 and 1 on permutation 1234 are re-run
+  as the determinism check (`anchor_max_abs_dev`, reported); as 4000-step runs they count in `degenerate_fraction`
+  (`G_D_stable`, at most 6 of its 60) and in no other gate, and the headline's own permutation is outside every
+  permutation-averaged gate. The PREREG as sealed in row 7 said they enter no gated metric; its section 15 corrects it.
+- **Amended before any data, no bar moved** (PREREG section 15, 2026-10-12, after the lab's review). Appended to the
+  sealed bytes, which stand unedited above it (the leading 56,960 bytes of the amended blob are row 7's blob, and the
+  gates block's sha256 is unchanged, `578924f8...`): the seeds-0/1 correction; gated metrics rounded to four decimals
+  before scoring, as the committed untied runner does; the leaves, the leaf log and the receipt committed with the
+  RESULT, the leaf directory pinned `-text`, the smoke receipt and the data not committed; the leaf-log line written
+  and fsynced before its leaf is renamed into place, so a crash between the two reads as a visible rewrite rather than
+  `plumbing_ok` 0; the GPU guard before the red team's device check, and every check that needs no torch before torch
+  is imported; why an appended section and not a new file under the PREREG's own section 12; and the
+  `--accept-schedule` prompt night 3 meets above 17.78 min per run.
 - **Plumbing that is checked, not described.** The runner imports `run_pmnist_ablation.py` and
   `run_pmnist_untied.py` verbatim and refuses before data unless their LF-normalised bytes hash to the committed
   blobs (`c8d7cdfb...`, `caf276da...`; the Windows working copy of the untied runner carries CRLF and hashes
   differently while running the same code), `_mnist.npz` hashes to `98d68505...`, the PREREG on disk hashes to the
-  sealed blob, the three arms share RNG state and every non-SSM tensor at seeds 0-4, `Experiment.check_metrics()`
-  resolves every gate path on the receipt shape, CUDA is available and 6 GiB are free. One leaf per run, an
-  append-only hash-chained leaf log, `--smoke` INVALID by type, three nights of about 18 GPU-hours measured
-  (`--night 1|2|3`, nights 2 and 3 refusing without the beacon or the declared fallback), `--aggregate`.
+  sealed blob, `Experiment.check_metrics()` resolves every gate path on the receipt shape, CUDA is available and 6 GiB
+  are free (checked before any tensor is placed on the card), and the three arms share RNG state and every non-SSM
+  tensor at seeds 0-4. One leaf per run, an append-only hash-chained leaf log, `--smoke` INVALID by type, three nights
+  of about 18 GPU-hours measured (`--night 1|2|3`, nights 2 and 3 refusing without the beacon or the declared
+  fallback), `--aggregate`.
 - **Written without knowledge of the sealed untied receipt** (`pmnist_untied_result.json`, run 2026-10-11, unread);
   section 7 of the PREREG predicts under each verdict it can carry. No run, no smoke and no GPU use in this change;
   the smoke and the nights wait on the operator's approval and the card.
-- Tests, on CPU with no data: the gates block through the lab's scanner with every assignment reaching a row;
-  `Experiment` scoring each verdict; the hash checks refusing a mutated runner copy; the derivation deterministic;
-  the aggregate arithmetic on synthetic leaves, degeneracy by arm and every plumbing zero; the data pin refusing a
-  different file; SEALS row 7 equal to the committed blob; the banned-word scan over the three files.
-
+- Tests, on CPU with no data, no card and no torch required (the one torch test skips without it): the gates block
+  through the lab's scanner with every assignment reaching a row; `Experiment` scoring each verdict; the hash checks
+  refusing a mutated runner copy; the derivation deterministic; the aggregate arithmetic on synthetic leaves,
+  degeneracy by arm and every plumbing zero; the data pin refusing a different file; section 15 appended to the row-7
+  bytes with the gates hash unchanged; SEALS row 8 equal to the committed blob, row 7 unedited, only row 8's memo
+  listed; the leaf-log order under a simulated power cut and a torn log refused; the GPU guard before the red team;
+  the command line refusing by name with torch unimportable; the ignore and `-text` policy; the banned-word scan over
+  the three files. `papers/LEDGER.md` regenerated for the new preregistration.
 
 ## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
 
