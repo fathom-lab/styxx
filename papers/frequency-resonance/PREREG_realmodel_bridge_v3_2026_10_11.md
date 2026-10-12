@@ -453,3 +453,172 @@ smoke showed the frozen mechanism headline (§5, the slowest channel's surviving
 distances because the per-token slowest channel is one whose Δ ≈ 0: two companions per layer, the median
 channel's filler-summed log|λ| and the fraction of channels still above 0.5 (`9b54d8d2`); on the smoke's 24
 items they read −0.0034 → −0.0845 (best layer) and 0.466 → 0.056 from D = 16 to D = 1024.
+
+### 17.2 Amendment, before any data (2026-10-11) — the operator's one bounded probe redesign, the last; the receipt fields the downstream designs ask for; four review minors
+
+**No bar moved; nothing above §17 is edited.** The format line of §17.1 (`NOT_STARTED`) stands until §17.3: the main run
+stays refused while this amendment is in force and no new pilot has run. Runner: `run_realmodel_bridge_v3.py` at the
+commit that follows this one on the branch (its sha256 is recorded in every receipt it writes as `config.runner_sha256`
+and is quoted in §17.3). Tests: `tests/test_realmodel_bridge_v3.py` at the commit after that.
+
+**The operator's decision (2026-10-11, about 22:50), in substance.** After the §9 pilot failed both answer formats
+(§17.1), the operator approved **one** bounded redesign of the compare probe, pre-stated here as **the last**: a compare
+readout that is argmax-shaped like recall, so that no Yes-prior exists to drift, scored over the three name tokens with
+exact balance over the correct slot; the degeneracy guard for compare becomes max-slot ≤ 0.80, as recall's already is;
+one 48-item pilot at D0, both arms, under 15 GPU-minutes, written into this document before sealing. **A second failed
+pilot closes the behavioural route** (`PLAN_next_experiment.md` §3.14: a third ABSTAIN-class outcome leaves only the
+profiler route). The operator also approved, pre-data, the four receipt and generator amendments the two downstream
+designs ask of this document (`NEXT_AFTER_V3.md` §3.6 items 1–4; `horizon-zoo/DESIGN.md` §8 items 2–3 and ATTACK F1/M5;
+`intervene/ATTACK.md` M7). Anything beyond this entry — another readout, more exemplars, another scale, another probe —
+is a different instrument and a new preregistration (§17.1, last paragraph), not an amendment of this one.
+
+#### 17.2.1 The redesigned compare readout
+
+- **Prompt shape.** Unchanged in structure (§4): four exemplars, a blank line, the three planted sentences
+  `The {name} code is {code}.`, exactly D NeoX tokens of filler, a newline, the question. The compare question becomes
+  `Question: Which name has the largest code: alpha, gamma or delta? Answer:` — the same words on every item and every
+  exemplar; the three option names are listed in slot order. The recall question is unchanged
+  (`Question: What is the {name} code? Answer:`).
+- **Answer set and scoring.** At the position after `Answer:` (NeoX id 27 for `:`), the log-probabilities of the three
+  name tokens are read from one forward pass; prediction = argmax over the three; correct iff it is the slot whose code
+  is numerically the largest. An exact tie resolves to the lowest slot and is counted (`near_ties`). The recall family
+  is unchanged (argmax of the three candidate codes' summed log-likelihood).
+- **Names.** The §4 list (alpha, bravo, delta) cannot serve as an equal-length three-way answer set: in the NeoX
+  tokenizer both arms share, ` bravo` is two tokens ([270, 41647]) while ` alpha` (9765) and ` delta` (18687) are one,
+  so a summed log-likelihood over the three would compare one token against two. The test names become **alpha,
+  gamma, delta** (ids 9765, 17356, 18687, each a single token, asserted and recorded in `redteam.name_token_ids`).
+  The exemplar names are a disjoint fixed list, **sigma, theta, omega** (40009, 39116, 40639; §17.2.2 item 4).
+- **How the claim-is-true/false structure maps onto a three-way choice.** §4's compare item carried a claim about one
+  name whose truth was a binary label with an in-context false code; its readout was the sign of log p(Yes) − log p(No)
+  against a fixed threshold, which is where a Yes-prior lives. The redesigned item carries the same three bound facts
+  and asks a relation among them: exactly one of the three in-context names is the correct answer, and the two
+  distractors are the other planted names, so every option the model can choose is in context (the property §4 wanted
+  from in-context false claims), the readout has no threshold and no label prior, and a constant responder scores
+  exactly 1/3 raw = 0 normalized under exact balance, as recall's already does. What "compare" measures changes with
+  it and the record says so: §4's operation was *fact versus later claim* (the toy's `cmp_long`); the redesigned
+  operation is *fact versus fact* — the magnitude order of the three planted codes, which cannot be answered from any
+  one binding. Both are relations over planted content that recall does not require; the dissociation this document
+  bridges (§1, "relating, not remembering") is read with that substitution, and §14's sentences are carried with
+  "judge which of three planted codes is the largest" in place of "judge a distant claim against a planted fact".
+- **Exact balance per cell (asserted from the items, assert 3).** n must be a multiple of 6 (600, 48 and 24 are).
+  Correct (largest-code) slot n/3 each; queried slot n/3 each; the last exemplar's compare answer slot n/3 each and its
+  recall query slot n/3 each; the last exemplar's compare answer slot equals the correct slot on exactly n/3 items and
+  its recall query slot equals the queried slot on exactly n/3 items, so a copy-the-last-exemplar's-position responder
+  scores exactly chance in both families (the recency control §4 had for Yes/No, carried to slots). At n = 600:
+  200/200/200 for each marginal, 200 for each coincidence; at n = 48: 16/16/16 and 16. One count is reported and not
+  exact: the number of items whose queried slot is also the largest-code slot is near n/3 (600 is not a multiple of
+  9); it bears on no in-prompt strategy, since the compare question names no slot and the recall prompt carries no
+  notion of "largest".
+- **Exemplars.** Four blocks with the exemplar names and zero filler, as §4; recall queries slots 1, 2, 3, 1 (frozen);
+  the largest exemplar code sits at slots 2, 1, 3, 2, arranged by the generator, so the queried code is the largest
+  in one exemplar of four. The per-item permutation is chosen so that the last exemplar is exemplar 2 on n/3 items,
+  exemplar 3 on n/3, and exemplars 1 and 4 on n/6 each — which is what makes both last-slot marginals exact.
+- **Codes.** Four-digit, from the equal-length pool (8,828 two-token codes in NeoX, asserted); the three planted codes
+  of an item are drawn distinct from the region's test pool restricted to **≤ 8999**, and the largest is placed at
+  the correct slot; the restriction exists so that a larger code is always available for C_overwrite.
+- **Guard.** Compare: the largest fraction of items answered with any one name ≤ 0.80 (`max_slot_fraction`), the
+  recall guard's rule; gated at D0 inside `G_A_guard`, reported at every distance. The Yes-rate window retires with
+  the Yes/No readout. Also reported per cell: the one-versus-rest AUROC averaged over the three slots (0.5 for any
+  constant responder), the mean and median margin (score of the correct slot minus the best other slot — the
+  three-way analogue of the Yes/No log-odds), and the near-tie count.
+- **Chance normalization stays three-way-correct.** `a′ = (a − chance)/(1 − chance)` with chance 1/3 in **both**
+  families (compare was 1/2). The bars never move: 0.40 normalized is raw 0.60 in both families (compare was raw
+  0.70); 0.16 normalized is raw 0.44. The paired item bootstrap of §7 weights both families by 1/(1 − 1/3) = 1.5 and
+  its point estimate equals `between_D1` (asserted). Chance SE at n = 600 is sqrt((1/3)(2/3)/600) × 1.5 = 0.029
+  normalized in both families, so 0.40 is about fourteen SE above chance (the frozen `G_A_screen` text says ten),
+  and the 97.5th percentile of chance is about 0.057 normalized against the 0.16 `G_C_abl` bar (the frozen text says
+  0.08 for compare). The gates block of §8 is **not edited** (its bytes are the plan's, tested byte-identical); where
+  its `power_basis` prose names raw 0.70, SE 0.041 or the Yes-rate window, it describes the retired readout and this
+  entry gives the three-way reading; the metric paths, ops and values are unchanged.
+- **Metrics and gates.** §7's formulas are unchanged in form. `G_C_abl` reads `result.ablated_max_norm_acc` over D0
+  and D1 as frozen; the ablated cells at 64 and 256 (item 4 below) are reported under `controls.ablated` and their
+  maximum under `result.ablated_max_norm_acc_all_distances`, outside the gate.
+- **Retired.** The `yes_no` and `true_false` readouts of §9: the runner parses them on the format line and refuses the
+  main run on either ("retired by amendment 17.2"). The §9 line and the §17.1 line stand as the record of the attempt.
+
+#### 17.2.2 The receipt fields and generator rules of `NEXT_AFTER_V3.md` §3.6 items 1–4 (pre-data)
+
+1. **`per_item`** — for every arm, family, distance and variant (plain, ablated, windowed, near, overwrite): the
+   correctness bits, the predicted and the correct slot, the three scores (compare: log p of each name token; recall:
+   each candidate's summed log-likelihood) and the margin per item; for C_overwrite also whether the prediction was the
+   re-planted name. The zoo's bootstrap and `c_auc` can be recomputed from the receipt (zoo §8 item 2, ATTACK m8/m10).
+2. **`items.sha256`** — sha256 of the UTF-8 text of every prompt (per family, distance and variant, in item order), of
+   every code the run plants (test, overwrite and exemplar codes, sorted by hash) and of every sentence the pool
+   handed out (sorted by hash). Later runs exclude by these lists, never by regeneration (intervene M7). The runner
+   asserts disjointness from the committed receipts by these lists before any model is loaded (§17.2.4).
+3. **`items.prefix_nested_across_distances = false`** (and `code_paired_across_distances = false`): items are
+   generated per distance from the item seed plus D; the filler at D = 16 is not the head of any other distance's
+   filler and the codes are drawn afresh per distance; an item is shared across the two families, every variant and
+   both arms at one distance (zoo §8 item 3 — the zoo's interval must resample distances independently).
+4. **Generator rules and controls.**
+   - *Exemplar names disjoint from test names* (sigma, theta, omega against alpha, gamma, delta; asserted). Every
+     prompt binds each test name once, so the recency-resolution component of zoo ATTACK F1 is removed.
+   - *`C_abl` at every distance* (was D0 and D1): the three code sentences replaced by a neutral text of the same
+     in-situ token count, both families, both arms, D ∈ {16, 64, 256, 1024}; gate as above.
+   - *`C_near` at D1, compare only, reported* (zoo F1 fix b, re-cut for a three-way readout, which has no single
+     "fourth code" question): the item's own D1 filler stands between the exemplars and the code block, and a fresh
+     16-token filler stands between the block and the question — the codes are 16 tokens before the question while
+     the exemplars are where they are at D1. If c_near(D1) ≈ c(D0), format distance is excluded and a compare drop at
+     D1 is about the codes; if c_near(D1) falls with c(D1), the drop is format decay and the RESULT prints
+     FORMAT_DECAY beside the cell. Recorded under `controls.near`.
+   - *`C_overwrite` at D1, compare only, reported* (zoo M5): the item's filler keeps its head and its last sentence
+     becomes `The {name} code is now {code}.` for a name that is **not** the correct slot (the overwrite slot, never
+     the correct one; each (correct, overwrite) pair on n/6 items so the overwrite name is balanced n/3 each) and a
+     code drawn from the region's test pool **larger than all three** planted codes; the filler stays exactly D1
+     tokens (a fresh fill closes any gap before the re-plant). Scored against the original correct slot; the
+     fraction of items answered with the re-planted name is `overwrite_follow_rate`. A model whose readout at D1 is
+     live to planted content follows the re-plant (accuracy against the original falls to or below chance); a model
+     that follows nothing at D1 has its far cells printed POSITIVE_CONTROL_SILENT. Recorded under `controls.overwrite`.
+   - The filler rules of [J1] extend to the six names: a pool sentence containing any of them, a digit or "code" is
+     skipped at draw time (count recorded as `fillers.sentences_skipped_for_a_name`); the pool itself — its
+     eligibility filter, cap and order — is unchanged, so the sentence indices in the committed smoke and 1011-pilot
+     receipts still name the same sentences (asserted against the parquet sha256s and the eligible count). The
+     re-plant sentence is not filler and is excluded from the no-name check by construction.
+   - Mechanism diagnostic (§5): unchanged, on the plain compare cells of M1.
+
+#### 17.2.3 The four review minors (2026-10-11 review of the branch at `7ba10c3e`)
+
+- (a) `write_json` emits UTF-8 without BOM with LF newlines on every platform (the committed receipts' blobs are LF by
+  the checkout's normalization; the working copies were CRLF on Windows). Tested.
+- (b) The model-level asserts of **both** arms (§12 items 1, 6 and 10 and the chunked-scan equivalence, on CPU in fp32)
+  run before any cell of any arm is scored or printed; the order and clock are recorded under
+  `redteam.model_level_asserts_before_any_scoring`, and the scoring loader refuses an arm whose asserts did not run.
+- (c) §12 item 11's T-only smoke lets the 4-hour rule miss the slow arm. The budget extrapolation now requires
+  `--arms M1,T` (the smoke's default): an untimed arm makes its verdict `OK_PARTIAL` and the main run refuses on it.
+  The pass structure counted is: compare 1 + recall 3 per cell, plain and ablated at every distance, T's windowed
+  control at D0 and D1, and the two compare-only D1 controls for both arms. Under that structure the committed smoke's
+  per-batch seconds (M1 11.66 / 2.27 s, T 1.18 / 0.19 s at D = 1024 / 16) extrapolate to **2.22 h** (M1 1.97, T 0.25),
+  inside the rule. The main run nevertheless requires a smoke receipt **written by this readout** (`config.readout`),
+  since the committed smoke red-teamed the retired code paths; that smoke has not been run and is not part of this
+  amendment's GPU budget.
+- (d) The `G_A_screen` power basis quotes a recall SE of 0.035 where sqrt((1/3)(2/3)/600) × 1.5 = 0.029. Corrected
+  here; the block's bytes are not edited (the seal is over them) and the bar is unchanged. Under this amendment the
+  same 0.029 is the compare SE as well.
+
+#### 17.2.4 The pilot of this amendment (seed 1012), pre-stated
+
+- **Items.** 48 at D0 = 16, item seed **1012**; sentences from a reserved 3,000-sentence slice of the seeded sentence
+  order cut from what was the main region's tail, before any main-set item exists (`perm[-10000:-7000]`, reshuffled by
+  1012); the smoke's slice (`perm[-7000:-4000]`) and the 1011 pilot's (`perm[-4000:]`) are unchanged. Codes from two
+  new pools (12 exemplar, 60 test) carved from the head of what was the main test pool; the five committed pools are
+  unchanged. Disjointness from the committed smoke and 1011-pilot receipts is **asserted by sha256 lists** (every
+  sentence index and sentence hash they record, every code of their reserved pools) and from the main region by
+  construction (every sentence drawn lies inside the pilot2 slice, asserted); the pilot's own lists go into its receipt
+  so the main run excludes them the same way.
+- **Run.** Both arms, the model-level asserts of both before any scoring, then per arm: compare (this readout), recall,
+  and C_abl at D0 for both families (reported). Under 15 GPU-minutes; one arm resident at a time; ≥ 6 GB free before
+  each load. Receipt `realmodel_bridge_v3_pilot2.json` with every field of §17.2.2. The runner refuses to run it twice.
+- **The rule, pre-stated.** An arm *clears* iff at D0 its compare and its recall normalized accuracy are both ≥ 0.40
+  and both max-slot guards pass (the §6 screen on the pilot's items). Outcome labels: `CLEARED_BOTH`,
+  `CLEARED_T_ONLY`, `CLEARED_M1_ONLY`, `NEITHER`. If `CLEARED_BOTH`, §17.3 sets the format line to `argmax_largest`
+  and the main run may proceed **only after** this document is sealed as a git blob and the operator's anchor is
+  placed (decision 5), and after a smoke under this readout with both arms timed (§17.2.3 c). Otherwise §17.3 sets
+  the format line to `NOT_STARTED` (final) and states that the behavioural route is closed by the operator's rule.
+  `CLEARED_T_ONLY` is printed as a measured fact at pilot strength (`NEXT_AFTER_V3.md` §3.1) and closes the route all
+  the same. The pilot's numbers license nothing else (§9).
+
+#### 17.2.5 What this entry does not change
+
+The eight gates, their metrics, ops and values; the outcome table; n = 600; D ∈ {16, 64, 256, 1024}; the arms; the
+item seed 20261011 and bootstrap seed; the budget rule; the discipline of §15; decision 6 (nothing posted). The
+preregistration remains unsealed and unsigned (PLAN §2); the defaults are what is built.
