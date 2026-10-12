@@ -31,11 +31,16 @@ record says why. No main-set item was generated or scored, and no gates-block ve
   1.4 B base models recall a planted code at 16 tokens and perform neither compare readout), what they do not
   (nothing about decay versus attention, distance, other deployed models, honesty or importance), two defects in
   the record (amendment 17.1 cites three runner commits by pre-reword hashes, mapped in the RESULT; the forward
-  pointer section 15 owes is not written: one half goes in the July RESULT, which is certified, and the other in
-  `papers/SYNTHESIS_program_2026_07_24.md` item 3; amendment 17.3 says it lands in the merge that carries the
-  preregistration, in a form the operator chooses), and the forward state: the
-  profiler on an oscillatory checkpoint is the only open bridge and needs a download or a training run the operator
-  has not approved.
+  pointer section 15 owes was not written in the RESULT's commit, and the RESULT leaves its form to the operator),
+  and the forward state: the profiler on an oscillatory checkpoint is the only open bridge and needs a download or a
+  training run the operator has not approved.
+- The forward pointer section 15 owes is written in this merge, which is where amendment 17.3 says it lands, in the
+  form the operator chose on 2026-10-12. `papers/SYNTHESIS_program_2026_07_24.md` item 3 gains it as an appended
+  paragraph (no certificate binds that document, and the digest of its extracted number tokens that
+  `papers/closed-model-frontier/oath_v11_baseline_ledger.json` records is unchanged), and
+  `papers/frequency-resonance/NOTE_realmodel_bridge_forward_pointer_2026_10_12.md` carries it beside
+  `RESULT_realmodel_bridge_2026_07_24.md`, which `CERT_realmodel_bridge.json` certifies and which is not edited.
+  Both read "attempt three: not started; two pilots, both NEITHER" and name the attempt-three RESULT.
 - `papers/frequency-resonance/run_realmodel_bridge_v3.py` refuses the main run on the format line and a second
   pilot on the committed receipt. `tests/test_realmodel_bridge_v3.py` runs on CPU with no checkpoint; the tokenizer
   and model tests skip when the cached files are absent, and the test that compares the gates block with the judged
