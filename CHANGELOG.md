@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — `styxx.horizon`: the horizon datasheet, an instrument from per-item bits to censored horizons, with the self-test that gates its printing
+
+**`styxx/horizon.py`, `styxx/horizon_README.md`; tests in `tests/test_horizon.py`.** The bridge-v3 probe
+(few-shot, exactly balanced, chance-normalised, degeneracy-guarded, paired-bootstrapped) asked one
+question of one pair of models. This module is the probe's scoring turned into an instrument that runs on
+any receipt of per-item bits — no torch, no GPU, no model load, no network — built from
+`next/horizon-zoo/DESIGN.md` (2026-10-11) with every fatal and major fix of its red team applied. The GPU
+runner and the zoo run are not in this change; nothing here changes what any committed RESULT says.
+
+- **Per model, from per-item bits** (`compare`: label, prediction, log-odds; `recall`: queried slot,
+  argmax slot): chance-normalised accuracy per cell, a 95% paired item-bootstrap interval (one index
+  resample per replicate applied to every cell of every model), the degeneracy guard and the rank AUROC
+  per cell, the capability screen at D0, the comparison horizon (where the interpolant in log2 D reaches
+  half its D0 value: the bracketing grid pair is the measurement, the interpolated point a convention; no
+  crossing is CENSORED and prints `> 1024 (none inside the tested range)`; c(D0) at or below chance is
+  NOT_ESTIMABLE), the recall horizon and the threshold-free `c_auc` horizon beside it, `ratio_min` per
+  family and the dissociation `ratio_min_compare − ratio_min_recall` with its interval, and the flags
+  (COMPARE_ONLY_HORIZON, STORAGE_HORIZON, DEGENERATE with both numbers, NONMONOTONE,
+  CALIBRATION_ARTEFACT_SUSPECTED, and the control flags).
+- **The red team's fixes, as code.** The screen reads one half of the D0 items, stratified by label so
+  each half keeps exact balance, and the horizon's denominator the other half (M4). The threshold-free
+  curve rides beside the thresholded one (F1c). The gated number is the compare-minus-recall dissociation,
+  not "attention has no horizon" (F2). The family aggregates are shaped for a declared composition —
+  every per-model value under `result.per_model.*`, every exclusion under `result.family_excluded` with
+  its reason — and the test runs them through `styxx.protocol`'s own composition check (M2). The ablated
+  maximum is taken over the screened set before the ablation exclusion, so it can fail (M1). The family
+  interval is the interval of the per-replicate minimum on one shared item resample (M3, M9). The
+  near-fact, overwrite and ablated controls set their flags when a receipt carries them and their
+  absence is printed beside every horizon (M5).
+- **The family is a fact, never a name.** `assert_family` takes a `config.json` and, for a state-space
+  model, its A values (`A = −exp(A_log)`, read from safetensors headers without torch): DECAY requires A
+  real and strictly negative in every layer; ATTN requires every layer's reach at or above 1,250 tokens;
+  a bare name, a missing `model_type`, a complex or non-negative A, a short sliding window and an unknown
+  type are each refused by name.
+- **The self-test gates the datasheet.** `selftest()` plants crossings at 32, 128, 203 and 600 in
+  synthetic bits whose curves are linear in log2 D and requires each recovered within [0.8, 1.25] × the
+  plant with the interval covering it; no crossing must read censored; a constant responder under exact
+  balance must be exactly 0 at every distance in both families and read SCREEN_FAIL with the guard in the
+  reason; two fits under one seed must agree. `datasheet()` refuses to print when it fails. (The design's
+  illustration planted "128" with c = (0.9, 0.7, 0.4, 0.2); under the interpolation rule those values
+  cross at about 203, so the plants are built from the rule.)
+- **The datasheet prints its limits** — no sentence about rotation, honesty, causation or ranking;
+  SCREEN_FAIL is "did not perform this format at D0", not "cannot compare"; "inside the tested range",
+  never "inside context"; nominal D in NeoX tokens with the native count beside it where recorded — and
+  refuses to print a word the lab never prints. `python -m styxx.horizon {selftest, fit, sheet, family}`;
+  `sheet --prereg` scores a COMMITTED prereg through `styxx.protocol`, otherwise the verdict line reads
+  `unscored: no committed prereg`.
+
 ## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
 
 **`styxx/capsule.py` and `styxx/charon.py`; tests in `tests/test_capsule_no_traceback.py`.** 7.49.0
