@@ -144,3 +144,65 @@ and names nothing, and the reader described here answers that case as item 3 say
   reader's defect reproduces as faithfully as its reading.
 - That HANDOFF reads SKEW. It does not, and will not from its own bytes.
 - That the browser's Unicode version is known. `case_floor` bounds the case tables and nothing else.
+
+## ERRATUM — 2026-10-12: what the INSTRUMENT SKEW problem quotes, as the reader applies it
+
+The text above is not edited. Two review rounds of phase 1 changed the reader after this file was
+committed, and item 3 now differs from the code in two places: the SKEW problem withholds a recorded name
+where item 3 says it names it, and a record that names part of its instrument and differs on a part it
+names reads SKEW. Where item 3 and this section differ, this section states what `styxx/capsule.py` does
+(`_identity_outcome` and the `_charon_quotable` helpers); `tests/test_instrument_identity.py` holds the
+withholding, the unknown list and the four hint forms.
+
+**Why a name is withheld.** `styxx.charon` reads a capsule problem holding `ambiguous`, `bytes !=`, or
+`!=` beside `binding` as a broken binding, and derives the line UNRESOLVED. The SKEW problem quotes values
+the minter chose, so without the rule a minter who names a module `styxx.ambiguous` turns a capsule that
+does not reproduce into an unresolved line in the ferry log.
+
+**The quoting rule.** It applies to the INSTRUMENT SKEW problem of item 3, the only problem text the
+identity comparison writes.
+
+1. The tokens of the record's choosing that the line can carry are four: the recorded identity, written as
+   one line, `<reader> <sha10> (styxx <styxx>) on <implementation> <version>, Unicode <unicode>`; a module
+   name inside a `build.modules[<name>]` field of the differing or unknown list; the recorded
+   `runtime.implementation` and `runtime.version` in the hint; and the sealed `build.styxx` as the hint's
+   pin. Before the test, every recorded value in the identity line and the hint is cut to 80 characters,
+   with each character outside `A-Z`, `a-z`, `0-9`, `.`, `_`, `+` and `-` written as `?`, and a null
+   written as `unknown`; a module name is already bounded to `^[a-z_.]{1,64}$`, matched whole.
+2. A token is withheld when it holds `ambiguous` in any letter case, or `!=`. This test is wider than
+   charon's own rule. After step 1 no token can hold `!` or `=`, so the word is what it refuses.
+3. A withheld identity is written `an instrument whose recorded name this verifier does not quote (charon
+   reads the name as a broken seal)`. A withheld module name, implementation or version is written
+   `(a name this verifier does not quote)`, so such a field reads
+   `build.modules[(a name this verifier does not quote)]`. A withheld `build.styxx` is not written at all,
+   and the hint takes its next form below.
+4. Neither replacement holds the word or `!=`, so the SKEW line never makes charon derive a capsule
+   UNRESOLVED; charon reads the capsule as not reproduced.
+5. Withholding is in the problem text only. The result's `gate_identity` keeps `recorded`, `differs` and
+   `unknown` as read, and the field lists in advisories are not withheld (charon reads no advisory). No
+   value of the live identity is in any problem, as item 3 says.
+6. The rule does not cover the lines item 3 keeps unchanged. The content lines (`gate.<key> not
+   reproduced: embedded ... vs live ...`) quote the content as before. The format-key SKEW line of spec
+   line 110 quotes the payload's unsealed `verifier.pip` as before, so a pin holding the word there still
+   makes charon derive UNRESOLVED, as it did before this phase. The R5 refusal at mint names the differing
+   fields as read; it is a refusal message, never a capsule problem.
+
+**A record that names part of its instrument.** Item 3 says that a record naming "no instrument, or not
+all of one" that does not reproduce "cannot be classified from its own bytes". The reader reads `differs`
+ahead of `incomplete` (`styxx.instrument.delta`): a record that names part of its instrument and differs
+on a field it names (its runtime and no build, for one) is INSTRUMENT SKEW, and the advisory is for a
+partial identity that differs on no field it names. The SKEW line lists every compared field null on
+either side after the differing ones, `(differs: <fields>; unknown: <fields>)`, the second list only when
+it is not empty, and its hint, `reproduce under that instrument (<hint>)`, points only at what the sealed
+record names, in this order:
+
+- `` `pip install styxx==<build.styxx>` on <implementation> <version> ``, when `build.styxx` is a
+  non-empty string the rule lets through, with an advisory that a release installing another
+  `styxx.diffgate` sha than the record names is not the minter's build;
+- `the styxx whose styxx.diffgate the record names, on <implementation> <version>`, when the record names
+  a `styxx.diffgate` sha;
+- `a build the record names only by a version this verifier does not quote, on <implementation>
+  <version>`, when its `build.styxx` was withheld and it names no `styxx.diffgate` sha;
+- `the record names no build, only the runtime <implementation> <version>`, otherwise.
+
+The payload's unsealed pin is never the SKEW line's hint.
