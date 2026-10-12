@@ -43,7 +43,11 @@ takes the "names no build or runtime" row below. Phase 2 makes the writer carry 
   erratum's rules 5 and 6 did not hold for the reader through `225785ad`, which now does what they say
   (the advisories quote a recorded identity as read; the format-key line reads the payload's pin as
   `origin/main` does), that the identity line writes a null reader sha as `sha unknown`, and that both
-  differences from item 3 the erratum names are older than the review rounds.
+  differences from item 3 the erratum names are older than the review rounds. A fourth section says
+  which commit holds which part of rules 5 and 6 in `tests/test_instrument_identity.py`: `4c8079fa`
+  what the reader's fix changed, `f0a7720e` the rest (a recorded module name kept as read outside
+  the SKEW problem; a payload pin holding the word turning charon UNRESOLVED through the format-key
+  line, as on `origin/main`).
 - **`styxx.instrument`** (new) defines the identity, reads one, compares two and prints one line. `build`:
   `schema` (`styxx.diffgate/instrument/v1`), `reader` (`styxx.diffgate`), `styxx` (the version string,
   recorded and never compared: one version string has named two readers) and `modules`, ordered
