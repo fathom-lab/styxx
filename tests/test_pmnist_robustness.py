@@ -7,17 +7,21 @@ refuses nothing it should accept; the frozen hashes refuse a mutated copy of eit
 copy, which is the trap SEALS names); the permutation derivation is deterministic, skips 1234 and repeats, and the
 fallback list equals the one the PREREG prints; the aggregate arithmetic on synthetic leaves gives the hand-computed
 numbers, counts a collapsed FREE run as 0 in the floor, excludes a collapsed decay run from the gap, maps a missing
-leaf, a foreign import hash, a read-back mismatch and a non-finite metric to plumbing_ok = 0; the _mnist.npz pin
+leaf, a foreign import hash, a read-back mismatch and a non-finite metric to plumbing_ok = 0; the receipt's seeds 0
+and 1 enter degenerate_fraction by value and G_P_plumbing as leaves, and no other gated metric; the _mnist.npz pin
 refuses a different file; the PREREG's section 15 is appended to the row-7 bytes and moves no gate; the sealed digest
 in SEALS row 8 is the committed blob's, row 7 stands unedited and only row 8's memo is listed; the leaf log is written
-before its leaf and a torn log is refused by name; the GPU guard runs before the red team touches the device; every
-refusal that needs no torch happens with torch unimportable; the leaves, the log and the receipt are committable and
-byte-pinned; and none of the three files prints the words the lab never prints. Nothing here loads a checkpoint,
+before its leaf, and a torn log is refused by name, by a night before any run trains; a non-finite loss is written
+as null and every file the runner writes is strict JSON; the GPU guard runs before the red team touches the device;
+every refusal that needs no torch happens with torch unimportable; the leaves, the log and the receipt are
+committable, and the leaves and the log byte-pinned; and none of the three files prints the words the lab never
+prints. Nothing here loads a checkpoint,
 reads the data or touches the card, and nothing here needs a GPU, torch, _mnist.npz or a path outside the checkout:
 a test that needs one of them skips when it is absent.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import importlib.util
 import itertools
@@ -392,7 +396,7 @@ def _leaf(r, acc, *, degenerate=False, derivation="sha256-of-tag fallback", impo
 
 
 # per-permutation accuracies: FREE, CLAMPED, REAL2 by seed index; the anchor's seeds 0, 1 are deliberately odd so
-# that a test can show they enter no gated metric
+# that a test can show their values enter no gated metric but degenerate_fraction (PREREG section 15.1)
 ACC = {
     "free": {1234: [0.50, 0.50, 0.92, 0.93, 0.91], "p0": [0.92, 0.93, 0.91], "p1": [0.90, 0.92, 0.91],
              "p2": [0.93, 0.92, 0.94], "p3": [0.91, 0.90, 0.92], "p4": [0.92, 0.92, 0.92]},
@@ -601,8 +605,40 @@ def test_a_non_finite_metric_reads_invalid_plumbing_not_an_exception():
     assert res["gap_perm_mean"] == 0.0 and res["plumbing_ok"] == 0.0 and out["plumbing"]["metrics_finite"] is False
     for m in RB.GATED:
         assert isinstance(res[m], float) and res[m] == res[m]
+    assert "nonfinite_fields" not in _strict_loads(RB.strict_json(out))     # every number in it went through _r
     exp = _experiment()
     assert exp.score(out).verdict == "INVALID__plumbing"
+
+
+def test_seeds_0_and_1_enter_degenerate_fraction_by_value_and_plumbing_as_leaves():
+    # PREREG section 15.1, read as the RESULT must repeat it: the six re-run trainings (FREE, CLAMPED, REAL2 at seeds
+    # 0 and 1 on permutation 1234) move no gated metric by value but degenerate_fraction, and like every leaf they
+    # count toward G_P_plumbing; degenerate_fraction counts the sixty 4000-step runs, not the 12,000-step ones
+    perms = RB.fallback_perms()
+    leaves = _synthetic_leaves(perms)
+    base = _agg(leaves, perms)["result"]
+    rerun = [RB.leaf_name(l) for l in leaves if l["perm"] == 1234 and l["seed"] in RB.RERUN_SEEDS and l["steps"] == 4000]
+    assert len(rerun) == 6
+    moved = json.loads(json.dumps(leaves))
+    for l in moved:
+        if RB.leaf_name(l) in rerun:
+            l["final_acc"] = 0.3
+    assert _agg(moved, perms)["result"] == base
+    collapsed = next(l for l in moved if RB.leaf_name(l) == "p1234_real2_s0_4000_h64.json")
+    collapsed["final_acc"], collapsed["degenerate"] = 0.1, True
+    res = _agg(moved, perms)["result"]
+    assert res["degenerate_fraction"] == round(1 / 60, 4)
+    assert {k: v for k, v in res.items() if k != "degenerate_fraction"} == \
+        {k: v for k, v in base.items() if k != "degenerate_fraction"}
+    short = [l for l in leaves if RB.leaf_name(l) != "p1234_clamped_s1_4000_h64.json"]
+    out = _agg(short, perms)
+    assert out["result"]["plumbing_ok"] == 0.0 and out["plumbing_detail"]["missing"] == ["p1234_clamped_s1_4000_h64.json"]
+    long_ = json.loads(json.dumps(leaves))
+    for l in long_:
+        if RB.leaf_name(l) == "p1234_clamped_s0_12000_h64.json":
+            l["final_acc"], l["degenerate"] = 0.1, True
+    out = _agg(long_, perms)
+    assert out["result"]["degenerate_fraction"] == 0.0 and out["degeneracy"]["long_count"] == 1
 
 
 def test_t_ci_uses_the_frozen_quantiles():
@@ -805,9 +841,83 @@ def test_a_torn_leaf_log_is_refused_by_name(monkeypatch, tmp_path):
     assert [q.name for q in runs.glob("p*.json")] == [RB.leaf_name(r0)]
 
 
+def test_a_night_refuses_a_torn_leaf_log_before_any_run_trains(monkeypatch, tmp_path):
+    _tmp_runs(monkeypatch, tmp_path)
+    smoke = tmp_path / "pmnist_robustness_smoke.json"
+    smoke.write_text(json.dumps({"projected_min_per_4000": 13.6}), encoding="utf-8")
+    monkeypatch.setattr(RB, "SMOKE_JSON", smoke)
+    monkeypatch.setattr(RB, "preflight_pure", lambda: {})           # items 1-3 are tested on their own above
+
+    class ReachedTheRunners(Exception):
+        pass
+
+    def load():
+        raise ReachedTheRunners()
+    monkeypatch.setattr(RB, "_load_runners", load)
+    args = argparse.Namespace(night=1, beacon=None, anchors=None, fallback_perms=False, width=False,
+                              accept_schedule=False)
+    with pytest.raises(ReachedTheRunners):                       # no log yet: the night goes on to the runners
+        RB.run_night(args)
+    r0 = RB.schedule(1)[0]
+    RB.write_leaf(r0, _leaf(r0, 0.92))
+    with pytest.raises(ReachedTheRunners):                       # a sound log: the same
+        RB.run_night(args)
+    RB.CHAIN_FILE.write_bytes(RB.CHAIN_FILE.read_bytes() + b'{"n": 2, "leaf"')    # an append cut short
+    with pytest.raises(RB.Refusal, match="torn"):                # refused before the runners load and a run trains
+        RB.run_night(args)
+
+
+# -- strict JSON: a bare NaN is not JSON, and section 15.3 commits the leaves and the receipt ----------------
+
+def _strict_loads(text):
+    def refuse(constant):
+        raise ValueError(f"{constant} is not JSON")
+    return json.loads(text, parse_constant=refuse)
+
+
+def test_a_non_finite_loss_is_written_as_null_and_every_file_the_runner_writes_is_strict_json(monkeypatch, tmp_path):
+    with pytest.raises(ValueError):
+        _strict_loads(json.dumps({"loss": float("nan")}))       # what the runner wrote before: NaN, refused here
+    printed = ("    step  500 loss 2.301 test 0.1135\n    step 1000 loss nan test 0.0980\n"
+               "    step 1500 loss inf test 0.0980\n    step 2000 loss 1.2e-1 test 0.5000\n")
+    losses, nonfinite = RB.parse_losses(printed)
+    assert losses == [2.301, None, None, 0.12] and nonfinite is True
+    assert RB.parse_losses("    step  500 loss 2.301 test 0.9000\n") == ([2.301], False)
+    _tmp_runs(monkeypatch, tmp_path)
+    r0, r1 = RB.schedule(1)[:2]
+    leaf = _leaf(r0, 0.098, degenerate=True)
+    leaf["losses"], leaf["nonfinite_loss"] = losses, nonfinite
+    got = _strict_loads(RB.write_leaf(r0, leaf).read_text(encoding="utf-8"))
+    assert got["losses"] == [2.301, None, None, 0.12] and got["nonfinite_loss"] is True and got["degenerate"] is True
+    assert "nonfinite_fields" not in got
+    # a clean leaf is written as the plain indent=1 dump, the bytes the log names
+    assert RB.write_leaf(r1, _leaf(r1, 0.9)).read_bytes() == json.dumps(_leaf(r1, 0.9), indent=1).encode("utf-8")
+    # any other non-finite number is written as null and named, never as a bare NaN, and nothing stops over it
+    bad = dict(_leaf(r0, 0.9), within_model_theta0_reliance=float("nan"), curve=[0.5, float("-inf")])
+    got = _strict_loads(RB.strict_json(bad))
+    assert got["within_model_theta0_reliance"] is None and got["curve"] == [0.5, None]
+    assert sorted(got["nonfinite_fields"]) == ["/curve/1", "/within_model_theta0_reliance"]
+    assert bad["within_model_theta0_reliance"] != bad["within_model_theta0_reliance"]     # the caller's copy is untouched
+
+
+def test_aggregate_writes_a_strict_json_receipt_whose_leaf_chain_verifies(monkeypatch, tmp_path):
+    _tmp_runs(monkeypatch, tmp_path)
+    result = tmp_path / "pmnist_robustness_result.json"
+    monkeypatch.setattr(RB, "RESULT_JSON", result)
+    perms = RB.fallback_perms()
+    for leaf in _synthetic_leaves(perms):
+        RB.write_leaf(leaf, leaf)
+    assert RB.aggregate(argparse.Namespace(beacon=None, anchors=None, fallback_perms=False)) == 0
+    out = _strict_loads(result.read_text(encoding="utf-8"))
+    assert out["leaf_chain"]["ok"] and out["leaf_chain"]["entries"] == 65 and out["leaf_chain"]["rewrites"] == []
+    assert out["schedule"] == {"expected_leaves": 65, "present": 65} and "nonfinite_fields" not in out
+    assert out["config"]["perm_derivation"] == "sha256-of-tag fallback" and out["config"]["held_out_perms"] == perms
+    assert out["plumbing"]["leaves_complete"] and out["plumbing"]["chain_ok"] and out["plumbing"]["metrics_finite"]
+
+
 # -- section 15.3: what is committed -------------------------------------------------------------------------
 
-def test_the_leaves_the_log_and_the_receipt_are_committable_and_pinned_and_the_rest_is_ignored():
+def test_the_leaves_the_log_and_the_receipt_are_committable_the_leaves_and_log_pinned_and_the_rest_is_ignored():
     base = "papers/frequency-resonance/"
     leaf = base + "pmnist_robustness_runs/p1234_free_s0_4000_h64.json"
     expect_ignored = {leaf: False, base + "pmnist_robustness_runs/leaf_chain.jsonl": False,

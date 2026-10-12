@@ -65,7 +65,9 @@ ARMS = ("free", "clamped", "real2")
 STEPS_MAIN, STEPS_LONG, EVAL_EVERY = 4000, 12000, 500
 H_DEFAULT = 64
 ANCHOR_SEEDS = (0, 1, 2, 3, 4)
-RERUN_SEEDS = (0, 1)                                # the receipt's seeds: determinism re-run, no gate
+RERUN_SEEDS = (0, 1)                                # the receipt's seeds: the determinism re-run (reported); by value
+                                                    # they enter degenerate_fraction only, and like every leaf they
+                                                    # count toward G_P_plumbing (PREREG section 15.1)
 NEW_SEEDS = (2, 3, 4)                               # the gated anchor test
 DERIVED_SEEDS = (0, 1, 2)
 LONG_SEEDS = {"free": (0, 1), "clamped": (0, 1, 2)}
@@ -312,6 +314,50 @@ def _r(x, nd=4):
         return None
     x = float(x)
     return round(x, nd) if math.isfinite(x) else None
+
+
+def _nulled(obj, path: str, found: list):
+    """A copy of a JSON-shaped object with every NaN or infinity replaced by None; each replaced path is appended to
+    `found` as a JSON pointer."""
+    if isinstance(obj, float) and not math.isfinite(obj):
+        found.append(path or "/")
+        return None
+    if isinstance(obj, dict):
+        return {k: _nulled(v, f"{path}/{k}", found) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_nulled(v, f"{path}/{i}", found) for i, v in enumerate(obj)]
+    return obj
+
+
+def strict_json(obj: dict) -> str:
+    """The text a leaf, the smoke receipt and the receipt are written as (indent=1). A bare NaN is not JSON and
+    section 15.3 commits the leaves and the receipt, so every NaN or infinity is written as null and its path is
+    listed under `nonfinite_fields`: nothing is replaced silently, and no night stops over it. A training loss is
+    the only number a run is known to print non-finite; parse_losses already writes it as null."""
+    found: list = []
+    clean = _nulled(obj, "", found)
+    if found:
+        clean["nonfinite_fields"] = found
+    return json.dumps(clean, indent=1, allow_nan=False)
+
+
+def parse_losses(text: str) -> tuple:
+    """The training losses a run printed ("loss <x>"), in order, and whether any was non-finite or unreadable.
+    Such a loss is written as null (a leaf stays strict JSON); `nonfinite_loss` records the fact and makes the run
+    degenerate (section 6)."""
+    losses: list = []
+    nonfinite = False
+    for tok in _LOSS_RE.findall(text):
+        try:
+            v = float(tok)
+        except ValueError:
+            v = float("nan")
+        if math.isfinite(v):
+            losses.append(v)
+        else:
+            losses.append(None)
+            nonfinite = True
+    return losses, nonfinite
 
 
 def t_ci(vals) -> dict:
@@ -743,13 +789,7 @@ def one_run(R, U, r: dict, data, pre: dict, derivation: str | None, beacon: str 
                     b.ssm.clamp_theta = False
         seconds = time.time() - t0
         curve = rec.values[:]
-        losses = []
-        for tok in _LOSS_RE.findall(buf.getvalue()):
-            try:
-                losses.append(float(tok))
-            except ValueError:
-                losses.append(float("nan"))
-        nonfinite = any(not math.isfinite(v) for v in losses)
+        losses, nonfinite = parse_losses(buf.getvalue())
         leaf = {"schema": LEAF_SCHEMA, "perm": r["perm"], "arm": r["arm"], "seed": r["seed"], "steps": r["steps"],
                 "h": r["h"], "perm_derivation": None if r["perm"] == ANCHOR_PERM else derivation,
                 "beacon": None if r["perm"] == ANCHOR_PERM else beacon,
@@ -804,9 +844,10 @@ def _fsynced_write(path: Path, data: bytes, mode: str) -> None:
 def write_leaf(r: dict, leaf: dict) -> Path:
     """PREREG section 15.3: the log line is appended and fsynced, then the leaf is written to <leaf>.tmp, fsynced and
     renamed into place. A crash between the two leaves a log line with no leaf; the night re-runs that run and the
-    receipt lists the name under leaf_chain.rewrites. No crash leaves a leaf that the log does not name."""
+    receipt lists the name under leaf_chain.rewrites. No crash leaves a leaf that the log does not name. The leaf
+    is strict JSON (strict_json)."""
     RUNS_DIR.mkdir(exist_ok=True)
-    raw = json.dumps(leaf, indent=1).encode("utf-8")
+    raw = strict_json(leaf).encode("utf-8")
     path = leaf_path(r)
     entries = _read_chain()
     prev = entries[-1]["entry_id"] if entries else "0" * 64
@@ -838,6 +879,7 @@ def run_night(args) -> int:
         raise Refusal(f"night {args.night} runs the held-out permutations: give --beacon <hex> from a styxx.clock "
                       f"verify line reading ANCHORED for this PREREG, --anchors <anchors.jsonl>, or --fallback-perms")
     pre = preflight_pure()
+    _read_chain()           # a torn leaf log is refused here, before a run trains, not by write_leaf after one has
     if not SMOKE_JSON.exists():
         raise Refusal(f"{SMOKE_JSON.name} is absent: run --smoke before a night (it measures the per-run time)")
     smoke_rec = json.loads(SMOKE_JSON.read_text(encoding="utf-8"))
@@ -896,7 +938,7 @@ def smoke(args) -> int:
            "projected_min_per_4000": round(projected, 2), "measured_min_per_4000_2026_10_11": PER_RUN_MIN_MEASURED,
            "refuse_above_min": PER_RUN_MIN_REFUSE, "verdict": v.verdict, "gates_sha256": v.gates_sha256,
            "prereg_commit": v.prereg_commit, "wall_clock": _now()}
-    SMOKE_JSON.write_text(json.dumps(out, indent=1), encoding="utf-8")
+    SMOKE_JSON.write_text(strict_json(out), encoding="utf-8")
     print(f"smoke: projected {out['projected_min_per_4000']} min per 4000-step run; verdict {v.verdict}; wrote {SMOKE_JSON.name}")
     return 0
 
@@ -931,7 +973,7 @@ def aggregate(args) -> int:
     except (PrologueError, GateSpecError) as e:              # an uncommitted or edited PREREG scores nothing; say so
         out.update({"verdict": None, "scoring_refused": f"{type(e).__name__}: {e}"})
     out["wall_clock"] = _now()
-    RESULT_JSON.write_text(json.dumps(out, indent=1), encoding="utf-8")
+    RESULT_JSON.write_text(strict_json(out), encoding="utf-8")
     print(json.dumps({"result": out["result"], "plumbing": out["plumbing"], "reported": out["reported"]}, indent=1))
     print(f"\n===== VERDICT: {out.get('verdict')} =====  wrote {RESULT_JSON.name}")
     return 0
