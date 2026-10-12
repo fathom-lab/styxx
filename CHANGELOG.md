@@ -7,6 +7,80 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — a diffgate record names the build and runtime that wrote it: `build` and `runtime` after the eleven content keys (identity phase 2)
+
+**Phase 2 of the design the operator approved on 2026-10-11**, after phase 1 below. The operator waived
+the five-file cap for this phase (eight files). It touches nine: `styxx/diffgate.py`, `tests/_p2a_ref.py`,
+`web/gate/differential/py_side.py`, `web/gate/README.md`, `web/gate/diffgate.js`,
+`web/gate/bookmarklet_src.js`, `tests/test_diffgate_record_identity.py` (new) and this file, the eight the
+design lists, and `tests/test_instrument_identity.py`, phase 1's own test file, four of whose tests
+asserted that the writer names nothing (below). No committed capsule, receipt, conformance vector or
+charon line is touched, and no line is appended to the log.
+
+- **The record.** `DiffGate.to_dict()` writes the eleven content keys in their v0 order, `"diffgate": "v0"`
+  still the format key of the content, and then `build` and `runtime` from
+  `styxx.instrument.record_identity` over the reader's own file, `_IDENTITY_FILE`, captured at import and
+  never looked up by name. The identity is computed once per process, at the earliest record, and copied
+  into every record; it is not a field of `DiffGate`, so `DiffGate(...)`, `vars(g)` and the PATH-2a
+  overlay's APPLY, which edits claims and the verdict only, cannot set or move it. It names the sha256 of
+  five module files (CRLF read as LF), the styxx version string (recorded, never compared), the
+  interpreter's implementation and version, `unicodedata.unidata_version` and a case-table floor; no path
+  and no `sys.version`. Timed once on this box (CPython 3.12.10, Windows 11), three runs: the computation
+  reads 319,831 bytes over the five files in 1.9 to 3.1 ms, and each copy into a record costs 9 to 14 µs.
+- **The CLI.** `--out` writes the record with the identity and no other change. `_report` prints one more
+  line, last: `instrument: styxx.diffgate <sha10> (styxx <version>) on <implementation> <version>, Unicode
+  <unicode>`, ASCII only. Every line before it is the line it was. `--demo` does not call `_report` and is
+  unchanged.
+- **Capsules.** Phase 1 left the reader ready, so `styxx/capsule.py` is not edited: a capsule minted from
+  here on embeds the live record, identity included, and seals it in `binding.gate`. Minted and verified
+  on one box it reads `same`, `ok`, with no identity advisory, and the command prints `instrument:
+  recorded <identity>; re-run here by <identity>`. The verifier 7.49.0 ships loops over its own eleven
+  live keys, every one of which such a capsule holds as minted, and the binding covers what was sealed.
+  Two honest mints of one summary and diff on two runtimes no longer share `binding.gate` (the
+  amendment's item 7): deduplicate by content.
+- **The #201 pin set moved**, as #201 moved it. `web/gate/differential/py_side.py` `PINNED`, the sha
+  `web/gate/README.md` names for the whole file, its run book's `py_side.py` line, and the comment in
+  `web/gate/diffgate.js` with its copy in `web/gate/bookmarklet_src.js` now name `ce067ec9…`, the whole
+  file (LF). `tests/_p2a_ref.py` `MAIN_PY_SHA`, the README's reader line and the comment inside the
+  PATH-2a block of `styxx/diffgate.py` name `4eb3d6f0…`, the reader the block is cut from (`68873068…`
+  plus the record naming its instrument). The JavaScript comments sit inside the port's block and
+  `bookmarklet.min.js` holds no comment, so `MAIN_JS_SHA`, the minified bookmarklet, its `href` and their
+  README lines did not move.
+- **PATH-2a comparisons (the design's section 6.1).** `tests/_p2a_ref.module_from` gives a module it builds
+  from a string the file of `styxx.diffgate` as imported, so the reconstruction and the module name one
+  identity, and no comparison is edited: not `relation` or `strict_alike`, and not one whole-record `==`
+  in `tests/test_diffgate_path2a.py` or `tests/test_diffgate_path2a_truth.py`. Without it, a string-built
+  reader names a null `styxx.diffgate` sha, never another file's bytes. `module_from` stays the only place
+  a reader is built from a string.
+- **The port's record is not changed** (the operator's O5 not taken). A Python record carries thirteen
+  keys and a port record eleven; `differential.py`, `check_pairs.js` and `path2a_recall.py` compare named
+  fields, so "0 disagreements" means what it meant.
+- **Phase 1's test file.** `tests/test_instrument_identity.py` asserted the phase-1 writer in four tests:
+  R5's live record holding no `build`, and three format-key SKEW tests reading `gate_identity.state ==
+  "unnamed"` for a capsule minted on this box. Such a capsule now names this verifier's own instrument, so
+  those read `same`; R5's supplied gate that names nothing is the live record with the identity keys
+  taken out, and one more case holds that a diverging supplied gate naming this minter's own instrument is
+  refused without "names another instrument". Its module docstring and `_Carrying`'s say so; nothing else
+  in it is edited.
+- **Measured, and held by `tests/test_diffgate_record_identity.py`.** Against `origin/main`'s
+  `styxx/diffgate.py` where this branched (`295529c6`, `09867056…`): the content keys of every record
+  are byte for byte the parent's (`json.dumps` of the eleven keys, in order) over 6,672 committed inputs
+  (the seven pinned-pair files, 3,000 regenerated fuzz pairs, 482 PATH-2a reproductions, 2,000 PATH-2a
+  fuzz and 1,000 text-seam pairs) in both strict modes, 13,344 runs, 8 of which raise the same exception
+  under both, and over the 111 PATH-2a fixtures that carry their own `--name-status` at the git door in
+  both strict modes, 222 runs: 0 differences. `_report` prints the parent's lines and then the
+  `instrument:` line, and `--out` writes the parent's bytes once the identity keys are taken out (the test
+  skips where that commit is not in the history). `DOGFOOD_session_2026_08_31.capsule.html` and
+  `HANDOFF_capsule_v02_2026_08_31.capsule.html` verify to the same result, key for key, as under a writer
+  that names nothing: DOGFOOD `ok` with no problem and one advisory, HANDOFF its one problem to the
+  character charon line seq 95 recorded, and one advisory. Lines seq 89 and 95 re-derive with no compared
+  key moved, and `python -m styxx.charon verify --log papers/charon/charon.log.jsonl --repo .` reads
+  257 lines MOVED_VERIFIER and none SAME_LINE, SKEW, DRIFT, UNRESOLVED, HEAD_MISMATCH or TAMPER, which the
+  stranger's ferry-log step allows.
+- **Not in this phase.** The Unicode-16 witness fixture (2b), charon's verifier naming its runtime (3), the
+  Action naming what it ran (4) and the bookmarklet panel measuring its engine (5, deferred).
+  `external1_harness.py` keeps its hand-stamped `"v0"`.
+
 ## [Unreleased] — capsule v0.2 layer 2 compares a record's instrument identity apart from its content; `styxx.instrument` names the build and runtime a diffgate record is written and re-run under
 
 **Phase 1 of the design the operator approved on 2026-10-11** (item 3 of step zero of the 2026-10-06
