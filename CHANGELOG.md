@@ -28,7 +28,7 @@ committed RESULT says.
   (predictions with the argmax of the scores or the sign of the log-odds, `correct` with prediction ==
   label, `margin` with the scores). Readout, chance and guard print on every row.
 - **Per model, from per-item bits:** chance-normalised accuracy and exact balance per cell (a cell out of
-  balance reads BALANCE_BROKEN; a D0 half out of balance fails the screen), a 95% paired item-bootstrap
+  balance reads BALANCE_BROKEN; a screen half out of balance fails the screen), a 95% paired item-bootstrap
   interval (one resample per replicate across every cell, across the two families at one distance, or per
   cell, as the receipt declares its pairing; an undeclared pairing prints as assumed and flags
   PAIRING_ASSUMED), the degeneracy guard and the rank AUROC per cell (one-versus-rest over the slots under
