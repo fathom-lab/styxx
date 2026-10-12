@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""run_pmnist_robustness.py -- frozen by PREREG_pmnist_robustness_2026_10_11 (sealed blob 18aa265c..., SEALS row 8).
+"""run_pmnist_robustness.py -- frozen by PREREG_pmnist_robustness_2026_10_11 (sealed blob 2068e673..., SEALS row 7) and
+read with CORRECTION_prereg_pmnist_robustness_2026_10_12 (sealed blob e591516f..., SEALS row 7b).
 
 Builds on the two committed runners WITHOUT editing them:
   * run_pmnist_ablation.py  (R): data, FREE and CLAMPED arms, the training loop, the evaluation, the scan red team
@@ -13,9 +14,12 @@ duration of a run (the committed function still computes every number).
   python run_pmnist_robustness.py --derive-perms [--beacon <64 hex>]      prints the five held-out permutations
   python run_pmnist_robustness.py --smoke                                 INVALID-only; measures the per-run time
   python run_pmnist_robustness.py --night 1 [--accept-schedule]           stage A + CLAMPED-LONG (no beacon needed)
-  python run_pmnist_robustness.py --night 2 --beacon <hex> | --anchors papers/charon/anchors.jsonl | --fallback-perms
+  python run_pmnist_robustness.py --night 2 --anchors papers/charon/anchors.jsonl [--beacon <hex>] | --fallback-perms
   python run_pmnist_robustness.py --night 3 ... (same)                    stage D
   python run_pmnist_robustness.py --aggregate                             scores every leaf through styxx.protocol
+
+Nights 2 and 3 wait for SEALS rows 7 and 7b to read ANCHORED, which only --anchors checks (the CORRECTION's
+section 5); the beacon is row 7's. Night 1 and the smoke need neither.
 
 Nothing here trains until --night or --smoke is given, and neither starts without CUDA and 6 GiB free. No model
 and no training loop is defined in this file. The pure functions (hashing, derivation, schedule, aggregate
@@ -41,10 +45,16 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 
 PREREG = HERE / "PREREG_pmnist_robustness_2026_10_11.md"
-# the sha256 of the git blob of the PREREG as amended before any data (its section 15; SEALS_2026_09_13.md row 8,
-# frozen at 98072bed; row 7, 2068e673..., is the same file before section 15 and is superseded); the PREREG on disk,
-# LF-normalised, must hash to this or the runner refuses before data (section 9.4 item 3)
-PREREG_BLOB_SHA256 = "18aa265c248fff55f49e71286f7e8baa2c54a9fc0e81dde3f397b83656776a72"
+# the sha256 of the git blob of the PREREG as frozen at 3598e59d (SEALS_2026_09_13.md row 7); the PREREG is not edited.
+# Row 8 (18aa265c..., the same file with a section 15 appended at 98072bed) was withdrawn before any anchor and is
+# not to be anchored: its section 15 is restated in the CORRECTION below. The PREREG on disk, LF-normalised, must
+# hash to this or the runner refuses before data (section 9.4 item 3)
+PREREG_BLOB_SHA256 = "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e"
+CORRECTION = HERE / "CORRECTION_prereg_pmnist_robustness_2026_10_12.md"
+# the sha256 of the git blob of the CORRECTION sealed beside the PREREG (SEALS row 7b, frozen at d90da693); section
+# 9.4 item 3 is read as naming both files (the CORRECTION's section 5), so the CORRECTION on disk, LF-normalised,
+# must hash to this too
+CORRECTION_BLOB_SHA256 = "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1"
 # LF-normalised git blobs of the imported runners, as frozen in the PREREG's section 1
 FROZEN_RUNNERS = {
     "run_pmnist_ablation.py": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
@@ -67,7 +77,7 @@ H_DEFAULT = 64
 ANCHOR_SEEDS = (0, 1, 2, 3, 4)
 RERUN_SEEDS = (0, 1)                                # the receipt's seeds: the determinism re-run (reported); by value
                                                     # they enter degenerate_fraction only, and like every leaf they
-                                                    # count toward G_P_plumbing (PREREG section 15.1)
+                                                    # count toward G_P_plumbing (the CORRECTION's section 1)
 NEW_SEEDS = (2, 3, 4)                               # the gated anchor test
 DERIVED_SEEDS = (0, 1, 2)
 LONG_SEEDS = {"free": (0, 1), "clamped": (0, 1, 2)}
@@ -153,17 +163,33 @@ def assert_data_pin(path: Path = DATA_FILE) -> dict:
     return d
 
 
-def check_prereg_bytes(path: Path = PREREG) -> dict:
+def _check_sealed(path: Path, sealed: str) -> dict:
     p = Path(path)
     got = lf_sha256(p) if p.exists() else None
-    return {"path": _shown(p), "lf_sha256": got, "sealed": PREREG_BLOB_SHA256, "ok": got == PREREG_BLOB_SHA256}
+    return {"path": _shown(p), "lf_sha256": got, "sealed": sealed, "ok": got == sealed}
+
+
+def check_prereg_bytes(path: Path = PREREG) -> dict:
+    return _check_sealed(path, PREREG_BLOB_SHA256)
 
 
 def assert_prereg_bytes(path: Path = PREREG) -> dict:
     d = check_prereg_bytes(path)
     if not d["ok"]:
-        raise Refusal(f"the PREREG on disk hashes to {d['lf_sha256']}, not the sealed blob {PREREG_BLOB_SHA256}; "
-                      f"an edited PREREG scores nothing")
+        raise Refusal(f"the PREREG on disk hashes to {d['lf_sha256']}, not the sealed blob {PREREG_BLOB_SHA256} "
+                      f"(SEALS row 7); an edited PREREG scores nothing")
+    return d
+
+
+def check_correction_bytes(path: Path = CORRECTION) -> dict:
+    return _check_sealed(path, CORRECTION_BLOB_SHA256)
+
+
+def assert_correction_bytes(path: Path = CORRECTION) -> dict:
+    d = check_correction_bytes(path)
+    if not d["ok"]:
+        raise Refusal(f"the CORRECTION on disk hashes to {d['lf_sha256']}, not the sealed blob "
+                      f"{CORRECTION_BLOB_SHA256} (SEALS row 7b); an edited or absent CORRECTION scores nothing")
     return d
 
 
@@ -191,37 +217,66 @@ def fallback_perms() -> list[int]:
     return derive_perms(FALLBACK_TAG)
 
 
-def beacon_from_anchors(path: str | Path, digest: str = PREREG_BLOB_SHA256) -> dict:
-    """Run styxx.clock.verify over the anchors file (network) and take the beacon of the ANCHORED sealed-prereg
-    line whose digest is this PREREG's blob. Anything else is a refusal that names what the line read."""
-    sys.path.insert(0, str(ROOT))
-    from styxx.clock import verify
-    rows = verify(str(path))
+def _anchored(rows: list[dict], digest: str, row: str) -> list[dict]:
+    """The sealed-prereg lines for `digest` that read ANCHORED with a beacon; a refusal naming what they read when
+    there is none."""
     mine = [r for r in rows if r.get("kind") == "sealed-prereg" and r.get("digest") == digest]
     if not mine:
-        raise Refusal(f"{path} has no sealed-prereg line for digest {digest[:12]}...; the beacon derivation needs "
-                      f"the anchor (or declare --fallback-perms, which is labelled as such)")
-    r = mine[0]
-    if r.get("status") != "ANCHORED" or not is_beacon_hex(r.get("beacon") or ""):
-        raise Refusal(f"the sealed-prereg line for {digest[:12]}... reads {r.get('status')} "
-                      f"({r.get('detail') or 'no detail'}); nights 2 and 3 do not start before it reads ANCHORED")
+        raise Refusal(f"the anchors file has no sealed-prereg line for SEALS row {row} ({digest[:12]}...); nights 2 and "
+                      f"3 do not start before rows 7 and 7b both read ANCHORED (or declare --fallback-perms, which is "
+                      f"labelled as such)")
+    good = [r for r in mine if r.get("status") == "ANCHORED" and is_beacon_hex(r.get("beacon") or "")]
+    if not good:
+        seen = "; ".join(f"{r.get('status')} ({r.get('detail') or 'no detail'})" for r in mine)
+        raise Refusal(f"no sealed-prereg line for SEALS row {row} ({digest[:12]}...) reads ANCHORED: {seen}; nights 2 "
+                      f"and 3 do not start before rows 7 and 7b both read ANCHORED")
+    return good
+
+
+def beacon_from_rows(rows: list[dict], prereg_digest: str = PREREG_BLOB_SHA256,
+                     correction_digest: str = CORRECTION_BLOB_SHA256) -> dict:
+    """The CORRECTION's section 5, over styxx.clock.verify's rows: a line reading ANCHORED for row 7's digest and one
+    for row 7b's, or a refusal; the beacon is row 7's (its earliest memo's slot, which is what ANCHORED certifies), and
+    row 7 lines that read ANCHORED with different beacons are refused. Pure: the network is verify's."""
+    seven = _anchored(rows, prereg_digest, "7")
+    _anchored(rows, correction_digest, "7b")
+    beacons = sorted({r["beacon"] for r in seven})
+    if len(beacons) > 1:
+        raise Refusal(f"sealed-prereg lines for SEALS row 7 read ANCHORED with different beacons ({beacons}); the "
+                      f"seal's beacon is ambiguous")
+    r = seven[0]
     return {"beacon": r["beacon"], "beacon_b58": r.get("beacon_b58"), "slot": r.get("slot"), "tx": r.get("tx"),
             "block_time": r.get("block_time"), "rpc": r.get("rpc")}
 
 
-def resolve_perms(beacon: str | None, anchors: str | None, fallback: bool) -> dict:
-    """What --beacon / --anchors / --fallback-perms mean, in one place; returns derivation, beacon, perms."""
-    given = sum(bool(x) for x in (beacon, anchors, fallback))
-    if given > 1:
-        raise Refusal("give one of --beacon, --anchors, --fallback-perms, not several")
-    if beacon:
-        if not is_beacon_hex(beacon):
-            raise Refusal("--beacon must be the 64 lowercase hex characters styxx.clock verify prints as beacon=")
-        return {"derivation": DERIVATION_BEACON, "beacon": beacon, "perms": derive_perms(beacon), "anchor_line": None}
+def beacon_from_anchors(path: str | Path) -> dict:
+    """Run styxx.clock.verify over the anchors file (network) and apply beacon_from_rows."""
+    sys.path.insert(0, str(ROOT))
+    from styxx.clock import verify
+    return beacon_from_rows(verify(str(path)))
+
+
+def resolve_perms(beacon: str | None, anchors: str | None, fallback: bool, *, night: bool = False) -> dict:
+    """What --beacon / --anchors / --fallback-perms mean, in one place; returns derivation, beacon, perms.
+    `night` is True for nights 2 and 3: there a beacon is taken only from --anchors, where rows 7 and 7b are verified
+    (the CORRECTION's section 5), and a --beacon beside it must equal row 7's."""
+    if fallback and (beacon or anchors):
+        raise Refusal("--fallback-perms is never mixed with a beacon: give --fallback-perms alone, or --anchors")
+    if beacon and not is_beacon_hex(beacon):
+        raise Refusal("--beacon must be the 64 lowercase hex characters styxx.clock verify prints as beacon=")
     if anchors:
         line = beacon_from_anchors(anchors)
+        if beacon and beacon != line["beacon"]:
+            raise Refusal(f"--beacon {beacon} is not the beacon of SEALS row 7's ANCHORED line ({line['beacon']}, "
+                          f"tx {line.get('tx')})")
         return {"derivation": DERIVATION_BEACON, "beacon": line["beacon"], "perms": derive_perms(line["beacon"]),
                 "anchor_line": line}
+    if beacon:
+        if night:
+            raise Refusal("--beacon alone does not start night 2 or 3: rows 7 and 7b must both read ANCHORED, which "
+                          "only --anchors checks (the CORRECTION's section 5); give --anchors "
+                          "papers/charon/anchors.jsonl, with --beacon beside it if you want it compared")
+        return {"derivation": DERIVATION_BEACON, "beacon": beacon, "perms": derive_perms(beacon), "anchor_line": None}
     if fallback:
         return {"derivation": DERIVATION_FALLBACK, "beacon": None, "perms": fallback_perms(), "anchor_line": None}
     return {"derivation": None, "beacon": None, "perms": None, "anchor_line": None}
@@ -330,10 +385,10 @@ def _nulled(obj, path: str, found: list):
 
 
 def strict_json(obj: dict) -> str:
-    """The text a leaf, the smoke receipt and the receipt are written as (indent=1). A bare NaN is not JSON and
-    section 15.3 commits the leaves and the receipt, so every NaN or infinity is written as null and its path is
-    listed under `nonfinite_fields`: nothing is replaced silently, and no night stops over it. A training loss is
-    the only number a run is known to print non-finite; parse_losses already writes it as null."""
+    """The text a leaf, the smoke receipt and the receipt are written as (indent=1). A bare NaN is not JSON and the
+    CORRECTION's section 3 commits the leaves and the receipt, so every NaN or infinity is written as null and its
+    path is listed under `nonfinite_fields`: nothing is replaced silently, and no night stops over it. A training
+    loss is the only number a run is known to print non-finite; parse_losses already writes it as null."""
     found: list = []
     clean = _nulled(obj, "", found)
     if found:
@@ -557,6 +612,7 @@ def aggregate_leaves(leaves: list[dict], perms: list[int] | None, derivation: st
                          if {k: (l.get("imports") or {}).get(k, {}).get("lf_sha256") for k in FROZEN_RUNNERS} != FROZEN_RUNNERS)
     data_bad = sorted(n for n, l in by_name.items() if l.get("data_sha256") != DATA_SHA256)
     prereg_bad = sorted(n for n, l in by_name.items() if l.get("prereg_blob_sha256") != PREREG_BLOB_SHA256)
+    correction_bad = sorted(n for n, l in by_name.items() if l.get("correction_blob_sha256") != CORRECTION_BLOB_SHA256)
     preflight_bad = sorted(n for n, l in by_name.items() if l.get("preflight_ok") is not True)
     curves_bad = sorted(n for n, l in by_name.items()
                         if len(l.get("curve") or []) != l["steps"] // EVAL_EVERY or l.get("curve_every") != EVAL_EVERY)
@@ -573,15 +629,17 @@ def aggregate_leaves(leaves: list[dict], perms: list[int] | None, derivation: st
     plumbing = {
         "leaves_complete": not missing and not extra and len(expected_names) == 65,
         "read_back_ok": not rb_bad, "imports_ok": not imports_bad, "data_ok": not data_bad,
-        "prereg_ok": not prereg_bad, "preflight_ok": not preflight_bad, "curves_ok": not curves_bad,
+        "prereg_ok": not prereg_bad, "correction_ok": not correction_bad, "preflight_ok": not preflight_bad,
+        "curves_ok": not curves_bad,
         "no_final_mismatch": not mismatch, "derivation_consistent": derivation_consistent,
         "perms_match_derivation": perms_ok, "chain_ok": bool(chain.get("ok")),
         "metrics_finite": not nonfinite,
         "disk_runners_ok": bool(disk.get("runners")), "disk_data_ok": bool(disk.get("data")),
-        "disk_prereg_ok": bool(disk.get("prereg")),
+        "disk_prereg_ok": bool(disk.get("prereg")), "disk_correction_ok": bool(disk.get("correction")),
     }
     plumbing_detail = {"missing": missing, "extra": extra, "read_back_bad": rb_bad, "imports_bad": imports_bad,
-                       "data_bad": data_bad, "prereg_bad": prereg_bad, "preflight_bad": preflight_bad,
+                       "data_bad": data_bad, "prereg_bad": prereg_bad, "correction_bad": correction_bad,
+                       "preflight_bad": preflight_bad,
                        "curves_bad": curves_bad, "curve_final_mismatch": mismatch,
                        "derivations_seen": sorted(str(d) for d in derivations), "nonfinite_metrics": nonfinite}
     res["plumbing_ok"] = 1.0 if all(plumbing.values()) else 0.0
@@ -590,6 +648,7 @@ def aggregate_leaves(leaves: list[dict], perms: list[int] | None, derivation: st
 
     out = {
         "prereg": PREREG.name, "prereg_blob_sha256": PREREG_BLOB_SHA256,
+        "correction": CORRECTION.name, "correction_blob_sha256": CORRECTION_BLOB_SHA256,
         "config": {"steps_main": STEPS_MAIN, "steps_long": STEPS_LONG, "eval_every": EVAL_EVERY, "h": H_DEFAULT,
                    "anchor_perm": ANCHOR_PERM, "rerun_seeds": list(RERUN_SEEDS), "new_seeds": list(NEW_SEEDS),
                    "derived_seeds": list(DERIVED_SEEDS), "long_seeds": {k: list(v) for k, v in LONG_SEEDS.items()},
@@ -627,7 +686,7 @@ def aggregate_leaves(leaves: list[dict], perms: list[int] | None, derivation: st
 
 def _load_runners():
     """Import the two committed runners (they import torch). Called only after every check that needs no torch has
-    passed (PREREG section 15.4); a box without torch is refused by name, not by a traceback."""
+    passed (the CORRECTION's section 4); a box without torch is refused by name, not by a traceback."""
     if str(HERE) not in sys.path:
         sys.path.insert(0, str(HERE))
     if str(ROOT) not in sys.path:
@@ -686,11 +745,13 @@ def assert_rng_sharing(R, U, seeds=range(5)) -> dict:
 
 
 def preflight_pure() -> dict:
-    """PREREG section 9.4 items 1-3, with no torch imported: the two runner blobs, the data pin, the sealed PREREG,
-    and styxx.protocol's own checks (Experiment constructs, no vacuous gate, check_metrics resolves every path)."""
+    """PREREG section 9.4 items 1-3, with no torch imported: the two runner blobs, the data pin, the sealed PREREG and
+    the sealed CORRECTION (rows 7 and 7b), and styxx.protocol's own checks (Experiment constructs, no vacuous gate,
+    check_metrics resolves every path)."""
     sys.path.insert(0, str(ROOT))
     from styxx.protocol import Experiment, PrologueError, GateSpecError
-    pre = {"imports": assert_frozen_runners(HERE), "data": assert_data_pin(DATA_FILE), "prereg": assert_prereg_bytes(PREREG)}
+    pre = {"imports": assert_frozen_runners(HERE), "data": assert_data_pin(DATA_FILE),
+           "prereg": assert_prereg_bytes(PREREG), "correction": assert_correction_bytes(CORRECTION)}
     try:
         exp = Experiment(PREREG, repo_root=ROOT)
     except (PrologueError, GateSpecError) as e:
@@ -706,8 +767,8 @@ def preflight_pure() -> dict:
 
 
 def preflight_torch(R, U, pre: dict, *, want_gpu: bool = True) -> dict:
-    """PREREG section 9.4 items 7, 4 and 5, in that order (section 15.4): the GPU guard runs before any tensor is
-    placed on the device, and R.redteam()'s scan check is the earliest tensor the run puts on the card."""
+    """PREREG section 9.4 items 7, 4 and 5, in that order (the CORRECTION's section 4): the GPU guard runs before any
+    tensor is placed on the device, and R.redteam()'s scan check is the earliest tensor the run puts on the card."""
     for k, v in COMMITTED.items():
         if getattr(R, k) != v:
             raise Refusal(f"R.{k} = {getattr(R, k)!r}, committed value {v!r}")
@@ -801,6 +862,7 @@ def one_run(R, U, r: dict, data, pre: dict, derivation: str | None, beacon: str 
                 "within_model_theta0_reliance": reliance, "seconds": round(seconds, 1),
                 "imports": pre["imports"], "data_sha256": pre["data"]["sha256"],
                 "prereg_blob_sha256": pre["prereg"]["lf_sha256"], "prereg_commit": pre.get("prereg_commit"),
+                "correction_blob_sha256": pre["correction"]["lf_sha256"],
                 "preflight_ok": pre.get("preflight_ok") is True, "gpu": pre.get("gpu"), "torch": torch.__version__,
                 "smoke": bool(R.SMOKE), "wall_clock": _now()}
         del m
@@ -815,7 +877,7 @@ def one_run(R, U, r: dict, data, pre: dict, derivation: str | None, beacon: str 
 
 def _read_chain() -> list[dict]:
     """The leaf log, line by line. A torn last line (a crash inside an append) is refused by name, never repaired
-    silently (PREREG section 15.3)."""
+    silently (the CORRECTION's section 3)."""
     if not CHAIN_FILE.exists():
         return []
     text = CHAIN_FILE.read_text(encoding="utf-8")
@@ -842,10 +904,10 @@ def _fsynced_write(path: Path, data: bytes, mode: str) -> None:
 
 
 def write_leaf(r: dict, leaf: dict) -> Path:
-    """PREREG section 15.3: the log line is appended and fsynced, then the leaf is written to <leaf>.tmp, fsynced and
-    renamed into place. A crash between the two leaves a log line with no leaf; the night re-runs that run and the
-    receipt lists the name under leaf_chain.rewrites. No crash leaves a leaf that the log does not name. The leaf
-    is strict JSON (strict_json)."""
+    """The CORRECTION's section 3: the log line is appended and fsynced, then the leaf is written to <leaf>.tmp,
+    fsynced and renamed into place. A crash between the two leaves a log line with no leaf; the night re-runs that run
+    and the receipt lists the name under leaf_chain.rewrites. No crash leaves a leaf that the log does not name. The
+    leaf is strict JSON (strict_json)."""
     RUNS_DIR.mkdir(exist_ok=True)
     raw = strict_json(leaf).encode("utf-8")
     path = leaf_path(r)
@@ -874,17 +936,19 @@ def _data_for(R, perm: int, h: int, cache: dict):
 
 
 def run_night(args) -> int:
-    """PREREG section 15.4's order: every check that needs no torch, then the runners, the GPU guard, the red team."""
-    if args.night in (2, 3) and not (args.beacon or args.anchors or args.fallback_perms):
-        raise Refusal(f"night {args.night} runs the held-out permutations: give --beacon <hex> from a styxx.clock "
-                      f"verify line reading ANCHORED for this PREREG, --anchors <anchors.jsonl>, or --fallback-perms")
+    """The CORRECTION's section 4: every check that needs no torch, then the runners, the GPU guard, the red team."""
+    held_out = args.night in (2, 3)
+    if held_out and not (args.anchors or args.fallback_perms):
+        raise Refusal(f"night {args.night} runs the held-out permutations and does not start before SEALS rows 7 and 7b "
+                      f"both read ANCHORED: give --anchors papers/charon/anchors.jsonl (verified here; the beacon is row "
+                      f"7's), or --fallback-perms")
     pre = preflight_pure()
     _read_chain()           # a torn leaf log is refused here, before a run trains, not by write_leaf after one has
     if not SMOKE_JSON.exists():
         raise Refusal(f"{SMOKE_JSON.name} is absent: run --smoke before a night (it measures the per-run time)")
     smoke_rec = json.loads(SMOKE_JSON.read_text(encoding="utf-8"))
     per_4000 = float(smoke_rec["projected_min_per_4000"])
-    sel = resolve_perms(args.beacon, args.anchors, args.fallback_perms)
+    sel = resolve_perms(args.beacon, args.anchors, args.fallback_perms, night=held_out)
     todo = [r for r in schedule(args.night, sel["perms"], args.width) if not leaf_path(r).exists()]
     hours = sum(per_run_minutes(r, per_4000) for r in todo) / 60.0
     print(f"night {args.night}{' (width stage)' if args.width else ''}: {len(todo)} runs to do, projected {hours:.1f} h "
@@ -933,7 +997,8 @@ def smoke(args) -> int:
     secs = [l["seconds"] for l in leaves]
     projected = float(np.median(secs)) * (STEPS_MAIN / R.STEPS) / 60.0
     v = exp.score({}, smoke=True)
-    out = {"smoke": True, "prereg": PREREG.name, "prereg_blob_sha256": PREREG_BLOB_SHA256, "preflight": pre,
+    out = {"smoke": True, "prereg": PREREG.name, "prereg_blob_sha256": PREREG_BLOB_SHA256,
+           "correction": CORRECTION.name, "correction_blob_sha256": CORRECTION_BLOB_SHA256, "preflight": pre,
            "runs": leaves, "seconds_per_run": secs, "steps_per_run": R.STEPS,
            "projected_min_per_4000": round(projected, 2), "measured_min_per_4000_2026_10_11": PER_RUN_MIN_MEASURED,
            "refuse_above_min": PER_RUN_MIN_REFUSE, "verdict": v.verdict, "gates_sha256": v.gates_sha256,
@@ -949,7 +1014,7 @@ def aggregate(args) -> int:
     leaves = [json.loads(p.read_text(encoding="utf-8")) for p in sorted(RUNS_DIR.glob("p*.json"))] if RUNS_DIR.exists() else []
     leaves = [l for l in leaves if not l.get("smoke")]
     # each leaf hashed with CRLF folded to LF (a leaf as written holds no CR byte), so a checkout made before the -text
-    # pin of section 15.3 still matches the log: the rule section 1 applies to the imported runners
+    # pin of the CORRECTION's section 3 still matches the log: the rule the PREREG's section 1 applies to the runners
     current = ({p.name: lf_sha256(p) for p in sorted(RUNS_DIR.glob("p*.json"))} if RUNS_DIR.exists() else {})
     chain = verify_chain(_read_chain(), current)
     sel = resolve_perms(args.beacon, args.anchors, args.fallback_perms)
@@ -962,7 +1027,8 @@ def aggregate(args) -> int:
                    fallback_perms() if d == DERIVATION_FALLBACK else None, "anchor_line": None}
     perms = [ANCHOR_PERM] + (sel["perms"] or [])
     disk = {"runners": all(v["ok"] for v in check_frozen_runners(HERE).values()),
-            "data": check_data_pin(DATA_FILE)["ok"], "prereg": check_prereg_bytes(PREREG)["ok"]}
+            "data": check_data_pin(DATA_FILE)["ok"], "prereg": check_prereg_bytes(PREREG)["ok"],
+            "correction": check_correction_bytes(CORRECTION)["ok"]}
     out = aggregate_leaves(leaves, perms, sel["derivation"], sel["beacon"], chain, disk)
     out["anchor_line"] = sel.get("anchor_line")
     try:
@@ -985,8 +1051,10 @@ def main(argv=None) -> int:
     ap.add_argument("--derive-perms", action="store_true")
     ap.add_argument("--night", type=int)
     ap.add_argument("--aggregate", action="store_true")
-    ap.add_argument("--beacon", help="64 lowercase hex: the beacon styxx.clock verify prints for this PREREG's seal")
-    ap.add_argument("--anchors", help="papers/charon/anchors.jsonl: verified here, the beacon taken from this PREREG's line")
+    ap.add_argument("--beacon", help="64 lowercase hex: the beacon styxx.clock verify prints for SEALS row 7; for night "
+                    "2 or 3 only beside --anchors, which must agree")
+    ap.add_argument("--anchors", help="papers/charon/anchors.jsonl: verified here; rows 7 and 7b must read ANCHORED, and "
+                    "the beacon is taken from row 7's line")
     ap.add_argument("--fallback-perms", action="store_true", help="the labelled sha256-of-tag derivation (no anchor)")
     ap.add_argument("--accept-schedule", action="store_true")
     ap.add_argument("--width", action="store_true", help="optional stage E (decision 4), reported only")

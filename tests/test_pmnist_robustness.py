@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""PREREG_pmnist_robustness_2026_10_11 and run_pmnist_robustness.py, on CPU, with no data and no GPU.
+"""PREREG_pmnist_robustness_2026_10_11, its CORRECTION_prereg_pmnist_robustness_2026_10_12 and run_pmnist_robustness.py,
+on CPU, with no data and no GPU.
 
 What is pinned here: the gates block parses through the lab's own scanner and every one of the 1,024 boolean
 assignments reaches a row; `Experiment` scores a receipt of the PREREG's shape to each of the thirteen verdicts and
@@ -9,12 +10,14 @@ fallback list equals the one the PREREG prints; the aggregate arithmetic on synt
 numbers, counts a collapsed FREE run as 0 in the floor, excludes a collapsed decay run from the gap, maps a missing
 leaf, a foreign import hash, a read-back mismatch and a non-finite metric to plumbing_ok = 0; the receipt's seeds 0
 and 1 enter degenerate_fraction by value and G_P_plumbing as leaves, and no other gated metric; the _mnist.npz pin
-refuses a different file; the PREREG's section 15 is appended to the row-7 bytes and moves no gate; the sealed digest
-in SEALS row 8 is the committed blob's, row 7 stands unedited and only row 8's memo is listed; the leaf log is written
+refuses a different file; the PREREG is SEALS row 7's blob byte for byte, with no section 15, and the CORRECTION is
+row 7b's, frozen alone; SEALS lists the memos of rows 7 and 7b and not row 8's, which is withdrawn; nights 2 and 3
+take their beacon from row 7's ANCHORED line only when row 7b's reads ANCHORED too, and a --beacon alone starts
+neither; a leaf or a disk copy of the CORRECTION that is not row 7b's reads plumbing 0; the leaf log is written
 before its leaf, and a torn log is refused by name, by a night before any run trains; a non-finite loss is written
 as null and every file the runner writes is strict JSON; the GPU guard runs before the red team touches the device;
 every refusal that needs no torch happens with torch unimportable; the leaves, the log and the receipt are
-committable, and the leaves and the log byte-pinned; and none of the three files prints the words the lab never
+committable, and the leaves and the log byte-pinned; and none of the four files prints the words the lab never
 prints. Nothing here loads a checkpoint,
 reads the data or touches the card, and nothing here needs a GPU, torch, _mnist.npz or a path outside the checkout:
 a test that needs one of them skips when it is absent.
@@ -42,10 +45,16 @@ RUNNER = FREQ / "run_pmnist_robustness.py"
 SEALS = ROOT / "papers" / "checksum" / "SEALS_2026_09_13.md"
 TEST_FILE = Path(__file__).resolve()
 REL_PREREG = "papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md"
-# SEALS row 7: the PREREG before its section 15 (frozen at 3598e59d), superseded by row 8 and never to be anchored
+CORRECTION = FREQ / "CORRECTION_prereg_pmnist_robustness_2026_10_12.md"
+REL_CORRECTION = "papers/frequency-resonance/CORRECTION_prereg_pmnist_robustness_2026_10_12.md"
+# SEALS row 7: the PREREG as frozen at 3598e59d and not edited (56,960 bytes); its slot is the beacon
 ROW7_SHA256 = "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e"
 ROW7_BYTES = 56960
-# the gates block's sha256 as styxx.protocol computes it, before and after section 15
+# SEALS row 7b: the CORRECTION sealed beside it, frozen at d90da693 (the commit that adds it and nothing else)
+ROW7B_SHA256 = "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1"
+# SEALS row 8: the PREREG with a section 15 appended at 98072bed; withdrawn before any anchor, never to be anchored
+ROW8_SHA256 = "18aa265c248fff55f49e71286f7e8baa2c54a9fc0e81dde3f397b83656776a72"
+# the gates block's sha256 as styxx.protocol computes it, at 3598e59d, at 98072bed and now
 GATES_SHA256 = "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
 
 
@@ -252,6 +261,17 @@ def test_prereg_bytes_check_refuses_an_edited_copy(tmp_path):
     copy.write_bytes(PREREG.read_bytes().replace(b'"value": 0.15', b'"value": 0.05', 1))
     with pytest.raises(RB.Refusal, match="sealed blob"):
         RB.assert_prereg_bytes(copy)
+    # the CORRECTION the same way: a CRLF copy is its blob, an edited or absent one is refused by name
+    corr = tmp_path / CORRECTION.name
+    lf = CORRECTION.read_bytes().replace(b"\r\n", b"\n")
+    corr.write_bytes(lf.replace(b"\n", b"\r\n"))
+    assert RB.check_correction_bytes(corr)["ok"] and RB.assert_correction_bytes(corr)["lf_sha256"] == ROW7B_SHA256
+    corr.write_bytes(lf.replace(b"**No bar moves**", b"**A bar moves**", 1))
+    assert corr.read_bytes() != lf
+    with pytest.raises(RB.Refusal, match="CORRECTION on disk"):
+        RB.assert_correction_bytes(corr)
+    with pytest.raises(RB.Refusal, match="row 7b"):
+        RB.assert_correction_bytes(tmp_path / "absent.md")
 
 
 def _git(*args):
@@ -271,55 +291,101 @@ def _seal_rows() -> dict:
     return rows
 
 
-def test_the_sealed_digest_is_the_committed_blob_and_the_disk_copy_lf_normalised():
-    assert RB.check_prereg_bytes(PREREG)["ok"], "the PREREG on disk (LF-normalised) is not the sealed bytes"
-    row = _seal_rows()["8"]
-    assert PREREG.name in row and RB.PREREG_BLOB_SHA256 in row
-    env = dict(os.environ, MSYS_NO_PATHCONV="1")
-    r = subprocess.run(["git", "-C", str(ROOT), "rev-parse", f"HEAD:{REL_PREREG}"], capture_output=True, timeout=60,
-                       env=env)
-    if r.returncode != 0:
-        pytest.skip("the PREREG is not in HEAD here")
-    blob = _git("cat-file", "blob", r.stdout.decode().strip())
-    assert hashlib.sha256(blob).hexdigest() == RB.PREREG_BLOB_SHA256, "the committed PREREG is not the sealed bytes"
-    # row 8's "frozen at" commit holds exactly these bytes (skipped on a clone too shallow to hold that commit)
+def _frozen_blob_sha256(row: str, rel: str):
+    """The sha256 of `rel`'s blob at the row's "frozen at" commit, or None on a clone too shallow to hold it."""
     frozen_at = [c.strip().strip("`") for c in row.split("|")][4]
     assert re.fullmatch(r"[0-9a-f]{8}", frozen_at), row
-    r = subprocess.run(["git", "-C", str(ROOT), "cat-file", "-p", f"{frozen_at}:{REL_PREREG}"], capture_output=True,
-                       timeout=60, env=env)
-    if r.returncode != 0:
-        pytest.skip(f"commit {frozen_at} is not in this clone")
-    assert hashlib.sha256(r.stdout).hexdigest() == RB.PREREG_BLOB_SHA256
+    r = subprocess.run(["git", "-C", str(ROOT), "cat-file", "-p", f"{frozen_at}:{rel}"], capture_output=True,
+                       timeout=60, env=dict(os.environ, MSYS_NO_PATHCONV="1"))
+    return (frozen_at, hashlib.sha256(r.stdout).hexdigest()) if r.returncode == 0 else (frozen_at, None)
 
 
-def test_section_15_is_appended_to_the_row_7_bytes_and_moves_no_gate():
+def test_the_sealed_digests_are_the_committed_blobs_and_the_disk_copies_lf_normalised():
+    # the runner pins row 7 (the PREREG) and row 7b (the CORRECTION), never row 8
+    assert (RB.PREREG_BLOB_SHA256, RB.CORRECTION_BLOB_SHA256) == (ROW7_SHA256, ROW7B_SHA256)
+    assert ROW8_SHA256 not in RUNNER.read_text(encoding="utf-8")
+    assert RB.check_prereg_bytes(PREREG)["ok"], "the PREREG on disk (LF-normalised) is not row 7's bytes"
+    assert RB.check_correction_bytes(CORRECTION)["ok"], "the CORRECTION on disk (LF-normalised) is not row 7b's bytes"
+    rows = _seal_rows()
+    env = dict(os.environ, MSYS_NO_PATHCONV="1")
+    skipped = []
+    for key, path, rel, digest in (("7", PREREG, REL_PREREG, ROW7_SHA256),
+                                   ("7b", CORRECTION, REL_CORRECTION, ROW7B_SHA256)):
+        assert path.name in rows[key] and digest in rows[key], key
+        r = subprocess.run(["git", "-C", str(ROOT), "rev-parse", f"HEAD:{rel}"], capture_output=True, timeout=60,
+                           env=env)
+        if r.returncode != 0:
+            pytest.skip(f"{rel} is not in HEAD here")
+        blob = _git("cat-file", "blob", r.stdout.decode().strip())
+        assert hashlib.sha256(blob).hexdigest() == digest, f"the committed {path.name} is not row {key}'s bytes"
+        # the row's "frozen at" commit holds exactly these bytes (skipped on a clone too shallow to hold that commit)
+        frozen_at, got = _frozen_blob_sha256(rows[key], rel)
+        if got is None:
+            skipped.append(frozen_at)
+        else:
+            assert got == digest, (key, frozen_at)
+    if skipped:
+        pytest.skip(f"commit(s) {skipped} not in this clone")
+
+
+def test_the_prereg_is_row_7s_bytes_with_no_section_15_and_the_correction_carries_it():
     lf = PREREG.read_bytes().replace(b"\r\n", b"\n")
-    assert hashlib.sha256(lf[:ROW7_BYTES]).hexdigest() == ROW7_SHA256, "the text above section 15 is not row 7's blob"
-    tail = lf[ROW7_BYTES:].decode("utf-8")
-    assert tail.startswith("\n---\n\n## 15. Amendment, before any data (2026-10-12)\n")
-    assert "```" not in tail and "<!--" not in tail                 # no second fence, nothing hidden
-    assert "56,960" in tail and ROW7_SHA256 in tail and GATES_SHA256 in tail
+    assert len(lf) == ROW7_BYTES and hashlib.sha256(lf).hexdigest() == ROW7_SHA256
+    text = lf.decode("utf-8")
+    assert "\n## 15." not in text
     from styxx.protocol import _select_gates_block
     block = _select_gates_block(PREREG.read_text(encoding="utf-8"))
     assert hashlib.sha256(block.encode("utf-8")).hexdigest() == GATES_SHA256
-    assert _select_gates_block(lf[:ROW7_BYTES].decode("utf-8")) == block
-    assert ROW7_SHA256 != RB.PREREG_BLOB_SHA256 and hashlib.sha256(lf).hexdigest() == RB.PREREG_BLOB_SHA256
+    # the CORRECTION: the precedent's status line, its seven sections in section 15's order, no second gates fence,
+    # nothing hidden, and the digests it names
+    craw = CORRECTION.read_bytes()
+    assert not craw.startswith(b"\xef\xbb\xbf") and b"\r" not in craw.replace(b"\r\n", b"")
+    c = craw.replace(b"\r\n", b"\n").decode("utf-8")
+    assert c.startswith("# CORRECTION — PREREG_pmnist_robustness_2026_10_11: ")
+    assert "The PREREG is not edited; its seal digest is\nunchanged" in c and "anchor 7b in" in c
+    heads = re.findall(r"^## (\S+) ", c, re.M)
+    assert heads == ["1.", "2.", "3.", "4.", "5.", "6.", "7.", "what"], heads
+    assert "```" not in c and "<!--" not in c
+    assert ROW7_SHA256 in c and GATES_SHA256 in c and "18aa265c" in c and ROW8_SHA256 not in c
+    assert ROW7B_SHA256 not in c                                   # a file cannot name its own digest
+    for phrase in ("row 8 is not to be anchored", "rows 7 and 7b both read ANCHORED", "2026-10-12",
+                   "CORRECTION_prereg_deploy_quant_H1_2026_09_13.md", "CORRECTION_prereg_beacon_draw_2026_09_14.md",
+                   "FREE 0.924 and 0.915", "CLAMPED 0.5529 and 0.6617", "REAL2 at seeds 0 and 1\nhas no public value",
+                   "the sixty 4000-step runs", "final accuracy unequal\nto its last curve point",
+                   "leaf log's latest entry"):
+        assert phrase in c, phrase
+    assert "already public" in c and "That is withdrawn" in c     # quoted once, as the withdrawn claim
+    assert c.count("already public") == 1
+    # the public numbers it quotes are the committed receipt's
+    pub = json.loads((FREQ / "pmnist_ablation_result.json").read_text(encoding="utf-8"))["test_acc"]
+    assert pub == {"free": [0.924, 0.915], "clamped": [0.5529, 0.6617]}
 
 
-def test_seals_row_8_supersedes_row_7_which_stands_unedited_and_only_row_8_is_a_memo():
+def test_seals_row_7b_seals_the_correction_row_8_is_withdrawn_and_the_memos_are_rows_7_and_7b():
     from styxx.clock import memo
     rows = _seal_rows()
-    r7, r8 = rows["7"], rows["8"]
-    assert list(rows)[-2:] == ["7", "8"]
-    assert ROW7_SHA256 in r7 and "`3598e59d`" in r7 and REL_PREREG in r7 and RB.PREREG_BLOB_SHA256 not in r7
-    assert RB.PREREG_BLOB_SHA256 in r8 and REL_PREREG in r8 and "`sealed-prereg`" in r8 and ROW7_SHA256 not in r8
-    assert "supersedes row 7" in r8 and "not to be anchored" in r8
+    r7, r7b, r8 = rows["7"], rows["7b"], rows["8"]
+    assert list(rows)[-3:] == ["7", "7b", "8"]
+    assert ROW7_SHA256 in r7 and "`3598e59d`" in r7 and REL_PREREG in r7 and ROW8_SHA256 not in r7
+    assert "nights 2 and 3 of the run do not start before this row reads ANCHORED" in r7
+    assert ROW7B_SHA256 in r7b and "`d90da693`" in r7b and REL_CORRECTION in r7b and "`sealed-prereg`" in r7b
+    assert "do not start before 7 and 7b both read ANCHORED" in r7b and "row 8 is not to be anchored" in r7b
+    # row 8's committed text stands as the cell's prefix, and the withdrawal is appended after it
+    assert ROW8_SHA256 in r8 and "`98072bed`" in r8 and "supersedes row 7" in r8
+    head, _, tail = r8.partition(". **Withdrawn 2026-10-12, before any anchor (row 7b):**")
+    assert tail and head.endswith("or the labelled sha256-of-tag fallback is declared")
+    assert "row 8 is not to be anchored, its memo is struck from the list" in tail
     memos = [ln.strip() for ln in SEALS.read_text(encoding="utf-8").splitlines() if ln.startswith("    styxx ")]
-    assert memo("sealed-prereg", RB.PREREG_BLOB_SHA256) in memos
-    assert memo("sealed-prereg", ROW7_SHA256) not in memos
-    assert memos[-1] == memo("sealed-prereg", RB.PREREG_BLOB_SHA256)
+    assert memos[-2:] == [memo("sealed-prereg", ROW7_SHA256), memo("sealed-prereg", ROW7B_SHA256)]
+    assert memo("sealed-prereg", ROW8_SHA256) not in memos and len(memos) == len(set(memos))
     raw = SEALS.read_bytes()
     assert b"\r" not in raw and not raw.startswith(b"\xef\xbb\xbf")
+    # row 7b's "frozen at" commit adds the CORRECTION and nothing else (skipped on a clone too shallow to hold it)
+    r = subprocess.run(["git", "-C", str(ROOT), "show", "--format=", "--name-status", "d90da693"], capture_output=True,
+                       timeout=60)
+    if r.returncode != 0:
+        pytest.skip("commit d90da693 is not in this clone")
+    assert r.stdout.decode().split() == ["A", REL_CORRECTION]
 
 
 # -- permutations ----------------------------------------------------------------------------------------
@@ -350,6 +416,50 @@ def test_resolve_perms_labels_the_derivation():
         RB.resolve_perms("xyz", None, False)
     with pytest.raises(RB.Refusal):
         RB.resolve_perms("c" * 64, None, True)
+    with pytest.raises(RB.Refusal, match="never mixed"):
+        RB.resolve_perms(None, "anchors.jsonl", True)
+    # nights 2 and 3: a hex alone cannot show that row 7b reads ANCHORED (the CORRECTION's section 5)
+    with pytest.raises(RB.Refusal, match="rows 7 and 7b"):
+        RB.resolve_perms("c" * 64, None, False, night=True)
+    assert RB.resolve_perms(None, None, True, night=True)["derivation"] == "sha256-of-tag fallback"
+
+
+def _anchor_row(digest, status="ANCHORED", beacon="a" * 64, tx="tx"):
+    return {"n": 1, "kind": "sealed-prereg", "digest": digest, "tx": tx, "status": status,
+            "beacon": beacon if status == "ANCHORED" else None, "slot": 7,
+            "detail": None if status == "ANCHORED" else "x"}
+
+
+def test_the_beacon_is_row_7s_and_only_when_rows_7_and_7b_both_read_anchored(monkeypatch):
+    b7, b7b = "a" * 64, "b" * 64
+    both = [_anchor_row(ROW7_SHA256, beacon=b7), _anchor_row(ROW7B_SHA256, beacon=b7b)]
+    line = RB.beacon_from_rows(both)
+    assert line["beacon"] == b7                                   # row 7's slot, not 7b's
+    assert RB.beacon_from_rows(list(reversed(both)))["beacon"] == b7
+    with pytest.raises(RB.Refusal, match="row 7b"):               # row 7b not anchored yet
+        RB.beacon_from_rows(both[:1])
+    with pytest.raises(RB.Refusal, match="row 7b .* reads ANCHORED: NOT_FOUND"):
+        RB.beacon_from_rows(both[:1] + [_anchor_row(ROW7B_SHA256, status="NOT_FOUND")])
+    with pytest.raises(RB.Refusal, match="SEALS row 7 "):          # row 7 not anchored: 7b alone draws nothing
+        RB.beacon_from_rows(both[1:])
+    with pytest.raises(RB.Refusal, match="SEALS row 7 "):          # a seal of row 8 draws nothing either
+        RB.beacon_from_rows([_anchor_row(ROW8_SHA256, beacon=b7), both[1]])
+    # a re-anchor of row 7 that is not the earliest reads EARLIER_MEMO_EXISTS; the ANCHORED line is the beacon
+    later = _anchor_row(ROW7_SHA256, status="EARLIER_MEMO_EXISTS", tx="later")
+    assert RB.beacon_from_rows([later] + both)["beacon"] == b7
+    with pytest.raises(RB.Refusal, match="different beacons"):
+        RB.beacon_from_rows(both + [_anchor_row(ROW7_SHA256, beacon="c" * 64, tx="other")])
+    # --anchors runs styxx.clock.verify (faked here: no network) and a --beacon beside it must agree
+    import styxx.clock
+    monkeypatch.setattr(styxx.clock, "verify", lambda path: both)
+    sel = RB.resolve_perms(None, "anchors.jsonl", False, night=True)
+    assert sel["derivation"] == "beacon" and sel["beacon"] == b7 and sel["perms"] == RB.derive_perms(b7)
+    assert RB.resolve_perms(b7, "anchors.jsonl", False, night=True)["beacon"] == b7
+    with pytest.raises(RB.Refusal, match="is not the beacon of SEALS row 7"):
+        RB.resolve_perms(b7b, "anchors.jsonl", False, night=True)
+    monkeypatch.setattr(styxx.clock, "verify", lambda path: both[:1])
+    with pytest.raises(RB.Refusal, match="row 7b"):
+        RB.resolve_perms(None, "anchors.jsonl", False, night=True)
 
 
 # -- schedule ---------------------------------------------------------------------------------------------
@@ -392,11 +502,12 @@ def _leaf(r, acc, *, degenerate=False, derivation="sha256-of-tag fallback", impo
             "curve": curve, "curve_final_mismatch": mismatch, "losses": [0.5], "nonfinite_loss": False,
             "degenerate": degenerate, "within_model_theta0_reliance": 0.8 if r["arm"] == "free" else None,
             "seconds": 800.0, "imports": imports, "data_sha256": RB.DATA_SHA256,
-            "prereg_blob_sha256": RB.PREREG_BLOB_SHA256, "preflight_ok": True, "smoke": False}
+            "prereg_blob_sha256": RB.PREREG_BLOB_SHA256, "correction_blob_sha256": RB.CORRECTION_BLOB_SHA256,
+            "preflight_ok": True, "smoke": False}
 
 
 # per-permutation accuracies: FREE, CLAMPED, REAL2 by seed index; the anchor's seeds 0, 1 are deliberately odd so
-# that a test can show their values enter no gated metric but degenerate_fraction (PREREG section 15.1)
+# that a test can show their values enter no gated metric but degenerate_fraction (the CORRECTION's section 1)
 ACC = {
     "free": {1234: [0.50, 0.50, 0.92, 0.93, 0.91], "p0": [0.92, 0.93, 0.91], "p1": [0.90, 0.92, 0.91],
              "p2": [0.93, 0.92, 0.94], "p3": [0.91, 0.90, 0.92], "p4": [0.92, 0.92, 0.92]},
@@ -431,7 +542,7 @@ def _chain_for(leaves):
     return RB.verify_chain(entries, current), entries, current
 
 
-DISK_OK = {"runners": True, "data": True, "prereg": True}
+DISK_OK = {"runners": True, "data": True, "prereg": True, "correction": True}
 
 
 def _agg(leaves, perms, derivation="sha256-of-tag fallback", beacon=None, chain=None, disk=DISK_OK):
@@ -571,8 +682,18 @@ def test_plumbing_reads_zero_on_a_missing_leaf_a_foreign_import_a_read_back_mism
     out = RB.aggregate_leaves(leaves, [1234] + perms[:4] + [99], "sha256-of-tag fallback", None, chain_ok, DISK_OK)
     assert out["plumbing"]["perms_match_derivation"] is False
     # the disk re-checks
-    out = _agg(leaves, perms, chain=chain_ok, disk={"runners": False, "data": True, "prereg": True})
+    out = _agg(leaves, perms, chain=chain_ok, disk={"runners": False, "data": True, "prereg": True, "correction": True})
     assert out["plumbing"]["disk_runners_ok"] is False and out["result"]["plumbing_ok"] == 0.0
+    out = _agg(leaves, perms, chain=chain_ok, disk={"runners": True, "data": True, "prereg": True, "correction": False})
+    assert out["plumbing"]["disk_correction_ok"] is False and out["result"]["plumbing_ok"] == 0.0
+    # a leaf that carries another CORRECTION digest (or none, as a leaf written under row 8 would): plumbing 0
+    bad = json.loads(json.dumps(leaves))
+    bad[2]["correction_blob_sha256"] = None
+    out = _agg(bad, perms, chain=chain_ok)
+    assert out["plumbing"]["correction_ok"] is False
+    assert out["plumbing_detail"]["correction_bad"] == [RB.leaf_name(bad[2])]
+    assert out["result"]["plumbing_ok"] == 0.0
+    assert out["correction"] == CORRECTION.name and out["correction_blob_sha256"] == ROW7B_SHA256
     # the chain: a tampered entry, a stale leaf, a re-run leaf
     tampered = json.loads(json.dumps(entries))
     tampered[10]["sha256"] = "0" * 64
@@ -611,7 +732,7 @@ def test_a_non_finite_metric_reads_invalid_plumbing_not_an_exception():
 
 
 def test_seeds_0_and_1_enter_degenerate_fraction_by_value_and_plumbing_as_leaves():
-    # PREREG section 15.1, read as the RESULT must repeat it: the six re-run trainings (FREE, CLAMPED, REAL2 at seeds
+    # the CORRECTION's section 1, which the RESULT repeats: the six re-run trainings (FREE, CLAMPED, REAL2 at seeds
     # 0 and 1 on permutation 1234) move no gated metric by value but degenerate_fraction, and like every leaf they
     # count toward G_P_plumbing; degenerate_fraction counts the sixty 4000-step runs, not the 12,000-step ones
     perms = RB.fallback_perms()
@@ -672,7 +793,7 @@ def test_the_lab_never_prints_these_words():
     words = re.findall(r'"([^"]+)"', m.group(1))
     assert len(words) >= 8
     banned = re.compile(r"\b(" + "|".join(re.escape(w) + "s?" for w in words) + r")\b", re.I)
-    for p in (PREREG, RUNNER, TEST_FILE):
+    for p in (PREREG, CORRECTION, RUNNER, TEST_FILE):
         raw = p.read_bytes()
         assert not raw.startswith(b"\xef\xbb\xbf"), f"{p.name} has a BOM"
         hits = [m.group(0) for m in banned.finditer(raw.decode("utf-8"))]
@@ -707,6 +828,10 @@ def test_cli_refuses_by_name_before_torch_is_imported():
     r = _cli_without_torch("--night", "2")
     assert r.returncode == 2 and "refused: night 2 runs the held-out permutations" in r.stderr, r.stderr
     assert "Traceback" not in r.stderr
+    # a beacon alone does not start night 2 or 3: rows 7 and 7b must both read ANCHORED, which only --anchors checks
+    r = _cli_without_torch("--night", "3", "--beacon", "d" * 64)
+    assert r.returncode == 2 and "rows 7 and 7b" in r.stderr and "--anchors" in r.stderr, r.stderr
+    assert "Traceback" not in r.stderr
     # night 1 and the smoke: refused at a check that needs no torch (the data pin or the smoke receipt on a box
     # without them), or, on a box that has both, at the torch import itself -- by name, never a traceback
     for argv in (("--night", "1"), ("--smoke",)):
@@ -717,7 +842,7 @@ def test_cli_refuses_by_name_before_torch_is_imported():
             assert "_mnist.npz" in r.stderr and "absent" in r.stderr, r.stderr
 
 
-# -- section 15.4: the GPU guard before the red team touches the device --------------------------------------
+# -- the CORRECTION's section 4: the GPU guard before the red team touches the device --------------------------
 
 class _FakeR:
     BATCH, LR, WD, T_LEN, N_BLK, H, D_SSM = 64, 3e-3, 0.01, 784, 3, 64, 64
@@ -781,7 +906,7 @@ def test_the_gpu_guard_runs_before_the_red_team_touches_the_device(monkeypatch):
         RB.preflight_torch(failing, _FakeU(calls), {})
 
 
-# -- section 15.3: the leaf log before the leaf, and a torn log refused -------------------------------------
+# -- the CORRECTION's section 3: the leaf log before the leaf, and a torn log refused -------------------------
 
 def _tmp_runs(monkeypatch, tmp_path):
     runs = tmp_path / "pmnist_robustness_runs"
@@ -867,7 +992,7 @@ def test_a_night_refuses_a_torn_leaf_log_before_any_run_trains(monkeypatch, tmp_
         RB.run_night(args)
 
 
-# -- strict JSON: a bare NaN is not JSON, and section 15.3 commits the leaves and the receipt ----------------
+# -- strict JSON: a bare NaN is not JSON, and the CORRECTION's section 3 commits the leaves and the receipt ----
 
 def _strict_loads(text):
     def refuse(constant):
@@ -915,7 +1040,7 @@ def test_aggregate_writes_a_strict_json_receipt_whose_leaf_chain_verifies(monkey
     assert out["plumbing"]["leaves_complete"] and out["plumbing"]["chain_ok"] and out["plumbing"]["metrics_finite"]
 
 
-# -- section 15.3: what is committed -------------------------------------------------------------------------
+# -- the CORRECTION's section 3: what is committed -------------------------------------------------------------
 
 def test_the_leaves_the_log_and_the_receipt_are_committable_the_leaves_and_log_pinned_and_the_rest_is_ignored():
     base = "papers/frequency-resonance/"

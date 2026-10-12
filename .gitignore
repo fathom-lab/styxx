@@ -208,6 +208,6 @@ papers/closed-model-frontier/_diffs/
 # a local list of unreleased-content markers the Zenodo deposit scripts read; never committed
 scripts/excluded_markers.json
 
-# pmnist robustness run: a leaf's temporary file before its rename (PREREG_pmnist_robustness_2026_10_11
-# section 15.3); the leaves, the leaf log and the receipt themselves are committed with the RESULT
+# pmnist robustness run: a leaf's temporary file before its rename (CORRECTION_prereg_pmnist_robustness_2026_10_12
+# section 3); the leaves, the leaf log and the receipt themselves are committed with the RESULT
 papers/frequency-resonance/pmnist_robustness_runs/*.tmp

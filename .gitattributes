@@ -146,6 +146,7 @@ papers/plates/ERRATUM_sand_survey_user_agent_2026_09_15.sworn-receipt.json -text
 # line while the text comparison still passed (#186).
 papers/LEDGER.md -text
 
-# pmnist robustness run (PREREG_pmnist_robustness_2026_10_11 section 15.3): the leaf log names every leaf by the
-# sha256 of its bytes, and the leaves are committed with the RESULT; a CRLF checkout would change those bytes
+# pmnist robustness run (CORRECTION_prereg_pmnist_robustness_2026_10_12 section 3): the leaf log names every leaf
+# by the sha256 of its bytes, and the leaves are committed with the RESULT; a CRLF checkout would change those
+# bytes
 papers/frequency-resonance/pmnist_robustness_runs/** -text
