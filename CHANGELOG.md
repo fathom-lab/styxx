@@ -39,7 +39,11 @@ takes the "names no build or runtime" row below. Phase 2 makes the writer carry 
   differing on a part it names reads SKEW. A second section of the same date narrows the erratum's rule 4
   to the SKEW line itself: a capsule whose `gate.claims` line quotes the gate's reason for a bare file
   name absent from the diff, which holds the word charon reads as a broken binding, still derives
-  UNRESOLVED in charon, as before this phase.
+  UNRESOLVED in charon, as before this phase. A third section of the same date records that the
+  erratum's rules 5 and 6 did not hold for the reader through `225785ad`, which now does what they say
+  (the advisories quote a recorded identity as read; the format-key line reads the payload's pin as
+  `origin/main` does), that the identity line writes a null reader sha as `sha unknown`, and that both
+  differences from item 3 the erratum names are older than the review rounds.
 - **`styxx.instrument`** (new) defines the identity, reads one, compares two and prints one line. `build`:
   `schema` (`styxx.diffgate/instrument/v1`), `reader` (`styxx.diffgate`), `styxx` (the version string,
   recorded and never compared: one version string has named two readers) and `modules`, ordered
@@ -70,7 +74,8 @@ takes the "names no build or runtime" row below. Phase 2 makes the writer carry 
   as a version, not a build; unreadable, an advisory `gate.<key> is not an identity this verifier reads
   (...); read as unnamed`, then read as absent; same instrument, nothing, or, not reproducing, an
   advisory that what moved is not the instrument; a different instrument and reproduced, an advisory
-  naming the differing fields; **a different instrument and not reproducing, `INSTRUMENT SKEW: the gate
+  naming the differing fields and the recorded identity; **a different instrument and not reproducing,
+  `INSTRUMENT SKEW: the gate
   record does not reproduce here and names another instrument (differs: ...); it was made by <the
   recorded identity> — reproduce under that instrument (...) before reading the lines below as an
   edit`**, a problem placed ahead of the field lines, which stay; a compared field null on either side is
@@ -86,9 +91,11 @@ takes the "names no build or runtime" row below. Phase 2 makes the writer carry 
   recorded identity and the differing field names and never a value of the live identity; a recorded
   name charon would read as a broken binding (`ambiguous`, `!=`) is not quoted in a problem, whether it
   is the identity, a module name inside a differing field (the reader admits any `^[a-z_.]{1,64}$`), the
-  implementation, the version or the pin's version string, which then goes unwritten: a minter who
-  chooses the words cannot turn a SKEW line UNRESOLVED in charon. The format-key mismatch stays
-  INSTRUMENT SKEW with no field comparison. The result gains `gate_identity` (`recorded`, `live`,
+  implementation, the version or the pin's version string, which then goes unwritten: no token of the
+  record's choosing in the SKEW line makes charon derive a capsule UNRESOLVED. Advisories, which charon
+  never reads, quote the recorded identity as `styxx.instrument.describe` writes it. The format-key
+  mismatch stays INSTRUMENT SKEW with no field comparison, and its line is `origin/main`'s, the
+  payload's pin read as before. The result gains `gate_identity` (`recorded`, `live`,
   `state`, `differs`, `unknown`, `pin`) and `skew`; no key is removed or retyped. At mint, R5 compares
   the content keys only, so a `--gate` written by another build or runtime is accepted when its content
   reproduces; a diverging one that names another instrument is refused with the fields named.
