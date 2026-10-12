@@ -1063,7 +1063,7 @@ def to_gpu_fp16(model):
 
 def release(redteam: dict | None = None, tag: str = "") -> int:
     """Give an arm's memory back to the device. The caller drops every reference to the model (and to any
-    hook holding its layers) BEFORE calling this: the first smoke emptied the cache while evaluate_arm's own
+    hook holding its layers) BEFORE calling this: an earlier smoke emptied the cache while evaluate_arm's own
     reference was still alive, the allocator kept the weights, and the free-GPU check refused the next arm."""
     torch = _torch()
     import gc
