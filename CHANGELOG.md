@@ -67,7 +67,8 @@ it on the same bars the sealed 2026-09-02 PREREG froze.
   refused before a night trains any run), every leaf and receipt written as strict JSON (a non-finite loss as null,
   flagged by `nonfinite_loss`), `--smoke` INVALID by type, three nights of about 18 GPU-hours measured
   (`--night 1|2|3`, nights 2 and 3 refusing without `--anchors`, whose rows 7 and 7b must read ANCHORED, or the
-  declared fallback), `--aggregate`.
+  declared fallback; an anchors file that is absent, unreadable or holds a line that is not a JSON object is
+  refused by name before any network call, never in a traceback), `--aggregate`.
 - **Written without knowledge of the sealed untied receipt** (`pmnist_untied_result.json`, run 2026-10-11, unread);
   section 7 of the PREREG predicts under each verdict it can carry. No run, no smoke and no GPU use in this change;
   the smoke and the nights wait on the operator's approval and the card.
@@ -78,11 +79,14 @@ it on the same bars the sealed 2026-09-02 PREREG froze.
   another CORRECTION among them; the receipt's seeds 0 and 1 moving `degenerate_fraction` by value and plumbing as
   leaves, and no other gated metric; the data pin refusing a different file; the PREREG equal to row 7's bytes with
   no section 15 and the gates hash unchanged; the CORRECTION equal to row 7b's, frozen alone; SEALS rows 7, 7b and 8
-  and the memo list; the beacon taken from row 7 only when row 7b reads ANCHORED too, and a `--beacon` alone
-  refused for nights 2 and 3; the leaf-log order under a simulated power cut and a torn log refused, by a night
-  before any run trains; a NaN loss written as null and the receipt strict JSON end to end; the GPU guard before
-  the red team; the command line refusing by name with torch unimportable; the ignore and `-text` policy; the
-  banned-word scan over the four files. `papers/LEDGER.md` regenerated for the new preregistration.
+  in that relative order and the memos of rows 7 and 7b in theirs, never the tail of the file, so a row another
+  track appends leaves the test standing; the beacon taken from row 7 only when row 7b reads ANCHORED too, and a
+  `--beacon` alone refused for nights 2 and 3; an absent, unreadable or malformed anchors file refused by name
+  before `styxx.clock.verify` is called; the leaf-log order under a simulated power cut and a torn log refused,
+  by a night before any run trains; a NaN loss written as null and the receipt strict JSON end to end; the GPU
+  guard before the red team; the command line refusing by name with torch unimportable; the ignore and `-text`
+  policy; the banned-word scan over the four files. `papers/LEDGER.md` regenerated for the new
+  preregistration.
 
 ## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
 
