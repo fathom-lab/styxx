@@ -16,7 +16,8 @@ balance, a degeneracy guard, a capability screen at the shortest distance). Its 
 record says why. No main-set item was generated or scored, and no gates-block verdict exists.
 
 - The smoke (`realmodel_bridge_v3_smoke.json`): `INVALID__smoke_plumbing_only` by the gates block, every red-team
-  assert held, the main run budgeted at 1.635 GPU-hours.
+  assert held, the main run budgeted at 1.635 GPU-hours under the design it smoked (amendment 17.2.3(c) extrapolates
+  the same per-batch timings to 2.22 hours under the redesigned passes; both are inside the four-hour rule).
 - Pilot one (`realmodel_bridge_v3_pilot.json`, seed 1011, amendment 17.1): 48 items at 16 tokens. The claim-check
   compare fails the 0.40 screen in both arms under both answer formats (the Mamba arm says Yes on 0.94 of items and
   True on 0.92, failing the guard); recall clears in both. The format line reads NOT_STARTED.
@@ -30,12 +31,15 @@ record says why. No main-set item was generated or scored, and no gates-block ve
   1.4 B base models recall a planted code at 16 tokens and perform neither compare readout), what they do not
   (nothing about decay versus attention, distance, other deployed models, honesty or importance), two defects in
   the record (amendment 17.1 cites three runner commits by pre-reword hashes, mapped in the RESULT; the forward
-  pointer section 15 owes the certified July RESULT stays owed, the operator's call), and the forward state: the
+  pointer section 15 owes is not written: one half goes in the July RESULT, which is certified, and the other in
+  `papers/SYNTHESIS_program_2026_07_24.md` item 3; amendment 17.3 says it lands in the merge that carries the
+  preregistration, in a form the operator chooses), and the forward state: the
   profiler on an oscillatory checkpoint is the only open bridge and needs a download or a training run the operator
   has not approved.
 - `papers/frequency-resonance/run_realmodel_bridge_v3.py` refuses the main run on the format line and a second
   pilot on the committed receipt. `tests/test_realmodel_bridge_v3.py` runs on CPU with no checkpoint; the tokenizer
-  and model tests skip when the cached files are absent.
+  and model tests skip when the cached files are absent, and the test that compares the gates block with the judged
+  plan's runs only when `BRIDGE_V3_PLAN_PATH` names that plan, which lives outside the repository.
 - `papers/LEDGER.md` regenerated: the corpus gained a preregistration with a gates block.
 
 ## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
