@@ -136,3 +136,9 @@ from its content (#212), and the diffgate record naming the build and runtime th
   locale, the git binary behind a sworn line's commit, and any module outside the hashed set still read
   DRIFT when one of them moves a line.
 - That any line is true.
+
+## ERRATUM — 2026-10-12: where the status table is
+
+The text above is not edited. Its opening section says the status table is at "spec lines 104-111". That is
+one line early: in `SPEC_charon_v01_2026_09_02.md` the table runs from its header row at line 105 to the
+`TAMPER` row at line 112.
