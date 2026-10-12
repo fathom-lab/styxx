@@ -381,3 +381,70 @@ that permission; the chat itself is not quoted here.
 
 Nothing else is changed here: the items, seed, slices, codes, scoring, screen rule, bars, model list, order and §10's
 limits are as sections 1 to 13 state them.
+
+## 15. Results, 2026-10-12
+
+**Status: appended after the receipt was committed (f43918d4).** Sections 1 to 14 stay as committed; this section
+reports what the receipt holds and changes no rule. Every number below is read from `zoo_d0_screen.json` (sha256
+`a04a69c77aa3b56935d1eeb524c822a7226a8d17033bec2882c44018e9a42f71`), written once by the rerun of §14 at ed620dfa,
+exit 0. Pilot-class; it licenses nothing and is not part of bridge v3's verdict.
+
+- **Wrapper equivalence** (`#/wrapper_equivalence`): M1 and T both reproduce the committed pilot2 per-item outputs,
+  max |Δ score| 0.0 on all four cells, no non-tie disagreement (near ties exempt on recall/ablated: 2 on M1, 1 on T).
+- **Rows**: 13 of 13 SCREENED; no NOT_CACHED, NOT_SCREENABLE or NOT_RUN row. `microsoft/Phi-3.5-mini-instruct` is
+  excluded as §2 says (`#/summary/excluded`).
+- **The fp32 reference of §12.4** ran on eight of the ten Llama, Qwen and Gemma rows and passed both bars on each
+  (right padding in fp32 at most 1.1e-5; fp16 against fp32 at most 0.034 nats). It did not run on
+  `meta-llama/Llama-3.2-3B` and `meta-llama/Llama-3.2-3B-Instruct`: available RAM was 13.55 and 14.65 GiB, under the
+  15.36 GiB it needs. As §12.4 item 5 says, both rows were scored and the receipt says why
+  (`#/models/<repo>/load/fp32_reference`); their fp16 right-padding bar passed (at most 0.016), and no fp16 fidelity
+  check exists for them.
+
+Per model, the D0 cells under v3's argmax readout in fp16, n = 48 per family (`#/models/<repo>/screen`; the guard is
+the max-slot fraction at most 0.80; a family passes at normalized accuracy at least 0.40 with its guard ok; C_abl is
+flagged above 0.16):
+
+| group | model | family | compare norm | compare max-slot | compare guard | recall norm | recall guard | compare | recall | C_abl compare | C_abl recall | status |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| base | `state-spaces/mamba-130m-hf` | decay SSM | −0.031 | 0.917 | fail | +0.156 | ok | fail | fail | −0.031 | +0.000 | SCREENED |
+| base | `state-spaces/mamba-1.4b-hf` (M1) | decay SSM | +0.094 | 0.896 | fail | +0.687 | ok | fail | pass | +0.000 | +0.063 | SCREENED |
+| base | `EleutherAI/pythia-1.4b` (T) | attention | +0.000 | 0.979 | fail | +1.000 | ok | fail | pass | +0.000 | +0.094 | SCREENED |
+| base | `meta-llama/Llama-3.2-1B` | attention | +0.000 | 0.979 | fail | +1.000 | ok | fail | pass | +0.000 | +0.156 | SCREENED |
+| base | `meta-llama/Llama-3.2-3B` | attention | +0.562 | 0.562 | ok | +1.000 | ok | pass | pass | −0.031 | +0.063 | SCREENED |
+| base | `Qwen/Qwen2.5-1.5B` | attention | −0.094 | 0.792 | ok | +1.000 | ok | fail | pass | −0.062 | +0.156 | SCREENED |
+| base | `Qwen/Qwen2.5-3B` | attention | +0.406 | 0.625 | ok | +1.000 | ok | pass | pass | +0.000 | +0.125 | SCREENED |
+| base | `google/gemma-2-2b` | attention | +0.031 | 0.688 | ok | +1.000 | ok | fail | pass | −0.094 | +0.094 | SCREENED |
+| instruct | `meta-llama/Llama-3.2-1B-Instruct` | attention | +0.063 | 0.562 | ok | +1.000 | ok | fail | pass | +0.031 | +0.156 | SCREENED |
+| instruct | `meta-llama/Llama-3.2-3B-Instruct` | attention | +0.781 | 0.375 | ok | +1.000 | ok | pass | pass | +0.094 | +0.125 | SCREENED |
+| instruct | `Qwen/Qwen2.5-1.5B-Instruct` | attention | +0.063 | 0.917 | fail | +1.000 | ok | fail | pass | −0.031 | −0.125 | SCREENED |
+| instruct | `Qwen/Qwen2.5-3B-Instruct` | attention | +0.937 | 0.375 | ok | +1.000 | ok | pass | pass | +0.031 | +0.031 | SCREENED |
+| instruct | `google/gemma-2-2b-it` | attention | +0.406 | 0.667 | ok | +1.000 | ok | pass | pass | −0.031 | +0.156 | SCREENED |
+
+The sentence per group, as §12.3 builds it (`#/summary/base/sentence`, `#/summary/instruct/sentence`):
+
+> At D0, under v3's argmax readout in fp16, 2 of 8 screened base models could perform the compare task and 7 of 8 the
+> recall task (C_abl above 0.16 in 0 of the 2 compare passes and 0 of the 7 recall passes); n = 48 items per family
+> per model, a pilot-class screen that licenses nothing.
+
+> At D0, under v3's argmax readout in fp16, 3 of 5 screened instruct models, given raw text without a chat template,
+> could perform the compare task and 5 of 5 the recall task (C_abl above 0.16 in 0 of the 3 compare passes and 0 of
+> the 5 recall passes); n = 48 items per family per model, a pilot-class screen that licenses nothing.
+
+Beside the counts, as §9 says the receipt prints them (`#/summary/<group>/by_family`): base, decay SSM 2 screened,
+0 compare, 1 recall, 0 both; base, attention 6 screened, 2 compare, 6 recall, 2 both; instruct, attention 5 screened,
+3 compare, 5 recall, 3 both. The compare passes are `meta-llama/Llama-3.2-3B` and `Qwen/Qwen2.5-3B` (base), and
+`meta-llama/Llama-3.2-3B-Instruct`, `Qwen/Qwen2.5-3B-Instruct` and `google/gemma-2-2b-it` (instruct); each of them
+also passes recall.
+
+Two of the compare passes sit one item over the bar: `Qwen/Qwen2.5-3B` and `google/gemma-2-2b-it` read +0.406
+(29 of 48 correct; 28 would read +0.375). §8's power figures apply: at n = 48 the counts are pilot-strength.
+
+§10 stands unchanged: nothing about distance, no causal claim, no ranking and no family-level sentence; the family
+labels are confounded with data, recipe, tokenizer, scale and tuning; a fail reads "did not perform under v3's format,
+in fp16"; the instruct group saw raw text without its chat template; and M1's and T's rows are a re-measurement on new
+items beside the pilot2 receipt, not in place of it. Amendment 17.3's format line for v3 (NOT_STARTED, final) is
+untouched. A model that performs both tasks here is a candidate for a different instrument under its own
+preregistration, which is the operator's to commission or not; this section does not propose one.
+
+The partial log (20 lines: the earlier attempt's 3, then this run's 17, ending with the receipt's sha256) and the
+earlier attempt's `zoo_d0_screen_refusal.json` stay on disk, untracked.
