@@ -7,6 +7,97 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — `styxx.horizon`: the horizon datasheet, an instrument from per-item bits to censored horizons, with the self-test that gates its printing
+
+**`styxx/horizon.py`, `styxx/horizon_README.md`; tests in `tests/test_horizon.py`.** The bridge-v3 probe
+(few-shot, exactly balanced, chance-normalised, degeneracy-guarded, paired-bootstrapped) asked one
+question of one pair of models. This module is the probe's scoring turned into an instrument that runs on
+any receipt of per-item bits — no torch, no GPU, no model load, no network — built from
+`next/horizon-zoo/DESIGN.md` (2026-10-11) with the fatal and major fixes of its red team that live in the
+instrument applied. The fixes that live in the GPU runner and the item generator (F1a, F1b, M5's items,
+M6, M7, M8) are not in this change: the instrument reads their results when a receipt carries them and
+prints their absence when it does not. The zoo run is not in this change; nothing here changes what any
+committed RESULT says.
+
+- **The readout is a fact of the receipt, not of the instrument.** Compare is scored under the readout
+  the receipt declares — `argmax_largest` (bridge-v3 amendment 17.2: argmax over three name tokens, chance
+  1/3, guard largest slot share ≤ 0.80) or `yes_no` / `true_false` (the design's probe, retired for v3 by
+  that amendment: chance 1/2, guard yes-rate within [0.20, 0.80]) — or, undeclared, under the readout its
+  cell keys decide, printed as inferred. A compare cell whose keys decide nothing is refused, a declared
+  chance that is not 1/k of its readout is refused, and every recorded field must agree with every other
+  (predictions with the argmax of the scores or the sign of the log-odds, `correct` with prediction ==
+  label, `margin` with the scores). Readout, chance and guard print on every row.
+- **Per model, from per-item bits:** chance-normalised accuracy and exact balance per cell (a cell out of
+  balance reads BALANCE_BROKEN; a screen half out of balance fails the screen), a 95% paired item-bootstrap
+  interval (one resample per replicate across every cell, across the two families at one distance, or per
+  cell, as the receipt declares its pairing; an undeclared pairing prints as assumed and flags
+  PAIRING_ASSUMED), the degeneracy guard and the rank AUROC per cell (one-versus-rest over the slots under
+  a slot readout), the capability screen at D0 with its bar printed on the row and validated (a bar other
+  than 0.40 reads NONSTANDARD_BAR, printed with every digit it has), the comparison horizon (where the interpolant in log2 D reaches a
+  fraction of its D0 value, 0.5 by default and refused outside (0, 1): the bracketing grid pair is the
+  measurement, the interpolated point a convention; no crossing is CENSORED and prints
+  `> 1024 (none inside the tested range)`; c(D0) at or below chance is NOT_ESTIMABLE), the recall horizon
+  and the threshold-free `c_auc` horizon beside it, `ratio_min` per family and the dissociation
+  `ratio_min_compare − ratio_min_recall` with its interval, the Spearman monotonicity per curve, and the
+  flags (COMPARE_ONLY_HORIZON, STORAGE_HORIZON, DEGENERATE with both numbers, NONMONOTONE,
+  CALIBRATION_ARTEFACT_SUSPECTED, and the control flags).
+- **A row that fails the screen gets no horizon.** It keeps its curves and its D0 numbers; its horizons,
+  `ratio_min` and dissociation read "not estimable (screen failed)" and the reasons print under it,
+  because the screen at D0 is the row's positive control. The sheet's count of reported numbers counts
+  only what it prints, so such a row adds no horizon and no dissociation to it.
+- **A receipt the reader cannot take is refused, never ended in a traceback.** `config.D0`, the
+  bootstrap's `n_resamples` and `seed` and a `native_D` distance must be integers (the seed
+  non-negative), `bootstrap` and `seeds` must be objects, and anything else malformed is refused with the
+  error it raised. A resample count under 40 is refused from a receipt, a call or the CLI: a 95%
+  percentile interval needs one replicate expected in each 2.5% tail.
+- **The bridge-v3 runner's receipt, read as the runner writes it.** `fit --arm` reads
+  `per_item[arm][family][D][variant]` (plain is the curve; ablated, near, overwrite and windowed are the
+  controls) with `config.readout`, `config.chance`, `config.guard` and
+  `items.prefix_nested_across_distances`. A receipt whose grid has one distance — the amendment-17.2
+  pilot — reads as cells and is refused as a curve. A test reproduces, from the committed pilot receipt's
+  per-item bits, the accuracy, slot shares, guard, one-versus-rest AUROC, margin and near-tie count the
+  runner recorded for each D0 cell of both arms, and the screen it applied (skipped where that receipt is
+  not in the checkout).
+- **The red team's fixes, as code.** The screen reads one half of the D0 items, stratified by label so
+  each half keeps exact balance, and the horizon's denominator the other half (M4). The threshold-free
+  curve rides beside the thresholded one (F1c). The gated number is the compare-minus-recall dissociation,
+  not "attention has no horizon" (F2). The family aggregates are shaped for a declared composition —
+  every per-model value under `result.per_model.*`, every exclusion under `result.family_excluded` with
+  its reason — and the test runs them through `styxx.protocol`'s own composition check (M2). The ablated
+  maximum is taken over the screened set before the ablation exclusion, so it can fail (M1). The family
+  interval is the interval of the per-replicate minimum on one shared item resample (M3, M9). The
+  near-fact, overwrite and ablated controls set their flags when a receipt carries them and their
+  absence is printed (M5).
+- **An empty family set scores to ABSTAIN through `styxx.protocol`.** The counts are finite in every case;
+  the family aggregates are None on an empty set and the scorer refuses them, as it should, so a prereg
+  reaches ABSTAIN there through a readiness gates block that reads the counts alone (tested on a committed
+  prereg; a family set of one walks to ABSTAIN through the family block itself). `sheet --prereg` refuses
+  before scoring unless every compare readout and pairing is declared and the bar and guard are the
+  bridge-v3 runner's, and prints a refusal of the scorer as a refusal of the sheet.
+- **The family is a fact, never a name.** `assert_family` takes a `config.json` and, for a state-space
+  model, its A values (`A = −exp(A_log)`, read from safetensors headers without torch): DECAY requires A
+  real and strictly negative in every layer; ATTN requires every layer's reach at or above 1,250 tokens;
+  a bare name, a missing `model_type`, a complex or non-negative A, a short sliding window and an unknown
+  type are each refused by name.
+- **The self-test gates the datasheet.** `selftest()` plants crossings at 32, 128, 203 and 600 in
+  synthetic bits whose curves are linear in log2 D and requires each recovered within [0.8, 1.25] × the
+  plant with the interval covering it; it also requires the recovered level (c(D0) within 0.05 of the
+  plant), the interval's width (within [0.85, 1.18] × the binomial width) and coverage (the plant inside
+  the interval on at least 24 of 32 seeds with drawn correctness), and the D0 split as wired (screen and
+  denominator halves planted apart and read apart); no crossing must read censored; a constant responder
+  under exact balance must be exactly 0 at every distance in both families under either readout and read
+  SCREEN_FAIL with the guard in the reason; a screen-failed row must print no horizon; two fits under one
+  seed must agree. `datasheet()` refuses to print when it fails, and the tests break the normalisation,
+  the interval and the D0 split one at a time to show the matching check fails. (The design's illustration
+  planted "128" with c = (0.9, 0.7, 0.4, 0.2); under the interpolation rule those values cross at about
+  203, so the plants are built from the rule.)
+- **The datasheet prints its limits** — no sentence about rotation, honesty, causation or ranking;
+  SCREEN_FAIL is "did not perform this format at D0", not "cannot compare"; "inside the tested range",
+  never "inside context"; nominal D in NeoX tokens with the native count beside it where recorded — and
+  refuses to print a word the lab never prints. `python -m styxx.horizon {selftest, fit, sheet, family}`;
+  `sheet --prereg` scores a COMMITTED prereg through `styxx.protocol`, otherwise the verdict line reads
+  `unscored: no committed prereg`.
+
 ## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
 
 **`styxx/capsule.py` and `styxx/charon.py`; tests in `tests/test_capsule_no_traceback.py`.** 7.49.0
