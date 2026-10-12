@@ -33,7 +33,10 @@ takes the "names no build or runtime" row below. Phase 2 makes the writer carry 
   re-measured for it on 2026-10-11 with the modules at `f469f25b` staged under an empty `__init__.py`:
   the summary `U+11BF3 files changed.` over a one-file diff reads PASS with no claim under CPython
   3.12.10 (Unicode 15.0.0) and FAIL under CPython 3.14.2 (Unicode 16.0.0) with `files_changed_count`
-  CONTRADICTED, `diff changes 1 files, claim says 3`.
+  CONTRADICTED, `diff changes 1 files, claim says 3`. An erratum dated 2026-10-12 is appended below the
+  amendment's text, which is not edited: it states the SKEW line's quoting rule as the reader applies it,
+  the unknown list and the hint's four forms, and that a record naming part of its instrument and
+  differing on a part it names reads SKEW.
 - **`styxx.instrument`** (new) defines the identity, reads one, compares two and prints one line. `build`:
   `schema` (`styxx.diffgate/instrument/v1`), `reader` (`styxx.diffgate`), `styxx` (the version string,
   recorded and never compared: one version string has named two readers) and `modules`, ordered
