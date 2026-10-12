@@ -8,9 +8,10 @@ raised on; the two committed capsules keeping their outcomes to the character ch
 (DOGFOOD ok with no problem, HANDOFF its one problem) with one advisory each, and charon lines seq 89
 and 95 re-deriving with no compared key moved; synthetic identities exercising SKEW, same, incomplete
 and unnamed through mint and verify, with the three wording constraints, (b) against a minter who chooses
-the words (a module named `ambiguous`, an implementation, a version, a styxx string holding it); R5 never
-comparing identity;
-the page's meta line; and `python -m styxx.instrument`.
+the words (a module named `ambiguous`, an implementation, a version, a styxx string holding it, with and
+without a styxx.diffgate sha); a record naming its runtime and no build, differing on the runtime, read
+as SKEW with the unknown fields listed and no sha pointed at; a trailing newline in a module name or sha
+refused (review 2); R5 never comparing identity; the page's meta line; and `python -m styxx.instrument`.
 
 The record writer (styxx/diffgate.py) names nothing in this phase, so a record that carries an
 identity here is made by wrapping gate_diff_text; phase 2 makes the writer carry it.
@@ -315,6 +316,10 @@ def test_delta_a_module_named_on_one_side_only_differs_but_an_absent_part_is_unk
     {"schema": I.BUILD_SCHEMA, "reader": "styxx.diffgate", "modules": [["m"]]},
     {"schema": I.BUILD_SCHEMA, "reader": "styxx.diffgate", "modules": "none"},
     {"schema": I.BUILD_SCHEMA, "reader": "styxx.diffgate", "modules": [[1, None]]},
+    # `$` alone matches before a trailing newline (review 2 of phase 1): a 65-character name or sha whose
+    # last character is one is refused whole, so no raw newline reaches a SKEW line or an advisory
+    {"schema": I.BUILD_SCHEMA, "reader": "styxx.diffgate", "modules": [["foo\n", None]]},
+    {"schema": I.BUILD_SCHEMA, "reader": "styxx.diffgate", "modules": [["m", "a" * 64 + "\n"]]},
 ])
 def test_an_unreadable_identity_is_read_as_unnamed_with_a_quoted_reason_never_raised_on(bad):
     for key in ("build", "runtime"):
@@ -521,12 +526,64 @@ def test_an_incomplete_identity_with_an_edit_is_i_fail_never_skew(tmp_path, monk
     assert charon.derive(out, tmp_path)["verdict"] != "UNRESOLVED"
 
 
+@pytest.mark.parametrize("build", [
+    pytest.param(None, id="no-build-key"),
+    pytest.param("null-shas-null-styxx", id="null-shas-null-styxx"),
+])
+def test_a_record_naming_its_runtime_and_no_build_that_differs_on_it_is_skew_listing_the_unknown_fields(
+        tmp_path, monkeypatch, build):
+    """Review 2 of phase 1. A record that names its runtime and no build (no `build` key, or one whose shas
+    and styxx string are null) differs on the runtime and does not reproduce: SKEW (`delta` reads differs
+    ahead of incomplete). The line lists what the record does not name after what differs, and its hint
+    says the record names no build instead of pointing at a styxx.diffgate sha the record does not carry.
+    Reproduced, the same record is D-ok with the same lists in the result."""
+    _under(monkeypatch, X)
+    out = _mint(tmp_path)
+    html, i, j, p = _payload(out)
+    if build is None:
+        del p["gate"]["build"]
+        unknown = ["build.reader"] + [f"build.modules[{n}]" for n in I.RECORD_MODULES]
+    else:
+        p["gate"]["build"] = {"schema": I.BUILD_SCHEMA, "reader": "styxx.diffgate", "styxx": None,
+                              "modules": [[n, None] for n in I.RECORD_MODULES]}
+        unknown = [f"build.modules[{n}]" for n in I.RECORD_MODULES]
+    p["gate"]["runtime"] = copy.deepcopy(Y["runtime"])
+    p["binding"]["gate"]["value"] = _gate_binding_hash(p["gate"])
+    _rewrite(out, html, i, j, p)
+    rep = verify_capsule(out)                                                # under X, reproduced: D-ok
+    assert rep["ok"] is True and rep["skew"] is False and rep["gate_identity"]["state"] == "differs"
+    assert rep["gate_identity"]["differs"] == ["runtime.version", "runtime.unicode"]
+    assert rep["gate_identity"]["unknown"] == unknown
+    _edit_and_reseal(out)
+    rep = verify_capsule(out)
+    assert rep["ok"] is False and rep["skew"] is True and rep["gate_identity"]["state"] == "differs"
+    skew = rep["problems"][0]
+    assert skew.startswith("INSTRUMENT SKEW: the gate record does not reproduce here and names another "
+                           f"instrument (differs: runtime.version, runtime.unicode; unknown: {', '.join(unknown)}); "
+                           "it was made by ")
+    assert ("reproduce under that instrument (the record names no build, only the runtime cpython 9.99.1) "
+            "before reading the lines below as an edit") in skew
+    assert "the styxx whose styxx.diffgate the record names" not in skew and "pip install" not in skew
+    assert not any(a.startswith("the SKEW line's pin") for a in rep["advisory"])
+    for p in rep["problems"]:                                                # (c): no live value
+        assert "3.12.10" not in p and "15.0.0" not in p and "a" * 10 not in p
+    assert any(p.startswith("gate.claims not reproduced") for p in rep["problems"][1:])
+    line = charon.derive(out, tmp_path)
+    assert line["verdict"] != "UNRESOLVED" and line["reproduced"] is False
+    assert line["counts"]["problems_detail"][0].startswith("INSTRUMENT SKEW")
+    code, text = _command(out)
+    assert code == 1 and "  - INSTRUMENT SKEW" in text and "; unknown: build." in text
+
+
 @pytest.mark.parametrize("hostile", [
     pytest.param({"module": "ambiguous"}, id="module-name"),
     pytest.param({"runtime__implementation": "ambiguous"}, id="implementation"),
     pytest.param({"module": "bytes_ambiguous", "runtime__implementation": "Ambiguous",
                   "runtime__version": "3.12-ambiguous", "build__styxx": "7.49.0+ambiguous",
                   "build__reader": "ambiguous.reader"}, id="every-token"),
+    # the styxx string holds the word and the record names no styxx.diffgate sha: the hint has nothing
+    # to point at but says so, and the unknown sha is listed
+    pytest.param({"build__styxx": "7.49.0+ambiguous", "module__styxx_diffgate": None}, id="version-only-build"),
 ])
 def test_a_skew_line_quotes_no_recorded_token_charon_reads_as_a_broken_binding(tmp_path, monkeypatch, hostile):
     """Constraint (b) against a minter who chooses the words (review 1 of phase 1). `ambiguous` is a module
@@ -553,7 +610,12 @@ def test_a_skew_line_quotes_no_recorded_token_charon_reads_as_a_broken_binding(t
     if "runtime__implementation" in hostile:
         assert "on (a name this verifier does not quote)" in skew
     if "build__styxx" in hostile:
-        assert "pip install" not in skew and "the styxx whose styxx.diffgate the record names, on" in skew
+        assert "pip install" not in skew
+        if "module__styxx_diffgate" in hostile:          # no sha to point at either
+            assert "a build the record names only by a version this verifier does not quote, on" in skew
+            assert "; unknown: build.modules[styxx.diffgate])" in skew
+        else:
+            assert "the styxx whose styxx.diffgate the record names, on" in skew
         assert not any(a.startswith("the SKEW line's pin") for a in rep["advisory"])
     else:
         assert "`pip install styxx==7.49.0` on" in skew
