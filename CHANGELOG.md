@@ -81,6 +81,185 @@ charon line is touched, and no line is appended to the log.
   Action naming what it ran (4) and the bookmarklet panel measuring its engine (5, deferred).
   `external1_harness.py` keeps its hand-stamped `"v0"`.
 
+## [Unreleased] — PREREG: the permuted-MNIST headline under held-out permutations, new seeds and a 3x budget, sealed as a git blob before any run, with a CORRECTION sealed beside it before any data
+
+**`papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md`,
+`CORRECTION_prereg_pmnist_robustness_2026_10_12.md`, `run_pmnist_robustness.py`, `tests/test_pmnist_robustness.py`;
+`papers/checksum/SEALS_2026_09_13.md` rows 7, 7b and 8.** The arc's headline (+0.3122 on permuted MNIST,
+`pmnist_ablation_result.json`) rests on two seeds, one pixel permutation and a 4000-step budget with no convergence
+control, and the 2026-09-02 entry below ("The arc's headline survives its own confound; the permuted-MNIST re-run is
+the owed next preregistration") was never supported by a receipt on this benchmark. This preregistration freezes,
+before any run, the measurement that gives the headline an interval or takes it away, and the untied control beside
+it on the same bars the sealed 2026-09-02 PREREG froze.
+
+- **Ten gates, thirteen rows, total** over 1,024 assignments, scored through `styxx.protocol` over the whole receipt.
+  The positive control is the rotating arm's floor (0.85 over 18 runs, a collapsed FREE run counted as 0); the gap
+  must reproduce on three seeds the receipt never ran (2, 3, 4 on permutation 1234, bar 0.15) before robustness is
+  read; the robustness gates read five held-out permutations only (mean gap 0.15; the permutation interval's lower
+  end above 0 and above the committed WIDENS bar, 0.05); the gap at three times the budget (12,000 steps, bar 0.15);
+  and REAL2 within 0.03 of FREE or of CLAMPED on held-out permutation average, with the recovery fraction's interval
+  the number the sentence prints, because at 15 runs per arm the 0.03 bars sit at 1.1 to 1.5 standard errors and
+  the ROTATION-versus-PARTIAL suffix is a label.
+- **Permutations no one chose.** The five held-out pixel permutations are the top 32 bits of
+  sha256(`<beacon hex>:perm:k`), k = 1..5, where the beacon is the block hash of the slot that seals the PREREG
+  (SEALS row 7, frozen at `3598e59d`, blob `2068e673...`): the 45 held-out trainings cannot precede the block that
+  named their inputs. Nights 2 and 3 do not start before row 7 and the CORRECTION's row 7b both read ANCHORED,
+  which the runner checks itself from the anchors file. The sha256-of-tag list (`3584514041`, `27380109`,
+  `2994719670`, `3317084913`, `2856893334`) is the labelled fallback if the operator declines the anchor; a fallback
+  run says so in every leaf and in the RESULT.
+- **The receipt's own seeds enter one gated metric by value.** Seeds 0 and 1 on permutation 1234 are re-run as the
+  determinism check (`anchor_max_abs_dev`, reported). As 4000-step runs their values count in `degenerate_fraction`
+  (`G_D_stable`, which counts the sixty 4000-step runs; at most 6 of them) and in no other gated metric; like every
+  leaf, the six re-run leaves also count toward `G_P_plumbing` (present, read back, imports, data, PREREG,
+  CORRECTION, preflight, curves, final equal to the last curve point, leaf log). The headline's own permutation is
+  outside every permutation-averaged gate. The PREREG says in three places, one of them inside its gates block, that
+  these seeds enter no gated metric; the CORRECTION's section 1 corrects all three in prose, and the RESULT must
+  repeat that section beside them, because the PREREG's text stays. The sealed untied receipt holds six re-run
+  accuracies, not two: four of those configurations (FREE and CLAMPED at seeds 0 and 1) have public values that the
+  re-runs match only up to device nondeterminism, and REAL2 at seeds 0 and 1 has none.
+- **A CORRECTION before any data, no bar moved** (2026-10-12, the operator's route). After the lab's review a
+  section 15 was appended to the sealed PREREG and the result sealed as row 8 (`98072bed`, `1ef6d242`). The PREREG's
+  own text calls the SEALS row the seal, and the operator chose the lab's precedent for a row not yet anchored
+  (rows 3b and 6b): the PREREG is back to row 7's bytes (`3a505c26`), section 15's content is restated for that
+  route, with the second review's corrections, in a CORRECTION sealed on its own as row 7b (`d90da693`, blob
+  `e591516f...`), and row 8 is withdrawn before any anchor (its committed text stands with the withdrawal appended,
+  and its memo is struck from the list, which carries rows 7 and 7b). The CORRECTION holds the seeds-0/1
+  correction; gated metrics rounded to four decimals before scoring, as the committed untied runner does; the
+  leaves, the leaf log and the receipt committed with the RESULT, the leaf directory pinned `-text`, the smoke
+  receipt and the data not committed; the leaf-log line written and fsynced before its leaf is renamed into place,
+  so a crash between the two reads as a visible rewrite rather than `plumbing_ok` 0; the GPU guard before the red
+  team's device check, and every check that needs no torch before torch is imported; the seal and its anchors; why
+  a CORRECTION file and not an appended section; and the `--accept-schedule` prompt night 3 meets above 17.78 min
+  per run. The gates block's sha256 is `578924f8...` at every step.
+- **Plumbing that is checked, not described.** The runner imports `run_pmnist_ablation.py` and
+  `run_pmnist_untied.py` verbatim and refuses before data unless their LF-normalised bytes hash to the committed
+  blobs (`c8d7cdfb...`, `caf276da...`; the Windows working copy of the untied runner carries CRLF and hashes
+  differently while running the same code), `_mnist.npz` hashes to `98d68505...`, the PREREG and the CORRECTION on
+  disk hash to rows 7 and 7b, `Experiment.check_metrics()` resolves every gate path on the receipt shape, CUDA is
+  available and 6 GiB are free (checked before any tensor is placed on the card), and the three arms share RNG state
+  and every non-SSM tensor at seeds 0-4. One leaf per run, an append-only hash-chained leaf log (a torn log is
+  refused before a night trains any run), every leaf and receipt written as strict JSON (a non-finite loss as null,
+  flagged by `nonfinite_loss`), `--smoke` INVALID by type, three nights of about 18 GPU-hours measured
+  (`--night 1|2|3`, nights 2 and 3 refusing without `--anchors`, whose rows 7 and 7b must read ANCHORED, or the
+  declared fallback; an anchors file that is absent, unreadable or holds a line that is not a JSON object is
+  refused by name before any network call, never in a traceback), `--aggregate`.
+- **Written without knowledge of the sealed untied receipt** (`pmnist_untied_result.json`, run 2026-10-11, unread);
+  section 7 of the PREREG predicts under each verdict it can carry. No run, no smoke and no GPU use in this change;
+  the smoke and the nights wait on the operator's approval and the card.
+- Tests, on CPU with no data, no card and no torch required (the one torch test skips without it): the gates block
+  through the lab's scanner with every assignment reaching a row; `Experiment` scoring each verdict; the hash checks
+  refusing a mutated runner copy, an edited PREREG and an edited CORRECTION; the derivation deterministic; the
+  aggregate arithmetic on synthetic leaves, degeneracy by arm and every plumbing zero, a leaf or disk copy of
+  another CORRECTION among them; the receipt's seeds 0 and 1 moving `degenerate_fraction` by value and plumbing as
+  leaves, and no other gated metric; the data pin refusing a different file; the PREREG equal to row 7's bytes with
+  no section 15 and the gates hash unchanged; the CORRECTION equal to row 7b's, frozen alone; SEALS rows 7, 7b and 8
+  in that relative order and the memos of rows 7 and 7b in theirs, never the tail of the file, so a row another
+  track appends leaves the test standing; the beacon taken from row 7 only when row 7b reads ANCHORED too, and a
+  `--beacon` alone refused for nights 2 and 3; an absent, unreadable or malformed anchors file refused by name
+  before `styxx.clock.verify` is called; the leaf-log order under a simulated power cut and a torn log refused,
+  by a night before any run trains; a NaN loss written as null and the receipt strict JSON end to end; the GPU
+  guard before the red team; the command line refusing by name with torch unimportable; the ignore and `-text`
+  policy; the banned-word scan over the four files. `papers/LEDGER.md` regenerated for the new
+  preregistration.
+
+## [Unreleased] — the research capsule, Phase A: one HTML file carries the chain of one preregistered experiment and prints three readings per link
+
+**`styxx/research_capsule.py` (new); tests in `tests/test_research_capsule.py`.** Spec id
+`styxx-oath/capsule/research/v0.1`. Builder and verifier only, no specimen: the pMNIST untied
+RESULT does not exist yet, and the design that orders this build (`next/capsule-chain/DESIGN.md`,
+red-teamed in its `ATTACK.md`, 2026-10-11) puts the specimen in a later phase, after anchor #2
+reads ANCHORED and the receipt is opened by another track. The profile knows nothing about any
+particular experiment.
+
+- One file, under 1.5 MB, carries for one experiment: the PREREG bytes (exactly one ```gates block,
+  by `styxx.protocol`'s scanner), the anchor line(s) in `styxx.clock`'s `anchors.jsonl` format, the
+  receipt JSON(s), the runner source(s), the RESULT with its sidecar and sworn receipt, a snapshot
+  of every `path:` target the RESULT swears through so the spans resolve with no git, the
+  `styxx.charon` entry WITH its seq (inclusion at seq, never the head, which moves with every
+  honest ingest), a committed run note, and the list of independent public clocks. `created` sits
+  outside the payload digest, as the sworn and charon rules have it.
+- Three readings per link, never two: HOLDS / FAILS offline, a pure function of the carried bytes,
+  re-derived by the page in the browser (an inlined verifier, sealed by digest, no network) and by
+  `python -m styxx.research_capsule verify`; CHECKABLE-ONLINE with the exact public read a stranger
+  would make, which `verify --repo CLONE` turns into MATCHES / DIFFERS / NOT-CHECKED and `verify
+  --network` into CONFIRMED-ON-CHAIN / CONTRADICTED / UNAVAILABLE-NOW with the clock's own status
+  word beside it, availability never read as contradiction; STATED-BY-THE-LAB for what nothing
+  checks. The summary line is `INTERNALLY CONSISTENT (offline)`, never the word `styxx.sworn` uses
+  for receipt re-derivation, and the label sits on the page and in every terminal report: a forger
+  controlling the whole file passes every offline link.
+- For the anchor the page prints `block_time − run_end` with its sign and the sentence that the
+  chain orders the PREREG before the receipt's reading, not before the run; the wallet is printed
+  as a constant inside the file with two out-of-band places to confirm it; the `--network` read
+  counts the wallet's listed sealed-prereg memos through the anchor's slot, a lower bound a
+  stranger can hold against the SEALS table.
+- The verdict is re-scored from the frozen table over the recorded numbers (`score_frozen`, the
+  body of `Experiment.score` with no disk and no git, with the composition check and a totality
+  enumeration of the outcome table); the sworn core re-derives over the carried snapshot
+  (`SnapshotTree`), in the terminal and in the page; the sworn receipt's verdict and counts must be
+  its own spans' tally (`receipt_tally_problem`, which a test runs over every sworn receipt
+  committed under `papers/`, chosen by its schema field and not its file name); the charon line's
+  `entry_id` re-derives from its core; the anchor's memo is the memo its kind and digest imply
+  (`check_anchor_offline`, the pure half of `clock.check_line`).
+- The page re-derives the sworn spans itself: `styxx/_data/sworn_verify.js`, the second
+  implementation of `styxx.sworn` held to the sworn conformance vectors, is inlined unchanged and
+  given the carried snapshot through a resolver that reads entries as `SnapshotTree` does, so a
+  number typed into a span that the receipt leaf does not hold, with the sworn receipt re-pointed
+  and re-digested, reads FAILS at L4 in the browser as it does in the terminal, and the browser
+  never prints `INTERNALLY CONSISTENT (offline)` over it.
+- L4 holds only when every sworn span reads HELD against the leaf it names, in both layers. A
+  RESULT whose honest sworn receipt says SWORN-FAILED, one with an UNRESOLVED span (which the sworn
+  document rule still calls SWORN-HELD: an rN span no manifest carries, a `prereg:` digest the
+  snapshot lacks), and one that swears nothing read FAILS at L4, and `build` refuses each by name.
+- Where an instrument reads an integer, both layers require an integer as written, and the page
+  reads it through a typed parse of its payload that keeps a float literal apart, as Python's
+  `json` does, because `JSON.parse` writes `102.0` as `102`: a span offset, a snapshot entry's size
+  (which must also be the entry's byte count) and the sworn receipt's counts, `sworn_total` and
+  `unresolved` at L4; an anchor's slot at L1; `experiment.score.receipt` at L2, which the terminal
+  no longer reads as 0 when it is not an integer. A value of another JSON type in any of these
+  fails its link in both layers, by name in the terminal. The agreement tests write each field as a
+  float, several also as a string, a list, a bool or null, and a sweep rewrites every integer
+  literal of a clean page as `N.0` by hand, which moves no digest: both layers read every link
+  alike on each.
+- A time on the page must name a time that exists: an anchor's `block_time` (L1) and a public
+  clock's `stated` time (L1b) are `YYYY-MM-DDTHH:MM:SSZ` in ASCII digits with no February 30, month
+  13, hour 24, second 60 or year 0, in both layers. Such a value ends in a named problem and never
+  in a traceback, and `build` refuses it by name, as it refuses a `stated.run_ended_utc` that names
+  no time. The page applies the terminal's public-clock rule word for word: a `name`, `binds` or
+  `read` that Python's `str.strip` leaves empty, or a `does_not_prove` that is not text, fails L1b.
+- `build` reads the repository at named commits and never the working tree, and refuses by name: an
+  inconsistent chain (each failing link's problem listed), a path that is not repository-relative
+  POSIX, a token-shaped string, a drive-letter or home path, an interpreter version string or a
+  worktree name anywhere in the minted bytes, a word the lab never prints in what the lab writes
+  for the capsule (the page outside its inlined verifier, the payload's own fields, the stated
+  facts, the public clocks, the RESULT and the run note; carried history such as the frozen PREREG
+  is carried as is and scanned for leaks only; a hit is named by its place in the list, never
+  echoed), and an oversize page; a written file that does not verify is not kept. The scan reads
+  decoded text, so an escaped line feed after a one-letter word is not a drive letter, and it reads
+  every pair of a repeated JSON key, in a carried artifact and in the page's own payload, so a
+  value that `json.loads` drops is still scanned. The payload names `styxx_version` and the module
+  digests only (operator decision O9 of 2026-10-11).
+- Under `--repo`, a commit the clone lacks reads NOT-CHECKED with the reason (fetch it and read
+  again), and a path absent at a commit the clone has reads DIFFERS: the public repository holds no
+  such object there.
+- The tests build the chain from synthetic fixtures, which is the disclosed whole-file forger and
+  passes every offline link, as the label says; a digest battery flips exactly the link that owns
+  the bytes (a mutated slot is caught by nothing offline, and the test says where it is checked); a
+  semantic battery re-builds CONSISTENT capsules with one link made false and asserts that link
+  alone flips, which a verifier whose logic past the hashes is constant would fail; controls that
+  must not fire (`created`, key order, the charon timestamp and note); the browser layer, run under
+  node, agrees with the installed layer link by link on the clean capsule and on every member of
+  both batteries, the seven L4 members of the semantic battery included (an edited sworn verdict, a
+  span value the receipt does not hold, a snapshot entry that is another receipt, an honest
+  SWORN-FAILED receipt, an UNRESOLVED rN span, an UNRESOLVED `prereg:` span, a RESULT that swears
+  nothing), on numeric, quote and hash spans over the snapshot, on every integer the instruments
+  read written with another JSON type or miscounted, on every integer literal of a clean page
+  written as a float, on an anchor line that is not an object, on public clocks of the wrong shape
+  and on times that name no time; the CLI round trip over a temporary repository with `--repo`,
+  including a rebuilt log reading DIFFERS at L5 and a forger that names the clone's commits with
+  paths absent at them reading DIFFERS.
+- Not in this phase: dispatch from the existing capsule command, a charon kind for the new profile,
+  the stranger step, the specimen. The existing capsule profiles are unchanged.
+
 ## [Unreleased] — capsule v0.2 layer 2 compares a record's instrument identity apart from its content; `styxx.instrument` names the build and runtime a diffgate record is written and re-run under
 
 **Phase 1 of the design the operator approved on 2026-10-11** (item 3 of step zero of the 2026-10-06
