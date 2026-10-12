@@ -7,6 +7,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the research capsule, Phase A: one HTML file carries the chain of one preregistered experiment and prints three readings per link
+
+**`styxx/research_capsule.py` (new); tests in `tests/test_research_capsule.py`.** Spec id
+`styxx-oath/capsule/research/v0.1`. Builder and verifier only, no specimen: the pMNIST untied
+RESULT does not exist yet, and the design that orders this build (`next/capsule-chain/DESIGN.md`,
+red-teamed in its `ATTACK.md`, 2026-10-11) puts the specimen in a later phase, after anchor #2
+reads ANCHORED and the receipt is opened by another track. The profile knows nothing about any
+particular experiment.
+
+- One file, under 1.5 MB, carries for one experiment: the PREREG bytes (exactly one ```gates
+  block, by `styxx.protocol`'s scanner), the anchor line(s) in `styxx.clock`'s `anchors.jsonl`
+  format, the receipt JSON(s), the runner source(s), the RESULT with its sidecar and sworn receipt,
+  a snapshot of every `path:` target the RESULT swears through so the spans resolve with no git,
+  the `styxx.charon` entry WITH its seq (inclusion at seq, never the head, which moves with every
+  honest ingest), a committed run note, and the list of independent public clocks. `created` sits
+  outside the payload digest, as the sworn and charon rules have it.
+- Three readings per link, never two: HOLDS / FAILS offline, a pure function of the carried bytes,
+  re-derived by the page in the browser (an inlined verifier, sealed by digest, no network) and by
+  `python -m styxx.research_capsule verify`; CHECKABLE-ONLINE with the exact public read a stranger
+  would make, which `verify --repo CLONE` turns into MATCHES / DIFFERS / NOT-CHECKED and
+  `verify --network` into CONFIRMED-ON-CHAIN / CONTRADICTED / UNAVAILABLE-NOW with the clock's own
+  status word beside it, availability never read as contradiction; STATED-BY-THE-LAB for what
+  nothing checks. The summary line is `INTERNALLY CONSISTENT (offline)`, never the word
+  `styxx.sworn` uses for receipt re-derivation, and the label sits on the page and in every
+  terminal report: a forger controlling the whole file passes every offline link.
+- For the anchor the page prints `block_time − run_end` with its sign and the sentence that the
+  chain orders the PREREG before the receipt's reading, not before the run; the wallet is printed
+  as a constant inside the file with two out-of-band places to confirm it; the `--network` read
+  counts the wallet's listed sealed-prereg memos through the anchor's slot, a lower bound a
+  stranger can hold against the SEALS table.
+- The verdict is re-scored from the frozen table over the recorded numbers (`score_frozen`, the
+  body of `Experiment.score` with no disk and no git, with the composition check and a totality
+  enumeration of the outcome table); the sworn core re-derives over the carried snapshot
+  (`SnapshotTree`); the charon line's `entry_id` re-derives from its core; the anchor's memo is
+  the memo its kind and digest imply (`check_anchor_offline`, the pure half of `clock.check_line`).
+- `build` reads the repository at named commits and never the working tree, and refuses by name:
+  an inconsistent chain (each failing link's problem listed), a path that is not
+  repository-relative POSIX, a payload holding a token-shaped string, a drive-letter or home path,
+  an interpreter version string, a worktree name or a word the lab never prints, an oversize page;
+  a written file that does not verify is not kept. The payload names `styxx_version` and the
+  module digests only (operator decision O9 of 2026-10-11).
+- The tests build the chain from synthetic fixtures, which is the disclosed whole-file forger and
+  passes every offline link, as the label says; a digest battery flips exactly the link that owns
+  the bytes (a mutated slot is caught by nothing offline, and the test says where it is checked);
+  a semantic battery re-builds CONSISTENT capsules with one link made false and asserts that link
+  alone flips, which a verifier whose logic past the hashes is constant would fail; controls that
+  must not fire (`created`, key order, the charon timestamp and note); the browser layer and the
+  installed layer agree under node on the clean capsule and on both batteries; the CLI round trip
+  over a temporary repository with `--repo`, including a rebuilt log reading DIFFERS at L5.
+- Not in this phase: dispatch from the existing capsule command, a charon kind for the new
+  profile, the stranger step, the specimen. The existing capsule profiles are unchanged.
+
 ## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
 
 **`styxx/capsule.py` and `styxx/charon.py`; tests in `tests/test_capsule_no_traceback.py`.** 7.49.0
