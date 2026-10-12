@@ -33,7 +33,7 @@ committed RESULT says.
   cell, as the receipt declares its pairing; an undeclared pairing prints as assumed and flags
   PAIRING_ASSUMED), the degeneracy guard and the rank AUROC per cell (one-versus-rest over the slots under
   a slot readout), the capability screen at D0 with its bar printed on the row and validated (a bar other
-  than 0.40 reads NONSTANDARD_BAR), the comparison horizon (where the interpolant in log2 D reaches a
+  than 0.40 reads NONSTANDARD_BAR, printed with every digit it has), the comparison horizon (where the interpolant in log2 D reaches a
   fraction of its D0 value, 0.5 by default and refused outside (0, 1): the bracketing grid pair is the
   measurement, the interpolated point a convention; no crossing is CENSORED and prints
   `> 1024 (none inside the tested range)`; c(D0) at or below chance is NOT_ESTIMABLE), the recall horizon
@@ -43,7 +43,13 @@ committed RESULT says.
   CALIBRATION_ARTEFACT_SUSPECTED, and the control flags).
 - **A row that fails the screen gets no horizon.** It keeps its curves and its D0 numbers; its horizons,
   `ratio_min` and dissociation read "not estimable (screen failed)" and the reasons print under it,
-  because the screen at D0 is the row's positive control.
+  because the screen at D0 is the row's positive control. The sheet's count of reported numbers counts
+  only what it prints, so such a row adds no horizon and no dissociation to it.
+- **A receipt the reader cannot take is refused, never ended in a traceback.** `config.D0`, the
+  bootstrap's `n_resamples` and `seed` and a `native_D` distance must be integers (the seed
+  non-negative), `bootstrap` and `seeds` must be objects, and anything else malformed is refused with the
+  error it raised. A resample count under 40 is refused from a receipt, a call or the CLI: a 95%
+  percentile interval needs one replicate expected in each 2.5% tail.
 - **The bridge-v3 runner's receipt, read as the runner writes it.** `fit --arm` reads
   `per_item[arm][family][D][variant]` (plain is the curve; ablated, near, overwrite and windowed are the
   controls) with `config.readout`, `config.chance`, `config.guard` and
