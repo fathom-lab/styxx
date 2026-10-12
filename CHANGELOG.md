@@ -36,7 +36,10 @@ takes the "names no build or runtime" row below. Phase 2 makes the writer carry 
   CONTRADICTED, `diff changes 1 files, claim says 3`. An erratum dated 2026-10-12 is appended below the
   amendment's text, which is not edited: it states the SKEW line's quoting rule as the reader applies it,
   the unknown list and the hint's four forms, and that a record naming part of its instrument and
-  differing on a part it names reads SKEW.
+  differing on a part it names reads SKEW. A second section of the same date narrows the erratum's rule 4
+  to the SKEW line itself: a capsule whose `gate.claims` line quotes the gate's reason for a bare file
+  name absent from the diff, which holds the word charon reads as a broken binding, still derives
+  UNRESOLVED in charon, as before this phase.
 - **`styxx.instrument`** (new) defines the identity, reads one, compares two and prints one line. `build`:
   `schema` (`styxx.diffgate/instrument/v1`), `reader` (`styxx.diffgate`), `styxx` (the version string,
   recorded and never compared: one version string has named two readers) and `modules`, ordered
