@@ -250,7 +250,29 @@ def beacon_from_rows(rows: list[dict], prereg_digest: str = PREREG_BLOB_SHA256,
 
 
 def beacon_from_anchors(path: str | Path) -> dict:
-    """Run styxx.clock.verify over the anchors file (network) and apply beacon_from_rows."""
+    """Run styxx.clock.verify over the anchors file (network) and apply beacon_from_rows. A file that is absent,
+    unreadable, or holds a line that is not a JSON object is refused by name before any network call, as
+    run_deploy_quant.py's beacon_refusal refuses an absent file; styxx.clock.verify would end those in a traceback.
+    Lines are split and parsed as verify splits and parses them."""
+    if not Path(path).is_file():
+        raise Refusal(f"no anchors file at {path}: no anchor of SEALS row 7 or 7b is on record there, so nights 2 "
+                      "and 3 do not start (record rows 7 and 7b's confirmed memos in it, or declare --fallback-perms)")
+    try:
+        with open(path, encoding="utf-8") as fh:
+            for n, raw in enumerate(fh, 1):
+                raw = raw.strip()
+                if not raw:
+                    continue
+                try:
+                    obj = json.loads(raw)
+                except ValueError as e:
+                    raise Refusal(f"{path} line {n} is not JSON ({e}): rows 7 and 7b cannot be checked") from None
+                if not isinstance(obj, dict):
+                    kind = {list: "an array", str: "a string", bool: "true or false", type(None): "null"}.get(
+                        type(obj), "a number")
+                    raise Refusal(f"{path} line {n} is {kind}, not a JSON object: rows 7 and 7b cannot be checked")
+    except (OSError, UnicodeDecodeError) as e:
+        raise Refusal(f"{path} could not be read ({type(e).__name__}: {e}): rows 7 and 7b cannot be checked") from None
     sys.path.insert(0, str(ROOT))
     from styxx.clock import verify
     return beacon_from_rows(verify(str(path)))

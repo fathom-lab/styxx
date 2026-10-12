@@ -434,7 +434,7 @@ def _anchor_row(digest, status="ANCHORED", beacon="a" * 64, tx="tx"):
             "detail": None if status == "ANCHORED" else "x"}
 
 
-def test_the_beacon_is_row_7s_and_only_when_rows_7_and_7b_both_read_anchored(monkeypatch):
+def test_the_beacon_is_row_7s_and_only_when_rows_7_and_7b_both_read_anchored(monkeypatch, tmp_path):
     b7, b7b = "a" * 64, "b" * 64
     both = [_anchor_row(ROW7_SHA256, beacon=b7), _anchor_row(ROW7B_SHA256, beacon=b7b)]
     line = RB.beacon_from_rows(both)
@@ -453,17 +453,50 @@ def test_the_beacon_is_row_7s_and_only_when_rows_7_and_7b_both_read_anchored(mon
     assert RB.beacon_from_rows([later] + both)["beacon"] == b7
     with pytest.raises(RB.Refusal, match="different beacons"):
         RB.beacon_from_rows(both + [_anchor_row(ROW7_SHA256, beacon="c" * 64, tx="other")])
-    # --anchors runs styxx.clock.verify (faked here: no network) and a --beacon beside it must agree
+    # --anchors runs styxx.clock.verify (faked here: no network) and a --beacon beside it must agree; the file must
+    # exist and hold JSON objects, which the runner checks before verify is called
     import styxx.clock
+    anchors = tmp_path / "anchors.jsonl"
+    anchors.write_text('{"kind": "sealed-prereg"}\n', encoding="utf-8")
     monkeypatch.setattr(styxx.clock, "verify", lambda path: both)
-    sel = RB.resolve_perms(None, "anchors.jsonl", False, night=True)
+    sel = RB.resolve_perms(None, str(anchors), False, night=True)
     assert sel["derivation"] == "beacon" and sel["beacon"] == b7 and sel["perms"] == RB.derive_perms(b7)
-    assert RB.resolve_perms(b7, "anchors.jsonl", False, night=True)["beacon"] == b7
+    assert RB.resolve_perms(b7, str(anchors), False, night=True)["beacon"] == b7
     with pytest.raises(RB.Refusal, match="is not the beacon of SEALS row 7"):
-        RB.resolve_perms(b7b, "anchors.jsonl", False, night=True)
+        RB.resolve_perms(b7b, str(anchors), False, night=True)
     monkeypatch.setattr(styxx.clock, "verify", lambda path: both[:1])
     with pytest.raises(RB.Refusal, match="row 7b"):
-        RB.resolve_perms(None, "anchors.jsonl", False, night=True)
+        RB.resolve_perms(None, str(anchors), False, night=True)
+
+
+def test_an_absent_unreadable_or_malformed_anchors_file_is_refused_by_name_before_any_network_call(
+        monkeypatch, tmp_path, capsys):
+    import styxx.clock
+
+    def no_network(path):
+        raise AssertionError(f"styxx.clock.verify was called on {path}")
+
+    monkeypatch.setattr(styxx.clock, "verify", no_network)
+    missing = tmp_path / "anchors.jsonl"
+    with pytest.raises(RB.Refusal, match="no anchors file at .*nights 2 and 3 do not start"):
+        RB.resolve_perms(None, str(missing), False, night=True)
+    with pytest.raises(RB.Refusal, match="no anchors file at"):        # a directory is not an anchors file
+        RB.beacon_from_anchors(tmp_path)
+    bad = tmp_path / "bad.jsonl"
+    bad.write_text('{"kind": "sealed-prereg"}\n\nnot json\n', encoding="utf-8")
+    with pytest.raises(RB.Refusal, match="line 3 is not JSON"):       # blank lines are skipped and counted
+        RB.beacon_from_anchors(bad)
+    for text, kind in (("[1, 2]", "an array"), ("null", "null"), ('"tx"', "a string"), ("7", "a number")):
+        bad.write_text(f"{{}}\n{text}\n", encoding="utf-8")
+        with pytest.raises(RB.Refusal, match=f"line 2 is {kind}, not a JSON object"):
+            RB.beacon_from_anchors(bad)
+    bad.write_bytes(b'{"kind": "sealed-prereg", "tx": "\xff"}\n')
+    with pytest.raises(RB.Refusal, match="could not be read .UnicodeDecodeError"):
+        RB.beacon_from_anchors(bad)
+    # on the command line the absent file ends in "refused:" and exit 2, never a traceback
+    assert RB.main(["--derive-perms", "--anchors", str(missing)]) == 2
+    err = capsys.readouterr().err
+    assert err.startswith("refused: no anchors file at") and "Traceback" not in err, err
 
 
 # -- schedule ---------------------------------------------------------------------------------------------
