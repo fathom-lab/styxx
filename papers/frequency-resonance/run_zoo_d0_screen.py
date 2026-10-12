@@ -16,13 +16,22 @@ and Llama, Qwen and Gemma reach v3's attention path through an adapter (gemma-2'
 transformers applies it). The wrapper must reproduce the committed pilot2 receipt's per-item outputs on M1 and T
 before any zoo item is scored.
 
+The plan's addendum (NOTE section 12, dated 2026-10-12, written after the review and before any data) adds: the
+Llama, Qwen and Gemma rows load by transformers' own fp16 load with no cast after it (the RoPE inv_freq buffer stays
+fp32, as transformers keeps it) and every buffer's dtype is recorded; an fp32 CPU reference per row (right padding at
+v3's 1e-3 in fp32, and the fp16 name log-probs against fp32 on the same two prompts); the status labels the receipt
+can carry, each named in the note; the printed sentence's wording and its C_abl flag counts; an append-only partial
+log; and the three committed v3 receipts in the committed-and-unchanged check.
+
   python run_zoo_d0_screen.py --check
       every CPU assert of the run: items, balance, fillers, disjointness from the committed receipts, the pilot2
       regeneration, the per-model tokenizer asserts and family facts. Loads no model, touches no GPU, writes nothing.
   python run_zoo_d0_screen.py
-      the run. Refuses unless the plan note, this runner and the v3 runner are committed and unchanged at HEAD, and
-      unless zoo_d0_screen.json is absent (written once, never regenerated). GPU: one model resident at a time, at
-      least 6 GiB free before each move to the GPU, fp16.
+      the run. Refuses unless the plan note, this runner, the v3 runner and the three committed v3 receipts are
+      committed and unchanged at HEAD, unless zoo_d0_screen.json is absent (written once, never regenerated), and
+      unless zoo_d0_screen.partial.jsonl is absent (a trace that an earlier attempt saw model outputs) or the
+      operator passes --operator-allows-rerun-after-partial. GPU: one model resident at a time, at least 6 GiB
+      free before each move to the GPU, fp16.
 
 The pure parts import only numpy (through the v3 module); torch and transformers are imported inside the functions
 that touch a model, so the unit tests run on CPU.
@@ -49,6 +58,7 @@ V3_RUNNER = HERE / "run_realmodel_bridge_v3.py"
 NOTE = HERE / "NOTE_zoo_d0_screen_plan_2026_10_12.md"
 RECEIPT = HERE / "zoo_d0_screen.json"
 REFUSAL_RECEIPT = HERE / "zoo_d0_screen_refusal.json"
+PARTIAL_LOG = HERE / "zoo_d0_screen.partial.jsonl"     # append-only; written before each row is printed (NOTE section 12)
 
 
 def _load_v3():
@@ -87,8 +97,25 @@ BATCH = R.BATCH_MAX                         # 16, v3's batches
 WRAPPER_EQ_TOL = 0.01                       # max |delta score| (nats) against the committed pilot2 per-item scores
 WRAPPER_EQ_TIE = 0.01                       # items whose committed |margin| is below this are exempt from the prediction match
 RIGHT_PAD_FP16_TOL = 0.25                   # non-NeoX models: max |delta log p| of the three names, alone vs padded, fp16 on GPU
+RIGHT_PAD_FP32_TOL = R.FP32_TOL             # 1e-3, v3's fp32 bar, on the three name log-probs of the fp32 CPU reference (NOTE 12.4)
+FP16_FIDELITY_TOL = 0.5                     # max |delta log p| of the three names, fp16 on GPU against the fp32 CPU reference (NOTE 12.4)
+RAM_FP32_FACTOR = 1.2                       # the fp32 reference runs only when available RAM >= 1.2 x its fp32 bytes + 1 GiB
+RAM_HEADROOM_BYTES = 1024 ** 3
 ATTENTION_TYPES = ("gpt_neox", "llama", "qwen2", "gemma2")
 NEOX_V3_PATH_TYPES = ("mamba", "gpt_neox")  # loaded through v3's own path: fp32 on CPU, v3's CPU asserts, then half() onto cuda
+
+# every status a model's row can carry; each is named in the plan (NOTE sections 2, 4, 7 and 12.2)
+STATUS_SCREENED = "SCREENED"
+STATUS_NOT_CACHED = "NOT_CACHED"
+STATUS_NOT_SCREENABLE = "NOT_SCREENABLE"
+STATUS_FP16_NONFINITE = "NOT_SCREENABLE__fp16_nonfinite"
+STATUS_RIGHT_PADDING = "NOT_SCREENABLE__right_padding"
+STATUS_FP16_FIDELITY = "NOT_SCREENABLE__fp16_fidelity"
+STATUS_FREE_GPU = "NOT_RUN__free_gpu"
+STATUS_MEMORY = "NOT_RUN__memory"
+STATUS_ERROR = "NOT_RUN__error"
+STATUSES = (STATUS_SCREENED, STATUS_NOT_CACHED, STATUS_NOT_SCREENABLE, STATUS_FP16_NONFINITE, STATUS_RIGHT_PADDING,
+            STATUS_FP16_FIDELITY, STATUS_FREE_GPU, STATUS_MEMORY, STATUS_ERROR)
 
 # (repo, group, v3 role) in the plan's section-2 order; base before instruct
 MODELS = (
@@ -113,7 +140,12 @@ GENERATOR_TOKENIZER = R.ARMS["T"]           # GPT-NeoX: the tokenizer that defin
 
 
 class NotScreenable(Exception):
-    """A per-model assert failed: the row reads NOT_SCREENABLE with this message; nothing is re-worded."""
+    """A per-model assert failed: the row reads the status this carries (NOT_SCREENABLE, or one of its suffixed labels
+    in NOTE sections 7 and 12.2) with this message; nothing is re-worded."""
+
+    def __init__(self, reason: str, status: str = STATUS_NOT_SCREENABLE):
+        super().__init__(reason)
+        self.status = status
 
 
 class NotRun(Exception):
@@ -362,6 +394,7 @@ def model_tokenizer_asserts(tok, prep: dict, bos: list) -> dict:
                        "name_token_ids": test_ids, "exemplar_name_token_ids": ex_ids, "code_token_length": L,
                        "in_context_checks": checks, "prompt_tokens": {k: _stats(v) for k, v in lengths.items()},
                        "prompt_tokens_per_item": lengths, "filler_tokens_native": _stats(filler_native),
+                       "filler_tokens_native_per_item": filler_native,
                        "filler_tokens_nominal_neox": D0, "longest_prompt_with_candidate": longest},
             "_prompt_sha256": sha}
 
@@ -440,7 +473,7 @@ def prepare_model_row(repo: str, group: str, role, prep: dict, tok_loader=None) 
     ok, why, snap = cache_status(repo)
     row["revision"] = snap.name if snap is not None else None
     if not ok:
-        row.update(status="NOT_CACHED", reason=why)
+        row.update(status=STATUS_NOT_CACHED, reason=why)
         return row
     try:
         row["family"] = family_fact(snap)
@@ -449,7 +482,7 @@ def prepare_model_row(repo: str, group: str, role, prep: dict, tok_loader=None) 
         asserted = model_tokenizer_asserts(tok, prep, bos)
         family_reach_ok(row["family"], asserted["record"]["longest_prompt_with_candidate"])
     except NotScreenable as e:
-        row.update(status="NOT_SCREENABLE", reason=str(e))
+        row.update(status=e.status, reason=str(e))
         return row
     row["tokenizer"] = asserted["record"]
     row["_seqs"], row["_cands"], row["_name_ids"] = asserted["_seqs"], asserted["_cands"], asserted["_name_ids"]
@@ -539,7 +572,8 @@ def score_cell(path: str, model, family: str, seqs: list, targets: list, name_id
                 scores[i:i + batch, slot] = R.recall_loglik_batch(path, model, seqs[i:i + batch], cs[i:i + batch])
                 n_batches += 1
     if not np.isfinite(scores).all():
-        raise NotScreenable(f"non-finite {family} scores in fp16 ({int((~np.isfinite(scores)).sum())} of {scores.size})")
+        raise NotScreenable(f"non-finite {family} scores in fp16 ({int((~np.isfinite(scores)).sum())} of {scores.size})",
+                            STATUS_FP16_NONFINITE)
     s = R.argmax_cell_summary(scores, targets)
     s["seconds"] = round(time.time() - t0, 2)
     s["batches"] = n_batches
@@ -558,7 +592,7 @@ def score_cell_with_backoff(path, model, family, seqs, targets, name_ids=None, c
         except torch.cuda.OutOfMemoryError:
             torch.cuda.empty_cache()
             if b == 1:
-                raise NotRun("NOT_RUN__memory", f"CUDA out of memory at batch 1 in the {family} cell")
+                raise NotRun(STATUS_MEMORY, f"CUDA out of memory at batch 1 in the {family} cell")
             b = max(1, b // 2)
 
 
@@ -603,10 +637,25 @@ def wrapper_equivalence(arm: str, path: str, model, tok, prep2: dict, rec: dict)
     return out
 
 
+def alone_name_logprobs(path: str, model, seqs: list, name_ids: list) -> list:
+    """Each item's three name log-probs at its last position, each item run alone (batch of one)."""
+    torch = R._torch()
+    device = next(model.parameters()).device
+    idx = torch.tensor(list(name_ids), device=device)
+    out = []
+    with torch.no_grad():
+        for s in seqs:
+            ids, _ = R.pad_batch([s], device)
+            h = R._hidden(path, model, ids)
+            out.append([float(x) for x in torch.log_softmax(R._logits(model, h[0, len(s) - 1]), -1)[idx]])
+    return out
+
+
 def right_padding_ids(path: str, model, seqs: list, name_ids: list, extra: int = 24) -> dict:
     """Two items' compare readout alone and inside a right-padded batch (padded by `extra` beyond the longer), on the
     model's own ids and device: max |delta logit| over the vocabulary (reported) and max |delta log p| over the three
-    names (gated for the non-NeoX models at RIGHT_PAD_FP16_TOL)."""
+    names (gated for the non-NeoX models at RIGHT_PAD_FP16_TOL in fp16 on the GPU and at RIGHT_PAD_FP32_TOL in the fp32
+    CPU reference). The alone name log-probs are returned for the fp16-against-fp32 comparison (NOTE section 12.4)."""
     torch = R._torch()
     device = next(model.parameters()).device
     with torch.no_grad():
@@ -617,7 +666,7 @@ def right_padding_ids(path: str, model, seqs: list, name_ids: list, extra: int =
             alone.append(R._logits(model, h[0, len(s) - 1]))
         ids, lengths = R.pad_batch(seqs, device, extra=extra)
         h = R._hidden(path, model, ids)
-        d_logit, d_name, agree = [], [], []
+        d_logit, d_name, agree, lp_alone = [], [], [], []
         idx = torch.tensor(list(name_ids), device=device)
         for i, n in enumerate(lengths):
             b = R._logits(model, h[i, n - 1])
@@ -625,8 +674,120 @@ def right_padding_ids(path: str, model, seqs: list, name_ids: list, extra: int =
             lb, la = torch.log_softmax(b, -1)[idx], torch.log_softmax(alone[i], -1)[idx]
             d_name.append(float((lb - la).abs().max()))
             agree.append(bool(int(lb.argmax()) == int(la.argmax())))
+            lp_alone.append([float(x) for x in la])
     return {"max_abs_logit_diff": max(d_logit), "max_abs_name_logprob_diff": max(d_name), "argmax_agree": agree,
-            "per_item_logit": d_logit, "dtype": str(next(model.parameters()).dtype), "device": str(device)}
+            "per_item_logit": d_logit, "per_item_name_logprob": d_name, "alone_name_logprobs": lp_alone,
+            "prompt_tokens": [len(s) for s in seqs], "dtype": str(next(model.parameters()).dtype), "device": str(device)}
+
+
+# ---------------------------------------------------------------------------------------------------
+# the fp16 load and the fp32 CPU reference (NOTE sections 12.1 and 12.4)
+# ---------------------------------------------------------------------------------------------------
+
+def buffer_dtypes(model) -> dict:
+    """The dtype of every rotary inv_freq buffer by name, and the count of floating buffers per dtype: what a load or a
+    cast did to the buffers (transformers' own fp16 load keeps inv_freq in fp32; a half() casts it)."""
+    inv, counts = {}, {}
+    for name, b in model.named_buffers():
+        if not b.is_floating_point():
+            continue
+        counts[str(b.dtype)] = counts.get(str(b.dtype), 0) + 1
+        if name.endswith("inv_freq"):
+            inv[name] = str(b.dtype)
+    return {"inv_freq": inv, "floating_buffers_by_dtype": counts}
+
+
+def stored_numel(snap: Path) -> int:
+    """The number of stored parameters, from the snapshot's safetensors headers (no tensor is read)."""
+    total = 0
+    for f in _safetensors_files(snap):
+        with open(f, "rb") as fh:
+            n = int.from_bytes(fh.read(8), "little")
+            header = json.loads(fh.read(n).decode("utf-8"))
+        for k, v in header.items():
+            if k != "__metadata__":
+                total += int(np.prod(v["shape"], dtype=np.int64)) if v["shape"] else 1
+    return total
+
+
+def available_ram_bytes():
+    """Available physical memory in bytes, or None when it cannot be read."""
+    try:
+        import psutil
+        return int(psutil.virtual_memory().available)
+    except Exception:                                                 # noqa: BLE001 -- unknown means the reference is not run
+        return None
+
+
+def load_hf_cpu(snap: Path, model_type: str, dtype_name: str):
+    """transformers' own load from the cached snapshot onto the CPU in fp16 (for scoring) or fp32 (the reference); gemma-2
+    with eager attention. Nothing is cast after the load (NOTE section 12.1): every parameter is asserted to carry the
+    dtype, and the buffers keep the dtype transformers gives them, recorded."""
+    torch = R._torch()
+    from transformers import AutoModelForCausalLM
+    dtype = {"float16": torch.float16, "float32": torch.float32}[dtype_name]
+    kwargs = {"dtype": dtype, "local_files_only": True}
+    if model_type == "gemma2":
+        kwargs["attn_implementation"] = "eager"                     # sdpa drops attn_logit_softcapping in transformers 4.57.3
+    t0 = time.time()
+    model = AutoModelForCausalLM.from_pretrained(str(snap), **kwargs)
+    model.eval()
+    bad = sorted({str(p.dtype) for p in model.parameters()} - {str(dtype)})
+    if bad:
+        model = None
+        raise NotScreenable(f"parameters not {dtype_name} after the load: {bad}")
+    info = {"dtype_loaded": dtype_name, "load_seconds_cpu": round(time.time() - t0, 2),
+            "attn_implementation": getattr(model.config, "_attn_implementation", None),
+            "final_logit_softcapping": getattr(model.config, "final_logit_softcapping", None),
+            "attn_logit_softcapping": getattr(model.config, "attn_logit_softcapping", None),
+            "buffers_after_load": buffer_dtypes(model)}
+    return model, info
+
+
+def fp32_reference(snap: Path, model_type: str, seqs2: list, name_ids: list, ram=None) -> dict:
+    """NOTE section 12.4: for a Llama, Qwen or Gemma row, before its fp16 load. When available RAM is at least
+    RAM_FP32_FACTOR x the fp32 bytes + RAM_HEADROOM_BYTES, the checkpoint is loaded in fp32 on the CPU (the only model
+    resident), right padding is measured on the two prompts (fp32_reference_gate applies RIGHT_PAD_FP32_TOL to the
+    three name log-probs), the alone name log-probs are kept as the reference, and the model is dropped. When RAM is
+    short or unknown, the reference is not run and the record says why; nothing else changes."""
+    need = int(stored_numel(snap) * 4 * RAM_FP32_FACTOR + RAM_HEADROOM_BYTES)
+    avail = (ram or available_ram_bytes)()
+    out = {"ran": False, "ram_needed_bytes": need, "ram_available_bytes": avail}
+    if avail is None or avail < need:
+        out["reason"] = ("available RAM could not be read" if avail is None else
+                         f"available RAM {avail / 2**30:.2f} GiB is under the {need / 2**30:.2f} GiB the fp32 reference needs")
+        return out
+    import gc
+    model = None
+    try:
+        model, info = load_hf_cpu(snap, model_type, "float32")
+        rp = right_padding_ids(v3_path(model_type), as_v3_model(model, model_type), seqs2, name_ids)
+    finally:
+        model = None
+        gc.collect()
+    out.update(ran=True, load=info, right_padding_fp32_cpu=rp)
+    return out
+
+
+def fp32_reference_gate(ref: dict) -> None:
+    """NOT_SCREENABLE__right_padding when the fp32 reference ran and right padding moved a name log-prob by more than
+    RIGHT_PAD_FP32_TOL (v3's fp32 bar). The caller keeps the reference's record either way."""
+    if ref.get("ran") and ref["right_padding_fp32_cpu"]["max_abs_name_logprob_diff"] > RIGHT_PAD_FP32_TOL:
+        d = ref["right_padding_fp32_cpu"]["max_abs_name_logprob_diff"]
+        raise NotScreenable(f"right padding moves the name log-probs by {d:.2e} > {RIGHT_PAD_FP32_TOL} in the fp32 CPU reference",
+                            STATUS_RIGHT_PADDING)
+
+
+def fp16_fidelity(ref: list, got: list, tol: float | None = None) -> dict:
+    """The fp16 GPU name log-probs against the fp32 CPU reference on the same prompts (NOTE section 12.4)."""
+    tol = FP16_FIDELITY_TOL if tol is None else tol
+    r, g = np.asarray(ref, dtype=float), np.asarray(got, dtype=float)
+    if r.shape != g.shape or r.ndim != 2 or r.shape[1] != 3:
+        raise ValueError(f"fp16 fidelity: shapes {g.shape} and {r.shape} do not match as [items, 3]")
+    d = np.abs(g - r)
+    return {"max_abs_name_logprob_diff": float(d.max()), "per_item": [float(x) for x in d.max(axis=1)],
+            "argmax_agree": [bool(a == b) for a, b in zip(g.argmax(axis=1), r.argmax(axis=1))], "tol": tol,
+            "ok": bool(float(d.max()) <= tol)}
 
 
 # ---------------------------------------------------------------------------------------------------
@@ -649,11 +810,26 @@ def screen_from_cells(cells: dict) -> dict:
     return sc
 
 
+def group_sentence(group: str, m: int, n_c: int, f_c: int, n_r: int, f_r: int) -> str:
+    """The printable sentence of one group (NOTE section 9 as corrected by section 12.3): the counts are of the M
+    screened models of that group, never of the cached models; a zero count reads "none of the M"; beside each nonzero
+    pass count, how many of those passes carry the C_abl flag; the instruct group's sentence says it saw raw text."""
+    tail = f"n = {N_ZOO} items per family per model, a pilot-class screen that licenses nothing."
+    if m == 0:
+        return f"At D0, no {group} model was screened (each {group} row is listed with its status and reason); {tail}"
+    who = f"screened {group} models" + (", given raw text without a chat template," if group == "instruct" else "")
+    count = lambda k: f"none of the {m}" if k == 0 else f"{k} of {m}"
+    flags = [f"{f} of the {k} {fam} passes" for k, f, fam in ((n_c, f_c, "compare"), (n_r, f_r, "recall")) if k > 0]
+    flag_clause = f" (C_abl above {ABLATED_FLAG_BAR} in " + " and ".join(flags) + ")" if flags else ""
+    return (f"At D0, under v3's argmax readout in fp16, {count(n_c)} {who} could perform the compare task and {count(n_r)} the "
+            f"recall task{flag_clause}; {tail}")
+
+
 def summarize(rows: list) -> dict:
     out = {}
     for group in GROUPS:
         g = [r for r in rows if r["group"] == group]
-        screened = [r for r in g if r["status"] == "SCREENED"]
+        screened = [r for r in g if r["status"] == STATUS_SCREENED]
         m = len(screened)
         nc = [r for r in screened if r["screen"]["compare"]["clears"]]
         nr = [r for r in screened if r["screen"]["recall"]["clears"]]
@@ -670,10 +846,8 @@ def summarize(rows: list) -> dict:
             "N_compare_with_ablated_flag": flag(nc, "compare"), "N_recall_with_ablated_flag": flag(nr, "recall"),
             "compare_passes": [r["repo"] for r in nc], "recall_passes": [r["repo"] for r in nr], "clear_both": [r["repo"] for r in both],
             "by_family": by_family,
-            "not_screened": [{"repo": r["repo"], "status": r["status"], "reason": r["reason"]} for r in g if r["status"] != "SCREENED"],
-            "sentence": (f"At D0, under v3's argmax readout, {len(nc)} of {m} screened {group} models could perform the compare task "
-                         f"(and {len(nr)} of {m} the recall task); n = {N_ZOO} items per family per model, a pilot-class screen that "
-                         f"licenses nothing.")}
+            "not_screened": [{"repo": r["repo"], "status": r["status"], "reason": r["reason"]} for r in g if r["status"] != STATUS_SCREENED],
+            "sentence": group_sentence(group, m, len(nc), flag(nc, "compare"), len(nr), flag(nr, "recall"))}
     out["excluded"] = [{"repo": k, "reason": v} for k, v in EXCLUDED.items()]
     return out
 
@@ -702,15 +876,55 @@ def git_facts() -> dict:
         head = r.stdout.strip() if r.returncode == 0 else None
     except (OSError, subprocess.TimeoutExpired):
         pass
-    return {"head": head, "note": git_blob_facts(NOTE), "runner": git_blob_facts(Path(__file__).resolve()),
-            "v3_runner": git_blob_facts(V3_RUNNER)}
+    out = {"head": head}
+    for k, path in committed_files():
+        out[k] = git_blob_facts(path)
+    return out
+
+
+def committed_files() -> tuple:
+    """What the run reads and must find committed and unchanged at HEAD: the plan, both runners, and the three v3
+    receipts that supply the disjointness lists and the wrapper's per-item reference (NOTE section 12.6)."""
+    return (("note", NOTE), ("runner", Path(__file__).resolve()), ("v3_runner", V3_RUNNER),
+            ("receipt_smoke", R.SMOKE_RECEIPT), ("receipt_pilot", R.PILOT1_RECEIPT), ("receipt_pilot2", R.PILOT2_RECEIPT))
+
+
+COMMITTED_KEYS = ("note", "runner", "v3_runner", "receipt_smoke", "receipt_pilot", "receipt_pilot2")
 
 
 def require_committed(git: dict) -> None:
-    for k in ("note", "runner", "v3_runner"):
-        f = git[k]
+    for k in COMMITTED_KEYS:
+        f = git.get(k)
+        if f is None:
+            raise Refusal(f"no git facts for {k}: the screen runs only on committed text")
         if f["head_blob_sha256"] is None or not f["working_copy_matches_head"]:
             raise Refusal(f"{f['path']} is not committed, or differs from HEAD: the screen runs only on committed text")
+
+
+# ---------------------------------------------------------------------------------------------------
+# the append-only partial log (NOTE section 12.5)
+# ---------------------------------------------------------------------------------------------------
+
+_STATE = {"run_started": False}
+
+
+def append_partial(event: dict) -> None:
+    """One JSON line appended to the partial log (UTF-8, LF), flushed and synced before the caller prints any of it.
+    Never truncated or rewritten by the runner."""
+    ev = dict(event, time=time.strftime("%Y-%m-%dT%H:%M:%S"))
+    data = (json.dumps(R.strip_private(ev), ensure_ascii=False) + "\n").encode("utf-8")
+    with open(PARTIAL_LOG, "ab") as f:
+        f.write(data)
+        f.flush()
+        os.fsync(f.fileno())
+
+
+def partial_facts():
+    """None when the partial log is absent; else its name, sha256 and line count."""
+    if not PARTIAL_LOG.exists():
+        return None
+    raw = PARTIAL_LOG.read_bytes()
+    return {"path": PARTIAL_LOG.name, "sha256": hashlib.sha256(raw).hexdigest(), "lines": raw.count(b"\n")}
 
 
 def cpu_phase(sentences=None, prov=None, receipts=None, tok_loader=None, models=MODELS, log=print) -> dict:
@@ -758,28 +972,49 @@ def cpu_phase(sentences=None, prov=None, receipts=None, tok_loader=None, models=
 # the GPU phase
 # ---------------------------------------------------------------------------------------------------
 
-def load_for_scoring(row: dict, prep: dict, red: dict, tag: str):
-    """Load one model per NOTE section 7 and run its model-level asserts. Returns (model, model as v3 reads it, info).
-    On any failure the failed frame's locals are cleared before the exception travels on, so that the traceback does
-    not keep the model alive past release() (the defect v3's release() docstring records)."""
+def load_for_scoring(row: dict, prep: dict, red: dict, tag: str, record: dict | None = None):
+    """Load one model per NOTE sections 7 and 12 and run its model-level asserts. Returns (model, model as v3 reads it,
+    info). `record`, when given, is filled as the load goes (numbers and strings only, never a tensor), so that a row
+    that fails an assert keeps the measurements that failed it. On any failure the failed frame's locals are cleared
+    before the exception travels on, so that the traceback does not keep the model alive past release() (the defect
+    v3's release() docstring records)."""
     try:
-        return _load_for_scoring(row, prep, red, tag)
+        return _load_for_scoring(row, prep, red, tag, record)
     except BaseException as e:
         traceback.clear_frames(e.__traceback__)
         raise
 
 
-def _load_for_scoring(row: dict, prep: dict, red: dict, tag: str):
+def _move_to_cuda(model, mt: str):
+    """The model onto the GPU: v3's to_gpu_fp16 (half(), then cuda) on v3's own path; a device move only for the
+    others, whose parameters are already fp16 from transformers' own load. A CUDA out-of-memory error here makes the
+    row NOT_RUN__memory (NOTE section 12.2)."""
+    torch = R._torch()
+    try:
+        if mt in NEOX_V3_PATH_TYPES:
+            return R.to_gpu_fp16(model)
+        model.to("cuda")
+        torch.cuda.synchronize()
+        return model
+    except torch.cuda.OutOfMemoryError as e:
+        model = None
+        torch.cuda.empty_cache()
+        raise NotRun(STATUS_MEMORY, f"CUDA out of memory while moving the model to the GPU: {e}")
+
+
+def _load_for_scoring(row: dict, prep: dict, red: dict, tag: str, record: dict | None = None):
     torch = R._torch()
     repo, mt = row["repo"], row["family"]["model_type"]
     tok = row["_tok"]
     items0 = prep["cells"][D0]
-    info = {"model_type": mt, "v3_path": v3_path(mt)}
+    seqs2, name_ids = row["_seqs"]["compare/plain"][:2], row["_name_ids"]
+    info = record if record is not None else {}
+    info.update({"model_type": mt, "v3_path": v3_path(mt)})
     t0 = time.time()
     try:
         R.require_free_gpu(red, tag)
     except Refusal as e:
-        raise NotRun("NOT_RUN__free_gpu", str(e))
+        raise NotRun(STATUS_FREE_GPU, str(e))
     if mt in NEOX_V3_PATH_TYPES:
         if mt == "mamba":
             info["chunked_scan"] = R.install_chunked_scan()
@@ -796,46 +1031,55 @@ def _load_for_scoring(row: dict, prep: dict, red: dict, tag: str):
         rp = R.check_right_padding(v3_path(mt), model, tok, items0, prep["exemplars"])
         info["right_padding_fp32_cpu"] = rp
         if rp["max_abs_logit_diff"] > R.FP32_TOL:
-            raise NotScreenable(f"right padding changes the last-position logits by {rp['max_abs_logit_diff']:.2e} in fp32")
+            raise NotScreenable(f"right padding changes the last-position logits by {rp['max_abs_logit_diff']:.2e} in fp32",
+                                STATUS_RIGHT_PADDING)
+        # NOTE section 12.4: on v3's own path the fp32 model is already on the CPU; its alone name log-probs on the two
+        # prompts are the reference for a recorded (not gated) fp16 comparison, so that M1 and T stay under pilot2's conditions
+        info["fp32_reference"] = {"ran": True, "on": "the fp32 CPU model of v3's own path", "gated": False,
+                                  "alone_name_logprobs": alone_name_logprobs(v3_path(mt), model, seqs2, name_ids)}
         try:
             R.require_free_gpu(red, tag + "_to_cuda")
         except Refusal as e:
             model = None
-            raise NotRun("NOT_RUN__free_gpu", str(e))
+            raise NotRun(STATUS_FREE_GPU, str(e))
         torch.cuda.reset_peak_memory_stats()
-        model = R.to_gpu_fp16(model)
+        model = _move_to_cuda(model, mt)
     else:
-        from transformers import AutoModelForCausalLM
-        kwargs = {"dtype": torch.float16, "local_files_only": True}
-        if mt == "gemma2":
-            kwargs["attn_implementation"] = "eager"                 # sdpa drops attn_logit_softcapping in transformers 4.57.3
         snap = R.snapshot_dir(repo)
-        model = AutoModelForCausalLM.from_pretrained(str(snap), **kwargs)
-        model.eval()
-        model.half()
-        bad = sorted({str(p.dtype) for p in model.parameters()} - {"torch.float16"})
-        if bad:
-            raise NotScreenable(f"parameters not fp16 after the load: {bad}")
-        info.update({"repo": repo, "revision": snap.name, "from_local_snapshot": True, "load_seconds_cpu_fp16": round(time.time() - t0, 2),
-                     "attn_implementation": getattr(model.config, "_attn_implementation", None),
-                     "final_logit_softcapping": getattr(model.config, "final_logit_softcapping", None),
-                     "attn_logit_softcapping": getattr(model.config, "attn_logit_softcapping", None)})
+        info["fp32_reference"] = {"ran": None, "note": "started; a failure inside it is the row's reason"}
+        info["fp32_reference"] = fp32_reference(snap, mt, seqs2, name_ids)
+        info["fp32_reference"]["gated"] = bool(info["fp32_reference"]["ran"])
+        fp32_reference_gate(info["fp32_reference"])
+        t1 = time.time()
+        model, linfo = load_hf_cpu(snap, mt, "float16")
+        info.update({"repo": repo, "revision": snap.name, "from_local_snapshot": True, "load_seconds_cpu_fp16": round(time.time() - t1, 2)})
+        info.update({k: v for k, v in linfo.items() if k != "load_seconds_cpu"})
         try:
             R.require_free_gpu(red, tag + "_to_cuda")
         except Refusal as e:
             model = None
-            raise NotRun("NOT_RUN__free_gpu", str(e))
+            raise NotRun(STATUS_FREE_GPU, str(e))
         torch.cuda.reset_peak_memory_stats()
-        model.to("cuda")
-        torch.cuda.synchronize()
+        model = _move_to_cuda(model, mt)
     info["load_and_assert_seconds"] = round(time.time() - t0, 2)
     info["dtype"] = str(next(model.parameters()).dtype)
+    info["buffers_on_gpu"] = buffer_dtypes(model)
     vm = as_v3_model(model, mt)
-    seqs2 = row["_seqs"]["compare/plain"][:2]
-    rp16 = right_padding_ids(v3_path(mt), vm, seqs2, row["_name_ids"])
+    rp16 = right_padding_ids(v3_path(mt), vm, seqs2, name_ids)
     info["right_padding_fp16_gpu"] = rp16
     if mt not in NEOX_V3_PATH_TYPES and rp16["max_abs_name_logprob_diff"] > RIGHT_PAD_FP16_TOL:
-        raise NotScreenable(f"right padding moves the name log-probs by {rp16['max_abs_name_logprob_diff']:.3f} > {RIGHT_PAD_FP16_TOL} in fp16")
+        raise NotScreenable(f"right padding moves the name log-probs by {rp16['max_abs_name_logprob_diff']:.3f} > {RIGHT_PAD_FP16_TOL} in fp16",
+                            STATUS_RIGHT_PADDING)
+    ref = info["fp32_reference"]
+    if ref["ran"]:
+        ref_lp = ref["alone_name_logprobs"] if "alone_name_logprobs" in ref else ref["right_padding_fp32_cpu"]["alone_name_logprobs"]
+        fid = fp16_fidelity(ref_lp, rp16["alone_name_logprobs"])
+        info["fp16_fidelity"] = dict(fid, gated=ref["gated"])
+        if ref["gated"] and not fid["ok"]:
+            raise NotScreenable(f"the fp16 name log-probs differ from the fp32 CPU reference by {fid['max_abs_name_logprob_diff']:.3f} > "
+                                f"{FP16_FIDELITY_TOL}", STATUS_FP16_FIDELITY)
+    else:
+        info["fp16_fidelity"] = {"ran": False, "reason": ref.get("reason"), "reading": "a fail on this row reads: did not perform in fp16"}
     return model, vm, info
 
 
@@ -844,9 +1088,13 @@ def peak_mb() -> float:
     return round(torch.cuda.max_memory_allocated() / 2 ** 20, 1)
 
 
-def run_screen(log=print) -> int:
+def run_screen(log=print, allow_after_partial: bool = False) -> int:
     if RECEIPT.exists():
         raise Refusal(f"{RECEIPT.name} exists: the screen runs once and a committed receipt is never regenerated")
+    prior_partial = partial_facts()
+    if prior_partial is not None and not allow_after_partial:
+        raise Refusal(f"{PARTIAL_LOG.name} exists: an earlier attempt saw model outputs; a rerun needs the operator's "
+                      f"--operator-allows-rerun-after-partial, and the new receipt then records that log's sha256")
     git = git_facts()
     require_committed(git)
     os.environ["HF_HUB_OFFLINE"] = "1"
@@ -865,6 +1113,12 @@ def run_screen(log=print) -> int:
                       "screen_bar": SCREEN_BAR, "guard_max_slot": GUARD_SLOT_MAX, "ablated_flag_bar": ABLATED_FLAG_BAR,
                       "batch": BATCH, "wrapper_equivalence": {"tol": WRAPPER_EQ_TOL, "tie": WRAPPER_EQ_TIE},
                       "right_padding_fp16_tol": RIGHT_PAD_FP16_TOL, "free_gpu_min_bytes": R.FREE_GPU_MIN_BYTES, "dtype": "float16 on cuda",
+                      "fp16_load": "Llama, Qwen and Gemma: transformers' own fp16 load, no cast after it (buffers recorded); "
+                                   "mamba and gpt_neox: v3's own path, fp32 on CPU then half() onto cuda, as pilot2",
+                      "fp32_reference": {"right_padding_fp32_tol": RIGHT_PAD_FP32_TOL, "fp16_fidelity_tol": FP16_FIDELITY_TOL,
+                                         "ram_rule": f"available RAM >= {RAM_FP32_FACTOR} x fp32 bytes + {RAM_HEADROOM_BYTES} bytes",
+                                         "gated_on": "Llama, Qwen and Gemma rows; recorded only on v3's own path"},
+                      "statuses": list(STATUSES),
                       "generator_tokenizer": GENERATOR_TOKENIZER, "models": [list(m) for m in MODELS], "excluded": dict(EXCLUDED),
                       "code_pools": prep["pools"], "zoo_codes": {"exemplar": prep["code_pools"]["zoo_exemplar"], "test": prep["code_pools"]["zoo_test"]},
                       "filler_pool": prep["sentence_provenance"], "sentence_region": prep["sentence_region"], "git": git},
@@ -874,8 +1128,11 @@ def run_screen(log=print) -> int:
            "disjointness": cpu["disjointness"], "wrapper_equivalence": {}, "models": {}, "per_item": {}, "summary": None,
            "redteam": {"generator": cpu["redteam"], "identical_bytes": cpu["identical_bytes"],
                        "pilot2_regeneration": {k: v for k, v in cpu["pilot2"].items() if k != "prep"}},
-           "runtime": {"cpu_phase_seconds": cpu["seconds"]}}
+           "runtime": {"cpu_phase_seconds": cpu["seconds"], "prior_partial_log": prior_partial}}
     R.record_versions(res)
+    _STATE["run_started"] = True
+    append_partial({"event": "run_start", "head": git["head"], "pid": os.getpid(), "prior_partial_log": prior_partial,
+                    "items_sha256": res["items"]["items_sha256"]})
     red = res["redteam"]
     by_repo = {r["repo"]: r for r in rows}
     rec2 = cpu["receipts"]["pilot2"]
@@ -900,6 +1157,7 @@ def run_screen(log=print) -> int:
             R.release(red, f"{arm}_equivalence")
         eq["load"] = info
         res["wrapper_equivalence"][arm] = eq
+        append_partial({"event": "wrapper_equivalence", "arm": arm, "result": eq})
         log(f"  wrapper equivalence {arm}: " + ", ".join(f"{k} max|d| {v['max_abs_score_diff']:.2e} disagree {v['pred_disagree_non_tie']}"
                                                        for k, v in eq.items() if k != "ok") + f" -> {'ok' if eq['ok'] else 'FAILED'}")
         if not eq["ok"]:
@@ -915,9 +1173,10 @@ def run_screen(log=print) -> int:
             continue
         t0 = time.time()
         model = vm = None
+        msg = None
+        out["load"] = {}
         try:
-            model, vm, info = load_for_scoring(row, prep, red, repo)
-            out["load"] = info
+            model, vm, info = load_for_scoring(row, prep, red, repo, record=out["load"])
             path = v3_path(row["family"]["model_type"])
             cells, t_score = {}, time.time()
             for family in FAMILIES:
@@ -934,35 +1193,35 @@ def run_screen(log=print) -> int:
                 s.pop("_correct")
                 out["cells"][f"{family}/{variant}"] = s
             out["screen"] = screen_from_cells(cells)
-            out["status"] = "SCREENED"
+            out["status"] = STATUS_SCREENED
             res["per_item"][repo] = per_item
             sc = out["screen"]
-            log(f"  {repo:36} compare {sc['compare']['acc_norm']:+.3f} max-slot {sc['compare']['max_slot_fraction']:.2f} "
-                f"{'pass' if sc['compare']['clears'] else 'fail'} | recall {sc['recall']['acc_norm']:+.3f} "
-                f"{'pass' if sc['recall']['clears'] else 'fail'} | C_abl {sc['compare']['ablated_acc_norm']:+.3f}/"
-                f"{sc['recall']['ablated_acc_norm']:+.3f} ({time.time() - t0:.0f}s, peak {out['peak_gpu_mb']:.0f} MB)")
-        except NotScreenable as e:
-            traceback.clear_frames(e.__traceback__)
-            out.update(status="NOT_SCREENABLE", reason=str(e))
-            log(f"  {repo:36} NOT_SCREENABLE: {e}")
-        except NotRun as e:
+            msg = (f"  {repo:36} compare {sc['compare']['acc_norm']:+.3f} max-slot {sc['compare']['max_slot_fraction']:.2f} "
+                   f"{'pass' if sc['compare']['clears'] else 'fail'} | recall {sc['recall']['acc_norm']:+.3f} "
+                   f"{'pass' if sc['recall']['clears'] else 'fail'} | C_abl {sc['compare']['ablated_acc_norm']:+.3f}/"
+                   f"{sc['recall']['ablated_acc_norm']:+.3f} ({time.time() - t0:.0f}s, peak {out['peak_gpu_mb']:.0f} MB)")
+        except (NotScreenable, NotRun) as e:
             traceback.clear_frames(e.__traceback__)
             out.update(status=e.status, reason=str(e))
-            log(f"  {repo:36} {e.status}: {e}")
+            msg = f"  {repo:36} {e.status}: {e}"
         except Exception as e:                                        # a defect or a device error: recorded, never hidden
+            tb = "".join(traceback.format_exception(type(e), e, e.__traceback__))
             traceback.clear_frames(e.__traceback__)
-            out.update(status="NOT_RUN__error", reason=f"{type(e).__name__}: {e}")
-            log(f"  {repo:36} NOT_RUN__error: {type(e).__name__}: {e}")
+            out.update(status=STATUS_ERROR, reason=f"{type(e).__name__}: {e}", error_traceback=tb[-6000:])
+            msg = f"  {repo:36} {STATUS_ERROR}: {type(e).__name__}: {e}"
         finally:
             model = vm = None
             out["free_gpu_bytes_after_release"] = R.release(red, repo)
             out["seconds"] = round(time.time() - t0, 2)
         out.pop("_tok", None)
         res["models"][repo] = out
+        append_partial({"event": "model", "repo": repo, "row": out, "per_item": res["per_item"].get(repo)})
+        log(msg)
     res["summary"] = summarize(list(res["models"].values()))
     res["runtime"]["total_seconds"] = round(sum(m.get("seconds", 0.0) for m in res["models"].values()) + res["runtime"]["cpu_phase_seconds"]
                                             + res["runtime"]["wrapper_equivalence_seconds"], 1)
     R.write_json(RECEIPT, res)
+    append_partial({"event": "receipt_written", "receipt": RECEIPT.name, "sha256": R.sha256_file(RECEIPT)})
     for group in GROUPS:
         log(f"\n  {res['summary'][group]['sentence']}")
     log(f"\nwrote {RECEIPT.name}")
@@ -976,7 +1235,8 @@ def run_check(log=print) -> int:
     log(f"ZOO D0 SCREEN --check (CPU only; no model is loaded; nothing is written)")
     git = git_facts()
     log("  git: HEAD " + str(git["head"]) + "; " + "; ".join(f"{k} committed={git[k]['head_blob_sha256'] is not None} matches={git[k]['working_copy_matches_head']}"
-                                                         for k in ("note", "runner", "v3_runner")))
+                                                         for k in COMMITTED_KEYS))
+    log(f"  partial log: {partial_facts() or 'absent'}")
     cpu = cpu_phase(log=log)
     ready = [r for r in cpu["rows"] if r["status"] == "READY"]
     log(f"  {len(ready)} of {len(cpu['rows'])} models pass every CPU assert; bytes identical across them: {cpu['identical_bytes']['identical']}"
@@ -987,16 +1247,31 @@ def run_check(log=print) -> int:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--check", action="store_true", help="every CPU assert of the run; loads no model; writes nothing")
+    ap.add_argument("--operator-allows-rerun-after-partial", action="store_true",
+                    help="run although zoo_d0_screen.partial.jsonl exists (the operator's call); its sha256 goes into the receipt")
     args = ap.parse_args(argv)
     try:
-        return run_check() if args.check else run_screen()
+        return run_check() if args.check else run_screen(allow_after_partial=args.operator_allows_rerun_after_partial)
     except Refusal as e:
         if args.check:
             print(f"\nREFUSED: {e}", file=sys.stderr, flush=True)
             return 2
-        R.write_json(REFUSAL_RECEIPT, {"refused": True, "reason": str(e), "mode": "zoo_d0_screen", "time": time.strftime("%Y-%m-%dT%H:%M:%S")})
+        if _STATE["run_started"]:
+            append_partial({"event": "refused", "reason": str(e)})
+        R.write_json(REFUSAL_RECEIPT, {"refused": True, "reason": str(e), "mode": "zoo_d0_screen", "time": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                                       "partial_log": partial_facts()})
         print(f"\nREFUSED: {e}\nwrote {REFUSAL_RECEIPT.name}", file=sys.stderr, flush=True)
         return 2
+    except Exception as e:                                            # NOTE section 12.5: an error outside a model's row leaves a record
+        if args.check:
+            raise
+        tb = "".join(traceback.format_exception(type(e), e, e.__traceback__))
+        if _STATE["run_started"]:
+            append_partial({"event": "error", "error": f"{type(e).__name__}: {e}", "traceback": tb[-6000:]})
+        R.write_json(REFUSAL_RECEIPT, {"refused": False, "error": f"{type(e).__name__}: {e}", "traceback": tb[-6000:], "mode": "zoo_d0_screen",
+                                       "time": time.strftime("%Y-%m-%dT%H:%M:%S"), "partial_log": partial_facts()})
+        print(f"\nERROR: {type(e).__name__}: {e}\nwrote {REFUSAL_RECEIPT.name}", file=sys.stderr, flush=True)
+        return 3
 
 
 if __name__ == "__main__":
