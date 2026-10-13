@@ -110,10 +110,10 @@ agent-authored pull requests from a corpus this lab did not collect
 ([AIDev](https://huggingface.co/datasets/hao-li/AIDev), the MSR 2026 mining-challenge dataset),
 preregistered a precision floor of 0.95 before touching the data, and sealed the adjudication key
 before any answer existed. A blind three-seat panel — which called 30 of 30 hidden decoys
-correctly — put the observed precision at **0.23**. The preregistered consequence was paid the
-same day: `file_created` / `file_deleted` / `file_touched` now return `UNCHECKABLE` with the
+correctly — put the observed precision at **0.23**. Part of the preregistered consequence was paid the
+same day, for the path classes: `file_created` / `file_deleted` / `file_touched` now return `UNCHECKABLE` with the
 accusation *withheld*, and four tests that pinned real catches are marked `xfail(strict=True)` so
-no repair can land silently. The V13 repair recovered 34.6% of the false accusations
+no repair can land silently. Not all of it: the same preregistration said "the GitHub Action does not launch on the current template set", and the Action launches, and reports by default (above). The V13 repair recovered 34.6% of the false accusations
 against a 66.7% bar and **also failed**; V14 then cleared that bar (0.6975) and scored **0.16** held-out precision against the same 0.95 floor, so this lab is not repairing the class again ([RESULT_v14](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md)). Counts, symbol and prefix claims are unaffected and still
 accuse. The full record, including two corrections to our own diagnosis, is in
 [RESULT_external1_the_gate_fails_in_the_wild](https://github.com/fathom-lab/styxx/blob/v7.49.0/papers/closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md).

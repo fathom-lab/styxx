@@ -222,7 +222,7 @@ _TEMPLATES = [
 ]
 
 
-# EXTERNAL-1 consequence, preregistered and paid: the path-claim accusation is
+# EXTERNAL-1's preregistered consequence, for the path classes: the path-claim accusation is
 # WITHHELD until a held-out blind panel licenses its return (PREREG_v13_repair).
 # Exposed as a flag, not a deletion, so the counterfactual stays measurable — the
 # question "how much of the failure was the instrument and how much was the
@@ -1450,10 +1450,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
 # function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
 # the block's own slotted classes, so nothing of main's is reachable from it as data.
-# Everything outside this block is main's reader (sha256 f43211e3..., LF: 4eb3d6f0... with the gate claim EXTERNAL-1
-# committed the lab to withdraw taken out of its module docstring and its CLI description; 4eb3d6f0... is 68873068...
-# plus the record naming its instrument, identity phase 2, and 68873068... is 1cde8b82's 9b620e00... with the demo's
-# CONTRADICTED label, fix/contradicted-not-lie), unchanged; the two doors call
+# Everything outside this block is main's reader (sha256 5395e7e8..., LF: 4eb3d6f0... with the gate claim EXTERNAL-1
+# committed the lab to withdraw taken out of its docstring and CLI description, and the WITHHOLD comment scoped to the
+# path classes; 4eb3d6f0... is 68873068... plus the record naming its instrument, identity phase 2, and 68873068... is
+# 1cde8b82's 9b620e00... with the demo's CONTRADICTED label, fix/contradicted-not-lie), unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
 # where #97, #121 or #101 can have made it wrong:

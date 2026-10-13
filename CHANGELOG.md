@@ -33,15 +33,22 @@ this entry the words were printed nowhere outside the preregistration and one re
   this file's older entries, `tests/`, and the recorded pull request body `web/gate/differential/bodies/pr98.md`.
 - **`styxx/diffgate.py` too, and the pins that name its bytes.** Its module docstring and the description
   `python -m styxx.diffgate --help` prints made the claim; both now say the summary is read against its diff.
-  That moves the file's LF sha256 to `5b6b980e…` and the reader the PATH-2a block is cut from to `f43211e3…`,
-  so every pin that names them moves in the same commit: `PINNED` in `web/gate/differential/py_side.py`,
+  The comment over `WITHHOLD_PATH_ACCUSATION` called the EXTERNAL-1 consequence "preregistered and paid"; it now
+  says this is the consequence's part for the path classes (see the next item). That moves the file's LF sha256
+  to `091fbb46…` and the reader the PATH-2a block is cut from to `5395e7e8…`, so every pin that names them moves
+  with it: `PINNED` in `web/gate/differential/py_side.py`,
   `MAIN_PY_SHA` in `tests/_p2a_ref.py`, the comment inside the PATH-2a block of `styxx/diffgate.py`, the port's
   comment in `web/gate/diffgate.js` and its copy in `web/gate/bookmarklet_src.js`, and `web/gate/README.md`. No
-  reading path moved: the two strings are the only change outside the block. A diffgate record names the file's
-  sha256 in `build.modules`, so records written from here on name `5b6b980e…`. The comment is the only change to
+  reading path moved: the two strings and the comment are the only change outside the block. A diffgate record
+  names the file's sha256 in `build.modules`, so records written from here on name `091fbb46…`. The comment is the only change to
   `bookmarklet_src.js` and `bookmarklet.min.js` does not carry the old hash, so the minified build and its pinned
   hash are left as they are; terser was not on the machine that made this change, so `build_bookmarklet.py
   --check` was not run there.
+- **README's account of the consequence is scoped.** Its paragraph headed 2026-08-31 said "The preregistered
+  consequence was paid the same day". What was paid that day is the path classes' part: their accusation is
+  withheld. The same preregistration also said "the GitHub Action does not launch on the current template set"
+  (line 78), and the Action launches, and reports by default. The paragraph now says part of the consequence was
+  paid, for the path classes, and names the clause that was not. It stays on its lines.
 - **README's GitHub Action row: its last sentence is withdrawn.** It read "if we ever lie about a diff, our own
   product fails our own build". That is a statement about what the gate catches, and no receipt measures it.
   The row now says the lab runs the Action on itself with `soft-fail: "false"` as its own choice, and that the
