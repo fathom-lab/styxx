@@ -786,6 +786,16 @@ def test_build_without_an_anchor_needs_allow_unanchored_and_then_L1_reads_fails(
 
 # ------------------------------------------------------------------------ O9 and the house words
 
+def _without_carried_runtime(p: dict) -> dict:
+    """The payload less the carried charon line's ``verifier.runtime``: carried history, which names the
+    interpreter its line was derived under (charon's verifier scheme v1) and is carried as is."""
+    out = json.loads(json.dumps(p))
+    ver = ((out["artifacts"].get("charon") or {}).get("entry") or {}).get("verifier")
+    if isinstance(ver, dict):
+        ver.pop("runtime", None)
+    return out
+
+
 def test_the_payload_carries_no_interpreter_path_host_or_secret(minted):
     p = _payload(minted)
     assert set(p["verifier"]) == {"styxx_version", "modules", "digest"}
@@ -793,10 +803,45 @@ def test_the_payload_carries_no_interpreter_path_host_or_secret(minted):
     text = json.dumps(p)
     import platform
     import sys
-    assert sys.version.split()[0] not in text or sys.version.split()[0] == p["verifier"]["styxx_version"]
-    assert "sys.version" not in text and (len(platform.node()) < 4 or platform.node() not in text)
+    # O9 as the operator recorded it: no sys.version anywhere in the payload, carried history included
+    assert sys.version not in text and "sys.version" not in text
+    # and the interpreter's version nowhere but where carried history names it (the next test)
+    own = json.dumps(_without_carried_runtime(p))
+    assert sys.version.split()[0] not in own or sys.version.split()[0] == p["verifier"]["styxx_version"]
+    assert len(platform.node()) < 4 or platform.node() not in text
     assert "C:\\\\" not in text and "C:/" not in text and "/home/" not in text and "/Users/" not in text
     assert rc.disclosure_hits(p, minted.read_text(encoding="utf-8"), host=platform.node()) == []
+
+
+def test_a_carried_charon_line_names_its_runtime_as_history_and_dropping_it_fails_L5(minted, tmp_path):
+    import platform
+    import sys
+    import unicodedata
+    p = _payload(minted)
+    v = p["artifacts"]["charon"]["entry"]["verifier"]
+    assert v["scheme"] == charon.VERIFIER_SCHEME
+    assert v["runtime"] == {"implementation": sys.implementation.name, "version": platform.python_version(),
+                            "unicode": unicodedata.unidata_version}
+    assert sys.version not in json.dumps(v) and "runtime" not in p["verifier"]
+    # the runtime sits inside the core the line's entry_id digests: a consistent capsule that dropped it
+    # fails L5 and L5 alone
+    def drop(payload):
+        payload["artifacts"]["charon"]["entry"]["verifier"].pop("runtime")
+    assert _fails(verify(_write_consistent(tmp_path, _inputs(), drop))) == {"L5"}
+    # the DISCLOSURE says so, and no longer says the payload carries no interpreter version
+    doc = " ".join(rc.__doc__.split())
+    assert "``verifier.runtime``" in doc and "carried as is" in doc
+    assert "the payload carries no interpreter version" not in doc
+
+
+def test_the_capsules_own_verifier_names_module_shas_over_lf_bytes(minted):
+    import hashlib
+    import importlib
+    p = _payload(minted)
+    assert [m for m, _ in p["verifier"]["modules"]] == list(rc._MODULES)
+    for name, sha in p["verifier"]["modules"]:
+        raw = Path(importlib.import_module(name).__file__).read_bytes()
+        assert sha == hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest(), name
 
 
 def test_no_house_word_in_the_module_the_tests_the_page_or_the_datasheet(minted):
