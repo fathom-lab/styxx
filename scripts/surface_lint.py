@@ -409,7 +409,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                        "python scripts/surface_lint.py --write-baseline scripts/surface_lint_baseline.json "
                        "only when a count falls.",
                "profile": a.profile, "counts": counts(rep.hits)}
-        Path(a.write_baseline).write_text(json.dumps(doc, indent=1, ensure_ascii=True) + "\n", encoding="utf-8")
+        with open(a.write_baseline, "w", encoding="utf-8", newline="\n") as f:     # LF on every system
+            f.write(json.dumps(doc, indent=1, ensure_ascii=True) + "\n")
         print(f"surface_lint: wrote {sum(sum(v.values()) for v in doc['counts'].values())} counted hits over "
               f"{len(doc['counts'])} files to {a.write_baseline}")
         return 0
