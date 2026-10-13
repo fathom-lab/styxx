@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the zoo D0 screen: 13 cached models on bridge v3's compare and recall at 16 tokens (pilot-class, licenses nothing)
+
+`papers/frequency-resonance/NOTE_zoo_d0_screen_plan_2026_10_12.md` planned, before any data, the readiness screen the
+operator approved on 2026-10-11: a pilot-class check that licenses nothing, is not part of bridge v3's verdict, and asks
+only whether any cached model can perform the v3 compare task, and the v3 recall task, at D0 under the argmax readout.
+Thirteen cached checkpoints, eight base and five instruct, were screened on one item set: v3's generator, imported, at
+seed 1013; 48 items per family per model at D0 = 16 GPT-NeoX tokens; C_abl (v3's ablated variant) beside every cell;
+sentences from a slice outside v3's pool; codes disjoint from every code a v3 run planted. Every model loaded from its
+local snapshot with `local_files_only=True` and `HF_HUB_OFFLINE=1`; no model was downloaded.
+`microsoft/Phi-3.5-mini-instruct` is cached and excluded, as the plan says.
+
+- The receipt, `zoo_d0_screen.json`, written once by the rerun at `ed620dfa`: 13 of 13 rows SCREENED. Through the
+  scoring wrapper, M1 and T reproduce the committed pilot2 per-item outputs (max |Δ score| 0.0 on all four cells)
+  before any zoo item is scored. The fp32 CPU reference of the plan's section 12.4 ran on eight of the ten Llama, Qwen
+  and Gemma rows and passed both bars; the two Llama-3.2-3B rows were scored without it (available RAM 13.55 and
+  14.65 GiB, under the 15.36 GiB it needs), as section 12.4 allows.
+- The plan's sentences, as the receipt builds them: "At D0, under v3's argmax readout in fp16, 2 of 8 screened base
+  models could perform the compare task and 7 of 8 the recall task (C_abl above 0.16 in 0 of the 2 compare passes and
+  0 of the 7 recall passes); n = 48 items per family per model, a pilot-class screen that licenses nothing." The
+  instruct group's: "At D0, under v3's argmax readout in fp16, 3 of 5 screened instruct models, given raw text without a
+  chat template, could perform the compare task and 5 of 5 the recall task (C_abl above 0.16 in 0 of the 3 compare
+  passes and 0 of the 5 recall passes); n = 48 items per family per model, a pilot-class screen that licenses nothing."
+  By family: base decay SSM 2 screened, 0 compare, 1 recall; base attention 6 screened, 2 compare, 6 recall; instruct
+  attention 5 screened, 3 compare, 5 recall.
+- An observation at n = 48, not a ranking and not a causal claim: the five compare passes are the four checkpoints
+  named 3B (`meta-llama/Llama-3.2-3B`, `Qwen/Qwen2.5-3B` and their instruct twins) and `google/gemma-2-2b-it`; no other
+  checkpoint named below 3B passes compare. Two of the five sit one item over the bar: `Qwen/Qwen2.5-3B` and
+  `google/gemma-2-2b-it` read +0.406 (29 of 48 correct; 28 would read +0.375 and fail). Size is confounded with data,
+  recipe, tokenizer and tuning, as the family label is, and nothing here attributes a pass or a fail to it.
+- What it was for: readiness for a ~3B bridge. The screen says which cached checkpoints performed v3's two tasks at
+  D0 under v3's format, in fp16; it proposes none, and amendment 17.3's format line for v3 (NOT_STARTED, final) is
+  untouched. No ~3B bridge is commissioned: one was drafted on 2026-10-12 and closed by the operator before
+  signature, unrun.
+- What it cannot show (the plan's section 10): nothing about distance; no causal claim; nothing about deployed honesty
+  or any capability beyond these two tasks under this format; not v3's verdict, and M1's and T's rows are a
+  re-measurement on new items beside the pilot2 receipt; a fail reads "did not perform under v3's format, in fp16";
+  no ranking and no family-level sentence; base and instruct reported apart.
+- The crashed attempt's record is committed. `zoo_d0_screen.partial.jsonl` holds 20 lines: the 3 of the attempt at
+  `acd5b1e9`, which stopped on a KeyError while printing M1's equivalence line and whose sha256 the receipt records
+  under `runtime.prior_partial_log`, then the rerun's 17, ending with the receipt's sha256. `zoo_d0_screen_refusal.json`
+  holds the KeyError and its traceback (sha256 in the plan's section 14). The two files and the receipt are pinned
+  `-text`. The plan's section 15 says the two files stay untracked; that was true when it was written, and the NOTE is
+  not edited.
+- `papers/frequency-resonance/run_zoo_d0_screen.py` imports v3's generator, readouts, summary and screen rule and copies
+  none of them. `tests/test_zoo_d0_screen.py` loads no checkpoint and touches no GPU: the tokenizer, pool and weight
+  tests skip when the cached files are absent, the tiny-model tests skip without torch and transformers, and a test
+  checks the committed record against the hashes the NOTE and the receipt name.
+
 ## [Unreleased] — charon's verifier names its runtime: verifier scheme `styxx.charon/verifier/v1`, module shas over LF bytes and the runtime inside the digest (identity phase 3)
 
 **Phase 3 of the design the operator approved on 2026-10-11**, after phases 0 to 2 (#207, #212, #217). It

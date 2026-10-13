@@ -1,0 +1,12 @@
+{
+  "refused": false,
+  "error": "KeyError: 'max_abs_score_diff'",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\heyzo\\clawd\\wt\\zoo-screen\\papers\\frequency-resonance\\run_zoo_d0_screen.py\", line 1254, in main\n    return run_check() if args.check else run_screen(allow_after_partial=args.operator_allows_rerun_after_partial)\n                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\heyzo\\clawd\\wt\\zoo-screen\\papers\\frequency-resonance\\run_zoo_d0_screen.py\", line 1161, in run_screen\n    log(f\"  wrapper equivalence {arm}: \" + \", \".join(f\"{k} max|d| {v['max_abs_score_diff']:.2e} disagree {v['pred_disagree_non_tie']}\"\n                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\heyzo\\clawd\\wt\\zoo-screen\\papers\\frequency-resonance\\run_zoo_d0_screen.py\", line 1161, in <genexpr>\n    log(f\"  wrapper equivalence {arm}: \" + \", \".join(f\"{k} max|d| {v['max_abs_score_diff']:.2e} disagree {v['pred_disagree_non_tie']}\"\n                                                                   ~^^^^^^^^^^^^^^^^^^^^^^\nKeyError: 'max_abs_score_diff'\n",
+  "mode": "zoo_d0_screen",
+  "time": "2026-10-12T12:31:56",
+  "partial_log": {
+    "path": "zoo_d0_screen.partial.jsonl",
+    "sha256": "c33cd06c098f145b4589658c37664e5d89756ce3802867fe963c6d6b52e8c7ba",
+    "lines": 3
+  }
+}
