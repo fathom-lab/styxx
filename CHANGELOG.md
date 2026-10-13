@@ -42,8 +42,9 @@ and no line is appended to the log.
     unknown rule are never counted as one build.
   - The CLI prints a `verifier moved:` line, and `verifier=` on every row it prints.
   - A verdict the interpreter or its Unicode database moved, under the same module bytes, now reads SKEW
-    `["runtime"]`, not DRIFT. DRIFT means the core moved under the same module bytes and the same runtime.
-    The report's note says so.
+    `["runtime"]`, or UNRESOLVED with `verifier_moved` `["runtime"]` when the capsule reader's problem text
+    holds a word `derive_capsule` reads as a broken binding (below); never DRIFT. DRIFT means the core
+    moved under the same module bytes and the same runtime. The report's note says so.
 - **Legacy lines.** Every line of the committed log is legacy: no scheme, raw-byte shas, no runtime, and a
   digest over the module list alone. No fresh digest can equal one, so a legacy line never reads SAME_LINE
   again (accepted, the design's risk 6), and never DRIFT. Re-derived on this tree, all 257 read
@@ -66,12 +67,15 @@ and no line is appended to the log.
     MOVED_VERIFIER `["legacy"]`;
   - the 257 lines written before the amendment being legacy;
   - the note and `by_verifier_part`;
+  - two capsules minted under one reading of the interpreter and verified under another, both ways, reading
+    SKEW or UNRESOLVED `["runtime"]` and never DRIFT;
   - hostile verifiers, chained and not;
   - one module sha under the legacy, scheme-v1 and unknown readings, tallied as three builds.
 
-  Eight mutations of `styxx/charon.py` were each caught by it: the raw module sha, a digest over the modules
-  alone, the set without the three modules, no legacy reading, no `lf:` prefix, the runtime not compared,
-  and both robustness guards removed. `tests/test_charon.py` and `tests/test_stranger.py` are not edited.
+  Nine mutations of `styxx/charon.py` were each caught by it: the raw module sha, a digest over the modules
+  alone, the set without the three modules, no legacy reading, no `lf:` prefix, no `unknown:` prefix, the
+  runtime not compared, and both robustness guards removed. `tests/test_charon.py` and
+  `tests/test_stranger.py` are not edited.
 - **The research capsule carries a charon line, so it now carries a runtime.** `styxx.research_capsule`
   carries one sworn line whole, and its link L5 re-derives the line's `entry_id` from a core that holds
   `verifier`. A scheme-v1 line carried there names `verifier.runtime`, and a capsule that dropped it would
@@ -95,6 +99,27 @@ and no line is appended to the log.
   no `scheme` reads `legacy` whatever its digest. A line edited that way reads SAME_LINE, and the edit needs
   a re-chained log, which `--expect-head`, with a head held outside the log, reads as HEAD_MISMATCH. The
   amendment's section dated 2026-10-12 says so, with the two items above and the report's keys.
+- **A verdict the interpreter moved reads SKEW or UNRESOLVED with `["runtime"]`, never DRIFT.** A real move
+  was measured: eleven `capsule-diffgate` lines ingested under CPython 3.12.10 (Unicode 15.0.0) and verified
+  under CPython 3.14.2 (Unicode 16.0.0), with the same module bytes, read 5 SKEW `["runtime"]`, 5 UNRESOLVED
+  with `verifier_moved` `["runtime"]`, 1 MOVED_VERIFIER `["runtime"]` (an ASCII control) and 0 DRIFT. The
+  reverse direction gave the same split. On the parent the same run read DRIFT 5, UNRESOLVED 5 and
+  SAME_LINE 1.
+  - The UNRESOLVED lines come from `derive_capsule`'s broken-binding rule, which this phase does not change:
+    a capsule problem holding `ambiguous` reads as a broken binding. The reader's `gate.claims not
+    reproduced` line quotes the gate's reason for a bare file name absent from the diff, which holds the
+    word. The INSTRUMENT SKEW line ahead of it holds none.
+  - The amendment's second section dated 2026-10-12 says so, and so does the verify note. A verdict the
+    interpreter moved reads SKEW with runtime, or UNRESOLVED with runtime when the capsule reader's problems
+    hold a word charon reads as a broken binding, never DRIFT. UNRESOLVED names such a capsule beside bytes
+    unavailable now.
+  - A new test mints two capsules under one reading of a synthetic interpreter and verifies them under
+    another, both ways. The bare-name capsule reads UNRESOLVED `["runtime"]`, the symbol capsule SKEW
+    `["runtime"]`, and none DRIFT. Three mutations of `styxx/charon.py` were each caught: the rule narrowed
+    to the binding lines `styxx/capsule.py` writes, and each of the note's two sentences reverted.
+  - Narrowing the rule goes past the design's text and is the operator's call. None of the twelve capsule
+    lines of the committed log was recorded UNRESOLVED or reads UNRESOLVED on this tree, so the narrowing
+    would move none of them.
 
 ## [Unreleased] — a diffgate record names the build and runtime that wrote it: `build` and `runtime` after the eleven content keys (identity phase 2)
 
