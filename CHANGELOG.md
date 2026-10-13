@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased] — charon's verifier names its runtime: verifier scheme `styxx.charon/verifier/v1`, module shas over LF bytes and the runtime inside the digest (identity phase 3)
 
 **Phase 3 of the design the operator approved on 2026-10-11**, after phases 0 to 2 (#207, #212, #217). It
-touches four files: `papers/charon/AMENDMENT_charon_verifier_names_its_runtime_2026_10_12.md` (new,
-committed alone, ahead of the code), `styxx/charon.py`, `tests/test_charon_instrument.py` (new) and this
-file. The charon spec is not edited. No committed capsule, receipt, conformance vector or charon line is
-touched, and no line is appended to the log.
+touches six files. Four are the design's: `papers/charon/AMENDMENT_charon_verifier_names_its_runtime_2026_10_12.md`
+(new, committed alone, ahead of the code), `styxx/charon.py`, `tests/test_charon_instrument.py` (new) and
+this file. Two the design did not name: `styxx/research_capsule.py` and `tests/test_research_capsule.py`.
+The research capsule carries a charon line, and its O9 test failed once that line named its runtime (below).
+The charon spec is not edited. No committed capsule, receipt, conformance vector or charon line is touched,
+and no line is appended to the log.
 
 - **New lines carry the verifier scheme `styxx.charon/verifier/v1`.** A line's `verifier` is `scheme`,
   `styxx_version`, `modules`, `runtime` and `digest`.
@@ -32,8 +34,12 @@ touched, and no line is appended to the log.
   - Each row gains `verifier_scheme` (`v1`, `legacy` or `unknown`), `verifier_moved`, `runtime_recorded`
     and `runtime_now`. `verifier_moved` is `[]`, `["modules"]`, `["runtime"]`, `["modules", "runtime"]`,
     `["legacy"]` or `["unattributed"]`, and null on a TAMPER row, which is not re-derived.
-  - The report gains `by_verifier_part` beside `by_status`. `verifier_builds_recorded` prefixes each sha of
-    a scheme-v1 line with `lf:`, so a raw sha and an LF sha are never counted as one build.
+  - The report gains `by_verifier_part` beside `by_status`, one key per value of `verifier_moved`: `same`,
+    `modules`, `runtime`, `modules+runtime`, `legacy` and `unattributed`, and `not_compared` for a TAMPER
+    row.
+  - `verifier_builds_recorded` prefixes each sha of a scheme-v1 line with `lf:`, and each sha of a line
+    naming a scheme this verifier does not read with `unknown:`. A raw sha, an LF sha and a sha under an
+    unknown rule are never counted as one build.
   - The CLI prints a `verifier moved:` line, and `verifier=` on every row it prints.
   - A verdict the interpreter or its Unicode database moved, under the same module bytes, now reads SKEW
     `["runtime"]`, not DRIFT. DRIFT means the core moved under the same module bytes and the same runtime.
@@ -60,11 +66,35 @@ touched, and no line is appended to the log.
     MOVED_VERIFIER `["legacy"]`;
   - the 257 lines written before the amendment being legacy;
   - the note and `by_verifier_part`;
-  - hostile verifiers, chained and not.
+  - hostile verifiers, chained and not;
+  - one module sha under the legacy, scheme-v1 and unknown readings, tallied as three builds.
 
   Eight mutations of `styxx/charon.py` were each caught by it: the raw module sha, a digest over the modules
   alone, the set without the three modules, no legacy reading, no `lf:` prefix, the runtime not compared,
   and both robustness guards removed. `tests/test_charon.py` and `tests/test_stranger.py` are not edited.
+- **The research capsule carries a charon line, so it now carries a runtime.** `styxx.research_capsule`
+  carries one sworn line whole, and its link L5 re-derives the line's `entry_id` from a core that holds
+  `verifier`. A scheme-v1 line carried there names `verifier.runtime`, and a capsule that dropped it would
+  read FAILS at L5.
+  - `test_the_payload_carries_no_interpreter_path_host_or_secret` failed on this branch before this fix
+    (the payload held `3.12.10`) and passes on `origin/main`.
+  - The capsule's DISCLOSURE said, under O9, that the payload carries no interpreter version. O9 as recorded
+    (item 8 of the capsule v0.2 instrument-identity amendment, item 1 of this one) drops `sys.version` from
+    sealed records and charon lines, and both carry the interpreter's version. The DISCLOSURE is restated:
+    the capsule's own `verifier` names no interpreter, carried history is carried as is, no `sys.version` is
+    carried anywhere, and an interpreter version string (`Python 3.x.y`) is still refused anywhere.
+  - The test now holds `sys.version` absent from the whole payload, and the interpreter's version absent
+    outside the carried line's `verifier.runtime`. A new test holds that a consistent capsule which drops
+    that runtime fails L5, and L5 alone.
+- **The research capsule's own module shas are over LF bytes.** Its `verifier` record reads charon's
+  `_module_pair`, so a research capsule minted on a CRLF checkout names LF shas where it named raw ones. No
+  research capsule is committed, and its `verify` never re-derives a module sha. A new test holds the LF
+  shas.
+- **What `verify` does not re-derive.** `same_build`, and a `verifier_moved` of `[]`, rest on digest
+  equality alone. A recorded scheme-v1 digest is not re-derived from the line's own parts, and a line with
+  no `scheme` reads `legacy` whatever its digest. A line edited that way reads SAME_LINE, and the edit needs
+  a re-chained log, which `--expect-head`, with a head held outside the log, reads as HEAD_MISMATCH. The
+  amendment's section dated 2026-10-12 says so, with the two items above and the report's keys.
 
 ## [Unreleased] — a diffgate record names the build and runtime that wrote it: `build` and `runtime` after the eleven content keys (identity phase 2)
 
