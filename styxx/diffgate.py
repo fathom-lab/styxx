@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""styxx.diffgate — the zero-receipt gate: an agent's summary cannot lie about its diff.
+"""styxx.diffgate — the zero-receipt gate: an agent's summary read against its diff.
 
 The wedge the trust stack points at UNMODIFIED agent work. No receipts, no preregs, no
 cooperation from the agent that wrote the summary: given the text an agent shipped (a PR
@@ -1450,9 +1450,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
 # function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
 # the block's own slotted classes, so nothing of main's is reachable from it as data.
-# Everything outside this block is main's reader (sha256 4eb3d6f0..., LF: 68873068..., which is 1cde8b82's
-# 9b620e00... with the demo's CONTRADICTED label, fix/contradicted-not-lie, plus the record naming its instrument,
-# identity phase 2), unchanged; the two doors call
+# Everything outside this block is main's reader (sha256 f43211e3..., LF: 4eb3d6f0... with the gate claim EXTERNAL-1
+# committed the lab to withdraw taken out of its module docstring and its CLI description; 4eb3d6f0... is 68873068...
+# plus the record naming its instrument, identity phase 2, and 68873068... is 1cde8b82's 9b620e00... with the demo's
+# CONTRADICTED label, fix/contradicted-not-lie), unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
 # where #97, #121 or #101 can have made it wrong:
@@ -3237,7 +3238,7 @@ def _demo() -> int:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="styxx.diffgate",
-                                 description="An agent's summary cannot lie about its diff.")
+                                 description="An agent's summary read against its diff.")
     ap.add_argument("summary", nargs="?")
     ap.add_argument("--repo", default=".")
     ap.add_argument("--base")

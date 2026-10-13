@@ -3,8 +3,9 @@
 `main` here is not a vendored copy. It is this checkout's own `styxx/diffgate.py` and `web/gate/diffgate.js` with
 the PATH-2a block cut out and the door hooks reverted -- the reconstruction -- asserted to hash to the reader pinned
 below (origin/main 1cde8b82's, then that file with the demo's CONTRADICTED label, fix/contradicted-not-lie, then that
-file with the record naming its instrument, identity phase 2). Every differential in the PATH-2a tests runs against
-that reconstruction, so the reference cannot drift from the reader the branch actually carries.
+file with the record naming its instrument, identity phase 2, then that file with the withdrawn gate claim out of its
+docstring and CLI description). Every differential in the PATH-2a tests runs against that reconstruction, so the
+reference cannot drift from the reader the branch actually carries.
 """
 from __future__ import annotations
 
@@ -31,7 +32,11 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # outside the block again: `to_dict` appends `build` and `runtime` after the eleven content keys, and `_report` prints
 # an `instrument:` line last. No content key moved, so the reconstruction is re-pinned to that file, LF, and every
 # differential here runs against it unedited, with the reader's file given by `module_from` (below).
-MAIN_PY_SHA = "4eb3d6f03f81a0b08153d329ce00a9e5e8cfe5b0952d6e86451b3084bb444130"
+# 4eb3d6f03f81a0b08153d329ce00a9e5e8cfe5b0952d6e86451b3084bb444130 was that file. docs/front-door-external1 changed the
+# reader outside the block once more, in two strings only: the module docstring and the argparse description no longer
+# make the gate claim EXTERNAL-1 committed the lab to withdraw. No reading path moved, so the reconstruction is
+# re-pinned to that file, LF.
+MAIN_PY_SHA = "f43211e352ba4ec6b8e5dadbb590b8d26b3476bdea726fcf693c03f191f44bb4"
 MAIN_JS_SHA = "06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
