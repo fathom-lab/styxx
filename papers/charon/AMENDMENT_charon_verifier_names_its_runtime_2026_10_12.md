@@ -142,3 +142,49 @@ from its content (#212), and the diffgate record naming the build and runtime th
 The text above is not edited. Its opening section says the status table is at "spec lines 104-111". That is
 one line early: in `SPEC_charon_v01_2026_09_02.md` the table runs from its header row at line 105 to the
 `TAMPER` row at line 112.
+
+## SECTION — 2026-10-12: a reader outside charon, the report's keys, and what `verify` does not re-derive
+
+The text above and the erratum are not edited. This section records what a review of the code found that the
+amendment did not say.
+
+1. **A research capsule carries a charon line as history, and a scheme-v1 line names its runtime.**
+   `styxx.research_capsule` (spec `styxx-oath/capsule/research/v0.1`) carries one sworn line of the ferry log
+   whole, under `artifacts.charon`. Its link L5 re-derives the line's `entry_id` from the line's core, and the
+   core holds `verifier`. A scheme-v1 line carried there therefore names the implementation, version and
+   Unicode database of the interpreter it was derived under, and a capsule that dropped them reads FAILS at
+   L5. The research capsule's disclosure said, under the operator's O9, that its payload carries no
+   interpreter version. O9 as this amendment's item 1 and item 8 of
+   `AMENDMENT_capsule_v02_instrument_identity_2026_10_11.md` record it drops `sys.version` from sealed
+   records and charon lines, and both carry the interpreter's version. The research capsule's disclosure is
+   restated in the same change, and nothing else about the capsule changes:
+   - its own `verifier` still names no interpreter: `styxx_version` and the module digests only;
+   - carried history is carried as is, as a receipt is: a scheme-v1 charon line holds `verifier.runtime`, and
+     a legacy line names none;
+   - no `sys.version` is carried anywhere, and an interpreter version string (`Python 3.x.y`) is still
+     refused at build anywhere in the payload.
+
+   No research capsule is committed, and the committed log holds no scheme-v1 line (O7), so no committed
+   artifact moves.
+
+2. **The research capsule's own verifier record reads `_module_pair`.** Its `verifier.modules` names six
+   modules through charon's `_module_pair`, so each sha is now over the file's bytes with CRLF read as LF,
+   where it was over raw bytes. A research capsule minted on a CRLF checkout names the LF shas.
+   `python -m styxx.research_capsule verify` prints the recorded version string, as stated, and never
+   re-derives a module sha.
+
+3. **The report's keys.** `by_verifier_part` has one key per value of `verifier_moved`: `same` (`[]`),
+   `modules`, `runtime`, `modules+runtime`, `legacy` and `unattributed`, and `not_compared` for a TAMPER row,
+   whose `verifier_moved` is null. In `verifier_builds_recorded`, a sha from a line that names a scheme this
+   verifier does not read is written with the prefix `unknown:`, so it is never counted with a raw sha or an
+   LF sha.
+
+4. **What `verify` does not re-derive.** `same_build`, and a `verifier_moved` of `[]`, rest on digest
+   equality alone. `verify` does not re-derive a recorded scheme-v1 digest from the line's own `modules` and
+   `runtime`, and `verifier_scheme` reads `legacy` for any line with no `scheme`. So a line whose parts were
+   edited and whose digest was kept, or a scheme-v1 line with its `scheme` removed, reads SAME_LINE with a
+   `verifier_moved` of `[]`; when the edited part is the runtime, `runtime_recorded` and `runtime_now` differ
+   on that row. Item 6's sentence that a legacy line never reads SAME_LINE again holds for a line whose digest
+   is over its module list, as every committed line's is. Both edits need the log re-chained, which
+   `verify --expect-head`, with a head held outside the log, reads as HEAD_MISMATCH. A reading that
+   re-derives the digest from the parts, with the status rule unchanged, is not in this phase.
