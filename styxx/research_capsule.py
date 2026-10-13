@@ -76,10 +76,18 @@ What the chain makes impossible is narrow and exact: changing what was frozen, w
 what was sworn or what was logged after the fact WITHOUT THE CHANGE SHOWING. It cannot make a lab
 honest about what it ran. The capsule prints both halves.
 
-DISCLOSURE (operator decision O9, 2026-10-11): the payload carries no interpreter version, no
-absolute path, no drive letter, no home directory, no worktree name, no host name, no secret and
-no signature. ``verifier`` names ``styxx_version`` and the module digests only. A payload holding
-a token-shaped string is refused at build, by name. The scan reads decoded text: every string of
+DISCLOSURE (operator decision O9, 2026-10-11: no ``sys.version`` in a sealed record or a charon
+line): the payload carries no ``sys.version``, no absolute path, no drive letter, no home
+directory, no worktree name, no host name, no secret and no signature, and an interpreter version
+string (``Python 3.x.y``) is refused anywhere in it. ``verifier`` names no interpreter: it names
+``styxx_version`` and the module digests only, each the sha256 of the module's file with CRLF read
+as LF (``styxx.charon._module_pair``, the rule of charon's verifier scheme v1). Carried history is
+carried as is, and that includes what a charon line names: a line of verifier scheme v1
+(``papers/charon/AMENDMENT_charon_verifier_names_its_runtime_2026_10_12.md``) holds
+``verifier.runtime``, the implementation, version and Unicode database of the interpreter it was
+derived under, as three separate fields inside the core its ``entry_id`` digests, so a capsule
+that dropped them would read FAILS at L5; a legacy line names none. A payload holding a
+token-shaped string is refused at build, by name. The scan reads decoded text: every string of
 the payload and of each carried JSON artifact as its parsed value, never its JSON escape (an
 escaped line feed after a one-letter word is not a drive letter), every pair of a repeated key
 included (``json.loads`` keeps only the last), and every other artifact as its bytes. The words
@@ -366,6 +374,9 @@ def _signed_delta(later: _dt.datetime, earlier: _dt.datetime) -> str:
 
 
 def _verifier_record() -> dict:
+    """The capsule's own verifier: the version string and the module digests, and no interpreter
+    (the DISCLOSURE). Each sha is charon's ``_module_pair``, over the module's file with CRLF read as
+    LF since charon's verifier scheme v1; ``verify`` prints the version and never re-derives a sha."""
     from styxx._version import __version__
     modules = [list(_charon._module_pair(m)) for m in _MODULES]
     return {"styxx_version": __version__, "modules": modules,
