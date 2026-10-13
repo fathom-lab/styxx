@@ -8,7 +8,9 @@ digest over both; capsule-diffgate ends with styxx.instrument, styxx.declare and
 other kinds keep their names; no sys.version and no path is written. Under a monkeypatched derive, runtime
 and module hash, verify reads every case the amendment names: MOVED_VERIFIER and SKEW naming runtime,
 modules or both, a verdict the interpreter moved reading SKEW ["runtime"] and not DRIFT, DRIFT only under the
-same module bytes and the same runtime, unattributed for a hand-edited digest. A legacy-shaped line never
+same module bytes and the same runtime, unattributed for a hand-edited digest. A capsule minted under one
+reading of the interpreter and verified under another, either way, reads SKEW ["runtime"], or UNRESOLVED
+["runtime"] when its reader quotes the gate's reason for a bare file name; never DRIFT. A legacy-shaped line never
 reads SAME_LINE, even when its shas are the LF ones. Lines seq 89 and 95 of the committed log, re-derived
 from the working tree, move no compared key and read MOVED_VERIFIER ["legacy"], and the 257 lines written
 before the amendment are legacy. The note names the runtime; by_verifier_part counts every row; a scheme-v1
@@ -20,6 +22,7 @@ step, unedited: every line must read SAME_LINE or MOVED_VERIFIER.
 """
 from __future__ import annotations
 
+import copy
 import hashlib
 import importlib
 import json
@@ -253,6 +256,79 @@ def test_verify_names_what_moved_in_the_verifier(sworn_repo, tmp_path, monkeypat
                                   else real_rt)
 
 
+# a moved interpreter over a capsule: the gate record it writes names it, and it reads the claims otherwise
+
+class _Record:
+    """A gate record as gate_diff_text returns one: to_dict() gives a fresh copy."""
+
+    def __init__(self, d):
+        self._d = d
+
+    def to_dict(self):
+        return copy.deepcopy(self._d)
+
+
+_REAL_GATE = diffgate.gate_diff_text
+
+
+def _gate_elsewhere(summary, diff, **kw):
+    """The record another interpreter writes over the same text: it names that interpreter's runtime, and
+    it reads each claim otherwise (an UNCHECKABLE claim VERIFIED, any other UNCHECKABLE, with a reason of
+    its own), as a Unicode database that assigns one more character splits a path or a name elsewhere. No
+    claim is CONTRADICTED, so the verdict stays PASS."""
+    d = _REAL_GATE(summary, diff, **kw).to_dict()
+    d["runtime"] = _elsewhere()
+    d["claims"] = [dict(c, verdict="VERIFIED" if c.get("verdict") == "UNCHECKABLE" else "UNCHECKABLE",
+                        why="read otherwise by another interpreter") for c in d["claims"]]
+    return _Record(d)
+
+
+_BARE = ("Updated x.py to handle retries.\n",
+         "diff --git a/src/r.py b/src/r.py\n--- a/src/r.py\n+++ b/src/r.py\n@@ -1 +1 @@\n-a = 1\n+a = 2\n")
+_SYMBOL = ("Adds function retry_once.\n",
+           "diff --git a/src/r.py b/src/r.py\n--- a/src/r.py\n+++ b/src/r.py\n@@ -1 +1,3 @@\n a = 1\n"
+           "+def retry_once():\n+    return 1\n")
+
+
+@pytest.mark.parametrize("minted, verified", [("here", "elsewhere"), ("elsewhere", "here")])
+def test_a_capsule_verdict_the_interpreter_moved_reads_skew_or_unresolved_with_runtime_never_drift(
+        tmp_path, monkeypatch, minted, verified):
+    """The amendment's second section of 2026-10-12. derive_capsule reads a capsule problem holding
+    `ambiguous` as a broken binding (a rule this phase does not change), and the reader's
+    `gate.claims not reproduced` line quotes the gate's reason for a bare file name, which holds the word.
+    So that capsule's line derives UNRESOLVED ["runtime"], not SKEW; the INSTRUMENT SKEW line ahead of it
+    holds none of charon's words, and no line reads DRIFT."""
+    from styxx import capsule
+
+    def world(w):
+        monkeypatch.setattr(I, "runtime", _REAL["runtime"] if w == "here" else _elsewhere)
+        monkeypatch.setattr(diffgate, "gate_diff_text", _REAL_GATE if w == "here" else _gate_elsewhere)
+
+    world(minted)
+    caps = []
+    for name, (summary, diff) in (("bare", _BARE), ("symbol", _SYMBOL)):
+        (tmp_path / f"{name}.md").write_bytes(summary.encode("utf-8"))
+        (tmp_path / f"{name}.diff").write_bytes(diff.encode("utf-8"))
+        out = tmp_path / f"{name}.capsule.html"
+        capsule.create_capsule_diffgate(tmp_path / f"{name}.md", tmp_path / f"{name}.diff", out)
+        caps.append(out)
+    log = _log_with(tmp_path, tmp_path, *caps)
+    assert verify_log(log, tmp_path)["by_status"]["SAME_LINE"] == 2      # under the reading that wrote them
+
+    world(verified)
+    problems = capsule.verify_capsule(caps[0])["problems"]
+    assert problems[0].startswith("INSTRUMENT SKEW") and not capsule._charon_reads_as_broken_binding(problems[0])
+    content = [p for p in problems if p.startswith("gate.claims not reproduced")]
+    assert len(content) == 1 and "ambiguous between a file and a library" in content[0]
+    rep = verify_log(log, tmp_path)
+    rows = {r["name"]: r for r in rep["lines"]}
+    bare, symbol = rows["bare.capsule.html"], rows["symbol.capsule.html"]
+    assert (bare["status"], bare["verifier_moved"]) == ("UNRESOLVED", ["runtime"])
+    assert bare["reason"].startswith("capsule_binding: INSTRUMENT SKEW")
+    assert (symbol["status"], symbol["verifier_moved"]) == ("SKEW", ["runtime"])
+    assert rep["by_status"]["DRIFT"] == 0 and rep["by_verifier_part"]["runtime"] == 2
+
+
 # ------------------------------------------------------------------------------ 3. a legacy line
 
 def test_a_legacy_shaped_line_reads_moved_verifier_legacy_and_never_same_line(sworn_repo, tmp_path, monkeypatch):
@@ -324,6 +400,10 @@ def test_the_note_names_the_runtime_and_the_report_counts_what_moved(sworn_repo,
     assert "runtime" in note and "a legacy line names no runtime" in note
     assert "DRIFT = the core moved under the same module bytes and the same runtime" in note
     assert "SKEW with runtime" in note and "unattributed" in note
+    # a capsule whose reader quotes a word charon reads as a broken binding: UNRESOLVED, never DRIFT
+    assert ("or UNRESOLVED with runtime when the capsule reader's problems hold a word charon reads as a "
+            "broken binding, never DRIFT") in note
+    assert "UNRESOLVED = bytes unavailable now, or a capsule whose reader's problems charon reads as a" in note
     assert charon.STATUSES == ("SAME_LINE", "MOVED_VERIFIER", "SKEW", "DRIFT", "UNRESOLVED", "HEAD_MISMATCH",
                                "TAMPER")
     assert list(rep["by_status"]) == list(charon.STATUSES)
