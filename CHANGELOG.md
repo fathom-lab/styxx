@@ -85,8 +85,9 @@ pinned-pair file or charon line is touched; `path2a_pairs.json` and `path2a_move
   `path2:v2-a-binary-deletion-line-holding-a-line-separator`) `measured` goes false → true; their claims stay
   UNCHECKABLE, now withheld by PATH-2a (#121), a move of reason text only. At the git door, in a repository
   with `core.quotePath=false` where an added `tests/test_a<U+0085>b.py` (or U+2028, U+2029) defines `test_a`,
-  "Added 1 test." and "Added function test_a." go UNCHECKABLE (#110) → VERIFIED, a `--strict` FAIL → PASS;
-  under git's default quoting neither moves. `--strict` fails on each new UNCHECKABLE. Measured on the 6,672
+  "Added 1 test." and "Added function test_a." go UNCHECKABLE (#110) → VERIFIED, a `--strict` FAIL → PASS, at both
+  doors; a false count there ("Added 2 tests.", "Added 0 tests.") goes UNCHECKABLE → CONTRADICTED, a default PASS →
+  FAIL, as the port already read it; under git's default quoting nothing there moves. `--strict` fails on each new UNCHECKABLE. Measured on the 6,672
   committed inputs (`tests/_p2a_ref.inputs()`), raw door, final records, against `62f8ff44`: inputs whose two
   final claim lists are equal in (kind, verdict, reason) 6,038 → 6,113, none newly apart; inputs whose two
   gate verdicts differ 23 → 9 without `--strict` and 13 → 10 with it; inputs where a port raises 5 → 3
@@ -185,10 +186,12 @@ pinned-pair file or charon line is touched; `path2a_pairs.json` and `path2a_move
   `def test_` with one space, so "Added 1 test." is CONTRADICTED and "Added 0 tests." VERIFIED there, wrongly,
   in both ports, as on `62f8ff44` (the symbol template reads it right; the grid pins both); a U+FEFF lead or
   separator (the port's `\s` reads it, the Python's does not); the Zs leads such as U+00A0, which both ports
-  read as white space and CPython refuses; a header path ending in U+001C to U+001F, U+0085 or U+FEFF, which
+  read as white space and CPython refuses; a header path starting or ending with U+001C to U+001F, U+0085 or U+FEFF, which
   the Python's `strip()` removes and the port's `trim()` keeps (held at the raw door by `divergent`); and the
   DECLARE-1 block's own line split and white space, and its reason for a count holding an ASCII control
-  character or a single quote and a backslash, with #181 and #182.
+  character or a single quote and a backslash, with #181 and #182; and the two other DECLARE-1 validators, which
+  #206 names and this change does not repair: `_PATHY_RE` (paths) and `_IDENT_RE` (identifiers, #182) read Unicode
+  `\w` by the interpreter's tables, against the port's ASCII `_DEC_PATHY` and `_DEC_IDENT`.
 
 ## [Unreleased] — charon's verifier names its runtime: verifier scheme `styxx.charon/verifier/v1`, module shas over LF bytes and the runtime inside the digest (identity phase 3)
 
