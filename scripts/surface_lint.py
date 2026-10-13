@@ -386,6 +386,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     root = Path(a.root)
     profile = PROFILES[a.profile]
+    shown = "none (--files reads each file whole)" if a.files else a.profile
     try:
         if a.files:
             label, rep = "files", run(named_files(a.files))
@@ -420,11 +421,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         problems = over_baseline(rep.hits, json.loads(Path(a.baseline).read_text(encoding="utf-8")))
 
     if a.json:
-        print(json.dumps({"source": label, "profile": a.profile, "files_read": rep.files, "skipped": rep.skipped,
+        print(json.dumps({"source": label, "profile": shown, "files_read": rep.files, "skipped": rep.skipped,
                           "hits": [h._asdict() for h in rep.hits], "allowed": [h._asdict() for h in rep.allowed],
                           "over_baseline": problems}, indent=1, ensure_ascii=True))
     else:
-        out = _summary(label, a.profile, rep)
+        out = _summary(label, shown, rep)
         out += [f"HIT     {h.path}:{h.line}:{h.col}  {h.rid}  | {h.excerpt}" for h in rep.hits]
         out += [f"ALLOWED {h.path}:{h.line}:{h.col}  {h.rid}  | {h.excerpt}" for h in rep.allowed]
         out += [f"SKIPPED {p} (over {MAX_BYTES} bytes or binary)" for p in rep.skipped]
