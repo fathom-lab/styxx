@@ -71,11 +71,29 @@ pinned-pair file or charon line is touched; `path2a_pairs.json` and `path2a_move
   inputs whose two claims were VERIFIED in both ports and are UNCHECKABLE in both now, a `--strict` PASS →
   FAIL (*pinned*). A content or context line no longer forges a header, an added line or a removed one in the
   Python; a header path holding one of these characters is read whole; the git door reads `--name-status` at
-  git's line ends. `--strict` fails on each new UNCHECKABLE. Measured on the 6,672 committed inputs
-  (`tests/_p2a_ref.inputs()`), raw door, final records, against `62f8ff44`: inputs whose two final claim lists
-  are equal in (kind, verdict, reason) 6,038 → 6,113, none newly apart; inputs whose two gate verdicts differ
-  23 → 9 without `--strict` and 13 → 10 with it; inputs where a port raises 5 → 3 (before, the Python alone on
-  2, the port alone on 1 and both on 2; now both on the same 3). On a 377-cell grid (every `str.splitlines()`
+  git's line ends. These three move records in the Python, and each verdict that moves goes to what the diff's
+  added lines define. Over the context line ` x<U+2028>+def test_new():`
+  (`path2:f2-a-context-line-holding-a-separator-adds-nothing`) the Python no longer reads an added
+  `def test_new()`, PATH-2a (#101) no longer withholds, and "Added 1 test." goes UNCHECKABLE → CONTRADICTED and
+  "Added 0 tests." UNCHECKABLE → VERIFIED. Over the headers
+  `+++ w/src<U+001D>/lib.py` and `+++ b/tests/test_<U+001E>x.py` (`p2a-fuzz:20260930:1309` and `:1007`) the
+  path read whole ends in `.py`, so #110's "no Python file" abstention lifts, and 9 `tests_added` and
+  `symbol_added` claims go UNCHECKABLE → CONTRADICTED and 2 UNCHECKABLE → VERIFIED. Those 3 inputs go PASS →
+  FAIL without `--strict` (FAIL before and after with it), and the Python's verdicts and reasons on them now
+  equal the port's, which did not move. Over the two binary headers holding U+2028
+  (`path2:v2-a-binary-header-holding-a-line-separator-registers-its-file` and
+  `path2:v2-a-binary-deletion-line-holding-a-line-separator`) `measured` goes false → true; their claims stay
+  UNCHECKABLE, now withheld by PATH-2a (#121), a move of reason text only. At the git door, in a repository
+  with `core.quotePath=false` where an added `tests/test_a<U+0085>b.py` (or U+2028, U+2029) defines `test_a`,
+  "Added 1 test." and "Added function test_a." go UNCHECKABLE (#110) → VERIFIED, a `--strict` FAIL → PASS;
+  under git's default quoting neither moves. `--strict` fails on each new UNCHECKABLE. Measured on the 6,672
+  committed inputs (`tests/_p2a_ref.inputs()`), raw door, final records, against `62f8ff44`: inputs whose two
+  final claim lists are equal in (kind, verdict, reason) 6,038 → 6,113, none newly apart; inputs whose two
+  gate verdicts differ 23 → 9 without `--strict` and 13 → 10 with it; inputs where a port raises 5 → 3
+  (before, the Python alone on 2, the port alone on 1 and both on 2; now both on the same 3). So on one input,
+  `p2a-fuzz:20260930:692`, a record became a raise in the Python, where the port already raised: read whole,
+  its `<U+000B>--- .docs/x.md` line is no `---` line, so the `+++ /dev/null` after it has no old path, a shape
+  git never writes. On a 377-cell grid (every `str.splitlines()`
   break, every `str.isspace()` character and U+FEFF, in eight positions on a definition line, judged by
   `ast.parse`): claims ast reads as true and a port CONTRADICTS, Python 10 → 6 and port 6 → 6, none newly
   CONTRADICTED, the 6 left the same in both (a lone CR, #176, in four; a tab or a form feed between `def` and
@@ -102,8 +120,10 @@ pinned-pair file or charon line is touched; `path2a_pairs.json` and `path2a_move
   VERIFIED in the Python (its `\s*$` and `strip()` remove them) and MALFORMED in the port;
   `files_changed: <U+FEFF>3` the other way. Nor the reason for a value holding an ASCII control character
   (U+0000 to U+001F, U+007F; `files_changed: 1<U+0001>`): MALFORMED in both ports, with the Python's `repr()`
-  escaping the character and the port's `_pyRepr` writing it raw, as on `62f8ff44`. So "the two ports read
-  every declared count alike" is not claimed.
+  escaping the character and the port's `_pyRepr` writing it raw, as on `62f8ff44`. Nor the reason for an
+  ASCII value holding a single quote and a backslash and no double quote (`files_changed: 1'\2`): MALFORMED
+  in both ports, with the Python's `repr()` doubling the backslash and the port's `_pyRepr` not, as on
+  `62f8ff44`. So "the two ports read every declared count alike" is not claimed.
 - **PATH-2a.** No rule is added and DECIDE and APPLY are not edited; the overlay's model of the Python's
   line cut follows the new cut. Line view 0 is the diff cut at git's line ends (`_P2aFacts.lines`, renamed
   from `fine`), so the two views are one object; the context lines are that cut's; the git door's listing is
@@ -168,7 +188,7 @@ pinned-pair file or charon line is touched; `path2a_pairs.json` and `path2a_move
   read as white space and CPython refuses; a header path ending in U+001C to U+001F, U+0085 or U+FEFF, which
   the Python's `strip()` removes and the port's `trim()` keeps (held at the raw door by `divergent`); and the
   DECLARE-1 block's own line split and white space, and its reason for a count holding an ASCII control
-  character, with #181 and #182.
+  character or a single quote and a backslash, with #181 and #182.
 
 ## [Unreleased] — a diffgate record names the build and runtime that wrote it: `build` and `runtime` after the eleven content keys (identity phase 2)
 
