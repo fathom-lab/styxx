@@ -51,6 +51,19 @@ this entry the words were printed nowhere outside the preregistration and one re
   was measured: 0.23, 0.16 and 0.25 (2 of 8, `only_touches`) were.
 - **Line numbers.** Both README edits stay on their lines (83 and 366), so the README line citations in
   `zenodo/MANIFEST.json` still point where they did.
+- **A surface lint, held in CI by `tests/test_surface_lint.py`.** `scripts/surface_lint.py`, standard library
+  only, reads the shipped surfaces (the root documents except this file, the Action's script and the pre-commit
+  hook definitions, and the prose under `styxx/`, `sworn/`, `integrations/`, `hooks/`, `docs/`, `web/` and
+  `packages/`; records, tests and fixtures are left out) and reports three kinds of string: the withdrawn
+  sentences above, the words the charter keeps out of public text, and the word-checkable part of the
+  must-not-say list in `papers/PLAN_the_next_level_2026_09_02.md` (lines 127-131). The test fails on a withdrawn
+  sentence anywhere except beside its withdrawal, and fails when any file carries more charter or plan words
+  than `scripts/surface_lint_baseline.json` records: 575 at this commit over 187 files, 516 of them the ordinal
+  the charter bans. A count may fall and never rise. The test also reads the committed sentence out of the
+  preregistration and checks that `action.yml` and the README print it. It is a word lint: it finds strings, not
+  claims, and a clean run says nothing about whether a sentence is true; the lab measured that finding claims in
+  prose fails (0.23, 0.16, and 0.4211 on 38 sentences; the plan, lines 17-22). The same script lints outward
+  drafts with `--files` and the site's source with `--profile site --root <dir>`, read-only.
 - **What this does not pay.** G-E1 also said "the offending template classes are disabled, and the GitHub
   Action does not launch on the current template set" (the preregistration, lines 76-79). Path accusations are
   withheld; the Action launches and reports by default. A clause-by-clause audit, each clause paid or unpaid
