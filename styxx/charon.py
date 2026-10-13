@@ -155,7 +155,9 @@ def _content_sha256(b: bytes) -> str:
     read as moved on the other platform.
 
     Applied to: the document an OATH certificate certifies, the receipt bytes handed to that
-    certification, and a capsule file. NOT applied to a sworn document: the sworn format refuses
+    certification, a capsule file, and, since verifier scheme v1, each module file the verifier
+    names (``_module_pair``, which ``styxx.research_capsule``'s own verifier record reads too).
+    NOT applied to a sworn document: the sworn format refuses
     newline normalisation by design, its bytes are pinned by `.gitattributes`, and its digest is
     an identity claim about exact bytes. Digests that come from git plumbing or from embedded
     base64 are already platform-stable and are used as they are.
@@ -792,10 +794,11 @@ def verify_log(log: Path, repo: Path, expect_head: Optional[str] = None) -> dict
         by_status[row["status"]] += 1
         moved = row["verifier_moved"]
         by_part["not_compared" if moved is None else ("+".join(moved) or "same")] += 1
-        # a scheme-v1 sha is over LF bytes and a legacy one over raw bytes: prefixed, the two are never
-        # read as one build. A pair that is not [name, text or null] is a line no writer wrote; it is
-        # not counted, and it must not end verify in a traceback
-        prefix = "lf:" if row["verifier_scheme"] == "v1" else ""
+        # a scheme-v1 sha is over LF bytes and a legacy one over raw bytes, and a sha under a scheme this
+        # verifier does not read follows a rule it does not know: prefixed, no two are read as one build.
+        # A pair that is not [name, text or null] is a line no writer wrote; it is not counted, and it
+        # must not end verify in a traceback
+        prefix = {"v1": "lf:", "unknown": "unknown:"}.get(row["verifier_scheme"], "")
         mods = ver.get("modules")
         for pair in mods if isinstance(mods, list) else []:
             if isinstance(pair, list) and len(pair) == 2 and isinstance(pair[0], str) \

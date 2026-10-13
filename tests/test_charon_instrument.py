@@ -12,7 +12,8 @@ same module bytes and the same runtime, unattributed for a hand-edited digest. A
 reads SAME_LINE, even when its shas are the LF ones. Lines seq 89 and 95 of the committed log, re-derived
 from the working tree, move no compared key and read MOVED_VERIFIER ["legacy"], and the 257 lines written
 before the amendment are legacy. The note names the runtime; by_verifier_part counts every row; a scheme-v1
-sha is recorded with the lf: prefix. A verifier no writer wrote is read, never raised on, chained or not.
+sha is recorded with the lf: prefix, and a sha under a scheme this verifier does not read with unknown:. A
+verifier no writer wrote is read, never raised on, chained or not.
 
 The full re-derivation of the committed log under this verifier is tests/test_stranger.py's ferry-log
 step, unedited: every line must read SAME_LINE or MOVED_VERIFIER.
@@ -368,3 +369,19 @@ def test_a_hand_edited_digest_on_a_line_with_both_parts_as_fresh_is_unattributed
     v = dict(read_log(log)[1][0]["verifier"], digest="1" * 64)
     row = verify_log(_with_verifier(log, tmp_path, v), sworn_repo)["lines"][0]
     assert (row["status"], row["verifier_moved"]) == ("MOVED_VERIFIER", ["unattributed"])
+
+
+def test_a_sha_under_a_scheme_this_verifier_does_not_read_is_tallied_apart(sworn_repo, tmp_path):
+    log = _log_with(sworn_repo, tmp_path, sworn_repo / "RESULT_x.sworn.json")
+    fresh = read_log(log)[1][0]["verifier"]
+    sha = dict(fresh["modules"])["styxx.charon"]
+    unknown = dict(fresh, scheme="styxx.charon/verifier/v9", digest="2" * 64)
+    rep = verify_log(_with_verifier(log, tmp_path, unknown), sworn_repo)
+    row = rep["lines"][0]
+    assert (row["status"], row["verifier_scheme"], row["verifier_moved"]) == ("MOVED_VERIFIER", "unknown",
+                                                                               ["unattributed"])
+    # the same sha under three readings: an unknown rule, the LF rule and the raw rule are three builds
+    assert rep["verifier_builds_recorded"]["styxx.charon"] == ["unknown:" + sha[:12]]
+    v1 = verify_log(log, sworn_repo)["verifier_builds_recorded"]["styxx.charon"]
+    legacy = verify_log(_with_verifier(log, tmp_path, _legacy(fresh)), sworn_repo)["verifier_builds_recorded"]
+    assert v1 == ["lf:" + sha[:12]] and legacy["styxx.charon"] == [sha[:12]]
