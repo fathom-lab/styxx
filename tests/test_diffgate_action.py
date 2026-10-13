@@ -113,7 +113,9 @@ def test_the_action_pins_a_version_that_has_the_bypass_fix():
     import re
 
     y = (ACTION.parent / "action.yml").read_text(encoding="utf-8")
-    m = re.search(r'default:\s*"styxx>=(\d+)\.(\d+)\.(\d+)"', y)
+    # a floor (>=) or, since the default names the tag's own release, an exact pin (==); either way the property is
+    # that the default never installs a release below the fix
+    m = re.search(r'default:\s*"styxx(?:>=|==)(\d+)\.(\d+)\.(\d+)"', y)
     assert m, "action.yml must pin a minimum styxx version"
     assert tuple(int(g) for g in m.groups()) >= (7, 44, 0)
 

@@ -56,14 +56,17 @@ inputs:
     default: "true"
   styxx-version:
     description: >-
-      styxx version spec to install. The floor is deliberate. Every release before
+      styxx version spec to install. The default is the exact version this copy of the
+      Action was tagged with, so `uses: fathom-lab/styxx@v7.50.0` installs the gate that
+      tag describes; set another spec to install another. Never set one below 7.44.2,
+      and the floor is deliberate. Every release before
       7.44.0 contained a bypass in this very gate — `only touches <prefix>` was
       VERIFIED against an unreadable diff, because "is any path outside the prefix?"
       is vacuously false when no paths were parsed. 7.44.2 additionally closes three
       false-accusation classes found by re-sweeping 150 commits and 40 public agent
       PRs. Do not pin below it.
     required: false
-    default: "styxx>=7.44.2"
+    default: "styxx==7.50.0"
 
 runs:
   using: "composite"
