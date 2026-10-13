@@ -7,6 +7,625 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — charon's verifier names its runtime: verifier scheme `styxx.charon/verifier/v1`, module shas over LF bytes and the runtime inside the digest (identity phase 3)
+
+**Phase 3 of the design the operator approved on 2026-10-11**, after phases 0 to 2 (#207, #212, #217). It
+touches six files. Four are the design's: `papers/charon/AMENDMENT_charon_verifier_names_its_runtime_2026_10_12.md`
+(new, committed alone, ahead of the code), `styxx/charon.py`, `tests/test_charon_instrument.py` (new) and
+this file. Two the design did not name: `styxx/research_capsule.py` and `tests/test_research_capsule.py`.
+The research capsule carries a charon line, and its O9 test failed once that line named its runtime (below).
+The charon spec is not edited. No committed capsule, receipt, conformance vector or charon line is touched,
+and no line is appended to the log.
+
+- **New lines carry the verifier scheme `styxx.charon/verifier/v1`.** A line's `verifier` is `scheme`,
+  `styxx_version`, `modules`, `runtime` and `digest`.
+  - Each module sha is over the file's bytes with CRLF read as LF. This extends E15 to module bytes:
+    `_module_pair` hashed raw bytes, so line seq 89 names `styxx.diffgate` by its CRLF rendering
+    (`405b7d42…`; the LF rendering of that blob is `4e6f6550…`).
+  - `runtime` is `styxx.instrument.runtime()` restricted to `implementation`, `version` and `unicode`, the
+    three fields the capsule reader compares.
+  - `digest` is sha256 over `JCS({"modules": …, "runtime": …})`. The scheme and the version string are on
+    the line, inside `entry_id`, and outside `digest`.
+  - No `sys.version` is written (the operator's O9), and no path.
+- **`capsule-diffgate` hashes three more modules**, after its five: `styxx.instrument`, `styxx.declare` and
+  `styxx.attestation`. The other kinds keep their module names and order.
+- **`verify` names what moved.** The statuses and the status rule are unchanged (`same_build` is digest
+  equality), so `styxx.stranger` and its tests need no edit.
+  - Each row gains `verifier_scheme` (`v1`, `legacy` or `unknown`), `verifier_moved`, `runtime_recorded`
+    and `runtime_now`. `verifier_moved` is `[]`, `["modules"]`, `["runtime"]`, `["modules", "runtime"]`,
+    `["legacy"]` or `["unattributed"]`, and null on a TAMPER row, which is not re-derived.
+  - The report gains `by_verifier_part` beside `by_status`, one key per value of `verifier_moved`: `same`,
+    `modules`, `runtime`, `modules+runtime`, `legacy` and `unattributed`, and `not_compared` for a TAMPER
+    row.
+  - `verifier_builds_recorded` prefixes each sha of a scheme-v1 line with `lf:`, and each sha of a line
+    naming a scheme this verifier does not read with `unknown:`. A raw sha, an LF sha and a sha under an
+    unknown rule are never counted as one build.
+  - The CLI prints a `verifier moved:` line, and `verifier=` on every row it prints.
+  - A verdict the interpreter or its Unicode database moved, under the same module bytes, now reads SKEW
+    `["runtime"]`, or UNRESOLVED with `verifier_moved` `["runtime"]` when the capsule reader's problem text
+    holds a word `derive_capsule` reads as a broken binding (below); never DRIFT. DRIFT means the core
+    moved under the same module bytes and the same runtime. The report's note says so.
+- **Legacy lines.** Every line of the committed log is legacy: no scheme, raw-byte shas, no runtime, and a
+  digest over the module list alone. No fresh digest can equal one, so a legacy line never reads SAME_LINE
+  again (accepted, the design's risk 6), and never DRIFT. Re-derived on this tree, all 257 read
+  MOVED_VERIFIER `["legacy"]`. On the parent they read MOVED_VERIFIER already (SAME_LINE 0,
+  MOVED_VERIFIER 257).
+- **A verifier no writer wrote ends `verify` in a reading, never a traceback.** On the parent, `verify`
+  raised in three cases, chained line or not:
+  - a module pair whose name is not text raised `TypeError` (unhashable) in the build tally;
+  - a module pair whose sha is not text raised `TypeError`;
+  - a `digest` that is not text raised `TypeError` in the row's digest prefix.
+
+  A re-chained line with no `digest` raised `KeyError`. Now such a pair is not counted, a digest that is not
+  text prints as empty, and the line reads `legacy`, `unknown` or a moved part.
+- **Tests.** `tests/test_charon_instrument.py` (new) holds the design's list:
+  - a fresh line's verifier, including that a CRLF copy of a module hashes as its LF copy;
+  - the three added modules;
+  - every reading under a monkeypatched derive, runtime and module hash;
+  - a legacy-shaped line never reading SAME_LINE, even with the LF shas;
+  - lines seq 89 and 95 re-derived from the working tree, moving no compared key and reading
+    MOVED_VERIFIER `["legacy"]`;
+  - the 257 lines written before the amendment being legacy;
+  - the note and `by_verifier_part`;
+  - two capsules minted under one reading of the interpreter and verified under another, both ways, reading
+    SKEW or UNRESOLVED `["runtime"]` and never DRIFT;
+  - hostile verifiers, chained and not;
+  - one module sha under the legacy, scheme-v1 and unknown readings, tallied as three builds.
+
+  Nine mutations of `styxx/charon.py` were each caught by it: the raw module sha, a digest over the modules
+  alone, the set without the three modules, no legacy reading, no `lf:` prefix, no `unknown:` prefix, the
+  runtime not compared, and both robustness guards removed. `tests/test_charon.py` and
+  `tests/test_stranger.py` are not edited.
+- **The research capsule carries a charon line, so it now carries a runtime.** `styxx.research_capsule`
+  carries one sworn line whole, and its link L5 re-derives the line's `entry_id` from a core that holds
+  `verifier`. A scheme-v1 line carried there names `verifier.runtime`, and a capsule that dropped it would
+  read FAILS at L5.
+  - `test_the_payload_carries_no_interpreter_path_host_or_secret` failed on this branch before this fix
+    (the payload held `3.12.10`) and passes on `origin/main`.
+  - The capsule's DISCLOSURE said, under O9, that the payload carries no interpreter version. O9 as recorded
+    (item 8 of the capsule v0.2 instrument-identity amendment, item 1 of this one) drops `sys.version` from
+    sealed records and charon lines, and both carry the interpreter's version. The DISCLOSURE is restated:
+    the capsule's own `verifier` names no interpreter, carried history is carried as is, no `sys.version` is
+    carried anywhere, and an interpreter version string (`Python 3.x.y`) is still refused anywhere.
+  - The test now holds `sys.version` absent from the whole payload, and the interpreter's version absent
+    outside the carried line's `verifier.runtime`. A new test holds that a consistent capsule which drops
+    that runtime fails L5, and L5 alone.
+- **The research capsule's own module shas are over LF bytes.** Its `verifier` record reads charon's
+  `_module_pair`, so a research capsule minted on a CRLF checkout names LF shas where it named raw ones. No
+  research capsule is committed, and its `verify` never re-derives a module sha. A new test holds the LF
+  shas.
+- **What `verify` does not re-derive.** `same_build`, and a `verifier_moved` of `[]`, rest on digest
+  equality alone. A recorded scheme-v1 digest is not re-derived from the line's own parts, and a line with
+  no `scheme` reads `legacy` whatever its digest. A line edited that way reads SAME_LINE, and the edit needs
+  a re-chained log, which `--expect-head`, with a head held outside the log, reads as HEAD_MISMATCH. The
+  amendment's section dated 2026-10-12 says so, with the two items above and the report's keys.
+- **A verdict the interpreter moved reads SKEW or UNRESOLVED with `["runtime"]`, never DRIFT.** A real move
+  was measured: eleven `capsule-diffgate` lines ingested under CPython 3.12.10 (Unicode 15.0.0) and verified
+  under CPython 3.14.2 (Unicode 16.0.0), with the same module bytes, read 5 SKEW `["runtime"]`, 5 UNRESOLVED
+  with `verifier_moved` `["runtime"]`, 1 MOVED_VERIFIER `["runtime"]` (an ASCII control) and 0 DRIFT. The
+  reverse direction gave the same split. On the parent the same run read DRIFT 5, UNRESOLVED 5 and
+  SAME_LINE 1.
+  - The UNRESOLVED lines come from `derive_capsule`'s broken-binding rule, which this phase does not change:
+    a capsule problem holding `ambiguous` reads as a broken binding. The reader's `gate.claims not
+    reproduced` line quotes the gate's reason for a bare file name absent from the diff, which holds the
+    word. The INSTRUMENT SKEW line ahead of it holds none.
+  - The amendment's second section dated 2026-10-12 says so, and so does the verify note. A verdict the
+    interpreter moved reads SKEW with runtime, or UNRESOLVED with runtime when the capsule reader's problems
+    hold a word charon reads as a broken binding, never DRIFT. UNRESOLVED names such a capsule beside bytes
+    unavailable now.
+  - A new test mints two capsules under one reading of a synthetic interpreter and verifies them under
+    another, both ways. The bare-name capsule reads UNRESOLVED `["runtime"]`, the symbol capsule SKEW
+    `["runtime"]`, and none DRIFT. Three mutations of `styxx/charon.py` were each caught: the rule narrowed
+    to the binding lines `styxx/capsule.py` writes, and each of the note's two sentences reverted.
+  - Narrowing the rule goes past the design's text and is the operator's call. None of the twelve capsule
+    lines of the committed log was recorded UNRESOLVED or reads UNRESOLVED on this tree, so the narrowing
+    would move none of them.
+
+## [Unreleased] — a diffgate record names the build and runtime that wrote it: `build` and `runtime` after the eleven content keys (identity phase 2)
+
+**Phase 2 of the design the operator approved on 2026-10-11**, after phase 1 below. The operator waived
+the five-file cap for this phase (eight files). It touches nine: `styxx/diffgate.py`, `tests/_p2a_ref.py`,
+`web/gate/differential/py_side.py`, `web/gate/README.md`, `web/gate/diffgate.js`,
+`web/gate/bookmarklet_src.js`, `tests/test_diffgate_record_identity.py` (new) and this file, the eight the
+design lists, and `tests/test_instrument_identity.py`, phase 1's own test file, four of whose tests
+asserted that the writer names nothing (below). No committed capsule, receipt, conformance vector or
+charon line is touched, and no line is appended to the log.
+
+- **The record.** `DiffGate.to_dict()` writes the eleven content keys in their v0 order, `"diffgate": "v0"`
+  still the format key of the content, and then `build` and `runtime` from
+  `styxx.instrument.record_identity` over the reader's own file, `_IDENTITY_FILE`, captured at import and
+  never looked up by name. The identity is computed once per process, at the earliest record, and copied
+  into every record; it is not a field of `DiffGate`, so `DiffGate(...)`, `vars(g)` and the PATH-2a
+  overlay's APPLY, which edits claims and the verdict only, cannot set or move it. It names the sha256 of
+  five module files (CRLF read as LF), the styxx version string (recorded, never compared), the
+  interpreter's implementation and version, `unicodedata.unidata_version` and a case-table floor; no path
+  and no `sys.version`. Timed once on this box (CPython 3.12.10, Windows 11), three runs: the computation
+  reads 319,831 bytes over the five files in 1.9 to 3.1 ms, and each copy into a record costs 9 to 14 µs.
+- **The CLI.** `--out` writes the record with the identity and no other change. `_report` prints one more
+  line, last: `instrument: styxx.diffgate <sha10> (styxx <version>) on <implementation> <version>, Unicode
+  <unicode>`, ASCII only. Every line before it is the line it was. `--demo` does not call `_report` and is
+  unchanged.
+- **Capsules.** Phase 1 left the reader ready, so `styxx/capsule.py` is not edited: a capsule minted from
+  here on embeds the live record, identity included, and seals it in `binding.gate`. Minted and verified
+  on one box it reads `same`, `ok`, with no identity advisory, and the command prints `instrument:
+  recorded <identity>; re-run here by <identity>`. The verifier 7.49.0 ships loops over its own eleven
+  live keys, every one of which such a capsule holds as minted, and the binding covers what was sealed.
+  Two honest mints of one summary and diff on two runtimes no longer share `binding.gate` (the
+  amendment's item 7): deduplicate by content.
+- **The #201 pin set moved**, as #201 moved it. `web/gate/differential/py_side.py` `PINNED`, the sha
+  `web/gate/README.md` names for the whole file, its run book's `py_side.py` line, and the comment in
+  `web/gate/diffgate.js` with its copy in `web/gate/bookmarklet_src.js` now name `ce067ec9…`, the whole
+  file (LF). `tests/_p2a_ref.py` `MAIN_PY_SHA`, the README's reader line and the comment inside the
+  PATH-2a block of `styxx/diffgate.py` name `4eb3d6f0…`, the reader the block is cut from (`68873068…`
+  plus the record naming its instrument). The JavaScript comments sit inside the port's block and
+  `bookmarklet.min.js` holds no comment, so `MAIN_JS_SHA`, the minified bookmarklet, its `href` and their
+  README lines did not move.
+- **PATH-2a comparisons (the design's section 6.1).** `tests/_p2a_ref.module_from` gives a module it builds
+  from a string the file of `styxx.diffgate` as imported, so the reconstruction and the module name one
+  identity, and no comparison is edited: not `relation` or `strict_alike`, and not one whole-record `==`
+  in `tests/test_diffgate_path2a.py` or `tests/test_diffgate_path2a_truth.py`. Without it, a string-built
+  reader names a null `styxx.diffgate` sha, never another file's bytes. `module_from` stays the only place
+  a reader is built from a string.
+- **The port's record is not changed** (the operator's O5 not taken). A Python record carries thirteen
+  keys and a port record eleven; `differential.py`, `check_pairs.js` and `path2a_recall.py` compare named
+  fields, so "0 disagreements" means what it meant.
+- **Phase 1's test file.** `tests/test_instrument_identity.py` asserted the phase-1 writer in four tests:
+  R5's live record holding no `build`, and three format-key SKEW tests reading `gate_identity.state ==
+  "unnamed"` for a capsule minted on this box. Such a capsule now names this verifier's own instrument, so
+  those read `same`; R5's supplied gate that names nothing is the live record with the identity keys
+  taken out, and one more case holds that a diverging supplied gate naming this minter's own instrument is
+  refused without "names another instrument". Its module docstring and `_Carrying`'s say so; nothing else
+  in it is edited.
+- **Measured, and held by `tests/test_diffgate_record_identity.py`.** Against `origin/main`'s
+  `styxx/diffgate.py` where this branched (`295529c6`, `09867056…`): the content keys of every record
+  are byte for byte the parent's (`json.dumps` of the eleven keys, in order) over 6,672 committed inputs
+  (the seven pinned-pair files, 3,000 regenerated fuzz pairs, 482 PATH-2a reproductions, 2,000 PATH-2a
+  fuzz and 1,000 text-seam pairs) in both strict modes, 13,344 runs, 8 of which raise the same exception
+  under both, and over the 111 PATH-2a fixtures that carry their own `--name-status` at the git door in
+  both strict modes, 222 runs: 0 differences. `_report` prints the parent's lines and then the
+  `instrument:` line, and `--out` writes the parent's bytes once the identity keys are taken out (the test
+  skips where that commit is not in the history). `DOGFOOD_session_2026_08_31.capsule.html` and
+  `HANDOFF_capsule_v02_2026_08_31.capsule.html` verify to the same result, key for key, as under a writer
+  that names nothing: DOGFOOD `ok` with no problem and one advisory, HANDOFF its one problem to the
+  character charon line seq 95 recorded, and one advisory. Lines seq 89 and 95 re-derive with no compared
+  key moved, and `python -m styxx.charon verify --log papers/charon/charon.log.jsonl --repo .` reads
+  257 lines MOVED_VERIFIER and none SAME_LINE, SKEW, DRIFT, UNRESOLVED, HEAD_MISMATCH or TAMPER, which the
+  stranger's ferry-log step allows.
+- **Not in this phase.** The Unicode-16 witness fixture (2b), charon's verifier naming its runtime (3), the
+  Action naming what it ran (4) and the bookmarklet panel measuring its engine (5, deferred).
+  `external1_harness.py` keeps its hand-stamped `"v0"`.
+
+## [Unreleased] — the real-model bridge, attempt three: NOT STARTED, two pilots both NEITHER, the behavioural route closed
+
+`papers/frequency-resonance/PREREG_realmodel_bridge_v3_2026_10_11.md` preregistered a recall-versus-comparison probe of
+`state-spaces/mamba-1.4b-hf` (pure decay: `A = −exp(A_log)` real and strictly negative in all 48 layers of the loaded
+weights) against `EleutherAI/pythia-1.4b`, built to the design the July ABSTAIN named (few-shot format, exact
+balance, a degeneracy guard, a capability screen at the shortest distance). Its main run never started, and the
+record says why. No main-set item was generated or scored, and no gates-block verdict exists.
+
+- The smoke (`realmodel_bridge_v3_smoke.json`): `INVALID__smoke_plumbing_only` by the gates block, every red-team
+  assert held, the main run budgeted at 1.635 GPU-hours under the design it smoked (amendment 17.2.3(c) extrapolates
+  the same per-batch timings to 2.22 hours under the redesigned passes; both are inside the four-hour rule).
+- Pilot one (`realmodel_bridge_v3_pilot.json`, seed 1011, amendment 17.1): 48 items at 16 tokens. The claim-check
+  compare fails the 0.40 screen in both arms under both answer formats (the Mamba arm says Yes on 0.94 of items and
+  True on 0.92, failing the guard); recall clears in both. The format line reads NOT_STARTED.
+- Pilot two (`realmodel_bridge_v3_pilot2.json`, seed 1012, amendments 17.2 and 17.3): the operator's one bounded
+  redesign, an argmax-shaped three-way compare ("which name has the largest code"), pre-stated as the last. Both arms
+  answer the middle name on nearly every item (compare normalized −0.062 and 0.000, guard failed; one-versus-rest
+  AUROC 0.449 and 0.535); recall 0.812 and 0.875. Outcome NEITHER: the format line reads NOT_STARTED, final, and the
+  operator's rule closes the behavioural route.
+- `papers/frequency-resonance/RESULT_realmodel_bridge_v3_not_started_2026_10_12.md`, sworn at d0411b2d (56 of 56
+  spans held, sidecar and receipt beside it, pinned `-text`): what the two pilots establish at pilot strength (two
+  1.4 B base models recall a planted code at 16 tokens and perform neither compare readout), what they do not
+  (nothing about decay versus attention, distance, other deployed models, honesty or importance), two defects in
+  the record (amendment 17.1 cites three runner commits by pre-reword hashes, mapped in the RESULT; the forward
+  pointer section 15 owes was not written in the RESULT's commit, and the RESULT leaves its form to the operator),
+  and the forward state: the profiler on an oscillatory checkpoint is the only open bridge and needs a download or a
+  training run the operator has not approved.
+- The forward pointer section 15 owes is written in this merge, which is where amendment 17.3 says it lands, in the
+  form the operator chose on 2026-10-12. `papers/SYNTHESIS_program_2026_07_24.md` item 3 gains it as an appended
+  paragraph (no certificate binds that document, and the digest of its extracted number tokens that
+  `papers/closed-model-frontier/oath_v11_baseline_ledger.json` records is unchanged), and
+  `papers/frequency-resonance/NOTE_realmodel_bridge_forward_pointer_2026_10_12.md` carries it beside
+  `RESULT_realmodel_bridge_2026_07_24.md`, which `CERT_realmodel_bridge.json` certifies and which is not edited.
+  Both read "attempt three: not started; two pilots, both NEITHER" and name the attempt-three RESULT.
+- `papers/frequency-resonance/run_realmodel_bridge_v3.py` refuses the main run on the format line and a second
+  pilot on the committed receipt. `tests/test_realmodel_bridge_v3.py` runs on CPU with no checkpoint; the tokenizer
+  and model tests skip when the cached files are absent, and the test that compares the gates block with the judged
+  plan's runs only when `BRIDGE_V3_PLAN_PATH` names that plan, which lives outside the repository.
+- `papers/LEDGER.md` regenerated: the corpus gained a preregistration with a gates block.
+
+## [Unreleased] — PREREG: the permuted-MNIST headline under held-out permutations, new seeds and a 3x budget, sealed as a git blob before any run, with a CORRECTION sealed beside it before any data
+
+**`papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md`,
+`CORRECTION_prereg_pmnist_robustness_2026_10_12.md`, `run_pmnist_robustness.py`, `tests/test_pmnist_robustness.py`;
+`papers/checksum/SEALS_2026_09_13.md` rows 7, 7b and 8.** The arc's headline (+0.3122 on permuted MNIST,
+`pmnist_ablation_result.json`) rests on two seeds, one pixel permutation and a 4000-step budget with no convergence
+control, and the 2026-09-02 entry below ("The arc's headline survives its own confound; the permuted-MNIST re-run is
+the owed next preregistration") was never supported by a receipt on this benchmark. This preregistration freezes,
+before any run, the measurement that gives the headline an interval or takes it away, and the untied control beside
+it on the same bars the sealed 2026-09-02 PREREG froze.
+
+- **Ten gates, thirteen rows, total** over 1,024 assignments, scored through `styxx.protocol` over the whole receipt.
+  The positive control is the rotating arm's floor (0.85 over 18 runs, a collapsed FREE run counted as 0); the gap
+  must reproduce on three seeds the receipt never ran (2, 3, 4 on permutation 1234, bar 0.15) before robustness is
+  read; the robustness gates read five held-out permutations only (mean gap 0.15; the permutation interval's lower
+  end above 0 and above the committed WIDENS bar, 0.05); the gap at three times the budget (12,000 steps, bar 0.15);
+  and REAL2 within 0.03 of FREE or of CLAMPED on held-out permutation average, with the recovery fraction's interval
+  the number the sentence prints, because at 15 runs per arm the 0.03 bars sit at 1.1 to 1.5 standard errors and
+  the ROTATION-versus-PARTIAL suffix is a label.
+- **Permutations no one chose.** The five held-out pixel permutations are the top 32 bits of
+  sha256(`<beacon hex>:perm:k`), k = 1..5, where the beacon is the block hash of the slot that seals the PREREG
+  (SEALS row 7, frozen at `3598e59d`, blob `2068e673...`): the 45 held-out trainings cannot precede the block that
+  named their inputs. Nights 2 and 3 do not start before row 7 and the CORRECTION's row 7b both read ANCHORED,
+  which the runner checks itself from the anchors file. The sha256-of-tag list (`3584514041`, `27380109`,
+  `2994719670`, `3317084913`, `2856893334`) is the labelled fallback if the operator declines the anchor; a fallback
+  run says so in every leaf and in the RESULT.
+- **The receipt's own seeds enter one gated metric by value.** Seeds 0 and 1 on permutation 1234 are re-run as the
+  determinism check (`anchor_max_abs_dev`, reported). As 4000-step runs their values count in `degenerate_fraction`
+  (`G_D_stable`, which counts the sixty 4000-step runs; at most 6 of them) and in no other gated metric; like every
+  leaf, the six re-run leaves also count toward `G_P_plumbing` (present, read back, imports, data, PREREG,
+  CORRECTION, preflight, curves, final equal to the last curve point, leaf log). The headline's own permutation is
+  outside every permutation-averaged gate. The PREREG says in three places, one of them inside its gates block, that
+  these seeds enter no gated metric; the CORRECTION's section 1 corrects all three in prose, and the RESULT must
+  repeat that section beside them, because the PREREG's text stays. The sealed untied receipt holds six re-run
+  accuracies, not two: four of those configurations (FREE and CLAMPED at seeds 0 and 1) have public values that the
+  re-runs match only up to device nondeterminism, and REAL2 at seeds 0 and 1 has none.
+- **A CORRECTION before any data, no bar moved** (2026-10-12, the operator's route). After the lab's review a
+  section 15 was appended to the sealed PREREG and the result sealed as row 8 (`98072bed`, `1ef6d242`). The PREREG's
+  own text calls the SEALS row the seal, and the operator chose the lab's precedent for a row not yet anchored
+  (rows 3b and 6b): the PREREG is back to row 7's bytes (`3a505c26`), section 15's content is restated for that
+  route, with the second review's corrections, in a CORRECTION sealed on its own as row 7b (`d90da693`, blob
+  `e591516f...`), and row 8 is withdrawn before any anchor (its committed text stands with the withdrawal appended,
+  and its memo is struck from the list, which carries rows 7 and 7b). The CORRECTION holds the seeds-0/1
+  correction; gated metrics rounded to four decimals before scoring, as the committed untied runner does; the
+  leaves, the leaf log and the receipt committed with the RESULT, the leaf directory pinned `-text`, the smoke
+  receipt and the data not committed; the leaf-log line written and fsynced before its leaf is renamed into place,
+  so a crash between the two reads as a visible rewrite rather than `plumbing_ok` 0; the GPU guard before the red
+  team's device check, and every check that needs no torch before torch is imported; the seal and its anchors; why
+  a CORRECTION file and not an appended section; and the `--accept-schedule` prompt night 3 meets above 17.78 min
+  per run. The gates block's sha256 is `578924f8...` at every step.
+- **Plumbing that is checked, not described.** The runner imports `run_pmnist_ablation.py` and
+  `run_pmnist_untied.py` verbatim and refuses before data unless their LF-normalised bytes hash to the committed
+  blobs (`c8d7cdfb...`, `caf276da...`; the Windows working copy of the untied runner carries CRLF and hashes
+  differently while running the same code), `_mnist.npz` hashes to `98d68505...`, the PREREG and the CORRECTION on
+  disk hash to rows 7 and 7b, `Experiment.check_metrics()` resolves every gate path on the receipt shape, CUDA is
+  available and 6 GiB are free (checked before any tensor is placed on the card), and the three arms share RNG state
+  and every non-SSM tensor at seeds 0-4. One leaf per run, an append-only hash-chained leaf log (a torn log is
+  refused before a night trains any run), every leaf and receipt written as strict JSON (a non-finite loss as null,
+  flagged by `nonfinite_loss`), `--smoke` INVALID by type, three nights of about 18 GPU-hours measured
+  (`--night 1|2|3`, nights 2 and 3 refusing without `--anchors`, whose rows 7 and 7b must read ANCHORED, or the
+  declared fallback; an anchors file that is absent, unreadable or holds a line that is not a JSON object is
+  refused by name before any network call, never in a traceback), `--aggregate`.
+- **Written without knowledge of the sealed untied receipt** (`pmnist_untied_result.json`, run 2026-10-11, unread);
+  section 7 of the PREREG predicts under each verdict it can carry. No run, no smoke and no GPU use in this change;
+  the smoke and the nights wait on the operator's approval and the card.
+- Tests, on CPU with no data, no card and no torch required (the one torch test skips without it): the gates block
+  through the lab's scanner with every assignment reaching a row; `Experiment` scoring each verdict; the hash checks
+  refusing a mutated runner copy, an edited PREREG and an edited CORRECTION; the derivation deterministic; the
+  aggregate arithmetic on synthetic leaves, degeneracy by arm and every plumbing zero, a leaf or disk copy of
+  another CORRECTION among them; the receipt's seeds 0 and 1 moving `degenerate_fraction` by value and plumbing as
+  leaves, and no other gated metric; the data pin refusing a different file; the PREREG equal to row 7's bytes with
+  no section 15 and the gates hash unchanged; the CORRECTION equal to row 7b's, frozen alone; SEALS rows 7, 7b and 8
+  in that relative order and the memos of rows 7 and 7b in theirs, never the tail of the file, so a row another
+  track appends leaves the test standing; the beacon taken from row 7 only when row 7b reads ANCHORED too, and a
+  `--beacon` alone refused for nights 2 and 3; an absent, unreadable or malformed anchors file refused by name
+  before `styxx.clock.verify` is called; the leaf-log order under a simulated power cut and a torn log refused,
+  by a night before any run trains; a NaN loss written as null and the receipt strict JSON end to end; the GPU
+  guard before the red team; the command line refusing by name with torch unimportable; the ignore and `-text`
+  policy; the banned-word scan over the four files. `papers/LEDGER.md` regenerated for the new
+  preregistration.
+
+## [Unreleased] — the research capsule, Phase A: one HTML file carries the chain of one preregistered experiment and prints three readings per link
+
+**`styxx/research_capsule.py` (new); tests in `tests/test_research_capsule.py`.** Spec id
+`styxx-oath/capsule/research/v0.1`. Builder and verifier only, no specimen: the pMNIST untied
+RESULT does not exist yet, and the design that orders this build (`next/capsule-chain/DESIGN.md`,
+red-teamed in its `ATTACK.md`, 2026-10-11) puts the specimen in a later phase, after anchor #2
+reads ANCHORED and the receipt is opened by another track. The profile knows nothing about any
+particular experiment.
+
+- One file, under 1.5 MB, carries for one experiment: the PREREG bytes (exactly one ```gates block,
+  by `styxx.protocol`'s scanner), the anchor line(s) in `styxx.clock`'s `anchors.jsonl` format, the
+  receipt JSON(s), the runner source(s), the RESULT with its sidecar and sworn receipt, a snapshot
+  of every `path:` target the RESULT swears through so the spans resolve with no git, the
+  `styxx.charon` entry WITH its seq (inclusion at seq, never the head, which moves with every
+  honest ingest), a committed run note, and the list of independent public clocks. `created` sits
+  outside the payload digest, as the sworn and charon rules have it.
+- Three readings per link, never two: HOLDS / FAILS offline, a pure function of the carried bytes,
+  re-derived by the page in the browser (an inlined verifier, sealed by digest, no network) and by
+  `python -m styxx.research_capsule verify`; CHECKABLE-ONLINE with the exact public read a stranger
+  would make, which `verify --repo CLONE` turns into MATCHES / DIFFERS / NOT-CHECKED and `verify
+  --network` into CONFIRMED-ON-CHAIN / CONTRADICTED / UNAVAILABLE-NOW with the clock's own status
+  word beside it, availability never read as contradiction; STATED-BY-THE-LAB for what nothing
+  checks. The summary line is `INTERNALLY CONSISTENT (offline)`, never the word `styxx.sworn` uses
+  for receipt re-derivation, and the label sits on the page and in every terminal report: a forger
+  controlling the whole file passes every offline link.
+- For the anchor the page prints `block_time − run_end` with its sign and the sentence that the
+  chain orders the PREREG before the receipt's reading, not before the run; the wallet is printed
+  as a constant inside the file with two out-of-band places to confirm it; the `--network` read
+  counts the wallet's listed sealed-prereg memos through the anchor's slot, a lower bound a
+  stranger can hold against the SEALS table.
+- The verdict is re-scored from the frozen table over the recorded numbers (`score_frozen`, the
+  body of `Experiment.score` with no disk and no git, with the composition check and a totality
+  enumeration of the outcome table); the sworn core re-derives over the carried snapshot
+  (`SnapshotTree`), in the terminal and in the page; the sworn receipt's verdict and counts must be
+  its own spans' tally (`receipt_tally_problem`, which a test runs over every sworn receipt
+  committed under `papers/`, chosen by its schema field and not its file name); the charon line's
+  `entry_id` re-derives from its core; the anchor's memo is the memo its kind and digest imply
+  (`check_anchor_offline`, the pure half of `clock.check_line`).
+- The page re-derives the sworn spans itself: `styxx/_data/sworn_verify.js`, the second
+  implementation of `styxx.sworn` held to the sworn conformance vectors, is inlined unchanged and
+  given the carried snapshot through a resolver that reads entries as `SnapshotTree` does, so a
+  number typed into a span that the receipt leaf does not hold, with the sworn receipt re-pointed
+  and re-digested, reads FAILS at L4 in the browser as it does in the terminal, and the browser
+  never prints `INTERNALLY CONSISTENT (offline)` over it.
+- L4 holds only when every sworn span reads HELD against the leaf it names, in both layers. A
+  RESULT whose honest sworn receipt says SWORN-FAILED, one with an UNRESOLVED span (which the sworn
+  document rule still calls SWORN-HELD: an rN span no manifest carries, a `prereg:` digest the
+  snapshot lacks), and one that swears nothing read FAILS at L4, and `build` refuses each by name.
+- Where an instrument reads an integer, both layers require an integer as written, and the page
+  reads it through a typed parse of its payload that keeps a float literal apart, as Python's
+  `json` does, because `JSON.parse` writes `102.0` as `102`: a span offset, a snapshot entry's size
+  (which must also be the entry's byte count) and the sworn receipt's counts, `sworn_total` and
+  `unresolved` at L4; an anchor's slot at L1; `experiment.score.receipt` at L2, which the terminal
+  no longer reads as 0 when it is not an integer. A value of another JSON type in any of these
+  fails its link in both layers, by name in the terminal. The agreement tests write each field as a
+  float, several also as a string, a list, a bool or null, and a sweep rewrites every integer
+  literal of a clean page as `N.0` by hand, which moves no digest: both layers read every link
+  alike on each.
+- A time on the page must name a time that exists: an anchor's `block_time` (L1) and a public
+  clock's `stated` time (L1b) are `YYYY-MM-DDTHH:MM:SSZ` in ASCII digits with no February 30, month
+  13, hour 24, second 60 or year 0, in both layers. Such a value ends in a named problem and never
+  in a traceback, and `build` refuses it by name, as it refuses a `stated.run_ended_utc` that names
+  no time. The page applies the terminal's public-clock rule word for word: a `name`, `binds` or
+  `read` that Python's `str.strip` leaves empty, or a `does_not_prove` that is not text, fails L1b.
+- `build` reads the repository at named commits and never the working tree, and refuses by name: an
+  inconsistent chain (each failing link's problem listed), a path that is not repository-relative
+  POSIX, a token-shaped string, a drive-letter or home path, an interpreter version string or a
+  worktree name anywhere in the minted bytes, a word the lab never prints in what the lab writes
+  for the capsule (the page outside its inlined verifier, the payload's own fields, the stated
+  facts, the public clocks, the RESULT and the run note; carried history such as the frozen PREREG
+  is carried as is and scanned for leaks only; a hit is named by its place in the list, never
+  echoed), and an oversize page; a written file that does not verify is not kept. The scan reads
+  decoded text, so an escaped line feed after a one-letter word is not a drive letter, and it reads
+  every pair of a repeated JSON key, in a carried artifact and in the page's own payload, so a
+  value that `json.loads` drops is still scanned. The payload names `styxx_version` and the module
+  digests only (operator decision O9 of 2026-10-11).
+- Under `--repo`, a commit the clone lacks reads NOT-CHECKED with the reason (fetch it and read
+  again), and a path absent at a commit the clone has reads DIFFERS: the public repository holds no
+  such object there.
+- The tests build the chain from synthetic fixtures, which is the disclosed whole-file forger and
+  passes every offline link, as the label says; a digest battery flips exactly the link that owns
+  the bytes (a mutated slot is caught by nothing offline, and the test says where it is checked); a
+  semantic battery re-builds CONSISTENT capsules with one link made false and asserts that link
+  alone flips, which a verifier whose logic past the hashes is constant would fail; controls that
+  must not fire (`created`, key order, the charon timestamp and note); the browser layer, run under
+  node, agrees with the installed layer link by link on the clean capsule and on every member of
+  both batteries, the seven L4 members of the semantic battery included (an edited sworn verdict, a
+  span value the receipt does not hold, a snapshot entry that is another receipt, an honest
+  SWORN-FAILED receipt, an UNRESOLVED rN span, an UNRESOLVED `prereg:` span, a RESULT that swears
+  nothing), on numeric, quote and hash spans over the snapshot, on every integer the instruments
+  read written with another JSON type or miscounted, on every integer literal of a clean page
+  written as a float, on an anchor line that is not an object, on public clocks of the wrong shape
+  and on times that name no time; the CLI round trip over a temporary repository with `--repo`,
+  including a rebuilt log reading DIFFERS at L5 and a forger that names the clone's commits with
+  paths absent at them reading DIFFERS.
+- Not in this phase: dispatch from the existing capsule command, a charon kind for the new profile,
+  the stranger step, the specimen. The existing capsule profiles are unchanged.
+
+## [Unreleased] — capsule v0.2 layer 2 compares a record's instrument identity apart from its content; `styxx.instrument` names the build and runtime a diffgate record is written and re-run under
+
+**Phase 1 of the design the operator approved on 2026-10-11** (item 3 of step zero of the 2026-10-06
+study: every diffgate record names its build and runtime), after phase 0's NOTE below. Five files:
+`papers/closed-model-frontier/AMENDMENT_capsule_v02_instrument_identity_2026_10_11.md` (new, committed
+alone ahead of the code; the spec is not edited), `styxx/instrument.py` (new), `styxx/capsule.py`,
+`tests/test_instrument_identity.py` (new) and this file. The record writer, `styxx/diffgate.py`, is not
+touched: a record still has its eleven keys and names nothing, so every capsule this reader verifies
+takes the "names no build or runtime" row below. Phase 2 makes the writer carry the identity.
+
+- **The amendment** states, against `SPEC_oath_capsule_v02_2026_08_31.md` (lines 21-24 and 105-115):
+  the record may carry `build` and `runtime` after its eleven content keys, with `"diffgate": "v0"`
+  still the format key and R2 unchanged; layer 2 compares every content key and the identity apart, a
+  third named softening beside the two the spec names; a record that does not reproduce and names a
+  different instrument is INSTRUMENT SKEW (`ok: false`), and one that names none, or not all of one,
+  cannot be classified from its own bytes, which the verifier says; R5 never compares identity keys;
+  layer 1 displays the recorded identity and proves only that it is the one sealed; the content is a
+  pure function of (summary bytes, diff bytes) under the instrument the record names, and the runtime
+  is part of the instrument; `binding.gate` differs between honest mints on two runtimes, so
+  deduplicate by content; and the disclosure: a capsule carries the interpreter's implementation and
+  version, the Unicode database version, a case-table floor label, the styxx version string and five
+  module names with the sha256 of each module's bytes, and no `sys.version` (the operator's decision
+  O9), no path, no host, no user, no locale, no operating system. The Unicode-16 witness it cites was
+  re-measured for it on 2026-10-11 with the modules at `f469f25b` staged under an empty `__init__.py`:
+  the summary `U+11BF3 files changed.` over a one-file diff reads PASS with no claim under CPython
+  3.12.10 (Unicode 15.0.0) and FAIL under CPython 3.14.2 (Unicode 16.0.0) with `files_changed_count`
+  CONTRADICTED, `diff changes 1 files, claim says 3`. An erratum dated 2026-10-12 is appended below the
+  amendment's text, which is not edited: it states the SKEW line's quoting rule as the reader applies it,
+  the unknown list and the hint's four forms, and that a record naming part of its instrument and
+  differing on a part it names reads SKEW. A second section of the same date narrows the erratum's rule 4
+  to the SKEW line itself: a capsule whose `gate.claims` line quotes the gate's reason for a bare file
+  name absent from the diff, which holds the word charon reads as a broken binding, still derives
+  UNRESOLVED in charon, as before this phase. A third section of the same date records that the
+  erratum's rules 5 and 6 did not hold for the reader through `225785ad` and that from `fd4036b3` the
+  reader does what they say (the advisories quote a recorded identity as read; the format-key line
+  reads the payload's pin as `origin/main` does), that the identity line writes a null reader sha as
+  `sha unknown`, and that both differences from item 3 the erratum names are older than the review
+  rounds. A fourth section says which commit holds which part of rules 5 and 6 in
+  `tests/test_instrument_identity.py`: `4c8079fa` what the reader's fix changed, `f0a7720e` the rest
+  (a recorded module name kept as read outside the SKEW problem; a payload pin holding the word turning
+  charon UNRESOLVED through the format-key line, as on `origin/main`).
+- **`styxx.instrument`** (new) defines the identity, reads one, compares two and prints one line. `build`:
+  `schema` (`styxx.diffgate/instrument/v1`), `reader` (`styxx.diffgate`), `styxx` (the version string,
+  recorded and never compared: one version string has named two readers) and `modules`, ordered
+  `[name, sha256]` pairs over `styxx.diffgate`, `styxx.instrument`, `styxx.declare`, `styxx.evidence`
+  and `styxx.claimdetect`, each sha256 over the file's bytes with CRLF read as LF (a lone CR kept), the
+  rule `web/gate/differential/py_side.py` and charon's `_content_sha256` follow; the reader hashes its
+  own file and never a module looked up by name, so a reader built from a string names a null sha;
+  the other modules are found with `importlib.util.find_spec`, which executes nothing. `runtime`:
+  `implementation`, `version`, `unicode` (`unicodedata.unidata_version`) and `case_floor` (a label from
+  six case pairs in three Unicode-version groups, 13.0, 14.0 and 16.0, that a browser can run too;
+  recorded, never compared). Compared: `build.reader`, `build.modules` by name, `runtime.implementation`,
+  `runtime.version`, `runtime.unicode`. A null equals nothing, so neither "same" nor skew is ever claimed
+  from an unnamed field, and an empty string is read as null; anything this runtime cannot know is null,
+  never a guess; no path is written. An identity that is not an object, names an
+  unknown schema, holds a compared value that is not a string of at most 128 characters or null, or
+  lists modules otherwise than as at most 16 `[name, sha]` pairs (a name `^[a-z_.]{1,64}$`, a sha of 64
+  lowercase hex or null, each matched whole: a trailing newline is refused) is read as unnamed with a
+  quoted reason, never a traceback. `python -m styxx.instrument` prints the identity this install would verify
+  under (`schema`, `styxx_version`, `build`, `runtime`, `loaded_from`), ASCII only.
+- **What `capsule verify` now compares.** For a v0.2 capsule the per-key reproduction runs over the
+  content keys only, with the same texts as before (`gate.<key> not reproduced: ...`; `unparsed_claims`
+  stays advisory). The identity the record names is then compared with the instrument that re-ran it:
+  the identity the live record carries, or, while the writer names nothing, the one computed over the
+  imported `styxx.diffgate`. Outcomes: the record names nothing and reproduced, an advisory that it
+  reproduced here under the named live instrument and does not say which instrument minted it; names
+  nothing and did not reproduce, the problem lines unchanged plus an advisory that the failure cannot be
+  told apart from INSTRUMENT SKEW or an edit from the record alone, naming the payload's unsealed pin
+  as a version, not a build; unreadable, an advisory `gate.<key> is not an identity this verifier reads
+  (...); read as unnamed`, then read as absent; same instrument, nothing, or, not reproducing, an
+  advisory that what moved is not the instrument; a different instrument and reproduced, an advisory
+  naming the differing fields and the recorded identity; **a different instrument and not reproducing,
+  `INSTRUMENT SKEW: the gate
+  record does not reproduce here and names another instrument (differs: ...); it was made by <the
+  recorded identity> — reproduce under that instrument (...) before reading the lines below as an
+  edit`**, a problem placed ahead of the field lines, which stay; a compared field null on either side is
+  listed after the differing ones (`differs: ...; unknown: ...`), so a record that names its runtime and
+  no build, and differs on the runtime, is SKEW with what it does not name listed; the hint holds the pin
+  taken from the sealed record's `build.styxx`, or, with none, the styxx whose `styxx.diffgate` sha the
+  record names, or, with neither, that the record names no build and only its runtime (a version string
+  this verifier does not quote and no sha: a build named only by that version); with a pin, an advisory
+  that a release installing another `styxx.diffgate` sha than the record names is not the minter's
+  build; an incomplete identity (a null compared field, or an
+  empty string, read as null), the two unnamed advisories naming the unknown fields, the failing one
+  naming the payload's pin as a version, not a build, as the unnamed one does. Problem texts carry the
+  recorded identity and the differing field names and never a value of the live identity; a recorded
+  name charon would read as a broken binding (`ambiguous`, `!=`) is not quoted in a problem, whether it
+  is the identity, a module name inside a differing field (the reader admits any `^[a-z_.]{1,64}$`), the
+  implementation, the version or the pin's version string, which then goes unwritten: no token of the
+  record's choosing in that SKEW line makes charon derive a capsule UNRESOLVED. Advisories, which charon
+  never reads, quote the recorded identity as `styxx.instrument.describe` writes it. The format-key
+  mismatch stays INSTRUMENT SKEW with no field comparison, and its line is `origin/main`'s: it quotes
+  the sealed format key and the payload's pin as before, outside the quoting rule, so either one
+  holding the word still makes charon derive the capsule UNRESOLVED, as on `origin/main`. The result
+  gains `gate_identity` (`recorded`, `live`,
+  `state`, `differs`, `unknown`, `pin`) and `skew`; no key is removed or retyped. At mint, R5 compares
+  the content keys only, so a `--gate` written by another build or runtime is accepted when its content
+  reproduces; a diverging one that names another instrument is refused with the fields named.
+- **What prints.** After `embedded gate verdict:` the command prints one line, `instrument: recorded
+  <the recorded identity, or "not named (pin ...)">; re-run here by <the live identity>`, each identity
+  as `styxx.diffgate <sha10> (styxx <version>) on <implementation> <version>, Unicode <unicode>`, ASCII
+  only, through the same escaping as every other line. The page's meta line appends `gate made by
+  <reader> <sha10> on <implementation> <version>, Unicode <unicode> (sealed in binding.gate; this page
+  re-runs nothing)` when the record carries the identity as strings, set through `textContent`, and the
+  footer says layer 2 compares the identity apart; committed pages keep their own template, and a page
+  minted in this phase shows nothing new because its record names nothing.
+- **No committed capsule, receipt or charon line moved.** `DOGFOOD_session_2026_08_31.capsule.html`
+  verifies with `ok`, no problem, exit 0, and one new advisory; `HANDOFF_capsule_v02_2026_08_31.capsule.html`
+  fails with its one problem, `gate.claims not reproduced: ...`, to the character charon line seq 95
+  recorded in `counts.problems_detail`, exit 1, and one new advisory, never a SKEW problem (the operator's
+  decision O3: its classification is phase 0's NOTE). `papers/charon/charon.log.jsonl` lines seq 89 and
+  95 re-derive with no compared key moved, because charon reads `problems` and `ok` and never
+  `advisory`; no line is rewritten or appended. Sworn receipts and the conformance vectors are
+  untouched (`styxx.sworn` imports nothing from the diff gate). `tests/test_instrument_identity.py`
+  holds all of this, and `tests/test_capsule_v02.py`, `test_capsule.py`, `test_capsule_no_traceback.py`,
+  `test_capsule_whole_certificate.py`, `test_charon.py`, `test_stranger.py` and
+  `test_diffgate_path2a.py` pass unedited.
+- **Not in this phase.** The writer naming its instrument (phase 2, which moves the #201 pin set), the
+  Unicode-16 fixture (2b), charon's verifier naming its runtime (3), the Action (4) and the bookmarklet
+  panel (5). `web/gate/*` and `styxx/diffgate.py` are not touched.
+
+## [Unreleased] — `styxx.horizon`: the horizon datasheet, an instrument from per-item bits to censored horizons, with the self-test that gates its printing
+
+**`styxx/horizon.py`, `styxx/horizon_README.md`; tests in `tests/test_horizon.py`.** The bridge-v3 probe
+(few-shot, exactly balanced, chance-normalised, degeneracy-guarded, paired-bootstrapped) asked one
+question of one pair of models. This module is the probe's scoring turned into an instrument that runs on
+any receipt of per-item bits — no torch, no GPU, no model load, no network — built from
+`next/horizon-zoo/DESIGN.md` (2026-10-11) with the fatal and major fixes of its red team that live in the
+instrument applied. The fixes that live in the GPU runner and the item generator (F1a, F1b, M5's items,
+M6, M7, M8) are not in this change: the instrument reads their results when a receipt carries them and
+prints their absence when it does not. The zoo run is not in this change; nothing here changes what any
+committed RESULT says.
+
+- **The readout is a fact of the receipt, not of the instrument.** Compare is scored under the readout
+  the receipt declares — `argmax_largest` (bridge-v3 amendment 17.2: argmax over three name tokens, chance
+  1/3, guard largest slot share ≤ 0.80) or `yes_no` / `true_false` (the design's probe, retired for v3 by
+  that amendment: chance 1/2, guard yes-rate within [0.20, 0.80]) — or, undeclared, under the readout its
+  cell keys decide, printed as inferred. A compare cell whose keys decide nothing is refused, a declared
+  chance that is not 1/k of its readout is refused, and every recorded field must agree with every other
+  (predictions with the argmax of the scores or the sign of the log-odds, `correct` with prediction ==
+  label, `margin` with the scores). Readout, chance and guard print on every row.
+- **Per model, from per-item bits:** chance-normalised accuracy and exact balance per cell (a cell out of
+  balance reads BALANCE_BROKEN; a screen half out of balance fails the screen), a 95% paired item-bootstrap
+  interval (one resample per replicate across every cell, across the two families at one distance, or per
+  cell, as the receipt declares its pairing; an undeclared pairing prints as assumed and flags
+  PAIRING_ASSUMED), the degeneracy guard and the rank AUROC per cell (one-versus-rest over the slots under
+  a slot readout), the capability screen at D0 with its bar printed on the row and validated (a bar other
+  than 0.40 reads NONSTANDARD_BAR, printed with every digit it has), the comparison horizon (where the interpolant in log2 D reaches a
+  fraction of its D0 value, 0.5 by default and refused outside (0, 1): the bracketing grid pair is the
+  measurement, the interpolated point a convention; no crossing is CENSORED and prints
+  `> 1024 (none inside the tested range)`; c(D0) at or below chance is NOT_ESTIMABLE), the recall horizon
+  and the threshold-free `c_auc` horizon beside it, `ratio_min` per family and the dissociation
+  `ratio_min_compare − ratio_min_recall` with its interval, the Spearman monotonicity per curve, and the
+  flags (COMPARE_ONLY_HORIZON, STORAGE_HORIZON, DEGENERATE with both numbers, NONMONOTONE,
+  CALIBRATION_ARTEFACT_SUSPECTED, and the control flags).
+- **A row that fails the screen gets no horizon.** It keeps its curves and its D0 numbers; its horizons,
+  `ratio_min` and dissociation read "not estimable (screen failed)" and the reasons print under it,
+  because the screen at D0 is the row's positive control. The sheet's count of reported numbers counts
+  only what it prints, so such a row adds no horizon and no dissociation to it.
+- **A receipt the reader cannot take is refused, never ended in a traceback.** `config.D0`, the
+  bootstrap's `n_resamples` and `seed` and a `native_D` distance must be integers (the seed
+  non-negative), `bootstrap` and `seeds` must be objects, and anything else malformed is refused with the
+  error it raised. A resample count under 40 is refused from a receipt, a call or the CLI: a 95%
+  percentile interval needs one replicate expected in each 2.5% tail.
+- **The bridge-v3 runner's receipt, read as the runner writes it.** `fit --arm` reads
+  `per_item[arm][family][D][variant]` (plain is the curve; ablated, near, overwrite and windowed are the
+  controls) with `config.readout`, `config.chance`, `config.guard` and
+  `items.prefix_nested_across_distances`. A receipt whose grid has one distance — the amendment-17.2
+  pilot — reads as cells and is refused as a curve. A test reproduces, from the committed pilot receipt's
+  per-item bits, the accuracy, slot shares, guard, one-versus-rest AUROC, margin and near-tie count the
+  runner recorded for each D0 cell of both arms, and the screen it applied (skipped where that receipt is
+  not in the checkout).
+- **The red team's fixes, as code.** The screen reads one half of the D0 items, stratified by label so
+  each half keeps exact balance, and the horizon's denominator the other half (M4). The threshold-free
+  curve rides beside the thresholded one (F1c). The gated number is the compare-minus-recall dissociation,
+  not "attention has no horizon" (F2). The family aggregates are shaped for a declared composition —
+  every per-model value under `result.per_model.*`, every exclusion under `result.family_excluded` with
+  its reason — and the test runs them through `styxx.protocol`'s own composition check (M2). The ablated
+  maximum is taken over the screened set before the ablation exclusion, so it can fail (M1). The family
+  interval is the interval of the per-replicate minimum on one shared item resample (M3, M9). The
+  near-fact, overwrite and ablated controls set their flags when a receipt carries them and their
+  absence is printed (M5).
+- **An empty family set scores to ABSTAIN through `styxx.protocol`.** The counts are finite in every case;
+  the family aggregates are None on an empty set and the scorer refuses them, as it should, so a prereg
+  reaches ABSTAIN there through a readiness gates block that reads the counts alone (tested on a committed
+  prereg; a family set of one walks to ABSTAIN through the family block itself). `sheet --prereg` refuses
+  before scoring unless every compare readout and pairing is declared and the bar and guard are the
+  bridge-v3 runner's, and prints a refusal of the scorer as a refusal of the sheet.
+- **The family is a fact, never a name.** `assert_family` takes a `config.json` and, for a state-space
+  model, its A values (`A = −exp(A_log)`, read from safetensors headers without torch): DECAY requires A
+  real and strictly negative in every layer; ATTN requires every layer's reach at or above 1,250 tokens;
+  a bare name, a missing `model_type`, a complex or non-negative A, a short sliding window and an unknown
+  type are each refused by name.
+- **The self-test gates the datasheet.** `selftest()` plants crossings at 32, 128, 203 and 600 in
+  synthetic bits whose curves are linear in log2 D and requires each recovered within [0.8, 1.25] × the
+  plant with the interval covering it; it also requires the recovered level (c(D0) within 0.05 of the
+  plant), the interval's width (within [0.85, 1.18] × the binomial width) and coverage (the plant inside
+  the interval on at least 24 of 32 seeds with drawn correctness), and the D0 split as wired (screen and
+  denominator halves planted apart and read apart); no crossing must read censored; a constant responder
+  under exact balance must be exactly 0 at every distance in both families under either readout and read
+  SCREEN_FAIL with the guard in the reason; a screen-failed row must print no horizon; two fits under one
+  seed must agree. `datasheet()` refuses to print when it fails, and the tests break the normalisation,
+  the interval and the D0 split one at a time to show the matching check fails. (The design's illustration
+  planted "128" with c = (0.9, 0.7, 0.4, 0.2); under the interpolation rule those values cross at about
+  203, so the plants are built from the rule.)
+- **The datasheet prints its limits** — no sentence about rotation, honesty, causation or ranking;
+  SCREEN_FAIL is "did not perform this format at D0", not "cannot compare"; "inside the tested range",
+  never "inside context"; nominal D in NeoX tokens with the native count beside it where recorded — and
+  refuses to print a word the lab never prints. `python -m styxx.horizon {selftest, fit, sheet, family}`;
+  `sheet --prereg` scores a COMMITTED prereg through `styxx.protocol`, otherwise the verdict line reads
+  `unscored: no committed prereg`.
+
 ## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
 
 **`styxx/capsule.py` and `styxx/charon.py`; tests in `tests/test_capsule_no_traceback.py`.** 7.49.0

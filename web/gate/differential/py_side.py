@@ -25,7 +25,9 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "09867056957082f129985591f5ed048021e85ed48627e73854494b4a1e6e2b3a"  # styxx/diffgate.py: main's 68873068 reader (9b620e00 + the demo's CONTRADICTED label) + the PATH-2a block (LF)
+PINNED = "ce067ec94fc820b6258bf550bd1c1ce8fe664bf01f8ef0f1de3a7cde99f92c64"  # styxx/diffgate.py: main's 4eb3d6f0 reader (68873068, which is 9b620e00 + the demo's CONTRADICTED label, + the record naming its instrument) + the PATH-2a block (LF)
+# The record naming its instrument (identity phase 2) appends `build` and `runtime` to every record and moves no
+# content key, so the differential, which compares named fields only, compares what it compared before.
 # The pin moved twice in one step and both moves are deliberate. COMPAT-2 (#124) changed the
 # compat reading, so the port had to follow it; and `fetch_pr` landed on main after the previous
 # pin was written, which is why this script has been REFUSING TO RUN on main ever since -- the
