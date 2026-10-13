@@ -12,14 +12,15 @@ verifier 7.49.0 ships, which loops over its own eleven keys, finds every one of 
 committed v0.2 capsules verify to the same result as under a writer that names nothing (phase 1), and
 charon lines seq 89 and 95 re-derive with no compared key moved; and, where the history is there, the
 content keys byte for byte against origin/main's styxx/diffgate.py on every committed input at both
-doors that #205 does not read anew (the rest are counted; #205 moved them by design), with ``_report``'s lines and
-``--out``'s bytes unchanged but for the identity.
+doors but the 139 whose content #205 moved by design (pinned by count and by a digest of their ids), with
+``_report``'s lines and ``--out``'s bytes unchanged but for the identity.
 """
 from __future__ import annotations
 
 import contextlib
 import copy
 import dataclasses
+import hashlib
 import io
 import json
 import re
@@ -361,34 +362,49 @@ def _same(a, b, run) -> str | None:
 # abstain over a line holding one of them but U+000C. #206 moved a declared count written outside ASCII, which this
 # comparison cannot see: the parent's file is built in this checkout's package, so it reads this styxx.declare.
 _MOVED_BY_205 = re.compile("[\x0b\x0c\x1c-\x1f\x85\u2028\u2029]")
-LEFT_OUT_BY_205 = 592     # raw-door inputs of R.inputs() (6,672); no git-door fixture with a listing holds one
+HOLD_205 = 592            # raw-door inputs of R.inputs() (6,672) whose diff holds one; no git-door fixture with a listing does
+# Of those, the inputs whose content moved in either strict mode (a record, or a raise where the parent raised none:
+# p2a-fuzz:20260930:692, which the CHANGELOG names), and the sha256 of their ids (R.uid), sorted and joined by LF.
+# Measured on CPython 3.12.10 and 3.14.2, the same set. Every other input, the 453 others holding one included, is
+# compared byte for byte.
+MOVED_BY_205 = 139
+MOVED_BY_205_SHA = "68e399a0ad8aea66428e576f1b674c87c651c0cdce8bad9aff042d135fe25424"
+
+
+def _same_or_raised(a, b, run) -> str | None:
+    """_same, with a raise of this reader where the parent raised none read as content moved."""
+    try:
+        return _same(a, b, run)
+    except Exception as e:  # noqa: BLE001 - this reader's own failure is part of what is compared
+        return f"this reader raised {e!r} and the parent did not"
 
 
 def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(parent, monkeypatch):
     """The pinned pairs, the regenerated 3,000-pair fuzz corpus, the PATH-2a reproductions with their seeded fuzz and
     text-seam sets, at the raw door in both strict modes; and every PATH-2a fixture that carries its own
     --name-status at the git door, in both strict modes. Identity phase 2's guarantee was every committed input; since
-    #205 it is every one whose diff (and listing) holds none of the characters #205 reads anew (`_MOVED_BY_205`), and
-    the inputs left out are counted, so the scope cannot widen unseen. tests/test_diffgate_issue205_206.py holds what
-    #205 moved on the rest."""
-    bad, runs, left_out = [], 0, 0
+    #205 it is every one but those whose content #205 moved by design: each of them holds a character #205 reads anew
+    (`_MOVED_BY_205`), and they are pinned by count and by a digest of their ids, so the set cannot grow or change
+    unseen. tests/test_diffgate_issue205_206.py holds what #205 moved."""
+    bad, runs, held, moved = [], 0, 0, []
     for row in R.inputs():
-        if _MOVED_BY_205.search(row[3] or ""):
-            left_out += 1
-            continue
+        holds = bool(_MOVED_BY_205.search(row[3] or ""))
+        held += holds
+        whys = []
         for strict in (False, True):
-            why = _same(parent, N, lambda m, s=row[2], d=row[3], k=strict: m.gate_diff_text(s, d, strict=k))
+            whys.append(_same_or_raised(parent, N, lambda m, s=row[2], d=row[3], k=strict:
+                                        m.gate_diff_text(s, d, strict=k)))
             runs += 1
-            if why:
-                bad.append((R.uid(0, row), strict, why))
+        if any(whys) and holds:
+            moved.append(R.uid(0, row))
+        elif any(whys):
+            bad.append((R.uid(0, row), whys))
     git_runs = 0
     for name in ("path2a_repros.json", "path2a_pass5_repros.json", "path2a_pass6_repros.json"):
         for c in json.loads((FIXTURES / name).read_text(encoding="utf-8"))["cases"]:
             if not c.get("name_status"):
                 continue
-            if _MOVED_BY_205.search(c["diff"] + c["name_status"]):
-                left_out += 1
-                continue
+            held += bool(_MOVED_BY_205.search(c["diff"] + c["name_status"]))
             fake = R.fake_git(c["name_status"], c["diff"])
             monkeypatch.setattr(parent, "_git", fake)
             monkeypatch.setattr(N, "_git", fake)
@@ -399,8 +415,11 @@ def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(par
                 if why:
                     bad.append((name, c["id"], strict, why))
     assert bad == [], bad[:5]
-    assert runs > 12000 and git_runs > 200, (runs, git_runs)       # 13,344 runs before #205 left 592 inputs out
-    assert left_out == LEFT_OUT_BY_205, left_out
+    assert runs > 13000 and git_runs > 200, (runs, git_runs)
+    assert held == HOLD_205, held
+    moved.sort()
+    assert len(moved) == MOVED_BY_205, (len(moved), moved[:5])
+    assert hashlib.sha256("\n".join(moved).encode("utf-8")).hexdigest() == MOVED_BY_205_SHA, moved[:5]
 
 
 def test_report_and_out_are_the_parents_but_for_the_identity(parent, tmp_path):
