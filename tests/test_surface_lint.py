@@ -79,7 +79,13 @@ def test_a_charter_word_inside_a_longer_word_is_not_a_hit():
     ("the agent can't lie about it", "withdrawn/gate-claim"),
     ("the agent cannot post a message that lies about its diff", "withdrawn/gate-claim"),
     ("a commit or PR command whose message lies about its diff", "withdrawn/gate-claim"),
+    ("gate: the diff cannot be lied about", "withdrawn/gate-claim"),
     ("Every claim machine-verified against committed receipts", "withdrawn/every-claim-verified"),
+    ("certify: every number checks out", "withdrawn/every-claim-verified"),
+    ("Every number in a paper proves itself against committed receipts", "withdrawn/every-claim-verified"),
+    ("Every number the lab reports is verified against a committed receipt", "withdrawn/every-claim-verified"),
+    ("One line in CI; the lie exits 1.", "withdrawn/lie-label"),
+    ('const marks = { CONTRADICTED: ["lie", "[LIE]"] };', "withdrawn/lie-label"),
     ("if we ever lie about a diff, our own product fails our own build", "withdrawn/own-build"),
     ("blocks only on kinds whose precision has been measured; today none has", "withdrawn/today-none-has"),
     ("Zero false accusations on our history", "withdrawn/zero-false-accusations"),
@@ -97,6 +103,30 @@ def test_each_listed_sentence_is_a_hit(text, rid):
 
 def test_protocol_alone_is_not_a_hit_because_it_is_a_module_name():
     assert _rids("python -m styxx.protocol runs the preregistration gates\n") == ([], [])
+
+
+@pytest.mark.parametrize("text", [
+    "a contradicted claim is printed as [CONTRADICTED] with its reason",   # the label that replaced it
+    "certify: every number vs its receipt",                                 # names what certify reads, claims nothing
+    "a claim the author believed may still be a lie the diff shows",       # the word alone is not the label
+    "every number in the table is from the run named beside it",           # not one of the listed wordings
+])
+def test_the_new_wordings_are_narrow(text):
+    assert _rids(text + "\n") == ([], [])
+
+
+def test_a_baseline_written_for_another_source_names_it(tmp_path):
+    site = tmp_path / "site"
+    site.mkdir()
+    (site / "index.html").write_text("<p>nobody</p>\n", encoding="utf-8")
+    out = tmp_path / "site_baseline.json"
+    assert L.main(["--profile", "site", "--root", str(site), "--write-baseline", str(out)]) == 0
+    doc = json.loads(out.read_text(encoding="utf-8"))
+    assert doc["profile"] == "site" and doc["source"] == site.as_posix()
+    assert doc["counts"] == {"index.html": {"plan/nobody": 1}}
+    assert L.main(["--profile", "site", "--root", str(site), "--baseline", str(out)]) == 0
+    (site / "index.html").write_text("<p>nobody</p>\n<p>the diff cannot be lied about</p>\n", encoding="utf-8")
+    assert L.main(["--profile", "site", "--root", str(site), "--baseline", str(out)]) == 1
 
 
 def test_the_withdrawal_may_quote_what_it_withdraws_even_across_a_line_break():

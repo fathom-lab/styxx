@@ -67,15 +67,21 @@ this entry the words were printed nowhere outside the preregistration and one re
   only, reads the shipped surfaces (the root documents except this file, the Action's script and the pre-commit
   hook definitions, and the prose under `styxx/`, `sworn/`, `integrations/`, `hooks/`, `docs/`, `web/` and
   `packages/`; records, tests and fixtures are left out) and reports three kinds of string: the withdrawn
-  sentences above, the words the charter keeps out of public text, and the word-checkable part of the
-  must-not-say list in `papers/PLAN_the_next_level_2026_09_02.md` (lines 127-131). The test fails on a withdrawn
+  sentences above (with the gate claim's passive form, "cannot be lied about", the universal receipt claim in
+  the wordings the site used, such as "every number checks out", and the retired LIE label, "[LIE]" and "the
+  lie exits"), the words the charter keeps out of public text, and the word-checkable part of the
+  must-not-say list in `papers/PLAN_the_next_level_2026_09_02.md` (lines 127-131). The one shipped place the
+  LIE label still stood, `integrations/openclaw/styxx-capsule/SKILL.md`'s "(the lie exits 1)", now reads "(a
+  contradicted claim exits 1)". The test fails on a withdrawn
   sentence anywhere except beside its withdrawal, and fails when any file carries more charter or plan words
   than `scripts/surface_lint_baseline.json` records: 575 at this commit over 187 files, 516 of them the ordinal
   the charter bans. A count may fall and never rise. The test also reads the committed sentence out of the
   preregistration and checks that `action.yml` and the README print it. It is a word lint: it finds strings, not
   claims, and a clean run says nothing about whether a sentence is true; the lab measured that finding claims in
   prose fails (0.23, 0.16, and 0.4211 on 38 sentences; the plan, lines 17-22). The same script lints outward
-  drafts with `--files` and the site's source with `--profile site --root <dir>`, read-only.
+  drafts with `--files` and the site's source with `--profile site --root <dir>`, read-only; a baseline written
+  with `--write-baseline` for such a source names it, and the same source passed back with `--baseline` exits 0
+  only with no withdrawn sentence and no count above it, which is a pass condition a deploy can use.
 - **What this does not pay.** G-E1 also said "the offending template classes are disabled, and the GitHub
   Action does not launch on the current template set" (the preregistration, lines 76-79). Path accusations are
   withheld; the Action launches and reports by default. A clause-by-clause audit, each clause paid or unpaid

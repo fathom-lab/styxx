@@ -18,9 +18,13 @@ What it reports
 ---------------
 withdrawn  sentences the lab has withdrawn. The gate claim that the EXTERNAL-1 preregistration bound the
            lab to withdraw (papers/closed-model-frontier/PREREG_external1_aidev_2026_08_31.md, lines
-           93-95), in the wordings the hook titles used; "Every claim machine-verified"; README's "if we ever
-           lie about a diff, our own product fails our own build"; the false replacement "today none has";
-           and the zero-false-accusation claim the README withdrew. A match with the withdrawal itself
+           93-95), in the wordings the hook titles and the site used, the passive "cannot be lied about"
+           included; "Every claim machine-verified", and the same universal receipt claim in the wordings the
+           site used ("every number checks out", "proves itself against committed receipts", "every number
+           ... is verified against"); README's "if we ever lie about a diff, our own product fails our own
+           build"; the false replacement "today none has"; the zero-false-accusation claim the README
+           withdrew; and the retired LIE label ("[LIE]", "the lie exits"), replaced by CHANGELOG.md's
+           "CONTRADICTED is printed as CONTRADICTED, with its reason, not as LIE". A match with the withdrawal itself
            within WINDOW characters ("is not yet true of this instrument", or a form of "withdraw") is
            counted as allowed, not as a hit, so the sentence that withdraws a claim may quote it.
 charter    the words the lab's charter keeps out of its public text. They are stored reversed, as
@@ -35,7 +39,8 @@ plan       the word-checkable part of "Must not be said" in papers/PLAN_the_next
 What it cannot do
 -----------------
 It matches strings. It cannot tell a priority claim from an ordinal number, cannot see a claim phrased in
-other words, and cannot check the two items on the plan's list that are not words: a bound-recall number
+other words ("whose every number is checked by certify" is the universal receipt claim in words it does not
+list), and cannot check the two items on the plan's list that are not words: a bound-recall number
 printed before the leg-2 panel runs, and any use of the sworn documents in this tree as evidence that the
 format works. The lab measured that finding claims in prose fails: precision 0.23 (EXTERNAL-1), 0.16 held
 out (V14), and 0.4211 on 38 sentences for the best structural detector (the plan above, lines 17-22). So a
@@ -117,11 +122,15 @@ def _rule(rid: str, kind: str, pattern: str, why: str) -> Rule:
 
 RULES: Tuple[Rule, ...] = (
     _rule("withdrawn/gate-claim", "withdrawn",
-          r"can(?:not|'t|’t|\s+not)\s+lie\b|cannot\s+post\s+a\s+message\s+that\s+lies"
+          r"can(?:not|'t|’t|\s+not)\s+(?:be\s+lied|lie)\b|cannot\s+post\s+a\s+message\s+that\s+lies"
           r"|whose\s+message\s+lies\s+about\s+its\s+diff",
           "EXTERNAL-1's preregistration bound the lab to withdraw it (PREREG_external1_aidev_2026_08_31.md l.93-95)"),
-    _rule("withdrawn/every-claim-verified", "withdrawn", r"every\s+claim\s+(?:is\s+)?machine[\s\-]verified",
-          "the sworn census's coverage floor is 0.0156 to 0.2185 (PLAN_the_next_level_2026_09_02.md l.47-48)"),
+    _rule("withdrawn/every-claim-verified", "withdrawn",
+          r"every\s+claim\s+(?:is\s+)?machine[\s\-]verified|every\s+number\s+checks\s+out"
+          r"|every\s+number\b[^.\n]{0,40}?\bproves\s+itself"
+          r"|every\s+number\s+(?:(?:the\s+lab|we)\s+reports?\s+)?is\s+verified\s+against",
+          "the sworn census's coverage floor is 0.0156 to 0.2185 (PLAN_the_next_level_2026_09_02.md l.47-48), and a "
+          "one-digit mutation of 3951 VERIFIED claims left 2696 unaccused (README.md, the certify row)"),
     _rule("withdrawn/own-build", "withdrawn",
           r"if\s+we\s+ever\s+lie\s+about\s+a\s+diff|our\s+own\s+product\s+fails\s+our\s+own\s+build",
           "a statement about what the gate catches, which no receipt measures"),
@@ -129,6 +138,9 @@ RULES: Tuple[Rule, ...] = (
           "precision was measured for kinds that accuse: 0.23, 0.16 and 0.25"),
     _rule("withdrawn/zero-false-accusations", "withdrawn", r"zero[\s\-]+false[\s\-]+accusations?",
           "withdrawn in the README; on the plan's must-not-say list (l.128-129)"),
+    _rule("withdrawn/lie-label", "withdrawn", r"\[lie\]|\bthe\s+lie\s+exits\b",
+          "the LIE label was retired (CHANGELOG.md: CONTRADICTED is printed as CONTRADICTED, with its reason, not "
+          "as LIE)"),
     _rule("charter/ordinal", "charter", _word("tsrif"), "the ordinal meaning number one"),
     _rule("charter/newness-adjective", "charter", _word("levon"), "a charter word"),
     _rule("charter/revolution-adjective", "charter", _word("yranoitulover"), "a charter word"),
@@ -405,11 +417,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                  [h for h in rep.allowed if h.kind in kinds])
 
     if a.write_baseline:
-        doc = {"what": "surface_lint.py baseline: charter and plan counts per shipped file, profile repo. A count "
-                       "may fall and never rise; a withdrawn sentence is never baselined. Regenerate with "
-                       "python scripts/surface_lint.py --write-baseline scripts/surface_lint_baseline.json "
-                       "only when a count falls.",
-               "profile": a.profile, "counts": counts(rep.hits)}
+        if a.profile == "repo" and not a.files and not a.rev:
+            doc = {"what": "surface_lint.py baseline: charter and plan counts per shipped file, profile repo. A "
+                           "count may fall and never rise; a withdrawn sentence is never baselined. Regenerate "
+                           "with python scripts/surface_lint.py --write-baseline scripts/surface_lint_baseline.json "
+                           "only when a count falls.",
+                   "profile": a.profile, "counts": counts(rep.hits)}
+        else:
+            # another source (the site's tree, a revision, named files) is named in the file, so the baseline says
+            # what it was counted on; passed back with --baseline against the same source, exit 0 is the pass
+            doc = {"what": "surface_lint.py baseline: charter and plan counts per file of the source named here. A "
+                           "count may fall and never rise; a withdrawn sentence is never baselined, so exit 0 with "
+                           "--baseline against this source means no withdrawn sentence and no count above these.",
+                   "profile": shown, "source": label, "counts": counts(rep.hits)}
         with open(a.write_baseline, "w", encoding="utf-8", newline="\n") as f:     # LF on every system
             f.write(json.dumps(doc, indent=1, ensure_ascii=True) + "\n")
         print(f"surface_lint: wrote {sum(sum(v.values()) for v in doc['counts'].values())} counted hits over "
