@@ -7,6 +7,91 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the front door says, in EXTERNAL-1's committed words, that the gate claim is not yet true, and stops making it
+
+**EXTERNAL-1's preregistration committed this lab to a sentence, not only to a deletion.** If accusation
+precision landed below 0.95, "the claim 'an agent's PR summary cannot lie about its diff' is not yet true of
+this instrument on real-world data, and this lab will say so in those words"
+(`papers/closed-model-frontier/PREREG_external1_aidev_2026_08_31.md`, lines 93-95). It landed at 0.23: a blind
+three-seat panel upheld 23 of 100 sampled accusations (`papers/closed-model-frontier/external1_adjudication.json`),
+and a repaired path accuser measured 0.16 on a held-out sample (`v14_adjudication.json`, same directory). Before
+this entry the words were printed nowhere outside the preregistration and one recorded session diff
+(`dogfood_session.diff`, same directory). The sentence:
+
+> The claim "an agent's PR summary cannot lie about its diff" is not yet true of this instrument on real-world data.
+
+- **Where it is printed.** `action.yml`'s description now opens with it, with the precision and the
+  preregistration it answers. The README prints it in the VERIFY section, on the line under the CI snippet,
+  with the 23 of 100 and its receipt. This entry is the third place. The notes of the release that ships this
+  owe it as well.
+- **Where the claim is removed.** The other shipped places that made it, in any wording: the docstring of
+  `styxx.gate_diff` (`styxx/__init__.py`); the titles of `integrations/git/README.md`,
+  `integrations/pre-commit/README.md`, `integrations/claude-code/diffgate-hook/README.md` and
+  `integrations/cursor/diffgate-hook/README.md`; and the docstrings of `integrations/git/commit-msg`,
+  `integrations/claude-code/diffgate-hook/pretool.py` and `integrations/cursor/diffgate-hook/before_shell.py`.
+  Each now says what the hook does: it reads the message against the diff. Records are not edited: `papers/`,
+  this file's older entries, `tests/`, and the recorded pull request body `web/gate/differential/bodies/pr98.md`.
+- **`styxx/diffgate.py` too, and the pins that name its bytes.** Its module docstring and the description
+  `python -m styxx.diffgate --help` prints made the claim; both now say the summary is read against its diff.
+  The comment over `WITHHOLD_PATH_ACCUSATION` called the EXTERNAL-1 consequence "preregistered and paid"; it now
+  says this is the consequence's part for the path classes (see the next item). That moves the file's LF sha256
+  to `091fbb46…` and the reader the PATH-2a block is cut from to `5395e7e8…`, so every pin that names them moves
+  with it: `PINNED` in `web/gate/differential/py_side.py`, `MAIN_PY_SHA` in `tests/_p2a_ref.py`, the comment
+  inside the PATH-2a block of `styxx/diffgate.py`, the port's comment in `web/gate/diffgate.js` and its copy in
+  `web/gate/bookmarklet_src.js`, and `web/gate/README.md`. No reading path moved: the two strings and the comment
+  are the only change outside the block. A diffgate record names the file's sha256 in `build.modules`, so records
+  written from here on name `091fbb46…`. The comment is the only change to `bookmarklet_src.js` and
+  `bookmarklet.min.js` does not carry the old hash, so the minified build and its pinned hash are left as they are; terser was not on the machine that made this change, so `build_bookmarklet.py
+  --check` was not run there.
+- **README's account of the consequence is scoped.** Its paragraph headed 2026-08-31 said "The preregistered
+  consequence was paid the same day". What was paid that day is the path classes' part: their accusation is
+  withheld. The same preregistration also said "the GitHub Action does not launch on the current template set"
+  (line 78), and the Action launches, and reports by default. The paragraph now says part of the consequence was
+  paid, for the path classes, and names the clause that was not. It stays on its lines.
+- **README's GitHub Action row: its last sentence is withdrawn.** It read "if we ever lie about a diff, our own
+  product fails our own build". That is a statement about what the gate catches, and no receipt measures it.
+  The row now says the lab runs the Action on itself with `soft-fail: "false"` as its own choice, and that the
+  check says nothing about the sentences the gate does not read.
+- **Kept.** `action.yml`'s sentence that no kind of accusation it still makes "has been measured clearing the
+  0.95 precision floor the lab set for accusing". It is true as written. No sentence here says that no precision
+  was measured: 0.23, 0.16 and 0.25 (2 of 8, `only_touches`) were.
+- **Line numbers.** The three README edits stay on their lines (83, 113-116 and 366), so the README is still 520
+  lines and the line citations in `zenodo/MANIFEST.json` still point where they did.
+- **The Action's pin is not moved here.** README lines 80 and 366 still name `fathom-lab/styxx@main`, and
+  `action.yml`'s `styxx-version` default is still the floor `styxx>=7.44.2`. An exact pin on the next release
+  names a version PyPI does not hold until that release is published, and `.github/workflows/diffgate.yml`, the
+  lab's own required check, installs the default, so a pin merged before its release is published fails that
+  check on every pull request until it is. The pin waits for the release, with a test that the exact pin equals
+  `styxx/_version.py`'s version; how it rides with the release (the workflow naming its own install, or the pin
+  following the publish) is the operator's call.
+- **A surface lint, held in CI by `tests/test_surface_lint.py`.** `scripts/surface_lint.py`, standard library
+  only, reads the shipped surfaces (the root documents except this file, the Action's script and the pre-commit
+  hook definitions, and the prose under `styxx/`, `sworn/`, `integrations/`, `hooks/`, `docs/`, `web/` and
+  `packages/`; records, tests and fixtures are left out) and reports three kinds of string: the withdrawn
+  sentences above (with the gate claim's passive form, "cannot be lied about", the universal receipt claim in
+  the wordings the site used, such as "every number checks out", and the retired LIE label, "[LIE]" and "the
+  lie exits"), the words the charter keeps out of public text, and the word-checkable part of the
+  must-not-say list in `papers/PLAN_the_next_level_2026_09_02.md` (lines 127-131). The one shipped place the
+  LIE label still stood, `integrations/openclaw/styxx-capsule/SKILL.md`'s "(the lie exits 1)", now reads "(a
+  contradicted claim exits 1)". The test fails on a withdrawn sentence anywhere except beside its withdrawal,
+  and fails when any file carries more charter or plan words than `scripts/surface_lint_baseline.json` records: 575 at this commit over 187 files, 516 of them the ordinal
+  the charter bans. A count may fall and never rise. The test also reads the committed sentence out of the
+  preregistration and checks that `action.yml` and the README print it. It is a word lint: it finds strings, not
+  claims, and a clean run says nothing about whether a sentence is true; the lab measured that finding claims in
+  prose fails (0.23, 0.16, and 0.4211 on 38 sentences; the plan, lines 17-22). The same script lints outward
+  drafts with `--files` and the site's source with `--profile site --root <dir>`, read-only; a baseline written
+  with `--write-baseline` for such a source names it, and the same source passed back with `--baseline` exits 0
+  only with no withdrawn sentence and no count above it, which is a pass condition a deploy can use. An excerpt
+  the console cannot encode is escaped, so a Windows pipe without `PYTHONIOENCODING` prints the report whole.
+- **What this does not pay.** G-E1 also said "the offending template classes are disabled, and the GitHub
+  Action does not launch on the current template set" (the preregistration, lines 76-79). Path accusations are
+  withheld; the Action launches and reports by default. A clause-by-clause audit, each clause paid or unpaid
+  with its receipt, is owed before the release and is not in this entry. Until every clause reads paid, what
+  this entry pays is the wording clause.
+- **Outside this repository** the claim still stands where only the operator can change it: the GitHub
+  repository description, the canonical site, and the PyPI pages of 7.49.0 and older, which cannot be edited and
+  are superseded by the next release instead.
+
 ## [Unreleased] — the zoo D0 screen: 13 cached models on bridge v3's compare and recall at 16 tokens (pilot-class, licenses nothing)
 
 `papers/frequency-resonance/NOTE_zoo_d0_screen_plan_2026_10_12.md` planned, before any data, the readiness screen the

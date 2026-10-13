@@ -426,7 +426,7 @@ def verify_seal(*args, **kwargs):
 
 
 def gate_diff(*args, **kwargs):
-    """The zero-receipt diff gate — an agent's summary cannot lie about its diff
+    """The zero-receipt diff gate — an agent's summary read against its diff
     (lazy, see styxx.diffgate for the closed template set and ceilings)."""
     from .diffgate import gate_diff as _g
     return _g(*args, **kwargs)

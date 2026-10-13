@@ -25,7 +25,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "ce067ec94fc820b6258bf550bd1c1ce8fe664bf01f8ef0f1de3a7cde99f92c64"  # styxx/diffgate.py: main's 4eb3d6f0 reader (68873068, which is 9b620e00 + the demo's CONTRADICTED label, + the record naming its instrument) + the PATH-2a block (LF)
+PINNED = "091fbb465f7eac110d8109917c9ee0a2aa293f94aef32808cca91d6fb1d7e035"  # styxx/diffgate.py: main's 5395e7e8 reader (4eb3d6f0 with the withdrawn gate claim out of its docstring and CLI description and its WITHHOLD comment scoped to the path classes; 4eb3d6f0 is 68873068 + the record naming its instrument, 68873068 is 9b620e00 + the demo's CONTRADICTED label) + the PATH-2a block (LF)
 # The record naming its instrument (identity phase 2) appends `build` and `runtime` to every record and moves no
 # content key, so the differential, which compares named fields only, compares what it compared before.
 # The pin moved twice in one step and both moves are deliberate. COMPAT-2 (#124) changed the
