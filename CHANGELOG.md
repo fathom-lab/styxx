@@ -30,36 +30,60 @@ pinned-pair file or charon line is touched; `path2a_pairs.json` and `path2a_move
   one cut. On a text holding none of those eight characters the cut is `str.splitlines()` exactly. A lone
   CR stays a cut, as in the port: git does not cut there, and that is #176's repair, not this one.
 - **#205, the abstention.** Once a line is whole, U+000B, U+001C to U+001F, U+0085, U+2028 and U+2029 still
-  part the readers: CPython refuses each in source, and the two readers' `\s`, `^` and `.` read all but
-  U+000B apart (on U+000B both read an indentation CPython refuses). In both ports `tests_added` and
-  `symbol_added` say UNCHECKABLE, after the #110 abstention, when an added line holds one: "an added line
-  holds U+XXXX, which CPython refuses in source and the Python and JavaScript readers read apart; this
-  template counts `def` lines (#205)", the same string in both ports and on every runtime; a declared count
-  abstains as the prose one does. The compatibility reading, UNCHECKABLE already, names a changed line
-  holding one in its reason and reads no definition. U+001F is in the set because a form feed used to hide
-  it; U+FEFF is not, since the cut does not change how either reader reads it and it heads line one of
-  every file saved with a byte-order mark.
+  part the readers: CPython refuses each in source outside a string or a comment, and the two readers' `\s`,
+  `^` and `.` read all but U+000B apart (on U+000B both read an indentation CPython refuses). In both ports
+  `tests_added` and `symbol_added` say UNCHECKABLE, after the #110 abstention, when an added line of any file
+  holds one: "an added line holds U+XXXX, which CPython refuses in source outside a string or a comment; this
+  template counts `def` lines and cannot tell where it sits (#205)", the same string in both ports and on
+  every runtime; a declared count abstains as the prose one does. The compatibility reading, UNCHECKABLE
+  already, reads no definition and says so: "compatibility claimed; a changed line holds U+XXXX, which CPython
+  refuses in source outside a string or a comment, and this reading cannot tell where it sits, so no
+  definition was read (#205)". Each reason says only what holds for every character of the set wherever it
+  sits, and `ast.parse` on the running CPython is asked that by a test; neither says the two readers read the
+  character apart, which is false for U+000B. The templates cannot tell a character in code from one in a
+  comment, a string or a file that is not Python, so the abstention also withholds true claims there: that
+  is its cost, counted under *Verdicts that move*. U+001F is in the set because a form feed used to hide it;
+  U+FEFF is not, since the cut does not change how either reader reads it and it heads line one of every
+  file saved with a byte-order mark.
 - **#205, the port.** `_DIFF_GIT` and `_BINARY_LINE` read `.` as `[^\n]`, as the Python's `.` reads: a
   header the Python no longer cuts at U+2028 registers its file in both ports.
-- **Verdicts that move.** In the Python, over an added line led by a form feed, "Added 1 test." and "Added
-  function test_a." go CONTRADICTED → VERIFIED and "Added 0 tests." VERIFIED → CONTRADICTED, at both doors,
-  in prose and declared, in both strict modes; the port already read so. A form-feed re-indent of an
-  existing test or function is now counted, as a space re-indent is, and withheld by PATH-2a (#101) in both
-  ports. `tests_added` and `symbol_added` over an added line holding one of the abstention's characters go
-  from any verdict to UNCHECKABLE (#205) in both ports, including the port's VERIFIED after U+000B or U+2028
-  (#177's shape, in added lines) and the old U+001F divergence. A content or context line no longer forges a
-  header, an added line or a removed one in the Python; a header path holding one of these characters is
-  read whole; the git door reads `--name-status` at git's line ends. `--strict` fails on each new
-  UNCHECKABLE. Measured on the 6,672 committed inputs (`tests/_p2a_ref.inputs()`), raw door, final records,
-  against `62f8ff44`: inputs whose two final claim lists are equal in (kind, verdict, reason) 6,038 → 6,113,
-  none newly apart; inputs whose two gate verdicts differ 23 → 9 without `--strict` and 13 → 10 with it;
-  inputs where a port raises: the Python alone on 2 and the port alone on 1 before, both ports on the same 3
-  now. On a 319-cell grid (every `str.splitlines()` break, every `str.isspace()` character and U+FEFF, in
-  seven positions on a definition line, judged by `ast.parse`): claims ast reads as true and a port
-  CONTRADICTS, Python 8 → 4 and port 4 → 4, none newly CONTRADICTED, the 4 left a lone CR (#176) in both;
-  cells whose two final claim lists differ 52 → 8, all U+FEFF. The grid's figures are *pinned* by
-  `tests/test_diffgate_issue205_206.py`; the committed-input figures were measured once on this box
-  (CPython 3.12.10, Node 24.13.0) and are not asserted.
+- **Verdicts that move.** In the Python, over an added line where a form feed leads a definition, leads its
+  indentation or sits inside it (`+<U+000C>def test_a():`, the issue's `class TestA:` /
+  `+<U+000C>    def test_a(self):`, and `+    <U+000C>def test_a(self):`), "Added 1 test." and "Added function
+  test_a." go CONTRADICTED → VERIFIED and "Added 0 tests." VERIFIED → CONTRADICTED, at both doors, in prose and
+  declared, in both strict modes. In the Python, over `+def<U+000C>foo():`, "Adds function foo." goes
+  CONTRADICTED → VERIFIED; the test count over `+def<U+000C>test_a():` does not move (see the residuals). The
+  port already read a form feed that leads a definition, sits inside its indentation or follows `def` so. It
+  moves on the issue's class shape, a form feed before the indentation: there `main`'s PATH-2a overlay
+  withheld the port's own verdicts (#101, `again`: its model of the Python's old cut read the piece after the
+  form feed, `    def test_a(self):`, as an unchanged line defining the same name), and the two mains now cut
+  there alike, so in the port "Added 1 test." and "Added function
+  test_a." go UNCHECKABLE → VERIFIED (a `--strict` FAIL → PASS) and "Added 0 tests." UNCHECKABLE →
+  CONTRADICTED (PASS → FAIL without `--strict`; FAIL before and after with it). No committed input holds an
+  added line where a form feed is followed by a space or a tab, so the committed-input figures below do not
+  show that move; `tests/test_diffgate_issue205_206.py` pins the shape in both ports. A form-feed re-indent of
+  an existing test or function is now counted, as a space re-indent is, and withheld by PATH-2a (#101) in both
+  ports. `tests_added` and `symbol_added` over an added line of any file holding one of the abstention's
+  characters go from any verdict to UNCHECKABLE (#205) in both ports, including the port's VERIFIED after
+  U+000B or U+2028 (#177's shape, in added lines) and the old U+001F divergence, and including true claims
+  beside such a character where CPython accepts it: a new `def test_new():` beside one in a comment, in a
+  string or in a line of `docs/notes.md`, for each of the eight characters, in prose and declared, is 48
+  inputs whose two claims were VERIFIED in both ports and are UNCHECKABLE in both now, a `--strict` PASS →
+  FAIL (*pinned*). A content or context line no longer forges a header, an added line or a removed one in the
+  Python; a header path holding one of these characters is read whole; the git door reads `--name-status` at
+  git's line ends. `--strict` fails on each new UNCHECKABLE. Measured on the 6,672 committed inputs
+  (`tests/_p2a_ref.inputs()`), raw door, final records, against `62f8ff44`: inputs whose two final claim lists
+  are equal in (kind, verdict, reason) 6,038 → 6,113, none newly apart; inputs whose two gate verdicts differ
+  23 → 9 without `--strict` and 13 → 10 with it; inputs where a port raises 5 → 3 (before, the Python alone on
+  2, the port alone on 1 and both on 2; now both on the same 3). On a 377-cell grid (every `str.splitlines()`
+  break, every `str.isspace()` character and U+FEFF, in eight positions on a definition line, judged by
+  `ast.parse`): claims ast reads as true and a port CONTRADICTS, Python 10 → 6 and port 6 → 6, none newly
+  CONTRADICTED, the 6 left the same in both (a lone CR, #176, in four; a tab or a form feed between `def` and
+  a test's name in two); claims ast reads as false and a port VERIFIES, Python 7 → 5 and port 5 → 5, of the
+  same two causes; cells whose two final claim lists differ 52 → 8, all U+FEFF. The grid's figures are
+  *pinned* by `tests/test_diffgate_issue205_206.py`; the committed-input figures were measured on this box
+  (CPython 3.12.10, Node 24.13.0), and again after the two #205 reasons were reworded, with the same result,
+  and are not asserted.
 - **#206.** `styxx/declare.py` reads a declared `files_changed` or `tests_added` count as `[0-9]{1,9}`.
   Python's `\d` was every decimal digit of the interpreter's Unicode tables and `int()` read them, so a
   count in full-width, Arabic-Indic or Devanagari digits was VERIFIED or CONTRADICTED in the Python and
@@ -71,11 +95,15 @@ pinned-pair file or charon line is touched; `path2a_pairs.json` and `path2a_move
   UNCHECKABLE on a count in non-ASCII digits, so a false such count no longer FAILs by default, and a true
   one, a right VERIFIED lost (full-width digits come from CJK input methods), FAILs under `--strict`; the
   preregistration's rule covers it ("a value that does not parse is MALFORMED, reported, never an
-  accusation"). Port: the reason's text only. No committed text declares such a count (21 declaration
-  blocks in tracked files, none). Not repaired, and belonging with #182: the white space around the value
-  and the declaration block's own line split. `files_changed: 3<U+0085>` and `3<U+001F>` are VERIFIED in the
-  Python (its `\s*$` and `strip()` remove them) and MALFORMED in the port; `files_changed: <U+FEFF>3` the
-  other way. So "the two ports read every declared count alike" is not claimed.
+  accusation"). Port: the reason's text only. No committed text on `62f8ff44` declares such a count: of the
+  51 `files_changed:` and `tests_added:` occurrences in its tracked files, read raw and through JSON and
+  Python escapes, none has a value outside ASCII. Not repaired, and belonging with #182: the white space
+  around the value and the declaration block's own line split. `files_changed: 3<U+0085>` and `3<U+001F>` are
+  VERIFIED in the Python (its `\s*$` and `strip()` remove them) and MALFORMED in the port;
+  `files_changed: <U+FEFF>3` the other way. Nor the reason for a value holding an ASCII control character
+  (U+0000 to U+001F, U+007F; `files_changed: 1<U+0001>`): MALFORMED in both ports, with the Python's `repr()`
+  escaping the character and the port's `_pyRepr` writing it raw, as on `62f8ff44`. So "the two ports read
+  every declared count alike" is not claimed.
 - **PATH-2a.** No rule is added and DECIDE and APPLY are not edited; the overlay's model of the Python's
   line cut follows the new cut. Line view 0 is the diff cut at git's line ends (`_P2aFacts.lines`, renamed
   from `fine`), so the two views are one object; the context lines are that cut's; the git door's listing is
@@ -107,9 +135,11 @@ pinned-pair file or charon line is touched; `path2a_pairs.json` and `path2a_move
   `PORT_161`'s pin of #161's `y2` (`P9-a-test-after-a-line-separator`, which told it before, is main's
   abstention now). `check_path2a.js --lockstep` calls `_p2aViews` with the lines alone, and with the diff
   text before them for a port of an earlier pass. `tests/test_diffgate_record_identity.py`'s content check
-  against `295529c6` is identity phase 2's guarantee, and it is narrowed here: it compares the inputs whose
-  diff holds none of U+000B, U+000C, U+001C to U+001F, U+0085, U+2028 and U+2029 and counts the 592 it
-  leaves out, which #205 moved by design.
+  against `295529c6` is identity phase 2's guarantee, and it is narrowed here by what #205 moved and no
+  more: it still compares every committed input, and the 139 whose content moved (a record, or the new raise
+  on `p2a-fuzz:20260930:692`), each holding one of U+000B, U+000C, U+001C to U+001F, U+0085, U+2028 and
+  U+2029, are pinned by their count and by a sha256 of their ids, the same set on CPython 3.12.10 and 3.14.2.
+  The other 453 inputs holding one of those characters are still compared byte for byte.
 - **`web/gate/differential/issue205_moves.json`** (new, whitelisted, read after `path2a_moves.json` by
   `check_pairs.js`, `tests/test_port_is_current.py` and the truth module) records the two pinned claims of
   `path2a_pairs.json` #205 moved, in both ports: `101-removed-def-only-in-python-lines` (`tests` →
@@ -117,12 +147,12 @@ pinned-pair file or charon line is touched; `path2a_pairs.json` and `path2a_move
   `p6-split-where-the-views-count-alike` (`split` → main's #205 abstention, U+0085).
 - **The pin set moved**, as #201 and #217 moved it, and this time reading paths moved in both languages.
   `web/gate/differential/py_side.py` `PINNED`, the README's whole-file sha and run-book line, and the
-  comment in the port's block name `ce54ce2d…`, the whole file (LF). `tests/_p2a_ref.py` `MAIN_PY_SHA`, the
-  README's reader line and the comment in the Python block name `cf443499…`, the reader the block is cut
+  comment in the port's block name `b0a65576…`, the whole file (LF). `tests/_p2a_ref.py` `MAIN_PY_SHA`, the
+  README's reader line and the comment in the Python block name `f457d2e4…`, the reader the block is cut
   from (`4eb3d6f0…` with #205). `MAIN_JS_SHA` moves, which no change since PATH-2a merged had done:
-  `31d0376c…`, the port the block is cut from (`06688702…` with #205's abstention and header patterns and
+  `d74cc729…`, the port the block is cut from (`06688702…` with #205's abstention and header patterns and
   #206's count). The bookmarklet is rebuilt with terser 5.46.0, which reproduces the previous build byte for
-  byte: `bookmarklet.min.js` `afcdd378…`, 54,269 characters, and `bookmarklet.href.txt` `e86801c2…`, 54,280; the
+  byte: `bookmarklet.min.js` `4f46cfdf…`, 54,335 characters, and `bookmarklet.href.txt` `e6913f66…`, 54,346; the
   README lists `5843f53d…` among the earlier builds.
 - **What does not move.** The committed capsules verify to the content they verified to; only the instrument
   line's module sha moves, as on any change to `styxx/diffgate.py` or `styxx/declare.py`. `python -m
@@ -130,11 +160,15 @@ pinned-pair file or charon line is touched; `path2a_pairs.json` and `path2a_move
   port differential over `main`'s corpora (176 real pairs rebuilt from their pinned shas, 3,000 regenerated fuzz
   pairs, the pinned pairs) reads 3,230 pairs, 0 disagreements, and no record of the real or the fuzz corpus moved
   against `62f8ff44`.
-- **Not repaired, and named:** a lone CR (#176); a U+FEFF lead or separator (the port's `\s` reads it, the
-  Python's does not); the Zs leads such as U+00A0, which both ports read as white space and CPython
-  refuses; a header path ending in U+001C to U+001F, U+0085 or U+FEFF, which the Python's `strip()` removes
-  and the port's `trim()` keeps (held at the raw door by `divergent`); and the DECLARE-1 block's own line
-  split, with #181 and #182.
+- **Not repaired, and named:** a lone CR (#176); a tab or a form feed between `def` and a test's name
+  (`+def<U+000C>test_a():`, which CPython reads as a definition of `test_a`): the tests template reads
+  `def test_` with one space, so "Added 1 test." is CONTRADICTED and "Added 0 tests." VERIFIED there, wrongly,
+  in both ports, as on `62f8ff44` (the symbol template reads it right; the grid pins both); a U+FEFF lead or
+  separator (the port's `\s` reads it, the Python's does not); the Zs leads such as U+00A0, which both ports
+  read as white space and CPython refuses; a header path ending in U+001C to U+001F, U+0085 or U+FEFF, which
+  the Python's `strip()` removes and the port's `trim()` keeps (held at the raw door by `divergent`); and the
+  DECLARE-1 block's own line split and white space, and its reason for a count holding an ASCII control
+  character, with #181 and #182.
 
 ## [Unreleased] — a diffgate record names the build and runtime that wrote it: `build` and `runtime` after the eleven content keys (identity phase 2)
 
