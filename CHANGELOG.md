@@ -51,13 +51,11 @@ this entry the words were printed nowhere outside the preregistration and one re
   was measured: 0.23, 0.16 and 0.25 (2 of 8, `only_touches`) were.
 - **Line numbers.** Both README edits stay on their lines (83 and 366), so the README line citations in
   `zenodo/MANIFEST.json` still point where they did.
-- **The Action is pinned to its release.** README lines 80 and 366 name `fathom-lab/styxx@v7.50.0` instead of
-  `@main`, the GitHub Action row links `action.yml` at that tag, and `action.yml`'s `styxx-version` default
-  becomes `styxx==7.50.0`, so a workflow that names the tag installs the gate the tag describes. That default
-  names a version PyPI holds only once 7.50.0 is published, and `.github/workflows/diffgate.yml`, the lab's own
-  required check, installs the default, so the pin can land on `main` only with the release; before it, every
-  pull request's diffgate check fails at `pip install`. `tests/test_diffgate_action.py` reads an exact pin as
-  well as a floor; the property it holds, no default below 7.44.0, is unchanged.
+- **The Action's pin is not moved here.** README lines 80 and 366 still name `fathom-lab/styxx@main`, and
+  `action.yml`'s `styxx-version` default is still the floor `styxx>=7.44.2`. An exact pin on the next release
+  names a version PyPI does not hold until that release is published, and `.github/workflows/diffgate.yml`, the
+  lab's own required check, installs the default, so the pin rides in the release's own pull request, with a test
+  that the exact pin equals `styxx/_version.py`'s version.
 - **A surface lint, held in CI by `tests/test_surface_lint.py`.** `scripts/surface_lint.py`, standard library
   only, reads the shipped surfaces (the root documents except this file, the Action's script and the pre-commit
   hook definitions, and the prose under `styxx/`, `sworn/`, `integrations/`, `hooks/`, `docs/`, `web/` and
