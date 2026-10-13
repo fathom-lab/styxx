@@ -62,7 +62,9 @@ here as they were committed.
   request's head is still the event's head (`require_unmoved_head`, which the parameters cannot turn off), and its
   rate limiter holds at most 50 requests in any hour across restarts.
 - **The draw.** `draw.py` draws n accusations with `styxx.beacon.select` and the id of a Bitcoin block the plan
-  names, proves the block's height from its coinbase (BIP34), and refuses each wrong order by name.
+  names. Given the coinbase and its merkle branch it proves the block's height from bytes (BIP34); without them it
+  records `height_proof: none` (`R:BATTERY_vs_build.md`, D10). It refuses, each by name, a height that is not the
+  plan's, a header that does not meet its own target and a block that is not after the window.
 - **The stranger re-derivation.** `stranger.py` re-derives the pool, the accusations and the draw from public bytes
   and sorts every published row into MATCH, DRIFT, UNREPRODUCIBLE or INCONSISTENT; it exits 0 when it agrees, 1 when
   GitHub moved and it cannot confirm, and 2 when the published record is contradicted.
@@ -75,8 +77,9 @@ here as they were committed.
 - **Predicted.** `R:BATTERY.md` holds 37 attacks in six groups: commitment and draw, shopping, population and pool
   construction, gate execution, panel, and reporting. Under the plan as the study specifies it, 7 are caught, 11
   bounded and 19 not caught, and "Six of the seven CAUGHT rows hold only if P or the build writes down what S
-  implies" (`R:BATTERY.md` section 2). It was committed alone before the builder's code was read (section 5 says
-  what that commit bounds).
+  implies" (`R:BATTERY.md` section 2). By its own account it was written before any of the builder's code was read,
+  and committed alone so that its predictions are dated before the build is seen (`R:BATTERY.md`, opening
+  paragraph); section 5 says what that commit bounds.
 - **Found against the build at `3c63ea40`** (`R:BATTERY_vs_build.md` section 2). The build implements the battery's
   catching check for 11 attacks (SA-05, 07, 13, 16, 17, 20, 22, 23, 24, 26, 28), part of it for 13, and none of it
   for 12; 1 needs nothing (SA-09). Ten of the 12 belong to stages the build says it has not built. Two are in scope
