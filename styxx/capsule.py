@@ -45,6 +45,10 @@ from collections import Counter
 from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import List, Optional
 
+# the identity of the instrument that wrote or re-ran a diffgate record (AMENDMENT_capsule_v02_instrument_
+# identity_2026_10_11): imports nothing from styxx itself, so it is imported here at the top
+from styxx import instrument as _instrument
+
 # The v0.13 UNCOVERED band appends ", N uncovered" to a verdict string. That suffix is a
 # COVERAGE report travelling in the headline, not a verdict change: `counts["UNGROUNDED"]` is
 # untouched and no token's status moved (styxx.corpus_audit.verdict_class learned this on
@@ -1978,6 +1982,11 @@ every why-string, every count, every uncovered sentence — re-derives from the 
 summary and diff by re-running the real instrument. one exception, printed when it
 applies: unparsed_claims is observational and depends on whether styxx.claimdetect is
 importable where the verifier runs; divergence there is reported, never treated as tamper.
+a record written since records began to name their instrument also carries, sealed in
+binding.gate, the build and runtime that wrote it; layer 2 compares that identity apart from
+the content, and a record that does not reproduce under a different instrument is named as
+instrument skew rather than read as an edit. this page shows the identity as recorded and
+compares nothing.
 
 what no layer proves: who minted this — no signatures; anyone can mint an internally
 honest capsule over bytes of their choosing, and a re-mint over different bytes is a
@@ -2025,9 +2034,22 @@ a capsule is a portable binding, not a portable oath of origin. nothing crosses 
     g.uncovered_sentences + '/' + g.sentences_total + ' sentences uncovered';
   vb.className = 'badge ' +
     (g.verdict === 'PASS' ? (g.claims.length ? 'held' : 'warn') : 'failed');
+  // the instrument the record names, shown as recorded when the record carries it as strings: this
+  // page displays it and proves only that it is the one sealed (binding.gate covers every key)
+  const txt = (o, k) => o && typeof o === 'object' && typeof o[k] === 'string' ? o[k] : null;
+  const madeBy = (() => {
+    const b = g.build, r = g.runtime;
+    const reader = txt(b, 'reader'), impl = txt(r, 'implementation'), ver = txt(r, 'version'),
+      uni = txt(r, 'unicode');
+    const own = b && Array.isArray(b.modules)
+      ? b.modules.find(m => Array.isArray(m) && m[0] === reader && typeof m[1] === 'string') : null;
+    if (!reader || !own || !impl || !ver || !uni) return '';
+    return ' · gate made by ' + reader + ' ' + own[1].slice(0, 10) + ' on ' + impl + ' ' + ver +
+      ', Unicode ' + uni + ' (sealed in binding.gate; this page re-runs nothing)';
+  })();
   $('meta').textContent = P.summary.name + ' + ' + P.diff.name + ' · capsule ' + P.spec +
     ' · minted ' + P.created + ' (timestamp unsealed) · verifier styxx ' +
-    P.verifier.styxx_version;
+    P.verifier.styxx_version + madeBy;
 
   // layer 1: hashes + the arithmetic folds the instrument guarantees
   const sumBytes = b64b(P.summary.b64), diffBytes = b64b(P.diff.b64);
@@ -2185,6 +2207,54 @@ def _gate_binding_hash(gate: dict) -> str:
     return _sha256(jcs(gate).encode("utf-8"))
 
 
+def _live_identity(live: dict) -> dict:
+    """The identity of the instrument that re-ran the record: the one the live record carries (a
+    record written since records name their instrument), else the one computed over the imported
+    styxx.diffgate, which is the module that ran (a record from a writer that names nothing yet)."""
+    from styxx import diffgate as _dg
+    ident, _ = _instrument.read_identity(live)
+    return ident if ident is not None else _instrument.record_identity(getattr(_dg, "__file__", None))
+
+
+def _charon_reads_as_broken_binding(text: str) -> bool:
+    """styxx.charon.derive_capsule reads a problem holding `ambiguous`, `bytes !=`, or `!=` beside `binding`
+    as a broken binding and derives the line UNRESOLVED. The identity comparison's SKEW line must never
+    read so (the amendment's wording constraint (b)), so every token of the record's choosing that it
+    quotes passes this test before it is written: the identity as instrument.describe writes it, a module
+    name inside a differing field, the implementation, the version, the pin's version string.
+    The format-key SKEW line is outside the rule (the erratum's rule 6): it quotes the sealed format key
+    and the payload's pin as origin/main does, so either one holding the word still makes charon derive
+    the capsule UNRESOLVED, as on origin/main. instrument._label and instrument.describe write no `!` or
+    `=`, so of the three only the word is left to refuse."""
+    return "ambiguous" in text.lower() or "!=" in text
+
+
+_UNQUOTED_NAME = "a name this verifier does not quote"
+
+
+def _charon_quotable(text: str) -> str:
+    """A recorded identity (instrument.describe), as a problem line may quote it. The replacement holds
+    neither the word nor `binding`, so charon's rule has nothing to read in the replacement itself."""
+    if _charon_reads_as_broken_binding(text):
+        return ("an instrument whose recorded name this verifier does not quote (charon reads the name as a "
+                "broken seal)")
+    return text
+
+
+def _charon_quotable_name(text: str) -> str:
+    """One recorded token (a module name, an implementation, a version), as a problem line may quote it."""
+    return "(%s)" % _UNQUOTED_NAME if _charon_reads_as_broken_binding(text) else text
+
+
+def _charon_quotable_field(field: str) -> str:
+    """A differing field name as the SKEW line prints it. The name inside `build.modules[...]` is the
+    record's own (the reader admits any `^[a-z_.]{1,64}$`), so it is quoted as a token; every other field
+    name is the reader's."""
+    if field.startswith("build.modules[") and field.endswith("]"):
+        return "build.modules[%s]" % _charon_quotable_name(field[len("build.modules["):-1])
+    return field
+
+
 def create_capsule_diffgate(summary: Path, diff: Path, out: Path,
                             gate_path: Path | None = None) -> Path:
     """Mint the agent-handoff capsule — refusing, loudly, to mint one that lies.
@@ -2216,7 +2286,9 @@ def create_capsule_diffgate(summary: Path, diff: Path, out: Path,
                     "REFUSED: environment legs cannot be capsuled in v0.2; a "
                     "--run-resolved tests_pass verdict would require executing an "
                     "embedded shell string to verify. re-gate without --run.")
-        diverged = [k for k in live                                           # R5
+        # R5 compares the content keys only, never build or runtime: a gate written by another build or
+        # runtime (a CI job's artifact, an older --out) is accepted when its content reproduces here
+        diverged = [k for k in _instrument.content_keys(live)                 # R5
                     if k not in ("base", "head") and supplied.get(k) != live[k]]
         if diverged == ["unparsed_claims"]:
             raise SystemExit(
@@ -2230,10 +2302,16 @@ def create_capsule_diffgate(summary: Path, diff: Path, out: Path,
                 "read-side policy — every UNCHECKABLE is visible in the record. "
                 "re-gate non-strict or omit --gate.")
         if diverged:
+            # when the supplied record names an instrument this one differs from, the refusal says so;
+            # the identity is still never what refuses (a record naming another runtime that reproduces
+            # is accepted above)
+            d = _instrument.delta(_instrument.read_identity(supplied)[0], _live_identity(live))
+            named = (f", and it names another instrument (differs: {', '.join(d['differs'])})"
+                     if d["state"] == "differs" else "")
             raise SystemExit(
                 "REFUSED: supplied gate does not reproduce from these bytes — stale, "
                 "forged, or produced by a different code path "
-                f"(diverging fields: {diverged}); re-gate from the exported diff or "
+                f"(diverging fields: {diverged}){named}; re-gate here from the exported diff or "
                 "omit --gate.")
 
     if not live.get("measured", False):                                       # R6
@@ -2272,13 +2350,117 @@ def create_capsule_diffgate(summary: Path, diff: Path, out: Path,
     return out
 
 
+def _identity_outcome(d: dict, recorded, live_identity, unreadable: List[str], pip,
+                      problems: List[str], advisory: List[str], result: dict) -> None:
+    """What the identity comparison adds, once the content keys are compared
+    (AMENDMENT_capsule_v02_instrument_identity_2026_10_11, item 3).
+
+    The record does not reproduce AND names an instrument that differs on a compared field: INSTRUMENT
+    SKEW, a problem placed ahead of the content lines, which stay. Every other outcome is an advisory:
+    a record that names nothing (every capsule minted before records named their instrument), one that
+    names its instrument incompletely, one that reproduced under another instrument, and one that names
+    this verifier's own build and runtime and does not reproduce under them. A record that names part of
+    its instrument and differs on a named field is SKEW too (instrument.delta reads differs ahead of
+    incomplete): its line lists the unknown fields, and its hint points at no sha the record does not
+    carry. Problem texts carry the recorded identity and the differing field names, never a value of the
+    live identity, which goes in the result and in advisories (charon reads problems, never advisories)."""
+    here = _instrument.describe(live_identity)
+    reproduced = not problems
+    for u in unreadable:
+        advisory.append(f"gate.{u}; read as unnamed")
+    pin_text = _short(pip, 80) if isinstance(pip, str) else "(none stated)"
+    if d["state"] == "unnamed":
+        if reproduced:
+            advisory.append(
+                "the gate record names no build or runtime (minted before records named their "
+                f"instrument); it reproduced here under {here}, so for these bytes its content does "
+                "not depend on whatever differs between the minter's instrument and this one, and it "
+                "does not say which instrument minted it")
+        else:
+            advisory.append(
+                "the gate record names no build or runtime, so this failure cannot be told apart from "
+                "INSTRUMENT SKEW or an edit from the record alone: the payload's pin "
+                f"{pin_text} is outside every binding and names a version, not a build; to classify "
+                "it, re-run it under the diffgate.py its minter ran")
+        return
+    # the recorded identity as describe writes it; only the SKEW problem below passes it through the
+    # quoting rule, because charon reads problems and never advisories (the erratum's rule 5)
+    recorded_as_read = _instrument.describe(recorded)
+    if d["state"] == "same":
+        if not reproduced:
+            advisory.append(
+                "the record names this verifier's own build and runtime and does not reproduce under "
+                "them: what moved is not the instrument")
+        return
+    if d["state"] == "incomplete":
+        unknown = ", ".join(d["unknown"])
+        if reproduced:
+            advisory.append(
+                f"the gate record names its instrument incompletely (unknown: {unknown}); it "
+                f"reproduced here under {here}, so for these bytes its content does not depend on "
+                "whatever differs between the minter's instrument and this one, and the record does "
+                "not fully say which instrument minted it")
+        else:
+            advisory.append(
+                f"the gate record names its instrument incompletely (unknown: {unknown}), so this "
+                "failure cannot be told apart from INSTRUMENT SKEW or an edit from the record alone: "
+                f"it was made by {recorded_as_read}, and the payload's pin {pin_text} is outside every "
+                "binding and names a version, not a build; to classify it, re-run it under that instrument")
+        return
+    if reproduced:
+        advisory.append(
+            f"reproduced under another instrument (differs: {', '.join(d['differs'])}): the content did not "
+            f"depend on the difference for these bytes; made by {recorded_as_read}, re-run here by {here}")
+        return
+    # The problem quotes tokens of the record's choosing beside the identity: a module name inside a
+    # differing or unknown field, the implementation, the version, the pin's version string. Each passes
+    # the rule the identity passed above (_charon_reads_as_broken_binding): a minter who names a module
+    # `ambiguous` must not turn the line UNRESOLVED. The pin comes from the sealed record, never from the
+    # payload's unsealed pin; a version string charon would misread leaves the pin unwritten. A compared
+    # field null on either side is listed after the differing ones (a record that names its runtime and
+    # no build differs on the runtime), and the hint points only at what the record names: the pin, else
+    # the styxx.diffgate sha, else nothing but the runtime.
+    made_by = _charon_quotable(recorded_as_read)
+    fields = ", ".join(_charon_quotable_field(f) for f in d["differs"])
+    if d["unknown"]:
+        fields += "; unknown: " + ", ".join(_charon_quotable_field(f) for f in d["unknown"])
+    b = recorded.get("build") if isinstance(recorded.get("build"), dict) else {}
+    r = recorded.get("runtime") if isinstance(recorded.get("runtime"), dict) else {}
+    styxx_raw = b.get("styxx") if isinstance(b.get("styxx"), str) and b.get("styxx") else None
+    styxx_v = _instrument._label(styxx_raw) if styxx_raw else None
+    if styxx_v is not None and _charon_reads_as_broken_binding(styxx_v):
+        styxx_v = None
+    reader_sha = _instrument._modules_by_name(b).get(_instrument.READER)
+    on = " ".join(_charon_quotable_name(_instrument._label(r.get(k))) for k in ("implementation", "version"))
+    if styxx_v:
+        hint = f"`pip install styxx=={styxx_v}` on {on}"
+    elif isinstance(reader_sha, str):
+        hint = f"the styxx whose styxx.diffgate the record names, on {on}"
+    elif styxx_raw:
+        hint = f"a build the record names only by a version this verifier does not quote, on {on}"
+    else:
+        hint = f"the record names no build, only the runtime {on}"
+    problems.insert(0,
+                    f"INSTRUMENT SKEW: the gate record does not reproduce here and names another "
+                    f"instrument (differs: {fields}); it was made by {made_by} — reproduce under that "
+                    f"instrument ({hint}) before reading the lines below as an edit")
+    result["skew"] = True
+    if styxx_v:
+        advisory.append(
+            "the SKEW line's pin is the sealed record's build.styxx; if that release installs another "
+            "styxx.diffgate sha than the record names, the release is not the minter's build")
+
+
 def _verify_capsule_v02(html: str, payload: dict) -> dict:
     from styxx.diffgate import gate_diff_text
 
     result = {"ok": False, "spec": SPEC_V02, "stage": "parse",
               "problems": [], "advisory": [],
               "verdict": None, "gate_reproduced": False, "reproduced_at": None,
-              "summary": None, "diff": None}
+              "summary": None, "diff": None,
+              # the identity the record names, the one that re-ran it here, and how they stand
+              # (AMENDMENT_capsule_v02_instrument_identity_2026_10_11); skew: a problem names INSTRUMENT SKEW
+              "gate_identity": None, "skew": False}
     problems: List[str] = []
     advisory: List[str] = []
 
@@ -2346,7 +2528,19 @@ def _verify_capsule_v02(html: str, payload: dict) -> dict:
         result["problems"] = [f"the installed diffgate could not re-run on the embedded text "
                               f"({type(e).__name__}: {str(e)[:160]})"]
         return result
+    # The identity the record names (build and runtime, read as unnamed when unreadable) against the
+    # instrument that re-ran it here. Compared apart from the content keys, below; never a cause of a
+    # content line, and never compared by the live re-run itself.
+    recorded, unreadable = _instrument.read_identity(gate)
+    live_identity = _live_identity(live)
+    d = _instrument.delta(recorded, live_identity)
+    pip = _obj_in(payload, "verifier").get("pip")
+    result["gate_identity"] = {"recorded": recorded, "live": live_identity, "state": d["state"],
+                               "differs": d["differs"], "unknown": d["unknown"],
+                               "pin": pip if isinstance(pip, str) else None}
     if live.get("diffgate") != gate.get("diffgate"):
+        # a format key other than the content's is INSTRUMENT SKEW with no field comparison, as before
+        result["skew"] = True
         pip = _obj_in(payload, "verifier").get("pip", "styxx")
         problems.append(
             f"INSTRUMENT SKEW: installed diffgate {live.get('diffgate')!r} vs embedded "
@@ -2359,7 +2553,10 @@ def _verify_capsule_v02(html: str, payload: dict) -> dict:
             _claimdetect = True
         except Exception:
             _claimdetect = False
-        for k in live:
+        # every content key of the live record, in its order; the identity keys are not content, and an
+        # embedded key the live record lacks is not read here (a 7.49.0 verifier reads a later record the
+        # same way)
+        for k in _instrument.content_keys(live):
             if k == "unparsed_claims":
                 if not _claimdetect:
                     advisory.append("SKIPPED: unparsed_claims (claimdetect unavailable "
@@ -2373,6 +2570,7 @@ def _verify_capsule_v02(html: str, payload: dict) -> dict:
             if live[k] != gate.get(k):
                 problems.append(f"gate.{k} not reproduced: embedded {gate.get(k)!r} "
                                 f"vs live {live[k]!r}")
+        _identity_outcome(d, recorded, live_identity, unreadable, pip, problems, advisory, result)
 
     result["problems"] = problems
     result["advisory"] = advisory
@@ -2790,6 +2988,13 @@ def main(argv=None) -> int:
     if rep.get("spec") == SPEC_V02:
         say(f"capsule: {rep.get('summary')} + {rep.get('diff')}  spec {rep.get('spec')}")
         say(f"embedded gate verdict: {rep.get('verdict')}")
+        gi = rep.get("gate_identity")
+        if isinstance(gi, dict):
+            # the instrument the record names, as recorded, and the one that re-ran it here
+            rec = gi.get("recorded")
+            recorded = (_instrument.describe(rec) if rec is not None else
+                        f"not named (pin {_short(gi['pin'], 80) if gi.get('pin') else 'none stated'})")
+            say(f"instrument: recorded {recorded}; re-run here by {_instrument.describe(gi.get('live'))}")
         for adv in rep.get("advisory", []):
             say(f"  advisory: {adv}")
         if rep["ok"]:
