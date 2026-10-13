@@ -1,0 +1,38 @@
+{
+ "account_id_ceiling": 322312423,
+ "ceiling_hour": "2026-08-29-0",
+ "draw": {
+  "bitcoin_height": 1,
+  "min_confirmations": 6,
+  "n": 60
+ },
+ "excluded_actor_logins": [
+  "darkflobi",
+  "fathomlab"
+ ],
+ "excluded_owners": [
+  "fathom-lab"
+ ],
+ "fetch": {
+  "body_source": "payload_else_api",
+  "diff_source": "pull",
+  "rate_limit_per_hour": 50,
+  "require_unmoved_head": true
+ },
+ "gap_grace_hours": 24,
+ "gate": {
+  "module": "styxx.diffgate",
+  "run": null,
+  "sha256": "09867056957082f129985591f5ed048021e85ed48627e73854494b4a1e6e2b3a",
+  "strict": false,
+  "styxx_version": "7.49.0"
+ },
+ "identity_rules_sha256": "2fce0c15763231ef7a32a59e1e93091c286258136dd7782ed79dc84da6c6ad66",
+ "max_prs_per_actor": null,
+ "max_prs_per_repo": null,
+ "repo_id_ceiling": 1350160476,
+ "schema": "styxx.sealed-ahead/params/v0",
+ "t0": "2026-09-28T00:00:00Z",
+ "t1": "2026-10-05T00:00:00Z",
+ "young_days": 30
+}

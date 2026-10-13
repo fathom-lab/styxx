@@ -155,3 +155,7 @@ papers/frequency-resonance/RESULT_realmodel_bridge_v3_not_started_2026_10_12.swo
 # by the sha256 of its bytes, and the leaves are committed with the RESULT; a CRLF checkout would change those
 # bytes
 papers/frequency-resonance/pmnist_robustness_runs/** -text
+
+# sealed-ahead records (NOTE_sealed_ahead_build_stopped_2026_10_12): committed byte for byte from a separate local
+# repository and named by sha256 in the NOTE and in tests/test_sealed_ahead_records.py; a CRLF checkout would change them
+papers/sealed-ahead/records_2026_10_12/** -text

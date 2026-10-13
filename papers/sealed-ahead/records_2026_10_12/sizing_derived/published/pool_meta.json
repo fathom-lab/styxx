@@ -1,0 +1,4770 @@
+{
+ "admitted_before_dedup": 18098,
+ "capped_by_actor": 0,
+ "capped_by_repo": 0,
+ "derivation_sha256": "58e2f0a6a5d59122e5cd9fb678beda64c6ddaa054c1dceb58285a946e8d5b950",
+ "duplicates": 0,
+ "families_for_sizing": {
+  "claude": 9614,
+  "codex": 6114,
+  "copilot": 250,
+  "cursor": 1710,
+  "devin": 334,
+  "jules": 76
+ },
+ "fields_census": {
+  "events": 13765478,
+  "keysets": {
+   "actor": [
+    [
+     "[\"avatar_url\", \"display_login\", \"gravatar_id\", \"id\", \"login\", \"url\"]",
+     13765478
+    ]
+   ],
+   "base": [
+    [
+     "[\"ref\", \"repo\", \"sha\"]",
+     525508
+    ]
+   ],
+   "event": [
+    [
+     "[\"actor\", \"created_at\", \"id\", \"payload\", \"public\", \"repo\", \"type\"]",
+     11721938
+    ],
+    [
+     "[\"actor\", \"created_at\", \"id\", \"org\", \"payload\", \"public\", \"repo\", \"type\"]",
+     2043540
+    ]
+   ],
+   "head": [
+    [
+     "[\"ref\", \"repo\", \"sha\"]",
+     525508
+    ]
+   ],
+   "head_repo": [
+    [
+     "[\"id\", \"name\", \"url\"]",
+     525508
+    ]
+   ],
+   "pr_payload": [
+    [
+     "[\"action\", \"number\", \"pull_request\"]",
+     392150
+    ],
+    [
+     "[\"action\", \"label\", \"labels\", \"number\", \"pull_request\"]",
+     124600
+    ],
+    [
+     "[\"action\", \"assignee\", \"assignees\", \"number\", \"pull_request\"]",
+     8758
+    ]
+   ],
+   "pull_request": [
+    [
+     "[\"base\", \"head\", \"id\", \"number\", \"url\"]",
+     525508
+    ]
+   ],
+   "repo": [
+    [
+     "[\"id\", \"name\", \"url\"]",
+     13765424
+    ],
+    [
+     "[]",
+     54
+    ]
+   ]
+  },
+  "pr_actions": {
+   "assigned": 8709,
+   "closed": 12141,
+   "labeled": 115333,
+   "merged": 170537,
+   "opened": 207838,
+   "reopened": 1634,
+   "unassigned": 49,
+   "unlabeled": 9267
+  },
+  "pr_body": {
+   "no_body": 525508
+  }
+ },
+ "gaps": [],
+ "hours": [
+  {
+   "admitted": 31,
+   "admitted_by_family": {
+    "claude": 16,
+    "codex": 11,
+    "copilot": 1,
+    "cursor": 3
+   },
+   "admitted_sha256": "5f1962070f9c356412a0c78bcd577717e910002f533d5a4b35196725eb77476b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18997587,
+   "compressed_sha256": "49f451a783b3f1026fe6a940f7c2d29e2cb7a6af593ee56ee5ec090ffc1dee53",
+   "events": 119814,
+   "excluded": {
+    "account_too_young": 2,
+    "repo_too_young": 12
+   },
+   "hour": "2026-09-28-0",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 390,
+    "not_opened": 689,
+    "not_pr_event": 118690
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 27,
+   "admitted_by_family": {
+    "claude": 17,
+    "codex": 7,
+    "copilot": 1,
+    "cursor": 2
+   },
+   "admitted_sha256": "33b589e1a6628602c9dc3325e1136cd383f9e68e3f6c0715bf0d8c183339728e",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18277772,
+   "compressed_sha256": "014fa7a7ed3039838f7cba91a7cafd946164399dc2437f6feec00d60a6707524",
+   "events": 119769,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 9
+   },
+   "hour": "2026-09-28-1",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 301,
+    "not_opened": 635,
+    "not_pr_event": 118793
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 22,
+   "admitted_by_family": {
+    "claude": 9,
+    "codex": 9,
+    "copilot": 1,
+    "cursor": 3
+   },
+   "admitted_sha256": "762f5e5ffebe838b6abe661cbac1a04077b8b1fe200d9a4fc0bbc0e77faf2436",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17698254,
+   "compressed_sha256": "173d430eca5235c41c1a879860621e22a7b38cabdf8180360147bf19ba6e8866",
+   "events": 124620,
+   "excluded": {
+    "account_too_young": 1,
+    "repo_too_young": 15
+   },
+   "hour": "2026-09-28-2",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 217,
+    "not_opened": 435,
+    "not_pr_event": 123930
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 26,
+   "admitted_by_family": {
+    "claude": 15,
+    "codex": 9,
+    "cursor": 2
+   },
+   "admitted_sha256": "a12616149f5d2e395cace3ba0f5cc89dfa25fcda3ed02dc1d34406bca825940b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17602715,
+   "compressed_sha256": "c0b277c0337140aea3092b8a2f570c5a6f638b69b852615c9e93c16d8636157e",
+   "events": 127850,
+   "excluded": {
+    "repo_too_young": 12
+   },
+   "hour": "2026-09-28-3",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 209,
+    "not_opened": 421,
+    "not_pr_event": 127182
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 17,
+   "admitted_by_family": {
+    "claude": 6,
+    "codex": 7,
+    "cursor": 4
+   },
+   "admitted_sha256": "8c681a003582fe76e73c58fdad971b635f7dda59f9ab06a9be81cdd9992d1ef3",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17608511,
+   "compressed_sha256": "4c43730956e618de690d5742a81f950f65790aa91b2e22a79d20162f95db2fdd",
+   "events": 128846,
+   "excluded": {
+    "repo_too_young": 5
+   },
+   "hour": "2026-09-28-4",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 189,
+    "not_opened": 363,
+    "not_pr_event": 128272
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 11,
+   "admitted_by_family": {
+    "claude": 5,
+    "codex": 3,
+    "cursor": 2,
+    "devin": 1
+   },
+   "admitted_sha256": "671f2118f7d0e3c80111fb1cd27da28cb0f1d16a6b23b12e0b923532e72d3e90",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16714334,
+   "compressed_sha256": "1f1fedc3001f94a2f4c16dae25618e6e88358e27743f51fd0c46a93da47d8a83",
+   "events": 125529,
+   "excluded": {
+    "repo_too_young": 7
+   },
+   "hour": "2026-09-28-5",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 123,
+    "not_opened": 274,
+    "not_pr_event": 125114
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 17,
+   "admitted_by_family": {
+    "claude": 10,
+    "codex": 7
+   },
+   "admitted_sha256": "31ab5abe20572dbc3cc4d36dc3cab42709749eff5e755cece967173ea9c6618f",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17294246,
+   "compressed_sha256": "86bd395431149f89c50ee90be24c843b7d32e6be6fc79d5bcd5a948b9d58c637",
+   "events": 127560,
+   "excluded": {
+    "repo_too_young": 8
+   },
+   "hour": "2026-09-28-6",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 137,
+    "not_opened": 310,
+    "not_pr_event": 127088
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 40,
+   "admitted_by_family": {
+    "claude": 21,
+    "codex": 11,
+    "cursor": 7,
+    "devin": 1
+   },
+   "admitted_sha256": "4676c8a4793194fbde67b53f035959ef5d3cb292fc90877b774c0de1e947c48d",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18848248,
+   "compressed_sha256": "8d19fe4abd99d3c890fe0676c83d758ceb9becf704e31bb2f44679db7fe18442",
+   "events": 121216,
+   "excluded": {
+    "repo_too_young": 15
+   },
+   "hour": "2026-09-28-7",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 329,
+    "not_opened": 680,
+    "not_pr_event": 120152
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 33,
+   "admitted_by_family": {
+    "claude": 22,
+    "codex": 10,
+    "copilot": 1
+   },
+   "admitted_sha256": "b36031cb19860d8fcf799b7457ab70634d418bb20a2c4589e36280f94cc365ac",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17764409,
+   "compressed_sha256": "3ec15ba059523d79f7cd6e55d30e1746c7c27dd8df2063e916d6a203815f9ad6",
+   "events": 113858,
+   "excluded": {
+    "account_too_young": 1,
+    "repo_too_young": 10
+   },
+   "hour": "2026-09-28-8",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 311,
+    "not_opened": 611,
+    "not_pr_event": 112892
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 20,
+   "admitted_by_family": {
+    "claude": 13,
+    "codex": 7
+   },
+   "admitted_sha256": "0bf05875847d50e108df1a571d46e9ebd0dcd29b9f734f578f63d44eb446ee12",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16418265,
+   "compressed_sha256": "7926cdb3c77d139beffaf288d11eefee87cc4ffd839c76dedd216bba21b205e1",
+   "events": 105208,
+   "excluded": {
+    "account_too_young": 2,
+    "repo_too_young": 18
+   },
+   "hour": "2026-09-28-9",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 286,
+    "not_opened": 631,
+    "not_pr_event": 104251
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 38,
+   "admitted_by_family": {
+    "claude": 24,
+    "codex": 7,
+    "copilot": 1,
+    "cursor": 5,
+    "devin": 1
+   },
+   "admitted_sha256": "0f4599e482827212893b2a2f6e6a43945eeb9aca8e1a6ae474baa921ab9d7a1b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16327316,
+   "compressed_sha256": "d974cf2aa3f8e8f0f21e314346cb721bdac0b3a0f1668696bf6f338381e0f8e2",
+   "events": 92447,
+   "excluded": {
+    "account_too_young": 2,
+    "repo_too_young": 29
+   },
+   "hour": "2026-09-28-10",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 457,
+    "not_opened": 864,
+    "not_pr_event": 91057
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 23,
+   "admitted_by_family": {
+    "claude": 12,
+    "codex": 7,
+    "cursor": 2,
+    "devin": 2
+   },
+   "admitted_sha256": "ac34fd0794fbb7304dcb4f4c12af7376bae141b11784236ae7f9c3a937ad01a9",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 13848712,
+   "compressed_sha256": "d1868f467d86d6731871601be89aea0d9ac28e24bcc0a5426dda6868f5414530",
+   "events": 88396,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 14
+   },
+   "hour": "2026-09-28-11",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 266,
+    "not_opened": 563,
+    "not_pr_event": 87527
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 21,
+   "admitted_by_family": {
+    "claude": 10,
+    "codex": 5,
+    "cursor": 5,
+    "jules": 1
+   },
+   "admitted_sha256": "5ba6813474c9266afa26de3ff0a124bd429be3c3a345748fe973ac55f7fd2a3d",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 14638441,
+   "compressed_sha256": "cafce4c34290a37d3de633b73391cfd572fed8ecd0dae6a47477881d665d1cab",
+   "events": 91523,
+   "excluded": {
+    "repo_too_young": 12
+   },
+   "hour": "2026-09-28-12",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 327,
+    "not_opened": 589,
+    "not_pr_event": 90574
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 32,
+   "admitted_by_family": {
+    "claude": 17,
+    "codex": 10,
+    "copilot": 1,
+    "cursor": 3,
+    "devin": 1
+   },
+   "admitted_sha256": "1fe5a5d6a602c8f6d78418e49b45d1c39edcba76ec63f74f9af7e804903ae8b3",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15436078,
+   "compressed_sha256": "f24d1167f3259b0810e89dd86846c661bf44d1d909db79e955454f0c9e5ea574",
+   "events": 94941,
+   "excluded": {
+    "account_too_young": 2,
+    "repo_too_young": 15
+   },
+   "hour": "2026-09-28-13",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 341,
+    "not_opened": 685,
+    "not_pr_event": 93866
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 31,
+   "admitted_by_family": {
+    "claude": 14,
+    "codex": 11,
+    "cursor": 5,
+    "devin": 1
+   },
+   "admitted_sha256": "d4a89cd805540470b7d1f8fff550ba15cbf626f364af1ae31dec57fae98efbda",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15426808,
+   "compressed_sha256": "fbfbf733e9f43e8d0eb51a2274f38bd7b7ce37efcbf98e987dc47c9911ff7b9e",
+   "events": 95579,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 16
+   },
+   "hour": "2026-09-28-14",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 276,
+    "not_opened": 556,
+    "not_pr_event": 94696
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 37,
+   "admitted_by_family": {
+    "claude": 19,
+    "codex": 12,
+    "copilot": 1,
+    "cursor": 4,
+    "devin": 1
+   },
+   "admitted_sha256": "1690229b49df13f848053e793037259e2f2122662e8be3e258d522b49335c747",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15316829,
+   "compressed_sha256": "084f06ce99cd91435014b3cc4b83c641b0a2e37d6fe98955ac6f01f8ec96921f",
+   "events": 93884,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 19
+   },
+   "hour": "2026-09-28-15",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 337,
+    "not_opened": 690,
+    "not_pr_event": 92797
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 47,
+   "admitted_by_family": {
+    "claude": 30,
+    "codex": 11,
+    "copilot": 2,
+    "cursor": 4
+   },
+   "admitted_sha256": "fa1b64cc0d6ce84d31605ce830d8f955cbfcdbbb16f90d9c6f5b986f02950661",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15810535,
+   "compressed_sha256": "7a751e4530f2723794a693fa031e89b3c5cbc2245f77f6f0d1d531ba553bef46",
+   "events": 94369,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 20
+   },
+   "hour": "2026-09-28-16",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 384,
+    "not_opened": 830,
+    "not_pr_event": 93084
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 64,
+   "admitted_by_family": {
+    "claude": 39,
+    "codex": 17,
+    "cursor": 5,
+    "devin": 3
+   },
+   "admitted_sha256": "22b027a7cfd2d9d0e9542a0149fe19527e2af0b3839d8bef63af566d45637017",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18719491,
+   "compressed_sha256": "8cd5e84531c0df94f0d86517593a379400a50b827ffcdabc2f38a6965c1e9343",
+   "events": 101931,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 29
+   },
+   "hour": "2026-09-28-17",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 600,
+    "not_opened": 1188,
+    "not_pr_event": 100047
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 46,
+   "admitted_by_family": {
+    "claude": 23,
+    "codex": 16,
+    "copilot": 1,
+    "cursor": 6
+   },
+   "admitted_sha256": "97bad24062d0af2281424ae4d9301a5f207c3f3fa9bd0fcdd4a8424547ecbe5a",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17097494,
+   "compressed_sha256": "3a88374658d704926554bd23e99db2873c1cdd60b82e1e21b1ad1c021a380d83",
+   "events": 101203,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 20
+   },
+   "hour": "2026-09-28-18",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 489,
+    "not_opened": 926,
+    "not_pr_event": 99719
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 54,
+   "admitted_by_family": {
+    "claude": 31,
+    "codex": 16,
+    "cursor": 6,
+    "devin": 1
+   },
+   "admitted_sha256": "85efa2ff4e220d7a8b1575596730e10c3e332d731ba3e8a715f8ed69417b75d4",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16752293,
+   "compressed_sha256": "e6ed437619a38432c49b0925dc2a8abf880d54ceeca842c2378a427abeb93db7",
+   "events": 95537,
+   "excluded": {
+    "account_too_young": 1,
+    "repo_too_young": 26
+   },
+   "hour": "2026-09-28-19",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 447,
+    "not_opened": 917,
+    "not_pr_event": 94092
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 60,
+   "admitted_by_family": {
+    "claude": 30,
+    "codex": 24,
+    "cursor": 6
+   },
+   "admitted_sha256": "f6aa93017dcb1d5016ed88db42230c8b7735480acbf24ccb06f13314c361b66e",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15998722,
+   "compressed_sha256": "5083ff0b05433fe3372b2469c9213086b119346e0aab5fd5d86ffd0b54b7c646",
+   "events": 90338,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 25
+   },
+   "hour": "2026-09-28-20",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 435,
+    "not_opened": 946,
+    "not_pr_event": 88868
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 47,
+   "admitted_by_family": {
+    "claude": 28,
+    "codex": 12,
+    "copilot": 1,
+    "cursor": 4,
+    "devin": 2
+   },
+   "admitted_sha256": "ee9287ee179110ee9518bb08b89cf60edf3b9f6c43f4dd52cea59a5d2943c32b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16310720,
+   "compressed_sha256": "77d1e208b0880f3f68b691d6a33ca9ab21228237a0a0c8df3869bc9cf57e20f2",
+   "events": 87531,
+   "excluded": {
+    "repo_too_young": 30
+   },
+   "hour": "2026-09-28-21",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 581,
+    "not_opened": 1102,
+    "not_pr_event": 85771
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 45,
+   "admitted_by_family": {
+    "claude": 30,
+    "codex": 10,
+    "cursor": 4,
+    "devin": 1
+   },
+   "admitted_sha256": "afd827c2cf317d60f6690fefa5f80243e4291f12226b0a8a3835921126886d07",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15772063,
+   "compressed_sha256": "ef7478d7044c4c9995de90f3a867a6186d026e6bb6ea12f78122b3fb63e022c1",
+   "events": 85215,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 25
+   },
+   "hour": "2026-09-28-22",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 506,
+    "not_opened": 956,
+    "not_pr_event": 83677
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 92,
+   "admitted_by_family": {
+    "claude": 56,
+    "codex": 25,
+    "copilot": 1,
+    "cursor": 8,
+    "devin": 1,
+    "jules": 1
+   },
+   "admitted_sha256": "7338e34a1c9a9f54b476ca4991f4686c01fc4b656cb9d2a1e584b15dce1ab2a3",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19530621,
+   "compressed_sha256": "c937a2a8bb12679ee775df9a5419d3b743c14e5184df32bcc548ca91dd6bf838",
+   "events": 88680,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 47
+   },
+   "hour": "2026-09-28-23",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 993,
+    "not_opened": 1842,
+    "not_pr_event": 85697
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 90,
+   "admitted_by_family": {
+    "claude": 61,
+    "codex": 21,
+    "cursor": 7,
+    "jules": 1
+   },
+   "admitted_sha256": "685c4b0e8e57ca8bd17ea19ef0443e3a12a4fcb41b3944a5599cc0ddf7c2702b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18955273,
+   "compressed_sha256": "3500d11e7aa6ca74c88edbe74008b6ee464b88471891588bcedb49572a45cfd0",
+   "events": 85627,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 44
+   },
+   "hour": "2026-09-29-0",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 889,
+    "not_opened": 1526,
+    "not_pr_event": 83075
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 65,
+   "admitted_by_family": {
+    "claude": 35,
+    "codex": 17,
+    "copilot": 1,
+    "cursor": 10,
+    "devin": 1,
+    "jules": 1
+   },
+   "admitted_sha256": "c02bce65adeba758ad987de4aac93fda04cd722f0b3c470393cb26884d9f045b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18054969,
+   "compressed_sha256": "7994d5b0c29f7e96b2e60623ffbbca97f433527d05d8fb281adf06186d243242",
+   "events": 88591,
+   "excluded": {
+    "account_too_young": 5,
+    "repo_too_young": 33
+   },
+   "hour": "2026-09-29-1",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 597,
+    "not_opened": 1211,
+    "not_pr_event": 86680
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 56,
+   "admitted_by_family": {
+    "claude": 32,
+    "codex": 18,
+    "cursor": 5,
+    "devin": 1
+   },
+   "admitted_sha256": "ff839e49f524c48b1449fe567903a0b64292f61fbb2e0df3d2d9ae0b34e57286",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16963807,
+   "compressed_sha256": "8b2cbaef9efe28592dfc9ced8efce799f2453718c4ed5f21947fe51a4960a8aa",
+   "events": 94113,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 24
+   },
+   "hour": "2026-09-29-2",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 508,
+    "not_opened": 953,
+    "not_pr_event": 92566
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 51,
+   "admitted_by_family": {
+    "claude": 31,
+    "codex": 17,
+    "copilot": 1,
+    "cursor": 2
+   },
+   "admitted_sha256": "8554eaec8f2f5d96a8f2f5ae28ed4b9c21c595ff0946fe128bff7901e3e6ab39",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17280653,
+   "compressed_sha256": "59ccecd163d6938cfbf94c4040ad7c259a19833a90038c3ad195a8d5fc3545b6",
+   "events": 93121,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 36
+   },
+   "hour": "2026-09-29-3",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 691,
+    "not_opened": 1213,
+    "not_pr_event": 91124
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 56,
+   "admitted_by_family": {
+    "claude": 34,
+    "codex": 15,
+    "cursor": 6,
+    "devin": 1
+   },
+   "admitted_sha256": "ef5dca93aa5f7dafd1e9dc208f097746696cf81e146106a4c5842debc99eb77b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18021418,
+   "compressed_sha256": "85a642bac33f9e028638c1b8c3a59b8b2de140b733d2e1e7dc5fcfc7c855b9ba",
+   "events": 96121,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 32
+   },
+   "hour": "2026-09-29-4",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 664,
+    "not_opened": 1284,
+    "not_pr_event": 94081
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 59,
+   "admitted_by_family": {
+    "claude": 30,
+    "codex": 19,
+    "copilot": 1,
+    "cursor": 8,
+    "devin": 1
+   },
+   "admitted_sha256": "0876d8194d62901c846d2c4f6a59b2600edc5d17b4c5988f47f8e0307a1d6041",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17980429,
+   "compressed_sha256": "df15fdc40e61aba31c4cc6c90af4ac4f40e39ecfeb397084ce49da891cb32696",
+   "events": 93717,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 21
+   },
+   "hour": "2026-09-29-5",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 674,
+    "not_opened": 1207,
+    "not_pr_event": 91749
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 44,
+   "admitted_by_family": {
+    "claude": 20,
+    "codex": 15,
+    "cursor": 6,
+    "devin": 2,
+    "jules": 1
+   },
+   "admitted_sha256": "e9e1ed50de8bad58ab773afcaa6f3f1d8bb67afadd4e10a2b8e8c705926ad4e0",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17168602,
+   "compressed_sha256": "c9531d0ffc1b6ef1d1fd0bbde52e5826777997df3d007e52fc6a0475b58d1271",
+   "events": 93542,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 29
+   },
+   "hour": "2026-09-29-6",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 623,
+    "not_opened": 1203,
+    "not_pr_event": 91640
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 47,
+   "admitted_by_family": {
+    "claude": 19,
+    "codex": 21,
+    "cursor": 6,
+    "devin": 1
+   },
+   "admitted_sha256": "cf99d41f98f56c02003ca6450ae0b5fb7f76c96bcba9efa110f0d52bddb5c664",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16926821,
+   "compressed_sha256": "5218d491f66af960839d6ced57b02893566fc304da9cf4bf16dc52196738a3d7",
+   "events": 96450,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 22
+   },
+   "hour": "2026-09-29-7",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 522,
+    "not_opened": 1133,
+    "not_pr_event": 94723
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 41,
+   "admitted_by_family": {
+    "claude": 24,
+    "codex": 12,
+    "cursor": 4,
+    "devin": 1
+   },
+   "admitted_sha256": "861b7f02c98dfc081a077ec0425fcace64f85ad960af6900f2af404376518dc9",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15435005,
+   "compressed_sha256": "6e92fd94e9789edd75c8a36ce5b07b627192820c4f5e382dd18e5004f1ba4615",
+   "events": 94033,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 27
+   },
+   "hour": "2026-09-29-8",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 345,
+    "not_opened": 723,
+    "not_pr_event": 92894
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 32,
+   "admitted_by_family": {
+    "claude": 20,
+    "codex": 8,
+    "cursor": 3,
+    "devin": 1
+   },
+   "admitted_sha256": "73f572faa9eeba8b1cb3c9d24c2355087f3fff61a9da4a70dc839ff37d17af08",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15826370,
+   "compressed_sha256": "019f8faf4cc2329afbbc37344572302dd48f8d177e237039936797f676c6b82f",
+   "events": 94284,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 17
+   },
+   "hour": "2026-09-29-9",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 370,
+    "not_opened": 627,
+    "not_pr_event": 93234
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 39,
+   "admitted_by_family": {
+    "claude": 20,
+    "codex": 12,
+    "cursor": 6,
+    "devin": 1
+   },
+   "admitted_sha256": "5908db67c0aac0fc55ce2b1383511cde396ab83d906039c033452de6dc45ec89",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16244917,
+   "compressed_sha256": "e04c81d7e079d3419517a0178e79e5332b81508cdd0fd4d1243bad600eb79906",
+   "events": 92051,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 33
+   },
+   "hour": "2026-09-29-10",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 425,
+    "not_opened": 856,
+    "not_pr_event": 90694
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 53,
+   "admitted_by_family": {
+    "claude": 26,
+    "codex": 21,
+    "copilot": 2,
+    "cursor": 3,
+    "jules": 1
+   },
+   "admitted_sha256": "9977e90784dbbb339dd7decc1e2d8c8461548ef3033c4da0541e4f0c8531a55e",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17647949,
+   "compressed_sha256": "16874696631f1d6f86131832e96b8672798b9edc987cee47d4280dc44be13363",
+   "events": 94152,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 25
+   },
+   "hour": "2026-09-29-11",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 568,
+    "not_opened": 964,
+    "not_pr_event": 92538
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 98,
+   "admitted_by_family": {
+    "claude": 59,
+    "codex": 25,
+    "copilot": 6,
+    "cursor": 8
+   },
+   "admitted_sha256": "3fd7f94ac30e5524f40be5ef166a63c11093840cdca40f43b3acb7e227303a60",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20817586,
+   "compressed_sha256": "13327b7f47750dc9c24cfd1be5c11ecc6c606a10efec490eb406756ba36e566e",
+   "events": 100721,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 39
+   },
+   "hour": "2026-09-29-12",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 905,
+    "not_opened": 1579,
+    "not_pr_event": 98096
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 77,
+   "admitted_by_family": {
+    "claude": 42,
+    "codex": 25,
+    "copilot": 1,
+    "cursor": 7,
+    "devin": 2
+   },
+   "admitted_sha256": "a6c8c0d9e5395a3c0d80049b6e23544002929a49f57a0b0afbc3a0924a822799",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20698601,
+   "compressed_sha256": "6ddf9a204cb976849b61f3ac154262d1c13941c23b19f2cbdd73e4bc5dfe0837",
+   "events": 100290,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 56
+   },
+   "hour": "2026-09-29-13",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 863,
+    "not_opened": 1478,
+    "not_pr_event": 97812
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 70,
+   "admitted_by_family": {
+    "claude": 33,
+    "codex": 28,
+    "copilot": 1,
+    "cursor": 8
+   },
+   "admitted_sha256": "4f8e15f272b0de5c87763f9004ebcfe51e816033b87390f6db7ffef48e25e042",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20924140,
+   "compressed_sha256": "688259c8ebeab023c9dd2bc24b150ffe2945af6fff56f5d0dd22d6b6a28950dc",
+   "events": 97190,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 30
+   },
+   "hour": "2026-09-29-14",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 886,
+    "not_opened": 1594,
+    "not_pr_event": 94600
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 76,
+   "admitted_by_family": {
+    "claude": 45,
+    "codex": 23,
+    "cursor": 8
+   },
+   "admitted_sha256": "b5e2d318ec1ab1242198109e6c23037c66026b2f94a991f390102fe3649f505f",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20003513,
+   "compressed_sha256": "f5fb947d4d01b65db00454f45d508bb7be53ed8095fb4e12f7b3df8c3ecc51c2",
+   "events": 100304,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 46
+   },
+   "hour": "2026-09-29-15",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 741,
+    "not_opened": 1460,
+    "not_pr_event": 97971
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 57,
+   "admitted_by_family": {
+    "claude": 32,
+    "codex": 14,
+    "copilot": 1,
+    "cursor": 9,
+    "devin": 1
+   },
+   "admitted_sha256": "53b8919cb53cbb244ae5fc33659d59630c8d77001a15095287c3d0dae9a7776a",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18168502,
+   "compressed_sha256": "6e7bd51da673135d1dadef9f41eb16e43b66ee90fbe23f7972e03100c992c75c",
+   "events": 100307,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 38
+   },
+   "hour": "2026-09-29-16",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 643,
+    "not_opened": 1184,
+    "not_pr_event": 98382
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 73,
+   "admitted_by_family": {
+    "claude": 48,
+    "codex": 15,
+    "cursor": 10
+   },
+   "admitted_sha256": "51c4ffdcc55fc8cb82bf509831bd212ff847dfb7aefabe11149749d7e238374b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19405114,
+   "compressed_sha256": "61618586afd4aaf644ca9fc0ec1003fba062b63bf797f9a2ba9b4e30b3372e43",
+   "events": 106524,
+   "excluded": {
+    "account_too_young": 8,
+    "repo_too_young": 44
+   },
+   "hour": "2026-09-29-17",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 695,
+    "not_opened": 1259,
+    "not_pr_event": 104445
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 80,
+   "admitted_by_family": {
+    "claude": 47,
+    "codex": 23,
+    "copilot": 2,
+    "cursor": 8
+   },
+   "admitted_sha256": "b3f9488ae554c9c0ee47309bb8b37f3f1693e2f785d354ac5ed5bd0ec5b8febf",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21879212,
+   "compressed_sha256": "c76f811f270f424e579d0663aa5a9d45e94d14d910acb4c0bb40401ff2b4b602",
+   "events": 105068,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 50
+   },
+   "hour": "2026-09-29-18",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 964,
+    "not_opened": 1705,
+    "not_pr_event": 102263
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 106,
+   "admitted_by_family": {
+    "claude": 58,
+    "codex": 36,
+    "copilot": 4,
+    "cursor": 7,
+    "devin": 1
+   },
+   "admitted_sha256": "7969634eee9363b9a82faa09d3145918321979d13fbabff875890e68ef1cc0bb",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21812745,
+   "compressed_sha256": "3f5b47fa54987291285743d458de25ce7cf5d64000c812107898c0d403297b6a",
+   "events": 79947,
+   "excluded": {
+    "account_too_young": 15,
+    "repo_too_young": 76
+   },
+   "hour": "2026-09-29-19",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1327,
+    "not_opened": 2406,
+    "not_pr_event": 76017
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 149,
+   "admitted_by_family": {
+    "claude": 91,
+    "codex": 38,
+    "copilot": 4,
+    "cursor": 14,
+    "devin": 2
+   },
+   "admitted_sha256": "35ddbe95de75f5341b4292ce105ab019781717b83fd4a2fec14dafc32654fc22",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 22268928,
+   "compressed_sha256": "38bcd5d55d18dd0f1f2737462fc36d59d5fc54eb33eea8c355f247c9c2a24597",
+   "events": 65493,
+   "excluded": {
+    "account_too_young": 19,
+    "repo_too_young": 86
+   },
+   "hour": "2026-09-29-20",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1689,
+    "not_opened": 2916,
+    "not_pr_event": 60634
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 172,
+   "admitted_by_family": {
+    "claude": 100,
+    "codex": 49,
+    "copilot": 2,
+    "cursor": 18,
+    "devin": 2,
+    "jules": 1
+   },
+   "admitted_sha256": "77727a07db69a53bdb28b0e36f3b460b804d71daf531c66dd9cfd8967d01b06b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21244177,
+   "compressed_sha256": "0b34cb18b01a51bc9b6850b32ae70733cecfcd9b25d6e05477ba2acb5fdc4948",
+   "events": 54279,
+   "excluded": {
+    "account_too_young": 11,
+    "repo_too_young": 86
+   },
+   "hour": "2026-09-29-21",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1723,
+    "not_opened": 2934,
+    "not_pr_event": 49353
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 180,
+   "admitted_by_family": {
+    "claude": 115,
+    "codex": 43,
+    "copilot": 2,
+    "cursor": 17,
+    "devin": 2,
+    "jules": 1
+   },
+   "admitted_sha256": "787c346b35c6a42f646c9baa1f48428713acdfac0b22857d24c3a9b7eb61067c",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19888564,
+   "compressed_sha256": "4e2338b02b7b76bcbe53003c55f93c6e211730f862a0936717e20fd28d514cf6",
+   "events": 46905,
+   "excluded": {
+    "account_too_young": 12,
+    "repo_too_young": 108
+   },
+   "hour": "2026-09-29-22",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1633,
+    "not_opened": 2917,
+    "not_pr_event": 42055
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 154,
+   "admitted_by_family": {
+    "claude": 73,
+    "codex": 57,
+    "copilot": 2,
+    "cursor": 18,
+    "devin": 3,
+    "jules": 1
+   },
+   "admitted_sha256": "ce7011b0bdb5bcf55c4c45a2720ee0d8e398cf56f759767f9130109c88b5043f",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18951211,
+   "compressed_sha256": "0360eabe08a7ca6b58637155df886cd99c536b588bd6f680c0869a6e09e71be0",
+   "events": 43508,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 112
+   },
+   "hour": "2026-09-29-23",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1829,
+    "not_opened": 2955,
+    "not_pr_event": 38452
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 206,
+   "admitted_by_family": {
+    "claude": 114,
+    "codex": 70,
+    "copilot": 3,
+    "cursor": 15,
+    "devin": 3,
+    "jules": 1
+   },
+   "admitted_sha256": "c9bdd15f6204fbd0b1fbc1c9b9946dc7b8502756ddafc9e03eb6a37918f37256",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 24815216,
+   "compressed_sha256": "f787e184e72e59c815007e4676abc3207b763e763e034a26048bc1f1ef7f79dd",
+   "events": 46643,
+   "excluded": {
+    "account_too_young": 19,
+    "repo_too_young": 119
+   },
+   "hour": "2026-09-30-0",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 2360,
+    "not_opened": 4214,
+    "not_pr_event": 39725
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 307,
+   "admitted_by_family": {
+    "claude": 181,
+    "codex": 97,
+    "copilot": 2,
+    "cursor": 23,
+    "devin": 2,
+    "jules": 2
+   },
+   "admitted_sha256": "907bc1a25ac8c023adaeb4ffccabca564abcf668337d1bdd9494b61684c6136d",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 30798981,
+   "compressed_sha256": "b1e1a01a9598fd2ca9df6d021acdba6cfa1d13c89b3f2a5aceda42aedcf12b8c",
+   "events": 53538,
+   "excluded": {
+    "account_too_young": 24,
+    "repo_too_young": 148
+   },
+   "hour": "2026-09-30-1",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 2818,
+    "not_opened": 5131,
+    "not_pr_event": 45110
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 231,
+   "admitted_by_family": {
+    "claude": 120,
+    "codex": 84,
+    "copilot": 4,
+    "cursor": 22,
+    "jules": 1
+   },
+   "admitted_sha256": "23b083c9d1da992a9d1ff98d2ff7dc6089790b8d88df52bc33522da856b10ba0",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 27939261,
+   "compressed_sha256": "c259bce8114024b0b8888710496d926ad23e6d19facb9c88bdf5f8247752d828",
+   "events": 53890,
+   "excluded": {
+    "account_too_young": 14,
+    "repo_too_young": 124
+   },
+   "hour": "2026-09-30-2",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 2128,
+    "not_opened": 4258,
+    "not_pr_event": 47135
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 238,
+   "admitted_by_family": {
+    "claude": 113,
+    "codex": 69,
+    "copilot": 4,
+    "cursor": 19,
+    "devin": 33
+   },
+   "admitted_sha256": "f26110f76cd2492f5ed26cf680dd098601471dfabeab020393c7bf76e2ec9d73",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 25362608,
+   "compressed_sha256": "4b3ab910a25ddbb26dd776fdc0f4f39d3a726c959cc1a57ec3a445e4156b6d3f",
+   "events": 57049,
+   "excluded": {
+    "account_too_young": 20,
+    "repo_too_young": 120
+   },
+   "hour": "2026-09-30-3",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 2090,
+    "not_opened": 3828,
+    "not_pr_event": 50753
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 201,
+   "admitted_by_family": {
+    "claude": 102,
+    "codex": 74,
+    "copilot": 1,
+    "cursor": 20,
+    "devin": 4
+   },
+   "admitted_sha256": "71002f5d72b4135b18af939fb0ebca17ff45862d6d20ceeb846f270a60f9fda7",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21570836,
+   "compressed_sha256": "4bf6864db3af6306a5ce2f4b270b5d96e6fb51b927fccbdf90b6394465296c9c",
+   "events": 54903,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 91
+   },
+   "hour": "2026-09-30-4",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1783,
+    "not_opened": 2998,
+    "not_pr_event": 49823
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 148,
+   "admitted_by_family": {
+    "claude": 86,
+    "codex": 51,
+    "cursor": 10,
+    "devin": 1
+   },
+   "admitted_sha256": "4794049725986076f1b0876577743996b90aaab435821b858ecb9a1e2f2e572e",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20627644,
+   "compressed_sha256": "6a1926f090bbab5b68e6749f1da16c2eb0b222d0be7b31fc71ebdb9b553acfd6",
+   "events": 55485,
+   "excluded": {
+    "account_too_young": 16,
+    "repo_too_young": 84
+   },
+   "hour": "2026-09-30-5",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1424,
+    "not_opened": 2764,
+    "not_pr_event": 51049
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 136,
+   "admitted_by_family": {
+    "claude": 61,
+    "codex": 57,
+    "copilot": 1,
+    "cursor": 15,
+    "devin": 1,
+    "jules": 1
+   },
+   "admitted_sha256": "cee6b169224c60943a1c3724502e54937304ffe914fed8df24d4498f77d56b08",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19814788,
+   "compressed_sha256": "5780e662d24c9795bb4457a5862c9bf2c8312c3774f08656416acd3e3a047d9d",
+   "events": 55263,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 89
+   },
+   "hour": "2026-09-30-6",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1346,
+    "not_opened": 2607,
+    "not_pr_event": 51078
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 113,
+   "admitted_by_family": {
+    "claude": 60,
+    "codex": 43,
+    "cursor": 8,
+    "devin": 2
+   },
+   "admitted_sha256": "a5c61983daacf7ee130bd15d76f46c8e8a28e839244b12dc8dcdfd565e45a003",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17361069,
+   "compressed_sha256": "d84f74424098807d0d70bcb88fd8232a0c0d06e06a8d45b267ddce5bb7887733",
+   "events": 48683,
+   "excluded": {
+    "account_too_young": 13,
+    "repo_too_young": 79
+   },
+   "hour": "2026-09-30-7",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1241,
+    "not_opened": 2235,
+    "not_pr_event": 45002
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 105,
+   "admitted_by_family": {
+    "claude": 61,
+    "codex": 31,
+    "copilot": 1,
+    "cursor": 7,
+    "devin": 4,
+    "jules": 1
+   },
+   "admitted_sha256": "91fa9a2d6d179af4d2ea1cda9dc2675d6c7c7dd26308daf7701eb422d49c6cf7",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 14949928,
+   "compressed_sha256": "a272da61b93794f3e79bf6e6e8f4627b5a481c9498fe3a179ffda5aa04bb9ee3",
+   "events": 45470,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 64
+   },
+   "hour": "2026-09-30-8",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1200,
+    "not_opened": 1900,
+    "not_pr_event": 42191
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 91,
+   "admitted_by_family": {
+    "claude": 48,
+    "codex": 31,
+    "cursor": 11,
+    "jules": 1
+   },
+   "admitted_sha256": "de22ef160bb5d623ca99be235797b89b32616f5016c343bb5812f1bc9655b420",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 13010296,
+   "compressed_sha256": "1127ca40d1f99efd249ffa6ee878f8ae56ec0eba4e657906c26d1c39ac3337bb",
+   "events": 45003,
+   "excluded": {
+    "account_too_young": 2,
+    "repo_too_young": 49
+   },
+   "hour": "2026-09-30-9",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1017,
+    "not_opened": 1708,
+    "not_pr_event": 42136
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 92,
+   "admitted_by_family": {
+    "claude": 54,
+    "codex": 29,
+    "copilot": 2,
+    "cursor": 7
+   },
+   "admitted_sha256": "bf189b16aeac699fa192e052b7aee667394a1c5a4932964b250418aeb7bc6135",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 13731130,
+   "compressed_sha256": "d3c3e37c099b7f10df660a4385563f6c223d46c5306a5e6bf7f598d12dd40d4e",
+   "events": 46576,
+   "excluded": {
+    "account_too_young": 8,
+    "repo_too_young": 62
+   },
+   "hour": "2026-09-30-10",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1088,
+    "not_opened": 1819,
+    "not_pr_event": 43507
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 121,
+   "admitted_by_family": {
+    "claude": 52,
+    "codex": 46,
+    "copilot": 2,
+    "cursor": 18,
+    "devin": 2,
+    "jules": 1
+   },
+   "admitted_sha256": "fe1c363ecc2bc79d2a328f24cec98076feda2148efbd6ff9245c322866e3855f",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 14878580,
+   "compressed_sha256": "dc15c7d6d9a803a0fb02ced4231fb6e5d4d44b32b28d4ae27e4aab15739216ab",
+   "events": 48723,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 52
+   },
+   "hour": "2026-09-30-11",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1064,
+    "not_opened": 1844,
+    "not_pr_event": 45633
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 110,
+   "admitted_by_family": {
+    "claude": 65,
+    "codex": 32,
+    "copilot": 1,
+    "cursor": 9,
+    "devin": 3
+   },
+   "admitted_sha256": "99cac4925512979267cf37bbc05b1af2bb97190146b9021a72b8601e481360ca",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16786669,
+   "compressed_sha256": "035ea6f06826a4df384c35a02d77e16f106fc7b202ca77019c0be8192519d099",
+   "events": 51451,
+   "excluded": {
+    "account_too_young": 13,
+    "repo_too_young": 55
+   },
+   "hour": "2026-09-30-12",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1226,
+    "not_opened": 2111,
+    "not_pr_event": 47936
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 132,
+   "admitted_by_family": {
+    "claude": 68,
+    "codex": 44,
+    "copilot": 2,
+    "cursor": 12,
+    "devin": 4,
+    "jules": 2
+   },
+   "admitted_sha256": "90a21125c8ad9d4526138a3c61173f833b6c7a5569d56af22f044b7f025d1d99",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17317103,
+   "compressed_sha256": "ca613f0157329f023b58c75d0cd2209ad7fc04829a0c14e47acb10cc6b9d9fc3",
+   "events": 52494,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 67
+   },
+   "hour": "2026-09-30-13",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1248,
+    "not_opened": 2338,
+    "not_pr_event": 48700
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 131,
+   "admitted_by_family": {
+    "claude": 80,
+    "codex": 40,
+    "cursor": 9,
+    "devin": 2
+   },
+   "admitted_sha256": "5e102c832f3f82673ebfdb77207a2be8d20d183a3a3e15a9da83b24cc8ab6cf0",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19443139,
+   "compressed_sha256": "42bcd738ae05059a56aff0302c22e225772ec667f41ad2f1b3fdb6c8f4503216",
+   "events": 52505,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 88
+   },
+   "hour": "2026-09-30-14",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1497,
+    "not_opened": 2694,
+    "not_pr_event": 48085
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 250,
+   "admitted_by_family": {
+    "claude": 151,
+    "codex": 75,
+    "copilot": 1,
+    "cursor": 21,
+    "devin": 2
+   },
+   "admitted_sha256": "e77d75baa41695b10077c5233d9d9dff9c8832936a67299efd7b9b20a8bdd58d",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 28029314,
+   "compressed_sha256": "05cab92ea062730c2f2ae5ceb2cc7fc87ffefd3fe5f2690c6ca4fa20e894c291",
+   "events": 56625,
+   "excluded": {
+    "account_too_young": 12,
+    "repo_too_young": 143
+   },
+   "hour": "2026-09-30-15",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 2455,
+    "not_opened": 4523,
+    "not_pr_event": 49242
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 220,
+   "admitted_by_family": {
+    "claude": 115,
+    "codex": 71,
+    "copilot": 4,
+    "cursor": 26,
+    "devin": 4
+   },
+   "admitted_sha256": "45d4999e8b0c89b2a7dc2eba2d3840b1bddd0f386b8a629a24395dd72250dcf8",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 27660178,
+   "compressed_sha256": "cdba7d6b65858f2faba5647b4f805cfc2306c2d571bfd8ff16c91aedef2f1a37",
+   "events": 56407,
+   "excluded": {
+    "account_too_young": 24,
+    "repo_too_young": 135
+   },
+   "hour": "2026-09-30-16",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 2523,
+    "not_opened": 4337,
+    "not_pr_event": 49168
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 246,
+   "admitted_by_family": {
+    "claude": 135,
+    "codex": 78,
+    "copilot": 3,
+    "cursor": 18,
+    "devin": 3,
+    "jules": 9
+   },
+   "admitted_sha256": "c9b4e62de89206a2a15027f74e5d48242b430b32ced519073a2f40df30ff35ae",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 25281472,
+   "compressed_sha256": "bce232c004d00e7409f82aed214f458d60a45cc0a16410e4f9da1cddddc5a316",
+   "events": 55966,
+   "excluded": {
+    "account_too_young": 23,
+    "repo_too_young": 144
+   },
+   "hour": "2026-09-30-17",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 2022,
+    "not_opened": 3745,
+    "not_pr_event": 49786
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 188,
+   "admitted_by_family": {
+    "claude": 118,
+    "codex": 44,
+    "copilot": 2,
+    "cursor": 24
+   },
+   "admitted_sha256": "69d2b40f5cd14e8a31adf690b3bae4e513bde31c19cbe9a3ee4283a1ab9d5db8",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 23414914,
+   "compressed_sha256": "8240cab55bc8a430ae6e5b56d6a76bb3e222ecadcd189f4289036cb8ad566ec7",
+   "events": 51393,
+   "excluded": {
+    "account_too_young": 19,
+    "repo_too_young": 112
+   },
+   "hour": "2026-09-30-18",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1857,
+    "not_opened": 3310,
+    "not_pr_event": 45907
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 214,
+   "admitted_by_family": {
+    "claude": 117,
+    "codex": 72,
+    "copilot": 1,
+    "cursor": 21,
+    "devin": 2,
+    "jules": 1
+   },
+   "admitted_sha256": "f9ee138bdd99a37298d4376f520f445abeb368a12367f1aa5da85e8d8e1da866",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21969294,
+   "compressed_sha256": "de4a172e5f8b975a33191b1470403f05e82fd2ea38541d89b7ab866b947de65b",
+   "events": 51377,
+   "excluded": {
+    "account_too_young": 16,
+    "repo_too_young": 120
+   },
+   "hour": "2026-09-30-19",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1777,
+    "not_opened": 3141,
+    "not_pr_event": 46109
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 189,
+   "admitted_by_family": {
+    "claude": 105,
+    "codex": 65,
+    "copilot": 2,
+    "cursor": 16,
+    "devin": 1
+   },
+   "admitted_sha256": "267966cf52b1df1a0753fd07f930addf14045db60806569e19d727e3ab9cfd45",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 22480725,
+   "compressed_sha256": "d7ad41983462d7fed56c7b19609c0f2ba85497633a1e986d9d4b7b3fcc43d8a3",
+   "events": 52626,
+   "excluded": {
+    "account_too_young": 28,
+    "repo_too_young": 117
+   },
+   "hour": "2026-09-30-20",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1838,
+    "not_opened": 3119,
+    "not_pr_event": 47335
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 181,
+   "admitted_by_family": {
+    "claude": 97,
+    "codex": 63,
+    "copilot": 6,
+    "cursor": 13,
+    "jules": 2
+   },
+   "admitted_sha256": "bed697f91f69a65c165ec9770f31f2f3890dd543e4a8fdaf764c3d13f05ed49c",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21846412,
+   "compressed_sha256": "c28a050feb08786dec968425ea69e5c9bed7d29c9086dac31a6a7f23c1328314",
+   "events": 52209,
+   "excluded": {
+    "account_too_young": 11,
+    "repo_too_young": 88
+   },
+   "hour": "2026-09-30-21",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1728,
+    "not_opened": 2897,
+    "not_pr_event": 47304
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 183,
+   "admitted_by_family": {
+    "claude": 94,
+    "codex": 65,
+    "copilot": 5,
+    "cursor": 16,
+    "devin": 2,
+    "jules": 1
+   },
+   "admitted_sha256": "af7106a5101e49b58751fdb4631ba14646278847ebb88fabe116ef75505b7372",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 22375672,
+   "compressed_sha256": "ed467673c2df0f3f03bdecec4572f4f9de82c21389d8b742f5294f96e1bfa103",
+   "events": 56274,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 103
+   },
+   "hour": "2026-09-30-22",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1814,
+    "not_opened": 2947,
+    "not_pr_event": 51217
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 178,
+   "admitted_by_family": {
+    "claude": 102,
+    "codex": 60,
+    "copilot": 3,
+    "cursor": 10,
+    "devin": 3
+   },
+   "admitted_sha256": "20b3fc5136dca2add0da18154a3552e57f28ac0ea061e0ec25ebdc6bc9efe526",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21770341,
+   "compressed_sha256": "5d07e078731b526369601e6c3fbea679a4077d477cd0b64618961d418ee99109",
+   "events": 55289,
+   "excluded": {
+    "account_too_young": 13,
+    "repo_too_young": 83
+   },
+   "hour": "2026-09-30-23",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1527,
+    "not_opened": 2706,
+    "not_pr_event": 50782
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 109,
+   "admitted_by_family": {
+    "claude": 63,
+    "codex": 33,
+    "copilot": 2,
+    "cursor": 9,
+    "devin": 1,
+    "jules": 1
+   },
+   "admitted_sha256": "26294efd9e5743e7ecf614a4526398361b45ad7fcc903b54b9e137bf3bb6f346",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19361669,
+   "compressed_sha256": "84e706c4c2725c1637c90a00d0ca9fc596e89bdd13a3b21a9f942f626ce3dca8",
+   "events": 61854,
+   "excluded": {
+    "account_too_young": 5,
+    "repo_too_young": 73
+   },
+   "hour": "2026-10-01-0",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1360,
+    "not_opened": 2545,
+    "not_pr_event": 57762
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 141,
+   "admitted_by_family": {
+    "claude": 69,
+    "codex": 44,
+    "copilot": 3,
+    "cursor": 15,
+    "devin": 7,
+    "jules": 3
+   },
+   "admitted_sha256": "2e1c9fa2100cac0d13dbe8a379c23cfa3d1bce771f2a89945d8c20a9372d4390",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21676204,
+   "compressed_sha256": "6e156cfcfe81473f2753972976ac2d11173b51a6ae9631d1b0f71a7fc840a054",
+   "events": 78086,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 74
+   },
+   "hour": "2026-10-01-1",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1136,
+    "not_opened": 2335,
+    "not_pr_event": 74396
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 107,
+   "admitted_by_family": {
+    "claude": 50,
+    "codex": 43,
+    "cursor": 14
+   },
+   "admitted_sha256": "fdf2ae782bac0130550e1fb25c7a7b9247d2abf146b73aa010546ea00c503a4d",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21537818,
+   "compressed_sha256": "b8435a12735222d8e9c0d1d234eb5cddd82d719777bb798a5442449204c85fe9",
+   "events": 85345,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 72
+   },
+   "hour": "2026-10-01-2",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1108,
+    "not_opened": 2313,
+    "not_pr_event": 81739
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 90,
+   "admitted_by_family": {
+    "claude": 42,
+    "codex": 37,
+    "copilot": 2,
+    "cursor": 7,
+    "devin": 2
+   },
+   "admitted_sha256": "443fcbaf89b4cc2e927b8fb0ee9a9b9902935f432974740f8a6061faf84dea27",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21134923,
+   "compressed_sha256": "0810bb8231b5e859e71556e0ea5628cdbf2955dc4a1150dc964a4a1d0a47a57c",
+   "events": 86558,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 58
+   },
+   "hour": "2026-10-01-3",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 997,
+    "not_opened": 1915,
+    "not_pr_event": 83491
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 101,
+   "admitted_by_family": {
+    "claude": 55,
+    "codex": 34,
+    "cursor": 11,
+    "jules": 1
+   },
+   "admitted_sha256": "af4387de7d1a436f01f43cabd399ec649cae8c4d9de37d14cec40d0e11984019",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19358278,
+   "compressed_sha256": "1ada5bd57e736ba598a851d269f85fb8be96f43442f92ae65eb67d0ef3d0d941",
+   "events": 83993,
+   "excluded": {
+    "account_too_young": 5,
+    "repo_too_young": 44
+   },
+   "hour": "2026-10-01-4",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 963,
+    "not_opened": 1922,
+    "not_pr_event": 80958
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 86,
+   "admitted_by_family": {
+    "claude": 46,
+    "codex": 32,
+    "copilot": 1,
+    "cursor": 7
+   },
+   "admitted_sha256": "18fb1ad80469afd7d690dbd1e99d96a250b3f6283334a85c5bd73c3297ce5c95",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20059304,
+   "compressed_sha256": "a273fb584e47aa835fed7cc7cc03be24fe380c4589e0e90012153c8ac82050da",
+   "events": 80366,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 51
+   },
+   "hour": "2026-10-01-5",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 903,
+    "not_opened": 1886,
+    "not_pr_event": 77437
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 92,
+   "admitted_by_family": {
+    "claude": 49,
+    "codex": 30,
+    "copilot": 2,
+    "cursor": 7,
+    "devin": 3,
+    "jules": 1
+   },
+   "admitted_sha256": "9791ed579053198d611956749eedc2b3624168082182a52ad63b29d4e0c5ea5b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18820837,
+   "compressed_sha256": "cb4c8300c0d0da73cd8bc5afb4ecebcc92779f83dc68dd1d994076c0a9c06486",
+   "events": 84105,
+   "excluded": {
+    "account_too_young": 13,
+    "repo_too_young": 56
+   },
+   "hour": "2026-10-01-6",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 838,
+    "not_opened": 1757,
+    "not_pr_event": 81349
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 76,
+   "admitted_by_family": {
+    "claude": 46,
+    "codex": 24,
+    "copilot": 3,
+    "cursor": 2,
+    "devin": 1
+   },
+   "admitted_sha256": "851bd7e9ec697ffcace552fffa9ccbd15c3c6448e13bd4308d54d176684aece2",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18108755,
+   "compressed_sha256": "cccb5a3206fe3d45beaf0c266951041ff20b844ec7e7e6328366aff259eeb1e3",
+   "events": 82354,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 51
+   },
+   "hour": "2026-10-01-7",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 817,
+    "not_opened": 1711,
+    "not_pr_event": 79695
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 84,
+   "admitted_by_family": {
+    "claude": 42,
+    "codex": 29,
+    "copilot": 2,
+    "cursor": 9,
+    "devin": 2
+   },
+   "admitted_sha256": "3ddb83d0b82ec28a497c7b000841de477e633f0066305e28ccde5bb2c9188d5a",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18666280,
+   "compressed_sha256": "a5a0777dd8be7d65b9bcf24d3b18870860cd49d2ac623a0fc6bef7de161200b1",
+   "events": 85259,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 45
+   },
+   "hour": "2026-10-01-8",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 953,
+    "not_opened": 1927,
+    "not_pr_event": 82243
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 58,
+   "admitted_by_family": {
+    "claude": 28,
+    "codex": 25,
+    "cursor": 4,
+    "devin": 1
+   },
+   "admitted_sha256": "a3bd4953da581f83ed3d8d84f44d29acf52c7f32f651e8806f3089d82f996638",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18572654,
+   "compressed_sha256": "ebaa53dcaf206c3d71abd4a3242b7cd351d234d8dc09e556ad2b8553d1391092",
+   "events": 86772,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 51
+   },
+   "hour": "2026-10-01-9",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 861,
+    "not_opened": 1666,
+    "not_pr_event": 84130
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 68,
+   "admitted_by_family": {
+    "claude": 33,
+    "codex": 29,
+    "cursor": 6
+   },
+   "admitted_sha256": "0c500f9fbf0ab2b834bfee6296caa6965547fa2427a7e73c41c8b11fefba83c4",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18484251,
+   "compressed_sha256": "afd7816cb1a0d17b1992dc38974014f589ae29690216679688306b6c4a103c64",
+   "events": 83164,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 61
+   },
+   "hour": "2026-10-01-10",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 961,
+    "not_opened": 1866,
+    "not_pr_event": 80201
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 85,
+   "admitted_by_family": {
+    "claude": 51,
+    "codex": 23,
+    "copilot": 3,
+    "cursor": 5,
+    "devin": 3
+   },
+   "admitted_sha256": "083a4db0d9b6b0d7f60e6ba6c6470d82860aeb75c0b566f25395fb40400fd793",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18293131,
+   "compressed_sha256": "e4fb7d7a26a1bf66b3630b225cd04609e4cf662b53536d433719bbbb39e8c98e",
+   "events": 84334,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 53
+   },
+   "hour": "2026-10-01-11",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 940,
+    "not_opened": 1774,
+    "not_pr_event": 81479
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 100,
+   "admitted_by_family": {
+    "claude": 52,
+    "codex": 29,
+    "copilot": 2,
+    "cursor": 14,
+    "devin": 1,
+    "jules": 2
+   },
+   "admitted_sha256": "9a264fd3f1892875c6b53d10f1d4f0aa75988bac2ff5cb38e7ee64eb55dc1133",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18566754,
+   "compressed_sha256": "ce2d57e01925c8fdd39b77e5e918a61456b7b7f3fd30ca3f16f2377d38e9c929",
+   "events": 92323,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 50
+   },
+   "hour": "2026-10-01-12",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 856,
+    "not_opened": 1598,
+    "not_pr_event": 89715
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 86,
+   "admitted_by_family": {
+    "claude": 44,
+    "codex": 28,
+    "copilot": 1,
+    "cursor": 8,
+    "devin": 3,
+    "jules": 2
+   },
+   "admitted_sha256": "b810810caa4e07c88123aeb3dda03a145f377a7995637d7c30e35447d7abd893",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18874479,
+   "compressed_sha256": "6b4f145f2af271b7d5c4d4a0c775cc7564c1abc27f762e485dfb85173163d23e",
+   "events": 94071,
+   "excluded": {
+    "account_too_young": 14,
+    "repo_too_young": 56
+   },
+   "hour": "2026-10-01-13",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 897,
+    "not_opened": 1522,
+    "not_pr_event": 91496
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 94,
+   "admitted_by_family": {
+    "claude": 48,
+    "codex": 35,
+    "copilot": 1,
+    "cursor": 8,
+    "devin": 2
+   },
+   "admitted_sha256": "58f0f895b2208823e0edbd04853a7df589c4e49544afa203ad4e0423fc62bc4d",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19309102,
+   "compressed_sha256": "364ab9da4b49090bef2383a92cfae8297f3ced9292a4a49da8e4a213dfe3d7c1",
+   "events": 92587,
+   "excluded": {
+    "account_too_young": 11,
+    "repo_too_young": 62
+   },
+   "hour": "2026-10-01-14",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 987,
+    "not_opened": 1780,
+    "not_pr_event": 89653
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 109,
+   "admitted_by_family": {
+    "claude": 53,
+    "codex": 36,
+    "copilot": 3,
+    "cursor": 15,
+    "devin": 2
+   },
+   "admitted_sha256": "8712318be1f77d307ee1c689235f0b88ec9ed6103c2d9b76cb950c019e6f8082",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19449539,
+   "compressed_sha256": "2a9282966415bf7208e2e9bea5dc59239e60dd2d2b572523033d590d989207ed",
+   "events": 85569,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 41
+   },
+   "hour": "2026-10-01-15",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1060,
+    "not_opened": 1981,
+    "not_pr_event": 82371
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 88,
+   "admitted_by_family": {
+    "claude": 53,
+    "codex": 26,
+    "cursor": 7,
+    "devin": 2
+   },
+   "admitted_sha256": "e5f2225beea4b3a6aab00c525920ffb69710b1a24c7c0999835cfacf49cd98ac",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19834907,
+   "compressed_sha256": "fde36c737b6fd49e732311e7abf82a25ae15e06f7546b5f7f4a23cd6acd1f43d",
+   "events": 90520,
+   "excluded": {
+    "account_too_young": 5,
+    "repo_too_young": 51
+   },
+   "hour": "2026-10-01-16",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 953,
+    "not_opened": 1669,
+    "not_pr_event": 87754
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 120,
+   "admitted_by_family": {
+    "claude": 70,
+    "codex": 37,
+    "cursor": 11,
+    "jules": 2
+   },
+   "admitted_sha256": "d3c3b3af907339ad94ad2227715722c504a25c70d80cdc41758ac2372154dcd2",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 22483130,
+   "compressed_sha256": "9f648a1f44d1047ed78b0ced909cda89b681f5dbb98ec174dfc6beb25dc85935",
+   "events": 93428,
+   "excluded": {
+    "account_too_young": 15,
+    "repo_too_young": 58
+   },
+   "hour": "2026-10-01-17",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1246,
+    "not_opened": 2296,
+    "not_pr_event": 89693
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 121,
+   "admitted_by_family": {
+    "claude": 58,
+    "codex": 45,
+    "cursor": 12,
+    "devin": 6
+   },
+   "admitted_sha256": "904b1ed8cdf28aec8544cc46e01b681b5a80bd12aef4ca5b2b1096d61ec3de62",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21508113,
+   "compressed_sha256": "627b364c654d75c2a20453a14f2c03458948da977558ce5dc7e7955677900ce2",
+   "events": 91028,
+   "excluded": {
+    "account_too_young": 5,
+    "repo_too_young": 68
+   },
+   "hour": "2026-10-01-18",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1124,
+    "not_opened": 2136,
+    "not_pr_event": 87574
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 108,
+   "admitted_by_family": {
+    "claude": 57,
+    "codex": 29,
+    "copilot": 2,
+    "cursor": 16,
+    "devin": 4
+   },
+   "admitted_sha256": "26dc6a52ac6dd97332732115ff96958f166a5992640ca3266f2fe99d77be0a22",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 22027022,
+   "compressed_sha256": "24ccb0ef7a8c197ccec9b2a2fb36af7d8c82c387885f9b534a64a8c55b337483",
+   "events": 94617,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 58
+   },
+   "hour": "2026-10-01-19",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1054,
+    "not_opened": 2130,
+    "not_pr_event": 91261
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 136,
+   "admitted_by_family": {
+    "claude": 66,
+    "codex": 36,
+    "copilot": 4,
+    "cursor": 15,
+    "devin": 15
+   },
+   "admitted_sha256": "3957caa9bccbbae289bdcab553ce89296a12ebfd74f883892c10569a8d8f77e5",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 23332147,
+   "compressed_sha256": "7509d7c563ef1721f3a57804259cae6f69151765ac47921e3a5d506feaa05463",
+   "events": 92585,
+   "excluded": {
+    "account_too_young": 12,
+    "repo_too_young": 67
+   },
+   "hour": "2026-10-01-20",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1286,
+    "not_opened": 2461,
+    "not_pr_event": 88623
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 121,
+   "admitted_by_family": {
+    "claude": 67,
+    "codex": 39,
+    "copilot": 2,
+    "cursor": 11,
+    "devin": 1,
+    "jules": 1
+   },
+   "admitted_sha256": "18ae5190f02db3602bd05aa19f5c69309bcd7d0a5e3df61faa9b4131d5a66e6a",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 23116919,
+   "compressed_sha256": "efb39cd31f5750ac4cb4e6103b8b8ff56c7d5f7769d21da087c08c2611776bf7",
+   "events": 90394,
+   "excluded": {
+    "account_too_young": 5,
+    "repo_too_young": 58
+   },
+   "hour": "2026-10-01-21",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1289,
+    "not_opened": 2478,
+    "not_pr_event": 86443
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 127,
+   "admitted_by_family": {
+    "claude": 54,
+    "codex": 49,
+    "copilot": 3,
+    "cursor": 18,
+    "devin": 3
+   },
+   "admitted_sha256": "e88c04b5d126e0a992ad8ac4c2d40bce8b0b97cba16ca5372c04846345b3c360",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 23018471,
+   "compressed_sha256": "38a7c4fff04e36ad1d6d4580dabeac9e225c3df7f6fb570ce14d4c6690004e6d",
+   "events": 89340,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 78
+   },
+   "hour": "2026-10-01-22",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1276,
+    "not_opened": 2573,
+    "not_pr_event": 85277
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 113,
+   "admitted_by_family": {
+    "claude": 57,
+    "codex": 40,
+    "copilot": 1,
+    "cursor": 14,
+    "devin": 1
+   },
+   "admitted_sha256": "c7ea3656b50f8a8c25fcee970cb53c575c9ee6d77162d804fdb5ee8804e83966",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 23319545,
+   "compressed_sha256": "c176343380f436f2b20b9ac66b48da9f5cd8b9802e5f66f694d73be3d63b3c28",
+   "events": 85242,
+   "excluded": {
+    "account_too_young": 13,
+    "repo_too_young": 86
+   },
+   "hour": "2026-10-01-23",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1348,
+    "not_opened": 2709,
+    "not_pr_event": 80973
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 179,
+   "admitted_by_family": {
+    "claude": 103,
+    "codex": 48,
+    "copilot": 3,
+    "cursor": 23,
+    "devin": 1,
+    "jules": 1
+   },
+   "admitted_sha256": "81a5c34d4f1fc1946560f7c72ca137580791efa07e99805e17697cd6aa26c2eb",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 25417935,
+   "compressed_sha256": "2866b82bdb59a54ba81b9adb327671fca1bd1f8cfafb5324b9569c6166ce7d72",
+   "events": 82865,
+   "excluded": {
+    "account_too_young": 11,
+    "repo_too_young": 87
+   },
+   "hour": "2026-10-02-0",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1652,
+    "not_opened": 2801,
+    "not_pr_event": 78135
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 160,
+   "admitted_by_family": {
+    "claude": 77,
+    "codex": 59,
+    "copilot": 1,
+    "cursor": 20,
+    "devin": 3
+   },
+   "admitted_sha256": "732ba0436988eec0856b7667a2779c33916a376b772cc6e60e5e33fea04e5d2a",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 25533954,
+   "compressed_sha256": "a022e260e490f723b137bf4d91eb7c6a2194fb930ab8e2dec82088ce8ea08da0",
+   "events": 83862,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 85
+   },
+   "hour": "2026-10-02-1",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1370,
+    "not_opened": 2575,
+    "not_pr_event": 79666
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 156,
+   "admitted_by_family": {
+    "claude": 82,
+    "codex": 58,
+    "copilot": 2,
+    "cursor": 10,
+    "devin": 3,
+    "jules": 1
+   },
+   "admitted_sha256": "4c753ccc7912d98a39614ce8d6b4460ee74ce2b7fe883c4d414b9a9d70b25c3f",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 26780261,
+   "compressed_sha256": "cadb4c26fce4ed83c8b1cb3094f3629c13cf68f3e313272d6bb14d33f4a4023a",
+   "events": 82734,
+   "excluded": {
+    "account_too_young": 14,
+    "repo_too_young": 103
+   },
+   "hour": "2026-10-02-2",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1626,
+    "not_opened": 2907,
+    "not_pr_event": 77928
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 156,
+   "admitted_by_family": {
+    "claude": 88,
+    "codex": 52,
+    "copilot": 1,
+    "cursor": 8,
+    "devin": 3,
+    "jules": 4
+   },
+   "admitted_sha256": "afe684fc2c31fc81d12a92f746e68f5d39ebbebe0c02386309efb4076ea91698",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 26104586,
+   "compressed_sha256": "b70be27daf5e6aad0a3a47eaf4528f1e8f4cc3b19aeb11438743c511c6fd2f83",
+   "events": 84268,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 94
+   },
+   "hour": "2026-10-02-3",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1737,
+    "not_opened": 3137,
+    "not_pr_event": 79135
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 205,
+   "admitted_by_family": {
+    "claude": 108,
+    "codex": 72,
+    "copilot": 6,
+    "cursor": 18,
+    "devin": 1
+   },
+   "admitted_sha256": "75b76e72408fe5155fb5d93e3a986094cbe45b0eb1ee9f3b1df225150345b3a8",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 25909513,
+   "compressed_sha256": "ace24795d814d0cae433727f53c3d02fe3be6010744e31a30dbc4855fe4fd1aa",
+   "events": 82036,
+   "excluded": {
+    "account_too_young": 11,
+    "repo_too_young": 85
+   },
+   "hour": "2026-10-02-4",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1728,
+    "not_opened": 3042,
+    "not_pr_event": 76965
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 142,
+   "admitted_by_family": {
+    "claude": 60,
+    "codex": 64,
+    "copilot": 2,
+    "cursor": 13,
+    "devin": 3
+   },
+   "admitted_sha256": "547890bf87bcb458230f59a35969f8ff8279488f92020474d2633e4ca761c878",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 25740281,
+   "compressed_sha256": "5539f397cdcf0f5c3f8f0ef16f6ecf35140cefee5e2859843c9d28af5e7d95b6",
+   "events": 79692,
+   "excluded": {
+    "account_too_young": 15,
+    "repo_too_young": 76
+   },
+   "hour": "2026-10-02-5",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1554,
+    "not_opened": 3143,
+    "not_pr_event": 74762
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 123,
+   "admitted_by_family": {
+    "claude": 65,
+    "codex": 42,
+    "copilot": 1,
+    "cursor": 14,
+    "jules": 1
+   },
+   "admitted_sha256": "7d272583e4c99616aff1436f8f7c6914418501a7dac60e33dcfc649cf0fddef1",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 24381636,
+   "compressed_sha256": "ada6db04f50e03443fdf3138aff45984ad144572c7d3fb62805340b959b2b868",
+   "events": 83551,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 96
+   },
+   "hour": "2026-10-02-6",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1389,
+    "not_opened": 2935,
+    "not_pr_event": 79004
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 143,
+   "admitted_by_family": {
+    "claude": 92,
+    "codex": 40,
+    "copilot": 1,
+    "cursor": 9,
+    "devin": 1
+   },
+   "admitted_sha256": "ae06af8b6bb5ec47707225b2dc7f75ba2f0f6375956ac095718fab1a56534433",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 25319561,
+   "compressed_sha256": "1365cabd81b9dbb9ae1519400e2b4ba3de12c588434ee72ee43f6aaf618bc551",
+   "events": 87636,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 92
+   },
+   "hour": "2026-10-02-7",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1530,
+    "not_opened": 2694,
+    "not_pr_event": 83168
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 145,
+   "admitted_by_family": {
+    "claude": 88,
+    "codex": 41,
+    "copilot": 3,
+    "cursor": 9,
+    "devin": 4
+   },
+   "admitted_sha256": "ef346e2ef088edf6cfd088e28f8531060fa951638f122f666626403e40081fa4",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 24584648,
+   "compressed_sha256": "bcae608783f0dbf17c02d9ae0b9d88a988557e4a3f99fc14c9a2b53afe444ee5",
+   "events": 87189,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 86
+   },
+   "hour": "2026-10-02-8",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1381,
+    "not_opened": 2525,
+    "not_pr_event": 83042
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 104,
+   "admitted_by_family": {
+    "claude": 58,
+    "codex": 33,
+    "copilot": 1,
+    "cursor": 11,
+    "devin": 1
+   },
+   "admitted_sha256": "96652630cf7029c0e4501bad46a369273a75d332f4a8e07074ebbcfc0fa758f4",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 22778588,
+   "compressed_sha256": "07aef8cdc489d10d01eee650677d811d5aba0fc430762252ce20b8056d41d158",
+   "events": 83764,
+   "excluded": {
+    "account_too_young": 14,
+    "repo_too_young": 93
+   },
+   "hour": "2026-10-02-9",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1285,
+    "not_opened": 2357,
+    "not_pr_event": 79911
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 82,
+   "admitted_by_family": {
+    "claude": 42,
+    "codex": 28,
+    "copilot": 1,
+    "cursor": 9,
+    "jules": 2
+   },
+   "admitted_sha256": "703c54b0a4141b005cb733f56fb396f852cecc26bb5e2aa82184fa2fee743da9",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 22254481,
+   "compressed_sha256": "332354b061c6ceef13b5db06147fb38b1ce94a61417f85850f3b4eef4e01835f",
+   "events": 84257,
+   "excluded": {
+    "account_too_young": 8,
+    "repo_too_young": 82
+   },
+   "hour": "2026-10-02-10",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1256,
+    "not_opened": 2346,
+    "not_pr_event": 80483
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 127,
+   "admitted_by_family": {
+    "claude": 62,
+    "codex": 47,
+    "copilot": 2,
+    "cursor": 12,
+    "devin": 3,
+    "jules": 1
+   },
+   "admitted_sha256": "776d9f44d51b00681af4ab977ad87a03f7b980b783997ec064e8c97ee1fce8be",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 23988777,
+   "compressed_sha256": "688419df8f5e31e303d6f996afcb1c1d67d6aa92d835b5620279ba2640beb445",
+   "events": 93699,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 66
+   },
+   "hour": "2026-10-02-11",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1243,
+    "not_opened": 2367,
+    "not_pr_event": 89889
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 121,
+   "admitted_by_family": {
+    "claude": 67,
+    "codex": 43,
+    "copilot": 4,
+    "cursor": 5,
+    "devin": 2
+   },
+   "admitted_sha256": "f91c6cd676fa8fc20b125bd602434d837c3e3f96618b1eb13842f69f115d6fff",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21881793,
+   "compressed_sha256": "1c7132058ac413b677c1e0ecff35387a8e54349d4431a12f065c8619fd808ce5",
+   "events": 92611,
+   "excluded": {
+    "account_too_young": 11,
+    "repo_too_young": 74
+   },
+   "hour": "2026-10-02-12",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1199,
+    "not_opened": 1945,
+    "not_pr_event": 89261
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 148,
+   "admitted_by_family": {
+    "claude": 73,
+    "codex": 53,
+    "copilot": 3,
+    "cursor": 17,
+    "devin": 2
+   },
+   "admitted_sha256": "d9747f251357107e2c1070c23516df66675572e3ebadd31c6e5a67030ef94f8a",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 24475917,
+   "compressed_sha256": "8cfedbce2d7f71b87c6e39b3be8683a41992db0320559b828c690cf4878e88ad",
+   "events": 90395,
+   "excluded": {
+    "account_too_young": 14,
+    "repo_too_young": 89
+   },
+   "hour": "2026-10-02-13",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1390,
+    "not_opened": 2426,
+    "not_pr_event": 86328
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 133,
+   "admitted_by_family": {
+    "claude": 74,
+    "codex": 45,
+    "copilot": 1,
+    "cursor": 11,
+    "devin": 1,
+    "jules": 1
+   },
+   "admitted_sha256": "b05b011bc33e4d02822d01f26f2d057d8a2baf3b2b30ecb937f8f3de718e6565",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 23468179,
+   "compressed_sha256": "96f090757f184f731dad1e7d2eca8d710d2bdb1456b3a5457f2f343b4b601d8e",
+   "events": 88752,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 69
+   },
+   "hour": "2026-10-02-14",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1382,
+    "not_opened": 2291,
+    "not_pr_event": 84870
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 110,
+   "admitted_by_family": {
+    "claude": 57,
+    "codex": 43,
+    "cursor": 9,
+    "devin": 1
+   },
+   "admitted_sha256": "8aa89e3285cda17ff9c07d05c960cca4f9b149a06c1a6c848dd75d2fa82dda60",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20843278,
+   "compressed_sha256": "2dfe227250407f417988bf47bcaa61ff01299ed10b1a027c68f6aec00cb7ace6",
+   "events": 84804,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 66
+   },
+   "hour": "2026-10-02-15",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1089,
+    "not_opened": 1869,
+    "not_pr_event": 81667
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 118,
+   "admitted_by_family": {
+    "claude": 57,
+    "codex": 44,
+    "copilot": 4,
+    "cursor": 11,
+    "devin": 2
+   },
+   "admitted_sha256": "e84143bf39eccc7c93374900dd7b8dccbec2de8a49dc08828b7a9080797f419f",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19570796,
+   "compressed_sha256": "d440b4064508a876da52336b3c323a7603e5bd5f0eda56ae704ee114f31104b1",
+   "events": 81551,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 66
+   },
+   "hour": "2026-10-02-16",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 998,
+    "not_opened": 1814,
+    "not_pr_event": 78549
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 107,
+   "admitted_by_family": {
+    "claude": 57,
+    "codex": 36,
+    "copilot": 1,
+    "cursor": 7,
+    "devin": 6
+   },
+   "admitted_sha256": "c7929792acb31b10ee312f52c834e5609374e87259babae73a0b5986dbacc82a",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19737476,
+   "compressed_sha256": "1132e851569846d4e8b9c2f0b835fd4d6bee3f8c28af11c2114b8608029066c9",
+   "events": 88904,
+   "excluded": {
+    "account_too_young": 5,
+    "repo_too_young": 51
+   },
+   "hour": "2026-10-02-17",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 941,
+    "not_opened": 1608,
+    "not_pr_event": 86192
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 104,
+   "admitted_by_family": {
+    "claude": 58,
+    "codex": 33,
+    "copilot": 2,
+    "cursor": 10,
+    "devin": 1
+   },
+   "admitted_sha256": "1400699fd9128042d29b1df5b7de3fa5077dcb5674c0c0eda35f8eff49ec4a55",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19264545,
+   "compressed_sha256": "11c3ffd7ed8225cbbfe45aea45fc0e5ba120ae8bffdccfb95599d8f8887cfd37",
+   "events": 86889,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 55
+   },
+   "hour": "2026-10-02-18",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 904,
+    "not_opened": 1535,
+    "not_pr_event": 84282
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 92,
+   "admitted_by_family": {
+    "claude": 48,
+    "codex": 32,
+    "copilot": 1,
+    "cursor": 10,
+    "devin": 1
+   },
+   "admitted_sha256": "bcf1ff84056b268501c27b91331c1120e41826260474522c0f0a71fdbacab1c6",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18927750,
+   "compressed_sha256": "2e99355aa38a8959262b617f71b9dec271fc1207142107c6b86553d5cbde32f0",
+   "events": 85057,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 48
+   },
+   "hour": "2026-10-02-19",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 772,
+    "not_opened": 1502,
+    "not_pr_event": 82640
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 104,
+   "admitted_by_family": {
+    "claude": 62,
+    "codex": 27,
+    "copilot": 4,
+    "cursor": 7,
+    "devin": 4
+   },
+   "admitted_sha256": "b34a0711bc64bdc13038bd61455d629098cee7e05654186fc8f5439cbdad060a",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19319164,
+   "compressed_sha256": "3b5d3ec31c2d6500b0949ac5ad326f13aabec372949d9aa544eec18df1728bc8",
+   "events": 82485,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 49
+   },
+   "hour": "2026-10-02-20",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 904,
+    "not_opened": 1576,
+    "not_pr_event": 79843
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 126,
+   "admitted_by_family": {
+    "claude": 60,
+    "codex": 39,
+    "copilot": 2,
+    "cursor": 21,
+    "devin": 4
+   },
+   "admitted_sha256": "c44f5dbbeb49e1c058c4eab93be75f07a513e3a7cbb7f5ce33b2505146f3ce7f",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21612316,
+   "compressed_sha256": "1e94cabedeb430e171c3bc99baccf65c4c9ce692ad66c5f6abc73642e196e9b7",
+   "events": 85330,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 64
+   },
+   "hour": "2026-10-02-21",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1071,
+    "not_opened": 1872,
+    "not_pr_event": 82190
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 127,
+   "admitted_by_family": {
+    "claude": 65,
+    "codex": 41,
+    "copilot": 1,
+    "cursor": 16,
+    "devin": 4
+   },
+   "admitted_sha256": "4b23b06667627bcc69efdc22bc2fbb86ef57e3d8cf8a361a7975cf81aa803218",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21464156,
+   "compressed_sha256": "ea1ccfbc393d8882d5df4d8791613c620aa4db513977bf17189dce2d26eafde3",
+   "events": 80371,
+   "excluded": {
+    "account_too_young": 8,
+    "repo_too_young": 64
+   },
+   "hour": "2026-10-02-22",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1144,
+    "not_opened": 2004,
+    "not_pr_event": 77024
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 168,
+   "admitted_by_family": {
+    "claude": 94,
+    "codex": 54,
+    "copilot": 3,
+    "cursor": 15,
+    "devin": 1,
+    "jules": 1
+   },
+   "admitted_sha256": "aa8d6216b07d6b9aac251078a69ff30f7989557fa9f23b051a22da277adc1f35",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 25216405,
+   "compressed_sha256": "1f2179668900074ac8bbfff79cc10182044e77377415d2cc3707a5c238794737",
+   "events": 78294,
+   "excluded": {
+    "account_too_young": 13,
+    "repo_too_young": 85
+   },
+   "hour": "2026-10-02-23",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1550,
+    "not_opened": 2656,
+    "not_pr_event": 73822
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 212,
+   "admitted_by_family": {
+    "claude": 105,
+    "codex": 77,
+    "copilot": 3,
+    "cursor": 21,
+    "devin": 6
+   },
+   "admitted_sha256": "1bfd7669685d420ed6a7a7201bc10caa8bb08616965eadc911940b8d78506c57",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 28124994,
+   "compressed_sha256": "0c737bc794850a38de236844a08e8103eade78c96c71dabbe25deb55b8eeb578",
+   "events": 79464,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 112
+   },
+   "hour": "2026-10-03-0",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1842,
+    "not_opened": 3290,
+    "not_pr_event": 73998
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 169,
+   "admitted_by_family": {
+    "claude": 89,
+    "codex": 55,
+    "cursor": 19,
+    "devin": 5,
+    "jules": 1
+   },
+   "admitted_sha256": "526549e7f5a28cac4ba369cc6f6f48d68530de07d53a878fb255e6aa0984f8cd",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 28447539,
+   "compressed_sha256": "3b0f4922f0efb2d6d3732a6b19f01832fa21fd64de3f427f8fc25767fcd03b45",
+   "events": 80220,
+   "excluded": {
+    "account_too_young": 20,
+    "repo_too_young": 123
+   },
+   "hour": "2026-10-03-1",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1982,
+    "not_opened": 3644,
+    "not_pr_event": 74282
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 228,
+   "admitted_by_family": {
+    "claude": 103,
+    "codex": 96,
+    "cursor": 24,
+    "devin": 4,
+    "jules": 1
+   },
+   "admitted_sha256": "722f8560e71ff52801b4e1b4b899ffa832c823292ab763ea1ba7565d206013d2",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 28751550,
+   "compressed_sha256": "b9e60aedaa9b33fa107453dac5805bef2b1d75326ef0c8c2d2a6ec5e4105477a",
+   "events": 84015,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 132
+   },
+   "hour": "2026-10-03-2",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1985,
+    "not_opened": 3315,
+    "not_pr_event": 78345
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 197,
+   "admitted_by_family": {
+    "claude": 101,
+    "codex": 74,
+    "copilot": 3,
+    "cursor": 19
+   },
+   "admitted_sha256": "6472e1d4c7fc9a5eb481d6226632a99274126aeeb3c8a59ca0ed652381c3736a",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 29567932,
+   "compressed_sha256": "0d60e6698d6692632d336af09f4751b6c915253b775cd522e07999e9a26f9db9",
+   "events": 88100,
+   "excluded": {
+    "account_too_young": 18,
+    "repo_too_young": 128
+   },
+   "hour": "2026-10-03-3",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1868,
+    "not_opened": 3218,
+    "not_pr_event": 82671
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 181,
+   "admitted_by_family": {
+    "claude": 86,
+    "codex": 72,
+    "copilot": 5,
+    "cursor": 13,
+    "devin": 4,
+    "jules": 1
+   },
+   "admitted_sha256": "b63a81a89a067e28aa4ab659e8280907867f2d44d258a66944b8133023982c9b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 28359735,
+   "compressed_sha256": "7f151626be2be2c6b973a9f9d29fe9b03bd123daaa4eefaf0976c005d0d514e7",
+   "events": 86500,
+   "excluded": {
+    "account_too_young": 19,
+    "repo_too_young": 142
+   },
+   "hour": "2026-10-03-4",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1753,
+    "not_opened": 3210,
+    "not_pr_event": 81195
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 199,
+   "admitted_by_family": {
+    "claude": 102,
+    "codex": 73,
+    "copilot": 7,
+    "cursor": 13,
+    "devin": 3,
+    "jules": 1
+   },
+   "admitted_sha256": "81de025fc3e73bbffe3564b3cf4318c5cbd4db60e0c73a578a3f873be683ebc7",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 27386613,
+   "compressed_sha256": "0984ceed972d7b415a3a79a9055cabc360cc38155da9b5398b1b38c2d8d97639",
+   "events": 84560,
+   "excluded": {
+    "account_too_young": 21,
+    "repo_too_young": 129
+   },
+   "hour": "2026-10-03-5",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1750,
+    "not_opened": 2947,
+    "not_pr_event": 79514
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 161,
+   "admitted_by_family": {
+    "claude": 89,
+    "codex": 56,
+    "copilot": 2,
+    "cursor": 10,
+    "devin": 2,
+    "jules": 2
+   },
+   "admitted_sha256": "4dd9f508578ed578bbd674c87a067c6f06ac35efba932ec18755a0e2b03c14cd",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 26798286,
+   "compressed_sha256": "5f03b52f665dd88ba6a19a0bfed07de0614ae7d53d952edbef716f2e0d684ac2",
+   "events": 84533,
+   "excluded": {
+    "account_too_young": 11,
+    "repo_too_young": 126
+   },
+   "hour": "2026-10-03-6",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1609,
+    "not_opened": 2780,
+    "not_pr_event": 79846
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 198,
+   "admitted_by_family": {
+    "claude": 104,
+    "codex": 73,
+    "copilot": 2,
+    "cursor": 17,
+    "devin": 2
+   },
+   "admitted_sha256": "ca0d1ee4fb1bc0d460ce374966a5e92ee3ed941b2ec5da591d0d40dcf81a6fe0",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 26946220,
+   "compressed_sha256": "549b5acb392f683a72af063fc62391735c5971c2da17f78432bade99a1bd2077",
+   "events": 84975,
+   "excluded": {
+    "account_too_young": 15,
+    "repo_too_young": 142
+   },
+   "hour": "2026-10-03-7",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1629,
+    "not_opened": 2932,
+    "not_pr_event": 80059
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 169,
+   "admitted_by_family": {
+    "claude": 87,
+    "codex": 62,
+    "copilot": 2,
+    "cursor": 13,
+    "devin": 3,
+    "jules": 2
+   },
+   "admitted_sha256": "610b1158d2fefae2632780569516b309c9b283c7ef50a179b5df633195742784",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 27068405,
+   "compressed_sha256": "900b040ca161cf33e6983dd12448414f5025b2ac8d2228e8423b74327b48b272",
+   "events": 84947,
+   "excluded": {
+    "account_too_young": 14,
+    "repo_too_young": 113
+   },
+   "hour": "2026-10-03-8",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1677,
+    "not_opened": 2885,
+    "not_pr_event": 80089
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 187,
+   "admitted_by_family": {
+    "claude": 88,
+    "codex": 70,
+    "copilot": 6,
+    "cursor": 20,
+    "devin": 2,
+    "jules": 1
+   },
+   "admitted_sha256": "11cc706fe94ec2c58e825a76c09d15997aac7840ab8c6f864f4620f37dd1d4af",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 25829025,
+   "compressed_sha256": "d1fec39b895455079f5950b32bb9f702da28f08b556db27b811c9817e166bad6",
+   "events": 88597,
+   "excluded": {
+    "account_too_young": 15,
+    "repo_too_young": 106
+   },
+   "hour": "2026-10-03-9",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1455,
+    "not_opened": 2590,
+    "not_pr_event": 84244
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 151,
+   "admitted_by_family": {
+    "claude": 82,
+    "codex": 51,
+    "copilot": 2,
+    "cursor": 15,
+    "devin": 1
+   },
+   "admitted_sha256": "7cd5fed6bb167a680366525fbda68d41b44cf8c3f9727a1a46ce8509f672eab9",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 25452279,
+   "compressed_sha256": "20e7bd9f7c8a701be32c9777fef636e85644733770044dc62ee79b6ceddc3d5d",
+   "events": 86631,
+   "excluded": {
+    "account_too_young": 13,
+    "repo_too_young": 89
+   },
+   "hour": "2026-10-03-10",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1424,
+    "not_opened": 2418,
+    "not_pr_event": 82536
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 154,
+   "admitted_by_family": {
+    "claude": 81,
+    "codex": 58,
+    "copilot": 1,
+    "cursor": 13,
+    "devin": 1
+   },
+   "admitted_sha256": "556a95501468e8593ba230fdfda80562e69c735cc57835e6e8707f1b8c79f73e",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 22599537,
+   "compressed_sha256": "43ad8f31bf0c021f895e22ad1941431128cafdf049dc017f58b61a0b902adf7c",
+   "events": 84538,
+   "excluded": {
+    "account_too_young": 12,
+    "repo_too_young": 100
+   },
+   "hour": "2026-10-03-11",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1234,
+    "not_opened": 2057,
+    "not_pr_event": 80981
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 120,
+   "admitted_by_family": {
+    "claude": 58,
+    "codex": 47,
+    "cursor": 11,
+    "devin": 4
+   },
+   "admitted_sha256": "4743594c04019f7fa56f1e423bc17cf1d390e5ec063b407657bff5005ebfaf2a",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21389912,
+   "compressed_sha256": "6239139922e006e31f7ed5d0cdf5d5b83f91731c206fe1ceeeb30d8923fcc394",
+   "events": 89648,
+   "excluded": {
+    "account_too_young": 12,
+    "repo_too_young": 103
+   },
+   "hour": "2026-10-03-12",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1071,
+    "not_opened": 1849,
+    "not_pr_event": 86493
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 155,
+   "admitted_by_family": {
+    "claude": 88,
+    "codex": 54,
+    "copilot": 1,
+    "cursor": 9,
+    "devin": 3
+   },
+   "admitted_sha256": "93a33efa51e26f7c017e09fc083c16389d8591cefc8b608be279316dbfa7cd70",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 23543294,
+   "compressed_sha256": "ff3da8458091c9fedcc416f8652a2884f79e789f673099989a4d2494995823f7",
+   "events": 88324,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 96
+   },
+   "hour": "2026-10-03-13",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1325,
+    "not_opened": 2178,
+    "not_pr_event": 84560
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 117,
+   "admitted_by_family": {
+    "claude": 66,
+    "codex": 34,
+    "copilot": 1,
+    "cursor": 13,
+    "jules": 3
+   },
+   "admitted_sha256": "6034e95c56c2eca30301fe96a7b01ccd85ed0665433a03025aee551d2863d7cc",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20230813,
+   "compressed_sha256": "ae595b8d35ed4619956dc2baaa2f0e3dc21d0dda93e4abd60e08f26de2d8ed29",
+   "events": 84018,
+   "excluded": {
+    "account_too_young": 12,
+    "repo_too_young": 94
+   },
+   "hour": "2026-10-03-14",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 975,
+    "not_opened": 1693,
+    "not_pr_event": 81127
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 118,
+   "admitted_by_family": {
+    "claude": 72,
+    "codex": 36,
+    "cursor": 9,
+    "devin": 1
+   },
+   "admitted_sha256": "60ee2ea405c1113d7e1e0ad92129cfaa1b1985a19668a14441a5b9fedebc1537",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19818419,
+   "compressed_sha256": "75e696dc6370756cfef4210babcc6545ead9395401eca6ee5e5478c7a8a5835e",
+   "events": 86229,
+   "excluded": {
+    "account_too_young": 15,
+    "repo_too_young": 73
+   },
+   "hour": "2026-10-03-15",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 929,
+    "not_opened": 1527,
+    "not_pr_event": 83567
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 111,
+   "admitted_by_family": {
+    "claude": 61,
+    "codex": 37,
+    "copilot": 4,
+    "cursor": 8,
+    "devin": 1
+   },
+   "admitted_sha256": "15c39f550d9f11493cc8586d9b3203c4c71dab145da7680df6e7fb86ff858646",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20939651,
+   "compressed_sha256": "3d9df5058edde41140226754b1c6bd10f85f84148ed0d52485b09ba57e7b4190",
+   "events": 81286,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 58
+   },
+   "hour": "2026-10-03-16",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1063,
+    "not_opened": 1774,
+    "not_pr_event": 78271
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 85,
+   "admitted_by_family": {
+    "claude": 52,
+    "codex": 21,
+    "copilot": 1,
+    "cursor": 7,
+    "devin": 3,
+    "jules": 1
+   },
+   "admitted_sha256": "c43b479822b25d39f3c6df182f6ba11fcf319b0d2d06739c22da9ec8799d326c",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17415325,
+   "compressed_sha256": "97e88aa14e8c852b9a31e13bc79ad346b3a6f04c36ab05a6f6854497fcde1675",
+   "events": 79304,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 57
+   },
+   "hour": "2026-10-03-17",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 847,
+    "not_opened": 1316,
+    "not_pr_event": 76989
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 126,
+   "admitted_by_family": {
+    "claude": 62,
+    "codex": 44,
+    "copilot": 3,
+    "cursor": 15,
+    "devin": 2
+   },
+   "admitted_sha256": "a72e2fd1afef003e4d8f543b0ce728396b9aab6f8bc2fcf1dec182b812ed4272",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19785854,
+   "compressed_sha256": "e19b4db4de3170530350a8596131b84f9e75a9719d5d3e9b397aef9f1f22fc82",
+   "events": 77961,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 88
+   },
+   "hour": "2026-10-03-18",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1048,
+    "not_opened": 1811,
+    "not_pr_event": 74878
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 66,
+   "admitted_by_family": {
+    "claude": 35,
+    "codex": 21,
+    "copilot": 1,
+    "cursor": 7,
+    "devin": 2
+   },
+   "admitted_sha256": "b9b718992f918beaed2a6abb6d9d4b010db747dae815f83e1bd32c3606dd3a24",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15782589,
+   "compressed_sha256": "4c9201971c6ebce0665db70744132ed680ce7c3ce237c686d7a249ca5cedd0bf",
+   "events": 73524,
+   "excluded": {
+    "account_too_young": 4,
+    "repo_too_young": 53
+   },
+   "hour": "2026-10-03-19",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 685,
+    "not_opened": 1047,
+    "not_pr_event": 71669
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 88,
+   "admitted_by_family": {
+    "claude": 47,
+    "codex": 32,
+    "copilot": 1,
+    "cursor": 7,
+    "devin": 1
+   },
+   "admitted_sha256": "66abc2cc37a695f762812b04a01a99a2562286d4b93216af8ba67cbec0095e6c",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16905271,
+   "compressed_sha256": "38dbf2b99f5d963020921dda752cb52555957d45b350ddb11161a511be6e5a06",
+   "events": 76190,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 42
+   },
+   "hour": "2026-10-03-20",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 782,
+    "not_opened": 1295,
+    "not_pr_event": 73976
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 63,
+   "admitted_by_family": {
+    "claude": 30,
+    "codex": 24,
+    "copilot": 3,
+    "cursor": 4,
+    "devin": 2
+   },
+   "admitted_sha256": "2019f15a4408b50a78843baeaf36e9c6ef05779b4ac0411aaa576f62fb8ab306",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 13467839,
+   "compressed_sha256": "7b93d29c073c878c0a57a6b4247b91d8d4c220a04c1af748d732b48e71a8c65b",
+   "events": 61029,
+   "excluded": {
+    "account_too_young": 5,
+    "repo_too_young": 43
+   },
+   "hour": "2026-10-03-21",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 604,
+    "not_opened": 1015,
+    "not_pr_event": 59299
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 116,
+   "admitted_by_family": {
+    "claude": 58,
+    "codex": 43,
+    "copilot": 1,
+    "cursor": 12,
+    "devin": 1,
+    "jules": 1
+   },
+   "admitted_sha256": "71fad1faecd0c1e90b93cabf8d9ebf13602d54ab17c3cb0f030b1fb5ca222a91",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17409173,
+   "compressed_sha256": "c724057c2fb8d254e13ba060b922860365ddaf482bd3164fce2cc2763d7373f6",
+   "events": 70117,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 64
+   },
+   "hour": "2026-10-03-22",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 947,
+    "not_opened": 1469,
+    "not_pr_event": 67515
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 121,
+   "admitted_by_family": {
+    "claude": 63,
+    "codex": 39,
+    "copilot": 1,
+    "cursor": 14,
+    "devin": 3,
+    "jules": 1
+   },
+   "admitted_sha256": "69f24b57c222f618f27315e1b1b5109c2b64583addf5aedddd8ed72d32a3ef9a",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21399252,
+   "compressed_sha256": "1170bc5eaa4e1f7fc64b6c481b619d9b1f1fdac590e83b6bbafc0b0743c06bfb",
+   "events": 70012,
+   "excluded": {
+    "account_too_young": 8,
+    "repo_too_young": 82
+   },
+   "hour": "2026-10-03-23",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1189,
+    "not_opened": 1964,
+    "not_pr_event": 66648
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 143,
+   "admitted_by_family": {
+    "claude": 64,
+    "codex": 64,
+    "cursor": 14,
+    "devin": 1
+   },
+   "admitted_sha256": "6a3a97f5528bd96fc81c18f9bb0916eeba8e3183cae2f7ea8423f342aafe0064",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 21620371,
+   "compressed_sha256": "1cc15ad95b47ee6aabce1945d118e2bd403c717ec51734977a82a6adf499620c",
+   "events": 67855,
+   "excluded": {
+    "account_too_young": 13,
+    "repo_too_young": 97
+   },
+   "hour": "2026-10-04-0",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1204,
+    "not_opened": 2074,
+    "not_pr_event": 64324
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 143,
+   "admitted_by_family": {
+    "claude": 61,
+    "codex": 56,
+    "copilot": 4,
+    "cursor": 20,
+    "devin": 2
+   },
+   "admitted_sha256": "02abd09977632ce7b3eb67c7bfe75b624817e8f3fa0e52d03087dce10c30dc86",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20723889,
+   "compressed_sha256": "12d115b9ea92619951584ad018f6d697c5c30da0d2e25eea7d70db7ba618af63",
+   "events": 69518,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 96
+   },
+   "hour": "2026-10-04-1",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1231,
+    "not_opened": 2025,
+    "not_pr_event": 66014
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 132,
+   "admitted_by_family": {
+    "claude": 70,
+    "codex": 46,
+    "copilot": 3,
+    "cursor": 11,
+    "devin": 2
+   },
+   "admitted_sha256": "530689dac59a76f91993dd993bb785e07aa676da199cdac7f6449841cb940e0f",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20782136,
+   "compressed_sha256": "cc68643a5dcf7aa6e29e02846828402db38dc9167dfeab00013f3ef2f55fd60b",
+   "events": 70526,
+   "excluded": {
+    "account_too_young": 8,
+    "repo_too_young": 83
+   },
+   "hour": "2026-10-04-2",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 982,
+    "not_opened": 1792,
+    "not_pr_event": 67529
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 124,
+   "admitted_by_family": {
+    "claude": 51,
+    "codex": 50,
+    "cursor": 16,
+    "devin": 6,
+    "jules": 1
+   },
+   "admitted_sha256": "38b0b166976a0ab7724313a2629d484f95dd9cbc16dd7e9c7050cad80bf82111",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20371143,
+   "compressed_sha256": "ecaac77affef3e8ac3ea664f0a8e4da945c53108dcd0cf5213bfaf7a2fd77d66",
+   "events": 76508,
+   "excluded": {
+    "account_too_young": 19,
+    "repo_too_young": 81
+   },
+   "hour": "2026-10-04-3",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1007,
+    "not_opened": 1622,
+    "not_pr_event": 73655
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 117,
+   "admitted_by_family": {
+    "claude": 47,
+    "codex": 55,
+    "cursor": 13,
+    "devin": 2
+   },
+   "admitted_sha256": "d5e8b2b68146647c8b664b4d3a95d6d965fd36fc6913dc0a4217f7ac67a5d428",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 19546798,
+   "compressed_sha256": "6cde2efce5fb32055686074715aa25fc4bd37a9e527bfa5f41b4df245383e1e9",
+   "events": 78096,
+   "excluded": {
+    "account_too_young": 14,
+    "repo_too_young": 85
+   },
+   "hour": "2026-10-04-4",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1113,
+    "not_opened": 1793,
+    "not_pr_event": 74974
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 105,
+   "admitted_by_family": {
+    "claude": 46,
+    "codex": 47,
+    "copilot": 1,
+    "cursor": 6,
+    "devin": 5
+   },
+   "admitted_sha256": "60b7d404f83a1a2492f243ebbf56890a624bb044bfbb40a23c80df23fd76ed4b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20581200,
+   "compressed_sha256": "20aa5ef5ca57fec1631a513f9655ffb036d201bc6847d96460441fa078c4314c",
+   "events": 77656,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 88
+   },
+   "hour": "2026-10-04-5",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1090,
+    "not_opened": 1789,
+    "not_pr_event": 74574
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 104,
+   "admitted_by_family": {
+    "claude": 63,
+    "codex": 32,
+    "copilot": 1,
+    "cursor": 6,
+    "devin": 1,
+    "jules": 1
+   },
+   "admitted_sha256": "deb004ed175106f3b1791bfb8be714df3ec2e4acf0105641630efdfc4fdf4cb4",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 20459155,
+   "compressed_sha256": "54c893a7d994f8fc6aa9adc5c55489b0488ba347228414bbf0bc0332c2e052d0",
+   "events": 78859,
+   "excluded": {
+    "account_too_young": 13,
+    "repo_too_young": 99
+   },
+   "hour": "2026-10-04-6",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 1071,
+    "not_opened": 1699,
+    "not_pr_event": 75873
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 96,
+   "admitted_by_family": {
+    "claude": 49,
+    "codex": 35,
+    "cursor": 9,
+    "devin": 3
+   },
+   "admitted_sha256": "9f5d27f6791409a4b12dc9f3856d3e6b4e92124586af80a8cb002b5ee803bc1c",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18147912,
+   "compressed_sha256": "4cf38aee4b50c24c166e45942344eaca7dd337559bcccdd2580a6b0afe28a854",
+   "events": 77336,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 75
+   },
+   "hour": "2026-10-04-7",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 867,
+    "not_opened": 1473,
+    "not_pr_event": 74815
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 92,
+   "admitted_by_family": {
+    "claude": 40,
+    "codex": 41,
+    "copilot": 1,
+    "cursor": 7,
+    "devin": 2,
+    "jules": 1
+   },
+   "admitted_sha256": "e48354866ae3ab32f3a7e7e32b47b1165b452300a3e370293f01cb35060d9f22",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 18625762,
+   "compressed_sha256": "cd2a1e9c1d1b857e72b0f3848dc2580d46e7532d701623d656df5a1358bc3b24",
+   "events": 80208,
+   "excluded": {
+    "account_too_young": 7,
+    "repo_too_young": 71
+   },
+   "hour": "2026-10-04-8",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 815,
+    "not_opened": 1357,
+    "not_pr_event": 77866
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 72,
+   "admitted_by_family": {
+    "claude": 40,
+    "codex": 25,
+    "cursor": 5,
+    "devin": 2
+   },
+   "admitted_sha256": "d5eedc1167fa807180e13a8fde537e5ca104ddf8a844b61aa6419a9d29a334d7",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16898208,
+   "compressed_sha256": "f06861c0a1d3b801c9732b60c0a44c47fc8fecc7656895985d5e1f5589a1fce0",
+   "events": 74528,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 48
+   },
+   "hour": "2026-10-04-9",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 795,
+    "not_opened": 1233,
+    "not_pr_event": 72374
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 82,
+   "admitted_by_family": {
+    "claude": 36,
+    "codex": 30,
+    "copilot": 2,
+    "cursor": 13,
+    "devin": 1
+   },
+   "admitted_sha256": "0f68aecde9799dd276bcd6d54740082c91be75b90ec15d38b48ccba0cbe4f08b",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 16451466,
+   "compressed_sha256": "3d17f28b0205637a30835f77e4d481c6c8f13939b1217a7a4ae0fe78e40abc65",
+   "events": 75973,
+   "excluded": {
+    "account_too_young": 12,
+    "repo_too_young": 56
+   },
+   "hour": "2026-10-04-10",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 727,
+    "not_opened": 1138,
+    "not_pr_event": 73958
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 64,
+   "admitted_by_family": {
+    "claude": 27,
+    "codex": 27,
+    "cursor": 5,
+    "devin": 4,
+    "jules": 1
+   },
+   "admitted_sha256": "d10bb4cf221f92b0b4c760123ea6fb6e91d26630f73e1e308cf22563c691cbe8",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15748720,
+   "compressed_sha256": "ed2b626f22fca51ae9ef176a01bb08154fc6ac96e50a85566ecb0a69ee1c4acb",
+   "events": 78507,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 37
+   },
+   "hour": "2026-10-04-11",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 675,
+    "not_opened": 1060,
+    "not_pr_event": 76661
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 76,
+   "admitted_by_family": {
+    "claude": 44,
+    "codex": 21,
+    "cursor": 8,
+    "devin": 3
+   },
+   "admitted_sha256": "fafce0c7024772416e62030b692ff72ac78b0ae01ce0c87c196388e83c2f3a49",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 17193411,
+   "compressed_sha256": "4358d529ea97725072742483776c8844d4b90bea95bf8d7a8b63d684676fea95",
+   "events": 77699,
+   "excluded": {
+    "account_too_young": 12,
+    "repo_too_young": 61
+   },
+   "hour": "2026-10-04-12",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 769,
+    "not_opened": 1172,
+    "not_pr_event": 75609
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 70,
+   "admitted_by_family": {
+    "claude": 32,
+    "codex": 27,
+    "copilot": 1,
+    "cursor": 8,
+    "devin": 2
+   },
+   "admitted_sha256": "11fcefe49867b8b8b70f1020e11199f52d641d4727f842fb3547bfe7c05a58b8",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15320638,
+   "compressed_sha256": "8441450f59837fa0243bbe23f75088dbe219a0dae5ec3f3559ec194a5c61e507",
+   "events": 78041,
+   "excluded": {
+    "account_too_young": 10,
+    "repo_too_young": 38
+   },
+   "hour": "2026-10-04-13",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 586,
+    "not_opened": 1011,
+    "not_pr_event": 76326
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 54,
+   "admitted_by_family": {
+    "claude": 21,
+    "codex": 24,
+    "cursor": 9
+   },
+   "admitted_sha256": "91e295037018ee1cd52d6869498d94cb0ca9afa60d3c2c67477cd49069a3d9bf",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15553711,
+   "compressed_sha256": "243ccea782d4b65d02c6a462167eb46d8fcf68dcea679f56d7bdd8cdb4cfbda0",
+   "events": 79902,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 37
+   },
+   "hour": "2026-10-04-14",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 587,
+    "not_opened": 940,
+    "not_pr_event": 78275
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 52,
+   "admitted_by_family": {
+    "claude": 28,
+    "codex": 17,
+    "cursor": 5,
+    "devin": 2
+   },
+   "admitted_sha256": "68cd13c3647c1c992c6a79057ecb264fcfd8fa1c9a85671b8c9b57e4d3180cce",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 14251101,
+   "compressed_sha256": "82db6e770604d6e49188b7f1b1180764ff12295a5eb7873c2dab03e6b921d9ce",
+   "events": 77589,
+   "excluded": {
+    "account_too_young": 12,
+    "repo_too_young": 50
+   },
+   "hour": "2026-10-04-15",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 492,
+    "not_opened": 795,
+    "not_pr_event": 76188
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 46,
+   "admitted_by_family": {
+    "claude": 23,
+    "codex": 18,
+    "cursor": 3,
+    "devin": 2
+   },
+   "admitted_sha256": "c4c2f963eff419b3e639410a460302eb45a0aa1ff4c5eb75de53e05308fad9d6",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 14452063,
+   "compressed_sha256": "fc2385500906ed03cabca060d70ed323f76cc0fd8cbca6b4f65d06b71f53e390",
+   "events": 81633,
+   "excluded": {
+    "account_too_young": 5,
+    "repo_too_young": 32
+   },
+   "hour": "2026-10-04-16",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 471,
+    "not_opened": 711,
+    "not_pr_event": 80368
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 58,
+   "admitted_by_family": {
+    "claude": 33,
+    "codex": 20,
+    "copilot": 1,
+    "cursor": 4
+   },
+   "admitted_sha256": "8d02d38889981c52a85f152d860bab789c6fadaa838b14f0185018fc7f858295",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 14694506,
+   "compressed_sha256": "6dc17b4fef8e540c604722a78e3d36dac4978413e468a31cedb68d6c61cfadf3",
+   "events": 77110,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 54
+   },
+   "hour": "2026-10-04-17",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 542,
+    "not_opened": 824,
+    "not_pr_event": 75626
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 49,
+   "admitted_by_family": {
+    "claude": 29,
+    "codex": 15,
+    "cursor": 3,
+    "devin": 2
+   },
+   "admitted_sha256": "6cd682d51787bd9913e5bd274da92359eda8c4160dd64600e6e755d69fc530ea",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15321324,
+   "compressed_sha256": "0340f1d1f5733dacc9ab1716ad78cc0cf7e3c0df358ef6cb10603ff53ce34f1f",
+   "events": 77367,
+   "excluded": {
+    "account_too_young": 3,
+    "repo_too_young": 42
+   },
+   "hour": "2026-10-04-18",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 605,
+    "not_opened": 951,
+    "not_pr_event": 75717
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 47,
+   "admitted_by_family": {
+    "claude": 24,
+    "codex": 13,
+    "copilot": 1,
+    "cursor": 8,
+    "devin": 1
+   },
+   "admitted_sha256": "f62df5fca608a5640771d4aae521e3e220e1e3f34bd97bbb139dad797a306f9e",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 14312467,
+   "compressed_sha256": "092f2939c5e0ae709c38e93acd946291412b24c8f1d42120c2fb9fcc9a59599b",
+   "events": 72699,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 45
+   },
+   "hour": "2026-10-04-19",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 539,
+    "not_opened": 892,
+    "not_pr_event": 71167
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 65,
+   "admitted_by_family": {
+    "claude": 36,
+    "codex": 20,
+    "copilot": 1,
+    "cursor": 8
+   },
+   "admitted_sha256": "afdbafc5cc9e418a44841fddf0bb4dd5c0a605ad883e462f8f585f51e2f22542",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 14090677,
+   "compressed_sha256": "a18c6a655b0dcd388c5c27164b9958b069c4f0c423afb64c4fb67851f983cbc8",
+   "events": 72990,
+   "excluded": {
+    "account_too_young": 8,
+    "repo_too_young": 53
+   },
+   "hour": "2026-10-04-20",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 568,
+    "not_opened": 877,
+    "not_pr_event": 71419
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 73,
+   "admitted_by_family": {
+    "claude": 35,
+    "codex": 29,
+    "copilot": 1,
+    "cursor": 6,
+    "devin": 2
+   },
+   "admitted_sha256": "c1d4cef6c5be49bc1e2ac24746d7c4b1a7f9acd954525dad22df32302b9f776e",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 14644046,
+   "compressed_sha256": "4f12cc356769741c69a80396010d201c2646007b8d2c25b010cecd23a78c90ab",
+   "events": 69613,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 36
+   },
+   "hour": "2026-10-04-21",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 625,
+    "not_opened": 988,
+    "not_pr_event": 67882
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 56,
+   "admitted_by_family": {
+    "claude": 29,
+    "codex": 17,
+    "copilot": 1,
+    "cursor": 9
+   },
+   "admitted_sha256": "111bd30ee49e37711841178d60f8a91b6a73d2f46c4ed0b217c967fd89a0634e",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 15474931,
+   "compressed_sha256": "d6bab10a5b79d8c06202b8c363a7f3a31e1c05ce5b23356dfeaab143ebf4b700",
+   "events": 70526,
+   "excluded": {
+    "account_too_young": 9,
+    "repo_too_young": 53
+   },
+   "hour": "2026-10-04-22",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 710,
+    "not_opened": 1141,
+    "not_pr_event": 68557
+   },
+   "status": "ok"
+  },
+  {
+   "admitted": 69,
+   "admitted_by_family": {
+    "claude": 36,
+    "codex": 23,
+    "copilot": 3,
+    "cursor": 3,
+    "devin": 4
+   },
+   "admitted_sha256": "eb330572ac4ae1b719e3bb9548da6c55e02682f1d174d89a4a00d46b12e553da",
+   "bad_json_lines": 0,
+   "bad_json_lines_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "compressed_bytes": 14591533,
+   "compressed_sha256": "5ea5681ebab6213a8612ceb0e57daea182c3e7b3494cead22d5513c8a8763a41",
+   "events": 67103,
+   "excluded": {
+    "account_too_young": 6,
+    "repo_too_young": 34
+   },
+   "hour": "2026-10-04-23",
+   "schema": "styxx.sealed-ahead/pool-hour/v0",
+   "skipped": {
+    "not_agent": 575,
+    "not_opened": 1048,
+    "not_pr_event": 65371
+   },
+   "status": "ok"
+  }
+ ],
+ "identity_rules_sha256": "2fce0c15763231ef7a32a59e1e93091c286258136dd7782ed79dc84da6c6ad66",
+ "open_hours": [],
+ "params_sha256": "667a38aa70c83071367ffa1a2cddb08e997569ac9a0dad8df76e0838e47ecb4e",
+ "pool_sha256": "9fdbd941095e476c2800da3f1468da17e33cb3c9ff1b78dda262b393fdb359c0",
+ "records": 18098,
+ "schema": "styxx.sealed-ahead/pool-meta/v0",
+ "status": "COMPLETE",
+ "window": {
+  "hours": 168,
+  "t0": "2026-09-28T00:00:00Z",
+  "t1": "2026-10-05T00:00:00Z"
+ }
+}
