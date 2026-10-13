@@ -22,10 +22,17 @@ WHAT THE LINE CARRIES.
     the line so a HELD bought with volume is visible. For OATH lines a larger set makes HELD
     strictly easier; for sworn lines ``n`` is the count of distinct receipts the spans named; for
     diffgate lines it is the count of bindings (summary, diff, gate).
-  * ``verifier.modules`` — every module on the derivation path, Charon itself included, each with
-    its bytes' sha256, digested into ``verifier.digest``. ``verify`` can then tell SKEW (the line
-    moved and the instrument's bytes moved) from DRIFT (the line moved under the same build).
-    SKEW detection is bounded by the hashed set; a change outside it reads as DRIFT.
+  * ``verifier`` — scheme ``styxx.charon/verifier/v1``
+    (``papers/charon/AMENDMENT_charon_verifier_names_its_runtime_2026_10_12.md``): ``modules``,
+    every module on the derivation path, Charon itself included, each with the sha256 of its bytes
+    with CRLF read as LF (E15 extended to module bytes), and ``runtime``, the interpreter's
+    implementation, version and Unicode database (``styxx.instrument.runtime``), both digested
+    into ``verifier.digest``. ``verify`` can then tell SKEW (the line moved and the verifier moved:
+    its module bytes, its runtime or both) from DRIFT (the line moved under the same module bytes
+    and the same runtime), and each row names what moved. SKEW detection is bounded by the hashed
+    set; a change outside it reads as DRIFT. A line with no scheme is legacy: raw-byte shas, no
+    runtime, a digest over the module list alone, which no fresh digest can equal, so it reads
+    MOVED_VERIFIER or SKEW and never SAME_LINE or DRIFT. ``sys.version`` is written nowhere.
   * ``prev`` — the previous line's ``entry_id``; the line after the header names the header's
     domain-separated digest, so the header is chained too.
 
@@ -90,6 +97,7 @@ import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
+from styxx import instrument as _instrument
 from styxx.attestation import jcs
 
 __all__ = ["LOG_SCHEMA", "ENTRY_SCHEMA", "KINDS", "STATUSES", "derive", "make_entry",
@@ -98,6 +106,7 @@ __all__ = ["LOG_SCHEMA", "ENTRY_SCHEMA", "KINDS", "STATUSES", "derive", "make_en
 LOG_SCHEMA = "styxx.charon/log/v1"
 ENTRY_SCHEMA = "styxx.charon/entry/v1"
 VERIFY_SCHEMA = "styxx.charon/verify/v1"
+VERIFIER_SCHEME = "styxx.charon/verifier/v1"
 KINDS = ("sworn", "capsule-oath", "capsule-diffgate", "oath-certificate")
 STATUSES = ("SAME_LINE", "MOVED_VERIFIER", "SKEW", "DRIFT", "UNRESOLVED", "HEAD_MISMATCH", "TAMPER")
 HELD_CLASSES = ("HELD", "OATH-HELD", "PASS")
@@ -108,14 +117,19 @@ _COMPARED_KEYS = ("subject", "at", "receipts", "verdict", "verdict_class", "coun
                   "reproduced")
 _REQUIRED_ENTRY_KEYS = ("schema", "seq", "prev", "entry_id") + _CORE_KEYS
 _HEADER_DOMAIN = b"styxx.charon/log/v1\n"
-# every module on the derivation path, per kind, Charon itself first: a change to any of them is a
-# change to the instrument that wrote the line
+# every module on the derivation path, per kind, Charon itself leading: a change to any of them is a
+# change to the instrument that wrote the line. capsule-diffgate's last three joined with verifier
+# scheme v1: the identity the capsule reader compares, DECLARE-1's reading (imported by diffgate at
+# module level) and the jcs of the gate binding
 _MODULES = {
     "sworn": ("styxx.charon", "styxx.sworn", "styxx.attestation", "styxx.claimdetect"),
     "capsule-oath": ("styxx.charon", "styxx.capsule", "styxx.certify"),
-    "capsule-diffgate": ("styxx.charon", "styxx.capsule", "styxx.diffgate", "styxx.evidence", "styxx.claimdetect"),
+    "capsule-diffgate": ("styxx.charon", "styxx.capsule", "styxx.diffgate", "styxx.evidence", "styxx.claimdetect",
+                         "styxx.instrument", "styxx.declare", "styxx.attestation"),
     "oath-certificate": ("styxx.charon", "styxx.corpus_audit", "styxx.certify"),
 }
+# what verify_log says moved in the verifier, one key per value of a row's verifier_moved
+_VERIFIER_PARTS = ("same", "modules", "runtime", "modules+runtime", "legacy", "unattributed", "not_compared")
 _CERTIFIES = ("every line is a verdict re-derived from bytes by the named verifier modules — at the "
               "named commit where one is named, over the working tree otherwise — chained to the line "
               "before it, with the size and digests of the receipt set it was reproduced against; NOT "
@@ -141,7 +155,9 @@ def _content_sha256(b: bytes) -> str:
     read as moved on the other platform.
 
     Applied to: the document an OATH certificate certifies, the receipt bytes handed to that
-    certification, and a capsule file. NOT applied to a sworn document: the sworn format refuses
+    certification, a capsule file, and, since verifier scheme v1, each module file the verifier
+    names (``_module_pair``, which ``styxx.research_capsule``'s own verifier record reads too).
+    NOT applied to a sworn document: the sworn format refuses
     newline normalisation by design, its bytes are pinned by `.gitattributes`, and its digest is
     an identity claim about exact bytes. Digests that come from git plumbing or from embedded
     base64 are already platform-stable and are used as they are.
@@ -166,18 +182,62 @@ def _rel(path: Path, root: Path) -> str:
 
 
 def _module_pair(name: str) -> Tuple[str, Optional[str]]:
+    """The module's name and the sha256 of its file with CRLF read as LF (E15 extended to module
+    bytes by verifier scheme v1): a Windows checkout and a Linux checkout of one commit name one
+    build. Null when the module is absent or its file cannot be read."""
     try:
         mod = importlib.import_module(name)
-        return name, _sha256(Path(mod.__file__).read_bytes())
+        return name, _content_sha256(Path(mod.__file__).read_bytes())
     except Exception:                                  # noqa: BLE001 - an absent optional module is recorded as such
         return name, None
 
 
+def _verifier_runtime() -> dict:
+    """The runtime part of the verifier: the three fields the capsule reader compares, and nothing
+    else (no case-table label, no sys.version: the operator's O9)."""
+    rt = _instrument.runtime()
+    return {k: rt.get(k) for k in _instrument.RUNTIME_COMPARED}
+
+
+def _verifier_digest(modules, runtime) -> str:
+    return _sha256(jcs({"modules": modules, "runtime": runtime}).encode("utf-8"))
+
+
 def _verifier(kind: str) -> dict:
+    """Verifier scheme v1: the module shas and the runtime, both inside ``digest``; the scheme and
+    the version string are on the line and outside it."""
     from styxx._version import __version__
     modules = [list(_module_pair(m)) for m in _MODULES[kind]]
-    return {"styxx_version": __version__, "modules": modules,
-            "digest": _sha256(jcs(modules).encode("utf-8"))}
+    runtime = _verifier_runtime()
+    return {"scheme": VERIFIER_SCHEME, "styxx_version": __version__, "modules": modules, "runtime": runtime,
+            "digest": _verifier_digest(modules, runtime)}
+
+
+def _verifier_scheme(recorded) -> str:
+    """``legacy`` (no scheme on the line), ``v1``, or ``unknown`` (a scheme this verifier does not read)."""
+    rec = recorded if isinstance(recorded, dict) else {}
+    if "scheme" not in rec:
+        return "legacy"
+    return "v1" if rec.get("scheme") == VERIFIER_SCHEME else "unknown"
+
+
+def _verifier_moved(recorded, fresh: dict) -> Tuple[str, List[str]]:
+    """(scheme, moved): which reading of the recorded verifier applies, and what moved between it
+    and the fresh one. ``[]`` for the same digest; ``modules``, ``runtime`` or both for a scheme-v1
+    line, by comparing each part; ``legacy`` for a line with no scheme (raw shas, no runtime, a
+    digest no fresh verifier can equal); ``unattributed`` when the digests differ and no part does
+    (a hand-edited digest), or when the line names a scheme this verifier does not read. Never
+    raises on a recorded verifier that is not what a writer writes."""
+    rec = recorded if isinstance(recorded, dict) else {}
+    scheme = _verifier_scheme(rec)
+    if rec.get("digest") == fresh.get("digest"):
+        return scheme, []
+    if scheme == "legacy":
+        return scheme, ["legacy"]
+    if scheme == "unknown":
+        return scheme, ["unattributed"]
+    moved = [part for part in ("modules", "runtime") if rec.get(part) != fresh.get(part)]
+    return scheme, moved or ["unattributed"]
 
 
 def _ascii_keys(obj) -> bool:
@@ -686,16 +746,21 @@ def verify_log(log: Path, repo: Path, expect_head: Optional[str] = None) -> dict
     tampered_lines = {p["line"] for p in problems + chain}
     lines = []
     by_status: Dict[str, int] = {s: 0 for s in STATUSES}
+    by_part: Dict[str, int] = {p: 0 for p in _VERIFIER_PARTS}
     builds: Dict[str, set] = {}
     for e in entries:
+        ver = e.get("verifier") if isinstance(e.get("verifier"), dict) else {}
+        digest = ver.get("digest") if isinstance(ver.get("digest"), str) else ""
         row = {"line": e.get("_line"), "seq": e.get("seq"), "kind": e.get("kind"),
                "name": (e.get("subject") or {}).get("name") if isinstance(e.get("subject"), dict) else None,
                "recorded_class": e.get("verdict_class"),
                "fresh_class": None, "status": None, "fields_changed": [], "subject_moved": None,
                "receipts_moved": None,
-               "verifier_recorded": ((e.get("verifier") or {}).get("digest") or "")[:12]
-                                    if isinstance(e.get("verifier"), dict) else "",
-               "verifier_now": None}
+               "verifier_recorded": digest[:12],
+               "verifier_now": None,
+               "verifier_scheme": _verifier_scheme(ver), "verifier_moved": None,
+               "runtime_recorded": ver.get("runtime") if isinstance(ver.get("runtime"), dict) else None,
+               "runtime_now": None}
         if e.get("_line") in tampered_lines or not _well_formed(e):
             row["status"] = "TAMPER"
         else:
@@ -708,7 +773,9 @@ def verify_log(log: Path, repo: Path, expect_head: Optional[str] = None) -> dict
                 fresh = _unresolved(e["kind"], e["subject"]["name"], e["subject"]["path"], str(ex.code))
             row["fresh_class"] = fresh["verdict_class"]
             row["verifier_now"] = fresh["verifier"]["digest"][:12]
-            same_build = fresh["verifier"]["digest"] == e["verifier"]["digest"]
+            row["runtime_now"] = fresh["verifier"].get("runtime")
+            row["verifier_scheme"], row["verifier_moved"] = _verifier_moved(ver, fresh["verifier"])
+            same_build = fresh["verifier"]["digest"] == ver.get("digest")
             changed = [k for k in _COMPARED_KEYS if jcs(fresh[k]) != jcs(e[k])]
             row["fields_changed"] = changed
             row["subject_moved"] = fresh["subject"]["sha256"] != e["subject"]["sha256"]
@@ -725,10 +792,18 @@ def verify_log(log: Path, repo: Path, expect_head: Optional[str] = None) -> dict
             else:
                 row["status"] = "DRIFT"
         by_status[row["status"]] += 1
-        if isinstance(e.get("verifier"), dict):
-            for pair in e["verifier"].get("modules") or []:
-                if isinstance(pair, list) and len(pair) == 2:
-                    builds.setdefault(pair[0], set()).add((pair[1] or "absent")[:12])
+        moved = row["verifier_moved"]
+        by_part["not_compared" if moved is None else ("+".join(moved) or "same")] += 1
+        # a scheme-v1 sha is over LF bytes and a legacy one over raw bytes, and a sha under a scheme this
+        # verifier does not read follows a rule it does not know: prefixed, no two are read as one build.
+        # A pair that is not [name, text or null] is a line no writer wrote; it is not counted, and it
+        # must not end verify in a traceback
+        prefix = {"v1": "lf:", "unknown": "unknown:"}.get(row["verifier_scheme"], "")
+        mods = ver.get("modules")
+        for pair in mods if isinstance(mods, list) else []:
+            if isinstance(pair, list) and len(pair) == 2 and isinstance(pair[0], str) \
+                    and (pair[1] is None or isinstance(pair[1], str)):
+                builds.setdefault(pair[0], set()).add(prefix + pair[1][:12] if pair[1] else "absent")
         lines.append(row)
     head = head_of(entries)
     head_matches: Optional[bool] = None
@@ -739,15 +814,25 @@ def verify_log(log: Path, repo: Path, expect_head: Optional[str] = None) -> dict
     rep = {"schema": VERIFY_SCHEMA, "log": log.name, "head": head, "head_expected": expect_head,
            "head_matches": head_matches, "file": facts, "header": header,
            "chain_broken_at_line": (min(p["line"] for p in chain if p["line"] is not None) if chain else None),
-           "chain_problems": problems + chain, "by_status": by_status,
+           "chain_problems": problems + chain, "by_status": by_status, "by_verifier_part": by_part,
            "verifier_builds_recorded": {k: sorted(v) for k, v in builds.items()},
            "lines": lines, "certifies": _CERTIFIES,
-           "note": ("SAME_LINE = the fresh core equals the recorded core under the same verifier build; "
-                    "MOVED_VERIFIER = same core, the instrument's bytes moved; SKEW = the core moved and the "
-                    "instrument's bytes moved; DRIFT = the core moved under the same build (the bytes changed); "
-                    "UNRESOLVED = bytes unavailable now, never an accusation; HEAD_MISMATCH = the head is not "
-                    "the one you expected — a truncated or rebuilt log; TAMPER = the chain broke. Without "
-                    "--expect-head this report establishes internal consistency only.")}
+           "note": ("the verifier is its module bytes and its runtime (implementation, version, Unicode "
+                    "database), both inside its digest. SAME_LINE = the fresh core equals the recorded core "
+                    "under the same verifier; MOVED_VERIFIER = same core, the verifier moved; SKEW = the core "
+                    "moved and the verifier moved, and a verdict the interpreter moved under the same module "
+                    "bytes reads SKEW with runtime, or UNRESOLVED with runtime when the capsule reader's "
+                    "problems hold a word charon reads as a broken binding, never DRIFT; DRIFT = the core "
+                    "moved under the same module bytes and the same runtime: the artifact's bytes or receipts "
+                    "moved, or an input outside the hashed set did; a legacy line names no runtime. "
+                    "verifier_moved names what moved: modules, runtime, "
+                    "both, legacy (a line written before the verifier named its runtime, whose digest no "
+                    "fresh verifier can equal, so it never reads SAME_LINE) or unattributed (the digests "
+                    "differ and no part does, or a scheme this verifier does not read). UNRESOLVED = bytes "
+                    "unavailable now, or a capsule whose reader's problems charon reads as a broken binding; "
+                    "never an accusation; HEAD_MISMATCH = the head is not the one you "
+                    "expected — a truncated or rebuilt log; TAMPER = the chain broke. Without --expect-head "
+                    "this report establishes internal consistency only.")}
     rep.update(_summaries(entries))
     return rep
 
@@ -898,13 +983,15 @@ def main(argv=None) -> int:
               % (log.name, rep["entries"], rep["distinct_subjects"], (rep["head"] or "none")[:16],
                  "" if rep["head_matches"] is None else ("  expected head %s" % ("MATCHES" if rep["head_matches"] else "MISMATCH"))))
         print("  " + "  ".join("%s=%d" % kv for kv in rep["by_status"].items()))
+        print("  verifier moved: " + "  ".join("%s=%d" % kv for kv in rep["by_verifier_part"].items()))
         print("  " + "  ".join("%s=%d" % kv for kv in sorted(rep["by_kind"].items())))
         print("  eol=%s file_sha256=%s" % (rep["file"]["eol"], rep["file"]["file_sha256"][:16]))
         for r in rep["lines"]:
             if r["status"] != "SAME_LINE":
-                print("  %-14s line %-4s seq %-4s %-17s %-46s recorded=%s now=%s changed=%s %s"
+                print("  %-14s line %-4s seq %-4s %-17s %-46s recorded=%s now=%s changed=%s verifier=%s %s"
                       % (r["status"], r["line"], r["seq"], r["kind"], (r["name"] or "")[:46], r["recorded_class"],
-                         r["fresh_class"], ",".join(r["fields_changed"]) or "-", r.get("reason", "")))
+                         r["fresh_class"], ",".join(r["fields_changed"]) or "-",
+                         ",".join(r["verifier_moved"] or []) or "-", r.get("reason", "")))
         if a.out:
             with open(a.out, "w", encoding="utf-8", newline="\n") as fh:
                 fh.write(json.dumps(rep, indent=1, ensure_ascii=False) + "\n")
