@@ -188,3 +188,53 @@ amendment did not say.
    is over its module list, as every committed line's is. Both edits need the log re-chained, which
    `verify --expect-head`, with a head held outside the log, reads as HEAD_MISMATCH. A reading that
    re-derives the digest from the parts, with the status rule unchanged, is not in this phase.
+
+## SECTION — 2026-10-12, a second: a verdict the interpreter moved reads SKEW or UNRESOLVED, never DRIFT
+
+The text above, the erratum and the section before this one are not edited. A red-team check of `84bd432f`
+moved the interpreter for real, and the last sentence of item 4 did not hold for five of the eleven lines it
+measured. The lead re-ran the measurement below and it gave the same readings.
+
+1. **What was measured.** Eleven `capsule-diffgate` capsules were minted and ingested under CPython 3.12.10
+   (Unicode 15.0.0), and the log was verified under CPython 3.14.2 (Unicode 16.0.0), from one copy of the
+   modules. Ten summaries name a path or an identifier holding a character the Unicode 16.0.0 database
+   assigns and Unicode 15.0.0 does not, and one is an ASCII control.
+   - The five symbol claims read SKEW `["runtime"]`.
+   - The five file claims read UNRESOLVED, with a `verifier_moved` of `["runtime"]` and a reason beginning
+     `capsule_binding: INSTRUMENT SKEW`. Under 3.12.10 each path splits at that character, and the gate
+     reads what follows it as a bare file name absent from the diff.
+   - The control reads MOVED_VERIFIER `["runtime"]`.
+   - None reads DRIFT. Minted under 3.14.2 and verified under 3.12.10, the same eleven gave the same split.
+     The parent of this change, minted under 3.12.10 and verified under 3.14.2, gave DRIFT 5, UNRESOLVED 5
+     and SAME_LINE 1.
+
+2. **Why.** `derive_capsule` reads a problem of the capsule reader holding `ambiguous`, `bytes !=`, or `!=`
+   beside `binding` as a broken binding, and derives the line UNRESOLVED. That rule is on the parent, and
+   this amendment does not change it. Under a moved interpreter the reader writes the INSTRUMENT SKEW line,
+   which never holds those words, and after it a content line, `gate.claims not reproduced: embedded [...]
+   vs live [...]`, which quotes both records' claims. The gate's reason for a bare file name absent from the
+   diff holds the word `ambiguous`, so the line derives UNRESOLVED from the content line, in both
+   directions. Rule 6 of the quoting erratum of `AMENDMENT_capsule_v02_instrument_identity_2026_10_11.md`,
+   and its erratum on rule 4, already record this for the capsule: the SKEW line never makes charon derive
+   a capsule UNRESOLVED, and a content line can.
+
+3. **What item 4's sentence reads.** A verdict the interpreter or its Unicode database moved, under the
+   same module bytes, reads SKEW `["runtime"]`, or UNRESOLVED with a `verifier_moved` of `["runtime"]` when
+   the capsule reader's problem text holds a word `derive_capsule` reads as a broken binding. It never
+   reads DRIFT. Item 6 is read the same way: a legacy capsule line whose reader's problems hold such a word
+   reads UNRESOLVED, whether or not its bytes are available. The verify note says both, and its gloss of
+   UNRESOLVED names, beside bytes unavailable now, a capsule whose reader's problems charon reads as a
+   broken binding.
+
+4. **What is not changed.** `derive_capsule`'s rule. Narrowing it to the binding lines `styxx/capsule.py`
+   writes goes past the design's text, and it is the operator's decision, not this phase's. On the test of
+   item 5 it turns the bare-name capsule SKEW `["runtime"]`. None of the twelve capsule lines of the
+   committed log (seq 9, 85, 89, 95, 106, 108, 129, 131, 135, 138, 217 and 233) was recorded UNRESOLVED or
+   reads UNRESOLVED on this tree, so that narrowing would move none of them.
+
+5. **A test pins the case without a second interpreter.** `tests/test_charon_instrument.py` mints two
+   capsules under one reading and verifies them under another, in both directions. The other reading names
+   another runtime and reads each claim otherwise. A capsule whose summary names a bare file absent from its
+   diff reads UNRESOLVED `["runtime"]`, with the INSTRUMENT SKEW line as its reason. A capsule with a symbol
+   claim reads SKEW `["runtime"]`. None reads DRIFT. Should the operator narrow the rule, the test moves
+   with it.
