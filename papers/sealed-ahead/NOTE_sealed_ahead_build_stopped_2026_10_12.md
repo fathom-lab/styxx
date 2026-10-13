@@ -1,19 +1,19 @@
 # NOTE: the sealed-ahead build stopped on 2026-10-12; its battery, sizing week and stranger pool check are records
 
 2026-10-12, late evening (EDT). The sealed-ahead precision build in this directory (branch
-`research/sealed-ahead-precision`) was stopped before any plan was fixed. The lab's decision record for that
-night says: "sealed-ahead build STOPPED (wf_04546d53-53a stopped mid-sizing); its battery, sizing week and stranger
-pool are to be committed as records". This NOTE does that. It adds `records_2026_10_12/`: ten files copied byte for
-byte from the separate local repository the battery and the sizing week were written in (`_sealed_ahead_2026_10_12`,
-no remote), and the 715 bytes of that repository's commit `6faeff16` as `git cat-file commit` prints them. No code
-under this directory changes, no test of it changes, and nothing under `styxx/` changes. Section 6 says what this
-does not show.
+`research/sealed-ahead-precision`) was stopped before its precision plan P was fixed. The lab's decision record for
+that night says: "sealed-ahead build STOPPED (wf_04546d53-53a stopped mid-sizing); its battery, sizing week and
+stranger pool are to be committed as records". This NOTE does that. It adds `records_2026_10_12/`: ten files copied
+byte for byte from the separate local repository the battery and the sizing week were written in
+(`_sealed_ahead_2026_10_12`, no remote), and the 715 bytes of that repository's commit `6faeff16` as
+`git cat-file commit` prints them. No code under this directory changes, no test of it changes, and nothing under
+`styxx/` changes. Section 6 says what this does not show.
 
 Receipt key. `R:` is `records_2026_10_12/` in this directory. `NL` is `NEXT_LEVEL.md`, `DEC` is
 `DECISIONS_2026_10_12.md`, `AF` is `attack_feasibility.md` and `GG` is `ground_gate.md`: the plan of 2026-10-12, the
-operator's answers and two of the plan's grounding reports, all local to the lab and not in this repository. `STUDY`
-is `STUDY_where_styxx_goes_next_2026_10_06.md`, also not in this repository. A number quoted from them keeps the
-receipt they gave it.
+operator's answers, the plan's feasibility attack pass and one of its grounding reports, all local to the lab and not
+in this repository. `STUDY` is `STUDY_where_styxx_goes_next_2026_10_06.md`, also not in this repository. A number
+quoted from them keeps the receipt they gave it.
 
 ## 1. Why it stopped
 
@@ -109,7 +109,13 @@ The plan and the script were committed in the separate repository at `473bc087` 
 of section 5 applies) before any hour was streamed. The run went from 2026-10-12 16:34Z to 2026-10-13 01:42Z through
 the builder's code at `3c63ea40`, which `sizing.py` refuses to load unless `common.py`, `population.py`, `pool.py`,
 `accuse.py` and `identity_table.json` hash (LF) to the plan's digests (`R:sizing/sizing_plan_2026_09_28.json`,
-`builder`). Counts only. The report is `R:SIZING.md`; the numbers below are keys of `R:sizing_week_2026_09_28.json`.
+`builder`). The script then took five more commits there, all to its report step and one comment: `3c831e72`,
+`a30bbac8`, `a288f327` and `2decbde0`, stated 12:43:10 to 12:59:37 −0400 (16:43:10Z to 16:59:37Z), while records
+were being fetched (`sample.fetched_between` runs from 16:40:55Z to 01:41:47Z), and `9acff5b0`, stated 21:45:26
+−0400, after it; 24 lines added and 5 removed in all (`git diff --stat 473bc087 9acff5b0 -- sizing/sizing.py` in that
+repository). `R:SIZING.md` section 1 lists them and says none touches counting, the sample or the gate. So the
+receipt's `script.lf_sha256` names the last version, not the script as committed before streaming. Counts only. The
+report is `R:SIZING.md`; the numbers below are keys of `R:sizing_week_2026_09_28.json`.
 
 - **The archive week**, 2026-09-28T00 to 2026-10-05T00 UTC: 168 of 168 hours, no 404; 3,376,781,443 compressed
   bytes; 13,765,478 lines, 0 bad; 525,508 PullRequestEvents, none carrying a body (`archive`).
@@ -151,7 +157,10 @@ the builder's code at `3c63ea40`, which `sizing.py` refuses to load unless `comm
   exactly these battery bytes and states that time.
 - **The order it states.** The builder's earliest commit on this branch, `ce02a336`, states 09:20:33 −0400, 2 min
   10 s later. The comparison records one probe of the builder's working tree at 09:20:07 (`R:BATTERY_vs_build.md`,
-  "Housekeeping"), also after the battery's stated time.
+  "Housekeeping"), also after the battery's stated time. The builder's commit dates do not bound when its files
+  were on disk: that probe wrote into the builder's folder 26 s before `ce02a336`, and six modules and 70 tests
+  landed in seven commits over 20 minutes. So the order shows only that the battery's bytes are dated before any
+  build commit; that the battery was written before any of the build was read rests on `R:BATTERY.md`'s own account.
 - **What it does not bound.** A local commit date is written from the committer's own clock, and git records any
   date it is handed. 09:18:23 −0400 is not a timestamp anyone else can check: the commit was never pushed, stamped
   or anchored, and the repository it sits in has no remote. "Battery before build" rests on the lab's clock and the
