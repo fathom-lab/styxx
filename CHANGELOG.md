@@ -61,8 +61,10 @@ this entry the words were printed nowhere outside the preregistration and one re
 - **The Action's pin is not moved here.** README lines 80 and 366 still name `fathom-lab/styxx@main`, and
   `action.yml`'s `styxx-version` default is still the floor `styxx>=7.44.2`. An exact pin on the next release
   names a version PyPI does not hold until that release is published, and `.github/workflows/diffgate.yml`, the
-  lab's own required check, installs the default, so the pin rides in the release's own pull request, with a test
-  that the exact pin equals `styxx/_version.py`'s version.
+  lab's own required check, installs the default, so a pin merged before its release is published fails that
+  check on every pull request until it is. The pin waits for the release, with a test that the exact pin equals
+  `styxx/_version.py`'s version; how it rides with the release (the workflow naming its own install, or the pin
+  following the publish) is the operator's call.
 - **A surface lint, held in CI by `tests/test_surface_lint.py`.** `scripts/surface_lint.py`, standard library
   only, reads the shipped surfaces (the root documents except this file, the Action's script and the pre-commit
   hook definitions, and the prose under `styxx/`, `sworn/`, `integrations/`, `hooks/`, `docs/`, `web/` and
