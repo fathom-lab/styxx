@@ -4,8 +4,11 @@
 U+0085, U+2028 and U+2029; git, CPython's tokenizer and the port do not. A line `+<U+000C>def test_a():` was cut in
 two, its definition dropped, and the true claims "Added 1 test." and "Added function test_a." read CONTRADICTED. The
 Python now cuts every piece of git output where the port does (`_git_lines`: CRLF, a lone CR, LF), and in both ports
-the `def` counts and the compatibility reading abstain over a line holding a character the two readers read apart
-once the line is whole (`_READ_APART`: U+000B, U+001C to U+001F, U+0085, U+2028, U+2029). The port reads the two
+the `def` counts and the compatibility reading abstain over a line, of any file, holding a character CPython refuses
+in source outside a string or a comment, which the two readers read apart once the line is whole or, U+000B, read
+alike as an indentation CPython refuses (`_READ_APART`: U+000B, U+001C to U+001F, U+0085, U+2028, U+2029). The
+abstention cannot tell where the character sits, so it also withholds true claims beside one in a comment, a string
+or another file; its reasons say no more than holds for every member wherever it sits. The port reads the two
 header patterns' `.` as the Python does, and the PATH-2a overlay models the new cut.
 
 #206. A declared `files_changed` / `tests_added` count is 1-9 ASCII digits in both ports; any other value is
@@ -14,9 +17,10 @@ reason are the same on every runtime, whatever its Unicode tables hold.
 
 What is held here: the issues' reproductions at the raw door, at the git door (a real two-commit repository; skipped
 without git) and in the port (skipped without node), in both strict modes; a grid of every str.splitlines() break,
-every str.isspace() character and U+FEFF in seven positions on a definition line, judged by ast.parse; the cut against
-str.splitlines() and against the port's, over every break, seeded; the sites that cut; the abstention's set and its
-reasons, the same in both ports; every code point from U+0080 up in a declared count; and a plant of each change,
+every str.isspace() character and U+FEFF in eight positions on a definition line, judged by ast.parse; the cut against
+str.splitlines() and against the port's, over every break, seeded; the sites that cut; the abstention's set, its
+reach and its reasons, the same in both ports, and that the reasons hold for every member on the running CPython;
+every code point from U+0080 up in a declared count; and a plant of each change,
 each told by a check here.
 """
 from __future__ import annotations
@@ -289,7 +293,8 @@ def test_206_the_two_ports_print_the_same_reason(tmp_path):
 GRID_CHARS = sorted({c for c in range(0x110000) if len(("a" + chr(c) + "b").splitlines()) == 2}
                     | {c for c in range(0x110000) if chr(c).isspace()} | {0xFEFF} - {0x0A})
 GRID_CHARS = [c for c in GRID_CHARS if c != 0x0A]               # LF is git's own line end
-POSITIONS = ("t-lead-new", "t-lead-reindent", "t-mid", "t-class-indent", "s-lead-new", "s-sep-new", "s-end-new")
+POSITIONS = ("t-lead-new", "t-lead-reindent", "t-mid", "t-class-indent", "t-sep-new", "s-lead-new", "s-sep-new",
+             "s-end-new")
 GRID_HEAD = "diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n"
 
 
@@ -299,6 +304,7 @@ def _cell(ch: str, pos: str) -> tuple:
         "t-lead-reindent": ("def test_n():\n    pass\n", ch + "def test_n():\n    pass\n"),
         "t-mid": ("x = 0\n", "x = 0\ny = 1" + ch + "def test_n():\n    pass\n"),
         "t-class-indent": ("class T:\n    pass\n", "class T:\n    pass\n" + ch + "    def test_n(self):\n        pass\n"),
+        "t-sep-new": ("x = 0\n", "x = 0\ndef" + ch + "test_n():\n    pass\n"),
         "s-lead-new": ("x = 0\n", "x = 0\n" + ch + "def foo():\n    pass\n"),
         "s-sep-new": ("x = 0\n", "x = 0\ndef" + ch + "foo():\n    pass\n"),
         "s-end-new": ("x = 0\n", "x = 0\ndef foo" + ch + "():\n    pass\n"),
@@ -341,11 +347,18 @@ def grid() -> list:
 
 
 # Measured on this change, CPython 3.12.10 and 3.14.2, Node 24.13.0: the cells where a claim ast reads as true is
-# CONTRADICTED (the same four in both ports: a lone CR, #176, which both ports cut at and git does not), and the cells
-# whose two final claim lists differ (all eight a U+FEFF lead or separator: the port's \s reads it, the Python's does
-# not; unchanged by #205 and named in its residuals). On main before #205 these were 8 and 4 cells, and 52 apart.
+# CONTRADICTED, the same six in both ports: a lone CR (four; #176, which both ports cut at and git does not), and a tab
+# or a form feed between `def` and a test's name (two; the tests template reads `def test_` with one space, so the
+# definition is not counted; not #205's, and the same on main); the cells where a claim ast reads as false is VERIFIED,
+# the same five in both ports and of the same two causes; and the cells whose two final claim lists differ (all eight a
+# U+FEFF lead or separator: the port's \s reads it, the Python's does not; unchanged by #205 and named in its
+# residuals). On main before #205 these were 10 in the Python and 6 in the port, 7 and 5, and 52 apart.
 RESIDUAL_CONTRADICTED = {"U+000D|t-lead-new|Added 1 test.", "U+000D|t-class-indent|Added 1 test.",
-                         "U+000D|t-mid|Added 1 test.", "U+000D|s-lead-new|foo"}
+                         "U+000D|t-mid|Added 1 test.", "U+000D|s-lead-new|foo",
+                         "U+0009|t-sep-new|Added 1 test.", "U+000C|t-sep-new|Added 1 test."}
+RESIDUAL_FALSE_VERIFIED = {"U+000D|t-lead-new|Added 0 tests.", "U+000D|t-class-indent|Added 0 tests.",
+                           "U+000D|t-mid|Added 0 tests.",
+                           "U+0009|t-sep-new|Added 0 tests.", "U+000C|t-sep-new|Added 0 tests."}
 RESIDUAL_APART_CHAR = "U+FEFF|"
 RESIDUAL_APART = 8
 
@@ -355,11 +368,17 @@ def _contradicted_true(cells: list, finals: dict) -> set:
             and any(x[0] in ("tests_added", "symbol_added") and x[1] == "CONTRADICTED" for x in finals[c["id"]])}
 
 
+def _verified_false(cells: list, finals: dict) -> set:
+    return {c["id"] for c in cells if c["true"] is False
+            and any(x[0] in ("tests_added", "symbol_added") and x[1] == "VERIFIED" for x in finals[c["id"]])}
+
+
 def test_the_grid_python():
     cells = grid()
-    assert len(GRID_CHARS) == 29 and len(cells) == 319
+    assert len(GRID_CHARS) == 29 and len(cells) == 377
     finals = {c["id"]: _rec(N.gate_diff_text(c["summary"], c["diff"]))["claims"] for c in cells}
     assert _contradicted_true(cells, finals) == RESIDUAL_CONTRADICTED
+    assert _verified_false(cells, finals) == RESIDUAL_FALSE_VERIFIED
 
 
 def test_the_grid_port_and_across_ports(tmp_path):
@@ -367,6 +386,7 @@ def test_the_grid_port_and_across_ports(tmp_path):
     got = _port([{"id": c["id"], "op": "gate", "summary": c["summary"], "diff": c["diff"]} for c in cells], tmp_path)
     port = {k: v["off"]["claims"] for k, v in got.items()}
     assert _contradicted_true(cells, port) == RESIDUAL_CONTRADICTED
+    assert _verified_false(cells, port) == RESIDUAL_FALSE_VERIFIED
     apart = [c["id"] for c in cells if port[c["id"]] != _rec(N.gate_diff_text(c["summary"], c["diff"]))["claims"]]
     assert all(x.startswith(RESIDUAL_APART_CHAR) for x in apart) and len(apart) == RESIDUAL_APART, apart
 
@@ -462,10 +482,13 @@ def test_every_site_that_cuts_git_output_uses_the_cut():
 # ---- 4. the abstention ------------------------------------------------------------------------------------------------
 
 APART = {0x0B, 0x1C, 0x1D, 0x1E, 0x1F, 0x85, 0x2028, 0x2029}
-WHY_ADDED = ("an added line holds U+{}, which CPython refuses in source and the Python and JavaScript readers read "
-             "apart; this template counts `def` lines (#205)")
-WHY_COMPAT = ("compatibility claimed; a changed line holds U+{}, which the Python and JavaScript readers read apart, "
-              "so no definition was read (#205)")
+# Each says only what holds for every member of APART wherever it sits (in code, a comment, a string or a file that is
+# not Python): CPython refuses it in source outside a string or a comment (`test_the_reasons_hold_for_every_member`),
+# and the reading cannot tell where it sits. The two readers read U+000B alike, so neither says they read it apart.
+WHY_ADDED = ("an added line holds U+{}, which CPython refuses in source outside a string or a comment; this template "
+             "counts `def` lines and cannot tell where it sits (#205)")
+WHY_COMPAT = ("compatibility claimed; a changed line holds U+{}, which CPython refuses in source outside a string or a "
+              "comment, and this reading cannot tell where it sits, so no definition was read (#205)")
 
 
 def _members(rx) -> set:
@@ -523,6 +546,78 @@ def _abstain_problems(mod) -> list:
 
 def test_the_abstention_reasons_python():
     assert _abstain_problems(N) == []
+
+
+# Where a member of APART can sit on an added line, and what CPython does with the file: refuse it in code, accept it in
+# a comment or a string. The reasons claim no more than this, so they are true whatever the position or the file.
+REFUSED_AT = {"lead": "{c}def test_a():\n    pass\n", "class lead": "class T:\n{c}    def test_a(self):\n        pass\n",
+              "after def": "def{c}test_a():\n    pass\n", "mid": "x = 1{c}+ 2\n", "trailing": "x = 1{c}\n",
+              "own line": "x = 1\n{c}\ny = 2\n", "in brackets": "x = (1,{c}2)\n", "continued": "x = 1 + \\\n{c}2\n"}
+ACCEPTED_AT = {"comment": "x = 1  # a{c}b\n", "string": "x = 'a{c}b'\n", "docstring": 'def f():\n    """a{c}b"""\n'}
+
+
+def _reach_cases() -> list:
+    """A new test, `def test_new():`, beside a member of APART that CPython accepts where it sits: in a comment, in a
+    string, or in a file that is not Python. The claims are true (ast.parse defines test_new), and both ports withhold
+    them all the same, with the #205 reason: the template cannot tell where the character sits."""
+    out = []
+    for c in sorted(APART):
+        ch = chr(c)
+        for where, lines, extra in (
+                ("comment", ["def test_new():", "    pass  # a" + ch + "b"], ""),
+                ("string", ["def test_new():", "    x = 'a" + ch + "b'"], ""),
+                ("other file", ["def test_new():", "    pass"], _new_file("docs/notes.md", ["a" + ch + "b"]))):
+            for form, summary in (("prose", "Added 1 test. Added function test_new."),
+                                  ("declared", "Adds a test.\n\n```styxx\ntests_added: 1\nadds_symbol: test_new\n```\n")):
+                out.append({"id": f"{c:04X}|{where}|{form}", "op": "gate", "summary": summary, "lines": lines,
+                            "diff": _new_file("tests/test_a.py", lines) + extra})
+    return out
+
+
+def _reach_want(it: dict) -> dict:
+    why = WHY_ADDED.format(it["id"].split("|")[0])
+    claims = [["tests_added", "UNCHECKABLE", why], ["symbol_added", "UNCHECKABLE", why]]
+    if it["id"].endswith("|declared"):
+        claims = claims[::-1]                       # a declaration is read in its keys' order
+    return {"off": {"verdict": "PASS", "claims": claims}, "on": {"verdict": "FAIL", "claims": claims}}
+
+
+def test_the_abstention_reaches_a_comment_a_string_and_another_file(tmp_path):
+    """The named cost of the abstention: 48 inputs whose two claims are true, VERIFIED in both ports before #205, are
+    UNCHECKABLE in both now, a `--strict` FAIL."""
+    cases = _reach_cases()
+    assert len(cases) == 48
+    for it in cases:
+        names = [n.name for n in ast.walk(ast.parse("\n".join(it["lines"]) + "\n")) if isinstance(n, ast.FunctionDef)]
+        assert names == ["test_new"], it["id"]
+        assert _gate(N, it["summary"], it["diff"]) == _reach_want(it), it["id"]
+    got = _port([{k: it[k] for k in ("id", "op", "summary", "diff")} for it in cases], tmp_path)
+    for it in cases:
+        assert {"off": got[it["id"]]["off"], "on": got[it["id"]]["on"]} == _reach_want(it), it["id"]
+
+
+def test_the_reasons_hold_for_every_member():
+    """Each reason says CPython refuses the character in source outside a string or a comment, and that the reading
+    cannot tell where it sits: on this runtime ast.parse refuses every member of APART in each code position and
+    accepts it in each comment and string position. Neither reason says the two readers read the character apart,
+    which is false for U+000B (both read it as white space, and `^` and `.` alike)."""
+    bad = []
+    for cp in sorted(APART):
+        for where, src in REFUSED_AT.items():
+            try:
+                ast.parse(src.replace("{c}", chr(cp)))
+                bad.append((f"{cp:04X}", where, "accepted"))
+            except SyntaxError:
+                pass
+        for where, src in ACCEPTED_AT.items():
+            try:
+                ast.parse(src.replace("{c}", chr(cp)))
+            except SyntaxError:
+                bad.append((f"{cp:04X}", where, "refused"))
+    assert bad == []
+    assert re.search(r"\s", "\x0b") and re.fullmatch(".", "\x0b") and re.search("^d", "\x0bd", re.M) is None
+    for why in (WHY_ADDED, WHY_COMPAT):
+        assert "outside a string or a comment" in why and "cannot tell where it sits" in why and "apart" not in why
 
 
 def _alike_cases() -> list:

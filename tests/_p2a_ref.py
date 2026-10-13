@@ -40,8 +40,8 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # (06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141 was 1cde8b82's): the same abstention, its two
 # header patterns read as the Python's, and #206's count. So relation (A), the lockstep and bar C run against the new
 # main in both languages, and every figure they pin was measured again on it.
-MAIN_PY_SHA = "cf443499cb2c73272043d4815f9ce054eed8c1a09323d5adaba21fd695302332"
-MAIN_JS_SHA = "31d0376c68b988f505c46e9b1e683bced862e5c5dd2142d4a44a49b4a1726121"
+MAIN_PY_SHA = "f457d2e4f8b3c1c7f059ec431901b93df411c6c3f4b4f7e2bb51de6a46c66611"
+MAIN_JS_SHA = "d74cc729cea84c98501adaa0ab651c0c8ef10f3da04aae4887e75e66a93dcbbd"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
 _MARK = "=== PATH-2a abstain-only overlay: "

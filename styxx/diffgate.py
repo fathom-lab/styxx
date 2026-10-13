@@ -577,14 +577,15 @@ def _compat_reading(sides: dict | None) -> tuple[str, str, dict]:
     if not langs:
         return ("UNCHECKABLE", "compatibility claimed; no language this reading covers in the diff "
                                "(python, js/ts, go, rust, java)", dict(empty))
-    # #205: a changed line holding a character the two readers read apart (files in order, each file's added lines
-    # then its removed lines) leaves no definition read; the verdict was UNCHECKABLE already, only the reason moves.
+    # #205: a changed line holding a character of _READ_APART (files in order, each file's added lines then its removed
+    # lines) leaves no definition read; the verdict was UNCHECKABLE already, only the reason moves.
     for added, removed in sides.values():
         for line in added + removed:
             apart = _read_apart(line)
             if apart:
-                return ("UNCHECKABLE", f"compatibility claimed; a changed line holds {apart}, which the Python and "
-                                       f"JavaScript readers read apart, so no definition was read (#205)", dict(empty))
+                return ("UNCHECKABLE", f"compatibility claimed; a changed line holds {apart}, which CPython refuses in "
+                                       f"source outside a string or a comment, and this reading cannot tell where it "
+                                       f"sits, so no definition was read (#205)", dict(empty))
     sig = f"; {len(changed)} signature(s) changed" if changed else ""
     detail = {"removed": [{"path": p, "language": l, "name": n, "surface": sf} for p, l, n, sf in dropped],
               "languages": langs,
@@ -1264,11 +1265,13 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 evidence=evidence, commit=commit, run=run, repo=repo))
         return _tp[0]
 
-    # #205: the `def` counts below abstain over an added line holding a character the two readers read apart. Read
+    # #205: the `def` counts below abstain over an added line, of any file, holding a character of _READ_APART. Read
     # once per call; the DECLARE-1 pass gets the same added lines, so a declared count and a prose one abstain alike.
+    # The reason says what holds for each such character wherever it sits: CPython refuses it outside a string or a
+    # comment, and a count of `def` lines cannot tell where it sits (on U+000B the two readers read alike).
     apart = _read_apart(added_blob)
-    apart_why = (f"an added line holds {apart}, which CPython refuses in source and the Python and JavaScript readers "
-                 f"read apart; this template counts `def` lines (#205)") if apart else None
+    apart_why = (f"an added line holds {apart}, which CPython refuses in source outside a string or a comment; this "
+                 f"template counts `def` lines and cannot tell where it sits (#205)") if apart else None
     claims: list[DiffClaim] = []
     sentences = re.split(r"(?<=[.!?])\s+|\n+", summary_text)
     covered = set()
@@ -1496,10 +1499,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
 # function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
 # the block's own slotted classes, so nothing of main's is reachable from it as data.
-# Everything outside this block is main's reader (sha256 cf443499..., LF: 4eb3d6f0..., which is 1cde8b82's
+# Everything outside this block is main's reader (sha256 f457d2e4..., LF: 4eb3d6f0..., which is 1cde8b82's
 # 9b620e00... with the demo's CONTRADICTED label, fix/contradicted-not-lie, plus the record naming its instrument,
 # identity phase 2; then #205, fix/diffgate-205-206, moved reading paths: every piece of git output is cut at git's
-# line ends, and the `def` counts and the compatibility reading abstain over a line the two readers read apart),
+# line ends, and the `def` counts and the compatibility reading abstain over a line holding a character of _READ_APART),
 # unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only

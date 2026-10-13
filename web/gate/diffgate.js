@@ -305,11 +305,11 @@ function _compatReading(sides) {
   if (!langs.length) {
     return ["UNCHECKABLE", "compatibility claimed; no language this reading covers in the diff (python, js/ts, go, rust, java)", empty()];
   }
-  // #205, as the Python's: a changed line holding a character the two readers read apart leaves no definition read
+  // #205, as the Python's: a changed line holding a character of _READ_APART leaves no definition read
   for (const [added, removed] of sides.values()) {
     for (const line of added.concat(removed)) {
       const apart = _readApart(line);
-      if (apart !== null) return ["UNCHECKABLE", `compatibility claimed; a changed line holds ${apart}, which the Python and JavaScript readers read apart, so no definition was read (#205)`, empty()];
+      if (apart !== null) return ["UNCHECKABLE", `compatibility claimed; a changed line holds ${apart}, which CPython refuses in source outside a string or a comment, and this reading cannot tell where it sits, so no definition was read (#205)`, empty()];
     }
   }
   const sig = changed.length ? `; ${changed.length} signature(s) changed` : "";
@@ -587,9 +587,10 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
     return [null, null];
   }
 
-  // #205, as the Python's _gate: the `def` counts abstain over an added line holding a character of _READ_APART
+  // #205, as the Python's _gate: the `def` counts abstain over an added line, of any file, holding a character of
+  // _READ_APART, with the Python's reason byte for byte
   const apart = _readApart(addedBlob);
-  const apartWhy = apart === null ? null : `an added line holds ${apart}, which CPython refuses in source and the Python and JavaScript readers read apart; this template counts \`def\` lines (#205)`;
+  const apartWhy = apart === null ? null : `an added line holds ${apart}, which CPython refuses in source outside a string or a comment; this template counts \`def\` lines and cannot tell where it sits (#205)`;
   const claims = [];
   const sentences = _pySplitSentences(summaryText);
   const covered = new Set();
@@ -727,8 +728,8 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
 // covered
 // (NOTE_path2a_eleventh_pass_2026_10_05).
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 ce54ce2de7cc44c319f88af24a5670b07104f4db29a11b40be0bacd94103eabc, LF). Everything outside this block is
-// main's port (sha256 31d0376c..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 b0a655768b66b8458cfc9171608885283200d7c4c14efb1c175204bab5efe818, LF). Everything outside this block is
+// main's port (sha256 d74cc729..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
 // compatibility reading and its two header patterns read as the Python reads them, and #206's count,
 // fix/diffgate-205-206), unchanged except that main's gateDiffText is named _gateDiffTextMain (its definition and its
 // DECLARE-1 self-call); the gateDiffText at the end of this block calls it and then the overlay, once. The overlay

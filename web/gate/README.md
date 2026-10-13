@@ -3,7 +3,7 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`ce54ce2de7cc44c319f88af24a5670b07104f4db29a11b40be0bacd94103eabc` (LF line endings; a wheel
+`b0a655768b66b8458cfc9171608885283200d7c4c14efb1c175204bab5efe818` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -17,8 +17,9 @@ content key moved (sha256
 `4eb3d6f03f81a0b08153d329ce00a9e5e8cfe5b0952d6e86451b3084bb444130`); and then one change on reading
 paths, #205: every piece of git output is cut at git's line ends (CRLF, a lone CR, LF), not at the
 other breaks `str.splitlines()` knows, and the two `def` counts and the compatibility reading abstain
-over a line holding a character the two readers read apart (sha256
-`cf443499cb2c73272043d4815f9ce054eed8c1a09323d5adaba21fd695302332`) — plus the PATH-2a block (an
+over a line holding U+000B, U+001C to U+001F, U+0085, U+2028 or U+2029, which CPython refuses in
+source outside a string or a comment (sha256
+`f457d2e4f8b3c1c7f059ec431901b93df411c6c3f4b4f7e2bb51de6a46c66611`) — plus the PATH-2a block (an
 overlay that only abstains, not yet released; see *PATH-2a* below), and a committed test cuts the
 block out and gets that reader back byte for byte, in both languages. The port's record carries the
 eleven content keys and no identity: the differential compares named fields, so a Python record of
@@ -26,7 +27,7 @@ thirteen keys and a port record of eleven compare as they did. The port's `main`
 #206 in the same change, which no change since PATH-2a merged had done: the same abstention, its two
 header patterns' `.` read as the Python's (`[^\n]`, since JavaScript's `.` refuses U+2028 and U+2029),
 and a declared count in ASCII digits with a reason that names any other character by its code point
-(the port with the block cut hashes to `31d0376c68b988f505c46e9b1e683bced862e5c5dd2142d4a44a49b4a1726121`; `1cde8b82`'s was
+(the port with the block cut hashes to `d74cc729cea84c98501adaa0ab651c0c8ef10f3da04aae4887e75e66a93dcbbd`; `1cde8b82`'s was
 `06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141`).
 
 The port was first cut from the 7.47.0 wheel (`fb2d9b3e…`) and re-cut on 2026-09-16 for issue
@@ -58,8 +59,8 @@ and the never-read count to the page.
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 afcdd3785eb60c95ea559ddbfd87202011bb15a8a7e707655a3a4b8f243ea2ce   54,269 chars
-    bookmarklet.href.txt  sha256 e86801c201fdcfa77f804d69ad07c9b972c4e09c0a145d258e40b9bfdcf7476d   54,280 chars
+    bookmarklet.min.js    sha256 4f46cfdf8abb72abef70207b119f7de6b52e949f97c9aa64c01e2974e14db8ba   54,335 chars
+    bookmarklet.href.txt  sha256 e6913f666667c4f6a31c9f5317321d2db9f0a455f610093d71e404aeeba739e2   54,346 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file;
@@ -93,7 +94,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout whose styxx/diffgate.py is the file named above
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to ce54ce2d…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to b0a65576…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 190 pinned pairs against their expect blocks (+ path2a_moves.json, issue205_moves.json)
@@ -781,7 +782,8 @@ port's templates reading the description with JavaScript's regex classes where t
 sites and headers (U+FEFF, the port's alone; the Zs leads, which both read and CPython refuses), and the two runtimes'
 case tables (#173 and #184 for the last). Until #205 `str.splitlines()` against a split at CR and LF only, and `^`
 after U+2028 and U+2029 in the port, parted them too: that line-break part is #205, repaired (both mains cut where git
-cuts and abstain over the characters they still read apart); the white-space part outside its characters has no
+cuts and abstain over U+000B, U+001C to U+001F, U+0085, U+2028 and U+2029, all but U+000B still read apart); the
+white-space part outside those characters has no
 issue of its own yet, which is for the lead or the operator to decide. "Only under the overlay" counts the inputs where `main`'s two
 gate verdicts agree and the overlay's do not; `main`'s two gates differ on the rest without any overlay.
 
