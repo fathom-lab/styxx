@@ -1,4 +1,4 @@
-# git hook — the commit message cannot lie about the staged diff
+# git hook — the commit message read against the staged diff
 
 One file, `commit-msg`, that runs `styxx.diffgate` on the message against `git diff --cached`
 before every commit lands. A message that says "added 3 tests" over a diff that adds one is

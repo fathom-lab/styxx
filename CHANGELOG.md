@@ -7,6 +7,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the front door says, in EXTERNAL-1's committed words, that the gate claim is not yet true, and stops making it
+
+**EXTERNAL-1's preregistration committed this lab to a sentence, not only to a deletion.** If accusation
+precision landed below 0.95, "the claim 'an agent's PR summary cannot lie about its diff' is not yet true of
+this instrument on real-world data, and this lab will say so in those words"
+(`papers/closed-model-frontier/PREREG_external1_aidev_2026_08_31.md`, lines 93-95). It landed at 0.23: a blind
+three-seat panel upheld 23 of 100 sampled accusations (`papers/closed-model-frontier/external1_adjudication.json`),
+and a repaired path accuser measured 0.16 on a held-out sample (`v14_adjudication.json`, same directory). Before
+this entry the words were printed nowhere outside the preregistration and one recorded session diff
+(`dogfood_session.diff`, same directory). The sentence:
+
+> The claim "an agent's PR summary cannot lie about its diff" is not yet true of this instrument on real-world data.
+
+- **Where it is printed.** `action.yml`'s description now opens with it, with the precision and the
+  preregistration it answers. The README prints it in the VERIFY section, on the line under the CI snippet,
+  with the 23 of 100 and its receipt. This entry is the third place. The notes of the release that ships this
+  owe it as well.
+- **Where the claim is removed.** The other shipped places that made it, in any wording: the docstring of
+  `styxx.gate_diff` (`styxx/__init__.py`); the titles of `integrations/git/README.md`,
+  `integrations/pre-commit/README.md`, `integrations/claude-code/diffgate-hook/README.md` and
+  `integrations/cursor/diffgate-hook/README.md`; and the docstrings of `integrations/git/commit-msg`,
+  `integrations/claude-code/diffgate-hook/pretool.py` and `integrations/cursor/diffgate-hook/before_shell.py`.
+  Each now says what the hook does: it reads the message against the diff. Records are not edited: `papers/`,
+  this file's older entries, `tests/`, and the recorded pull request body `web/gate/differential/bodies/pr98.md`.
+- **README's GitHub Action row: its last sentence is withdrawn.** It read "if we ever lie about a diff, our own
+  product fails our own build". That is a statement about what the gate catches, and no receipt measures it.
+  The row now says the lab runs the Action on itself with `soft-fail: "false"` as its own choice, and that the
+  check says nothing about the sentences the gate does not read.
+- **Kept.** `action.yml`'s sentence that no kind of accusation it still makes "has been measured clearing the
+  0.95 precision floor the lab set for accusing". It is true as written. No sentence here says that no precision
+  was measured: 0.23, 0.16 and 0.25 (2 of 8, `only_touches`) were.
+- **Line numbers.** Both README edits stay on their lines (83 and 366), so the README line citations in
+  `zenodo/MANIFEST.json` still point where they did.
+- **What this does not pay.** G-E1 also said "the offending template classes are disabled, and the GitHub
+  Action does not launch on the current template set" (the preregistration, lines 76-79). Path accusations are
+  withheld; the Action launches and reports by default. A clause-by-clause audit, each clause paid or unpaid
+  with its receipt, is owed before the release and is not in this entry. Until every clause reads paid, what
+  this entry pays is the wording clause.
+- **Outside this repository** the claim still stands where only the operator can change it: the GitHub
+  repository description, the canonical site, and the PyPI pages of 7.49.0 and older, which cannot be edited and
+  are superseded by the next release instead.
+
 ## [Unreleased] — a diffgate record names the build and runtime that wrote it: `build` and `runtime` after the eleven content keys (identity phase 2)
 
 **Phase 2 of the design the operator approved on 2026-10-11**, after phase 1 below. The operator waived

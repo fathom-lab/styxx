@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""commit-msg hook: the message cannot lie about the staged diff.
+"""commit-msg hook: the message read against the staged diff.
 
 Install (one file, no build step; needs `pip install styxx`):
 

@@ -1,4 +1,4 @@
-# diffgate hook for Claude Code — the agent cannot post a message that lies about its diff
+# diffgate hook for Claude Code — the agent's commit and PR messages read against their diff
 
 `pretool.py` is a `PreToolUse` hook. Every Bash call the agent is about to make passes
 through it; when the call is a `git commit -m …` or a `gh pr create / edit --body …`, the

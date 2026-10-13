@@ -1,6 +1,9 @@
 name: "styxx diffgate"
 description: >-
-  Your agent's PR summary cannot lie about its diff. Extracts diff-shaped claims from the
+  The claim "an agent's PR summary cannot lie about its diff" is not yet true of this
+  instrument on real-world data: EXTERNAL-1 measured accusation precision 0.23 against a
+  preregistered 0.95 floor, and its preregistration (PREREG_external1_aidev_2026_08_31.md)
+  committed the lab to say so in those words. The Action extracts diff-shaped claims from the
   PR body (or push commit message) and verifies each against the actual diff — checkout-free,
   via the GitHub API. By default it reports and does not block: every verdict goes in the job
   summary and a contradicted claim is named as an annotation, but the job fails on it only if
