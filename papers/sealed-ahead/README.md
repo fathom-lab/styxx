@@ -1,5 +1,7 @@
 # Sealed-ahead precision: the pipeline
 
+**Stopped on 2026-10-12, before any plan was fixed.** The code below stays as it was committed. The battery, its comparison with this build, the sizing week of 2026-09-28 and the stranger's pool check are records in `records_2026_10_12/`, and `NOTE_sealed_ahead_build_stopped_2026_10_12.md` says why the build stopped and what the records do not show. The rest of this file was written before the sizing week ran: where it says no hour has gone through `derive` and no pull request has been gated, the sizing week has since done both (NOTE, section 4). No precision has been measured.
+
 *Built 2026-10-12 on branch research/sealed-ahead-precision. No plan exists yet, no real GH Archive hour has gone through `derive`, no pull request has been gated, nothing is published. This directory is the machinery the plan will name, with tests on synthetic lines.*
 
 The study of 2026-10-06 (`STUDY_where_styxx_goes_next_2026_10_06.md`, section 2.1, outside this repository) ranks one measurement above the rest: how often diffgate's accusations are right, judged blind, on agent pull requests opened after the plan was fixed, with every step a stranger could suspect re-derivable from public bytes. Five scripts do the deriving. Each is a pure function of public bytes and one parameters file; none takes a choice on its command line that would change a pool, an accusation or a draw.
