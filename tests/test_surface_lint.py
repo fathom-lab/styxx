@@ -115,6 +115,19 @@ def test_the_new_wordings_are_narrow(text):
     assert _rids(text + "\n") == ([], [])
 
 
+def test_an_excerpt_the_console_cannot_encode_is_escaped_not_fatal(tmp_path):
+    import os
+    import subprocess
+
+    f = tmp_path / "draft.md"
+    f.write_text("❓ nobody reads this\n", encoding="utf-8")
+    env = {k: v for k, v in os.environ.items() if k != "PYTHONUTF8"}
+    env["PYTHONIOENCODING"] = "cp1252"                     # what a Windows pipe gets without the variable
+    r = subprocess.run([sys.executable, str(SCRIPT), "--files", str(f)], capture_output=True, env=env, timeout=120)
+    assert r.returncode == 1 and b"Traceback" not in r.stderr, r.stderr.decode("utf-8", "replace")
+    assert b"plan/nobody" in r.stdout and b"\\u2753" in r.stdout
+
+
 def test_a_baseline_written_for_another_source_names_it(tmp_path):
     site = tmp_path / "site"
     site.mkdir()

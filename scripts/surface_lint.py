@@ -395,6 +395,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     ap.add_argument("--json", action="store_true", help="print the report as JSON")
     ap.add_argument("--kinds", default=",".join(KINDS), help="comma-separated kinds to report (default: all)")
     a = ap.parse_args(argv)
+    # an excerpt can carry any character the source does (the site's sample carries U+2753); a Windows pipe or file is
+    # cp1252 unless PYTHONIOENCODING says otherwise, and a character it cannot encode must not end the run unreported
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(errors="backslashreplace")
+        except (ValueError, OSError):
+            pass
 
     root = Path(a.root)
     profile = PROFILES[a.profile]
