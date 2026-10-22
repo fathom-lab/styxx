@@ -1,0 +1,21 @@
+{
+ "at": "2026-10-12T16:48:15Z",
+ "checks": {
+  "complete": true,
+  "hours": true,
+  "identity_rules_sha256": true,
+  "params_sha256": true,
+  "pool_sha256": true
+ },
+ "compressed_bytes_differ": [],
+ "gaps_now_available": [],
+ "hours_differ": [],
+ "open_hours_here": [],
+ "pool_sha256": "9fdbd941095e476c2800da3f1468da17e33cb3c9ff1b78dda262b393fdb359c0",
+ "published_gaps": [],
+ "published_pool_sha256": "9fdbd941095e476c2800da3f1468da17e33cb3c9ff1b78dda262b393fdb359c0",
+ "records": 18098,
+ "schema": "styxx.sealed-ahead/stranger/v0",
+ "stage": "pool",
+ "verdict": "AGREES"
+}
