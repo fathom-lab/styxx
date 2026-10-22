@@ -146,15 +146,19 @@ def test_there_are_pinned_pairs_to_check():
 
 
 MOVES = DIFFERENTIAL / "path2a_moves.json"
+# #205: the pinned claims main's new line reading moves, in the same form, applied after the overlay's (check_pairs.js
+# reads the two files in this order too)
+MOVES_205 = DIFFERENTIAL / "issue205_moves.json"
 
 
 def _moves() -> list[dict]:
-    """PATH-2a: pinned claims of main's files that the overlay moves (NOTE_path2a_abstain_overlay_2026_09_30)."""
-    return json.loads(MOVES.read_text(encoding="utf-8"))["moves"]
+    """PATH-2a: pinned claims of main's files that the overlay moves (NOTE_path2a_abstain_overlay_2026_09_30); then
+    #205's, pinned claims main's line reading moves since fix/diffgate-205-206."""
+    return [m for f in (MOVES, MOVES_205) for m in json.loads(f.read_text(encoding="utf-8"))["moves"]]
 
 
 def _expected(name: str, pair: dict) -> dict:
-    """The pinned expect, with any PATH-2a move applied after checking the pinned claim still reads `from`."""
+    """The pinned expect, with any PATH-2a or #205 move applied, in order, after checking the claim still reads `from`."""
     expect = json.loads(json.dumps(pair["expect"]))
     for m in _moves():
         if m["file"] == name and m["id"] == pair["id"]:
@@ -178,12 +182,19 @@ def test_python_matches_each_pinned_expect_block(name, pair):
 def test_every_path2a_move_names_a_pinned_claim_and_is_whitelisted():
     """A move that matches nothing would pass silently; the moves file is JSON in a directory that ignores JSON."""
     pinned = {(name, pair["id"]): pair for name, pair in _pairs()}
-    for m in _moves():
-        assert (m["file"], m["id"]) in pinned, f"path2a_moves.json names {m['file']}:{m['id']}, which is not pinned"
-        assert list(pinned[m["file"], m["id"]]["expect"]["claims"][m["claim"]]) == m["from"]
+    moves = _moves()
+    for k, m in enumerate(moves):
+        assert (m["file"], m["id"]) in pinned, f"a moves file names {m['file']}:{m['id']}, which is not pinned"
+        expect = json.loads(json.dumps(pinned[m["file"], m["id"]]["expect"]))
+        for e in moves[:k]:             # a later move of the same claim reads what the earlier one wrote
+            if (e["file"], e["id"], e["claim"]) == (m["file"], m["id"], m["claim"]):
+                expect["claims"][e["claim"]] = e["to"]
+        assert list(expect["claims"][m["claim"]]) == m["from"]
     allowed = {l[1:].strip() for l in (DIFFERENTIAL / ".gitignore").read_text(encoding="utf-8").splitlines()
                if l.startswith("!")}
-    assert MOVES.name in allowed
+    assert MOVES.name in allowed and MOVES_205.name in allowed
+    assert re.search(r'const MOVES = \["path2a_moves\.json", "issue205_moves\.json"\]',
+                     CHECK_PAIRS.read_text(encoding="utf-8")), "check_pairs.js does not read both moves files in order"
 
 
 def test_the_javascript_port_agrees_on_every_pinned_pair():

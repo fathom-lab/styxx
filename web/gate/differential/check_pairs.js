@@ -6,11 +6,13 @@
 // the port alone; the differential (py_side.py + js_side.js + differential.py) is the real check.
 // PATH-2a: path2a_pairs.json pins the overlay's decisions, and path2a_moves.json lists the pinned claims of the
 // other files that the overlay moves; each listed claim must still read `from` in its file and is compared with `to`.
+// #205: issue205_moves.json lists the pinned claims main's new line reading moves, in the same form, read after it.
 "use strict";
 const fs = require("fs");
 const path = require("path");
 const { gateDiffText } = require("../diffgate.js");
-const moves = JSON.parse(fs.readFileSync(path.join(__dirname, "path2a_moves.json"), "utf8")).moves;
+const MOVES = ["path2a_moves.json", "issue205_moves.json"];
+const moves = [].concat(...MOVES.map(f => JSON.parse(fs.readFileSync(path.join(__dirname, f), "utf8")).moves));
 let applied = 0;
 function expected(name, pair) {
   const mine = moves.filter(m => m.file === name && m.id === pair.id);
@@ -40,6 +42,6 @@ for (const name of ["bc1_pairs.json", "compat_pairs.json", "bin1_pairs.json", "c
     if (!ok) { bad++; console.log(`DISAGREES ${pair.id}\n  expect ${JSON.stringify(expect)}\n  got    ${JSON.stringify({verdict: g.verdict, claims: got, uncovered_sentences: g.uncovered_sentences})}`); }
   }
 }
-if (applied !== moves.length) { bad++; console.log(`path2a_moves.json lists ${moves.length} move(s) and ${applied} matched a pinned claim`); }
+if (applied !== moves.length) { bad++; console.log(`${MOVES.join(" and ")} list ${moves.length} move(s) and ${applied} matched a pinned claim`); }
 console.log(`${n} pinned pairs, ${bad} disagreement(s)`);
 process.exit(bad ? 1 : 0);
