@@ -1,0 +1,13 @@
+tree 4b49d6d9bca6cb0538a04ce529a2b58cac769153
+author darkflobi <darkflobi@darkcity.wtf> 1791811103 -0400
+committer darkflobi <darkflobi@darkcity.wtf> 1791811103 -0400
+
+BATTERY: 37 attacks on sealed-ahead precision with predicted outcomes, written before the build was read
+
+Under the plan as the study specifies it: 7 caught, 11 bounded, 19 not caught.
+Measured on four GH Archive hours (aggregates only): PullRequestEvent carries
+no body, IssuesEvent carries the full issue, a 404 hour persists a week, and
+77% of agent-labelled pull requests are identified by branch prefix alone.
+Exact bounds for fork-and-grind, audit sampling and planting are included.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

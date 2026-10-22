@@ -92,6 +92,43 @@ this entry the words were printed nowhere outside the preregistration and one re
   repository description, the canonical site, and the PyPI pages of 7.49.0 and older, which cannot be edited and
   are superseded by the next release instead.
 
+## [Unreleased] — sealed-ahead: the build stopped on 2026-10-12; its battery, sizing week and stranger pool check are committed as records
+
+**A record, with no change to `styxx/`.** The operator delegated the cut of 2026-10-12 to the lead ("i trust you"),
+who stopped the sealed-ahead precision build as that night's plan recommends: under the grant of 50 requests an hour
+to github.com and api.github.com together, the 60-accusation draw is about 92,000 requests, about 77 days. This change
+brings the build (branch `research/sealed-ahead-precision`, seven commits, code unchanged), eleven files committed byte
+for byte under `papers/sealed-ahead/records_2026_10_12/`, and
+`papers/sealed-ahead/NOTE_sealed_ahead_build_stopped_2026_10_12.md`, which carries every number below with its
+receipt.
+
+- **The build.** `papers/sealed-ahead/`: the population function (`population.py`, six identity rules, an id-ceiling
+  age rule), the pool as a pure function of GH Archive hours (`pool.py`), the frozen 7.49.0 gate over each pool
+  record whose head has not moved (`accuse.py`), the draw by a named Bitcoin block (`draw.py`) and the stranger's
+  re-derivation (`stranger.py`); `tests/test_sealed_ahead.py`, 70 tests, no network.
+- **The battery.** 37 attacks; under the plan as the study specifies it, 7 caught, 11 bounded and 19 not caught
+  (`BATTERY.md` section 2). Against the build: the catching check implemented for 11, part of it for 13 and none of
+  it for 12 (10 of them in stages not built), 1 needing nothing; eleven defects, D1 to D11; one erratum to the
+  battery, since GH Archive does not zero-pad the hour (`BATTERY_vs_build.md`, `hour_name_check_2026_10_12.json`).
+- **The sizing week of 2026-09-28.** 168 of 168 hours; 30,435 openings matched the identity table and 18,098 were
+  admitted; the stranger's pool check agrees on pool_sha256 `9fdbd941…`; of 300 sampled records 190 were gated, 100
+  had moved their head, 8 were gone and 2 were empty; 0 accusations, Wilson 95% 0 to 12.6 per 1,000
+  (`sizing_week_2026_09_28.json`, `SIZING.md`, `sizing/stranger_pool_2026_10_12.json`). Counts and digests only:
+  the pool, the sample and the outcome ledger, which name repositories and accounts, are not committed.
+  `sizing.py` took five report-side commits after its plan, four of them while records were being fetched; the
+  receipt names the last version (NOTE section 4).
+- **The battery's time.** Its commit in the separate repository, `6faeff16`, states 2026-10-12 09:18:23 −0400,
+  2 min 10 s before the builder's earliest commit. The builder's files were on disk before that commit, so the order
+  dates the battery's bytes before any build commit, not before the build could be read (NOTE section 5). The commit
+  object is committed and re-derives from the battery's bytes. A local commit date is not a timestamp anyone else
+  can check.
+- **Not shown.** No precision was measured and no gate was licensed.
+- **Tests and housekeeping.** `tests/test_sealed_ahead_records.py` (new, 16 tests): each record's sha256, the
+  folder's `-text` attribute, the battery's blob, tree and commit ids, the builder's modules against the digests the
+  sizing plan names, and the sizing receipts against each other. `.gitattributes` marks the folder `-text`; the arc's
+  row in `papers/INDEX.md` and `papers/index_check.json` (52 arcs, 52 rows) follow; the arc's README gains a stop
+  line at its head.
+
 ## [Unreleased] — diffgate cuts a diff where git does and abstains where its two readers still read a line apart (#205); a declared count is ASCII digits in both ports (#206)
 
 **A behaviour change in both ports.** It sits on identity phase 2. The code is a few lines per port; the

@@ -1,0 +1,10 @@
+{
+ "schema": "styxx.sealed-ahead/hour-name-check/v0",
+ "what": "One HEAD request each to the padded and the unpadded name of hour three of 2026-10-05, made by the builder on 2026-10-12 with curl -sI, no credentials, nothing downloaded.",
+ "requests": [
+  {"url": "https://data.gharchive.org/2026-10-05-3.json.gz", "status": 200, "content_length": 17712148, "last_modified": "Mon, 05 Oct 2026 04:05:06 GMT"},
+  {"url": "https://data.gharchive.org/2026-10-05-03.json.gz", "status": 404, "content_length": 127}
+ ],
+ "reading": "GH Archive names hours without zero padding. The study's attack pass (2026-10-07) reported 2026-10-05-03 as a 404 gap; the hour exists under its unpadded name. Any hour 0..9 asked for with padding answers 404.",
+ "code": "papers/sealed-ahead/common.py hour_name / parse_hour_name on branch research/sealed-ahead-precision"
+}
