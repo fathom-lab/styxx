@@ -317,7 +317,11 @@ def test_every_attributable_false_verdict_abstains_at_the_git_door(monkeypatch):
 PY_PLANTS = [
     ("no divergence guard", "        return self.name_status is None and self._get(\"div\"",
      "        return False and self._get(\"div\""),
-    ("the port-only line view", "    v0 = _p2a_view(fine)\n", "    v0 = _p2a_view(_p2a_lines(diff_text, _P2A_COARSE))\n"),
+    # #205 (fix/diffgate-205-206): the view is one cut now, so the plant of pass 1 ("the port-only line view", view 0
+    # cut as the port cuts) is the code itself, and its inverse is planted: view 0 cut at CPython's str.splitlines()
+    # breaks, as main cut it before #205
+    ("view 0 cut at CPython's line breaks", "    v = _p2a_view(lines)\n    return [v, v]\n",
+     '    v = _p2a_view(lines)\n    return [_p2a_view(_p2a_lines("\\n".join(lines), _P2A_FINE)), v]\n'),
     ("count CONTRADICTED interval shrunk", 'return ("count", "#121") if lo <= n <= hi else None',
      'return ("count", "#121") if lo <= n < hi else None'),
     ("V97 allows a base name for a directory claim",
@@ -403,7 +407,7 @@ PY_PLANTS = [
      "            hit = hit or head == \"-\"\n            acc = acc[-1:]\n"),
     # pass 6 (NOTE_path2a_sixth_pass_2026_09_30): each new rule, dropped
     ("the unchanged lines dropped",
-     '        return self._get("unchanged", lambda: _p2a_context(self.diff_text, self.fine())\n'
+     '        return self._get("unchanged", lambda: _p2a_context(self.lines())\n'
      '                         + _p2a_joined(self.diff_text, " "))',
      '        return self._get("unchanged", lambda: [])'),
     ("a name defined again kept",
@@ -425,15 +429,19 @@ PY_PLANTS = [
      "                if True:"),
     # pass 9 (NOTE_path2a_ninth_pass_2026_10_04, I-2): the U+2028 and U+2029 starts of the two definition readers, which
     # passed every test when dropped; the cross-port cases P9-a-removed-def-, P9-an-unchanged-def- and P9-a-test-after-
-    # hold them now
+    # hold them now (the last no longer since #205, where main abstains on it: EQUIVALENT below)
     ("the counted tests read without the U+2028 and U+2029 starts", "        r = lead.match(line, b).end()\n",
      "        if b:\n            continue\n        r = lead.match(line, b).end()\n"),
     ("the definitions read without the U+2028 and U+2029 starts", "        p = _P2A_COARSE_RUN.match(line, b).end()\n",
      "        if b:\n            continue\n        p = _P2A_COARSE_RUN.match(line, b).end()\n"),
 ]
-# Plants that cannot change a record, said so rather than hidden: none this pass. Pass 2's one (a clause that never
-# decided alone) went with the per-set comparison it sat behind (NOTE_path2a_third_pass_2026_09_30, B-2).
-EQUIVALENT: set = set()
+# Plants that cannot change a record, said so rather than hidden. Pass 2's one (a clause that never decided alone) went
+# with the per-set comparison it sat behind (NOTE_path2a_third_pass_2026_09_30, B-2). #205 (fix/diffgate-205-206) adds
+# one: main now abstains on a tests claim whenever an added line holds U+2028 or U+2029, so the starts after them, which
+# only the counted tests of a decided claim read, can move no record. They are kept because the overlay's count must
+# still be main's on every input, decided or not: tests/test_diffgate_path2a.py's lockstep holds that in each port, and
+# tests/test_diffgate_issue205_206.py plants this same slip and tells it there.
+EQUIVALENT: set = {"the counted tests read without the U+2028 and U+2029 starts"}
 
 
 def _planted(k, old, new):
@@ -446,9 +454,10 @@ def _planted(k, old, new):
 def _pairs_catch(mod):
     for p in json.loads((R.DIFFERENTIAL / "path2a_pairs.json").read_text(encoding="utf-8")):
         g = mod.gate_diff_text(p["summary"], p["diff"])
-        width = len(p["expect"]["claims"][0]) if p["expect"]["claims"] else 3
+        want = R.moved_expect("path2a_pairs.json", p)      # #205 moved two of these pins (issue205_moves.json)
+        width = len(want["claims"][0]) if want["claims"] else 3
         rows = [[c.kind, c.verdict, c.why][:width] for c in g.claims]
-        if rows != p["expect"]["claims"] or g.verdict != p["expect"]["verdict"]:
+        if rows != want["claims"] or g.verdict != want["verdict"]:
             return "pinned pair " + p["id"]
     # pass 5 (NOTE_path2a_fifth_pass_2026_09_30): the cross-port pins' Python decisions, some of them on claims only
     # main's Python reads (a path outside ASCII), which no pinned pair can hold for both ports
@@ -457,6 +466,14 @@ def _pairs_catch(mod):
         got = [(c.verdict, R.phrase_key(c.why, N._P2A_PHRASES)) for c in mod.gate_diff_text(s, d).claims]
         if got != want_py:
             return "cross-port pin " + cid
+    # #205 (fix/diffgate-205-206): the `split` of P9-a-test-after-a-line-separator went with main's abstention there,
+    # and #161's y2, whose Python decisions PORT_161 pins, holds one still
+    from tests.test_diffgate_path2a import PORT_161
+    cases = {c["id"]: c for c in R.repro_cases()}
+    for cid, (gate, want_py, _js_gate, _js_want) in PORT_161.items():
+        g = mod.gate_diff_text(cases[cid]["summary"], cases[cid]["diff"])
+        if (g.verdict, [(c.verdict, R.phrase_key(c.why, N._P2A_PHRASES)) for c in g.claims]) != (gate, want_py):
+            return "PORT_161 pin " + cid
     return None
 
 
@@ -514,7 +531,9 @@ def test_plants_are_refused(world):
 JS_PLANTS = [
     ("no divergence guard", '    divergent: () => get("div", () => _p2aDivergent(diffText)),',
      "    divergent: () => false,"),
-    ("one line view", "  return [_p2aView(_p2aLines(diffText, _P2A_FINE)), v1];", "  return [v1, v1];"),
+    # #205: one line view is the code now; its inverse is planted, view 0 cut at CPython's str.splitlines() breaks
+    ("view 0 cut at CPython's line breaks", "  return [v, v];",
+     '  return [_p2aView(_p2aLines(coarse.join("\\n"), _P2A_FINE)), v];'),
     ("count interval shrunk", 'return (lo <= n && n <= hi) ? ["count", "#121"] : null;',
      'return (lo <= n && n < hi) ? ["count", "#121"] : null;'),
     # pass 2
@@ -541,7 +560,7 @@ JS_PLANTS = [
      "        if (_p2aWideName(line, j, r, e)) return [out, true];   // every claimed name is defined now\n", ""),
     # pass 6 (NOTE_path2a_sixth_pass_2026_09_30): each new rule, dropped from the port alone
     ("no unchanged lines in the port",
-     '    unchanged: () => get("unchanged", () => _p2aContext(diffText, f.coarse()).concat(_p2aJoined(diffText, " "))),',
+     '    unchanged: () => get("unchanged", () => _p2aContext(f.coarse()).concat(_p2aJoined(diffText, " "))),',
      "    unchanged: () => [],"),
     ("no again rule in the port", '  if (f.redefines(name)) return ["again", "#101"];   // B-1 (NOTE_path2a_sixth_pass_2026_09_30)\n',
      ""),
@@ -615,7 +634,29 @@ def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
         real = json.loads((tmp_path / "own_real.json").read_text(encoding="utf-8"))
         mine = json.loads((tmp_path / "own_planted.json").read_text(encoding="utf-8"))
         new_disagreements = sum(json.dumps(x, sort_keys=True) != json.dumps(y, sort_keys=True) for x, y in zip(real, mine))
+    if new_disagreements == 0 and name in JS_EQUIVALENT:
+        # #205 (fix/diffgate-205-206): a plant that can move no record (JS_EQUIVALENT) is held to that, on every input
+        # here, and told where it shows: the port's lockstep, whose count in view 1 is no longer its main's
+        recs, locks = {}, {}
+        for port, tag in ((R.PORT, "real"), (planted, "planted")):
+            for mode, out in (("--records", recs), ("--lockstep", locks)):
+                args = ([mode, str(port), str(tmp_path / "in.json"), str(tmp_path / f"eq_{tag}.json")]
+                        if mode == "--records" else [mode, str(tmp_path / "in.json"), str(tmp_path / f"eq_{tag}.json"),
+                                                     str(port)])
+                r = subprocess.run([NODE, str(R.DIFFERENTIAL / "check_path2a.js"), *args], capture_output=True,
+                                   text=True)
+                assert r.returncode == 0, r.stderr[-2000:]
+                out[tag] = json.loads((tmp_path / f"eq_{tag}.json").read_text(encoding="utf-8"))
+        assert recs["planted"] == recs["real"], name
+        assert all(v["views"][1] == v["main"] for v in locks["real"]["counts"].values())
+        new_disagreements = sum(v["views"][1] != v["main"] for v in locks["planted"]["counts"].values())
     assert new_disagreements > 0, name
+
+
+# #205: main abstains on a tests claim whenever an added line holds U+2028 or U+2029, so the port's starts after them can
+# move no record (as the Python's, EQUIVALENT above); they are kept so that the overlay's count in view 1 stays its
+# main's on every input, which the lockstep holds.
+JS_EQUIVALENT = {"the port's counted tests without the U+2028 and U+2029 starts"}
 
 
 # Claims only one main decides so (NOTE_path2a_sixth_pass_2026_09_30): a created test after U+FEFF, which the port

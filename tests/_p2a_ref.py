@@ -3,9 +3,10 @@
 `main` here is not a vendored copy. It is this checkout's own `styxx/diffgate.py` and `web/gate/diffgate.js` with
 the PATH-2a block cut out and the door hooks reverted -- the reconstruction -- asserted to hash to the reader pinned
 below (origin/main 1cde8b82's, then that file with the demo's CONTRADICTED label, fix/contradicted-not-lie, then that
-file with the record naming its instrument, identity phase 2, then that file with the withdrawn gate claim out of its
-docstring and CLI description and its WITHHOLD comment scoped to the path classes). Every differential in the PATH-2a tests runs against that reconstruction, so the
-reference cannot drift from the reader the branch actually carries.
+file with the record naming its instrument, identity phase 2, then that file with #205's reading, fix/diffgate-205-206)
+and to the port pinned below (1cde8b82's, then that file with #205's and #206's reading). Every differential in the
+PATH-2a tests runs against that reconstruction, so the reference cannot drift from the reader the branch actually
+carries.
 """
 from __future__ import annotations
 
@@ -32,13 +33,17 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # outside the block again: `to_dict` appends `build` and `runtime` after the eleven content keys, and `_report` prints
 # an `instrument:` line last. No content key moved, so the reconstruction is re-pinned to that file, LF, and every
 # differential here runs against it unedited, with the reader's file given by `module_from` (below).
-# 4eb3d6f03f81a0b08153d329ce00a9e5e8cfe5b0952d6e86451b3084bb444130 was that file. docs/front-door-external1 changed the
-# reader outside the block once more, in two strings and one comment only: the module docstring and the argparse
-# description no longer make the gate claim EXTERNAL-1 committed the lab to withdraw, and the comment above
-# WITHHOLD_PATH_ACCUSATION no longer says the preregistered consequence was paid, only that this is its part for the
-# path classes. No reading path moved, so the reconstruction is re-pinned to that file, LF.
-MAIN_PY_SHA = "5395e7e81e4edcd791d83ecc0896e21ce771ca4128736304594845fa03a00d02"
-MAIN_JS_SHA = "06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141"
+# 4eb3d6f03f81a0b08153d329ce00a9e5e8cfe5b0952d6e86451b3084bb444130 was that file. fix/diffgate-205-206 changed the
+# reader outside the block on reading paths, unlike the two changes above: #205 cuts every piece of git output at git's
+# line ends (`_git_lines`, four sites, both doors), and the `def` counts and the compatibility reading abstain over a
+# line holding a character of `_READ_APART`. main's port moved with it, which no change since PATH-2a merged had done
+# (06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141 was 1cde8b82's): the same abstention, its two
+# header patterns read as the Python's, and #206's count. So relation (A), the lockstep and bar C run against the new
+# main in both languages, and every figure they pin was measured again on it. docs/front-door-external1 then changed
+# the reader outside the block in text only: the module docstring, the --help description and the comment over
+# WITHHOLD_PATH_ACCUSATION (e1441f18...); no reading path moved, so no figure below was measured again.
+MAIN_PY_SHA = "e1441f18f0f71cc3455ff5c02ac3b42eb1bf963f337fb3b9bcfa9db14f88a74e"
+MAIN_JS_SHA = "d74cc729cea84c98501adaa0ab651c0c8ef10f3da04aae4887e75e66a93dcbbd"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
 _MARK = "=== PATH-2a abstain-only overlay: "
@@ -149,6 +154,23 @@ def main_port_path(tmp: Path) -> Path:
 
 
 # ---- inputs -------------------------------------------------------------------------------------------------------
+
+# The moves files, in the order check_pairs.js and tests/test_port_is_current.py apply them: the overlay's moves of
+# main's pinned claims (PATH-2a), then the pinned claims main's line reading moved (#205, fix/diffgate-205-206).
+MOVES_FILES = ("path2a_moves.json", "issue205_moves.json")
+
+
+def moved_expect(name: str, pair: dict) -> dict:
+    """A pinned pair's expect block with every move of it applied in order, each `from` checked before it applies."""
+    expect = json.loads(json.dumps(pair["expect"]))
+    for f in MOVES_FILES:
+        for m in json.loads((DIFFERENTIAL / f).read_text(encoding="utf-8"))["moves"]:
+            if m["file"] == name and m["id"] == pair["id"]:
+                assert list(expect["claims"][m["claim"]]) == m["from"], f"stale move {m['id']} claim {m['claim']}"
+                expect["claims"][m["claim"]] = m["to"]
+                expect["verdict"] = m["verdict"]
+    return expect
+
 
 def pinned_files() -> list[str]:
     m = re.search(r"for \(const name of \[(.*?)\]", lf(DIFFERENTIAL / "check_pairs.js"), re.S)

@@ -153,8 +153,10 @@ const _reEscape = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 // BIN-1 (issue #118): a `diff --git` header with no `---`/`+++` pair — a binary change, a mode-only
 // change, a pure rename — registers its file: A on `new file mode` / `Binary files /dev/null and …`,
 // D on `deleted file mode` / `… and /dev/null differ`, else M. Files with hunks read as before.
-const _DIFF_GIT = /^diff --git (?:"a\/(?<qa>(?:[^"\\]|\\.)*)"|a\/(?<a>.*?)) (?:"b\/(?<qb>(?:[^"\\]|\\.)*)"|b\/(?<b>.*))$/;
-const _BINARY_LINE = /^Binary files (?<a>.+?) and (?<b>.+?) differ$/;
+// #205: each `.` of the Python's two patterns is `[^\n]` here. JavaScript's `.` also refuses U+2028 and U+2029, which
+// a header the Python no longer cuts there can hold (`diff --git a/x<U+2028>.py b/y.py`).
+const _DIFF_GIT = /^diff --git (?:"a\/(?<qa>(?:[^"\\]|\\[^\n])*)"|a\/(?<a>[^\n]*?)) (?:"b\/(?<qb>(?:[^"\\]|\\[^\n])*)"|b\/(?<b>[^\n]*))$/;
+const _BINARY_LINE = /^Binary files (?<a>[^\n]+?) and (?<b>[^\n]+?) differ$/;
 
 function _headerPaths(line) {
   const body = line.slice("diff --git ".length);
@@ -304,6 +306,13 @@ function _compatReading(sides) {
   if (!langs.length) {
     return ["UNCHECKABLE", "compatibility claimed; no language this reading covers in the diff (python, js/ts, go, rust, java)", empty()];
   }
+  // #205, as the Python's: a changed line holding a character of _READ_APART leaves no definition read
+  for (const [added, removed] of sides.values()) {
+    for (const line of added.concat(removed)) {
+      const apart = _readApart(line);
+      if (apart !== null) return ["UNCHECKABLE", `compatibility claimed; a changed line holds ${apart}, which CPython refuses in source outside a string or a comment, and this reading cannot tell where it sits, so no definition was read (#205)`, empty()];
+    }
+  }
   const sig = changed.length ? `; ${changed.length} signature(s) changed` : "";
   const detail = {
     removed: dropped.map(([p, l, n, sf]) => ({ path: p, language: l, name: n, surface: sf })),
@@ -384,10 +393,20 @@ function _basename(p) {
   return s.slice(s.lastIndexOf("/") + 1);
 }
 function _splitlines(text) {
-  // str.splitlines() for the line endings a diff can carry
+  // the Python's _git_lines: CRLF, a lone CR, LF. Since #205 both ports cut a diff here (git ends a line at LF);
+  // the Python's str.splitlines() also broke at U+000B, U+000C, U+001C to U+001E, U+0085, U+2028 and U+2029.
   const lines = text.split(/\r\n|\r|\n/);
   if (lines.length && lines[lines.length - 1] === "") lines.pop();
   return lines;
+}
+
+// #205, the Python's _READ_APART: the characters a whole line can hold that CPython refuses in source and that the
+// two readers' `\s`, `^` and `.` read apart (or, U+000B, read as an indentation CPython refuses). A count of `def`
+// lines over a line holding one abstains in both ports, naming the leftmost by its code point (_readApart).
+const _READ_APART = /[\u000b\u001c-\u001f\u0085\u2028\u2029]/;
+function _readApart(text) {
+  const m = _READ_APART.exec(text);
+  return m === null ? null : "U+" + _codePoint(m[0]);
 }
 
 // repr() of a str, for the `why` strings the Python builds with !r.
@@ -478,7 +497,8 @@ const DECLARABLE = {
   file_touched: "file_touched", file_created: "file_created",
   file_deleted: "file_deleted", tests_pass: "tests_pass",
 };
-const _DEC_INT = /^\d{1,9}$/, _DEC_PATHY = /^[\w.\-/\\]+$/, _DEC_IDENT = /^[A-Za-z_]\w*$/;
+// A count is the ASCII digits 0-9 (#206): the same set as this port's `\d`, written out, and now the Python's too.
+const _DEC_INT = /^[0-9]{1,9}$/, _DEC_PATHY = /^[\w.\-/\\]+$/, _DEC_IDENT = /^[A-Za-z_]\w*$/;
 
 // Python's repr() for a simple string, because the reason strings are compared byte for byte by
 // the differential and JSON.stringify quotes differently. Python prefers single quotes and
@@ -487,6 +507,19 @@ function _pyRepr(v) {
   const t = String(v);
   if (t.includes("'") && !t.includes('"')) return '"' + t + '"';
   return "'" + t.replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'";
+}
+
+// The Python's _not_a_count (#206): an ASCII value keeps the old reason; a value holding a character from U+0080 up
+// names the leftmost such code point (code points, not UTF-16 units, so an astral digit prints as in the Python).
+function _notACount(value) {
+  const wide = [...value].find(ch => ch.codePointAt(0) > 0x7f);
+  if (wide === undefined) return `MALFORMED: ${_pyRepr(value)} is not a count`;
+  return `MALFORMED: a count is written in the ASCII digits 0-9, and the value holds U+${_codePoint(wide)}`;
+}
+
+// A code point as the Python's f"{cp:04X}" prints it: upper-case hex, at least four digits.
+function _codePoint(ch) {
+  return ch.codePointAt(0).toString(16).toUpperCase().padStart(4, "0");
 }
 
 function parseDeclaration(text) {
@@ -509,8 +542,8 @@ function parseDeclaration(text) {
 
 function canonicalSentence(key, value) {
   if (key === "tests_pass") return [null, "declared, and deliberately not verifiable: a declaration that tests passed is not evidence that they did"];
-  if (key === "files_changed") return _DEC_INT.test(value) ? [`${parseInt(value, 10)} files changed.`, null] : [null, `MALFORMED: ${_pyRepr(value)} is not a count`];
-  if (key === "tests_added") return _DEC_INT.test(value) ? [`Added ${parseInt(value, 10)} tests.`, null] : [null, `MALFORMED: ${_pyRepr(value)} is not a count`];
+  if (key === "files_changed") return _DEC_INT.test(value) ? [`${parseInt(value, 10)} files changed.`, null] : [null, _notACount(value)];
+  if (key === "tests_added") return _DEC_INT.test(value) ? [`Added ${parseInt(value, 10)} tests.`, null] : [null, _notACount(value)];
   if (key === "adds_symbol") return _DEC_IDENT.test(value) ? [`Adds function ${value}.`, null] : [null, `MALFORMED: ${_pyRepr(value)} is not an identifier`];
   const v = value.replace(/\/\*{1,2}$/, "");
   if (!v || !_DEC_PATHY.test(v)) return [null, `MALFORMED: ${_pyRepr(value)} is not a path`];
@@ -555,6 +588,10 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
     return [null, null];
   }
 
+  // #205, as the Python's _gate: the `def` counts abstain over an added line, of any file, holding a character of
+  // _READ_APART, with the Python's reason byte for byte
+  const apart = _readApart(addedBlob);
+  const apartWhy = apart === null ? null : `an added line holds ${apart}, which CPython refuses in source outside a string or a comment; this template counts \`def\` lines and cannot tell where it sits (#205)`;
   const claims = [];
   const sentences = _pySplitSentences(summaryText);
   const covered = new Set();
@@ -588,6 +625,8 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           if (BC1_BY_CONSTRUCTION && !_diffTouchesPython(status)) {
             c.verdict = "UNCHECKABLE";
             c.why = "no Python file in the diff; this template counts `def` lines (#110)";
+          } else if (apartWhy !== null) {
+            c.verdict = "UNCHECKABLE"; c.why = apartWhy;   // #205
           } else {
             const got = (addedBlob.match(/^\s*def test_/gm) || []).length;
             if (got === n) {
@@ -604,6 +643,8 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           if (BC1_BY_CONSTRUCTION && !_diffTouchesPython(status)) {
             c.verdict = "UNCHECKABLE";
             c.why = "no Python file in the diff; this template counts `def` lines (#110)";
+          } else if (apartWhy !== null) {
+            c.verdict = "UNCHECKABLE"; c.why = apartWhy;   // #205
           } else {
             const pat = new RegExp("^\\s*(?:def|class)\\s+" + _reEscape(d.name) + "\\b", "m");
             const hit = pat.test(addedBlob);
@@ -688,12 +729,13 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
 // covered
 // (NOTE_path2a_eleventh_pass_2026_10_05).
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 091fbb465f7eac110d8109917c9ee0a2aa293f94aef32808cca91d6fb1d7e035, LF). Everything outside this block is
-// main's port at 1cde8b82 (sha256 06688702..., LF), unchanged except that main's gateDiffText is named
-// _gateDiffTextMain (its definition and its DECLARE-1 self-call); the gateDiffText at the end of this block calls it
-// and then the overlay, once. The overlay reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason
-// naming the verdict it withholds, the defect and main's reason verbatim, only where #97, #121 or #101 can have made
-// it wrong. Every function mirrors the Python block; every comparison is structural (ASCII case, code points, '/',
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 b63f2b03c5051f7ca1a196c9b6ac9e7f907fe626970a22e400e484e4598aa446, LF). Everything outside this block is
+// main's port (sha256 d74cc729..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
+// compatibility reading and its two header patterns read as the Python reads them, and #206's count,
+// fix/diffgate-205-206), unchanged except that main's gateDiffText is named _gateDiffTextMain (its definition and its
+// DECLARE-1 self-call); the gateDiffText at the end of this block calls it and then the overlay, once. The overlay
+// reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason naming the verdict it withholds, the
+// defect and main's reason verbatim, only where #97, #121 or #101 can have made it wrong. Every function mirrors the Python block; every comparison is structural (ASCII case, code points, '/',
 // '.', fixed character sets), and a decision reads the claim's kind, verdict and detail, main's counts in its reason
 // and the door's bytes, never the claim's text, so the two ports decide alike wherever main's two ports give a claim
 // the same kind, verdict and detail. Where the Python reads a str by code point, this block reads UTF-16 units only
@@ -712,12 +754,14 @@ const _P2A_ONE_SPACE = "\u001c\u001d\u001e\u001f\u0085\ufeff";
 // The neutral code points (NOTE_path2a_fourth_pass_2026_09_30, B-2), as the Python's _P2A_NEUTRAL class: all in the
 // Basic Multilingual Plane, so each is one UTF-16 unit.
 const _P2A_NEUTRAL_RANGES = [[0xa0, 0xa9], [0xab, 0xac], [0xae, 0xb1], [0xb4, 0xb4], [0xb6, 0xb8], [0xbb, 0xbb], [0xbf, 0xbf], [0xd7, 0xd7], [0xf7, 0xf7], [0x1680, 0x1680], [0x2000, 0x200a], [0x2010, 0x2027], [0x202f, 0x203e], [0x2041, 0x2053], [0x2055, 0x205f], [0x20a0, 0x20bf], [0x2190, 0x23ff], [0x2500, 0x2775], [0x2794, 0x27bf], [0x2b00, 0x2b73], [0x2b76, 0x2b95], [0x2b97, 0x2bff], [0x3000, 0x3004], [0x3008, 0x3020], [0x3030, 0x3030], [0x3036, 0x3037], [0x303d, 0x303f], [0xfe0e, 0xfe19], [0xfe30, 0xfe32], [0xfe35, 0xfe4c], [0xfe50, 0xfe52], [0xfe54, 0xfe66], [0xfe68, 0xfe6b], [0xff01, 0xff0f], [0xff1a, 0xff20], [0xff3b, 0xff3e], [0xff40, 0xff40], [0xff5b, 0xff65]];
-const _P2A_OWN = 1;             // this port's main reads line view 1 (its own breaks) with its own white space
+const _P2A_OWN = 1;             // this port's main reads line view 1 with its own white space and its own `^`
+// Since #205 the Python's main cuts a diff where this port's does, so line view 0 is this port's cut too (one object
+// with view 1); until then it was cut at CPython's str.splitlines() breaks.
 const _P2A_HEADERS = ["diff --git ", "--- ", "+++ ", "rename from ", "rename to ", "new file mode", "deleted file mode", "Binary files "];
-const _P2A_FINE = new RegExp("\r\n|[" + _P2A_PY_BREAKS + "]");
-const _P2A_COARSE = new RegExp("\r\n|\r|\n");
+const _P2A_FINE = new RegExp("\r\n|[" + _P2A_PY_BREAKS + "]");   // str.splitlines(): read by _p2aDivergent only, since #205
+const _P2A_COARSE = new RegExp("\r\n|\r|\n");   // both mains' line cut (_splitlines), since #205
 const _P2A_CR = new RegExp("\r");
-const _P2A_FINE_ONLY = new RegExp("[\u000b\u000c\u001c\u001d\u001e\u0085\u2028\u2029]");   // where the two splits can part
+const _P2A_SEG = new RegExp("[\u2028\u2029]");   // where only this port's `^` also matches (#205; the Python's _P2A_SEG)
 const _P2A_LEAD_APART = new RegExp("[\u001c\u001d\u001e\u001f\u0085\ufeff]");   // white space of one main only
 const _P2A_SEP = "\u0000";      // joins the summary's runs and zones; never in a claimed path, name, prefix or number
 const _P2A_COUNT_HEAD = new RegExp("^diff changes ([0-9]+) files, claim says ");
@@ -805,12 +849,11 @@ function _p2aView(ls) {
           ls.filter(x => x.startsWith("-") && !x.startsWith("---")).map(x => x.slice(1))];
 }
 
-function _p2aViews(diffText, coarse) {
-  // [[added, removed]] under CPython's line breaks and under the port's (`coarse`, the diff as _splitlines splits it);
-  // each port's main reads one. Where the text holds no break only CPython's split reads, the two are one object.
-  const v1 = _p2aView(coarse);
-  if (!_P2A_FINE_ONLY.test(diffText)) return [v1, v1];
-  return [_p2aView(_p2aLines(diffText, _P2A_FINE)), v1];
+function _p2aViews(coarse) {
+  // [[added, removed]] of line view 0 (the Python's main) and line view 1 (this port's), as the Python's _p2a_views:
+  // since #205 both mains cut the diff where _splitlines does (`coarse`), so the two views are one object.
+  const v = _p2aView(coarse);
+  return [v, v];
 }
 
 function _p2aDivergent(diffText) {
@@ -1102,15 +1145,16 @@ const _P2A_LEADS = [_P2A_PY_SPACE, _P2A_JS_SPACE].map(s => {
   return u => set.has(u);
 });
 
-function _p2aCounted(line, lead) {
+function _p2aCounted(line, lead, seg = false) {
   // The ASCII name runs at the `def test_` sites of one added line that a main's count of `def test_` after white
-  // space reads, where `lead` tests a unit of that main's white space: a site counts when, from the line start or the
-  // last U+2028 / U+2029 before it, only that white space precedes it. A site counts exactly where a segment's leading
-  // run ends, and a start inside a run already read reaches the same end, so each segment is read once.
+  // space reads, where `lead` tests a unit of that main's white space: a site counts when, from the line start, or with
+  // `seg` (this port's count, whose `^` also matches there) from the last U+2028 / U+2029 before it, only that white
+  // space precedes it; CPython's `^` matches at the line start only (#205). A site counts exactly where a segment's
+  // leading run ends, and a start inside a run already read reaches the same end, so each segment is read once.
   const out = [];
   if (!line.includes("def test_")) return out;
   const starts = [0];
-  if (line.includes("\u2028") || line.includes("\u2029")) {
+  if (seg && (line.includes("\u2028") || line.includes("\u2029"))) {
     for (let p = 0; p < line.length; p++) {
       const u = line.charCodeAt(p);
       if (u === 0x2028 || u === 0x2029) starts.push(p + 1);
@@ -1162,17 +1206,17 @@ function _p2aTestDefs(groups, nfkc = true) {
 }
 
 function _p2aPairing(views, alike = false, extra = [], unchanged = []) {
-  // Per line view (0: CPython's breaks and white space; 1: this port's), [the number of `def test_` sites that view's
-  // main counts, how many of them name a test a removed line may define after `def`, how many name a test a removed or
-  // an unchanged line may define], as the Python's _p2a_pairing: a name read through NFKC pairs with every name (B-2);
-  // `extra`, the removed lines no view reads (B-1); `unchanged`, the unchanged lines of each view and those no view
-  // reads (NOTE_path2a_sixth_pass_2026_09_30, B-1).
+  // Per line view (0: CPython's white space and `^`; 1: this port's, whose `^` also matches after U+2028 and U+2029,
+  // #205), [the number of `def test_` sites that view's main counts, how many of them name a test a removed line may
+  // define after `def`, how many name a test a removed or an unchanged line may define], as the Python's _p2a_pairing:
+  // a name read through NFKC pairs with every name (B-2); `extra`, the removed lines no view reads (B-1); `unchanged`,
+  // the unchanged lines of each view and those no view reads (NOTE_path2a_sixth_pass_2026_09_30, B-1).
   const [rem, wild] = _p2aTestDefs(_p2aRemoved(views, extra));
   const [ctx] = _p2aTestDefs([unchanged], false);
   const out = (alike ? _p2aDistinct(views) : views).map(([added], v) => {
     let got = 0, paired = 0, based = 0;
     for (const line of added) {
-      for (const x of _p2aCounted(line, _P2A_LEADS[v])) {
+      for (const x of _p2aCounted(line, _P2A_LEADS[v], v === 1)) {
         got++;
         const p = wild || (x === null ? rem.size > 0 : rem.has(x));
         if (p) paired++;
@@ -1188,12 +1232,10 @@ function _p2aDistinct(views) {
   return views[0] === views[1] ? views.slice(0, 1) : views;
 }
 
-function _p2aContext(diffText, coarse) {
-  // The unchanged lines (git lines starting with " ") of each distinct line view, without the " ", as the Python's
-  // _p2a_context (NOTE_path2a_sixth_pass_2026_09_30, B-1).
-  const unchanged = ls => ls.filter(x => x.startsWith(" ")).map(x => x.slice(1));
-  if (!_P2A_FINE_ONLY.test(diffText)) return unchanged(coarse);
-  return unchanged(_p2aLines(diffText, _P2A_FINE)).concat(unchanged(coarse));
+function _p2aContext(coarse) {
+  // The unchanged lines (git lines starting with " ") of the line view, without the " ", as the Python's _p2a_context
+  // (NOTE_path2a_sixth_pass_2026_09_30, B-1); one view since #205.
+  return coarse.filter(x => x.startsWith(" ")).map(x => x.slice(1));
 }
 
 function _p2aJoined(diffText, side = "-") {
@@ -1497,7 +1539,7 @@ function _p2aFactsRaw(diffText, summaryText) {
     diffText,
     coarse: () => get("coarse", () => _splitlines(diffText)),
     regs: () => get("regs", () => _p2aRegsRaw(f.coarse())),
-    views: () => get("views", () => _p2aViews(diffText, f.coarse())),
+    views: () => get("views", () => _p2aViews(f.coarse())),
     divergent: () => get("div", () => _p2aDivergent(diffText)),
     status: space => get(space, () => _p2aBuild(f.regs(), _P2A_FORMS[space][0])),
     order: space => get("order" + space, () => [...f.status(space).keys()]),
@@ -1567,8 +1609,8 @@ function _p2aFactsRaw(diffText, summaryText) {
       return [twin, wa, forms.size, size(rk, _p2aWK), size(rk, _p2aK), wa < forms.size ? _p2aCaseCount(forms) : forms.size];
     }),
     // NOTE_path2a_sixth_pass_2026_09_30, B-1: the unchanged lines of each view, and those no view reads
-    unchanged: () => get("unchanged", () => _p2aContext(diffText, f.coarse()).concat(_p2aJoined(diffText, " "))),
-    pairing: () => get("pairing", () => _p2aPairing(f.views(), f.views()[0] === f.views()[1] && !_P2A_LEAD_APART.test(diffText), f.joined(), f.unchanged())),
+    unchanged: () => get("unchanged", () => _p2aContext(f.coarse()).concat(_p2aJoined(diffText, " "))),
+    pairing: () => get("pairing", () => _p2aPairing(f.views(), f.views()[0] === f.views()[1] && !_P2A_LEAD_APART.test(diffText) && !_P2A_SEG.test(diffText), f.joined(), f.unchanged())),   // #205
     // NOTE_path2a_sixth_pass_2026_09_30, A-1: the words the claims in reach may look up in the summary's runs or zones
     tokens: (kind, named) => get("tokens:" + kind, () => new Set(named.filter(w => {
       if (!w || w.includes(_P2A_SEP)) return false;

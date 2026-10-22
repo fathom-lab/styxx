@@ -424,7 +424,10 @@ function main(argv) {
       const got = [...P._p2aBuild(P._p2aRegsRaw(P._splitlines(it.diff || "")), P._norm)];
       n++;
       if (JSON.stringify(got) !== JSON.stringify([...parsed.status])) bad.push(it.id);
-      const pairing = P._p2aPairing(P._p2aViews(it.diff || "", P._splitlines(it.diff || "")));
+      // #205: one cut since fix/diffgate-205-206, so _p2aViews takes the lines alone; a port of an earlier pass
+      // still takes the diff text before them
+      const lines = P._splitlines(it.diff || "");
+      const pairing = P._p2aPairing(P._p2aViews.length === 1 ? P._p2aViews(lines) : P._p2aViews(it.diff || "", lines));
       counts[it.id] = { main: (parsed.addedBlob.match(/^\s*def test_/gm) || []).length, views: pairing.map(x => x[0]) };
     }
     fs.writeFileSync(argv[2], JSON.stringify({ checked: n, main_raises: skipped, differ: bad, counts }));
