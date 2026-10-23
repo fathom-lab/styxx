@@ -1,5 +1,65 @@
 # What Oscillation Buys a State-Space Model: Seven Controlled Causal Ablations and a Reusable Profiler
 
+> **Banner, added 2026-10-23, with `NOTE_prior_art_full_text_reads_2026_10_23.md` and
+> `RESULT_pmnist_robustness_2026_10_23.md`.** The NOTE records full-text reads of four prior papers, each read
+> twice: the LRU paper (Orvieto et al., arXiv 2303.06349), S4D (Gu, Gupta, Goel and Ré, arXiv 2206.11893), LinOSS
+> (Rusch and Rus, arXiv 2410.03943) and D-LinOSS (Boyer, Rusch and Rus, arXiv 2505.12171); its section 5 files
+> this draft's sentences. The RESULT re-ran the permuted-MNIST headline under a sealed preregistration and reads
+> `BUDGET_CONFOUND__gap_does_not_survive_3x_steps` (`pmnist_robustness_result.json#/verdict`), worded so: On
+> permutation 1234, at 12,000 steps under a cosine schedule re-stretched to that budget, the gap is 0.1097 (two
+> FREE seeds against three CLAMPED seeds); at 4,000 steps on three new seeds it is 0.3182. The 4000-step gap does
+> not survive the longer budget on this permutation. Every sentence below is left as written. Each line here names
+> its sentence by section and a quoted fragment, not by line number.
+>
+> The lab no longer stands behind these:
+>
+> - **Priority-shaped, not supportable as written:** §3's closing sentence (it begins "Across all of these,"), and
+>   the two ordinals of §1, "becomes, for the [ordinal] time, a *controlled experiment*" and "the [ordinal]
+>   within-architecture map" (ordinal elided in both). S4D's Table 3(a) (2022) is a controlled real-versus-complex
+>   comparison inside one model, and the LRU paper's PathX phase-range runs (2023) are controlled phase
+>   experiments.
+> - **Contradicted in part as general sentences** (true of LinOSS and D-LinOSS, not of the field): the Abstract's
+>   "Yet the field evaluates them by comparing whole architectures", and §1's "is untested, because the standard
+>   comparison is between whole models" and "We supply the missing causal instrument". S4D's Table 3(a) sets a
+>   real initialization (S4D-Real) against a complex one (S4D-Inv) inside one diagonal SSM at matched size.
+> - **Known wrong:** "S5/LinOSS-class" in §2 ("the oscillatory (S5/LinOSS-class) model") and in §4.1 ("A deep
+>   S5/LinOSS-class classifier"). The model is a three-block complex-diagonal linear recurrence, LRU-style (`CLRU`
+>   in `run_smnist_ablation.py` and `run_pmnist_ablation.py`); the S5 paper was not read.
+> - **Known wrong:** Appendix A's equivalence, in its title ("the phase-clamp is LinOSS's oscillation ablation"),
+>   in "a statement about LinOSS itself, not a proxy" and in "is identical to clamping the restoring force". In
+>   LinOSS-IM magnitude and phase are tied (`|λ| = √S = cos θ` per mode, derived in the NOTE from LinOSS's
+>   Proposition 3.1), so θ → 0 forces `|λ|` → 1, the integrator the appendix itself describes at A = 0, while
+>   CLAMPED keeps a learnable magnitude below 1. The CLAMPED arm is not reachable inside LinOSS. The appendix's
+>   algebra holds; the equivalence does not follow from it.
+> - **Exceeds every read:** "the oscillation *is* the long-range mechanism" (Abstract) and "it *is* the long-range
+>   mechanism; a decay model of equal budget cannot substitute for it" (§4.1). The measurement is one
+>   architecture, one permutation, two seeds and 4000 steps, and none of the four papers supports the general
+>   sentence.
+> - **Does not carry at the RESULT's verdict:** the permuted-MNIST headline of the Abstract and §4.1 (+31.2
+>   points, 92.0% against 60.7%, "widens 7.6×"). Its numbers stand as what was measured at 4000 steps on two seeds
+>   and permutation 1234 (`pmnist_ablation_result.json`).
+>
+> These stand, with what they owe:
+>
+> - **True as written, needs the S4D pointer:** §4.1's "This is the controlled single-knob within-architecture
+>   ablation the whole-model benchmarks cannot run." What it implies, that no within-architecture
+>   real-versus-complex comparison exists, does not hold: S4D's Table 3(a).
+> - **A paraphrase of LinOSS's abstract, needs its table:** §1's "beats Mamba ~2× on 50k-length sequences".
+>   LinOSS's Table 2 (PPG-DaLiA, length 49,920) gives 1.66× against Mamba (test MSE 6.4 against 10.65, ×1e-2).
+> - **Approximate:** §4.1's "matched-param". FREE registers θ as a parameter and CLAMPED as a buffer, so FREE
+>   trains 192 more parameters (64 modes × 3 blocks): 101,002 against 100,810 in both MNIST receipts.
+> - **Omitted from §3:** the LRU paper, whose magnitude parameterization (`nu = log(−log r)`) and ring
+>   initialization `CLRU` uses, and S4D.
+> - **Stands, with version pins:** §3's "LinOSS (2410.03943) and D-LinOSS use *static* (fixed-after-training)
+>   frequencies and report no within-architecture oscillation-vs-decay ablation" (LinOSS v1-v3, D-LinOSS v1-v2).
+>   Appendix A's closing "the within-architecture ablation the LinOSS paper does not report" is literally true for
+>   the same reason, though the clamp is not that ablation (above).
+> - **Outside every read:** the sequential-MNIST sentences of the Abstract and §4.1 ("causally load-bearing"); no
+>   read paper has sequential MNIST.
+>
+> The reads cover four papers. TIDES, the S5 paper and the rest of §3's related work were not read, so nothing
+> here is a statement about the literature, and no priority claim is made. The text below is unchanged.
+
 *STYXX / fathom-lab · draft 2026-07-23*
 
 ## Abstract
