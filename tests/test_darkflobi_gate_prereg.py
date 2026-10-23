@@ -16,6 +16,7 @@ because the protocol refuses a draft on disk.
 """
 from __future__ import annotations
 
+import ast
 import hashlib
 import importlib.util
 import itertools
@@ -257,7 +258,7 @@ def test_every_verdict_has_a_printable_paragraph():
 def test_the_population_and_the_cells_are_frozen_in_words():
     text = PREREG.read_text(encoding="utf-8")
     for token in ("anchor_channel_hash", "canary_chat_hash", "operator_dm_hash", "HMAC-SHA256", "28 calendar days",
-                  "America/New_York", "pre-gate", "shadow", "live", "never pooled", "Four a day", "4 × 28 = 112",
+                  "America/New_York", "pre-gate", "shadow", "live", "never pooled", "four G_C items", "4 × 28 = 112",
                   "Qwen2.5-3B-Instruct", "claude -p", "27 of 30", "9 of 15", "## 15. amendments before the merge"):
         assert token in text, token
     rules = RULES.read_text(encoding="utf-8")
@@ -310,6 +311,10 @@ def test_lock_table_and_check_on_a_synthetic_box(tmp_path):
     (gate / "plugin" / "tests" / ".pytest_cache" / "v").write_bytes(b"x")
     (gate / "plugin" / "tests" / "run_tests.mjs").write_bytes(b"// tests\n")             # a real file, any depth
     (gate / ".manifest_snapshot_3437340b.json").write_bytes(b"{}")                         # the snapshot's cache
+    for live in ("ledger.jsonl.lock", "ledger.jsonl.lock.break", "ledger_failures.jsonl", "anchor_state.json"):
+        (gate / live).write_bytes(b"{}\n")                                                  # live state: never rows
+    (gate / "tmp").mkdir()
+    (gate / "tmp" / "x.json").write_bytes(b"{}")                                            # the plugin's scratch
     (gate / "canary" / "keys").mkdir(parents=True)
     (gate / "canary" / "outbox").mkdir()
     (gate / "canary" / "outbox" / "item.json").write_bytes(b"{}")                          # harness working state
@@ -325,6 +330,9 @@ def test_lock_table_and_check_on_a_synthetic_box(tmp_path):
     assert not any("sealed" in p for p in paths), "a sealed folder must never become a lock row"
     assert "W:gate/_test_stdout.txt" not in paths and "W:gate/.manifest_snapshot_3437340b.json" not in paths
     assert "W:gate/canary/outbox/item.json" not in paths
+    for live in ("ledger.jsonl.lock", "ledger.jsonl.lock.break", "ledger_failures.jsonl", "anchor_state.json",
+                 "tmp/x.json"):
+        assert "W:gate/" + live not in paths, live
     by_path = {p: h for _, p, h, _ in rows}
     assert by_path["W:gate/canary/keys/sworn_measurement_darkflobi_gate_canary_seed.sha256"] == \
         hashlib.sha256(b"ab  k.json\n").hexdigest(), "the harness's public digest file is a row of its own"
@@ -340,6 +348,11 @@ def test_lock_table_and_check_on_a_synthetic_box(tmp_path):
     doc.write_text("## 11. lock hashes\n\n| what | path | sha256 | note |\n|---|---|---|---|\n" + md + "\n",
                    encoding="utf-8")
     assert lock.check(doc, w, home) == 0
+    # a bytecode cache beside a locked source: printed always, a failure under --strict until it is gone
+    assert lock.bytecode_paths(gate) == ["__pycache__/"]
+    assert lock.check(doc, w, home, strict=True) == 1, "a cache Python would run in place of gate.py must fail"
+    (gate / "__pycache__" / "gate.cpython-312.pyc").unlink()
+    (gate / "__pycache__").rmdir()
     assert lock.check(doc, w, home, strict=True) == 0
     (gate / "gate.py").write_bytes(b"# edited\n")
     assert lock.check(doc, w, home) == 1, "an edited lock-hashed file must read CHANGED"
@@ -408,9 +421,23 @@ def test_the_walker_never_lists_a_sealed_folder_or_a_pruned_one(tmp_path, monkey
     monkeypatch.setattr(os, "scandir", spy)
     files = [rel for rel, _, _ in lock.gate_files(gate)]
     assert files == ["gate.py"]
+    assert lock.bytecode_paths(gate) == []
     assert listed, "the spy saw no listing; the walker no longer uses os.scandir"
     for bad in ("canary_sealed", "panel_secret_keys", "_tmp", "node_modules", "exhibit_out", "/canary"):
         assert not any(p.endswith(bad) or (bad + "/") in p for p in listed), (bad, listed)
+
+
+def test_the_bytecode_scan_names_every_cache_a_locked_script_could_run(tmp_path):
+    lock = _load(LOCK_PY, "lock_hashes")
+    gate = tmp_path / "W" / "gate"
+    for d in ("__pycache__", "helpers/__pycache__", "plugin/tests/_tmp/__pycache__", "snapshot_3437340b/x/__pycache__",
+              "canary_sealed/__pycache__", "node_modules/m/__pycache__"):
+        (gate / d).mkdir(parents=True)
+        (gate / d / "m.cpython-312.pyc").write_bytes(b"\x00")
+    (gate / "helpers" / "loose.pyc").write_bytes(b"\x00")     # a sourceless module beside the helpers
+    (gate / "gate.py").write_bytes(b"# gate\n")
+    assert lock.bytecode_paths(gate) == ["__pycache__/", "helpers/__pycache__/", "helpers/loose.pyc"]
+    assert lock.bytecode_paths(tmp_path / "nowhere") == []
 
 
 def test_the_walker_refuses_what_it_cannot_read_and_reads_long_paths(tmp_path, monkeypatch):
@@ -523,11 +550,13 @@ def test_the_rules_selector_is_the_locked_selector_py_when_the_box_is_named():
     assert _rules_selector() == have
 
 
-# the codes RULES section 6 names, by class, as gate.py and the plugin spell them
+# the codes RULES section 6 names, by class, as gate.py, the plugin and its helper spell them
 TRUTH_CODES = ("sworn_failed:", "certify_ungrounded", "audit_fail:")
-FORM_CODES = ("sworn_malformed:", "sworn_unresolved:", "sworn_withheld:", "receipts_missing", "audit_unresolved:",
-              "audit_err:", "media_no_rule", "unbound_on_x")
-PLUGIN_CODES = ("gate_unavailable", "gate_timeout", "gate_no_verdict", "gate_not_registered", "gate_not_wired")
+FORM_CODES = ("sworn_malformed:", "sworn_unresolved:", "sworn_withheld:", "receipts_missing", "receipts_unreadable",
+              "text_not_utf8:", "audit_unresolved:", "audit_err:", "media_no_rule", "unbound_on_x")
+PLUGIN_CODES = ("gate_unavailable", "gate_timeout", "gate_no_verdict", "gate_not_registered", "gate_not_wired",
+                "gate_hook_foreign", "gate_result_unbound")
+LEDGER_CODES = ("ledger_locked", "tamper", "ledger_error:")
 CLASS_ROWS = {"truth": "truth refusal", "form": "form refusal", "spoof": "spoof", "lint": "lint refusal",
               "unavailable": "unavailability on the line", "internal": "not a refusal"}
 
@@ -553,7 +582,8 @@ def test_the_rules_codes_and_the_prereg_truth_codes_agree():
         assert f"`{code}`" in rows["unavailability before any line"], code
     assert "`anchor_form_spoof`" in rows["spoof"] and "`lint_hit:" in rows["lint refusal"]
     assert "`gate_unavailable:" in rows["unavailability on the line"]
-    assert "`ledger_locked`" in rows["the ledger could not take the line"] and "`tamper`" in rows["the ledger could not take the line"]
+    for code in LEDGER_CODES:
+        assert f"`{code}" in rows["the ledger could not take the line"], code
     truth_cell = re.findall(r"`([a-z_]+:?)", rows["truth refusal"])
     assert tuple(truth_cell) == TRUTH_CODES, truth_cell
     prereg = PREREG.read_text(encoding="utf-8")
@@ -566,6 +596,29 @@ def test_the_rules_codes_and_the_prereg_truth_codes_agree():
         assert stale not in prereg and stale not in RULES.read_text(encoding="utf-8"), stale
 
 
+def _gate_findings(gate_py: str) -> list:
+    """(class or None, code prefix or None, source of the code expression) for every `findings.append((cls, code))`
+    in gate.py, read with ast: a literal code whole, a `%`-formatted or f-string code up to its opening placeholder, and
+    any other expression as its source text (the class None when it is not a literal)."""
+    out = []
+    for node in ast.walk(ast.parse(gate_py)):
+        if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == "append"
+                and isinstance(node.func.value, ast.Name) and node.func.value.id == "findings" and node.args
+                and isinstance(node.args[0], ast.Tuple) and len(node.args[0].elts) == 2):
+            continue
+        c, e = node.args[0].elts
+        cls = c.value if isinstance(c, ast.Constant) and isinstance(c.value, str) else None
+        prefix = None
+        if isinstance(e, ast.Constant) and isinstance(e.value, str):
+            prefix = e.value
+        elif isinstance(e, ast.BinOp) and isinstance(e.op, ast.Mod) and isinstance(e.left, ast.Constant):
+            prefix = e.left.value.split("%", 1)[0]
+        elif isinstance(e, ast.JoinedStr) and e.values and isinstance(e.values[0], ast.Constant):
+            prefix = e.values[0].value
+        out.append((cls, prefix, ast.get_source_segment(gate_py, e)))
+    return out
+
+
 def test_the_rules_codes_are_the_codes_the_gate_emits_when_the_box_is_named():
     w_root = os.environ.get("STYXX_GATE_W_ROOT")
     if not w_root:
@@ -574,24 +627,136 @@ def test_the_rules_codes_are_the_codes_the_gate_emits_when_the_box_is_named():
     gate_py = (gate / "gate.py").read_text(encoding="utf-8")
     plugin = (gate / "plugin" / "index.js").read_text(encoding="utf-8") + (gate / "gate.js").read_text(encoding="utf-8")
     rows = _rules_code_rows()
-    # every (class, code) gate.py appends to its findings is in the RULES row of that class
-    pairs = re.findall(r'findings\.append\(\(\s*(?:"(\w+)"|(\w+)),\s*"([a-z_%]+)', gate_py)
-    assert len(pairs) >= 10, pairs
-    for cls, var, code in pairs:
-        if code.startswith("sworn_%s"):
-            assert var == "cls" and '"truth" if s["verdict"] == "FAILED" else "form"' in gate_py
+    found = _gate_findings(gate_py)
+    assert len(found) >= 15, found
+    computed = sorted({src for cls, prefix, src in found if prefix is None})
+    # the one computed code: gate_verify's replay hands the receipts finding back, and it is one of two literals
+    assert computed == ['replay["receipts_finding"]'], computed
+    for literal in ("receipts_missing", "receipts_unreadable"):
+        assert f'"{literal}"' in gate_py and f"`{literal}`" in rows["form refusal"], literal
+    for cls, prefix, src in found:
+        if prefix is None:
             continue
-        prefix = code.split("%", 1)[0]
-        assert f"`{prefix}" in rows[CLASS_ROWS[cls]], (cls, code)
+        if cls is None:
+            # the sworn span's class is computed: FAILED is truth, every other non-HELD verdict form
+            assert prefix == "sworn_" and '"truth" if s["verdict"] == "FAILED" else "form"' in gate_py, src
+            continue
+        assert f"`{prefix}" in rows[CLASS_ROWS[cls]], (cls, prefix)
     # every code the RULES names is one the files can emit
+    literals = {p for _, p, _ in found if p}
     for code in TRUTH_CODES + FORM_CODES:
-        needle = '"sworn_%s:%s"' if code in ("sworn_failed:", "sworn_unresolved:", "sworn_withheld:") else code
-        assert needle in gate_py or f'"{code}"' in gate_py or ("PUBLIC_MARK_X = \"%s\"" % code) in gate_py, code
+        if code in ("sworn_failed:", "sworn_unresolved:", "sworn_withheld:"):
+            assert '"sworn_%s:%s"' in gate_py, code
+            continue
+        assert any(lit.startswith(code) for lit in literals) or f'"{code}"' in gate_py \
+            or ("PUBLIC_MARK_X = \"%s\"" % code) in gate_py, code
     for code in PLUGIN_CODES:
         assert f'"{code}"' in plugin, code
     for code in ("ledger_locked", "tamper", "unbound_marked", "internal_not_gated", "anchor_form_spoof"):
         assert f'"{code}"' in gate_py, code
-    assert re.search(r'findings\.append\(\(\s*"unavailable",\s*"gate_unavailable:%s"', gate_py)
+    assert '"ledger_error:%s"' in gate_py
+    assert ("unavailable", "gate_unavailable:") in {(c, p) for c, p, _ in found}
+
+
+def test_the_rules_kinds_are_the_ledger_kinds_when_the_box_is_named():
+    w_root = os.environ.get("STYXX_GATE_W_ROOT")
+    if not w_root:
+        pytest.skip("set STYXX_GATE_W_ROOT to read W:gate/ledger.py against RULES sections 2 and 13")
+    tree = ast.parse((Path(w_root) / "gate" / "ledger.py").read_text(encoding="utf-8"))
+    kinds = None
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and any(isinstance(x, ast.Name) and x.id == "KINDS" for x in node.targets):
+            kinds = ast.literal_eval(node.value)
+    assert kinds and "send" in kinds, kinds
+    s2, s13 = _rules_section(2), _rules_section(13)
+    for k in kinds:
+        assert f"`{k}`" in s2, ("RULES section 2", k)
+        assert f"`{k}`" in s13 or k in ("send",), ("RULES section 13", k)
+
+
+END_FORM_NAMES = ("TRAILER_END", "MARK_END", "CAPSULE_FOOTER_END", "NARRATIVE_FOOTER_END")
+
+
+def _rules_end_forms() -> list:
+    sec = _rules_section(12)
+    fence = sec.split("   ```\n", 2)[1]
+    return [ln.strip() for ln in fence.splitlines() if ln.strip()]
+
+
+def test_the_rules_census_forms_pin_their_cases():
+    forms = _rules_end_forms()
+    assert len(forms) == 4
+    rx = [re.compile(f) for f in forms]
+    footer = ("body\n\ncapsule: https://x.example/c/1.html\npost sha256 0123456789abcdef \u00b7 styxx 7.50.0 (pip install "
+              "styxx==7.50.0; pin 3437340b) \u00b7 nothing signed; the words are not checked")
+    desktop = footer + ("\nthe page does not print this digest yet: compare it on a desktop with python -m "
+                        "styxx.capsule verify")
+    assert rx[2].search(footer) and rx[2].search(desktop), "the mint's footer, with and without the desktop line"
+    assert rx[0].search("t\n\n[gate: 3 of 7 numerals bound \u00b7 ledger 0042]")
+    assert rx[1].search("t\n\n[unchecked: styxx unavailable]") and not rx[1].search("t [gate: x]")
+    assert rx[3].search("t\n\nno number in this post; no receipt stands behind it")
+    sec = " ".join(_rules_section(12).split())
+    for token in ("**The source is `W:gate/reconcile.py`**", "180 s after the one before it (`JOIN_WINDOW_S`)",
+                  "up to 8 in all (`JOIN_MAX`)", "600 s (`MEDIA_MATCH_WINDOW_S`)", "120 s (`LINE_AFTER_MESSAGE_SLACK_S`",
+                  "`sent_not_in_export`", "the shortest join"):
+        assert token in sec, token
+
+
+def test_the_rules_census_rule_is_reconcile_py_when_the_box_is_named():
+    w_root = os.environ.get("STYXX_GATE_W_ROOT")
+    if not w_root:
+        pytest.skip("set STYXX_GATE_W_ROOT to compare RULES section 12 with W:gate/reconcile.py")
+    tree = ast.parse((Path(w_root) / "gate" / "reconcile.py").read_text(encoding="utf-8"))
+    consts, patterns = {}, {}
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+            name = node.targets[0].id
+            if isinstance(node.value, ast.Constant):
+                consts[name] = node.value.value
+            elif (isinstance(node.value, ast.Call) and getattr(node.value.func, "attr", "") == "compile"
+                  and node.value.args):
+                patterns[name] = ast.literal_eval(node.value.args[0])
+    assert [patterns[n] for n in END_FORM_NAMES] == _rules_end_forms()
+    for name, value in (("JOIN_WINDOW_S", 180), ("JOIN_MAX", 8), ("MEDIA_MATCH_WINDOW_S", 600),
+                        ("LINE_AFTER_MESSAGE_SLACK_S", 120)):
+        assert consts.get(name) == value, (name, consts.get(name))
+    assert patterns["_LINE_LEAD"] in _rules_section(12)
+
+
+def test_the_canary_section_names_the_cadence_and_the_catch_rule():
+    sec7 = " ".join(PREREG.read_text(encoding="utf-8").split("## 7. the canaries", 1)[1].split("## 8. ", 1)[0].split())
+    for token in ("cadence `s7`", "four G_C items, one each of constructions A, B, C and D", "4 × 28 = 112",
+                  "Two a week of kinds E and F", "4 of E and 4 of F", "`sworn_failed:`", "`lint_hit:withdrawn/`",
+                  "0 canaries planted", "--cadence s7 --window-start <D0>", "`fallbacks_to_D` 10"):
+        assert token in sec7, token
+
+
+def test_the_canary_section_is_the_harness_when_the_box_is_named():
+    w_root = os.environ.get("STYXX_GATE_W_ROOT")
+    if not w_root:
+        pytest.skip("set STYXX_GATE_W_ROOT to compare PREREG section 7 with W:gate/canary_shadow.py and its schedule")
+    gate = Path(w_root) / "gate"
+    src = (gate / "canary_shadow.py").read_text(encoding="utf-8")
+    tree = ast.parse(src)
+    consts = {}
+    for node in tree.body:
+        if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+            try:
+                consts[node.targets[0].id] = ast.literal_eval(node.value)
+            except ValueError:
+                pass
+    assert consts.get("PER_DAY_GC") == 4 and "s7" in consts.get("CADENCES", ())
+    assert consts.get("CATCH_PREFIXES") == {"A": ("sworn_failed:",), "B": ("sworn_failed:",), "C": ("sworn_failed:",),
+                                            "D": ("lint_hit:withdrawn/",)}, consts.get("CATCH_PREFIXES")
+    sched = json.loads((gate / "canary" / "schedule.json").read_text(encoding="utf-8"))
+    c = sched["counts"]
+    if sched.get("cadence") == "s7":
+        assert (c["gc_items"], c["ef_items"], c["live_items"], c["fallbacks_to_D"]) == (112, 8, 4, 0), c
+    else:
+        # the v0 plan for the example start that section 7 describes, until the lead re-plans at the sitting
+        assert sched["window_start"] == "2026-11-05" and sched["days"] == 28
+        assert (c["items"], c["gc_items"], c["ef_items"], c["live_items"], c["fallbacks_to_D"]) == (144, 112, 28, 4, 10), c
+        assert sched["capacity_by_construction"]["C"] == 18
 
 
 def test_the_canary_seed_digest_is_committed_and_its_location_said_once():

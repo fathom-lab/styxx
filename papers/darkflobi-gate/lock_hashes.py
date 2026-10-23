@@ -34,18 +34,24 @@ Standard library only (and `git` for `pin-tree`). Four verbs:
           UNREADABLE   the walker could not read a tree row's folder whole (a failure)
           SKIPPED      the plugins-subtree row (the config is read by its own digest script, never here)
         and then one `UNLOCKED <path>` line per file the lock covers on the box that no row names (a file added
-        under W:gate/ after the fill). Exit 1 on any CHANGED, BUILT SINCE or UNREADABLE; with --strict also on any
-        ABSENT or UNLOCKED, which is the form the merge-time run and the weekly check use.
+        under W:gate/ after the fill), and one `BYTECODE <path>` line per `__pycache__` folder and `.pyc` file where
+        the lock covers W:gate/ (Python runs a cache whose header carries the source's size and time in place of the source, so a
+        forged cache beside a locked `.py` would run with every row SAME; the snapshot's caches are inside its tree
+        digest). Exit 1 on any CHANGED, BUILT SINCE or UNREADABLE; with --strict also on any ABSENT, UNLOCKED or
+        BYTECODE, which is the form the merge-time run and the weekly check use.
 
 What the lock covers under W:gate/, and what it never covers. Never entered, at the top level of W:gate/: the live
-state folders `sources/`, `refused/`, `prepared/`, `pending/`, `baseline/`, the wheel `wheel/`, `exhibit_out/` (the
+state folders `sources/`, `refused/`, `prepared/`, the mint's dry-run records `prepared_dryrun/`, `pending/`,
+`baseline/`, the plugin's scratch `tmp/`, the wheel
+`wheel/`, `exhibit_out/` (the
 local mirror of the `exhibit` branch, pinned by its own charon log), the canary harness's working folder `canary/`
 (its two public files, `schedule.json` and the sealed seed's salted digest under `keys/`, get rows of their own), and
 the `snapshot_*` folders (one tree-digest row each). Never entered, at any depth: a folder whose name opens with `_`
 (scratch by the folder's own convention: `_scratch/`, `_tmp/`, `_out/`), `__pycache__`, `.pytest_cache`,
 `node_modules`, `.git`, and any folder whose name holds `sealed` or `secret`, which this script never lists, never
-opens and never hashes. Never a row: at the top level the live files `ledger.jsonl`, `head.txt`, `heads.txt`,
-`tamper.jsonl`, `REQUIRED`, `plugin_sent_index.jsonl`, `plugin_failures.jsonl` and the snapshot manifest cache
+opens and never hashes. Never a row: at the top level the live files `ledger.jsonl`, its lock `ledger.jsonl.lock` and the lock's breaker
+`ledger.jsonl.lock.break`, `head.txt`, `heads.txt`, `tamper.jsonl`, `ledger_failures.jsonl`, `REQUIRED`,
+`plugin_sent_index.jsonl`, `plugin_failures.jsonl`, the plugin's `anchor_state.json` and the snapshot manifest cache
 `.manifest_snapshot_<pin8>.json` (written by gate.py beside the snapshot it caches; the snapshot row binds the bytes
 it caches); at any depth a file whose name opens with `_` (`_test_*.txt`) or ends `.pyc`, `.log` or `.tmp`. `salt` and
 `config.json` get rows of their own. Everything else under W:gate/ is a row whether or not the plan named it.
@@ -71,11 +77,13 @@ from pathlib import Path
 NOT_BUILT = "not built at the freeze"
 
 # never a row, at the top level of W:gate/ (the live state; `salt` and `config.json` get their own rows below)
-EXCLUDED_NAMES = {"ledger.jsonl", "head.txt", "heads.txt", "tamper.jsonl", "salt", "config.json", "REQUIRED",
-                  "plugin_sent_index.jsonl", "plugin_failures.jsonl"}
+EXCLUDED_NAMES = {"ledger.jsonl", "ledger.jsonl.lock", "ledger.jsonl.lock.break", "head.txt", "heads.txt",
+                  "tamper.jsonl", "ledger_failures.jsonl", "salt", "config.json", "REQUIRED",
+                  "plugin_sent_index.jsonl", "plugin_failures.jsonl", "anchor_state.json"}
 EXCLUDED_TOP_GLOBS = (".manifest_snapshot_*.json",)
 # never entered, at the top level of W:gate/
-EXCLUDED_TOP_DIRS = {"sources", "refused", "prepared", "pending", "baseline", "wheel", "exhibit_out", "canary"}
+EXCLUDED_TOP_DIRS = {"sources", "refused", "prepared", "prepared_dryrun", "pending", "baseline", "tmp", "wheel",
+                     "exhibit_out", "canary"}
 # never entered, at any depth
 EXCLUDED_ANY_DIRS = {"__pycache__", ".pytest_cache", "node_modules", ".git"}
 EXCLUDED_SUFFIXES = {".pyc", ".log", ".tmp"}
@@ -96,13 +104,17 @@ CANARY_PUBLIC = (
 )
 # paths outside W:gate/ the plan names as lock-hashed (P0.4, P0.5), relative to W:
 OUTSIDE_W = (
-    ("the X check", "W:ops/darkflobi-tweet.js"),
+    ("the X script (P0.5 not built: no check in it)", "W:ops/darkflobi-tweet.js"),
     ("the posting skill", "W:skills/styxx-post/SKILL.md"),
 )
-# the plugin as installed (OD-4); hashed where it exists, else NOT_BUILT; relative to the home folder
+# the plugin as installed (OD-4; W:gate/plugin/README.md step 1 copies these six); hashed where it exists, else
+# NOT_BUILT; relative to the home folder
 PLUGIN_HOME = ("~/.clawdbot/extensions/styxx-gate/clawdbot.plugin.json",
                "~/.clawdbot/extensions/styxx-gate/index.js",
-               "~/.clawdbot/extensions/styxx-gate/gate.js")
+               "~/.clawdbot/extensions/styxx-gate/package.json",
+               "~/.clawdbot/extensions/styxx-gate/README.md",
+               "~/.clawdbot/extensions/styxx-gate/gate.js",
+               "~/.clawdbot/extensions/styxx-gate/patch_dist.js")
 
 # a lock row: | label | `path` | `sha256 (64 hex), or the pin (40 hex), or the not-built note` | note |
 ROW_RE = re.compile(r"^\|\s*(?P<label>[^|]*?)\s*\|\s*`(?P<path>[^`]+)`\s*\|\s*`(?P<hash>[0-9a-f]{64}|[0-9a-f]{40}|"
@@ -271,6 +283,28 @@ def gate_files(gate: Path):
     return out
 
 
+def bytecode_paths(gate: Path) -> list[str]:
+    """Every `__pycache__` folder (as `<rel>/`) and every `.pyc` file where the lock covers W:gate/, sorted posix paths.
+
+    The walk is the lock's own (`_gate_prune`): never a sealed folder (never listed), `node_modules`, `.git`, `_`
+    scratch, the live-state and harness folders at the top, or the `snapshot_*` folders (their caches are inside the
+    tree digest); a `__pycache__` folder is named and not listed. Raises WalkError as the walker does."""
+    if not gate.is_dir():
+        return []
+    found: list[str] = []
+
+    def prune(rel_dir: str, name: str) -> bool:
+        if name == "__pycache__":
+            found.append((rel_dir + "/" if rel_dir else "") + name + "/")
+            return True
+        return _gate_prune(rel_dir, name)
+
+    for rel, _full, _size in walk_regular_files(gate, prune=prune):
+        if rel.endswith(".pyc"):
+            found.append(rel)
+    return sorted(found)
+
+
 def rows_for_box(w_root: Path, home: Path, hashed: bool = True) -> list[tuple[str, str, str, str]]:
     """(label, path, hash-or-NOT_BUILT, note) for the whole lock set as the box stands.
 
@@ -417,12 +451,21 @@ def check(prereg: Path, w_root: Path, home: Path, strict: bool = False) -> int:
         if path not in rows and h != NOT_BUILT:
             unlocked += 1
             print(f"{'UNLOCKED':12s} {path}  locked=-  now=present")
+    # caches Python would run in place of a locked source
+    try:
+        caches = bytecode_paths(w_root / "gate")
+    except WalkError as e:
+        print(f"{'UNREADABLE':12s} W:gate/ (bytecode scan)  ({e})")
+        counts["UNREADABLE"] += 1
+        caches = []
+    for rel in caches:
+        print(f"{'BYTECODE':12s} W:gate/{rel}")
     print(f"rows {len(rows)}, changed {counts['CHANGED']}, built since {counts['BUILT SINCE']}, "
-          f"absent {counts['ABSENT']}, unreadable {counts['UNREADABLE']}, unlocked {unlocked}"
+          f"absent {counts['ABSENT']}, unreadable {counts['UNREADABLE']}, unlocked {unlocked}, bytecode {len(caches)}"
           + (" (strict)" if strict else ""))
     failed = counts["CHANGED"] + counts["BUILT SINCE"] + counts["UNREADABLE"]
     if strict:
-        failed += counts["ABSENT"] + unlocked
+        failed += counts["ABSENT"] + unlocked + len(caches)
     return 1 if failed else 0
 
 
