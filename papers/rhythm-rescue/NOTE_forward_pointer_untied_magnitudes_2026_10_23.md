@@ -12,7 +12,7 @@ frequency arc's headline. Its lines 34 to 36, quoted line by line:
 
 The arc's headline is the permuted-MNIST phase-clamp gap. The CHANGELOG entry for its re-run's preregistration names
 it so,
-<sworn r="path:CHANGELOG.md#L870" k="quote">`The arc's headline (+0.3122 on permuted MNIST,`</sworn>
+<sworn r="path:CHANGELOG.md#L920" k="quote">`The arc's headline (+0.3122 on permuted MNIST,`</sworn>
 and that preregistration, `PREREG_pmnist_robustness_2026_10_11.md`, states it on its line 35:
 <sworn r="path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L35" k="quote">`The headline: FREE 0.9195 (0.9240 / 0.9150) vs CLAMPED 0.6073 (0.5529 / 0.6617), gap +0.3122`</sworn>.
 The re-run's RESULT, `papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md`, is what this NOTE points
@@ -53,7 +53,7 @@ and permutation
 <sworn r="path:papers/frequency-resonance/pmnist_ablation_result.json#/config/perm_seed" k="numeric">1234</sworn>.
 It stands as what was measured there; as the arc's headline it does not carry at this verdict. The CHANGELOG banner
 of 2026-10-23 over the 2026-09-02 entry says the same of the +0.3122 headline: it
-<sworn r="path:CHANGELOG.md#L4493" k="quote">`does not carry at this verdict`</sworn>.
+<sworn r="path:CHANGELOG.md#L4543" k="quote">`does not carry at this verdict`</sworn>.
 
 ## What of this RESULT's own measurement stands, as measured
 
@@ -91,6 +91,19 @@ and the anchors landed within
 items of the committed GPU receipt. These stand as what was measured, in that setting. The robustness RESULT did not
 re-run the ordered-copy task, and nothing in it or in this NOTE moves them.
 
+They were measured at one budget. The run took
+<sworn r="path:papers/rhythm-rescue/untied_control_result.json#/config/steps" k="numeric">4000</sworn>
+steps, and so did the 2026-06-03 run whose receipt its anchors reproduce,
+<sworn r="path:papers/rhythm-rescue/rhythm_rescue_result.json#/config/steps" k="numeric">4000</sworn>
+steps in `rhythm_rescue_result.json`. That run's PREREG, `PREREG_rhythm_rescue_2026_06_03.md`, froze
+<sworn r="path:papers/rhythm-rescue/PREREG_rhythm_rescue_2026_06_03.md#L67" k="quote">`Both arms trained to the same fixed budget`</sworn>
+and wrote that
+<sworn r="path:papers/rhythm-rescue/PREREG_rhythm_rescue_2026_06_03.md#L67" k="quote">`a CLAMPED failure`</sworn>
+<sworn r="path:papers/rhythm-rescue/PREREG_rhythm_rescue_2026_06_03.md#L68" k="quote">`must not be an optimization artifact`</sworn>.
+Neither receipt varies the budget, and neither tests whether the ordered-copy gap survives a longer one; this NOTE
+does not test it either. The permuted-MNIST budget verdict is neither carried to ordered copy nor shown not to apply
+there.
+
 The RESULT said in its own scope that it did not test permuted MNIST (lines 41 and 42):
 <sworn r="path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md#L41" k="quote">`permuted-MNIST number (+0.312) was measured with the same knob and carries the same confound; this`</sworn>
 <sworn r="path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md#L42" k="quote">`result makes the diversity reading unlikely there but does not test it`</sworn>.
@@ -122,7 +135,8 @@ REAL2 − CLAMPED
 and recovery
 <sworn r="path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_recovery_newseed" k="numeric">−0.0378</sworn>.
 
-How the verdict row reads them: it does not. The row the receipt scored names the gap and budget gates and neither
+How the verdict row reads them: it does not. The row the receipt scored names `G_P_plumbing`, `G_D_stable`,
+`G_F_floor`, `G_C_anchor`, the three gap gates (`G_G_exists`, `G_G_mean`, `G_G_ci`) and `G_B_long`, and neither
 attribution gate,
 <sworn r="path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L262" k="quote">`"G_G_ci": true, "G_B_long": false}, "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps"`</sworn>,
 and the RESULT says so in its own words:
@@ -150,7 +164,7 @@ read or score the receipt.
 and files it:
 <sworn r="path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L468" k="quote">`"in SSMs" exceeds the measurement: one LRU-style architecture. No read paper supports the general sentence`</sworn>.
 Its CHANGELOG entry reads
-<sworn r="path:CHANGELOG.md#L149" k="quote">`INDEX row 51's "in SSMs" exceeds every read`</sworn>.
+<sworn r="path:CHANGELOG.md#L199" k="quote">`INDEX row 51's "in SSMs" exceeds every read`</sworn>.
 The sentence at lines 34 to 36 above states that general sentence about state-space models, and the reads support it
 there no more than in INDEX row 51. The headline's measurement is one three-block LRU-style recurrence on permuted
 MNIST (`CLRU` in `run_pmnist_ablation.py`); this RESULT's is one ordered-copy task at one width.
@@ -186,14 +200,15 @@ inside `RESULT_untied_magnitudes_2026_09_02.md` stays the operator's call.
 - It does not unseal, read or score the sealed untied receipt.
 - It reports no measurement of its own and re-runs nothing: the ordered-copy numbers above are the 2026-09-02
   receipt's, and the permuted-MNIST numbers are the 2026-07-23 and robustness receipts'.
+- It does not test the ordered-copy gap at a longer budget.
 - It says nothing of the theta-gamma reading in lines 35 and 36. The robustness RESULT does not test it.
 - No outcome it points to bears on deployed models, on attention, on importance or on priority (robustness PREREG
   section 11).
 
 ## Sworn
 
-This note swears 64 spans, each to bytes committed at the commit its sidecar names: the 2026-09-02 RESULT's lines
-and blob, its receipt, its verdict receipt and the charon log; the robustness receipt, RESULT and PREREG; the
-2026-07-23 receipt; SEALS row 2; the prior-art NOTE and the CHANGELOG; and the leg-2 PREREG and its packet. The
-sidecar and the verdict receipt beside this file were written by `python -m styxx.sworn canon` and
-`python -m styxx.sworn verify`; the verdicts are the receipt's.
+This note swears 69 spans, each to bytes committed at the commit its sidecar names: the 2026-09-02 RESULT's lines
+and blob, its receipt, its verdict receipt and the charon log; the 2026-06-03 receipt and PREREG; the robustness
+receipt, RESULT and PREREG; the 2026-07-23 receipt; SEALS row 2; the prior-art NOTE and the CHANGELOG; and the
+leg-2 PREREG and its packet. The sidecar and the verdict receipt beside this file were written by
+`python -m styxx.sworn canon` and `python -m styxx.sworn verify`; the verdicts are the receipt's.
