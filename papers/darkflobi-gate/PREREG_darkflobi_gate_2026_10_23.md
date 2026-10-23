@@ -575,7 +575,7 @@ row below.
 | gate file | `W:gate/exhibit_page.py` | `b3c434a9e22413c0684db03cf565da8d110cb527cccce9eeb5ad7a27335605ec` | 9805 bytes |
 | gate file | `W:gate/gate.js` | `fccfb82518415fa21cf780311ab7073abe194e7485ba392df936608b162ffd5b` | 8429 bytes |
 | gate file | `W:gate/gate.py` | `33cdf9b86eed7c766ea4f6c0df6adac46a1f3f6415ab3e3b6819db2c1c713acf` | 83270 bytes |
-| gate file | `W:gate/gate_verify.py` | `79066f8fc723054a676ccef3f4a1105de22a04bf611e03c1bb79ba2bc7127d29` | 27028 bytes |
+| gate file | `W:gate/gate_verify.py` | `f4b19c9428cfc73f205e8b540b657f3711255361f45dc4b345b23fd25fdc1d70` | 27204 bytes |
 | gate file | `W:gate/helpers/numerals.py` | `6e56ef95554522b3ce10ae30cb1c9b33b111a412a96690dc32b48ac524b28f86` | 4928 bytes |
 | gate file | `W:gate/ledger.py` | `dfdecee0c37ca18327f074121d752ca51ed49231109172b31ce7ee67195b9e2e` | 27202 bytes |
 | gate file | `W:gate/make_exhibit_out.py` | `b75188df5fe039063ded1c746cd312015d2eb9fbf690fd6f856e521add0c9688` | 8619 bytes |
@@ -593,7 +593,7 @@ row below.
 | gate file | `W:gate/plugin/tests/fakes/telegram_token.mjs` | `d3604c43ef61d90b50eaa14ece6aab9404ab0620964d0cd74ffdf2f63b5a4873` | 202 bytes |
 | gate file | `W:gate/plugin/tests/fakes/web_media.mjs` | `8cb4ccef755e3a426e0fd48d0c18cfead9e9ab6766e0de94effa17d2801c41a2` | 988 bytes |
 | gate file | `W:gate/plugin/tests/loader_hooks.mjs` | `c9194233873785f6edbf2d1309b51a839d0c2b16feb6a3efee1d2da52323d6b2` | 1181 bytes |
-| gate file | `W:gate/plugin/tests/run_tests.mjs` | `650a28e57695095f904bd87f9776c0ad962c1f39c116cd887e97a9de89e18e1e` | 99976 bytes |
+| gate file | `W:gate/plugin/tests/run_tests.mjs` | `8d4b7db0369d23139cac59131cd69078e6d11ea0d6024e58e481219771afc313` | 100363 bytes |
 | gate file | `W:gate/plugin/tests/stub_gate.py` | `7da1a4db092aab74b6d25ec296c2cb858b8a8f2ed0047ead97dcb4fc02e837e4` | 23348 bytes |
 | gate file | `W:gate/pregate_count.py` | `d8182d7918178afd3834efdfc75581d3c86008dabc765e0bbbbc07983505e37f` | 10831 bytes |
 | gate file | `W:gate/reconcile.py` | `231a03e8a68888747a1ee7381858c7debc7749065f26388972012ddb4d5d6d5b` | 76513 bytes |
@@ -607,12 +607,12 @@ row below.
 | gate file | `W:gate/tests/test_census.py` | `cdbd0bb6a1b348743e9f3392bd021ab3458700fddb768de355cc1e8527ca828f` | 67701 bytes |
 | gate file | `W:gate/tests/test_controls.py` | `e549831f13f2a4ad23cc290e9e637cc55faf5920c4c1885b99b7de73ce25895c` | 8950 bytes |
 | gate file | `W:gate/tests/test_exhibit_mint.py` | `58ddc0cabceae82066c64f83b909e99603bbad393d341c0287c3f53dced412f1` | 59137 bytes |
-| gate file | `W:gate/tests/test_gate.py` | `3d62702bdfc1379087fb7af6cd0e5a20294abfa5fc5359c74aa957943bea4461` | 23391 bytes |
+| gate file | `W:gate/tests/test_gate.py` | `d12167d33d06c78d859df98180ea926b5f155edc25a805acf195da8a48a113f2` | 23543 bytes |
 | gate file | `W:gate/tests/test_gate_fault.py` | `a85f3d37c116364c5c118051de60d25d73e68050042f42b828570d48cd6eb78d` | 7021 bytes |
 | gate file | `W:gate/tests/test_gate_round2.py` | `1ccb07ad38c739851808073d1abda9c6c0f1a9b132f9712e246b8f944a9ca6df` | 27495 bytes |
 | gate file | `W:gate/tests/test_ledger.py` | `e6010db04143fd3ba5701c7fcd39542799ed5fe1b8bc79b39c608e063aa24201` | 8136 bytes |
 | gate file | `W:gate/tests/test_resolver.py` | `ac126a493f8488b273004abf72e84aa6e33eac059029601b2ca054a945e47a58` | 11132 bytes |
-| gate file | `W:gate/tests/test_verify.py` | `fcbd35bc6ca986633fa527f50172d5a0669cba76a10d89ae618409e3b9c7b5da` | 11509 bytes |
+| gate file | `W:gate/tests/test_verify.py` | `669100d4086aeb64d5b501cbf80c2fbc118c9597044962105b616ea7f549db34` | 12453 bytes |
 | canary schedule | `W:gate/canary/schedule.json` | `e6ee0fcfc2004793d01b44f51603fc604b6c1bb5f49793354ddc024966d6c76b` | 14807 bytes |
 | canary seed digest | `W:gate/canary/keys/sworn_measurement_darkflobi_gate_canary_seed.sha256` | `625e7371db302076cc84f98326d7a39ad89149aec20927dfefee62193f745eeb` | 116 bytes |
 | salt_sha256 | `W:gate/salt` | `not built at the freeze` | written at the sitting (OD-6); appended under section 15 |
@@ -627,7 +627,7 @@ row below.
 | plugin as installed | `~/.clawdbot/extensions/styxx-gate/patch_dist.js` | `not built at the freeze` | installed at the sitting (OD-4) |
 
 The rows above the box's files are the repository's own; the rows from `W:gate/` down are the box's, as
-`lock_hashes.py table` printed them at 13:50 local on 2026-10-23, the snapshot row being the digest the pin
+`lock_hashes.py table` printed them at 14:20 local on 2026-10-23, the snapshot row being the digest the pin
 gives (here:5). The plan's `W:ops/exhibit_mint.py` row is gone: the mint is `W:gate/exhibit_mint.py`, a gate
 file row. The X script is locked as it stands, with no check in it (`PLAN` P0.5 is not built, §3). The canary
 schedule row is the `v0` plan for the example start that §7 describes, re-planned at the sitting and restated
