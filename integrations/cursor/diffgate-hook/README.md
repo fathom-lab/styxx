@@ -1,4 +1,4 @@
-# diffgate hook for Cursor — the agent cannot run a commit or PR command whose message lies about its diff
+# diffgate hook for Cursor — the agent's commit and PR commands read against their diff
 
 `before_shell.py` is a Cursor `beforeShellExecution` hook. Cursor hands it every shell command
 the agent is about to run; when the command is a `git commit -m …` or a `gh pr create / edit

@@ -51,7 +51,7 @@
   },
   "cli": {
    "file": "vectors/cli.json",
-   "sha256": "27a4b8941c15a5c382cbb398b98659d7e61582aa070da1e1fd19021b376baa85",
+   "sha256": "d662ad681aa920a9ec631740dc2864bb89cb0fe13a116367af7e24594ca43963",
    "count": 9
   },
   "coverage": {
@@ -76,7 +76,7 @@
   },
   "gaming": {
    "file": "vectors/gaming.json",
-   "sha256": "869e9b6cc4b96167d30ec18060339c680bd6372f168aebd8a8f9c17cb7706276",
+   "sha256": "a9fe377e5fa0bbfcb458846db33d1b863f6893902a4c4ee2045b80381893898c",
    "count": 51
   },
   "invariants": {
@@ -106,7 +106,7 @@
   },
   "receipt_v1": {
    "file": "vectors/receipt_v1.json",
-   "sha256": "7cbe0101c2bc7d8ecac6a5fd0ef72d0189f47a730f0520d5206e632062fa1e02",
+   "sha256": "8cc9dc7dabd37cb0ffe90f593fa8530a39d3b661c4ff1b5be71022ec97b84d83",
    "count": 5
   },
   "receipts": {
@@ -116,7 +116,7 @@
   },
   "rules": {
    "file": "vectors/rules.json",
-   "sha256": "3fd0a40359ecc11d03641addd845ee34221fac2f12188ccd1800db9989fb3506",
+   "sha256": "c6517264acd7684016f9cd6f8760104ed43216986b457d12f4861a98089be3ea",
    "count": 22
   },
   "sidecar_hardening": {
@@ -142,7 +142,7 @@
  },
  "blobs": {
   "file": "blobs.json",
-  "sha256": "8dc72c818c475cad5effaed041bad80581a605617c443e455320b43ef5662649",
+  "sha256": "9ea5b2fe24c151983598eb23a8d99536e7d805692087cc6d2f5d277bb34fb975",
   "count": 3981
  },
  "observer": {
@@ -449,8 +449,8 @@
   },
   "python": "3.12.10",
   "platform": "win32",
-  "styxx_version": "7.49.0",
+  "styxx_version": "7.50.0",
   "pytest_summary": "350 passed"
  },
- "set_sha256": "4138dabc8aa2ec8e7f7d569de5165309f3ba59d78bdd9e5cca274df237b276a5"
+ "set_sha256": "03e7e4cdc246f635823c00317fbaa4225af99accb83e9f9e20f5fe272e1582b5"
 }

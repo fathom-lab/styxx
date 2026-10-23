@@ -72,9 +72,22 @@ DECLARABLE = {
     "tests_pass": "tests_pass",
 }
 
-_INT_RE = re.compile(r"^\d{1,9}$")
+# A count is the ASCII digits 0-9 (#206). `\d` here was every Unicode decimal digit of the interpreter's own
+# tables, and `int()` read them: a count in full-width or Arabic-Indic digits was VERIFIED or CONTRADICTED in the
+# Python, MALFORMED in the port (whose `\d` is ASCII), and which digits counted moved with the Unicode version.
+_INT_RE = re.compile(r"^[0-9]{1,9}$")
 _PATHY_RE = re.compile(r"^[\w.\-/\\]+$")
 _IDENT_RE = re.compile(r"^[A-Za-z_]\w*$")
+
+
+def _not_a_count(value: str) -> str:
+    """The MALFORMED reason for a count that is not 1-9 ASCII digits. An ASCII value keeps the old reason byte for
+    byte; a value holding a character from U+0080 up names the leftmost such character by its code point, with no
+    repr() and no Unicode table, so the reason is the same on every runtime and in the port (#206)."""
+    wide = next((ch for ch in value if ord(ch) > 0x7F), None)
+    if wide is None:
+        return f"MALFORMED: {value!r} is not a count"
+    return f"MALFORMED: a count is written in the ASCII digits 0-9, and the value holds U+{ord(wide):04X}"
 
 
 def parse_declaration(text: str) -> tuple[dict[str, str] | None, list[str]]:
@@ -120,11 +133,11 @@ def canonical_sentence(key: str, value: str) -> tuple[str | None, str | None]:
                       "is not evidence that they did")
     if key == "files_changed":
         if not _INT_RE.match(value):
-            return None, f"MALFORMED: {value!r} is not a count"
+            return None, _not_a_count(value)
         return f"{int(value)} files changed.", None
     if key == "tests_added":
         if not _INT_RE.match(value):
-            return None, f"MALFORMED: {value!r} is not a count"
+            return None, _not_a_count(value)
         return f"Added {int(value)} tests.", None
     if key == "adds_symbol":
         if not _IDENT_RE.match(value):

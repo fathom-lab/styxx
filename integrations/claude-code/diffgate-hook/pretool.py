@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Claude Code PreToolUse hook: the agent cannot post a message that lies about its diff.
+"""Claude Code PreToolUse hook: the agent's commit and PR messages read against their diff.
 
 Wire it in ~/.claude/settings.json (or a checkout's .claude/settings.local.json):
 

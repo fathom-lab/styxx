@@ -2,7 +2,7 @@
 name: styxx-capsule
 description: >
   Verify agent work instead of trusting it. Gate your PR summary against your
-  actual diff before you ship (the lie exits 1), seal your work into a
+  actual diff before you ship (a contradicted claim exits 1), seal your work into a
   proof-carrying capsule the receiver re-verifies in one command, and verify
   any capsule handed to you before acting on it.
 metadata:

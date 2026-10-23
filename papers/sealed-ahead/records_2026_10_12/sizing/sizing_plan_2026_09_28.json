@@ -1,0 +1,72 @@
+{
+ "schema": "styxx.sealed-ahead/sizing-plan/v0",
+ "written": "2026-10-12, committed before any hour of the sizing week was streamed and before any pull request was fetched",
+ "what": "The sizing run for sealed-ahead precision (study 2026-10-06, section 2.1 and section 4 step 4): one past week of GH Archive through the builder's population.py and pool.py, then a uniform sample of at most 300 admitted records through the builder's accuse.py and the frozen 7.49.0 gate. Counts only: no adjudication, no precision, and no table by repository, account or product. Agent family appears only as a sizing count of admitted records.",
+ "window": {"t0": "2026-09-28T00:00:00Z", "t1": "2026-10-05T00:00:00Z", "hours": 168},
+ "builder": {
+  "repository_path": "C:/Users/heyzo/clawd/wt/sealed-ahead",
+  "branch": "research/sealed-ahead-precision",
+  "commit": "3c63ea40b460e3597d6c4da41359ad776fcb619a",
+  "modules_lf_sha256": {
+   "common.py": "d49a5f314d404eb79c34531dba0a91c2eec900b9d15982d42631373dbb91e133",
+   "population.py": "4f74516152e929315d9cbbc9914755a0348c86b5ad6b75cd60da869b86605991",
+   "pool.py": "1f168c68fcc4fb23937567580aebe53da71d7ec68e12c1fc65c01c150bde1cde",
+   "accuse.py": "ceaf860c20760db9a526f3dc8e83ac31545b7a665d345267968579a5ee99b7cc"
+  },
+  "identity_table_lf_sha256": "0237e338d92c179a9c1aaec69b791c28281f53be8e862a1f7c640f81127bc987",
+  "identity_rules_sha256": "2fce0c15763231ef7a32a59e1e93091c286258136dd7782ed79dc84da6c6ad66"
+ },
+ "gate": {
+  "release": "7.49.0",
+  "tag_commit": "c6e00da02673ec6a2e84919f17f56a2e4435a8c9",
+  "diffgate_lf_sha256": "09867056957082f129985591f5ed048021e85ed48627e73854494b4a1e6e2b3a",
+  "package_source": "git -c core.autocrlf=false archive v7.49.0 styxx, extracted to sizing_derived/styxx_7_49_0 (not committed); accuse.load_gate refuses any other diffgate",
+  "call": "gate_diff_text(title + \"\\n\\n\" + body, diff, run=None, strict=False), as accuse.gate_outcome makes it",
+  "interpreter": "py -3.12 (CPython 3.12.10 on this machine); the run records interpreter and unicodedata version"
+ },
+ "provisional_params": {
+  "note": "Not a plan. These fill the builder's parameter schema for one sizing run. account_id_ceiling and repo_id_ceiling are derived by `sizing.py ceilings` from the calibration hour named by young_days (pool.py ceilings' rule); bitcoin_height is a placeholder because the sizing run draws nothing.",
+  "schema": "styxx.sealed-ahead/params/v0",
+  "t0": "2026-09-28T00:00:00Z",
+  "t1": "2026-10-05T00:00:00Z",
+  "identity_rules_sha256": "2fce0c15763231ef7a32a59e1e93091c286258136dd7782ed79dc84da6c6ad66",
+  "young_days": 30,
+  "ceiling_hour": "2026-08-29-0",
+  "account_id_ceiling": "derived",
+  "repo_id_ceiling": "derived",
+  "excluded_owners": ["fathom-lab"],
+  "excluded_actor_logins": ["darkflobi", "fathomlab"],
+  "max_prs_per_repo": null,
+  "max_prs_per_actor": null,
+  "gap_grace_hours": 24,
+  "gate": {"module": "styxx.diffgate", "sha256": "09867056957082f129985591f5ed048021e85ed48627e73854494b4a1e6e2b3a", "styxx_version": "7.49.0", "run": null, "strict": false},
+  "fetch": {"body_source": "payload_else_api", "diff_source": "pull", "rate_limit_per_hour": 50, "require_unmoved_head": true},
+  "draw": {"n": 60, "bitcoin_height": 1, "min_confirmations": 6}
+ },
+ "age_rule_sensitivity": {
+  "what": "The same week counted again, before deduplication, under the age rule at other young_days and with no age rule. Counts only; the pool and the sample use the provisional params above.",
+  "young_days": [0, 7, 30],
+  "calibration_hours": {"0": "2026-09-28-0", "7": "2026-09-21-0", "30": "2026-08-29-0"},
+  "no_age_rule": true
+ },
+ "sample": {
+  "frame": "pool.jsonl as pool.assemble writes it under the provisional params (one record per (repo_id, number), uncapped)",
+  "n_max": 300,
+  "seed": "styxx sealed-ahead sizing week 2026-09-28 sample v0",
+  "method": "for each record, key = sha256(canon({\"pool_key\": \"<repo_id>#<number>\", \"seed\": seed})) as lowercase hex, canon being common.canon; the n_max records with the smallest keys form the sample (all records if the pool holds fewer); the sample is then ordered by event id as accuse.run orders it",
+  "why_this_method": "A pure function of the seed and the pool: anyone holding the pool re-derives the sample, and the seed is fixed here before the pool exists, so it cannot be chosen to suit the sample."
+ },
+ "fetch_budget": {
+  "routes": "accuse.py's own: api.github.com/repositories/<repo_id>/pulls/<number>, then github.com/<owner>/<name>/pull/<number>.diff; unauthenticated; no other GitHub request is made",
+  "rate_limit_per_hour": 50,
+  "limiter": "accuse.RateLimiter with its stamps kept in the output directory",
+  "if_the_budget_runs_out": "the records without a final outcome are reported as unfetched, with the partial counts and the method; nothing is extrapolated over them"
+ },
+ "estimators": {
+  "denominator": "sampled records with a final outcome (admitted agent pull requests, whatever their outcome: HEAD_MOVED, EMPTY_BODY and PR_GONE records count in the denominator because the window's population holds them too); the rate per gated record is reported beside it",
+  "per_kind": "accusations of each kind per 1,000 sampled records; Wilson 95% interval on the share of sampled records with at least one accusation of that kind (z = 1.959964), and the same for any kind",
+  "projection": "admitted records in the week times the sampled rate, at the point estimate and at both Wilson ends",
+  "window_for_60": "60 divided by the weekly projection at the Wilson lower end, in days; unbounded when the lower end is zero. The fetch budget is a second limit and is computed from the sample's measured requests per record",
+  "not_computed": "precision, any accusation count by family, repository, account or product"
+ }
+}

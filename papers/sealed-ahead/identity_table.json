@@ -1,0 +1,99 @@
+{
+ "schema": "styxx.sealed-ahead/identity-table/v0",
+ "about": "Which opened pull requests the pool admits as agent work, read from the two fields a 2026 GH Archive PullRequestEvent still carries: the opening account (actor.login) and the head branch (payload.pull_request.head.ref). The rules are tried in the order listed; a record keeps every rule it matched and the family they share, or 'mixed' when they name different families. The operative part (rule, family, match, value) is digested by population.rules_sha256 and named by the plan; editing anything here changes nothing the plan names unless it changes that part, and editing that part breaks the pin in tests/test_sealed_ahead.py on purpose.",
+ "derived_from": "AIDev's agent set (six agents, hao-li/AIDev v4 README) and the attack pass of 2026-10-07 (STUDY_where_styxx_goes_next_2026_10_06.md, section 2.1). No per-agent count, rate or precision appears here or anywhere this pipeline writes.",
+ "evidence_sources": {
+  "E1": "hao-li/AIDev v4 dataset card (HuggingFace snapshot c63c8a57a2de34fc03fa83722412824af4d8753b, read from the local cache on 2026-10-12): names the six agents; its overview gives, per agent, the number of distinct human developers on the agent's pull requests, which is zero or near zero for three agents (their pull requests are opened by the agent's own account) and large for the other three (opened from a person's account, so the agent shows only in the branch or the text).",
+  "E2": "Attack pass of 2026-10-07 (study section 2.1 and its transcript): 2026 PullRequestEvent payloads are trimmed to base, head{ref,repo,sha}, id, number and url plus the event's actor; a 'claude/' head ref was seen in hour 2026-10-05-12; AIDev identified one agent from body text, which a trimmed payload does not carry, so this table's labels will differ from AIDev's.",
+  "E3": "Recalled by the builder on 2026-10-12, not re-fetched: the login strings and branch prefixes each agent writes. The network grant of 2026-10-12 does not cover the agents' documentation, so each E3 item is a candidate until E4 holds.",
+  "E4": "Required before the plan freezes and not yet done: in the sizing week, population.fields_census must show each admitted rule matching opened events, and one unauthenticated GET of api.github.com/users/<login> per login rule must record that account's numeric id and type (three requests)."
+ },
+ "admitted": [
+  {
+   "rule": "login:copilot",
+   "family": "copilot",
+   "match": "actor_login",
+   "value": "Copilot",
+   "third_party_can_forge": false,
+   "evidence": ["E1", "E3"],
+   "evidence_status": "E1 documents that this agent's pull requests are opened by its own account; the login string is E3 and needs E4.",
+   "note": "Anyone may drive the real agent in a repository they control; that is agent work, so it is admitted, and planting through it is bounded by the account and repository age rules and the per-repository cap, not by this rule."
+  },
+  {
+   "rule": "login:devin",
+   "family": "devin",
+   "match": "actor_login",
+   "value": "devin-ai-integration[bot]",
+   "third_party_can_forge": false,
+   "evidence": ["E1", "E3"],
+   "evidence_status": "E1 documents an agent-owned opening account; the login string is E3 and needs E4. A login ending in [bot] belongs to a GitHub App and cannot be registered by a person.",
+   "note": ""
+  },
+  {
+   "rule": "login:jules",
+   "family": "jules",
+   "match": "actor_login",
+   "value": "google-labs-jules[bot]",
+   "third_party_can_forge": false,
+   "evidence": ["E1", "E3"],
+   "evidence_status": "E1 documents a mostly agent-owned opening account (a few people appear); the login string is E3 and needs E4.",
+   "note": "Pull requests this agent opens from a person's account are not matched by any admitted rule."
+  },
+  {
+   "rule": "prefix:codex/",
+   "family": "codex",
+   "match": "head_ref_prefix",
+   "value": "codex/",
+   "third_party_can_forge": true,
+   "evidence": ["E1", "E3"],
+   "evidence_status": "E1 documents that this agent's pull requests are opened from people's accounts, so only the branch can carry the agent; the prefix is E3 and needs E4.",
+   "note": "Anyone can name a branch codex/...; the prefix is a label, not a signature."
+  },
+  {
+   "rule": "prefix:cursor/",
+   "family": "cursor",
+   "match": "head_ref_prefix",
+   "value": "cursor/",
+   "third_party_can_forge": true,
+   "evidence": ["E1", "E3"],
+   "evidence_status": "E1 documents people's opening accounts; the prefix is E3 and needs E4.",
+   "note": "A label, not a signature."
+  },
+  {
+   "rule": "prefix:claude/",
+   "family": "claude",
+   "match": "head_ref_prefix",
+   "value": "claude/",
+   "third_party_can_forge": true,
+   "evidence": ["E1", "E2", "E3"],
+   "evidence_status": "E2 observed the prefix in a 2026 hour; E1 documents people's opening accounts; AIDev labelled this agent from body text, so the population differs from AIDev's for this family.",
+   "note": "A label, not a signature."
+  }
+ ],
+ "considered_not_admitted": [
+  {
+   "candidate": "prefix:copilot/",
+   "why_not": "The agent's own pull requests are matched by its login rule already; on a pull request opened from a person's account the prefix does not establish that the agent wrote the change (E3)."
+  },
+  {
+   "candidate": "prefix:devin/",
+   "why_not": "Same reason: the agent opens its pull requests from its own account, matched by the login rule; a person's devin/ branch is not established agent work (E3)."
+  },
+  {
+   "candidate": "body text markers (a 'Generated with ...' line, a co-author trailer)",
+   "why_not": "The 2026 payload carries no body (E2). A rule over a body fetched later makes the population depend on what the API serves at fetch time, so the pool would stop being a function of GH Archive bytes."
+  },
+  {
+   "candidate": "agents outside AIDev's six (OpenHands, Sweep and other app accounts)",
+   "why_not": "The 0.13% accusation rate that sizes the window was measured on AIDev's six agents; admitting others changes the population the sizing assumed. A later plan may admit them under its own sizing."
+  },
+  {
+   "candidate": "any login ending in [bot]",
+   "why_not": "It admits dependency, translation and CI bots, which are not coding agents in AIDev's sense."
+  },
+  {
+   "candidate": "pull request labels",
+   "why_not": "A label arrives as a separate 'labeled' event, after the opening; a rule over it would make admission depend on events outside the opened event."
+  }
+ ]
+}

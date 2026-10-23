@@ -25,7 +25,10 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "ce067ec94fc820b6258bf550bd1c1ce8fe664bf01f8ef0f1de3a7cde99f92c64"  # styxx/diffgate.py: main's 4eb3d6f0 reader (68873068, which is 9b620e00 + the demo's CONTRADICTED label, + the record naming its instrument) + the PATH-2a block (LF)
+PINNED = "b63f2b03c5051f7ca1a196c9b6ac9e7f907fe626970a22e400e484e4598aa446"  # styxx/diffgate.py: main's e1441f18 reader (f457d2e4 + the front door's docstring, --help and WITHHOLD comment wording, outside any reading path; f457d2e4 is 4eb3d6f0 + #205's line cut and abstention; 4eb3d6f0 is 68873068, which is 9b620e00 + the demo's CONTRADICTED label, + the record naming its instrument) + the PATH-2a block (LF)
+# #205 (fix/diffgate-205-206) moved reading paths in both files at once: the Python cuts git output where the port
+# always did, and both abstain on the `def` counts over a line holding a character of _READ_APART, so the differential
+# compares the new reading on both sides. #206 moved styxx/declare.py, which this pin does not hold.
 # The record naming its instrument (identity phase 2) appends `build` and `runtime` to every record and moves no
 # content key, so the differential, which compares named fields only, compares what it compared before.
 # The pin moved twice in one step and both moves are deliberate. COMPAT-2 (#124) changed the
