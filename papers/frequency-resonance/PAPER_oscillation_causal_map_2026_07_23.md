@@ -1,30 +1,40 @@
 # What Oscillation Buys a State-Space Model: Seven Controlled Causal Ablations and a Reusable Profiler
 
 > **Banner, added 2026-10-23, with `NOTE_prior_art_full_text_reads_2026_10_23.md` and
-> `RESULT_pmnist_robustness_2026_10_23.md`.** The NOTE records full-text reads of four prior papers, each read
-> twice: the LRU paper (Orvieto et al., arXiv 2303.06349), S4D (Gu, Gupta, Goel and Ré, arXiv 2206.11893), LinOSS
-> (Rusch and Rus, arXiv 2410.03943) and D-LinOSS (Boyer, Rusch and Rus, arXiv 2505.12171); its section 5 files
-> this draft's sentences. The RESULT re-ran the permuted-MNIST headline under a sealed preregistration and reads
+> `RESULT_pmnist_robustness_2026_10_23.md`.** In short: the lab no longer stands behind this draft's priority-shaped
+> sentences, its sentences saying the field compares only whole architectures, its "S5/LinOSS-class" label,
+> Appendix A's equivalence with LinOSS's ablation, "the long-range mechanism", or its permuted-MNIST headline. A
+> real-versus-complex comparison inside one diagonal SSM is published in S4D (2022), and the LRU paper (2023), whose
+> magnitude parameterization and ring initialization this draft's model uses, reports controlled phase experiments.
+> Neither document settles two things: the sequential-MNIST sentences, outside every read and not re-run, and the
+> causal readings of an in-place θ → 0 clamp, which rest on a measurement the RESULT counts as reported, not
+> evidence.
+>
+> The NOTE reads four papers in full, each twice: the LRU paper (Orvieto et al., arXiv 2303.06349), S4D (Gu et al.,
+> arXiv 2206.11893), LinOSS (Rusch and Rus, arXiv 2410.03943) and D-LinOSS (Boyer et al., arXiv 2505.12171). Its
+> section 5 cites this draft's lines as they stood before this banner (at `2e218601`); each now sits 81 lines
+> lower. The RESULT re-ran the permuted-MNIST headline under a sealed preregistration and reads
 > `BUDGET_CONFOUND__gap_does_not_survive_3x_steps` (`pmnist_robustness_result.json#/verdict`), worded so: On
-> permutation 1234, at 12,000 steps under a cosine schedule re-stretched to that budget, the gap is 0.1097 (two
-> FREE seeds against three CLAMPED seeds); at 4,000 steps on three new seeds it is 0.3182. The 4000-step gap does
-> not survive the longer budget on this permutation. Every sentence below is left as written. Each line here names
-> its sentence by section and a quoted fragment, not by line number.
+> permutation 1234, at 12,000 steps under a cosine schedule re-stretched to that budget, the gap is 0.1097 (two FREE
+> seeds against three CLAMPED seeds); at 4,000 steps on three new seeds it is 0.3182. The 4000-step gap does not
+> survive the longer budget on this permutation. Each item below names its sentence by section and a quoted
+> fragment.
 >
 > The lab no longer stands behind these:
 >
-> - **Priority-shaped, not supportable as written:** §3's closing sentence (it begins "Across all of these,"), and
->   the two ordinals of §1, "becomes, for the [ordinal] time, a *controlled experiment*" and "the [ordinal]
->   within-architecture map" (ordinal elided in both). S4D's Table 3(a) (2022) is a controlled real-versus-complex
->   comparison inside one model, and the LRU paper's PathX phase-range runs (2023) are controlled phase
->   experiments.
+> - **Priority-shaped, not supportable as written, and in the NOTE's words should not be printed:** §3's closing
+>   sentence, not reprinted here (it begins "Across all of these,"), and the two ordinals of §1, "becomes, for the
+>   [ordinal] time, a *controlled experiment*" and "the [ordinal] within-architecture map" (ordinal elided in both).
+>   S4D's Table 3(a) (2022) is a controlled real-versus-complex comparison inside one model, and the LRU paper's
+>   PathX phase-range runs (2023) are controlled phase experiments.
 > - **Contradicted in part as general sentences** (true of LinOSS and D-LinOSS, not of the field): the Abstract's
 >   "Yet the field evaluates them by comparing whole architectures", and §1's "is untested, because the standard
 >   comparison is between whole models" and "We supply the missing causal instrument". S4D's Table 3(a) sets a
 >   real initialization (S4D-Real) against a complex one (S4D-Inv) inside one diagonal SSM at matched size.
 > - **Known wrong:** "S5/LinOSS-class" in §2 ("the oscillatory (S5/LinOSS-class) model") and in §4.1 ("A deep
->   S5/LinOSS-class classifier"). The model is a three-block complex-diagonal linear recurrence, LRU-style (`CLRU`
->   in `run_smnist_ablation.py` and `run_pmnist_ablation.py`); the S5 paper was not read.
+>   S5/LinOSS-class classifier"). Its LinOSS half fails for the Appendix A reason below. The model is a three-block
+>   complex-diagonal linear recurrence, LRU-style (`CLRU` in `run_smnist_ablation.py` and `run_pmnist_ablation.py`).
+>   The S5 paper was not read, so nothing here says whether `CLRU` is S5-class.
 > - **Known wrong:** Appendix A's equivalence, in its title ("the phase-clamp is LinOSS's oscillation ablation"),
 >   in "a statement about LinOSS itself, not a proxy" and in "is identical to clamping the restoring force". In
 >   LinOSS-IM magnitude and phase are tied (`|λ| = √S = cos θ` per mode, derived in the NOTE from LinOSS's
@@ -32,9 +42,8 @@
 >   CLAMPED keeps a learnable magnitude below 1. The CLAMPED arm is not reachable inside LinOSS. The appendix's
 >   algebra holds; the equivalence does not follow from it.
 > - **Exceeds every read:** "the oscillation *is* the long-range mechanism" (Abstract) and "it *is* the long-range
->   mechanism; a decay model of equal budget cannot substitute for it" (§4.1). The measurement is one
->   architecture, one permutation, two seeds and 4000 steps, and none of the four papers supports the general
->   sentence.
+>   mechanism; a decay model of equal budget cannot substitute for it" (§4.1). The measurement is one architecture,
+>   one permutation, two seeds and 4000 steps; none of the four papers supports the general sentence.
 > - **Does not carry at the RESULT's verdict:** the permuted-MNIST headline of the Abstract and §4.1 (+31.2
 >   points, 92.0% against 60.7%, "widens 7.6×"). Its numbers stand as what was measured at 4000 steps on two seeds
 >   and permutation 1234 (`pmnist_ablation_result.json`).
@@ -54,11 +63,23 @@
 >   frequencies and report no within-architecture oscillation-vs-decay ablation" (LinOSS v1-v3, D-LinOSS v1-v2).
 >   Appendix A's closing "the within-architecture ablation the LinOSS paper does not report" is literally true for
 >   the same reason, though the clamp is not that ablation (above).
-> - **Outside every read:** the sequential-MNIST sentences of the Abstract and §4.1 ("causally load-bearing"); no
->   read paper has sequential MNIST.
 >
-> The reads cover four papers. TIDES, the S5 paper and the rest of §3's related work were not read, so nothing
-> here is a statement about the literature, and no priority claim is made. The text below is unchanged.
+> Settled by neither document:
+>
+> - **Outside every read, and not re-run:** the sequential-MNIST sentences of the Abstract and §4.1 ("causally
+>   load-bearing"), measured at 4000 steps on two seeds (`smnist_ablation_result.json`). No read paper has
+>   sequential MNIST, and the robustness design did not re-run it.
+> - **Rests on a measurement the RESULT counts as reported, not evidence:** the causal readings of an in-place
+>   θ → 0 clamp on a trained model, in the Abstract ("collapses it to chance (9.8%)", "read off, causally"), §4.1
+>   ("+88.5 points", "routes almost all of its computation through the rotation") and §4.4 ("decay floor 0.027").
+>   The RESULT reports the same kind of clamp on its own FREE runs as "not evidence for the between-model gap: a
+>   destructive perturbation with no matched-norm control", and establishes "Nothing from the within-model
+>   reliance". Neither `run_smnist_ablation.py` nor `resonance_profiler.py` runs a matched-norm control.
+>
+> The reads cover four papers; TIDES, the S5 paper and the rest of §3's related work were not read. So nothing here
+> is a statement about the literature as a whole, and no priority claim is made. This banner carries only what the
+> NOTE and the RESULT file; sentences it does not list were not re-examined. The text below is unchanged: every
+> sentence is left as written.
 
 *STYXX / fathom-lab · draft 2026-07-23*
 
