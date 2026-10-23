@@ -156,6 +156,11 @@ papers/frequency-resonance/RESULT_realmodel_bridge_v3_not_started_2026_10_12.swo
 # bytes
 papers/frequency-resonance/pmnist_robustness_runs/** -text
 
+# pmnist robustness RESULT (2026-10-23): sworn document, sidecar and receipt, byte-pinned like every other sworn artifact
+papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md -text
+papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.sworn.json -text
+papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.sworn-receipt.json -text
+
 # sealed-ahead records (NOTE_sealed_ahead_build_stopped_2026_10_12): committed byte for byte from a separate local
 # repository and named by sha256 in the NOTE and in tests/test_sealed_ahead_records.py; a CRLF checkout would change them
 papers/sealed-ahead/records_2026_10_12/** -text
