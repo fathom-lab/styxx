@@ -47,6 +47,13 @@ merged after the tag is in it.
 - `README.md`: its 91 tag-pinned links (85 `blob/`, 5 `tree/` and 1 `raw.githubusercontent.com`, on 64
   lines) name v7.50.0 where they named v7.49.0. Every one of the 65 paths they name exists at v7.50.0, and
   none cites a 7.49.0-era document on purpose, so none is kept at v7.49.0. No line is added or removed.
+- `tests/test_release_ceiling_caveat.py` names the three 7.50.0 Zenodo records it skips
+  (`ZENODO_RECORD_PATHS`: the metadata as sent, as published and the record as read back), with a test
+  that each name is a tracked file. The record's description quotes "HaluEval-QA AUC 0.998" as the PyPI
+  positioning the release replaced, with no ceiling caveat beside it, so the guard failed on the three
+  files once they were committed. They hold what Zenodo was sent and returned and are never rewritten.
+  The live record reads the same; an in-place edit that puts the ceiling caveat beside the figure, as
+  7.48.0's record had on 2026-09-29, is the operator's call.
 - Not changed: the other nine stale lines the record lists, namely `web/gate/`'s pages and headers, the
   header comment of `.github/workflows/diffgate.yml`, `sworn/README.md` and `sworn/action.yml` (which give
   7.48.0 as the release to install), the README's always-latest label for 10.5281/zenodo.19326174 (D3,
