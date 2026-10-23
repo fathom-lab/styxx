@@ -264,8 +264,12 @@ A numeral is a match of certify's `_NUM` (`M:styxx/certify.py` l.42-44), after c
 |(?<![\w.])[-+]?\.\d+(?![\w.])|(?<![\w.])[-+]?\d+(?![\w.])
 ```
 
-`Nn` on a line is the count of numerals in the checked text (`numerals.total`); `Nb` the count bound (§4,
-`numerals.bound`); `Nu` the count unbound and marked (`numerals.unbound`); `Ns` the count certify reads as spec or
+`Nn` on a line is the count of numerals in the checked text (`numerals.total`): certify's ledger rows plus its
+counted uncovered band (a numeral ending a sentence, `12.`, is no `_NUM` token and is in the band), read whenever
+the text holds a digit [R, `gate.py` `bind_numerals`]. `Nb` is the count bound (§4, `numerals.bound`), by position:
+a numeral whose certify row is VERIFIED, or whose opening character lies inside a sworn HELD numeric span
+(`legs.sworn.held_numeric_at`); a span over a numeral certify does not count binds nothing, and no count is added
+to another; `Nu` the count unbound and marked (`numerals.unbound`); `Ns` the count certify reads as spec or
 notation (ABSTAIN with a spec reason), not recorded on the line and printed as "not recorded" (§13). A number in words is not a
 numeral (shape S4). Thread ordinals, pull-request numbers and line cites are numerals (shape S14) and read unbound
 unless given a leaf.
@@ -280,7 +284,7 @@ this order of precedence: `internal`, `anchor`, `unavailable`, `spoof`, `lint`, 
 `clean`) and `reasons`, a list of codes. A refusal at any leg still records every leg that ran. The codes are spelled
 as `W:gate/gate.py`, the plugin `W:gate/plugin/index.js` and its helper `W:gate/gate.js` emit them, and a code's class
 is the class `gate.py` appends it under (`findings.append((<class>, <code>))`) [R, the three files at the hashes the
-PREREG's §11 locks; read for this table at 2026-10-23 13:31 EDT: `gate.py` `33cdf9b8…`, `index.js` `759ceb82…`,
+PREREG's §11 locks; read for this table at 2026-10-23 13:50 EDT: `gate.py` `33cdf9b8…`, `index.js` `759ceb82…`,
 `gate.js` `fccfb825…`]; a code written `name:<x>` is matched by its prefix `name:`, the suffix naming the span's
 reason, the claim, the shape, the leg or the fault. Where this table and the locked files ever differ, the files
 decide which code a line carries and in which class, and the difference is printed under the PREREG's §15 before the
@@ -294,7 +298,7 @@ merge and in the RESULT after it; `tests/test_darkflobi_gate_prereg.py` compares
 | **spoof** | `anchor_form_spoof` (§9): the anchor's form from any origin but the timer's nonce | counted and listed, never rated |
 | **lint refusal** | `lint_hit:<rule id>` for every `withdrawn`, `charter` or `plan` rule of `M:scripts/surface_lint.py` `RULES` that hits (a `withdrawn` match with a withdrawal form within 300 characters either side is ALLOWED, not a hit, `WINDOW` l.66) | counted and listed, never rated |
 | **unavailability on the line** (a leg could not run) | `gate_unavailable:<why>`, `<why>` naming the leg and its failure (`sworn_exit<n>`, `certify_exit<n>`, `audit_exit2`, `lint_exit2`, `strip_helper_exit<n>`, `numerals_helper_exit<n>`, `instrument_mismatch:<leg>`, `snapshot_missing:<file>`, `gate_timeout`, `spawn_error:<name>` and the like) or, for any other fault inside the legs, the exception's class name | counted per day on the ledger page; a public attempt under it is silence, never a send (`DG` §4; `PLAN` repair 16) |
-| **unavailability before any line** (a fault of the plugin or of its helper, outside `gate.py`) | the plugin's own faults: `gate_unavailable` (`gate.py` absent or not spawned), `gate_timeout` (no answer in 30 s), `gate_no_verdict` (an answer with no `send` or `cancel` action); for each the plugin asks `gate.py fault` for a line, a `kind: send` line with `finding: unavailable`, `reasons` `gate_unavailable:<code>`, `plugin_fault: <code>` and no leg run (so the line carries the code under the class above), and only when that call fails too is the code written to `W:gate/plugin_failures.jsonl` alone. The helper `gate.js`, at the exit: `gate_not_registered` (no `message_sending` handler with `REQUIRED` present), `gate_no_verdict` (the handler threw: the hook runner swallows it, `D:plugins/hooks.js` l.20), `gate_hook_foreign` (with `REQUIRED` present, a `message_sending` or `message_sent` hook of another plugin in the registry, or `styxx-gate` not the one loaded from the global extensions folder), `gate_result_unbound` (with `REQUIRED` present, the answer does not carry the gate's `sent_sha256`, or it is not the sha256 of the bytes the exit will send); the exit sends nothing and only the gateway's own log names them; and `gate_not_wired` (a marker missing from a patched `dist/` file), on the plugin's `gate_not_wired` line | a public attempt under any of them is silence with `REQUIRED` present, never a send; counted per day from the lines and from `plugin_failures.jsonl`; the helper's cancels that left no line are not counted, and are not deliveries |
+| **unavailability before any line** (a fault of the plugin or of its helper, outside `gate.py`) | the plugin's own faults: `gate_unavailable` (`gate.py` absent or not spawned), `gate_timeout` (no answer in 30 s), `gate_no_verdict` (an answer with no `send` or `cancel` action); for each the plugin asks `gate.py fault` for a line, a `kind: send` line with `finding: unavailable`, `reasons` `gate_unavailable:<code>`, `plugin_fault: <code>` and no leg run (so the line carries the code under the class above); the plugin writes every such fault to `W:gate/plugin_failures.jsonl` as well, and when the `fault` call fails too that file alone holds it. The helper `gate.js`, at the exit: `gate_not_registered` (no `message_sending` handler with `REQUIRED` present), `gate_no_verdict` (the handler threw: the hook runner swallows it, `D:plugins/hooks.js` l.20), `gate_hook_foreign` (with `REQUIRED` present, a `message_sending` or `message_sent` hook of another plugin in the registry, or `styxx-gate` not the one loaded from the global extensions folder), `gate_result_unbound` (with `REQUIRED` present, the answer does not carry the gate's `sent_sha256`, or it is not the sha256 of the bytes the exit will send); the exit sends nothing and only the gateway's own log names them; and `gate_not_wired` (a marker missing from a patched `dist/` file), on the plugin's `gate_not_wired` line | a public attempt under any of them is silence with `REQUIRED` present, never a send; counted per day from the lines and from `plugin_failures.jsonl`; the helper's cancels that left no line are not counted, and are not deliveries |
 | **the ledger could not take the line** | `ledger_locked` (the lock was not taken in its wait), `tamper` (the log's recomputed head differs from `W:gate/head.txt`, `DG` §5.3), `ledger_error:<exception name>` (any other failure to append) | no line: the attempt is written to `W:gate/ledger_failures.jsonl` (not chained, never published) and counted, the days listed; under `REQUIRED` nothing is sent, the operator's DM included; in shadow a public send goes unmarked with the refusal recorded in that file, and the operator's DM is sent marked `[gate: <code>]` |
 | **not a refusal** | `unbound_marked` (sent with the trailer of §7); `internal_not_gated` (an `internal` destination, §2) | `unbound_marked` is the marked count M |
 
@@ -304,9 +308,8 @@ The plugin's own anchor failures (`kind: anchor_not_sent` with `config_missing`,
 
 Under `REQUIRED` absent (the shadow phase and before it) no code refuses a send: the line carries the decision the
 gate would have taken (`would_refuse`) and the send goes out; to the operator's DM the same holds in every phase, with
-the mark `[gate: <codes>]` or `[unchecked: styxx unavailable]` appended after a blank line. Two exceptions, both the
-plugin's: a spoof is cancelled in every phase (§7), and a failure before any line is silence at a public exit only
-with `REQUIRED` present.
+the mark `[gate: <codes>]` or `[unchecked: styxx unavailable]` appended after a blank line. One exception, the
+plugin's: a spoof is cancelled in every phase (§7).
 
 ---
 
@@ -321,8 +324,11 @@ with `REQUIRED` present.
 | the anchor's form from any origin but the gate's own timer | refuse `anchor_form_spoof` | refuse `anchor_form_spoof` (the one refusal that holds in shadow, because the spoofed line would read as an anchor; `PLAN` §0) | refuse `anchor_form_spoof` |
 | the checker unavailable | refuse; the line, or before any line `plugin_failures.jsonl`, says which code | send; the line reads `would_refuse` | send, marked `[unchecked: styxx unavailable]` |
 
-The gate never edits inside a text. The trailer, the mark and the capsule footer are appended after a blank line;
-`sent_sha256` is over the delivered bytes, `checked_sha256` over the bytes the instruments read, both on the line.
+The gate never edits inside a text. The trailer and the mark are appended after a blank line; the capsule footer is
+the mint's, already after a blank line in the handed bytes, and the gate reads only the document above it when the
+footer is OD-20's fixed lines composed for the prepared record (`gate.py` `prepared_split`, `footer_problem`),
+otherwise the whole text, the line's `prepared.footer_refused` saying why. `sent_sha256` is over the delivered
+bytes, `checked_sha256` over the bytes the instruments read, both on the line.
 
 **The departure from OD-15's default** [J; §4]. OD-15's default text blocks on "certify UNGROUNDED". Under this rule an
 UNGROUNDED row that certify VERIFIES against the leaves the author offered (the trace of a leaf the resolver dropped:
@@ -383,8 +389,11 @@ per day per gate folder) and every retry, and a restart inside the window, resen
 each retry, at most one a minute, and stops at 00:10, after which no anchor is sent and the day reads `missing` at
 the census. A load inside 00:00-00:10 with the day before still undelivered is a catch-up and sends that day's anchor
 under the same rule, marked `late: true` when it is past 00:01 (the census judges lateness by the server stamp, not by
-this mark); a load after 00:10 sends none for that day. A payload in the anchor's form from any other origin (the `message`
-tool, a cron, a reply, a `clawdbot message` process) is refused as `anchor_form_spoof` at every destination.
+this mark); a load after 00:10 sends none for that day. A payload that carries the anchor's form from any other origin (the `message` tool, a cron, a reply, a `clawdbot
+message` process) is refused as `anchor_form_spoof` at every destination; the test errs wide [R, `W:gate/ledger.py`
+`looks_like_anchor`]: the form in any line of the raw text, or in the text after `normalise_for_anchor` (NFKC, HTML
+entities decoded, tags, markdown characters and invisible characters removed, horizontal whitespace collapsed),
+read per line and with every line break read as a space.
 
 **The census rule for day d** [J, `PLAN` §0; OD-12]: among the bot's messages in the anchor channel on day d+1 by
 Telegram's server time, the earliest in the anchor's form is day d's anchor.
@@ -473,7 +482,7 @@ is not here is counted `[u]` and listed with its text hash, not excused.
 
 **The source is `W:gate/reconcile.py`** (`normalise`, `END_FORMS`, `census_chat`, `JOIN_WINDOW_S`, `JOIN_MAX`,
 `MEDIA_MATCH_WINDOW_S`, `LINE_AFTER_MESSAGE_SLACK_S`), lock-hashed in the PREREG's §11; the rule below is transcribed
-from it [R, `reconcile.py` at 231a03e8…, read 2026-10-23 13:31 EDT]. Where this transcription and the locked file
+from it [R, `reconcile.py` at 231a03e8…, read 2026-10-23 13:50 EDT]. Where this transcription and the locked file
 ever differ, the file decides which message matched which line, and the difference is printed under the PREREG's §15
 before the merge and in the RESULT after it; `tests/test_darkflobi_gate_prereg.py` compares the four end forms and
 the two constants of the join with the file when the box is named.
@@ -545,7 +554,7 @@ counts printed: `exact`, `normalised` (and `normalised_joined`), `gateway_native
 The ledger's schema is `gate.py`'s and `ledger.py`'s (`darkflobi.gate/entry/v0`, both lock-hashed in the PREREG). The
 measurement reads these fields [R, `W:gate/ledger.py` `KINDS`, `RESERVED_FIELDS`, `append`, and `gate.py`
 `_common_fields`, `check`, `cmd_fault`, `cmd_event`, `cmd_anchor`, at the hashes §11 of the PREREG locks; read for
-this list at 2026-10-23 13:31 EDT: `gate.py` `33cdf9b8…`, `ledger.py` `dfdecee0…`]; a line missing one its kind
+this list at 2026-10-23 13:50 EDT: `gate.py` `33cdf9b8…`, `ledger.py` `dfdecee0…`]; a line missing one its kind
 carries is counted `malformed_line` and listed:
 
 - **every line**: `seq`, `prev`, `entry_id`, `timestamp` (inside the chained core; the gate's statement, not evidence

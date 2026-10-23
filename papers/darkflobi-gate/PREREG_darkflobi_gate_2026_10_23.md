@@ -1,7 +1,7 @@
 # PREREG — darkflobi under the gate: the agent's claim-binding behaviour in public, counted for 28 days under a rule frozen before the gate is wired — 2026-10-23
 
 **FROZEN before any count.** Rule file: `RULES_darkflobi_gate_2026_10_23.md` beside this file, sha256 (git blob, LF)
-`de4471d159432e102429e969cff8d781144499f8ddc547263afcee136e896d41`; no definition in it moves after the pull request carrying both opens. Scorer:
+`77c7670ffed883c2c916904f1e03065b913e0efd356f3462ce89492163135ea8`; no definition in it moves after the pull request carrying both opens. Scorer:
 `styxx.protocol.Experiment` from the gates block in §6 (sha256 `4ed27cb98f72e69f3f4a5acbf83ac62b0d54e2048001052e50600f1068dbeba6`,
 6,354 bytes, the block `design_measurement/DESIGN.md` §3.2 wrote and its `runs/protocol_scan.txt` scanned; this file's
 test prints the digest again). Receipt: `measurement_result.json`, written at close by the scorer with every gated
@@ -326,7 +326,7 @@ assignments, asserts every assignment reaches a row and every row is reached (51
 
 The gate is measured, not trusted. `W:gate/canary_shadow.py` (lock-hashed) submits drafts at the plugin boundary in a
 never-deliver mode (`DM` §2.4; `PLAN` P0.7). What it plants, transcribed from the harness [R, `canary_shadow.py`
-`build_plan`, `tally` and `CADENCES` at the hash §11 locks; read for this section at 2026-10-23 13:31 EDT, `b7a13d9c…`]; where
+`build_plan`, `tally` and `CADENCES` at the hash §11 locks; read for this section at 2026-10-23 13:50 EDT, `b7a13d9c…`]; where
 this text and the locked file ever differ, the file decides what was planted and the difference is printed under §15
 before the merge and in the RESULT after it:
 
@@ -540,7 +540,7 @@ row below.
 
 | what | path | sha256 | note |
 |---|---|---|---|
-| the rule file | `papers/darkflobi-gate/RULES_darkflobi_gate_2026_10_23.md` | `de4471d159432e102429e969cff8d781144499f8ddc547263afcee136e896d41` | git blob, LF |
+| the rule file | `papers/darkflobi-gate/RULES_darkflobi_gate_2026_10_23.md` | `77c7670ffed883c2c916904f1e03065b913e0efd356f3462ce89492163135ea8` | git blob, LF |
 | the gates block | `PREREG_darkflobi_gate_2026_10_23.md#gates` | `4ed27cb98f72e69f3f4a5acbf83ac62b0d54e2048001052e50600f1068dbeba6` | 6,354 bytes as `_select_gates_block` reads them |
 | the `plugins` subtree of `~/.clawdbot/clawdbot.json` | `plugins-subtree:clawdbot.json` | `c11055d36eb05fe30d3f5cd2ce1194a59f205ba5cc38f3786b05a4ac334ccf24` | canonical JSON (here:3), 41 bytes; re-read at the sitting after the plugin is placed and restated under §15; a change between D0 and close counts into G_X (`PLAN` repair 11 (g)) |
 | the panel questions | `papers/sworn/measurement/common.py` at the pin | `db8488b78db6d1586b97e4b670cc080c3961e80ee769f4f2b3b6099ffe0a9ed3` | `QUESTION_L`, `BLOCKS_L`, `QUESTION_R`, `BLOCKS_R`, `final_label`; the one-clause adaptation is `RULES` §3's text |
@@ -606,7 +606,7 @@ row below.
 | gate file | `W:gate/tests/fixtures/exhibit/dryrun_collide.receipts.json` | `9f5371235a6820987c97f11868fa72efb9115cb0d826b58a23d39fee224c4355` | 1682 bytes |
 | gate file | `W:gate/tests/test_census.py` | `cdbd0bb6a1b348743e9f3392bd021ab3458700fddb768de355cc1e8527ca828f` | 67701 bytes |
 | gate file | `W:gate/tests/test_controls.py` | `e549831f13f2a4ad23cc290e9e637cc55faf5920c4c1885b99b7de73ce25895c` | 8950 bytes |
-| gate file | `W:gate/tests/test_exhibit_mint.py` | `0f22210e8cb1951e7532ddd6d7adb8d318b09e89364392acd1bb7607aebd4ff3` | 58312 bytes |
+| gate file | `W:gate/tests/test_exhibit_mint.py` | `58ddc0cabceae82066c64f83b909e99603bbad393d341c0287c3f53dced412f1` | 59137 bytes |
 | gate file | `W:gate/tests/test_gate.py` | `3d62702bdfc1379087fb7af6cd0e5a20294abfa5fc5359c74aa957943bea4461` | 23391 bytes |
 | gate file | `W:gate/tests/test_gate_fault.py` | `a85f3d37c116364c5c118051de60d25d73e68050042f42b828570d48cd6eb78d` | 7021 bytes |
 | gate file | `W:gate/tests/test_gate_round2.py` | `1ccb07ad38c739851808073d1abda9c6c0f1a9b132f9712e246b8f944a9ca6df` | 27495 bytes |
@@ -627,7 +627,7 @@ row below.
 | plugin as installed | `~/.clawdbot/extensions/styxx-gate/patch_dist.js` | `not built at the freeze` | installed at the sitting (OD-4) |
 
 The rows above the box's files are the repository's own; the rows from `W:gate/` down are the box's, as
-`lock_hashes.py table` printed them at 13:31 local on 2026-10-23, the snapshot row being the digest the pin
+`lock_hashes.py table` printed them at 13:50 local on 2026-10-23, the snapshot row being the digest the pin
 gives (here:5). The plan's `W:ops/exhibit_mint.py` row is gone: the mint is `W:gate/exhibit_mint.py`, a gate
 file row. The X script is locked as it stands, with no check in it (`PLAN` P0.5 is not built, §3). The canary
 schedule row is the `v0` plan for the example start that §7 describes, re-planned at the sitting and restated
