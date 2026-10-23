@@ -1,0 +1,1389 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "237e778403d3eeb8c4697653f02cbeefab793a9d",
+ "document": {
+  "name": "RESULT_pmnist_robustness_2026_10_23.md",
+  "sha256": "038ccbbbadcf1d3a8a2b7974eda8555a3653196fbb0802247db69d291a8b05cb"
+ },
+ "text": "# RESULT — the permuted-MNIST headline under held-out permutations, new seeds and a 3x budget: `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`\n\n**Verdict:\n`BUDGET_CONFOUND__gap_does_not_survive_3x_steps`.**\nScored by `styxx.protocol` over the whole receipt, under the gates block whose sha256 the receipt records as\n`578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854`,\nthe digest the CORRECTION states; the protocol records the PREREG's commit as\n`3598e59d3fe708ebf2dd20992f253d02d753c88b`.\nThis document takes the verdict from the receipt and decides nothing itself.\n\n**The five held-out permutations were typed by the designer's tag and order nothing after the seal.** The receipt\nrecords the derivation\n`sha256-of-tag fallback`\nover the tag\n`PREREG_pmnist_robustness_2026_10_11`,\nthe labelled fallback of PREREG §3; no beacon drew them.\n\nFathom Lab · 2026-10-23 · Preregistration: `PREREG_pmnist_robustness_2026_10_11.md`, sealed as SEALS row 7,\nits blob hashes to `2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e`;\nread with `CORRECTION_prereg_pmnist_robustness_2026_10_12.md`, sealed as row 7b,\nits blob hashes to `e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1`.\nThe receipt names the same two digests\n(`2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e`\nand\n`e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1`).\nOn 2026-10-12 the operator chose the CORRECTION-file route (CORRECTION §6): the PREREG carries row 7's bytes unedited,\nthe CORRECTION is sealed on its own as row 7b, and row 8 is not to be anchored. Runner:\n`run_pmnist_robustness.py --aggregate`. Receipt: `pmnist_robustness_result.json`, written at\n`2026-10-23T07:29:52-0400`,\nwith 65\nof\n65\nscheduled leaves present; the leaves and the leaf log (`pmnist_robustness_runs/`) are committed with it (CORRECTION\n§3). Every number below that comes from the receipt is sworn to it at the commit this document's sidecar names;\nnumbers marked operator-attested come from the run's account, and the bars are quoted from the sealed PREREG.\n\n## The gates as the receipt scored them\n\n| gate | metric | receipt | without exclusions | bar (sealed PREREG, section 5) | outcome | read by this row |\n|---|---|---|---|---|---|---|\n| `G_P_plumbing` | `plumbing_ok` | 1.0 | — | `\"G_P_plumbing\": {\"metric\": \"result.plumbing_ok\", \"op\": \"==\", \"value\": 1.0` | held | yes |\n| `G_D_stable` | `degenerate_fraction` | 0.0 | 0.0 | `\"G_D_stable\": {\"metric\": \"result.degenerate_fraction\", \"op\": \"<=\", \"value\": 0.10` | held | yes |\n| `G_F_floor` | `free_perm_mean` | 0.9274 | 0.9274 | `\"G_F_floor\": {\"metric\": \"result.free_perm_mean\", \"op\": \">=\", \"value\": 0.85` | held | yes |\n| `G_C_anchor` | `anchor_gap_newseed` | 0.3182 | 0.3182 | `\"G_C_anchor\": {\"metric\": \"result.anchor_gap_newseed\", \"op\": \">=\", \"value\": 0.15` | held | yes |\n| `G_G_exists` | `gap_perm_ci_lo` | 0.2066 | 0.2066 | `\"G_G_exists\": {\"metric\": \"result.gap_perm_ci_lo\", \"op\": \">\", \"value\": 0.0` | held | yes |\n| `G_G_mean` | `gap_perm_mean` | 0.2676 | 0.2676 | `\"G_G_mean\": {\"metric\": \"result.gap_perm_mean\", \"op\": \">=\", \"value\": 0.15` | held | yes |\n| `G_G_ci` | `gap_perm_ci_lo` | 0.2066 | 0.2066 | `\"G_G_ci\": {\"metric\": \"result.gap_perm_ci_lo\", \"op\": \">=\", \"value\": 0.05` | held | yes |\n| `G_B_long` | `gap_long` | 0.1097 | 0.1097 | `\"G_B_long\": {\"metric\": \"result.gap_long\", \"op\": \">=\", \"value\": 0.15` | did not hold | yes |\n| `G_R_diversity` | `free_minus_real2_perm_mean` | 0.275 | 0.275 | `\"G_R_diversity\": {\"metric\": \"result.free_minus_real2_perm_mean\", \"op\": \"<=\", \"value\": 0.03` | did not hold | no |\n| `G_R_rotation` | `real2_minus_clamped_perm_mean` | −0.0074 | −0.0074 | `\"G_R_rotation\": {\"metric\": \"result.real2_minus_clamped_perm_mean\", \"op\": \"<=\", \"value\": 0.03` | held | no |\n\nThe outcome column is the receipt's own record (`gates`), and the bar column quotes the sealed gates block; every\ngated metric is written rounded once to four decimals before scoring (CORRECTION §2), and the column without\nexclusions is the same aggregate with degenerate runs at their own values (§6).\n\n## Permutation 1234: the new-seed anchor gap and the receipt's re-run seeds\n\nOn permutation\n1234,\nFREE minus CLAMPED over the seeds the 2026-07-23 receipt never ran\n(2,\n3,\n4) is\n0.3182,\nthe gated `G_C_anchor`. The receipt's own seeds\n(0\nand\n1)\nre-ran to seed means FREE\n0.9195\nand CLAMPED\n0.6073,\nagainst the 2026-07-23 receipt's\n0.9195\nand\n0.6073:\nthe larger deviation is\n0.0,\nreported and not gated (§6). Over all five seeds the gap is\n0.3158\n(reported).\n\n| arm | seed 0 | seed 1 | seed 2 | seed 3 | seed 4 |\n|---|---|---|---|---|---|\n| FREE | 0.924 | 0.915 | 0.9289 | 0.9322 | 0.9259 |\n| CLAMPED | 0.5529 | 0.6617 | 0.6637 | 0.5434 | 0.6253 |\n| REAL2 | 0.6619 | 0.5962 | 0.5854 | 0.595 | 0.6159 |\n\n## The five held-out permutations\n\nEach held-out permutation ran the three arms at seeds\n0,\n1\nand\n2.\nPer permutation, with degenerate runs excluded from the means (§6):\n\n| permutation | n FREE / CLAMPED / REAL2 | FREE | CLAMPED | REAL2 | gap | FREE − REAL2 | REAL2 − CLAMPED | recovery |\n|---|---|---|---|---|---|---|---|---|\n| 3584514041 | 3 / 3 / 3 | 0.927 | 0.6823 | 0.6533 | 0.2447 | 0.2737 | −0.0289 | −0.1182 |\n| 27380109 | 3 / 3 / 3 | 0.9282 | 0.6643 | 0.647 | 0.2638 | 0.2812 | −0.0174 | −0.0658 |\n| 2994719670 | 3 / 3 / 3 | 0.9306 | 0.6582 | 0.6716 | 0.2724 | 0.259 | 0.0133 | 0.049 |\n| 3317084913 | 3 / 3 / 3 | 0.925 | 0.5798 | 0.5718 | 0.3453 | 0.3532 | −0.0079 | −0.023 |\n| 2856893334 | 3 / 3 / 3 | 0.9248 | 0.7128 | 0.7167 | 0.212 | 0.2081 | 0.004 | 0.0187 |\n\nThe permutation-mean gap is\n0.2676,\nits sd across the five permutations\n0.0492\nand its smallest permutation\n0.212;\nthe 95% permutation interval (t with four degrees of freedom, the permutation as the unit) is\n[0.2066,\n0.3287].\nPooled over runs, run as the unit with the normal approximation (n\n15\nFREE,\n15\nCLAMPED), the gap is\n0.2676\nwith interval\n[0.2415,\n0.2938],\nthe tighter interval M6 asks to print beside the permutation one. The hierarchical bootstrap\n(2000\nresamples, generator seed\n20261011)\nputs the permutation-mean gap in\n[0.2321,\n0.311]\nand attributes\n0.8901\nof the permutation scatter to the permutation (variance of the five gaps\n0.00242,\nof which seed noise accounts for\n0.000266\nby the method of moments); seed noise alone scatters five three-seed gaps, which is why that share and not the\ninterval says whether the permutation is the source (§4, M6).\n\n## Three times the budget, on permutation 1234\n\nAt\n12,000\nsteps under a cosine schedule re-stretched to that budget, FREE (seeds\n0\nand\n1)\nreaches\n0.9541\nand CLAMPED (seeds\n0,\n1\nand\n2)\n0.8444:\ngap_long is\n0.1097.\nBetween the two schedules, CLAMPED gains\n0.2183\nand FREE\n0.0346\nover the same seeds at\n4,000\nsteps; that compares two schedules, not one curve. Within the long curves, accuracy at step 8000 minus accuracy at\nstep 4000 is\n0.129\nfor CLAMPED and\n0.0384\nfor FREE — the within-schedule quantity the \"plateaus\" sentence of the 2026-07-23 RESULT lacked — and over the last\nquarter of each\n4000-step\nCLAMPED run, accuracy at step 4000 minus accuracy at step 3000 is\n0.0367,\nread with the caveat that a cosine schedule drives the learning rate to zero at the budget (§4). None of these gains\nis a gate.\n\n| arm | seed | final accuracy |\n|---|---|---|\n| FREE | 0 | 0.9544 |\n| FREE | 1 | 0.9537 |\n| CLAMPED | 0 | 0.8289 |\n| CLAMPED | 1 | 0.8537 |\n| CLAMPED | 2 | 0.8505 |\n\n## The untied control: FREE, REAL2 and CLAMPED on held-out permutation average\n\nOn held-out permutation average FREE − REAL2 is\n0.275\n(`G_R_diversity`) and REAL2 − CLAMPED is\n−0.0074\n(`G_R_rotation`); over the same pools they sum to the permutation-mean gap. The recovery fraction, defined where a\npermutation's gap is at least 0.05 (here on\n`3584514041`,\n`27380109`,\n`2994719670`,\n`3317084913`,\n`2856893334`),\nis\n−0.0279,\ninterval\n[−0.1105,\n0.0547],\nclass\n`rotation`.\nAt fifteen runs per arm the gates block puts `G_R_diversity`'s 0.03 bar at\n`about 1.5 SE`\nand `G_R_rotation`'s at\n`about 1.1 SE`,\nso the suffix of a ROBUST or ATTENUATED_VARIABLE verdict is a label and this interval is the finding (§7, M3). On\npermutation 1234's new seeds the same three read FREE − REAL2\n0.3302,\nREAL2 − CLAMPED\n−0.012\nand recovery\n−0.0378\n— the attribution on the sealed untied run's own permutation with seeds it never ran. This row does not read the\nattribution gates; the numbers are reported, not pronounced.\n\n## Degenerate runs, by arm, and the aggregate without exclusions\n\n0\nof the sixty 4000-step runs and\n0\nof the five 12,000-step runs are degenerate: a final accuracy at or below 0.15 on the 10,000-image test set, or a\nnon-finite loss on any logged line (§6). FREE: none. CLAMPED: none. REAL2: none. FREE runs counted as 0.0 in the floor\nrather than dropped: none. A collapsed decay-arm run is excluded from every mean, the conservative direction for the\ngap; the gates table above prints every gated metric again with no exclusion.\n\n## Within-model reliance (reported, not evidence)\n\nThe within-model θ→0 reliance of the FREE runs (`clamp_theta` on each block of each trained FREE model) has mean\n0.8273\nover\n22\nruns. It is recorded because it is free and is not evidence for the between-model gap: a destructive perturbation with\nno matched-norm control (`CRITIC.md` M3; PREREG §3).\n\n## Plumbing and the leaf log\n\nplumbing_ok reads\n1.0.\nThe checks of §9.4 that did not hold, as the receipt's `plumbing` block names them: none.\n\nThe leaf log holds\n65\nentries. Leaves re-run after a log line (rewrites, visible and not fatal): none. Leaves whose bytes are not the log's\nlatest entry: none. Leaves the log does not name: none. A lab that deletes a leaf and re-runs it leaves a visible\nsecond entry; a lab that rebuilds the chain is not caught by this (§9.5), and only an outside replication checks the\nnumbers (`ATTACK.md` §6).\n\nNo field of the receipt or of a leaf was written as null for being non-finite, and no run logged a non-finite loss.\n\n## The derivation of the permutations, and what the seal orders\n\nDerivation\n`sha256-of-tag fallback`:\nthe five held-out permutation seeds are the top 32 bits of sha256(`<tag>:perm:k`) over the tag\n`PREREG_pmnist_robustness_2026_10_11`:\n3584514041,\n27380109,\n2994719670,\n3317084913,\n2856893334.\nThe fallback is auditable but was typed by the designer's tag (§13 decision 3). A seal bounds this file's existence\nfrom above and orders nothing else, and under the fallback nothing in this run is ordered after the seal: neither the\nforty-five held-out-permutation trainings nor the twenty anchor-permutation runs.\n\n## The sealed untied verdict, beside this one\n\nThe sealed untied receipt (`pmnist_untied_result.json`, run 2026-10-11, `PREREG_pmnist_untied_2026_09_02.md`) has not\nbeen unsealed for this RESULT, and its verdict is not printed here. Once it is, it goes beside this one with the note\nthat its anchor postdates its run (run end 18:54:26 on 2026-10-11, PREREG §10).\n\n## What happened in the run (operator-attested)\n\nThe numbers and dates in this section come from the operator-facts file the lead filled in, not from the receipt: the\nsmoke receipts are gitignored by the lab's `papers/**/*_smoke.json` rule (CORRECTION §3), and the crash log, the\nrelaunch log and the operator's record are kept outside the commit, each named below by its path under the lab's\nworktree folder and by the sha256 of its bytes. Each smoke is named by the sha256 of its receipt's bytes.\n\n**The smokes.** Two smokes ran before night 1: 18.15 minutes per 4000-step run (smoke receipt sha256\n`541f0bf08cec733e76c9ddf4baecb9122ffe8bf30fa0b15e9fd1bbfbf3a86790`), the smoke run at 18:31 on 2026-10-12 while agent\nworkflows and a model download loaded the box; kept as smoke_attempt1_2026-10-12T1835.json; 18.22 minutes per\n4000-step run (smoke receipt sha256 `fcc51b31cd8fdeaed768a16c6f2ed489bb68408ea3c63c2a4fcf2f1b3c8f56d8`), the smoke\nre-run at 18:37 the same evening; the receipt in place when every night was launched, so the one the nights read.\nEvery one projects more than the 18.0-minute refusal threshold of §8, so a night refuses to start without\n`--accept-schedule`; above 17.78 minutes night 3's twenty-seven runs also exceed the 8-hour window (CORRECTION §7).\nThe design does not change with the schedule (§8).\n\n**The schedule, accepted.** The operator started nights 1, 2 and 3 with `--accept-schedule`: both smokes projected\nmore than the 18.0-minute refusal threshold of PREREG section 8 (18.15 and 18.22 minutes per 4000-step run), and the\noperator chose in chat on 2026-10-12 to start night 1 with --accept-schedule; nights 2 and 3 were started with the\nsame flag under the same decision, the smoke receipt being unchanged. The operator's record of the run is\n`_frequency_2026_10_11/next/robustness/smoke_attempts/OPERATOR_ACCEPT_SCHEDULE_2026_10_12.md` (sha256\n`39120f911ba182bf37fcd94e28bf2f931546a291f35e0696b4c9b3ee3fccc0ad`, 2,063 bytes), kept in the lab's run folder for\nthis PREREG.\n\n**The nights.** Night 1 ran on 2026-10-12 as scheduled: 18 leaves, none degenerate, the measured runs taking about\n14.5 minutes each against the smoke's 18.2. Night 2 ran on 2026-10-22, not on 2026-10-13 as scheduled: the lab's\nweekly usage limit stopped its launcher on the scheduled night; started 2026-10-22 at 19:44 under the box lease, with\nthe labelled sha256-of-tag fallback permutations. Night 3 ran on 2026-10-23, not on 2026-10-14 as scheduled: the lab's\nweekly usage limit stopped its launcher on the scheduled night; started 2026-10-23 at 01:20 through the night launcher\nunder the box lease, straight after night 2, with the same fallback permutations and the same accepted schedule. These\ndates are the operator's record, checked at write time against the `wall_clock` the runner wrote into each night's\nleaves (the receipt's `runs`) and never read from a file's modification time.\n\n**Night 1's crash and its resumption.** Night 1 stopped in its run 4 of 18 in the runner's order\n(`p1234_free_s3_4000_h64.json`) with a CUDA out-of-memory error, caused by another process's use of the host's commit\ncharge. the same command re-run the same evening at 19:59, once the other process had exited and free commit was back\nabove 14 GB; the runner skipped the three leaves on disk and wrote the remaining fifteen. The leaves already written\npersisted and the runner skipped them on the restart (§8: a crash loses at most one run). The crashed attempt's log is\nkept as `_frequency_2026_10_11/next/robustness/smoke_attempts/night1_attempt1_oom.log` (sha256\n`8e89243a2ecf7740cb54a525a92d10e019cc396b3ba09b3f310c05e60f03e545`, 3,939 bytes), kept in the lab's run folder for\nthis PREREG, as the operator's record names it (the same bytes as `robustness_night1.log` beside the runner, which the\n`*.log` rule ignores), and the relaunch's log as `robustness-run/papers/frequency-resonance/robustness_night1b.log`\n(sha256 `5f4dbe0edf593aca790ceeed33ab264f6235c4bb7e8a1b5af8680a68731876e3`, 8,696 bytes), kept beside the runner in\nthe run worktree at 62f8ff44, where the `*.log` rule ignores it; neither is committed. The receipt's leaf log lists no\nre-run for it: the runner appends a leaf's log line only after the run has trained (CORRECTION §3), so a run that\ncrashed while training left no line. Its leaf in the receipt reads final accuracy\n0.9322.\n\n**The permutations of nights 2 and 3: the labelled fallback.** The operator declared `--fallback-perms`: rows 7 and 7b\nwere never anchored; the operator's decision of 2026-10-12 named the labelled sha256-of-tag derivation for that case.\nThe receipt's derivation is sworn in the opening lines and agrees with this account.\n\n**Compute.** The operator's account records no overrun of the approved compute past 1.5×, at which §8 has the operator\nstop the run and the RESULT say so.\n\n**Repairs by hand.** None: no torn leaf log was repaired by hand (CORRECTION §3).\n\n**Row 8.** No memo carrying row 8's digest (`18aa265c…`) is recorded; row 8 draws nothing and seals nothing this run\nreads (CORRECTION §5).\n\n**Note.** night 2 ran under the box lease (clawd/wt/_box/lease.py hold), installed 2026-10-22 after night 1's crash;\nthe lease refused other heavy work on the box while the run held the GPU.\n\n## The receipt's seeds 0 and 1: the PREREG's three sentences and the CORRECTION's section 1\n\nThree sentences of the PREREG are wrong as written and stay as they are: the opening's\n`those two enter no gated metric (§4)`;\n§3's\n`(reported) and **no gated metric**`;\nand, inside the frozen gates block, `G_C_anchor`'s power basis,\n`seeds 0 and 1 are the receipt's own and enter no gate`.\nThe CORRECTION, sealed beside it as row 7b, corrects all three in prose\n(`By value the six enter exactly one gated metric`),\nand asks this RESULT to repeat its section 1 beside them. It is repeated here, verbatim:\n\n> Three sentences of the PREREG are wrong as written, and stay as they are: the opening's \"those two enter no gated\n> metric (§4)\"; §3's \"they feed `anchor_max_abs_dev` (reported) and **no gated metric**\"; and the last clause of\n> `G_C_anchor`'s power basis, \"seeds 0 and 1 are the receipt's own and enter no gate\", which sits inside the frozen\n> gates block. This section corrects all three in prose. No byte of the block changes, and a power basis decides no\n> row.\n>\n> **By value.** The six re-run trainings (FREE, CLAMPED and REAL2 at seeds 0 and 1 on permutation 1234) are 4000-step\n> runs, and `degenerate_fraction` (§4) is degenerate 4000-step runs over 60: the sixty 4000-step runs, the six among\n> them, and not the five 12,000-step runs, which §4 leaves out of it. The runner counts them (its pool for that metric\n> is every 4000-step leaf at H = 64). By value the six enter exactly one gated metric, `degenerate_fraction`\n> (`G_D_stable`), and no other: not the floor and not `anchor_gap_newseed` (both read anchor seeds 2, 3, 4), not any\n> permutation-averaged gate (held-out permutations only), not `gap_long` (its own 12,000-step runs). This is kept,\n> not changed in code: `G_D_stable` is a validity gate over the sixty 4000-step runs, and dropping six of them would\n> let a collapse of the re-run go uncounted. The bar stays at 0.10.\n>\n> **As leaves.** \"And no other\" holds for the six runs' values only. Like every leaf, the six leaves count toward\n> `G_P_plumbing`: `plumbing_ok` reads 0 if any of them is absent, reads back module values other than the\n> schedule's, names other imported-runner blobs, another data digest, another PREREG digest or another digest of this\n> file (section 5), lacks `preflight_ok`, carries a curve of the wrong length or spacing, has a final accuracy unequal\n> to its last curve point, or is not the leaf log's latest entry for its name (§9.4, §9.5).\n>\n> **What a reader of the sealed receipt knows.** The committed `run_pmnist_untied.py` trains FREE, CLAMPED and REAL2\n> again at seeds 0 and 1 on permutation 1234 and writes each re-run's final accuracy (`test_acc` per arm and seed): the\n> sealed receipt holds six re-run accuracies, not the \"two\" the opening says. Four of the six configurations, FREE and\n> CLAMPED at seeds 0 and 1, have public values in `pmnist_ablation_result.json` (`test_acc`: FREE 0.924 and 0.915,\n> CLAMPED 0.5529 and 0.6617); the sealed receipt's re-runs agree with those only up to device nondeterminism, which\n> that receipt's `anchor_max_abs_dev` measures on the two arms' seed means (§7 lists\n> `INVALID__plumbing_anchors_drifted`, a deviation above 0.03, among the verdicts it can carry). REAL2 at seeds 0 and 1\n> has no public value. Whoever reads the sealed receipt before this run therefore knows six of this design's sixty-five\n> final accuracies, each up to device nondeterminism, and could foresee at most 6 of the 60 runs that\n> `degenerate_fraction` counts.\n>\n> **Withdrawn.** This branch's CHANGELOG entry as written at `4e3d8be7` and reworded at `e8b91392`, and those two\n> commits' messages, said that four of the six accuracies in the sealed receipt \"are already public\" and that its\n> reader learns two new numbers. That is withdrawn: the four public numbers are the 2026-07-23 run's, the sealed\n> receipt's are re-runs, and how closely they agree is a fact about a receipt no one writing this has read.\n>\n> The RESULT repeats this section beside the PREREG's three sentences, citing this correction.\n\nIn this receipt the six re-run trainings read as below; by value they enter `degenerate_fraction` only, and of the six\nthe degenerate ones are: none.\n\n| arm | seed 0 | seed 1 |\n|---|---|---|\n| FREE | 0.924 | 0.915 |\n| CLAMPED | 0.5529 | 0.6617 |\n| REAL2 | 0.6619 | 0.5962 |\n\n## The sentence this verdict licenses\n\nThe PREREG's §11 gives the sentence for this row\n(`- **BUDGET_CONFOUND:**`).\nWith this receipt's numbers, and nothing stronger:\n\n**On permutation\n1234,\nat\n12,000\nsteps under a cosine schedule re-stretched to that budget, the gap is\n0.1097\n(two FREE seeds against three CLAMPED seeds); at\n4,000\nsteps on three new seeds it is\n0.3182.\nThe\n4000-step\ngap does not survive the longer budget on this permutation.**\n\nNot licensed (§11):\n`Not: \"the +0.3122 was a training-budget`\n`reading\" — one permutation and five runs do not license the general sentence (M8).`\n\nFor every row:\n`No outcome bears on deployed models, on attention`\n… on importance, on priority, or on what the lab added that others did not (§11).\n\n## What this does not establish\n\n- Nothing about what the task needs. Correctness is not coverage: a gap inside this architecture says nothing about\n  what permuted MNIST requires, and at matched parameters the transformer's mean capacity in\n  `necessity_attention_result.json` stands at\n  15.33.\n- Nothing beyond a three-block complex-diagonal linear recurrence (LRU-style; `CLRU` in `run_pmnist_ablation.py`): the\n  architecture is named by its code, and the prior-art reads `ATTACK.md` §5 names (the LRU and S4D real-versus-complex\n  rows) are owed before any public sentence; no priority claim is made.\n- Nothing about deployed models, attention, importance or priority (§11, §14).\n- Nothing from the within-model reliance: no matched-norm control was run (a separate design,\n  `PLAN_next_experiment.md` §1.3).\n- Nothing ordered after the seal: the held-out permutations were typed by the designer's tag.\n\n## Owed with this RESULT, and not done by the kit that wrote it\n\n- The banner for the 2026-09-02 CHANGELOG sentence (\"The arc's headline survives its own confound; the permuted-MNIST\n  re-run is the owed next preregistration.\"), whatever the verdict (§10), because that sentence was never supported by\n  a receipt on this benchmark. Its text is in the kit's output, `CHANGELOG_banner_2026_09_02.txt`.\n- Forward pointers to `RESULT_pmnist_robustness_2026_10_23.md` in `RESULT_pmnist_ablation_2026_07_23.md` and in\n  `PREREG_pmnist_untied_2026_09_02.md`, in the same commit (§10). The untied PREREG is sealed (SEALS row 2,\n  its blob hashes to `507ef9aceb297ba06511d9e96c79ab9e1d6eca867d2ab73390e884c455c4a600`)\n  and `CERT_pmnist_ablation.json` names the 2026-07-23 RESULT, so an edit of either moves bytes a seal or a\n  certificate names; the pointer text is in `FORWARD_POINTERS.txt`, and how it lands is the operator's call.\n- The headline's rows in `papers/INDEX.md` (the frequency-resonance row and the `+0.3122` receipt row) point to this\n  RESULT; their status changes accordingly (§11).\n\n## Sworn\n\nThis document swears 229 spans. At write time `make_result.py` verified them in process against the bytes it read (the\nreceipt, the PREREG, the CORRECTION, the 2026-07-23 receipt, the untied PREREG and the attention receipt): 229 HELD, 0\nFAILED, 0 UNRESOLVED, 0 MALFORMED; sentence_share 0.3567 (advisory, a floor that counts every narrative sentence as\nload-bearing; `styxx.sworn`). The sidecar committed beside this file is the receipt for these counts.\n",
+ "spans": [
+  {
+   "start": 158,
+   "end": 206,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 319,
+   "end": 385,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/gates_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 465,
+   "end": 507,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/prereg_commit",
+   "kind": "quote"
+  },
+  {
+   "start": 724,
+   "end": 748,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/perm_derivation",
+   "kind": "quote"
+  },
+  {
+   "start": 762,
+   "end": 799,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/fallback_tag",
+   "kind": "quote"
+  },
+  {
+   "start": 970,
+   "end": 1055,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md",
+   "kind": "hash"
+  },
+  {
+   "start": 1138,
+   "end": 1223,
+   "receipt": "path:papers/frequency-resonance/CORRECTION_prereg_pmnist_robustness_2026_10_12.md",
+   "kind": "hash"
+  },
+  {
+   "start": 1265,
+   "end": 1331,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/prereg_blob_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 1336,
+   "end": 1402,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/correction_blob_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 1706,
+   "end": 1732,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/wall_clock",
+   "kind": "quote"
+  },
+  {
+   "start": 1739,
+   "end": 1741,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/schedule/present",
+   "kind": "numeric"
+  },
+  {
+   "start": 1745,
+   "end": 1747,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/schedule/expected_leaves",
+   "kind": "numeric"
+  },
+  {
+   "start": 2305,
+   "end": 2308,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/plumbing_ok",
+   "kind": "numeric"
+  },
+  {
+   "start": 2317,
+   "end": 2392,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L234",
+   "kind": "quote"
+  },
+  {
+   "start": 2449,
+   "end": 2452,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/degenerate_fraction",
+   "kind": "numeric"
+  },
+  {
+   "start": 2455,
+   "end": 2458,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/unexcluded/degenerate_fraction",
+   "kind": "numeric"
+  },
+  {
+   "start": 2461,
+   "end": 2543,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L236",
+   "kind": "quote"
+  },
+  {
+   "start": 2594,
+   "end": 2600,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/free_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 2603,
+   "end": 2609,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/unexcluded/free_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 2612,
+   "end": 2688,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L238",
+   "kind": "quote"
+  },
+  {
+   "start": 2744,
+   "end": 2750,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/anchor_gap_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 2753,
+   "end": 2759,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/unexcluded/anchor_gap_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 2762,
+   "end": 2843,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L240",
+   "kind": "quote"
+  },
+  {
+   "start": 2895,
+   "end": 2901,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_perm_ci_lo",
+   "kind": "numeric"
+  },
+  {
+   "start": 2904,
+   "end": 2910,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/unexcluded/gap_perm_ci_lo",
+   "kind": "numeric"
+  },
+  {
+   "start": 2913,
+   "end": 2988,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L242",
+   "kind": "quote"
+  },
+  {
+   "start": 3037,
+   "end": 3043,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 3046,
+   "end": 3052,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/unexcluded/gap_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 3055,
+   "end": 3129,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L244",
+   "kind": "quote"
+  },
+  {
+   "start": 3177,
+   "end": 3183,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_perm_ci_lo",
+   "kind": "numeric"
+  },
+  {
+   "start": 3186,
+   "end": 3192,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/unexcluded/gap_perm_ci_lo",
+   "kind": "numeric"
+  },
+  {
+   "start": 3195,
+   "end": 3268,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L246",
+   "kind": "quote"
+  },
+  {
+   "start": 3312,
+   "end": 3318,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 3321,
+   "end": 3327,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/unexcluded/gap_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 3330,
+   "end": 3399,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L248",
+   "kind": "quote"
+  },
+  {
+   "start": 3474,
+   "end": 3479,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/free_minus_real2_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 3482,
+   "end": 3487,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/unexcluded/free_minus_real2_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 3490,
+   "end": 3582,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L250",
+   "kind": "quote"
+  },
+  {
+   "start": 3658,
+   "end": 3667,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/real2_minus_clamped_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 3670,
+   "end": 3679,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/unexcluded/real2_minus_clamped_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 3682,
+   "end": 3776,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L252",
+   "kind": "quote"
+  },
+  {
+   "start": 4190,
+   "end": 4194,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/anchor_perm",
+   "kind": "numeric"
+  },
+  {
+   "start": 4264,
+   "end": 4265,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/new_seeds/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 4267,
+   "end": 4268,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/new_seeds/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 4270,
+   "end": 4271,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/new_seeds/2",
+   "kind": "numeric"
+  },
+  {
+   "start": 4276,
+   "end": 4282,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/anchor_gap_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 4333,
+   "end": 4334,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/rerun_seeds/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 4339,
+   "end": 4340,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/rerun_seeds/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 4368,
+   "end": 4374,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/free_01",
+   "kind": "numeric"
+  },
+  {
+   "start": 4387,
+   "end": 4393,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/clamped_01",
+   "kind": "numeric"
+  },
+  {
+   "start": 4428,
+   "end": 4434,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/receipt/free",
+   "kind": "numeric"
+  },
+  {
+   "start": 4439,
+   "end": 4445,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/receipt/clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 4471,
+   "end": 4474,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_max_abs_dev",
+   "kind": "numeric"
+  },
+  {
+   "start": 4537,
+   "end": 4543,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_gap_5seed",
+   "kind": "numeric"
+  },
+  {
+   "start": 4570,
+   "end": 4571,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/rerun_seeds/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 4579,
+   "end": 4580,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/rerun_seeds/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 4588,
+   "end": 4589,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/new_seeds/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 4597,
+   "end": 4598,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/new_seeds/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 4606,
+   "end": 4607,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/new_seeds/2",
+   "kind": "numeric"
+  },
+  {
+   "start": 4645,
+   "end": 4650,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/free/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 4653,
+   "end": 4658,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/free/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 4661,
+   "end": 4667,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/free/2",
+   "kind": "numeric"
+  },
+  {
+   "start": 4670,
+   "end": 4676,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/free/3",
+   "kind": "numeric"
+  },
+  {
+   "start": 4679,
+   "end": 4685,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/free/4",
+   "kind": "numeric"
+  },
+  {
+   "start": 4700,
+   "end": 4706,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/clamped/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 4709,
+   "end": 4715,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/clamped/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 4718,
+   "end": 4724,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/clamped/2",
+   "kind": "numeric"
+  },
+  {
+   "start": 4727,
+   "end": 4733,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/clamped/3",
+   "kind": "numeric"
+  },
+  {
+   "start": 4736,
+   "end": 4742,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/clamped/4",
+   "kind": "numeric"
+  },
+  {
+   "start": 4755,
+   "end": 4761,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/real2/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 4764,
+   "end": 4770,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/real2/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 4773,
+   "end": 4779,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/real2/2",
+   "kind": "numeric"
+  },
+  {
+   "start": 4782,
+   "end": 4787,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/real2/3",
+   "kind": "numeric"
+  },
+  {
+   "start": 4790,
+   "end": 4796,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/real2/4",
+   "kind": "numeric"
+  },
+  {
+   "start": 4889,
+   "end": 4890,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/derived_seeds/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 4892,
+   "end": 4893,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/derived_seeds/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 4898,
+   "end": 4899,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/derived_seeds/2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5133,
+   "end": 5143,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/held_out_perms/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 5146,
+   "end": 5147,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3584514041/n/free",
+   "kind": "numeric"
+  },
+  {
+   "start": 5150,
+   "end": 5151,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3584514041/n/clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5154,
+   "end": 5155,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3584514041/n/real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5158,
+   "end": 5163,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3584514041/mean/free",
+   "kind": "numeric"
+  },
+  {
+   "start": 5166,
+   "end": 5172,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3584514041/mean/clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5175,
+   "end": 5181,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3584514041/mean/real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5184,
+   "end": 5190,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3584514041/gap",
+   "kind": "numeric"
+  },
+  {
+   "start": 5193,
+   "end": 5199,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3584514041/free_minus_real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5202,
+   "end": 5211,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3584514041/real2_minus_clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5214,
+   "end": 5223,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3584514041/recovery",
+   "kind": "numeric"
+  },
+  {
+   "start": 5228,
+   "end": 5236,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/held_out_perms/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 5239,
+   "end": 5240,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/27380109/n/free",
+   "kind": "numeric"
+  },
+  {
+   "start": 5243,
+   "end": 5244,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/27380109/n/clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5247,
+   "end": 5248,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/27380109/n/real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5251,
+   "end": 5257,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/27380109/mean/free",
+   "kind": "numeric"
+  },
+  {
+   "start": 5260,
+   "end": 5266,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/27380109/mean/clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5269,
+   "end": 5274,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/27380109/mean/real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5277,
+   "end": 5283,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/27380109/gap",
+   "kind": "numeric"
+  },
+  {
+   "start": 5286,
+   "end": 5292,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/27380109/free_minus_real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5295,
+   "end": 5304,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/27380109/real2_minus_clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5307,
+   "end": 5316,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/27380109/recovery",
+   "kind": "numeric"
+  },
+  {
+   "start": 5321,
+   "end": 5331,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/held_out_perms/2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5334,
+   "end": 5335,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2994719670/n/free",
+   "kind": "numeric"
+  },
+  {
+   "start": 5338,
+   "end": 5339,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2994719670/n/clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5342,
+   "end": 5343,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2994719670/n/real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5346,
+   "end": 5352,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2994719670/mean/free",
+   "kind": "numeric"
+  },
+  {
+   "start": 5355,
+   "end": 5361,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2994719670/mean/clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5364,
+   "end": 5370,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2994719670/mean/real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5373,
+   "end": 5379,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2994719670/gap",
+   "kind": "numeric"
+  },
+  {
+   "start": 5382,
+   "end": 5387,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2994719670/free_minus_real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5390,
+   "end": 5396,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2994719670/real2_minus_clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5399,
+   "end": 5404,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2994719670/recovery",
+   "kind": "numeric"
+  },
+  {
+   "start": 5409,
+   "end": 5419,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/held_out_perms/3",
+   "kind": "numeric"
+  },
+  {
+   "start": 5422,
+   "end": 5423,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3317084913/n/free",
+   "kind": "numeric"
+  },
+  {
+   "start": 5426,
+   "end": 5427,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3317084913/n/clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5430,
+   "end": 5431,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3317084913/n/real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5434,
+   "end": 5439,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3317084913/mean/free",
+   "kind": "numeric"
+  },
+  {
+   "start": 5442,
+   "end": 5448,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3317084913/mean/clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5451,
+   "end": 5457,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3317084913/mean/real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5460,
+   "end": 5466,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3317084913/gap",
+   "kind": "numeric"
+  },
+  {
+   "start": 5469,
+   "end": 5475,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3317084913/free_minus_real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5478,
+   "end": 5487,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3317084913/real2_minus_clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5490,
+   "end": 5498,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/3317084913/recovery",
+   "kind": "numeric"
+  },
+  {
+   "start": 5503,
+   "end": 5513,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/held_out_perms/4",
+   "kind": "numeric"
+  },
+  {
+   "start": 5516,
+   "end": 5517,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2856893334/n/free",
+   "kind": "numeric"
+  },
+  {
+   "start": 5520,
+   "end": 5521,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2856893334/n/clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5524,
+   "end": 5525,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2856893334/n/real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5528,
+   "end": 5534,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2856893334/mean/free",
+   "kind": "numeric"
+  },
+  {
+   "start": 5537,
+   "end": 5543,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2856893334/mean/clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5546,
+   "end": 5552,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2856893334/mean/real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5555,
+   "end": 5560,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2856893334/gap",
+   "kind": "numeric"
+  },
+  {
+   "start": 5563,
+   "end": 5569,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2856893334/free_minus_real2",
+   "kind": "numeric"
+  },
+  {
+   "start": 5572,
+   "end": 5577,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2856893334/real2_minus_clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 5580,
+   "end": 5586,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/per_permutation/2856893334/recovery",
+   "kind": "numeric"
+  },
+  {
+   "start": 5618,
+   "end": 5624,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 5662,
+   "end": 5668,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/gap_perm_sd",
+   "kind": "numeric"
+  },
+  {
+   "start": 5698,
+   "end": 5703,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/gap_perm_min",
+   "kind": "numeric"
+  },
+  {
+   "start": 5800,
+   "end": 5806,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_perm_ci_lo",
+   "kind": "numeric"
+  },
+  {
+   "start": 5808,
+   "end": 5814,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/gap_perm_ci_hi",
+   "kind": "numeric"
+  },
+  {
+   "start": 5884,
+   "end": 5886,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/pooled_n/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 5893,
+   "end": 5895,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/pooled_n/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 5917,
+   "end": 5923,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/pooled_gap",
+   "kind": "numeric"
+  },
+  {
+   "start": 5939,
+   "end": 5945,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/pooled_ci/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 5947,
+   "end": 5953,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/pooled_ci/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 6050,
+   "end": 6054,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/bootstrap/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 6081,
+   "end": 6089,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/bootstrap/seed",
+   "kind": "numeric"
+  },
+  {
+   "start": 6125,
+   "end": 6131,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/bootstrap/ci_lo",
+   "kind": "numeric"
+  },
+  {
+   "start": 6133,
+   "end": 6138,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/bootstrap/ci_hi",
+   "kind": "numeric"
+  },
+  {
+   "start": 6155,
+   "end": 6161,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/bootstrap/between_perm_var_share",
+   "kind": "numeric"
+  },
+  {
+   "start": 6235,
+   "end": 6242,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/bootstrap/gap_perm_var",
+   "kind": "numeric"
+  },
+  {
+   "start": 6277,
+   "end": 6285,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/bootstrap/seed_noise_var_of_gap_p",
+   "kind": "numeric"
+  },
+  {
+   "start": 6512,
+   "end": 6518,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 6590,
+   "end": 6591,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/long_seeds/free/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 6596,
+   "end": 6597,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/long_seeds/free/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 6607,
+   "end": 6613,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/long/free_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 6633,
+   "end": 6634,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/long_seeds/clamped/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 6636,
+   "end": 6637,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/long_seeds/clamped/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 6642,
+   "end": 6643,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/long_seeds/clamped/2",
+   "kind": "numeric"
+  },
+  {
+   "start": 6645,
+   "end": 6651,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/long/clamped_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 6665,
+   "end": 6671,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 6714,
+   "end": 6720,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/long/clamped_long_gain",
+   "kind": "numeric"
+  },
+  {
+   "start": 6730,
+   "end": 6736,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/long/free_long_gain",
+   "kind": "numeric"
+  },
+  {
+   "start": 6760,
+   "end": 6765,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 6894,
+   "end": 6899,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/long/clamped_long_midgain",
+   "kind": "numeric"
+  },
+  {
+   "start": 6916,
+   "end": 6922,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/long/free_long_midgain",
+   "kind": "numeric"
+  },
+  {
+   "start": 7059,
+   "end": 7063,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 7135,
+   "end": 7141,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/long/clamped_last_quarter_gain",
+   "kind": "numeric"
+  },
+  {
+   "start": 7328,
+   "end": 7329,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/long_seeds/free/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 7332,
+   "end": 7338,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/runs/8/final_acc",
+   "kind": "numeric"
+  },
+  {
+   "start": 7350,
+   "end": 7351,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/long_seeds/free/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 7354,
+   "end": 7360,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/runs/10/final_acc",
+   "kind": "numeric"
+  },
+  {
+   "start": 7375,
+   "end": 7376,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/long_seeds/clamped/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 7379,
+   "end": 7385,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/runs/0/final_acc",
+   "kind": "numeric"
+  },
+  {
+   "start": 7400,
+   "end": 7401,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/long_seeds/clamped/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 7404,
+   "end": 7410,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/runs/2/final_acc",
+   "kind": "numeric"
+  },
+  {
+   "start": 7425,
+   "end": 7426,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/long_seeds/clamped/2",
+   "kind": "numeric"
+  },
+  {
+   "start": 7429,
+   "end": 7435,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/runs/4/final_acc",
+   "kind": "numeric"
+  },
+  {
+   "start": 7569,
+   "end": 7574,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/free_minus_real2_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 7618,
+   "end": 7627,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/real2_minus_clamped_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 7787,
+   "end": 7799,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_defined_on/0",
+   "kind": "quote"
+  },
+  {
+   "start": 7801,
+   "end": 7811,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_defined_on/1",
+   "kind": "quote"
+  },
+  {
+   "start": 7813,
+   "end": 7825,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_defined_on/2",
+   "kind": "quote"
+  },
+  {
+   "start": 7827,
+   "end": 7839,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_defined_on/3",
+   "kind": "quote"
+  },
+  {
+   "start": 7841,
+   "end": 7853,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_defined_on/4",
+   "kind": "quote"
+  },
+  {
+   "start": 7859,
+   "end": 7868,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 7880,
+   "end": 7889,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_perm_ci/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 7891,
+   "end": 7897,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_perm_ci/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 7906,
+   "end": 7916,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_class",
+   "kind": "quote"
+  },
+  {
+   "start": 7993,
+   "end": 8007,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L251",
+   "kind": "quote"
+  },
+  {
+   "start": 8032,
+   "end": 8046,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L253",
+   "kind": "quote"
+  },
+  {
+   "start": 8227,
+   "end": 8233,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_free_minus_real2_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 8253,
+   "end": 8261,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_real2_minus_clamped_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 8275,
+   "end": 8284,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_recovery_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 8528,
+   "end": 8529,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/degeneracy/main_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 8562,
+   "end": 8563,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/degeneracy/long_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 9161,
+   "end": 9167,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/reliance_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 9173,
+   "end": 9175,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/reliance_n",
+   "kind": "numeric"
+  },
+  {
+   "start": 9398,
+   "end": 9401,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/plumbing_ok",
+   "kind": "numeric"
+  },
+  {
+   "start": 9514,
+   "end": 9516,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/leaf_chain/entries",
+   "kind": "numeric"
+  },
+  {
+   "start": 10088,
+   "end": 10112,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/perm_derivation",
+   "kind": "quote"
+  },
+  {
+   "start": 10209,
+   "end": 10246,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/fallback_tag",
+   "kind": "quote"
+  },
+  {
+   "start": 10248,
+   "end": 10258,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/held_out_perms/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 10260,
+   "end": 10268,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/held_out_perms/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 10270,
+   "end": 10280,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/held_out_perms/2",
+   "kind": "numeric"
+  },
+  {
+   "start": 10282,
+   "end": 10292,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/held_out_perms/3",
+   "kind": "numeric"
+  },
+  {
+   "start": 10294,
+   "end": 10304,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/held_out_perms/4",
+   "kind": "numeric"
+  },
+  {
+   "start": 15353,
+   "end": 15359,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/runs/13/final_acc",
+   "kind": "numeric"
+  },
+  {
+   "start": 16443,
+   "end": 16482,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L18",
+   "kind": "quote"
+  },
+  {
+   "start": 16490,
+   "end": 16526,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L140",
+   "kind": "quote"
+  },
+  {
+   "start": 16592,
+   "end": 16647,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L241",
+   "kind": "quote"
+  },
+  {
+   "start": 16722,
+   "end": 16771,
+   "receipt": "path:papers/frequency-resonance/CORRECTION_prereg_pmnist_robustness_2026_10_12.md#L33",
+   "kind": "quote"
+  },
+  {
+   "start": 20533,
+   "end": 20534,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/rerun_seeds/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 20542,
+   "end": 20543,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/rerun_seeds/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 20569,
+   "end": 20574,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/free/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 20577,
+   "end": 20582,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/free/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 20597,
+   "end": 20603,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/clamped/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 20606,
+   "end": 20612,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/clamped/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 20625,
+   "end": 20631,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/real2/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 20634,
+   "end": 20640,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/per_seed/real2/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 20734,
+   "end": 20758,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L513",
+   "kind": "quote"
+  },
+  {
+   "start": 20830,
+   "end": 20834,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/anchor_perm",
+   "kind": "numeric"
+  },
+  {
+   "start": 20839,
+   "end": 20845,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 20916,
+   "end": 20922,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 20972,
+   "end": 20977,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 21009,
+   "end": 21015,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/anchor_gap_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 21021,
+   "end": 21025,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 21115,
+   "end": 21156,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L515",
+   "kind": "quote"
+  },
+  {
+   "start": 21157,
+   "end": 21243,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L516",
+   "kind": "quote"
+  },
+  {
+   "start": 21260,
+   "end": 21311,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L526",
+   "kind": "quote"
+  },
+  {
+   "start": 21688,
+   "end": 21693,
+   "receipt": "path:papers/frequency-resonance/necessity_attention_result.json#/arms/transformer/mean_kcap",
+   "kind": "numeric"
+  },
+  {
+   "start": 22937,
+   "end": 23022,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_untied_2026_09_02.md",
+   "kind": "hash"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
