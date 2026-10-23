@@ -52,8 +52,14 @@ merged after the tag is in it.
   that each name is a tracked file. The record's description quotes "HaluEval-QA AUC 0.998" as the PyPI
   positioning the release replaced, with no ceiling caveat beside it, so the guard failed on the three
   files once they were committed. They hold what Zenodo was sent and returned and are never rewritten.
-  The live record reads the same; an in-place edit that puts the ceiling caveat beside the figure, as
-  7.48.0's record had on 2026-09-29, is the operator's call.
+  The live record was edited in place on 2026-10-23 at 16:28:14Z, on the operator's word in chat, to put
+  the ceiling caveat beside the figure ("a register-detection figure at a documented construct ceiling",
+  the wording of 7.48.0's 2026-09-29 edit); the description is the only field changed, and the DOI,
+  concept, version and file checksums read back unchanged
+  (`release/zenodo-edit-receipt-software-v7.50.0-2026-10-23.json`, made by
+  `scripts/zenodo_edit_software_v7_50_0_2026_10_23.py`; the edited metadata is
+  `release/zenodo-metadata-software-v7.50.0-edit-2026-10-23.json`). The 7.50.0 GitHub release notes
+  carried the same sentence and carry the same words now.
 - Not changed: the other nine stale lines the record lists, namely `web/gate/`'s pages and headers, the
   header comment of `.github/workflows/diffgate.yml`, `sworn/README.md` and `sworn/action.yml` (which give
   7.48.0 as the release to install), the README's always-latest label for 10.5281/zenodo.19326174 (D3,
