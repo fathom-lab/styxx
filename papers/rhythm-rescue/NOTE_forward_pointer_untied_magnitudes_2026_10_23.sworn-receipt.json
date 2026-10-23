@@ -3,10 +3,10 @@
  "format": "sworn/0.1",
  "document": {
   "name": "NOTE_forward_pointer_untied_magnitudes_2026_10_23.sworn.json",
-  "inline_sha256": "10024b7465ecd8feb01ef2cf64aea978be6e1d46212dfbc702120ff94d577d87",
-  "canonical_sha256": "cfb39c5557ada55e595792a9fc02c0bfd8509e6609aeea3f7031b0a71b6131e6"
+  "inline_sha256": "a8e293a4a795fab3b7cf13fe6d9b7223efabe58183d3c8d6d7fcc0448e1aafe0",
+  "canonical_sha256": "f913de489852bfefbaa8987e325d0f8d462205bbb76215356d418574ce95dcfa"
  },
- "commit": "459578c4bc9e43d6729fc0ce92cbaa39233c9e30",
+ "commit": "2a36bd0d92da6ccc9aec781bab55e1303b13d6d9",
  "manifest_digest": null,
  "spans": [
   {
@@ -25,7 +25,7 @@
    "resolved_sha256": "ec7921a03bbfcb74b6f87846da4ecbfe8d6f8f9fa84c0b661d036461c9db603a",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -44,7 +44,7 @@
    "resolved_sha256": "ec7921a03bbfcb74b6f87846da4ecbfe8d6f8f9fa84c0b661d036461c9db603a",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -63,14 +63,14 @@
    "resolved_sha256": "ec7921a03bbfcb74b6f87846da4ecbfe8d6f8f9fa84c0b661d036461c9db603a",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
    "at": 1186,
    "start": 892,
    "end": 940,
-   "receipt": "path:CHANGELOG.md#L870",
+   "receipt": "path:CHANGELOG.md#L920",
    "kind": "quote",
    "verdict": "HELD",
    "reason": null,
@@ -79,10 +79,10 @@
     "haystack_bytes": 104,
     "occurrences": 1
    },
-   "resolved_sha256": "348f52120f7cc0790b8c5ed03e12aae8499ab6f14d35049a54b93f2978be9148",
+   "resolved_sha256": "97d7e1e976acd40ee50a5bcd1f452ccfa8b74b5ffd18c179cc2b6767e2633b91",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -101,7 +101,7 @@
    "resolved_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -120,7 +120,7 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -142,7 +142,7 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -164,7 +164,7 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -186,7 +186,7 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -208,7 +208,7 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -230,7 +230,7 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -252,7 +252,7 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -274,7 +274,7 @@
    "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -296,7 +296,7 @@
    "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -318,7 +318,7 @@
    "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -340,7 +340,7 @@
    "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -362,14 +362,14 @@
    "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
    "at": 4135,
    "start": 2360,
    "end": 2392,
-   "receipt": "path:CHANGELOG.md#L4493",
+   "receipt": "path:CHANGELOG.md#L4543",
    "kind": "quote",
    "verdict": "HELD",
    "reason": null,
@@ -378,10 +378,10 @@
     "haystack_bytes": 118,
     "occurrences": 1
    },
-   "resolved_sha256": "348f52120f7cc0790b8c5ed03e12aae8499ab6f14d35049a54b93f2978be9148",
+   "resolved_sha256": "97d7e1e976acd40ee50a5bcd1f452ccfa8b74b5ffd18c179cc2b6767e2633b91",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -400,7 +400,7 @@
    "resolved_sha256": "ec7921a03bbfcb74b6f87846da4ecbfe8d6f8f9fa84c0b661d036461c9db603a",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -422,7 +422,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -444,7 +444,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -466,7 +466,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -488,7 +488,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -510,7 +510,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -529,7 +529,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -548,7 +548,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -570,7 +570,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -592,7 +592,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -614,7 +614,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -636,7 +636,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -658,7 +658,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -680,7 +680,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -702,7 +702,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -724,7 +724,7 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
@@ -746,13 +746,114 @@
    "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 6945,
-   "start": 3363,
-   "end": 3463,
+   "at": 6904,
+   "start": 3322,
+   "end": 3326,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/config/steps",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "4000",
+    "printed": "4000",
+    "receipt": "4000",
+    "receipt_rounded": "4000",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "09b75f04616cf6ce4ff553d6e4b313056f858820b936115c811ed9d51ada648c",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
+   }
+  },
+  {
+   "at": 7081,
+   "start": 3401,
+   "end": 3405,
+   "receipt": "path:papers/rhythm-rescue/rhythm_rescue_result.json#/config/steps",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "4000",
+    "printed": "4000",
+    "receipt": "4000",
+    "receipt_rounded": "4000",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "771bf62b519652ca584acd0853155030108289d981dd1e77f470d4a0eba9d41e",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
+   }
+  },
+  {
+   "at": 7284,
+   "start": 3507,
+   "end": 3551,
+   "receipt": "path:papers/rhythm-rescue/PREREG_rhythm_rescue_2026_06_03.md#L67",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 42,
+    "haystack_bytes": 89,
+    "occurrences": 1
+   },
+   "resolved_sha256": "618398bad690c6fda3643b8816c47b77c16c527efeeaa4562371dc2a2a7cfef6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
+   }
+  },
+  {
+   "at": 7438,
+   "start": 3567,
+   "end": 3586,
+   "receipt": "path:papers/rhythm-rescue/PREREG_rhythm_rescue_2026_06_03.md#L67",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 17,
+    "haystack_bytes": 89,
+    "occurrences": 1
+   },
+   "resolved_sha256": "618398bad690c6fda3643b8816c47b77c16c527efeeaa4562371dc2a2a7cfef6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
+   }
+  },
+  {
+   "at": 7552,
+   "start": 3587,
+   "end": 3625,
+   "receipt": "path:papers/rhythm-rescue/PREREG_rhythm_rescue_2026_06_03.md#L68",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 36,
+    "haystack_bytes": 95,
+    "occurrences": 1
+   },
+   "resolved_sha256": "618398bad690c6fda3643b8816c47b77c16c527efeeaa4562371dc2a2a7cfef6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
+   }
+  },
+  {
+   "at": 8014,
+   "start": 3955,
+   "end": 4055,
    "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md#L41",
    "kind": "quote",
    "verdict": "HELD",
@@ -765,13 +866,13 @@
    "resolved_sha256": "ec7921a03bbfcb74b6f87846da4ecbfe8d6f8f9fa84c0b661d036461c9db603a",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 7144,
-   "start": 3464,
-   "end": 3536,
+   "at": 8213,
+   "start": 4056,
+   "end": 4128,
    "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md#L42",
    "kind": "quote",
    "verdict": "HELD",
@@ -784,13 +885,13 @@
    "resolved_sha256": "ec7921a03bbfcb74b6f87846da4ecbfe8d6f8f9fa84c0b661d036461c9db603a",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 7530,
-   "start": 3752,
-   "end": 3757,
+   "at": 8599,
+   "start": 4344,
+   "end": 4349,
    "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/free_minus_real2_perm_mean",
    "kind": "numeric",
    "verdict": "HELD",
@@ -806,13 +907,13 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 7707,
-   "start": 3801,
-   "end": 3810,
+   "at": 8776,
+   "start": 4393,
+   "end": 4402,
    "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/real2_minus_clamped_perm_mean",
    "kind": "numeric",
    "verdict": "HELD",
@@ -828,13 +929,13 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 7928,
-   "start": 3891,
-   "end": 3983,
+   "at": 8997,
+   "start": 4483,
+   "end": 4575,
    "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L250",
    "kind": "quote",
    "verdict": "HELD",
@@ -847,13 +948,13 @@
    "resolved_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 8179,
-   "start": 4037,
-   "end": 4061,
+   "at": 9248,
+   "start": 4629,
+   "end": 4653,
    "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#L5498",
    "kind": "quote",
    "verdict": "HELD",
@@ -866,13 +967,13 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 8333,
-   "start": 4094,
-   "end": 4116,
+   "at": 9402,
+   "start": 4686,
+   "end": 4708,
    "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#L5499",
    "kind": "quote",
    "verdict": "HELD",
@@ -885,13 +986,13 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 8479,
-   "start": 4143,
-   "end": 4152,
+   "at": 9548,
+   "start": 4735,
+   "end": 4744,
    "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_perm_mean",
    "kind": "numeric",
    "verdict": "HELD",
@@ -907,13 +1008,13 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 8622,
-   "start": 4164,
-   "end": 4173,
+   "at": 9691,
+   "start": 4756,
+   "end": 4765,
    "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_perm_ci/0",
    "kind": "numeric",
    "verdict": "HELD",
@@ -929,13 +1030,13 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 8755,
-   "start": 4175,
-   "end": 4181,
+   "at": 9824,
+   "start": 4767,
+   "end": 4773,
    "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_perm_ci/1",
    "kind": "numeric",
    "verdict": "HELD",
@@ -951,13 +1052,13 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 8892,
-   "start": 4190,
-   "end": 4200,
+   "at": 9961,
+   "start": 4782,
+   "end": 4792,
    "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_class",
    "kind": "quote",
    "verdict": "HELD",
@@ -970,13 +1071,13 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 9070,
-   "start": 4252,
-   "end": 4258,
+   "at": 10139,
+   "start": 4844,
+   "end": 4850,
    "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_free_minus_real2_newseed",
    "kind": "numeric",
    "verdict": "HELD",
@@ -992,13 +1093,13 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 9229,
-   "start": 4278,
-   "end": 4286,
+   "at": 10298,
+   "start": 4870,
+   "end": 4878,
    "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_real2_minus_clamped_newseed",
    "kind": "numeric",
    "verdict": "HELD",
@@ -1014,13 +1115,13 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 9387,
-   "start": 4300,
-   "end": 4309,
+   "at": 10456,
+   "start": 4892,
+   "end": 4901,
    "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_recovery_newseed",
    "kind": "numeric",
    "verdict": "HELD",
@@ -1036,13 +1137,13 @@
    "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 9657,
-   "start": 4445,
-   "end": 4542,
+   "at": 10831,
+   "start": 5142,
+   "end": 5239,
    "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L262",
    "kind": "quote",
    "verdict": "HELD",
@@ -1055,13 +1156,13 @@
    "resolved_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 9902,
-   "start": 4585,
-   "end": 4613,
+   "at": 11076,
+   "start": 5282,
+   "end": 5310,
    "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L216",
    "kind": "quote",
    "verdict": "HELD",
@@ -1074,13 +1175,13 @@
    "resolved_sha256": "e2e84d22202db19f72e4ae502cd933084885a836e2cdccc5f5f7a3471792f3a6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 10036,
-   "start": 4614,
-   "end": 4676,
+   "at": 11210,
+   "start": 5311,
+   "end": 5373,
    "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L217",
    "kind": "quote",
    "verdict": "HELD",
@@ -1093,13 +1194,13 @@
    "resolved_sha256": "e2e84d22202db19f72e4ae502cd933084885a836e2cdccc5f5f7a3471792f3a6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 10664,
-   "start": 5137,
-   "end": 5200,
+   "at": 11838,
+   "start": 5834,
+   "end": 5897,
    "receipt": "path:papers/checksum/SEALS_2026_09_13.md#L33",
    "kind": "quote",
    "verdict": "HELD",
@@ -1112,13 +1213,13 @@
    "resolved_sha256": "a675443242890da9db1f50ef5ba6d9eb761829edbfdc7946b8b7aeac4d7b8ef9",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 10846,
-   "start": 5245,
-   "end": 5254,
+   "at": 12020,
+   "start": 5942,
+   "end": 5951,
    "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L270",
    "kind": "quote",
    "verdict": "HELD",
@@ -1131,13 +1232,13 @@
    "resolved_sha256": "e2e84d22202db19f72e4ae502cd933084885a836e2cdccc5f5f7a3471792f3a6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 10961,
-   "start": 5255,
-   "end": 5323,
+   "at": 12135,
+   "start": 5952,
+   "end": 6020,
    "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L271",
    "kind": "quote",
    "verdict": "HELD",
@@ -1150,13 +1251,13 @@
    "resolved_sha256": "e2e84d22202db19f72e4ae502cd933084885a836e2cdccc5f5f7a3471792f3a6",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 11444,
-   "start": 5633,
-   "end": 5741,
+   "at": 12618,
+   "start": 6330,
+   "end": 6438,
    "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L464",
    "kind": "quote",
    "verdict": "HELD",
@@ -1169,13 +1270,13 @@
    "resolved_sha256": "9391d5dbefeb381a89d65ff8ff8029dce83259ded938e7f7299a217827ebffee",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 11679,
-   "start": 5757,
-   "end": 5865,
+   "at": 12853,
+   "start": 6454,
+   "end": 6562,
    "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L468",
    "kind": "quote",
    "verdict": "HELD",
@@ -1188,14 +1289,14 @@
    "resolved_sha256": "9391d5dbefeb381a89d65ff8ff8029dce83259ded938e7f7299a217827ebffee",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 11926,
-   "start": 5893,
-   "end": 5938,
-   "receipt": "path:CHANGELOG.md#L149",
+   "at": 13100,
+   "start": 6590,
+   "end": 6635,
+   "receipt": "path:CHANGELOG.md#L199",
    "kind": "quote",
    "verdict": "HELD",
    "reason": null,
@@ -1204,16 +1305,16 @@
     "haystack_bytes": 111,
     "occurrences": 1
    },
-   "resolved_sha256": "348f52120f7cc0790b8c5ed03e12aae8499ab6f14d35049a54b93f2978be9148",
+   "resolved_sha256": "97d7e1e976acd40ee50a5bcd1f452ccfa8b74b5ffd18c179cc2b6767e2633b91",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 12746,
-   "start": 6661,
-   "end": 6727,
+   "at": 13920,
+   "start": 7358,
+   "end": 7424,
    "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.sworn-receipt.json#/document/inline_sha256",
    "kind": "quote",
    "verdict": "HELD",
@@ -1226,13 +1327,13 @@
    "resolved_sha256": "c29016236286382ad7b39b974e767916015f10f0d55a806e4a46c6fe79945486",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 12987,
-   "start": 6768,
-   "end": 6853,
+   "at": 14161,
+   "start": 7465,
+   "end": 7550,
    "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md",
    "kind": "hash",
    "verdict": "HELD",
@@ -1244,13 +1345,13 @@
    "resolved_sha256": "ec7921a03bbfcb74b6f87846da4ecbfe8d6f8f9fa84c0b661d036461c9db603a",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 13317,
-   "start": 7005,
-   "end": 7154,
+   "at": 14491,
+   "start": 7702,
+   "end": 7851,
    "receipt": "path:papers/charon/charon.log.jsonl#L221",
    "kind": "quote",
    "verdict": "HELD",
@@ -1263,13 +1364,13 @@
    "resolved_sha256": "e905465d2e3ede13f3e06f94f32dd65e95e034ee44a5f3a853a7f48c7b368414",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 13599,
-   "start": 7217,
-   "end": 7275,
+   "at": 14773,
+   "start": 7914,
+   "end": 7972,
    "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L263",
    "kind": "quote",
    "verdict": "HELD",
@@ -1282,13 +1383,13 @@
    "resolved_sha256": "8b2e72f1f52dfa36af49a651d36039fe78d77b6cfaab76fea290cc226c70ae1f",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 13800,
-   "start": 7327,
-   "end": 7393,
+   "at": 14974,
+   "start": 8024,
+   "end": 8090,
    "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L551",
    "kind": "quote",
    "verdict": "HELD",
@@ -1301,13 +1402,13 @@
    "resolved_sha256": "8b2e72f1f52dfa36af49a651d36039fe78d77b6cfaab76fea290cc226c70ae1f",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   },
   {
-   "at": 14037,
-   "start": 7473,
-   "end": 7568,
+   "at": 15211,
+   "start": 8170,
+   "end": 8265,
    "receipt": "path:papers/sworn/measurement/packet_L.json#/items/3/text",
    "kind": "quote",
    "verdict": "HELD",
@@ -1320,23 +1421,23 @@
    "resolved_sha256": "140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9",
    "provenance": {
     "form": "path",
-    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+    "note": "committed object at 2a36bd0d92da6ccc9aec781bab55e1303b13d6d9; authorship unchecked"
    }
   }
  ],
  "counts": {
-  "HELD": 64,
+  "HELD": 69,
   "FAILED": 0,
   "UNRESOLVED": 0,
   "MALFORMED": 0,
   "WITHHELD": 0
  },
- "sworn_total": 64,
+ "sworn_total": 69,
  "unresolved": 0,
  "document_verdict": "SWORN-HELD",
  "document_malformed": null,
  "rungs": {
-  "committed": 64
+  "committed": 69
  },
  "verifier": {
   "styxx_version": "7.50.0",
@@ -1375,14 +1476,14 @@
   }
  },
  "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
- "digest": "7801ea10bb3a763f9b385591f180f6383ae179df40e5765970d059c8e4222d0f",
+ "digest": "bc58119e5a31c41bcbdda0e48f296fa74ebad09e614683be9e819cba249b8a1d",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
-  "sworn_total": 64,
-  "narrative_sentences": 177,
-  "sentence_share": 0.2656,
+  "sworn_total": 69,
+  "narrative_sentences": 190,
+  "sentence_share": 0.2664,
   "diff_claim_sentences": 0,
   "diff_claim_share": 1.0,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
@@ -1390,6 +1491,6 @@
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "394d25053a30b55a69201a2f092de2df2a9a34e5900945531ef01151539f6b88",
- "timestamp": "2026-10-23T21:42:32Z"
+ "coverage_sha256": "68cd9eeba581a75dfb3f50ef96b703c97c93b1a0c3127f6eccdbcee50a8cb7fd",
+ "timestamp": "2026-10-23T22:30:45Z"
 }
