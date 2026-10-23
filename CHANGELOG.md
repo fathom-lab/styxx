@@ -17,7 +17,7 @@ differ, and leaves out what only one reports. It edits no committed document and
 are outside the repository.
 
 - **S4D (arXiv 2206.11893, v2).** Table 3(a) carries an "S4D-Real" row (A_n = −(n+1)) in the S4D-Inv block, at
-  matched size on sCIFAR, Speech Commands and BIDMC: −5.45, −10.17 and +0.066 RMSE against S4D-Inv. It is an
+  matched size on sCIFAR, Speech Commands and BIDMC: −5.45 and −10.17 accuracy points and +0.066 RMSE against S4D-Inv. It is an
   initialization that also moves the real part, not a clamp. The two reads differ on whether A was trained, and on
   how much the row says about oscillation, since other complex initializations in the same table do as badly.
 - **The LRU paper (arXiv 2303.06349, v1).** No real-eigenvalue row. "Λ Real + Im" is a complex Λ in Cartesian form,

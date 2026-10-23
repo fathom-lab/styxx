@@ -424,7 +424,7 @@ Read together, the four papers give this:
   whole architectures (e.g. LinOSS vs Mamba), which cannot isolate what the oscillation *itself* contributes";
   l.36-38, "But *why* they work — whether the oscillation is causally essential or an incidental feature of a good
   architecture — is untested, because the standard comparison is between whole models."; l.38, "We supply the
-  missing causal instrument", with the ordinal adjective l.39 puts on the within-architecture map. S4D's Table 3(a)
+  missing causal instrument". S4D's Table 3(a)
   is a within-architecture real-versus-complex comparison at matched size from 2022, and the LRU paper compares
   parameterizations within the complex diagonal family. These sentences are true of LinOSS and D-LinOSS, not of the
   field.
@@ -439,8 +439,12 @@ Read together, the four papers give this:
   reports Δ. S4D-Real is an initialization rather than a phase held at zero through training, and it moves the real
   part too, so it is not the move as the sentence states it; nor do the four papers show anyone making that move.
   What separates the lab's arm (θ held at 0 through training, magnitude parameterization and initialization
-  unchanged) from S4D-Real is a design difference, not priority. The Related Work section (l.62-73) also omits the
-  LRU paper, whose parameterization `CLRU` uses, and S4D.
+  unchanged) from S4D-Real is a design difference, not priority. The PAPER's two ordinals belong here too and
+  are filed the same way: l.32-34, where the intuition "becomes, for the [ordinal] time, a *controlled
+  experiment*", and the ordinal adjective l.39 puts on the lab's within-architecture map (ordinal elided in both
+  quotes). S4D's Table 3(a) (2022) is a controlled real-versus-complex comparison inside one model, and the LRU
+  paper's PathX phase-range runs (2023) are controlled phase experiments. The Related Work section (l.62-73) also omits the
+  LRU paper, whose magnitude parameterization (`nu = log(−log r)`) and ring initialization `CLRU` uses, and S4D.
 - **Known wrong, needs a banner:** l.47, "**FREE**: θ learnable → the oscillatory (S5/LinOSS-class) model.", and
   l.79, "A deep S5/LinOSS-class classifier", for the reason given under the July RESULT.
 - **Known wrong, needs a banner on Appendix A:** l.173, "## Appendix A: the phase-clamp is LinOSS's oscillation
