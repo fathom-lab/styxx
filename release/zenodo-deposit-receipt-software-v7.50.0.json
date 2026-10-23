@@ -1,0 +1,187 @@
+{
+  "schema": "fathom/zenodo-deposit-receipt/v2",
+  "action": "software_deposit_published",
+  "status": "published_and_verified",
+  "version": "7.50.0",
+  "tag": "v7.50.0",
+  "tag_commit": "bebdadf1562c742f53f2114cad99b4aba0738cdf",
+  "deposit_id": 23594959,
+  "concept_recid": "19758618",
+  "token_source": "--token-file ([ZENODO] zenodo_token)",
+  "draft_receipt_sha256": "e9d26303c82889dd7877b7484d8a1554d40eb4d4f24d57acc1bc55f0fc405f9a",
+  "metadata_json_sha256": "12f5af55dd21532b81baf899ecdd9a6cd26b4417dd2c753e5928bc25a9ba981d",
+  "deposit_script_sha256": "5643c518922c936dc5190e661f8defa6e787fad6e75757b57708950353d71965",
+  "publish_script_sha256": "8d2986c135b5f35c7f35601517702c7e884e05a0c587b311f8aa517c8ce7dc5e",
+  "predecessor": {
+    "id": 23221755,
+    "doi": "10.5281/zenodo.23221755",
+    "version": "7.49.0",
+    "title": "styxx v7.49.0 — security repair: capsule verify passed v0.1 capsules whose certificate was edited to say what their bytes do not, and now compares the whole certificate; the diff gate withholds verdicts its known defects can make wrong",
+    "files": [
+      "styxx-7.49.0-py3-none-any.whl",
+      "styxx-7.49.0.tar.gz",
+      "styxx-v7.49.0-source-bundle.zip"
+    ]
+  },
+  "files": {
+    "styxx-v7.50.0-source-bundle.zip": {
+      "bytes": 277268802,
+      "sha256": "8f444bd13b035f00fb22c24c43109591b8a6fdde2d0b0002f5de25c7d0a25d6f",
+      "md5": "37ce89258987104eb06ba1556b7e4b33"
+    },
+    "styxx-7.50.0-py3-none-any.whl": {
+      "bytes": 8208487,
+      "sha256": "66744ee588eacfa413fe036b37fc4f7b171d15a86d2c0c31ceacf6f24a0560b3",
+      "md5": "13d709d1c1419a8ad60fc7520f22ebd3"
+    },
+    "styxx-7.50.0.tar.gz": {
+      "bytes": 9041414,
+      "sha256": "5f706fe0ba580e56155c37d4ca04f988ca14a87288189655ac6145871f1b7af5",
+      "md5": "9192f9a80ecaa7f7ed8ee082b96b1ae6"
+    }
+  },
+  "checks_before_publish": {
+    "unpublished draft": true,
+    "in concept 19758618": true,
+    "draft id is the receipt's": true,
+    "reserved DOI is the draft's own": true,
+    "metadata title = metadata.json": true,
+    "metadata version = metadata.json": true,
+    "metadata publication_date = metadata.json": true,
+    "metadata upload_type = metadata.json": true,
+    "metadata access_right = metadata.json": true,
+    "metadata language = metadata.json": true,
+    "metadata license = metadata.json": true,
+    "metadata creators = metadata.json": true,
+    "metadata keywords = metadata.json": true,
+    "metadata related_identifiers = metadata.json": true,
+    "metadata description = metadata.json": true,
+    "metadata notes = metadata.json": true,
+    "no metadata key beyond those sent (+ doi, prereserve_doi, imprint_publisher)": true,
+    "exactly the three files": true,
+    "styxx-v7.50.0-source-bundle.zip: md5 and size = local": true,
+    "styxx-7.50.0-py3-none-any.whl: md5 and size = local": true,
+    "styxx-7.50.0.tar.gz: md5 and size = local": true,
+    "the concept's latest version is still the draft's predecessor, 23221755": true
+  },
+  "published_at_local_utc": "2026-10-23T13:04:08Z",
+  "concept_latest_after_publish": 23594959,
+  "doi_resolver": {
+    "url": "https://doi.org/10.5281/zenodo.23594959",
+    "status": 302,
+    "location": "https://zenodo.org/doi/10.5281/zenodo.23594959",
+    "points_at_record": false,
+    "points_at_zenodo_doi_page": true
+  },
+  "software_doi": "10.5281/zenodo.23594959",
+  "software_doi_url": "https://doi.org/10.5281/zenodo.23594959",
+  "concept_doi": "10.5281/zenodo.19758618",
+  "record_url": "https://zenodo.org/records/23594959",
+  "published_at_zenodo": {
+    "deposition_modified": "2026-10-23T13:04:08.232637+00:00",
+    "record_created": "2026-10-23T13:04:07.852445+00:00"
+  },
+  "file_checksums_after_publish": [
+    {
+      "name": "styxx-v7.50.0-source-bundle.zip",
+      "md5": "37ce89258987104eb06ba1556b7e4b33",
+      "size": 277268802,
+      "match": true
+    },
+    {
+      "name": "styxx-7.50.0-py3-none-any.whl",
+      "md5": "13d709d1c1419a8ad60fc7520f22ebd3",
+      "size": 8208487,
+      "match": true
+    },
+    {
+      "name": "styxx-7.50.0.tar.gz",
+      "md5": "9192f9a80ecaa7f7ed8ee082b96b1ae6",
+      "size": 9041414,
+      "match": true
+    }
+  ],
+  "related_identifiers": [
+    [
+      "isDerivedFrom",
+      "https://github.com/fathom-lab/styxx/tree/bebdadf1562c742f53f2114cad99b4aba0738cdf"
+    ],
+    [
+      "isNewVersionOf",
+      "10.5281/zenodo.23221755"
+    ],
+    [
+      "isPartOf",
+      "10.5281/zenodo.19326174"
+    ],
+    [
+      "isSupplementTo",
+      "10.5281/zenodo.19746215"
+    ],
+    [
+      "isSupplementTo",
+      "https://github.com/fathom-lab/styxx/releases/tag/v7.50.0"
+    ],
+    [
+      "isSupplementTo",
+      "https://pypi.org/project/styxx/7.50.0/"
+    ]
+  ],
+  "license_as_stored": "mit-license",
+  "checks_after_publish": {
+    "publish response: this deposition, submitted, DOI = 10.5281/zenodo.<id>": true,
+    "deposition: published (state done)": true,
+    "deposition: DOI = 10.5281/zenodo.<id>": true,
+    "deposition: concept DOI 10.5281/zenodo.19758618": true,
+    "deposition: every metadata field = metadata.json": true,
+    "public record: DOI = 10.5281/zenodo.<id>": true,
+    "public record: concept 19758618": true,
+    "public record: version 7.50.0, title = metadata.json": true,
+    "public record: the three files, md5 and size = local": true
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/deposit/depositions/23594959",
+      "status": 200,
+      "seconds": 0.74
+    },
+    {
+      "method": "GET",
+      "path": "/api/deposit/depositions/23594959/files",
+      "status": 200,
+      "seconds": 0.16
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/19758618/versions/latest",
+      "status": 200,
+      "seconds": 0.5
+    },
+    {
+      "method": "POST",
+      "path": "/api/deposit/depositions/23594959/actions/publish",
+      "status": 202,
+      "seconds": 0.98
+    },
+    {
+      "method": "GET",
+      "path": "/api/deposit/depositions/23594959",
+      "status": 200,
+      "seconds": 0.39
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/23594959",
+      "status": 200,
+      "seconds": 0.21
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/19758618/versions/latest",
+      "status": 200,
+      "seconds": 0.39
+    }
+  ],
+  "written_utc": "2026-10-23T13:04:09Z"
+}
