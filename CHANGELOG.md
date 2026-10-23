@@ -25,14 +25,16 @@ what does not, and swears why it stands beside its documents and not inside them
 - **The untied-magnitudes NOTE.** That RESULT measured ordered copy, not permuted MNIST: D 256, 4000 steps, seeds 0,
   1 and 2, on CPU; ordered-memory capacity FREE 6.0, CLAMPED 2.6667 and REAL2 2.6667, recovery 0.0, verdict
   `ROTATION_LOAD_BEARING__beyond_diversity`. Those numbers stand as measured, at one fixed budget: the run and the
-  2026-06-03 run its anchors reproduce both took 4000 steps, neither receipt tests whether the ordered-copy gap
-  survives a longer budget, and the permuted-MNIST budget verdict is neither carried to ordered copy nor shown not to
-  apply there. The headline its l.34 calls surviving does not carry at
-  `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`. On permuted MNIST the robustness RESULT reports FREE − REAL2
-  0.275 (`G_R_diversity`, not held) and REAL2 − CLAMPED −0.0074 (`G_R_rotation`, held), recovery −0.0279 [−0.1105,
-  0.0547], class `rotation`; the BUDGET_CONFOUND row reads neither gate, so these are reported, not read. The sealed
-  untied receipt, the run under the untied PREREG that SEALS row 2 seals, stays sealed, and the prior-art NOTE files
-  "causally load-bearing in SSMs" as exceeding every read.
+  2026-06-03 run its anchors reproduce both took 4000 steps, neither receipt records the training curves the
+  2026-06-03 PREREG froze as reported, neither tests whether the ordered-copy gap survives a longer budget, and the
+  permuted-MNIST budget verdict is neither carried to ordered copy nor shown not to apply there. The headline its
+  l.34 calls surviving does not carry at `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`. On permuted MNIST the
+  robustness RESULT reports, from its 4000-step runs, FREE − REAL2 0.275 (`G_R_diversity`, not held) and
+  REAL2 − CLAMPED −0.0074 (`G_R_rotation`, held), recovery −0.0279 [−0.1105, 0.0547], class `rotation`; the
+  BUDGET_CONFOUND row reads neither gate, so these are reported, not read, and no REAL2 run took the 12,000-step
+  budget, so whether FREE − REAL2 survives it is not measured. The sealed untied receipt, the run under the untied
+  PREREG that SEALS row 2 seals, stays sealed, and the prior-art NOTE files "causally load-bearing in SSMs" as
+  exceeding every read.
 - **The program-documents NOTE.** The +0.3122 stands as what was measured (FREE 0.9195 against CLAMPED 0.6073, 4000
   steps, seeds 0 and 1, permutation 1234, the three-block `CLRU`); as the arc's headline it does not carry at the
   verdict. The general sentences are filed by the prior-art NOTE and by the PAPER's banner. The table row's reason
@@ -61,8 +63,9 @@ what does not, and swears why it stands beside its documents and not inside them
   certified, sealed, frozen or sworn file, receipt and conformance vector. The other surfaces a search of
   `origin/main` found are listed, with their reasons, in the pull request. `papers/build_ledger.py` and
   `papers/build_index.py` were run; neither moved a file.
-- **Sworn.** 69 of 69 and 57 of 57 spans HELD, 0 FAILED, 0 UNRESOLVED, 0 MALFORMED, at the commit each sidecar
-  names (`2a36bd0d`); `python -m styxx.sworn check` re-derives both receipts.
+- **Sworn.** 83 of 83 spans HELD for the untied-magnitudes NOTE and 57 of 57 for the program-documents NOTE, 0
+  FAILED, 0 UNRESOLVED, 0 MALFORMED, at the commit each sidecar names (`0dfb26e3` and `2a36bd0d`);
+  `python -m styxx.sworn check` re-derives both receipts.
 
 ## [Unreleased] — PAPER banner: the 2026-07-23 oscillation draft carries, above its unchanged text, what the prior-art reads and the robustness RESULT file against it
 
