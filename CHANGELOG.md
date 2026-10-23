@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — PAPER banner: the 2026-07-23 oscillation draft carries, above its unchanged text, what the prior-art reads and the robustness RESULT file against it
+
+**`papers/frequency-resonance/PAPER_oscillation_causal_map_2026_07_23.md`.** A dated blockquote banner after the
+title line, in the house form of the 2026-09-01 back-pointers and the 2026-09-02 forward pointer, carries what
+section 5 of `NOTE_prior_art_full_text_reads_2026_10_23.md` files against the draft, one item per filing, each
+located by section and a quoted fragment rather than a line number. It points to that NOTE and to
+`RESULT_pmnist_robustness_2026_10_23.md`, and quotes the sentence the RESULT's verdict licenses. The draft's
+sentences are left as written: the change adds 60 lines above the draft's third line and removes none.
+
+- **Why in place.** Nothing names the draft's bytes. On `origin/main` `b216b371` no `CERT_*.json`,
+  `*.certificate.json`, SEALS file, sworn sidecar or receipt, capsule or charon log carries its path, its git blob
+  id (`129f95b4…`) or the sha256 of its blob (`252d9aec…`). Three OATH records name its path without its bytes:
+  `papers/closed-model-frontier/oath_v11_baseline_ledger.json` records a digest of its extracted number tokens,
+  which carry line numbers, so the banner moves that digest (111 tokens, `8649b3ec…`, to 160, `7fa0d4d1…`), as the
+  2026-09-01 back-pointers and the 2026-09-02 pointers moved theirs; `oath_v10_ordinal_census.json` and
+  `oath_v10_ordinal_redteam.json` record its tables by line number. They describe the bytes they ran on and are not
+  regenerated.
+- **What the banner says the lab no longer stands behind.** The priority-shaped close of §3 and the two ordinals of
+  §1; the Abstract's and §1's sentences that the field compares only whole architectures (true of LinOSS and
+  D-LinOSS, not of the field: S4D's Table 3(a) sets a real initialization against a complex one inside one diagonal
+  SSM at matched size); the "S5/LinOSS-class" label (the model is LRU-style, `CLRU`); Appendix A's equivalence with
+  LinOSS's oscillation ablation (in LinOSS-IM magnitude and phase are tied, so the CLAMPED arm is not reachable
+  inside LinOSS); "the long-range mechanism", which exceeds every read; and the permuted-MNIST headline, which does
+  not carry at `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`, its numbers standing as what was measured at 4000
+  steps on two seeds.
+- **What it says stands, with what each owes.** §4.1's "the whole-model benchmarks cannot run" sentence, true as
+  written, with the S4D pointer; §1's "~2×" paraphrase of LinOSS's abstract, with its Table 2 (1.66× against
+  Mamba); "matched-param", approximate (FREE trains 192 more parameters, 101,002 against 100,810); §3's omission of
+  the LRU paper and S4D; §3's LinOSS and D-LinOSS sentence, with version pins; the sequential-MNIST sentences, outside
+  every read. TIDES, the S5 paper and the rest of §3's related work were not read, and no priority claim is made.
+- **Not edited.** `papers/INDEX.md` row 51 carries no filed sentence since #226. The other surfaces that repeat the
+  draft's filed sentences are listed in the pull request; the certified, sealed, frozen and sworn ones among them
+  keep their bytes. `papers/build_ledger.py` and `papers/build_index.py` were run; neither moved a file.
+
 ## [Unreleased] — NOTE: the prior-art full texts the permuted-MNIST robustness RESULT owes, each read twice: S4D published a real-versus-complex initialization row in 2022, the LRU paper has none, and the lab's phase clamp is not LinOSS's ablation
 
 **`papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md`.** The full-text reads that
