@@ -1,0 +1,105 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "cdf9f470c0614167b757706f7eb0dbcac6b94f7c",
+ "document": {
+  "name": "NOTE_forward_pointer_pmnist_ablation_2026_10_23.md",
+  "sha256": "e49ebdcf500fc6541aa6bde5fdb9793ad58dc4eae5dcefc64637c34f960de641"
+ },
+ "text": "# NOTE — the forward pointer from the 2026-07-23 permuted-MNIST RESULT to the robustness RESULT\n\n**status: a forward pointer, sworn to committed bytes. It stands beside `RESULT_pmnist_ablation_2026_07_23.md`, in\nthis directory, and edits nothing: that RESULT, `CERT_pmnist_ablation.json` and `pmnist_ablation_result.json` keep\ntheir bytes.**\n\n2026-10-23. Section 10 of `PREREG_pmnist_robustness_2026_10_11.md` owes `RESULT_pmnist_ablation_2026_07_23.md` a\nforward pointer to `RESULT_pmnist_robustness_2026_10_23.md`, and that RESULT lists the pointer under \"Owed with this\nRESULT, and not done by the kit that wrote it\". The kit's pointer paragraph, quoted byte for byte:\n\n> **Forward pointer (2026-10-23).** The permuted-MNIST measurement this document reports was re-run under\n> `PREREG_pmnist_robustness_2026_10_11.md` (five held-out permutations, three new seeds on permutation 1234, a 3x\n> budget arm and the untied control under one frozen bar); its RESULT, `RESULT_pmnist_robustness_2026_10_23.md`, reads\n> `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`.\n\nIn it, \"this document\" is `RESULT_pmnist_ablation_2026_07_23.md`.\n\n## What it points to\n\nThe measurement the pointer names is the 2026-07-23 receipt's FREE minus CLAMPED,\n+0.3122,\nat\n4000\nsteps on permutation\n1234,\nin a three-block complex-diagonal linear recurrence (LRU-style; `CLRU` in `run_pmnist_ablation.py`). The re-run's\nreceipt reads\n`BUDGET_CONFOUND__gap_does_not_survive_3x_steps`.\nThe sentence that verdict licenses, copied with its spans from the RESULT's section \"The sentence this verdict\nlicenses\":\n\n**On permutation\n1234,\nat\n12,000\nsteps under a cosine schedule re-stretched to that budget, the gap is\n0.1097\n(two FREE seeds against three CLAMPED seeds); at\n4,000\nsteps on three new seeds it is\n0.3182.\nThe\n4000-step\ngap does not survive the longer budget on this permutation.**\n\nNothing stronger is licensed. Section 11 of the robustness PREREG refuses the general sentence about the +0.3122 and\nthe training budget: one permutation and five runs do not license it (M8). The verdict is its own row of the frozen\ntable, neither `NOT_ROBUST__gap_confined_to_anchor_permutation` nor\n`HEADLINE_NOT_REPRODUCED__anchor_permutation_three_new_seeds`, and the re-run's seeds 0 and 1 reproduced the\n2026-07-23 receipt's seed means with a larger deviation of\n0.0\n(reported, not gated).\n\n## Why beside it and not inside it\n\nThe lead's decision, for this NOTE and for `NOTE_forward_pointer_pmnist_untied_2026_10_23.md` beside the untied\nPREREG: both target documents are named by the sha256 of their bytes, one by a certificate and one by a seal, and\nthis lab never regenerates a committed receipt in place, so the pointers land beside them as two NOTE files, not\ninside them. For this document:\n\n- `CERT_pmnist_ablation.json` names it,\n  `RESULT_pmnist_ablation_2026_07_23.md`,\n  by the digest\n  `2e5154efc55ec18d59de0f4e8ec23d2a8fb6c7f1f9a7588d7deaa6fa5430e741`,\n  the sha256 of the file as committed on 2026-07-23 at `71b2812a`.\n- The file was edited in place once already. On 2026-09-02, at `2acf4f29`, it gained a forward pointer as its line\n  3, which opens\n  `> **Forward-pointer, added 2026-09-02.**`,\n  and since then\n  its blob hashes to `31908649bbb5bc62a2302963fa073f13d212b752335e808125fa3c93b3d0963e`,\n  not to the certificate's digest. Since that day the certificate has named bytes the file no longer holds; that\n  edit is history and is not undone here.\n- A second pointer inside the file would move it further from the bytes the certificate names, and a pointer inside\n  it that a certificate covers needs a fresh certificate beside the old one, which stays as committed.\n\nPutting this pointer inside `RESULT_pmnist_ablation_2026_07_23.md` stays the operator's call.\n\n## What this note does not do\n\n- It does not put the pointer inside the RESULT. A reader who opens only that file does not see it; that is the cost\n  of this route.\n- It does not meet section 10's \"in the same commit as the RESULT\": the RESULT was committed without the pointer and\n  lists it as owed.\n- It reports no measurement of its own. The robustness RESULT and its receipt are the record, and no outcome there\n  bears on deployed models, on attention, on importance or on priority (PREREG section 11).\n\n## Sworn\n\nThis note swears 15 spans, each to bytes committed at the commit its sidecar names: the two runs' receipts, the\ncertificate, and the 2026-07-23 RESULT's blob and its line 3. The sidecar and the verdict receipt beside this file\nwere written by `python -m styxx.sworn canon` and `python -m styxx.sworn verify`; the verdicts are the receipt's.\n",
+ "spans": [
+  {
+   "start": 1238,
+   "end": 1245,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/result/free_minus_clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 1250,
+   "end": 1254,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/steps",
+   "kind": "numeric"
+  },
+  {
+   "start": 1276,
+   "end": 1280,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/perm_seed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1410,
+   "end": 1458,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 1600,
+   "end": 1604,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/anchor_perm",
+   "kind": "numeric"
+  },
+  {
+   "start": 1609,
+   "end": 1615,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 1686,
+   "end": 1692,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 1742,
+   "end": 1747,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 1779,
+   "end": 1785,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/anchor_gap_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1791,
+   "end": 1795,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 2333,
+   "end": 2336,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_max_abs_dev",
+   "kind": "numeric"
+  },
+  {
+   "start": 2811,
+   "end": 2849,
+   "receipt": "path:papers/frequency-resonance/CERT_pmnist_ablation.json#/document",
+   "kind": "quote"
+  },
+  {
+   "start": 2869,
+   "end": 2935,
+   "receipt": "path:papers/frequency-resonance/CERT_pmnist_ablation.json#/document_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 3138,
+   "end": 3180,
+   "receipt": "path:papers/frequency-resonance/RESULT_pmnist_ablation_2026_07_23.md#L3",
+   "kind": "quote"
+  },
+  {
+   "start": 3201,
+   "end": 3286,
+   "receipt": "path:papers/frequency-resonance/RESULT_pmnist_ablation_2026_07_23.md",
+   "kind": "hash"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
