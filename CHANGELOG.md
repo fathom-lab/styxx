@@ -7,6 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — PREREG: leg 2, sworn output measured in-house under DESIGN v2's ten bars, unchanged, with five named amendments; signed by the operator on 2026-10-23
+
+**`papers/sworn/PREREG_sworn_measurement_2026_10_23.md`, `papers/sworn/measurement/tranche_b.py`,
+`papers/sworn/measurement/verdict_input.py`; `tests/test_sworn_measurement_machinery.py`; `papers/LEDGER.md`.** The
+preregistration of leg 2 of the plan of 2026-09-02 (`papers/PLAN_the_next_level_2026_09_02.md`): the ten bars of
+`papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02.md` l.50-61, quoted byte for byte (the twelve lines hash to
+`39651df8…`), signed unchanged, with five named amendments written before the signature and no bar moved. The
+operator signed in chat on 2026-10-23 ("leg 2: sign, defaults"; "You, under my word quoted") and the lead committed
+under that word, the operator's sentence quoted in the signing commit's message and in the file's opening paragraph.
+The sign sheet's date, 2026-10-19, had passed with the sheet never before the operator, because the lab's launcher
+stopped on 2026-10-13 at the weekly usage limit and ran again on 2026-10-22; the opening paragraph says so, and
+every hash and Appendix A were recomputed at `origin/main` `bebdadf1`, where no file the preregistration pins had
+moved since draft 4's `2021e152`.
+
+- **What is signed.** G-F, G-D, G-S1, G-S1X, G-U, G-S2, G-P, G-C, G-R and G-G1 as DESIGN v2 l.52-61 state them,
+  with l.63 ("Every gate can fail and failure publishes under its title at the same speed as a pass"); a 15-gate,
+  70-row gates block that `styxx.protocol` accepts with `require_power_basis=True` and
+  `require_nonvacuous_gates=True`, every one of its 32,768 assignments matching a row and 64 distinct verdicts
+  (gates block sha256 `518e6616…`); G-F read per panel, as the frozen SPEC defines it (a Panel R void withholds G-P
+  only, a Panel L void withholds G-S1 and G-S2 only); a share on a qualified panel with denominator 0 read as a
+  miss, printed "0 of 0, the bar was not tested"; G-C on each fold's canaries pooled across its twins (tranche A:
+  182; 179 of 182 FAILED clears at a Wilson lower bound of 0.9527, 178 does not at 0.9449; a clean sweep clears
+  from n = 73, and a fold below that prints its miss under the DESIGN title with the size beside it).
+- **The amendments.** (1) The local family is `Qwen/Qwen2.5-3B-Instruct` at bf16 on the GPU by day, every seat
+  file labelled `named_in_design: false`; decode for the six local seat files is priced from the 2026-10-13
+  throughput probe (15.13 tokens per second after a 35-token prompt, load 8.4 s) at no more than 53,536 s
+  (14.87 h), prefill on the real packets unpriced. (2) Tranche A is the nine documents `population.json` pinned at
+  `f28d35ad`; tranche B is the next four rule-selected documents whose `.md` and `.sworn.json` are both absent
+  from the signing point's tree and whose `.md` no commit in the signing point's history added (renames followed
+  at git's 50% similarity, never copies), in merge order, built by `tranche_b.py` with tranche A's decoys and
+  closed by the constant `CLOSE_AT = "2027-01-10T23:59:59-05:00"`; the five rule-selected documents that entered
+  the mainline between the pin and the signature (Appendix A, rows 6, 7, 24, 25 and 34) are listed and excluded;
+  nine plus four is thirteen, which departs from the DESIGN's twelve under both readings of it, and the file says
+  so. (3) The canary arm is reported with its three constructions and the lab's Gold Anchors limit, never as the
+  verifier's miss rate on real errors. (4) The open seat is a pointer and an answer format inside the file; an
+  outside seat is scored as its own cell and gates nothing. (5) The dry run's counts size the canary arm and
+  nothing else.
+- **The code beside it, both blobs in the lock.** `verdict_input.py --tranche A|B` is the one path from a fold's
+  `measurement_result.json` to its verdict: it finds the PREREG at HEAD by the runners' rule, refuses a fold
+  scored under any other PREREG or labelled the wrong tranche, recomputes every rate from `score.py`'s counts with
+  `score.py`'s rounding, scores through `styxx.protocol.Experiment`, cross-checks against `score.py`'s own gate
+  decisions and writes one record once. `tranche_b.py` plans, selects and builds tranche B with committed
+  functions only, refuses tranche A's measurement and sealed directories, and was rehearsed over documents already
+  on `main` (pin `568687fa`, `decoys_L.json` byte-identical to the committed one, eight refusals, none creating a
+  file).
+- **The test change.** Once a `papers/sworn/PREREG_sworn_measurement_*.md` is tracked the seat runners pass their
+  refusal, so `test_a_seat_over_the_real_packet_refuses_without_a_prereg` now runs the refusal over a copy of the
+  real Panel L packet in a temporary repository with no PREREG, and the assertion that no seat file exists holds
+  only while no PREREG is tracked. Without the change, the whole test file at a commit holding the PREREG, in a
+  throwaway clone with a stand-in `claude` and torch shadowed, read 3 failed, 52 passed, called `claude` three
+  times and wrote `L-seat1.json`; with it, 55 passed and no call (PREREG section 0).
+- `papers/LEDGER.md` regenerated after the signing commit: preregistrations frozen 411 → 412, 51 → 52 carrying a
+  machine-scored gates block, power basis declared 19 of 51 → 20 of 52, of those frozen since the field existed
+  18 of 19 → 19 of 20.
+- No seat has run and no model was loaded in this change. Whatever the panel finds is a pilot until an outside
+  seat answers the public packets (PREREG, "Limits"); the count of outside seats, zero included, is printed beside
+  every number the file licenses.
+
 ## [7.50.0] — 2026-10-22 — the front door says, in EXTERNAL-1's committed words, that the gate claim is not yet true; the diff gate cuts a diff where git does; every diffgate record and charon's verifier name the build and runtime that wrote them
 
 A minor release: the front door prints the sentence the lab's 2026-08-31 preregistration committed it to ("an agent's PR summary cannot lie about its diff" is not yet true of this instrument on real-world data; EXTERNAL-1, precision 0.23) and stops making the claim on every shipped surface, held there by a word lint in CI; the diff gate cuts a diff at git's own line ends and abstains where its two readers still read a line apart (#205), and a declared count is ASCII digits in both ports (#206); every diffgate record names the build and runtime that wrote it, and charon's verifier names its own; the research capsule, the horizon datasheet, the robustness preregistration and its correction, the real-model bridge's closure, the zoo screen and the sealed-ahead records; and what else merged on `main` after 7.49.0. Upgrade with `pip install -U styxx==7.50.0`. The PyPI summary changes with this release: the April positioning ("Cognitive observability", "HaluEval-QA AUC 0.998") is replaced by what the instruments do; earlier PyPI pages are superseded, not edited. The entries headed `[Unreleased]` until this cut are kept whole below, in the order this file carried them; entries written at this cut say so in their opening line.
