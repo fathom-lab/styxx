@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased] — PREREG: darkflobi under the gate: the rule the measurement is counted under and the 28-day preregistration, frozen before any exit is wired
 
 **`papers/darkflobi-gate/PREREG_darkflobi_gate_2026_10_23.md`, `RULES_darkflobi_gate_2026_10_23.md`, `README.md`,
-`lock_hashes.py`, `scan_gates.py`; `tests/test_darkflobi_gate_prereg.py`.** The lab's agent, darkflobi (a clawdbot
+`lock_hashes.py`, `scan_gates.py`, `keys/sworn_measurement_darkflobi_gate_canary_seed.sha256`;
+`tests/test_darkflobi_gate_prereg.py`.** The lab's agent, darkflobi (a clawdbot
 gateway on the lab's box, Telegram today), is to post for 28 days with every message to a public destination passed
 through a gate that checks the numerals and spans its author bound against committed bytes at a pinned commit and
 the text against the surface lint's withdrawn wordings, and marks or refuses what does not bind; the plan is
@@ -20,19 +21,22 @@ the text against the surface lint's withdrawn wordings, and marks or refuses wha
 - **The rule file** freezes the definitions the counting rests on: what counts as a claim (the sworn measurement
   panel's question with one clause adapted for posts, said so), what counts as bound (a sworn span HELD, or a certify
   numeral VERIFIED against a receipts file whose every leaf carries `read_from` in one of two forms: a committed object
-  at the pin or one of its ancestors, read and compared four ways, or the post's own count), what counts as a public
+  at the pin or one of its ancestors, read and compared four ways, or the post's own count; a leaf that fails is
+  dropped and its numeral reads unbound, and a drop alone refuses nothing), what counts as a public
   destination (a keyed hash of the chat id under a salt that never leaves the box; the operator's DM, the anchor
   channel and the canary chat named by their hashes and excluded from the population), the fourteen claim shapes of the
   2026-10-22 post with the five the instruments read, the media rule (absent: a file or an image to a public destination
   is refused until a rule exists, and the line says the body was not read), the daily anchor's fixed form and the census
-  rule for duplicate, edited, late, mismatched, conflicting and missing anchors, the refusal reason codes in their three
-  classes (truth, form, lint) and the unavailability codes beside them, the selector's patterns, the gateway's own fixed
+  rule for duplicate, edited, late, mismatched, conflicting and missing anchors, the refusal reason codes as the gate
+  and its plugin spell them, by class (truth, form, spoof, lint) with the unavailability and ledger codes beside them,
+  the selector's patterns transcribed from the lock-hashed selector that is their source, the gateway's own fixed
   strings by text and `dist/` line, and the census normalisation rule. Nothing in it reads what a sentence says.
 - **The preregistration** names the population by destination, the three cells (pre-gate, shadow, live; never pooled),
   the result dict, the gates block the measurement design wrote (sha256
   `4ed27cb98f72e69f3f4a5acbf83ac62b0d54e2048001052e50600f1068dbeba6`, 6,354 bytes: ten gates, eleven rows, every one
   of the 1,024 assignments reaching a row), the canaries (four a day of constructions A to D, 112 over the window, so
-  one miss clears the 0.95 Wilson bar and two do not; E and F reported), the two-family panel and its disclosure (one
+  one miss clears the 0.95 Wilson bar and two do not; E and F reported; the seed sealed on the box and its salted
+  digest committed beside the PREREG), the two-family panel and its disclosure (one
   family is the agent's own), the census, the re-derivation and the reconciliation that check the gate itself, one
   printable paragraph per verdict as counts under the frozen rule, the lock-hash table of the gate's files as they
   stood on the box when it was written (a piece not yet landed is said so, its hash appended under §15 before the
@@ -42,8 +46,10 @@ the text against the surface lint's withdrawn wordings, and marks or refuses wha
 - **The tests** pin the block's digest and byte count, the one-fence and no-duplicate-key rules, totality and
   reachability with the row counts, the eleven verdicts through `styxx.protocol.Experiment` with the power-basis and
   non-vacuity refusals on, the Wilson numbers the power bases quote, the rule file's hash as the PREREG prints it, the
-  lock table's form, the helper scripts on a synthetic tree, the lint over the folder's documents, and that none of the
-  files prints the words the lab never prints. They run offline, on CPU, and skip the `Experiment` construction where
+  lock table's form, the snapshot row against the pin's own blobs, the selector's cases and the refusal codes the
+  PREREG counts, the helper scripts on a synthetic tree (the walker never lists a sealed folder and refuses a path it
+  cannot read), the lint over the folder's documents, and that none of the files prints the words the lab never
+  prints; named to the box, they also read the selector, the codes and the lock rows against the files there. They run offline, on CPU, and skip the `Experiment` construction where
   the PREREG is not committed, because the protocol refuses a draft on disk.
 - **What this entry does not say.** No exit is wired, no `dist/` file is patched, no plugin is installed, no message is
   sent and no gate runs by this change; those are the operator's sitting after the merge, and the plan prints "not

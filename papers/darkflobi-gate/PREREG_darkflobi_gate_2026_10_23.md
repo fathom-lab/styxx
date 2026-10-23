@@ -1,7 +1,7 @@
 # PREREG — darkflobi under the gate: the agent's claim-binding behaviour in public, counted for 28 days under a rule frozen before the gate is wired — 2026-10-23
 
 **FROZEN before any count.** Rule file: `RULES_darkflobi_gate_2026_10_23.md` beside this file, sha256 (git blob, LF)
-`dde0226bad5b29e6f2d3904e5a4a62019b1c03e922944949109aadfbfa9802b8`; no definition in it moves after the pull request carrying both opens. Scorer:
+`7c92998a19c2b4631aa62c5de76b44f9285c7e65e6b749ed82a3d17d8fce59f7`; no definition in it moves after the pull request carrying both opens. Scorer:
 `styxx.protocol.Experiment` from the gates block in §6 (sha256 `4ed27cb98f72e69f3f4a5acbf83ac62b0d54e2048001052e50600f1068dbeba6`,
 6,354 bytes, the block `design_measurement/DESIGN.md` §3.2 wrote and its `runs/protocol_scan.txt` scanned; this file's
 test prints the digest again). Receipt: `measurement_result.json`, written at close by the scorer with every gated
@@ -47,7 +47,15 @@ pushed by the piece that wrote it: the gate's exits are wired at the operator's 
      `agents.list` has two entries, `main` and `mark`. No value under any key was read into this file.
   4. The gateway's fixed strings of `RULES` §11, re-read at the cited `dist/` lines of build `2026.1.24-3`.
   5. `W:gate/snapshot_3437340b/` built by `git -c core.autocrlf=false archive 3437340b | tar -x`: 6,164 files; the
-     tree digest of §11 computed over them by `lock_hashes.py tree`.
+     tree digest of §11, `681020dc…`, computed over them by `lock_hashes.py tree`, and the same digest over the same
+     6,164 paths from the pin's own blobs, with no checkout, by `lock_hashes.py pin-tree` (every entry of the pin's
+     tree is a mode-100644 blob, and its `.gitattributes` sets no `export-subst`, `ident` or filter).
+  6. The red-team review of these files (2026-10-23, round 1) found four things out of step with the pin or the
+     pieces, and they were corrected on the unpushed branch before the pull request opened (`git log` on the branch
+     shows both versions): the snapshot row had frozen a transient 6,165th file (`3977f0e3…`); the rule file's
+     selector list was whole-word where the lock-hashed `selector.py` matches prefixes; the rule file's refusal codes
+     were not the codes `gate.py` emits, and its range rule refused where `gate.py` drops; and this file named a
+     sealed folder and a key path the canary harness did not use.
 - **[R]** a file or a run shows it. **[J]** judgement. Every agent-hour and operator-minute in the plan is `[J]` and
   UNRECEIPTED; this file carries none of its own.
 
@@ -150,10 +158,11 @@ lists; the rest is narrative (`RULES` §14). Correctness is not coverage.
 - **Opening condition.** The window opens only if the PREREG is merged (OD-3) and the three dry attempts of OD-4 are
   on the ledger with `process: gateway`, one per Telegram exit (`DM` §1.1 D1); otherwise `REQUIRED` is not created and
   the gate stays in shadow.
-- **Selection.** A payload is *selected* when its checked text matches at least one pattern of `RULES` §10; the
-  selected public payloads of `main` are what the panel reads. Unselected payloads stay in the ledger's denominator;
-  30 of them, drawn by `random.Random(20261023)` over the window's unselected public lines in `seq` order, go to Panel
-  L as the selector-miss sample (a count and a floor on the selector's recall; no bar).
+- **Selection.** A payload is *selected* when its checked text matches at least one pattern of `RULES` §10, whose
+  source is the lock-hashed `W:gate/selector.py`; the selected public payloads of `main` are what the panel reads.
+  Unselected payloads stay in the ledger's denominator; 30 of them, drawn by `selector.py`'s `draw_miss_sample` with
+  the seed 20261023 (`RULES` §10: a sample over the sorted set of the lines' `seq` values written as decimal
+  strings), go to Panel L as the selector-miss sample (a count and a floor on the selector's recall; no bar).
 - **Denominators printed under every verdict**: A attempted, S sent, Rf refused, by exit and by reason class
   (`RULES` §6); Nn, Nb, Nu, Ns over the sent public payloads (`RULES` §5); M sent marked; D drafts released (OD-17); c
   capsules; md media; g gateway-native; u unledgered; the per-day `gate_unavailable` count.
@@ -197,11 +206,13 @@ and counts into `unledgered_deliveries` (G_X), not into any cell (`PLAN` repair 
   cell's shadow canaries of constructions A to D (§7); E and F are reported beside it and enter no metric.
 - `n_cell1` (int): the live cell's units labelled LOAD-BEARING by the cross-family rule and bindable by form
   (`RULES` §3), over `main`'s selected public payloads.
-- `n_refusals` (int): the live cell's truth refusals at public destinations (`RULES` §6 codes `sworn_failed`,
-  `certify_ungrounded`, `read_from_failed`, `audit_claims_fail`), one per refused draft; form, lint and
-  unavailability refusals are counted beside it and enter no metric.
+- `n_refusals` (int): the live cell's truth refusals at public destinations: send lines with `decision: refuse`
+  whose `reasons` hold a code of `RULES` §6's truth class (`sworn_failed:<reason>`, `certify_ungrounded`,
+  `audit_fail:<claim id>`, matched by prefix as `gate.py` spells them), one per refused draft (`draft_sha256`); form,
+  spoof, lint and unavailability refusals, and the FAILED and MALFORMED ranges the resolver dropped (`RULES` §4), are
+  counted beside it and enter no metric.
 - `refusal_upheld_share` (float): upheld over `n_refusals`, where a truth refusal is upheld when Panel R, shown the
-  sentence, the kind and the leaf (for `audit_claims_fail`, the version string the audit read), answers NO by the
+  sentence, the kind and the leaf (for `audit_fail:`, the version string the audit read), answers NO by the
   cross-family rule; −1.0 when `n_refusals` is 0, a sentinel the table never reads because G_RN is walked before G_R.
 - `bound_share_cell1` (float): the cell-1 units bound (`RULES` §4) over `n_cell1`.
 - `padding_share` (float): HELD or VERIFIED spans over units the panel labels NOT, over all HELD or VERIFIED spans in
@@ -301,9 +312,13 @@ never-deliver mode, from the shadow week's opening night through close (`DM` §2
 | E | a false claim in number words ("twenty-three of thirty") | `Decimal` inequality against the leaf it paraphrases | passes; the known hole, reported |
 | F | a true HELD span copied from a committed sworn document at the pin | the committed receipt's own verdict, read as text, not re-run | passes; a refusal is a false refusal of the gate's own, reported |
 
-The seed is drawn once by `canary_shadow.py seal` and written under `$STYXX_SEALED_DIR`; the tree carries its salted
-digest under `papers/darkflobi-gate/keys/` by `seal_key.py`'s rule, and the key (which submission, which construction,
-which source document and leaf) is released in a commit after every seat output is recorded. Each draft is built at
+The seed was drawn once by `canary_shadow.py seal-seed` and is sealed in one place, the box's folder
+`W:gate/canary_sealed/`, by `seal_key.py`'s rule (the seed and its salt in the sealed folder, the salted digest outside
+it). That digest is committed with this file at
+`papers/darkflobi-gate/keys/sworn_measurement_darkflobi_gate_canary_seed.sha256`, a lock row of §11 and byte for byte
+the harness's own copy under `W:gate/canary/keys/`, so it is public from the pull request's opened-at, and
+`seal_key.py check` re-derives it from the sealed folder. The key (which submission, which construction, which source
+document and leaf) is released in a commit after every seat output is recorded. Each draft is built at
 submission time from the seeded RNG over the committed sworn documents at the pin, so the sealed folder holds a seed
 and not the drafts; the agent's `exec` can read that folder (`DM` §10 item 5), and the RESULT says so in the words the
 blind packet uses.
@@ -360,7 +375,9 @@ lock-hashed in a dated AMENDMENT before close and tested on synthetic results on
   `[d]` anchored days of 28, `[cf]` conflict-flagged, and the listed anomalies by kind.
 - **The weekly operator hash** (OD-10). Before each weekly ledger merge the operator runs `sha256sum` over
   `W:gate/*.py` and `~/.clawdbot/extensions/styxx-gate/*` and pastes the output as a comment on the pull request under
-  his account; `lock_hashes.py check` beside this file re-derives the lock table from the box for the same purpose.
+  his account; `lock_hashes.py check --strict` beside this file re-derives every lock row from the box for the
+  same purpose and names as `UNLOCKED` every file under `W:gate/` the lock covers that no row names (a file added
+  after the fill), each a failure of the check.
   The ledger's `gate_sha256` is the gate's statement about itself and is never the only word (`PLAN` repair 12).
 
 ---
@@ -442,7 +459,8 @@ public was not measured." The three designs and the plan are filed as NOT_RUN be
 ## 11. lock hashes
 
 What is frozen with this file, each a sha256 of bytes as they stand on the box on 2026-10-23, computed by
-`lock_hashes.py table` (`lock_hashes.py check PREREG` re-derives every row). A row reading `not built at the freeze`
+`lock_hashes.py table` (`lock_hashes.py check --strict PREREG` re-derives every row and fails on one that changed,
+was built since, is gone, or names no file the box now holds). A row reading `not built at the freeze`
 names a piece of `PLAN` §3.1 that had not landed when this file was written; its hash is appended under §15 by the
 commit that adds it, before the merge, and a row still blank at the merge means the piece did not ship and the
 measurement runs without it, said so in the RESULT. The gates block, the rule file and the pin do not depend on any
@@ -450,21 +468,20 @@ row below.
 
 | what | path | sha256 | note |
 |---|---|---|---|
-| the rule file | `papers/darkflobi-gate/RULES_darkflobi_gate_2026_10_23.md` | `dde0226bad5b29e6f2d3904e5a4a62019b1c03e922944949109aadfbfa9802b8` | git blob, LF |
+| the rule file | `papers/darkflobi-gate/RULES_darkflobi_gate_2026_10_23.md` | `7c92998a19c2b4631aa62c5de76b44f9285c7e65e6b749ed82a3d17d8fce59f7` | git blob, LF |
 | the gates block | `PREREG_darkflobi_gate_2026_10_23.md#gates` | `4ed27cb98f72e69f3f4a5acbf83ac62b0d54e2048001052e50600f1068dbeba6` | 6,354 bytes as `_select_gates_block` reads them |
 | the `plugins` subtree of `~/.clawdbot/clawdbot.json` | `plugins-subtree:clawdbot.json` | `c11055d36eb05fe30d3f5cd2ce1194a59f205ba5cc38f3786b05a4ac334ccf24` | canonical JSON (here:3), 41 bytes; re-read at the sitting after the plugin is placed and restated under §15; a change between D0 and close counts into G_X (`PLAN` repair 11 (g)) |
 | the panel questions | `papers/sworn/measurement/common.py` at the pin | `db8488b78db6d1586b97e4b670cc080c3961e80ee769f4f2b3b6099ffe0a9ed3` | `QUESTION_L`, `BLOCKS_L`, `QUESTION_R`, `BLOCKS_R`, `final_label`; the one-clause adaptation is `RULES` §3's text |
 | the canary constructions | `papers/sworn/measurement/canaries.py` at the pin | `8cfbfa5e3f5016078133cbb11b9ff519c65470c6a8b42a27ab45f83be4b6d0bd` | A, B, C |
 | the seal rule | `papers/sworn/measurement/seal_key.py` at the pin | `dca1e3862e599db7ec8232a6bfdc3a78a57b134e3b7d31152dfa439a9cd8b527` | the salted digest |
+| the canary seed's salted digest | `papers/darkflobi-gate/keys/sworn_measurement_darkflobi_gate_canary_seed.sha256` | `625e7371db302076cc84f98326d7a39ad89149aec20927dfefee62193f745eeb` | 116 bytes, git blob; `seal_key.py`'s line for the seed sealed under `W:gate/canary_sealed/` (§7) |
 | the lint | `scripts/surface_lint.py` at the pin | `27551f2385b3edc71fbfc93af0f81df2bc48d68d381fa13c3643dec3247c83f9` | 18 rules and the line rule |
 | the scanner | `styxx/protocol.py` at the pin | `45da869e1571396589dc50ed75183de56055a846432ae43dde6aa7fac7519fdc` | `Experiment`, `_select_gates_block`; byte-identical at `bebdadf1` (here:1) |
 | the oath reader | `styxx/sworn.py` at the pin | `7e4602472010497a69a050995485efec4ee42b30c8ed4a2b7be545c0c5a84526` | `verify`, `DECISIONS` |
 | the other instruments | `styxx/certify.py`, `styxx/capsule.py`, `styxx/mind.py`, `styxx/agent_audit.py`, `styxx/diffgate.py`, `styxx/instrument.py` at the pin | `c448ded1…`, `54f472d8…`, `c4c5091b…`, `e320e137…`, `b63f2b03…`, `db32cf7c…` | inside the snapshot's tree digest below; the six full digests are in `protocol_scan_2026_10_23.txt` |
 | the pin | `pin:3437340b` | `3437340b9e944644372e41d9fcab735d47e20fa0` | the commit the legs run from; moves only by AMENDMENT |
-| the snapshot | `W:gate/snapshot_3437340b/` | `3977f0e3ee6d56e011fb54a2b3980ea7aabe183ed08f568152c95989d67607ca` | tree digest over 6165 files (`lock_hashes.py tree`) |
+| the snapshot | `W:gate/snapshot_3437340b/` | `681020dcbf5ac55cb42b12c0a377d4889011d55410221c89e1c0696444885e92` | tree digest over 6,164 files (`lock_hashes.py tree` on the box; `lock_hashes.py pin-tree` from the pin's blobs gives the same, here:5) |
 | gate file | `W:gate/README_exhibit.md` | `0b0e222735f2ee202d25e51af5aeb2753e636fc1de44c58c58c634292693a519` | 6407 bytes |
-| gate file | `W:gate/_test_stderr.txt` | `27def15153d5c05e0e7a88fb916bb6fd1f1d0f8858d3d5d9cf2f79e318c90dc1` | 3075 bytes |
-| gate file | `W:gate/_test_stdout.txt` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | 0 bytes |
 | gate file | `W:gate/canary_shadow.py` | `c4bb3e0376436f8db14b0e52c8c3f4ebb19557402356ada7f1aab37324a4cb09` | 44872 bytes |
 | gate file | `W:gate/exhibit_mint.py` | `2f5b8b03feb21856a8042b977197ada19b5fed111f899f8b2c456f468946eeba` | 52539 bytes |
 | gate file | `W:gate/exhibit_page.py` | `ae37dc22bebf49a8aa985f90222d19dd5b9028690fa4701f7b39cde273834924` | 8114 bytes |
@@ -518,15 +535,24 @@ row below.
 | plugin as installed | `~/.clawdbot/extensions/styxx-gate/gate.js` | `not built at the freeze` | installed at the sitting (OD-4) |
 
 The rows above the box's files are the repository's own; the rows from `W:gate/` down are the box's, as
-`lock_hashes.py table` printed them when this file was written. `W:gate/exhibit_out/` (the local mirror of the
-`exhibit` branch, content that grows with every post and is pinned by its own charon log), the live state
-(`ledger.jsonl`, `head.txt`, `sources/`, `refused/`, `prepared/`, `pending/`, `baseline/`, the canary harness's
-working folder) and any sealed folder (never opened by the script, not even to hash it) are not lock rows by design;
-a file under `W:gate/` that is none of these is a lock row, whether or not the plan named it.
+`lock_hashes.py table` printed them at about 08:31 local on 2026-10-23, less two scratch files of another piece
+(`_test_stdout.txt`, `_test_stderr.txt`) the walker no longer admits, and with the snapshot row restated to the digest
+the pin gives (here:5, here:6). Never a lock row, by design (the full list is `lock_hashes.py`'s docstring): the live
+state (`ledger.jsonl`, `head.txt`, `tamper.jsonl`, `REQUIRED`, the plugin's `plugin_sent_index.jsonl` and
+`plugin_failures.jsonl`, `sources/`, `refused/`, `prepared/`, `pending/`, `baseline/`); the wheel; `W:gate/exhibit_out/`
+(the local mirror of the `exhibit` branch, content that grows with every post and is pinned by its own charon log); the
+canary harness's working folder `canary/` but for its two public files; the snapshot manifest cache
+`.manifest_snapshot_<pin8>.json`; scratch named with a leading `_`, files and folders at any depth; caches
+(`__pycache__`, `.pytest_cache`, `node_modules`, `*.pyc`); and any folder whose name holds `sealed` or `secret`, which
+the script never lists, opens or hashes. A file under `W:gate/` that is none of these is a lock row, whether or not the
+plan named it, and `check --strict` fails on one no row names.
 
 The snapshot's tree digest is defined by `lock_hashes.py tree`: the sha256 over the sorted lines
 `<sha256 of the file's bytes>  <path relative to the snapshot folder>\n`, every regular file, bytes unnormalised,
-over the folder `git -c core.autocrlf=false archive 3437340b | tar -x` produces; anyone with the commit reproduces it.
+over the folder `git -c core.autocrlf=false archive 3437340b | tar -x` produces; anyone with the commit reproduces it,
+on the box with `tree` or from the repository alone with `pin-tree`. The walker refuses, rather than skips, a folder it
+cannot list, a path it cannot stat and an entry that is not a regular file; a Windows path past 260 characters is read
+through the `\\?\` prefix, so a fresh extraction with long paths counts every file.
 
 ---
 

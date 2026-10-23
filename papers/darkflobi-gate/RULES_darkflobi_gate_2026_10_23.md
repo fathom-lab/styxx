@@ -165,44 +165,69 @@ channel or bind only when rewritten; one is refused in public until a rule exist
 
 A cell-1 unit is **bound** when one of two things holds on the ledger line of the payload that carried it:
 
-1. **sworn.** The shipped text is a sworn sidecar's `text` and the sidecar verifies at the pin or one exact ancestor
-   of it with a HELD span over the unit (`python -m styxx.sworn verify SRC --repo <snapshot's object store> --commit
-   <40-hex> --out RCPT`; receipts `path:` or `prereg:`; `M:styxx/sworn.py` `verify`). FAILED, MALFORMED and
-   UNRESOLVED spans do not bind, and each is a refusal of §6.
-2. **certify.** The unit's one numeral is VERIFIED by `python -m styxx.certify T RECEIPTS --require-committed --out
-   CERT` over the receipts file as the resolver below left it, so that every leaf certify may bind to re-derives from
-   a committed object (`M:styxx/certify.py` l.1385-1392 for `--require-committed`).
+1. **sworn.** The shipped text is a sworn sidecar's `text` and the sidecar verifies at the pin with a HELD span
+   over the unit (`python -m styxx.sworn verify SRC --repo <the styxx repository> --commit <the pin> --out RCPT`, as
+   `W:gate/gate.py` `leg_sworn` runs it; receipts `path:` or `prereg:`; `M:styxx/sworn.py` `verify`). A span with any
+   other verdict does not bind and is a refusal of §6: FAILED a truth refusal, every other verdict (MALFORMED,
+   UNRESOLVED, WITHHELD) a form refusal.
+2. **certify.** The unit's one numeral is VERIFIED by `python -m styxx.certify T RECEIPTS --out CERT` (as `gate.py`
+   `leg_certify` runs it) over the receipts file as the resolver below left it: every leaf left in that file
+   re-derived from a committed object at a named commit, and every leaf that did not is gone from it before certify
+   reads it.
 
-**The resolver** [J, `PLAN` §2 "The resolver's grammar"; `CR:` B2; `RC:` M7, M8]. Every fact leaf in
-`T.receipts.json` carries `read_from` in exactly one of two forms:
+**The resolver** [R, `W:gate/gate.py` `FORM_A`, `Resolver.resolve`, `_check_form_a`; `PLAN` §2 "The resolver's
+grammar"; `CR:` B2; `RC:` M7]. Every fact leaf in `T.receipts.json` carries `read_from` in exactly one of two forms:
 
-- **(a)** `<path>#<json-pointer or Lx-Ly>@<40-hex>`. The 40-hex names one commit: the pin or one exact ancestor of it
-  (`git merge-base --is-ancestor <40-hex> 3437340b` must hold; no search is made, the object is read at the named
-  commit and nowhere else). The resolver reads `<40-hex>:<path>` with `git cat-file` and compares four things: the
-  path exists at that commit; the pointer or range resolves; the value equals the leaf's; the commit is the one named
-  (recorded on the line; `read_from_not_at_pin` counts the leaves whose commit is not the pin). Any of the four failing
-  drops the leaf, and the drop is on the line as `dropped_leaves`. The path must sit under a receipt-bearing
-  directory (below). For a line range `Lx-Ly` (1-based, inclusive, at most 3 lines, split on LF) the resolver reads the
-  lines as text, tokenises them with certify's `_NUM` (§5), and requires exactly one numeral token that is the whole
-  numeral as the text writes it and equals the leaf's value: a range with no token, more than one token, or a fragment
-  (a token followed by `,` or `.` and a digit, or preceded by `-` attached to a word: `8,904.` reads as `8` and `pass-8`
-  as `8` under `_NUM`) is MALFORMED, a form refusal with the range named on the line; a range whose one token differs
-  from the value is FAILED, a truth refusal.
+- **(a)** `<path>#<fragment>@<40-hex>`, matched whole by
+  `^(?P<path>[^#@\s]+)#(?P<frag>/[^@]*|L(?P<l1>\d+)(?:-L(?P<l2>\d+))?)@(?P<commit>[0-9a-f]{40})$`: the fragment is a
+  JSON pointer (opening `/`) or a line range `L<x>` or `L<x>-L<y>`. The 40-hex names one commit: the pin or one exact
+  ancestor of it (`git merge-base --is-ancestor <40-hex> 3437340b` must hold; no search is made, the object is read at
+  the named commit and nowhere else). The resolver reads `<40-hex>:<path>` with `git cat-file` and compares four
+  things: the path sits under a receipt-bearing directory (below) and exists at that commit; the pointer or range
+  resolves; the value equals the leaf's (as decimals); the commit is the pin or its ancestor (recorded;
+  `read_from_not_at_pin` counts the kept leaves whose commit is not the pin). For a line range (1-based, inclusive, at
+  most 3 lines, split on LF) the resolver reads the lines as text, tokenises them with certify's `_NUM` (§5), and
+  requires exactly one numeral token that is the whole numeral as the text writes it and equals the leaf's value: a
+  range with no token, more than one token, or a fragment (a token followed by `,` or `.` and a digit, or preceded by
+  `-` attached to a word: `8,904.` reads as `8` and `pass-8` as `8` under `_NUM`) is MALFORMED; a range whose one token
+  differs from the value, or a pointer whose value differs, is FAILED.
 - **(b)** `self:count`, permitted on exactly one leaf, the post's own count of numbers (`post.numbers_post_holds` in the
   2026-10-05 recipe): the resolver checks it against the length of certify's ledger over the same document (the count
   guard `WT:_channel_2026_10_04/capsule/build_capsule.py` l.44-46 applies) and drops it on a mismatch.
 
-A leaf with any other `read_from` (prose, a URL, a date, a run name), or none, is dropped. Dropping is never silent:
-`dropped_leaves` and `read_from_not_at_pin` are on every certify line.
+**A leaf that fails drops; a drop is never a refusal by itself** [R, `gate.py`; `DG` §3.2]. A leaf with any other
+`read_from` (prose, a URL, a date, a run name), or none, or one failing any comparison of form (a), is dropped from
+the receipts file certify reads, and the line says so under `resolver`: `dropped` (each leaf with its reason, one of
+`no_read_from`, `prose_read_from`, `path_not_receipt_bearing`, `commit_not_pin_or_ancestor`,
+`path_missing_at_commit`, `leaf_not_numeric`, `object_not_json`, `object_not_utf8`, `pointer_unresolved`,
+`pointer_not_numeric`, `range_malformed:<range_shape | no_token | tokens_<n> | fragment>`, `value_differs`,
+`self_count_mismatch`, `self_count_duplicate`), `malformed_ranges` (each MALFORMED range named), `failed` (each FAILED
+leaf with the committed value), `dropped_leaves` and `read_from_not_at_pin`. Dropping is never silent. A numeral whose
+leaf was dropped reads unbound and leaves marked on Telegram and refused on X (§7). Certify's UNGROUNDED over a
+numeral whose value the author's receipts file held in a leaf the resolver dropped is that drop's consequence and
+reads unbound (`legs.certify.ungrounded_after_drop`); an UNGROUNDED numeral whose value the author's receipts never
+held is the truth refusal `certify_ungrounded` of §6 (`legs.certify.ungrounded_genuine`). A MALFORMED or FAILED range
+is therefore counted and listed from `resolver.malformed_ranges` and `resolver.failed`, never rated, and enters no
+`n_refusals`.
 
-**Receipt-bearing directories** [J, frozen here; `PLAN` §2]: `papers/` (every subfolder), `web/gate/README.md`,
-`runs/`, and the measurement folders `papers/sworn/measurement/` and `papers/darkflobi-gate/`. Never `styxx/`,
-`tests/`, `scripts/`, `conformance/`, `web/` outside the one README, or any path outside the repository. The pool is
-every receipt-bearing object at the pin or in its history; G_P (bar 0.10) prices receipt shopping over that pool and
-`bindings.txt` shows which object each numeral took.
+[J] Said so because it departs from a sentence of `PLAN` §2, which calls a MALFORMED range "a form refusal" and a
+FAILED range a refusal (`RC:` M8), and from P0.1's T12, which refuses a commit that is not the pin or its ancestor.
+The same plan's positive control, reading (ii) of P0.1, expects the published 2026-10-05 document with 12 MALFORMED
+ranges to leave send-marked as `Nb` 3 of `Nn`, which only the drop rule gives; the gate as built drops, and the rule
+here is the gate's. A FAILED range is a leaf that does not hold the value the sentence prints, and under this rule it
+leaves the sentence unbound and marked, not refused: the count of such leaves is printed beside `n_refusals`.
+
+**Receipt-bearing directories** [J, frozen here; `PLAN` §2; `gate.py` `RECEIPT_BEARING_DEFAULT`,
+`NEVER_RECEIPT_BEARING`]: `papers/` (every subfolder, the measurement folders `papers/sworn/measurement/` and
+`papers/darkflobi-gate/` among them), `web/gate/README.md`, and `runs/`. Never `styxx/`, `tests/` or `scripts/`
+(refused before the list is read), a path holding `..` or opening `/`, any other top-level folder (`conformance/`,
+`web/` outside the one README), or any path outside the repository. `gate.py` reads a `receipt_bearing` list from
+`W:gate/config.json` when one is there; the config written at the sitting carries no such key (its sha256 is a lock
+row). The pool is every receipt-bearing object at the pin or in its history; G_P (bar 0.10) prices receipt shopping
+over that pool and `bindings.txt` shows which object each numeral took.
 
 **Everything else is unbound**: narrative, ABSTAIN, UNCOVERED, a numeral whose leaf was dropped, a sidecar that did not
-verify, a span that is UNRESOLVED. **Bound is not true**: a HELD span or a VERIFIED numeral says the leaf holds what
+verify, a span that is not HELD. **Bound is not true**: a HELD span or a VERIFIED numeral says the leaf holds what
 the sentence prints at a named commit; Panel R asks whether the leaf evidences the sentence (G_P); nothing asks
 whether the sentence is true of the world. The receipts files are the agent's own writing (`ATT:` A5); the share of
 bound leaves whose introducing commit on `main` predates the window and names a committer other than `darkflobi` is
@@ -220,8 +245,9 @@ A numeral is a match of certify's `_NUM` (`M:styxx/certify.py` l.42-44), after c
 |(?<![\w.])[-+]?\.\d+(?![\w.])|(?<![\w.])[-+]?\d+(?![\w.])
 ```
 
-`Nn` on a line is the count of numerals in the checked text; `Nb` the count bound (§4); `Nu` the count unbound and
-marked; `Ns` the count certify reads as spec or notation (ABSTAIN with a spec reason). A number in words is not a
+`Nn` on a line is the count of numerals in the checked text (`numerals.total`); `Nb` the count bound (§4,
+`numerals.bound`); `Nu` the count unbound and marked (`numerals.unbound`); `Ns` the count certify reads as spec or
+notation (ABSTAIN with a spec reason; not yet on the line, §13). A number in words is not a
 numeral (shape S4). Thread ordinals, pull-request numbers and line cites are numerals (shape S14) and read unbound
 unless given a leaf.
 
@@ -229,16 +255,29 @@ unless given a leaf.
 
 ## 6. refusals: the reason codes and the classes they fall in
 
-Every attempt writes one ledger line with `decision` (`allow`, `allow_marked`, `refuse`) and `reasons`, a list of
-codes. A refusal at any leg still records every leg that ran. The classes:
+Every attempt the gate answers writes one ledger line (`kind: send`) with `decision` (`allow`, `allow_marked`,
+`refuse`), `action` (`send` or `cancel`, what the exit does, the phase applied), `finding` (the class that decided, in
+this order of precedence: `internal`, `anchor`, `unavailable`, `spoof`, `lint`, `truth`, `form`, `media`, `unbound`,
+`clean`) and `reasons`, a list of codes. A refusal at any leg still records every leg that ran. The codes are spelled
+as `W:gate/gate.py` and the plugin (`W:gate/plugin/index.js`, `W:gate/gate.js`) emit them [R, the three files as
+read on 2026-10-23: `gate.py` sha256 `3d71c65a…`, `index.js` `9cef827f…`, `gate.js` `47add1fd…`; the PREREG locks the
+bytes the window runs]; a code written `name:<x>` is matched by its prefix `name:`, the suffix naming the span's
+reason, the claim, the shape or the leg. The classes:
 
 | class | codes | enters |
 |---|---|---|
-| **truth refusal** (an accusation against a sentence) | `sworn_failed` (a span FAILED), `certify_ungrounded` (a numeral UNGROUNDED), `read_from_failed` (a form-(a) range whose one token differs from the leaf), `audit_claims_fail` (a version-shaped claim audit-claims reads as FAIL against the snapshot) | `n_refusals` (G_RN); Panel R upholds or does not (G_R) |
-| **form refusal** (a shape the instruments cannot read) | `sworn_malformed`, `sworn_unresolved`, `read_from_malformed` (the range rule of §4), `media_no_rule` (§8), `anchor_form_spoof` (§9), `unbound_on_x` (E4 only: unbound numerals have no room for a trailer in 280 characters, `PLAN` resolution 2) | counted and listed, never rated |
+| **truth refusal** (an accusation against a sentence) | `sworn_failed:<reason>` (a sworn span FAILED); `certify_ungrounded` (a numeral UNGROUNDED whose value the author's receipts never held, §4); `audit_fail:<claim id>` (a version or tag claim audit-claims reads as FAIL against the snapshot) | `n_refusals` (G_RN); Panel R upholds or does not (G_R) |
+| **form refusal** (a shape the instruments cannot read) | `sworn_malformed:<reason>` (a span MALFORMED, or the document refused by sworn's own lexer, `lexical` when it names no reason); `sworn_unresolved:<reason>`, `sworn_withheld:<reason>` and any other `sworn_<verdict>:` of a span that is not HELD and not FAILED; `receipts_missing` (the named receipts file does not exist); `audit_unresolved:<shape>` (`git_tag`: a tag claim the snapshot, which carries no refs, cannot check); `audit_err:<claim id>`; `media_no_rule` (§8); `unbound_on_x` (E4 only: unbound numerals have no room for a trailer in 280 characters, `PLAN` resolution 2) | counted and listed, never rated |
+| **spoof** | `anchor_form_spoof` (§9): the anchor's form from any origin but the timer's nonce | counted and listed, never rated |
 | **lint refusal** | `lint_hit:<rule id>` for every `withdrawn`, `charter` or `plan` rule of `M:scripts/surface_lint.py` `RULES` that hits (a `withdrawn` match with a withdrawal form within 300 characters either side is ALLOWED, not a hit, `WINDOW` l.66) | counted and listed, never rated |
-| **unavailability** (the checker did not answer) | `gate_unavailable` (a 30 s timeout, a spawn error, the snapshot missing, a lease refusing the spawn, the ledger lock held past 10 s), `gate_not_registered` (no handler on `message_sending` with `REQUIRED` present), `gate_no_verdict` (the handler threw; the hook runner swallows it, `D:plugins/hooks.js` l.20), `gate_not_wired` (a marker missing from a patched `dist/` file), `ledger_append_failed` | counted per day on the ledger page; a public attempt under them is silence, never a send (`DG` §4; `PLAN` repair 16) |
-| **chain** | the chain refusal: the log's recomputed head differs from `W:gate/head.txt` (`DG` §5.3 names the line `tamper`); every append and every public send is refused until the operator looks | counted; its days are listed |
+| **unavailability on the line** (a leg could not run) | `gate_unavailable:<why>`, `<why>` naming the leg and its failure (`sworn_exit<n>`, `certify_exit<n>`, `audit_exit2`, `strip_helper_exit<n>`, `instrument_mismatch:<leg>` and the like) | counted per day on the ledger page; a public attempt under it is silence, never a send (`DG` §4; `PLAN` repair 16) |
+| **unavailability before any line** (the plugin's; written to `W:gate/plugin_failures.jsonl` and the session's pending queue, never to the ledger, which only `gate.py` writes) | `gate_unavailable` (`gate.py` absent or not spawned), `gate_timeout` (no answer in 30 s), `gate_no_verdict` (an answer with no action, or a handler that threw: the hook runner swallows it, `D:plugins/hooks.js` l.20), `gate_not_registered` (no `message_sending` handler with `REQUIRED` present), `gate_not_wired` (a marker missing from a patched `dist/` file) | counted per day from that file; a public attempt under them is silence, never a send |
+| **the ledger could not take the line** | `ledger_locked` (the lock was not taken in its wait), `tamper` (the log's recomputed head differs from `W:gate/head.txt`, `DG` §5.3) | counted, the days listed; a public send under them is refused (in shadow it is sent and the refusal recorded where it can be), the operator's DM is sent marked `[gate: <code>]` |
+| **not a refusal** | `unbound_marked` (sent with the trailer of §7); `internal_not_gated` (an `internal` destination, §2) | `unbound_marked` is the marked count M |
+
+The plugin's own anchor failures (`kind: anchor_not_sent` with `config_missing`, `anchor_channel_hash_missing`,
+`anchor_dest_missing` or `anchor_dest_mismatch`; `anchor_compose_failed`; `anchor_send_failed`) go to the same
+`plugin_failures.jsonl`; the census reads that day's anchor as `missing` (§9) whatever the file says.
 
 Under `REQUIRED` absent (the shadow phase and before it) no code refuses a send: the line carries the decision the
 gate would have taken (`would_refuse`) and the send goes out; to the operator's DM the same holds in every phase, with
@@ -255,7 +294,7 @@ the mark `[gate: <codes>]` or `[unchecked: styxx unavailable]` appended after a 
 | everything bound, or `Nn` = 0, lint clean | send, no trailer | send | send |
 | a file or an image in the payload (`mediaUrl`, `mediaUrls`) | refuse `media_no_rule` (§8) | send, `media_unread: true` | send, `media_unread: true` |
 | the anchor's form from any origin but the gate's own timer | refuse `anchor_form_spoof` | refuse `anchor_form_spoof` (the one refusal that holds in shadow, because the spoofed line would read as an anchor; `PLAN` §0) | refuse `anchor_form_spoof` |
-| the checker unavailable | refuse; the line says which code | send, line marked | send, marked `[unchecked: styxx unavailable]` |
+| the checker unavailable | refuse; the line, or before any line `plugin_failures.jsonl`, says which code | send; the line reads `would_refuse` | send, marked `[unchecked: styxx unavailable]` |
 
 The gate never edits inside a text. The trailer, the mark and the capsule footer are appended after a blank line;
 `sent_sha256` is over the delivered bytes, `checked_sha256` over the bytes the instruments read, both on the line.
@@ -329,20 +368,42 @@ from his export and the week's is GitHub's.
 
 ## 10. the selector
 
-A payload enters the selected set when its checked text, casefolded, matches at least one of these patterns
-(Python `re`, `IGNORECASE`; `\b` is a word boundary) [J, `DM` §1.1]:
+**The source is `W:gate/selector.py`** (`STEM_PATTERNS`, applied by `select`), lock-hashed in the PREREG's §11: a
+payload is selected when its checked text matches at least one of these patterns. They are the stems of `DM` §1.1
+("matches at least one stem from a committed list"), each a prefix match after a character that is not a letter or a
+digit, transcribed here character for character from the file, one per line as `<flags>  <stem>  <pattern>` (`I` =
+`re.IGNORECASE`, `-` = none; Python `re.search`) [R, `selector.py` at the hash the PREREG locks]:
 
 ```
-\bstyxx\b            \bfathom\b           \bsworn\b            \boath\b             \bdiff ?gate\b
-\bcapsule\b          \bcharon\b           \bprereg\b           \breceipts?\b        \bprecision\b
-\bpull requests?\b   (?<![\w#])#\d+\b     github\.com/fathom-lab
-\bpapers/            [\w./-]+\.(?:py|md)\b                     \b7\.\d\d?\.\d+\b
+I  styxx                  (?<![a-z0-9])styxx
+I  fathom                 (?<![a-z0-9])fathom
+I  sworn                  (?<![a-z0-9])sworn
+I  oath                   (?<![a-z0-9])oath
+I  diffgate               (?<![a-z0-9])diffgate
+I  diff gate              (?<![a-z0-9])diff\ gate
+I  capsule                (?<![a-z0-9])capsule
+I  charon                 (?<![a-z0-9])charon
+I  prereg                 (?<![a-z0-9])prereg
+I  receipt                (?<![a-z0-9])receipt
+I  precision              (?<![a-z0-9])precision
+I  pull request           (?<![a-z0-9])pull\ request
+I  github.com/fathom-lab  (?<![a-z0-9])github\.com/fathom\-lab
+I  papers/                (?<![a-z0-9])papers/
+-  #digits                #[0-9]+(?![0-9A-Za-z_])
+I  .py/.md path           (?<![A-Za-z0-9_])[A-Za-z0-9_./\\-]+\.(?:py|md)(?![A-Za-z0-9_])
+-  7.x.y version          (?<![0-9.])7\.[0-9][0-9]?\.[0-9](?![0-9])
 ```
 
-Unselected payloads stay in the ledger's denominator; 30 of them, drawn with the committed seed, go to Panel L as the
-selector-miss sample (any LOAD-BEARING unit found there is a selector miss, printed as a count and a floor on the
-selector's recall; no bar). `W:gate/selector.py` implements this list and is lock-hashed; a difference between the
-list here and the implementation is a defect in the implementation, found by its tests, and the list here governs.
+So "the preregistration", "receipted", "capsules" and "a#12" are selected (a stem is a prefix, and `#` takes any
+left neighbour), and "7.50.10" is not (the version is `7.` and one or two digits, `.` and one digit, with no digit
+after). Where this transcription and the locked file ever differ, the file decides which payloads were selected and
+the difference is printed under the PREREG's §15; `tests/test_darkflobi_gate_prereg.py` compares the two when the
+box is named (`STYXX_GATE_W_ROOT`) and pins the cases above on the transcription alone.
+
+Unselected payloads stay in the ledger's denominator; 30 of them go to Panel L as the selector-miss sample (any
+LOAD-BEARING unit found there is a selector miss, printed as a count and a floor on the selector's recall; no bar),
+drawn by `selector.py`'s `draw_miss_sample`: `random.Random(20261023).sample` over the sorted set of the window's
+unselected public send lines' `seq` values written as decimal strings (sorted as strings), `min(30, n)` of them.
 
 ---
 
@@ -402,19 +463,35 @@ ledgered send has no exit, `RC2:` m5). A ledgered send with `delivered: true` an
 
 ## 13. the ledger fields the measurement reads
 
-The ledger's schema is `gate.py`'s (`darkflobi.gate/entry/v0`, lock-hashed in the PREREG); this list names the fields
-the measurement reads off every line, so a line missing one is counted `malformed_line` and listed:
+The ledger's schema is `gate.py`'s and `ledger.py`'s (`darkflobi.gate/entry/v0`, both lock-hashed in the PREREG). The
+measurement reads these fields [R, `W:gate/ledger.py` and `gate.py` `_common_fields`, `check`, `cmd_event`,
+`cmd_anchor`]; a line missing one its kind carries is counted `malformed_line` and listed:
 
-`seq`, `prev`, `entry_id`, `timestamp` (inside the chained core; the gate's statement, not evidence of order), `day`
-(the local calendar day, America/New_York, of the timestamp), `kind`, `payload_kind`, `exit`, `channel`,
-`dest_class`, `dest_hash`, `agent`, `session_hash`, `process` (`{name, pid}`: `gateway` with the serving pid, or
-the CLI command word with its pid), `draft_sha256`, `checked_sha256`, `sent_sha256`, `source_sha256`, `legs` (lint,
-sworn, certify, audit_claims, diffgate), `numerals` (`total`, `bound`, `unbound`, `spec`, `unbound_tokens`),
-`decision`, `reasons`, `would_refuse`, `dropped_leaves`, `read_from_not_at_pin`, `instrument`, `gate_sha256`,
-`config_sha256`, `required_present`, `pin`, `snapshot_sha256`, `salt_sha256`, `media`, `media_unread`, `chunks`,
-`caption_split`, `canary`, `late`, and the post-send `delivered` line's `message_id_hash`. `gate_sha256` is the gate's
-statement about itself (`PLAN` repair 12); the PREREG's lock hashes and the operator's weekly `sha256sum` (OD-10) are
-the hashes the agent did not all compute.
+- **every line**: `seq`, `prev`, `entry_id`, `timestamp` (inside the chained core; the gate's statement, not evidence
+  of order), `day` (the local calendar day, America/New_York, of the timestamp), `kind` (`ledger.py` `KINDS`), `process`
+  (`{name, pid}`: `gateway` with the serving pid, or the CLI command word with its pid), `pin`, `gate_sha256`,
+  `config_sha256`, `required_present`, `salt_sha256`.
+- **a `send` line**: `exit`, `channel`, `dest_class`, `dest_role` (`operator_dm`, `anchor_channel`, `canary_chat` or
+  none), `dest_hash`, `payload_kind` (`block`, `final`, `tool`, `anchor`, `canary`), `session_hash`, `draft_sha256`,
+  `checked_sha256`, `sent_sha256`, `source_sha256`, `stripped_sha256`, `prepared`, `legs` (`lint`, `sworn`, `certify`,
+  `audit_claims`, `diffgate`), `resolver` (with `dropped_leaves`, `read_from_not_at_pin`, `dropped`,
+  `malformed_ranges`, `failed`), `numerals` (`total`, `bound`, `unbound`, `uncovered`, `unbound_tokens`), `media`,
+  `media_unread`, `decision`, `action`, `finding`, `reasons`, `would_refuse`, `shadow`, `instrument`,
+  `snapshot_sha256`. A canary submission is a send line with `payload_kind: canary` and leaves no message.
+- **the other kinds**: `delivered` (`for_seq`, `ok`, and `message_id_hash` when the exit knew the message id),
+  `deleted` (`sent_sha256`), `anchor` (`anchor_date`, `anchor_head`, `anchor_head_seq`, `anchor_text_sha256`, `late`),
+  `anchor_anomaly` (`anomaly`, `anchor_date`), `pin_moved` (`from`, `to`), `exec_scan` (`exec_calls`), `started`
+  (`markers_present`), `gate_not_wired` and `gate_wired` (`files`).
+
+**Named by the plan and not written by `gate.py` as read on 2026-10-23** (sha256 `3d71c65a…`): the
+line's `agent`, which the population of §2 needs (`main` measured, the others counted), the gateway's chunk count
+`chunks` and the caption split `caption_split`, which the census of §12 reads, and the spec count `Ns` of §5. A
+`gate.py` that writes them is restated under the PREREG's §15 before the merge; until one is, the population by
+agent, the chunk rule and `Ns` cannot be read off the ledger, a send line after D0 without `agent` is
+`malformed_line`, and the RESULT says which of the three were read and from where.
+
+`gate_sha256` is the gate's statement about itself (`PLAN` repair 12); the PREREG's lock hashes and the operator's
+weekly `sha256sum` (OD-10) are the hashes the agent did not all compute.
 
 ---
 

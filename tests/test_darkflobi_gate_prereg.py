@@ -41,6 +41,8 @@ CHANGELOG = ROOT / "CHANGELOG.md"
 GATES_SHA256 = "4ed27cb98f72e69f3f4a5acbf83ac62b0d54e2048001052e50600f1068dbeba6"
 GATES_BYTES = 6354
 PIN = "3437340b9e944644372e41d9fcab735d47e20fa0"
+SNAPSHOT_SHA256 = "681020dcbf5ac55cb42b12c0a377d4889011d55410221c89e1c0696444885e92"
+SNAPSHOT_FILES = 6164
 GATES = ["G_X_exits", "G_F1_panel", "G_F2_families", "G_C_canaries", "G_N_power", "G_RN_refusals",
          "G_R_refusals_upheld", "G_B_bound", "G_S2_padding", "G_P_pairing"]
 VERDICTS = [
@@ -300,21 +302,37 @@ def test_lock_table_and_check_on_a_synthetic_box(tmp_path):
     (gate / "__pycache__").mkdir()
     (gate / "__pycache__" / "gate.cpython-312.pyc").write_bytes(b"\x00")
     (gate / "canary_sealed").mkdir()
-    (gate / "canary_sealed" / "seed.json").write_bytes(b"{}")      # a sealed folder: never opened, never a row
+    (gate / "canary_sealed" / "seed.json").write_bytes(b"{}")      # a sealed folder: never listed, never a row
     (gate / "_test_stdout.txt").write_bytes(b"scratch\n")         # a scratch file by the folder's convention
+    (gate / "plugin" / "tests" / "_tmp" / "case1").mkdir(parents=True)
+    (gate / "plugin" / "tests" / "_tmp" / "case1" / "ledger.jsonl").write_bytes(b"{}\n")   # test scratch, any depth
+    (gate / "plugin" / "tests" / ".pytest_cache").mkdir(parents=True)
+    (gate / "plugin" / "tests" / ".pytest_cache" / "v").write_bytes(b"x")
+    (gate / "plugin" / "tests" / "run_tests.mjs").write_bytes(b"// tests\n")             # a real file, any depth
+    (gate / ".manifest_snapshot_3437340b.json").write_bytes(b"{}")                         # the snapshot's cache
+    (gate / "canary" / "keys").mkdir(parents=True)
+    (gate / "canary" / "outbox").mkdir()
+    (gate / "canary" / "outbox" / "item.json").write_bytes(b"{}")                          # harness working state
+    (gate / "canary" / "keys" / "sworn_measurement_darkflobi_gate_canary_seed.sha256").write_bytes(b"ab  k.json\n")
     home = tmp_path / "home"
     home.mkdir()
     rows = lock.rows_for_box(w, home)
     paths = {p for _, p, _, _ in rows}
     assert "W:gate/gate.py" in paths and "W:gate/snapshot_3437340b/" in paths and "pin:3437340b" in paths
+    assert "W:gate/plugin/tests/run_tests.mjs" in paths
     assert "W:gate/ledger.jsonl" not in paths and "W:gate/sources/deadbeef.md" not in paths
-    assert not any("pycache" in p for p in paths)
+    assert not any("pycache" in p or "pytest_cache" in p or "/_tmp/" in p for p in paths)
     assert not any("sealed" in p for p in paths), "a sealed folder must never become a lock row"
-    assert "W:gate/_test_stdout.txt" not in paths
+    assert "W:gate/_test_stdout.txt" not in paths and "W:gate/.manifest_snapshot_3437340b.json" not in paths
+    assert "W:gate/canary/outbox/item.json" not in paths
     by_path = {p: h for _, p, h, _ in rows}
-    assert by_path["W:gate/salt"] == lock.NOT_BUILT and by_path["W:ops/exhibit_mint.py"] == lock.NOT_BUILT
+    assert by_path["W:gate/canary/keys/sworn_measurement_darkflobi_gate_canary_seed.sha256"] == \
+        hashlib.sha256(b"ab  k.json\n").hexdigest(), "the harness's public digest file is a row of its own"
+    assert by_path["W:gate/canary/schedule.json"] == lock.NOT_BUILT
+    assert by_path["W:gate/salt"] == lock.NOT_BUILT and by_path["W:gate/exhibit_mint.py"] == lock.NOT_BUILT
     assert by_path["W:gate/reconcile.py"] == lock.NOT_BUILT, "a plan-named file that is absent prints a blank row, not nothing"
     assert by_path["W:gate/config.json"] == lock.NOT_BUILT
+    assert {p for _, p, _, _ in lock.rows_for_box(w, home, hashed=False)} == paths
     md = lock.markdown_rows(rows)
     parsed = lock.parse_lock_rows(md)
     assert parsed["W:gate/gate.py"][0] == hashlib.sha256(b"# gate\n").hexdigest()
@@ -322,6 +340,7 @@ def test_lock_table_and_check_on_a_synthetic_box(tmp_path):
     doc.write_text("## 11. lock hashes\n\n| what | path | sha256 | note |\n|---|---|---|---|\n" + md + "\n",
                    encoding="utf-8")
     assert lock.check(doc, w, home) == 0
+    assert lock.check(doc, w, home, strict=True) == 0
     (gate / "gate.py").write_bytes(b"# edited\n")
     assert lock.check(doc, w, home) == 1, "an edited lock-hashed file must read CHANGED"
     # a later row under section 15 overrides the earlier one for the same path
@@ -329,6 +348,22 @@ def test_lock_table_and_check_on_a_synthetic_box(tmp_path):
     later = md + "\n\n## 15. amendments before the merge\n\n| gate file | `W:gate/gate.py` | `" + h_edited + "` | restated |\n"
     doc.write_text("## 11. lock hashes\n\n" + later, encoding="utf-8")
     assert lock.check(doc, w, home) == 0
+    # a plan-named file built after the fill, with no later row, is BUILT SINCE: a failure
+    (gate / "reconcile.py").write_bytes(b"# census\n")
+    assert lock.check(doc, w, home) == 1, "a row frozen blank whose file now exists must fail until restated"
+    later += "| gate file | `W:gate/reconcile.py` | `" + hashlib.sha256(b"# census\n").hexdigest() + "` | restated |\n"
+    doc.write_text("## 11. lock hashes\n\n" + later, encoding="utf-8")
+    assert lock.check(doc, w, home) == 0
+    # a file added under W:gate/ after the fill that no row names is UNLOCKED: printed always, a failure under --strict
+    (gate / "helpers").mkdir()
+    (gate / "helpers" / "x.py").write_bytes(b"# imported by gate.py\n")
+    assert lock.check(doc, w, home) == 0
+    assert lock.check(doc, w, home, strict=True) == 1, "a file no row covers must fail the merge-time check"
+    # a locked file that is gone is ABSENT: printed, a failure under --strict
+    (gate / "helpers" / "x.py").unlink()
+    (gate / "plugin" / "tests" / "run_tests.mjs").unlink()
+    assert lock.check(doc, w, home) == 0
+    assert lock.check(doc, w, home, strict=True) == 1
 
 
 def test_check_re_derives_the_gates_block_row_and_the_repository_rows(tmp_path):
@@ -354,6 +389,226 @@ def test_check_re_derives_the_gates_block_row_and_the_repository_rows(tmp_path):
     assert lock.check(doc, tmp_path / "nowhere", tmp_path / "nohome") == 1
     with pytest.raises(ValueError):
         lock.gates_block_sha256("```gates\n{}\n```\n```gates\n{}\n```\n")
+
+
+def test_the_walker_never_lists_a_sealed_folder_or_a_pruned_one(tmp_path, monkeypatch):
+    lock = _load(LOCK_PY, "lock_hashes")
+    gate = tmp_path / "W" / "gate"
+    for d in ("canary_sealed", "panel_secret_keys", "plugin/tests/_tmp", "node_modules/x", "exhibit_out", "canary"):
+        (gate / d).mkdir(parents=True)
+        (gate / d / "f.txt").write_bytes(b"x")
+    (gate / "gate.py").write_bytes(b"# gate\n")
+    listed = []
+    real = os.scandir
+
+    def spy(path="."):
+        listed.append(os.fspath(path).replace("\\", "/"))
+        return real(path)
+
+    monkeypatch.setattr(os, "scandir", spy)
+    files = [rel for rel, _, _ in lock.gate_files(gate)]
+    assert files == ["gate.py"]
+    assert listed, "the spy saw no listing; the walker no longer uses os.scandir"
+    for bad in ("canary_sealed", "panel_secret_keys", "_tmp", "node_modules", "exhibit_out", "/canary"):
+        assert not any(p.endswith(bad) or (bad + "/") in p for p in listed), (bad, listed)
+
+
+def test_the_walker_refuses_what_it_cannot_read_and_reads_long_paths(tmp_path, monkeypatch):
+    lock = _load(LOCK_PY, "lock_hashes")
+    # a path past 260 characters: written and read through the long-path prefix on Windows, counted, not skipped
+    deep = tmp_path / "long"
+    segs = ["s" * 48 + str(i) for i in range(6)]
+    target_dir = deep.joinpath(*segs)
+    os.makedirs(lock._long(target_dir), exist_ok=True)
+    target = target_dir / "f.txt"
+    with open(lock._long(target), "wb") as fh:
+        fh.write(b"far\n")
+    assert len(str(target)) > 260
+    d, n = lock.tree_digest(deep)
+    rel = "/".join(segs) + "/f.txt"
+    assert n == 1
+    assert d == hashlib.sha256((hashlib.sha256(b"far\n").hexdigest() + "  " + rel + "\n").encode("utf-8")).hexdigest()
+    # a path the walker cannot stat is an error, never a silent skip
+    flat = tmp_path / "flat"
+    flat.mkdir()
+    (flat / "ok.txt").write_bytes(b"ok\n")
+    (flat / "bad.txt").write_bytes(b"bad\n")
+    real_lstat = os.lstat
+
+    def lstat(p, *a, **k):
+        if os.fspath(p).endswith("bad.txt"):
+            raise PermissionError("denied")
+        return real_lstat(p, *a, **k)
+
+    monkeypatch.setattr(os, "lstat", lstat)
+    with pytest.raises(lock.WalkError):
+        lock.tree_digest(flat)
+    monkeypatch.setattr(os, "lstat", real_lstat)
+    # a folder the walker cannot list is an error too
+    real_scandir = os.scandir
+
+    def scandir(p="."):
+        if os.fspath(p).endswith("flat"):
+            raise PermissionError("denied")
+        return real_scandir(p)
+
+    monkeypatch.setattr(os, "scandir", scandir)
+    with pytest.raises(lock.WalkError):
+        lock.tree_digest(flat)
+
+
+def test_the_snapshot_row_is_the_digest_the_pin_gives():
+    lock = _load(LOCK_PY, "lock_hashes")
+    rows = lock.parse_lock_rows(PREREG.read_text(encoding="utf-8"))
+    h, _ = rows["W:gate/snapshot_3437340b/"]
+    assert h == SNAPSHOT_SHA256
+    text = PREREG.read_text(encoding="utf-8")
+    assert "tree digest over 6,164 files" in text and "6165" not in text
+    have_pin = subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", PIN + "^{commit}"],
+                              capture_output=True).returncode == 0
+    if not have_pin:
+        pytest.skip("the pin is not in this clone's object store")
+    d, n = lock.pin_tree_digest(ROOT, PIN)
+    assert (d, n) == (SNAPSHOT_SHA256, SNAPSHOT_FILES)
+
+
+# -- the rule file against the pieces it names --------------------------------------------------------------------
+
+def _rules_section(n: int) -> str:
+    rules = RULES.read_text(encoding="utf-8")
+    start = rules.index(f"\n## {n}. ")
+    end = rules.index("\n## ", start + 5)
+    return rules[start:end]
+
+
+SELECTOR_LINE = re.compile(r"^(?P<flag>[I-])  (?P<name>\S(?:.*?\S)?) {2,}(?P<pattern>\S.*)$")
+
+
+def _rules_selector():
+    sec = _rules_section(10)
+    fence = sec.split("```\n", 2)[1]
+    out = []
+    for line in fence.splitlines():
+        m = SELECTOR_LINE.match(line)
+        assert m, f"not a selector line: {line!r}"
+        out.append((m.group("name"), m.group("flag"), m.group("pattern")))
+    return out
+
+
+def test_the_rules_selector_is_a_prefix_rule_and_pins_its_cases():
+    rows = _rules_selector()
+    assert len(rows) == 17
+    rx = [re.compile(p, re.IGNORECASE if f == "I" else 0) for _, f, p in rows]
+
+    def selected(text):
+        return any(r.search(text) for r in rx)
+
+    for text in ("the preregistration is merged", "we preregistered it", "receipted deliveries", "capsules shipped",
+                 "oathkeeper", "styxxes everywhere", "a#12", "##5", "version 7.50.1", "see PR #224", "Styxx",
+                 "see papers/foo", "run.py", "fathom-lab", "diff gate", "pull requests", "precision 0.23"):
+        assert selected(text), text
+    for text in ("version 7.50.10", "the weather is fine", "a draft for the operator", "17.5.1", "issue#x"):
+        assert not selected(text), text
+    sec = _rules_section(10)
+    assert "**The source is `W:gate/selector.py`**" in sec and "draw_miss_sample" in sec
+    assert "20261023" in sec and "\\bprereg\\b" not in sec
+
+
+def test_the_rules_selector_is_the_locked_selector_py_when_the_box_is_named():
+    w_root = os.environ.get("STYXX_GATE_W_ROOT")
+    if not w_root:
+        pytest.skip("set STYXX_GATE_W_ROOT to compare RULES section 10 with W:gate/selector.py")
+    sel = _load(Path(w_root) / "gate" / "selector.py", "darkflobi_gate_selector")
+    have = [(name, "I" if rx.flags & re.IGNORECASE else "-", rx.pattern) for name, rx in sel.STEM_PATTERNS.items()]
+    assert _rules_selector() == have
+
+
+# the codes RULES section 6 names, by class, as gate.py and the plugin spell them
+TRUTH_CODES = ("sworn_failed:", "certify_ungrounded", "audit_fail:")
+FORM_CODES = ("sworn_malformed:", "sworn_unresolved:", "sworn_withheld:", "receipts_missing", "audit_unresolved:",
+              "audit_err:", "media_no_rule", "unbound_on_x")
+PLUGIN_CODES = ("gate_unavailable", "gate_timeout", "gate_no_verdict", "gate_not_registered", "gate_not_wired")
+CLASS_ROWS = {"truth": "truth refusal", "form": "form refusal", "spoof": "spoof", "lint": "lint refusal",
+              "unavailable": "unavailability on the line", "internal": "not a refusal"}
+
+
+def _rules_code_rows() -> dict:
+    out = {}
+    for line in _rules_section(6).splitlines():
+        m = re.match(r"^\| \*\*(?P<cls>[^*]+)\*\*[^|]*\| (?P<codes>[^|]+) \|", line)
+        if m:
+            out[m.group("cls")] = m.group("codes")
+    return out
+
+
+def test_the_rules_codes_and_the_prereg_truth_codes_agree():
+    rows = _rules_code_rows()
+    assert list(rows) == ["truth refusal", "form refusal", "spoof", "lint refusal", "unavailability on the line",
+                          "unavailability before any line", "the ledger could not take the line", "not a refusal"]
+    for code in TRUTH_CODES:
+        assert f"`{code}" in rows["truth refusal"], code
+    for code in FORM_CODES:
+        assert f"`{code}" in rows["form refusal"], code
+    for code in PLUGIN_CODES:
+        assert f"`{code}`" in rows["unavailability before any line"], code
+    assert "`anchor_form_spoof`" in rows["spoof"] and "`lint_hit:" in rows["lint refusal"]
+    assert "`gate_unavailable:" in rows["unavailability on the line"]
+    assert "`ledger_locked`" in rows["the ledger could not take the line"] and "`tamper`" in rows["the ledger could not take the line"]
+    truth_cell = re.findall(r"`([a-z_]+:?)", rows["truth refusal"])
+    assert tuple(truth_cell) == TRUTH_CODES, truth_cell
+    prereg = PREREG.read_text(encoding="utf-8")
+    sec5 = prereg.split("## 5. metrics", 1)[1].split("## 6. ", 1)[0]
+    n_ref = sec5.split("`n_refusals` (int)", 1)[1].split("\n- `", 1)[0]
+    for c in TRUTH_CODES:
+        assert f"`{c}" in n_ref, c
+    for stale in ("read_from_failed", "audit_claims_fail", "read_from_malformed", "ledger_append_failed",
+                  "STYXX_SEALED_DIR"):
+        assert stale not in prereg and stale not in RULES.read_text(encoding="utf-8"), stale
+
+
+def test_the_rules_codes_are_the_codes_the_gate_emits_when_the_box_is_named():
+    w_root = os.environ.get("STYXX_GATE_W_ROOT")
+    if not w_root:
+        pytest.skip("set STYXX_GATE_W_ROOT to read W:gate/gate.py and the plugin against RULES section 6")
+    gate = Path(w_root) / "gate"
+    gate_py = (gate / "gate.py").read_text(encoding="utf-8")
+    plugin = (gate / "plugin" / "index.js").read_text(encoding="utf-8") + (gate / "gate.js").read_text(encoding="utf-8")
+    rows = _rules_code_rows()
+    # every (class, code) gate.py appends to its findings is in the RULES row of that class
+    pairs = re.findall(r'findings\.append\(\(\s*(?:"(\w+)"|(\w+)),\s*"([a-z_%]+)', gate_py)
+    assert len(pairs) >= 10, pairs
+    for cls, var, code in pairs:
+        if code.startswith("sworn_%s"):
+            assert var == "cls" and '"truth" if s["verdict"] == "FAILED" else "form"' in gate_py
+            continue
+        prefix = code.split("%", 1)[0]
+        assert f"`{prefix}" in rows[CLASS_ROWS[cls]], (cls, code)
+    # every code the RULES names is one the files can emit
+    for code in TRUTH_CODES + FORM_CODES:
+        needle = '"sworn_%s:%s"' if code in ("sworn_failed:", "sworn_unresolved:", "sworn_withheld:") else code
+        assert needle in gate_py or f'"{code}"' in gate_py or ("PUBLIC_MARK_X = \"%s\"" % code) in gate_py, code
+    for code in PLUGIN_CODES:
+        assert f'"{code}"' in plugin, code
+    for code in ("ledger_locked", "tamper", "unbound_marked", "internal_not_gated", "anchor_form_spoof"):
+        assert f'"{code}"' in gate_py, code
+    assert re.search(r'findings\.append\(\(\s*"unavailable",\s*"gate_unavailable:%s"', gate_py)
+
+
+def test_the_canary_seed_digest_is_committed_and_its_location_said_once():
+    key = FOLDER / "keys" / "sworn_measurement_darkflobi_gate_canary_seed.sha256"
+    raw = key.read_bytes().replace(b"\r\n", b"\n")
+    assert re.fullmatch(rb"[0-9a-f]{64}  sworn_measurement_darkflobi_gate_canary_seed\.json\n", raw), raw
+    lock = _load(LOCK_PY, "lock_hashes")
+    rows = lock.parse_lock_rows(PREREG.read_text(encoding="utf-8"))
+    h, _ = rows["papers/darkflobi-gate/keys/sworn_measurement_darkflobi_gate_canary_seed.sha256"]
+    assert h == hashlib.sha256(raw).hexdigest()
+    sec7 = PREREG.read_text(encoding="utf-8").split("## 7. the canaries", 1)[1].split("## 8. ", 1)[0]
+    assert sec7.count("`W:gate/canary_sealed/`") == 1
+    assert "STYXX_SEALED_DIR" not in sec7
+    w_root = os.environ.get("STYXX_GATE_W_ROOT")
+    if w_root:
+        box = Path(w_root) / "gate" / "canary" / "keys" / key.name
+        assert box.read_bytes().replace(b"\r\n", b"\n") == raw, "the committed digest must equal the harness's copy"
 
 
 def test_scan_script_prints_the_pinned_digest_and_the_row_counts(tmp_path):
