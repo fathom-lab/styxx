@@ -155,3 +155,8 @@ papers/frequency-resonance/RESULT_realmodel_bridge_v3_not_started_2026_10_12.swo
 # by the sha256 of its bytes, and the leaves are committed with the RESULT; a CRLF checkout would change those
 # bytes
 papers/frequency-resonance/pmnist_robustness_runs/** -text
+
+# pmnist robustness RESULT (2026-10-23): sworn document, sidecar and receipt, byte-pinned like every other sworn artifact
+papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md -text
+papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.sworn.json -text
+papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.sworn-receipt.json -text
