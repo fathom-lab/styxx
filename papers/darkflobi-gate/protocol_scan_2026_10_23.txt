@@ -57,10 +57,10 @@ wilson(z=1.96):
   se of a share at p=0.70, n=40: 0.0725
 
 # receipt trailer (written by the piece after the PREREG's commit; the scan above is the scanner's own output)
-written: 2026-10-23T13:51:37-04:00
+written: 2026-10-23T14:23:50-04:00
 prereg_commit (the scanner's reading: the earliest commit holding the file): dc06d68e84407c487973b6d5a98e3695b26f5eba
-prereg text scanned: the blob at c932129c2621964ab69b74113f1c83b136dd7b36 (the commit that relocked section 11 and transcribed the rule file again from the landed bytes after the second review, on the unpushed branch, before the pull request opens; `git log` shows every version)
-prereg blob sha256 (git show <commit>:<path> | sha256sum): 13011f29931d6b69f0eb08ed233d338d69999717af2fe8b742961fb1778bea8a  76007 bytes
+prereg text scanned: the blob at 2ae9176da0c2ee4901e4711f651b7cd19a78aa3c (the commit that relocked section 11 at 14:20 after the integration pass moved four gate files, on the unpushed branch, before the pull request opens; `git log` shows every version)
+prereg blob sha256 (git show <commit>:<path> | sha256sum): 7b0db6c1fad7a633e9e50b805f29a3a454fb00d1652427c4eb9a125131418771  76008 bytes
 rules blob sha256: 77c7670ffed883c2c916904f1e03065b913e0efd356f3462ce89492163135ea8  55569 bytes
 canary seed digest blob sha256 (keys/sworn_measurement_darkflobi_gate_canary_seed.sha256): 625e7371db302076cc84f98326d7a39ad89149aec20927dfefee62193f745eeb  116 bytes
 snapshot tree digest (lock_hashes.py pin-tree, from the pin's blobs): 681020dcbf5ac55cb42b12c0a377d4889011d55410221c89e1c0696444885e92  6164 files
