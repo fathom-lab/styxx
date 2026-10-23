@@ -50,6 +50,17 @@ MODE_ODD = MODE + "has a value this job does not recognise" + REPORTS
 MODE_FALSE = MODE + 'is "false", so a FAIL verdict fails this job.'
 
 
+def _changelog_entry(changelog: str, title: str) -> str:
+    """The CHANGELOG entry whose heading starts with `title`: `## [Unreleased] — title` while it waits
+    for a release, `### title` once a release cut folds it under a version heading (7.49.0's cut set
+    the pattern). It ends at the next heading of level 2 or 3."""
+    m = re.search(r"^#{2,3} (?:\[Unreleased\] — )?" + re.escape(title), changelog, re.M)
+    assert m, f"CHANGELOG.md has no entry headed {title!r} at level 2 or 3"
+    rest = changelog[m.end():]
+    nxt = re.search(r"\n#{2,3} ", rest)
+    return rest[: nxt.start()] if nxt else rest
+
+
 def _mode(soft_fail):
     """The mode line the job should print for this value of STYXX_SOFT_FAIL (None: unset)."""
     if soft_fail is None:
@@ -384,7 +395,7 @@ def test_the_docs_warn_that_a_protected_variable_does_not_reach_a_merge_request_
     readme = (ROOT / "integrations" / "gitlab" / "README.md").read_text(encoding="utf-8")
     header = JOB.read_text(encoding="utf-8").split("\ndiffgate:", 1)[0]
     changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
-    entry = changelog.split("## [Unreleased] — the GitLab job reports by default", 1)[1].split("\n## ", 1)[0]
+    entry = _changelog_entry(changelog, "the GitLab job reports by default")
     for text in (readme, header, entry):
         flat = " ".join(text.replace("#", " ").replace("`", "").split())
         assert "marked Protected" in flat
@@ -401,7 +412,7 @@ def test_the_docs_say_what_goes_to_the_log_and_what_to_the_artifact():
     readme = (ROOT / "integrations" / "gitlab" / "README.md").read_text(encoding="utf-8")
     header = JOB.read_text(encoding="utf-8").split("\ndiffgate:", 1)[0]
     changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
-    entry = changelog.split("## [Unreleased] \u2014 the GitLab job reports by default", 1)[1].split("\n## ", 1)[0]
+    entry = _changelog_entry(changelog, "the GitLab job reports by default")
     for text in (readme, header, entry):
         flat = " ".join(text.replace("#", " ").replace("`", "").split())
         assert "every verdict goes to the job log" not in flat
