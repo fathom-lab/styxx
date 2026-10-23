@@ -528,7 +528,8 @@ def test_an_incomplete_identity_with_an_edit_is_i_fail_never_skew(tmp_path, monk
                                                "(unknown: build.modules[styxx.declare]), so this failure cannot be "
                                                "told apart from INSTRUMENT SKEW or an edit from the record alone")
     assert I.describe(x_null) in adv[0]
-    assert ("the payload's pin 'styxx==7.49.0' is outside every binding and names a version, not a build"
+    from styxx._version import __version__   # the minted payload pins the running version, whatever it is
+    assert (f"the payload's pin 'styxx=={__version__}' is outside every binding and names a version, not a build"
             in adv[0])
     assert charon.derive(out, tmp_path)["verdict"] != "UNRESOLVED"
 
