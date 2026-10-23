@@ -1,0 +1,5506 @@
+{
+ "prereg": "PREREG_pmnist_robustness_2026_10_11.md",
+ "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+ "correction": "CORRECTION_prereg_pmnist_robustness_2026_10_12.md",
+ "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+ "config": {
+  "steps_main": 4000,
+  "steps_long": 12000,
+  "eval_every": 500,
+  "h": 64,
+  "anchor_perm": 1234,
+  "rerun_seeds": [
+   0,
+   1
+  ],
+  "new_seeds": [
+   2,
+   3,
+   4
+  ],
+  "derived_seeds": [
+   0,
+   1,
+   2
+  ],
+  "long_seeds": {
+   "free": [
+    0,
+    1
+   ],
+   "clamped": [
+    0,
+    1,
+    2
+   ]
+  },
+  "held_out_perms": [
+   3584514041,
+   27380109,
+   2994719670,
+   3317084913,
+   2856893334
+  ],
+  "perm_derivation": "sha256-of-tag fallback",
+  "beacon": null,
+  "fallback_tag": "PREREG_pmnist_robustness_2026_10_11",
+  "degenerate_acc": 0.15,
+  "t975": {
+   "2": 12.706,
+   "3": 4.303,
+   "4": 3.182,
+   "5": 2.776
+  },
+  "z975": 1.96
+ },
+ "imports": {
+  "run_pmnist_ablation.py": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+  "run_pmnist_untied.py": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf"
+ },
+ "data": {
+  "file": "_mnist.npz",
+  "sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8"
+ },
+ "schedule": {
+  "expected_leaves": 65,
+  "present": 65
+ },
+ "per_permutation": {
+  "3584514041": {
+   "n": {
+    "free": 3,
+    "clamped": 3,
+    "real2": 3
+   },
+   "mean": {
+    "free": 0.927,
+    "clamped": 0.6823,
+    "real2": 0.6533
+   },
+   "gap": 0.2447,
+   "free_minus_real2": 0.2737,
+   "real2_minus_clamped": -0.0289,
+   "recovery": -0.1182
+  },
+  "27380109": {
+   "n": {
+    "free": 3,
+    "clamped": 3,
+    "real2": 3
+   },
+   "mean": {
+    "free": 0.9282,
+    "clamped": 0.6643,
+    "real2": 0.647
+   },
+   "gap": 0.2638,
+   "free_minus_real2": 0.2812,
+   "real2_minus_clamped": -0.0174,
+   "recovery": -0.0658
+  },
+  "2994719670": {
+   "n": {
+    "free": 3,
+    "clamped": 3,
+    "real2": 3
+   },
+   "mean": {
+    "free": 0.9306,
+    "clamped": 0.6582,
+    "real2": 0.6716
+   },
+   "gap": 0.2724,
+   "free_minus_real2": 0.259,
+   "real2_minus_clamped": 0.0133,
+   "recovery": 0.049
+  },
+  "3317084913": {
+   "n": {
+    "free": 3,
+    "clamped": 3,
+    "real2": 3
+   },
+   "mean": {
+    "free": 0.925,
+    "clamped": 0.5798,
+    "real2": 0.5718
+   },
+   "gap": 0.3453,
+   "free_minus_real2": 0.3532,
+   "real2_minus_clamped": -0.0079,
+   "recovery": -0.023
+  },
+  "2856893334": {
+   "n": {
+    "free": 3,
+    "clamped": 3,
+    "real2": 3
+   },
+   "mean": {
+    "free": 0.9248,
+    "clamped": 0.7128,
+    "real2": 0.7167
+   },
+   "gap": 0.212,
+   "free_minus_real2": 0.2081,
+   "real2_minus_clamped": 0.004,
+   "recovery": 0.0187
+  }
+ },
+ "result": {
+  "plumbing_ok": 1.0,
+  "degenerate_fraction": 0.0,
+  "free_perm_mean": 0.9274,
+  "anchor_gap_newseed": 0.3182,
+  "gap_perm_mean": 0.2676,
+  "gap_perm_ci_lo": 0.2066,
+  "gap_long": 0.1097,
+  "free_minus_real2_perm_mean": 0.275,
+  "real2_minus_clamped_perm_mean": -0.0074,
+  "nonfinite_metrics": []
+ },
+ "reported": {
+  "gap_perm_ci_hi": 0.3287,
+  "gap_perm_sd": 0.0492,
+  "gap_perm_min": 0.212,
+  "free_perm_min": 0.9248,
+  "recovery_perm_mean": -0.0279,
+  "recovery_perm_ci": [
+   -0.1105,
+   0.0547
+  ],
+  "recovery_defined_on": [
+   "3584514041",
+   "27380109",
+   "2994719670",
+   "3317084913",
+   "2856893334"
+  ],
+  "recovery_class": "rotation",
+  "pooled_gap": 0.2676,
+  "pooled_n": [
+   15,
+   15
+  ],
+  "pooled_ci": [
+   0.2415,
+   0.2938
+  ],
+  "pooled_ci_note": "normal approximation, z = 1.96, run as the unit; reported beside the permutation interval",
+  "reliance_mean": 0.8273,
+  "reliance_n": 22,
+  "gap_by_width": {}
+ },
+ "unexcluded": {
+  "degenerate_fraction": 0.0,
+  "free_perm_mean": 0.9274,
+  "anchor_gap_newseed": 0.3182,
+  "gap_perm_mean": 0.2676,
+  "gap_perm_ci_lo": 0.2066,
+  "gap_long": 0.1097,
+  "free_minus_real2_perm_mean": 0.275,
+  "real2_minus_clamped_perm_mean": -0.0074
+ },
+ "bootstrap": {
+  "n": 2000,
+  "seed": 20261011,
+  "ci_lo": 0.2321,
+  "ci_hi": 0.311,
+  "between_perm_var_share": 0.8901,
+  "gap_perm_var": 0.00242,
+  "seed_noise_var_of_gap_p": 0.000266
+ },
+ "degeneracy": {
+  "by_arm": {
+   "free": [],
+   "clamped": [],
+   "real2": []
+  },
+  "by_perm": {
+   "1234": [],
+   "3584514041": [],
+   "27380109": [],
+   "2994719670": [],
+   "3317084913": [],
+   "2856893334": []
+  },
+  "main_count": 0,
+  "long_count": 0,
+  "free_counted_as_zero_in_floor": []
+ },
+ "anchor": {
+  "per_seed": {
+   "free": {
+    "0": 0.924,
+    "1": 0.915,
+    "2": 0.9289,
+    "3": 0.9322,
+    "4": 0.9259
+   },
+   "clamped": {
+    "0": 0.5529,
+    "1": 0.6617,
+    "2": 0.6637,
+    "3": 0.5434,
+    "4": 0.6253
+   },
+   "real2": {
+    "0": 0.6619,
+    "1": 0.5962,
+    "2": 0.5854,
+    "3": 0.595,
+    "4": 0.6159
+   }
+  },
+  "free_01": 0.9195,
+  "clamped_01": 0.6073,
+  "anchor_max_abs_dev": 0.0,
+  "receipt": {
+   "free": 0.9195,
+   "clamped": 0.6073
+  },
+  "anchor_gap_5seed": 0.3158,
+  "anchor_free_minus_real2_newseed": 0.3302,
+  "anchor_real2_minus_clamped_newseed": -0.012,
+  "anchor_recovery_newseed": -0.0378
+ },
+ "long": {
+  "free_long": 0.9541,
+  "clamped_long": 0.8444,
+  "clamped_long_gain": 0.2183,
+  "free_long_gain": 0.0346,
+  "clamped_long_midgain": 0.129,
+  "free_long_midgain": 0.0384,
+  "clamped_last_quarter_gain": 0.0367
+ },
+ "leaf_chain": {
+  "ok": true,
+  "entries": 65,
+  "broken_at": null,
+  "stale": [],
+  "missing_from_chain": [],
+  "rewrites": [],
+  "head": "ae16b4c66b3577c90eafa728c2171520c844bbc663ef012782fb35eb1142bd43"
+ },
+ "plumbing": {
+  "leaves_complete": true,
+  "read_back_ok": true,
+  "imports_ok": true,
+  "data_ok": true,
+  "prereg_ok": true,
+  "correction_ok": true,
+  "preflight_ok": true,
+  "curves_ok": true,
+  "no_final_mismatch": true,
+  "derivation_consistent": true,
+  "perms_match_derivation": true,
+  "chain_ok": true,
+  "metrics_finite": true,
+  "disk_runners_ok": true,
+  "disk_data_ok": true,
+  "disk_prereg_ok": true,
+  "disk_correction_ok": true
+ },
+ "plumbing_detail": {
+  "missing": [],
+  "extra": [],
+  "read_back_bad": [],
+  "imports_bad": [],
+  "data_bad": [],
+  "prereg_bad": [],
+  "correction_bad": [],
+  "preflight_bad": [],
+  "curves_bad": [],
+  "curve_final_mismatch": [],
+  "derivations_seen": [
+   "('sha256-of-tag fallback', None)"
+  ],
+  "nonfinite_metrics": []
+ },
+ "runs": [
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "clamped",
+   "seed": 0,
+   "steps": 12000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 12000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.8289,
+   "curve_every": 500,
+   "curve": [
+    0.2381,
+    0.2777,
+    0.3474,
+    0.4054,
+    0.4839,
+    0.5293,
+    0.5791,
+    0.6552,
+    0.6579,
+    0.7078,
+    0.7234,
+    0.7537,
+    0.7636,
+    0.7699,
+    0.7901,
+    0.802,
+    0.8027,
+    0.8085,
+    0.816,
+    0.8227,
+    0.8265,
+    0.8292,
+    0.829,
+    0.8289
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.299,
+    1.903,
+    1.921,
+    1.786,
+    1.588,
+    1.481,
+    1.196,
+    0.919,
+    0.97,
+    0.938,
+    1.063,
+    0.796,
+    0.912,
+    0.589,
+    0.654,
+    0.637,
+    0.602,
+    0.552,
+    0.394,
+    0.401,
+    0.534,
+    0.519,
+    0.42,
+    0.457
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 2555.8,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T23:29:47-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "clamped",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.5529,
+   "curve_every": 500,
+   "curve": [
+    0.2373,
+    0.284,
+    0.3517,
+    0.4308,
+    0.4798,
+    0.5281,
+    0.5511,
+    0.5529
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.299,
+    1.857,
+    1.921,
+    1.784,
+    1.6,
+    1.465,
+    1.185,
+    1.326
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 860.0,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T20:43:03-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "clamped",
+   "seed": 1,
+   "steps": 12000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 12000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.8537,
+   "curve_every": 500,
+   "curve": [
+    0.2338,
+    0.3016,
+    0.4249,
+    0.497,
+    0.555,
+    0.5883,
+    0.6735,
+    0.6926,
+    0.7301,
+    0.752,
+    0.7576,
+    0.7455,
+    0.772,
+    0.8106,
+    0.8039,
+    0.8049,
+    0.8288,
+    0.8304,
+    0.8326,
+    0.8454,
+    0.8467,
+    0.8516,
+    0.8519,
+    0.8537
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.17,
+    2.066,
+    1.686,
+    1.691,
+    1.202,
+    0.965,
+    1.216,
+    0.891,
+    0.894,
+    0.539,
+    0.598,
+    0.684,
+    0.636,
+    0.873,
+    0.644,
+    0.355,
+    0.5,
+    0.554,
+    0.446,
+    0.562,
+    0.561,
+    0.247,
+    0.439,
+    0.353
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 2563.1,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-13T00:12:30-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "clamped",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6617,
+   "curve_every": 500,
+   "curve": [
+    0.2371,
+    0.3302,
+    0.4538,
+    0.5078,
+    0.5693,
+    0.6345,
+    0.6529,
+    0.6617
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.166,
+    2.068,
+    1.693,
+    1.628,
+    1.133,
+    0.876,
+    1.315,
+    0.926
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 955.2,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T20:58:58-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "clamped",
+   "seed": 2,
+   "steps": 12000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 12000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.8505,
+   "curve_every": 500,
+   "curve": [
+    0.2339,
+    0.3115,
+    0.4376,
+    0.5425,
+    0.5916,
+    0.6555,
+    0.6784,
+    0.6896,
+    0.7396,
+    0.7331,
+    0.781,
+    0.7791,
+    0.7871,
+    0.7933,
+    0.8158,
+    0.8176,
+    0.8198,
+    0.825,
+    0.8301,
+    0.842,
+    0.847,
+    0.8466,
+    0.8493,
+    0.8505
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.268,
+    1.881,
+    1.685,
+    1.613,
+    1.31,
+    1.145,
+    0.81,
+    0.862,
+    0.885,
+    0.941,
+    0.633,
+    0.954,
+    0.393,
+    0.876,
+    0.658,
+    0.457,
+    0.539,
+    0.801,
+    0.666,
+    0.537,
+    0.388,
+    0.406,
+    0.316,
+    0.564
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 2557.2,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-13T00:55:08-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "clamped",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6637,
+   "curve_every": 500,
+   "curve": [
+    0.2346,
+    0.3228,
+    0.4797,
+    0.5051,
+    0.6087,
+    0.6372,
+    0.6565,
+    0.6637
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.267,
+    1.897,
+    1.634,
+    1.753,
+    1.362,
+    1.185,
+    0.844,
+    0.976
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 900.8,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T21:13:59-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "clamped",
+   "seed": 3,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.5434,
+   "curve_every": 500,
+   "curve": [
+    0.2301,
+    0.2994,
+    0.3637,
+    0.4011,
+    0.4583,
+    0.498,
+    0.5297,
+    0.5434
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.029,
+    1.756,
+    1.78,
+    1.745,
+    1.384,
+    1.475,
+    1.018,
+    1.159
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 884.4,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T21:28:43-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "clamped",
+   "seed": 4,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6253,
+   "curve_every": 500,
+   "curve": [
+    0.2443,
+    0.3248,
+    0.3775,
+    0.4636,
+    0.5369,
+    0.5967,
+    0.6191,
+    0.6253
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.045,
+    1.935,
+    1.72,
+    1.588,
+    1.391,
+    1.231,
+    1.113,
+    1.157
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 872.6,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T21:43:16-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "free",
+   "seed": 0,
+   "steps": 12000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 12000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9544,
+   "curve_every": 500,
+   "curve": [
+    0.4711,
+    0.6804,
+    0.7036,
+    0.8386,
+    0.8705,
+    0.8261,
+    0.8719,
+    0.9026,
+    0.9169,
+    0.9201,
+    0.9187,
+    0.9217,
+    0.9239,
+    0.918,
+    0.9373,
+    0.9352,
+    0.9415,
+    0.9503,
+    0.9513,
+    0.9494,
+    0.9546,
+    0.9534,
+    0.9532,
+    0.9544
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.483,
+    0.655,
+    0.827,
+    0.395,
+    0.349,
+    0.658,
+    0.519,
+    0.259,
+    0.284,
+    0.142,
+    0.262,
+    0.117,
+    0.274,
+    0.13,
+    0.214,
+    0.035,
+    0.08,
+    0.023,
+    0.104,
+    0.161,
+    0.125,
+    0.016,
+    0.089,
+    0.133
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8524,
+   "seconds": 2554.6,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T00:32:53-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "free",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.924,
+   "curve_every": 500,
+   "curve": [
+    0.4509,
+    0.6441,
+    0.7747,
+    0.8262,
+    0.8818,
+    0.9096,
+    0.9206,
+    0.924
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.532,
+    0.746,
+    0.844,
+    0.331,
+    0.223,
+    0.221,
+    0.155,
+    0.103
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8213,
+   "seconds": 869.8,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T18:56:14-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "free",
+   "seed": 1,
+   "steps": 12000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 12000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9537,
+   "curve_every": 500,
+   "curve": [
+    0.4819,
+    0.6919,
+    0.7429,
+    0.8313,
+    0.856,
+    0.8709,
+    0.8923,
+    0.8963,
+    0.8925,
+    0.9089,
+    0.9061,
+    0.9196,
+    0.9347,
+    0.936,
+    0.9341,
+    0.9404,
+    0.9413,
+    0.9438,
+    0.95,
+    0.9505,
+    0.9523,
+    0.9547,
+    0.9534,
+    0.9537
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.386,
+    0.925,
+    0.74,
+    0.649,
+    0.267,
+    0.303,
+    0.334,
+    0.458,
+    0.291,
+    0.068,
+    0.114,
+    0.106,
+    0.063,
+    0.174,
+    0.147,
+    0.042,
+    0.128,
+    0.058,
+    0.143,
+    0.042,
+    0.009,
+    0.003,
+    0.031,
+    0.048
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8602,
+   "seconds": 2551.1,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T01:15:25-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "free",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.915,
+   "curve_every": 500,
+   "curve": [
+    0.3958,
+    0.6529,
+    0.7824,
+    0.8473,
+    0.8645,
+    0.8964,
+    0.9114,
+    0.915
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.768,
+    0.981,
+    0.701,
+    0.618,
+    0.332,
+    0.308,
+    0.322,
+    0.216
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.7912,
+   "seconds": 869.5,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T19:10:44-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "free",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9289,
+   "curve_every": 500,
+   "curve": [
+    0.5934,
+    0.7952,
+    0.8441,
+    0.8041,
+    0.8884,
+    0.9143,
+    0.9285,
+    0.9289
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.264,
+    0.707,
+    0.426,
+    0.526,
+    0.475,
+    0.327,
+    0.079,
+    0.269
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8335,
+   "seconds": 874.2,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T19:25:18-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "free",
+   "seed": 3,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9322,
+   "curve_every": 500,
+   "curve": [
+    0.5452,
+    0.7367,
+    0.8644,
+    0.8833,
+    0.8908,
+    0.9161,
+    0.9277,
+    0.9322
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.47,
+    0.745,
+    0.352,
+    0.31,
+    0.205,
+    0.299,
+    0.097,
+    0.154
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.834,
+   "seconds": 867.8,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T20:14:15-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "free",
+   "seed": 4,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9259,
+   "curve_every": 500,
+   "curve": [
+    0.5462,
+    0.7359,
+    0.8289,
+    0.8693,
+    0.8944,
+    0.9132,
+    0.9249,
+    0.9259
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.138,
+    0.835,
+    0.584,
+    0.559,
+    0.238,
+    0.283,
+    0.395,
+    0.14
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8277,
+   "seconds": 867.0,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T20:28:42-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "real2",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6619,
+   "curve_every": 500,
+   "curve": [
+    0.2454,
+    0.292,
+    0.3808,
+    0.5208,
+    0.5635,
+    0.6126,
+    0.6591,
+    0.6619
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.298,
+    1.841,
+    1.867,
+    1.509,
+    1.361,
+    1.372,
+    0.962,
+    1.1
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 777.5,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T21:56:14-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "real2",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.5962,
+   "curve_every": 500,
+   "curve": [
+    0.2359,
+    0.3361,
+    0.3603,
+    0.4414,
+    0.5291,
+    0.5755,
+    0.5904,
+    0.5962
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.19,
+    1.998,
+    1.796,
+    1.894,
+    1.285,
+    1.206,
+    1.425,
+    1.138
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 788.2,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T22:09:22-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "real2",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.5854,
+   "curve_every": 500,
+   "curve": [
+    0.2449,
+    0.2883,
+    0.3614,
+    0.4105,
+    0.4942,
+    0.547,
+    0.5764,
+    0.5854
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.219,
+    1.896,
+    1.735,
+    1.631,
+    1.559,
+    1.415,
+    1.011,
+    1.263
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 790.2,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T22:22:32-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "real2",
+   "seed": 3,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.595,
+   "curve_every": 500,
+   "curve": [
+    0.2318,
+    0.3101,
+    0.386,
+    0.4408,
+    0.5192,
+    0.5615,
+    0.5868,
+    0.595
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.038,
+    1.739,
+    1.657,
+    1.579,
+    1.411,
+    1.203,
+    0.873,
+    1.036
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 743.0,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T22:34:55-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 1234,
+   "arm": "real2",
+   "seed": 4,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": null,
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 1234,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6159,
+   "curve_every": 500,
+   "curve": [
+    0.2611,
+    0.3526,
+    0.4279,
+    0.4749,
+    0.5767,
+    0.5934,
+    0.6126,
+    0.6159
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.094,
+    1.871,
+    1.748,
+    1.524,
+    1.361,
+    1.201,
+    1.158,
+    1.212
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 735.8,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-12T22:47:11-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 27380109,
+   "arm": "clamped",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 27380109,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6614,
+   "curve_every": 500,
+   "curve": [
+    0.2298,
+    0.3005,
+    0.3588,
+    0.5205,
+    0.563,
+    0.6347,
+    0.6533,
+    0.6614
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.313,
+    1.821,
+    1.727,
+    1.404,
+    1.271,
+    1.169,
+    1.058,
+    1.052
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 852.7,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T22:45:15-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 27380109,
+   "arm": "clamped",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 27380109,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6546,
+   "curve_every": 500,
+   "curve": [
+    0.2539,
+    0.3265,
+    0.4129,
+    0.5153,
+    0.5598,
+    0.6154,
+    0.6394,
+    0.6546
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.166,
+    1.989,
+    1.597,
+    1.56,
+    1.021,
+    1.151,
+    1.205,
+    1.072
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 852.2,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T22:59:27-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 27380109,
+   "arm": "clamped",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 27380109,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.677,
+   "curve_every": 500,
+   "curve": [
+    0.2618,
+    0.338,
+    0.4177,
+    0.4911,
+    0.5801,
+    0.6403,
+    0.6665,
+    0.677
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.178,
+    1.901,
+    2.034,
+    1.675,
+    1.043,
+    1.227,
+    1.007,
+    0.964
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 852.2,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T23:13:40-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 27380109,
+   "arm": "free",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 27380109,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9297,
+   "curve_every": 500,
+   "curve": [
+    0.5355,
+    0.7724,
+    0.8384,
+    0.8377,
+    0.8982,
+    0.9162,
+    0.9254,
+    0.9297
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.671,
+    0.636,
+    0.664,
+    0.36,
+    0.383,
+    0.299,
+    0.232,
+    0.149
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8315,
+   "seconds": 860.4,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T22:02:19-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 27380109,
+   "arm": "free",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 27380109,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9262,
+   "curve_every": 500,
+   "curve": [
+    0.561,
+    0.648,
+    0.8007,
+    0.8706,
+    0.9028,
+    0.9084,
+    0.9226,
+    0.9262
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.446,
+    1.001,
+    0.443,
+    0.44,
+    0.242,
+    0.423,
+    0.176,
+    0.425
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8306,
+   "seconds": 862.3,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T22:16:42-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 27380109,
+   "arm": "free",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 27380109,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9286,
+   "curve_every": 500,
+   "curve": [
+    0.6149,
+    0.7985,
+    0.8307,
+    0.8459,
+    0.8938,
+    0.9131,
+    0.9252,
+    0.9286
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.302,
+    0.681,
+    0.579,
+    0.566,
+    0.252,
+    0.256,
+    0.09,
+    0.185
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8394,
+   "seconds": 860.6,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T22:31:02-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 27380109,
+   "arm": "real2",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 27380109,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.667,
+   "curve_every": 500,
+   "curve": [
+    0.2406,
+    0.3023,
+    0.3794,
+    0.5237,
+    0.5372,
+    0.6318,
+    0.6619,
+    0.667
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.346,
+    1.858,
+    1.666,
+    1.363,
+    1.214,
+    1.204,
+    1.092,
+    1.047
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 732.2,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T23:25:52-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 27380109,
+   "arm": "real2",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 27380109,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6492,
+   "curve_every": 500,
+   "curve": [
+    0.2451,
+    0.3499,
+    0.3772,
+    0.4714,
+    0.5741,
+    0.6215,
+    0.6414,
+    0.6492
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.191,
+    1.992,
+    1.643,
+    1.551,
+    1.077,
+    1.21,
+    1.163,
+    1.044
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 732.5,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T23:38:04-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 27380109,
+   "arm": "real2",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 27380109,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6247,
+   "curve_every": 500,
+   "curve": [
+    0.256,
+    0.3474,
+    0.3924,
+    0.4745,
+    0.5485,
+    0.5901,
+    0.6125,
+    0.6247
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.17,
+    1.928,
+    1.833,
+    1.697,
+    1.328,
+    1.342,
+    1.028,
+    1.194
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 733.6,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T23:50:18-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2856893334,
+   "arm": "clamped",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2856893334,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.7362,
+   "curve_every": 500,
+   "curve": [
+    0.2405,
+    0.3271,
+    0.5147,
+    0.6349,
+    0.6618,
+    0.7119,
+    0.7348,
+    0.7362
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.189,
+    1.607,
+    1.555,
+    0.967,
+    0.989,
+    0.964,
+    0.721,
+    0.741
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 866.0,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T06:23:14-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2856893334,
+   "arm": "clamped",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2856893334,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6843,
+   "curve_every": 500,
+   "curve": [
+    0.2649,
+    0.3308,
+    0.4338,
+    0.5437,
+    0.5967,
+    0.6501,
+    0.6781,
+    0.6843
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.092,
+    1.964,
+    1.544,
+    1.786,
+    1.166,
+    1.085,
+    1.215,
+    1.003
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 866.7,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T06:37:40-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2856893334,
+   "arm": "clamped",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2856893334,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.7178,
+   "curve_every": 500,
+   "curve": [
+    0.2627,
+    0.3289,
+    0.3582,
+    0.505,
+    0.6431,
+    0.6737,
+    0.7101,
+    0.7178
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.101,
+    1.798,
+    1.885,
+    1.379,
+    1.121,
+    1.021,
+    0.86,
+    0.815
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 867.8,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T06:52:08-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2856893334,
+   "arm": "free",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2856893334,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9302,
+   "curve_every": 500,
+   "curve": [
+    0.5209,
+    0.7809,
+    0.8444,
+    0.8715,
+    0.907,
+    0.9085,
+    0.9268,
+    0.9302
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.461,
+    0.66,
+    0.609,
+    0.318,
+    0.265,
+    0.376,
+    0.129,
+    0.128
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8407,
+   "seconds": 874.0,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T05:39:39-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2856893334,
+   "arm": "free",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2856893334,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9139,
+   "curve_every": 500,
+   "curve": [
+    0.403,
+    0.6509,
+    0.7296,
+    0.8296,
+    0.8582,
+    0.8846,
+    0.9107,
+    0.9139
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.992,
+    1.062,
+    0.766,
+    0.76,
+    0.216,
+    0.376,
+    0.304,
+    0.365
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8157,
+   "seconds": 874.3,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T05:54:14-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2856893334,
+   "arm": "free",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2856893334,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9303,
+   "curve_every": 500,
+   "curve": [
+    0.5867,
+    0.8009,
+    0.8681,
+    0.8552,
+    0.9024,
+    0.9173,
+    0.9269,
+    0.9303
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.418,
+    0.682,
+    0.485,
+    0.619,
+    0.276,
+    0.24,
+    0.066,
+    0.135
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8293,
+   "seconds": 874.0,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T06:08:48-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2856893334,
+   "arm": "real2",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2856893334,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.7493,
+   "curve_every": 500,
+   "curve": [
+    0.2456,
+    0.3537,
+    0.5417,
+    0.6088,
+    0.6601,
+    0.7251,
+    0.7456,
+    0.7493
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.171,
+    1.451,
+    1.584,
+    1.108,
+    0.929,
+    0.867,
+    0.638,
+    0.721
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 749.9,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T07:04:38-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2856893334,
+   "arm": "real2",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2856893334,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6852,
+   "curve_every": 500,
+   "curve": [
+    0.2651,
+    0.3084,
+    0.4397,
+    0.5471,
+    0.6111,
+    0.6469,
+    0.6737,
+    0.6852
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.051,
+    1.977,
+    1.523,
+    1.595,
+    1.119,
+    1.109,
+    1.266,
+    0.947
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 743.9,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T07:17:02-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2856893334,
+   "arm": "real2",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2856893334,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.7157,
+   "curve_every": 500,
+   "curve": [
+    0.2692,
+    0.3156,
+    0.4272,
+    0.557,
+    0.6297,
+    0.6876,
+    0.7075,
+    0.7157
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.072,
+    1.959,
+    1.8,
+    1.426,
+    1.305,
+    1.101,
+    0.755,
+    0.843
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 743.3,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T07:29:26-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2994719670,
+   "arm": "clamped",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2994719670,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6551,
+   "curve_every": 500,
+   "curve": [
+    0.2011,
+    0.3313,
+    0.4259,
+    0.4945,
+    0.5764,
+    0.622,
+    0.651,
+    0.6551
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.444,
+    1.581,
+    1.709,
+    1.578,
+    1.236,
+    1.285,
+    1.134,
+    1.175
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 852.2,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T02:17:24-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2994719670,
+   "arm": "clamped",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2994719670,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6745,
+   "curve_every": 500,
+   "curve": [
+    0.2343,
+    0.3422,
+    0.4022,
+    0.4854,
+    0.5712,
+    0.6296,
+    0.6634,
+    0.6745
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.078,
+    1.927,
+    1.56,
+    1.738,
+    1.151,
+    1.223,
+    1.31,
+    1.059
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 852.0,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T02:31:36-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2994719670,
+   "arm": "clamped",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2994719670,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6451,
+   "curve_every": 500,
+   "curve": [
+    0.2398,
+    0.2967,
+    0.3676,
+    0.47,
+    0.5627,
+    0.6114,
+    0.6366,
+    0.6451
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.242,
+    1.923,
+    1.737,
+    1.744,
+    1.188,
+    1.156,
+    0.872,
+    1.034
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 852.4,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T02:45:49-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2994719670,
+   "arm": "free",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2994719670,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9356,
+   "curve_every": 500,
+   "curve": [
+    0.5062,
+    0.6976,
+    0.8657,
+    0.8792,
+    0.9055,
+    0.9185,
+    0.93,
+    0.9356
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.506,
+    0.683,
+    0.517,
+    0.246,
+    0.291,
+    0.274,
+    0.169,
+    0.088
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8328,
+   "seconds": 862.3,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T01:34:30-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2994719670,
+   "arm": "free",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2994719670,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9237,
+   "curve_every": 500,
+   "curve": [
+    0.4097,
+    0.6277,
+    0.7254,
+    0.8601,
+    0.8891,
+    0.9098,
+    0.9216,
+    0.9237
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.655,
+    1.121,
+    0.764,
+    0.701,
+    0.169,
+    0.277,
+    0.339,
+    0.447
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.7804,
+   "seconds": 860.8,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T01:48:51-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2994719670,
+   "arm": "free",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2994719670,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9325,
+   "curve_every": 500,
+   "curve": [
+    0.4287,
+    0.7058,
+    0.8312,
+    0.8652,
+    0.8999,
+    0.9207,
+    0.9296,
+    0.9325
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.58,
+    0.775,
+    0.442,
+    0.627,
+    0.503,
+    0.243,
+    0.165,
+    0.155
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8316,
+   "seconds": 860.6,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T02:03:12-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2994719670,
+   "arm": "real2",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2994719670,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.672,
+   "curve_every": 500,
+   "curve": [
+    0.2535,
+    0.3184,
+    0.3757,
+    0.4842,
+    0.5746,
+    0.6066,
+    0.666,
+    0.672
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.352,
+    1.614,
+    1.798,
+    1.414,
+    1.384,
+    1.322,
+    1.079,
+    1.032
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 729.4,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T02:57:58-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2994719670,
+   "arm": "real2",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2994719670,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6653,
+   "curve_every": 500,
+   "curve": [
+    0.2735,
+    0.3279,
+    0.3623,
+    0.5026,
+    0.5704,
+    0.6226,
+    0.6551,
+    0.6653
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.136,
+    1.945,
+    1.779,
+    1.605,
+    1.251,
+    1.145,
+    1.217,
+    1.046
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 729.5,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T03:10:08-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 2994719670,
+   "arm": "real2",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 2994719670,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6774,
+   "curve_every": 500,
+   "curve": [
+    0.2605,
+    0.3476,
+    0.4395,
+    0.5501,
+    0.6159,
+    0.6489,
+    0.6641,
+    0.6774
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.197,
+    1.878,
+    1.681,
+    1.65,
+    1.217,
+    1.097,
+    0.785,
+    0.993
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 729.4,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T03:22:17-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3317084913,
+   "arm": "clamped",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3317084913,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.5276,
+   "curve_every": 500,
+   "curve": [
+    0.2379,
+    0.3422,
+    0.4041,
+    0.4378,
+    0.4792,
+    0.5044,
+    0.525,
+    0.5276
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.244,
+    1.726,
+    1.671,
+    1.325,
+    1.251,
+    1.576,
+    1.201,
+    1.269
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 851.8,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T04:19:29-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3317084913,
+   "arm": "clamped",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3317084913,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.5933,
+   "curve_every": 500,
+   "curve": [
+    0.2628,
+    0.3336,
+    0.3527,
+    0.4412,
+    0.4905,
+    0.5336,
+    0.5865,
+    0.5933
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.134,
+    1.856,
+    1.634,
+    1.705,
+    1.568,
+    1.416,
+    1.423,
+    0.965
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 851.7,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T04:33:41-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3317084913,
+   "arm": "clamped",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3317084913,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6184,
+   "curve_every": 500,
+   "curve": [
+    0.2575,
+    0.3571,
+    0.4212,
+    0.4972,
+    0.5614,
+    0.5735,
+    0.6135,
+    0.6184
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.141,
+    1.955,
+    1.649,
+    1.536,
+    1.303,
+    1.101,
+    1.008,
+    1.205
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 861.3,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T04:48:02-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3317084913,
+   "arm": "free",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3317084913,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9279,
+   "curve_every": 500,
+   "curve": [
+    0.4413,
+    0.6904,
+    0.8203,
+    0.8593,
+    0.8764,
+    0.9174,
+    0.9246,
+    0.9279
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.474,
+    0.909,
+    0.703,
+    0.403,
+    0.343,
+    0.27,
+    0.163,
+    0.108
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8297,
+   "seconds": 859.9,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T03:36:37-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3317084913,
+   "arm": "free",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3317084913,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9125,
+   "curve_every": 500,
+   "curve": [
+    0.4731,
+    0.6634,
+    0.7476,
+    0.8515,
+    0.8769,
+    0.893,
+    0.9082,
+    0.9125
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.412,
+    0.99,
+    0.564,
+    0.627,
+    0.251,
+    0.252,
+    0.34,
+    0.325
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8102,
+   "seconds": 859.9,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T03:50:57-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3317084913,
+   "arm": "free",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3317084913,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9347,
+   "curve_every": 500,
+   "curve": [
+    0.5353,
+    0.7564,
+    0.8628,
+    0.866,
+    0.8984,
+    0.9048,
+    0.9301,
+    0.9347
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.592,
+    0.911,
+    0.399,
+    0.366,
+    0.346,
+    0.304,
+    0.065,
+    0.096
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8315,
+   "seconds": 859.9,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T04:05:17-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3317084913,
+   "arm": "real2",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3317084913,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.5452,
+   "curve_every": 500,
+   "curve": [
+    0.2599,
+    0.3296,
+    0.3876,
+    0.4445,
+    0.4857,
+    0.5207,
+    0.5469,
+    0.5452
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.275,
+    1.755,
+    1.604,
+    1.365,
+    1.312,
+    1.456,
+    1.306,
+    1.183
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 740.7,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T05:00:23-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3317084913,
+   "arm": "real2",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3317084913,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.5785,
+   "curve_every": 500,
+   "curve": [
+    0.2655,
+    0.3325,
+    0.4157,
+    0.4938,
+    0.5038,
+    0.5466,
+    0.5741,
+    0.5785
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.174,
+    1.802,
+    1.568,
+    1.535,
+    1.512,
+    1.316,
+    1.397,
+    1.016
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 740.9,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T05:12:44-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3317084913,
+   "arm": "real2",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3317084913,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.5918,
+   "curve_every": 500,
+   "curve": [
+    0.2745,
+    0.3734,
+    0.4744,
+    0.4699,
+    0.5409,
+    0.5683,
+    0.5853,
+    0.5918
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.122,
+    1.909,
+    1.476,
+    1.656,
+    1.314,
+    1.149,
+    1.143,
+    1.268
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 740.9,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-23T05:25:05-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3584514041,
+   "arm": "clamped",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3584514041,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6662,
+   "curve_every": 500,
+   "curve": [
+    0.2749,
+    0.3368,
+    0.3615,
+    0.474,
+    0.5643,
+    0.6157,
+    0.6618,
+    0.6662
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.195,
+    1.633,
+    1.857,
+    1.348,
+    1.463,
+    1.444,
+    1.119,
+    0.889
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 852.2,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T20:43:01-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3584514041,
+   "arm": "clamped",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3584514041,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6739,
+   "curve_every": 500,
+   "curve": [
+    0.2701,
+    0.3256,
+    0.4303,
+    0.4843,
+    0.5697,
+    0.6428,
+    0.6675,
+    0.6739
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.093,
+    1.856,
+    1.769,
+    1.738,
+    1.194,
+    1.261,
+    1.154,
+    1.201
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 852.9,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T20:57:14-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3584514041,
+   "arm": "clamped",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3584514041,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.7067,
+   "curve_every": 500,
+   "curve": [
+    0.2598,
+    0.3376,
+    0.4549,
+    0.5585,
+    0.5867,
+    0.6519,
+    0.6935,
+    0.7067
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.16,
+    1.818,
+    1.473,
+    1.476,
+    1.425,
+    1.034,
+    0.716,
+    0.864
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 853.4,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T21:11:27-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3584514041,
+   "arm": "free",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3584514041,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9314,
+   "curve_every": 500,
+   "curve": [
+    0.4374,
+    0.7422,
+    0.8158,
+    0.8805,
+    0.9046,
+    0.9195,
+    0.9288,
+    0.9314
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.671,
+    0.895,
+    0.638,
+    0.274,
+    0.334,
+    0.306,
+    0.105,
+    0.079
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8305,
+   "seconds": 925.3,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T20:00:05-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3584514041,
+   "arm": "free",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3584514041,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9227,
+   "curve_every": 500,
+   "curve": [
+    0.4787,
+    0.6269,
+    0.7712,
+    0.8674,
+    0.8867,
+    0.9111,
+    0.9203,
+    0.9227
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.428,
+    1.1,
+    0.698,
+    0.484,
+    0.21,
+    0.351,
+    0.292,
+    0.305
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8221,
+   "seconds": 862.5,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T20:14:28-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3584514041,
+   "arm": "free",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3584514041,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.9269,
+   "curve_every": 500,
+   "curve": [
+    0.4051,
+    0.6972,
+    0.7904,
+    0.8494,
+    0.8957,
+    0.916,
+    0.926,
+    0.9269
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    1.719,
+    0.967,
+    0.776,
+    0.437,
+    0.327,
+    0.331,
+    0.112,
+    0.2
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": 0.8241,
+   "seconds": 860.8,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T20:28:49-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3584514041,
+   "arm": "real2",
+   "seed": 0,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3584514041,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6538,
+   "curve_every": 500,
+   "curve": [
+    0.2739,
+    0.2925,
+    0.3292,
+    0.4484,
+    0.548,
+    0.5861,
+    0.6482,
+    0.6538
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.252,
+    1.624,
+    1.819,
+    1.419,
+    1.388,
+    1.399,
+    1.069,
+    0.883
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 730.8,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T21:23:38-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3584514041,
+   "arm": "real2",
+   "seed": 1,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3584514041,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6505,
+   "curve_every": 500,
+   "curve": [
+    0.2569,
+    0.3079,
+    0.4018,
+    0.5018,
+    0.566,
+    0.6139,
+    0.6421,
+    0.6505
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.164,
+    1.886,
+    1.803,
+    1.637,
+    1.281,
+    1.214,
+    1.263,
+    1.197
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 729.8,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T21:35:48-0400"
+  },
+  {
+   "schema": "pmnist_robustness/leaf/v1",
+   "perm": 3584514041,
+   "arm": "real2",
+   "seed": 2,
+   "steps": 4000,
+   "h": 64,
+   "perm_derivation": "sha256-of-tag fallback",
+   "beacon": null,
+   "read_back": {
+    "PERM_SEED": 3584514041,
+    "STEPS": 4000,
+    "EVAL_EVERY": 500,
+    "H": 64,
+    "D_SSM": 64,
+    "BATCH": 64,
+    "LR": 0.003,
+    "WD": 0.01,
+    "T_LEN": 784,
+    "N_BLK": 3
+   },
+   "final_acc": 0.6557,
+   "curve_every": 500,
+   "curve": [
+    0.2654,
+    0.3383,
+    0.3737,
+    0.4599,
+    0.5394,
+    0.5935,
+    0.6487,
+    0.6557
+   ],
+   "curve_final_mismatch": false,
+   "losses": [
+    2.118,
+    1.857,
+    1.72,
+    1.663,
+    1.434,
+    1.304,
+    0.886,
+    0.953
+   ],
+   "nonfinite_loss": false,
+   "degenerate": false,
+   "within_model_theta0_reliance": null,
+   "seconds": 730.3,
+   "imports": {
+    "run_pmnist_ablation.py": {
+     "lf_sha256": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "frozen": "c8d7cdfbab3fabce94fc541e92c46947cf1909b13ad6d4994baa42d52a305423",
+     "ok": true
+    },
+    "run_pmnist_untied.py": {
+     "lf_sha256": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "frozen": "caf276da27e0b6ad408adadc019d7f39d07747ee928fbdf9e4d636a645de94bf",
+     "ok": true
+    }
+   },
+   "data_sha256": "98d685052d7a6ab8b6982491df8ec3eb366a252fd5415aa58f878bbe6510d4e8",
+   "prereg_blob_sha256": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+   "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+   "correction_blob_sha256": "e591516f49f84595aa3510b66cdab516dc250b903043899a0a564fdda013f0c1",
+   "preflight_ok": true,
+   "gpu": {
+    "cuda": true,
+    "torch": "2.5.1+cu121",
+    "free_mib": 7068,
+    "total_mib": 8187,
+    "held_mib": 1119,
+    "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU"
+   },
+   "torch": "2.5.1+cu121",
+   "smoke": false,
+   "wall_clock": "2026-10-22T21:47:58-0400"
+  }
+ ],
+ "anchor_line": null,
+ "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+ "gates": {
+  "G_P_plumbing": true,
+  "G_D_stable": true,
+  "G_F_floor": true,
+  "G_C_anchor": true,
+  "G_G_exists": true,
+  "G_G_mean": true,
+  "G_G_ci": true,
+  "G_B_long": false,
+  "G_R_diversity": false,
+  "G_R_rotation": true
+ },
+ "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854",
+ "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+ "vacuous_gates": [],
+ "undeclared_power_gates": [],
+ "wall_clock": "2026-10-23T07:29:52-0400"
+}
