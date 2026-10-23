@@ -1,4 +1,4 @@
-# diffgate as a pre-commit hook — the commit message cannot lie about the staged diff
+# diffgate as a pre-commit hook — the commit message read against the staged diff
 
 Four lines in your `.pre-commit-config.yaml`:
 

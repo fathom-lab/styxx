@@ -1,0 +1,598 @@
+{
+ "what": "surface_lint.py baseline: charter and plan counts per shipped file, profile repo. A count may fall and never rise; a withdrawn sentence is never baselined. Regenerate with python scripts/surface_lint.py --write-baseline scripts/surface_lint_baseline.json only when a count falls.",
+ "profile": "repo",
+ "counts": {
+  "AUTOPILOT.md": {
+   "charter/ordinal": 1
+  },
+  "BOUNTY.md": {
+   "charter/ordinal": 1
+  },
+  "CONTRIBUTING.md": {
+   "charter/ordinal": 4,
+   "plan/nobody": 1
+  },
+  "LEADERBOARD.md": {
+   "charter/ordinal": 4
+  },
+  "OATH_CONTRACT.md": {
+   "charter/ordinal": 1
+  },
+  "PATENTS.md": {
+   "charter/ordinal": 1
+  },
+  "POSITIONING.md": {
+   "charter/halluc-compound": 1,
+   "charter/ordinal": 1
+  },
+  "README.md": {
+   "charter/ordinal": 6,
+   "plan/nobody": 3
+  },
+  "REPLICATIONS.md": {
+   "charter/ordinal": 6,
+   "plan/nobody": 1
+  },
+  "docs/DEADLINES.md": {
+   "charter/ordinal": 3,
+   "plan/nobody": 2
+  },
+  "docs/OPERATOR_BRIEF_2026_07_14.md": {
+   "charter/ordinal": 1
+  },
+  "docs/OPERATOR_BRIEF_2026_07_20.md": {
+   "charter/ordinal": 1
+  },
+  "docs/REFERENCE.md": {
+   "charter/ordinal": 1
+  },
+  "docs/agents/self-install.md": {
+   "charter/ordinal": 1
+  },
+  "docs/announcements/ANNOUNCEMENT_7.9.0.md": {
+   "charter/ordinal": 2
+  },
+  "docs/anthropic-support.md": {
+   "plan/nobody": 1
+  },
+  "docs/cognet-protocol-v0.md": {
+   "charter/ordinal": 3
+  },
+  "docs/cvp/CVP-1.0-specification.md": {
+   "charter/ordinal": 1
+  },
+  "docs/findings/FINDING_dogfood_self_audit_2026_06_07.md": {
+   "charter/revolution-adjective": 2
+  },
+  "docs/findings/dogfood_legibility_self_audit.py": {
+   "charter/revolution-adjective": 2
+  },
+  "docs/findings/dogfood_opus_self_audit.py": {
+   "charter/ordinal": 2
+  },
+  "docs/findings/dogfood_opus_self_audit_contrast.py": {
+   "charter/ordinal": 5
+  },
+  "docs/protocols/consensus-proxy-measurement-equivalence-v0.md": {
+   "charter/ordinal": 2
+  },
+  "docs/research/cognitive-dynamics-v0.md": {
+   "charter/ordinal": 1,
+   "plan/nobody": 1
+  },
+  "docs/research/cognitive-metrology-charter.md": {
+   "charter/ordinal": 8
+  },
+  "docs/token/plate/plate_receipt.py": {
+   "charter/ordinal": 1
+  },
+  "docs/users/COMPATIBILITY.md": {
+   "charter/ordinal": 1
+  },
+  "hooks/cognometric-audit-on-send/HOOK.md": {
+   "charter/ordinal": 1
+  },
+  "integrations/git/commit-msg": {
+   "charter/ordinal": 1
+  },
+  "integrations/openclaw/styxx-capsule/SKILL.md": {
+   "charter/ordinal": 2
+  },
+  "integrations/pre-commit/README.md": {
+   "charter/ordinal": 1
+  },
+  "packages/styxx-scope/_test_adversarial.js": {
+   "charter/ordinal": 3
+  },
+  "packages/styxx-scope/_test_classifier.js": {
+   "charter/ordinal": 5
+  },
+  "packages/styxx-scope/classifier.js": {
+   "charter/ordinal": 1
+  },
+  "pyproject.toml": {
+   "charter/ordinal": 1
+  },
+  "styxx/__init__.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/_data/LEADERBOARD.md": {
+   "charter/ordinal": 4
+  },
+  "styxx/_data/sworn_verify.js": {
+   "charter/ordinal": 11
+  },
+  "styxx/absence.py": {
+   "charter/ordinal": 2,
+   "plan/nobody": 1
+  },
+  "styxx/adapters/anthropic.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/adapters/anthropic_sampled.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/adapters/guardrails.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/adjudicate.py": {
+   "charter/ordinal": 5
+  },
+  "styxx/agent_audit.py": {
+   "charter/ordinal": 8
+  },
+  "styxx/analytics.py": {
+   "charter/ordinal": 7,
+   "plan/nobody": 1
+  },
+  "styxx/anchors.py": {
+   "charter/ordinal": 3
+  },
+  "styxx/anthropic_hack/companion.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/anthropic_hack/consensus.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/anthropic_hack/text_features.py": {
+   "charter/ordinal": 4
+  },
+  "styxx/antipatterns.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/apparatus.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/apparatus_QUARANTINED.py.txt": {
+   "charter/ordinal": 1
+  },
+  "styxx/attack/base.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/attack/basis.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/attack/mine.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/attestation.py": {
+   "plan/nobody": 1
+  },
+  "styxx/audit.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/audit_grounding_README.md": {
+   "charter/ordinal": 1
+  },
+  "styxx/autoboot.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/autoreflex.py": {
+   "charter/ordinal": 7
+  },
+  "styxx/beacon.py": {
+   "charter/ordinal": 2,
+   "plan/nobody": 1
+  },
+  "styxx/bootlog.py": {
+   "plan/nobody": 1
+  },
+  "styxx/calibration.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/card_image.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/certify.py": {
+   "charter/ordinal": 22
+  },
+  "styxx/charon.py": {
+   "charter/ordinal": 4,
+   "charter/self-compound": 1,
+   "charter/tamper-compound": 1
+  },
+  "styxx/checksum.py": {
+   "charter/ordinal": 8
+  },
+  "styxx/claim_audit.py": {
+   "charter/break-noun": 1,
+   "charter/ordinal": 9,
+   "charter/revolution-adjective": 1
+  },
+  "styxx/claimdetect.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/cli.py": {
+   "charter/ordinal": 12
+  },
+  "styxx/clock.py": {
+   "charter/ordinal": 9,
+   "plan/nobody": 1
+  },
+  "styxx/cognometrics.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/coherence.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/compare.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/compliance/competence_cliff.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/compliance/eu_ai_act.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/compliance/nist_ai_rmf.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/compliance/templates/README.md": {
+   "charter/ordinal": 1
+  },
+  "styxx/compliance/templates/boundary_statement.md": {
+   "charter/ordinal": 1
+  },
+  "styxx/compliance/templates/robustness_statement.md": {
+   "charter/ordinal": 1
+  },
+  "styxx/compliance/templates/sycophancy_disclosure.md": {
+   "charter/ordinal": 1
+  },
+  "styxx/config.py": {
+   "charter/ordinal": 3,
+   "plan/nobody": 1
+  },
+  "styxx/confound_audit.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/conscience.py": {
+   "charter/ordinal": 12
+  },
+  "styxx/contract.py": {
+   "charter/ordinal": 1,
+   "plan/nobody": 3
+  },
+  "styxx/conversation.py": {
+   "charter/ordinal": 8
+  },
+  "styxx/core.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/corpus_audit.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/coupling.py": {
+   "charter/newness-adjective": 1,
+   "charter/ordinal": 2
+  },
+  "styxx/credits.py": {
+   "charter/ordinal": 7,
+   "plan/nobody": 1
+  },
+  "styxx/critique.py": {
+   "charter/newness-adjective": 1
+  },
+  "styxx/crossmind.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/d_axis.py": {
+   "charter/ordinal": 3
+  },
+  "styxx/dashboard.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/declare.py": {
+   "charter/ordinal": 3,
+   "plan/nobody": 1
+  },
+  "styxx/diffgate.py": {
+   "charter/ordinal": 9
+  },
+  "styxx/diffgate_hook.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/discriminates.py": {
+   "charter/ordinal": 5
+  },
+  "styxx/divergence.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/doctor.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/dynamics.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/edges.py": {
+   "charter/ordinal": 1,
+   "plan/nobody": 1
+  },
+  "styxx/eval.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/evidence.py": {
+   "charter/ordinal": 11,
+   "plan/nobody": 2
+  },
+  "styxx/flattering.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/fleet.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/forecast.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/framelocality.py": {
+   "charter/ordinal": 3,
+   "plan/nobody": 1
+  },
+  "styxx/gate.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/gates.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/gauntlet.py": {
+   "charter/ordinal": 1,
+   "plan/nobody": 1
+  },
+  "styxx/generate_safe.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/geoplate.py": {
+   "charter/ordinal": 1,
+   "plan/nobody": 1
+  },
+  "styxx/guardrail/__init__.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/calibrated_weights_deception_v0.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/calibrated_weights_drift_v1.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/guardrail/calibrated_weights_goal_drift_v0.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/calibrated_weights_overconfidence_v0.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/calibrated_weights_refusal_v2.py": {
+   "charter/ordinal": 4
+  },
+  "styxx/guardrail/calibrated_weights_sycophancy_v0.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/claim_decomposer.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/conversation_loop_signals.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/guardrail/deception.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/deception_signals.py": {
+   "charter/ordinal": 2,
+   "plan/nobody": 1
+  },
+  "styxx/guardrail/deception_v2.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/guardrail/depression_signals.py": {
+   "charter/ordinal": 5,
+   "plan/nobody": 3
+  },
+  "styxx/guardrail/drift_signals.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/entity_verify.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/nli_signal.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/guardrail/overconfidence.py": {
+   "charter/break-noun": 1
+  },
+  "styxx/guardrail/overconfidence_signals.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/guardrail/refusal.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/refusal_signals.py": {
+   "charter/ordinal": 3
+  },
+  "styxx/guardrail/response_novelty.py": {
+   "charter/newness-adjective": 1,
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/self_directed_gate.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/guardrail/sycophancy.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/guardrail/sycophancy_signals.py": {
+   "charter/ordinal": 3
+  },
+  "styxx/hallucination.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/hf_audit.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/honesty.py": {
+   "charter/ordinal": 3
+  },
+  "styxx/hooks.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/horizon.py": {
+   "plan/nobody": 2
+  },
+  "styxx/horizon_README.md": {
+   "plan/nobody": 1
+  },
+  "styxx/islands.py": {
+   "charter/ordinal": 3
+  },
+  "styxx/knowsay.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/ladder.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/loops.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/mcp/README.md": {
+   "charter/ordinal": 2
+  },
+  "styxx/meaning_integrity.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/measured.py": {
+   "charter/ordinal": 3,
+   "plan/nobody": 3
+  },
+  "styxx/memory.py": {
+   "charter/ordinal": 6
+  },
+  "styxx/mind.py": {
+   "charter/ordinal": 3
+  },
+  "styxx/mount.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/oathready.py": {
+   "plan/nobody": 2
+  },
+  "styxx/observatory.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/plate.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/power.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/power_QUARANTINED.py.txt": {
+   "charter/ordinal": 2
+  },
+  "styxx/probe.py": {
+   "plan/nobody": 1
+  },
+  "styxx/probe_validity.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/protocol.py": {
+   "charter/ordinal": 3
+  },
+  "styxx/receipt_binding.py": {
+   "charter/ordinal": 12
+  },
+  "styxx/recover.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/reflex.py": {
+   "charter/ordinal": 4
+  },
+  "styxx/seal.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/selfaudit_demo.py": {
+   "charter/ordinal": 5
+  },
+  "styxx/sense.py": {
+   "charter/ordinal": 3
+  },
+  "styxx/serve.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/single_pass.py": {
+   "charter/ordinal": 20
+  },
+  "styxx/stream.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/streaming_preflight.py": {
+   "charter/ordinal": 3
+  },
+  "styxx/sworn.py": {
+   "charter/ordinal": 15,
+   "plan/nobody": 4
+  },
+  "styxx/temperature.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/thought.py": {
+   "charter/newness-adjective": 1,
+   "charter/ordinal": 2
+  },
+  "styxx/transparency.py": {
+   "charter/ordinal": 1
+  },
+  "styxx/trust.py": {
+   "charter/ordinal": 16
+  },
+  "styxx/vitals.py": {
+   "charter/ordinal": 5,
+   "plan/nobody": 1
+  },
+  "styxx/watch.py": {
+   "charter/ordinal": 10
+  },
+  "styxx/weather.py": {
+   "charter/ordinal": 2
+  },
+  "styxx/witness.py": {
+   "charter/ordinal": 4
+  },
+  "web/gate/README.md": {
+   "charter/ordinal": 3
+  },
+  "web/gate/bookmarklet.href.txt": {
+   "charter/ordinal": 1
+  },
+  "web/gate/bookmarklet.min.js": {
+   "charter/ordinal": 1
+  },
+  "web/gate/bookmarklet_src.js": {
+   "charter/ordinal": 3
+  },
+  "web/gate/diffgate.js": {
+   "charter/ordinal": 3
+  },
+  "web/self-certifying.html": {
+   "charter/ordinal": 1
+  },
+  "web/styxx_verify.js": {
+   "charter/ordinal": 1
+  }
+ }
+}

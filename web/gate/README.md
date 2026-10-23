@@ -3,7 +3,7 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`b0a655768b66b8458cfc9171608885283200d7c4c14efb1c175204bab5efe818` (LF line endings; a wheel
+`b63f2b03c5051f7ca1a196c9b6ac9e7f907fe626970a22e400e484e4598aa446` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -19,7 +19,10 @@ paths, #205: every piece of git output is cut at git's line ends (CRLF, a lone C
 other breaks `str.splitlines()` knows, and the two `def` counts and the compatibility reading abstain
 over a line holding U+000B, U+001C to U+001F, U+0085, U+2028 or U+2029, which CPython refuses in
 source outside a string or a comment (sha256
-`f457d2e4f8b3c1c7f059ec431901b93df411c6c3f4b4f7e2bb51de6a46c66611`) — plus the PATH-2a block (an
+`f457d2e4f8b3c1c7f059ec431901b93df411c6c3f4b4f7e2bb51de6a46c66611`); and then one change outside any reading
+path, the front door: the module docstring and the `--help` description stop making the gate claim EXTERNAL-1
+committed the lab to withdraw, and the `WITHHOLD_PATH_ACCUSATION` comment is scoped to the path classes (sha256
+`e1441f18f0f71cc3455ff5c02ac3b42eb1bf963f337fb3b9bcfa9db14f88a74e`) — plus the PATH-2a block (an
 overlay that only abstains, not yet released; see *PATH-2a* below), and a committed test cuts the
 block out and gets that reader back byte for byte, in both languages. The port's record carries the
 eleven content keys and no identity: the differential compares named fields, so a Python record of
@@ -94,7 +97,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout whose styxx/diffgate.py is the file named above
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to b0a65576…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to b63f2b03…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 190 pinned pairs against their expect blocks (+ path2a_moves.json, issue205_moves.json)

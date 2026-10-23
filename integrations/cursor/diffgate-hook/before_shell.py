@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Cursor beforeShellExecution hook: the agent cannot run a commit or PR command whose message lies about its diff.
+"""Cursor beforeShellExecution hook: the agent's commit and PR commands read against their diff.
 
 Wire it in ~/.cursor/hooks.json (every project) or <project>/.cursor/hooks.json (that project):
 
