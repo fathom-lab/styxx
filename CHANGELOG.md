@@ -65,6 +65,34 @@ the text against the surface lint's withdrawn wordings, and marks or refuses wha
   run" if the sheet is unsigned by 2026-11-05. Nothing here says a post is true, and the bars are the sworn measurement
   design's, transcribed and unsigned until the sheet is signed.
 
+## [Unreleased] — NOTE: the robustness RESULT's forward pointers land beside the certified 2026-07-23 RESULT and the sealed untied PREREG, not inside them; the INDEX rows read `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`
+
+**`papers/frequency-resonance/NOTE_forward_pointer_pmnist_ablation_2026_10_23.md` and
+`papers/frequency-resonance/NOTE_forward_pointer_pmnist_untied_2026_10_23.md` (both sworn, with their sidecars and
+verdict receipts); `papers/INDEX.md`; `.gitattributes`.** The two forward pointers that section 10 of
+`PREREG_pmnist_robustness_2026_10_11.md` owes, and `RESULT_pmnist_robustness_2026_10_23.md` lists as owed, to
+`RESULT_pmnist_ablation_2026_07_23.md` and to `PREREG_pmnist_untied_2026_09_02.md`. Each NOTE quotes the result
+kit's pointer paragraph byte for byte, swears the verdict (`pmnist_robustness_result.json#/verdict`), copies the
+sentence the verdict licenses with its spans, and swears why it stands beside its document and not inside it.
+
+- **Beside, not inside: the lead's decision.** Both documents are named by the sha256 of their bytes, the RESULT by
+  `CERT_pmnist_ablation.json#/document_sha256` (`2e5154ef…`) and the PREREG by SEALS row 2 (`507ef9ac…`), and this
+  lab never regenerates a committed receipt in place, so the pointers land as two NOTE files. An in-place edit stays
+  the operator's call; each NOTE says so in one sentence.
+- **What the ablation NOTE records.** The certificate's digest is the RESULT's blob as committed on 2026-07-23
+  (`71b2812a`). The file gained an in-place forward pointer on 2026-09-02 (`2acf4f29`) and its blob has hashed to
+  `31908649…` since, so the certificate has named bytes the file no longer holds since that day; the NOTE swears the
+  digest, that line and the current blob hash, and edits neither file.
+- **The INDEX rows** (PREREG section 11). The frequency-resonance row carries the licensed sentence after the
+  +0.3122 it qualifies and reads SUPERSEDED (verdict BUDGET_CONFOUND, which is neither NOT_ROBUST nor a retraction;
+  extensions NEGATIVE); the +0.3122 receipt row keeps its number and gains the re-run's verdict and the RESULT's
+  path.
+- **Not changed.** `RESULT_pmnist_ablation_2026_07_23.md`, `CERT_pmnist_ablation.json`,
+  `PREREG_pmnist_untied_2026_09_02.md` and `papers/checksum/SEALS_2026_09_13.md` keep their bytes. The banner over
+  the 2026-09-02 sentence landed with the RESULT and is not repeated; `papers/LEDGER.md` regenerates unchanged.
+- **Sworn.** 15 of 15 and 12 of 12 spans HELD, 0 FAILED, 0 UNRESOLVED, 0 MALFORMED, at the commit each sidecar
+  names; `python -m styxx.sworn check` re-derives both receipts.
+
 ## [Unreleased] — PREREG: leg 2, sworn output measured in-house under DESIGN v2's ten bars, unchanged, with five named amendments; signed by the operator on 2026-10-23
 
 **`papers/sworn/PREREG_sworn_measurement_2026_10_23.md`, `papers/sworn/measurement/tranche_b.py`,
