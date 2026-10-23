@@ -61,6 +61,22 @@ RECEIPT_SUFFIXES = (
     ".capsule.html",
 )
 
+# Zenodo's own records of a publish: the metadata as sent, as the deposition returned it, and the
+# public record as read back. They hold what Zenodo was sent and returned, not prose written now, and
+# they are never rewritten (the deposit receipt pins the as-sent file's sha256). They are named one by
+# one, so a new record is scanned until it is named here with its reason.
+#
+# 7.50.0 (10.5281/zenodo.23594959): the description quotes "HaluEval-QA AUC 0.998" as the PyPI
+# positioning the release replaced, with no ceiling caveat beside it, and the live record reads the
+# same. Skipping these files does not fix the live record. A caveat there is an in-place edit of the
+# record, as 7.48.0's had on 2026-09-29 (committed as a new dated file, which this guard does scan),
+# and that edit is the operator's call.
+ZENODO_RECORD_PATHS = (
+    "release/zenodo-metadata-software-v7.50.0.json",
+    "release/zenodo-metadata-software-v7.50.0-as-published.json",
+    "release/zenodo-record-software-v7.50.0-readback.json",
+)
+
 TEXT_SUFFIXES = {".md", ".markdown", ".txt", ".html", ".htm", ".rst", ".json", ".yaml", ".yml"}
 
 
@@ -101,6 +117,8 @@ def _scanned_files():
                 continue
             if any(p.name.endswith(s) for s in RECEIPT_SUFFIXES):
                 continue
+            if p.relative_to(REPO).as_posix() in ZENODO_RECORD_PATHS:
+                continue          # a Zenodo record of a publish: see ZENODO_RECORD_PATHS
             if tracked is not None and p.resolve() not in tracked:
                 continue          # untracked or ignored: the lab did not publish it
             yield p
@@ -253,3 +271,13 @@ def test_scanner_actually_reaches_the_release_tree():
     assert scanned, "scanned no files -- check SCANNED_DIRS and TEXT_SUFFIXES"
     carriers = [p for p in scanned if _lines(p) and any(_hits(ln) for ln in _lines(p))]
     assert carriers, "found no file quoting the figures -- the scan is not reaching the corpus"
+
+
+def test_named_zenodo_records_are_tracked_files():
+    """A name in ZENODO_RECORD_PATHS that the repository does not hold exempts nothing and hides a typo."""
+    tracked = _tracked_paths()
+    for rel in ZENODO_RECORD_PATHS:
+        path = REPO / rel
+        assert path.is_file(), f"ZENODO_RECORD_PATHS names a file that is not here: {rel}"
+        if tracked is not None:
+            assert path.resolve() in tracked, f"ZENODO_RECORD_PATHS names an untracked file: {rel}"

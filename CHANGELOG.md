@@ -63,6 +63,65 @@ none.
   ones among them keep their bytes. `papers/build_ledger.py` and `papers/build_index.py` were run; neither moved a
   file.
 
+## [Unreleased] — styxx 7.50.0 on Zenodo, as the next version of the software record; `CITATION.cff`, `README.md` and the Zenodo manifest follow the release
+
+styxx 7.50.0 is deposited on Zenodo as **10.5281/zenodo.23594959**, a new version of the styxx software
+concept record **10.5281/zenodo.19758618**, made from 7.49.0's record (10.5281/zenodo.23221755). Zenodo
+recorded it at 2026-10-23T13:04:07Z (09:04 at UTC-4), and the concept DOI now resolves to it. The record
+holds three files: the v7.50.0 tag's tree as a zip (commit bebdadf1;
+`git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.50.0/ v7.50.0` reproduces it, md5
+37ce89258987104eb06ba1556b7e4b33) and the wheel and sdist PyPI serves for 7.50.0. Its related identifiers
+link 7.49.0 (isNewVersionOf), the Cognometric Fingerprint Specification v1.0 (10.5281/zenodo.19746215,
+isSupplementTo), the Fathom research series (10.5281/zenodo.19326174, isPartOf), the GitHub release, the
+PyPI page and the tagged tree. No advisory accompanies 7.50.0, so there is no isDocumentedBy row. Nothing
+merged after the tag is in it.
+
+- `release/`: the draft receipt and the deposit receipt (`zenodo-draft-receipt-software-v7.50.0.json`,
+  `zenodo-deposit-receipt-software-v7.50.0.json`), the metadata as sent and as published
+  (`zenodo-metadata-software-v7.50.0.json`, `zenodo-metadata-software-v7.50.0-as-published.json`), and
+  the public record as read back after the publish (`zenodo-record-software-v7.50.0-readback.json`).
+- `scripts/zenodo_deposit_software_v7_50_0.py` makes the draft and cannot publish it.
+  `scripts/zenodo_publish_software_v7_50_0.py` publishes only the draft the draft receipt names, after
+  re-reading it from Zenodo's side, and then reads the record back. Both are adapted from 7.49.0's, and
+  their git blobs have the sha256 the deposit receipt pins. The publish script's docstring names its own
+  file as the one it was adapted from; 7.49.0's is `scripts/zenodo_publish_software_v7_49_0.py`. The line
+  stays, because a corrected blob would not have the pinned sha256.
+- `release/NOTE_zenodo_software_v7_50_0_provenance.md` says what the receipts and logs show and what they
+  do not. They do not record who ran either script or who authorized the publish, which was recorded 66
+  minutes after the draft receipt was written, and no log of the publish run was kept. Just after the
+  publish, doi.org redirected the DOI to `zenodo.org/doi/…` rather than straight to the record, as it did
+  for 7.49.0. The record's description lists twelve stale or wrong lines in the deposited tree, and the
+  note names them by topic; this change updates three of them, below.
+- `zenodo/MANIFEST.json`: the 19758618 entry names 7.50.0 as the latest version and the four versions
+  before it, a new entry records 10.5281/zenodo.23594959, and the 23221755 entry says it was superseded.
+  `updated_in` names #204 for the 7.49.0 version, where it named the branch. No `cited_in` line moves.
+- `CITATION.cff`: `version` 7.50.0 and `date-released` 2026-10-23, the tag's date and the day PyPI
+  records the upload, which the record's `publication_date` also gives; the `[7.50.0]` heading dates the
+  cut 2026-10-22. The identifier note that 7.48.0 is 10.5281/zenodo.23042251 stays: it is still true, the
+  manifest records that the line names it, and whether it should name 7.50.0's record is the operator's
+  call.
+- `README.md`: its 91 tag-pinned links (85 `blob/`, 5 `tree/` and 1 `raw.githubusercontent.com`, on 64
+  lines) name v7.50.0 where they named v7.49.0. Every one of the 65 paths they name exists at v7.50.0, and
+  none cites a 7.49.0-era document on purpose, so none is kept at v7.49.0. No line is added or removed.
+- `tests/test_release_ceiling_caveat.py` names the three 7.50.0 Zenodo records it skips
+  (`ZENODO_RECORD_PATHS`: the metadata as sent, as published and the record as read back), with a test
+  that each name is a tracked file. The record's description quotes "HaluEval-QA AUC 0.998" as the PyPI
+  positioning the release replaced, with no ceiling caveat beside it, so the guard failed on the three
+  files once they were committed. They hold what Zenodo was sent and returned and are never rewritten.
+  The live record was edited in place on 2026-10-23 at 16:28:14Z, on the operator's word in chat, to put
+  the ceiling caveat beside the figure ("a register-detection figure at a documented construct ceiling",
+  the wording of 7.48.0's 2026-09-29 edit); the description is the only field changed, and the DOI,
+  concept, version and file checksums read back unchanged
+  (`release/zenodo-edit-receipt-software-v7.50.0-2026-10-23.json`, made by
+  `scripts/zenodo_edit_software_v7_50_0_2026_10_23.py`; the edited metadata is
+  `release/zenodo-metadata-software-v7.50.0-edit-2026-10-23.json`). The 7.50.0 GitHub release notes
+  carried the same sentence and carry the same words now.
+- Not changed: the other nine stale lines the record lists, namely `web/gate/`'s pages and headers, the
+  header comment of `.github/workflows/diffgate.yml`, `sworn/README.md` and `sworn/action.yml` (which give
+  7.48.0 as the release to install), the README's always-latest label for 10.5281/zenodo.19326174 (D3,
+  D4), the preferred citation (D2), the EXTERNAL-1 packet, `zenodo/README.md`, the `[7.49.0]` section
+  kept as released, and section 15 of the zoo D0 screen plan NOTE.
+
 ## [Unreleased] — NOTE: the prior-art full texts the permuted-MNIST robustness RESULT owes, each read twice: S4D published a real-versus-complex initialization row in 2022, the LRU paper has none, and the lab's phase clamp is not LinOSS's ablation
 
 **`papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md`.** The full-text reads that
