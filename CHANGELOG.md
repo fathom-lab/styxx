@@ -21,21 +21,23 @@ are outside the repository.
   initialization that also moves the real part, not a clamp. The two reads differ on whether A was trained, and on
   how much the row says about oscillation, since other complex initializations in the same table do as badly.
 - **The LRU paper (arXiv 2303.06349, v1).** No real-eigenvalue row. "Λ Real + Im" is a complex Λ in Cartesian form,
-  so the red team's recollection of a "Λ real" row is refuted. Long Range Arena only, no MNIST; its one phase
-  experiment, on PathX, is an initialization range with θ still learnable.
+  so the red team's recollection of a "Λ real" row is refuted. Its benchmarks are the six Long Range Arena tasks, and
+  it has no MNIST; its one phase experiment on a long-range task, on PathX, is an initialization range with θ still
+  learnable.
 - **LinOSS (arXiv 2410.03943, v3, with v1 and v2 checked) and D-LinOSS (arXiv 2505.12171, v2, with v1 checked).** No
   oscillation-off or real-eigenvalue arm in any version, and no MNIST. In LinOSS-IM magnitude and phase are tied
-  (`|λ| = cos θ` per mode, both reads' derivation from Proposition 3.1), so θ → 0 forces `|λ|` → 1 and the lab's
-  CLAMPED arm is not reachable inside LinOSS.
+  (`|λ| = cos θ` per mode, derived by the reader from Proposition 3.1 and checked by the re-reader), so θ → 0 forces
+  `|λ|` → 1 and the lab's CLAMPED arm is not reachable inside LinOSS.
 - **The lab's sentences.** The PAPER's Appendix A equivalence ("identical", "not a proxy") and the "S5/LinOSS-class"
-  label are known wrong; its l.72-73 ("the move no one makes ... is ours") is priority-shaped and known wrong as
-  written; "untested, because the standard comparison is between whole models" is wrong as a general sentence. The
-  July RESULT's +0.3122 stands as a measurement; INDEX row 51's "in SSMs" exceeds every read; the robustness RESULT's
-  l.431-433 stands, with its two owed reads now done. Banners and pointers are the operator's call, and none is made
-  in this change.
+  label are known wrong; its l.72-73 ("the move no one makes ... is ours") is priority-shaped and not supportable as
+  written; "untested, because the standard comparison is between whole models" is contradicted in part as a general
+  sentence. The July RESULT's +0.3122 stands as a measurement; INDEX row 51's "in SSMs" exceeds every read; the
+  robustness RESULT's l.431-433 stands, with its two owed reads now done. Banners and pointers are the operator's
+  call, and none is made in this change.
 - **What remains the lab's own is a measurement:** a three-block LRU-style recurrence with θ held at 0 through
-  training and the magnitude parameterization unchanged, on permuted MNIST. None of the four papers has permuted
-  MNIST or that arm. Not read: TIDES, Le, Jaitly and Hinton, the S5 paper, and the PAPER's other related work.
+  training and the magnitude parameterization and initialization unchanged, on permuted MNIST. None of the four
+  papers has permuted MNIST, and none reports that arm. Not read: TIDES, Le, Jaitly and Hinton, the S5 paper, and
+  the PAPER's other related work.
 - `papers/LEDGER.md` was regenerated and did not move.
 
 ## [Unreleased] — PREREG: leg 2, sworn output measured in-house under DESIGN v2's ten bars, unchanged, with five named amendments; signed by the operator on 2026-10-23
