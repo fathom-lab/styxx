@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — NOTE: the prior-art full texts the permuted-MNIST robustness RESULT owes, each read twice: S4D published a real-versus-complex initialization row in 2022, the LRU paper has none, and the lab's phase clamp is not LinOSS's ablation
+
+**`papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md`.** The full-text reads that
+`RESULT_pmnist_robustness_2026_10_23.md` l.431-433 owes before any public sentence ("the LRU and S4D
+real-versus-complex rows"), with the LinOSS and D-LinOSS reads its red team adds. Each paper was read in full from
+arXiv's HTML and again by an independent re-reader; the NOTE states only what the two agree on, gives both where they
+differ, and leaves out what only one reports. It edits no committed document and swears no spans, because its sources
+are outside the repository.
+
+- **S4D (arXiv 2206.11893, v2).** Table 3(a) carries an "S4D-Real" row (A_n = −(n+1)) in the S4D-Inv block, at
+  matched size on sCIFAR, Speech Commands and BIDMC: −5.45 and −10.17 accuracy points and +0.066 RMSE against S4D-Inv. It is an
+  initialization that also moves the real part, not a clamp. The two reads differ on whether A was trained, and on
+  how much the row says about oscillation, since other complex initializations in the same table do as badly.
+- **The LRU paper (arXiv 2303.06349, v1).** No real-eigenvalue row. "Λ Real + Im" is a complex Λ in Cartesian form,
+  so the red team's recollection of a "Λ real" row is refuted. Its benchmarks are the six Long Range Arena tasks, and
+  it has no MNIST; its one phase experiment on a long-range task, on PathX, is an initialization range with θ still
+  learnable.
+- **LinOSS (arXiv 2410.03943, v3, with v1 and v2 checked) and D-LinOSS (arXiv 2505.12171, v2, with v1 checked).** No
+  oscillation-off or real-eigenvalue arm in any version, and no MNIST. In LinOSS-IM magnitude and phase are tied
+  (`|λ| = cos θ` per mode, derived by the reader from Proposition 3.1 and checked by the re-reader), so θ → 0 forces
+  `|λ|` → 1 and the lab's CLAMPED arm is not reachable inside LinOSS.
+- **The lab's sentences.** The PAPER's Appendix A equivalence ("identical", "not a proxy") and the "S5/LinOSS-class"
+  label are known wrong; its l.72-73 ("the move no one makes ... is ours") is priority-shaped and not supportable as
+  written; "untested, because the standard comparison is between whole models" is contradicted in part as a general
+  sentence. The July RESULT's +0.3122 stands as a measurement; INDEX row 51's "in SSMs" exceeds every read; the
+  robustness RESULT's l.431-433 stands, with its two owed reads now done. Banners and pointers are the operator's
+  call, and none is made in this change.
+- **What remains the lab's own is a measurement:** a three-block LRU-style recurrence with θ held at 0 through
+  training and the magnitude parameterization and initialization unchanged, on permuted MNIST. None of the four
+  papers has permuted MNIST, and none reports that arm. Not read: TIDES, Le, Jaitly and Hinton, the S5 paper, and
+  the PAPER's other related work.
+- `papers/LEDGER.md` was regenerated and did not move.
+
 ## [Unreleased] — NOTE: the robustness RESULT's forward pointers land beside the certified 2026-07-23 RESULT and the sealed untied PREREG, not inside them; the INDEX rows read `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`
 
 **`papers/frequency-resonance/NOTE_forward_pointer_pmnist_ablation_2026_10_23.md` and
