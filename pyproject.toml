@@ -8,7 +8,7 @@ name = "styxx"
 # via [tool.setuptools.dynamic] below, so pyproject and the runtime __version__
 # can never drift. To cut a release, bump styxx/_version.py only.
 dynamic = ["version"]
-description = "Cognitive observability for LLM agents. @styxx.profile returns a per-step cognometric readout: drift, confabulation, refusal, sycophancy, phase transition, low trust, incoherence. Register instruments with documented ceilings: guardrail.check vs a grounding passage, HaluEval-QA AUC 0.998 (fails DROP, FinanceBench); refuse_check, XSTest-v2 0.976; drift_check, BFCL v3 0.943. Reference implementation of Cognometric Fingerprint Spec v1.0. No torch, no GPU, no LLM in the loop; base install: numpy, scikit-learn."
+description = "Instruments that check what AI agents claim against committed bytes. diffgate reads an agent's PR summary against its diff and reports by default: the claim \"an agent's PR summary cannot lie about its diff\" is not yet true of this instrument on real-world data (EXTERNAL-1: precision 0.23, 23 of 100 sampled accusations upheld, styxx 7.47.0, against a 0.95 floor). OATH certificates check the numbers they extract from a document against committed receipts. Base install: numpy, scikit-learn."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [
@@ -21,19 +21,16 @@ requires-python = ">=3.9"
 keywords = [
     "llm",
     "agent",
-    "agent-observability",
-    "cognitive",
-    "cognitive-profiler",
-    "cognometric-fingerprint",
-    "refusal-detection",
-    "tool-call-drift",
-    "sycophancy-detection",
-    "interpretability",
+    "ai-agents",
+    "verification",
+    "pull-request",
+    "diff",
+    "github-action",
+    "receipts",
+    "preregistration",
+    "reproducibility",
     "ai-safety",
-    "langsmith",
-    "datadog",
     "fathom",
-    "spec-v1.0",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

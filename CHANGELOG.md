@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [Unreleased] — the front door says, in EXTERNAL-1's committed words, that the gate claim is not yet true, and stops making it
+## [7.50.0] — 2026-10-22 — the front door says, in EXTERNAL-1's committed words, that the gate claim is not yet true; the diff gate cuts a diff where git does; every diffgate record and charon's verifier name the build and runtime that wrote them
+
+A minor release: the front door prints the sentence the lab's 2026-08-31 preregistration committed it to ("an agent's PR summary cannot lie about its diff" is not yet true of this instrument on real-world data; EXTERNAL-1, precision 0.23) and stops making the claim on every shipped surface, held there by a word lint in CI; the diff gate cuts a diff at git's own line ends and abstains where its two readers still read a line apart (#205), and a declared count is ASCII digits in both ports (#206); every diffgate record names the build and runtime that wrote it, and charon's verifier names its own; the research capsule, the horizon datasheet, the robustness preregistration and its correction, the real-model bridge's closure, the zoo screen and the sealed-ahead records; and what else merged on `main` after 7.49.0. Upgrade with `pip install -U styxx==7.50.0`. The PyPI summary changes with this release: the April positioning ("Cognitive observability", "HaluEval-QA AUC 0.998") is replaced by what the instruments do; earlier PyPI pages are superseded, not edited. The entries headed `[Unreleased]` until this cut are kept whole below, in the order this file carried them; entries written at this cut say so in their opening line.
+
+### conformance/sworn regenerated for 7.50.0: the version stamp moves every vector's id and no expected outcome
+
+Written at this cut. The sworn receipt digest covers `verifier.styxx_version`, so the bump to 7.50.0 gives every committed conformance vector a new id. `conformance/sworn/gen_vectors.py --check` reproduced the committed set at 7.49.0 before the bump; the set was regenerated at 7.50.0 afterwards, and the outcome of every vector is unchanged: 3,620 vectors, 3,981 blobs, 3 skipped, verdicts `WITHHELD` at both versions; `set_sha256` `4138dabc8aa2ec8e7f7d569de5165309f3ba59d78bdd9e5cca274df237b276a5` at 7.49.0 and `03e7e4cdc246f635823c00317fbaa4225af99accb83e9f9e20f5fe272e1582b5` at 7.50.0, each regenerating to its own digest under `--check` and replaying under `--replay`.
+
+### the front door says, in EXTERNAL-1's committed words, that the gate claim is not yet true, and stops making it
 
 **EXTERNAL-1's preregistration committed this lab to a sentence, not only to a deletion.** If accusation
 precision landed below 0.95, "the claim 'an agent's PR summary cannot lie about its diff' is not yet true of
@@ -92,7 +100,7 @@ this entry the words were printed nowhere outside the preregistration and one re
   repository description, the canonical site, and the PyPI pages of 7.49.0 and older, which cannot be edited and
   are superseded by the next release instead.
 
-## [Unreleased] — sealed-ahead: the build stopped on 2026-10-12; its battery, sizing week and stranger pool check are committed as records
+### sealed-ahead: the build stopped on 2026-10-12; its battery, sizing week and stranger pool check are committed as records
 
 **A record, with no change to `styxx/`.** The operator delegated the cut of 2026-10-12 to the lead ("i trust you"),
 who stopped the sealed-ahead precision build as that night's plan recommends: under the grant of 50 requests an hour
@@ -129,7 +137,7 @@ receipt.
   row in `papers/INDEX.md` and `papers/index_check.json` (52 arcs, 52 rows) follow; the arc's README gains a stop
   line at its head.
 
-## [Unreleased] — diffgate cuts a diff where git does and abstains where its two readers still read a line apart (#205); a declared count is ASCII digits in both ports (#206)
+### diffgate cuts a diff where git does and abstains where its two readers still read a line apart (#205); a declared count is ASCII digits in both ports (#206)
 
 **A behaviour change in both ports.** It sits on identity phase 2. The code is a few lines per port; the
 rest is the pin cascade and the tests that hold it, so the five-file cap is exceeded, as identity phase 2's
@@ -315,7 +323,7 @@ pinned-pair file or charon line is touched; `path2a_pairs.json` and `path2a_move
   #206 names and this change does not repair: `_PATHY_RE` (paths) and `_IDENT_RE` (identifiers, #182) read Unicode
   `\w` by the interpreter's tables, against the port's ASCII `_DEC_PATHY` and `_DEC_IDENT`.
 
-## [Unreleased] — the zoo D0 screen: 13 cached models on bridge v3's compare and recall at 16 tokens (pilot-class, licenses nothing)
+### the zoo D0 screen: 13 cached models on bridge v3's compare and recall at 16 tokens (pilot-class, licenses nothing)
 
 `papers/frequency-resonance/NOTE_zoo_d0_screen_plan_2026_10_12.md` planned, before any data, the readiness screen the
 operator approved on 2026-10-11: a pilot-class check that licenses nothing, is not part of bridge v3's verdict, and asks
@@ -363,7 +371,7 @@ local snapshot with `local_files_only=True` and `HF_HUB_OFFLINE=1`; no model was
   tests skip when the cached files are absent, the tiny-model tests skip without torch and transformers, and a test
   checks the committed record against the hashes the NOTE and the receipt name.
 
-## [Unreleased] — charon's verifier names its runtime: verifier scheme `styxx.charon/verifier/v1`, module shas over LF bytes and the runtime inside the digest (identity phase 3)
+### charon's verifier names its runtime: verifier scheme `styxx.charon/verifier/v1`, module shas over LF bytes and the runtime inside the digest (identity phase 3)
 
 **Phase 3 of the design the operator approved on 2026-10-11**, after phases 0 to 2 (#207, #212, #217). It
 touches six files. Four are the design's: `papers/charon/AMENDMENT_charon_verifier_names_its_runtime_2026_10_12.md`
@@ -477,7 +485,7 @@ and no line is appended to the log.
     lines of the committed log was recorded UNRESOLVED or reads UNRESOLVED on this tree, so the narrowing
     would move none of them.
 
-## [Unreleased] — a diffgate record names the build and runtime that wrote it: `build` and `runtime` after the eleven content keys (identity phase 2)
+### a diffgate record names the build and runtime that wrote it: `build` and `runtime` after the eleven content keys (identity phase 2)
 
 **Phase 2 of the design the operator approved on 2026-10-11**, after phase 1 below. The operator waived
 the five-file cap for this phase (eight files). It touches nine: `styxx/diffgate.py`, `tests/_p2a_ref.py`,
@@ -551,7 +559,7 @@ charon line is touched, and no line is appended to the log.
   Action naming what it ran (4) and the bookmarklet panel measuring its engine (5, deferred).
   `external1_harness.py` keeps its hand-stamped `"v0"`.
 
-## [Unreleased] — the real-model bridge, attempt three: NOT STARTED, two pilots both NEITHER, the behavioural route closed
+### the real-model bridge, attempt three: NOT STARTED, two pilots both NEITHER, the behavioural route closed
 
 `papers/frequency-resonance/PREREG_realmodel_bridge_v3_2026_10_11.md` preregistered a recall-versus-comparison probe of
 `state-spaces/mamba-1.4b-hf` (pure decay: `A = −exp(A_log)` real and strictly negative in all 48 layers of the loaded
@@ -591,7 +599,7 @@ record says why. No main-set item was generated or scored, and no gates-block ve
   plan's runs only when `BRIDGE_V3_PLAN_PATH` names that plan, which lives outside the repository.
 - `papers/LEDGER.md` regenerated: the corpus gained a preregistration with a gates block.
 
-## [Unreleased] — PREREG: the permuted-MNIST headline under held-out permutations, new seeds and a 3x budget, sealed as a git blob before any run, with a CORRECTION sealed beside it before any data
+### PREREG: the permuted-MNIST headline under held-out permutations, new seeds and a 3x budget, sealed as a git blob before any run, with a CORRECTION sealed beside it before any data
 
 **`papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md`,
 `CORRECTION_prereg_pmnist_robustness_2026_10_12.md`, `run_pmnist_robustness.py`, `tests/test_pmnist_robustness.py`;
@@ -672,7 +680,7 @@ it on the same bars the sealed 2026-09-02 PREREG froze.
   policy; the banned-word scan over the four files. `papers/LEDGER.md` regenerated for the new
   preregistration.
 
-## [Unreleased] — the research capsule, Phase A: one HTML file carries the chain of one preregistered experiment and prints three readings per link
+### the research capsule, Phase A: one HTML file carries the chain of one preregistered experiment and prints three readings per link
 
 **`styxx/research_capsule.py` (new); tests in `tests/test_research_capsule.py`.** Spec id
 `styxx-oath/capsule/research/v0.1`. Builder and verifier only, no specimen: the pMNIST untied
@@ -770,7 +778,7 @@ particular experiment.
 - Not in this phase: dispatch from the existing capsule command, a charon kind for the new profile,
   the stranger step, the specimen. The existing capsule profiles are unchanged.
 
-## [Unreleased] — capsule v0.2 layer 2 compares a record's instrument identity apart from its content; `styxx.instrument` names the build and runtime a diffgate record is written and re-run under
+### capsule v0.2 layer 2 compares a record's instrument identity apart from its content; `styxx.instrument` names the build and runtime a diffgate record is written and re-run under
 
 **Phase 1 of the design the operator approved on 2026-10-11** (item 3 of step zero of the 2026-10-06
 study: every diffgate record names its build and runtime), after phase 0's NOTE below. Five files:
@@ -891,7 +899,7 @@ takes the "names no build or runtime" row below. Phase 2 makes the writer carry 
   Unicode-16 fixture (2b), charon's verifier naming its runtime (3), the Action (4) and the bookmarklet
   panel (5). `web/gate/*` and `styxx/diffgate.py` are not touched.
 
-## [Unreleased] — `styxx.horizon`: the horizon datasheet, an instrument from per-item bits to censored horizons, with the self-test that gates its printing
+### `styxx.horizon`: the horizon datasheet, an instrument from per-item bits to censored horizons, with the self-test that gates its printing
 
 **`styxx/horizon.py`, `styxx/horizon_README.md`; tests in `tests/test_horizon.py`.** The bridge-v3 probe
 (few-shot, exactly balanced, chance-normalised, degeneracy-guarded, paired-bootstrapped) asked one
@@ -982,7 +990,7 @@ committed RESULT says.
   `sheet --prereg` scores a COMMITTED prereg through `styxx.protocol`, otherwise the verdict line reads
   `unscored: no committed prereg`.
 
-## [Unreleased] — `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
+### `capsule verify` ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)
 
 **`styxx/capsule.py` and `styxx/charon.py`; tests in `tests/test_capsule_no_traceback.py`.** 7.49.0
 left #196 open: its entry named two classes that still ended `python -m styxx.capsule verify` in a
@@ -1132,7 +1140,7 @@ fails under both). Re-deriving `papers/charon/charon.log.jsonl` gives every one 
 its 257 lines the same status, classes and changed fields under both. `styxx/certify.py`,
 `styxx/sworn.py`, `styxx/corpus_audit.py` and the diff gate are not touched.
 
-## [Unreleased] — the GitLab job reports by default; blocking is opt-in with `STYXX_SOFT_FAIL: "false"`
+### the GitLab job reports by default; blocking is opt-in with `STYXX_SOFT_FAIL: "false"`
 
 **This changes behaviour for anyone who relied on the default.** The GitLab job,
 `integrations/gitlab/diffgate.gitlab-ci.yml`, failed on every CONTRADICTED claim. It now reports,
@@ -1224,7 +1232,7 @@ tests fail, dropping the report check 9, the strip 3, the lowercasing 3, reading
 4, printing no mode line on a PASS run 9, naming an unset variable as `"true"` without the Protected
 caveat 11, and a default that blocks 11. The job has not been run on GitLab itself.
 
-## [Unreleased] — the leaderboard `styxx leaderboard` prints says what Baseline-019 measured, without the priority claim `critique.py` withdrew
+### the leaderboard `styxx leaderboard` prints says what Baseline-019 measured, without the priority claim `critique.py` withdrew
 
 `papers/NOTE_prior_art_credit_2026_09_29.md` section 3 withdrew an unpriced ordinal priority claim from
 `styxx/critique.py`'s docstring, which since reads "It passed the styxx gauntlet's v3 detection bars".
@@ -1345,7 +1353,7 @@ the record's line stays true of what it describes.
   `scripts/osf_deposit_v6.py` (line 76), a deposit script. `submissions/` and the copies under `zenodo/`
   and `release/` are not edited.
 
-## [Unreleased] — NOTE: the HANDOFF capsule reproduces under its minting build; a record that names no build cannot say so
+### NOTE: the HANDOFF capsule reproduces under its minting build; a record that names no build cannot say so
 
 A measurement, with no code or test change: phase 0 of the design the operator approved on 2026-10-11 for item 3
 of step zero of the 2026-10-06 study (every diffgate record names its build and runtime).
@@ -1375,7 +1383,7 @@ since 2026-09-03.
 - **Not touched.** The capsule, DOGFOOD, the charon log (no line rewritten or appended), every module and test.
   `verify` says today what it said at 7.49.0, and HANDOFF still exits 1.
 
-## [Unreleased] — styxx 7.49.0 on Zenodo, as the next version of the software record
+### styxx 7.49.0 on Zenodo, as the next version of the software record
 
 styxx 7.49.0 is deposited on Zenodo as **10.5281/zenodo.23221755**, a new version of the styxx software
 concept record **10.5281/zenodo.19758618**, made from 7.48.1's record (10.5281/zenodo.23200977). Zenodo
