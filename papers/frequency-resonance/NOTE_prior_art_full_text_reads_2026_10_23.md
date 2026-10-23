@@ -5,8 +5,8 @@ sentence, made from arXiv's HTML on 2026-10-23, each paper by one reader and aga
 edits no committed document: not that RESULT, not `RESULT_pmnist_ablation_2026_07_23.md` (which
 `CERT_pmnist_ablation.json` names), not `PAPER_oscillation_causal_map_2026_07_23.md`, not `papers/INDEX.md`. It
 swears no spans, because its sources are outside this repository. It states which of those documents' sentences
-stand, which need a pointer or a banner, and which wording is now known to be wrong; how any of that lands is the
-operator's call.**
+stand, which need a pointer or a banner, and which wording the reads show to be wrong, contradicted in part or not
+supportable as written; how any of that lands is the operator's call.**
 
 The debt, in the robustness RESULT's words (l.431-433): "Nothing beyond a three-block complex-diagonal linear
 recurrence (LRU-style; `CLRU` in `run_pmnist_ablation.py`): the architecture is named by its code, and the prior-art
@@ -24,18 +24,21 @@ them. TIDES is not read (see "What was not read").
   them; both reads rendered them in a browser pane and read them by eye.
 - The re-reader checked each report against the paper and listed corrections and omissions. **This NOTE states only
   what the two reads agree on.** Where they differ, the section "Where the two reads differ" under each paper gives
-  both. Items that only one read reports are left out.
-- At most one quotation per paper, under fifteen words. Lab sentences are quoted exactly, with file and line, as they
-  read on origin/main `2e218601`.
+  both. Items that only one read reports are left out, with one exception: three items that only the re-reader
+  reported and that a third look, during review, confirmed in the paper (two S4D table cells and one D-LinOSS table
+  row) appear marked as such.
+- At most one quotation from each paper, under fifteen words. Section headings, table row labels and the papers' own
+  names for things appear in quotation marks as locators, not as quotations. Lab sentences are quoted exactly, with
+  file and line, as they read on origin/main `2e218601`.
 - Every "the paper does not contain" below comes after both reads went through the paper's full table list, figure
   list and appendices; the place is named under "Where both reads looked".
 
 ## 1. The LRU paper — Orvieto et al., arXiv 2303.06349, v1
 
 **Citation.** Orvieto, Smith, Gu, Fernando, Gulcehre, Pascanu and De, "Resurrecting Recurrent Neural Networks for
-Long Sequences", arXiv 2303.06349. Version read: v1, the only version
-(submitted 2023-03-11; the abs page's comment reads "30 pages, 9 figures"). Read at
-https://arxiv.org/html/2303.06349v1, version list from https://arxiv.org/abs/2303.06349.
+Long Sequences", arXiv 2303.06349. Version read: v1, the only version (submitted 2023-03-11; the abs page's comment
+gives 30 pages and 9 figures). Read at https://arxiv.org/html/2303.06349v1, version list from
+https://arxiv.org/abs/2303.06349.
 
 **Real versus complex: no real-eigenvalue arm anywhere in the paper.** No table, figure or appendix trains a model
 whose eigenvalues are held real, or whose phase is held at zero. `ATTACK.md` §5 recalled a "Λ real" row against a
@@ -73,7 +76,9 @@ What the paper does contain:
   numbers").** Derivation only, no experiment. The real alternative discussed is a real canonical form, algebraically
   equivalent to the complex diagonal and keeping its rotations. It is not a model with real eigenvalues.
 
-**Tasks.** The six Long Range Arena tasks only. sMNIST, psMNIST and permuted MNIST appear nowhere in the paper.
+**Tasks.** The benchmarks are the six Long Range Arena tasks. sMNIST, psMNIST and permuted MNIST appear nowhere in
+the paper. Neither read finds a real-eigenvalue or zero-phase arm in any experiment; whether the paper also has
+synthetic experiments is under "Where the two reads differ".
 
 **Matched-ness.** Not matched in the way the lab's clamp is. Dense A against the diagonal rows changes the structure
 (dense real against diagonal complex) and the parameter count. The paper states no parameter counts, and Section 2.2
@@ -104,6 +109,12 @@ are not per-se needed", meaning a real block form can carry the same rotations.
 - *Appendix E.3's real form.* Reader: real 2×2 rotation blocks. Re-reader: block diagonal, 1×1 entries for the real
   eigenvalues of a general real matrix and 2×2 blocks for the conjugate pairs. Both: a derivation, with no model
   trained with real eigenvalues only.
+- *Synthetic experiments.* Reader: the tasks are the six LRA tasks only. Re-reader: the paper also has three
+  synthetic settings, a one-layer linear-versus-tanh RNN learning a length-100 convolution kernel (Figure 7,
+  Appendix E.2), a single-eigenvalue toy that moves the target phase toward π/2 and compares the Cartesian and
+  exponential parameterizations (Figure 8, Appendix E.2), and a numerical check of Proposition 3 (Figure 9). Both:
+  none of them has a real-eigenvalue or θ = 0 arm. Figure 8 is phase-related, so the "one phase experiment" in §5
+  below is the one on a long-range task.
 - *Venue.* Reader: ICML 2023. Re-reader: the abs page names no venue. This NOTE names none.
 - *Parameter counts.* Reader: not stated (medium confidence). Re-reader: not stated (high confidence; searched both
   windows of the text for the phrases).
@@ -122,8 +133,8 @@ https://arxiv.org/html/2206.11893v2/diag_init.svg, Table 3(b) at `.../ablations_
 `.../diag_real.svg` and `.../diag_compute.svg` (checked against appendix Tables 7 and 8); version list from
 https://arxiv.org/abs/2206.11893.
 
-**Real versus complex: yes, as an initialization row.** Table 3(a), "Ablations of the initialization of the diagonal
-A matrix in S4D" (§5.2, paragraph "Ablation: Other S4D matrices"), carries a row "S4D-Real", placed in the S4D-Inv
+**Real versus complex: yes, as an initialization row.** Table 3(a), which ablates the initialization of S4D's
+diagonal A matrix (§5.2, paragraph "Ablation: Other S4D matrices"), carries a row "S4D-Real", placed in the S4D-Inv
 block. In the paper's words, "S4D-Real uses a particular real initialization with A_n = −(n+1)" (§5.2). That is
 the HiPPO-LegS real spectrum: the imaginary parts start at zero and the real parts move too, from −1/2 to −(n+1).
 
@@ -138,7 +149,7 @@ S4D-Real deltas are read against the S4D-Inv row by the table's layout; the capt
 | S4D-Random | −6.32 | −1.95 | +0.034 |
 | Scale 0.01 | −5.03 | −0.08 | +0.028 |
 | Scale 100 | −7.77 | −52.31 | +0.034 |
-| S4D-Inv2 | (one read only) | −39.84 | (one read only) |
+| S4D-Inv2 | −2.62 (re-reader; third look) | −39.84 | +0.005 (re-reader; third look) |
 
 The S4D-Lin block (baseline 85.12 / 90.66 / 0.128) has Scale 0.01 at −7.27 / −1.92 / +0.040 and Scale 100 at
 −7.91 / −4.04 / +0.077, and no real-eigenvalue row. The "Scale 0.01" rows shrink every imaginary part 100× and keep
@@ -230,15 +241,17 @@ different parameter counts (Table 5: on EigenWorms LinOSS-IM 134,279 and LRU 101
 
 **The model, and why the lab's clamp is not its ablation.** By Proposition 3.1, LinOSS-IM's eigenvalues are
 `(1 ± i·dt·√A)/(1 + dt²·A)`, with `|λ|² = S = 1/(1 + dt²·A)`. A is learned, diagonal and independent of the input;
-dt is described as a hyperparameter (dt = 1 in the main runs). Both reads derive from Proposition 3.1, and it is
-their derivation, not a sentence in the paper: per mode the phase is `θ = arctan(dt·√A)` and the magnitude is
-`|λ| = cos θ`. Magnitude and phase are tied together by the one parameter A, so in LinOSS-IM every bit of damping
-comes with oscillation. Driving θ to 0 forces `|λ|` to 1; at A = 0 the mode is a repeated eigenvalue 1, an
-integrator, with no decay. The lab's CLAMPED arm (real, with a learnable magnitude below 1) is not reachable inside
-LinOSS-IM or LinOSS-IMEX, and the FREE arm (magnitude and phase independent) matches neither.
+dt is described as a hyperparameter (dt = 1 in the main runs). The reader derives from Proposition 3.1, and the
+re-reader checks the algebra (trace 2S, determinant S); it is their derivation, not a sentence in the paper: per mode
+the phase is `θ = arctan(dt·√A)` and the magnitude is `|λ| = cos θ`. Magnitude and phase are tied together by the
+one parameter A, so in LinOSS-IM every bit of damping comes with oscillation. Driving θ to 0 forces `|λ|` to 1; at
+A = 0 the mode is a repeated eigenvalue 1, an integrator, with no decay. The lab's CLAMPED arm (real, with a
+learnable magnitude below 1) is not reachable inside LinOSS-IM or LinOSS-IMEX, and the FREE arm (magnitude and phase
+independent) matches neither.
 
-**The authors' conclusion.** LinOSS beats LRU, S5, S6, Mamba and the NCDE family as whole models on UEA, PPG-DaLiA
-and weather; LinOSS-IM is stable for A ≥ 0 (Proposition 3.1), and the model is universal for continuous causal
+**The authors' conclusion.** As whole models, LinOSS beats LRU, S5, S6, Mamba and the NCDE family on the UEA average
+(Table 1) and on PPG-DaLiA (Table 2), and S4, Informer and the other weather rows on weather (Table 3); LinOSS-IM is
+stable for A ≥ 0 (Proposition 3.1), and the model is universal for continuous causal
 operators (Theorem 3.3, a constructive proof). Its case for oscillation is stated with a hedge: forced harmonic
 oscillators "seem to ensure expressive representations" (§1, Introduction). It is never tested by removing the
 oscillation inside the model.
@@ -254,15 +267,15 @@ oscillation inside the model.
   C.1 says ReLU with a standard-normal init would switch off about half of them; what the paper never analyses is the
   dynamics at A_kk = 0. Both: never ablated.
 - *The A = 0 matrix.* Reader: `[[1, dt], [0, 1]]`, no decay at all. Re-reader: in the paper's `[z, y]` ordering it is
-  `[[1, 0], [dt, 1]]`, the same Jordan block transposed: a double integrator whose state can grow linearly, which is
-  not the "off" the paper describes. Both: repeated eigenvalue 1, no decay.
+  `[[1, 0], [dt, 1]]`, the same Jordan block transposed: a double integrator whose state can grow linearly, which does
+  not match the paper's description of such a dimension as switched off. Both: repeated eigenvalue 1, no decay.
 - *Table 6's initialization rows.* Reader: uniform against standard-normal initialization, all rows LinOSS-IM.
   Re-reader: the standard-normal row (64.0) uses the squared parameterization, so the clean initialization contrast
   is squared-uniform 67.1 against squared-normal 64.0.
 - *Where the comparison numbers come from.* Reader: each comparison model tuned by its own grid search under the Walker
   et al. 2024 protocol (Appendix B.1). Re-reader: Appendix B.1 describes LinOSS's own search; §4.1 says all other
   results are taken from Walker et al. (2024); the weather rows cite their own papers.
-- *The abstract by version.* Reader: "nearly 2×" against Mamba and LRU. Re-reader: that is v3; the v1 and v2 abstracts
+- *The abstract by version.* Reader: nearly 2× against Mamba and LRU. Re-reader: that is v3; the v1 and v2 abstracts
   say nearly 2× against Mamba and 2.5× against LRU, with Table 2's LRU at 15.64 (2.44×); Mamba's 10.65 (1.66×) is the
   same in all three versions.
 - *Table 5's label.* Reader: Table 5a. Re-reader: v3 renders Table 5 as one table. The numbers agree.
@@ -277,7 +290,7 @@ found none.
 
 **Citation.** Jared Boyer, T. Konstantin Rusch, Daniela Rus, "Learning to Dissipate Energy in Oscillatory
 State-Space Models", arXiv 2505.12171. Version read: v2 (2025-09-30), the current one; v1 is dated 2025-05-17 and was
-read for structure. The abs comment reads "18 pages, 4 figures" and names no venue. Read at
+read for structure. The abs comment gives 18 pages and 4 figures and names no venue. Read at
 https://arxiv.org/html/2505.12171v2, with https://arxiv.org/html/2505.12171v1 and the version list at
 https://arxiv.org/abs/2505.12171.
 
@@ -286,9 +299,8 @@ phase, or sets a matched real-diagonal arm against an oscillatory one. The neare
 
 - Table 1 (§3.2, Appendix B.1): LinOSS-IMEX, LinOSS-IM and D-LinOSS learning a synthetic exponential decay with one
   real eigenvalue of 0.8 (length 1000, 3 seeds; Appendix B.1 writes the system as A = 0.8, and the paper does not
-  reconcile the two). RMSE as v2's header prints it (×1e-3): IMEX 24.5 ± 2.3, IM
-  8.0 ± 1.7, D-LinOSS 0.8 ± 0.1. All three arms are oscillator-family models; the variable is damping and
-  discretization.
+  reconcile the two). RMSE as v2's header prints it (×1e-3): IMEX 24.5 ± 2.3, IM 8.0 ± 1.7, D-LinOSS 0.8 ± 0.1. All
+  three arms are oscillator-family models; the variable is damping and discretization.
 - Figure 2 (§4.4, Appendix B.2; v2 only): the adding task at lengths 500, 2000 and 5000. D-LinOSS reaches validation
   MSE 1e-2 about 1.7× faster than LinOSS-IM at 500 and 2000 and about 1.4× at 5000; LinOSS-IMEX does not beat the
   0.167 random-guess level.
@@ -303,7 +315,8 @@ phase, or sets a matched real-diagonal arm against an oscillatory one. The neare
 - Table 3 (PPG-DaLiA, MSE ×1e-2, though the caption says accuracies): D-LinOSS 6.16 ± 0.73, LinOSS-IM 6.4 ± 0.23,
   LinOSS-IMEX 7.5 ± 0.46, Log-NCDE 9.56, NRDE 9.90, Mamba 10.65, LRU 12.17, S5 12.63, S6 12.88, NCDE 13.54.
 - Table 4 (weather MAE, no variance): D-LinOSS 0.486, LinOSS-IMEX 0.508, LinOSS-IM 0.528, S4 0.578, Informer 0.731,
-  LSTnet 0.757, LogTrans 0.773, LSTMa 1.109, Reformer 1.575.
+  Informer† 0.741 (re-reader; third look), LSTnet 0.757, LogTrans 0.773, LSTMa 1.109, Reformer 1.575. The reader
+  lists nine rows and omits Informer†.
 - Table 6 (compute): D-LinOSS and LinOSS-IM have the same parameter count on EigenWorms (134,279) and different
   counts on Ethanol (71,112 against 6,728), Heartbeat (4,356 against 10,936) and Motor (20,598 against 91,844).
 
@@ -312,22 +325,29 @@ forced second-order oscillator (`x'' = −A·x − G·x' + B·u`, A and G diagon
 implicit-explicitly into a 2×2 block per mode. Proposition 3.2 gives every mode modulus `1/√(1 + Δt·G)`; the §3.3
 parameterization clamps A between bounds derived from the stability inequality, which keeps the modes in
 complex-conjugate pairs; Proposition 3.3 says the reachable set is the closed unit disk, and Proposition 3.4 that
-LinOSS's sets have measure zero. Both reads derive, and it is not a sentence in the paper, that A = 0 forces G = 0,
-which gives the integrator with a repeated eigenvalue 1. So "frequency off" in D-LinOSS's own parameterization is not
-the lab's CLAMPED decaying real mode; the lab's arm corresponds to the θ = 0 slice of D-LinOSS's disk, which the
-paper never isolates.
+LinOSS's sets have measure zero. The reader derives, and the re-reader's own algebra of the clamp bounds confirms (it
+is not a sentence in the paper), that A = 0 forces G = 0, which gives the integrator with a repeated eigenvalue 1. So
+"frequency off" in D-LinOSS's own parameterization is not the lab's CLAMPED decaying real mode. In its eigenvalues,
+the lab's arm corresponds to the θ = 0 slice of D-LinOSS's disk, which the paper never isolates; whether it
+corresponds in dynamics is under "Where the two reads differ".
 
 **The authors' conclusion.** A learnable damping matrix G decouples dissipation from frequency and lets the
-eigenvalues fill the unit disk; D-LinOSS's averages sit just above LinOSS-IM's on UEA, PPG-DaLiA and weather, and it
-converges faster on the adding task. Every
-comparison is between whole models or within the LinOSS family (damping, discretization, initialization).
-Section 6 asserts that "D-LinOSS is inherently well-suited to represent temporal relationships with oscillatory
-structure", with no ablation behind it, names the time-invariant layer as a limitation, and leaves selective variants
-to future work.
+eigenvalues fill the unit disk. D-LinOSS scores slightly better than LinOSS-IM on all three real-data benchmarks (UEA
+average accuracy 68.0 against 67.8; PPG-DaLiA MSE 6.16 against 6.4, lower is better; weather MAE 0.486 against
+0.528, lower is better), with most or all of the UEA per-dataset gaps inside the reported standard deviations (the
+reads differ, below), and it converges faster on the adding task. Every comparison is between whole models or
+within the LinOSS family (damping, discretization, initialization). Section 6 asserts that "D-LinOSS is inherently
+well-suited to represent temporal relationships with oscillatory structure", with no ablation behind it, names the
+time-invariant layer as a limitation, and leaves selective variants to future work.
 
 **Where the two reads differ.**
 
-- *Table 4's rows.* Reader: the nine above. Re-reader: ten, the tenth being Informer† at 0.741 (also in v1).
+- *Table 4's rows.* Reader: nine. Re-reader: ten, the tenth being Informer† at 0.741 (also in v1); a third look in
+  review confirmed it in v2.
+- *The θ = 0 slice.* Reader: the lab's arm corresponds to it. Re-reader: inside the §3.3 clamp that slice is
+  critically damped, a defective 2×2 Jordan block whose impulse response carries both r^n and n·r^n terms, so it
+  matches the lab's single real decaying mode in eigenvalue, not in dynamics (the re-reader's derivation from the
+  §2.2 blocks).
 - *Table 6's parameter matching.* Reader: matched on EigenWorms only, of the four datasets it lists. Re-reader: also
   SCP1 (992,776 against 991,240) and SCP2 (399,496 against 399,112), each difference being state dimension times
   blocks, that is the added G parameters at the same configuration; and the EigenWorms row is identical in all three
@@ -356,25 +376,26 @@ heading. v1: outline, tables, figures. Text searches for MNIST, psMNIST, "permut
 
 Read together, the four papers give this:
 
-- **The real-versus-complex contrast inside one diagonal SSM was published in 2022, by S4D** (Table 3(a), S4D-Real
-  against S4D-Inv at matched size, on sCIFAR, Speech Commands and BIDMC). The comparison is theirs. It is an
-  initialization contrast that also moves the real part, not a clamp, and the two reads differ on how much it says
-  about oscillation (§2). The LRU paper has no real arm. LinOSS and D-LinOSS have no oscillation-off arm.
+- **A real-versus-complex contrast inside one diagonal SSM is published in S4D (2022)** (Table 3(a), S4D-Real
+  against S4D-Inv at matched size, on sCIFAR, Speech Commands and BIDMC). It is an initialization contrast that also
+  moves the real part, not a clamp, and the two reads differ on how much it says about oscillation (§2). The LRU
+  paper has no real arm. LinOSS and D-LinOSS have no oscillation-off arm.
 - **The lab's own part is a measurement, stated as one.** In a three-block LRU-style complex-diagonal recurrence
   (`CLRU` in `run_pmnist_ablation.py`), the phase θ was held at 0 for the whole of training while the magnitude
-  parameterization stayed unchanged, on permuted MNIST with permutation 1234: a gap of +0.3122 at 4000 steps on two
-  seeds (the July receipt), and 0.1097 at 12,000 steps under the sealed re-run (the robustness RESULT). None of the
-  four papers read here has permuted MNIST, and none has an arm that holds the phase at zero through training while
-  the magnitude stays free. That describes four papers. It is not a statement about the literature: TIDES, S5 and the
-  PAPER's other related work are unread.
+  parameterization and initialization stayed unchanged, on permuted MNIST with permutation 1234: a gap of +0.3122 at
+  4000 steps on two seeds (the July receipt), and 0.1097 at 12,000 steps under the sealed re-run (the robustness
+  RESULT). None of the four papers read here has permuted MNIST, and none reports an arm that holds the phase at zero
+  through training with the magnitude parameterization and initialization unchanged. That describes four papers. It
+  is not a statement about the literature: TIDES, S5 and the PAPER's other related work are unread.
 
 ### `RESULT_pmnist_ablation_2026_07_23.md` (the July RESULT; `CERT_pmnist_ablation.json` names it)
 
 - **Stands, as a measurement:** l.25, "`FREE − CLAMPED = +0.3122`. Matched-param (101,002 vs 100,810) and
-  RNG-matched; the single knob is θ." No read paper has permuted MNIST, so none confirms or refutes the number; its
-  pointer to the robustness RESULT is already owed. "Matched-param" is approximate: in `run_pmnist_ablation.py`
-  l.55-58, FREE registers θ as a parameter and CLAMPED as a buffer, so FREE trains 192 more parameters (64 modes × 3
-  blocks), which is the l.25 difference itself.
+  RNG-matched; the single knob is θ." No read paper has permuted MNIST, so none confirms or refutes the number. Its
+  forward pointer to the robustness RESULT is owed, and open PR #226 (branch `papers/pmnist-robustness-pointers`, not
+  merged when this NOTE was written) adds it as a NOTE beside the July RESULT. "Matched-param" is approximate: in
+  `run_pmnist_ablation.py` l.55-58, FREE registers θ as a parameter and CLAMPED as a buffer, so FREE trains 192 more
+  parameters (64 modes × 3 blocks), which is the l.25 difference itself.
 - **Known wrong, needs a banner:** l.6, "`run_pmnist_ablation.py` (deep S5/LinOSS-class classifier", and l.49-51,
   "Combined with Appendix A of the paper (the phase-clamp is LinOSS's oscillation ablation by the math), this is a
   causal statement about the LinOSS/S5 class on real long-range data that the whole-architecture benchmarks cannot
@@ -399,20 +420,27 @@ Read together, the four papers give this:
 - **Stands as a paraphrase of LinOSS's abstract, needs the table beside it:** l.34-35, "LinOSS (Rusch & Rus, ICLR
   2025) builds a bank of forced harmonic oscillators and beats Mamba ~2× on 50k-length sequences". Table 2 gives
   1.66× against Mamba (§3).
-- **Known wrong as general sentences, needs a banner:** l.9-10, "Yet the field evaluates them by comparing whole
-  architectures (e.g. LinOSS vs Mamba), which cannot isolate what the oscillation *itself* contributes"; l.36-38,
-  "But *why* they work — whether the oscillation is causally essential or an incidental feature of a good
+- **Contradicted in part as general sentences, needs a banner:** l.9-10, "Yet the field evaluates them by comparing
+  whole architectures (e.g. LinOSS vs Mamba), which cannot isolate what the oscillation *itself* contributes";
+  l.36-38, "But *why* they work — whether the oscillation is causally essential or an incidental feature of a good
   architecture — is untested, because the standard comparison is between whole models."; l.38, "We supply the
-  missing causal instrument", with the ordinal adjective l.39 puts on the within-architecture map; l.91-92, "This is
-  the controlled single-knob within-architecture ablation the whole-model benchmarks cannot run." S4D's Table 3(a) is
-  a within-architecture real-versus-complex comparison at matched size from 2022, and the LRU paper compares
+  missing causal instrument", with the ordinal adjective l.39 puts on the within-architecture map. S4D's Table 3(a)
+  is a within-architecture real-versus-complex comparison at matched size from 2022, and the LRU paper compares
   parameterizations within the complex diagonal family. These sentences are true of LinOSS and D-LinOSS, not of the
   field.
-- **Priority-shaped, known wrong as written, should not be printed:** l.72-73, "Across all of these, the move no one
-  makes — clamp the oscillation off, hold everything else fixed, measure Δ — is ours." S4D-Real starts the imaginary
-  parts at zero, holds architecture and protocol fixed and reports Δ. What separates the lab's arm (θ held at 0
-  through training, magnitude unchanged) is a design difference, not priority. The Related Work section (l.62-73)
-  also omits the LRU paper, whose parameterization `CLRU` uses, and S4D.
+- **True as written, implies more than it says, needs the S4D pointer:** l.91-92, "This is the controlled
+  single-knob within-architecture ablation the whole-model benchmarks cannot run." Whole-model benchmarks cannot run
+  a within-architecture ablation, so the sentence is literally true. What it implies, that no within-architecture
+  real-versus-complex comparison exists, does not hold: S4D published one (§2).
+- **Priority-shaped, not supportable as written, should not be printed:** l.72-73, "Across all of these, the move no
+  one makes — clamp the oscillation off, hold everything else fixed, measure Δ — is ours." It is shaped as a
+  priority claim, four reads cannot carry a universal sentence, and no read supports it. Its nearest relative in the
+  four papers is S4D-Real, which starts the imaginary parts at zero, holds architecture and protocol fixed and
+  reports Δ. S4D-Real is an initialization rather than a phase held at zero through training, and it moves the real
+  part too, so it is not the move as the sentence states it; nor do the four papers show anyone making that move.
+  What separates the lab's arm (θ held at 0 through training, magnitude parameterization and initialization
+  unchanged) from S4D-Real is a design difference, not priority. The Related Work section (l.62-73) also omits the
+  LRU paper, whose parameterization `CLRU` uses, and S4D.
 - **Known wrong, needs a banner:** l.47, "**FREE**: θ learnable → the oscillatory (S5/LinOSS-class) model.", and
   l.79, "A deep S5/LinOSS-class classifier", for the reason given under the July RESULT.
 - **Known wrong, needs a banner on Appendix A:** l.173, "## Appendix A: the phase-clamp is LinOSS's oscillation
@@ -436,11 +464,14 @@ NEGATIVE)", as the row reads on origin/main `2e218601`.
 - "in SSMs" exceeds the measurement: one LRU-style architecture. No read paper supports the general sentence: S4D
   shows a real initialization losing to S4D-Inv at matched size (the reads differ on what that says about
   oscillation, §2), the LRU paper has no real arm, and LinOSS and D-LinOSS have no oscillation-off arm.
-- The row can carry no priority, implied or stated, because the real-versus-complex contrast within one diagonal SSM
-  is S4D's.
+- The row can carry no priority, implied or stated, because a real-versus-complex contrast within one diagonal SSM
+  is published in S4D (2022).
 - What the row needs is a named architecture ("a three-block LRU-style complex-diagonal recurrence, `CLRU`"), and
   pointers to the robustness RESULT, which says the row's status changes with its verdict (l.449-450), and to this
   NOTE. The INDEX "carries no finding" (its l.3-4), so the edit is cheap; this NOTE does not make it.
+- Open PR #226 (branch `papers/pmnist-robustness-pointers`, not merged when this NOTE was written) rewrites this
+  row: it names the architecture as LRU-style `CLRU`, drops "in SSMs", points to the robustness RESULT and its
+  verdict, and sets the status to SUPERSEDED. It does not point to this NOTE.
 
 ### `RESULT_pmnist_robustness_2026_10_23.md`
 
@@ -460,8 +491,8 @@ NEGATIVE)", as the row reads on origin/main `2e218601`.
   and the LRU paper (2023-03-11) about three years and four months.
 - Its conditional ("If either recollection holds, ... the knob itself is not new") holds through S4D, in this form.
   A real-versus-complex initialization contrast inside one architecture at matched size is published. The specific
-  form the lab ran, phase held at zero for all of training with the magnitude parameterization unchanged, is not in
-  any of the four papers read.
+  form the lab ran, phase held at zero for all of training with the magnitude parameterization and initialization
+  unchanged, is not reported in any of the four papers read.
 
 ### Other lab files the reads touch (no edit made)
 
