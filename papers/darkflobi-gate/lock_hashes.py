@@ -189,19 +189,48 @@ def parse_lock_rows(text: str) -> dict[str, tuple[str, str]]:
     return out
 
 
+def gates_block_sha256(text: str) -> str:
+    """The sha256 of the text between the plain ```gates fence and its closer, as the scanner reads a plain file.
+
+    `styxx.protocol._select_gates_block` is the authority (it refuses hidden, indented, tilde and doubled fences);
+    this is the standard-library reading of the one plain form, enough to re-derive the row without styxx on the path.
+    """
+    lines = text.split("\n")
+    opens = [i for i, ln in enumerate(lines) if ln == "```gates"]
+    if len(opens) != 1:
+        raise ValueError(f"expected exactly one plain ```gates fence, found {len(opens)}")
+    i = opens[0]
+    for j in range(i + 1, len(lines)):
+        if lines[j].rstrip() == "```":
+            return hashlib.sha256("\n".join(lines[i + 1:j]).encode("utf-8")).hexdigest()
+    raise ValueError("the ```gates fence is never closed")
+
+
 def check(prereg: Path, w_root: Path, home: Path) -> int:
     text = prereg.read_text(encoding="utf-8")
     rows = parse_lock_rows(text)
     if not rows:
         print("no lock rows found", file=sys.stderr)
         return 2
+    repo_root = prereg.resolve().parent.parent.parent      # papers/darkflobi-gate/PREREG -> the repository
     changed = 0
     for path, (h, label) in rows.items():
         if path.startswith("pin:"):
             status = "SAME" if h == PIN else "CHANGED"
             now = PIN
+        elif path.endswith("#gates"):
+            now = gates_block_sha256(text)
+            status = "SAME" if now == h else "CHANGED"
         elif path.startswith("plugins-subtree:"):
             status, now = "SKIPPED (read the config with the digest script; never printed here)", "-"
+        elif not (path.startswith("W:") or path.startswith("~/")):
+            # a repository file, locked as its git blob: LF bytes, whatever the checkout's line ends
+            p = repo_root / path
+            if p.is_file():
+                now = hashlib.sha256(p.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+                status = "SAME" if now == h else "CHANGED"
+            else:
+                now, status = "-", "ABSENT"
         elif path.endswith("/") and SNAPSHOT_PREFIX in path:
             p = resolve(path.rstrip("/"), w_root, home)
             if p.is_dir():

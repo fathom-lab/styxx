@@ -331,6 +331,31 @@ def test_lock_table_and_check_on_a_synthetic_box(tmp_path):
     assert lock.check(doc, w, home) == 0
 
 
+def test_check_re_derives_the_gates_block_row_and_the_repository_rows(tmp_path):
+    lock = _load(LOCK_PY, "lock_hashes")
+    # the committed PREREG itself: the block row and the rule-file row re-derive without styxx on the path
+    assert lock.gates_block_sha256(PREREG.read_text(encoding="utf-8")) == GATES_SHA256
+    rows = lock.parse_lock_rows(PREREG.read_text(encoding="utf-8"))
+    assert rows["papers/darkflobi-gate/RULES_darkflobi_gate_2026_10_23.md"][0] == \
+        hashlib.sha256(RULES.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+    # a synthetic repository: the rule-file row is hashed LF whatever the checkout's line ends
+    repo = tmp_path / "repo"
+    folder = repo / "papers" / "x"
+    folder.mkdir(parents=True)
+    (folder / "RULES.md").write_bytes(b"a\r\nb\r\n")
+    h_lf = hashlib.sha256(b"a\nb\n").hexdigest()
+    block = '{"gates": {}, "outcomes": [], "smoke_verdict": "x"}'
+    h_block = hashlib.sha256(block.encode("utf-8")).hexdigest()
+    doc = folder / "P.md"
+    doc.write_text("```gates\n" + block + "\n```\n\n| r | `papers/x/RULES.md` | `" + h_lf + "` | blob |\n"
+                   "| g | `P.md#gates` | `" + h_block + "` | block |\n", encoding="utf-8")
+    assert lock.check(doc, tmp_path / "nowhere", tmp_path / "nohome") == 0
+    doc.write_text(doc.read_text(encoding="utf-8").replace(h_block, "0" * 64), encoding="utf-8")
+    assert lock.check(doc, tmp_path / "nowhere", tmp_path / "nohome") == 1
+    with pytest.raises(ValueError):
+        lock.gates_block_sha256("```gates\n{}\n```\n```gates\n{}\n```\n")
+
+
 def test_scan_script_prints_the_pinned_digest_and_the_row_counts(tmp_path):
     r = subprocess.run([sys.executable, str(SCAN_PY), str(PREREG), "--styxx", str(ROOT), "--scratch", str(tmp_path)],
                        capture_output=True, text=True, encoding="utf-8", timeout=300)
