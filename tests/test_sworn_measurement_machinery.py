@@ -504,18 +504,32 @@ class TestSeatRunners:
 
     @pytest.mark.skipif(not (MEAS / "packet_L.json").exists(), reason="packets not built")
     @pytest.mark.parametrize("mod", [SCL, SL])
-    def test_a_seat_over_the_real_packet_refuses_without_a_prereg(self, mod):
+    def test_a_seat_over_the_real_packet_refuses_without_a_prereg(self, mod, tmp_path):
+        # The real packet, in a repository that has no PREREG: never this checkout. Once a
+        # papers/sworn/PREREG_sworn_measurement_*.md is committed here, run(..., dry_run=False) over
+        # MEAS passes the refusal, calls the claude CLI or loads the local model, and writes the
+        # write-once seat file the real run needs.
+        import shutil
+        import subprocess
+        meas = tmp_path / "papers" / "sworn" / "measurement"
+        meas.mkdir(parents=True)
+        shutil.copyfile(MEAS / "packet_L.json", meas / "packet_L.json")
+        r = subprocess.run(["git", "init", "-q", str(tmp_path)], capture_output=True, check=False)
+        assert r.returncode == 0, r.stderr
+        assert C.prereg_at_head(tmp_path) is None
         with pytest.raises(SystemExit) as ei:
-            mod.run("L", 1, MEAS, dry_run=False)
+            mod.run("L", 1, meas, dry_run=False, root=tmp_path)
         msg = str(ei.value)
         assert msg.startswith("REFUSED:") and "PREREG" in msg
+        assert not (meas / "seat_outputs").exists()
 
     @pytest.mark.skipif(not (MEAS / "keys").exists(), reason="keys not built")
     def test_the_key_digests_are_in_the_tree_before_any_seat_file_is(self):
         assert sorted(p.name for p in (MEAS / "keys").glob("*.sha256")) == [
             "sworn_measurement_canary_key.sha256", "sworn_measurement_key_L.sha256",
             "sworn_measurement_key_R.sha256"]
-        assert not (MEAS / "seat_outputs").exists(), "a seat file exists before the PREREG commit"
+        if C.prereg_at_head() is None:
+            assert not (MEAS / "seat_outputs").exists(), "a seat file exists before the PREREG commit"
 
     @pytest.mark.skipif(not (MEAS / "packet_L.json").exists(), reason="packets not built")
     def test_the_transport_check_refuses_a_packet_that_is_not_synthetic(self):
