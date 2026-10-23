@@ -301,6 +301,7 @@ def test_lock_table_and_check_on_a_synthetic_box(tmp_path):
     (gate / "__pycache__" / "gate.cpython-312.pyc").write_bytes(b"\x00")
     (gate / "canary_sealed").mkdir()
     (gate / "canary_sealed" / "seed.json").write_bytes(b"{}")      # a sealed folder: never opened, never a row
+    (gate / "_test_stdout.txt").write_bytes(b"scratch\n")         # a scratch file by the folder's convention
     home = tmp_path / "home"
     home.mkdir()
     rows = lock.rows_for_box(w, home)
@@ -309,6 +310,7 @@ def test_lock_table_and_check_on_a_synthetic_box(tmp_path):
     assert "W:gate/ledger.jsonl" not in paths and "W:gate/sources/deadbeef.md" not in paths
     assert not any("pycache" in p for p in paths)
     assert not any("sealed" in p for p in paths), "a sealed folder must never become a lock row"
+    assert "W:gate/_test_stdout.txt" not in paths
     by_path = {p: h for _, p, h, _ in rows}
     assert by_path["W:gate/salt"] == lock.NOT_BUILT and by_path["W:ops/exhibit_mint.py"] == lock.NOT_BUILT
     assert by_path["W:gate/reconcile.py"] == lock.NOT_BUILT, "a plan-named file that is absent prints a blank row, not nothing"

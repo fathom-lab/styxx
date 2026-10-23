@@ -1,0 +1,74 @@
+prereg: PREREG_darkflobi_gate_2026_10_23.md
+styxx from: C:/Users/heyzo/clawd/wt/gate-prereg
+gates block sha256: 4ed27cb98f72e69f3f4a5acbf83ac62b0d54e2048001052e50600f1068dbeba6
+gates block bytes : 6354
+freeze: the file is committed in its repository; scanned in place
+prereg_commit: dc06d68e84407c487973b6d5a98e3695b26f5eba
+gates (10): ['G_X_exits', 'G_F1_panel', 'G_F2_families', 'G_C_canaries', 'G_N_power', 'G_RN_refusals', 'G_R_refusals_upheld', 'G_B_bound', 'G_S2_padding', 'G_P_pairing']
+undeclared_power_gates: []
+vacuous_gates: []
+outcome rows: 11
+assignments enumerated: 1024
+  row  0 reached by  512 assignments -> INVALID__exits_open
+  row  1 reached by  256 assignments -> INVALID__panel_void
+  row  2 reached by  128 assignments -> ABSTAIN__one_family_counts_only
+  row  3 reached by   64 assignments -> GATE_LEAKS__planted_falsehoods_passed
+  row  4 reached by   32 assignments -> ABSTAIN__underpowered_counts_only
+  row  5 reached by    8 assignments -> GATE_OVERREFUSES__refusals_not_upheld
+  row  6 reached by   12 assignments -> UNBOUND__agent_leaves_bindable_sentences_unbound
+  row  7 reached by    6 assignments -> PADDED__spans_on_sentences_that_bear_nothing
+  row  8 reached by    3 assignments -> WRONG_LEAF__held_spans_do_not_evidence_their_sentences
+  row  9 reached by    1 assignments -> BOUND__under_gate__refusals_upheld
+  row 10 reached by    2 assignments -> BOUND__under_gate__refusals_uncounted
+verdicts realised by scoring synthetic results:
+  ABSTAIN__one_family_counts_only                                         128
+  ABSTAIN__underpowered_counts_only                                        32
+  BOUND__under_gate__refusals_uncounted                                     2
+  BOUND__under_gate__refusals_upheld                                        1
+  GATE_LEAKS__planted_falsehoods_passed                                    64
+  GATE_OVERREFUSES__refusals_not_upheld                                     8
+  INVALID__exits_open                                                     384
+  INVALID__panel_void                                                     128
+  PADDED__spans_on_sentences_that_bear_nothing                              6
+  UNBOUND__agent_leaves_bindable_sentences_unbound                         12
+  WRONG_LEAF__held_spans_do_not_evidence_their_sentences                    3
+rows never realised by a result dict: none
+smoke verdict: INVALID__smoke_plumbing_only (gates read: 0)
+check_metrics usable: True paths: 10
+two gates fences refused: prereg contains 2 gates-like fenced blocks (line 230 (```gates), line 615 (```ga
+
+wilson(z=1.96):
+  k= 73 n= 73  lower=0.9500 upper=1.0000
+  k= 72 n= 72  lower=0.9493 upper=1.0000
+  k=109 n=110  lower=0.9503 upper=0.9984
+  k=108 n=109  lower=0.9499 upper=0.9984
+  k=140 n=142  lower=0.9501 upper=0.9961
+  k=139 n=141  lower=0.9498 upper=0.9961
+  k=111 n=112  lower=0.9512 upper=0.9984
+  k=110 n=112  lower=0.9372 upper=0.9951
+  k= 28 n= 40  lower=0.5457 upper=0.8193
+  k= 27 n= 30  lower=0.7438 upper=0.9654
+  k=  9 n= 15  lower=0.3575 upper=0.8018
+  k= 19 n= 20  lower=0.7639 upper=0.9911
+  k= 18 n= 20  lower=0.6990 upper=0.9721
+  smallest n with 0 misses clearing 0.95: 73
+  smallest n with 1 miss  clearing 0.95: 110
+  smallest n with 2 misses clearing 0.95: 142
+  se of a share at p=0.70, n=40: 0.0725
+
+# receipt trailer (written by the piece after the PREREG's commit; the scan above is the scanner's own output)
+written: 2026-10-23T08:32:32-04:00
+prereg commit: dc06d68e84407c487973b6d5a98e3695b26f5eba
+prereg blob sha256 (git show <commit>:<path> | sha256sum): 83e6d2a77486534ee3c6835087f94e70d39b0377674855c8cc1da6c5946ef050  59882 bytes
+rules blob sha256: dde0226bad5b29e6f2d3904e5a4a62019b1c03e922944949109aadfbfa9802b8  34532 bytes
+styxx used by the scan: the repository at origin/main bebdadf1 (protocol.py and mind.py byte-identical to the pin 3437340b)
+instrument digests at the pin (sha256 over the snapshot's bytes; the six the PREREG's section 11 abbreviates, and the two it prints whole):
+  c448ded108df0f54de7a68cb0755fd31f574e21d4ace8c6b6b4b427cd8e9ea59  styxx/certify.py
+  54f472d863776f28225440c72ad2b84b8e40eb1218dbd4993f5578109b42c9b3  styxx/capsule.py
+  c4c5091b991061f22592e1353da3a9d14889e4817aecf9bb15645de720577115  styxx/mind.py
+  e320e1372e22d0fcc825b50e36e4af9dbbab0457c9f8fc778e3e8f66673248da  styxx/agent_audit.py
+  b63f2b03c5051f7ca1a196c9b6ac9e7f907fe626970a22e400e484e4598aa446  styxx/diffgate.py
+  db32cf7cdb84ca3be748deffa050b88b787d0e3046f930b2608629233a4601e7  styxx/instrument.py
+  45da869e1571396589dc50ed75183de56055a846432ae43dde6aa7fac7519fdc  styxx/protocol.py
+  7e4602472010497a69a050995485efec4ee42b30c8ed4a2b7be545c0c5a84526  styxx/sworn.py
+  27551f2385b3edc71fbfc93af0f81df2bc48d68d381fa13c3643dec3247c83f9  scripts/surface_lint.py

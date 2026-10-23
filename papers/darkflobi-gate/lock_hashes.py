@@ -125,6 +125,8 @@ def gate_files(gate: Path):
             p = Path(dirpath) / name
             if not parts and name in EXCLUDED_NAMES:
                 continue
+            if name.startswith("_"):            # a scratch file by the folder's own convention (`_scratch/`, `_test_*.txt`)
+                continue
             if p.suffix in EXCLUDED_SUFFIXES or not p.is_file():
                 continue
             out.append((p.relative_to(gate).as_posix(), p))
