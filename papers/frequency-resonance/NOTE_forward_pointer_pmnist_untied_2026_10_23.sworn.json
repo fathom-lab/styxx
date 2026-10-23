@@ -1,0 +1,87 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "cdf9f470c0614167b757706f7eb0dbcac6b94f7c",
+ "document": {
+  "name": "NOTE_forward_pointer_pmnist_untied_2026_10_23.md",
+  "sha256": "a5e70fc6fd831e51421f94fa125305563ccb6ef35c0e13a266dcdf9e52a2d3d6"
+ },
+ "text": "# NOTE — the forward pointer from the sealed untied PREREG to the robustness RESULT\n\n**status: a forward pointer, sworn to committed bytes. It stands beside `PREREG_pmnist_untied_2026_09_02.md`, in\nthis directory, and edits nothing: the PREREG keeps the blob SEALS row 2 names.**\n\n2026-10-23. Section 10 of `PREREG_pmnist_robustness_2026_10_11.md` owes `PREREG_pmnist_untied_2026_09_02.md` a\nforward pointer to `RESULT_pmnist_robustness_2026_10_23.md`, and that RESULT lists the pointer under \"Owed with this\nRESULT, and not done by the kit that wrote it\". The kit's pointer paragraph, quoted byte for byte:\n\n> **Forward pointer (2026-10-23).** The permuted-MNIST measurement this document reports was re-run under\n> `PREREG_pmnist_robustness_2026_10_11.md` (five held-out permutations, three new seeds on permutation 1234, a 3x\n> budget arm and the untied control under one frozen bar); its RESULT, `RESULT_pmnist_robustness_2026_10_23.md`, reads\n> `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`.\n\nThe kit wrote one paragraph for both documents that are owed a pointer. In it, \"this document\" is\n`PREREG_pmnist_untied_2026_09_02.md`, which designs a measurement and reports none; beside it, \"the measurement this\ndocument reports\" reads as the one it designs, FREE, CLAMPED and the untied real bank REAL2 on permuted MNIST, which\nthe robustness PREREG ran again as its untied control.\n\n## What it points to\n\nThe re-run's receipt reads\n`BUDGET_CONFOUND__gap_does_not_survive_3x_steps`.\nThe sentence that verdict licenses, copied with its spans from the RESULT's section \"The sentence this verdict\nlicenses\":\n\n**On permutation\n1234,\nat\n12,000\nsteps under a cosine schedule re-stretched to that budget, the gap is\n0.1097\n(two FREE seeds against three CLAMPED seeds); at\n4,000\nsteps on three new seeds it is\n0.3182.\nThe\n4000-step\ngap does not survive the longer budget on this permutation.**\n\nNothing stronger is licensed. Section 11 of the robustness PREREG refuses the general sentence about the +0.3122 and\nthe training budget: one permutation and five runs do not license it (M8). The +0.3122 is the 2026-07-23 receipt's\nFREE minus CLAMPED,\n+0.3122,\nthe flagship this PREREG's opening names.\n\nThis NOTE carries no verdict for the untied run. That run ended on 2026-10-11, its receipt is sealed, and the\nrobustness RESULT prints none for it:\n`its verdict is not printed here`.\n\n## Why beside it and not inside it\n\nThe lead's decision, for this NOTE and for `NOTE_forward_pointer_pmnist_ablation_2026_10_23.md` beside the\n2026-07-23 RESULT: both target documents are named by the sha256 of their bytes, one by a certificate and one by a\nseal, and this lab never regenerates a committed receipt in place, so the pointers land beside them as two NOTE\nfiles, not inside them. For this document:\n\n- SEALS row 2 names its blob. Line 33 of `papers/checksum/SEALS_2026_09_13.md`, row 2 of its table, carries\n  `507ef9aceb297ba06511d9e96c79ab9e1d6eca867d2ab73390e884c455c4a600`\n  in its blob column, and the file still is that blob:\n  its blob hashes to `507ef9aceb297ba06511d9e96c79ab9e1d6eca867d2ab73390e884c455c4a600`.\n- A seal is the digest of the frozen file's git blob\n  (`A seal is the sha256 of the **git blob** of the frozen file`),\n  so any byte added inside the PREREG, a pointer included, would leave row 2 naming a blob the file no longer is,\n  while the sealed untied receipt is the run this PREREG froze before data.\n\nPutting this pointer inside `PREREG_pmnist_untied_2026_09_02.md` stays the operator's call.\n\n## What this note does not do\n\n- It does not put the pointer inside the PREREG. A reader who opens only that file does not see it; that is the cost\n  of this route.\n- It does not unseal, read or score the untied receipt.\n- It does not meet section 10's \"in the same commit as the RESULT\": the RESULT was committed without the pointer and\n  lists it as owed.\n- It reports no measurement of its own. The robustness RESULT and its receipt are the record, and no outcome there\n  bears on deployed models, on attention, on importance or on priority (PREREG section 11).\n\n## Sworn\n\nThis note swears 12 spans, each to bytes committed at the commit its sidecar names: the two runs' receipts, the\nrobustness RESULT's line 271, SEALS row 2 and the rule above it, and the untied PREREG's blob. The sidecar and the\nverdict receipt beside this file were written by `python -m styxx.sworn canon` and `python -m styxx.sworn verify`;\nthe verdicts are the receipt's.\n",
+ "spans": [
+  {
+   "start": 1440,
+   "end": 1488,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 1630,
+   "end": 1634,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/anchor_perm",
+   "kind": "numeric"
+  },
+  {
+   "start": 1639,
+   "end": 1645,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 1716,
+   "end": 1722,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 1772,
+   "end": 1777,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 1809,
+   "end": 1815,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/anchor_gap_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1821,
+   "end": 1825,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 2146,
+   "end": 2153,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/result/free_minus_clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 2346,
+   "end": 2379,
+   "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L271",
+   "kind": "quote"
+  },
+  {
+   "start": 2906,
+   "end": 2972,
+   "receipt": "path:papers/checksum/SEALS_2026_09_13.md#L33",
+   "kind": "quote"
+  },
+  {
+   "start": 3030,
+   "end": 3115,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_untied_2026_09_02.md",
+   "kind": "hash"
+  },
+  {
+   "start": 3173,
+   "end": 3234,
+   "receipt": "path:papers/checksum/SEALS_2026_09_13.md#L9",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
