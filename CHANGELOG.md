@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — RESULT: the permuted-MNIST headline under held-out permutations, new seeds and a 3x budget reads `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`
+
+**`papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md` (sworn), `pmnist_robustness_result.json`,
+`pmnist_robustness_runs/` (the leaves and the leaf log).** On permutation 1234, at 12,000 steps under a cosine
+schedule re-stretched to that budget, the gap is 0.1097 (two FREE seeds against three CLAMPED seeds); at 4,000 steps
+on three new seeds it is 0.3182. The 4000-step gap does not survive the longer budget on this permutation. Each number
+is sworn in the RESULT; its pointers, into `pmnist_robustness_result.json` where no file is named:
+`#/config/anchor_perm`, `#/config/steps_long`, `#/result/gap_long`, `#/config/steps_main`,
+`#/result/anchor_gap_newseed`.
+
+- **Scored under the sealed bars.** The PREREG (SEALS row 7, `2068e673…`) read with its CORRECTION (row 7b,
+  `e591516f…`), gates block `578924f8…`: `styxx.protocol` scored the whole receipt to
+  `BUDGET_CONFOUND__gap_does_not_survive_3x_steps` (`pmnist_robustness_result.json#/verdict`). No bar moved, and the
+  RESULT takes the verdict from the receipt.
+- **The permutations.** The five held-out permutations were the labelled sha256-of-tag fallback, typed by the
+  designer's tag and ordering nothing after the seal.
+- **The run** (operator-attested in the RESULT): smokes 18.15 min per 4000-step run (sha256 `541f0bf0…`); 18.22 min
+  per 4000-step run (sha256 `fcc51b31…`). Nights 1, 2 and 3 ran with `--accept-schedule`. Nights (operator-attested
+  dates): night 1 ran on 2026-10-12; night 2 ran on 2026-10-22; night 3 ran on 2026-10-23. Night 1 stopped in run 4
+  (`p1234_free_s3_4000_h64.json`) with a CUDA out-of-memory error, caused by another process's use of the host's
+  commit charge, and was resumed; the leaves already written persisted, and the crash and relaunch logs are named by
+  sha256 in the RESULT.
+- **The 2026-09-02 sentence gets its banner** ("The arc's headline survives its own confound; the permuted-MNIST
+  re-run is the owed next preregistration."), whatever the verdict (PREREG §10): it was never supported by a receipt
+  on this benchmark.
+- **Owed in the same commit** (PREREG §10): forward pointers to the RESULT in `RESULT_pmnist_ablation_2026_07_23.md`
+  and `PREREG_pmnist_untied_2026_09_02.md`; the untied PREREG is sealed (SEALS row 2) and a certificate names the
+  2026-07-23 RESULT, so how the pointers land is the operator's call.
+- **Sworn.** 229 spans, all HELD at write time against the bytes the kit read; sentence_share 0.3567 (advisory).
+
 ## [Unreleased] — a diffgate record names the build and runtime that wrote it: `build` and `runtime` after the eleven content keys (identity phase 2)
 
 **Phase 2 of the design the operator approved on 2026-10-11**, after phase 1 below. The operator waived
@@ -3736,6 +3766,20 @@ limiting case, all structure). Census re-folded under the new mapping hash; two 
 the lab's own 207 documents the flag moves 0 of 8,583 tokens; on the rebuilt external corpus it removes
 exactly the 13 accusations the panel called non-claims, taking the external false-accusation rate from
 0.2596 to 0.2323. The RESULT recommends the flip; the flip is the release cycle's.
+
+> **Banner, 2026-10-23, with `papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md`.** This paragraph's
+> last sentence, "The arc's headline survives its own confound; the permuted-MNIST re-run is the owed next
+> preregistration.", was never supported by a receipt on this benchmark; the later entry for
+> `PREREG_pmnist_robustness_2026_10_11.md` says so: "The arc's headline (+0.3122 on permuted MNIST,
+> `pmnist_ablation_result.json`) rests on two seeds, one pixel permutation and a 4000-step budget with no convergence
+> control, and the 2026-09-02 entry below ("The arc's headline survives its own confound; the permuted-MNIST re-run is
+> the owed next preregistration") was never supported by a receipt on this benchmark." The re-run it names has run and
+> reads `BUDGET_CONFOUND__gap_does_not_survive_3x_steps` (`pmnist_robustness_result.json#/verdict`), and the RESULT
+> words it so: On permutation 1234, at 12,000 steps under a cosine schedule re-stretched to that budget, the gap is
+> 0.1097 (two FREE seeds against three CLAMPED seeds); at 4,000 steps on three new seeds it is 0.3182. The 4000-step
+> gap does not survive the longer budget on this permutation. The +0.3122 headline
+> (`pmnist_ablation_result.json#/result/free_minus_clamped`) does not carry at this verdict, and this paragraph's last
+> sentence does not stand.
 
 **The confound in the phase clamp, preregistered.** `PREREG_untied_magnitudes_2026_09_02.md`: the
 clamp removes rotation and, in the same move, ties each complex mode's two real channels to one
