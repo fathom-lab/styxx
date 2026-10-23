@@ -1,0 +1,75 @@
+{
+  "title": "styxx v7.50.0 — the front door says, in EXTERNAL-1's committed words, that the gate claim is not yet true; the diff gate cuts a diff where git does; every diffgate record and charon's verifier name the build and runtime that wrote them",
+  "doi": "10.5281/zenodo.23594959",
+  "publication_date": "2026-10-23",
+  "description": "<p>This version continues the styxx software record (v6.2.0, the reference implementation of the Cognometric Fingerprint Specification v1.0, <a href=\"https://doi.org/10.5281/zenodo.19746215\">10.5281/zenodo.19746215</a>; its deposited foundations outline predates the 2026-06-21 scope note, D5 in <code>zenodo/MANIFEST.json</code>) and belongs to the Fathom research series (<a href=\"https://doi.org/10.5281/zenodo.19326174\">10.5281/zenodo.19326174</a>).</p>\n\n<p><strong>styxx v7.50.0</strong>, cut 2026-10-22 and released 2026-10-23: a minor release. This\nrecord holds the Python package exactly as published on PyPI and the source tree at the git tag\n<code>v7.50.0</code> (commit <code>bebdadf1562c742f53f2114cad99b4aba0738cdf</code>). It is a version in the\nstyxx software concept record\n<a href=\"https://doi.org/10.5281/zenodo.19758618\">10.5281/zenodo.19758618</a>, which resolves to\nthe latest version. styxx 7.49.0, the release before this one, is\n<a href=\"https://doi.org/10.5281/zenodo.23221755\">10.5281/zenodo.23221755</a> in the same concept (released\n2026-10-07).</p>\n\n<p>The release, in the words of the <code>## [7.50.0]</code> section's opening paragraph (its last\nsentence, on the order of its entries, left out): A minor release: the front door prints the sentence the lab's 2026-08-31 preregistration committed it to (\"an agent's PR summary cannot lie about its diff\" is not yet true of this instrument on real-world data; EXTERNAL-1, precision 0.23) and stops making the claim on every shipped surface, held there by a word lint in CI; the diff gate cuts a diff at git's own line ends and abstains where its two readers still read a line apart (#205), and a declared count is ASCII digits in both ports (#206); every diffgate record names the build and runtime that wrote it, and charon's verifier names its own; the research capsule, the horizon datasheet, the robustness preregistration and its correction, the real-model bridge's closure, the zoo screen and the sealed-ahead records; and what else merged on <code>main</code> after 7.49.0. Upgrade with <code>pip install -U styxx==7.50.0</code>. The PyPI summary changes with this release: the April positioning (\"Cognitive observability\", \"HaluEval-QA AUC 0.998\", a register-detection figure at a documented construct ceiling) is replaced by what the instruments do; earlier PyPI pages are superseded, not edited. This record's keywords are\n<code>pyproject.toml</code>'s at the tag, which the cut changed with the summary: 12 keywords\nwhere 7.49.0's record carries 15.</p>\n\n<p>The list after this paragraph gives the heading of each of the 17 entries of the\n<code>## [7.50.0]</code> section of <code>CHANGELOG.md</code> in this tree, where the full entries and\ntheir receipts are; each heading is as that section prints it, its markdown backticks dropped. The\nlist of stale or wrong lines after them comes from that section and the <code>## [7.49.0]</code> and\n<code>## [7.48.1]</code> sections, from <code>zenodo/MANIFEST.json</code> (its open defects and its\nentry for this concept), from 7.49.0's record as committed under <code>release/</code>, and from the\nfiles each line names, as they stand at the tag. The last two sections describe this deposit: what\nit holds, and each file's size, sha256 and md5, computed from the deposited bytes, with the source\nbundle's file count taken from the tag's tree.</p>\n\n<p><strong>What this release carries: the 17 entries of the <code>## [7.50.0]</code> section</strong></p>\n<ul>\n<li>conformance/sworn regenerated for 7.50.0: the version stamp moves every vector's id and no expected outcome</li>\n<li>the front door says, in EXTERNAL-1's committed words, that the gate claim is not yet true, and stops making it</li>\n<li>sealed-ahead: the build stopped on 2026-10-12; its battery, sizing week and stranger pool check are committed as records</li>\n<li>diffgate cuts a diff where git does and abstains where its two readers still read a line apart (#205); a declared count is ASCII digits in both ports (#206)</li>\n<li>the zoo D0 screen: 13 cached models on bridge v3's compare and recall at 16 tokens (pilot-class, licenses nothing)</li>\n<li>charon's verifier names its runtime: verifier scheme <code>styxx.charon/verifier/v1</code>, module shas over LF bytes and the runtime inside the digest (identity phase 3)</li>\n<li>a diffgate record names the build and runtime that wrote it: <code>build</code> and <code>runtime</code> after the eleven content keys (identity phase 2)</li>\n<li>the real-model bridge, attempt three: NOT STARTED, two pilots both NEITHER, the behavioural route closed</li>\n<li>PREREG: the permuted-MNIST headline under held-out permutations, new seeds and a 3x budget, sealed as a git blob before any run, with a CORRECTION sealed beside it before any data</li>\n<li>the research capsule, Phase A: one HTML file carries the chain of one preregistered experiment and prints three readings per link</li>\n<li>capsule v0.2 layer 2 compares a record's instrument identity apart from its content; <code>styxx.instrument</code> names the build and runtime a diffgate record is written and re-run under</li>\n<li><code>styxx.horizon</code>: the horizon datasheet, an instrument from per-item bits to censored horizons, with the self-test that gates its printing</li>\n<li><code>capsule verify</code> ends every hostile capsule in a named problem, never a traceback, and refuses the same file names on every system (#196)</li>\n<li>the GitLab job reports by default; blocking is opt-in with <code>STYXX_SOFT_FAIL: \"false\"</code></li>\n<li>the leaderboard <code>styxx leaderboard</code> prints says what Baseline-019 measured, without the priority claim <code>critique.py</code> withdrew</li>\n<li>NOTE: the HANDOFF capsule reproduces under its minting build; a record that names no build cannot say so</li>\n<li>styxx 7.49.0 on Zenodo, as the next version of the software record</li>\n</ul>\n\n<p><strong>Known stale or wrong lines in the deposited tree</strong></p>\n<ul>\n<li><code>CITATION.cff</code> gives <code>version</code> 7.49.0 and <code>date-released</code>\n2026-10-07; the cut did not move them, and <code>styxx/_version.py</code> at the tag is 7.50.0. Its\n<code>identifiers</code> entry still names 7.48.0's version DOI (10.5281/zenodo.23042251) beside the\nconcept DOI, which the Zenodo entry of the <code>## [7.50.0]</code> section records as true of 7.48.0\nand leaves to the operator.</li>\n<li><code>README.md</code>, which becomes the PyPI page, keeps its 91 tag-pinned links at\n<code>v7.49.0</code>; the cut did not move them to <code>v7.50.0</code> (7.49.0's cut had moved its 89\nfrom <code>v7.48.0</code>, as the <code>## [7.49.0]</code> section records).</li>\n<li><code>web/gate/README.md</code>'s opening paragraph calls the PATH-2a block not yet released,\nand its drift section, <code>web/gate/differential/py_side.py</code> and the headers of\n<code>web/gate/diffgate.js</code> and <code>web/gate/bookmarklet_src.js</code> still speak of\n7.48.0 as not yet shipped. The bookmarklet's panel text (<code>web/gate/bookmarklet_ui.js</code>)\nstill calls its port the 7.48.0 one, as <code>web/gate/README.md</code> says; that file's PATH-2a\nsection says 7.49.0 released it.</li>\n<li>The header comment of <code>.github/workflows/diffgate.yml</code> says the instrument is the\nreleased package; the Action imports the <code>styxx</code> package beside its script, at the ref\nthe workflow names (the Action entry of the <code>## [7.49.0]</code> section).</li>\n<li><code>sworn/README.md</code> and <code>sworn/action.yml</code> still give\n<code>styxx==7.48.0</code> as the way to install the released <code>styxx.sworn</code>;\nGHSA-h5xv-4344-f62r (the <code>## [7.48.1]</code> section) and GHSA-3g8h-qcfm-25xw (the\n<code>## [7.49.0]</code> section) both name 7.48.0 as affected.</li>\n<li><code>README.md</code> labels 10.5281/zenodo.19326174, the concept record of the Fathom\nresearch-paper series, as the always-latest DOI in its badge row and link table (open defects D3\nand D4 in <code>zenodo/MANIFEST.json</code>). Its citation row names the software concept DOI,\n10.5281/zenodo.19758618.</li>\n<li><code>CITATION.cff</code> names the software concept DOI, but GitHub's \"Cite this repository\"\nprompt renders its <code>preferred-citation</code>, the position paper 10.5281/zenodo.19777921,\nwhich predates that paper's 2026-06-21 scope erratum (D2 in <code>zenodo/MANIFEST.json</code>).\nWhether the prompt should cite the software is left to the maintainer.</li>\n<li>The committed EXTERNAL-1 packet,\n<code>papers/closed-model-frontier/external1_packet.json</code>, still carries the id leak. Since\n#125 its builder, <code>external1_packet.py</code>, numbers items by their shuffled position by\ndefault, and its <code>build --as-published</code> mode writes the pre-repair numbering on purpose,\nleak included, because the committed packet, key and digest are receipts; that mode has been shown\nonly on a synthetic ledger and shelf, not run on the real ones. Whether any adjudicator used the\nleak cannot be re-tested.</li>\n<li><code>zenodo/README.md</code> still describes the 7.48.0 deposit flow only.</li>\n<li><code>zenodo/MANIFEST.json</code> names 7.49.0 (10.5281/zenodo.23221755) as the latest version\nof this concept; this record supersedes that line.</li>\n<li>The <code>## [7.49.0]</code> section, kept as released, carries the wording its record\n(10.5281/zenodo.23221755) lists as stale: that PATH-2a is not released, the\n<code>styxx/diffgate.py</code> digests #201 had moved, and the G-P1 decision left to the operator.\nOf the files that record names, <code>styxx/_data/LEADERBOARD.md</code> and the two comments in\n<code>styxx/__init__.py</code> no longer carry the Baseline-019 priority claim (the leaderboard\nentry above); the other lines stand as listed here.</li>\n<li><code>papers/frequency-resonance/NOTE_zoo_d0_screen_plan_2026_10_12.md</code>, section 15, says\nthe partial log and the earlier attempt's <code>zoo_d0_screen_refusal.json</code> stay on disk,\nuntracked; both files (<code>zoo_d0_screen.partial.jsonl</code> and\n<code>zoo_d0_screen_refusal.json</code>) are committed beside it, and the zoo entry says so.</li>\n</ul>\n\n<p><strong>Not in this deposit</strong></p>\n<p>This record holds the tagged tree and the two files PyPI serves for 7.50.0, and nothing else.\nWork merged to the default branch after the tag is not in it.</p>\n\n<p><strong>Files in this record</strong></p>\n<ul>\n<li><code>styxx-v7.50.0-source-bundle.zip</code>: the source tree at tag <code>v7.50.0</code>: <code>git archive --format=zip --prefix=styxx-7.50.0/ v7.50.0</code> run with <code>core.autocrlf=false</code>, so each of its 6164 files is byte-identical to its git blob (checked by blob id); the zip comment carries the commit id. 277268802 bytes; sha256 <code>8f444bd13b035f00fb22c24c43109591b8a6fdde2d0b0002f5de25c7d0a25d6f</code>; md5 <code>37ce89258987104eb06ba1556b7e4b33</code></li>\n<li><code>styxx-7.50.0-py3-none-any.whl</code>: the wheel, as published on PyPI (sha256 checked against PyPI). 8208487 bytes; sha256 <code>66744ee588eacfa413fe036b37fc4f7b171d15a86d2c0c31ceacf6f24a0560b3</code>; md5 <code>13d709d1c1419a8ad60fc7520f22ebd3</code></li>\n<li><code>styxx-7.50.0.tar.gz</code>: the sdist, as published on PyPI (sha256 checked against PyPI). 9041414 bytes; sha256 <code>5f706fe0ba580e56155c37d4ca04f988ca14a87288189655ac6145871f1b7af5</code>; md5 <code>9192f9a80ecaa7f7ed8ee082b96b1ae6</code></li>\n</ul>\n<p>Each file in the wheel outside its <code>.dist-info</code> directory, and each file in the sdist other than the build metadata its build generates (<code>PKG-INFO</code>, <code>setup.cfg</code> and <code>styxx.egg-info/</code>), is byte-identical to the tag's blob at the same path. <code>.github/workflows/publish.yml</code> at the tag uploads with <code>attestations: false</code>, so check the wheel and the sdist by the SHA-256 sums above, as <code>SECURITY.md</code> says.</p>\n<p>Reproduce the source bundle's contents from a clone: <code>git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.50.0/ v7.50.0</code>. Every file it holds then equals its git blob; the zip's own sha256 can differ with the git and zlib versions that write it. Without <code>core.autocrlf=false</code> on a machine that sets it, git converts text files to CRLF inside the archive and the file contents differ.</p>",
+  "access_right": "open",
+  "creators": [
+    {
+      "name": "Rodabaugh, Alexander",
+      "affiliation": "Fathom Intelligence"
+    }
+  ],
+  "keywords": [
+    "llm",
+    "agent",
+    "ai-agents",
+    "verification",
+    "pull-request",
+    "diff",
+    "github-action",
+    "receipts",
+    "preregistration",
+    "reproducibility",
+    "ai-safety",
+    "fathom"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/fathom-lab/styxx/releases/tag/v7.50.0",
+      "relation": "isSupplementTo",
+      "resource_type": "software",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/fathom-lab/styxx/tree/bebdadf1562c742f53f2114cad99b4aba0738cdf",
+      "relation": "isDerivedFrom",
+      "resource_type": "software",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://pypi.org/project/styxx/7.50.0/",
+      "relation": "isSupplementTo",
+      "resource_type": "software",
+      "scheme": "url"
+    },
+    {
+      "identifier": "10.5281/zenodo.23221755",
+      "relation": "isNewVersionOf",
+      "resource_type": "software",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.19746215",
+      "relation": "isSupplementTo",
+      "resource_type": "publication-workingpaper",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.19326174",
+      "relation": "isPartOf",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    }
+  ],
+  "version": "7.50.0",
+  "language": "eng",
+  "license": "mit-license",
+  "imprint_publisher": "Zenodo",
+  "notes": "Software concept DOI (all versions): 10.5281/zenodo.19758618. Released 2026-10-23 as styxx 7.50.0 on PyPI (PyPI records the upload at 2026-10-23T10:32Z, UTC); git tag v7.50.0 at commit bebdadf1562c742f53f2114cad99b4aba0738cdf; CHANGELOG.md dates the cut 2026-10-22. No security advisory accompanies this release. styxx 7.49.0, the release before this one, is 10.5281/zenodo.23221755 in this concept.",
+  "upload_type": "software",
+  "prereserve_doi": {
+    "doi": "10.5281/zenodo.23594959",
+    "recid": 23594959
+  }
+}
