@@ -171,3 +171,12 @@ papers/sealed-ahead/records_2026_10_12/** -text
 papers/frequency-resonance/zoo_d0_screen.json -text
 papers/frequency-resonance/zoo_d0_screen.partial.jsonl -text
 papers/frequency-resonance/zoo_d0_screen_refusal.json -text
+
+# pmnist robustness forward pointers (2026-10-23): two sworn NOTEs beside the certified 2026-07-23 RESULT and the
+# sealed untied PREREG, each with its sidecar and receipt, byte-pinned like every other sworn artifact
+papers/frequency-resonance/NOTE_forward_pointer_pmnist_ablation_2026_10_23.md -text
+papers/frequency-resonance/NOTE_forward_pointer_pmnist_ablation_2026_10_23.sworn.json -text
+papers/frequency-resonance/NOTE_forward_pointer_pmnist_ablation_2026_10_23.sworn-receipt.json -text
+papers/frequency-resonance/NOTE_forward_pointer_pmnist_untied_2026_10_23.md -text
+papers/frequency-resonance/NOTE_forward_pointer_pmnist_untied_2026_10_23.sworn.json -text
+papers/frequency-resonance/NOTE_forward_pointer_pmnist_untied_2026_10_23.sworn-receipt.json -text
