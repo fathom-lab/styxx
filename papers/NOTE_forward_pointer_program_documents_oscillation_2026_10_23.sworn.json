@@ -1,0 +1,339 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "459578c4bc9e43d6729fc0ce92cbaa39233c9e30",
+ "document": {
+  "name": "NOTE_forward_pointer_program_documents_oscillation_2026_10_23.md",
+  "sha256": "b3cdbb854c2ae723d2317a8a4b1d49f49d465fe5e50bc95932933a19a3f8aa56"
+ },
+ "text": "# NOTE — the forward pointer from the program audit and the program synthesis to the permuted-MNIST robustness RESULT\n\n**status: a forward pointer, sworn to committed bytes. It stands beside `AUDIT_the_whole_program_2026_09_01.md` and\n`SYNTHESIS_program_2026_07_24.md`, in this directory, and edits neither: both keep their bytes.**\n\n2026-10-23. Two program documents state the frequency arc's permuted-MNIST headline as it stood before its sealed\nre-run. The three sentences, quoted from the documents' committed bytes:\n\n- **The audit, finding 5 of its section 3, \"What is settled, with receipts\"** (lines 240 to 242):\n  `5. **Oscillation is causally load-bearing in state-space models.** +0.3122 permuted-MNIST accuracy`\n  …\n  `from a single phase clamp`\n  …\n  `positive control and a family-wise null.`\n- **The audit, rank 2 of the table in its section 7, \"Built and never used\"** (line 446), the reason it gives\n  for `papers/frequency-resonance/resonance_profiler.py`:\n  `the phase-clamp result behind it is the program's cleanest causal ablation (+0.3122)`\n- **The synthesis, Arc B** (lines 49 and 50):\n  `- **Oscillation is the long-range mechanism** in state-space models (phase-clamp ablation; permuted-MNIST`\n  `decay gap +31.2 points).`\n\nThe re-run is `papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md`, under the sealed\n`PREREG_pmnist_robustness_2026_10_11.md`. This NOTE points each of the three sentences to it, says what carries and\nwhat does not, and points to the documents that already file the same sentences.\n\n## What the re-run reads\n\nThe re-run's receipt reads\n`BUDGET_CONFOUND__gap_does_not_survive_3x_steps`.\nThe sentence that verdict licenses, copied with its spans from the RESULT's section \"The sentence this verdict\nlicenses\":\n\n**On permutation\n1234,\nat\n12,000\nsteps under a cosine schedule re-stretched to that budget, the gap is\n0.1097\n(two FREE seeds against three CLAMPED seeds); at\n4,000\nsteps on three new seeds it is\n0.3182.\nThe\n4000-step\ngap does not survive the longer budget on this permutation.**\n\nNothing stronger is licensed. Section 11 of the robustness PREREG refuses the general sentence about the +0.3122 and\nthe training budget: one permutation and five runs do not license it (M8).\n\n## What carries and what does not\n\n**The number.** All three sentences rest on one measurement, the 2026-07-23 receipt's FREE minus CLAMPED,\n+0.3122:\nFREE\n0.9195\nagainst CLAMPED\n0.6073,\nat\n4000\nsteps on seeds\n0\nand\n1\nand permutation\n1234,\nin a\n3-block\ncomplex-diagonal linear recurrence (LRU-style; `CLRU` in `run_pmnist_ablation.py`). The synthesis's \"+31.2 points\" is\nthe same value in accuracy points. The number stands as what was measured in that setting. As the arc's headline it\ndoes not carry at the re-run's verdict, and the CHANGELOG banner of 2026-10-23 over the 2026-09-02 entry says the\nsame of it: the +0.3122 headline\n`does not carry at this verdict`.\n\n**Finding 5's sentence.** \"Oscillation is causally load-bearing in state-space models\" is the general sentence the\nprior-art reads file. `papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md` quotes it as INDEX\nrow 51 carried it,\n`The single-knob phase clamp shows oscillation is causally load-bearing in SSMs (+0.3122 on permuted MNIST)`,\nand files it:\n`\"in SSMs\" exceeds the measurement: one LRU-style architecture. No read paper supports the general sentence`.\nIts CHANGELOG entry reads\n`INDEX row 51's \"in SSMs\" exceeds every read`.\nThe audit's line 240 states that sentence of state-space models as a class, and the reads give it no more support\nthere than in INDEX row 51. The finding's positive control and its family-wise null are not re-examined here.\n\n**The table row's reason.** The +0.3122 is a gap between two separately trained arms; in CLAMPED,\n`the phase θ was held at 0 for the whole of training`.\nThe profiler the row ranks makes another measurement: it clamps the phase of one trained model in place,\n`the profiler clamps the oscillatory machinery off in place`.\nThe robustness RESULT runs that kind of clamp on its own FREE models and records it\n`because it is free and is not evidence for the between-model gap: a destructive perturbation with`\n`no matched-norm control`.\nSo the row's reason rests on a number that does not carry at the verdict, and that number comes from a measurement\nother than the one the profiler makes. The row's missing piece has been met: the profiler ships as\n`styxx/resonance.py`,\n`styxx.resonance — the resonance profiler`,\npromoted from the file the row names,\n`which the 2026-09-01 program audit listed`\nas built and never shipped. This NOTE does not re-rank the table.\n\n**The synthesis's sentence.** \"Oscillation is the long-range mechanism in state-space models\" is a general sentence\nof the same kind. The prior-art NOTE files the 2026-07-23 RESULT's version of it under\n`**Exceeds every read, needs the same banner:**`,\n`l.39, \"the oscillation *is* the long-range mechanism\"`,\nand the PAPER's banner files the PAPER's own,\n`**Exceeds every read:** \"the oscillation *is* the long-range mechanism\"`,\nand its \"+31.2 points\" headline,\n`**Does not carry at the RESULT's verdict:** the permuted-MNIST headline of the Abstract and §4.1 (+31.2 points,`.\nThe synthesis's lines 49 and 50 state that sentence of state-space models as a class, with the same number, and\nnothing in the reads or the RESULT supports them further than it supports the PAPER's.\n\n## Where the same sentences are already filed\n\n- `papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md`: the re-run, its verdict and the sentence it\n  licenses.\n- `papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md`: the full-text reads of the LRU paper,\n  S4D, LinOSS and D-LinOSS, and its section 5, which files the lab's sentences.\n- `papers/frequency-resonance/PAPER_oscillation_causal_map_2026_07_23.md`: the banner above its unchanged text, which\n  opens\n  `**Banner, added 2026-10-23, from`\n  and files the draft's versions of both general sentences.\n- `papers/INDEX.md`, which the audit names as its companion: its frequency-resonance row reads the re-run's verdict\n  since 2026-10-23,\n  `was re-run under a sealed preregistration and reads`,\n  and so does its +0.3122 receipt row.\n- `papers/rhythm-rescue/NOTE_forward_pointer_untied_magnitudes_2026_10_23.md`: the same pointer beside the\n  2026-09-02 untied-magnitudes RESULT, whose section \"The finding\" states finding 5's sentence too.\n\n## Why beside them and not inside them\n\nThe lead's decision for this sweep, as for the two pointer NOTEs of 2026-10-23 beside the certified 2026-07-23 RESULT\nand the sealed untied PREREG: both documents keep their bytes, and the pointer lands beside them as a NOTE. What names\neach, one file to a sentence:\n\n**The audit.** No certificate, seal, sworn span or receipt names its bytes: on origin/main `333f3c73` a search for its\nsha256 and for its git blob id (`9a5f0b82…`) finds neither. Its bytes, for the record:\nits blob hashes to `41c08977bfbf8f01842256c4375ced0dfbeca0088793eaf708919337ab1dc21d`.\nSworn documents, a census receipt and the leg-2 packets name it by name, and most of them by section:\n\n- `papers/sworn/DESIGN_sworn_measurement_2026_09_01.md`, sworn, cites its §8:\n  `AUDIT_the_whole_program_2026_09_01.md`.\n- `papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02.md`, sworn, cites its §8:\n  `AUDIT_the_whole_program_2026_09_01.md`.\n- `papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01.md`, sworn, takes its rows from the audit's list:\n  `AUDIT_the_whole_program_2026_09_01.md`.\n- `papers/sworn/prose_claimhood_census.json`, that census's receipt, takes §8.1 as written:\n  `in_audit rows are AUDIT_the_whole_program_2026_09_01.md §8.1 direction 1, as written`.\n- `papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01.md`, sworn, cites its M2:\n  `AUDIT_the_whole_program_2026_09_01.md`.\n- `papers/SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md`, sworn, cites its M2:\n  `AUDIT_the_whole_program_2026_09_01.md`.\n- `papers/sworn/measurement/packet_L.json`, which the leg-2 PREREG's lock table pins by sha256,\n  `140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9`,\n  carries two passages that name it:\n  `AUDIT_the_whole_program_2026_09_01.md`\n  and\n  `AUDIT_the_whole_program_2026_09_01.md`.\n- `papers/sworn/measurement/decoys_L.json`, which the same lock table pins by blob,\n  `75a030fd8d18113a2e98c30cbb61d2b037207fbc`,\n  carries one:\n  `AUDIT_the_whole_program_2026_09_01.md`.\n\n**The synthesis.** Its bytes, for the record:\nits blob hashes to `7780a96b3c09046c1bd5006dac9a546fcf7cec89181967918b49bcb6a95e172b`.\n\n- `papers/closed-model-frontier/oath_v11_baseline_ledger.json` records a digest over its extracted number tokens,\n  11\n  tokens,\n  `9bcb573e7b875b639f568ac6128bef82d7d854602063c086381116a61774d9da`;\n  each token carries its line (`extraction_digests` in `make_oath_v11_baseline.py`), the digest reproduces on\n  origin/main `333f3c73`, and the ledger is not regenerated, so a number added inside the synthesis, or a line added\n  above its line 54, where its last token sits, would leave the ledger describing bytes the file no longer holds.\n- `papers/frequency-resonance/RESULT_realmodel_bridge_v3_not_started_2026_10_12.md`, sworn, names its item 3 as the\n  place a pointer of that preregistration lands:\n  `papers/SYNTHESIS_program_2026_07_24.md`;\n  that pointer has stood inside item 3 since 2026-10-12,\n  `Forward pointer (2026-10-12): attempt three: not started; two pilots, both NEITHER`,\n  and carries no number token the ledger reads.\n\nPutting a pointer inside either document stays the operator's call.\n\n## What this note does not do\n\n- It does not put the pointer inside the audit or the synthesis. A reader who opens only one of them does not see\n  it; that is the cost of this route.\n- It does not edit `papers/INDEX.md`, whose two rows already read the verdict.\n- It re-examines nothing else in either document: not finding 5's positive control or family-wise null, not the\n  audit's other findings or other table rows, not the synthesis's other Arc B items.\n- It reports no measurement of its own. No outcome it points to bears on deployed models, on attention, on\n  importance or on priority (robustness PREREG section 11).\n\n## Sworn\n\nThis note swears 54 spans, each to bytes committed at the commit its sidecar names: the audit's and the\nsynthesis's lines and blobs; the 2026-07-23 receipt and the robustness receipt and RESULT; the prior-art NOTE, the\nPAPER's banner, the INDEX row and the CHANGELOG; `styxx/resonance.py`; and the files that name the two documents.\nThe sidecar and the verdict receipt beside this file were written by `python -m styxx.sworn canon` and\n`python -m styxx.sworn verify`; the verdicts are the receipt's.\n",
+ "spans": [
+  {
+   "start": 624,
+   "end": 724,
+   "receipt": "path:papers/AUDIT_the_whole_program_2026_09_01.md#L240",
+   "kind": "quote"
+  },
+  {
+   "start": 733,
+   "end": 760,
+   "receipt": "path:papers/AUDIT_the_whole_program_2026_09_01.md#L241",
+   "kind": "quote"
+  },
+  {
+   "start": 769,
+   "end": 811,
+   "receipt": "path:papers/AUDIT_the_whole_program_2026_09_01.md#L242",
+   "kind": "quote"
+  },
+  {
+   "start": 982,
+   "end": 1068,
+   "receipt": "path:papers/AUDIT_the_whole_program_2026_09_01.md#L446",
+   "kind": "quote"
+  },
+  {
+   "start": 1117,
+   "end": 1224,
+   "receipt": "path:papers/SYNTHESIS_program_2026_07_24.md#L49",
+   "kind": "quote"
+  },
+  {
+   "start": 1227,
+   "end": 1253,
+   "receipt": "path:papers/SYNTHESIS_program_2026_07_24.md#L50",
+   "kind": "quote"
+  },
+  {
+   "start": 1606,
+   "end": 1654,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 1796,
+   "end": 1800,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/anchor_perm",
+   "kind": "numeric"
+  },
+  {
+   "start": 1805,
+   "end": 1811,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 1882,
+   "end": 1888,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 1938,
+   "end": 1943,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 1975,
+   "end": 1981,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/anchor_gap_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1987,
+   "end": 1991,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 2394,
+   "end": 2401,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/result/free_minus_clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 2408,
+   "end": 2414,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/result/free_acc",
+   "kind": "numeric"
+  },
+  {
+   "start": 2431,
+   "end": 2437,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/result/clamped_acc",
+   "kind": "numeric"
+  },
+  {
+   "start": 2442,
+   "end": 2446,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/steps",
+   "kind": "numeric"
+  },
+  {
+   "start": 2462,
+   "end": 2463,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/seeds/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 2468,
+   "end": 2469,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/seeds/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 2486,
+   "end": 2490,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/perm_seed",
+   "kind": "numeric"
+  },
+  {
+   "start": 2497,
+   "end": 2498,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/blocks",
+   "kind": "numeric"
+  },
+  {
+   "start": 2886,
+   "end": 2918,
+   "receipt": "path:CHANGELOG.md#L4493",
+   "kind": "quote"
+  },
+  {
+   "start": 3170,
+   "end": 3278,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L464",
+   "kind": "quote"
+  },
+  {
+   "start": 3294,
+   "end": 3402,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L468",
+   "kind": "quote"
+  },
+  {
+   "start": 3430,
+   "end": 3475,
+   "receipt": "path:CHANGELOG.md#L149",
+   "kind": "quote"
+  },
+  {
+   "start": 3800,
+   "end": 3854,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L384",
+   "kind": "quote"
+  },
+  {
+   "start": 3961,
+   "end": 4021,
+   "receipt": "path:styxx/resonance.py#L10",
+   "kind": "quote"
+  },
+  {
+   "start": 4107,
+   "end": 4206,
+   "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L235",
+   "kind": "quote"
+  },
+  {
+   "start": 4207,
+   "end": 4232,
+   "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L236",
+   "kind": "quote"
+  },
+  {
+   "start": 4470,
+   "end": 4514,
+   "receipt": "path:styxx/resonance.py#L2",
+   "kind": "quote"
+  },
+  {
+   "start": 4554,
+   "end": 4597,
+   "receipt": "path:styxx/resonance.py#L5",
+   "kind": "quote"
+  },
+  {
+   "start": 4868,
+   "end": 4916,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L406",
+   "kind": "quote"
+  },
+  {
+   "start": 4918,
+   "end": 4973,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L407",
+   "kind": "quote"
+  },
+  {
+   "start": 5021,
+   "end": 5094,
+   "receipt": "path:papers/frequency-resonance/PAPER_oscillation_causal_map_2026_07_23.md#L50",
+   "kind": "quote"
+  },
+  {
+   "start": 5129,
+   "end": 5243,
+   "receipt": "path:papers/frequency-resonance/PAPER_oscillation_causal_map_2026_07_23.md#L53",
+   "kind": "quote"
+  },
+  {
+   "start": 5942,
+   "end": 5976,
+   "receipt": "path:papers/frequency-resonance/PAPER_oscillation_causal_map_2026_07_23.md#L3",
+   "kind": "quote"
+  },
+  {
+   "start": 6175,
+   "end": 6228,
+   "receipt": "path:papers/INDEX.md#L51",
+   "kind": "quote"
+  },
+  {
+   "start": 6993,
+   "end": 7078,
+   "receipt": "path:papers/AUDIT_the_whole_program_2026_09_01.md",
+   "kind": "hash"
+  },
+  {
+   "start": 7264,
+   "end": 7303,
+   "receipt": "path:papers/sworn/DESIGN_sworn_measurement_2026_09_01.md#L9",
+   "kind": "quote"
+  },
+  {
+   "start": 7389,
+   "end": 7428,
+   "receipt": "path:papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02.md#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 7544,
+   "end": 7583,
+   "receipt": "path:papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01.md#L6",
+   "kind": "quote"
+  },
+  {
+   "start": 7680,
+   "end": 7767,
+   "receipt": "path:papers/sworn/prose_claimhood_census.json#/criterion",
+   "kind": "quote"
+  },
+  {
+   "start": 7862,
+   "end": 7901,
+   "receipt": "path:papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01.md#L13",
+   "kind": "quote"
+  },
+  {
+   "start": 7993,
+   "end": 8032,
+   "receipt": "path:papers/SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 8132,
+   "end": 8198,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L551",
+   "kind": "quote"
+  },
+  {
+   "start": 8239,
+   "end": 8278,
+   "receipt": "path:papers/sworn/measurement/packet_L.json#/items/24/text",
+   "kind": "quote"
+  },
+  {
+   "start": 8287,
+   "end": 8326,
+   "receipt": "path:papers/sworn/measurement/packet_L.json#/items/47/text",
+   "kind": "quote"
+  },
+  {
+   "start": 8414,
+   "end": 8456,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L578",
+   "kind": "quote"
+  },
+  {
+   "start": 8475,
+   "end": 8514,
+   "receipt": "path:papers/sworn/measurement/decoys_L.json#/decoys/22/text",
+   "kind": "quote"
+  },
+  {
+   "start": 8563,
+   "end": 8648,
+   "receipt": "path:papers/SYNTHESIS_program_2026_07_24.md",
+   "kind": "hash"
+  },
+  {
+   "start": 8767,
+   "end": 8769,
+   "receipt": "path:papers/closed-model-frontier/oath_v11_baseline_ledger.json#/extraction/papers~1SYNTHESIS_program_2026_07_24.md/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 8782,
+   "end": 8848,
+   "receipt": "path:papers/closed-model-frontier/oath_v11_baseline_ledger.json#/extraction/papers~1SYNTHESIS_program_2026_07_24.md/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 9358,
+   "end": 9398,
+   "receipt": "path:papers/frequency-resonance/RESULT_realmodel_bridge_v3_not_started_2026_10_12.md#L174",
+   "kind": "quote"
+  },
+  {
+   "start": 9459,
+   "end": 9543,
+   "receipt": "path:papers/SYNTHESIS_program_2026_07_24.md#L99",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

@@ -1,0 +1,1161 @@
+{
+ "schema": "styxx.sworn.verdict-receipt/v1",
+ "format": "sworn/0.1",
+ "document": {
+  "name": "NOTE_forward_pointer_program_documents_oscillation_2026_10_23.sworn.json",
+  "inline_sha256": "19dd334289bdabcb5b44415c01ffa1e898e25d937d877a6de3737ea58f351d84",
+  "canonical_sha256": "b3cdbb854c2ae723d2317a8a4b1d49f49d465fe5e50bc95932933a19a3f8aa56"
+ },
+ "commit": "459578c4bc9e43d6729fc0ce92cbaa39233c9e30",
+ "manifest_digest": null,
+ "spans": [
+  {
+   "at": 624,
+   "start": 624,
+   "end": 724,
+   "receipt": "path:papers/AUDIT_the_whole_program_2026_09_01.md#L240",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 98,
+    "haystack_bytes": 98,
+    "occurrences": 1
+   },
+   "resolved_sha256": "41c08977bfbf8f01842256c4375ced0dfbeca0088793eaf708919337ab1dc21d",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 817,
+   "start": 733,
+   "end": 760,
+   "receipt": "path:papers/AUDIT_the_whole_program_2026_09_01.md#L241",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 25,
+    "haystack_bytes": 98,
+    "occurrences": 1
+   },
+   "resolved_sha256": "41c08977bfbf8f01842256c4375ced0dfbeca0088793eaf708919337ab1dc21d",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 937,
+   "start": 769,
+   "end": 811,
+   "receipt": "path:papers/AUDIT_the_whole_program_2026_09_01.md#L242",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 40,
+    "haystack_bytes": 43,
+    "occurrences": 1
+   },
+   "resolved_sha256": "41c08977bfbf8f01842256c4375ced0dfbeca0088793eaf708919337ab1dc21d",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 1234,
+   "start": 982,
+   "end": 1068,
+   "receipt": "path:papers/AUDIT_the_whole_program_2026_09_01.md#L446",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 84,
+    "haystack_bytes": 314,
+    "occurrences": 1
+   },
+   "resolved_sha256": "41c08977bfbf8f01842256c4375ced0dfbeca0088793eaf708919337ab1dc21d",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 1453,
+   "start": 1117,
+   "end": 1224,
+   "receipt": "path:papers/SYNTHESIS_program_2026_07_24.md#L49",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 105,
+    "haystack_bytes": 105,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7780a96b3c09046c1bd5006dac9a546fcf7cec89181967918b49bcb6a95e172b",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 1640,
+   "start": 1227,
+   "end": 1253,
+   "receipt": "path:papers/SYNTHESIS_program_2026_07_24.md#L50",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 24,
+    "haystack_bytes": 26,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7780a96b3c09046c1bd5006dac9a546fcf7cec89181967918b49bcb6a95e172b",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 2096,
+   "start": 1606,
+   "end": 1654,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/verdict",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 46,
+    "haystack_bytes": 46,
+    "occurrences": 1
+   },
+   "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 2386,
+   "start": 1796,
+   "end": 1800,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/anchor_perm",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1234",
+    "printed": "1234",
+    "receipt": "1234",
+    "receipt_rounded": "1234",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 2508,
+   "start": 1805,
+   "end": 1811,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_long",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "12,000",
+    "printed": "12000",
+    "receipt": "12000",
+    "receipt_rounded": "12000",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 2697,
+   "start": 1882,
+   "end": 1888,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_long",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.1097",
+    "printed": "0.1097",
+    "receipt": "0.1097",
+    "receipt_rounded": "0.1097",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 2863,
+   "start": 1938,
+   "end": 1943,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "4,000",
+    "printed": "4000",
+    "receipt": "4000",
+    "receipt_rounded": "4000",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 3012,
+   "start": 1975,
+   "end": 1981,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/anchor_gap_newseed",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.3182",
+    "printed": "0.3182",
+    "receipt": "0.3182",
+    "receipt_rounded": "0.3182",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 3144,
+   "start": 1987,
+   "end": 1991,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "4000",
+    "printed": "4000",
+    "receipt": "4000",
+    "receipt_rounded": "4000",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 3663,
+   "start": 2394,
+   "end": 2401,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/result/free_minus_clamped",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "+0.3122",
+    "printed": "0.3122",
+    "receipt": "0.3122",
+    "receipt_rounded": "0.3122",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 3795,
+   "start": 2408,
+   "end": 2414,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/result/free_acc",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.9195",
+    "printed": "0.9195",
+    "receipt": "0.9195",
+    "receipt_rounded": "0.9195",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 3926,
+   "start": 2431,
+   "end": 2437,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/result/clamped_acc",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0.6073",
+    "printed": "0.6073",
+    "receipt": "0.6073",
+    "receipt_rounded": "0.6073",
+    "fractional_digits": 4,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 4048,
+   "start": 2442,
+   "end": 2446,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/steps",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "4000",
+    "printed": "4000",
+    "receipt": "4000",
+    "receipt_rounded": "4000",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 4173,
+   "start": 2462,
+   "end": 2463,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/seeds/0",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "0",
+    "printed": "0",
+    "receipt": "0",
+    "receipt_rounded": "0",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 4286,
+   "start": 2468,
+   "end": 2469,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/seeds/1",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1",
+    "printed": "1",
+    "receipt": "1",
+    "receipt_rounded": "1",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 4411,
+   "start": 2486,
+   "end": 2490,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/perm_seed",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "1234",
+    "printed": "1234",
+    "receipt": "1234",
+    "receipt_rounded": "1234",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 4531,
+   "start": 2497,
+   "end": 2498,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/blocks",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "3",
+    "printed": "3",
+    "receipt": "3",
+    "receipt_rounded": "3",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "fae9692c8f3a3ab42bd1727cc3adb0af6d479441f8eac4119c2d6b46bb167a14",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 5026,
+   "start": 2886,
+   "end": 2918,
+   "receipt": "path:CHANGELOG.md#L4493",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 30,
+    "haystack_bytes": 118,
+    "occurrences": 1
+   },
+   "resolved_sha256": "348f52120f7cc0790b8c5ed03e12aae8499ab6f14d35049a54b93f2978be9148",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 5363,
+   "start": 3170,
+   "end": 3278,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L464",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 106,
+    "haystack_bytes": 114,
+    "occurrences": 1
+   },
+   "resolved_sha256": "9391d5dbefeb381a89d65ff8ff8029dce83259ded938e7f7299a217827ebffee",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 5598,
+   "start": 3294,
+   "end": 3402,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L468",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 106,
+    "haystack_bytes": 113,
+    "occurrences": 1
+   },
+   "resolved_sha256": "9391d5dbefeb381a89d65ff8ff8029dce83259ded938e7f7299a217827ebffee",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 5845,
+   "start": 3430,
+   "end": 3475,
+   "receipt": "path:CHANGELOG.md#L149",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 43,
+    "haystack_bytes": 111,
+    "occurrences": 1
+   },
+   "resolved_sha256": "348f52120f7cc0790b8c5ed03e12aae8499ab6f14d35049a54b93f2978be9148",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 6267,
+   "start": 3800,
+   "end": 3854,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L384",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 52,
+    "haystack_bytes": 112,
+    "occurrences": 1
+   },
+   "resolved_sha256": "9391d5dbefeb381a89d65ff8ff8029dce83259ded938e7f7299a217827ebffee",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 6539,
+   "start": 3961,
+   "end": 4021,
+   "receipt": "path:styxx/resonance.py#L10",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 58,
+    "haystack_bytes": 98,
+    "occurrences": 1
+   },
+   "resolved_sha256": "c11f0c9546c16fdc755b6fa49d70a3ed8f2a5d54d8d6d23ffd3876e86ed44fe6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 6742,
+   "start": 4107,
+   "end": 4206,
+   "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L235",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 97,
+    "haystack_bytes": 118,
+    "occurrences": 1
+   },
+   "resolved_sha256": "e2e84d22202db19f72e4ae502cd933084885a836e2cdccc5f5f7a3471792f3a6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 6947,
+   "start": 4207,
+   "end": 4232,
+   "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L236",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 23,
+    "haystack_bytes": 53,
+    "occurrences": 1
+   },
+   "resolved_sha256": "e2e84d22202db19f72e4ae502cd933084885a836e2cdccc5f5f7a3471792f3a6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 7315,
+   "start": 4470,
+   "end": 4514,
+   "receipt": "path:styxx/resonance.py#L2",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 42,
+    "haystack_bytes": 109,
+    "occurrences": 1
+   },
+   "resolved_sha256": "c11f0c9546c16fdc755b6fa49d70a3ed8f2a5d54d8d6d23ffd3876e86ed44fe6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 7455,
+   "start": 4554,
+   "end": 4597,
+   "receipt": "path:styxx/resonance.py#L5",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 41,
+    "haystack_bytes": 101,
+    "occurrences": 1
+   },
+   "resolved_sha256": "c11f0c9546c16fdc755b6fa49d70a3ed8f2a5d54d8d6d23ffd3876e86ed44fe6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 7825,
+   "start": 4868,
+   "end": 4916,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L406",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 46,
+    "haystack_bytes": 112,
+    "occurrences": 1
+   },
+   "resolved_sha256": "9391d5dbefeb381a89d65ff8ff8029dce83259ded938e7f7299a217827ebffee",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 7986,
+   "start": 4918,
+   "end": 4973,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L407",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 53,
+    "haystack_bytes": 119,
+    "occurrences": 1
+   },
+   "resolved_sha256": "9391d5dbefeb381a89d65ff8ff8029dce83259ded938e7f7299a217827ebffee",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 8200,
+   "start": 5021,
+   "end": 5094,
+   "receipt": "path:papers/frequency-resonance/PAPER_oscillation_causal_map_2026_07_23.md#L50",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 71,
+    "haystack_bytes": 114,
+    "occurrences": 1
+   },
+   "resolved_sha256": "c045f520c51388ef1cf912cd545c08591e16662b7361381a3f0fe91fe7da71c4",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 8416,
+   "start": 5129,
+   "end": 5243,
+   "receipt": "path:papers/frequency-resonance/PAPER_oscillation_causal_map_2026_07_23.md#L53",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 112,
+    "haystack_bytes": 116,
+    "occurrences": 1
+   },
+   "resolved_sha256": "c045f520c51388ef1cf912cd545c08591e16662b7361381a3f0fe91fe7da71c4",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 9337,
+   "start": 5942,
+   "end": 5976,
+   "receipt": "path:papers/frequency-resonance/PAPER_oscillation_causal_map_2026_07_23.md#L3",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 32,
+    "haystack_bytes": 85,
+    "occurrences": 1
+   },
+   "resolved_sha256": "c045f520c51388ef1cf912cd545c08591e16662b7361381a3f0fe91fe7da71c4",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 9677,
+   "start": 6175,
+   "end": 6228,
+   "receipt": "path:papers/INDEX.md#L51",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 51,
+    "haystack_bytes": 1033,
+    "occurrences": 1
+   },
+   "resolved_sha256": "055c1a7bf8e42ef96ff602a3099b53f4aa44bfee5454a26f0fbfe4d02b3bbe22",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 10549,
+   "start": 6993,
+   "end": 7078,
+   "receipt": "path:papers/AUDIT_the_whole_program_2026_09_01.md",
+   "kind": "hash",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "stated": "41c08977bfbf8f01842256c4375ced0dfbeca0088793eaf708919337ab1dc21d",
+    "receipt_sha256": "41c08977bfbf8f01842256c4375ced0dfbeca0088793eaf708919337ab1dc21d"
+   },
+   "resolved_sha256": "41c08977bfbf8f01842256c4375ced0dfbeca0088793eaf708919337ab1dc21d",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 10898,
+   "start": 7264,
+   "end": 7303,
+   "receipt": "path:papers/sworn/DESIGN_sworn_measurement_2026_09_01.md#L9",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 37,
+    "haystack_bytes": 69,
+    "occurrences": 1
+   },
+   "resolved_sha256": "bd7f3d473c451f03ca44a89568095dcc1a61476fbd77a6a41645d1fccc3ef6c3",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 11112,
+   "start": 7389,
+   "end": 7428,
+   "receipt": "path:papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02.md#L7",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 37,
+    "haystack_bytes": 98,
+    "occurrences": 1
+   },
+   "resolved_sha256": "102bf1d97afafa855ff56c5a4bb95424443af08678ba59d20969a6ff7782cab0",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 11359,
+   "start": 7544,
+   "end": 7583,
+   "receipt": "path:papers/sworn/CENSUS_prose_claimhood_instruments_2026_09_01.md#L6",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 37,
+    "haystack_bytes": 101,
+    "occurrences": 1
+   },
+   "resolved_sha256": "df47d46ba82a4602eed593fc18179f929163421dc4f3bd970a0013eda1282b3c",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 11594,
+   "start": 7680,
+   "end": 7767,
+   "receipt": "path:papers/sworn/prose_claimhood_census.json#/criterion",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 85,
+    "haystack_bytes": 159,
+    "occurrences": 1
+   },
+   "resolved_sha256": "2b9296c426af86e139a85e84476469bf26f601c5f4b43b42afc06d97bfc07ebc",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 11862,
+   "start": 7862,
+   "end": 7901,
+   "receipt": "path:papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01.md#L13",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 37,
+    "haystack_bytes": 91,
+    "occurrences": 1
+   },
+   "resolved_sha256": "e955d50f3bc3feacb7c00a71825ff900c76fc7b56600b112429706ae88c8f3d2",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 12096,
+   "start": 7993,
+   "end": 8032,
+   "receipt": "path:papers/SYNTHESIS_the_grain_of_the_handed_target_2026_09_02.md#L7",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 37,
+    "haystack_bytes": 94,
+    "occurrences": 1
+   },
+   "resolved_sha256": "3165cd1e54cd509363cafd2dd0c12b79201fa9f7dea62dc03581adb36ec5baa6",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 12334,
+   "start": 8132,
+   "end": 8198,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L551",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 64,
+    "haystack_bytes": 166,
+    "occurrences": 1
+   },
+   "resolved_sha256": "8b2e72f1f52dfa36af49a651d36039fe78d77b6cfaab76fea290cc226c70ae1f",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 12532,
+   "start": 8239,
+   "end": 8278,
+   "receipt": "path:papers/sworn/measurement/packet_L.json#/items/24/text",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 37,
+    "haystack_bytes": 2188,
+    "occurrences": 1
+   },
+   "resolved_sha256": "140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 12668,
+   "start": 8287,
+   "end": 8326,
+   "receipt": "path:papers/sworn/measurement/packet_L.json#/items/47/text",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 37,
+    "haystack_bytes": 200,
+    "occurrences": 1
+   },
+   "resolved_sha256": "140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 12883,
+   "start": 8414,
+   "end": 8456,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L578",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 40,
+    "haystack_bytes": 89,
+    "occurrences": 1
+   },
+   "resolved_sha256": "8b2e72f1f52dfa36af49a651d36039fe78d77b6cfaab76fea290cc226c70ae1f",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 13035,
+   "start": 8475,
+   "end": 8514,
+   "receipt": "path:papers/sworn/measurement/decoys_L.json#/decoys/22/text",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 37,
+    "haystack_bytes": 200,
+    "occurrences": 1
+   },
+   "resolved_sha256": "2b63f1b09e41eb2c94d55c24a24e1d7b0ea681fdd71fdf90014b13c34db08b2c",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 13212,
+   "start": 8563,
+   "end": 8648,
+   "receipt": "path:papers/SYNTHESIS_program_2026_07_24.md",
+   "kind": "hash",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "stated": "7780a96b3c09046c1bd5006dac9a546fcf7cec89181967918b49bcb6a95e172b",
+    "receipt_sha256": "7780a96b3c09046c1bd5006dac9a546fcf7cec89181967918b49bcb6a95e172b"
+   },
+   "resolved_sha256": "7780a96b3c09046c1bd5006dac9a546fcf7cec89181967918b49bcb6a95e172b",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 13488,
+   "start": 8767,
+   "end": 8769,
+   "receipt": "path:papers/closed-model-frontier/oath_v11_baseline_ledger.json#/extraction/papers~1SYNTHESIS_program_2026_07_24.md/n",
+   "kind": "numeric",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "printed_token": "11",
+    "printed": "11",
+    "receipt": "11",
+    "receipt_rounded": "11",
+    "fractional_digits": 0,
+    "rounding": "ROUND_HALF_EVEN"
+   },
+   "resolved_sha256": "3766142ea7fb85ac10319f970d635b8e6ee922cf5c0d88cdc776c130a7f2d9fe",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 13652,
+   "start": 8782,
+   "end": 8848,
+   "receipt": "path:papers/closed-model-frontier/oath_v11_baseline_ledger.json#/extraction/papers~1SYNTHESIS_program_2026_07_24.md/sha256",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 64,
+    "haystack_bytes": 64,
+    "occurrences": 1
+   },
+   "resolved_sha256": "3766142ea7fb85ac10319f970d635b8e6ee922cf5c0d88cdc776c130a7f2d9fe",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 14380,
+   "start": 9358,
+   "end": 9398,
+   "receipt": "path:papers/frequency-resonance/RESULT_realmodel_bridge_v3_not_started_2026_10_12.md#L174",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 38,
+    "haystack_bytes": 110,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7899774c084fbd2116346a3ec093213cb8d09a68c8544a665cc55611b8c48437",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  },
+  {
+   "at": 14600,
+   "start": 9459,
+   "end": 9543,
+   "receipt": "path:papers/SYNTHESIS_program_2026_07_24.md#L99",
+   "kind": "quote",
+   "verdict": "HELD",
+   "reason": null,
+   "detail": {
+    "needle_bytes": 82,
+    "haystack_bytes": 89,
+    "occurrences": 1
+   },
+   "resolved_sha256": "7780a96b3c09046c1bd5006dac9a546fcf7cec89181967918b49bcb6a95e172b",
+   "provenance": {
+    "form": "path",
+    "note": "committed object at 459578c4bc9e43d6729fc0ce92cbaa39233c9e30; authorship unchecked"
+   }
+  }
+ ],
+ "counts": {
+  "HELD": 54,
+  "FAILED": 0,
+  "UNRESOLVED": 0,
+  "MALFORMED": 0,
+  "WITHHELD": 0
+ },
+ "sworn_total": 54,
+ "unresolved": 0,
+ "document_verdict": "SWORN-HELD",
+ "document_malformed": null,
+ "rungs": {
+  "committed": 54
+ },
+ "verifier": {
+  "styxx_version": "7.50.0",
+  "sworn_sha256": "7e4602472010497a69a050995485efec4ee42b30c8ed4a2b7be545c0c5a84526",
+  "rounding": "ROUND_HALF_EVEN",
+  "decisions": {
+   "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
+   "code_span": "inline backtick spans match runs of equal length on the same line; an unmatched run is literal",
+   "tag_grammar": "exactly `<sworn r=\"…\" k=\"…\">` with single spaces, double quotes, lowercase, and `</sworn>`; any other tag-shaped candidate (`<sworn`/`</sworn` followed by a non-name byte) is MALFORMED, never narrative",
+   "lexical_malformed_refuses_sidecar": "a document with tag_syntax/nesting/stray_closer/unclosed has no canonical text, and a zero-byte span has no representable offsets; both can be verified inline but a sidecar is refused, and a sidecar carrying either shape is refused on load",
+   "sworn_total_counts_malformed": "sworn_total includes MALFORMED; UNSWORN is reserved for a document with no tag-shaped candidate at all",
+   "document_malformed_is_failed": "unbalanced fences or undecodable UTF-8 yield SWORN-FAILED with document_malformed set, never UNSWORN",
+   "empty_span": "an inner text of zero bytes, or only ASCII whitespace, is MALFORMED for every kind",
+   "number_grammar": "the span is cut into MAXIMAL tokens of [\\w.,+-−%/±:]; exactly one token may carry a digit and, after stripping trailing . , : it must be entirely one number: [-+−]?(digits with optional ,thousands)(.digits)?%? or .digits%?. Any other digit-bearing token (r1, v0.1, STRUCT-1, sha256, 1e-5, 3/4, 2026-09-01, 0.55-0.60, ±0.02, ٣) is MALFORMED — no identifier whitelist, no date/sha/version scrub, no partial extraction possible by construction. `42%` is the number 42 and no conversion happens; `0.55.` is 0.55; `23,247.` is 23247",
+   "rounding": "the receipt scalar is a Decimal from the JSON text, quantized to the printed fractional digits with ROUND_HALF_EVEN, compared as Decimal (never a float)",
+   "numeric_leaf": "the addressed value must be a JSON number (read as Decimal from its own digits); a string, bool, null, NaN, Infinity, array or object is MALFORMED — a string that happens to spell a number is not parsed, that would be a guess",
+   "numeric_address": "numeric reads the receipt as JSON with numbers as Decimal; bytes that are not UTF-8 JSON are MALFORMED receipt_not_json (the author named a fragment or scalar inside bytes it could read); a duplicated key ON the pointer path is MALFORMED pointer_ambiguous, a duplicate off the path is irrelevant; the address is the JSON pointer, or the root when there is none; a line-anchored slice must itself be one JSON number",
+   "needle": "for quote and absent, the stated string is the content of exactly ONE inline backtick code span inside the sworn text, bytes verbatim, no trimming; a needle of zero bytes or only ASCII whitespace is MALFORMED",
+   "quote_pointer": "quote against a JSON pointer compares the needle with a string leaf's UTF-8 bytes",
+   "hash_token": "the stated hash is exactly one run of 64 hex characters in the span; any run of 32/40/96/128 hex, or two 64-runs, is MALFORMED",
+   "line_anchor": "#L13 / #L13-L20 are 1-based, inclusive, split on LF only, CR retained, interior newlines kept, the final line's terminating LF excluded; a line past EOF is MALFORMED; a trailing LF does not begin an empty last line",
+   "rn_grammar": "^r[1-9][0-9]*$, optionally followed by the same `#` fragment grammar path: takes — `/`-pointer (RFC 6901) or Ln[-Lm] — since v0.2 R1; absent and hash over a fragment are MALFORMED exactly as over a partial path:",
+   "hidden_commitment": "since v0.2 R2: a tag-shaped candidate inside an HTML comment (`<!--` … `-->`, scanned outside fences and code spans, comments never nesting, an unterminated comment running to end of document) is MALFORMED hidden_commitment — never HELD, never narrative; it counts in sworn_total and makes the document SWORN-FAILED",
+   "short_needle": "since v0.2 R3: a quote needle under 16 bytes searched over a WHOLE receipt is MALFORMED short_needle; a quote against a JSON-pointer string leaf or a line anchor is exempt (the author narrowed the haystack by naming it), and absent is exempt (a short absent needle over a complete object is the stronger oath); occurrences of a quote needle in its haystack are counted into detail, report-only",
+   "length_cap": "since v0.2 R4: the inner text is capped at 300 Unicode code points; a pure function of bytes because invalid UTF-8 is document-MALFORMED first",
+   "rung": "since v0.2 R6: a manifest/0.2 declares rung L1 (a local hook sharing a filesystem and a shell with the agent — weak) or L2 (a runner that minted after the turn ended and the agent could not write to); L3 (signed, verified) is reserved and refused; a manifest/0.1, or a 0.2 with no rung, resolves at rung `undeclared`, never at L2; an unknown or reserved rung string makes every rN span UNRESOLVED rung_unknown — the verifier declining to see a manifest that claims what it cannot check, never an accusation against the author",
+   "provenance": "since v0.2 R7: every span verdict carries `provenance` — for rN {harness, rung, kind_of_source}; for path: and prereg: the literal `committed object at <commit>; authorship unchecked` — and the receipt carries a `rungs` count; nothing verifies a rung, the verifier prints what the manifest declared",
+   "receipt_v1": "since v0.2 R9: the receipt digest covers the core WITHOUT coverage; coverage travels beside it under coverage_sha256; verify_receipt re-derives the core and reports coverage_reproduces separately (advisory); a /v0 receipt is compared on its core minus coverage minus verifier, its digest still checked over its full body, and the note says so",
+   "path_grammar": "relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no glob metacharacter (* ? [ ]), no leading ':' (git pathspec magic) — a path names ONE committed file, never a set the verifier would pick from; split at the FIRST #; fragment is `/`-pointer (RFC 6901, ~0 ~1 only) or Ln[-Lm]",
+   "prereg_search": "the tree at the sidecar's commit, blobs only, memoised per commit",
+   "manifest_bytes": "standard base64; an entry whose bytes do not hash to its sha256 is UNRESOLVED",
+   "author_minted": "kind_of_source in {agent_output, agent_file_write, agent_message}, or a receipt sha256 listed in the manifest's authored_sha256 (every byte-object the agent produced this turn, recorded by the harness), is MALFORMED receipt_author_minted; a kind outside the closed vocabulary is MALFORMED kind_of_source_unknown; complete missing from an rN used with absent is UNRESOLVED manifest_no_completeness, complete:false is MALFORMED",
+   "coverage": "since v0.2 R8 the ESTIMATE IS WITHDRAWN: the denominator instrument (styxx.claimdetect, STRUCT-1) is a diff-claim detector measured on agent pull-request prose and by its own docstring never reads result-shaped sentences as claims, so across the twelve committed sworn receipts at 320b303 it printed 0.6667-1.0 while counting 0-8 of tens of narrative sentences; the block is now schema sworn/coverage/1 carrying sworn_total, narrative_sentences (diffgate's splitter `(?<=[.!?])\\s+|\\n+` over canonical text minus sworn spans minus fenced regions, non-empty), sentence_share = sworn_total / (sworn_total + narrative_sentences) — a FLOOR that treats every narrative sentence as load-bearing and so cannot flatter — and diff_claim_sentences / diff_claim_share from STRUCT-1 labelled with its idiom and ceiling; 0/0 is null; ALWAYS advisory; never a measurement of bound recall",
+   "exit_codes": "verify exits 0 for EVERY document verdict — SWORN-HELD, SWORN-FAILED, UNSWORN, document-level MALFORMED — because sworn reports and never gates; a refusal (undecodable document, a sidecar that cannot round-trip or carries an unknown shape, a manifest that disagrees with the embedded one) is SystemExit('REFUSED: …'), exit status 1, nothing written; check exits 1 when a receipt does not re-derive",
+   "html_comments": "v0.1 recognised a tag inside an HTML comment like any other and named the hidden commitment as owed; v0.2 R2 closes it — see `hidden_commitment`"
+  }
+ },
+ "certifies": "the spans the author bound were checked against bytes the author did not write, at the commit or manifest the document names and at the rung the manifest declares — NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the history that holds the commit",
+ "digest": "3fa03acf3fc1c19101f2b4e279af51dc05510658d00e9946fea748172dbcc36f",
+ "coverage": {
+  "schema": "sworn/coverage/1",
+  "advisory": true,
+  "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
+  "sworn_total": 54,
+  "narrative_sentences": 170,
+  "sentence_share": 0.2411,
+  "diff_claim_sentences": 2,
+  "diff_claim_share": 0.9643,
+  "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
+  "unsworn_claims": [
+   {
+    "start": 237,
+    "end": 334,
+    "text": "`SYNTHESIS_program_2026_07_24.md`, in this directory, and edits neither: both keep their bytes.**"
+   },
+   {
+    "start": 9846,
+    "end": 9924,
+    "text": "- It does not edit `papers/INDEX.md`, whose two rows already read the verdict."
+   }
+  ],
+  "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
+  "claimdetect_version": "struct-1/2026-08-30"
+ },
+ "coverage_sha256": "a69e5230344ef058e5e99dfd829e7314fae4031b75e38d8b8c92c0262f6dd984",
+ "timestamp": "2026-10-23T21:42:48Z"
+}

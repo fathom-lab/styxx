@@ -1,0 +1,399 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "459578c4bc9e43d6729fc0ce92cbaa39233c9e30",
+ "document": {
+  "name": "NOTE_forward_pointer_untied_magnitudes_2026_10_23.md",
+  "sha256": "cfb39c5557ada55e595792a9fc02c0bfd8509e6609aeea3f7031b0a71b6131e6"
+ },
+ "text": "# NOTE — the forward pointer from the 2026-09-02 untied-magnitudes RESULT to the permuted-MNIST robustness RESULT\n\n**status: a forward pointer, sworn to committed bytes. It stands beside `RESULT_untied_magnitudes_2026_09_02.md`, in\nthis directory, and edits nothing: that RESULT, its sidecar and its verdict receipt keep their bytes.**\n\n2026-10-23. `RESULT_untied_magnitudes_2026_09_02.md` closes its section \"The finding\" with a sentence about the\nfrequency arc's headline. Its lines 34 to 36, quoted line by line:\n\n- `The arc's headline, that oscillation is causally load-bearing in state-space models, survives`\n- `the sharpest control its own knob admits, and the theta-gamma reading — phase as the code for`\n- `order — is strengthened rather than scoped.`\n\nThe arc's headline is the permuted-MNIST phase-clamp gap. The CHANGELOG entry for its re-run's preregistration names\nit so,\n`The arc's headline (+0.3122 on permuted MNIST,`\nand that preregistration, `PREREG_pmnist_robustness_2026_10_11.md`, states it on its line 35:\n`The headline: FREE 0.9195 (0.9240 / 0.9150) vs CLAMPED 0.6073 (0.5529 / 0.6617), gap +0.3122`.\nThe re-run's RESULT, `papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md`, is what this NOTE points\nto. The headline the sentence above calls surviving does not carry at its verdict.\n\n## What the robustness RESULT reads\n\nThe re-run's receipt reads\n`BUDGET_CONFOUND__gap_does_not_survive_3x_steps`.\nThe sentence that verdict licenses, copied with its spans from the RESULT's section \"The sentence this verdict\nlicenses\":\n\n**On permutation\n1234,\nat\n12,000\nsteps under a cosine schedule re-stretched to that budget, the gap is\n0.1097\n(two FREE seeds against three CLAMPED seeds); at\n4,000\nsteps on three new seeds it is\n0.3182.\nThe\n4000-step\ngap does not survive the longer budget on this permutation.**\n\nNothing stronger is licensed. Section 11 of the robustness PREREG refuses the general sentence about the +0.3122 and\nthe training budget: one permutation and five runs do not license it (M8). The +0.3122 is the 2026-07-23 receipt's\nFREE minus CLAMPED,\n+0.3122,\nat\n4000\nsteps on seeds\n0\nand\n1\nand permutation\n1234.\nIt stands as what was measured there; as the arc's headline it does not carry at this verdict. The CHANGELOG banner\nof 2026-10-23 over the 2026-09-02 entry says the same of the +0.3122 headline: it\n`does not carry at this verdict`.\n\n## What of this RESULT's own measurement stands, as measured\n\nIt measured no permutation of MNIST. Its task is ordered copy, the rhythm-rescue task, and its own scope says so:\n`One task family (ordered copy), one width, three seeds, no interval, toy scale.`\nIts receipt, `untied_control_result.json`, records D\n256,\n4000\nsteps, seeds\n0,\n1\nand\n2,\nthe device\n`cpu`,\nand the verdict\n`ROTATION_LOAD_BEARING__beyond_diversity`.\nOrdered-memory capacity, in items: FREE\n6.0,\nCLAMPED\n2.6667,\nand REAL2, the untied real bank with\n168524\nparameters against FREE's\n168524,\n2.6667.\nFREE minus CLAMPED is\n3.3333,\nREAL2 minus CLAMPED\n0.0,\nthe recovery fraction\n0.0,\nand the anchors landed within\n0.0\nitems of the committed GPU receipt. These stand as what was measured, in that setting. The robustness RESULT did not\nre-run the ordered-copy task, and nothing in it or in this NOTE moves them.\n\nThe RESULT said in its own scope that it did not test permuted MNIST (lines 41 and 42):\n`permuted-MNIST number (+0.312) was measured with the same knob and carries the same confound; this`\n`result makes the diversity reading unlikely there but does not test it`.\n\n## What the robustness RESULT reports about the untied control on permuted MNIST\n\nThe robustness design ran REAL2 again, on permuted MNIST, as its untied control. On held-out permutation average\nFREE − REAL2 is\n0.275\n(`G_R_diversity`) and REAL2 − CLAMPED is\n−0.0074\n(`G_R_rotation`), each against a bar of at most 0.03 in the sealed gates block:\n`\"G_R_diversity\": {\"metric\": \"result.free_minus_real2_perm_mean\", \"op\": \"<=\", \"value\": 0.03`.\nThe receipt records `G_R_diversity` as not holding,\n`\"G_R_diversity\": false`,\nand `G_R_rotation` as holding,\n`\"G_R_rotation\": true`.\nThe recovery fraction is\n−0.0279,\ninterval\n[−0.1105,\n0.0547],\nclass\n`rotation`.\nOn permutation 1234's new seeds FREE − REAL2 is\n0.3302,\nREAL2 − CLAMPED\n−0.012\nand recovery\n−0.0378.\n\nHow the verdict row reads them: it does not. The row the receipt scored names the gap and budget gates and neither\nattribution gate,\n`\"G_G_ci\": true, \"G_B_long\": false}, \"verdict\": \"BUDGET_CONFOUND__gap_does_not_survive_3x_steps\"`,\nand the RESULT says so in its own words:\n`This row does not read the`\n`attribution gates; the numbers are reported, not pronounced.`\nSo `G_R_diversity` and `G_R_rotation` are reported, not read by the `BUDGET_CONFOUND` row. This NOTE reads them no\nfurther: on permuted MNIST no verdict was pronounced on rotation against timescale diversity, and the ordered-copy\nverdict above is not carried to it.\n\n## The sealed untied receipt\n\nThe permuted-MNIST untied run that `PREREG_pmnist_untied_2026_09_02.md` designs ran on 2026-10-11, and its receipt is\nstill sealed. SEALS row 2 seals that PREREG,\n`papers/frequency-resonance/PREREG_pmnist_untied_2026_09_02.md`,\nand the robustness RESULT says the receipt\n`has not`\n`been unsealed for this RESULT, and its verdict is not printed here`.\n`NOTE_forward_pointer_pmnist_untied_2026_10_23.md`, beside that PREREG, says the same. This NOTE does not unseal,\nread or score the receipt.\n\n## What the prior-art reads file against the general sentence\n\n`NOTE_prior_art_full_text_reads_2026_10_23.md` quotes the general sentence as INDEX row 51 carried it,\n`The single-knob phase clamp shows oscillation is causally load-bearing in SSMs (+0.3122 on permuted MNIST)`,\nand files it:\n`\"in SSMs\" exceeds the measurement: one LRU-style architecture. No read paper supports the general sentence`.\nIts CHANGELOG entry reads\n`INDEX row 51's \"in SSMs\" exceeds every read`.\nThe sentence at lines 34 to 36 above states that general sentence about state-space models, and the reads support it\nthere no more than in INDEX row 51. The headline's measurement is one three-block LRU-style recurrence on permuted\nMNIST (`CLRU` in `run_pmnist_ablation.py`); this RESULT's is one ordered-copy task at one width.\n\n## Why beside it and not inside it\n\nThe lead's decision, as for the two pointer NOTEs of 2026-10-23 beside the certified 2026-07-23 RESULT and the sealed\nuntied PREREG: this RESULT's bytes are named, and this lab never regenerates a committed receipt in place, so the\npointer lands beside it as a NOTE. For this document:\n\n- It is sworn. Its verdict receipt names the sha256 of its bytes,\n  `ec7921a03bbfcb74b6f87846da4ecbfe8d6f8f9fa84c0b661d036461c9db603a`,\n  and the file still is those bytes:\n  its blob hashes to `ec7921a03bbfcb74b6f87846da4ecbfe8d6f8f9fa84c0b661d036461c9db603a`.\n  `tests/test_sworn_dogfood.py` renders its sidecar back to those bytes.\n- The charon log names the same digest for the same path, on its line 221:\n  `\"path\": \"papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md\", \"sha256\": \"ec7921a03bbfcb74b6f87846da4ecbfe8d6f8f9fa84c0b661d036461c9db603a\"`.\n- The leg-2 measurement PREREG lists it in its population,\n  `papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02`,\n  and the packet its lock table pins by sha256,\n  `140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9`,\n  carries this RESULT's section \"The finding\", the sentence above included:\n  `The arc's headline, that oscillation is causally load-bearing in state-space models, survives`.\n\nAny byte added inside the RESULT would leave its verdict receipt and the charon line naming bytes the file no longer\nholds, and the leg-2 population and its pinned packet describing a document that has moved. Putting this pointer\ninside `RESULT_untied_magnitudes_2026_09_02.md` stays the operator's call.\n\n## What this note does not do\n\n- It does not put the pointer inside the RESULT. A reader who opens only that file does not see it; that is the cost\n  of this route.\n- It does not unseal, read or score the sealed untied receipt.\n- It reports no measurement of its own and re-runs nothing: the ordered-copy numbers above are the 2026-09-02\n  receipt's, and the permuted-MNIST numbers are the 2026-07-23 and robustness receipts'.\n- It says nothing of the theta-gamma reading in lines 35 and 36. The robustness RESULT does not test it.\n- No outcome it points to bears on deployed models, on attention, on importance or on priority (robustness PREREG\n  section 11).\n\n## Sworn\n\nThis note swears 64 spans, each to bytes committed at the commit its sidecar names: the 2026-09-02 RESULT's lines\nand blob, its receipt, its verdict receipt and the charon log; the robustness receipt, RESULT and PREREG; the\n2026-07-23 receipt; SEALS row 2; the prior-art NOTE and the CHANGELOG; and the leg-2 PREREG and its packet. The\nsidecar and the verdict receipt beside this file were written by `python -m styxx.sworn canon` and\n`python -m styxx.sworn verify`; the verdicts are the receipt's.\n",
+ "spans": [
+  {
+   "start": 521,
+   "end": 616,
+   "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md#L34",
+   "kind": "quote"
+  },
+  {
+   "start": 619,
+   "end": 716,
+   "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md#L35",
+   "kind": "quote"
+  },
+  {
+   "start": 719,
+   "end": 766,
+   "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md#L36",
+   "kind": "quote"
+  },
+  {
+   "start": 892,
+   "end": 940,
+   "receipt": "path:CHANGELOG.md#L870",
+   "kind": "quote"
+  },
+  {
+   "start": 1035,
+   "end": 1129,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L35",
+   "kind": "quote"
+  },
+  {
+   "start": 1394,
+   "end": 1442,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 1584,
+   "end": 1588,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/anchor_perm",
+   "kind": "numeric"
+  },
+  {
+   "start": 1593,
+   "end": 1599,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 1670,
+   "end": 1676,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/gap_long",
+   "kind": "numeric"
+  },
+  {
+   "start": 1726,
+   "end": 1731,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 1763,
+   "end": 1769,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/anchor_gap_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 1775,
+   "end": 1779,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/config/steps_main",
+   "kind": "numeric"
+  },
+  {
+   "start": 2100,
+   "end": 2107,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/result/free_minus_clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 2112,
+   "end": 2116,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/steps",
+   "kind": "numeric"
+  },
+  {
+   "start": 2132,
+   "end": 2133,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/seeds/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 2138,
+   "end": 2139,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/seeds/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 2156,
+   "end": 2160,
+   "receipt": "path:papers/frequency-resonance/pmnist_ablation_result.json#/config/perm_seed",
+   "kind": "numeric"
+  },
+  {
+   "start": 2360,
+   "end": 2392,
+   "receipt": "path:CHANGELOG.md#L4493",
+   "kind": "quote"
+  },
+  {
+   "start": 2571,
+   "end": 2652,
+   "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md#L40",
+   "kind": "quote"
+  },
+  {
+   "start": 2706,
+   "end": 2709,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/config/D",
+   "kind": "numeric"
+  },
+  {
+   "start": 2711,
+   "end": 2715,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/config/steps",
+   "kind": "numeric"
+  },
+  {
+   "start": 2729,
+   "end": 2730,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/config/seeds/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 2732,
+   "end": 2733,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/config/seeds/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 2738,
+   "end": 2739,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/config/seeds/2",
+   "kind": "numeric"
+  },
+  {
+   "start": 2752,
+   "end": 2757,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/config/device",
+   "kind": "quote"
+  },
+  {
+   "start": 2775,
+   "end": 2816,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 2858,
+   "end": 2861,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/arms/free/kcap_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 2871,
+   "end": 2877,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/arms/clamped/kcap_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 2916,
+   "end": 2922,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/arms/real2/params",
+   "kind": "numeric"
+  },
+  {
+   "start": 2949,
+   "end": 2955,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/arms/free/params",
+   "kind": "numeric"
+  },
+  {
+   "start": 2957,
+   "end": 2963,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/arms/real2/kcap_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 2987,
+   "end": 2993,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/metrics/gap_free_minus_clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 3015,
+   "end": 3018,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/metrics/real2_minus_clamped",
+   "kind": "numeric"
+  },
+  {
+   "start": 3042,
+   "end": 3045,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/metrics/recovery_fraction",
+   "kind": "numeric"
+  },
+  {
+   "start": 3077,
+   "end": 3080,
+   "receipt": "path:papers/rhythm-rescue/untied_control_result.json#/metrics/anchor_max_abs_dev",
+   "kind": "numeric"
+  },
+  {
+   "start": 3363,
+   "end": 3463,
+   "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md#L41",
+   "kind": "quote"
+  },
+  {
+   "start": 3464,
+   "end": 3536,
+   "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md#L42",
+   "kind": "quote"
+  },
+  {
+   "start": 3752,
+   "end": 3757,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/free_minus_real2_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 3801,
+   "end": 3810,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/result/real2_minus_clamped_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 3891,
+   "end": 3983,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L250",
+   "kind": "quote"
+  },
+  {
+   "start": 4037,
+   "end": 4061,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#L5498",
+   "kind": "quote"
+  },
+  {
+   "start": 4094,
+   "end": 4116,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#L5499",
+   "kind": "quote"
+  },
+  {
+   "start": 4143,
+   "end": 4152,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_perm_mean",
+   "kind": "numeric"
+  },
+  {
+   "start": 4164,
+   "end": 4173,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_perm_ci/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 4175,
+   "end": 4181,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_perm_ci/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 4190,
+   "end": 4200,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/reported/recovery_class",
+   "kind": "quote"
+  },
+  {
+   "start": 4252,
+   "end": 4258,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_free_minus_real2_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 4278,
+   "end": 4286,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_real2_minus_clamped_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 4300,
+   "end": 4309,
+   "receipt": "path:papers/frequency-resonance/pmnist_robustness_result.json#/anchor/anchor_recovery_newseed",
+   "kind": "numeric"
+  },
+  {
+   "start": 4445,
+   "end": 4542,
+   "receipt": "path:papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md#L262",
+   "kind": "quote"
+  },
+  {
+   "start": 4585,
+   "end": 4613,
+   "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L216",
+   "kind": "quote"
+  },
+  {
+   "start": 4614,
+   "end": 4676,
+   "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L217",
+   "kind": "quote"
+  },
+  {
+   "start": 5137,
+   "end": 5200,
+   "receipt": "path:papers/checksum/SEALS_2026_09_13.md#L33",
+   "kind": "quote"
+  },
+  {
+   "start": 5245,
+   "end": 5254,
+   "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L270",
+   "kind": "quote"
+  },
+  {
+   "start": 5255,
+   "end": 5323,
+   "receipt": "path:papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md#L271",
+   "kind": "quote"
+  },
+  {
+   "start": 5633,
+   "end": 5741,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L464",
+   "kind": "quote"
+  },
+  {
+   "start": 5757,
+   "end": 5865,
+   "receipt": "path:papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md#L468",
+   "kind": "quote"
+  },
+  {
+   "start": 5893,
+   "end": 5938,
+   "receipt": "path:CHANGELOG.md#L149",
+   "kind": "quote"
+  },
+  {
+   "start": 6661,
+   "end": 6727,
+   "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.sworn-receipt.json#/document/inline_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 6768,
+   "end": 6853,
+   "receipt": "path:papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02.md",
+   "kind": "hash"
+  },
+  {
+   "start": 7005,
+   "end": 7154,
+   "receipt": "path:papers/charon/charon.log.jsonl#L221",
+   "kind": "quote"
+  },
+  {
+   "start": 7217,
+   "end": 7275,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L263",
+   "kind": "quote"
+  },
+  {
+   "start": 7327,
+   "end": 7393,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L551",
+   "kind": "quote"
+  },
+  {
+   "start": 7473,
+   "end": 7568,
+   "receipt": "path:papers/sworn/measurement/packet_L.json#/items/3/text",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
