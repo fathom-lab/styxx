@@ -73,8 +73,10 @@ case-insensitively with surrounding whitespace stripped, so `"false"` and `"Fals
 `"true"`, `" true"` and `"TRUE"` report. Every other value, the empty string included, reports
 as `"true"` does, and the job prints a warning naming the value it did not recognise.
 
-**`--strict`.** Add `--strict` to the `python -m styxx.diffgate` line to make an UNCHECKABLE
-claim a failure too; the job fails on it only when `STYXX_SOFT_FAIL` is `"false"`.
+**`--strict`.** Add `--strict` to the `python -m styxx.diffgate` line that writes
+`diffgate.json` to make an UNCHECKABLE claim a failure too; the job fails on it only when
+`STYXX_SOFT_FAIL` is `"false"`. The gate's second run over a cut needs no flag: the job reads only
+which claims it withholds or does not read.
 
 **Errors are not verdicts.** In either mode the job fails on an install error, on a failed fetch
 of the diff base, and on a gate whose report does not match its exit: an exit 1 without a FAIL
