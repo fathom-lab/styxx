@@ -1265,3 +1265,18 @@ prints.
   is `86d8aa306f10fd9530f96e52fa4197dea62b4f543e5cab3b9e979ded985b104b`, 1,411 bytes, its file time
   2026-10-24T15:51:31.98Z, the time the record gives for the drop rule's answer. 15.4 and 15.5 quote it, and their
   quotes are its words.
+
+### 15.13 — 2026-10-24: the operator's word on 15.8, 15.11 and 15.12
+
+Each of the three readings this section listed for the operator's word was put to the operator in chat, and each answer is
+the reading as written, so 15.8's second reading, 15.11's "a contradicted leaf that no sentence prints refuses"
+and 15.12's per-stretch reading of component (iv) stand; no paragraph is replaced. The answers, quoted:
+
+- **15.8, the population.** "Count every public send (Recommended)".
+- **15.11, a contradicted leaf no sentence prints.** "Yes, refuse (Recommended)".
+- **15.12, component (iv) against the gate's digests.** "Per stretch (Recommended)".
+
+The lead's record of the three questions and answers is `WT:_darkflobi_gate_2026_10_22/SIGNED_2026_10_24_readings.md`,
+untracked in the clawd repository; at this entry its sha256 is `20b3506551153435fe78c7ade031f1bb8de4d4fd539a870135fcf68e9a18f579`, 1,260 bytes. The
+record 15.12 pins (`86d8aa30…`) is not edited.
+
