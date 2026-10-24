@@ -627,7 +627,8 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           } else if (apartWhy !== null) {
             c.verdict = "UNCHECKABLE"; c.why = apartWhy;   // #205
           } else {
-            const got = (addedBlob.match(/^\s*def test_/gm) || []).length;
+            const tx = /^\s*(?:async[ \t\f]+)?def test_/gm;   // #179: `async def test_` too
+            const got = (addedBlob.match(tx) || []).length;
             if (got === n) {
               c.verdict = "VERIFIED"; c.why = `diff adds ${got} test functions, claim says ${n}`;
             } else if (BC1_BY_CONSTRUCTION && _TEST_NOUNS_NOT_FUNCTIONS.has(noun)) {
@@ -645,7 +646,7 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           } else if (apartWhy !== null) {
             c.verdict = "UNCHECKABLE"; c.why = apartWhy;   // #205
           } else {
-            const pat = new RegExp("^\\s*(?:def|class)\\s+" + _reEscape(d.name) + "\\b", "m");
+            const pat = new RegExp("^\\s*(?:async[ \\t\\f]+def|def|class)\\s+" + _reEscape(d.name) + "\\b", "m");   // #179
             const hit = pat.test(addedBlob);
             c.verdict = hit ? "VERIFIED" : "CONTRADICTED";
             c.why = `added lines ${hit ? "do" : "do NOT"} define ${d.kind} ${pyRepr(d.name)}`;
@@ -1119,6 +1120,7 @@ function _p2aHolds(auto, text) {
 const _p2aCoarseUnit = u => u <= 0x20 || u === 0x7f || u >= 0x80;
 const _p2aWordUnit = u => u === 95 || (u >= 48 && u <= 57) || (u >= 65 && u <= 90) || (u >= 97 && u <= 122);
 const _p2aNameUnit = u => _p2aWordUnit(u) || u >= 0x80;
+const _p2aAsyncGapUnit = u => u === 32 || u === 9 || u === 12;   // #179: the white space CPython reads after `async`
 
 function _p2aRunEnd(s, j, test) {        // where the run of units passing `test` from j ends
   while (j < s.length && test(s.charCodeAt(j))) j++;
@@ -1164,9 +1166,14 @@ function _p2aCounted(line, lead, seg = false) {
     if (b <= last) continue;
     const r = _p2aRunEnd(line, b, lead);
     last = r;
-    if (line.startsWith("def test_", r)) {
-      const e = _p2aRunEnd(line, r + 4, _p2aWordUnit);
-      out.push(e < line.length && line.charCodeAt(e) >= 0x80 ? null : line.slice(r + 4, e));
+    let s = r;                                       // #179: main reads `async def test_` too
+    if (line.startsWith("async", r)) {
+      const q = _p2aRunEnd(line, r + 5, _p2aAsyncGapUnit);
+      if (q > r + 5) s = q;
+    }
+    if (line.startsWith("def test_", s)) {
+      const e = _p2aRunEnd(line, s + 4, _p2aWordUnit);
+      out.push(e < line.length && line.charCodeAt(e) >= 0x80 ? null : line.slice(s + 4, e));
     }
   }
   return out;

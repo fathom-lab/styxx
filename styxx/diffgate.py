@@ -1339,7 +1339,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     elif apart_why:
                         c.verdict, c.why = "UNCHECKABLE", apart_why  # #205
                     else:
-                        got = len(re.findall(r"^\s*def test_", added_blob, re.M))
+                        tx = r"^\s*(?:async[ \t\f]+)?def test_"                   # #179: `async def test_` too
+                        got = len(re.findall(tx, added_blob, re.M))
                         if got == n:
                             c.verdict, c.why = "VERIFIED", f"diff adds {got} test functions, claim says {n}"
                         elif BC1_BY_CONSTRUCTION and noun in _TEST_NOUNS_NOT_FUNCTIONS:
@@ -1361,7 +1362,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     elif apart_why:
                         c.verdict, c.why = "UNCHECKABLE", apart_why  # #205
                     else:
-                        pat = (r"^\s*(?:def|class)\s+" + re.escape(d["name"]) + r"\b")
+                        pat = (r"^\s*(?:async[ \t\f]+def|def|class)\s+" + re.escape(d["name"]) + r"\b")   # #179
                         hit = bool(re.search(pat, added_blob, re.M))
                         c.verdict = "VERIFIED" if hit else "CONTRADICTED"
                         c.why = (f"added lines {'do' if hit else 'do NOT'} define "
@@ -1586,6 +1587,7 @@ _P2A_SEP = "\x00"                  # joins the summary's runs and zones; never i
 _P2A_PIECE_CUT = re.compile("[" + _P2A_SEP + _P2A_DIVERGENT + _P2A_WORDISH + "]+")   # ends the pieces a token lies in
 _P2A_CUT = re.compile("\n|[.!?][ \t\r]")          # where both ports end a sentence: a line break, or '.!?' + a space
 _P2A_COARSE_RUN = re.compile("[\x00-\x20\x7f-\U0010ffff]*")              # controls, space, DEL, from 0x80 up
+_P2A_ASYNC_GAP = re.compile("[ \t\f]*")                                  # #179: the gap CPython reads after `async`
 _P2A_WORD_RUN = re.compile("[A-Za-z0-9_]*")                              # an ASCII name run
 _P2A_NAME_RUN = re.compile("[A-Za-z0-9_\x80-\U0010ffff]*")               # a name run: ASCII word, or from 0x80
 _P2A_SEG = re.compile("[\u2028\u2029]")
@@ -2078,6 +2080,10 @@ def _p2a_counted(line: str, lead, seg: bool = False) -> list:
             continue
         r = lead.match(line, b).end()
         last = r
+        if line.startswith("async", r):                      # #179: main reads `async def test_` too
+            q = _P2A_ASYNC_GAP.match(line, r + 5).end()
+            if q > r + 5:
+                r = q
         if line.startswith("def test_", r):
             e = _P2A_WORD_RUN.match(line, r + 4).end()
             out.append(None if _P2A_WIDE.match(line, e) else line[r + 4:e])
