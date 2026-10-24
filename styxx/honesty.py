@@ -28,7 +28,8 @@ have:
 The strongest *supplied* signal wins (``span_logits`` > ``logits`` > ``engine`` > ``confidence``),
 then ``verify`` runs as a second-opinion backstop on anything that passed. With none of the four
 supplied, nothing is checked: the answer passes (``method="none"``) unless you pass
-``on_no_signal="abstain"``.
+``on_no_signal="abstain"``, which also treats a supplied input with nothing to read (no finite
+logit, a confidence that is not a finite number, an engine that cannot run) as no signal.
 
 So one ``honest(...)`` call degrades gracefully across the models people actually deploy, and emits
 a :class:`HonestyVerdict` you can log as a compliance-grade attestation. It **flags / abstains** —
@@ -50,6 +51,7 @@ it never fabricates a correction (correction is a closed negative in the researc
 """
 from __future__ import annotations
 
+import math
 from typing import Any, Callable, NamedTuple, Optional, Sequence
 
 from .single_pass import (
@@ -68,11 +70,11 @@ class HonestyVerdict(NamedTuple):
     ------
     answer : str
         What to return to the user: the original answer if it passed, or the ``abstention`` text
-        if the gate fired / verification refuted it / no signal was supplied under
+        if the gate fired / verification refuted it / there was no signal to read under
         ``on_no_signal="abstain"``.
     action : str
         ``"answered"`` (passed), ``"abstained"`` (confab gate fired / confidence below floor / no
-        signal supplied under ``on_no_signal="abstain"``), or ``"refuted"`` (external verification
+        signal to read under ``on_no_signal="abstain"``), or ``"refuted"`` (external verification
         contradicted a confident answer).
     abstained : bool
         ``True`` for ``"abstained"`` or ``"refuted"`` (the original answer was withheld).
@@ -81,7 +83,8 @@ class HonestyVerdict(NamedTuple):
         for the confidence gate); ``None`` if no detection signal was available.
     method : str
         Which signal decided: ``"span"`` | ``"single_pass"`` | ``"confidence"`` | ``"retrieval"`` |
-        ``"none"`` (no signal supplied: nothing was checked).
+        ``"none"`` (nothing was checked: no signal supplied, or under ``on_no_signal="abstain"`` an
+        input with nothing to read).
     confidence : float or None
         The effective confidence in the answer in ``[0, 1]`` (``1 - signal`` where defined).
     detail : str
@@ -225,9 +228,22 @@ def honest(
         ``no honesty signal supplied (span_logits, logits, engine or confidence) -> abstained``.
         ``verify``, if given, still runs: a verifier that supports the answer lets it through as
         ``"answered"``, one that refutes it gives ``"refuted"``, and an inconclusive one leaves it
-        abstained (``; verification inconclusive`` in the detail).
-    Any other value raises ``ValueError``. With any signal supplied ``on_no_signal`` does nothing; an
-    engine that errors (it fails open, ``method="engine"``) is a supplied signal, not this case.
+        abstained (``; verification inconclusive`` in the detail). Support is read as everywhere in
+        ``honest()``: ``True``, a ``.verdict`` of ``"supported"``, or any other truthy value with
+        no ``.verdict``. So a bare string such as ``"refuted"`` or ``"unclear"``, or a NaN, reads
+        as support and lets the answer through; return a bool or an object with a ``.verdict``.
+    Under ``"abstain"`` a supplied input with nothing to read is no signal too, and is withheld the
+    same way (``method="none"``, ``signal=None``, ``verify`` deciding as above), with a detail that
+    names it, ``no honesty signal: ...``: ``span_logits`` or ``logits`` with no finite logit
+    (``[]``, ``[[]]``, all NaN or inf), with or without a threshold; a ``confidence`` that is not a
+    finite number (NaN, inf, -inf); an ``engine`` that is neither ``True`` nor callable (``"yes"``,
+    ``1``). Under ``"pass"`` these read as they always have: the empty logit inputs pass with
+    ``signal 0.000`` in the detail, a NaN or inf confidence passes, a -inf one fires the floor, and
+    a non-callable engine passes with ``signal n/a``.
+    Any other value of ``on_no_signal`` raises ``ValueError``. With a signal to read it does
+    nothing, and two such inputs still pass under ``"abstain"``: logits with no threshold
+    (advisory: the gate cannot fire) and an engine that runs and errors (it fails open,
+    ``method="engine"``, ``signal=None``).
 
     Returns
     -------
@@ -278,6 +294,25 @@ def honest(
         signal = 1.0 - conf
         gate_fired = conf < confidence_floor
 
+    # Under on_no_signal="abstain" a supplied input with nothing to read is no signal too: logits
+    # with no finite entry (the scorers return abstain=None before reading a threshold, and signal
+    # 0.000), a confidence that is not a finite number, an engine that is neither True nor callable
+    # (_run_engine runs nothing). The default never enters this block.
+    no_signal = "no honesty signal supplied (span_logits, logits, engine or confidence)"
+    if on_no_signal == "abstain" and method != "none":
+        empty = None
+        if method == "span" and sc.n_tokens == 0:
+            empty = "span_logits holds no finite logit"
+        elif method == "single_pass" and sp.n_logits == 0:
+            empty = "logits holds no finite logit"
+        elif method == "confidence" and not math.isfinite(conf):
+            empty = f"confidence is {conf}, not a finite number"
+        elif method == "engine" and engine is not True and not callable(engine):
+            empty = "engine is neither True nor callable"
+        if empty is not None:
+            method, signal, conf, gate_fired, engine_flagged = "none", None, None, False, False
+            no_signal = f"no honesty signal: {empty}"
+
     if conf is None and signal is not None and method in ("span", "single_pass"):
         # no probability scale for raw entropy; expose confidence only for the confidence gate
         conf = None
@@ -303,8 +338,7 @@ def honest(
         # that supported it (v is True) is a check, so that answer falls through as "answered"
         why = "" if verify is None else "; verification inconclusive"
         return HonestyVerdict(
-            abstention, "abstained", True, None, "none", None,
-            f"no honesty signal supplied (span_logits, logits, engine or confidence){why} -> abstained")
+            abstention, "abstained", True, None, "none", None, f"{no_signal}{why} -> abstained")
 
     if verify is None:
         note = "UNVERIFIED (pass verify= for the truth check) -> answered"
