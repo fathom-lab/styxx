@@ -24,7 +24,7 @@ path, the front door: the module docstring and the `--help` description stop mak
 committed the lab to withdraw, and the `WITHHOLD_PATH_ACCUSATION` comment is scoped to the path classes (sha256
 `e1441f18f0f71cc3455ff5c02ac3b42eb1bf963f337fb3b9bcfa9db14f88a74e`); and then one change on reading paths, #179 and #178: the two `def`
 counts read `async def` where they read `def`, and abstain where a counted line sits in a file not read as .py or
-.pyi, or after an odd number of triple quotes in its file's added lines (sha256
+.pyi, or after an odd number of triple quotes in the added lines of its `+++` section (sha256
 `cb91f7c3ce3725bcc1dd6f48b4dc2b5dc23bbbda09de468b80125df3b97f2d01`) — plus the PATH-2a block (an
 overlay that only abstains, not yet released; see *PATH-2a* below), and a committed test cuts the
 block out and gets that reader back byte for byte, in both languages. The port's record carries the

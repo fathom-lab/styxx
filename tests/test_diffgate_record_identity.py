@@ -372,8 +372,9 @@ MOVED_BY_205_SHA = "5c87f4167d437961a96860330b3def12fcb6f8bb31eb981882e40adfb3ad
 
 # #179 and #178 (fix/diffgate-178-179) moved the reading of a diff of these shapes, by design: the `def` counts read
 # `async def` where they read `def`, and abstain where a counted line sits in a file not read as .py or .pyi, or after
-# an odd number of triple quotes in that file's added lines. The predicate holds on a diff holding `async`, three double
-# or three single quotes, or an added `def` or `class` line under a `+++` path that does not end in .py or .pyi.
+# an odd number of triple quotes in the added lines of its `+++` section. The predicate holds on a diff holding
+# `async`, three double or three single quotes, or an added `def` or `class` line under a `+++` path that does not
+# end in .py or .pyi.
 _ASYNC_OR_TRIPLE = re.compile("async|\"{3}|'{3}")
 _ADDED_DEF = re.compile(r"\+[ \t\f]*(?:async[ \t\f]+)?(?:def|class)\b")
 

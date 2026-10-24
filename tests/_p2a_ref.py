@@ -45,9 +45,9 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # WITHHOLD_PATH_ACCUSATION (e1441f18...); no reading path moved, so no figure below was measured again.
 # fix/diffgate-178-179 then changed the reader and main's port outside the block on reading paths (e1441f18... and
 # d74cc729... were the two): the `def` counts read `async def` (#179), and abstain where a counted line sits in a
-# file not read as .py or .pyi, or after an odd number of triple quotes in its file's added lines (#178); the block's
-# model of main's count reads `async` with them. So relation (A), the lockstep and bar C run against the new main in
-# both languages, and every figure they pin was measured again on it.
+# file not read as .py or .pyi, or after an odd number of triple quotes in the added lines of its `+++` section (#178);
+# the block's model of main's count reads `async` with them. So relation (A), the lockstep and bar C run against the
+# new main in both languages, and every figure they pin was measured again on it.
 MAIN_PY_SHA = "cb91f7c3ce3725bcc1dd6f48b4dc2b5dc23bbbda09de468b80125df3b97f2d01"
 MAIN_JS_SHA = "e5aaf0b1fa0fa2da8e92cd31cddb26d332fe9c71a2578a257e7c8aad81a5daba"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
