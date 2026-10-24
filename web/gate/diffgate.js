@@ -463,6 +463,110 @@ function _readApart(text) {
   return m === null ? null : "U+" + _codePoint(m[0]);
 }
 
+// #205's seams where the `def` counts reach them, as the Python's _SEAM_WS, _SEAM_APART, _seam_edges, _seam_py,
+// _seam_header, _seam_tests, _seam_symbol and _tests_twice: the same code-point sets, not `\s`, `\b`, strip() or trim()
+const _SEAM_WS = "\\t\\u000b\\u000c \\u001c-\\u001f\\u0085\\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\ufeff";
+const _SEAM_APART = new RegExp("[\\u001c-\\u001f\\u0085\\ufeff]");
+const _SEAM_EDGE = new RegExp("^[" + _SEAM_WS + "]$");
+const _SEAM_TEST = new RegExp("^[" + _SEAM_WS + "]*(?:async[ \\t\\f]+)?def test_");
+const _SEAM_DEF = "(?:def|class|async[ \\t\\f]+def)";
+const _SEAM_WORD = /[A-Za-z0-9_]/;
+const _TWICE = new RegExp("^[" + _SEAM_WS + "]*(async[ \\t\\f]+)?def (test_[A-Za-z0-9_]*)");
+
+function _seamEdges(s) {
+  let a = 0, z = s.length;
+  while (a < z && _SEAM_EDGE.test(s[a])) a++;
+  while (z > a && _SEAM_EDGE.test(s[z - 1])) z--;
+  const k = _SEAM_APART.exec(s.slice(0, a)) || _SEAM_APART.exec(s.slice(z));
+  return [k === null ? null : "U+" + _codePoint(k[0]), s.slice(a, z)];
+}
+
+function _seamPy(path, cut) {
+  let e = path.length;
+  while (cut && e > 0 && (path.charCodeAt(e - 1) <= 32 || path.charCodeAt(e - 1) >= 127)) e--;
+  const t = path.slice(0, e).toLowerCase();
+  return _PY_SUFFIXES.some(x => t.endsWith(x));
+}
+
+function _seamHeader(diffText) {
+  let seam = null, alike = false, old = null;
+  for (const line of _splitlines(diffText || "")) {
+    if (line.startsWith("--- ")) {
+      old = line.slice(4);
+    } else if (line.startsWith("+++ ")) {
+      let [k, core] = _seamEdges(line.slice(4));
+      if (k !== null && _edgeCut(line.slice(4)) === "/dev/null") {   // one parse may read a deletion, one not
+        if (old !== null && _seamPy(old, true)) seam = seam || k;
+        continue;
+      }
+      const [path, cut] = (k === null && core === "/dev/null") ? [old, "a/"] : [line.slice(4), "b/"];
+      if (path === null) continue;
+      [k, core] = _seamEdges(path);
+      if (k !== null) {
+        if (_seamPy(path, true)) seam = seam || k;
+      } else if (_seamPy(_norm(core.startsWith(cut) ? core.slice(cut.length) : core), false)) {
+        alike = true;
+      }
+    }
+  }
+  return alike ? null : seam;
+}
+
+function _seamTests(blobs) {
+  for (const blob of blobs) {
+    for (const line of blob.split("\n")) {
+      const m = _SEAM_TEST.exec(line);
+      const k = m === null ? null : _SEAM_APART.exec(line.slice(0, m[0].length));
+      if (k !== null) return "U+" + _codePoint(k[0]);
+    }
+  }
+  return null;
+}
+
+function _seamSymbol(blobs, name) {
+  const rx = new RegExp("([" + _SEAM_WS + "]*)" + _SEAM_DEF + "([\\n" + _SEAM_WS + "]+)" + _reEscape(name), "y");
+  for (const blob of blobs) {
+    let both = false, apart = null, p = 0;
+    for (;;) {
+      rx.lastIndex = p;
+      const m = rx.exec(blob);
+      if (m !== null) {
+        const e = m.index + m[0].length;
+        const nxt = e < blob.length ? blob[e] : "";
+        const k = _SEAM_APART.exec(m[1]) || _SEAM_APART.exec(m[2]);
+        if (nxt !== "" && _SEAM_WORD.test(nxt)) {
+          // the name runs on in ASCII: neither port reads it
+        } else if (k !== null) {
+          apart = apart || ["before", "U+" + _codePoint(k[0])];
+        } else if (nxt !== "" && blob.charCodeAt(e) >= 0x80) {
+          apart = apart || ["after", "U+" + _codePoint(blob.slice(e, e + 2))];
+        } else {
+          both = true;
+        }
+      }
+      const q = blob.indexOf("\n", p);
+      if (q < 0) break;
+      p = q + 1;
+    }
+    if (apart !== null && !both) return apart;
+  }
+  return null;
+}
+
+function _testsTwice(sections) {
+  for (const [, added] of sections) {
+    const seen = new Map();
+    for (const line of added) {
+      const m = _TWICE.exec(line);
+      if (m === null || (m[0].length < line.length && line.charCodeAt(m[0].length) >= 0x80)) continue;
+      const [k, a] = seen.get(m[2]) || [0, false];
+      seen.set(m[2], [k + 1, a || m[1] !== undefined]);
+    }
+    for (const [name, [k, a]] of seen) if (k > 1 && a) return [name, k];
+  }
+  return null;
+}
+
 // repr() of a str, for the `why` strings the Python builds with !r.
 function pyRepr(s) {
   const q = (s.includes("'") && !s.includes('"')) ? '"' : "'";
@@ -653,6 +757,10 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
   for (const [, added] of sections) for (const x of added) sidesLines.push(x);
   const sidesBlob = sidesLines.join("\n");
   const insideBlob = _pythonSourceLines(sections).join("\n");
+  // #205's seam at a header's edge, as the Python's _seam_header and header_why: both counts abstain, before #110, where
+  // the two ports' parses can read apart whether the diff touches a Python file
+  const seamHeader = _seamHeader(diffText);
+  const headerWhy = seamHeader === null ? null : `a \`---\` or \`+++\` header holds ${seamHeader} at an edge, which Python's strip() and the port's trim() remove apart, and no header both read alike names a Python file; this template counts \`def\` lines and cannot tell whether the diff touches one (#205)`;
   const claims = [];
   const sentences = _pySplitSentences(summaryText);
   const covered = new Set();
@@ -683,11 +791,17 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
         } else if (kind === "tests_added") {
           const n = parseInt(d.n, 10);
           const noun = (d.noun || "").toLowerCase();
-          if (BC1_BY_CONSTRUCTION && !_diffTouchesPython(status)) {
+          if (headerWhy !== null) {
+            c.verdict = "UNCHECKABLE"; c.why = headerWhy;   // #205's seam at a header's edge
+          } else if (BC1_BY_CONSTRUCTION && !_diffTouchesPython(status)) {
             c.verdict = "UNCHECKABLE";
             c.why = "no Python file in the diff; this template counts `def` lines (#110)";
           } else if (apartWhy !== null) {
             c.verdict = "UNCHECKABLE"; c.why = apartWhy;   // #205
+          } else if (_seamTests([addedBlob, sidesBlob]) !== null) {   // #205's seam before a `def`
+            const seam = _seamTests([addedBlob, sidesBlob]);
+            c.verdict = "UNCHECKABLE";
+            c.why = `an added \`def test_\` line holds ${seam} before its \`def\`, which ` + (seam === "U+FEFF" ? "CPython reads only as the byte order mark heading a file" : "CPython refuses in source outside a string or a comment") + `; this template counts \`def\` lines and cannot tell where it sits; claim says ${n} (#205)`;
           } else {
             const tx = /^\s*(?:async[ \t\f]+)?def test_/gm;   // #179: `async def test_` too
             const got = (addedBlob.match(tx) || []).length;
@@ -696,6 +810,10 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
             if (inside !== placed) {                         // #178
               c.verdict = "UNCHECKABLE";
               c.why = `${placed - inside} of the ${placed} \`def test_\` lines added sit in a file not read as .py or .pyi, or after an odd number of triple quotes in the added lines of their \`+++\` section; this template counts \`def\` lines and cannot tell whether CPython defines a test there; claim says ${n} (#178)`;
+            } else if (_testsTwice(sections) !== null) {     // #179
+              const twice = _testsTwice(sections);
+              c.verdict = "UNCHECKABLE";
+              c.why = `${twice[1]} of the \`def test_\` lines added in one \`+++\` section define ${pyRepr(twice[0])}, one of them after \`async\`; CPython binds a name once in a scope, and this template cannot tell the scopes apart; claim says ${n} (#179)`;
             } else if (got === n) {
               c.verdict = "VERIFIED"; c.why = `diff adds ${got} test functions, claim says ${n}`;
             } else if (BC1_BY_CONSTRUCTION && _TEST_NOUNS_NOT_FUNCTIONS.has(noun)) {
@@ -707,11 +825,17 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
             }
           }
         } else if (kind === "symbol_added") {
-          if (BC1_BY_CONSTRUCTION && !_diffTouchesPython(status)) {
+          if (headerWhy !== null) {
+            c.verdict = "UNCHECKABLE"; c.why = headerWhy;   // #205's seam at a header's edge
+          } else if (BC1_BY_CONSTRUCTION && !_diffTouchesPython(status)) {
             c.verdict = "UNCHECKABLE";
             c.why = "no Python file in the diff; this template counts `def` lines (#110)";
           } else if (apartWhy !== null) {
             c.verdict = "UNCHECKABLE"; c.why = apartWhy;   // #205
+          } else if (_seamSymbol([addedBlob, sidesBlob, insideBlob], d.name) !== null) {   // #205's seams
+            const seam = _seamSymbol([addedBlob, sidesBlob, insideBlob], d.name);
+            c.verdict = "UNCHECKABLE";
+            c.why = `an added line that would define ${d.kind} ${pyRepr(d.name)} ` + (seam[0] === "after" ? `runs the name on into ${seam[1]}, where the two ports' readers end a name apart` : `holds ${seam[1]} before the name, which ` + (seam[1] === "U+FEFF" ? "CPython reads only as the byte order mark heading a file" : "CPython refuses in source outside a string or a comment")) + "; this template cannot tell whether CPython defines it there (#205)";
           } else {
             const pat = new RegExp("^\\s*(?:async[ \\t\\f]+def|def|class)\\s+" + _reEscape(d.name) + "\\b", "m");   // #179
             const hit = pat.test(addedBlob);

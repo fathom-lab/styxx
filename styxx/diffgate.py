@@ -565,6 +565,139 @@ def _python_source_lines(sections: list) -> list:
     return out
 
 
+# #205's seams, where the `def` counts reach them (review 3 of fix batch 1). The Python's `\s` and the port's part on
+# U+FEFF (the port's reads it as white space, the Python's does not) and on U+001C to U+001F and U+0085 (the reverse);
+# Python's strip() and the port's trim() remove those apart at a `---` or `+++` header's edge; and the Python's `\b`
+# ends a name by Unicode where the port's ends it by ASCII. _READ_APART leaves U+FEFF out, since a file saved with a
+# byte order mark holds one at the head of line 1. So where a header holds one of these at an edge, or a line the counts
+# read holds one before its name, or runs the name on into a code point from U+0080 up, the two ports printed different
+# verdicts and the gates could part without `--strict` (#205's residual on `main`, which #179's `async def` read reached
+# on more lines). The two counts abstain there in both ports, which read these lines with the same code-point sets
+# (`_SEAM_WS`, every code point either `\s` reads in a line; `_SEAM_APART`), not with `\s`, `\b`, strip() or trim():
+# at a header's edge only where the two parses can read apart whether the diff touches a Python file, and for the symbol
+# claim only where no line of a blob is one both ports read as defining the name. The port's _seamEdges, _seamPy,
+# _seamHeader, _seamTests, _seamSymbol and _testsTwice are the same reading.
+_SEAM_WS = "\t\x0b\x0c \x1c-\x1f\x85\xa0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff"
+_SEAM_APART = re.compile("[\x1c-\x1f\x85\ufeff]")      # the white space one port reads and the other does not
+_SEAM_EDGE = re.compile("[" + _SEAM_WS + "]")
+_SEAM_TEST = re.compile("[" + _SEAM_WS + "]*(?:async[ \t\f]+)?def test_")
+_SEAM_DEF = "(?:def|class|async[ \t\f]+def)"
+_SEAM_WORD = re.compile("[A-Za-z0-9_]")
+_TWICE = re.compile("[" + _SEAM_WS + "]*(async[ \t\f]+)?def (test_[A-Za-z0-9_]*)")
+
+
+def _seam_edges(s: str) -> tuple:
+    """#205: (`U+XXXX` for the leftmost code point of _SEAM_APART in `s`'s leading run of _SEAM_WS, else in its trailing
+    run, else None; `s` with both runs removed). Where the code point is None, strip() and trim() read `s` alike."""
+    a, z = 0, len(s)
+    while a < z and _SEAM_EDGE.match(s, a):
+        a += 1
+    while z > a and _SEAM_EDGE.match(s, z - 1):
+        z -= 1
+    k = _SEAM_APART.search(s, 0, a) or _SEAM_APART.search(s, z)
+    return (f"U+{ord(k.group()):04X}" if k else None), s[a:z]
+
+
+def _seam_py(path: str, cut: bool) -> bool:
+    """#205: whether `path` ends in .py or .pyi, lowered as `_diff_touches_python` lowers it; with `cut`, after every
+    trailing code point at or below U+0020 or from U+007F up is removed, a tail either port's reading may reach."""
+    e = len(path)
+    while cut and e and (ord(path[e - 1]) <= 32 or ord(path[e - 1]) >= 127):
+        e -= 1
+    return path[:e].lower().endswith(_PY_SUFFIXES)
+
+
+def _seam_header(diff_text: str) -> str | None:
+    """#205: `U+XXXX` for a code point of _SEAM_APART at an edge of a `---` or `+++` header on which the two ports'
+    parses can read apart whether the diff touches a Python file, when no header both read alike names one; else None.
+    Such a header is a `+++` path whose tail reads .py or .pyi once every trailing code point `_edge_cut` removes is
+    removed, a `+++` read as `/dev/null` on `_edge_cut` beside a `---` path whose tail reads so, or a `---` path whose
+    tail reads so beside a `+++ /dev/null`. Elsewhere the two ports' status maps hold a Python file alike, so #110
+    fires in both or in neither, and these code points move no `def` count (`_diff_sections` reads the path on the
+    edge set, and every added line is read whatever its header)."""
+    seam, alike, old = None, False, None
+    for line in _git_lines(diff_text):
+        if line.startswith("--- "):
+            old = line[4:]
+        elif line.startswith("+++ "):
+            k, core = _seam_edges(line[4:])
+            if k is not None and _edge_cut(line[4:]) == "/dev/null":    # one parse may read a deletion, one not
+                if old is not None and _seam_py(old, True):
+                    seam = seam or k
+                continue
+            path, cut = (old, "a/") if k is None and core == "/dev/null" else (line[4:], "b/")
+            if path is None:
+                continue
+            k, core = _seam_edges(path)
+            if k is not None:
+                if _seam_py(path, True):
+                    seam = seam or k
+            elif _seam_py(_norm(core[len(cut):] if core.startswith(cut) else core), False):
+                alike = True
+    return None if alike else seam
+
+
+def _seam_tests(blobs) -> str | None:
+    """#205: `U+XXXX` for the leftmost code point of _SEAM_APART before the `def` of a line of `blobs` either port's
+    test count reads, or None. One port's count reads such a line and the other's does not."""
+    for blob in blobs:
+        for line in blob.split("\n"):
+            m = _SEAM_TEST.match(line)
+            k = _SEAM_APART.search(line, 0, m.end()) if m else None
+            if k:
+                return f"U+{ord(k.group()):04X}"
+    return None
+
+
+def _seam_symbol(blobs, name: str) -> tuple | None:
+    """#205: for the earliest of `blobs` that holds a line one port's symbol pattern reads as defining `name` and the
+    other's may not, and no line both read so: ("before", `U+XXXX`) for a code point of _SEAM_APART before the name, or
+    ("after", `U+XXXX`) for the code point from U+0080 up the name runs on into. None where no blob holds one."""
+    rx = re.compile("([" + _SEAM_WS + "]*)" + _SEAM_DEF + "([\n" + _SEAM_WS + "]+)" + re.escape(name))
+    for blob in blobs:
+        both, apart, p = False, None, 0
+        while True:
+            m = rx.match(blob, p)
+            if m:
+                e = m.end()
+                nxt = blob[e] if e < len(blob) else ""
+                k = _SEAM_APART.search(m.group(1)) or _SEAM_APART.search(m.group(2))
+                if nxt and _SEAM_WORD.match(nxt):
+                    pass                                         # the name runs on in ASCII: neither port reads it
+                elif k:
+                    apart = apart or ("before", f"U+{ord(k.group()):04X}")
+                elif nxt and ord(nxt) >= 0x80:
+                    apart = apart or ("after", f"U+{ord(nxt):04X}")
+                else:
+                    both = True
+            q = blob.find("\n", p)
+            if q < 0:
+                break
+            p = q + 1
+        if apart and not both:
+            return apart
+    return None
+
+
+def _tests_twice(sections: list) -> tuple | None:
+    """#179: (name, k) for the leftmost name that k >= 2 lines of one `+++` section the test count reads define, one
+    of them after `async`, or None. CPython binds a name once in a scope; `main`'s count of `def` lines counts each
+    line (its duplicate-definition limit, which `def` lines had and keep), and #179's read reached that limit through
+    `async def`, so the count abstains there. A name that runs on into a code point from U+0080 up is not compared."""
+    for _p, added in sections:
+        seen: dict = {}
+        for line in added:
+            m = _TWICE.match(line)
+            if not m or (m.end() < len(line) and ord(line[m.end()]) >= 0x80):
+                continue
+            k, a = seen.get(m.group(2), (0, False))
+            seen[m.group(2)] = (k + 1, a or m.group(1) is not None)
+        for name, (k, a) in seen.items():
+            if k > 1 and a:
+                return name, k
+    return None
+
+
 def _compat_params(line: str, at: int) -> str | None:
     """The parameter list of a definition line: the text inside the first `(` at or after `at`,
     whitespace-collapsed, or `None` when the line has no `(` there. A list that does not close
@@ -1182,7 +1315,8 @@ def gate_diff_text(summary_text: str, diff_text: str,
                  repo=repo, base="(diff-text)", head="(diff-text)",
                  evidence=evidence, commit=commit,
                  raw_input_len=len(diff_text or ""),
-                 sides=parse_unified_diff_sides(diff_text or ""), sections=_diff_sections(diff_text or ""))
+                 sides=parse_unified_diff_sides(diff_text or ""), sections=_diff_sections(diff_text or ""),
+                 seam_header=_seam_header(diff_text or ""))
     return _p2a_abstain(g, strict, lambda: _P2aFacts(diff_text or "", None, summary_text))  # PATH-2a
 
 
@@ -1222,7 +1356,8 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
     g = _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base=base, head=head,
                  evidence=evidence, commit=commit,
-                 sides=parse_unified_diff_sides(diff_text), sections=_diff_sections(diff_text))
+                 sides=parse_unified_diff_sides(diff_text), sections=_diff_sections(diff_text),
+                 seam_header=_seam_header(diff_text))
     return _p2a_abstain(g, strict, lambda: _P2aFacts(diff_text, name_status, summary_text))  # PATH-2a
 
 
@@ -1295,7 +1430,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
           run: str | None, strict: bool, repo, base: str, head: str,
           evidence=None, commit: str | None = None,
           raw_input_len: int | None = None, sides: dict | None = None,
-          sections: list | None = None, _declared: bool = False) -> DiffGate:
+          sections: list | None = None, seam_header: str | None = None, _declared: bool = False) -> DiffGate:
 
     # Some claim kinds are VACUOUSLY TRUE against an empty diff. `only_touches`
     # asks "is anything outside the prefix?" and an empty status answers "no" —
@@ -1339,6 +1474,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     apart = _read_apart(added_blob)
     apart_why = (f"an added line holds {apart}, which CPython refuses in source outside a string or a comment; this "
                  f"template counts `def` lines and cannot tell where it sits (#205)") if apart else None
+    # #205's seam at a header's edge (`_seam_header`, read by the door): both counts abstain, before #110, where the two
+    # ports' parses can read apart whether the diff touches a Python file.
+    header_why = (f"a `---` or `+++` header holds {seam_header} at an edge, which Python's strip() and the port's "
+                  f"trim() remove apart, and no header both read alike names a Python file; this template counts "
+                  f"`def` lines and cannot tell whether the diff touches one (#205)") if seam_header else None
     # #178: the same counts over one walk, `_diff_sections`, which places each added line as `parse_unified_diff_sides`
     # does: every section's added lines (`sides_blob`), and the lines of them a Python file's section holds outside a
     # string its added lines open (`inside_blob`, _python_source_lines). Where the two counts differ the claim
@@ -1405,12 +1545,20 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 elif kind == "tests_added":
                     n = int(d["n"])
                     noun = d.get("noun", "").lower()
-                    if BC1_BY_CONSTRUCTION and not _diff_touches_python(status):
+                    if header_why:
+                        c.verdict, c.why = "UNCHECKABLE", header_why  # #205's seam at a header's edge
+                    elif BC1_BY_CONSTRUCTION and not _diff_touches_python(status):
                         c.verdict = "UNCHECKABLE"           # BC-1 repair 1
                         c.why = ("no Python file in the diff; this template counts "
                                  "`def` lines (#110)")
                     elif apart_why:
                         c.verdict, c.why = "UNCHECKABLE", apart_why  # #205
+                    elif (seam := _seam_tests((added_blob, sides_blob))):  # #205's seam before a `def`
+                        c.verdict = "UNCHECKABLE"
+                        c.why = (f"an added `def test_` line holds {seam} before its `def`, which " + (
+                            "CPython reads only as the byte order mark heading a file" if seam == "U+FEFF" else
+                            "CPython refuses in source outside a string or a comment") +
+                            f"; this template counts `def` lines and cannot tell where it sits; claim says {n} (#205)")
                     else:
                         tx = r"^\s*(?:async[ \t\f]+)?def test_"                   # #179: `async def test_` too
                         got = len(re.findall(tx, added_blob, re.M))
@@ -1422,6 +1570,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                                      f"read as .py or .pyi, or after an odd number of triple quotes in the added "
                                      f"lines of their `+++` section; this template counts `def` lines and cannot "
                                      f"tell whether CPython defines a test there; claim says {n} (#178)")
+                        elif (twice := _tests_twice(sections or [])):                 # #179
+                            c.verdict = "UNCHECKABLE"
+                            c.why = (f"{twice[1]} of the `def test_` lines added in one `+++` section define "
+                                     f"{twice[0]!r}, one of them after `async`; CPython binds a name once in a "
+                                     f"scope, and this template cannot tell the scopes apart; claim says {n} (#179)")
                         elif got == n:
                             c.verdict, c.why = "VERIFIED", f"diff adds {got} test functions, claim says {n}"
                         elif BC1_BY_CONSTRUCTION and noun in _TEST_NOUNS_NOT_FUNCTIONS:
@@ -1436,12 +1589,22 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                             c.verdict = "CONTRADICTED"
                             c.why = f"diff adds {got} test functions, claim says {n}"
                 elif kind == "symbol_added":
-                    if BC1_BY_CONSTRUCTION and not _diff_touches_python(status):
+                    if header_why:
+                        c.verdict, c.why = "UNCHECKABLE", header_why  # #205's seam at a header's edge
+                    elif BC1_BY_CONSTRUCTION and not _diff_touches_python(status):
                         c.verdict = "UNCHECKABLE"           # BC-1 repair 1
                         c.why = ("no Python file in the diff; this template counts "
                                  "`def` lines (#110)")
                     elif apart_why:
                         c.verdict, c.why = "UNCHECKABLE", apart_why  # #205
+                    elif (seam := _seam_symbol((added_blob, sides_blob, inside_blob), d["name"])):  # #205's seams
+                        c.verdict = "UNCHECKABLE"
+                        c.why = (f"an added line that would define {d['kind']} {d['name']!r} " + (
+                            f"runs the name on into {seam[1]}, where the two ports' readers end a name apart" if
+                            seam[0] == "after" else f"holds {seam[1]} before the name, which " + (
+                                "CPython reads only as the byte order mark heading a file" if seam[1] == "U+FEFF" else
+                                "CPython refuses in source outside a string or a comment")) +
+                            "; this template cannot tell whether CPython defines it there (#205)")
                     else:
                         pat = (r"^\s*(?:async[ \t\f]+def|def|class)\s+" + re.escape(d["name"]) + r"\b")   # #179
                         hit = bool(re.search(pat, added_blob, re.M))
@@ -1512,7 +1675,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
             if _dtext:
                 _sub = _gate(_dtext, status, added_blob, run=run, strict=strict, repo=repo,
                              base=base, head=head, evidence=evidence, commit=commit,
-                             raw_input_len=raw_input_len, sides=sides, sections=sections, _declared=True)
+                             raw_input_len=raw_input_len, sides=sides, sections=sections,
+                             seam_header=seam_header, _declared=True)
                 for _c in _sub.claims:
                     _c.detail = dict(_c.detail or {})
                     _c.detail["declared"] = True
