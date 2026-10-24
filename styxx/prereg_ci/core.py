@@ -31,7 +31,12 @@ Where ``rescore`` departs from ``score_frozen``, and why:
   existing scorers ignore the key, as they ignore every key they do not read.
 * totality: ``score_frozen`` enumerates assignments and gives up past 12 gates (its ``total``
   is None there); ``_cover`` splits cubes instead, has no gate cap, and counts holes and
-  landings exactly.
+  landings exactly. Counting the assignments a set of rows matches is a #DNF count, which is
+  #P-complete, so some ordinary-looking tables need exponential work (k rows of the form
+  "G2i and G2i+1" visit about 2 ** (k + 2) subcubes). The verdict does not need the cover, so
+  ``rescore`` gives the cover a work budget: past it the verdict still stands, ``total``,
+  ``holes`` and ``unreachable_rows`` stay None, and ``cover_code`` reads ``COVER_UNCHECKABLE``
+  (DESIGN 3.3: UNCHECKABLE, exit 3).
 """
 from __future__ import annotations
 
@@ -55,9 +60,20 @@ _DECISION_DIGEST_UNSEALED = "DECISION_DIGEST_UNSEALED"
 _VERDICT_DIFFERS = "VERDICT_DIFFERS"
 _RECORDED_DIGEST_ABSENT = "RECORDED_DIGEST_ABSENT"
 _RECORDED_VERDICT_ABSENT = "RECORDED_VERDICT_ABSENT"
+_COVER_UNCHECKABLE = "COVER_UNCHECKABLE"
 _KIND = {_NOT_GATED: "NOTE", _SCORER_REFUSES: "FAIL", _SMOKE_AMBIGUOUS: "INPUT",
          _DECISION_DIGEST_UNSEALED: "FAIL", _VERDICT_DIFFERS: "FAIL",
-         _RECORDED_DIGEST_ABSENT: "NOTE", _RECORDED_VERDICT_ABSENT: "NOTE"}
+         _RECORDED_DIGEST_ABSENT: "NOTE", _RECORDED_VERDICT_ABSENT: "NOTE",
+         _COVER_UNCHECKABLE: "UNCHECKABLE"}
+
+# rescore's default work budget for the cover, in subcubes visited. The largest committed cover
+# vector (synthetic/n15/0: 15 gates, 23 rows) visits 2,591 and the 15-gate leg-2 table fewer; the
+# pair-row tables above reach 2 ** 20 near 36 gates, about 2 s on the build box.
+_COVER_BUDGET = 1 << 20
+
+
+class _CoverBudget(Exception):
+    """The cover visited more subcubes than its budget allows; its counts are not read."""
 
 # the scanner's own words for a document holding no gates-like fence at all; every other refusal
 # of the scanner is a fence that is there and is not read, which is a refusal, never NOT_GATED
@@ -89,7 +105,7 @@ def _literal(value: Any) -> Optional[bool]:
     return None
 
 
-def _cover(gates: Sequence[str], rows: Sequence[Any]) -> Dict[str, Any]:
+def _cover(gates: Sequence[str], rows: Sequence[Any], budget: Optional[int] = None) -> Dict[str, Any]:
     """Totality and row reachability of an outcome table by cube splitting, with no gate cap.
 
     *rows* are the ``when`` objects in table order. A row matches an assignment when every literal
@@ -101,7 +117,8 @@ def _cover(gates: Sequence[str], rows: Sequence[Any]) -> Dict[str, Any]:
 
     Returns ``{total, holes, hole, landings, unreachable_rows}``: ``hole`` is one assignment of
     every gate that no row matches, or None. Refuses a row that is not an object or that names a
-    gate the table does not declare, as ``score_frozen`` does.
+    gate the table does not declare, as ``score_frozen`` does. With *budget*, raises
+    ``_CoverBudget`` once more than *budget* subcubes have been visited (None: no budget).
     """
     names = list(gates)
     declared = set(names)
@@ -125,8 +142,13 @@ def _cover(gates: Sequence[str], rows: Sequence[Any]) -> Dict[str, Any]:
     holes = 0
     hole: Optional[Dict[str, bool]] = None
     stack: List[Tuple[Dict[str, bool], List[int]]] = [({}, [i for i, c in enumerate(cubes) if c is not None])]
+    visited = 0
     while stack:
         fixed, live = stack.pop()
+        visited += 1
+        if budget is not None and visited > budget:
+            raise _CoverBudget(f"the cover visited more than {budget} subcubes of {n} gates and {len(cubes)} "
+                               f"rows; totality and reachability are not read")
         live = [i for i in live if all(fixed.get(k, v) == v for k, v in cubes[i].items())]
         size = 1 << (n - len(fixed))
         if not live:
@@ -221,7 +243,7 @@ def _landed(rows: Sequence[Dict[str, Any]], fired: Dict[str, bool]) -> Optional[
     return None
 
 
-def rescore(prereg: Any, receipt: Any) -> Dict[str, Any]:
+def rescore(prereg: Any, receipt: Any, *, cover_budget: Optional[int] = _COVER_BUDGET) -> Dict[str, Any]:
     """Re-derive the verdict a sealed decision gives a receipt (DESIGN 3.4, C5).
 
     *prereg* is the PREREG's bytes (a blob) or text; *receipt* is the parsed receipt. Returns a
@@ -231,10 +253,17 @@ def rescore(prereg: Any, receipt: Any) -> Dict[str, Any]:
     index of the landed outcome row; None for a smoke receipt), ``gates_sha256`` (sha256 of the
     selected fence's text, the digest ``Experiment`` and ``score_frozen`` record), ``smoke``,
     ``smoke_verdict``, and the cover of the table: ``total``, ``holes``, ``unreachable_rows``.
+    ``cover_code`` is None, or ``COVER_UNCHECKABLE`` (with ``cover_detail``) when the cover ran
+    past *cover_budget* subcubes; the verdict is read either way. ``cover_budget=None`` runs the
+    cover with no budget.
     """
+    if cover_budget is not None and (isinstance(cover_budget, bool) or not isinstance(cover_budget, int)
+                                     or cover_budget < 1):
+        raise ValueError(f"cover_budget is a positive int or None, not {cover_budget!r}")
     out: Dict[str, Any] = {"form": None, "code": None, "detail": None, "verdict": None, "gates": None,
                            "row": None, "gates_sha256": None, "smoke": None, "smoke_verdict": None,
-                           "total": None, "holes": None, "unreachable_rows": None}
+                           "total": None, "holes": None, "unreachable_rows": None, "cover_code": None,
+                           "cover_detail": None}
 
     def refuse(detail: str) -> Dict[str, Any]:
         out.update(code=_SCORER_REFUSES, detail=detail)
@@ -287,7 +316,11 @@ def rescore(prereg: Any, receipt: Any) -> Dict[str, Any]:
         rows = [row["when"] for row in spec["outcomes"]]
         out.update(verdict=scored["verdict"], gates=scored["gates"], smoke_verdict=scored["smoke_verdict"],
                    row=_landed(rows, scored["gates"]))
-    cover = _cover(names, rows)
+    try:
+        cover = _cover(names, rows, budget=cover_budget)
+    except _CoverBudget as e:
+        out.update(cover_code=_COVER_UNCHECKABLE, cover_detail=str(e))
+        return out
     out.update(total=cover["total"], holes=cover["holes"], unreachable_rows=cover["unreachable_rows"])
     return out
 
