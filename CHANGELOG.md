@@ -41,51 +41,63 @@ file or charon line is touched.
   `_diffSections`), which places each added line as `parse_unified_diff_sides` does: over every `+++` section's added
   lines, and over the added lines of a section whose path ends in `.py` or `.pyi` that do not follow an odd number of
   `"""` plus `'''` in that section's added lines (`_python_source_lines`, `_pythonSourceLines`). The path's tail is
-  read with every trailing code point at or below U+0020 or from U+007F up removed, so Python's `strip()` and
-  JavaScript's `trim()` cannot part the path test. The parity and the path test are a section's, not a key's of
-  `parse_unified_diff_sides`, because the two ports build those keys apart: `strip()` removes U+0085 and U+001C to
-  U+001F from a path's tail where `trim()` keeps them, `trim()` removes U+FEFF where `strip()` keeps it, and Node 24
-  lowers U+1C89 to U+1C8A where CPython 3.12 does not. Taken per key, the parity put a `def test_` after an odd count
-  in one port only where two sections merged in that port: of 43 inputs review 1 built around such keys, the two
-  ports printed different records on 18, and opposite gates on 3 without `--strict` and on 15 with it, which the
-  overlay did not withhold (`origin/main` read all 43 alike). Taken per section, both ports read all 43 alike, and on
-  every committed input the walk holds the added lines the parse holds, in each port. `tests_added` is UNCHECKABLE
-  where the two counts differ: "{k} of the {placed} `def test_` lines added sit in a file not read as .py or .pyi, or
-  after an odd number of triple quotes in the added lines of their `+++` section; this template counts `def` lines
-  and cannot tell whether CPython defines a test there; claim says {n} (#178)". `symbol_added` is UNCHECKABLE where
-  the pattern finds the name in every section's added lines and not in the Python-source lines: "every added line
-  that would define {kind} {name!r} sits in a file not read as .py or .pyi, or after an odd number of triple quotes
-  in the added lines of its `+++` section; this template cannot tell whether CPython defines it there (#178)". The
-  same strings in both ports, the name through `pyRepr` in the port. Each says only what was measured, #220's rule:
-  where the counted line sits, and that the template cannot tell. Elsewhere `main`'s verdict stands as before. The
-  order is #110, #205, #178, then `main`'s verdict; #110's and #205's reasons stay byte for byte, and
-  `parse_unified_diff` and `parse_unified_diff_sides` return what they returned. The triage's sketch compared the
-  Python-source count with `main`'s count over `parse_unified_diff`'s added lines. It moved 290 committed inputs
-  where this moves 278, and on each of the 12 more the two parse functions place a counted `def` or `class` line
-  apart (a `--- ` content line, a `+++:` header, an added line before any header: #172's shapes), where the sketch
-  fired with a reason that is false there. Both counts from one walk confine the abstention to what its reason says.
-- **Verdicts that move.** Measured on the 6,672 committed inputs (`tests/_p2a_ref.inputs()`), raw door, final
-  records, against `333f3c73`: the Python moves 278 inputs and the port the same 278 (the fuzz corpus 159, the seeded
-  PATH-2a fuzz 109, the PATH-2a reproductions 10); 0 inputs become apart between the ports and 0 come together (559
-  apart before and after, either strict mode). Without `--strict`: tests CONTRADICTED → UNCHECKABLE 207 and VERIFIED
-  → UNCHECKABLE 63; symbol VERIFIED → UNCHECKABLE 26 and CONTRADICTED → UNCHECKABLE 7; reason-only moves 71 (tests
-  CONTRADICTED with another count), 65 (tests UNCHECKABLE with another reason) and 15 (symbol UNCHECKABLE with another
-  reason). Exactly 4 decided verdicts flip, each right by its diff: `path2:v1-limit-an-added-async-def-is-not-read`
-  ("Adds function foo." over `+async def foo():`) CONTRADICTED → VERIFIED; `path2:a1-an-added-async-test-abstains-the-count`
-  ("Added 0 tests." over a changed test and an added `async def test_parse():`) UNCHECKABLE → CONTRADICTED;
-  `p2a-fuzz:20260930:1355` ("Added 0 tests.") VERIFIED → CONTRADICTED; `p2a-fuzz:20260930:1417` ("Added 1 tests.")
-  CONTRADICTED → VERIFIED. The two `path2:` ids are #161's limit reproductions, not G-P1's verdicts for the three
-  defects. `--strict` fails on each new UNCHECKABLE. `tests/test_diffgate_issue178_179.py` pins the reporters' cases
-  in both ports: an added `async def test_x():` under "Added 1 test." and `async def fetch():` under "Added function
-  fetch." read VERIFIED at the raw door and the git door, in prose and declared; a fenced `def test_example` in
-  `docs/guide.md` beside a `src/a.py` edit, the same beside a created test (CONTRADICTED before), `def test_s` inside
-  a triple-quoted string added to `src/a.py`, a `def foo` in a `.md` beside a `.py` change and a `notes.txt` read
-  UNCHECKABLE (#178); a `def test_` in a `.py` file with no triple quote, and a `def` after a docstring closed in the
-  added lines, keep `main`'s verdict; the sections a key would merge read alike in both ports. On `333f3c73` 27 of
-  the module's 34 tests fail: every #179 case, #178's reporters' cases in both ports, the sections a key would merge,
-  the named residuals of the parity and the path, the walk, the ast grid and the 14 plants (their anchors are not
-  there). The 7 that pass there are the ast's reading of the reporters' cases, #178's controls in both ports, the
-  one-parse, path-tail and named-residual cases, and the two ports printing the same records.
+  read with every trailing code point at or below U+0020 or from U+007F up removed, and a `+++` header is read as
+  `/dev/null` on that header with every such code point removed from either end (`_edge_cut`, `_edgeCut`): every code
+  point Python's `strip()` or JavaScript's `trim()` removes is in that set (the test module holds it over every code
+  point), so the two ports reach the same path tail where `strip()` and `trim()` part. Read after `strip()` and
+  `trim()`, `+++ /dev/null<U+0085>` was a deletion in Python only and `+++ /dev/null<U+FEFF>` in the port only, so
+  #178 fired in one port only and, on a false count, the gates parted without `--strict` (review 2's crafted inputs;
+  `origin/main` read each alike); git writes `+++ /dev/null` with nothing around it. The parity and the path test are
+  a section's, not a key's of `parse_unified_diff_sides`, because the two ports build those keys apart: `strip()`
+  removes U+0085 and U+001C to U+001F from a path's tail where `trim()` keeps them, `trim()` removes U+FEFF where
+  `strip()` keeps it, and Node 24 lowers U+1C89 to U+1C8A where CPython 3.12 does not. Taken per key, the parity put a
+  `def test_` after an odd count in one port only where two sections merged in that port: of 43 inputs review 1 built
+  around such keys, the two ports printed different records on 18, and opposite gates on 3 without `--strict` and on
+  15 with it, which the overlay did not withhold (`origin/main` read all 43 alike). Taken per section, both ports read
+  all 43 alike, and on every committed input the walk holds the added lines the parse holds, in each port.
+  `tests_added` is UNCHECKABLE where the two counts differ: "{k} of the {placed} `def test_` lines added sit in a file
+  not read as .py or .pyi, or after an odd number of triple quotes in the added lines of their `+++` section; this
+  template counts `def` lines and cannot tell whether CPython defines a test there; claim says {n} (#178)".
+  `symbol_added` is UNCHECKABLE where the pattern finds the name in every section's added lines and not in the
+  Python-source lines: "every added line that would define {kind} {name!r} sits in a file not read as .py or .pyi, or
+  after an odd number of triple quotes in the added lines of its `+++` section; this template cannot tell whether
+  CPython defines it there (#178)". The same strings in both ports, the name through `pyRepr` in the port. Each says
+  only what was measured, #220's rule: where the counted line sits, and that the template cannot tell. Elsewhere
+  `main`'s verdict stands as before. The order is #110, #205, #178, then `main`'s verdict; #110's and #205's reasons
+  stay byte for byte, and `parse_unified_diff` and `parse_unified_diff_sides` return what they returned. The triage's
+  sketch compared the Python-source count with `main`'s count over `parse_unified_diff`'s added lines. It moved 290
+  committed inputs where this moves 278, and on each of the 12 more the two parse functions place a counted `def` or
+  `class` line apart (a `--- ` content line, a `+++:` header, an added line before any header: #172's shapes), where
+  the sketch fired with a reason that is false there. Both counts from one walk confine the abstention to what its
+  reason says.
+- **Verdicts that move.** Measured on the 6,672 committed inputs (`tests/_p2a_ref.inputs()`), raw door, final records,
+  against `333f3c73`: the Python moves 278 inputs and the port the same 278 (the fuzz corpus 159, the seeded PATH-2a
+  fuzz 109, the PATH-2a reproductions 10); 0 inputs become apart between the ports and 0 come together (559 apart
+  before and after, either strict mode). Without `--strict`, the Python's claims: tests CONTRADICTED → UNCHECKABLE 207
+  and VERIFIED → UNCHECKABLE 63; symbol VERIFIED → UNCHECKABLE 26 and CONTRADICTED → UNCHECKABLE 7; reason-only moves
+  71 (tests CONTRADICTED with another count), 65 (tests UNCHECKABLE with another reason) and 15 (symbol UNCHECKABLE
+  with another reason). The port's claims, over the same 278 inputs: 208, 62, 26 and 7, and reason-only 70, 66 and 15
+  (the two ports already printed different records on 559 of the inputs). Exactly 4 decided verdicts flip, each right
+  by its diff: `path2:v1-limit-an-added-async-def-is-not-read` ("Adds function foo." over `+async def foo():`)
+  CONTRADICTED → VERIFIED; `path2:a1-an-added-async-test-abstains-the-count` ("Added 0 tests." over a changed test and
+  an added `async def test_parse():`) UNCHECKABLE → CONTRADICTED; `p2a-fuzz:20260930:1355` ("Added 0 tests.") VERIFIED
+  → CONTRADICTED; `p2a-fuzz:20260930:1417` ("Added 1 tests.") CONTRADICTED → VERIFIED. The two `path2:` ids are #161's
+  limit reproductions, not G-P1's verdicts for the three defects. `--strict` fails on each new UNCHECKABLE.
+  `tests/test_diffgate_issue178_179.py` pins the reporters' cases in both ports: an added `async def test_x():` under
+  "Added 1 test." and `async def fetch():` under "Added function fetch." read VERIFIED at the raw door and the git
+  door, in prose and declared; a fenced `def test_example` in `docs/guide.md` beside a `src/a.py` edit, the same
+  beside a created test (CONTRADICTED before), `def test_s` inside a triple-quoted string added to `src/a.py`, a
+  `def foo` in a `.md` beside a `.py` change and a `notes.txt` read UNCHECKABLE (#178); a `def test_` in a `.py` file
+  with no triple quote, and a `def` after a docstring closed in the added lines, keep `main`'s verdict; the sections a
+  key would merge read alike in both ports, and so does a `+++ /dev/null` header holding a code point `strip()` and
+  `trim()` remove apart, at either end, as `main` reads it. On `333f3c73` 32 of the module's 40 tests fail: every #179
+  case, #178's reporters' cases in both ports, the sections a key would merge, the named residuals of the parity and
+  the path, the edited docstring line at the git door, #205's seams under the symbol abstention, the edge set, the
+  walk, the ast grid and the 16 plants (their anchors are not there). The 8 that pass there are the ast's reading of
+  the reporters' cases, #178's controls in both ports, the one-parse, path-tail and named-residual cases, the
+  `/dev/null` header cases (`main` reads them as this does), and the two ports printing the same records. On
+  `8d2bea17` 5 fail: the header cases, the edge set, the two ports printing the same records and the two plants of the
+  header decision.
 - **The truth world** (1,706 cases, the final record): right verdicts printed 5,644 → 5,569, wrong verdicts printed
   236 → 228, withheld 1,591 → 1,616. Of the 75 right verdicts no longer printed, 45 are withheld by #101, which now
   sees the changed async tests `main` counts; 28 are `main`'s own #178 abstention; and 2 become wrong:
@@ -95,24 +107,25 @@ file or charon line is touched.
   transforms.
 - **The numbers that moved, each re-pinned with the reason beside it** (CPython 3.12.10 and 3.14.2, Node 24.13.0).
   `tests/test_diffgate_path2a.py`: the Python's decided claims on the committed inputs 12,458 → 12,179 (`main`
-  abstains on 279 itself, 238 test counts and 41 symbols), withheld 2,631 → 2,654 (`tests` 433 → 468, `symbol`
-  192 → 186, `again` 5 → 3, `redefined` 22 → 18; the same keys under the POSIX flavour, decided 12,455 → 12,176); the
-  port's decided and withheld (12,264, 2,538) → (11,983, 2,559); bar C's four committed rows: one input leaves the
-  diff side and five more inputs with equal lists hold a withheld claim (6,133 / 1,151 / 58 → 6,134 / 1,156 / 57 on
-  3.12's Windows row), and no gate column moves; the seeded `line break` set 44 → 65 inputs apart on the diff side (52
-  → 80 on 3.14.2), each newly apart input an `async def` line with U+FEFF or a name running on into a letter outside
-  ASCII, #205's two seams, now reached through `async def`; the decorated world 355 → 367 inputs with a withheld
-  claim. `tests/test_diffgate_path2a_truth.py`: `PINNED` decided 7,614 → 7,554, false 1,535 → 1,547, attributable
-  1,206 → 1,230, abstained 1,591 → 1,616, right 5,897 → 5,828, right lost 253 → 259, undecided 182 → 179 (abstained
-  39 → 38), false other 329 → 317 (abstained 93 → 89); `PINNED_PORT` decided 7,393 → 7,333, abstained 1,452 → 1,477,
-  right 5,739 → 5,670, right lost 177 → 183, false 1,385 → 1,397, attributable 1,100 → 1,124 (966 of them the same
-  `main` record in Python, 942 before), false other 285 → 273 (abstained 49 → 45), undecided 269 → 266 (abstained
-  126 → 125); each transformed world 24 more attributable verdicts in both ports, every one withheld. The 60 claims
-  `main` no longer decides there are in 22 cases, each holding triple quotes; the 35 attributable verdicts new in
-  Python each sit over an added `async def` line (a test made async is counted as added, #101's shape), and 11 leave:
-  8 to the #178 abstention (`p2a-101:20260930:39` claim 3, `:84` claims 4 and 5, `:162` claim 7, `:216` claims 0
-  and 3, `:258` claim 2, `:384` claim 1), and 3 to right CONTRADICTEDs, since `main` now counts the async test
-  (`:235` claim 8, `:322` claim 1, `:355` claim 4). `PINNED_GIT` does not move.
+  abstains on 279 itself, 238 test counts and 41 symbols), withheld 2,631 → 2,654 (`tests` 433 → 468, `symbol` 192 →
+  186, `again` 5 → 3, `redefined` 22 → 18; the same keys under the POSIX flavour, decided 12,455 → 12,176); the port's
+  decided and withheld (12,264, 2,538) → (11,983, 2,559); bar C's four committed rows: one input leaves the diff side
+  and five more inputs with equal lists hold a withheld claim (6,133 / 1,151 / 58 → 6,134 / 1,156 / 57 on 3.12's
+  Windows row), and no gate column moves; the seeded `line break` set 44 → 65 inputs apart on the diff side (52 → 80
+  on 3.14.2), each newly apart input an `async def` line with U+FEFF or a name running on into a letter outside ASCII,
+  #205's two seams, now reached through `async def`; the decorated world 355 → 367 inputs with a withheld claim.
+  `tests/test_diffgate_path2a_truth.py`: `PINNED` decided 7,614 → 7,554, false 1,535 → 1,547, attributable 1,206 →
+  1,230, abstained 1,591 → 1,616, right 5,897 → 5,828, right lost 253 → 259, undecided 182 → 179 (abstained 39 → 38),
+  false other 329 → 317 (abstained 93 → 89); `PINNED_PORT` decided 7,393 → 7,333, abstained 1,452 → 1,477, right 5,739
+  → 5,670, right lost 177 → 183, false 1,385 → 1,397, attributable 1,100 → 1,124 (966 of them the same `main` record
+  in Python, 942 before), false other 285 → 273 (abstained 49 → 45), undecided 269 → 266 (abstained 126 → 125); each
+  transformed world 24 more attributable verdicts in both ports, every one withheld. The 60 claims `main` no longer
+  decides there are in 22 cases, each holding triple quotes; the 35 attributable verdicts new in Python each sit over
+  an added `async def` line (a test made async is counted as added, #101's shape), and 11 leave: 8 to the #178
+  abstention (`p2a-101:20260930:39` claim 3, `:84` claims 4 and 5, `:162` claim 7, `:216` claims 0 and 3, `:258` claim
+  2, `:384` claim 1), and 3 where `main` now prints a right CONTRADICTED, since it counts the async test (`:235` claim
+  8, `:322` claim 1, `:355` claim 4); the overlay withholds each of the 3 (#101), so the gate prints UNCHECKABLE
+  there. `PINNED_GIT` does not move.
 - **The tests that pinned the old reading.** `tests/_p2a_truth.py`'s V101 counterfactual is re-anchored on `main`'s
   new lines in both ports. It keeps its meaning, a test or symbol a removed line defines is not an added one, and
   applies it to every count `main` takes over added lines (`got`, and #178's `inside` and `placed`), the added side
@@ -128,15 +141,14 @@ file or charon line is touched.
   the same on CPython 3.12.10 and 3.14.2. Every other input, and every git-door fixture, is still compared byte for
   byte.
 - **The pin set moved**, as #220 moved it, on reading paths in both languages. `web/gate/differential/py_side.py`
-  `PINNED`, the README's whole-file sha and run-book line, and the comment in the port's block name `d65205fe…`, the
+  `PINNED`, the README's whole-file sha and run-book line, and the comment in the port's block name `e74c4a61…`, the
   whole file (LF). `tests/_p2a_ref.py` `MAIN_PY_SHA`, the README's reader line and the comment in the Python block
-  name `cb91f7c3…`, the reader the block is cut from (`e1441f18…` with #179 and #178). `MAIN_JS_SHA`, the README's
-  port line and the comment in the port's block name `e5aaf0b1…`, the port the block is cut from (`d74cc729…` with
-  the same two). The bookmarklet is rebuilt with terser 5.46.0, which rebuilds `main`'s build from `main`'s sources
-  byte for byte (`4f46cfdf…`): `bookmarklet.min.js` `b6fb14d4…`, 55,958 characters, and `bookmarklet.href.txt`
-  `4e5e9510…`, 55,969; the README lists `4f46cfdf…` among the earlier builds. terser was laid out from this box's npm
-  cache by integrity, since `npm install --offline` refused for want of a cached package document; nothing was
-  downloaded.
+  name `738e7941…`, the reader the block is cut from (`e1441f18…` with #179 and #178). `MAIN_JS_SHA`, the README's
+  port line and the comment in the port's block name `306ff6bd…`, the port the block is cut from (`d74cc729…` with the
+  same two). The bookmarklet is rebuilt with terser 5.46.0, which rebuilds `main`'s build from `main`'s sources byte
+  for byte (`4f46cfdf…`): `bookmarklet.min.js` `bd5869e2…`, 56,148 characters, and `bookmarklet.href.txt` `031f1bf3…`,
+  56,159; the README lists `4f46cfdf…` among the earlier builds. terser was laid out from this box's npm cache by
+  integrity, since `npm install --offline` refused for want of a cached package document; nothing was downloaded.
 - **What does not move.** No pinned pair moves, so no moves file is added; `node check_pairs.js` reads 190 pinned
   pairs, 0 disagreements. The port differential over `main`'s corpora (176 real pairs rebuilt from their pinned shas,
   3,000 regenerated fuzz pairs, the pinned pairs) reads 3,230 pairs, 0 disagreements; no record of the 176 real pairs
@@ -167,9 +179,23 @@ file or charon line is touched.
   trailing code point from U+007F up, so `tests/test_a.py<U+00E9>` is read as Python source and `main`'s count stands
   there, as before; #169's and #168's header misreads carry into the path test, so a `+++` path git quotes under its
   default `core.quotePath` (any name outside ASCII) or a GNU or svn header carrying a timestamp is read as not `.py`,
-  and a true count over a `def test_` there beside a plain `.py` file reads UNCHECKABLE (#178), where `333f3c73`
-  read VERIFIED (FAIL under `--strict`); and a file two `+++` sections of one diff name has its parity taken per
-  section, so a string one section opens and the next closes leaves the next section's `def` abstaining.
+  and a true count over a `def test_` there beside a plain `.py` file reads UNCHECKABLE (#178), where `333f3c73` read
+  VERIFIED (FAIL under `--strict`); and a file two `+++` sections of one diff name has its parity taken per section,
+  so a string one section opens and the next closes leaves the next section's `def` abstaining. Named by review 2 and
+  pinned as they read: an added line holding one end of a string whose other end is a context line (an edited
+  docstring's opening or closing line) turns the parity for the rest of its `+++` section, so a `def` after it
+  abstains, and a true count and a true symbol read UNCHECKABLE (FAIL under `--strict`) where `333f3c73` read
+  VERIFIED, at both doors, both ports alike. On the 176 real diffs (383 Python sections) the parity excludes an added
+  `def` or `class` line in 3 sections: 1 rightly (a `"""` string in `pr95`) and 2 wrongly (`styxx/sworn.py` in
+  `commit:8b743cbe87`, `styxx/receipt_binding.py` in `commit:2857b62d72`, real definitions by `ast`); no real body
+  claims those names, so no real record moves, and a parity over the context and added lines would exclude 10. And
+  #205's two seams reach #178's symbol abstention: a `def foo():` led by U+FEFF (a file saved with a byte order mark;
+  CPython defines `foo`) or a `def fooé():` in a `.py` section, beside a `def foo():` the abstention places outside
+  Python source, reads UNCHECKABLE (#178) in Python and VERIFIED in the port (right on the U+FEFF line, and `main`'s
+  wrong VERIFIED on the run-on name), where `333f3c73` read VERIFIED in both; the gates part under `--strict` only. On
+  review 2's two seeded fuzz sets (20,000 inputs each) 27 and 31 inputs are newly apart against `333f3c73`, every one
+  holding such a seam line, none with the gates apart without `--strict` (8 and 7 with it); none of the committed
+  inputs is newly apart.
 
 ## [Unreleased] — the GitLab job names a merge request description GitLab cut at 2,700 characters, gates it to its last whole sentence, prints CUT where the gate prints PASS over it, and does not fail on a claim the text the cut dropped decides (#209)
 

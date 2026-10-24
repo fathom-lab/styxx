@@ -206,16 +206,16 @@ def flavour(mod) -> str:
 # PATH-2 reproductions read a split only the old cut made, and fuzz 20260930:692 (`+++ /dev/null` with no `---`) now
 # raises in the Python as it did in the port.
 # #179 and #178 (fix/diffgate-178-179), on the inputs #205 pinned: main's reading moved, and the overlay's model of
-# main's count with it; no rule did. main abstains (#178) on 279 claims it decided, 238 test counts and 41 symbols, where
-# a counted line sits in a file not read as .py or .pyi or after an odd number of triple quotes in its file's added
-# lines; 41 of them were withheld before (`tests` -21, `redefined` -4, `split` -1, `symbol` -13, `again` -2). main reads
-# `async def` (#179), so 78 claims it decided change verdict (CONTRADICTED -> VERIFIED 41, VERIFIED -> CONTRADICTED 37)
-# and 101 test counts stay CONTRADICTED with another count. Of those the overlay withholds 57 test claims and 7 symbols
-# it did not (`tests` +57, `symbol` +7) and 1 more by `split` (fuzz 20260930:645), and one test claim it withheld it no
-# longer does: path2:a1-an-added-async-test-abstains-the-count, "Added 0 tests.", which main now CONTRADICTS, as the
-# overlay's model of main's count read it. The three other verdicts that move and stay decided are path2:v1-limit-an-
-# added-async-def-is-not-read and fuzz 20260930:1417 (to VERIFIED) and fuzz 20260930:1355 (to CONTRADICTED). The same
-# keys move under the POSIX flavour.
+# main's count with it; no rule did. main abstains (#178) on 279 claims it decided, 238 test counts and 41 symbols,
+# where a counted line sits in a file not read as .py or .pyi or after an odd number of triple quotes in the added lines
+# of its `+++` section; 41 of them were withheld before (`tests` -21, `redefined` -4, `split` -1, `symbol` -13, `again`
+# -2). main reads `async def` (#179), so 78 claims it decided change verdict (CONTRADICTED -> VERIFIED 41, VERIFIED ->
+# CONTRADICTED 37) and 101 test counts stay CONTRADICTED with another count. Of those the overlay withholds 57 test
+# claims and 7 symbols it did not (`tests` +57, `symbol` +7) and 1 more by `split` (fuzz 20260930:645), and one test
+# claim it withheld it no longer does: path2:a1-an-added-async-test-abstains-the-count, "Added 0 tests.", which main now
+# CONTRADICTS, as the overlay's model of main's count read it. The three other verdicts that move and stay decided are
+# path2:v1-limit-an-added-async-def-is-not-read and fuzz 20260930:1417 (to VERIFIED) and fuzz 20260930:1355 (to
+# CONTRADICTED). The same keys move under the POSIX flavour.
 ABSTENTIONS = {
     "windows": {
         "decided": 12179, "main raises": 6,

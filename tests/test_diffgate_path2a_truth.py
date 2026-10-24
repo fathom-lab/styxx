@@ -58,11 +58,11 @@ DECIDED = ("VERIFIED", "CONTRADICTED")
 # #179 and #178 (fix/diffgate-178-179): main's reading moved and no overlay rule did; the V101 counterfactual reads
 # every count main takes as main reads it (tests/_p2a_truth.py). main abstains (#178) on 60 claims it decided (57 test
 # counts and 3 symbols, in 22 cases, each holding triple quotes): decided 7614 -> 7554 in Python, 7393 -> 7333 in the
-# port. main reads `async def` (#179), so a test or function made async, or changed while async, is counted as added:
-# a false verdict the counterfactual attributes to #101. Attributable 1206 -> 1230 in Python (35 new, each over an
-# added `async def` line; 11 leave, 8 of them to main's #178 abstention and 3, p2a-101:20260930:235 claim 8, :322
-# claim 1 and :355 claim 4, to right CONTRADICTEDs, since main now counts the async test) and 1100 -> 1124 in the
-# port, each withheld.
+# port. main reads `async def` (#179), so a test or function made async, or changed while async, is counted as added: a
+# false verdict the counterfactual attributes to #101. Attributable 1206 -> 1230 in Python (35 new, each over an added
+# `async def` line; 11 leave, 8 of them to main's #178 abstention and 3, p2a-101:20260930:235 claim 8, :322 claim 1 and
+# :355 claim 4, where main now prints a right CONTRADICTED, since it counts the async test, and the overlay withholds it
+# (#101), so the gate prints UNCHECKABLE there) and 1100 -> 1124 in the port, each withheld.
 # Of the right verdicts the gate printed, 5,644 -> 5,569 in Python, 45 are withheld by #101, 28 are main's own #178
 # abstention, and 2 become false (p2a-101:20260930:217 claim 5 and :379 claim 0, "Added 2 tests." VERIFIED over one
 # async test defined twice in a file: main counts `def` lines and CPython binds one name, the duplicate-definition
