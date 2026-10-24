@@ -285,6 +285,54 @@ file or charon line is touched.
   gates without `--strict` on 1, `path2:x1-a-claimed-name-that-runs-past-the-identifier-names-none`, whose claimed name
   (`fo²o`) the two templates read apart in the description, as on `333f3c73`.
 
+## [Unreleased] — AMENDMENT 6 to the leg-2 PREREG: the Claude family runs on `claude-opus-5-5`, because `claude-fable-5`, the alias the PREREG names, does not answer on the operator's plan; written before any seat runs
+
+**`papers/sworn/AMENDMENT_sworn_measurement_leg2_seat_alias_2026_10_24.md`; `papers/sworn/measurement/receipts/`.**
+The preregistration signed on 2026-10-23 (`papers/sworn/PREREG_sworn_measurement_2026_10_23.md`, #225) names
+`claude-fable-5` as the Claude alias and says, at l.207, that if it does not resolve "no seat runs on another alias
+until an amendment naming it is committed". This is that amendment, the sixth after the five of the PREREG's section
+3. The PREREG and every file its lock names are not edited, and no bar moves.
+
+- **What was measured.** On 2026-10-23 the PREREG's one-item transport check over a synthetic packet read
+  VOID-CONTAM on a failed call ("the transport returned its error envelope"; the lead's direct call that day
+  reported an OAuth session that had expired and could not be refreshed). On 2026-10-24, after the operator renewed
+  the CLI login, one call each with the seat's argv and its contamination probe: `claude-fable-5` returned 429
+  `model_requires_usage_credits` with an empty `modelUsage`, and `claude-opus-5-5` answered `NO`
+  (`papers/sworn/measurement/receipts/transport_alias_fable_2026_10_24.json` and
+  `papers/sworn/measurement/receipts/transport_alias_opus_2026_10_24.json`: the exact argv, the times, the claude
+  CLI version, and the raw stdout with the sha256 of its bytes; the calls ran in the environment a Claude Code
+  session hands the processes it starts, which the receipts do not record). The transport check on
+  `claude-opus-5-5` read TRANSPORT-CHECK-SYNTHETIC, one synthetic item parsed, the probe `NO`
+  (`papers/sworn/measurement/receipts/transport_check_opus_2026_10_24.seat.json`, the seat file byte for byte).
+  The amendment names each committed receipt by its full path, because a path beginning `receipts/` in the PREREG
+  names a local planning file that is not committed.
+- **The decision.** Asked which alias the Claude seats should use, the operator answered in chat on 2026-10-24:
+  "Amend to Opus 5.5".
+- **What changes.** The three Claude seats of each panel run `seat_claude.py ... --model claude-opus-5-5`, the
+  runner's own flag, and every seat file records `substrate.model` `claude-opus-5-5`. `twin_trivial.py` has no alias
+  flag, and as committed its call reaches `claude-fable-5`, which would leave G-G1 with no pair; so the trivial
+  twins of both tranches run through its own `main` under a one-line `python -c` that binds `seat_claude.cli`'s
+  model to the amended alias, with no file edited (checked with a recorder in place of the transport; no model
+  called). That route is the one rule the amendment moves beside the alias: for the twins only, it replaces the
+  committed `twin_trivial.py` CLI that the PREREG's section 4 and its Amendment 2 item 5 name. Every other flag,
+  the packets, the probe, the timeouts, section 4's order and its count (675 item calls, 6 probes and 9 twin calls
+  on the operator's plan, one usage window, no fan-out) are unchanged, and so are the local family, Amendments 1,
+  3, 4 and 5, and Amendment 2 except its item 5's CLI for the twins. The check on the day, the seats and the twins
+  run in one environment.
+- **What the RESULT prints.** The alias beside every Claude-family number; each Claude seat file's `substrate.model`,
+  read from the file, because `score.py`'s `families` block reads one seat file per family, with any seat file that
+  names another alias printed as a seat run on an alias no amendment names; that the dry run's six Claude seat files
+  name `claude-fable-5` and hold canned answers, so their counts stay sizing inputs only, as Amendment 5 says; that
+  the seat file's `named_in_design: true` names the family and its transport, the alias having been the PREREG's
+  and now being this amendment's; the twins' route as the departure from section 4's CLI, with every twin command
+  line of each tranche as it was run and the fact that a twin's status file records no alias; and the environment
+  the check, the seats and the twins ran in.
+- **Not examined.** The receipted `claude-opus-5-5` call wrote 39,201 input tokens to the prompt cache for a
+  150-character prompt with no tools and no setting sources; what fills them is not read here, and the probe's `NO`
+  stays the only contamination check.
+- No seat has run: at `origin/main` `ca347730` the only tracked files under a leg-2 `seat_outputs/` are the dry
+  run's 20, under `papers/sworn/measurement/dryrun/seat_outputs/`, and no model read a real item in this change.
+
 ## [Unreleased] — the GitLab job names a merge request description GitLab cut at 2,700 characters, gates it to its last whole sentence, prints CUT where the gate prints PASS over it, and does not fail on a claim the text the cut dropped decides (#209)
 
 **What was wrong.** Over 2,700 characters, GitLab hands a merge request description to
