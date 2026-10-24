@@ -65,6 +65,237 @@ the text against the surface lint's withdrawn wordings, and marks or refuses wha
   run" if the sheet is unsigned by 2026-11-05. Nothing here says a post is true, and the bars are the sworn measurement
   design's, transcribed and unsigned until the sheet is signed.
 
+## [Unreleased] — the GitLab job names a merge request description GitLab cut at 2,700 characters, gates it to its last whole sentence, prints CUT where the gate prints PASS over it, and does not fail on a claim the text the cut dropped decides (#209)
+
+**What was wrong.** Over 2,700 characters, GitLab hands a merge request description to
+`CI_MERGE_REQUEST_DESCRIPTION`, the variable the GitLab job reads, as its leading 2,697 characters
+and `"..."`, 2,700 in all, and sets `CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED` to `"true"`:
+GitLab's `app/models/merge_request.rb` (`truncate_mr_description`, read 2026-10-24) calls
+`description.truncate(2700)`, and ActiveSupport's `String#truncate` writes its default omission,
+`"..."`, in place of the rest. GitLab's docs ("Predefined CI/CD variables reference", both
+entries) give the 2,700 and not the `"..."`. The job never read the flag, so over a longer
+description it gated that text as if it were the description, two ways. A claim past GitLab's cut
+was never read and never named as unread: the issue's case, a false "Added 3 tests." after a long
+summary, printed `PASS  claims=0` in report and blocking mode alike. And the sentence the cut
+broke was gated as written: "Only touches src/ and tests/." cut after "src/" was read as
+"Only touches src/...", CONTRADICTED (as "Only touches src/", the triage's form, is), and with
+`STYXX_SOFT_FAIL` `"false"` the job failed on a true claim. The GitHub Action does not have this
+hole: it reads the pull request body from the API.
+
+**What it does now**, in `integrations/gitlab/diffgate.gitlab-ci.yml`, when the flag is `"true"`
+(compared case-insensitively, surrounding white space stripped):
+
+- a new step after the description is written cuts it back to its last whole sentence and the
+  white space after it, where `styxx.diffgate` itself splits sentences (`.`, `!` or `?` before
+  white space, or a line break), so every sentence the gate's templates read over the cut is a
+  whole sentence of the description, GitLab's `"..."` is never read (no white space follows it),
+  and a sentence the cut broke is not judged: the second run, below, reads it only to hold a claim
+  back. The white space is kept because PATH-2a (#121) reads it: where the two readers read it
+  apart (U+0085, U+2028, FF, U+001C and the rest of its set), it withholds a claim of the
+  sentence it ends;
+- that step prints one line before the gate's output naming the cut, what GitLab handed the job
+  (the description's leading characters and the `"..."`) and how many characters the gate's
+  verdict is over, and keeps the text GitLab handed in `mr_description.handed.md`;
+- the gate's output is kept in `diffgate.log` and printed by the step that reads
+  `STYXX_SOFT_FAIL`, which prints CUT where the gate prints PASS and, after the mode line, says
+  the job does not call the description a pass, since no claim past the cut counts toward the
+  gate's verdict;
+- `diffgate.json` gains `description_cut`: the flag's value, `characters_handed`,
+  `characters_gated` and a `why`, which says what GitLab handed and what the verdict is over and,
+  when the second run ran, that it ran only to hold a claim back. Its `verdict` stays the gate's,
+  over the prefix;
+- a FAIL over a cut is the gate's FAIL over that prefix. PATH-2a's withholding and the
+  one-`styxx`-block rule read the whole text the gate is handed, so the partial sentence the cut
+  drops can hold their reason: a non-ASCII letter in the sentence as both readers end one, a
+  zone of PATH-2a's that names the claimed prefix, the closing fence of a second block. So when the
+  gate FAILs over a cut the job runs it again over `mr_description.handed.md`, only to hold a claim
+  back, read as the run over the cut is (a report that does not match its exit fails the job). A
+  CONTRADICTED claim of the cut that this run withholds (PATH-2a's reason, in the one form
+  `styxx/diffgate.py` writes it) or does not read is held back: named in the log (quoted, as the
+  CLI quotes text a description controls) and under `held_back` in `description_cut`, with that
+  run's reason, and the job does not fail on it. A FAIL whose every CONTRADICTED claim is held back
+  does not fail the job, in either mode. The job cannot see `--strict` (the record does not carry
+  it): with it such a FAIL does not fail the job either, and the log names the UNCHECKABLE claims
+  `--strict` would fail on, over the cut and held back. Any other FAIL over a cut reports or blocks
+  as any FAIL does. A cut never fails the job by itself.
+
+Without the flag, or with any other value, the job gates the description as GitLab handed it, as
+before; the gate's output now reaches the log through `diffgate.log`, byte for byte.
+
+**Measured.** The job's own cut step and its own `STYXX_SOFT_FAIL` step, run on every prefix that
+cuts after the claim, with the gate's records made by `gate_diff_text` over the merge request's
+diff and each file read as the CLI reads it. Each prefix is handed as it is and, as GitLab's code
+hands it, with `"..."` after it. Counted: prefixes where the job stands on a CONTRADICTED claim
+that neither the whole description nor the text GitLab handed gives, and prefixes where it fails
+with `"false"` and neither has a CONTRADICTED claim. Over 553 descriptions (17,439 prefixes: 8
+claims by 20 separators; 7 claims by 8 kinds of white space by 7 sentences the cut runs through;
+two `styxx` blocks), run once outside the suite, as it is and with `"..."`: 2,860 and 2,616, and
+2,864 and 2,620, with the cut at the start of the white space and nothing held back, as the change
+stood at review; 365 and 305, and 369 and 309, with the white space kept and nothing held back; 0
+and 0 now, both ways, and now no claim the whole description reads CONTRADICTED is held back and
+none the text GitLab handed does not read CONTRADICTED is stood on (0 of 17,439, both ways). Over
+25 of those descriptions (847 prefixes), on every run of `tests/test_gitlab_job.py`: 240 and 240,
+and 241 and 241; 42 and 42, and 43 and 43; 0 and 0 both ways, the test asserting 0 now and more
+than 0 for each earlier form, both ways.
+
+**What it cannot do.** It cannot read past GitLab's cut, or say how long the description was. The
+cut back to a whole sentence also drops a sentence that ended on the 2,697th character, since
+GitLab's `"..."` took the white space after it; the line names how many characters the verdict is
+over. Text past GitLab's cut never reaches the job, so a claim the gate would withhold, or not
+read, over the whole description for text there can still be CONTRADICTED over the cut, as it was
+over GitLab's prefix before #209, and with `"false"` the job fails on it. It cannot see
+`--strict`: with it, a FAIL whose every CONTRADICTED claim is held back passes the job even where
+`--strict` fails the gate on an UNCHECKABLE claim, and the log names those claims. GitLab's
+job-token docs list `GET /projects/:id/merge_requests/:merge_request_iid` among the endpoints a
+job token reaches, which would read the whole description. This change does not call it: the job
+has not run on GitLab itself, and by default a job token reads another project's merge requests
+only when that project's allowlist admits the job's project. That is left for a later change.
+
+**Tests.** `tests/test_gitlab_job.py` hands the job `description[:2697] + "..."` with the flag, as
+GitLab's code does (it handed `description[:2700]` until review 2 of #209 read that code), and the
+whole description as the control. The issue's case prints CUT, never PASS, names the cut in the log
+and in `diffgate.json`, and passes in either mode, with an UNCHECKABLE claim before the cut still
+named in the log; the scope sentence the cut broke is not judged in either mode; a false whole
+sentence before the cut still FAILs, reported by default and blocking with `"false"`, nothing held
+back; one ending on the 2,696th character is gated and FAILs, one ending on the 2,697th, 2,698th or
+2,700th is not, and the `"..."` is never in the gated text. A false scope claim before U+0085,
+U+2028, FF or U+001C is withheld over the cut as over the whole description; one the gate withholds
+over the text GitLab handed (NBSP before a non-ASCII word, a zone in the dropped text) or does not
+read there (a second block closed at the cut) is held back and not failed on, in either mode, and
+the line naming it quotes it, so an ESC sequence in the claim never reaches the log; a release names
+the UNCHECKABLE claims `--strict` would fail on (in the test's case, with `--strict`, the whole
+description FAILs where the job passes); one whose reason to withhold sits past GitLab's cut fails
+the job with `"false"`; a second run whose report does not match its exit fails the job in either
+mode; the line and the `why` say what GitLab handed and what the verdict is over, never that the
+gate does not read the rest, and the `why` names the second run when it ran; and the sweep above
+holds. The cut step runs on every prefix of four descriptions (CRLF, a lone CR, NBSP, U+2028, a
+`styxx` declaration block, a sentence with no end), as it is and with `"..."` after it, and leaves
+the same text either way: only whole sentences of the description by the gate's split, as written
+and as the CLI reads the file; tests read that split and the form of PATH-2a's reason from
+`styxx/diffgate.py`; without the flag the step leaves the text alone and removes a stale cut record
+and handed copy. Each of those cases fails on main. The harness's interpreter count moves from two
+to four, it hands bash the script as a file (Git's bash on Windows ran a `-c` argument of 8,166
+characters whole and one of 8,196 cut short), and the no-shell-expansion test reads expansions of
+`$CI_MERGE_REQUEST_DESCRIPTION`, not mentions of its name. The module ran 39 tests before and 83
+now. No reader file, pin, conformance vector or differential grid moves: the job installs the
+released `styxx` and runs its CLI unchanged.
+
+## [Unreleased] — NOTE: forward pointers beside the untied-magnitudes RESULT and beside the program audit and synthesis, which still state the permuted-MNIST headline; `styxx/resonance.py`'s docstring carries the S4D pointer and the robustness RESULT's in-place-clamp caveat
+
+**`papers/rhythm-rescue/NOTE_forward_pointer_untied_magnitudes_2026_10_23.md` and
+`papers/NOTE_forward_pointer_program_documents_oscillation_2026_10_23.md` (both sworn, with their sidecars and
+verdict receipts); `styxx/resonance.py` (docstring only); `.gitattributes`.** The surfaces outside
+`papers/frequency-resonance/` that still state the frequency arc's permuted-MNIST headline as it stood before
+`RESULT_pmnist_robustness_2026_10_23.md`: the untied-magnitudes RESULT's l.34-36 ("The arc's headline, that
+oscillation is causally load-bearing in state-space models, survives the sharpest control its own knob admits"),
+the program audit's finding 5 (l.240-242) and its rank-2 row for the profiler (l.446, "the program's cleanest causal
+ablation (+0.3122)"), the program synthesis's Arc B line (l.49-50, "Oscillation is the long-range mechanism in
+state-space models"); and, beside them, the shipped profiler's docstring, whose "structurally cannot do" sentence
+the prior-art reads bear on. Each NOTE quotes its sentences against the documents' bytes, swears the verdict
+(`pmnist_robustness_result.json#/verdict`), copies the sentence it licenses with its spans, says what carries and
+what does not, and swears why it stands beside its documents and not inside them.
+
+- **The untied-magnitudes NOTE.** That RESULT measured ordered copy, not permuted MNIST: D 256, 4000 steps, seeds 0,
+  1 and 2, on CPU; ordered-memory capacity FREE 6.0, CLAMPED 2.6667 and REAL2 2.6667, recovery 0.0, verdict
+  `ROTATION_LOAD_BEARING__beyond_diversity`. Those numbers stand as measured, at one fixed budget: the run and the
+  2026-06-03 run its anchors reproduce both took 4000 steps, neither receipt records the training curves the
+  2026-06-03 PREREG froze as reported, neither tests whether the ordered-copy gap survives a longer budget, and the
+  permuted-MNIST budget verdict is neither carried to ordered copy nor shown not to apply there. The headline its
+  l.34 calls surviving does not carry at `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`. On permuted MNIST the
+  robustness RESULT reports, from its 4000-step runs, FREE − REAL2 0.275 (`G_R_diversity`, not held) and
+  REAL2 − CLAMPED −0.0074 (`G_R_rotation`, held), recovery −0.0279 [−0.1105, 0.0547], class `rotation`; the
+  BUDGET_CONFOUND row reads neither gate, so these are reported, not read, and no REAL2 run took the 12,000-step
+  budget, so whether FREE − REAL2 survives it is not measured. The sealed untied receipt, the run under the untied
+  PREREG that SEALS row 2 seals, stays sealed, and the prior-art NOTE files "causally load-bearing in SSMs" as
+  exceeding every read.
+- **The program-documents NOTE.** The +0.3122 stands as what was measured (FREE 0.9195 against CLAMPED 0.6073, 4000
+  steps, seeds 0 and 1, permutation 1234, the three-block `CLRU`); as the arc's headline it does not carry at the
+  verdict. The general sentences are filed by the prior-art NOTE and by the PAPER's banner. The table row's reason
+  rests on a gap between separately trained models, not on the in-place clamp the profiler makes, which the
+  robustness RESULT reports as "not evidence for the between-model gap: a destructive perturbation with no
+  matched-norm control".
+- **Beside, not inside.** The untied-magnitudes RESULT is sworn: its verdict receipt and line 221 of the charon log
+  name the sha256 of its bytes (`ec7921a0…`), and the leg-2 PREREG's population and its pinned `packet_L.json` carry
+  it. On `origin/main` `333f3c73` no certificate, seal, sworn span or receipt named the audit's bytes; the
+  program-documents NOTE added here swears its blob hash (`41c08977…`) at `2a36bd0d`, for the record. Five sworn
+  documents, the census receipt, `h_mapping.json` and the leg-2 packets name it by name, most of them citing a
+  section of it or its mechanism M2. `oath_v11_baseline_ledger.json` records a digest of the synthesis's number
+  tokens (11 tokens, `9bcb573e…`, which `origin/main` reproduces), and a sworn RESULT names its item 3. None of the
+  three is edited; an in-place edit stays the operator's call.
+- **`styxx/resonance.py`, docstring only.** "This is the within-architecture ablation that whole-model benchmarks
+  (LinOSS vs Mamba) structurally cannot do" becomes "Whole-model benchmarks (LinOSS vs Mamba) cannot run this
+  within-architecture ablation", followed by the S4D pointer (arXiv 2206.11893, Table 3(a), 2022: a
+  real-versus-complex initialization contrast inside one diagonal SSM) and the prior-art NOTE's path. WHAT IT DOES
+  NOT SAY gains the robustness RESULT's caveat on the in-place clamp, in its words. No code changes. On `origin/main`
+  `333f3c73` nothing pinned the file's bytes or quoted its lines (no sworn span, receipt, certificate, conformance
+  vector or test), and it is not among the modules `styxx.instrument` or `styxx.charon` hash. The program-documents
+  NOTE added here quotes its lines 2, 5 and 10 at `2a36bd0d`; they sit above the edited lines, and the edit leaves
+  them unchanged.
+- **Not changed.** `RESULT_untied_magnitudes_2026_09_02.md`, `AUDIT_the_whole_program_2026_09_01.md`,
+  `SYNTHESIS_program_2026_07_24.md`, `papers/INDEX.md` (its two rows read the verdict since #226), and every
+  certified, sealed, frozen or sworn file, receipt and conformance vector. The other surfaces a search of
+  `origin/main` found are listed, with their reasons, in the pull request. `papers/build_ledger.py` and
+  `papers/build_index.py` were run; neither moved a file.
+- **Sworn.** 83 of 83 spans HELD for the untied-magnitudes NOTE and 57 of 57 for the program-documents NOTE, 0
+  FAILED, 0 UNRESOLVED, 0 MALFORMED, at the commit each sidecar names (`0dfb26e3` and `2a36bd0d`);
+  `python -m styxx.sworn check` re-derives both receipts.
+
+## [Unreleased] — PAPER banner: the 2026-07-23 oscillation draft carries, above its unchanged text, what the prior-art reads and the robustness RESULT file against it
+
+**`papers/frequency-resonance/PAPER_oscillation_causal_map_2026_07_23.md`.** A dated blockquote banner after the
+title line, in the house form of the 2026-09-01 back-pointers and the 2026-09-02 forward pointer, carries what
+section 5 of `NOTE_prior_art_full_text_reads_2026_10_23.md` files against the draft, one item per filing, each
+located by section and a quoted fragment rather than a line number. Its opening lines say what the lab no longer
+stands behind and name the earlier work with its years (S4D, 2022; the LRU paper, 2023). It points to that NOTE and
+to `RESULT_pmnist_robustness_2026_10_23.md`, quotes word for word the sentence the RESULT's verdict licenses, and
+says that the draft's line numbers as the NOTE (sections 5 and 6) and its CHANGELOG entry cite them now sit 94 lines
+lower. The draft's sentences are left as written: the change adds 94 lines above the draft's third line and removes
+none.
+
+- **Why in place.** Nothing names the draft's bytes. On `origin/main` `b216b371` no `CERT_*.json`,
+  `*.certificate.json`, SEALS file, sworn sidecar or receipt, capsule or charon log carries its path, its git blob
+  id (`129f95b4…`) or the sha256 of its blob (`252d9aec…`). Three OATH records name its path without its bytes:
+  `papers/closed-model-frontier/oath_v11_baseline_ledger.json` records a digest of its extracted number tokens,
+  which carry line numbers, so the banner moves that digest (111 tokens, `8649b3ec…`, to 181, `c6bd78c6…`), as the
+  2026-09-01 back-pointers and the 2026-09-02 pointers moved theirs; `oath_v10_ordinal_census.json` and
+  `oath_v10_ordinal_redteam.json` record its tables by line number. They describe the bytes they ran on and are not
+  regenerated.
+- **What the banner says the lab no longer stands behind.** The priority-shaped close of §3 and the two ordinals of
+  §1, which the NOTE says should not be printed (the close is located by its opening words, the ordinals are
+  elided). The close is a universal sentence four reads cannot carry; its nearest relative in them, S4D-Real, is an
+  initialization that also moves the real part, and what separates the draft's CLAMPED arm from it is a design
+  difference, not priority. Also: the Abstract's and §1's sentences that the field evaluates oscillatory SSMs by
+  comparing whole architectures (true of LinOSS and D-LinOSS, not of the field: S4D's Table 3(a) sets a real
+  initialization against a complex one inside one diagonal SSM at matched size); the "S5/LinOSS-class" label (its
+  LinOSS half fails for the Appendix A reason, the model is LRU-style, `CLRU`, and the S5 paper was not read, so
+  nothing says whether `CLRU` is S5-class); Appendix A's equivalence with LinOSS's oscillation ablation (in
+  LinOSS-IM magnitude and phase are tied, so the CLAMPED arm is not reachable inside LinOSS); "the long-range
+  mechanism", which exceeds every read; and the permuted-MNIST headline, which does not carry at
+  `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`, its numbers standing as what was measured at 4000 steps on two
+  seeds.
+- **What it says stands, with what each owes.** §4.1's "the whole-model benchmarks cannot run" sentence, true as
+  written, with the S4D pointer; §1's "~2×" paraphrase of LinOSS's abstract, with its Table 2 (1.66× against
+  Mamba); "matched-param", approximate (FREE trains 192 more parameters, 101,002 against 100,810); the LRU paper and
+  S4D, owed by §3, which omits them; §3's LinOSS and D-LinOSS sentence, with version pins.
+- **What it says neither document settles.** The sequential-MNIST sentences ("causally load-bearing"), outside
+  every read and not re-run by the robustness design; the draft's causal readings of an in-place θ → 0 clamp on a
+  trained model (the Abstract's "collapses it to chance (9.8%)" and "read off, causally", §4.1's "+88.5 points" and
+  "routes almost all of its computation through the rotation", §4.4's "+0.385 from static oscillation"), which rest
+  on a kind of measurement the RESULT reports on its own runs as "not evidence for the between-model gap: a
+  destructive perturbation with no matched-norm control" (neither `run_smnist_ablation.py` nor
+  `resonance_profiler.py` runs that control); and §4.1's "because the decay model plateaus while the oscillatory one
+  keeps improving", which had no receipt. Within the RESULT's 12,000-step runs, accuracy at step 8000 minus accuracy
+  at step 4000 is 0.129 for CLAMPED and 0.0384 for FREE; over the last quarter of each 4000-step CLAMPED run, step
+  3000 to step 4000, the gain is 0.0367, read with the RESULT's caveat that a cosine schedule drives the learning
+  rate to zero at the budget. In
+  the RESULT's words, "None of these gains is a gate." The banner carries only what the NOTE and the RESULT file
+  against the draft, and a sentence it does not list is neither withdrawn nor affirmed by it. TIDES, the S5 paper
+  and the rest of §3's related work were not read, and no priority claim is made.
+- **Not edited.** `papers/INDEX.md` row 51 carries no filed sentence since #226. The other surfaces that repeat the
+  draft's filed sentences are listed, not exhaustively, in the pull request; the certified, sealed, frozen and sworn
+  ones among them keep their bytes. `papers/build_ledger.py` and `papers/build_index.py` were run; neither moved a
+  file.
+
 ## [Unreleased] — styxx 7.50.0 on Zenodo, as the next version of the software record; `CITATION.cff`, `README.md` and the Zenodo manifest follow the release
 
 styxx 7.50.0 is deposited on Zenodo as **10.5281/zenodo.23594959**, a new version of the styxx software

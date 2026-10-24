@@ -16,8 +16,11 @@ of the mechanism causally contributes::
     + adaptation                = full eval  −  eval with adaptation off     (what time-varying θ buys)
     = total oscillation reliance = full eval  −  decay floor
 
-This is the within-architecture ablation that whole-model benchmarks (LinOSS vs Mamba) structurally
-cannot do: clamp the oscillation off, hold everything else fixed, measure the difference.
+Whole-model benchmarks (LinOSS vs Mamba) cannot run this within-architecture ablation: clamp the
+oscillation off, hold everything else fixed, measure the difference. A real-versus-complex comparison
+inside one diagonal SSM was published in S4D (Gu et al., arXiv 2206.11893, Table 3(a), 2022), as an
+initialization: S4D-Real against S4D-Inv. See
+``papers/frequency-resonance/NOTE_prior_art_full_text_reads_2026_10_23.md``.
 
 THE CONTRACT, FRAMEWORK-AGNOSTIC. Any object tree whose nodes are reachable through ``modules()``
 (torch's convention) or through attribute walking, where a node exposing a per-mode phase named
@@ -32,6 +35,12 @@ adaptive primitive beat an independently trained static bank" — the arc's gate
 then falsified at scale, then shown to be capacity in disguise by
 ``RESULT_efficiency_control_from_receipts_2026_09_02.md``). The profiler diagnoses a given model; it
 never licenses a primitive.
+
+Nor is the in-place clamp evidence for a gap between separately trained models. The permuted-MNIST
+robustness RESULT (``papers/frequency-resonance/RESULT_pmnist_robustness_2026_10_23.md``) runs the same
+kind of in-place θ → 0 clamp on its own trained FREE models and reports it as "not evidence for the
+between-model gap: a destructive perturbation with no matched-norm control". This profiler runs no
+matched-norm control either.
 
 CLI::
 
