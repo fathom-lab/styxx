@@ -222,6 +222,25 @@ function parseUnifiedDiffSides(diffText) {
   return sides;
 }
 
+function _pythonSourceLines(sides) {
+  // #178, as the Python's _python_source_lines: the added lines of each file whose path ends in .py or .pyi, its tail
+  // read with every trailing unit at or below U+0020 or from U+007F up removed, except those after an odd number of
+  // triple quotes in that file's added lines
+  const out = [];
+  for (const [p, [added]] of sides) {
+    let e = p.length;
+    while (e > 0 && (p.charCodeAt(e - 1) <= 32 || p.charCodeAt(e - 1) >= 127)) e--;
+    const head = p.slice(0, e);
+    if (!_PY_SUFFIXES.some(x => head.endsWith(x))) continue;
+    let q = 0;
+    for (const line of added) {
+      if (q % 2 === 0) out.push(line);
+      q += line.split('"""').length - 1 + line.split("'''").length - 1;
+    }
+  }
+  return out;
+}
+
 function _compatParams(line, at) {
   // The parameter list of a definition line: the text inside the first `(` at or after `at`,
   // whitespace-collapsed, or null when there is none. A list that does not close on the line is
@@ -592,6 +611,12 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
   // _READ_APART, with the Python's reason byte for byte
   const apart = _readApart(addedBlob);
   const apartWhy = apart === null ? null : `an added line holds ${apart}, which CPython refuses in source outside a string or a comment; this template counts \`def\` lines and cannot tell where it sits (#205)`;
+  // #178, as the Python's _gate: the same counts over one parse, every file's added lines and the lines of them
+  // _pythonSourceLines keeps
+  const sidesLines = [];
+  for (const [added] of sides.values()) for (const x of added) sidesLines.push(x);
+  const sidesBlob = sidesLines.join("\n");
+  const insideBlob = _pythonSourceLines(sides).join("\n");
   const claims = [];
   const sentences = _pySplitSentences(summaryText);
   const covered = new Set();
@@ -628,8 +653,14 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           } else if (apartWhy !== null) {
             c.verdict = "UNCHECKABLE"; c.why = apartWhy;   // #205
           } else {
-            const got = (addedBlob.match(/^\s*def test_/gm) || []).length;
-            if (got === n) {
+            const tx = /^\s*(?:async[ \t\f]+)?def test_/gm;   // #179: `async def test_` too
+            const got = (addedBlob.match(tx) || []).length;
+            const inside = (insideBlob.match(tx) || []).length;
+            const placed = (sidesBlob.match(tx) || []).length;
+            if (inside !== placed) {                         // #178
+              c.verdict = "UNCHECKABLE";
+              c.why = `${placed - inside} of the ${placed} \`def test_\` lines added sit in a file not read as .py or .pyi, or after an odd number of triple quotes in that file's added lines; this template counts \`def\` lines and cannot tell whether CPython defines a test there; claim says ${n} (#178)`;
+            } else if (got === n) {
               c.verdict = "VERIFIED"; c.why = `diff adds ${got} test functions, claim says ${n}`;
             } else if (BC1_BY_CONSTRUCTION && _TEST_NOUNS_NOT_FUNCTIONS.has(noun)) {
               c.verdict = "UNCHECKABLE";
@@ -646,10 +677,15 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           } else if (apartWhy !== null) {
             c.verdict = "UNCHECKABLE"; c.why = apartWhy;   // #205
           } else {
-            const pat = new RegExp("^\\s*(?:def|class)\\s+" + _reEscape(d.name) + "\\b", "m");
+            const pat = new RegExp("^\\s*(?:async[ \\t\\f]+def|def|class)\\s+" + _reEscape(d.name) + "\\b", "m");   // #179
             const hit = pat.test(addedBlob);
-            c.verdict = hit ? "VERIFIED" : "CONTRADICTED";
-            c.why = `added lines ${hit ? "do" : "do NOT"} define ${d.kind} ${pyRepr(d.name)}`;
+            if (pat.test(sidesBlob) && !pat.test(insideBlob)) {   // #178
+              c.verdict = "UNCHECKABLE";
+              c.why = `every added line that would define ${d.kind} ${pyRepr(d.name)} sits in a file not read as .py or .pyi, or after an odd number of triple quotes in that file's added lines; this template cannot tell whether CPython defines it there (#178)`;
+            } else {
+              c.verdict = hit ? "VERIFIED" : "CONTRADICTED";
+              c.why = `added lines ${hit ? "do" : "do NOT"} define ${d.kind} ${pyRepr(d.name)}`;
+            }
           }
         } else if (kind === "only_touches") {
           let prefs = [_rstrip(_norm(d.prefix), "/.")];      // sentence-final periods are not path
@@ -729,10 +765,11 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
 // covered
 // (NOTE_path2a_eleventh_pass_2026_10_05).
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 b63f2b03c5051f7ca1a196c9b6ac9e7f907fe626970a22e400e484e4598aa446, LF). Everything outside this block is
-// main's port (sha256 d74cc729..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 14e859a24b25a481d7cdbad8bfccfe9d6f127534f12a28c7b1ec37fbc5d795fa, LF). Everything outside this block is
+// main's port (sha256 8b75fd3a..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
 // compatibility reading and its two header patterns read as the Python reads them, and #206's count,
-// fix/diffgate-205-206), unchanged except that main's gateDiffText is named _gateDiffTextMain (its definition and its
+// fix/diffgate-205-206, d74cc729...; then #179's `async def` read and #178's abstention, fix/diffgate-178-179),
+// unchanged except that main's gateDiffText is named _gateDiffTextMain (its definition and its
 // DECLARE-1 self-call); the gateDiffText at the end of this block calls it and then the overlay, once. The overlay
 // reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason naming the verdict it withholds, the
 // defect and main's reason verbatim, only where #97, #121 or #101 can have made it wrong. Every function mirrors the Python block; every comparison is structural (ASCII case, code points, '/',
@@ -1120,6 +1157,7 @@ function _p2aHolds(auto, text) {
 const _p2aCoarseUnit = u => u <= 0x20 || u === 0x7f || u >= 0x80;
 const _p2aWordUnit = u => u === 95 || (u >= 48 && u <= 57) || (u >= 65 && u <= 90) || (u >= 97 && u <= 122);
 const _p2aNameUnit = u => _p2aWordUnit(u) || u >= 0x80;
+const _p2aAsyncGapUnit = u => u === 32 || u === 9 || u === 12;   // #179: the white space CPython reads after `async`
 
 function _p2aRunEnd(s, j, test) {        // where the run of units passing `test` from j ends
   while (j < s.length && test(s.charCodeAt(j))) j++;
@@ -1165,9 +1203,14 @@ function _p2aCounted(line, lead, seg = false) {
     if (b <= last) continue;
     const r = _p2aRunEnd(line, b, lead);
     last = r;
-    if (line.startsWith("def test_", r)) {
-      const e = _p2aRunEnd(line, r + 4, _p2aWordUnit);
-      out.push(e < line.length && line.charCodeAt(e) >= 0x80 ? null : line.slice(r + 4, e));
+    let s = r;                                       // #179: main reads `async def test_` too
+    if (line.startsWith("async", r)) {
+      const q = _p2aRunEnd(line, r + 5, _p2aAsyncGapUnit);
+      if (q > r + 5) s = q;
+    }
+    if (line.startsWith("def test_", s)) {
+      const e = _p2aRunEnd(line, s + 4, _p2aWordUnit);
+      out.push(e < line.length && line.charCodeAt(e) >= 0x80 ? null : line.slice(s + 4, e));
     }
   }
   return out;

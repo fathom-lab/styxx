@@ -1542,12 +1542,14 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
 # function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
 # the block's own slotted classes, so nothing of main's is reachable from it as data.
-# Everything outside this block is main's reader (sha256 e1441f18..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
+# Everything outside this block is main's reader (sha256 e3049d7b..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
 # 9b620e00... with the demo's CONTRADICTED label, fix/contradicted-not-lie, plus the record naming its instrument,
 # identity phase 2; then #205, fix/diffgate-205-206, moved reading paths: every piece of git output is cut at git's
 # line ends, and the `def` counts and the compatibility reading abstain over a line holding a character of _READ_APART;
 # then the gate claim EXTERNAL-1 committed the lab to withdraw taken out of its docstring and CLI description, and
-# the WITHHOLD comment scoped to the path classes, docs/front-door-external1), unchanged; the two doors call
+# the WITHHOLD comment scoped to the path classes, docs/front-door-external1, e1441f18...; then #179 and #178,
+# fix/diffgate-178-179, moved reading paths: the `def` counts read `async def`, and abstain where a counted line sits
+# in a file not read as .py or .pyi or after an odd number of triple quotes), unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
 # where #97, #121 or #101 can have made it wrong:

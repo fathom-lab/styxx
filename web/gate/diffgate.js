@@ -764,10 +764,11 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
 // covered
 // (NOTE_path2a_eleventh_pass_2026_10_05).
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 b63f2b03c5051f7ca1a196c9b6ac9e7f907fe626970a22e400e484e4598aa446, LF). Everything outside this block is
-// main's port (sha256 d74cc729..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 14e859a24b25a481d7cdbad8bfccfe9d6f127534f12a28c7b1ec37fbc5d795fa, LF). Everything outside this block is
+// main's port (sha256 8b75fd3a..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
 // compatibility reading and its two header patterns read as the Python reads them, and #206's count,
-// fix/diffgate-205-206), unchanged except that main's gateDiffText is named _gateDiffTextMain (its definition and its
+// fix/diffgate-205-206, d74cc729...; then #179's `async def` read and #178's abstention, fix/diffgate-178-179),
+// unchanged except that main's gateDiffText is named _gateDiffTextMain (its definition and its
 // DECLARE-1 self-call); the gateDiffText at the end of this block calls it and then the overlay, once. The overlay
 // reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason naming the verdict it withholds, the
 // defect and main's reason verbatim, only where #97, #121 or #101 can have made it wrong. Every function mirrors the Python block; every comparison is structural (ASCII case, code points, '/',

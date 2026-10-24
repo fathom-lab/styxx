@@ -3,8 +3,9 @@
 `main` here is not a vendored copy. It is this checkout's own `styxx/diffgate.py` and `web/gate/diffgate.js` with
 the PATH-2a block cut out and the door hooks reverted -- the reconstruction -- asserted to hash to the reader pinned
 below (origin/main 1cde8b82's, then that file with the demo's CONTRADICTED label, fix/contradicted-not-lie, then that
-file with the record naming its instrument, identity phase 2, then that file with #205's reading, fix/diffgate-205-206)
-and to the port pinned below (1cde8b82's, then that file with #205's and #206's reading). Every differential in the
+file with the record naming its instrument, identity phase 2, then that file with #205's reading, fix/diffgate-205-206,
+then that file with #179's and #178's reading, fix/diffgate-178-179) and to the port pinned below (1cde8b82's, then
+that file with #205's and #206's reading, then that file with #179's and #178's). Every differential in the
 PATH-2a tests runs against that reconstruction, so the reference cannot drift from the reader the branch actually
 carries.
 """
@@ -42,8 +43,13 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # main in both languages, and every figure they pin was measured again on it. docs/front-door-external1 then changed
 # the reader outside the block in text only: the module docstring, the --help description and the comment over
 # WITHHOLD_PATH_ACCUSATION (e1441f18...); no reading path moved, so no figure below was measured again.
-MAIN_PY_SHA = "e1441f18f0f71cc3455ff5c02ac3b42eb1bf963f337fb3b9bcfa9db14f88a74e"
-MAIN_JS_SHA = "d74cc729cea84c98501adaa0ab651c0c8ef10f3da04aae4887e75e66a93dcbbd"
+# fix/diffgate-178-179 then changed the reader and main's port outside the block on reading paths (e1441f18... and
+# d74cc729... were the two): the `def` counts read `async def` (#179), and abstain where a counted line sits in a
+# file not read as .py or .pyi, or after an odd number of triple quotes in its file's added lines (#178); the block's
+# model of main's count reads `async` with them. So relation (A), the lockstep and bar C run against the new main in
+# both languages, and every figure they pin was measured again on it.
+MAIN_PY_SHA = "e3049d7b11d7d2b6099df8cbb6b50520093773cf3f7813c61741143316bedfd9"
+MAIN_JS_SHA = "8b75fd3af8cfdba4207812e87fee055e9a28d328f1084a49d804d944bb32cffa"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
 _MARK = "=== PATH-2a abstain-only overlay: "
