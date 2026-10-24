@@ -2677,7 +2677,7 @@ def create_capsule_sworn(doc: Path, manifest: Optional[Path], receipt: Path, out
         live_as = _core_as(issue_receipt(live), rec_obj.get("schema"))
     except ValueError:
         raise SystemExit("REFUSED sworn_receipt_mismatch: the receipt names schema "
-                         f"{rec_obj.get('schema')!r}, which this verifier has no core projection for")
+                         f"{rec_obj.get('schema')!r}, which this verifier has no core projection for") from None
     if _sworn_core_sha256(live_as) != _sworn_core_sha256(rec_obj):
         raise SystemExit("REFUSED sworn_receipt_mismatch: the receipt's core does not re-derive "
                          "from the sealed bytes at the installed verifier "

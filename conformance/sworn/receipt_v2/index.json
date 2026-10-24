@@ -42,17 +42,17 @@
  "families": {
   "check_v0": {
    "file": "vectors/check_v0.json",
-   "sha256": "f4106e267ddcdfa89ff83500b90dec581ea70aedb1ebde8afb4a8c731ebccfd7",
+   "sha256": "9144574c2e5a76c2babc8b812367f3a1964f3511b2118897618fb2f679745122",
    "count": 5
   },
   "check_v1": {
    "file": "vectors/check_v1.json",
-   "sha256": "05f048fbf467715fe30ad7c4912b4e99998cafce4eb121b2b7431c9399c39b1e",
+   "sha256": "6a18ef16c61ec75e55196b939a5695136fbb20ae0301e7636690e2a20aa10b2a",
    "count": 5
   },
   "check_v2": {
    "file": "vectors/check_v2.json",
-   "sha256": "f292876bc7dc7077b114efea9af66b891fbbb41211efa601dfb9d504a576678b",
+   "sha256": "5ba515b06c85768439725fc337b182ac979acffb0c1ac93e6d410126e407b152",
    "count": 4
   },
   "core_v2": {
@@ -63,7 +63,7 @@
  },
  "blobs": {
   "file": "blobs.json",
-  "sha256": "34b34fedb5e85e85851300afdbe323da8e6d1b2b2d6f4c220185feb1a4e818fc",
+  "sha256": "4d0b2301f1061c1f7513a0d89916e0b6528d1c7b767a84b2687feb6f47679cad",
   "count": 77
  },
  "observer": {
@@ -278,7 +278,7 @@
  },
  "provenance": {
   "note": "outside set_sha256: which bytes generated the set, not what the set pins (C7)",
-  "sworn_sha256": "cf2762657ac11a7aee5bcf226349cce9eb0630862c1ddba691969d9a77c328b2",
+  "sworn_sha256": "9e9aadc2481a43e2eef51f322fa063f1300772fed38cffeee5bfe02ed7265836",
   "sources_sha256": {
    "tests/test_sworn_receipt_v2.py": "6f33d0d9d246543be9110c0e5b240e1185d3be294f70e18b315307eab968e3c7"
   },
@@ -287,5 +287,5 @@
   "styxx_version": "7.50.0",
   "pytest_summary": "28 passed"
  },
- "set_sha256": "099aff37e022a1aa08133beee6149196bfba7ab60600fe0e2f6ec8cdd0b57247"
+ "set_sha256": "948c660fafef4b26e2b2ce48aaf2b89ecd080f35f26322bde78f087c7a6fa599"
 }

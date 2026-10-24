@@ -24,9 +24,8 @@ says* — as far as the harness's manifest records what the author wrote. A
 verifier refuses a receipt the manifest lists as the agent's own (``receipt_author_minted``) and
 cannot see bytes the agent wrote that the harness never digested
 (``papers/sworn/NOTE_certifies_correction_2026_10_24.md``). Everything outside a span is NARRATIVE
-by definition —
-not by a verifier's judgement — and narrative is never accused. The verifier is never handed a
-target; it is handed commitments, and it checks them.
+by definition — not by a verifier's judgement — and narrative is never accused. The verifier is
+never handed a target; it is handed commitments, and it checks them.
 
 WHY THIS SHAPE.  Every instrument this lab built to *find* claims in prose was measured against
 readers who did not write that prose and did not survive it (0.23 in the wild, 0.16 held-out

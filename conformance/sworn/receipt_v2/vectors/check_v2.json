@@ -4,61 +4,7 @@
  "count": 4,
  "vectors": [
   {
-   "id": "21e010e372889f287a65acca41794aeaac3cf9cd104674584fe3f8f8bf056a09",
-   "family": "check_v2",
-   "sources": [
-    "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_whose_certifies_was_edited_fails"
-   ],
-   "rules": [],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "eb02f86a4f2a99da14b1613c18337ff57da5f19a1bb08e05988c6c056576b30a",
-    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
-    "sidecar": null,
-    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": true,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
-   "id": "4b30255564e18728911191e651efeede26b5581acd8ba2d267ae0bc89eaa3a50",
-   "family": "check_v2",
-   "sources": [
-    "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_carrying_the_v1_sentence_fails"
-   ],
-   "rules": [],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "fa7139fb103165b1ef9ef6b32ecfa11ad2741b8a2b429467c9b78ea55902e9c7",
-    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
-    "sidecar": null,
-    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": true,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
-   "id": "58354ff727f45460139b584efae8b38df16cb710b91e92fe25ecd1b63f651aab",
+   "id": "3535f3f851f488231f92a2694ee6776fe5f091ea07af7bc09717754c573f4dcc",
    "family": "check_v2",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_issues_and_re_derives"
@@ -69,7 +15,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "3272671b7aa0419bc27a2a866f64d7a7b099b7763ccc8cd9111cfd82a29713e0",
+    "receipt": "dcdcbd8bbd68a389533d799fa30555c1426e8571fb8c9606a2509906de2e8058",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -85,7 +31,34 @@
    }
   },
   {
-   "id": "f0eb27b178b631ba9b982c2e6d7e9683b6cbf86565352e2a05a09e828c5ed925",
+   "id": "6a20acafc69ffc7fd48ed34c8b0304c616a84fb3c23db4ba810c75971839bad0",
+   "family": "check_v2",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_carrying_the_v1_sentence_fails"
+   ],
+   "rules": [],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "c7234e8b77da6b6fa1dd3742109f100e89b62b45684558a3f4f56ae4b849ec3b",
+    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
+    "sidecar": null,
+    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": true,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "a6f7383027c64c83179e8f9fab16c24e61d290f0112f0a42939122e9445ce4a4",
    "family": "check_v2",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_whose_certifies_was_edited_fails"
@@ -96,7 +69,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "5671de25fae228aa3acb02345d05d9f03e41393128648f7bdf7e5e9ce80ed7ad",
+    "receipt": "1fe83db3833be1fc9a2857feffdba1b1c68c2a095a396e8a901e26d46bb1769a",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -107,6 +80,33 @@
     "check": {
      "status": "FAILED",
      "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "c4a21f68716d5296bada57d21633d8ae920939d2a79608990a4f0fd6eea0f257",
+   "family": "check_v2",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_whose_certifies_was_edited_fails"
+   ],
+   "rules": [],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "8a3c9cad058201ebcb153a94bbedc5183dc2e82c120b0a147738b34557acc5d0",
+    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
+    "sidecar": null,
+    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": true,
      "verdict_reproduces": false
     }
    }

@@ -33,6 +33,64 @@
    }
   },
   {
+   "id": "44822f7a02a64d9082e4e1f0f39a26d474452c83e3e05ca0d79ad37a657506c1",
+   "family": "receipt_v1",
+   "sources": [
+    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "532ed2dfd6654bb46511b2c5d791b81b16f9d71578f32e448d4223bb66b655d8",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "46cf1252ccdd06266488d6b1e62d121e3423a6bb67ed888ae9175f78a126c8c1",
+   "family": "receipt_v1",
+   "sources": [
+    "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "46c1bd5bd9759c5ddde52f673122a672d917957d3f693139999d34f045cbd1fb",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
    "id": "56e65a789c35d139873391a6ae1bdaeb4022c12d6952135ddecb7bc20e14ba94",
    "family": "receipt_v1",
    "sources": [
@@ -85,36 +143,7 @@
    }
   },
   {
-   "id": "a311301874c761c2392aa1784bf9a89f52b0b58d81a2c77a5f63a95ee1aec60c",
-   "family": "receipt_v1",
-   "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "6feef701c35a4e4b23200ac2d1cdcef8d1e424367e83ca8c2fe741af8a017bdf",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
-    }
-   }
-  },
-  {
-   "id": "bf753eb7302199d389d334d432e58487b20eb858f3cf2003d975c0f3977b792a",
+   "id": "aefb9b9e12805ceb1162bfda8ef69b73f71411629544782344bb487556b8dac0",
    "family": "receipt_v1",
    "sources": [
     "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
@@ -127,7 +156,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "5b7336f15da7b8a99eb159b51095e022e2d87896c95d3f8201a3b6810f7c4204",
+    "receipt": "5976f8099c64701a81d70c2256804cb34c60f19eae4ea45bea09de5b14a7ecf7",
     "document": "637b3b6b1ac524d8c277aa295b09f1f7886a342ec6204edba51c359380382f15",
     "sidecar": null,
     "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
@@ -138,35 +167,6 @@
     "check": {
      "status": "FAILED",
      "digest_match": true,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
-   "id": "d210ae149114576494b52bba8983f44cdef1b19402048837f520819731861f17",
-   "family": "receipt_v1",
-   "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "91ea78dfa31377fbb5b35ff5745c60c94f307bc54e440843e6b72b7a10b17807",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": false,
      "verdict_reproduces": false
     }
    }

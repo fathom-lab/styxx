@@ -53,7 +53,7 @@
   },
   "cli": {
    "file": "vectors/cli.json",
-   "sha256": "51639f929665aa05b24c627fe5983805b87bbf957b217be3446ca923b6a9886e",
+   "sha256": "de28aad3676ccb7a3b6e30cc12c3273027140c4dbfd07f7152667303c621f4ea",
    "count": 9
   },
   "coverage": {
@@ -78,7 +78,7 @@
   },
   "gaming": {
    "file": "vectors/gaming.json",
-   "sha256": "dbfb3fb208733fcfae588dcdd35a620ce716163d01aad0b903cf4611fce3f69b",
+   "sha256": "d4d3bd0768962163aa33f63c898ab84e3c564d185c1e5c9eb9bb91499c2054e7",
    "count": 51
   },
   "invariants": {
@@ -108,7 +108,7 @@
   },
   "receipt_v1": {
    "file": "vectors/receipt_v1.json",
-   "sha256": "124e5050f7a1b9f8ba6c23e173a3333ada948bf27421257e1036ebae4ecfbfab",
+   "sha256": "69ecab04426100766331111a7192e628eea566ee8988d6e28e08724adc0049a4",
    "count": 5
   },
   "receipts": {
@@ -118,7 +118,7 @@
   },
   "rules": {
    "file": "vectors/rules.json",
-   "sha256": "af016f44b5960bf4318ad918b9fa6158bf8e4e705ce859aa6333c4c62adcc601",
+   "sha256": "3f66a9af1fa0736e2fabfae2a0dd4e2afa8d8b94c25e94a851c6249c5b276e9c",
    "count": 22
   },
   "sidecar_hardening": {
@@ -144,7 +144,7 @@
  },
  "blobs": {
   "file": "blobs.json",
-  "sha256": "1f818ed08e4f1e0df4fe6a884085ca740e506fbe7eb14337eff13ea4aeda61ed",
+  "sha256": "2207cf53759cc773750a20f3948b859c8610b99776674ababe9a7f9e6b7214a8",
   "count": 3981
  },
  "observer": {
@@ -444,7 +444,7 @@
  },
  "provenance": {
   "note": "outside set_sha256: which bytes generated the set, not what the set pins (C7)",
-  "sworn_sha256": "cf2762657ac11a7aee5bcf226349cce9eb0630862c1ddba691969d9a77c328b2",
+  "sworn_sha256": "9e9aadc2481a43e2eef51f322fa063f1300772fed38cffeee5bfe02ed7265836",
   "sources_sha256": {
    "tests/test_sworn.py": "3a14e4ff3f0ca67a9a98965e2154cdf71dcec0e5839de35a7649c88659fdc05c",
    "tests/test_sworn_attacks.py": "60f8f8aecb10b4ba025249a0113e9ae9c63404879430750ac28df8fc073618a9"
@@ -454,5 +454,5 @@
   "styxx_version": "7.50.0",
   "pytest_summary": "350 passed"
  },
- "set_sha256": "eee6e39636b234c2abac4f09618b8436958ff0033e124c0cf4b999a210bf3994"
+ "set_sha256": "13489076907a43cff64549c76692588e98ff2bbbc81f67f58240488be9c370ba"
 }

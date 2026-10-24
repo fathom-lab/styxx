@@ -4,6 +4,33 @@
  "count": 9,
  "vectors": [
   {
+   "id": "11fcb7d11fe40beafb3abd9db17fc927b72bec3cf48f60e3390afe70deeb9693",
+   "family": "cli",
+   "sources": [
+    "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [],
+   "inputs": {
+    "receipt": "f4da31c984914af1aa93681564a81bcb5dbbdaa55ed69b2376aba7a9340c7db8",
+    "document": null,
+    "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
    "id": "2b13429fd8d8987e4e0ec7828e07579ff9fe2d24048f6d398692423268ec237c",
    "family": "cli",
    "sources": [
@@ -272,33 +299,6 @@
      "sworn_total": 1,
      "narrative_sentences": 0,
      "sentence_share": 1.0
-    }
-   }
-  },
-  {
-   "id": "d427826e9cb58be801987a7d2b2667e08f3859b7ede8aa844cf6ca770768c25f",
-   "family": "cli",
-   "sources": [
-    "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [],
-   "inputs": {
-    "receipt": "a74a821b5045af4d0a0fd414864bf914ab5545ad106905866f216d9310059bc8",
-    "document": null,
-    "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
-    "manifest": null,
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
     }
    }
   }
