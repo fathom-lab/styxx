@@ -4,7 +4,7 @@
  "count": 5,
  "vectors": [
   {
-   "id": "1be1a91ee62ef58a0a76f932a5c7f905ef87a185b01a0901d5ac75974fa91121",
+   "id": "092ce49fd4b826a4d26b93ea0ff7b759bfef725c1ab2bc33359174a972c8db39",
    "family": "check_v0",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV0UnderV2::test_a_v0_receipt_is_checked_as_before_whatever_its_certifies_says[another]"
@@ -15,7 +15,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "cdb3c4ab49a5ab29fca5d7d21d99ba7961381dd6285184938a780a1601899a7c",
+    "receipt": "d9126e7c3cbe29194322b897e67054008ebd71404b6a910de8eb7c84cfc37a2e",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -31,7 +31,34 @@
    }
   },
   {
-   "id": "43201bad62d0c63d0d7fb55856dc8857403f22b9b3c6a0d5c20f95fce045386e",
+   "id": "4cf11ff339ada38c2ee6c4ad4c28bbead21b87054540cc13d94103967190a4de",
+   "family": "check_v0",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestReceiptV0UnderV2::test_a_v0_receipt_is_checked_as_before_whatever_its_certifies_says[v1_sentence]"
+   ],
+   "rules": [],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "634f064e43094c330d19ccede70a3de72cc9bd68c0af0fd7d267886b7f25efd0",
+    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
+    "sidecar": null,
+    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
+   "id": "4ef288f3dbb1490bc49f27586242ccf65f2accbffe8b334abd78d88d47340d12",
    "family": "check_v0",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV0UnderV2::test_a_v0_receipt_with_a_moved_verdict_fails"
@@ -42,7 +69,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "bead56c351885fb3d79e9c40355c65c85073c1d420ffc2396fc4227f9d004b7b",
+    "receipt": "6f7d5d5068d5673ccbf86555316ed57313938e9caca4e53736930f3eb379b065",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -58,7 +85,7 @@
    }
   },
   {
-   "id": "c6c7e6349bd989d7e3057b9500fc225bb610a2e20a5de3fcd285a07d4a452542",
+   "id": "87819c32ea389c643397edc0e6b3560f3dc1ec1360e370e61098addc7403d778",
    "family": "check_v0",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV0UnderV2::test_a_v0_receipt_is_checked_as_before_whatever_its_certifies_says[v2_sentence]"
@@ -69,7 +96,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "5c937fbb32018c7940169cb0c17356532c203c2d3068a28ab59b2f98dfd02c7a",
+    "receipt": "b3cd272308088a73d038bce6d7f829118360bba33968f4ca09111f3d7121f293",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -142,33 +169,6 @@
      "sworn_total": 1,
      "narrative_sentences": 0,
      "sentence_share": 1.0
-    }
-   }
-  },
-  {
-   "id": "de7ca7d8eaca04176488989005f5aa8c348464f701159e2ffc01c3427893f282",
-   "family": "check_v0",
-   "sources": [
-    "tests/test_sworn_receipt_v2.py::TestReceiptV0UnderV2::test_a_v0_receipt_is_checked_as_before_whatever_its_certifies_says[v1_sentence]"
-   ],
-   "rules": [],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "09bef7251f21dbad2f903ade7ded7c9ae5f0a2393edf0c9ff9bcd01ff6c60e3d",
-    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
-    "sidecar": null,
-    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
     }
    }
   }

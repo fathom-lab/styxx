@@ -286,9 +286,9 @@ DECISIONS = {
                       "hidden commitment as owed; v0.2 R2 closes it — see `hidden_commitment`"),
 }
 
-# WITHDRAWN 2026-10-24 (papers/sworn/NOTE_certifies_correction_2026_10_24.md): the /v1 sentence. Its
-# opening clause said more than the verifier checks. Loaded, never emitted: every /v1 receipt in
-# history carries it byte for byte, and verify_receipt holds a /v1 receipt's certifies to it.
+# The /v1 sentence (papers/sworn/NOTE_certifies_correction_2026_10_24.md): its opening clause said
+# more than the verifier checks. Every /v1 receipt in history carries it byte for byte, and
+# verify_receipt holds a /v1 receipt's certifies to it. WITHDRAWN 2026-10-24: loaded, never emitted.
 _CERTIFIES_V1 = (
     "the spans the author bound were checked against bytes the author did not write, at the commit "
     "or manifest the document names and at the rung the manifest declares — NOT a claim that the "
