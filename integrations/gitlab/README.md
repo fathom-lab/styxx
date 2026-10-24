@@ -205,7 +205,7 @@ fails, reported by default and blocking with `"false"`; the white space after th
 sentence is kept, so a claim PATH-2a withholds for a character of that white space it withholds
 over the cut too; a claim the gate withholds, or does not read, over the text GitLab handed the job
 is held back and not failed on, in either mode; a reason to withhold past GitLab's cut never
-reaches the job, and the claim fails it with `"false"`; the gate's second run is read as its first,
+reaches the job, and the claim fails it with `"false"`; the gate's second run is read as the other is,
 a report that does not match its exit failing the job; and over 847 prefixes of 25 descriptions
 built to put PATH-2a's or the one-block rule's reason in the text the cut drops, the job's own two
 steps never stand on, or fail on, a CONTRADICTED claim that neither the whole description nor the

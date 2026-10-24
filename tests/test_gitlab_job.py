@@ -673,7 +673,7 @@ def test_a_claim_the_gate_withholds_over_the_text_gitlab_handed_is_not_failed_on
 def test_a_declared_claim_the_gate_does_not_read_over_the_text_gitlab_handed_is_not_failed_on(mr_repo):
     """A second styxx block whose closing fence is the last thing GitLab kept. Over the whole description
     and over the text GitLab handed the job the gate reads two blocks and so neither (a body declares
-    once or not at all); over the cut, which drops that fence, it reads the first block's false
+    once or not at all); over the cut, which drops that fence, it reads the leading block's false
     only_touches, CONTRADICTED. The second run reads no such claim, so the job holds it back and does
     not fail with STYXX_SOFT_FAIL "false"."""
     work, base, head = mr_repo
@@ -727,7 +727,7 @@ def test_a_claim_withheld_over_text_past_gitlabs_cut_is_still_contradicted_over_
 ])
 def test_a_second_run_whose_report_does_not_match_its_exit_fails_the_job_in_either_mode(
         mr_repo, soft_fail, verdict, code, error):
-    """The gate's second run, over the text GitLab handed the job, is read as the first is: only an exit 0 with a
+    """The gate's second run, over the text GitLab handed the job, is read as the run over the cut is: only an exit 0 with a
     PASS report or an exit 1 with a FAIL report is a verdict, and any other pairing is an error that fails the job
     whatever STYXX_SOFT_FAIL says, before anything is held back or failed on."""
     work, base, head = mr_repo
@@ -838,7 +838,7 @@ def test_over_every_cut_the_job_stands_on_no_claim_the_whole_description_and_the
     """#209 review, the sweep: over every prefix of the SWEEP descriptions that cuts after the claim, the job never
     stands on a CONTRADICTED claim, nor fails with STYXX_SOFT_FAIL "false", where neither the whole description nor
     the prefix as GitLab handed it has one. The same sweep finds both with the cut at the start of the white space
-    and nothing held back (as the change first stood), and with the white space kept and nothing held back: the
+    and nothing held back (as the change stood at review), and with the white space kept and nothing held back: the
     sweep can see what it guards against, and each half of the repair is needed."""
     work, base, head = mr_repo
     cut_src, read_src = _cut_step(), _soft_fail_step()

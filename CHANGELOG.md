@@ -42,8 +42,8 @@ request body from the API.
   one-`styxx`-block rule read the whole text the gate is handed, so the partial sentence the cut
   drops can hold their reason: a non-ASCII letter in the sentence as both readers end one, a
   zone of PATH-2a's that names the claimed prefix, the closing fence of a second block. So when the
-  gate FAILs over a cut the job runs it again over `mr_description.handed.md`, read as its first
-  run is (a report that does not match its exit fails the job). A CONTRADICTED claim of the cut
+  gate FAILs over a cut the job runs it again over `mr_description.handed.md`, read as the run over the
+  cut is (a report that does not match its exit fails the job). A CONTRADICTED claim of the cut
   that this run withholds (PATH-2a's reason, in the one form `styxx/diffgate.py` writes it) or
   does not read is held back: named in the log and under `held_back` in `description_cut`, with
   that run's reason, and the job does not fail on it. A FAIL whose every CONTRADICTED claim is held
@@ -60,7 +60,7 @@ CONTRADICTED claim that neither the whole description nor the prefix GitLab hand
 prefixes where it fails with `"false"` and neither has a CONTRADICTED claim. Over 553 descriptions
 (17,439 prefixes: 8 claims by 20 kinds of white space; 7 claims by 8 kinds of white space by 7
 sentences the cut runs through; two `styxx` blocks), run once outside the suite: 2,860 and 2,616
-with the cut at the start of the white space and nothing held back, as the change first stood; 365
+with the cut at the start of the white space and nothing held back, as the change stood at review; 365
 and 305 with the white space kept and nothing held back; 0 and 0 now. Over 25 of those descriptions
 (847 prefixes), on every run of `tests/test_gitlab_job.py`: 240 and 240, 42 and 42, 0 and 0, the
 test asserting 0 now and more than 0 for each earlier form.
