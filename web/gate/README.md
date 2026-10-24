@@ -3,7 +3,7 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`14e859a24b25a481d7cdbad8bfccfe9d6f127534f12a28c7b1ec37fbc5d795fa` (LF line endings; a wheel
+`d65205febb289bbce999f98763b2daabdc31ae4389066e313d38a0aea038c901` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -25,7 +25,7 @@ committed the lab to withdraw, and the `WITHHOLD_PATH_ACCUSATION` comment is sco
 `e1441f18f0f71cc3455ff5c02ac3b42eb1bf963f337fb3b9bcfa9db14f88a74e`); and then one change on reading paths, #179 and #178: the two `def`
 counts read `async def` where they read `def`, and abstain where a counted line sits in a file not read as .py or
 .pyi, or after an odd number of triple quotes in its file's added lines (sha256
-`e3049d7b11d7d2b6099df8cbb6b50520093773cf3f7813c61741143316bedfd9`) — plus the PATH-2a block (an
+`cb91f7c3ce3725bcc1dd6f48b4dc2b5dc23bbbda09de468b80125df3b97f2d01`) — plus the PATH-2a block (an
 overlay that only abstains, not yet released; see *PATH-2a* below), and a committed test cuts the
 block out and gets that reader back byte for byte, in both languages. The port's record carries the
 eleven content keys and no identity: the differential compares named fields, so a Python record of
@@ -36,7 +36,7 @@ and a declared count in ASCII digits with a reason that names any other characte
 (the port with the block cut hashed to `d74cc729cea84c98501adaa0ab651c0c8ef10f3da04aae4887e75e66a93dcbbd` then; `1cde8b82`'s was
 `06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141`). #179 and #178 moved the port's `main` with the
 Python's, in the same change: the port with the block cut hashes to
-`8b75fd3af8cfdba4207812e87fee055e9a28d328f1084a49d804d944bb32cffa`.
+`e5aaf0b1fa0fa2da8e92cd31cddb26d332fe9c71a2578a257e7c8aad81a5daba`.
 
 The port was first cut from the 7.47.0 wheel (`fb2d9b3e…`) and re-cut on 2026-09-16 for issue
 #110: the 7.47.0 templates count Python `def` lines and accuse a TypeScript commit that says
@@ -67,8 +67,8 @@ and the never-read count to the page.
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 a84bf20a9822dc2d89c06a99eddab9df34341fe7e4166a8f868a32f6e2bd6b54   55,511 chars
-    bookmarklet.href.txt  sha256 0457dfefb8faf86fd5ce8d1e3a4146a9add5e0930b3c5ab8bc0b0a5d347a2ad9   55,522 chars
+    bookmarklet.min.js    sha256 b6fb14d45ce082781c6f3ede9b652329e7a650fd4a40d8cc7022a0c90c84d32b   55,958 chars
+    bookmarklet.href.txt  sha256 4e5e9510ec3235ab29c6c6e7c077d4b2b54302e820801e0584fa7aaa885b462b   55,969 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file;
@@ -103,7 +103,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout whose styxx/diffgate.py is the file named above
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 14e859a2…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to d65205fe…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 190 pinned pairs against their expect blocks (+ path2a_moves.json, issue205_moves.json)

@@ -469,12 +469,13 @@ def cut_sites(text: str) -> tuple:
     return split, sorted(cut)
 
 
-WANT_SITES = sorted(["parse_unified_diff_sides", "parse_unified_diff", "gate_diff", "gate_diff"])
+WANT_SITES = sorted(["parse_unified_diff_sides", "parse_unified_diff", "gate_diff", "gate_diff", "_diff_sections"])
 
 
 def test_every_site_that_cuts_git_output_uses_the_cut():
-    """No reader outside the block cuts with str.splitlines() any more, and the four sites cut with _git_lines:
-    parse_unified_diff_sides, parse_unified_diff, and gate_diff's --name-status and its added lines."""
+    """No reader outside the block cuts with str.splitlines() any more, and the five sites cut with _git_lines:
+    parse_unified_diff_sides, parse_unified_diff, gate_diff's --name-status and its added lines, and #178's walk of the
+    diff's sections, _diff_sections (fix/diffgate-178-179)."""
     split, cut = cut_sites(R.lf(R.INSTRUMENT))
     assert split == [] and cut == WANT_SITES, (split, cut)
 
@@ -693,6 +694,7 @@ PY_PLANTS = {
     "R1 undone in parse_unified_diff": ("_git_lines(diff_text)", "diff_text.splitlines()", "def parse_unified_diff(", "ff"),
     "R1 undone at the git door's added lines": ("_git_lines(diff_text)", "diff_text.splitlines()", "def gate_diff(", "git"),
     "R1 undone at the git door's listing": ("_git_lines(name_status)", "name_status.splitlines()", "def gate_diff(", "sites"),
+    "R1 undone in #178's walk": ("_git_lines(diff_text)", "diff_text.splitlines()", "def _diff_sections(", "sites"),
     "U+001F dropped from the abstention": ("\\x1c-\\x1f", "\\x1c-\\x1e", "_READ_APART = re.compile(", "apart"),
     "the abstention dropped from the counts": ("    elif apart_why:\n", "    elif False:\n", "def _gate(", "apart"),
     "the abstention dropped from the compatibility reading": ("            if apart:\n", "            if False:\n",

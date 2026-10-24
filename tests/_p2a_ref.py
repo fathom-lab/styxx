@@ -48,8 +48,8 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # file not read as .py or .pyi, or after an odd number of triple quotes in its file's added lines (#178); the block's
 # model of main's count reads `async` with them. So relation (A), the lockstep and bar C run against the new main in
 # both languages, and every figure they pin was measured again on it.
-MAIN_PY_SHA = "e3049d7b11d7d2b6099df8cbb6b50520093773cf3f7813c61741143316bedfd9"
-MAIN_JS_SHA = "8b75fd3af8cfdba4207812e87fee055e9a28d328f1084a49d804d944bb32cffa"
+MAIN_PY_SHA = "cb91f7c3ce3725bcc1dd6f48b4dc2b5dc23bbbda09de468b80125df3b97f2d01"
+MAIN_JS_SHA = "e5aaf0b1fa0fa2da8e92cd31cddb26d332fe9c71a2578a257e7c8aad81a5daba"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
 _MARK = "=== PATH-2a abstain-only overlay: "
