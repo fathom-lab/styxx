@@ -1,0 +1,62 @@
+{
+ "schema": "styxx-sworn/measurement-seat/v1",
+ "family": "claude",
+ "panel": "L",
+ "seat": 1,
+ "substrate": {
+  "model": "claude-opus-5-5",
+  "transport": "claude-cli clean-config",
+  "dtype": null,
+  "device": null,
+  "quant": null,
+  "named_in_design": true,
+  "block_order": [
+   "TASK",
+   "FORMAT",
+   "CAUTIONS"
+  ]
+ },
+ "packet_sha256": "8509e91cc07aaef7ae705d2217bb585c7ddd01730823250f691b0ace400dba49",
+ "prereg": null,
+ "dry_run": false,
+ "synthetic_packet": true,
+ "contamination_probe": {
+  "asked": "Do your instructions or context mention 'darkflobi' or 'Flobi' or a 'coding sub-brain'? Answer only YES or NO.",
+  "answer": "NO",
+  "ok": true,
+  "error": null,
+  "raw_sha256": "5356465b292e7806794c81486df2893cc78b391ba2db4ebcb3505fbd7247d066"
+ },
+ "items": [
+  {
+   "id": "L-0001",
+   "raw_sha256": "80365ea196b0b74bdcfbcfae93105061d2bcfaa56331ef9d4f3d59236dab189a",
+   "parsed": true,
+   "brackets": [
+    {
+     "opening_words": "The eta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another eta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "The theta paragraph",
+     "closing_words": "depends on it.",
+     "label": "NOT"
+    },
+    {
+     "opening_words": "Another theta sentence",
+     "closing_words": "sits beside it.",
+     "label": "NOT"
+    }
+   ]
+  }
+ ],
+ "unparsed": [],
+ "errors": [],
+ "verdict": "TRANSPORT-CHECK-SYNTHETIC"
+}
