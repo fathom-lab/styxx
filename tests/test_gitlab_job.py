@@ -670,6 +670,34 @@ def test_a_claim_the_gate_withholds_over_the_text_gitlab_handed_is_not_failed_on
 
 
 @needs_bash
+def test_a_declared_claim_the_gate_does_not_read_over_the_text_gitlab_handed_is_not_failed_on(mr_repo):
+    """A second styxx block whose closing fence is the last thing GitLab kept. Over the whole description
+    and over the text GitLab handed the job the gate reads two blocks and so neither (a body declares
+    once or not at all); over the cut, which drops that fence, it reads the first block's false
+    only_touches, CONTRADICTED. The second run reads no such claim, so the job holds it back and does
+    not fail with STYXX_SOFT_FAIL "false"."""
+    work, base, head = mr_repo
+    block, second = "```styxx\nonly_touches: src/\n```\n", "\n```styxx\nfiles_changed: 9\n```"
+    description = block + _prose(GITLAB_KEEPS - len(block) - len(second)) + second + "\nEnd."
+    whole = _run_job(work, base, head, description, soft_fail="false")
+    assert whole.returncode == 0 and _report(work)["claims"] == [], whole.stdout + whole.stderr
+
+    text, flag = _gitlab(description)
+    assert text.endswith(second)
+    r = _run_job(work, base, head, text, soft_fail="false", truncated=flag)
+    assert r.returncode == 0, r.stdout + r.stderr
+    kept = GITLAB_KEEPS - len("```")
+    assert HELD + f"{kept} characters, but over the {GITLAB_KEEPS} characters GitLab handed this job it reads no " \
+        "such claim" in r.stdout, r.stdout
+    assert HELD_NOT_FAILED in r.stdout and BLOCKED not in r.stdout
+    report = _report(work)
+    assert report["verdict"] == "FAIL"
+    assert report["description_cut"]["held_back"] == [
+        {"kind": "only_touches", "text": SCOPE, "over_the_handed_text": None}]
+    _cut_named(r.stdout, kept, report)
+
+
+@needs_bash
 def test_a_claim_withheld_over_text_past_gitlabs_cut_is_still_contradicted_over_the_cut(mr_repo):
     """What the job cannot do (#209): the text past GitLab's cut never reaches the job. Here PATH-2a's reason to
     withhold a false scope claim at the top sits past character 2700: over the whole description the gate withholds
