@@ -498,12 +498,28 @@ def parse_unified_diff_sides(diff_text: str) -> dict:
     return sides
 
 
+def _edge_cut(s: str) -> str:
+    """#178: `s` with every code point at or below U+0020 or from U+007F up removed from either end. Every code point
+    Python's strip() removes and every one the port's trim() removes is in that set, though the two sets differ
+    (strip() removes U+001C to U+001F and U+0085, trim() U+FEFF). The port's _edgeCut is the same reading, unit by
+    unit: a surrogate is from U+D800 up, so a code point outside the BMP goes as it goes here."""
+    a, z = 0, len(s)
+    while a < z and (ord(s[a]) <= 32 or ord(s[a]) >= 127):
+        a += 1
+    while z > a and (ord(s[z - 1]) <= 32 or ord(s[z - 1]) >= 127):
+        z -= 1
+    return s[a:z]
+
+
 def _diff_sections(diff_text: str) -> list:
     """#178: [(path, added_lines)] for each `+++` section of the diff, in order. It walks the lines as
     `parse_unified_diff_sides` does (the same branches in the same order), so each added line is placed as that
-    function places it and the path is the key it gives the section; but two sections one key holds stay two here.
-    The ports build those keys apart (Python's strip() and the port's trim() remove different code points, and the
-    runtimes lower case differently), and they read sections alike. The port's _diffSections is the same walk."""
+    function places it, and two sections one key holds stay two here. The path is the key that function gives the
+    section, except where a `+++` header is read as `/dev/null`: here that is decided on `_edge_cut` of the header,
+    not after strip(). The ports build the keys apart (Python's strip() and the port's trim() remove different code
+    points, and the runtimes lower case differently): strip() reads `+++ /dev/null<U+0085>` as a deletion where
+    trim() does not, and trim() reads `+++ /dev/null<U+FEFF>` so where strip() does not. On `_edge_cut` both ports
+    take the `---` path there. The port's _diffSections is the same walk."""
     out: list = []
     old_path = None
     cur = None
@@ -515,7 +531,7 @@ def _diff_sections(diff_text: str) -> list:
             cur = None
         elif line.startswith("+++ "):
             new = line[4:].strip()
-            if new == "/dev/null":
+            if _edge_cut(line[4:]) == "/dev/null":      # not on strip(): the port's trim() removes another set
                 raw = old_path[2:] if old_path and old_path.startswith("a/") else (old_path or "")
             else:
                 raw = new[2:] if new.startswith("b/") else new
@@ -529,10 +545,11 @@ def _diff_sections(diff_text: str) -> list:
 def _python_source_lines(sections: list) -> list:
     """#178: the added lines of each section of `_diff_sections` whose path ends in .py or .pyi, except those after an
     odd number of triple quotes (three double or three single) in that section's added lines. The path's tail is read
-    with every trailing code point at or below U+0020 or from U+007F up removed, so Python's strip() and the port's
-    trim(), which remove different sets, cannot part the path test, and the parity is a section's, which both ports
-    read alike. A string opened in a line the diff does not show is not seen. The port's _pythonSourceLines is the
-    same reading."""
+    with every trailing code point at or below U+0020 or from U+007F up removed, the set `_edge_cut` removes, which
+    holds every code point Python's strip() or the port's trim() removes; so the two ports' paths reach the same tail,
+    and the parity is a section's. A string opened in a line the diff does not show is not seen, and an added line
+    holding one end of a string whose other end is a context line (an edited docstring's opening or closing line)
+    turns the parity for the rest of its section. The port's _pythonSourceLines is the same reading."""
     out = []
     for p, added in sections:
         e = len(p)
