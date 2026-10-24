@@ -2,9 +2,11 @@
 
 The GitHub Action reads a PR body against a PR diff with no checkout. GitLab hands a merge
 request pipeline the same two things another way: the description in
-`CI_MERGE_REQUEST_DESCRIPTION`, the diff as the range between `CI_MERGE_REQUEST_DIFF_BASE_SHA`
-and `CI_COMMIT_SHA` on the job's checkout. So the door is the CLI, unchanged, in one short job.
-`diffgate.gitlab-ci.yml` next to this file is that job; include it or paste it:
+`CI_MERGE_REQUEST_DESCRIPTION` (over 2,700 characters, its leading 2,697 and `"..."`: see "A
+description longer than 2,700 characters" below), the diff as the range between
+`CI_MERGE_REQUEST_DIFF_BASE_SHA` and `CI_COMMIT_SHA` on the job's checkout. So the door is the
+CLI, unchanged, in one short job. `diffgate.gitlab-ci.yml` next to this file is that job; include
+it or paste it:
 
 ```yaml
 include:
@@ -15,11 +17,16 @@ What it does, line by line: runs on merge request pipelines only; installs the r
 `styxx` (floor 7.44.2, the same floor the Action pins and for the same reason — every earlier
 release let `only touches <prefix>` verify against an unreadable diff); fetches the diff base so
 a shallow clone still has it; writes the description to a file with `printf '%s'`, so the text
-never passes through a shell expansion; removes any `diffgate.json` an earlier run left in the
-build directory; runs `python -m styxx.diffgate` on that file against
-`--base $CI_MERGE_REQUEST_DIFF_BASE_SHA --head $CI_COMMIT_SHA`, writing `diffgate.json`; decides
-the job's exit from `STYXX_SOFT_FAIL`, the CLI's exit code (1 on FAIL, 0 on PASS) and that
-report; keeps the JSON report as a job artifact whether the job passed or failed.
+never passes through a shell expansion; when GitLab says it cut the description
+(`CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED` `"true"`), cuts that file back to its last whole
+sentence, keeps the text GitLab handed it in `mr_description.handed.md`, and says so; removes any
+`diffgate.json` an earlier run left in the build directory; runs `python -m styxx.diffgate` on
+that file against `--base $CI_MERGE_REQUEST_DIFF_BASE_SHA --head $CI_COMMIT_SHA`, writing
+`diffgate.json` and keeping what it prints in `diffgate.log`; when the gate FAILs over a cut, runs
+it again over `mr_description.handed.md`, writing `diffgate.handed.json`, only to hold a claim
+back; prints the gate's output, with CUT where the gate prints PASS over a description GitLab
+cut; decides the job's exit from `STYXX_SOFT_FAIL`, the CLI's exit code (1 on FAIL, 0 on PASS)
+and that report; keeps the JSON report as a job artifact whether the job passed or failed.
 
 ## It reports by default; blocking is opt-in
 
@@ -67,8 +74,11 @@ case-insensitively with surrounding whitespace stripped, so `"false"` and `"Fals
 `"true"`, `" true"` and `"TRUE"` report. Every other value, the empty string included, reports
 as `"true"` does, and the job prints a warning naming the value it did not recognise.
 
-**`--strict`.** Add `--strict` to the `python -m styxx.diffgate` line to make an UNCHECKABLE
-claim a failure too; the job fails on it only when `STYXX_SOFT_FAIL` is `"false"`.
+**`--strict`.** Add `--strict` to the `python -m styxx.diffgate` line that writes
+`diffgate.json` to make an UNCHECKABLE claim a failure too; the job fails on it only when
+`STYXX_SOFT_FAIL` is `"false"`. The gate's second run over a cut needs no flag: the job reads only
+which claims it withholds or does not read. Over a cut the job cannot see `--strict`, and what that
+leaves is in "A description longer than 2,700 characters" below.
 
 **Errors are not verdicts.** In either mode the job fails on an install error, on a failed fetch
 of the diff base, and on a gate whose report does not match its exit: an exit 1 without a FAIL
@@ -119,23 +129,114 @@ WARNING: styxx diffgate found failures but STYXX_SOFT_FAIL is on, as it is by de
 and passes; with `STYXX_SOFT_FAIL` `"false"` it prints the blocking mode line and that the job
 fails, and fails.
 
+## A description longer than 2,700 characters
+
+Over 2,700 characters, GitLab hands a merge request description to
+`CI_MERGE_REQUEST_DESCRIPTION` as its leading 2,697 characters and `"..."`, 2,700 in all, and
+sets `CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED` to `"true"`: GitLab's
+`app/models/merge_request.rb` calls `description.truncate(2700)`, and ActiveSupport's
+`String#truncate` writes its default omission, `"..."`, in place of the rest. GitLab's docs
+("Predefined CI/CD variables reference", both entries) give the 2,700 and not the `"..."`. The
+job reads only that variable, so for a longer description it is handed a prefix and GitLab's
+`"..."`. Until #209 it gated that text as if it were the description: a claim past the cut was
+never read and the job printed PASS without a word about it, and the sentence the cut broke was
+gated as written ("Only touches src/ and tests/." cut after "src/" was read as
+"Only touches src/...", CONTRADICTED). Now, when the flag is `"true"` (compared
+case-insensitively, surrounding white space stripped):
+
+- the job cuts what it was handed back to its last whole sentence and the white space after it,
+  where the gate itself splits sentences (`.`, `!` or `?` before white space, or a line break),
+  so every sentence the gate's templates read over the cut is a whole sentence of the
+  description, GitLab's `"..."` is never read (no white space follows it), and a sentence the
+  cut broke is not judged: the gate's second run, below, reads it only to hold a claim back;
+- it prints one line before the gate's output naming the cut, what GitLab handed it (the
+  description's leading characters and the `"..."`) and how many characters the gate's verdict
+  is over;
+- it prints CUT where the gate prints PASS, and after the mode line one more line saying it does
+  not call the description a pass, since no claim past the cut counts toward the gate's verdict;
+- it adds `description_cut` to `diffgate.json`: the flag's value, `characters_handed`,
+  `characters_gated` and a `why`, which says what GitLab handed and what the verdict is over and,
+  when the gate's second run ran, that it ran only to hold a claim back. The record's `verdict`
+  stays the gate's, over the prefix;
+- a FAIL over a cut is the gate's FAIL over that prefix. Two of the gate's rules read the whole
+  text it is handed, not one sentence: PATH-2a's withholding (#121), which reads a sentence as
+  both readers end one and some characters anywhere in the text, and the one-`styxx`-block rule.
+  So the text the cut drops can change how the gate reads a whole sentence before it, and when the
+  gate FAILs over a cut the job runs it again over the text GitLab handed it, only to hold a claim
+  back. A CONTRADICTED claim of the cut that this run withholds or does not read is held back:
+  named in the log (quoted, as the CLI quotes text a description controls) and under `held_back`
+  in `description_cut`, with that run's reason, and the job does not fail on it. A FAIL whose
+  every CONTRADICTED claim is held back does not fail the job, in either mode. The job cannot see
+  `--strict` (the record does not carry it, and a FAIL with a CONTRADICTED claim is a FAIL either
+  way): with it, such a FAIL does not fail the job either, though `--strict` fails the gate on an
+  UNCHECKABLE claim, so the log names the UNCHECKABLE claims over the cut and the held-back claims
+  the second run withholds, which `--strict` would fail on. Any other FAIL over a cut reports or
+  blocks as any FAIL does;
+- a cut never fails the job by itself, in either mode.
+
+Over the issue's case, a false "Added 3 tests." past character 2,700, the log reads (the line
+that is only `...` stands for the gate's "no diff-shaped claims" block, its instrument line and
+the mode line):
+
+```
+styxx diffgate: CUT. CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED is 'true': GitLab handed this job 2700 characters: the leading 2697 characters of the merge request description and the "..." GitLab's truncate writes after them (app/models/merge_request.rb). The gate's verdict is over the leading 2639 characters, up to the last whole sentence, and no claim past that point counts toward it, so this job prints CUT where the gate prints PASS. If the gate FAILs over them, it runs again over all 2700 characters GitLab handed, only to hold a claim back.
+CUT   claims=0 contradicted=0 uncheckable=0 uncovered_sentences=29
+never read: 29 of 29 sentences — prose outside the closed template set is listed in --out, not judged
+...
+styxx diffgate: CUT. Nothing in the leading 2639 characters the gate read failed it, and the rest of the description was never read, so this job does not call the description a pass. diffgate.json keeps the gate's verdict over that prefix and names the cut under "description_cut".
+```
+
+What it cannot do: read past GitLab's cut, or say how long the description was. A claim the job
+should gate belongs in the leading 2,697 characters; a `styxx` declaration block at the top of
+the description is one way. The cut back to a whole sentence also drops a sentence that ended on
+the 2,697th character, since GitLab's `"..."` took the white space after it; the line names how
+many characters the verdict is over. Text past GitLab's cut never reaches the job, so a claim
+the gate would withhold, or not read, over the whole description for text there (PATH-2a, a
+second `styxx` block) can still be CONTRADICTED over the cut, as it was over GitLab's prefix
+before #209, and with `"false"` the job fails on it. GitLab's job-token docs list
+`GET /projects/:id/merge_requests/:merge_request_iid` among the endpoints a job token reaches,
+which would read the whole description. This job does not call it: the job has not run on GitLab
+itself, and by default a job token reads another project's merge requests only when that
+project's allowlist admits the job's project. That is left for a later change.
+
 ## What is tested, and what is not
 
-`tests/test_gitlab_job.py` parses the job file, runs its `script` lines in a temporary
-repository with the four `CI_*` variables set the way GitLab sets them (the release already
-installed, so the `pip install` line is skipped), and checks: by default a lying description is
-reported with the lies named and the job passes; with `STYXX_SOFT_FAIL` `"false"` it fails the
-job; ten values of the variable are read as above, each the way the Action's reader reads it;
-`--strict` fails the job on an UNCHECKABLE claim only with the opt-in; a gate that errors fails
-the job in either mode, and a stale `diffgate.json` is not read as its verdict; a stand-in for the
-CLI whose report does not match its exit (exit 0 with no report or a FAIL one, exit 1 with a PASS
-one, exit 2) fails the job in either mode; an honest description passes; every run the module
-makes, PASS included, prints the one mode line its value calls for; a description with a VERIFIED,
-a CONTRADICTED and an UNCHECKABLE claim puts the last two in the log and all three in
-`diffgate.json`, and this README, the job's header and the CHANGELOG entry say so; and they carry
-the Protected caveat. That is the mechanics of the job, tested here under bash; a run on GitLab
-itself is not something this repository has done, and a run there that fails on a variable name or
-on the multi-line script step is worth an issue.
+`tests/test_gitlab_job.py` parses the job file, runs its `script` lines in a temporary repository
+with the four `CI_*` variables set the way GitLab sets them (the release already installed, so the
+`pip install` line is skipped), and checks: by default a lying description is reported with the
+lies named and the job passes; with `STYXX_SOFT_FAIL` `"false"` it fails the job; ten values of the
+variable are read as above, each the way the Action's reader reads it; `--strict` fails the job on
+an UNCHECKABLE claim only with the opt-in; a gate that errors fails the job in either mode, and a
+stale `diffgate.json` is not read as its verdict; a stand-in for the CLI whose report does not
+match its exit (exit 0 with no report or a FAIL one, exit 1 with a PASS one, exit 2) fails the job
+in either mode; an honest description passes; every run the module makes, PASS included, prints the
+one mode line its value calls for; a description with a VERIFIED, a CONTRADICTED and an UNCHECKABLE
+claim puts the last two in the log and all three in `diffgate.json`, and this README, the job's
+header and the CHANGELOG entry say so; and they carry the Protected caveat. For #209 the module
+hands the job `description[:2697] + "..."` with `CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED`
+`"true"`, as GitLab's code does, and the whole description as the control: a claim past the cut is
+never read and the run prints CUT, never PASS, names the cut in the log and in `diffgate.json`, and
+passes in either mode; a scope sentence the cut broke is not judged; a false whole sentence before
+the cut still fails, reported by default and blocking with `"false"`; one ending on the 2,696th
+character is gated, one ending on the 2,697th to the 2,700th is not, and the `"..."` is never in
+the gated text; the white space after the last whole sentence is kept, so a claim PATH-2a withholds
+for a character of that white space it withholds over the cut too; a claim the gate withholds, or
+does not read, over the text GitLab handed the job is held back and not failed on, in either mode,
+and the line naming it quotes it, so an ESC sequence in it never reaches the log; a release names
+the UNCHECKABLE claims `--strict` would fail on; a reason to withhold past GitLab's cut never
+reaches the job, and the claim fails it with `"false"`; the gate's second run is read as the other is,
+a report that does not match its exit failing the job; and over 847 prefixes of 25 descriptions
+built to put PATH-2a's or the one-block rule's reason in the text the cut drops, each handed as it
+is and with GitLab's `"..."` after it, the job's own two steps never stand on, or fail on, a
+CONTRADICTED claim that neither the whole description nor the text GitLab handed gives, where the
+cut at the start of the white space with nothing held back does both, and so does the cut after it
+with nothing held back. The cut step, run on every prefix of four descriptions, as it is and with
+`"..."` after it, leaves only whole sentences of the description by the gate's own split, as
+written and as the CLI reads the file, which the module reads from `styxx/diffgate.py` with the
+form of PATH-2a's reason; without the flag it leaves the text alone. The module hands bash the
+script as a file. That is the mechanics of the job, tested here under bash; a run on GitLab itself
+is not something this repository has done, and a run there that fails on a variable name or on the
+multi-line script step is worth an issue.
 
 Everything the Action's README says about scope applies: the closed template set, "tests pass"
 UNCHECKABLE without `--evidence`, a path the diff does not show UNCHECKABLE and never accused
