@@ -34,42 +34,42 @@ file or charon line is touched.
   (`test_179_a_changed_async_test_stays_withheld_*`) reads otherwise and the plant is told. No rule is added:
   DECIDE, APPLY, REACH, the phrases and the reason form are not edited, and the lines the plants anchor on are kept
   verbatim. G-P1 is not claimed, and #97, #101 and #121 stay open: #101 is withheld, not repaired.
-- **#178, the abstention.** Both ports counted `def` lines over every file's added lines, so a `def test_` in a
-  Markdown fence, a text file or a triple-quoted string beside a Python change was counted, where CPython defines
-  nothing: a wrong VERIFIED on "Added 1 test." over a documented example, and a wrong CONTRADICTED where a real test
-  sits beside one. Now, after #110 and #205, both ports take two counts from one walk of the diff (`_diff_sections`,
+- **#178, the abstention.** Both ports counted `def` lines over every file's added lines, so a `def test_` in a Markdown
+  fence, a text file or a triple-quoted string beside a Python change was counted, where CPython defines nothing: a
+  wrong VERIFIED on "Added 1 test." over a documented example, and a wrong CONTRADICTED where a real test sits beside
+  one. Now, after #110 and #205, both ports take two counts from one walk of the diff (`_diff_sections`,
   `_diffSections`), which places each added line as `parse_unified_diff_sides` does: over every `+++` section's added
   lines, and over the added lines of a section whose path ends in `.py` or `.pyi` that do not follow an odd number of
-  `"""` plus `'''` in that section's added lines (`_python_source_lines`, `_pythonSourceLines`). The path's tail is
-  read with every trailing code point at or below U+0020 or from U+007F up removed, and a `+++` header is read as
-  `/dev/null` on that header with every such code point removed from either end (`_edge_cut`, `_edgeCut`): every code
-  point Python's `strip()` or JavaScript's `trim()` removes is in that set (the test module holds it over every code
-  point), so the two ports reach the same path tail where `strip()` and `trim()` part. Read after `strip()` and
-  `trim()`, `+++ /dev/null<U+0085>` was a deletion in Python only and `+++ /dev/null<U+FEFF>` in the port only, so
-  #178 fired in one port only and, on a false count, the gates parted without `--strict` (review 2's crafted inputs;
-  `origin/main` read each alike); git writes `+++ /dev/null` with nothing around it. The parity and the path test are
-  a section's, not a key's of `parse_unified_diff_sides`, because the two ports build those keys apart: `strip()`
-  removes U+0085 and U+001C to U+001F from a path's tail where `trim()` keeps them, `trim()` removes U+FEFF where
-  `strip()` keeps it, and Node 24 lowers U+1C89 to U+1C8A where CPython 3.12 does not. Taken per key, the parity put a
-  `def test_` after an odd count in one port only where two sections merged in that port: of 43 inputs review 1 built
-  around such keys, the two ports printed different records on 18, and opposite gates on 3 without `--strict` and on
-  15 with it, which the overlay did not withhold (`origin/main` read all 43 alike). Taken per section, both ports read
-  all 43 alike, and on every committed input the walk holds the added lines the parse holds, in each port.
-  `tests_added` is UNCHECKABLE where the two counts differ: "{k} of the {placed} `def test_` lines added sit in a file
-  not read as .py or .pyi, or after an odd number of triple quotes in the added lines of their `+++` section; this
-  template counts `def` lines and cannot tell whether CPython defines a test there; claim says {n} (#178)".
-  `symbol_added` is UNCHECKABLE where the pattern finds the name in every section's added lines and not in the
-  Python-source lines: "every added line that would define {kind} {name!r} sits in a file not read as .py or .pyi, or
-  after an odd number of triple quotes in the added lines of its `+++` section; this template cannot tell whether
-  CPython defines it there (#178)". The same strings in both ports, the name through `pyRepr` in the port. Each says
-  only what was measured, #220's rule: where the counted line sits, and that the template cannot tell. Elsewhere
-  `main`'s verdict stands as before. The order is #110, #205, #178, then `main`'s verdict; #110's and #205's reasons
-  stay byte for byte, and `parse_unified_diff` and `parse_unified_diff_sides` return what they returned. The triage's
-  sketch compared the Python-source count with `main`'s count over `parse_unified_diff`'s added lines. It moved 290
-  committed inputs where this moves 278, and on each of the 12 more the two parse functions place a counted `def` or
-  `class` line apart (a `--- ` content line, a `+++:` header, an added line before any header: #172's shapes), where
-  the sketch fired with a reason that is false there. Both counts from one walk confine the abstention to what its
-  reason says.
+  `"""` plus `'''` in that section's added lines (`_python_source_lines`, `_pythonSourceLines`). The path's tail is read
+  with every trailing code point at or below U+0020 or from U+007F up removed, and a `+++` header is read as `/dev/null`
+  on that header with every such code point removed from either end (`_edge_cut`, `_edgeCut`): every code point Python's
+  `strip()` or JavaScript's `trim()` removes is in that set (the test module holds it over every code point), so the two
+  ports reach the same path tail where `strip()` and `trim()` part. Read after `strip()` and `trim()`, `+++
+  /dev/null<U+0085>` was a deletion in Python only and `+++ /dev/null<U+FEFF>` in the port only, so #178 fired in one
+  port only and, on a false count, the gates parted without `--strict` (review 2's crafted inputs; `origin/main` read
+  each alike); git writes `+++ /dev/null` with nothing around it. The parity and the path test are a section's, not a
+  key's of `parse_unified_diff_sides`, because the two ports build those keys apart: `strip()` removes U+0085 and U+001C
+  to U+001F from a path's tail where `trim()` keeps them, `trim()` removes U+FEFF where `strip()` keeps it, and Node 24
+  lowers U+1C89 to U+1C8A where CPython 3.12 does not. Taken per key, the parity put a `def test_` after an odd count in
+  one port only where two sections merged in that port: of 43 inputs review 1 built around such keys, the two ports
+  printed different records on 18, and opposite gates on 3 without `--strict` and on 15 with it, which the overlay did
+  not withhold (`origin/main` read all 43 alike). Taken per section, both ports read all 43 alike, and on every
+  committed input the walk holds the added lines the parse holds, in each port. `tests_added` is UNCHECKABLE where the
+  two counts differ: "{k} of the {placed} `def test_` lines added sit in a file not read as .py or .pyi, or after an odd
+  number of triple quotes in the added lines of their `+++` section; this template counts `def` lines and cannot tell
+  whether CPython defines a test there; claim says {n} (#178)". `symbol_added` is UNCHECKABLE where the pattern finds
+  the name in every section's added lines and not in the Python-source lines: "every added line that would define {kind}
+  {name!r} sits in a file not read as .py or .pyi, or after an odd number of triple quotes in the added lines of its
+  `+++` section; this template cannot tell whether CPython defines it there (#178)". The same strings in both ports, the
+  name through `pyRepr` in the port. Each says only what was measured, #220's rule: where the counted line sits, and
+  that the template cannot tell. Elsewhere `main`'s verdict stands as before. The order is #110, #205, #178, then
+  `main`'s verdict (since review 3: #205's seam at a header's edge, #110, #205, #205's seams before a `def` or a name,
+  #178, the name defined twice, then `main`'s verdict); #110's and #205's reasons stay byte for byte, and
+  `parse_unified_diff` and `parse_unified_diff_sides` return what they returned. The triage's sketch compared the
+  Python-source count with `main`'s count over `parse_unified_diff`'s added lines. It moved 290 committed inputs where
+  this moves 278, and on each of the 12 more the two parse functions place a counted `def` or `class` line apart (a `---
+  ` content line, a `+++:` header, an added line before any header: #172's shapes), where the sketch fired with a reason
+  that is false there. Both counts from one walk confine the abstention to what its reason says.
 - **#205's seams and the name defined twice (review 3).** A third review measured what #179 and #178 did between the
   two readers on inputs `333f3c73` read alike. Without `--strict` the CLI's and the bookmarklet's gates parted with
   both deciding on a new file saved with a byte order mark whose line 1 is `async def test_x():` (CPython defines
