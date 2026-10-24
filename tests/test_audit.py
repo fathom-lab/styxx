@@ -103,6 +103,47 @@ class TestVerdictDerivation:
         assert v == "confabulation"
 
 
+class TestLowStabilityIsOneNumber:
+    """#233: GroundedScore.abstains() and audit_claim's "abstain" verdict read one constant."""
+
+    def test_audit_defaults_are_the_divergence_constant(self):
+        import inspect
+        from styxx import audit as audit_mod
+        from styxx.divergence import LOW_STABILITY, GroundedScore
+        assert LOW_STABILITY == 0.50
+        assert audit_mod._DEFAULT_LOW_STABILITY is LOW_STABILITY
+        for fn, name in ((audit_claim, "low_stability_threshold"),
+                         (audit_session, "low_stability_threshold"),
+                         (GroundedScore.abstains, "low_stability")):
+            assert inspect.signature(fn).parameters[name].default is LOW_STABILITY
+
+    @pytest.mark.parametrize("stability", [0.0, 0.25, 0.49, 0.5, 0.75, 1.0])
+    def test_abstains_agrees_with_the_audit_verdict(self, stability):
+        from styxx.divergence import LOW_STABILITY, GroundedScore
+        g = GroundedScore(stability * 1.0, stability, 1.0, 1, 5)
+        v = _derive_verdict(
+            grounded=g.grounded, stability=g.stability, concordance_stateless=g.concordance,
+            injection_suspected=False,
+            honest=0.7, low_stability=LOW_STABILITY, contradiction=0.3,
+        )
+        assert (v == "abstain") is g.abstains()
+
+    def test_where_abstains_and_the_audit_verdict_part(self):
+        # the agreement above holds with injection not suspected and five samples; two places part
+        from styxx.divergence import LOW_STABILITY, GroundedScore
+        kw = dict(honest=0.7, low_stability=LOW_STABILITY, contradiction=0.3)
+        # injection suspected: the verdict reads "injected" before "abstain", while abstains() is True
+        g = GroundedScore(0.0, 0.0, 0.0, 5, 5)
+        assert g.abstains() is True
+        assert _derive_verdict(grounded=0.0, stability=0.0, concordance_stateless=0.0,
+                               injection_suspected=True, **kw) == "injected"
+        # one sample: stability 1.0; the verdict has no sample-count rule
+        one = GroundedScore(0.0, 1.0, 0.0, 1, 1)
+        assert one.abstains() is True
+        assert _derive_verdict(grounded=0.0, stability=1.0, concordance_stateless=0.0,
+                               injection_suspected=False, **kw) == "contradiction"
+
+
 class TestConfidenceBand:
     def test_high(self):
         assert _confidence_band(0.95) == "high"
