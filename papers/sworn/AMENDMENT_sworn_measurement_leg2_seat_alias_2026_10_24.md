@@ -8,6 +8,10 @@ decision of 2026-10-24 quoted below. It is committed with its three receipts, un
 section 8 (l.765-766) makes any amendment after a seat has read a real item a new preregistration under a new
 name. No bar moves.
 
+Every committed receipt this file cites is named by its full repository path. In the PREREG, a path beginning
+`receipts/` names a local planning file that is not committed (l.48-55); `papers/sworn/measurement/receipts/` is
+a committed folder that only shares that name.
+
 ## What the PREREG says
 
 Section 2, lines 203-207, byte for byte (the five lines with their line feeds hash to sha256
@@ -51,14 +55,17 @@ timeout each (`common.py` l.61), one contamination probe per seat file, and 9 tr
 
    | receipt | started (UTC) | exit | stdout sha256 | what the envelope says |
    |---|---|---|---|---|
-   | `receipts/transport_alias_fable_2026_10_24.json` | 2026-10-24T14:13:20.605Z | 1 | `86eef9c0af24299462fc80a16b2b07c968bb7c3bdcd53cd6e2647ac417094e89` | `"is_error": true`, `"api_error_status": 429`, `"api_error": "model_requires_usage_credits"`, `"modelUsage": {}`, result "You're out of usage credits. Switch to another model, or manage usage credits at https://claude.ai/settings/usage?from=cc_cli_limit_message, to continue." |
-   | `receipts/transport_alias_opus_2026_10_24.json` | 2026-10-24T14:13:30.501Z | 0 | `4afd17595d3461e194462d1922b6c53a22cd20a4ebe6952b312cb79f76140637` | `"is_error": false`, result `NO`, `modelUsage` naming `claude-opus-5-5` and nothing else |
+   | `papers/sworn/measurement/receipts/transport_alias_fable_2026_10_24.json` | 2026-10-24T14:13:20.605Z | 1 | `86eef9c0af24299462fc80a16b2b07c968bb7c3bdcd53cd6e2647ac417094e89` | `"is_error": true`, `"api_error_status": 429`, `"api_error": "model_requires_usage_credits"`, `"modelUsage": {}`, result "You're out of usage credits. Switch to another model, or manage usage credits at https://claude.ai/settings/usage?from=cc_cli_limit_message, to continue." |
+   | `papers/sworn/measurement/receipts/transport_alias_opus_2026_10_24.json` | 2026-10-24T14:13:30.501Z | 0 | `4afd17595d3461e194462d1922b6c53a22cd20a4ebe6952b312cb79f76140637` | `"is_error": false`, result `NO`, `modelUsage` naming `claude-opus-5-5` and nothing else |
 
    One more `claude-fable-5` call was made shortly before the receipted one: the receipt script's own scan for
    token-shaped strings refused the receipt it built, on its schema string, before the bytes were kept. The
    receipted call replaced it. The `claude-sonnet-5-5` call was not re-made, and nothing here rests on it. Both
    receipts were scanned for key-, bearer-, JWT- and e-mail-shaped strings before they were written; the CLI's
-   JSON carries a session id and a `uuid` and no secret.
+   JSON carries a session id and a `uuid` and no secret. These two calls and the transport check below ran in
+   the environment that the drafting box's Claude Code session hands to the processes it starts, and
+   `seat_claude.py` passes its own environment on unchanged (`subprocess.run` with no `env`, l.75). The receipts
+   record the argv, not that environment.
 3. **2026-10-24: the PREREG's transport check on the amended alias resolved.** In the run worktree, at
    14:14:00Z to 14:14:17Z, over `transport_check_2026_10_24_opus/`, a fresh copy made by the same rule (its inputs
    equal `transport_check_2026_10_23/`'s byte for byte: `diff -rq` lists only that folder's `seat_outputs/`;
@@ -70,7 +77,8 @@ timeout each (`common.py` l.61), one contamination probe per seat file, and 9 tr
    contamination probe answered 'NO'
    ```
 
-   The seat file is committed byte for byte as `receipts/transport_check_opus_2026_10_24.seat.json` (sha256
+   The seat file is committed byte for byte as
+   `papers/sworn/measurement/receipts/transport_check_opus_2026_10_24.seat.json` (sha256
    `fccff86c4939cd605002ebaa0119aefab1cbf6d38cd5d52a095a3c03f07b2407`): `substrate.model` `claude-opus-5-5`,
    `synthetic_packet` true, `prereg` null, `dry_run` false, one synthetic item parsed, the probe `"ok": true`. Its
    ledger (sha256 `d7c3691edf6d3520143897670bed347db14e81e377bacc3628117748348b3582`) stays in the run worktree.
@@ -112,17 +120,32 @@ answered: **"Amend to Opus 5.5"**.
    python -c "import functools, sys; sys.path.insert(0, 'papers/sworn/measurement'); import seat_claude as SC; SC.cli = functools.partial(SC.cli, model='claude-opus-5-5'); import twin_trivial as T; sys.exit(T.main(sys.argv[1:]))" --doc D01
    ```
 
-   (D01 to D09; tranche B's add `--dir`). `twin_trivial.py` imports `seat_claude` by name (l.29), so its call
-   site reaches the bound function, with every other argument as committed. Checked on the drafting box by a
-   local script, not committed, with `subprocess.run` replaced by a recorder, so no model was called: as committed, the twin's call site passed
-   `--model claude-fable-5`; under the command's statements it passed `--model claude-opus-5-5`; and a call with
-   an explicit model, the seats' route, passed that model. A twin's status file records no alias (l.69-79): the
-   alias of every twin is this amendment's, and the RESULT names it from here.
+   (D01 to D09 in tranche A; in tranche B, its own `B`-prefixed ids with `--dir`). `twin_trivial.py` imports
+   `seat_claude` by name (l.29), so its call site reaches the bound function, with every other argument as
+   committed. Checked on the drafting box by a local script, not committed, with `subprocess.run` replaced by a
+   recorder, so no model was called: as committed, the twin's call site passed `--model claude-fable-5`; under
+   the command's statements it passed `--model claude-opus-5-5`; and a call with an explicit model, the seats'
+   route, passed that model.
+
+   This route is the one rule this amendment moves beside the alias. Section 4 (l.509-511) and Amendment 2
+   item 5 (l.411-412) run the twins with the committed CLI that `twin_trivial.py` names (l.13):
+
+   ```text
+   python papers/sworn/measurement/twin_trivial.py --doc D01 [--dry-run] [--dir DIR]
+   ```
+
+   For the twins of both tranches, and for them only, this item replaces that CLI with the same file's `main`
+   under the binding above.
+
+   A twin's status file records no alias (l.69-79), and nothing in the tree receipts the alias a twin call
+   reached: the status file keeps `raw_sha256` but not the bytes. The alias of every twin is this amendment's,
+   the RESULT names it from here, and it prints every twin command line of each tranche as it was run.
 4. **The transport check on the day.** Section 2's check is item 3 of the measurements above, on the amended
    alias. If the seats start on a later day than 2026-10-24, the same one-item check runs again that day, over a
    fresh synthetic copy made by the same rule, before any seat, and the RESULT prints its verdict. If
    `claude-opus-5-5` does not resolve, line 207 applies to it as it did to `claude-fable-5`: no seat runs on
-   another alias until an amendment naming it is committed.
+   another alias until an amendment naming it is committed. The check on the day, the seats and the twins run
+   in one environment, and the RESULT says which: a Claude Code session's, as on 2026-10-24, or another.
 5. **`named_in_design: true` names the family and its transport.** `seat_claude.py` writes it for every alias
    (l.208). DESIGN v2 l.21 names the Claude family as Claude through the `claude -p` clean-config subscription
    transport, pointing at `run_b23_fable.py`, whose alias is `claude-fable-5` (its l.44); the alias itself was
@@ -131,10 +154,15 @@ answered: **"Amend to Opus 5.5"**.
 
 ## What does not change
 
-- No bar, no gate, no row of the gates block, no packet, no key digest, no lock hash and no rule of the PREREG's
-  sections 2 to 8. The PREREG and every file its section 5 names are not edited.
+- No bar, no gate, no row of the gates block, no packet, no key digest and no lock hash. The PREREG and every
+  file its section 5 names are not edited.
+- Beside the alias, which line 207 provides for, one rule moves: item 3's route for the trivial twins, in place
+  of the committed `twin_trivial.py` CLI that section 4 (l.509-511) and Amendment 2 item 5 (l.411-412) name.
+  Every other rule of the PREREG's sections 2 to 8 stands. The seats and the fold still run with the committed
+  CLIs, in both tranches.
 - The local family and Amendment 1: `Qwen/Qwen2.5-3B-Instruct`, bf16, `--device cuda`, by day, every seat file
-  `named_in_design: false`. Amendments 2 to 5 stand as written.
+  `named_in_design: false`. Amendments 3 to 5 stand as written, and so does Amendment 2, except its item 5's
+  committed CLI for the twins, which item 3 replaces.
 - The cost, in section 4's counts: 675 item calls, 6 contamination probes and 9 trivial-twin calls, each with at
   most two retries after a failed call, on the operator's plan, in one usage window with no fan-out running.
 
@@ -159,8 +187,10 @@ read a real item.
   seats.
 - The two transport facts that led here, with this file's name: 2026-10-23, VOID-CONTAM on a failed call;
   2026-10-24, `claude-fable-5` answering 429 `model_requires_usage_credits`.
-- Item 5's reading beside `named_in_design: true`, and item 3's route for the twins, with the fact that a twin's
-  status file records no alias.
+- Item 5's reading beside `named_in_design: true`.
+- Item 3's route for the twins, named as the departure from section 4's committed CLI; every twin command line
+  of each tranche as it was run; and the fact that a twin's status file records no alias.
+- The environment the check on the day, the seats and the twins ran in (item 4).
 
 ## What this amendment does not say
 
@@ -173,3 +203,5 @@ read a real item.
 - That `claude-opus-5-5` will answer on the day the seats run, or that the 690 calls fit inside one usage window
   of it. Item 4 covers the day; the window is not measured.
 - That `claude-fable-5` is unavailable in general. The receipt shows this login's plan on 2026-10-24.
+- That a twin's alias is receipted. The RESULT prints the twins' command lines; the tree keeps no twin call's
+  bytes.
