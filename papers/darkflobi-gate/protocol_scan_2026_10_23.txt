@@ -35,7 +35,7 @@ verdicts realised by scoring synthetic results:
 rows never realised by a result dict: none
 smoke verdict: INVALID__smoke_plumbing_only (gates read: 0)
 check_metrics usable: True paths: 10
-two gates fences refused: prereg contains 2 gates-like fenced blocks (line 276 (```gates), line 749 (```ga
+two gates fences refused: prereg contains 2 gates-like fenced blocks (line 276 (```gates), line 1120 (```g
 
 wilson(z=1.96):
   k= 73 n= 73  lower=0.9500 upper=1.0000
@@ -57,14 +57,14 @@ wilson(z=1.96):
   se of a share at p=0.70, n=40: 0.0725
 
 # receipt trailer (written by the piece after the PREREG's commit; the scan above is the scanner's own output)
-written: 2026-10-23T14:23:50-04:00
+written: 2026-10-24T13:06:23-04:00
 prereg_commit (the scanner's reading: the earliest commit holding the file): dc06d68e84407c487973b6d5a98e3695b26f5eba
-prereg text scanned: the blob at 2ae9176da0c2ee4901e4711f651b7cd19a78aa3c (the commit that relocked section 11 at 14:20 after the integration pass moved four gate files, on the unpushed branch, before the pull request opens; `git log` shows every version)
-prereg blob sha256 (git show <commit>:<path> | sha256sum): 7b0db6c1fad7a633e9e50b805f29a3a454fb00d1652427c4eb9a125131418771  76008 bytes
+prereg text scanned: the blob at 80333254500e0bf5ec86d5d23d7ad90a9412acaa (the commit that appended section 15's entries 15.5 to 15.9 before the merge: the drop rule as the operator signed it, the gate files after it, the pre-gate count of section 12 step 3, the payload kinds and the review's minors; on the branch of the open pull request #229, unpushed at this receipt; `git log` shows every version)
+prereg blob sha256 (git show <commit>:<path> | sha256sum): 82a4625172cfb3909222bfb24900733ba15d355c856d68fb55743ae15b03f4cd  113395 bytes
 rules blob sha256: 77c7670ffed883c2c916904f1e03065b913e0efd356f3462ce89492163135ea8  55569 bytes
 canary seed digest blob sha256 (keys/sworn_measurement_darkflobi_gate_canary_seed.sha256): 625e7371db302076cc84f98326d7a39ad89149aec20927dfefee62193f745eeb  116 bytes
 snapshot tree digest (lock_hashes.py pin-tree, from the pin's blobs): 681020dcbf5ac55cb42b12c0a377d4889011d55410221c89e1c0696444885e92  6164 files
-styxx used by the scan: the repository at the branch head (origin/main 2e218601 merged in at f7eee3ee, and 4c24e4b0 at 9f9639db); styxx/protocol.py, styxx/mind.py, styxx/sworn.py, styxx/certify.py, styxx/capsule.py, styxx/agent_audit.py, styxx/diffgate.py, styxx/instrument.py, scripts/surface_lint.py and papers/sworn/measurement/common.py, canaries.py and seal_key.py are byte-identical to the pin 3437340b (git diff --stat 3437340b HEAD over those paths, empty); papers/sworn/measurement/ differs from the pin only by two files main added for leg 2 (tranche_b.py, verdict_input.py), which this PREREG does not use
+styxx used by the scan: the repository at the branch head (origin/main 2e218601 merged in at f7eee3ee, 4c24e4b0 at 9f9639db, and ca347730 at 698948a2); styxx/protocol.py, styxx/mind.py, styxx/sworn.py, styxx/certify.py, styxx/capsule.py, styxx/agent_audit.py, styxx/diffgate.py, styxx/instrument.py, scripts/surface_lint.py and papers/sworn/measurement/common.py, canaries.py and seal_key.py are byte-identical to the pin 3437340b (git diff --stat 3437340b HEAD over those paths, empty); papers/sworn/measurement/ differs from the pin only by two files main added for leg 2 (tranche_b.py, verdict_input.py), which this PREREG does not use
 instrument digests at the pin (sha256 over the pin's blobs; the six the PREREG's section 11 abbreviates, and the three it prints whole):
   c448ded108df0f54de7a68cb0755fd31f574e21d4ace8c6b6b4b427cd8e9ea59  styxx/certify.py
   54f472d863776f28225440c72ad2b84b8e40eb1218dbd4993f5578109b42c9b3  styxx/capsule.py
