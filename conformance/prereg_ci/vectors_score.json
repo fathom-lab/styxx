@@ -1,0 +1,5677 @@
+{
+ "schema": "styxx.prereg-ci.conformance.score/v0",
+ "label": "conformance vectors for the gates scorers and the table cover; no claim",
+ "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+ "rules": {
+  "id": "sha256 of the sorted, compact UTF-8 JSON of {name, inputs}",
+  "blobs": "inputs.prereg and inputs.receipt name bytes in blobs.json by sha256",
+  "receipt": "json.loads over the receipt bytes decoded as UTF-8",
+  "frozen": "research_capsule.score_frozen(protocol._select_gates_block(prereg.decode('utf-8')), receipt); no newline translation, no smoke branch",
+  "experiment": "protocol.Experiment(<the PREREG written to disk and committed>).score(receipt, smoke=bool(receipt.get('smoke'))), the reading of styxx.seal",
+  "rescore": "styxx.prereg_ci.core.rescore(prereg, receipt), compared on the keys the vector holds",
+  "compare": "styxx.prereg_ci.core.compare(rescore, inputs.recorded, sealed=inputs.sealed, declared=inputs.declared), compared on code and kind",
+  "outcome": "{verdict, gates, gates_sha256}, or {raises, at, message}: the class always, the message for GateSpecError only",
+  "agree": "frozen and experiment both refuse, or both give the same verdict, gates and digest"
+ },
+ "vectors": [
+  {
+   "id": "f10afeb20b41295e1ba58a2ab930a137c1379aa050b8ba156f7ee311cd24346b",
+   "name": "census/papers/arxiv/connection-of-minds/submission/anc/receipt_b34v3_result.json",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b34v3_labelfree_read_2026_08_03.md",
+   "inputs": {
+    "prereg": "386ac532b5467eb41026676c4f3da10e00d2aa374a9d9c5721ca95940c360344",
+    "receipt": "192812ab82cb25447cfa67b8de664c170a123eb5da3bd7e78f919950cc7b56c8",
+    "recorded": {
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     }
+    },
+    "sealed": [
+     "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/arxiv/connection-of-minds/submission/anc/receipt_b34v3_result.json",
+    "pointer": "",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b34v3_labelfree_read_2026_08_03.md",
+    "prereg_commit": "aea406fdbe845dfd1344f9b9e47253bb0d665083",
+    "receipt_path": "papers/arxiv/connection-of-minds/submission/anc/receipt_b34v3_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     },
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed"
+    },
+    "experiment": {
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     },
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     },
+     "row": 2,
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "1c2d9967501197788d3d5677261239e33dd6e56fe170c0f7e0cb5ade7da4999d",
+   "name": "census/papers/disjoint-worlds/FINDING_b34v3_labelfree_read_2026_08_03.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b34v3_labelfree_read_2026_08_03.md",
+   "inputs": {
+    "prereg": "386ac532b5467eb41026676c4f3da10e00d2aa374a9d9c5721ca95940c360344",
+    "receipt": "192812ab82cb25447cfa67b8de664c170a123eb5da3bd7e78f919950cc7b56c8",
+    "recorded": {
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     }
+    },
+    "sealed": [
+     "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b34v3_labelfree_read_2026_08_03.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b34v3_labelfree_read_2026_08_03.md",
+    "prereg_commit": "aea406fdbe845dfd1344f9b9e47253bb0d665083",
+    "receipt_path": "papers/disjoint-worlds/b34v3_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     },
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed"
+    },
+    "experiment": {
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     },
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     },
+     "row": 2,
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "e56785a39804b5dcb035da5fc43692490e9ea16f9334202490ff1ec5a0b510a2",
+   "name": "census/papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b35_seed_stability_2026_08_03.md",
+   "inputs": {
+    "prereg": "39b52cd1bc0bfa5ad3b3c1432c8315e0986fa13e029fc5f097510028f96a579f",
+    "receipt": "5727e491ce7fd79ca322ecec4b5723773f92a07045a83c877e52f2bb5a011b05",
+    "recorded": {
+     "verdict": "LABELFREE_READ_SEED_STABLE",
+     "gates_sha256": "1436b1319e55e707d93c6b56ea2ef36e407863ec0730eba7e52f3370e04fe0ff",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null_mean": true,
+      "G1_stability": true
+     }
+    },
+    "sealed": [
+     "1436b1319e55e707d93c6b56ea2ef36e407863ec0730eba7e52f3370e04fe0ff"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b35a_seed_stable_2026_08_03.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b35_seed_stability_2026_08_03.md",
+    "prereg_commit": "758b4a5f1ef8cfe528491b78ffab4819f0d62042",
+    "receipt_path": "papers/disjoint-worlds/b35a_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "LABELFREE_READ_SEED_STABLE",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null_mean": true,
+      "G1_stability": true
+     },
+     "gates_sha256": "1436b1319e55e707d93c6b56ea2ef36e407863ec0730eba7e52f3370e04fe0ff"
+    },
+    "experiment": {
+     "verdict": "LABELFREE_READ_SEED_STABLE",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null_mean": true,
+      "G1_stability": true
+     },
+     "gates_sha256": "1436b1319e55e707d93c6b56ea2ef36e407863ec0730eba7e52f3370e04fe0ff"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "LABELFREE_READ_SEED_STABLE",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null_mean": true,
+      "G1_stability": true
+     },
+     "row": 2,
+     "gates_sha256": "1436b1319e55e707d93c6b56ea2ef36e407863ec0730eba7e52f3370e04fe0ff",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "2d4567bbbc0f1d631e5bcd77b35dbf1ad64e17708e0c31958229080d2a682f71",
+   "name": "census/papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b35c_open_vocab_2026_08_03.md",
+   "inputs": {
+    "prereg": "4b50b3c653660050e61866c0c68fd17834e978ddaf49813fb6d80c31da5a92e7",
+    "receipt": "cf3525dd3169b069344feed5aac5aca55278017d07ef972f2410f1b824fd7d2b",
+    "recorded": {
+     "verdict": "INVALID__null_artifact",
+     "gates_sha256": "c47f7b61644d9ceb013a9042f33f2b8584555009edaff7d1508c3bfafbb3f891",
+     "gates": {
+      "G0_sanity": true,
+      "G2_null": false,
+      "G1_open": true
+     }
+    },
+    "sealed": [
+     "c47f7b61644d9ceb013a9042f33f2b8584555009edaff7d1508c3bfafbb3f891"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b35c_open_vocab_2026_08_03.md",
+    "prereg_commit": "6d88a80502a693ebb1b52d4e93265070e4afb8a5",
+    "receipt_path": "papers/disjoint-worlds/b35c_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "INVALID__null_artifact",
+     "gates": {
+      "G0_sanity": true,
+      "G2_null": false,
+      "G1_open": true
+     },
+     "gates_sha256": "c47f7b61644d9ceb013a9042f33f2b8584555009edaff7d1508c3bfafbb3f891"
+    },
+    "experiment": {
+     "verdict": "INVALID__null_artifact",
+     "gates": {
+      "G0_sanity": true,
+      "G2_null": false,
+      "G1_open": true
+     },
+     "gates_sha256": "c47f7b61644d9ceb013a9042f33f2b8584555009edaff7d1508c3bfafbb3f891"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__null_artifact",
+     "gates": {
+      "G0_sanity": true,
+      "G2_null": false,
+      "G1_open": true
+     },
+     "row": 1,
+     "gates_sha256": "c47f7b61644d9ceb013a9042f33f2b8584555009edaff7d1508c3bfafbb3f891",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "004ee2e11e91dfdd36aa350e2bcb3fac4b2a48cee3fab92ffe8428f7c827f418",
+   "name": "census/papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.seal.json#/protocol/1",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b35b_second_source_2026_08_03.md",
+   "inputs": {
+    "prereg": "9f2ec67637bd5ba9b3d74c7ea99327ee4255e42c1e6403d2b0228fc8513075da",
+    "receipt": "825d53b9e3b313b041b81aeb092a1d912b666d544c9fd57b3f6f14f0ff0ac8c1",
+    "recorded": {
+     "verdict": "INVALID__second_source_discovery_broken",
+     "gates_sha256": "51957075bbc9850fefb5b1a21c4370a6126ab7e3454c799d65e71ab9d3f4e749",
+     "gates": {
+      "G0_same_family": false,
+      "G2_null": true,
+      "G1_cross": false
+     }
+    },
+    "sealed": [
+     "51957075bbc9850fefb5b1a21c4370a6126ab7e3454c799d65e71ab9d3f4e749"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b35bc_generality_invalids_2026_08_03.seal.json",
+    "pointer": "/protocol/1",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b35b_second_source_2026_08_03.md",
+    "prereg_commit": "a3d981fd9dab816a115aad633c9b66954d41a4a3",
+    "receipt_path": "papers/disjoint-worlds/b35b_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "INVALID__second_source_discovery_broken",
+     "gates": {
+      "G0_same_family": false,
+      "G2_null": true,
+      "G1_cross": false
+     },
+     "gates_sha256": "51957075bbc9850fefb5b1a21c4370a6126ab7e3454c799d65e71ab9d3f4e749"
+    },
+    "experiment": {
+     "verdict": "INVALID__second_source_discovery_broken",
+     "gates": {
+      "G0_same_family": false,
+      "G2_null": true,
+      "G1_cross": false
+     },
+     "gates_sha256": "51957075bbc9850fefb5b1a21c4370a6126ab7e3454c799d65e71ab9d3f4e749"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__second_source_discovery_broken",
+     "gates": {
+      "G0_same_family": false,
+      "G2_null": true,
+      "G1_cross": false
+     },
+     "row": 0,
+     "gates_sha256": "51957075bbc9850fefb5b1a21c4370a6126ab7e3454c799d65e71ab9d3f4e749",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "53a58921c8e898e56c2f6ea5dfd2761d14427f2ede24b0199043783132f54e65",
+   "name": "census/papers/disjoint-worlds/FINDING_b37_legibility_matrix_2026_08_04.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b37_legibility_matrix_2026_08_04.md",
+   "inputs": {
+    "prereg": "6986fd983f984417735226149d28d045d1ec50929143b3bbd1eb6da7e8802207",
+    "receipt": "b37f37d902bd16afbe79f94a1117e751e80f7b487561e367616c4dbba83720e3",
+    "recorded": {
+     "verdict": "LEGIBILITY_LAW_CANDIDATE__local_structure_symmetric",
+     "gates_sha256": "bee27861fbefe136b2b95b07ebc516e2cc3fe2bf2dc4c2f3408e1e7921cff772",
+     "gates": {
+      "G0_reproduce": true,
+      "G0b_reproduce_weak": true,
+      "G1_law": true,
+      "G2_beats_rsa": true,
+      "G3_symmetry": true
+     }
+    },
+    "sealed": [
+     "bee27861fbefe136b2b95b07ebc516e2cc3fe2bf2dc4c2f3408e1e7921cff772"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b37_legibility_matrix_2026_08_04.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b37_legibility_matrix_2026_08_04.md",
+    "prereg_commit": "978f6196f50d8d54c47f0cbee7f57f94da4fd3a5",
+    "receipt_path": "papers/disjoint-worlds/b37_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "LEGIBILITY_LAW_CANDIDATE__local_structure_symmetric",
+     "gates": {
+      "G0_reproduce": true,
+      "G0b_reproduce_weak": true,
+      "G1_law": true,
+      "G2_beats_rsa": true,
+      "G3_symmetry": true
+     },
+     "gates_sha256": "bee27861fbefe136b2b95b07ebc516e2cc3fe2bf2dc4c2f3408e1e7921cff772"
+    },
+    "experiment": {
+     "verdict": "LEGIBILITY_LAW_CANDIDATE__local_structure_symmetric",
+     "gates": {
+      "G0_reproduce": true,
+      "G0b_reproduce_weak": true,
+      "G1_law": true,
+      "G2_beats_rsa": true,
+      "G3_symmetry": true
+     },
+     "gates_sha256": "bee27861fbefe136b2b95b07ebc516e2cc3fe2bf2dc4c2f3408e1e7921cff772"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "LEGIBILITY_LAW_CANDIDATE__local_structure_symmetric",
+     "gates": {
+      "G0_reproduce": true,
+      "G0b_reproduce_weak": true,
+      "G1_law": true,
+      "G2_beats_rsa": true,
+      "G3_symmetry": true
+     },
+     "row": 2,
+     "gates_sha256": "bee27861fbefe136b2b95b07ebc516e2cc3fe2bf2dc4c2f3408e1e7921cff772",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "c11d595b05e931808dbfd9afff5a2a1c14ed2c0d53ca3408c75b483b936b84c4",
+   "name": "census/papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b38_legibility_cliff_2026_08_04.md",
+   "inputs": {
+    "prereg": "3bd3978be0474e78cfbff2427e0f0d946de41af5bee579f14cb3debed7e1230a",
+    "receipt": "013e3f0f1d79bea2432344375652d0717b447d93f04e6f75bb2152b0e438ebb1",
+    "recorded": {
+     "verdict": "INVALID__dose_response_nonmonotone",
+     "gates_sha256": "453903f2ea72aef4a417ed833754fdb189999b9e359a14ee96277973306ac7ad",
+     "gates": {
+      "G0_baseline": true,
+      "G1_monotone": false,
+      "G2_island_matched": false,
+      "G2b_island_not_matched": true
+     }
+    },
+    "sealed": [
+     "453903f2ea72aef4a417ed833754fdb189999b9e359a14ee96277973306ac7ad"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b38_cliff_invalid_2026_08_04.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b38_legibility_cliff_2026_08_04.md",
+    "prereg_commit": "4d382a8f033630b5a6181da4fe351926cdef54d7",
+    "receipt_path": "papers/disjoint-worlds/b38_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "INVALID__dose_response_nonmonotone",
+     "gates": {
+      "G0_baseline": true,
+      "G1_monotone": false,
+      "G2_island_matched": false,
+      "G2b_island_not_matched": true
+     },
+     "gates_sha256": "453903f2ea72aef4a417ed833754fdb189999b9e359a14ee96277973306ac7ad"
+    },
+    "experiment": {
+     "verdict": "INVALID__dose_response_nonmonotone",
+     "gates": {
+      "G0_baseline": true,
+      "G1_monotone": false,
+      "G2_island_matched": false,
+      "G2b_island_not_matched": true
+     },
+     "gates_sha256": "453903f2ea72aef4a417ed833754fdb189999b9e359a14ee96277973306ac7ad"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__dose_response_nonmonotone",
+     "gates": {
+      "G0_baseline": true,
+      "G1_monotone": false,
+      "G2_island_matched": false,
+      "G2b_island_not_matched": true
+     },
+     "row": 1,
+     "gates_sha256": "453903f2ea72aef4a417ed833754fdb189999b9e359a14ee96277973306ac7ad",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "11bda6420f610424d36dbc127511e2306eb967b0c97d3aac42e1d2fb89a31e0f",
+   "name": "census/papers/disjoint-worlds/FINDING_b39_whitening_2026_08_04.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b39_whitening_rescue_2026_08_04.md",
+   "inputs": {
+    "prereg": "59a1a82131b454582f160defc88f16c2f809b17c7509d9e62868d973b000c728",
+    "receipt": "6039a02ddead3cc241693a24bcaed455da482e6be3ce06c9839df3a8ea846ae6",
+    "recorded": {
+     "verdict": "INVALID__whitening_breaks_the_clique",
+     "gates_sha256": "5dd4296bf0df60f8cd9df9b8b6a20a10c51ec8780c71426ed854ae5aa442e3c5",
+     "gates": {
+      "G0_baseline": true,
+      "G0b_whiten_preserves_clique": false,
+      "G1_rescue": false,
+      "G2_no_rescue": true
+     }
+    },
+    "sealed": [
+     "5dd4296bf0df60f8cd9df9b8b6a20a10c51ec8780c71426ed854ae5aa442e3c5"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b39_whitening_2026_08_04.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b39_whitening_rescue_2026_08_04.md",
+    "prereg_commit": "e43eaa104115aa249830f93bbd6a8de8cc6d879c",
+    "receipt_path": "papers/disjoint-worlds/b39_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "INVALID__whitening_breaks_the_clique",
+     "gates": {
+      "G0_baseline": true,
+      "G0b_whiten_preserves_clique": false,
+      "G1_rescue": false,
+      "G2_no_rescue": true
+     },
+     "gates_sha256": "5dd4296bf0df60f8cd9df9b8b6a20a10c51ec8780c71426ed854ae5aa442e3c5"
+    },
+    "experiment": {
+     "verdict": "INVALID__whitening_breaks_the_clique",
+     "gates": {
+      "G0_baseline": true,
+      "G0b_whiten_preserves_clique": false,
+      "G1_rescue": false,
+      "G2_no_rescue": true
+     },
+     "gates_sha256": "5dd4296bf0df60f8cd9df9b8b6a20a10c51ec8780c71426ed854ae5aa442e3c5"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__whitening_breaks_the_clique",
+     "gates": {
+      "G0_baseline": true,
+      "G0b_whiten_preserves_clique": false,
+      "G1_rescue": false,
+      "G2_no_rescue": true
+     },
+     "row": 1,
+     "gates_sha256": "5dd4296bf0df60f8cd9df9b8b6a20a10c51ec8780c71426ed854ae5aa442e3c5",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "912faefe312bc4be859e38aeb5e52291ddf428c7dfd17bc76db9efa6b21707f4",
+   "name": "census/papers/disjoint-worlds/FINDING_b40_island_named_2026_08_05.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b40_anisotropy_signature_2026_08_05.md",
+   "inputs": {
+    "prereg": "6bd2f3f816a70c2cd1936eaddffcb90a3a1da5bd40b70099681e57befe19d5e5",
+    "receipt": "5625adcd52cdb82fb29f41178fa69e41f30867abe5cae4add8fdee20f2b7511a",
+    "recorded": {
+     "verdict": "ISLAND_NAMED__qwen_dominant_subspace_differs_and_affinity_tracks_legibility",
+     "gates_sha256": "d64d0ce6aae43b87d94bfd17633e962e5c69514d181262cd01bd43025beab0dc",
+     "gates": {
+      "G1_separation": true,
+      "G2_tracks_legibility": true
+     }
+    },
+    "sealed": [
+     "d64d0ce6aae43b87d94bfd17633e962e5c69514d181262cd01bd43025beab0dc"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b40_island_named_2026_08_05.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b40_anisotropy_signature_2026_08_05.md",
+    "prereg_commit": "f69366c1bdd542efadc9d1d600a68ceb9cc3cdd6",
+    "receipt_path": "papers/disjoint-worlds/b40_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "ISLAND_NAMED__qwen_dominant_subspace_differs_and_affinity_tracks_legibility",
+     "gates": {
+      "G1_separation": true,
+      "G2_tracks_legibility": true
+     },
+     "gates_sha256": "d64d0ce6aae43b87d94bfd17633e962e5c69514d181262cd01bd43025beab0dc"
+    },
+    "experiment": {
+     "verdict": "ISLAND_NAMED__qwen_dominant_subspace_differs_and_affinity_tracks_legibility",
+     "gates": {
+      "G1_separation": true,
+      "G2_tracks_legibility": true
+     },
+     "gates_sha256": "d64d0ce6aae43b87d94bfd17633e962e5c69514d181262cd01bd43025beab0dc"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "ISLAND_NAMED__qwen_dominant_subspace_differs_and_affinity_tracks_legibility",
+     "gates": {
+      "G1_separation": true,
+      "G2_tracks_legibility": true
+     },
+     "row": 0,
+     "gates_sha256": "d64d0ce6aae43b87d94bfd17633e962e5c69514d181262cd01bd43025beab0dc",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "ebb0515080b72869b89435239ad08f1323dff5a187b3f2271d2afe8b5208187f",
+   "name": "census/papers/disjoint-worlds/FINDING_b41_bridge_built_2026_08_05.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b41_bridge_2026_08_05.md",
+   "inputs": {
+    "prereg": "8a0447610d02002e8159a594ed2dc914e5b329c6f6b6aa38e1f2d81c24a3d148",
+    "receipt": "9d8b3e9d5a49bad6b4ec15aec630e092aff740d4a380c3f0964b77fc32746608",
+    "recorded": {
+     "verdict": "BRIDGE_BUILT__named_contrasts_causally_block_legibility",
+     "gates_sha256": "43aac2407a50a439061a95364ca289606d61147d16631aeb806bd1ad0e61106c",
+     "gates": {
+      "G0_baseline": true,
+      "G3_no_harm": true,
+      "G1_bridge": true,
+      "G2_specificity": true
+     }
+    },
+    "sealed": [
+     "43aac2407a50a439061a95364ca289606d61147d16631aeb806bd1ad0e61106c"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b41_bridge_built_2026_08_05.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b41_bridge_2026_08_05.md",
+    "prereg_commit": "6fe0e5ce5a26abc2d25482ca095cc632ba93fe76",
+    "receipt_path": "papers/disjoint-worlds/b41_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "BRIDGE_BUILT__named_contrasts_causally_block_legibility",
+     "gates": {
+      "G0_baseline": true,
+      "G3_no_harm": true,
+      "G1_bridge": true,
+      "G2_specificity": true
+     },
+     "gates_sha256": "43aac2407a50a439061a95364ca289606d61147d16631aeb806bd1ad0e61106c"
+    },
+    "experiment": {
+     "verdict": "BRIDGE_BUILT__named_contrasts_causally_block_legibility",
+     "gates": {
+      "G0_baseline": true,
+      "G3_no_harm": true,
+      "G1_bridge": true,
+      "G2_specificity": true
+     },
+     "gates_sha256": "43aac2407a50a439061a95364ca289606d61147d16631aeb806bd1ad0e61106c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "BRIDGE_BUILT__named_contrasts_causally_block_legibility",
+     "gates": {
+      "G0_baseline": true,
+      "G3_no_harm": true,
+      "G1_bridge": true,
+      "G2_specificity": true
+     },
+     "row": 2,
+     "gates_sha256": "43aac2407a50a439061a95364ca289606d61147d16631aeb806bd1ad0e61106c",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": false,
+     "holes": 1,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "cafa9f32de22e8562c874ca40d2a2393a99f7c79e06d46741d59018d785b3afa",
+   "name": "census/papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b42_bridge_dose_2026_08_05.md",
+   "inputs": {
+    "prereg": "ecef8b2e0ffca0052918ac4242e4db4c24c65e52017ff8eb290000a21e049d33",
+    "receipt": "3edc46f6a88b7a9d1a47bb183efa15543b64e8aaaa27177a9a99325193adedb7",
+    "recorded": {
+     "verdict": "BRIDGE_REPLICATES_AND_DOSES__barrier_is_low_rank",
+     "gates_sha256": "45c09ab5209aa5ab35827f495a1898a72436d197355f3b49bc038e929abe7fbe",
+     "gates": {
+      "G1_replicates": true,
+      "G2_null_clean": true,
+      "G3_dose_monotone": true
+     }
+    },
+    "sealed": [
+     "45c09ab5209aa5ab35827f495a1898a72436d197355f3b49bc038e929abe7fbe"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b42_dose_curve_2026_08_05.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b42_bridge_dose_2026_08_05.md",
+    "prereg_commit": "05141b1db15167f8b030e45ce6a5f500e1df3366",
+    "receipt_path": "papers/disjoint-worlds/b42_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "BRIDGE_REPLICATES_AND_DOSES__barrier_is_low_rank",
+     "gates": {
+      "G1_replicates": true,
+      "G2_null_clean": true,
+      "G3_dose_monotone": true
+     },
+     "gates_sha256": "45c09ab5209aa5ab35827f495a1898a72436d197355f3b49bc038e929abe7fbe"
+    },
+    "experiment": {
+     "verdict": "BRIDGE_REPLICATES_AND_DOSES__barrier_is_low_rank",
+     "gates": {
+      "G1_replicates": true,
+      "G2_null_clean": true,
+      "G3_dose_monotone": true
+     },
+     "gates_sha256": "45c09ab5209aa5ab35827f495a1898a72436d197355f3b49bc038e929abe7fbe"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "BRIDGE_REPLICATES_AND_DOSES__barrier_is_low_rank",
+     "gates": {
+      "G1_replicates": true,
+      "G2_null_clean": true,
+      "G3_dose_monotone": true
+     },
+     "row": 2,
+     "gates_sha256": "45c09ab5209aa5ab35827f495a1898a72436d197355f3b49bc038e929abe7fbe",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "80c8ca71503febdcf79fbd7eadccff8c92b37526daad78bd6cd43179be642a80",
+   "name": "census/papers/disjoint-worlds/FINDING_b43_sub_symbolic_2026_08_05.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b43_name_the_twenty_2026_08_05.md",
+   "inputs": {
+    "prereg": "0cc5b3ed5fa5968dae0b5f4a675895e0483f57c8f6b8a7b34ca36ea251dd3fd4",
+    "receipt": "b669e6e28cc010c5592e561bbd6d6a7b9d4f7f74b62ef6fe744140871f456da2",
+    "recorded": {
+     "verdict": "NO_NAMEABLE_STORY__twenty_are_rank_space_noise",
+     "gates_sha256": "e7365fe8c711985e2beedcd624de3ef9a037dec7c6ed9296b8b79d3a5e837d48",
+     "gates": {
+      "G1_stability": false,
+      "G2_coherence": false
+     }
+    },
+    "sealed": [
+     "e7365fe8c711985e2beedcd624de3ef9a037dec7c6ed9296b8b79d3a5e837d48"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b43_sub_symbolic_2026_08_05.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b43_name_the_twenty_2026_08_05.md",
+    "prereg_commit": "fc8404f100d2de8651c756200ccfbfc820cacc0b",
+    "receipt_path": "papers/disjoint-worlds/b43_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "NO_NAMEABLE_STORY__twenty_are_rank_space_noise",
+     "gates": {
+      "G1_stability": false,
+      "G2_coherence": false
+     },
+     "gates_sha256": "e7365fe8c711985e2beedcd624de3ef9a037dec7c6ed9296b8b79d3a5e837d48"
+    },
+    "experiment": {
+     "verdict": "NO_NAMEABLE_STORY__twenty_are_rank_space_noise",
+     "gates": {
+      "G1_stability": false,
+      "G2_coherence": false
+     },
+     "gates_sha256": "e7365fe8c711985e2beedcd624de3ef9a037dec7c6ed9296b8b79d3a5e837d48"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "NO_NAMEABLE_STORY__twenty_are_rank_space_noise",
+     "gates": {
+      "G1_stability": false,
+      "G2_coherence": false
+     },
+     "row": 3,
+     "gates_sha256": "e7365fe8c711985e2beedcd624de3ef9a037dec7c6ed9296b8b79d3a5e837d48",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "26e273651e82f73bff8f27dd6c587100a2ef74605477555201062d665c75a5ca",
+   "name": "census/papers/disjoint-worlds/FINDING_b44_shared_frame_2026_08_05.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b44_wrong_donor_2026_08_05.md",
+   "inputs": {
+    "prereg": "9b414fd15962e308e5adb87952a635ae8336c4d94b09dd1c5cad5ef0f77a67e4",
+    "receipt": "3555f2944d4a82c3acbed5ce61d44d50990c10ee4bf151106a54a0b9c51472d9",
+    "recorded": {
+     "verdict": "SHARED_FRAME__any_clique_frame_corrects_the_island",
+     "gates_sha256": "6113dcbf2589aa38d56675fac025ac34f1ba559e460b9df184f20022cd8cb445",
+     "gates": {
+      "G0_positive_control": true,
+      "G1_wrong_max_low": false,
+      "G2_wrong_min_high": true
+     }
+    },
+    "sealed": [
+     "6113dcbf2589aa38d56675fac025ac34f1ba559e460b9df184f20022cd8cb445"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b44_shared_frame_2026_08_05.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b44_wrong_donor_2026_08_05.md",
+    "prereg_commit": "b303a356c1a64d21106dda6696487299e1358347",
+    "receipt_path": "papers/disjoint-worlds/b44_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "SHARED_FRAME__any_clique_frame_corrects_the_island",
+     "gates": {
+      "G0_positive_control": true,
+      "G1_wrong_max_low": false,
+      "G2_wrong_min_high": true
+     },
+     "gates_sha256": "6113dcbf2589aa38d56675fac025ac34f1ba559e460b9df184f20022cd8cb445"
+    },
+    "experiment": {
+     "verdict": "SHARED_FRAME__any_clique_frame_corrects_the_island",
+     "gates": {
+      "G0_positive_control": true,
+      "G1_wrong_max_low": false,
+      "G2_wrong_min_high": true
+     },
+     "gates_sha256": "6113dcbf2589aa38d56675fac025ac34f1ba559e460b9df184f20022cd8cb445"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "SHARED_FRAME__any_clique_frame_corrects_the_island",
+     "gates": {
+      "G0_positive_control": true,
+      "G1_wrong_max_low": false,
+      "G2_wrong_min_high": true
+     },
+     "row": 3,
+     "gates_sha256": "6113dcbf2589aa38d56675fac025ac34f1ba559e460b9df184f20022cd8cb445",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "1dff02ba0f66f6ff190544ec0d76a29d72208e3d6a3b8931a16da16f7768b5f2",
+   "name": "census/papers/disjoint-worlds/FINDING_b45_frame_geometry_2026_08_06.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b45_frame_geometry_2026_08_06.md",
+   "inputs": {
+    "prereg": "606a121b56f4bd3eeb4f6752ac1dece054a17aad8114344fdbf6c57dbefeb441",
+    "receipt": "3dc4bba8c70f02db6f646e32d624da35a6f6b9d4f2c148d9b8887df0ece65198",
+    "recorded": {
+     "verdict": "SHARED_FRAME_CONFIRMED_GEOMETRICALLY__island_rotated_away",
+     "gates_sha256": "e07bc396ad646c46c4c569e37c31e35669a8eb2a15bc90e33bca224412b3f15b",
+     "gates": {
+      "G1_clique_frames_shared": true,
+      "G2_island_separated_all_seeds": true
+     }
+    },
+    "sealed": [
+     "e07bc396ad646c46c4c569e37c31e35669a8eb2a15bc90e33bca224412b3f15b"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b45_frame_geometry_2026_08_06.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b45_frame_geometry_2026_08_06.md",
+    "prereg_commit": "22ad3e2862409334b27e755a1e486bc7e48d41b3",
+    "receipt_path": "papers/disjoint-worlds/b45_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "SHARED_FRAME_CONFIRMED_GEOMETRICALLY__island_rotated_away",
+     "gates": {
+      "G1_clique_frames_shared": true,
+      "G2_island_separated_all_seeds": true
+     },
+     "gates_sha256": "e07bc396ad646c46c4c569e37c31e35669a8eb2a15bc90e33bca224412b3f15b"
+    },
+    "experiment": {
+     "verdict": "SHARED_FRAME_CONFIRMED_GEOMETRICALLY__island_rotated_away",
+     "gates": {
+      "G1_clique_frames_shared": true,
+      "G2_island_separated_all_seeds": true
+     },
+     "gates_sha256": "e07bc396ad646c46c4c569e37c31e35669a8eb2a15bc90e33bca224412b3f15b"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "SHARED_FRAME_CONFIRMED_GEOMETRICALLY__island_rotated_away",
+     "gates": {
+      "G1_clique_frames_shared": true,
+      "G2_island_separated_all_seeds": true
+     },
+     "row": 1,
+     "gates_sha256": "e07bc396ad646c46c4c569e37c31e35669a8eb2a15bc90e33bca224412b3f15b",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "75e802a1985b0191eb2e6bb35038b64d98d05d46baa9ff5d27f9cf497bf9b734",
+   "name": "census/papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b46_cliff_function_2026_08_06.md",
+   "inputs": {
+    "prereg": "a6e4b60c849098e98786c90f5a279f8ca75932a81702132e36215b9e36d80712",
+    "receipt": "d185642c765327ddc67ead2e54d61f0432d291b2c60b7080b83566069522649b",
+    "recorded": {
+     "verdict": "CLIFF_MAPPED__legibility_rises_monotonically_with_dose",
+     "gates_sha256": "47190e1064a286c246806e14c562d362482d2de52b5c2991e3054b7bbb33f43f",
+     "gates": {
+      "G0_baseline_low": true,
+      "G1_bridge_high": true,
+      "G2_monotone": true
+     }
+    },
+    "sealed": [
+     "47190e1064a286c246806e14c562d362482d2de52b5c2991e3054b7bbb33f43f"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b46_cliff_mapped_2026_08_06.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b46_cliff_function_2026_08_06.md",
+    "prereg_commit": "060f8b3ad72f1255b0ff3729d47bd770b8d9bd3d",
+    "receipt_path": "papers/disjoint-worlds/b46_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "CLIFF_MAPPED__legibility_rises_monotonically_with_dose",
+     "gates": {
+      "G0_baseline_low": true,
+      "G1_bridge_high": true,
+      "G2_monotone": true
+     },
+     "gates_sha256": "47190e1064a286c246806e14c562d362482d2de52b5c2991e3054b7bbb33f43f"
+    },
+    "experiment": {
+     "verdict": "CLIFF_MAPPED__legibility_rises_monotonically_with_dose",
+     "gates": {
+      "G0_baseline_low": true,
+      "G1_bridge_high": true,
+      "G2_monotone": true
+     },
+     "gates_sha256": "47190e1064a286c246806e14c562d362482d2de52b5c2991e3054b7bbb33f43f"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "CLIFF_MAPPED__legibility_rises_monotonically_with_dose",
+     "gates": {
+      "G0_baseline_low": true,
+      "G1_bridge_high": true,
+      "G2_monotone": true
+     },
+     "row": 2,
+     "gates_sha256": "47190e1064a286c246806e14c562d362482d2de52b5c2991e3054b7bbb33f43f",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "25302d37bbf1cd12b0f0be7ebeef51989b426bf80afab5ab53ca53cc2fc38f7a",
+   "name": "census/papers/disjoint-worlds/FINDING_b47_no_islands_2026_08_06.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b47_eight_minds_2026_08_06.md",
+   "inputs": {
+    "prereg": "7ea2b3ae623e549b542283b29d82de89fb0e34a9ea8ab51ea97d4079bb8e7200",
+    "receipt": "c37ab9357ebd0fa5535f657f7ebb3c2d862a1ae02c547069e513cffeb6f07c81",
+    "recorded": {
+     "verdict": "SINGLE_LEGIBLE_CLIQUE__no_islands_in_this_cohort",
+     "gates_sha256": "faefac22d9821e64217ab15fecb94a5e362661cf4b760565c50cf79c69402b4f",
+     "gates": {
+      "G0_cohort": true,
+      "G1_shared_frame": true,
+      "G2_islands_present": false
+     }
+    },
+    "sealed": [
+     "faefac22d9821e64217ab15fecb94a5e362661cf4b760565c50cf79c69402b4f"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b47_no_islands_2026_08_06.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b47_eight_minds_2026_08_06.md",
+    "prereg_commit": "bf701ec9548320e582ecf7edc93815bcb420db50",
+    "receipt_path": "papers/disjoint-worlds/b47_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "SINGLE_LEGIBLE_CLIQUE__no_islands_in_this_cohort",
+     "gates": {
+      "G0_cohort": true,
+      "G1_shared_frame": true,
+      "G2_islands_present": false
+     },
+     "gates_sha256": "faefac22d9821e64217ab15fecb94a5e362661cf4b760565c50cf79c69402b4f"
+    },
+    "experiment": {
+     "verdict": "SINGLE_LEGIBLE_CLIQUE__no_islands_in_this_cohort",
+     "gates": {
+      "G0_cohort": true,
+      "G1_shared_frame": true,
+      "G2_islands_present": false
+     },
+     "gates_sha256": "faefac22d9821e64217ab15fecb94a5e362661cf4b760565c50cf79c69402b4f"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "SINGLE_LEGIBLE_CLIQUE__no_islands_in_this_cohort",
+     "gates": {
+      "G0_cohort": true,
+      "G1_shared_frame": true,
+      "G2_islands_present": false
+     },
+     "row": 3,
+     "gates_sha256": "faefac22d9821e64217ab15fecb94a5e362661cf4b760565c50cf79c69402b4f",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "54e62a339e4fa05ee512372b9b5a54b79038b64c14c0d982429528057cce15b7",
+   "name": "census/papers/disjoint-worlds/FINDING_b48_invalid_null_bar_2026_08_06.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b48_legibility_matrix_ten_2026_08_06.md",
+   "inputs": {
+    "prereg": "1e59b232e1a3c9ab66702cab5daf40f595c4f73785b73493d2cae037de928e39",
+    "receipt": "c5c7b1e9dfea851e29da6123d514d32dcc3d79ae5fd7ba22c5a17d73473b4ff6",
+    "recorded": {
+     "verdict": "INVALID__null_leaks",
+     "gates_sha256": "7ffbe5be95a1003169428e46fefb229244b197ad19b342c0d08e199bc0dc45c1",
+     "gates": {
+      "G0_coverage": true,
+      "G1_signal_present": true,
+      "G2_null_clean": false,
+      "G3_legibility_islands": false
+     }
+    },
+    "sealed": [
+     "7ffbe5be95a1003169428e46fefb229244b197ad19b342c0d08e199bc0dc45c1"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b48_invalid_null_bar_2026_08_06.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b48_legibility_matrix_ten_2026_08_06.md",
+    "prereg_commit": "90bd04d0121bd9af2febd67350b4af95c8922b82",
+    "receipt_path": "papers/disjoint-worlds/b48_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "INVALID__null_leaks",
+     "gates": {
+      "G0_coverage": true,
+      "G1_signal_present": true,
+      "G2_null_clean": false,
+      "G3_legibility_islands": false
+     },
+     "gates_sha256": "7ffbe5be95a1003169428e46fefb229244b197ad19b342c0d08e199bc0dc45c1"
+    },
+    "experiment": {
+     "verdict": "INVALID__null_leaks",
+     "gates": {
+      "G0_coverage": true,
+      "G1_signal_present": true,
+      "G2_null_clean": false,
+      "G3_legibility_islands": false
+     },
+     "gates_sha256": "7ffbe5be95a1003169428e46fefb229244b197ad19b342c0d08e199bc0dc45c1"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__null_leaks",
+     "gates": {
+      "G0_coverage": true,
+      "G1_signal_present": true,
+      "G2_null_clean": false,
+      "G3_legibility_islands": false
+     },
+     "row": 2,
+     "gates_sha256": "7ffbe5be95a1003169428e46fefb229244b197ad19b342c0d08e199bc0dc45c1",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "8fc68622ccbe59f3cd3b35c89752346408702ca2a42d944c22696ff315421a1a",
+   "name": "census/papers/disjoint-worlds/FINDING_b49_survives_the_control_2026_08_07.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b49_amplitude_reaudit_2026_08_07.md",
+   "inputs": {
+    "prereg": "c6f67973be02ca42375515aa1ddafa5a89758f520dd7671797d0624b458c5193",
+    "receipt": "9d8ec7cc1de79986313a87d8d8eec4d9adebd91d829700b385a21024131a7813",
+    "recorded": {
+     "verdict": "PARTIAL__b45_holds_b47_verdict_moves",
+     "gates_sha256": "b4e11467cdd9d1daa5c29171791767c2150d3408ac3208fb158a7fa76960694d",
+     "gates": {
+      "G1_b45_clique_still_above_null": true,
+      "G2_b45_island_still_lowest": true,
+      "G3_b47_verdict_unchanged": false
+     }
+    },
+    "sealed": [
+     "b4e11467cdd9d1daa5c29171791767c2150d3408ac3208fb158a7fa76960694d"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b49_survives_the_control_2026_08_07.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b49_amplitude_reaudit_2026_08_07.md",
+    "prereg_commit": "88239ac694d809159fb39f30305b247db2dbeb06",
+    "receipt_path": "papers/disjoint-worlds/b49_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PARTIAL__b45_holds_b47_verdict_moves",
+     "gates": {
+      "G1_b45_clique_still_above_null": true,
+      "G2_b45_island_still_lowest": true,
+      "G3_b47_verdict_unchanged": false
+     },
+     "gates_sha256": "b4e11467cdd9d1daa5c29171791767c2150d3408ac3208fb158a7fa76960694d"
+    },
+    "experiment": {
+     "verdict": "PARTIAL__b45_holds_b47_verdict_moves",
+     "gates": {
+      "G1_b45_clique_still_above_null": true,
+      "G2_b45_island_still_lowest": true,
+      "G3_b47_verdict_unchanged": false
+     },
+     "gates_sha256": "b4e11467cdd9d1daa5c29171791767c2150d3408ac3208fb158a7fa76960694d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PARTIAL__b45_holds_b47_verdict_moves",
+     "gates": {
+      "G1_b45_clique_still_above_null": true,
+      "G2_b45_island_still_lowest": true,
+      "G3_b47_verdict_unchanged": false
+     },
+     "row": 2,
+     "gates_sha256": "b4e11467cdd9d1daa5c29171791767c2150d3408ac3208fb158a7fa76960694d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "179abed86c2bb49a78f337664ab5d24e143a61ec7074211183ad3dae74a9403c",
+   "name": "census/papers/disjoint-worlds/FINDING_b50_no_legibility_islands_2026_08_08.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b50_legibility_islands_2026_08_08.md",
+   "inputs": {
+    "prereg": "fb1027e377b08eeb64e94e063e938229cfbab84f9e7a9757eb8a93c3186acc20",
+    "receipt": "5e3f735ed4dd0c604ad64e21ec39f7230bc50e95afa8f407db5192643cea7be6",
+    "recorded": {
+     "verdict": "NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize",
+     "gates_sha256": "99768c7e402494b152c3f8bc30c035f3d121ef2419a3695881ce7ae1f99e7c22",
+     "gates": {
+      "G0_coverage": true,
+      "G1_signal_present": true,
+      "G2_null_at_chance": true,
+      "G3_null_tail_bounded": true,
+      "G4_islands": false
+     }
+    },
+    "sealed": [
+     "99768c7e402494b152c3f8bc30c035f3d121ef2419a3695881ce7ae1f99e7c22"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/FINDING_b50_no_legibility_islands_2026_08_08.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b50_legibility_islands_2026_08_08.md",
+    "prereg_commit": "44b49537f2a9364eb7c248fea03e1927ad1de935",
+    "receipt_path": "papers/disjoint-worlds/b50_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize",
+     "gates": {
+      "G0_coverage": true,
+      "G1_signal_present": true,
+      "G2_null_at_chance": true,
+      "G3_null_tail_bounded": true,
+      "G4_islands": false
+     },
+     "gates_sha256": "99768c7e402494b152c3f8bc30c035f3d121ef2419a3695881ce7ae1f99e7c22"
+    },
+    "experiment": {
+     "verdict": "NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize",
+     "gates": {
+      "G0_coverage": true,
+      "G1_signal_present": true,
+      "G2_null_at_chance": true,
+      "G3_null_tail_bounded": true,
+      "G4_islands": false
+     },
+     "gates_sha256": "99768c7e402494b152c3f8bc30c035f3d121ef2419a3695881ce7ae1f99e7c22"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "NO_LEGIBILITY_ISLANDS__the_first_island_does_not_generalize",
+     "gates": {
+      "G0_coverage": true,
+      "G1_signal_present": true,
+      "G2_null_at_chance": true,
+      "G3_null_tail_bounded": true,
+      "G4_islands": false
+     },
+     "row": 5,
+     "gates_sha256": "99768c7e402494b152c3f8bc30c035f3d121ef2419a3695881ce7ae1f99e7c22",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "e4edec6a3837e6787d81086fd1ee924c5cd15dbb5ae11c423c1307e8f90bfc64",
+   "name": "census/papers/disjoint-worlds/b34v3_result.json",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_b34v3_labelfree_read_2026_08_03.md",
+   "inputs": {
+    "prereg": "386ac532b5467eb41026676c4f3da10e00d2aa374a9d9c5721ca95940c360344",
+    "receipt": "192812ab82cb25447cfa67b8de664c170a123eb5da3bd7e78f919950cc7b56c8",
+    "recorded": {
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     }
+    },
+    "sealed": [
+     "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/disjoint-worlds/b34v3_result.json",
+    "pointer": "",
+    "prereg_path": "papers/disjoint-worlds/PREREG_b34v3_labelfree_read_2026_08_03.md",
+    "prereg_commit": "aea406fdbe845dfd1344f9b9e47253bb0d665083",
+    "receipt_path": "papers/disjoint-worlds/b34v3_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     },
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed"
+    },
+    "experiment": {
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     },
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "TELEPATHY_READ_BAR_CLEARED__labelfree_pairing_reads_crossfamily",
+     "gates": {
+      "G0_discovery": true,
+      "G2_null": true,
+      "G1_bar": true
+     },
+     "row": 2,
+     "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "5b94417c991f65f27de9aab30bc5096c4a1853fd11e8d9760bfcc0d56a73349b",
+   "name": "census/papers/first-afference/FINDING_c1_instrument_blind_to_isc_2026_08_06.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_c1_coupling_on_neural_timeseries_2026_08_06.md",
+   "inputs": {
+    "prereg": "acebac0a1ce8fd9cb1d5c474a641c1302c2a21b24bc6af76da27a3270ad1fbff",
+    "receipt": "39ae9444577aff1bcc746263a3b70a0be3d7f728644ded181f67f504b1d9abee",
+    "recorded": {
+     "verdict": "INSTRUMENT_BLIND_TO_ISC__refusals_are_miscalibrated",
+     "gates_sha256": "1cffefa49ed9b6481de5cd63e2e6bf67adf29d04ec465d3820696ccb5cd9126f",
+     "gates": {
+      "G0_pairs": true,
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true
+     }
+    },
+    "sealed": [
+     "1cffefa49ed9b6481de5cd63e2e6bf67adf29d04ec465d3820696ccb5cd9126f"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/first-afference/FINDING_c1_instrument_blind_to_isc_2026_08_06.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/first-afference/PREREG_c1_coupling_on_neural_timeseries_2026_08_06.md",
+    "prereg_commit": "9f8cedbce3146cac68075d64295cd35e3a71e571",
+    "receipt_path": "papers/first-afference/c1_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "INSTRUMENT_BLIND_TO_ISC__refusals_are_miscalibrated",
+     "gates": {
+      "G0_pairs": true,
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true
+     },
+     "gates_sha256": "1cffefa49ed9b6481de5cd63e2e6bf67adf29d04ec465d3820696ccb5cd9126f"
+    },
+    "experiment": {
+     "verdict": "INSTRUMENT_BLIND_TO_ISC__refusals_are_miscalibrated",
+     "gates": {
+      "G0_pairs": true,
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true
+     },
+     "gates_sha256": "1cffefa49ed9b6481de5cd63e2e6bf67adf29d04ec465d3820696ccb5cd9126f"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INSTRUMENT_BLIND_TO_ISC__refusals_are_miscalibrated",
+     "gates": {
+      "G0_pairs": true,
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true
+     },
+     "row": 1,
+     "gates_sha256": "1cffefa49ed9b6481de5cd63e2e6bf67adf29d04ec465d3820696ccb5cd9126f",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "0c87754a289ef8c753257952da2adc1f3000280b8b70b7116806f28e4369c4d6",
+   "name": "census/papers/first-afference/FINDING_c2_still_blind_2026_08_07.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_c2_surrogate_recalibration_2026_08_07.md",
+   "inputs": {
+    "prereg": "2798a0a6b46e1612e5ac414c12d45274f3ac804f210380b7a34f53782d5ec79d",
+    "receipt": "c6ad97a6f0fc375ffc1ae5be711ef1587e372d8a9d8b983bef9a30330228a49d",
+    "recorded": {
+     "verdict": "STILL_BLIND__surrogate_does_not_recover_isc",
+     "gates_sha256": "73e24a3ef521454e58e5364ed989e043e69ae25541c729e15faf46eefb1bc828",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     }
+    },
+    "sealed": [
+     "73e24a3ef521454e58e5364ed989e043e69ae25541c729e15faf46eefb1bc828"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/first-afference/FINDING_c2_still_blind_2026_08_07.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/first-afference/PREREG_c2_surrogate_recalibration_2026_08_07.md",
+    "prereg_commit": "11ec5bdc9f99da2c5de209b1e99f341ba591510d",
+    "receipt_path": "papers/first-afference/c2_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "STILL_BLIND__surrogate_does_not_recover_isc",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     },
+     "gates_sha256": "73e24a3ef521454e58e5364ed989e043e69ae25541c729e15faf46eefb1bc828"
+    },
+    "experiment": {
+     "verdict": "STILL_BLIND__surrogate_does_not_recover_isc",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     },
+     "gates_sha256": "73e24a3ef521454e58e5364ed989e043e69ae25541c729e15faf46eefb1bc828"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "STILL_BLIND__surrogate_does_not_recover_isc",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     },
+     "row": 0,
+     "gates_sha256": "73e24a3ef521454e58e5364ed989e043e69ae25541c729e15faf46eefb1bc828",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "602507404f2317dc4310be2f9b8c623cd47d81e473e69fe351c7ad75e5e653bb",
+   "name": "census/papers/first-afference/FINDING_c3_algebra_wrong_2026_08_07.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_c3_linear_statistic_2026_08_07.md",
+   "inputs": {
+    "prereg": "3eab7c60035279cdc0acf66bf22fbf3b1c4cbe1ea77c88ae927e0939529cdd25",
+    "receipt": "fa85e02953f04abc16694ed7c3904ab76c04fb590f2f754481ffc3f9c78a8a8b",
+    "recorded": {
+     "verdict": "ALGEBRA_WRONG__linear_statistic_also_blind",
+     "gates_sha256": "58d52b481e3b9b3a8ed058d910699ba1f3df1da7b8172bea0ecc1e9d7ec70517",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": false
+     }
+    },
+    "sealed": [
+     "58d52b481e3b9b3a8ed058d910699ba1f3df1da7b8172bea0ecc1e9d7ec70517"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/first-afference/FINDING_c3_algebra_wrong_2026_08_07.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/first-afference/PREREG_c3_linear_statistic_2026_08_07.md",
+    "prereg_commit": "0149f25bf63aa91186b98913959d515b8bbaa99a",
+    "receipt_path": "papers/first-afference/c3_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "ALGEBRA_WRONG__linear_statistic_also_blind",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": false
+     },
+     "gates_sha256": "58d52b481e3b9b3a8ed058d910699ba1f3df1da7b8172bea0ecc1e9d7ec70517"
+    },
+    "experiment": {
+     "verdict": "ALGEBRA_WRONG__linear_statistic_also_blind",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": false
+     },
+     "gates_sha256": "58d52b481e3b9b3a8ed058d910699ba1f3df1da7b8172bea0ecc1e9d7ec70517"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "ALGEBRA_WRONG__linear_statistic_also_blind",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": false
+     },
+     "row": 0,
+     "gates_sha256": "58d52b481e3b9b3a8ed058d910699ba1f3df1da7b8172bea0ecc1e9d7ec70517",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "ecd358bb8873c50a02fb31e46ca8baf4d8dcc8596f2bab8304291dc166610455",
+   "name": "census/papers/first-afference/FINDING_c4_mechanism_incomplete_2026_08_07.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_c4_signed_statistic_2026_08_07.md",
+   "inputs": {
+    "prereg": "afbb162e1f6bbfb01651b810402fbb57ca223aee6860c0ae497734c4f7a77850",
+    "receipt": "b6b461105a8b412a8e992471fc86cd51369f7a3136a1bf8b8f972c98ea9cd03b",
+    "recorded": {
+     "verdict": "MECHANISM_INCOMPLETE__signed_statistic_also_blind",
+     "gates_sha256": "80ff363af2292977d73640f108236ab47c71a7df9651fddc8c72f9d9cd8d8694",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     }
+    },
+    "sealed": [
+     "80ff363af2292977d73640f108236ab47c71a7df9651fddc8c72f9d9cd8d8694"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/first-afference/FINDING_c4_mechanism_incomplete_2026_08_07.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/first-afference/PREREG_c4_signed_statistic_2026_08_07.md",
+    "prereg_commit": "1020df3fff58fb625a0ea6a5d04cadc8b35fced5",
+    "receipt_path": "papers/first-afference/c4_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "MECHANISM_INCOMPLETE__signed_statistic_also_blind",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     },
+     "gates_sha256": "80ff363af2292977d73640f108236ab47c71a7df9651fddc8c72f9d9cd8d8694"
+    },
+    "experiment": {
+     "verdict": "MECHANISM_INCOMPLETE__signed_statistic_also_blind",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     },
+     "gates_sha256": "80ff363af2292977d73640f108236ab47c71a7df9651fddc8c72f9d9cd8d8694"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "MECHANISM_INCOMPLETE__signed_statistic_also_blind",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     },
+     "row": 0,
+     "gates_sha256": "80ff363af2292977d73640f108236ab47c71a7df9651fddc8c72f9d9cd8d8694",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "213fb5f8445eda60d25fbbc4c65e302162f0a5a17a13baa1b3318498224e88d2",
+   "name": "census/papers/first-afference/FINDING_c5_the_bar_was_wrong_2026_08_07.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_c5_roi_2026_08_07.md",
+   "inputs": {
+    "prereg": "af2dc1432f80026730410db915e4d5a50c11c7eb8ee7b35e9e7ebf4b71343390",
+    "receipt": "92c7d173f229100e9d9d4e3c6924eba58357caf1c8b39d80a9b21c180e681dfa",
+    "recorded": {
+     "verdict": "FRAMEWORK_WRONG__blind_even_on_the_right_tissue",
+     "gates_sha256": "c43f4ed59769f3d8dc6894759a6ba11e0581c5619c768c63db1d493e7f5818be",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     }
+    },
+    "sealed": [
+     "c43f4ed59769f3d8dc6894759a6ba11e0581c5619c768c63db1d493e7f5818be"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/first-afference/FINDING_c5_the_bar_was_wrong_2026_08_07.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/first-afference/PREREG_c5_roi_2026_08_07.md",
+    "prereg_commit": "fee777dad070808415438c3fee9a3ebe30709b02",
+    "receipt_path": "papers/first-afference/c5_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "FRAMEWORK_WRONG__blind_even_on_the_right_tissue",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     },
+     "gates_sha256": "c43f4ed59769f3d8dc6894759a6ba11e0581c5619c768c63db1d493e7f5818be"
+    },
+    "experiment": {
+     "verdict": "FRAMEWORK_WRONG__blind_even_on_the_right_tissue",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     },
+     "gates_sha256": "c43f4ed59769f3d8dc6894759a6ba11e0581c5619c768c63db1d493e7f5818be"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "FRAMEWORK_WRONG__blind_even_on_the_right_tissue",
+     "gates": {
+      "G1_finds_isc": false,
+      "G2_rejects_reversed": true,
+      "G3_rejects_independent_ar": true,
+      "G4_rejects_shared_trend": true
+     },
+     "row": 0,
+     "gates_sha256": "c43f4ed59769f3d8dc6894759a6ba11e0581c5619c768c63db1d493e7f5818be",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "ca3efaf88f2aee99e9a4621552b5d0386d0b6bc84c2ccf268dbd8ebe4f45282f",
+   "name": "census/papers/first-afference/FINDING_e1_not_estimable_2026_08_08.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_e1_effective_n_bakeoff_2026_08_08.md",
+   "inputs": {
+    "prereg": "5243d99e2e1dc85238c056df0bc4a7edff40d1c97f1f5ede91d20f7473950242",
+    "receipt": "232854c8c3532e2483251939459217176e78b0d64c62ba32bbab81e0c7175639",
+    "recorded": {
+     "verdict": "RESOLVED__winner_selected_and_c5_recomputed",
+     "gates_sha256": "667c0eba396ea5de7d5b528b310f3264836c057fcbc2d17d447078249595e2b9",
+     "gates": {
+      "G0_grid_complete": true,
+      "G1_a_candidate_is_usable": true,
+      "G2_winner_not_silently_blind": true,
+      "G3_c5_range_recomputed": true
+     }
+    },
+    "sealed": [
+     "667c0eba396ea5de7d5b528b310f3264836c057fcbc2d17d447078249595e2b9"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/first-afference/FINDING_e1_not_estimable_2026_08_08.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/first-afference/PREREG_e1_effective_n_bakeoff_2026_08_08.md",
+    "prereg_commit": "af2d76384d7b8db925d0ca91c30dbdcf9fa30f63",
+    "receipt_path": "papers/first-afference/e1_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "RESOLVED__winner_selected_and_c5_recomputed",
+     "gates": {
+      "G0_grid_complete": true,
+      "G1_a_candidate_is_usable": true,
+      "G2_winner_not_silently_blind": true,
+      "G3_c5_range_recomputed": true
+     },
+     "gates_sha256": "667c0eba396ea5de7d5b528b310f3264836c057fcbc2d17d447078249595e2b9"
+    },
+    "experiment": {
+     "verdict": "RESOLVED__winner_selected_and_c5_recomputed",
+     "gates": {
+      "G0_grid_complete": true,
+      "G1_a_candidate_is_usable": true,
+      "G2_winner_not_silently_blind": true,
+      "G3_c5_range_recomputed": true
+     },
+     "gates_sha256": "667c0eba396ea5de7d5b528b310f3264836c057fcbc2d17d447078249595e2b9"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "RESOLVED__winner_selected_and_c5_recomputed",
+     "gates": {
+      "G0_grid_complete": true,
+      "G1_a_candidate_is_usable": true,
+      "G2_winner_not_silently_blind": true,
+      "G3_c5_range_recomputed": true
+     },
+     "row": 4,
+     "gates_sha256": "667c0eba396ea5de7d5b528b310f3264836c057fcbc2d17d447078249595e2b9",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "dd32ba02276b26b259044d0ea6976aa4040d206a3b51abae79800af1356d3c41",
+   "name": "census/papers/first-afference/FINDING_h1a_human_single_clique_2026_08_06.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_h1a_human_alignment_2026_08_06.md",
+   "inputs": {
+    "prereg": "4594f63219affddca9f3d32fda8ea703e5c301fada1226ed440864dbfb59fd40",
+    "receipt": "c3cd7c045d68d479c5da7ab5b693eae47294a4f1eaf3eda053f31165ae356a9e",
+    "recorded": {
+     "verdict": "HUMAN_SINGLE_CLIQUE__alignment_is_continuous",
+     "gates_sha256": "3f323354408bed9914b740b2ad2d97e79fb7d7bd4478ee4cc7cc4b8ca82e5d29",
+     "gates": {
+      "G0_cohort": true,
+      "G1_shared_frame": true,
+      "G2_islands_present": false
+     }
+    },
+    "sealed": [
+     "3f323354408bed9914b740b2ad2d97e79fb7d7bd4478ee4cc7cc4b8ca82e5d29"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/first-afference/FINDING_h1a_human_single_clique_2026_08_06.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/first-afference/PREREG_h1a_human_alignment_2026_08_06.md",
+    "prereg_commit": "e42bf9ccd2ea576fe50b8d457ac20b303ca95659",
+    "receipt_path": "papers/first-afference/h1a_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "HUMAN_SINGLE_CLIQUE__alignment_is_continuous",
+     "gates": {
+      "G0_cohort": true,
+      "G1_shared_frame": true,
+      "G2_islands_present": false
+     },
+     "gates_sha256": "3f323354408bed9914b740b2ad2d97e79fb7d7bd4478ee4cc7cc4b8ca82e5d29"
+    },
+    "experiment": {
+     "verdict": "HUMAN_SINGLE_CLIQUE__alignment_is_continuous",
+     "gates": {
+      "G0_cohort": true,
+      "G1_shared_frame": true,
+      "G2_islands_present": false
+     },
+     "gates_sha256": "3f323354408bed9914b740b2ad2d97e79fb7d7bd4478ee4cc7cc4b8ca82e5d29"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "HUMAN_SINGLE_CLIQUE__alignment_is_continuous",
+     "gates": {
+      "G0_cohort": true,
+      "G1_shared_frame": true,
+      "G2_islands_present": false
+     },
+     "row": 3,
+     "gates_sha256": "3f323354408bed9914b740b2ad2d97e79fb7d7bd4478ee4cc7cc4b8ca82e5d29",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "5ce78196c2da590f63b248131c35ddad2c5da56bc02e3095b828a256bc80d346",
+   "name": "census/papers/first-afference/FINDING_h1b_no_unreadable_minds_2026_08_06.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_h1b_human_readability_2026_08_06.md",
+   "inputs": {
+    "prereg": "1aa5610bf6a61562dbce35e1e64692e30f5e78961fcce5d9362aacdd7b63b153",
+    "receipt": "be075416c286f574f2218482fc23dbb32b16eb24244e09e6bbd2375e00bb263f",
+    "recorded": {
+     "verdict": "READABILITY_IS_CONTINUOUS__no_switch_at_this_cohort",
+     "gates_sha256": "699c88df8c43efbe653b490e0a26936c22d04ec31611e457082ff3d01d487d6f",
+     "gates": {
+      "G0_cohort": true,
+      "G1_group_reads_above_chance": true,
+      "G2_bimodal_readability": false
+     }
+    },
+    "sealed": [
+     "699c88df8c43efbe653b490e0a26936c22d04ec31611e457082ff3d01d487d6f"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/first-afference/FINDING_h1b_no_unreadable_minds_2026_08_06.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/first-afference/PREREG_h1b_human_readability_2026_08_06.md",
+    "prereg_commit": "c84c7b496c1cec7e890ff9925d58b5a836f1e183",
+    "receipt_path": "papers/first-afference/h1b_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "READABILITY_IS_CONTINUOUS__no_switch_at_this_cohort",
+     "gates": {
+      "G0_cohort": true,
+      "G1_group_reads_above_chance": true,
+      "G2_bimodal_readability": false
+     },
+     "gates_sha256": "699c88df8c43efbe653b490e0a26936c22d04ec31611e457082ff3d01d487d6f"
+    },
+    "experiment": {
+     "verdict": "READABILITY_IS_CONTINUOUS__no_switch_at_this_cohort",
+     "gates": {
+      "G0_cohort": true,
+      "G1_group_reads_above_chance": true,
+      "G2_bimodal_readability": false
+     },
+     "gates_sha256": "699c88df8c43efbe653b490e0a26936c22d04ec31611e457082ff3d01d487d6f"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "READABILITY_IS_CONTINUOUS__no_switch_at_this_cohort",
+     "gates": {
+      "G0_cohort": true,
+      "G1_group_reads_above_chance": true,
+      "G2_bimodal_readability": false
+     },
+     "row": 3,
+     "gates_sha256": "699c88df8c43efbe653b490e0a26936c22d04ec31611e457082ff3d01d487d6f",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "9421781f5d909b33dd816d213760da341a7c557071f0a5aa1ca8c288e593ff44",
+   "name": "census/papers/first-afference/FINDING_protocol_v4_2026_08_09.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_protocol_v4_composition_2026_08_09.md",
+   "inputs": {
+    "prereg": "92033c9d565f51f9ffde45b18de303605cbade0b779852ab20d06e08238bf0e9",
+    "receipt": "0c621dbcaefe5b48d6b90bcccb3c8f158019a5eb3a578b77625c834ad5aacb84",
+    "recorded": {
+     "verdict": "PROCEED_TO_RED_TEAM__not_yet_shippable",
+     "gates_sha256": "d4a69f152907e892151cdbb7683f37b18ee04ebe3ba072ec09568045406a5f2d",
+     "gates": {
+      "G0_mutants_refused": true,
+      "G1_valid_still_scores": true,
+      "G2_e1_retro_refused": true,
+      "G3_corpus_byte_identical": true
+     }
+    },
+    "sealed": [
+     "d4a69f152907e892151cdbb7683f37b18ee04ebe3ba072ec09568045406a5f2d"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/first-afference/FINDING_protocol_v4_2026_08_09.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/first-afference/PREREG_protocol_v4_composition_2026_08_09.md",
+    "prereg_commit": "0a3d24c80b800d5b6eb1cd747f31b657b38be931",
+    "receipt_path": "papers/first-afference/protocol_v4_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PROCEED_TO_RED_TEAM__not_yet_shippable",
+     "gates": {
+      "G0_mutants_refused": true,
+      "G1_valid_still_scores": true,
+      "G2_e1_retro_refused": true,
+      "G3_corpus_byte_identical": true
+     },
+     "gates_sha256": "d4a69f152907e892151cdbb7683f37b18ee04ebe3ba072ec09568045406a5f2d"
+    },
+    "experiment": {
+     "verdict": "PROCEED_TO_RED_TEAM__not_yet_shippable",
+     "gates": {
+      "G0_mutants_refused": true,
+      "G1_valid_still_scores": true,
+      "G2_e1_retro_refused": true,
+      "G3_corpus_byte_identical": true
+     },
+     "gates_sha256": "d4a69f152907e892151cdbb7683f37b18ee04ebe3ba072ec09568045406a5f2d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PROCEED_TO_RED_TEAM__not_yet_shippable",
+     "gates": {
+      "G0_mutants_refused": true,
+      "G1_valid_still_scores": true,
+      "G2_e1_retro_refused": true,
+      "G3_corpus_byte_identical": true
+     },
+     "row": 4,
+     "gates_sha256": "d4a69f152907e892151cdbb7683f37b18ee04ebe3ba072ec09568045406a5f2d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "792007ff49f6f4b0bbef9354bc76eb65b7e343a3b6bdb88ef7b2fbe998008630",
+   "name": "census/papers/first-afference/FINDING_r0_instrument_blind_2026_08_05.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_r0_instrument_validation_2026_08_05.md",
+   "inputs": {
+    "prereg": "ec063e5475d986488da5ae4d77c9fa48012f38d37346db068ca4542f2746d5e4",
+    "receipt": "8fbe8b3ca697bba59c5a5d40519fa526a36e28a1f5924e8672aceda85dea89e0",
+    "recorded": {
+     "verdict": "INSTRUMENT_BLIND__cannot_detect_planted_coupling",
+     "gates_sha256": "6a73c61068c4b8079dec85b3abc366be4860cc67afa6996e2160b458bf36062d",
+     "gates": {
+      "G1_detects_planted_coupling": false,
+      "G2_absorbs_pure_clock": true,
+      "G3_clock_beats_free_null": false,
+      "G4_silent_on_nothing": true
+     }
+    },
+    "sealed": [
+     "6a73c61068c4b8079dec85b3abc366be4860cc67afa6996e2160b458bf36062d"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/first-afference/FINDING_r0_instrument_blind_2026_08_05.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/first-afference/PREREG_r0_instrument_validation_2026_08_05.md",
+    "prereg_commit": "eb78bfd3b072942df9bd764864df2591e3af4926",
+    "receipt_path": "papers/first-afference/r0_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "INSTRUMENT_BLIND__cannot_detect_planted_coupling",
+     "gates": {
+      "G1_detects_planted_coupling": false,
+      "G2_absorbs_pure_clock": true,
+      "G3_clock_beats_free_null": false,
+      "G4_silent_on_nothing": true
+     },
+     "gates_sha256": "6a73c61068c4b8079dec85b3abc366be4860cc67afa6996e2160b458bf36062d"
+    },
+    "experiment": {
+     "verdict": "INSTRUMENT_BLIND__cannot_detect_planted_coupling",
+     "gates": {
+      "G1_detects_planted_coupling": false,
+      "G2_absorbs_pure_clock": true,
+      "G3_clock_beats_free_null": false,
+      "G4_silent_on_nothing": true
+     },
+     "gates_sha256": "6a73c61068c4b8079dec85b3abc366be4860cc67afa6996e2160b458bf36062d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INSTRUMENT_BLIND__cannot_detect_planted_coupling",
+     "gates": {
+      "G1_detects_planted_coupling": false,
+      "G2_absorbs_pure_clock": true,
+      "G3_clock_beats_free_null": false,
+      "G4_silent_on_nothing": true
+     },
+     "row": 0,
+     "gates_sha256": "6a73c61068c4b8079dec85b3abc366be4860cc67afa6996e2160b458bf36062d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "0889f334b54dc16ad2885c74ee32815998bb7181976118302054ac72eb154d1a",
+   "name": "census/papers/first-afference/FINDING_r0v2_instrument_valid_2026_08_05.seal.json#/protocol/0",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_r0v2_detection_exam_2026_08_05.md",
+   "inputs": {
+    "prereg": "485dfd4d8af4017cb385df1e203fb52caef848ba31207708e43354c1a8e77947",
+    "receipt": "bb02ba62161f71968ec4e6a28eed4dd83050720620c3240bd0cac0827e249097",
+    "recorded": {
+     "verdict": "INSTRUMENT_VALID__r1v2_licensed",
+     "gates_sha256": "a1a731fe50b58e20fd48319bf618eb2188c97ae74061d839691d639390e03f75",
+     "gates": {
+      "G1_detects_planted_coupling": true,
+      "G2_absorbs_pure_clock": true,
+      "G3_clock_beats_free_null": true,
+      "G4_silent_on_nothing": true
+     }
+    },
+    "sealed": [
+     "a1a731fe50b58e20fd48319bf618eb2188c97ae74061d839691d639390e03f75"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/first-afference/FINDING_r0v2_instrument_valid_2026_08_05.seal.json",
+    "pointer": "/protocol/0",
+    "prereg_path": "papers/first-afference/PREREG_r0v2_detection_exam_2026_08_05.md",
+    "prereg_commit": "9969dc40c334d3aac87f10945a3df87c9fe3107c",
+    "receipt_path": "papers/first-afference/r0v2_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "INSTRUMENT_VALID__r1v2_licensed",
+     "gates": {
+      "G1_detects_planted_coupling": true,
+      "G2_absorbs_pure_clock": true,
+      "G3_clock_beats_free_null": true,
+      "G4_silent_on_nothing": true
+     },
+     "gates_sha256": "a1a731fe50b58e20fd48319bf618eb2188c97ae74061d839691d639390e03f75"
+    },
+    "experiment": {
+     "verdict": "INSTRUMENT_VALID__r1v2_licensed",
+     "gates": {
+      "G1_detects_planted_coupling": true,
+      "G2_absorbs_pure_clock": true,
+      "G3_clock_beats_free_null": true,
+      "G4_silent_on_nothing": true
+     },
+     "gates_sha256": "a1a731fe50b58e20fd48319bf618eb2188c97ae74061d839691d639390e03f75"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INSTRUMENT_VALID__r1v2_licensed",
+     "gates": {
+      "G1_detects_planted_coupling": true,
+      "G2_absorbs_pure_clock": true,
+      "G3_clock_beats_free_null": true,
+      "G4_silent_on_nothing": true
+     },
+     "row": 4,
+     "gates_sha256": "a1a731fe50b58e20fd48319bf618eb2188c97ae74061d839691d639390e03f75",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "3126ce741d5174e4acd14a1ee7f0e71642ade979a45670439e233b5683a95a4c",
+   "name": "census/papers/frequency-resonance/pmnist_robustness_result.json",
+   "family": "census",
+   "why": "R1: a committed record re-scored from the PREREG blob at the commit that added it",
+   "file": "PREREG_pmnist_robustness_2026_10_11.md",
+   "inputs": {
+    "prereg": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+    "receipt": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
+    "recorded": {
+     "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+     "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": false,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     }
+    },
+    "sealed": [
+     "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/frequency-resonance/pmnist_robustness_result.json",
+    "pointer": "",
+    "prereg_path": "papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md",
+    "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+    "receipt_path": "papers/frequency-resonance/pmnist_robustness_result.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": false,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
+    },
+    "experiment": {
+     "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": false,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": false,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "row": 8,
+     "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "40cb31bc85250b1714c589988e644ca1ffa66b47bd5b205997049de891b8ff01",
+   "name": "census/papers/frequency-resonance/realmodel_bridge_v3_smoke.json",
+   "family": "census",
+   "why": "K1: the receipt is a smoke run. Only Experiment.score (through styxx.seal's reading, bool(receipt.get('smoke'))) has a smoke branch; score_frozen reads the receipt's numbers. rescore reads it by type, as the record does (R1 scored it so too).",
+   "file": "PREREG_realmodel_bridge_v3_2026_10_11.md",
+   "inputs": {
+    "prereg": "387cc7ff872c47fcef719337d9c6cb27ca4af86869a2f000d57d5fefb4dbdc69",
+    "receipt": "63b08c3df3536961de4f339beb68ea371ec7324d04885c522a8e16d0fe8eda86",
+    "recorded": {
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates_sha256": "a21aa51d844c14a9abc206810890a4f9e8c16c4ce1bf89c68d98355b4db03931"
+    },
+    "sealed": [
+     "a21aa51d844c14a9abc206810890a4f9e8c16c4ce1bf89c68d98355b4db03931"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "record": "papers/frequency-resonance/realmodel_bridge_v3_smoke.json",
+    "pointer": "",
+    "prereg_path": "papers/frequency-resonance/PREREG_realmodel_bridge_v3_2026_10_11.md",
+    "prereg_commit": "333712d5778e73a8ff693d8a299872f867297134",
+    "receipt_path": "papers/frequency-resonance/realmodel_bridge_v3_smoke.json",
+    "receipt_rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "metric 'result.plumbing_ok' not present in result"
+    },
+    "experiment": {
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates": {},
+     "gates_sha256": "a21aa51d844c14a9abc206810890a4f9e8c16c4ce1bf89c68d98355b4db03931"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates": {},
+     "row": null,
+     "gates_sha256": "a21aa51d844c14a9abc206810890a4f9e8c16c4ce1bf89c68d98355b4db03931",
+     "smoke": true,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "383349789b0158f5fe1ab70597b0cc9ffe138275a19c43dd86af1d108a16aca7",
+   "name": "r2/working-copy-bar",
+   "family": "replay",
+   "why": "DESIGN 4.A, A.2: the sealed #224 blob with G_B_long's bar moved from 0.15 to 0.10, as a working copy would hold it; every leg reads the moved bar (R2)",
+   "file": "PREREG_pmnist_robustness_2026_10_11.md",
+   "inputs": {
+    "prereg": "e9af5324958c07a188f0ec6c49e311d1d10ba67e04d4f6df60c603e9f6ff9621",
+    "receipt": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2"
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "prereg_path": "papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md",
+    "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+    "receipt_path": "papers/frequency-resonance/pmnist_robustness_result.json",
+    "edit": "G_B_long value 0.15 -> 0.10"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "ROBUST__ROTATION_LOAD_BEARING__beyond_diversity",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": true,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "gates_sha256": "e513a1da1f8c068ea6ba60138392a031bd13edd2b2539a0f4f0fbe4ab9c61c82"
+    },
+    "experiment": {
+     "verdict": "ROBUST__ROTATION_LOAD_BEARING__beyond_diversity",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": true,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "gates_sha256": "e513a1da1f8c068ea6ba60138392a031bd13edd2b2539a0f4f0fbe4ab9c61c82"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "ROBUST__ROTATION_LOAD_BEARING__beyond_diversity",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": true,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "row": 6,
+     "gates_sha256": "e513a1da1f8c068ea6ba60138392a031bd13edd2b2539a0f4f0fbe4ab9c61c82",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "73be67669a7d146ecedb0f7e9995b60a6d06a48e1cf6406971421fcac39c9846",
+   "name": "r2/a2-re-run-under-the-working-copy-bar",
+   "family": "replay",
+   "why": "DESIGN 4.A, A.2: a re-run scored under the working-copy bar and written to a new receipt; the sealed bytes score it otherwise and hold another digest",
+   "file": "PREREG_pmnist_robustness_2026_10_11.md",
+   "inputs": {
+    "prereg": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+    "receipt": "c6b4d6c90405dcc72df1d73b478711454793d9ff3bad4174b41459368f6edf89",
+    "recorded": {
+     "verdict": "ROBUST__ROTATION_LOAD_BEARING__beyond_diversity",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": true,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "gates_sha256": "e513a1da1f8c068ea6ba60138392a031bd13edd2b2539a0f4f0fbe4ab9c61c82"
+    },
+    "sealed": [
+     "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
+    ]
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "prereg_path": "papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md",
+    "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+    "receipt_path": "papers/frequency-resonance/pmnist_robustness_result.json",
+    "edit": "the receipt's verdict, gates and gates_sha256 set from the moved bar, written with json.dumps(indent=1) as DESIGN 4.A writes it"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": false,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
+    },
+    "experiment": {
+     "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": false,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": false,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "row": 8,
+     "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": [
+     {
+      "code": "DECISION_DIGEST_UNSEALED",
+      "kind": "FAIL"
+     },
+     {
+      "code": "VERDICT_DIFFERS",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "1eb94759228b05bb9f365c7e151e6b567d9090c5b1f3cf3f6847c44a2717187b",
+   "name": "r2/a1-the-result-types-another-rung",
+   "family": "replay",
+   "why": "DESIGN 4.A, A.1: a RESULT prints a rung the receipt did not land on",
+   "file": "PREREG_pmnist_robustness_2026_10_11.md",
+   "inputs": {
+    "prereg": "2068e6733c1d5d2c4305cddc89e6e5f2ddd3671406e8bcf56332251d05db648e",
+    "receipt": "5eac28f854e351c6a2aa23b674111658840282dab014a1e44dc33ad165f7e8d2",
+    "recorded": {
+     "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": false,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
+    },
+    "sealed": [
+     "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
+    ],
+    "declared": "ROBUST__ROTATION_LOAD_BEARING__beyond_diversity"
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "prereg_path": "papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md",
+    "prereg_commit": "3598e59d3fe708ebf2dd20992f253d02d753c88b",
+    "receipt_path": "papers/frequency-resonance/pmnist_robustness_result.json"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": false,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
+    },
+    "experiment": {
+     "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": false,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "BUDGET_CONFOUND__gap_does_not_survive_3x_steps",
+     "gates": {
+      "G_P_plumbing": true,
+      "G_D_stable": true,
+      "G_F_floor": true,
+      "G_C_anchor": true,
+      "G_G_exists": true,
+      "G_G_mean": true,
+      "G_G_ci": true,
+      "G_B_long": false,
+      "G_R_diversity": false,
+      "G_R_rotation": true
+     },
+     "row": 8,
+     "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": [
+     {
+      "code": "VERDICT_DIFFERS",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "403a5920550040b3acfb2498159caa6285920721e49d451e9077cd1c4937a7e0",
+   "name": "both/lands-row-0",
+   "family": "synthetic",
+   "why": "the gate on the floor fails; the earliest row lands",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "80a4ee4e492d2135b1097501c3b64ad97b59a9f3410a3dc7f1575677cffb6f6e"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "INVALID__a_below_floor",
+     "gates": {
+      "G0": false,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "INVALID__a_below_floor",
+     "gates": {
+      "G0": false,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__a_below_floor",
+     "gates": {
+      "G0": false,
+      "G1": true
+     },
+     "row": 0,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "1432891a40213c0e5c3feda8af70064b67a20741d88fc04b9141b22b6fb6060c",
+   "name": "both/lands-row-1",
+   "family": "synthetic",
+   "why": "both gates fire",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "row": 1,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "280469dacde3645d5dd74a3ed13529dcb02d14ce3e8f21e5fb28f490140a16c4",
+   "name": "both/lands-row-2",
+   "family": "synthetic",
+   "why": "G1 does not fire",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "e8027683339a9e6455666cc8b800bc25de76a513381fe46a8cf6873dc405b1b9"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "FAIL",
+     "gates": {
+      "G0": true,
+      "G1": false
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "FAIL",
+     "gates": {
+      "G0": true,
+      "G1": false
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "FAIL",
+     "gates": {
+      "G0": true,
+      "G1": false
+     },
+     "row": 2,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "8e3e81f4991ae181bd49249e0f711754b94c549e10eb0abd5dbb7cd4a4bbce20",
+   "name": "both/wildcard-last-row",
+   "family": "synthetic",
+   "why": "an empty when matches every assignment",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "728c53466eb011612049cd9781908865a10d51939062bf05b58c180cfbf21d5d",
+    "receipt": "80a4ee4e492d2135b1097501c3b64ad97b59a9f3410a3dc7f1575677cffb6f6e"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "REST",
+     "gates": {
+      "G0": false,
+      "G1": true
+     },
+     "gates_sha256": "ac2b25bc73a7954fe7350f894fa91d6ae3b5444f270bf54bac4f490de79bac71"
+    },
+    "experiment": {
+     "verdict": "REST",
+     "gates": {
+      "G0": false,
+      "G1": true
+     },
+     "gates_sha256": "ac2b25bc73a7954fe7350f894fa91d6ae3b5444f270bf54bac4f490de79bac71"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "REST",
+     "gates": {
+      "G0": false,
+      "G1": true
+     },
+     "row": 1,
+     "gates_sha256": "ac2b25bc73a7954fe7350f894fa91d6ae3b5444f270bf54bac4f490de79bac71",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "6e83e664edbd281bc7399310fb33d71567eafa0c06a32c4de6949eb97bd564b0",
+   "name": "both/int-metric-int-bar",
+   "family": "synthetic",
+   "why": "integers compare as numbers",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "f6036eab2eeafabef88653de6d13a661f7d6d22bf22cc447a6353069b684dec2",
+    "receipt": "6f98e83ec2f42de626d0494cdd31fb03a81cf8a5cde0be50520cc440ecbaa538"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "57aa631cc64a77db06abf5f161ad4d8c57dd7c75d04dd9f833e5c0502e97f5e2"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "57aa631cc64a77db06abf5f161ad4d8c57dd7c75d04dd9f833e5c0502e97f5e2"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "57aa631cc64a77db06abf5f161ad4d8c57dd7c75d04dd9f833e5c0502e97f5e2",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "f68841f5f3ebaf58b02e21b3cfd5fb51ea8ff0c1d32efd0a4f06246ea5ca20d7",
+   "name": "both/when-literal-one-and-zero",
+   "family": "synthetic",
+   "why": "the scorers compare a fired bool with ==, so 1 matches true",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "c6966bce06d05c6e5ca3f289154a1ca2c9521b501856d204361f53349038f5bc",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "ONE",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "7bf2ae7e52ea86459480ba1ef652b9861336b1890303aa9ec3826fecb4d4fa54"
+    },
+    "experiment": {
+     "verdict": "ONE",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "7bf2ae7e52ea86459480ba1ef652b9861336b1890303aa9ec3826fecb4d4fa54"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "ONE",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "7bf2ae7e52ea86459480ba1ef652b9861336b1890303aa9ec3826fecb4d4fa54",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "2d0b4f4a8907d555749e0e9176ad7bbf1fa6b00019f1aa8442c43eeb2e60fd0b",
+   "name": "both/when-literal-string-never-matches",
+   "family": "synthetic",
+   "why": "no bool equals the string 'true'",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "e46475158768d981a67fd46ced198ba189f7a5063e29d8ae43f21e5b97dde89b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "REST",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "573b5b72868c3ea404844a97ff6462937b0a9ee5b833a0bc2259186ae9b8f9a4"
+    },
+    "experiment": {
+     "verdict": "REST",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "573b5b72868c3ea404844a97ff6462937b0a9ee5b833a0bc2259186ae9b8f9a4"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "REST",
+     "gates": {
+      "G0": true
+     },
+     "row": 1,
+     "gates_sha256": "573b5b72868c3ea404844a97ff6462937b0a9ee5b833a0bc2259186ae9b8f9a4",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": [
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "fda7b0852f612979e6dec91f2f12e7e15717ab1b4509bbf47aa0fcd7291ce5a4",
+   "name": "both/extra-keys-ignored",
+   "family": "synthetic",
+   "why": "keys the scorers do not read change no verdict (RV4)",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "0c47398b4eac9c169f27a7650478cc5796a6ffe1cafdcfd3151e2a0499f1a12b",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e7d902eab8add95c1ca9d8c7b836e2aa5792274621e689d29846ffe0f853fd48"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e7d902eab8add95c1ca9d8c7b836e2aa5792274621e689d29846ffe0f853fd48"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "row": 1,
+     "gates_sha256": "e7d902eab8add95c1ca9d8c7b836e2aa5792274621e689d29846ffe0f853fd48",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "5b3bbf869d55475df419cfc4e1423bcb0578c0a6fecf7a5adb0f41616707b592",
+   "name": "both/composition-holds",
+   "family": "synthetic",
+   "why": "a declared minimum equals the recomputed one",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "c430b519abc3870636788af5d8945f0d08619923e38101185a7918edb29d30d1",
+    "receipt": "6154748773a2d5673bc5e0df0a488ac99f4d43de42f5ef0a8c8cb84d120c97e3"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "796d2b8fc7f61e05450cee38df5cab92d361bd2583d55e41de3351bf4bd856c2"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "796d2b8fc7f61e05450cee38df5cab92d361bd2583d55e41de3351bf4bd856c2"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "796d2b8fc7f61e05450cee38df5cab92d361bd2583d55e41de3351bf4bd856c2",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "f211f98d0edb99f435f37c76f1bb7c1dd23914a52a38b9747feb984569de016f",
+   "name": "both/composition-violation",
+   "family": "synthetic",
+   "why": "a quoted minimum the population does not give is refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "c430b519abc3870636788af5d8945f0d08619923e38101185a7918edb29d30d1",
+    "receipt": "282441f8ed4b0218790d4000690a60dfae513997896180f61b82497542f7500f"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': COMPOSITION VIOLATION \u2014 metric quotes 0.9 but the declared min over 'per' recomputes to 0.6"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': COMPOSITION VIOLATION \u2014 metric quotes 0.9 but the declared min over 'per' recomputes to 0.6 (attained by ['x']). The quoted value belongs to a population this prereg's own declarations rule out. This is the E1 defect (cycle 159): a gate passing on a candidate another gate disqualified."
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "796d2b8fc7f61e05450cee38df5cab92d361bd2583d55e41de3351bf4bd856c2",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "6f57d8099a9d86af641f24640e7fd4d30410e14a9767ebb203652080a84432a3",
+   "name": "both/composition-half-declared",
+   "family": "synthetic",
+   "why": "agg without over is refused (Experiment at init, score_frozen at score)",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "0adaf59b5c82018bf486a028faa16c2a228edee986d3d91ad1f555f7e632aaa8",
+    "receipt": "f3168ae88a3b1914b3e0150e78252c1a1e8880cbd3cd4b318a5bc0ca11a51e37"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': a composition declaration needs 'agg' min|max and a non-empty 'over' path"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "gate 'G0': a composition declaration needs both 'agg' and 'over' (got ['agg']). Half a declaration checks nothing while looking like it checks something, which is worse than no declaration."
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "942c55a79d7671f36b63a0d4f15d9c3b16309830e02d3e2cc8ece157acdf4e24",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "50601c66ca4508f8ddb1677e713d87503be58a99231abd1a5ba3ad0aea3ed0f4",
+   "name": "both/metric-nan",
+   "family": "synthetic",
+   "why": "a NaN metric is refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "4de8136578798c924ff22709460b6a97bc7b6792d0d5163b4af24fd4f3fee013"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': metric 'a' resolves to nan, which cannot be compared"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': metric 'a' resolves to nan, which cannot be compared. A NaN previously made every comparison False and returned the frozen table's false branch as a SEALED verdict, with no refusal anywhere."
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "787b5a41a07d14b1687e7448890481cfdf2af85ffbe660459cc55556ac3ddd33",
+   "name": "both/metric-bool",
+   "family": "synthetic",
+   "why": "a bool metric is refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "79e7fb6985f47805260d966a3a541a629bc6bd4aaca9aec8e8c2c2f721f68795"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': metric 'a' resolves to True, which cannot be compared"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': metric 'a' resolves to True, which cannot be compared. A NaN previously made every comparison False and returned the frozen table's false branch as a SEALED verdict, with no refusal anywhere."
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "1a43403af2ab0c31a1a585b0f8693a30c245ca5c62a22360b28e52df83414249",
+   "name": "both/metric-string",
+   "family": "synthetic",
+   "why": "a string metric is refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "8393da1a57633480202cf2dbcb6d3a2e9ab2946309f4311470f4853c2dac1adc"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': metric 'a' resolves to '0.9', which cannot be compared"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': metric 'a' resolves to '0.9', which cannot be compared. A NaN previously made every comparison False and returned the frozen table's false branch as a SEALED verdict, with no refusal anywhere."
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "388bf32dda2ca98e18ed8a62d35239e18cda4f53ec1c7a47c13b611b5fbd048f",
+   "name": "both/metric-missing",
+   "family": "synthetic",
+   "why": "a metric path absent from the receipt is refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "97054cdc2c06f17094de7fc5b59e9e01fb7a82928f0edc7760ce8a7f104b46d5"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "metric 'a' not present in result"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "metric 'a' not present in result"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "5c95e8aa99cbe77a61a0d02449d69f58511f098ca50042e255f00c3a9917ba49",
+   "name": "both/metric-huge-int",
+   "family": "synthetic",
+   "why": "an integer past a float's range raises OverflowError in both scorers",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "09693cb4180213087ec46d4d38bd2c20150bd587553f5eba1675b4387c9f2f50"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "OverflowError",
+     "at": "score"
+    },
+    "experiment": {
+     "raises": "OverflowError",
+     "at": "score"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "af2fc0b8113865d5016ae328c32f7b0b0734f1201831948a095c407964985148",
+   "name": "both/unknown-op",
+   "family": "synthetic",
+   "why": "an op outside >=, <=, >, <, == is refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "d185dba4dc86d1202d3c317a25c113ee6e05f09de36876af4bc3e40bee6ee987",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': unknown op '=>'"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': unknown op '=>'"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "62f62a1305a5c5f48399ecbbcad11e77a5d824407df4471dfdffb1b696be1d16",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "45ae1b26f93cb8c4108366424feaa8ee025d5898f280ac2be8af0583e2a289ec",
+   "name": "both/not-total",
+   "family": "synthetic",
+   "why": "no row matches the assignment",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "b831ab65cc4f0487d608444eed61869c50048868124032c98600907d126409a9",
+    "receipt": "43d142a2dea8e00bc41d3ec37e9d340fc0d605c34fbe488b1f284d14b8ee8d17"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "no outcome row matches gates {'G0': False} \u2014 the frozen table is not total"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "no outcome row matches gates {'G0': False} \u2014 the frozen table is not total; this is a prereg design bug, surfaced instead of guessed around"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "c988f82cae67b3e96b0b3a10768bbec60a20526da65e813d8776e591f1e1f133",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "2d4149b4e977fa6489689881b89bc287374e05e6f66a99ebdeddeb92f3e70a6d",
+   "name": "both/empty-outcomes",
+   "family": "synthetic",
+   "why": "an empty table is refused (score_frozen by shape, Experiment as not total)",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "ede947871533afcdd988c45952f7aee5a1e15e0da3993626a8c4b72a5aba5b8f",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gates block 'outcomes' must be a non-empty list"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "no outcome row matches gates {'G0': True, 'G1': True} \u2014 the frozen table is not total; this is a prereg design bug, surfaced instead of guessed around"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "458e3f0ed0b628368df2bd86651fe5bedb6c8a92eb5165d0ab13d8cbf3d81865",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "b7591f56e4dcf966a52b0b572fb7d04d786b02a5adb427283f3a3a82dedbe681",
+   "name": "both/duplicate-key",
+   "family": "synthetic",
+   "why": "a key declared twice is refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7e4bc10a0ed3bbea61187cecfe10e056cef61d8a7bb5b8f903d5b150ead59c2d",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gates block is not valid strict JSON: duplicate key 'gates'"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "duplicate key 'gates' in the gates block \u2014 a block that declares the same key twice shows a reader both and honours only the last, which is a shadowing channel, not a typo to forgive"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "118718fdd38cbc867acfe4950356af5a422e45cc8be7e9a1dd85afd7c8722798",
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "132e73fbded1125e5eee1998b1f8e847fa3ea731a1fdfa8cb6a316b4eb83c51e",
+   "name": "both/non-ascii-key",
+   "family": "synthetic",
+   "why": "a gate name with a Cyrillic letter is refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "6bdda3b3cf07ac33961e2417fe49464472edb428b1846ed3ac91efd6e81c6f55",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gates block is not valid strict JSON: non-ASCII key 'G\u04300'"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "non-ASCII key 'G\u04300' in the gates block \u2014 a key a human cannot distinguish from an ASCII one is a shadowing channel. Keys must be ASCII."
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "ecc71cfe74365613e4ffb83fe470d72d54bdc35ea61e6cc16bd014e4d2552808",
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "8075b2c559b5e8a49c2a7dbdb4a1d60e6ba006679209b928e6ba52c1ef88490e",
+   "name": "both/invalid-json",
+   "family": "synthetic",
+   "why": "a fence that is not JSON is refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "e0f8a0be9a40b463cff37d366e5a9400362d197960aef383186bcc71dff54382",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gates block is not valid strict JSON: Expecting value: line 1 column 11 (char 10)"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "gates block is not valid JSON: Expecting value: line 1 column 11 (char 10)"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "71aecc18460771ba87c2d90926095b743fdedc1049a40b6cb4a4953a3ab2f094",
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "e0851ee474b5de82f578572a2cd19d031d9813cab7cd54b1a3899d5f1c9d80ba",
+   "name": "both/missing-smoke-verdict",
+   "family": "synthetic",
+   "why": "the block must name its smoke verdict",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "3a5703c7e21df9a937c38ec1aedd7fe16e349c3dc149c5857046b63f7700a9ab",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gates block missing 'smoke_verdict'"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "gates block missing 'smoke_verdict'"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "5907018a04ef518b2c4b433efa218730e39687bfdf35f885255fc701fb0b8c60",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "f39202ee12358cfb354ce9babd8f7d2dae86c6b34ea503a595bed5114d71a2a4",
+   "name": "both/spec-is-a-list",
+   "family": "synthetic",
+   "why": "the block must be an object",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "8eda3199672fdf40f318feacf40f996e7b57a03a80613892e158689478bd71f5",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gates block is not a JSON object"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "gates block missing 'gates'"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "3a316d6d3226f84c1e46e4447fa8d5fd800bff4a1bc6498152523cd4a602b69b",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "2847646acd1aae64a27cbbba83863fb78ee0ff4d4086c38a617260ee482907c7",
+   "name": "both/metric-path-not-a-string",
+   "family": "synthetic",
+   "why": "a gate's metric must be a path",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "cb81676bfc8ca1d1ef2aba33eb6c8cc30fb6372548ba5fb3c577f4ea25296c89",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': missing or non-string 'metric' path"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "gates with a missing or non-string 'metric' path: ['G0']. Left unchecked this put None into metric_paths and made check_metrics() raise AttributeError \u2014 the pre-run safety tool crashing on the most mis-specified gate there is."
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "c3dfa57348db505d8899bee3e19d6e4f96cff091804eeef97ec56a5ef703cba4",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "8e6819de87281d7bd20dfc9a288ae24669c1610ed511a515c969ef5933ba15d8",
+   "name": "both/receipt-not-an-object",
+   "family": "synthetic",
+   "why": "a receipt that is a list is refused (score_frozen finds no metric; styxx.seal's smoke reading calls .get on it)",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "2119ba1d042978d58b2da79290bc779983f19d4224aa2130af22605c6f4cfd9d"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "metric 'a' not present in result"
+    },
+    "experiment": {
+     "raises": "AttributeError",
+     "at": "score"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "5df1b26696706eb1d212ad45a7bcfeafa705155ae729c99c34fe7efee9948463",
+   "name": "both/prereg-not-utf8",
+   "family": "synthetic",
+   "why": "PREREG bytes that are not UTF-8 are refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "ca2d9d454c9e982e7c4a0790a2ee3ccddd6a4720ae84ab600c27ccc9f5e59702",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "UnicodeDecodeError",
+     "at": "decode"
+    },
+    "experiment": {
+     "raises": "UnicodeDecodeError",
+     "at": "init"
+    },
+    "rescore": {
+     "form": null,
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "ab30202ad5764d46213c9b1be46b2f62a6d9959e4c413ef9530e711899488ee8",
+   "name": "both/fifteen-gates",
+   "family": "synthetic",
+   "why": "both scorers read a 15-gate table; score_frozen's own total gives up past 12, rescore's cover counts it",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "910217e8b6bf4d0c2e787047801eb607ddc308bfb8ec62543cf9e6e74d6da24c",
+    "receipt": "40dbecf3a4fc872fc2d07925d5e9d2d5dd98e6c9cd334424bdb1a8010a895412"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "REST",
+     "gates": {
+      "G00": false,
+      "G01": false,
+      "G02": false,
+      "G03": false,
+      "G04": false,
+      "G05": false,
+      "G06": false,
+      "G07": false,
+      "G08": false,
+      "G09": false,
+      "G10": false,
+      "G11": false,
+      "G12": false,
+      "G13": false,
+      "G14": false
+     },
+     "gates_sha256": "d580c835a0046ce1fa1f7fe6594803bdad5ef56985f37e8c4847be5ff33cb0fd"
+    },
+    "experiment": {
+     "verdict": "REST",
+     "gates": {
+      "G00": false,
+      "G01": false,
+      "G02": false,
+      "G03": false,
+      "G04": false,
+      "G05": false,
+      "G06": false,
+      "G07": false,
+      "G08": false,
+      "G09": false,
+      "G10": false,
+      "G11": false,
+      "G12": false,
+      "G13": false,
+      "G14": false
+     },
+     "gates_sha256": "d580c835a0046ce1fa1f7fe6594803bdad5ef56985f37e8c4847be5ff33cb0fd"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "REST",
+     "gates": {
+      "G00": false,
+      "G01": false,
+      "G02": false,
+      "G03": false,
+      "G04": false,
+      "G05": false,
+      "G06": false,
+      "G07": false,
+      "G08": false,
+      "G09": false,
+      "G10": false,
+      "G11": false,
+      "G12": false,
+      "G13": false,
+      "G14": false
+     },
+     "row": 15,
+     "gates_sha256": "d580c835a0046ce1fa1f7fe6594803bdad5ef56985f37e8c4847be5ff33cb0fd",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "e3a6678694d56c8dae9532db499dc77f5c3f664e6c46fbca4ce3c5ee69dc87ed",
+   "name": "fence/none",
+   "family": "synthetic",
+   "why": "a document with no gates-like fence holds no decision",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7f10d74d5ff754992bf0345d59a6eb085bdebb8cab526a545e91a62edb755503",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "rescore": {
+     "form": null,
+     "code": "NOT_GATED",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "160532b71a042abf17b53b3326a55be1f661d9b7ced5a4b645725a75a787b1fb",
+   "name": "fence/two-gates-fences",
+   "family": "synthetic",
+   "why": "two gates-like fences are refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7f73f6e00138c7c72c74b5218859125cb7736599e68830605a352e12a7830dc1",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg contains 2 gates-like fenced blocks (line 5 (```gates), line 45 (```gates)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "prereg contains 2 gates-like fenced blocks (line 5 (```gates), line 45 (```gates)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "rescore": {
+     "form": null,
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "1c5eac7bd086e30779882880be5e7141cd3fe11841346d0962e1e70ebc612094",
+   "name": "fence/tilde",
+   "family": "synthetic",
+   "why": "a tilde fence is gates-like and not the plain form",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "9ed262420428336fd7be3835716a041054036b4e9a3f53b2700229470050a861",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "the single gates-like block (line 5, ''~~~gates) is not a plain unindented ```gates fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "the single gates-like block (line 5, ''~~~gates) is not a plain unindented ```gates fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "rescore": {
+     "form": null,
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "9d908f0b58270cdfd46ce92b617a0be2e17089467bd4c74e251c7d26e04bb7be",
+   "name": "fence/inside-html-comment",
+   "family": "synthetic",
+   "why": "a fence a renderer hides is refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "ff091ae08c2e7df023f7f26b4e889916b6f26bf136e6a0011c808cbe22c34aed",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "the ```gates fence at line 6 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "the ```gates fence at line 6 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "rescore": {
+     "form": null,
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "2294bf1c7c84ca0d77221fa1954836de4469c0b0b190304fc2998b6d7bafabba",
+   "name": "fence/after-unterminated-comment",
+   "family": "synthetic",
+   "why": "an unterminated comment hides everything after it",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "ae4a5dbd255f73ac4d7d0224499bd2ce3b2a388d8521836bc08ee3028522c3e7",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "the ```gates fence at line 7 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "the ```gates fence at line 7 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "rescore": {
+     "form": null,
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "593b754757fef6eb6f759ce0af334e230e0b822892fe4c61188b3e33c06d796e",
+   "name": "fence/never-closed",
+   "family": "synthetic",
+   "why": "an unclosed fence freezes nothing",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "28ea160f53063d7c4079cf4f9baf87db213c95243ca03714a56f5af6f78549fd",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "the ```gates fence at line 5 is never closed \u2014 an unterminated block renders as everything-is-code and freezes nothing"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "the ```gates fence at line 5 is never closed \u2014 an unterminated block renders as everything-is-code and freezes nothing"
+    },
+    "rescore": {
+     "form": null,
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "1a11ed1e2fbaf4d91e9313ab981ff63d805a877ea25c0950091753b948d591cd",
+   "name": "fence/non-ascii-info",
+   "family": "synthetic",
+   "why": "a confusable info string is refused outright",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "bf83ad71b73b5d42c99d162825bc2d950245635009d3881ee8f9ae4ae5fd8381",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "fence info string 'g\u0430tes' (line 5) contains non-ASCII characters \u2014 a confusable info string is a shadowing channel, and this parser refuses the class rather than trusting a normalization table to enumerate it"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "fence info string 'g\u0430tes' (line 5) contains non-ASCII characters \u2014 a confusable info string is a shadowing channel, and this parser refuses the class rather than trusting a normalization table to enumerate it"
+    },
+    "rescore": {
+     "form": null,
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "7bbc0f7d09e59459e8b9c51351888e26ea34b302b1a60d839d737fe5234cd00f",
+   "name": "fence/three-space-indent",
+   "family": "synthetic",
+   "why": "a rendered fence indented three spaces is gates-like and not plain",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "b527a655ec3d16e8faa4404ee467d3877331d62726b445442eb925caf3ff1f9d",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "the single gates-like block (line 5, '   '```gates) is not a plain unindented ```gates fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "the single gates-like block (line 5, '   '```gates) is not a plain unindented ```gates fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "rescore": {
+     "form": null,
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "22a9f2e73e6852e78041b11d528d8ce620e479be50828f0ce45433fe8a64fe58",
+   "name": "fence/uppercase-info",
+   "family": "synthetic",
+   "why": "GATES casefolds to gates and is not the plain form",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "4b1927e416074520c59e9ecc09baa472833f19279e39962c870d5c6a8b6ecb27",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "the single gates-like block (line 5, ''```GATES) is not a plain unindented ```gates fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "the single gates-like block (line 5, ''```GATES) is not a plain unindented ```gates fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "rescore": {
+     "form": null,
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "e3f9a77b9d0aaf2efb1929156cc51279120b9dce8f2d03caa4b45cf09a45ddb8",
+   "name": "fence/tab-indented-opener",
+   "family": "synthetic",
+   "why": "a tab-indented opener is four columns, an indented code block, not a fence; neither a renderer nor the scanner reads a fence",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "bb5a6d918b8df69c128f98b3d341a7977f2a23cda298e21275d40084bad91a1c",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "rescore": {
+     "form": null,
+     "code": "NOT_GATED",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "f00516268414f4f2614a4d89368b6458f439e4cfe2b710f46a8ef1824db1964a",
+   "name": "newline/lf-blob",
+   "family": "synthetic",
+   "why": "the reference for the three readings below",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "row": 1,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "760edcffd8928af63d2c9c9bc2eea7ef7791da722b25586b089a43355de89bb2",
+   "name": "newline/crlf-blob",
+   "family": "synthetic",
+   "why": "Experiment reads the working copy with universal newlines; score_frozen fed the raw decode finds no fence line; rescore translates as Experiment reads, so the digest is the LF one",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "2c8c1f4387a3fdc0db0902963d74cbde8d69ebf92c1b369dd1f5dda7fae8d20e",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "row": 1,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "9e403de0e3d4984e34ad3d4de4d60ba2540b101c6d02d647cb10da339d80456b",
+   "name": "newline/lone-cr-blob",
+   "family": "synthetic",
+   "why": "a lone CR is a newline to Path.read_text and to rescore, not to a raw decode",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "ea0bdb3a2dcf2b243065429b044e6fa161abe7676d9c1047318e3b4f00cefefc",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "row": 1,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "d7a9e891585ec7bf37b217ce986112dcc6848cdab6edb2c0fe594a44fd4be35f",
+   "name": "newline/bom-then-prose",
+   "family": "synthetic",
+   "why": "a BOM before the prose moves no fence line",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "44a94d7714e6e8e333879ffdb8336eb7dda9af740d5c53ac61d36f0e2abb643e",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "row": 1,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "22a1c6027ce0d89a792138b14ff78507219a66539a11b5e027114d7a422b4dee",
+   "name": "newline/bom-on-the-fence-line",
+   "family": "synthetic",
+   "why": "a BOM before an opener on line 1 makes that line no fence for the scanner; Experiment and rescore keep the BOM, so this reads NOT_GATED",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "60235491887a771269095c89da8222472ea6dbc0fff30a5c6e60ef39277db980",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "rescore": {
+     "form": null,
+     "code": "NOT_GATED",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "0f8ab9bd9c38c2bad0e384de2a0a9c55f0b1f81347dcc32d99012b650e52fd1b",
+   "name": "k1/bar-nan",
+   "family": "synthetic",
+   "why": "score_frozen refuses a bar that is not a finite number; Experiment compares with NaN, every comparison is false, and the false branch lands",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "e6e4142c537c3bb8c5d2d37a869b0b1ae3758f77e4130cb2cd2f81e614681cff",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': 'value' nan is not a finite number"
+    },
+    "experiment": {
+     "verdict": "INVALID__a_below_floor",
+     "gates": {
+      "G0": false,
+      "G1": true
+     },
+     "gates_sha256": "0a4e83776e0cd927cbf62f396d8240c1a04e60bec3ac21b07f3cc123f925d2ff"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "0a4e83776e0cd927cbf62f396d8240c1a04e60bec3ac21b07f3cc123f925d2ff",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "8160b03bf901312922fd9c21dda843dc07d487a658feada57369d849250fcf0b",
+   "name": "k1/bar-infinite",
+   "family": "synthetic",
+   "why": "score_frozen refuses an infinite bar; Experiment compares with it",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "4298004e1b864c627c20effd39a77dd53118ee64243ac53be3e062f6700320e8",
+    "receipt": "e8027683339a9e6455666cc8b800bc25de76a513381fe46a8cf6873dc405b1b9"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G1': 'value' inf is not a finite number"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "9652d512fd5f3937b7ba664e4e9e698426a648dcd4f67de22f58bdbcf1ea8d3d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "9652d512fd5f3937b7ba664e4e9e698426a648dcd4f67de22f58bdbcf1ea8d3d",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "10ecfd126ee4b994f68e1d95003bfe9f04d19a0230ab22f0baa92274f968e013",
+   "name": "k1/bar-string-ge",
+   "family": "synthetic",
+   "why": "score_frozen refuses a string bar; Experiment raises TypeError comparing with it (styxx.seal catches that as a refusal): both refuse",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "0bbf07f1d0ca5d1c397b7a45dd5915763a172feda840df102a185a128a8f120d",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': 'value' '0.5' is not a finite number"
+    },
+    "experiment": {
+     "raises": "TypeError",
+     "at": "score"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "1eaa0b4a042c1ddd8978a7d8d76ce4452c2ee88b000f2d1f0dcaee7dc3ed5de7",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "8dea64f2840d61bece5bdb720196e01911dada6ecd6f61a59452cc4bd19b9c1e",
+   "name": "k1/bar-string-eq",
+   "family": "synthetic",
+   "why": "score_frozen refuses a string bar; under == Experiment compares a float with a string, which is false, and lands on the false branch",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "13954d03056b7664cd4d64ba501509bebd594d4fe345c04e5d97fccb791a1de7",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': 'value' '0.9' is not a finite number"
+    },
+    "experiment": {
+     "verdict": "INVALID__a_below_floor",
+     "gates": {
+      "G0": false,
+      "G1": true
+     },
+     "gates_sha256": "856aa2544bb9194ff801a7d5f83552961140ef61e0fd7a48606c1c0d958797e0"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "856aa2544bb9194ff801a7d5f83552961140ef61e0fd7a48606c1c0d958797e0",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "55d0220c7470ba871a6320bc031f3465da5a0a9a8aa0d434a64c53a7a63772a7",
+   "name": "k1/bar-bool",
+   "family": "synthetic",
+   "why": "score_frozen refuses a bool bar; Experiment compares with it as the integer 1",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "3bd3c39a760a63b395178ca4b4202bf906bf6ecda06528f737ff2806962d3165",
+    "receipt": "53f9041ff6624c286c5ad517e096cd0bf7192d246d5a02f80e997ed325311fa5"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': 'value' True is not a finite number"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "775dce11920383dbb428daa2d56c6f8de58462af335002e9ec59d534823e90c3"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "775dce11920383dbb428daa2d56c6f8de58462af335002e9ec59d534823e90c3",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "8dc4bd45290777c04fb0d4ff23752f096392b28acbd94d814e44e1749db14888",
+   "name": "k1/bar-null",
+   "family": "synthetic",
+   "why": "score_frozen refuses a null bar; Experiment raises TypeError: both refuse",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "320979762f7c44709ac74aa15798c66585bf68b67dc380b312b66a50b30c85ba",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': 'value' None is not a finite number"
+    },
+    "experiment": {
+     "raises": "TypeError",
+     "at": "score"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "b5d70885b27d788d050e929bcb39a2319ef34eb83476c97c4d940ee8703735a1",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "c513c889dd491c9bbf403bc3e523f2ee4da0da3910da2613faabb5ab4ccf6055",
+   "name": "k1/bar-missing",
+   "family": "synthetic",
+   "why": "score_frozen refuses a gate with no bar; Experiment raises KeyError: both refuse",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "244e78feaccf113fc0de4d106f6d3940eceb845fbebb91df5c773f68278ccc65",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': 'value' None is not a finite number"
+    },
+    "experiment": {
+     "raises": "KeyError",
+     "at": "score"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "60b2ce7f5dabef9ee3cc2bb67ef2cf5fd326bdf5beeca9deba2bedad8b18a13f",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "057e900f55c0423c0623d184116b80ae06f93208ae89a382120fa5495a4db3fb",
+   "name": "k1/bar-huge-int",
+   "family": "synthetic",
+   "why": "score_frozen raises OverflowError turning the bar into a float; Experiment compares the float with the integer exactly",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "0debe6cd577c7eb35417d1c8b6e911f3d25886daa9a857e032883e3a74ee4670",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "OverflowError",
+     "at": "score"
+    },
+    "experiment": {
+     "verdict": "FAIL",
+     "gates": {
+      "G0": false
+     },
+     "gates_sha256": "d353bfa585479a595cbc39bb6b3fc00928c885f1ccf2adae4982ffb257b200bf"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "d353bfa585479a595cbc39bb6b3fc00928c885f1ccf2adae4982ffb257b200bf",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "3a3d1a5030f201026cad5dea0a42b2403258a764b20b1fb42b4593fd9224d0d5",
+   "name": "k1/row-names-undeclared-gate",
+   "family": "synthetic",
+   "why": "score_frozen refuses a row naming an undeclared gate; Experiment reads the gate as None, which no true equals, and walks past the row",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "202564ba004e4cb68d557c3455ece55fb7c0764e84e0d7b980da8a73937ed3a8",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "an outcome row names gates the block does not declare: ['G9']"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "a9930166f494618f1c740ae99178a312901b9dc6b994218e0aa79e7d05cd391e"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "a9930166f494618f1c740ae99178a312901b9dc6b994218e0aa79e7d05cd391e",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "5b9ba6d090235096c371fc2ccf2f2d2d159c6dd760986fe78474d17316387ef9",
+   "name": "k1/row-names-undeclared-gate-null",
+   "family": "synthetic",
+   "why": "Experiment reads the undeclared gate as None, and None == null lands the row; score_frozen refuses it",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "ccd1735869fe8dd45e730c10590fa8f4e8c99c1454283208d36b651200c0d71a",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "an outcome row names gates the block does not declare: ['G9']"
+    },
+    "experiment": {
+     "verdict": "GHOST",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "ee85c84564d039f73295d12698130e4f02e2c21de3b04aaa52e3aedf0b4aca0c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "ee85c84564d039f73295d12698130e4f02e2c21de3b04aaa52e3aedf0b4aca0c",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "36c0a2870dbcca67393fac6af660fe7c37b3d554e534f1e7585ffb793e30bd8f",
+   "name": "k1/malformed-row-after-the-landed-row",
+   "family": "synthetic",
+   "why": "score_frozen checks every row; Experiment stops at the landed row and never reads the row with no when",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "960f085f8bf68d188101185422efb1078441b0cbd87aaaf65dd8e4a75ab1fc9e",
+    "receipt": "80a4ee4e492d2135b1097501c3b64ad97b59a9f3410a3dc7f1575677cffb6f6e"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "an outcome row is not {when: {...}, verdict: str}"
+    },
+    "experiment": {
+     "verdict": "INVALID__a_below_floor",
+     "gates": {
+      "G0": false,
+      "G1": true
+     },
+     "gates_sha256": "59d20eb76a4fcca8cd295d204cd0ad3b08b2f7679f3863ad21f8bde9ae0ced81"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "59d20eb76a4fcca8cd295d204cd0ad3b08b2f7679f3863ad21f8bde9ae0ced81",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "15c0acd96e81f5c7545cba9c618521795fcf985e3fee698c19821b6244791317",
+   "name": "k1/verdict-not-a-string",
+   "family": "synthetic",
+   "why": "score_frozen refuses a verdict that is not a string; Experiment returns it",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "35a117cdd5afeca590053e9dacea51ec9e535212d800edbf7ebb6f4fd00dcb79",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "an outcome row is not {when: {...}, verdict: str}"
+    },
+    "experiment": {
+     "verdict": 7,
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "fa596f3c8f42df55cae022c99738f81c1a87d74fc34845dc071a5a4c839120b1"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "fa596f3c8f42df55cae022c99738f81c1a87d74fc34845dc071a5a4c839120b1",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "f5518cbcf3673cdaa466299cdd45e441c8f364fc65e02d4cec2b6d0c86eedc14",
+   "name": "k1/empty-gates-wildcard-row",
+   "family": "synthetic",
+   "why": "score_frozen refuses an empty gates object; Experiment lands the wildcard row",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "d8fdafcef4881db8b28af3e23329dad7cc7fe17284fd5babe8b25d3e4543323b",
+    "receipt": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gates block 'gates' must be a non-empty object"
+    },
+    "experiment": {
+     "verdict": "EVERYTHING",
+     "gates": {},
+     "gates_sha256": "c85ce840cb6bffac6eb659a01bcfea0cbcf08e373284b8dd83cf0545e6cb6218"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "c85ce840cb6bffac6eb659a01bcfea0cbcf08e373284b8dd83cf0545e6cb6218",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "3a5dc22cc9da6dd6c4143ca345d1452b1b0890c05be982b251c1034beddb3936",
+   "name": "k1/non-object-gate",
+   "family": "synthetic",
+   "why": "score_frozen refuses a gate that is not an object; Experiment raises AttributeError at init: both refuse",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "79a75cf75bf6ff8793cdfb2eb12f01fd52309e8e9c853e6bc44dc2f59dbb8d4c",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0' is not an object"
+    },
+    "experiment": {
+     "raises": "AttributeError",
+     "at": "init"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "20b07e903bfd76dca34f15b79e21bf72a24b8d69376a55f4e195732e37d3572f",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "b1a439b4963f5e61c280126ae09bf0fb341469bb88fae1cbd79815cb056f8c4c",
+   "name": "k1/spec-is-a-string",
+   "family": "synthetic",
+   "why": "a block that is a JSON string passes Experiment's key test by substring and raises TypeError; score_frozen refuses it as not an object: both refuse",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "baba3eadcbb052a8ea7188a13a2d8aa46a06287b29e65c4b8c032ac3754c3fe6",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gates block is not a JSON object"
+    },
+    "experiment": {
+     "raises": "TypeError",
+     "at": "init"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "c9a49454989203778fccc3b7723577eab9189d8290f5760389ba3bea8638ff99",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "0f7d83c47bb5a0a0f017a4db3ad759d7b8fe344c55cbfe02b0a230d0f3880605",
+   "name": "k1/when-not-an-object",
+   "family": "synthetic",
+   "why": "score_frozen refuses a when that is a list; Experiment raises AttributeError: both refuse",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "3bb3ee331d0e566f8866361ca84fcf0dcd4860fd3e0d496866fd5388444e0e67",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "an outcome row is not {when: {...}, verdict: str}"
+    },
+    "experiment": {
+     "raises": "AttributeError",
+     "at": "score"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "fb23e8d7f61155f70008a804aa0c916d87685739d76e6a455f4a456028e45217",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "ac4185b62ea9e1bc2f7658a42df2ea9c1105a1c510d9a8a01dbe17065c32d598",
+   "name": "k1/row-without-when",
+   "family": "synthetic",
+   "why": "score_frozen refuses a row with no when; Experiment raises KeyError: both refuse",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "3601386be2bdb35bcc80bcfadf3a778db0e16b707374a5a42570e280d5fc527b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "an outcome row is not {when: {...}, verdict: str}"
+    },
+    "experiment": {
+     "raises": "KeyError",
+     "at": "score"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "2522e7290187a0bc78810cf5a920975ee60180c770f63dfd7bccf742ffa7f2f0",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "f314a9daa39c828282fb035f6f6bc039735718b20b0db13886b729368b34f214",
+   "name": "k1/smoke-receipt-with-numbers",
+   "family": "synthetic",
+   "why": "score_frozen has no smoke branch and scores the numbers; Experiment (styxx.seal's reading) returns the smoke verdict by type; rescore reads it by type",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "1379c58e5810f123257f8de08cf4e18e5d9bfe0b42c6f10bd143ab591954cc1d"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates": {},
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates": {},
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": true,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "236614b6fd48192fb504141746012db93ad2a0057a0d0dbd1a075e5970aae47e",
+   "name": "k1/smoke-receipt-without-metrics",
+   "family": "synthetic",
+   "why": "score_frozen finds no metric in a smoke receipt; Experiment never reads one",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "e5a31d86b5ec0f1d079656a3815f25df1035c3650489d14bcb29f35377a0acc6"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "metric 'a' not present in result"
+    },
+    "experiment": {
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates": {},
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates": {},
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": true,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "60442e9df35414e8e405809b7b595314d12e2ae632dbec2f08defa61c05fc963",
+   "name": "prereg-ci/receipt-pointer",
+   "family": "synthetic",
+   "why": "the sealed pointer names where the metrics are; the existing scorers ignore the key and read the top level",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "0aaae667fd4a471196c7967494f539373c095599684a00d104026fd332a99ce8",
+    "receipt": "216343866a54cbbb1aa84e055d034ff63cf624cb8d1e5fe9e99e5408898e9c84"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "INVALID__a_below_floor",
+     "gates": {
+      "G0": false,
+      "G1": true
+     },
+     "gates_sha256": "cf97649a392425039cfe98788622cfe9c34624336de05c5cb62ddbde1be6595c"
+    },
+    "experiment": {
+     "verdict": "INVALID__a_below_floor",
+     "gates": {
+      "G0": false,
+      "G1": true
+     },
+     "gates_sha256": "cf97649a392425039cfe98788622cfe9c34624336de05c5cb62ddbde1be6595c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "row": 1,
+     "gates_sha256": "cf97649a392425039cfe98788622cfe9c34624336de05c5cb62ddbde1be6595c",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "869e0608ca17d87fceb81bd4a8b1e8418729baa9b069e7e1b3818d68c7f1d8e6",
+   "name": "prereg-ci/receipt-pointer-empty",
+   "family": "synthetic",
+   "why": "the empty pointer is the whole receipt",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "e76a4d90522c33a4434ca179efb6c26a88d8328cd98655d361827122047f0f24",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "85d6152b7d38eeda8a4cff82436c532b654228a677610421b268a4725b64b3a0"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "85d6152b7d38eeda8a4cff82436c532b654228a677610421b268a4725b64b3a0"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "row": 1,
+     "gates_sha256": "85d6152b7d38eeda8a4cff82436c532b654228a677610421b268a4725b64b3a0",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "cddfb23c8adc378a3de19d7c2219d10f9359b4b96259f4b2e318cbb98c4de2ec",
+   "name": "prereg-ci/receipt-pointer-unresolved",
+   "family": "synthetic",
+   "why": "a sealed pointer the receipt does not hold is refused",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "5ece778826651783ef2a7a37ee94cf951acb37c8b15f3329ee2efb6c28601546",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "3c3bb1a7a5ad6cac3fc479d79a3177837d3e28b4c57143f1790d87bf0edfdb7e"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "3c3bb1a7a5ad6cac3fc479d79a3177837d3e28b4c57143f1790d87bf0edfdb7e"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "3c3bb1a7a5ad6cac3fc479d79a3177837d3e28b4c57143f1790d87bf0edfdb7e",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "6941a8a6f7e5f4105ec90510c1cfa3dda60e7580fb9ed40483877240ebd04f0e",
+   "name": "prereg-ci/receipt-pointer-not-a-string",
+   "family": "synthetic",
+   "why": "a pointer must be a string",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "c4cb98cf10cc0c8b1edee2acdba4182f71d6fc7a8e200605578b23b8baedfbcd",
+    "receipt": "481b51bbd08c88e658d459c2335c29dc597f79a445d70a818ccaac1af6d85330"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "0fe16d01a589edeb5236de8724bb4efed1c098d32d495695a1abf0b0804b072b"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "0fe16d01a589edeb5236de8724bb4efed1c098d32d495695a1abf0b0804b072b"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "0fe16d01a589edeb5236de8724bb4efed1c098d32d495695a1abf0b0804b072b",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "26f64a00a64a8549bb19d60dc9076655499dd7f53395a630e92ad68cafc3babc",
+   "name": "prereg-ci/smoke-false-explicit",
+   "family": "synthetic",
+   "why": "smoke false is not smoke",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "935554b278f0365f76e4c69c9f97311c97fa8ba46510775a50b1c367031d65a9"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "row": 1,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "6ba685df4878d5ac48b75802a43804905ac48bbb4d3a8ef57cde1c8f21e93209",
+   "name": "prereg-ci/smoke-config-false-alone",
+   "family": "synthetic",
+   "why": "/config/smoke false agrees with an absent top-level smoke",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "d89eb968a29d60c12f479f35a08737e40f04ff0a57a0f0e6e4aa640e5e93f6b3"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "row": 1,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "e677f431d74e54ce6ba3227997ed7d869c1dc6ee0123cd5b23dec63b99790406",
+   "name": "prereg-ci/smoke-config-disagrees",
+   "family": "synthetic",
+   "why": "top-level smoke false, /config/smoke true: one convention decides and they disagree",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "d8d2c25c374ba133f1c559c09866a2918ca6184df9fa2fc54094aed148813993"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SMOKE_AMBIGUOUS",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "e85cc4a49dc4e8810b3d9e89c5f1559ee21af77b54725fe93f905ec630788de1",
+   "name": "prereg-ci/smoke-config-without-top-level",
+   "family": "synthetic",
+   "why": "an absent top-level smoke reads false (DESIGN K19), and /config/smoke true disagrees with it",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "197238dad1709fbb3ed9833d00ad3af00e9f4eb2a2df1c571b8825dbc8e2580f"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SMOKE_AMBIGUOUS",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "7f97880e8343479268f438f68d8736a11e2f8464dbb5e278f3eab7de1c628e91",
+   "name": "prereg-ci/smoke-both-conventions-true",
+   "family": "synthetic",
+   "why": "both conventions say smoke; score_frozen has no smoke branch",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "aaadff140a06b26ec2b2c0d69beb7295fbec1a34c1e6ef464c051a9d223f9923"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates": {},
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates": {},
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": true,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "7dc5c00352e2564771b3dc1d57adc2c58407ba81fef84c83a5ec52edfaba92e5",
+   "name": "prereg-ci/smoke-truthy-string",
+   "family": "synthetic",
+   "why": "styxx.seal reads smoke with bool(), so the string 'no' is smoke; rescore reads it so too, to agree with the verdicts seal recorded",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "604e598b29dcfb4e0b15a9b69a45decffde2a8f156a90e406655fe2703203ee7",
+    "receipt": "6876eba3ff4026ada3ec0ce7e706ef3657da60028f67033fa6e23f3cbe323760"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS",
+     "gates": {
+      "G0": true,
+      "G1": true
+     },
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "experiment": {
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates": {},
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates": {},
+     "row": null,
+     "gates_sha256": "e722c2afa220c7eb6eaa9a247d04a4b2449961144571a7ffff00ea71d7f4557c",
+     "smoke": true,
+     "smoke_verdict": "INVALID__smoke_plumbing_only",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    }
+   }
+  },
+  {
+   "id": "e5b7717a897dba30f1a527682fd54bef67774713f5976ae91e09518c2ce79607",
+   "name": "prereg-ci/smoke-table-invalid",
+   "family": "synthetic",
+   "why": "rescore checks the table's shape before it reads a smoke receipt by type; Experiment.score(smoke=True) reads only smoke_verdict; score_frozen refuses the NaN bar",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "e6e4142c537c3bb8c5d2d37a869b0b1ae3758f77e4130cb2cd2f81e614681cff",
+    "receipt": "c1094490d1b050b063562a0de466642232d5106ef3af73221385e4bae3e4a60d"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "gate 'G0': 'value' nan is not a finite number"
+    },
+    "experiment": {
+     "verdict": "INVALID__smoke_plumbing_only",
+     "gates": {},
+     "gates_sha256": "0a4e83776e0cd927cbf62f396d8240c1a04e60bec3ac21b07f3cc123f925d2ff"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "0a4e83776e0cd927cbf62f396d8240c1a04e60bec3ac21b07f3cc123f925d2ff",
+     "smoke": true,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  },
+  {
+   "id": "961f9a4e2427fac2ed74b17afb0c88d62e7ca94561092e244cb175b4c88178ae",
+   "name": "prereg-ci/smoke-verdict-not-a-string",
+   "family": "synthetic",
+   "why": "a smoke receipt's verdict is the smoke_verdict, so it must be a string; Experiment returns the 5",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "1275c85eefbf2f029925a358e80058e4966c60ff529637d12802057fb283f496",
+    "receipt": "e5a31d86b5ec0f1d079656a3815f25df1035c3650489d14bcb29f35377a0acc6"
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "metric 'a' not present in result"
+    },
+    "experiment": {
+     "verdict": 5,
+     "gates": {},
+     "gates_sha256": "e5025050fb525e0317f4ee5a2cbf5180db11772f489169cc245459acc920dc8f"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "e5025050fb525e0317f4ee5a2cbf5180db11772f489169cc245459acc920dc8f",
+     "smoke": true,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    }
+   }
+  }
+ ]
+}
