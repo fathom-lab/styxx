@@ -21,7 +21,14 @@ walk, so the abstention fires only where its reason holds, never where `parse_un
 key's of `parse_unified_diff_sides`: the two ports build those keys apart (Python's strip() and the port's trim()
 remove different code points from a path's tail, and the runtimes lower case differently, U+1C89 on Node 24 and not on
 CPython 3.12), so a parity taken per key put a `def test_` after an odd count in one port only, and the two printed
-opposite gates (review 1 of fix batch 1). The path's tail is read with every trailing code point at or below U+0020 or
+opposite gates (review 1 of fix batch 1). The tests count abstains only on a claim at or below the larger of its
+two counts (the one-sided #178, options judgment of fix batch 1): above every count the template takes, the claim
+differs from each of them and from the same counts with changed tests dropped, so main's CONTRADICTED stands there;
+below the Python-source count it still abstains, since dropping a changed test can reach the claim there
+(p2a-101:20260930:111, where deciding below the range printed a false CONTRADICTED the overlay does not withhold).
+Above every count the verdict is main's, on main's counts: where main counts fewer `def` lines than CPython defines
+(two spaces after `def`), a true count there reads CONTRADICTED as on main, a named residual pinned here.
+The path's tail is read with every trailing code point at or below U+0020 or
 from U+007F up removed, and a `+++` header is read as /dev/null on that header with every such code point removed from
 either end (`_edge_cut` / `_edgeCut`, review 2 of fix batch 1): every code point strip() or trim() removes is in that
 set, so the two ports reach the same path tail where strip() and trim() part (held here over every code point). Read
@@ -47,11 +54,12 @@ main's count, a residual pinned here.
 
 What is held here: the reporters' cases at the raw door (both ports, both strict modes, the two ports' records equal,
 reasons included) and at the git door (a real two-commit repository; skipped without git, failed under CI); the gap
-after `async`; the changed async test the overlay withholds; the controls #178 must not touch; the one-parse rule; the
-path's tail; the `+++ /dev/null` header and the set it is read on; the sections a key would merge; the walk placing
-every added line as the parse does; #205's seams, at a header's edge, before a `def` and after a name, and the line both
-ports read that keeps main's verdict; the name defined twice; the named residuals, pinned as they read; an ast grid over
-every case with a Python file model; and a plant of each change in each port, each told by a check here.
+after `async`; the changed async test the overlay withholds; the controls #178 must not touch; the two sides of the
+tests count's range; the one-parse rule; the path's tail; the `+++ /dev/null` header and the set it is read on; the
+sections a key would merge; the walk placing every added line as the parse does; #205's seams, at a header's edge,
+before a `def` and after a name, and the line both ports read that keeps main's verdict; the name defined twice; the
+named residuals, pinned as they read; an ast grid over every case with a Python file model; and a plant of each
+change in each port, each told by a check here.
 """
 from __future__ import annotations
 
@@ -272,6 +280,30 @@ CASES_178 = [
           D_SRC + _new_file("docs/guide.md", ["async def test_md():", "class Foo:"]), PY_SRC,
           [("tests", 1), ("symbol", "Foo")], [_t178(1, 1, 1), _s178("class", "Foo")]),
 ]
+
+# The two sides of the tests count's range (the one-sided #178). Above every count main's verdict stands; at or below
+# the larger count #178 abstains, and below the Python-source count too: there a changed test beside a `def test_` in
+# a string makes a true "Added 0 tests." read CONTRADICTED on main's count, which the overlay does not withhold
+# (p2a-101:20260930:111's shape: main counts 2, the Python source 1, and the counts with the changed test dropped 1
+# and 0).
+SIDE_OLD = ["def test_c():", "    pass"]
+SIDE_NEW = ["def test_c(x=0):", "    pass", 'DOC = """', "def test_a():", '"""']
+CASES_178_SIDES = [
+    _case("178-above-every-count", "Added 0 tests. Added 1 test. Added 2 tests. Added 3 tests.",
+          _new_file("tests/test_new.py", NEW_TEST) + _new_file("docs/guide.md", FENCED),
+          {"tests/test_new.py": (None, _text(NEW_TEST))}, [("tests", 0), ("tests", 1), ("tests", 2), ("tests", 3)],
+          [_t178(1, 2, 0), _t178(1, 2, 1), _t178(1, 2, 2), _tests(2, 3)]),
+    _case("178-below-the-python-count-beside-a-changed-test", "Added 0 tests.",
+          _edit("tests/test_a.py", SIDE_OLD, SIDE_NEW), {"tests/test_a.py": (_text(SIDE_OLD), _text(SIDE_NEW))},
+          [("tests", 0)], [_t178(1, 2, 0)]),
+]
+# Its named residual, pinned as it reads: above every count main's verdict stands on main's counts, so where main
+# counts fewer `def test_` lines than CPython defines (two spaces after `def`, which `def test_` does not read), a true
+# count above them reads CONTRADICTED, as on main, and as at the head on the same file without the docs file beside it.
+UNDER = ["def  test_a():", "    pass", "def  test_b():", "    pass"]
+RESIDUAL_UNDERCOUNT_ABOVE = _case("residual-undercount-above-every-count", "Added 2 tests.",
+                                  _new_file("tests/test_a.py", UNDER) + _new_file("docs/guide.md", FENCED),
+                                  {"tests/test_a.py": (None, _text(UNDER))}, [("tests", 2)], [_tests(1, 2)])
 
 DOC_ONE = ['"""Module doc."""', "def test_d():", "    pass"]
 DOC_TWO = ['"""Module doc,', 'on two lines."""', "", "def test_e():", "    pass", "", "class Foo:", "    pass"]
@@ -648,10 +680,11 @@ CASES_DEVNULL_EDGE = [
           [("tests", 2)], [_tests(1, 2)])
     for tag, ch in (("U+007F", "\x7f"), ("U+200B", "\u200b"))
 ]
-ALL_ALIKE = CASES_179 + CASES_GAP + [RESIDUAL_BACKSLASH, CASE_CHANGED] + CASES_178 + CASES_CONTROL + CASES_TAIL + \
+ALL_ALIKE = CASES_179 + CASES_GAP + [RESIDUAL_BACKSLASH, CASE_CHANGED] + CASES_178 + CASES_178_SIDES + \
+    [RESIDUAL_UNDERCOUNT_ABOVE] + CASES_CONTROL + CASES_TAIL + \
     [RESIDUAL_STRING] + CASES_SECTIONS + RESIDUALS_178 + CASES_DEVNULL + CASES_DEVNULL_EDGE + CASES_SEAM + \
     CASES_HEADER + CASES_TWICE + [RESIDUAL_TWICE_DEF] + RESIDUALS_STRING_ASYNC + RESIDUALS_PARITY
-RESIDUALS = {RESIDUAL_STRING["id"], RESIDUAL_MIXED_QUOTES["id"]} | \
+RESIDUALS = {RESIDUAL_STRING["id"], RESIDUAL_MIXED_QUOTES["id"], RESIDUAL_UNDERCOUNT_ABOVE["id"]} | \
     {c["id"] for c in RESIDUALS_STRING_ASYNC + RESIDUALS_PARITY}                       # what the ast grid names
 
 
@@ -746,6 +779,17 @@ def test_178_the_reporters_cases_port(tmp_path):
     assert _port_problems(CASES_178, got) == []
 
 
+def test_178_the_two_sides_python():
+    """Above every count main's verdict stands; at or below the larger count, and below the Python-source count,
+    #178 abstains."""
+    assert _problems(N, CASES_178_SIDES) == []
+
+
+def test_178_the_two_sides_port(tmp_path):
+    got = _port(CASES_178_SIDES, tmp_path)
+    assert _port_problems(CASES_178_SIDES, got) == []
+
+
 def test_178_controls_python():
     assert _problems(N, CASES_CONTROL) == []
 
@@ -785,6 +829,16 @@ def test_178_named_residual(tmp_path):
     """A string opened in a line the diff does not show is not seen: the count reads the `def test_` as on main."""
     assert _problems(N, [RESIDUAL_STRING]) == []
     assert _port([RESIDUAL_STRING], tmp_path)[RESIDUAL_STRING["id"]] == RESIDUAL_STRING["want"]
+
+
+def test_178_named_residual_above_every_count(tmp_path):
+    """Above every count main's verdict stands, on main's counts: `def  test_a` (two spaces) defines a test CPython
+    reads and the template does not count, so a true "Added 2 tests." beside a fenced example reads CONTRADICTED in
+    both ports, as main reads it."""
+    assert [n.name for n in ast.parse(_text(UNDER)).body if isinstance(n, ast.FunctionDef)] == ["test_a", "test_b"]
+    assert _problems(N, [RESIDUAL_UNDERCOUNT_ABOVE]) == []
+    got = _port([RESIDUAL_UNDERCOUNT_ABOVE], tmp_path)
+    assert got[RESIDUAL_UNDERCOUNT_ABOVE["id"]] == RESIDUAL_UNDERCOUNT_ABOVE["want"]
 
 
 def test_178_named_residual_reached_through_async(tmp_path):
@@ -1060,7 +1114,13 @@ PY_PLANTS = {
                                                    CASES_179),
     "#179: the overlay's mirror dropped": ('        if line.startswith("async", r):', "        if False:",
                                           "def _p2a_counted(", [CASE_CHANGED]),
-    "#178: dropped from the count": ("if inside != placed:", "if False:", "def _gate(", CASES_178),
+    "#178: dropped from the count": ("if inside != placed and n <= max(placed, got):", "if False:", "def _gate(",
+                                     CASES_178),
+    "#178: a claim above every count abstains": ("if inside != placed and n <= max(placed, got):",
+                                                 "if inside != placed:", "def _gate(", CASES_178_SIDES),
+    "#178: a claim below the Python-source count decided": (
+        "n <= max(placed, got):", "min(inside, got - (placed - inside)) <= n <= max(placed, got):", "def _gate(",
+        CASES_178_SIDES),
     "#178: dropped from the symbol": ("if re.search(pat, sides_blob, re.M) and not re.search(pat, inside_blob, re.M):",
                                       "if False:", "def _gate(", CASES_178),
     "#178: the path's tail read as is": ("while e and (ord(p[e - 1]) <= 32 or ord(p[e - 1]) >= 127):", "while False:",
@@ -1100,7 +1160,13 @@ JS_PLANTS = {
                                           "const tx = /^\\s*def test_/gm;", CASES_179),
     "#179: async dropped from the symbol pattern": ("(?:async[ \\\\t\\\\f]+def|def|class)", "(?:def|class)", CASES_179),
     "#179: the overlay's mirror dropped": ("      if (q > r + 5) s = q;\n", "", [CASE_CHANGED]),
-    "#178: dropped from the count": ("if (inside !== placed) {", "if (false) {", CASES_178),
+    "#178: dropped from the count": ("if (inside !== placed && n <= Math.max(placed, got)) {", "if (false) {",
+                                     CASES_178),
+    "#178: a claim above every count abstains": ("if (inside !== placed && n <= Math.max(placed, got)) {",
+                                                 "if (inside !== placed) {", CASES_178_SIDES),
+    "#178: a claim below the Python-source count decided": (
+        "&& n <= Math.max(placed, got)) {",
+        "&& Math.min(inside, got - (placed - inside)) <= n && n <= Math.max(placed, got)) {", CASES_178_SIDES),
     "#178: dropped from the symbol": ("if (pat.test(sidesBlob) && !pat.test(insideBlob)) {", "if (false) {", CASES_178),
     "#178: the path's tail read as is": (
         "    while (e > 0 && (p.charCodeAt(e - 1) <= 32 || p.charCodeAt(e - 1) >= 127)) e--;\n", "", CASES_TAIL),
