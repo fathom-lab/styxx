@@ -205,9 +205,20 @@ def flavour(mod) -> str:
 # file and v2-a-binary-deletion-line-holding-a-line-separator among them). main raises on three inputs, not four: two
 # PATH-2 reproductions read a split only the old cut made, and fuzz 20260930:692 (`+++ /dev/null` with no `---`) now
 # raises in the Python as it did in the port.
+# #179 and #178 (fix/diffgate-178-179), on the inputs #205 pinned: main's reading moved, and the overlay's model of
+# main's count with it; no rule did. main abstains (#178) on 279 claims it decided, 238 test counts and 41 symbols, where
+# a counted line sits in a file not read as .py or .pyi or after an odd number of triple quotes in its file's added
+# lines; 41 of them were withheld before (`tests` -21, `redefined` -4, `split` -1, `symbol` -13, `again` -2). main reads
+# `async def` (#179), so 78 claims it decided change verdict (CONTRADICTED -> VERIFIED 41, VERIFIED -> CONTRADICTED 37)
+# and 101 test counts stay CONTRADICTED with another count. Of those the overlay withholds 57 test claims and 7 symbols
+# it did not (`tests` +57, `symbol` +7) and 1 more by `split` (fuzz 20260930:645), and one test claim it withheld it no
+# longer does: path2:a1-an-added-async-test-abstains-the-count, "Added 0 tests.", which main now CONTRADICTS, as the
+# overlay's model of main's count read it. The three other verdicts that move and stay decided are path2:v1-limit-an-
+# added-async-def-is-not-read and fuzz 20260930:1417 (to VERIFIED) and fuzz 20260930:1355 (to CONTRADICTED). The same
+# keys move under the POSIX flavour.
 ABSTENTIONS = {
     "windows": {
-        "decided": 12458, "main raises": 6,
+        "decided": 12179, "main raises": 6,
         "file_created:case": 3, "file_created:dir": 65, "file_created:divergent": 15, "file_created:dot": 20,
         "file_created:dot_earliest": 4, "file_created:dot_tier": 11, "file_created:extract": 43, "file_created:odd": 1,
         "file_created:tier": 9,
@@ -220,13 +231,13 @@ ABSTENTIONS = {
         "files_changed_count:count": 375, "files_changed_count:divergent": 227, "files_changed_count:extract": 4,
         "files_changed_count:seam": 6,
         "only_touches:divergent": 108, "only_touches:extract": 154, "only_touches:only": 32, "only_touches:shape": 29,
-        "symbol_added:again": 5, "symbol_added:extract": 24, "symbol_added:symbol": 192,
-        "tests_added:redefined": 22, "tests_added:split": 4, "tests_added:tests": 433,
+        "symbol_added:again": 3, "symbol_added:extract": 24, "symbol_added:symbol": 186,
+        "tests_added:redefined": 18, "tests_added:split": 4, "tests_added:tests": 468,
     },
 }
 # Under the POSIX flavour main reads `c:x.py` as a bare name not in the diff, so three decided drive-like claims are
 # UNCHECKABLE on main to begin with: path2a:guard-drive-like-path claim 0, and fuzz 20260930:1033 and :1590.
-ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12455, "file_touched:odd": 4}
+ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12176, "file_touched:odd": 4}
 del ABSTENTIONS["posix"]["file_created:odd"], ABSTENTIONS["posix"]["file_deleted:odd"]
 # main's own reading depends on the interpreter's Unicode tables where the inputs probe letters added in Unicode 14 and
 # 16 (#161's k2, x1 and y3 cases). Measured on CPython 3.12 (Unicode 15.0) and 3.14 (16.0); for Unicode 13.0 and 14.0
@@ -311,8 +322,10 @@ def test_abstain_only_port(work):
     if engine_unicode() == "16":                  # measured on Node 24.13.0: what this port withholds of what its main decides
         # #205 (fix/diffgate-205-206): (12526, 2590) before; the port's main abstains on the `def` counts over an added
         # line holding a character of _READ_APART, and the overlay's view 0 is the port's own cut, so the overlay
-        # withholds less where the two mains now read a diff alike
-        assert (rep["counts"]["decided"], rep["counts"]["abstained"]) == (12264, 2538), rep["counts"]
+        # withholds less where the two mains now read a diff alike. #179 and #178 (fix/diffgate-178-179): (12264, 2538)
+        # before; the port's main abstains on the `def` counts where a counted line sits outside Python source (#178)
+        # and reads `async def` (#179), which the overlay's model of main's count reads with it
+        assert (rep["counts"]["decided"], rep["counts"]["abstained"]) == (11983, 2559), rep["counts"]
 
 
 def test_lockstep_python(M, inputs):
@@ -330,7 +343,7 @@ def test_lockstep_python(M, inputs):
         assert lines == M._git_lines(diff or ""), iid
         assert list(N._p2a_build(N._p2a_regs_raw(lines), N._norm).items()) == list(status.items()), iid
         views = N._p2a_views(lines)
-        assert N._p2a_pairing(views)[0][0] == len(re.findall(r"^\s*def test_", blob, re.M)), iid
+        assert N._p2a_pairing(views)[0][0] == len(re.findall(r"^\s*(?:async[ \t\f]+)?def test_", blob, re.M)), iid
         # pass 4 (A-2): the facts object's shortcut (one view, counted once) gives what both views counted apart give;
         # pass 5 (B-1): with the removed lines no view reads; pass 6 (B-1): with the unchanged lines too; #205: on a
         # text holding U+2028 or U+2029, where only the port's `^` also matches, the shortcut is not taken (R4)
@@ -2668,13 +2681,15 @@ BAR_C = {
     # there that its port, and its Python under the POSIX flavour, leave UNCHECKABLE. #205 (fix/diffgate-205-206): main's
     # two ports now cut a diff alike and abstain alike over the characters they read apart, so on every row the diff
     # side shrinks (120 -> 58 on CPython 3.12's Windows row), the inputs a main raises on go from 5 to 3, and the
-    # gates part under the overlay alone on y2 only without --strict (six inputs before). Measured on CPython 3.12.10
-    # and 3.14.2, Node 24.13.0
+    # gates part under the overlay alone on y2 only without --strict (six inputs before). #179 and #178
+    # (fix/diffgate-178-179): on every row one input leaves the diff side for the equal side (58 -> 57 on CPython 3.12's
+    # Windows row) and five more inputs on the equal side hold a withheld claim (1151 -> 1156 there); no gate column
+    # moves. Measured on CPython 3.12.10 and 3.14.2, Node 24.13.0
     "committed": {
-        ("15.0.0", "windows", "16"): (6672, 3, 6133, 1151, 478, 58, 8, 9, 1, 0, 13, 10, 2, 5),
-        ("15.0.0", "posix", "16"): (6672, 3, 6136, 1151, 478, 55, 8, 9, 1, 0, 12, 10, 2, 4),
-        ("16.0.0", "windows", "16"): (6672, 3, 6134, 1152, 480, 55, 9, 10, 1, 0, 14, 10, 2, 6),
-        ("16.0.0", "posix", "16"): (6672, 3, 6137, 1152, 480, 52, 9, 10, 1, 0, 13, 10, 2, 5),
+        ("15.0.0", "windows", "16"): (6672, 3, 6134, 1156, 478, 57, 8, 9, 1, 0, 13, 10, 2, 5),
+        ("15.0.0", "posix", "16"): (6672, 3, 6137, 1156, 478, 54, 8, 9, 1, 0, 12, 10, 2, 4),
+        ("16.0.0", "windows", "16"): (6672, 3, 6135, 1157, 480, 54, 9, 10, 1, 0, 14, 10, 2, 6),
+        ("16.0.0", "posix", "16"): (6672, 3, 6138, 1157, 480, 51, 9, 10, 1, 0, 13, 10, 2, 5),
     },
     # every input of this shape where main's two ports decide the symbol claim apart parts the gate verdicts under the
     # overlay, since the tests or count claim that made both of main's gates FAIL is withheld in both ports. Before
@@ -2682,16 +2697,20 @@ BAR_C = {
     # U+001C, U+001F and U+0085 parted main's two ports. Since #205 main reads them alike (it abstains over all but the
     # form feed, which both cut nowhere and read as white space), and what still parts the two is U+FEFF, the port's
     # \s alone, and a name running on into a letter outside ASCII, which only the Python's \b reads as part of the name
-    # (44 in all; 52 where the interpreter knows U+105C0 as a letter too)
-    "line break": {("15.0.0", "any", "16"): (600, 0, 556, 342, 0, 44, 0, 44, 44, 0, 0, 0, 0, 0),
-                   ("16.0.0", "any", "16"): (600, 0, 548, 334, 0, 52, 0, 52, 52, 0, 0, 0, 0, 0)},
+    # (44 in all; 52 where the interpreter knows U+105C0 as a letter too). #179 and #178 (fix/diffgate-178-179): main
+    # reads `async def` now, so the same two seams part its two ports on the shape's `async def` lines as well: 65 in
+    # all, 80 where the interpreter knows U+105C0 as a letter; each of the 21 (28) inputs newly apart is an `async def`
+    # line with U+FEFF or a name running on into a letter outside ASCII
+    "line break": {("15.0.0", "any", "16"): (600, 0, 535, 321, 0, 65, 0, 65, 65, 0, 0, 0, 0, 0),
+                   ("16.0.0", "any", "16"): (600, 0, 520, 306, 0, 80, 0, 80, 80, 0, 0, 0, 0, 0)},
     # on the patched engine main's two gate verdicts differ on 421 inputs (294 where the interpreter folds the Unicode
     # 16 pair too) and the overlay's on none: the counts the two mains decide apart are withheld in both ports
     # (`case_count`)
     "newer engine": {("15.0.0", "any", "16"): (1500, 0, 669, 294, 0, 831, 421, 0, 0, 421, 358, 0, 0, 358),
                      ("16.0.0", "any", "16"): (1500, 0, 913, 538, 0, 587, 294, 0, 0, 294, 255, 0, 0, 255)},
-    "decorated world": {("15.0.0", "any", "16"): (1000, 0, 752, 355, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-                        ("16.0.0", "any", "16"): (1000, 0, 752, 355, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0)},
+    # 355 inputs held a withheld claim on the equal side before #179 and #178 (fix/diffgate-178-179)
+    "decorated world": {("15.0.0", "any", "16"): (1000, 0, 752, 367, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+                        ("16.0.0", "any", "16"): (1000, 0, 752, 367, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0)},
 }
 # The committed inputs on which main's two gate verdicts agree and the overlay's do not. Without --strict: y2, where the
 # port's main alone counts a `def test_` after U+FEFF and its two false verdicts are withheld (PASS) while the Python's

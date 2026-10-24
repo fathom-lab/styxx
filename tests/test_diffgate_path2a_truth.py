@@ -55,15 +55,25 @@ DECIDED = ("VERIFIED", "CONTRADICTED")
 # Pass 9 (NOTE_path2a_ninth_pass_2026_10_04): the C-1 switch is removed, and no figure here moves. The switch did keep
 # attributable verdicts under a U+FEFF before the summary, or a sentence naming styxx beside U+2028, which main's two
 # ports read as they read the plain summary: the transformed worlds at the end of this module.
-PINNED = {"cases": 1706, "main raises": 0, "decided": 7614, "false": 1535, "attributable": 1206, "abstained": 1591,
-          "attributable abstained": 1206, "right": 5897, "right lost": 253, "undecided": 182,
-          "undecided abstained": 39, "unjudged": 0, "unjudged abstained": 0, "false other": 329,
-          "false other abstained": 93}
-# The port judged in its own terms: 1,100 attributable claims, of which 942 carry the same main record in Python and
+# #179 and #178 (fix/diffgate-178-179): main's reading moved and no overlay rule did; the V101 counterfactual reads
+# every count main takes as main reads it (tests/_p2a_truth.py). main abstains (#178) on 60 claims it decided (57 test
+# counts and 3 symbols, in 22 cases, each holding triple quotes): decided 7614 -> 7554 in Python, 7393 -> 7333 in the
+# port. main reads `async def` (#179), so a test or function made async, or changed while async, is counted as added:
+# a false verdict the counterfactual attributes to #101. Attributable 1206 -> 1230 in Python (35 new, each over an
+# added `async def` line; 11 leave, 7 of them to main's #178 abstention) and 1100 -> 1124 in the port, each withheld.
+# Of the right verdicts the gate printed, 5,644 -> 5,569 in Python, 45 are withheld by #101, 28 are main's own #178
+# abstention, and 2 become false (p2a-101:20260930:217 claim 5 and :379 claim 0, "Added 2 tests." VERIFIED over one
+# async test defined twice in a file: main counts `def` lines and CPython binds one name, the duplicate-definition
+# limit main already had for `def`).
+PINNED = {"cases": 1706, "main raises": 0, "decided": 7554, "false": 1547, "attributable": 1230, "abstained": 1616,
+          "attributable abstained": 1230, "right": 5828, "right lost": 259, "undecided": 179,
+          "undecided abstained": 38, "unjudged": 0, "unjudged abstained": 0, "false other": 317,
+          "false other abstained": 89}
+# The port judged in its own terms: 1,124 attributable claims, of which 966 carry the same main record in Python and
 # 158 are read otherwise by Python's main (paths and names outside ASCII, which the two templates extract apart).
-PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7393, "abstained": 1452, "right": 5739, "right lost": 177,
-               "false": 1385, "attributable": 1100, "attributable abstained": 1100, "false other": 285,
-               "false other abstained": 49, "undecided": 269, "undecided abstained": 126}
+PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7333, "abstained": 1477, "right": 5670, "right lost": 183,
+               "false": 1397, "attributable": 1124, "attributable abstained": 1124, "false other": 273,
+               "false other abstained": 45, "undecided": 266, "undecided abstained": 125}
 PINNED_GIT = {"cases": 96, "main raises": 0, "with R, C or T": 16, "decided": 63, "abstained": 14, "false": 17,
               "attributable": 14, "attributable abstained": 14, "right": 46, "right lost": 0, "false other": 3,
               "false other abstained": 0}
@@ -981,8 +991,10 @@ def _transformed(how: str) -> list:
     return out
 
 
-# The attributable false verdicts of each transformed world, in Python and in the port: every one is withheld.
-TRANSFORMED = {"cjk2": (1073, 969), "insent": (1193, 1087), "bom": (1175, 1087), "styxx": (1193, 1087)}
+# The attributable false verdicts of each transformed world, in Python and in the port: every one is withheld. Each
+# 24 more in both ports since #179 and #178 (fix/diffgate-178-179), as on the plain world: the changed async tests and
+# functions main now counts, attributed to #101.
+TRANSFORMED = {"cjk2": (1097, 993), "insent": (1217, 1111), "bom": (1199, 1111), "styxx": (1217, 1111)}
 
 
 @pytest.mark.parametrize("how", sorted(TRANSFORMED))
