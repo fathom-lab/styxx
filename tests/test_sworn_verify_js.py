@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 JS = ROOT / "styxx" / "_data" / "sworn_verify.js"
 REPLAY = ROOT / "conformance" / "sworn" / "replay_js.js"
 INDEX = ROOT / "conformance" / "sworn" / "index.json"
+SET_V2 = ROOT / "conformance" / "sworn" / "receipt_v2"
 BAR = 1689                       # SPEC B3, frozen before the verifier was written
 
 
@@ -32,18 +33,29 @@ def _node():
     return exe
 
 
-@pytest.fixture(scope="module")
-def report(tmp_path_factory):
-    if not INDEX.exists():
-        pytest.skip("the conformance set is not in this checkout")
+def _run_report(tmp_path_factory, *extra):
     out = tmp_path_factory.mktemp("replay") / "replay.json"
-    p = subprocess.run([_node(), str(REPLAY), "--json", str(out), "--quiet"],
+    p = subprocess.run([_node(), str(REPLAY), *extra, "--json", str(out), "--quiet"],
                        cwd=str(ROOT), capture_output=True, text=True)
     assert out.exists(), f"the harness wrote no report:\n{p.stdout}\n{p.stderr}"
     rep = json.loads(out.read_text(encoding="utf-8"))
     rep["_returncode"] = p.returncode
     rep["_stderr"] = p.stderr
     return rep
+
+
+@pytest.fixture(scope="module")
+def report(tmp_path_factory):
+    if not INDEX.exists():
+        pytest.skip("the conformance set is not in this checkout")
+    return _run_report(tmp_path_factory)
+
+
+@pytest.fixture(scope="module")
+def report_v2(tmp_path_factory):
+    if not (SET_V2 / "index.json").exists():
+        pytest.skip("the /v2 conformance set is not in this checkout")
+    return _run_report(tmp_path_factory, "--set", str(SET_V2))
 
 
 def test_the_verifier_parses_and_exports_its_entry_point():
@@ -85,6 +97,33 @@ def test_the_set_the_harness_ran_is_the_committed_set(report):
     assert report["vectors_total"] == index["vector_count"]
     # the harness projects the verifier's core onto the schema the set declares, never onto an expectation
     assert report["core_schema"] == index["core_schema"] == "styxx.sworn.verdict-receipt/v1"
+
+
+def test_the_v2_set_reproduces_every_in_scope_vector_it_carries(report_v2):
+    """The /v2 set beside the /v1 one (papers/sworn/NOTE_certifies_correction_2026_10_24.md) holds the
+    browser verifier to the two strings /v2 moved. Its in-scope count is the set's own, counted here from
+    its vectors by B1's rule; unlike SPEC B3's 1689 for the /v1 set it was not frozen before the code."""
+    index = json.loads((SET_V2 / "index.json").read_text(encoding="utf-8"))
+    in_scope = 0
+    for meta in index["families"].values():
+        for v in json.loads((SET_V2 / meta["file"]).read_text(encoding="utf-8"))["vectors"]:
+            if v["mode"] == "inline" and set(v.get("requires") or []) <= {"manifest"}:
+                in_scope += 1
+    assert in_scope > 0
+    assert report_v2["core_schema"] == index["core_schema"] == "styxx.sworn.verdict-receipt/v2"
+    assert report_v2["set_sha256"] == index["set_sha256"]
+    assert report_v2["ran"] == in_scope and report_v2["passed"] == in_scope, report_v2["failures"][:3]
+    assert report_v2["failed"] == 0 and report_v2["_returncode"] == 0, report_v2["_stderr"]
+
+
+def test_a_set_that_declares_no_core_schema_is_refused(tmp_path):
+    index = json.loads(INDEX.read_text(encoding="utf-8"))
+    del index["core_schema"]
+    (tmp_path / "index.json").write_text(json.dumps(index), encoding="utf-8")
+    (tmp_path / "blobs.json").write_text("{}", encoding="utf-8")
+    p = subprocess.run([_node(), str(REPLAY), "--set", str(tmp_path), "--quiet"],
+                       cwd=str(ROOT), capture_output=True, text=True)
+    assert p.returncode == 2 and "REFUSED" in p.stderr and "core_schema" in p.stderr
 
 
 def test_what_is_skipped_is_counted_and_reasoned(report):

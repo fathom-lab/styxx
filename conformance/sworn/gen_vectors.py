@@ -203,6 +203,19 @@ SETS: Dict[str, Dict[str, Any]] = {
     "sworn": {"dir": SET_DIR, "sources": list(SOURCES), "sources_note": SOURCES_NOTE, "spec": SPEC_PATH,
               "core_schema": "styxx.sworn.verdict-receipt/v1", "pin": "styxx.sworn.verdict-receipt/v1",
               "family_by_class": FAMILY_BY_CLASS, "rule_contract": RULE_CONTRACT},
+    # The /v2 set beside it: its cores carry the live schema, so nothing is pinned; its only source is
+    # pure (no git, no repository tree, no node), so every call it makes records. Its rule contract is
+    # the /v1 set's to keep; this set pins the two strings /v2 moved and the clauses of its sentence.
+    "receipt_v2": {"dir": SET_DIR / "receipt_v2", "sources": ["tests/test_sworn_receipt_v2.py"],
+                   "sources_note": ("the /v2 step's own source (papers/sworn/NOTE_certifies_correction_2026_10_24.md): "
+                                    "one core per clause of the /v2 certifies sentence that a document, a manifest and "
+                                    "an in-memory tree can show, and /v2, /v1 and /v0 receipts checked by a verifier "
+                                    "that issues /v2"),
+                   "spec": "papers/sworn/NOTE_certifies_correction_2026_10_24.md",
+                   "core_schema": "styxx.sworn.verdict-receipt/v2", "pin": None,
+                   "family_by_class": {"TestCoreV2": "core_v2", "TestReceiptV2": "check_v2",
+                                       "TestReceiptV1UnderV2": "check_v1", "TestReceiptV0UnderV2": "check_v0"},
+                   "rule_contract": {}},
 }
 
 REQUIRES_LEGEND = {
