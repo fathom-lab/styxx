@@ -215,10 +215,15 @@ def flavour(mod) -> str:
 # claim it withheld it no longer does: path2:a1-an-added-async-test-abstains-the-count, "Added 0 tests.", which main now
 # CONTRADICTS, as the overlay's model of main's count read it. The three other verdicts that move and stay decided are
 # path2:v1-limit-an-added-async-def-is-not-read and fuzz 20260930:1417 (to VERIFIED) and fuzz 20260930:1355 (to
-# CONTRADICTED). The same keys move under the POSIX flavour.
+# CONTRADICTED). The same keys move under the POSIX flavour. Review 3 of fix batch 1 (the same branch): main abstains
+# on 121 more claims it decided where #205's seams part its two readers or a test name is defined twice, one line
+# after `async`: 73 test counts before a `def` holding U+FEFF, 39 symbols (a U+FEFF before the name or a name run on
+# into a code point from U+0080 up), 4 at a header's edge (1 test count, 3 symbols) and 5 test counts on a name defined
+# twice; 39 of them were withheld before (`tests` -25, `split` -4, `redefined` -1, `extract` -9 on the symbol), and
+# `split` withholds no committed claim now.
 ABSTENTIONS = {
     "windows": {
-        "decided": 12179, "main raises": 6,
+        "decided": 12058, "main raises": 6,
         "file_created:case": 3, "file_created:dir": 65, "file_created:divergent": 15, "file_created:dot": 20,
         "file_created:dot_earliest": 4, "file_created:dot_tier": 11, "file_created:extract": 43, "file_created:odd": 1,
         "file_created:tier": 9,
@@ -231,19 +236,22 @@ ABSTENTIONS = {
         "files_changed_count:count": 375, "files_changed_count:divergent": 227, "files_changed_count:extract": 4,
         "files_changed_count:seam": 6,
         "only_touches:divergent": 108, "only_touches:extract": 154, "only_touches:only": 32, "only_touches:shape": 29,
-        "symbol_added:again": 3, "symbol_added:extract": 24, "symbol_added:symbol": 186,
-        "tests_added:redefined": 18, "tests_added:split": 4, "tests_added:tests": 468,
+        "symbol_added:again": 3, "symbol_added:extract": 15, "symbol_added:symbol": 186,
+        "tests_added:redefined": 17, "tests_added:tests": 443,
     },
 }
 # Under the POSIX flavour main reads `c:x.py` as a bare name not in the diff, so three decided drive-like claims are
 # UNCHECKABLE on main to begin with: path2a:guard-drive-like-path claim 0, and fuzz 20260930:1033 and :1590.
-ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12176, "file_touched:odd": 4}
+ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12055, "file_touched:odd": 4}
 del ABSTENTIONS["posix"]["file_created:odd"], ABSTENTIONS["posix"]["file_deleted:odd"]
 # main's own reading depends on the interpreter's Unicode tables where the inputs probe letters added in Unicode 14 and
 # 16 (#161's k2, x1 and y3 cases). Measured on CPython 3.12 (Unicode 15.0) and 3.14 (16.0); for Unicode 13.0 and 14.0
 # (CI's 3.9 to 3.11) by re-reading the inputs with the five Unicode 14 letters present mapped to code points no
 # version assigns (NOTE_path2a_second_pass_2026_09_30, I-10): no figure moved. On 16.0 main reads the y3 name
-# `fo` + U+105C0 whole and CONTRADICTS it, so it is not a VERIFIED symbol the overlay withholds. Unicode 15.1 (CPython
+# `fo` + U+105C0 whole and CONTRADICTS it, so it is not a VERIFIED symbol the overlay withholds; since review 3 of fix
+# batch 1 it also reads x1's claimed name `foo` + U+1C89 + `bar` whole and decides it (VERIFIED, withheld by
+# `extract`), where on 15.0 the claimed name is `foo`, run on into U+1C89, and main abstains (#205's seam after a name):
+# one more decided claim and the same count withheld. Unicode 15.1 (CPython
 # 3.13; NOTE_path2a_seventh_pass_2026_09_30, I-5): the committed inputs hold no code point assigned in 15.0 or 15.1
 # (the sixth integration review's inventory: 99 distinct code points from 0x80 up, whose only letters added after 13.0
 # are the five of Unicode 14, and whose unassigned ones are Unicode 16's), so its figures are 15.0's.
@@ -254,7 +262,7 @@ def pinned_abstentions(fl: str) -> dict:
     v = unicodedata.unidata_version
     pin = dict(ABSTENTIONS[fl])
     if v == "16.0.0":
-        pin["symbol_added:extract"] -= 1
+        pin["decided"] += 1
     else:
         assert v in UNICODE_SAME, f"Unicode {v}: measure the PATH-2a abstention figures on it and pin them here"
     return pin
@@ -324,8 +332,10 @@ def test_abstain_only_port(work):
         # line holding a character of _READ_APART, and the overlay's view 0 is the port's own cut, so the overlay
         # withholds less where the two mains now read a diff alike. #179 and #178 (fix/diffgate-178-179): (12264, 2538)
         # before; the port's main abstains on the `def` counts where a counted line sits outside Python source (#178)
-        # and reads `async def` (#179), which the overlay's model of main's count reads with it
-        assert (rep["counts"]["decided"], rep["counts"]["abstained"]) == (11983, 2559), rep["counts"]
+        # and reads `async def` (#179), which the overlay's model of main's count reads with it. (11983, 2559) before
+        # review 3 of fix batch 1, where the port's main abstains where #205's seams part the two readers and on a test
+        # name defined twice, one line after `async`, as the Python's does
+        assert (rep["counts"]["decided"], rep["counts"]["abstained"]) == (11863, 2482), rep["counts"]
 
 
 def test_lockstep_python(M, inputs):
@@ -2684,12 +2694,15 @@ BAR_C = {
     # gates part under the overlay alone on y2 only without --strict (six inputs before). #179 and #178
     # (fix/diffgate-178-179): on every row one input leaves the diff side for the equal side (58 -> 57 on CPython 3.12's
     # Windows row) and five more inputs on the equal side hold a withheld claim (1151 -> 1156 there); no gate column
-    # moves. Measured on CPython 3.12.10 and 3.14.2, Node 24.13.0
+    # moved. Review 3 of fix batch 1 (the same branch): main's two ports abstain alike where #205's seams parted them,
+    # so the diff side shrinks again (57 -> 15 on CPython 3.12's Windows row), main's two gates part without --strict
+    # on 1 input (8 before) and the overlay's on 1 (9), and y2 leaves the inputs where only the overlay's part (main
+    # abstains on its claims in both ports). Measured on CPython 3.12.10 and 3.14.2, Node 24.13.0
     "committed": {
-        ("15.0.0", "windows", "16"): (6672, 3, 6134, 1156, 478, 57, 8, 9, 1, 0, 13, 10, 2, 5),
-        ("15.0.0", "posix", "16"): (6672, 3, 6137, 1156, 478, 54, 8, 9, 1, 0, 12, 10, 2, 4),
-        ("16.0.0", "windows", "16"): (6672, 3, 6135, 1157, 480, 54, 9, 10, 1, 0, 14, 10, 2, 6),
-        ("16.0.0", "posix", "16"): (6672, 3, 6138, 1157, 480, 51, 9, 10, 1, 0, 13, 10, 2, 5),
+        ("15.0.0", "windows", "16"): (6672, 3, 6176, 1161, 478, 15, 1, 1, 0, 0, 12, 4, 2, 10),
+        ("15.0.0", "posix", "16"): (6672, 3, 6179, 1161, 478, 12, 1, 1, 0, 0, 11, 4, 2, 9),
+        ("16.0.0", "windows", "16"): (6672, 3, 6177, 1162, 480, 12, 2, 2, 0, 0, 14, 4, 2, 12),
+        ("16.0.0", "posix", "16"): (6672, 3, 6180, 1162, 480, 9, 2, 2, 0, 0, 13, 4, 2, 11),
     },
     # every input of this shape where main's two ports decide the symbol claim apart parts the gate verdicts under the
     # overlay, since the tests or count claim that made both of main's gates FAIL is withheld in both ports. Before
@@ -2700,25 +2713,30 @@ BAR_C = {
     # (44 in all; 52 where the interpreter knows U+105C0 as a letter too). #179 and #178 (fix/diffgate-178-179): main
     # reads `async def` now, so the same two seams part its two ports on the shape's `async def` lines as well: 65 in
     # all, 80 where the interpreter knows U+105C0 as a letter; each of the 21 (28) inputs newly apart is an `async def`
-    # line with U+FEFF or a name running on into a letter outside ASCII
-    "line break": {("15.0.0", "any", "16"): (600, 0, 535, 321, 0, 65, 0, 65, 65, 0, 0, 0, 0, 0),
-                   ("16.0.0", "any", "16"): (600, 0, 520, 306, 0, 80, 0, 80, 80, 0, 0, 0, 0, 0)},
+    # line with U+FEFF or a name running on into a letter outside ASCII. Review 3 of fix batch 1 (the same branch):
+    # both of main's ports abstain on the symbol claim there now (#205's seams before and after a name), so every input
+    # of the shape is on the equal side, under either interpreter
+    "line break": {("15.0.0", "any", "16"): (600, 0, 600, 386, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+                   ("16.0.0", "any", "16"): (600, 0, 600, 386, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)},
     # on the patched engine main's two gate verdicts differ on 421 inputs (294 where the interpreter folds the Unicode
     # 16 pair too) and the overlay's on none: the counts the two mains decide apart are withheld in both ports
     # (`case_count`)
     "newer engine": {("15.0.0", "any", "16"): (1500, 0, 669, 294, 0, 831, 421, 0, 0, 421, 358, 0, 0, 358),
                      ("16.0.0", "any", "16"): (1500, 0, 913, 538, 0, 587, 294, 0, 0, 294, 255, 0, 0, 255)},
-    # 355 inputs held a withheld claim on the equal side before #179 and #178 (fix/diffgate-178-179)
-    "decorated world": {("15.0.0", "any", "16"): (1000, 0, 752, 367, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-                        ("16.0.0", "any", "16"): (1000, 0, 752, 367, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0)},
+    # 355 inputs held a withheld claim on the equal side before #179 and #178 (fix/diffgate-178-179), 367 before review
+    # 3 of fix batch 1, where main abstains itself on the test counts the overlay withheld in two of them (a test name
+    # defined twice in one section, one line after `async`)
+    "decorated world": {("15.0.0", "any", "16"): (1000, 0, 752, 365, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+                        ("16.0.0", "any", "16"): (1000, 0, 752, 365, 248, 0, 0, 0, 0, 0, 0, 0, 0, 0)},
 }
-# The committed inputs on which main's two gate verdicts agree and the overlay's do not. Without --strict: y2, where the
-# port's main alone counts a `def test_` after U+FEFF and its two false verdicts are withheld (PASS) while the Python's
-# right CONTRADICTED stands (FAIL). #161's four f2 separator inputs (a vertical tab, a form feed, U+2028 or U+2029
+# The committed inputs on which main's two gate verdicts agree and the overlay's do not. Without --strict: none since
+# review 3 of fix batch 1. y2 was here, where the port's main alone counted a `def test_` after U+FEFF and its two false
+# verdicts were withheld (PASS) while the Python's right CONTRADICTED stood (FAIL); both mains abstain on its claims now
+# (#205's seam before a `def`, PORT_161). #161's four f2 separator inputs (a vertical tab, a form feed, U+2028 or U+2029
 # before `def test_a`) and f2's context line were here too until #205: main's two ports read them alike now (PORT_161).
 # Under --strict: two text-seam inputs where only the port's main reads a path claim, which `extract` withholds there.
 GATES_APART_UNDER_THE_OVERLAY_ONLY = {
-    "no --strict": {"path2:y2-a-changed-test-beside-a-created-bom-test-under-bare-hunks"},
+    "no --strict": set(),
     "--strict": {"p2a-seam:4242:335", "p2a-seam:4242:487"},
 }
 
@@ -2981,8 +2999,9 @@ XPORT_CASES = [
      [("UNCHECKABLE", "tests"), ("UNCHECKABLE", "count")], [("UNCHECKABLE", None), ("UNCHECKABLE", "count")], "PASS"),
     # B-3: an added def whose name runs into an accented letter, or a CJK line holding `def`, that no claim names: the
     # false tests verdict is withheld. Where the claimed name is that run, CPython's \b reads the accented letter as a
-    # word character and the port's does not, so the two mains decide the symbol claim apart (the diff side of C(iii));
-    # the tests claim is withheld in both, and the gates part on the symbol claim alone
+    # word character and the port's does not, so the two mains decided the symbol claim apart (the diff side of C(iii));
+    # the tests claim is withheld in both, and the gates parted on the symbol claim alone. Since review 3 of fix batch 1
+    # both mains abstain on that symbol claim (#205's seam after a name), and the gates agree
     ("B3-an-accented-def-elsewhere", "Added function helper. Added 1 test.",
      D_TEST_ADDED + D_HELPER.replace("+def helper():\n", "+def helper():\n+def caf" + chr(0xE9) + "():\n"),
      [("VERIFIED", None), ("UNCHECKABLE", "tests")], [("VERIFIED", None), ("UNCHECKABLE", "tests")], "PASS"),
@@ -2990,7 +3009,7 @@ XPORT_CASES = [
      [("VERIFIED", None), ("UNCHECKABLE", "tests")], [("VERIFIED", None), ("UNCHECKABLE", "tests")], "PASS"),
     ("B3-the-claimed-name-runs-on", "Added function caf. Added 1 test.",
      D_TEST_ADDED + D_HELPER.replace("+def helper():\n", "+def caf" + chr(0xE9) + "():\n"),
-     [("CONTRADICTED", None), ("UNCHECKABLE", "tests")], [("VERIFIED", None), ("UNCHECKABLE", "tests")], "FAIL/PASS"),
+     [("UNCHECKABLE", None), ("UNCHECKABLE", "tests")], [("UNCHECKABLE", None), ("UNCHECKABLE", "tests")], "PASS"),
     # a Unicode 16 case pair, U+A7DC and U+019B. CPython 3.9 to 3.12 (Unicode 15 or older) key the two paths apart and
     # Node 24 (Unicode 16) merges them, so main's two ports may count 3 and 2 files: the count is withheld in both
     # whatever each main reads (`case_count`), and the changed test's false verdict too
@@ -3004,13 +3023,16 @@ XPORT_CASES = [
     # count claim, which is false (#101, #121) and withheld in both. The gates then part on the symbol claim alone
     # #205 (fix/diffgate-205-206): an added line holding U+001F, which only the Python's \s reads, now makes main
     # abstain on both `def` claims in both ports, so the pair that parted here is read alike (were "VC/CC FAIL/FAIL",
-    # [VERIFIED, `tests`] and [CONTRADICTED, `tests`], PASS/FAIL; and for C1-xl-count VC/CC, PASS/FAIL)
+    # [VERIFIED, `tests`] and [CONTRADICTED, `tests`], PASS/FAIL; and for C1-xl-count VC/CC, PASS/FAIL). Review 3 of fix
+    # batch 1: a U+FEFF in the gap after `def`, which only the port's \s reads, and a name run on into U+00E9, which only
+    # the port's \b ends, make both mains abstain on the symbol claim too (#205's seams), so C1-xl-bom and C1-xl-e-acute
+    # are read alike as well (were "CC/VC FAIL/FAIL", [CONTRADICTED, `tests`] and [VERIFIED, `tests`], FAIL/PASS)
     ("C1-xl-unit-separator", "Adds function foo. Added 0 tests.", D_TEST + D_LINES(["x = 1", "def", "\x1ffoo():"]),
      [("UNCHECKABLE", None), ("UNCHECKABLE", None)], [("UNCHECKABLE", None), ("UNCHECKABLE", None)], "PASS"),
     ("C1-xl-bom", "Adds function foo. Added 0 tests.", D_TEST + D_LINES(["x = 1", "def", "﻿foo():"]),
-     [("CONTRADICTED", None), ("UNCHECKABLE", "tests")], [("VERIFIED", None), ("UNCHECKABLE", "tests")], "FAIL/PASS"),
+     [("UNCHECKABLE", None), ("UNCHECKABLE", "tests")], [("UNCHECKABLE", None), ("UNCHECKABLE", "tests")], "PASS"),
     ("C1-xl-e-acute", "Adds function foo. Added 0 tests.", D_TEST + D_LINES(["def", "foo\xe9():"]),
-     [("CONTRADICTED", None), ("UNCHECKABLE", "tests")], [("VERIFIED", None), ("UNCHECKABLE", "tests")], "FAIL/PASS"),
+     [("UNCHECKABLE", None), ("UNCHECKABLE", "tests")], [("UNCHECKABLE", None), ("UNCHECKABLE", "tests")], "PASS"),
     ("C1-xl-count", "Adds function foo. 3 files changed.", _mod(".env") + _mod("env") + D_LINES(["def", "\x1ffoo():"]),
      [("UNCHECKABLE", None), ("UNCHECKABLE", "count")], [("UNCHECKABLE", None), ("UNCHECKABLE", "count")], "PASS"),
     # B-1: two changed paths that differ outside ASCII but not in case (CJK, Cyrillic, two accented letters): the count
@@ -3132,8 +3154,8 @@ XPORT_MAIN = {
     "B2-in-window-prefix": "CC/CC FAIL/FAIL", "B2-in-window-test-count": "C/CC FAIL/FAIL",
     "B2-wordish-before-the-verb": "C/CC FAIL/FAIL", "B2-noun-in-the-window": "CC/UC FAIL/FAIL",
     "B3-an-accented-def-elsewhere": "VC/VC FAIL/FAIL", "B3-a-cjk-line-holding-def": "VC/VC FAIL/FAIL",
-    "B3-the-claimed-name-runs-on": "CC/VC FAIL/FAIL", "C1-a-unicode-16-case-pair": "?C/?C FAIL/FAIL",
-    "C1-xl-unit-separator": "UU/UU PASS/PASS", "C1-xl-bom": "CC/VC FAIL/FAIL", "C1-xl-e-acute": "CC/VC FAIL/FAIL",
+    "B3-the-claimed-name-runs-on": "UC/UC FAIL/FAIL", "C1-a-unicode-16-case-pair": "?C/?C FAIL/FAIL",
+    "C1-xl-unit-separator": "UU/UU PASS/PASS", "C1-xl-bom": "UC/UC FAIL/FAIL", "C1-xl-e-acute": "UC/UC FAIL/FAIL",
     "C1-xl-count": "UC/UC FAIL/FAIL", "B1-cjk-names": "VC/VC FAIL/FAIL", "B1-cyrillic-names": "VC/VC FAIL/FAIL",
     "B1-two-accents": "VC/VC FAIL/FAIL", "B1-a-latin-case-pair": "CC/CC FAIL/FAIL", "B2-naive-inputs": "C/C FAIL/FAIL",
     "B2-joses-parser": "C/C FAIL/FAIL", "B2-cjk-word": "C/C FAIL/FAIL", "B2-count-cafe": "C/C FAIL/FAIL",
@@ -3341,8 +3363,9 @@ def test_bar_c_on_the_seeded_sets(name, M, tmp_path):
     an engine patched to fold U+A7CE and U+A7CF (unassigned through Unicode 16, standing in for a later version's
     pair), so main's two ports key such a pair of paths apart and decide count claims apart; `case_count` withholds
     those counts in both ports, and the test asserts that main's two ports do count apart there. `line break`: a `def`
-    that ends its line, where main's two ports decide the symbol claim apart on more than 100 inputs, and the gate
-    verdicts then part on that claim (the eighth pass kept every CONTRADICTED there to hide it). `decorated world`: the
+    that ends its line, where main's two ports decided the symbol claim apart on more than 100 inputs, and the gate
+    verdicts then parted on that claim (the eighth pass kept every CONTRADICTED there to hide it); since review 3 of fix
+    batch 1 both of main's ports abstain alike where #205's seams sit there. `decorated world`: the
     truth generator's families under decorations that leave main's two lists the same. On each: no split under the
     by-construction keys; where main's lists are the same, the same final lists and gate verdicts in both strict modes,
     on more inputs with a withheld claim than the floor; and the pinned counts of the rest."""
@@ -3361,14 +3384,19 @@ def test_bar_c_on_the_seeded_sets(name, M, tmp_path):
     if name == "line break":
         # #205: what still parts main's two ports on this shape is U+FEFF, the port's \s alone, and a name running on
         # into a letter outside ASCII (U+00E9, and U+105C0 where the interpreter knows it as a letter), which only the
-        # Python's \b reads as part of the name (#182's neighbourhood); no separator #205 reads alike parts them now
+        # Python's \b reads as part of the name (#182's neighbourhood); no separator #205 reads alike parts them now.
+        # Review 3 of fix batch 1 (fix/diffgate-178-179): main's two ports abstain on the symbol claim where those
+        # seams sit (#205's seams before and after a name), on 88 inputs under either interpreter, so none of the shape
+        # is on the diff side
         by_id = {it["id"]: it["diff"] for it in items}
         apart = [r["id"] for r in rows if not r.get("raises")
                  and R.how_lists_differ(r["a"]["claims"], r["ja"]["claims"]) == "diff"]
         runs_on = re.compile("(?:foo|Foo|helper)([^\x00-\x7f])")
-        assert apart and all(chr(0xFEFF) in by_id[i] or any(m.group(1).isalnum() for m in runs_on.finditer(by_id[i]))
-                             for i in apart), apart
-        assert len(apart) == counts["lists differ, diff side"]
+        seamed = [r["id"] for r in rows if not r.get("raises") and any(
+            x["kind"] == "symbol_added" and x["why"].startswith("an added line that would") and "(#205)" in x["why"]
+            for x in r["a"]["claims"])]
+        assert apart == [] and counts["lists differ, diff side"] == 0, apart
+        assert len(seamed) == 88 and all(chr(0xFEFF) in by_id[i] or runs_on.search(by_id[i]) for i in seamed), seamed
 
 
 # The port's decisions on #161's reproductions where its main alone counts a `def test_` after U+FEFF, a vertical tab, a
@@ -3378,12 +3406,16 @@ def test_bar_c_on_the_seeded_sets(name, M, tmp_path):
 # inputs are read alike by main's two ports now. After a vertical tab, U+2028 or U+2029 main abstains on both tests
 # claims in both ports (the port's main PASSes there, `MAIN_PASSES_SINCE_205`); after a form feed both mains count the
 # changed test, as a space re-indent, and the overlay withholds both claims in both ports (the Python FAILed on its
-# CONTRADICTED before: [VERIFIED, CONTRADICTED] with the old cut).
+# CONTRADICTED before: [VERIFIED, CONTRADICTED] with the old cut). Review 3 of fix batch 1 (fix/diffgate-178-179): the
+# two r1 inputs and y2 hold a `def test_` led by U+FEFF, which only the port's \s reads, so both mains abstain on every
+# tests claim there (#205's seam before a `def`) and PASS (`MAIN_PASSES_SINCE_THE_SEAM`); before, r1 read
+# FAIL [CONTRADICTED, VERIFIED] in Python and FAIL [CONTRADICTED, `tests`] in the port, and y2 FAIL [`split`, `tests`,
+# CONTRADICTED] and PASS [`split`, `tests`, `tests`].
 PORT_161 = {
     "path2:r1-a-bom-on-a-changed-test-does-not-hide-a-new-one":
-        ("FAIL", [("CONTRADICTED", None), ("VERIFIED", None)], "FAIL", [("CONTRADICTED", None), ("UNCHECKABLE", "tests")]),
+        ("PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)], "PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)]),
     "path2:r1-a-bom-on-a-changed-test-beside-two-new-ones":
-        ("FAIL", [("CONTRADICTED", None), ("VERIFIED", None)], "FAIL", [("CONTRADICTED", None), ("UNCHECKABLE", "tests")]),
+        ("PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)], "PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)]),
     "path2:f2-a-vertical-tab-is-not-a-line-break":
         ("PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)], "PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)]),
     "path2:f2-a-form-feed-is-not-a-line-break":
@@ -3393,11 +3425,14 @@ PORT_161 = {
     "path2:f2-a-paragraph-separator-is-not-a-line-break":
         ("PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)], "PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None)]),
     "path2:y2-a-changed-test-beside-a-created-bom-test-under-bare-hunks":
-        ("FAIL", [("UNCHECKABLE", "split"), ("UNCHECKABLE", "tests"), ("CONTRADICTED", None)],
-         "PASS", [("UNCHECKABLE", "split"), ("UNCHECKABLE", "tests"), ("UNCHECKABLE", "tests")]),
+        ("PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None), ("UNCHECKABLE", None)],
+         "PASS", [("UNCHECKABLE", None), ("UNCHECKABLE", None), ("UNCHECKABLE", None)]),
 }
 MAIN_PASSES_SINCE_205 = {"path2:f2-a-vertical-tab-is-not-a-line-break", "path2:f2-a-line-separator-is-not-a-line-break",
                          "path2:f2-a-paragraph-separator-is-not-a-line-break"}
+MAIN_PASSES_SINCE_THE_SEAM = {"path2:r1-a-bom-on-a-changed-test-does-not-hide-a-new-one",
+                              "path2:r1-a-bom-on-a-changed-test-beside-two-new-ones",
+                              "path2:y2-a-changed-test-beside-a-created-bom-test-under-bare-hunks"}
 
 
 def test_the_port_withholds_its_own_false_tests_verdicts_on_161s_reproductions(tmp_path):
@@ -3408,7 +3443,8 @@ def test_the_port_withholds_its_own_false_tests_verdicts_on_161s_reproductions(t
         b = N.gate_diff_text(cases[k]["summary"], cases[k]["diff"]).to_dict()
         assert (b["verdict"], [_said(x) for x in b["claims"]]) == (gate, want), k
         assert (js[k]["new"]["verdict"], [_said(x) for x in js[k]["new"]["claims"]]) == (js_gate, js_want), k
-        assert js[k]["main"]["verdict"] == ("PASS" if k in MAIN_PASSES_SINCE_205 else "FAIL"), k
+        assert js[k]["main"]["verdict"] == ("PASS" if k in MAIN_PASSES_SINCE_205 | MAIN_PASSES_SINCE_THE_SEAM
+                                            else "FAIL"), k
 
 
 # B-2 (NOTE_path2a_sixth_pass_2026_09_30): #161's joint #121 reproductions. V121's count is false too (a submodule
