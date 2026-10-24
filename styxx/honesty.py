@@ -26,7 +26,9 @@ have:
     **retrieval** backstop -> pass ``verify`` to escalate a confident answer to external grounding.
 
 The strongest *supplied* signal wins (``span_logits`` > ``logits`` > ``engine`` > ``confidence``),
-then ``verify`` runs as a second-opinion backstop on anything that passed.
+then ``verify`` runs as a second-opinion backstop on anything that passed. With none of the four
+supplied, nothing is checked: the answer passes (``method="none"``) unless you pass
+``on_no_signal="abstain"``.
 
 So one ``honest(...)`` call degrades gracefully across the models people actually deploy, and emits
 a :class:`HonestyVerdict` you can log as a compliance-grade attestation. It **flags / abstains** —
@@ -68,8 +70,9 @@ class HonestyVerdict(NamedTuple):
         What to return to the user: the original answer if it passed, or the ``abstention`` text
         if the gate fired / verification refuted it.
     action : str
-        ``"answered"`` (passed), ``"abstained"`` (confab gate fired / confidence below floor), or
-        ``"refuted"`` (external verification contradicted a confident answer).
+        ``"answered"`` (passed), ``"abstained"`` (confab gate fired / confidence below floor / no
+        signal supplied under ``on_no_signal="abstain"``), or ``"refuted"`` (external verification
+        contradicted a confident answer).
     abstained : bool
         ``True`` for ``"abstained"`` or ``"refuted"`` (the original answer was withheld).
     signal : float or None
@@ -77,7 +80,7 @@ class HonestyVerdict(NamedTuple):
         for the confidence gate); ``None`` if no detection signal was available.
     method : str
         Which signal decided: ``"span"`` | ``"single_pass"`` | ``"confidence"`` | ``"retrieval"`` |
-        ``"none"``.
+        ``"none"`` (no signal supplied: nothing was checked).
     confidence : float or None
         The effective confidence in the answer in ``[0, 1]`` (``1 - signal`` where defined).
     detail : str
@@ -174,6 +177,7 @@ def honest(
     engine: Any = None,
     verify: Optional[Callable[[str], Any]] = None,
     abstention: str = "I'm not sure.",
+    on_no_signal: str = "pass",
     **engine_kwargs: Any,
 ) -> HonestyVerdict:
     """The one-call, tier-adaptive honesty runtime: detect -> abstain/refute, with attestation.
@@ -210,10 +214,26 @@ def honest(
     a logit signal but no threshold, the gate cannot fire (it stays quiet and ``method`` reflects the
     signal as advisory) — calibrate first; the detector is load-bearing.
 
+    No signal at all (none of ``span_logits``, ``logits``, ``engine``, ``confidence``): nothing is
+    checked, ``method`` is ``"none"`` and ``signal`` is ``None``. ``prompt`` is read only by the
+    engine tier, so passing it alone supplies no signal. What happens then is ``on_no_signal``'s:
+      * ``"pass"`` (the default, the behaviour before this keyword existed) — the answer passes
+        through unchecked: ``action="answered"``, detail ``passed via none (signal n/a) -> answered``.
+        ``verify``, if given, still runs and can refute it.
+      * ``"abstain"`` — the answer is withheld: ``action="abstained"``, ``answer=abstention``, detail
+        ``no honesty signal supplied (span_logits, logits, engine or confidence) -> abstained``.
+        ``verify``, if given, still runs: a verifier that supports the answer lets it through as
+        ``"answered"``, one that refutes it gives ``"refuted"``, and an inconclusive one leaves it
+        abstained (``; verification inconclusive`` in the detail).
+    Any other value raises ``ValueError``. With any signal supplied ``on_no_signal`` does nothing; an
+    engine that errors (it fails open, ``method="engine"``) is a supplied signal, not this case.
+
     Returns
     -------
     HonestyVerdict
     """
+    if on_no_signal not in ("pass", "abstain"):
+        raise ValueError(f"on_no_signal must be 'pass' or 'abstain', got {on_no_signal!r}")
     signal: Optional[float] = None
     conf: Optional[float] = None
     method = "none"
@@ -276,6 +296,14 @@ def honest(
         return HonestyVerdict(
             abstention, "refuted", True, signal, "retrieval", conf,
             "external verification refuted the answer -> withheld")
+
+    if method == "none" and on_no_signal == "abstain" and v is not True:
+        # nothing was checked and the caller asked not to pass an unchecked answer; a verifier
+        # that supported it (v is True) is a check, so that answer falls through as "answered"
+        why = "" if verify is None else "; verification inconclusive"
+        return HonestyVerdict(
+            abstention, "abstained", True, None, "none", None,
+            f"no honesty signal supplied (span_logits, logits, engine or confidence){why} -> abstained")
 
     if verify is None:
         note = "UNVERIFIED (pass verify= for the truth check) -> answered"
