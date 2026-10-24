@@ -1,6 +1,8 @@
 """Tests for the unifying honesty runtime (styxx.honesty)."""
 from __future__ import annotations
 
+import pytest
+
 from styxx.honesty import honest, HonestyVerdict
 from styxx.single_pass import SinglePassCalibration
 
@@ -229,3 +231,71 @@ def test_supported_verification_still_says_verified():
     v = honest("42", confidence=0.9, verify=lambda a: True)
     assert v.action == "answered"
     assert "(verified)" in v.detail or "verified ->" in v.detail
+
+
+# --- on_no_signal: what a call with no honesty signal does (#234) -------------------
+
+def test_no_signal_default_is_unchanged():
+    # the default is "pass": the behaviour before the keyword existed, detail included
+    for v in (honest("42"), honest("42", prompt="q"), honest("42", on_no_signal="pass")):
+        assert v.action == "answered" and v.abstained is False and v.answer == "42"
+        assert v.method == "none" and v.signal is None and v.confidence is None
+        assert v.detail == "passed via none (signal n/a) -> answered"
+        assert bool(v) is True
+
+
+def test_no_signal_abstain_opt_in_withholds_the_answer():
+    v = honest("42", prompt="q", on_no_signal="abstain")
+    assert v.action == "abstained" and v.abstained is True and bool(v) is False
+    assert v.answer == "I'm not sure." and v.method == "none"
+    assert v.signal is None and v.confidence is None
+    assert v.detail == ("no honesty signal supplied (span_logits, logits, engine or confidence)"
+                        " -> abstained")
+    assert honest("42", on_no_signal="abstain", abstention="n/a").answer == "n/a"
+
+
+def test_no_signal_abstain_still_runs_verify():
+    # a verifier that supports the answer is a check: the answer goes through
+    v = honest("42", on_no_signal="abstain", verify=lambda a: True)
+    assert v.action == "answered" and v.answer == "42" and "(verified)" in v.detail
+    assert honest("42", on_no_signal="abstain", verify=lambda a: _RV("supported")).action == "answered"
+    # one that refutes it refutes it, as with the default
+    assert honest("42", on_no_signal="abstain", verify=lambda a: False).action == "refuted"
+    assert honest("42", verify=lambda a: False).action == "refuted"
+    # an inconclusive one (unclear, None, raised) leaves it abstained, and says so
+    def boom(a):
+        raise RuntimeError("network down")
+    for verifier in (lambda a: _RV("unclear"), lambda a: None, boom):
+        v = honest("42", on_no_signal="abstain", verify=verifier)
+        assert v.action == "abstained" and v.answer == "I'm not sure."
+        assert v.detail.endswith("; verification inconclusive -> abstained")
+        assert "verified" not in v.detail.replace("verification", "")
+
+
+def test_on_no_signal_does_nothing_when_a_signal_is_supplied():
+    assert honest("42", confidence=0.9, on_no_signal="abstain").action == "answered"
+    assert honest("42", confidence=0.1, on_no_signal="abstain").detail.startswith("confab gate fired")
+    # a logit signal with no threshold is advisory, not absent
+    v = honest("42", span_logits=[[10.0, 0.0]], on_no_signal="abstain")
+    assert v.action == "answered" and v.method == "span"
+    # an engine that errors fails open (method "engine"): a supplied signal, not this case
+    def broken(p, a):
+        raise RuntimeError("detector down")
+    v = honest("42", engine=broken, on_no_signal="abstain")
+    assert v.action == "answered" and v.method == "engine" and v.signal is None
+
+
+def test_on_no_signal_rejects_an_unknown_value():
+    for bad in ("answer", "refuse", "", None, "ABSTAIN"):
+        with pytest.raises(ValueError, match="on_no_signal"):
+            honest("42", on_no_signal=bad)
+    with pytest.raises(ValueError):                      # checked even when a signal is given
+        honest("42", confidence=0.9, on_no_signal="refuse")
+
+
+def test_honest_docstring_states_both_no_signal_behaviours():
+    doc = honest.__doc__
+    assert "No signal at all" in doc
+    assert '``"pass"`` (the default' in doc and '``"abstain"``' in doc
+    assert "passed via none (signal n/a) -> answered" in doc
+    assert "no honesty signal supplied (span_logits, logits, engine or confidence) -> abstained" in doc
