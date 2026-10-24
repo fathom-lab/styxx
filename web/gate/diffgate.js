@@ -221,6 +221,25 @@ function parseUnifiedDiffSides(diffText) {
   return sides;
 }
 
+function _pythonSourceLines(sides) {
+  // #178, as the Python's _python_source_lines: the added lines of each file whose path ends in .py or .pyi, its tail
+  // read with every trailing unit at or below U+0020 or from U+007F up removed, except those after an odd number of
+  // triple quotes in that file's added lines
+  const out = [];
+  for (const [p, [added]] of sides) {
+    let e = p.length;
+    while (e > 0 && (p.charCodeAt(e - 1) <= 32 || p.charCodeAt(e - 1) >= 127)) e--;
+    const head = p.slice(0, e);
+    if (!_PY_SUFFIXES.some(x => head.endsWith(x))) continue;
+    let q = 0;
+    for (const line of added) {
+      if (q % 2 === 0) out.push(line);
+      q += line.split('"""').length - 1 + line.split("'''").length - 1;
+    }
+  }
+  return out;
+}
+
 function _compatParams(line, at) {
   // The parameter list of a definition line: the text inside the first `(` at or after `at`,
   // whitespace-collapsed, or null when there is none. A list that does not close on the line is
@@ -591,6 +610,12 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
   // _READ_APART, with the Python's reason byte for byte
   const apart = _readApart(addedBlob);
   const apartWhy = apart === null ? null : `an added line holds ${apart}, which CPython refuses in source outside a string or a comment; this template counts \`def\` lines and cannot tell where it sits (#205)`;
+  // #178, as the Python's _gate: the same counts over one parse, every file's added lines and the lines of them
+  // _pythonSourceLines keeps
+  const sidesLines = [];
+  for (const [added] of sides.values()) for (const x of added) sidesLines.push(x);
+  const sidesBlob = sidesLines.join("\n");
+  const insideBlob = _pythonSourceLines(sides).join("\n");
   const claims = [];
   const sentences = _pySplitSentences(summaryText);
   const covered = new Set();
@@ -629,7 +654,12 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           } else {
             const tx = /^\s*(?:async[ \t\f]+)?def test_/gm;   // #179: `async def test_` too
             const got = (addedBlob.match(tx) || []).length;
-            if (got === n) {
+            const inside = (insideBlob.match(tx) || []).length;
+            const placed = (sidesBlob.match(tx) || []).length;
+            if (inside !== placed) {                         // #178
+              c.verdict = "UNCHECKABLE";
+              c.why = `${placed - inside} of the ${placed} \`def test_\` lines added sit in a file not read as .py or .pyi, or after an odd number of triple quotes in that file's added lines; this template counts \`def\` lines and cannot tell whether CPython defines a test there; claim says ${n} (#178)`;
+            } else if (got === n) {
               c.verdict = "VERIFIED"; c.why = `diff adds ${got} test functions, claim says ${n}`;
             } else if (BC1_BY_CONSTRUCTION && _TEST_NOUNS_NOT_FUNCTIONS.has(noun)) {
               c.verdict = "UNCHECKABLE";
@@ -648,8 +678,13 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           } else {
             const pat = new RegExp("^\\s*(?:async[ \\t\\f]+def|def|class)\\s+" + _reEscape(d.name) + "\\b", "m");   // #179
             const hit = pat.test(addedBlob);
-            c.verdict = hit ? "VERIFIED" : "CONTRADICTED";
-            c.why = `added lines ${hit ? "do" : "do NOT"} define ${d.kind} ${pyRepr(d.name)}`;
+            if (pat.test(sidesBlob) && !pat.test(insideBlob)) {   // #178
+              c.verdict = "UNCHECKABLE";
+              c.why = `every added line that would define ${d.kind} ${pyRepr(d.name)} sits in a file not read as .py or .pyi, or after an odd number of triple quotes in that file's added lines; this template cannot tell whether CPython defines it there (#178)`;
+            } else {
+              c.verdict = hit ? "VERIFIED" : "CONTRADICTED";
+              c.why = `added lines ${hit ? "do" : "do NOT"} define ${d.kind} ${pyRepr(d.name)}`;
+            }
           }
         } else if (kind === "only_touches") {
           let prefs = [_rstrip(_norm(d.prefix), "/.")];      // sentence-final periods are not path

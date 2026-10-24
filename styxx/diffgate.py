@@ -498,6 +498,27 @@ def parse_unified_diff_sides(diff_text: str) -> dict:
     return sides
 
 
+def _python_source_lines(sides: dict) -> list:
+    """#178: the added lines of each file of `sides` whose path ends in .py or .pyi, except those after an odd number
+    of triple quotes (three double or three single) in that file's added lines. The path's tail is read with every
+    trailing code point at or below U+0020 or from U+007F up removed, so Python's strip() and the port's trim(), which
+    remove different sets, cannot part the decision. A string opened in a line the diff does not show is not seen.
+    The port's _pythonSourceLines is the same reading."""
+    out = []
+    for p, (added, _removed) in sides.items():
+        e = len(p)
+        while e and (ord(p[e - 1]) <= 32 or ord(p[e - 1]) >= 127):
+            e -= 1
+        if not p[:e].endswith(_PY_SUFFIXES):
+            continue
+        q = 0
+        for line in added:
+            if q % 2 == 0:
+                out.append(line)
+            q += line.count('"""') + line.count("'''")
+    return out
+
+
 def _compat_params(line: str, at: int) -> str | None:
     """The parameter list of a definition line: the text inside the first `(` at or after `at`,
     whitespace-collapsed, or `None` when the line has no `(` there. A list that does not close
@@ -1272,6 +1293,12 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     apart = _read_apart(added_blob)
     apart_why = (f"an added line holds {apart}, which CPython refuses in source outside a string or a comment; this "
                  f"template counts `def` lines and cannot tell where it sits (#205)") if apart else None
+    # #178: the same counts over one parse, `parse_unified_diff_sides`: every file's added lines (`sides_blob`), and
+    # the lines of them a Python file's added lines hold outside a string they open (`inside_blob`,
+    # _python_source_lines). Where the two counts differ the claim abstains. With no per-file parse, both are
+    # `added_blob` and nothing abstains.
+    sides_blob = added_blob if sides is None else "\n".join(x for a, _r in sides.values() for x in a)
+    inside_blob = added_blob if sides is None else "\n".join(_python_source_lines(sides))
     claims: list[DiffClaim] = []
     sentences = re.split(r"(?<=[.!?])\s+|\n+", summary_text)
     covered = set()
@@ -1341,7 +1368,15 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     else:
                         tx = r"^\s*(?:async[ \t\f]+)?def test_"                   # #179: `async def test_` too
                         got = len(re.findall(tx, added_blob, re.M))
-                        if got == n:
+                        inside = len(re.findall(tx, inside_blob, re.M))
+                        placed = len(re.findall(tx, sides_blob, re.M))
+                        if inside != placed:                                          # #178
+                            c.verdict = "UNCHECKABLE"
+                            c.why = (f"{placed - inside} of the {placed} `def test_` lines added sit in a file not "
+                                     f"read as .py or .pyi, or after an odd number of triple quotes in that file's "
+                                     f"added lines; this template counts `def` lines and cannot tell whether "
+                                     f"CPython defines a test there; claim says {n} (#178)")
+                        elif got == n:
                             c.verdict, c.why = "VERIFIED", f"diff adds {got} test functions, claim says {n}"
                         elif BC1_BY_CONSTRUCTION and noun in _TEST_NOUNS_NOT_FUNCTIONS:
                             # BC-2 repair 2: a case, file, scenario, suite or class is not a
@@ -1364,9 +1399,16 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     else:
                         pat = (r"^\s*(?:async[ \t\f]+def|def|class)\s+" + re.escape(d["name"]) + r"\b")   # #179
                         hit = bool(re.search(pat, added_blob, re.M))
-                        c.verdict = "VERIFIED" if hit else "CONTRADICTED"
-                        c.why = (f"added lines {'do' if hit else 'do NOT'} define "
-                                 f"{d['kind']} {d['name']!r}")
+                        if re.search(pat, sides_blob, re.M) and not re.search(pat, inside_blob, re.M):  # #178
+                            c.verdict = "UNCHECKABLE"
+                            c.why = (f"every added line that would define {d['kind']} {d['name']!r} sits in a "
+                                     f"file not read as .py or .pyi, or after an odd number of triple quotes in "
+                                     f"that file's added lines; this template cannot tell whether CPython defines "
+                                     f"it there (#178)")
+                        else:
+                            c.verdict = "VERIFIED" if hit else "CONTRADICTED"
+                            c.why = (f"added lines {'do' if hit else 'do NOT'} define "
+                                     f"{d['kind']} {d['name']!r}")
                 elif kind == "only_touches":
                     prefs = [_norm(d["prefix"]).rstrip("/.")]   # sentence-final periods are not path
                     if d.get("prefix2"):
