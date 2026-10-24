@@ -866,3 +866,252 @@ is `WT:_darkflobi_gate_2026_10_22/SIGNED_2026_10_24.md`). No sheet line is signe
 alternative of §13 applies. The drop rule has no line on that sheet (§13): signing every line with its default does
 not sign it. The gate runs the drop as built (`RULES` §4, §7), the departure §13 names, and that line is still owed
 before the merge.
+
+### 15.5 — 2026-10-24: the drop rule, signed (the line §13 and 15.4 owed)
+
+The lead put the drop rule to the operator in chat; the lead's record is
+`WT:_darkflobi_gate_2026_10_22/SIGNED_2026_10_24.md`, "The drop rule, signed 2026-10-24T15:51:31Z". The question:
+"When darkflobi cites a receipt for a number and the receipt contradicts it (failed range, different value, or a
+commit not in the repo's history), what should the gate do once blocking starts after the shadow week?", with two
+options, "Refuse the post (Recommended)", the plan's reading and OD-15's own text, and "Send it marked (as built)". The
+operator answered:
+
+> Refuse the post (Recommended)
+
+So §13's alternative for the drop rule applies, as that record words it: "a FAILED range, a differing pointer value
+and a non-ancestor commit refuse as truth findings and enter `n_refusals`; MALFORMED keeps the drop." `W:gate/gate.py`
+was changed to it and moved into place before this entry (15.6). `RULES` §4 and §7, with the parts of `RULES` §6 and
+of §5 and §13 here that name the drop, are restated below as the gate now runs them [R, `gate.py` `8b5a7381…`:
+`RESOLVER_TRUTH_REASONS`, `Resolver.commit_status`, `check`; `W:gate/tests/test_drop_rule.py` `10e6ed65…`, 20 tests over
+a fixture repository of its own, 15 of which fail against the old `gate.py` and all 20 pass against the new; the lead's
+record `WT:_darkflobi_gate_2026_10_22/p0/drop_rule_report.md`]. The rule file's text is not edited; where this
+restatement and the locked `gate.py` ever differ, the file decides, as `RULES` §6 says of its table, and the difference
+is printed in the RESULT.
+
+- **RULES §4, "A leaf that fails drops", restated.** A leaf that fails any comparison of form (a), or the count guard
+  of form (b), is still dropped from the receipts file certify reads and listed under `resolver` as before (`dropped`
+  with a reason each, `malformed_ranges`, `failed`, `dropped_leaves`, `read_from_not_at_pin`). The reasons, `RULES`
+  §4's list with the one it did not name: `no_read_from`, `prose_read_from`, `path_not_receipt_bearing`,
+  `commit_not_pin_or_ancestor`, `commit_unknown` (a 40-hex naming no commit the repository holds; the gate wrote it
+  before this change too), `path_missing_at_commit`, `leaf_not_numeric`, `object_not_json`, `object_not_utf8`,
+  `pointer_unresolved`, `pointer_not_numeric`, `range_malformed:<range_shape | no_token | tokens_<n> | fragment>`,
+  `value_differs`, `self_count_mismatch`, `self_count_duplicate`. Three of them are truth findings, each written
+  `resolver_failed:<reason>`, one per dropped leaf: `value_differs` (a FAILED range, its one token differing from the
+  leaf's value, or a pointer whose value differs; `resolver.failed` names the leaf, the committed value and the
+  `read_from`), `commit_not_pin_or_ancestor` (the commit exists and `git merge-base --is-ancestor <commit> <pin>`
+  answers no, exit 1) and `commit_unknown`. A drop for any other reason, every `range_malformed:*` among them, refuses
+  nothing by itself: its numeral reads unbound, marked on Telegram and refused on X, as before. A commit is called
+  unknown or not an ancestor only against a pin the repository holds, and only on git's own no: a pin the repository
+  does not hold is `gate_unavailable:pin_not_in_repo` and any other exit of `merge-base` is
+  `gate_unavailable:merge_base_exit<n>`, unavailabilities of `RULES` §6 and never a finding against a receipt.
+  Certify's split is unchanged: a row certify VERIFIES against the leaves the author offered reads unbound
+  (`legs.certify.ungrounded_after_drop`) and every other UNGROUNDED row is `certify_ungrounded`; a payload whose
+  dropped leaf is `value_differs` refuses on `resolver_failed:value_differs`, the certify row beside it still unbound.
+  So §4's heading sentence ("a drop is never a refusal by itself") and its closing sentence (those ranges, values and
+  commits "enter no `n_refusals`") now read for the MALFORMED ranges and the other drop reasons alone, and its [J]
+  paragraph, the departure, is answered by the operator's line.
+- **RULES §6, the truth refusal row, restated.** The codes: `sworn_failed:<reason>`; `certify_ungrounded`;
+  `audit_fail:<claim id>`; `resolver_failed:<reason>` (a cited leaf the resolver found contradicted by its committed
+  object or outside the pin's history, `<reason>` one of `value_differs`, `commit_not_pin_or_ancestor`,
+  `commit_unknown`; `gate.py` appends `("truth", "resolver_failed:%s" % reason)` once per such leaf). The row enters
+  `n_refusals` (G_RN), and Panel R upholds each refusal or does not (G_R). The other rows of §6 stand; the
+  unavailability row's `<why>` also takes `pin_not_in_repo` and `merge_base_exit<n>`.
+- **RULES §7, restated.** `resolver_failed:<reason>` takes the matrix's row of a positive finding, as every truth code
+  does: at a `public` destination with `REQUIRED` present, refuse (`action: cancel`), nothing sent, the draft kept at
+  `W:gate/refused/<draft_sha256>.txt`, the agent told the code and the `seq`; in shadow, `decision: refuse`,
+  `action: send`, `would_refuse: true`, sent as handed; to the operator's DM in every phase, `allow_marked`, sent with
+  `[gate: resolver_failed:<reason>]` after a blank line; on X, once E4 is gated, the truth refusal and not
+  `unbound_on_x`. The paragraph "The departure from OD-15's default" now reads: an UNGROUNDED row certify VERIFIES
+  against the offered leaves reads unbound and leaves marked (refused on X as `unbound_on_x`) when the drops behind it
+  are of the reasons that refuse nothing: the MALFORMED ranges, by the operator's line, and the other reasons as
+  `PLAN` P0.1's T12 drops them ("each failing alone drops the leaf"); the operator's line names three cases that
+  refuse and MALFORMED that drops, and names no other reason, so the others drop as built [J]. A FAILED range, a
+  differing pointer value and a commit outside the pin's history refuse, so for them no departure from OD-15's default
+  is left; the drop that remains, MALFORMED, is the operator's signed rule.
+- **PREREG §5, `n_refusals`, restated.** The live cell's truth refusals at public destinations: send lines with
+  `decision: refuse` whose `reasons` hold a code of the truth class as `RULES` §6 and this entry spell it
+  (`sworn_failed:<reason>`, `certify_ungrounded`, `audit_fail:<claim id>`, `resolver_failed:<reason>`, matched by
+  prefix as `gate.py` spells them), one per refused draft (`draft_sha256`), however many leaves or codes the line
+  holds; form, spoof, lint and unavailability refusals, and the MALFORMED ranges and the other drops that refuse
+  nothing, are counted beside it and enter no metric. The clause "that the dropped FAILED leaves enter no metric
+  departs from OD-15's default" is void: those leaves, differing pointer values and commits outside the pin's history
+  enter `n_refusals`. For G_R, Panel R is shown, for a `resolver_failed:` refusal, the sentence, the kind (`numeric`,
+  the certify route's) and the leaf as the resolver read it at the `read_from` target: for `value_differs` the
+  committed value `resolver.failed` names; for `commit_not_pin_or_ancestor` the object at that commit, with the words
+  that the commit is not in the pin's history; for `commit_unknown` the `read_from` string, with the words that no
+  commit has that name [J, §5's parenthesis for `audit_fail:` read for this code, before any count]. A refusal on the
+  commit alone can name an object that holds the sentence's value; Panel R may then answer YES, and the refusal is not
+  upheld, which G_R prices as an over-refusal.
+- **§13's drop-rule row, as signed.** Its alternative column applies and its default column ("as built") does not:
+  `gate.py` changed (15.6), and `RULES` §4 and §7 are restated here, before the merge.
+- **What does not move.** The rule file's blob (`77c7670f…`), the gates block (`4ed27cb98f72…`), the bars and the pin.
+  The positive control reads as before under its three readings (the drop-rule record: `tests/test_controls.py` 7 ok;
+  reading (ii) holds 0 FAILED leaves and 12 MALFORMED ranges, so it still leaves marked with `Nb` 3 of `Nn`), and the
+  negative control still refuses. `W:gate/README.md` (`de55f382…`, SAME) still says "A drop never refuses by itself"
+  (l.83) and that an UNGROUNDED row certify VERIFIES against the offered leaves "is unbound (marked), not a truth
+  refusal" (l.256-257), stale for the three reasons; it is not edited by this entry, and this entry and `gate.py`
+  decide.
+
+### 15.6 — 2026-10-24: the gate's files after the drop rule (item 2)
+
+Three files under `W:gate/` moved or landed after the table was read, each tested in a staging copy and moved into
+place by `os.replace` (a copy beside the target, its sha256 checked against the tested bytes, one rename), with
+`REQUIRED` absent before, during and after [R, the lead's record `WT:_darkflobi_gate_2026_10_22/p0/drop_rule_report.md`
+and its receipts under `p0/drop_rule/`: the Python suite under `W:gate/tests/` 209 tests OK in place after the move,
+the plugin's 79 of 79]. Every hash below is re-derived from the box for this entry. `gate.py` moved into place at
+2026-10-24T16:31:20Z (12:31:20 EDT) by the box's file times (its bytes 16:31:20.956Z, the folder's entry
+16:31:20.969Z; the box's statement).
+
+| what | path | sha256 | note |
+|---|---|---|---|
+| gate file | `W:gate/gate.py` | `8b5a738107064c64baec2c86012513d0fb2ace30cc9a2ba0242c388b61b2d52e` | 85704 bytes; the drop rule as signed (15.5), in place at 2026-10-24T16:31:20Z; before it `33cdf9b8…` (§11); `gate_sha256` from this row on `592dc579b5d049b4ede848f5b2b66e4c934f1fb91d06af1b230c00b291144254`, before it `387fc063ef1167f728c9c233e99d7ad42fb621d4ef69455b516ed8aa07b3db65` |
+| gate file | `W:gate/tests/test_gate.py` | `589450c79379c1b3128b786dc4c4e2002351b6d83f31e38b30c812fa6cd78ee2` | 23720 bytes; `test_T3_five_of_five_bound_then_one_dropped` asserts the signed rule; before it `d12167d3…` (§11) |
+| gate file | `W:gate/tests/test_drop_rule.py` | `10e6ed655e49890e2f7d462fcd93651d059814f2c908b7630c803b578c58727e` | 17248 bytes; new with the drop rule (15.5), 20 tests |
+
+**`gate_sha256`, the gate's statement about its own files.** By `Env.gate_sha256`'s rule (`W:gate/*.py`,
+`W:gate/helpers/*.py` and the six plugin files as installed, 18 files, each its name, a NUL, its LF bytes and a NUL),
+re-derived for this entry by a script that does not import `gate.py`: over the files the rows lock after this entry,
+`592dc579b5d049b4ede848f5b2b66e4c934f1fb91d06af1b230c00b291144254`; with `gate.py` rebuilt to `33cdf9b8…` from the
+recorded diff (`p0/drop_rule/gate_py.diff`) and every other file as it stands,
+`387fc063ef1167f728c9c233e99d7ad42fb621d4ef69455b516ed8aa07b3db65`, the digest 15.3 re-derived and every line of the
+ledger carries. The two test files are outside the digest. At this entry the ledger still holds its header and 13
+lines (sha256 `bf4ce3ce…`, head `9f8a90bb…`; no line since 15.3), so its `gate_sha256` changes between the dry
+attempts (seq 1 to 13, `387fc063…`) and the next line the gate writes (`592dc579…`).
+
+**How the RESULT reads the two.** §5's component (iv) reads "the lock-hashed gate files' digest", and the lock rows
+give two in turn. The RESULT reads each send line against the digest of the files locked when the line was written:
+`387fc063…` for the lines written before 2026-10-24T16:31:20Z (seq 1 to 13), `592dc579…` for every line after; a line
+after the move carrying `387fc063…`, or a line carrying any third digest, counts into (iv). It prints both digests, the
+seq at which the second begins, and (iv) for each. `reconcile.py` takes one `gate_sha256` in `--locks`: run with
+`592dc579…`, its `iv_lines` counts the six dry-attempt send lines, which the RESULT names and does not count; its
+`iv_lines_after_d0` is unaffected, D0 following the move. The dry attempts went to the canary chat and the operator's
+DM and sit in no cell either way (§3).
+
+`lock_hashes.py check --strict` at this entry, with the rows above: rows 80, changed 0, built since 0, absent 0,
+unreadable 0, unlocked 0, bytecode 0, exit 0; NOT BUILT: `W:skills/styxx-post/SKILL.md`; SKIPPED: the `plugins`
+subtree, whose digest re-read for this entry by here:3's rule is `519905d2…`, the 15.3 row's.
+
+### 15.7 — 2026-10-24: the pre-gate count of §12 step 3 (OD-1)
+
+`W:gate/pregate_count.py` (`d8182d79…`, SAME), run once on the box at 2026-10-24T16:49:34Z as §12 step 3 and
+`W:gate/README_census.md` say (`--before <opened_at> --pr-number N --pr-opened-at <opened_at>`); counts only, no text
+read into this entry:
+
+    py -3.12 -B W:gate/pregate_count.py --transcripts ~/.clawdbot/agents/main/sessions
+        --sessions-json ~/.clawdbot/agents/main/sessions/sessions.json --before 2026-10-23T18:31:28Z --days 28
+        --post WT:_channel_2026_09_29/channel_post.md@2026-09-29
+        --post WT:_channel_2026_10_04/capsule/UPDATE_2026_10_05.md --post WT:ANNOUNCE_2026_10_22.md
+        --pr-number 229 --pr-opened-at 2026-10-23T18:31:28Z --out W:gate/baseline/pre_gate_counts.json
+
+The three outward posts are those of `PLAN` here:9, each the bytes the provisional run read (the sha256 each row
+carries is the same in both files), and the transcripts are `main`'s, as the provisional runs read them. The output,
+`W:gate/baseline/pre_gate_counts.json`: sha256 `8ef0f779cbf0d1059e15aa1ac219df3536a44f4eafd8a56c93180f57613ac0e2`,
+4,941 bytes, `generated_at` 2026-10-24T16:49:34Z, `provisional: false`, `pr_number` 229, `pr_opened_at`
+2026-10-23T18:31:28Z, `gate_legs_run: false`, the window 2026-09-25T18:31:28Z to 2026-10-23T18:31:28Z, under
+`selector.py` `f27f9c80…` and `reconcile.py` `231a03e8…` (both SAME). The provisional version 15.1 names was copied
+byte for byte before the run to `W:gate/baseline/pre_gate_counts.provisional_85dac721.json` (`85dac721…`, 4,923 bytes;
+`baseline/` is never a lock row), so the count it holds is not discarded (here:7).
+
+**The count for OD-1's line: 40 cell-1 candidates** (`cell1_candidates.for_OD1_line`, the upper bound
+`pregate_count.py` builds): the 3 outward posts, all inside the window, give 37 (14, 20 and 3), and the transcripts
+give 3, all in unmapped sessions and 0 in the group session. Beside it, the group-only count, 37, which holds only under
+its condition (every payload outside the group session went to a chat that is not public, and no post fell on an edge
+day). The transcripts gave 47 payloads (39 assistant text, 8 `message` tool sends; 7 in the group session, 40
+unmapped), 13 selected, 8 bindable units, 19 numerals. The provisional versions' digests beside it, as §12 step 3
+asks: `d1bf118e0cacb2aa…` (08:26 local on 2026-10-23, under `selector.py` `bd51a842…`; here:7) and `85dac721…`
+(2026-10-23T17:11:46Z; 15.1), the latter giving the same 40 over a window ending 80 minutes earlier (43 payloads). A
+candidate is not a cell-1 unit: cell 1 needs the panel's label after close, and the pre-gate cell is counts only and
+feeds no gate (G_N reads the live cell's `n_cell1`).
+
+**Said plainly: OD-1 was signed with the count blank.** The operator signed the sheet (15.4) at 2026-10-24T14:23:41Z
+with OD-1's bracket blank: no pre-gate count stood on that line when he signed, and this count was made after the
+signature. It is not on OD-1 as signed; the RESULT prints it beside OD-1's blank line, with this file's digest and
+the provisional digests, and says that the sheet was signed without it.
+
+### 15.8 — 2026-10-24: the population rule against the payload kinds the ledger writes
+
+§3 ("Payload kinds `block` and `final` are the population; `tool` payloads are ledgered and excluded") and `RULES` §2
+(the same, citing the reply dispatcher, `D:auto-reply/reply/reply-dispatcher.js` l.70-72) name the dispatcher's three
+kinds. The plugin as installed (`index.js` `759ceb82…`: `PAYLOAD_KINDS`, `payloadKindOf`; `W:gate/plugin/README.md`,
+"where the calls sit") writes on a send line: at E1, `reply`, the fixed kind of `deliverReplies` (the dispatcher's own
+kind would ride as `replyKind` and be used when it is `tool`, `block` or `final`, and `deliverReplies` receives none
+from its caller in this build, the plugin README's P11); at E2, `outbound`, fixed (a payload's own kind never reaches
+the hook); at E3, `telegram_action`; on the timer's E2 send whose nonce matched, `anchor`; for a harness submission,
+`canary`; for any other kind an exit passes, `other`; and `final` for an exit that passes none. The ledger at this
+entry holds `telegram_action` three times, `reply` twice and `outbound` once, and no `block`, `final` or `tool` line.
+Read against the rule as frozen, kind by kind, without changing it:
+
+- `block`, `final`: in the population at a `public` destination outside the two keyed exclusions. No exit as built
+  writes `block`; `final` comes only from an exit that passes no kind, which none of E1 to E3 does.
+- `tool`: excluded. No exit as built writes it.
+- `anchor`: out, by its destination (`anchor_channel_hash`) and as the gate's own line (`RULES` §2, §9).
+- `canary`: out; it never delivers and is counted under the canary ledger (§7).
+- `reply` (E1), `outbound` (E2), `telegram_action` (E3) and `other`: **the rule does not fit them.** Its sentence names
+  the dispatcher's kinds, which no line as built carries. E2 and E3 carry no dispatcher kind at all (the `message`
+  tool, the gateway `send` RPC, cron, heartbeat and the exec-approval forwarder at E2; the `telegram` action tool at
+  E3), and E1's `reply` holds the dispatcher's `block`, `final` and `tool` payloads alike, so the exclusion the rule
+  names cannot be applied at E1: E1's `tool` payloads cannot be told from the rest on the line. Read literally (the
+  population is the `block` and `final` lines), the population as built is empty at every exit; read as §3's Exits
+  bullet and the gate sentence of §2 read the exits (E1, E2 and E3 gated, every message through them), it is every
+  public send line at E1 to E4 outside the keyed exclusions, with `tool` lines out wherever a line says `tool`.
+
+**What the RESULT must report** [J, entered before any line of the population exists: the dry attempts of 15.3 went to
+the canary chat and the operator's DM and sit in no cell]: the send lines by exit, `payload_kind`, `dest_class` and
+`dest_role`, every kind the ledger holds, `other` included; the cells over the second reading, the one the gated
+metrics are scored on, with the words "the population rule names the reply dispatcher's kinds, which no exit as built
+writes; the population is every public send line at the gated exits, and E1's tool payloads, which the line cannot
+tell from the rest, are inside it", and the count of E1 public lines beside them; and the literal reading's count
+(public `block` and `final` lines; 0 as built) beside the cells, said empty by construction. If a commit before D0
+passes the dispatcher's kind to E1, the plugin's hash moves under a row of §11's form before the merge or in an
+AMENDMENT after it, and from that line on E1 lines read `block`, `final` or `tool` and the `tool` lines leave. An
+operator line signed otherwise before the merge replaces this paragraph.
+
+### 15.9 — 2026-10-24: the review's minor findings, and three readings checked
+
+- **15.2, one sentence made exact.** "One file under `W:gate/` was added after the table was read, at the sitting:
+  `anchor_dest.txt`" names the one file added at the sitting that no row named and the lock does not exclude. The
+  sitting added more: `salt` and `config.json` (11:04:43 local, beside `anchor_dest.txt`; their rows read
+  `not built at the freeze` in §11 and are restated in 15.3), and the live state the lock excludes by design
+  (`ledger.jsonl`, `head.txt`, `plugin_sent_index.jsonl`, `sources/`, `refused/`, `pending/`, `tmp/`, and the scratch
+  folders `_runs/` and `_verify/`). Added since: `tests/test_drop_rule.py` (its row in 15.6) and
+  `baseline/pre_gate_counts.provisional_85dac721.json` (15.7; `baseline/` is never a row).
+- **Reading (c) of 15.3, checked.** `https://t.me/s/DFledger`, fetched with no Telegram login at
+  2026-10-24T16:50:35Z, redirects to `https://t.me/DFledger`: a landing page with the title "darkflobi ledger", "2
+  members" and one "View in Telegram" link, and no message on it (no message widget in the page); `https://t.me/DFledger`
+  reads the same. The supergroup has no public web view: a stranger reads a day's anchor in a Telegram client, not on
+  the web. OD-11's "anyone with the link reads" and §9's "read from the channel itself, as anyone can" hold through a
+  Telegram client only; no rule moves, and the RESULT says so in those words. [J] Telegram's web view serves channels
+  and not groups; the fetch is made again after the earliest anchor line is sent, and the RESULT prints what it showed.
+- **Reading (a) of 15.3, the anchor's choice.** `RULES` §9 chooses a day's anchor "among the bot's messages", and the
+  census code does not: `reconcile.py` `anchors_via_gate_verify` hands every message of the anchor destination to
+  `gate_verify.census_anchors` marked `from_bot: True`, and that function takes the earliest message in the anchor's
+  form naming the day. So an operator message in the anchor's form can be chosen as a day's anchor. Nothing prevents it
+  but the operator's practice: he is an admin of the supergroup and posts from his own client, outside every gated
+  exit, where `anchor_form_spoof` does not reach. What detects it: (1) the census reads every message in the anchor
+  destination whoever sent it (`RULES` §12; `census_chat` with the role `anchor_channel`), and a message of his pairs
+  with no delivering line, or takes the bot's line and leaves the bot's own message unpaired, so one message is `[u]`,
+  G-1 fails, and §5's component (ii) carries it into `unledgered_deliveries`, whose bar is 0 (`INVALID__exits_open`);
+  (2) `census_anchors` lists an anchor-form message naming a head other than the chain's own line for the day as
+  `mismatch` when it is the earliest (the day unanchored) and as `conflict` when it is later (the day flagged `[cf]`),
+  and one naming the same head as `duplicate`. Not detected by the code: which sender a day's chosen anchor came from;
+  an operator message that names the chain's own head and precedes the bot's would stand as the day's anchor. The
+  RESULT chooses each day's anchor among the bot's messages, by the keyed hash of the export's sender id against
+  `config.json`'s `bot_from_id_hmac`, as §9 says, prints every day where that choice differs from `census_anchors`',
+  and lists every message in the anchor destination by sender class (the bot or not), never by id.
+- **OD-11 (i), whether the canary chat is allowlisted.** Read by keyed hash in memory, no id printed: the canary chat
+  is not the one entry of `channels.telegram.groupAllowFrom` (that entry is a supergroup's id and keys to
+  `config.json`'s `group_hashes` entry, OD-6's allowlisted group), and `channels.telegram` holds no `groups` key, which
+  is this build's allowlist of chats (`D:config/group-policy.js` `resolveChannelGroupPolicy`: with no `groups`, every
+  group is allowed; `D:telegram/bot-handlers.js` l.387-392). `groupPolicy` reads `allowlist`, which in this build
+  filters a group message by its sender (`msg.from.id`) against `groupAllowFrom` and the pairing store
+  (`D:telegram/bot-handlers.js` l.356-386): a list of senders, not of chats. Both filter what the bot reads; neither is
+  read on a send, and the dry attempts to the canary chat were delivered (`ok: true` at seq 3, 5, 9 and 13). So OD-11
+  (i)'s "allowlisted" holds in no list on the box. The canary chat is private and named by its keyed hash alone, no
+  rule here depends on an allowlist (§3 excludes it by `canary_chat_hash`), and the RESULT names it "private, not
+  allowlisted". [J] The same reading makes OD-6's "allowlisted group" a chat id held in a list this build reads as
+  sender ids; the census reads the chats OD-12 exports, so a public send line to any other chat (the bot added to
+  another group) is outside every export, and the RESULT lists such lines by `dest_hash`, with their count.
+- **The pull request's body.** It said the exits are wired at the sitting "after the merge" and that no plugin is
+  installed and no gate runs, and its lists before the merge still named what 15.1 to 15.3 cover and the canary
+  re-plan, which 15.3 puts in an AMENDMENT after the merge. The body is corrected to the sitting as it ran and to these
+  entries, and its paragraph "The seal" names this file's blob after them.

@@ -8,7 +8,9 @@ counts, and every gate is named by some row; `Experiment` (power basis and non-v
 of the PREREG's section 5 shape to each of the eleven verdicts and reads no gate on a smoke; the Wilson numbers the
 power bases quote re-derive from `styxx.mind.wilson`; the rule file's LF-normalised sha256 is the one the PREREG prints;
 the lock table parses, names the pin, the snapshot and the plugins-subtree digest, and agrees with the box when a
-caller names the box; every verdict has a printable paragraph; the two helper scripts do what their docstrings say on
+caller names the box; every verdict has a printable paragraph; the refusal codes are RULES section 6's with the ones a
+dated section 15 entry restates (the drop rule the operator signed, `resolver_failed:<reason>`), compared with what
+`gate.py` emits when the box is named; the two helper scripts do what their docstrings say on
 a synthetic tree; the lint finds no listed string in the folder's documents; and none of the files, nor the CHANGELOG's
 unreleased entry, prints the words the lab never prints. Nothing here reads a transcript, a config value, a ledger or a
 chat; nothing needs a network or a GPU. The `Experiment` tests skip when the PREREG is not committed in the checkout,
@@ -570,6 +572,32 @@ def _rules_code_rows() -> dict:
     return out
 
 
+# the codes a dated entry under the PREREG's section 15 restates for a RULES section 6 row (the rule file is never
+# edited after the pull request opens): the drop rule as the operator signed it on 2026-10-24 (PREREG 15.5)
+RESTATED_TRUTH_CODES = ("resolver_failed:",)
+RESOLVER_TRUTH_REASONS = ("value_differs", "commit_not_pin_or_ancestor", "commit_unknown")
+RESTATED_ROW = re.compile(r"^- \*\*RULES §6, the (?P<cls>[a-z ]+) row, restated\.\*\*(?P<body>.*?)(?=^- \*\*|^#|\n\n|\Z)",
+                          re.M | re.S)
+
+
+def _section15() -> str:
+    return PREREG.read_text(encoding="utf-8").split("## 15. amendments before the merge", 1)[1]
+
+
+def _restated_code_rows() -> dict:
+    """{RULES section 6 class row: the text of the section 15 bullet that restates it}; the last entry for a row wins."""
+    return {m.group("cls"): m.group("body") for m in RESTATED_ROW.finditer(_section15())}
+
+
+def _code_rows_as_restated() -> dict:
+    """RULES section 6's rows, each with the codes section 15 restates for it appended."""
+    rows = _rules_code_rows()
+    for cls, body in _restated_code_rows().items():
+        assert cls in rows, f"section 15 restates a row RULES section 6 does not have: {cls}"
+        rows[cls] = rows[cls] + " " + body
+    return rows
+
+
 def test_the_rules_codes_and_the_prereg_truth_codes_agree():
     rows = _rules_code_rows()
     assert list(rows) == ["truth refusal", "form refusal", "spoof", "lint refusal", "unavailability on the line",
@@ -594,6 +622,33 @@ def test_the_rules_codes_and_the_prereg_truth_codes_agree():
     for stale in ("read_from_failed", "audit_claims_fail", "read_from_malformed", "ledger_append_failed",
                   "STYXX_SEALED_DIR"):
         assert stale not in prereg and stale not in RULES.read_text(encoding="utf-8"), stale
+
+
+def test_section_15_restates_the_signed_drop_rule_for_rules_4_6_7_and_prereg_5():
+    sec15 = _section15()
+    entry = sec15.split("### 15.5 ", 1)[1].split("\n### ", 1)[0]
+    assert "> Refuse the post (Recommended)" in entry and "2026-10-24T15:51:31Z" in entry
+    restated = _restated_code_rows()
+    assert list(restated) == ["truth refusal"], list(restated)
+    truth = restated["truth refusal"]
+    order = [m.group(1) for m in re.finditer(r"`([a-z_]+:?)", truth)]
+    assert tuple(order[:4]) == TRUTH_CODES + RESTATED_TRUTH_CODES, order
+    for reason in RESOLVER_TRUTH_REASONS:
+        assert f"`{reason}`" in truth, reason
+    assert "`n_refusals`" in truth and "G_R" in truth
+    # RULES section 4 restated: the full drop-reason list, with the one the rule file did not name
+    s4 = entry.split("- **RULES §4,", 1)[1].split("\n- **", 1)[0]
+    rules4 = " ".join(_rules_section(4).split())
+    listed = re.findall(r"`([a-z_]+(?::<[^`]*>)?)`", s4.split("The reasons,", 1)[1].split(". Three of them", 1)[0])
+    for reason in listed:
+        assert reason == "commit_unknown" or f"`{reason}`" in rules4, reason
+    assert "commit_unknown" in listed and "`commit_unknown`" not in rules4
+    assert all(r in listed for r in RESOLVER_TRUTH_REASONS)
+    # PREREG section 5's n_refusals restated: every truth code, the restated one among them
+    s5 = entry.split("- **PREREG §5, `n_refusals`, restated.**", 1)[1].split("\n- **", 1)[0]
+    for code in TRUTH_CODES + RESTATED_TRUTH_CODES:
+        assert f"`{code}" in s5, code
+    assert "- **RULES §7, restated.**" in entry and "- **§13's drop-rule row, as signed.**" in entry
 
 
 def _gate_findings(gate_py: str) -> list:
@@ -626,7 +681,7 @@ def test_the_rules_codes_are_the_codes_the_gate_emits_when_the_box_is_named():
     gate = Path(w_root) / "gate"
     gate_py = (gate / "gate.py").read_text(encoding="utf-8")
     plugin = (gate / "plugin" / "index.js").read_text(encoding="utf-8") + (gate / "gate.js").read_text(encoding="utf-8")
-    rows = _rules_code_rows()
+    rows = _code_rows_as_restated()
     found = _gate_findings(gate_py)
     assert len(found) >= 15, found
     computed = sorted({src for cls, prefix, src in found if prefix is None})
@@ -642,9 +697,9 @@ def test_the_rules_codes_are_the_codes_the_gate_emits_when_the_box_is_named():
             assert prefix == "sworn_" and '"truth" if s["verdict"] == "FAILED" else "form"' in gate_py, src
             continue
         assert f"`{prefix}" in rows[CLASS_ROWS[cls]], (cls, prefix)
-    # every code the RULES names is one the files can emit
+    # every code the RULES names, or section 15 restates, is one the files can emit
     literals = {p for _, p, _ in found if p}
-    for code in TRUTH_CODES + FORM_CODES:
+    for code in TRUTH_CODES + RESTATED_TRUTH_CODES + FORM_CODES:
         if code in ("sworn_failed:", "sworn_unresolved:", "sworn_withheld:"):
             assert '"sworn_%s:%s"' in gate_py, code
             continue
@@ -656,6 +711,24 @@ def test_the_rules_codes_are_the_codes_the_gate_emits_when_the_box_is_named():
         assert f'"{code}"' in gate_py, code
     assert '"ledger_error:%s"' in gate_py
     assert ("unavailable", "gate_unavailable:") in {(c, p) for c, p, _ in found}
+
+
+def test_the_restated_drop_rule_is_the_gates_when_the_box_is_named():
+    w_root = os.environ.get("STYXX_GATE_W_ROOT")
+    if not w_root:
+        pytest.skip("set STYXX_GATE_W_ROOT to read W:gate/gate.py against the drop rule section 15 restates")
+    gate_py = (Path(w_root) / "gate" / "gate.py").read_text(encoding="utf-8")
+    reasons = None
+    for node in ast.parse(gate_py).body:
+        if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "RESOLVER_TRUTH_REASONS"
+                                                for t in node.targets):
+            reasons = ast.literal_eval(node.value)
+    assert reasons == RESOLVER_TRUTH_REASONS, reasons
+    assert ("truth", "resolver_failed:") in {(c, p) for c, p, _ in _gate_findings(gate_py)}
+    truth = _restated_code_rows()["truth refusal"]
+    assert [r for r in re.findall(r"`([a-z_]+)`", truth) if r in reasons] == list(reasons)
+    for why in ("pin_not_in_repo", "merge_base_exit%d"):
+        assert f'GateUnavailable("{why}")' in gate_py or f'GateUnavailable("{why}" %' in gate_py, why
 
 
 def test_the_rules_kinds_are_the_ledger_kinds_when_the_box_is_named():
