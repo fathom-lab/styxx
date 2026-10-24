@@ -306,9 +306,10 @@ def _sec(path: str, lines: list) -> str:
 # The sections a key of `parse_unified_diff_sides` would merge (review 1 of fix batch 1): `tests/test_a.py<ch>` and
 # `tests/test_a.py`, where Python's strip() removes U+0085, U+001C and U+001F and the port's trim() keeps them, and the
 # port's trim() removes U+FEFF and Python's strip() keeps it; U+1C89 and U+1C8A, which Node 24 lower-cases together and
-# CPython 3.12 does not; an ASCII case pair, which both lower-case together; and one path named twice. Read per key, the
-# first section's open `"""` put the second section's `def test_x` after an odd count in the port that merged them
-# only (13 of 37 such inputs parted the two ports' records and gates); read per section, both ports read each alike.
+# CPython 3.12 does not; an ASCII case pair, which both lower-case together; and one path named twice. Read per key,
+# one section's open `"""` put the next section's `def test_x` after an odd count in the port that merged them only
+# (of 43 inputs review 1 built around such keys, 18 parted the two ports' records, 3 their gates without --strict and
+# 15 with it); read per section, both ports read each alike.
 SECTIONS_OPEN = [_sec("tests/test_a.py{ch}", ['S = """']), _sec("tests/test_a.py", ["def test_x(): pass"])]
 SECTIONS_CLOSE = [_sec("tests/test_a.py{ch}", ['S = """', "x"]), _sec("tests/test_a.py", ['"""', "def test_x(): pass"])]
 SECTION_CHARS = {"U+0085": "\x85", "U+001F": "\x1f", "U+001C": "\x1c", "U+FEFF": "\ufeff"}
@@ -317,7 +318,7 @@ CASES_SECTIONS = [
           None, [("tests", 2), ("symbol", "test_x")], [_tests(1, 2), _symbol("function", "test_x", True)])
     for tag, ch in SECTION_CHARS.items()
 ] + [
-    # the string the first section opens is closed in the second, and the `def` after it is read after an odd count
+    # the string one section opens is closed in the next, and the `def` after it is read after an odd count
     # in its own section: #178 abstains in both ports (main read VERIFIED; the merging port read it so too)
     _case(f"sections-close-{tag}", "Added 1 test. Added function test_x.", "".join(SECTIONS_CLOSE).replace("{ch}", ch),
           None, [("tests", 1), ("symbol", "test_x")], [_t178(1, 1, 1), _s178("function", "test_x")])
