@@ -298,7 +298,9 @@ def compare(rescored: Dict[str, Any], recorded: Optional[Dict[str, Any]] = None,
 
     *rescored* is ``rescore``'s output. *recorded* holds what the receipt (or the record that
     carries it) states: ``verdict``, optionally ``gates`` and ``gates_sha256``. *sealed* is every
-    decision digest a seal holds for the PREREG (default: the digest ``rescore`` scored under).
+    decision digest a seal holds for the PREREG (default: the digest ``rescore`` scored under), an
+    iterable of digests; a single str or bytes is refused with TypeError, since iterating it would
+    read its characters as digests.
     *declared* is the verdict a RESULT prints, when one does. Returns findings in C6's order, each
     ``{code, kind, detail}``; an empty list is agreement on everything read:
 
@@ -313,6 +315,8 @@ def compare(rescored: Dict[str, Any], recorded: Optional[Dict[str, Any]] = None,
     quote or in a list item, which ``styxx.protocol.Experiment`` refuses too). With no recorded
     digest it is its own NOTE, and a recorded verdict is not read (a prose PREREG's receipt).
     """
+    if isinstance(sealed, (str, bytes, bytearray)):
+        raise TypeError(f"sealed is an iterable of digests, not one {type(sealed).__name__}; pass [digest]")
     code = rescored.get("code")
     if code == _NOT_GATED:
         recorded = recorded or {}
@@ -333,18 +337,18 @@ def compare(rescored: Dict[str, Any], recorded: Optional[Dict[str, Any]] = None,
     elif recorded["gates_sha256"] not in held:
         found.append(_finding(_DECISION_DIGEST_UNSEALED,
                               f"the receipt records gates {recorded['gates_sha256']}; the sealed PREREG holds "
-                              f"{', '.join(held) if held else 'no digest'}"))
+                              f"{', '.join(map(str, held)) if held else 'no digest'}"))
+    parts = []
     if "verdict" not in recorded:
-        found.append(_finding(_RECORDED_VERDICT_ABSENT, "the receipt records no verdict, so (ii) is not read"))
-    else:
-        parts = []
-        if recorded["verdict"] != verdict:
-            parts.append(f"the sealed decision scores this receipt {verdict}; the receipt records "
-                         f"{recorded['verdict']}")
-        if "gates" in recorded and recorded["gates"] != rescored["gates"]:
-            parts.append(f"the sealed decision fires {rescored['gates']}; the receipt records {recorded['gates']}")
-        if parts:
-            found.append(_finding(_VERDICT_DIFFERS, "; ".join(parts)))
+        found.append(_finding(_RECORDED_VERDICT_ABSENT,
+                              "the receipt records no verdict, so (ii) reads its gates only" if "gates" in recorded
+                              else "the receipt records no verdict and no gates, so (ii) is not read"))
+    elif recorded["verdict"] != verdict:
+        parts.append(f"the sealed decision scores this receipt {verdict}; the receipt records {recorded['verdict']}")
+    if "gates" in recorded and recorded["gates"] != rescored["gates"]:
+        parts.append(f"the sealed decision fires {rescored['gates']}; the receipt records {recorded['gates']}")
+    if parts:
+        found.append(_finding(_VERDICT_DIFFERS, "; ".join(parts)))
     if declared is not None and declared != verdict:
         found.append(_finding(_VERDICT_DIFFERS,
                               f"the sealed decision scores this receipt {verdict}; the RESULT prints {declared}"))
