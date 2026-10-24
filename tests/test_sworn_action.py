@@ -432,9 +432,10 @@ class TestTheCommittedSample:
     # history: it records what the action printed before the verify headline warned about a
     # SWORN-HELD document with unresolved spans, and two sworn documents cite it. When the verifier
     # changed, the script's own refusal named the remedy — "a sample is history; write a new prefix
-    # at a new commit" — so a second sample was written beside the first rather than over it. The
-    # third was written on 2026-10-24 when receipts moved to schema /v2 and the summary's certificate
-    # sentence with them (papers/sworn/NOTE_certifies_correction_2026_10_24.md); the second is history.
+    # at a new commit" — so a second sample was written beside the first rather than over it.
+    # A third was written on 2026-10-24 when receipts moved to schema /v2 and the summary's
+    # certificate sentence with them (papers/sworn/NOTE_certifies_correction_2026_10_24.md); the
+    # second is history now too.
     CURRENT_SAMPLE = "sworn_action_sample_2026_10_24"
     SECOND_SAMPLE = "sworn_action_sample_2026_09_06"
 
