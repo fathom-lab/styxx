@@ -1588,7 +1588,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
 # function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
 # the block's own slotted classes, so nothing of main's is reachable from it as data.
-# Everything outside this block is main's reader (sha256 cb91f7c3..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
+# Everything outside this block is main's reader (sha256 738e7941..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
 # 9b620e00... with the demo's CONTRADICTED label, fix/contradicted-not-lie, plus the record naming its instrument,
 # identity phase 2; then #205, fix/diffgate-205-206, moved reading paths: every piece of git output is cut at git's
 # line ends, and the `def` counts and the compatibility reading abstain over a line holding a character of _READ_APART;
