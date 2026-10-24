@@ -344,9 +344,11 @@ RESIDUAL_MIXED_QUOTES = _case("residual-mixed-quotes", "Added 1 test. Added func
                               _new_file("tests/test_s.py", MIXED), {"tests/test_s.py": (None, _text(MIXED))},
                               [("tests", 1), ("symbol", "test_s")],
                               [_tests(1, 1), _symbol("function", "test_s", True)])
-RESIDUAL_TAIL_ABOVE_7F = _case("residual-tail-above-7f", "Added 1 test.",
-                               _new_file("tests/test_a.py\u00e9", ["def test_e():"]), None, [("tests", 1)],
-                               [_tests(1, 1)])
+# (beside a plain .py file, so #110's abstention, which reads no tail rule, is not what reads it)
+RESIDUAL_TAIL_ABOVE_7F = _case("residual-tail-above-7f", "Added 2 tests.",
+                               _new_file("tests/test_n.py", ["def test_n(): pass"])
+                               + _new_file("tests/test_a.py\u00e9", ["def test_e():"]), None, [("tests", 2)],
+                               [_tests(2, 2)])
 RESIDUAL_QUOTED_PATH = _case(
     "residual-quoted-path-169", "Added 2 tests.",
     'diff --git "a/tests/t\\303\\251st.py" "b/tests/t\\303\\251st.py"\nnew file mode 100644\nindex 0000000..1\n'

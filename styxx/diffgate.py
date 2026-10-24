@@ -498,14 +498,43 @@ def parse_unified_diff_sides(diff_text: str) -> dict:
     return sides
 
 
-def _python_source_lines(sides: dict) -> list:
-    """#178: the added lines of each file of `sides` whose path ends in .py or .pyi, except those after an odd number
-    of triple quotes (three double or three single) in that file's added lines. The path's tail is read with every
-    trailing code point at or below U+0020 or from U+007F up removed, so Python's strip() and the port's trim(), which
-    remove different sets, cannot part the decision. A string opened in a line the diff does not show is not seen.
-    The port's _pythonSourceLines is the same reading."""
+def _diff_sections(diff_text: str) -> list:
+    """#178: [(path, added_lines)] for each `+++` section of the diff, in order. It walks the lines as
+    `parse_unified_diff_sides` does (the same branches in the same order), so each added line is placed as that
+    function places it and the path is the key it gives the section; but two sections one key holds stay two here.
+    The ports build those keys apart (Python's strip() and the port's trim() remove different code points, and the
+    runtimes lower case differently), and they read sections alike. The port's _diffSections is the same walk."""
+    out: list = []
+    old_path = None
+    cur = None
+    for line in _git_lines(diff_text):                  # #205: git's line ends, as parse_unified_diff_sides reads them
+        if line.startswith("diff --git "):
+            cur = None
+        elif line.startswith("--- "):
+            old_path = line[4:].strip()
+            cur = None
+        elif line.startswith("+++ "):
+            new = line[4:].strip()
+            if new == "/dev/null":
+                raw = old_path[2:] if old_path and old_path.startswith("a/") else (old_path or "")
+            else:
+                raw = new[2:] if new.startswith("b/") else new
+            cur = (_norm(raw), [])
+            out.append(cur)
+        elif cur is not None and line.startswith("+") and not line.startswith("+++"):
+            cur[1].append(line[1:])
+    return out
+
+
+def _python_source_lines(sections: list) -> list:
+    """#178: the added lines of each section of `_diff_sections` whose path ends in .py or .pyi, except those after an
+    odd number of triple quotes (three double or three single) in that section's added lines. The path's tail is read
+    with every trailing code point at or below U+0020 or from U+007F up removed, so Python's strip() and the port's
+    trim(), which remove different sets, cannot part the path test, and the parity is a section's, which both ports
+    read alike. A string opened in a line the diff does not show is not seen. The port's _pythonSourceLines is the
+    same reading."""
     out = []
-    for p, (added, _removed) in sides.items():
+    for p, added in sections:
         e = len(p)
         while e and (ord(p[e - 1]) <= 32 or ord(p[e - 1]) >= 127):
             e -= 1
@@ -1136,7 +1165,7 @@ def gate_diff_text(summary_text: str, diff_text: str,
                  repo=repo, base="(diff-text)", head="(diff-text)",
                  evidence=evidence, commit=commit,
                  raw_input_len=len(diff_text or ""),
-                 sides=parse_unified_diff_sides(diff_text or ""))
+                 sides=parse_unified_diff_sides(diff_text or ""), sections=_diff_sections(diff_text or ""))
     return _p2a_abstain(g, strict, lambda: _P2aFacts(diff_text or "", None, summary_text))  # PATH-2a
 
 
@@ -1176,7 +1205,7 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
     g = _gate(summary_text, status, added_blob, run=run, strict=strict,
                  repo=repo, base=base, head=head,
                  evidence=evidence, commit=commit,
-                 sides=parse_unified_diff_sides(diff_text))
+                 sides=parse_unified_diff_sides(diff_text), sections=_diff_sections(diff_text))
     return _p2a_abstain(g, strict, lambda: _P2aFacts(diff_text, name_status, summary_text))  # PATH-2a
 
 
@@ -1249,7 +1278,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
           run: str | None, strict: bool, repo, base: str, head: str,
           evidence=None, commit: str | None = None,
           raw_input_len: int | None = None, sides: dict | None = None,
-          _declared: bool = False) -> DiffGate:
+          sections: list | None = None, _declared: bool = False) -> DiffGate:
 
     # Some claim kinds are VACUOUSLY TRUE against an empty diff. `only_touches`
     # asks "is anything outside the prefix?" and an empty status answers "no" —
@@ -1293,12 +1322,12 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
     apart = _read_apart(added_blob)
     apart_why = (f"an added line holds {apart}, which CPython refuses in source outside a string or a comment; this "
                  f"template counts `def` lines and cannot tell where it sits (#205)") if apart else None
-    # #178: the same counts over one parse, `parse_unified_diff_sides`: every file's added lines (`sides_blob`), and
-    # the lines of them a Python file's added lines hold outside a string they open (`inside_blob`,
-    # _python_source_lines). Where the two counts differ the claim abstains. With no per-file parse, both are
-    # `added_blob` and nothing abstains.
-    sides_blob = added_blob if sides is None else "\n".join(x for a, _r in sides.values() for x in a)
-    inside_blob = added_blob if sides is None else "\n".join(_python_source_lines(sides))
+    # #178: the same counts over one walk, `_diff_sections`, which places each added line as `parse_unified_diff_sides`
+    # does: every section's added lines (`sides_blob`), and the lines of them a Python file's section holds outside a
+    # string its added lines open (`inside_blob`, _python_source_lines). Where the two counts differ the claim
+    # abstains. With no sections, both are `added_blob` and nothing abstains.
+    sides_blob = added_blob if sections is None else "\n".join(x for _p, a in sections for x in a)
+    inside_blob = added_blob if sections is None else "\n".join(_python_source_lines(sections))
     claims: list[DiffClaim] = []
     sentences = re.split(r"(?<=[.!?])\s+|\n+", summary_text)
     covered = set()
@@ -1373,9 +1402,9 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         if inside != placed:                                          # #178
                             c.verdict = "UNCHECKABLE"
                             c.why = (f"{placed - inside} of the {placed} `def test_` lines added sit in a file not "
-                                     f"read as .py or .pyi, or after an odd number of triple quotes in that file's "
-                                     f"added lines; this template counts `def` lines and cannot tell whether "
-                                     f"CPython defines a test there; claim says {n} (#178)")
+                                     f"read as .py or .pyi, or after an odd number of triple quotes in the added "
+                                     f"lines of their `+++` section; this template counts `def` lines and cannot "
+                                     f"tell whether CPython defines a test there; claim says {n} (#178)")
                         elif got == n:
                             c.verdict, c.why = "VERIFIED", f"diff adds {got} test functions, claim says {n}"
                         elif BC1_BY_CONSTRUCTION and noun in _TEST_NOUNS_NOT_FUNCTIONS:
@@ -1403,8 +1432,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                             c.verdict = "UNCHECKABLE"
                             c.why = (f"every added line that would define {d['kind']} {d['name']!r} sits in a "
                                      f"file not read as .py or .pyi, or after an odd number of triple quotes in "
-                                     f"that file's added lines; this template cannot tell whether CPython defines "
-                                     f"it there (#178)")
+                                     f"the added lines of its `+++` section; this template cannot tell whether "
+                                     f"CPython defines it there (#178)")
                         else:
                             c.verdict = "VERIFIED" if hit else "CONTRADICTED"
                             c.why = (f"added lines {'do' if hit else 'do NOT'} define "
@@ -1466,7 +1495,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
             if _dtext:
                 _sub = _gate(_dtext, status, added_blob, run=run, strict=strict, repo=repo,
                              base=base, head=head, evidence=evidence, commit=commit,
-                             raw_input_len=raw_input_len, sides=sides, _declared=True)
+                             raw_input_len=raw_input_len, sides=sides, sections=sections, _declared=True)
                 for _c in _sub.claims:
                     _c.detail = dict(_c.detail or {})
                     _c.detail["declared"] = True
