@@ -743,4 +743,126 @@ sha256, `salt_sha256`, the `plugins` subtree digest re-read after the plugin is 
 installed and the canary schedule re-planned for the window (§7), by the commit before the merge (OD-6, OD-11,
 OD-4). Any sheet line signed other than its default, as §13 names it, the drop rule's line among them.
 
-(none yet)
+### 15.1 — 2026-10-24: the pull request and the provisional count (item 1)
+
+The pull request carrying this file is `fathom-lab/styxx#229`, opened 2026-10-23T18:31:28Z by GitHub's server: the
+freeze anchor of the opening paragraph (the lead's statement; entered on 2026-10-24, the day after the opening, where
+item (1) asks for the day itself). `W:gate/baseline/pre_gate_counts.json` as it then stood: sha256
+`85dac72187ce2a1899421e67a2c3804ea3985b79ecec08475bcb7f5cdc69ce22`, 4,923 bytes, the version here:7 read
+(`generated_at` 2026-10-23T17:11:46Z; the box's file time 17:11:50Z, before the opened-at, the box's statement),
+`provisional: true`, `pr_number: null`, `pr_opened_at: null`, `gate_legs_run: false`; read for this entry: its keys
+and those four fields, no number. The count of §12 step 3 (`pregate_count.py` with `--before` the opened-at and
+`--pr-number 229`) had not been made on the box at this entry, and OD-1's bracket reads blank on the sheet as signed
+(15.4): the operator signed with no pre-gate count on that line. The count is still owed, after the opened-at as §12
+step 3 orders; it can no longer stand on OD-1 before the signature (§4), and the RESULT says so beside it, with this
+digest.
+
+### 15.2 — 2026-10-24: the pieces after the table was read (item 2)
+
+`lock_hashes.py check --strict` at this entry, before the rows of 15.3 existed: the 63 rows of §11 for files under
+`W:gate/` that held a hash (the snapshot's tree digest over 6,164 files, the 60 gate files, the canary schedule and the
+canary seed digest) read SAME; no piece of `PLAN` §3.1 moved after the table was read at 14:20 local on 2026-10-23, so
+this item adds no row for a moved piece. The X script reads SAME (`c429f866…`): `PLAN` P0.5 is still not built, and
+the X arm prints "not gated" (§3). The posting skill `W:skills/styxx-post/SKILL.md` reads NOT BUILT; a row still
+blank at the merge means the piece did not ship (§11). One file under `W:gate/` was added after the table was read, at
+the sitting: `anchor_dest.txt`, which `lock_hashes.py` neither excludes nor finds in a row (UNLOCKED under
+`--strict`); its row is in 15.3. `lock_hashes.py` reads the rows under this section as it reads §11's (the last row
+for a path wins), so its code is unchanged by this entry.
+
+### 15.3 — 2026-10-24: the sitting (item 3; OD-4, OD-5, OD-6, OD-11)
+
+From the lead's record of the sitting, every hash re-derived from the box for this entry (`lock_hashes.py`,
+`sha256sum`, and here:3's canonical-JSON rule for the `plugins` subtree), none copied. `W:gate/salt` (32 bytes), `W:gate/config.json` (five keys: `operator_dm_hash`, `anchor_channel_hash`,
+`canary_chat_hash`, `group_hashes`, `bot_from_id_hmac`) and `W:gate/anchor_dest.txt` were written with the gate's own
+`Env.salt` and `Env.keyed_hash` (`W:gate/gate.py`); the plugin was placed under `~/.clawdbot/extensions/styxx-gate/`,
+its six files each byte-identical to its locked source under `W:gate/` (§11: `plugin/clawdbot.plugin.json`,
+`plugin/index.js`, `plugin/package.json`, `plugin/README.md`, `gate.js`, `patch_dist.js`); `~/.clawdbot/clawdbot.json`
+gained `channels.telegram.streamMode` `"off"` and `channels.telegram.blockStreaming` `false` (OD-5; those two values
+read for this entry and no other) and `plugins.allow` `["telegram", "styxx-gate"]`; `patch_dist.js --check` against
+the gateway's `dist/` reads `wired` (exit 0, every block of E1, E2 and E3 applied); the gateway serves as pid 28320.
+
+The two keyed hashes §3 appends here (HMAC-SHA256 under the salt, `RULES` §2):
+
+- `anchor_channel_hash` `b89efe50898fb7d052b913cd193e42b366884c2f32f4bc115251c89b2be75a6a`, re-derived at this entry
+  from `anchor_dest.txt`, the id of OD-11's anchor below;
+- `canary_chat_hash` `953d2e12316b497a8545a9d5e057e14bf73702fa191de375bb26371579a239cd`, the `dest_hash` of every
+  canary-chat send line on the ledger at this entry; the chat is private and its id is printed nowhere.
+
+| what | path | sha256 | note |
+|---|---|---|---|
+| salt_sha256 | `W:gate/salt` | `1e29eb71d0f77c2f55a0de1f709e8e4029e5344347f41e4369c03104edd9fe12` | sha256 of the 32 raw bytes, written at the sitting by the gate's own `Env.salt` (OD-6); `salt_sha256` on every line; the salt itself never leaves the box |
+| config_sha256 | `W:gate/config.json` | `1981256bd555f324ab9d25cdd5ed087db064a5c02fb786617e204e70f2ac3f43` | 454 bytes; written once at the sitting from OD-6 and OD-11 by the gate's own `Env.keyed_hash` (`operator_dm_hash`, `anchor_channel_hash`, `canary_chat_hash`, `group_hashes` with one entry, `bot_from_id_hmac`); `config_sha256` on every line |
+| gate file | `W:gate/anchor_dest.txt` | `08dca9c28ec9f7a6497e2fdd8768737ee3e29013ccd5d599eab3e3ce0330e7f6` | 15 bytes; written at the sitting: the anchor's id as the Bot API prints it and a line end; the plugin sends the daily anchor there only while it keys to `anchor_channel_hash` (`W:gate/plugin/README.md`), as it does at this entry |
+| the `plugins` subtree of `~/.clawdbot/clawdbot.json` | `plugins-subtree:clawdbot.json` | `519905d2dc225927d3371e7a59a1a13c4251fbb87b9ab88db7b2b3f22d8d6f61` | canonical JSON (here:3), 75 bytes, re-read after the plugin was placed: keys `allow` and `entries`, `entries` holding one key, `telegram`; no other value read; a change between D0 and close counts into G_X |
+| plugin as installed | `~/.clawdbot/extensions/styxx-gate/clawdbot.plugin.json` | `27c2ecd9dafa19df5d214c84a578c0408aee4bf1ef53602db073bd32ad2f5f54` | 1983 bytes; installed at the sitting (OD-4); the bytes of `W:gate/plugin/clawdbot.plugin.json` |
+| plugin as installed | `~/.clawdbot/extensions/styxx-gate/index.js` | `759ceb82174cc8c1ccabf68198e4bc7fb35b1be3dae260b20ac164c60f7af02c` | 65951 bytes; installed at the sitting (OD-4); the bytes of `W:gate/plugin/index.js` |
+| plugin as installed | `~/.clawdbot/extensions/styxx-gate/package.json` | `c734e17af7f523b33b74990e7459108db60d791dd7e5a7c4f134ecf2c772f04a` | 204 bytes; installed at the sitting (OD-4); the bytes of `W:gate/plugin/package.json` |
+| plugin as installed | `~/.clawdbot/extensions/styxx-gate/README.md` | `ed2ac65e341ec9bce9ac5a424c7ad756bf17e38fca0f6cfd417eb668b0e04e8e` | 22473 bytes; installed at the sitting (OD-4); the bytes of `W:gate/plugin/README.md` |
+| plugin as installed | `~/.clawdbot/extensions/styxx-gate/gate.js` | `fccfb82518415fa21cf780311ab7073abe194e7485ba392df936608b162ffd5b` | 8429 bytes; installed at the sitting (OD-4); the bytes of `W:gate/gate.js` |
+| plugin as installed | `~/.clawdbot/extensions/styxx-gate/patch_dist.js` | `3a481036cf8e9defe466a125c71f72c7b075e8edb090a5111409dd255bb2c567` | 33360 bytes; installed at the sitting (OD-4); the bytes of `W:gate/patch_dist.js` |
+
+**The ledger at the sitting.** `W:gate/ledger.jsonl` holds its header line and 13 chained lines, seq 1 to 13: the
+`kind: started` line (2026-10-24T15:09:56Z, `process` gateway, pid 28320, `required_present` false), then six send
+lines, each followed by its `delivered` line, the dry attempts of OD-4: E3 three to the canary chat (seq 2, 4, 8), E1
+two to the operator's DM (seq 6, 10; their `dest_hash` is `operator_dm_hash`, OD-6), E2 one to the canary chat
+(seq 12); every one `decision: allow`, `required_present: false`, `process` gateway, pid 28320, under `config_sha256`
+`1981256b…`, `salt_sha256` `1e29eb71…`, the pin `3437340b` and `gate_sha256`
+`387fc063ef1167f728c9c233e99d7ad42fb621d4ef69455b516ed8aa07b3db65`. This entry re-derives that digest by
+`Env.gate_sha256`'s rule over the locked bytes (`W:gate/*.py`, `W:gate/helpers/*.py` and the six installed plugin
+files): it is the digest against which §5's component (iv) reads a send line's `gate_sha256`. The head is
+`9f8a90bb563419e12f7626f20717b9b3ee862af42932d7526c5b669f771ae059` at seq 13, the head `head.txt` names.
+`gate_verify.py --log W:gate/ledger.jsonl --rederive` at this entry: 13 lines, the chain re-derives, 0 anchor lines, 0
+problems, 0 lines after their day's anchor, re-derived SAME 6 (DRIFT 0, SKEW 0, UNRESOLVED 0, TAMPER 0), exit 0. The
+ledger grows and is never a lock row (§11); its sha256 at this entry was `bf4ce3ce…` over 22,833 bytes.
+
+**The order, as it ran.** The opening paragraph and §12 step 4 put the merge before the patch; at this sitting the
+patch, the start and the dry attempts came before the merge, which has not happened at this entry. The rule file and
+the gates block are those the opened-at froze (both SAME), so the shadow's lines from seq 1 are written under that
+rule; the merge timestamp, when it exists, is later than the shadow's earliest line, and the RESULT says so. Of §3's
+opening condition, the dry attempts are on the ledger, at least one per Telegram exit, with `process: gateway`; the
+merge is owed.
+
+**OD-11, the form it took.** (i) The canary chat is a private Telegram supergroup with the bot as an admin, named here
+by `canary_chat_hash` alone. (ii) The anchor destination is not a channel: it is a public supergroup, "darkflobi
+ledger" (`@DFledger`, -1004493221658 as the Bot API prints it), in which members cannot send messages and the operator
+and the bot, both admins, can. The two are distinct and the anchor is public, so §13's OD-11 alternative (one private
+chat for both) does not apply and the printable's bracket (§10) takes its public branch; the RESULT names the form, a
+public supergroup in which only the bot and the operator can post. What the form changes for the anchor rules
+(`RULES` §9, read with §12; §7 of this file names none, and its live canary goes to the chat of (i) as written):
+nothing in their text, and three readings. (a) OD-11's "posted to by the bot alone" is held by the operator's
+practice, not by the chat's permissions: `RULES` §12 reads every message in the anchor destination whoever sent it, and
+§9's last row counts one that is not a ledgered anchor send as `[u]`, so a message of his there fails G-1. (b) A
+supergroup's join and leave notices are service messages in a Telegram Desktop export, and the census reads only
+messages of type `message` (`W:gate/reconcile.py` `load_export` and `census_chat` at `231a03e8…`), so they enter no
+count. (c) [J, not checked for this entry] a public channel reads on the web without a Telegram account; whether this
+supergroup does is not known here, so a stranger's check of a day's anchor may need a Telegram client; no rule moves.
+
+**The canary schedule (§7): the re-plan waits for D0.** D0 is 00:00 America/New_York on the day after the operator
+creates `W:gate/REQUIRED`, which he does after reading the shadow week's refusals (OD-9, signed with its default), so
+D0 is not known at this entry and no window is planned here. `W:gate/canary/schedule.json` stays the `v0` plan for the
+example start 2026-11-05 (`e6ee0fcf…`, SAME), which is not this window's. The command, run on the day `REQUIRED` is
+created, before D0's earliest item, with D0 as `YYYY-MM-DD`:
+
+    py -3.12 -B W:gate/canary_shadow.py plan --cadence s7 --window-start <D0>
+
+(28 days by the harness's default; the sealed seed read from `W:gate/canary_sealed/`; the schedule written over
+`W:gate/canary/schedule.json`; every later verb of the window names `--cadence s7` too). Its `counts.gc_items` is
+printed beside its hash, 112 expected (§7). D0 follows the merge (§3's opening condition), so the re-planned hash
+cannot be a dated entry here: by §12's closing paragraph it is restated in a dated AMENDMENT file under this folder,
+lock-hashed in its turn, before D0; from the re-plan until a check reads that AMENDMENT's row, `lock_hashes.py check`
+over this file reads the schedule row CHANGED. No shadow-week plan with items disjoint from the window's was built
+and restated before the sitting, so the shadow cell reports "0 canaries planted" (§4, §7).
+
+**The spawn flags (§14).** The plugin as installed (`index.js` `759ceb82…`) spawns `gate.py` with
+`PYTHONDONTWRITEBYTECODE=1`, which stops Python writing a cache and not reading one, and without `-X pycache_prefix` or
+`-s`; §14's bullet stands as written, and `check --strict` reads BYTECODE 0 at this entry.
+
+### 15.4 — 2026-10-24: the decision sheet
+
+The operator signed the decision sheet in chat at 2026-10-24T14:23:41Z with "Sign, all defaults (Recommended)": every
+one of its 25 lines with its default, over the sheet whose sha256 is
+`4debf0c877cf4367615effa45e469ce8116aae7edbaf48b1be9b5bfbd8b3e2d0` (the `4debf0c8…` this file names; the lead's record
+is `WT:_darkflobi_gate_2026_10_22/SIGNED_2026_10_24.md`). No sheet line is signed other than its default, so no
+alternative of §13 applies. The drop rule has no line on that sheet (§13): signing every line with its default does
+not sign it. The gate runs the drop as built (`RULES` §4, §7), the departure §13 names, and that line is still owed
+before the merge.
