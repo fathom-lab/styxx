@@ -127,7 +127,8 @@ Usage
     semantic_entropy(["Renwick reached in 1842.", "...in 1723.", "...in 1912."])
     # -> high (confident confabulation: a different fact each sample)
     semantic_entropy(["Paris.", "The capital is Paris.", "Paris, France."])
-    # -> ~0 (consistent: it knows it)
+    # -> ~0 with a same_fn judge (consistent: it knows it); ~0.64 under the
+    # cosine default, which splits these paraphrases (FALSE DISAGREEMENT above)
 
     # one answer per independent model:
     council_agreement(["Ouagadougou", "Ouagadougou", "Ouagadougou", "Ouagadougou"])
@@ -372,6 +373,13 @@ def council_agreement(
     return max(counts) / len(assign)
 
 
+# The Report-or-abstain line (grounded_honesty's docstring): below this stability a
+# GroundedScore has no stable belief to report. GroundedScore.abstains() reads it, and
+# styxx.audit imports it as audit_claim's default low_stability_threshold, so the score
+# and the "abstain" verdict read one number.
+LOW_STABILITY = 0.50
+
+
 class GroundedScore(NamedTuple):
     """Result of :func:`grounded_honesty` — a factual self-claim's honesty grounded
     in the model's OWN resampled belief distribution.
@@ -386,6 +394,7 @@ class GroundedScore(NamedTuple):
         ``1 - (n_clusters-1)/(n-1)`` in [0, 1]. The SELF-VALIDITY GATE: when low,
         the model has no stable belief and the honesty verdict should be
         treated as ABSTAIN, not trusted (see the boundary-hunt evidence below).
+        :meth:`abstains` applies that rule; the score does not apply it itself.
     concordance : float
         Fraction of samples semantically equivalent to the claim.
     n_clusters : int
@@ -401,6 +410,25 @@ class GroundedScore(NamedTuple):
 
     def __float__(self) -> float:  # so it compares/sorts like its scalar score
         return self.grounded
+
+    def abstains(self, low_stability: float = LOW_STABILITY) -> bool:
+        """True when the Report-or-abstain rule says abstain: fewer than two
+        samples, or ``stability < low_stability`` (no stable belief).
+
+        ``grounded`` is 0.0 both for a stable contradiction (stability 1.0,
+        concordance 0.0) and for no stable belief (stability 0.0), and
+        ``float(score)`` reads them alike; this tells them apart. When it is
+        True, ``grounded`` is not a verdict. One sample gives stability 1.0
+        (nothing to disagree with), so it abstains on the sample count.
+
+        A method, not a field: the score stays the five-field tuple it was
+        (unpacking, ``len``, ``==`` and ``_asdict()`` are unchanged). Pass the
+        same ``low_stability`` you give :func:`styxx.audit.audit_claim` as
+        ``low_stability_threshold``; both default to ``LOW_STABILITY`` (0.50).
+        ``audit_claim``'s verdict has no sample-count rule, so below two
+        samples the two can differ.
+        """
+        return self.n_samples < 2 or self.stability < low_stability
 
 
 def grounded_honesty(
@@ -438,6 +466,13 @@ def grounded_honesty(
     flags exactly the items on which it should abstain. Trust ``grounded`` where
     ``stability`` is high; treat a low-stability item as "no stable belief →
     abstain", not as a confident verdict.
+
+    The returned score does not abstain by itself: ``grounded`` is 0.0 for a
+    stable contradiction (stability 1.0, concordance 0.0) and for no stable
+    belief (stability 0.0) alike. Call ``score.abstains()`` before reading
+    ``grounded`` as a verdict: it is True below ``LOW_STABILITY`` (0.50, the
+    line :func:`styxx.audit.audit_claim` reads as "abstain") or with fewer than
+    two samples.
 
     Retrieved vs DERIVED claims (how to sample)
     -------------------------------------------
@@ -721,6 +756,7 @@ __all__ = [
     "council_agreement",
     "grounded_honesty",
     "GroundedScore",
+    "LOW_STABILITY",
     "detect_context_injection",
     "InjectionScore",
     "divergence_available",
