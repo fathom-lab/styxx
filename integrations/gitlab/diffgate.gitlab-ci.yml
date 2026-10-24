@@ -25,10 +25,11 @@
 # sentence before it: when the gate FAILs over a cut, the job runs it again over the text GitLab
 # handed it, only to hold a claim back, and does not fail on a CONTRADICTED claim that run withholds
 # or does not read; it names each one in the log and under "held_back". The job cannot see --strict:
-# such a FAIL does not fail the job with --strict either, and the log names the UNCHECKABLE claims
-# --strict would fail on. Text past GitLab's cut never reaches the job, so a claim the gate would
-# withhold, or not read, over the whole description can still be CONTRADICTED over the cut, as it
-# was over GitLab's prefix before #209. A cut never fails the job by itself.
+# a FAIL whose every CONTRADICTED claim is held back does not fail the job with --strict either, and
+# the log names the UNCHECKABLE claims --strict would fail on. Text past GitLab's cut never reaches
+# the job, so a claim the gate would withhold, or not read, over the whole description can still be
+# CONTRADICTED over the cut, as it was over GitLab's prefix before #209. A cut never fails the job by
+# itself.
 #
 # It reports by default, as the GitHub Action does, and the gate's verdicts never fail the job.
 # The gate's verdict, its claim counts and each CONTRADICTED or UNCHECKABLE claim go to the job
