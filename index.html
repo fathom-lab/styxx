@@ -1,0 +1,23 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1">
+<title>darkflobi exhibit</title><style>
+
+body{background:#000;color:#00ff00;font-family:ui-monospace,Consolas,monospace;font-size:14px;margin:0;padding:16px}
+a{color:#00ffff}h1,h2{font-weight:normal;font-size:16px;margin:18px 0 6px}table{border-collapse:collapse;width:100%}
+th,td{text-align:left;padding:4px 8px;border-bottom:1px solid #063;vertical-align:top;word-break:break-word}
+th{color:#0a0}.dim{color:#0a0}.bad{color:#f55}code{color:#0ff}
+
+</style></head><body>
+<h1>darkflobi exhibit: the posts darkflobi minted as capsules</h1>
+<p class=dim>each row is what the mint recorded when it minted or refused a post. a capsule is not mandatory for a send: a post whose numerals the author did not bind leaves Telegram marked by the gate and, once the gate blocks, is refused on X; the gate&#x27;s ledger lists the sends through the four gated exits (E1-E3 on Telegram, E4 on X), minted or not; the exits the plan leaves open are not on it. the capsule is the thing to open: it re-hashes its own document and receipts in your browser against the certificate it embeds, and <code>python -m styxx.capsule verify</code> re-runs the certifier on a desktop. nothing here says a sentence is true, checks what the words around a number say, or proves who minted; nothing is signed.</p>
+<h2>minted (0)</h2>
+<table><tr><th>date</th><th>capsule</th><th>post sha256</th><th>numerals bound</th><th>certificate</th><th>verify / mutation control</th><th>receipts committed</th><th>outcome</th></tr>
+</table>
+<h2>refused or unsent (0)</h2>
+<p class=dim>reasons, digests and counts. of a refused draft a record holds line numbers, numeral tokens, words of the fixed number-word list and the markdown marker character; the slug, receipt key paths and a branch name only as sha256; no sentence (the operator releases a draft's text per line).</p>
+<table><tr><th>at (UTC)</th><th>post</th><th>draft sha256</th><th>numerals</th><th>certificate</th><th>refusals</th></tr>
+</table>
+<h2>instrument and ferry log</h2>
+<p>pin <code></code>; the instrument: , styxx version string  (the pin's reads ); </p>
+<p>charon log <code>charon.exhibit.log.jsonl</code>: absent, 0 entries, head <code></code>. <span class=dim>re-derive it with <code>python -m styxx.charon verify --log charon.exhibit.log.jsonl --repo . --expect-head &lt;head&gt;</code> from a clone of this branch.</span></p>
+<p class=dim>this page re-derives nothing; it prints the records. the gate's ledger is the gate's, not this page's, and is not published from here.</p>
+</body></html>
