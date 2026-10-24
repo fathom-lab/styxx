@@ -727,8 +727,24 @@ def test_the_restated_drop_rule_is_the_gates_when_the_box_is_named():
     assert ("truth", "resolver_failed:") in {(c, p) for c, p, _ in _gate_findings(gate_py)}
     truth = _restated_code_rows()["truth refusal"]
     assert [r for r in re.findall(r"`([a-z_]+)`", truth) if r in reasons] == list(reasons)
-    for why in ("pin_not_in_repo", "merge_base_exit%d"):
+    for why in ("pin_not_in_repo", "merge_base_exit%d", "cat_file_exit%d"):
         assert f'GateUnavailable("{why}")' in gate_py or f'GateUnavailable("{why}" %' in gate_py, why
+    # 15.10: git's own "no such object" is `cat-file -e` exit 1, and a sign `_NUM` does not read makes a fragment
+    assert '"cat-file", "-e", commit' in gate_py and "_OTHER_MINUS" in gate_py
+
+
+def test_section_15_restates_the_resolver_after_the_review():
+    """15.10 restates RULES section 4's fragment and git's own no; 15.11 and 15.12 say the drop rule's readings and
+    component (iv)'s plainly. The RULES section 6 row restated is still the one 15.5 restates."""
+    sec15 = _section15()
+    entry = sec15.split("### 15.10 ", 1)[1].split("\n### ", 1)[0]
+    assert "**`RULES` §4's fragment, restated.**" in entry
+    for s in ("`range_malformed:fragment`", "U+2212", "`gate_unavailable:cat_file_exit<n>`", "`commit_unknown`",
+              "`W:gate/gate.py`", "`W:gate/tests/test_drop_rule.py`"):
+        assert s in entry, s
+    for n in ("15.11", "15.12"):
+        assert f"\n### {n} — 2026-10-24: " in sec15, n
+    assert list(_restated_code_rows()) == ["truth refusal"]
 
 
 def test_the_rules_kinds_are_the_ledger_kinds_when_the_box_is_named():

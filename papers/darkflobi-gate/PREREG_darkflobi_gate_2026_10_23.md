@@ -1115,3 +1115,153 @@ operator line signed otherwise before the merge replaces this paragraph.
   installed and no gate runs, and its lists before the merge still named what 15.1 to 15.3 cover and the canary
   re-plan, which 15.3 puts in an AMENDMENT after the merge. The body is corrected to the sitting as it ran and to these
   entries, and its paragraph "The seal" names this file's blob after them.
+
+### 15.10 — 2026-10-24: the resolver after the review: a sign `_NUM` does not read, and git's own "no" (item 2)
+
+The pre-merge review of the gate of 15.6 (the lead's record
+`WT:_darkflobi_gate_2026_10_22/p0/prereg/premerge_review_gate.md`, G1 and G2) found two readings of the box written as
+findings against a receipt, and `W:gate/gate.py` was changed again before the merge [R, `gate.py` `25d53fd6…`:
+`_OTHER_MINUS`, `whole_numeral_tokens`, `Resolver.commit_status`; `W:gate/tests/test_drop_rule.py` `6ec8977b…`, 31
+tests, 11 added with this entry, 9 of which fail against `8b5a7381…` and all 31 pass against the new file; the lead's
+record `WT:_darkflobi_gate_2026_10_22/p0/prereg/premerge_fix1.md` and its receipts under `p0/drop_rule_fix1/`]. The drop
+rule as signed (15.5) does not move: the same three reasons refuse, one per leaf, and MALFORMED keeps the drop.
+
+- **A sign `_NUM` does not read (G1).** Certify's `_NUM`, which the resolver reads out of the snapshot and never retypes
+  (`RULES` §4, §5), takes only the ASCII `-` as a minus sign, so a committed numeral written with U+2212 MINUS SIGN
+  before its digits, `0.2793478260869565` under that sign, is the token `0.2793478260869565`, its sign lost. Under the gate of 15.6 the correct leaf
+  `-0.2793478260869565` citing that line read `value_differs` and refused, a false truth refusal, and a leaf with the
+  sign dropped was kept. At the pin, 648 lines in 223 files of the receipt-bearing paths read otherwise under the rule
+  below, 90 of them lines whose one token a range could cite [R, `p0/drop_rule_fix1/scale.txt`].
+- **`RULES` §4's fragment, restated.** A range's token is a fragment, and the range MALFORMED
+  (`range_malformed:fragment`): when it is followed by `,` or `.` and a digit; when it is preceded by a dash attached to
+  a word (`-`, and, as built since the freeze, any Pd dash and the minus sign: `gate.py`'s `_DASHES` was always wider
+  than the rule file's "`-`", so `pass–8` reads as `pass-8` does); and, from this entry, when it carries no sign of its
+  own and stands right after any dash or minus sign, wherever that stands: a character of `_DASHES` (`-`, U+2010 to
+  U+2015, U+2212, U+FE58, U+FE63, U+FF0D) or of `_OTHER_MINUS` (U+2796, U+02D7, U+2052, U+207B, U+208B). Such a token is
+  never compared as a value: its leaf drops as MALFORMED, its numeral reads unbound, marked on Telegram and refused on X
+  as `unbound_on_x`, and it enters no `n_refusals`. The ASCII `-` that `_NUM` reads as a sign is compared as before: a
+  leaf `5` citing a committed `-5` refuses as `value_differs`. A minus sign standing apart from its digits (a space
+  between) is read as no sign by `_NUM` and by this rule, so a leaf `-5` citing it reads `value_differs` [J, said so:
+  the spaced form stays a token, because the same shape opens a markdown list item, `- 42 cases`].
+- **git's own "no" (G2).** A commit is called unknown only on git's own word: `git cat-file -e <commit>` exit 1 (no
+  object has that name), or `cat-file -t` naming a tree, a blob or a tag (no commit has it). Any other exit of either
+  call on the cited commit is the box's fault, `gate_unavailable:cat_file_exit<n>`, an unavailability of `RULES` §6 (its
+  `<why>` takes `cat_file_exit<n>` beside 15.5's `pin_not_in_repo` and `merge_base_exit<n>`), and never
+  `commit_unknown`. Under the gate of 15.6 the one call was `cat-file -t`, which exits 128 for a missing object and for
+  a fault alike, so a fault on it read `commit_unknown` and refused. 15.5's sentence, a commit called unknown or not an
+  ancestor "only on git's own no", now holds for every git call the commit check makes.
+- **What does not move.** `RESOLVER_TRUTH_REASONS`, `check`, `decide`, every code of `RULES` §6 and 15.5's restatements,
+  but the fragment's definition and the unavailability's `<why>` above. The positive control reads as before under its
+  three readings and the negative control still refuses: `tests/test_controls.py` 7 ok, and the readings `gate.check`
+  writes are identical between `8b5a7381…` and `25d53fd6…` but for the gate's own sha256, and identical to the readings
+  15.5 cites (`p0/drop_rule_fix1/controls_8b5a7381.json`, `controls_fix1.json`). `W:gate/tests/test_gate.py` is not
+  edited, and 15.6's row for it stands.
+
+Two files under `W:gate/` moved after 15.6's rows, each tested in a staging copy (the whole Python suite under
+`W:gate/tests/` 220 tests OK; the plugin's 79 of 79) and moved into place by `os.replace` (a copy beside the target, its
+sha256 checked against the tested bytes, one rename), with `REQUIRED` absent before, during and after; in place after
+the move, the suite 220 tests OK and the plugin's 79 of 79. `gate.py` moved into place at 2026-10-24T18:08:13Z (14:08:13
+EDT) by the box's file times (its bytes 18:08:13.510Z, the folder's entry 18:08:13.522Z; the box's statement). Every
+hash below is re-derived from the box for this entry.
+
+| what | path | sha256 | note |
+|---|---|---|---|
+| gate file | `W:gate/gate.py` | `25d53fd6aa5e76046087ac78b3063b0b12c567c13f399471da225b036de2dad1` | 87547 bytes; the resolver after the review (15.10), in place at 2026-10-24T18:08:13Z; before it `8b5a7381…` (15.6); `gate_sha256` from this row on `ff34b52d634e6f535a8f0c160d30931031f0a996bfa4e388f8234a9a76b72dca`, before it `592dc579b5d049b4ede848f5b2b66e4c934f1fb91d06af1b230c00b291144254` (15.6) |
+| gate file | `W:gate/tests/test_drop_rule.py` | `6ec8977ba1187c31f088c00cd988c2070826c7496fe4acc89cd86c4258b52c92` | 27419 bytes; 31 tests, 11 added with 15.10; before it `10e6ed65…` (15.6) |
+
+**`gate_sha256`, a third digest.** By 15.6's rule (`W:gate/*.py`, `W:gate/helpers/*.py` and the six plugin files as
+installed, each its name, a NUL, its LF bytes and a NUL), from `gate.Env().gate_sha256()` after the move and re-derived
+by a script that does not import `gate.py`: `ff34b52d634e6f535a8f0c160d30931031f0a996bfa4e388f8234a9a76b72dca` over the
+files the rows lock after this entry. The ledger at this entry holds its header and 13 lines (sha256 `bf4ce3ce…`, head
+`9f8a90bb…`), every one carrying `387fc063…`: the gate wrote no line while the files 15.6 locked were in place
+(2026-10-24T16:31:20Z to 2026-10-24T18:08:13Z), so no line carries `592dc579…`, and the ledger's `gate_sha256` changes
+between the dry attempts (seq 1 to 13, `387fc063…`) and the next line the gate writes (`ff34b52d…`). The RESULT reads
+the three as 15.12 says.
+
+`lock_hashes.py check --strict` at this entry, with the rows above: rows 80, changed 0, built since 0, absent 0,
+unreadable 0, unlocked 0, bytecode 0, exit 0; NOT BUILT: `W:skills/styxx-post/SKILL.md`; SKIPPED: the `plugins`
+subtree, not re-read for this entry (15.6 re-read it as `519905d2…`, the 15.3 row's).
+
+### 15.11 — 2026-10-24: the drop rule's readings the reviews asked to be said plainly
+
+From the two pre-merge reviews (the lead's records `WT:_darkflobi_gate_2026_10_22/p0/prereg/premerge_review_gate.md`, G3
+to G5 and its notes, and `p0/prereg/premerge_review_record.md`, its second minor and its third note). No rule above
+moves; each bullet says how the gate of 15.10 reads the signed rule where its words leave room, and what the RESULT
+prints.
+
+- **`commit_unknown` refuses, and why the signed words cover it** [J]. The signed record names "a non-ancestor commit"
+  (15.5), and the question put to the operator named "a commit not in the repo's history". `RULES` §4's own test is that
+  the 40-hex names "the pin or one exact ancestor of it (`git merge-base --is-ancestor <40-hex> 3437340b` must hold)": a
+  40-hex that names no commit the repository holds fails that test as a side-branch commit does, so it is a commit that
+  is not the pin or its ancestor, and it is outside the repository's history in the question's words. Counting it with
+  `commit_not_pin_or_ancestor` also makes the outcome independent of what the box has fetched: a side-branch commit the
+  box lacks and one it holds both refuse. A git fault is neither (15.10).
+- **A commit newer than the pin refuses** (G4). A commit on `main` after the pin, a descendant of it, is in the
+  repository's history and is not the pin or its ancestor, so `merge-base --is-ancestor <commit> <pin>` answers no and
+  the leaf refuses as `resolver_failed:commit_not_pin_or_ancestor`, whatever value the object holds there. At this entry
+  the styxx checkout's `origin/main` is 78 commits past the pin (`git rev-list --count 3437340b..origin/main`), so a
+  receipt cut at the head of `main` refuses. 15.5's "outside the pin's history" is this case too. The posting skill
+  (`W:skills/styxx-post/SKILL.md`, not built, §11) must tell the agent to cite the pin or an ancestor of it; until it
+  exists nothing tells the agent so, and a refusal's notice names the codes and the `seq` only (`RULES` §7).
+- **A contradicted leaf that no sentence prints refuses** (G3) [J]. The check is per cited leaf, with no condition on a
+  numeral of the text (the drop-rule record's decision (2)): a receipts file whose leaf no sentence prints, contradicted
+  by its committed object, refuses the post even when every numeral the post prints is bound, and even when the leaf's
+  value is a year certify does not count as a numeral. The signed question asked about "a receipt for a number" that
+  "contradicts it"; this reading takes the receipt as the claim. For G_R, Panel R is shown, for such a refusal, in place
+  of 15.5's "the sentence": the leaf's dotted name and the value the author offered for it, written as one line
+  (`<leaf>: <value>`), with the words that no sentence of the post prints it, the kind `numeric`, and the committed
+  value at the `read_from` target; it answers whether the object evidences that line, and NO upholds the refusal. The
+  RESULT prints, beside `n_refusals`, the count of `resolver_failed:` refusals whose contradicted leaf no numeral of
+  the post prints. An operator line signed otherwise before the merge replaces this bullet.
+- **The leaf's value is compared exactly** (G5). The resolver compares the leaf and the committed token as decimals
+  (`RULES` §4: "the value equals the leaf's (as decimals)") and applies none of the equivalences certify applies
+  (rounding, percent): a rounded leaf (`0.28` citing a committed `0.2793478260869565`) and a share written as a fraction
+  (`0.5` citing `50%`) read `value_differs` and refuse. Panel R, shown the committed value beside the sentence, may
+  answer YES; the refusal is then not upheld, which G_R prices as an over-refusal. The posting skill must tell the agent
+  to copy the committed value into the leaf as the object writes it.
+- **An off-by-one range, and a contradiction beside a date** (the review's notes). A range one line off reads by the
+  line it lands on: on a line holding one other numeral it reads `value_differs` and refuses; on a line holding no
+  numeral, or two, it reads MALFORMED and only marks. A contradicted value cited on a line that also holds a date
+  (`1,600 generated on 2026-10-24`, four tokens) reads `range_malformed:tokens_4` and only marks, so a contradiction can
+  leave marked by the line it cites; the signed rule keeps the MALFORMED drop, and that route stays open. The RESULT
+  prints the MALFORMED drops by reason (`resolver.malformed_ranges`) beside `n_refusals`, as 15.5's restatement of §5
+  counts them beside it.
+- **The mark at the operator's DM, corrected.** 15.5's restatement of `RULES` §7 gives the DM copy
+  "`[gate: resolver_failed:<reason>]`". `gate.py` `decide` writes `[gate: <codes>]`, every code on the line joined by
+  spaces and cut at 200 characters, as `RULES` §6 says: a payload with two contradicted leaves, or a `certify_ungrounded` beside
+  one, carries all of its codes, and eight contradicted leaves cut the last code inside its word. The refusal's notice
+  to the agent names the codes and the `seq`, not the leaf or its committed value.
+
+### 15.12 — 2026-10-24: component (iv) against the gate's digests, and three corrections of record
+
+- **§5 (iv), read against three digests** [J]. §5's component (iv) counts "ledger send lines whose `gate_sha256` differs
+  from the lock-hashed gate files' digest", with no "after D0", and the lock rows give three digests in turn:
+  `387fc063…` (§11's rows; 15.3), `592dc579…` (15.6's rows, from 2026-10-24T16:31:20Z) and `ff34b52d…` (15.10's rows,
+  from 2026-10-24T18:08:13Z). The RESULT reads each send line against the digest of the files locked when the line was
+  written: `387fc063…` for seq 1 to 13, `592dc579…` for a line written in the second stretch (none at this entry),
+  `ff34b52d…` for every line after; a line carrying a digest other than its stretch's, or any fourth digest, counts into
+  (iv). It prints the three digests, the seq at which each begins, and (iv) for each. Read against the last row alone,
+  (iv) counts the six dry-attempt send lines, and the locked `reconcile.py` (`231a03e8…`) does so: it takes one
+  `gate_sha256` in `--locks`, counts `iv_lines` over every send line (l.1231-1234), and its
+  `unledgered_deliveries.total` adds `iv_lines`, not `iv_lines_after_d0` (l.1407), so run with `ff34b52d…` it prints at
+  least 6 and the table reads `INVALID__exits_open`. This is a judgement on frozen text, and it decides G_X: it is
+  entered before any line of the shadow or the live cell exists, the six lines sit in no cell (they went to the canary
+  chat and the operator's DM, §3), and the `score.py` adaptation §8 requires, lock-hashed in a dated AMENDMENT before
+  close, implements it (the per-stretch reading of (iv), and `unledgered_deliveries` summed over it). 15.6's paragraph
+  "How the RESULT reads the two" is this bullet's reading for two digests. It is listed for the operator's word beside
+  15.8 and 15.11's reading of a leaf no sentence prints; a line he signs otherwise replaces this bullet.
+- **The `canary` kind's source, corrected** (15.8). 15.8 says the plugin writes `canary` "for a harness submission". The
+  plugin as installed (`index.js` `759ceb82…`) holds no such string: the canary harness writes it.
+  `W:gate/canary_shadow.py` (`b7a13d9c…`) `gate_request` (l.847-853) hands `gate.py` `payload_kind: canary` itself, at
+  E2, to a destination in no config list, with `never_deliver` and no receipts file. 15.8's reading of the kind stands
+  (out of the population, counted under the canary ledger, §7), and with no receipts file the drop rule of 15.5 and
+  15.10 cannot touch the canary catch rule.
+- **15.8's second reading, its frozen support.** §4's shadow row ("every `public` send line between the sitting and D0
+  with `required_present: false`") and live row ("every `public` send line between D0 and close with
+  `required_present: true`") are frozen text that names no payload kind, beside §3's Exits bullet and the gate sentence of §2 that 15.8
+  cites; the second reading, the one the gated metrics are scored on, rests on those rows too.
+- **The signed record, pinned.** The lead's record of the operator's two answers,
+  `WT:_darkflobi_gate_2026_10_22/SIGNED_2026_10_24.md`, is untracked in the clawd repository; at this entry its sha256
+  is `86d8aa306f10fd9530f96e52fa4197dea62b4f543e5cab3b9e979ded985b104b`, 1,411 bytes, its file time
+  2026-10-24T15:51:31.98Z, the time the record gives for the drop rule's answer. 15.4 and 15.5 quote it, and their
+  quotes are its words.
