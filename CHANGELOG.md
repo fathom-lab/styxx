@@ -72,7 +72,10 @@ RESULT, AMENDMENT, conformance vector, fixture, pinned-pair file, moves file or 
   `docs/guide.md` beside a `src/a.py` edit, the same beside a created test (CONTRADICTED before), `def test_s` inside
   a triple-quoted string added to `src/a.py`, a `def foo` in a `.md` beside a `.py` change and a `notes.txt` read
   UNCHECKABLE (#178); a `def test_` in a `.py` file with no triple quote, and a `def` after a docstring closed in the
-  added lines, keep `main`'s verdict. Each of its `test_179_*` and `test_178_*` cases failed on `333f3c73`.
+  added lines, keep `main`'s verdict. On `333f3c73` 22 of the module's 29 tests fail: every #179 case, #178's
+  reporters' cases in both ports, the ast grid and the 12 plants (their anchors are not there). The 7 that pass there
+  are the ast's reading of the reporters' cases, #178's controls in both ports, the one-parse, path-tail and
+  named-residual cases, and the two ports printing the same records.
 - **The truth world** (1,706 cases, the final record): right verdicts printed 5,644 → 5,569, wrong verdicts printed
   236 → 228, withheld 1,591 → 1,616. Of the 75 right verdicts no longer printed, 45 are withheld by #101, which now
   sees the changed async tests `main` counts; 28 are `main`'s own #178 abstention; and 2 become wrong:
