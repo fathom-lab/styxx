@@ -4,33 +4,6 @@
  "count": 9,
  "vectors": [
   {
-   "id": "11fcb7d11fe40beafb3abd9db17fc927b72bec3cf48f60e3390afe70deeb9693",
-   "family": "cli",
-   "sources": [
-    "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [],
-   "inputs": {
-    "receipt": "f4da31c984914af1aa93681564a81bcb5dbbdaa55ed69b2376aba7a9340c7db8",
-    "document": null,
-    "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
-    "manifest": null,
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
-    }
-   }
-  },
-  {
    "id": "2b13429fd8d8987e4e0ec7828e07579ff9fe2d24048f6d398692423268ec237c",
    "family": "cli",
    "sources": [
@@ -201,6 +174,33 @@
      "where": "to_sidecar",
      "code": "lexical_malformed",
      "match": "cannot carry a lexically MALFORMED declaration"
+    }
+   }
+  },
+  {
+   "id": "9c6839d318332cf9b2ceb9baf086107e8e94b9b1e9707ecff14b7bdf9a047b9f",
+   "family": "cli",
+   "sources": [
+    "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [],
+   "inputs": {
+    "receipt": "6d00cfa56c337a6f35762e81fdc787e6af215495c6e20b38d53d87c6d582bebd",
+    "document": null,
+    "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
+    "manifest": null,
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
     }
    }
   },

@@ -4,10 +4,10 @@
  "count": 4,
  "vectors": [
   {
-   "id": "3535f3f851f488231f92a2694ee6776fe5f091ea07af7bc09717754c573f4dcc",
+   "id": "61df4a41d8ba4f3c99c895dd80107a62e4868c9b58f8bc792703bf7afa01d1ac",
    "family": "check_v2",
    "sources": [
-    "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_issues_and_re_derives"
+    "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_whose_certifies_was_edited_fails"
    ],
    "rules": [],
    "mode": "receipt_check",
@@ -15,34 +15,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "dcdcbd8bbd68a389533d799fa30555c1426e8571fb8c9606a2509906de2e8058",
-    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
-    "sidecar": null,
-    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
-    }
-   }
-  },
-  {
-   "id": "6a20acafc69ffc7fd48ed34c8b0304c616a84fb3c23db4ba810c75971839bad0",
-   "family": "check_v2",
-   "sources": [
-    "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_carrying_the_v1_sentence_fails"
-   ],
-   "rules": [],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "c7234e8b77da6b6fa1dd3742109f100e89b62b45684558a3f4f56ae4b849ec3b",
+    "receipt": "8c4839672047670a91193aa2e74fcfccd967162bf816cd74f98836b33d7d4cbc",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -58,7 +31,7 @@
    }
   },
   {
-   "id": "a6f7383027c64c83179e8f9fab16c24e61d290f0112f0a42939122e9445ce4a4",
+   "id": "93b9df49211fedfbaf2e816bfcf1df04fbfab5f964d36f970a52568076b6c457",
    "family": "check_v2",
    "sources": [
     "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_whose_certifies_was_edited_fails"
@@ -69,7 +42,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "1fe83db3833be1fc9a2857feffdba1b1c68c2a095a396e8a901e26d46bb1769a",
+    "receipt": "675259ce07be182b15ada710a2bacf18548e82c1180f60866fd9742e0ca154fc",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
@@ -85,10 +58,10 @@
    }
   },
   {
-   "id": "c4a21f68716d5296bada57d21633d8ae920939d2a79608990a4f0fd6eea0f257",
+   "id": "c36b3dc0e9f74c47f443f05114132fbbac2685c4b6e1557d12c2e0df97945765",
    "family": "check_v2",
    "sources": [
-    "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_whose_certifies_was_edited_fails"
+    "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_issues_and_re_derives"
    ],
    "rules": [],
    "mode": "receipt_check",
@@ -96,7 +69,34 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "8a3c9cad058201ebcb153a94bbedc5183dc2e82c120b0a147738b34557acc5d0",
+    "receipt": "789780e56039091d426401d64787311247157b7e82edb7aa8b366b89d3824967",
+    "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
+    "sidecar": null,
+    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
+   "id": "cbf49822f9cdb48920cf9cd31ec07b20dcdfdea103363c1f1fbdecea81d7053d",
+   "family": "check_v2",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestReceiptV2::test_a_v2_receipt_carrying_the_v1_sentence_fails"
+   ],
+   "rules": [],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "baed095680c201ea5359e0e2c84099de5021e8a73c935795e4428e6a3585ab4c",
     "document": "913cb5d94e6ea43ab00705d33886fb07c02ccb75291ed69a02bf60a2926c8fc6",
     "sidecar": null,
     "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",

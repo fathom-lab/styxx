@@ -100,8 +100,8 @@ class TestCoreV2:
         m = harness(r1=(STDOUT, "web_scrape"))
         assert only(core_of(sp("12 passed.", "r1"), manifest=m)) == ("MALFORMED", "kind_of_source_unknown")
 
-    def test_an_unresolved_span_was_not_checked(self):
-        # each sentence contradicts its receipt; none was checked, so none FAILED, and the document
+    def test_an_unresolved_span_was_not_compared(self):
+        # each sentence contradicts its receipt; none was compared, so none FAILED, and the document
         # verdict does not consult UNRESOLVED
         wrong = sp("99 passed.", "r1")
         no_manifest = core_of(wrong)
@@ -111,6 +111,51 @@ class TestCoreV2:
             "UNRESOLVED", "rung_unknown")
         assert only(core_of(wrong, manifest=harness(r2=(STDOUT, "tool_stdout")))) == (
             "UNRESOLVED", "manifest_id_missing")
+
+    def test_a_malformed_span_was_refused_before_any_comparison_the_authorship_refusals_among_them(self):
+        # every receipt below CONTAINS the needle the span swears absent, so a comparison would FAIL it;
+        # a MALFORMED span never reaches the comparison
+        log = b"tests: 1 failed, 11 passed in 0.01s\n"
+        doc = sp("The log never reads `1 failed, 11 passed`.", "r1", "absent")
+        assert only(core_of(doc, manifest=harness(r1=(log, "test_report")))) == ("FAILED", "needle_present")
+        assert only(core_of(doc, manifest=harness(authored=(log,), r1=(log, "test_report")))) == (
+            "MALFORMED", "receipt_author_minted")
+        assert only(core_of(doc, manifest=harness(r1=(log, "agent_output")))) == ("MALFORMED", "receipt_author_minted")
+        partial = Manifest("conformance-harness", "turn-v2", minted_at=CLOCK, rung="L2")
+        partial.add("r1", log, "test_report", complete=False, captured_at=CLOCK)
+        assert only(core_of(doc, manifest=partial)) == ("MALFORMED", "absent_over_partial")
+
+    def test_an_rn_span_is_checked_at_the_rung_the_manifest_declares_and_a_path_span_carries_no_rung(self):
+        # the rung clause names rN spans alone: under an L2 manifest the rN span records L2, and the
+        # path: span in the same document records no rung and is counted as committed
+        m = harness(rung="L2", r1=(STDOUT, "tool_stdout"))
+        doc = sp("12 passed.", "r1") + sp("The count is 12.", "path:t/table.json#/n")
+        core = core_of(doc, manifest=m, tree=tree(), commit=C)
+        assert [(s["verdict"], s["reason"]) for s in core["spans"]] == [("HELD", None), ("HELD", None)]
+        rn, path = (s["provenance"] for s in core["spans"])
+        assert rn["rung"] == "L2" and "rung" not in path
+        assert core["rungs"] == {"L2": 1, "committed": 1}
+
+    def test_a_path_span_carries_no_rung_so_a_rung_the_verifier_refuses_does_not_reach_it(self):
+        # an L3 manifest: the rN span is UNRESOLVED rung_unknown, and the path: span beside it, which
+        # carries no rung, is checked against the tree and counted as committed
+        m = harness(rung="L3", r1=(STDOUT, "tool_stdout"))
+        doc = sp("12 passed.", "r1") + sp("The count is 12.", "path:t/table.json#/n")
+        core = core_of(doc, manifest=m, tree=tree(), commit=C)
+        assert [(s["verdict"], s["reason"]) for s in core["spans"]] == [
+            ("UNRESOLVED", "rung_unknown"), ("HELD", None)]
+        assert "rung" not in core["spans"][1]["provenance"]
+        assert core["rungs"] == {"unresolved": 1, "committed": 1}
+
+    def test_the_authorship_test_reads_the_bytes_sha256_and_never_a_name(self):
+        # the bytes the harness digested, committed under a name it never saw, are caught; the name it
+        # did see, holding those bytes and one LF more, is not
+        m = harness(authored=(TABLE,), r1=(STDOUT, "tool_stdout"))
+        t = MemoryTree({"t/renamed.json": TABLE, "t/table.json": TABLE + b"\n"}, commit=C)
+        assert only(core_of(sp("The count is 12.", "path:t/renamed.json#/n"), manifest=m, tree=t, commit=C)) == (
+            "MALFORMED", "receipt_author_minted")
+        assert only(core_of(sp("The count is 12.", "path:t/table.json#/n"), manifest=m, tree=t, commit=C)) == (
+            "HELD", None)
 
     def test_a_path_receipt_when_no_manifest_is_given_is_taken_as_not_the_author_s(self):
         core = core_of(sp("The count is 12.", "path:t/table.json#/n"), tree=tree(), commit=C)
@@ -140,7 +185,7 @@ class TestCoreV2:
         m = harness(authored=(TABLE,), r1=(STDOUT, "tool_stdout"))
         assert only(core_of(doc, manifest=m, tree=tree(), commit=C)) == ("MALFORMED", "receipt_author_minted")
 
-    def test_a_path_receipt_with_no_tree_was_not_checked(self):
+    def test_a_path_receipt_with_no_tree_was_not_compared(self):
         assert only(core_of(sp("The count is 12.", "path:t/table.json#/n"))) == ("UNRESOLVED", "no_repository")
         m = harness(r1=(STDOUT, "tool_stdout"))
         doc = sp("12 passed.", "r1") + sp("The count is 12.", "path:t/table.json#/n")

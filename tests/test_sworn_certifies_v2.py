@@ -38,22 +38,28 @@ V1_SENTENCE = (
     "were written at write time, NOT a check of any signature, and only as trustworthy as the harness "
     "that minted the manifest and the history that holds the commit"
 )
-# The /v2 sentence, word for word (the NOTE quotes it in full).
+# The /v2 sentence, word for word (the NOTE quotes it in full). Its rung clause names rN spans
+# alone (a path: or prereg: span carries no rung and is counted as committed), and it says what the
+# per-span note authorship unchecked means and that MALFORMED and UNRESOLVED spans were not compared.
 V2_SENTENCE = (
     "the spans the author bound that read HELD or FAILED were checked, each by its kind, against the "
     "receipt it names (its bytes, or for a hash span on a manifest entry that carries none, the sha256 "
-    "the manifest records), at the commit and manifest the receipt records and at the rung the manifest "
-    "declares; the only authorship check is against the manifest: an rN receipt is taken as not the "
-    "author's when the manifest records it under a kind_of_source from the closed external vocabulary and "
-    "does not list its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given "
-    "or the manifest does not list its sha256 there; authored_sha256 is the harness's record of what the "
-    "agent produced in the turn the manifest names, so bytes the author wrote that the harness never "
-    "digested, such as a file committed in another turn or under a name the harness never saw, are not "
-    "caught; an UNRESOLVED span was not checked — NOT a claim that the author did not write the receipt's "
-    "bytes, NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT "
-    "a check that the tags were written at write time, NOT a check of any signature, and only as "
-    "trustworthy as the harness that minted the manifest and the tree that served the commit (git history "
-    "from the CLI; a snapshot or in-memory tree on its caller's word)"
+    "the manifest records), at the commit and manifest this receipt records, and an rN span at the rung "
+    "the manifest declares (a path: or prereg: span carries no rung and is counted as committed); the "
+    "only authorship test reads the manifest: an rN receipt is taken as not the author's when the "
+    "manifest records it under a kind_of_source from the closed external vocabulary and does not list "
+    "its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given or the "
+    "manifest does not list its sha256 there (its span's provenance reads authorship unchecked: nothing "
+    "beyond that membership was tested); authored_sha256 is the harness's record of what the agent "
+    "produced in the turn the manifest names, tested on the bytes' sha256 and never on a name, so bytes "
+    "the author wrote that the harness never digested, such as a file written in another turn, or by a "
+    "shell command or a tool the harness does not digest, are not caught; a MALFORMED span was refused "
+    "before any comparison, the authorship refusals among them, and an UNRESOLVED span was not compared "
+    "— NOT a claim that the author did not write the receipt's bytes, NOT a claim that the document is "
+    "correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written "
+    "at write time, NOT a check of any signature, and only as trustworthy as the harness that minted "
+    "the manifest and the tree that served the commit (git history from the CLI; a snapshot or "
+    "in-memory tree on its caller's word)"
 )
 V1_OPENING = "the spans the author bound were checked against bytes the author did not write"
 
@@ -105,7 +111,7 @@ def test_the_receipt_schema_strings_are_pinned_verbatim():
     assert sworn._CERTIFIES == V2_SENTENCE
     assert sworn._CERTIFIES_V1 == V1_SENTENCE
     assert sworn._CERTIFIES_OF == {V1: V1_SENTENCE, V2: V2_SENTENCE}
-    assert len(V2_SENTENCE) == 1345 and len(V2_SENTENCE.encode("utf-8")) == 1347
+    assert len(V2_SENTENCE) == 1679 and len(V2_SENTENCE.encode("utf-8")) == 1681
 
 
 def test_a_fresh_receipt_issues_at_v2_with_the_corrected_sentence():
@@ -127,11 +133,25 @@ def test_the_v2_sentence_keeps_every_true_clause_and_drops_the_wide_one():
                  "NOT a check of any signature"):
         assert kept in s, kept
     # the correction
-    for new in ("that read HELD or FAILED were checked", "the only authorship check is against the manifest",
-                "are not caught", "an UNRESOLVED span was not checked",
+    for new in ("that read HELD or FAILED were checked", "the only authorship test reads the manifest",
+                "are not caught", "an UNRESOLVED span was not compared",
                 "NOT a claim that the author did not write the receipt's bytes",
                 "the tree that served the commit"):
         assert new in s, new
+    # the review of 2026-10-24 (REVIEW_truth F1-F5): the rung clause names rN spans alone, "this receipt"
+    # is the verdict receipt, the membership is tested on bytes and never on a name, MALFORMED is said, and
+    # the per-span note "authorship unchecked" is reconciled with the authorship test
+    for fixed in ("and an rN span at the rung the manifest declares (a path: or prereg: span carries no rung "
+                  "and is counted as committed)",
+                  "at the commit and manifest this receipt records",
+                  "tested on the bytes' sha256 and never on a name",
+                  "such as a file written in another turn, or by a shell command or a tool the harness does not digest",
+                  "a MALFORMED span was refused before any comparison, the authorship refusals among them",
+                  "its span's provenance reads authorship unchecked: nothing beyond that membership was tested"):
+        assert fixed in s, fixed
+    for gone in ("at the commit and manifest the receipt records and at the rung", "under a name the harness never saw",
+                 "an UNRESOLVED span was not checked", "the only authorship check is against the manifest"):
+        assert gone not in s, gone
     assert V1_OPENING not in s
     assert "bytes the author did not write" not in s
     assert "\n" not in s and "  " not in s and "—" in s
@@ -220,6 +240,8 @@ def test_a_v1_receipt_re_derives_and_a_re_worded_one_fails():
     res = verify_receipt(v1, doc, manifest=m)
     assert res["status"] == "VERIFIED" and res["schema"] == V1
     assert "held at their /v1 strings" in res["note"]
+    # the check of a committed /v1 receipt says the sentence it carries is withdrawn (REVIEW_truth F6)
+    assert "the /v1 certifies sentence it carries is withdrawn" in res["note"]
     for sentence in ("every span here is true", V2_SENTENCE):
         edited = _redigest(dict(v1, certifies=sentence))
         assert edited["digest"] != v1["digest"]

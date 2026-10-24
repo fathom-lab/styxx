@@ -4,6 +4,35 @@
  "count": 5,
  "vectors": [
   {
+   "id": "307d0ec5481234732039041ad21f3b45c4763d7d5d5a94b631b07a5fb7bd9adf",
+   "family": "receipt_v1",
+   "sources": [
+    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "21f456efd795348fde4786f0d89ec3516ab36b87c6ca9153fdeaeac46106fd0e",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
    "id": "32c2acce4ee0059beda5bbbbdb475778f969278a21d0cd6f1f4a35f3fb6bf523",
    "family": "receipt_v1",
    "sources": [
@@ -33,7 +62,7 @@
    }
   },
   {
-   "id": "44822f7a02a64d9082e4e1f0f39a26d474452c83e3e05ca0d79ad37a657506c1",
+   "id": "43168a886cf32417ec570b18d844289851643fa84a615f6086a09f8ed52da58c",
    "family": "receipt_v1",
    "sources": [
     "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
@@ -46,8 +75,8 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "532ed2dfd6654bb46511b2c5d791b81b16f9d71578f32e448d4223bb66b655d8",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "receipt": "04367b4342b4add8a5a3186c59c946334c7beba62b8fd4eadad61ce5151f077e",
+    "document": "637b3b6b1ac524d8c277aa295b09f1f7886a342ec6204edba51c359380382f15",
     "sidecar": null,
     "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
     "tree": null
@@ -56,37 +85,8 @@
     "outcome": "check",
     "check": {
      "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
-   "id": "46cf1252ccdd06266488d6b1e62d121e3423a6bb67ed888ae9175f78a126c8c1",
-   "family": "receipt_v1",
-   "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "46c1bd5bd9759c5ddde52f673122a672d917957d3f693139999d34f045cbd1fb",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
      "digest_match": true,
-     "verdict_reproduces": true
+     "verdict_reproduces": false
     }
    }
   },
@@ -143,10 +143,10 @@
    }
   },
   {
-   "id": "aefb9b9e12805ceb1162bfda8ef69b73f71411629544782344bb487556b8dac0",
+   "id": "c12f634e711dd8591a36bec8469428a0b56ae50b2010cdc7aa5e082b6917316b",
    "family": "receipt_v1",
    "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
+    "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
    ],
    "rules": [
     "R9"
@@ -156,18 +156,18 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "5976f8099c64701a81d70c2256804cb34c60f19eae4ea45bea09de5b14a7ecf7",
-    "document": "637b3b6b1ac524d8c277aa295b09f1f7886a342ec6204edba51c359380382f15",
+    "receipt": "79e70ba81c9d45b107d84bd8c601b6541d3799458cd6e7002e9ad0f63e10bc70",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
     "sidecar": null,
-    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
     "tree": null
    },
    "expect": {
     "outcome": "check",
     "check": {
-     "status": "FAILED",
+     "status": "VERIFIED",
      "digest_match": true,
-     "verdict_reproduces": false
+     "verdict_reproduces": true
     }
    }
   }

@@ -1,7 +1,7 @@
 {
  "schema": "styxx.sworn.conformance.family/v1",
  "family": "core_v2",
- "count": 30,
+ "count": 38,
  "vectors": [
   {
    "id": "0755870a5460b936a3e06c8bc2e1d4f37543d0c72ba9583c10c08816e78d034e",
@@ -23,7 +23,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "d2afd091472fb5b135dea1b0b34bd96ff4dd971dcee163ec79f1d7ab384fde93",
+    "core_sha256": "974380d98f309a5f8c56643a607a92310793f4e3791fa666e9995ad5b05b73c8",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -73,7 +73,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "a455f275ede75d7f6687f23156fdf25a8cf00e8d1669c0c0fc0e147b85fc643e",
+    "core_sha256": "ebdfae8c69feec363dfbc40d29e5bf40cf179dfaf60fdcf4b2a31fb805e9d10b",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -139,7 +139,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "df2178eff1a5ea1890bdd16f3859b1bca5e35e56a29cd52fb0ea912c82f19683",
+    "core_sha256": "62920ffc51f8668f60b5ff7768eeda885948bc69106aafa685a23ec0ea8c09c2",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 1,
@@ -189,7 +189,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "c1ab7bc05c80ab91856b81a3eeb8d5e364cfb4be5580819597b8db948718d009",
+    "core_sha256": "6dabd948d0d682d7321d1b268c7c1e410381a0725b430584dd7760c21da73528",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -239,7 +239,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "36b66b99cc059a359149c7d8a03c6dc73a8b07496cae927d3932cc8ec129fcd4",
+    "core_sha256": "2b5b1389c08f6c8e9af1af964ac14d0ca2f08d81079db5d80e620f622cc06c3a",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 1,
@@ -273,7 +273,7 @@
    "id": "25922a17a8c712c2ea029f36778d34fa6f429aae1035f77ba15e88ee71f39370",
    "family": "core_v2",
    "sources": [
-    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_an_unresolved_span_was_not_checked"
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_an_unresolved_span_was_not_compared"
    ],
    "rules": [],
    "mode": "inline",
@@ -289,7 +289,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "641ef91ee97a5bce8463b1b142f813e17c4e7bcc751d57a9a8e691d9d1d2b882",
+    "core_sha256": "8b4994718b144f8fd72ba1102aeee609b54f54f42c8678fe4c5f3f7df34bc58a",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 0,
@@ -320,6 +320,80 @@
    }
   },
   {
+   "id": "3261ecfee42627b02f748d4f5786387adc4a5bc2ed404e3536b44679c56893c3",
+   "family": "core_v2",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_an_rn_span_is_checked_at_the_rung_the_manifest_declares_and_a_path_span_carries_no_rung"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest",
+    "tree"
+   ],
+   "inputs": {
+    "name": "v2.md",
+    "commit": "cccccccccccccccccccccccccccccccccccccccc",
+    "document": "9eeba9a2bdc411486f5b24ded65cec9efae7668c5d318da0ce873c1f018c169b",
+    "manifest": "f2691bc34a7df7293db04f871cae25eccbc38d3d483b2916b2bc88503c376863",
+    "tree": {
+     "snapshot_commit": "cccccccccccccccccccccccccccccccccccccccc",
+     "handle_commit": "cccccccccccccccccccccccccccccccccccccccc",
+     "entries": {
+      "t/notes.txt": {
+       "mode": "100644",
+       "size": 13,
+       "sha256": "c2a8079d955d628967ba60b7025898ac8ff4894865b2162a7e03406307f58578"
+      },
+      "t/table.json": {
+       "mode": "100644",
+       "size": 25,
+       "sha256": "bc67c2ef5d6b4bb985107311ab2ed35005de0a6cb704626f89b2944be4d10ab9"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "a9201100b918d84b6ff78e181f50adc57c297cc290246675388c7d1667b80ecc",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 2,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 0,
+    "rungs": {
+     "L2": 1,
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     },
+     {
+      "at": 45,
+      "receipt": "path:t/table.json#/n",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
    "id": "368d8c02e9de12d844b1a6112059b6400b8cb982d41a614db07eb05b176a8241",
    "family": "core_v2",
    "sources": [
@@ -339,7 +413,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "4fd3f93aa9aea22597be9af3cd32f3b5ea8c4ddd7ff0185cbb89d5b796d078a1",
+    "core_sha256": "441b0b0e9371a05b31585a382a23f5a12aef0f69a12adcdcc3cd0974050e0cb6",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 1,
@@ -373,7 +447,7 @@
    "id": "3caa8ae8b172abe091c77f2ea5fcf20e0e075f6d40eb4039ff5319c4f8630b3c",
    "family": "core_v2",
    "sources": [
-    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_an_unresolved_span_was_not_checked"
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_an_unresolved_span_was_not_compared"
    ],
    "rules": [],
    "mode": "inline",
@@ -387,7 +461,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "7049833b7276f08a8adf0ed07eaa1c2f40651e90fbac75cdac8151a490db323e",
+    "core_sha256": "0e3ba743c5569849c8db2a6b88cd4c30a752dc1121cacd6e2fe5ad9feda2dcb0",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 0,
@@ -408,6 +482,56 @@
       "kind": "numeric",
       "verdict": "UNRESOLVED",
       "reason": "manifest_absent"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "48f285953f0be724e85f85077920b621a2d65b0af334523ad755e11758392879",
+   "family": "core_v2",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_a_malformed_span_was_refused_before_any_comparison_the_authorship_refusals_among_them"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "v2.md",
+    "commit": null,
+    "document": "713761b22af45e7b182794e356a28a4451266dc7eaccdc97a25856097fdad00e",
+    "manifest": "e16c768bb1c295c1d4c97755acee0a88b06fc2ec88eeaeeab7bdedb8fefe2aa4",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "f5d57ecd2c1eacf91b4869eaa7bb93d228b6601fc457036fb6ba73a387a16a40",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 1,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "L2": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "absent",
+      "verdict": "FAILED",
+      "reason": "needle_present"
      }
     ],
     "floor": {
@@ -453,7 +577,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "62b2cd03b13dbe2658f966c16b5682b211d03644d7d91c14b2d2dc2f3e0a553b",
+    "core_sha256": "0ffd25cad1aed1546fcdcc9f7bd45aef0def09f8804347c12916f68295f1a3db",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 1,
@@ -484,6 +608,106 @@
    }
   },
   {
+   "id": "55257e9032eee9d1dfd7563f8e677941df4c1e06153e950bea830c3c788114c1",
+   "family": "core_v2",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_a_malformed_span_was_refused_before_any_comparison_the_authorship_refusals_among_them"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "v2.md",
+    "commit": null,
+    "document": "713761b22af45e7b182794e356a28a4451266dc7eaccdc97a25856097fdad00e",
+    "manifest": "e10bd125fe87c1f99293a87539c3e427c8f0ea8a30dff7f83bea6d4eb7a2fe8e",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "308defb45b241d5774099771e760223daf7abc04ca5fbc99dba0c3fec8521ed7",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "absent",
+      "verdict": "MALFORMED",
+      "reason": "receipt_author_minted"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "644b9e8198074b1703d3afd2c0b864cce3b69b46ffd340736032b47b6f848ef9",
+   "family": "core_v2",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_a_malformed_span_was_refused_before_any_comparison_the_authorship_refusals_among_them"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "v2.md",
+    "commit": null,
+    "document": "713761b22af45e7b182794e356a28a4451266dc7eaccdc97a25856097fdad00e",
+    "manifest": "5614cc2e39fc3f9a695a61350421d1018e69aa438a8429ecadf60b85bb80ffd2",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "4a0347185856c53f79c1d20e00099b2c8687397aaeaac85dca1771f6cd936b35",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "L2": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "absent",
+      "verdict": "MALFORMED",
+      "reason": "absent_over_partial"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
    "id": "7894a5a16197b78b2ad8a6ff96468c075723022082cb16b7b902543a31c77892",
    "family": "core_v2",
    "sources": [
@@ -503,7 +727,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "a5a6aef968604a48af3f89ff62cfebfea848dcb7d912c264601ea8407e3a0b5f",
+    "core_sha256": "8cd9175679f02cfb81c0e656f23a9f867bb4735e60e8f5cf33180c5bac0c9f40",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 1,
@@ -553,7 +777,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "b36ebe425da8aeb47e157a9491ce131f37e70559b3e79af0715c13812069372e",
+    "core_sha256": "eb6fbecb902571c1c09c88e3d94a729cef4c8cfe34ffa358c37447cc785eb443",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 1,
@@ -574,6 +798,72 @@
       "kind": "quote",
       "verdict": "HELD",
       "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "81d2e25801fe5682a9a7f7dd8b5a6c5112e99a9f70572ede32d402f355d93f9d",
+   "family": "core_v2",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_the_authorship_test_reads_the_bytes_sha256_and_never_a_name"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest",
+    "tree"
+   ],
+   "inputs": {
+    "name": "v2.md",
+    "commit": "cccccccccccccccccccccccccccccccccccccccc",
+    "document": "4039b6305a682a1797ed9dc5553d6dda0319f1e7b2cd82fee750c99edaf7f2fa",
+    "manifest": "518b32e14f3bf285e7ae7a72077eb30591d63d318733c518e04865caa6c12b28",
+    "tree": {
+     "snapshot_commit": "cccccccccccccccccccccccccccccccccccccccc",
+     "handle_commit": "cccccccccccccccccccccccccccccccccccccccc",
+     "entries": {
+      "t/renamed.json": {
+       "mode": "100644",
+       "size": 25,
+       "sha256": "bc67c2ef5d6b4bb985107311ab2ed35005de0a6cb704626f89b2944be4d10ab9"
+      },
+      "t/table.json": {
+       "mode": "100644",
+       "size": 26,
+       "sha256": "ff575c214c625cbab00d5b4c3ddf392e772992d3086ab73e1256aef11dddc812"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "f522228e516429616aec2da0a67a70e36987f2f7305c8010837778362892ebe4",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:t/renamed.json#/n",
+      "kind": "numeric",
+      "verdict": "MALFORMED",
+      "reason": "receipt_author_minted"
      }
     ],
     "floor": {
@@ -618,7 +908,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "e8f05b602596f06658ad893b1a4e268e85d374a85447fafdcf7284b5c1548edb",
+    "core_sha256": "ca43c17a9a499b104a7b8148ff98356622189dd2dd56901af2d61acfb9791623",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 1,
@@ -668,7 +958,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "5985691d2368bf69b1f4a68b5dbe8c94fba34df28256a6b71773acc801dc1491",
+    "core_sha256": "98e4e46ddd447a3dd01079f2fe37eacdd88cb35ff77de8fca2033a69a895134e",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -718,7 +1008,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "8b3ed772a4885055cf60d1460644eefbe5a6addc7dac0215f3d0256746a9713d",
+    "core_sha256": "8a84888ac96ff20327f19721eb4f320825fe041f103599bfefd4b87a97faaa7b",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -752,7 +1042,7 @@
    "id": "a54a97932fbdfd8197e0b3e0c73bd9e3a81b39b9487dadbe09d0e13b22ae55a1",
    "family": "core_v2",
    "sources": [
-    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_a_path_receipt_with_no_tree_was_not_checked"
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_a_path_receipt_with_no_tree_was_not_compared"
    ],
    "rules": [],
    "mode": "inline",
@@ -766,7 +1056,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "b1ec6906caa2d7a73545ef9a07283a7986e3aafbbfd740e9a7ba4bfd220cfbe7",
+    "core_sha256": "04b428f8ca37bb3414b3b1d77fad8489804501aae0070d860d17fc7af0e6ae2c",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 0,
@@ -816,7 +1106,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "b1df597554d651c04c01b42ae90fa0ab839a0e1112df746a10fa97eaff88f195",
+    "core_sha256": "c6767a60058af0c0c2670f4d5a576755f62d75a942a2c77a0e3673d402082e7f",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -864,7 +1154,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "6d80f8d49b8abfe68958f138f94cc96ca3b1fbc5caf4753d0689e1a28a4e1136",
+    "core_sha256": "21ff0d89a2f18503b662be152b36c73d1066cff7e45b3d98f1afc59521f3c099",
     "document_verdict": "UNSWORN",
     "counts": {
      "HELD": 0,
@@ -920,7 +1210,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "6325406d73ea2f055bfce6e31d584a5018a108ad1375431d458839714d93d5ff",
+    "core_sha256": "4a1ab433b60d997f30676c40a5b3dbbfed2ba66b4b7e18623c64564b119469f9",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -954,7 +1244,7 @@
    "id": "bd9c2d3137b92563e19c1fd84a200a0b6d7ce6b8a49d1da38e2f769d29ab7e06",
    "family": "core_v2",
    "sources": [
-    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_an_unresolved_span_was_not_checked"
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_an_unresolved_span_was_not_compared"
    ],
    "rules": [],
    "mode": "inline",
@@ -970,7 +1260,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "87a72b34781b745819d8712be37e5e8bef15fdf4c07b5b4fef1c1239a3cdd1e4",
+    "core_sha256": "ec45b4dd9b53ec26082c38a8f78185ef48ef277dfc84e4034466b8d7a560f279",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 0,
@@ -1020,7 +1310,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "c8137e2e4d538b9bbc3a027612b2b39817f05465e0ee191a4aec0dfd79d8743e",
+    "core_sha256": "0089e5500cb21ed1047354b97aa911ec3767fbd903b7ece96751b0b301d575ff",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 1,
@@ -1038,6 +1328,72 @@
      {
       "at": 0,
       "receipt": "r2#/n",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "c01732338932d0bf7e736ebf8c93a080a297b6e2de956fc9566d23a48794fe2e",
+   "family": "core_v2",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_the_authorship_test_reads_the_bytes_sha256_and_never_a_name"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest",
+    "tree"
+   ],
+   "inputs": {
+    "name": "v2.md",
+    "commit": "cccccccccccccccccccccccccccccccccccccccc",
+    "document": "f04c1b2adc7aa9579773aa039c3a40c30bffca1ff18af214b8860e22fd60c69e",
+    "manifest": "518b32e14f3bf285e7ae7a72077eb30591d63d318733c518e04865caa6c12b28",
+    "tree": {
+     "snapshot_commit": "cccccccccccccccccccccccccccccccccccccccc",
+     "handle_commit": "cccccccccccccccccccccccccccccccccccccccc",
+     "entries": {
+      "t/renamed.json": {
+       "mode": "100644",
+       "size": 25,
+       "sha256": "bc67c2ef5d6b4bb985107311ab2ed35005de0a6cb704626f89b2944be4d10ab9"
+      },
+      "t/table.json": {
+       "mode": "100644",
+       "size": 26,
+       "sha256": "ff575c214c625cbab00d5b4c3ddf392e772992d3086ab73e1256aef11dddc812"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "379d955fd3a426213766410722b54fd67c5d2d660657d8fb2ffffc1efe064fc9",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "path:t/table.json#/n",
       "kind": "numeric",
       "verdict": "HELD",
       "reason": null
@@ -1070,7 +1426,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "c21cb1f7f9c825bec8e55b62bc39f36e29d9246337e92e365e98c05d6b2f1ade",
+    "core_sha256": "aa6c7470cfc5509d2a6eb9b85e3c0f8d22cd38149c054c5973ceb26e872c8572",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 1,
@@ -1120,7 +1476,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "0c4752f27431ffaf54c4ae00339a1e6f43a9543bd3797d3a3ef38cce5648fa2d",
+    "core_sha256": "066ea97d37735521b2b6bc2f266f5a29b2e99acc47e55a1147e468b2ae81b774",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -1186,7 +1542,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "7edb26941cd114c0593d5cef8ada2745f5f7b0532aae94c417b359201f2b2967",
+    "core_sha256": "34a08f9ac37bc543505a0cd7bf5538488c48835d0940a83b1102ad907292f5e3",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -1236,7 +1592,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "17a36333231676c377a095fd48f865042e60d207c32f8471c5e33a69f6d83aab",
+    "core_sha256": "285258a23a86967a2862a6262ce6a1290c9448cbfb849a82f710fb615a76bf02",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -1301,7 +1657,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "26308804d7243a679d2b1cc9622c28a94bc4948790d23df76e345a267a37b3d7",
+    "core_sha256": "dc69a7529b5d84df99b6398dc83f51a3f4ca1387e8fadbf0fcddfa4399b285fe",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 1,
@@ -1351,7 +1707,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "29b158d8883b50ad2c8cf9e6627302e947f216cdc813c26534e10fdfe3aeefdd",
+    "core_sha256": "a62cf2915e30dedb663934751069845a786a86e59878b35a2cd28388d4d5a26e",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -1401,7 +1757,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "7a938b5d74323419a64511c7b7ff81e9decd6a9bc012ed3c8904fd839f2c153d",
+    "core_sha256": "9cc778fc89c5803768fb522d04a6c20f0a09f0b9d8cbdd9e3f5a12d39f16e111",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 0,
@@ -1449,7 +1805,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "28e9e9f9ea33ac6afdb6895226f3a1bacf2b5752414b14541265a43c57fc1220",
+    "core_sha256": "8c46bccee07516da3192872eebba7984159cad6fade1cbbafaf3a19b559cca90",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -1489,7 +1845,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "200147cc7fe1ae96931e28e894a50faf8fc3ef4233cf3b3a6bde26cdc4b67ca3",
+    "core_sha256": "97a58f772916f9855800bbcc76e312037fb6137ed57d23b33cceced8546390ec",
     "document_verdict": "SWORN-FAILED",
     "counts": {
      "HELD": 0,
@@ -1520,10 +1876,134 @@
    }
   },
   {
+   "id": "fa11fdbec939095602dc80a6dccf062c9c09cace539fa53debd1836c6ad0c037",
+   "family": "core_v2",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_a_path_span_carries_no_rung_so_a_rung_the_verifier_refuses_does_not_reach_it"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest",
+    "tree"
+   ],
+   "inputs": {
+    "name": "v2.md",
+    "commit": "cccccccccccccccccccccccccccccccccccccccc",
+    "document": "9eeba9a2bdc411486f5b24ded65cec9efae7668c5d318da0ce873c1f018c169b",
+    "manifest": "fef3bc23c5308f808f0600f1b12cf1a706d792dcf6664e4d63681d8a884eabfd",
+    "tree": {
+     "snapshot_commit": "cccccccccccccccccccccccccccccccccccccccc",
+     "handle_commit": "cccccccccccccccccccccccccccccccccccccccc",
+     "entries": {
+      "t/notes.txt": {
+       "mode": "100644",
+       "size": 13,
+       "sha256": "c2a8079d955d628967ba60b7025898ac8ff4894865b2162a7e03406307f58578"
+      },
+      "t/table.json": {
+       "mode": "100644",
+       "size": 25,
+       "sha256": "bc67c2ef5d6b4bb985107311ab2ed35005de0a6cb704626f89b2944be4d10ab9"
+      }
+     }
+    }
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "2b762c43a6d1f31784b1aa2e8f93d88d94dbbadc2b0df14838dce20ec3d89cf2",
+    "document_verdict": "SWORN-HELD",
+    "counts": {
+     "HELD": 1,
+     "FAILED": 0,
+     "UNRESOLVED": 1,
+     "MALFORMED": 0,
+     "WITHHELD": 0
+    },
+    "sworn_total": 2,
+    "unresolved": 1,
+    "rungs": {
+     "unresolved": 1,
+     "committed": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "numeric",
+      "verdict": "UNRESOLVED",
+      "reason": "rung_unknown"
+     },
+     {
+      "at": 45,
+      "receipt": "path:t/table.json#/n",
+      "kind": "numeric",
+      "verdict": "HELD",
+      "reason": null
+     }
+    ],
+    "floor": {
+     "sworn_total": 2,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
+   "id": "fddc4edae51abcaeb4008af2b51ff3c8fd586c3096ffd2cc59dc551501749457",
+   "family": "core_v2",
+   "sources": [
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_a_malformed_span_was_refused_before_any_comparison_the_authorship_refusals_among_them"
+   ],
+   "rules": [],
+   "mode": "inline",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "name": "v2.md",
+    "commit": null,
+    "document": "713761b22af45e7b182794e356a28a4451266dc7eaccdc97a25856097fdad00e",
+    "manifest": "4308c4c7cadf5c563cc16076044cfaad38c9616728ec0497112688199aea6914",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "core",
+    "core_sha256": "d05bfb0f24d531ffe78e0b7ee888c4d76ce1789ae033b1a7b41605bae835b227",
+    "document_verdict": "SWORN-FAILED",
+    "counts": {
+     "HELD": 0,
+     "FAILED": 0,
+     "UNRESOLVED": 0,
+     "MALFORMED": 1,
+     "WITHHELD": 0
+    },
+    "sworn_total": 1,
+    "unresolved": 0,
+    "rungs": {
+     "unresolved": 1
+    },
+    "spans": [
+     {
+      "at": 0,
+      "receipt": "r1",
+      "kind": "absent",
+      "verdict": "MALFORMED",
+      "reason": "receipt_author_minted"
+     }
+    ],
+    "floor": {
+     "sworn_total": 1,
+     "narrative_sentences": 0,
+     "sentence_share": 1.0
+    }
+   }
+  },
+  {
    "id": "ff1c7c17a29608c1bb065f748a90f4d6609f4f63c00b097a946f08f809d38c26",
    "family": "core_v2",
    "sources": [
-    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_a_path_receipt_with_no_tree_was_not_checked"
+    "tests/test_sworn_receipt_v2.py::TestCoreV2::test_a_path_receipt_with_no_tree_was_not_compared"
    ],
    "rules": [],
    "mode": "inline",
@@ -1539,7 +2019,7 @@
    },
    "expect": {
     "outcome": "core",
-    "core_sha256": "52cb498b24ed3d0edd47fed124db9eb02de7c9c59d998c9213a94488036b5838",
+    "core_sha256": "e7443aef5af466be9e6ed9585512ce02afe8655cf7de329abb5d0f4b8e4c53a1",
     "document_verdict": "SWORN-HELD",
     "counts": {
      "HELD": 1,

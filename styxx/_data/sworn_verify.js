@@ -440,18 +440,22 @@ const CERTIFIES_V1 =
 const CERTIFIES =
   "the spans the author bound that read HELD or FAILED were checked, each by its kind, against the " +
   "receipt it names (its bytes, or for a hash span on a manifest entry that carries none, the sha256 " +
-  "the manifest records), at the commit and manifest the receipt records and at the rung the manifest " +
-  "declares; the only authorship check is against the manifest: an rN receipt is taken as not the " +
-  "author's when the manifest records it under a kind_of_source from the closed external vocabulary and " +
-  "does not list its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given " +
-  "or the manifest does not list its sha256 there; authored_sha256 is the harness's record of what the " +
-  "agent produced in the turn the manifest names, so bytes the author wrote that the harness never " +
-  "digested, such as a file committed in another turn or under a name the harness never saw, are not " +
-  "caught; an UNRESOLVED span was not checked — NOT a claim that the author did not write the receipt's " +
-  "bytes, NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT " +
-  "a check that the tags were written at write time, NOT a check of any signature, and only as " +
-  "trustworthy as the harness that minted the manifest and the tree that served the commit (git history " +
-  "from the CLI; a snapshot or in-memory tree on its caller's word)";
+  "the manifest records), at the commit and manifest this receipt records, and an rN span at the rung " +
+  "the manifest declares (a path: or prereg: span carries no rung and is counted as committed); the " +
+  "only authorship test reads the manifest: an rN receipt is taken as not the author's when the " +
+  "manifest records it under a kind_of_source from the closed external vocabulary and does not list " +
+  "its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given or the " +
+  "manifest does not list its sha256 there (its span's provenance reads authorship unchecked: nothing " +
+  "beyond that membership was tested); authored_sha256 is the harness's record of what the agent " +
+  "produced in the turn the manifest names, tested on the bytes' sha256 and never on a name, so bytes " +
+  "the author wrote that the harness never digested, such as a file written in another turn, or by a " +
+  "shell command or a tool the harness does not digest, are not caught; a MALFORMED span was refused " +
+  "before any comparison, the authorship refusals among them, and an UNRESOLVED span was not compared " +
+  "— NOT a claim that the author did not write the receipt's bytes, NOT a claim that the document is " +
+  "correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written " +
+  "at write time, NOT a check of any signature, and only as trustworthy as the harness that minted " +
+  "the manifest and the tree that served the commit (git history from the CLI; a snapshot or " +
+  "in-memory tree on its caller's word)";
 const SPEC = "sworn/0.1";
 const RECEIPT_SCHEMA = "styxx.sworn.verdict-receipt/v2";
 // The sentence each receipt schema carries, one to one (styxx.sworn._CERTIFIES_OF).

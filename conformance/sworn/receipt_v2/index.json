@@ -37,50 +37,50 @@
   "tests/test_sworn_receipt_v2.py"
  ],
  "sources_note": "the /v2 step's own source (papers/sworn/NOTE_certifies_correction_2026_10_24.md): one core per clause of the /v2 certifies sentence that a document, a manifest and an in-memory tree can show, and /v2, /v1 and /v0 receipts checked by a verifier that issues /v2",
- "vector_count": 44,
+ "vector_count": 52,
  "family_count": 4,
  "families": {
   "check_v0": {
    "file": "vectors/check_v0.json",
-   "sha256": "9144574c2e5a76c2babc8b812367f3a1964f3511b2118897618fb2f679745122",
+   "sha256": "53998804ddf85d70e8c380e9e49ccb808753e68b733d9a97447c035a08ff7f98",
    "count": 5
   },
   "check_v1": {
    "file": "vectors/check_v1.json",
-   "sha256": "6a18ef16c61ec75e55196b939a5695136fbb20ae0301e7636690e2a20aa10b2a",
+   "sha256": "80551bdb6ab412762698955c56fb7a9cf2806312f638e197dcad75c928ccd659",
    "count": 5
   },
   "check_v2": {
    "file": "vectors/check_v2.json",
-   "sha256": "5ba515b06c85768439725fc337b182ac979acffb0c1ac93e6d410126e407b152",
+   "sha256": "3e9c557499c3d8c7c325cee800afa6937539a8dcc1e84da3f755ce59847f7f3a",
    "count": 4
   },
   "core_v2": {
    "file": "vectors/core_v2.json",
-   "sha256": "77bec0088ec1b5774b8721442cccafdc52d38f8042847b2acd8e85bd976a61db",
-   "count": 30
+   "sha256": "b333bf7f3f968bf831f4d2bb7e3de7d226d8f91e355817c96647b3118980c57d",
+   "count": 38
   }
  },
  "blobs": {
   "file": "blobs.json",
-  "sha256": "4d0b2301f1061c1f7513a0d89916e0b6528d1c7b767a84b2687feb6f47679cad",
-  "count": 77
+  "sha256": "f994f4496bd5e2dad3cf8fbef6df3644e65b0a3642361eff9bd2148493694bc4",
+  "count": 92
  },
  "observer": {
   "file": "observer.json",
   "note": "outside set_sha256: the observer's and the build's numbers (C4)"
  },
  "modes": {
-  "inline": 31,
+  "inline": 39,
   "receipt_check": 13
  },
  "outcomes": {
   "check": 13,
-  "core": 31
+  "core": 39
  },
  "requires": {
-  "manifest": 34,
-  "manifest+tree": 4,
+  "manifest": 38,
+  "manifest+tree": 8,
   "none": 4,
   "tree": 2
  },
@@ -203,7 +203,6 @@
  "rule_contract": {},
  "unvectored": {
   "reasons": [
-   "absent_over_partial",
    "anchor_out_of_range",
    "commit_absent",
    "digest_form",
@@ -223,7 +222,6 @@
    "manifest_spec_unknown",
    "needle_count",
    "needle_empty",
-   "needle_present",
    "nesting",
    "no_commit",
    "not_a_blob",
@@ -278,14 +276,14 @@
  },
  "provenance": {
   "note": "outside set_sha256: which bytes generated the set, not what the set pins (C7)",
-  "sworn_sha256": "9e9aadc2481a43e2eef51f322fa063f1300772fed38cffeee5bfe02ed7265836",
+  "sworn_sha256": "3f32da0fdd69d2f448c54d87fc9bfdb07917c3fc076c86d591ba771ec2267fcb",
   "sources_sha256": {
-   "tests/test_sworn_receipt_v2.py": "6f33d0d9d246543be9110c0e5b240e1185d3be294f70e18b315307eab968e3c7"
+   "tests/test_sworn_receipt_v2.py": "3557b24c4a0badc9d89488e5248f0502a6ffadd621d6c4f275937fa6405e9f14"
   },
   "python": "3.12.10",
   "platform": "win32",
   "styxx_version": "7.50.0",
-  "pytest_summary": "28 passed"
+  "pytest_summary": "32 passed"
  },
- "set_sha256": "948c660fafef4b26e2b2ce48aaf2b89ecd080f35f26322bde78f087c7a6fa599"
+ "set_sha256": "801bd62547ccb53ee68ab358e76c684f032eb742af88d8f01d0c7a96ca0ef793"
 }

@@ -296,23 +296,31 @@ _CERTIFIES_V1 = (
     "that minted the manifest and the history that holds the commit"
 )
 # The /v2 sentence: what the checks in _resolve and _adjudicate are, clause by clause. The only
-# authorship check is the manifest's (the rN refusal and the path:/prereg: refusal in _resolve), and
-# authored_sha256 is one turn's record, so bytes the harness never digested are not caught.
+# authorship test is the manifest's (the rN refusal and the path:/prereg: refusal in _resolve), on the
+# bytes' sha256, and authored_sha256 is one turn's record, so bytes the harness never digested are not
+# caught. Only an rN span has a rung (_resolve's rN provenance); a path: or prereg: span has none and
+# the rungs block counts it as committed. MALFORMED and UNRESOLVED return before any comparison
+# (_adjudicate). The draft of this sentence committed on 2026-10-24 attached the rung to every span
+# and was corrected before any merge (papers/sworn/NOTE_certifies_correction_2026_10_24.md).
 _CERTIFIES = (
     "the spans the author bound that read HELD or FAILED were checked, each by its kind, against the "
     "receipt it names (its bytes, or for a hash span on a manifest entry that carries none, the sha256 "
-    "the manifest records), at the commit and manifest the receipt records and at the rung the manifest "
-    "declares; the only authorship check is against the manifest: an rN receipt is taken as not the "
-    "author's when the manifest records it under a kind_of_source from the closed external vocabulary and "
-    "does not list its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given "
-    "or the manifest does not list its sha256 there; authored_sha256 is the harness's record of what the "
-    "agent produced in the turn the manifest names, so bytes the author wrote that the harness never "
-    "digested, such as a file committed in another turn or under a name the harness never saw, are not "
-    "caught; an UNRESOLVED span was not checked — NOT a claim that the author did not write the receipt's "
-    "bytes, NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT "
-    "a check that the tags were written at write time, NOT a check of any signature, and only as "
-    "trustworthy as the harness that minted the manifest and the tree that served the commit (git history "
-    "from the CLI; a snapshot or in-memory tree on its caller's word)"
+    "the manifest records), at the commit and manifest this receipt records, and an rN span at the rung "
+    "the manifest declares (a path: or prereg: span carries no rung and is counted as committed); the "
+    "only authorship test reads the manifest: an rN receipt is taken as not the author's when the "
+    "manifest records it under a kind_of_source from the closed external vocabulary and does not list "
+    "its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given or the "
+    "manifest does not list its sha256 there (its span's provenance reads authorship unchecked: nothing "
+    "beyond that membership was tested); authored_sha256 is the harness's record of what the agent "
+    "produced in the turn the manifest names, tested on the bytes' sha256 and never on a name, so bytes "
+    "the author wrote that the harness never digested, such as a file written in another turn, or by a "
+    "shell command or a tool the harness does not digest, are not caught; a MALFORMED span was refused "
+    "before any comparison, the authorship refusals among them, and an UNRESOLVED span was not compared "
+    "— NOT a claim that the author did not write the receipt's bytes, NOT a claim that the document is "
+    "correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written "
+    "at write time, NOT a check of any signature, and only as trustworthy as the harness that minted "
+    "the manifest and the tree that served the commit (git history from the CLI; a snapshot or "
+    "in-memory tree on its caller's word)"
 )
 # The sentence each receipt schema carries, one to one (M7 keys on the schema string). /v0 is not
 # here: a /v0 receipt is projected by _v0_shape, which leaves certifies out.
@@ -1299,6 +1307,9 @@ def _resolve(parsed: dict, kind: str, manifest: Optional[Manifest], tree) -> _Re
         # Only half of the rN refusal has an analogue here: the tree channel has no kind_of_source,
         # so a file the agent committed under a name the harness never digested is still not
         # caught. That is a limit of the manifest, and it is stated in the spec rather than solved.
+        # (2026-10-24: the test below is on the bytes' sha256, never on a name. The digested bytes
+        # under any name are caught; what is not caught is bytes the harness never digested, such
+        # as a file written in another turn, or by a shell command or a tool it does not digest.)
         if manifest is not None and sha in manifest.authored_sha256:
             return _Resolved(status="malformed", reason="receipt_author_minted")
         # A committed blob IS complete — the verifier holds every byte of it. This was never the
@@ -1893,9 +1904,11 @@ def _v0_shape(fresh: dict) -> dict:
 
 def _core_as(core: dict, schema: str) -> dict:
     """The core with the two strings a receipt of `schema` carries, `schema` and `certifies`. A /v1
-    and a /v2 core differ in nothing else, so a fresh core projected onto /v1 is, byte for byte, the
-    core a /v1 verifier emitted. ValueError for any other schema (a /v0 receipt has its own
-    projection, _v0_shape). The input is not modified."""
+    and a /v2 core differ in nothing else, so a fresh core projected onto /v1 is, byte for byte and
+    outside its `verifier` block, the core a /v1 verifier emitted (the block names the live build and
+    its decisions, the receipt_v2 row among them, and verify_receipt compares without it).
+    ValueError for any other schema (a /v0 receipt has its own projection, _v0_shape). The input is
+    not modified."""
     if not isinstance(schema, str) or schema not in _CERTIFIES_OF:
         raise ValueError("no core projection for receipt schema %r" % (schema,))
     out = dict(core)
@@ -1943,7 +1956,8 @@ def verify_receipt(receipt: dict, raw: Optional[bytes] = None, sidecar: Optional
                  "onto the v0 shape; its coverage block predates sworn/coverage/1 and is not compared")
     elif schema == "styxx.sworn.verdict-receipt/v1":
         note += (" — /v1 receipt: compared with schema and certifies held at their /v1 strings "
-                 "(NOTE_certifies_correction_2026_10_24); its digest is checked over its bytes as committed")
+                 "(NOTE_certifies_correction_2026_10_24); its digest is checked over its bytes as committed; "
+                 "the /v1 certifies sentence it carries is withdrawn")
     try:
         fresh = verify(raw, sidecar, name=doc.get("name", ""), manifest=manifest, tree=tree,
                        commit=core.get("commit"))
