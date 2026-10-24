@@ -48,7 +48,7 @@ calls passed every sample that way.
   supplied, a logit signal with no threshold and an engine that errors and fails open among them,
   the keyword does nothing. Any other value raises `ValueError`, with or without a signal. The
   `honest()` docstring states what a call with no signal does under each value; the module
-  docstring and the `HonestyVerdict` `action` and `method` docs name the no-signal case.
+  docstring and the `HonestyVerdict` `answer`, `action` and `method` docs name the no-signal case.
 
 **What it does not change.** No default threshold moves: the cosine clustering threshold stays
 0.90 (#233 lists the committed readings a change would move). No existing call changes:

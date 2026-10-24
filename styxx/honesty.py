@@ -68,7 +68,8 @@ class HonestyVerdict(NamedTuple):
     ------
     answer : str
         What to return to the user: the original answer if it passed, or the ``abstention`` text
-        if the gate fired / verification refuted it.
+        if the gate fired / verification refuted it / no signal was supplied under
+        ``on_no_signal="abstain"``.
     action : str
         ``"answered"`` (passed), ``"abstained"`` (confab gate fired / confidence below floor / no
         signal supplied under ``on_no_signal="abstain"``), or ``"refuted"`` (external verification
