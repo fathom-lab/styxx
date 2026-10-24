@@ -7,6 +7,73 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — `grounded_honesty`'s score says when to abstain (`GroundedScore.abstains()`, at the 0.50 line `audit_claim` already reads), and `honest()` can withhold an answer no signal checked (`on_no_signal="abstain"`); both opt-in, no existing call changes (#233, #234)
+
+**What was wrong.** #233: `grounded_honesty` returns `grounded = stability * concordance`, which is
+0.0 both when the samples agree with each other and not with the claim (stability 1.0, concordance
+0.0: a contradiction to report) and when no two samples agree (stability 0.0: abstain). Its
+docstring's Report-or-abstain section says to abstain on low stability, and `audit_claim` returns
+`"abstain"` below stability 0.50, but the score carried no abstain flag, and `float(score)` read both
+rows as 0.0. The lab's agent printed `grounded=0.000` for three of its self-claims and read it as a
+verdict; on each, stability was 0.000. #234: `honest(answer)` with none of `span_logits`, `logits`,
+`engine` or `confidence` checks nothing and returns `"answered"`, detail
+`passed via none (signal n/a) -> answered`; `prompt` alone is read only by the engine tier. A test
+pinned that, and the docstring did not say it. The agent's three `honest(sample, prompt=claim)`
+calls passed every sample that way.
+
+**What it does now.**
+
+- `styxx.divergence.LOW_STABILITY = 0.50` is the report-or-abstain line, and
+  `GroundedScore.abstains(low_stability=LOW_STABILITY)` returns True when `stability < low_stability`
+  or the score has fewer than two samples (one sample gives stability 1.0, a "stable" reading of
+  one answer). It is a method, not a field: `_fields`, `len()`, five-way unpacking, `==` against a
+  5-tuple, `_asdict()` and `float()` are as before. `styxx/audit.py` sets
+  `_DEFAULT_LOW_STABILITY = LOW_STABILITY`, so the default `low_stability_threshold` of
+  `audit_claim` and `audit_session` is that constant. `grounded_honesty`'s Report-or-abstain section
+  says the score does not abstain by itself and to call `score.abstains()` before reading `grounded`
+  as a verdict; the `stability` field's doc points at the method. `LOW_STABILITY` joins
+  `styxx.divergence.__all__`; `styxx/__init__.py` is unchanged.
+- The module docstring's Usage comment said
+  `semantic_entropy(["Paris.", "The capital is Paris.", "Paris, France."])` reads `~0`. Under the
+  cosine default it reads about 0.64: the three paraphrases split into two clusters, the
+  docstring's own FALSE DISAGREEMENT case. The comment now says ~0 with a `same_fn` judge and ~0.64
+  under the cosine default.
+- `honest()` takes `on_no_signal`, `"pass"` (the default) or `"abstain"`. `"pass"` is the behaviour
+  before the keyword, detail included. With no signal, `"abstain"` returns the abstention with
+  `action="abstained"`, `method="none"`, `signal=None` and detail
+  `no honesty signal supplied (span_logits, logits, engine or confidence) -> abstained`. `verify`
+  still runs: a verifier that supports the answer lets it through as `"answered"` (`(verified)` in
+  the detail), one that refutes it gives `"refuted"`, and an inconclusive one (unclear, `None`, or
+  raised) leaves it abstained with `; verification inconclusive` in the detail. With any signal
+  supplied, a logit signal with no threshold and an engine that errors and fails open among them,
+  the keyword does nothing. Any other value raises `ValueError`, with or without a signal. The
+  `honest()` docstring states what a call with no signal does under each value; the module
+  docstring and the `HonestyVerdict` `action` and `method` docs name the no-signal case.
+
+**What it does not change.** No default threshold moves: the cosine clustering threshold stays
+0.90 (#233 lists the committed readings a change would move). No existing call changes:
+`self_audit.py` prints the same output, byte for byte, before and after, and
+`test_no_signal_answers_with_method_none` passes unedited. `audit_claim`'s verdict has no
+sample-count rule, so below two samples it can still read "contradiction" where `abstains()` is
+True; giving it the rule would change its output, and that is a separate decision. Making
+`"abstain"` the default is the operator's call (#234 lists what it would change). A misspelled
+keyword still falls into `honest()`'s `**engine_kwargs`, as any unknown keyword did before.
+
+**Tests.** `tests/test_divergence.py`, five new: the two 0.0 rows are told apart by `abstains()`
+and not by `float()`; fewer than two samples (none, one, a `None` filtered down to one) abstain and
+two agreeing samples do not; the line is `LOW_STABILITY`, 0.50, and strict (stability 0.5 reports,
+0.49 abstains, and a caller's `low_stability` moves it); the tuple's shape; the docstring points at
+the method. `tests/test_honesty.py`, six new: the default unchanged, exact detail included, with and
+without `prompt` and with `on_no_signal="pass"`; the opt-in withholds; `verify` that supports,
+refutes, or is inconclusive three ways; the keyword ignored when a signal is supplied (a stated
+confidence, an advisory logit signal, an engine that errors); unknown values raise; the docstring
+states both behaviours. `tests/test_audit.py`, two new, one of them over six stabilities: the audit
+defaults are the divergence constant, and `abstains()` agrees with `_derive_verdict`'s "abstain"
+from stability 0.0 to 1.0. Of the 18 test items, 15 fail on main; the other three (the tuple's
+shape, the default unchanged, the keyword ignored with a signal) are guards that pass on both. No
+existing test is edited; `tests/test_honesty.py` gains an `import pytest` line. The three modules
+ran 123 passed and 2 skipped before, and 141 passed and 2 skipped now.
+
 ## [Unreleased] — the GitLab job names a merge request description GitLab cut at 2,700 characters, gates it to its last whole sentence, prints CUT where the gate prints PASS over it, and does not fail on a claim the text the cut dropped decides (#209)
 
 **What was wrong.** Over 2,700 characters, GitLab hands a merge request description to
