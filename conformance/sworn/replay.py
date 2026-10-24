@@ -6,6 +6,13 @@ vector and its blobs: no clock, no git, no filesystem. ``gen_vectors.py`` runs i
 before the set is written (C6) and ``tests/test_sworn_conformance.py`` runs it over the committed
 set. A second verifier does the same thing in its own language; this module is the reference for
 what "the same thing" is, entrypoint by entrypoint.
+
+A set declares the receipt schema its cores carry (``index.json`` ``core_schema``). A core this
+verifier emits is projected onto that schema before it is hashed (``styxx.sworn._core_as``, which
+sets exactly ``schema`` and ``certifies``), so the /v1 set keeps its cores under a verifier that
+issues /v2 (papers/sworn/NOTE_certifies_correction_2026_10_24.md). The schema comes from the set's
+declaration, never from the vector's expectation: the harness never passes the expectation into
+the verifier (SPEC B2).
 """
 from __future__ import annotations
 
@@ -81,14 +88,23 @@ def _core_diff(got: dict, want_blob: Optional[dict]) -> str:
     return "core_sha256 differs but every key compares equal under jcs"
 
 
-def _expect_core(vec: dict, blobs: Dict[str, str], core: dict) -> Tuple[str, str]:
+def as_schema(core: dict, core_schema: str) -> dict:
+    """The portable core projected onto the receipt schema the set declares (styxx.sworn._core_as)."""
+    return sworn._core_as(portable(core), core_schema)
+
+
+def _expect_core(vec: dict, blobs: Dict[str, str], core: dict, core_schema: str) -> Tuple[str, str]:
     expect = vec["expect"]
-    got = core_sha256(core)
+    try:
+        projected = as_schema(core, core_schema)
+    except ValueError as e:
+        return "fail", "the set declares core_schema %r: %s" % (core_schema, e)
+    got = core_sha256(projected)
     if got != expect["core_sha256"]:
         want = None
         if expect["core_sha256"] in blobs:
             want = json.loads(blob_bytes(blobs, expect["core_sha256"]).decode("utf-8"))
-        return "fail", _core_diff(portable(core), want)
+        return "fail", _core_diff(projected, want)
     if floor_of(core) != expect["floor"]:
         return "fail", "floor differs: got %r, vector has %r" % (floor_of(core), expect["floor"])
     return "pass", "core"
@@ -106,8 +122,11 @@ def _expect_refusal(vec: dict, where: str, e: SystemExit) -> Tuple[str, str]:
     return "pass", "refused " + r["code"]
 
 
-def replay_vector(vec: dict, blobs: Dict[str, str]) -> Tuple[str, str]:
-    """('pass' | 'fail' | 'skip', detail). Skips only a vector whose ``requires`` names ``git``."""
+def replay_vector(vec: dict, blobs: Dict[str, str], *, core_schema: str) -> Tuple[str, str]:
+    """('pass' | 'fail' | 'skip', detail). Skips only a vector whose ``requires`` names ``git``.
+
+    ``core_schema`` is the receipt schema the set declares for its cores (``index.json``); a core
+    outcome is compared after projection onto it."""
     if "git" in vec.get("requires", []):
         return "skip", "requires a live git object store"
     mode = vec["mode"]
@@ -137,7 +156,7 @@ def replay_vector(vec: dict, blobs: Dict[str, str]) -> Tuple[str, str]:
             return _expect_refusal(vec, "verify", e)
         if expect["outcome"] != "core":
             return "fail", "verify returned a core where the vector expects %s" % expect["outcome"]
-        return _expect_core(vec, blobs, core)
+        return _expect_core(vec, blobs, core, core_schema)
 
     if mode == "sidecar":
         try:
@@ -146,7 +165,7 @@ def replay_vector(vec: dict, blobs: Dict[str, str]) -> Tuple[str, str]:
             return _expect_refusal(vec, "verify", e)
         if expect["outcome"] != "core":
             return "fail", "verify returned a core where the vector expects %s" % expect["outcome"]
-        return _expect_core(vec, blobs, core)
+        return _expect_core(vec, blobs, core, core_schema)
 
     if mode == "canon":
         try:

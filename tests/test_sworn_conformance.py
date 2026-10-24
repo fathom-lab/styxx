@@ -57,6 +57,22 @@ def test_the_set_is_where_the_spec_says_and_wears_the_spec_s_strings():
     assert "observer" not in {k for k, v in INDEX["families"].items()}, "the observer is not a family"
 
 
+def test_the_v1_set_stays_a_v1_set():
+    """The set's cores were recorded at styxx.sworn.verdict-receipt/v1 and stay there when the verifier
+    issues /v2 (papers/sworn/NOTE_certifies_correction_2026_10_24.md): the index declares the schema,
+    every core blob carries it and the /v1 sentence byte for byte, and the replay projects a live core
+    onto the declaration (never onto anything a vector expects)."""
+    v1 = "styxx.sworn.verdict-receipt/v1"
+    assert INDEX["core_schema"] == v1
+    assert v1 in INDEX["receipt_schemas"] and sworn.RECEIPT_SCHEMA in INDEX["receipt_schemas"]
+    cores = [v for v in ALL if v["expect"]["outcome"] == "core"]
+    assert len(cores) == 2069
+    for v in cores:
+        core = json.loads(blob_bytes(BLOBS, v["expect"]["core_sha256"]).decode("utf-8"))
+        assert core["schema"] == v1, v["id"]
+        assert core["certifies"] == sworn._CERTIFIES_V1, v["id"]
+
+
 def test_every_blob_hashes_to_its_key():
     assert len(BLOBS) == INDEX["blobs"]["count"]
     for sha in BLOBS:
@@ -102,10 +118,11 @@ def test_every_vector_id_re_derives_from_its_mode_and_inputs_and_names_only_blob
 @pytest.mark.parametrize("family", FAMILY_NAMES)
 def test_every_vector_replays_through_styxx_sworn(family):
     """LOAD-BEARING. Cores by core_sha256 and floor, refusals by match, sidecars by sidecar_sha256
-    and a byte-exact render, manifests by digest and rung status, checks by the three fields."""
+    and a byte-exact render, manifests by digest and rung status, checks by the three fields. A core
+    is compared after projection onto the receipt schema the set declares (index core_schema)."""
     failures, skipped = [], []
     for v in FAMILIES[family]:
-        status, detail = replay_vector(v, BLOBS)
+        status, detail = replay_vector(v, BLOBS, core_schema=INDEX["core_schema"])
         if status == "fail":
             failures.append((v["id"][:12], v["sources"][0], detail))
         elif status == "skip":

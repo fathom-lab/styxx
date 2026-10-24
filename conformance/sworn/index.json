@@ -10,8 +10,10 @@
  ],
  "receipt_schemas": [
   "styxx.sworn.verdict-receipt/v0",
-  "styxx.sworn.verdict-receipt/v1"
+  "styxx.sworn.verdict-receipt/v1",
+  "styxx.sworn.verdict-receipt/v2"
  ],
+ "core_schema": "styxx.sworn.verdict-receipt/v1",
  "core_definition": [
   "schema",
   "format",
@@ -51,7 +53,7 @@
   },
   "cli": {
    "file": "vectors/cli.json",
-   "sha256": "d662ad681aa920a9ec631740dc2864bb89cb0fe13a116367af7e24594ca43963",
+   "sha256": "85fc3448ada89d97fcc4f0409311311eb7d175bb95d03a15ec24a9f20639dac0",
    "count": 9
   },
   "coverage": {
@@ -76,7 +78,7 @@
   },
   "gaming": {
    "file": "vectors/gaming.json",
-   "sha256": "a9fe377e5fa0bbfcb458846db33d1b863f6893902a4c4ee2045b80381893898c",
+   "sha256": "621354a62ac411ae23aa194e287832137c8c024302e59faa43d346003f01fc80",
    "count": 51
   },
   "invariants": {
@@ -106,7 +108,7 @@
   },
   "receipt_v1": {
    "file": "vectors/receipt_v1.json",
-   "sha256": "8cc9dc7dabd37cb0ffe90f593fa8530a39d3b661c4ff1b5be71022ec97b84d83",
+   "sha256": "9d6021de9369cd6b2b686bd383994da506336e68b410dd7990cf0a91c7ea46cb",
    "count": 5
   },
   "receipts": {
@@ -116,7 +118,7 @@
   },
   "rules": {
    "file": "vectors/rules.json",
-   "sha256": "c6517264acd7684016f9cd6f8760104ed43216986b457d12f4861a98089be3ea",
+   "sha256": "d262ee2df100d2e266095ca815abc9ae23063a5658c92bada7f54a83a57a8fd2",
    "count": 22
   },
   "sidecar_hardening": {
@@ -142,7 +144,7 @@
  },
  "blobs": {
   "file": "blobs.json",
-  "sha256": "9ea5b2fe24c151983598eb23a8d99536e7d805692087cc6d2f5d277bb34fb975",
+  "sha256": "73bd1c99ee4d2f6381097134aa6e329d04b96bbb64dc30075881d8d3d9c6d2eb",
   "count": 3981
  },
  "observer": {
@@ -442,15 +444,15 @@
  },
  "provenance": {
   "note": "outside set_sha256: which bytes generated the set, not what the set pins (C7)",
-  "sworn_sha256": "7e4602472010497a69a050995485efec4ee42b30c8ed4a2b7be545c0c5a84526",
+  "sworn_sha256": "25e8af0496d66a938d1895aaa736f65b4ce76cf357c21869db402e68d08179fe",
   "sources_sha256": {
-   "tests/test_sworn.py": "86efbc2c3576ab52755f2de4b2a4ba16171ee67306b05210f415bbb42b52dfd7",
-   "tests/test_sworn_attacks.py": "d11e875292627e29566853ca44eb6439ec655e7887e3e5e272b8353776a597a2"
+   "tests/test_sworn.py": "3a14e4ff3f0ca67a9a98965e2154cdf71dcec0e5839de35a7649c88659fdc05c",
+   "tests/test_sworn_attacks.py": "60f8f8aecb10b4ba025249a0113e9ae9c63404879430750ac28df8fc073618a9"
   },
   "python": "3.12.10",
   "platform": "win32",
   "styxx_version": "7.50.0",
   "pytest_summary": "350 passed"
  },
- "set_sha256": "03e7e4cdc246f635823c00317fbaa4225af99accb83e9f9e20f5fe272e1582b5"
+ "set_sha256": "d31d7fce9d0c3af7722ee27ef2bc8b0c800afd58a82040182060880e91bae59d"
 }

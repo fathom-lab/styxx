@@ -83,6 +83,8 @@ def test_the_set_the_harness_ran_is_the_committed_set(report):
     index = json.loads(INDEX.read_text(encoding="utf-8"))
     assert report["set_sha256"] == index["set_sha256"]
     assert report["vectors_total"] == index["vector_count"]
+    # the harness projects the verifier's core onto the schema the set declares, never onto an expectation
+    assert report["core_schema"] == index["core_schema"] == "styxx.sworn.verdict-receipt/v1"
 
 
 def test_what_is_skipped_is_counted_and_reasoned(report):

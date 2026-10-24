@@ -10,7 +10,14 @@
  * in-scope vectors is 1689. The harness computes the digest from the verifier's own object and
  * never passes the expectation into it (B2).
  *
- *   node conformance/sworn/replay_js.js [--json OUT] [--quiet]
+ * A set declares the receipt schema its cores carry (`index.core_schema`). The verifier's core is
+ * projected onto it with `coreAs` before it is hashed, which sets exactly `schema` and `certifies`
+ * (papers/sworn/NOTE_certifies_correction_2026_10_24.md); a set that declares none is refused. The
+ * schema comes from the set's declaration, never from a vector's expectation (B2).
+ *
+ *   node conformance/sworn/replay_js.js [--set DIR] [--json OUT] [--quiet]
+ *
+ * --set defaults to conformance/sworn (the /v1 set); conformance/sworn/receipt_v2 is the /v2 set.
  *
  * Exit 0 when every in-scope vector passes, 1 otherwise.
  */
@@ -33,8 +40,16 @@ function b64ToBytes(s) {
 function main(argv) {
   const jsonOut = argv.includes("--json") ? argv[argv.indexOf("--json") + 1] : null;
   const quiet = argv.includes("--quiet");
-  const index = readJson(path.join(HERE, "index.json"));
-  const blobs = readJson(path.join(HERE, "blobs.json"));
+  const setDir = argv.includes("--set") ? path.resolve(argv[argv.indexOf("--set") + 1]) : HERE;
+  const index = readJson(path.join(setDir, "index.json"));
+  const blobs = readJson(path.join(setDir, "blobs.json"));
+  const coreSchema = index.core_schema;
+  if (typeof coreSchema !== "string" ||
+      !Object.prototype.hasOwnProperty.call(api.CERTIFIES_BY_SCHEMA, coreSchema)) {
+    console.error("REFUSED: the set at " + setDir + " declares core_schema " + JSON.stringify(coreSchema) +
+                  "; this verifier projects onto " + Object.keys(api.CERTIFIES_BY_SCHEMA).join(", "));
+    return 2;
+  }
 
   const perFamily = {};
   const failures = [];
@@ -43,7 +58,7 @@ function main(argv) {
   const families = Object.keys(index.families).sort();
   for (const fam of families) {
     const meta = index.families[fam];
-    const raw = readJson(path.join(HERE, meta.file));
+    const raw = readJson(path.join(setDir, meta.file));
     const vectors = Array.isArray(raw) ? raw : raw.vectors;
     const rec = { ran: 0, passed: 0, failed: 0, skipped: 0, skip_reasons: {} };
     for (const v of vectors) {
@@ -69,7 +84,7 @@ function main(argv) {
       try {
         const core = api.swornVerify(docBytes, manifestObj,
                                      { name: inputs.name, commit: inputs.commit });
-        got = api.coreDigest(core);
+        got = api.coreDigest(api.coreAs(core, coreSchema));
       } catch (e) {
         err = String(e && e.message ? e.message : e);
       }
@@ -90,6 +105,8 @@ function main(argv) {
     schema: "styxx.sworn.browser-verifier/replay/v1",
     spec: "papers/sworn/SPEC_sworn_browser_verifier_v01_2026_09_05.md",
     set_sha256: index.set_sha256,
+    set_dir: path.relative(ROOT, setDir).split(path.sep).join("/") || ".",
+    core_schema: coreSchema,
     in_scope: { modes: [...IN_SCOPE_MODES], requires_subset_of: [...IN_SCOPE_REQUIRES] },
     vectors_total: index.vector_count,
     ran, passed, failed: failures.length, skipped,
@@ -98,7 +115,8 @@ function main(argv) {
   };
   if (jsonOut) fs.writeFileSync(jsonOut, JSON.stringify(report, null, 1) + "\n", "utf8");
   if (!quiet) {
-    console.log("set " + index.set_sha256.slice(0, 12) + " — " + index.vector_count + " vectors");
+    console.log("set " + index.set_sha256.slice(0, 12) + " — " + index.vector_count + " vectors; cores " +
+                coreSchema);
     console.log("in scope (mode inline, requires subset of {manifest}): " + ran +
                 " ran, " + passed + " passed, " + failures.length + " failed; " +
                 skipped + " skipped");
