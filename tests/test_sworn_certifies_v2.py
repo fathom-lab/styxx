@@ -137,6 +137,39 @@ def test_the_v2_sentence_keeps_every_true_clause_and_drops_the_wide_one():
     assert "\n" not in s and "  " not in s and "—" in s
     hits, _ = _surface_lint().lint_text(s, "certifies.txt")
     assert [h.rid for h in hits if h.kind == "charter"] == []
+    assert [h.rid for h in hits if h.rid == "withdrawn/certifies-v1"] == []
+
+
+def test_the_census_the_note_swears_to_reproduces():
+    """papers/sworn/certifies_census_2026_10_24.json is what the NOTE's numeric spans read. Every key
+    regenerates from git and styxx.sworn here except one: re-deriving the receipts beside the sidecars
+    takes minutes, and tests/test_sworn_dogfood.py re-derives each of them anyway, so here it is held
+    to the count it names (python papers/sworn/certifies_census.py --check runs it in full)."""
+    spec = importlib.util.spec_from_file_location("certifies_census", ROOT / "papers" / "sworn" / "certifies_census.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    committed = json.loads(mod.OUT.read_text(encoding="utf-8"))
+    fresh = mod.census(verify_receipts=False)
+    assert fresh.pop("sidecar_receipts_verified") is None
+    verified = committed.pop("sidecar_receipts_verified")
+    assert committed == fresh
+    assert verified == committed["sidecar_receipts"] == committed["sidecars"]
+    assert committed["v1_opening"] == V1_OPENING and V1_SENTENCE.startswith(V1_OPENING)
+    assert committed["committed_receipts_modified_or_deleted_since_base"] == 0
+
+
+def test_the_v1_opening_stands_only_beside_its_withdrawal():
+    """scripts/surface_lint.py lists the /v1 opening as withdrawn. On shipped surfaces it stands only in
+    the two frozen constants, each under its WITHDRAWN marker; papers/ (the receipts, the samples, the
+    NOTE) is not a shipped surface and is not linted."""
+    L = _surface_lint()
+    assert "withdrawn/certifies-v1" in {r.rid for r in L.RULES}
+    hits, allowed = L.lint_text(V1_SENTENCE, "x.md")
+    assert [h.rid for h in hits] == ["withdrawn/certifies-v1"] and allowed == []
+    rep = L.run(L.tree_files(ROOT, L.PROFILES["repo"]))
+    assert [h for h in rep.hits if h.rid == "withdrawn/certifies-v1"] == []
+    assert sorted(h.path for h in rep.allowed if h.rid == "withdrawn/certifies-v1") == [
+        "styxx/_data/sworn_verify.js", "styxx/sworn.py"]
 
 
 # ============================================================================ the projection
