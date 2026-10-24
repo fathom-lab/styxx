@@ -2,7 +2,8 @@
 
 The GitHub Action reads a PR body against a PR diff with no checkout. GitLab hands a merge
 request pipeline the same two things another way: the description in
-`CI_MERGE_REQUEST_DESCRIPTION`, the diff as the range between `CI_MERGE_REQUEST_DIFF_BASE_SHA`
+`CI_MERGE_REQUEST_DESCRIPTION` (at most its leading 2,700 characters: see "A description longer
+than 2,700 characters" below), the diff as the range between `CI_MERGE_REQUEST_DIFF_BASE_SHA`
 and `CI_COMMIT_SHA` on the job's checkout. So the door is the CLI, unchanged, in one short job.
 `diffgate.gitlab-ci.yml` next to this file is that job; include it or paste it:
 
@@ -15,11 +16,15 @@ What it does, line by line: runs on merge request pipelines only; installs the r
 `styxx` (floor 7.44.2, the same floor the Action pins and for the same reason — every earlier
 release let `only touches <prefix>` verify against an unreadable diff); fetches the diff base so
 a shallow clone still has it; writes the description to a file with `printf '%s'`, so the text
-never passes through a shell expansion; removes any `diffgate.json` an earlier run left in the
-build directory; runs `python -m styxx.diffgate` on that file against
-`--base $CI_MERGE_REQUEST_DIFF_BASE_SHA --head $CI_COMMIT_SHA`, writing `diffgate.json`; decides
-the job's exit from `STYXX_SOFT_FAIL`, the CLI's exit code (1 on FAIL, 0 on PASS) and that
-report; keeps the JSON report as a job artifact whether the job passed or failed.
+never passes through a shell expansion; when GitLab says it cut the description
+(`CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED` `"true"`), cuts that file back to its last whole
+sentence and says so; removes any `diffgate.json` an earlier run left in the build directory;
+runs `python -m styxx.diffgate` on that file against
+`--base $CI_MERGE_REQUEST_DIFF_BASE_SHA --head $CI_COMMIT_SHA`, writing `diffgate.json` and
+keeping what it prints in `diffgate.log`; prints that output, with CUT where the gate prints PASS
+over a description GitLab cut; decides the job's exit from `STYXX_SOFT_FAIL`, the CLI's exit code
+(1 on FAIL, 0 on PASS) and that report; keeps the JSON report as a job artifact whether the job
+passed or failed.
 
 ## It reports by default; blocking is opt-in
 
@@ -119,6 +124,51 @@ WARNING: styxx diffgate found failures but STYXX_SOFT_FAIL is on, as it is by de
 and passes; with `STYXX_SOFT_FAIL` `"false"` it prints the blocking mode line and that the job
 fails, and fails.
 
+## A description longer than 2,700 characters
+
+GitLab stores only the leading 2,700 characters of a longer merge request description in
+`CI_MERGE_REQUEST_DESCRIPTION`, and sets `CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED` to `"true"`
+when it did (GitLab's docs, "Predefined CI/CD variables reference", both entries). The job reads
+only that variable, so for a longer description it is handed a prefix. Until #209 it gated the
+prefix as if it were the description: a claim past the cut was never read and the job printed
+PASS without a word about it, and the sentence the cut broke was gated as written ("Only touches
+src/ and tests/." cut after "src/" was read as "Only touches src/", CONTRADICTED). Now, when the
+flag is `"true"` (compared case-insensitively, surrounding white space stripped):
+
+- the job cuts what it was handed back to its last whole sentence, where the gate itself splits
+  sentences (`.`, `!` or `?` before white space, or a line break), so every sentence the gate
+  reads is a sentence of the description and a sentence the cut broke is never judged;
+- it prints one line before the gate's output naming the cut, the characters GitLab handed it
+  and the characters the gate reads;
+- it prints CUT where the gate prints PASS, and after the mode line one more line saying it does
+  not call the description a pass, since a claim past the cut is never read;
+- it adds `description_cut` to `diffgate.json`: the flag's value, `characters_handed`,
+  `characters_gated` and a `why`. The record's `verdict` stays the gate's, over the prefix;
+- a FAIL over a cut stands, and reports or blocks as any FAIL does: every sentence the gate
+  judged is a whole sentence of the description;
+- a cut never fails the job by itself, in either mode.
+
+Over the issue's case, a false "Added 3 tests." past character 2,700, the log reads (the gate's
+"no diff-shaped claims" block left out):
+
+```
+styxx diffgate: CUT. CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED is 'true': GitLab handed this job only the leading 2700 characters of the merge request description. The gate reads the leading 2638, up to the last whole sentence, and never the rest: a claim past that point is never read and a sentence the cut broke is not judged, so this job prints CUT where the gate prints PASS.
+CUT   claims=0 contradicted=0 uncheckable=0 uncovered_sentences=29
+never read: 29 of 29 sentences — prose outside the closed template set is listed in --out, not judged
+...
+styxx diffgate: CUT. Nothing in the leading 2638 characters the gate read failed it, and the rest of the description was never read, so this job does not call the description a pass. diffgate.json keeps the gate's verdict over that prefix and names the cut under "description_cut".
+```
+
+What it cannot do: read past the cut, or say how long the description was. A claim the job
+should gate belongs in the leading 2,700 characters; a `styxx` declaration block at the top of
+the description is one way. The cut back to a whole sentence can also drop a sentence that ended
+on the 2,700th character, since the job cannot see what followed it; the line names how many
+characters were read. GitLab's job-token docs list
+`GET /projects/:id/merge_requests/:merge_request_iid` among the endpoints a job token reaches,
+which would read the whole description. This job does not call it: the job has not run on GitLab
+itself, and a job token reads another project's merge requests only when that project's
+allowlist admits the job's project. That is left for a later change.
+
 ## What is tested, and what is not
 
 `tests/test_gitlab_job.py` parses the job file, runs its `script` lines in a temporary
@@ -133,7 +183,14 @@ one, exit 2) fails the job in either mode; an honest description passes; every r
 makes, PASS included, prints the one mode line its value calls for; a description with a VERIFIED,
 a CONTRADICTED and an UNCHECKABLE claim puts the last two in the log and all three in
 `diffgate.json`, and this README, the job's header and the CHANGELOG entry say so; and they carry
-the Protected caveat. That is the mechanics of the job, tested here under bash; a run on GitLab
+the Protected caveat. For #209 the module hands the job `description[:2700]` with
+`CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED` `"true"`, as GitLab does, and the whole description as
+the control: a claim past the cut is never read and the run prints CUT, never PASS, names the cut
+in the log and in `diffgate.json`, and passes in either mode; a scope sentence the cut broke is not
+judged; a false whole sentence before the cut still fails, reported by default and blocking with
+`"false"`. The cut step, run on every prefix of four descriptions, leaves only whole sentences of
+the description by the gate's own split, which the module reads from `styxx/diffgate.py`, and
+without the flag it leaves the text alone. That is the mechanics of the job, tested here under bash; a run on GitLab
 itself is not something this repository has done, and a run there that fails on a variable name or
 on the multi-line script step is worth an issue.
 

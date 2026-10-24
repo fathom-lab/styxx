@@ -178,10 +178,11 @@ def _run_job(work, base, head, description, soft_fail=None, strict=False, gate=N
         assert n == 1, script
     # bash reads the backslashes of a Windows path as escapes, so the interpreter is passed with
     # forward slashes and quoted (#185); on POSIX this is the path as it was. The job names it
-    # `python` twice, at the start of a line: the gate, and the reading of STYXX_SOFT_FAIL.
+    # `python` three times, at the start of a line: the cut of a description GitLab truncated (#209),
+    # the gate, and the reading of STYXX_SOFT_FAIL.
     python = shlex.quote(Path(sys.executable).as_posix())
     script, n = re.subn(r"(?m)^python(?= )", lambda _: python, script)
-    assert n == 2, script
+    assert n == 3, script
     return subprocess.run([BASH, "-c", "set -e\n" + script + "\n"], cwd=work, env=env,
                           capture_output=True, text=True, encoding="utf-8", errors="replace")
 
@@ -593,7 +594,7 @@ CUT_CASES = [
 def test_the_cut_keeps_only_whole_sentences_of_the_description_at_every_cut_point(tmp_path, monkeypatch, capsys,
                                                                                   description):
     """The job's cut step, run on every prefix GitLab could hand it: the text it leaves for the gate is
-    a prefix of what it was handed, the gate's split of it is the first sentences of the gate's split
+    a prefix of what it was handed, the gate's split of it is the leading sentences of the gate's split
     of the whole description, nothing longer qualifies, a declaration it leaves is the whole one or
     none, and the record it writes says how much was handed and how much was kept."""
     from styxx.declare import declaration_pass

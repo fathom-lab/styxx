@@ -7,6 +7,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — the GitLab job names a merge request description GitLab cut at 2,700 characters, gates it to its last whole sentence, and prints CUT where the gate prints PASS over it (#209)
+
+**What was wrong.** GitLab stores only the leading 2,700 characters of a longer merge request
+description in `CI_MERGE_REQUEST_DESCRIPTION`, the variable the GitLab job reads, and sets
+`CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED` to `"true"` when it did (GitLab's docs, "Predefined
+CI/CD variables reference", both entries, read 2026-10-23). The job never read the flag, so over
+a longer description it gated a prefix as if it were the description, two ways. A claim past
+character 2,700 was never read and never named as unread: the issue's case, a false "Added 3
+tests." after a long summary, printed `PASS  claims=0` in report and blocking mode alike. And the
+sentence the cut broke was gated as written: "Only touches src/ and tests/." cut after "src/" was
+read as "Only touches src/", CONTRADICTED, and with `STYXX_SOFT_FAIL` `"false"` the job failed on
+a true claim (the triage's case). The GitHub Action does not have this hole: it reads the pull
+request body from the API.
+
+**What it does now**, in `integrations/gitlab/diffgate.gitlab-ci.yml`, when the flag is `"true"`
+(compared case-insensitively, surrounding white space stripped):
+
+- a new step after the description is written cuts it back to its last whole sentence, where
+  `styxx.diffgate` itself splits sentences (`.`, `!` or `?` before white space, or a line break),
+  so every sentence the gate reads is a sentence of the description and a sentence the cut broke
+  is never judged;
+- that step prints one line before the gate's output naming the cut, the characters GitLab handed
+  the job and the characters the gate reads;
+- the gate's output is kept in `diffgate.log` and printed by the step that reads
+  `STYXX_SOFT_FAIL`, which prints CUT where the gate prints PASS and, after the mode line, says
+  the job does not call the description a pass, since a claim past the cut is never read;
+- `diffgate.json` gains `description_cut`: the flag's value, `characters_handed`,
+  `characters_gated` and a `why`. Its `verdict` stays the gate's, over the prefix;
+- a FAIL over a cut stands and reports or blocks as any FAIL does, since every sentence it judged
+  is whole; a cut never fails the job by itself.
+
+Without the flag, or with any other value, the job gates the description as GitLab handed it, as
+before; the gate's output now reaches the log through `diffgate.log`, byte for byte.
+
+**What it cannot do.** It cannot read past the cut, or say how long the description was. The cut
+back to a whole sentence can drop a sentence that ended on the 2,700th character, since the job
+cannot see what followed it; the line names how many characters were read. GitLab's job-token
+docs list `GET /projects/:id/merge_requests/:merge_request_iid` among the endpoints a job token
+reaches, which would read the whole description. This change does not call it: the job has not
+run on GitLab itself, and a job token reads another project's merge requests only when that
+project's allowlist admits the job's project. That is left for a later change.
+
+**Tests.** `tests/test_gitlab_job.py` hands the job `description[:2700]` with the flag, as GitLab
+does, and the whole description as the control. The issue's case prints CUT, never PASS, names
+the cut in the log and in `diffgate.json`, and passes in either mode, with an UNCHECKABLE claim
+before the cut still named in the log; the scope sentence the cut broke is not judged in either
+mode; a false whole sentence before the cut still FAILs, reported by default and blocking with
+`"false"`. The cut step runs on every prefix of four descriptions (CRLF, a lone CR, NBSP, U+2028,
+a `styxx` declaration block, a sentence with no end) and leaves only whole sentences of the
+description by the gate's split, which a test reads from `styxx/diffgate.py`; without the flag it
+leaves the text alone and removes a stale cut record. Each of those cases fails on main. The
+harness's interpreter count moves from two to three, and the no-shell-expansion test reads
+expansions of `$CI_MERGE_REQUEST_DESCRIPTION`, not mentions of its name. The module ran 39 tests
+before and 57 now. No reader file, pin, conformance vector or differential grid moves: the job
+installs the released `styxx` and runs its CLI unchanged.
+
 ## [Unreleased] — NOTE: forward pointers beside the untied-magnitudes RESULT and beside the program audit and synthesis, which still state the permuted-MNIST headline; `styxx/resonance.py`'s docstring carries the S4D pointer and the robustness RESULT's in-place-clamp caveat
 
 **`papers/rhythm-rescue/NOTE_forward_pointer_untied_magnitudes_2026_10_23.md` and
