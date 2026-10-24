@@ -148,8 +148,8 @@ flag is `"true"` (compared case-insensitively, surrounding white space stripped)
   judged is a whole sentence of the description;
 - a cut never fails the job by itself, in either mode.
 
-Over the issue's case, a false "Added 3 tests." past character 2,700, the log reads (the gate's
-"no diff-shaped claims" block left out):
+Over the issue's case, a false "Added 3 tests." past character 2,700, the log reads (the `...`
+stands for the gate's "no diff-shaped claims" block, its instrument line and the mode line):
 
 ```
 styxx diffgate: CUT. CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED is 'true': GitLab handed this job only the leading 2700 characters of the merge request description. The gate reads the leading 2638, up to the last whole sentence, and never the rest: a claim past that point is never read and a sentence the cut broke is not judged, so this job prints CUT where the gate prints PASS.
@@ -190,9 +190,9 @@ in the log and in `diffgate.json`, and passes in either mode; a scope sentence t
 judged; a false whole sentence before the cut still fails, reported by default and blocking with
 `"false"`. The cut step, run on every prefix of four descriptions, leaves only whole sentences of
 the description by the gate's own split, which the module reads from `styxx/diffgate.py`, and
-without the flag it leaves the text alone. That is the mechanics of the job, tested here under bash; a run on GitLab
-itself is not something this repository has done, and a run there that fails on a variable name or
-on the multi-line script step is worth an issue.
+without the flag it leaves the text alone. That is the mechanics of the job, tested here under
+bash; a run on GitLab itself is not something this repository has done, and a run there that fails
+on a variable name or on the multi-line script step is worth an issue.
 
 Everything the Action's README says about scope applies: the closed template set, "tests pass"
 UNCHECKABLE without `--evidence`, a path the diff does not show UNCHECKABLE and never accused
