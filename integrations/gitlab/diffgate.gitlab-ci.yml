@@ -13,11 +13,17 @@
 #
 # GitLab stores only the leading 2,700 characters of a longer description in that variable and sets
 # CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED to "true" (#209). The job then cuts the text back to its
-# last whole sentence, by the gate's own sentence split, so a sentence the cut broke is never judged;
-# prints one line naming the cut, the characters it was handed and the characters the gate reads;
-# prints CUT where the gate prints PASS, since a claim past the cut is never read; and adds
-# "description_cut" to diffgate.json saying the same. A FAIL over a cut stands: every sentence the
-# gate judged is a whole sentence of the description. A cut never fails the job by itself.
+# last whole sentence, keeping the white space after it, by the gate's own sentence split, so a
+# sentence the cut broke is never read by the gate's templates; prints one line naming the cut, the
+# characters it was handed and the characters the gate reads; prints CUT where the gate prints PASS,
+# since a claim past the cut is never read; and adds "description_cut" to diffgate.json saying the
+# same. A FAIL over a cut is the gate's FAIL over that prefix. PATH-2a's withholding (#121) and the
+# one-styxx-block rule read the whole text the gate is handed, so the text the cut drops can change
+# how the gate reads a whole sentence before it: when the gate FAILs over a cut, the job runs it again
+# over the text GitLab handed it, and does not fail on a CONTRADICTED claim that run withholds or does
+# not read; it names each one in the log and under "held_back". Text past GitLab's cut never reaches
+# the job, so a claim the gate would withhold over the whole description can still be CONTRADICTED
+# over the cut, as it was over GitLab's prefix before #209. A cut never fails the job by itself.
 #
 # It reports by default, as the GitHub Action does, and the gate's verdicts never fail the job.
 # The gate's verdict, its claim counts and each CONTRADICTED or UNCHECKABLE claim go to the job
@@ -54,17 +60,23 @@ diffgate:
       import json, os, re
       # GitLab stores only the leading 2700 characters of a longer description in the variable and sets
       # CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED to "true" (#209). The gate then reads the text up to its last
-      # whole sentence, cut where styxx.diffgate splits sentences, and the cut is named here and in diffgate.json.
-      try:
-          os.remove("mr_description.cut.json")
-      except FileNotFoundError:
-          pass
+      # whole sentence and the white space after it, cut where styxx.diffgate splits sentences, and the cut is named
+      # here and in diffgate.json. The white space is kept because PATH-2a (#121) reads it: where the two readers read
+      # it apart it withholds a claim of the sentence it ends. The text GitLab handed the job is kept beside it for
+      # the gate's second run (STYXX_SOFT_FAIL_READ below).
+      for stale in ("mr_description.cut.json", "mr_description.handed.md"):
+          try:
+              os.remove(stale)
+          except FileNotFoundError:
+              pass
       flag = os.environ.get("CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED")
       if flag is not None and flag.strip().lower() == "true":
           with open("mr_description.md", encoding="utf-8", newline="") as f:
               text = f.read()
-          ends = [m.start() for m in re.finditer(r"(?<=[.!?])\s+|\n+", text)]
+          ends = [m.end() for m in re.finditer(r"(?<=[.!?])\s+|\n+", text)]
           kept = text[:ends[-1]] if ends else ""
+          with open("mr_description.handed.md", "w", encoding="utf-8", newline="") as f:
+              f.write(text)
           with open("mr_description.md", "w", encoding="utf-8", newline="") as f:
               f.write(kept)
           cut = {"CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED": flag,
@@ -81,11 +93,16 @@ diffgate:
                 "never read and a sentence the cut broke is not judged, so this job prints CUT where the gate prints "
                 "PASS.")
       STYXX_DESCRIPTION_CUT
-    - rm -f diffgate.json
+    - rm -f diffgate.json diffgate.handed.json
     - |
       styxx_gate=0
       python -m styxx.diffgate mr_description.md --repo . --base "$CI_MERGE_REQUEST_DIFF_BASE_SHA" --head "$CI_COMMIT_SHA" --out diffgate.json > diffgate.log || styxx_gate=$?
-      python - "$styxx_gate" <<'STYXX_SOFT_FAIL_READ'
+      styxx_handed=none
+      if [ "$styxx_gate" = 1 ] && [ -f mr_description.handed.md ]; then
+      styxx_handed=0
+      python -m styxx.diffgate mr_description.handed.md --repo . --base "$CI_MERGE_REQUEST_DIFF_BASE_SHA" --head "$CI_COMMIT_SHA" --out diffgate.handed.json > /dev/null || styxx_handed=$?
+      fi
+      python - "$styxx_gate" "$styxx_handed" <<'STYXX_SOFT_FAIL_READ'
       import json, os, re, sys
       gate = int(sys.argv[1])
       want = {0: "PASS", 1: "FAIL"}.get(gate)
@@ -134,6 +151,40 @@ diffgate:
           print(f"styxx diffgate exited {gate} without writing a {want or 'matching'} report: that is an "
                 "error, not a verdict, and it fails the job whatever STYXX_SOFT_FAIL says.")
           sys.exit(gate or 1)
+      contradicted = [c for c in report.get("claims", []) if c.get("verdict") == "CONTRADICTED"]
+      if cut is not None and gate == 1:
+          # PATH-2a's withholding (#121) and the one-styxx-block rule read the whole text the gate is handed, and the
+          # cut dropped some of it, so the gate ran again over the text GitLab handed this job. A CONTRADICTED claim of
+          # the cut that this run withholds (PATH-2a's reason, a fixed form) or does not read is held back: named here
+          # and in diffgate.json, and the job does not fail on it.
+          handed_gate = None if sys.argv[2] == "none" else int(sys.argv[2])
+          handed_want = {0: "PASS", 1: "FAIL"}.get(handed_gate)
+          try:
+              with open("diffgate.handed.json", encoding="utf-8") as f:
+                  handed = json.load(f)
+              handed_verdict = handed.get("verdict")
+          except Exception:
+              handed, handed_verdict = None, None
+          if handed_want is None or handed_verdict != handed_want:
+              ran = "did not run" if handed_gate is None else f"exited {handed_gate}"
+              print(f"styxx diffgate {ran} over the text GitLab handed this job without writing a "
+                    f"{handed_want or 'matching'} report: that is an error, not a verdict, and it fails the job "
+                    "whatever STYXX_SOFT_FAIL says.")
+              sys.exit(handed_gate or 1)
+
+          def same(c):
+              return c.get("kind"), c.get("text"), json.dumps(c.get("detail"), sort_keys=True)
+
+          read = {}
+          for c in handed.get("claims", []):
+              read.setdefault(same(c), []).append(c)
+          withheld = "CONTRADICTED withheld by PATH-2a ("
+          cut["held_back"] = []
+          for c in contradicted:
+              there = read.get(same(c), [])
+              if all(o.get("verdict") == "UNCHECKABLE" and str(o.get("why")).startswith(withheld) for o in there):
+                  cut["held_back"].append({"kind": c.get("kind"), "text": c.get("text"),
+                                           "over_the_handed_text": there[0].get("why") if there else None})
       if cut is not None:
           report["description_cut"] = cut
           with open("diffgate.json", "w", encoding="utf-8") as f:
@@ -145,6 +196,18 @@ diffgate:
                     "description a pass. diffgate.json keeps the gate's verdict over that prefix and names the cut "
                     "under \"description_cut\".")
           sys.exit(0)
+      if cut is not None:
+          for h in cut["held_back"]:
+              how = "withholds it" if h["over_the_handed_text"] is not None else "reads no such claim"
+              print(f"styxx diffgate: CUT. The gate reads {h['kind']} \"{h['text']}\" as CONTRADICTED over the leading "
+                    f"{cut['characters_gated']} characters, but over the {cut['characters_handed']} characters GitLab "
+                    f"handed this job it {how}: the text the cut dropped changes how the gate reads that claim, so "
+                    "this job does not fail on it.")
+          if cut["held_back"] and len(cut["held_back"]) == len(contradicted):
+              print("styxx diffgate: CUT. Every CONTRADICTED claim of the gate's FAIL over the cut is named above, so "
+                    "this job does not fail on that FAIL, in either mode. diffgate.json keeps the gate's verdict over "
+                    "that prefix and names them under \"description_cut\", \"held_back\".")
+              sys.exit(0)
       if value == "false":
           print("styxx diffgate: FAIL, and STYXX_SOFT_FAIL is \"false\", so the job fails.")
           sys.exit(1)

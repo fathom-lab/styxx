@@ -149,12 +149,15 @@ def mr_repo(tmp_path):
     return work, base, head
 
 
-def _run_job(work, base, head, description, soft_fail=None, strict=False, gate=None, truncated=None):
+def _run_job(work, base, head, description, soft_fail=None, strict=False, gate=None, truncated=None,
+             handed_gate=None):
     """Run the job's script lines under bash. ``soft_fail`` None leaves STYXX_SOFT_FAIL unset;
     ``strict`` adds --strict to the styxx.diffgate line, the edit the README describes; ``gate``,
     a script path and its arguments, stands in for the whole styxx.diffgate command (a CLI that
     exits without the report its exit promises); ``truncated`` is the value GitLab gives
-    CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED (None leaves it unset)."""
+    CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED (None leaves it unset); ``handed_gate`` stands in, the
+    same way, for the gate's second run, over the text GitLab handed the job, which runs only when the
+    gate FAILs over a cut (#209)."""
     job = _job()
     assert job["rules"][0]["if"] == '$CI_PIPELINE_SOURCE == "merge_request_event"'
     env = dict(os.environ, CI_MERGE_REQUEST_DESCRIPTION=description,
@@ -176,14 +179,27 @@ def _run_job(work, base, head, description, soft_fail=None, strict=False, gate=N
         script, n = re.subn(r"(?m)^python -m styxx\.diffgate [^\n]* --out diffgate\.json"
                             r"(?=(?: > diffgate\.log)? \|\| styxx_gate=\$\?$)", lambda _: stub, script)
         assert n == 1, script
+    if handed_gate is not None:
+        stub = "python " + " ".join(shlex.quote(str(a)) for a in handed_gate)
+        script, n = re.subn(r"(?m)^python -m styxx\.diffgate mr_description\.handed\.md [^\n]*"
+                            r" --out diffgate\.handed\.json(?= > /dev/null \|\| styxx_handed=\$\?$)",
+                            lambda _: stub, script)
+        assert n == 1, script
     # bash reads the backslashes of a Windows path as escapes, so the interpreter is passed with
     # forward slashes and quoted (#185); on POSIX this is the path as it was. The job names it
-    # `python` three times, at the start of a line: the cut of a description GitLab truncated (#209),
-    # the gate, and the reading of STYXX_SOFT_FAIL.
+    # `python` four times, at the start of a line: the cut of a description GitLab truncated (#209),
+    # the gate, the gate's second run over the text GitLab handed the job (#209), and the reading
+    # of STYXX_SOFT_FAIL.
     python = shlex.quote(Path(sys.executable).as_posix())
     script, n = re.subn(r"(?m)^python(?= )", lambda _: python, script)
-    assert n == 3, script
-    return subprocess.run([BASH, "-c", "set -e\n" + script + "\n"], cwd=work, env=env,
+    assert n == 4, script
+    # The script goes to bash as a file, not as `bash -c` text: Git's bash on Windows ran a `-c`
+    # argument of 8,166 characters whole and one of 8,196 cut short, and the job's script, with the
+    # interpreter's path written in, passed that once the gate's second run was added (#209).
+    path = work.parent / "job_script.sh"
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        f.write("set -e\n" + script + "\n")
+    return subprocess.run([BASH, path.as_posix()], cwd=work, env=env,
                           capture_output=True, text=True, encoding="utf-8", errors="replace")
 
 
@@ -465,9 +481,10 @@ def _gitlab(description):
 
 
 def _whole_sentences(text):
-    """How much of ``text``, a prefix GitLab cut, ends at its last whole sentence: the oracle the
-    tests hold the job to, written apart from the job (a filler sentence ends at '. ')."""
-    return text.rfind(". ") + 1
+    """How much of ``text``, a prefix GitLab cut, ends at its last whole sentence and the space after
+    it: the oracle the tests hold the job to, written apart from the job (a filler sentence ends at
+    '. ')."""
+    return text.rfind(". ") + 2
 
 
 def _cut_step():
@@ -551,7 +568,7 @@ def test_a_sentence_the_cut_broke_is_not_judged(mr_repo, soft_fail):
     report = _report(work)
     assert report["verdict"] == "PASS" and report["claims"] == []
     assert not any("only touches" in t.lower() for t in report["uncovered_texts"])
-    _cut_named(r.stdout, len(text) - len("Only touches src/") - 1, report)
+    _cut_named(r.stdout, len(text) - len("Only touches src/"), report)
 
 
 @needs_bash
@@ -568,8 +585,9 @@ def test_a_false_whole_sentence_before_the_cut_still_fails_and_the_cut_is_named(
     assert "[CONTRADICTED:tests_added]" in r.stdout and CUT_NOT_PASS not in r.stdout
     assert (BLOCKED in r.stdout) is (soft_fail == "false") and (REPORTED in r.stdout) is (soft_fail is None)
     _one_mode_line(r.stdout, soft_fail)
+    assert HELD_ANY not in r.stdout
     report = _report(work)
-    assert report["verdict"] == "FAIL"
+    assert report["verdict"] == "FAIL" and report["description_cut"]["held_back"] == []
     _cut_named(r.stdout, _whole_sentences(text), report)
 
 
@@ -577,10 +595,11 @@ def test_a_false_whole_sentence_before_the_cut_still_fails_and_the_cut_is_named(
 # and it reads the whole text the gate is handed: a sentence as both readers end one (`\n|[.!?][ \t\r]`, not the gate's
 # split), and a zone or run anywhere in the summary. So what the cut drops can hold its reason to withhold.
 # White space the two readers read apart (styxx/diffgate.py _P2A_DIVERGENT), each a sentence end for the gate's split:
-APART = ["\x85", " ", "\x0c", "\x1c"]
+APART = ["\x85", "\u2028", "\x0c", "\x1c"]
 TAIL = "Then a tail sentence that runs past the cut point here."
 SCOPE = "Only touches src/."
-HELD = f'styxx diffgate: CUT. The gate reads only_touches "{SCOPE}" as CONTRADICTED over the leading '
+HELD_ANY = "styxx diffgate: CUT. The gate reads "
+HELD = HELD_ANY + f'only_touches "{SCOPE}" as CONTRADICTED over the leading '
 HELD_NOT_FAILED = "so this job does not fail on that FAIL, in either mode."
 
 
@@ -607,7 +626,7 @@ def test_the_cut_keeps_the_white_space_after_the_last_whole_sentence(mr_repo, se
     assert text.endswith(SCOPE + sep + TAIL[:19])
     r = _run_job(work, base, head, text, soft_fail="false", truncated=flag)
     assert r.returncode == 0, r.stdout + r.stderr
-    assert "CONTRADICTED" not in r.stdout and CUT_NOT_PASS in r.stdout
+    assert "[CONTRADICTED:" not in r.stdout and "[UNCHECKABLE:only_touches]" in r.stdout and CUT_NOT_PASS in r.stdout
     report = _report(work)
     (claim,) = report["claims"]
     assert claim["kind"] == "only_touches" and _withheld(claim), claim
@@ -617,8 +636,8 @@ def test_the_cut_keeps_the_white_space_after_the_last_whole_sentence(mr_repo, se
 @needs_bash
 @pytest.mark.parametrize("soft_fail", [None, "false"])
 @pytest.mark.parametrize("sep, dropped", [
-    (" ", "The café"),                        # one sentence for PATH-2a: the gate's split ends it at NBSP
-    (" ", "Only the café part is in src/."),        # a zone of PATH-2a's that names src/, with no end GitLab kept
+    ("\u00a0", "The caf\u00e9"),                        # one sentence for PATH-2a: the gate's split ends it at NBSP
+    (" ", "Only the caf\u00e9 part is in src/."),        # a zone of PATH-2a's that names src/, with no end GitLab kept
 ])
 def test_a_claim_the_gate_withholds_over_the_text_gitlab_handed_is_not_failed_on(mr_repo, soft_fail, sep, dropped):
     """Review of #209: the text the cut drops, after the last whole sentence, can hold PATH-2a's reason to withhold a
@@ -626,7 +645,7 @@ def test_a_claim_the_gate_withholds_over_the_text_gitlab_handed_is_not_failed_on
     scope claim; over the cut it is CONTRADICTED. The job runs the gate again over the text GitLab handed it, names
     the claim in the log and under "held_back" in diffgate.json, and does not fail on it, in either mode."""
     work, base, head = mr_repo
-    rest = {" ": " part is in src/ too. Done.", " ": " Done."}[sep]
+    rest = {"\u00a0": " part is in src/ too. Done.", " ": " Done."}[sep]
     description = _prose(GITLAB_KEEPS - len(SCOPE) - len(sep) - len(dropped)) + SCOPE + sep + dropped + rest
     whole = _run_job(work, base, head, description, soft_fail="false")
     assert whole.returncode == 0, whole.stdout + whole.stderr
@@ -657,7 +676,7 @@ def test_a_claim_withheld_over_text_past_gitlabs_cut_is_still_contradicted_over_
     it; over the cut it is CONTRADICTED, as it is over the text GitLab handed the job and was over GitLab's prefix
     before #209, so nothing is held back and with STYXX_SOFT_FAIL "false" the job fails. The docs say so."""
     work, base, head = mr_repo
-    description = SCOPE + " " + _prose(GITLAB_KEEPS) + "Only the café part is in src/. Done."
+    description = SCOPE + " " + _prose(GITLAB_KEEPS) + "Only the caf\u00e9 part is in src/. Done."
     whole = _run_job(work, base, head, description, soft_fail="false")
     assert whole.returncode == 0, whole.stdout + whole.stderr
     assert [_withheld(c) for c in _report(work)["claims"] if c["kind"] == "only_touches"] == [True]
@@ -671,12 +690,56 @@ def test_a_claim_withheld_over_text_past_gitlabs_cut_is_still_contradicted_over_
     _cut_named(r.stdout, _whole_sentences(text), report)
 
 
+@needs_bash
+@pytest.mark.parametrize("soft_fail", [None, "false"])
+@pytest.mark.parametrize("verdict, code, error", [
+    ("none", 0, "exited 0 over the text GitLab handed this job without writing a PASS report"),
+    ("PASS", 1, "exited 1 over the text GitLab handed this job without writing a FAIL report"),
+    ("none", 2, "exited 2 over the text GitLab handed this job without writing a matching report"),
+])
+def test_a_second_run_whose_report_does_not_match_its_exit_fails_the_job_in_either_mode(
+        mr_repo, soft_fail, verdict, code, error):
+    """The gate's second run, over the text GitLab handed the job, is read as the first is: only an exit 0 with a
+    PASS report or an exit 1 with a FAIL report is a verdict, and any other pairing is an error that fails the job
+    whatever STYXX_SOFT_FAIL says, before anything is held back or failed on."""
+    work, base, head = mr_repo
+    stub = work.parent / "stub_handed_gate.py"
+    stub.write_text(STUB_GATE.replace('"diffgate.json"', '"diffgate.handed.json"'), encoding="utf-8")
+    text, flag = _gitlab("Added 3 tests. " + _prose(GITLAB_KEEPS + 300))
+    r = _run_job(work, base, head, text, soft_fail=soft_fail, truncated=flag,
+                 handed_gate=[stub.as_posix(), verdict, code])
+    assert r.returncode == (code or 1), r.stdout + r.stderr
+    assert re.search(r"(?m)^FAIL +claims=1 contradicted=1\b", r.stdout), r.stdout
+    assert f"styxx diffgate {error}: that is an error, not a verdict" in r.stdout, r.stdout
+    assert PASSES not in r.stdout and BLOCKED not in r.stdout and HELD_ANY not in r.stdout
+    _one_mode_line(r.stdout, soft_fail)
+
+
+def _soft_fail_step():
+    """The Python the job runs to read the gate's exit, its report and STYXX_SOFT_FAIL."""
+    for item in _job()["script"]:
+        m = re.search(r"^python - [^\n]*<<'STYXX_SOFT_FAIL_READ'\n(.*?)^STYXX_SOFT_FAIL_READ$", item, re.S | re.M)
+        if m:
+            return m.group(1)
+    raise AssertionError("the job has no step that reads STYXX_SOFT_FAIL")
+
+
 def test_the_cut_uses_the_gates_own_sentence_split():
-    """The job cuts where styxx.diffgate splits sentences, so every sentence it gates is a sentence
-    of the whole description. A reader whose split moves moves this test."""
+    """The job cuts where styxx.diffgate splits sentences, after the white space that ends the last
+    whole sentence, so every sentence the gate's templates read is a sentence of the whole
+    description. A reader whose split moves moves this test."""
     src = (ROOT / "styxx" / "diffgate.py").read_text(encoding="utf-8")
     assert re.findall(r'sentences = re\.split\(r"([^"]+)", summary_text\)', src) == [SPLIT]
-    assert 're.finditer(r"' + SPLIT + '", text)' in _cut_step()
+    assert '[m.end() for m in re.finditer(r"' + SPLIT + '", text)]' in _cut_step()
+
+
+def test_the_job_reads_path2a_withholding_in_the_form_the_gate_writes_it():
+    """The job holds back a CONTRADICTED claim of the cut that the gate's second run withholds, which it
+    reads from the reason PATH-2a writes in one fixed form (styxx/diffgate.py, _p2a_apply). A reader
+    whose form moves moves this test."""
+    src = (ROOT / "styxx" / "diffgate.py").read_text(encoding="utf-8")
+    assert src.count('c.why = f"{c.verdict} withheld by PATH-2a ({tag}): {phrase}. main\'s reading: {c.why}"') == 1
+    assert 'withheld = "CONTRADICTED withheld by PATH-2a ("' in _soft_fail_step()
 
 
 CUT_CASES = [
@@ -692,14 +755,18 @@ CUT_CASES = [
 def test_the_cut_keeps_only_whole_sentences_of_the_description_at_every_cut_point(tmp_path, monkeypatch, capsys,
                                                                                   description):
     """The job's cut step, run on every prefix GitLab could hand it: the text it leaves for the gate is
-    a prefix of what it was handed, the gate's split of it is the leading sentences of the gate's split
-    of the whole description, nothing longer qualifies, a declaration it leaves is the whole one or
-    none, and the record it writes says how much was handed and how much was kept."""
+    a prefix of what it was handed, ending in the white space after a whole sentence; the gate's split
+    of it is the leading sentences of the gate's split of the whole description, as written and as the
+    gate reads the file (Path.read_text, which reads CRLF and a lone CR as LF), with nothing after
+    them; nothing longer qualifies; a declaration it leaves is the whole one or none; the text it was
+    handed is kept beside it for the gate's second run; and the record it writes says how much was
+    handed and how much was kept."""
     from styxx.declare import declaration_pass
     code = compile(_cut_step(), "STYXX_DESCRIPTION_CUT", "exec")
     monkeypatch.chdir(tmp_path)
     monkeypatch.setenv("CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED", "true")
     whole = re.split(SPLIT, description)
+    whole_read = re.split(SPLIT, description.replace("\r\n", "\n").replace("\r", "\n"))
     declared = declaration_pass(description)[0]
     for cut in range(len(description) + 1):
         handed = description[:cut]
@@ -708,11 +775,15 @@ def test_the_cut_keeps_only_whole_sentences_of_the_description_at_every_cut_poin
         exec(code, {"__name__": "__main__"})
         with open("mr_description.md", encoding="utf-8", newline="") as f:
             kept = f.read()
+        with open("mr_description.handed.md", encoding="utf-8", newline="") as f:
+            assert f.read() == handed, cut
         assert handed.startswith(kept), (cut, kept)
         if kept:
             parts = re.split(SPLIT, kept)
-            assert parts == whole[:len(parts)], (cut, kept)
-        assert all(m.start() <= len(kept) for m in re.finditer(SPLIT, handed)), (cut, kept)
+            assert parts[-1] == "" and parts[:-1] == whole[:len(parts) - 1], (cut, kept)
+            read = re.split(SPLIT, (tmp_path / "mr_description.md").read_text(encoding="utf-8"))
+            assert read[-1] == "" and read[:-1] == whole_read[:len(read) - 1], (cut, kept)
+        assert all(m.end() <= len(kept) for m in re.finditer(SPLIT, handed)), (cut, kept)
         assert declaration_pass(kept)[0] in ("", declared), (cut, kept)
         with open("mr_description.cut.json", encoding="utf-8") as f:
             record = json.load(f)
@@ -723,7 +794,8 @@ def test_the_cut_keeps_only_whole_sentences_of_the_description_at_every_cut_poin
 @pytest.mark.parametrize("flag", [None, "false", "", "no"])
 def test_the_cut_step_leaves_a_description_alone_unless_gitlab_says_it_cut_it(tmp_path, monkeypatch, capsys, flag):
     """Without the flag "true" the description is gated as GitLab handed it, nothing is printed, and no
-    cut record is left, a stale one from an earlier run included."""
+    cut record or copy of the handed text is left, a stale one from an earlier run included, so the
+    gate's second run never runs."""
     code = compile(_cut_step(), "STYXX_DESCRIPTION_CUT", "exec")
     monkeypatch.chdir(tmp_path)
     monkeypatch.delenv("CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED", raising=False)
@@ -732,9 +804,11 @@ def test_the_cut_step_leaves_a_description_alone_unless_gitlab_says_it_cut_it(tm
     text = "Added 3 tests. Only touches src/"
     (tmp_path / "mr_description.md").write_text(text, encoding="utf-8", newline="")
     (tmp_path / "mr_description.cut.json").write_text("{}", encoding="utf-8")
+    (tmp_path / "mr_description.handed.md").write_text("Stale.", encoding="utf-8")
     exec(code, {"__name__": "__main__"})
     assert (tmp_path / "mr_description.md").read_text(encoding="utf-8") == text
     assert not (tmp_path / "mr_description.cut.json").exists()
+    assert not (tmp_path / "mr_description.handed.md").exists()
     assert capsys.readouterr().out == ""
 
 
