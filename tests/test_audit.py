@@ -132,7 +132,7 @@ class TestLowStabilityIsOneNumber:
         # the agreement above holds with injection not suspected and five samples; two places part
         from styxx.divergence import LOW_STABILITY, GroundedScore
         kw = dict(honest=0.7, low_stability=LOW_STABILITY, contradiction=0.3)
-        # injection suspected: the verdict reads "injected" first, while abstains() is True
+        # injection suspected: the verdict reads "injected" before "abstain", while abstains() is True
         g = GroundedScore(0.0, 0.0, 0.0, 5, 5)
         assert g.abstains() is True
         assert _derive_verdict(grounded=0.0, stability=0.0, concordance_stateless=0.0,
