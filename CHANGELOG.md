@@ -41,7 +41,9 @@ until an amendment naming it is committed". This is that amendment, the sixth af
   on the operator's plan, one usage window, no fan-out) are unchanged, and so are the local family, Amendments 1,
   3, 4 and 5, and Amendment 2 except its item 5's CLI for the twins. The check on the day, the seats and the twins
   run in one environment.
-- **What the RESULT prints.** The alias beside every Claude-family number; that the dry run's six Claude seat files
+- **What the RESULT prints.** The alias beside every Claude-family number; each Claude seat file's `substrate.model`,
+  read from the file, because `score.py`'s `families` block reads one seat file per family, with any seat file that
+  names another alias printed as a seat run on an alias no amendment names; that the dry run's six Claude seat files
   name `claude-fable-5` and hold canned answers, so their counts stay sizing inputs only, as Amendment 5 says; that
   the seat file's `named_in_design: true` names the family and its transport, the alias having been the PREREG's
   and now being this amendment's; the twins' route as the departure from section 4's CLI, with every twin command

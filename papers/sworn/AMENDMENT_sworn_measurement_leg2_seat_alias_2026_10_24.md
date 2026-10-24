@@ -66,10 +66,11 @@ timeout each (`common.py` l.61), one contamination probe per seat file, and 9 tr
    the environment that the drafting box's Claude Code session hands to the processes it starts, and
    `seat_claude.py` passes its own environment on unchanged (`subprocess.run` with no `env`, l.75). The receipts
    record the argv, not that environment.
-3. **2026-10-24: the PREREG's transport check on the amended alias resolved.** In the run worktree, at
-   14:14:00Z to 14:14:17Z, over `transport_check_2026_10_24_opus/`, a fresh copy made by the same rule (its inputs
-   equal `transport_check_2026_10_23/`'s byte for byte: `diff -rq` lists only that folder's `seat_outputs/`;
-   `packet_L.json` sha256 `8509e91c…`, the dry run's):
+3. **2026-10-24: the PREREG's transport check on the amended alias resolved.** In the run worktree, from
+   14:14:03Z (the `ts` of its two ledger rows, taken before the probe call, l.212) to 14:14:17Z (the seat file's
+   write time on that disk, which no committed byte records), over `transport_check_2026_10_24_opus/`, a fresh
+   copy made by the same rule (its inputs equal `transport_check_2026_10_23/`'s byte for byte: `diff -rq` lists
+   only that folder's `seat_outputs/`; `packet_L.json` sha256 `8509e91c…`, the dry run's):
 
    ```text
    python seat_claude.py --packet L --seat 1 --transport-check --max-items 1 --dir transport_check_2026_10_24_opus --model claude-opus-5-5
@@ -105,9 +106,11 @@ answered: **"Amend to Opus 5.5"**.
    (seats 1-3, packets L and R: six seat files; tranche B's add `--dir`). Every other part of the call is
    unchanged: the argv's flags (l.68-71), the packets and their instruction blocks, the probe's question and
    system prompt, the 600 s item timeout and the probe's 120 s, the two retries after a failed call (l.39, l.73),
-   one item per call with no session reuse, and section 4's order. Every seat file records
-   `"substrate": {"model": "claude-opus-5-5", ...}` (l.207), and `score.py` carries that substrate into
-   `measurement_result.json` under `families` (l.518-521, l.543).
+   one item per call with no session reuse, and section 4's order. A seat file records the alias it ran with as
+   `"substrate": {"model": ...}` (l.207), so each of the six reads `claude-opus-5-5`. `score.py` carries one seat
+   file's substrate per family into `measurement_result.json` under `families`: `L-seat1`'s, or `R-seat1`'s when
+   `L-seat1` is missing (l.518-521, l.543). It reads no other seat file's `substrate`, so the RESULT reads the
+   rest from the files themselves (below).
 3. **The trivial twins reach the alias through `seat_claude.cli`, with no file edited.** `twin_trivial.py` has
    no alias flag (l.103-111): it calls `SC.cli(prompt, system, None)` (l.77) with no model, and `cli`'s default
    was bound to `MODEL = "claude-fable-5"` when `seat_claude.py` was imported (l.37, l.62-63). Run as committed,
@@ -181,6 +184,11 @@ read a real item.
 
 - `claude-opus-5-5 (Amendment 6)` beside every Claude-family number: its G-D counts on each panel, its family
   labels, every kappa it enters, and the G-G1 pairs.
+- Each Claude seat file's `substrate.model`, read from the file itself: the six seat files of each tranche, and
+  the seat file of item 4's check if it runs again. `score.py`'s `families` block reads one seat file per family
+  (item 2), and a seat run without `--model` records `claude-fable-5`, the flag's default (`seat_claude.py`
+  l.261). A Claude seat file that names any alias other than `claude-opus-5-5` is a seat run on an alias no
+  amendment names (line 207), and the RESULT prints it as that, with the file's name.
 - That the Claude seats ran on `claude-opus-5-5`, a different model from the one the dry run's six Claude seat
   files name (`substrate.model` `claude-fable-5`, `dry_run` true, verdict `DRY-RUN`), whose answers were canned:
   no model was called by the dry run (`RESULT_measurement_machinery_dry_run_2026_09_05.md` l.5-6). The dry run's
@@ -206,3 +214,5 @@ read a real item.
 - That `claude-fable-5` is unavailable in general. The receipt shows this login's plan on 2026-10-24.
 - That a twin's alias is receipted. The RESULT prints the twins' command lines; the tree keeps no twin call's
   bytes.
+- What a Claude seat file on another alias does to a count. The RESULT prints it (above); this amendment sets no
+  rule for it.
