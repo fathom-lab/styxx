@@ -144,6 +144,66 @@ RESULT, AMENDMENT, conformance vector, fixture, pinned-pair file, moves file or 
   pinned as it reads; a `def` line in a non-Python file with no Python file in the diff is #110's abstention, as
   before; and the shapes where `parse_unified_diff` and `parse_unified_diff_sides` place a line apart are #172's.
 
+## [Unreleased] — NOTE: forward pointers beside the untied-magnitudes RESULT and beside the program audit and synthesis, which still state the permuted-MNIST headline; `styxx/resonance.py`'s docstring carries the S4D pointer and the robustness RESULT's in-place-clamp caveat
+
+**`papers/rhythm-rescue/NOTE_forward_pointer_untied_magnitudes_2026_10_23.md` and
+`papers/NOTE_forward_pointer_program_documents_oscillation_2026_10_23.md` (both sworn, with their sidecars and
+verdict receipts); `styxx/resonance.py` (docstring only); `.gitattributes`.** The surfaces outside
+`papers/frequency-resonance/` that still state the frequency arc's permuted-MNIST headline as it stood before
+`RESULT_pmnist_robustness_2026_10_23.md`: the untied-magnitudes RESULT's l.34-36 ("The arc's headline, that
+oscillation is causally load-bearing in state-space models, survives the sharpest control its own knob admits"),
+the program audit's finding 5 (l.240-242) and its rank-2 row for the profiler (l.446, "the program's cleanest causal
+ablation (+0.3122)"), the program synthesis's Arc B line (l.49-50, "Oscillation is the long-range mechanism in
+state-space models"); and, beside them, the shipped profiler's docstring, whose "structurally cannot do" sentence
+the prior-art reads bear on. Each NOTE quotes its sentences against the documents' bytes, swears the verdict
+(`pmnist_robustness_result.json#/verdict`), copies the sentence it licenses with its spans, says what carries and
+what does not, and swears why it stands beside its documents and not inside them.
+
+- **The untied-magnitudes NOTE.** That RESULT measured ordered copy, not permuted MNIST: D 256, 4000 steps, seeds 0,
+  1 and 2, on CPU; ordered-memory capacity FREE 6.0, CLAMPED 2.6667 and REAL2 2.6667, recovery 0.0, verdict
+  `ROTATION_LOAD_BEARING__beyond_diversity`. Those numbers stand as measured, at one fixed budget: the run and the
+  2026-06-03 run its anchors reproduce both took 4000 steps, neither receipt records the training curves the
+  2026-06-03 PREREG froze as reported, neither tests whether the ordered-copy gap survives a longer budget, and the
+  permuted-MNIST budget verdict is neither carried to ordered copy nor shown not to apply there. The headline its
+  l.34 calls surviving does not carry at `BUDGET_CONFOUND__gap_does_not_survive_3x_steps`. On permuted MNIST the
+  robustness RESULT reports, from its 4000-step runs, FREE − REAL2 0.275 (`G_R_diversity`, not held) and
+  REAL2 − CLAMPED −0.0074 (`G_R_rotation`, held), recovery −0.0279 [−0.1105, 0.0547], class `rotation`; the
+  BUDGET_CONFOUND row reads neither gate, so these are reported, not read, and no REAL2 run took the 12,000-step
+  budget, so whether FREE − REAL2 survives it is not measured. The sealed untied receipt, the run under the untied
+  PREREG that SEALS row 2 seals, stays sealed, and the prior-art NOTE files "causally load-bearing in SSMs" as
+  exceeding every read.
+- **The program-documents NOTE.** The +0.3122 stands as what was measured (FREE 0.9195 against CLAMPED 0.6073, 4000
+  steps, seeds 0 and 1, permutation 1234, the three-block `CLRU`); as the arc's headline it does not carry at the
+  verdict. The general sentences are filed by the prior-art NOTE and by the PAPER's banner. The table row's reason
+  rests on a gap between separately trained models, not on the in-place clamp the profiler makes, which the
+  robustness RESULT reports as "not evidence for the between-model gap: a destructive perturbation with no
+  matched-norm control".
+- **Beside, not inside.** The untied-magnitudes RESULT is sworn: its verdict receipt and line 221 of the charon log
+  name the sha256 of its bytes (`ec7921a0…`), and the leg-2 PREREG's population and its pinned `packet_L.json` carry
+  it. On `origin/main` `333f3c73` no certificate, seal, sworn span or receipt named the audit's bytes; the
+  program-documents NOTE added here swears its blob hash (`41c08977…`) at `2a36bd0d`, for the record. Five sworn
+  documents, the census receipt, `h_mapping.json` and the leg-2 packets name it by name, most of them citing a
+  section of it or its mechanism M2. `oath_v11_baseline_ledger.json` records a digest of the synthesis's number
+  tokens (11 tokens, `9bcb573e…`, which `origin/main` reproduces), and a sworn RESULT names its item 3. None of the
+  three is edited; an in-place edit stays the operator's call.
+- **`styxx/resonance.py`, docstring only.** "This is the within-architecture ablation that whole-model benchmarks
+  (LinOSS vs Mamba) structurally cannot do" becomes "Whole-model benchmarks (LinOSS vs Mamba) cannot run this
+  within-architecture ablation", followed by the S4D pointer (arXiv 2206.11893, Table 3(a), 2022: a
+  real-versus-complex initialization contrast inside one diagonal SSM) and the prior-art NOTE's path. WHAT IT DOES
+  NOT SAY gains the robustness RESULT's caveat on the in-place clamp, in its words. No code changes. On `origin/main`
+  `333f3c73` nothing pinned the file's bytes or quoted its lines (no sworn span, receipt, certificate, conformance
+  vector or test), and it is not among the modules `styxx.instrument` or `styxx.charon` hash. The program-documents
+  NOTE added here quotes its lines 2, 5 and 10 at `2a36bd0d`; they sit above the edited lines, and the edit leaves
+  them unchanged.
+- **Not changed.** `RESULT_untied_magnitudes_2026_09_02.md`, `AUDIT_the_whole_program_2026_09_01.md`,
+  `SYNTHESIS_program_2026_07_24.md`, `papers/INDEX.md` (its two rows read the verdict since #226), and every
+  certified, sealed, frozen or sworn file, receipt and conformance vector. The other surfaces a search of
+  `origin/main` found are listed, with their reasons, in the pull request. `papers/build_ledger.py` and
+  `papers/build_index.py` were run; neither moved a file.
+- **Sworn.** 83 of 83 spans HELD for the untied-magnitudes NOTE and 57 of 57 for the program-documents NOTE, 0
+  FAILED, 0 UNRESOLVED, 0 MALFORMED, at the commit each sidecar names (`0dfb26e3` and `2a36bd0d`);
+  `python -m styxx.sworn check` re-derives both receipts.
+
 ## [Unreleased] — PAPER banner: the 2026-07-23 oscillation draft carries, above its unchanged text, what the prior-art reads and the robustness RESULT file against it
 
 **`papers/frequency-resonance/PAPER_oscillation_causal_map_2026_07_23.md`.** A dated blockquote banner after the
