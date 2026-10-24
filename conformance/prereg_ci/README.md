@@ -15,6 +15,8 @@ cover; no claim.
 | `blobs.json` | every byte object a score vector names, keyed by sha256; the lab's committed bytes as base64, synthetic ones as UTF-8 text |
 | `replay.py` | the reference legs and the brute force; it imports nothing from `styxx.prereg_ci` |
 | `gen_vectors.py` | builds the set from styxx's history at `REV` (in `__init__.py`), checks every vector, and writes the three JSON files |
+| `vectors_compare.json` | added after the B0 review, beside the committed set: synthetic vectors for every code `compare` returns, the A.2 re-run through a fence the scanner does not count, and the readings the review asked for; its bytes are in its own `blobs` |
+| `gen_vectors_compare.py` | builds `vectors_compare.json` from cases that state their outcome in advance; reads no history |
 
 The JSON files are generated, never edited by hand. `tests/test_prereg_ci_score_vectors.py` and
 `tests/test_prereg_ci_cover.py` replay every vector; only the checks that read history skip, when
@@ -46,6 +48,27 @@ Experiment never reaches, a verdict that is not a string, an empty gates object,
 branch only `Experiment.score` has), the newline reading (a CRLF or lone-CR blob, which
 `Experiment` reads through universal newlines and a raw decode does not), and prereg-ci's own smoke
 readings.
+
+## What a compare vector is
+
+`vectors_compare.json` holds the same legs as a score vector (`frozen`, `experiment`, `rescore`,
+`compare`) for 26 synthetic cases, and `compare` is run on every one of them (an absent record
+reads as `{}`); a `compare` outcome is a list of `{code, kind}`, or `{raises: <class>}` where
+`compare` refuses its arguments. Together the vectors reach every code `compare` returns:
+`NOT_GATED`, `SCORER_REFUSES`, `SMOKE_AMBIGUOUS`, `DECISION_DIGEST_UNSEALED`, `VERDICT_DIFFERS`,
+`RECORDED_DIGEST_ABSENT` and `RECORDED_VERDICT_ABSENT`. They pin:
+
+- a receipt that records a gates digest against a PREREG reading `NOT_GATED` is
+  `DECISION_DIGEST_UNSEALED` (DESIGN 3.4 C6(i): a PREREG with no decision holds no sealed digest);
+  with no recorded digest it is a `NOT_GATED` NOTE and nothing recorded is read;
+- DESIGN 4.A's A.2 (a re-run scored under a bar moved only in the working copy) through three
+  fences the scanner does not count and CommonMark renders: a BOM before the opener on line 1, a
+  fence in a block quote, a fence as a list item's content. `Experiment` (the reading `styxx.seal`
+  uses) refuses each of the three PREREGs, and `compare` refuses the re-run's digest; beside them
+  the visible fence, where `compare` gives `DECISION_DIGEST_UNSEALED` and `VERDICT_DIFFERS`;
+- recorded gates read without a recorded verdict, a gates-only mismatch, an empty sealed list,
+  one digest passed as a string (`TypeError`), and a table whose `receipt_pointer` is not a
+  string, refused for a smoke receipt as for a scored one.
 
 ## What a cover vector is
 
@@ -83,7 +106,15 @@ if one differs:
 - `newline/bom-on-the-fence-line`: a BOM before an opener on line 1 makes that line no fence for
   the scanner, so the PREREG reads `NOT_GATED`. A renderer that drops a leading BOM would show the
   fence. Pinned as the scanner reads it today, and left to the step that reads ```result and
-  ```locks fences with the same rules.
+  ```locks fences with the same rules. A fence in a block quote or a list item is the same class.
+  Since the B0 review, `compare` refuses a receipt that records a gates digest against such a
+  PREREG (`vectors_compare.json`, `a2/hidden-fence/*`); a receipt that records a verdict and no
+  digest against it is still read as `NOT_GATED`, which the scanner step decides.
+- `rescore` runs the cover under a work budget (`core._COVER_BUDGET`, 2 ** 20 subcubes): past it
+  the verdict stands and `total`, `holes` and `unreachable_rows` stay None, with `cover_code`
+  `COVER_UNCHECKABLE`. Every committed cover vector fits inside it (the largest visits 2,591).
+- The vector files hold `gates_sha256` keys inside their inputs and outcomes; a receipt discovery
+  that walks the tree for that key excludes `conformance/**`.
 - The census and R2 vectors carry the lab's history as is: paths, verdict identifiers, gate names
   and the bytes. The generator scans the words it writes itself, never carried history.
 
@@ -92,6 +123,7 @@ if one differs:
 ```
 python -B conformance/prereg_ci/gen_vectors.py            # write the set where none is committed
 python -B conformance/prereg_ci/gen_vectors.py --check    # regenerate in memory; exit 1 if a byte differs
+python -B conformance/prereg_ci/gen_vectors_compare.py --check
 ```
 
 Once committed, the set is never written again. A run that regenerates it byte for byte exits 0;
