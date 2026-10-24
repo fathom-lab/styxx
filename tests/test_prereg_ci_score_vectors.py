@@ -252,7 +252,8 @@ def test_rescore_is_score_frozen_wherever_it_reads_neither_smoke_nor_a_pointer_n
             assert r["code"] in ("SCORER_REFUSES", "NOT_GATED"), v["name"]
         else:
             assert r["code"] is None, v["name"]
-            assert [r[k] for k in ("verdict", "gates", "gates_sha256")] ==                 [e["frozen"][k] for k in ("verdict", "gates", "gates_sha256")], v["name"]
+            keys = ("verdict", "gates", "gates_sha256")
+            assert [r[k] for k in keys] == [e["frozen"][k] for k in keys], v["name"]
     assert n >= 60, n
 
 

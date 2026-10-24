@@ -193,3 +193,64 @@ def test_the_census_tables_are_read_from_history():
     for path, (digest, gates, rows) in seen.items():
         v = census[path]
         assert (digest, gates, rows) == (v["source"]["gates_sha256"], v["gates"], v["rows"]), path
+
+
+# ---- the work budget (B0 review, minor 5) -----------------------------------------------------------------
+
+def _pair_table(k):
+    """k rows of the form 'G2i and G2i+1', then a catch-all: the cube split visits about 2 ** (k + 2)
+    subcubes, so exact counting doubles its work per pair of gates."""
+    names = ["G%02d" % i for i in range(2 * k)]
+    rows = [{names[2 * i]: True, names[2 * i + 1]: True} for i in range(k)] + [{}]
+    return names, rows
+
+
+def _pair_prereg(k):
+    names, rows = _pair_table(k)
+    gates = {g: {"metric": g, "op": ">=", "value": 0.5} for g in names}
+    outcomes = [{"when": w, "verdict": "R%d" % i if w else "REST"} for i, w in enumerate(rows)]
+    block = json.dumps({"gates": gates, "outcomes": outcomes, "smoke_verdict": "INVALID__smoke"})
+    nl = chr(10)
+    return "# plan" + nl + nl + "```gates" + nl + block + nl + "```" + nl, {g: 0.0 for g in names}
+
+
+def test_every_committed_cover_vector_fits_the_default_budget():
+    assert core._COVER_BUDGET == 1 << 20
+    for v in VECTORS:
+        got = core._cover(v["gates"], v["rows"], budget=core._COVER_BUDGET)
+        assert normal(_counts(got)) == v["expect"], v["name"]
+
+
+def test_the_cover_refuses_past_its_budget_and_counts_within_it():
+    names, rows = _pair_table(6)                    # 12 gates; brute force is cheap here
+    exact = core._cover(names, rows)
+    assert {k: exact[k] for k in ("total", "holes", "landings")} == {
+        k: v for k, v in brute_force(names, rows).items() if k in ("total", "holes", "landings")}
+    with pytest.raises(core._CoverBudget):
+        core._cover(names, rows, budget=10)
+    visited = 1 << (6 + 2)                          # 2 ** (k + 2) - 3 subcubes for this shape
+    assert core._cover(names, rows, budget=visited)["landings"] == exact["landings"]
+    with pytest.raises(core._CoverBudget):
+        core._cover(names, rows, budget=visited - 4)
+
+
+def test_rescore_returns_the_verdict_when_the_cover_runs_past_its_budget():
+    """The verdict does not need the cover: past the budget rescore still scores the receipt, leaves
+    the cover's counts unread, and says why in cover_code (kind UNCHECKABLE, exit 3)."""
+    prereg, receipt = _pair_prereg(20)              # 40 gates
+    got = core.rescore(prereg, receipt, cover_budget=1000)
+    assert (got["code"], got["verdict"], got["row"]) == (None, "REST", 20)
+    assert (got["total"], got["holes"], got["unreachable_rows"]) == (None, None, None)
+    assert got["cover_code"] == "COVER_UNCHECKABLE" and "1000 subcubes" in got["cover_detail"]
+    assert core._KIND["COVER_UNCHECKABLE"] == "UNCHECKABLE"
+    small, receipt = _pair_prereg(4)
+    got = core.rescore(small, receipt)
+    assert (got["verdict"], got["total"], got["holes"], got["cover_code"]) == ("REST", True, 0, None)
+    assert core.rescore(small, receipt, cover_budget=None)["total"] is True
+
+
+def test_rescore_refuses_a_budget_that_is_not_a_positive_int():
+    prereg, receipt = _pair_prereg(1)
+    for bad in (0, -1, True, 1.5, "10"):
+        with pytest.raises(ValueError):
+            core.rescore(prereg, receipt, cover_budget=bad)
