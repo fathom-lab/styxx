@@ -807,7 +807,10 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
             const got = (addedBlob.match(tx) || []).length;
             const inside = (insideBlob.match(tx) || []).length;
             const placed = (sidesBlob.match(tx) || []).length;
-            if (inside !== placed) {                         // #178
+            // #178 abstains on a claim at or below the larger count. Above every count this template takes (n > placed
+            // and n > got), the claim differs from each of them and from the same counts with changed tests dropped
+            // (#101), so main's verdict stands there.
+            if (inside !== placed && n <= Math.max(placed, got)) {   // #178
               c.verdict = "UNCHECKABLE";
               c.why = `${placed - inside} of the ${placed} \`def test_\` lines added sit in a file not read as .py or .pyi, or after an odd number of triple quotes in the added lines of their \`+++\` section; this template counts \`def\` lines and cannot tell whether CPython defines a test there; claim says ${n} (#178)`;
             } else if (_testsTwice(sections) !== null) {     // #179

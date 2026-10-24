@@ -1564,7 +1564,10 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         got = len(re.findall(tx, added_blob, re.M))
                         inside = len(re.findall(tx, inside_blob, re.M))
                         placed = len(re.findall(tx, sides_blob, re.M))
-                        if inside != placed:                                          # #178
+                        # #178 abstains on a claim at or below the larger count. Above every count this template
+                        # takes (n > placed and n > got), the claim differs from each of them and from the same
+                        # counts with changed tests dropped (#101), so main's verdict stands there.
+                        if inside != placed and n <= max(placed, got):                # #178
                             c.verdict = "UNCHECKABLE"
                             c.why = (f"{placed - inside} of the {placed} `def test_` lines added sit in a file not "
                                      f"read as .py or .pyi, or after an odd number of triple quotes in the added "
