@@ -305,12 +305,23 @@ def compare(rescored: Dict[str, Any], recorded: Optional[Dict[str, Any]] = None,
     (i) a recorded digest no seal holds is ``DECISION_DIGEST_UNSEALED``; (ii) a recorded verdict,
     or recorded gates, other than the re-score's is ``VERDICT_DIFFERS``; (iii) a RESULT's verdict
     other than the re-score's is ``VERDICT_DIFFERS``. A recorded field that is absent is not read,
-    and a NOTE says so. A re-score that refused is returned as its own code; NOT_GATED compares
-    nothing.
+    and a NOTE says so. A re-score that refused is returned as its own code.
+
+    A ``NOT_GATED`` re-score holds no decision, so no seal holds a decision digest for it: a
+    recorded digest there is ``DECISION_DIGEST_UNSEALED`` (C6(i); the receipt says it was scored
+    under a fence the scanner does not read, such as a fence behind a BOM on line 1, in a block
+    quote or in a list item, which ``styxx.protocol.Experiment`` refuses too). With no recorded
+    digest it is its own NOTE, and a recorded verdict is not read (a prose PREREG's receipt).
     """
     code = rescored.get("code")
     if code == _NOT_GATED:
-        return []
+        recorded = recorded or {}
+        if recorded.get("gates_sha256") is not None:
+            return [_finding(_DECISION_DIGEST_UNSEALED,
+                             f"the receipt records gates {recorded['gates_sha256']}; the PREREG holds no gates "
+                             f"fence the scanner reads, so no seal holds a decision digest for it")]
+        return [_finding(_NOT_GATED, (rescored.get("detail") or "the PREREG holds no gates fence")
+                         + "; nothing recorded is read")]
     if code is not None:
         return [_finding(code, rescored.get("detail") or "")]
     recorded = recorded or {}
