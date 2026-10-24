@@ -13,10 +13,12 @@ log, and the job passes. Only STYXX_SOFT_FAIL set to "false" blocks, read the wa
 unset as "true", every other value reporting with a warning naming it. An error that leaves no
 report fails the job in either mode.
 
-GitLab stores only the leading 2700 characters of a longer description in the variable and sets
-CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED to "true" (#209). The job then gates the leading part up to its
-last whole sentence, names the cut, prints CUT where the gate prints PASS, and records the cut in
-diffgate.json; the tests hand it description[:2700] with the flag, as GitLab does.
+GitLab hands a description longer than 2700 characters to the variable as description.truncate(2700), its
+leading 2697 characters and the "..." ActiveSupport's String#truncate writes after them, and sets
+CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED to "true" (#209; app/models/merge_request.rb). The job then gates
+the leading part up to its last whole sentence, names the cut, prints CUT where the gate prints PASS, and
+records the cut in diffgate.json; the tests hand it description[:2697] + "..." with the flag, as GitLab's
+code does.
 """
 import importlib.util
 import json
@@ -451,14 +453,20 @@ def test_the_docs_say_what_goes_to_the_log_and_what_to_the_artifact():
         assert re.search(r"every claim's verdict, VERIFIED included, goes to (the )?diffgate\.json", flat)
 
 
-# #209. GitLab stores only the leading 2700 characters of a longer merge request description in
-# CI_MERGE_REQUEST_DESCRIPTION and sets CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED to "true" (docs.gitlab.com,
-# "Predefined CI/CD variables reference", both entries, read 2026-10-23). These tests hand the job
-# description[:2700] with the flag, as GitLab does, and the whole description as the control.
-GITLAB_KEEPS = 2700
+# #209. Over 2700 characters (CI_MERGE_REQUEST_DESCRIPTION_MAX_LENGTH), GitLab hands a merge request description to
+# CI_MERGE_REQUEST_DESCRIPTION as description.truncate(2700) and sets CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED to
+# "true" (app/models/merge_request.rb, truncate_mr_description, read 2026-10-24). ActiveSupport's String#truncate
+# writes its default omission "..." in place of the rest, so the variable holds the description's leading 2697
+# characters and "...", 2700 in all; review 2 of #209 found these tests handed description[:2700]. They hand the
+# job what GitLab's code does, with the flag, and the whole description as the control.
+GITLAB_MAX = 2700
+OMISSION = "..."
+GITLAB_KEEPS = GITLAB_MAX - len(OMISSION)
 FILLER = "The retry helper is described here at the length a long merge request description runs to. "
-CUT = ("styxx diffgate: CUT. CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED is 'true': GitLab handed this job only "
-       "the leading ")
+CUT = "styxx diffgate: CUT. CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED is 'true': GitLab handed this job "
+# GitLab's own words for what it handed: the variable's length, the description's leading characters and the "..."
+HANDED = (f"{GITLAB_MAX} characters: the leading {GITLAB_KEEPS} characters of the merge request description and the "
+          "\"...\" GitLab's truncate writes after them (app/models/merge_request.rb)")
 CUT_NOT_PASS = "so this job does not call the description a pass."
 # styxx.diffgate's own sentence split (`_gate`), which the job's cut must use
 SPLIT = r"(?<=[.!?])\s+|\n+"
@@ -474,9 +482,10 @@ def _prose(n):
 
 
 def _gitlab(description):
-    """What GitLab hands the job for this description: the variable's value, and the flag's."""
-    if len(description) > GITLAB_KEEPS:
-        return description[:GITLAB_KEEPS], "true"
+    """What GitLab hands the job for this description: the variable's value, and the flag's
+    (truncate_mr_description: description.truncate(2700) and 'true' when it is longer than 2700)."""
+    if len(description) > GITLAB_MAX:
+        return description[:GITLAB_KEEPS] + OMISSION, "true"
     return description, "false"
 
 
@@ -497,15 +506,27 @@ def _cut_step():
 
 
 def _cut_named(stdout, kept, report):
-    """The cut is named in the log and in the record, with what was handed and what was read."""
-    named = (CUT + f"{GITLAB_KEEPS} characters of the merge request description. The gate reads the leading "
-             f"{kept}, up to the last whole sentence, and never the rest")
+    """The cut is named in the log and in the record: what GitLab handed (the description's leading characters and
+    its "...") and how much of it the gate's verdict is over. Neither says the gate never reads the rest (review 2 of
+    #209): when the gate FAILs over the cut it runs again over all GitLab handed, only to hold a claim back, and the
+    record's why says so then."""
+    named = (CUT + HANDED + f". The gate's verdict is over the leading {kept} characters, up to the last whole "
+             "sentence, and no claim past that point counts toward it, so this job prints CUT where the gate prints "
+             f"PASS. If the gate FAILs over them, it runs again over all {GITLAB_MAX} characters GitLab handed, only "
+             "to hold a claim back.")
     assert named in stdout, stdout
     assert stdout.count(CUT) == 1, stdout
     cut = report["description_cut"]
     assert cut["CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED"] == "true"
-    assert (cut["characters_handed"], cut["characters_gated"]) == (GITLAB_KEEPS, kept)
-    assert f"handed this job {GITLAB_KEEPS} characters" in cut["why"] and f"the leading {kept}," in cut["why"]
+    assert (cut["characters_handed"], cut["characters_gated"]) == (GITLAB_MAX, kept)
+    assert f"handed this job {HANDED}." in cut["why"], cut["why"]
+    assert (f"This record's verdict and claims are over the leading {kept} characters, up to the last whole "
+            "sentence; no claim past that point has a verdict in this record") in cut["why"], cut["why"]
+    again = (f"Because the gate FAILed over that prefix, the job also ran it over the {GITLAB_MAX} characters GitLab "
+             "handed, only to hold a claim back (held_back); that run's verdict is not this record's.")
+    assert (again in cut["why"]) is (report["verdict"] == "FAIL"), cut["why"]
+    for said in (stdout, cut["why"]):
+        assert "never the rest" not in said and "only the leading" not in said
 
 
 @needs_bash
@@ -518,8 +539,8 @@ def test_a_claim_past_the_cut_is_named_unread_and_never_printed_as_a_pass(mr_rep
     prints CUT where the gate prints PASS, records the cut, and passes in either mode (the claim is
     unread, not judged). An UNCHECKABLE claim before the cut is still named in the log."""
     work, base, head = mr_repo
-    description = lead + _prose(GITLAB_KEEPS + 150) + "Added 3 tests."
-    assert description.index("Added 3 tests.") > GITLAB_KEEPS
+    description = lead + _prose(GITLAB_MAX + 150) + "Added 3 tests."
+    assert description.index("Added 3 tests.") > GITLAB_MAX
     whole = _run_job(work, base, head, description, soft_fail=soft_fail)           # the flag unset
     assert whole.returncode == (1 if soft_fail == "false" else 0), whole.stdout + whole.stderr
     assert re.search(rf"(?m)^FAIL +claims={1 + bool(lead)} contradicted=1 uncheckable={int(bool(lead))}\b",
@@ -546,10 +567,11 @@ def test_a_claim_past_the_cut_is_named_unread_and_never_printed_as_a_pass(mr_rep
 @needs_bash
 @pytest.mark.parametrize("soft_fail", [None, "false"])
 def test_a_sentence_the_cut_broke_is_not_judged(mr_repo, soft_fail):
-    """#209 (b), found by the triage: GitLab's cut at character 2700 lands inside "Only touches src/
-    and tests/.", after "src/". Handed whole, the sentence is VERIFIED. The job gated the prefix
-    "Only touches src/" as written and read it CONTRADICTED, and with STYXX_SOFT_FAIL "false" it
-    failed the job on a true claim. It now gates whole sentences only."""
+    """#209 (b), found by the triage: GitLab's cut lands inside "Only touches src/ and tests/.", after
+    "src/", where GitLab writes its "...". Handed whole, the sentence is VERIFIED. The job gated what it
+    was handed as written and read "Only touches src/..." CONTRADICTED (as it reads "Only touches src/",
+    the triage's form), and with STYXX_SOFT_FAIL "false" it failed the job on a true claim. It now gates
+    whole sentences only."""
     work, base, head = mr_repo
     description = _prose(GITLAB_KEEPS - len("Only touches src/")) + "Only touches src/ and tests/."
     whole = _run_job(work, base, head, description, soft_fail=soft_fail, truncated="false")
@@ -558,7 +580,7 @@ def test_a_sentence_the_cut_broke_is_not_judged(mr_repo, soft_fail):
     assert "description_cut" not in _report(work) and "CUT" not in whole.stdout
 
     text, flag = _gitlab(description)
-    assert text.endswith(". Only touches src/") and flag == "true"
+    assert text.endswith(". Only touches src/" + OMISSION) and flag == "true"
     r = _run_job(work, base, head, text, soft_fail=soft_fail, truncated=flag)
     assert r.returncode == 0, r.stdout + r.stderr
     assert "CONTRADICTED" not in r.stdout and "only_touches" not in r.stdout
@@ -568,7 +590,7 @@ def test_a_sentence_the_cut_broke_is_not_judged(mr_repo, soft_fail):
     report = _report(work)
     assert report["verdict"] == "PASS" and report["claims"] == []
     assert not any("only touches" in t.lower() for t in report["uncovered_texts"])
-    _cut_named(r.stdout, len(text) - len("Only touches src/"), report)
+    _cut_named(r.stdout, GITLAB_KEEPS - len("Only touches src/"), report)
 
 
 @needs_bash
@@ -599,8 +621,17 @@ APART = ["\x85", "\u2028", "\x0c", "\x1c"]
 TAIL = "Then a tail sentence that runs past the cut point here."
 SCOPE = "Only touches src/."
 HELD_ANY = "styxx diffgate: CUT. The gate reads "
-HELD = HELD_ANY + f'only_touches "{SCOPE}" as CONTRADICTED over the leading '
+HELD = HELD_ANY + f"only_touches {SCOPE!r} as CONTRADICTED over the leading "
 HELD_NOT_FAILED = "so this job does not fail on that FAIL, in either mode."
+STRICT_UNSEEN = "styxx diffgate: CUT. This job cannot see --strict: "
+
+
+def strict_unseen(n, unchecked, withheld, kept):
+    """The rest of the line a release prints when --strict would fail the gate on an UNCHECKABLE claim (review 2 of
+    #209): the job cannot see the flag, so it names them."""
+    return (f"with it the gate fails on an UNCHECKABLE claim as well, and this job does not fail on the {n} here "
+            f"({unchecked} UNCHECKABLE over the leading {kept} characters, {withheld} held back above that the run "
+            f"over the {GITLAB_MAX} characters GitLab handed withholds).")
 
 
 def _withheld(claim):
@@ -623,7 +654,7 @@ def test_the_cut_keeps_the_white_space_after_the_last_whole_sentence(mr_repo, se
     assert claim["kind"] == "only_touches" and _withheld(claim), claim
 
     text, flag = _gitlab(description)
-    assert text.endswith(SCOPE + sep + TAIL[:19])
+    assert text.endswith(SCOPE + sep + TAIL[:19] + OMISSION)
     r = _run_job(work, base, head, text, soft_fail="false", truncated=flag)
     assert r.returncode == 0, r.stdout + r.stderr
     assert "[CONTRADICTED:" not in r.stdout and "[UNCHECKABLE:only_touches]" in r.stdout and CUT_NOT_PASS in r.stdout
@@ -652,12 +683,14 @@ def test_a_claim_the_gate_withholds_over_the_text_gitlab_handed_is_not_failed_on
     assert [_withheld(c) for c in _report(work)["claims"] if c["kind"] == "only_touches"] == [True]
 
     text, flag = _gitlab(description)
-    assert text.endswith(SCOPE + sep + dropped)
+    assert text.endswith(SCOPE + sep + dropped + OMISSION)
     r = _run_job(work, base, head, text, soft_fail=soft_fail, truncated=flag)
     assert r.returncode == 0, r.stdout + r.stderr
     kept = GITLAB_KEEPS - len(dropped)
-    assert HELD + f"{kept} characters, but over the {GITLAB_KEEPS} characters GitLab handed this job it withholds it" \
+    assert HELD + f"{kept} characters, but over the {GITLAB_MAX} characters GitLab handed this job it withholds it" \
         in r.stdout, r.stdout
+    # with --strict the gate fails on the claim the run over the text GitLab handed withholds, as UNCHECKABLE there
+    assert STRICT_UNSEEN + strict_unseen(1, 0, 1, kept) in r.stdout, r.stdout
     assert HELD_NOT_FAILED in r.stdout and BLOCKED not in r.stdout and PASSES not in r.stdout
     _one_mode_line(r.stdout, soft_fail)
     report = _report(work)
@@ -670,12 +703,14 @@ def test_a_claim_the_gate_withholds_over_the_text_gitlab_handed_is_not_failed_on
 
 
 @needs_bash
-def test_a_declared_claim_the_gate_does_not_read_over_the_text_gitlab_handed_is_not_failed_on(mr_repo):
-    """A second styxx block whose closing fence is the last thing GitLab kept. Over the whole description
-    and over the text GitLab handed the job the gate reads two blocks and so neither (a body declares
-    once or not at all); over the cut, which drops that fence, it reads the leading block's false
-    only_touches, CONTRADICTED. The second run reads no such claim, so the job holds it back and does
-    not fail with STYXX_SOFT_FAIL "false"."""
+@pytest.mark.parametrize("soft_fail", [None, "false"])
+def test_a_declared_claim_the_gate_does_not_read_over_the_text_gitlab_handed_is_not_failed_on(mr_repo, soft_fail):
+    """A second styxx block whose closing fence is the last of the description GitLab kept, with GitLab's "..."
+    on the fence's line (styxx.declare reads a line that starts with the fence as one). Over the whole
+    description and over the text GitLab handed the job the gate reads two blocks and so neither (a body
+    declares once or not at all); over the cut, which drops that fence, it reads the leading block's false
+    only_touches, CONTRADICTED. The second run reads no such claim, so the job holds it back and does not
+    fail on it, in either mode."""
     work, base, head = mr_repo
     block, second = "```styxx\nonly_touches: src/\n```\n", "\n```styxx\nfiles_changed: 9\n```"
     description = block + _prose(GITLAB_KEEPS - len(block) - len(second)) + second + "\nEnd."
@@ -683,18 +718,94 @@ def test_a_declared_claim_the_gate_does_not_read_over_the_text_gitlab_handed_is_
     assert whole.returncode == 0 and _report(work)["claims"] == [], whole.stdout + whole.stderr
 
     text, flag = _gitlab(description)
-    assert text.endswith(second)
-    r = _run_job(work, base, head, text, soft_fail="false", truncated=flag)
+    assert text.endswith(second + OMISSION)
+    r = _run_job(work, base, head, text, soft_fail=soft_fail, truncated=flag)
     assert r.returncode == 0, r.stdout + r.stderr
     kept = GITLAB_KEEPS - len("```")
-    assert HELD + f"{kept} characters, but over the {GITLAB_KEEPS} characters GitLab handed this job it reads no " \
+    assert HELD + f"{kept} characters, but over the {GITLAB_MAX} characters GitLab handed this job it reads no " \
         "such claim" in r.stdout, r.stdout
-    assert HELD_NOT_FAILED in r.stdout and BLOCKED not in r.stdout
+    assert HELD_NOT_FAILED in r.stdout and BLOCKED not in r.stdout and PASSES not in r.stdout
+    assert STRICT_UNSEEN not in r.stdout          # nothing here that --strict would fail on
+    _one_mode_line(r.stdout, soft_fail)
     report = _report(work)
     assert report["verdict"] == "FAIL"
     assert report["description_cut"]["held_back"] == [
         {"kind": "only_touches", "text": SCOPE, "over_the_handed_text": None}]
     _cut_named(r.stdout, kept, report)
+
+
+@needs_bash
+@pytest.mark.parametrize("end", [GITLAB_KEEPS - 1, GITLAB_KEEPS, GITLAB_KEEPS + 1, GITLAB_MAX])
+def test_gitlabs_ellipsis_is_never_gated_and_takes_the_white_space_after_a_sentence_it_follows(mr_repo, end):
+    """Review 2 of #209: GitLab hands the leading 2,697 characters and "...", not the leading 2,700. A false
+    "Added 3 tests." ends on character ``end`` of the description, with a space after it. Only where it ends
+    before character 2,697 is that space among what GitLab kept, so only there is it a whole sentence of what
+    GitLab handed, gated and blocking with "false". Ending on character 2,697, GitLab's "..." takes the space; past
+    it, the cut broke the sentence: the job gates neither, prints CUT and passes. The text the gate reads is the
+    description's own, never a character of the "..."."""
+    work, base, head = mr_repo
+    claim = "Added 3 tests."
+    description = _prose(end - len(claim)) + claim + " " + _prose(300)
+    text, flag = _gitlab(description)
+    assert flag == "true" and text == description[:GITLAB_KEEPS] + OMISSION and len(text) == GITLAB_MAX
+    r = _run_job(work, base, head, text, soft_fail="false", truncated=flag)
+    gated = (work / "mr_description.md").read_text(encoding="utf-8")
+    assert description.startswith(gated) and len(gated) <= GITLAB_KEEPS, gated[-20:]
+    report = _report(work)
+    if end < GITLAB_KEEPS:
+        assert r.returncode == 1, r.stdout + r.stderr
+        assert "[CONTRADICTED:tests_added]" in r.stdout and BLOCKED in r.stdout
+        assert gated.endswith(claim + " ")
+        _cut_named(r.stdout, end + 1, report)
+    else:
+        assert r.returncode == 0, r.stdout + r.stderr
+        assert "tests_added" not in r.stdout and report["claims"] == []
+        assert re.search(r"(?m)^CUT +claims=0 contradicted=0 uncheckable=0\b", r.stdout), r.stdout
+        _cut_named(r.stdout, end - len(claim), report)
+
+
+@needs_bash
+def test_the_held_back_line_quotes_the_claim_so_a_description_cannot_write_escapes_to_the_log(mr_repo):
+    """Review 2 of #209: the line naming a held-back claim printed its sentence, which the description controls, as
+    written, so an ESC sequence in it reached the job log raw and a description could print, say, a green
+    "styxx diffgate: PASS" there. The line prints the sentence as a Python string literal, as the CLI quotes text a
+    description controls; diffgate.json keeps it as written."""
+    work, base, head = mr_repo
+    scope = "Only touches src/ \x1b[2K\x1b[32mstyxx diffgate: PASS\x1b[0m."
+    dropped = "The caf\xe9"
+    description = (_prose(GITLAB_KEEPS - len(scope) - 1 - len(dropped)) + scope + "\xa0" + dropped
+                   + " part is in src/ too. Done.")
+    text, flag = _gitlab(description)
+    r = _run_job(work, base, head, text, soft_fail="false", truncated=flag)
+    assert r.returncode == 0, r.stdout + r.stderr
+    (held,) = _report(work)["description_cut"]["held_back"]
+    assert (held["kind"], held["text"]) == ("only_touches", scope)
+    assert HELD_ANY + f"only_touches {scope!r} as CONTRADICTED over the leading " in r.stdout, r.stdout
+    assert "\x1b" not in r.stdout
+
+
+@needs_bash
+@pytest.mark.parametrize("lead", ["", "All tests pass. "])
+def test_under_strict_a_release_names_the_uncheckable_claims_it_does_not_fail_on(mr_repo, lead):
+    """Review 2 of #209: the job cannot see --strict (the record does not carry it, and a FAIL with a CONTRADICTED
+    claim is a FAIL in either mode), so a FAIL whose every CONTRADICTED claim is held back does not fail the job
+    with --strict either, though --strict fails the gate on an UNCHECKABLE claim: here the held-back scope claim,
+    UNCHECKABLE over the text GitLab handed, and "All tests pass." over the cut when it leads. With --strict the
+    whole description fails; the job passes, and its log names those claims and says it cannot see the flag."""
+    work, base, head = mr_repo
+    dropped = "The caf\xe9"
+    description = (lead + _prose(GITLAB_KEEPS - len(lead) - len(SCOPE) - 1 - len(dropped)) + SCOPE + "\xa0" + dropped
+                   + " part is in src/ too. Done.")
+    whole = _run_job(work, base, head, description, soft_fail="false", strict=True)
+    assert whole.returncode == 1 and BLOCKED in whole.stdout, whole.stdout + whole.stderr
+    text, flag = _gitlab(description)
+    r = _run_job(work, base, head, text, soft_fail="false", strict=True, truncated=flag)
+    assert r.returncode == 0, r.stdout + r.stderr
+    kept = GITLAB_KEEPS - len(dropped)
+    assert HELD + f"{kept} characters" in r.stdout and HELD_NOT_FAILED in r.stdout, r.stdout
+    unchecked = int(bool(lead))
+    assert STRICT_UNSEEN + strict_unseen(1 + unchecked, unchecked, 1, kept) in r.stdout, r.stdout
+    assert r.stdout.count(STRICT_UNSEEN) == 1
 
 
 @needs_bash
@@ -763,12 +874,13 @@ SWEEP = [("Intro. " + c, w + d, " Done.") for c in SWEEP_CLAIMS for w in SWEEP_W
     ("Intro.\n```styxx\nonly_touches: src/\n```\nText.", "\n```styxx\nfiles_changed: 9\n```", "\nEnd.")]
 
 
-def _sweep(work, base, head, run_dir, monkeypatch, cut_src, read_src, records):
+def _sweep(work, base, head, run_dir, monkeypatch, cut_src, read_src, records, omission=""):
     """The job's cut step and its STYXX_SOFT_FAIL step, run on every prefix GitLab could hand the job of each SWEEP
-    description that cuts after the claim, with the gate's records made by gate_diff_text over the merge request's diff
-    and each file read as the CLI reads it (Path.read_text). Returns (prefixes, prefixes where the job stands on a
-    CONTRADICTED claim that neither the whole description nor the prefix as handed gives, prefixes where it fails
-    with STYXX_SOFT_FAIL "false" and neither has a CONTRADICTED claim)."""
+    description that cuts after the claim, followed by ``omission`` (GitLab's "..." when it is OMISSION), with the
+    gate's records made by gate_diff_text over the merge request's diff and each file read as the CLI reads it
+    (Path.read_text). Returns (prefixes, prefixes where the job stands on a CONTRADICTED claim that neither the whole
+    description nor the prefix as handed gives, prefixes where it fails with STYXX_SOFT_FAIL "false" and neither has
+    a CONTRADICTED claim)."""
     import contextlib
     import io
     from styxx.diffgate import gate_diff_text
@@ -799,7 +911,7 @@ def _sweep(work, base, head, run_dir, monkeypatch, cut_src, read_src, records):
         write("whole.md", lead + dropped + end)
         whole = contradicted(record("whole.md"))
         for cut in range(len(lead), len(lead) + len(dropped) + 1):
-            handed = (lead + dropped + end)[:cut]
+            handed = (lead + dropped + end)[:cut] + omission
             write("handed_as_is.md", handed)
             main = contradicted(record("handed_as_is.md"))
             write("mr_description.md", handed)
@@ -835,22 +947,27 @@ def _sweep(work, base, head, run_dir, monkeypatch, cut_src, read_src, records):
 
 def test_over_every_cut_the_job_stands_on_no_claim_the_whole_description_and_the_handed_text_both_spare(
         mr_repo, tmp_path, monkeypatch):
-    """#209 review, the sweep: over every prefix of the SWEEP descriptions that cuts after the claim, the job never
-    stands on a CONTRADICTED claim, nor fails with STYXX_SOFT_FAIL "false", where neither the whole description nor
-    the prefix as GitLab handed it has one. The same sweep finds both with the cut at the start of the white space
-    and nothing held back (as the change stood at review), and with the white space kept and nothing held back: the
-    sweep can see what it guards against, and each half of the repair is needed."""
+    """#209 review, the sweep: over every prefix of the SWEEP descriptions that cuts after the claim, handed as it is
+    and with GitLab's "..." after it (review 2), the job never stands on a CONTRADICTED claim, nor fails with
+    STYXX_SOFT_FAIL "false", where neither the whole description nor the text as GitLab handed it has one. The same
+    sweep finds both, in both forms, with the cut at the start of the white space and nothing held back (as the change
+    stood at review), and with the white space kept and nothing held back: the sweep can see what it guards against,
+    and each half of the repair is needed."""
     work, base, head = mr_repo
     cut_src, read_src = _cut_step(), _soft_fail_step()
     at_start = cut_src.replace("[m.end() for m in", "[m.start() for m in")
     held_none = read_src.replace("if all(o.get(", "if False and all(o.get(")
     assert at_start != cut_src and held_none != read_src
     records = {}
-    n, stood, failed = _sweep(work, base, head, tmp_path / "sweep", monkeypatch, cut_src, read_src, records)
-    assert n == sum(len(dropped) + 1 for _, dropped, _ in SWEEP) and (stood, failed) == (0, 0), (n, stood, failed)
-    for cut_form in (at_start, cut_src):
-        _, stood, failed = _sweep(work, base, head, tmp_path / "sweep", monkeypatch, cut_form, held_none, records)
-        assert stood > 0 and failed > 0, (cut_form is cut_src, stood, failed)
+    for omission in ("", OMISSION):
+        n, stood, failed = _sweep(work, base, head, tmp_path / "sweep", monkeypatch, cut_src, read_src, records,
+                                  omission)
+        assert n == sum(len(dropped) + 1 for _, dropped, _ in SWEEP) and (stood, failed) == (0, 0), \
+            (omission, n, stood, failed)
+        for cut_form in (at_start, cut_src):
+            _, stood, failed = _sweep(work, base, head, tmp_path / "sweep", monkeypatch, cut_form, held_none, records,
+                                      omission)
+            assert stood > 0 and failed > 0, (omission, cut_form is cut_src, stood, failed)
 
 
 def test_the_cut_uses_the_gates_own_sentence_split():
@@ -918,6 +1035,19 @@ def test_the_cut_keeps_only_whole_sentences_of_the_description_at_every_cut_poin
             record = json.load(f)
         assert (record["characters_handed"], record["characters_gated"]) == (len(handed), len(kept))
         assert CUT + f"{len(handed)} characters" in capsys.readouterr().out
+        # GitLab's own cut hands the leading characters and "..." (app/models/merge_request.rb): the gate reads the
+        # same text, never a character of the "...", and the line and the record say what GitLab handed
+        with open("mr_description.md", "w", encoding="utf-8", newline="") as f:
+            f.write(handed + OMISSION)
+        exec(code, {"__name__": "__main__"})
+        with open("mr_description.md", encoding="utf-8", newline="") as f:
+            assert f.read() == kept, cut
+        with open("mr_description.cut.json", encoding="utf-8") as f:
+            record = json.load(f)
+        assert (record["characters_handed"], record["characters_gated"]) == (cut + 3, len(kept))
+        named = (f"{cut + 3} characters: the leading {cut} characters of the merge request description and the "
+                 "\"...\" GitLab's truncate writes after them (app/models/merge_request.rb)")
+        assert f"handed this job {named}." in record["why"] and CUT + named in capsys.readouterr().out
 
 
 @pytest.mark.parametrize("flag", [None, "false", "", "no"])
@@ -942,12 +1072,14 @@ def test_the_cut_step_leaves_a_description_alone_unless_gitlab_says_it_cut_it(tm
 
 
 def test_the_docs_name_the_cut_gitlab_makes_at_2700_characters():
-    """GitLab hands the job at most the leading 2,700 characters (#209). The README, the job's header and
-    the CHANGELOG entry each say so, name the flag, and say what the job does over a cut: a FAIL over a
-    cut is the gate's over that prefix, a claim the text the cut dropped decides is held back, and text
-    past GitLab's cut never reaches the job. None gives whole sentences as the reason a FAIL over a cut
-    stands (the review of #209: PATH-2a and the one-block rule read the whole text the gate is handed),
-    and the job-token allowlist is the docs' default, not a rule."""
+    """Over 2,700 characters GitLab hands the job the description's leading 2,697 and "..." (#209; review 2 read
+    GitLab's code). The README, the job's header and the CHANGELOG entry each say so, name the flag, and say
+    what the job does over a cut: a FAIL over a cut is the gate's over that prefix, a claim the text the cut
+    dropped decides is held back, the gate's second run reads that text only to hold a claim back, the job
+    cannot see --strict, and text past GitLab's cut never reaches the job. None gives whole sentences as the
+    reason a FAIL over a cut stands (the review of #209: PATH-2a and the one-block rule read the whole text the
+    gate is handed), none says GitLab hands the leading 2,700, and the job-token allowlist is the docs'
+    default, not a rule."""
     readme = (ROOT / "integrations" / "gitlab" / "README.md").read_text(encoding="utf-8")
     header = JOB.read_text(encoding="utf-8").split("\ndiffgate:", 1)[0]
     changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
@@ -965,6 +1097,11 @@ def test_the_docs_name_the_cut_gitlab_makes_at_2700_characters():
         assert "Text past GitLab's cut never reaches the job" in flat
         assert "FAIL over a cut stands" not in flat and "judged is a whole sentence" not in flat
         assert "it judged is whole" not in flat
+        assert "2,697" in flat and '"..."' in flat and "merge_request.rb" in flat
+        assert "only the leading 2,700" not in flat and "stores only the leading" not in flat
+        assert "only to hold a claim back" in flat and "never read by them" not in flat
+        assert "cannot see --strict" in flat
+    assert "never the rest" not in JOB.read_text(encoding="utf-8")
     for text in (readme, entry):
         flat = " ".join(text.replace("`", "").split())
         assert "by default a job token reads another project's merge requests only when" in flat
