@@ -497,7 +497,7 @@ def _cut_named(stdout, kept, report):
 def test_a_claim_past_the_cut_is_named_unread_and_never_printed_as_a_pass(mr_repo, soft_fail, lead):
     """#209 (a), the issue's case: the only diff claim, a false "Added 3 tests.", sits past character
     2700. Handed whole, the gate reads it CONTRADICTED. Handed GitLab's prefix, the job printed
-    "PASS claims=0" and never said it had read a prefix; it now names the cut and how much it read,
+    "PASS  claims=0" and never said it had read a prefix; it now names the cut and how much it read,
     prints CUT where the gate prints PASS, records the cut, and passes in either mode (the claim is
     unread, not judged). An UNCHECKABLE claim before the cut is still named in the log."""
     work, base, head = mr_repo
@@ -570,6 +570,104 @@ def test_a_false_whole_sentence_before_the_cut_still_fails_and_the_cut_is_named(
     _one_mode_line(r.stdout, soft_fail)
     report = _report(work)
     assert report["verdict"] == "FAIL"
+    _cut_named(r.stdout, _whole_sentences(text), report)
+
+
+# PATH-2a (#121) withholds a CONTRADICTED scope, count or tests claim where the two readers may read the summary apart,
+# and it reads the whole text the gate is handed: a sentence as both readers end one (`\n|[.!?][ \t\r]`, not the gate's
+# split), and a zone or run anywhere in the summary. So what the cut drops can hold its reason to withhold.
+# White space the two readers read apart (styxx/diffgate.py _P2A_DIVERGENT), each a sentence end for the gate's split:
+APART = ["\x85", " ", "\x0c", "\x1c"]
+TAIL = "Then a tail sentence that runs past the cut point here."
+SCOPE = "Only touches src/."
+HELD = f'styxx diffgate: CUT. The gate reads only_touches "{SCOPE}" as CONTRADICTED over the leading '
+HELD_NOT_FAILED = "so this job does not fail on that FAIL, in either mode."
+
+
+def _withheld(claim):
+    return claim["verdict"] == "UNCHECKABLE" and claim["why"].startswith("CONTRADICTED withheld by PATH-2a (")
+
+
+@needs_bash
+@pytest.mark.parametrize("sep", APART)
+def test_the_cut_keeps_the_white_space_after_the_last_whole_sentence(mr_repo, sep):
+    """Review of #209: the cut kept the text up to the start of the white space after the last whole sentence,
+    so it dropped that white space. Where it is a character the two readers read apart, PATH-2a withholds the false
+    scope claim before it over the whole description and over GitLab's prefix as the job gated it before #209; over
+    the cut without it the claim was CONTRADICTED, and with STYXX_SOFT_FAIL "false" the job failed. The cut now keeps
+    it, and the gate withholds the claim over the cut as over the whole description."""
+    work, base, head = mr_repo
+    description = _prose(GITLAB_KEEPS - 20 - len(SCOPE)) + SCOPE + sep + TAIL
+    whole = _run_job(work, base, head, description, soft_fail="false")
+    assert whole.returncode == 0, whole.stdout + whole.stderr
+    (claim,) = _report(work)["claims"]
+    assert claim["kind"] == "only_touches" and _withheld(claim), claim
+
+    text, flag = _gitlab(description)
+    assert text.endswith(SCOPE + sep + TAIL[:19])
+    r = _run_job(work, base, head, text, soft_fail="false", truncated=flag)
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert "CONTRADICTED" not in r.stdout and CUT_NOT_PASS in r.stdout
+    report = _report(work)
+    (claim,) = report["claims"]
+    assert claim["kind"] == "only_touches" and _withheld(claim), claim
+    _cut_named(r.stdout, GITLAB_KEEPS - 19, report)
+
+
+@needs_bash
+@pytest.mark.parametrize("soft_fail", [None, "false"])
+@pytest.mark.parametrize("sep, dropped", [
+    (" ", "The café"),                        # one sentence for PATH-2a: the gate's split ends it at NBSP
+    (" ", "Only the café part is in src/."),        # a zone of PATH-2a's that names src/, with no end GitLab kept
+])
+def test_a_claim_the_gate_withholds_over_the_text_gitlab_handed_is_not_failed_on(mr_repo, soft_fail, sep, dropped):
+    """Review of #209: the text the cut drops, after the last whole sentence, can hold PATH-2a's reason to withhold a
+    claim before it. Over the whole description and over the text GitLab handed the job the gate withholds the false
+    scope claim; over the cut it is CONTRADICTED. The job runs the gate again over the text GitLab handed it, names
+    the claim in the log and under "held_back" in diffgate.json, and does not fail on it, in either mode."""
+    work, base, head = mr_repo
+    rest = {" ": " part is in src/ too. Done.", " ": " Done."}[sep]
+    description = _prose(GITLAB_KEEPS - len(SCOPE) - len(sep) - len(dropped)) + SCOPE + sep + dropped + rest
+    whole = _run_job(work, base, head, description, soft_fail="false")
+    assert whole.returncode == 0, whole.stdout + whole.stderr
+    assert [_withheld(c) for c in _report(work)["claims"] if c["kind"] == "only_touches"] == [True]
+
+    text, flag = _gitlab(description)
+    assert text.endswith(SCOPE + sep + dropped)
+    r = _run_job(work, base, head, text, soft_fail=soft_fail, truncated=flag)
+    assert r.returncode == 0, r.stdout + r.stderr
+    kept = GITLAB_KEEPS - len(dropped)
+    assert HELD + f"{kept} characters, but over the {GITLAB_KEEPS} characters GitLab handed this job it withholds it" \
+        in r.stdout, r.stdout
+    assert HELD_NOT_FAILED in r.stdout and BLOCKED not in r.stdout and PASSES not in r.stdout
+    _one_mode_line(r.stdout, soft_fail)
+    report = _report(work)
+    assert report["verdict"] == "FAIL"            # the gate's verdict over the prefix, kept as it wrote it
+    assert [(c["kind"], c["verdict"]) for c in report["claims"]] == [("only_touches", "CONTRADICTED")]
+    (held,) = report["description_cut"]["held_back"]
+    assert (held["kind"], held["text"]) == ("only_touches", SCOPE)
+    assert held["over_the_handed_text"].startswith("CONTRADICTED withheld by PATH-2a ("), held
+    _cut_named(r.stdout, kept, report)
+
+
+@needs_bash
+def test_a_claim_withheld_over_text_past_gitlabs_cut_is_still_contradicted_over_the_cut(mr_repo):
+    """What the job cannot do (#209): the text past GitLab's cut never reaches the job. Here PATH-2a's reason to
+    withhold a false scope claim at the top sits past character 2700: over the whole description the gate withholds
+    it; over the cut it is CONTRADICTED, as it is over the text GitLab handed the job and was over GitLab's prefix
+    before #209, so nothing is held back and with STYXX_SOFT_FAIL "false" the job fails. The docs say so."""
+    work, base, head = mr_repo
+    description = SCOPE + " " + _prose(GITLAB_KEEPS) + "Only the café part is in src/. Done."
+    whole = _run_job(work, base, head, description, soft_fail="false")
+    assert whole.returncode == 0, whole.stdout + whole.stderr
+    assert [_withheld(c) for c in _report(work)["claims"] if c["kind"] == "only_touches"] == [True]
+
+    text, flag = _gitlab(description)
+    r = _run_job(work, base, head, text, soft_fail="false", truncated=flag)
+    assert r.returncode == 1, r.stdout + r.stderr
+    assert "[CONTRADICTED:only_touches]" in r.stdout and BLOCKED in r.stdout and HELD not in r.stdout
+    report = _report(work)
+    assert report["verdict"] == "FAIL" and report["description_cut"]["held_back"] == []
     _cut_named(r.stdout, _whole_sentences(text), report)
 
 
