@@ -12,6 +12,11 @@ log, and the job passes. Only STYXX_SOFT_FAIL set to "false" blocks, read the wa
 ``_soft_fail`` reads soft-fail: compared case-insensitively with surrounding whitespace stripped,
 unset as "true", every other value reporting with a warning naming it. An error that leaves no
 report fails the job in either mode.
+
+GitLab stores only the leading 2700 characters of a longer description in the variable and sets
+CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED to "true" (#209). The job then gates the leading part up to its
+last whole sentence, names the cut, prints CUT where the gate prints PASS, and records the cut in
+diffgate.json; the tests hand it description[:2700] with the flag, as GitLab does.
 """
 import importlib.util
 import json
@@ -144,11 +149,12 @@ def mr_repo(tmp_path):
     return work, base, head
 
 
-def _run_job(work, base, head, description, soft_fail=None, strict=False, gate=None):
+def _run_job(work, base, head, description, soft_fail=None, strict=False, gate=None, truncated=None):
     """Run the job's script lines under bash. ``soft_fail`` None leaves STYXX_SOFT_FAIL unset;
     ``strict`` adds --strict to the styxx.diffgate line, the edit the README describes; ``gate``,
     a script path and its arguments, stands in for the whole styxx.diffgate command (a CLI that
-    exits without the report its exit promises)."""
+    exits without the report its exit promises); ``truncated`` is the value GitLab gives
+    CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED (None leaves it unset)."""
     job = _job()
     assert job["rules"][0]["if"] == '$CI_PIPELINE_SOURCE == "merge_request_event"'
     env = dict(os.environ, CI_MERGE_REQUEST_DESCRIPTION=description,
@@ -157,6 +163,9 @@ def _run_job(work, base, head, description, soft_fail=None, strict=False, gate=N
     env.pop("STYXX_SOFT_FAIL", None)
     if soft_fail is not None:
         env["STYXX_SOFT_FAIL"] = soft_fail
+    env.pop("CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED", None)
+    if truncated is not None:
+        env["CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED"] = truncated
     lines = [l for l in job["script"] if not l.startswith("pip install")]
     script = "\n".join(lines)
     if strict:
@@ -164,8 +173,8 @@ def _run_job(work, base, head, description, soft_fail=None, strict=False, gate=N
         script = script.replace(" --out diffgate.json", " --strict --out diffgate.json")
     if gate is not None:
         stub = "python " + " ".join(shlex.quote(str(a)) for a in gate)
-        script, n = re.subn(r"(?m)^python -m styxx\.diffgate [^\n]* --out diffgate\.json(?= \|\| styxx_gate=\$\?$)",
-                            lambda _: stub, script)
+        script, n = re.subn(r"(?m)^python -m styxx\.diffgate [^\n]* --out diffgate\.json"
+                            r"(?=(?: > diffgate\.log)? \|\| styxx_gate=\$\?$)", lambda _: stub, script)
         assert n == 1, script
     # bash reads the backslashes of a Windows path as escapes, so the interpreter is passed with
     # forward slashes and quoted (#185); on POSIX this is the path as it was. The job names it
@@ -358,9 +367,13 @@ def test_a_gate_whose_report_does_not_match_its_exit_fails_the_job_in_either_mod
 
 
 def test_the_job_never_expands_the_description_through_the_shell():
+    """The one shell expansion of the description is the printf that writes it to a file. The flag that
+    says GitLab cut it (#209) is read by Python from the environment, never through the shell."""
     job = _job()
-    writes = [l for l in job["script"] if "CI_MERGE_REQUEST_DESCRIPTION" in l]
+    writes = [l for l in job["script"] if re.search(r"\$\{?CI_MERGE_REQUEST_DESCRIPTION(?![A-Z_])", l)]
     assert writes == ["printf '%s' \"$CI_MERGE_REQUEST_DESCRIPTION\" > mr_description.md"]
+    assert not any(re.search(r"\$\{?CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED", l) for l in job["script"])
+    assert 'os.environ.get("CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED")' in _cut_step()
     assert job["artifacts"]["when"] == "always" and "diffgate.json" in job["artifacts"]["paths"]
 
 
@@ -419,3 +432,225 @@ def test_the_docs_say_what_goes_to_the_log_and_what_to_the_artifact():
         assert "each contradicted claim is named in the log" not in flat
         assert "its claim counts and each CONTRADICTED or UNCHECKABLE claim go to the" in flat
         assert re.search(r"every claim's verdict, VERIFIED included, goes to (the )?diffgate\.json", flat)
+
+
+# #209. GitLab stores only the leading 2700 characters of a longer merge request description in
+# CI_MERGE_REQUEST_DESCRIPTION and sets CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED to "true" (docs.gitlab.com,
+# "Predefined CI/CD variables reference", both entries, read 2026-10-23). These tests hand the job
+# description[:2700] with the flag, as GitLab does, and the whole description as the control.
+GITLAB_KEEPS = 2700
+FILLER = "The retry helper is described here at the length a long merge request description runs to. "
+CUT = ("styxx diffgate: CUT. CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED is 'true': GitLab handed this job only "
+       "the leading ")
+CUT_NOT_PASS = "so this job does not call the description a pass."
+# styxx.diffgate's own sentence split (`_gate`), which the job's cut must use
+SPLIT = r"(?<=[.!?])\s+|\n+"
+
+
+def _prose(n):
+    """Whole filler sentences, exactly ``n`` characters (n >= 10), the last one ending '. '."""
+    k = (n - 10) // len(FILLER)
+    rest = n - k * len(FILLER)
+    out = FILLER * k + "Note " + "x" * (rest - 7) + ". "
+    assert len(out) == n
+    return out
+
+
+def _gitlab(description):
+    """What GitLab hands the job for this description: the variable's value, and the flag's."""
+    if len(description) > GITLAB_KEEPS:
+        return description[:GITLAB_KEEPS], "true"
+    return description, "false"
+
+
+def _whole_sentences(text):
+    """How much of ``text``, a prefix GitLab cut, ends at its last whole sentence: the oracle the
+    tests hold the job to, written apart from the job (a filler sentence ends at '. ')."""
+    return text.rfind(". ") + 1
+
+
+def _cut_step():
+    """The Python the job runs to cut a description GitLab truncated back to its last whole sentence."""
+    for item in _job()["script"]:
+        m = re.search(r"^python - <<'STYXX_DESCRIPTION_CUT'\n(.*?)^STYXX_DESCRIPTION_CUT$", item, re.S | re.M)
+        if m:
+            return m.group(1)
+    raise AssertionError("the job has no step that reads CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED")
+
+
+def _cut_named(stdout, kept, report):
+    """The cut is named in the log and in the record, with what was handed and what was read."""
+    named = (CUT + f"{GITLAB_KEEPS} characters of the merge request description. The gate reads the leading "
+             f"{kept}, up to the last whole sentence, and never the rest")
+    assert named in stdout, stdout
+    assert stdout.count(CUT) == 1, stdout
+    cut = report["description_cut"]
+    assert cut["CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED"] == "true"
+    assert (cut["characters_handed"], cut["characters_gated"]) == (GITLAB_KEEPS, kept)
+    assert f"handed this job {GITLAB_KEEPS} characters" in cut["why"] and f"the leading {kept}," in cut["why"]
+
+
+@needs_bash
+@pytest.mark.parametrize("soft_fail", [None, "false"])
+@pytest.mark.parametrize("lead", ["", "All tests pass. "])
+def test_a_claim_past_the_cut_is_named_unread_and_never_printed_as_a_pass(mr_repo, soft_fail, lead):
+    """#209 (a), the issue's case: the only diff claim, a false "Added 3 tests.", sits past character
+    2700. Handed whole, the gate reads it CONTRADICTED. Handed GitLab's prefix, the job printed
+    "PASS claims=0" and never said it had read a prefix; it now names the cut and how much it read,
+    prints CUT where the gate prints PASS, records the cut, and passes in either mode (the claim is
+    unread, not judged). An UNCHECKABLE claim before the cut is still named in the log."""
+    work, base, head = mr_repo
+    description = lead + _prose(GITLAB_KEEPS + 150) + "Added 3 tests."
+    assert description.index("Added 3 tests.") > GITLAB_KEEPS
+    whole = _run_job(work, base, head, description, soft_fail=soft_fail)           # the flag unset
+    assert whole.returncode == (1 if soft_fail == "false" else 0), whole.stdout + whole.stderr
+    assert re.search(rf"(?m)^FAIL +claims={1 + bool(lead)} contradicted=1 uncheckable={int(bool(lead))}\b",
+                     whole.stdout), whole.stdout
+    assert "[CONTRADICTED:tests_added]" in whole.stdout and "CUT" not in whole.stdout
+    assert "description_cut" not in _report(work)
+
+    text, flag = _gitlab(description)
+    r = _run_job(work, base, head, text, soft_fail=soft_fail, truncated=flag)
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert not re.search(r"(?m)^PASS\b", r.stdout), r.stdout
+    assert re.search(rf"(?m)^CUT +claims={int(bool(lead))} contradicted=0 uncheckable={int(bool(lead))}\b",
+                     r.stdout), r.stdout
+    assert "tests_added" not in r.stdout
+    assert ("[UNCHECKABLE:tests_pass]" in r.stdout) is bool(lead)
+    assert CUT_NOT_PASS in r.stdout and "WARNING" not in r.stdout
+    _one_mode_line(r.stdout, soft_fail)
+    report = _report(work)
+    assert report["verdict"] == "PASS"            # the gate's verdict over the prefix, kept as it wrote it
+    assert [c["kind"] for c in report["claims"]] == (["tests_pass"] if lead else [])
+    _cut_named(r.stdout, _whole_sentences(text), report)
+
+
+@needs_bash
+@pytest.mark.parametrize("soft_fail", [None, "false"])
+def test_a_sentence_the_cut_broke_is_not_judged(mr_repo, soft_fail):
+    """#209 (b), found by the triage: GitLab's cut at character 2700 lands inside "Only touches src/
+    and tests/.", after "src/". Handed whole, the sentence is VERIFIED. The job gated the prefix
+    "Only touches src/" as written and read it CONTRADICTED, and with STYXX_SOFT_FAIL "false" it
+    failed the job on a true claim. It now gates whole sentences only."""
+    work, base, head = mr_repo
+    description = _prose(GITLAB_KEEPS - len("Only touches src/")) + "Only touches src/ and tests/."
+    whole = _run_job(work, base, head, description, soft_fail=soft_fail, truncated="false")
+    assert whole.returncode == 0 and whole.stdout.startswith("PASS"), whole.stdout + whole.stderr
+    assert {c["kind"]: c["verdict"] for c in _report(work)["claims"]} == {"only_touches": "VERIFIED"}
+    assert "description_cut" not in _report(work) and "CUT" not in whole.stdout
+
+    text, flag = _gitlab(description)
+    assert text.endswith(". Only touches src/") and flag == "true"
+    r = _run_job(work, base, head, text, soft_fail=soft_fail, truncated=flag)
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert "CONTRADICTED" not in r.stdout and "only_touches" not in r.stdout
+    assert re.search(r"(?m)^CUT +claims=0 contradicted=0 uncheckable=0\b", r.stdout), r.stdout
+    assert CUT_NOT_PASS in r.stdout
+    _one_mode_line(r.stdout, soft_fail)
+    report = _report(work)
+    assert report["verdict"] == "PASS" and report["claims"] == []
+    assert not any("only touches" in t.lower() for t in report["uncovered_texts"])
+    _cut_named(r.stdout, len(text) - len("Only touches src/") - 1, report)
+
+
+@needs_bash
+@pytest.mark.parametrize("soft_fail", [None, "false"])
+def test_a_false_whole_sentence_before_the_cut_still_fails_and_the_cut_is_named(mr_repo, soft_fail):
+    """A sentence wholly before the cut is a sentence of the description, so its CONTRADICTED stands
+    and the job reports or blocks on it as on any FAIL; the log and the record still name the cut."""
+    work, base, head = mr_repo
+    description = "Added 3 tests. " + _prose(GITLAB_KEEPS + 300)
+    text, flag = _gitlab(description)
+    r = _run_job(work, base, head, text, soft_fail=soft_fail, truncated=flag)
+    assert r.returncode == (1 if soft_fail == "false" else 0), r.stdout + r.stderr
+    assert re.search(r"(?m)^FAIL +claims=1 contradicted=1 uncheckable=0\b", r.stdout), r.stdout
+    assert "[CONTRADICTED:tests_added]" in r.stdout and CUT_NOT_PASS not in r.stdout
+    assert (BLOCKED in r.stdout) is (soft_fail == "false") and (REPORTED in r.stdout) is (soft_fail is None)
+    _one_mode_line(r.stdout, soft_fail)
+    report = _report(work)
+    assert report["verdict"] == "FAIL"
+    _cut_named(r.stdout, _whole_sentences(text), report)
+
+
+def test_the_cut_uses_the_gates_own_sentence_split():
+    """The job cuts where styxx.diffgate splits sentences, so every sentence it gates is a sentence
+    of the whole description. A reader whose split moves moves this test."""
+    src = (ROOT / "styxx" / "diffgate.py").read_text(encoding="utf-8")
+    assert re.findall(r'sentences = re\.split\(r"([^"]+)", summary_text\)', src) == [SPLIT]
+    assert 're.finditer(r"' + SPLIT + '", text)' in _cut_step()
+
+
+CUT_CASES = [
+    "Fixed v1.2 of the retry loop. Only touches src/ and tests/.\r\nAdded 2 tests!\n\nDone?  Yes.\u00a0Next one."
+    "\nModified src/retry.py",
+    "One long sentence with no end that GitLab cut in the middle and that has no stop at all",
+    "\n\nAdded 1 test.\n```styxx\ntests_added: 3\nonly_touches: src\n```\nAfter the block. e.g. this. Ends.",
+    "Wait... what?! Really.\tTabbed. Line\rCR only. \u2028Sep. Last",
+]
+
+
+@pytest.mark.parametrize("description", CUT_CASES)
+def test_the_cut_keeps_only_whole_sentences_of_the_description_at_every_cut_point(tmp_path, monkeypatch, capsys,
+                                                                                  description):
+    """The job's cut step, run on every prefix GitLab could hand it: the text it leaves for the gate is
+    a prefix of what it was handed, the gate's split of it is the first sentences of the gate's split
+    of the whole description, nothing longer qualifies, a declaration it leaves is the whole one or
+    none, and the record it writes says how much was handed and how much was kept."""
+    from styxx.declare import declaration_pass
+    code = compile(_cut_step(), "STYXX_DESCRIPTION_CUT", "exec")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED", "true")
+    whole = re.split(SPLIT, description)
+    declared = declaration_pass(description)[0]
+    for cut in range(len(description) + 1):
+        handed = description[:cut]
+        with open("mr_description.md", "w", encoding="utf-8", newline="") as f:
+            f.write(handed)
+        exec(code, {"__name__": "__main__"})
+        with open("mr_description.md", encoding="utf-8", newline="") as f:
+            kept = f.read()
+        assert handed.startswith(kept), (cut, kept)
+        if kept:
+            parts = re.split(SPLIT, kept)
+            assert parts == whole[:len(parts)], (cut, kept)
+        assert all(m.start() <= len(kept) for m in re.finditer(SPLIT, handed)), (cut, kept)
+        assert declaration_pass(kept)[0] in ("", declared), (cut, kept)
+        with open("mr_description.cut.json", encoding="utf-8") as f:
+            record = json.load(f)
+        assert (record["characters_handed"], record["characters_gated"]) == (len(handed), len(kept))
+        assert CUT + f"{len(handed)} characters" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("flag", [None, "false", "", "no"])
+def test_the_cut_step_leaves_a_description_alone_unless_gitlab_says_it_cut_it(tmp_path, monkeypatch, capsys, flag):
+    """Without the flag "true" the description is gated as GitLab handed it, nothing is printed, and no
+    cut record is left, a stale one from an earlier run included."""
+    code = compile(_cut_step(), "STYXX_DESCRIPTION_CUT", "exec")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.delenv("CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED", raising=False)
+    if flag is not None:
+        monkeypatch.setenv("CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED", flag)
+    text = "Added 3 tests. Only touches src/"
+    (tmp_path / "mr_description.md").write_text(text, encoding="utf-8", newline="")
+    (tmp_path / "mr_description.cut.json").write_text("{}", encoding="utf-8")
+    exec(code, {"__name__": "__main__"})
+    assert (tmp_path / "mr_description.md").read_text(encoding="utf-8") == text
+    assert not (tmp_path / "mr_description.cut.json").exists()
+    assert capsys.readouterr().out == ""
+
+
+def test_the_docs_name_the_cut_gitlab_makes_at_2700_characters():
+    """GitLab hands the job at most the leading 2,700 characters (#209). The README, the job's header and
+    the CHANGELOG entry each say so, name the flag, and say what the job does over a cut."""
+    readme = (ROOT / "integrations" / "gitlab" / "README.md").read_text(encoding="utf-8")
+    header = JOB.read_text(encoding="utf-8").split("\ndiffgate:", 1)[0]
+    changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+    entry = _changelog_entry(changelog, "the GitLab job names a merge request description GitLab cut at 2,700")
+    for text in (readme, header, entry):
+        flat = " ".join(text.replace("#", " ").replace("`", "").split())
+        assert "CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED" in flat
+        assert "2,700 characters" in flat
+        assert "last whole sentence" in flat
+        assert "prints CUT where the gate prints PASS" in flat
+        assert "description_cut" in flat
+        assert "never read" in flat
