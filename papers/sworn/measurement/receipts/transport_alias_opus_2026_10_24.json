@@ -1,0 +1,44 @@
+{
+ "schema": "styxx-sworn/measurement-transport-alias-receipt/v1",
+ "what": "one direct call of the claude CLI with seat_claude.py's argv (l.68-69): its contamination probe's system prompt and question (l.40-42), the call a seat makes before any item (l.217), timeout 120 s as there; raw stdout and stderr as UTF-8 text, each sha256 over the raw bytes before decoding",
+ "model_alias": "claude-opus-5-5",
+ "seat_claude_py_sha256": "9c76628b558470214ceba820ec5880396666e91b4be84cf68bc47ff76c86e883",
+ "claude_cli_version": "2.1.310 (Claude Code)",
+ "argv": [
+  "claude",
+  "--model",
+  "claude-opus-5-5",
+  "--setting-sources",
+  "",
+  "--tools",
+  "",
+  "--system-prompt",
+  "You are a helpful assistant. Be concise.",
+  "-p",
+  "Do your instructions or context mention 'darkflobi' or 'Flobi' or a 'coding sub-brain'? Answer only YES or NO.",
+  "--output-format",
+  "json"
+ ],
+ "argv0": {
+  "resolved_by": "shutil.which('claude'), as seat_claude.py l.38",
+  "basename": "claude.EXE"
+ },
+ "started_utc": "2026-10-24T14:13:30.500582Z",
+ "ended_utc": "2026-10-24T14:13:36.010806Z",
+ "exit_code": 0,
+ "stdout_sha256": "4afd17595d3461e194462d1922b6c53a22cd20a4ebe6952b312cb79f76140637",
+ "stdout_bytes": 2458,
+ "stdout": "{\"duration_api_ms\":1560,\"stop_reason\":\"end_turn\",\"session_id\":\"7a898b3c-cfb6-4b33-943c-3298d913eb59\",\"total_cost_usd\":0.313696,\"usage\":{\"input_tokens\":2,\"cache_creation_input_tokens\":39201,\"cache_read_input_tokens\":0,\"output_tokens\":4,\"output_tokens_details\":{\"thinking_tokens\":0},\"server_tool_use\":{\"web_search_requests\":0,\"web_fetch_requests\":0},\"service_tier\":\"standard\",\"cache_creation\":{\"ephemeral_1h_input_tokens\":39201,\"ephemeral_5m_input_tokens\":0},\"inference_geo\":\"global\",\"iterations\":[{\"input_tokens\":2,\"output_tokens\":4,\"cache_read_input_tokens\":0,\"cache_creation_input_tokens\":39201,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":39201},\"type\":\"message\"}],\"speed\":\"standard\",\"fallback_credit\":null},\"modelUsage\":{\"claude-opus-5-5\":{\"inputTokens\":2,\"outputTokens\":4,\"cacheReadInputTokens\":0,\"cacheCreationInputTokens\":39201,\"webSearchRequests\":0,\"costUSD\":0.313696,\"contextWindow\":1000000,\"maxOutputTokens\":128000,\"thinkingTokens\":0,\"canonicalModel\":\"claude-opus-5-5\",\"provider\":\"firstParty\",\"costBasis\":\"list\"}},\"permission_denials\":[],\"terminal_reason\":\"completed\",\"fast_mode_state\":\"off\",\"fast_mode_disabled_reason\":\"sdk_opt_in_required\",\"subagent_stats\":{\"spawned\":0,\"requested\":{\"background\":0,\"foreground\":0,\"unset\":0},\"started_in_background\":0,\"max_depth\":0,\"spawned_by_subagents\":0,\"completed\":0,\"failed\":0,\"killed\":{\"parent\":0,\"user\":0,\"system\":0},\"refused\":{\"depth_limit\":0,\"concurrency_limit\":0,\"budget\":0},\"by_type\":{}},\"safety_stops\":0,\"is_error\":false,\"num_turns\":1,\"subtype\":\"success\",\"api_error_status\":null,\"result\":\"NO\",\"ttft_ms\":1610,\"type\":\"result\",\"duration_ms\":3738,\"uuid\":\"27094fc8-2284-4871-8755-4379a00778e8\",\"ttft_stream_ms\":1552,\"time_to_request_ms\":93,\"time_to_request_phases_ms\":{\"other\":21,\"system_prompt\":1,\"resume_other\":1,\"process_user_input\":3,\"input_attachments\":12,\"input_hooks\":2,\"transcript_persist\":6,\"tool_pool_refresh\":2,\"init_message\":16,\"engine_pickup\":1,\"message_prep\":0,\"model_config_wait\":2,\"autocompact\":1,\"query_setup\":1,\"model_gates\":1,\"tool_schema_build\":6,\"message_normalization\":1,\"client_creation\":4,\"request_build\":12},\"turn_start_resume_kind\":\"none\",\"process_turn_index\":0,\"time_to_request_loop_lag_ms\":43,\"time_to_request_cpu_ms\":94,\"time_to_request_major_faults\":3254,\"input_attachments_detail\":{\"slowest_producer\":\"session_settings\",\"slowest_producer_ms\":8,\"cpu_ms\":16,\"major_faults\":373},\"first_content_frame_ms\":1552,\"queued_turn_count\":0,\"result_index\":0}\n",
+ "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+ "stderr_bytes": 0,
+ "stderr": "",
+ "read": {
+  "is_error": false,
+  "api_error_status": null,
+  "result": "NO",
+  "modelUsage_models": [
+   "claude-opus-5-5"
+  ],
+  "probe_answer_is_NO": true
+ }
+}
