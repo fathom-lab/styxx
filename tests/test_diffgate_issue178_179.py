@@ -13,17 +13,24 @@ async test: without that mirror a changed `async def test_x` reads a wrong VERIF
 `def test_n():` in `notes.txt`, or a `def test_s():` inside a triple-quoted string added to a Python file. So a false
 "Added 1 test." read VERIFIED, and a true one beside a documented example read CONTRADICTED. Both ports now abstain
 (UNCHECKABLE, #178) on those two claims when a counted line sits in a file whose path does not end in .py or .pyi, or
-after an odd number of triple quotes in its file's added lines. Both counts are taken from one parse
-(`parse_unified_diff_sides`): every file's added lines against the Python-source lines of the same parse, so the
-abstention fires only where its reason holds, never where the two parse functions place a line apart (#172's shapes).
-The path's tail is read with every trailing code point at or below U+0020 or from U+007F up removed, so Python's
-strip() and the port's trim() cannot part the decision. The abstention adds no VERIFIED and no CONTRADICTED.
+after an odd number of triple quotes in the added lines of its `+++` section. Both counts are taken from one walk of
+the diff (`_diff_sections` / `_diffSections`), which places each added line as `parse_unified_diff_sides` does (held
+here on every committed input, in both ports): every section's added lines against the Python-source lines of the same
+walk, so the abstention fires only where its reason holds, never where `parse_unified_diff` and
+`parse_unified_diff_sides` place a line apart (#172's shapes). The parity and the path test are a section's, not a
+key's of `parse_unified_diff_sides`: the two ports build those keys apart (Python's strip() and the port's trim()
+remove different code points from a path's tail, and the runtimes lower case differently, U+1C89 on Node 24 and not on
+CPython 3.12), so a parity taken per key put a `def test_` after an odd count in one port only, and the two printed
+opposite gates (review 1 of fix batch 1); sections both ports read alike. The path's tail is read with every trailing
+code point at or below U+0020 or from U+007F up removed, so strip() and trim() cannot part the path test either. The
+abstention adds no VERIFIED and no CONTRADICTED.
 
 What is held here: the reporters' cases at the raw door (both ports, both strict modes, the two ports' records equal,
 reasons included) and at the git door (a real two-commit repository; skipped without git, failed under CI); the gap
 after `async`; the changed async test the overlay withholds; the controls #178 must not touch; the one-parse rule; the
-path's tail; the named residuals, pinned as they read; an ast grid over every case with a Python file model; and a
-plant of each change in each port, each told by a check here.
+path's tail; the sections a key would merge; the walk placing every added line as the parse does; the named residuals,
+pinned as they read; an ast grid over every case with a Python file model; and a plant of each change in each port,
+each told by a check here.
 """
 from __future__ import annotations
 
@@ -135,11 +142,11 @@ def _symbol(kind: str, name: str, hit: bool) -> list:
 # The two #178 reasons. Each says only what was measured: where the counted lines sit, and that a template that counts
 # `def` lines cannot tell whether CPython defines a test or the name there.
 WHY_178_TESTS = ("{k} of the {placed} `def test_` lines added sit in a file not read as .py or .pyi, or after an odd "
-                 "number of triple quotes in that file's added lines; this template counts `def` lines and cannot "
-                 "tell whether CPython defines a test there; claim says {n} (#178)")
+                 "number of triple quotes in the added lines of their `+++` section; this template counts `def` lines "
+                 "and cannot tell whether CPython defines a test there; claim says {n} (#178)")
 WHY_178_SYMBOL = ("every added line that would define {kind} {name} sits in a file not read as .py or .pyi, or after "
-                  "an odd number of triple quotes in that file's added lines; this template cannot tell whether "
-                  "CPython defines it there (#178)")
+                  "an odd number of triple quotes in the added lines of its `+++` section; this template cannot tell "
+                  "whether CPython defines it there (#178)")
 
 
 def _t178(k: int, placed: int, n: int) -> list:
@@ -288,9 +295,73 @@ RESIDUAL_STRING = _case(
     "@@ -2,2 +2,3 @@\n x\n+def test_s():\n \"\"\"\n",
     {"src/a.py": (_text(RESIDUAL_OPEN_BEFORE), _text(RESIDUAL_OPEN_AFTER))}, [("tests", 1)], [_tests(1, 1)])
 
+
+
+def _sec(path: str, lines: list) -> str:
+    """One `+++` section editing `path`: a context line, then `lines` added."""
+    return (f"diff --git a/{path} b/{path}\nindex 1111111..2222222 100644\n--- a/{path}\n+++ b/{path}\n"
+            f"@@ -1,1 +1,{len(lines) + 1} @@\n x = 0\n" + "".join("+" + x + "\n" for x in lines))
+
+
+# The sections a key of `parse_unified_diff_sides` would merge (review 1 of fix batch 1): `tests/test_a.py<ch>` and
+# `tests/test_a.py`, where Python's strip() removes U+0085, U+001C and U+001F and the port's trim() keeps them, and the
+# port's trim() removes U+FEFF and Python's strip() keeps it; U+1C89 and U+1C8A, which Node 24 lower-cases together and
+# CPython 3.12 does not; an ASCII case pair, which both lower-case together; and one path named twice. Read per key, the
+# first section's open `"""` put the second section's `def test_x` after an odd count in the port that merged them
+# only (13 of 37 such inputs parted the two ports' records and gates); read per section, both ports read each alike.
+SECTIONS_OPEN = [_sec("tests/test_a.py{ch}", ['S = """']), _sec("tests/test_a.py", ["def test_x(): pass"])]
+SECTIONS_CLOSE = [_sec("tests/test_a.py{ch}", ['S = """', "x"]), _sec("tests/test_a.py", ['"""', "def test_x(): pass"])]
+SECTION_CHARS = {"U+0085": "\x85", "U+001F": "\x1f", "U+001C": "\x1c", "U+FEFF": "\ufeff"}
+CASES_SECTIONS = [
+    _case(f"sections-open-{tag}", "Added 2 tests. Added function test_x.", "".join(SECTIONS_OPEN).replace("{ch}", ch),
+          None, [("tests", 2), ("symbol", "test_x")], [_tests(1, 2), _symbol("function", "test_x", True)])
+    for tag, ch in SECTION_CHARS.items()
+] + [
+    # the string the first section opens is closed in the second, and the `def` after it is read after an odd count
+    # in its own section: #178 abstains in both ports (main read VERIFIED; the merging port read it so too)
+    _case(f"sections-close-{tag}", "Added 1 test. Added function test_x.", "".join(SECTIONS_CLOSE).replace("{ch}", ch),
+          None, [("tests", 1), ("symbol", "test_x")], [_t178(1, 1, 1), _s178("function", "test_x")])
+    for tag, ch in SECTION_CHARS.items()
+] + [
+    _case(f"sections-{tag}", "Added 2 tests. Added function test_x.",
+          _sec(p1, ['S = """']) + _sec(p2, ["def test_x(): pass"]), None, [("tests", 2), ("symbol", "test_x")],
+          [_tests(1, 2), _symbol("function", "test_x", True)])
+    for tag, (p1, p2) in {"lowering-U+1C89": ("tests/\u1c89.py", "tests/\u1c8a.py"),
+                          "case-pair": ("tests/A.py", "tests/a.py"),
+                          "one-path-twice": ("tests/test_a.py", "tests/test_a.py")}.items()
+]
+
+# Named residuals of #178's parity and path test (review 1 of fix batch 1), each pinned as it reads, both ports alike:
+# - the parity counts three double and three single quotes together, so a `"""` line inside a `'''` string flips it:
+#   the `def test_s` inside the string is read as source, a wrong VERIFIED, as on main;
+# - the tail rule removes any trailing code point from U+007F up, so `tests/test_a.py<U+00E9>` is read as Python source
+#   and main's count stands there, as on main;
+# - #169's and #168's header misreads carry into the path test: a path git quotes under its default core.quotePath
+#   (any name outside ASCII) and a GNU or svn header carrying a timestamp are read as not .py, so a true count over a
+#   `def test_` there beside a plain .py file reads UNCHECKABLE (#178), where main read VERIFIED.
+MIXED = ["S = '''", '"""', "def test_s():", "'''"]
+RESIDUAL_MIXED_QUOTES = _case("residual-mixed-quotes", "Added 1 test. Added function test_s.",
+                              _new_file("tests/test_s.py", MIXED), {"tests/test_s.py": (None, _text(MIXED))},
+                              [("tests", 1), ("symbol", "test_s")],
+                              [_tests(1, 1), _symbol("function", "test_s", True)])
+RESIDUAL_TAIL_ABOVE_7F = _case("residual-tail-above-7f", "Added 1 test.",
+                               _new_file("tests/test_a.py\u00e9", ["def test_e():"]), None, [("tests", 1)],
+                               [_tests(1, 1)])
+RESIDUAL_QUOTED_PATH = _case(
+    "residual-quoted-path-169", "Added 2 tests.",
+    'diff --git "a/tests/t\\303\\251st.py" "b/tests/t\\303\\251st.py"\nnew file mode 100644\nindex 0000000..1\n'
+    '--- /dev/null\n+++ "b/tests/t\\303\\251st.py"\n@@ -0,0 +1,1 @@\n+def test_q(): pass\n'
+    + _new_file("tests/test_n.py", ["def test_n(): pass"]), None, [("tests", 2)], [_t178(1, 2, 2)])
+RESIDUAL_SVN_TIMESTAMP = _case(
+    "residual-svn-timestamp-168", "Added 2 tests.",
+    "Index: x.py\n===================================================================\n--- x.py\t(revision 1)\n"
+    "+++ x.py\t(working copy)\n@@ -0,0 +1,1 @@\n+def test_x(): pass\n"
+    + _new_file("tests/test_n.py", ["def test_n(): pass"]), None, [("tests", 2)], [_t178(1, 2, 2)])
+RESIDUALS_178 = [RESIDUAL_MIXED_QUOTES, RESIDUAL_TAIL_ABOVE_7F, RESIDUAL_QUOTED_PATH, RESIDUAL_SVN_TIMESTAMP]
+
 ALL_ALIKE = CASES_179 + CASES_GAP + [RESIDUAL_BACKSLASH, CASE_CHANGED] + CASES_178 + CASES_CONTROL + CASES_TAIL + \
-    [RESIDUAL_STRING]
-RESIDUALS = {RESIDUAL_STRING["id"], RESIDUAL_FEFF["id"]}       # what the ast grid names and leaves
+    [RESIDUAL_STRING] + CASES_SECTIONS + RESIDUALS_178
+RESIDUALS = {RESIDUAL_STRING["id"], RESIDUAL_FEFF["id"], RESIDUAL_MIXED_QUOTES["id"]}   # what the ast grid names
 
 
 def _problems(mod, cases: list) -> list:
@@ -428,6 +499,59 @@ def test_178_named_residual(tmp_path):
     assert _port([RESIDUAL_STRING], tmp_path)[RESIDUAL_STRING["id"]] == RESIDUAL_STRING["want"]
 
 
+def test_178_the_sections_a_key_would_merge(tmp_path):
+    """The parity and the path test are a `+++` section's: both ports print the same record where their keys of
+    `parse_unified_diff_sides` merge two sections apart."""
+    assert _problems(N, CASES_SECTIONS) == []
+    got = _port(CASES_SECTIONS, tmp_path)
+    assert _port_problems(CASES_SECTIONS, got) == []
+
+
+def test_178_named_residuals_of_the_parity_and_the_path(tmp_path):
+    """Mixed triple quotes, a tail from U+007F up, a quoted path (#169) and an svn timestamp (#168): pinned as read."""
+    assert _problems(N, RESIDUALS_178) == []
+    got = _port(RESIDUALS_178, tmp_path)
+    assert _port_problems(RESIDUALS_178, got) == []
+
+
+SECTIONS_RUNNER = r"""
+"use strict";
+const fs = require("fs");
+const vm = require("vm");
+const [port, inp, out] = process.argv.slice(2);
+const P = vm.runInContext(fs.readFileSync(port, "utf8") + "\n;({_diffSections, parseUnifiedDiffSides})",
+                          vm.createContext({}), { filename: port });
+const res = JSON.parse(fs.readFileSync(inp, "utf8")).map(d => {
+  const a = P._diffSections(d).flatMap(([, x]) => x).sort();
+  const b = [...P.parseUnifiedDiffSides(d).values()].flatMap(([x]) => x).sort();
+  return JSON.stringify(a) === JSON.stringify(b);
+});
+fs.writeFileSync(out, JSON.stringify(res));
+"""
+
+
+def test_178_the_walk_places_every_added_line_as_the_parse(tmp_path):
+    """On every committed input `_diff_sections` holds the added lines `parse_unified_diff_sides` holds, as a multiset,
+    in each port: the two counts #178 compares are of one parse's lines, grouped per section."""
+    import collections
+    rows = R.inputs()
+    assert len(rows) == 6672
+    bad = [R.uid(i, r) for i, r in enumerate(rows)
+           if collections.Counter(x for _p, a in N._diff_sections(r[3]) for x in a)
+           != collections.Counter(x for a, _r in N.parse_unified_diff_sides(r[3]).values() for x in a)]
+    assert bad == []
+    if NODE is None:
+        _missing("node", "the port half of this check")
+    runner, src, out = tmp_path / "sections.js", tmp_path / "sections_in.json", tmp_path / "sections_out.json"
+    runner.write_text(SECTIONS_RUNNER, encoding="utf-8")
+    src.write_text(json.dumps([r[3] for r in rows], ensure_ascii=True), encoding="utf-8")
+    r = subprocess.run([NODE, str(runner), str(R.PORT), str(src), str(out)], capture_output=True, text=True,
+                       timeout=600)
+    assert r.returncode == 0, r.stderr[-2000:]
+    same = json.loads(out.read_text(encoding="utf-8"))
+    assert len(same) == len(rows) and [R.uid(i, rows[i]) for i, x in enumerate(same) if not x] == []
+
+
 def test_the_two_ports_print_the_same_records(tmp_path):
     got = _port(ALL_ALIKE, tmp_path)
     assert [c["id"] for c in ALL_ALIKE if got[c["id"]] != _gate(N, c["summary"], c["diff"])] == []
@@ -478,6 +602,7 @@ def test_the_ast_grid(tmp_path):
         refuted += _refuted(c, _gate(N, c["summary"], c["diff"])) + _refuted(c, got[c["id"]])
     assert {r[0] for r in refuted} <= RESIDUALS, refuted
     assert RESIDUAL_STRING["id"] in {r[0] for r in refuted}          # the residual is a residual: ast refutes it
+    assert RESIDUAL_MIXED_QUOTES["id"] in {r[0] for r in refuted}
 
 
 # ---- 4. plants: each change undone, in each port, each told by a check above ------------------------------------------
@@ -500,6 +625,10 @@ PY_PLANTS = {
                                       "if False:", "def _gate(", CASES_178),
     "#178: the path's tail read as is": ("while e and (ord(p[e - 1]) <= 32 or ord(p[e - 1]) >= 127):", "while False:",
                                          "def _python_source_lines(", CASES_TAIL),
+    "#178: the parity per key, not per section": (
+        'sections=_diff_sections(diff_text or "")',
+        'sections=[(p, a) for p, (a, _r) in parse_unified_diff_sides(diff_text or "").items()]',
+        "def gate_diff_text(", CASES_SECTIONS),
 }
 
 
@@ -520,6 +649,9 @@ JS_PLANTS = {
     "#178: dropped from the symbol": ("if (pat.test(sidesBlob) && !pat.test(insideBlob)) {", "if (false) {", CASES_178),
     "#178: the path's tail read as is": (
         "    while (e > 0 && (p.charCodeAt(e - 1) <= 32 || p.charCodeAt(e - 1) >= 127)) e--;\n", "", CASES_TAIL),
+    "#178: the parity per key, not per section": ("const sections = _diffSections(diffText);",
+                                                  "const sections = [...sides].map(([p, [a]]) => [p, a]);",
+                                                  CASES_SECTIONS),
 }
 
 
