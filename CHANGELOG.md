@@ -41,8 +41,8 @@ until an amendment naming it is committed". This is that amendment, the sixth af
 - **Not examined.** The receipted `claude-opus-5-5` call wrote 39,201 input tokens to the prompt cache for a
   150-character prompt with no tools and no setting sources; what fills them is not read here, and the probe's `NO`
   stays the only contamination check.
-- No seat has run: at `origin/main` `ca347730` the only tracked leg-2 seat files are the dry run's 20, under
-  `papers/sworn/measurement/dryrun/seat_outputs/`, and no model read a real item in this change.
+- No seat has run: at `origin/main` `ca347730` the only tracked files under a leg-2 `seat_outputs/` are the dry
+  run's 20, under `papers/sworn/measurement/dryrun/seat_outputs/`, and no model read a real item in this change.
 
 ## [Unreleased] — the GitLab job names a merge request description GitLab cut at 2,700 characters, gates it to its last whole sentence, prints CUT where the gate prints PASS over it, and does not fail on a claim the text the cut dropped decides (#209)
 
