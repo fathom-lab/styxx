@@ -21,16 +21,21 @@ walk, so the abstention fires only where its reason holds, never where `parse_un
 key's of `parse_unified_diff_sides`: the two ports build those keys apart (Python's strip() and the port's trim()
 remove different code points from a path's tail, and the runtimes lower case differently, U+1C89 on Node 24 and not on
 CPython 3.12), so a parity taken per key put a `def test_` after an odd count in one port only, and the two printed
-opposite gates (review 1 of fix batch 1); sections both ports read alike. The path's tail is read with every trailing
-code point at or below U+0020 or from U+007F up removed, so strip() and trim() cannot part the path test either. The
-abstention adds no VERIFIED and no CONTRADICTED.
+opposite gates (review 1 of fix batch 1). The path's tail is read with every trailing code point at or below U+0020 or
+from U+007F up removed, and a `+++` header is read as /dev/null on that header with every such code point removed from
+either end (`_edge_cut` / `_edgeCut`, review 2 of fix batch 1): every code point strip() or trim() removes is in that
+set, so the two ports reach the same path tail where strip() and trim() part (held here over every code point). Read
+after strip() and trim(), `+++ /dev/null<U+0085>` was a deletion in Python only and `+++ /dev/null<U+FEFF>` in the
+port only, and on a false count the gates parted without --strict. The abstention adds no VERIFIED and no
+CONTRADICTED.
 
 What is held here: the reporters' cases at the raw door (both ports, both strict modes, the two ports' records equal,
 reasons included) and at the git door (a real two-commit repository; skipped without git, failed under CI); the gap
 after `async`; the changed async test the overlay withholds; the controls #178 must not touch; the one-parse rule; the
-path's tail; the sections a key would merge; the walk placing every added line as the parse does; the named residuals,
-pinned as they read; an ast grid over every case with a Python file model; and a plant of each change in each port,
-each told by a check here.
+path's tail; the `+++ /dev/null` header and the set it is read on; the sections a key would merge; the walk placing
+every added line as the parse does; the named residuals, pinned as they read (two that read apart between the ports
+pinned per port); an ast grid over every case with a Python file model; and a plant of each change in each port, each
+told by a check here.
 """
 from __future__ import annotations
 
@@ -360,10 +365,72 @@ RESIDUAL_SVN_TIMESTAMP = _case(
     "Index: x.py\n===================================================================\n--- x.py\t(revision 1)\n"
     "+++ x.py\t(working copy)\n@@ -0,0 +1,1 @@\n+def test_x(): pass\n"
     + _new_file("tests/test_n.py", ["def test_n(): pass"]), None, [("tests", 2)], [_t178(1, 2, 2)])
-RESIDUALS_178 = [RESIDUAL_MIXED_QUOTES, RESIDUAL_TAIL_ABOVE_7F, RESIDUAL_QUOTED_PATH, RESIDUAL_SVN_TIMESTAMP]
+# Named residual of #178's parity (review 2 of fix batch 1), pinned as it reads, at both doors, both ports alike: the
+# parity is taken over a section's added lines, so an added line holding one end of a string whose other end is a
+# context line turns it for the rest of the section. An edited docstring closing line (`    Longer text, edited."""`,
+# its opening line a context line) and then an added `def test_b():` puts the `def` after an odd count, so a true count
+# and a true symbol read UNCHECKABLE (#178; FAIL under --strict), where main read VERIFIED. The converse, a string
+# opened out of view, is RESIDUAL_STRING above.
+EDIT_BASE = ["def test_a():", '    """Check a.', "", '    Longer text."""', "    assert True"]
+EDIT_HEAD = ["def test_a():", '    """Check a.', "", '    Longer text, edited."""', "    assert True", "", "",
+             "def test_b():", "    assert True"]
+RESIDUAL_DOCSTRING_EDIT = _case(
+    "residual-docstring-edit-turns-the-parity", "Added 1 test. Added function test_b.",
+    "diff --git a/tests/test_m.py b/tests/test_m.py\nindex 92a06e4..c130441 100644\n--- a/tests/test_m.py\n"
+    "+++ b/tests/test_m.py\n@@ -1,5 +1,9 @@\n def test_a():\n     \"\"\"Check a.\n \n-    Longer text.\"\"\"\n"
+    "+    Longer text, edited.\"\"\"\n+    assert True\n+\n+\n+def test_b():\n     assert True\n",
+    {"tests/test_m.py": (_text(EDIT_BASE), _text(EDIT_HEAD))}, [("tests", 1), ("symbol", "test_b")],
+    [_t178(1, 1, 1), _s178("function", "test_b")])
+RESIDUALS_178 = [RESIDUAL_MIXED_QUOTES, RESIDUAL_TAIL_ABOVE_7F, RESIDUAL_QUOTED_PATH, RESIDUAL_SVN_TIMESTAMP,
+                 RESIDUAL_DOCSTRING_EDIT]
+
+# Named residual of #178's symbol abstention (review 2 of fix batch 1), pinned per port: it reads #205's two seams over
+# the Python-source lines. A `def foo():` led by U+FEFF (line 1 of a file saved with a byte order mark; CPython defines
+# foo) or a `def foo<U+00E9>():` (CPython defines another name) in a .py section, beside a plain `def foo():` in a .md
+# file: main's search finds the plain line in both ports, and the abstention's search over the Python-source lines
+# finds the seam line in the port only (its `\s` reads U+FEFF and its `\b` is ASCII; the Python's `\s` does not and
+# its `\b` is Unicode). So the Python abstains (#178) and the port keeps main's VERIFIED: right on the BOM-led line,
+# where the Python loses a right verdict, and wrong on the run-on name, where main's wrong VERIFIED stands. The gates
+# part under --strict only. main read VERIFIED in both ports on both.
+SEAM_MD = _new_file("docs/a.md", ["def foo():"])
+RESIDUALS_SEAM = [
+    {"id": "residual-seam-bom-led-def", "summary": "Added function foo.",
+     "diff": _new_file("src/b.py", ["\ufeffdef foo():", "    pass"]) + SEAM_MD,
+     "want_py": _want([_s178("function", "foo")]), "want_port": _want([_symbol("function", "foo", True)])},
+    {"id": "residual-seam-run-on-name", "summary": "Added function foo.",
+     "diff": _new_file("src/b.py", ["def foo\u00e9():", "    pass"]) + SEAM_MD,
+     "want_py": _want([_s178("function", "foo")]), "want_port": _want([_symbol("function", "foo", True)])},
+]
+
+# The `+++ /dev/null` header (review 2 of fix batch 1). git writes it bare, but the raw door reads any text. On
+# `+++ /dev/null<ch>` or `+++ <ch>/dev/null`, where Python's strip() removes ch and the port's trim() keeps it (U+001C to
+# U+001F, U+0085) or the reverse (U+FEFF), #178 read after strip() and trim() took the `---` path (`tests/test_a.py`,
+# Python source) in one port and `dev/null<ch>` (not .py) in the other, and fired in that one only: on a false count
+# one gate FAILed (CONTRADICTED) and the other PASSed (UNCHECKABLE) without --strict, where origin/main read each alike.
+# Read on `_edge_cut` / `_edgeCut`, both ports take the `---` path and read each as main does. The deleted file's
+# section adds a `def test_x` only because the raw door reads any text; src/o.py keeps #110 out of it.
+def _deleted_adding(path: str, header: str, added: list) -> str:
+    return (f"diff --git a/{path} b/{path}\ndeleted file mode 100644\nindex 1111111..0000000\n--- a/{path}\n"
+            f"+++ {header}\n@@ -1,1 +0,{len(added)} @@\n-x = 0\n" + "".join("+" + x + "\n" for x in added))
+
+
+D_OTHER = _edit("src/o.py", ["x = 1"], ["x = 2"])
+DEVNULL_CHARS = {"U+001C": "\x1c", "U+001D": "\x1d", "U+001E": "\x1e", "U+001F": "\x1f", "U+0085": "\x85",
+                 "U+FEFF": "\ufeff"}
+CASES_DEVNULL = [
+    _case(f"devnull-{end}-{tag}", "Added 1 test.",
+          _deleted_adding("tests/test_a.py", "/dev/null" + ch if end == "tail" else ch + "/dev/null",
+                          ["def test_x(): pass"]) + D_OTHER, None, [("tests", 1)], [_tests(1, 1)])
+    for tag, ch in DEVNULL_CHARS.items() for end in ("tail", "lead")
+] + [
+    _case(f"devnull-false-count-{tag}", "Added 2 tests.",
+          _deleted_adding("tests/test_a.py", "/dev/null" + ch, ["def test_x(): pass"]) + D_OTHER, None,
+          [("tests", 2)], [_tests(1, 2)])
+    for tag, ch in (("U+0085", "\x85"), ("U+FEFF", "\ufeff"))
+]
 
 ALL_ALIKE = CASES_179 + CASES_GAP + [RESIDUAL_BACKSLASH, CASE_CHANGED] + CASES_178 + CASES_CONTROL + CASES_TAIL + \
-    [RESIDUAL_STRING] + CASES_SECTIONS + RESIDUALS_178
+    [RESIDUAL_STRING] + CASES_SECTIONS + RESIDUALS_178 + CASES_DEVNULL
 RESIDUALS = {RESIDUAL_STRING["id"], RESIDUAL_FEFF["id"], RESIDUAL_MIXED_QUOTES["id"]}   # what the ast grid names
 
 
@@ -511,10 +578,102 @@ def test_178_the_sections_a_key_would_merge(tmp_path):
 
 
 def test_178_named_residuals_of_the_parity_and_the_path(tmp_path):
-    """Mixed triple quotes, a tail from U+007F up, a quoted path (#169) and an svn timestamp (#168): pinned as read."""
+    """Mixed triple quotes, a tail from U+007F up, a quoted path (#169), an svn timestamp (#168) and an edited
+    docstring line that turns the parity: pinned as read."""
     assert _problems(N, RESIDUALS_178) == []
     got = _port(RESIDUALS_178, tmp_path)
     assert _port_problems(RESIDUALS_178, got) == []
+
+
+def _repo_edit(tmp_path: Path, base: dict, head: dict) -> Path:
+    """A two-commit repository: a base holding `base`, and a head writing `head` over it."""
+    if GIT is None:
+        _missing("git", "the git door half of this check")
+    d = tmp_path / "repo_edit"
+    d.mkdir()
+    _git(d, "init", "-q")
+    _git(d, "config", "core.autocrlf", "false")
+    _git(d, "config", "core.longpaths", "true")
+    for files, msg in ((base, "base"), (head, "head")):
+        for rel, text in files.items():
+            (d / rel).parent.mkdir(parents=True, exist_ok=True)
+            (d / rel).write_bytes(text.encode("utf-8"))
+        _git(d, "add", "-A")
+        _git(d, "commit", "-q", "-m", msg)
+    return d
+
+
+def test_178_named_residual_the_docstring_edit_at_the_git_door(tmp_path):
+    """The edited docstring line that turns the parity, through git: the same record as at the raw door."""
+    c = RESIDUAL_DOCSTRING_EDIT
+    d = _repo_edit(tmp_path, {p: b for p, (b, _h) in c["py"].items()}, {p: h for p, (_b, h) in c["py"].items()})
+    got = {"off": _rec(N.gate_diff(c["summary"], d, "HEAD~1", "HEAD")),
+           "on": _rec(N.gate_diff(c["summary"], d, "HEAD~1", "HEAD", strict=True))}
+    assert got == c["want"]
+
+
+def test_178_named_residual_the_seams_under_the_symbol_abstention(tmp_path):
+    """#205's two seams under #178's symbol abstention, pinned per port; what CPython reads of each line."""
+    bom = [n.name for n in ast.walk(ast.parse("\ufeffdef foo():\n    pass\n".encode("utf-8")))
+           if isinstance(n, ast.FunctionDef)]
+    run_on = [n.name for n in ast.walk(ast.parse("def foo\u00e9():\n    pass\n")) if isinstance(n, ast.FunctionDef)]
+    assert bom == ["foo"] and run_on == ["foo\u00e9"]
+    for c in RESIDUALS_SEAM:
+        assert _gate(N, c["summary"], c["diff"]) == c["want_py"], c["id"]
+    got = _port(RESIDUALS_SEAM, tmp_path)
+    for c in RESIDUALS_SEAM:
+        assert got[c["id"]] == c["want_port"], c["id"]
+
+
+def test_178_the_dev_null_header(tmp_path):
+    """`+++ /dev/null` with a code point strip() and trim() remove apart, at either end: both ports read the `---`
+    path, and print main's records."""
+    assert _problems(N, CASES_DEVNULL) == []
+    got = _port(CASES_DEVNULL, tmp_path)
+    assert _port_problems(CASES_DEVNULL, got) == []
+    for c in CASES_DEVNULL:
+        assert got[c["id"]] == _gate(N, c["summary"], c["diff"]), c["id"]
+
+
+EDGE_RUNNER = r"""
+"use strict";
+const fs = require("fs");
+const vm = require("vm");
+const [port, out] = process.argv.slice(2);
+const P = vm.runInContext(fs.readFileSync(port, "utf8") + "\n;({_edgeCut})", vm.createContext({}), { filename: port });
+const trimmed = [];
+let cut = true;
+for (let u = 0; u < 0x10000; u++) {
+  const ch = String.fromCharCode(u);
+  if (ch.trim() === "") trimmed.push(u);
+}
+for (const u of trimmed) {
+  const ch = String.fromCharCode(u);
+  if (P._edgeCut(ch + "/dev/null" + ch) !== "/dev/null") cut = false;
+}
+const astral = P._edgeCut("\u{1F600}/dev/null\u{1F600}") === "/dev/null" && P._edgeCut("a\u{1F600}b") === "a\u{1F600}b";
+fs.writeFileSync(out, JSON.stringify({ trimmed, cut, astral }));
+"""
+
+
+def test_178_the_edge_set_holds_every_code_point_strip_or_trim_removes(tmp_path):
+    """_edge_cut's set (at or below U+0020, or from U+007F up) holds every code point Python's strip() removes and
+    every unit the port's trim() removes; the two differ by U+001C to U+001F and U+0085 (strip() only) and U+FEFF
+    (trim() only), and each port's cut removes every one of them from either end of a header."""
+    stripped = [c for c in range(0x110000) if chr(c).strip() == ""]
+    assert all(c <= 32 or c >= 127 for c in stripped)
+    assert all(N._edge_cut(chr(c) + "/dev/null" + chr(c)) == "/dev/null" for c in stripped)
+    assert N._edge_cut("\U0001F600/dev/null\U0001F600") == "/dev/null" and N._edge_cut("a\U0001F600b") == "a\U0001F600b"
+    if NODE is None:
+        _missing("node", "the port half of this check")
+    runner, out = tmp_path / "edge.js", tmp_path / "edge_out.json"
+    runner.write_text(EDGE_RUNNER, encoding="utf-8")
+    r = subprocess.run([NODE, str(runner), str(R.PORT), str(out)], capture_output=True, text=True, timeout=600)
+    assert r.returncode == 0, r.stderr[-2000:]
+    got = json.loads(out.read_text(encoding="utf-8"))
+    assert all(u <= 32 or u >= 127 for u in got["trimmed"]) and got["cut"] and got["astral"]
+    assert sorted(set(stripped) - set(got["trimmed"])) == [0x1C, 0x1D, 0x1E, 0x1F, 0x85]
+    assert sorted(set(got["trimmed"]) - set(stripped)) == [0xFEFF]
 
 
 SECTIONS_RUNNER = r"""
@@ -632,6 +791,8 @@ PY_PLANTS = {
         'sections=_diff_sections(diff_text or "")',
         'sections=[(p, a) for p, (a, _r) in parse_unified_diff_sides(diff_text or "").items()]',
         "def gate_diff_text(", CASES_SECTIONS),
+    "#178: /dev/null read after strip()": ('if _edge_cut(line[4:]) == "/dev/null":', 'if new == "/dev/null":',
+                                           "def _diff_sections(", CASES_DEVNULL),
 }
 
 
@@ -655,6 +816,8 @@ JS_PLANTS = {
     "#178: the parity per key, not per section": ("const sections = _diffSections(diffText);",
                                                   "const sections = [...sides].map(([p, [a]]) => [p, a]);",
                                                   CASES_SECTIONS),
+    "#178: /dev/null read after trim()": ('if (_edgeCut(line.slice(4)) === "/dev/null")', 'if (nw === "/dev/null")',
+                                          CASES_DEVNULL),
 }
 
 
