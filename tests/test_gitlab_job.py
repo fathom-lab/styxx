@@ -752,6 +752,107 @@ def _soft_fail_step():
     raise AssertionError("the job has no step that reads STYXX_SOFT_FAIL")
 
 
+# Descriptions that put a claim, then white space, then a sentence GitLab's cut can run through (#209 review): ASCII,
+# a non-ASCII word in PATH-2a's sentence, a zone of PATH-2a's naming the claimed prefix; and two styxx blocks, the
+# second closed where the cut can fall.
+SWEEP_CLAIMS = ["Only touches src/.", "Added 3 tests."]
+SWEEP_WHITE = [" ", "\x85", "\u00a0", "\u2028"]
+SWEEP_DROPPED = ["Then a tail sentence that GitLab cut.", "The caf\u00e9 part is in src/ too.",
+                 "Only the caf\u00e9 part is in src/."]
+SWEEP = [("Intro. " + c, w + d, " Done.") for c in SWEEP_CLAIMS for w in SWEEP_WHITE for d in SWEEP_DROPPED] + [
+    ("Intro.\n```styxx\nonly_touches: src/\n```\nText.", "\n```styxx\nfiles_changed: 9\n```", "\nEnd.")]
+
+
+def _sweep(work, base, head, run_dir, monkeypatch, cut_src, read_src, records):
+    """The job's cut step and its STYXX_SOFT_FAIL step, run on every prefix GitLab could hand the job of each SWEEP
+    description that cuts after the claim, with the gate's records made by gate_diff_text over the merge request's diff
+    and each file read as the CLI reads it (Path.read_text). Returns (prefixes, prefixes where the job stands on a
+    CONTRADICTED claim that neither the whole description nor the prefix as handed gives, prefixes where it fails
+    with STYXX_SOFT_FAIL "false" and neither has a CONTRADICTED claim)."""
+    import contextlib
+    import io
+    from styxx.diffgate import gate_diff_text
+    diff = subprocess.run(["git", "-c", "core.autocrlf=false", "diff", base, head], cwd=work, capture_output=True,
+                          text=True, encoding="utf-8", check=True).stdout
+    cut_code = compile(cut_src, "STYXX_DESCRIPTION_CUT", "exec")
+    read_code = compile(read_src, "STYXX_SOFT_FAIL_READ", "exec")
+    run_dir.mkdir(exist_ok=True)
+    monkeypatch.chdir(run_dir)
+    monkeypatch.setenv("CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED", "true")
+    monkeypatch.setenv("STYXX_SOFT_FAIL", "false")
+
+    def write(name, text):
+        with open(name, "w", encoding="utf-8", newline="") as f:
+            f.write(text)
+
+    def record(name):
+        text = Path(name).read_text(encoding="utf-8")
+        if text not in records:
+            records[text] = gate_diff_text(text, diff).to_dict()
+        return records[text]
+
+    def contradicted(rec):
+        return {(c["kind"], c["text"]) for c in rec["claims"] if c["verdict"] == "CONTRADICTED"}
+
+    n = stood = failed = 0
+    for lead, dropped, end in SWEEP:
+        write("whole.md", lead + dropped + end)
+        whole = contradicted(record("whole.md"))
+        for cut in range(len(lead), len(lead) + len(dropped) + 1):
+            handed = (lead + dropped + end)[:cut]
+            write("handed_as_is.md", handed)
+            main = contradicted(record("handed_as_is.md"))
+            write("mr_description.md", handed)
+            with contextlib.redirect_stdout(io.StringIO()):
+                exec(cut_code, {"__name__": "__main__"})
+            kept = record("mr_description.md")
+            gate, again = (1 if kept["verdict"] == "FAIL" else 0), "none"
+            with open("diffgate.json", "w", encoding="utf-8") as f:
+                json.dump(kept, f)
+            if os.path.exists("diffgate.handed.json"):
+                os.remove("diffgate.handed.json")
+            if gate == 1 and os.path.exists("mr_description.handed.md"):
+                handed_rec = record("mr_description.handed.md")
+                again = "1" if handed_rec["verdict"] == "FAIL" else "0"
+                with open("diffgate.handed.json", "w", encoding="utf-8") as f:
+                    json.dump(handed_rec, f)
+            open("diffgate.log", "wb").close()
+            monkeypatch.setattr(sys, "argv", ["-", str(gate), again])
+            rc = 0
+            try:
+                with contextlib.redirect_stdout(io.TextIOWrapper(io.BytesIO(), encoding="utf-8")):
+                    exec(read_code, {"__name__": "__main__"})
+            except SystemExit as e:
+                rc = e.code or 0
+            with open("diffgate.json", encoding="utf-8") as f:
+                rec = json.load(f)
+            held = {(h["kind"], h["text"]) for h in rec.get("description_cut", {}).get("held_back", [])}
+            n += 1
+            stood += bool(contradicted(rec) - held - whole - main)
+            failed += rc == 1 and not whole and not main
+    return n, stood, failed
+
+
+def test_over_every_cut_the_job_stands_on_no_claim_the_whole_description_and_the_handed_text_both_spare(
+        mr_repo, tmp_path, monkeypatch):
+    """#209 review, the sweep: over every prefix of the SWEEP descriptions that cuts after the claim, the job never
+    stands on a CONTRADICTED claim, nor fails with STYXX_SOFT_FAIL "false", where neither the whole description nor
+    the prefix as GitLab handed it has one. The same sweep finds both with the cut at the start of the white space
+    and nothing held back (as the change first stood), and with the white space kept and nothing held back: the
+    sweep can see what it guards against, and each half of the repair is needed."""
+    work, base, head = mr_repo
+    cut_src, read_src = _cut_step(), _soft_fail_step()
+    at_start = cut_src.replace("[m.end() for m in", "[m.start() for m in")
+    held_none = read_src.replace("if all(o.get(", "if False and all(o.get(")
+    assert at_start != cut_src and held_none != read_src
+    records = {}
+    n, stood, failed = _sweep(work, base, head, tmp_path / "sweep", monkeypatch, cut_src, read_src, records)
+    assert n == sum(len(dropped) + 1 for _, dropped, _ in SWEEP) and (stood, failed) == (0, 0), (n, stood, failed)
+    for cut_form in (at_start, cut_src):
+        _, stood, failed = _sweep(work, base, head, tmp_path / "sweep", monkeypatch, cut_form, held_none, records)
+        assert stood > 0 and failed > 0, (cut_form is cut_src, stood, failed)
+
+
 def test_the_cut_uses_the_gates_own_sentence_split():
     """The job cuts where styxx.diffgate splits sentences, after the white space that ends the last
     whole sentence, so every sentence the gate's templates read is a sentence of the whole
@@ -842,7 +943,11 @@ def test_the_cut_step_leaves_a_description_alone_unless_gitlab_says_it_cut_it(tm
 
 def test_the_docs_name_the_cut_gitlab_makes_at_2700_characters():
     """GitLab hands the job at most the leading 2,700 characters (#209). The README, the job's header and
-    the CHANGELOG entry each say so, name the flag, and say what the job does over a cut."""
+    the CHANGELOG entry each say so, name the flag, and say what the job does over a cut: a FAIL over a
+    cut is the gate's over that prefix, a claim the text the cut dropped decides is held back, and text
+    past GitLab's cut never reaches the job. None gives whole sentences as the reason a FAIL over a cut
+    stands (the review of #209: PATH-2a and the one-block rule read the whole text the gate is handed),
+    and the job-token allowlist is the docs' default, not a rule."""
     readme = (ROOT / "integrations" / "gitlab" / "README.md").read_text(encoding="utf-8")
     header = JOB.read_text(encoding="utf-8").split("\ndiffgate:", 1)[0]
     changelog = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
@@ -855,3 +960,11 @@ def test_the_docs_name_the_cut_gitlab_makes_at_2700_characters():
         assert "prints CUT where the gate prints PASS" in flat
         assert "description_cut" in flat
         assert "never read" in flat
+        assert "a FAIL over a cut is the gate's FAIL over that prefix" in flat.replace("A FAIL", "a FAIL")
+        assert "PATH-2a" in flat and "held_back" in flat and "does not fail on" in flat
+        assert "Text past GitLab's cut never reaches the job" in flat
+        assert "FAIL over a cut stands" not in flat and "judged is a whole sentence" not in flat
+        assert "it judged is whole" not in flat
+    for text in (readme, entry):
+        flat = " ".join(text.replace("`", "").split())
+        assert "by default a job token reads another project's merge requests only when" in flat
