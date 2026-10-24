@@ -1061,7 +1061,8 @@ def test_the_cut_step_leaves_a_description_alone_unless_gitlab_says_it_cut_it(tm
     if flag is not None:
         monkeypatch.setenv("CI_MERGE_REQUEST_DESCRIPTION_IS_TRUNCATED", flag)
     text = "Added 3 tests. Only touches src/"
-    (tmp_path / "mr_description.md").write_text(text, encoding="utf-8", newline="")
+    with open(tmp_path / "mr_description.md", "w", encoding="utf-8", newline="") as f:   # write_text(newline=) is 3.10+
+        f.write(text)
     (tmp_path / "mr_description.cut.json").write_text("{}", encoding="utf-8")
     (tmp_path / "mr_description.handed.md").write_text("Stale.", encoding="utf-8")
     exec(code, {"__name__": "__main__"})
