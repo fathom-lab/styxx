@@ -159,8 +159,10 @@ def _finite_bar(value: Any) -> bool:
 
 def _table(spec: Any, smoke: bool) -> Tuple[List[str], List[Any]]:
     """The checks ``score_frozen`` makes before it reads a metric, without a result: the gate
-    names and the ``when`` rows, or a refusal in score_frozen's words. With *smoke*, the
-    ``smoke_verdict`` must be a string, since it is then the verdict."""
+    names and the ``when`` rows, or a refusal in score_frozen's words. prereg-ci's own key,
+    ``receipt_pointer``, must be a string when present, so one table reads one way for a smoke
+    receipt and for a scored one. With *smoke*, the ``smoke_verdict`` must be a string, since it
+    is then the verdict."""
     if not isinstance(spec, dict):
         raise _GateSpecError("gates block is not a JSON object")
     for key in ("gates", "outcomes", "smoke_verdict"):
@@ -194,6 +196,8 @@ def _table(spec: Any, smoke: bool) -> Tuple[List[str], List[Any]]:
         unknown = sorted(k for k in row["when"] if k not in gates)
         if unknown:
             raise _GateSpecError(f"an outcome row names gates the block does not declare: {unknown}")
+    if "receipt_pointer" in spec and not isinstance(spec["receipt_pointer"], str):
+        raise _GateSpecError(f"'receipt_pointer' {spec['receipt_pointer']!r} is not a string")
     if smoke and not isinstance(spec["smoke_verdict"], str):
         raise _GateSpecError(f"'smoke_verdict' {spec['smoke_verdict']!r} is not a string, and a smoke "
                              f"receipt's verdict is the smoke_verdict")
