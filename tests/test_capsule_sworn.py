@@ -101,7 +101,9 @@ try{
   out.js_sealed_ok=api.sha256Bytes(b64(P.verifier_js.b64))===P.verifier_js.sha256;
   out.doc_ok=api.sha256Bytes(doc)===P.document.sha256;
   const man=P.manifest?api.jsonPlain(JSON.stringify(P.manifest)):null;
-  const core=api.swornVerify(doc,man,{name:P.receipt.document.name,commit:P.receipt.commit});
+  // the page projects the core onto the sealed receipt's schema before hashing it (coreAs), so a
+  // /v1 receipt sealed under the /v2 verifier re-derives as it did
+  const core=api.coreAs(api.swornVerify(doc,man,{name:P.receipt.document.name,commit:P.receipt.commit}),P.receipt.schema);
   out.verdict=core.document_verdict;
   out.counts=core.counts;
   out.core_ok=api.coreDigest(core)===P.core_sha256;

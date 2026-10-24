@@ -274,3 +274,57 @@ def test_the_browser_verifier_carries_the_same_strings_and_projection():
     assert got["core_jcs"] == sworn._jcs(core)
     assert got["core_digest"] == sworn._sha256(sworn._jcs(core).encode("utf-8"))
     assert got["v1_jcs"] == sworn._jcs(sworn._core_as(core, V1))
+
+
+# ============================================================================ the capsule profile
+
+def test_the_committed_sworn_capsule_still_verifies():
+    """The sealed capsule embeds a /v1 receipt and the /v1 browser verifier. Layer 2 re-runs the
+    installed verifier, which issues /v2, and compares on the receipt's own schema."""
+    from styxx.capsule import verify_capsule
+    rep = verify_capsule(ROOT / "papers" / "sworn" / "CANNED_harness_junit_2026_09_05.capsule.html")
+    assert rep["ok"] is True, rep["problems"]
+    assert any("INSTRUMENT SKEW" in a for a in rep["advisory"]), rep["advisory"]
+
+
+_LAYER1 = r"""
+const fs=require('fs');
+const html=fs.readFileSync(process.argv[1],'utf8');
+const m=html.match(/<script type="application\/json" id="oath-capsule">([\s\S]*?)<\/script>/);
+const P=JSON.parse(m[1].replace(/\\u003c/g,'<'));
+const js=html.match(/<script>([\s\S]*?)<\/script>\s*<script>\s*\(function/);
+const mod={exports:{}};
+new Function('module','exports','globalThis',js[1])(mod,mod.exports,globalThis);
+const api=globalThis.swornVerifyApi;
+const b64=s=>new Uint8Array(Buffer.from(s,'base64'));
+const man=P.manifest?api.jsonPlain(JSON.stringify(P.manifest)):null;
+const live=api.swornVerify(b64(P.document.b64),man,{name:P.receipt.document.name,commit:P.receipt.commit});
+const core=api.coreAs(live,P.receipt.schema);
+console.log(JSON.stringify({schema:P.receipt.schema,live_schema:live.schema,
+  core_ok:api.coreDigest(core)===P.core_sha256,unprojected_ok:api.coreDigest(live)===P.core_sha256}));
+"""
+
+
+def test_a_capsule_seals_a_v1_receipt_and_both_layers_re_derive_it(tmp_path):
+    from styxx.capsule import create_capsule_sworn, verify_capsule
+    report = b'{"passed": 12}\n'
+    m = Manifest("pytest", "turn-1", "2026-09-01T00:00:00Z", rung="L1")
+    m.add("r1", report, "test_report", complete=True, captured_at="2026-09-01T00:00:00Z")
+    man = tmp_path / "m.manifest.json"
+    m.write(man)
+    doc = tmp_path / "note.md"
+    doc.write_bytes(b'# note\n\n<sworn r="r1#/passed" k="numeric">The battery passed 12 checks.</sworn>\n')
+    core = verify(doc.read_bytes(), name=doc.name, manifest=m)
+    rec = tmp_path / "r.sworn-receipt.json"
+    rec.write_text(json.dumps(issue_receipt(sworn._core_as(core, V1), timestamp="2026-09-01T00:00:00Z"), indent=1),
+                   encoding="utf-8")
+    cap = create_capsule_sworn(doc, man, rec, tmp_path / "note.capsule.html")
+    rep = verify_capsule(cap)
+    assert rep["ok"] is True, rep["problems"]
+    html = cap.read_text(encoding="utf-8")
+    assert "api.coreAs(api.swornVerify(" in html, "the page's layer 1 projects onto the sealed schema"
+    node = _node()
+    p = subprocess.run([node, "-e", _LAYER1, str(cap)], capture_output=True, text=True, encoding="utf-8")
+    assert p.returncode == 0, p.stderr
+    got = json.loads(p.stdout)
+    assert got == {"schema": V1, "live_schema": V2, "core_ok": True, "unprojected_ok": False}
