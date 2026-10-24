@@ -461,8 +461,10 @@ reads the same with `--strict` as without it, and where `main` raises the branch
 - The 6,672 committed inputs (the pinned pairs, `main`'s 3,000 fuzz pairs regenerated in memory, #161's reproductions
   and pair inputs, a seeded 2,000-pair PATH-2a fuzz and a seeded 1,000-input text-seam set), both strict modes, in
   Python and in the port: 0 records outside the relation (*pinned*; in the port 13,344 runs, 6 of which raise in
-  `main` and raise alike). Of 12,058 claims `main`'s Python decides there the overlay withholds 2,615, and of 11,863
-  its port decides, 2,482 (12,179 and 2,654, 11,983 and 2,559 before review 3 of fix batch 1, whose `main` abstains
+  `main` and raise alike). Of 12,146 claims `main`'s Python decides there the overlay withholds 2,615, and of 11,951
+  its port decides, 2,482 (12,058 and 11,863 before the one-sided #178, whose `main` decides again the 88 test
+  counts that claim more tests than any count it takes, and the overlay withholds none of them; 12,179 and 2,654,
+  11,983 and 2,559 before review 3 of fix batch 1, whose `main` abstains
   on 121 more of the Python's decided claims itself, where #205's seams part its two readers or a test name is
   defined twice in one section with one line after `async`; 12,458 and 2,631, 12,264 and 2,538 before #179 and #178,
   whose `main` abstains on 279 of them itself and reads `async def`; 12,718 and 2,633, 12,526 and 2,590 before #205,
@@ -542,8 +544,8 @@ three) does not read it false: the but-for reading. Every figure in this table i
 
 | world | cases | main decides | false | attributable | withheld | right verdicts lost | undecided withheld |
 |---|---|---|---|---|---|---|---|
-| raw door (Python) | 1,706 | 7,537 | 1,542 | 1,228 | **1,228** | 255 of 5,817 | 38 of 178 |
-| the port, in its own terms (variants built from `main`'s port) | 1,706 | 7,316 | 1,392 | 1,122 | **1,122** | 179 of 5,659 | 125 of 265 |
+| raw door (Python) | 1,706 | 7,556 | 1,542 | 1,228 | **1,228** | 255 of 5,836 | 38 of 178 |
+| the port, in its own terms (variants built from `main`'s port) | 1,706 | 7,335 | 1,392 | 1,122 | **1,122** | 179 of 5,678 | 125 of 265 |
 | git door (Python), the reproductions with their own `--name-status` | 96 | 63 | 17 | 14 | **14** | 0 of 46 | — |
 
 The cases are #161's 101 reproductions that carry a file model, the 5 PREREG_path2 reproductions and 1,600 generated
@@ -748,8 +750,9 @@ flavour, so the figures are given under both where they differ.
 
 Every abstention on `main`'s corpora is on synthetic input: the only real-world #97 record there, `corpus_real` pr98
 ("integrations/git/README.md — created."), is left as `main` has it, since neither of its two records is a false
-decided verdict. On the committed inputs as a whole (above) the overlay withholds 2,615 of 12,058 in Python (2,654
-of 12,179 before review 3 of fix batch 1, 2,631 of 12,458 before #179 and #178); most of
+decided verdict. On the committed inputs as a whole (above) the overlay withholds 2,615 of 12,146 in Python (2,615
+of 12,058 before the one-sided #178, 2,654 of 12,179 before review 3 of fix batch 1, 2,631 of 12,458 before
+#179 and #178); most of
 those inputs are fuzz built from the characters the rules read.
 On the EXTERNAL-1 shelf (69,054 agent pull requests, each read once by its id; measured at `16daa725`, the database
 opened read-only): 7,836 hold a decided claim in reach, 12,785 such claims in Python, of which the overlay withholds
