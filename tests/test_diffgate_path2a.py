@@ -220,10 +220,13 @@ def flavour(mod) -> str:
 # after `async`: 73 test counts before a `def` holding U+FEFF, 39 symbols (a U+FEFF before the name or a name run on
 # into a code point from U+0080 up), 4 at a header's edge (1 test count, 3 symbols) and 5 test counts on a name defined
 # twice; 39 of them were withheld before (`tests` -25, `split` -4, `redefined` -1, `extract` -9 on the symbol), and
-# `split` withholds no committed claim now.
+# `split` withholds no committed claim now. The one-sided #178 (options judgment of fix batch 1): main's tests count
+# abstains (#178) only on a claim at or below the larger of its two counts, so on 88 claims, each claiming more
+# tests than any count main takes, main decides again (CONTRADICTED) and the overlay withholds none of them:
+# `decided` +88, no abstention key moves.
 ABSTENTIONS = {
     "windows": {
-        "decided": 12058, "main raises": 6,
+        "decided": 12146, "main raises": 6,
         "file_created:case": 3, "file_created:dir": 65, "file_created:divergent": 15, "file_created:dot": 20,
         "file_created:dot_earliest": 4, "file_created:dot_tier": 11, "file_created:extract": 43, "file_created:odd": 1,
         "file_created:tier": 9,
@@ -242,7 +245,7 @@ ABSTENTIONS = {
 }
 # Under the POSIX flavour main reads `c:x.py` as a bare name not in the diff, so three decided drive-like claims are
 # UNCHECKABLE on main to begin with: path2a:guard-drive-like-path claim 0, and fuzz 20260930:1033 and :1590.
-ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12055, "file_touched:odd": 4}
+ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12143, "file_touched:odd": 4}
 del ABSTENTIONS["posix"]["file_created:odd"], ABSTENTIONS["posix"]["file_deleted:odd"]
 # main's own reading depends on the interpreter's Unicode tables where the inputs probe letters added in Unicode 14 and
 # 16 (#161's k2, x1 and y3 cases). Measured on CPython 3.12 (Unicode 15.0) and 3.14 (16.0); for Unicode 13.0 and 14.0
@@ -334,8 +337,9 @@ def test_abstain_only_port(work):
         # before; the port's main abstains on the `def` counts where a counted line sits outside Python source (#178)
         # and reads `async def` (#179), which the overlay's model of main's count reads with it. (11983, 2559) before
         # review 3 of fix batch 1, where the port's main abstains where #205's seams part the two readers and on a test
-        # name defined twice, one line after `async`, as the Python's does
-        assert (rep["counts"]["decided"], rep["counts"]["abstained"]) == (11863, 2482), rep["counts"]
+        # name defined twice, one line after `async`, as the Python's does. (11863, 2482) before the one-sided #178,
+        # where the port's main decides the 88 test counts that claim more tests than any count it takes
+        assert (rep["counts"]["decided"], rep["counts"]["abstained"]) == (11951, 2482), rep["counts"]
 
 
 def test_lockstep_python(M, inputs):

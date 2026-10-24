@@ -397,9 +397,11 @@ def _moved_by_178_179(diff: str) -> bool:
 HOLD_178_179 = 1910       # raw-door inputs of R.inputs() whose diff holds no #205 character and one of these shapes
 # Of those, the inputs whose content moved in either strict mode, and the sha256 of their ids, as for #205. Measured on
 # CPython 3.12.10 and 3.14.2, the same set. The other 1,667 are compared byte for byte, as is every git-door fixture
-# (none of those with a listing holds one of these shapes). 240 (515595d7...) until review 3 of fix batch 1.
-MOVED_BY_178_179 = 243
-MOVED_BY_178_179_SHA = "aa4c38fcc12186e58fcadf99bd37d571260596af717fd7f3859261e31e670c8b"
+# (none of those with a listing holds one of these shapes). 240 (515595d7...) until review 3 of fix batch 1, and 243
+# (aa4c38fc...) until the one-sided #178 (options judgment of fix batch 1), where main's tests count decides again a
+# claim above every count it takes: 54 inputs leave the set, their content the parent's again, and none joins it.
+MOVED_BY_178_179 = 189
+MOVED_BY_178_179_SHA = "0199f6b873cd583717601f594cbe467bbbea08b63d4ab78b22df6057c7a356a9"
 
 # Review 3 of fix batch 1 (fix/diffgate-178-179) moved the reading of a diff of these shapes, by design: the two `def`
 # counts abstain where #205's seams part the two readers, a U+FEFF before a counted line's `def` or name or at a

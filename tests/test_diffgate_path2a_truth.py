@@ -73,14 +73,18 @@ DECIDED = ("VERIFIED", "CONTRADICTED")
 # port; false 1547 -> 1542 (the 2 wrong VERIFIEDs above leave, 1 more false verdict of main's the overlay withheld,
 # and 2 attributable ones), attributable 1230 -> 1228 and 1124 -> 1122, right 5828 -> 5817 (right lost 259 -> 255). The
 # gate prints 5,562 right verdicts (5,569 before), 226 wrong ones (228) and withholds 1,609 claims (1,616). #205's seams
-# reach no case of this world.
-PINNED = {"cases": 1706, "main raises": 0, "decided": 7537, "false": 1542, "attributable": 1228, "abstained": 1609,
-          "attributable abstained": 1228, "right": 5817, "right lost": 255, "undecided": 178,
+# reach no case of this world. The one-sided #178 (options judgment of fix batch 1): main's tests count abstains only
+# on a claim at or below the larger of its two counts, so on 19 claims in 13 cases, each claiming more tests than any
+# count main takes, main decides again, each a right CONTRADICTED: decided 7537 -> 7556 and right 5817 -> 5836 in
+# Python, 7316 -> 7335 and 5659 -> 5678 in the port; no false verdict, attributable or withheld figure moves. The gate
+# prints 5,581 right verdicts (5,499 in the port), 226 wrong ones, and withholds 1,609 claims.
+PINNED = {"cases": 1706, "main raises": 0, "decided": 7556, "false": 1542, "attributable": 1228, "abstained": 1609,
+          "attributable abstained": 1228, "right": 5836, "right lost": 255, "undecided": 178,
           "undecided abstained": 38, "unjudged": 0, "unjudged abstained": 0, "false other": 314,
           "false other abstained": 88}
 # The port judged in its own terms: 1,122 attributable claims, of which 964 carry the same main record in Python and
 # 158 are read otherwise by Python's main (paths and names outside ASCII, which the two templates extract apart).
-PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7316, "abstained": 1470, "right": 5659, "right lost": 179,
+PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7335, "abstained": 1470, "right": 5678, "right lost": 179,
                "false": 1392, "attributable": 1122, "attributable abstained": 1122, "false other": 270,
                "false other abstained": 44, "undecided": 265, "undecided abstained": 125}
 PINNED_GIT = {"cases": 96, "main raises": 0, "with R, C or T": 16, "decided": 63, "abstained": 14, "false": 17,
