@@ -3,7 +3,7 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`26e6e89f1524871545b1c1d3afd02c09093eb95661b2d2fd5eb31f7bcea8abd2` (LF line endings; a wheel
+`7b264014b757d64fd97981f9b823f3f648b9890f82973982b580491041ccef63` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -28,7 +28,9 @@ counts read `async def` where they read `def`, and abstain where a counted line 
 two readers (U+FEFF, U+001C to U+001F or U+0085 at a `---` or `+++` header's edge or before a counted line's `def` or
 name, or a name run on into a code point from U+0080 up), and where two lines of one `+++` section define one test
 name, one of them after `async` (sha256
-`91d45e3aef5c6e232d1384a069219fdb9a5df1ab3009d508126dff8399775420`) — plus the PATH-2a block (an
+`91d45e3aef5c6e232d1384a069219fdb9a5df1ab3009d508126dff8399775420`; and then the tests count's
+abstention narrowed to a claim at or below the larger count, the one-sided #178, sha256
+`969abb0df7eada6ff4e2c6b8fceb5af3056f19447e152bb1b48695712eedec62`) — plus the PATH-2a block (an
 overlay that only abstains, not yet released; see *PATH-2a* below), and a committed test cuts the
 block out and gets that reader back byte for byte, in both languages. The port's record carries the
 eleven content keys and no identity: the differential compares named fields, so a Python record of
@@ -38,8 +40,9 @@ header patterns' `.` read as the Python's (`[^\n]`, since JavaScript's `.` refus
 and a declared count in ASCII digits with a reason that names any other character by its code point
 (the port with the block cut hashed to `d74cc729cea84c98501adaa0ab651c0c8ef10f3da04aae4887e75e66a93dcbbd` then; `1cde8b82`'s was
 `06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141`). #179 and #178 moved the port's `main` with the
-Python's, in the same change: the port with the block cut hashes to
-`ba76562ce173d148eee719b56f35bcc73239fca2f4613b7413e5a2c0c9f3fb14`.
+Python's, in the same change: the port with the block cut hashed to
+`ba76562ce173d148eee719b56f35bcc73239fca2f4613b7413e5a2c0c9f3fb14`, and with the one-sided #178 it
+hashes to `1097d2fb6a2484e64aeb5a5d3cd3c554a8b42d6ef11e9c204a8c53d981d35324`.
 
 The port was first cut from the 7.47.0 wheel (`fb2d9b3e…`) and re-cut on 2026-09-16 for issue
 #110: the 7.47.0 templates count Python `def` lines and accuse a TypeScript commit that says
@@ -70,8 +73,8 @@ and the never-read count to the page.
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 be4fb2056b5b883c5a10ef8d0169c5d743486e0e1c93d958c1718edd731c5533   59,747 chars
-    bookmarklet.href.txt  sha256 56ece84eaf51e4a335bcff73b3631f1f50c100a8c4a2f087298492b2046286a7   59,758 chars
+    bookmarklet.min.js    sha256 eb2465a6ba95e7eebc8eb045e306154b191caf0a72fed7e9b39afc139cd590a8   59,765 chars
+    bookmarklet.href.txt  sha256 09c3d622dde9a9ee92d56074e57d1d671892ae1d4f3dd1dc19da9337bff9a800   59,776 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file;
@@ -83,7 +86,9 @@ and the never-read count to the page.
 `6bf6121a…`, 53,371 chars, PATH-2a as merged (#187), whose panel labelled a CONTRADICTED verdict LIE;
 `5843f53d…`, 53,380 chars, #201's, whose Python counterpart cut a diff at a form feed (#205) and read a declared
 count in any script's digits (#206); `4f46cfdf…`, 54,335 chars, #220's, whose Python counterpart read no `async def`
-(#179) and counted a `def` line in a Markdown file or a string beside a Python file (#178).
+(#179) and counted a `def` line in a Markdown file or a string beside a Python file (#178); `be4fb205…`, 59,747
+chars, the batch's, whose Python counterpart abstained on every tests claim beside a `def` line outside Python
+source.
 A bookmark that hashes to any of these is an old port; drag the new one. The panel text still names the 7.48.0 port; see *PATH-2a* below.)
 
 Whatever a browser holds under that bookmark either hashes to the first line (drop the
@@ -106,7 +111,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout whose styxx/diffgate.py is the file named above
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 26e6e89f…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 7b264014…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 190 pinned pairs against their expect blocks (+ path2a_moves.json, issue205_moves.json)

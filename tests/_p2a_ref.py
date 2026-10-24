@@ -49,9 +49,10 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # where #205's seams part the two readers (a header's edge, before a `def`, after a name), and where two lines of one
 # `+++` section define one test name, one of them after `async`; the block's model of main's count reads `async` with
 # them. So relation (A), the lockstep and bar C run against the new main in both languages, and every figure they pin
-# was measured again on it.
-MAIN_PY_SHA = "91d45e3aef5c6e232d1384a069219fdb9a5df1ab3009d508126dff8399775420"
-MAIN_JS_SHA = "ba76562ce173d148eee719b56f35bcc73239fca2f4613b7413e5a2c0c9f3fb14"
+# was measured again on it. The one-sided #178 then narrowed the tests count's abstention to a claim at or below the
+# larger count, in both files (91d45e3a... and ba76562c... were the two before it); the block did not move.
+MAIN_PY_SHA = "969abb0df7eada6ff4e2c6b8fceb5af3056f19447e152bb1b48695712eedec62"
+MAIN_JS_SHA = "1097d2fb6a2484e64aeb5a5d3cd3c554a8b42d6ef11e9c204a8c53d981d35324"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
 _MARK = "=== PATH-2a abstain-only overlay: "

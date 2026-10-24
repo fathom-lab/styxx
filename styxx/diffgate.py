@@ -1755,7 +1755,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
 # function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
 # the block's own slotted classes, so nothing of main's is reachable from it as data.
-# Everything outside this block is main's reader (sha256 91d45e3a..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
+# Everything outside this block is main's reader (sha256 969abb0d..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
 # 9b620e00... with the demo's CONTRADICTED label, fix/contradicted-not-lie, plus the record naming its instrument,
 # identity phase 2; then #205, fix/diffgate-205-206, moved reading paths: every piece of git output is cut at git's
 # line ends, and the `def` counts and the compatibility reading abstain over a line holding a character of _READ_APART;
@@ -1764,7 +1764,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # fix/diffgate-178-179, moved reading paths: the `def` counts read `async def`, and abstain where a counted line sits
 # in a file not read as .py or .pyi or after an odd number of triple quotes, where #205's seams part the two readers (a
 # header's edge, before a `def`, after a name), and where two lines of one section define one test name, one after
-# `async`), unchanged; the two doors call
+# `async`, 91d45e3a...; then the tests count's abstention narrowed to a claim at or below the larger count, the
+# one-sided #178), unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
 # where #97, #121 or #101 can have made it wrong:
