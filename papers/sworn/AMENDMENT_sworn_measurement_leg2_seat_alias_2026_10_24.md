@@ -127,8 +127,9 @@ answered: **"Amend to Opus 5.5"**.
    the command's statements it passed `--model claude-opus-5-5`; and a call with an explicit model, the seats'
    route, passed that model.
 
-   This route is the one rule this amendment moves beside the alias. Section 4 (l.509-511) and Amendment 2
-   item 5 (l.411-412) run the twins with the committed CLI that `twin_trivial.py` names (l.13):
+   This route is the one rule this amendment moves beside the alias. Section 4 (l.509-511) names
+   `twin_trivial.py` for the twins, and Amendment 2 item 5 (l.411-412) runs them "with the committed CLIs"; the
+   committed CLI is the one `twin_trivial.py` names (l.13):
 
    ```text
    python papers/sworn/measurement/twin_trivial.py --doc D01 [--dry-run] [--dir DIR]
