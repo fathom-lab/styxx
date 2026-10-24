@@ -446,3 +446,42 @@ def test_grounded_honesty_docstring_points_at_abstains():
     doc = grounded_honesty.__doc__
     assert "score.abstains()" in doc and "LOW_STABILITY" in doc
     assert "does not abstain by itself" in doc
+
+
+# ─── the default line is audit_claim's, not the boundary hunt's split (#233 review) ───
+
+def _boundary_hunt():
+    import json
+    from pathlib import Path
+    p = (Path(__file__).resolve().parent.parent / "papers" / "grounded-honesty-axis"
+         / "boundary_hunt_result.json")
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def test_the_default_line_is_not_the_boundary_hunt_split():
+    d = _boundary_hunt()
+    n, b2, rows = d["n_samples"], d["B2_stability_gate"], d["rows"]
+    assert (len(rows), n, b2["median_stability"], b2["n_high"], b2["n_low"]) == (36, 10, 1.0, 30, 6)
+    scores = [GroundedScore(r["g_true"], r["stability"], r["concord_true"] / n, r["n_clusters"], n)
+              for r in rows]
+    low = [s for s in scores if s.stability < b2["median_stability"]]
+    assert sorted(round(s.stability, 2) for s in low) == [0.78, 0.89, 0.89, 0.89, 0.89, 0.89]
+    # at the default (0.50) no item abstains, the six of the AUC 0.444 stratum included
+    assert not any(s.abstains() for s in scores)
+    # the run's own split is abstains(low_stability=1.0): True on exactly its low stratum
+    assert [s for s in scores if s.abstains(low_stability=1.0)] == low
+
+
+def test_the_docs_call_the_default_a_default_and_cite_the_split():
+    b2 = _boundary_hunt()["B2_stability_gate"]
+    for doc in (GroundedScore.abstains.__doc__, grounded_honesty.__doc__):
+        flat = " ".join(doc.split())
+        assert "low_stability_threshold" in flat and "not a measured line" in flat
+        assert "False does not make it one" in flat
+        assert "abstains(low_stability=1.0)" in flat
+        assert f"{b2['auc_low_stability']:.3f}" in flat          # 0.444
+    flat = " ".join(GroundedScore.abstains.__doc__.split())
+    assert f"{b2['auc_high_stability']:.3f}" in flat             # 0.967
+    # the sample-count rule is the method's own, and the two places audit_claim parts from it
+    assert "names no count" in flat
+    assert '``"injected"`` before ``"abstain"``' in flat

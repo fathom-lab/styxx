@@ -128,6 +128,21 @@ class TestLowStabilityIsOneNumber:
         )
         assert (v == "abstain") is g.abstains()
 
+    def test_where_abstains_and_the_audit_verdict_part(self):
+        # the agreement above holds with injection not suspected and five samples; two places part
+        from styxx.divergence import LOW_STABILITY, GroundedScore
+        kw = dict(honest=0.7, low_stability=LOW_STABILITY, contradiction=0.3)
+        # injection suspected: the verdict reads "injected" first, while abstains() is True
+        g = GroundedScore(0.0, 0.0, 0.0, 5, 5)
+        assert g.abstains() is True
+        assert _derive_verdict(grounded=0.0, stability=0.0, concordance_stateless=0.0,
+                               injection_suspected=True, **kw) == "injected"
+        # one sample: stability 1.0; the verdict has no sample-count rule
+        one = GroundedScore(0.0, 1.0, 0.0, 1, 1)
+        assert one.abstains() is True
+        assert _derive_verdict(grounded=0.0, stability=1.0, concordance_stateless=0.0,
+                               injection_suspected=False, **kw) == "contradiction"
+
 
 class TestConfidenceBand:
     def test_high(self):

@@ -299,3 +299,82 @@ def test_honest_docstring_states_both_no_signal_behaviours():
     assert '``"pass"`` (the default' in doc and '``"abstain"``' in doc
     assert "passed via none (signal n/a) -> answered" in doc
     assert "no honesty signal supplied (span_logits, logits, engine or confidence) -> abstained" in doc
+
+
+# --- on_no_signal="abstain": an input with nothing to read is no signal (#234 review) -------
+
+_NAN, _INF = float("nan"), float("inf")
+_NO_FINITE_SPAN = "no honesty signal: span_logits holds no finite logit"
+_NO_FINITE_LOGITS = "no honesty signal: logits holds no finite logit"
+_SPAN_0 = ("answered", "span", 0.0, "passed via span (signal 0.000) -> answered")
+_LOGITS_0 = ("answered", "single_pass", 0.0, "passed via single_pass (signal 0.000) -> answered")
+_ENGINE_NA = ("answered", "engine", None, "passed via engine (signal n/a) -> answered")
+
+# (input, the opt-in's detail before " -> abstained", what the default returns: action, method,
+# signal, detail -- the verdicts main returns for these inputs)
+_NOTHING_TO_READ = [
+    (dict(span_logits=[]), _NO_FINITE_SPAN, _SPAN_0),
+    (dict(span_logits=[], entropy_threshold=0.5, margin_threshold=1.0), _NO_FINITE_SPAN, _SPAN_0),
+    (dict(span_logits=[[]], entropy_threshold=0.5), _NO_FINITE_SPAN, _SPAN_0),
+    (dict(span_logits=[[_NAN, _NAN]], entropy_threshold=0.5), _NO_FINITE_SPAN, _SPAN_0),
+    (dict(logits=[]), _NO_FINITE_LOGITS, _LOGITS_0),
+    (dict(logits=[], entropy_threshold=0.5), _NO_FINITE_LOGITS, _LOGITS_0),
+    (dict(logits=[_NAN, _INF], entropy_threshold=0.5), _NO_FINITE_LOGITS, _LOGITS_0),
+    (dict(confidence=_NAN), "no honesty signal: confidence is nan, not a finite number",
+     ("answered", "confidence", _NAN, "passed via confidence (signal nan) -> answered")),
+    (dict(confidence=_INF), "no honesty signal: confidence is inf, not a finite number",
+     ("answered", "confidence", -_INF, "passed via confidence (signal -inf) -> answered")),
+    (dict(confidence=-_INF), "no honesty signal: confidence is -inf, not a finite number",
+     ("abstained", "confidence", _INF, "confab gate fired via confidence (signal inf) -> abstained")),
+    (dict(engine="yes"), "no honesty signal: engine is neither True nor callable", _ENGINE_NA),
+    (dict(engine=1), "no honesty signal: engine is neither True nor callable", _ENGINE_NA),
+]
+_NOTHING_IDS = ["span-empty", "span-empty-thresholds", "span-empty-row", "span-nan",
+                "logits-empty", "logits-empty-threshold", "logits-nonfinite",
+                "confidence-nan", "confidence-inf", "confidence-minus-inf", "engine-str", "engine-int"]
+
+
+@pytest.mark.parametrize("kw, head, default", _NOTHING_TO_READ, ids=_NOTHING_IDS)
+def test_no_signal_abstain_withholds_an_input_with_nothing_to_read(kw, head, default):
+    v = honest("42", on_no_signal="abstain", **kw)
+    assert v.action == "abstained" and v.abstained is True and v.answer == "I'm not sure."
+    assert v.method == "none" and v.signal is None and v.confidence is None
+    assert v.detail == head + " -> abstained"
+    # verify still decides: support lets the answer through, read as checked by no signal
+    ok = honest("42", on_no_signal="abstain", verify=lambda a: True, **kw)
+    assert ok.action == "answered" and ok.answer == "42" and ok.method == "none"
+    assert ok.signal is None and ok.detail == "passed via none (signal n/a) (verified) -> answered"
+    assert honest("42", on_no_signal="abstain", verify=lambda a: False, **kw).action == "refuted"
+    unc = honest("42", on_no_signal="abstain", verify=lambda a: None, **kw)
+    assert unc.action == "abstained" and unc.detail == head + "; verification inconclusive -> abstained"
+
+
+@pytest.mark.parametrize("kw, head, default", _NOTHING_TO_READ, ids=_NOTHING_IDS)
+def test_inputs_with_nothing_to_read_are_unchanged_under_the_default(kw, head, default):
+    action, method, signal, detail = default
+    for v in (honest("42", **kw), honest("42", on_no_signal="pass", **kw)):
+        assert (v.action, v.method, repr(v.signal), v.detail) == (action, method, repr(signal), detail)
+
+
+def test_one_finite_logit_is_a_signal_under_the_opt_in():
+    v = honest("42", span_logits=[[], [10.0, 0.0]], entropy_threshold=0.5, on_no_signal="abstain")
+    assert v.action == "answered" and v.method == "span"
+    v = honest("42", logits=[_NAN, 3.0], entropy_threshold=0.5, on_no_signal="abstain")
+    assert v.action == "answered" and v.method == "single_pass"
+    v = honest("42", confidence=0.9, on_no_signal="abstain")
+    assert v.action == "answered" and v.method == "confidence"
+
+
+def test_a_bare_string_from_verify_reads_as_support_as_the_docstring_says():
+    # the verifier's reading is the default path's (any truthy value with no .verdict is
+    # support); the docstring names it, and changing it is a separate decision
+    for out in ("refuted", "unclear", _NAN):
+        v = honest("42", on_no_signal="abstain", verify=lambda a, out=out: out)
+        assert v.action == "answered" and "(verified)" in v.detail
+
+
+def test_honest_docstring_names_inputs_with_nothing_to_read():
+    flat = " ".join(honest.__doc__.split())
+    for s in ("no finite logit", "not a finite number", "neither ``True`` nor callable",
+              "reads as support", "with or without a threshold"):
+        assert s in flat, s
