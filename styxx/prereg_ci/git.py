@@ -39,7 +39,11 @@ missing blob from the clone's promisor remote, which a full clone never needs. T
   ``seen`` null of an imported record (PLAN K10); a prereg line held to the default seal's
   decision (``MANIFEST_SEAL_NOT_LANDED``); the decision in effect for a receipt, with
   ``AMENDED_AFTER_RECEIPT`` and ``AMENDED_AFTER_DATA`` (C4); and the lines the ``seal`` verb writes
-  (3.3, PLAN K9).
+  (3.3, PLAN K9);
+* RESULTs (3.2(c), step B3): what a RESULT declares, each receipt it names resolved and paired
+  (``RECEIPT_ABSENT``, ``RESULT_PREREG_DIFFERS``, ``RESULT_NAMES_NO_RECEIPT``), and C1's pairs under
+  PLAN K11, every receipt a pull request writes and every receipt named by a RESULT it adds or
+  changes.
 
 History is read as the commit objects record it. Every command runs with replacement off
 (``--no-replace-objects`` and ``GIT_NO_REPLACE_OBJECTS``, the rule of ``styxx.sworn.GitTree``), with
@@ -81,6 +85,9 @@ _KIND = {
     # a manifest prereg line against the default seal of its path (the B2 review, case A)
     "MANIFEST_SEAL_NOT_LANDED": "FAIL", "MANIFEST_SEAL_PROSE_DIFFERS": "NOTE",
     "NOT_A_COMMIT": "INPUT",
+    # the RESULT readers (step B3): core's three, and the pairing's two
+    "RESULT_REFUSES": "FAIL", "RESULT_FORMS_DIFFER": "FAIL", "RESULT_NOT_READ": "NOTE",
+    "RESULT_PREREG_DIFFERS": "FAIL", "RESULT_NAMES_NO_RECEIPT": "NOTE",
 }
 
 _MAX_BLOB_BYTES = _RECEIPT_CAP           # read at call time, so a test may lower it
@@ -1643,3 +1650,154 @@ def _seal_notes(repo: _Repo, entries: Sequence[Dict[str, Any]], new: Sequence[Di
                 out.append((x["id"], f"{f['code']}: {f['detail']}"))
         seen_lines.append(x)
     return out
+
+
+# ---- RESULTs: what they declare, and the receipts they name (DESIGN 3.2(c), 3.4 C1; PLAN K11; step B3) ----
+
+def _result_declarations(repo: _Repo, rev: str, path: str, exclude: Sequence[str] = ()) -> Dict[str, Any]:
+    """One RESULT at *rev*, read (``core._result_reading``) and paired: ``{path, code, kind, detail,
+    declared, findings, excluded}``.
+
+    A sworn span's receipt is the repository-relative path it names (sworn's own grammar); a
+    ```result fence's receipt and PREREG names resolve as DESIGN 3.2(d) resolves a receipt's
+    ``prereg``, from the RESULT's directory. A receipt that is not in the tree is ``RECEIPT_ABSENT``
+    (``RECEIPT_AMBIGUOUS`` for a name two files hold), exit 2. A receipt is paired when its JSON names
+    its PREREG by a top-level ``prereg`` (3.2(d)); a span on a file that names none is
+    ``RESULT_NAMES_NO_RECEIPT``, a NOTE (sworn checks such a span, prereg-ci pairs nothing), and a
+    fence on one is ``RESULT_PREREG_DIFFERS``, as is a fence whose PREREG is not the one its receipt
+    names (the receipt's own ``prereg`` governs the pairing, and it is still paired). Each entry of
+    ``declared`` is ``core._declared``'s group with ``receipt`` (the parsed receipt at *rev*) and
+    ``prereg_path`` (its PREREG) added; a receipt under *exclude* is listed in ``excluded`` and not
+    read. A refusal of the RESULT itself is ``code`` (``RESULT_REFUSES``) with nothing declared."""
+    c = repo.commit(rev)
+    tree = repo._view(c)
+    out: Dict[str, Any] = {"path": path, "code": None, "kind": None, "detail": None, "declared": [], "findings": [],
+                           "excluded": []}
+    reading = _core._result_reading(repo.read(c, path) or b"")
+    if reading["code"] is not None:
+        detail = f"{path}: {reading['detail']}"
+        out.update(code=reading["code"], kind=reading["kind"], detail=detail,
+                   findings=[{"code": reading["code"], "kind": reading["kind"], "detail": detail, "path": path}])
+        return out
+    findings = [{"code": u["code"], "kind": u["kind"], "detail": f"{path}: {u['detail']}", "path": path}
+                for u in reading["unread"]]
+    near = posixpath.dirname(path)
+
+    def note(code: str, detail: str) -> None:
+        findings.append({"code": code, "kind": _KIND[code], "detail": f"{path}: {detail}", "path": path})
+
+    resolved: List[Dict[str, Any]] = []
+    held: Dict[str, Tuple[Any, str]] = {}
+    for d in reading["declarations"]:
+        where = f"the {d['form']} at line {d['line']}"
+        try:
+            if d["form"] == "sworn":
+                rp = d["receipt"]
+                if rp not in tree:
+                    raise _Refusal("RECEIPT_ABSENT", f"{rp} is not in the tree at {c[:12]}")
+            else:
+                rp = _resolve(d["receipt"], near, tree, what="RECEIPT")
+        except _Refusal as e:
+            findings.append({**e.finding(path), "detail": f"{path}: {where} declares the verdict of a receipt that "
+                                                          f"does not resolve: {e.detail}"})
+            continue
+        if _excluded(rp, exclude):
+            out["excluded"].append(rp)
+            continue
+        try:
+            obj = _json(repo.read(c, rp) or b"")
+        except _Refusal as e:
+            if e.code != "NOT_A_BLOB":
+                raise
+            obj = None
+        except (UnicodeDecodeError, ValueError):
+            obj = None
+        if _receipt_kind(obj) != "receipt":
+            if d["form"] == "sworn":
+                note("RESULT_NAMES_NO_RECEIPT", f"{where} declares the verdict leaf of {rp}, which names no PREREG "
+                                                f"by a top-level prereg; styxx.sworn checks the span, and nothing is "
+                                                f"paired")
+            else:
+                note("RESULT_PREREG_DIFFERS", f"{where} names PREREG {d['prereg']} for {rp}, which names no PREREG "
+                                              f"by a top-level prereg")
+            continue
+        try:
+            pp = _resolve(obj["prereg"], posixpath.dirname(rp), tree)
+        except _Refusal as e:
+            findings.append({**e.finding(path), "detail": f"{path}: {where} names {rp}, whose PREREG does not "
+                                                          f"resolve: {e.detail}"})
+            continue
+        if d["form"] == "fence":
+            try:
+                fp: Optional[str] = _resolve(d["prereg"], near, tree)
+            except _Refusal as e:
+                fp = None
+                findings.append({**e.finding(path), "detail": f"{path}: {where} names a PREREG that does not "
+                                                              f"resolve: {e.detail}"})
+            if fp is not None and fp != pp:
+                note("RESULT_PREREG_DIFFERS", f"{where} names PREREG {fp} for {rp}; the receipt names {pp}, which "
+                                              f"governs the pairing")
+        resolved.append({**d, "result": path, "receipt_path": rp})
+        held[rp] = (obj, pp)
+    merged = _core._declared(resolved)
+    findings += merged["findings"]
+    out["declared"] = [{**m, "receipt": held[m["receipt_path"]][0], "prereg_path": held[m["receipt_path"]][1]}
+                       for m in merged["declared"]]
+    out["findings"] = findings
+    out["excluded"] = sorted(set(out["excluded"]))
+    return out
+
+
+def _results_written(repo: _Repo, base: str, head: str, exclude: Sequence[str] = ()) -> Dict[str, Any]:
+    """Every markdown file the pull request leaves holding new bytes at HEAD (an add, a rename's new
+    path, an edit in place or a type change), read as a RESULT at HEAD (``_result_declarations``):
+    ``{declared, findings, excluded}``. A ``.md`` suffix is read whatever its case; a symlink or a
+    submodule holds no RESULT; a path under *exclude* is listed in ``excluded`` and not read. A
+    RESULT the pull request deletes or leaves alone is not read (the report's not_examined)."""
+    ch = repo.changes(base, head)
+    h = ch["head"]
+    declared: List[Dict[str, Any]] = []
+    findings: List[Dict[str, Any]] = []
+    excluded = set()
+    for x in ch["changes"]:
+        path = x["path"]
+        if x["status"] not in _WRITES or not _suffix(path, (".md",)):
+            continue
+        if _excluded(path, exclude):
+            excluded.add(path)
+            continue
+        try:
+            r = _result_declarations(repo, h, path, exclude)
+        except _Refusal as e:
+            if e.code == "NOT_A_BLOB":
+                continue
+            raise
+        declared += r["declared"]
+        findings += r["findings"]
+        excluded.update(r["excluded"])
+    return {"declared": declared, "findings": findings, "excluded": sorted(excluded)}
+
+
+def _pairs_written(repo: _Repo, base: str, head: str, exclude: Sequence[str] = ()) -> Dict[str, Any]:
+    """C1's pairs under PLAN K11: every receipt the pull request writes (``_receipts_written``), and
+    every receipt named by a RESULT it adds or changes (``_results_written``), each once:
+    ``{pairs, findings, notes, excluded}``.
+
+    A receipt named by a RESULT and not written by the pull request has ``status`` "named" and R the
+    oldest commit, in git's date order, at which its path holds a receipt in HEAD's history; its
+    bytes are read at HEAD. Each pair carries ``declared``: one ``{result, verdict, verdicts,
+    sources}`` per RESULT that names it (empty where none does), which C6(iii) reads. ``findings``
+    are the RESULT readers'; ``notes`` are ``_receipts_written``'s."""
+    w = _receipts_written(repo, base, head, exclude)
+    r = _results_written(repo, base, head, exclude)
+    h = repo.commit(head)
+    by: Dict[str, Dict[str, Any]] = {x["path"]: {**x, "declared": []} for x in w["receipts"]}
+    for d in r["declared"]:
+        p = d["receipt_path"]
+        if p not in by:
+            held = repo._held(p, h, lambda c, q=p: _holds_receipt(repo, c, q))
+            by[p] = {"path": p, "status": "named", "old": p, "receipt_commit": held[-1],
+                     "receipt_holders": tuple(_minimal(repo, held)), "receipt": d["receipt"], "declared": []}
+        by[p]["declared"].append({k: d[k] for k in ("result", "verdict", "verdicts", "sources")})
+    return {"pairs": [by[p] for p in sorted(by)], "findings": r["findings"], "notes": w["notes"],
+            "excluded": sorted(set(w["excluded"]) | set(r["excluded"]))}
