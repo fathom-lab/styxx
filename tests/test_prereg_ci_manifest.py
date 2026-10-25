@@ -969,6 +969,72 @@ def test_seal_reads_an_amendment_that_keeps_the_fence_in_effect_as_inheriting(de
     assert code == 0 and (lines[0]["id"], lines[0]["decision"]) == ("1c", "own")
 
 
+def _withdrawn_manifest(demo):
+    """A working-copy manifest whose newest line naming P withdraws a re-seal of it (SEALS row 8's
+    shape): 1 seals P, 1b withdraws P at the result commit (the same bytes, its fence kept)."""
+    es = [line("1", "prereg", P, demo.seal, prereg(0.5)),
+          line("1b", "withdrawn", P, demo.result, prereg(0.5), amends="1", decision="inherits")]
+    (demo.g.root / M).write_bytes(jsonl(*es))
+    return es
+
+
+def test_seal_amends_a_path_by_its_newest_line_that_is_not_withdrawn(demo, capsys):
+    """The B2 review, case B: --amends PATH named the path's newest line, a withdrawn one, and refused;
+    it names the newest line that is not withdrawn. --amends naming the withdrawn id is refused with the
+    line it withdrew from."""
+    _withdrawn_manifest(demo)
+    demo.g.write(C, "# CORRECTION\n\nprose only\n")
+    corr = demo.g.commit("correction")
+    code, out, lines = _seal_cli(capsys, C, "--amends", P, "--seen", "results seen")
+    assert code == 0 and lines == [line("1c", "amendment", C, corr, "# CORRECTION\n\nprose only\n", amends="1",
+                                        decision="inherits", seen="results seen")]
+    assert "note:" not in out
+    code, out, lines = _seal_cli(capsys, C, "--amends", "1b", "--seen", "results seen")
+    assert code == 2 and lines == [] and "withdrawn" in out and "--amends 1" in out
+
+
+def test_seal_refuses_a_path_whose_every_line_is_withdrawn(demo, capsys):
+    es = [line("1", "prereg", P, demo.seal, prereg(0.5)),
+          line("1b", "withdrawn", A, demo.amend, prereg(0.6, "amendment"), amends="1", decision="own")]
+    (demo.g.root / M).write_bytes(jsonl(*es))
+    code, out, lines = _seal_cli(capsys, C, "--amends", A, "--seen", "results seen")
+    assert code == 2 and lines == [] and "every line naming" in out and "by its id" in out
+
+
+def test_seal_notes_a_line_that_records_bytes_another_line_records(demo, capsys):
+    """Case B's second reading: --amends 7 wrote 7c for the CORRECTION 7b already seals, without a word."""
+    assert _seal_cli(capsys, P, "--append")[0] == 0
+    assert _seal_cli(capsys, A, "--amends", "1", "--seen", "results seen", "--append")[0] == 0
+    code, out, lines = _seal_cli(capsys, A, "--amends", "1", "--seen", "results seen")
+    assert code == 0 and lines[0]["id"] == "1c"
+    notes = [x for x in out.splitlines() if x.startswith("  note:")]
+    assert notes == [f"  note: line 1b (amendment) already records {A} with blob sha256 "
+                     f"{sha(prereg(0.6, 'amendment'))}; line 1c records the same bytes again"]
+
+
+def test_seal_writes_and_prints_seen_on_a_prereg_line(demo, capsys):
+    """The B2 review's note: a prereg line may carry seen (what had been seen when it was sealed); the
+    verb prints it beside the line, and the seal the check reads carries it."""
+    code, out, lines = _seal_cli(capsys, P, "--seen", "nothing run", "--append")
+    assert code == 0 and lines == [line("1", "prereg", P, demo.seal, prereg(0.5), seen="nothing run")]
+    assert f"seal {P} (line 1, prereg, seen: nothing run)" in out
+    code, out, _ = _seal_cli(capsys, A, "--amends", "1", "--seen", "results seen")
+    assert f"seal {A} (line 1b, amendment, amends 1, own, seen: results seen)" in out
+    with G._Repo(demo.g.root) as repo:
+        es = core._manifest((demo.g.root / M).read_bytes())
+        got = G._effect(repo, P, "p/receipt.json", demo.result, "HEAD", "HEAD", es)
+        assert got["seal"]["seen"] == "nothing run"
+        assert G._effect(repo, P, "p/receipt.json", demo.result, "HEAD", "HEAD", None)["seal"]["seen"] is None
+
+
+def test_seal_notes_a_prereg_line_whose_prose_is_not_the_landed_prose(demo, capsys):
+    demo.g.write(P, prereg(0.5, "v2, the fence kept"))
+    prose = demo.g.commit("prose")
+    code, out, lines = _seal_cli(capsys, P, "--commit", prose)
+    assert code == 0 and lines[0]["commit"] == prose
+    assert [x for x in out.splitlines() if x.startswith("  note: MANIFEST_SEAL_PROSE_DIFFERS")]
+
+
 def test_seal_at_a_named_commit(demo, capsys):
     demo.g.write(P, prereg(0.5, "v2"))
     demo.g.commit("prose")
@@ -1200,6 +1266,24 @@ def test_every_prereg_line_of_the_seals_record_holds_the_landed_bytes(generated,
     assert [e["id"] for e in es if e["kind"] == "prereg"] == ["2", "3", "6", "7"]
     assert G._manifest_landed(styxx_repo, es, REV, REV) == []
     assert G._manifest_landed(styxx_repo, es, "HEAD", "HEAD") == []
+
+
+def test_seal_amends_the_labs_robustness_prereg_by_its_path(styxx_repo, monkeypatch, capsys):
+    """Case B on the lab's own record, read-only (no --append): the robustness PREREG's newest line is
+    row 8, withdrawn, and --amends by its path names row 7; the CORRECTION's bytes are row 7b's, which
+    the note names."""
+    monkeypatch.chdir(ROOT)
+    man = "conformance/prereg_ci/seals_manifest_from_SEALS_2026_09_13.jsonl"
+    corr = "papers/frequency-resonance/CORRECTION_prereg_pmnist_robustness_2026_10_12.md"
+    pre = "papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md"
+    before = COPY.read_bytes()
+    code, out, lines = _seal_cli(capsys, corr, "--amends", pre, "--seen", "results seen", "--manifest", man)
+    assert code == 0 and [(x["id"], x["amends"], x["decision"]) for x in lines] == [("7c", "7", "inherits")]
+    assert lines[0]["blob_sha256"] == SEALS_ROWS[6][4]
+    assert f"  note: line 7b (amendment) already records {corr} with blob sha256 {SEALS_ROWS[6][4]}" in out
+    code, out, _ = _seal_cli(capsys, corr, "--amends", "8", "--seen", "results seen", "--manifest", man)
+    assert code == 2 and "--amends 7" in out
+    assert COPY.read_bytes() == before
 
 
 def test_the_generator_check_regenerates_the_committed_bytes():

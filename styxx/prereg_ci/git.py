@@ -1520,10 +1520,13 @@ def _seal_lines(repo: _Repo, entries: Sequence[Dict[str, Any]], path: str, head:
     """The manifest line(s) ``seal`` writes for *path* (repository-relative), read at *commit* or,
     by default, at the path's landing commit on HEAD's parent-one chain.
 
-    Without *amends*: one prereg line (a path is sealed once). With *amends* (PLAN K9): a line id
-    of *entries*, else a repository-relative path, which names that path's newest line, or, where
-    the path has none, gets its default-seal line (the landing rule) written before the amendment.
-    An amendment line's ``decision`` is read from its bytes: ``own`` when it holds a fence other than
+    Without *amends*: one prereg line (a path is sealed once); *seen*, when given, is what had been
+    seen when it was sealed. With *amends* (PLAN K9): a line id of *entries*, else a
+    repository-relative path, which names that path's newest line that is not withdrawn (the B2
+    review, case B: SEALS row 8 withdraws a re-seal of row 7's path, and the path still names row
+    7), or, where the path has no line, gets its default-seal line (the landing rule) written before
+    the amendment. Nothing amends a withdrawn line: the refusal names the line it withdrew from. An
+    amendment line's ``decision`` is read from its bytes: ``own`` when it holds a fence other than
     the one in effect for its lineage, else ``inherits``; ``seen`` is required."""
     h = repo.commit(head)
     _plain_path(path)
@@ -1540,12 +1543,41 @@ def _seal_lines(repo: _Repo, entries: Sequence[Dict[str, Any]], path: str, head:
     target = next((e for e in entries if e["id"] == amends), None)
     if target is None:
         named = [e for e in entries if e["path"] == amends]
-        if named:
-            target = named[-1]
+        live = [e for e in named if e["kind"] != "withdrawn"]
+        if live:
+            target = live[-1]
+        elif named:
+            raise _Refusal("MANIFEST_INVALID", f"every line naming {amends} is withdrawn (line "
+                                               f"{', '.join(e['id'] for e in named)}), and nothing amends a withdrawn "
+                                               f"line; name the line to amend by its id")
         else:
             target = _sealed_line(repo, entries, amends, h, None, "prereg")
             new.append(target)
     if target["kind"] == "withdrawn":
-        raise _Refusal("MANIFEST_INVALID", f"line {target['id']} is withdrawn, and nothing amends a withdrawn line")
+        raise _Refusal("MANIFEST_INVALID", f"line {target['id']} is withdrawn, and nothing amends a withdrawn line; "
+                                           f"it withdrew a seal of line {target['amends']}, which --amends "
+                                           f"{target['amends']} names")
     new.append(_sealed_line(repo, [*entries, *new], path, h, commit, "amendment", amends=target["id"], seen=seen))
     return new
+
+
+def _seal_notes(repo: _Repo, entries: Sequence[Dict[str, Any]], new: Sequence[Dict[str, Any]],
+                head: str = "HEAD") -> List[Tuple[str, str]]:
+    """``(line id, note)`` for each line ``seal`` writes that the caller should see beside it: a line
+    above (or written before it) that already records the same path with the same blob sha256 (the
+    B2 review, case B: ``--amends 7`` wrote 7c for the bytes 7b records), and a prereg line's reading
+    against the default seal on HEAD (``MANIFEST_SEAL_PROSE_DIFFERS``; a decision other than the
+    landed one is refused before this)."""
+    out: List[Tuple[str, str]] = []
+    seen_lines: List[Dict[str, Any]] = list(entries)
+    for x in new:
+        for e in seen_lines:
+            if e["path"] == x["path"] and e["blob_sha256"] == x["blob_sha256"]:
+                out.append((x["id"], f"line {e['id']} ({e['kind']}) already records {x['path']} with blob sha256 "
+                                     f"{x['blob_sha256']}; line {x['id']} records the same bytes again"))
+        if x["kind"] == "prereg":
+            f = _seal_finding(repo, x, head, head)
+            if f is not None:
+                out.append((x["id"], f"{f['code']}: {f['detail']}"))
+        seen_lines.append(x)
+    return out

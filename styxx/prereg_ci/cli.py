@@ -11,10 +11,13 @@ not UNCHECKABLE is an input error.
 commit and the order commit, and the manifest line (DESIGN 3.2(b)); the commit is L on HEAD's
 parent-one chain unless ``--commit`` names one in HEAD's history. ``seal PATH --amends ID|PATH --seen
 LEVEL [--append]`` prints an amendment line: ``--amends`` names a manifest line by id, or a path,
-which names that path's newest line, or, where the path has none, gets its default-seal line
-written before the amendment (PLAN K9). A prereg line seals the decision the PREREG landed with on
-HEAD's parent-one chain: ``--commit`` naming bytes that hold another decision is refused
-(``MANIFEST_SEAL_NOT_LANDED``, which check reads too), since a changed decision is an amendment line.
+which names that path's newest line that is not withdrawn, or, where the path has none, gets its
+default-seal line written before the amendment (PLAN K9); a line that records bytes another line
+already records is printed with a note naming it. ``--seen`` on a prereg line states what had been
+seen when it was sealed (reproducible-science's freeze records an access level too) and is printed
+beside it. A prereg line seals the decision the PREREG landed with on HEAD's parent-one chain:
+``--commit`` naming bytes that hold another decision is refused (``MANIFEST_SEAL_NOT_LANDED``,
+which check reads too), since a changed decision is an amendment line.
 ``--append`` appends the line(s) to the manifest's working copy (``prereg-ci.seals.jsonl`` at the
 work tree's top), LF, no byte-order mark, after checking that the working copy is HEAD's manifest
 with lines appended and that the whole still parses; without it nothing is written. The manifest
@@ -58,8 +61,11 @@ def _repo_path(arg: str, top: str) -> str:
 def _say(line: Dict[str, Any], seal: Dict[str, Any]) -> None:
     decision = (f"gates {seal['gates_sha256']}" if seal["form"] == "gates"
                 else f"no decision the scanner reads ({seal['code']})")
-    print(f"seal {line['path']} (line {line['id']}, {line['kind']}"
-          + (f", amends {line['amends']}, {line['decision']}, seen: {line['seen']}" if line["amends"] else "") + ")")
+    if line["amends"]:
+        said = f", amends {line['amends']}, {line['decision']}, seen: {line['seen']}"
+    else:
+        said = "" if line["seen"] is None else f", seen: {line['seen']}"
+    print(f"seal {line['path']} (line {line['id']}, {line['kind']}{said})")
     print(f"  bytes {len(seal['bytes'])} at {line['commit']}")
     print(f"  blob sha256 {line['blob_sha256']}")
     print(f"  decision: {decision}")
@@ -102,8 +108,11 @@ def _seal(args: argparse.Namespace) -> int:
         new = _git._seal_lines(repo, entries, rel, head, commit=args.commit, amends=amends, seen=args.seen)
         appended = _core._manifest_bytes(new)
         _git._manifest_parse(lf + appended, man, "the working copy with the new lines")
+        notes = _git._seal_notes(repo, entries, new, head)
         for line in new:
             _say(line, _git._line_seal(repo, line, head, head))
+            for _, note in (n for n in notes if n[0] == line["id"]):
+                print(f"  note: {note}")
         if not args.append:
             print(f"  not written: --append appends the line{'s' if len(new) > 1 else ''} to {man}")
         else:
