@@ -530,6 +530,21 @@ def test_rescore_locked_has_rescore_s_shape_and_names_what_ran():
     assert core.compare(r, {"verdict": "PASS"})[-1]["code"] == "VERDICT_DIFFERS"
 
 
+def test_compare_returns_each_code_of_the_locks_form_with_its_kind():
+    """The three codes tests/test_prereg_ci_compare_vectors.py leaves to this file: compare returns a
+    locks run's refusal as its own finding, and reads no recorded field beside it."""
+    prereg = locks_prereg({"scorer": "score.py", "reads": [], "outcomes": ["PASS"]})
+    got = {}
+    got["SCORER_NOT_RUN"] = core.rescore(prereg, {})
+    got["SCORER_ERROR"] = S._rescore_locked(prereg.encode(), "r.json", b"{}", {"score.py": b"raise SystemExit(3)\n"})
+    got["SCORER_READS_UNLOCKED"] = S._rescore_locked(prereg.encode(), "r.json", b"{}",
+                                                     {"score.py": b"import numpy\n"})
+    for code, r in got.items():
+        found = core.compare(r, {"verdict": "PASS", "gates_sha256": "0" * 64})
+        assert [(f["code"], f["kind"]) for f in found] == [(code, core._KIND[code])], (code, found)
+    assert {core._KIND[c] for c in got} == {"UNCHECKABLE", "FAIL"}
+
+
 def test_rescore_locked_on_a_gates_prereg_or_a_refused_block_does_not_run_anything():
     r = S._rescore_locked(f"# P\n\n{F}gates\n{GATES}\n{F}\n".encode(), "r.json", b"{}", {})
     assert r["code"] == "SCORER_REFUSES" and "locks" in r["detail"] and r["run"] is None

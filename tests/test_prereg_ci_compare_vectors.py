@@ -128,9 +128,13 @@ def test_compare_leg(v):
 # ---- what the vectors say --------------------------------------------------------------------------------
 
 def test_the_vectors_reach_every_code_compare_returns():
+    """Every code compare returns for a gates decision. The three codes of the locks form (step B4)
+    come from a locked scorer's run, which this set (committed at B0, never written again) holds no
+    leg for; tests/test_prereg_ci_scorer_run.py reaches each of them through compare by name."""
     seen = {f["code"] for v in VECTORS if isinstance(v["expect"]["compare"], list) for f in v["expect"]["compare"]}
     kinds = core._KIND
-    compare_codes = {c for c in kinds if c != core._COVER_UNCHECKABLE}
+    locks_codes = {core._SCORER_NOT_RUN, core._SCORER_ERROR, core._SCORER_READS_UNLOCKED}
+    compare_codes = {c for c in kinds if c != core._COVER_UNCHECKABLE} - locks_codes
     assert seen == compare_codes
     for v in VECTORS:
         if isinstance(v["expect"]["compare"], list):
