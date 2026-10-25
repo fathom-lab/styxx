@@ -37,12 +37,25 @@ Where ``rescore`` departs from ``score_frozen``, and why:
   ``rescore`` gives the cover a work budget: past it the verdict still stands, ``total``,
   ``holes`` and ``unreachable_rows`` stay None, and ``cover_code`` reads ``COVER_UNCHECKABLE``
   (DESIGN 3.3: UNCHECKABLE, exit 3).
+
+The seals manifest (DESIGN 3.2(b), step B2). ``prereg-ci.seals.jsonl`` holds one JSON line per sealed
+file: ``id``, ``kind`` (``prereg``, ``amendment`` or ``withdrawn``), ``path``, ``commit`` (a full id),
+``blob_sha256`` (``git show <commit>:<path> | sha256sum``), ``amends``, ``decision`` (``own``: the
+line's file carries the fence that then governs; ``inherits``: the decision digest in effect is
+unchanged), ``seen`` (reproducible-science's four access levels, or null where a record states
+none) and ``time`` (token files, read at step B6). ``_manifest`` parses it strictly and
+``_manifest_bytes`` renders it canonically, so a generated manifest round-trips byte for byte.
+``_amendment_readings``, ``_in_effect`` and ``_amended_after_data`` read the decision in effect for
+a receipt (DESIGN 3.4 C4) from what the git layer hands them: each line's decision, and whether its
+commit is a strict ancestor of the receipt's.
 """
 from __future__ import annotations
 
 import hashlib
+import json
 import math
 import numbers
+import re
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 from styxx import protocol as _protocol
@@ -65,6 +78,14 @@ _KIND = {_NOT_GATED: "NOTE", _SCORER_REFUSES: "FAIL", _SMOKE_AMBIGUOUS: "INPUT",
          _DECISION_DIGEST_UNSEALED: "FAIL", _VERDICT_DIFFERS: "FAIL",
          _RECORDED_DIGEST_ABSENT: "NOTE", _RECORDED_VERDICT_ABSENT: "NOTE",
          _COVER_UNCHECKABLE: "UNCHECKABLE"}
+# the seals manifest's codes (step B2), in a table of their own: _KIND is compare's and the cover's
+_MANIFEST_INVALID = "MANIFEST_INVALID"
+_MANIFEST_SEEN_MISSING = "MANIFEST_SEEN_MISSING"
+_MANIFEST_DECISION_DIFFERS = "MANIFEST_DECISION_DIFFERS"
+_AMENDED_AFTER_RECEIPT = "AMENDED_AFTER_RECEIPT"
+_AMENDED_AFTER_DATA = "AMENDED_AFTER_DATA"
+_SEAL_KIND = {_MANIFEST_INVALID: "INPUT", _MANIFEST_SEEN_MISSING: "FAIL", _MANIFEST_DECISION_DIFFERS: "FAIL",
+              _AMENDED_AFTER_RECEIPT: "NOTE", _AMENDED_AFTER_DATA: "NOTE"}
 
 # rescore's default work budget for the cover, in subcubes visited. The largest committed cover
 # vector (synthetic/n15/0: 15 gates, 23 rows) visits 2,591 and the 15-gate leg-2 table fewer; the
@@ -408,3 +429,296 @@ def compare(rescored: Dict[str, Any], recorded: Optional[Dict[str, Any]] = None,
         found.append(_finding(_VERDICT_DIFFERS,
                               f"the sealed decision scores this receipt {verdict}; the RESULT prints {declared}"))
     return found
+
+
+# ---- the seals manifest (DESIGN 3.2(b)) ---------------------------------------------------------------
+
+_MANIFEST_KEYS = ("id", "kind", "path", "commit", "blob_sha256", "amends", "decision", "seen", "time")
+_MANIFEST_KINDS = ("prereg", "amendment", "withdrawn")
+_DECISIONS = ("own", "inherits")
+# reproducible-science's four access levels (Tower, 2026), which the design credits to it
+_SEEN = ("nothing run", "no results seen", "results not opened", "results seen")
+_LINE_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,63}")
+_AMEND_AFTER_DATA = ("report", "fail")
+
+
+class _ManifestError(ValueError):
+    """A manifest this module does not read: ``code`` (``MANIFEST_INVALID`` or
+    ``MANIFEST_SEEN_MISSING``), its ``kind``, ``detail``, and the 1-based ``line`` (None where the
+    file as a whole is refused)."""
+
+    def __init__(self, code: str, detail: str, line: Optional[int] = None):
+        super().__init__(f"{code}: " + (f"line {line}: " if line is not None else "") + detail)
+        self.code, self.kind, self.detail, self.line = code, _SEAL_KIND[code], detail, line
+
+
+def _line_finding(code: str, detail: str, line_id: Optional[str]) -> Dict[str, Any]:
+    return {"code": code, "kind": _SEAL_KIND[code], "detail": detail, "id": line_id}
+
+
+def _path_problem(path: Any) -> Optional[str]:
+    """Why *path* is not a repository-relative POSIX path with a portable file name, or None
+    (``research_capsule``'s rule, which every manifest path and token path is held to)."""
+    return _capsule._posix_path_problem(path)
+
+
+def _full_id(value: Any) -> bool:
+    return isinstance(value, str) and len(value) in (40, 64) and _capsule._is_hex(value, len(value))
+
+
+def _manifest_entry(obj: Any, n: int, ids: Dict[str, Tuple[int, str]], sealed: Dict[str, str]) -> Dict[str, Any]:
+    def bad(why: str) -> _ManifestError:
+        return _ManifestError(_MANIFEST_INVALID, why, n)
+
+    if not isinstance(obj, dict):
+        raise bad(f"is not a JSON object (it is a {type(obj).__name__})")
+    unknown = sorted(set(obj) - set(_MANIFEST_KEYS))
+    if unknown:
+        raise bad(f"holds keys the format does not name: {unknown}")
+    kind = obj.get("kind")
+    missing = [k for k in _MANIFEST_KEYS if k not in obj]
+    if missing == ["seen"] and kind in ("amendment", "withdrawn"):
+        raise _ManifestError(_MANIFEST_SEEN_MISSING, "an amendment line states what had been seen (DESIGN 3.2(b)); "
+                                                     "this one has no 'seen' key", n)
+    if missing:
+        raise bad(f"lacks the keys {missing}; every line carries all of {list(_MANIFEST_KEYS)}")
+    line_id = obj["id"]
+    if not isinstance(line_id, str) or not _LINE_ID.fullmatch(line_id):
+        raise bad(f"id {line_id!r} is not 1 to 64 of A-Z, a-z, 0-9, '.', '_', '-' (led by a letter or digit)")
+    if line_id in ids:
+        raise bad(f"id {line_id!r} is the id of line {ids[line_id][0]}")
+    if kind not in _MANIFEST_KINDS:
+        raise bad(f"kind {kind!r} is not one of {list(_MANIFEST_KINDS)}")
+    problem = _path_problem(obj["path"])
+    if problem:
+        raise bad(f"path {obj['path']!r} {problem}")
+    if not _full_id(obj["commit"]):
+        raise bad(f"commit {obj['commit']!r} is not a full commit id (40 or 64 lower-case hex)")
+    if not (isinstance(obj["blob_sha256"], str) and _capsule._is_hex(obj["blob_sha256"], 64)):
+        raise bad(f"blob_sha256 {obj['blob_sha256']!r} is not 64 lower-case hex")
+    amends, decision = obj["amends"], obj["decision"]
+    if kind == "prereg":
+        if amends is not None:
+            raise bad(f"a prereg line amends nothing, and this one names {amends!r}")
+        if decision != "own":
+            raise bad(f"a prereg line's decision is its own ('own'), not {decision!r}")
+        if obj["path"] in sealed:
+            raise bad(f"{obj['path']} is sealed by line id {sealed[obj['path']]!r} already; a later seal of a "
+                      f"path is an amendment line")
+    else:
+        if not isinstance(amends, str) or amends not in ids:
+            raise bad(f"an {kind} line amends a line above it, and {amends!r} names none")
+        if ids[amends][1] == "withdrawn":
+            raise bad(f"amends {amends!r}, a withdrawn line, which nothing amends")
+        if decision not in _DECISIONS:
+            raise bad(f"decision {decision!r} is not one of {list(_DECISIONS)}")
+    if obj["seen"] is not None and obj["seen"] not in _SEEN:
+        raise bad(f"seen {obj['seen']!r} is not one of {list(_SEEN)} (or null)")
+    time = obj["time"]
+    if not isinstance(time, list):
+        raise bad(f"time is a list of token paths, not {type(time).__name__}")
+    for token in time:
+        problem = _path_problem(token)
+        if problem:
+            raise bad(f"time token {token!r} {problem}")
+    if len(set(time)) != len(time):
+        raise bad("time lists a token twice")
+    ids[line_id] = (n, kind)
+    if kind == "prereg":
+        sealed[obj["path"]] = line_id
+    return {k: (list(obj[k]) if k == "time" else obj[k]) for k in _MANIFEST_KEYS}
+
+
+def _manifest(data: Any) -> List[Dict[str, Any]]:
+    """The lines of a seals manifest's bytes, each a dict in the format's key order, or
+    ``_ManifestError`` naming the line refused.
+
+    The file is UTF-8 with no byte-order mark, LF only (prereg-ci reads blobs; a carriage return
+    is refused, not read past), one non-blank strict JSON object a line (``research_capsule``'s
+    reader: duplicate and non-ASCII keys refused), ending in a newline. A line holds every key of
+    ``_MANIFEST_KEYS`` and no other; ``id`` is unique; ``path`` and every ``time`` token are
+    repository-relative POSIX paths; ``commit`` is a full id; ``amends`` names a line above it that
+    is not withdrawn (null on a prereg line, whose ``decision`` is ``own``); a path has at most one
+    prereg line; ``seen`` is null or one of ``_SEEN``. An amendment or withdrawn line with no
+    ``seen`` key is ``MANIFEST_SEEN_MISSING``; whether its null is the imported record's is the git
+    layer's reading, since it turns on the commit that added the manifest (PLAN K10)."""
+    if not isinstance(data, (bytes, bytearray)):
+        raise TypeError(f"a manifest is bytes (a blob), not {type(data).__name__}")
+    data = bytes(data)
+    if data.startswith(b"\xef\xbb\xbf"):
+        raise _ManifestError(_MANIFEST_INVALID, "begins with a byte-order mark", 1)
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError as e:
+        raise _ManifestError(_MANIFEST_INVALID, f"is not UTF-8: {e}")
+    if not text:
+        return []
+    if not text.endswith("\n"):
+        raise _ManifestError(_MANIFEST_INVALID, "the file does not end with a newline, so the next line appended "
+                                                "would join this one", text.count("\n") + 1)
+    ids: Dict[str, Tuple[int, str]] = {}
+    sealed: Dict[str, str] = {}
+    out = []
+    for n, raw in enumerate(text[:-1].split("\n"), 1):
+        if "\r" in raw:
+            raise _ManifestError(_MANIFEST_INVALID, "holds a carriage return; the manifest is LF", n)
+        if not raw.strip():
+            raise _ManifestError(_MANIFEST_INVALID, "is blank", n)
+        try:
+            obj = _capsule._strict_json(raw)
+        except ValueError as e:
+            raise _ManifestError(_MANIFEST_INVALID, f"is not strict JSON: {e}", n)
+        out.append(_manifest_entry(obj, n, ids, sealed))
+    return out
+
+
+def _manifest_bytes(entries: Iterable[Dict[str, Any]]) -> bytes:
+    """The canonical bytes of manifest lines: the format's key order, ``json.dumps``'s default
+    spacing, ASCII, one line each with LF. ``_manifest(_manifest_bytes(es)) == es`` for every list
+    ``_manifest`` returns."""
+    return "".join(json.dumps({k: e[k] for k in _MANIFEST_KEYS}, ensure_ascii=True) + "\n"
+                   for e in entries).encode("ascii")
+
+
+def _lineage(entries: Sequence[Dict[str, Any]], root: str) -> List[Dict[str, Any]]:
+    """The amendment and withdrawn lines that descend from the line *root* (through ``amends``), in
+    file order. A line only amends one above it, so one pass reads the whole family."""
+    family = {root}
+    out = []
+    for e in entries:
+        if e["kind"] != "prereg" and e["amends"] in family:
+            family.add(e["id"])
+            out.append(e)
+    return out
+
+
+def _canonical(block: Optional[str]) -> Optional[str]:
+    """A fence's decision tuple (DESIGN 3.4 C0: each gate's metric, op, value and composition,
+    the rows in order, the smoke verdict and the receipt pointer) as canonical JSON, or None where
+    the block does not parse. Prose keys such as ``power_basis`` are not in it."""
+    if block is None:
+        return None
+    try:
+        spec = _capsule._strict_json(block)
+    except ValueError:
+        return None
+    if (not isinstance(spec, dict) or not isinstance(spec.get("gates"), dict)
+            or not isinstance(spec.get("outcomes"), list)):
+        return None
+    gates = {name: ({k: g[k] for k in ("metric", "op", "value", *_COMPOSITION_KEYS) if k in g}
+                    if isinstance(g, dict) else g) for name, g in spec["gates"].items()}
+    rows = [[r.get("when"), r.get("verdict")] if isinstance(r, dict) else r for r in spec["outcomes"]]
+    return json.dumps({"gates": gates, "outcomes": rows, "smoke_verdict": spec.get("smoke_verdict"),
+                       "receipt_pointer": spec.get("receipt_pointer")}, sort_keys=True)
+
+
+def _amendment_readings(seal: Dict[str, Any], chain: Sequence[Tuple[Dict[str, Any], Dict[str, Any], bytes]]
+                        ) -> List[Dict[str, Any]]:
+    """Each lineage line read against its own bytes, in file order.
+
+    *seal* is ``_decision`` of the seal's bytes; *chain* is ``(line, _decision(bytes), bytes)`` per
+    line of ``_lineage``. A line's ``decision`` must be borne out by its bytes, else
+    ``MANIFEST_DECISION_DIFFERS`` (a FAIL; the line is then never in effect): ``own`` needs a fence
+    the scanner reads; ``inherits`` needs no fence, or the fence in effect at that point of the file
+    (the seal's, replaced by each ``own`` amendment line above it), as SEALS row 8's blob holds row
+    7's fence; a fence the scanner refuses bears out neither. ``decision_identical`` marks an ``own``
+    line whose decision tuple (``_canonical``) equals the one it replaces, and every ``inherits``
+    line."""
+    digest, block = seal.get("gates_sha256"), seal.get("block")
+    out = []
+    for line, reading, data in chain:
+        r = {"id": line["id"], "kind": line["kind"], "path": line["path"], "commit": line["commit"],
+             "decision": line["decision"], "seen": line["seen"], "form": reading["form"],
+             "gates_sha256": reading["gates_sha256"], "block": reading["block"], "bytes": data,
+             "decision_identical": None, "finding": None}
+        why = None
+        if reading["form"] is None and reading["code"] != _NOT_GATED:
+            why = f"holds a fence the scanner refuses: {reading['detail']}"
+        elif line["decision"] == "own" and reading["form"] is None:
+            why = "holds no fence, so it carries no decision of its own"
+        elif line["decision"] == "inherits" and reading["form"] is not None and reading["gates_sha256"] != digest:
+            why = (f"holds the fence {reading['gates_sha256']}, not the one in effect above it "
+                   f"({digest or 'none'}), so it does not inherit")
+        if why is not None:
+            r["finding"] = _line_finding(_MANIFEST_DECISION_DIFFERS, f"line {line['id']} ({line['path']} at "
+                                         f"{line['commit'][:12]}) says {line['decision']!r} and {why}", line["id"])
+        elif line["decision"] == "own":
+            old = _canonical(block)
+            r["decision_identical"] = old is not None and _canonical(reading["block"]) == old
+            if line["kind"] == "amendment":
+                digest, block = reading["gates_sha256"], reading["block"]
+        else:
+            r["decision_identical"] = True
+        out.append(r)
+    return out
+
+
+def _in_effect(seal: Dict[str, Any], readings: Sequence[Dict[str, Any]], before: Dict[str, bool]) -> Dict[str, Any]:
+    """The decision in effect for one receipt (DESIGN 3.4 C4).
+
+    *seal* is ``{id, gates_sha256, bytes}`` (``id`` None for the landing rule's default seal);
+    *readings* is ``_amendment_readings``; *before* maps a line id to whether its commit is a strict
+    ancestor of R, the receipt's commit. The seal's fence governs, replaced by the latest ``own``
+    amendment line (file order: the manifest is append-only) that is before R and bears its
+    decision out. A withdrawn line is never in effect and prints nothing; an amendment line not
+    before R prints ``AMENDED_AFTER_RECEIPT``. ``sealed`` is every decision digest a seal holds for
+    the PREREG at R (the seal's and each own amendment's in effect), which C6(i) reads.
+
+    Returns ``{seal, source, gates_sha256, bytes, sealed, amendments, findings}``: ``source`` is
+    the governing line's id (the seal's, or None for a default seal), ``bytes`` the governing file's
+    bytes (what ``rescore`` scores), ``amendments`` one entry per reading with ``before_receipt`` and
+    ``in_effect``."""
+    source, digest, data = seal.get("id"), seal.get("gates_sha256"), seal.get("bytes")
+    sealed = [digest] if digest is not None else []
+    amendments, findings = [], []
+    for r in readings:
+        is_before = bool(before.get(r["id"], False))
+        live = r["kind"] == "amendment" and r["finding"] is None and is_before
+        if r["finding"] is not None:
+            findings.append(r["finding"])
+        elif r["kind"] == "amendment" and not is_before:
+            seen = r["seen"] if r["seen"] is not None else "not stated"
+            findings.append(_line_finding(_AMENDED_AFTER_RECEIPT, (
+                f"amendment {r['id']} ({r['path']} at {r['commit'][:12]}, {r['decision']}, seen: {seen}) is not "
+                f"strictly before the receipt's commit, so the receipt is read under the decision before it"),
+                r["id"]))
+        if live and r["decision"] == "own":
+            source, digest, data = r["id"], r["gates_sha256"], r["bytes"]
+            if digest not in sealed:
+                sealed.append(digest)
+        amendments.append({"id": r["id"], "kind": r["kind"], "path": r["path"], "commit": r["commit"],
+                           "decision": r["decision"], "seen": r["seen"], "gates_sha256": r["gates_sha256"],
+                           "decision_identical": r["decision_identical"], "before_receipt": is_before,
+                           "in_effect": live})
+    return {"seal": seal.get("id"), "source": source, "gates_sha256": digest, "bytes": data, "sealed": sealed,
+            "amendments": amendments, "findings": findings}
+
+
+def _amended_after_data(effect: Dict[str, Any], earlier: Iterable[Dict[str, Any]],
+                        policy: str = "report") -> List[Dict[str, Any]]:
+    """``AMENDED_AFTER_DATA`` (DESIGN 3.4 C4): when an own amendment governs this receipt, every
+    earlier receipt of the same PREREG whose commit is strictly before that amendment's commit,
+    read under its own decision in effect, with its verdict and the amendment's ``seen`` (null
+    printed as "not stated"). A NOTE under ``amend_after_data = "report"`` (the default), a FAIL
+    under ``"fail"``. *effect* is ``_in_effect``'s output; each of *earlier* is ``{path, commit,
+    before_amendment, source, verdict, code}`` (``code`` set where the re-score refused)."""
+    if policy not in _AMEND_AFTER_DATA:
+        raise ValueError(f"amend_after_data is one of {_AMEND_AFTER_DATA}, not {policy!r}")
+    gov = effect["source"]
+    if gov is None or gov == effect["seal"]:
+        return []
+    line = next(a for a in effect["amendments"] if a["id"] == gov)
+    seen = line["seen"] if line["seen"] is not None else "not stated"
+    out = []
+    for e in earlier:
+        if not e["before_amendment"] or e["source"] == gov:
+            continue
+        under = "the sealed table" if e["source"] == effect["seal"] else f"amendment {e['source']}"
+        read = e["verdict"] if e.get("code") is None else e["code"]
+        f = _line_finding(_AMENDED_AFTER_DATA, (
+            f"{e['path']}@{e['commit'][:12]} read {read} under {under}, before amendment {gov} ({line['path']} at "
+            f"{line['commit'][:12]}) came to govern this receipt; amendment seen: {seen}"), gov)
+        if policy == "fail":
+            f["kind"] = "FAIL"
+        out.append(f)
+    return out
