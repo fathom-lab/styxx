@@ -635,6 +635,8 @@ def test_k11_what_a_result_names_is_read_or_refused(base_repo, doc, code, kind):
 
 
 def test_k11_a_result_deleted_or_left_alone_is_not_read(base_repo):
+    """Neither is paired. Since the B3 review (N1) the deleted one, which declared a verdict at the
+    merge base, is a RESULT_DECLARATION_DROPPED NOTE; the one left alone is not read at all."""
     g, s, r = base_repo
     g.write("p/RESULT_a.md", result_md("HOLD"))
     g.write("p/RESULT_b.md", result_md("HOLD"))
@@ -645,7 +647,9 @@ def test_k11_a_result_deleted_or_left_alone_is_not_read(base_repo):
     head = g.commit("delete one, touch another file")
     with G._Repo(g.root) as repo:
         got = G._pairs_written(repo, base, head)
-    assert got == {"pairs": [], "findings": [], "notes": [], "excluded": []}
+    assert (got["pairs"], got["notes"], got["excluded"]) == ([], [], [])
+    assert [(f["code"], f["kind"], f["path"]) for f in got["findings"]] == [
+        ("RESULT_DECLARATION_DROPPED", "NOTE", "p/RESULT_a.md")]
 
 
 def test_k11_an_excluded_result_is_listed_not_read(base_repo):

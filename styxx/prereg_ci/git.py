@@ -43,7 +43,9 @@ missing blob from the clone's promisor remote, which a full clone never needs. T
 * RESULTs (3.2(c), step B3): what a RESULT declares, each receipt it names resolved and paired
   (``RECEIPT_ABSENT``, ``RESULT_PREREG_DIFFERS``, ``RESULT_NAMES_NO_RECEIPT``), and C1's pairs under
   PLAN K11, every receipt a pull request writes and every receipt named by a RESULT it adds or
-  changes.
+  changes; since the B3 review a RESULT is any written file that is a ``.md`` file or holds a
+  form's marker, whatever its suffix, and a RESULT whose declaration the pull request drops is
+  ``RESULT_DECLARATION_DROPPED``, a NOTE.
 
 History is read as the commit objects record it. Every command runs with replacement off
 (``--no-replace-objects`` and ``GIT_NO_REPLACE_OBJECTS``, the rule of ``styxx.sworn.GitTree``), with
@@ -88,6 +90,8 @@ _KIND = {
     # the RESULT readers (step B3): core's three, and the pairing's two
     "RESULT_REFUSES": "FAIL", "RESULT_FORMS_DIFFER": "FAIL", "RESULT_NOT_READ": "NOTE",
     "RESULT_PREREG_DIFFERS": "FAIL", "RESULT_NAMES_NO_RECEIPT": "NOTE",
+    # a RESULT that declared a verdict at the merge base and declares none of it at HEAD (the B3 review, N1)
+    "RESULT_DECLARATION_DROPPED": "NOTE",
 }
 
 _MAX_BLOB_BYTES = _RECEIPT_CAP           # read at call time, so a test may lower it
@@ -1658,8 +1662,8 @@ def _result_declarations(repo: _Repo, rev: str, path: str, exclude: Sequence[str
     """One RESULT at *rev*, read (``core._result_reading``) and paired: ``{path, code, kind, detail,
     declared, findings, excluded}``.
 
-    A sworn span's receipt is the repository-relative path it names (sworn's own grammar); a
-    ```result fence's receipt and PREREG names resolve as DESIGN 3.2(d) resolves a receipt's
+    A sworn span's receipt is the repository-relative path it names (sworn's own grammar); the
+    receipt and PREREG names of a ```result fence resolve as DESIGN 3.2(d) resolves a receipt's
     ``prereg``, from the RESULT's directory. A receipt that is not in the tree is ``RECEIPT_ABSENT``
     (``RECEIPT_AMBIGUOUS`` for a name two files hold), exit 2. A receipt is paired when its JSON names
     its PREREG by a top-level ``prereg`` (3.2(d)); a span on a file that names none is
@@ -1748,33 +1752,80 @@ def _result_declarations(repo: _Repo, rev: str, path: str, exclude: Sequence[str
     return out
 
 
+def _result_at(repo: _Repo, rev: str, path: str, exclude: Sequence[str]) -> Optional[Dict[str, Any]]:
+    """``_result_declarations`` of *path* at *rev* when the path holds a RESULT candidate there: a
+    regular file whose suffix is ``.md`` (any case), or whose bytes hold the marker of a form
+    (``core._result_candidate``), whatever its suffix. None for a path that holds no file, a symlink or a
+    submodule, or bytes that are no candidate. A blob over the cap is ``BLOB_TOO_LARGE``, as everywhere in
+    this layer."""
+    try:
+        data = repo.read(rev, path)
+    except _Refusal as e:
+        if e.code == "NOT_A_BLOB":
+            return None
+        raise
+    if data is None or not (_suffix(path, (".md",)) or _core._result_candidate(data)):
+        return None
+    return _result_declarations(repo, rev, path, exclude)
+
+
 def _results_written(repo: _Repo, base: str, head: str, exclude: Sequence[str] = ()) -> Dict[str, Any]:
-    """Every markdown file the pull request leaves holding new bytes at HEAD (an add, a rename's new
-    path, an edit in place or a type change), read as a RESULT at HEAD (``_result_declarations``):
-    ``{declared, findings, excluded}``. A ``.md`` suffix is read whatever its case; a symlink or a
-    submodule holds no RESULT; a path under *exclude* is listed in ``excluded`` and not read. A
-    RESULT the pull request deletes or leaves alone is not read (the report's not_examined)."""
+    """Every file the pull request leaves holding new bytes at HEAD (an add, a rename's new path, an
+    edit in place or a type change) that holds a RESULT candidate (``_result_at``: a ``.md`` file, or
+    any file whose bytes hold the marker of a form, the B3 review's ADV2), read as a RESULT at HEAD
+    (``_result_declarations``): ``{declared, findings, excluded}``. A symlink or a submodule holds no
+    RESULT; a path under *exclude* is listed in ``excluded`` and not read.
+
+    A RESULT the pull request leaves alone is not read. One that declares a verdict at the merge base
+    and that the pull request deletes, renames away (to a path that declares no verdict of that
+    receipt, or that sits under *exclude*), or edits until it declares none, is
+    ``RESULT_DECLARATION_DROPPED``, a NOTE naming each receipt it no longer declares (the review's
+    N1): the verdict at the merge base is not checked again, and the report says so."""
     ch = repo.changes(base, head)
-    h = ch["head"]
+    h, mb = ch["head"], ch["merge_base"]
     declared: List[Dict[str, Any]] = []
     findings: List[Dict[str, Any]] = []
     excluded = set()
+    at_head: Dict[str, set] = {}
     for x in ch["changes"]:
         path = x["path"]
-        if x["status"] not in _WRITES or not _suffix(path, (".md",)):
+        if x["status"] not in _WRITES:
             continue
         if _excluded(path, exclude):
             excluded.add(path)
             continue
-        try:
-            r = _result_declarations(repo, h, path, exclude)
-        except _Refusal as e:
-            if e.code == "NOT_A_BLOB":
-                continue
-            raise
+        r = _result_at(repo, h, path, exclude)
+        if r is None:
+            continue
         declared += r["declared"]
         findings += r["findings"]
         excluded.update(r["excluded"])
+        at_head[path] = {d["receipt_path"] for d in r["declared"]} | set(r["excluded"])
+    for x in ch["changes"]:
+        old = x["old"] if x["status"] == "R" else x["path"]
+        if x["status"] not in ("M", "T", "D", "R") or _excluded(old, exclude):
+            continue
+        r = _result_at(repo, mb, old, exclude)
+        if r is None or not r["declared"]:
+            continue
+        new = None if x["status"] == "D" else x["path"]
+        gone = sorted({d["receipt_path"] for d in r["declared"]} - at_head.get(new, set()))
+        if not gone:
+            continue
+        them = "it" if len(gone) == 1 else "them"
+        if new is None:
+            how = "the pull request deletes it"
+        elif new != old and _excluded(new, exclude):
+            how = f"the pull request renames it to {new}, which sits under exclude and is not read"
+        elif new != old:
+            how = f"the pull request renames it to {new}, which declares no verdict of {them}"
+        else:
+            how = f"at HEAD it declares no verdict of {them}"
+        code = "RESULT_DECLARATION_DROPPED"
+        findings.append({"code": code, "kind": _KIND[code], "path": old,
+                         "detail": f"{old} declares the verdict of {', '.join(gone)} at the merge base {mb[:12]}; "
+                                   f"{how}, so that declaration is not checked again, and prose outside the two "
+                                   f"forms is not examined (DESIGN 3.4 C9)"})
     return {"declared": declared, "findings": findings, "excluded": sorted(excluded)}
 
 
