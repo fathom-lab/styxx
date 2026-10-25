@@ -24,6 +24,8 @@ cover; no claim.
 | `gen_vectors_fence.py` | builds `vectors_fence.json` from cases that state their outcome in advance; reads no history |
 | `vectors_fence_containers.json` | added after the B3 review: result and locks fences inside containers, where that rule stops, and RESULT bytes in wide encodings and binary files; see "The fence scanner and the RESULT readers" |
 | `gen_vectors_fence_containers.py` | builds `vectors_fence_containers.json` from cases that state their outcome in advance; reads no history |
+| `locks/LOCKS_checksum_deploy_quant_reconstructed.md` | added at step B4: the checksum scorer's deploy-quant path as a locks decision, a RECONSTRUCTION (never sealed, not a catch); see "The locks form and the checksum scorer" |
+| `gen_locks_checksum.py` | builds that file from `papers/checksum/score.py`'s blob at `f0ec5605`, whose sha256 and grammar lines it pins |
 
 The JSON files are generated, never edited by hand. `tests/test_prereg_ci_score_vectors.py` and
 `tests/test_prereg_ci_cover.py` replay every vector; only the checks that read history skip, when
@@ -246,6 +248,39 @@ declaration, as the gates rule reads a gates fence there. A file that shows an e
 span (documentation, tests, these vectors) is read as a RESULT when a pull request writes it, and such paths
 go in `exclude`.
 
+## The locks form and the checksum scorer
+
+Step B4. A PREREG's decision is one of two forms (DESIGN 3.2(a)): the gates fence, or one locks fence read
+with the result fence's rules (`core._fence_block`: the scanner's refusals, then a fence a renderer may show
+inside a container). `core._decision` reads both forms and refuses a PREREG that holds both, and a gates
+PREREG that holds a locks-like fence the locks reader refuses. The gates scanner reads before the locks
+reader, so every gates reading stands; `tests/test_prereg_ci_scorer_run.py` checks that over every `.md` blob
+in the tree at `REV` and at HEAD. `core._locks` reads the block: `scorer`, `reads` and `outcomes`, and the
+optional `withdraws`, `argv` (with `{receipt}` once and `{out}` at most once, each a whole element) and
+`verdict_from` (`stdout`, or an RFC 6901 pointer into the `{out}` JSON), the two keys of PLAN K2b.
+`core.rescore` runs nothing, and reads a locks decision as `SCORER_NOT_RUN`.
+
+The module `styxx.prereg_ci.scorer_run` runs a locked scorer. Each locked file's sealed blob and the receipt
+are written into an empty temporary directory, and the scorer runs under `python -I -S -B -X utf8` through a
+bootstrap that puts that directory ahead of the standard library on `sys.path` and runs it as `__main__`
+(PLAN K3), with a 60-second timeout and no environment but `SYSTEMROOT` on Windows. An audit hook and a last
+import finder refuse and record each reach past the locks: a read of a file not locked, a write but `{out}`,
+an import the locked code asks for that the run does not hold, a process, a socket. `core._run_reading` reads
+any of them as `SCORER_READS_UNLOCKED`, whatever the scorer printed. It is not a sandbox (DESIGN 7, risk 5).
+
+The checksum PREREGs froze their reading rules as prose and are sealed, so neither can gain a locks fence
+(PLAN K2b). The file under `locks/`, written by `gen_locks_checksum.py`, is a RECONSTRUCTION: written after the
+data and after the scorer, never sealed, not a catch. It locks `papers/checksum/score.py`'s deploy-quant path
+at `f0ec5605`, and its outcomes are the 1730 readings that path can print, enumerated from the scorer's code
+(the generator pins the blob's sha256 and the lines the grammar is read from). The test re-derives each of
+the four committed deploy-quant dry-run cards byte for byte, each with the scorer's blob of the commit that
+wrote it; the cards are instrument checks, not results. The certs were written before the scorer's oldest
+blob, so no seal holding the scorer could have ordered them. The beacon-draw path imports numpy through
+`styxx.checksum` and reads `SCORER_READS_UNLOCKED` under `-S`; its scorer catches that import failure and
+prints its committed reading anyway, which is why the run watches imports. The reconstruction holds a locks
+fence, so once it lands the git layer reads it as a decision (C0) like any other; it is never written again
+either way.
+
 ## How to regenerate it
 
 ```
@@ -255,6 +290,7 @@ python -B conformance/prereg_ci/gen_vectors_compare.py --check
 python -B conformance/prereg_ci/gen_seals_manifest.py --check
 python -B conformance/prereg_ci/gen_vectors_fence.py --check
 python -B conformance/prereg_ci/gen_vectors_fence_containers.py --check
+python -B conformance/prereg_ci/gen_locks_checksum.py --check
 ```
 
 Once committed, the set is never written again. A run that regenerates it byte for byte exits 0;
