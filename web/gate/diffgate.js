@@ -617,6 +617,22 @@ function parseUnifiedDiff(diffText) {
   return { status, addedBlob: added.join("\n") };
 }
 
+function parseUnifiedDiffRenames(diffText) {
+  // #174, as the Python's parse_unified_diff_renames: the normalized old path of each rename, read where _Pending
+  // reads `rename from` (after a header, before its `---`/`+++` pair). A copy's `copy from` is not read.
+  const out = [];
+  let pending = false;
+  for (const line of _splitlines(diffText || "")) {
+    if (line.startsWith("diff --git ")) pending = true;
+    else if (line.startsWith("+++ ")) pending = false;
+    else if (pending && line.startsWith("rename from ")) {
+      const old = _norm(line.slice("rename from ".length));
+      if (old) out.push(old);
+    }
+  }
+  return out;
+}
+
 function _pySplitSentences(text) {
   // re.split(r"(?<=[.!?])\s+|\n+", text)
   return text.split(/(?<=[.!?])\s+|\n+/);
@@ -730,6 +746,7 @@ function declarationPass(summaryText) {
 function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = false } = {}) {
   const { status, addedBlob } = parseUnifiedDiff(diffText);
   const sides = parseUnifiedDiffSides(diffText);
+  const sources = parseUnifiedDiffRenames(diffText);           // #174
   const rawInputLen = (diffText || "").length;
   let noEvidence = null;
   if (status.size === 0 && !addedBlob) {
@@ -858,10 +875,16 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           const notPaths = BC1_BY_CONSTRUCTION
             ? rawPrefs.filter(x => !_prefixIsPathShaped(x, status)).map(x => _rstrip(_norm(x), "/."))
             : [];
+          // #174: a rename's old path, which the status keys do not hold, is read beside them
           // PATH-1 mode 1: _pathInside matches a bare filename on its basename.
           const outside = [...status.keys()].filter(p => !prefs.some(x => _pathInside(p, x)));
+          const moved = sources.filter(p => !prefs.some(x => _pathInside(p, x)));
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
           else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
+          else if (moved.length && !outside.length) {    // #174: one reason, naming no path, as the Python's
+            c.verdict = "UNCHECKABLE";
+            c.why = "every changed path lies under the prefix, but not the old path of a rename; git lists it as deleted where it reads no rename, and this template does not decide whether the claim covers it (#174)";
+          }
           else {
             c.verdict = outside.length === 0 ? "VERIFIED" : "CONTRADICTED";
             const shown = prefs.length === 1 ? prefs[0] : prefs.map(pyRepr).join(" and ");
@@ -1010,6 +1033,18 @@ const _P2A_PHRASES = {
 function _p2aLines(text, rx) {
   const out = text.split(rx);
   return (out.length && out[out.length - 1] === "") ? out.slice(0, out.length - 1) : out;
+}
+
+function _p2aSourcesRaw(lines) {
+  // #174: parseUnifiedDiffRenames line for line, the paths as written
+  const out = [];
+  let pending = false;
+  for (const line of lines) {
+    if (line.startsWith("diff --git ")) pending = true;
+    else if (line.startsWith("+++ ")) pending = false;
+    else if (pending && line.startsWith("rename from ")) out.push(line.slice("rename from ".length));
+  }
+  return out;
 }
 
 function _p2aRegsRaw(lines) {
@@ -1748,6 +1783,7 @@ function _p2aFactsRaw(diffText, summaryText) {
     diffText,
     coarse: () => get("coarse", () => _splitlines(diffText)),
     regs: () => get("regs", () => _p2aRegsRaw(f.coarse())),
+    sources: () => get("sources", () => _p2aSourcesRaw(f.coarse())),
     views: () => get("views", () => _p2aViews(f.coarse())),
     divergent: () => get("div", () => _p2aDivergent(diffText)),
     status: space => get(space, () => _p2aBuild(f.regs(), _P2A_FORMS[space][0])),
@@ -2005,22 +2041,29 @@ function _p2aShaped(prefix, keys, form) {   // _prefixIsPathShaped
 const _P2A_SPACES = [["A", _p2aA, _p2aWA, _p2aStrip], ["K", _p2aK, _p2aWK, _p2aDotted]];
 
 function _p2aScope(f, prefixes) {
-  // {space|wild: [whether `prefix` reads as a path, whether prefix2 does, whether every changed path lies under
-  // the prefixes that reading uses]}, in main's key space A and V121's K, with case folded (wild false) and outside
-  // ASCII a placeholder (true).
+  // {space|wild: [whether `prefix` reads as a path, whether prefix2 does, the reading of the prefixes that reading
+  // uses]}, in main's key space A and V121's K, with case folded (wild false) and outside ASCII a placeholder (true).
+  // The reading is true where every changed path lies under them, false where one does not, and null where main's
+  // reading abstains: only a rename's old path outside them (#174).
   const two = prefixes.length === 2;
   const regs = f.regs();
+  const olds = f.sources();
   const out = new Map();
   for (const [sp, form, wform, preKey] of _P2A_SPACES) {
     const [fs, ws] = f.space(sp);
     const keep = [];
     regs.forEach((r, i) => { if (r[2] === "+" || preKey(r[0])) keep.push(i); });
+    const held = olds.filter(s => preKey(s));
     for (const [wild, fm, forms] of [[false, form, fs], [true, wform, ws]]) {
       const paths = keep.map(i => forms[i]);
+      const moved = held.map(s => fm(s));
       const lead = _p2aShaped(prefixes[0], paths, fm);
       const shaped = two && _p2aShaped(prefixes[1], paths, fm);
       const ps = (shaped ? prefixes : prefixes.slice(0, 1)).map(x => _rstrip(fm(x), "/."));
-      out.set(sp + "|" + wild, [lead, shaped, paths.every(p => ps.some(x => _p2aInside(p, x)))]);
+      let under = true;
+      if (!paths.every(p => ps.some(x => _p2aInside(p, x)))) under = false;
+      else if (!moved.every(p => ps.some(x => _p2aInside(p, x)))) under = null;
+      out.set(sp + "|" + wild, [lead, shaped, under]);
     }
   }
   return out;
@@ -2048,7 +2091,7 @@ function _p2aOnly(c, f) {
   const same = (x, y) => x[0] === y[0] && x[1] === y[1] && x[2] === y[2];
   if (!same(got.get("A|false"), got.get("A|true")) || !same(got.get("K|false"), got.get("K|true"))) return ["case", "#121"];
   const [lead, , under] = got.get("A|false");
-  if (!lead || (under ? "VERIFIED" : "CONTRADICTED") !== c.verdict) return ["unreproduced", "#121"];
+  if (!lead || under !== (c.verdict === "VERIFIED")) return ["unreproduced", "#121"];
   // B-1 (NOTE_path2a_fourth_pass_2026_09_30): V121 does not read a `prefix` only the dropped dots make a path. With
   // one prefix the verdict is kept; any rendering that drops a leading directory D holding `.D/` (`--no-prefix` over
   // `a/` or `b/`, `--relative=D`) can make a CONTRADICTED there false (NOTE_path2a_twelfth_pass_2026_10_05; O-10).
