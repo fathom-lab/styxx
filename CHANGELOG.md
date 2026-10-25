@@ -315,21 +315,23 @@ file or charon line is touched.
   one of the 3 is a truth miss, `p2a-101:20260930:111` claim 1, a false CONTRADICTED the counterfactual attributes to
   #101, printed at the raw door and in the four transforms in both ports and at the git door over the generated cases;
   to withhold it the overlay would have to model #178's range, which is a new rule. On the committed inputs it decides
-  21 claims more (109 against 88), 14 right, 4 wrong and 3 not decidable by the cost check's reading, and two of the 4
-  are false alarms on #161's y5 reproductions, read by hand
+  21 claims more (109 against 88), 14 right, 4 wrong and 3 not decidable by the cost check's reading; without `--strict`
+  it turns 29 gates from PASS to FAIL in each reader where the one-sided form turns 22, the 7 more being 5 right catches
+  (`fuzz:224`, `:393`, `:752`, `:1474`, `:2655`) and 2 false alarms on #161's y5 reproductions
   (`path2:y5-a-test-defined-in-a-markdown-block-beside-a-changed-test`,
-  `path2:y5-a-definition-inside-a-string-the-diff-opens`); on the two seeded fuzz sets it decides 762 and 734 more,
-  which the cost check's judge calls 102 and 107 wrong. #161's A-1 shape for #179 (an added `async def test_` makes the
-  count UNCHECKABLE, and an added `async def NAME` turns the symbol CONTRADICTED into UNCHECKABLE) needs no overlay
-  mirror and loses the VERIFIEDs; no lab document gates the full read: the AMENDMENT's G-P1 gates the repair of #97,
-  #101 and #121 and says nothing on `async`; it would also leave the string class named below, the operator's choice.
-  For review 3 (measured on this branch): a name defined twice counted once is a new reading, which the overlay's model
-  of `main`'s count would have to mirror, and wrong where the two definitions sit in two classes; abstaining on any two
-  lines of one name, `def` ones too, moves 351 committed inputs in Python and 356 in the port (334 and 339 for the rule
-  taken, both before the one-sided #178) and takes one more wrong VERIFIED off the truth world (225 wrong verdicts
-  printed, 226 here), at the cost of a right count wherever two classes of one file define tests of one name; and the
-  header's rule read over every header holding such a code point at an edge withheld the CONTRADICTEDs of 6 committed
-  inputs both readers read alike.
+  `path2:y5-a-definition-inside-a-string-the-diff-opens`), each read by hand, and with `--strict` neither form moves a
+  gate; on the two seeded fuzz sets it decides 762 and 734 more, which the cost check's judge, validated on the
+  committed set only, calls 258 and 253 right, 102 and 107 wrong and 402 and 374 not decidable. #161's A-1 shape for
+  #179 (an added `async def test_` makes the count UNCHECKABLE, and an added `async def NAME` turns the symbol
+  CONTRADICTED into UNCHECKABLE) needs no overlay mirror and loses the VERIFIEDs; no lab document gates the full read:
+  the AMENDMENT's G-P1 gates the repair of #97, #101 and #121 and says nothing on `async`; it would also leave the
+  string class named below, the operator's choice. For review 3 (measured on this branch): a name defined twice counted
+  once is a new reading, which the overlay's model of `main`'s count would have to mirror, and wrong where the two
+  definitions sit in two classes; abstaining on any two lines of one name, `def` ones too, moves 351 committed inputs in
+  Python and 356 in the port (334 and 339 for the rule taken, both before the one-sided #178) and takes one more wrong
+  VERIFIED off the truth world (225 wrong verdicts printed, 226 here), at the cost of a right count wherever two classes
+  of one file define tests of one name; and the header's rule read over every header holding such a code point at an
+  edge withheld the CONTRADICTEDs of 6 committed inputs both readers read alike.
 - **Left to the operator, as a separate PR after this one: U+FEFF at line 1 read as the byte order mark** (option B),
   where a hunk at `+1` or a new file's section shows that position. Measured on `eb0a255e`, before the one-sided #178
   (the two were not measured together), in each reader: it brings back 9 committed claims, all 9 right by hand, with 4
