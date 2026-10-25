@@ -230,6 +230,30 @@ def test_the_add_commit_is_gits_diff_filter_rule(merged):
         assert repo.add_commit(path, "main") == porcelain, path
 
 
+def test_a_merge_that_introduces_a_path_lands_it_and_is_no_add_commit(tmp_path):
+    """git's --diff-filter=A shows no diff for a merge, so a path a merge itself introduces (on
+    neither side) has no add commit by that rule; the landing rule still finds the merge."""
+    g = Git(tmp_path / "evil")
+    g.write("README.md", "r\n")
+    g.commit("m0")
+    g("switch", "-q", "-c", "side")
+    g.write("side.md", "s\n")
+    g.commit("side")
+    g("switch", "-q", "main")
+    g.write("main.md", "m\n")
+    g.commit("m1")
+    g("merge", "-q", "--no-ff", "--no-commit", "side")
+    g.write(P, prereg())
+    M = g.commit("a merge that also writes the plan")
+    g.write(P, prereg(0.6))
+    g.commit("edit the plan")
+    with G._Repo(g.root) as repo:
+        assert len(repo.parents(M)) == 2
+        assert g("log", "main", "--diff-filter=A", "--format=%H", "--", P) == ""
+        assert repo.add_commit(P, "main") is None
+        assert repo.landing([P], "main") == {P: M}
+
+
 def test_the_add_commit_of_a_deleted_and_re_added_path_is_the_oldest_add(tmp_path):
     g = Git(tmp_path / "readd")
     g.write("x.md", "a\n")
