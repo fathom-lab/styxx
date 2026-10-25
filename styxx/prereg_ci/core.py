@@ -1370,6 +1370,10 @@ def _locks(block: str) -> Dict[str, Any]:
             raise _GateSpecError(f"each outcome is a non-empty string; {v!r} is not")
         if any(ord(c) < 32 or c in "\x7f\u2028\u2029" for c in v):
             raise _GateSpecError(f"each outcome is a string of one line; {v!r} is not")
+        if v != v.strip():
+            raise _GateSpecError(f"each outcome is a string with no leading or trailing whitespace; {v!r} is not "
+                                 f"(a verdict is read against it exactly, and a reader of a report cannot see the "
+                                 f"difference)")
         if v in seen:
             raise _GateSpecError(f"the outcome {v!r} is declared twice")
         seen.add(v)
