@@ -57,8 +57,10 @@ renders that the scanner does not count (``_shadow_fences``: behind a byte-order
 quote, a list item or a footnote, on a list item's or a footnote's continuation lines, or with a
 second word in the info string), then reads strict JSON.
 ``_result_reading`` reads a RESULT's ```result fence and its sworn spans on receipts' verdict leaves
-(through ``styxx.sworn.scan``, held to the checks sworn makes from bytes alone); ``_declared`` groups
-what one RESULT declares per receipt and refuses two forms that disagree.
+(through ``styxx.sworn.scan``, held to the checks sworn makes from bytes alone), and refuses one in
+UTF-16 or UTF-32 that holds a form's marker; ``_result_candidate`` says whether a reading of some
+bytes could find anything, which is how the git layer reads any file a pull request writes;
+``_declared`` groups what one RESULT declares per receipt and refuses two forms that disagree.
 """
 from __future__ import annotations
 
@@ -772,8 +774,18 @@ _LEXICAL = ("tag_syntax", "nesting", "stray_closer", "unclosed")
 # a tag the sworn lexer would meet (its own candidate pattern) that names a verdict leaf, wherever it sits: what a
 # document the lexer cannot read is searched for, so a mention of the leaf in prose or in code is not one
 _VERDICT_TAG = re.compile(rb"</?[sS][wW][oO][rR][nN](?![A-Za-z0-9_\-])[^>\n]*#/verdict")
-# bytes that are not UTF-8 are read as a RESULT only when they hold such a tag or a result fence's marker
+# bytes that are not UTF-8 are read as a RESULT only when they hold such a tag or a result fence's marker (B3); a
+# wider marker would refuse binary files by chance
 _BYTES_FORM = re.compile(rb"(?im:^[^\n]*?(?:`{3,}|~{3,})[ \t]*result)")
+# the marker of a fence a RESULT reading of UTF-8 text could count or refuse, in its bytes: a backtick or tilde
+# run, the ASCII whitespace str.split() reads past, then "result" in any case, or a word holding a non-ASCII byte
+# (a confusable info string, or a non-ASCII space before the word). With _VERDICT_TAG it is what
+# ``_result_candidate`` looks for in UTF-8 text (the B3 review, ADV2 and M1).
+_FORM_MARK = re.compile(rb"(?i:(?:`{3,}|~{3,})[\t\x0b\x0c\r\x1c-\x1f ]*"
+                        rb"(?:result|[^\t\n\x0b\x0c\r\x1c-\x1f ]*?[\x80-\xff]))")
+# byte-order marks of the wide encodings, the UTF-32 ones before the UTF-16 ones they begin with
+_WIDE_BOMS = ((b"\x00\x00\xfe\xff", "UTF-32-BE"), (b"\xff\xfe\x00\x00", "UTF-32-LE"),
+              (b"\xfe\xff", "UTF-16-BE"), (b"\xff\xfe", "UTF-16-LE"))
 
 
 class _ResultError(ValueError):
@@ -1012,8 +1024,9 @@ def _verdict_spans(raw: bytes) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any
     (the lexer's MALFORMED reasons, a blank span, the length cap, the kind, the receipt grammar, a
     directional override, the needle), and any of them refuses the reading; so does a document
     sworn reads as MALFORMED (unbalanced fences) when it holds a tag naming a verdict leaf
-    (``_VERDICT_TAG``), and a document whose tags do not lex when one of them names a verdict leaf. Spans on other leaves are not read here. A span naming its receipt by the ``rN`` or
-    ``prereg:`` form, which no committed path holds, is listed in *unread* (``RESULT_NOT_READ``)."""
+    (``_VERDICT_TAG``), and a document whose tags do not lex when one of them names a verdict leaf.
+    Spans on other leaves are not read here. A span naming its receipt by the ``rN`` or ``prereg:``
+    form, which no committed path holds, is listed in *unread* (``RESULT_NOT_READ``)."""
     sc = _sworn.scan(raw)
     if sc["document_malformed"] is not None:
         if _VERDICT_TAG.search(raw):
@@ -1075,6 +1088,52 @@ def _verdict_spans(raw: bytes) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any
     return out, unread
 
 
+def _marked(data: bytes) -> bool:
+    """Whether the bytes of UTF-8 text hold the marker of a form: a fence a RESULT reading could count
+    or refuse (``_FORM_MARK``), or a sworn tag naming a verdict leaf (``_VERDICT_TAG``)."""
+    return bool(_FORM_MARK.search(data) or _VERDICT_TAG.search(data))
+
+
+def _bytes_marked(data: bytes) -> bool:
+    """Whether bytes that are not UTF-8 hold a result fence's marker or a sworn tag naming a verdict
+    leaf (B3's rule for them, kept narrow so a binary file does not hold one by chance)."""
+    return bool(_VERDICT_TAG.search(data) or _BYTES_FORM.search(data))
+
+
+def _wide(data: bytes) -> Optional[Tuple[str, bytes]]:
+    """``(encoding, text as UTF-8)`` for bytes that start with a UTF-16 or UTF-32 byte-order mark and
+    decode strictly under it; None for other bytes (the B3 review, M1). Bytes with no mark are read as
+    they stand: UTF-16 text with no mark holds NUL bytes, which git's diff reads as binary."""
+    for bom, enc in _WIDE_BOMS:
+        if data.startswith(bom):
+            try:
+                return enc, data[len(bom):].decode(enc.lower()).encode("utf-8")
+            except UnicodeDecodeError:
+                continue
+    return None
+
+
+def _result_candidate(data: Any) -> bool:
+    """Whether a RESULT reading of *data* (``_result_reading``) could find anything: a declaration, a
+    refusal, or a span it prints. UTF-8 bytes are a candidate when they hold the marker of a form
+    (``_marked``); bytes in a wide encoding (``_wide``), when their text does; other bytes, when they
+    hold the narrow marker the reading refuses them on (``_bytes_marked``). The git layer reads a file
+    the pull request writes as a RESULT when this holds, whatever the file's suffix (the B3 review,
+    ADV2); for bytes it passes over the reading is empty, which
+    ``tests/test_prereg_ci_result_review.py`` checks over generated documents."""
+    if not isinstance(data, (bytes, bytearray)):
+        raise TypeError(f"a RESULT is bytes (a blob), not {type(data).__name__}")
+    data = bytes(data)
+    wide = _wide(data)
+    if wide is not None:
+        return _marked(wide[1])
+    try:
+        data.decode("utf-8")
+    except UnicodeDecodeError:
+        return _bytes_marked(data)
+    return _marked(data)
+
+
 def _result_reading(data: Any) -> Dict[str, Any]:
     """What a RESULT's bytes declare (DESIGN 3.2(c)): ``{code, kind, detail, declarations, unread}``.
 
@@ -1086,7 +1145,10 @@ def _result_reading(data: Any) -> Dict[str, Any]:
     a span); ``line`` 1-based. A refusal of either form (the scanner's, a shadow fence's, strict
     JSON's, the fence's keys, or a span's) is ``RESULT_REFUSES``, a FAIL, and then no declaration
     is read. A document holding neither form declares nothing, which is no finding: most markdown
-    is not a RESULT. Bytes that are not UTF-8 are refused only when they hold a marker of a form."""
+    is not a RESULT. A RESULT is read as UTF-8: bytes that start with a UTF-16 or UTF-32 byte-order
+    mark and decode under it (``_wide``) are refused when their text holds the marker of a form
+    (``_marked``), and declare nothing otherwise (the B3 review, M1); other bytes that are not UTF-8
+    are refused only when they hold a result fence's marker or a span's (``_bytes_marked``)."""
     if not isinstance(data, (bytes, bytearray)):
         raise TypeError(f"a RESULT is bytes (a blob), not {type(data).__name__}")
     data = bytes(data)
@@ -1097,10 +1159,18 @@ def _result_reading(data: Any) -> Dict[str, Any]:
                    unread=[])
         return out
 
+    wide = _wide(data)
+    if wide is not None:
+        if _marked(wide[1]):
+            return refuse(f"the document is {wide[0]} (it starts with that byte-order mark), and read that way it "
+                          f"holds the marker of a form (a fence whose info string reads result or holds a non-ASCII "
+                          f"character, or a sworn tag naming a verdict leaf); a RESULT is read as UTF-8, so nothing "
+                          f"in it is read")
+        return out
     try:
         text = data.decode("utf-8")
     except UnicodeDecodeError as e:
-        if _VERDICT_TAG.search(data) or _BYTES_FORM.search(data):
+        if _bytes_marked(data):
             return refuse(f"the document is not UTF-8 ({e}), and it holds the marker of a ```result fence or of a "
                           f"span on a verdict leaf")
         return out
