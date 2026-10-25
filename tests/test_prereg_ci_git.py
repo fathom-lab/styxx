@@ -308,7 +308,8 @@ def test_the_order_commit_is_the_oldest_holder_of_the_landed_digest(tmp_path):
         assert repo.order_commit(P, L, "decision") == x1
         assert repo.order_commit(P, L, "blob") == x2
         assert core._decision(repo.read(x1, P))["gates_sha256"] == digest(0.5)
-        assert [b for _, b in repo.blob_history(P, x1, L)] == [repo.blob_id(c, P) for c in (x1, y, x2)]
+        assert repo.blob_history(P, x1, L) == [(c, repo.blob_id(c, P)) for c in (x1, y, x2, L)], (
+            "the landing merge differs from main's side at the path, so it is listed")
 
 
 def test_the_oldest_holder_on_a_side_branch_counts(tmp_path):
@@ -376,8 +377,34 @@ def test_a_landing_by_rename_is_named(tmp_path):
 
 def test_blob_history_lists_every_blob_between_two_commits(merged):
     hist = merged.repo.blob_history(P, merged.p1, merged.r1)
-    assert [c for c, _ in hist] == [merged.p1, merged.p2, merged.p3]
-    assert len({b for _, b in hist}) == 3
+    assert [c for c, _ in hist] == [merged.p1, merged.p2, merged.p3, merged.L]
+    assert len({b for _, b in hist}) == 3 and hist[-1][1] == hist[-2][1]
+
+
+def test_blob_history_prints_an_edit_and_revert_on_a_merged_branch(tmp_path):
+    """Review case 9, the reason 3.2(e) prints the history (RED_TEAM m8): the sealed fence is
+    edited on a side branch and reverted there, and the branch is merged before the receipt. The
+    merge is TREESAME to both parents, so git's default simplification lists the seal alone."""
+    g = Git(tmp_path / "revert")
+    g.write(P, prereg(0.5))
+    s = g.commit("seal the plan")
+    g("switch", "-q", "-c", "side")
+    g.write(P, prereg(0.1))
+    e1 = g.commit("move the bar on a branch")
+    g.write(P, prereg(0.5))
+    e2 = g.commit("move it back")
+    g("switch", "-q", "main")
+    g.write("other.md", "o\n")
+    g.commit("main moves")
+    g.merge("side", "merge the branch")
+    g.write("p/receipt_a.json", receipt())
+    r = g.commit("the receipt")
+    with G._Repo(g.root) as repo:
+        assert g("rev-list", r, "--not", s + "^@", "--", P).split() == [s], "default simplification"
+        hist = repo.blob_history(P, s, r)
+        assert [c for c, _ in hist] == [s, e1, e2]
+        assert [b for _, b in hist] == [repo.blob_id(s, P), repo.blob_id(e1, P), repo.blob_id(s, P)]
+        assert core._decision(repo.read(e1, P))["gates_sha256"] == digest(0.1)
 
 
 # ---- reads -----------------------------------------------------------------------------------------------

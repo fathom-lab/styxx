@@ -508,11 +508,16 @@ class _Repo:
         return listed or ([start] if holds(start) else [])
 
     def blob_history(self, path: str, a: str, b: str) -> List[Tuple[str, Optional[str]]]:
-        """(commit, blob id) for *a* and every commit from *b* back to *a* whose diff touches
-        *path*, oldest to newest (git's simplified history of the path; DESIGN 3.2(e) prints it)."""
+        """(commit, blob id) for *a* and every commit from *b* back to *a* whose diff against one of
+        its parents touches *path* (a merge that takes the path unchanged from every parent is left
+        out), oldest to newest with no commit before its parents. DESIGN 3.2(e) prints it because an
+        edit and revert on a branch never reaches a per-PR check (RED_TEAM m8), so the history is
+        git's full one (``--full-history``): default simplification follows one TREESAME parent of a
+        merge and drops the side branch that edited and reverted the path."""
         self._full()
         a, b = self.commit(a), self.commit(b)
-        listed = self._ok("rev-list", b, "--not", a + "^@", "--", _plain_path(path)).decode("ascii").split()
+        listed = self._ok("rev-list", "--full-history", "--date-order", b, "--not", a + "^@", "--",
+                          _plain_path(path)).decode("ascii").split()
         commits = [a] + [c for c in reversed(listed) if c != a]
         return [(c, self._blob_id(c, path)) for c in commits]
 
