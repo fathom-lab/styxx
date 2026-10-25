@@ -336,7 +336,7 @@ def test_m1_a_result_rewritten_as_utf16_refuses_in_the_pull_request(lab):
     g.write("RESULT_a.md", b"\xff\xfe" + result_md("FAIL").encode("utf-16-le"))
     head = g.commit("rewrite the RESULT as UTF-16")
     got = read_pr(g, base, head)
-    assert (REFUSES, "FAIL", "RESULT_a.md") in got["findings"], got
+    assert got["findings"] == [(REFUSES, "FAIL", "RESULT_a.md")], got        # the refusal alone, no drop NOTE
     assert got["pairs"] == []
 
 

@@ -1780,13 +1780,15 @@ def _results_written(repo: _Repo, base: str, head: str, exclude: Sequence[str] =
     and that the pull request deletes, renames away (to a path that declares no verdict of that
     receipt, or that sits under *exclude*), or edits until it declares none, is
     ``RESULT_DECLARATION_DROPPED``, a NOTE naming each receipt it no longer declares (the review's
-    N1): the verdict at the merge base is not checked again, and the report says so."""
+    N1): the verdict at the merge base is not checked again, and the report says so. A RESULT whose
+    reading at HEAD is refused gets the refusal alone."""
     ch = repo.changes(base, head)
     h, mb = ch["head"], ch["merge_base"]
     declared: List[Dict[str, Any]] = []
     findings: List[Dict[str, Any]] = []
     excluded = set()
     at_head: Dict[str, set] = {}
+    refused = set()                       # read at HEAD and refused: that FAIL names the file, so no NOTE follows
     for x in ch["changes"]:
         path = x["path"]
         if x["status"] not in _WRITES:
@@ -1801,9 +1803,11 @@ def _results_written(repo: _Repo, base: str, head: str, exclude: Sequence[str] =
         findings += r["findings"]
         excluded.update(r["excluded"])
         at_head[path] = {d["receipt_path"] for d in r["declared"]} | set(r["excluded"])
+        if r["code"] is not None:
+            refused.add(path)
     for x in ch["changes"]:
         old = x["old"] if x["status"] == "R" else x["path"]
-        if x["status"] not in ("M", "T", "D", "R") or _excluded(old, exclude):
+        if x["status"] not in ("M", "T", "D", "R") or _excluded(old, exclude) or x["path"] in refused:
             continue
         r = _result_at(repo, mb, old, exclude)
         if r is None or not r["declared"]:
