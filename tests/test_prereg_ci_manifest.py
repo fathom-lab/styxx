@@ -718,6 +718,8 @@ def test_a_receipt_deleted_before_the_amendment_still_reads_amended_after_data(t
     g.write("q/other.json", receipt(name="PREREG_b.md", m=0.1))
     g.write("q/PREREG_b.md", prereg(0.5))
     g.commit("a receipt of another PREREG")
+    g.write("p/receipt_0.json", _recd(0.46, 0.5))
+    g.commit("receipt_0 rewritten in place before it is dropped")
     os.remove(g.root / "p" / "receipt_0.json")
     g.commit("drop it")
     g.write(A, prereg(0.4, "amendment"))
@@ -735,11 +737,12 @@ def test_a_receipt_deleted_before_the_amendment_still_reads_amended_after_data(t
         d = got["findings"][0]["detail"]
         assert f"p/receipt_0.json@{r0[:12]} read HOLD under the sealed table (in history only" in d
         assert "seen: nothing run" in d
+        # R is the oldest writer, read with the bytes it wrote
         assert [(x["path"], x["commit"], x["in_tree"]) for x in got["earlier"]] == [("p/receipt_0.json", r0, False)]
         assert G._effect(repo, P, "p/receipt_1.json", r1, base, head, es, amend_after_data="fail")["findings"][0][
             "kind"] == "FAIL"
         hist = G._receipts_in_history(repo, P, a, seal, [])
-        assert [(x["path"], x["receipt_commit"]) for x in hist] == [("p/receipt_0.json", r0)]
+        assert [(x["path"], x["receipt_commit"], x["receipt"]["m"]) for x in hist] == [("p/receipt_0.json", r0, 0.45)]
         assert G._receipts_in_history(repo, P, a, seal, ["p/receipt_0.json"]) == []
         assert G._receipts_in_history(repo, P, a, seal, [], exclude=("p/",)) == []
         assert G._receipts_in_history(repo, P, r0, seal, []) == []          # strictly before the tip
