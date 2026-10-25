@@ -96,6 +96,30 @@ def _sha256(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def _decision(prereg: Any) -> Dict[str, Any]:
+    """The decision a PREREG's bytes hold, read as ``rescore`` reads it, without a receipt.
+
+    Returns ``{form, block, gates_sha256, code, detail}``: form "gates" with the selected fence's
+    text and its digest; or form None with ``code`` ``NOT_GATED`` (no gates-like fence at all) or
+    ``SCORER_REFUSES`` (a fence the scanner refuses, or bytes that are not UTF-8) and the refusal's
+    text. The git layer compares these digests along a path's history (the order commit of DESIGN
+    3.2(b), and C0); ``rescore`` scores the same block, so the two never read a PREREG two ways.
+    """
+    out: Dict[str, Any] = {"form": None, "block": None, "gates_sha256": None, "code": None, "detail": None}
+    try:
+        text = _decision_text(prereg)
+    except UnicodeDecodeError as e:
+        out.update(code=_SCORER_REFUSES, detail=f"the PREREG is not UTF-8: {e}")
+        return out
+    try:
+        block = _protocol._select_gates_block(text)
+    except _GateSpecError as e:
+        out.update(code=_NOT_GATED if str(e).startswith(_NO_FENCE) else _SCORER_REFUSES, detail=str(e))
+        return out
+    out.update(form="gates", block=block, gates_sha256=_sha256(block))
+    return out
+
+
 def _literal(value: Any) -> Optional[bool]:
     """What a ``when`` literal matches under the scorers' rule ``fired.get(k) == v``, where a fired
     gate is a bool: True, False, or None for a literal no bool equals (the row can never match)."""
@@ -269,19 +293,13 @@ def rescore(prereg: Any, receipt: Any, *, cover_budget: Optional[int] = _COVER_B
         out.update(code=_SCORER_REFUSES, detail=detail)
         return out
 
-    try:
-        text = _decision_text(prereg)
-    except UnicodeDecodeError as e:
-        return refuse(f"the PREREG is not UTF-8: {e}")
-    try:
-        block = _protocol._select_gates_block(text)
-    except _GateSpecError as e:
-        if str(e).startswith(_NO_FENCE):
-            out.update(code=_NOT_GATED, detail=str(e))
-            return out
-        return refuse(str(e))
+    decision = _decision(prereg)
+    if decision["form"] is None:
+        out.update(code=decision["code"], detail=decision["detail"])
+        return out
+    block = decision["block"]
     out["form"] = "gates"
-    out["gates_sha256"] = _sha256(block)
+    out["gates_sha256"] = decision["gates_sha256"]
     try:
         spec = _capsule._strict_json(block)
     except (ValueError, UnicodeDecodeError) as e:
