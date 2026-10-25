@@ -755,6 +755,8 @@ _RESULT_NOT_READ = "RESULT_NOT_READ"
 _RESULT_KIND = {_RESULT_REFUSES: "FAIL", _RESULT_FORMS_DIFFER: "FAIL", _RESULT_NOT_READ: "NOTE"}
 _RESULT_KEYS = ("prereg", "receipt", "verdict")
 _VERDICT_LEAF = "/verdict"
+# how a finding names a declaration's form
+_FORM_NAME = {"fence": "result fence", "sworn": "sworn span"}
 # the lexer's reasons under which a document's tags have no canonical text (styxx.sworn's own list)
 _LEXICAL = ("tag_syntax", "nesting", "stray_closer", "unclosed")
 # a tag the sworn lexer would meet (its own candidate pattern) that names a verdict leaf, wherever it sits: what a
@@ -1073,7 +1075,8 @@ def _declared(declarations: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
         if len(verdicts) > 1:
             findings.append({"code": _RESULT_FORMS_DIFFER, "kind": _RESULT_KIND[_RESULT_FORMS_DIFFER], "path": result,
                              "detail": f"{result or 'the RESULT'} declares {len(verdicts)} verdicts for {path}: "
-                                       + "; ".join(f"the {s['form']} at line {s['line']} prints {s['verdict']}"
+                                       + "; ".join(f"the {_FORM_NAME[s['form']]} at line {s['line']} prints "
+                                                   f"{s['verdict']}"
                                                    for s in sources)
                                        + "; the forms must agree (DESIGN 3.2(c))"})
     return {"declared": declared, "findings": findings}

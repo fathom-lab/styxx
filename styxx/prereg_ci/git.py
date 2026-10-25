@@ -1689,7 +1689,7 @@ def _result_declarations(repo: _Repo, rev: str, path: str, exclude: Sequence[str
     resolved: List[Dict[str, Any]] = []
     held: Dict[str, Tuple[Any, str]] = {}
     for d in reading["declarations"]:
-        where = f"the {d['form']} at line {d['line']}"
+        where = f"the {_core._FORM_NAME[d['form']]} at line {d['line']}"
         try:
             if d["form"] == "sworn":
                 rp = d["receipt"]
