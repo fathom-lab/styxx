@@ -10,6 +10,14 @@ This suite pins the REPORTING contract only. `_NUM` is deliberately unchanged: w
 would push the whole class through the obligation ladder and re-adjudicate 208 committed
 documents, which is a preregistered measurement and not a patch. Every assertion below was watched
 failing against the pre-clause verifier before it was written to pass.
+
+2026-10-25, the numeral reader v2 (`V15_READER_V2`, tests/test_certify_numerals_v2.py): the reader
+now widens through a SECOND regex that reads `_NUM`'s shapes plus suffixed magnitudes and the named
+forms, and `_NUM` itself is still not edited. The sentence-final rule that would read `0.55.` is in
+the tree behind `V15_SENTENCE_FINAL`, OFF: that measurement was run (12 committed OATH-HELD
+certificates re-derive OATH-FAILED) and the operator decides. So every assertion here about the
+trailing period still holds under the shipped reader, and the band's policy block now names the
+reader that issued it (schema v2); the v1 block is asserted with the master flag off.
 """
 import json
 import re
@@ -23,7 +31,9 @@ from styxx.certify import (_NUM, _UNCOVERED_COUNTED, _WIDE_NUM, certify_doc, ext
 # --------------------------------------------------------------------------- the defect itself
 
 def test_num_regex_cannot_see_a_number_followed_by_a_period():
-    """The premise. If this ever fails, `_NUM` was widened and this whole band changes meaning."""
+    """The premise. If this ever fails, `_NUM` itself was widened. The numeral reader v2 widens
+    through a second regex and leaves `_NUM` as it is, so this still holds; whether the band keeps its
+    meaning is now `V15_SENTENCE_FINAL`'s question (off), not `_NUM`'s."""
     assert [m.group(0) for m in _NUM.finditer("precision of 0.55")] == ["0.55"]
     assert [m.group(0) for m in _NUM.finditer("precision of 0.55.")] == []
     assert [m.group(0) for m in _NUM.finditer("the count was 12.")] == []
@@ -128,10 +138,25 @@ def test_a_partially_extracted_span_records_what_was_examined_instead(tmp_path):
 
 
 def test_the_policy_block_names_the_bands_own_boundary(tmp_path):
+    """Under the shipped reader (v2) the block names the reader and its counted reasons; with the
+    master flag off it is the 2026-09-01 block, byte for byte in its text."""
+    import styxx.certify as C
     pol = _cert(tmp_path, CANON, {})["uncovered_policy"]
+    assert pol["schema"] == "styxx-oath/uncovered-band/v2"
+    assert sorted(pol["counted_reasons"]) == sorted(C._V15_UNCOVERED_COUNTED)
+    assert set(pol["counted_reasons"]) > set(_UNCOVERED_COUNTED)
+    assert "trailing-period" in pol["note"]        # the sentence-final rule is off: the band keeps it
+    # uncovered=0 must not be readable as "fully covered"
+    assert "does NOT mean fully covered" in pol["scope_limit"]
+    C.V15_READER_V2 = False
+    C._v15_reset()
+    try:
+        pol = _cert(tmp_path, CANON, {})["uncovered_policy"]
+    finally:
+        C.V15_READER_V2 = True
+        C._v15_reset()
     assert pol["schema"] == "styxx-oath/uncovered-band/v1"
     assert sorted(pol["counted_reasons"]) == sorted(_UNCOVERED_COUNTED)
-    # uncovered=0 must not be readable as "fully covered"
     assert "does NOT mean fully covered" in pol["scope_limit"]
 
 

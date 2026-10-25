@@ -154,6 +154,8 @@ def _pose_as_pre_band(c):
     c["verdict"] = "OATH-HELD"
     for k in _BAND:
         del c[k]
+    # a certificate from before the band (2026-09-01) predates the numeral reader v2 (2026-10-25) too
+    c.pop("numeral_reader", None)
 
 
 def test_d1_a_pre_band_pose_that_keeps_a_later_field_fails(uncovered, tmp_path):
@@ -544,6 +546,7 @@ def _june_shaped(cert):
         del e["col"], e["epistemics"]
     for k in _BAND + ("epistemics_summary", "receipt_binding"):
         del cert[k]
+    cert.pop("numeral_reader", None)       # the numeral reader v2 (2026-10-25) is later still
     cert["verifier_sha256"] = "1" * 64
 
 
@@ -906,7 +909,8 @@ def test_binding_context_deleted_from_a_dated_certificate_fails(tmp_path):
     rep = _fails_on_legacy(src, tmp_path, no_context, "certificate.ledger[].binding_context is "
                                                       "absent from 2 of 2 row(s)")
     msg = [x for x in rep["problems"] if "binding_context" in x][0]
-    assert "2026-06-10" in msg and "certificate.receipt_binding" in msg, msg
+    # the field that dates the certificate is the latest generation it carries: numeral_reader since 2026-10-25
+    assert "2026-06-10" in msg and "certificate.numeral_reader" in msg and "2026-10-25" in msg, msg
 
 
 def test_a_certificate_with_nothing_to_date_it_names_the_day_certify_began_each_field(tmp_path):
