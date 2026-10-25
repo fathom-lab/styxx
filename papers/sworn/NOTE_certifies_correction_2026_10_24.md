@@ -1,7 +1,7 @@
 # NOTE — the receipt's certificate sentence said more than the verifier checks; schema /v2 corrects it
 
-Fathom Lab · 2026-10-24 · A correction, on the route the operator chose for it. No committed receipt is edited.
-Every count below is sworn to `papers/sworn/certifies_census_2026_10_24.json`, which
+Fathom Lab · 2026-10-24 · A correction, on the route the operator chose for it. No receipt committed on main is
+edited. Every count inside a sworn span below is sworn to `papers/sworn/certifies_census_2026_10_24.json`, which
 `papers/sworn/certifies_census.py` writes from git objects and from `styxx.sworn` (`--check` regenerates it).
 Line numbers in `styxx/sworn.py` are at `2e98debc`, the commit this step was cut from.
 
@@ -22,13 +22,16 @@ authorship check reads that manifest:
 - an `rN` receipt is refused when the manifest records it under an author-side `kind_of_source`, or lists
   its sha256 in `authored_sha256` (l.1228);
 - a `path:` or `prereg:` receipt is refused when a manifest is given and lists its sha256 there (l.1265);
-  with no manifest nothing about authorship is consulted, and every such span already prints
-  "authorship unchecked";
+  with no manifest nothing about authorship is consulted. Every resolved span of these two forms prints
+  "authorship unchecked", with a manifest or without: nothing beyond that membership was tested;
 - `authored_sha256` is the harness's record of what the agent produced in one turn. The code says what
   follows, in its own comment: "a file the agent committed under a name the harness never digested is still
   not caught" (l.1262-1264), and `SPEC_tree_channel_authorship_v01_2026_09_06.md` says so under "What this
-  spec does not say";
-- an UNRESOLVED span was not checked at all, and the sentence opened with "the spans … were checked".
+  spec does not say". The comment's "name" is loose: the membership is tested on the bytes' sha256, never
+  on a name, so the bytes the harness digested, committed under a name it never saw, are refused. What is
+  not caught is bytes the harness never digested, such as a file written in another turn, or by a shell
+  command or a tool the harness does not digest;
+- an UNRESOLVED span was not compared at all, and the sentence opened with "the spans … were checked".
 
 The adapters' own documents already drew the line the sentence did not: `sworn/README.md`
 ("`authored_sha256` catches only the trivial laundering of a committed file into a receipt") and
@@ -37,7 +40,7 @@ a file").
 
 In this lab the gap is the ordinary case.
 <sworn r="path:papers/sworn/certifies_census_2026_10_24.json#/sidecars" k="numeric">The 58 committed sidecars</sworn>
-carry
+carry, at `2e98debc`,
 <sworn r="path:papers/sworn/certifies_census_2026_10_24.json#/path_spans" k="numeric">1,261 spans that name a committed file</sworn>
 (`path:` spans) over
 <sworn r="path:papers/sworn/certifies_census_2026_10_24.json#/path_targets" k="numeric">137 distinct files</sworn>,
@@ -45,7 +48,9 @@ and
 <sworn r="path:papers/sworn/certifies_census_2026_10_24.json#/path_spans_on_speaker_touched_files" k="numeric">1,261 of those spans rest on a file whose git history names one of the lab's five agent names as author or committer</sworn>.
 A HELD `path:` span here has been a consistency check between the speaker's sentence and files the
 speaker, or the operator, committed. That says nothing about whether those files are true; it says what
-the receipt certified.
+the receipt certified. The spans of this NOTE are the same case: each is a `path:` span on the census, a
+file a speaker committed, so what a reader can rely on is that `papers/sworn/certifies_census.py --check`
+regenerates the census from git objects and from `styxx.sworn`.
 
 ## Where the sentence is
 
@@ -71,23 +76,33 @@ too.
 - Receipts issue as `styxx.sworn.verdict-receipt/v2`; only `schema` and `certifies` differ from /v1. The
   /v2 sentence, in full:
 
-  > the spans the author bound that read HELD or FAILED were checked, each by its kind, against the
-  > receipt it names (its bytes, or for a hash span on a manifest entry that carries none, the sha256 the
-  > manifest records), at the commit and manifest the receipt records and at the rung the manifest
-  > declares; the only authorship check is against the manifest: an rN receipt is taken as not the
-  > author's when the manifest records it under a kind_of_source from the closed external vocabulary and
-  > does not list its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given
-  > or the manifest does not list its sha256 there; authored_sha256 is the harness's record of what the
-  > agent produced in the turn the manifest names, so bytes the author wrote that the harness never
-  > digested, such as a file committed in another turn or under a name the harness never saw, are not
-  > caught; an UNRESOLVED span was not checked — NOT a claim that the author did not write the receipt's
-  > bytes, NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT
-  > a check that the tags were written at write time, NOT a check of any signature, and only as
+  > the spans the author bound that read HELD or FAILED were checked, each by its kind, against the receipt
+  > it names (its bytes, or for a hash span on a manifest entry that carries none, the sha256 the manifest
+  > records), at the commit and manifest this receipt records, and an rN span at the rung the manifest
+  > declares (a path: or prereg: span carries no rung and is counted as committed); the only authorship test
+  > reads the manifest: an rN receipt is taken as not the author's when the manifest records it under a
+  > kind_of_source from the closed external vocabulary and does not list its sha256 in authored_sha256, and
+  > a path: or prereg: receipt when no manifest is given or the manifest does not list its sha256 there (its
+  > span's provenance reads authorship unchecked: nothing beyond that membership was tested);
+  > authored_sha256 is the harness's record of what the agent produced in the turn the manifest names,
+  > tested on the bytes' sha256 and never on a name, so bytes the author wrote that the harness never
+  > digested, such as a file written in another turn, or by a shell command or a tool the harness does not
+  > digest, are not caught; a MALFORMED span was refused before any comparison, the authorship refusals
+  > among them, and an UNRESOLVED span was not compared — NOT a claim that the author did not write the
+  > receipt's bytes, NOT a claim that the document is correct, NOT a claim that the right sentences were
+  > bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as
   > trustworthy as the harness that minted the manifest and the tree that served the commit (git history
   > from the CLI; a snapshot or in-memory tree on its caller's word)
 
   (`_CERTIFIES` in `styxx/sworn.py` is that text on one line; the /v1 text stays beside it as
   `_CERTIFIES_V1`, marked withdrawn, loaded and never emitted.)
+- A draft of the /v2 sentence, committed on the branch that carries this NOTE and reviewed before merge,
+  attached "at the rung the manifest declares" to every span. Only an `rN` span has a rung: a `path:` or
+  `prereg:` span has none in its provenance, and the receipt's `rungs` block counts it as `committed`, so
+  under a manifest declaring L3, a rung the verifier refuses, a `path:` span still reads HELD beside an
+  `rN` span that reads UNRESOLVED. The sentence above is the corrected one. The receipts the draft was printed
+  in, this NOTE's and the new action sample's, were issued again before merge; no receipt on main carries
+  the draft.
 - A /v1 receipt keeps its digest over its bytes as committed and is compared on the fresh core with
   `schema` and `certifies` held at the /v1 strings, so it re-derives exactly when it did; one whose
   `certifies` was edited and re-digested still fails. A /v0 receipt is checked as before.
@@ -108,6 +123,20 @@ Of the
 <sworn r="path:papers/sworn/certifies_census_2026_10_24.json#/sidecar_receipts" k="numeric">58 receipts beside a committed sidecar</sworn>,
 <sworn r="path:papers/sworn/certifies_census_2026_10_24.json#/sidecar_receipts_verified" k="numeric">58 re-derive</sworn>
 under the `/v2` verifier at the commits they name.
+
+## What else moved
+
+- The `/v1` conformance set's `set_sha256`, and the ids of its `receipt_check` vectors whose input receipts
+  name the verifier's build, moved, as they do at every edit of `sworn.py`; no core vector and no expected
+  outcome moved (`conformance/sworn/README.md`).
+- `same_verifier_build` reads false on every committed receipt an earlier `sworn.py` issued. It is advisory,
+  outside the digest and outside the compare.
+- The stranger's ferry-log step (`python -m styxx.stranger`) reads FAIL. The sworn lines of
+  `papers/charon/charon.log.jsonl` that recorded `counts.receipt_check.same_verifier_build` true carry that
+  build-relative flag inside the core charon compares, so under any edited `sworn.py` they read SKEW (the line
+  moved and the verifier moved). Their receipts still verify, `tests/test_stranger.py` holds that the flag is
+  the only field that moved in each, and `papers/checksum/STRANGER.md` says so beside its step 2. Whether
+  charon should compare that flag apart is the operator's decision.
 
 ## What this does not say
 

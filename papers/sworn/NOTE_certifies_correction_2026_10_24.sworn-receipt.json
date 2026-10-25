@@ -3,16 +3,16 @@
  "format": "sworn/0.1",
  "document": {
   "name": "NOTE_certifies_correction_2026_10_24.sworn.json",
-  "inline_sha256": "7b7776297bd361fb2f8f43e42fe9049cc40dbddf06f43e1304b3a58d2ac04d15",
-  "canonical_sha256": "aedf90b7078f7c0f1e7e059efec95804a9d576e56734f7e845b7829a85097be7"
+  "inline_sha256": "4f12d93debc6d8a7d86a97c0d2904a10761a91c54fd793e52d3b638bf76bb0ce",
+  "canonical_sha256": "3443e0f28838813862ae9ab1c61c7d607f38c62cd4ef29d35cf60ff86ad2d339"
  },
  "commit": "b4dee7bfd74066352e7903f37f5903779615422a",
  "manifest_digest": null,
  "spans": [
   {
-   "at": 733,
-   "start": 733,
-   "end": 819,
+   "at": 761,
+   "start": 761,
+   "end": 847,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/v1_opening",
    "kind": "quote",
    "verdict": "HELD",
@@ -29,9 +29,9 @@
    }
   },
   {
-   "at": 2526,
-   "start": 2434,
-   "end": 2459,
+   "at": 2980,
+   "start": 2888,
+   "end": 2913,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/sidecars",
    "kind": "numeric",
    "verdict": "HELD",
@@ -51,9 +51,9 @@
    }
   },
   {
-   "at": 2650,
-   "start": 2466,
-   "end": 2504,
+   "at": 3120,
+   "start": 2936,
+   "end": 2974,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/path_spans",
    "kind": "numeric",
    "verdict": "HELD",
@@ -73,9 +73,9 @@
    }
   },
   {
-   "at": 2804,
-   "start": 2526,
-   "end": 2544,
+   "at": 3274,
+   "start": 2996,
+   "end": 3014,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/path_targets",
    "kind": "numeric",
    "verdict": "HELD",
@@ -95,9 +95,9 @@
    }
   },
   {
-   "at": 2924,
-   "start": 2550,
-   "end": 2666,
+   "at": 3394,
+   "start": 3020,
+   "end": 3136,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/path_spans_on_speaker_touched_files",
    "kind": "numeric",
    "verdict": "HELD",
@@ -117,9 +117,9 @@
    }
   },
   {
-   "at": 3414,
-   "start": 2921,
-   "end": 2946,
+   "at": 4136,
+   "start": 3643,
+   "end": 3668,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/files_carrying_the_v1_clause_at_base",
    "kind": "numeric",
    "verdict": "HELD",
@@ -139,9 +139,9 @@
    }
   },
   {
-   "at": 3575,
-   "start": 2962,
-   "end": 3004,
+   "at": 4297,
+   "start": 3684,
+   "end": 3726,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/v1_receipts_carrying_the_v1_sentence",
    "kind": "numeric",
    "verdict": "HELD",
@@ -161,9 +161,9 @@
    }
   },
   {
-   "at": 3739,
-   "start": 3006,
-   "end": 3016,
+   "at": 4461,
+   "start": 3728,
+   "end": 3738,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/by_class_at_base/sworn_receipt_json",
    "kind": "numeric",
    "verdict": "HELD",
@@ -183,9 +183,9 @@
    }
   },
   {
-   "at": 3906,
-   "start": 3054,
-   "end": 3076,
+   "at": 4628,
+   "start": 3776,
+   "end": 3798,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/by_class_at_base/dryrun_receipt",
    "kind": "numeric",
    "verdict": "HELD",
@@ -205,9 +205,9 @@
    }
   },
   {
-   "at": 4281,
-   "start": 3314,
-   "end": 3338,
+   "at": 5003,
+   "start": 4036,
+   "end": 4060,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/v0_receipts_at_base",
    "kind": "numeric",
    "verdict": "HELD",
@@ -227,9 +227,9 @@
    }
   },
   {
-   "at": 6811,
-   "start": 5741,
-   "end": 5773,
+   "at": 8529,
+   "start": 7459,
+   "end": 7491,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/conformance_v1_core_vectors_unchanged_since_base",
    "kind": "numeric",
    "verdict": "HELD",
@@ -249,9 +249,9 @@
    }
   },
   {
-   "at": 7585,
-   "start": 6383,
-   "end": 6474,
+   "at": 9303,
+   "start": 8101,
+   "end": 8192,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/committed_receipts_modified_or_deleted_since_base",
    "kind": "numeric",
    "verdict": "HELD",
@@ -271,9 +271,9 @@
    }
   },
   {
-   "at": 7818,
-   "start": 6483,
-   "end": 6521,
+   "at": 9536,
+   "start": 8201,
+   "end": 8239,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/sidecar_receipts",
    "kind": "numeric",
    "verdict": "HELD",
@@ -293,9 +293,9 @@
    }
   },
   {
-   "at": 7958,
-   "start": 6523,
-   "end": 6535,
+   "at": 9676,
+   "start": 8241,
+   "end": 8253,
    "receipt": "path:papers/sworn/certifies_census_2026_10_24.json#/sidecar_receipts_verified",
    "kind": "numeric",
    "verdict": "HELD",
@@ -331,7 +331,7 @@
  },
  "verifier": {
   "styxx_version": "7.50.0",
-  "sworn_sha256": "cf2762657ac11a7aee5bcf226349cce9eb0630862c1ddba691969d9a77c328b2",
+  "sworn_sha256": "3f32da0fdd69d2f448c54d87fc9bfdb07917c3fc076c86d591ba771ec2267fcb",
   "rounding": "ROUND_HALF_EVEN",
   "decisions": {
    "fence": "a line whose first bytes are 0-3 ASCII spaces then three or more backticks is a fence delimiter; every delimiter toggles; an odd count is document-level MALFORMED. Tilde fences, blockquoted fences and 4-space indented code are NOT fences (spec-literal; not a markdown parse).",
@@ -366,43 +366,78 @@
    "html_comments": "v0.1 recognised a tag inside an HTML comment like any other and named the hidden commitment as owed; v0.2 R2 closes it — see `hidden_commitment`"
   }
  },
- "certifies": "the spans the author bound that read HELD or FAILED were checked, each by its kind, against the receipt it names (its bytes, or for a hash span on a manifest entry that carries none, the sha256 the manifest records), at the commit and manifest the receipt records and at the rung the manifest declares; the only authorship check is against the manifest: an rN receipt is taken as not the author's when the manifest records it under a kind_of_source from the closed external vocabulary and does not list its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given or the manifest does not list its sha256 there; authored_sha256 is the harness's record of what the agent produced in the turn the manifest names, so bytes the author wrote that the harness never digested, such as a file committed in another turn or under a name the harness never saw, are not caught; an UNRESOLVED span was not checked — NOT a claim that the author did not write the receipt's bytes, NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the tree that served the commit (git history from the CLI; a snapshot or in-memory tree on its caller's word)",
- "digest": "49046b917daaf96e99eb800bc7238ebc19a1f9210e00d9b142eb280938c0cf74",
+ "certifies": "the spans the author bound that read HELD or FAILED were checked, each by its kind, against the receipt it names (its bytes, or for a hash span on a manifest entry that carries none, the sha256 the manifest records), at the commit and manifest this receipt records, and an rN span at the rung the manifest declares (a path: or prereg: span carries no rung and is counted as committed); the only authorship test reads the manifest: an rN receipt is taken as not the author's when the manifest records it under a kind_of_source from the closed external vocabulary and does not list its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given or the manifest does not list its sha256 there (its span's provenance reads authorship unchecked: nothing beyond that membership was tested); authored_sha256 is the harness's record of what the agent produced in the turn the manifest names, tested on the bytes' sha256 and never on a name, so bytes the author wrote that the harness never digested, such as a file written in another turn, or by a shell command or a tool the harness does not digest, are not caught; a MALFORMED span was refused before any comparison, the authorship refusals among them, and an UNRESOLVED span was not compared — NOT a claim that the author did not write the receipt's bytes, NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the tree that served the commit (git history from the CLI; a snapshot or in-memory tree on its caller's word)",
+ "digest": "75adf2851cf68fa55d976ae2ce63d125491e9a20f6ae00a9bfee9539045670fe",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
   "sworn_total": 14,
-  "narrative_sentences": 108,
-  "sentence_share": 0.1148,
-  "diff_claim_sentences": 4,
-  "diff_claim_share": 0.7778,
+  "narrative_sentences": 147,
+  "sentence_share": 0.087,
+  "diff_claim_sentences": 11,
+  "diff_claim_share": 0.56,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
   "unsworn_claims": [
    {
-    "start": 2174,
-    "end": 2270,
+    "start": 2628,
+    "end": 2724,
     "text": "(\"`authored_sha256` catches only the trivial laundering of a committed file into a receipt\") and"
    },
    {
-    "start": 5505,
-    "end": 5556,
+    "start": 3446,
+    "end": 3551,
+    "text": "file a speaker committed, so what a reader can rely on is that `papers/sworn/certifies_census.py --check`"
+   },
+   {
+    "start": 6583,
+    "end": 6686,
+    "text": "`prereg:` span has none in its provenance, and the receipt's `rungs` block counts it as `committed`, so"
+   },
+   {
+    "start": 7223,
+    "end": 7274,
     "text": "`certifies` was edited and re-digested still fails."
    },
    {
-    "start": 6262,
-    "end": 6357,
+    "start": 7980,
+    "end": 8075,
     "text": "boundary, and `scripts/surface_lint.py` lists the /v1 opening as withdrawn on shipped surfaces."
    },
    {
-    "start": 6536,
-    "end": 6586,
+    "start": 8254,
+    "end": 8304,
     "text": "under the `/v2` verifier at the commits they name."
+   },
+   {
+    "start": 8436,
+    "end": 8540,
+    "text": "name the verifier's build, moved, as they do at every edit of `sworn.py`; no core vector and no expected"
+   },
+   {
+    "start": 8543,
+    "end": 8589,
+    "text": "outcome moved (`conformance/sworn/README.md`)."
+   },
+   {
+    "start": 8590,
+    "end": 8682,
+    "text": "- `same_verifier_build` reads false on every committed receipt an earlier `sworn.py` issued."
+   },
+   {
+    "start": 8947,
+    "end": 9055,
+    "text": "build-relative flag inside the core charon compares, so under any edited `sworn.py` they read SKEW (the line"
+   },
+   {
+    "start": 9168,
+    "end": 9263,
+    "text": "the only field that moved in each, and `papers/checksum/STRANGER.md` says so beside its step 2."
    }
   ],
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "b9405af72d0e9f3edc6c1874a80d47c61af9f64c98b423add58f6cc637a2da06",
- "timestamp": "2026-10-24T22:20:34Z"
+ "coverage_sha256": "f0b5257971c692e1a76e7527e9b9a6e6c245b9f4e9d10eaa976076e92e26e5b9",
+ "timestamp": "2026-10-25T00:02:06Z"
 }
