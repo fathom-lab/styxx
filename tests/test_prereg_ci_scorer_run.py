@@ -469,6 +469,45 @@ def test_a_scorer_that_leaves_without_the_closing_line_is_an_error():
     assert r["code"] == "SCORER_ERROR" and "closing line" in r["detail"], r
 
 
+def test_a_runtime_line_the_scorer_writes_to_the_record_is_a_problem_and_the_opening_line_is_the_runtime():
+    """The record's descriptor is open in the scorer's process and os.write raises no audit event, so a
+    scorer can write lines to it (the B4 review's case 3 forged the runtime, and the last runtime line
+    won). The bootstrap writes the runtime line as the opening line, with the nonce the parent gave it
+    outside the run; a runtime line anywhere else, or without the nonce, is a problem and the opening
+    line is the runtime."""
+    raw, r = go("""
+        import json, os
+        line = (json.dumps({"t": "runtime", "implementation": "forged", "version": "0.0.0", "unicode": "0"}) + "\\n").encode()
+        for fd in range(3, 64):
+            try:
+                os.write(fd, line)
+            except OSError:
+                pass
+        print(json.dumps({"verdict": "PASS"}))
+        """)
+    assert raw["runtime"]["implementation"] == sys.implementation.name and raw["runtime"]["version"] != "0.0.0", raw
+    assert r["code"] == "SCORER_ERROR" and "runtime line" in r["detail"], (r, raw)
+
+
+def test_a_closing_line_the_scorer_writes_itself_is_not_the_run_s():
+    """A scorer that wrote a done line to the record and then ended the process itself would read as a
+    scorer that returned, and whatever the bootstrap checks at the close would not run; the closing
+    line carries the nonce, which the scorer does not hold (the config file's read is refused)."""
+    raw, r = go("""
+        import json, os, sys
+        line = (json.dumps({"t": "done"}) + "\\n").encode()
+        for fd in range(3, 64):
+            try:
+                os.write(fd, line)
+            except OSError:
+                pass
+        print(json.dumps({"verdict": "PASS"}))
+        sys.stdout.flush()
+        os._exit(0)
+        """)
+    assert not raw["done"] and r["code"] == "SCORER_ERROR" and "closing line" in r["detail"], (r, raw)
+
+
 def test_a_scorer_past_its_timeout_is_stopped():
     raw, r = go("""
         import time

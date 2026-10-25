@@ -67,7 +67,9 @@ _WATCHED = ("the run refuses and records, through an audit hook and a last impor
             "is not a sandbox: native code, stat calls and the interpreter are not watched (DESIGN 7, risk 5)")
 
 # The bootstrap the child runs under -I -S -B -X utf8. argv[1] is a JSON config file outside the run
-# directory: watch (the record), scorer, args, read and write (run-relative paths).
+# directory: watch (the record), scorer, args, read and write (run-relative paths), and nonce, which the
+# opening and closing lines carry (a scorer holds the record's descriptor and can write lines to it; it
+# does not hold the config file, whose read the hook refuses).
 _BOOTSTRAP = r'''
 import json, os, sys
 with open(sys.argv[1], "rb") as _f:
@@ -83,7 +85,7 @@ import platform, pkgutil, runpy, threading, unicodedata
 for _s in (sys.stdout, sys.stderr):
     _s.reconfigure(newline="\n")
 _say({"t": "runtime", "implementation": sys.implementation.name, "version": platform.python_version(),
-      "unicode": unicodedata.unidata_version})
+      "unicode": unicodedata.unidata_version, "nonce": _cfg["nonce"]})
 _nc = os.path.normcase
 _raw = os.path.abspath(os.getcwd())
 _here = _nc(_raw)
@@ -245,9 +247,9 @@ sys.addaudithook(_hook)
 try:
     runpy.run_path(os.path.join(_raw, _cfg["scorer"].replace("/", _sep)), run_name="__main__")
 except SystemExit:
-    _say({"t": "done"})
+    _say({"t": "done", "nonce": _cfg["nonce"]})
     raise
-_say({"t": "done"})
+_say({"t": "done", "nonce": _cfg["nonce"]})
 '''
 
 
@@ -329,9 +331,12 @@ def _tail(path: str, run: str, root: str) -> str:
     return line[:_TAIL_CHARS]
 
 
-def _watch(path: str) -> Tuple[Dict[str, Any], List[str], bool, Optional[str]]:
-    """``(runtime, unlocked, done, problem)`` from the run's record. A line that is not one the
-    bootstrap writes is a problem: the record is not read as clean."""
+def _watch(path: str, nonce: str) -> Tuple[Dict[str, Any], List[str], bool, Optional[str]]:
+    """``(runtime, unlocked, done, problem)`` from the run's record. The bootstrap opens the record
+    with the runtime line and closes it once, each carrying *nonce*, which it has from the config file
+    outside the run and a scorer writing to the record's descriptor does not. A line the bootstrap
+    does not write, a runtime line that is not the opening line, a runtime or closing line without
+    the nonce, or a second closing line is a problem: the record is not read as clean."""
     runtime: Dict[str, Any] = {"implementation": None, "version": None, "unicode": None}
     unlocked: List[str] = []
     done, problem = False, None
@@ -340,7 +345,7 @@ def _watch(path: str) -> Tuple[Dict[str, Any], List[str], bool, Optional[str]]:
             data = fh.read()
     except OSError:
         return runtime, unlocked, done, "the run left no record (its bootstrap did not start)"
-    for raw in data.split(b"\n")[:-1]:
+    for i, raw in enumerate(data.split(b"\n")[:-1]):
         try:
             rec = json.loads(raw.decode("ascii"))
             kind = rec["t"]
@@ -348,11 +353,20 @@ def _watch(path: str) -> Tuple[Dict[str, Any], List[str], bool, Optional[str]]:
             problem = "the run's record holds a line its bootstrap does not write"
             continue
         if kind == "runtime":
-            runtime = {k: rec.get(k) if isinstance(rec.get(k), str) else None for k in runtime}
+            if i != 0 or rec.get("nonce") != nonce:
+                problem = ("the run's record holds a runtime line its bootstrap did not write (the bootstrap "
+                           "writes one, as the opening line)")
+            else:
+                runtime = {k: rec.get(k) if isinstance(rec.get(k), str) else None for k in runtime}
+        elif i == 0:
+            problem = "the run's record does not open with its runtime line"
         elif kind == "unlocked" and isinstance(rec.get("what"), str):
             unlocked.append(rec["what"])
         elif kind == "done":
-            done = True
+            if done or rec.get("nonce") != nonce:
+                problem = "the run's record holds a closing line its bootstrap did not write"
+            else:
+                done = True
         else:
             problem = "the run's record holds a line its bootstrap does not write"
     return runtime, list(dict.fromkeys(unlocked)), done, problem
@@ -396,7 +410,8 @@ def _run(spec: Dict[str, Any], blobs: Dict[str, bytes], receipt_path: str, recei
         args = [receipt_path if a == _core._RECEIPT_ARG else out_rel if a == _core._OUT_ARG else a
                 for a in spec["argv"]]
         watch, cfg = os.path.join(root, "watch.jsonl"), os.path.join(root, "config.json")
-        conf = {"watch": watch, "scorer": spec["scorer"], "args": args,
+        nonce = os.urandom(16).hex()
+        conf = {"watch": watch, "scorer": spec["scorer"], "args": args, "nonce": nonce,
                 "read": [*spec["locked"], receipt_path], "write": [out_rel] if out_rel else []}
         with open(cfg, "wb") as fh:
             fh.write(json.dumps(conf, sort_keys=True).encode("utf-8"))
@@ -413,7 +428,7 @@ def _run(spec: Dict[str, Any], blobs: Dict[str, bytes], receipt_path: str, recei
                 code, timed_out = None, True
         stdout, over = _head(so_path, _STDOUT_CAP)
         tail = _tail(se_path, run, root)
-        runtime, unlocked, done, problem = _watch(watch)
+        runtime, unlocked, done, problem = _watch(watch, nonce)
         out, out_problem = None, None
         if out_rel is not None:
             target = os.path.join(run, *out_rel.split("/"))
