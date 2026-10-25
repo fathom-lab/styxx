@@ -221,13 +221,26 @@ def _hook(event, args):
         raise PermissionError(f"prereg-ci: the scorer run refuses this (the scorer {why}); only locked files are read")
 
 
+def _asker(frame):
+    """The file whose code asked, or None. A frame of a compiled string ("<string>", "<frozen os>") is
+    judged by the __file__ of its globals; one with no __file__ (exec(compile(src, "<string>", "exec"),
+    {}) in the scorer; collections' namedtuple in the standard library) is judged by the nearest frame
+    below it that has a file, which is the code that ran the string."""
+    f = frame
+    while f is not None:
+        fn = f.f_code.co_filename
+        if not fn.startswith("<"):
+            return fn
+        fn = f.f_globals.get("__file__")
+        if isinstance(fn, str):
+            return fn
+        f = f.f_back
+    return None
+
+
 def _locked_code(frame):
-    fn = frame.f_code.co_filename
-    if fn.startswith("<"):
-        fn = frame.f_globals.get("__file__")
-        if not isinstance(fn, str):
-            return False
-    return _under(_nc(os.path.abspath(os.path.join(_raw, fn))), _here)
+    fn = _asker(frame)
+    return fn is not None and _under(_nc(os.path.abspath(os.path.join(_raw, fn))), _here)
 
 
 class _Miss:

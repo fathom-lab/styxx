@@ -383,6 +383,7 @@ def test_the_standard_library_s_own_optional_imports_are_not_reaches():
     ("import os; os.listdir(os.path.dirname(OUTSIDE))", "lists a directory outside the run"),
     ("import sys; sys.path.append(os.path.dirname(OUTSIDE)); import outside_mod", "outside_mod"),
     ("import sys; open(sys.executable, 'rb').read(4)", "outside the run"),
+    ("exec(compile('import numpy', '<string>', 'exec'), {'__name__': 'x'})", "imports numpy"),
 ])
 def test_a_scorer_that_reaches_past_its_locks_reads_unlocked_even_when_it_catches_the_error(body, words, tmp_path):
     outside = tmp_path / "outside.txt"
