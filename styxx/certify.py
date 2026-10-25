@@ -19,6 +19,16 @@ Claim classes:
 v0 scope (stated, not hidden): numeric claims only; receipts are the explicit set passed in (the doc's own
 cited result JSONs), not discovered; no semantic/prose entailment (that is audit_claim/NLI territory).
 
+What the numeral reader reads (v0.15, 2026-10-25, flags V15_*): signed digit runs with optional thousands
+commas and a decimal part; suffixed magnitudes (`$67.4k`, `1.2B`, `3.4M`, `5bn`; `m b t mm` only after a
+currency symbol; `1.2 billion` after a space) as mantissa times multiplier; `-$x`, `($x)` and `- $x` as
+negative; thin-space digit groups as one number. Named and excluded, never read: clock times, thread
+markers, word-led version strings, calendar dates (listed in uncovered_excluded_by_rule). Counted and
+never valued: a decimal comma or dotted thousands beside a currency, a digit run glued to a non-ASCII
+letter or a superscript. Still not read and not counted: numbers glued to other letters (`10x`, `24h`,
+`TP1`, `7B-Instruct`), scientific notation, number words, spans the sha/date/version scrub blanks. A
+numeral before a sentence period is the band's (`trailing-period`) until V15_SENTENCE_FINAL is on.
+
 Pre-registration (kill-gates D1/D2/D3, frozen before the validation run):
   papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md
 
@@ -150,6 +160,8 @@ def extract_numbers(text: str) -> list[dict]:
 
     v0.3: markdown table rows inherit their table's HEADER line as additional binding context —
     the trigger vocabulary of '| regime | AUC-g | margin |' binds the numbers in every data row."""
+    if V15_READER_V2:
+        return _extract_numbers_v2(text)      # v0.15: the numeral reader v2, same shape plus magnitude
     out = []
     lines = text.splitlines()
     header_for: dict[int, str] = {ln: lines[h - 1].strip()
@@ -269,6 +281,465 @@ _STRUCT_ORDINAL = re.compile(r"^(?P<lead>\s{0,3}(?:>\s?)*\s*(?:#{1,6}\s+|[-*+]\s
 # clause's whole discretion and it is written here, in one place, rather than buried in a branch.
 _UNCOVERED_COUNTED = frozenset({"trailing-period", "partial-extraction", "unexplained"})
 
+# ================================================================ v0.15: the numeral reader v2
+#
+# What `_NUM` could not see, read by a written rule. Every alternative of `_NUM` ends with
+# `(?![\w.])`, so a numeral glued to a letter is not a token: `$67.4k`, `$1.2B`, `3.4M`, `2.4K` read
+# NOTHING, and a made-up `$99.9k` passes a certificate unmarked (the product red team's blocker B1,
+# 2026-10-24). The same guard reads `14:00` as two numerals, `1/` as one, `version 2.5` as a value,
+# `-$1,234.56` as a gain, `84,17 €` as two numbers, and a thin-space group `67 412.50` as two.
+#
+# THE RULE (RULE_final.md of the certify_suffix design, 2026-10-25, after its red team; the NOTE
+# `papers/closed-model-frontier/NOTE_numeral_reader_v2_2026_10_25.md` prints what it moved). One
+# master flag and one flag per rule, so a census can attribute every move to a rule. With the master
+# OFF every function below is unreachable and this module behaves as it did at 078b0a16, byte for
+# byte on every committed certificate: `conformance/numerals/vectors_v2.json` carries that reading
+# as the `v1_reader` and `v1_binding` families, recorded from HEAD before this block existed.
+#
+#   V15_MAGNITUDE        a numeral glued to k K M B T bn mn (and m b t mm after a currency symbol)
+#                        is the mantissa times the multiplier; it binds a leaf within half a unit of
+#                        the last shown mantissa digit, never looser than 5% (A-2: `$1B` is [0.95B,
+#                        1.05B], not [0.5B, 1.5B)); a leaf whose path names a time or an id is never
+#                        a magnitude hit (A-1b: `$1.7T` does not bind `openTime`); a zero-decimal
+#                        magnitude keeps the v0.3 count-binding filter (A-1a); a BARE magnitude is
+#                        never obligated (62 false accusations on `7B` model sizes otherwise), a
+#                        CURRENCY-LED one is obligated as an unsuffixed numeral is (A-8).
+#   V15_MAGNITUDE_WORDS  `1.2 billion`, `2 trillion`: the word after a space is the multiplier.
+#   V15_FORM_NOISE       clock times, thread markers, word-led version strings and calendar dates
+#                        are NAMED exclusions, listed in uncovered_excluded_by_rule, never read, never
+#                        counted; a form never splits a numeric token (A-6) and a month-day without a
+#                        year is a date only before punctuation, a time, a zone or at/on/the (A-16).
+#   V15_SIGNED_CURRENCY  `-$x`, `($x)` and `- $x` are negative (a markdown bullet is not a sign).
+#   V15_THIN_GROUPS      U+2009 / U+202F between three-digit groups join one number.
+#   V15_DECIMAL_COMMA    `84,17 €`, `1.234,5`, `1,5k`, `1.234.567` are COUNTED, never valued.
+#   V15_GLUED_NONASCII   a digit run glued to a non-ASCII letter or a superscript (`$99.9к`) is
+#                        COUNTED, never silent: it renders like the valid form and read nothing.
+#   V15_SENTENCE_FINAL   OFF. A numeral before a sentence period is read (the band's own defect,
+#                        v0.13). Measured: 12 committed OATH-HELD certificates re-derive OATH-FAILED,
+#                        6 committed capsules stop verifying, 152 charon lines read SKEW, every one
+#                        through a token the period had hidden and the ladder's standing rules accuse.
+#                        The operator decides; until then the band keeps counting them.
+#   V15_MAGNITUDE_RANGES OFF. `60-70k` read as 60,000 and 70,000 (A-5's full arm); rows only, off
+#                        until the census of its moves is read. With it off, the lower half of such a
+#                        range is ABSTAIN as notation (v0.5 class B widened to the suffix table).
+#
+# DOCTRINE. The reader READS `_NUM`'s shapes, `_scrub_line`, `_drop_reason`, `_STRUCT_ORDINAL` and
+# the band's `_WIDE_NUM`; it copies none of them, and `_NUM` is not edited (tests/test_uncovered_band
+# pins that). Every span the reader does not read as a value is enumerated with a reason: silence
+# loud, never omission. The integer filter, the obligation ladder, `is_spec`, the trigger vocabulary
+# and the verdict rule are not changed here; what they do with the tokens they can now see is theirs.
+V15_READER_V2 = True
+V15_MAGNITUDE = True
+V15_MAGNITUDE_WORDS = True
+V15_FORM_NOISE = True
+V15_SIGNED_CURRENCY = True
+V15_THIN_GROUPS = True
+V15_DECIMAL_COMMA = True
+V15_GLUED_NONASCII = True
+V15_SENTENCE_FINAL = False
+V15_MAGNITUDE_RANGES = False
+_V15_RULE_FLAGS = ("V15_MAGNITUDE", "V15_MAGNITUDE_WORDS", "V15_FORM_NOISE", "V15_SIGNED_CURRENCY",
+                   "V15_THIN_GROUPS", "V15_DECIMAL_COMMA", "V15_GLUED_NONASCII", "V15_SENTENCE_FINAL",
+                   "V15_MAGNITUDE_RANGES")
+
+# currency symbols: dollar, euro, pound, yen, rupee, won, ruble, lira, bitcoin
+_V15_CUR = "$\u20ac\u00a3\u00a5\u20b9\u20a9\u20bd\u20ba\u20bf"
+_V15_CUR_CLS = "[" + re.escape(_V15_CUR) + "]"
+_V15_SUFFIX_MULT = {"k": 10 ** 3, "K": 10 ** 3, "M": 10 ** 6, "B": 10 ** 9, "T": 10 ** 12,
+                    "bn": 10 ** 9, "Bn": 10 ** 9, "BN": 10 ** 9, "mn": 10 ** 6, "Mn": 10 ** 6,
+                    "mm": 10 ** 6, "MM": 10 ** 6, "m": 10 ** 6, "b": 10 ** 9, "t": 10 ** 12}
+_V15_CUR_ONLY = frozenset({"m", "b", "t", "mm", "MM"})     # read only after a currency symbol
+_V15_SUF_ALWAYS = r"bn|Bn|BN|mn|Mn|[kKMBT]"
+_V15_SUF_LC = r"bn|Bn|BN|mn|Mn|mm|MM|[kKMBTmbt]"
+_V15_WORD_MULT = {"thousand": 10 ** 3, "million": 10 ** 6, "billion": 10 ** 9, "trillion": 10 ** 12}
+_V15_NUM_SHAPES = r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+\.\d+|\.\d+|\d+"
+_V15_UNCOVERED_COUNTED = frozenset(_UNCOVERED_COUNTED | {"decimal-comma", "dotted-groups", "glued-nonascii"})
+_V15_FORM_REASONS = ("clock-time", "calendar-date", "thread-marker", "version-string")
+# a hyphen followed by one of these words modifies the number, it is not formula notation (A-4b)
+_V15_HYPHEN_WORD = re.compile(r"^\s?[\u2212\u2013-]\s?(?:ish|plus|odd|something|level|range|or-so)\b", re.I)
+_V15_ELLIPSIS = re.compile(r"^(?:\.\.\.|\u2026)")
+_V15_COARSE = re.compile(r"\d|\.\d|0\.\d|\d\.0+")        # a one-significant-digit mantissa (A-2)
+# a leaf whose path's last segment names a time or an id, by segment (snake and camel), never by
+# substring: `openTime`, `updated_at`, `firstId`, `tradeIds` are excluded; `last_updated`, `bids`,
+# `grids`, `count`, `lastPrice` are not (A-1b)
+_V15_LEAF_WORDS = frozenset({"time", "times", "timestamp", "timestamps", "datetime", "epoch", "date",
+                             "dates", "at", "id", "ids", "firstid", "lastid", "tradeid"})
+_V15_SEG_PARTS = re.compile(r"[A-Z]?[a-z]+|[A-Z]+(?![a-z])|\d+")
+_V15_RX_CACHE: dict = {}
+
+
+def _v15_reset() -> None:
+    """Forget the compiled readers; call after toggling a V15_* flag (tests, the census)."""
+    _V15_RX_CACHE.clear()
+
+
+def _v15_num_rx(allow_lc: bool):
+    """The v2 token regex for the current flags: `lead? num (magnitude wide-tail | plain tail)`.
+
+    `allow_lc` admits the lower-case currency-only suffixes; the caller checks the currency condition
+    and, when it fails, re-matches ANCHORED with the other regex (A-15), never searching forward."""
+    key = (V15_MAGNITUDE, V15_MAGNITUDE_WORDS, V15_SIGNED_CURRENCY, V15_THIN_GROUPS, V15_SENTENCE_FINAL,
+           allow_lc)
+    rx = _V15_RX_CACHE.get(key)
+    if rx is not None:
+        return rx
+    lead = (r"(?P<lead>(?<![\w.])-" + _V15_CUR_CLS + r"(?=\d|\.\d))?") if V15_SIGNED_CURRENCY else ""
+    groups = [r"\d{1,3}(?:,\d{3})+(?:\.\d+)?"]
+    if V15_THIN_GROUPS:
+        groups.append("\\d{1,3}(?:[\u2009\u202f]\\d{3})+(?:\\.\\d+)?")
+    groups += [r"\d+\.\d+", r"\.\d+", r"\d+"]
+    num = r"(?P<num>(?<![\w.])[-+]?(?:" + "|".join(groups) + r"))"
+    tails = []
+    if V15_MAGNITUDE:
+        tails.append(r"(?P<suf>" + (_V15_SUF_LC if allow_lc else _V15_SUF_ALWAYS) + r")")
+    if V15_MAGNITUDE_WORDS:
+        tails.append(r"[ \t]+(?P<word>(?i:thousand|million|billion|trillion))")
+    # a plain numeral's tail is `_NUM`'s own unless the sentence-final rule is on; a magnitude's tail
+    # is always the band's wide tail: the suffix letter ends the token, a period after it cannot be
+    # part of it, so reading `$99.9k.` moves no committed verdict and creates no band item
+    plain_tail = r"(?!\w)(?!\.\d)" if V15_SENTENCE_FINAL else r"(?![\w.])"
+    if tails:
+        tail = r"(?:(?:" + "|".join(tails) + r")(?!\w)(?!\.\d)|" + plain_tail + r")"
+    else:
+        tail = plain_tail
+    rx = re.compile(lead + num + tail)
+    _V15_RX_CACHE[key] = rx
+    return rx
+
+
+def _v15_leaf_excluded(path: str) -> bool:
+    """True iff the leaf's LAST path segment names a time or an id (A-1b), by whole segment part."""
+    seg = re.sub(r"(?:\[\d+\])+$", "", path.rsplit(".", 1)[-1])
+    parts = [p.lower() for piece in seg.split("_") for p in _V15_SEG_PARTS.findall(piece)]
+    return any(p in _V15_LEAF_WORDS for p in parts)
+
+
+# ---- the forms (V15_FORM_NOISE, V15_DECIMAL_COMMA): each a NAMED span the reader does not value
+_V15_TIME = re.compile(
+    r"(?<![\w:.])(?P<T>T)?(?P<h>[01]?\d|2[0-3]):(?P<m>[0-5]\d)(?P<s>:[0-5]\d(?:\.\d+)?)?(?![\d:]|\.\d)"
+    r"(?P<ap>[ \t]?[AaPp]\.?[Mm]\.?(?!\w))?"
+    r"(?P<tz>(?:Z|[+-](?:[01]\d|2[0-3]):?[0-5]\d)(?!\w)|[ \t]?(?:UTC|GMT|[A-Z]{1,4}T)(?!\w))?(?!\w)")
+_V15_THREAD_LEAD = re.compile(r"^\s*(?:[-*+>]\s*)?(?:\U0001F9F5\s*)?(?P<n>\d{1,3}/(?:n\b)?)(?=\s|$)")
+_V15_THREAD_EMOJI = re.compile(r"\U0001F9F5\s*(?P<n>\d{1,3}/(?:\d{1,3}|n\b)?)(?![\w/])")
+# A-3: `N/M` closing its line after a separator; 1 <= N <= M <= 50 is checked by the caller
+_V15_THREAD_LAST = re.compile(r"(?:[|\u2014\u2013\-\u00b7\u2022(\[]|\U0001F9F5)\s*(?P<n>(?P<a>\d{1,2})/(?P<b>\d{1,2}))"
+                              r"[)\].]?\s*$")
+_V15_MON = (r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June?|July?|Aug(?:ust)?"
+            r"|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)")
+_V15_YEAR = r"(?:19|20)\d{2}"
+# A-16: a month-day WITHOUT a year is a date only before the end of the line, punctuation, a time, a
+# zone word or at/on/the; before a letter-word (`May 5 trades`) the day is a count and stays read
+_V15_MD_FOLLOW = r"(?=\s*$|[,.;:)\]]|\s+(?:at|on|the)\b|\s+\d{1,2}:\d{2}|\s+(?:UTC|GMT|Z|[A-Z]{1,4}T)(?!\w))"
+_V15_DATE_MD = re.compile(
+    r"\b" + _V15_MON + r"\.?[ \t]+(?P<d>[0-3]?\d)(?:st|nd|rd|th)?(?!\w)(?!\.\d)(?!,\d)"
+    r"(?:(?P<y>,?[ \t]+" + _V15_YEAR + r"(?!\w))|" + _V15_MD_FOLLOW + r")")
+_V15_DATE_DM = re.compile(
+    r"(?<![\w.,])(?P<d>[0-3]?\d)(?:st|nd|rd|th)?[ \t]+" + _V15_MON + r"\b"
+    r"(?:(?P<y>\.?,?[ \t]+" + _V15_YEAR + r"(?!\w))|(?=\s*$|[,.;:)\]]))")
+_V15_DATE_NUM = re.compile(r"(?<![\w./])(?:[0-3]?\d[/.][0-3]?\d[/.]" + _V15_YEAR
+                           + r"|" + _V15_YEAR + r"/[01]?\d/[0-3]?\d)(?![\w/]|\.\d)")
+_V15_VERSION_WORD = re.compile(r"\b(?:[Vv]ersion|[Vv]er\.)[ \t]+(?P<v>v?\d+(?:\.\d+)*)(?!\w)(?!\.\d)")
+_V15_DECIMAL_COMMA = re.compile(
+    r"(?<![\w.,])\d{1,3}(?:\.\d{3})+,\d+(?![\w,]|\.\d)"                                  # 1.234,5
+    r"|(?:(?<=" + _V15_CUR_CLS + r")|(?<=" + _V15_CUR_CLS + r" ))\d+,\d{1,2}(?![\d,])"      # € 84,17
+    r"|(?<![\w.,])\d+,\d{1,2}(?=[ \t]?" + _V15_CUR_CLS + r")"                              # 84,17 €
+    r"|(?<![\w.,])\d+,\d{1,2}(?:" + _V15_SUF_LC + r")(?!\w)"                                # 1,5k
+    "|(?<![\\w.,])\\d{1,3}(?:[\u2009\u202f\u00a0]\\d{3})+,\\d{1,2}(?![\\d,])")           # 67 412,50
+# scanned on the UNSCRUBBED line: the version scrub blanks `1.234.567`, so the whole span, comma
+# tail included, is claimed here and nothing of it is read as a number; a single dotted group is a
+# thousands group beside the euro only (`$0.001` is a price)
+_V15_DOTTED = re.compile(
+    r"(?<![\w.,])\d{1,3}(?:\.\d{3}){2,}(?:,\d+)?(?![\w,]|\.\d)"
+    "|(?:(?<=\u20ac)|(?<=\u20ac ))[1-9]\\d{0,2}\\.\\d{3}(?![\\d.,])"
+    "|(?<![\\w.,])[1-9]\\d{0,2}\\.\\d{3}(?=[ \\t]?\u20ac)")
+# V15_GLUED_NONASCII: a digit run (with an optional ASCII suffix) glued to a non-ASCII letter, a
+# combining mark or a superscript; `(?![A-Za-z0-9_])` keeps the ASCII-glued forms where they are.
+# A Greek letter is mathematical notation (`2\u03c0`, `3.4\u03c3`: the census found exactly those two in the
+# certified corpus), the same letter-glue class as `10x`, silent as today; except the four capitals
+# that render as a suffix letter, \u0392 \u039a \u039c \u03a4, which the red team's look-alike list names.
+_V15_GLUED = re.compile(r"(?<![\w.])[-+]?(?:" + _V15_NUM_SHAPES + r")(?:" + _V15_SUF_LC + r")?"
+                        r"(?=(?![A-Za-z0-9_])(?:[\u0392\u039a\u039c\u03a4]|(?![\u0370-\u03ff])[^\W\d]"
+                        r"|[\u0300-\u036f]))")
+
+
+def _v15_forms(line: str, scrub: str):
+    """(the scrub with every form blanked, the forms) for one U+2212-normalised line.
+
+    A form is `(start, end, reason, counted)`. A claim is refused where it would end inside a numeric
+    span the band's scanner finds (A-6: `Mar 10,000` is a number, not a date and a zero), and where
+    an earlier claim already holds the characters."""
+    found: list = []
+    taken = [False] * len(scrub)
+    wide = [(m.start(), m.end()) for m in _WIDE_NUM.finditer(scrub)]
+
+    def claim(a: int, b: int, reason: str, counted: bool) -> None:
+        if a >= b or any(taken[a:b]) or any(ws < b < we for ws, we in wide):
+            return
+        for i in range(a, b):
+            taken[i] = True
+        found.append((a, b, reason, counted))
+
+    if V15_DECIMAL_COMMA:
+        for m in _V15_DOTTED.finditer(line):
+            claim(m.start(), m.end(), "dotted-groups", True)
+        for m in _V15_DECIMAL_COMMA.finditer(scrub):
+            claim(m.start(), m.end(), "decimal-comma", True)
+    if V15_FORM_NOISE:
+        for m in _V15_TIME.finditer(scrub):
+            marked = bool(m.group("s") or m.group("ap") or m.group("tz") or m.group("T"))
+            if len(m.group("h")) == 2 or marked:
+                claim(m.start(), m.end(), "clock-time", False)
+        for rx in (_V15_DATE_NUM, _V15_DATE_MD, _V15_DATE_DM):
+            for m in rx.finditer(scrub):
+                if "d" in rx.groupindex and not 1 <= int(m.group("d")) <= 31:
+                    continue
+                claim(m.start(), m.end(), "calendar-date", False)
+        m = _V15_THREAD_LEAD.match(scrub)
+        if m:
+            claim(m.start("n"), m.end("n"), "thread-marker", False)
+        for m in _V15_THREAD_EMOJI.finditer(scrub):
+            claim(m.start("n"), m.end("n"), "thread-marker", False)
+        m = _V15_THREAD_LAST.search(scrub)
+        if m and 1 <= int(m.group("a")) <= int(m.group("b")) <= 50:
+            claim(m.start("n"), m.end("n"), "thread-marker", False)
+        for m in _V15_VERSION_WORD.finditer(scrub):
+            claim(m.start("v"), m.end("v"), "version-string", False)
+    s2 = list(scrub)
+    for a, b, _r, _c in found:
+        for i in range(a, b):
+            s2[i] = " "
+    found.sort()
+    return "".join(s2), found
+
+
+def _v15_drop_reason(raw: str, s2: str, start: int, end: int, line: str, kind: str, cur_led: bool,
+                     pair_upper: bool):
+    """`_drop_reason`, read for a plain numeral and amended for the v2 kinds (A-4, A-5).
+
+    kind: `plain`, `suffix` or `word`. A magnitude is never a year and never a markdown artefact. A
+    currency-led numeral or magnitude is never formula notation or a compound identifier
+    (`$99.9k-ish`, `sub-$67k`); a hyphen word (`-ish`, `-plus`) never makes a formula; a word
+    magnitude's hyphen binds the word (`1.2 billion-dollar`). The upper half of a read range pair
+    (V15_MAGNITUDE_RANGES) is not dropped as a range's second half."""
+    tail = s2[end:]
+    if kind == "plain":
+        reason = _drop_reason(raw, s2, start, end, line)
+        if reason in ("formula-notation", "compound-identifier") and cur_led:
+            return None
+        if reason == "formula-notation" and _V15_HYPHEN_WORD.match(tail):
+            return None
+        return reason
+    if (kind == "suffix" and not cur_led and _FORMULA_AFTER.match(tail)
+            and not _V15_HYPHEN_WORD.match(tail)):
+        return "formula-notation"
+    if not pair_upper:
+        if start >= 2 and s2[start - 1] in "\u2013-\u2212" and s2[start - 2].isdigit():
+            return "range-second-half"
+        if not cur_led and start >= 2 and s2[start - 1] == "-" and s2[start - 2].isalpha():
+            return "compound-identifier"
+    try:
+        float(raw)
+    except ValueError:
+        return "unparseable"
+    return None
+
+
+def _v15_line(line: str, scrub: str):
+    """The v2 reader on one line: (tokens, the spans it produced, the forms it blanked).
+
+    Each token: token, raw, start, end, value, decimals, and, when present, magnitude, sign_form,
+    ellipsis. Scans left to right with the lower-case-allowing regex; a match whose suffix needs the
+    currency condition and lacks it is re-matched ANCHORED with the other regex, and when that fails
+    the scan advances one character (A-15): what stands earlier on a line never changes how a token
+    later on it is read."""
+    from decimal import Decimal, InvalidOperation
+    s2, forms = _v15_forms(line, scrub)
+    toks: list = []
+    produced: set = set()
+    ol = _STRUCT_ORDINAL.match(line)
+    ol_span = (ol.start("n"), ol.end("n")) if ol else None
+    md = _MD_STRUCTURE.match(line)
+    bullet_at = md.end() - 2 if md and line[md.end() - 2:md.end() - 1] in "-*+" else -1
+    rx, rx_nolc = _v15_num_rx(True), _v15_num_rx(False)
+    n = len(s2)
+    pos = 0
+    prev_end, prev_pairable = -1, False      # the previous token's end, and whether it can open a pair
+    pair_upper_at = -1
+    while pos <= n:
+        m = rx.search(s2, pos)
+        if m is None:
+            break
+        gd = m.groupdict()
+        suf, lead = gd.get("suf"), gd.get("lead")
+        ns = m.start("num")
+        cur_led = bool(lead) or (ns >= 1 and s2[ns - 1] in _V15_CUR)
+        if suf in _V15_CUR_ONLY and not cur_led:
+            # A-15: the currency condition failed. Re-match ANCHORED here with the regex that has no
+            # lower-case class; if that fails too, advance one character. Never search forward with
+            # the restricted regex: that skipped every currency-led `$Xm` after a bare `5m` on a line.
+            m2 = rx_nolc.match(s2, m.start())
+            if m2 is None:
+                pos = m.start() + 1
+                continue
+            m = m2
+            gd = m.groupdict()
+            suf, lead = gd.get("suf"), gd.get("lead")
+            ns = m.start("num")
+            cur_led = bool(lead) or (ns >= 1 and s2[ns - 1] in _V15_CUR)
+        word = gd.get("word")
+        start, end = m.start(), m.end()
+        numtxt = m.group("num")
+        raw = numtxt.replace(",", "").replace("\u2009", "").replace("\u202f", "")
+        sign_form = None
+        if lead:
+            raw = "-" + raw
+        elif V15_SIGNED_CURRENCY and cur_led and not raw.startswith(("-", "+")):
+            # A-9: the accounting forms. `($1.2k)` with nothing but the currency and the number
+            # inside; `- $1.2k` with one space, unless the `-` is the line's bullet marker.
+            if ns >= 2 and s2[ns - 2] == "(" and s2[end:end + 1] == ")":
+                raw, start, end, sign_form = "-" + raw, ns - 2, end + 1, "parenthesis"
+            elif (ns >= 3 and s2[ns - 3:ns - 1] == "- " and ns - 3 != bullet_at
+                  and (ns == 3 or not (s2[ns - 4].isalnum() or s2[ns - 4] in "._"))):
+                raw, start, sign_form = "-" + raw, ns - 3, "spaced"
+        kind = "suffix" if suf else ("word" if word else "plain")
+        magword = suf or (word.lower() if word else None)
+        mult = None
+        range_role = None
+        upper_candidate = -1
+        if kind == "plain" and V15_MAGNITUDE_RANGES and V15_MAGNITUDE and end < n and s2[end] in "-\u2013":
+            # A-5 full arm: a bare lower half glued to `-magnitude` wears that magnitude's suffix
+            m_hi = (rx if cur_led else rx_nolc).match(s2, end + 1)
+            hs = m_hi.groupdict().get("suf") if m_hi is not None else None
+            if hs and not (hs in _V15_CUR_ONLY and not cur_led):
+                kind, magword, mult, range_role = "suffix", hs, _V15_SUFFIX_MULT[hs], "lower"
+                upper_candidate = m_hi.start()
+        pair_upper = (V15_MAGNITUDE_RANGES and kind == "suffix" and start >= 1 and s2[start - 1] in "-\u2013"
+                      and (start == pair_upper_at or (prev_end == start - 1 and prev_pairable)))
+        pair_upper_at = -1               # named a position at or before this token: spent
+        pos = end
+        if _v15_drop_reason(raw, s2, start, end, line, kind, cur_led, pair_upper) is not None:
+            continue
+        # C3: a structural ordinal (`1.` of a list item or heading) is a label the band lists
+        if (V15_SENTENCE_FINAL and kind == "plain" and ol_span is not None and (start, end) == ol_span
+                and s2[end:end + 1] == "."):
+            continue
+        try:
+            dval = Decimal(raw)
+        except InvalidOperation:
+            continue
+        entry = {"token": s2[start:end], "raw": raw, "start": start, "end": end, "decimals": _decimals(raw)}
+        if kind != "plain":
+            if mult is None:
+                mult = _V15_SUFFIX_MULT[suf] if suf else _V15_WORD_MULT[magword]
+            entry["value"] = float(dval * mult)
+            entry["magnitude"] = {"suffix": magword, "multiplier": mult, "mantissa": raw,
+                                  "coarse": bool(_V15_COARSE.fullmatch(raw.lstrip("+-"))),
+                                  "currency_led": cur_led}
+            if range_role or pair_upper:
+                entry["magnitude"]["range"] = range_role or "upper"
+        else:
+            entry["value"] = float(dval)
+        if sign_form:
+            entry["sign_form"] = sign_form
+        if _V15_ELLIPSIS.match(s2[end:]):
+            entry["ellipsis"] = True
+        toks.append(entry)
+        produced.add((start, end))
+        prev_end, prev_pairable = end, (kind != "plain" or cur_led)
+        if range_role == "lower":
+            pair_upper_at = upper_candidate   # the upper half is read next and is not dropped
+    return toks, produced, forms
+
+
+def _extract_numbers_v2(text: str) -> list:
+    out: list = []
+    lines = text.splitlines()
+    header_for = {ln: lines[h - 1].strip() for ln, h in _table_rows(lines).items()}
+    for ln_no, line in enumerate(lines, 1):
+        line = line.replace("\u2212", "-")
+        scrub = _scrub_line(line)
+        toks, _p, _f = _v15_line(line, scrub)
+        for t in toks:
+            entry = {"line": ln_no, "token": t["token"], "value": t["value"], "decimals": t["decimals"],
+                     "context": line.strip()[:160]}
+            if V10_TOKEN_COLUMN:
+                entry["col"] = t["start"]
+            if ln_no in header_for:
+                entry["binding_context"] = (header_for[ln_no] + " " + line.strip())[:320]
+            for k in ("magnitude", "sign_form", "ellipsis"):
+                if k in t:
+                    entry[k] = t[k]
+            out.append(entry)
+    return out
+
+
+def _uncovered_spans_v2(text: str) -> list:
+    out: list = []
+    for ln_no, raw_line in enumerate(text.splitlines(), 1):
+        line = raw_line.replace("\u2212", "-")
+        scrub = _scrub_line(line)
+        _t, produced, forms = _v15_line(line, scrub)
+        blanked = [(a, b) for a, b, _r, _c in forms]
+        narrow = {(m.start(), m.end()) for m in _NUM.finditer(scrub)}
+        narrow_starts = {s for s, _ in narrow}
+        narrow_at = {m.start(): m.group(0) for m in _NUM.finditer(scrub)}
+        prod_at = {a: scrub[a:b] for a, b in produced}
+        ol = _STRUCT_ORDINAL.match(line)
+        ol_span = (ol.start("n"), ol.end("n")) if ol else None
+        ol_reason = ("heading-ordinal" if ol and "#" in ol.group("lead") else "ordered-list-marker")
+        ctx = line.strip()[:160]
+        items: list = []
+        for m in _WIDE_NUM.finditer(scrub):
+            span = (m.start(), m.end())
+            if span in narrow or span in produced:
+                continue
+            if any(a <= m.start() < b for a, b in blanked):
+                continue                     # a named form holds these characters
+            if any(a <= m.start() and m.end() <= b for a, b in produced):
+                continue                     # inside a token the v2 reader produced
+            tok = m.group(0)
+            token_raw = tok.replace(",", "")
+            partial = None
+            if m.start() in narrow_starts or m.start() in prod_at:
+                partial = prod_at.get(m.start(), narrow_at.get(m.start()))
+                reason = "partial-extraction"
+            elif (drop := _drop_reason(token_raw, scrub, m.start(), m.end(), line)) is not None:
+                reason = drop
+            elif ol_span == span:
+                reason = ol_reason
+            elif scrub[m.end():m.end() + 1] == ".":
+                reason = "trailing-period"
+            else:
+                reason = "unexplained"
+            item = {"line": ln_no, "col": m.start(), "token": tok,
+                    "counted": reason in _V15_UNCOVERED_COUNTED, "reason": reason, "context": ctx}
+            if partial is not None:
+                item["extracted_instead"] = partial
+            items.append(item)
+        if V15_GLUED_NONASCII:
+            for m in _V15_GLUED.finditer(scrub):
+                a, b = m.start(), m.end()
+                if any(pa < b and a < pb for pa, pb in produced) or any(fa <= a < fb for fa, fb in blanked):
+                    continue
+                items.append({"line": ln_no, "col": a, "token": scrub[a:b], "counted": True,
+                              "reason": "glued-nonascii", "context": ctx})
+        for a, b, reason, counted in forms:
+            # the token is read from the line: a dotted group sits where the version scrub blanked
+            items.append({"line": ln_no, "col": a, "token": line[a:b], "counted": counted,
+                          "reason": reason, "context": ctx})
+        items.sort(key=lambda it: it["col"])
+        out.extend(items)
+    return out
+
+
+def _v15_class_b_suffix(num: dict, pre: str) -> str:
+    """The v0.5 class-B suffix class: `[BMK]` under v1; the suffix table under V15_MAGNITUDE, with the
+    lower-case currency-only suffixes admitted when the token is currency-led (A-5, minimum arm)."""
+    if not (V15_READER_V2 and V15_MAGNITUDE):
+        return "[BMK]"
+    led = bool((num.get("magnitude") or {}).get("currency_led")) or (bool(pre) and pre[-1] in _V15_CUR)
+    return "(?:" + (_V15_SUF_LC if led else _V15_SUF_ALWAYS) + ")"
+
 
 def uncovered_spans(text: str) -> list[dict]:
     """Numeric spans present in *text* that `extract_numbers` never produced a token for.
@@ -278,6 +749,8 @@ def uncovered_spans(text: str) -> list[dict]:
     coordinate (`line`, `col`), the span text, whether it COUNTS toward the band, and the machine
     reason it was not examined — silence loud, never omission.
     """
+    if V15_READER_V2:
+        return _uncovered_spans_v2(text)      # v0.15: the forms and the counted locale/glue reasons
     out: list[dict] = []
     lines = text.splitlines()
     for ln_no, raw_line in enumerate(lines, 1):
@@ -1055,11 +1528,16 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         # B unit-suffixed numeric range ("2–3B"), C arXiv identifier, D @-glued parameter.
         is_notation = (
             (V05_UNIT_RANGE and (
-                bool(re.match(r"\s*[–-]\s*\d+(\.\d+)?\s*[BMK]\b", post))
-                or (bool(re.search(r"\d\s*[–-]\s*$", pre)) and bool(re.match(r"\s*[BMK]\b", post)))))
+                bool(re.match(r"\s*[–-]\s*\d+(\.\d+)?\s*" + _v15_class_b_suffix(num, pre) + r"\b", post))
+                or (bool(re.search(r"\d\s*[–-]\s*$", pre))
+                    and bool(re.match(r"\s*" + _v15_class_b_suffix(num, pre) + r"\b", post)))))
             or (V05_ARXIV_ID and bool(re.fullmatch(r"\d{4}\.\d{4,5}", num["token"])))
             or (V05_AT_PARAM and bool(re.search(r"@\s*$", pre)))
         )
+        # v0.15 (V15_MAGNITUDE_RANGES): both halves of `60-70k` are read as magnitudes, so the lower
+        # half is a value, not class-B notation
+        if (num.get("magnitude") or {}).get("range"):
+            is_notation = False
         # v0.1 QUOTED-HISTORICAL rule: corrected-away values quoted inside a disclosure note are
         # historical quotations, not live claims. v0.3: prior-run narrative counts, and on a MIXED
         # line the rule covers only tokens at/after the disclosure phrase (live values stay live).
@@ -1070,8 +1548,22 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         # and `post` are final by here) so the range-sanity guard can read it too.
         slash_pair = bool(re.search(r"/\s*$", pre)) or bool(re.match(r"\s*/", post))
         allow_scaling = "%" in ctx or re.search(r"\bpercent", ctx, re.I) is not None
-        hits = [(rn, pth) for rn, pth, rv in rvals
-                if _match(num["value"], num["decimals"], rv, allow_scaling)]
+        _mag = num.get("magnitude")
+        _excluded_hits: list = []
+        if _mag is not None:
+            # v0.15 (RULE_final 1.4): a leaf binds a magnitude iff it equals the value, or, in the
+            # suffixed unit, lies within half a unit of the last shown mantissa digit and within 5%
+            # of the mantissa (A-2: `$1B` binds [0.95B, 1.05B], not [0.5B, 1.5B)). Percent scaling
+            # never applies. A leaf whose path names a time or an id is recorded, never a hit (A-1b).
+            _mul, _man = _mag["multiplier"], float(_mag["mantissa"])
+            _half = min(0.5 * 10 ** (-num["decimals"]), 0.05 * abs(_man)) + 1e-12
+            hits = []
+            for rn, pth, rv in rvals:
+                if rv == num["value"] or abs(rv / _mul - _man) <= _half:
+                    (_excluded_hits if _v15_leaf_excluded(pth) else hits).append((rn, pth))
+        else:
+            hits = [(rn, pth) for rn, pth, rv in rvals
+                    if _match(num["value"], num["decimals"], rv, allow_scaling)]
         # v0.3 COUNT-BINDING rule: an integer claim only grounds in a leaf whose PATH shares a word
         # stem with the claim's line (or an n=/n_ pairing) — bare counts coincide with unrelated
         # count fields far too easily (the k=14-class D1 misses: 27->37 'verified' because a shared
@@ -1137,6 +1629,12 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         sign_kw = re.search(r"\b(margins?|deltas?|elevation)\s*[(=:≈~\s]*$", pre, re.I)
         out_of_range = (unit_kw and not 0.0 <= num["value"] <= 1.0) or \
                        (sign_kw and not -1.0 <= num["value"] <= 1.0)
+        # v0.15 (RULE_final 1.5): a bare magnitude (`7B`, `10k held-out`) is never obligated: no trigger
+        # word, n=, correlation register, precision rule or range-sanity rule accuses it (measured: 62
+        # false accusations on model sizes otherwise). A currency-led magnitude keeps every obligation.
+        if _mag is not None and not _mag["currency_led"]:
+            out_of_range = False
+            bound, precision_only, _ob_src = False, False, None
         # v0.10 companion: a slash-pair numerator is a COUNT, not a value of the bounded quantity
         # named to its left. '(stability 5/5)' is five of five, not a stability of 5.0.
         if V10_SLASHPAIR_RANGE_GUARD and slash_pair:
@@ -1252,8 +1750,9 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         if is_spec or is_hist:
             status, ref = "ABSTAIN", "spec-or-historical"
             _branch = "spec-or-historical"
-        elif is_notation:
-            status, ref = "ABSTAIN", "v05-notation"
+        elif is_notation or num.get("ellipsis"):
+            status = "ABSTAIN"
+            ref = "v05-notation" if is_notation else "v15-ellipsis-truncated"
             _branch = "notation"
         elif derived_ref:
             status, ref = "VERIFIED", derived_ref
@@ -1296,6 +1795,8 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
         _ep = {"branch": _branch, "obligated": bool(bound), "obligation_source": _ob_src}
         if _branch == "value-match":
             _ep["path_checked"] = num["decimals"] == 0
+        if _excluded_hits:
+            _ep["path_class_excluded"] = [f"{rn}:{pth}" for rn, pth in _excluded_hits]
         _entry = {**num, "status": status, "receipt_ref": ref, "epistemics": _ep}
         if V14_RANGE_SANITY_REPORT and _range_flag:
             _entry["range_flag"] = _range_flag       # a NEW field, present only under the flag
@@ -1338,20 +1839,7 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
     if n_uncov:
         verdict = f"{verdict}, {n_uncov} uncovered"
 
-    cert = {
-        "oath": "styxx OATH v0 (numeric-claim certificate)",
-        "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
-        "document": doc_path.name,
-        "document_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
-        "receipts_sha256": receipts,
-        "receipt_binding": _receipt_binding_block(receipt_paths, doc_path.parent),
-        "verifier_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-        "counts": counts,
-        "epistemics_summary": summary,
-        "uncovered": n_uncov,
-        "uncovered_items": uncovered_items,
-        "uncovered_excluded_by_rule": excluded_items,
-        "uncovered_policy": {
+    _policy = {
             "schema": "styxx-oath/uncovered-band/v1",
             "note": ("numeric spans present in the document text that the extractor never "
                      "examined — neither VERIFIED nor ABSTAIN nor UNGROUNDED. Reporting only: "
@@ -1368,12 +1856,68 @@ def certify_doc(doc_path: Path, receipt_paths: list[Path]) -> dict:
                             "detect scientific notation, letter-glued numbers, non-ASCII digits, "
                             "numerals in fenced code, or spans blanked by the sha/date/version "
                             "scrub. uncovered=0 does NOT mean fully covered."),
-        },
+        }
+    if V15_READER_V2:
+        _policy = {
+            "schema": "styxx-oath/uncovered-band/v2",
+            "note": ("numeric spans present in the document text that the numeral reader v2 did not read "
+                     "as a value, each with its reason; the counted ones are the band. The reader reads "
+                     "suffixed magnitudes (k K M B T bn mn; m b t mm after a currency symbol; thousand, "
+                     "million, billion, trillion after a space) as mantissa times multiplier, a minus before "
+                     "a currency symbol and the accounting forms ($x in parentheses, `- $x`) as the sign, and "
+                     "thin-space digit groups as one number"
+                     + (", and a numeral before a sentence period." if V15_SENTENCE_FINAL else
+                        ". A numeral before a sentence period is still listed here as trailing-period "
+                        "(V15_SENTENCE_FINAL is off).")),
+            "counted_reasons": sorted(_V15_UNCOVERED_COUNTED),
+            "excluded_reasons_note": ("spans a NAMED rule already decided about (year, md-structure, "
+                                      "formula-notation, range-second-half, compound-identifier, "
+                                      "unparseable, ordered-list-marker, heading-ordinal, clock-time, "
+                                      "calendar-date, thread-marker, version-string); listed in "
+                                      "uncovered_excluded_by_rule, not in the band"),
+            "excluded_by_rule": len(excluded_items),
+            "scope_limit": ("not read and not counted: numbers glued to letters other than a magnitude "
+                            "suffix (10x, 24h, TP1, v2.5, 7B-Instruct, mid-60k), scientific notation "
+                            "(1e-5), number words (one million), lakh and crore, and spans blanked by the "
+                            "sha/date/version scrub (2026-10-24, 7.50.0, 24.10.2026). Read like prose, not "
+                            "excluded: numerals inside fenced or inline code; digits of any Unicode script, "
+                            "read as their decimal value. Counted, never valued: a decimal comma or dotted "
+                            "thousands beside a currency, a digit run glued to a non-ASCII letter or a "
+                            "superscript. uncovered=0 does NOT mean fully covered."),
+        }
+    cert = {
+        "oath": "styxx OATH v0 (numeric-claim certificate)",
+        "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+        "document": doc_path.name,
+        "document_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+        "receipts_sha256": receipts,
+        "receipt_binding": _receipt_binding_block(receipt_paths, doc_path.parent),
+        "verifier_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "counts": counts,
+        "epistemics_summary": summary,
+        "uncovered": n_uncov,
+        "uncovered_items": uncovered_items,
+        "uncovered_excluded_by_rule": excluded_items,
+        "uncovered_policy": _policy,
         "verdict": verdict,
         "ungrounded": [c for c in ledger if c["status"] == "UNGROUNDED"],
         "abstained": [{"line": c["line"], "token": c["token"]} for c in ledger if c["status"] == "ABSTAIN"],
         "ledger": ledger,
     }
+    if V15_READER_V2:
+        # v0.15: the certificate names the reader that issued it, the flags that were on, how many
+        # suffixed numbers it read and how they fared, and how many spans each form rule excluded
+        _mrows = [c for c in ledger if "magnitude" in c]
+        cert["numeral_reader"] = {
+            "schema": "styxx-oath/numerals/v2",
+            "rules": sorted(k for k in _V15_RULE_FLAGS if globals()[k]),
+            "magnitudes": {"rows": len(_mrows),
+                           "verified": sum(1 for c in _mrows if c["status"] == "VERIFIED"),
+                           "abstain": sum(1 for c in _mrows if c["status"] == "ABSTAIN"),
+                           "ungrounded": sum(1 for c in _mrows if c["status"] == "UNGROUNDED"),
+                           "currency_led": sum(1 for c in _mrows if c["magnitude"]["currency_led"])},
+            "excluded_forms": {r: sum(1 for e in excluded_items if e["reason"] == r) for r in _V15_FORM_REASONS},
+        }
     return cert
 
 
