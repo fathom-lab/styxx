@@ -6,9 +6,9 @@ it. Nothing in this module reads a disk, a clock, a process or a network; every 
 function of the bytes and objects it is handed, so a FAIL built on it is a function of the git
 objects those bytes came from.
 
-Public: ``rescore`` and ``compare``. The private names of ``styxx.protocol`` and
-``styxx.research_capsule`` it reuses are used here and nowhere else in the package; the
-conformance set under ``conformance/prereg_ci/`` pins what they do, vector by vector.
+Public: ``rescore`` and ``compare``. The private names of ``styxx.protocol``,
+``styxx.research_capsule`` and ``styxx.sworn`` it reuses are used here and nowhere else in the
+package; the conformance set under ``conformance/prereg_ci/`` pins what they do, vector by vector.
 
 The gates form. A PREREG's decision is its one ```gates fence, selected by
 ``styxx.protocol._select_gates_block`` (the single scanner and its refusals), over the PREREG
@@ -48,6 +48,16 @@ none) and ``time`` (token files, read at step B6). ``_manifest`` parses it stric
 ``_amendment_readings``, ``_in_effect`` and ``_amended_after_data`` read the decision in effect for
 a receipt (DESIGN 3.4 C4) from what the git layer hands them: each line's decision, and whether its
 commit is a strict ancestor of the receipt's.
+
+The RESULT readers (DESIGN 3.2(c), step B3). ``_fence_at`` is the gates scanner with its info string
+as a parameter (PLAN K4: ``styxx.protocol`` hard-codes "gates" and does not change); for "gates" it
+decides as ``_select_gates_block`` does, which the conformance set pins on every gates vector.
+``_fence_json`` reads a ```result or ```locks fence through it, then refuses a fence CommonMark
+renders that the scanner does not count (``_shadow_fences``: behind a byte-order mark, in a block
+quote or a list item, or with a second word in the info string), then reads strict JSON.
+``_result_reading`` reads a RESULT's ```result fence and its sworn spans on receipts' verdict leaves
+(through ``styxx.sworn.scan``, held to the checks sworn makes from bytes alone); ``_declared`` groups
+what one RESULT declares per receipt and refuses two forms that disagree.
 """
 from __future__ import annotations
 
@@ -60,6 +70,7 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 from styxx import protocol as _protocol
 from styxx import research_capsule as _capsule
+from styxx import sworn as _sworn
 
 __all__ = ["rescore", "compare"]
 
@@ -725,3 +736,344 @@ def _amended_after_data(effect: Dict[str, Any], earlier: Iterable[Dict[str, Any]
             f["kind"] = "FAIL"
         out.append(f)
     return out
+
+
+# ---- the fence scanner with its info string as a parameter (PLAN K4), and the RESULT readers (step B3) ----
+
+# an info string this scanner is asked for: one lower-case ASCII word
+_INFO = re.compile(r"[a-z][a-z0-9_-]*")
+_EM = "\u2014"
+# a CommonMark container prefix: a block quote marker, or a list item marker and the spacing after it
+_CONTAINER = re.compile(r" {0,3}(?:>[ \t]?|(?:[-+*]|[0-9]{1,9}[.)])(?:[ \t]+|$))")
+# a line CommonMark may open a fence on: its indent, then a backtick run (whose info string holds no
+# backtick) or a tilde run, then the info string
+_LOOSE_FENCE = re.compile(r"([ \t]*)(?:`{3,}([^`]*)|~{3,}(.*))")
+_RESULT_REFUSES = "RESULT_REFUSES"
+_RESULT_FORMS_DIFFER = "RESULT_FORMS_DIFFER"
+_RESULT_NOT_READ = "RESULT_NOT_READ"
+# the RESULT readers' codes, in a table of their own (as _SEAL_KIND is): _KIND is compare's and the cover's
+_RESULT_KIND = {_RESULT_REFUSES: "FAIL", _RESULT_FORMS_DIFFER: "FAIL", _RESULT_NOT_READ: "NOTE"}
+_RESULT_KEYS = ("prereg", "receipt", "verdict")
+_VERDICT_LEAF = "/verdict"
+# the lexer's reasons under which a document's tags have no canonical text (styxx.sworn's own list)
+_LEXICAL = ("tag_syntax", "nesting", "stray_closer", "unclosed")
+# a tag the sworn lexer would meet (its own candidate pattern) that names a verdict leaf, wherever it sits: what a
+# document the lexer cannot read is searched for, so a mention of the leaf in prose or in code is not one
+_VERDICT_TAG = re.compile(rb"</?[sS][wW][oO][rR][nN](?![A-Za-z0-9_\-])[^>\n]*#/verdict")
+# bytes that are not UTF-8 are read as a RESULT only when they hold such a tag or a result fence's marker
+_BYTES_FORM = re.compile(rb"(?im:^[^\n]*?(?:`{3,}|~{3,})[ \t]*result)")
+
+
+class _ResultError(ValueError):
+    """A RESULT whose declared verdict is not read: the reason, which ``_result_reading`` reports as
+    ``RESULT_REFUSES``."""
+
+
+def _cols(indent: str) -> int:
+    """The columns an indent spans, a tab to the next multiple of 4 (the scanner's own count)."""
+    cols = 0
+    for ch in indent:
+        cols = cols + 4 - cols % 4 if ch == "\t" else cols + 1
+    return cols
+
+
+def _fence_at(text: str, info: str) -> Optional[Tuple[int, str]]:
+    """``(line index, block text)`` of the one ```<info> fence of *text*, None where the text holds
+    no <info>-like fence, or a ``GateSpecError``.
+
+    The scanner of ``styxx.protocol._select_gates_block`` (``styxx/protocol.py:66-147``) with the
+    info string as a parameter, rule for rule and in the same order: every fence line is tokenised
+    once with that module's own pattern; an info string holding any non-ASCII character refuses,
+    on any fence line; an <info>-like block is a fence a renderer shows (indent of at most 3
+    columns, a tab to the next multiple of 4) whose casefolded info string is *info*, counted
+    inside HTML comments too; exactly one may exist, in the plain unindented lower-case backtick
+    form, outside every HTML comment (an unterminated one runs to the end), and closed. For
+    "gates" the refusals' words are that module's, so the two read a PREREG one way; the one
+    difference is the reading of a text with no gates-like fence, which that module refuses and
+    this returns as None."""
+    if not isinstance(info, str):
+        raise TypeError(f"an info string is a str, not {type(info).__name__}")
+    if not _INFO.fullmatch(info):
+        raise ValueError(f"an info string here is one lower-case ASCII word, not {info!r}")
+    doc = "prereg" if info in ("gates", "locks") else "the document"
+    lines = text.split("\n")
+    spans, pos = [], 0
+    while True:
+        s = text.find("<!--", pos)
+        if s < 0:
+            break
+        e = text.find("-->", s + 4)
+        spans.append((s, len(text) if e < 0 else e + 3))
+        pos = s + 4 if e < 0 else e + 3
+    offsets, off = [], 0
+    for ln in lines:
+        offsets.append(off)
+        off += len(ln) + 1
+    like = []
+    for i, ln in enumerate(lines):
+        m = _protocol._FENCE_LINE_RE.match(ln)
+        if not m:
+            continue
+        indent, marker, found = m.groups()
+        if not found.isascii():
+            raise _GateSpecError(
+                f"fence info string {found!r} (line {i + 1}) contains non-ASCII characters {_EM} a "
+                f"confusable info string is a shadowing channel, and this parser refuses the "
+                f"class rather than trusting a normalization table to enumerate it")
+        if _cols(indent) <= 3 and found.casefold() == info:
+            like.append((i, indent, marker, found))
+    if not like:
+        return None
+    if len(like) > 1:
+        where = [f"line {i + 1} ({marker}{found})" for i, _, marker, found in like]
+        raise _GateSpecError(
+            f"{doc} contains {len(like)} {info}-like fenced blocks ({', '.join(where)}) "
+            f"{_EM} the frozen block must be unambiguous. A document that can show a reader one "
+            f"block and score against another is not frozen; remove or rename all but one.")
+    i, indent, marker, found = like[0]
+    if indent or marker != "```" or found != info:
+        raise _GateSpecError(
+            f"the single {info}-like block (line {i + 1}, {indent!r}{marker}{found}) is not a "
+            f"plain unindented ```{info} fence {_EM} the one form a renderer and this parser read "
+            f"identically. A block only one of them recognises is a shadowing channel, not a "
+            f"style choice.")
+    if any(s <= offsets[i] < e for s, e in spans):
+        raise _GateSpecError(
+            f"the ```{info} fence at line {i + 1} sits inside an HTML comment (possibly "
+            f"unterminated) {_EM} a renderer hides it, so scoring it would divorce the machine's "
+            f"authority from the reader's. De-comment it.")
+    for j in range(i + 1, len(lines)):
+        if _protocol._CLOSER_RE.match(lines[j]):
+            return i, "\n".join(lines[i + 1:j])
+    raise _GateSpecError(
+        f"the ```{info} fence at line {i + 1} is never closed {_EM} an unterminated block renders "
+        f"as everything-is-code and freezes nothing")
+
+
+def _select_fence(text: str, info: str) -> Optional[str]:
+    """The text of the one ```<info> fence (``_fence_at``), None where there is none, or a
+    ``GateSpecError``. For "gates" it decides as ``styxx.protocol._select_gates_block`` does
+    (``tests/test_prereg_ci_result.py`` and ``conformance/prereg_ci/vectors_fence.json``)."""
+    found = _fence_at(text, info)
+    return None if found is None else found[1]
+
+
+def _shadow_fences(text: str, info: str) -> List[int]:
+    """The 1-based lines on which CommonMark opens an <info> block that the scanner does not count:
+    a fence line behind a byte-order mark, a block quote marker or a list item marker, or one
+    whose info string's leading word is *info* (any case) with more words after it. A leading word
+    holding a non-ASCII character counts too, the scanner's own class. A line the scanner tokenises
+    as it stands is left to ``_fence_at``, and so is indented code (4 columns or more)."""
+    out = []
+    for i, ln in enumerate(text.split("\n")):
+        rest, wrapped = ln, False
+        if rest.startswith("\ufeff"):
+            rest, wrapped = rest.lstrip("\ufeff"), True
+        while True:
+            m = _CONTAINER.match(rest)
+            if m is None:
+                break
+            rest, wrapped = rest[m.end():], True
+        m = _LOOSE_FENCE.fullmatch(rest)
+        if m is None or _cols(m.group(1)) > 3:
+            continue
+        if not wrapped and _protocol._FENCE_LINE_RE.match(ln):
+            continue
+        words = (m.group(2) if m.group(2) is not None else m.group(3)).split()
+        if words and (not words[0].isascii() or words[0].casefold() == info):
+            out.append(i + 1)
+    return out
+
+
+def _fence_json(text: str, info: str) -> Optional[Tuple[int, Any]]:
+    """``(1-based line, object)`` of the one ```<info> fence read as strict JSON (duplicate and
+    non-ASCII keys refused, ``research_capsule``'s reader), None where the text holds none, or a
+    ``GateSpecError``: every refusal of ``_fence_at``, then a fence ``_shadow_fences`` finds, then
+    bytes that are not strict JSON. The reader of the ```result fence (step B3) and of the ```locks
+    fence (step B4)."""
+    found = _fence_at(text, info)
+    shadow = _shadow_fences(text, info)
+    if shadow:
+        raise _GateSpecError(
+            f"a ```{info} fence at line {shadow[0]} renders as a {info} block (behind a byte-order mark, in a "
+            f"block quote or a list item, or with a second word in its info string) and the scanner counts no "
+            f"fence there {_EM} a block only one of them recognises is a shadowing channel; write the one plain "
+            f"unindented ```{info} fence")
+    if found is None:
+        return None
+    i, block = found
+    try:
+        return i + 1, _capsule._strict_json(block)
+    except ValueError as e:
+        raise _GateSpecError(f"the ```{info} fence at line {i + 1} is not valid strict JSON: {e}")
+
+
+def _result_fence(text: str) -> Optional[Dict[str, Any]]:
+    """The declaration of a RESULT's one ```result fence (DESIGN 3.2(c)): a JSON object naming
+    ``prereg``, ``receipt`` and ``verdict``, three non-empty strings, and nothing else, so no key a
+    reader sees beside them is one the machine passes over. None where there is no fence."""
+    got = _fence_json(text, "result")
+    if got is None:
+        return None
+    line, obj = got
+    if not isinstance(obj, dict):
+        raise _ResultError(f"the ```result fence at line {line} is not a JSON object (it is a {type(obj).__name__})")
+    missing = [k for k in _RESULT_KEYS if k not in obj]
+    extra = sorted(k for k in obj if k not in _RESULT_KEYS)
+    if missing or extra:
+        raise _ResultError(f"the ```result fence at line {line} names prereg, receipt and verdict and nothing else; "
+                           + "; ".join(([f"it lacks {missing}"] if missing else [])
+                                       + ([f"it holds {extra}"] if extra else [])))
+    for k in _RESULT_KEYS:
+        v = obj[k]
+        if not isinstance(v, str) or not v.strip() or any(ord(c) < 32 for c in v):
+            raise _ResultError(f"the ```result fence at line {line}: {k} {v!r} is not a non-empty string of one line")
+    return {"form": "fence", "receipt": obj["receipt"], "prereg": obj["prereg"], "verdict": obj["verdict"],
+            "line": line}
+
+
+def _on_verdict_leaf(d: Dict[str, Any]) -> bool:
+    """Whether a declaration the sworn lexer met names a receipt's verdict leaf (``#/verdict``), or,
+    for a tag the lexer could not read, whether its bytes name one."""
+    ref = d.get("receipt")
+    if isinstance(ref, str):
+        return "#" in ref and ref.split("#", 1)[1] == _VERDICT_LEAF
+    return "#" + _VERDICT_LEAF in (d.get("raw") or "")
+
+
+def _verdict_spans(raw: bytes) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """``(declarations, unread)``: every sworn span on a receipt's verdict leaf (DESIGN 3.2(c)), read
+    through ``styxx.sworn.scan``, or a ``_ResultError``.
+
+    A span declares the verdict its needle quotes: ``k="quote"``, the content of its one inline
+    code span. Each is held to the checks ``styxx.sworn`` makes from the bytes alone, in its order
+    (the lexer's MALFORMED reasons, a blank span, the length cap, the kind, the receipt grammar, a
+    directional override, the needle), and any of them refuses the reading; so does a document
+    sworn reads as MALFORMED (unbalanced fences) when it holds a tag naming a verdict leaf
+    (``_VERDICT_TAG``), and a document whose tags do not lex when one of them names a verdict leaf. Spans on other leaves are not read here. A span naming its receipt by the ``rN`` or
+    ``prereg:`` form, which no committed path holds, is listed in *unread* (``RESULT_NOT_READ``)."""
+    sc = _sworn.scan(raw)
+    if sc["document_malformed"] is not None:
+        if _VERDICT_TAG.search(raw):
+            raise _ResultError(f"styxx.sworn reads the document as MALFORMED {sc['document_malformed']['reason']}, "
+                               f"so no verdict sworn in it is read")
+        return [], []
+    decls = sc["declarations"]
+    mine = [d for d in decls if _on_verdict_leaf(d)]
+    if not mine:
+        return [], []
+
+    def line_of(d: Dict[str, Any]) -> int:
+        return raw.count(b"\n", 0, d["at"]) + 1
+
+    if not sc["lexical_ok"]:
+        bad = next(d for d in decls if d["malformed"] in _LEXICAL)
+        raise _ResultError(f"styxx.sworn reads the tag at line {line_of(bad)} as MALFORMED {bad['malformed']}: the "
+                           f"document's tags do not lex, so no verdict sworn in it is read")
+    out, unread = [], []
+    for d in mine:
+        line, ref, kind = line_of(d), d["receipt"], d["kind"]
+
+        def bad(reason: str) -> _ResultError:
+            return _ResultError(f"the span at line {line} on {ref} is MALFORMED {reason} under styxx.sworn, so the "
+                                f"verdict it declares is not read")
+
+        if d["malformed"]:
+            raise bad(d["malformed"])
+        inner = d["inner"]
+        if not inner.strip(b" \t\r\n\f\v"):
+            raise bad("empty_span")
+        if len(inner.decode("utf-8")) > _sworn.SPAN_CAP_CODEPOINTS:
+            raise bad("length_cap")
+        if kind in _sworn.RESERVED_KINDS:
+            raise bad("kind_reserved")
+        if kind not in _sworn.KINDS:
+            raise bad("kind_unknown")
+        parsed, why = _sworn._parse_receipt(ref)
+        if parsed is None:
+            raise bad(why)
+        if kind in ("absent", "hash") and parsed["partial"]:
+            raise bad(f"{kind}_over_partial")
+        if kind != "quote":
+            raise _ResultError(f"the span at line {line} on {ref} has k=\"{kind}\"; a verdict leaf is declared with "
+                               f"k=\"quote\", whose needle is the verdict")
+        if _sworn._DIRECTIONAL_OVERRIDE.search(inner.decode("utf-8")):
+            raise bad("directional_override")
+        needle, why = _sworn._needle_in(inner)
+        if needle is None:
+            raise bad(why)
+        if parsed["form"] != "path":
+            unread.append({"code": _RESULT_NOT_READ, "kind": _RESULT_KIND[_RESULT_NOT_READ], "receipt": ref,
+                           "line": line, "detail": f"the span at line {line} declares the verdict of {ref}, a "
+                                                   f"{parsed['form']} receipt no committed path holds, so it is "
+                                                   f"not paired (styxx.sworn checks the span itself)"})
+            continue
+        out.append({"form": "sworn", "receipt": parsed["target"], "prereg": None, "verdict": needle.decode("utf-8"),
+                    "line": line})
+    return out, unread
+
+
+def _result_reading(data: Any) -> Dict[str, Any]:
+    """What a RESULT's bytes declare (DESIGN 3.2(c)): ``{code, kind, detail, declarations, unread}``.
+
+    *data* is a blob. The ```result fence is read from the bytes decoded as UTF-8 with CRLF and a
+    lone CR read as LF (as a PREREG is), the sworn spans from the bytes as ``styxx.sworn`` lexes
+    them. Each declaration is ``{form, receipt, prereg, verdict, line}``: ``form`` "fence" or
+    "sworn"; ``receipt`` the name the RESULT gives (a sworn path is repository-relative, a fence
+    name is resolved as DESIGN 3.2(d) resolves names); ``prereg`` the fence's PREREG name (None for
+    a span); ``line`` 1-based. A refusal of either form (the scanner's, a shadow fence's, strict
+    JSON's, the fence's keys, or a span's) is ``RESULT_REFUSES``, a FAIL, and then no declaration
+    is read. A document holding neither form declares nothing, which is no finding: most markdown
+    is not a RESULT. Bytes that are not UTF-8 are refused only when they hold a marker of a form."""
+    if not isinstance(data, (bytes, bytearray)):
+        raise TypeError(f"a RESULT is bytes (a blob), not {type(data).__name__}")
+    data = bytes(data)
+    out: Dict[str, Any] = {"code": None, "kind": None, "detail": None, "declarations": [], "unread": []}
+
+    def refuse(detail: str) -> Dict[str, Any]:
+        out.update(code=_RESULT_REFUSES, kind=_RESULT_KIND[_RESULT_REFUSES], detail=detail, declarations=[],
+                   unread=[])
+        return out
+
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError as e:
+        if _VERDICT_TAG.search(data) or _BYTES_FORM.search(data):
+            return refuse(f"the document is not UTF-8 ({e}), and it holds the marker of a ```result fence or of a "
+                          f"span on a verdict leaf")
+        return out
+    try:
+        fence = _result_fence(text.replace("\r\n", "\n").replace("\r", "\n"))
+        spans, unread = _verdict_spans(data)
+    except (_GateSpecError, _ResultError) as e:
+        return refuse(str(e))
+    out["declarations"] = ([fence] if fence is not None else []) + spans
+    out["unread"] = unread
+    return out
+
+
+def _declared(declarations: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
+    """The verdict each RESULT declares for each receipt (DESIGN 3.4 C6(iii)): ``{declared, findings}``.
+
+    Each of *declarations* is a ``_result_reading`` declaration with ``result`` (the RESULT's path)
+    and ``receipt_path`` (the receipt its name resolves to, the git layer's reading) added. They are
+    grouped by RESULT and receipt in the order met; each group is ``{result, receipt_path, verdict,
+    verdicts, sources}``, ``sources`` one ``{form, line, verdict}`` per declaration. Two verdicts
+    for one receipt in one RESULT (the fence and a span, or two spans) are ``RESULT_FORMS_DIFFER``,
+    a FAIL, and the group's ``verdict`` is None: DESIGN 3.2(c), both must agree."""
+    groups: Dict[Tuple[Any, str], List[Dict[str, Any]]] = {}
+    for d in declarations:
+        groups.setdefault((d.get("result"), d["receipt_path"]), []).append(d)
+    declared, findings = [], []
+    for (result, path), ds in groups.items():
+        verdicts = list(dict.fromkeys(d["verdict"] for d in ds))
+        sources = [{"form": d["form"], "line": d["line"], "verdict": d["verdict"]} for d in ds]
+        declared.append({"result": result, "receipt_path": path, "verdict": verdicts[0] if len(verdicts) == 1 else None,
+                         "verdicts": verdicts, "sources": sources})
+        if len(verdicts) > 1:
+            findings.append({"code": _RESULT_FORMS_DIFFER, "kind": _RESULT_KIND[_RESULT_FORMS_DIFFER], "path": result,
+                             "detail": f"{result or 'the RESULT'} declares {len(verdicts)} verdicts for {path}: "
+                                       + "; ".join(f"the {s['form']} at line {s['line']} prints {s['verdict']}"
+                                                   for s in sources)
+                                       + "; the forms must agree (DESIGN 3.2(c))"})
+    return {"declared": declared, "findings": findings}
