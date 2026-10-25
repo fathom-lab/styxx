@@ -17,8 +17,10 @@ missing blob from the clone's promisor remote, which a full clone never needs. T
 * the order commit is the oldest commit, among L and its ancestors (HEAD and its ancestors, for a
   PREREG that arrives in the same pull request as its receipt, C2), at which the path's decision
   digest already was the one at L; the file-blob reading (the design's RV2 comparison) does the same
-  on the blob id. A decision changed and changed back orders from the commit that wrote it before
-  the change; the blob history between seal and receipt prints the interval;
+  on the blob id. "Oldest" is git's date order, which lists no commit before its children; where
+  the value was written on branches that do not reach each other, every minimal holder is listed
+  too. A decision changed and changed back orders from the commit that wrote it before the change;
+  the blob history between seal and receipt (git's full history of the path) prints the interval;
 * strict ancestry is ``merge-base --is-ancestor`` with a commit never strictly before itself; the
   blob history of a path between two commits; the paths a pull request adds, changes, deletes or
   renames, read from the merge base of BASE and HEAD, as git's three-dot diff reads them;
@@ -518,29 +520,41 @@ class _Repo:
 
         The oldest holder is a commit that wrote the value, so it differs at the path from every
         parent and ``rev-list --full-history`` lists it, on whichever branch it sits; "oldest" is
-        git's listing order (commit date), as the design's RV2 reads it with ``git log``."""
+        git's date order (commit date, with no commit listed before all of its children), as the
+        design's RV2 reads it with ``git log``, so the order commit never has a holder among its
+        ancestors, whatever dates the author set. Holders on branches that do not reach each other
+        are each oldest on their own side: ``order_holders`` lists every one."""
+        held = self._holding(path, start, key)
+        return held[-1] if held else None
+
+    def order_holders(self, path: str, start: str, key: str = "decision") -> Tuple[str, ...]:
+        """Every minimal holder of the value at *start*: the commits among *start* and its
+        ancestors holding it with no other holder among their own ancestors, newest to oldest in
+        git's date order; the order commit is the last. Two or more mean the value was written on
+        branches that do not reach each other (the same plan committed twice), where "oldest" is
+        a partial order: C3 can ask whether any of them is strictly before R, or print each."""
+        return tuple(_minimal(self, self._holding(path, start, key)))
+
+    def _holding(self, path: str, start: str, key: str) -> Tuple[str, ...]:
         if key not in ("decision", "blob"):
             raise ValueError(f"key is 'decision' or 'blob', not {key!r}")
         self._full()
         c = self.commit(start)
-        memo = ("order", c, _plain_path(path), key)
+        memo = ("held", c, _plain_path(path), key)
         if memo not in self._memo:
             want = self._key(c, path, key)
-            oldest: Optional[str] = None
+            held: List[str] = []
             if want is not None:
                 self._parents_of(c)
-                oldest = c
-                for x in self._ok("rev-list", "--full-history", c, "--", path).decode("ascii").split():
-                    if self._key(x, path, key) == want:
-                        oldest = x                      # the listing runs newest to oldest; the last one stays
-            self._memo[memo] = oldest
+                held = self._held(path, c, lambda x: self._key(x, path, key) == want)
+            self._memo[memo] = tuple(held)
         return self._memo[memo]
 
     def _held(self, path: str, start: str, holds: Any, stop: Optional[str] = None) -> List[str]:
         """Every commit git lists for *path* from *start*, *stop* and its ancestors left out, at
         which ``holds(commit)`` is true, newest to oldest in git's date order (no commit before all of
-        its children); ``[start]`` where git lists none and *start* holds, else ``[]``. No holder
-        listed after the last one is its ancestor."""
+        its children); ``[start]`` where git lists none and *start* holds, else ``[]``. No other
+        holder listed is an ancestor of the last one."""
         argv = ["rev-list", "--full-history", "--date-order", start, *(("--not", stop) if stop else ()),
                 "--", _plain_path(path)]
         listed = [x for x in self._ok(*argv).decode("ascii").split() if holds(x)]
@@ -593,6 +607,12 @@ class _Repo:
         prefix = (c + ":").encode("ascii")
         return [tok[len(prefix):].decode("utf-8", "surrogateescape") for tok in out.split(b"\0")
                 if tok.startswith(prefix)]
+
+
+def _minimal(repo: _Repo, held: Sequence[str]) -> List[str]:
+    """The commits of *held* (newest to oldest in git's date order, so an ancestor is never listed
+    before its descendant) that have no other commit of *held* among their ancestors."""
+    return [x for i, x in enumerate(held) if not any(repo.is_strict_ancestor(o, x) for o in held[i + 1:])]
 
 
 def _chunks(paths: Sequence[str], budget: int = 6000) -> List[List[str]]:
@@ -833,10 +853,11 @@ def _recorded(repo: _Repo, rev: str, receipt_path: str, receipt: Any,
 
 def _seal(repo: _Repo, path: str, base: str, head: Optional[str] = None) -> Dict[str, Any]:
     """The default seal of *path* (DESIGN 3.2(b)): its landing commit L on *base*'s parent-one chain
-    and the blob there, the order commit on the decision digest and on the file blob, the add commit,
-    the decision the seal bytes hold, and the path L renamed it from, if any. A PREREG not on the
-    chain that is in *head* arrives in the pull request (C2): no L, orders read from *head*, the add
-    commit from *head*'s history. Neither is PREREG_ABSENT."""
+    and the blob there, the order commit on the decision digest and on the file blob, every minimal
+    holder of the decision (``order_holders``), the add commit, the decision the seal bytes hold,
+    and the path L renamed it from, if any. A PREREG not on the chain that is in *head* arrives in
+    the pull request (C2): no L, orders read from *head*, the add commit from *head*'s history.
+    Neither is PREREG_ABSENT."""
     b = repo.commit(base)
     landing = repo.landing([path], b)[path]
     if landing is not None:
@@ -852,6 +873,7 @@ def _seal(repo: _Repo, path: str, base: str, head: Optional[str] = None) -> Dict
     decision = _core._decision(data)
     return {"path": path, "landing": landing, "landed": landing is not None, "add": repo.add_commit(path, add_rev),
             "order": repo.order_commit(path, start, "decision"), "order_blob": repo.order_commit(path, start, "blob"),
+            "order_holders": repo.order_holders(path, start, "decision"),
             "blob": repo.blob_id(start, path), "blob_sha256": hashlib.sha256(data).hexdigest(), "bytes": data,
             "form": decision["form"], "gates_sha256": decision["gates_sha256"], "code": decision["code"],
             "detail": decision["detail"], "renamed_from": repo.renamed_from(path, landing) if landing else None}
@@ -877,14 +899,19 @@ def _receipts_written(repo: _Repo, base: str, head: str,
     HEAD whose change is an add, a rename's new path, an edit in place or a type change (A, R, M,
     T), whatever the path held at the merge base: nothing, a placeholder, bytes that are not JSON,
     or a receipt (which ``_receipts_rewritten`` also reads, so under ``receipt_rewrite = "note"`` the
-    new bytes are still scored). Each is ``{path, status, old, receipt_commit, receipt}``;
-    ``receipt_commit`` is R, the oldest commit in merge_base..HEAD at which the path holds a receipt,
-    so a path used before the pull request does not move R outside it. A changed ``.json`` that is
-    not JSON at HEAD is a ``RECEIPT_UNREADABLE`` NOTE, since no receipt can be read from it; one
-    that is a symlink or a submodule at HEAD is a ``RECEIPT_NOT_A_FILE`` NOTE. A ``.json`` suffix is
-    read whatever its case. Every changed ``.json`` path (new or old) under *exclude* is left out
-    here and in ``_receipts_rewritten`` and listed in ``excluded``, for the report's not_examined.
-    Returns ``{receipts, notes, excluded}``."""
+    new bytes are still scored).
+
+    Each is ``{path, status, old, receipt_commit, receipt_holders, receipt}``. ``receipt_commit`` is
+    R, the oldest commit in merge_base..HEAD at which the path holds a receipt (git's date order), so
+    a path used before the pull request does not move R outside it; ``receipt_holders`` is every
+    such commit with no other among its ancestors, R the last (two or more where branches of the
+    pull request that do not reach each other each wrote one).
+
+    A changed ``.json`` that is not JSON at HEAD is a ``RECEIPT_UNREADABLE`` NOTE, since no receipt
+    can be read from it; one that is a symlink or a submodule at HEAD is a ``RECEIPT_NOT_A_FILE``
+    NOTE. A ``.json`` suffix is read whatever its case. Every changed ``.json`` path (new or old)
+    under *exclude* is left out here and in ``_receipts_rewritten`` and listed in ``excluded``, for
+    the report's not_examined. Returns ``{receipts, notes, excluded}``."""
     ch = repo.changes(base, head)
     mb, h = ch["merge_base"], ch["head"]
     receipts, notes, excluded = [], [], set()
@@ -905,7 +932,7 @@ def _receipts_written(repo: _Repo, base: str, head: str,
             continue
         held = repo._held(path, h, lambda c, p=path: _holds_receipt(repo, c, p), stop=mb)
         receipts.append({"path": path, "status": x["status"], "old": x["old"], "receipt_commit": held[-1],
-                         "receipt": obj})
+                         "receipt_holders": tuple(_minimal(repo, held)), "receipt": obj})
     return {"receipts": receipts, "notes": notes, "excluded": sorted(excluded)}
 
 

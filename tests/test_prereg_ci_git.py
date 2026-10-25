@@ -64,8 +64,11 @@ class Git:
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_bytes(data if isinstance(data, bytes) else data.encode("utf-8"))
 
-    def commit(self, msg: str) -> str:
+    def commit(self, msg: str, at: int | None = None) -> str:
+        """Commit everything; *at* sets the commit's date (seconds after the clock's start)."""
         self("add", "-A")
+        if at is not None:
+            self.t = 1_760_000_000 + at - 60
         self("commit", "-q", "--allow-empty", "-m", msg)
         return self("rev-parse", "HEAD")
 
@@ -380,6 +383,92 @@ def test_the_oldest_holder_on_a_side_branch_counts(tmp_path):
         assert repo.landing([P], "main") == {P: L}
         assert repo.order_commit(P, L, "decision") == a1
         assert repo.order_commit(P, L, "blob") == a1
+
+
+def test_the_order_commit_has_no_holder_among_its_ancestors_whatever_the_dates(tmp_path):
+    """The author sets commit dates. X writes the plan, Z moves the bar, Y writes X's bytes back
+    with a date older than X's, and a branch off X (C2, newest of all) is merged in before the plan
+    lands. Git's default walk reaches X through C2 before it reaches Y, so its listing puts Y last
+    among the holders although X, a holder, is Y's ancestor; the date order lists X after both."""
+    g = Git(tmp_path / "skew")
+    g.write("README.md", "r\n")
+    g.commit("m0", at=100)
+    g("switch", "-q", "-c", "a")
+    g.write(P, prereg(0.5))
+    x = g.commit("X: the plan", at=2000)
+    g("switch", "-q", "-c", "b")
+    g.write("b.md", "b\n")
+    g.commit("C2: a branch off X", at=3000)
+    g("switch", "-q", "a")
+    g.write(P, prereg(0.6))
+    z = g.commit("Z: the bar moves", at=2100)
+    g.write(P, prereg(0.5))
+    y = g.commit("Y: X's bytes again, dated before X", at=600)
+    g.t = 1_760_000_000 + 3100 - 60
+    g.merge("b", "join b")
+    g("switch", "-q", "main")
+    g.t = 1_760_000_000 + 3200 - 60
+    L = g.merge("a", "land")
+    with G._Repo(g.root) as repo:
+        default = [c for c in g("rev-list", "--full-history", L, "--", P).split()
+                   if repo.blob_id(c, P) == repo.blob_id(x, P)]
+        assert default[-1] == y and repo.is_strict_ancestor(x, y), "git's default listing"
+        assert repo.landing([P], "main") == {P: L}
+        assert repo.order_commit(P, L, "decision") == x
+        assert repo.order_commit(P, L, "blob") == x
+        assert repo.order_holders(P, L, "decision") == (x,)
+        assert z not in repo.order_holders(P, L, "decision")
+
+
+def test_incomparable_holders_of_the_landed_decision_are_each_listed(tmp_path):
+    """Review case 2 (for C3): the same plan committed on two branches that do not reach each other,
+    c1 dated older than b1; the receipt forks from b1 and b merges c before it lands. The order
+    commit is the date-oldest, c1, which is not an ancestor of R; order_holders lists both, so C3
+    can ask whether any minimal holder is strictly before R."""
+    g = Git(tmp_path / "twice")
+    g.write("README.md", "r\n")
+    g.commit("m0", at=100)
+    g("switch", "-q", "-c", "c")
+    g.write(P, prereg(0.5))
+    c1 = g.commit("the plan on branch c", at=200)
+    g("switch", "-q", "main")
+    g("switch", "-q", "-c", "b")
+    g.write(P, prereg(0.5))
+    b1 = g.commit("the plan on branch b", at=300)
+    g("switch", "-q", "-c", "rcpt")
+    g.write("p/receipt_a.json", receipt())
+    r = g.commit("the receipt after b1", at=400)
+    g("switch", "-q", "b")
+    g.merge("c", "merge c into b")
+    g("switch", "-q", "main")
+    L = g.merge("b", "land b")
+    g.merge("rcpt", "land the receipt")
+    with G._Repo(g.root) as repo:
+        assert repo.landing([P], "main") == {P: L}
+        s = G._seal(repo, P, "main")
+        assert s["order"] == c1 and set(s["order_holders"]) == {b1, c1} and s["order_holders"][-1] == c1
+        assert repo.is_strict_ancestor(b1, r) and not repo.is_strict_ancestor(c1, r)
+        assert [h for h in s["order_holders"] if repo.is_strict_ancestor(h, r)] == [b1]
+
+
+def test_receipt_holders_on_two_branches_of_one_pull_request(tmp_path):
+    """R's partial order: two branches of one pull request write a receipt at the same path, and
+    the pull request merges them; R is the date-oldest, and receipt_holders lists both."""
+    g = Git(tmp_path / "rtwice")
+    g.write(P, prereg(0.5))
+    g.commit("seal", at=100)
+    g("switch", "-q", "-c", "pr")
+    g("switch", "-q", "-c", "side")
+    g.write("p/receipt_a.json", receipt(m=0.7))
+    s1 = g.commit("a receipt on one branch", at=200)
+    g("switch", "-q", "pr")
+    g.write("p/receipt_a.json", receipt(m=0.8))
+    p1 = g.commit("a receipt on the other", at=300)
+    g("merge", "-q", "--no-ff", "-X", "ours", "-m", "join", "side")
+    with G._Repo(g.root) as repo:
+        (w,) = G._receipts_written(repo, "main", "pr")["receipts"]
+        assert (w["path"], w["receipt_commit"], set(w["receipt_holders"])) == ("p/receipt_a.json", s1, {s1, p1})
+        assert w["receipt"]["m"] == 0.8
 
 
 def test_a_prereg_that_arrives_with_its_receipt_has_no_landing_and_orders_from_head(tmp_path):
