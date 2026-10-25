@@ -1,0 +1,93 @@
+{
+ "schema": "styxx-sworn/leg2-verdict/v1",
+ "tranche": "A",
+ "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+ "prereg_commit": "01e9d2b772d036b906b80c234ce32473c2f1ae39",
+ "gates_sha256": "518e661662e0ec1b52cab4958e2a7a168b7e2c1a6a64fc0ab91833c9e69bc038",
+ "verdict": "VOID_L_R__G_S1_G_S2_G_P_withheld__MISSED__G_G1",
+ "gates": {
+  "G_D_claude_L_overall": false,
+  "G_D_claude_L_side": true,
+  "G_D_claude_R_overall": true,
+  "G_D_claude_R_side": true,
+  "G_D_local_L_overall": false,
+  "G_D_local_L_side": false,
+  "G_D_local_R_overall": false,
+  "G_D_local_R_side": false,
+  "G_F_L": false,
+  "G_F_R": false,
+  "G_S1": false,
+  "G_S2": false,
+  "G_P": false,
+  "G_C": true,
+  "G_G1": false
+ },
+ "crosscheck": {
+  "G_F_L": "agrees",
+  "G_F_R": "agrees",
+  "G_S1": "score.py undecided: withheld",
+  "G_S2": "score.py undecided: withheld",
+  "G_P": "score.py undecided: withheld",
+  "G_C": "agrees",
+  "G_G1": "score.py undecided: empty denominator"
+ },
+ "withheld": [
+  "G_S1",
+  "G_S2",
+  "G_P"
+ ],
+ "empty_denominators": [
+  "G_G1"
+ ],
+ "score_py_quotable": false,
+ "verdict_input": {
+  "schema": "styxx-sworn/leg2-verdict-input/v1",
+  "tranche": "A",
+  "path_check_only": false,
+  "g_d": {
+   "claude_L": {
+    "overall": 26,
+    "min_side": 11
+   },
+   "claude_R": {
+    "overall": 29,
+    "min_side": 14
+   },
+   "local_L": {
+    "overall": 14,
+    "min_side": 7
+   },
+   "local_R": {
+    "overall": 15,
+    "min_side": 0
+   }
+  },
+  "g_f": {
+   "L": 0,
+   "R": 1
+  },
+  "g_s1": {
+   "share": -1.0
+  },
+  "g_s2": {
+   "share": 2.0
+  },
+  "g_p": {
+   "share": 2.0
+  },
+  "g_c": {
+   "wilson_lower": 0.9793286325558971
+  },
+  "g_g1": {
+   "share": -1.0
+  },
+  "withheld": [
+   "G_S1",
+   "G_S2",
+   "G_P"
+  ],
+  "empty_denominators": [
+   "G_G1"
+  ]
+ }
+}

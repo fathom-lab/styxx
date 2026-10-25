@@ -1,0 +1,31 @@
+{
+ "script": "papers/sworn/measurement/tranche_A_packet_facts.py",
+ "script_sha256": "183a188b180be1b96a678dca0ee0f1a02d403fe673348a89483d2944d4e5e7eb",
+ "schema": "styxx-sworn/measurement-tranche-A-packet-facts/v1",
+ "what_this_is_not": "no decoy, no side, no seat and no answer: packet bytes only",
+ "packet_L_sha256": "140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9",
+ "packet_R_sha256": "7a10ce63bc9a64dde216f6932836f1d97b10a71fabca304ac8875bd205f60798",
+ "packet_L_items": 59,
+ "packet_R_items": 166,
+ "packet_L_items_beginning_with_dash": [
+  {
+   "index": 32,
+   "id": "L-0033",
+   "text_chars": 2130
+  }
+ ],
+ "packet_L_items_beginning_with_dash_count": 1,
+ "packet_R_item_keys": [
+  "id",
+  "kind",
+  "leaf",
+  "sentence"
+ ],
+ "compared_by_length": [
+  {
+   "index": 7,
+   "id": "L-0008",
+   "text_chars": 2853
+  }
+ ]
+}
