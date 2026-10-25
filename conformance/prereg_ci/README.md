@@ -18,6 +18,8 @@ cover; no claim.
 | `vectors_compare.json` | added after the B0 review, beside the committed set: synthetic vectors for every code `compare` returns, the A.2 re-run through a fence the scanner does not count, and the readings the review asked for; its bytes are in its own `blobs` |
 | `gen_vectors_compare.py` | builds `vectors_compare.json` from cases that state their outcome in advance; reads no history |
 | `rescore_census_ca347730.txt`, `seal_rule_ca347730.txt`, `landing_order_ca347730.txt`, `pairs_ca347730.txt` | added at step B1: the design's R1, RV1 and RV2 outputs and RV2's pair list, copied; see "The history the git layer reproduces" |
+| `seals_manifest_from_SEALS_2026_09_13.jsonl` | added at step B2: the eight rows of `papers/checksum/SEALS_2026_09_13.md` as seals manifest lines; see "The SEALS record as manifest lines" |
+| `gen_seals_manifest.py` | builds that file from the SEALS blob at `REV` and checks it; prints R10's `MATCH` lines |
 
 The JSON files are generated, never edited by hand. `tests/test_prereg_ci_score_vectors.py` and
 `tests/test_prereg_ci_cover.py` replay every vector; only the checks that read history skip, when
@@ -145,10 +147,36 @@ The copies carry the lab's history as is: paths, verdict identifiers and commit 
 - `rescore` runs the cover under a work budget (`core._COVER_BUDGET`, 2 ** 20 subcubes): past it
   the verdict stands and `total`, `holes` and `unreachable_rows` stay None, with `cover_code`
   `COVER_UNCHECKABLE`. Every committed cover vector fits inside it (the largest visits 2,591).
-- The vector files hold `gates_sha256` keys inside their inputs and outcomes; the git layer's
-  record and receipt discovery leaves `conformance/` out by default (`git._EXCLUDE`).
+- The vector files hold `gates_sha256` keys inside their inputs and outcomes, below their top
+  level, so the git layer's record rule (a top-level `gates_sha256`, or a `protocol` entry holding
+  one) reads none of them. Since the B1 review nothing is left out by default: a prefix to leave
+  out is the caller's `exclude` argument, and the paths it leaves out are listed.
 - The census and R2 vectors carry the lab's history as is: paths, verdict identifiers, gate names
   and the bytes. The generator scans the words it writes itself, never carried history.
+
+## The SEALS record as manifest lines
+
+Step B2 adds the seals manifest of DESIGN 3.2(b) (`styxx.prereg_ci.core._manifest`, the git layer's
+`_manifest_*` readings, and the `seal` verb). `seals_manifest_from_SEALS_2026_09_13.jsonl` is the
+lab's own record of seals in that format: `gen_seals_manifest.py` reads
+`papers/checksum/SEALS_2026_09_13.md` as git stores it at `REV`, takes the table under "## the
+digests" (lines 33-40), and writes one line per row. The design's receipt R10 is that each row
+reproduces under `git show <commit>:<path> | sha256sum`; the generator prints R10's `MATCH` line
+for each and refuses on any `DIFFERS`.
+
+| id | kind | amends | decision | why |
+|---|---|---|---|---|
+| 2, 3, 6, 7 | `prereg` | null | `own` | a number alone |
+| 3b, 6b, 7b | `amendment` | 3, 6, 7 | `inherits` | a number with a letter; the three CORRECTIONs hold no gates fence |
+| 8 | `withdrawn` | 7 | `inherits` | its note says it "supersedes row 7" and was "Withdrawn"; its blob holds row 7's fence |
+
+Every `seen` is null (the record states none) and every `time` is empty (no token exists). Lines
+7, 7b and 8 are, byte for byte, the three example lines DESIGN 3.2(b) prints. Parsing the file
+with `core._manifest` and rendering it with `core._manifest_bytes` gives its bytes back.
+`tests/test_prereg_ci_manifest.py` re-runs the generator at `REV`, compares it with this file, and
+re-derives each `blob_sha256` with `git show` itself. Under PLAN K10 as built, a null `seen` stands
+on an amendment line only when the manifest held that line at the commit that added the manifest
+and the line's commit is strictly before it (the record a manifest imports when it begins).
 
 ## How to regenerate it
 
@@ -156,6 +184,7 @@ The copies carry the lab's history as is: paths, verdict identifiers and commit 
 python -B conformance/prereg_ci/gen_vectors.py            # write the set where none is committed
 python -B conformance/prereg_ci/gen_vectors.py --check    # regenerate in memory; exit 1 if a byte differs
 python -B conformance/prereg_ci/gen_vectors_compare.py --check
+python -B conformance/prereg_ci/gen_seals_manifest.py --check
 ```
 
 Once committed, the set is never written again. A run that regenerates it byte for byte exits 0;
