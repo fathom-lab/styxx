@@ -61,6 +61,25 @@ second word in the info string), then reads strict JSON.
 UTF-16 or UTF-32 that holds a form's marker; ``_result_candidate`` says whether a reading of some
 bytes could find anything, which is how the git layer reads any file a pull request writes;
 ``_declared`` groups what one RESULT declares per receipt and refuses two forms that disagree.
+
+The locks form (DESIGN 3.2(a) and (f), step B4). A PREREG's decision is exactly one of two forms: the
+gates fence above, or one ```locks fence, read by ``_fence_block`` with the result fence's rules (the
+scanner's refusals, then a fence a renderer may show inside a container). A PREREG holding both is
+refused, and so is a gates PREREG holding a locks-like fence the locks reader refuses. ``_decision``
+gives the form and the digest of the fence's text for both, so the git layer's seal, order and C0
+readings hold a locks decision as they hold a gates one. ``_locks`` reads the block: ``scorer`` and
+``reads`` (the locked files, repository-relative and portable, each named once, none under the run's
+own ``.prereg-ci/``), ``outcomes`` (the verdicts the scorer may print), ``withdraws`` (a map from a
+declared outcome to its licences, read at step B5), and two optional keys (PLAN K2b): ``argv``, the
+scorer's arguments with ``{receipt}`` once and ``{out}`` at most once, each a whole element (default
+``["{receipt}"]``), and ``verdict_from``, ``"stdout"`` (one line of JSON ``{"verdict": V}``,
+optionally ``"gates"``) or an RFC 6901 pointer into the JSON the scorer writes at ``{out}``.
+``rescore`` runs nothing, so a locks decision reads ``SCORER_NOT_RUN`` there;
+``styxx.prereg_ci.scorer_run`` runs the scorer at its sealed blobs and ``_run_reading`` reads what the
+run left: ``SCORER_READS_UNLOCKED`` when the run recorded a reach past the locks, whatever the scorer
+did next, else ``SCORER_ERROR`` for a timeout, a nonzero exit, a record the run cannot read, a run that
+ended without its closing line, or output the contract does not read, else the verdict, which must be
+a declared outcome.
 """
 from __future__ import annotations
 
@@ -88,10 +107,18 @@ _VERDICT_DIFFERS = "VERDICT_DIFFERS"
 _RECORDED_DIGEST_ABSENT = "RECORDED_DIGEST_ABSENT"
 _RECORDED_VERDICT_ABSENT = "RECORDED_VERDICT_ABSENT"
 _COVER_UNCHECKABLE = "COVER_UNCHECKABLE"
+# the locks form (step B4): rescore runs no scorer; the scorer run's two readings
+_SCORER_NOT_RUN = "SCORER_NOT_RUN"
+_SCORER_ERROR = "SCORER_ERROR"
+_SCORER_READS_UNLOCKED = "SCORER_READS_UNLOCKED"
 _KIND = {_NOT_GATED: "NOTE", _SCORER_REFUSES: "FAIL", _SMOKE_AMBIGUOUS: "INPUT",
          _DECISION_DIGEST_UNSEALED: "FAIL", _VERDICT_DIFFERS: "FAIL",
          _RECORDED_DIGEST_ABSENT: "NOTE", _RECORDED_VERDICT_ABSENT: "NOTE",
-         _COVER_UNCHECKABLE: "UNCHECKABLE"}
+         _COVER_UNCHECKABLE: "UNCHECKABLE",
+         _SCORER_NOT_RUN: "UNCHECKABLE", _SCORER_ERROR: "FAIL", _SCORER_READS_UNLOCKED: "FAIL"}
+# every key of rescore's output, which the locked scorer run's output holds too
+_RESCORE_KEYS = ("form", "code", "detail", "verdict", "gates", "row", "gates_sha256", "smoke", "smoke_verdict",
+                 "total", "holes", "unreachable_rows", "cover_code", "cover_detail")
 # the seals manifest's codes (step B2), in a table of their own: _KIND is compare's and the cover's
 _MANIFEST_INVALID = "MANIFEST_INVALID"
 _MANIFEST_SEEN_MISSING = "MANIFEST_SEEN_MISSING"
@@ -134,10 +161,13 @@ def _sha256(text: str) -> str:
 def _decision(prereg: Any) -> Dict[str, Any]:
     """The decision a PREREG's bytes hold, read as ``rescore`` reads it, without a receipt.
 
-    Returns ``{form, block, gates_sha256, code, detail}``: form "gates" with the selected fence's
-    text and its digest; or form None with ``code`` ``NOT_GATED`` (no gates-like fence at all) or
-    ``SCORER_REFUSES`` (a fence the scanner refuses, or bytes that are not UTF-8) and the refusal's
-    text. The git layer compares these digests along a path's history (the order commit of DESIGN
+    Returns ``{form, block, gates_sha256, code, detail}``: form "gates" or "locks" with the selected
+    fence's text and the sha256 of that text (the decision digest; the key keeps the gates name the
+    receipts record); or form None with ``code`` ``NOT_GATED`` (no gates-like and no locks-like
+    fence at all) or ``SCORER_REFUSES`` (a fence a scanner refuses, both forms in one PREREG, or
+    bytes that are not UTF-8) and the refusal's text. The gates scanner reads before the locks
+    reader, so a gates PREREG reads as it read before step B4 unless it also holds a locks-like
+    fence. The git layer compares these digests along a path's history (the order commit of DESIGN
     3.2(b), and C0); ``rescore`` scores the same block, so the two never read a PREREG two ways.
     """
     out: Dict[str, Any] = {"form": None, "block": None, "gates_sha256": None, "code": None, "detail": None}
@@ -146,12 +176,32 @@ def _decision(prereg: Any) -> Dict[str, Any]:
     except UnicodeDecodeError as e:
         out.update(code=_SCORER_REFUSES, detail=f"the PREREG is not UTF-8: {e}")
         return out
+    none = None
     try:
         block = _protocol._select_gates_block(text)
     except _GateSpecError as e:
-        out.update(code=_NOT_GATED if str(e).startswith(_NO_FENCE) else _SCORER_REFUSES, detail=str(e))
+        if not str(e).startswith(_NO_FENCE):
+            out.update(code=_SCORER_REFUSES, detail=str(e))
+            return out
+        block, none = None, str(e)
+    try:
+        locks = _fence_block(text, "locks")
+    except _GateSpecError as e:
+        out.update(code=_SCORER_REFUSES, detail=str(e))
         return out
-    out.update(form="gates", block=block, gates_sha256=_sha256(block))
+    if block is not None and locks is not None:
+        line = _fence_at(text, "gates")[0] + 1
+        out.update(code=_SCORER_REFUSES, detail=(
+            f"the PREREG holds a ```gates fence (line {line}) and a ```locks fence (line {locks[0] + 1}) {_EM} "
+            f"a PREREG carries one decision, in one of the two forms (DESIGN 3.2(a)); a reader who sees both "
+            f"cannot tell which one judges"))
+        return out
+    if block is not None:
+        out.update(form="gates", block=block, gates_sha256=_sha256(block))
+    elif locks is not None:
+        out.update(form="locks", block=locks[1], gates_sha256=_sha256(locks[1]))
+    else:
+        out.update(code=_NOT_GATED, detail=none)
     return out
 
 
@@ -315,14 +365,16 @@ def rescore(prereg: Any, receipt: Any, *, cover_budget: Optional[int] = _COVER_B
     ``cover_code`` is None, or ``COVER_UNCHECKABLE`` (with ``cover_detail``) when the cover ran
     past *cover_budget* subcubes; the verdict is read either way. ``cover_budget=None`` runs the
     cover with no budget.
+
+    A locks decision is scored by running its scorer, which this pure function does not do: it
+    reads form "locks", the decision digest, and ``SCORER_NOT_RUN`` (UNCHECKABLE) once the block
+    reads (a block ``_locks`` refuses is ``SCORER_REFUSES``); ``styxx.prereg_ci.scorer_run`` gives
+    the same keys for a run.
     """
     if cover_budget is not None and (isinstance(cover_budget, bool) or not isinstance(cover_budget, int)
                                      or cover_budget < 1):
         raise ValueError(f"cover_budget is a positive int or None, not {cover_budget!r}")
-    out: Dict[str, Any] = {"form": None, "code": None, "detail": None, "verdict": None, "gates": None,
-                           "row": None, "gates_sha256": None, "smoke": None, "smoke_verdict": None,
-                           "total": None, "holes": None, "unreachable_rows": None, "cover_code": None,
-                           "cover_detail": None}
+    out: Dict[str, Any] = dict.fromkeys(_RESCORE_KEYS)
 
     def refuse(detail: str) -> Dict[str, Any]:
         out.update(code=_SCORER_REFUSES, detail=detail)
@@ -331,6 +383,16 @@ def rescore(prereg: Any, receipt: Any, *, cover_budget: Optional[int] = _COVER_B
     decision = _decision(prereg)
     if decision["form"] is None:
         out.update(code=decision["code"], detail=decision["detail"])
+        return out
+    if decision["form"] == "locks":
+        out.update(form="locks", gates_sha256=decision["gates_sha256"])
+        try:
+            _locks(decision["block"])
+        except _GateSpecError as e:
+            return refuse(str(e))
+        out.update(code=_SCORER_NOT_RUN, detail=(
+            "a locks decision is scored by running its scorer at its sealed blobs (styxx.prereg_ci.scorer_run); "
+            "rescore is pure and runs nothing"))
         return out
     block = decision["block"]
     out["form"] = "gates"
@@ -955,9 +1017,23 @@ def _shadow_fences(text: str, info: str) -> List[int]:
 def _fence_json(text: str, info: str) -> Optional[Tuple[int, Any]]:
     """``(1-based line, object)`` of the one ```<info> fence read as strict JSON (duplicate and
     non-ASCII keys refused, ``research_capsule``'s reader), None where the text holds none, or a
-    ``GateSpecError``: every refusal of ``_fence_at``, then a fence ``_shadow_fences`` finds, then
-    bytes that are not strict JSON. The reader of the ```result fence (step B3) and of the ```locks
-    fence (step B4)."""
+    ``GateSpecError``: every refusal of ``_fence_block``, then bytes that are not strict JSON. The
+    reader of the ```result fence (step B3); the ```locks fence (step B4) is read through
+    ``_fence_block`` by ``_decision`` and parsed by ``_locks``, so a locks fence that is not JSON
+    still has a digest, as a gates fence does."""
+    found = _fence_block(text, info)
+    if found is None:
+        return None
+    i, block = found
+    try:
+        return i + 1, _capsule._strict_json(block)
+    except ValueError as e:
+        raise _GateSpecError(f"the ```{info} fence at line {i + 1} is not valid strict JSON: {e}")
+
+
+def _fence_block(text: str, info: str) -> Optional[Tuple[int, str]]:
+    """``(line index, block text)`` of the one ```<info> fence, None where the text holds none, or a
+    ``GateSpecError``: every refusal of ``_fence_at``, then a fence ``_shadow_fences`` finds."""
     found = _fence_at(text, info)
     shadow = _shadow_lines(text, info)
     if shadow and shadow[0][1]:
@@ -973,13 +1049,7 @@ def _fence_json(text: str, info: str) -> Optional[Tuple[int, Any]]:
             f"below a line that opens a list item or a footnote) and the scanner counts no fence there {_EM} this "
             f"reader does not follow a container to its end, so the class is refused; write the one plain "
             f"unindented ```{info} fence outside every container")
-    if found is None:
-        return None
-    i, block = found
-    try:
-        return i + 1, _capsule._strict_json(block)
-    except ValueError as e:
-        raise _GateSpecError(f"the ```{info} fence at line {i + 1} is not valid strict JSON: {e}")
+    return found
 
 
 def _result_fence(text: str) -> Optional[Dict[str, Any]]:
@@ -1210,3 +1280,222 @@ def _declared(declarations: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
                                                    for s in sources)
                                        + "; the forms must agree (DESIGN 3.2(c))"})
     return {"declared": declared, "findings": findings}
+
+
+# ---- the locks form (DESIGN 3.2(a) and (f), PLAN K2b; step B4) ----------------------------------------
+
+# the directory the scorer run keeps for itself inside the run: the {out} file lives there, so no locked
+# file and no receipt may
+_RUN_DIR = ".prereg-ci"
+_RECEIPT_ARG = "{receipt}"
+_OUT_ARG = "{out}"
+_LOCKS_KEYS = ("scorer", "reads", "outcomes", "withdraws", "argv", "verdict_from")
+_LOCKS_REQUIRED = ("scorer", "reads", "outcomes")
+# a reading names at most this many reaches past the locks, then counts the rest
+_SHOWN = 12
+
+
+def _locked_path_problem(path: Any) -> Optional[str]:
+    """Why *path* cannot name a locked file or a receipt in the scorer run, or None: a
+    repository-relative POSIX path (``research_capsule``'s rule, as the manifest holds paths to),
+    every segment a portable name on every file system (a Windows device name such as ``CON`` is
+    a file on Linux and no file on Windows), and not under the run's own ``.prereg-ci/``."""
+    if not isinstance(path, str) or not path:
+        return "is not a repository-relative path (a non-empty string)"
+    why = _path_problem(path)
+    if why is not None:
+        return why
+    for seg in path.split("/"):
+        if not _capsule._bare_name(seg):
+            return f"holds the segment {seg!r}, which is not a portable name on every file system"
+    if path.split("/")[0].casefold() == _RUN_DIR:
+        return f"sits under {_RUN_DIR}/, which the scorer run keeps for itself"
+    return None
+
+
+def _locks(block: str) -> Dict[str, Any]:
+    """The ```locks block (DESIGN 3.2(a), PLAN K2b) read strictly, or a ``GateSpecError``.
+
+    Returns ``{scorer, reads, outcomes, withdraws, argv, verdict_from, locked}``: ``locked`` is the
+    scorer then the reads, the files the run materialises at their sealed blobs. The block names
+    ``scorer``, ``reads`` and ``outcomes``, and may name ``withdraws`` (default ``{}``: each key a
+    declared outcome, each value a list of licences, read at step B5), ``argv`` (default
+    ``["{receipt}"]``) and ``verdict_from`` (default ``"stdout"``); a key the format does not name is
+    refused, as a result fence's is, since a key a reader sees and the machine passes over is a
+    shadowing channel. No two locked paths are one file on a case-insensitive file system, and no
+    locked path is a directory of another."""
+    try:
+        spec = _capsule._strict_json(block)
+    except (ValueError, UnicodeDecodeError) as e:
+        raise _GateSpecError(f"the ```locks block is not valid strict JSON: {e}")
+    if not isinstance(spec, dict):
+        raise _GateSpecError(f"the ```locks block is not a JSON object (it is a {type(spec).__name__})")
+    extra = sorted(k for k in spec if k not in _LOCKS_KEYS)
+    if extra:
+        raise _GateSpecError(f"the ```locks block holds keys the format does not name: {extra}; it names "
+                             f"{', '.join(_LOCKS_KEYS)} and nothing else")
+    for key in _LOCKS_REQUIRED:
+        if key not in spec:
+            raise _GateSpecError(f"the ```locks block lacks {key!r}; it names scorer, reads and outcomes")
+    scorer, reads = spec["scorer"], spec["reads"]
+    why = _locked_path_problem(scorer)
+    if why is not None:
+        raise _GateSpecError(f"'scorer' {scorer!r} {why}")
+    if not isinstance(reads, list):
+        raise _GateSpecError(f"'reads' is a list of paths, not a {type(reads).__name__}")
+    for p in reads:
+        why = _locked_path_problem(p)
+        if why is not None:
+            raise _GateSpecError(f"a path in 'reads', {p!r}, {why}")
+    locked = [scorer, *reads]
+    folded: Dict[str, str] = {}
+    for p in locked:
+        other = folded.get(p.casefold())
+        if other == p:
+            raise _GateSpecError(f"{p!r} is locked twice; 'scorer' and 'reads' name each file once")
+        if other is not None:
+            raise _GateSpecError(f"{other!r} and {p!r} differ only in case, and a checkout on a case-insensitive "
+                                 f"file system holds one file for both")
+        folded[p.casefold()] = p
+    for a in locked:
+        for b in locked:
+            if b.casefold().startswith(a.casefold() + "/"):
+                raise _GateSpecError(f"{a!r} is locked as a file and is a directory of {b!r}")
+    outcomes = spec["outcomes"]
+    if not isinstance(outcomes, list) or not outcomes:
+        raise _GateSpecError("'outcomes' is a non-empty list of the verdicts the scorer may print")
+    seen = set()
+    for v in outcomes:
+        if not isinstance(v, str) or not v.strip():
+            raise _GateSpecError(f"each outcome is a non-empty string; {v!r} is not")
+        if any(ord(c) < 32 or c in "\x7f\u2028\u2029" for c in v):
+            raise _GateSpecError(f"each outcome is a string of one line; {v!r} is not")
+        if v in seen:
+            raise _GateSpecError(f"the outcome {v!r} is declared twice")
+        seen.add(v)
+    withdraws = spec.get("withdraws", {})
+    if not isinstance(withdraws, dict):
+        raise _GateSpecError(f"'withdraws' maps a declared outcome to a list of licences, not a "
+                             f"{type(withdraws).__name__}")
+    for k, v in withdraws.items():
+        if k not in seen:
+            raise _GateSpecError(f"'withdraws' names {k!r}, which is not a declared outcome")
+        if not isinstance(v, list):
+            raise _GateSpecError(f"'withdraws' maps {k!r} to a {type(v).__name__}, not a list of licences")
+    argv = spec.get("argv", [_RECEIPT_ARG])
+    if not isinstance(argv, list) or not all(isinstance(a, str) for a in argv):
+        raise _GateSpecError(f"'argv' is a list of strings, not {argv!r}")
+    for a in argv:
+        if a not in (_RECEIPT_ARG, _OUT_ARG) and (_RECEIPT_ARG in a or _OUT_ARG in a):
+            raise _GateSpecError(f"'argv' element {a!r} holds a placeholder inside other text; {_RECEIPT_ARG} and "
+                                 f"{_OUT_ARG} each stand as a whole element")
+    if argv.count(_RECEIPT_ARG) != 1:
+        raise _GateSpecError(f"'argv' names {_RECEIPT_ARG} {argv.count(_RECEIPT_ARG)} times; it names it once")
+    if argv.count(_OUT_ARG) > 1:
+        raise _GateSpecError(f"'argv' names {_OUT_ARG} {argv.count(_OUT_ARG)} times; it names it at most once")
+    verdict_from = spec.get("verdict_from", "stdout")
+    if not isinstance(verdict_from, str) or (verdict_from != "stdout" and not verdict_from.startswith("/")):
+        raise _GateSpecError(f"'verdict_from' is \"stdout\" or an RFC 6901 pointer into the {_OUT_ARG} JSON, "
+                             f"beginning with '/', not {verdict_from!r}")
+    if verdict_from != "stdout" and _OUT_ARG not in argv:
+        raise _GateSpecError(f"'verdict_from' {verdict_from!r} points into the {_OUT_ARG} file, and 'argv' names no "
+                             f"{_OUT_ARG}")
+    return {"scorer": scorer, "reads": list(reads), "outcomes": list(outcomes), "withdraws": dict(withdraws),
+            "argv": list(argv), "verdict_from": verdict_from, "locked": locked}
+
+
+def _run_reading(spec: Dict[str, Any], raw: Dict[str, Any]) -> Dict[str, Any]:
+    """What a locked scorer's run gives (DESIGN 3.2(f)): ``{code, detail, verdict, gates, output}``.
+
+    *spec* is ``_locks``'s reading; *raw* is what ``styxx.prereg_ci.scorer_run`` recorded: ``exit``
+    (None when stopped), ``timed_out``, ``timeout_s``, ``done`` (the run's closing line was written,
+    so the scorer returned or raised SystemExit), ``stdout`` (bytes) and ``stdout_over``,
+    ``stderr_tail`` (its last non-empty line), ``out`` (the bytes at ``{out}``, or None with
+    ``out_problem``), ``unlocked`` (each reach past the locks the run refused) and ``watch_problem``
+    (the run's record holds a line its bootstrap does not write, or is missing). In this order: any
+    reach past the locks is ``SCORER_READS_UNLOCKED``, whatever the scorer printed or how it exited,
+    since a scorer may catch the refusal and go on; a timeout, a nonzero exit, a record the run
+    cannot read, or a run that ended without its closing line is ``SCORER_ERROR`` with the last
+    stderr line; then the verdict is
+    read from stdout (one line of JSON naming ``verdict`` and optionally ``gates``, an object) or at
+    the ``verdict_from`` pointer of the ``{out}`` JSON, and must be a string the block declares
+    among its outcomes, else ``SCORER_ERROR``. ``output`` is the JSON the verdict was read from."""
+    out: Dict[str, Any] = {"code": None, "detail": None, "verdict": None, "gates": None, "output": None}
+
+    def err(code: str, detail: str) -> Dict[str, Any]:
+        out.update(code=code, detail=detail)
+        return out
+
+    unlocked = list(dict.fromkeys(raw.get("unlocked") or ()))
+    if unlocked:
+        more = f"; and {len(unlocked) - _SHOWN} more" if len(unlocked) > _SHOWN else ""
+        return err(_SCORER_READS_UNLOCKED, (
+            f"the scorer reaches past its locks: it {'; '.join(unlocked[:_SHOWN])}{more}. The run refuses each "
+            f"reach and records it whatever the scorer does next, so nothing it printed is read (DESIGN 3.2(f): a "
+            f"read of any unlocked file fails)"))
+    tail = raw.get("stderr_tail") or ""
+    said = f"; its last stderr line: {tail}" if tail else ""
+    if raw.get("timed_out"):
+        return err(_SCORER_ERROR, f"the scorer ran past the run's {raw.get('timeout_s')} s timeout and was "
+                                  f"stopped{said}")
+    if raw.get("exit") != 0:
+        return err(_SCORER_ERROR, f"the scorer exited {raw.get('exit')}{said}")
+    if raw.get("watch_problem"):
+        return err(_SCORER_ERROR, f"{raw['watch_problem']}, so nothing the scorer printed is read{said}")
+    if not raw.get("done"):
+        return err(_SCORER_ERROR, f"the scorer exited 0 without the run's closing line (it ended the process "
+                                  f"itself, as os._exit does), so nothing it printed is read{said}")
+    declared = set(spec["outcomes"])
+
+    def verdict(v: Any, where: str) -> Optional[Dict[str, Any]]:
+        if not isinstance(v, str):
+            return err(_SCORER_ERROR, f"the verdict at {where} is not a string (it is {v!r})")
+        if v not in declared:
+            return err(_SCORER_ERROR, f"the scorer prints the verdict {v!r} at {where}, which the locks block does "
+                                      f"not declare among its {len(declared)} outcomes")
+        return None
+
+    if spec["verdict_from"] == "stdout":
+        if raw.get("stdout_over"):
+            return err(_SCORER_ERROR, "the scorer printed more on stdout than the run reads; the contract is one "
+                                      "line of JSON {\"verdict\": V}")
+        data = raw.get("stdout") or b""
+        try:
+            text = bytes(data).decode("utf-8")
+        except UnicodeDecodeError as e:
+            return err(_SCORER_ERROR, f"the scorer's stdout is not UTF-8 ({e})")
+        body = text[:-1] if text.endswith("\n") else text
+        if not body.strip() or "\n" in body:
+            return err(_SCORER_ERROR, f"the scorer's stdout is not one line of JSON {{\"verdict\": V}} (it holds "
+                                      f"{len(text.splitlines())} lines)")
+        try:
+            obj = _capsule._strict_json(body)
+        except ValueError as e:
+            return err(_SCORER_ERROR, f"the scorer's stdout line is not valid strict JSON: {e}")
+        if not isinstance(obj, dict):
+            return err(_SCORER_ERROR, f"the scorer's stdout line is not a JSON object (it is a {type(obj).__name__})")
+        if "verdict" not in obj or any(k not in ("verdict", "gates") for k in obj):
+            return err(_SCORER_ERROR, f"the scorer's stdout object names verdict and gates and nothing else; it "
+                                      f"holds {sorted(obj)}")
+        bad = verdict(obj["verdict"], "stdout")
+        if bad is not None:
+            return bad
+        if "gates" in obj and not isinstance(obj["gates"], dict):
+            return err(_SCORER_ERROR, f"the scorer's gates {obj['gates']!r} is not an object")
+        out.update(verdict=obj["verdict"], gates=obj.get("gates"), output=obj)
+        return out
+    pointer = spec["verdict_from"]
+    if raw.get("out") is None:
+        return err(_SCORER_ERROR, raw.get("out_problem") or f"the scorer wrote no {_OUT_ARG} file")
+    try:
+        obj = _capsule._strict_json(bytes(raw["out"]))
+    except (ValueError, UnicodeDecodeError) as e:
+        return err(_SCORER_ERROR, f"the {_OUT_ARG} file is not valid strict JSON: {e}")
+    value, missing = _capsule._pointer(obj, pointer)
+    if missing is not None:
+        return err(_SCORER_ERROR, f"'verdict_from' {pointer!r} does not resolve in the {_OUT_ARG} file: {missing}")
+    bad = verdict(value, f"{pointer} of the {_OUT_ARG} file")
+    if bad is not None:
+        return bad
+    out.update(verdict=value, output=obj)
+    return out
