@@ -355,6 +355,24 @@ def test_a_locked_module_beside_the_scorer_imports():
     assert (r["code"], r["verdict"]) == (None, "HOLD"), (r, raw["stderr_tail"])
 
 
+def test_a_scorer_that_puts_its_own_directories_on_sys_path_does_not_alter_the_import_system():
+    """The close reads the import system as the bootstrap set it; a scorer's own directories under the
+    run, inserted at the head of sys.path (papers/checksum/score.py's idiom, with the repository root it
+    computes from __file__), are not an alteration."""
+    s = spec(scorer="tools/score.py", reads=["tools/lib/rule.py"])
+    src = scorer("""
+        import json, os, sys
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "lib"))
+        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        from rule import verdict
+        print(json.dumps({"verdict": verdict()}))
+        """)
+    raw = S._run(s, {"tools/score.py": src, "tools/lib/rule.py": b"def verdict():\n    return 'HOLD'\n"},
+                 "r.json", b"{}")
+    r = core._run_reading(s, raw)
+    assert (r["code"], r["verdict"], raw["unlocked"]) == (None, "HOLD", []), (r, raw["stderr_tail"])
+
+
 def test_the_standard_library_s_own_optional_imports_are_not_reaches():
     """A stdlib module that tries an optional import and falls back (tarfile's pwd on Windows, the
     C accelerators elsewhere) is not the scorer reaching past its locks: only an import the locked
@@ -384,6 +402,10 @@ def test_the_standard_library_s_own_optional_imports_are_not_reaches():
     ("import sys; sys.path.append(os.path.dirname(OUTSIDE)); import outside_mod", "outside_mod"),
     ("import sys; open(sys.executable, 'rb').read(4)", "outside the run"),
     ("exec(compile('import numpy', '<string>', 'exec'), {'__name__': 'x'})", "imports numpy"),
+    ("import sys; sys.meta_path.pop(); import numpy", "altered the import system (the last import finder"),
+    ("import sys; sys.path.pop(0)", "altered the import system (the run directory is off"),
+    ("import sys; sys.path.remove(sys.path[0]); sys.path.append(os.getcwd())", "standard library is ahead"),
+    ("import sys; sys.path.append(os.path.dirname(OUTSIDE))", "sys.path holds a directory outside"),
 ])
 def test_a_scorer_that_reaches_past_its_locks_reads_unlocked_even_when_it_catches_the_error(body, words, tmp_path):
     outside = tmp_path / "outside.txt"

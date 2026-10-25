@@ -260,6 +260,34 @@ class _Miss:
         return None
 
 
+def _altered():
+    """Why the import system is not as the bootstrap set it, or None: the last finder is the run's, the
+    run directory is on sys.path ahead of the standard library, and nothing outside the two is on it. A
+    scorer may add its own directories under the run (papers/checksum/score.py inserts the repository
+    root it computes from __file__)."""
+    if not sys.meta_path or sys.meta_path[-1] is not _Miss:
+        return "the last import finder is not the run's"
+    try:
+        ps = [_nc(os.path.abspath(p or ".")) for p in sys.path]
+    except (TypeError, ValueError):
+        return "sys.path holds an entry that is not a path"
+    if _here not in ps:
+        return "the run directory is off sys.path"
+    std = [i for i, p in enumerate(ps) if p in _entries]
+    if std and ps.index(_here) > std[0]:
+        return "the standard library is ahead of the run directory on sys.path"
+    if any(not _under(p, _here) and p not in _entries for p in ps):
+        return "sys.path holds a directory outside the run and the standard library"
+    return None
+
+
+def _close():
+    why = _altered()
+    if why is not None:
+        _note(f"altered the import system ({why})")
+    _say({"t": "done", "nonce": _cfg["nonce"]})
+
+
 sys.argv = [_cfg["scorer"], *_cfg["args"]]
 sys.path.insert(0, _raw)
 sys.meta_path.append(_Miss)
@@ -267,9 +295,9 @@ sys.addaudithook(_hook)
 try:
     runpy.run_path(os.path.join(_raw, _cfg["scorer"].replace("/", _sep)), run_name="__main__")
 except SystemExit:
-    _say({"t": "done", "nonce": _cfg["nonce"]})
+    _close()
     raise
-_say({"t": "done", "nonce": _cfg["nonce"]})
+_close()
 '''
 
 
