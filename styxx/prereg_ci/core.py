@@ -54,7 +54,8 @@ as a parameter (PLAN K4: ``styxx.protocol`` hard-codes "gates" and does not chan
 decides as ``_select_gates_block`` does, which the conformance set pins on every gates vector.
 ``_fence_json`` reads a ```result or ```locks fence through it, then refuses a fence CommonMark
 renders that the scanner does not count (``_shadow_fences``: behind a byte-order mark, in a block
-quote or a list item, or with a second word in the info string), then reads strict JSON.
+quote, a list item or a footnote, on a list item's or a footnote's continuation lines, or with a
+second word in the info string), then reads strict JSON.
 ``_result_reading`` reads a RESULT's ```result fence and its sworn spans on receipts' verdict leaves
 (through ``styxx.sworn.scan``, held to the checks sworn makes from bytes alone); ``_declared`` groups
 what one RESULT declares per receipt and refuses two forms that disagree.
@@ -743,8 +744,17 @@ def _amended_after_data(effect: Dict[str, Any], earlier: Iterable[Dict[str, Any]
 # an info string this scanner is asked for: one lower-case ASCII word
 _INFO = re.compile(r"[a-z][a-z0-9_-]*")
 _EM = "\u2014"
-# a CommonMark container prefix: a block quote marker, or a list item marker and the spacing after it
+# a CommonMark container prefix: a block quote marker, or a list item marker and the spacing after it (the B3 rule)
 _CONTAINER = re.compile(r" {0,3}(?:>[ \t]?|(?:[-+*]|[0-9]{1,9}[.)])(?:[ \t]+|$))")
+# a container marker on a line at any indent, since a nested container sits 4 columns or more in (the B3 review,
+# ADV1): a block quote marker, a list item marker and the spacing after it, or a footnote label (GFM) and the
+# spacing after it
+_PREFIX = re.compile(r"[ \t]*(?:>[ \t]?|(?:[-+*]|[0-9]{1,9}[.)])(?:[ \t]+|$)|\[\^[^\]\n]*\]:(?:[ \t]+|$))")
+# a line's block quote markers and indent, read past to see whether the line opens a list item or a footnote
+_QUOTES = re.compile(r"(?:[ \t]*>)*[ \t]*")
+# a line that opens a list item or a footnote: a container whose content a renderer reads on the lines below it,
+# indented by the width of its marker
+_OPENS_ITEM = re.compile(r"(?:[-+*]|[0-9]{1,9}[.)])(?:[ \t]|$)|\[\^[^\]\n]*\]:")
 # a line CommonMark may open a fence on: its indent, then a backtick run (whose info string holds no
 # backtick) or a tilde run, then the info string
 _LOOSE_FENCE = re.compile(r"([ \t]*)(?:`{3,}([^`]*)|~{3,}(.*))")
@@ -860,31 +870,74 @@ def _select_fence(text: str, info: str) -> Optional[str]:
     return None if found is None else found[1]
 
 
-def _shadow_fences(text: str, info: str) -> List[int]:
-    """The 1-based lines on which CommonMark opens an <info> block that the scanner does not count:
-    a fence line behind a byte-order mark, a block quote marker or a list item marker, or one
-    whose info string's leading word is *info* (any case) with more words after it. A leading word
-    holding a non-ASCII character counts too, the scanner's own class. A line the scanner tokenises
-    as it stands is left to ``_fence_at``, and so is indented code (4 columns or more)."""
+def _names(m: "re.Match[str]", info: str) -> bool:
+    """Whether a ``_LOOSE_FENCE`` match opens an <info> block: its info string's leading word is *info*
+    (any case), or holds a non-ASCII character (the scanner's own class)."""
+    words = (m.group(2) if m.group(2) is not None else m.group(3)).split()
+    return bool(words) and (not words[0].isascii() or words[0].casefold() == info)
+
+
+def _b3_shadow(ln: str, info: str) -> bool:
+    """Whether the B3 rule names the line: a fence line behind a byte-order mark, or behind a block
+    quote or list item marker at most 3 columns in, opening at most 3 columns after it; or a line at
+    most 3 columns in that the scanner does not tokenise. Kept so a refusal of that class keeps its
+    words (``vectors_fence.json``)."""
+    rest, wrapped = ln, False
+    if rest.startswith("\ufeff"):
+        rest, wrapped = rest.lstrip("\ufeff"), True
+    while True:
+        m = _CONTAINER.match(rest)
+        if m is None:
+            break
+        rest, wrapped = rest[m.end():], True
+    m = _LOOSE_FENCE.fullmatch(rest)
+    if m is None or _cols(m.group(1)) > 3:
+        return False
+    if not wrapped and _protocol._FENCE_LINE_RE.match(ln):
+        return False
+    return _names(m, info)
+
+
+def _shadow_lines(text: str, info: str) -> List[Tuple[int, bool]]:
+    """``(1-based line, whether the B3 rule names it)`` for each line ``_shadow_fences`` finds."""
     out = []
+    item_above = False
     for i, ln in enumerate(text.split("\n")):
         rest, wrapped = ln, False
         if rest.startswith("\ufeff"):
             rest, wrapped = rest.lstrip("\ufeff"), True
         while True:
-            m = _CONTAINER.match(rest)
+            m = _PREFIX.match(rest)
             if m is None:
                 break
             rest, wrapped = rest[m.end():], True
         m = _LOOSE_FENCE.fullmatch(rest)
-        if m is None or _cols(m.group(1)) > 3:
-            continue
-        if not wrapped and _protocol._FENCE_LINE_RE.match(ln):
-            continue
-        words = (m.group(2) if m.group(2) is not None else m.group(3)).split()
-        if words and (not words[0].isascii() or words[0].casefold() == info):
-            out.append(i + 1)
+        if m is not None and _names(m, info):
+            cols = _cols(m.group(1))
+            if wrapped or (cols <= 3 and not _protocol._FENCE_LINE_RE.match(ln)) or (cols > 3 and item_above):
+                out.append((i + 1, _b3_shadow(ln, info)))
+        bare = ln.lstrip("\ufeff")
+        if _OPENS_ITEM.match(bare, _QUOTES.match(bare).end()):
+            item_above = True
     return out
+
+
+def _shadow_fences(text: str, info: str) -> List[int]:
+    """The 1-based lines on which a renderer may open an <info> block that the scanner does not count,
+    a fence whose info string's leading word is *info* (any case) or holds a non-ASCII character (the
+    scanner's own class):
+    - behind a container marker on its own line, the marker at any indent and the fence at any indent
+      after it: a byte-order mark, a block quote marker, a list item marker, a footnote label;
+    - with no marker on the line and at most 3 columns in, a line the scanner does not tokenise as it
+      stands (a second word in the info string);
+    - with no marker on the line and 4 or more columns in (a tab to the next multiple of 4), once any
+      line above it opens a list item or a footnote, its block quote markers read past. A renderer
+      reads such a line as a fence in that item's content when it sits within 3 columns of the item's
+      content column; this reader does not follow a container to its end, so it refuses the line
+      whether or not the container is still open (the B3 review, ADV1).
+    A line the scanner tokenises at most 3 columns in is left to ``_fence_at``. Indented code (4 columns
+    or more) with no list item or footnote opened above it is code, and is passed over."""
+    return [n for n, _ in _shadow_lines(text, info)]
 
 
 def _fence_json(text: str, info: str) -> Optional[Tuple[int, Any]]:
@@ -894,13 +947,20 @@ def _fence_json(text: str, info: str) -> Optional[Tuple[int, Any]]:
     bytes that are not strict JSON. The reader of the ```result fence (step B3) and of the ```locks
     fence (step B4)."""
     found = _fence_at(text, info)
-    shadow = _shadow_fences(text, info)
-    if shadow:
+    shadow = _shadow_lines(text, info)
+    if shadow and shadow[0][1]:
         raise _GateSpecError(
-            f"a ```{info} fence at line {shadow[0]} renders as a {info} block (behind a byte-order mark, in a "
+            f"a ```{info} fence at line {shadow[0][0]} renders as a {info} block (behind a byte-order mark, in a "
             f"block quote or a list item, or with a second word in its info string) and the scanner counts no "
             f"fence there {_EM} a block only one of them recognises is a shadowing channel; write the one plain "
             f"unindented ```{info} fence")
+    if shadow:
+        raise _GateSpecError(
+            f"a ```{info} fence at line {shadow[0][0]} may render as a {info} block inside a container (behind a "
+            f"block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in "
+            f"below a line that opens a list item or a footnote) and the scanner counts no fence there {_EM} this "
+            f"reader does not follow a container to its end, so the class is refused; write the one plain "
+            f"unindented ```{info} fence outside every container")
     if found is None:
         return None
     i, block = found
