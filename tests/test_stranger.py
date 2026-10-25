@@ -61,41 +61,14 @@ def ferry_log_pass():
     return stranger.step_ferry_log(Path(ROOT), _head())      # the one real re-derivation of every line
 
 
-def _lines_that_recorded_the_build():
-    """The sworn lines that recorded counts.receipt_check.same_verifier_build true: ingested while the
-    receipt they re-check had been issued by the sworn.py of the day."""
-    _, entries, _, _ = charon.read_log(Path(LOG))
-    return [e for e in entries if e.get("kind") == "sworn"
-            and ((e.get("counts") or {}).get("receipt_check") or {}).get("same_verifier_build") is True]
-
-
 @needs_history
 def test_the_ferry_log_passes_against_its_own_head(ferry_log_pass):
-    # PASS while sworn.py is the file that issued the receipts the lines re-check. Some lines recorded
-    # counts.receipt_check.same_verifier_build true; that flag names a build and sits inside the line's
-    # compared core, so once sworn.py moves those lines read SKEW (the line moved and the verifier
-    # moved) and the step does not PASS. The /v2 step of 2026-10-24
-    # (papers/sworn/NOTE_certifies_correction_2026_10_24.md) is the earliest sworn.py edit since the
-    # lines were written, and this test pinned an unmoved sworn.py without saying so. Held exactly: every
-    # SKEW is one of those lines, its receipt still VERIFIES, and nothing in it moved but that flag.
+    # PASS after a sworn.py edit too: a sworn line that recorded counts.receipt_check.same_verifier_build
+    # true reads MOVED_VERIFIER when that flag alone moved and the sworn.py it names is not the installed one
+    # (papers/charon/AMENDMENT_charon_same_verifier_build_flag_2026_10_25.md; tests/test_charon_build_flag.py)
     ok = ferry_log_pass
-    assert ok["head_matches"] is True and ok["external_head_checked"] is True
+    assert ok["status"] == "PASS" and ok["head_matches"] is True and ok["external_head_checked"] is True
     assert set(ok["by_status"]) >= {"SAME_LINE", "MOVED_VERIFIER"} and ok["chain_broken_at_line"] is None
-    assert not {k: v for k, v in ok["by_status"].items() if v and k not in ("SAME_LINE", "MOVED_VERIFIER", "SKEW")}
-    skew = ok["by_status"].get("SKEW", 0)
-    if skew == 0:
-        assert ok["status"] == "PASS"
-        return
-    assert ok["status"] == "FAIL"
-    flagged = _lines_that_recorded_the_build()
-    assert skew == len(flagged), (skew, len(flagged))
-    for e in flagged:
-        fresh = charon.derive(charon._artifact_for(e, Path(ROOT)), Path(ROOT))
-        rc = fresh["counts"]["receipt_check"]
-        assert rc["status"] == "VERIFIED" and rc["same_verifier_build"] is False, (e["subject"]["name"], rc)
-        fresh["counts"]["receipt_check"] = dict(rc, same_verifier_build=True)
-        moved = [k for k in charon._COMPARED_KEYS if charon.jcs(fresh[k]) != charon.jcs(e[k])]
-        assert moved == [], (e["subject"]["name"], moved)
 
 
 def test_a_head_that_is_not_the_full_64_hex_is_refused_before_the_log_is_read(monkeypatch):
