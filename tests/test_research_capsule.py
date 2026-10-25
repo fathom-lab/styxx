@@ -1650,3 +1650,42 @@ def test_the_page_before_its_script_runs_claims_nothing(minted):
     # the sworn layer is the package's second implementation, inlined byte for byte (LF), not edited
     sworn_js = (ROOT / "styxx" / "_data" / "sworn_verify.js").read_bytes().decode("utf-8").replace("\r\n", "\n")
     assert sworn_js in html and rc._JS_RESEARCH in html
+
+
+# --------------------------------------------------------------------- a /v1 sworn receipt, carried
+
+def _inputs_v1_receipt(certifies=None) -> dict:
+    """The synthetic chain with its sworn receipt as a /v1 verifier issued it: the core projected onto
+    styxx.sworn.verdict-receipt/v1 and re-digested; the charon line agrees with it."""
+    inp = _inputs()
+    v1 = sworn._core_as(inp["sworn_receipt"], "styxx.sworn.verdict-receipt/v1")
+    if certifies is not None:
+        v1["certifies"] = certifies
+    v1 = _redigest(v1)
+    inp["sworn_receipt"] = v1
+    inp["charon"]["entry"] = _charon_entry(inp["sidecar"], v1, inp["_core"], "papers/x/RESULT_x.md", HEADER)
+    inp.pop("_core")
+    return inp
+
+
+def test_a_research_capsule_carries_a_v1_sworn_receipt(tmp_path):
+    """Every sworn receipt committed before 2026-10-24 is /v1, and the CLI builds from a committed one
+    (papers/sworn/NOTE_certifies_correction_2026_10_24.md). L4 projects the live core onto the carried
+    receipt's own schema, in Python and in the page, so a /v1 receipt holds as it did under a /v1
+    verifier; one whose certifies was re-worded and re-digested does not."""
+    inp = _inputs_v1_receipt()
+    assert inp["sworn_receipt"]["schema"] == "styxx.sworn.verdict-receipt/v1"
+    assert inp["sworn_receipt"]["certifies"] == sworn._CERTIFIES_V1
+    cap = build(inp, tmp_path / "v1.research.html", created=TS)
+    rep = verify(cap)
+    assert rep["ok"], [(l["id"], l["problems"]) for l in rep["links"]]
+    l1 = _layer1(cap)
+    assert l1["summary"].startswith(SUMMARY_OK), l1
+    _agree(l1, rep, "v1 receipt")
+    assert "the /v1 sentence, withdrawn: papers/sworn/NOTE_certifies_correction_2026_10_24.md" in rc._JS_RESEARCH
+
+    bad = _write_consistent(tmp_path, _inputs_v1_receipt(certifies=sworn._CERTIFIES), name="v1bad.research.html")
+    rep = verify(bad)
+    assert _fails(rep) == {"L4"}, [(l["id"], l["problems"]) for l in rep["links"]]
+    l1 = _layer1(bad)
+    _agree(l1, rep, "v1 receipt carrying the v2 sentence")

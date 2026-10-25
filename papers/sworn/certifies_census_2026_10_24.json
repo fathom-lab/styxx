@@ -1,0 +1,38 @@
+{
+ "schema": "styxx.sworn.certifies-census/v1",
+ "base": "2e98debc9d2aa8f4d70f255fae7445b8e9262ef5",
+ "v1_opening": "the spans the author bound were checked against bytes the author did not write",
+ "files_carrying_the_v1_clause_at_base": 81,
+ "by_class_at_base": {
+  "sworn_receipt_json": 66,
+  "dryrun_receipt": 5,
+  "capsule": 1,
+  "action_run_json": 2,
+  "action_summary": 2,
+  "sworn_result_and_sidecar": 2,
+  "frozen_spec": 1,
+  "verifier_source": 2
+ },
+ "v1_receipts_at_base": 71,
+ "v1_receipts_carrying_the_v1_sentence": 71,
+ "v0_receipts_at_base": 0,
+ "sidecars": 58,
+ "spans": 1300,
+ "path_spans": 1261,
+ "path_targets": 137,
+ "speaker_names": [
+  "claude",
+  "claude (for flobi)",
+  "darkflobi",
+  "darkflobi-autopilot",
+  "styxx-coding-agent"
+ ],
+ "path_spans_on_speaker_touched_files": 1261,
+ "path_targets_speaker_touched": 137,
+ "sidecar_receipts": 58,
+ "sidecar_receipts_verified": 58,
+ "committed_receipts_modified_or_deleted_since_base": 0,
+ "conformance_v1_core_vectors": 2069,
+ "conformance_v1_core_vectors_unchanged_since_base": 2069,
+ "what_this_does_not_count": "whether any file a path: span rests on is true, or who wrote the bytes of any receipt: a speaker name in a file's history says who touched it, nothing more"
+}

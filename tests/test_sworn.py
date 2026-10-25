@@ -868,7 +868,7 @@ class TestVerdictReceipt:
         doc = sp("0.5").encode()
         m = manifest(r1=b"0.5")
         rec = issue_receipt(verify(doc, name="d.md", manifest=m), timestamp="2026-09-01T00:00:00Z")
-        assert rec["schema"] == "styxx.sworn.verdict-receipt/v1"
+        assert rec["schema"] == sworn.RECEIPT_SCHEMA
         res = verify_receipt(rec, doc, manifest=m)
         assert res["status"] == "VERIFIED" and res["coverage_reproduces"] is True
         # v0.2 R9: coverage is outside the digest and carries its own hash
@@ -1000,10 +1000,13 @@ class TestDoctrine:
     def test_the_three_spec_strings_are_pinned_verbatim(self):
         assert sworn.SPEC == "sworn/0.1"
         assert sworn.MANIFEST_SPEC == "sworn/manifest/0.2"
-        assert sworn.RECEIPT_SCHEMA == "styxx.sworn.verdict-receipt/v1"
-        # the old strings are still LOADED and never EMITTED (M7)
+        # the old strings are still LOADED and never EMITTED (M7). Schema-neutral since the /v2 step
+        # (papers/sworn/NOTE_certifies_correction_2026_10_24.md): this file is a conformance source and
+        # also runs with the receipt schema held at /v1 (conformance/sworn/recorder.py, C3b), so the
+        # exact pins of RECEIPT_SCHEMA and RECEIPT_SCHEMAS live in tests/test_sworn_certifies_v2.py.
         assert sworn.MANIFEST_SPECS == ("sworn/manifest/0.1", "sworn/manifest/0.2")
-        assert sworn.RECEIPT_SCHEMAS == ("styxx.sworn.verdict-receipt/v0", "styxx.sworn.verdict-receipt/v1")
+        assert sworn.RECEIPT_SCHEMAS[:2] == ("styxx.sworn.verdict-receipt/v0", "styxx.sworn.verdict-receipt/v1")
+        assert sworn.RECEIPT_SCHEMA in sworn.RECEIPT_SCHEMAS
 
     def test_sworn_is_not_on_the_package_surface_and_does_not_shadow_parrhesia(self):
         import styxx

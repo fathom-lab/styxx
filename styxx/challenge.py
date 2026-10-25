@@ -98,15 +98,22 @@ def _blob_sha256(repo: str, commit: str, doc: str) -> str | None:
         return None
 
 
+# the verdict-receipt schemas whose digest is styxx.sworn.issue_receipt's (the core without digest,
+# timestamp, coverage and coverage_sha256); /v0 digested its whole body
+_REISSUABLE_SCHEMAS = ("styxx.sworn.verdict-receipt/v1", "styxx.sworn.verdict-receipt/v2")
+
+
 def _reissued_digest(receipt: dict, *, without_version: bool = False) -> str | None:
     """The digest `styxx.sworn.issue_receipt` gives this receipt's own fields. That is the receipt
     module's canonicalisation (JCS of the core without digest, timestamp and coverage), not a
     second one written here. With `without_version`, `verifier.styxx_version` is set aside before
-    the re-issue. None for a receipt that is not a /v1 verdict receipt (a /v0 receipt digested
-    other fields, so nothing here may call it version skew), or whose fields cannot be
-    canonicalised."""
+    the re-issue. None for a receipt that is not a /v1 or /v2 verdict receipt (a /v0 receipt
+    digested other fields, so nothing here may call it version skew), or whose fields cannot be
+    canonicalised. /v1 and /v2 digest the same body and differ only in `schema` and `certifies`
+    (papers/sworn/NOTE_certifies_correction_2026_10_24.md), so a committed /v1 lab receipt re-issues
+    here exactly as it did before the verifier moved to /v2."""
     from styxx import sworn
-    if not isinstance(receipt, dict) or receipt.get("schema") != sworn.RECEIPT_SCHEMA:
+    if not isinstance(receipt, dict) or receipt.get("schema") not in _REISSUABLE_SCHEMAS:
         return None
     # coverage sits outside the digest (issue_receipt drops it); leaving it out here only spares
     # issue_receipt hashing it beside, which this comparison never reads

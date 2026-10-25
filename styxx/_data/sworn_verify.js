@@ -18,6 +18,12 @@
  *
  * Every place where Python and JavaScript disagree is marked `[B4]` with the row of the SPEC's
  * table it implements.
+ *
+ * Cores are styxx.sworn.verdict-receipt/v2 since 2026-10-24
+ * (papers/sworn/NOTE_certifies_correction_2026_10_24.md): only `schema` and `certifies` moved. The
+ * /v1 conformance set is compared through `coreAs(core, "styxx.sworn.verdict-receipt/v1")`, the
+ * same projection styxx.sworn applies to a /v1 receipt; conformance/sworn/receipt_v2/ pins the two
+ * /v2 strings.
  */
 
 /* ============================================================ sha256 (pure, synchronous)
@@ -422,14 +428,54 @@ function jcs(obj) {
 
 /* ============================================================ constants, from the format */
 
-const CERTIFIES =
+// WITHDRAWN 2026-10-24 (papers/sworn/NOTE_certifies_correction_2026_10_24.md): the /v1 sentence.
+// Loaded, never emitted; coreAs holds a /v1 core to it (styxx.sworn._CERTIFIES_V1, byte for byte).
+const CERTIFIES_V1 =
   "the spans the author bound were checked against bytes the author did not write, at the commit " +
   "or manifest the document names and at the rung the manifest declares — NOT a claim that the " +
   "document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags " +
   "were written at write time, NOT a check of any signature, and only as trustworthy as the harness " +
   "that minted the manifest and the history that holds the commit";
+// The /v2 sentence (styxx.sworn._CERTIFIES, byte for byte).
+const CERTIFIES =
+  "the spans the author bound that read HELD or FAILED were checked, each by its kind, against the " +
+  "receipt it names (its bytes, or for a hash span on a manifest entry that carries none, the sha256 " +
+  "the manifest records), at the commit and manifest this receipt records, and an rN span at the rung " +
+  "the manifest declares (a path: or prereg: span carries no rung and is counted as committed); the " +
+  "only authorship test reads the manifest: an rN receipt is taken as not the author's when the " +
+  "manifest records it under a kind_of_source from the closed external vocabulary and does not list " +
+  "its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given or the " +
+  "manifest does not list its sha256 there (its span's provenance reads authorship unchecked: nothing " +
+  "beyond that membership was tested); authored_sha256 is the harness's record of what the agent " +
+  "produced in the turn the manifest names, tested on the bytes' sha256 and never on a name, so bytes " +
+  "the author wrote that the harness never digested, such as a file written in another turn, or by a " +
+  "shell command or a tool the harness does not digest, are not caught; a MALFORMED span was refused " +
+  "before any comparison, the authorship refusals among them, and an UNRESOLVED span was not compared " +
+  "— NOT a claim that the author did not write the receipt's bytes, NOT a claim that the document is " +
+  "correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written " +
+  "at write time, NOT a check of any signature, and only as trustworthy as the harness that minted " +
+  "the manifest and the tree that served the commit (git history from the CLI; a snapshot or " +
+  "in-memory tree on its caller's word)";
 const SPEC = "sworn/0.1";
-const RECEIPT_SCHEMA = "styxx.sworn.verdict-receipt/v1";
+const RECEIPT_SCHEMA = "styxx.sworn.verdict-receipt/v2";
+// The sentence each receipt schema carries, one to one (styxx.sworn._CERTIFIES_OF).
+const CERTIFIES_BY_SCHEMA = Object.freeze({
+  "styxx.sworn.verdict-receipt/v1": CERTIFIES_V1,
+  "styxx.sworn.verdict-receipt/v2": CERTIFIES,
+});
+
+/** The core with the two strings a receipt of `schema` carries, `schema` and `certifies`
+ * (styxx.sworn._core_as). A /v1 and a /v2 core differ in nothing else. Pure; the input is not
+ * modified; any other schema throws. */
+function coreAs(core, schema) {
+  if (typeof schema !== "string" || !Object.prototype.hasOwnProperty.call(CERTIFIES_BY_SCHEMA, schema)) {
+    throw new Error("no core projection for receipt schema " + String(schema));
+  }
+  const out = Object.assign({}, core);
+  out.schema = schema;
+  out.certifies = CERTIFIES_BY_SCHEMA[schema];
+  return out;
+}
 const MANIFEST_SPECS = ["sworn/manifest/0.1", "sworn/manifest/0.2"];
 const SPAN_CAP_CODEPOINTS = 300;
 const SHORT_NEEDLE_BYTES = 16;
@@ -1243,7 +1289,8 @@ function coreDigest(core) {
   return sha256Bytes(utf8(jcs(core)));
 }
 
-const _api = { swornVerify, coreDigest, jcs, jcsString, sha256Bytes, jsonStrict, jsonStrictBytes,
+const _api = { swornVerify, coreDigest, coreAs, RECEIPT_SCHEMA, CERTIFIES_BY_SCHEMA,
+               jcs, jcsString, sha256Bytes, jsonStrict, jsonStrictBytes,
                jsonPlain, jsonPlainBytes,
                Manifest, Dec, JObj, scan, parseReceipt, utf8, decodeStrict, safeText, LABEL:
   "re-derives sworn span verdicts offline; a forger controlling the whole file passes both " +
