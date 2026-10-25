@@ -20,6 +20,8 @@ cover; no claim.
 | `rescore_census_ca347730.txt`, `seal_rule_ca347730.txt`, `landing_order_ca347730.txt`, `pairs_ca347730.txt` | added at step B1: the design's R1, RV1 and RV2 outputs and RV2's pair list, copied; see "The history the git layer reproduces" |
 | `seals_manifest_from_SEALS_2026_09_13.jsonl` | added at step B2: the eight rows of `papers/checksum/SEALS_2026_09_13.md` as seals manifest lines; see "The SEALS record as manifest lines" |
 | `gen_seals_manifest.py` | builds that file from the SEALS blob at `REV` and checks it; prints R10's `MATCH` lines |
+| `vectors_fence.json` | added at step B3: the fence scanner with its info string as a parameter, for `gates`, `result` and `locks`, and what a RESULT declares; see "The fence scanner and the RESULT readers" |
+| `gen_vectors_fence.py` | builds `vectors_fence.json` from cases that state their outcome in advance; reads no history |
 
 The JSON files are generated, never edited by hand. `tests/test_prereg_ci_score_vectors.py` and
 `tests/test_prereg_ci_cover.py` replay every vector; only the checks that read history skip, when
@@ -144,6 +146,8 @@ The copies carry the lab's history as is: paths, verdict identifiers and commit 
   Since the B0 review, `compare` refuses a receipt that records a gates digest against such a
   PREREG (`vectors_compare.json`, `a2/hidden-fence/*`); a receipt that records a verdict and no
   digest against it is still read as `NOT_GATED`, which the scanner step decides.
+  Since step B3 the gates fence keeps this reading (sealed PREREGs depend on it), and the result and
+  locks fences refuse the class: see "The fence scanner and the RESULT readers".
 - `rescore` runs the cover under a work budget (`core._COVER_BUDGET`, 2 ** 20 subcubes): past it
   the verdict stands and `total`, `holes` and `unreachable_rows` stay None, with `cover_code`
   `COVER_UNCHECKABLE`. Every committed cover vector fits inside it (the largest visits 2,591).
@@ -181,6 +185,41 @@ begins): a pull request that adds the manifest imports only what its base alread
 record's four amendment and withdrawn lines stand at null, and an amendment that pull request
 commits itself states its `seen`.
 
+## The fence scanner and the RESULT readers
+
+Step B3. `styxx.protocol._select_gates_block` names its info string in its code, and `styxx/protocol.py` does
+not change (PLAN K4), so `styxx.prereg_ci.core._fence_at` holds the same scanner with the info string as a
+parameter: the module's own fence-line pattern, the non-ASCII info string refused on any fence line, a fence a
+renderer shows (at most 3 columns of indent) counted inside HTML comments too, exactly one, plain, outside every
+comment, and closed. For `gates` its refusals carry the module's own words. `vectors_fence.json` holds 99
+vectors, each with its outcome stated by the generator before the run:
+
+- for `gates`, the scanner's outcome equals `_select_gates_block`'s on every vector (a text with no gates fence,
+  which that module refuses with "prereg has no ... gates block", reads as `{none: true}`), and
+  `tests/test_prereg_ci_result.py` shows the same over every PREREG blob the score and compare vectors name and
+  over the 420 `PREREG_*.md` files in the tree at `REV` (52 gated, the 412 under `papers/` being R8's count);
+- for `result` and `locks`, every attack class `tests/test_protocol_v4.py` pins for the gates fence refuses
+  (a decoy in an HTML comment, a tilde fence, a case variant, the fence only in a comment, a confusable info
+  string, a tab-indented opener, an unterminated comment, an unclosed fence, two fences, an indented opener),
+  and so do duplicate and non-ASCII keys, read by `research_capsule`'s strict JSON;
+- for `result` and `locks` only, `core._fence_json` also refuses a fence CommonMark renders and the scanner does
+  not count: behind a byte-order mark on line 1, in a block quote, in a list item, or with a second word in its
+  info string. The gates fence keeps the scanner's reading of these (it is `NOT_GATED`, and `compare` refuses a
+  digest recorded against it, `vectors_compare.json`), since sealed PREREGs are read that way.
+
+What a RESULT declares (`core._result_reading`, DESIGN 3.2(c)): its one result fence, a strict JSON object
+naming `prereg`, `receipt` and `verdict` (three strings, and no other key), and every sworn span on a receipt's
+verdict leaf (`path:<receipt>#/verdict`, read through `styxx.sworn.scan`), whose needle is the verdict. A span
+is held to every check `styxx.sworn` makes from the bytes alone, in its order (the lexer's MALFORMED reasons,
+including a tag in an HTML comment; a blank span; the length cap; the kind, which must be `quote`; the receipt
+grammar; a directional override; one needle), and a document sworn reads as MALFORMED, or whose tags do not
+lex, refuses when it names a verdict leaf. Any refusal is `RESULT_REFUSES`. A span naming its receipt by a
+manifest id or a `prereg:` digest is printed (`RESULT_NOT_READ`), not paired. Two declarations for one receipt
+in one RESULT that differ are `RESULT_FORMS_DIFFER` (`core._declared`).
+
+The vectors are synthetic. The lab's own sworn spans are read by the test from git objects at `REV`: 20
+markdown files name a `json#/verdict` leaf, 13 of them declare through 17 spans, and none is refused.
+
 ## How to regenerate it
 
 ```
@@ -188,6 +227,7 @@ python -B conformance/prereg_ci/gen_vectors.py            # write the set where 
 python -B conformance/prereg_ci/gen_vectors.py --check    # regenerate in memory; exit 1 if a byte differs
 python -B conformance/prereg_ci/gen_vectors_compare.py --check
 python -B conformance/prereg_ci/gen_seals_manifest.py --check
+python -B conformance/prereg_ci/gen_vectors_fence.py --check
 ```
 
 Once committed, the set is never written again. A run that regenerates it byte for byte exits 0;
