@@ -15,6 +15,7 @@ in the sworn RESULT that names this set's digest; none is written here.
 | `recorder.py` | the pytest plugin that records every call into `styxx.sworn` while the sources run; the clock and the git dates are pinned here; git is read here and nowhere in the verifier |
 | `gen_vectors.py` | runs the sources under the recorder, folds the records into vectors, replays every vector, refuses a moved core, writes the set |
 | `replay.py` | replays one vector through `styxx.sworn`; the reference for what a second verifier does, entrypoint by entrypoint |
+| `receipt_v2/` | a second set in the same layout, from `tests/test_sworn_receipt_v2.py`: cores at receipt schema `/v2` (see "Two receipt schemas") |
 
 The generated files are never hand-edited. `tests/test_sworn_conformance.py` replays the committed
 set with nothing skipped and fails, rather than skips, on any vector that does not reproduce.
@@ -87,6 +88,35 @@ has the same digest on every run and every platform. Pinning the clock changes n
 The whole directory is `-text` in `.gitattributes`: the vectors carry CRLF, lone CR, BOM, NUL and
 invalid UTF-8 inside base64 while the JSON around them is LF, and this is generated on a box with
 `core.autocrlf=true`.
+
+## Two receipt schemas
+
+Since 2026-10-24 `styxx.sworn` issues verdict receipts at `styxx.sworn.verdict-receipt/v2`
+(`papers/sworn/NOTE_certifies_correction_2026_10_24.md`). A /v2 core differs from a /v1 core in two
+values and nothing else: `schema`, and `certifies`, the verifier's sentence about what it checked,
+corrected because the /v1 sentence said more than the verifier checks.
+
+- Every index declares the receipt schema its cores carry, `core_schema`, inside `set_sha256`. This
+  set's is `/v1`, and its cores stay there: a replay (`replay.py`, `replay_js.js`) projects the live
+  core onto the declared schema before hashing it (`styxx.sworn._core_as`, `coreAs` in the browser
+  verifier). The projection sets exactly `schema` and `certifies`, the only two bytes of a core this
+  set does not hold a /v2 verifier to. The schema comes from the set's declaration, never from a
+  vector's expectation, so the harness still never passes the expectation into the verifier.
+- Some `receipt_check` vectors take as input a receipt the sources issue while they run, and an input
+  cannot be projected after the fact. So while the sources run, the recorder holds the verifier's
+  `RECEIPT_SCHEMA` and `_CERTIFIES` at the set's schema, exactly as it holds the clock (C3b in
+  `recorder.py`); `tests/test_sworn_certifies_v2.py` shows that the pin moves those two strings and no
+  verdict. The receipts those vectors carry name the verifier's build, so their ids move when
+  `sworn.py` does, as at every release; no expected outcome moves.
+- `receipt_v2/` is the set that pins the two /v2 strings: its cores carry `/v2` and the /v2 sentence,
+  one per clause of that sentence a document, a manifest and an in-memory tree can show, with /v2, /v1
+  and /v0 receipts checked by a verifier that issues /v2. Its in-scope count for the browser verifier is
+  its own, counted from its vectors.
+
+```
+python conformance/sworn/gen_vectors.py --set receipt_v2 [--check | --replay]
+node conformance/sworn/replay_js.js [--set conformance/sworn/receipt_v2]
+```
 
 ## What passing means, and does not
 

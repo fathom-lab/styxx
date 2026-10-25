@@ -63,6 +63,9 @@ def ferry_log_pass():
 
 @needs_history
 def test_the_ferry_log_passes_against_its_own_head(ferry_log_pass):
+    # PASS after a sworn.py edit too: a sworn line that recorded counts.receipt_check.same_verifier_build
+    # true reads MOVED_VERIFIER when that flag alone moved and the sworn.py it names is not the installed one
+    # (papers/charon/AMENDMENT_charon_same_verifier_build_flag_2026_10_25.md; tests/test_charon_build_flag.py)
     ok = ferry_log_pass
     assert ok["status"] == "PASS" and ok["head_matches"] is True and ok["external_head_checked"] is True
     assert set(ok["by_status"]) >= {"SAME_LINE", "MOVED_VERIFIER"} and ok["chain_broken_at_line"] is None

@@ -178,7 +178,7 @@
    }
   },
   {
-   "id": "ad2e62ba4b36d3178a9419485e95a49b1e4955d8e96f3203a3b67167c649ba62",
+   "id": "9c6839d318332cf9b2ceb9baf086107e8e94b9b1e9707ecff14b7bdf9a047b9f",
    "family": "cli",
    "sources": [
     "tests/test_sworn.py::TestCLI::test_canon_render_verify_check_round_trip"
@@ -189,7 +189,7 @@
    "mode": "receipt_check",
    "requires": [],
    "inputs": {
-    "receipt": "6a57ae8fcd883a316a690df1c210b4f0fd61349c198dd0c9c4b458734fd1b21c",
+    "receipt": "6d00cfa56c337a6f35762e81fdc787e6af215495c6e20b38d53d87c6d582bebd",
     "document": null,
     "sidecar": "454d4291eeff182164c6cb6001dd85a80ea9f8b4f5c026a363f6ff47f071eaa6",
     "manifest": null,

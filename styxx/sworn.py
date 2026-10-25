@@ -4,8 +4,8 @@
 Spec: ``papers/sworn/SPEC_sworn_output_v01_2026_09_01.md``, frozen before this file existed, and
 ``papers/sworn/SPEC_sworn_output_v02_2026_09_02.md``, frozen before the v0.2 changes below.
 Format ``sworn/0.1`` (the grammar an author writes did not change). Manifest
-``sworn/manifest/0.2`` (0.1 still loads). Verdict receipt ``styxx.sworn.verdict-receipt/v1``
-(v0 still checks).
+``sworn/manifest/0.2`` (0.1 still loads). Verdict receipt ``styxx.sworn.verdict-receipt/v2``
+(v0 and v1 still check).
 
 V0.2, IN ONE PARAGRAPH. The format was attacked twelve ways before any sentence about it left
 the tree (``papers/sworn/ATTACKS_sworn_v01_battery_2026_09_02.md``, pinned by
@@ -19,10 +19,13 @@ nothing; two counts that cannot flatter stand in its place. The verdict receipt 
 without coverage (R9), so a receipt re-derives wherever the observer differs.
 
 THE INVARIANT.  *The author chooses what to swear; the author cannot choose what the receipt
-says.*  A ``<sworn r="RECEIPT" k="KIND">…</sworn>`` span binds one sentence, at write time, to
-bytes the author could not have written. Everything outside a span is NARRATIVE by definition —
-not by a verifier's judgement — and narrative is never accused. The verifier is never handed a
-target; it is handed commitments, and it checks them.
+says* — as far as the harness's manifest records what the author wrote. A
+``<sworn r="RECEIPT" k="KIND">…</sworn>`` span binds one sentence to the bytes of a receipt; the
+verifier refuses a receipt the manifest lists as the agent's own (``receipt_author_minted``) and
+cannot see bytes the agent wrote that the harness never digested
+(``papers/sworn/NOTE_certifies_correction_2026_10_24.md``). Everything outside a span is NARRATIVE
+by definition — not by a verifier's judgement — and narrative is never accused. The verifier is
+never handed a target; it is handed commitments, and it checks them.
 
 WHY THIS SHAPE.  Every instrument this lab built to *find* claims in prose was measured against
 readers who did not write that prose and did not survive it (0.23 in the wild, 0.16 held-out
@@ -96,11 +99,13 @@ SPEC = "sworn/0.1"
 # v0.2 (SPEC_sworn_output_v02_2026_09_02.md): the document grammar an author writes is unchanged,
 # so the format string stays. The manifest and the verdict receipt moved; the old strings are
 # still LOADED (M7: absence of a field is never a zero, and a v0 receipt in history must still
-# check) and are never EMITTED.
+# check) and are never EMITTED. The receipt moved again on 2026-10-24, to /v2, in two values only,
+# `schema` and `certifies` (papers/sworn/NOTE_certifies_correction_2026_10_24.md; _core_as below).
 MANIFEST_SPEC = "sworn/manifest/0.2"
 MANIFEST_SPECS = ("sworn/manifest/0.1", "sworn/manifest/0.2")
-RECEIPT_SCHEMA = "styxx.sworn.verdict-receipt/v1"
-RECEIPT_SCHEMAS = ("styxx.sworn.verdict-receipt/v0", "styxx.sworn.verdict-receipt/v1")
+RECEIPT_SCHEMA = "styxx.sworn.verdict-receipt/v2"
+RECEIPT_SCHEMAS = ("styxx.sworn.verdict-receipt/v0", "styxx.sworn.verdict-receipt/v1",
+                   "styxx.sworn.verdict-receipt/v2")
 COVERAGE_SCHEMA = "sworn/coverage/1"
 # v0.2 R4: the cap counts Unicode code points (v0.1 counted bytes and disclosed the inequity).
 # Still a pure function of bytes — invalid UTF-8 is document-level MALFORMED before any span is
@@ -240,6 +245,12 @@ DECISIONS = {
                    "reports coverage_reproduces separately (advisory); a /v0 receipt is compared on "
                    "its core minus coverage minus verifier, its digest still checked over its full "
                    "body, and the note says so"),
+    "receipt_v2": ("since 2026-10-24 (papers/sworn/NOTE_certifies_correction_2026_10_24.md): receipts "
+                   "issue as /v2, whose certifies is the corrected sentence, and nothing else in the core "
+                   "moved; a /v1 receipt keeps its digest over its bytes as committed and is compared on "
+                   "the fresh core with schema and certifies held at the /v1 strings, so it re-derives "
+                   "exactly when it did and one whose certifies was edited fails; a /v0 receipt is "
+                   "checked as before"),
     "path_grammar": ("relative, /-separated, no empty/./.. segment, no backslash, no whitespace, no "
                      "glob metacharacter (* ? [ ]), no leading ':' (git pathspec magic) — a path "
                      "names ONE committed file, never a set the verifier would pick from; split at "
@@ -274,13 +285,47 @@ DECISIONS = {
                       "hidden commitment as owed; v0.2 R2 closes it — see `hidden_commitment`"),
 }
 
-_CERTIFIES = (
+# The /v1 sentence (papers/sworn/NOTE_certifies_correction_2026_10_24.md): its opening clause said
+# more than the verifier checks. Every /v1 receipt in history carries it byte for byte, and
+# verify_receipt holds a /v1 receipt's certifies to it. WITHDRAWN 2026-10-24: loaded, never emitted.
+_CERTIFIES_V1 = (
     "the spans the author bound were checked against bytes the author did not write, at the commit "
     "or manifest the document names and at the rung the manifest declares — NOT a claim that the "
     "document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags "
     "were written at write time, NOT a check of any signature, and only as trustworthy as the harness "
     "that minted the manifest and the history that holds the commit"
 )
+# The /v2 sentence: what the checks in _resolve and _adjudicate are, clause by clause. The only
+# authorship test is the manifest's (the rN refusal and the path:/prereg: refusal in _resolve), on the
+# bytes' sha256, and authored_sha256 is one turn's record, so bytes the harness never digested are not
+# caught. Only an rN span has a rung (_resolve's rN provenance); a path: or prereg: span has none and
+# the rungs block counts it as committed. MALFORMED and UNRESOLVED return before any comparison
+# (_adjudicate). The draft of this sentence committed on 2026-10-24 attached the rung to every span
+# and was corrected before any merge (papers/sworn/NOTE_certifies_correction_2026_10_24.md).
+_CERTIFIES = (
+    "the spans the author bound that read HELD or FAILED were checked, each by its kind, against the "
+    "receipt it names (its bytes, or for a hash span on a manifest entry that carries none, the sha256 "
+    "the manifest records), at the commit and manifest this receipt records, and an rN span at the rung "
+    "the manifest declares (a path: or prereg: span carries no rung and is counted as committed); the "
+    "only authorship test reads the manifest: an rN receipt is taken as not the author's when the "
+    "manifest records it under a kind_of_source from the closed external vocabulary and does not list "
+    "its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given or the "
+    "manifest does not list its sha256 there (its span's provenance reads authorship unchecked: nothing "
+    "beyond that membership was tested); authored_sha256 is the harness's record of what the agent "
+    "produced in the turn the manifest names, tested on the bytes' sha256 and never on a name, so bytes "
+    "the author wrote that the harness never digested, such as a file written in another turn, or by a "
+    "shell command or a tool the harness does not digest, are not caught; a MALFORMED span was refused "
+    "before any comparison, the authorship refusals among them, and an UNRESOLVED span was not compared "
+    "— NOT a claim that the author did not write the receipt's bytes, NOT a claim that the document is "
+    "correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written "
+    "at write time, NOT a check of any signature, and only as trustworthy as the harness that minted "
+    "the manifest and the tree that served the commit (git history from the CLI; a snapshot or "
+    "in-memory tree on its caller's word)"
+)
+# The sentence each receipt schema carries, one to one (M7 keys on the schema string). /v0 is not
+# here: a /v0 receipt is projected by _v0_shape, which leaves certifies out.
+_CERTIFIES_OF = {"styxx.sworn.verdict-receipt/v1": _CERTIFIES_V1,
+                 "styxx.sworn.verdict-receipt/v2": _CERTIFIES}
 _COVERAGE_CEILING = ("advisory, always: sentence_share is a floor computed by diffgate's sentence "
                      "splitter (the lane's largest false-flag source) that treats every narrative "
                      "sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect "
@@ -1262,6 +1307,9 @@ def _resolve(parsed: dict, kind: str, manifest: Optional[Manifest], tree) -> _Re
         # Only half of the rN refusal has an analogue here: the tree channel has no kind_of_source,
         # so a file the agent committed under a name the harness never digested is still not
         # caught. That is a limit of the manifest, and it is stated in the spec rather than solved.
+        # (2026-10-24: the test below is on the bytes' sha256, never on a name. The digested bytes
+        # under any name are caught; what is not caught is bytes the harness never digested, such
+        # as a file written in another turn, or by a shell command or a tool it does not digest.)
         if manifest is not None and sha in manifest.authored_sha256:
             return _Resolved(status="malformed", reason="receipt_author_minted")
         # A committed blob IS complete — the verifier holds every byte of it. This was never the
@@ -1854,16 +1902,35 @@ def _v0_shape(fresh: dict) -> dict:
     return out
 
 
+def _core_as(core: dict, schema: str) -> dict:
+    """The core with the two strings a receipt of `schema` carries, `schema` and `certifies`. A /v1
+    and a /v2 core differ in nothing else, so a fresh core projected onto /v1 is, byte for byte and
+    outside its `verifier` block, the core a /v1 verifier emitted (the block names the live build and
+    its decisions, the receipt_v2 row among them, and verify_receipt compares without it).
+    ValueError for any other schema (a /v0 receipt has its own projection, _v0_shape). The input is
+    not modified."""
+    if not isinstance(schema, str) or schema not in _CERTIFIES_OF:
+        raise ValueError("no core projection for receipt schema %r" % (schema,))
+    out = dict(core)
+    out["schema"] = schema
+    out["certifies"] = _CERTIFIES_OF[schema]
+    return out
+
+
 def verify_receipt(receipt: dict, raw: Optional[bytes] = None, sidecar: Optional[dict] = None, *,
                    manifest: Optional[Manifest] = None, tree=None) -> dict:
     """Re-derive a receipt against the presented document. Trust neither the author (bytes are
     hashed) nor the verifier that issued it (the verdict is re-run).
 
-    Schema-aware (M7: key on the schema string, never on key presence). A /v1 receipt digests
+    Schema-aware (M7: key on the schema string, never on key presence). A /v2 receipt digests
     its core without coverage and is compared on that core; coverage reproduction is reported
-    beside it, advisory. A /v0 receipt digested everything, so its digest is checked over its
-    full body, and it is compared on its core minus coverage minus verifier, projected onto the
-    shape v0 carried — its coverage block cannot reproduce under this verifier and the note says so.
+    beside it, advisory. A /v1 receipt digests the same body and is compared the same way, with
+    the fresh core's `schema` and `certifies` held at the /v1 strings (:func:`_core_as`), so it
+    re-derives exactly when it did under a /v1 verifier and one whose certifies was edited fails
+    (papers/sworn/NOTE_certifies_correction_2026_10_24.md). A /v0 receipt digested everything, so
+    its digest is checked over its full body, and it is compared on its core minus coverage minus
+    verifier, projected onto the shape v0 carried — its coverage block cannot reproduce under this
+    verifier and the note says so.
     """
     fail = {"status": "FAILED", "digest_match": False, "verdict_reproduces": False,
             "coverage_reproduces": None, "same_verifier_build": False, "schema": None}
@@ -1887,6 +1954,10 @@ def verify_receipt(receipt: dict, raw: Optional[bytes] = None, sidecar: Optional
     if v0:
         note += (" — /v0 receipt: compared on its core minus coverage minus verifier, projected "
                  "onto the v0 shape; its coverage block predates sworn/coverage/1 and is not compared")
+    elif schema == "styxx.sworn.verdict-receipt/v1":
+        note += (" — /v1 receipt: compared with schema and certifies held at their /v1 strings "
+                 "(NOTE_certifies_correction_2026_10_24); its digest is checked over its bytes as committed; "
+                 "the /v1 certifies sentence it carries is withdrawn")
     try:
         fresh = verify(raw, sidecar, name=doc.get("name", ""), manifest=manifest, tree=tree,
                        commit=core.get("commit"))
@@ -1900,7 +1971,10 @@ def verify_receipt(receipt: dict, raw: Optional[bytes] = None, sidecar: Optional
         cmp_fresh = _v0_shape(fresh)
         cmp_core = {k: v for k, v in core.items() if k not in ("verifier", "schema", "certifies")}
     else:
-        cmp_fresh = {k: v for k, v in fresh.items() if k not in ("verifier", "coverage")}
+        # /v1 and /v2 digest the same body. The comparison holds schema and certifies at the
+        # receipt's own schema: a /v1 receipt is compared without the live sentence and held to the
+        # one a /v1 verifier printed, so it re-derives exactly when it did.
+        cmp_fresh = _core_as({k: v for k, v in fresh.items() if k not in ("verifier", "coverage")}, schema)
         cmp_core = {k: v for k, v in core.items() if k != "verifier"}
     try:
         reproduces = _jcs(cmp_fresh) == _jcs(cmp_core)

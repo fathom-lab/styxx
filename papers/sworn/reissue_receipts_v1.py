@@ -22,9 +22,20 @@ ROOT = HERE.parent.parent
 sys.path.insert(0, str(ROOT))
 
 from styxx.sworn import GitTree, issue_receipt, load_sidecar, verify  # noqa: E402
+from styxx import sworn as _sworn  # noqa: E402
+
+V1 = "styxx.sworn.verdict-receipt/v1"
 
 
 def main() -> int:
+    # 2026-10-24: receipts issue as /v2 (papers/sworn/NOTE_certifies_correction_2026_10_24.md). This script
+    # is the record of the 2026-09-02 re-issue from /v0 to /v1, and it writes over every committed receipt.
+    # Under a verifier that issues any other schema it would write that schema over the committed /v1
+    # receipts in place, and a receipt is history too: it refuses instead.
+    if _sworn.RECEIPT_SCHEMA != V1:
+        print("REFUSED: this verifier issues %s; this script re-issues receipts under %s only, and a "
+              "committed receipt is never rewritten in place" % (_sworn.RECEIPT_SCHEMA, V1))
+        return 2
     moved = []
     written = 0
     for side_path in sorted(ROOT.glob("papers/**/*.sworn.json")):

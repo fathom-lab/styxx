@@ -45,12 +45,22 @@ def _lab():
     return json.load(open(RCPT, encoding="utf-8"))
 
 
+def _running_verifier() -> dict:
+    """The verifier block this sworn.py writes into every receipt it issues."""
+    return sworn.verify(b"# nothing sworn\n", name="x.md")["verifier"]
+
+
 def _issued_by(version, tmp_path, *, edit=None, name="lab.json"):
-    """The committed receipt as styxx `version`, with this sworn.py, would have issued it: the version
-    stamp replaced, `edit` applied, and the digest re-issued by styxx.sworn.issue_receipt itself.
-    Written under tmp_path; the committed receipt is never touched."""
-    lab = _lab()
-    lab["verifier"] = dict(lab["verifier"], styxx_version=version)
+    """The committed receipt as styxx `version`, with this sworn.py, would have issued it: the receipt
+    schema and certifies this sworn.py issues (sworn._core_as), the verifier block this sworn.py writes
+    (its sworn_sha256, rounding and decisions) stamped with `version`, `edit` applied, and the digest
+    re-issued by styxx.sworn.issue_receipt itself. Until 2026-10-24 only the version stamp was
+    replaced, which made this true only while sworn.py was byte for byte the file that issued the
+    committed receipt; the /v2 step (papers/sworn/NOTE_certifies_correction_2026_10_24.md) is the
+    earliest sworn.py edit since these tests were written. Written under tmp_path; the committed
+    receipt is never touched."""
+    lab = sworn._core_as(_lab(), sworn.RECEIPT_SCHEMA)
+    lab["verifier"] = dict(_running_verifier(), styxx_version=version)
     if edit is not None:
         edit(lab)
     lab["digest"] = sworn.issue_receipt(lab, timestamp=lab["timestamp"])["digest"]
@@ -291,6 +301,20 @@ def test_why_names_each_digested_part_that_differs_and_never_a_field_outside_the
     assert challenge._differing_parts(lab, counted) == [
         "a span-level difference (the fields counted from the spans differ: counts)"]
     assert challenge._differing_parts(lab, json.loads(json.dumps(lab))) == []
+
+
+def test_a_committed_v1_lab_receipt_still_re_issues_to_its_own_digest(tmp_path):
+    # every committed lab receipt is /v1; /v1 and /v2 digest the same body, so the re-issue reads a /v1
+    # receipt as it did before the verifier issued /v2, and a /v0 or unknown schema reads as nothing
+    lab = _lab()
+    assert lab["schema"] == "styxx.sworn.verdict-receipt/v1"
+    assert challenge._reissued_digest(lab) == lab["digest"]
+    v2 = json.loads(_issued_by(RUNNING, tmp_path).read_text(encoding="utf-8"))
+    assert v2["schema"] == sworn.RECEIPT_SCHEMA and challenge._reissued_digest(v2) == v2["digest"]
+    for schema in ("styxx.sworn.verdict-receipt/v0", "styxx.sworn.verdict-receipt/v9"):
+        assert challenge._reissued_digest(dict(lab, schema=schema)) is None
+    rec = challenge.run(DOC, RCPT, repo=".", out=str(tmp_path / "mine.json"))
+    assert rec["lab_digest_reissues"] is True
 
 
 def test_a_lab_receipt_re_stamped_with_the_running_version_matches_no_build(tmp_path):

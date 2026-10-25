@@ -2630,7 +2630,7 @@ def _sworn_core_sha256(receipt: dict) -> str:
 def create_capsule_sworn(doc: Path, manifest: Optional[Path], receipt: Path, out: Path) -> Path:
     """Mint a sworn capsule. Refuses, by name, rather than sealing something the browser could
     only ever call UNRESOLVED — or something that does not re-derive here and now."""
-    from styxx.sworn import Manifest, issue_receipt, scan, verify
+    from styxx.sworn import Manifest, _core_as, issue_receipt, scan, verify
     from styxx._version import __version__
 
     doc_bytes = doc.read_bytes()
@@ -2671,7 +2671,14 @@ def create_capsule_sworn(doc: Path, manifest: Optional[Path], receipt: Path, out
     # sworn_receipt_mismatch — the receipt must re-derive from the sealed bytes, here and now
     live = verify(doc_bytes, name=(rec_obj.get("document") or {}).get("name", ""),
                   manifest=man, commit=rec_obj.get("commit"))
-    if _sworn_core_sha256(issue_receipt(live)) != _sworn_core_sha256(rec_obj):
+    # the live core is projected onto the receipt's own schema, so a /v1 receipt seals as it did
+    # under a /v1 verifier (styxx.sworn._core_as; papers/sworn/NOTE_certifies_correction_2026_10_24.md)
+    try:
+        live_as = _core_as(issue_receipt(live), rec_obj.get("schema"))
+    except ValueError:
+        raise SystemExit("REFUSED sworn_receipt_mismatch: the receipt names schema "
+                         f"{rec_obj.get('schema')!r}, which this verifier has no core projection for") from None
+    if _sworn_core_sha256(live_as) != _sworn_core_sha256(rec_obj):
         raise SystemExit("REFUSED sworn_receipt_mismatch: the receipt's core does not re-derive "
                          "from the sealed bytes at the installed verifier "
                          f"(live {live['document_verdict']} {live['counts']} vs sealed "
@@ -2709,7 +2716,7 @@ def create_capsule_sworn(doc: Path, manifest: Optional[Path], receipt: Path, out
 def _verify_capsule_sworn(html: str, payload: dict) -> dict:
     """Layer 2: re-run styxx.sworn over the sealed bytes. INSTRUMENT SKEW is named apart from
     tamper — one is the instrument having moved, the other is the bytes having moved."""
-    from styxx.sworn import Manifest, issue_receipt, verify
+    from styxx.sworn import Manifest, _core_as, issue_receipt, verify
 
     problems: List[str] = []
     advisory: List[str] = []
@@ -2799,6 +2806,15 @@ def _verify_capsule_sworn(html: str, payload: dict) -> dict:
     if not same_build:
         advisory.append("INSTRUMENT SKEW: the receipt was issued by styxx.sworn "
                         f"{str(sealed_build)[:12]} and this is {str(live_build)[:12]}")
+    # The live core is projected onto the sealed receipt's own schema: /v1 and /v2 cores differ in
+    # schema and certifies only, so a /v1 receipt re-derives as it did under a /v1 verifier
+    # (styxx.sworn._core_as; papers/sworn/NOTE_certifies_correction_2026_10_24.md).
+    try:
+        live_rec = _core_as(live_rec, rec.get("schema"))
+    except ValueError:
+        problems.append(f"the receipt names schema {str(rec.get('schema'))[:80]!r}, which this verifier "
+                        "has no core projection for, so its verdict core cannot be compared")
+        return out
     if _sworn_core_sha256(live_rec) != sealed_core:
         problems.append(
             "the verdict core does not re-derive from the sealed bytes"
@@ -2873,8 +2889,8 @@ is the one that checks the build the receipt names.</div>
     ok = ok && docOk;
     const man = P.manifest === null || P.manifest === undefined ? null
               : api.jsonPlain(JSON.stringify(P.manifest));
-    const core = api.swornVerify(doc, man,
-      { name: P.receipt.document.name, commit: P.receipt.commit });
+    const core = api.coreAs(api.swornVerify(doc, man,
+      { name: P.receipt.document.name, commit: P.receipt.commit }), P.receipt.schema);
     const got = api.coreDigest(core);
     const coreOk = got === P.core_sha256;
     lines.push((coreOk ? "OK  " : "BAD ") + "the verdict core re-derives here: " +

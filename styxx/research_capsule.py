@@ -1082,6 +1082,10 @@ def check_payload(payload: dict, html: Optional[str] = None) -> dict:
                 advisory.append("INSTRUMENT SKEW: the sworn receipt names styxx.sworn "
                                 f"{str((srec.get('verifier') or {}).get('sworn_sha256'))[:12]} and this "
                                 f"is {live['verifier']['sworn_sha256'][:12]}")
+            # the live core projected onto the carried receipt's own schema: a /v1 receipt re-derives
+            # as it did under a /v1 verifier (papers/sworn/NOTE_certifies_correction_2026_10_24.md);
+            # a schema with no projection is a ValueError, read below as a failed link
+            live_rec = _sworn._core_as(live_rec, srec.get("schema"))
             L4.check(_sworn_core_sha256(live_rec) == _sworn_core_sha256(srec),
                      f"the sworn core re-derives over the snapshot: {live['document_verdict']} "
                      f"{live['counts']}",
@@ -2064,7 +2068,7 @@ if(resBytes&&side&&srec){var doc=srec.document||{};
   (srec.spans||[]).forEach(function(s){var r=String(s.receipt||"");if(r.slice(0,5)==="path:"&&s.verdict!=="UNRESOLVED"){var target=r.slice(5).split("#")[0],e=entries[target];
     chk("L4",!!e&&e.sha256===s.resolved_sha256,"span @"+s.at+" resolved_sha256 is the snapshot entry's for "+target,"the receipt resolved other bytes");}});
   try{var swCore=swornCoreHere(side,snapTree,snap.commit),swWant=shaText(jcs(portableCore(srec)));
-    chk("L4",SW.api.coreDigest(swCore)===swWant,"the sworn core re-derives here over the carried snapshot: "+swCore.document_verdict+" "+JSON.stringify(swCore.counts)+" (each span adjudicated again by the inlined sworn_verify.js)",
+    chk("L4",SW.api.coreDigest(SW.api.coreAs(swCore,srec.schema))===swWant,"the sworn core re-derives here over the carried snapshot: "+swCore.document_verdict+" "+JSON.stringify(swCore.counts)+" (each span adjudicated again by the inlined sworn_verify.js)",
         "the live core differs (live "+swCore.document_verdict+" "+JSON.stringify(swCore.counts)+" vs carried "+srec.document_verdict+" "+JSON.stringify(srec.counts)+")");
     var heldWhy=allHeldProblem(swCore);
     chk("L4",heldWhy===null,"every sworn span reads HELD against the leaf it names ("+(swCore.counts.HELD||0)+" of "+swCore.sworn_total+")",heldWhy||"");}
@@ -2111,7 +2115,7 @@ pre("prereg",prText);
 pre("score",scoreOut?("re-scored: "+scoreOut.verdict+"  gates "+JSON.stringify(scoreOut.gates)+"\nrecorded:  "+(runObj?pointer(runObj,S.verdict):"?")+"  gates "+JSON.stringify(runObj?pointer(runObj,S.gates):null)+"\noutcome table total: "+scoreOut.total+"\n"+Object.keys(scoreOut.power_basis).map(function(g){return g+" power_basis: "+scoreOut.power_basis[g];}).join("\n")):"(not re-scored)");
 pre("receipt",receipts.map(function(r){var d;try{d=dec(b64(r.b64));}catch(e){d="(undecodable)";}return "# "+r.path+"  sha256 "+r.sha256+"\n"+d;}).join("\n\n"));
 if(resBytes){var el=document.getElementById("result");if(el){var h=esc(dec(resBytes));h=h.replace(/&lt;sworn r=&quot;([^&]*)&quot; k=&quot;([^&]*)&quot;&gt;([\s\S]*?)&lt;\/sworn&gt;/g,function(m,r,k,inner){return '<mark title="'+r+' ('+k+')">'+inner+"</mark>";});el.innerHTML=h;}}
-pre("sworn",srec?("sworn receipt: "+srec.document_verdict+" "+JSON.stringify(srec.counts)+"  commit "+srec.commit+"\ncoverage sentence_share "+((srec.coverage||{}).sentence_share)+" (a floor; the narrative outside the spans is the author's)\ndigest "+srec.digest+"\ncertifies: "+srec.certifies):"(none)");
+pre("sworn",srec?("sworn receipt: "+srec.document_verdict+" "+JSON.stringify(srec.counts)+"  commit "+srec.commit+"\ncoverage sentence_share "+((srec.coverage||{}).sentence_share)+" (a floor; the narrative outside the spans is the author's)\ndigest "+srec.digest+"\ncertifies: "+srec.certifies+(srec.schema==="styxx.sworn.verdict-receipt/v1"?" (the /v1 sentence, withdrawn: papers/sworn/NOTE_certifies_correction_2026_10_24.md)":"")):"(none)");
 pre("charon",ch?("seq "+ch.seq+"  entry_id "+ch.entry_id+"  head_at_seq "+ch.head_at_seq+"  log "+ch.log_path+"\n"+JSON.stringify(ch.entry,null,1)):"(none)");
 pre("runnote",A.run_note?("# "+A.run_note.path+"  sha256 "+A.run_note.sha256+"  (stated by the lab)\n"+dec(b64(A.run_note.b64))):"(no run note carried)");
 var rn=document.getElementById("runners");if(rn)rn.innerHTML=(A.runners||[]).map(function(r){var d;try{d=dec(b64(r.b64));}catch(e){d="(undecodable)";}return "<details><summary>"+esc(r.path)+"  sha256 "+esc(r.sha256)+"</summary><pre>"+esc(d)+"</pre></details>";}).join("")||"(no runner carried)";

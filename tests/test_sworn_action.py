@@ -433,7 +433,11 @@ class TestTheCommittedSample:
     # SWORN-HELD document with unresolved spans, and two sworn documents cite it. When the verifier
     # changed, the script's own refusal named the remedy — "a sample is history; write a new prefix
     # at a new commit" — so a second sample was written beside the first rather than over it.
-    CURRENT_SAMPLE = "sworn_action_sample_2026_09_06"
+    # A third was written on 2026-10-24 when receipts moved to schema /v2 and the summary's
+    # certificate sentence with them (papers/sworn/NOTE_certifies_correction_2026_10_24.md); the
+    # second is history now too.
+    CURRENT_SAMPLE = "sworn_action_sample_2026_10_24"
+    SECOND_SAMPLE = "sworn_action_sample_2026_09_06"
 
     def _sample_module(self):
         script = ROOT / "papers" / "sworn" / "sworn_action_sample.py"
@@ -463,7 +467,7 @@ class TestTheCommittedSample:
         """The pair IS the record of the change: same action, same fixture, one line apart."""
         here = ROOT / "papers" / "sworn"
         old = (here / "sworn_action_sample.summary.md").read_text(encoding="utf-8").splitlines()
-        new = (here / ("%s.summary.md" % self.CURRENT_SAMPLE)).read_text(
+        new = (here / ("%s.summary.md" % self.SECOND_SAMPLE)).read_text(
             encoding="utf-8").splitlines()
         assert len(old) == len(new), "the samples differ in shape, not just in the warning"
         differing = [i for i, (a, b) in enumerate(zip(old, new)) if a != b]
@@ -472,6 +476,45 @@ class TestTheCommittedSample:
         assert "UNRESOLVED.md" in old[i] and "SWORN-HELD" in old[i]
         assert "WARNING" not in old[i], "the first sample predates the warning"
         assert "nothing was checked" in new[i], new[i]
+
+    def test_the_second_sample_is_still_here_and_no_longer_reproduces(self):
+        """The 2026-09-06 sample printed the /v1 certificate sentence. It is kept, and it must not
+        reproduce under a verifier that issues /v2: one that did would mean it was rewritten."""
+        here = ROOT / "papers" / "sworn"
+        assert (here / ("%s.summary.md" % self.SECOND_SAMPLE)).exists()
+        assert self._sample_module().check(self.SECOND_SAMPLE) != 0
+
+    def test_the_2026_10_24_sample_differs_from_the_2026_09_06_one_only_in_the_certificate(self):
+        """Same action, same fixture: the summaries differ in exactly the certificate line, run.json in
+        each row's certifies (and the receipt digest that covers it), the receipts in schema, certifies
+        and what moves with the build, and the manifests not at all."""
+        import styxx.sworn as sworn
+        here = ROOT / "papers" / "sworn"
+        old_p, new_p = self.SECOND_SAMPLE, self.CURRENT_SAMPLE
+        old = (here / ("%s.summary.md" % old_p)).read_text(encoding="utf-8").splitlines()
+        new = (here / ("%s.summary.md" % new_p)).read_text(encoding="utf-8").splitlines()
+        assert len(old) == len(new)
+        differing = [i for i, (a, b) in enumerate(zip(old, new)) if a != b]
+        assert len(differing) == 1, differing
+        i = differing[0]
+        assert old[i] == "_%s_" % sworn._CERTIFIES_V1 and new[i] == "_%s_" % sworn._CERTIFIES, (old[i], new[i])
+        for name in ("manifest.json", "junit.manifest.json", "github.manifest.json"):
+            assert (here / ("%s.%s" % (old_p, name))).read_bytes() == (here / ("%s.%s" % (new_p, name))).read_bytes()
+        a = json.loads((here / ("%s.run.json" % old_p)).read_text(encoding="utf-8"))
+        b = json.loads((here / ("%s.run.json" % new_p)).read_text(encoding="utf-8"))
+        assert [d["certifies"] for d in a["documents"]] == [sworn._CERTIFIES_V1] * len(a["documents"])
+        assert [d["certifies"] for d in b["documents"]] == [sworn._CERTIFIES] * len(b["documents"])
+        for run in (a, b):
+            for d in run["documents"]:
+                d.pop("certifies"), d.pop("receipt_digest", None)
+        assert a == b
+        for p in sorted(here.glob("%s.*.sworn-receipt.json" % new_p)):
+            r_new = json.loads(p.read_text(encoding="utf-8"))
+            r_old = json.loads((here / p.name.replace(new_p, old_p)).read_text(encoding="utf-8"))
+            assert (r_old["schema"], r_new["schema"]) == ("styxx.sworn.verdict-receipt/v1", sworn.RECEIPT_SCHEMA)
+            moved = sorted(k for k in set(r_old) | set(r_new) if r_old.get(k) != r_new.get(k))
+            assert set(moved) <= {"schema", "certifies", "verifier", "digest"}, (p.name, moved)
+            assert {"schema", "certifies"} <= set(moved)
 
     def test_the_sample_refuses_to_overwrite_itself(self, capsys):
         script = ROOT / "papers" / "sworn" / "sworn_action_sample.py"
