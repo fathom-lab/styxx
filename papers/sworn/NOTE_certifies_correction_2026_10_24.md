@@ -131,12 +131,16 @@ under the `/v2` verifier at the commits they name.
   outcome moved (`conformance/sworn/README.md`).
 - `same_verifier_build` reads false on every committed receipt an earlier `sworn.py` issued. It is advisory,
   outside the digest and outside the compare.
-- The stranger's ferry-log step (`python -m styxx.stranger`) reads FAIL. The sworn lines of
-  `papers/charon/charon.log.jsonl` that recorded `counts.receipt_check.same_verifier_build` true carry that
-  build-relative flag inside the core charon compares, so under any edited `sworn.py` they read SKEW (the line
-  moved and the verifier moved). Their receipts still verify, `tests/test_stranger.py` holds that the flag is
-  the only field that moved in each, and `papers/checksum/STRANGER.md` says so beside its step 2. Whether
-  charon should compare that flag apart is the operator's decision.
+- The 14 sworn lines of `papers/charon/charon.log.jsonl` that recorded
+  `counts.receipt_check.same_verifier_build` true carry that build-relative flag inside the core charon
+  compares, so under any edited `sworn.py` they read SKEW under charon's SPEC E5 (the line moved and the
+  verifier moved), and the stranger's ferry-log step (`python -m styxx.stranger`) read FAIL on this branch.
+  Their receipts still verify, and the flag is the only value that moved in each. On the operator's decision
+  of 2026-10-25, `papers/charon/AMENDMENT_charon_same_verifier_build_flag_2026_10_25.md` reads such a line
+  MOVED_VERIFIER when that flag alone moved, from true to false, while the `sworn.py` the line names is not
+  the installed one and the receipt still names it; under the same build it stays DRIFT, and beside any other
+  moved value it reads what E5 reads. The 14 lines now read MOVED_VERIFIER, the ferry-log step reads PASS,
+  `papers/checksum/STRANGER.md` says so beside its step 2, and no committed line was edited.
 
 ## What this does not say
 

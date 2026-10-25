@@ -3,8 +3,8 @@
  "format": "sworn/0.1",
  "document": {
   "name": "NOTE_certifies_correction_2026_10_24.sworn.json",
-  "inline_sha256": "4f12d93debc6d8a7d86a97c0d2904a10761a91c54fd793e52d3b638bf76bb0ce",
-  "canonical_sha256": "3443e0f28838813862ae9ab1c61c7d607f38c62cd4ef29d35cf60ff86ad2d339"
+  "inline_sha256": "d3f4b94e072a9596df6921b81a9332b4a44acb43a502d05b9dd4f6f474ac2b44",
+  "canonical_sha256": "1d3dc90ac0b2fe552b84a0fc1fa8f6397ee9fe985441b57d1a12be9196300cf2"
  },
  "commit": "b4dee7bfd74066352e7903f37f5903779615422a",
  "manifest_digest": null,
@@ -367,16 +367,16 @@
   }
  },
  "certifies": "the spans the author bound that read HELD or FAILED were checked, each by its kind, against the receipt it names (its bytes, or for a hash span on a manifest entry that carries none, the sha256 the manifest records), at the commit and manifest this receipt records, and an rN span at the rung the manifest declares (a path: or prereg: span carries no rung and is counted as committed); the only authorship test reads the manifest: an rN receipt is taken as not the author's when the manifest records it under a kind_of_source from the closed external vocabulary and does not list its sha256 in authored_sha256, and a path: or prereg: receipt when no manifest is given or the manifest does not list its sha256 there (its span's provenance reads authorship unchecked: nothing beyond that membership was tested); authored_sha256 is the harness's record of what the agent produced in the turn the manifest names, tested on the bytes' sha256 and never on a name, so bytes the author wrote that the harness never digested, such as a file written in another turn, or by a shell command or a tool the harness does not digest, are not caught; a MALFORMED span was refused before any comparison, the authorship refusals among them, and an UNRESOLVED span was not compared — NOT a claim that the author did not write the receipt's bytes, NOT a claim that the document is correct, NOT a claim that the right sentences were bound, NOT a check that the tags were written at write time, NOT a check of any signature, and only as trustworthy as the harness that minted the manifest and the tree that served the commit (git history from the CLI; a snapshot or in-memory tree on its caller's word)",
- "digest": "75adf2851cf68fa55d976ae2ce63d125491e9a20f6ae00a9bfee9539045670fe",
+ "digest": "412064fc1c3433016b9a01983b3978f94775e161a18dea639403020c5015b868",
  "coverage": {
   "schema": "sworn/coverage/1",
   "advisory": true,
   "ceiling_note": "advisory, always: sentence_share is a floor computed by diffgate's sentence splitter (the lane's largest false-flag source) that treats every narrative sentence as load-bearing; diff_claim_share is counted by styxx.claimdetect (STRUCT-1), a diff-claim detector for agent pull-request prose measured at precision 0.4211 on n=38 by one model family in-house, which does not read result-shaped sentences (measured rates, test totals) as claims; neither number is bound recall — that is a blind panel's to measure, and it has not",
   "sworn_total": 14,
-  "narrative_sentences": 147,
-  "sentence_share": 0.087,
-  "diff_claim_sentences": 11,
-  "diff_claim_share": 0.56,
+  "narrative_sentences": 150,
+  "sentence_share": 0.0854,
+  "diff_claim_sentences": 13,
+  "diff_claim_share": 0.5185,
   "diff_claim_idiom": "agent pull-request prose (styxx.claimdetect STRUCT-1, precision 0.4211 on n=38, one model family, in-house); result-shaped sentences are never counted by it",
   "unsworn_claims": [
    {
@@ -425,19 +425,29 @@
     "text": "- `same_verifier_build` reads false on every committed receipt an earlier `sworn.py` issued."
    },
    {
-    "start": 8947,
-    "end": 9055,
-    "text": "build-relative flag inside the core charon compares, so under any edited `sworn.py` they read SKEW (the line"
+    "start": 8922,
+    "end": 9024,
+    "text": "compares, so under any edited `sworn.py` they read SKEW under charon's SPEC E5 (the line moved and the"
    },
    {
-    "start": 9168,
-    "end": 9263,
-    "text": "the only field that moved in each, and `papers/checksum/STRANGER.md` says so beside its step 2."
+    "start": 9027,
+    "end": 9132,
+    "text": "verifier moved), and the stranger's ferry-log step (`python -m styxx.stranger`) read FAIL on this branch."
+   },
+   {
+    "start": 9351,
+    "end": 9456,
+    "text": "MOVED_VERIFIER when that flag alone moved, from true to false, while the `sworn.py` the line names is not"
+   },
+   {
+    "start": 9676,
+    "end": 9766,
+    "text": "`papers/checksum/STRANGER.md` says so beside its step 2, and no committed line was edited."
    }
   ],
   "splitter": "diffgate:(?<=[.!?])\\s+|\\n+",
   "claimdetect_version": "struct-1/2026-08-30"
  },
- "coverage_sha256": "f0b5257971c692e1a76e7527e9b9a6e6c245b9f4e9d10eaa976076e92e26e5b9",
- "timestamp": "2026-10-25T00:02:06Z"
+ "coverage_sha256": "2166af8de688f1add2315a860b6e1ef760db8c5f64d48a8273891c9c5e04a06b",
+ "timestamp": "2026-10-25T14:20:24Z"
 }

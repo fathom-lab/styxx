@@ -43,15 +43,19 @@ cites the log. What it does not prove: that a HELD line is true about the world 
 numbers are the numbers in its receipt at its commit; and it does not read the `.md` in your working
 tree (step 3 does).
 
-What SKEW means here (added 2026-10-24): a line whose core moved while the verifier moved. Since the
-sworn verdict receipt moved to schema /v2 (`papers/sworn/NOTE_certifies_correction_2026_10_24.md`), the
-sworn lines that recorded `counts.receipt_check.same_verifier_build` true read SKEW. That flag says
-whether the receipt was issued by the `sworn.py` re-checking it; it sits inside the core charon compares,
-and any edit of `sworn.py` flips it. Their receipts still verify, and
-`python -m pytest tests/test_stranger.py -k ferry_log_passes` re-derives each of those lines and fails if
-anything but that flag moved in it. So `styxx.stranger` reports the ferry-log step as FAIL for those lines.
-Whether charon should compare that flag apart is the operator's decision, still open; until it is taken, a
-SKEW on any other line, and any DRIFT, TAMPER or HEAD_MISMATCH, is a finding.
+What a flag about the instrument reads (added 2026-10-24, amended 2026-10-25): SKEW is a line whose core
+moved while the verifier moved. Since the sworn verdict receipt moved to schema /v2
+(`papers/sworn/NOTE_certifies_correction_2026_10_24.md`), the 14 sworn lines that recorded
+`counts.receipt_check.same_verifier_build` true re-derive with that flag moved. The flag says whether the
+receipt was issued by the `sworn.py` re-checking it; it sits inside the core charon compares, and any edit
+of `sworn.py` flips it. Their receipts still verify. On the operator's decision of 2026-10-25,
+`papers/charon/AMENDMENT_charon_same_verifier_build_flag_2026_10_25.md` reads such a line MOVED_VERIFIER,
+with `read_apart` naming the flag on its row, when that flag alone moved, from true to false, while the
+`sworn.py` the line names is not the installed one and the receipt still names it. So the 14 lines read
+MOVED_VERIFIER and `styxx.stranger` reports the ferry-log step as PASS;
+`python -m pytest tests/test_charon_build_flag.py` holds the rule and re-derives each of the 14. Under the
+same build, or beside any other moved value, the flag reads what it read before, so a receipt rewritten in
+place is still DRIFT. A SKEW, a DRIFT, a TAMPER or a HEAD_MISMATCH on any line is a finding.
 
 ## 3. one sworn document, by hand
 
