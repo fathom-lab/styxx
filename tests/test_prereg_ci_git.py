@@ -730,6 +730,40 @@ def test_r_is_read_inside_the_pull_request(tmp_path):
         assert repo.is_strict_ancestor(s["order"], r) and not repo.is_strict_ancestor(s["order"], old)
 
 
+def test_suffixes_match_whatever_their_case_and_nothing_is_left_out_by_default(tmp_path):
+    """Review case 5: a sealed bar moved in ``PREREG_b.MD``, receipts written as ``rerun.JSON``
+    and under conformance/, and a committed ``old.JSON`` receipt edited. Each is read; a configured
+    prefix leaves its paths out of C1 and RECEIPT_REWRITTEN and lists them in ``excluded``."""
+    g = Git(tmp_path / "case")
+    g.write(P, prereg(0.5))
+    g.write("p/PREREG_b.MD", prereg(0.5))
+    g.write("p/old.JSON", receipt(gates_sha256=digest(0.5), verdict="PASS"))
+    g.write("conformance/old.json", receipt(gates_sha256=digest(0.5), verdict="PASS"))
+    g.commit("two plans and two receipts")
+    g("switch", "-q", "-c", "pr")
+    g.write("p/PREREG_b.MD", prereg(0.1))
+    g.write("p/rerun.JSON", receipt(gates_sha256=digest(0.1), verdict="PASS"))
+    g.write("p/old.JSON", receipt(m=0.1, gates_sha256=digest(0.1), verdict="PASS"))
+    g.write("conformance/run.json", receipt(gates_sha256=digest(0.1), verdict="PASS"))
+    g.write("conformance/old.json", receipt(m=0.1, gates_sha256=digest(0.1), verdict="PASS"))
+    head = g.commit("move a bar; write receipts")
+    with G._Repo(g.root) as repo:
+        assert _by_path(G._decisions_moved(repo, "main", "pr")) == {
+            "p/PREREG_b.MD": ("DECISION_EDITED_AFTER_SEAL", "FAIL")}
+        written = G._receipts_written(repo, "main", "pr")
+        assert [a["path"] for a in written["receipts"]] == [
+            "conformance/old.json", "conformance/run.json", "p/old.JSON", "p/rerun.JSON"]
+        assert written["excluded"] == []
+        assert sorted(_by_path(G._receipts_rewritten(repo, "main", "pr"))) == ["conformance/old.json", "p/old.JSON"]
+        assert {r["record"] for r in G._records(repo, head)} == {
+            "conformance/old.json", "conformance/run.json", "p/old.JSON", "p/rerun.JSON"}
+        cut = ("conformance/",)
+        written = G._receipts_written(repo, "main", "pr", exclude=cut)
+        assert [a["path"] for a in written["receipts"]] == ["p/old.JSON", "p/rerun.JSON"]
+        assert written["excluded"] == ["conformance/old.json", "conformance/run.json"]
+        assert sorted(_by_path(G._receipts_rewritten(repo, "main", "pr", exclude=cut))) == ["p/old.JSON"]
+
+
 # ---- the resolver, the records, the recorded digest (3.2(d), K2) -------------------------------------------
 
 TREE = frozenset({"a/PREREG_x.md", "a/r.json", "b/PREREG_y.md", "c/PREREG_y.md", "d/PREREG_z.md", "a/sub/r2.json"})
@@ -791,8 +825,11 @@ def records(tmp_path_factory):
         yield SimpleNamespace(g=g, repo=repo, c=c, d=d)
 
 
-def test_records_are_r1s_rule_with_conformance_left_out(records):
-    got = G._records(records.repo, "main")
+def test_records_are_r1s_rule_and_leave_out_only_what_is_configured(records):
+    """Nothing is left out by default; styxx's census may name conformance/, whose vectors hold
+    gates digests inside their inputs."""
+    assert [r["record"] for r in G._records(records.repo, "main")][0] == "conformance/v.json"
+    got = G._records(records.repo, "main", exclude=("conformance/",))
     assert [(r["record"], r["pointer"], r["own"]) for r in got] == [
         ("papers/v/r_dup.json", "", True),
         ("papers/x/FINDING_x.seal.json", "/protocol/0", False),
@@ -804,11 +841,10 @@ def test_records_are_r1s_rule_with_conformance_left_out(records):
     assert side["recorded"] == {"verdict": "PASS", "gates": {"G0": True}, "gates_sha256": records.d}
     assert (side["prereg"], side["result"], side["prereg_commit"]) == (
         "papers/x/PREREG_x.md", "papers/x/r_side.json", "c0ffee")
-    assert [r["record"] for r in G._records(records.repo, "main", exclude=())][0] == "conformance/v.json"
 
 
 def test_pairs_resolve_the_receipt_and_the_prereg_or_refuse(records):
-    got = {(r["record"], r["pointer"]): r for r in G._pairs(records.repo, "main")}
+    got = {(r["record"], r["pointer"]): r for r in G._pairs(records.repo, "main", exclude=("conformance/",))}
     assert got[("papers/x/r_own.json", "")]["receipt_path"] == "papers/x/r_own.json"
     assert got[("papers/x/r_own.json", "")]["prereg_path"] == "papers/x/PREREG_x.md"
     assert got[("papers/x/FINDING_x.seal.json", "/protocol/0")]["receipt_path"] == "papers/x/r_side.json"

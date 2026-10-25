@@ -69,7 +69,10 @@ _KIND = {
 
 _MAX_BLOB_BYTES = _RECEIPT_CAP           # read at call time, so a test may lower it
 _GIT_TIMEOUT_S = 300
-_EXCLUDE = ("conformance/",)            # prereg-ci's own vectors hold gates digests inside their inputs
+# Suffixes match whatever their case (a receipt.JSON is read, a PREREG.MD's fence is held). Nothing
+# is left out by default: a repository-relative prefix in ``exclude`` (styxx's census can name
+# conformance/, whose vectors hold gates digests inside their inputs) is configuration, and the
+# paths it leaves out of C1 are listed for the report's not_examined.
 _HEX = re.compile(r"[0-9a-f]{40}|[0-9a-f]{64}")
 _NEEDLE = '"gates_sha256"'
 # git's own environment that would point a command at another repository, ref namespace or shallow
@@ -664,6 +667,12 @@ def _excluded(path: str, exclude: Sequence[str]) -> bool:
     return any(path.startswith(x) for x in exclude)
 
 
+def _suffix(path: str, suffixes: Sequence[str]) -> bool:
+    """Whether *path* ends with one of *suffixes*, case aside."""
+    low = path.lower()
+    return any(low.endswith(s.lower()) for s in suffixes)
+
+
 def _not_a_file(e: _Refusal, path: str, rev: str) -> Dict[str, Any]:
     """The NOTE for a ``.json`` path that is a symlink or a submodule: it holds no receipt this
     layer reads, and it does not stop the check (C0 skips one at the base the same way). Any other
@@ -674,17 +683,17 @@ def _not_a_file(e: _Refusal, path: str, rev: str) -> Dict[str, Any]:
                                           f"from it").finding(path)
 
 
-def _records(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> List[Dict[str, Any]]:
+def _records(repo: _Repo, rev: str, exclude: Sequence[str] = ()) -> List[Dict[str, Any]]:
     """Every committed record naming a gates digest at *rev* (R1's rule): a JSON file whose
     top-level object holds ``gates_sha256``, or one entry per ``protocol`` item holding it. Each is
     ``{record, pointer, own, dir, prereg, result, prereg_commit, recorded}``, with ``recorded`` the
     ``verdict`` (``frozen_verdict`` in a protocol entry), ``gates`` and ``gates_sha256`` it states.
     A file that holds the key and is not JSON is listed with a ``refusal`` (a NOTE); git grep reads
-    regular files only, and a path that read as anything else would be a NOTE too. Paths under
-    *exclude* are not read."""
+    regular files only, and a path that read as anything else would be a NOTE too. A ``.json``
+    suffix is read whatever its case; paths under *exclude* are not read."""
     c = repo.commit(rev)
     out: List[Dict[str, Any]] = []
-    for path in repo.grep(c, _NEEDLE, "*.json"):
+    for path in repo.grep(c, _NEEDLE, ":(icase)*.json"):
         if _excluded(path, exclude):
             continue
         base = {"record": path, "dir": posixpath.dirname(path)}
@@ -709,7 +718,7 @@ def _records(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> List[D
     return out
 
 
-def _pairs(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> List[Dict[str, Any]]:
+def _pairs(repo: _Repo, rev: str, exclude: Sequence[str] = ()) -> List[Dict[str, Any]]:
     """``_records`` with each record's receipt and PREREG resolved in *rev*'s tree: ``receipt_path``
     (the record itself, or its ``result`` resolved from the record's directory) and ``prereg_path``
     (resolved from the receipt's directory), or a ``refusal``."""
@@ -728,7 +737,7 @@ def _pairs(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> List[Dic
     return out
 
 
-def _sidecars(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> Dict[str, Any]:
+def _sidecars(repo: _Repo, rev: str, exclude: Sequence[str] = ()) -> Dict[str, Any]:
     """Every ``protocol`` entry holding a gates digest in every ``*.seal.json`` of *rev*'s tree,
     by the receipt its ``result`` resolves to. ``{by, ambiguous, unreadable, not_files}``: the
     sidecars that are not JSON, and the symlinks and submodules, are listed and not read."""
@@ -741,7 +750,7 @@ def _sidecars(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> Dict[
         unreadable: List[str] = []
         not_files: List[str] = []
         for path in repo.paths(c):
-            if not path.endswith(".seal.json") or _excluded(path, exclude):
+            if not _suffix(path, (".seal.json",)) or _excluded(path, exclude):
                 continue
             try:
                 d = _json(repo.read(c, path) or b"")
@@ -770,7 +779,7 @@ def _sidecars(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> Dict[
 
 
 def _recorded(repo: _Repo, rev: str, receipt_path: str, receipt: Any,
-              exclude: Sequence[str] = _EXCLUDE) -> Optional[Dict[str, Any]]:
+              exclude: Sequence[str] = ()) -> Optional[Dict[str, Any]]:
     """The digest a receipt was scored under (DESIGN 3.2(d), PLAN K2): its own ``gates_sha256``,
     else every ``protocol`` entry of every ``*.seal.json`` in *rev*'s tree whose ``result`` resolves
     to the receipt. Readings that disagree (digest, verdict or gates), or an entry whose result is
@@ -834,7 +843,7 @@ def _holds_receipt(repo: _Repo, commit: str, path: str) -> bool:
 
 
 def _receipts_written(repo: _Repo, base: str, head: str,
-                      exclude: Sequence[str] = _EXCLUDE) -> Dict[str, List[Dict[str, Any]]]:
+                      exclude: Sequence[str] = ()) -> Dict[str, List[Any]]:
     """C1's receipts (DESIGN 3.4): every ``.json`` path the pull request leaves holding a receipt at
     HEAD whose change is an add, a rename's new path, an edit in place or a type change (A, R, M,
     T), whatever the path held at the merge base: nothing, a placeholder, bytes that are not JSON,
@@ -843,14 +852,17 @@ def _receipts_written(repo: _Repo, base: str, head: str,
     ``receipt_commit`` is R, the oldest commit in merge_base..HEAD at which the path holds a receipt,
     so a path used before the pull request does not move R outside it. A changed ``.json`` that is
     not JSON at HEAD is a ``RECEIPT_UNREADABLE`` NOTE, since no receipt can be read from it; one
-    that is a symlink or a submodule at HEAD is a ``RECEIPT_NOT_A_FILE`` NOTE. Returns
-    ``{receipts, notes}``."""
+    that is a symlink or a submodule at HEAD is a ``RECEIPT_NOT_A_FILE`` NOTE. A ``.json`` suffix is
+    read whatever its case. Every changed ``.json`` path (new or old) under *exclude* is left out
+    here and in ``_receipts_rewritten`` and listed in ``excluded``, for the report's not_examined.
+    Returns ``{receipts, notes, excluded}``."""
     ch = repo.changes(base, head)
     mb, h = ch["merge_base"], ch["head"]
-    receipts, notes = [], []
+    receipts, notes, excluded = [], [], set()
     for x in ch["changes"]:
         path = x["path"]
-        if x["status"] not in _WRITES or not path.endswith(".json") or _excluded(path, exclude):
+        excluded.update(p for p in (path, x["old"]) if p and _suffix(p, (".json",)) and _excluded(p, exclude))
+        if x["status"] not in _WRITES or not _suffix(path, (".json",)) or _excluded(path, exclude):
             continue
         try:
             obj = _json(repo.read(h, path) or b"")
@@ -865,11 +877,11 @@ def _receipts_written(repo: _Repo, base: str, head: str,
         held = repo._held(path, h, lambda c, p=path: _holds_receipt(repo, c, p), stop=mb)
         receipts.append({"path": path, "status": x["status"], "old": x["old"], "receipt_commit": held[-1],
                          "receipt": obj})
-    return {"receipts": receipts, "notes": notes}
+    return {"receipts": receipts, "notes": notes, "excluded": sorted(excluded)}
 
 
 def _receipts_rewritten(repo: _Repo, base: str, head: str, policy: str = "fail",
-                        exclude: Sequence[str] = _EXCLUDE) -> List[Dict[str, Any]]:
+                        exclude: Sequence[str] = ()) -> List[Dict[str, Any]]:
     """RECEIPT_REWRITTEN (DESIGN 3.2(d), C1) for every receipt or record committed at the merge
     base that the pull request changes, deletes or renames; a re-run writes a new path. FAIL under
     ``receipt_rewrite = "fail"`` (the default), a NOTE under ``"note"``."""
@@ -880,7 +892,7 @@ def _receipts_rewritten(repo: _Repo, base: str, head: str, policy: str = "fail",
     out = []
     for x in ch["changes"]:
         old = x["old"]
-        if old is None or not old.endswith(".json") or _excluded(old, exclude):
+        if old is None or not _suffix(old, (".json",)) or _excluded(old, exclude):
             continue
         try:
             obj = _json(repo.read(mb, old) or b"")
@@ -900,8 +912,9 @@ def _receipts_rewritten(repo: _Repo, base: str, head: str, policy: str = "fail",
 
 def _decisions_moved(repo: _Repo, base: str, head: str, immutability: str = "gates",
                      suffixes: Sequence[str] = (".md",)) -> List[Dict[str, Any]]:
-    """C0 for every file under *suffixes* that holds a decision at the merge base and that the pull
-    request changes, deletes or renames: a deleted or renamed one, or one whose fence moved, is
+    """C0 for every file whose name ends with one of *suffixes* (case aside, so ``PREREG.MD`` is
+    read) that holds a decision at the merge base and that the pull request changes, deletes or
+    renames: a deleted or renamed one, or one whose fence moved, is
     DECISION_EDITED_AFTER_SEAL; prose moved around an unchanged fence is PROSE_AMENDED_IN_PLACE,
     a NOTE under ``immutability = "gates"`` (the default) and a FAIL under ``"file"``."""
     if immutability not in _IMMUTABILITY:
@@ -911,7 +924,7 @@ def _decisions_moved(repo: _Repo, base: str, head: str, immutability: str = "gat
     out = []
     for x in ch["changes"]:
         old = x["old"]
-        if old is None or not old.endswith(tuple(suffixes)):
+        if old is None or not _suffix(old, suffixes):
             continue
         try:
             before = _core._decision(repo.read(mb, old) or b"")
