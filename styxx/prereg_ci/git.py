@@ -50,6 +50,10 @@ missing blob from the clone's promisor remote, which a full clone never needs. T
   the seal, the order commit and C0 hold it as they hold a gates fence (its digest is the fence's
   text); ``LOCKED_FILE_ABSENT`` is the code ``styxx.prereg_ci.scorer_run`` gives a locked path that is
   not a file at the commit its blobs are read at.
+* the shipped surfaces (3.2(g), step B5): ``_surfaces`` reads, at a commit, every blob the surface
+  profile selects (``core._SURFACE_PROFILE``, surface_lint's ``repo`` profile copied under PLAN K14,
+  or a configured one), decoded as ``core._surface_text`` decodes it, for ``core.licences``; a
+  symlink, a binary and a blob over the size cap are listed unread.
 
 History is read as the commit objects record it. Every command runs with replacement off
 (``--no-replace-objects`` and ``GIT_NO_REPLACE_OBJECTS``, the rule of ``styxx.sworn.GitTree``), with
@@ -1863,3 +1867,32 @@ def _pairs_written(repo: _Repo, base: str, head: str, exclude: Sequence[str] = (
         by[p]["declared"].append({k: d[k] for k in ("result", "verdict", "verdicts", "sources")})
     return {"pairs": [by[p] for p in sorted(by)], "findings": r["findings"], "notes": w["notes"],
             "excluded": sorted(set(w["excluded"]) | set(r["excluded"]))}
+
+
+# ---- the shipped surfaces (DESIGN 3.2(g), step B5) ---------------------------------------------------------
+
+def _surfaces(repo: _Repo, rev: str, profile: Optional[Dict[str, Any]] = None) -> List[Tuple[str, Optional[str]]]:
+    """The shipped surfaces at *rev*, for ``core.licences``: ``(path, text)`` for every blob of the
+    tree that *profile* (default ``core._SURFACE_PROFILE``, surface_lint's ``repo`` profile) selects
+    under ``core._surface_selected``, sorted by path. ``text`` is the blob decoded as
+    ``core._surface_text`` decodes it, or None for a symlink, a blob over ``core._SURFACE_MAX_BYTES``
+    (or this layer's cap) and a binary, each listed so the report can name what was not read.
+    Nothing in a working copy is read."""
+    c = repo.commit(rev)
+    prof = _core._SURFACE_PROFILE if profile is None else profile
+    tree = repo._tree(c)
+    cap = min(_core._SURFACE_MAX_BYTES, _MAX_BLOB_BYTES)
+    out: List[Tuple[str, Optional[str]]] = []
+    for path in sorted(p for p in repo.paths(c) if _core._surface_selected(p, prof)):
+        mode, _, oid = tree[path]
+        if mode == "120000":
+            out.append((path, None))
+            continue
+        head = repo._batch_check().header(oid)
+        if head is None:
+            raise _Refusal("GIT_UNAVAILABLE", f"blob {oid} ({path}) is not in the object store")
+        if head[2] > cap:
+            out.append((path, None))
+            continue
+        out.append((path, _core._surface_text(repo._batch_cat().contents(oid))))
+    return out
