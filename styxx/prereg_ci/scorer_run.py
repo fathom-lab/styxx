@@ -554,7 +554,8 @@ def _rescore_locked(prereg: Any, receipt_path: str, receipt: Any, files: Dict[st
     *prereg* is the PREREG's bytes (the decision in effect), *receipt_path* and *receipt* the
     receipt's repository-relative path and bytes, *files* the locked files' bytes at the seal
     (``_locked_files``). Returns every key ``rescore`` returns (form "locks", the decision digest,
-    ``code``, ``detail``, ``verdict``, ``gates``; the cover keys stay None) plus ``output`` (the JSON
+    ``code``, ``detail``, ``verdict``, ``gates``, ``withdraws``, the block's licences for the verdict read,
+    ``[]`` where it names none and None where no verdict was read; the cover keys stay None) plus ``output`` (the JSON
     the verdict was read from) and ``run``: the locked files and the receipt by path and sha256 of
     the raw bytes, the scorer's argv, the runtime's three fields, the network reading, what is
     watched, the exit, the reaches past the locks, the last stderr line and the ``{out}`` bytes.
@@ -592,6 +593,8 @@ def _rescore_locked(prereg: Any, receipt_path: str, receipt: Any, files: Dict[st
     reading = _core._run_reading(spec, raw)
     out.update(code=reading["code"], detail=reading["detail"], verdict=reading["verdict"], gates=reading["gates"],
                output=reading["output"])
+    if reading["code"] is None:                 # the block's licences for the outcome read (DESIGN 3.2(g), step B5)
+        out["withdraws"] = spec["withdraws"].get(reading["verdict"], [])
     out["run"] = {
         "locked": [{"path": p, "sha256": hashlib.sha256(files[p]).hexdigest()} for p in spec["locked"]],
         "receipt": {"path": receipt_path, "sha256": hashlib.sha256(receipt).hexdigest()},

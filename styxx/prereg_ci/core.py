@@ -6,7 +6,7 @@ it. Nothing in this module reads a disk, a clock, a process or a network; every 
 function of the bytes and objects it is handed, so a FAIL built on it is a function of the git
 objects those bytes came from.
 
-Public: ``rescore`` and ``compare``. The private names of ``styxx.protocol``,
+Public: ``rescore``, ``compare`` and ``licences``. The private names of ``styxx.protocol``,
 ``styxx.research_capsule`` and ``styxx.sworn`` it reuses are used here and nowhere else in the
 package; the conformance set under ``conformance/prereg_ci/`` pins what they do, vector by vector.
 
@@ -80,21 +80,51 @@ run left: ``SCORER_READS_UNLOCKED`` when the run recorded a reach past the locks
 did next, else ``SCORER_ERROR`` for a timeout, a nonzero exit, a record the run cannot read, a run that
 ended without its closing line, or output the contract does not read, else the verdict, which must be
 a declared outcome.
+
+Licences (DESIGN 3.2(g), 3.4 C8, 3.7; step B5). An outcome row of the gates form may carry
+``"withdraws": [{"id", "quote", "pattern"}]``, and the locks block's ``withdraws`` map holds the same
+lists per declared outcome: ``quote`` is the sentence as the PREREG writes it, ``pattern`` a
+case-insensitive regular expression over whitespace-collapsed text (every run of whitespace one
+space, with the curly apostrophes U+2018 and U+2019 read as the straight one, PLAN K15) that the
+author expects to match the wordings on shipped surfaces. ``_licence_specs`` reads them strictly, in
+table order, after the table itself reads as ``rescore`` reads it; ``rescore`` returns the landed
+row's list as the row writes it under ``withdraws``. ``licences`` scans the surfaces it is handed,
+pairs of a repository-relative path and the surface's text (None for one not read), with ``_scan``:
+a match is named by line and column in the text as ``Path.read_text`` would read it, and is
+withdrawn when a withdrawal (a form of "withdraw", or "not yet true of this instrument") lies whole
+within ``_WINDOW`` characters of it on either side, ``scripts/surface_lint.py``'s window rule
+re-implemented over compiled patterns, so the sentence that withdraws a claim may quote it. Once a
+receipt has landed on a row (``landed`` names its verdict), every match of that row's licences that
+is not withdrawn is ``LICENCE_WITHDRAWN`` (FAIL); before any receipt lands (``landed`` None) it is
+``LICENCE_PENDING`` (NOTE: the sentence stands on a verdict not yet given), and a licence whose
+pattern matches no surface at all is ``LICENCE_PATTERN_FINDS_NOTHING`` (FAIL, the lint's refusal: a
+licence that matches nothing before data licenses nothing, the analogue of a vacuous gate). Rows
+that did not land withdraw nothing, and every match is listed either way, so the author sees a
+pattern's coverage. Which files are surfaces is a profile: ``_SURFACE_PROFILE`` is a copy of
+surface_lint's ``repo`` profile (PLAN K14: ``scripts/`` is not in the wheel), a configured profile
+names globs (``*`` stays inside one directory, ``**`` crosses them), ``_surface_selected`` applies
+either and ``_surface_text`` decodes a blob as surface_lint does; the git layer's ``_surfaces``
+reads them at a commit. Licences match strings (DESIGN 7, risk 3): a pattern registered before
+data does not reach a wording written after it. The match is Python's ``re`` with no step limit, so
+a pattern is capped at ``_PATTERN_MAX_CHARS`` characters, refused when it can match the empty
+string, and nothing else guards its cost.
 """
 from __future__ import annotations
 
+import bisect
+import functools
 import hashlib
 import json
 import math
 import numbers
 import re
-from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
 from styxx import protocol as _protocol
 from styxx import research_capsule as _capsule
 from styxx import sworn as _sworn
 
-__all__ = ["rescore", "compare"]
+__all__ = ["rescore", "compare", "licences"]
 
 _GateSpecError = _protocol.GateSpecError
 
@@ -111,14 +141,21 @@ _COVER_UNCHECKABLE = "COVER_UNCHECKABLE"
 _SCORER_NOT_RUN = "SCORER_NOT_RUN"
 _SCORER_ERROR = "SCORER_ERROR"
 _SCORER_READS_UNLOCKED = "SCORER_READS_UNLOCKED"
+# licences (step B5): a landed row's sentence still on a surface; a sentence on a verdict not yet given; a
+# pattern that matches no surface before data (the lint's refusal)
+_LICENCE_WITHDRAWN = "LICENCE_WITHDRAWN"
+_LICENCE_PENDING = "LICENCE_PENDING"
+_LICENCE_PATTERN_FINDS_NOTHING = "LICENCE_PATTERN_FINDS_NOTHING"
 _KIND = {_NOT_GATED: "NOTE", _SCORER_REFUSES: "FAIL", _SMOKE_AMBIGUOUS: "INPUT",
          _DECISION_DIGEST_UNSEALED: "FAIL", _VERDICT_DIFFERS: "FAIL",
          _RECORDED_DIGEST_ABSENT: "NOTE", _RECORDED_VERDICT_ABSENT: "NOTE",
          _COVER_UNCHECKABLE: "UNCHECKABLE",
-         _SCORER_NOT_RUN: "UNCHECKABLE", _SCORER_ERROR: "FAIL", _SCORER_READS_UNLOCKED: "FAIL"}
-# every key of rescore's output, which the locked scorer run's output holds too
+         _SCORER_NOT_RUN: "UNCHECKABLE", _SCORER_ERROR: "FAIL", _SCORER_READS_UNLOCKED: "FAIL",
+         _LICENCE_WITHDRAWN: "FAIL", _LICENCE_PENDING: "NOTE", _LICENCE_PATTERN_FINDS_NOTHING: "FAIL"}
+# every key of rescore's output, which the locked scorer run's output holds too; "withdraws" (step B5) is the
+# landed row's licences as the row writes them, [] where the landed row (or a smoke run) withdraws nothing
 _RESCORE_KEYS = ("form", "code", "detail", "verdict", "gates", "row", "gates_sha256", "smoke", "smoke_verdict",
-                 "total", "holes", "unreachable_rows", "cover_code", "cover_detail")
+                 "total", "holes", "unreachable_rows", "cover_code", "cover_detail", "withdraws")
 # the seals manifest's codes (step B2), in a table of their own: _KIND is compare's and the cover's
 _MANIFEST_INVALID = "MANIFEST_INVALID"
 _MANIFEST_SEEN_MISSING = "MANIFEST_SEEN_MISSING"
@@ -361,7 +398,10 @@ def rescore(prereg: Any, receipt: Any, *, cover_budget: Optional[int] = _COVER_B
     ``detail`` (the refusal's text), ``verdict``, ``gates`` (gate name to fired), ``row`` (the
     index of the landed outcome row; None for a smoke receipt), ``gates_sha256`` (sha256 of the
     selected fence's text, the digest ``Experiment`` and ``score_frozen`` record), ``smoke``,
-    ``smoke_verdict``, and the cover of the table: ``total``, ``holes``, ``unreachable_rows``.
+    ``smoke_verdict``, ``withdraws`` (the landed row's ``withdraws`` list as the row writes it,
+    DESIGN 3.2(g); ``[]`` where the row has none or the receipt is a smoke run, which lands on no
+    row; None where no verdict was read; ``licences`` reads the list strictly, this function does
+    not), and the cover of the table: ``total``, ``holes``, ``unreachable_rows``.
     ``cover_code`` is None, or ``COVER_UNCHECKABLE`` (with ``cover_detail``) when the cover ran
     past *cover_budget* subcubes; the verdict is read either way. ``cover_budget=None`` runs the
     cover with no budget.
@@ -413,7 +453,7 @@ def rescore(prereg: Any, receipt: Any, *, cover_budget: Optional[int] = _COVER_B
             names, rows = _table(spec, smoke=True)
         except _GateSpecError as e:
             return refuse(str(e))
-        out.update(verdict=spec["smoke_verdict"], gates={}, smoke_verdict=spec["smoke_verdict"])
+        out.update(verdict=spec["smoke_verdict"], gates={}, smoke_verdict=spec["smoke_verdict"], withdraws=[])
     else:
         pointer = spec.get("receipt_pointer", "") if isinstance(spec, dict) else ""
         if not isinstance(pointer, str):
@@ -429,8 +469,9 @@ def rescore(prereg: Any, receipt: Any, *, cover_budget: Optional[int] = _COVER_B
             return refuse(f"{type(e).__name__}: {e}")
         names = list(spec["gates"])
         rows = [row["when"] for row in spec["outcomes"]]
+        landed = _landed(rows, scored["gates"])
         out.update(verdict=scored["verdict"], gates=scored["gates"], smoke_verdict=scored["smoke_verdict"],
-                   row=_landed(rows, scored["gates"]))
+                   row=landed, withdraws=spec["outcomes"][landed].get("withdraws", []))
     try:
         cover = _cover(names, rows, budget=cover_budget)
     except _CoverBudget as e:
@@ -1506,3 +1547,367 @@ def _run_reading(spec: Dict[str, Any], raw: Dict[str, Any]) -> Dict[str, Any]:
         return bad
     out.update(verdict=value, output=obj)
     return out
+
+
+# ---- licences and the shipped surfaces (DESIGN 3.2(g), 3.4 C8, 3.7; step B5) ---------------------------
+
+try:                                      # the regular expression parser: 3.11 and later name it re._parser
+    from re import _parser as _rx_parser
+except ImportError:                       # 3.9 and 3.10
+    import sre_parse as _rx_parser
+
+_LICENCE_KEYS = ("id", "quote", "pattern")
+_WINDOW = 300                             # characters either side of a match searched for a withdrawal
+# surface_lint's withdrawal words, pattern for pattern (tests/test_prereg_ci_licences.py pins the two equal)
+_WITHDRAWAL = re.compile(r"not\s+yet\s+true\s+of\s+this\s+instrument|(?<![a-z0-9_])withdr(?:aw|awn|aws|awal|awing|ew)"
+                         r"(?![a-z0-9_])", re.IGNORECASE)
+_PATTERN_MAX_CHARS = 1000
+_WS = re.compile(r"\s+")
+_CURLY = str.maketrans({"‘": "'", "’": "'"})
+# the shipped surfaces (DESIGN 3.2(g), PLAN K14): scripts/surface_lint.py's ``repo`` profile, copied, since
+# scripts/ is not in the wheel; tests/test_prereg_ci_licences.py pins the copy equal to the script's. A
+# profile is {include, exclude, exts}: globs over repository-relative POSIX paths, where ``*`` and ``?`` stay
+# inside one directory and ``**`` crosses them, and the suffixes a surface may carry.
+_SURFACE_EXTS = frozenset({".py", ".md", ".rst", ".txt", ".yml", ".yaml", ".toml", ".cfg", ".cff", ".js", ".mjs",
+                           ".cjs", ".ts", ".jsx", ".tsx", ".html", ".htm"})
+_SURFACE_PROFILE: Dict[str, Any] = {
+    "include": ["README.md", "action.yml", "pyproject.toml", "diffgate_action.py", ".pre-commit-hooks.yaml",
+                "SECURITY.md", "CONTRIBUTING.md", "CITATION.cff", "CODE_OF_CONDUCT.md", "POSITIONING.md",
+                "OATH_CONTRACT.md", "BOUNTY.md", "LEADERBOARD.md", "REPLICATIONS.md", "AUTOPILOT.md",
+                "PATENTS.md", "styxx/**", "sworn/**", "integrations/**", "hooks/**", "docs/**", "web/**",
+                "packages/**"],
+    "exclude": ["web/gate/differential/**"],
+    "exts": _SURFACE_EXTS,
+}
+_SURFACE_PRUNE = frozenset({".git", "node_modules", "__pycache__", "dist", "build", ".netlify", ".venv", "venv"})
+_SURFACE_MAX_BYTES = 5_000_000            # a larger surface is listed as skipped, never read (surface_lint's cap)
+
+
+def _matches_empty(pattern: str, rx: "re.Pattern[str]") -> bool:
+    """Whether *pattern* can match the empty string: its parsed minimum width is 0 (a lookaround or an
+    optional piece standing alone), which ``rx.fullmatch("")`` alone misses for a lookahead."""
+    try:
+        return _rx_parser.parse(pattern, rx.flags).getwidth()[0] == 0
+    except Exception:                         # noqa: BLE001 - the parser's own refusal falls back to a probe
+        return rx.fullmatch("") is not None
+
+
+def _licence(lic: Any, row: int, verdict: str, n: int, ids: Dict[str, int]) -> Dict[str, Any]:
+    """One licence read strictly (``_licence_specs``), or a ``GateSpecError``."""
+    where = f"licence {n} of outcome row {row} ({verdict})"
+    if not isinstance(lic, dict):
+        raise _GateSpecError(f"{where} is not a JSON object (it is a {type(lic).__name__}); a licence is "
+                             f"{{\"id\", \"quote\", \"pattern\"}}")
+    extra = sorted(k for k in lic if k not in _LICENCE_KEYS)
+    if extra:
+        raise _GateSpecError(f"{where} holds keys the format does not name: {extra}; a licence names id, quote and "
+                             f"pattern and nothing else")
+    for key in _LICENCE_KEYS:
+        if key not in lic:
+            raise _GateSpecError(f"{where} lacks {key!r}; a licence names id, quote and pattern")
+    lid, quote, pattern = lic["id"], lic["quote"], lic["pattern"]
+    if not isinstance(lid, str) or not _LINE_ID.fullmatch(lid):
+        raise _GateSpecError(f"{where}: 'id' {lid!r} is not an id (a letter or digit, then up to 63 letters, digits, "
+                             f"'.', '_' or '-'), the name a report prints for the licence")
+    if lid in ids:
+        raise _GateSpecError(f"the licence id {lid!r} is declared twice (outcome rows {ids[lid]} and {row}); each "
+                             f"licence is named once in a decision")
+    if not isinstance(quote, str) or not quote.strip():
+        raise _GateSpecError(f"{where}: 'quote' {quote!r} is not a non-empty string; it is the sentence as the "
+                             f"PREREG writes it")
+    if not isinstance(pattern, str) or not pattern.strip():
+        raise _GateSpecError(f"{where}: 'pattern' {pattern!r} is not a non-empty string; it is a case-insensitive "
+                             f"regular expression over whitespace-collapsed text")
+    if len(pattern) > _PATTERN_MAX_CHARS:
+        raise _GateSpecError(f"{where}: 'pattern' is {len(pattern)} characters long, over the {_PATTERN_MAX_CHARS} "
+                             f"the scan reads")
+    try:
+        rx = re.compile(pattern, re.IGNORECASE)
+    except re.error as e:
+        raise _GateSpecError(f"{where}: 'pattern' {pattern!r} does not compile: {e}")
+    if _matches_empty(pattern, rx):
+        raise _GateSpecError(f"{where}: 'pattern' {pattern!r} can match the empty string, so it would match every "
+                             f"surface and license nothing")
+    ids[lid] = row
+    return {"id": lid, "row": row, "verdict": verdict, "quote": quote, "pattern": pattern, "rx": rx}
+
+
+def _licence_table(decision: Dict[str, Any]) -> Tuple[List[Dict[str, Any]], Set[str]]:
+    """``_licence_specs``'s list and the verdicts the decision declares (every row's, and a gates
+    table's ``smoke_verdict``), or ``([], set())`` for a PREREG with no decision."""
+    form = decision["form"]
+    if form is None:
+        return [], set()
+    if form == "locks":
+        spec = _locks(decision["block"])
+        rows = [(i, v, spec["withdraws"].get(v, [])) for i, v in enumerate(spec["outcomes"])]
+        declared = set(spec["outcomes"])
+    else:
+        try:
+            spec = _capsule._strict_json(decision["block"])
+        except (ValueError, UnicodeDecodeError) as e:
+            raise _GateSpecError(f"gates block is not valid strict JSON: {e}")
+        _table(spec, smoke=False)
+        rows = [(i, r["verdict"], r.get("withdraws", [])) for i, r in enumerate(spec["outcomes"])]
+        declared = {v for _, v, _ in rows}
+        if isinstance(spec["smoke_verdict"], str):
+            declared.add(spec["smoke_verdict"])
+    specs: List[Dict[str, Any]] = []
+    ids: Dict[str, int] = {}
+    for i, verdict, lics in rows:
+        if not isinstance(lics, list):
+            raise _GateSpecError(f"outcome row {i} ({verdict}): 'withdraws' is a list of licences, not a "
+                                 f"{type(lics).__name__}")
+        for n, lic in enumerate(lics):
+            specs.append(_licence(lic, i, verdict, n, ids))
+    return specs, declared
+
+
+def _licence_specs(decision: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """The licences a decision (``_decision``'s reading) declares, DESIGN 3.2(g), read strictly in
+    table order: each ``{id, row, verdict, quote, pattern, rx}``, ``rx`` the pattern compiled
+    case-insensitively; a gates row's ``withdraws`` list, or the locks block's map read per declared
+    outcome. The table reads before any licence does, as ``rescore`` reads it (a refusal of ``_table``
+    or ``_locks`` comes ahead of a licence's). A licence is refused when it is not an object of exactly id, quote
+    and pattern, its id is not an id or is declared twice, its quote or pattern is empty or not a
+    string, or its pattern is over ``_PATTERN_MAX_CHARS``, does not compile, or can match the empty
+    string (``GateSpecError``). ``[]`` for a PREREG with no decision."""
+    return _licence_table(decision)[0]
+
+
+class _Collapsed:
+    """A surface's text two ways: ``source`` is the text as ``Path.read_text`` would read it (CRLF and
+    a lone CR as LF) with the curly apostrophes U+2018 and U+2019 read as the straight one; ``text`` is
+    ``source`` with every run of whitespace one space, the string the patterns run over; ``at(i)`` is
+    the source position of collapsed position *i* (a run's start for its one space; ``len(source)`` for
+    ``len(text)``)."""
+    __slots__ = ("text", "source", "_c", "_s")
+
+    def __init__(self, raw: str):
+        source = raw.replace("\r\n", "\n").replace("\r", "\n").translate(_CURLY)
+        pieces: List[str] = []
+        c: List[int] = []
+        s: List[int] = []
+        pos = n = 0
+        for m in _WS.finditer(source):
+            if m.start() > pos:
+                pieces.append(source[pos:m.start()])
+                c.append(n)
+                s.append(pos)
+                n += m.start() - pos
+            pieces.append(" ")
+            c.append(n)
+            s.append(m.start())
+            n += 1
+            pos = m.end()
+        if pos < len(source):
+            pieces.append(source[pos:])
+            c.append(n)
+            s.append(pos)
+            n += len(source) - pos
+        c.append(n)
+        s.append(len(source))
+        self.text, self.source, self._c, self._s = "".join(pieces), source, c, s
+
+    def at(self, i: int) -> int:
+        k = bisect.bisect_right(self._c, i) - 1
+        return self._s[k] + (i - self._c[k])
+
+
+def _collapse(raw: str) -> _Collapsed:
+    return _Collapsed(raw)
+
+
+def _line_col(source: str, pos: int) -> Tuple[int, int]:
+    """The 1-based line and column of *pos* in *source*."""
+    return source.count("\n", 0, pos) + 1, pos - source.rfind("\n", 0, pos)
+
+
+def _scan(text: str, specs: Sequence[Dict[str, Any]], path: str) -> List[Dict[str, Any]]:
+    """Every match of every licence in *specs* on one surface, sorted by line and column (then
+    licence order): ``{id, path, line, col, text, withdrawn}``. ``text`` is the matched text as the
+    collapsed string holds it; line and column name the match's start in the source text. A match
+    is ``withdrawn`` when a withdrawal (``_WITHDRAWAL``: "not yet true of this instrument", or a form
+    of "withdraw") lies whole within ``_WINDOW`` characters of it on either side in the source text,
+    ``scripts/surface_lint.py``'s window rule re-implemented over compiled patterns, so the sentence
+    that withdraws a claim may quote it (surface_lint searches the window with ``pos`` and
+    ``endpos``, which reads a withdrawal cut by the window's edge as one; here it lies whole inside).
+    A match of no characters, which a pattern may give at some positions and not at the empty
+    string, is passed over."""
+    c = _collapse(text)
+    spans = [(m.start(), m.end()) for m in _WITHDRAWAL.finditer(c.source)]
+    starts = [s for s, _ in spans]
+    out: List[Tuple[Tuple[int, int, int], Dict[str, Any]]] = []
+    for k, spec in enumerate(specs):
+        for m in spec["rx"].finditer(c.text):
+            if m.end() == m.start():
+                continue
+            s0, s1 = c.at(m.start()), c.at(m.end())
+            lo, hi = s0 - _WINDOW, s1 + _WINDOW
+            withdrawn = False
+            i = bisect.bisect_left(starts, lo)
+            while i < len(spans) and spans[i][0] <= hi:
+                if spans[i][1] <= hi:
+                    withdrawn = True
+                    break
+                i += 1
+            line, col = _line_col(c.source, s0)
+            out.append(((line, col, k), {"id": spec["id"], "path": path, "line": line, "col": col,
+                                          "text": m.group(0), "withdrawn": withdrawn}))
+    return [m for _, m in sorted(out, key=lambda x: x[0])]
+
+
+def _licence_finding(code: str, detail: str, spec: Optional[Dict[str, Any]] = None,
+                     match: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    return {"code": code, "kind": _KIND[code], "detail": detail,
+            "licence": spec["id"] if spec else None, "row": spec["row"] if spec else None,
+            "verdict": spec["verdict"] if spec else None,
+            "path": match["path"] if match else None, "line": match["line"] if match else None,
+            "col": match["col"] if match else None}
+
+
+def licences(prereg: Any, surfaces: Iterable[Any], *, landed: Optional[str] = None) -> Dict[str, Any]:
+    """Read the sentences a decision's rows withdraw against the shipped surfaces (DESIGN 3.2(g),
+    3.4 C8, 3.7).
+
+    *prereg* is the PREREG's bytes (a blob) or text. *surfaces* is an iterable of ``(path, text)``
+    pairs, each a repository-relative path and the surface's text (``str``; the git layer's
+    ``_surfaces`` decodes a blob as surface_lint does), or None for a surface not read (binary, a
+    symlink, over the size cap), which is listed under ``skipped``; another shape is a TypeError.
+    *landed* is the verdict the receipt landed on (``rescore``'s ``verdict``; the smoke verdict for a
+    smoke run), or None before any receipt has landed (the reading ``lint`` makes before data); a
+    verdict the decision does not declare is a ValueError.
+
+    Returns a dict with every key present: ``form``, ``gates_sha256``, ``code`` and ``detail`` (the
+    decision's own reading where there are no licences to read: ``NOT_GATED``, or ``SCORER_REFUSES``
+    for a fence the scanner refuses, a table ``rescore`` refuses or a licence the format does not
+    read, each as its one finding), ``landed``, ``surfaces`` (how many were read), ``skipped``,
+    ``licences`` (one entry per licence in table order: ``id``, ``row``, ``verdict``, ``quote``,
+    ``pattern``, ``surfaces``, the paths with a match, and ``matches``, each as ``_scan`` gives it,
+    sorted by path, line and column, the withdrawn ones included, so the author sees a pattern's
+    coverage), and ``findings``, each ``{code, kind, detail, licence, row, verdict, path, line, col}``
+    in licence order, then by path, line and column:
+
+    * once a receipt has landed on a row, every match of that row's licences with no withdrawal in
+      window is ``LICENCE_WITHDRAWN`` (FAIL), naming the file, line and column and the row; the
+      other rows' licences withdraw nothing, whatever they match;
+    * before any receipt lands, such a match is ``LICENCE_PENDING`` (NOTE: the sentence stands on a
+      verdict not yet given), and a licence whose pattern matches no surface at all is
+      ``LICENCE_PATTERN_FINDS_NOTHING`` (FAIL: a licence that matches nothing before data licenses
+      nothing, the analogue of a vacuous gate).
+
+    Licences match strings (DESIGN 7, risk 3): a pattern registered before data does not reach a
+    wording written after it, and the report prints that as the boundary (C9), beside this reading.
+    """
+    out: Dict[str, Any] = {"form": None, "gates_sha256": None, "code": None, "detail": None, "landed": landed,
+                           "surfaces": 0, "skipped": [], "licences": [], "findings": []}
+    decision = _decision(prereg)
+    out.update(form=decision["form"], gates_sha256=decision["gates_sha256"])
+    if decision["form"] is None:
+        out.update(code=decision["code"], detail=decision["detail"])
+        out["findings"] = [_licence_finding(decision["code"], decision["detail"] or "")]
+        return out
+    try:
+        specs, declared = _licence_table(decision)
+    except _GateSpecError as e:
+        out.update(code=_SCORER_REFUSES, detail=str(e))
+        out["findings"] = [_licence_finding(_SCORER_REFUSES, str(e))]
+        return out
+    if landed is not None and landed not in declared:
+        raise ValueError(f"landed {landed!r} is not a verdict the decision declares ({sorted(declared)})")
+    by_id: Dict[str, List[Dict[str, Any]]] = {s["id"]: [] for s in specs}
+    skipped: List[str] = []
+    read = 0
+    for item in surfaces:
+        if not isinstance(item, (tuple, list)) or len(item) != 2 or not isinstance(item[0], str):
+            raise TypeError(f"a surface is a (path, text) pair with a str path, not {item!r:.80}")
+        path, text = item
+        if text is None:
+            skipped.append(path)
+            continue
+        if not isinstance(text, str):
+            raise TypeError(f"a surface's text is str (a blob decoded as the git layer decodes it) or None, not "
+                            f"{type(text).__name__}: {path}")
+        read += 1
+        if specs:
+            for m in _scan(text, specs, path):
+                by_id[m["id"]].append(m)
+    out.update(surfaces=read, skipped=skipped)
+    for spec in specs:
+        matches = sorted(by_id[spec["id"]], key=lambda m: (m["path"], m["line"], m["col"]))
+        out["licences"].append({"id": spec["id"], "row": spec["row"], "verdict": spec["verdict"],
+                                "quote": spec["quote"], "pattern": spec["pattern"],
+                                "surfaces": sorted({m["path"] for m in matches}), "matches": matches})
+        standing = [m for m in matches if not m["withdrawn"]]
+        if landed is None:
+            for m in standing:
+                out["findings"].append(_licence_finding(_LICENCE_PENDING, (
+                    f"{m['path']}:{m['line']}:{m['col']} reads {m['text']!r}, a wording of licence {spec['id']} "
+                    f"({spec['quote']!r}), which outcome row {spec['row']} ({spec['verdict']}) withdraws once a "
+                    f"receipt lands on it; no receipt has landed, so the sentence stands on a verdict not yet "
+                    f"given"), spec, m))
+            if not matches:
+                out["findings"].append(_licence_finding(_LICENCE_PATTERN_FINDS_NOTHING, (
+                    f"licence {spec['id']} ({spec['quote']!r}): its pattern {spec['pattern']!r} matches none of the "
+                    f"{read} surfaces read; a licence that matches nothing before data licenses nothing, the "
+                    f"analogue of a vacuous gate (DESIGN 3.7)"), spec))
+        elif spec["verdict"] == landed:
+            for m in standing:
+                out["findings"].append(_licence_finding(_LICENCE_WITHDRAWN, (
+                    f"{m['path']}:{m['line']}:{m['col']} reads {m['text']!r}, a wording of licence {spec['id']} "
+                    f"({spec['quote']!r}), which the landed outcome row {spec['row']} ({spec['verdict']}) "
+                    f"withdraws, and no withdrawal lies within {_WINDOW} characters of it (DESIGN 3.4 C8)"),
+                    spec, m))
+    return out
+
+
+@functools.lru_cache(maxsize=256)
+def _glob(pattern: str) -> "re.Pattern[str]":
+    """*pattern* as a regular expression over a POSIX path: ``**`` matches across ``/`` (``/**/`` also
+    matches no directory at all), ``*`` and ``?`` within one segment, every other character itself."""
+    out: List[str] = []
+    i = 0
+    while i < len(pattern):
+        if pattern.startswith("/**/", i):
+            out.append("/(?:.*/)?")
+            i += 4
+        elif pattern.startswith("**", i):
+            out.append(".*")
+            i += 2
+        elif pattern[i] == "*":
+            out.append("[^/]*")
+            i += 1
+        elif pattern[i] == "?":
+            out.append("[^/]")
+            i += 1
+        else:
+            out.append(re.escape(pattern[i]))
+            i += 1
+    return re.compile("".join(out))
+
+
+def _surface_selected(path: str, profile: Dict[str, Any]) -> bool:
+    """Whether *path* (repository-relative, POSIX) is a surface under *profile*, surface_lint's rule:
+    an include glob matches, no exclude glob does, no directory of it is pruned (a build or cache
+    directory), and its suffix, whatever its case, is one the profile reads, or it has none (an
+    extensionless script such as a git hook; a name whose only dots lead, like ``.hidden``, has none)."""
+    if not any(_glob(p).fullmatch(path) for p in profile["include"]):
+        return False
+    if any(_glob(p).fullmatch(path) for p in profile["exclude"]):
+        return False
+    parts = path.split("/")
+    if any(part in _SURFACE_PRUNE for part in parts[:-1]):
+        return False
+    stem = parts[-1].lstrip(".")
+    if "." in stem:
+        return ("." + stem.rsplit(".", 1)[1]).lower() in profile["exts"]
+    return True
+
+
+def _surface_text(data: bytes) -> Optional[str]:
+    """A blob as surface_lint reads it: None for a binary (a NUL byte in its head), else UTF-8 with
+    the bytes it cannot decode replaced."""
+    data = bytes(data)
+    if b"\x00" in data[:8192]:
+        return None
+    return data.decode("utf-8", errors="replace")
