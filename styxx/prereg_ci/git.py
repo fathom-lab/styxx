@@ -62,7 +62,8 @@ _KIND = {
     "NOT_A_BLOB": "INPUT", "PATH_UNREADABLE": "INPUT", "NO_MERGE_BASE": "INPUT",
     "PREREG_ABSENT": "INPUT", "PREREG_AMBIGUOUS": "INPUT", "RECEIPT_ABSENT": "INPUT", "RECEIPT_AMBIGUOUS": "INPUT",
     "RECORDED_DIGEST_AMBIGUOUS": "INPUT",
-    "RECEIPT_UNREADABLE": "NOTE", "RECEIPT_REWRITTEN": "FAIL", "DECISION_EDITED_AFTER_SEAL": "FAIL",
+    "RECEIPT_UNREADABLE": "NOTE", "RECEIPT_NOT_A_FILE": "NOTE",
+    "RECEIPT_REWRITTEN": "FAIL", "DECISION_EDITED_AFTER_SEAL": "FAIL",
     "PROSE_AMENDED_IN_PLACE": "NOTE",
 }
 
@@ -651,13 +652,24 @@ def _excluded(path: str, exclude: Sequence[str]) -> bool:
     return any(path.startswith(x) for x in exclude)
 
 
+def _not_a_file(e: _Refusal, path: str, rev: str) -> Dict[str, Any]:
+    """The NOTE for a ``.json`` path that is a symlink or a submodule: it holds no receipt this
+    layer reads, and it does not stop the check (C0 skips one at the base the same way). Any other
+    refusal is raised again."""
+    if e.code != "NOT_A_BLOB":
+        raise e
+    return _Refusal("RECEIPT_NOT_A_FILE", f"{path} at {rev[:12]} is not a regular file, so no receipt is read "
+                                          f"from it").finding(path)
+
+
 def _records(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> List[Dict[str, Any]]:
     """Every committed record naming a gates digest at *rev* (R1's rule): a JSON file whose
     top-level object holds ``gates_sha256``, or one entry per ``protocol`` item holding it. Each is
     ``{record, pointer, own, dir, prereg, result, prereg_commit, recorded}``, with ``recorded`` the
     ``verdict`` (``frozen_verdict`` in a protocol entry), ``gates`` and ``gates_sha256`` it states.
-    A file that holds the key and is not JSON is listed with a ``refusal``. Paths under *exclude*
-    are not read."""
+    A file that holds the key and is not JSON is listed with a ``refusal`` (a NOTE); git grep reads
+    regular files only, and a path that read as anything else would be a NOTE too. Paths under
+    *exclude* are not read."""
     c = repo.commit(rev)
     out: List[Dict[str, Any]] = []
     for path in repo.grep(c, _NEEDLE, "*.json"):
@@ -666,6 +678,9 @@ def _records(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> List[D
         base = {"record": path, "dir": posixpath.dirname(path)}
         try:
             d = _json(repo.read(c, path) or b"")
+        except _Refusal as e:
+            out.append({**base, "pointer": "", "own": True, "refusal": _not_a_file(e, path, c)})
+            continue
         except (UnicodeDecodeError, ValueError) as e:
             out.append({**base, "pointer": "", "own": True,
                         "refusal": _Refusal("RECEIPT_UNREADABLE", f"{path} is not JSON: {e}").finding(path)})
@@ -703,7 +718,8 @@ def _pairs(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> List[Dic
 
 def _sidecars(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> Dict[str, Any]:
     """Every ``protocol`` entry holding a gates digest in every ``*.seal.json`` of *rev*'s tree,
-    by the receipt its ``result`` resolves to. ``{by, ambiguous, unreadable}``."""
+    by the receipt its ``result`` resolves to. ``{by, ambiguous, unreadable, not_files}``: the
+    sidecars that are not JSON, and the symlinks and submodules, are listed and not read."""
     c = repo.commit(rev)
     key = ("sidecars", c, tuple(exclude))
     if key not in repo._memo:
@@ -711,11 +727,16 @@ def _sidecars(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> Dict[
         by: Dict[str, List[Dict[str, Any]]] = {}
         ambiguous: List[Tuple[Tuple[str, ...], Dict[str, Any]]] = []
         unreadable: List[str] = []
+        not_files: List[str] = []
         for path in repo.paths(c):
             if not path.endswith(".seal.json") or _excluded(path, exclude):
                 continue
             try:
                 d = _json(repo.read(c, path) or b"")
+            except _Refusal as e:
+                _not_a_file(e, path, c)
+                not_files.append(path)
+                continue
             except (UnicodeDecodeError, ValueError):
                 unreadable.append(path)
                 continue
@@ -732,7 +753,7 @@ def _sidecars(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> Dict[
                         ambiguous.append((e.candidates, rec))
                     continue
                 by.setdefault(target, []).append(rec)
-        repo._memo[key] = {"by": by, "ambiguous": ambiguous, "unreadable": unreadable}
+        repo._memo[key] = {"by": by, "ambiguous": ambiguous, "unreadable": unreadable, "not_files": not_files}
     return repo._memo[key]
 
 
@@ -809,8 +830,9 @@ def _receipts_written(repo: _Repo, base: str, head: str,
     new bytes are still scored). Each is ``{path, status, old, receipt_commit, receipt}``;
     ``receipt_commit`` is R, the oldest commit in merge_base..HEAD at which the path holds a receipt,
     so a path used before the pull request does not move R outside it. A changed ``.json`` that is
-    not JSON at HEAD is a ``RECEIPT_UNREADABLE`` NOTE, since no receipt can be read from it.
-    Returns ``{receipts, notes}``."""
+    not JSON at HEAD is a ``RECEIPT_UNREADABLE`` NOTE, since no receipt can be read from it; one
+    that is a symlink or a submodule at HEAD is a ``RECEIPT_NOT_A_FILE`` NOTE. Returns
+    ``{receipts, notes}``."""
     ch = repo.changes(base, head)
     mb, h = ch["merge_base"], ch["head"]
     receipts, notes = [], []
@@ -820,6 +842,9 @@ def _receipts_written(repo: _Repo, base: str, head: str,
             continue
         try:
             obj = _json(repo.read(h, path) or b"")
+        except _Refusal as e:
+            notes.append(_not_a_file(e, path, h))
+            continue
         except (UnicodeDecodeError, ValueError) as e:
             notes.append(_Refusal("RECEIPT_UNREADABLE", f"{path} is not JSON: {e}").finding(path))
             continue
@@ -847,6 +872,9 @@ def _receipts_rewritten(repo: _Repo, base: str, head: str, policy: str = "fail",
             continue
         try:
             obj = _json(repo.read(mb, old) or b"")
+        except _Refusal as e:
+            _not_a_file(e, old, mb)
+            continue                                # a symlink or a submodule at the base held no receipt
         except (UnicodeDecodeError, ValueError):
             continue                                # no receipt was ever read from bytes that are not JSON
         if _receipt_kind(obj) is None:

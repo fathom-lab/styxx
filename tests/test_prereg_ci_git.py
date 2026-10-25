@@ -413,6 +413,50 @@ def test_a_symlink_and_an_oversized_blob_are_refused(tmp_path, monkeypatch):
         assert (e.value.code, e.value.kind) == ("BLOB_TOO_LARGE", "UNCHECKABLE")
 
 
+def test_a_symlinked_json_is_a_note_and_does_not_stop_the_check(tmp_path):
+    """Review case 3: a pull request that moves a ``latest.json`` symlink, adds a symlinked
+    ``best.json`` and a symlinked sidecar, beside a real receipt. A symlink holds no receipt: the
+    added ones are RECEIPT_NOT_A_FILE NOTEs, the moved one was no receipt at the base, the sidecar
+    is listed and not read, and a symlink whose target text holds the needle is no record (git grep
+    reads regular files only). The links are committed through the index, so the box's symlink
+    rights do not matter."""
+    g = Git(tmp_path / "links")
+
+    def link(path: str, target: str) -> None:
+        oid = subprocess.run(["git", "hash-object", "-w", "--stdin"], cwd=str(g.root), input=target.encode(),
+                             capture_output=True, check=True).stdout.decode().strip()
+        g("update-index", "--add", "--cacheinfo", f"120000,{oid},{path}")
+
+    g.write(P, prereg(0.5))
+    g.write("p/run1.json", json.dumps({"rows": [1]}) + "\n")
+    g.write("p/run2.json", json.dumps({"rows": [2]}) + "\n")
+    g("add", "-A")
+    link("p/latest.json", "run1.json")
+    g("commit", "-q", "-m", "data and a latest pointer")
+    g("switch", "-q", "-c", "pr")
+    g.write("p/receipt_a.json", receipt())
+    g("add", "p/receipt_a.json")
+    link("p/latest.json", "run2.json")
+    link("p/best.json", "run2.json")
+    link("p/x.seal.json", "run2.json")
+    link("p/needle.json", '"gates_sha256"')
+    g("commit", "-q", "-m", "move the pointer; add pointers and a receipt")
+    head = g("rev-parse", "HEAD")
+    with G._Repo(g.root) as repo:
+        assert G._receipts_rewritten(repo, "main", "pr") == []
+        written = G._receipts_written(repo, "main", "pr")
+        assert [a["path"] for a in written["receipts"]] == ["p/receipt_a.json"]
+        assert [(n["path"], n["code"], n["kind"]) for n in written["notes"]] == [
+            ("p/best.json", "RECEIPT_NOT_A_FILE", "NOTE"), ("p/latest.json", "RECEIPT_NOT_A_FILE", "NOTE"),
+            ("p/needle.json", "RECEIPT_NOT_A_FILE", "NOTE"), ("p/x.seal.json", "RECEIPT_NOT_A_FILE", "NOTE")]
+        side = G._sidecars(repo, head)
+        assert (side["not_files"], side["by"]) == (["p/x.seal.json"], {})
+        assert G._records(repo, head) == []
+        with pytest.raises(G._Refusal) as e:
+            repo.read(head, "p/best.json")
+        assert e.value.code == "NOT_A_BLOB", "a named read still refuses a symlink"
+
+
 # ---- refusals the history itself earns ------------------------------------------------------------------
 
 def test_a_shallow_clone_is_uncheckable_for_history_and_readable_for_bytes(merged, tmp_path):
