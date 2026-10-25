@@ -1,0 +1,2 @@
+{"item_id": "PROBE", "panel": "L", "seat": 1, "raw_sha256": "5356465b292e7806794c81486df2893cc78b391ba2db4ebcb3505fbd7247d066", "ts": "2026-10-24T14:14:03Z", "error": null, "transport_check": true}
+{"item_id": "L-0001", "panel": "L", "seat": 1, "raw_sha256": "80365ea196b0b74bdcfbcfae93105061d2bcfaa56331ef9d4f3d59236dab189a", "ts": "2026-10-24T14:14:03Z", "error": null, "dry_run": false, "transport_check": true}
