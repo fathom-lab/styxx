@@ -833,13 +833,14 @@ def test_a_receipt_rewritten_under_the_note_policy_is_still_paired(tmp_path):
 
 
 def test_r_is_read_inside_the_pull_request(tmp_path):
-    """Review case 8, and R's rule: the receipt path held another file before the seal and was
-    deleted; the pull request writes plain JSON there, then a receipt, then edits the receipt. R is
-    the oldest commit of the pull request at which the path holds a receipt: not the old file's add
-    commit (which would put R before the seal), not the plain JSON, not the later edit."""
+    """Review case 8, and R's rule: the receipt path held an old receipt (of another plan) before
+    the seal and was deleted; the pull request writes plain JSON there, then a receipt, then edits
+    the receipt. R is the oldest commit of the pull request at which the path holds a receipt: not
+    the old receipt's commit outside it (which would put R before the seal), not the plain JSON,
+    not the later edit."""
     g = Git(tmp_path / "reused")
-    g.write("p/receipt_a.json", json.dumps({"rows": [0]}) + "\n")
-    old = g.commit("an old file at the receipt path")
+    g.write("p/receipt_a.json", receipt("PREREG_old.md"))
+    old = g.commit("an old receipt at the path")
     (g.root / "p/receipt_a.json").unlink()
     g.commit("drop it")
     g.write(P, prereg(0.5))
