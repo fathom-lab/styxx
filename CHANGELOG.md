@@ -400,6 +400,157 @@ file or charon line is touched.
   one-sided #178 decides again on the truth world, the two fuzz sets and 85 of the 88 committed ones is false under a
   bound that counts those gaps; the other 3 were read by hand.
 
+## [Unreleased] — PREREG: darkflobi under the gate: the rule the measurement is counted under and the 28-day preregistration, frozen before any exit is wired
+
+**`papers/darkflobi-gate/PREREG_darkflobi_gate_2026_10_23.md`, `RULES_darkflobi_gate_2026_10_23.md`, `README.md`,
+`lock_hashes.py`, `scan_gates.py`, `keys/sworn_measurement_darkflobi_gate_canary_seed.sha256`;
+`tests/test_darkflobi_gate_prereg.py`.** The lab's agent, darkflobi (a clawdbot
+gateway on the lab's box, Telegram today), is to post for 28 days with every message to a public destination passed
+through a gate that checks the numerals and spans its author bound against committed bytes at a pinned commit and
+the text against the surface lint's withdrawn wordings, and marks or refuses what does not bind; the plan is
+`PLAN_darkflobi_under_the_gate.md` of 2026-10-23 in the lab's working tree, outside this repository, with its
+25-line decision sheet. This folder is the part of it that must exist before the count the measurement uses.
+
+- **The rule file** freezes the definitions the counting rests on: what counts as a claim (the sworn measurement
+  panel's question with one clause adapted for posts, said so), what counts as bound (a sworn span HELD, or a certify
+  numeral VERIFIED against a receipts file whose every leaf carries `read_from` in one of two forms: a committed object
+  at the pin or one of its ancestors, read and compared four ways, or the post's own count; a leaf that fails is
+  dropped and its numeral reads unbound, and a drop alone refuses nothing, a departure from the decision sheet's
+  default for a leaf that names a committed value other than the printed one, named as such and owed to the sheet),
+  what counts as a public
+  destination (a keyed hash of the chat id under a salt that never leaves the box; the operator's DM, the anchor
+  channel and the canary chat named by their hashes and excluded from the population), the fourteen claim shapes of the
+  2026-10-22 post with the five the instruments read, the media rule (absent: a file or an image to a public destination
+  is refused until a rule exists, and the line says the body was not read), the daily anchor's fixed form and the census
+  rule for duplicate, edited, late, mismatched, conflicting and missing anchors, the refusal reason codes as the gate,
+  its plugin and the plugin's helper spell them, by class (truth, form, spoof, lint) with the unavailability and ledger
+  codes beside them,
+  the selector's patterns transcribed from the lock-hashed selector that is their source, the gateway's own fixed
+  strings by text and `dist/` line, and the census normalisation rule as the census code applies it, with the
+  fallbacks for the fields the gate does not write (the agent by transcript folder, chunks joined by time) frozen
+  before any count. Nothing in it reads what a sentence says.
+- **The preregistration** names the population by destination, the three cells (pre-gate, shadow, live; never pooled),
+  the result dict, the gates block the measurement design wrote (sha256
+  `4ed27cb98f72e69f3f4a5acbf83ac62b0d54e2048001052e50600f1068dbeba6`, 6,354 bytes: ten gates, eleven rows, every one
+  of the 1,024 assignments reaching a row), the canaries (one each of constructions A to D a day under the harness's
+  cadence `s7`, 112 over the window, so one miss clears the 0.95 Wilson bar and two do not; a catch is a refusal for
+  the planted reason; E and F two a week, reported; the seed sealed on the box and its salted
+  digest committed beside the PREREG), the two-family panel and its disclosure (one
+  family is the agent's own), the census, the re-derivation and the reconciliation that check the gate itself, one
+  printable paragraph per verdict as counts under the frozen rule, the lock-hash table of the gate's files as they
+  stood on the box when it was written (a piece not yet landed is said so, its hash appended under §15 before the
+  merge), and the order of operations: the pull request's opened-at is the freeze anchor, the merge the second, each
+  weekly ledger merge a later one. A provisional pre-gate count was made on the box before the pull request opens;
+  the PREREG says when, by which piece, under which selector, and which text was written after it, and the count that
+  goes onto the decision sheet is made after the pull request opens. The merge-time and weekly lock check fails while
+  a bytecode cache sits beside the gate's sources, a route the lock rows over source bytes do not see.
+- **The tests** pin the block's digest and byte count, the one-fence and no-duplicate-key rules, totality and
+  reachability with the row counts, the eleven verdicts through `styxx.protocol.Experiment` with the power-basis and
+  non-vacuity refusals on, the Wilson numbers the power bases quote, the rule file's hash as the PREREG prints it, the
+  lock table's form, the snapshot row against the pin's own blobs, the selector's cases, the refusal codes the
+  PREREG counts, the canary cadence and catch rule, the census rule's end forms, the helper scripts on a synthetic tree (the walker never lists a sealed folder and refuses a path it
+  cannot read), the lint over the folder's documents, and that none of the files prints the words the lab never
+  prints; named to the box, they also read the selector, the codes, the ledger kinds, the census rule, the canary plan and
+  the lock rows against the files there. They run offline, on CPU, and skip the `Experiment` construction where
+  the PREREG is not committed, because the protocol refuses a draft on disk.
+- **What this entry does not say.** No exit is wired, no `dist/` file is patched, no plugin is installed, no message is
+  sent and no gate runs by this change; those are the operator's sitting after the merge, and the plan prints "not
+  run" if the sheet is unsigned by 2026-11-05. Nothing here says a post is true, and the bars are the sworn measurement
+  design's, transcribed and unsigned until the sheet is signed.
+
+## [Unreleased] — `GroundedScore.abstains()` tells "no stable belief" from a stable contradiction (stability below `audit_claim`'s default 0.50, or fewer than two samples), and `honest()` can withhold an answer no signal was supplied for (`on_no_signal="abstain"`, which counts an empty or non-finite input as none); both opt-in, no existing call changes (#233, #234)
+
+**What was wrong.** #233: `grounded_honesty` returns `grounded = stability * concordance`, which is
+0.0 both when the samples agree with each other and not with the claim (stability 1.0, concordance
+0.0: a contradiction to report) and when no two samples agree (stability 0.0: abstain). Its
+docstring's Report-or-abstain section says to abstain on low stability, and `audit_claim` returns
+`"abstain"` below stability 0.50 (its default `low_stability_threshold`), but the score carried no
+abstain flag, and `float(score)` read both rows as 0.0. The lab's agent printed `grounded=0.000`
+for three of its self-claims and read it as a verdict; on each, stability was 0.000. #234:
+`honest(answer)` with none of `span_logits`, `logits`, `engine` or `confidence` checks nothing and
+returns `"answered"`, detail `passed via none (signal n/a) -> answered`; `prompt` alone is read only
+by the engine tier. A test pinned that, and the docstring did not say it. The agent's three
+`honest(sample, prompt=claim)` calls passed every sample that way.
+
+**What it does now.**
+
+- `GroundedScore.abstains(low_stability=LOW_STABILITY)` returns True when `stability < low_stability`
+  or the score has fewer than two samples (one sample gives stability 1.0, a "stable" reading of
+  one answer; the sample-count rule is the method's own). True means `grounded` is not a verdict;
+  False does not make it one. `styxx.divergence.LOW_STABILITY = 0.50` is `audit_claim`'s default
+  `low_stability_threshold`, not a measured line: the boundary hunt behind the Report-or-abstain
+  section split its 36 items at the median stability, 1.0 (30 at 1.0: AUC 0.967; 6 at 0.78 and
+  0.89: AUC 0.444; gpt-4o-mini, 10 samples, one run), so all six of its low stratum read False at
+  0.50, and `abstains(low_stability=1.0)` is that run's split. It is a method, not a field:
+  `_fields`, `len()`, five-way unpacking, `==` against a 5-tuple, `_asdict()` and `float()` are as
+  before. `styxx/audit.py` sets `_DEFAULT_LOW_STABILITY = LOW_STABILITY`, so the default
+  `low_stability_threshold` of `audit_claim` and `audit_session` is that constant. The two still
+  part in two places, both named in the docstring: the verdict has no sample-count rule, and it
+  returns `"injected"` before `"abstain"`. `grounded_honesty`'s Report-or-abstain section says the
+  score does not abstain by itself, what `score.abstains()` reads and what 0.50 is; the `stability`
+  field's doc points at the method. `LOW_STABILITY` joins `styxx.divergence.__all__`;
+  `styxx/__init__.py` is unchanged.
+- The module docstring's Usage comment said
+  `semantic_entropy(["Paris.", "The capital is Paris.", "Paris, France."])` reads `~0`. It reads
+  about 0.64 under the cosine default and the lexical fallback (the three paraphrases split into
+  two clusters, the docstring's own FALSE DISAGREEMENT case) and ln 3, about 1.10, under an
+  exact-match judge. The comment now gives all three, with ~0 only under a same-answer judge that
+  merges them.
+- `honest()` takes `on_no_signal`, `"pass"` (the default) or `"abstain"`. `"pass"` is the behaviour
+  before the keyword, detail included. With no signal, `"abstain"` returns the abstention with
+  `action="abstained"`, `method="none"`, `signal=None` and detail
+  `no honesty signal supplied (span_logits, logits, engine or confidence) -> abstained`. Under
+  `"abstain"` a supplied input with nothing to read is no signal too, withheld the same way with a
+  detail that names it (`no honesty signal: span_logits holds no finite logit -> abstained`, and so
+  on): `span_logits` or `logits` with no finite logit, with or without a threshold (the gate could
+  not fire, and the detail read signal 0.000), a confidence that is not a finite number, and an
+  engine that is neither True nor callable. `verify` still runs: a verifier that supports the
+  answer lets it through as `"answered"` (`(verified)` in the detail), one that refutes it gives
+  `"refuted"`, and an inconclusive one (unclear, `None`, or raised) leaves it abstained with
+  `; verification inconclusive` in the detail. Support is `honest()`'s reading everywhere, so a
+  bare string such as `"refuted"`, or a NaN, from `verify` reads as support and releases the
+  answer; the docstring says so. With a signal to read, a logit signal with no threshold and an
+  engine that runs, errors and fails open among them, the keyword does nothing. Any other value
+  raises `ValueError`, with or without a signal. The `honest()` docstring states what a call with
+  no signal does under each value; the module docstring and the `HonestyVerdict` `answer`,
+  `action` and `method` docs name the no-signal case.
+
+**What it does not change.** No default threshold moves: the cosine clustering threshold stays
+0.90 (#233 lists the committed readings a change would move). No existing call changes:
+`self_audit.py` prints the same output, byte for byte, before and after, and
+`test_no_signal_answers_with_method_none` passes unedited. `audit_claim`'s verdict has no
+sample-count rule, so below two samples it can still read "contradiction" where `abstains()` is
+True; giving it the rule would change its output, and that is a separate decision. Making
+`"abstain"` the default is the operator's call (#234 lists what it would change), and so is
+changing what `verify`'s reading counts as support, which the default path shares. A call that
+already passed `on_no_signal=` before the keyword existed now reads it: `**engine_kwargs` took
+it, so nothing read it without `engine=True`, and with `engine=True` `guardrail.check` raised and
+the engine failed open. No caller in this repository passes it. A misspelled keyword still falls
+into `honest()`'s `**engine_kwargs`, as any unknown keyword did before.
+
+**Tests.** `tests/test_divergence.py`, seven new: the two 0.0 rows are told apart by `abstains()`
+and not by `float()`; fewer than two samples (none, one, a `None` filtered down to one) abstain and
+two agreeing samples do not; the line is `LOW_STABILITY`, 0.50, and strict (stability 0.5 reports,
+0.49 abstains, and a caller's `low_stability` moves it); the tuple's shape; the docstring points at
+the method; the boundary hunt's committed receipt read back (no item abstains at 0.50,
+`abstains(low_stability=1.0)` is True on exactly its six low-stratum items); the docs call 0.50 a
+default and cite the split from the receipt. `tests/test_honesty.py`, eleven new: the default
+unchanged, exact detail included, with and without `prompt` and with `on_no_signal="pass"`; the
+opt-in withholds; `verify` that supports, refutes, or is inconclusive three ways; the keyword
+ignored when a signal is supplied (a stated confidence, an advisory logit signal, an engine that
+errors); unknown values raise; the docstring states both behaviours; twelve inputs with nothing to
+read, withheld under `"abstain"` (with `verify` supporting, refuting and inconclusive) and read
+under the default as main reads them; one finite logit is still a signal; a bare string from
+`verify` reads as support, as the docstring says; the docstring names the inputs.
+`tests/test_audit.py`, three new, one of them over six stabilities: the audit defaults are the
+divergence constant; `abstains()` agrees with `_derive_verdict`'s "abstain" from stability 0.0 to
+1.0 with injection not suspected and five samples; and the two places they part. Of the 48 test
+items, 31 fail on main; the other 17 are guards that pass on both (the tuple's shape, the default
+unchanged, the keyword ignored with a signal, the twelve inputs under the default, one finite
+logit, the bare string from `verify`). No existing test is edited; `tests/test_honesty.py` gains an
+`import pytest` line. The three modules ran 123 passed and 2 skipped before, and 171 passed and 2
+skipped now.
+
 ## [Unreleased] — AMENDMENT 6 to the leg-2 PREREG: the Claude family runs on `claude-opus-5-5`, because `claude-fable-5`, the alias the PREREG names, does not answer on the operator's plan; written before any seat runs
 
 **`papers/sworn/AMENDMENT_sworn_measurement_leg2_seat_alias_2026_10_24.md`; `papers/sworn/measurement/receipts/`.**

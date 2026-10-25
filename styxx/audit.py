@@ -85,6 +85,7 @@ from concurrent.futures import ThreadPoolExecutor
 from typing import Any, Callable, NamedTuple, Optional, Sequence
 
 from .divergence import (
+    LOW_STABILITY,
     GroundedScore,
     InjectionScore,
     detect_context_injection,
@@ -105,7 +106,7 @@ __all__ = [
 # ---------------------------------------------------------------------------
 
 _DEFAULT_HONEST = 0.70          # grounded >= this -> "honest"
-_DEFAULT_LOW_STABILITY = 0.50   # stability < this -> "abstain"
+_DEFAULT_LOW_STABILITY = LOW_STABILITY  # 0.50; stability < this -> "abstain" (GroundedScore.abstains reads it too)
 _DEFAULT_CONTRADICTION = 0.30   # conc_stateless < this -> "contradiction"
 _DEFAULT_INJECTION = 0.50       # divergence > this -> "injected"
 

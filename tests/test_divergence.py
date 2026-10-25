@@ -387,3 +387,101 @@ def test_untokenizable_but_different_strings_are_not_called_identical():
     assert _lexical_same("🙂", "🙂", 0.5) is True
     assert _lexical_same("🙂", "🙃", 0.5) is False
     assert _lexical_same("", "", 0.5) is True
+
+
+# ─── GroundedScore.abstains: the Report-or-abstain rule on the score (#233) ───
+
+def test_abstains_separates_stable_contradiction_from_no_stable_belief():
+    """grounded is 0.0 for both rows and float() reads them alike; only
+    abstains() tells "report a contradiction" from "abstain"."""
+    contra = grounded_honesty(["Canberra"] * 5, "Sydney", same_fn=_EQ)
+    nobelief = grounded_honesty(["a", "b", "c", "d", "e"], "z", same_fn=_EQ)
+    assert contra.grounded == nobelief.grounded == 0.0
+    assert float(contra) == float(nobelief) == 0.0
+    assert (contra.stability, nobelief.stability) == (1.0, 0.0)
+    assert contra.abstains() is False
+    assert nobelief.abstains() is True
+
+
+def test_abstains_on_fewer_than_two_samples():
+    # one sample gives stability 1.0 (nothing to disagree with): a "stable
+    # contradiction" from one answer, which the sample count refuses
+    one = grounded_honesty(["Sydney"], "Canberra", same_fn=_EQ)
+    assert one.stability == 1.0 and one.n_samples == 1
+    assert one.abstains() is True
+    assert grounded_honesty([], "x", same_fn=_EQ).abstains() is True
+    assert grounded_honesty([None, "y"], "x", same_fn=_EQ).abstains() is True  # None filtered
+    assert grounded_honesty(["y", "y"], "x", same_fn=_EQ).abstains() is False
+
+
+def test_abstains_threshold_is_low_stability_and_strict():
+    from styxx.divergence import LOW_STABILITY
+    assert LOW_STABILITY == 0.50
+    # stability 0.75 (two clusters of five): reported at the default, abstains above 0.75
+    g = grounded_honesty(["Canberra", "Canberra", "Canberra", "Canberra", "Sydney"],
+                         "Canberra", same_fn=_EQ)
+    assert g.stability == pytest.approx(0.75)
+    assert g.abstains() is False
+    assert g.abstains(low_stability=0.8) is True
+    assert g.abstains(0.75) is False                      # strict: stability < low_stability
+    # stability exactly 0.5 (three clusters of five) is not below the line
+    half = grounded_honesty(["a", "a", "a", "b", "c"], "a", same_fn=_EQ)
+    assert half.stability == pytest.approx(0.5)
+    assert half.abstains() is False
+    assert GroundedScore(0.0, 0.49, 0.0, 3, 5).abstains() is True
+
+
+def test_abstains_is_a_method_and_the_tuple_shape_is_unchanged():
+    g = grounded_honesty(["Canberra"] * 4 + ["Sydney"], "Canberra", same_fn=_EQ)
+    a, b, c, d, e = g                                   # five-way unpacking still works
+    assert (a, b, c, d, e) == tuple(g)
+    assert GroundedScore._fields == ("grounded", "stability", "concordance",
+                                     "n_clusters", "n_samples")
+    assert len(g) == 5 and "abstains" not in g._asdict()
+    assert grounded_honesty([], "x", same_fn=_EQ) == GroundedScore(0.0, 0.0, 0.0, 0, 0)
+    assert grounded_honesty([], "x", same_fn=_EQ) == (0.0, 0.0, 0.0, 0, 0)
+
+
+def test_grounded_honesty_docstring_points_at_abstains():
+    doc = grounded_honesty.__doc__
+    assert "score.abstains()" in doc and "LOW_STABILITY" in doc
+    assert "does not abstain by itself" in doc
+
+
+# ─── the default line is audit_claim's, not the boundary hunt's split (#233 review) ───
+
+def _boundary_hunt():
+    import json
+    from pathlib import Path
+    p = (Path(__file__).resolve().parent.parent / "papers" / "grounded-honesty-axis"
+         / "boundary_hunt_result.json")
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def test_the_default_line_is_not_the_boundary_hunt_split():
+    d = _boundary_hunt()
+    n, b2, rows = d["n_samples"], d["B2_stability_gate"], d["rows"]
+    assert (len(rows), n, b2["median_stability"], b2["n_high"], b2["n_low"]) == (36, 10, 1.0, 30, 6)
+    scores = [GroundedScore(r["g_true"], r["stability"], r["concord_true"] / n, r["n_clusters"], n)
+              for r in rows]
+    low = [s for s in scores if s.stability < b2["median_stability"]]
+    assert sorted(round(s.stability, 2) for s in low) == [0.78, 0.89, 0.89, 0.89, 0.89, 0.89]
+    # at the default (0.50) no item abstains, the six of the AUC 0.444 stratum included
+    assert not any(s.abstains() for s in scores)
+    # the run's own split is abstains(low_stability=1.0): True on exactly its low stratum
+    assert [s for s in scores if s.abstains(low_stability=1.0)] == low
+
+
+def test_the_docs_call_the_default_a_default_and_cite_the_split():
+    b2 = _boundary_hunt()["B2_stability_gate"]
+    for doc in (GroundedScore.abstains.__doc__, grounded_honesty.__doc__):
+        flat = " ".join(doc.split())
+        assert "low_stability_threshold" in flat and "not a measured line" in flat
+        assert "False does not make it one" in flat
+        assert "abstains(low_stability=1.0)" in flat
+        assert f"{b2['auc_low_stability']:.3f}" in flat          # 0.444
+    flat = " ".join(GroundedScore.abstains.__doc__.split())
+    assert f"{b2['auc_high_stability']:.3f}" in flat             # 0.967
+    # the sample-count rule is the method's own, and the two places audit_claim parts from it
+    assert "names no count" in flat
+    assert '``"injected"`` before ``"abstain"``' in flat
