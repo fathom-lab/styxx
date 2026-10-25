@@ -1,0 +1,874 @@
+# -*- coding: utf-8 -*-
+"""styxx.prereg_ci.git: the git layer of prereg-ci.
+
+Every reading here is a function of git objects at named commits, read with plumbing. Nothing reads
+a working copy and no command here talks to a remote; in a partial clone git itself fetches a
+missing blob from the clone's promisor remote, which a full clone never needs. The readings
+(DESIGN 3.2(b), 3.2(d), 3.4):
+
+* a revision resolves to a full commit id (``rev-parse --verify <rev>^{commit}``), or COMMIT_ABSENT;
+* the parent-one chain of a revision is walked from ``rev-list --parents`` (parent index 0), so no
+  flag of git's names the walk;
+* the landing commit L of a path is the oldest commit on the default branch's parent-one chain
+  whose diff against its parent one touches the path (``diff-tree --stdin`` over the chain's pairs);
+  the seal bytes are the path's blob at L;
+* the add commit A is the oldest commit of the path's history whose diff adds it: the rule
+  ``styxx.protocol`` reads with ``--diff-filter=A``, without ``--follow`` (the design's RV1);
+* the order commit is the oldest commit, among L and its ancestors (HEAD and its ancestors, for a
+  PREREG that arrives in the same pull request as its receipt, C2), at which the path's decision
+  digest already was the one at L; the file-blob reading (the design's RV2 comparison) does the same
+  on the blob id. A decision changed and changed back orders from the commit that wrote it before
+  the change; the blob history between seal and receipt prints the interval;
+* strict ancestry is ``merge-base --is-ancestor`` with a commit never strictly before itself; the
+  blob history of a path between two commits; the paths a pull request adds, changes, deletes or
+  renames, read from the merge base of BASE and HEAD, as git's three-dot diff reads them;
+* receipts: R1's record rule, the resolver of 3.2(d) (``PREREG_AMBIGUOUS``, never a guess), the
+  recorded digest of PLAN K2, the receipts a pull request adds (C1), and the immutability of the
+  receipts it found committed (``RECEIPT_REWRITTEN``);
+* sealed decisions (C0): a fence edited in place, a deleted PREREG and a renamed one are
+  ``DECISION_EDITED_AFTER_SEAL`` (fail closed); prose edited around an unchanged fence is
+  ``PROSE_AMENDED_IN_PLACE``, a NOTE, or a FAIL under ``immutability = "file"``. This is the refusal
+  path protection gives, kept so one tool covers it (DESIGN 3.4).
+
+History is read as the commit objects record it. Every command runs with replacement off
+(``--no-replace-objects`` and ``GIT_NO_REPLACE_OBJECTS``, the rule of ``styxx.sworn.GitTree``), with
+``GIT_GRAFT_FILE`` pointed at the null device (git honours ``info/grafts`` with replacement off),
+and with the commit-graph cache off, so a parent is the one its commit object names. A shallow clone
+is ``SHALLOW_CLONE`` (UNCHECKABLE) for every reading that walks history; bytes at a named commit
+still read. A blob over ``styxx.sworn.MAX_RECEIPT_BYTES`` is never read (``BLOB_TOO_LARGE``).
+
+Nothing here is public API: DESIGN 3.1 names ``core.rescore``, ``.compare``, ``.licences`` and the
+CLI, and the CLI is this module's caller. Every module-level name is private.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import posixpath
+import re
+import subprocess
+from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
+
+from styxx.prereg_ci import core as _core
+from styxx.sworn import MAX_RECEIPT_BYTES as _RECEIPT_CAP
+
+# the kind of each code: UNCHECKABLE is exit 3, INPUT exit 2, FAIL refuses, NOTE is printed
+_KIND = {
+    "COMMIT_ABSENT": "UNCHECKABLE", "SHALLOW_CLONE": "UNCHECKABLE", "GIT_UNAVAILABLE": "UNCHECKABLE",
+    "BLOB_TOO_LARGE": "UNCHECKABLE",
+    "NOT_A_BLOB": "INPUT", "PATH_UNREADABLE": "INPUT", "NO_MERGE_BASE": "INPUT",
+    "PREREG_ABSENT": "INPUT", "PREREG_AMBIGUOUS": "INPUT", "RECEIPT_ABSENT": "INPUT", "RECEIPT_AMBIGUOUS": "INPUT",
+    "RECORDED_DIGEST_AMBIGUOUS": "INPUT",
+    "RECEIPT_UNREADABLE": "NOTE", "RECEIPT_REWRITTEN": "FAIL", "DECISION_EDITED_AFTER_SEAL": "FAIL",
+    "PROSE_AMENDED_IN_PLACE": "NOTE",
+}
+
+_MAX_BLOB_BYTES = _RECEIPT_CAP           # read at call time, so a test may lower it
+_GIT_TIMEOUT_S = 300
+_EXCLUDE = ("conformance/",)            # prereg-ci's own vectors hold gates digests inside their inputs
+_HEX = re.compile(r"[0-9a-f]{40}|[0-9a-f]{64}")
+_NEEDLE = '"gates_sha256"'
+# git's own environment that would point a command at another repository, ref namespace or shallow
+# list, or read its pathspecs another way than the one each call names
+_DROP_ENV = ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_COMMON_DIR", "GIT_NAMESPACE", "GIT_SHALLOW_FILE",
+             "GIT_LITERAL_PATHSPECS", "GIT_GLOB_PATHSPECS", "GIT_NOGLOB_PATHSPECS", "GIT_ICASE_PATHSPECS",
+             "GIT_REPLACE_REF_BASE")
+_GLOBAL = ("--no-replace-objects", "-c", "core.commitGraph=false", "-c", "color.ui=false", "-c",
+           "core.quotepath=false")
+_POLICIES = ("fail", "note")
+_IMMUTABILITY = ("gates", "file")
+_HOW = {"D": "deleted", "M": "changed in place", "T": "changed to another file type"}
+
+
+class _Refusal(Exception):
+    """A reading this layer does not give: ``code``, its ``kind``, ``detail``, and for an
+    ambiguous name the ``candidates``."""
+
+    def __init__(self, code: str, detail: str, candidates: Sequence[str] = ()):
+        super().__init__(f"{code}: {detail}")
+        self.code, self.kind, self.detail = code, _KIND[code], detail
+        self.candidates = tuple(candidates)
+
+    def finding(self, path: Optional[str] = None) -> Dict[str, Any]:
+        return {"code": self.code, "kind": self.kind, "detail": self.detail, "path": path}
+
+
+def _env() -> Dict[str, str]:
+    env = {k: v for k, v in os.environ.items() if k.upper() not in _DROP_ENV}
+    env.update(GIT_NO_REPLACE_OBJECTS="1", GIT_GRAFT_FILE=os.devnull, GIT_TERMINAL_PROMPT="0",
+               GIT_OPTIONAL_LOCKS="0")
+    return env
+
+
+def _plain_path(path: str) -> str:
+    """A path git can be asked about one line at a time, or PATH_UNREADABLE."""
+    if not isinstance(path, str) or not path or any(ch in path for ch in "\n\r\0"):
+        raise _Refusal("PATH_UNREADABLE", f"{path!r} is not a path this layer asks git about one line at a time")
+    return path
+
+
+class _Batch:
+    """One long-lived ``git cat-file`` process: one object name a line in, one answer out."""
+
+    def __init__(self, argv: List[str], env: Dict[str, str]):
+        try:
+            self.p = subprocess.Popen(argv, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                      stderr=subprocess.DEVNULL, env=env)
+        except (OSError, ValueError) as e:
+            raise _Refusal("GIT_UNAVAILABLE", f"git cat-file could not start: {e}")
+
+    def _line(self, name: str) -> bytes:
+        try:
+            self.p.stdin.write(name.encode("utf-8", "surrogateescape") + b"\n")
+            self.p.stdin.flush()
+            line = self.p.stdout.readline()
+        except (OSError, ValueError) as e:
+            raise _Refusal("GIT_UNAVAILABLE", f"git cat-file stopped answering: {e}")
+        if not line.endswith(b"\n"):
+            raise _Refusal("GIT_UNAVAILABLE", "git cat-file ended before it answered")
+        return line[:-1]
+
+    def header(self, name: str) -> Optional[Tuple[str, str, int]]:
+        """(oid, type, size) of the object *name* names, or None where it names none."""
+        line = self._line(name)
+        if line.endswith((b" missing", b" ambiguous")):
+            return None
+        parts = line.split(b" ")
+        if len(parts) != 3 or not parts[2].isdigit() or not _HEX.fullmatch(parts[0].decode("ascii", "replace")):
+            raise _Refusal("GIT_UNAVAILABLE", f"git cat-file answered {line[:200]!r}")
+        return parts[0].decode("ascii"), parts[1].decode("ascii"), int(parts[2])
+
+    def contents(self, oid: str) -> bytes:
+        head = self.header(oid)
+        if head is None:
+            raise _Refusal("GIT_UNAVAILABLE", f"object {oid} is not in the object store")
+        size = head[2]
+        try:
+            data = self.p.stdout.read(size)
+            tail = self.p.stdout.read(1)
+        except (OSError, ValueError) as e:
+            raise _Refusal("GIT_UNAVAILABLE", f"git cat-file stopped mid-object: {e}")
+        if len(data) != size or tail != b"\n":
+            raise _Refusal("GIT_UNAVAILABLE", f"git cat-file sent {len(data)} of {size} bytes of {oid}")
+        return data
+
+    def close(self) -> None:
+        try:
+            self.p.stdin.close()
+            self.p.wait(timeout=10)
+        except (OSError, ValueError, subprocess.TimeoutExpired):
+            self.p.kill()
+            self.p.wait()
+        finally:
+            if self.p.stdout is not None:
+                self.p.stdout.close()
+
+
+class _Paths(frozenset):
+    """A tree's blob paths, with the basename index the resolver reads."""
+
+    def __new__(cls, paths: Iterable[str]):
+        self = super().__new__(cls, paths)
+        by: Dict[str, List[str]] = {}
+        for p in sorted(self):
+            by.setdefault(p.rsplit("/", 1)[-1], []).append(p)
+        self.by_name = {k: tuple(v) for k, v in by.items()}
+        return self
+
+
+class _Repo:
+    """A repository read through git plumbing; a context manager, since it keeps two ``cat-file``
+    processes open for the walks. Readings are kept by commit id, which names immutable objects;
+    a revision name is resolved once, so a ``_Repo`` reads a repository whose refs do not move
+    while it is open (one check, one census)."""
+
+    def __init__(self, root: Any):
+        self.root = os.fspath(root)
+        self._env = _env()
+        self._shallow: Optional[bool] = None
+        self._commits: Dict[str, str] = {}
+        self._parents: Dict[str, Tuple[str, ...]] = {}
+        self._chains: Dict[str, List[str]] = {}
+        self._trees: Dict[str, Dict[str, Tuple[str, str, str]]] = {}
+        self._orders: Dict[str, Tuple[str, ...]] = {}
+        self._views: Dict[str, _Paths] = {}
+        self._digests: Dict[str, Optional[str]] = {}
+        self._check: Optional[_Batch] = None
+        self._cat: Optional[_Batch] = None
+        self._memo: Dict[Any, Any] = {}
+
+    # -- process plumbing ------------------------------------------------------------------------
+
+    def __enter__(self) -> "_Repo":
+        return self
+
+    def __exit__(self, *exc: Any) -> None:
+        self.close()
+
+    def __del__(self) -> None:
+        try:
+            self.close()
+        except Exception:                           # noqa: BLE001 - interpreter shutdown
+            pass
+
+    def close(self) -> None:
+        for b in (self._check, self._cat):
+            if b is not None:
+                b.close()
+        self._check = self._cat = None
+
+    def _argv(self, *args: str, literal: bool = True) -> List[str]:
+        return ["git", *_GLOBAL, *(("--literal-pathspecs",) if literal else ()), "-C", self.root, *args]
+
+    def _run(self, *args: str, stdin: Optional[bytes] = None, literal: bool = True) -> Tuple[int, bytes, bytes]:
+        try:
+            r = subprocess.run(self._argv(*args, literal=literal), input=stdin, capture_output=True,
+                               env=self._env, check=False, timeout=_GIT_TIMEOUT_S)
+        except subprocess.TimeoutExpired:
+            raise _Refusal("GIT_UNAVAILABLE", f"git {args[0]} ran past {_GIT_TIMEOUT_S} s")
+        except (OSError, ValueError) as e:
+            raise _Refusal("GIT_UNAVAILABLE", f"git could not run: {e}")
+        return r.returncode, r.stdout, r.stderr
+
+    def _ok(self, *args: str, stdin: Optional[bytes] = None, literal: bool = True) -> bytes:
+        rc, out, err = self._run(*args, stdin=stdin, literal=literal)
+        if rc != 0:
+            raise _Refusal("GIT_UNAVAILABLE", f"git {args[0]} exited {rc}: "
+                                              f"{err.decode('utf-8', 'replace').strip()[:300]}")
+        return out
+
+    def _batch_check(self) -> _Batch:
+        if self._check is None:
+            self._check = _Batch(self._argv("cat-file", "--batch-check"), self._env)
+        return self._check
+
+    def _batch_cat(self) -> _Batch:
+        if self._cat is None:
+            self._cat = _Batch(self._argv("cat-file", "--batch"), self._env)
+        return self._cat
+
+    # -- revisions and history --------------------------------------------------------------------
+
+    def commit(self, rev: Any) -> str:
+        """The full id of the commit *rev* names, or COMMIT_ABSENT."""
+        if not isinstance(rev, str) or not rev or any(ch in rev for ch in "\n\r\0"):
+            raise _Refusal("COMMIT_ABSENT", f"{rev!r} names no commit")
+        if rev not in self._commits:
+            rc, out, _ = self._run("rev-parse", "--verify", "--quiet", "--end-of-options", rev + "^{commit}")
+            oid = out.decode("ascii", "replace").strip()
+            if rc != 0 or not _HEX.fullmatch(oid):
+                raise _Refusal("COMMIT_ABSENT", f"{rev!r} names no commit in {self.root}")
+            self._commits[rev] = oid
+        return self._commits[rev]
+
+    def is_shallow(self) -> bool:
+        if self._shallow is None:
+            out = self._ok("rev-parse", "--is-shallow-repository").strip()
+            if out not in (b"true", b"false"):
+                raise _Refusal("GIT_UNAVAILABLE", f"git rev-parse answered {out[:80]!r} on shallowness")
+            self._shallow = out == b"true"
+        return self._shallow
+
+    def _full(self) -> None:
+        if self.is_shallow():
+            raise _Refusal("SHALLOW_CLONE", "the clone is shallow: its history stops at a cut boundary, so the "
+                                            "landing commit, the order commit and ancestry are not read")
+
+    def _parents_of(self, commit: str) -> Tuple[str, ...]:
+        if commit not in self._parents:
+            for line in self._ok("rev-list", "--parents", commit).decode("ascii").split("\n"):
+                ids = line.split()
+                if ids:
+                    self._parents.setdefault(ids[0], tuple(ids[1:]))
+            if commit not in self._parents:
+                raise _Refusal("COMMIT_ABSENT", f"{commit} is not in the history git lists")
+        return self._parents[commit]
+
+    def parents(self, rev: str) -> Tuple[str, ...]:
+        """The parents *rev*'s commit object names, in order."""
+        self._full()
+        return self._parents_of(self.commit(rev))
+
+    def chain(self, rev: str) -> List[str]:
+        """*rev*'s parent-one chain, newest to oldest: parent index 0 of each commit, to a root."""
+        self._full()
+        tip = self.commit(rev)
+        if tip not in self._chains:
+            out: List[str] = []
+            cur: Optional[str] = tip
+            while cur is not None:
+                out.append(cur)
+                ps = self._parents_of(cur)
+                cur = ps[0] if ps else None
+            self._chains[tip] = out
+        return list(self._chains[tip])
+
+    def is_strict_ancestor(self, a: str, b: str) -> bool:
+        """Whether *a* is an ancestor of *b* and not *b* itself (C3)."""
+        self._full()
+        a, b = self.commit(a), self.commit(b)
+        if a == b:
+            return False
+        if ("anc", a, b) in self._memo:
+            return self._memo[("anc", a, b)]
+        rc, _, err = self._run("merge-base", "--is-ancestor", a, b)
+        if rc in (0, 1):
+            self._memo[("anc", a, b)] = rc == 0
+            return rc == 0
+        raise _Refusal("COMMIT_ABSENT", f"git merge-base exited {rc}: {err.decode('utf-8', 'replace').strip()[:300]}")
+
+    def merge_base(self, base: str, head: str) -> str:
+        self._full()
+        base, head = self.commit(base), self.commit(head)
+        rc, out, err = self._run("merge-base", base, head)
+        oid = out.decode("ascii", "replace").strip()
+        if rc == 1 and not oid:
+            raise _Refusal("NO_MERGE_BASE", f"{base} and {head} share no history")
+        if rc != 0 or not _HEX.fullmatch(oid):
+            raise _Refusal("COMMIT_ABSENT", f"git merge-base exited {rc}: {err.decode('utf-8', 'replace').strip()[:300]}")
+        return oid
+
+    # -- trees and blobs ------------------------------------------------------------------------
+
+    def _tree(self, commit: str) -> Dict[str, Tuple[str, str, str]]:
+        if commit not in self._trees:
+            entries: Dict[str, Tuple[str, str, str]] = {}
+            order: List[str] = []
+            for ent in self._ok("ls-tree", "-r", "-z", "--full-tree", commit).split(b"\0"):
+                if not ent:
+                    continue
+                meta, _, raw = ent.partition(b"\t")
+                mode, typ, oid = meta.decode("ascii").split()
+                path = raw.decode("utf-8", "surrogateescape")
+                entries[path] = (mode, typ, oid)
+                if typ == "blob":
+                    order.append(path)
+            self._trees[commit] = entries
+            self._orders[commit] = tuple(order)
+        return self._trees[commit]
+
+    def paths(self, rev: str) -> Tuple[str, ...]:
+        """Every blob path of *rev*'s tree, in git's tree order."""
+        c = self.commit(rev)
+        self._tree(c)
+        return self._orders[c]
+
+    def _view(self, rev: str) -> _Paths:
+        c = self.commit(rev)
+        if c not in self._views:
+            self._views[c] = _Paths(self.paths(c))
+        return self._views[c]
+
+    def _entry(self, commit: str, path: str) -> Optional[Tuple[str, str, str]]:
+        """(mode, type, oid) of the entry at *path*; a directory reads as its tree entry."""
+        hit = self._trees.get(commit, {}).get(path)
+        if hit is not None:
+            return hit
+        out = self._ok("ls-tree", "-z", "--full-tree", commit, "--", path)
+        for ent in out.split(b"\0"):
+            meta, _, raw = ent.partition(b"\t")
+            if raw.decode("utf-8", "surrogateescape") == path:
+                mode, typ, oid = meta.decode("ascii").split()
+                return mode, typ, oid
+        return None
+
+    def _blob_id(self, commit: str, path: str) -> Optional[str]:
+        head = self._batch_check().header(f"{commit}:{_plain_path(path)}")
+        return head[0] if head is not None and head[1] == "blob" else None
+
+    def blob_id(self, rev: str, path: str) -> Optional[str]:
+        """The blob id at *path* in *rev*'s tree, or None where no blob is there."""
+        return self._blob_id(self.commit(rev), path)
+
+    def _contents(self, oid: str, path: str) -> bytes:
+        head = self._batch_check().header(oid)
+        if head is None:
+            raise _Refusal("GIT_UNAVAILABLE", f"blob {oid} ({path}) is not in the object store")
+        if head[2] > _MAX_BLOB_BYTES:
+            raise _Refusal("BLOB_TOO_LARGE", f"{path} is {head[2]} bytes, over the {_MAX_BLOB_BYTES} this layer reads")
+        return self._batch_cat().contents(oid)
+
+    def read(self, rev: str, path: str) -> Optional[bytes]:
+        """The bytes of the regular file at *path* in *rev*'s tree; None where no entry is there.
+        A symlink or a submodule is NOT_A_BLOB, as ``styxx.sworn.GitTree.blob`` reads them."""
+        c = self.commit(rev)
+        e = self._entry(c, _plain_path(path))
+        if e is None:
+            return None
+        mode, typ, oid = e
+        if typ != "blob" or mode == "120000":
+            raise _Refusal("NOT_A_BLOB", f"{path} at {c[:12]} is a {'symlink' if mode == '120000' else typ}, "
+                                         f"not a regular file")
+        return self._contents(oid, path)
+
+    def _digest(self, oid: str, path: str) -> Optional[str]:
+        if oid not in self._digests:
+            self._digests[oid] = _core._decision(self._contents(oid, path))["gates_sha256"]
+        return self._digests[oid]
+
+    def _key(self, commit: str, path: str, key: str) -> Optional[str]:
+        oid = self._blob_id(commit, path)
+        if oid is None or key == "blob":
+            return oid
+        return self._digest(oid, path)
+
+    # -- the seal rules -------------------------------------------------------------------------
+
+    def landing(self, paths: Iterable[str], rev: str) -> Dict[str, Optional[str]]:
+        """Each path's landing commit on *rev*'s parent-one chain (DESIGN 3.2(b)), or None for a
+        path no commit of the chain touches."""
+        chain = self.chain(rev)
+        tip = chain[0]
+        asked = list(dict.fromkeys(_plain_path(p) for p in paths))
+        for p in asked:
+            if _HEX.fullmatch(p):
+                raise _Refusal("PATH_UNREADABLE", f"{p!r} reads like a commit id in diff-tree's output")
+        wanted = [p for p in asked if ("landing", tip, p) not in self._memo]
+        found: Dict[str, Optional[str]] = {p: None for p in wanted}
+        on_chain = set(chain)
+        feed = "".join(f"{c} {self._parents_of(c)[0]}\n" if self._parents_of(c) else f"{c}\n"
+                       for c in chain) if wanted else ""
+        for chunk in _chunks(wanted):
+            want = {p.encode("utf-8", "surrogateescape"): p for p in chunk}
+            out = self._ok("diff-tree", "--stdin", "-r", "-z", "--name-only", "--root", "--", *chunk,
+                           stdin=feed.encode("ascii"))
+            current: Optional[str] = None
+            for tok in out.split(b"\0"):
+                if not tok:
+                    continue
+                if tok in want:
+                    if current is None:
+                        raise _Refusal("GIT_UNAVAILABLE", "git diff-tree named a path before a commit")
+                    found[want[tok]] = current          # the chain runs newest to oldest; the last one stays
+                else:
+                    current = tok.decode("ascii", "replace")
+                    if current not in on_chain:
+                        raise _Refusal("GIT_UNAVAILABLE", f"git diff-tree named {current[:60]!r}, not a chain commit")
+        for p, c in found.items():
+            self._memo[("landing", tip, p)] = c
+        return {p: self._memo[("landing", tip, p)] for p in asked}
+
+    def add_commit(self, path: str, rev: str) -> Optional[str]:
+        """The oldest commit of *path*'s history from *rev* whose diff adds the path: git's
+        ``--diff-filter=A`` reading (a merge shows no diff there), or None."""
+        self._full()
+        tip = self.commit(rev)
+        memo = ("add", tip, _plain_path(path))
+        if memo not in self._memo:
+            self._parents_of(tip)
+            self._memo[memo] = None
+            for c in reversed(self._ok("rev-list", tip, "--", path).decode("ascii").split()):
+                ps = self._parents_of(c)
+                if len(ps) > 1 or self._blob_id(c, path) is None:
+                    continue
+                if not ps or self._blob_id(ps[0], path) is None:
+                    self._memo[memo] = c
+                    break
+        return self._memo[memo]
+
+    def order_commit(self, path: str, start: str, key: str = "decision") -> Optional[str]:
+        """The order commit of DESIGN 3.2(b) from *start* (L, or HEAD for a PREREG not yet landed):
+        the oldest commit, among *start* and its ancestors, at which the path's decision digest
+        (``key="decision"``) or blob id (``key="blob"``) already was the one at *start*. None where
+        *start* holds no such value (no blob, or no decision the scanner reads).
+
+        The oldest holder is a commit that wrote the value, so it differs at the path from every
+        parent and ``rev-list --full-history`` lists it, on whichever branch it sits; "oldest" is
+        git's listing order (commit date), as the design's RV2 reads it with ``git log``."""
+        if key not in ("decision", "blob"):
+            raise ValueError(f"key is 'decision' or 'blob', not {key!r}")
+        self._full()
+        c = self.commit(start)
+        memo = ("order", c, _plain_path(path), key)
+        if memo not in self._memo:
+            want = self._key(c, path, key)
+            oldest: Optional[str] = None
+            if want is not None:
+                self._parents_of(c)
+                oldest = c
+                for x in self._ok("rev-list", "--full-history", c, "--", path).decode("ascii").split():
+                    if self._key(x, path, key) == want:
+                        oldest = x                      # the listing runs newest to oldest; the last one stays
+            self._memo[memo] = oldest
+        return self._memo[memo]
+
+    def blob_history(self, path: str, a: str, b: str) -> List[Tuple[str, Optional[str]]]:
+        """(commit, blob id) for *a* and every commit from *b* back to *a* whose diff touches
+        *path*, oldest to newest (git's simplified history of the path; DESIGN 3.2(e) prints it)."""
+        self._full()
+        a, b = self.commit(a), self.commit(b)
+        listed = self._ok("rev-list", b, "--not", a + "^@", "--", _plain_path(path)).decode("ascii").split()
+        commits = [a] + [c for c in reversed(listed) if c != a]
+        return [(c, self._blob_id(c, path)) for c in commits]
+
+    def renamed_from(self, path: str, rev: str) -> Optional[str]:
+        """The path *path* was renamed from in *rev*'s diff against its parent one, or None."""
+        self._full()
+        c = self.commit(rev)
+        ps = self._parents_of(c)
+        if not ps:
+            return None
+        for ch in _name_status(self._ok("diff-tree", "-r", "-z", "-M", "--name-status", ps[0], c)):
+            if ch["status"] == "R" and ch["path"] == path:
+                return ch["old"]
+        return None
+
+    def changes(self, base: str, head: str) -> Dict[str, Any]:
+        """What a pull request changes: the tree diff from the merge base of *base* and *head* to
+        *head*, with renames named. ``{base, head, merge_base, changes}``; each change is
+        ``{status, path, old}`` with status A, M, T, D or R (``old`` None for A)."""
+        self._full()
+        b, h = self.commit(base), self.commit(head)
+        mb = self.merge_base(b, h)
+        out = self._ok("diff-tree", "-r", "-z", "-M", "--name-status", mb, h)
+        return {"base": b, "head": h, "merge_base": mb, "changes": _name_status(out)}
+
+    def grep(self, rev: str, needle: str, glob: str) -> List[str]:
+        """Paths under *rev*'s tree matching *glob* whose bytes hold *needle*, in tree order."""
+        c = self.commit(rev)
+        rc, out, err = self._run("grep", "-l", "-z", "-F", "--no-textconv", "-e", needle, c, "--", glob, literal=False)
+        if rc == 1:
+            return []
+        if rc != 0:
+            raise _Refusal("GIT_UNAVAILABLE", f"git grep exited {rc}: {err.decode('utf-8', 'replace').strip()[:300]}")
+        prefix = (c + ":").encode("ascii")
+        return [tok[len(prefix):].decode("utf-8", "surrogateescape") for tok in out.split(b"\0")
+                if tok.startswith(prefix)]
+
+
+def _chunks(paths: Sequence[str], budget: int = 6000) -> List[List[str]]:
+    """Pathspec groups that keep a command line short on every platform."""
+    out: List[List[str]] = []
+    cur: List[str] = []
+    size = 0
+    for p in paths:
+        if cur and (size + len(p) + 1 > budget or len(cur) >= 200):
+            out.append(cur)
+            cur, size = [], 0
+        cur.append(p)
+        size += len(p) + 1
+    if cur:
+        out.append(cur)
+    return out
+
+
+def _name_status(raw: bytes) -> List[Dict[str, Any]]:
+    toks = [t.decode("utf-8", "surrogateescape") for t in raw.split(b"\0")]
+    out: List[Dict[str, Any]] = []
+    i = 0
+    while i < len(toks) and toks[i]:
+        status = toks[i][:1]
+        if status in ("R", "C"):
+            out.append({"status": status, "path": toks[i + 2], "old": toks[i + 1]})
+            i += 3
+        else:
+            path = toks[i + 1]
+            out.append({"status": status, "path": path, "old": None if status == "A" else path})
+            i += 2
+    return out
+
+
+# ---- receipts: the resolver, the records, the recorded digest ----------------------------------------
+
+def _resolve(name: Any, near: str, paths: Any, what: str = "PREREG") -> str:
+    """DESIGN 3.2(d)'s resolver. A value holding a ``/`` is a repository-relative path; a bare
+    basename is the file of that name in *near* (the receipt's own directory), else the one file of
+    that name in *paths* (the tree the receipt is read at). Two candidates are ``<what>_AMBIGUOUS``,
+    never a guess; anything else that names no file is ``<what>_ABSENT``."""
+    absent, ambiguous = f"{what}_ABSENT", f"{what}_AMBIGUOUS"
+    if not isinstance(name, str) or not name:
+        raise _Refusal(absent, f"the record names no {what} ({name!r})")
+    if any(ch in name for ch in "\\\0\n\r"):
+        raise _Refusal(absent, f"{name!r} is neither a repository-relative path nor a bare basename")
+    if "/" in name:
+        parts = name.split("/")
+        if name.startswith("/") or re.match(r"[A-Za-z]:", name) or any(p in ("", ".", "..") for p in parts):
+            raise _Refusal(absent, f"{name!r} is not a repository-relative path")
+        if name in paths:
+            return name
+        raise _Refusal(absent, f"{name} is not in the tree")
+    if name in (".", ".."):
+        raise _Refusal(absent, f"{name!r} names no file")
+    here = posixpath.join(near, name) if near else name
+    if here in paths:
+        return here
+    by_name = getattr(paths, "by_name", None)
+    cands = by_name.get(name, ()) if by_name is not None else tuple(sorted(p for p in paths
+                                                                          if p.rsplit("/", 1)[-1] == name))
+    if len(cands) == 1:
+        return cands[0]
+    if not cands:
+        raise _Refusal(absent, f"no file named {name} is in the tree")
+    raise _Refusal(ambiguous, f"{len(cands)} files are named {name}: {', '.join(cands)}", candidates=cands)
+
+
+def _receipt_kind(obj: Any) -> Optional[str]:
+    """``"receipt"`` for an object naming its PREREG by a top-level ``prereg`` string (3.2(d)),
+    ``"record"`` for one that records a gates digest (R1's rule: a top-level ``gates_sha256``, or a
+    ``protocol`` entry holding one, as ``styxx.seal`` writes), else None."""
+    if not isinstance(obj, dict):
+        return None
+    if isinstance(obj.get("prereg"), str):
+        return "receipt"
+    if "gates_sha256" in obj:
+        return "record"
+    entries = obj.get("protocol")
+    if isinstance(entries, list) and any(isinstance(e, dict) and "gates_sha256" in e for e in entries):
+        return "record"
+    return None
+
+
+def _json(data: bytes) -> Any:
+    """A receipt as the conformance set reads one: UTF-8, then ``json.loads``."""
+    return json.loads(data.decode("utf-8"))
+
+
+def _fields(obj: Dict[str, Any], verdict_key: str) -> Dict[str, Any]:
+    out: Dict[str, Any] = {}
+    if verdict_key in obj:
+        out["verdict"] = obj[verdict_key]
+    if "gates" in obj:
+        out["gates"] = obj["gates"]
+    out["gates_sha256"] = obj.get("gates_sha256")
+    return out
+
+
+def _excluded(path: str, exclude: Sequence[str]) -> bool:
+    return any(path.startswith(x) for x in exclude)
+
+
+def _records(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> List[Dict[str, Any]]:
+    """Every committed record naming a gates digest at *rev* (R1's rule): a JSON file whose
+    top-level object holds ``gates_sha256``, or one entry per ``protocol`` item holding it. Each is
+    ``{record, pointer, own, dir, prereg, result, prereg_commit, recorded}``, with ``recorded`` the
+    ``verdict`` (``frozen_verdict`` in a protocol entry), ``gates`` and ``gates_sha256`` it states.
+    A file that holds the key and is not JSON is listed with a ``refusal``. Paths under *exclude*
+    are not read."""
+    c = repo.commit(rev)
+    out: List[Dict[str, Any]] = []
+    for path in repo.grep(c, _NEEDLE, "*.json"):
+        if _excluded(path, exclude):
+            continue
+        base = {"record": path, "dir": posixpath.dirname(path)}
+        try:
+            d = _json(repo.read(c, path) or b"")
+        except (UnicodeDecodeError, ValueError) as e:
+            out.append({**base, "pointer": "", "own": True,
+                        "refusal": _Refusal("RECEIPT_UNREADABLE", f"{path} is not JSON: {e}").finding(path)})
+            continue
+        if isinstance(d, dict) and isinstance(d.get("protocol"), list):
+            for i, entry in enumerate(d["protocol"]):
+                if isinstance(entry, dict) and "gates_sha256" in entry:
+                    out.append({**base, "pointer": f"/protocol/{i}", "own": False, "prereg": entry.get("prereg"),
+                                "result": entry.get("result"), "prereg_commit": entry.get("prereg_commit"),
+                                "recorded": _fields(entry, "frozen_verdict")})
+        elif isinstance(d, dict) and "gates_sha256" in d:
+            out.append({**base, "pointer": "", "own": True, "prereg": d.get("prereg"), "result": path,
+                        "prereg_commit": d.get("prereg_commit"), "recorded": _fields(d, "verdict")})
+    return out
+
+
+def _pairs(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> List[Dict[str, Any]]:
+    """``_records`` with each record's receipt and PREREG resolved in *rev*'s tree: ``receipt_path``
+    (the record itself, or its ``result`` resolved from the record's directory) and ``prereg_path``
+    (resolved from the receipt's directory), or a ``refusal``."""
+    tree = repo._view(rev)
+    out = []
+    for rec in _records(repo, rev, exclude):
+        rec = dict(rec)
+        if "refusal" not in rec:
+            try:
+                rp = rec["record"] if rec["own"] else _resolve(rec["result"], rec["dir"], tree, what="RECEIPT")
+                pp = _resolve(rec["prereg"], posixpath.dirname(rp), tree, what="PREREG")
+                rec.update(receipt_path=rp, prereg_path=pp)
+            except _Refusal as e:
+                rec["refusal"] = e.finding(rec["record"])
+        out.append(rec)
+    return out
+
+
+def _sidecars(repo: _Repo, rev: str, exclude: Sequence[str] = _EXCLUDE) -> Dict[str, Any]:
+    """Every ``protocol`` entry holding a gates digest in every ``*.seal.json`` of *rev*'s tree,
+    by the receipt its ``result`` resolves to. ``{by, ambiguous, unreadable}``."""
+    c = repo.commit(rev)
+    key = ("sidecars", c, tuple(exclude))
+    if key not in repo._memo:
+        tree = repo._view(c)
+        by: Dict[str, List[Dict[str, Any]]] = {}
+        ambiguous: List[Tuple[Tuple[str, ...], Dict[str, Any]]] = []
+        unreadable: List[str] = []
+        for path in repo.paths(c):
+            if not path.endswith(".seal.json") or _excluded(path, exclude):
+                continue
+            try:
+                d = _json(repo.read(c, path) or b"")
+            except (UnicodeDecodeError, ValueError):
+                unreadable.append(path)
+                continue
+            if not isinstance(d, dict) or not isinstance(d.get("protocol"), list):
+                continue
+            for i, entry in enumerate(d["protocol"]):
+                if not isinstance(entry, dict) or "gates_sha256" not in entry:
+                    continue
+                rec = {**_fields(entry, "frozen_verdict"), "source": f"{path}#/protocol/{i}"}
+                try:
+                    target = _resolve(entry.get("result"), posixpath.dirname(path), tree, what="RECEIPT")
+                except _Refusal as e:
+                    if e.code == "RECEIPT_AMBIGUOUS":
+                        ambiguous.append((e.candidates, rec))
+                    continue
+                by.setdefault(target, []).append(rec)
+        repo._memo[key] = {"by": by, "ambiguous": ambiguous, "unreadable": unreadable}
+    return repo._memo[key]
+
+
+def _recorded(repo: _Repo, rev: str, receipt_path: str, receipt: Any,
+              exclude: Sequence[str] = _EXCLUDE) -> Optional[Dict[str, Any]]:
+    """The digest a receipt was scored under (DESIGN 3.2(d), PLAN K2): its own ``gates_sha256``,
+    else every ``protocol`` entry of every ``*.seal.json`` in *rev*'s tree whose ``result`` resolves
+    to the receipt. Readings that disagree (digest, verdict or gates), or an entry whose result is
+    ambiguous between this receipt and another file, are ``RECORDED_DIGEST_AMBIGUOUS``; none is None
+    (printed as absent). Returns ``{gates_sha256, verdict?, gates?, source}``."""
+    if isinstance(receipt, dict) and receipt.get("gates_sha256") is not None:
+        return {**_fields(receipt, "verdict"), "source": receipt_path}
+    side = _sidecars(repo, rev, exclude)
+    for cands, rec in side["ambiguous"]:
+        if receipt_path in cands:
+            raise _Refusal("RECORDED_DIGEST_AMBIGUOUS", f"{rec['source']} names a result that resolves to "
+                                                        f"{', '.join(cands)}, one of them {receipt_path}")
+    found = list(side["by"].get(receipt_path, ()))
+    readings = {json.dumps([f["gates_sha256"], f.get("verdict"), f.get("gates")], sort_keys=True) for f in found}
+    if len(readings) > 1:
+        raise _Refusal("RECORDED_DIGEST_AMBIGUOUS", f"{receipt_path} is recorded {len(readings)} ways: " + "; ".join(
+            f"{f['source']} gates {f['gates_sha256']} verdict {f.get('verdict')}" for f in found))
+    return found[0] if found else None
+
+
+# ---- the seal of one PREREG (C2) ----------------------------------------------------------------------
+
+def _seal(repo: _Repo, path: str, base: str, head: Optional[str] = None) -> Dict[str, Any]:
+    """The default seal of *path* (DESIGN 3.2(b)): its landing commit L on *base*'s parent-one chain
+    and the blob there, the order commit on the decision digest and on the file blob, the add commit,
+    the decision the seal bytes hold, and the path L renamed it from, if any. A PREREG not on the
+    chain that is in *head* arrives in the pull request (C2): no L, orders read from *head*, the add
+    commit from *head*'s history. Neither is PREREG_ABSENT."""
+    b = repo.commit(base)
+    landing = repo.landing([path], b)[path]
+    if landing is not None:
+        start, add_rev = landing, b
+    elif head is not None and repo.blob_id(head, path) is not None:
+        start = add_rev = repo.commit(head)
+    else:
+        where = f"on {base}'s parent-one chain" + ("" if head is None else f" or in {head}")
+        raise _Refusal("PREREG_ABSENT", f"{path} is not {where}")
+    data = repo.read(start, path)
+    if data is None:
+        raise _Refusal("PREREG_ABSENT", f"{path} is not a file at {start[:12]}")
+    decision = _core._decision(data)
+    return {"path": path, "landing": landing, "landed": landing is not None, "add": repo.add_commit(path, add_rev),
+            "order": repo.order_commit(path, start, "decision"), "order_blob": repo.order_commit(path, start, "blob"),
+            "blob": repo.blob_id(start, path), "blob_sha256": hashlib.sha256(data).hexdigest(), "bytes": data,
+            "form": decision["form"], "gates_sha256": decision["gates_sha256"], "code": decision["code"],
+            "detail": decision["detail"], "renamed_from": repo.renamed_from(path, landing) if landing else None}
+
+
+# ---- what a pull request does to receipts and sealed decisions (C0, C1) -------------------------------
+
+def _receipts_added(repo: _Repo, base: str, head: str,
+                    exclude: Sequence[str] = _EXCLUDE) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """C1's receipts: every ``.json`` the pull request adds (a rename's new path included) that names
+    a PREREG, each ``{path, add_commit, receipt}``; and the added ``.json`` files that are not JSON,
+    each a ``RECEIPT_UNREADABLE`` NOTE, since no receipt can be read from them."""
+    ch = repo.changes(base, head)
+    added, skipped = [], []
+    for x in ch["changes"]:
+        path = x["path"]
+        if x["status"] not in ("A", "R") or not path.endswith(".json") or _excluded(path, exclude):
+            continue
+        try:
+            obj = _json(repo.read(ch["head"], path) or b"")
+        except (UnicodeDecodeError, ValueError) as e:
+            skipped.append(_Refusal("RECEIPT_UNREADABLE", f"{path} is not JSON: {e}").finding(path))
+            continue
+        if _receipt_kind(obj) == "receipt":
+            added.append({"path": path, "add_commit": repo.add_commit(path, ch["head"]), "receipt": obj})
+    return added, skipped
+
+
+def _receipts_rewritten(repo: _Repo, base: str, head: str, policy: str = "fail",
+                        exclude: Sequence[str] = _EXCLUDE) -> List[Dict[str, Any]]:
+    """RECEIPT_REWRITTEN (DESIGN 3.2(d), C1) for every receipt or record committed at the merge
+    base that the pull request changes, deletes or renames; a re-run writes a new path. FAIL under
+    ``receipt_rewrite = "fail"`` (the default), a NOTE under ``"note"``."""
+    if policy not in _POLICIES:
+        raise ValueError(f"receipt_rewrite is one of {_POLICIES}, not {policy!r}")
+    ch = repo.changes(base, head)
+    mb = ch["merge_base"]
+    out = []
+    for x in ch["changes"]:
+        old = x["old"]
+        if old is None or not old.endswith(".json") or _excluded(old, exclude):
+            continue
+        try:
+            obj = _json(repo.read(mb, old) or b"")
+        except (UnicodeDecodeError, ValueError):
+            continue                                # no receipt was ever read from bytes that are not JSON
+        if _receipt_kind(obj) is None:
+            continue
+        how = f"renamed to {x['path']}" if x["status"] == "R" else _HOW.get(x["status"], f"changed ({x['status']})")
+        out.append({"code": "RECEIPT_REWRITTEN", "kind": "FAIL" if policy == "fail" else "NOTE", "path": old,
+                    "detail": f"{old}, committed at {mb[:12]}, is {how} in this pull request; a re-run writes a "
+                              f"new path (receipt_rewrite = {policy!r})"})
+    return out
+
+
+def _decisions_moved(repo: _Repo, base: str, head: str, immutability: str = "gates",
+                     suffixes: Sequence[str] = (".md",)) -> List[Dict[str, Any]]:
+    """C0 for every file under *suffixes* that holds a decision at the merge base and that the pull
+    request changes, deletes or renames: a deleted or renamed one, or one whose fence moved, is
+    DECISION_EDITED_AFTER_SEAL; prose moved around an unchanged fence is PROSE_AMENDED_IN_PLACE,
+    a NOTE under ``immutability = "gates"`` (the default) and a FAIL under ``"file"``."""
+    if immutability not in _IMMUTABILITY:
+        raise ValueError(f"immutability is one of {_IMMUTABILITY}, not {immutability!r}")
+    ch = repo.changes(base, head)
+    mb, h = ch["merge_base"], ch["head"]
+    out = []
+    for x in ch["changes"]:
+        old = x["old"]
+        if old is None or not old.endswith(tuple(suffixes)):
+            continue
+        try:
+            before = _core._decision(repo.read(mb, old) or b"")
+        except _Refusal as e:
+            if e.code == "NOT_A_BLOB":
+                continue                            # a symlink at the base holds no decision
+            raise
+        if before["form"] is None:
+            continue
+        sealed = before["gates_sha256"]
+        moved = None
+        if x["status"] == "D":
+            moved = "is deleted"
+        elif x["status"] == "R":
+            moved = f"is renamed to {x['path']}"
+        else:
+            try:
+                after = _core._decision(repo.read(h, old) or b"")
+            except _Refusal as e:
+                if e.code != "NOT_A_BLOB":
+                    raise
+                moved = "is no longer a regular file"
+            else:
+                if after["gates_sha256"] != sealed:
+                    moved = ("holds no fence the scanner reads" if after["form"] is None
+                             else f"holds the fence {after['gates_sha256']}")
+        if moved is not None:
+            out.append({"code": "DECISION_EDITED_AFTER_SEAL", "kind": "FAIL", "path": old,
+                        "detail": f"{old} held the sealed fence {sealed} at {mb[:12]}; at HEAD it {moved}. A "
+                                  f"sealed decision changes through an amendment file (fail closed)"})
+        else:
+            out.append({"code": "PROSE_AMENDED_IN_PLACE", "kind": "FAIL" if immutability == "file" else "NOTE",
+                        "path": old, "detail": f"{old}: prose outside the fence {sealed} changed in place "
+                                               f"(immutability = {immutability!r})"})
+    return out
