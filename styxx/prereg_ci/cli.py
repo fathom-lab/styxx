@@ -59,7 +59,7 @@ def _repo_path(arg: str, top: str) -> str:
 
 
 def _say(line: Dict[str, Any], seal: Dict[str, Any]) -> None:
-    decision = (f"gates {seal['gates_sha256']}" if seal["form"] == "gates"
+    decision = (f"{seal['form']} {seal['gates_sha256']}" if seal["form"] is not None
                 else f"no decision the scanner reads ({seal['code']})")
     if line["amends"]:
         said = f", amends {line['amends']}, {line['decision']}, seen: {line['seen']}"

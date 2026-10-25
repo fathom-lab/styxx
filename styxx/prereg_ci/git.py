@@ -45,7 +45,11 @@ missing blob from the clone's promisor remote, which a full clone never needs. T
   PLAN K11, every receipt a pull request writes and every receipt named by a RESULT it adds or
   changes; since the B3 review a RESULT is any written file that is a ``.md`` file or holds a
   form's marker, whatever its suffix, and a RESULT whose declaration the pull request drops is
-  ``RESULT_DECLARATION_DROPPED``, a NOTE.
+  ``RESULT_DECLARATION_DROPPED``, a NOTE;
+* locks decisions (3.2(a), step B4): ``core._decision`` reads a ```locks fence as the second form, so
+  the seal, the order commit and C0 hold it as they hold a gates fence (its digest is the fence's
+  text); ``LOCKED_FILE_ABSENT`` is the code ``styxx.prereg_ci.scorer_run`` gives a locked path that is
+  not a file at the commit its blobs are read at.
 
 History is read as the commit objects record it. Every command runs with replacement off
 (``--no-replace-objects`` and ``GIT_NO_REPLACE_OBJECTS``, the rule of ``styxx.sworn.GitTree``), with
@@ -92,6 +96,9 @@ _KIND = {
     "RESULT_PREREG_DIFFERS": "FAIL", "RESULT_NAMES_NO_RECEIPT": "NOTE",
     # a RESULT that declared a verdict at the merge base and declares none of it at HEAD (the B3 review, N1)
     "RESULT_DECLARATION_DROPPED": "NOTE",
+    # a locks decision names a file that is not a file at the seal's commit: the sealed decision cannot run
+    # (step B4; styxx.prereg_ci.scorer_run reads the locked files)
+    "LOCKED_FILE_ABSENT": "FAIL",
 }
 
 _MAX_BLOB_BYTES = _RECEIPT_CAP           # read at call time, so a test may lower it
@@ -1279,7 +1286,7 @@ def _bytes_of(repo: _Repo, entry: Dict[str, Any], rev: str) -> bytes:
 
 
 def _label(reading: Dict[str, Any]) -> str:
-    return (f"the fence gates {reading['gates_sha256']}" if reading["form"] == "gates"
+    return (f"the fence {reading['form']} {reading['gates_sha256']}" if reading["form"] is not None
             else f"no decision the scanner reads ({reading['code']})")
 
 
