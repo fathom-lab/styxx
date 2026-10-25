@@ -636,22 +636,153 @@ def test_an_amendment_that_is_no_ancestor_of_the_receipt_is_not_in_effect_whatev
 
 
 def test_a_manifest_line_overrides_the_landing_rule_and_both_are_printed(tmp_path):
-    """DESIGN 3.2(b): the manifest overrides the default per path; the landing commit is printed beside it."""
+    """DESIGN 3.2(b): the manifest overrides the default per path, its commit and bytes; the landing
+    commit is printed beside it. Bytes other than the landed ones around the landed decision are a
+    NOTE (MANIFEST_SEAL_PROSE_DIFFERS); the landed bytes at another commit read nothing."""
     g = Git(tmp_path / "override")
     g.write(P, prereg(0.5))
     early = g.commit("plan")
-    g.write(P, prereg(0.6, "re-sealed by the manifest"))
-    later = g.commit("plan edited before any receipt")
+    g.write(P, prereg(0.5, "prose moved, the fence kept"))
+    later = g.commit("plan's prose edited before any receipt")
     g.write("p/receipt_1.json", receipt(m=0.55))
     r = g.commit("receipt")
-    es = [line("1", "prereg", P, later, prereg(0.6, "re-sealed by the manifest"))]
+    es = [line("1", "prereg", P, later, prereg(0.5, "prose moved, the fence kept"))]
     with G._Repo(g.root) as repo:
         got = G._effect(repo, P, "p/receipt_1.json", r, "main", "main", es)
         assert (got["seal"]["commit"], got["seal"]["landing"], got["seal"]["manifest_id"]) == (later, early, "1")
-        assert got["effect"]["gates_sha256"] == digest(0.6)
-        assert got["seal"]["order"] == later
+        assert got["seal"]["bytes"] == prereg(0.5, "prose moved, the fence kept").encode("utf-8")
+        assert got["effect"]["gates_sha256"] == digest(0.5) and got["seal"]["refused"] is None
+        assert got["seal"]["order"] == early                    # the decision was already held at L
+        assert codes(got["findings"]) == [("MANIFEST_SEAL_PROSE_DIFFERS", "NOTE")]
+        assert codes(G._manifest_landed(repo, es, "main", "main")) == [("MANIFEST_SEAL_PROSE_DIFFERS", "NOTE")]
         default = G._effect(repo, P, "p/receipt_1.json", r, "main", "main", None)
         assert (default["seal"]["commit"], default["effect"]["gates_sha256"]) == (early, digest(0.5))
+    g.write("README.md", "r\n")
+    other = g.commit("a commit that leaves the PREREG as it is")
+    g.write(P, prereg(0.5))
+    g.commit("the landed bytes again")
+    es = [line("1", "prereg", P, early, prereg(0.5))]
+    with G._Repo(g.root) as repo:
+        assert G._manifest_landed(repo, es, "main", "main") == []
+        assert G._manifest_landed(repo, [dict(es[0], commit=g("rev-parse", "HEAD"))], "main", "main") == []
+        assert codes(G._manifest_landed(repo, [line("1", "prereg", P, other, prereg(0.5, "prose moved, the fence "
+                                                                                      "kept"))], "main", "main")) \
+            == [("MANIFEST_SEAL_PROSE_DIFFERS", "NOTE")]
+
+
+def _recd(m, bar):
+    """A receipt scored honestly under *bar*: its verdict, gates and digest as a scorer writes them."""
+    return receipt(m=m, verdict="PASS" if m >= bar else "HOLD", gates={"G0": m >= bar}, gates_sha256=digest(bar))
+
+
+def _scored(repo, rpath, rcommit, base, head, es):
+    got = G._effect(repo, P, rpath, rcommit, base, head, es)
+    rec = json.loads(repo.read(rcommit, rpath))
+    s = core.rescore(got["effect"]["bytes"], rec)
+    return got, s, core.compare(s, rec, sealed=got["effect"]["sealed"])
+
+
+def test_a_prereg_line_cannot_reseal_a_landed_prereg_at_a_decision_that_never_landed(tmp_path):
+    """The B2 review, case A: the plan (bar 0.5) lands and receipt_0 reads HOLD under it. A pull request
+    moves the bar to 0.4 at c1, puts the PREREG back to its landed bytes (C0 reads nothing), adds a
+    manifest prereg line naming c1, and adds receipt_1 scored under 0.4. The line overrides the default
+    seal's decision, which only an amendment line (with seen) may change: MANIFEST_SEAL_NOT_LANDED, and
+    the landed decision governs, so receipt_1 reads DECISION_DIGEST_UNSEALED and VERDICT_DIFFERS while
+    the honest receipt_0 reads clean."""
+    g = Git(tmp_path / "reseal")
+    g.write("README.md", "r\n")
+    g.commit("m0")
+    g.write(P, prereg(0.5))
+    seal = g.commit("the plan lands (bar 0.5)")
+    g.write("p/receipt_0.json", _recd(0.45, 0.5))
+    r0 = g.commit("run under the sealed table: HOLD")
+    base = g("rev-parse", "HEAD")
+    g("switch", "-q", "-c", "pr")
+    g.write(P, prereg(0.4))
+    c1 = g.commit("move the bar to 0.4")
+    g.write(P, prereg(0.5))
+    g.commit("put the PREREG back to its landed bytes")
+    es = [line("1", "prereg", P, c1, prereg(0.4))]
+    g.write(M, jsonl(*es))
+    g.commit("a manifest line sealing the PREREG at c1")
+    g.write("p/receipt_1.json", _recd(0.45, 0.4))
+    r1 = g.commit("re-run under 0.4: PASS")
+    head = g("rev-parse", "HEAD")
+    with G._Repo(g.root) as repo:
+        assert G._decisions_moved(repo, base, head) == []
+        assert G._manifest_blobs(repo, es, head) == [] and G._manifest_append_only(repo, base, head) == []
+        found = G._manifest_landed(repo, es, base, head)
+        assert [(f["code"], f["kind"], f["id"]) for f in found] == [("MANIFEST_SEAL_NOT_LANDED", "FAIL", "1")]
+        assert seal[:12] in found[0]["detail"] and digest(0.5) in found[0]["detail"]
+        assert digest(0.4) in found[0]["detail"] and "amendment line" in found[0]["detail"]
+        got, s, cmp_ = _scored(repo, "p/receipt_1.json", r1, base, head, es)
+        assert codes(got["findings"]) == [("MANIFEST_SEAL_NOT_LANDED", "FAIL")]
+        assert (got["seal"]["commit"], got["seal"]["manifest_id"], got["seal"]["refused"]["commit"]) == (seal, "1", c1)
+        assert got["effect"]["gates_sha256"] == digest(0.5) and got["effect"]["sealed"] == [digest(0.5)]
+        assert s["verdict"] == "HOLD"
+        assert [f["code"] for f in cmp_] == ["DECISION_DIGEST_UNSEALED", "VERDICT_DIFFERS"]
+        got0, s0, cmp0 = _scored(repo, "p/receipt_0.json", r0, base, head, es)
+        assert (s0["verdict"], cmp0) == ("HOLD", [])
+        assert codes(got0["findings"]) == [("MANIFEST_SEAL_NOT_LANDED", "FAIL")]
+        # without the line the landing rule reads the same decision, and nothing is refused
+        assert G._effect(repo, P, "p/receipt_1.json", r1, base, head, None)["effect"]["gates_sha256"] == digest(0.5)
+
+
+def test_a_prereg_line_for_a_prereg_that_arrives_in_the_pull_request_holds_heads_decision(tmp_path):
+    """Case A within one pull request: the PREREG is not on BASE, so the default seal is HEAD's bytes
+    (C2); a line naming a commit whose fence HEAD no longer holds is refused the same way."""
+    g = Git(tmp_path / "reseal_new")
+    g.write("README.md", "r\n")
+    base = g.commit("m0")
+    g("switch", "-q", "-c", "pr")
+    g.write(P, prereg(0.5))
+    g.commit("the plan (bar 0.5)")
+    g.write(P, prereg(0.4))
+    c1 = g.commit("move the bar to 0.4")
+    g.write(P, prereg(0.5))
+    g.commit("put it back")
+    es = [line("1", "prereg", P, c1, prereg(0.4))]
+    g.write(M, jsonl(*es))
+    g.commit("seal at c1")
+    g.write("p/receipt_1.json", _recd(0.45, 0.4))
+    r1 = g.commit("run under 0.4")
+    head = g("rev-parse", "HEAD")
+    with G._Repo(g.root) as repo:
+        found = G._manifest_landed(repo, es, base, head)
+        assert codes(found) == [("MANIFEST_SEAL_NOT_LANDED", "FAIL")] and "has not landed" in found[0]["detail"]
+        got, s, cmp_ = _scored(repo, "p/receipt_1.json", r1, base, head, es)
+        assert got["effect"]["gates_sha256"] == digest(0.5) and s["verdict"] == "HOLD"
+        assert [f["code"] for f in cmp_] == ["DECISION_DIGEST_UNSEALED", "VERDICT_DIFFERS"]
+        ok = [line("1", "prereg", P, head, prereg(0.5))]
+        assert G._manifest_landed(repo, ok, base, head) == []
+
+
+def test_the_same_change_as_an_amendment_line_reads_amended_after_data(tmp_path):
+    """The route case A's line was refused for: the bar moved after a receipt is an amendment line, which
+    names its seen and prints AMENDED_AFTER_DATA beside the later receipt."""
+    g = Git(tmp_path / "as_amendment")
+    g.write("README.md", "r\n")
+    g.commit("m0")
+    g.write(P, prereg(0.5))
+    seal = g.commit("plan")
+    g.write("p/receipt_0.json", _recd(0.45, 0.5))
+    g.commit("HOLD")
+    base = g("rev-parse", "HEAD")
+    g("switch", "-q", "-c", "pr")
+    g.write(A, prereg(0.4, "amendment"))
+    a = g.commit("amendment")
+    es = [line("1", "prereg", P, seal, prereg(0.5)),
+          line("1b", "amendment", A, a, prereg(0.4, "amendment"), amends="1", seen="results seen")]
+    g.write(M, jsonl(*es))
+    g.commit("seal it")
+    g.write("p/receipt_1.json", _recd(0.45, 0.4))
+    r1 = g.commit("PASS")
+    head = g("rev-parse", "HEAD")
+    with G._Repo(g.root) as repo:
+        assert G._manifest_landed(repo, es, base, head) == []
+        got, s, cmp_ = _scored(repo, "p/receipt_1.json", r1, base, head, es)
+        assert codes(got["findings"]) == [("AMENDED_AFTER_DATA", "NOTE")] and (s["verdict"], cmp_) == ("PASS", [])
+        assert "seen: results seen" in got["findings"][0]["detail"]
 
 
 def test_a_manifest_line_whose_bytes_differ_refuses_the_reading(amended):
@@ -748,6 +879,20 @@ def test_seal_at_a_named_commit(demo, capsys):
     demo.g.commit("prose")
     code, _, lines = _seal_cli(capsys, P, "--commit", demo.seal[:10])
     assert code == 0 and lines[0]["commit"] == demo.seal and lines[0]["blob_sha256"] == sha(prereg(0.5))
+
+
+def test_seal_refuses_a_prereg_line_at_a_decision_other_than_the_landed_one(demo, capsys):
+    """Case A at the verb: a prereg line at bytes holding another fence than the one the PREREG landed
+    with is refused, naming the amendment route, which then writes the line."""
+    demo.g.write(P, prereg(0.4, "the bar moved after the result"))
+    moved = demo.g.commit("move the bar in place")
+    code, out, lines = _seal_cli(capsys, P, "--commit", moved)
+    assert code == 2 and lines == [] and "MANIFEST_SEAL_NOT_LANDED" in out and "--amends" in out
+    assert demo.seal[:12] in out and digest(0.4) in out
+    assert _seal_cli(capsys, P, "--append")[0] == 0
+    code, _, lines = _seal_cli(capsys, P, "--amends", "1", "--seen", "results seen", "--commit", moved)
+    assert code == 0 and lines == [line("1b", "amendment", P, moved, prereg(0.4, "the bar moved after the result"),
+                                        amends="1", seen="results seen")]
 
 
 @pytest.mark.parametrize("argv, why", [
@@ -936,6 +1081,16 @@ def test_the_seals_record_reads_as_amendments_in_effect(generated, styxx_repo):
     assert [(a["id"], a["kind"], a["in_effect"]) for a in got["effect"]["amendments"]] == [
         ("7b", "amendment", True), ("8", "withdrawn", False)]
     assert got["findings"] == []
+
+
+def test_every_prereg_line_of_the_seals_record_holds_the_landed_bytes(generated, styxx_repo):
+    """Case A against the lab's own record: the four prereg lines (2, 3, 6, 7) each hold the bytes
+    the landing rule seals, at REV and at HEAD, so none reads MANIFEST_SEAL_NOT_LANDED or
+    MANIFEST_SEAL_PROSE_DIFFERS."""
+    es = core._manifest(generated["bytes"])
+    assert [e["id"] for e in es if e["kind"] == "prereg"] == ["2", "3", "6", "7"]
+    assert G._manifest_landed(styxx_repo, es, REV, REV) == []
+    assert G._manifest_landed(styxx_repo, es, "HEAD", "HEAD") == []
 
 
 def test_the_generator_check_regenerates_the_committed_bytes():

@@ -12,11 +12,14 @@ commit and the order commit, and the manifest line (DESIGN 3.2(b)); the commit i
 parent-one chain unless ``--commit`` names one in HEAD's history. ``seal PATH --amends ID|PATH --seen
 LEVEL [--append]`` prints an amendment line: ``--amends`` names a manifest line by id, or a path,
 which names that path's newest line, or, where the path has none, gets its default-seal line
-written before the amendment (PLAN K9). ``--append`` appends the line(s) to the manifest's working
-copy (``prereg-ci.seals.jsonl`` at the work tree's top), LF, no byte-order mark, after checking
-that the working copy is HEAD's manifest with lines appended and that the whole still parses;
-without it nothing is written. The manifest is read from blobs everywhere else, so a working copy
-that a checkout holds with CRLF is read here with CRLF as LF and its bytes are left as they are.
+written before the amendment (PLAN K9). A prereg line seals the decision the PREREG landed with on
+HEAD's parent-one chain: ``--commit`` naming bytes that hold another decision is refused
+(``MANIFEST_SEAL_NOT_LANDED``, which check reads too), since a changed decision is an amendment line.
+``--append`` appends the line(s) to the manifest's working copy (``prereg-ci.seals.jsonl`` at the
+work tree's top), LF, no byte-order mark, after checking that the working copy is HEAD's manifest
+with lines appended and that the whole still parses; without it nothing is written. The manifest
+is read from blobs everywhere else, so a working copy that a checkout holds with CRLF is read here
+with CRLF as LF and its bytes are left as they are.
 """
 from __future__ import annotations
 
@@ -100,9 +103,7 @@ def _seal(args: argparse.Namespace) -> int:
         appended = _core._manifest_bytes(new)
         _git._manifest_parse(lf + appended, man, "the working copy with the new lines")
         for line in new:
-            seal, _ = _git._sealed(repo, line["path"], head, head, [{**line, "kind": "prereg", "amends": None,
-                                                                    "decision": "own"}])
-            _say(line, seal)
+            _say(line, _git._line_seal(repo, line, head, head))
         if not args.append:
             print(f"  not written: --append appends the line{'s' if len(new) > 1 else ''} to {man}")
         else:

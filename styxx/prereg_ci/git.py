@@ -36,7 +36,8 @@ missing blob from the clone's promisor remote, which a full clone never needs. T
 * the seals manifest (3.2(b), step B2): its lines as a revision holds them; every ``blob_sha256``
   against the blob at its commit, which the history the manifest is read in must hold; the
   append-only rule, for a pull request (merge base to HEAD) and along the parent-one chain; the
-  ``seen`` null of an imported record (PLAN K10); the decision in effect for a receipt, with
+  ``seen`` null of an imported record (PLAN K10); a prereg line held to the default seal's
+  decision (``MANIFEST_SEAL_NOT_LANDED``); the decision in effect for a receipt, with
   ``AMENDED_AFTER_RECEIPT`` and ``AMENDED_AFTER_DATA`` (C4); and the lines the ``seal`` verb writes
   (3.3, PLAN K9).
 
@@ -77,6 +78,8 @@ _KIND = {
     "MANIFEST_INVALID": "INPUT", "NOT_COMMITTED": "INPUT",
     "MANIFEST_SEEN_MISSING": "FAIL", "MANIFEST_BLOB_DIFFERS": "FAIL", "MANIFEST_COMMIT_UNREACHABLE": "FAIL",
     "MANIFEST_REWRITTEN": "FAIL",
+    # a manifest prereg line against the default seal of its path (the B2 review, case A)
+    "MANIFEST_SEAL_NOT_LANDED": "FAIL", "MANIFEST_SEAL_PROSE_DIFFERS": "NOTE",
 }
 
 _MAX_BLOB_BYTES = _RECEIPT_CAP           # read at call time, so a test may lower it
@@ -862,6 +865,22 @@ def _recorded(repo: _Repo, rev: str, receipt_path: str, receipt: Any,
 
 # ---- the seal of one PREREG (C2) ----------------------------------------------------------------------
 
+def _default_start(repo: _Repo, path: str, base: str, head: Optional[str] = None
+                   ) -> Tuple[Optional[str], str, str]:
+    """``(L, start, add_rev)`` for the default seal of *path*: its landing commit L on *base*'s
+    parent-one chain, read there; else, for a PREREG that arrives in the pull request (C2), no L and
+    *head*'s bytes. PREREG_ABSENT otherwise."""
+    b = repo.commit(base)
+    landing = repo.landing([path], b)[path]
+    if landing is not None:
+        return landing, landing, b
+    if head is not None and repo.blob_id(head, path) is not None:
+        h = repo.commit(head)
+        return None, h, h
+    where = f"on {base}'s parent-one chain" + ("" if head is None else f" or in {head}")
+    raise _Refusal("PREREG_ABSENT", f"{path} is not {where}")
+
+
 def _seal(repo: _Repo, path: str, base: str, head: Optional[str] = None) -> Dict[str, Any]:
     """The default seal of *path* (DESIGN 3.2(b)): its landing commit L on *base*'s parent-one chain
     and the blob there, the order commit on the decision digest and on the file blob, every minimal
@@ -869,15 +888,7 @@ def _seal(repo: _Repo, path: str, base: str, head: Optional[str] = None) -> Dict
     and the path L renamed it from, if any. A PREREG not on the chain that is in *head* arrives in
     the pull request (C2): no L, orders read from *head*, the add commit from *head*'s history.
     Neither is PREREG_ABSENT."""
-    b = repo.commit(base)
-    landing = repo.landing([path], b)[path]
-    if landing is not None:
-        start, add_rev = landing, b
-    elif head is not None and repo.blob_id(head, path) is not None:
-        start = add_rev = repo.commit(head)
-    else:
-        where = f"on {base}'s parent-one chain" + ("" if head is None else f" or in {head}")
-        raise _Refusal("PREREG_ABSENT", f"{path} is not {where}")
+    landing, start, add_rev = _default_start(repo, path, base, head)
     data = repo.read(start, path)
     if data is None:
         raise _Refusal("PREREG_ABSENT", f"{path} is not a file at {start[:12]}")
@@ -1195,27 +1206,90 @@ def _bytes_of(repo: _Repo, entry: Dict[str, Any], rev: str) -> bytes:
     return repo.read(entry["commit"], entry["path"]) or b""
 
 
-def _sealed(repo: _Repo, path: str, base: str, head: str,
-            entries: Optional[Sequence[Dict[str, Any]]]) -> Tuple[Dict[str, Any], List[Tuple[Any, Any, bytes]]]:
-    """The seal of *path* (C2: its manifest line, else the landing rule) and the lineage of that
-    line with each line's decision and bytes. A manifest seal carries the landing commit beside it,
-    printed (DESIGN 3.2(b): both are printed)."""
-    line = next((e for e in entries or () if e["kind"] == "prereg" and e["path"] == path), None)
-    if line is None:
-        seal = dict(_seal(repo, path, base, head))
-        seal.update(manifest_id=None, commit=seal["landing"] or repo.commit(head))
-        return seal, []
+def _label(reading: Dict[str, Any]) -> str:
+    return (f"the fence gates {reading['gates_sha256']}" if reading["form"] == "gates"
+            else f"no decision the scanner reads ({reading['code']})")
+
+
+def _seal_finding(repo: _Repo, line: Dict[str, Any], base: str, head: str) -> Optional[Dict[str, Any]]:
+    """A manifest prereg line against the default seal of its path (DESIGN 3.2(b), C2; the B2
+    review, case A): the landing rule on *base*'s parent-one chain, else, for a PREREG that arrives
+    in the pull request, HEAD's bytes. The manifest overrides the default seal's commit and bytes,
+    never its decision: a line whose bytes hold another decision (another fence, or none where the
+    default holds one) is ``MANIFEST_SEAL_NOT_LANDED``, a FAIL, since a decision changed after it
+    is an amendment line, with ``seen``, which C4 reads (``AMENDED_AFTER_DATA``). A line whose bytes
+    hold the default's decision with other prose is ``MANIFEST_SEAL_PROSE_DIFFERS``, a NOTE. None
+    where the line's bytes are the default seal's bytes."""
+    path = line["path"]
+    landing, start, _ = _default_start(repo, path, base, head)
+    ref = repo.read(start, path) or b""
+    mine = _bytes_of(repo, line, head)
+    if mine == ref:
+        return None
+    a, d = _core._decision(mine), _core._decision(ref)
+    where = (f"the default seal is its landing commit {landing[:12]} on the parent-one chain of {base}" if landing
+             else f"{path} has not landed on the parent-one chain of {base}, so the default seal is its bytes at "
+                  f"{start[:12]}, the head of the pull request (C2)")
+    said = f"line {line['id']} seals {path} at {line['commit'][:12]}"
+    if (a["form"], a["gates_sha256"], a["code"]) != (d["form"], d["gates_sha256"], d["code"]):
+        return _line("MANIFEST_SEAL_NOT_LANDED", (
+            f"{said}, holding {_label(a)}; {where}, holding {_label(d)}. A prereg line overrides the default seal's "
+            f"commit and bytes, never its decision: a decision changed after it is an amendment line, with seen, "
+            f"which AMENDED_AFTER_DATA reads. The default seal governs"), line)
+    return _line("MANIFEST_SEAL_PROSE_DIFFERS", (
+        f"{said} (blob sha256 {line['blob_sha256']}); {where} (blob sha256 {hashlib.sha256(ref).hexdigest()}). "
+        f"Both hold {_label(d)}; the bytes differ outside the fence, and the line's bytes are the seal bytes"), line)
+
+
+def _manifest_landed(repo: _Repo, entries: Sequence[Dict[str, Any]], base: str, head: str) -> List[Dict[str, Any]]:
+    """``_seal_finding`` for every prereg line of *entries* (the manifest as *head* holds it), in
+    file order: the manifest-wide reading of case A, which a pull request that adds a receipt
+    nowhere still gets."""
+    found = (_seal_finding(repo, e, base, head) for e in entries if e["kind"] == "prereg")
+    return [f for f in found if f is not None]
+
+
+def _line_seal(repo: _Repo, line: Dict[str, Any], base: str, head: str) -> Dict[str, Any]:
+    """The seal a manifest line records, read from its own bytes, with the landing commit on *base*'s
+    chain printed beside it (DESIGN 3.2(b): both are printed). No reading against the default seal."""
+    path = line["path"]
     data = _bytes_of(repo, line, head)
-    c, b = line["commit"], repo.commit(base)
+    c, b = repo.commit(line["commit"]), repo.commit(base)
     landing = repo.landing([path], b)[path]
     decision = _core._decision(data)
-    seal = {"path": path, "manifest_id": line["id"], "commit": c, "landing": landing, "landed": landing is not None,
+    return {"path": path, "manifest_id": line["id"], "commit": c, "landing": landing, "landed": landing is not None,
             "add": repo.add_commit(path, b if landing is not None else head),
             "order": repo.order_commit(path, c, "decision"), "order_blob": repo.order_commit(path, c, "blob"),
             "order_holders": repo.order_holders(path, c, "decision"), "blob": repo.blob_id(c, path),
             "blob_sha256": line["blob_sha256"], "bytes": data, "form": decision["form"],
             "gates_sha256": decision["gates_sha256"], "code": decision["code"], "detail": decision["detail"],
-            "renamed_from": repo.renamed_from(path, landing) if landing else None}
+            "renamed_from": repo.renamed_from(path, landing) if landing else None, "seen": line["seen"],
+            "refused": None, "findings": []}
+
+
+def _sealed(repo: _Repo, path: str, base: str, head: str,
+            entries: Optional[Sequence[Dict[str, Any]]]) -> Tuple[Dict[str, Any], List[Tuple[Any, Any, bytes]]]:
+    """The seal of *path* (C2: its manifest line, else the landing rule) and the lineage of that
+    line with each line's decision and bytes. A manifest seal carries the landing commit beside it,
+    printed (DESIGN 3.2(b): both are printed), and its reading against the default seal
+    (``_seal_finding``) in ``findings``. A line refused there (``MANIFEST_SEAL_NOT_LANDED``) does not
+    govern: the default seal does, under the line's id (its amendments still hang on it), and the
+    refused line's commit and decision are kept in ``refused``. ``seen`` is the line's (a prereg
+    line may state what had been seen when it was sealed; null is not stated), None for no line."""
+    line = next((e for e in entries or () if e["kind"] == "prereg" and e["path"] == path), None)
+    if line is None:
+        seal = dict(_seal(repo, path, base, head))
+        seal.update(manifest_id=None, commit=seal["landing"] or repo.commit(head), seen=None, refused=None,
+                    findings=[])
+        return seal, []
+    seal = _line_seal(repo, line, base, head)
+    found = _seal_finding(repo, line, base, head)
+    if found is not None and found["kind"] == "FAIL":
+        kept = dict(_seal(repo, path, base, head))
+        kept.update(manifest_id=line["id"], commit=kept["landing"] or repo.commit(head), seen=line["seen"],
+                    refused={k: seal[k] for k in ("commit", "blob_sha256", "form", "gates_sha256", "code")})
+        seal = kept
+    seal["findings"] = [found] if found is not None else []
     chain = []
     for e in _core._lineage(entries or (), line["id"]):
         b_e = _bytes_of(repo, e, head)
@@ -1272,7 +1346,8 @@ def _effect(repo: _Repo, prereg_path: str, receipt_path: str, receipt_commit: st
     *entries* is the manifest as HEAD holds it (``_manifest_at``), or None. The seal is the
     PREREG's manifest line, else the landing rule on *base*'s chain (C2); the decision is the seal's
     fence replaced by the latest own amendment line strictly before R (``core._in_effect``).
-    Findings: ``MANIFEST_DECISION_DIFFERS`` for a line its bytes do not bear out,
+    Findings: the seal line's reading against the default seal (``MANIFEST_SEAL_NOT_LANDED``,
+    ``MANIFEST_SEAL_PROSE_DIFFERS``), ``MANIFEST_DECISION_DIFFERS`` for a line its bytes do not bear out,
     ``AMENDED_AFTER_RECEIPT`` for each amendment line not before R, and, when an own amendment
     governs, ``AMENDED_AFTER_DATA`` for every other receipt of the PREREG (in HEAD's tree or in the
     tree at the amendment's commit) whose R is strictly before the amendment's commit, re-scored
@@ -1286,7 +1361,7 @@ def _effect(repo: _Repo, prereg_path: str, receipt_path: str, receipt_commit: st
     r = repo.commit(receipt_commit)
     seal, chain = _sealed(repo, prereg_path, base, head, entries)
     effect = _reading(repo, seal, chain, r)
-    findings = list(effect["findings"])
+    findings = list(seal["findings"]) + list(effect["findings"])
     earlier: List[Dict[str, Any]] = []
     gov = effect["source"]
     if gov is not None and gov != seal["manifest_id"]:
@@ -1347,6 +1422,14 @@ def _sealed_line(repo: _Repo, entries: Sequence[Dict[str, Any]], path: str, head
         raise _Refusal("NOT_COMMITTED", f"{path} is not a file at {c[:12]}")
     if kind == "prereg":
         line_id, decision = _next_number(entries), "own"
+        landing, start, _ = _default_start(repo, path, head, head)
+        a, d = _core._decision(data), _core._decision(repo.read(start, path) or b"")
+        if (a["form"], a["gates_sha256"], a["code"]) != (d["form"], d["gates_sha256"], d["code"]):
+            raise _Refusal("MANIFEST_SEAL_NOT_LANDED", (
+                f"{path} at {c[:12]} holds {_label(a)}; it landed at {(landing or start)[:12]} on HEAD's parent-one chain "
+                f"holding {_label(d)}, and check refuses a prereg line whose decision is not the landed one. A "
+                f"decision changed after landing is an amendment line: seal {path} --amends ID --seen LEVEL "
+                f"--commit {c[:12]}"))
     else:
         reading = _core._decision(data)
         if reading["form"] is None and reading["code"] != "NOT_GATED":
