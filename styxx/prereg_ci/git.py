@@ -32,7 +32,13 @@ missing blob from the clone's promisor remote, which a full clone never needs. T
 * sealed decisions (C0): a fence edited in place, a deleted PREREG and a renamed one are
   ``DECISION_EDITED_AFTER_SEAL`` (fail closed); prose edited around an unchanged fence is
   ``PROSE_AMENDED_IN_PLACE``, a NOTE, or a FAIL under ``immutability = "file"``. This is the refusal
-  path protection gives, kept so one tool covers it (DESIGN 3.4).
+  path protection gives, kept so one tool covers it (DESIGN 3.4);
+* the seals manifest (3.2(b), step B2): its lines as a revision holds them; every ``blob_sha256``
+  against the blob at its commit, which the history the manifest is read in must hold; the
+  append-only rule, for a pull request (merge base to HEAD) and along the parent-one chain; the
+  ``seen`` null of an imported record (PLAN K10); the decision in effect for a receipt, with
+  ``AMENDED_AFTER_RECEIPT`` and ``AMENDED_AFTER_DATA`` (C4); and the lines the ``seal`` verb writes
+  (3.3, PLAN K9).
 
 History is read as the commit objects record it. Every command runs with replacement off
 (``--no-replace-objects`` and ``GIT_NO_REPLACE_OBJECTS``, the rule of ``styxx.sworn.GitTree``), with
@@ -67,6 +73,10 @@ _KIND = {
     "RECEIPT_UNREADABLE": "NOTE", "RECEIPT_NOT_A_FILE": "NOTE",
     "RECEIPT_REWRITTEN": "FAIL", "DECISION_EDITED_AFTER_SEAL": "FAIL",
     "PROSE_AMENDED_IN_PLACE": "NOTE",
+    # the seals manifest (step B2)
+    "MANIFEST_INVALID": "INPUT", "NOT_COMMITTED": "INPUT",
+    "MANIFEST_SEEN_MISSING": "FAIL", "MANIFEST_BLOB_DIFFERS": "FAIL", "MANIFEST_COMMIT_UNREACHABLE": "FAIL",
+    "MANIFEST_REWRITTEN": "FAIL",
 }
 
 _MAX_BLOB_BYTES = _RECEIPT_CAP           # read at call time, so a test may lower it
@@ -88,6 +98,7 @@ _POLICIES = ("fail", "note")
 _IMMUTABILITY = ("gates", "file")
 _HOW = {"D": "deleted", "M": "changed in place", "T": "changed to another file type"}
 _WRITES = ("A", "R", "M", "T")           # the changes that leave a path holding new bytes at HEAD
+_MANIFEST = "prereg-ci.seals.jsonl"      # DESIGN 3.2(b): the seals manifest, at the work tree's top
 
 
 class _Refusal(Exception):
@@ -1020,3 +1031,370 @@ def _decisions_moved(repo: _Repo, base: str, head: str, immutability: str = "gat
                         "path": old, "detail": f"{old}: prose outside the fence {sealed} changed in place "
                                                f"(immutability = {immutability!r})"})
     return out
+
+
+# ---- the seals manifest (DESIGN 3.2(b); step B2) -------------------------------------------------------
+
+def _manifest_parse(data: bytes, path: str, where: str) -> List[Dict[str, Any]]:
+    """``core._manifest`` over bytes read at *where*, its refusal raised as this layer's."""
+    try:
+        return _core._manifest(data)
+    except _core._ManifestError as e:
+        at = f", line {e.line}" if e.line is not None else ""
+        raise _Refusal(e.code, f"{path} at {where}{at}: {e.detail}")
+
+
+def _manifest_at(repo: _Repo, rev: str, path: str = _MANIFEST) -> Optional[List[Dict[str, Any]]]:
+    """The manifest's lines as *rev*'s tree holds them, or None where it holds no manifest. A
+    manifest path that is a symlink or a submodule is MANIFEST_INVALID."""
+    c = repo.commit(rev)
+    try:
+        data = repo.read(c, path)
+    except _Refusal as e:
+        if e.code != "NOT_A_BLOB":
+            raise
+        raise _Refusal("MANIFEST_INVALID", f"{path} at {c[:12]} is not a regular file")
+    return None if data is None else _manifest_parse(data, path, c[:12])
+
+
+def _line(code: str, detail: str, entry: Dict[str, Any]) -> Dict[str, Any]:
+    return {"code": code, "kind": _KIND[code], "detail": detail, "path": entry["path"], "id": entry["id"]}
+
+
+def _manifest_blobs(repo: _Repo, entries: Sequence[Dict[str, Any]], rev: str) -> List[Dict[str, Any]]:
+    """DESIGN 3.2(b): every ``blob_sha256`` equals ``git show <commit>:<path> | sha256sum``, the
+    sha256 of the blob as git stores it (never a working copy, never newlines translated), else
+    ``MANIFEST_BLOB_DIFFERS``. A line's commit is *rev* or an ancestor of it, so every clone of the
+    history the manifest is read in holds its bytes; else ``MANIFEST_COMMIT_UNREACHABLE``. A commit
+    the object store lacks is COMMIT_ABSENT (UNCHECKABLE)."""
+    tip = repo.commit(rev)
+    out = []
+    for e in entries:
+        c = repo.commit(e["commit"])
+        if c != tip and not repo.is_strict_ancestor(c, tip):
+            out.append(_line("MANIFEST_COMMIT_UNREACHABLE", f"line {e['id']}: {c[:12]} is not in the history of "
+                             f"{tip[:12]}, so a clone of that history holds no bytes for it", e))
+            continue
+        try:
+            data = repo.read(c, e["path"])
+        except _Refusal as r:
+            if r.code != "NOT_A_BLOB":
+                raise
+            data = None
+        if data is None:
+            out.append(_line("MANIFEST_BLOB_DIFFERS", f"line {e['id']}: {e['path']} at {c[:12]} is no regular file, "
+                             f"so no bytes there match blob_sha256 {e['blob_sha256']}", e))
+            continue
+        got = hashlib.sha256(data).hexdigest()
+        if got != e["blob_sha256"]:
+            out.append(_line("MANIFEST_BLOB_DIFFERS", f"line {e['id']}: git show {c[:12]}:{e['path']} | sha256sum "
+                             f"gives {got}; the line records {e['blob_sha256']}", e))
+    return out
+
+
+def _not_appended(old: bytes, new: bytes) -> Optional[str]:
+    """Why *new* is not *old* with lines appended, or None."""
+    if new.startswith(old) and (not old or old.endswith(b"\n")):
+        return None
+    was, now = old.splitlines(keepends=True), new.splitlines(keepends=True)
+    for i, (x, y) in enumerate(zip(was, now)):
+        if x != y:
+            return f"line {i + 1} is not the line the manifest held there"
+    return f"it holds {len(now)} of the {len(was)} lines the manifest held"
+
+
+def _manifest_append_only(repo: _Repo, base: str, head: str, path: str = _MANIFEST) -> List[Dict[str, Any]]:
+    """DESIGN 3.2(b): the manifest is append-only. For a pull request, the bytes HEAD holds start
+    with the bytes the merge base held (a manifest the pull request adds has nothing to keep); a
+    manifest deleted, renamed away or made something other than a regular file is
+    ``MANIFEST_REWRITTEN`` too."""
+    ch = repo.changes(base, head)
+    mb, h = ch["merge_base"], ch["head"]
+    out = []
+
+    def rewritten(how: str) -> None:
+        out.append({"code": "MANIFEST_REWRITTEN", "kind": _KIND["MANIFEST_REWRITTEN"], "path": path, "id": None,
+                    "detail": f"{path}, committed at {mb[:12]}, {how} in this pull request; the manifest is "
+                              f"append-only, so a line is corrected by a new line"})
+
+    for x in ch["changes"]:
+        if x["old"] == path and x["path"] != path:
+            rewritten("is deleted" if x["status"] == "D" else f"is renamed to {x['path']}")
+        elif x["path"] == path:
+            try:
+                old = repo.read(mb, path)
+                new = repo.read(h, path)
+            except _Refusal as e:
+                if e.code != "NOT_A_BLOB":
+                    raise
+                rewritten("is no longer a regular file")
+                continue
+            why = None if old is None else _not_appended(old, new or b"")
+            if why is not None:
+                rewritten(f"is not appended to: {why}")
+    return out
+
+
+def _manifest_chain(repo: _Repo, rev: str, path: str = _MANIFEST) -> List[Dict[str, Any]]:
+    """Append-only along *rev*'s parent-one chain (the default branch's history, which a census
+    reads): every chain commit whose manifest differs from its parent one's holds the parent's
+    bytes with lines appended, else ``MANIFEST_REWRITTEN`` naming the commit."""
+    out = []
+    for c in reversed(repo.chain(rev)):
+        ps = repo._parents_of(c)
+        now, was = repo._blob_id(c, path), (repo._blob_id(ps[0], path) if ps else None)
+        if now == was or was is None:
+            continue
+        why = "deleted it" if now is None else _not_appended(repo._contents(was, path), repo._contents(now, path))
+        if why is not None:
+            out.append({"code": "MANIFEST_REWRITTEN", "kind": _KIND["MANIFEST_REWRITTEN"], "path": path, "id": None,
+                        "detail": f"{c[:12]} on the parent-one chain of {rev} rewrote {path}: {why}"})
+    return out
+
+
+def _manifest_seen(repo: _Repo, entries: Sequence[Dict[str, Any]], rev: str,
+                   path: str = _MANIFEST) -> List[Dict[str, Any]]:
+    """PLAN K10. An amendment or withdrawn line may say ``seen`` null only as part of the record
+    the manifest imported when it began: the manifest held the same line at the commit that added
+    it (git's add commit of *path* in *rev*'s history), and the line's commit is strictly before
+    that commit. Any other null is ``MANIFEST_SEEN_MISSING`` (DESIGN 3.2(b): "a new amendment line
+    without seen is refused"); a missing key is refused by the parser."""
+    nulls = [e for e in entries if e["kind"] != "prereg" and e["seen"] is None]
+    if not nulls:
+        return []
+    added = repo.add_commit(path, rev)
+    imported: Dict[str, Dict[str, Any]] = {}
+    if added is not None:
+        try:
+            imported = {e["id"]: e for e in _manifest_parse(repo.read(added, path) or b"", path, added[:12])}
+        except _Refusal:
+            imported = {}
+    out = []
+    for e in nulls:
+        if added is None:
+            why = f"{path} has no add commit in the history of {rev}"
+        elif imported.get(e["id"]) != e:
+            why = f"the line was not in {path} when {added[:12]} added it"
+        elif not repo.is_strict_ancestor(e["commit"], added):
+            why = f"its commit {e['commit'][:12]} is not strictly before {added[:12]}, which added {path}"
+        else:
+            continue
+        out.append(_line("MANIFEST_SEEN_MISSING", f"line {e['id']} ({e['path']} at {e['commit'][:12]}): an amendment "
+                         f"line states what had been seen; seen is null and {why}, so it is no record the manifest "
+                         f"imported", e))
+    return out
+
+
+# ---- the decision in effect for one receipt (DESIGN 3.4 C2, C4) -----------------------------------------
+
+def _bytes_of(repo: _Repo, entry: Dict[str, Any], rev: str) -> bytes:
+    """A manifest line's bytes, refused unless they are what the line records."""
+    found = _manifest_blobs(repo, [entry], rev)
+    if found:
+        raise _Refusal(found[0]["code"], found[0]["detail"])
+    return repo.read(entry["commit"], entry["path"]) or b""
+
+
+def _sealed(repo: _Repo, path: str, base: str, head: str,
+            entries: Optional[Sequence[Dict[str, Any]]]) -> Tuple[Dict[str, Any], List[Tuple[Any, Any, bytes]]]:
+    """The seal of *path* (C2: its manifest line, else the landing rule) and the lineage of that
+    line with each line's decision and bytes. A manifest seal carries the landing commit beside it,
+    printed (DESIGN 3.2(b): both are printed)."""
+    line = next((e for e in entries or () if e["kind"] == "prereg" and e["path"] == path), None)
+    if line is None:
+        seal = dict(_seal(repo, path, base, head))
+        seal.update(manifest_id=None, commit=seal["landing"] or repo.commit(head))
+        return seal, []
+    data = _bytes_of(repo, line, head)
+    c, b = line["commit"], repo.commit(base)
+    landing = repo.landing([path], b)[path]
+    decision = _core._decision(data)
+    seal = {"path": path, "manifest_id": line["id"], "commit": c, "landing": landing, "landed": landing is not None,
+            "add": repo.add_commit(path, b if landing is not None else head),
+            "order": repo.order_commit(path, c, "decision"), "order_blob": repo.order_commit(path, c, "blob"),
+            "order_holders": repo.order_holders(path, c, "decision"), "blob": repo.blob_id(c, path),
+            "blob_sha256": line["blob_sha256"], "bytes": data, "form": decision["form"],
+            "gates_sha256": decision["gates_sha256"], "code": decision["code"], "detail": decision["detail"],
+            "renamed_from": repo.renamed_from(path, landing) if landing else None}
+    chain = []
+    for e in _core._lineage(entries or (), line["id"]):
+        b_e = _bytes_of(repo, e, head)
+        chain.append((e, _core._decision(b_e), b_e))
+    return seal, chain
+
+
+def _reading(repo: _Repo, seal: Dict[str, Any], chain: Sequence[Tuple[Any, Any, bytes]], r: str) -> Dict[str, Any]:
+    before = {e["id"]: repo.is_strict_ancestor(e["commit"], r) for e, _, _ in chain}
+    readings = _core._amendment_readings(_core._decision(seal["bytes"]), chain)
+    return _core._in_effect({"id": seal["manifest_id"], "gates_sha256": seal["gates_sha256"], "bytes": seal["bytes"]},
+                            readings, before)
+
+
+def _receipts_of(repo: _Repo, prereg_path: str, revs: Sequence[str],
+                 exclude: Sequence[str] = ()) -> List[Dict[str, Any]]:
+    """Every receipt (3.2(d)) in the trees of *revs* whose ``prereg`` resolves to *prereg_path*,
+    by path (a path in more than one tree is read at the earliest-listed rev that holds it), each
+    ``{path, receipt, receipt_commit, receipt_holders, rev}``: R is the oldest commit of that rev's
+    history at which the path holds a receipt."""
+    out: Dict[str, Dict[str, Any]] = {}
+    for rev in revs:
+        c = repo.commit(rev)
+        tree = repo._view(c)
+        for path in repo.grep(c, '"prereg"', ":(icase)*.json"):
+            if path in out or _excluded(path, exclude):
+                continue
+            try:
+                obj = _json(repo.read(c, path) or b"")
+            except _Refusal as e:
+                if e.code == "NOT_A_BLOB":
+                    continue
+                raise
+            except (UnicodeDecodeError, ValueError):
+                continue
+            if _receipt_kind(obj) != "receipt":
+                continue
+            try:
+                if _resolve(obj["prereg"], posixpath.dirname(path), tree) != prereg_path:
+                    continue
+            except _Refusal:
+                continue
+            held = repo._held(path, c, lambda x, p=path: _holds_receipt(repo, x, p))
+            out[path] = {"path": path, "receipt": obj, "receipt_commit": held[-1],
+                         "receipt_holders": tuple(_minimal(repo, held)), "rev": c}
+    return [out[p] for p in sorted(out)]
+
+
+def _effect(repo: _Repo, prereg_path: str, receipt_path: str, receipt_commit: str, base: str, head: str,
+            entries: Optional[Sequence[Dict[str, Any]]] = None, *, amend_after_data: str = "report",
+            exclude: Sequence[str] = ()) -> Dict[str, Any]:
+    """The decision in effect for one receipt at R (DESIGN 3.4 C4), with the seal it starts from.
+
+    *entries* is the manifest as HEAD holds it (``_manifest_at``), or None. The seal is the
+    PREREG's manifest line, else the landing rule on *base*'s chain (C2); the decision is the seal's
+    fence replaced by the latest own amendment line strictly before R (``core._in_effect``).
+    Findings: ``MANIFEST_DECISION_DIFFERS`` for a line its bytes do not bear out,
+    ``AMENDED_AFTER_RECEIPT`` for each amendment line not before R, and, when an own amendment
+    governs, ``AMENDED_AFTER_DATA`` for every other receipt of the PREREG (in HEAD's tree or in the
+    tree at the amendment's commit) whose R is strictly before the amendment's commit, re-scored
+    under its own decision in effect (``earlier``). A manifest line whose bytes are not what it
+    records refuses the reading (``MANIFEST_BLOB_DIFFERS``, ``MANIFEST_COMMIT_UNREACHABLE``).
+
+    Returns ``{seal, effect, findings, earlier}``; ``effect["bytes"]`` is what ``core.rescore``
+    scores and ``effect["sealed"]`` the digests C6(i) reads."""
+    if amend_after_data not in _core._AMEND_AFTER_DATA:
+        raise ValueError(f"amend_after_data is one of {_core._AMEND_AFTER_DATA}, not {amend_after_data!r}")
+    r = repo.commit(receipt_commit)
+    seal, chain = _sealed(repo, prereg_path, base, head, entries)
+    effect = _reading(repo, seal, chain, r)
+    findings = list(effect["findings"])
+    earlier: List[Dict[str, Any]] = []
+    gov = effect["source"]
+    if gov is not None and gov != seal["manifest_id"]:
+        amendment = next(e for e, _, _ in chain if e["id"] == gov)
+        for x in _receipts_of(repo, prereg_path, [head, amendment["commit"]], exclude):
+            r0 = x["receipt_commit"]
+            if x["path"] == receipt_path or not repo.is_strict_ancestor(r0, amendment["commit"]):
+                continue
+            under = _reading(repo, seal, chain, r0)
+            scored = _core.rescore(under["bytes"], x["receipt"])
+            earlier.append({"path": x["path"], "commit": r0, "before_amendment": True, "source": under["source"],
+                            "verdict": scored["verdict"], "code": scored["code"]})
+        findings += _core._amended_after_data(effect, earlier, amend_after_data)
+    return {"seal": seal, "effect": effect, "findings": findings, "earlier": earlier}
+
+
+# ---- the lines ``seal`` writes (DESIGN 3.3; PLAN K9) --------------------------------------------------
+
+def _next_number(entries: Sequence[Dict[str, Any]]) -> str:
+    nums = [int(m.group(0)) for m in (re.match(r"[0-9]+", e["id"]) for e in entries) if m]
+    return str(max(nums) + 1 if nums else 1)
+
+
+def _amendment_id(entries: Sequence[Dict[str, Any]], root: str) -> str:
+    """The root line's id with the next letter (SEALS' 3b, 6b, 7b), then ``<root>.<n>``."""
+    used = {e["id"] for e in entries}
+    for ch in "bcdefghijklmnopqrstuvwxyz":
+        if root + ch not in used:
+            return root + ch
+    n = 2
+    while f"{root}.{n}" in used:
+        n += 1
+    return f"{root}.{n}"
+
+
+def _root_of(entries: Sequence[Dict[str, Any]], line_id: str) -> Dict[str, Any]:
+    by = {e["id"]: e for e in entries}
+    e = by[line_id]
+    while e["kind"] != "prereg":
+        e = by[e["amends"]]
+    return e
+
+
+def _sealed_line(repo: _Repo, entries: Sequence[Dict[str, Any]], path: str, head: str, commit: Optional[str],
+                 kind: str, amends: Optional[str] = None, seen: Optional[str] = None) -> Dict[str, Any]:
+    if commit is None:
+        c = repo.landing([path], head)[path]
+        if c is None:
+            raise _Refusal("NOT_COMMITTED", f"{path} is on no commit of HEAD's parent-one chain; commit it, or name "
+                                            f"the commit that holds it with --commit")
+    else:
+        c = repo.commit(commit)
+        if c != head and not repo.is_strict_ancestor(c, head):
+            raise _Refusal("NOT_COMMITTED", f"{c[:12]} is not in HEAD's history, so a clone of it holds no bytes "
+                                            f"there")
+    data = repo.read(c, path)
+    if data is None:
+        raise _Refusal("NOT_COMMITTED", f"{path} is not a file at {c[:12]}")
+    if kind == "prereg":
+        line_id, decision = _next_number(entries), "own"
+    else:
+        reading = _core._decision(data)
+        if reading["form"] is None and reading["code"] != "NOT_GATED":
+            raise _Refusal("MANIFEST_INVALID", f"{path} at {c[:12]} holds a fence the scanner refuses: "
+                                               f"{reading['detail']}")
+        root = _root_of(entries, amends)
+        digest = _core._decision(repo.read(root["commit"], root["path"]) or b"")["gates_sha256"]
+        for e in _core._lineage(entries, root["id"]):
+            if e["kind"] == "amendment" and e["decision"] == "own":
+                digest = _core._decision(repo.read(e["commit"], e["path"]) or b"")["gates_sha256"]
+        decision = "own" if reading["form"] is not None and reading["gates_sha256"] != digest else "inherits"
+        line_id = _amendment_id(entries, root["id"])
+    return {"id": line_id, "kind": kind, "path": path, "commit": c, "blob_sha256": hashlib.sha256(data).hexdigest(),
+            "amends": amends, "decision": decision, "seen": seen, "time": []}
+
+
+def _seal_lines(repo: _Repo, entries: Sequence[Dict[str, Any]], path: str, head: str = "HEAD",
+                commit: Optional[str] = None, amends: Optional[str] = None,
+                seen: Optional[str] = None) -> List[Dict[str, Any]]:
+    """The manifest line(s) ``seal`` writes for *path* (repository-relative), read at *commit* or,
+    by default, at the path's landing commit on HEAD's parent-one chain.
+
+    Without *amends*: one prereg line (a path is sealed once). With *amends* (PLAN K9): a line id
+    of *entries*, else a repository-relative path, which names that path's newest line, or, where
+    the path has none, gets its default-seal line (the landing rule) written before the amendment.
+    An amendment line's ``decision`` is read from its bytes: ``own`` when it holds a fence other than
+    the one in effect for its lineage, else ``inherits``; ``seen`` is required."""
+    h = repo.commit(head)
+    _plain_path(path)
+    if amends is None:
+        held = next((e for e in entries if e["kind"] == "prereg" and e["path"] == path), None)
+        if held is not None:
+            raise _Refusal("MANIFEST_INVALID", f"{path} is sealed already, by line {held['id']}; a later seal of it "
+                                               f"is an amendment (--amends {held['id']})")
+        return [_sealed_line(repo, entries, path, h, commit, "prereg", seen=seen)]
+    if seen is None:
+        raise _Refusal("MANIFEST_SEEN_MISSING", "an amendment line states what had been seen: name --seen, one of "
+                                                + ", ".join(repr(s) for s in _core._SEEN))
+    new: List[Dict[str, Any]] = []
+    target = next((e for e in entries if e["id"] == amends), None)
+    if target is None:
+        named = [e for e in entries if e["path"] == amends]
+        if named:
+            target = named[-1]
+        else:
+            target = _sealed_line(repo, entries, amends, h, None, "prereg")
+            new.append(target)
+    if target["kind"] == "withdrawn":
+        raise _Refusal("MANIFEST_INVALID", f"line {target['id']} is withdrawn, and nothing amends a withdrawn line")
+    new.append(_sealed_line(repo, [*entries, *new], path, h, commit, "amendment", amends=target["id"], seen=seen))
+    return new
