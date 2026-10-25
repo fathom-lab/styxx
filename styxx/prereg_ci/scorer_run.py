@@ -90,7 +90,14 @@ _nc = os.path.normcase
 _raw = os.path.abspath(os.getcwd())
 _here = _nc(_raw)
 _sep = os.sep
-_std = [_nc(os.path.abspath(p)) for p in sys.path if p]
+# sys.path under -I -S: the standard library's zip, Lib and DLLs (lib-dynload), and on Windows the install
+# root itself (the directory of python.exe). The import system lists each entry; the standard library is
+# read from the entries that are not sys.prefix or its kin, since a file under the install root alone
+# (LICENSE.txt, python.exe) is no standard library (the B4 review's case 7)
+_entries = [_nc(os.path.abspath(p)) for p in sys.path if p]
+_roots = {_nc(os.path.abspath(p)) for p in (sys.prefix, sys.base_prefix, sys.exec_prefix, sys.base_exec_prefix,
+                                            os.path.dirname(sys.executable or "")) if p}
+_std = [p for p in _entries if p not in _roots]
 
 
 def _under(p, root):
@@ -182,7 +189,7 @@ def _judge(event, args):
         return "opens a file outside the run to read"
     if event in ("os.listdir", "os.scandir"):
         p, a = _path(args[0] if args else None)
-        if p is None or _under(p, _here) or _stdlib(p):
+        if p is None or _under(p, _here) or p in _entries or _stdlib(p):
             return None
         return "lists a directory outside the run"
     if event in _PROCESS:
