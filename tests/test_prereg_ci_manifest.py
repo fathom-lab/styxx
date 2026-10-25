@@ -719,7 +719,7 @@ def test_a_receipt_deleted_before_the_amendment_still_reads_amended_after_data(t
     g.write("q/PREREG_b.md", prereg(0.5))
     g.commit("a receipt of another PREREG")
     g.write("p/receipt_0.json", _recd(0.46, 0.5))
-    g.commit("receipt_0 rewritten in place before it is dropped")
+    r0b = g.commit("receipt_0 rewritten in place before it is dropped")
     os.remove(g.root / "p" / "receipt_0.json")
     g.commit("drop it")
     g.write(A, prereg(0.4, "amendment"))
@@ -746,7 +746,10 @@ def test_a_receipt_deleted_before_the_amendment_still_reads_amended_after_data(t
         assert G._receipts_in_history(repo, P, a, seal, ["p/receipt_0.json"]) == []
         assert G._receipts_in_history(repo, P, a, seal, [], exclude=("p/",)) == []
         assert G._receipts_in_history(repo, P, r0, seal, []) == []          # strictly before the tip
-        assert G._receipts_in_history(repo, P, a, r0, []) == []             # the stop and its ancestors left out
+        # the stop and its ancestors are left out: from r0 on, the oldest writer is the rewrite
+        assert [(x["receipt_commit"], x["receipt"]["m"]) for x in G._receipts_in_history(repo, P, a, r0, [])] == [
+            (r0b, 0.46)]
+        assert G._receipts_in_history(repo, P, a, r0b, []) == []
 
 
 def test_a_receipt_on_a_branch_the_amendment_does_not_hold_is_not_before_it(tmp_path):
