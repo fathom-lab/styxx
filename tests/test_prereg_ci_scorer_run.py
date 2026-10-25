@@ -441,6 +441,23 @@ def test_the_last_stderr_line_names_the_run_directory_without_printing_it():
     assert r["code"] == "SCORER_ERROR" and "<run>" in r["detail"] and "prereg-ci-run-" not in r["detail"], r
 
 
+def test_the_last_stderr_line_names_the_interpreter_and_the_home_directory_without_printing_them():
+    """DESIGN 3.2(e): no absolute path. The interpreter's directories and the home directory are named,
+    as the run's are (the B4 review's case 6: sys.executable printed to stderr reached the detail)."""
+    home = os.path.expanduser("~")
+    raw, r = go(f"""
+        import sys
+        print(sys.executable, sys.prefix, {home!r}, file=sys.stderr)
+        sys.exit(3)
+        """)
+    d = r["detail"]
+    assert r["code"] == "SCORER_ERROR" and "<python>" in d and "<home>" in d, d
+    for p in (sys.executable, sys.prefix, home):
+        assert p not in d and p.replace("\\", "/") not in d, d
+    assert "Users" not in d and ":/" not in d and ":\\" not in d, d
+    assert all(os.path.splitdrive(form)[1].strip("/\\") for form, _ in S._masks("x", "y"))
+
+
 def test_a_scorer_that_leaves_without_the_closing_line_is_an_error():
     raw, r = go("""
         import json, os, sys

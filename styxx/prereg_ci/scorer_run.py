@@ -296,17 +296,36 @@ def _head(path: str, cap: int) -> Tuple[bytes, bool]:
     return data[:cap], len(data) > cap
 
 
+def _masks(run: str, root: str) -> List[Tuple[str, str]]:
+    """The directories a stderr line names rather than prints (DESIGN 3.2(e): no absolute path), longest
+    form ahead: the run and its parent; the interpreter's (``sys.prefix`` and its kin, and the directory
+    of ``sys.executable``) as ``<python>``; the home directory as ``<home>``. Each in its own, real and
+    normalised spellings, with backslashes and with slashes. A drive or file-system root is no mask."""
+    named = [(run, "<run>"), (root, "<run's parent>")]
+    named += [(d, "<python>") for d in (sys.prefix, sys.base_prefix, sys.exec_prefix, sys.base_exec_prefix,
+                                        os.path.dirname(sys.executable or "")) if d]
+    home = os.path.expanduser("~")
+    if home and home != "~":
+        named.append((home, "<home>"))
+    out = set()
+    for d, said in named:
+        for spelt in (d, os.path.realpath(d), os.path.normcase(d)):
+            for form in (spelt, spelt.replace("\\", "/")):
+                if os.path.splitdrive(form)[1].strip("/\\"):
+                    out.add((form, said))
+    return sorted(out, key=lambda pair: (-len(pair[0]), pair[0]))
+
+
 def _tail(path: str, run: str, root: str) -> str:
-    """The last non-empty line of the stderr file, with the run's own directories named, not printed."""
+    """The last non-empty line of the stderr file, with the directories of ``_masks`` named, not printed."""
     size = os.path.getsize(path)
     with open(path, "rb") as fh:
         fh.seek(max(0, size - _STDERR_TAIL))
         text = fh.read().decode("utf-8", "replace")
     lines = [ln.strip() for ln in text.replace("\r\n", "\n").replace("\r", "\n").split("\n") if ln.strip()]
     line = lines[-1] if lines else ""
-    for d, said in ((run, "<run>"), (root, "<run's parent>")):
-        for form in {d, os.path.realpath(d), d.replace("\\", "/"), os.path.realpath(d).replace("\\", "/")}:
-            line = line.replace(form, said)
+    for form, said in _masks(run, root):
+        line = line.replace(form, said)
     return line[:_TAIL_CHARS]
 
 
