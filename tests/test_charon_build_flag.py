@@ -342,7 +342,7 @@ def test_a_tampered_row_names_no_read_apart(sworn_repo, tmp_path):
     e = json.loads(lines[1])
     e["counts"]["HELD"] += 1
     lines[1] = json.dumps(e, ensure_ascii=False)
-    log.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    log.write_bytes(("\n".join(lines) + "\n").encode("utf-8"))
     row = verify_log(log, sworn_repo)["lines"][0]
     assert row["status"] == "TAMPER" and row["read_apart"] is None
 
