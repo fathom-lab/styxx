@@ -59,7 +59,7 @@ from styxx.sworn import MAX_RECEIPT_BYTES as _RECEIPT_CAP
 _KIND = {
     "COMMIT_ABSENT": "UNCHECKABLE", "SHALLOW_CLONE": "UNCHECKABLE", "GIT_UNAVAILABLE": "UNCHECKABLE",
     "BLOB_TOO_LARGE": "UNCHECKABLE",
-    "NOT_A_BLOB": "INPUT", "PATH_UNREADABLE": "INPUT", "NO_MERGE_BASE": "INPUT",
+    "NOT_A_REPOSITORY": "INPUT", "NOT_A_BLOB": "INPUT", "PATH_UNREADABLE": "INPUT", "NO_MERGE_BASE": "INPUT",
     "PREREG_ABSENT": "INPUT", "PREREG_AMBIGUOUS": "INPUT", "RECEIPT_ABSENT": "INPUT", "RECEIPT_AMBIGUOUS": "INPUT",
     "RECORDED_DIGEST_AMBIGUOUS": "INPUT",
     "RECEIPT_UNREADABLE": "NOTE", "RECEIPT_NOT_A_FILE": "NOTE",
@@ -188,10 +188,12 @@ class _Repo:
     """A repository read through git plumbing; a context manager, since it keeps two ``cat-file``
     processes open for the walks. Readings are kept by commit id, which names immutable objects;
     a revision name is resolved once, so a ``_Repo`` reads a repository whose refs do not move
-    while it is open (one check, one census)."""
+    while it is open (one check, one census). *root* may be any directory inside the work tree:
+    every command runs at the work tree's top, so a path is always repository-relative."""
 
     def __init__(self, root: Any):
         self.root = os.fspath(root)
+        self._top: Optional[str] = None
         self._env = _env()
         self._shallow: Optional[bool] = None
         self._commits: Dict[str, str] = {}
@@ -225,8 +227,35 @@ class _Repo:
                 b.close()
         self._check = self._cat = None
 
+    def _where(self) -> str:
+        """The directory every command runs in: the work tree's top (``rev-parse --show-toplevel``),
+        so git never reads a pathspec relative to a subdirectory *root* names; a bare repository or
+        a git directory as given, since git reads no prefix there. NOT_A_REPOSITORY otherwise."""
+        if self._top is None:
+            def ask(*flags: str) -> Tuple[int, List[str]]:
+                try:
+                    r = subprocess.run(["git", *_GLOBAL, "-C", self.root, "rev-parse", *flags], capture_output=True,
+                                       env=self._env, check=False, timeout=_GIT_TIMEOUT_S)
+                except subprocess.TimeoutExpired:
+                    raise _Refusal("GIT_UNAVAILABLE", f"git rev-parse ran past {_GIT_TIMEOUT_S} s")
+                except (OSError, ValueError) as e:
+                    raise _Refusal("GIT_UNAVAILABLE", f"git could not run: {e}")
+                return r.returncode, r.stdout.decode("utf-8", "surrogateescape").splitlines()
+
+            rc, flags = ask("--is-bare-repository", "--is-inside-git-dir")
+            if rc != 0 or len(flags) != 2 or any(f not in ("true", "false") for f in flags):
+                raise _Refusal("NOT_A_REPOSITORY", f"{self.root} is not inside a git repository git will read")
+            if "true" in flags:
+                self._top = self.root
+            else:
+                rc, top = ask("--show-toplevel")
+                if rc != 0 or len(top) != 1 or not top[0]:
+                    raise _Refusal("NOT_A_REPOSITORY", f"git names no work tree top for {self.root}")
+                self._top = top[0]
+        return self._top
+
     def _argv(self, *args: str, literal: bool = True) -> List[str]:
-        return ["git", *_GLOBAL, *(("--literal-pathspecs",) if literal else ()), "-C", self.root, *args]
+        return ["git", *_GLOBAL, *(("--literal-pathspecs",) if literal else ()), "-C", self._where(), *args]
 
     def _run(self, *args: str, stdin: Optional[bytes] = None, literal: bool = True) -> Tuple[int, bytes, bytes]:
         try:
@@ -904,6 +933,10 @@ def _receipts_rewritten(repo: _Repo, base: str, head: str, policy: str = "fail",
         if _receipt_kind(obj) is None:
             continue
         how = f"renamed to {x['path']}" if x["status"] == "R" else _HOW.get(x["status"], f"changed ({x['status']})")
+        if x["status"] == "M":
+            was, now = repo._entry(mb, old), repo._entry(ch["head"], x["path"])
+            if was is not None and now is not None and was[2] == now[2] and was[0] != now[0]:
+                how = f"changed in file mode only ({was[0]} to {now[0]}; its bytes are identical)"
         out.append({"code": "RECEIPT_REWRITTEN", "kind": "FAIL" if policy == "fail" else "NOTE", "path": old,
                     "detail": f"{old}, committed at {mb[:12]}, is {how} in this pull request; a re-run writes a "
                               f"new path (receipt_rewrite = {policy!r})"})

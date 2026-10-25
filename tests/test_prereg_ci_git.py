@@ -178,6 +178,29 @@ def test_every_git_command_is_a_local_read_with_replacement_off(merged, monkeypa
         assert env.get("GIT_NO_REPLACE_OBJECTS") == "1" and env.get("GIT_GRAFT_FILE") == os.devnull, argv
 
 
+def test_a_repo_opened_below_the_top_reads_paths_from_the_top(tmp_path):
+    """Review case 6: opened at a subdirectory, git read pathspecs relative to it, so blob_id found
+    the PREREG while landing and add_commit did not. Every command now runs at the work tree's top;
+    a directory outside any repository is NOT_A_REPOSITORY."""
+    g = Git(tmp_path / "top")
+    g.write(P, prereg(0.5))
+    g.write("sub/x.txt", "x\n")
+    c = g.commit("plan")
+    for root in (g.root, g.root / "sub", g.root / "p"):
+        with G._Repo(root) as repo:
+            assert (repo.blob_id("main", P), repo.landing([P], "main"), repo.add_commit(P, "main")) == (
+                g("rev-parse", f"main:{P}"), {P: c}, c), root
+            assert repo.paths("main") == (P, "sub/x.txt")
+    plain = tmp_path / "plain"
+    plain.mkdir()
+    if subprocess.run(["git", "-C", str(plain), "rev-parse", "--git-dir"], capture_output=True).returncode == 0:
+        pytest.skip("tmp_path sits inside a git repository on this box")
+    with G._Repo(plain) as repo:
+        with pytest.raises(G._Refusal) as e:
+            repo.commit("HEAD")
+        assert (e.value.code, e.value.kind) == ("NOT_A_REPOSITORY", "INPUT")
+
+
 # ---- revisions, the chain, ancestry ---------------------------------------------------------------------
 
 def test_a_revision_resolves_to_a_full_commit_id_or_is_refused(merged):
@@ -634,6 +657,23 @@ def test_a_committed_receipt_changed_deleted_or_renamed_is_rewritten(pr):
     assert {k for _, k in _by_path(notes).values()} == {"NOTE"}
     with pytest.raises(ValueError):
         G._receipts_rewritten(pr.repo, "main", "pr", policy="warn")
+
+
+def test_a_receipt_whose_mode_alone_changed_is_named_so(tmp_path):
+    """Review case 7: a committed receipt made executable, its bytes identical, still fails closed,
+    and the detail says the mode changed."""
+    g = Git(tmp_path / "mode")
+    g.write(P, prereg(0.5))
+    g.write("p/receipt_a.json", receipt())
+    g.commit("plan and receipt")
+    g("switch", "-q", "-c", "pr")
+    g("update-index", "--chmod=+x", "p/receipt_a.json")
+    g("commit", "-q", "-m", "mode only")
+    with G._Repo(g.root) as repo:
+        assert repo.blob_id("main", "p/receipt_a.json") == repo.blob_id("pr", "p/receipt_a.json")
+        found = G._receipts_rewritten(repo, "main", "pr")
+        assert [(f["path"], f["code"], f["kind"]) for f in found] == [("p/receipt_a.json", "RECEIPT_REWRITTEN", "FAIL")]
+        assert "file mode only (100644 to 100755; its bytes are identical)" in found[0]["detail"]
 
 
 def test_a_sealed_decision_does_not_move_and_fails_closed_on_delete_and_rename(pr):
