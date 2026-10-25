@@ -175,8 +175,11 @@ Every `seen` is null (the record states none) and every `time` is empty (no toke
 with `core._manifest` and rendering it with `core._manifest_bytes` gives its bytes back.
 `tests/test_prereg_ci_manifest.py` re-runs the generator at `REV`, compares it with this file, and
 re-derives each `blob_sha256` with `git show` itself. Under PLAN K10 as built, a null `seen` stands
-on an amendment line only when the manifest held that line at the commit that added the manifest
-and the line's commit is strictly before it (the record a manifest imports when it begins).
+on an amendment line only when the manifest held that line where it began and the line's commit was
+on the default branch before the pull request that began it (the record a manifest imports when it
+begins): a pull request that adds the manifest imports only what its base already holds, so the
+record's four amendment and withdrawn lines stand at null, and an amendment that pull request
+commits itself states its `seen`.
 
 ## How to regenerate it
 

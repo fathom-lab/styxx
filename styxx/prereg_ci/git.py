@@ -1187,31 +1187,68 @@ def _manifest_chain(repo: _Repo, rev: str, path: str = _MANIFEST) -> List[Dict[s
     return out
 
 
-def _manifest_seen(repo: _Repo, entries: Sequence[Dict[str, Any]], rev: str,
-                   path: str = _MANIFEST) -> List[Dict[str, Any]]:
-    """PLAN K10. An amendment or withdrawn line may say ``seen`` null only as part of the record
-    the manifest imported when it began: the manifest held the same line at the commit that added
-    it (git's add commit of *path* in *rev*'s history), and the line's commit is strictly before
-    that commit. Any other null is ``MANIFEST_SEEN_MISSING`` (DESIGN 3.2(b): "a new amendment line
-    without seen is refused"); a missing key is refused by the parser."""
+def _import_point(repo: _Repo, rev: str, path: str, base: Optional[str]) -> Tuple[Optional[str], Optional[str], str]:
+    """``(began, before, said)`` for PLAN K10: *began* is the commit whose manifest is the record
+    imported, *before* the last commit of the default branch before the manifest's pull request
+    (None where there is none), *said* how *before* was read.
+
+    With *base* (a pull request's check): where the manifest has landed on *base*'s parent-one
+    chain, *began* is that landing commit and *before* its parent one; where the pull request adds
+    the manifest, *began* is its add commit in *rev*'s history and *before* the merge base of *base*
+    and *rev*. Without *base* (a census along *rev*'s chain), *began* is the commit at which the
+    manifest landed on that chain and *before* its parent one."""
+    if base is not None:
+        b = repo.commit(base)
+        landed = repo.landing([path], b)[path]
+        if landed is None:
+            began = repo.add_commit(path, rev)
+            mb = repo.merge_base(b, rev)
+            return began, mb, f"the merge base {mb[:12]} of {base} and {rev}, where the pull request adding it begins"
+    else:
+        landed = repo.landing([path], rev)[path]
+    if landed is None:
+        return None, None, ""
+    ps = repo._parents_of(landed)
+    if not ps:
+        return landed, None, f"{landed[:12]} is a root commit, so nothing is before it"
+    return landed, ps[0], f"{ps[0][:12]}, the parent one of {landed[:12]}, which landed it"
+
+
+def _manifest_seen(repo: _Repo, entries: Sequence[Dict[str, Any]], rev: str, path: str = _MANIFEST,
+                   base: Optional[str] = None) -> List[Dict[str, Any]]:
+    """PLAN K10, with the import point of the B2 review (case C). An amendment or withdrawn line may
+    say ``seen`` null only as part of the record the manifest imported when it began: the manifest
+    held the same line where it began, and the line's commit was on the default branch before the
+    pull request that began the manifest (an ancestor of, or equal to, ``_import_point``'s
+    *before*). So a pull request that adds the manifest imports only what *base* already held, and
+    an amendment it commits itself needs a stated ``seen``. Any other null is
+    ``MANIFEST_SEEN_MISSING`` (DESIGN 3.2(b): "a new amendment line without seen is refused"); a
+    missing key is refused by the parser.
+
+    Pass *base* for a pull request's check. Without it (a census), the import point is read from
+    *rev*'s parent-one chain: a manifest that landed by a merge commit has the default branch as its
+    parent one, but one that landed by a fast-forward has its own pull request's commits there, so a
+    census cannot tell them from the default branch's; the pull request's check, with *base*, can."""
     nulls = [e for e in entries if e["kind"] != "prereg" and e["seen"] is None]
     if not nulls:
         return []
-    added = repo.add_commit(path, rev)
+    began, before, said = _import_point(repo, rev, path, base)
     imported: Dict[str, Dict[str, Any]] = {}
-    if added is not None:
+    if began is not None:
         try:
-            imported = {e["id"]: e for e in _manifest_parse(repo.read(added, path) or b"", path, added[:12])}
+            imported = {e["id"]: e for e in _manifest_parse(repo.read(began, path) or b"", path, began[:12])}
         except _Refusal:
             imported = {}
     out = []
     for e in nulls:
-        if added is None:
-            why = f"{path} has no add commit in the history of {rev}"
+        c = _line_commit(repo, e)
+        if began is None:
+            why = f"{path} has no commit in the history of {rev} at which it began"
         elif imported.get(e["id"]) != e:
-            why = f"the line was not in {path} when {added[:12]} added it"
-        elif not repo.is_strict_ancestor(_line_commit(repo, e), added):
-            why = f"its commit {e['commit'][:12]} is not strictly before {added[:12]}, which added {path}"
+            why = f"the line was not in {path} when it began at {began[:12]}"
+        elif before is None or not (c == before or repo.is_strict_ancestor(c, before)):
+            why = (f"its commit {c[:12]} is not strictly before {began[:12]}, where {path} began, on the default "
+                   f"branch ({said})")
         else:
             continue
         out.append(_line("MANIFEST_SEEN_MISSING", f"line {e['id']} ({e['path']} at {e['commit'][:12]}): an amendment "

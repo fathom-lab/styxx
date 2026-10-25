@@ -22,9 +22,9 @@ committed copy is ``conformance/prereg_ci/seals_manifest_from_SEALS_2026_09_13.j
 
 PLAN K9: ``seal --amends`` takes a line id or a path; a path names its newest line, and a path with
 no line gets its default-seal line (the landing rule) appended before the amendment. PLAN K10, as
-built: ``seen`` null is accepted on an amendment line only when the manifest held that line at the
-commit that added the manifest and the line's commit is strictly before that commit (a record
-imported when the manifest began); any later null, and any missing key, is refused.
+built: ``seen`` null is accepted on an amendment line only when the manifest held that line where it
+began and the line's commit was on the default branch before the pull request that began it (a
+record imported when the manifest began); any later null, and any missing key, is refused.
 
 Every repository here is made with ``git init`` in tmp_path, with no remote; the history tests
 read styxx's own objects at ``REV`` and skip, saying why, where that commit is not in the store.
@@ -595,6 +595,75 @@ def test_seen_null_in_the_import_is_refused_when_its_commit_is_not_before_the_ma
         found = G._manifest_seen(repo, es, "main")
         assert [(f["code"], f["id"]) for f in found] == [("MANIFEST_SEEN_MISSING", "1b")]
         assert "not strictly before" in found[0]["detail"]
+
+
+@pytest.fixture()
+def importing(tmp_path):
+    """main: the plan, an old CORRECTION and receipt_0. A pull request commits a NEW amendment, then
+    adds the manifest importing the old CORRECTION and listing the new amendment, both at seen null
+    (the B2 review, case C)."""
+    g = Git(tmp_path / "importing")
+    g.write("README.md", "r\n")
+    g.commit("m0")
+    g.write(P, prereg(0.5))
+    seal = g.commit("plan")
+    g.write(C, "# CORRECTION\n\nold\n")
+    old = g.commit("an old correction on main")
+    g.write("p/receipt_0.json", receipt(m=0.45))
+    g.commit("HOLD under the plan")
+    base = g("rev-parse", "HEAD")
+    g("switch", "-q", "-c", "pr")
+    body = prereg(0.4, "amendment written after receipt_0")
+    g.write(A, body)
+    new = g.commit("a new amendment, in the pull request")
+    es = [line("1", "prereg", P, seal, prereg(0.5)),
+          line("1b", "amendment", C, old, "# CORRECTION\n\nold\n", amends="1", decision="inherits"),
+          line("1c", "amendment", A, new, body, amends="1")]
+    g.write(M, jsonl(*es))
+    added = g.commit("the manifest begins: the old record and the new amendment, seen null")
+    return SimpleNamespace(g=g, base=base, old=old, new=new, added=added, es=es)
+
+
+def test_a_pull_request_that_adds_the_manifest_imports_only_what_base_held(importing):
+    """Case C: under the pull request's check (base given), the import point is the merge base, so the
+    old CORRECTION's null stands and the new amendment's null is refused; the old rule (strictly before
+    the add commit) let both through."""
+    with G._Repo(importing.g.root) as repo:
+        found = G._manifest_seen(repo, importing.es, "pr", base=importing.base)
+        assert [(f["code"], f["kind"], f["id"]) for f in found] == [("MANIFEST_SEEN_MISSING", "FAIL", "1c")]
+        assert importing.base[:12] in found[0]["detail"] and "merge base" in found[0]["detail"]
+        named = [*importing.es[:2], dict(importing.es[2], seen="results seen")]
+        assert G._manifest_seen(repo, named, "pr", base=importing.base) == []
+
+
+def test_a_census_reads_the_import_point_from_the_merge_that_landed_the_manifest(importing):
+    """After a merge commit lands the manifest, its parent one is main before the pull request: a census
+    refuses the new amendment's null as the pull request's check did."""
+    g = importing.g
+    g("switch", "-q", "main")
+    g.merge("pr", "land the manifest")
+    with G._Repo(g.root) as repo:
+        found = G._manifest_seen(repo, importing.es, "main")
+        assert [(f["code"], f["id"]) for f in found] == [("MANIFEST_SEEN_MISSING", "1c")]
+        assert "not strictly before" in found[0]["detail"]
+        # a later pull request against this main reads the landing on main the same way
+        g("switch", "-q", "-c", "pr2")
+        g.write("README.md", "r2\n")
+        g.commit("an unrelated change")
+        found = G._manifest_seen(repo, importing.es, "pr2", base="main")
+        assert [f["id"] for f in found] == ["1c"]
+
+
+def test_a_census_along_a_fast_forward_cannot_tell_the_pull_requests_commits_from_mains(importing):
+    """The stated boundary: landed by a fast-forward, the manifest's parent one is the new amendment
+    itself, so a census accepts its null; the pull request's check (above) is where it is refused."""
+    g = importing.g
+    g("switch", "-q", "main")
+    g("merge", "-q", "--ff-only", "pr")
+    with G._Repo(g.root) as repo:
+        assert G._manifest_seen(repo, importing.es, "main") == []
+        assert [f["id"] for f in G._manifest_seen(repo, importing.es, "main", base=importing.base)] == ["1c"]
+        assert G._import_point(repo, "main", M, None)[:2] == (importing.added, importing.new)
 
 
 def test_a_named_seen_level_is_never_refused(amended):
