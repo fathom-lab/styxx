@@ -1,0 +1,220 @@
+{
+ "cadence": "s7",
+ "canary_plan_sha256": "97f4f0f3d60e821f0675ed03dae35042feea137cfcc7e290238abbe44eb0075f",
+ "canary_shadow_sha256": "b7a13d9c22625087e140d23c139315dbd03caa5685f2a55660dfb4a10a36c0cd",
+ "days": 28,
+ "generated_at_utc": "2026-10-25T19:25:22+00:00",
+ "item_ids_disjoint_across_seeds": true,
+ "note": "probe seeds of the builder's own, never the sealed one; the window's schedule is written at D0 from the sealed seed and its digest goes into the amendment's addendum",
+ "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
+ "schedule_digests_distinct": true,
+ "schedule_version": "darkflobi-gate/canary-schedule/v0",
+ "schema": "darkflobi.gate/canary-plan-probe/v0",
+ "seeds": [
+  {
+   "bytes": 13321,
+   "capacity_by_construction": {
+    "A": 125,
+    "B": 36,
+    "C": 18,
+    "C_pairs": 237,
+    "E": 64,
+    "F": 133
+   },
+   "counts": {
+    "ef_items": 8,
+    "fallbacks_to_D": 0,
+    "gc_items": 112,
+    "items": 124,
+    "live_items": 4
+   },
+   "earliest_day": {
+    "date": "2026-11-01",
+    "items": [
+     {
+      "item_id": "331a18a448464b24",
+      "time_local": "01:09"
+     },
+     {
+      "item_id": "8db33230231a2de3",
+      "time_local": "03:11"
+     },
+     {
+      "item_id": "acd6999e2b403e3e",
+      "time_local": "03:34"
+     },
+     {
+      "item_id": "0ad326f1be6e4d54",
+      "time_local": "14:48"
+     }
+    ]
+   },
+   "live_probes": [
+    {
+     "date": "2026-11-01",
+     "item_id": "28ae487e6993e49b",
+     "time_local": "12:00"
+    },
+    {
+     "date": "2026-11-08",
+     "item_id": "876c39b809eea7c5",
+     "time_local": "12:00"
+    },
+    {
+     "date": "2026-11-15",
+     "item_id": "64bf75f10182fe34",
+     "time_local": "12:00"
+    },
+    {
+     "date": "2026-11-22",
+     "item_id": "2c158eb0a93b4471",
+     "time_local": "12:00"
+    }
+   ],
+   "same_seed_twice": true,
+   "schedule_sha256": "32a50c9d6133788cff6b7991321a17950dff7afdcfd0807053ec2f282c740f0a",
+   "seed": 424242001,
+   "wilson": {
+    "bar": 0.95,
+    "lower_at_k_eq_n": 0.96684,
+    "lower_one_miss": 0.95115,
+    "lower_two_misses": 0.93722,
+    "n": 112,
+    "z": 1.96
+   }
+  },
+  {
+   "bytes": 13321,
+   "capacity_by_construction": {
+    "A": 125,
+    "B": 36,
+    "C": 18,
+    "C_pairs": 237,
+    "E": 64,
+    "F": 133
+   },
+   "counts": {
+    "ef_items": 8,
+    "fallbacks_to_D": 0,
+    "gc_items": 112,
+    "items": 124,
+    "live_items": 4
+   },
+   "earliest_day": {
+    "date": "2026-11-01",
+    "items": [
+     {
+      "item_id": "59c9b213b21849e0",
+      "time_local": "07:29"
+     },
+     {
+      "item_id": "4f5cd01a37cbd097",
+      "time_local": "09:16"
+     },
+     {
+      "item_id": "b736ad2636a38867",
+      "time_local": "14:00"
+     },
+     {
+      "item_id": "26c1e99e2479c6fb",
+      "time_local": "18:29"
+     },
+     {
+      "item_id": "7ea76039c23f5729",
+      "time_local": "22:58"
+     }
+    ]
+   },
+   "live_probes": [
+    {
+     "date": "2026-11-01",
+     "item_id": "21f0acae2d4d97e2",
+     "time_local": "12:00"
+    },
+    {
+     "date": "2026-11-08",
+     "item_id": "f4181400ba974e7b",
+     "time_local": "12:00"
+    },
+    {
+     "date": "2026-11-15",
+     "item_id": "54d6ce9966d4265d",
+     "time_local": "12:00"
+    },
+    {
+     "date": "2026-11-22",
+     "item_id": "f81181a92c14bd1b",
+     "time_local": "12:00"
+    }
+   ],
+   "same_seed_twice": true,
+   "schedule_sha256": "b7691d079265dc3e860209bf1d5537c5ec30515699dd2f413f48049530f7a8a9",
+   "seed": 424242002,
+   "wilson": {
+    "bar": 0.95,
+    "lower_at_k_eq_n": 0.96684,
+    "lower_one_miss": 0.95115,
+    "lower_two_misses": 0.93722,
+    "n": 112,
+    "z": 1.96
+   }
+  }
+ ],
+ "sources": [
+  {
+   "commit": "b4042f24c97e2c88ea430593bc7657203e508d89",
+   "doc_id": "D01",
+   "spans": 8,
+   "stem": "papers/closed-model-frontier/RESULT_handedness_v2_INVALID_2026_09_02"
+  },
+  {
+   "commit": "dd78bc2376ad703a72ff5fca0b1b75f7e4859af8",
+   "doc_id": "D02",
+   "spans": 26,
+   "stem": "papers/charon/RESULT_charon_v01_ships_2026_09_02"
+  },
+  {
+   "commit": "575e51f1d115eee26d7106ed00910e7a2be3d7f0",
+   "doc_id": "D03",
+   "spans": 12,
+   "stem": "papers/frequency-resonance/RESULT_efficiency_control_from_receipts_2026_09_02"
+  },
+  {
+   "commit": "a335bb17d2ee90c64ea7e2b4862054f39468bb4d",
+   "doc_id": "D04",
+   "spans": 12,
+   "stem": "papers/closed-model-frontier/RESULT_handedness_accusations_INVALID_2026_09_02"
+  },
+  {
+   "commit": "3b14f4208e304ae9e3824984fc0decdf540dc9d2",
+   "doc_id": "D05",
+   "spans": 14,
+   "stem": "papers/frequency-resonance/RESULT_efficiency_control_2026_09_02"
+  },
+  {
+   "commit": "3f4a03eac7a4d1748bc5cbfb8af2a130a274b40d",
+   "doc_id": "D06",
+   "spans": 11,
+   "stem": "papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02"
+  },
+  {
+   "commit": "48d4d5494bc8ee0b6ba1d6681acbab33de67f67f",
+   "doc_id": "D07",
+   "spans": 11,
+   "stem": "papers/closed-model-frontier/RESULT_range_sanity_report_SHIP_2026_09_02"
+  },
+  {
+   "commit": "841f232ba875390f928fe1728654ea420354a1f6",
+   "doc_id": "D08",
+   "spans": 27,
+   "stem": "papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01"
+  },
+  {
+   "commit": "b1a6326ef35b894065c81f722800d1c4de0f8bc8",
+   "doc_id": "D09",
+   "spans": 15,
+   "stem": "papers/closed-model-frontier/RESULT_handedness_v3_header_handed_2026_09_02"
+  }
+ ],
+ "window_start": "2026-11-01"
+}
