@@ -64,7 +64,7 @@ quoted as given; no committed byte records them.
   <sworn r="path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/call_hashes_per_panel/R/distinct_non_null" k="numeric">2</sworn> distinct values over
   <sworn r="path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/call_hashes_per_panel/R/item_rows" k="numeric">498</sworn> rows (SUBSTRATE NOT NAMED IN DESIGN v2), so a row's hash names which of two outputs
   that seat gave on that item: an item-level answer, which D1 holds with the seat files. Its counts and sha256 are in
-  the seat facts; it enters the tree with them. The Claude ledger hashes the transport's envelope, and its Panel R
+  the seat facts; it enters the tree with them. The Claude ledger (`claude-opus-5-5`, Amendment 6) hashes the transport's envelope, and its Panel R
   rows hold <sworn r="path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/call_hashes_per_panel/R/distinct_non_null" k="numeric">498</sworn> distinct values over
   <sworn r="path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/call_hashes_per_panel/R/item_rows" k="numeric">498</sworn> rows.
 - **Tranche B's route:** "New prereg with fixes (Recommended)". Tranche B runs on a fixed transport under a new
