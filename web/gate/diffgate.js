@@ -130,6 +130,59 @@ function _prefixIsPathShaped(prefix, status) {
   return false;
 }
 
+function _scopeResolve(prefix, segs, changed) {
+  // #175, as the Python's _scope_resolve: one reading of a scope prefix's segments, [the prefix, null], "" for the
+  // repository root, or [null, why]
+  const plain = _rstrip(_norm(prefix), "/.");
+  const climbs = `prefix ${pyRepr(prefix)} has a '..' segment with no directory before it, so it names a directory outside the one it is read from (#175)`;
+  let i = 0;                // a leading run of `..` is the key's to read, as the Python's
+  while (i < segs.length - 1 && segs[i] === "..") i++;
+  if (segs[segs.length - 1] !== ".." && !segs.slice(i, -1).some(s => s === "." || s === "..")) {
+    return [_rstrip(segs.join("/"), "/."), null];
+  }
+  const kept = segs.slice(0, i);
+  for (const s of segs.slice(i)) {
+    if (s === ".") continue;
+    if (s === "..") {
+      if (kept.length <= i || !kept[kept.length - 1]) return [null, climbs];
+      kept.pop();
+      continue;
+    }
+    kept.push(s);
+  }
+  if (i && kept.length <= i) return [null, climbs];
+  const got = _rstrip(_norm(kept.join("/")), "/.");
+  if (got === plain || !got) return [got, null];
+  if (!got.includes("/") && _isBareFilename(got)) {
+    return [null, `prefix ${pyRepr(prefix)} resolves to the file name ${pyRepr(got)} at the repository root, which this template would match in any directory (#175)`];
+  }
+  for (const p of changed) {
+    if (p.split("/").some(s => s === "." || s === "..")) {
+      return [null, `prefix ${pyRepr(prefix)} and the changed path ${pyRepr(p)} each hold a '.' or '..' segment; git writes no such path, and the two are not compared (#175)`];
+    }
+  }
+  return [got, null];
+}
+
+function _scopeReadings(prefix, changed) {
+  // #175, as the Python's _scope_readings: [[each reading of a scope prefix], null], or [null, why] where the claim
+  // abstains. A last segment ".." reads as its parent (git's reading) and as the prefix before it (the last dot a
+  // sentence's period); three or more dots abstain; so does a prefix whose only reading is the root.
+  const segs = _norm(prefix).split("/");
+  const last = segs[segs.length - 1];
+  if (last.length >= 3 && !_stripChars(last, ".")) {
+    return [null, `prefix ${pyRepr(prefix)} ends in ${pyRepr(last)}, which git reads as a directory of that name and prose as a sentence's period or an ellipsis (#175)`];
+  }
+  const out = [];
+  for (const cut of (last === ".." && segs.length > 1 ? [segs.slice(0, -1), segs] : [segs])) {
+    const [got, why] = _scopeResolve(prefix, cut, changed);
+    if (why !== null) return [null, why];
+    out.push(got);
+  }
+  if (out.length === 1 && out[0] === "") return [null, `prefix ${pyRepr(prefix)} names the repository root, which holds every changed path (#175)`];
+  return [out, null];
+}
+
 // COMPAT-1: which public top-level definitions the diff removed without re-defining, per language.
 // COMPAT-2 (PREREG_compat2_surface_and_panel_2026_09_16): the surface split, the signature reading and
 // the candidate flag, mirrored from the Python; the licence flag is false and the verdict stays UNCHECKABLE.
@@ -875,12 +928,27 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           const notPaths = BC1_BY_CONSTRUCTION
             ? rawPrefs.filter(x => !_prefixIsPathShaped(x, status)).map(x => _rstrip(_norm(x), "/."))
             : [];
+          // #175: each reading of the prefixes, `.` and `..` resolved as git resolves them ("" is the root);
           // #174: a rename's old path, which the status keys do not hold, is read beside them
+          const read = rawPrefs.map(x => _scopeReadings(x, [...status.keys()].concat(sources)));
+          const dotted = read.find(r => r[1] !== null);
+          const dots = dotted === undefined ? null : dotted[1];
+          let ways = [[]];
+          for (const [r] of (dots === null ? read : prefs.map(x => [[x], null]))) ways = ways.flatMap(w => r.map(x => w.concat([x])));
           // PATH-1 mode 1: _pathInside matches a bare filename on its basename.
-          const outside = [...status.keys()].filter(p => !prefs.some(x => _pathInside(p, x)));
-          const moved = sources.filter(p => !prefs.some(x => _pathInside(p, x)));
+          const seen = ways.map(w => [[...status.keys()].filter(p => !w.some(x => x === "" || _pathInside(p, x))),
+                                      sources.filter(p => !w.some(x => x === "" || _pathInside(p, x)))]);
+          prefs = ways[0];
+          const [outside, moved] = seen[0];
+          const parts = new Set(seen.map(([o, m]) => o.length ? "C" : m.length ? "U" : "V")).size > 1;
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
           else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
+          else if (dots !== null) { c.verdict = "UNCHECKABLE"; c.why = dots; }
+          else if (parts) {
+            const two = rawPrefs.find((x, k) => read[k][0].length === 2);
+            c.verdict = "UNCHECKABLE";
+            c.why = `prefix ${pyRepr(two)} ends in '..', which reads as the directory before it (its last dot a sentence's period) and as that directory's parent (git's reading), and the claim holds under one and not the other (#175)`;
+          }
           else if (moved.length && !outside.length) {    // #174: one reason, naming no path, as the Python's
             c.verdict = "UNCHECKABLE";
             c.why = "every changed path lies under the prefix, but not the old path of a rename; git lists it as deleted where it reads no rename, and this template does not decide whether the claim covers it (#174)";
@@ -2040,11 +2108,52 @@ function _p2aShaped(prefix, keys, form) {   // _prefixIsPathShaped
 
 const _P2A_SPACES = [["A", _p2aA, _p2aWA, _p2aStrip], ["K", _p2aK, _p2aWK, _p2aDotted]];
 
+function _p2aSegments(fm, segs, plain, changed) {   // _scopeResolve (#175), in the key space of `fm`
+  // main's key drops a prefix's leading run of "." and "/"; V121's keeps a leading run of ".." segments, read as
+  // written, as before #175 (the truth oracle judges no prefix that starts with ".."). The segments after it resolve as
+  // main's do. null where main abstains.
+  const k = segs.length - 1;
+  let i = 0;
+  while (i < k && segs[i] === "..") i++;
+  if (segs[k] !== ".." && !segs.slice(i, k).some(s => s === "." || s === "..")) return _rstrip(segs.join("/"), "/.");
+  const out = segs.slice(0, i);
+  for (const s of segs.slice(i)) {
+    if (s === ".") continue;
+    if (s === "..") {
+      if (out.length <= i || !out[out.length - 1]) return null;
+      out.pop();
+      continue;
+    }
+    out.push(s);
+  }
+  if (i && out.length <= i) return null;
+  const got = _rstrip(fm(out.join("/")), "/.");
+  if (got === plain || !got) return got;
+  if (!got.includes("/") && _p2aExt(got)) return null;
+  if (changed.some(p => p.split("/").some(s => s === "." || s === ".."))) return null;
+  return got;
+}
+
+function _p2aReadings(prefix, fm, changed) {   // _scopeReadings (#175)
+  const segs = fm(prefix).split("/");
+  const k = segs.length - 1;
+  if (segs[k].length >= 3 && !_stripChars(segs[k], ".")) return null;
+  const out = [];
+  for (const cut of (segs[k] === ".." && k > 0 ? [segs.slice(0, k), segs] : [segs])) {
+    const got = _p2aSegments(fm, cut, _rstrip(fm(prefix), "/."), changed);
+    if (got === null) return null;
+    out.push(got);
+  }
+  if (out.length === 1 && out[0] === "") return null;
+  return out;
+}
+
 function _p2aScope(f, prefixes) {
   // {space|wild: [whether `prefix` reads as a path, whether prefix2 does, the reading of the prefixes that reading
   // uses]}, in main's key space A and V121's K, with case folded (wild false) and outside ASCII a placeholder (true).
   // The reading is true where every changed path lies under them, false where one does not, and null where main's
-  // reading abstains: only a rename's old path outside them (#174).
+  // reading abstains: a prefix #175 does not read, readings of it that part (#175), or only a rename's old path
+  // outside them (#174).
   const two = prefixes.length === 2;
   const regs = f.regs();
   const olds = f.sources();
@@ -2059,11 +2168,17 @@ function _p2aScope(f, prefixes) {
       const moved = held.map(s => fm(s));
       const lead = _p2aShaped(prefixes[0], paths, fm);
       const shaped = two && _p2aShaped(prefixes[1], paths, fm);
-      const ps = (shaped ? prefixes : prefixes.slice(0, 1)).map(x => _rstrip(fm(x), "/."));
-      let under = true;
-      if (!paths.every(p => ps.some(x => _p2aInside(p, x)))) under = false;
-      else if (!moved.every(p => ps.some(x => _p2aInside(p, x)))) under = null;
-      out.set(sp + "|" + wild, [lead, shaped, under]);
+      const rs = (shaped ? prefixes : prefixes.slice(0, 1)).map(x => _p2aReadings(x, fm, paths.concat(moved)));
+      if (rs.some(r => r === null)) { out.set(sp + "|" + wild, [lead, shaped, null]); continue; }
+      let ways = [[]];
+      for (const r of rs) ways = ways.flatMap(w => r.map(x => w.concat([x])));
+      const got = new Set();
+      for (const w of ways) {
+        if (!paths.every(p => w.some(x => x === "" || _p2aInside(p, x)))) got.add(false);
+        else if (!moved.every(p => w.some(x => x === "" || _p2aInside(p, x)))) got.add(null);
+        else got.add(true);
+      }
+      out.set(sp + "|" + wild, [lead, shaped, got.size === 1 ? [...got][0] : null]);
     }
   }
   return out;
