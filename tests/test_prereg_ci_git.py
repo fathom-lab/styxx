@@ -164,6 +164,7 @@ def test_every_git_command_is_a_local_read_with_replacement_off(merged, monkeypa
         repo.blob_history(P, merged.p1, merged.r1)
         repo.is_strict_ancestor(merged.p1, merged.r1)
         G._receipts_rewritten(repo, merged.m0, "main")
+        G._receipts_written(repo, merged.m0, "main")
         G._decisions_moved(repo, merged.m0, "main")
         G._records(repo, "main")
     allowed = {"rev-parse", "rev-list", "cat-file", "ls-tree", "diff-tree", "merge-base", "grep"}
@@ -356,10 +357,10 @@ def test_a_prereg_that_arrives_with_its_receipt_has_no_landing_and_orders_from_h
         s = G._seal(repo, P, "main", head="pr")
         assert (s["landing"], s["landed"], s["add"], s["order"], s["order_blob"]) == (None, False, p1, p1, p2)
         assert repo.is_strict_ancestor(s["order"], r1) and not repo.is_strict_ancestor(s["order_blob"], r1)
-        added, skipped = G._receipts_added(repo, "main", "pr")
-        assert [(a["path"], a["add_commit"], a["receipt"]["prereg"]) for a in added] == [
-            ("p/receipt_a.json", r1, "PREREG_a.md")]
-        assert skipped == []
+        written = G._receipts_written(repo, "main", "pr")
+        assert [(a["path"], a["status"], a["receipt_commit"], a["receipt"]["prereg"]) for a in written["receipts"]] == [
+            ("p/receipt_a.json", "A", r1, "PREREG_a.md")]
+        assert written["notes"] == []
 
 
 def test_a_landing_by_rename_is_named(tmp_path):
@@ -557,10 +558,84 @@ def test_a_sealed_decision_does_not_move_and_fails_closed_on_delete_and_rename(p
         G._decisions_moved(pr.repo, "main", "pr", immutability="bytes")
 
 
-def test_receipts_added_in_the_pull_request(pr):
-    added, skipped = G._receipts_added(pr.repo, "main", "pr")
-    assert [(a["path"], a["add_commit"]) for a in added] == [("d/r_new.json", pr.head), ("e/r_mv.json", pr.head)]
-    assert [(s["path"], s["code"]) for s in skipped] == [("d/broken.json", "RECEIPT_UNREADABLE")]
+def test_receipts_written_in_the_pull_request(pr):
+    """C1 pairs every path the pull request leaves holding a receipt: added (r_new), renamed (r_mv)
+    and changed in place (r_mod, which RECEIPT_REWRITTEN also reads). A record without a ``prereg``
+    (r_own, the sidecar) and plain data are not receipts; bytes that are not JSON are a NOTE."""
+    written = G._receipts_written(pr.repo, "main", "pr")
+    assert [(a["path"], a["status"], a["old"], a["receipt_commit"]) for a in written["receipts"]] == [
+        ("d/r_mod.json", "M", "d/r_mod.json", pr.head), ("d/r_new.json", "A", None, pr.head),
+        ("e/r_mv.json", "R", "d/r_mv.json", pr.head)]
+    assert [(s["path"], s["code"], s["kind"]) for s in written["notes"]] == [
+        ("d/broken.json", "RECEIPT_UNREADABLE", "NOTE")]
+
+
+def test_a_receipt_written_over_a_committed_placeholder_is_paired(tmp_path):
+    """Review case 1: a placeholder committed on main (JSON that is no receipt, and bytes that are
+    not JSON) is overwritten by a receipt recording an unsealed digest (DESIGN 4.A.2's re-run). The
+    diff reads M; no receipt was committed there, so nothing is rewritten, and C1 pairs both."""
+    g = Git(tmp_path / "placeholder")
+    g.write(P, prereg(0.5))
+    g.write("p/result.json", json.dumps({"status": "pending"}) + "\n")
+    g.write("p/out.json", "pending\n")
+    g.commit("seal the plan, commit placeholders")
+    g("switch", "-q", "-c", "pr")
+    run = receipt(m=0.45, verdict="PASS", gates={"G0": True}, gates_sha256=digest(0.4))
+    g.write("p/result.json", run)
+    g.write("p/out.json", run)
+    r = g.commit("the run")
+    with G._Repo(g.root) as repo:
+        assert {(c["status"], c["path"]) for c in repo.changes("main", "pr")["changes"]} == {
+            ("M", "p/out.json"), ("M", "p/result.json")}
+        written = G._receipts_written(repo, "main", "pr")
+        assert [(a["path"], a["status"], a["receipt_commit"], a["receipt"]["gates_sha256"])
+                for a in written["receipts"]] == [("p/out.json", "M", r, digest(0.4)),
+                                                  ("p/result.json", "M", r, digest(0.4))]
+        assert G._receipts_rewritten(repo, "main", "pr") == []
+
+
+def test_a_receipt_rewritten_under_the_note_policy_is_still_paired(tmp_path):
+    """Review case 1b: under ``receipt_rewrite = "note"`` the rewrite is a NOTE, and the new bytes
+    are paired for re-score all the same (3.2(d) prints the policy beside every PASS)."""
+    g = Git(tmp_path / "build_output")
+    g.write(P, prereg(0.5))
+    g.write("p/build.json", receipt(verdict="PASS", gates={"G0": True}, gates_sha256=digest(0.5)))
+    g.commit("a build-output receipt")
+    g("switch", "-q", "-c", "pr")
+    g.write("p/build.json", receipt(m=0.45, verdict="PASS", gates={"G0": True}, gates_sha256=digest(0.4)))
+    r = g.commit("rebuild under a working-copy bar")
+    with G._Repo(g.root) as repo:
+        notes = G._receipts_rewritten(repo, "main", "pr", policy="note")
+        assert [(f["path"], f["code"], f["kind"]) for f in notes] == [("p/build.json", "RECEIPT_REWRITTEN", "NOTE")]
+        written = G._receipts_written(repo, "main", "pr")["receipts"]
+        assert [(a["path"], a["status"], a["receipt_commit"]) for a in written] == [("p/build.json", "M", r)]
+
+
+def test_r_is_read_inside_the_pull_request(tmp_path):
+    """Review case 8, and R's rule: the receipt path held another file before the seal and was
+    deleted; the pull request writes plain JSON there, then a receipt, then edits the receipt. R is
+    the oldest commit of the pull request at which the path holds a receipt: not the old file's add
+    commit (which would put R before the seal), not the plain JSON, not the later edit."""
+    g = Git(tmp_path / "reused")
+    g.write("p/receipt_a.json", json.dumps({"rows": [0]}) + "\n")
+    old = g.commit("an old file at the receipt path")
+    (g.root / "p/receipt_a.json").unlink()
+    g.commit("drop it")
+    g.write(P, prereg(0.5))
+    g.commit("seal the plan")
+    g("switch", "-q", "-c", "pr")
+    g.write("p/receipt_a.json", json.dumps({"rows": [1]}) + "\n")
+    g.commit("plain data at the path")
+    g.write("p/receipt_a.json", receipt())
+    r = g.commit("the run, after the seal")
+    g.write("p/receipt_a.json", receipt(m=0.8))
+    g.commit("the receipt edited inside the pull request")
+    with G._Repo(g.root) as repo:
+        assert repo.add_commit("p/receipt_a.json", "pr") == old
+        written = G._receipts_written(repo, "main", "pr")["receipts"]
+        assert [(a["path"], a["status"], a["receipt_commit"]) for a in written] == [("p/receipt_a.json", "A", r)]
+        s = G._seal(repo, P, "main", "pr")
+        assert repo.is_strict_ancestor(s["order"], r) and not repo.is_strict_ancestor(s["order"], old)
 
 
 # ---- the resolver, the records, the recorded digest (3.2(d), K2) -------------------------------------------

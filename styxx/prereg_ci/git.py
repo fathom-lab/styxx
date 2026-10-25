@@ -23,8 +23,10 @@ missing blob from the clone's promisor remote, which a full clone never needs. T
   blob history of a path between two commits; the paths a pull request adds, changes, deletes or
   renames, read from the merge base of BASE and HEAD, as git's three-dot diff reads them;
 * receipts: R1's record rule, the resolver of 3.2(d) (``PREREG_AMBIGUOUS``, never a guess), the
-  recorded digest of PLAN K2, the receipts a pull request adds (C1), and the immutability of the
-  receipts it found committed (``RECEIPT_REWRITTEN``);
+  recorded digest of PLAN K2, the receipts a pull request writes (C1: every path it leaves holding
+  a receipt, whatever the path held before, with R the oldest commit of the pull request at which
+  the path holds one), and the immutability of the receipts it found committed
+  (``RECEIPT_REWRITTEN``);
 * sealed decisions (C0): a fence edited in place, a deleted PREREG and a renamed one are
   ``DECISION_EDITED_AFTER_SEAL`` (fail closed); prose edited around an unchanged fence is
   ``PROSE_AMENDED_IN_PLACE``, a NOTE, or a FAIL under ``immutability = "file"``. This is the refusal
@@ -79,6 +81,7 @@ _GLOBAL = ("--no-replace-objects", "-c", "core.commitGraph=false", "-c", "color.
 _POLICIES = ("fail", "note")
 _IMMUTABILITY = ("gates", "file")
 _HOW = {"D": "deleted", "M": "changed in place", "T": "changed to another file type"}
+_WRITES = ("A", "R", "M", "T")           # the changes that leave a path holding new bytes at HEAD
 
 
 class _Refusal(Exception):
@@ -493,6 +496,16 @@ class _Repo:
             self._memo[memo] = oldest
         return self._memo[memo]
 
+    def _held(self, path: str, start: str, holds: Any, stop: Optional[str] = None) -> List[str]:
+        """Every commit git lists for *path* from *start*, *stop* and its ancestors left out, at
+        which ``holds(commit)`` is true, newest to oldest in git's date order (no commit before all of
+        its children); ``[start]`` where git lists none and *start* holds, else ``[]``. No holder
+        listed after the last one is its ancestor."""
+        argv = ["rev-list", "--full-history", "--date-order", start, *(("--not", stop) if stop else ()),
+                "--", _plain_path(path)]
+        listed = [x for x in self._ok(*argv).decode("ascii").split() if holds(x)]
+        return listed or ([start] if holds(start) else [])
+
     def blob_history(self, path: str, a: str, b: str) -> List[Tuple[str, Optional[str]]]:
         """(commit, blob id) for *a* and every commit from *b* back to *a* whose diff touches
         *path*, oldest to newest (git's simplified history of the path; DESIGN 3.2(e) prints it)."""
@@ -775,25 +788,47 @@ def _seal(repo: _Repo, path: str, base: str, head: Optional[str] = None) -> Dict
 
 # ---- what a pull request does to receipts and sealed decisions (C0, C1) -------------------------------
 
-def _receipts_added(repo: _Repo, base: str, head: str,
-                    exclude: Sequence[str] = _EXCLUDE) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """C1's receipts: every ``.json`` the pull request adds (a rename's new path included) that names
-    a PREREG, each ``{path, add_commit, receipt}``; and the added ``.json`` files that are not JSON,
-    each a ``RECEIPT_UNREADABLE`` NOTE, since no receipt can be read from them."""
+def _holds_receipt(repo: _Repo, commit: str, path: str) -> bool:
+    """Whether *path* at *commit* is a regular file whose JSON names a PREREG (3.2(d))."""
+    try:
+        return _receipt_kind(_json(repo.read(commit, path) or b"")) == "receipt"
+    except _Refusal as e:
+        if e.code == "NOT_A_BLOB":
+            return False                            # a symlink or a submodule holds no receipt
+        raise
+    except (UnicodeDecodeError, ValueError):
+        return False
+
+
+def _receipts_written(repo: _Repo, base: str, head: str,
+                      exclude: Sequence[str] = _EXCLUDE) -> Dict[str, List[Dict[str, Any]]]:
+    """C1's receipts (DESIGN 3.4): every ``.json`` path the pull request leaves holding a receipt at
+    HEAD whose change is an add, a rename's new path, an edit in place or a type change (A, R, M,
+    T), whatever the path held at the merge base: nothing, a placeholder, bytes that are not JSON,
+    or a receipt (which ``_receipts_rewritten`` also reads, so under ``receipt_rewrite = "note"`` the
+    new bytes are still scored). Each is ``{path, status, old, receipt_commit, receipt}``;
+    ``receipt_commit`` is R, the oldest commit in merge_base..HEAD at which the path holds a receipt,
+    so a path used before the pull request does not move R outside it. A changed ``.json`` that is
+    not JSON at HEAD is a ``RECEIPT_UNREADABLE`` NOTE, since no receipt can be read from it.
+    Returns ``{receipts, notes}``."""
     ch = repo.changes(base, head)
-    added, skipped = [], []
+    mb, h = ch["merge_base"], ch["head"]
+    receipts, notes = [], []
     for x in ch["changes"]:
         path = x["path"]
-        if x["status"] not in ("A", "R") or not path.endswith(".json") or _excluded(path, exclude):
+        if x["status"] not in _WRITES or not path.endswith(".json") or _excluded(path, exclude):
             continue
         try:
-            obj = _json(repo.read(ch["head"], path) or b"")
+            obj = _json(repo.read(h, path) or b"")
         except (UnicodeDecodeError, ValueError) as e:
-            skipped.append(_Refusal("RECEIPT_UNREADABLE", f"{path} is not JSON: {e}").finding(path))
+            notes.append(_Refusal("RECEIPT_UNREADABLE", f"{path} is not JSON: {e}").finding(path))
             continue
-        if _receipt_kind(obj) == "receipt":
-            added.append({"path": path, "add_commit": repo.add_commit(path, ch["head"]), "receipt": obj})
-    return added, skipped
+        if _receipt_kind(obj) != "receipt":
+            continue
+        held = repo._held(path, h, lambda c, p=path: _holds_receipt(repo, c, p), stop=mb)
+        receipts.append({"path": path, "status": x["status"], "old": x["old"], "receipt_commit": held[-1],
+                         "receipt": obj})
+    return {"receipts": receipts, "notes": notes}
 
 
 def _receipts_rewritten(repo: _Repo, base: str, head: str, policy: str = "fail",
