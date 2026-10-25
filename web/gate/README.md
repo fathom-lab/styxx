@@ -3,7 +3,7 @@
 The instrument is `styxx/diffgate.py`. Two browser surfaces cannot import it: the paste-in
 preview page and the bookmarklet. They run `diffgate.js`, a JavaScript transliteration of one
 specific file — `styxx/diffgate.py` on this branch, sha256
-`b63f2b03c5051f7ca1a196c9b6ac9e7f907fe626970a22e400e484e4598aa446` (LF line endings; a wheel
+`7b264014b757d64fd97981f9b823f3f648b9890f82973982b580491041ccef63` (LF line endings; a wheel
 built on Windows carries CRLF and hashes differently, so `py_side.py` normalises before it
 compares) — and this directory is the receipt for that port: the differential test that holds
 it to the Python's output, and the build that turns it into the bookmarklet people drag into
@@ -22,7 +22,15 @@ source outside a string or a comment (sha256
 `f457d2e4f8b3c1c7f059ec431901b93df411c6c3f4b4f7e2bb51de6a46c66611`); and then one change outside any reading
 path, the front door: the module docstring and the `--help` description stop making the gate claim EXTERNAL-1
 committed the lab to withdraw, and the `WITHHOLD_PATH_ACCUSATION` comment is scoped to the path classes (sha256
-`e1441f18f0f71cc3455ff5c02ac3b42eb1bf963f337fb3b9bcfa9db14f88a74e`) — plus the PATH-2a block (an
+`e1441f18f0f71cc3455ff5c02ac3b42eb1bf963f337fb3b9bcfa9db14f88a74e`); and then one change on reading paths, #179 and #178: the two `def`
+counts read `async def` where they read `def`, and abstain where a counted line sits in a file not read as .py or
+.pyi, or after an odd number of triple quotes in the added lines of its `+++` section, where #205's seams part the
+two readers (U+FEFF, U+001C to U+001F or U+0085 at a `---` or `+++` header's edge or before a counted line's `def` or
+name, or a name run on into a code point from U+0080 up), and where two lines of one `+++` section define one test
+name, one of them after `async` (sha256
+`91d45e3aef5c6e232d1384a069219fdb9a5df1ab3009d508126dff8399775420`; and then the tests count's
+abstention narrowed to a claim at or below the larger count, the one-sided #178, sha256
+`969abb0df7eada6ff4e2c6b8fceb5af3056f19447e152bb1b48695712eedec62`) — plus the PATH-2a block (an
 overlay that only abstains, not yet released; see *PATH-2a* below), and a committed test cuts the
 block out and gets that reader back byte for byte, in both languages. The port's record carries the
 eleven content keys and no identity: the differential compares named fields, so a Python record of
@@ -30,8 +38,11 @@ thirteen keys and a port record of eleven compare as they did. The port's `main`
 #206 in the same change, which no change since PATH-2a merged had done: the same abstention, its two
 header patterns' `.` read as the Python's (`[^\n]`, since JavaScript's `.` refuses U+2028 and U+2029),
 and a declared count in ASCII digits with a reason that names any other character by its code point
-(the port with the block cut hashes to `d74cc729cea84c98501adaa0ab651c0c8ef10f3da04aae4887e75e66a93dcbbd`; `1cde8b82`'s was
-`06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141`).
+(the port with the block cut hashed to `d74cc729cea84c98501adaa0ab651c0c8ef10f3da04aae4887e75e66a93dcbbd` then; `1cde8b82`'s was
+`06688702999cdabe763265722a0ac14d4b9ffb40d0efcbb32339eba89f00c141`). #179 and #178 moved the port's `main` with the
+Python's, in the same change: the port with the block cut hashed to
+`ba76562ce173d148eee719b56f35bcc73239fca2f4613b7413e5a2c0c9f3fb14`, and with the one-sided #178 it
+hashes to `1097d2fb6a2484e64aeb5a5d3cd3c554a8b42d6ef11e9c204a8c53d981d35324`.
 
 The port was first cut from the 7.47.0 wheel (`fb2d9b3e…`) and re-cut on 2026-09-16 for issue
 #110: the 7.47.0 templates count Python `def` lines and accuse a TypeScript commit that says
@@ -62,8 +73,8 @@ and the never-read count to the page.
 `terser -c -m --format ascii_only`, writes `bookmarklet.min.js` and `bookmarklet.href.txt`.
 `--check` rebuilds and compares against the committed files. The shipped bookmarklet is
 
-    bookmarklet.min.js    sha256 4f46cfdf8abb72abef70207b119f7de6b52e949f97c9aa64c01e2974e14db8ba   54,335 chars
-    bookmarklet.href.txt  sha256 e6913f666667c4f6a31c9f5317321d2db9f0a455f610093d71e404aeeba739e2   54,346 chars
+    bookmarklet.min.js    sha256 eb2465a6ba95e7eebc8eb045e306154b191caf0a72fed7e9b39afc139cd590a8   59,765 chars
+    bookmarklet.href.txt  sha256 09c3d622dde9a9ee92d56074e57d1d671892ae1d4f3dd1dc19da9337bff9a800   59,776 chars
 
 (Earlier builds: `b04d14dc…`, 11,437 chars, from the 7.47.0 file — accuses outside Python;
 `9ea8f572…`, 17,686 chars, the BC-2 + COMPAT-1 re-cut — cannot see a binary file;
@@ -74,7 +85,10 @@ and the never-read count to the page.
 `c72ae2db…`, 51,838 chars, its pass 9; `e550ecbd…`, 52,937 chars, its pass 10; `3659b422…`, 53,246 chars, its pass 11;
 `6bf6121a…`, 53,371 chars, PATH-2a as merged (#187), whose panel labelled a CONTRADICTED verdict LIE;
 `5843f53d…`, 53,380 chars, #201's, whose Python counterpart cut a diff at a form feed (#205) and read a declared
-count in any script's digits (#206).
+count in any script's digits (#206); `4f46cfdf…`, 54,335 chars, #220's, whose Python counterpart read no `async def`
+(#179) and counted a `def` line in a Markdown file or a string beside a Python file (#178); `be4fb205…`, 59,747
+chars, the batch's, whose Python counterpart abstained on every tests claim beside a `def` line outside Python
+source.
 A bookmark that hashes to any of these is an old port; drag the new one. The panel text still names the 7.48.0 port; see *PATH-2a* below.)
 
 Whatever a browser holds under that bookmark either hashes to the first line (drop the
@@ -97,7 +111,7 @@ reason, or reads one sentence more or less, is a disagreement.
     cd web/gate/differential             # on a checkout whose styxx/diffgate.py is the file named above
     python build_corpus.py               # 176 real pairs, pinned to shas (below)
     python fuzz_corpus.py                # 3,000 synthetic pairs, seeded
-    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to b63f2b03…
+    python py_side.py                    # refuses to run unless styxx/diffgate.py hashes to 7b264014…
     node js_side.js
     python differential.py
     node check_pairs.js                  # the 190 pinned pairs against their expect blocks (+ path2a_moves.json, issue205_moves.json)
@@ -447,9 +461,15 @@ reads the same with `--strict` as without it, and where `main` raises the branch
 - The 6,672 committed inputs (the pinned pairs, `main`'s 3,000 fuzz pairs regenerated in memory, #161's reproductions
   and pair inputs, a seeded 2,000-pair PATH-2a fuzz and a seeded 1,000-input text-seam set), both strict modes, in
   Python and in the port: 0 records outside the relation (*pinned*; in the port 13,344 runs, 6 of which raise in
-  `main` and raise alike). Of 12,458 claims `main`'s Python decides there the overlay withholds 2,631, and of 12,264
-  its port decides, 2,538 (12,718 and 2,633, 12,526 and 2,590 before #205, whose `main` abstains on 260 of the
-  Python's decided claims itself); the per-phrase counts are *pinned* for both path flavours and for Unicode 13.0 to 16.0
+  `main` and raise alike). Of 12,146 claims `main`'s Python decides there the overlay withholds 2,615, and of 11,951
+  its port decides, 2,482 (12,058 and 11,863 before the one-sided #178, whose `main` decides again the 88 test
+  counts that claim more tests than any count it takes, and the overlay withholds none of them; 12,179 and 2,654,
+  11,983 and 2,559 before review 3 of fix batch 1, whose `main` abstains
+  on 121 more of the Python's decided claims itself, where #205's seams part its two readers or a test name is
+  defined twice in one section with one line after `async`; 12,458 and 2,631, 12,264 and 2,538 before #179 and #178,
+  whose `main` abstains on 279 of them itself and reads `async def`; 12,718 and 2,633, 12,526 and 2,590 before #205,
+  whose `main` abstains on 260 of them); the per-phrase counts are *pinned* for both path flavours and for Unicode
+  13.0 to 16.0
   (13.0 and 14.0 by re-reading the inputs with their five Unicode 14 letters mapped to code points no version
   assigns, 15.1 because the inputs hold no code point assigned in 15.0 or 15.1; 15.0 and 16.0 were run).
 - The same with what only the Python doors take, a run leg that exits 0, a green test report, and a report under a
@@ -524,19 +544,28 @@ three) does not read it false: the but-for reading. Every figure in this table i
 
 | world | cases | main decides | false | attributable | withheld | right verdicts lost | undecided withheld |
 |---|---|---|---|---|---|---|---|
-| raw door (Python) | 1,706 | 7,614 | 1,535 | 1,206 | **1,206** | 253 of 5,897 | 39 of 182 |
-| the port, in its own terms (variants built from `main`'s port) | 1,706 | 7,393 | 1,385 | 1,100 | **1,100** | 177 of 5,739 | 126 of 269 |
+| raw door (Python) | 1,706 | 7,556 | 1,542 | 1,228 | **1,228** | 255 of 5,836 | 38 of 178 |
+| the port, in its own terms (variants built from `main`'s port) | 1,706 | 7,335 | 1,392 | 1,122 | **1,122** | 179 of 5,678 | 125 of 265 |
 | git door (Python), the reproductions with their own `--name-status` | 96 | 63 | 17 | 14 | **14** | 0 of 46 | — |
 
 The cases are #161's 101 reproductions that carry a file model, the 5 PREREG_path2 reproductions and 1,600 generated
-cases (400 per family: #97, #121, #121 with case outside ASCII, #101). In the port, 942 of the 1,100 attributable
+cases (400 per family: #97, #121, #121 with case outside ASCII, #101). In the port, 964 of the 1,122 attributable
 claims carry the same `main` record as in Python; the other 158 are paths and names outside ASCII, which the two
-templates extract apart. Further truth tests, each *pinned*:
+templates extract apart. Before #179 and #178 the two rows read 7,614, 1,535, 1,206, 253 of 5,897 and 39 of 182 in
+Python, and 7,393, 1,385, 1,100, 177 of 5,739 and 126 of 269 in the port (942 of the 1,100 the same in Python):
+`main` now abstains on 60 decided claims itself (#178, in 22 cases that hold triple quotes), and counts an added
+`async def` test (#179), so a test made async is a false verdict of `main` the V101 counterfactual attributes to
+#101, and is withheld. Review 3 of fix batch 1 took 17 more decided claims, in 4 cases where a test name is defined
+twice in one section with one line after `async` (before it: 7,554, 1,547, 1,230, 259 of 5,828 and 38 of 179 in
+Python, and 7,333, 1,397, 1,124, 183 of 5,670 and 125 of 266 in the port, 966 of the 1,124 the same in Python).
+Further truth tests, each *pinned*:
 - the 1,600 generated cases under four transforms, in Python and in the port, every attributable claim withheld:
-  two changed CJK docs and a right count sentence (1,073 and 969 attributable); "(naïve)" inside each tests or count
-  claim's own sentence (1,193 and 1,087); a U+FEFF before the summary (1,175 and 1,087); a sentence naming styxx beside
-  U+2028 (1,193 and 1,087). Right verdicts lost under the last three: 242 of 5,842 or of 5,827 in Python and 166 of
-  5,684 in the port, the plain world's figures. The parent head kept 139 attributable verdicts in each port under the
+  two changed CJK docs and a right count sentence (1,095 and 991 attributable); "(naïve)" inside each tests or count
+  claim's own sentence (1,215 and 1,109); a U+FEFF before the summary (1,197 and 1,109); a sentence naming styxx beside
+  U+2028 (1,215 and 1,109). Right verdicts lost under the last three: 244 of 5,762 or of 5,747 in Python and 168 of
+  5,604 in the port, the plain world's figures (before review 3 of fix batch 1: 1,097 and 993, 1,217 and 1,111, 1,199
+  and 1,111, 1,217 and 1,111; 248 of 5,773 or of 5,758, and 172 of 5,615; before #179 and #178: 1,073 and 969, 1,193
+  and 1,087, 1,175 and 1,087, 1,193 and 1,087; 242 of 5,842 or of 5,827, and 166 of 5,684). The parent head kept 139 attributable verdicts in each port under the
   third and 214 under the fourth (a probe's count);
 - the fourth review's three `shape` reproductions (a GNU deletion, a mnemonic header, a rename into `.github/`, the
   last at both doors), the fifth review's definition reproductions (a test or function CPython reads across a
@@ -699,7 +728,9 @@ and 177 → 275 in the port, claims withheld +98 in each, no other count moved, 
 Python and 145 in the port on one decorated world (seed 11101), 144
 and 147 on another (seed 11102); 58, 58 and 19 at the git door on renderings by real git (seed 11103). Not taken; the
 operator decides. The other known gaps (case-only merges with no dot, names `strip()` merges,
-multi-commit renderings, `async def` tests `main` does not count, `def` in non-Python files, joint shapes where #121
+multi-commit renderings, `def` in non-Python files (since #178 `main` abstains itself where such a line sits beside a
+Python file or in a string the added lines open, and #110 where no Python file changed; since #179 `main` counts
+`async def` tests, which it did not), joint shapes where #121
 is one of two causes, and #161's off-tree prefix family, where `main` reads "Only touches docs/.." as `docs` through
 `rstrip("/.")`) are none of the three mechanisms or are not reachable by an abstain-only rule; the notes list them.
 
@@ -719,7 +750,9 @@ flavour, so the figures are given under both where they differ.
 
 Every abstention on `main`'s corpora is on synthetic input: the only real-world #97 record there, `corpus_real` pr98
 ("integrations/git/README.md — created."), is left as `main` has it, since neither of its two records is a false
-decided verdict. On the committed inputs as a whole (above) the overlay withholds 2,631 of 12,458 in Python; most of
+decided verdict. On the committed inputs as a whole (above) the overlay withholds 2,615 of 12,146 in Python (2,615
+of 12,058 before the one-sided #178, 2,654 of 12,179 before review 3 of fix batch 1, 2,631 of 12,458 before
+#179 and #178); most of
 those inputs are fuzz built from the characters the rules read.
 On the EXTERNAL-1 shelf (69,054 agent pull requests, each read once by its id; measured at `16daa725`, the database
 opened read-only): 7,836 hold a decided claim in reach, 12,785 such claims in Python, of which the overlay withholds
@@ -785,32 +818,45 @@ port's templates reading the description with JavaScript's regex classes where t
 sites and headers (U+FEFF, the port's alone; the Zs leads, which both read and CPython refuses), and the two runtimes'
 case tables (#173 and #184 for the last). Until #205 `str.splitlines()` against a split at CR and LF only, and `^`
 after U+2028 and U+2029 in the port, parted them too: that line-break part is #205, repaired (both mains cut where git
-cuts and abstain over U+000B, U+001C to U+001F, U+0085, U+2028 and U+2029, all but U+000B still read apart); the
-white-space part outside those characters has no
+cuts and abstain over U+000B, U+001C to U+001F, U+0085, U+2028 and U+2029, all but U+000B still read apart). Since
+review 3 of fix batch 1 both `main`s also abstain on the two `def` counts where U+FEFF, U+001C to U+001F or U+0085
+sits before a counted line's `def` or name or at the edge of a header that decides whether the diff touches a Python
+file, or a name runs on into a code point from U+0080 up, so the committed inputs' diff side holds 15 inputs on
+CPython 3.12's Windows row (57 before); the white-space part outside the `def` counts has no
 issue of its own yet, which is for the lead or the operator to decide. "Only under the overlay" counts the inputs where `main`'s two
 gate verdicts agree and the overlay's do not; `main`'s two gates differ on the rest without any overlay.
 
 | set | inputs | lists the same (with a withheld claim) | lists differ: description + diff side | gates differ without `--strict`: `main` / overlay (only under the overlay) | with `--strict` |
 |---|---|---|---|---|---|
-| committed inputs, CPython 3.12, Windows path flavour (*pinned*) | 6,672 | 6,133 (1,151) | 478 + 58 | 8 / 9 (1) | 13 / 10 (2) |
-| the same, POSIX path flavour (*pinned*) | 6,672 | 6,136 (1,151) | 478 + 55 | 8 / 9 (1) | 12 / 10 (2) |
-| the same, CPython 3.14.2, Windows flavour (*pinned*) | 6,672 | 6,134 (1,152) | 480 + 55 | 9 / 10 (1) | 14 / 10 (2) |
-| the 84 cross-port cases (each *pinned* by itself; two read alike since #205) | 84 | 51 (39) | 29 + 4 | 0 / 12 (12) | 0 / 4 (4) |
-| a `def` that ends its line, 600 seeded inputs (*pinned*) | 600 | 556 (342) | 0 + 44 | 0 / 44 (44) | 0 / 0 |
+| committed inputs, CPython 3.12, Windows path flavour (*pinned*) | 6,672 | 6,176 (1,161) | 478 + 15 | 1 / 1 (0) | 12 / 4 (2) |
+| the same, POSIX path flavour (*pinned*) | 6,672 | 6,179 (1,161) | 478 + 12 | 1 / 1 (0) | 11 / 4 (2) |
+| the same, CPython 3.14.2, Windows flavour (*pinned*) | 6,672 | 6,177 (1,162) | 480 + 12 | 2 / 2 (0) | 14 / 4 (2) |
+| the 84 cross-port cases (each *pinned* by itself; two read alike since #205, three more since review 3 of fix batch 1) | 84 | 54 (42) | 29 + 1 | 0 / 9 (9) | 0 / 4 (4) |
+| a `def` that ends its line, 600 seeded inputs (*pinned*) | 600 | 600 (386) | 0 + 0 | 0 / 0 | 0 / 0 |
 | a case pair only the patched engine folds, 1,500 seeded inputs (*pinned*) | 1,500 | 669 (294) | 0 + 831 | 421 / 0 | 358 / 0 |
-| a truth world under decorations, 1,000 seeded inputs (*pinned*) | 1,000 | 752 (355) | 248 + 0 | 0 / 0 | 0 / 0 |
+| a truth world under decorations, 1,000 seeded inputs (*pinned*) | 1,000 | 752 (365) | 248 + 0 | 0 / 0 | 0 / 0 |
 | the 160,000 adversarial inputs | 160,000 | 81,917 (19,478) | 71,961 + 6,104 | 30,928 / 17,940 (2,628) | 27,302 / 25,550 (1,972) |
 | the EXTERNAL-1 shelf, one body per pull request id against the diff rebuilt from its folded rows | 69,054 | 69,035 (108) | 19 + 0 | 0 / 0 | 4 / 4 (0) |
 
 Three inputs of each of the committed rows raise in a `main` and are left out (five before #205: two raised on a split
 only the Python's old cut made, and one, a `+++ /dev/null` with no `---`, now raises in the Python as it did in the
-port). The one committed input whose gates part only under the overlay without `--strict` is `y2`, where the port's
-`main` alone counts the test after U+FEFF, its two false verdicts are withheld (PASS) and the Python's right
-CONTRADICTED stands (FAIL); it is on the diff side. #161's four `f2` separator inputs (a vertical tab, a form feed,
-U+2028 or U+2029 before `def test_a`) and `f2`'s context line were here too until #205, which has both mains read them
-alike. Under `--strict` the two are text-seam inputs ("Modified lib/core.jsé": only the port's
+port). No committed input's gates part only under the overlay without `--strict` since review 3 of fix batch 1:
+`y2` was the one, where the port's `main` alone counted the test after U+FEFF, its two false verdicts were withheld
+(PASS) and the Python's right CONTRADICTED stood (FAIL), and both mains abstain on its claims now (#205's seam before
+a `def`). #161's four `f2` separator inputs (a vertical tab, a form feed, U+2028 or U+2029 before `def test_a`) and
+`f2`'s context line were there too until #205, which has both mains read them alike. Under `--strict` the two are text-seam inputs ("Modified lib/core.jsé": only the port's
 `main` reads `lib/core.js`, which `extract` withholds there). The adversarial and EXTERNAL-1 rows below the seeded sets
-were measured before #205 and not again. On the adversarial inputs the overlay parts 2,628 pairs
+were measured before #205 and not again, after #205 or after #179 and #178. #179 and #178 moved the pinned rows: on
+the committed rows one input leaves the diff side (58 → 57 on CPython 3.12's Windows row) and five more inputs with
+equal lists hold a withheld claim (1,151 → 1,156), and no gate column moves; on the seeded `def`-ends-its-line set
+`main` now reads its `async def` lines, where U+FEFF and a name running on into a letter outside ASCII part its two
+ports as on `def` lines, 44 → 65 on the diff side (52 → 80 on CPython 3.14.2, where U+105C0 is a letter); on the
+decorated world 355 → 367 with a withheld claim. Review 3 of fix batch 1 moved them again: both mains abstain where
+#205's seams parted them, so the committed rows' diff side shrinks (57 → 15 on CPython 3.12's Windows row) and
+`main`'s and the overlay's gates part without `--strict` on 1 input each (8 and 9 before) and with it on 12 and 4 (13
+and 10); the `def`-ends-its-line set has no input on the diff side (65 → 0, and 80 → 0 on CPython 3.14.2); and the
+decorated world holds 365 inputs with a withheld claim, where `main` abstains itself on two of them (a test name
+defined twice in one section, one line after `async`). On the adversarial inputs the overlay parts 2,628 pairs
 of gates that `main` has together and joins 15,616 that `main` has apart (description side 71,961, diff side 6,104);
 1,016 of the 2,628 are one generator, a `def` that ends its line, where every input on the diff side parts. Under
 `--strict` a withheld claim fails the gate in the port that reads it, so a claim only one port's `main` reads can part
