@@ -274,7 +274,7 @@ def test_a_withdrawn_line_is_never_in_effect_and_prints_no_finding():
     ("own", PROSE, "# CORRECTION\n\nprose only\n", "holds no fence"),
     ("inherits", OWN6, prereg(0.6, "amendment"), "holds the fence"),
     ("own", core._decision("```gates\n{not json\n```\n```gates\n{}\n```\n"), "two fences", "refuses"),
-])
+], ids=["own-but-no-fence", "inherits-but-another-fence", "own-but-a-refused-fence"])
 def test_a_line_whose_decision_its_bytes_do_not_bear_out_is_refused(decision, reading, data, why):
     readings = core._amendment_readings(SEAL, _chain(("1b", "amendment", decision, "results seen", reading, data)))
     assert readings[0]["finding"]["code"] == "MANIFEST_DECISION_DIFFERS"
@@ -728,6 +728,19 @@ def test_seal_amends_a_path_with_no_line_by_appending_its_default_seal_line(demo
     want = [line("1", "prereg", P, demo.seal, prereg(0.5)),
             line("1b", "amendment", A, demo.amend, prereg(0.6, "amendment"), amends="1", seen="results seen")]
     assert lines == want and core._manifest((demo.g.root / M).read_bytes()) == want
+
+
+def test_seal_reads_an_amendment_that_keeps_the_fence_in_effect_as_inheriting(demo, capsys):
+    """SEALS row 8's shape: the PREREG itself, amended outside its fence, sealed as an amendment of its
+    own line. Its fence is the one in effect, so the line inherits; a fence moved later reads own."""
+    assert _seal_cli(capsys, P, "--append")[0] == 0
+    demo.g.write(P, prereg(0.5, "v1 with a section appended"))
+    prose = demo.g.commit("a section appended outside the fence")
+    code, _, lines = _seal_cli(capsys, P, "--amends", "1", "--seen", "nothing run", "--commit", prose, "--append")
+    assert code == 0 and lines == [line("1b", "amendment", P, prose, prereg(0.5, "v1 with a section appended"),
+                                        amends="1", decision="inherits", seen="nothing run")]
+    code, _, lines = _seal_cli(capsys, A, "--amends", "1", "--seen", "results seen")
+    assert code == 0 and (lines[0]["id"], lines[0]["decision"]) == ("1c", "own")
 
 
 def test_seal_at_a_named_commit(demo, capsys):
