@@ -280,21 +280,25 @@ by the new file and edited nowhere, so its row does not move.
    form code is `refused_other`, not a catch); a rate in the wild (the bound is over planted items with known answers,
    a floor on recall over these four constructions and nothing beyond them); the live probe's delivery until it is
    wired; and whether the canary chat is allowlisted (15.9: that holds in no list).
-9. **The lock rows that move.** Two new rows, read off `lock_hashes.py table` against the copy [R, item 3 of the
-   measurements; the digests re-derived with `sha256sum` on the copy]:
-
-   | what | path | sha256 | note |
-   |---|---|---|---|
-   | gate file | `W:gate/canary_plan.py` | `97f4f0f3d60e821f0675ed03dae35042feea137cfcc7e290238abbe44eb0075f` | 13068 bytes; new file, no earlier row; the schedule as a function of the seed (item 3) |
-   | gate file | `W:gate/tests/test_canary_plan.py` | `8deba26fe548ed46588caf35485559d881938ad2ee41c69122bef10acb717711` | 14422 bytes; new file, no earlier row; its tests (item 3) |
-
-   And one row that moves at D0, written in the addendum in the lock row form when the file exists: `W:gate/canary/schedule.json`,
-   from `e6ee0fcfc2004793d01b44f51603fc604b6c1bb5f49793354ddc024966d6c76b` (14,807 bytes, the `v0` plan for 2026-11-05)
+9. **The lock rows that move** are the table under the heading "The lock rows" below (kept at the left margin, so
+   `lock_hashes.py`'s row regex reads them): two new rows, read off `lock_hashes.py table` against the copy [R, item
+   3 of the measurements; the digests re-derived with `sha256sum` on the copy], and one row that moves at D0, written
+   in the addendum in the lock row form when the file exists: `W:gate/canary/schedule.json`, from
+   `e6ee0fcfc2004793d01b44f51603fc604b6c1bb5f49793354ddc024966d6c76b` (14,807 bytes, the `v0` plan for 2026-11-05)
    to the digest of the `s7` plan for D0. Nothing else moves: not the harness (`b7a13d9c…`), not the seed digest's
    two rows (`625e7371…`), not the pin's `common.py`, `canaries.py` or `seal_key.py`. Until `lock_hashes.py check`
    reads amendment rows, the two new files read UNLOCKED under `--strict` and the schedule row CHANGED from the
    re-plan on (15.3); the lead's apply-time relock and the weekly check carry that reading, or the check learns the
    rows, and the RESULT says which.
+
+## The lock rows
+
+| what | path | sha256 | note |
+|---|---|---|---|
+| gate file | `W:gate/canary_plan.py` | `97f4f0f3d60e821f0675ed03dae35042feea137cfcc7e290238abbe44eb0075f` | 13068 bytes; new file, no earlier row; the schedule as a function of the seed (item 3) |
+| gate file | `W:gate/tests/test_canary_plan.py` | `8deba26fe548ed46588caf35485559d881938ad2ee41c69122bef10acb717711` | 14422 bytes; new file, no earlier row; its tests (item 3) |
+
+The schedule row is the addendum's, filled at D0.
 
 ## What does not change
 
@@ -349,13 +353,14 @@ above this heading edited.
 - the command lines as run (item 4), and the interpreter (`py -3.12 -B`, its full version): _blank_
 - `expect`'s `schedule_sha256` and `counts`: _blank_
 - `sha256sum W:gate/canary/schedule.json`: _blank_ (must equal `expect`'s)
-- the lock row, in `lock_hashes.py`'s row form, replacing `e6ee0fcf…`:
-
-  | what | path | sha256 | note |
-  |---|---|---|---|
-  | canary schedule | `W:gate/canary/schedule.json` | _filled at D0_ | _bytes_; the `s7` plan for D0, from the sealed seed |
-
 - the runner (item 5): _the daily task at 23:45 America/New_York as written, or a per-time runner named with its row_
 - `W:gate/canary_sealed/canary_chat.txt` exists: _yes or no; never its content_
 - the operator's own `sha256sum` of the schedule file, when given: _blank_
 - the commit of this addendum: _blank_
+
+The lock row, in `lock_hashes.py`'s row form at the left margin, replacing `e6ee0fcf…` (the hash column is not in
+the row form until the lead writes the 64 hex characters, so no check reads this line as a row before D0):
+
+| what | path | sha256 | note |
+|---|---|---|---|
+| canary schedule | `W:gate/canary/schedule.json` | _filled at D0_ | _bytes_; the `s7` plan for D0, from the sealed seed |
