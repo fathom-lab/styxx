@@ -220,15 +220,28 @@ _FIND_PATH_V97 = """        for _t in (0, 1, 2):
 """
 _NORM = '    return p.replace("\\\\", "/").lstrip("./").lower()\n'
 _NORM_V121 = '    return re.sub(r"^(?:\\.?/)+", "", p.replace("\\\\", "/")).lower()\n'
-_TESTS = '                        got = len(re.findall(r"^\\s*def test_", added_blob, re.M))\n'
+# V101 reads every count main takes over added lines (#179's `got`, #178's `inside` and `placed`), the added side as
+# main reads it (`async[ \t\f]+` before `def`), and skips #178's abstention for a name a removed line
+# defines.
+_TESTS = ('                        got = len(re.findall(tx, added_blob, re.M))\n'
+          '                        inside = len(re.findall(tx, inside_blob, re.M))\n'
+          '                        placed = len(re.findall(tx, sides_blob, re.M))\n')
 _TESTS_V101 = ('                        _rem = {x for _a, _r in (sides or {}).values() for _l in _r\n'
-               '                                for x in re.findall(r"\\s*(?:async\\s+)?def\\s+(test_\\w*)", _l)}\n'
-               '                        got = len([x for x in re.findall(r"^\\s*def (test_\\w*)", added_blob, re.M)\n'
-               '                                   if x not in _rem])\n')
-_SYMBOL = '                        hit = bool(re.search(pat, added_blob, re.M))\n'
-_SYMBOL_V101 = (_SYMBOL + '                        hit = hit and not any(\n'
-                '                            re.search(r"^\\s*(?:async\\s+)?(?:def|class)\\s+" + re.escape(d["name"])\n'
-                '                                      + r"\\b", _l) for _a, _r in (sides or {}).values() for _l in _r)\n')
+               '                                for x in re.findall(r"BSs*(?:asyncBSs+)?defBSs+(test_BSw*)", _l)}\n'
+               '                        _cnt = lambda _b: len([x for x in re.findall(r"^BSs*(?:async[ BStBSf]+)?def (test_BSw*)",\n'
+               '                                                                     _b, re.M) if x not in _rem])\n'
+               '                        got = _cnt(added_blob)\n'
+               '                        inside = _cnt(inside_blob)\n'
+               '                        placed = _cnt(sides_blob)\n').replace("BS", chr(92))
+_SYMBOL = ('                        hit = bool(re.search(pat, added_blob, re.M))\n'
+           '                        if re.search(pat, sides_blob, re.M) and not re.search(pat, inside_blob, re.M):  # #178\n')
+_SYMBOL_V101 = ('                        hit = bool(re.search(pat, added_blob, re.M))\n'
+                '                        _again = any(re.search(r"^BSs*(?:asyncBSs+)?(?:def|class)BSs+" + re.escape(d["name"])\n'
+                '                                               + r"BSb", _l) for _a, _r in (sides or {}).values() for _l in _r)\n'
+                '                        hit = hit and not _again\n'
+                '                        if not _again and (re.search(pat, sides_blob, re.M)\n'
+                '                                           and not re.search(pat, inside_blob, re.M)):  # #178\n'
+                ).replace("BS", chr(92))
 
 VARIANTS = {
     "v97": [(_FIND_PATH, _FIND_PATH_V97)],
@@ -270,16 +283,24 @@ _JS_NORM = """  let s = p.replace(/BSBS/g, "/");
 """.replace("BS", chr(92))
 _JS_NORM_V121 = """  return p.replace(/BSBS/g, "/").replace(/^(?:BS.?BS/)+/, "").toLowerCase();
 """.replace("BS", chr(92))
-_JS_TESTS = "            const got = (addedBlob.match(/^BSs*def test_/gm) || []).length;\n".replace("BS", chr(92))
+_JS_TESTS = ("            const got = (addedBlob.match(tx) || []).length;\n"
+             "            const inside = (insideBlob.match(tx) || []).length;\n"
+             "            const placed = (sidesBlob.match(tx) || []).length;\n")
 _JS_TESTS_V101 = ("            const _rem = new Set();\n"
                   "            for (const [, _r] of sides.values()) for (const _l of _r) "
                   "for (const _m of _l.matchAll(/BSs*(?:asyncBSs+)?defBSs+(test_BSw*)/g)) _rem.add(_m[1]);\n"
-                  "            const got = [...addedBlob.matchAll(/^BSs*def (test_BSw*)/gm)]"
-                  ".filter(_m => !_rem.has(_m[1])).length;\n").replace("BS", chr(92))
-_JS_SYMBOL = "            const hit = pat.test(addedBlob);\n"
-_JS_SYMBOL_V101 = ("            const hit = pat.test(addedBlob) && ![...sides.values()].some(([, _r]) => _r.some(_l => "
+                  "            const _cnt = _b => [..._b.matchAll(/^BSs*(?:async[ BStBSf]+)?def (test_BSw*)/gm)]"
+                  ".filter(_m => !_rem.has(_m[1])).length;\n"
+                  "            const got = _cnt(addedBlob);\n"
+                  "            const inside = _cnt(insideBlob);\n"
+                  "            const placed = _cnt(sidesBlob);\n").replace("BS", chr(92))
+_JS_SYMBOL = ("            const hit = pat.test(addedBlob);\n"
+              "            if (pat.test(sidesBlob) && !pat.test(insideBlob)) {   // #178\n")
+_JS_SYMBOL_V101 = ("            const _again = [...sides.values()].some(([, _r]) => _r.some(_l => "
                    "new RegExp(\"^BSBSs*(?:asyncBSBSs+)?(?:def|class)BSBSs+\" + _reEscape(d.name) + \"BSBSb\")"
-                   ".test(_l)));\n").replace("BS", chr(92))
+                   ".test(_l)));\n"
+                   "            const hit = pat.test(addedBlob) && !_again;\n"
+                   "            if (!_again && pat.test(sidesBlob) && !pat.test(insideBlob)) {   // #178\n").replace("BS", chr(92))
 
 PORT_VARIANTS = {
     "v97": [(_JS_FIND_PATH, _JS_FIND_PATH_V97)],

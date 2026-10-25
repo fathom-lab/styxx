@@ -28,6 +28,7 @@ import shutil
 import subprocess
 import sys
 import types
+import unicodedata
 from pathlib import Path
 
 import pytest
@@ -365,10 +366,55 @@ _MOVED_BY_205 = re.compile("[\x0b\x0c\x1c-\x1f\x85\u2028\u2029]")
 HOLD_205 = 592            # raw-door inputs of R.inputs() (6,672) whose diff holds one; no git-door fixture with a listing does
 # Of those, the inputs whose content moved in either strict mode (a record, or a raise where the parent raised none:
 # p2a-fuzz:20260930:692, which the CHANGELOG names), and the sha256 of their ids (R.uid), sorted and joined by LF.
-# Measured on CPython 3.12.10 and 3.14.2, the same set. Every other input, the 453 others holding one included, is
-# compared byte for byte.
-MOVED_BY_205 = 139
-MOVED_BY_205_SHA = "68e399a0ad8aea66428e576f1b674c87c651c0cdce8bad9aff042d135fe25424"
+# Measured on CPython 3.12.10 and 3.14.2, the same set. Every other input, the 414 others holding one included, is
+# compared byte for byte. 139 (68e399a0...) until #179 and #178 (fix/diffgate-178-179) moved the reading of more of them,
+# and 167 (5c87f416...) until review 3 of fix batch 1 (the same branch) did, where #205's seams part the two readers
+# and a test name is defined twice in one section, one line after `async`.
+MOVED_BY_205 = 178
+MOVED_BY_205_SHA = "9f110670d44baa4325492dc2c9a34c5b7b9cf9fca0062db9f6b6d5910f55b4ff"
+
+# #179 and #178 (fix/diffgate-178-179) moved the reading of a diff of these shapes, by design: the `def` counts read
+# `async def` where they read `def`, and abstain where a counted line sits in a file not read as .py or .pyi, or after
+# an odd number of triple quotes in the added lines of its `+++` section. The predicate holds on a diff holding
+# `async`, three double or three single quotes, or an added `def` or `class` line under a `+++` path that does not
+# end in .py or .pyi.
+_ASYNC_OR_TRIPLE = re.compile("async|\"{3}|'{3}")
+_ADDED_DEF = re.compile(r"\+[ \t\f]*(?:async[ \t\f]+)?(?:def|class)\b")
+
+
+def _moved_by_178_179(diff: str) -> bool:
+    if _ASYNC_OR_TRIPLE.search(diff):
+        return True
+    path = None
+    for line in N._git_lines(diff):
+        if line.startswith("+++ "):
+            path = line[4:].strip().lower()
+        elif path is not None and _ADDED_DEF.match(line) and not path.endswith((".py", ".pyi")):
+            return True
+    return False
+
+
+HOLD_178_179 = 1910       # raw-door inputs of R.inputs() whose diff holds no #205 character and one of these shapes
+# Of those, the inputs whose content moved in either strict mode, and the sha256 of their ids, as for #205. Measured on
+# CPython 3.12.10 and 3.14.2, the same set. The other 1,667 are compared byte for byte, as is every git-door fixture
+# (none of those with a listing holds one of these shapes). 240 (515595d7...) until review 3 of fix batch 1, and 243
+# (aa4c38fc...) until the one-sided #178 (options judgment of fix batch 1), where main's tests count decides again a
+# claim above every count it takes: 54 inputs leave the set, their content the parent's again, and none joins it.
+MOVED_BY_178_179 = 189
+MOVED_BY_178_179_SHA = "0199f6b873cd583717601f594cbe467bbbea08b63d4ab78b22df6057c7a356a9"
+
+# Review 3 of fix batch 1 (fix/diffgate-178-179) moved the reading of a diff of these shapes, by design: the two `def`
+# counts abstain where #205's seams part the two readers, a U+FEFF before a counted line's `def` or name or at a
+# header's edge, or a name run on into a code point from U+0080 up. The predicate holds on a diff, holding none of the
+# shapes above, that holds U+FEFF or a `def` or `class` name running on into such a code point.
+_MOVED_BY_SEAMS = re.compile("\ufeff|(?:def|class)[ \t\f]+[A-Za-z0-9_]*[\x80-\U0010ffff]")
+HOLD_SEAMS = 123
+# Of those, the inputs whose content moved in either strict mode, and the sha256 of their ids, as above. One input more
+# on CPython 3.12.10 than on 3.14.2: path2:x1's claimed name runs on into U+1C89, a letter only from Unicode 16, so on
+# Unicode 15 and older the claimed name is `foo` and the seam abstains, and on 16 it is the whole run, as the parent
+# reads it.
+MOVED_BY_SEAMS = {"16.0.0": (39, "baa927861d5a3e73f48fcd9529c62e478c58a44299edf221d3dc794f778c6cb4")}
+MOVED_BY_SEAMS_BEFORE_16 = (40, "2863a90eed5ddcf028759dcb0f2323cc1e9e4a25c5f7fdc2fc0039f2b8028d23")
 
 
 def _same_or_raised(a, b, run) -> str | None:
@@ -385,11 +431,20 @@ def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(par
     --name-status at the git door, in both strict modes. Identity phase 2's guarantee was every committed input; since
     #205 it is every one but those whose content #205 moved by design: each of them holds a character #205 reads anew
     (`_MOVED_BY_205`), and they are pinned by count and by a digest of their ids, so the set cannot grow or change
-    unseen. tests/test_diffgate_issue205_206.py holds what #205 moved."""
+    unseen. tests/test_diffgate_issue205_206.py holds what #205 moved. Since #179 and #178 the inputs holding none of
+    those characters and a shape `_moved_by_178_179` reads are pinned apart the same way, and since review 3 of fix
+    batch 1 the inputs holding neither and a shape `_MOVED_BY_SEAMS` reads; tests/test_diffgate_issue178_179.py holds
+    what those moved."""
     bad, runs, held, moved = [], 0, 0, []
+    held_new, moved_new = 0, []
+    held_seam, moved_seam = 0, []
     for row in R.inputs():
         holds = bool(_MOVED_BY_205.search(row[3] or ""))
         held += holds
+        holds_new = not holds and _moved_by_178_179(row[3] or "")
+        held_new += holds_new
+        holds_seam = not holds and not holds_new and bool(_MOVED_BY_SEAMS.search(row[3] or ""))
+        held_seam += holds_seam
         whys = []
         for strict in (False, True):
             whys.append(_same_or_raised(parent, N, lambda m, s=row[2], d=row[3], k=strict:
@@ -397,6 +452,10 @@ def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(par
             runs += 1
         if any(whys) and holds:
             moved.append(R.uid(0, row))
+        elif any(whys) and holds_new:
+            moved_new.append(R.uid(0, row))
+        elif any(whys) and holds_seam:
+            moved_seam.append(R.uid(0, row))
         elif any(whys):
             bad.append((R.uid(0, row), whys))
     git_runs = 0
@@ -420,6 +479,14 @@ def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(par
     moved.sort()
     assert len(moved) == MOVED_BY_205, (len(moved), moved[:5])
     assert hashlib.sha256("\n".join(moved).encode("utf-8")).hexdigest() == MOVED_BY_205_SHA, moved[:5]
+    assert held_new == HOLD_178_179, held_new
+    moved_new.sort()
+    assert len(moved_new) == MOVED_BY_178_179, (len(moved_new), moved_new[:5])
+    assert hashlib.sha256("\n".join(moved_new).encode("utf-8")).hexdigest() == MOVED_BY_178_179_SHA, moved_new[:5]
+    assert held_seam == HOLD_SEAMS, held_seam
+    moved_seam.sort()
+    want = MOVED_BY_SEAMS.get(unicodedata.unidata_version, MOVED_BY_SEAMS_BEFORE_16)
+    assert (len(moved_seam), hashlib.sha256("\n".join(moved_seam).encode("utf-8")).hexdigest()) == want, moved_seam[:5]
 
 
 def test_report_and_out_are_the_parents_but_for_the_identity(parent, tmp_path):

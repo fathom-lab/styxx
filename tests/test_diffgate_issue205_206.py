@@ -350,9 +350,11 @@ def grid() -> list:
 # CONTRADICTED, the same six in both ports: a lone CR (four; #176, which both ports cut at and git does not), and a tab
 # or a form feed between `def` and a test's name (two; the tests template reads `def test_` with one space, so the
 # definition is not counted; not #205's, and the same on main); the cells where a claim ast reads as false is VERIFIED,
-# the same five in both ports and of the same two causes; and the cells whose two final claim lists differ (all eight a
-# U+FEFF lead or separator: the port's \s reads it, the Python's does not; unchanged by #205 and named in its
-# residuals). On main before #205 these were 10 in the Python and 6 in the port, 7 and 5, and 52 apart.
+# the same five in both ports and of the same two causes; and the cells whose two final claim lists differ: none since
+# fix/diffgate-178-179 (review 3 of fix batch 1), where the eight that differed (a U+FEFF lead or separator: the port's
+# \s reads it, the Python's does not; unchanged by #205 and named in its residuals) abstain in both ports, #205's seam
+# before a `def` or a name. On main before #205 these were 10 in the Python and 6 in the port, 7 and 5, and 52 apart;
+# after #205, 6, 5 and 8.
 RESIDUAL_CONTRADICTED = {"U+000D|t-lead-new|Added 1 test.", "U+000D|t-class-indent|Added 1 test.",
                          "U+000D|t-mid|Added 1 test.", "U+000D|s-lead-new|foo",
                          "U+0009|t-sep-new|Added 1 test.", "U+000C|t-sep-new|Added 1 test."}
@@ -360,7 +362,7 @@ RESIDUAL_FALSE_VERIFIED = {"U+000D|t-lead-new|Added 0 tests.", "U+000D|t-class-i
                            "U+000D|t-mid|Added 0 tests.",
                            "U+0009|t-sep-new|Added 0 tests.", "U+000C|t-sep-new|Added 0 tests."}
 RESIDUAL_APART_CHAR = "U+FEFF|"
-RESIDUAL_APART = 8
+RESIDUAL_APART = 0
 
 
 def _contradicted_true(cells: list, finals: dict) -> set:
@@ -469,12 +471,15 @@ def cut_sites(text: str) -> tuple:
     return split, sorted(cut)
 
 
-WANT_SITES = sorted(["parse_unified_diff_sides", "parse_unified_diff", "gate_diff", "gate_diff"])
+WANT_SITES = sorted(["parse_unified_diff_sides", "parse_unified_diff", "gate_diff", "gate_diff", "_diff_sections",
+                     "_seam_header"])
 
 
 def test_every_site_that_cuts_git_output_uses_the_cut():
-    """No reader outside the block cuts with str.splitlines() any more, and the four sites cut with _git_lines:
-    parse_unified_diff_sides, parse_unified_diff, and gate_diff's --name-status and its added lines."""
+    """No reader outside the block cuts with str.splitlines() any more, and the six sites cut with _git_lines:
+    parse_unified_diff_sides, parse_unified_diff, gate_diff's --name-status and its added lines, #178's walk of the
+    diff's sections, _diff_sections, and the read of #205's seam at a header's edge, _seam_header
+    (fix/diffgate-178-179)."""
     split, cut = cut_sites(R.lf(R.INSTRUMENT))
     assert split == [] and cut == WANT_SITES, (split, cut)
 
@@ -523,10 +528,21 @@ def _abstain_cases() -> list:
     return out
 
 
+# #205's seam before a `def` and a name (fix/diffgate-178-179): a U+FEFF lead, which the port's `\s` reads and the
+# Python's does not, abstains both claims in both ports.
+WHY_FEFF_LEAD_TESTS = ("an added `def test_` line holds U+FEFF before its `def`, which CPython reads only as the byte "
+                       "order mark heading a file; this template counts `def` lines and cannot tell where it sits; claim "
+                       "says 1 (#205)")
+WHY_FEFF_LEAD_SYMBOL = ("an added line that would define function 'test_a' holds U+FEFF before the name, which CPython "
+                        "reads only as the byte order mark heading a file; this template cannot tell whether CPython "
+                        "defines it there (#205)")
+
+
 def _abstain_problems(mod) -> list:
     """The abstention's reasons, as the Python must write them: each member of APART on an added line, at its start or
     inside it, gives both `def` claims the #205 reason naming it, and the compatibility reading its #205 reason; a form
-    feed and U+FEFF give neither."""
+    feed gives neither, and U+FEFF gives neither inside a line and, leading a `def` line, the reasons of #205's seam
+    before a `def` and a name (fix/diffgate-178-179, review 3 of fix batch 1), not this one."""
     bad = []
     for it in _abstain_cases():
         c = int(it["id"].split("|")[0], 16)
@@ -535,6 +551,8 @@ def _abstain_problems(mod) -> list:
         if it["id"].endswith("|compat"):
             want = WHY_COMPAT.format(name) if c in APART else None
             ok = (claims[0][2] == want) if want else (claims[0][2] != WHY_COMPAT.format(name))
+        elif it["id"] == "FEFF|lead|tests":
+            ok = [x[1:] for x in claims] == [["UNCHECKABLE", WHY_FEFF_LEAD_TESTS], ["UNCHECKABLE", WHY_FEFF_LEAD_SYMBOL]]
         else:
             want = WHY_ADDED.format(name) if c in APART else None
             ok = all(x[2] == want and x[1] == "UNCHECKABLE" for x in claims) if want else \
@@ -621,9 +639,10 @@ def test_the_reasons_hold_for_every_member():
 
 
 def _alike_cases() -> list:
-    """The abstention's cases both ports must read byte for byte alike: all but a U+FEFF lead, the residual #205 names
-    and leaves (the port's \\s reads it, the Python's does not; the grid above pins it)."""
-    return [it for it in _abstain_cases() if it["id"] != "FEFF|lead|tests"]
+    """The abstention's cases both ports must read byte for byte alike: every one, since fix/diffgate-178-179 (review 3
+    of fix batch 1) the U+FEFF lead too, the residual #205 named and left (the port's \\s reads it, the Python's does
+    not), which abstains in both ports now (#205's seam before a `def`)."""
+    return _abstain_cases()
 
 
 def test_the_abstention_is_the_same_in_both_ports(tmp_path):
@@ -634,9 +653,8 @@ def test_the_abstention_is_the_same_in_both_ports(tmp_path):
     assert got["apart"]["flags"] == "" and _class_of_port_source(got["apart"]["source"]) == APART
     for it in _alike_cases():
         assert got[it["id"]]["off"] == _rec(N.gate_diff_text(it["summary"], it["diff"])), it["id"]
-    feff = next(it for it in _abstain_cases() if it["id"] == "FEFF|lead|tests")       # the residual, as it stands
-    assert [x[1] for x in got[feff["id"]]["off"]["claims"]] == ["VERIFIED", "VERIFIED"]
-    assert [x[1] for x in _rec(N.gate_diff_text(feff["summary"], feff["diff"]))["claims"]] == ["CONTRADICTED"] * 2
+    feff = next(it for it in _abstain_cases() if it["id"] == "FEFF|lead|tests")       # the residual #205 left
+    assert [x[1] for x in got[feff["id"]]["off"]["claims"]] == ["UNCHECKABLE", "UNCHECKABLE"]
 
 
 # R3: a header whose old name holds U+2028 registers the same file in both ports
@@ -693,6 +711,9 @@ PY_PLANTS = {
     "R1 undone in parse_unified_diff": ("_git_lines(diff_text)", "diff_text.splitlines()", "def parse_unified_diff(", "ff"),
     "R1 undone at the git door's added lines": ("_git_lines(diff_text)", "diff_text.splitlines()", "def gate_diff(", "git"),
     "R1 undone at the git door's listing": ("_git_lines(name_status)", "name_status.splitlines()", "def gate_diff(", "sites"),
+    "R1 undone in #178's walk": ("_git_lines(diff_text)", "diff_text.splitlines()", "def _diff_sections(", "sites"),
+    "R1 undone in the header seam's read": ("_git_lines(diff_text)", "diff_text.splitlines()", "def _seam_header(",
+                                            "sites"),
     "U+001F dropped from the abstention": ("\\x1c-\\x1f", "\\x1c-\\x1e", "_READ_APART = re.compile(", "apart"),
     "the abstention dropped from the counts": ("    elif apart_why:\n", "    elif False:\n", "def _gate(", "apart"),
     "the abstention dropped from the compatibility reading": ("            if apart:\n", "            if False:\n",
