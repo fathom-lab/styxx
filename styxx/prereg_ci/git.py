@@ -421,7 +421,9 @@ class _Repo:
 
     def landing(self, paths: Iterable[str], rev: str) -> Dict[str, Optional[str]]:
         """Each path's landing commit on *rev*'s parent-one chain (DESIGN 3.2(b)), or None for a
-        path no commit of the chain touches."""
+        path no commit of the chain touches. A pathspec also matches the files under a directory of
+        that name, which ``diff-tree`` names too; a token is a commit header only when it is a chain
+        commit's id, and a path that was not asked about is passed over."""
         chain = self.chain(rev)
         tip = chain[0]
         asked = list(dict.fromkeys(_plain_path(p) for p in paths))
@@ -445,10 +447,15 @@ class _Repo:
                     if current is None:
                         raise _Refusal("GIT_UNAVAILABLE", "git diff-tree named a path before a commit")
                     found[want[tok]] = current          # the chain runs newest to oldest; the last one stays
-                else:
-                    current = tok.decode("ascii", "replace")
-                    if current not in on_chain:
-                        raise _Refusal("GIT_UNAVAILABLE", f"git diff-tree named {current[:60]!r}, not a chain commit")
+                    continue
+                text = tok.decode("utf-8", "surrogateescape")
+                if _HEX.fullmatch(text):
+                    if text not in on_chain:
+                        raise _Refusal("GIT_UNAVAILABLE", f"git diff-tree named {text[:60]!r}, not a chain commit")
+                    current = text
+                elif current is None:
+                    raise _Refusal("GIT_UNAVAILABLE", f"git diff-tree named {text[:60]!r} before a commit")
+                # else: a file under a directory an asked path names (asked paths never read as ids)
         for p, c in found.items():
             self._memo[("landing", tip, p)] = c
         return {p: self._memo[("landing", tip, p)] for p in asked}

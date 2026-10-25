@@ -221,6 +221,27 @@ def test_the_landing_commit_is_the_oldest_parent_one_commit_touching_the_path(me
         assert got[path] == merged.g("log", "main", _P1_FLAG, "--format=%H", "--", path).split()[-1], path
 
 
+def test_a_path_that_was_a_directory_before_it_held_the_prereg_lands(tmp_path):
+    """Review case 4: the path named a directory before the plan was written there. diff-tree names
+    the directory's files under the asked pathspec; they are passed over, not read as commit ids.
+    (git log's pathspec matches the directory as well, so its oldest commit for the path is the
+    directory's, where no file of that name exists.)"""
+    g = Git(tmp_path / "dir_before")
+    g.write(f"{P}/old_notes.txt", "a directory once\n")
+    dirs = g.commit("a directory at the path")
+    g("rm", "-q", "-r", P)
+    g.write(P, prereg(0.5))
+    landed = g.commit("the plan at that path")
+    g.write(P, prereg(0.5, "v2"))
+    g.commit("prose")
+    with G._Repo(g.root) as repo:
+        assert repo.landing([P], "main") == {P: landed}
+        assert repo.landing([f"{P}/old_notes.txt", P], "main") == {f"{P}/old_notes.txt": dirs, P: landed}
+        assert g("log", "main", _P1_FLAG, "--format=%H", "--", P).split()[-1] == dirs
+        s = G._seal(repo, P, "main")
+        assert (s["landing"], s["form"], s["gates_sha256"]) == (landed, "gates", digest(0.5))
+
+
 def test_the_add_commit_is_gits_diff_filter_rule(merged):
     repo = merged.repo
     assert repo.add_commit(P, "main") == merged.p1
