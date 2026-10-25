@@ -45,6 +45,9 @@ from tests.test_prereg_ci_git import Git, prereg  # noqa: E402
 GateSpecError = protocol.GateSpecError
 F = "```"
 REFUSES, DROPPED = "RESULT_REFUSES", "RESULT_DECLARATION_DROPPED"
+# a sworn tag, built from pieces so this file's bytes hold none: a pull request that writes it is not read
+# as a RESULT (core._result_candidate reads any file it writes)
+TAG, END = "<" + "sworn", "</" + "sworn>"
 BODIES = {
     "result": {"prereg": "PREREG_a.md", "receipt": "receipt.json", "verdict": "PASS"},
     "locks": {"scorer": "score.py", "reads": ["data.csv"], "outcomes": ["PASS", "FAIL"], "withdraws": {}},
@@ -210,7 +213,7 @@ def test_binary_bytes_are_no_candidate_by_chance():
 
 
 def test_a_wide_document_holding_a_sworn_verdict_span_or_a_confusable_fence_refuses():
-    span = '<sworn r="path:p/receipt.json#/verdict" k="quote">`FAIL`</sworn>'
+    span = TAG + ' r="path:p/receipt.json#/verdict" k="quote">`FAIL`' + END
     for text in ("# R\n\nVerdict: " + span + "\n", "# R\n\n" + F + "r\u0435sult\n{}\n" + F + "\n"):
         data = b"\xff\xfe" + text.encode("utf-16-le")
         assert core._result_reading(data)["code"] == REFUSES, text
@@ -221,8 +224,8 @@ def test_a_wide_document_holding_a_sworn_verdict_span_or_a_confusable_fence_refu
 PIECES = ["# t\n", "\n", "text\n", "- item\n", "10. item\n", "> quote\n", "[^1]: note\n", "    ", "\t", "  ", ">",
           "- ", F, "~~~", "````", "result", "RESULT", "r\u0435sult", "locks", "python", " json", "\u3000", "\u00a0",
           "\x0c", "<!--", "-->", '{"prereg": "P.md", "receipt": "r.json", "verdict": "X"}', "\n" + F + "\n",
-          '<sworn r="path:r.json#/verdict" k="quote">`X`</sworn>', '<sworn r="path:r.json#/verdict"',
-          "</sworn>", "#/verdict", "`", "\ufeff", "caf\u00e9", "\x00"]
+          TAG + ' r="path:r.json#/verdict" k="quote">`X`' + END, TAG + ' r="path:r.json#/verdict"',
+          END, "#/verdict", "`", "\ufeff", "caf\u00e9", "\x00"]
 
 
 def test_result_candidate_is_true_wherever_a_reading_finds_anything():
@@ -370,11 +373,11 @@ def test_n1_a_result_that_drops_one_of_two_receipts_names_that_one(lab):
     g, r, base = lab
     g.write("receipt_2.json", json.dumps({"prereg": "PREREG_a.md", "m": 0.9, "verdict": "PASS"}) + "\n")
     g.write("RESULT_c.md", "# RESULT c\n\n"
-            + '<sworn r="path:receipt.json#/verdict" k="quote">`PASS`</sworn> and '
-            + '<sworn r="path:receipt_2.json#/verdict" k="quote">`PASS`</sworn>\n')
+            + TAG + ' r="path:receipt.json#/verdict" k="quote">`PASS`' + END + ' and '
+            + TAG + ' r="path:receipt_2.json#/verdict" k="quote">`PASS`' + END + '\n')
     base2 = g.commit("a RESULT naming two receipts")
     g("switch", "-q", "-c", "pr2")
-    g.write("RESULT_c.md", "# RESULT c\n\n" + '<sworn r="path:receipt.json#/verdict" k="quote">`PASS`</sworn>\n')
+    g.write("RESULT_c.md", "# RESULT c\n\n" + TAG + ' r="path:receipt.json#/verdict" k="quote">`PASS`' + END + '\n')
     head = g.commit("drop one span")
     got = read_pr(g, base2, head)
     assert got["findings"] == [(DROPPED, "NOTE", "RESULT_c.md")], got

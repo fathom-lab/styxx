@@ -114,7 +114,9 @@ def encoding_cases() -> List[tuple]:
     """(name, why, bytes, candidate, code, n): what core._result_candidate and core._result_reading give."""
     fenced = f"# RESULT a\n\n{block('result', 'FAIL')}"
     plain = "# notes\n\nThe verdict was FAIL.\n\n" + F + "python\nprint(1)\n" + F + "\n"
-    span = '# RESULT a\n\nVerdict: <sworn r="path:p/receipt.json#/verdict" k="quote">`FAIL`</sworn>\n'
+    # the tag is built from pieces, so this file's bytes hold none (core._result_candidate reads any file a
+    # pull request writes)
+    span = '# RESULT a\n\nVerdict: <' + 'sworn r="path:p/receipt.json#/verdict" k="quote">`FAIL`</' + 'sworn>\n'
     confusable = "# RESULT a\n\n" + F + "r" + chr(0x435) + "sult\n{}\n" + F + "\n"
     boms = {"utf-16-le": b"\xff\xfe", "utf-16-be": b"\xfe\xff", "utf-32-le": b"\xff\xfe\x00\x00",
             "utf-32-be": b"\x00\x00\xfe\xff"}
