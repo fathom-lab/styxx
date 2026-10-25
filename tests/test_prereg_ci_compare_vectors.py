@@ -130,11 +130,14 @@ def test_compare_leg(v):
 def test_the_vectors_reach_every_code_compare_returns():
     """Every code compare returns for a gates decision. The three codes of the locks form (step B4)
     come from a locked scorer's run, which this set (committed at B0, never written again) holds no
-    leg for; tests/test_prereg_ci_scorer_run.py reaches each of them through compare by name."""
+    leg for; tests/test_prereg_ci_scorer_run.py reaches each of them through compare by name. The
+    three licence codes (step B5) are ``licences``'s, which compare never returns;
+    tests/test_prereg_ci_licences.py and conformance/prereg_ci/vectors_licence.json reach each."""
     seen = {f["code"] for v in VECTORS if isinstance(v["expect"]["compare"], list) for f in v["expect"]["compare"]}
     kinds = core._KIND
     locks_codes = {core._SCORER_NOT_RUN, core._SCORER_ERROR, core._SCORER_READS_UNLOCKED}
-    compare_codes = {c for c in kinds if c != core._COVER_UNCHECKABLE} - locks_codes
+    licence_codes = {core._LICENCE_WITHDRAWN, core._LICENCE_PENDING, core._LICENCE_PATTERN_FINDS_NOTHING}
+    compare_codes = {c for c in kinds if c != core._COVER_UNCHECKABLE} - locks_codes - licence_codes
     assert seen == compare_codes
     for v in VECTORS:
         if isinstance(v["expect"]["compare"], list):
