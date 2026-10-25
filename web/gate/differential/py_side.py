@@ -25,7 +25,10 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "7b264014b757d64fd97981f9b823f3f648b9890f82973982b580491041ccef63"  # styxx/diffgate.py: main's 969abb0d reader (91d45e3a + the one-sided #178, on a reading path; 91d45e3a is e1441f18 + #179's async read and #178's abstention, on reading paths; e1441f18 is f457d2e4 + the front door's docstring, --help and WITHHOLD comment wording, outside any reading path; f457d2e4 is 4eb3d6f0 + #205's line cut and abstention; 4eb3d6f0 is 68873068, which is 9b620e00 + the demo's CONTRADICTED label, + the record naming its instrument) + the PATH-2a block (LF)
+PINNED = "2f79793e46acd3dd4c2e9f2932db881ec4ebfe65846868f2d6fc0956c42793e6"  # styxx/diffgate.py: main's a7debd58 reader (969abb0d + #174's old path and #175's segments in `only_touches`, on reading paths; 969abb0d is 91d45e3a + the one-sided #178, on a reading path; 91d45e3a is e1441f18 + #179's async read and #178's abstention, on reading paths; e1441f18 is f457d2e4 + the front door's docstring, --help and WITHHOLD comment wording, outside any reading path; f457d2e4 is 4eb3d6f0 + #205's line cut and abstention; 4eb3d6f0 is 68873068, which is 9b620e00 + the demo's CONTRADICTED label, + the record naming its instrument) + the PATH-2a block (LF)
+# #174 and #175 (fix/diffgate-174-175) moved reading paths in both files at once: `only_touches` reads a rename's old
+# path beside the status keys and abstains where only it lies outside the prefixes, and resolves a prefix's `.` and
+# `..` segments as git resolves a pathspec, so the differential compares the new reading on both sides.
 # #179 and #178 (fix/diffgate-178-179) moved reading paths in both files at once: both read `async def` where they read
 # `def`, and both abstain on the `def` counts where a counted line sits in a file not read as .py or .pyi or after an
 # odd number of triple quotes in the added lines of its `+++` section, where #205's seams part the two readers (a

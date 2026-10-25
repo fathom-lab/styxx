@@ -1019,13 +1019,14 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
 // covered
 // (NOTE_path2a_eleventh_pass_2026_10_05).
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 7b264014b757d64fd97981f9b823f3f648b9890f82973982b580491041ccef63, LF). Everything outside this block is
-// main's port (sha256 1097d2fb..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 2f79793e46acd3dd4c2e9f2932db881ec4ebfe65846868f2d6fc0956c42793e6, LF). Everything outside this block is
+// main's port (sha256 7ff464f0..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
 // compatibility reading and its two header patterns read as the Python reads them, and #206's count,
 // fix/diffgate-205-206, d74cc729...; then #179's `async def` read, #178's abstention and the abstention where #205's
 // seams part the two readers or two lines of one section define one test name, one after `async`,
 // fix/diffgate-178-179, ba76562c...; then the tests count's abstention narrowed to a claim at or below the larger
-// count, the one-sided #178),
+// count, the one-sided #178, 1097d2fb...; then #174's old path and #175's segments in `only_touches`, as the
+// Python's, fix/diffgate-174-175),
 // unchanged except that main's gateDiffText is named _gateDiffTextMain (its definition and its
 // DECLARE-1 self-call); the gateDiffText at the end of this block calls it and then the overlay, once. The overlay
 // reads each DECIDED claim once more and turns it UNCHECKABLE, with a reason naming the verdict it withholds, the

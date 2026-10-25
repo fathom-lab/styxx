@@ -51,8 +51,12 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # them. So relation (A), the lockstep and bar C run against the new main in both languages, and every figure they pin
 # was measured again on it. The one-sided #178 then narrowed the tests count's abstention to a claim at or below the
 # larger count, in both files (91d45e3a... and ba76562c... were the two before it); the block did not move.
-MAIN_PY_SHA = "969abb0df7eada6ff4e2c6b8fceb5af3056f19447e152bb1b48695712eedec62"
-MAIN_JS_SHA = "1097d2fb6a2484e64aeb5a5d3cd3c554a8b42d6ef11e9c204a8c53d981d35324"
+# fix/diffgate-174-175 then changed the reader and main's port outside the block on reading paths (969abb0d... and
+# 1097d2fb... were the two): `only_touches` reads a rename's old path (#174) and resolves `.` and `..` prefix segments
+# (#175); the block's model of main's scope reading reads both. So relation (A), the lockstep and bar C run against
+# the new main in both languages, and every figure they pin was measured again on it.
+MAIN_PY_SHA = "a7debd589dfc52f2d88575e394dafcc4855aed57f0983f9dd1773f25871391f1"
+MAIN_JS_SHA = "7ff464f082844981912b8a19fc9de614c99670b788287939dde18e69117b3ebb"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
 _MARK = "=== PATH-2a abstain-only overlay: "
