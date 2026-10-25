@@ -17,6 +17,7 @@ cover; no claim.
 | `gen_vectors.py` | builds the set from styxx's history at `REV` (in `__init__.py`), checks every vector, and writes the three JSON files |
 | `vectors_compare.json` | added after the B0 review, beside the committed set: synthetic vectors for every code `compare` returns, the A.2 re-run through a fence the scanner does not count, and the readings the review asked for; its bytes are in its own `blobs` |
 | `gen_vectors_compare.py` | builds `vectors_compare.json` from cases that state their outcome in advance; reads no history |
+| `rescore_census_ca347730.txt`, `seal_rule_ca347730.txt`, `landing_order_ca347730.txt`, `pairs_ca347730.txt` | added at step B1: the design's R1, RV1 and RV2 outputs and RV2's pair list, copied; see "The history the git layer reproduces" |
 
 The JSON files are generated, never edited by hand. `tests/test_prereg_ci_score_vectors.py` and
 `tests/test_prereg_ci_cover.py` replay every vector; only the checks that read history skip, when
@@ -97,12 +98,43 @@ if one differs:
 - R8b: the 15-gate leg-2 table (70 rows) is total over 32,768 assignments, where
   `research_capsule._table_total` returns None.
 
+## The history the git layer reproduces
+
+Step B1 adds `styxx.prereg_ci.git`, and `tests/test_prereg_ci_history.py` re-derives three of the
+design's receipts through it and `styxx.prereg_ci.core`, line by line, at `REV`. The receipts are the
+outputs of the design's own probes, which live with the design outside this repository; the copies
+here are those outputs with CRLF read as LF (the probes ran on Windows, whose console writes CRLF,
+and a tracked file under `conformance/` holds no carriage return). Nothing else in them changed.
+
+| copy | the design's file | its sha256 | the copy's sha256 |
+|---|---|---|---|
+| `rescore_census_ca347730.txt` (R1) | `census/rescore_census_ca347730.txt` | `42d3c6ba0123dc589d3e85a86ca428fe723488229eff69d29280a6cd26c85857` | `f901d7dea242bfba30d0e356a63ba53a8acb0622bbbc049f9b8035a54ed7c763` |
+| `seal_rule_ca347730.txt` (RV1) | `revision_probes/seal_rule_ca347730.txt` | `ca880e9b2f016a93dc8b3d580b3226c79cb30c267c37e43769eaa3db41babebf` | `c59d1180ed033381aa1858294380bc37cf87c124ebe180d8c6f0e8ab88f4d6c9` |
+| `landing_order_ca347730.txt` (RV2) | `revision_probes/landing_order_ca347730.txt` | `96e283ab57fb016c0b1ca3db6400fedac9dee54f1724b0030b765da19568ebfb` | `674e64cd01e8da324267ceb01bb2c575edd8f211eff9496432d0329e84e1e452` |
+| `pairs_ca347730.txt` (RV2's input) | the 32 `PAIR` lines (lines 36-67) of `red_team_probes/distinct_pairs_ca347730.txt` | `7d2b4a0de249c2a85069fc200cd5a0955062f78dacf02d6c5f86e06c7afa83da` (the whole file) | `80c81a157ef6afe2125bd169753fe6cdeea58dc58dd6c4308c370467647c565b` |
+
+What each copy pins, as the test reads it:
+
+- R1: 33 records naming a gates digest, over 32 distinct (PREREG, receipt) pairs; each re-scored from
+  the PREREG blob at its add commit gives the recorded verdict and digest (`TALLY {"RESCORES": 33}`),
+  with the order of add commits, the count of PREREG blobs between seal and receipt (2 for #224, 1
+  elsewhere) and whether the blob at `REV` is the sealed one (not for the realmodel smoke record).
+- RV1: of 52 gated PREREGs, the add commit is the landing commit for 40, the file blob differs
+  between the two rules for 2, and the gates digest for 1 (`PREREG_pmnist_untied_2026_09_02.md`,
+  add `1cbc5997`, landing `320b3032`).
+- RV2: over the 32 pairs, the order commit on the landed gates digest is strictly before the
+  receipt's add commit for 32, the order commit on the landed file blob for 31 (the miss is
+  `realmodel_bridge_v3_smoke.json`), the add commit for 32.
+
+The copies carry the lab's history as is: paths, verdict identifiers and commit ids.
+
 ## Boundaries
 
 - The census vectors seal at the commit that added the PREREG (R1's rule). The landing rule of the
-  design (3.2(b)) is the git layer's, a later step; for every census PREREG the two rules give the
-  same gates digest (the one PREREG where they do not, `PREREG_pmnist_untied_2026_09_02.md`, carries
-  no census record).
+  design (3.2(b)) is the git layer's (`styxx.prereg_ci.git`, step B1); for every census PREREG the
+  two rules give the same gates digest (the one PREREG where they do not,
+  `PREREG_pmnist_untied_2026_09_02.md`, carries no census record), and
+  `tests/test_prereg_ci_history.py` shows every record reading as recorded under the landing rule.
 - `newline/bom-on-the-fence-line`: a BOM before an opener on line 1 makes that line no fence for
   the scanner, so the PREREG reads `NOT_GATED`. A renderer that drops a leading BOM would show the
   fence. Pinned as the scanner reads it today, and left to the step that reads ```result and
@@ -113,8 +145,8 @@ if one differs:
 - `rescore` runs the cover under a work budget (`core._COVER_BUDGET`, 2 ** 20 subcubes): past it
   the verdict stands and `total`, `holes` and `unreachable_rows` stay None, with `cover_code`
   `COVER_UNCHECKABLE`. Every committed cover vector fits inside it (the largest visits 2,591).
-- The vector files hold `gates_sha256` keys inside their inputs and outcomes; a receipt discovery
-  that walks the tree for that key excludes `conformance/**`.
+- The vector files hold `gates_sha256` keys inside their inputs and outcomes; the git layer's
+  record and receipt discovery leaves `conformance/` out by default (`git._EXCLUDE`).
 - The census and R2 vectors carry the lab's history as is: paths, verdict identifiers, gate names
   and the bytes. The generator scans the words it writes itself, never carried history.
 
