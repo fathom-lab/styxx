@@ -80,6 +80,7 @@ _KIND = {
     "MANIFEST_REWRITTEN": "FAIL",
     # a manifest prereg line against the default seal of its path (the B2 review, case A)
     "MANIFEST_SEAL_NOT_LANDED": "FAIL", "MANIFEST_SEAL_PROSE_DIFFERS": "NOTE",
+    "NOT_A_COMMIT": "INPUT",
 }
 
 _MAX_BLOB_BYTES = _RECEIPT_CAP           # read at call time, so a test may lower it
@@ -313,6 +314,14 @@ class _Repo:
                 raise _Refusal("COMMIT_ABSENT", f"{rev!r} names no commit in {self.root}")
             self._commits[rev] = oid
         return self._commits[rev]
+
+    def object_type(self, name: Any) -> Optional[str]:
+        """The type of the object *name* names as git stores it (``cat-file --batch-check``, no
+        peeling: an annotated tag's id is a ``tag``), or None where it names none."""
+        if not isinstance(name, str) or not name or any(ch in name for ch in "\n\r\0"):
+            return None
+        head = self._batch_check().header(name)
+        return None if head is None else head[1]
 
     def is_shallow(self) -> bool:
         if self._shallow is None:
@@ -1072,16 +1081,31 @@ def _line(code: str, detail: str, entry: Dict[str, Any]) -> Dict[str, Any]:
     return {"code": code, "kind": _KIND[code], "detail": detail, "path": entry["path"], "id": entry["id"]}
 
 
+def _line_commit(repo: _Repo, entry: Dict[str, Any]) -> str:
+    """A manifest line's commit, which must be a commit object (the B2 review, case D): an id the
+    object store lacks is COMMIT_ABSENT (UNCHECKABLE: a shallow or partial clone); the id of a tag,
+    tree or blob is MANIFEST_INVALID, an input error, since a tag's id would be printed as the seal
+    commit and a tree holds no history to order."""
+    typ = repo.object_type(entry["commit"])
+    if typ is None:
+        raise _Refusal("COMMIT_ABSENT", f"line {entry['id']}: {entry['commit']} is not in the object store")
+    if typ != "commit":
+        raise _Refusal("MANIFEST_INVALID", f"line {entry['id']}: {entry['commit']} is the id of a {typ}, not of a "
+                                           f"commit; a manifest line names the commit that holds its bytes")
+    return repo.commit(entry["commit"])
+
+
 def _manifest_blobs(repo: _Repo, entries: Sequence[Dict[str, Any]], rev: str) -> List[Dict[str, Any]]:
     """DESIGN 3.2(b): every ``blob_sha256`` equals ``git show <commit>:<path> | sha256sum``, the
     sha256 of the blob as git stores it (never a working copy, never newlines translated), else
     ``MANIFEST_BLOB_DIFFERS``. A line's commit is *rev* or an ancestor of it, so every clone of the
     history the manifest is read in holds its bytes; else ``MANIFEST_COMMIT_UNREACHABLE``. A commit
-    the object store lacks is COMMIT_ABSENT (UNCHECKABLE)."""
+    the object store lacks is COMMIT_ABSENT (UNCHECKABLE); an id that is not a commit's is
+    MANIFEST_INVALID (``_line_commit``)."""
     tip = repo.commit(rev)
     out = []
     for e in entries:
-        c = repo.commit(e["commit"])
+        c = _line_commit(repo, e)
         if c != tip and not repo.is_strict_ancestor(c, tip):
             out.append(_line("MANIFEST_COMMIT_UNREACHABLE", f"line {e['id']}: {c[:12]} is not in the history of "
                              f"{tip[:12]}, so a clone of that history holds no bytes for it", e))
@@ -1186,7 +1210,7 @@ def _manifest_seen(repo: _Repo, entries: Sequence[Dict[str, Any]], rev: str,
             why = f"{path} has no add commit in the history of {rev}"
         elif imported.get(e["id"]) != e:
             why = f"the line was not in {path} when {added[:12]} added it"
-        elif not repo.is_strict_ancestor(e["commit"], added):
+        elif not repo.is_strict_ancestor(_line_commit(repo, e), added):
             why = f"its commit {e['commit'][:12]} is not strictly before {added[:12]}, which added {path}"
         else:
             continue
@@ -1203,7 +1227,7 @@ def _bytes_of(repo: _Repo, entry: Dict[str, Any], rev: str) -> bytes:
     found = _manifest_blobs(repo, [entry], rev)
     if found:
         raise _Refusal(found[0]["code"], found[0]["detail"])
-    return repo.read(entry["commit"], entry["path"]) or b""
+    return repo.read(_line_commit(repo, entry), entry["path"]) or b""
 
 
 def _label(reading: Dict[str, Any]) -> str:
@@ -1254,7 +1278,7 @@ def _line_seal(repo: _Repo, line: Dict[str, Any], base: str, head: str) -> Dict[
     chain printed beside it (DESIGN 3.2(b): both are printed). No reading against the default seal."""
     path = line["path"]
     data = _bytes_of(repo, line, head)
-    c, b = repo.commit(line["commit"]), repo.commit(base)
+    c, b = _line_commit(repo, line), repo.commit(base)
     landing = repo.landing([path], b)[path]
     decision = _core._decision(data)
     return {"path": path, "manifest_id": line["id"], "commit": c, "landing": landing, "landed": landing is not None,
@@ -1413,7 +1437,14 @@ def _sealed_line(repo: _Repo, entries: Sequence[Dict[str, Any]], path: str, head
             raise _Refusal("NOT_COMMITTED", f"{path} is on no commit of HEAD's parent-one chain; commit it, or name "
                                             f"the commit that holds it with --commit")
     else:
-        c = repo.commit(commit)
+        try:
+            c = repo.commit(commit)
+        except _Refusal as e:
+            typ = repo.object_type(commit) if e.code == "COMMIT_ABSENT" else None
+            if typ is None:
+                raise
+            raise _Refusal("NOT_A_COMMIT", f"--commit {commit!r} names a {typ}, not a commit; name the commit that "
+                                           f"holds {path}")
         if c != head and not repo.is_strict_ancestor(c, head):
             raise _Refusal("NOT_COMMITTED", f"{c[:12]} is not in HEAD's history, so a clone of it holds no bytes "
                                             f"there")
@@ -1426,8 +1457,8 @@ def _sealed_line(repo: _Repo, entries: Sequence[Dict[str, Any]], path: str, head
         a, d = _core._decision(data), _core._decision(repo.read(start, path) or b"")
         if (a["form"], a["gates_sha256"], a["code"]) != (d["form"], d["gates_sha256"], d["code"]):
             raise _Refusal("MANIFEST_SEAL_NOT_LANDED", (
-                f"{path} at {c[:12]} holds {_label(a)}; it landed at {(landing or start)[:12]} on HEAD's parent-one chain "
-                f"holding {_label(d)}, and check refuses a prereg line whose decision is not the landed one. A "
+                f"{path} at {c[:12]} holds {_label(a)}; it landed at {(landing or start)[:12]} on HEAD's parent-one "
+                f"chain holding {_label(d)}, and check refuses a prereg line whose decision is not the landed one. A "
                 f"decision changed after landing is an amendment line: seal {path} --amends ID --seen LEVEL "
                 f"--commit {c[:12]}"))
     else:
@@ -1436,10 +1467,10 @@ def _sealed_line(repo: _Repo, entries: Sequence[Dict[str, Any]], path: str, head
             raise _Refusal("MANIFEST_INVALID", f"{path} at {c[:12]} holds a fence the scanner refuses: "
                                                f"{reading['detail']}")
         root = _root_of(entries, amends)
-        digest = _core._decision(repo.read(root["commit"], root["path"]) or b"")["gates_sha256"]
+        digest = _core._decision(repo.read(_line_commit(repo, root), root["path"]) or b"")["gates_sha256"]
         for e in _core._lineage(entries, root["id"]):
             if e["kind"] == "amendment" and e["decision"] == "own":
-                digest = _core._decision(repo.read(e["commit"], e["path"]) or b"")["gates_sha256"]
+                digest = _core._decision(repo.read(_line_commit(repo, e), e["path"]) or b"")["gates_sha256"]
         decision = "own" if reading["form"] is not None and reading["gates_sha256"] != digest else "inherits"
         line_id = _amendment_id(entries, root["id"])
     return {"id": line_id, "kind": kind, "path": path, "commit": c, "blob_sha256": hashlib.sha256(data).hexdigest(),

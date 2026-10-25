@@ -419,6 +419,32 @@ def test_every_blob_sha256_is_the_sha256_of_the_blob_at_its_commit(amended):
     assert codes(found) == [("MANIFEST_COMMIT_UNREACHABLE", "FAIL")]
 
 
+def test_a_line_whose_commit_names_a_tag_or_a_tree_is_an_input_error(tmp_path):
+    """The B2 review, case D: git would peel an annotated tag's id to its commit and print the tag's id
+    as the seal commit; a tree's id read as an absent commit (UNCHECKABLE). Both are MANIFEST_INVALID;
+    an id the object store lacks stays COMMIT_ABSENT."""
+    g = Git(tmp_path / "objects")
+    g.write(P, prereg(0.5))
+    seal = g.commit("plan")
+    g("tag", "-a", "-m", "t", "v1", seal)
+    tag, tree = g("rev-parse", "v1"), g("rev-parse", seal + "^{tree}")
+    blob = g("rev-parse", f"{seal}:{P}")
+    g.write("p/receipt.json", receipt(m=0.6))
+    r = g.commit("receipt")
+    with G._Repo(g.root) as repo:
+        assert (repo.object_type(tag), repo.object_type(tree), repo.object_type(seal)) == ("tag", "tree", "commit")
+        assert repo.object_type("1" * 40) is None
+        for oid, typ in ((tag, "tag"), (tree, "tree"), (blob, "blob")):
+            es = [line("1", "prereg", P, oid, prereg(0.5))]
+            with pytest.raises(G._Refusal) as e:
+                G._manifest_blobs(repo, es, "main")
+            assert (e.value.code, e.value.kind) == ("MANIFEST_INVALID", "INPUT") and f"of a {typ}" in e.value.detail
+            with pytest.raises(G._Refusal) as e:
+                G._effect(repo, P, "p/receipt.json", r, "main", "main", es)
+            assert e.value.code == "MANIFEST_INVALID"
+        assert G._manifest_blobs(repo, [line("1", "prereg", P, seal, prereg(0.5))], "main") == []
+
+
 def test_the_blob_is_hashed_as_git_stores_it_never_with_newlines_translated(tmp_path):
     """SEALS 'the rule': the bytes as git stores them, never a working copy read through text mode."""
     g = Git(tmp_path / "crlf")
@@ -879,6 +905,20 @@ def test_seal_at_a_named_commit(demo, capsys):
     demo.g.commit("prose")
     code, _, lines = _seal_cli(capsys, P, "--commit", demo.seal[:10])
     assert code == 0 and lines[0]["commit"] == demo.seal and lines[0]["blob_sha256"] == sha(prereg(0.5))
+
+
+def test_seal_commit_takes_a_commit_or_a_tag_of_one_and_refuses_a_tree_as_input(demo, capsys):
+    """Case D at the verb: --commit naming a tree is an input error (exit 2), not UNCHECKABLE (exit 3,
+    which DESIGN 3.3 keeps for a shallow clone or a missing commit); an annotated tag's name is peeled,
+    and the line records the commit's id."""
+    tree = demo.g("rev-parse", demo.seal + "^{tree}")
+    code, out, lines = _seal_cli(capsys, P, "--commit", tree)
+    assert code == 2 and lines == [] and "NOT_A_COMMIT" in out and "tree" in out
+    code, out, _ = _seal_cli(capsys, P, "--commit", "9" * 40)
+    assert code == 3 and "COMMIT_ABSENT" in out
+    demo.g("tag", "-a", "-m", "t", "v1", demo.seal)
+    code, _, lines = _seal_cli(capsys, P, "--commit", "v1")
+    assert code == 0 and lines[0]["commit"] == demo.seal
 
 
 def test_seal_refuses_a_prereg_line_at_a_decision_other_than_the_landed_one(demo, capsys):
