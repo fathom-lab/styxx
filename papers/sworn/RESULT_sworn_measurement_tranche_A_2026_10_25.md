@@ -58,11 +58,11 @@ quoted as given; no committed byte records them.
   fold's two outputs, the Claude family's ledger, the nine trivial twins and their status files, and per-seat facts
   with each seat file's sha256 (`tranche_A_seat_facts.json`, below). The twelve seat files (`claude/` and `local/`,
   `L-seat1` to `R-seat3`) enter the tree only in tranche A's key-release commit, whose bytes must then match the
-  sha256 printed here. One file more is held, by the lead's reading of the same decision: the local family's ledger.
-  `seat_local.py` hashes the model's generated text into each row
+  sha256 printed here. One file more is held, by the lead's reading of the same decision: the local family's
+  ledger (SUBSTRATE NOT NAMED IN DESIGN v2). `seat_local.py` hashes the model's generated text into each row
   (<sworn r="path:papers/sworn/measurement/seat_local.py#L148" k="quote">`raw_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()`</sworn>, l.148), and its Panel R rows hold
   <sworn r="path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/call_hashes_per_panel/R/distinct_non_null" k="numeric">2</sworn> distinct values over
-  <sworn r="path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/call_hashes_per_panel/R/item_rows" k="numeric">498</sworn> rows, so a row's hash names which of two outputs
+  <sworn r="path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/call_hashes_per_panel/R/item_rows" k="numeric">498</sworn> rows (SUBSTRATE NOT NAMED IN DESIGN v2), so a row's hash names which of two outputs
   that seat gave on that item: an item-level answer, which D1 holds with the seat files. Its counts and sha256 are in
   the seat facts; it enters the tree with them. The Claude ledger hashes the transport's envelope, and its Panel R
   rows hold <sworn r="path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/call_hashes_per_panel/R/distinct_non_null" k="numeric">498</sworn> distinct values over
@@ -716,7 +716,7 @@ byte for byte:
 
 This document swears 728 spans: 436 quote, 258 numeric, 25 hash and 9 absent, every one over bytes committed at
 `747e0890`, the commit its sidecar names. Before this file was committed, `python -m styxx.sworn verify` over it at
-that commit read SWORN-HELD: 728 HELD, 0 FAILED, 0 UNRESOLVED, 0 MALFORMED; sentence_share 0.5066 (advisory, a floor
+that commit read SWORN-HELD: 728 HELD, 0 FAILED, 0 UNRESOLVED, 0 MALFORMED; sentence_share 0.5063 (advisory, a floor
 that counts every narrative sentence as load-bearing; `styxx.sworn`). The sidecar and the verdict receipt committed
 beside this file are the receipt for these counts, and `python -m styxx.sworn check` re-derives the receipt from
 them. A span binds a sentence to bytes the author did not write at that commit; it does not make the sentence
