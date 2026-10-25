@@ -1,0 +1,12 @@
+{
+ "script": "papers/sworn/measurement/tranche_A_packet_facts.py",
+ "script_sha256": "183a188b180be1b96a678dca0ee0f1a02d403fe673348a89483d2944d4e5e7eb",
+ "schema": "styxx-sworn/measurement-tranche-A-decoy-text-count/v1",
+ "what_this_is_not": "counts only: no item id, no decoy id and no side; it does not say which items are decoys",
+ "packet_L_sha256": "140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9",
+ "decoys_L_sha256": "2b63f1b09e41eb2c94d55c24a24e1d7b0ea681fdd71fdf90014b13c34db08b2c",
+ "packet_L_items": 59,
+ "committed_decoys": 30,
+ "committed_decoy_distinct_texts": 30,
+ "packet_L_item_texts_equal_to_a_committed_decoy_text": 30
+}
