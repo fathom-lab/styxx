@@ -22,6 +22,8 @@ cover; no claim.
 | `gen_seals_manifest.py` | builds that file from the SEALS blob at `REV` and checks it; prints R10's `MATCH` lines |
 | `vectors_fence.json` | added at step B3: the fence scanner with its info string as a parameter, for `gates`, `result` and `locks`, and what a RESULT declares; see "The fence scanner and the RESULT readers" |
 | `gen_vectors_fence.py` | builds `vectors_fence.json` from cases that state their outcome in advance; reads no history |
+| `vectors_fence_containers.json` | added after the B3 review: result and locks fences inside containers, where that rule stops, and RESULT bytes in wide encodings and binary files; see "The fence scanner and the RESULT readers" |
+| `gen_vectors_fence_containers.py` | builds `vectors_fence_containers.json` from cases that state their outcome in advance; reads no history |
 
 The JSON files are generated, never edited by hand. `tests/test_prereg_ci_score_vectors.py` and
 `tests/test_prereg_ci_cover.py` replay every vector; only the checks that read history skip, when
@@ -141,8 +143,8 @@ The copies carry the lab's history as is: paths, verdict identifiers and commit 
   `tests/test_prereg_ci_history.py` shows every record reading as recorded under the landing rule.
 - `newline/bom-on-the-fence-line`: a BOM before an opener on line 1 makes that line no fence for
   the scanner, so the PREREG reads `NOT_GATED`. A renderer that drops a leading BOM would show the
-  fence. Pinned as the scanner reads it today, and left to the step that reads ```result and
-  ```locks fences with the same rules. A fence in a block quote or a list item is the same class.
+  fence. Pinned as the scanner reads it today, and left to the step that reads the ```result and
+  the ```locks fences with the same rules. A fence in a block quote or a list item is the same class.
   Since the B0 review, `compare` refuses a receipt that records a gates digest against such a
   PREREG (`vectors_compare.json`, `a2/hidden-fence/*`); a receipt that records a verdict and no
   digest against it is still read as `NOT_GATED`, which the scanner step decides.
@@ -220,6 +222,30 @@ in one RESULT that differ are `RESULT_FORMS_DIFFER` (`core._declared`).
 The vectors are synthetic. The lab's own sworn spans are read by the test from git objects at `REV`: 20
 markdown files name a `json#/verdict` leaf, 13 of them declare through 17 spans, and none is refused.
 
+Since the B3 review, `vectors_fence_containers.json` (49 vectors, written by `gen_vectors_fence_containers.py`;
+`vectors_fence.json` is not written again, and every one of its vectors still reads as it states) pins three
+more rules:
+
+- a result or locks fence a renderer may show inside a container refuses: behind a block quote marker, a list
+  item marker or a footnote label on its own line, at any indent; or 4 or more columns in (a tab to the next
+  multiple of 4) once a line above it opens a list item or a footnote. The reader does not follow a container
+  to its end, so the last rule also refuses below a list that has ended, which a renderer prints as code; the
+  vectors state that over-refusal in advance. Indented code with no list item or footnote opened above it stays
+  code. A refusal of a B3 class keeps its B3 words;
+- every file a pull request writes is read as a RESULT when it is a `.md` file or its bytes hold the marker of
+  a form (`core._result_candidate`), whatever its suffix, so a RESULT renamed to `.markdown` or `.txt` is still
+  read. A RESULT that declared a verdict at the merge base and declares none of it at HEAD (deleted, renamed
+  away or under `exclude`, or edited to prose) is `RESULT_DECLARATION_DROPPED`, a NOTE;
+- a RESULT that starts with a UTF-16 or UTF-32 byte-order mark is refused when its text holds the marker of a
+  form. Other bytes that are not UTF-8 keep the B3 marker, a result fence's or a verdict span's: a fence run
+  followed by a non-ASCII byte occurs by chance in compressed files.
+
+Not refused, and named: a plain result fence a renderer shows as code or as raw HTML (inside an outer fence,
+or in an HTML block opened by a line such as `<script>`, `<style>` or `<details>` above it) is read as the
+declaration, as the gates rule reads a gates fence there. A file that shows an example result fence or verdict
+span (documentation, tests, these vectors) is read as a RESULT when a pull request writes it, and such paths
+go in `exclude`.
+
 ## How to regenerate it
 
 ```
@@ -228,6 +254,7 @@ python -B conformance/prereg_ci/gen_vectors.py --check    # regenerate in memory
 python -B conformance/prereg_ci/gen_vectors_compare.py --check
 python -B conformance/prereg_ci/gen_seals_manifest.py --check
 python -B conformance/prereg_ci/gen_vectors_fence.py --check
+python -B conformance/prereg_ci/gen_vectors_fence_containers.py --check
 ```
 
 Once committed, the set is never written again. A run that regenerates it byte for byte exits 0;
