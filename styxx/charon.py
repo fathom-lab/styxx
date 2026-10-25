@@ -33,6 +33,12 @@ WHAT THE LINE CARRIES.
     set; a change outside it reads as DRIFT. A line with no scheme is legacy: raw-byte shas, no
     runtime, a digest over the module list alone, which no fresh digest can equal, so it reads
     MOVED_VERIFIER or SKEW and never SAME_LINE or DRIFT. ``sys.version`` is written nowhere.
+    One compared value is read apart
+    (``papers/charon/AMENDMENT_charon_same_verifier_build_flag_2026_10_25.md``): a sworn line whose
+    only moved value is ``counts.receipt_check.same_verifier_build``, recorded true and read false,
+    reads MOVED_VERIFIER when the styxx.sworn sha the line names is not the installed one and the
+    receipt still names the line's sha; under the same build it stays DRIFT, and beside any other
+    moved value it reads what SPEC E5 reads. The row says so in ``read_apart``.
   * ``prev`` — the previous line's ``entry_id``; the line after the header names the header's
     domain-separated digest, so the header is chained too.
 
@@ -130,6 +136,9 @@ _MODULES = {
 }
 # what verify_log says moved in the verifier, one key per value of a row's verifier_moved
 _VERIFIER_PARTS = ("same", "modules", "runtime", "modules+runtime", "legacy", "unattributed", "not_compared")
+# the one compared value verify_log reads apart from SPEC E5's whole-core rule, and only under the
+# conditions of _read_apart (AMENDMENT_charon_same_verifier_build_flag_2026_10_25)
+_BUILD_FLAG = "counts.receipt_check.same_verifier_build"
 _CERTIFIES = ("every line is a verdict re-derived from bytes by the named verifier modules — at the "
               "named commit where one is named, over the working tree otherwise — chained to the line "
               "before it, with the size and digests of the receipt set it was reproduced against; NOT "
@@ -238,6 +247,73 @@ def _verifier_moved(recorded, fresh: dict) -> Tuple[str, List[str]]:
         return scheme, ["unattributed"]
     moved = [part for part in ("modules", "runtime") if rec.get(part) != fresh.get(part)]
     return scheme, moved or ["unattributed"]
+
+
+def _module_sha(verifier, name: str) -> Optional[str]:
+    """The sha a verifier record names for one module, or None. Never raises on a record that is not
+    what a writer writes."""
+    mods = verifier.get("modules") if isinstance(verifier, dict) else None
+    for pair in mods if isinstance(mods, list) else []:
+        if isinstance(pair, list) and len(pair) == 2 and pair[0] == name and isinstance(pair[1], str):
+            return pair[1]
+    return None
+
+
+def _receipt_build(sidecar: Path) -> Optional[str]:
+    """The build a sworn document's verdict receipt names as its issuer (``verifier.sworn_sha256``),
+    read from the receipt beside the sidecar, or None when there is none or it cannot be read."""
+    if not sidecar.name.endswith(".sworn.json"):
+        return None
+    path = sidecar.with_name(sidecar.name[: -len(".sworn.json")] + ".sworn-receipt.json")
+    try:
+        rec = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    ver = rec.get("verifier") if isinstance(rec, dict) else None
+    sha = ver.get("sworn_sha256") if isinstance(ver, dict) else None
+    return sha if isinstance(sha, str) else None
+
+
+def _read_apart(entry: dict, fresh: dict, changed: List[str], same_build: bool, art: Path) -> List[str]:
+    """``[_BUILD_FLAG]`` when the line's move is the advisory build flag alone and the installed sworn.py
+    moved it, else ``[]`` (AMENDMENT_charon_same_verifier_build_flag_2026_10_25). Every condition holds:
+
+      * a sworn line, re-derived as a sworn line, and the verifier moved (``same_build`` is false);
+      * the only compared key that moved is ``counts``, and with the fresh flag put back to the recorded
+        one the fresh counts equal the recorded counts;
+      * the line recorded the flag true and the fresh reading is false;
+      * the styxx.sworn sha the line's verifier names is not the installed one;
+      * the receipt beside the sidecar still names, as its issuer, the styxx.sworn sha the line names.
+
+    The flag is whether the receipt's issuing build is the installed sworn.py. Recorded true, the receipt
+    named the build the line names; read false with the receipt naming that build still, the installed
+    sworn.py is not that build, and nothing else on the line moved. A flag that moved under the same
+    build, false to true, beside any other moved value, outside styxx.sworn, or with the receipt naming
+    another build is not read apart: SPEC E5 reads it. The receipt names a raw-byte sha, a legacy line
+    raw-byte shas and a scheme-v1 line LF shas; sworn.py is pinned -text, so on a checkout of this
+    repository the three are one string. Where sworn.py carries CRLF bytes a scheme-v1 line is never
+    read apart, and on a legacy line a sworn.py whose line endings alone moved reads as moved. The
+    receipt is read only when every cheaper condition holds. Never raises."""
+    if same_build or changed != ["counts"] or entry.get("kind") != "sworn" or fresh.get("kind") != "sworn":
+        return []
+    rec_counts, new_counts = entry.get("counts"), fresh.get("counts")
+    if not (isinstance(rec_counts, dict) and isinstance(new_counts, dict)):
+        return []
+    rec_rc, new_rc = rec_counts.get("receipt_check"), new_counts.get("receipt_check")
+    if not (isinstance(rec_rc, dict) and isinstance(new_rc, dict)):
+        return []
+    if rec_rc.get("same_verifier_build") is not True or new_rc.get("same_verifier_build") is not False:
+        return []
+    try:
+        if jcs(dict(new_counts, receipt_check=dict(new_rc, same_verifier_build=True))) != jcs(rec_counts):
+            return []
+    except (TypeError, ValueError):
+        return []
+    named = _module_sha(entry.get("verifier"), "styxx.sworn")
+    installed = _module_sha(fresh.get("verifier"), "styxx.sworn")
+    if named is None or installed is None or named == installed:
+        return []
+    return [_BUILD_FLAG] if _receipt_build(art) == named else []
 
 
 def _ascii_keys(obj) -> bool:
@@ -747,6 +823,7 @@ def verify_log(log: Path, repo: Path, expect_head: Optional[str] = None) -> dict
     lines = []
     by_status: Dict[str, int] = {s: 0 for s in STATUSES}
     by_part: Dict[str, int] = {p: 0 for p in _VERIFIER_PARTS}
+    by_apart: Dict[str, int] = {_BUILD_FLAG: 0}
     builds: Dict[str, set] = {}
     for e in entries:
         ver = e.get("verifier") if isinstance(e.get("verifier"), dict) else {}
@@ -760,7 +837,7 @@ def verify_log(log: Path, repo: Path, expect_head: Optional[str] = None) -> dict
                "verifier_now": None,
                "verifier_scheme": _verifier_scheme(ver), "verifier_moved": None,
                "runtime_recorded": ver.get("runtime") if isinstance(ver.get("runtime"), dict) else None,
-               "runtime_now": None}
+               "runtime_now": None, "read_apart": None}
         if e.get("_line") in tampered_lines or not _well_formed(e):
             row["status"] = "TAMPER"
         else:
@@ -780,12 +857,16 @@ def verify_log(log: Path, repo: Path, expect_head: Optional[str] = None) -> dict
             row["fields_changed"] = changed
             row["subject_moved"] = fresh["subject"]["sha256"] != e["subject"]["sha256"]
             row["receipts_moved"] = fresh["receipts"]["sha256"] != e["receipts"]["sha256"]
+            row["read_apart"] = apart = _read_apart(e, fresh, changed, same_build, art)
+            for key in apart:
+                by_apart[key] += 1
             if fresh["verdict_class"] == "UNRESOLVED" and e["verdict_class"] != "UNRESOLVED":
                 row["status"] = "UNRESOLVED"
                 row["reason"] = fresh["counts"].get("reason")
             elif not changed and same_build:
                 row["status"] = "SAME_LINE"
-            elif not changed:
+            elif not changed or apart:
+                # fields_changed still names counts: the row says what moved and what was read apart
                 row["status"] = "MOVED_VERIFIER"
             elif not same_build:
                 row["status"] = "SKEW"
@@ -815,6 +896,7 @@ def verify_log(log: Path, repo: Path, expect_head: Optional[str] = None) -> dict
            "head_matches": head_matches, "file": facts, "header": header,
            "chain_broken_at_line": (min(p["line"] for p in chain if p["line"] is not None) if chain else None),
            "chain_problems": problems + chain, "by_status": by_status, "by_verifier_part": by_part,
+           "read_apart": by_apart,
            "verifier_builds_recorded": {k: sorted(v) for k, v in builds.items()},
            "lines": lines, "certifies": _CERTIFIES,
            "note": ("the verifier is its module bytes and its runtime (implementation, version, Unicode "
@@ -825,6 +907,11 @@ def verify_log(log: Path, repo: Path, expect_head: Optional[str] = None) -> dict
                     "problems hold a word charon reads as a broken binding, never DRIFT; DRIFT = the core "
                     "moved under the same module bytes and the same runtime: the artifact's bytes or receipts "
                     "moved, or an input outside the hashed set did; a legacy line names no runtime. "
+                    "read_apart: a sworn line whose only moved value is " + _BUILD_FLAG + ", recorded "
+                    "true and read false, while the styxx.sworn sha it names is not the installed one and "
+                    "its receipt still names that sha, reads MOVED_VERIFIER with fields_changed naming "
+                    "counts; under the same build it reads DRIFT, and beside any other moved value what "
+                    "the whole-core rule reads. "
                     "verifier_moved names what moved: modules, runtime, "
                     "both, legacy (a line written before the verifier named its runtime, whose digest no "
                     "fresh verifier can equal, so it never reads SAME_LINE) or unattributed (the digests "
@@ -984,14 +1071,17 @@ def main(argv=None) -> int:
                  "" if rep["head_matches"] is None else ("  expected head %s" % ("MATCHES" if rep["head_matches"] else "MISMATCH"))))
         print("  " + "  ".join("%s=%d" % kv for kv in rep["by_status"].items()))
         print("  verifier moved: " + "  ".join("%s=%d" % kv for kv in rep["by_verifier_part"].items()))
+        print("  read apart: " + "  ".join("%s=%d" % kv for kv in rep["read_apart"].items()))
         print("  " + "  ".join("%s=%d" % kv for kv in sorted(rep["by_kind"].items())))
         print("  eol=%s file_sha256=%s" % (rep["file"]["eol"], rep["file"]["file_sha256"][:16]))
         for r in rep["lines"]:
             if r["status"] != "SAME_LINE":
-                print("  %-14s line %-4s seq %-4s %-17s %-46s recorded=%s now=%s changed=%s verifier=%s %s"
+                print("  %-14s line %-4s seq %-4s %-17s %-46s recorded=%s now=%s changed=%s verifier=%s%s %s"
                       % (r["status"], r["line"], r["seq"], r["kind"], (r["name"] or "")[:46], r["recorded_class"],
                          r["fresh_class"], ",".join(r["fields_changed"]) or "-",
-                         ",".join(r["verifier_moved"] or []) or "-", r.get("reason", "")))
+                         ",".join(r["verifier_moved"] or []) or "-",
+                         (" read_apart=" + ",".join(r["read_apart"])) if r.get("read_apart") else "",
+                         r.get("reason", "")))
         if a.out:
             with open(a.out, "w", encoding="utf-8", newline="\n") as fh:
                 fh.write(json.dumps(rep, indent=1, ensure_ascii=False) + "\n")
