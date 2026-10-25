@@ -701,6 +701,77 @@ def test_the_decision_in_effect_follows_the_receipts_commit(amended):
         ("p/receipt_0.json", "PASS", "1"), ("p/receipt_1.json", "HOLD", "1b")]
 
 
+def test_a_receipt_deleted_before_the_amendment_still_reads_amended_after_data(tmp_path):
+    """The B2 review, case E: receipt_0 is committed under the plan and deleted inside the pull request,
+    then an own amendment governs receipt_1. C4 says a receipt under the old decision "exists in
+    history"; the two trees read before held none, so nothing printed. The history between the seal's
+    order commit and the amendment is read too."""
+    g = Git(tmp_path / "deleted")
+    g.write("README.md", "r\n")
+    g.commit("m0")
+    g.write(P, prereg(0.5))
+    seal = g.commit("plan")
+    base = g("rev-parse", "HEAD")
+    g("switch", "-q", "-c", "pr")
+    g.write("p/receipt_0.json", _recd(0.45, 0.5))
+    r0 = g.commit("HOLD under the plan")
+    g.write("q/other.json", receipt(name="PREREG_b.md", m=0.1))
+    g.write("q/PREREG_b.md", prereg(0.5))
+    g.commit("a receipt of another PREREG")
+    os.remove(g.root / "p" / "receipt_0.json")
+    g.commit("drop it")
+    g.write(A, prereg(0.4, "amendment"))
+    a = g.commit("amendment")
+    es = [line("1", "prereg", P, seal, prereg(0.5)),
+          line("1b", "amendment", A, a, prereg(0.4, "amendment"), amends="1", seen="nothing run")]
+    g.write(M, jsonl(*es))
+    g.commit("seal it")
+    g.write("p/receipt_1.json", _recd(0.45, 0.4))
+    r1 = g.commit("PASS under the amendment")
+    head = g("rev-parse", "HEAD")
+    with G._Repo(g.root) as repo:
+        got = G._effect(repo, P, "p/receipt_1.json", r1, base, head, es)
+        assert codes(got["findings"]) == [("AMENDED_AFTER_DATA", "NOTE")]
+        d = got["findings"][0]["detail"]
+        assert f"p/receipt_0.json@{r0[:12]} read HOLD under the sealed table (in history only" in d
+        assert "seen: nothing run" in d
+        assert [(x["path"], x["commit"], x["in_tree"]) for x in got["earlier"]] == [("p/receipt_0.json", r0, False)]
+        assert G._effect(repo, P, "p/receipt_1.json", r1, base, head, es, amend_after_data="fail")["findings"][0][
+            "kind"] == "FAIL"
+        hist = G._receipts_in_history(repo, P, a, seal, [])
+        assert [(x["path"], x["receipt_commit"]) for x in hist] == [("p/receipt_0.json", r0)]
+        assert G._receipts_in_history(repo, P, a, seal, ["p/receipt_0.json"]) == []
+        assert G._receipts_in_history(repo, P, a, seal, [], exclude=("p/",)) == []
+        assert G._receipts_in_history(repo, P, r0, seal, []) == []          # strictly before the tip
+        assert G._receipts_in_history(repo, P, a, r0, []) == []             # the stop and its ancestors left out
+
+
+def test_a_receipt_on_a_branch_the_amendment_does_not_hold_is_not_before_it(tmp_path):
+    """The history read is the amendment's ancestry: a receipt committed and deleted on a branch that the
+    amendment's commit does not reach is not "before" it."""
+    g = Git(tmp_path / "side_receipt")
+    g.write(P, prereg(0.5))
+    seal = g.commit("plan")
+    g("switch", "-q", "-c", "side")
+    g.write("p/receipt_0.json", _recd(0.45, 0.5))
+    g.commit("a receipt on a side branch")
+    os.remove(g.root / "p" / "receipt_0.json")
+    g.commit("dropped there")
+    g("switch", "-q", "main")
+    g.write(A, prereg(0.4, "amendment"))
+    a = g.commit("amendment on main")
+    g.merge("side", "merge the side branch after the amendment")
+    es = [line("1", "prereg", P, seal, prereg(0.5)),
+          line("1b", "amendment", A, a, prereg(0.4, "amendment"), amends="1", seen="nothing run")]
+    g.write(M, jsonl(*es))
+    g.commit("seal it")
+    g.write("p/receipt_1.json", _recd(0.45, 0.4))
+    r1 = g.commit("PASS")
+    with G._Repo(g.root) as repo:
+        got = G._effect(repo, P, "p/receipt_1.json", r1, "main", "main", es)
+        assert got["effect"]["source"] == "1b" and got["findings"] == [] and got["earlier"] == []
+
+
 def test_without_a_manifest_line_the_default_seal_governs_alone(amended):
     r = G._effect(amended.repo, P, "p/receipt_1.json", amended.r1, "main", "main", None)
     assert r["seal"]["manifest_id"] is None and r["seal"]["landing"] == amended.seal

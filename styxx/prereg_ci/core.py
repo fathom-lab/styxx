@@ -701,7 +701,8 @@ def _amended_after_data(effect: Dict[str, Any], earlier: Iterable[Dict[str, Any]
     read under its own decision in effect, with its verdict and the amendment's ``seen`` (null
     printed as "not stated"). A NOTE under ``amend_after_data = "report"`` (the default), a FAIL
     under ``"fail"``. *effect* is ``_in_effect``'s output; each of *earlier* is ``{path, commit,
-    before_amendment, source, verdict, code}`` (``code`` set where the re-score refused)."""
+    before_amendment, source, verdict, code}`` (``code`` set where the re-score refused), with
+    ``in_tree`` False for a receipt read from history that the trees read no longer hold."""
     if policy not in _AMEND_AFTER_DATA:
         raise ValueError(f"amend_after_data is one of {_AMEND_AFTER_DATA}, not {policy!r}")
     gov = effect["source"]
@@ -715,6 +716,8 @@ def _amended_after_data(effect: Dict[str, Any], earlier: Iterable[Dict[str, Any]
             continue
         under = "the sealed table" if e["source"] == effect["seal"] else f"amendment {e['source']}"
         read = e["verdict"] if e.get("code") is None else e["code"]
+        if e.get("in_tree") is False:
+            under += " (in history only: it was deleted since)"
         f = _line_finding(_AMENDED_AFTER_DATA, (
             f"{e['path']}@{e['commit'][:12]} read {read} under {under}, before amendment {gov} ({line['path']} at "
             f"{line['commit'][:12]}) came to govern this receipt; amendment seen: {seen}"), gov)

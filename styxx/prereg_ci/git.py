@@ -1399,6 +1399,63 @@ def _receipts_of(repo: _Repo, prereg_path: str, revs: Sequence[str],
     return [out[p] for p in sorted(out)]
 
 
+def _receipts_in_history(repo: _Repo, prereg_path: str, tip: str, stop: Optional[str], known: Iterable[str],
+                         exclude: Sequence[str] = ()) -> List[Dict[str, Any]]:
+    """C4's "exists in history" (the B2 review, case E): every receipt of *prereg_path* that a
+    commit strictly before *tip* wrote (an ancestor of *tip*; *stop* and its ancestors left out) at a
+    ``.json`` path not in *known*, the paths ``_receipts_of`` read from trees, so a receipt
+    committed and deleted since is read. One ``rev-list`` and one ``diff-tree --stdin`` over the
+    interval, each commit against its parent one (a root against nothing), on every branch the
+    interval holds; a path's R is the oldest commit, in git's date order, that wrote a receipt of the
+    PREREG there, read with the bytes it wrote. Each is ``{path, receipt, receipt_commit,
+    receipt_holders, rev, in_tree}``, ``in_tree`` False."""
+    t = repo.commit(tip)
+    argv = ["rev-list", "--date-order", t, *(("--not", repo.commit(stop)) if stop else ())]
+    commits = [c for c in repo._ok(*argv).decode("ascii").split() if c != t]
+    if not commits:
+        return []
+    skip = set(known)
+    feed = "".join(f"{c} {repo._parents_of(c)[0]}\n" if repo._parents_of(c) else f"{c}\n" for c in commits)
+    out = repo._ok("diff-tree", "--stdin", "-r", "-z", "--name-only", "--root", "--diff-filter=AMT",
+                   stdin=feed.encode("ascii"))
+    listed, current = set(commits), None
+    written: Dict[str, List[str]] = {}
+    for tok in out.split(b"\0"):
+        if not tok:
+            continue
+        text = tok.decode("utf-8", "surrogateescape")
+        if text in listed:
+            current = text
+            continue
+        if current is None:
+            raise _Refusal("GIT_UNAVAILABLE", f"git diff-tree named {text[:60]!r} before a commit")
+        if _suffix(text, (".json",)) and text not in skip and not _excluded(text, exclude):
+            written.setdefault(text, []).append(current)
+    name = posixpath.basename(prereg_path)
+    found = []
+    for path in sorted(written):
+        for c in reversed(written[path]):              # the feed runs newest to oldest
+            try:
+                obj = _json(repo.read(c, path) or b"")
+            except _Refusal as e:
+                if e.code == "NOT_A_BLOB":
+                    continue
+                raise
+            except (UnicodeDecodeError, ValueError):
+                continue
+            if _receipt_kind(obj) != "receipt" or posixpath.basename(obj["prereg"]) != name:
+                continue
+            try:
+                if _resolve(obj["prereg"], posixpath.dirname(path), repo._view(c)) != prereg_path:
+                    continue
+            except _Refusal:
+                continue
+            found.append({"path": path, "receipt": obj, "receipt_commit": c, "receipt_holders": (c,), "rev": c,
+                          "in_tree": False})
+            break
+    return found
+
+
 def _effect(repo: _Repo, prereg_path: str, receipt_path: str, receipt_commit: str, base: str, head: str,
             entries: Optional[Sequence[Dict[str, Any]]] = None, *, amend_after_data: str = "report",
             exclude: Sequence[str] = ()) -> Dict[str, Any]:
@@ -1410,9 +1467,11 @@ def _effect(repo: _Repo, prereg_path: str, receipt_path: str, receipt_commit: st
     Findings: the seal line's reading against the default seal (``MANIFEST_SEAL_NOT_LANDED``,
     ``MANIFEST_SEAL_PROSE_DIFFERS``), ``MANIFEST_DECISION_DIFFERS`` for a line its bytes do not bear out,
     ``AMENDED_AFTER_RECEIPT`` for each amendment line not before R, and, when an own amendment
-    governs, ``AMENDED_AFTER_DATA`` for every other receipt of the PREREG (in HEAD's tree or in the
-    tree at the amendment's commit) whose R is strictly before the amendment's commit, re-scored
-    under its own decision in effect (``earlier``). A manifest line whose bytes are not what it
+    governs, ``AMENDED_AFTER_DATA`` for every other receipt of the PREREG (in HEAD's tree, in the
+    tree at the amendment's commit, or written in the history between the seal's order commit and
+    the amendment and deleted since, ``_receipts_in_history``) whose R is strictly before the
+    amendment's commit, re-scored under its own decision in effect (``earlier``, ``in_tree`` False
+    for one read from history). A manifest line whose bytes are not what it
     records refuses the reading (``MANIFEST_BLOB_DIFFERS``, ``MANIFEST_COMMIT_UNREACHABLE``).
 
     Returns ``{seal, effect, findings, earlier}``; ``effect["bytes"]`` is what ``core.rescore``
@@ -1427,14 +1486,17 @@ def _effect(repo: _Repo, prereg_path: str, receipt_path: str, receipt_commit: st
     gov = effect["source"]
     if gov is not None and gov != seal["manifest_id"]:
         amendment = next(e for e, _, _ in chain if e["id"] == gov)
-        for x in _receipts_of(repo, prereg_path, [head, amendment["commit"]], exclude):
+        trees = _receipts_of(repo, prereg_path, [head, amendment["commit"]], exclude)
+        gone = _receipts_in_history(repo, prereg_path, amendment["commit"], seal["order"] or seal["commit"],
+                                    [receipt_path, *(x["path"] for x in trees)], exclude)
+        for x in trees + gone:
             r0 = x["receipt_commit"]
             if x["path"] == receipt_path or not repo.is_strict_ancestor(r0, amendment["commit"]):
                 continue
             under = _reading(repo, seal, chain, r0)
             scored = _core.rescore(under["bytes"], x["receipt"])
             earlier.append({"path": x["path"], "commit": r0, "before_amendment": True, "source": under["source"],
-                            "verdict": scored["verdict"], "code": scored["code"]})
+                            "verdict": scored["verdict"], "code": scored["code"], "in_tree": x.get("in_tree", True)})
         findings += _core._amended_after_data(effect, earlier, amend_after_data)
     return {"seal": seal, "effect": effect, "findings": findings, "earlier": earlier}
 
