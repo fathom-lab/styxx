@@ -26,6 +26,10 @@ cover; no claim.
 | `gen_vectors_fence_containers.py` | builds `vectors_fence_containers.json` from cases that state their outcome in advance; reads no history |
 | `locks/LOCKS_checksum_deploy_quant_reconstructed.md` | added at step B4: the checksum scorer's deploy-quant path as a locks decision, a RECONSTRUCTION (never sealed, not a catch); see "The locks form and the checksum scorer" |
 | `gen_locks_checksum.py` | builds that file from `papers/checksum/score.py`'s blob at `f0ec5605`, whose sha256 and grammar lines it pins |
+| `reconstructed/external1_reconstructed.md` | added at step B5: the design's RV4 table, two of EXTERNAL-1's rules as a gates table whose failing row carries the licence form, a RECONSTRUCTION (written 2026-10-24 after the result; never sealed, not a catch), copied byte for byte; see "The licences and the surface scan" |
+| `licence_replay_ca347730.txt`, `external1_rescore_ca347730.txt` | added at step B5: the design's RV3 and RV4 outputs, copied (CRLF read as LF, as the step B1 copies were); see "The licences and the surface scan" |
+| `vectors_licence.json` | added at step B5: `core.licences` over synthetic PREREGs and surfaces, each outcome stated before the run; see "The licences and the surface scan" |
+| `gen_vectors_licence.py` | builds `vectors_licence.json` from cases that state their outcome in advance; reads no history |
 
 The JSON files are generated, never edited by hand. `tests/test_prereg_ci_score_vectors.py` and
 `tests/test_prereg_ci_cover.py` replay every vector; only the checks that read history skip, when
@@ -296,6 +300,61 @@ prints its committed reading anyway, which is why the run watches imports. The r
 fence, so once it lands the git layer reads it as a decision (C0) like any other; it is never written again
 either way.
 
+## The licences and the surface scan
+
+Step B5. An outcome row of a gates table, or the locks block's `withdraws` map, may carry licences (DESIGN
+3.2(g)): `{"id", "quote", "pattern"}`, the sentence the row withdraws as the PREREG writes it, and a
+case-insensitive regular expression over whitespace-collapsed text (every run of whitespace one space, the
+curly apostrophes U+2018 and U+2019 read as the straight one, PLAN K15). `core._licence_specs` reads them
+strictly, after the table reads as `rescore` reads it; `core.rescore` returns the landed row's list under
+`withdraws`, and the locked scorer run returns the block's list for the verdict it read.
+`core.licences(prereg, surfaces, landed=...)` scans the surfaces it is handed and names each match by line and
+column; `styxx.prereg_ci.git._surfaces` reads them at a commit, every blob `scripts/surface_lint.py`'s `repo`
+profile selects (copied into `core._SURFACE_PROFILE`, since `scripts/` is not in the wheel, PLAN K14) or a
+configured profile of globs. A match is withdrawn when a withdrawal (a form of "withdraw", or "not yet true of
+this instrument") lies whole within 300 characters of it, surface_lint's window rule over compiled patterns,
+so the sentence that withdraws a claim may quote it. Once a receipt has landed on a row, a match of that
+row's licences that is not withdrawn is `LICENCE_WITHDRAWN` (FAIL); before any receipt lands it is
+`LICENCE_PENDING` (NOTE: the sentence stands on a verdict not yet given), and a licence whose pattern matches
+no surface is `LICENCE_PATTERN_FINDS_NOTHING` (FAIL, the lint's refusal, the analogue of a vacuous gate).
+Rows that did not land withdraw nothing; every match is listed either way, so the author sees a pattern's
+coverage. Licences match strings (DESIGN 7, risk 3): a pattern registered before data does not reach a
+wording written after it.
+
+`vectors_licence.json` holds 19 vectors, each one call of `core.licences` over a synthetic PREREG, a list of
+surfaces and the verdict landed on, with its outcome stated by the generator before the run: the
+normalisation (case, whitespace runs across lines, the curly apostrophes), the window (a withdrawal inside,
+outside, whole inside at its edge, the lab's own phrase), the three codes, the rows that did not land and the
+smoke verdict, the locks block's map, a surface not read, the order of findings, and the refusals (a pattern
+that does not compile or can match the empty string, a table refused before its licences, a PREREG with no
+decision).
+
+The design's RV3 and RV4 are reproduced through the module by `tests/test_prereg_ci_licences.py`, on the
+lab's own history, and the copies here state the numbers the test holds it to:
+
+| copy | the design's file | its sha256 | the copy's sha256 |
+|---|---|---|---|
+| `reconstructed/external1_reconstructed.md` (RV4's table) | `revision_probes/external1_reconstructed.md` | `fe6454d54cb0228ecea2231d8fd558e6b62eb89dd0fba8bfd37c260b2fc07840` | the same (LF, no carriage return) |
+| `licence_replay_ca347730.txt` (RV3) | `revision_probes/licence_replay_ca347730.txt` | `3a83adb9fd5b730bae10eaeee87250129729d8a1852783e319a10f06cff99b0e` | `2f984da434f7acd12f77124af1d4b7eb375b1ba812170b8b7a8a44c18cf5b0fa` |
+| `external1_rescore_ca347730.txt` (RV4) | `revision_probes/external1_rescore_ca347730.txt` | `80bc6e2c400ae1c5ec104e4a328b6d51cdb083c823290645df983d6448d4a61b` | `4fa6ec04375dab24c5d5e390f5daf24f65fdfb06b9cea4638e53f42cb75e6e05` |
+
+- RV3: over the surfaces surface_lint's `repo` profile selects, read from git objects, the sentence
+  EXTERNAL-1's PREREG bound the lab to withdraw (`papers/closed-model-frontier/PREREG_external1_aidev_2026_08_31.md`,
+  lines 93-95), registered as a licence pattern verbatim, matches 0 of 328 surfaces at `414db45a` (the
+  commit that added the EXTERNAL-1 RESULT) and 0 of 394 at `3437340b^1` (the parent of the #221 merge): the
+  lint would have refused it before data. Its last five words match 4 surfaces at `414db45a` (`README.md`,
+  `action.yml`, `styxx/__init__.py`, `styxx/diffgate.py`), the same 4 the hand-written rule
+  `withdrawn/gate-claim` of `scripts/surface_lint.py` (added by #221) reports, each `LICENCE_WITHDRAWN` under
+  the landed row; at `3437340b^1` they match 3 of the hand rule's 10, the 7 they miss being integration
+  surfaces added 2026-09-16, 16 days after the RESULT, in other wordings. The test takes the hand rule's
+  count from `scripts/surface_lint.py`, never from prereg-ci.
+- RV4: the committed adjudication receipt `papers/closed-model-frontier/external1_adjudication.json` at
+  `414db45a` scores `FAILURE__gate_claim_not_yet_true` under the reconstructed table through `core.rescore`
+  (gates `G_rel` true, `G_E1` false, 0.23 against 0.95; decision digest
+  `bd6f4256dcd01ccbfdcfa9864c312d1c008e0a5fd8aebed29486cb3321311841`), and its `withdraws` is the row's one
+  licence, `gate-claim`. The table is a reconstruction written after the result: it shows the mechanism on
+  real bytes, not a catch.
+
 ## How to regenerate it
 
 ```
@@ -306,6 +365,7 @@ python -B conformance/prereg_ci/gen_seals_manifest.py --check
 python -B conformance/prereg_ci/gen_vectors_fence.py --check
 python -B conformance/prereg_ci/gen_vectors_fence_containers.py --check
 python -B conformance/prereg_ci/gen_locks_checksum.py --check
+python -B conformance/prereg_ci/gen_vectors_licence.py --check
 ```
 
 Once committed, the set is never written again. A run that regenerates it byte for byte exits 0;
