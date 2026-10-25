@@ -21,21 +21,38 @@ A read of an unlocked file fails (3.2(f)). The bootstrap installs an audit hook
 each reach past the locks to a file outside the run directory, written through a descriptor opened
 before the hook:
 - opening a file to read that is neither locked, the receipt, the ``{out}`` file, nor under the
-  standard library's directories as ``-I -S`` sets them (a ``site-packages`` or ``dist-packages``
-  directory below them is not standard library);
+  standard library's directories (the ``sys.path`` entries ``-I -S`` sets, less the interpreter's
+  install root, which Windows puts there too; a ``site-packages`` or ``dist-packages`` directory
+  below them is not standard library);
 - opening any file to write but the ``{out}`` file, and every event that changes the file system;
-- listing a directory outside the run and the standard library;
-- an import the locked code asks for that no finder holds (a standard library module's own optional
-  import, such as tarfile's ``pwd`` on Windows, is not the scorer's ask and is not recorded);
+- listing a directory outside the run and the standard library (the import system's listing of a
+  ``sys.path`` entry is not a reach);
+- an import the locked code asks for that no finder holds, judged by the file of the asking frame
+  or, for a compiled string with no ``__file__``, of the code that ran the string (a standard library
+  module's own optional import, such as tarfile's ``pwd`` on Windows, is not the scorer's ask and is
+  not recorded);
 - starting a process, a socket or another network client, a native library through ctypes, the
-  Windows registry, a temporary file.
-Each is refused by raising ``PermissionError`` from the hook, and recorded whether or not the scorer
-catches it, so ``core._run_reading`` reads ``SCORER_READS_UNLOCKED`` whatever the scorer printed. The
-run's closing line is written when the scorer returns or raises ``SystemExit``; a scorer that ends
-the process itself leaves none. This is not a sandbox (DESIGN 7, risk 5): native code the scorer
-already holds, ``stat`` calls and the interpreter itself are not watched, the interpreter is not
-locked (it is printed as the runtime's three fields), and on Linux the network is removed with
-``unshare -rn`` only where the runner permits it; elsewhere the run prints ``not isolated``.
+  Windows registry, a temporary file;
+- at the close, an import system no longer as the bootstrap set it: the last finder not the run's,
+  the run directory off ``sys.path`` or behind the standard library, a directory outside the two on
+  it.
+Each reach is recorded before the hook raises ``PermissionError``, so a scorer that catches the error
+and goes on still reads ``SCORER_READS_UNLOCKED`` through ``core._run_reading``, whatever it printed.
+The record opens with the runtime line and closes with a line written when the scorer returns or
+raises ``SystemExit``, both carrying a nonce the bootstrap has from its config file outside the run;
+a scorer that ends the process itself leaves no closing line.
+
+The boundary. The watch is Python in the scorer's own process, and it holds for a scorer that leaves
+it alone. A scorer written against it can reach the bootstrap's globals through ``sys._getframe`` or
+``gc`` and widen the read set or replace the judge; pop the finder and put it back before returning;
+run a compiled string whose filename or ``__file__`` names a file outside the run; load native code
+it already holds; call ``stat``. None of that is refused or recorded in v0, and the interpreter is
+not locked (it is printed as the runtime's three fields). This is not a sandbox (DESIGN 7, risk 5);
+the OS-level sandbox is v1 (DESIGN 3.8). On Linux the network is removed with ``unshare -rn`` only
+where the runner permits it; elsewhere the run prints ``not isolated``.
+``tests/test_prereg_ci_scorer_run.py`` pins the frame walk, the restored finder and the forged
+``__file__`` as the boundary, so a later hardening is seen as a change and this statement moves with
+it.
 
 Nothing here is public API (DESIGN 3.1); the CLI is this module's caller.
 """
@@ -63,8 +80,12 @@ _OUT = _core._RUN_DIR + "/out.json"
 _WATCHED = ("the run refuses and records, through an audit hook and a last import finder installed before the "
             "scorer runs: a read of any file the locks block does not lock (the receipt, the {out} file and the "
             "standard library aside), a write but the {out} file, a listing outside the run, an import the locked "
-            "code asks for that the run does not hold, a process, a socket, a native library and the registry. It "
-            "is not a sandbox: native code, stat calls and the interpreter are not watched (DESIGN 7, risk 5)")
+            "code asks for that the run does not hold, a process, a socket, a native library and the registry; "
+            "and at the close, an import system no longer as the bootstrap set it. The watch is Python in the "
+            "scorer's own process and holds for a scorer that leaves it alone: a scorer may reach it through "
+            "sys._getframe or gc, restore a finder it moved, run a compiled string naming a file outside the "
+            "run, load native code it holds or call stat, and none of that is recorded. It is not a sandbox "
+            "(DESIGN 7, risk 5); the OS-level sandbox is v1 (DESIGN 3.8)")
 
 # The bootstrap the child runs under -I -S -B -X utf8. argv[1] is a JSON config file outside the run
 # directory: watch (the record), scorer, args, read and write (run-relative paths), and nonce, which the

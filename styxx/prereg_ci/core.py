@@ -1415,7 +1415,10 @@ def _run_reading(spec: Dict[str, Any], raw: Dict[str, Any]) -> Dict[str, Any]:
     (None when stopped), ``timed_out``, ``timeout_s``, ``done`` (the run's closing line was written,
     so the scorer returned or raised SystemExit), ``stdout`` (bytes) and ``stdout_over``,
     ``stderr_tail`` (its last non-empty line), ``out`` (the bytes at ``{out}``, or None with
-    ``out_problem``), ``unlocked`` (each reach past the locks the run refused) and ``watch_problem``
+    ``out_problem``), ``unlocked`` (each reach past the locks the run's watch refused and recorded;
+    the watch is Python in the scorer's process, and a scorer written against it can leave this
+    empty, as ``scorer_run``'s docstring names, so an empty list is what the watch saw, not what the
+    scorer did) and ``watch_problem``
     (the run's record holds a line its bootstrap does not write, or is missing). In this order: any
     reach past the locks is ``SCORER_READS_UNLOCKED``, whatever the scorer printed or how it exited,
     since a scorer may catch the refusal and go on; a timeout, a nonzero exit, a record the run

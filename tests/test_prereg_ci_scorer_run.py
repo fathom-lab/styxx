@@ -447,6 +447,63 @@ def test_a_file_in_the_interpreter_s_site_packages_is_not_standard_library():
     assert r["code"] == "SCORER_READS_UNLOCKED" and "outside the run" in r["detail"], (r, raw)
 
 
+# ---- the boundary: what the watch does not see (DESIGN 7, risk 5; DESIGN 3.8: the OS-level sandbox is v1) ----
+
+@pytest.mark.parametrize("name, body", [
+    ("widens the read set through sys._getframe", """
+        f = sys._getframe()
+        while f is not None and not ("_reads" in f.f_globals and "_hook" in f.f_globals):
+            f = f.f_back
+        f.f_globals["_reads"].add(os.path.normcase(os.path.abspath(os.path.join("..", "config.json"))))
+        ok = b"watch" in open(os.path.join("..", "config.json"), "rb").read()
+        """),
+    ("replaces the judge through sys._getframe", """
+        f = sys._getframe()
+        while f is not None and "_judge" not in f.f_globals:
+            f = f.f_back
+        f.f_globals["_judge"] = lambda event, args: None
+        open("elsewhere.txt", "w").write("x")
+        ok = open("elsewhere.txt").read() == "x"
+        """),
+    ("pops the last finder and puts it back before returning", """
+        last = sys.meta_path.pop()
+        try:
+            import numpy
+        except ImportError:
+            pass
+        sys.meta_path.append(last)
+        ok = True
+        """),
+    ("runs a compiled string whose __file__ names a file outside the run", """
+        try:
+            exec(compile("import numpy", "<string>", "exec"), {"__name__": "x", "__file__": sys.prefix + "/x.py"})
+        except ImportError:
+            pass
+        ok = True
+        """),
+])
+def test_boundary_a_scorer_written_against_the_watch_is_not_recorded(name, body):
+    """Pinned as the boundary, not as the contract. The watch is Python in the scorer's own process and
+    records the reaches of a scorer that leaves it alone; each scorer here reaches the hook's state or
+    the import system from inside and reads PASS with nothing recorded (the B4 review's cases 1 and 1b,
+    and what its fixes B4 and B5 leave open). scorer_run's docstring and _WATCHED say so; a hardening
+    that closes one of these is seen here as a change, and the statement moves with it."""
+    raw, r = go(f"""
+        import json, os, sys
+        {textwrap.indent(textwrap.dedent(body), " " * 8).lstrip()}
+        print(json.dumps({{"verdict": "PASS" if ok else "HOLD"}}))
+        """)
+    assert (r["code"], r["verdict"], raw["unlocked"]) == (None, "PASS", []), (name, r, raw["stderr_tail"])
+
+
+def test_the_watched_statement_names_the_boundary():
+    """What B7 prints beside every PASS of a locks PREREG names what is recorded and what is not."""
+    for words in ("audit hook", "import finder", "import system", "sys._getframe", "gc", "compiled string",
+                  "native code", "stat", "not a sandbox", "DESIGN 7, risk 5", "DESIGN 3.8"):
+        assert words in S._WATCHED, words
+    assert "whether or not" not in S._WATCHED and "whether or not the scorer" not in S.__doc__
+
+
 def test_a_scorer_error_carries_its_last_stderr_line():
     raw, r = go("""
         raise ValueError("boom at the bar")
@@ -504,7 +561,8 @@ def test_a_runtime_line_the_scorer_writes_to_the_record_is_a_problem_and_the_ope
     line is the runtime."""
     raw, r = go("""
         import json, os
-        line = (json.dumps({"t": "runtime", "implementation": "forged", "version": "0.0.0", "unicode": "0"}) + "\\n").encode()
+        rec = {"t": "runtime", "implementation": "forged", "version": "0.0.0", "unicode": "0"}
+        line = (json.dumps(rec) + "\\n").encode()
         for fd in range(3, 64):
             try:
                 os.write(fd, line)
@@ -608,7 +666,7 @@ def test_rescore_locked_has_rescore_s_shape_and_names_what_ran():
     assert r["run"]["receipt"] == {"path": "r.json", "sha256": hashlib.sha256(b"{}").hexdigest()}
     assert set(r["run"]["runtime"]) == {"implementation", "version", "unicode"}
     assert r["run"]["network"].startswith(("not isolated", "removed"))
-    assert "watched" in r["run"] and "not a sandbox" in r["run"]["watched"]
+    assert "watched" in r["run"] and "not a sandbox" in r["run"]["watched"] and "sys._getframe" in r["run"]["watched"]
     assert [f["code"] for f in core.compare(r, {"verdict": "HOLD"})] == ["RECORDED_DIGEST_ABSENT"]
     assert core.compare(r, {"verdict": "PASS"})[-1]["code"] == "VERDICT_DIFFERS"
 

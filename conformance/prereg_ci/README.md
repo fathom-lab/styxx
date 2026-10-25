@@ -264,9 +264,24 @@ The module `styxx.prereg_ci.scorer_run` runs a locked scorer. Each locked file's
 are written into an empty temporary directory, and the scorer runs under `python -I -S -B -X utf8` through a
 bootstrap that puts that directory ahead of the standard library on `sys.path` and runs it as `__main__`
 (PLAN K3), with a 60-second timeout and no environment but `SYSTEMROOT` on Windows. An audit hook and a last
-import finder refuse and record each reach past the locks: a read of a file not locked, a write but `{out}`,
-an import the locked code asks for that the run does not hold, a process, a socket. `core._run_reading` reads
-any of them as `SCORER_READS_UNLOCKED`, whatever the scorer printed. It is not a sandbox (DESIGN 7, risk 5).
+import finder refuse and record each reach past the locks: a read of a file not locked (the standard library
+aside, which is the `sys.path` entries less the interpreter's install root), a write but `{out}`, an import
+the locked code asks for that the run does not hold (an import from a compiled string with no `__file__` is
+the asking code's), a process, a socket; and at the close, an import system no longer as the bootstrap set
+it. `core._run_reading` reads any of them as `SCORER_READS_UNLOCKED`, whatever the scorer printed. The
+record's runtime and closing lines carry a nonce the scorer does not hold, and the last stderr line names
+the run's, the interpreter's and the home directory rather than printing them.
+
+The boundary, printed beside every reading (`scorer_run._WATCHED`): the watch is Python in the scorer's own
+process and holds for a scorer that leaves it alone. A scorer written against it can reach the bootstrap's
+globals through `sys._getframe` or `gc` and widen the read set or replace the judge, pop the finder and put
+it back before returning, run a compiled string whose filename or `__file__` names a file outside the run,
+load native code it holds or call `stat`; none of that is recorded in v0. It is not a sandbox (DESIGN 7,
+risk 5); the OS-level sandbox is v1 (DESIGN 3.8). `tests/test_prereg_ci_scorer_run.py` pins the frame walk,
+the restored finder and the forged `__file__` as the boundary, so a hardening that closes one is seen as a
+change. The B4 review's cases (a frame walk, an exec'd string, a popped finder, a forged runtime line, the
+interpreter's path in the stderr tail, a read under the install root) drove this statement and the refusals
+named above.
 
 The checksum PREREGs froze their reading rules as prose and are sealed, so neither can gain a locks fence
 (PLAN K2b). The file under `locks/`, written by `gen_locks_checksum.py`, is a RECONSTRUCTION: written after the
