@@ -43,6 +43,16 @@ cites the log. What it does not prove: that a HELD line is true about the world 
 numbers are the numbers in its receipt at its commit; and it does not read the `.md` in your working
 tree (step 3 does).
 
+What SKEW means here (added 2026-10-24): a line whose core moved while the verifier moved. Since the
+sworn verdict receipt moved to schema /v2 (`papers/sworn/NOTE_certifies_correction_2026_10_24.md`), the
+sworn lines that recorded `counts.receipt_check.same_verifier_build` true read SKEW. That flag says
+whether the receipt was issued by the `sworn.py` re-checking it; it sits inside the core charon compares,
+and any edit of `sworn.py` flips it. Their receipts still verify, and
+`python -m pytest tests/test_stranger.py -k ferry_log_passes` re-derives each of those lines and fails if
+anything but that flag moved in it. So `styxx.stranger` reports the ferry-log step as FAIL for those lines.
+Whether charon should compare that flag apart is the operator's decision, still open; until it is taken, a
+SKEW on any other line, and any DRIFT, TAMPER or HEAD_MISMATCH, is a finding.
+
 ## 3. one sworn document, by hand
 
     python -m styxx.sworn check  papers/checksum/PREREG_checksum_beacon_draw_2026_09_14.sworn-receipt.json \
