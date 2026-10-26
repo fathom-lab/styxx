@@ -1089,8 +1089,10 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
 
     # the numeral reader (2026-10-25): when the certificate's reader is not the installed one, or one
     # side has none, say so beside the problems, with the flag that reproduces the minting reader. A
-    # certificate issued before the reader v2 re-derives with more rows (suffixed magnitudes) or
-    # fewer (clock times, dates) under the installed reader, and verifies under its minting reader.
+    # certificate issued before the reader v2 re-derives with the same rows under the shipped flags
+    # (RULE_final 0.1: no committed certificate moves), with more rows (bare magnitudes) or fewer
+    # (clock times, dates) when V15_MAGNITUDE_BARE or V15_FORM_NOISE is on, and with the rows a period
+    # hid under V15_SENTENCE_FINAL; it verifies under its minting reader.
     _er = (cert.get("numeral_reader") or {}).get("schema") if isinstance(cert.get("numeral_reader"), dict) else None
     _lr = (live.get("numeral_reader") or {}).get("schema") if isinstance(live.get("numeral_reader"), dict) else None
     if _er != _lr:

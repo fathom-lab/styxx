@@ -12,12 +12,13 @@ documents, which is a preregistered measurement and not a patch. Every assertion
 failing against the pre-clause verifier before it was written to pass.
 
 2026-10-25, the numeral reader v2 (`V15_READER_V2`, tests/test_certify_numerals_v2.py): the reader
-now widens through a SECOND regex that reads `_NUM`'s shapes plus suffixed magnitudes and the named
-forms, and `_NUM` itself is still not edited. The sentence-final rule that would read `0.55.` is in
-the tree behind `V15_SENTENCE_FINAL`, OFF: that measurement was run (12 committed OATH-HELD
-certificates re-derive OATH-FAILED) and the operator decides. So every assertion here about the
-trailing period still holds under the shipped reader, and the band's policy block now names the
-reader that issued it (schema v2); the v1 block is asserted with the master flag off.
+now widens through a SECOND regex that reads `_NUM`'s shapes plus currency-led magnitudes, signs and
+thin-space groups (and, behind flags that ship off, bare magnitudes and the named forms), and `_NUM`
+itself is still not edited. The sentence-final rule that would read `0.55.` is in the tree behind
+`V15_SENTENCE_FINAL`, OFF: that measurement was run (11 committed OATH-HELD certificates re-derive
+OATH-FAILED with the ellipsis rule built, 12 without it) and the operator decides. So every assertion
+here about the trailing period still holds under the shipped reader, and the band's policy block now
+names the reader that issued it (schema v2); the v1 block is asserted with the master flag off.
 """
 import json
 import re
