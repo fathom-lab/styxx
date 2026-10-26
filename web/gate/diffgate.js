@@ -1045,8 +1045,8 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
 // covered
 // (NOTE_path2a_eleventh_pass_2026_10_05).
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 9c4a1c2f231b99e9e7b2c4e3828904048b991676363cb3e539200c14492aeb2c, LF). Everything outside this block is
-// main's port (sha256 50cc7dd5..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 5134175b45553015888e0930ee9e031699cb982f14634158af7d59fc0150feaa, LF). Everything outside this block is
+// main's port (sha256 e32bb9dd..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
 // compatibility reading and its two header patterns read as the Python reads them, and #206's count,
 // fix/diffgate-205-206, d74cc729...; then #179's `async def` read, #178's abstention and the abstention where #205's
 // seams part the two readers or two lines of one section define one test name, one after `async`,

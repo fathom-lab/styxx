@@ -134,8 +134,9 @@ function _prefixIsPathShaped(prefix, status) {
 function _scopeResolve(prefix, segs, changed) {
   // #175, as the Python's _scope_resolve: one reading of a scope prefix's segments, [the prefix, null], "" for the
   // repository root, or [null, why]. What main's rstrip("/.") cut off the prefix stays cut, and nothing else is: a name
-  // a later ".." lays bare keeps its dots, as git reads it. Where the resolved reading is not main's, it abstains if
-  // that cut run takes part of a name git reads whole (three or more dots, or more of the last name than one final dot).
+  // a later ".." lays bare keeps its dots, as git reads it. Where the resolved reading is not main's and that cut run
+  // takes part of a name git reads whole (three or more dots, or more of the last name than one final dot), git's
+  // reading, every name whole, is read beside it, and the claim abstains where a changed path lies under one only.
   const whole = _norm(prefix);
   const plain = _rstrip(whole, "/.");
   const climbs = `prefix ${pyRepr(prefix)} has a '..' segment with no directory before it, so it names a directory outside the one it is read from (#175)`;
@@ -171,13 +172,15 @@ function _scopeResolve(prefix, segs, changed) {
   }
   const got = _rstrip(_norm(names.join("/")), "/");
   if (got === plain) return [got, null];
-  if (cut.length) {
-    return [null, `prefix ${pyRepr(prefix)} ends in a run of dots and slashes that this template cuts as a sentence's period or an ellipsis and git reads as part of the name ${pyRepr(cut[0])} (#175)`];
-  }
-  if (!got) return [got, null];
-  if (!got.includes("/") && _isBareFilename(got)) {
+  if (got && !got.includes("/") && _isBareFilename(got)) {
     return [null, `prefix ${pyRepr(prefix)} resolves to the file name ${pyRepr(got)} at the repository root, which this template would match in any directory (#175)`];
   }
+  const full = _rstrip(kept.join("/"), "/");   // git's reading: every name kept whole, a leading dot too
+  const holds = (x, p) => !x || _pathInside(p, x);
+  if (cut.length && changed.some(p => holds(got, p) !== holds(full, p))) {
+    return [null, `prefix ${pyRepr(prefix)} ends in a run of dots and slashes that this template cuts as a sentence's period or an ellipsis and git reads as part of the name ${pyRepr(cut[0])}, and a changed path lies under one of the two readings and not the other (#175)`];
+  }
+  if (!got) return [got, null];
   for (const p of changed) {
     if (p.split("/").some(s => s === "." || s === "..")) {
       return [null, `prefix ${pyRepr(prefix)} and the changed path ${pyRepr(p)} each hold a '.' or '..' segment; git writes no such path, and the two are not compared (#175)`];
@@ -1043,8 +1046,8 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
 // covered
 // (NOTE_path2a_eleventh_pass_2026_10_05).
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 9c4a1c2f231b99e9e7b2c4e3828904048b991676363cb3e539200c14492aeb2c, LF). Everything outside this block is
-// main's port (sha256 50cc7dd5..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 5134175b45553015888e0930ee9e031699cb982f14634158af7d59fc0150feaa, LF). Everything outside this block is
+// main's port (sha256 e32bb9dd..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
 // compatibility reading and its two header patterns read as the Python reads them, and #206's count,
 // fix/diffgate-205-206, d74cc729...; then #179's `async def` read, #178's abstention and the abstention where #205's
 // seams part the two readers or two lines of one section define one test name, one after `async`,
@@ -2172,9 +2175,10 @@ function _p2aSegments(fm, segs, whole, changed) {   // _scopeResolve (#175), in 
   }
   const got = _rstrip(fm(names.join("/")), "/");
   if (got === plain) return got;
-  if (cut) return null;
+  if (got && !got.includes("/") && _p2aExt(got)) return null;
+  const full = _rstrip(out.join("/"), "/");
+  if (cut && changed.some(p => (got === "" || _p2aInside(p, got)) !== (full === "" || _p2aInside(p, full)))) return null;
   if (!got) return got;
-  if (!got.includes("/") && _p2aExt(got)) return null;
   if (changed.some(p => p.split("/").some(s => s === "." || s === ".."))) return null;
   return got;
 }
