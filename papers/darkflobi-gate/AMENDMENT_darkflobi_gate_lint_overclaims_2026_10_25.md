@@ -2,13 +2,21 @@
 
 Fathom Lab · 2026-10-25 · Amends `PREREG_darkflobi_gate_2026_10_23.md`, in this directory, merged as `fathom-lab/styxx#229`
 with its section 15 closed at 15.13, not edited: under its section 12's closing paragraph a change after the merge is a
-new dated file here. Written by the build subagent for piece (3) of the before-D0 work, on the lead's plan
-(`WT:_darkflobi_gate_2026_10_22/before_d0/PLAN.md` section 5, untracked in the clawd repository), before D0:
-`W:gate/REQUIRED` absent at writing, the ledger at 117 lines (seq 1-116, head `76de868c…`). No bar moves, no row under
-`W:gate/` moves, the pin does not move, and nothing here is enforced by the gate inside the window. The question it
-answers: the agent under the gate described the gate, in public, in words the lab does not use; does that become a lint
-rule the gate enforces, or a rule of the posting skill? Both, in the order below, and the gate's part waits for the
-next pin.
+new dated file here. Written by the build subagent for piece (3) of the before-D0 work on the lead's pass-1 plan (its
+section 5, kept as `WT:_darkflobi_gate_2026_10_22/before_d0/PLAN_superseded_2026_10_25T1512_local.md`), and revised in
+place on this branch (unmerged, so still a draft, under the same name) by pass 2's build on the lead's pass-2
+plan (`PLAN.md` section 6, same folder; both untracked in the clawd repository). Before D0: `W:gate/REQUIRED` absent at
+both writings, the ledger at 117 lines (seq 1-116, head `76de868c…`) at both, the second time re-read on 2026-10-26 at
+about 00:12Z. No bar moves, no row under `W:gate/` moves, the pin does not move, and nothing here is enforced by the
+gate inside the window. The question it answers: the agent under the gate described the gate, in public, in words the
+lab does not use; does that become a lint rule the gate enforces, or a rule of the posting skill? Both, in the order
+below, and the gate's part waits for the next pin.
+
+What pass 2 changed: rule 2 of the persona rule (item 1) taught pass 1's count rule, which that rule's
+review defeated with a form the writer composes, and now states the count rule as rewritten; the removal of seq 93's
+message is stated as the ledger reads it, not as the lead's brief said it; the scan's test names its synthetic texts
+as the agent's withdrawn wordings (item 2's table); and the lock rows are stated (none). The route, the five rules and
+the count are as pass 1 built them.
 
 Receipt key: `W:` = `C:/Users/heyzo/clawd/`; `WT:` = `W:wt/`; `BD:` = `WT:_darkflobi_gate_2026_10_22/before_d0/`;
 `M:` = this repository at the branch carrying this file; `seq N` = a line of `W:gate/ledger.jsonl`, named by its fields
@@ -48,20 +56,27 @@ is withdrawn by this file; none is the lab's.
 | 94 | 2026-10-25T17:18:14Z | delivered | | | | | | | `for_seq` 93, `ok` true | | | | |
 | 97 | 2026-10-25T17:19:14Z | send | E1 | operator_dm / operator_dm | allow_marked | send | false | lint | `lint_hit:charter/ordinal` | exit 1, hits 2 | 0 / 0 / 0 | reply | `bfa7f480…` |
 
-Every one of the three lines carries `required_present: false`, `shadow: true`, `gate_sha256 ff34b52d…`, `pin
-3437340b…`, and `instrument.modules` naming `scripts.surface_lint` `27551f23…`: the pin's lint. Seq 93 is the one
-public refusal on the ledger today (57 send lines: public 30, of which `allow` 24, `allow_marked` 5 with
-`unbound_marked`, `refuse` 1 with `lint_hit:charter/ordinal`; operator_dm 27). The refuse was recorded and the message
-delivered, as RULES §6's closing paragraph says of the shadow phase. Seq 97 is the same text sent to the operator's DM
-with the mark appended (two hits: the DM's preface repeats the word).
+All three lines carry `required_present: false`, `gate_sha256 ff34b52d…` and `pin 3437340b…`; the two send lines also
+carry `shadow: true` and `instrument.modules` naming `scripts.surface_lint` `27551f23…`: the pin's lint. In the chain,
+seq 93 is `entry_id` `86c509e57a472346…` and seq 94 is `33e3a0fdf79185b8…`. Seq 93 is the one public refusal on the
+ledger today (57 send lines: public 30, of which `allow` 24, `allow_marked` 5 with `unbound_marked`, `refuse` 1 with
+`lint_hit:charter/ordinal`; operator_dm 27). The refuse was recorded and the message delivered, as RULES §6's closing
+paragraph says of the shadow phase; the draft is kept under `W:gate/refused/` by its checked digest (listed by name for
+this file, not opened). Seq 97 carries the same wording to the operator's DM in another checked text (`bfa7f480…`),
+marked, with 2 hits on the same rule.
 
-**The removal.** The ledger holds no `kind: deleted` line (kinds at 117 lines: `started` 1, `send` 57, `delivered` 57,
-`anchor` 1) and no `W:gate/plugin_failures.jsonl` exists; seq 97's line is an ordinary send. The lead's brief said the
-message was "deleted (seq 99)"; seq 99 is an unrelated public send (`allow`, 0 numerals). So the message left the chat by
-a route outside the gated `deleteMessage` branch, and the census will meet seq 93 as a delivering line with a
-`delivered ok` and no message in the export: `missing_from_export` (RULES §12; `W:gate/README_census.md` l.66), listed,
-never `[u]`. The receipt for this amendment is the seq 93 line with seq 94 and seq 97, and the absence of a `deleted`
-line is part of the record.
+**The removal.** The lead's brief said the agent then deleted the message, "(seq 99)". The ledger does not say so.
+Seq 99 (2026-10-25T17:19:37Z, E3, public / group) is an ordinary send: `allow`, finding `clean`, 0 numerals, delivered
+at seq 100. The ledger holds no `kind: deleted` line (kinds at 117 lines: `started` 1, `send` 57, `delivered` 57,
+`anchor` 1), and no `W:gate/plugin_failures.jsonl` exists, so there is no `deleted_unrecorded` or `deleted_exception`
+record either. The plugin writes a `deleted` line only through `gate.js`'s `gateDeleted`, after a `deleteMessage`
+through the gated Telegram action that succeeded (`W:gate/plugin/index.js` l.932-934, `handleDeleted` l.1070-1096); a
+gated call that failed writes no line and leaves the message where it was. So if the message was taken down, it went
+by a route the gate does not see (the Bot API through `exec`, or a Telegram client), and no line here says who removed
+it or when. At the census a delivering line with a `delivered ok` line and no message in the export reads
+`missing_from_export` (RULES §12; `W:gate/README_census.md` l.66): listed, never `[u]`; if the message is still in the
+chat, the census matches it instead. The receipt for this amendment is the seq 93 line with seq 94 and seq 97; the
+absence of a `deleted` line is part of the record.
 
 ### 2. the wordings, by seq (each is withdrawn here)
 
@@ -128,22 +143,37 @@ Four of the thirty public lines would have hit a rule of item 2; the pin's lint 
 operator's 27 DM lines (out of the population; `BD:gate_words_scan_operator_dm_2026_10_25.txt`, `40a663c52155c5b9…`):
 `charter/ordinal` seq 97, `withdrawn/gate-detects-deception` seq 97 and 105.
 
+## Whose decision
+
+The route is the lead's plan's judgement (the pass-2 plan, section 6.3), with its reasons in item 3 below. Three decisions
+are the operator's and none is taken here: merging the pull request that carries this file (no lock row moves with
+it); inserting the paragraph into `W:SOUL.md`, or not; and moving the pin after the window, which is when the five
+rules of item 2 reach the gate.
+
 ## The amendment
 
 1. **A persona rule now, in the posting skill and offered for `SOUL.md`.** The text is
-   `BD:soul_gate_paragraph.md` ("how i describe the gate"): the sentences of item 4 as what the agent may say; the
-   wordings of item 2, each marked withdrawn with its seq and reason; and five rules: describe the gate in those
-   sentences or not at all, and never paraphrase a withdrawn wording into a new shape; a ledger seq in prose is a
-   number like any other, bound or marked; a withdrawn wording quoted to say it is withdrawn keeps the word "withdrawn"
-   within a sentence of it (item 3); on a refusal after D0, revise with receipts or drop, and never remove a public
-   message to hide a mark (a removal through the Telegram action is a `kind: deleted` line, by any other route a census
-   `missing_from_export`, and the RESULT prints both); a number about the gate's own record goes out with a receipt or
-   not at all. The posting skill (piece (4)'s `AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md`,
-   `W:skills/styxx-post/SKILL.md`) carries the same section as its "how I describe the gate"; its draft today lists the
-   wordings of seq 34, 44 and 46, and this amendment adds seq 42 and seq 93's. Inserting the paragraph into `W:SOUL.md`
-   (beside the staged `W:SOUL_STYXX_CLAUSE.md`, "awaiting flobi approval") is the operator's; the identity block of
-   every minted capsule hashes `SOUL.md`, `AGENTS.md`, `TOOLS.md` and the skill (`W:gate/exhibit_mint.py`
-   `SKILL_KEY`), so whether the rule governed a post is on that post's record.
+   `BD:soul_gate_paragraph.md` ("how i describe the gate"; sha256 `6e7720775458f698…` as pass 2 revised it,
+   untracked): the sentences of the observations' item 4 as what the agent may say; the wordings of item 2, each
+   marked withdrawn with its seq and reason; and five rules. (1) Describe the gate in those sentences or not at all,
+   and never paraphrase a withdrawn wording into a new shape. (2) A ledger seq in prose is a number like any other,
+   bound or marked; "quoting the gate's mark whole, as it was appended to the line it names, is not counted; a mark you
+   compose is counted" (the rule of `AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md` as pass 2 rewrote it,
+   from the move that applies it; before that move a quoted mark is counted too), so in a public post marks and seqs
+   are left out or bound. (3) A withdrawn wording quoted to say it is withdrawn keeps the word "withdrawn" within a
+   sentence of it (the observations' item 3). (4) On a refusal after D0, revise with receipts or drop, and never remove
+   a public message to hide a mark (a removal through the Telegram action is a `kind: deleted` line, by any other route
+   a census `missing_from_export`, and the RESULT prints both). (5) A number about the gate's own record goes out with a
+   receipt or not at all. Pass 1's rule 2 said that quoting the trailer exactly, inline, was "the one form that
+   is not counted": that taught pass 1's count rule, which its review defeated, and it is replaced here.
+   The posting skill is to carry the same rows and rules in its section 7, "how I describe the gate" (the lead's
+   pass-2 plan, 6.4 items 2-3 and 7.4: the rows of seq 34, 42, 44, 46 and 93, and rule 2's sentence); piece (4)'s
+   amendment (`AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md`) commits that text beside it and gives
+   `W:skills/styxx-post/SKILL.md` its lock row, and this item names the same digest once that text is on the branch.
+   Inserting the paragraph into `W:SOUL.md` (beside
+   the staged `W:SOUL_STYXX_CLAUSE.md`, "awaiting flobi approval") is the operator's; the identity block of every
+   minted capsule hashes `SOUL.md`, `AGENTS.md`, `TOOLS.md` and the skill (`W:gate/exhibit_mint.py` l.562-565,
+   `SKILL_KEY` l.168), so whether the rule governed a post is on that post's record.
 
 2. **The wordings go onto the lab's lint on `main`** as five `withdrawn/*` rules of `scripts/surface_lint.py`, in the
    manner of `withdrawn/certifies-v1` (a lab sentence withdrawn in `papers/sworn/NOTE_certifies_correction_2026_10_24.md`
@@ -170,18 +200,28 @@ operator's 27 DM lines (out of the population; `BD:gate_words_scan_operator_dm_2
    read, 574 hits (charter 529, plan 45, withdrawn 0), 8 allowed, 0 skipped, over baseline 0, exit 0; the
    same over the three frozen documents of this folder (`--files PREREG RULES README`): 0 hits. `tests/test_surface_lint.py`
    gains one case per wording (twelve), eight narrowness cases and one withdrawal-context case; with
-   `tests/test_gate_words_scan.py` the two files read 74 passed.
+   `tests/test_gate_words_scan.py` the two files read 74 passed (both passes). The scan's test spells the agent's
+   wordings as input (its synthetic seq 30-33); in pass 2 two comments above them name them the agent's
+   withdrawn wordings of live seq 34 and 46, so the branch's lint reads that file 0 hits, 9 allowed (pass 1's
+   file read 4 hits); the synthetic texts are unchanged, so the scan's hit cases stay hits.
 
-   The committed files (blob sha, sha256 of the LF bytes, size):
+   The committed files (blob sha, sha256 of the LF bytes abbreviated here and whole in the block below, size):
 
    | what | path | blob | sha256 | bytes |
    |---|---|---|---|---|
-   | the lint on `main`, was blob `dff7bafa` / `7435ac0cf414a5c7…` at `879f6be9` | `scripts/surface_lint.py` | `9df05b5d` | `4fc2249a4a775f25067e4ef6ab79c9bf602151605a1549d4d5fc191a3043bdef` | 26,711 |
-   | its test | `tests/test_surface_lint.py` | `6c4a2ebb` | `e4a7546cd468321bda979529a79dd0ff0181fd7adb2f667a501171618ead7b93` | 14,112 |
-   | the scan (item 4) | `papers/darkflobi-gate/gate_words_scan.py` | `613d4f5d` | `e4afe17f17b21ca4e895b5aecebd80cc3771df938a205c9b48984ec77eba2d33` | 10,406 |
-   | its test | `tests/test_gate_words_scan.py` | `43fda541` | `67dc04882568682b467c3dd1a9b65d45ead3dbc8cf3636c1e0390c4ed6a52f4c` | 7,789 |
+   | the lint on `main`, was blob `dff7bafa` / `7435ac0cf414a5c7…` at `879f6be9` | `scripts/surface_lint.py` | `9df05b5d` | `4fc2249a4a775f25…` | 26,711 |
+   | its test | `tests/test_surface_lint.py` | `6c4a2ebb` | `e4a7546cd468321b…` | 14,112 |
+   | the scan (item 4) | `papers/darkflobi-gate/gate_words_scan.py` | `613d4f5d` | `e4afe17f17b21ca4…` | 10,406 |
+   | its test, pass 2 (was blob `43fda541` / `67dc04882568682b…`, 7,789 bytes) | `tests/test_gate_words_scan.py` | `e4e359da` | `8d0fb2cc68fceff9…` | 8,080 |
 
-   This table is a record of repository blobs and is on purpose not in `lock_hashes.py`'s row form: no lock row moves.
+   ```text
+   4fc2249a4a775f25067e4ef6ab79c9bf602151605a1549d4d5fc191a3043bdef  scripts/surface_lint.py
+   e4a7546cd468321bda979529a79dd0ff0181fd7adb2f667a501171618ead7b93  tests/test_surface_lint.py
+   e4afe17f17b21ca4e895b5aecebd80cc3771df938a205c9b48984ec77eba2d33  papers/darkflobi-gate/gate_words_scan.py
+   8d0fb2cc68fceff961ada84e3e5d750e47ac07b7ac79312488dfea1ccf773b6a  tests/test_gate_words_scan.py
+   ```
+
+   These are repository blobs, on purpose not in `lock_hashes.py`'s row form: no lock row moves (see "The lock rows").
 
 3. **Not enforced in this window; said plainly.** The gate's L1 runs `W:gate/snapshot_3437340b/scripts/surface_lint.py`,
    the pin's bytes (`27551f23…`, inside the snapshot row `681020dc…`, which read SAME on 2026-10-25's `lock_hashes.py
@@ -206,8 +246,10 @@ operator's 27 DM lines (out of the population; `BD:gate_words_scan_operator_dm_2
 5. **Canary kind D is unchanged.** Its wordings are a fixed list of five in `W:gate/canary_shadow.py` l.99-107 (stored
    reversed), the pin's `withdrawn/*` wordings; the five rules of item 2 enter no canary, and G_C's count is not touched.
 
-6. **Seq 93's message, at the census.** It reads `missing_from_export` (item 1 of the observations), is listed with its
-   seq, and the RESULT prints that the removal left no `deleted` line. The persona rule forbids the next one.
+6. **Seq 93's message, at the census.** If it is gone from the chat it reads `missing_from_export` (the observations'
+   item 1), listed with its seq; if it is still there the census matches it. Either way the RESULT prints that the
+   ledger holds no `deleted` line for it and that seq 99 is not a removal. The persona rule's rule 4 forbids removing a
+   public message to hide a mark.
 
 ## What does not change
 
@@ -227,7 +269,8 @@ operator's 27 DM lines (out of the population; `BD:gate_words_scan_operator_dm_2
   day-1 baseline.
 - The seq 93 refusal by its fields (decision `refuse`, reasons `lint_hit:charter/ordinal`, `dest_class public`,
   2026-10-25T17:18:12Z, `would_refuse true`, `required_present false`), its delivery (seq 94, `ok true`), the DM copy
-  (seq 97), and the `missing_from_export` reading of its removal.
+  (seq 97), and the census's reading of it (`missing_from_export` if the message is gone, matched if not), beside the
+  sentence that the ledger holds no `deleted` line for it.
 - Whether any public line in the window was refused under a rule this amendment adds: none, by construction (item 3),
   and the RESULT says so rather than leaving it to be inferred.
 - The digests of `SOUL.md` and the skill in each minted capsule's identity block (piece (4)), so a reader can tell
@@ -239,7 +282,16 @@ operator's 27 DM lines (out of the population; `BD:gate_words_scan_operator_dm_2
 - That a paraphrase is caught: the lint matches strings (RULES §14), and item 2's receipts show what it misses (the
   manifesto's other sentences; the seq 105 repudiation counted as a hit).
 - That the agent's description of the gate is otherwise checked, or that the persona rule was inserted into `SOUL.md`.
-- That seq 93's message was deleted through the gate: no line says so.
+- That seq 93's message was deleted through the gate, or deleted at all: no line says either, and seq 99 is not it.
+- That quoting a mark is left out of the count before the move that applies the count-rule amendment: until then a
+  quoted mark is counted like any text, as on seq 46.
 - That the scan's count enters any gate, bar or verdict: it is printed beside them.
 - That the wordings of seq 44 (the patent) are withdrawn by the lab: that line is the operator's (`RED_TEAM.md` M7), and
   this amendment only hands the agent the rule to write what is filed, with its leaf.
+
+## The lock rows
+
+None. This file carries no line in `lock_hashes.py`'s row form (`ROW_RE`, l.120), so `parse_lock_rows` reads 0 rows
+from it: every digest above is a repository blob, a ledger field or a receipt, and the lint the gate runs is the pin's
+(`27551f23…`, inside the snapshot row `681020dc…`), which does not move. No file under `W:gate/` changes for this
+amendment; the skill's row is piece (4)'s amendment's.
