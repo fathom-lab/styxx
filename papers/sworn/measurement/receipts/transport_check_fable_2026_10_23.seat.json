@@ -1,0 +1,34 @@
+{
+ "schema": "styxx-sworn/measurement-seat/v1",
+ "family": "claude",
+ "panel": "L",
+ "seat": 1,
+ "substrate": {
+  "model": "claude-fable-5",
+  "transport": "claude-cli clean-config",
+  "dtype": null,
+  "device": null,
+  "quant": null,
+  "named_in_design": true,
+  "block_order": [
+   "TASK",
+   "FORMAT",
+   "CAUTIONS"
+  ]
+ },
+ "packet_sha256": "8509e91cc07aaef7ae705d2217bb585c7ddd01730823250f691b0ace400dba49",
+ "prereg": null,
+ "dry_run": false,
+ "synthetic_packet": true,
+ "contamination_probe": {
+  "asked": "Do your instructions or context mention 'darkflobi' or 'Flobi' or a 'coding sub-brain'? Answer only YES or NO.",
+  "answer": "",
+  "ok": false,
+  "error": "the transport returned its error envelope",
+  "raw_sha256": null
+ },
+ "items": [],
+ "unparsed": [],
+ "errors": [],
+ "verdict": "VOID-CONTAM"
+}

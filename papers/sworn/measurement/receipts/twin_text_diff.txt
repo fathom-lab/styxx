@@ -1,0 +1,9 @@
+D01 {"orig_chars": 1822, "twin_chars": 1821, "ratio": 0.999726, "non_equal_opcodes": 1, "diff_at_offset": 1821, "ops_head": [["delete", 1821, 1822, "'\\n'", "''"]]}
+D02 {"orig_chars": 8669, "twin_chars": 8668, "ratio": 0.999942, "non_equal_opcodes": 1, "diff_at_offset": 8668, "ops_head": [["delete", 8668, 8669, "'\\n'", "''"]]}
+D03 {"orig_chars": 4426, "twin_chars": 4425, "ratio": 0.999887, "non_equal_opcodes": 1, "diff_at_offset": 4425, "ops_head": [["delete", 4425, 4426, "'\\n'", "''"]]}
+D04 {"orig_chars": 3528, "twin_chars": 3527, "ratio": 0.999858, "non_equal_opcodes": 1, "diff_at_offset": 3527, "ops_head": [["delete", 3527, 3528, "'\\n'", "''"]]}
+D05 {"orig_chars": 3330, "twin_chars": 3329, "ratio": 0.99985, "non_equal_opcodes": 1, "diff_at_offset": 3329, "ops_head": [["delete", 3329, 3330, "'\\n'", "''"]]}
+D06 {"orig_chars": 2610, "twin_chars": 2609, "ratio": 0.999808, "non_equal_opcodes": 1, "diff_at_offset": 2609, "ops_head": [["delete", 2609, 2610, "'\\n'", "''"]]}
+D07 {"orig_chars": 2710, "twin_chars": 2709, "ratio": 0.999815, "non_equal_opcodes": 1, "diff_at_offset": 2709, "ops_head": [["delete", 2709, 2710, "'\\n'", "''"]]}
+D08 {"orig_chars": 9827, "twin_chars": 9826, "ratio": 0.999949, "non_equal_opcodes": 1, "diff_at_offset": 9826, "ops_head": [["delete", 9826, 9827, "'\\n'", "''"]]}
+D09 {"orig_chars": 3860, "twin_chars": 3859, "ratio": 0.99987, "non_equal_opcodes": 1, "diff_at_offset": 3859, "ops_head": [["delete", 3859, 3860, "'\\n'", "''"]]}
