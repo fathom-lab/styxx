@@ -53,11 +53,23 @@ def _check_step(action):
     return step
 
 
+def _committed_bytes(path: Path) -> bytes:
+    """*path* as the index holds it (what a commit stores), else the working copy: a checkout under
+    ``core.autocrlf=true`` writes CRLF into the working copy of an LF blob (the B7 review's F6)."""
+    rel = path.relative_to(ROOT).as_posix()
+    try:
+        r = subprocess.run(["git", "-C", str(ROOT), "show", f":{rel}"], capture_output=True)
+    except OSError:
+        return path.read_bytes()
+    return r.stdout if r.returncode == 0 else path.read_bytes()
+
+
 def test_the_action_lives_outside_dot_github_and_is_composite(action):
     assert ACTION.is_file() and ".github" not in ACTION.parts
     assert action["runs"]["using"] == "composite"
-    raw = ACTION.read_bytes()
+    raw = _committed_bytes(ACTION)
     assert b"\r" not in raw and not raw.startswith(b"\xef\xbb\xbf")
+    assert not ACTION.read_bytes().startswith(b"\xef\xbb\xbf")
 
 
 def test_the_checkout_is_full_history_with_a_blob_none_partial_clone(action):
