@@ -107,7 +107,9 @@ either and ``_surface_text`` decodes a blob as surface_lint does; the git layer'
 reads them at a commit. Licences match strings (DESIGN 7, risk 3): a pattern registered before
 data does not reach a wording written after it. The match is Python's ``re`` with no step limit, so
 a pattern is capped at ``_PATTERN_MAX_CHARS`` characters, refused when it can match the empty
-string, and nothing else guards its cost.
+string, and nothing else guards its cost. ``licences`` names the landed row by its index when given
+``row`` (step B7), so two rows that share a verdict are told apart; ``_quote_coverage`` reads each
+licence's quote as a literal pattern, which is what the report prints beside the pattern's coverage.
 """
 from __future__ import annotations
 
@@ -1594,7 +1596,7 @@ def _matches_empty(pattern: str, rx: "re.Pattern[str]") -> bool:
 
 def _licence(lic: Any, row: int, verdict: str, n: int, ids: Dict[str, int]) -> Dict[str, Any]:
     """One licence read strictly (``_licence_specs``), or a ``GateSpecError``."""
-    where = f"licence {n} of outcome row {row} ({verdict})"
+    where = f"licence {n + 1} of outcome row {row + 1} ({verdict})"
     if not isinstance(lic, dict):
         raise _GateSpecError(f"{where} is not a JSON object (it is a {type(lic).__name__}); a licence is "
                              f"{{\"id\", \"quote\", \"pattern\"}}")
@@ -1610,8 +1612,8 @@ def _licence(lic: Any, row: int, verdict: str, n: int, ids: Dict[str, int]) -> D
         raise _GateSpecError(f"{where}: 'id' {lid!r} is not an id (a letter or digit, then up to 63 letters, digits, "
                              f"'.', '_' or '-'), the name a report prints for the licence")
     if lid in ids:
-        raise _GateSpecError(f"the licence id {lid!r} is declared twice (outcome rows {ids[lid]} and {row}); each "
-                             f"licence is named once in a decision")
+        raise _GateSpecError(f"the licence id {lid!r} is declared twice (outcome rows {ids[lid] + 1} and {row + 1}); "
+                             f"each licence is named once in a decision")
     if not isinstance(quote, str) or not quote.strip():
         raise _GateSpecError(f"{where}: 'quote' {quote!r} is not a non-empty string; it is the sentence as the "
                              f"PREREG writes it")
@@ -1656,7 +1658,7 @@ def _licence_table(decision: Dict[str, Any]) -> Tuple[List[Dict[str, Any]], Set[
     ids: Dict[str, int] = {}
     for i, verdict, lics in rows:
         if not isinstance(lics, list):
-            raise _GateSpecError(f"outcome row {i} ({verdict}): 'withdraws' is a list of licences, not a "
+            raise _GateSpecError(f"outcome row {i + 1} ({verdict}): 'withdraws' is a list of licences, not a "
                                  f"{type(lics).__name__}")
         for n, lic in enumerate(lics):
             specs.append(_licence(lic, i, verdict, n, ids))
@@ -1766,7 +1768,16 @@ def _licence_finding(code: str, detail: str, spec: Optional[Dict[str, Any]] = No
             "col": match["col"] if match else None}
 
 
-def licences(prereg: Any, surfaces: Iterable[Any], *, landed: Optional[str] = None) -> Dict[str, Any]:
+def _row_verdicts(decision: Dict[str, Any]) -> List[str]:
+    """The verdict of each outcome row of a decision that ``_licence_table`` has read, by index: a gates
+    table's rows, or a locks block's declared outcomes."""
+    if decision["form"] == "locks":
+        return list(_locks(decision["block"])["outcomes"])
+    return [r["verdict"] for r in _capsule._strict_json(decision["block"])["outcomes"]]
+
+
+def licences(prereg: Any, surfaces: Iterable[Any], *, landed: Optional[str] = None,
+             row: Optional[int] = None) -> Dict[str, Any]:
     """Read the sentences a decision's rows withdraw against the shipped surfaces (DESIGN 3.2(g),
     3.4 C8, 3.7).
 
@@ -1776,7 +1787,11 @@ def licences(prereg: Any, surfaces: Iterable[Any], *, landed: Optional[str] = No
     symlink, over the size cap), which is listed under ``skipped``; another shape is a TypeError.
     *landed* is the verdict the receipt landed on (``rescore``'s ``verdict``; the smoke verdict for a
     smoke run), or None before any receipt has landed (the reading ``lint`` makes before data); a
-    verdict the decision does not declare is a ValueError.
+    verdict the decision does not declare is a ValueError. *row* names the landed outcome row by its
+    index (``rescore``'s ``row``; a locks block's outcome by its place in ``outcomes``): only that row's
+    licences are then withdrawn, so two rows that share a verdict are told apart (the B5 review). A
+    row with *landed* None, a row out of range, or a row whose verdict is not *landed* is a
+    ValueError.
 
     Returns a dict with every key present: ``form``, ``gates_sha256``, ``code`` and ``detail`` (the
     decision's own reading where there are no licences to read: ``NOT_GATED``, or ``SCORER_REFUSES``
@@ -1815,6 +1830,14 @@ def licences(prereg: Any, surfaces: Iterable[Any], *, landed: Optional[str] = No
         return out
     if landed is not None and landed not in declared:
         raise ValueError(f"landed {landed!r} is not a verdict the decision declares ({sorted(declared)})")
+    if row is not None:
+        verdicts = _row_verdicts(decision)
+        if landed is None:
+            raise ValueError("row names the row a receipt landed on, and landed is None (no receipt has landed)")
+        if isinstance(row, bool) or not isinstance(row, int) or not 0 <= row < len(verdicts):
+            raise ValueError(f"row {row!r} is not the index of one of the decision's {len(verdicts)} outcome rows")
+        if verdicts[row] != landed:
+            raise ValueError(f"row {row} reads {verdicts[row]!r}, not the landed verdict {landed!r}")
     by_id: Dict[str, List[Dict[str, Any]]] = {s["id"]: [] for s in specs}
     skipped: List[str] = []
     read = 0
@@ -1843,7 +1866,7 @@ def licences(prereg: Any, surfaces: Iterable[Any], *, landed: Optional[str] = No
             for m in standing:
                 out["findings"].append(_licence_finding(_LICENCE_PENDING, (
                     f"{m['path']}:{m['line']}:{m['col']} reads {m['text']!r}, a wording of licence {spec['id']} "
-                    f"({spec['quote']!r}), which outcome row {spec['row']} ({spec['verdict']}) withdraws once a "
+                    f"({spec['quote']!r}), which outcome row {spec['row'] + 1} ({spec['verdict']}) withdraws once a "
                     f"receipt lands on it; no receipt has landed, so the sentence stands on a verdict not yet "
                     f"given"), spec, m))
             if not matches:
@@ -1851,13 +1874,32 @@ def licences(prereg: Any, surfaces: Iterable[Any], *, landed: Optional[str] = No
                     f"licence {spec['id']} ({spec['quote']!r}): its pattern {spec['pattern']!r} matches none of the "
                     f"{read} surfaces read; a licence that matches nothing before data licenses nothing, the "
                     f"analogue of a vacuous gate (DESIGN 3.7)"), spec))
-        elif spec["verdict"] == landed:
+        elif (spec["row"] == row) if row is not None else (spec["verdict"] == landed):
             for m in standing:
                 out["findings"].append(_licence_finding(_LICENCE_WITHDRAWN, (
                     f"{m['path']}:{m['line']}:{m['col']} reads {m['text']!r}, a wording of licence {spec['id']} "
-                    f"({spec['quote']!r}), which the landed outcome row {spec['row']} ({spec['verdict']}) "
+                    f"({spec['quote']!r}), which the landed outcome row {spec['row'] + 1} ({spec['verdict']}) "
                     f"withdraws, and no withdrawal lies within {_WINDOW} characters of it (DESIGN 3.4 C8)"),
                     spec, m))
+    return out
+
+
+def _quote_coverage(prereg: Any, surfaces: Iterable[Any]) -> List[Dict[str, Any]]:
+    """Each licence's ``quote`` read as a literal pattern over the same surfaces (DESIGN 4.A, A.3; the
+    design's RV3 counts it as Q): ``{id, quote, surfaces}`` in licence order, ``surfaces`` the paths it
+    matches. The quote is read as the scan reads text (whitespace runs collapsed, curly apostrophes
+    straightened) and matched case-insensitively. A quote that matches nothing is the pattern
+    ``lint`` would have refused (``LICENCE_PATTERN_FINDS_NOTHING``) had it been registered as the
+    pattern; the report prints it beside the pattern's own coverage. A licence the format does not read
+    is a ``GateSpecError``, as in ``_licence_specs``."""
+    specs = _licence_specs(_decision(prereg))
+    items = [(path, text) for path, text in surfaces if text is not None]
+    out = []
+    for spec in specs:
+        literal = _collapse(spec["quote"]).text.strip()
+        probe = {"id": spec["id"], "rx": re.compile(re.escape(literal), re.IGNORECASE)}
+        hit = sorted({path for path, text in items if literal and _scan(text, [probe], path)})
+        out.append({"id": spec["id"], "quote": spec["quote"], "surfaces": hit})
     return out
 
 
