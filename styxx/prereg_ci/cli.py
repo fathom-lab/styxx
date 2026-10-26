@@ -21,7 +21,9 @@ would read as FAIL.
 error. Step B2 built ``seal``, step B6 ``stamp``; step B7 adds the rest and the report
 (``styxx.prereg_ci.report``). The verbs are this module's, run as ``python -m styxx.prereg_ci``, as
 ``styxx.sworn``, ``styxx.seal`` and ``styxx.charon`` run theirs; ``styxx/cli.py`` registers none of them
-(PLAN 2).
+(PLAN 2). Inside a checkout that holds styxx itself, ``python -I -m styxx.prereg_ci`` runs the installed
+checker: under plain ``-m`` the working directory heads ``sys.path``, so the checkout's own
+``styxx/`` would be imported (the Action runs both its python steps with ``-I`` for that reason).
 
 ``check --base BASE --head HEAD`` reads the pull request as git's three-dot diff reads it (from the
 merge base) and prints, for every receipt the pull request writes or a RESULT it changes names (C1,
@@ -399,7 +401,7 @@ def _config_read(repo: _git._Repo, rev: str) -> Tuple[Dict[str, Any], bool]:
         return {}, False
     try:
         text = data.decode("utf-8")
-        if text.startswith("﻿"):
+        if text.startswith("\ufeff"):
             raise ValueError("it begins with a byte-order mark")
         obj = _toml(text)
     except (UnicodeDecodeError, ValueError) as e:

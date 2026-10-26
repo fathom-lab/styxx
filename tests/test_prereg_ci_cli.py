@@ -237,10 +237,12 @@ def test_policies_are_read_at_base_so_a_pull_request_cannot_relax_its_own_judge(
 
 def test_a_config_holding_a_key_or_a_value_the_format_does_not_name_is_an_input_error(tmp_path, capsys):
     for bad in ('receipt_rewrite = "maybe"\n', "receipt_rewrite = 1\n", 'colour = "red"\n',
-                '[table]\nreceipt_rewrite = "note"\n', 'surfaces = "README.md"\n'):
+                '[table]\nreceipt_rewrite = "note"\n', 'surfaces = "README.md"\n',
+                '\ufeffsurfaces = ["README*.md"]\n'):
         g, rec = demo(tmp_path / str(abs(hash(bad))), config=bad)
         code, out = run(g, "check", "--base", "main", "--head", "result", capsys=capsys)
         assert code == 2 and "CONFIG_INVALID" in out, (bad, out)
+        assert "byte-order mark" in out or not bad.startswith("\ufeff"), out
 
 
 def test_an_invalid_config_is_refused_where_it_is_written_and_a_broken_base_can_be_repaired(tmp_path, capsys):
