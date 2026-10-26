@@ -503,13 +503,29 @@ def _landed_row(rs: Dict[str, Any], decision: Dict[str, Any]) -> Optional[int]:
 def _rescore(ctx: _Ctx, data: bytes, decision: Dict[str, Any], receipt_path: str, receipt: Any, gov: str,
              pair: Optional[str], findings: List[Dict[str, Any]]) -> Tuple[Optional[Dict[str, Any]], Any]:
     """C5: the gates table over the receipt, or the locked scorer run at the blobs of the commit that
-    governs (the seal's, or the amendment in effect). Returns (re-score, the run's record)."""
+    governs (the seal's, or the amendment in effect). Returns (re-score, the run's record).
+
+    A locked scorer runs as code, so it runs only from blobs BASE's history holds: the governing
+    commit is BASE or an ancestor of it. A locks PREREG that arrives in the pull request (C2), or an
+    amendment line naming a commit the pull request brings, would run the pull request's own bytes as
+    the judge, which DESIGN 3.2(f) rules out ("a pull request cannot change the code that judges
+    it"); that receipt reads ``SCORER_NOT_RUN`` (UNCHECKABLE, exit 3) until the PREREG and its locked
+    files land (the B8 fresh review, F1). A census reads a revision's own history, so its BASE is the
+    revision and every seal in it runs."""
     if decision["form"] != "locks":
         return _core.rescore(data, receipt), None
     try:
         spec = _core._locks(decision["block"])
     except _core._GateSpecError:
         return _core.rescore(data, receipt), None
+    if gov != ctx.b and not ctx.repo.is_strict_ancestor(gov, ctx.b):
+        findings.append(_report._finding("SCORER_NOT_RUN", (
+            f"the locks decision in effect for {receipt_path} is read at {gov[:12]}, which the base {ctx.b[:12]} "
+            f"does not hold, so its scorer and locked files are this pull request's own bytes; a locked scorer "
+            f"runs as code, and prereg-ci runs one only from blobs the base already holds (DESIGN 3.2(f)). Once "
+            f"the PREREG and its locked files have landed, a receipt is judged by the landed scorer"),
+            path=receipt_path, check="C5", pair=pair))
+        return None, None
     try:
         files = _scorer_run._locked_files(ctx.repo, gov, spec)
         raw = ctx.repo.read(ctx.h, receipt_path)

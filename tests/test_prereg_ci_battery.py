@@ -336,3 +336,61 @@ def test_a_file_outside_md_that_holds_a_fence_and_is_named_by_no_receipt_is_not_
     g.commit("edit the test")
     code, out = run(g, "check", "--base", "main", "--head", "edit", capsys=capsys)
     assert code == 0 and "DECISION_EDITED_AFTER_SEAL" not in out, out
+
+
+# ---- F1: a locks PREREG that arrives in the pull request, whose scorer is the pull request's own code ----------
+
+LOCK_SCORER = ("import json, sys\n"
+               "r = json.load(open(sys.argv[1], encoding='utf-8'))\n"
+               "{pre}v = 'INVALID__accuracy_floor' if r['acc'] < 0.9 else ('SHIP' if r['ece'] <= 0.05 else "
+               "'HOLD__calibration')\n"
+               "print(json.dumps({{'verdict': v}}))\n")
+LOCKS = {"scorer": "score.py", "reads": [], "outcomes": ["INVALID__accuracy_floor", "SHIP", "HOLD__calibration"]}
+
+
+def locks_prereg() -> str:
+    return f"# PREREG locks\n\nthe plan\n\n{F}locks\n{json.dumps(LOCKS, indent=1)}\n{F}\n"
+
+
+def test_a_locks_prereg_that_arrives_in_the_pull_request_does_not_run_its_scorer(tmp_path, capsys):
+    """The fresh review's P2: PREREG, scorer and receipt in one pull request; the scorer ran as the judge,
+    so the pull request chose the code that judged it (DESIGN 3.2(f)), and the check printed PASS."""
+    g = Git(tmp_path / "pr")
+    g.write("README_demo.md", README_PLAIN)
+    g.write("prereg-ci.toml", CFG)
+    g.commit("init")
+    g("switch", "-q", "-c", "pr")
+    g.write("PREREG_locks.md", locks_prereg())
+    g.write("score.py", LOCK_SCORER.format(pre="r['acc'] = 1.0\nr['ece'] = 0.0\n"))
+    g.commit("plan and scorer")
+    g.write("receipt.json", json.dumps({"prereg": "PREREG_locks.md", **HOLD, "verdict": "SHIP"}, indent=1) + "\n")
+    g.commit("result")
+    code, out = run(g, "check", "--base", "main", "--head", "pr", capsys=capsys)
+    assert code == 3, out
+    assert "UNCHECKABLE SCORER_NOT_RUN" in out and "the base" in out and "does not hold" in out, out
+    assert "locked scorer score.py" not in out, out
+
+
+def test_a_landed_locks_prereg_still_runs_its_sealed_scorer_and_an_edit_in_the_pull_request_does_not_judge(
+        tmp_path, capsys):
+    g = Git(tmp_path / "landed")
+    g.write("README_demo.md", README_PLAIN)
+    g.write("prereg-ci.toml", CFG)
+    g.write("PREREG_locks.md", locks_prereg())
+    g.write("score.py", LOCK_SCORER.format(pre=""))
+    g.commit("seal")
+    g("switch", "-q", "-c", "run")
+    g.write("score.py", LOCK_SCORER.format(pre="r['ece'] = 0.0\n"))
+    g.write("receipt.json", json.dumps({"prereg": "PREREG_locks.md", **HOLD, "verdict": "SHIP"}, indent=1) + "\n")
+    g.commit("a looser judge and a typed receipt")
+    code, out = run(g, "check", "--base", "main", "--head", "run", capsys=capsys)
+    assert code == 1 and "FAIL VERDICT_DIFFERS" in out and "NOTE LOCKED_FILE_MOVED" in out, out
+
+
+def test_the_action_says_a_locked_scorer_runs_as_code_and_where_the_action_must_not_run():
+    """The fresh review's F1: the Action said "contents: read" and "opens no connection", and nothing of the
+    code a locks PREREG runs, nor of the token its checkout keeps."""
+    import yaml
+    desc = yaml.safe_load((ROOT / "prereg-ci" / "action.yml").read_text(encoding="utf-8"))["description"]
+    for words in ("runs as code", "not a sandbox", "SCORER_NOT_RUN", "pull_request_target", "no secret"):
+        assert words in desc, words

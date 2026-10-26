@@ -21,6 +21,12 @@ description: >-
   itself) pins fathom-lab/styxx/prereg-ci@<sha> and never uses: ./prereg-ci, whose styxx-source
   default installs the pull request's own tree. The check opens no connection of its own: no
   time-stamp authority, no OpenTimestamps calendar, no forge API (the server rung prints "not read").
+  A locks PREREG's scorer runs as code (python -I -S with a timeout, its network removed only where a
+  Linux runner permits it; not a sandbox), so the check runs one only from blobs the base commit
+  holds: a locks PREREG, or a locked file, that the pull request brings reads SCORER_NOT_RUN (exit 3)
+  until it lands. The checkout keeps the job's token in .git/config for the partial clone's fetches,
+  and a landed scorer runs beside it: run this action on pull_request, never under
+  pull_request_target, and with no secret in the job.
   Policies come from prereg-ci.toml as the base commit holds it, and an input here wins over the file.
 author: "Fathom Lab"
 branding:
