@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Generate the numerals conformance vectors from `texts.py`, replay them, write `vectors_v2.json`.
+"""Generate the numerals conformance vectors from `texts.py` and `texts_review.py`, replay them, write a set.
 
-    py -3.12 -B conformance/numerals/gen_vectors.py --v1-recording PATH --out vectors_v2_default.json
+    py -3.12 -B conformance/numerals/gen_vectors.py --v1-recording PATH [--v1-recording PATH2] --out NEW.json
     py -3.12 -B conformance/numerals/gen_vectors.py --check            # replay every committed set, write nothing
 
 Four families. `reader`: `extract_numbers` and `uncovered_spans` on one text under the shipped flags,
@@ -9,21 +9,28 @@ minus the `context` field (a function of the text). `binding`: `certify_doc` on 
 receipts under the shipped flags: the verdict, its class, the counts, every ledger row's token, status
 and receipt_ref, and the counted band. `v1_reader` and `v1_binding`: the same texts and cases under
 `V15_READER_V2 = False`, whose expectations are READ FROM A RECORDING made at HEAD before the reader v2
-existed (`--v1-recording`): the generator re-derives them with the master flag off and refuses to write
-if any differ. That recording is the machine form of "flag off == HEAD".
+existed (`--v1-recording`, once per recording: the texts of `texts_review.py` were recorded on 2026-10-25
+from a `git archive` of the same commit, whose certify.py has no v2 code): the generator re-derives them
+with the master flag off and refuses to write if any differ. That recording is the machine form of "flag
+off == HEAD".
 
-`id = sha256(utf8(jcs({"family": f, "rules": rules, "text": t[, "receipts": r]})))`, where `rules` is the
-set's `reader.rules`, the flags that were on; `vectors_v2.json`, the earlier set, was written before ids
-carried the rules and its `id_rule` says so. A receipt file is named by its index, so `receipt_ref` reads
+`id = sha256(utf8(jcs({"family": f, "flags": flags, "text": t[, "receipts": r]})))`, where `flags` is the
+set's `reader.flags`, every rule flag on or off (ID_RULE_FLAGS, from the set after the review fixes on: a
+flag that ships off can change a reading without changing which rules are on). `vectors_v2_default.json`
+used `rules`, the flags that were on (ID_RULE), and `vectors_v2.json` neither (ID_RULE_V1); each set's
+`id_rule` says which. A receipt file is named by its index, so `receipt_ref` reads
 `receipt[j]:path` in every expectation. `set_sha256` is the sha256 of the JCS text of the index minus
 `set_sha256` and minus `provenance`.
 
 EACH SET NAMES ITS CONFIGURATION. `reader.flags` holds every V15_* rule flag as it stood when the set was
 written, and the replay sets exactly those flags (the master off for the `v1_*` families). A set whose
 reader names no `flags` (`vectors_v2.json`, written by the earlier build session of 2026-10-25) is read
-from `reader.rules`, every flag it does not list off, with one fact of that day applied: `V15_MAGNITUDE`
-then covered bare magnitudes too (`V15_MAGNITUDE_BARE` did not exist; RULE_final 0.1 split it out), so a
-set of that shape listing `V15_MAGNITUDE` replays with `V15_MAGNITUDE_BARE` on.
+from `reader.rules`, every flag it does not list off. A FLAG A SET PREDATES replays at the value of the
+flag it was split from (SPLIT_FROM): `V15_MAGNITUDE` covered bare magnitudes until RULE_final 0.1 split
+`V15_MAGNITUDE_BARE` out of it, and `V15_SIGNED_CURRENCY` covered the accounting forms until the review fix
+(R2) split `V15_ACCOUNTING_SIGN` out of it. So `vectors_v2.json` replays with both on, and
+`vectors_v2_default.json`, whose flag block names `V15_MAGNITUDE_BARE` off but predates the accounting
+flag, replays with the accounting forms on, as it was written.
 
 A RECEIPT IS HISTORY TOO. The generator refuses to write a vector whose id already stands in any
 committed `conformance/numerals/vectors_*.json` with a different `expect`. A later reader records its
@@ -48,11 +55,12 @@ import importlib  # noqa: E402
 
 C = importlib.import_module("styxx.certify")   # the module, never the package's `certify` function
 import texts as T  # noqa: E402
+import texts_review as R  # noqa: E402
 from styxx.attestation import jcs  # noqa: E402
 
 SCHEMA = "styxx-oath/numerals-vectors/v1"
 READER_SCHEMA = "styxx-oath/numerals/v2"
-OUT = HERE / "vectors_v2_default.json"
+OUT = HERE / "vectors_v2_default_after_review.json"
 STUB = {"schema": "stub", "head": None, "receipts": []}
 
 
@@ -62,34 +70,52 @@ def _sha(s: str) -> str:
 
 ID_RULE_V1 = "sha256(utf8(jcs({family, text[, receipts]})))"
 ID_RULE = "sha256(utf8(jcs({family, rules, text[, receipts]})))"
-# flags a set written before they existed implies from the rules it lists (see the docstring)
-LEGACY_IMPLIED = {"V15_MAGNITUDE": ("V15_MAGNITUDE_BARE",)}
+ID_RULE_FLAGS = "sha256(utf8(jcs({family, flags, text[, receipts]})))"
+# a flag split out of another, and the flag it was split from: a set written before the split replays the
+# new flag at the old one's value (see the docstring)
+SPLIT_FROM = {"V15_MAGNITUDE_BARE": "V15_MAGNITUDE", "V15_ACCOUNTING_SIGN": "V15_SIGNED_CURRENCY"}
 
 
-def vector_id(family: str, text: str, receipts=None, rules=None) -> str:
+def vector_id(family: str, text: str, receipts=None, rules=None, flags=None) -> str:
     key = {"family": family, "text": text}
     if rules is not None:
         key["rules"] = list(rules)
+    if flags is not None:
+        key["flags"] = dict(flags)
     if receipts is not None:
         key["receipts"] = receipts
     return _sha(jcs(key))
 
 
 def set_flags_of(doc: dict) -> dict:
-    """Every V15_* rule flag as the set *doc* was written under."""
+    """Every V15_* rule flag as the set *doc* was written under; a flag the set predates takes the value of
+    the flag it was split from."""
     reader = doc.get("reader") or {}
     if isinstance(reader.get("flags"), dict):
-        return {k: bool(reader["flags"].get(k, False)) for k in C._V15_RULE_FLAGS}
-    rules = set(reader.get("rules") or [])
-    for k, implied in LEGACY_IMPLIED.items():
-        if k in rules:
-            rules |= set(implied)
-    return {k: (k in rules) for k in C._V15_RULE_FLAGS}
+        named = {k: bool(v) for k, v in reader["flags"].items()}
+    else:
+        named = {k: True for k in (reader.get("rules") or [])}
+        # a rules-only set names a flag only by listing it on; every flag that existed and is not listed is off
+        named.update({k: False for k in C._V15_RULE_FLAGS if k not in named and k not in SPLIT_FROM})
+    out = {}
+    for k in C._V15_RULE_FLAGS:
+        if k in named:
+            out[k] = named[k]
+        elif k in SPLIT_FROM:
+            out[k] = bool(named.get(SPLIT_FROM[k], False))
+        else:
+            out[k] = False
+    return out
 
 
-def id_rules_of(doc: dict):
-    """The `rules` list a set's ids are over, or None for a set whose ids carry no rules."""
-    return list(doc["reader"]["rules"]) if doc.get("id_rule") == ID_RULE else None
+def id_key_of(doc: dict) -> dict:
+    """What a set's ids are over besides family, text and receipts: {"rules": [...]}, {"flags": {...}} or {}."""
+    rule = doc.get("id_rule")
+    if rule == ID_RULE:
+        return {"rules": list(doc["reader"]["rules"])}
+    if rule == ID_RULE_FLAGS:
+        return {"flags": dict(doc["reader"]["flags"])}
+    return {}
 
 
 def _strip(d: dict) -> dict:
@@ -169,29 +195,48 @@ def existing_expectations() -> dict:
     return seen
 
 
-def generate(v1_recording: Path | None) -> dict:
+def all_texts() -> list[str]:
+    """`texts.py`'s texts, then `texts_review.py`'s that are not among them."""
+    out = T.all_texts()
+    seen = set(out)
+    for t in R.READER_TEXTS:
+        if t not in seen:
+            seen.add(t)
+            out.append(t)
+    return out
+
+
+def all_cases() -> list[tuple]:
+    return list(T.BINDING_CASES) + list(R.BINDING_CASES)
+
+
+def generate(v1_recordings) -> dict:
     """The set under the flags the module holds now (the shipped default unless a caller set others)."""
+    if isinstance(v1_recordings, (str, Path)):
+        v1_recordings = [v1_recordings]
+    v1_recordings = [Path(x) for x in (v1_recordings or [])]
     saved = saved_flags()
     rule_flags = {k: bool(getattr(C, k)) for k in C._V15_RULE_FLAGS}
     rules = sorted(k for k, v in rule_flags.items() if v)
+    idk = {"flags": rule_flags}
     families: dict = {"reader": [], "binding": [], "v1_reader": [], "v1_binding": []}
     try:
         with tempfile.TemporaryDirectory() as td:
             tmp = Path(td)
             set_flags(True, rule_flags)
-            for t in T.all_texts():
-                families["reader"].append({"id": vector_id("reader", t, rules=rules), "text": t, "expect": read(t)})
-            for i, (name, text, rec) in enumerate(T.BINDING_CASES):
+            for t in all_texts():
+                families["reader"].append({"id": vector_id("reader", t, **idk), "text": t, "expect": read(t)})
+            for i, (name, text, rec) in enumerate(all_cases()):
                 recs = rec if isinstance(rec, list) else [rec]
-                families["binding"].append({"id": vector_id("binding", text, recs, rules), "name": name,
+                families["binding"].append({"id": vector_id("binding", text, recs, **idk), "name": name,
                                             "text": text, "receipts": recs, "expect": bind(text, recs, tmp, f"b{i}")})
             set_flags(False, rule_flags)
-            for t in T.all_texts():
-                families["v1_reader"].append({"id": vector_id("v1_reader", t, rules=rules), "text": t,
+            for t in all_texts():
+                families["v1_reader"].append({"id": vector_id("v1_reader", t, **idk), "text": t,
                                               "expect": read(t)})
-            for i, (name, text, rec) in enumerate(T.BINDING_CASES):
+            for i, (name, text, rec) in enumerate(all_cases()):
                 recs = rec if isinstance(rec, list) else [rec]
-                families["v1_binding"].append({"id": vector_id("v1_binding", text, recs, rules), "name": name,
+                families["v1_binding"].append({"id": vector_id("v1_binding", text, recs, **idk), "name": name,
                                                "text": text, "receipts": recs,
                                                "expect": bind(text, recs, tmp, f"v{i}")})
     finally:
@@ -203,16 +248,24 @@ def generate(v1_recording: Path | None) -> dict:
         for v in vs:
             seen_ids.setdefault(v["id"], v)
         families[name] = list(seen_ids.values())
-    provenance = {"generated_by": "conformance/numerals/gen_vectors.py", "texts": "conformance/numerals/texts.py"}
-    if v1_recording is not None:
-        rec = json.loads(v1_recording.read_text(encoding="utf-8"))
-        by_text = {r["text"]: r for r in rec["reader"]}
+    provenance = {"generated_by": "conformance/numerals/gen_vectors.py",
+                  "texts": "conformance/numerals/texts.py, then conformance/numerals/texts_review.py"}
+    if v1_recordings:
+        recs_ = [json.loads(x.read_text(encoding="utf-8")) for x in v1_recordings]
+        shas = {r["certify_sha256_lf"] for r in recs_}
+        if len(shas) != 1:
+            raise SystemExit(f"REFUSED: the v1 recordings were made from different readers: {sorted(shas)}")
+        by_text, by_case = {}, {}
+        for rec in recs_:
+            for r in rec["reader"]:
+                by_text.setdefault(r["text"], r)
+            for i, r in enumerate(rec["binding"]):
+                by_case.setdefault((r["text"], jcs(r["receipts"])), (i, r))
         diffs = []
         for v in families["v1_reader"]:
             exp = by_text.get(v["text"])
             if exp is None or {"numbers": exp["numbers"], "uncovered": exp["uncovered"]} != v["expect"]:
                 diffs.append(("reader", v["text"]))
-        by_case = {(r["text"], jcs(r["receipts"])): (i, r) for i, r in enumerate(rec["binding"])}
         for v in families["v1_binding"]:
             found = by_case.get((v["text"], jcs(v["receipts"])))
             if found is None:
@@ -234,9 +287,15 @@ def generate(v1_recording: Path | None) -> dict:
         if diffs:
             raise SystemExit(f"REFUSED: the master-off reader differs from the HEAD recording on {len(diffs)} "
                              f"vector(s): {diffs[:3]}")
-        provenance["v1_recording"] = {"head": rec["head"], "certify_sha256_lf": rec["certify_sha256_lf"],
-                                      "n_reader": rec["n_reader"], "n_binding": rec["n_binding"],
-                                      "note": "the v1_* families reproduce this recording exactly"}
+        heads = sorted({r["head"] for r in recs_})
+        provenance["v1_recording"] = {"head": heads[0] if len(heads) == 1 else heads,
+                                      "certify_sha256_lf": recs_[0]["certify_sha256_lf"],
+                                      "n_reader": sum(r["n_reader"] for r in recs_),
+                                      "n_binding": sum(r["n_binding"] for r in recs_),
+                                      "parts": [{"recorded_from": r.get("recorded_from"), "head": r["head"],
+                                                 "n_reader": r["n_reader"], "n_binding": r["n_binding"]}
+                                                for r in recs_],
+                                      "note": "the v1_* families reproduce these recordings exactly"}
     certify_bytes = (ROOT / "styxx" / "certify.py").read_bytes()
     doc = {
         "schema": SCHEMA,
@@ -245,7 +304,7 @@ def generate(v1_recording: Path | None) -> dict:
                    "rules": rules,
                    "flags": rule_flags,
                    "master": "V15_READER_V2"},
-        "id_rule": ID_RULE,
+        "id_rule": ID_RULE_FLAGS,
         "families": {name: {"n": len(vs), "vectors": sorted(vs, key=lambda v: v["id"])}
                      for name, vs in families.items()},
     }
@@ -262,7 +321,7 @@ def replay(doc: dict) -> list:
         bad.append(("set_sha256", "does not re-derive"))
     saved = saved_flags()
     rule_flags = set_flags_of(doc)
-    rules = id_rules_of(doc)
+    idk = id_key_of(doc)
     try:
         with tempfile.TemporaryDirectory() as td:
             tmp = Path(td)
@@ -270,11 +329,11 @@ def replay(doc: dict) -> list:
                 set_flags(not fam.startswith("v1_"), rule_flags)
                 for k, v in enumerate(body["vectors"]):
                     if fam.endswith("reader"):
-                        if vector_id(fam, v["text"], rules=rules) != v["id"]:
+                        if vector_id(fam, v["text"], **idk) != v["id"]:
                             bad.append((fam, v["text"], "id"))
                         got = read(v["text"])
                     else:
-                        if vector_id(fam, v["text"], v["receipts"], rules) != v["id"]:
+                        if vector_id(fam, v["text"], v["receipts"], **idk) != v["id"]:
                             bad.append((fam, v["text"], "id"))
                         got = bind(v["text"], v["receipts"], tmp, f"{fam}{k}")
                     if got != v["expect"]:
@@ -286,8 +345,9 @@ def replay(doc: dict) -> list:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--v1-recording", type=Path, default=None,
-                    help="JSON recorded from HEAD before the build; the v1_* families must reproduce it")
+    ap.add_argument("--v1-recording", type=Path, action="append", default=None,
+                    help="JSON recorded from HEAD before the build (repeatable); the v1_* families must reproduce "
+                         "the recordings together")
     ap.add_argument("--out", type=Path, default=OUT)
     ap.add_argument("--check", action="store_true", help="replay the committed set and write nothing")
     a = ap.parse_args(argv)
