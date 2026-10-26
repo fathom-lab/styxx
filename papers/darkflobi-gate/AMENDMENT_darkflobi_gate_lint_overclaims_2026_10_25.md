@@ -18,6 +18,11 @@ message is stated as the ledger reads it, not as the lead's brief said it; the s
 as the agent's withdrawn wordings (item 2's table); and the lock rows are stated (none). The route, the five rules and
 the count are as pass 1 built them.
 
+What pass 3 changed (the fix pass after the two pass-2 reviews, `BD:REVIEW_rule.md` F5 and F6): item 4 fixes the lint
+the RESULT's scans run, so the printed count moves with the agent and not with `main`'s rule set; the posting skill's
+section 7 rule 4 now keeps the record's condition on seq 93's removal, as the paragraph does, so the skill's digest in
+item 1 moves with piece (4)'s row.
+
 Receipt key: `W:` = `C:/Users/heyzo/clawd/`; `WT:` = `W:wt/`; `BD:` = `WT:_darkflobi_gate_2026_10_22/before_d0/`;
 `M:` = this repository at the branch carrying this file; `seq N` = a line of `W:gate/ledger.jsonl`, named by its fields
 and never by its text; `PREREG` and `RULES` = the two frozen files beside this one. A wording quoted below as the agent's
@@ -168,8 +173,8 @@ rules of item 2 reach the gate.
    is not counted": that taught pass 1's count rule, which its review defeated, and it is replaced here.
    The posting skill carries the same rows and the same five rules in its section 7, "how I describe the gate": the
    rows of seq 34, 42, 44, 46 and 93, and rule 2's sentence word for word. The skill's text is sha256
-   `5339e659a17516a01d965730a85c1ce9daf5fdd9a4d87977dc65e2d2825ddf32` (LF, no BOM, as piece (4)'s build left it in
-   `BD:posting_skill/SKILL.md`): the text piece (4)'s amendment (`AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md`)
+   `3e2af0503d21cd665f192714f5b7ad5f80c7ddca0795a8c4f47e3810a8b86c5e` (LF, no BOM, as pass 3 left it in
+   `BD:posting_skill/SKILL.md`; pass 2's was `5339e659…`, whose rule 4 stated seq 93's removal as fact): the text piece (4)'s amendment (`AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md`)
    commits beside it as `papers/darkflobi-gate/styxx-post_SKILL.md`, and the digest its lock row gives
    `W:skills/styxx-post/SKILL.md`; the two amendments name one digest. Inserting the paragraph into `W:SOUL.md` (beside
    the staged `W:SOUL_STYXX_CLAUSE.md`, "awaiting flobi approval") is the operator's; the identity block of every
@@ -242,7 +247,12 @@ rules of item 2 reach the gate.
    text above the capsule footer for a minted post where the gate's lint ran over the whole payload, so the two can
    differ on a footer and never on a sentence the agent wrote. It is run at each weekly snapshot and at close, its
    output pasted into the RESULT with the operator's `sha256sum` beside the lint refusals of RULES §6; item 5 above is
-   the day-1 reading. It is a count, not a gates-block input: the gates block reads the ledger's codes.
+   the day-1 reading. It is a count, not a gates-block input: the gates block reads the ledger's codes. **The lint those
+   scans run is fixed here**: blob `9df05b5d` of `scripts/surface_lint.py` (sha256 `4fc2249a…`, item 2's table), passed
+   as `--lint <file>` where the file holds that blob's bytes (`git show 9df05b5d > <file>`, its sha256 checked against
+   item 2's block before the run; the scan prints the sha256 of the lint it loaded, and the RESULT prints that line). A
+   lint of a later commit, if `main` gains rules inside the window, is run beside it and printed beside it, never in its
+   place: the weekly and the closing counts are one rule set's.
 
 5. **Canary kind D is unchanged.** Its wordings are a fixed list of five in `W:gate/canary_shadow.py` l.99-107 (stored
    reversed), the pin's `withdrawn/*` wordings; the five rules of item 2 enter no canary, and G_C's count is not touched.
@@ -266,7 +276,7 @@ rules of item 2 reach the gate.
 ## What the RESULT prints
 
 - The scan of item 4 at each weekly snapshot and at close: per rule id the lines and seqs, by day, the sha256 of the
-  lint it ran, and today's reading (item 5: 30 public lines, 4 hit under `main`'s rules, 1 under the pin's) as the
+  lint it ran (`4fc2249a…`, item 4; a later lint's count beside it, never in its place), and today's reading (item 5: 30 public lines, 4 hit under `main`'s rules, 1 under the pin's) as the
   day-1 baseline.
 - The seq 93 refusal by its fields (decision `refuse`, reasons `lint_hit:charter/ordinal`, `dest_class public`,
   2026-10-25T17:18:12Z, `would_refuse true`, `required_present false`), its delivery (seq 94, `ok true`), the DM copy

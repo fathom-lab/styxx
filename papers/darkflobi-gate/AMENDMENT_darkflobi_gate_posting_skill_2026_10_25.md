@@ -10,6 +10,13 @@ and before any prepared record has reached a ledger line (item 1 of "What was ob
 nothing new for it; what is his, and what is the lead's, is listed under "Whose step". No bar, no cell, no row of the
 gates block, no reason code and no row of RULES section 7's matrix moves.
 
+Pass 3 (2026-10-25 evening, the fix pass after the two pass-2 reviews, `BD:REVIEW_rule.md` and `BD:REVIEW_apply.md`):
+the skill's section 6 "Versions" paragraph now says that certify's scrubs leave out any figure glued to a word or
+written in three dotted parts, and names the two shapes a writer is told are not counted, a model's published identifier
+and a version (the rule review's F1); its section 7 rule 4 keeps the record's condition on seq 93's removal (F6). The
+skill's digest moves from pass 2's `5339e659…` to the row below, here and in the lint AMENDMENT's item 1 alike. Item 8 and
+"Whose step" now say what can be run when (the apply review's F5). No file under `W:gate` moved for pass 3.
+
 Receipt key: `W:` = `C:/Users/heyzo/clawd/`; `WT:` = `W:wt/`; `BD:` = `WT:_darkflobi_gate_2026_10_22/before_d0/`;
 `PREREG` and `RULES` = this folder's files at `879f6be9`, where this branch starts, line numbers their own; `seq N` = a
 line of `W:gate/ledger.jsonl`; `[R]` a file or a run shows it; `[J]` judgement. A digest written `abcd1234…` is a
@@ -103,8 +110,10 @@ beyond a listing and clawdbot's installed `dist/` (read, for how a skill is load
    avoided; the claim shapes of RULES §3.1, condensed; what the gate does with the minted message (item 2 below
    included); the count rule's words as the count rule AMENDMENT of 2026-10-25 writes them (a mark quoted whole as the
    gate appended it to the line it names is not counted, a mark composed is; a minted post carries no mark and no seq,
-   because the mint's certify counts both); versions (a hyphenated model identifier is not counted; `opus 4.8` and a
-   quoted `"3.1"` are; any three-part version wakes the audit leg, and a styxx version the pin does not carry fails);
+   because the mint's certify counts both); versions (a model's published identifier with its hyphens, and a version,
+   are not counted; the same scrubs leave out any figure glued to a word by a hyphen or written in three dotted parts,
+   so a figure of the lab's is never written that way; `opus 4.8` and a quoted `"3.1"` are numerals; any three-part
+   version wakes the audit leg, and a styxx version the pin does not carry fails);
    how the agent describes the gate (section 7: the lab's sentences, the withdrawn wordings by seq and the five rules
    of `AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md` item 1, the same rows and rules); what a refusal
    notice's codes mean; and the window's rules (no clawdbot update, `REQUIRED` the operator's, the pin by AMENDMENT
@@ -157,15 +166,18 @@ beyond a listing and clawdbot's installed `dist/` (read, for how a skill is load
    rows below are the files with both changes, one digest each, and the count rule's file names the same digests. They
    enter `gate_sha256`; the stretch that begins with the move is named once, in the lock-rows AMENDMENT's addendum.
 
-8. **Placement** [the lead's]: after this file's rows are on the branch (until then the strict check reads the skill
-   BUILT SINCE), the lead copies `styxx-post_SKILL.md` byte for byte to `W:skills/styxx-post/SKILL.md`, compares its
+8. **Placement** [the lead's]: after the move's in-place readings are green (`BD:APPLY_RUNBOOK.md` section 8), the lead
+   copies `styxx-post_SKILL.md` byte for byte to `W:skills/styxx-post/SKILL.md`, compares its
    sha256 with the row, and confirms with `/context detail` in the operator's DM that `styxx-post` is listed (or `/new`,
-   which builds the snapshot on the new session's opening turn).
+   which builds the snapshot on the new session's opening turn). Read with the PREREG alone, `lock_hashes.py check` reads the
+   placed skill BUILT SINCE against §11's `not built at the freeze`; read with this folder's amendment files
+   (`--amendment`, `AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md`) it reads the row below, SAME.
 
 ## Whose step
 
-- **The lead's**: the move (with the count rule's half, one process), the suite and the dry harness in place, the
-  strict check naming every amendment file, the skill's placement and its listing, the PR with its CHANGELOG entry.
+- **The lead's**: the move (with the count rule's half, one process), the suite and the plugin harness in place, the
+  dry harness against the copy (it refuses `W:gate` by path, `dry_harness.py` l.193; after the move the copy's ten files
+  are the live bytes, which the runbook's section 4 checks by `sha256sum`), the strict check naming every amendment file, the skill's placement and its listing, the PR with its CHANGELOG entry.
 - **The operator's**: the merge (the relock of record); the `--push` credential on `exhibit` and OD-7's protection;
   the phone test (`BD:posting_skill/PHONE_TEST_CHECKLIST.md`: one live mint, the two badges on the phone, the handshake
   read on the ledger, then one post the agent makes by the skill); the no-update line in `W:TOOLS.md`, or not.
@@ -198,7 +210,7 @@ the lab never prints), and its sha256 is this file's row for `W:skills/styxx-pos
 | gate file | `W:gate/tests/test_prepared_guard.py` | `d9870b45126e1500a64ab2d32503772187ac7aa183d6967eb4bdce5a4d2739c0` | 16354 bytes; new with this amendment, no earlier row; 13 tests (the tests above) |
 | gate file | `W:gate/tests/test_gate.py` | `626d5e9eb98dd3b0ddead29151ace4c003419b4f3139be9e91ee26210c8c97e5` | 23815 bytes; one hand-made record made live-shaped (item 6); before it `589450c7…` (15.6) |
 | gate file | `W:gate/tests/test_gate_round2.py` | `ddb8e988bc1e59636c1f280a7ebb6dc8b24fef5fa227bf333ac1af220574bfff` | 27531 bytes; two hand-made records made live-shaped (item 6); before it `1ccb07ad…` (§11) |
-| the posting skill | `W:skills/styxx-post/SKILL.md` | `5339e659a17516a01d965730a85c1ce9daf5fdd9a4d87977dc65e2d2825ddf32` | 25144 bytes; the text committed beside this file as `styxx-post_SKILL.md`, the same bytes (item 1); before it not built at the freeze (§11) |
+| the posting skill | `W:skills/styxx-post/SKILL.md` | `3e2af0503d21cd665f192714f5b7ad5f80c7ddca0795a8c4f47e3810a8b86c5e` | 25785 bytes; the text committed beside this file as `styxx-post_SKILL.md`, the same bytes (item 1), as pass 3 revised it (pass 2's text was `5339e659…`, never placed); before it not built at the freeze (§11) |
 
 ## What does not change
 

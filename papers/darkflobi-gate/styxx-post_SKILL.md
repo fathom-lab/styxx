@@ -218,10 +218,14 @@ the lint; a paraphrase of it passes everywhere, which is why section 7 asks you 
   of your own ("flagged 2 numerals") is a number. In a minted post none of this helps: the mint's certify counts
   every numeral in `POST.md`, a quoted mark included, and refuses the post (refusal 3), so a minted post carries no
   mark and no seq.
-- Versions. Write a model by its published identifier with the hyphen (`claude-opus-4-8`,
-  `gemini-3.1-pro-preview`): certify does not count a number glued by a hyphen to a word, as signed. `opus 4.8`,
-  `gemini 3.1` and a quoted `"3.1"` are numerals and read unbound. A three-part version (`2.1.310`, `7.50.0`) is
-  not counted, but any three-part version wakes the audit leg, which checks version claims against the pin: a
+- Versions, and what certify leaves out. Write a model by its published identifier with the hyphen
+  (`claude-opus-4-8`, `gemini-3.1-pro-preview`): certify does not count a model identifier or a version, as signed.
+  That is the whole of it. The same scrubs leave out any number glued to a word by a hyphen or written in three
+  dotted parts, whatever the number is, so never write a figure of the lab's that way (`500-user`, `28-day`,
+  `3-of-4`, `precision-0.23`, a price written `4.99.0`): write it as a numeral, bound by its receipt, or leave it
+  out. The RESULT counts those shapes in every post (the count rule AMENDMENT, "What the RESULT prints"), so a
+  figure moved into them shows there. `opus 4.8`, `gemini 3.1` and a quoted `"3.1"` are numerals and read unbound.
+  A three-part version (`2.1.310`, `7.50.0`) is not counted, but any three-part version wakes the audit leg, which checks version claims against the pin: a
   styxx version the pin does not carry fails (`audit_fail`, a refusal). Write no styxx version in a post; the
   footer's install line is the mint's, and it is left unread only behind an honoured record.
 
@@ -267,8 +271,10 @@ The rules:
    lint reads strings, and a repudiation in other words is still a hit (seq 105, the operator's DM, is the receipt).
 4. On a refusal notice after D0, revise with receipts or drop the message. Never remove a public message to hide a
    mark: a removal through the telegram action is a `kind: deleted` ledger line, a removal by any other route is a
-   census `missing_from_export`, and the RESULT prints both (seq 93 is the receipt: it was removed outside the gated
-   branch, the ledger holds no `deleted` line for it, and the census will read it `missing_from_export`).
+   census `missing_from_export`, and the RESULT prints both. Seq 93 is the receipt: the ledger holds no `deleted`
+   line for it (seq 99 is an ordinary send, not a removal), so if that message was taken down it went by a route the
+   gate does not see, and the census will read it `missing_from_export`; if it is still in the chat, the census
+   matches it.
 5. A number about the gate's own record (how many it caught, what the ledger says) goes out with a receipt or does
    not go out.
 
