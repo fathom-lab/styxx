@@ -174,6 +174,12 @@ policy that judges it; a flag (or an Action input) wins over the file.
 | `exclude` | none | path prefixes the pairing and the licence scan leave out |
 | `surfaces`, `surfaces_exclude` | the `repo` profile of `scripts/surface_lint.py` | globs of the shipped surfaces |
 
+A repository that ships example plans, test fixtures or vectors holding fences and tags names them in `exclude`: run
+over styxx's own tree, a check reads the conformance tables, the RESULT readers' test fixtures and this example's
+RESULT (whose receipt is written by the run, not committed beside it) unless `conformance/`, `tests/` and
+`examples/prereg-ci-demo/` are excluded. styxx commits no `prereg-ci.toml` yet: what its measurement window counts
+is decided with the window.
+
 ## Files
 
 `styxx/prereg_ci/` (the package: `core` is the pure half and its public names are `rescore`, `compare` and
