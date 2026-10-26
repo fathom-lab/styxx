@@ -133,27 +133,48 @@ function _prefixIsPathShaped(prefix, status) {
 
 function _scopeResolve(prefix, segs, changed) {
   // #175, as the Python's _scope_resolve: one reading of a scope prefix's segments, [the prefix, null], "" for the
-  // repository root, or [null, why]
-  const plain = _rstrip(_norm(prefix), "/.");
+  // repository root, or [null, why]. What main's rstrip("/.") cut off the prefix stays cut, and nothing else is: a name
+  // a later ".." lays bare keeps its dots, as git reads it. Where the resolved reading is not main's, it abstains if
+  // that cut run takes part of a name git reads whole (three or more dots, or more of the last name than one final dot).
+  const whole = _norm(prefix);
+  const plain = _rstrip(whole, "/.");
   const climbs = `prefix ${pyRepr(prefix)} has a '..' segment with no directory before it, so it names a directory outside the one it is read from (#175)`;
   let i = 0;                // a leading run of `..` is the key's to read, as the Python's
   while (i < segs.length - 1 && segs[i] === "..") i++;
   if (segs[segs.length - 1] !== ".." && !segs.slice(i, -1).some(s => s === "." || s === "..")) {
     return [_rstrip(segs.join("/"), "/."), null];
   }
-  const kept = segs.slice(0, i);
-  for (const s of segs.slice(i)) {
-    if (s === ".") continue;
-    if (s === "..") {
-      if (kept.length <= i || !kept[kept.length - 1]) return [null, climbs];
+  const kept = [], at = [];   // each kept segment, and where it starts in the prefix as _norm reads it
+  let o = 0;
+  for (let n = 0; n < segs.length; n++) {
+    const s = segs[n];
+    if (n < i || (s !== "." && s !== "..")) {
+      kept.push(s);
+      at.push(o);
+    } else if (s === "..") {
+      if (kept.length <= i) return [null, climbs];
+      if (!kept[kept.length - 1]) {
+        return [null, `prefix ${pyRepr(prefix)} has a '..' segment after an empty segment, which this template does not resolve (#175)`];
+      }
       kept.pop();
-      continue;
+      at.pop();
     }
-    kept.push(s);
+    o += s.length + 1;
   }
   if (i && kept.length <= i) return [null, climbs];
-  const got = _rstrip(_norm(kept.join("/")), "/.");
-  if (got === plain || !got) return [got, null];
+  const m = at.filter(a => a < plain.length).length;   // the segments main's reading holds; the rest lie in its cut run
+  const names = kept.slice(0, m), cut = kept.slice(m).filter(s => s);
+  if (m && at[m - 1] + names[m - 1].length > plain.length) {   // the name holding main's last character
+    const last = names.pop();
+    if (at[m - 1] + last.length < whole.length || last.slice(plain.length - at[m - 1]) !== ".") cut.unshift(last);
+    names.push(_rstrip(last, "."));
+  }
+  const got = _rstrip(_norm(names.join("/")), "/");
+  if (got === plain) return [got, null];
+  if (cut.length) {
+    return [null, `prefix ${pyRepr(prefix)} ends in a run of dots and slashes that this template cuts as a sentence's period or an ellipsis and git reads as part of the name ${pyRepr(cut[0])} (#175)`];
+  }
+  if (!got) return [got, null];
   if (!got.includes("/") && _isBareFilename(got)) {
     return [null, `prefix ${pyRepr(prefix)} resolves to the file name ${pyRepr(got)} at the repository root, which this template would match in any directory (#175)`];
   }
@@ -945,8 +966,10 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
           else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
           else if (dots !== null) { c.verdict = "UNCHECKABLE"; c.why = dots; }
-          else if (parts) {
-            const two = rawPrefs.find((x, k) => read[k][0].length === 2);
+          else if (parts) {     // a prefix whose two readings part the verdict, the other's held, as the Python's
+            const vs = seen.map(([o, m]) => o.length ? "C" : m.length ? "U" : "V");
+            const rest = (w, k) => JSON.stringify(w.slice(0, k).concat(w.slice(k + 1)));
+            const two = rawPrefs.find((x, k) => ways.some((a, i) => ways.some((b, j) => vs[i] !== vs[j] && rest(a, k) === rest(b, k))));
             c.verdict = "UNCHECKABLE";
             c.why = `prefix ${pyRepr(two)} ends in '..', which reads as the directory before it (its last dot a sentence's period) and as that directory's parent (git's reading), and the claim holds under one and not the other (#175)`;
           }
@@ -1020,8 +1043,8 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
 // data; code that reaches around its argument (an inherited method patched, a function built from a string) is not
 // covered
 // (NOTE_path2a_eleventh_pass_2026_10_05).
-// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 2f79793e46acd3dd4c2e9f2932db881ec4ebfe65846868f2d6fc0956c42793e6, LF). Everything outside this block is
-// main's port (sha256 7ff464f0..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
+// The port's half of the PATH-2a block in styxx/diffgate.py (sha256 9c4a1c2f231b99e9e7b2c4e3828904048b991676363cb3e539200c14492aeb2c, LF). Everything outside this block is
+// main's port (sha256 50cc7dd5..., LF: 1cde8b82's 06688702... with #205's abstention of the `def` counts and of the
 // compatibility reading and its two header patterns read as the Python reads them, and #206's count,
 // fix/diffgate-205-206, d74cc729...; then #179's `async def` read, #178's abstention and the abstention where #205's
 // seams part the two readers or two lines of one section define one test name, one after `async`,
@@ -2110,27 +2133,47 @@ function _p2aShaped(prefix, keys, form) {   // _prefixIsPathShaped
 
 const _P2A_SPACES = [["A", _p2aA, _p2aWA, _p2aStrip], ["K", _p2aK, _p2aWK, _p2aDotted]];
 
-function _p2aSegments(fm, segs, plain, changed) {   // _scopeResolve (#175), in the key space of `fm`
+function _p2aSegments(fm, segs, whole, changed) {   // _scopeResolve (#175), in the key space of `fm`
   // main's key drops a prefix's leading run of "." and "/"; V121's keeps a leading run of ".." segments, read as
   // written, as before #175 (the truth oracle judges no prefix that starts with ".."). The segments after it resolve as
-  // main's do. null where main abstains.
+  // main's do: what main's rstrip cut off `whole` (the prefix in the key's form) stays cut, and nothing else is. null
+  // where main abstains.
+  const plain = _rstrip(whole, "/.");
   const k = segs.length - 1;
   let i = 0;
   while (i < k && segs[i] === "..") i++;
   if (segs[k] !== ".." && !segs.slice(i, k).some(s => s === "." || s === "..")) return _rstrip(segs.join("/"), "/.");
-  const out = segs.slice(0, i);
-  for (const s of segs.slice(i)) {
-    if (s === ".") continue;
-    if (s === "..") {
+  const out = [], at = [];
+  let o = 0, n = 0;
+  for (const s of segs) {
+    if (n < i || (s !== "." && s !== "..")) {
+      out.push(s);
+      at.push(o);
+    } else if (s === "..") {
       if (out.length <= i || !out[out.length - 1]) return null;
       out.pop();
-      continue;
+      at.pop();
     }
-    out.push(s);
+    o += s.length + 1;
+    n++;
   }
   if (i && out.length <= i) return null;
-  const got = _rstrip(fm(out.join("/")), "/.");
-  if (got === plain || !got) return got;
+  const m = at.filter(a => a < plain.length).length;
+  const names = out.slice(0, m);
+  let cut = out.slice(m).some(s => s);
+  if (m) {
+    const start = at.slice(0, m).pop(), last = names.pop();
+    if (start + last.length > plain.length) {
+      if (start + last.length < whole.length || last.slice(plain.length - start) !== ".") cut = true;
+      names.push(_rstrip(last, "."));
+    } else {
+      names.push(last);
+    }
+  }
+  const got = _rstrip(fm(names.join("/")), "/");
+  if (got === plain) return got;
+  if (cut) return null;
+  if (!got) return got;
   if (!got.includes("/") && _p2aExt(got)) return null;
   if (changed.some(p => p.split("/").some(s => s === "." || s === ".."))) return null;
   return got;
@@ -2142,7 +2185,7 @@ function _p2aReadings(prefix, fm, changed) {   // _scopeReadings (#175)
   if (segs[k].length >= 3 && !_stripChars(segs[k], ".")) return null;
   const out = [];
   for (const cut of (segs[k] === ".." && k > 0 ? [segs.slice(0, k), segs] : [segs])) {
-    const got = _p2aSegments(fm, cut, _rstrip(fm(prefix), "/."), changed);
+    const got = _p2aSegments(fm, cut, fm(prefix), changed);
     if (got === null) return null;
     out.push(got);
   }

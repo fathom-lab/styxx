@@ -55,8 +55,8 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # 1097d2fb... were the two): `only_touches` reads a rename's old path (#174) and resolves `.` and `..` prefix segments
 # (#175); the block's model of main's scope reading reads both. So relation (A), the lockstep and bar C run against
 # the new main in both languages, and every figure they pin was measured again on it.
-MAIN_PY_SHA = "a7debd589dfc52f2d88575e394dafcc4855aed57f0983f9dd1773f25871391f1"
-MAIN_JS_SHA = "7ff464f082844981912b8a19fc9de614c99670b788287939dde18e69117b3ebb"
+MAIN_PY_SHA = "e03b9177de1bf7685a3c9500de9791e8f3254d822283c5603320c0a86a6b043b"
+MAIN_JS_SHA = "50cc7dd5a1ed9cad8efc9ffaef9a0d450cd6a83c193586a337f6c00797b62a15"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
 _MARK = "=== PATH-2a abstain-only overlay: "
