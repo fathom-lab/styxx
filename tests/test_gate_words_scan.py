@@ -70,8 +70,8 @@ def _ledger(tmp_path: Path, missing_seq: int = 38):
     lines.append({"kind": "send", "seq": missing_seq, "day": "2026-10-25", "dest_class": "public", "decision": "allow",
                   "reasons": [], "checked_sha256": "ab" * 32, "entry_id": f"{missing_seq:064x}"})
     ledger = gate / "ledger.jsonl"
-    ledger.write_text("".join(json.dumps(x, sort_keys=True, separators=(",", ":")) + "\n" for x in lines),
-                      encoding="utf-8", newline="\n")
+    ledger.write_bytes("".join(json.dumps(x, sort_keys=True, separators=(",", ":")) + "\n" for x in lines)
+                       .encode("utf-8"))
     return ledger, sources
 
 
