@@ -33,9 +33,14 @@ shipped surfaces", so a surface a later pull request adds is refused when it is 
 
 Policies are read from ``prereg-ci.toml`` at the work tree's top as BASE holds it, so a pull request
 does not relax the policy that judges it (a change to the file is printed as ``CONFIG_CHANGED``), and a
-flag wins over the file: ``immutability`` (gates | file), ``amend_after_data`` (report | fail),
-``receipt_rewrite`` (fail | note), ``require_time`` (T1 | T3a), ``preregistered_word`` (note | fail),
-``exclude`` (repository-relative path prefixes C1 and the licence scan leave out), ``surfaces`` and
+flag wins over the file. A pull request that changes the file has HEAD's copy read too, and one that
+does not read is ``CONFIG_INVALID`` (exit 2) on that pull request, before it lands and locks every
+later check; a BASE copy that does not read is exit 2 on every pull request but the one that replaces
+it with a copy that reads (or deletes it), which is judged under the flags and the defaults, as a
+repository with no config is, and prints ``CONFIG_REPAIRED``. The keys: ``immutability`` (gates |
+file), ``amend_after_data`` (report | fail), ``receipt_rewrite`` (fail | note), ``require_time`` (T1 |
+T3a), ``preregistered_word`` (note | fail), ``exclude`` (repository-relative path prefixes C1 and
+the licence scan leave out), ``surfaces`` and
 ``surfaces_exclude`` (the globs of the shipped surfaces; default: surface_lint's ``repo`` profile, PLAN
 K14). PLAN K8: the file is read with ``tomllib`` where the interpreter has it, else with
 ``_toml_subset``, a strict reader of what the format uses (bare keys, strings, booleans, arrays of
@@ -410,11 +415,13 @@ def _config_read(repo: _git._Repo, rev: str) -> Tuple[Dict[str, Any], bool]:
     return obj, True
 
 
-def _policies(repo: _git._Repo, rev: str, args: argparse.Namespace) -> Dict[str, Any]:
-    """The policies in force: a flag, else ``prereg-ci.toml`` at *rev*, else the design's default
-    (DESIGN 9: immutability gates, amend_after_data report, receipt_rewrite fail, require_time T1,
-    preregistered_word note). ``profile`` is the surface profile the licence scan reads."""
-    cfg, present = _config_read(repo, rev)
+def _policies(repo: _git._Repo, rev: str, args: argparse.Namespace,
+              read: Optional[Tuple[Dict[str, Any], bool]] = None) -> Dict[str, Any]:
+    """The policies in force: a flag, else ``prereg-ci.toml`` at *rev* (or *read*, the file as the
+    caller read it), else the design's default (DESIGN 9: immutability gates, amend_after_data report,
+    receipt_rewrite fail, require_time T1, preregistered_word note). ``profile`` is the surface profile
+    the licence scan reads."""
+    cfg, present = _config_read(repo, rev) if read is None else read
     pol: Dict[str, Any] = {"source": {}}
     for key, default in _DEFAULTS.items():
         flag = getattr(args, key, None)
@@ -439,7 +446,7 @@ def _policies(repo: _git._Repo, rev: str, args: argparse.Namespace) -> Dict[str,
         pol["surfaces"] = {"include": include, "exclude": exclude}
     else:
         pol["profile"], pol["surfaces"] = None, None
-    pol["config"] = {"path": _CONFIG, "read_at": repo.commit(rev), "present": present}
+    pol["config"] = {"path": _CONFIG, "read_at": repo.commit(rev), "present": present, "reads": True}
     return pol
 
 
@@ -804,12 +811,38 @@ def _run_check(repo: _git._Repo, base: str, head: str, args: argparse.Namespace)
     b, h = repo.commit(base), repo.commit(head)
     repo._full()
     mb = repo.merge_base(b, h)
-    pol = _policies(repo, b, args)
     config_findings = []
-    if repo.blob_id(mb, _CONFIG) != repo.blob_id(h, _CONFIG):
+    changed = repo.blob_id(mb, _CONFIG) != repo.blob_id(h, _CONFIG)
+    head_reads = True
+    if changed:                                     # the copy that governs once this pull request lands
+        try:
+            _config_read(repo, h)
+        except _Coded as e:
+            if e.code != "CONFIG_INVALID":
+                raise
+            head_reads = False
+            config_findings.append(_report._finding("CONFIG_INVALID", (
+                f"{e.detail}; this pull request writes it, and once it lands every later check, a repair "
+                f"included, reads its policies as an input error"), path=_CONFIG, check="config", pair=None))
+    repaired: Optional[_Coded] = None
+    try:
+        read = _config_read(repo, b)
+    except _Coded as e:
+        if e.code != "CONFIG_INVALID" or not changed or not head_reads:
+            raise
+        read, repaired = ({}, False), e
+    pol = _policies(repo, b, args, read=read)
+    if repaired is not None:
+        pol["config"].update(present=True, reads=False)
+        config_findings.append(_report._finding("CONFIG_REPAIRED", (
+            f"{repaired.detail}; this pull request replaces it with a copy that reads, so it is judged under the "
+            f"flags and the defaults, as a repository with no config is, and its copy governs once it lands"),
+            path=_CONFIG, check="config", pair=None))
+    if changed:
         config_findings.append(_report._finding("CONFIG_CHANGED", (
-            f"{_CONFIG} changes in this pull request; the policies are read at base {b[:12]}, so the change governs "
-            f"once it lands"), path=_CONFIG, check="config", pair=None))
+            f"{_CONFIG} changes in this pull request; the policies are read at base {b[:12]}"
+            + (" (whose copy does not read, so the defaults govern)" if repaired is not None else "")
+            + ", so the change governs once it lands"), path=_CONFIG, check="config", pair=None))
     decisions = _tag(_git._decisions_moved(repo, b, h, pol["immutability"]), "C0")
     man: Dict[str, Any] = {"path": _git._MANIFEST, "present": False, "lines": 0, "findings": []}
     entries = None

@@ -42,6 +42,7 @@ _CHECK_KIND = {
     "LOCKED_FILE_MOVED": "NOTE",                # a locked file's blob at HEAD is not the seal's; the run read the seal's
     "CONFIG_INVALID": "INPUT",                  # prereg-ci.toml holds what its format does not name
     "CONFIG_CHANGED": "NOTE",                   # the pull request changes prereg-ci.toml; the base's governs it
+    "CONFIG_REPAIRED": "NOTE",                  # the base's copy does not read; the pull request replaces it
     "CLOSE_AFTER_UNREAD": "NOTE",               # a sealed close_after the time reader does not read (check prints it)
     # lint (DESIGN 3.7), before data
     "TABLE_NOT_TOTAL": "FAIL", "ROW_UNREACHABLE": "FAIL", "VERDICTS_REPEATED": "FAIL", "GATE_VACUOUS": "FAIL",
@@ -344,7 +345,9 @@ def _check_lines(report: Dict[str, Any]) -> List[str]:
     out.append(_policy_line(report["policies"]))
     cfg = report["policies"].get("config") or {}
     out.append(f"config: {cfg.get('path')} read at base {_short(cfg.get('read_at'), 12)}: "
-               + ("read" if cfg.get("present") else "absent, so the defaults and flags govern"))
+               + ("does not read, and this pull request replaces it, so the defaults and flags govern"
+                  if cfg.get("reads") is False else
+                  "read" if cfg.get("present") else "absent, so the defaults and flags govern"))
     out += _finding_lines(report.get("config_findings", ()))
     moved = [f for f in report["decisions"] if f["code"] == "DECISION_EDITED_AFTER_SEAL"]
     out.append(f"C0 sealed decisions: {len(moved)} moved"

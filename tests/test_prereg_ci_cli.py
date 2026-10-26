@@ -243,6 +243,65 @@ def test_a_config_holding_a_key_or_a_value_the_format_does_not_name_is_an_input_
         assert code == 2 and "CONFIG_INVALID" in out, (bad, out)
 
 
+def test_an_invalid_config_is_refused_where_it_is_written_and_a_broken_base_can_be_repaired(tmp_path, capsys):
+    """The B7 review's F2, its three pull requests: (1) the one that writes a config the format refuses
+    reads it at HEAD and exits 2, so under a required check it does not land; (2) if it lands anyway (a
+    bypass, a direct push), an unrelated pull request still exits 2, since the policies the repository
+    set do not read; (3) the pull request that replaces the broken copy with one that reads is judged
+    under the defaults and flags (as a repository with no config is), prints CONFIG_REPAIRED, and
+    passes, so the repository can merge its own repair."""
+    g, rec = demo(tmp_path)
+    g("switch", "-q", "main")
+    g("merge", "-q", "--no-ff", "-m", "merge result", "result")
+    main0 = g("rev-parse", "HEAD")
+    g("switch", "-q", "-c", "pr1", main0)
+    g.write("prereg-ci.toml", 'surfaces = ["README*.md"]\nreceipt_rewrite = "sometimes"\n')
+    g.commit("tune the policy")
+    code, out = run(g, "check", "--base", main0, "--head", "pr1", capsys=capsys)
+    assert code == 2, out
+    assert f"INPUT CONFIG_INVALID  prereg-ci.toml at {g('rev-parse', 'pr1')[:12]}: receipt_rewrite" in out, out
+    assert "NOTE CONFIG_CHANGED" in out and out.rstrip().endswith("INPUT_ERROR  exit 2: CONFIG_INVALID")
+    g("switch", "-q", "main")
+    g("merge", "-q", "--no-ff", "-m", "merge pr1 past its check", "pr1")
+    main1 = g("rev-parse", "HEAD")
+    g("switch", "-q", "-c", "pr2", main1)
+    g.write("notes.md", "a note\n")
+    g.commit("a note")
+    code, out = run(g, "check", "--base", main1, "--head", "pr2", capsys=capsys)
+    assert code == 2 and f"INPUT CONFIG_INVALID  prereg-ci.toml at {main1[:12]}" in out, out
+    for name, text in (("pr3", 'surfaces = ["README*.md"]\n'), ("pr3_rm", None)):
+        g("switch", "-q", "-c", name, main1)
+        if text is None:
+            g("rm", "-q", "prereg-ci.toml")
+        else:
+            g.write("prereg-ci.toml", text)
+        g.commit("repair the config")
+        code, out = run(g, "check", "--base", main1, "--head", name, capsys=capsys)
+        assert code == 0, (name, out)
+        assert "NOTE CONFIG_REPAIRED" in out and "does not read, and this pull request replaces it" in out, out
+        assert "receipt_rewrite fail (default)" in out and "(whose copy does not read, so the defaults govern)" in out
+    g("switch", "-q", "-c", "pr4", main1)
+    g.write("prereg-ci.toml", 'receipt_rewrite = "never"\n')
+    g.commit("a repair that does not read either")
+    code, out = run(g, "check", "--base", main1, "--head", "pr4", capsys=capsys)
+    assert code == 2 and f"prereg-ci.toml at {main1[:12]}" in out and "CONFIG_REPAIRED" not in out, out
+
+
+def test_a_repair_of_a_broken_base_config_is_still_judged_by_the_defaults(tmp_path, capsys):
+    """The repair path does not let a pull request choose its policies: one that writes a valid config
+    relaxing receipt_rewrite and rewrites a committed receipt in the same commit is refused under the
+    default (fail), not under the copy it writes."""
+    g, rec = demo(tmp_path, config='receipt_rewrite = "sometimes"\n')
+    g("switch", "-q", "main")
+    g("merge", "-q", "--no-ff", "-m", "merge result", "result")
+    g("switch", "-q", "-c", "relax")
+    g.write("prereg-ci.toml", 'surfaces = ["README*.md"]\nreceipt_rewrite = "note"\n')
+    g.write("receipt.json", json.dumps(scored({"acc": 0.95, "ece": 0.04})) + "\n")
+    g.commit("repair, relax and rewrite")
+    code, out = run(g, "check", "--base", "main", "--head", "relax", capsys=capsys)
+    assert code == 1 and "FAIL RECEIPT_REWRITTEN" in out and "NOTE CONFIG_REPAIRED" in out, out
+
+
 CONFIGS = [
     "",
     "# nothing but a comment\n",
