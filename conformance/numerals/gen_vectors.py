@@ -306,12 +306,18 @@ def main(argv=None) -> int:
     bad = replay(doc)
     if bad:
         raise SystemExit(f"REFUSED: the generated set does not replay: {bad[:3]}")
-    text = json.dumps(doc, indent=1, ensure_ascii=False) + "\n"
+    data = (json.dumps(doc, indent=1, ensure_ascii=False) + "\n").encode("utf-8")
     committed = {q.resolve() for q in committed_sets()}
-    if a.out.resolve() in committed and a.out.read_text(encoding="utf-8") != text:
-        raise SystemExit(f"REFUSED: {a.out.name} is a committed set and these bytes differ from it (a receipt is "
-                         "history too): a reader that reads differently writes a new file")
-    a.out.write_text(text, encoding="utf-8")
+    if a.out.resolve() in committed:
+        # a committed set is never rewritten, not even to the same content in other line endings: the two
+        # sets of 2026-10-25 were written in text mode on Windows and are stored with CRLF (conformance/**
+        # is -text), and they stay so
+        if a.out.read_bytes().replace(b"\r\n", b"\n") != data:
+            raise SystemExit(f"REFUSED: {a.out.name} is a committed set and these bytes differ from it (a receipt "
+                             "is history too): a reader that reads differently writes a new file")
+        print("unchanged:", a.out.name, "is a committed set and it reproduces; nothing written")
+        return 0
+    a.out.write_bytes(data)          # LF on every platform; conformance/** is -text, so these are the bytes git keeps
     print("wrote", a.out, {k: v["n"] for k, v in doc["families"].items()}, "set_sha256", doc["set_sha256"][:16])
     return 0
 
