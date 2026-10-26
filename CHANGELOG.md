@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — prereg-ci v0: a sealed decision, the verdict it gives and the sentences that rest on it, re-derived at merge; the Action is report-only by default, and no workflow runs it yet
+
+**`styxx/prereg_ci/` (`core`, `git`, `scorer_run`, `time`, `report`, `cli`), `prereg-ci/action.yml`,
+`prereg-ci/README.md`, `prereg-ci/CREDITS.md`, `prereg-ci/KNOWN_MISSES.md`, `conformance/prereg_ci/`,
+`examples/prereg-ci-demo/`, `tests/test_prereg_ci_*.py`; `scripts/surface_lint.py`'s `repo` profile.** A PREREG
+seals one machine-readable decision (a ```gates table, or a ```locks block naming a scorer and every file it
+reads), and its outcome rows may name the sentences each row withdraws. `python -m styxx.prereg_ci check --base
+BASE --head HEAD` re-derives the verdict of every receipt a pull request writes, or a RESULT it changes names, from
+the PREREG's sealed bytes, and prints the seal, the time ladder, the outcome ladder with margins, the single-gate
+flip table and what it did not examine.
+
+- **What it refuses** that a byte comparison of the plan does not: a RESULT that prints a rung the receipt did not
+  land on, and a receipt whose recorded verdict is not the sealed table's reading (`VERDICT_DIFFERS`); a receipt
+  scored under a decision digest no seal holds (`DECISION_DIGEST_UNSEALED`); a shipped surface that still prints a
+  sentence the landed row withdraws (`LICENCE_WITHDRAWN`). Beside them: a committed receipt rewritten in place
+  (`RECEIPT_REWRITTEN`), and a sealed decision edited (`DECISION_EDITED_AFTER_SEAL`, the refusal path protection,
+  honest-signal and reproducible-science already give, said so where it prints).
+- **The verbs**: `lint` (before data: grammar, totality by cube splitting, vacuity, each licence pattern's
+  coverage), `seal` (a `prereg-ci.seals.jsonl` line; amendments carry what had been seen), `check`, `ladder`,
+  `census`, and `stamp`, the one command that opens a connection, which refuses without `--go`.
+- **Time.** Every FAIL is a function of git objects at named commits. T1 `AUTHOR_ORDER` is printed as order, not
+  time; the forge's merge times are not read; an RFC 3161 token committed beside a sealed file is verified offline
+  with `openssl ts -verify` and can decide under `require_time = "T3a"`; an OpenTimestamps proof is parsed and
+  printed.
+- **The Action** (`prereg-ci/action.yml`, outside `.github/`) is report-only by default: it writes the verdict, the
+  JSON report and the job summary, and exits 0 until a caller sets `report-only: "false"`. No workflow in this
+  repository runs it; pushing one is the operator's.
+- **What it lets through** is listed in `prereg-ci/KNOWN_MISSES.md`, from a mutation battery written by a reader
+  who wrote none of the code: a locked scorer that reads the clock, the entropy pool or the environment is not
+  refused, and every locks reading prints that boundary.
+- **The five-minute example** (`examples/prereg-ci-demo/`): a logistic regression on scikit-learn's bundled digits
+  set, a three-row table whose `HOLD__calibration` row withdraws a README sentence, and the refusals above on
+  branches of a `git init` repository, run by `tests/test_prereg_ci_example.py`.
+- **Credit** (`prereg-ci/CREDITS.md`): reproducible-science (Tower, 2026), Panossian (2026), honest-signal,
+  preregister and scienceverse, each with what it does and what prereg-ci adopts; their behaviour on the four
+  mutations is untested and owed, with the result shown to their authors before any comparing sentence.
+- **Not changed**: no byte of `styxx/protocol.py` or `styxx/research_capsule.py`; no committed receipt, capsule,
+  certificate, SEALS row or conformance vector; nothing under `.github/`. `scripts/surface_lint.py` now reads
+  `prereg-ci/**` and `examples/prereg-ci-demo/**` as shipped surfaces.
+
 ## [Unreleased] — PREREG: darkflobi under the gate: the rule the measurement is counted under and the 28-day preregistration, frozen before any exit is wired
 
 **`papers/darkflobi-gate/PREREG_darkflobi_gate_2026_10_23.md`, `RULES_darkflobi_gate_2026_10_23.md`, `README.md`,
