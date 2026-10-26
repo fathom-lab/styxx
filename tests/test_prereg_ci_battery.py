@@ -460,3 +460,23 @@ def test_boundary_a_locked_scorer_whose_verdict_reads_the_clock_passes_and_the_b
     code, out = run(g, "check", "--base", "main", "--head", "run", capsys=capsys)
     assert code == 0, out
     assert "the locked scorer's clock, entropy and environment: not watched" in out, out
+
+
+# ---- the list the README prints ----------------------------------------------------------------------------
+
+KNOWN = ROOT / "prereg-ci" / "KNOWN_MISSES.md"
+
+
+def test_the_known_misses_list_names_what_v0_does_not_refuse_and_the_case_that_pins_it():
+    from tests.test_prereg_ci_package import HOUSE_RX, PRIORITY_RX
+    raw = KNOWN.read_bytes()
+    assert not raw.startswith(b"\xef\xbb\xbf")
+    text = raw.decode("utf-8")
+    assert not HOUSE_RX.search(text) and not PRIORITY_RX.search(text)
+    for word in ("M5", "FENCE_SHADOWED", "RECEIPT_NOT_JSON", "SCORER_NOT_RUN", "pull_request_target"):
+        assert word in text, word
+    for case in ("O03", "O11", "O32r", "O32", "O31", "O30z", "O30s", "O30n", "O50b", "O39", "O39e",
+                 "O29", "O30", "O34", "O47", "O53", "O33n", "B06i"):
+        assert case in text, case
+    pinned = "test_boundary_a_locked_scorer_whose_verdict_reads_the_clock_passes_and_the_boundary_says_so"
+    assert pinned in text and pinned in globals()

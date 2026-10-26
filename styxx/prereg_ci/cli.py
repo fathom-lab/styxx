@@ -16,7 +16,8 @@ input error or an unchecked reading, the refusal decides the code (1) and the re
 A ``--json`` or ``--summary`` path that does not write is an input error (2, or 1 when the reading
 refused something). An exception none of these readings names is no verdict: it prints ``ERROR`` and
 the exception, and exits 4 (the Action's ERROR), never 1, the code Python gives an uncaught one, which
-would read as FAIL.
+would read as FAIL. Every line printed goes through ``report._printable``, so text a receipt, a RESULT
+or a path carries stays on its line and opens none with a workflow command (the B8 fresh review, F2).
 ``seal`` and ``stamp`` decide nothing, so every refusal of either that is not UNCHECKABLE is an input
 error. Step B2 built ``seal``, step B6 ``stamp``; step B7 adds the rest and the report
 (``styxx.prereg_ci.report``). The verbs are this module's, run as ``python -m styxx.prereg_ci``, as
@@ -31,7 +32,9 @@ PLAN K11): the seal (the manifest line, else the landing rule, C2), the order co
 commit that added the receipt (C3, ``SEAL_NOT_BEFORE_RECEIPT``), the time ladder (3.5, with the trust
 store read at BASE so a branch cannot pin the certificate that verifies its own token), the decision in
 effect (C4), the re-score from the sealed bytes (C5: the gates table, or the locked scorer run at its
-sealed blobs), the comparison with what the receipt records and every RESULT declares (C6), the
+sealed blobs, which runs only where BASE's history holds them: ``SCORER_NOT_RUN`` otherwise), a gates-like
+fence a renderer shows and the scanner does not count (``FENCE_SHADOWED``), the comparison with what
+the receipt records and every RESULT declares (C6), the
 outcome ladder and the single-gate flip table (C7), the licences of the landed row (C8), and what was
 not examined (C9). Beside the pairs: sealed decisions moved (C0), receipts rewritten, the manifest's
 own rules, and the licences of every receipt already in HEAD's tree (C8: "every later check scans the
