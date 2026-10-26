@@ -441,3 +441,22 @@ def test_the_action_stops_workflow_commands_around_the_check_and_resumes_after(t
                           script.index('echo "::$token::"'))
     assert stop < call < resume, script
     assert "/dev/urandom" in script and '-ne 32' in script
+
+
+# ---- M5 (named, not refused in v0): what the locked scorer run does not watch -----------------------------------
+
+def test_boundary_a_locked_scorer_whose_verdict_reads_the_clock_passes_and_the_boundary_says_so(tmp_path, capsys):
+    """B10c pinned as the boundary, not the contract (KNOWN_MISSES.md, M5): a scorer that types SHIP after a
+    date is not refused in v0; the printout names the clock beside the PASS."""
+    g = Git(tmp_path / "clock")
+    g.write("README_demo.md", README_PLAIN)
+    g.write("prereg-ci.toml", CFG)
+    g.write("PREREG_locks.md", locks_prereg())
+    g.write("score.py", LOCK_SCORER.format(pre="import time\nr['ece'] = 0.0 if time.time() > 1.7e9 else r['ece']\n"))
+    g.commit("seal")
+    g("switch", "-q", "-c", "run")
+    g.write("receipt.json", json.dumps({"prereg": "PREREG_locks.md", **HOLD, "verdict": "SHIP"}, indent=1) + "\n")
+    g.commit("result")
+    code, out = run(g, "check", "--base", "main", "--head", "run", capsys=capsys)
+    assert code == 0, out
+    assert "the locked scorer's clock, entropy and environment: not watched" in out, out

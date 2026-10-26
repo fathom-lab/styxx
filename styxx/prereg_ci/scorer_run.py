@@ -47,7 +47,12 @@ it alone. A scorer written against it can reach the bootstrap's globals through 
 ``gc`` and widen the read set or replace the judge; pop the finder and put it back before returning;
 run a compiled string whose filename or ``__file__`` names a file outside the run; load native code
 it already holds; call ``stat``. None of that is refused or recorded in v0, and the interpreter is
-not locked (it is printed as the runtime's three fields). This is not a sandbox (DESIGN 7, risk 5);
+not locked (it is printed as the runtime's three fields). The clock (``time``, ``datetime``), the
+entropy pool (``os.urandom``, ``random``'s seed) and the environment the run passes are not watched at
+all: a reading of the clock raises no audit event, and a hook patched over ``time.time`` would see
+neither a C-level clock read nor a read through the standard library, so a scorer whose verdict reads
+one of them is not refused, and every locks reading prints so (the B8 battery, M5;
+``prereg-ci/KNOWN_MISSES.md``). This is not a sandbox (DESIGN 7, risk 5);
 the OS-level sandbox is v1 (DESIGN 3.8). On Linux the network is removed with ``unshare -rn`` only
 where the runner permits it; elsewhere the run prints ``not isolated``.
 ``tests/test_prereg_ci_scorer_run.py`` pins the frame walk, the restored finder and the forged
@@ -84,7 +89,9 @@ _WATCHED = ("the run refuses and records, through an audit hook and a last impor
             "and at the close, an import system no longer as the bootstrap set it. The watch is Python in the "
             "scorer's own process and holds for a scorer that leaves it alone: a scorer may reach it through "
             "sys._getframe or gc, restore a finder it moved, run a compiled string naming a file outside the "
-            "run, load native code it holds or call stat, and none of that is recorded. It is not a sandbox "
+            "run, load native code it holds or call stat, and none of that is recorded. The clock, the entropy "
+            "pool and the environment the run passes are not watched, so a verdict that reads one of them is "
+            "not refused. It is not a sandbox "
             "(DESIGN 7, risk 5); the OS-level sandbox is v1 (DESIGN 3.8)")
 
 # The bootstrap the child runs under -I -S -B -X utf8. argv[1] is a JSON config file outside the run

@@ -603,6 +603,9 @@ def _boundary(form: Optional[str], rung: Optional[str], smoke: bool, network: Op
                      "not read")
     if network and network != "isolated":
         items.append(f"the locked scorer's network: {network}")
+    if form == "locks":
+        items.append("the locked scorer's clock, entropy and environment: not watched, so a verdict that reads the "
+                     "time, os.urandom or an environment variable is not refused (prereg-ci/KNOWN_MISSES.md)")
     return items
 
 
