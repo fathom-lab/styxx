@@ -179,7 +179,7 @@ def run_step(action, repo: Path, tmp: Path, **inputs):
     env.update(GITHUB_OUTPUT=str(tmp / "out.txt"), GITHUB_STEP_SUMMARY=str(tmp / "summary.md"),
                PYTHONDONTWRITEBYTECODE="1", PREREG_CI_TEST_PYTHON=python.as_posix())
     script = 'python() { "$PREREG_CI_TEST_PYTHON" -B "$@"; }\n' + step["run"]
-    (tmp / "step.sh").write_text(script, encoding="utf-8", newline="\n")
+    (tmp / "step.sh").write_bytes(script.encode("utf-8"))
     r = subprocess.run([bash, str(tmp / "step.sh")], cwd=str(repo), env=env, capture_output=True)
     outputs = {}
     if (tmp / "out.txt").exists():

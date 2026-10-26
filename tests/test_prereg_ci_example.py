@@ -153,8 +153,8 @@ def flow(tmp_path_factory):
     readme = g.root / "README_demo.md"
     text = readme.read_text(encoding="utf-8")
     assert text.count(SENTENCE) == 1
-    readme.write_text(text.replace(SENTENCE, f'Withdrawn: "{SENTENCE}" The amended table\'s HOLD__calibration row '
-                                             f"withdraws it (receipt_amended.json)."), encoding="utf-8", newline="\n")
+    readme.write_bytes(text.replace(SENTENCE, f'Withdrawn: "{SENTENCE}" The amended table\'s HOLD__calibration row '
+                                              f"withdraws it (receipt_amended.json).").encode("utf-8"))
     g.commit("re-run under the amendment, and withdraw the sentence it withdraws")
     g("switch", "-q", "main")
     return g, landed, run
