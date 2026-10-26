@@ -155,6 +155,28 @@ def _write(path: str, data: bytes, append: bool = False) -> None:
         raise OSError(f"{path} did not read back as written")
 
 
+# a character that would end a line of the job log, or that a terminal reads as a command: C0 controls but the
+# tab, DEL, C1 controls (NEL among them) and the two Unicode separators
+_UNPRINTED = re.compile("[\x00-\x08\x0a-\x1f\x7f-\x9f\u2028\u2029]")
+_ESCAPE = {"\n": "\\n", "\r": "\\r"}
+
+
+def _printable(line: Any) -> str:
+    """*line* as one line of the printout: each character that would end a line or command a terminal is
+    printed as its escape (``\\n``, ``\\r``, ``\\xNN``, ``\\uNNNN``), so text a receipt, a RESULT or a
+    path carries (a verdict string, a file name, a refusal's detail) stays inside the line it is printed
+    on; and a line that would open with ``::`` once its leading space is read past, or that holds ``##[``,
+    has that colon or bracket printed as its escape, since a runner reads either as a workflow command
+    (``::error::``, ``::add-mask::``, ``::stop-commands::``) wherever a line of the log begins with it (the
+    B8 fresh review, F2). The markdown summary escapes the same text for markdown (``_md``)."""
+    text = _UNPRINTED.sub(lambda m: _ESCAPE.get(m.group(), f"\\x{ord(m.group()):02x}" if ord(m.group()) < 0x100
+                                                else f"\\u{ord(m.group()):04x}"), str(line))
+    lead = len(text) - len(text.lstrip())
+    if text.startswith("::", lead):
+        text = text[:lead] + "\\x3a" + text[lead + 1:]
+    return text.replace("##[", "##\\x5b")
+
+
 def _num(x: Any) -> str:
     """A value as the printout shows it: four decimal places at most, ints as ints, JSON's words for
     true, false and null."""

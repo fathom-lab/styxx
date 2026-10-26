@@ -914,7 +914,7 @@ def _emit(report: Dict[str, Any], lines: Sequence[str], args: argparse.Namespace
     """Print the reading, then write the JSON report and append the summary; a path that does not
     write is an input error after the reading (exit 2, or 1 when the reading refused something)."""
     for ln in lines:
-        print(ln)
+        print(_report._printable(ln))
     writes = (("json", lambda path: _report._write(path, _report._dumps(report))),
               ("summary", lambda path: _report._write(
                   path, _report._markdown(_report._jsonable(report)).encode("utf-8"), append=True)))
@@ -925,7 +925,7 @@ def _emit(report: Dict[str, Any], lines: Sequence[str], args: argparse.Namespace
         try:
             write(path)
         except OSError as e:
-            print(f"REFUSED --{flag} {path} does not write: {e.strerror or e}")
+            print(_report._printable(f"REFUSED --{flag} {path} does not write: {e.strerror or e}"))
             return 1 if report["exit"] == 1 else 2
     return report["exit"]
 
@@ -1349,18 +1349,20 @@ def main(argv: Optional[List[str]] = None) -> int:
     try:
         return args.run(args)
     except _Input as e:
-        print(f"REFUSED {e}")
+        print(_report._printable(f"REFUSED {e}"))
         return 2
     except _Coded as e:
-        print(f"{e.kind} {e.code}  {e.detail}")
+        print(_report._printable(f"{e.kind} {e.code}  {e.detail}"))
         return 2 if e.kind == "INPUT" else 3 if e.kind == "UNCHECKABLE" else 1
     except _git._Refusal as e:
-        print(f"REFUSED {e.code}: {e.detail}")
+        print(_report._printable(f"REFUSED {e.code}: {e.detail}"))
         return 3 if e.kind == "UNCHECKABLE" else 2
     except Exception as e:                            # noqa: BLE001 - a crash is no verdict, so never exit 1
         import traceback
-        traceback.print_exc()
-        print(f"ERROR  {type(e).__name__}: {e} (an internal error: no verdict was read, exit {_CRASH})")
+        for ln in traceback.format_exc().splitlines():  # the traceback's own lines, each made printable
+            print(_report._printable(ln), file=sys.stderr)
+        print(_report._printable(f"ERROR  {type(e).__name__}: {e} (an internal error: no verdict was read, "
+                                 f"exit {_CRASH})"))
         return _CRASH
 
 

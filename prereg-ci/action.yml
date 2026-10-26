@@ -26,7 +26,8 @@ description: >-
   holds: a locks PREREG, or a locked file, that the pull request brings reads SCORER_NOT_RUN (exit 3)
   until it lands. The checkout keeps the job's token in .git/config for the partial clone's fetches,
   and a landed scorer runs beside it: run this action on pull_request, never under
-  pull_request_target, and with no secret in the job.
+  pull_request_target, and with no secret in the job. Workflow commands are stopped while the check
+  prints, so a receipt's bytes cannot write an annotation into the log.
   Policies come from prereg-ci.toml as the base commit holds it, and an input here wins over the file.
 author: "Fathom Lab"
 branding:
@@ -161,9 +162,15 @@ runs:
           if [ -n "$prefix" ]; then args+=(--exclude "$prefix"); fi
         done <<< "$PREREG_CI_EXCLUDE"
         code=0
+        # the printout carries text a receipt or a RESULT wrote: the runner reads no workflow command
+        # (::error::, ::add-mask::) from it until the token, which the pull request cannot know, resumes them
+        token="$(od -An -N16 -tx1 /dev/urandom | tr -d ' \n\r')"
+        if [ "${#token}" -ne 32 ]; then echo "prereg-ci: no token to stop workflow commands with"; exit 4; fi
+        echo "::stop-commands::$token"
         # -I keeps the pull request's tree off sys.path, so the installed checker judges it; -X utf8
         # fixes the printout's encoding, which -I no longer takes from PYTHONIOENCODING
         python -I -X utf8 -m styxx.prereg_ci "${args[@]}" || code=$?
+        echo "::$token::"
         case "$code" in
           0) verdict=PASS ;;
           1) verdict=FAIL ;;

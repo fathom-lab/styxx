@@ -394,3 +394,50 @@ def test_the_action_says_a_locked_scorer_runs_as_code_and_where_the_action_must_
     desc = yaml.safe_load((ROOT / "prereg-ci" / "action.yml").read_text(encoding="utf-8"))["description"]
     for words in ("runs as code", "not a sandbox", "SCORER_NOT_RUN", "pull_request_target", "no secret"):
         assert words in desc, words
+
+
+# ---- F2: author bytes cannot open a line of the printout with a workflow command ---------------------------------
+
+def test_a_receipt_verdict_carrying_a_newline_and_a_workflow_command_stays_on_its_line(tmp_path, capsys):
+    """The fresh review's P1: a receipt verdict "SHIP\\n::error title=prereg-ci::...PASS" printed two lines
+    that opened with ::error, which a runner reads as annotations."""
+    g = sealed(tmp_path, "inj", prereg())
+    g("switch", "-q", "-c", "run")
+    rec = {**scored(HOLD), "verdict": "SHIP\n::error title=prereg-ci::every receipt re-derived, PASS"}
+    g.write("receipt.json", json.dumps(rec, indent=1) + "\n")
+    g.write("RESULT_digits.md", result_md("SHIP\r\n::notice::PASS"))
+    g.commit("run")
+    code, out = run(g, "check", "--base", "main", "--head", "run", capsys=capsys)
+    assert code == 1, out
+    for ln in out.splitlines():
+        assert not ln.lstrip().startswith("::"), ln
+    assert "SHIP\\n::error title=prereg-ci" in out, out
+
+
+@pytest.mark.parametrize("raw, shown", [
+    ("plain words", "plain words"),
+    ("a\ttab stays", "a\ttab stays"),
+    ("one\ntwo", "one\\ntwo"),
+    ("one\r\ntwo", "one\\r\\ntwo"),
+    ("  ::warning::x", "  \\x3a:warning::x"),
+    ("::add-mask::y", "\\x3a:add-mask::y"),
+    ("text ::notice::z", "text ::notice::z"),
+    ("a ##[error]b", "a ##\\x5berror]b"),
+    ("nel\x85line sep\x1b[0m", "nel\\x85line\\u2028sep\\x1b[0m"),
+])
+def test_every_printed_line_is_one_line_with_no_command_at_its_head(raw, shown):
+    from styxx.prereg_ci import report
+    got = report._printable(raw)
+    assert got == shown
+    assert len(got.splitlines()) == 1 and not got.lstrip().startswith("::")
+
+
+def test_the_action_stops_workflow_commands_around_the_check_and_resumes_after(tmp_path):
+    import yaml
+    action = yaml.safe_load((ROOT / "prereg-ci" / "action.yml").read_text(encoding="utf-8"))
+    (step,) = [s for s in action["runs"]["steps"] if s.get("id") == "check"]
+    script = step["run"]
+    stop, call, resume = (script.index('echo "::stop-commands::$token"'), script.index("python -I -X utf8 -m styxx.prereg_ci"),
+                          script.index('echo "::$token::"'))
+    assert stop < call < resume, script
+    assert "/dev/urandom" in script and '-ne 32' in script
