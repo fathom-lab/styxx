@@ -270,3 +270,12 @@ def test_a_three_decimal_euro_price_is_a_counted_dotted_group(tmp_path):
     c = cert(tmp_path, "Super E10 costs €1.789 per litre", {"fuel": {"e10_eur": "1.789"}})
     assert rows(c) == []
     assert [(u["token"], u["reason"], u["counted"]) for u in c["uncovered_items"]] == [("1.789", "dotted-groups", True)]
+
+
+def test_the_note_names_the_magnitude_exception_only_when_magnitudes_are_read(tmp_path):
+    """RULE_final 0.1: a certificate never says its reader read a form it did not read."""
+    note = cert(tmp_path, "BTC $67.4k", {})["uncovered_policy"]["note"]
+    assert "BTC $99.9k. reads 99.9k" in note and "SL 66,200. reads 66" in note
+    with flags(V15_MAGNITUDE=False):
+        note = cert(tmp_path, "BTC $67.4k", {}, "e")["uncovered_policy"]["note"]
+        assert "99.9k. reads" not in note and "SL 66,200. reads 66" in note

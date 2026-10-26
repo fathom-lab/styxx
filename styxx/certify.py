@@ -836,8 +836,9 @@ def _v15_policy(n_excluded: int) -> dict:
     if not V15_SENTENCE_FINAL:
         note += (" A numeral before a sentence period is still listed here as trailing-period "
                  "(V15_SENTENCE_FINAL is off), except a thousands-grouped one, which reads its leading group "
-                 "as a value beside a partial-extraction item (SL 66,200. reads 66), and a magnitude, whose "
-                 "suffix ends it (BTC $99.9k. reads 99.9k).")
+                 "as a value beside a partial-extraction item (SL 66,200. reads 66)"
+                 + (", and a magnitude, whose suffix ends it (BTC $99.9k. reads 99.9k)" if V15_MAGNITUDE else "")
+                 + ".")
     if not V15_ACCOUNTING_SIGN:
         note += (" $x in parentheses and `- $x` read as the positive amount, as before v2, so an "
                  "accounting-format loss binds a positive leaf (V15_ACCOUNTING_SIGN is off).")
