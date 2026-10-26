@@ -20,6 +20,13 @@ a last segment of three or more dots, a `..` that climbs, the root, a file name 
 path that holds a dot segment abstain. No CONTRADICTED is added either: a resolved prefix holds every path the text
 prefix held unless a changed path holds a dot segment, and then the claim abstains.
 
+The resolution cuts from a prefix only what main's `rstrip("/.")` cut (its trailing run of dots and slashes). A name a
+later `..` lays bare keeps its dots, as git reads it: `a/b./c/../.` reads `a/b.`, not its sibling `a/b`, which held
+neither `a/b./c/x.py` (a new, false CONTRADICTED) nor kept out `a/b/y.py` (a new, false VERIFIED). So every reading of
+a prefix with no inner dot segment is main's reading or a directory above it. Where the resolved reading is not main's
+and that cut run takes part of a name git reads whole (`...`, or the dots of the name written last beyond one final
+period), the claim abstains.
+
 The PATH-2a overlay's model of main's scope reading (`_p2a_scope` / `_p2aScope`) reads both, in its key spaces A and K,
 so `unreproduced` does not fire on the repaired verdicts and #121's withholding still reads.
 """
@@ -250,6 +257,8 @@ def test_174_the_overlay_reads_the_old_path_in_both_key_spaces(tmp_path):
 
 DOCS = _edit("docs/guide/a.md")
 SRC = _edit("src/x.py", "x = 1", "x = 2")
+DOTNAME = _edit("a/b./c/x.py")      # a directory whose name ends in a dot, which git writes and reads as it is
+SIBLING = _edit("a/b/y.py")
 C175 = [
     # the reporter's three
     (_scope("175-a", "src/../docs/.", DOCS), "VERIFIED", "all changed paths under prefix"),
@@ -280,6 +289,39 @@ C175 = [
     (_scope("175-dot-key", "docs/./guide/.", _edit("docs/./guide/a.md")), "UNCHECKABLE",
      "prefix 'docs/./guide/.' and the changed path 'docs/./guide/a.md' each hold a '.' or '..' segment; git writes no "
      "such path, and the two are not compared (#175)"),
+    # a name a `..` lays bare keeps its dots, as git reads it (the review of this batch, F1)
+    (_scope("175-dotname-pop", "a/b./c/../.", DOTNAME), "VERIFIED", "all changed paths under prefix"),
+    (_scope("175-dotname-pop-tick", "`a/b./c/../`", DOTNAME), "VERIFIED", "all changed paths under prefix"),
+    (_scope("175-dotname-two-pops", "a/b./c/d/../../.", _edit("a/b./c/d/x.py")), "VERIFIED",
+     "all changed paths under prefix"),
+    (_scope("175-dotname-two-dots", "a/v1../c/../.", _edit("a/v1../c/x.py")), "VERIFIED", "all changed paths under prefix"),
+    (_scope("175-dotname-second-prefix", "src/ and a/b./c/../.", DOTNAME), "VERIFIED", "all changed paths under prefix"),
+    (_scope("175-dotname-last-dotdot", "a/b./c/..", DOTNAME), "VERIFIED", "all changed paths under prefix"),
+    (_scope("175-dotname-sibling", "a/b./c/../.", SIBLING), "CONTRADICTED", "paths outside 'a/b.': ['a/b/y.py']"),
+    (_scope("175-dotname-sibling-v1", "releases/v1./notes/../.", _edit("releases/v1/x.md")), "CONTRADICTED",
+     "paths outside 'releases/v1.': ['releases/v1/x.md']"),
+    # main's cut run holds the dots of the name written last: main's reading, `b`, is kept
+    (_scope("175-dotname-in-the-cut-run", "`b./.../../`", _edit("b/src/x.py")), "VERIFIED",
+     "all changed paths under prefix"),
+    # the resolved reading would rest on a cut git does not make
+    (_scope("175-cut-run-name", "`docs/../a/.../`", _edit("a/x.py")), "UNCHECKABLE",
+     "prefix 'docs/../a/.../' ends in a run of dots and slashes that this template cuts as a sentence's period or an "
+     "ellipsis and git reads as part of the name '...' (#175)"),
+    (_scope("175-cut-run-last-name", "src/../b./.", _edit("b/x.py")), "UNCHECKABLE",
+     "prefix 'src/../b./.' ends in a run of dots and slashes that this template cuts as a sentence's period or an "
+     "ellipsis and git reads as part of the name 'b.' (#175)"),
+    (_scope("175-cut-run-two-dots", "src/../b..", _edit("b/x.py")), "UNCHECKABLE",
+     "prefix 'src/../b..' ends in a run of dots and slashes that this template cuts as a sentence's period or an "
+     "ellipsis and git reads as part of the name 'b..' (#175)"),
+    # one final dot is a sentence's period, as main reads it
+    (_scope("175-one-final-dot", "src/../b.", _edit("b/x.py")), "VERIFIED", "all changed paths under prefix"),
+    # the reasons say what was read (M1, M2 of the review)
+    (_scope("175-empty-segment-pop", "docs//../src/.", SRC), "UNCHECKABLE",
+     "prefix 'docs//../src/.' has a '..' segment after an empty segment, which this template does not resolve (#175)"),
+    (_scope("175-two-prefixes-the-second-parts", "`a/b/..` and `src/..` here.", _edit("a/b/x.py") + _edit("lib/y.py")),
+     "UNCHECKABLE",
+     "prefix 'src/..' ends in '..', which reads as the directory before it (its last dot a sentence's period) and as "
+     "that directory's parent (git's reading), and the claim holds under one and not the other (#175)"),
     # controls: main's reading, byte for byte
     (_scope("175-literal-dots", "src/.../tests/.", SRC), "CONTRADICTED", "paths outside 'src/.../tests': ['src/x.py']"),
     (_scope("175-leading-run", "../docs/.", SRC), "CONTRADICTED", "paths outside 'docs': ['src/x.py']"),
@@ -315,19 +357,91 @@ def test_175_git_reads_each_prefix_as_the_gate_does(tmp_path):
         assert got[0][1] == verdict, (prefix, got)
 
 
+def _plumbed(tmp, name: str, trees: list) -> tuple:
+    """A repository built with git plumbing (hash-object, mktree, commit-tree; no checkout, so a name a Windows file
+    system refuses, `b.`, is written as git stores it): one commit per {path: content} tree, each the next one's
+    parent. Returns the repository and the commits."""
+    repo = tmp / name
+    repo.mkdir()
+    _git(repo, "init", "-q")
+
+    def put(d) -> str:
+        rows = []
+        for k, v in sorted(d.items()):
+            sha = put(v) if isinstance(v, dict) else subprocess.run(
+                [GIT, "hash-object", "-w", "--stdin"], cwd=repo, input=v.encode("utf-8"), capture_output=True,
+                check=True).stdout.decode().strip()
+            rows.append(f"{'040000 tree' if isinstance(v, dict) else '100644 blob'} {sha}\t{k}")
+        return subprocess.run([GIT, "mktree"], cwd=repo, input=("\n".join(rows) + "\n").encode("utf-8"),
+                              capture_output=True, check=True).stdout.decode().strip()
+
+    commits, parent = [], []
+    for files in trees:
+        root: dict = {}
+        for p, t in files.items():
+            cur = root
+            for seg in p.split("/")[:-1]:
+                cur = cur.setdefault(seg, {})
+            cur[p.split("/")[-1]] = t
+        c = subprocess.run([GIT, "-c", "user.name=t", "-c", "user.email=t@t", "commit-tree", "-m", "c", put(root),
+                            *parent], cwd=repo, capture_output=True, check=True).stdout.decode().strip()
+        commits.append(c)
+        parent = ["-p", c]
+    return repo, commits
+
+
+def test_175_a_name_a_dotdot_lays_bare_reads_as_git_reads_it(tmp_path):
+    """A directory named `b.` or `v1.` under a later `..`: git's own pathspec reading decides each claim (empty
+    `git diff --name-status -- . ':(exclude)P'`: every changed path lies under P), and the gate's decided verdict at
+    both doors, main's level and the final record, in both ports, agrees with it; the raw door's records equal the git
+    door's and the port's equal the Python's."""
+    if GIT is None:
+        _missing("git", "the pathspec oracle")
+    trees = [{"a/b./c/x.py": "a\n", "a/b/y.py": "a\n", "releases/v1./notes/x.md": "a\n",
+              "releases/v1/x.md": "a\n"}]
+    for p in ("a/b./c/x.py", "a/b/y.py", "releases/v1./notes/x.md", "releases/v1/x.md"):   # one changed path a commit
+        trees.append(dict(trees[-1], **{p: "b\n"}))
+    repo, commits = _plumbed(tmp_path, "dotname", trees)
+    old_py = R.module_from(R.reconstruct_py(R.lf(R.INSTRUMENT)), "_b2_main_dotname")
+    cases = []
+    for lo, hi in zip(commits, commits[1:]):
+        text = _git(repo, "diff", lo, hi)
+        for prefix in ("a/b./c/../.", "`a/b./c/../`", "a/b./c/d/../../.", "releases/v1./notes/../.", "a/b./c/.."):
+            claim = f"Only touches {prefix}"
+            want = None
+            for p in [x for c in N.gate_diff_text(claim, "").claims if c.kind == "only_touches"
+                      for x in (c.detail.get("prefix"), c.detail.get("prefix2")) if x]:
+                rest = _git(repo, "diff", "--name-status", lo, hi, "--", ".", f":(exclude){p}").strip()
+                want = "VERIFIED" if rest == "" else "CONTRADICTED"
+            git_door = _only(_rec(N.gate_diff(claim, str(repo), lo, hi)))
+            raw = _py(N, {"summary": claim, "diff": text})["off"]
+            main = _rec(old_py.gate_diff_text(claim, text))
+            for rec in (git_door, _only(raw), _only(main)):
+                assert rec[0][1] in (want, "UNCHECKABLE"), (prefix, lo[:7], want, rec)
+            assert git_door == _only(raw), (prefix, git_door, raw)
+            cases.append({"id": f"{prefix}@{lo[:7]}", "summary": claim, "diff": text, "py": raw, "main": main})
+    js = _port(cases, tmp_path, tag="dotname")
+    for c in cases:
+        assert js[c["id"]]["off"] == c["py"] and js[c["id"]]["main"] == c["main"], c["id"]
+    assert all(_only(c["py"])[0][1] != "UNCHECKABLE" for c in cases), [(c["id"], _only(c["py"])) for c in cases]
+
+
 # ---- neither adds an accusation ---------------------------------------------------------------------------------------
 
 PREFIXES = ["src/", "src/.", "src/b/", "./src/./b/", "src/../src/", "src/b/..", "src/b/...", "../src/", "src/../../x/",
-            "lib/../src/", "./", "docs/.."]
+            "lib/../src/", "./", "docs/..", "a/b./c/../.", "a/b./c/..", "a/b./c/d/../../.", "src/../a/b./."]
 DIFFS = [_rename("lib/old.py", "src/new.py"), _rename("src/a/old.py", "src/b/new.py"),
          _rename("lib/old.py", "src/new.py", edit=False), _edit("src/b/x.py"), _edit("src/x.py") + _edit("docs/y.md"),
-         _rename(".lib/old.py", "src/new.py"), _rename("src/old.py", "lib/new.py")]
+         _rename(".lib/old.py", "src/new.py"), _rename("src/old.py", "lib/new.py"), _edit("a/b./c/x.py"),
+         _edit("a/b/y.py"), _rename("a/b/old.py", "a/b./c/new.py")]
 
 
 def test_neither_fix_adds_a_contradicted_verdict(tmp_path):
-    """Over a grid of prefixes and rename shapes, both ports, main's level and the final record: a claim reads
-    CONTRADICTED only where a status key lies outside every reading of its prefix (`_baseline`), the one shape in
-    which main read it CONTRADICTED too (the measured comparison against main is the PR's)."""
+    """Over a grid of prefixes, rename shapes and directories whose names end in a dot, both ports, main's level and the
+    final record: a claim reads CONTRADICTED only where a status key lies outside every reading of its prefix
+    (`_baseline`) and outside the prefix as main read it before #175, as text (`_main_held`, which reads no reading of
+    this batch): every CONTRADICTED here, main printed. And no claim reads VERIFIED where main's text reading and git's
+    own reading of the prefix (`_git_reading`) both put a changed path outside it."""
     cases = [{"id": f"g{i}-{j}", "summary": f"Only touches {p}", "diff": d}
              for (i, p), (j, d) in itertools.product(enumerate(PREFIXES), enumerate(DIFFS))]
     old_py = R.module_from(R.reconstruct_py(R.lf(R.INSTRUMENT)), "_b2_main_now")
@@ -335,7 +449,8 @@ def test_neither_fix_adds_a_contradicted_verdict(tmp_path):
     for c in cases:
         for rec in (_py(N, c)["off"], _rec(old_py.gate_diff_text(c["summary"], c["diff"])), js[c["id"]]["off"],
                     js[c["id"]]["main"]):
-            assert rec["claims"][0][1] != "CONTRADICTED" or _baseline(c), (c, rec)
+            assert rec["claims"][0][1] != "CONTRADICTED" or (_baseline(c) and _main_held(c)), (c, rec)
+            assert rec["claims"][0][1] != "VERIFIED" or not (_main_held(c) and _git_outside(c)), (c, rec)
 
 
 def _baseline(case) -> bool:
@@ -348,3 +463,38 @@ def _baseline(case) -> bool:
     if why is not None:
         return False
     return all(any(not (x == "" or N._path_inside(p, x)) for p in status) for x in read)
+
+
+def _main_held(case) -> bool:
+    """Whether the prefix as main read it before #175 (after `_norm`, `rstrip("/.")`, compared as text) leaves a status
+    key outside it: where main read the claim CONTRADICTED."""
+    status, _ = N.parse_unified_diff(case["diff"])
+    prefix = N._norm(case["summary"][len("Only touches "):]).rstrip("/.")
+    return any(not N._path_inside(p, prefix) for p in status)
+
+
+def _git_reading(prefix: str):
+    """git's lexical reading of a pathspec at the top of the tree: `.` and empty segments dropped, `..` pops; None
+    where it climbs out (git refuses it)."""
+    out: list = []
+    for s in prefix.replace("\\", "/").split("/"):
+        if s in ("", "."):
+            continue
+        if s == "..":
+            if not out:
+                return None
+            out.pop()
+            continue
+        out.append(s)
+    return "/".join(out)
+
+
+def _git_outside(case) -> bool:
+    """Whether git's reading of the prefix, over git's listing without rename detection (every status key and every
+    old path), leaves a changed path outside it."""
+    status, _ = N.parse_unified_diff(case["diff"])
+    g = _git_reading(case["summary"][len("Only touches "):].lower())
+    if g is None:
+        return False
+    return any(not (g == "" or p == g or p.startswith(g + "/"))
+               for p in list(status) + N.parse_unified_diff_renames(case["diff"]))
