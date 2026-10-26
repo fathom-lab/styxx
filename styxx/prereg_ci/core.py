@@ -1617,7 +1617,7 @@ _SURFACE_PROFILE: Dict[str, Any] = {
                 "SECURITY.md", "CONTRIBUTING.md", "CITATION.cff", "CODE_OF_CONDUCT.md", "POSITIONING.md",
                 "OATH_CONTRACT.md", "BOUNTY.md", "LEADERBOARD.md", "REPLICATIONS.md", "AUTOPILOT.md",
                 "PATENTS.md", "styxx/**", "sworn/**", "integrations/**", "hooks/**", "docs/**", "web/**",
-                "packages/**"],
+                "packages/**", "prereg-ci/**", "examples/prereg-ci-demo/**"],
     "exclude": ["web/gate/differential/**"],
     "exts": _SURFACE_EXTS,
 }
