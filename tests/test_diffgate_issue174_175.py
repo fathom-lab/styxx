@@ -3,7 +3,7 @@
 #174. A rename's old path was registered by neither door: `parse_unified_diff` keys a rename by its new path (status M
 at the raw door, R at the git door), so "Only touches src/." over `R080 lib/old.py -> src/new.py` read VERIFIED while
 git's own pathspec reading (`git diff --name-status -- . ':(exclude)src'` prints `D lib/old.py`) says the change
-leaves `src`. Both ports now read the old path (`rename from` at the raw door, the R row's first path at the git door)
+leaves `src`. Both ports now read the old path (`rename from` at the raw door, the R row's old path at the git door)
 beside the status keys, in `only_touches` only, and where every status key lies under the prefixes and an old path
 does not, the claim abstains (UNCHECKABLE, #174). No CONTRADICTED is added: prose `only_touches` accusations measured
 2/11 and 2/8 precision on BENCH-2, and a C-quoted old path (#169) would read outside a prefix that holds it. The count,
