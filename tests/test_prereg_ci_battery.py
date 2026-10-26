@@ -20,7 +20,9 @@ pin those boundaries, so a later hardening is seen as a change.
 """
 from __future__ import annotations
 
+import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -147,3 +149,102 @@ def test_lint_refuses_a_draft_holding_a_shadowed_table(tmp_path, capsys):
     g.write("PREREG_digits.md", SHADOWS["block-quote-beside-plain"])
     code, out = run(g, "lint", "PREREG_digits.md", capsys=capsys)
     assert code == 1 and "FAIL FENCE_SHADOWED" in out, out
+
+
+# ---- M2: the seals manifest deleted, and re-added after a merged deletion -------------------------------------
+
+MANIFEST = "prereg-ci.seals.jsonl"
+
+
+def show(g: Git, rev: str, path: str) -> bytes:
+    r = subprocess.run(["git", "--no-replace-objects", "show", f"{rev}:{path}"], cwd=str(g.root), capture_output=True)
+    assert r.returncode == 0, r.stderr
+    return r.stdout
+
+
+def line(**kw) -> str:
+    d = {"id": None, "kind": None, "path": None, "commit": None, "blob_sha256": None, "amends": None,
+         "decision": "own", "seen": None, "time": []}
+    d.update(kw)
+    return json.dumps(d) + "\n"
+
+
+def landed_with_receipt(tmp_path, name: str, metrics=None, prereg_name: str = "PREREG_digits.md",
+                        readme: str = README_PLAIN) -> Git:
+    """main: the PREREG sealed, then a merged pull request adding a receipt under it."""
+    g = Git(tmp_path / name)
+    g.write(prereg_name, prereg())
+    g.write("README_demo.md", readme)
+    g.write("prereg-ci.toml", CFG)
+    g.commit("seal")
+    g("switch", "-q", "-c", "result")
+    g.write("receipt.json", json.dumps({**scored(metrics or HOLD), "prereg": prereg_name}, indent=1) + "\n")
+    g.commit("result")
+    g("switch", "-q", "main")
+    g.merge("result", "Merge pull request #2 from result")
+    return g
+
+
+def with_amendment_line(tmp_path, name: str):
+    """main: the PREREG and a HOLD receipt; then a merged pull request adding an own amendment, the manifest
+    (its prereg line and the amendment line, seen "results seen") and a receipt under the amendment."""
+    g = landed_with_receipt(tmp_path, name)
+    land = g("rev-list", "--reverse", "main").split()[0]
+    g("switch", "-q", "-c", "amend")
+    g.write("AMENDMENT_digits.md", prereg(moved(0.10), prose="the ceiling is moved to 0.10"))
+    am = g.commit("amendment")
+    l1 = line(id="1", kind="prereg", path="PREREG_digits.md", commit=land,
+              blob_sha256=hashlib.sha256(show(g, land, "PREREG_digits.md")).hexdigest())
+    kw = dict(id="2", kind="amendment", path="AMENDMENT_digits.md", commit=am,
+              blob_sha256=hashlib.sha256(show(g, am, "AMENDMENT_digits.md")).hexdigest(), amends="1")
+    g.write(MANIFEST, l1 + line(seen="results seen", **kw))
+    g.commit("seal the amendment, results seen")
+    g.write("receipt_amended.json", json.dumps(scored(HOLD, table=moved(0.10)), indent=1) + "\n")
+    g.commit("re-run under the amendment")
+    g("switch", "-q", "main")
+    g.merge("amend", "Merge pull request #3")
+    return g, l1, kw
+
+
+def test_a_pull_request_that_deletes_the_seals_manifest_is_manifest_rewritten(tmp_path, capsys):
+    """O16d: with no manifest at HEAD the append-only reading never ran, and the deletion passed."""
+    g, _, _ = with_amendment_line(tmp_path, "d")
+    g("switch", "-q", "-c", "drop")
+    (g.root / MANIFEST).unlink()
+    g.commit("drop the manifest")
+    code, out = run(g, "check", "--base", "main", "--head", "drop", capsys=capsys)
+    assert code == 1, out
+    assert "FAIL MANIFEST_REWRITTEN" in out and "is deleted in this pull request" in out, out
+
+
+def test_a_manifest_re_added_after_a_merged_deletion_keeps_the_lines_it_held(tmp_path, capsys):
+    """O16r: deleted in one merged pull request, re-added in the next with the amendment's seen restated
+    (results seen -> nothing run); each check compared its merge base to HEAD only, and both passed."""
+    g, l1, kw = with_amendment_line(tmp_path, "r")
+    g("switch", "-q", "-c", "drop")
+    (g.root / MANIFEST).unlink()
+    g.commit("drop the manifest")
+    g("switch", "-q", "main")
+    g.merge("drop", "Merge pull request #4")
+    g("switch", "-q", "-c", "restate")
+    g.write(MANIFEST, l1 + line(seen="nothing run", **kw))
+    g.commit("the manifest again, seen restated")
+    code, out = run(g, "check", "--base", "main", "--head", "restate", capsys=capsys)
+    assert code == 1, out
+    assert "FAIL MANIFEST_REWRITTEN" in out and "held it on the base branch" in out, out
+    g("switch", "-q", "-c", "restore", "main")
+    g.write(MANIFEST, l1 + line(seen="results seen", **kw))
+    g.commit("the manifest again, as it was")
+    code, out = run(g, "check", "--base", "main", "--head", "restore", capsys=capsys)
+    assert "MANIFEST_REWRITTEN" not in out, out
+
+
+def test_a_manifest_added_where_the_base_never_held_one_is_not_compared(tmp_path, capsys):
+    g = landed_with_receipt(tmp_path, "new")
+    land = g("rev-list", "--reverse", "main").split()[0]
+    g("switch", "-q", "-c", "man")
+    g.write(MANIFEST, line(id="1", kind="prereg", path="PREREG_digits.md", commit=land,
+                           blob_sha256=hashlib.sha256(show(g, land, "PREREG_digits.md")).hexdigest()))
+    g.commit("start the manifest")
+    code, out = run(g, "check", "--base", "main", "--head", "man", capsys=capsys)
+    assert code == 0 and "MANIFEST_REWRITTEN" not in out, out

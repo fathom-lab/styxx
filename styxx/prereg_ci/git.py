@@ -1206,11 +1206,32 @@ def _not_appended(old: bytes, new: bytes) -> Optional[str]:
     return f"it holds {len(now)} of the {len(was)} lines the manifest held"
 
 
+def _manifest_held_before(repo: _Repo, rev: str, path: str = _MANIFEST) -> Optional[Tuple[str, bytes]]:
+    """``(commit, bytes)`` of the newest commit on *rev*'s parent-one chain whose tree holds the manifest
+    as a regular file, or None where no commit of the chain holds one."""
+    for c in repo.chain(rev):
+        if repo._blob_id(c, path) is None:
+            continue
+        try:
+            data = repo.read(c, path)
+        except _Refusal as e:
+            if e.code != "NOT_A_BLOB":
+                raise
+            continue
+        if data is not None:
+            return c, data
+    return None
+
+
 def _manifest_append_only(repo: _Repo, base: str, head: str, path: str = _MANIFEST) -> List[Dict[str, Any]]:
     """DESIGN 3.2(b): the manifest is append-only. For a pull request, the bytes HEAD holds start
-    with the bytes the merge base held (a manifest the pull request adds has nothing to keep); a
-    manifest deleted, renamed away or made something other than a regular file is
-    ``MANIFEST_REWRITTEN`` too."""
+    with the bytes the merge base held; a manifest deleted, renamed away or made something other
+    than a regular file is ``MANIFEST_REWRITTEN`` too. A manifest the pull request adds where the
+    merge base holds none starts with the bytes the newest commit of the base's parent-one chain
+    that held one held (``_manifest_held_before``): a manifest deleted in one merged pull request and
+    added again in the next, a line restated, is the rewrite a check of each pull request alone
+    passed (the B8 battery, M2); one the chain never held has nothing to keep. The CLI reads this
+    whether or not HEAD holds a manifest, so a deletion is read."""
     ch = repo.changes(base, head)
     mb, h = ch["merge_base"], ch["head"]
     out = []
@@ -1223,6 +1244,8 @@ def _manifest_append_only(repo: _Repo, base: str, head: str, path: str = _MANIFE
     for x in ch["changes"]:
         if x["old"] == path and x["path"] != path:
             rewritten("is deleted" if x["status"] == "D" else f"is renamed to {x['path']}")
+        elif x["path"] == path and x["status"] == "D":
+            rewritten("is deleted")
         elif x["path"] == path:
             try:
                 old = repo.read(mb, path)
@@ -1232,7 +1255,18 @@ def _manifest_append_only(repo: _Repo, base: str, head: str, path: str = _MANIFE
                     raise
                 rewritten("is no longer a regular file")
                 continue
-            why = None if old is None else _not_appended(old, new or b"")
+            if old is None:
+                prior = _manifest_held_before(repo, mb, path)
+                why = None if prior is None else _not_appended(prior[1], new or b"")
+                if why is not None:
+                    out.append({"code": "MANIFEST_REWRITTEN", "kind": _KIND["MANIFEST_REWRITTEN"], "path": path,
+                                "id": None, "detail": (
+                                    f"{path} is added again in this pull request, after {prior[0][:12]} held it on "
+                                    f"the base branch (it was deleted since), and is not appended to the bytes held "
+                                    f"there: {why}; the manifest is append-only, so a line is corrected by a new "
+                                    f"line")})
+                continue
+            why = _not_appended(old, new or b"")
             if why is not None:
                 rewritten(f"is not appended to: {why}")
     return out

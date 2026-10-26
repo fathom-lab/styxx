@@ -861,9 +861,13 @@ def _run_check(repo: _git._Repo, base: str, head: str, args: argparse.Namespace)
         entries = _git._manifest_at(repo, h)
     except _git._Refusal as e:
         man["findings"].append(_refusal(e, _git._MANIFEST, "C2", None))
+    try:                                            # whether or not HEAD holds one: a deletion is a rewrite (B8, M2)
+        man["findings"] += _tag(_git._manifest_append_only(repo, b, h), "C2")
+    except _git._Refusal as e:
+        man["findings"].append(_refusal(e, _git._MANIFEST, "C2", None))
     if entries is not None:
         man.update(present=True, lines=len(entries))
-        for read in (lambda: _git._manifest_append_only(repo, b, h), lambda: _git._manifest_blobs(repo, entries, h),
+        for read in (lambda: _git._manifest_blobs(repo, entries, h),
                      lambda: _git._manifest_seen(repo, entries, h, base=b),
                      lambda: _git._manifest_landed(repo, entries, b, h)):
             try:
