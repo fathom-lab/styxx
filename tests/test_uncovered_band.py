@@ -141,7 +141,8 @@ def test_a_partially_extracted_span_records_what_was_examined_instead(tmp_path):
 def test_the_policy_block_names_the_bands_own_boundary(tmp_path):
     """Under the shipped reader (v2) the block names the reader and its counted reasons; with the
     master flag off it is the 2026-09-01 block, byte for byte in its text."""
-    import styxx.certify as C
+    import importlib
+    C = importlib.import_module("styxx.certify")    # not the package's `certify` function
     pol = _cert(tmp_path, CANON, {})["uncovered_policy"]
     assert pol["schema"] == "styxx-oath/uncovered-band/v2"
     assert sorted(pol["counted_reasons"]) == sorted(C._V15_UNCOVERED_COUNTED)

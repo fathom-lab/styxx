@@ -13,14 +13,14 @@ existed (`--v1-recording`): the generator re-derives them with the master flag o
 if any differ. That recording is the machine form of "flag off == HEAD".
 
 `id = sha256(utf8(jcs({"family": f, "rules": rules, "text": t[, "receipts": r]})))`, where `rules` is the
-set's `reader.rules`, the flags that were on; `vectors_v2.json`, the first set, was written before ids
+set's `reader.rules`, the flags that were on; `vectors_v2.json`, the earlier set, was written before ids
 carried the rules and its `id_rule` says so. A receipt file is named by its index, so `receipt_ref` reads
 `receipt[j]:path` in every expectation. `set_sha256` is the sha256 of the JCS text of the index minus
 `set_sha256` and minus `provenance`.
 
 EACH SET NAMES ITS CONFIGURATION. `reader.flags` holds every V15_* rule flag as it stood when the set was
 written, and the replay sets exactly those flags (the master off for the `v1_*` families). A set whose
-reader names no `flags` (`vectors_v2.json`, written by the first build session of 2026-10-25) is read
+reader names no `flags` (`vectors_v2.json`, written by the earlier build session of 2026-10-25) is read
 from `reader.rules`, every flag it does not list off, with one fact of that day applied: `V15_MAGNITUDE`
 then covered bare magnitudes too (`V15_MAGNITUDE_BARE` did not exist; RULE_final 0.1 split it out), so a
 set of that shape listing `V15_MAGNITUDE` replays with `V15_MAGNITUDE_BARE` on.
@@ -44,7 +44,9 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(HERE))
 
-import styxx.certify as C  # noqa: E402
+import importlib  # noqa: E402
+
+C = importlib.import_module("styxx.certify")   # the module, never the package's `certify` function
 import texts as T  # noqa: E402
 from styxx.attestation import jcs  # noqa: E402
 

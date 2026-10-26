@@ -11,7 +11,7 @@ files; none is written here.
 |---|---|
 | `texts.py` | the texts and receipt cases, as data: the product red team's posts, the design's probe texts and cases, the design's red team's reader families and binding cases, and the amendments' cases |
 | `gen_vectors.py` | generates a set from `texts.py` under the flags the module holds, replays it, refuses to re-record an id with a different expectation and to rewrite a committed set; `--check` replays every committed set |
-| `vectors_v2.json` | the first set, written by the first build session of 2026-10-25 under its default (bare magnitudes and form noise on); four families, each vector addressed by its id, one digest over the index. Never edited |
+| `vectors_v2.json` | the earlier set, written by the earlier build session of 2026-10-25 under its default (bare magnitudes and form noise on); four families, each vector addressed by its id, one digest over the index. Never edited |
 | `vectors_v2_default.json` | the shipped default of RULE_final 0.1 (bare magnitudes and form noise off); the same texts and cases, the same four families; `reader.flags` names every flag |
 
 The generated file is never hand-edited. `tests/test_certify_numerals_v2_vectors.py` replays the

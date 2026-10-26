@@ -2,7 +2,7 @@
 """Replay every committed numerals conformance vector through the installed reader.
 
 `conformance/numerals/vectors_*.json`: the `reader` and `binding` families pin what the numeral reader
-v2 reads under the flags each set names (`vectors_v2.json`: the first build session's default, bare
+v2 reads under the flags each set names (`vectors_v2.json`: the earlier build session's default, bare
 magnitudes and form noise on; `vectors_v2_default.json`: the shipped default of RULE_final 0.1); the
 `v1_reader` and `v1_binding` families pin what the reader at `879f6be9` read (recorded there, before the
 v2 code existed) and are replayed with the master flag off, so "V15_READER_V2 = False behaves as HEAD" is
@@ -73,7 +73,8 @@ def test_the_product_need_is_a_pinned_vector(path):
 
 def test_the_default_set_pins_the_shipped_flags():
     """RULE_final 0.1: the shipped default has its own set, and that set names every flag as shipped."""
-    import styxx.certify as C
+    import importlib
+    C = importlib.import_module("styxx.certify")    # not the package's `certify` function
     doc = json.loads((NUMERALS / "vectors_v2_default.json").read_text(encoding="utf-8"))
     assert doc["reader"]["flags"] == {k: bool(getattr(C, k)) for k in C._V15_RULE_FLAGS}
     assert doc["reader"]["rules"] == sorted(k for k in C._V15_RULE_FLAGS if getattr(C, k))

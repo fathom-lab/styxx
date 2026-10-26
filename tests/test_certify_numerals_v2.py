@@ -22,8 +22,13 @@ from pathlib import Path
 
 import pytest
 
-import styxx.certify as C
-from styxx.certify import certify_doc, extract_numbers, uncovered_spans
+import importlib
+
+# importlib, not `import styxx.certify as C`: the package attribute `styxx.certify` is the FUNCTION
+# styxx/__init__ exports (from styxx.provenance), and which one an import binds depends on the order
+# the suite imported things in (the earlier session's band test failed in a full run on exactly that)
+C = importlib.import_module("styxx.certify")
+certify_doc, extract_numbers, uncovered_spans = C.certify_doc, C.extract_numbers, C.uncovered_spans
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "conformance" / "numerals"))
