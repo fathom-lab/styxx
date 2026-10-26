@@ -618,7 +618,8 @@ def _anchors(data: bytes, digests: Iterable[str]) -> Dict[str, Any]:
     """Lines of ``styxx.clock``'s anchors format, each about this seal (its digest one of *digests*)
     read through ``research_capsule.check_anchor_offline``: SHAPE_OK or MALFORMED_LINE, and never
     ANCHORED, since nothing here reads the chain. ``n`` is the line's own sequence number as it
-    writes it; ``line`` is where it sits in the file."""
+    writes it; ``line`` is where it sits in the file. ``malformed`` counts the lines that are not a
+    JSON object (or nest past the recursion limit, as ``research_capsule`` counts its own reads)."""
     wanted = set(digests)
     out: Dict[str, Any] = {"lines": 0, "malformed": 0, "about_seal": [],
                            "detail": "offline: each line's shape alone, through research_capsule.check_anchor_offline; "
@@ -629,13 +630,14 @@ def _anchors(data: bytes, digests: Iterable[str]) -> Dict[str, Any]:
         out["lines"] += 1
         try:
             obj = json.loads(raw)
-        except ValueError:
+        except (ValueError, RecursionError):                # not JSON, or nested past the recursion limit
             out["malformed"] += 1
             continue
         if not isinstance(obj, dict):
             out["malformed"] += 1
             continue
-        if obj.get("digest") not in wanted:
+        d = obj.get("digest")
+        if not isinstance(d, str) or d not in wanted:       # a digest that is no string names no seal
             continue
         reading = dict(_check_anchor_offline(obj))
         reading["line"] = n

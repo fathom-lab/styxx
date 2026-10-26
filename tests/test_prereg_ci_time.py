@@ -627,6 +627,41 @@ def test_an_anchor_lines_own_n_is_kept_apart_from_its_line_in_the_file():
     assert [(a["n"], a["line"]) for a in r["about_seal"]] == [(9, 2), (None, 3)]
 
 
+DEEP_LINES = ["[" * 50_000, '{"a": ' * 50_000]      # under the 1 MiB cap, nested past Python's recursion limit
+
+
+def test_an_anchors_line_nested_too_deep_is_malformed_and_one_whose_digest_is_no_string_is_not_about_the_seal():
+    """B6 review A2 and A3: a line whose digest is a JSON list raised TypeError (a list is not hashable)
+    and a line of 50,000 '[' raised RecursionError out of the reader. A digest that is not a string names
+    no seal, since a seal's digests are hex strings: the line is counted and not read further."""
+    good = {"n": 1, "kind": "sealed-prereg", "digest": sha(SEAL), "tx": "5" * 88}
+    lines = [json.dumps({"n": 2, "kind": "sealed-prereg", "digest": [sha(SEAL)], "tx": "t"}),
+             json.dumps({"n": 3, "kind": "sealed-prereg", "digest": {"sha256": sha(SEAL)}, "tx": "t"}),
+             *DEEP_LINES, json.dumps(good)]
+    r = T._anchors("\n".join(lines).encode("utf-8") + b"\n", [sha(SEAL)])
+    assert r["lines"] == 5 and r["malformed"] == 2
+    assert [(a["n"], a["line"], a["status"]) for a in r["about_seal"]] == [(1, 5, "SHAPE_OK")]
+
+
+def test_a_committed_anchors_file_holding_those_lines_leaves_the_ladder_reading(tmp_path):
+    """The anchors file is read at the rev for every seal, so one such line on a branch took down every
+    reading there; now the ladder reads and prints the count."""
+    good = {"n": 1, "kind": "sealed-prereg", "digest": sha(SEAL), "tx": "5" * 88}
+    g = Git(tmp_path / "r")
+    g.write(P, SEAL)
+    c0 = g.commit("seal the plan")
+    g.write(T._ANCHORS, "\n".join([json.dumps({"n": 2, "kind": "sealed-prereg", "digest": ["x"], "tx": "t"}),
+                                   DEEP_LINES[0], json.dumps(good)]) + "\n")
+    g.write(R, receipt(m=0.7))
+    rc = g.commit("an anchors file, and a result")
+    with G._Repo(g.root) as repo:
+        r = T._reading(repo, path=P, rev=rc, seal=SEAL, order=c0, receipt=rc, trust_rev=c0)
+    assert r["rung"] == "T1" and r["T3c"]["files"] == [T._ANCHORS]
+    assert (r["T3c"]["lines"], r["T3c"]["malformed"]) == (3, 1)
+    assert [(a["n"], a["status"]) for a in r["T3c"]["about_seal"]] == [(1, "SHAPE_OK")]
+    assert "T3c 3 lines in papers/charon/anchors.jsonl, 1 about this seal" in T._describe(r)
+
+
 # ---- repositories: tokens beside the sealed file, the trust store, the ladder ---------------------------------
 
 @pytest.fixture(scope="module")
