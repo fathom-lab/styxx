@@ -1107,22 +1107,69 @@ def _receipts_rewritten(repo: _Repo, base: str, head: str, policy: str = "fail",
     return out
 
 
+def _named_preregs(repo: _Repo, rev: str, exclude: Sequence[str] = ()) -> frozenset:
+    """Every path *rev*'s tree names as a PREREG: each receipt's (3.2(d), a ``.json`` file naming its
+    PREREG by a top-level ``prereg`` string) resolved as C1 resolves it, and each seals manifest line's.
+    The resolver pairs a receipt with a PREREG of any name, so C0 and C8 over the tree read this set
+    beside every ``*.md`` file (the B8 battery, M4). A receipt this layer does not read (over the cap,
+    a symlink, bytes that are not JSON) or whose PREREG does not resolve names nothing here, and a
+    manifest that does not read names nothing; each is read, and refused, where it is paired."""
+    c = repo.commit(rev)
+    key = ("named", c, tuple(exclude))
+    if key not in repo._memo:
+        tree = repo._view(c)
+        out = set()
+        for path in repo.grep(c, '"prereg"', ":(icase)*.json"):
+            if _excluded(path, exclude):
+                continue
+            try:
+                obj = _json(repo.read(c, path) or b"")
+            except _Refusal as e:
+                if e.code in ("NOT_A_BLOB", "BLOB_TOO_LARGE"):
+                    continue
+                raise
+            except (UnicodeDecodeError, ValueError):
+                continue
+            if _receipt_kind(obj) != "receipt":
+                continue
+            try:
+                out.add(_resolve(obj["prereg"], posixpath.dirname(path), tree))
+            except _Refusal:
+                continue
+        try:
+            entries = _manifest_at(repo, c)
+        except _Refusal:
+            entries = None
+        out.update(e["path"] for e in entries or ())
+        repo._memo[key] = frozenset(out)
+    return repo._memo[key]
+
+
 def _decisions_moved(repo: _Repo, base: str, head: str, immutability: str = "gates",
                      suffixes: Sequence[str] = (".md",)) -> List[Dict[str, Any]]:
     """C0 for every file whose name ends with one of *suffixes* (case aside, so ``PREREG.MD`` is
-    read) that holds a decision at the merge base and that the pull request changes, deletes or
-    renames: a deleted or renamed one, or one whose fence moved, is
-    DECISION_EDITED_AFTER_SEAL; prose moved around an unchanged fence is PROSE_AMENDED_IN_PLACE,
-    a NOTE under ``immutability = "gates"`` (the default) and a FAIL under ``"file"``."""
+    read), or that a receipt or a manifest line at the merge base names as its PREREG
+    (``_named_preregs``, whatever its suffix: the B8 battery, M4), that holds a decision at the merge
+    base and that the pull request changes, deletes or renames: a deleted or renamed one, or one
+    whose fence moved, is DECISION_EDITED_AFTER_SEAL; prose moved around an unchanged fence is
+    PROSE_AMENDED_IN_PLACE, a NOTE under ``immutability = "gates"`` (the default) and a FAIL under
+    ``"file"``. A file under another suffix that no receipt names is not read, though its bytes may
+    hold a fence (a test file quoting a PREREG, as styxx's ``tests/test_protocol.py`` does)."""
     if immutability not in _IMMUTABILITY:
         raise ValueError(f"immutability is one of {_IMMUTABILITY}, not {immutability!r}")
     ch = repo.changes(base, head)
     mb, h = ch["merge_base"], ch["head"]
     out = []
+    named: Optional[frozenset] = None
     for x in ch["changes"]:
         old = x["old"]
-        if old is None or not _suffix(old, suffixes):
+        if old is None:
             continue
+        if not _suffix(old, suffixes):
+            if named is None:
+                named = _named_preregs(repo, mb)
+            if old not in named:
+                continue
         try:
             was = repo.read(mb, old) or b""
         except _Refusal as e:

@@ -765,13 +765,16 @@ def _tree_reading(ctx: _Ctx, pp: str, x: Dict[str, Any]) -> Optional[Dict[str, A
 
 
 def _tree_licences(ctx: _Ctx, handled: Sequence[str]) -> List[Dict[str, Any]]:
-    """C8 over HEAD's tree: every PREREG whose decision declares a licence, read under every receipt of
-    it at HEAD that this run did not pair already; a PREREG with no receipt at all reads its matches as
-    ``LICENCE_PENDING`` (the claim stands on a verdict not yet given). A pattern that matches nothing
-    is ``lint``'s refusal and is not repeated here."""
+    """C8 over HEAD's tree: every PREREG whose decision declares a licence (a ``*.md`` file, or one a
+    receipt or a manifest line at HEAD names under another suffix, ``git._named_preregs``: the B8
+    battery, M4), read under every receipt of it at HEAD that this run did not pair already; a PREREG
+    with no receipt at all reads its matches as ``LICENCE_PENDING`` (the claim stands on a verdict not
+    yet given). A pattern that matches nothing is ``lint``'s refusal and is not repeated here."""
     repo, h = ctx.repo, ctx.h
     out: List[Dict[str, Any]] = []
-    for pp in repo.grep(h, '"withdraws"', ":(icase)*.md"):
+    md = repo.grep(h, '"withdraws"', ":(icase)*.md")
+    named = sorted(p for p in _git._named_preregs(repo, h, ctx.exclude) if not _git._suffix(p, (".md",)))
+    for pp in md + [p for p in named if p not in md]:
         if _git._excluded(pp, ctx.exclude):
             continue
         try:

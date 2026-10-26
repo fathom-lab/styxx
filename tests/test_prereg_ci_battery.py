@@ -297,3 +297,42 @@ def test_text_files_that_hold_no_receipt_are_left_alone(tmp_path, capsys):
     g.commit("docs")
     code, out = run(g, "check", "--base", "main", "--head", "docs", capsys=capsys)
     assert code == 0 and "RECEIPT_NOT_JSON" not in out, out
+
+
+# ---- M4: a PREREG kept under a suffix other than .md, named by a receipt ---------------------------------------
+
+@pytest.mark.parametrize("name", ["PREREG_digits.markdown", "PREREG_digits.txt"])
+def test_a_bar_moved_in_a_sealed_prereg_under_another_suffix_is_decision_edited_after_seal(tmp_path, capsys, name):
+    """O20, O20t: C0 read *.md only while the resolver pairs a receipt with a PREREG of any name: '0 moved', PASS."""
+    g = landed_with_receipt(tmp_path, "moved", prereg_name=name)
+    g("switch", "-q", "-c", "move")
+    g.write(name, prereg(moved(0.10)))
+    g.commit("move the bar")
+    code, out = run(g, "check", "--base", "main", "--head", "move", capsys=capsys)
+    assert code == 1, out
+    assert "FAIL DECISION_EDITED_AFTER_SEAL" in out and name in out, out
+
+
+def test_a_withdrawn_sentence_back_on_a_surface_is_refused_for_a_prereg_under_another_suffix(tmp_path, capsys):
+    """O20l: the tree's licence pass grepped *.md only, so a .markdown PREREG's landed HOLD row withdrew
+    nothing on later pull requests."""
+    g = landed_with_receipt(tmp_path, "lic", prereg_name="PREREG_digits.markdown")
+    g("switch", "-q", "-c", "claim")
+    g.write("README_demo.md", f"# demo\n\nThe model is {SENTENCE}.\n")
+    g.commit("the sentence again")
+    code, out = run(g, "check", "--base", "main", "--head", "claim", capsys=capsys)
+    assert code == 1, out
+    assert "FAIL LICENCE_WITHDRAWN" in out and "README_demo.md" in out, out
+
+
+def test_a_file_outside_md_that_holds_a_fence_and_is_named_by_no_receipt_is_not_a_sealed_decision(tmp_path, capsys):
+    """tests/test_protocol.py on styxx holds a fence the scanner reads; a pull request editing such a file is
+    not C0's, unless a receipt names it."""
+    g = sealed(tmp_path, "py", prereg())
+    g.write("tests/test_fence.py", 'TEXT = """\n' + fence() + '\n"""\n')
+    g.commit("a test file")
+    g("switch", "-q", "-c", "edit")
+    g.write("tests/test_fence.py", 'TEXT = """\n' + fence(moved(0.2)) + '\n"""\n')
+    g.commit("edit the test")
+    code, out = run(g, "check", "--base", "main", "--head", "edit", capsys=capsys)
+    assert code == 0 and "DECISION_EDITED_AFTER_SEAL" not in out, out
