@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Generate the numerals conformance vectors from `texts.py`, replay them, write `vectors_v2.json`.
 
-    py -3.12 -B conformance/numerals/gen_vectors.py --v1-recording PATH [--out vectors_v2.json]
-    py -3.12 -B conformance/numerals/gen_vectors.py --check            # replay the committed set, write nothing
+    py -3.12 -B conformance/numerals/gen_vectors.py --v1-recording PATH --out vectors_v2_default.json
+    py -3.12 -B conformance/numerals/gen_vectors.py --check            # replay every committed set, write nothing
 
 Four families. `reader`: `extract_numbers` and `uncovered_spans` on one text under the shipped flags,
 minus the `context` field (a function of the text). `binding`: `certify_doc` on one text and its
@@ -12,9 +12,18 @@ and receipt_ref, and the counted band. `v1_reader` and `v1_binding`: the same te
 existed (`--v1-recording`): the generator re-derives them with the master flag off and refuses to write
 if any differ. That recording is the machine form of "flag off == HEAD".
 
-`id = sha256(utf8(jcs({"family": f, "text": t[, "receipts": r]})))`. A receipt file is named by its
-index, so `receipt_ref` reads `receipt[j]:path` in every expectation. `set_sha256` is the sha256 of the
-JCS text of the index minus `set_sha256` and minus `provenance`.
+`id = sha256(utf8(jcs({"family": f, "rules": rules, "text": t[, "receipts": r]})))`, where `rules` is the
+set's `reader.rules`, the flags that were on; `vectors_v2.json`, the first set, was written before ids
+carried the rules and its `id_rule` says so. A receipt file is named by its index, so `receipt_ref` reads
+`receipt[j]:path` in every expectation. `set_sha256` is the sha256 of the JCS text of the index minus
+`set_sha256` and minus `provenance`.
+
+EACH SET NAMES ITS CONFIGURATION. `reader.flags` holds every V15_* rule flag as it stood when the set was
+written, and the replay sets exactly those flags (the master off for the `v1_*` families). A set whose
+reader names no `flags` (`vectors_v2.json`, written by the first build session of 2026-10-25) is read
+from `reader.rules`, every flag it does not list off, with one fact of that day applied: `V15_MAGNITUDE`
+then covered bare magnitudes too (`V15_MAGNITUDE_BARE` did not exist; RULE_final 0.1 split it out), so a
+set of that shape listing `V15_MAGNITUDE` replays with `V15_MAGNITUDE_BARE` on.
 
 A RECEIPT IS HISTORY TOO. The generator refuses to write a vector whose id already stands in any
 committed `conformance/numerals/vectors_*.json` with a different `expect`. A later reader records its
@@ -41,7 +50,7 @@ from styxx.attestation import jcs  # noqa: E402
 
 SCHEMA = "styxx-oath/numerals-vectors/v1"
 READER_SCHEMA = "styxx-oath/numerals/v2"
-OUT = HERE / "vectors_v2.json"
+OUT = HERE / "vectors_v2_default.json"
 STUB = {"schema": "stub", "head": None, "receipts": []}
 
 
@@ -49,11 +58,36 @@ def _sha(s: str) -> str:
     return hashlib.sha256(s.encode("utf-8")).hexdigest()
 
 
-def vector_id(family: str, text: str, receipts=None) -> str:
+ID_RULE_V1 = "sha256(utf8(jcs({family, text[, receipts]})))"
+ID_RULE = "sha256(utf8(jcs({family, rules, text[, receipts]})))"
+# flags a set written before they existed implies from the rules it lists (see the docstring)
+LEGACY_IMPLIED = {"V15_MAGNITUDE": ("V15_MAGNITUDE_BARE",)}
+
+
+def vector_id(family: str, text: str, receipts=None, rules=None) -> str:
     key = {"family": family, "text": text}
+    if rules is not None:
+        key["rules"] = list(rules)
     if receipts is not None:
         key["receipts"] = receipts
     return _sha(jcs(key))
+
+
+def set_flags_of(doc: dict) -> dict:
+    """Every V15_* rule flag as the set *doc* was written under."""
+    reader = doc.get("reader") or {}
+    if isinstance(reader.get("flags"), dict):
+        return {k: bool(reader["flags"].get(k, False)) for k in C._V15_RULE_FLAGS}
+    rules = set(reader.get("rules") or [])
+    for k, implied in LEGACY_IMPLIED.items():
+        if k in rules:
+            rules |= set(implied)
+    return {k: (k in rules) for k in C._V15_RULE_FLAGS}
+
+
+def id_rules_of(doc: dict):
+    """The `rules` list a set's ids are over, or None for a set whose ids carry no rules."""
+    return list(doc["reader"]["rules"]) if doc.get("id_rule") == ID_RULE else None
 
 
 def _strip(d: dict) -> dict:
@@ -97,8 +131,20 @@ def bind(text: str, receipts: list, tmp: Path, tag: str) -> dict:
             "uncovered": [_strip(u) for u in cert["uncovered_items"]]}
 
 
-def set_flags(master: bool) -> None:
+def set_flags(master: bool, rule_flags=None) -> None:
     C.V15_READER_V2 = master
+    for k, v in (rule_flags or {}).items():
+        setattr(C, k, v)
+    C._v15_reset()
+
+
+def saved_flags() -> dict:
+    return {k: getattr(C, k) for k in ("V15_READER_V2", *C._V15_RULE_FLAGS)}
+
+
+def restore_flags(saved: dict) -> None:
+    for k, v in saved.items():
+        setattr(C, k, v)
     C._v15_reset()
 
 
@@ -122,25 +168,32 @@ def existing_expectations() -> dict:
 
 
 def generate(v1_recording: Path | None) -> dict:
-    shipped = C.V15_READER_V2
+    """The set under the flags the module holds now (the shipped default unless a caller set others)."""
+    saved = saved_flags()
+    rule_flags = {k: bool(getattr(C, k)) for k in C._V15_RULE_FLAGS}
+    rules = sorted(k for k, v in rule_flags.items() if v)
     families: dict = {"reader": [], "binding": [], "v1_reader": [], "v1_binding": []}
-    with tempfile.TemporaryDirectory() as td:
-        tmp = Path(td)
-        set_flags(True)
-        for t in T.all_texts():
-            families["reader"].append({"id": vector_id("reader", t), "text": t, "expect": read(t)})
-        for i, (name, text, rec) in enumerate(T.BINDING_CASES):
-            recs = rec if isinstance(rec, list) else [rec]
-            families["binding"].append({"id": vector_id("binding", text, recs), "name": name, "text": text,
-                                        "receipts": recs, "expect": bind(text, recs, tmp, f"b{i}")})
-        set_flags(False)
-        for t in T.all_texts():
-            families["v1_reader"].append({"id": vector_id("v1_reader", t), "text": t, "expect": read(t)})
-        for i, (name, text, rec) in enumerate(T.BINDING_CASES):
-            recs = rec if isinstance(rec, list) else [rec]
-            families["v1_binding"].append({"id": vector_id("v1_binding", text, recs), "name": name, "text": text,
-                                           "receipts": recs, "expect": bind(text, recs, tmp, f"v{i}")})
-        set_flags(shipped)
+    try:
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            set_flags(True, rule_flags)
+            for t in T.all_texts():
+                families["reader"].append({"id": vector_id("reader", t, rules=rules), "text": t, "expect": read(t)})
+            for i, (name, text, rec) in enumerate(T.BINDING_CASES):
+                recs = rec if isinstance(rec, list) else [rec]
+                families["binding"].append({"id": vector_id("binding", text, recs, rules), "name": name,
+                                            "text": text, "receipts": recs, "expect": bind(text, recs, tmp, f"b{i}")})
+            set_flags(False, rule_flags)
+            for t in T.all_texts():
+                families["v1_reader"].append({"id": vector_id("v1_reader", t, rules=rules), "text": t,
+                                              "expect": read(t)})
+            for i, (name, text, rec) in enumerate(T.BINDING_CASES):
+                recs = rec if isinstance(rec, list) else [rec]
+                families["v1_binding"].append({"id": vector_id("v1_binding", text, recs, rules), "name": name,
+                                               "text": text, "receipts": recs,
+                                               "expect": bind(text, recs, tmp, f"v{i}")})
+    finally:
+        restore_flags(saved)
     # two cases with the same text and receipts are one vector (the id is over the text and the
     # receipts, never over a case's name); the earlier case's name is kept
     for name, vs in families.items():
@@ -187,9 +240,10 @@ def generate(v1_recording: Path | None) -> dict:
         "schema": SCHEMA,
         "reader": {"schema": READER_SCHEMA,
                    "certify_sha256_lf": _sha(certify_bytes.replace(b"\r\n", b"\n").decode("utf-8")),
-                   "rules": sorted(k for k in C._V15_RULE_FLAGS if getattr(C, k)),
+                   "rules": rules,
+                   "flags": rule_flags,
                    "master": "V15_READER_V2"},
-        "id_rule": "sha256(utf8(jcs({family, text[, receipts]})))",
+        "id_rule": ID_RULE,
         "families": {name: {"n": len(vs), "vectors": sorted(vs, key=lambda v: v["id"])}
                      for name, vs in families.items()},
     }
@@ -204,25 +258,27 @@ def replay(doc: dict) -> list:
     core = {k: v for k, v in doc.items() if k not in ("set_sha256", "provenance")}
     if _sha(jcs(core)) != doc.get("set_sha256"):
         bad.append(("set_sha256", "does not re-derive"))
-    shipped = C.V15_READER_V2
+    saved = saved_flags()
+    rule_flags = set_flags_of(doc)
+    rules = id_rules_of(doc)
     try:
         with tempfile.TemporaryDirectory() as td:
             tmp = Path(td)
             for fam, body in doc["families"].items():
-                set_flags(not fam.startswith("v1_"))
+                set_flags(not fam.startswith("v1_"), rule_flags)
                 for k, v in enumerate(body["vectors"]):
                     if fam.endswith("reader"):
-                        if vector_id(fam, v["text"]) != v["id"]:
+                        if vector_id(fam, v["text"], rules=rules) != v["id"]:
                             bad.append((fam, v["text"], "id"))
                         got = read(v["text"])
                     else:
-                        if vector_id(fam, v["text"], v["receipts"]) != v["id"]:
+                        if vector_id(fam, v["text"], v["receipts"], rules) != v["id"]:
                             bad.append((fam, v["text"], "id"))
                         got = bind(v["text"], v["receipts"], tmp, f"{fam}{k}")
                     if got != v["expect"]:
                         bad.append((fam, v["text"], got, v["expect"]))
     finally:
-        set_flags(shipped)
+        restore_flags(saved)
     return bad
 
 
@@ -250,7 +306,12 @@ def main(argv=None) -> int:
     bad = replay(doc)
     if bad:
         raise SystemExit(f"REFUSED: the generated set does not replay: {bad[:3]}")
-    a.out.write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    text = json.dumps(doc, indent=1, ensure_ascii=False) + "\n"
+    committed = {q.resolve() for q in committed_sets()}
+    if a.out.resolve() in committed and a.out.read_text(encoding="utf-8") != text:
+        raise SystemExit(f"REFUSED: {a.out.name} is a committed set and these bytes differ from it (a receipt is "
+                         "history too): a reader that reads differently writes a new file")
+    a.out.write_text(text, encoding="utf-8")
     print("wrote", a.out, {k: v["n"] for k, v in doc["families"].items()}, "set_sha256", doc["set_sha256"][:16])
     return 0
 
