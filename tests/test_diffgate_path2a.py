@@ -224,9 +224,20 @@ def flavour(mod) -> str:
 # abstains (#178) only on a claim at or below the larger of its two counts, so on 88 claims, each claiming more
 # tests than any count main takes, main decides again (CONTRADICTED) and the overlay withholds none of them:
 # `decided` +88, no abstention key moves.
+# #174 and #175 (fix/diffgate-174-175), on the inputs the one-sided #178 pinned: main's `only_touches` reading moved,
+# and the overlay's model of it; no rule did. main no longer decides 96 scope claims: 93 CONTRADICTEDs over the prefix
+# `docs/..`, 92 in the regenerated fuzz corpus (whose generator writes `docs/.` and then the sentence's period) and
+# #161's v4-limit reproduction, where git's reading of the last `..` (the root) and the prose reading (`docs`) part
+# (#175); path2:v4-a-prefix-ending-in-dotdot-could-hold-anything (`../docs/..`, the same two readings); the pinned
+# pair path2a:scope-shape-rename-raw, whose rename's old path lies outside the prefixes (#174), withheld before by
+# `shape`; and path2:v4-a-dotfile-parent-before-a-sentence-period-is-off-tree (`.github/../.`, the root, #175),
+# withheld before by `only`. One CONTRADICTED main decided now reads VERIFIED and is withheld (`only`):
+# path2:v4-a-dotdot-after-a-named-segment-could-hold-anything (`../src/../docs`, which V121 reads with its `../`);
+# and one VERIFIED main keeps is withheld (`only`): path2:121-a-pure-rename-to-a-dotted-name claim 1, whose old path
+# V121 reads outside `.eslintrc.json`. So `decided` -96, `shape` -1, `only` +1 (+2 and -1); the same under POSIX.
 ABSTENTIONS = {
     "windows": {
-        "decided": 12146, "main raises": 6,
+        "decided": 12050, "main raises": 6,
         "file_created:case": 3, "file_created:dir": 65, "file_created:divergent": 15, "file_created:dot": 20,
         "file_created:dot_earliest": 4, "file_created:dot_tier": 11, "file_created:extract": 43, "file_created:odd": 1,
         "file_created:tier": 9,
@@ -238,14 +249,14 @@ ABSTENTIONS = {
         "files_changed_count:case_count": 42,
         "files_changed_count:count": 375, "files_changed_count:divergent": 227, "files_changed_count:extract": 4,
         "files_changed_count:seam": 6,
-        "only_touches:divergent": 108, "only_touches:extract": 154, "only_touches:only": 32, "only_touches:shape": 29,
+        "only_touches:divergent": 108, "only_touches:extract": 154, "only_touches:only": 33, "only_touches:shape": 28,
         "symbol_added:again": 3, "symbol_added:extract": 15, "symbol_added:symbol": 186,
         "tests_added:redefined": 17, "tests_added:tests": 443,
     },
 }
 # Under the POSIX flavour main reads `c:x.py` as a bare name not in the diff, so three decided drive-like claims are
 # UNCHECKABLE on main to begin with: path2a:guard-drive-like-path claim 0, and fuzz 20260930:1033 and :1590.
-ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12143, "file_touched:odd": 4}
+ABSTENTIONS["posix"] = {**ABSTENTIONS["windows"], "decided": 12047, "file_touched:odd": 4}
 del ABSTENTIONS["posix"]["file_created:odd"], ABSTENTIONS["posix"]["file_deleted:odd"]
 # main's own reading depends on the interpreter's Unicode tables where the inputs probe letters added in Unicode 14 and
 # 16 (#161's k2, x1 and y3 cases). Measured on CPython 3.12 (Unicode 15.0) and 3.14 (16.0); for Unicode 13.0 and 14.0
@@ -338,8 +349,10 @@ def test_abstain_only_port(work):
         # and reads `async def` (#179), which the overlay's model of main's count reads with it. (11983, 2559) before
         # review 3 of fix batch 1, where the port's main abstains where #205's seams part the two readers and on a test
         # name defined twice, one line after `async`, as the Python's does. (11863, 2482) before the one-sided #178,
-        # where the port's main decides the 88 test counts that claim more tests than any count it takes
-        assert (rep["counts"]["decided"], rep["counts"]["abstained"]) == (11951, 2482), rep["counts"]
+        # where the port's main decides the 88 test counts that claim more tests than any count it takes. (11951, 2482)
+        # before #174 and #175 (fix/diffgate-174-175), where the port's main no longer decides the 96 scope claims the
+        # Python's main leaves (ABSTENTIONS), and the overlay withholds as many as before
+        assert (rep["counts"]["decided"], rep["counts"]["abstained"]) == (11855, 2482), rep["counts"]
 
 
 def test_lockstep_python(M, inputs):
@@ -548,8 +561,14 @@ def test_git_door_reproductions(tmp_path):
     assert rows("copy") == ("PASS", [("file_created", "UNCHECKABLE", None), ("file_touched", "VERIFIED", None),
                                      ("files_changed_count", "VERIFIED", None)])
     assert rows("typechange") == ("PASS", [("file_touched", "VERIFIED", None), ("files_changed_count", "VERIFIED", None)])
-    # B-1: main's VERIFIED is false (docs/x.md changed) and V121 does not read `github` as a path; ea677740 kept it
-    assert rows("scope-shape-rename") == ("PASS", [("only_touches", "UNCHECKABLE", "shape")])
+    # B-1: main's VERIFIED was false (docs/x.md changed) and V121 does not read `github` as a path; ea677740 kept it,
+    # and PATH-2a withheld it (`shape`). #174 (fix/diffgate-174-175): main reads the rename's old path, docs/x.md, outside
+    # the prefixes and abstains itself, so the claim no longer reaches the overlay
+    assert rows("scope-shape-rename") == ("PASS", [("only_touches", "UNCHECKABLE", None)])
+    summary, repo = repos["scope-shape-rename"]
+    assert [c.why for c in N.gate_diff(summary, repo, "HEAD~1", "HEAD").claims] == [
+        "every changed path lies under the prefix, but not the old path of a rename; git lists it as deleted where it "
+        "reads no rename, and this template does not decide whether the claim covers it (#174)"]
 
     def raw(name):
         summary, repo = repos[name]
@@ -565,7 +584,8 @@ def test_git_door_reproductions(tmp_path):
                                                ("files_changed_count", "VERIFIED", None)])
     assert raw("line-separator") == ("PASS", [("file_touched", "UNCHECKABLE", "divergent"),
                                               ("files_changed_count", "UNCHECKABLE", "divergent")])
-    assert raw("scope-shape-rename") == ("PASS", [("only_touches", "UNCHECKABLE", "shape")])
+    # #174: at the raw door too main reads the old path from the `rename from` line and abstains itself
+    assert raw("scope-shape-rename") == ("PASS", [("only_touches", "UNCHECKABLE", None)])
 
 
 @pytest.mark.skipif(GIT is None, reason="git is not on PATH; the git door cannot be exercised here")
@@ -2701,12 +2721,14 @@ BAR_C = {
     # moved. Review 3 of fix batch 1 (the same branch): main's two ports abstain alike where #205's seams parted them,
     # so the diff side shrinks again (57 -> 15 on CPython 3.12's Windows row), main's two gates part without --strict
     # on 1 input (8 before) and the overlay's on 1 (9), and y2 leaves the inputs where only the overlay's part (main
-    # abstains on its claims in both ports). Measured on CPython 3.12.10 and 3.14.2, Node 24.13.0
+    # abstains on its claims in both ports). #174 and #175 (fix/diffgate-174-175): on every row one input on the equal
+    # side no longer holds a withheld claim (1161 -> 1160 on CPython 3.12's rows), since main abstains itself where
+    # the overlay withheld; no other column moved. Measured on CPython 3.12.10 and 3.14.2, Node 24.13.0
     "committed": {
-        ("15.0.0", "windows", "16"): (6672, 3, 6176, 1161, 478, 15, 1, 1, 0, 0, 12, 4, 2, 10),
-        ("15.0.0", "posix", "16"): (6672, 3, 6179, 1161, 478, 12, 1, 1, 0, 0, 11, 4, 2, 9),
-        ("16.0.0", "windows", "16"): (6672, 3, 6177, 1162, 480, 12, 2, 2, 0, 0, 14, 4, 2, 12),
-        ("16.0.0", "posix", "16"): (6672, 3, 6180, 1162, 480, 9, 2, 2, 0, 0, 13, 4, 2, 11),
+        ("15.0.0", "windows", "16"): (6672, 3, 6176, 1160, 478, 15, 1, 1, 0, 0, 12, 4, 2, 10),
+        ("15.0.0", "posix", "16"): (6672, 3, 6179, 1160, 478, 12, 1, 1, 0, 0, 11, 4, 2, 9),
+        ("16.0.0", "windows", "16"): (6672, 3, 6177, 1161, 480, 12, 2, 2, 0, 0, 14, 4, 2, 12),
+        ("16.0.0", "posix", "16"): (6672, 3, 6180, 1161, 480, 9, 2, 2, 0, 0, 13, 4, 2, 11),
     },
     # every input of this shape where main's two ports decide the symbol claim apart parts the gate verdicts under the
     # overlay, since the tests or count claim that made both of main's gates FAIL is withheld in both ports. Before

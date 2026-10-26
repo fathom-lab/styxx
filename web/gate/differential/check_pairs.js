@@ -7,11 +7,12 @@
 // PATH-2a: path2a_pairs.json pins the overlay's decisions, and path2a_moves.json lists the pinned claims of the
 // other files that the overlay moves; each listed claim must still read `from` in its file and is compared with `to`.
 // #205: issue205_moves.json lists the pinned claims main's new line reading moves, in the same form, read after it.
+// #174: issue174_moves.json lists the pinned claims main's reading of a rename's old path moves, read after those.
 "use strict";
 const fs = require("fs");
 const path = require("path");
 const { gateDiffText } = require("../diffgate.js");
-const MOVES = ["path2a_moves.json", "issue205_moves.json"];
+const MOVES = ["path2a_moves.json", "issue205_moves.json", "issue174_moves.json"];
 const moves = [].concat(...MOVES.map(f => JSON.parse(fs.readFileSync(path.join(__dirname, f), "utf8")).moves));
 let applied = 0;
 function expected(name, pair) {
