@@ -22,6 +22,9 @@ The receipt-binding block is stubbed for population A (it reads git and is not p
 populations B and C run the real block. The REPLICATIONS.md audit line is re-derived under `v1` and
 `default` (`corpus_audit.audit_corpus`, history off).
 
+`summary` holds, as plain numbers, every count the NOTE swears to (each a JSON pointer a sworn span
+names), derived here from the per-configuration blocks beside it.
+
 NOTHING IS WRITTEN OUTSIDE THIS FILE'S OWN RESULT. No committed certificate, capsule, receipt or charon
 line is touched; a move is reported, never repaired.
 
@@ -185,6 +188,33 @@ def audit_line() -> str:
             f"documents that the extractor never examined (reporting only; no verdict moved)")
 
 
+def summarize(per_config: dict, n_certs: int) -> dict:
+    """The counts the NOTE swears to, one scalar per pointer."""
+    out: dict = {"certificates": n_certs, "configs": {}}
+    v1_caps = {c["capsule"]: c["ok"] for c in (per_config["v1"].get("capsules") or {}).get("rows", [])}
+    for name, c in per_config.items():
+        row = {k: int(c.get(k, 0)) for k in ("certificates_moved", "class_flips", "rows_added", "rows_removed",
+                                              "rows_status_changed")}
+        row["magnitude_rows"] = c["magnitude_rows"]["total"]
+        for st in ("VERIFIED", "ABSTAIN", "UNGROUNDED"):
+            row[f"rows_added_{st.lower()}"] = int(c["rows_added_by_status"].get(st, 0))
+        row["uncovered_total"] = c["uncovered_total"]
+        row["uncovered_documents"] = c["uncovered_documents"]
+        if "capsules" in c:
+            caps = c["capsules"]["rows"]
+            row["capsules"] = c["capsules"]["total"]
+            row["capsules_ok"] = c["capsules"]["ok"]
+            row["capsules_stop_verifying"] = sum(1 for x in caps if v1_caps.get(x["capsule"]) and not x["ok"])
+            by = c["charon"]["by_status"] or {}
+            row["charon_lines"] = c["charon"]["lines"]
+            for st, v in by.items():
+                row[f"charon_{st.lower()}"] = int(v)
+            row["charon_neither_same_nor_moved_verifier"] = sum(int(v) for st, v in by.items()
+                                                               if st not in ("SAME_LINE", "MOVED_VERIFIER"))
+        out["configs"][name] = row
+    return out
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--quick", action="store_true", help="population A only")
@@ -331,6 +361,7 @@ def main(argv=None) -> int:
                        "unresolved": [{k: v for k, v in r.items() if not k.startswith("_")} for r in rows if "_doc" not in r
                                       or r["cert"] not in base_by_cert]},
         "compared_fields": list(COMPARED),
+        "summary": summarize(per_config, len(ok)),
         "configurations": per_config,
         "seconds": round(time.time() - t0, 1),
     }
