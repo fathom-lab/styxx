@@ -1,0 +1,969 @@
+{
+ "what": "F-1: the daily anchor left no send line; the anchor path reached jiti's copy of deliver.js; the fix (native_import.cjs, runnerState read before every send), its tests, the lock reading the whole installed folder, and the move's script and rehearsals",
+ "keys": {
+  "W:": "C:/Users/heyzo/clawd/",
+  "BD:": "W:wt/_darkflobi_gate_2026_10_22/before_d0/",
+  "F1:": "BD:f1_anchor/"
+ },
+ "fixed_copy": {
+  "plugin_index_js_sha256": "e56990f437134dd26a31db256062d4911ebf7e7be08d2605c4a94c7644d6921f",
+  "native_import_cjs_sha256": "b173faea8eca7a1bb71db956299016bcf84bcf8d3a921936dd4097b5cb2bb124",
+  "readme_sha256": "49a7dc73dbe76d1b9207a835eba31602b73e88e6d6704a3a482daea9c781257b",
+  "run_tests_mjs_sha256": "90ae51c1700277ebe371b6e758eb5d5205ac926be7fb540dbbc65bf3504ef23f",
+  "probe_sha256": "e0d0178a12c76195785c45f9fdb218d31bb9b940eedd23c3dc8e57bdcd39011c"
+ },
+ "route_scan": {
+  "command": "py -3.12 -B papers/darkflobi-gate/anchor_route_scan.py --gate W:gate --ledger F1:logs_frozen_20261026T175116Z/ledger.jsonl --anchor-state F1:logs_frozen_20261026T175116Z/anchor_state.json --log F1:logs_frozen_20261026T175116Z/clawdbot-2026-10-24.log --log F1:logs_frozen_20261026T175116Z/clawdbot-2026-10-25.log --log F1:logs_frozen_20261026T175116Z/clawdbot-2026-10-26.log --until 2026-10-26T17:02:49Z --clawdbot-json ~/.clawdbot/clawdbot.json",
+  "run_at_utc": "2026-10-26T18:33:45Z",
+  "frozen_inputs": "F1:logs_frozen_20261026T175116Z/ (SHA256SUMS inside; copies taken 2026-10-26T17:51:16Z); the gate's sources/ folder read live, named by its digest in the output",
+  "output": {
+   "anchor_lines": [
+    {
+     "anchor_date": "2026-10-24",
+     "process": {
+      "name": "gateway",
+      "pid": 28320
+     },
+     "seq": 58,
+     "timestamp": "2026-10-25T04:00:01Z"
+    },
+    {
+     "anchor_date": "2026-10-25",
+     "process": {
+      "name": "gateway",
+      "pid": 28320
+     },
+     "seq": 117,
+     "timestamp": "2026-10-26T04:00:00Z"
+    }
+   ],
+   "config_key_names": {
+    "channels": [
+     "telegram"
+    ],
+    "plugins_entries": [
+     "telegram"
+    ]
+   },
+   "delivered_days": [
+    {
+     "anchor_line_seq": 58,
+     "day": "2026-10-24",
+     "delivered_at": "2026-10-25T04:00:02.436Z",
+     "hook_runs_within_120s": [],
+     "log_lines_of_any_kind_within_120s": 0,
+     "send_lines_payload_kind_anchor_that_day": [],
+     "source_file_with_this_day_anchor_text": false
+    },
+    {
+     "anchor_line_seq": 117,
+     "day": "2026-10-25",
+     "delivered_at": "2026-10-26T04:00:01.221Z",
+     "hook_runs_within_120s": [],
+     "log_lines_of_any_kind_within_120s": 0,
+     "send_lines_payload_kind_anchor_that_day": [],
+     "source_file_with_this_day_anchor_text": false
+    }
+   ],
+   "e2_outbound_sends_and_their_hook_lines": [
+    {
+     "nearest_message_sending_before_s": 1.349,
+     "seq": 12,
+     "timestamp": "2026-10-24T15:14:16Z"
+    },
+    {
+     "nearest_message_sending_before_s": 10.638,
+     "seq": 111,
+     "timestamp": "2026-10-25T18:10:17Z"
+    },
+    {
+     "nearest_message_sending_before_s": 1.022,
+     "seq": 115,
+     "timestamp": "2026-10-25T19:10:05Z"
+    },
+    {
+     "nearest_message_sending_before_s": 1.094,
+     "seq": 118,
+     "timestamp": "2026-10-26T05:10:06Z"
+    },
+    {
+     "nearest_message_sending_before_s": 0.625,
+     "seq": 120,
+     "timestamp": "2026-10-26T06:10:05Z"
+    },
+    {
+     "nearest_message_sending_before_s": 0.265,
+     "seq": 124,
+     "timestamp": "2026-10-26T09:10:05Z"
+    },
+    {
+     "nearest_message_sending_before_s": 0.342,
+     "seq": 127,
+     "timestamp": "2026-10-26T15:41:03Z"
+    },
+    {
+     "nearest_message_sending_before_s": 1.088,
+     "seq": 129,
+     "timestamp": "2026-10-26T15:41:33Z"
+    },
+    {
+     "nearest_message_sending_before_s": 0.316,
+     "seq": 133,
+     "timestamp": "2026-10-26T16:41:03Z"
+    }
+   ],
+   "hook_handler_counts_seen": [
+    1
+   ],
+   "hook_line_span": [
+    "2026-10-24T15:12:21.906000+00:00",
+    "2026-10-26T16:41:04.403000+00:00"
+   ],
+   "hook_lines_until": "2026-10-26T17:02:49Z",
+   "hook_runs_in_logs": {
+    "message_sending": 65,
+    "message_sent": 65
+   },
+   "inputs": {
+    "anchor_state": {
+     "bytes": 613,
+     "name": "anchor_state.json",
+     "sha256": "1a0acc7981b008fd30a388a7780ae16d0d5b5a243bd8e02bc258272722df86db"
+    },
+    "ledger": {
+     "bytes": 218133,
+     "head_seq": 134,
+     "lines": 134,
+     "name": "ledger.jsonl",
+     "sha256": "ee8dfe33c61380ecec375e8e0bf76346ff07280634d65168db4234d483fa92bf"
+    },
+    "logs": [
+     {
+      "bytes": 4295133,
+      "name": "clawdbot-2026-10-24.log",
+      "sha256": "65f2e61920e5d6b2ef1ad01b4315bca51272b02a22a7bfa95a8fe1a1a0b1feb3"
+     },
+     {
+      "bytes": 11575,
+      "name": "clawdbot-2026-10-25.log",
+      "sha256": "4b30ab176b2b93b131aeafed443249a6aff093ba80ef6c1361537d9799dc2d4b"
+     },
+     {
+      "bytes": 559365,
+      "name": "clawdbot-2026-10-26.log",
+      "sha256": "f04e3b6d558374896ca7f6ed21fd8adb4edc8b5c44b97f4342b801dba65e4933"
+     }
+    ],
+    "plugin_failures_jsonl": null,
+    "sources_dir": {
+     "digest_over_names_and_sha256": "c95f4063c4742ff7593f44f6bbf80af3625a36cda4f873abbff6332e848bcbaf",
+     "files": 57,
+     "read_live": true
+    }
+   },
+   "plugin_failures_jsonl_present": false,
+   "send_lines": 65,
+   "send_lines_by_payload_kind": {
+    "outbound": 9,
+    "reply": 42,
+    "telegram_action": 14
+   },
+   "send_lines_payload_kind_anchor": 0
+  },
+  "without_the_cutoff": {
+   "message_sending": 67,
+   "message_sent": 65,
+   "note": "two message_sending lines at 2026-10-26T17:16:38Z, with no ledger line, during the second review's experiments, which ran clawdbot's hook runner in other processes writing to the same log file"
+  }
+ },
+ "sdk_repro": {
+  "command": "node papers/darkflobi-gate/anchor_sdk_repro.mjs <installed dist> F1:gate_copy/plugin",
+  "note": "a reproduction in another process with the installed dist, jiti 2.6.1 and the loader's alias; not the gateway",
+  "run_at_utc": "2026-10-26T19:01:25Z",
+  "plugin_index_js_sha256": "e56990f437134dd26a31db256062d4911ebf7e7be08d2605c4a94c7644d6921f",
+  "output": {
+   "node": "v24.13.0",
+   "jiti": "2.6.1",
+   "before_sdk": {
+    "import_v040_same_as_native": true,
+    "require_same_as_native": true,
+    "fix_same_as_native": true,
+    "fix_runner_is_the_gateways": true,
+    "fix_holds_gate": true
+   },
+   "sdk_through_jiti_ms": 15704,
+   "after_sdk": {
+    "import_v040_same_as_native": false,
+    "require_same_as_native": true,
+    "fix_same_as_native": true,
+    "fix_runner_is_the_gateways": true,
+    "fix_holds_gate": true,
+    "jiti_runner_is_null": true
+   }
+  }
+ },
+ "probe_d8": {
+  "command": "node F1:gate_copy/plugin/tests/f1_native_deliver_probe.mjs <installed dist> F1:gate_copy/plugin (cwd elsewhere)",
+  "run_at_utc": "2026-10-26T19:01:17Z",
+  "plugin_index_js_sha256": "e56990f437134dd26a31db256062d4911ebf7e7be08d2605c4a94c7644d6921f",
+  "output": {
+   "cwd_is_plugin_parent": false,
+   "poison_ms": 5288,
+   "jiti_copy_differs": true,
+   "jiti_runner_is_null": true,
+   "import_v040_same": false,
+   "require_same": true,
+   "default_getDeliver_same_deliver": true,
+   "default_getDeliver_same_runner": true,
+   "default_getDeliver_state": "gate",
+   "collision_key_found_deliver.js": true,
+   "collision_key_found_hook-runner-global.js": true,
+   "collision_key_found_native_import.cjs": false,
+   "helper_cached_under_node_key_native_import.cjs": true,
+   "collided_import_v040_same": false,
+   "collided_require_same": false,
+   "collided_default_getDeliver_same_deliver": true,
+   "collided_default_getDeliver_same_runner": true,
+   "collided_default_getDeliver_state": "gate",
+   "states": {
+    "gate": "gate",
+    "empty": "unbound",
+    "foreign_only": "unbound",
+    "sent_only_ours": "unbound",
+    "never_initialised": "null",
+    "throwing": "unreadable"
+   },
+   "guard_sequence": [
+    "sent",
+    "anchor_runner_unbound",
+    "anchor_runner_unbound",
+    "anchor_runner_unreadable",
+    "sent"
+   ],
+   "guard_calls": 2,
+   "guard_send_error_code": "deliver_test_fault",
+   "guard_null_code": "anchor_runner_null",
+   "guard_calls_after_null": 2
+  }
+ },
+ "harness": {
+  "command": "node F1:gate_copy/plugin/tests/run_tests.mjs",
+  "before_the_fix_live_in_place": {
+   "passed": 79,
+   "failed": 0,
+   "total": 79,
+   "source": "BD:apply/s6_20261026T134223Z/plugin_harness.txt"
+  },
+  "after_the_fix_on_the_copy": {
+   "passed": 85,
+   "failed": 0,
+   "total": 85,
+   "elapsed_ms": 60165,
+   "rss_mb": 181,
+   "node": "v24.13.0",
+   "ran_at": "2026-10-26T18:31:42.977Z",
+   "output": "F1:harness_after_fix_v4.txt",
+   "output_sha256": "c2c2b405861a87c1c298f931f96f7bb74b05758c72245c5aca0746505b06769d",
+   "ran_on_index_js_sha256": "e56990f437134dd26a31db256062d4911ebf7e7be08d2605c4a94c7644d6921f",
+   "ran_on_run_tests_mjs_sha256": "90ae51c1700277ebe371b6e758eb5d5205ac926be7fb540dbbc65bf3504ef23f"
+  },
+  "new_or_changed_tests": [
+   "D2",
+   "D8",
+   "F11",
+   "F12",
+   "F13",
+   "F14",
+   "F15",
+   "H1 (timestamps blanked)"
+  ]
+ },
+ "mutations": {
+  "M1_default_falls_back_to_import": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 64831,
+    "rss_mb": 191,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:33:26.495Z"
+   },
+   "failed": [
+    "D8"
+   ],
+   "mutant_index_js_sha256": "d5306f89e250c96826923677bed669cb94079f5081ec1b9d430804a72ef0af1b",
+   "mutant_source": "F1:mutants_v4/index.M1_default_falls_back_to_import.js"
+  },
+  "M2_guard_removed": {
+   "result": {
+    "passed": 82,
+    "failed": 3,
+    "total": 85,
+    "elapsed_ms": 64048,
+    "rss_mb": 194,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:34:31.290Z"
+   },
+   "failed": [
+    "D8",
+    "F12",
+    "F15"
+   ],
+   "mutant_index_js_sha256": "92c50598e9f65529e82925d20f1bd298d4377e4e9ad3f41041f963a7dd159ea2",
+   "mutant_source": "F1:mutants_v4/index.M2_guard_removed.js"
+  },
+  "M3_any_handler_counts": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 64502,
+    "rss_mb": 192,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:35:36.474Z"
+   },
+   "failed": [
+    "D8"
+   ],
+   "mutant_index_js_sha256": "b68d4f9391d1295803eb4f7948b18299e6bc70ab3c298406e6fd8ce5a8151c67",
+   "mutant_source": "F1:mutants_v4/index.M3_any_handler_counts.js"
+  },
+  "M4_require_of_deliver": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 62152,
+    "rss_mb": 194,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:36:39.239Z"
+   },
+   "failed": [
+    "D8"
+   ],
+   "mutant_index_js_sha256": "7aa6539ce5561fa73f525faee5fc76868b3b79f75ed9e2e83d87ea9a538d8e0c",
+   "mutant_source": "F1:mutants_v4/index.M4_require_of_deliver.js"
+  },
+  "M5_failed_load_cached": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 61475,
+    "rss_mb": 191,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:37:41.321Z"
+   },
+   "failed": [
+    "F13"
+   ],
+   "mutant_index_js_sha256": "669b7171750f714dc30ae88d63638da9317d08481dad36f3cc97490763b24991",
+   "mutant_source": "F1:mutants_v4/index.M5_failed_load_cached.js"
+  },
+  "M6_no_empty_record": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 60260,
+    "rss_mb": 194,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:38:42.212Z"
+   },
+   "failed": [
+    "F14"
+   ],
+   "mutant_index_js_sha256": "6b67e059e090bedf0f91bb7aedf755e09b6a47b7df4accc2dd6c858b5b033b50",
+   "mutant_source": "F1:mutants_v4/index.M6_no_empty_record.js"
+  },
+  "MA_static_import_of_helper": {
+   "result": {
+    "passed": 85,
+    "failed": 0,
+    "total": 85,
+    "elapsed_ms": 62201,
+    "rss_mb": 190,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:48:08.884Z"
+   },
+   "failed": [],
+   "mutant_index_js_sha256": "438fcf5730f9506a5980fcb56b0585c23616a2f18d1ea81e545d61a1b03488cb",
+   "mutant_source": "F1:mutants_v4/index.MA_static_import_of_helper.js",
+   "note": "survives, harmless as observed: jiti 2.6.1 hands a .cjs file to Node's require, so a static import reaches Node's instance of the helper (probe_d8: no jiti key for the helper)"
+  },
+  "MB_null_reads_unbound": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 61721,
+    "rss_mb": 194,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:49:11.230Z"
+   },
+   "failed": [
+    "D8"
+   ],
+   "mutant_index_js_sha256": "e683aea08e8d038a1816fd461ed7c5e70d951dc5cf23c2584ce87cdface3433f",
+   "mutant_source": "F1:mutants_v4/index.MB_null_reads_unbound.js"
+  },
+  "N13_second_refusal_gives_up": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 61847,
+    "rss_mb": 194,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:46:02.723Z"
+   },
+   "failed": [
+    "F12"
+   ],
+   "mutant_index_js_sha256": "abe107a757d182041af6f3f131895661aeabee1808b22efd767255c9e484e87a",
+   "mutant_source": "F1:mutants_v4/index.N13_second_refusal_gives_up.js"
+  },
+  "N14_helper_from_cwd": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 62629,
+    "rss_mb": 192,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:47:05.967Z"
+   },
+   "failed": [
+    "D8"
+   ],
+   "mutant_index_js_sha256": "f0cb997d22736d11949469d31c8194ed8338c857172ec3b027a76ab609ee2c71",
+   "mutant_source": "F1:mutants_v4/index.N14_helper_from_cwd.js"
+  },
+  "N1_hookname_dropped": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 60736,
+    "rss_mb": 192,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:39:43.555Z"
+   },
+   "failed": [
+    "D8"
+   ],
+   "mutant_index_js_sha256": "5245bde94b30989520801ed8390f2fdbbd24926e16f9b0cd62381e88bec03c78",
+   "mutant_source": "F1:mutants_v4/index.N1_hookname_dropped.js"
+  },
+  "N3_checked_once_at_load": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 60219,
+    "rss_mb": 193,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:40:44.402Z"
+   },
+   "failed": [
+    "F15"
+   ],
+   "mutant_index_js_sha256": "624b11eb9a67d6109c2a0e271c2e4e80028ecc760ff89f475ae1ecbad8497f21",
+   "mutant_source": "F1:mutants_v4/index.N3_checked_once_at_load.js"
+  },
+  "N4_record_names_readme": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 64943,
+    "rss_mb": 192,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:41:50.034Z"
+   },
+   "failed": [
+    "D2"
+   ],
+   "mutant_index_js_sha256": "9d79d0cf6f369bbddf6da24ba26b82721f4e912f0e887c9a6cdc03934dab7bed",
+   "mutant_source": "F1:mutants_v4/index.N4_record_names_readme.js"
+  },
+  "N6_guard_latches_open": {
+   "result": {
+    "passed": 83,
+    "failed": 2,
+    "total": 85,
+    "elapsed_ms": 62108,
+    "rss_mb": 193,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:42:52.766Z"
+   },
+   "failed": [
+    "D8",
+    "F15"
+   ],
+   "mutant_index_js_sha256": "d77e4b7ad29d56ac271a7ece0f4229a09fe45a73684d99b6825224bf6a3c8d52",
+   "mutant_source": "F1:mutants_v4/index.N6_guard_latches_open.js"
+  },
+  "N7_catch_reads_gate": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 61775,
+    "rss_mb": 193,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:43:55.299Z"
+   },
+   "failed": [
+    "D8"
+   ],
+   "mutant_index_js_sha256": "07393892f2d9bc48dd4382ec7f6c3f4b30c57f8618263a723dd9f8af483f4263",
+   "mutant_source": "F1:mutants_v4/index.N7_catch_reads_gate.js"
+  },
+  "N8_refusal_recomposes": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 64312,
+    "rss_mb": 195,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:45:00.238Z"
+   },
+   "failed": [
+    "F12"
+   ],
+   "mutant_index_js_sha256": "16247ccfc0ba522e63c8e9fb74f754200af0d1998e7dc5fabd4d39de8a63ce32",
+   "mutant_source": "F1:mutants_v4/index.N8_refusal_recomposes.js"
+  },
+  "X1_unreadable_sends": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 61850,
+    "rss_mb": 192,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:50:13.699Z"
+   },
+   "failed": [
+    "D8"
+   ],
+   "mutant_index_js_sha256": "d98d848601d9e9c9c57b2ea7843728ea091576ca730236ef28319630166ad387",
+   "mutant_source": "F1:mutants_v4/index.X1_unreadable_sends.js"
+  },
+  "X2_throwing_send_reads_empty": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 62375,
+    "rss_mb": 193,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:51:16.687Z"
+   },
+   "failed": [
+    "D8"
+   ],
+   "mutant_index_js_sha256": "90077af8081b6d0f63ea56f8255d7db33cf2635b74cdd0370d315f1512e119e1",
+   "mutant_source": "F1:mutants_v4/index.X2_throwing_send_reads_empty.js"
+  },
+  "X3_unreadable_recorded_unbound": {
+   "result": {
+    "passed": 84,
+    "failed": 1,
+    "total": 85,
+    "elapsed_ms": 75379,
+    "rss_mb": 192,
+    "node": "v24.13.0",
+    "ran_at": "2026-10-26T18:52:32.706Z"
+   },
+   "failed": [
+    "D8"
+   ],
+   "mutant_index_js_sha256": "0c0d0a433c410320aaa18fa8c775c2e8937b96098a06624296c2b6e4a2b8f100",
+   "mutant_source": "F1:mutants_v4/index.X3_unreadable_recorded_unbound.js"
+  }
+ },
+ "files": {
+  "W:gate/plugin/tests/fakes/import_deliver_v040.mjs": {
+   "before": null,
+   "after": "120f0f2eff8dc9242df123475c07ed81dce3ef6d651016300e799517e8172658",
+   "bytes_after": 415
+  },
+  "W:gate/plugin/tests/f1_native_deliver_probe.mjs": {
+   "before": null,
+   "after": "e0d0178a12c76195785c45f9fdb218d31bb9b940eedd23c3dc8e57bdcd39011c",
+   "bytes_after": 7901
+  },
+  "W:gate/plugin/tests/run_tests.mjs": {
+   "before": "8d4b7db0369d23139cac59131cd69078e6d11ea0d6024e58e481219771afc313",
+   "after": "90ae51c1700277ebe371b6e758eb5d5205ac926be7fb540dbbc65bf3504ef23f",
+   "bytes_after": 113560
+  },
+  "W:gate/plugin/README.md": {
+   "before": "ed2ac65e341ec9bce9ac5a424c7ad756bf17e38fca0f6cfd417eb668b0e04e8e",
+   "after": "49a7dc73dbe76d1b9207a835eba31602b73e88e6d6704a3a482daea9c781257b",
+   "bytes_after": 23831
+  },
+  "W:gate/plugin/native_import.cjs": {
+   "before": null,
+   "after": "b173faea8eca7a1bb71db956299016bcf84bcf8d3a921936dd4097b5cb2bb124",
+   "bytes_after": 1025
+  },
+  "W:gate/plugin/index.js": {
+   "before": "759ceb82174cc8c1ccabf68198e4bc7fb35b1be3dae260b20ac164c60f7af02c",
+   "after": "e56990f437134dd26a31db256062d4911ebf7e7be08d2605c4a94c7644d6921f",
+   "bytes_after": 71944
+  },
+  "~/.clawdbot/extensions/styxx-gate/README.md": {
+   "before": "ed2ac65e341ec9bce9ac5a424c7ad756bf17e38fca0f6cfd417eb668b0e04e8e",
+   "after": "49a7dc73dbe76d1b9207a835eba31602b73e88e6d6704a3a482daea9c781257b",
+   "bytes_after": 23831
+  },
+  "~/.clawdbot/extensions/styxx-gate/native_import.cjs": {
+   "before": null,
+   "after": "b173faea8eca7a1bb71db956299016bcf84bcf8d3a921936dd4097b5cb2bb124",
+   "bytes_after": 1025
+  },
+  "~/.clawdbot/extensions/styxx-gate/index.js": {
+   "before": "759ceb82174cc8c1ccabf68198e4bc7fb35b1be3dae260b20ac164c60f7af02c",
+   "after": "e56990f437134dd26a31db256062d4911ebf7e7be08d2605c4a94c7644d6921f",
+   "bytes_after": 71944
+  }
+ },
+ "gate_sha256": {
+  "now": {
+   "after_order": null,
+   "gate_sha256": "c5084df2ef574658fe84f84feea0b70a1169eb695a882f1d4237b439d3a418e8",
+   "files": 19,
+   "what": "before the move"
+  },
+  "stages": [
+   {
+    "after_order": null,
+    "gate_sha256": "c5084df2ef574658fe84f84feea0b70a1169eb695a882f1d4237b439d3a418e8",
+    "files": 19,
+    "what": "before the move"
+   },
+   {
+    "after_order": 7,
+    "gate_sha256": "0a85eb81c7b6a97e98cad7d22a42af36d2a3bb2dfa309f055b326ba059d8dc52",
+    "files": 19,
+    "what": "after ~/.clawdbot/extensions/styxx-gate/README.md"
+   },
+   {
+    "after_order": 8,
+    "gate_sha256": "cadac3753be0e1fc56ae55de74b83d5641ecfd671caaec74d29e6effc0bbd8c7",
+    "files": 20,
+    "what": "after ~/.clawdbot/extensions/styxx-gate/native_import.cjs"
+   },
+   {
+    "after_order": 9,
+    "gate_sha256": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f",
+    "files": 20,
+    "what": "after ~/.clawdbot/extensions/styxx-gate/index.js"
+   }
+  ],
+  "candidate_after_the_move": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f",
+  "files_after": 20,
+  "installed_files_before": [
+   "README.md",
+   "clawdbot.plugin.json",
+   "gate.js",
+   "index.js",
+   "package.json",
+   "patch_dist.js"
+  ],
+  "installed_files_after": [
+   "README.md",
+   "clawdbot.plugin.json",
+   "gate.js",
+   "index.js",
+   "native_import.cjs",
+   "package.json",
+   "patch_dist.js"
+  ],
+  "how": "F1:make_f1_move_table.py: BD:apply/rederive_gate_sha256.py over a copy of the installed folder after each installed rename"
+ },
+ "move_table": {
+  "path": "F1:f1_move_table.json",
+  "sha256": "96e6ba1add320bb79fd85f3473c979d19780c38eaf2c3cc3f8beffda540a8c5a"
+ },
+ "move_script": {
+  "path": "F1:apply_f1_move.py",
+  "sha256": "61b1d36f0a7ba8213ec74db065a5867261850650bf7af80f3a8c4516cd036a95"
+ },
+ "move_rehearsals": {
+  "table_sha256": "96e6ba1add320bb79fd85f3473c979d19780c38eaf2c3cc3f8beffda540a8c5a",
+  "script_sha256": "61b1d36f0a7ba8213ec74db065a5867261850650bf7af80f3a8c4516cd036a95",
+  "all_ok": true,
+  "scenarios": {
+   "happy_move_rollback_rollback": {
+    "tree_before": "327e9c40ef1c4d0cb70f5ee99776b4d82a55484f9cd5db73bf5614ba9c782b81",
+    "steps": [
+     {
+      "args": [
+       "--apply"
+      ],
+      "fault": null,
+      "rc": 0,
+      "tail": [
+       "      wait for :18789 and its started line, then resume the watchdog (pm2 start darkflobi-watchdog).",
+       "THEN: rederive_gate_sha256.py --gate C:/Users/heyzo/clawd/gate -> expect 445ac94cb9687618…, the plugin harness in place, the strict check with",
+       "      every amendment, gate_verify --rederive, then the addendum."
+      ]
+     },
+     {
+      "args": [
+       "--rollback",
+       "C:\\Users\\heyzo\\clawd\\wt\\_darkflobi_gate_2026_10_22\\before_d0\\f1_anchor\\rehearsal\\happy\\apply\\before_2026-10-26T190101Z"
+      ],
+      "fault": null,
+      "rc": 0,
+      "tail": [
+       "8 remove ~/.clawdbot/extensions/styxx-gate/native_import.cjs -> None",
+       "rollback complete, every row at its before digest",
+       "NEXT: start the gateway, as after a move"
+      ]
+     },
+     {
+      "args": [
+       "--rollback",
+       "C:\\Users\\heyzo\\clawd\\wt\\_darkflobi_gate_2026_10_22\\before_d0\\f1_anchor\\rehearsal\\happy\\apply\\before_2026-10-26T190101Z"
+      ],
+      "fault": null,
+      "rc": 0,
+      "tail": [
+       "rollback complete, every row at its before digest",
+       "NEXT: start the gateway, as after a move"
+      ]
+     }
+    ],
+    "tree_after_move": "127b723d5a1454798166360d16c897592b525b63bc75c3b7e79a3a35cdd90c2b",
+    "installed_files_after_move": [
+     "README.md",
+     "clawdbot.plugin.json",
+     "gate.js",
+     "index.js",
+     "native_import.cjs",
+     "package.json",
+     "patch_dist.js"
+    ],
+    "rows_after_move_read": true,
+    "tree_after_rollback": "327e9c40ef1c4d0cb70f5ee99776b4d82a55484f9cd5db73bf5614ba9c782b81",
+    "tree_after_second_rollback": "327e9c40ef1c4d0cb70f5ee99776b4d82a55484f9cd5db73bf5614ba9c782b81",
+    "strays": [],
+    "ok": true
+   },
+   "stage_fault_1": {
+    "step": {
+     "args": [
+      "--apply"
+     ],
+     "fault": "stage:1",
+     "rc": 2,
+     "tail": [
+      "8  OK   ~/.clawdbot/extensions/styxx-gate/native_import.cjs  source=b173faea8eca  target=None  want before=None after=b173faea8eca",
+      "9  OK   ~/.clawdbot/extensions/styxx-gate/index.js  source=e56990f43713  target=759ceb82174c  want before=759ceb82174c after=e56990f43713",
+      "REFUSED: OSError('F1_FAULT stage:1'); every staged file removed, nothing moved (snapshot C:\\Users\\heyzo\\clawd\\wt\\_darkflobi_gate_2026_10_22\\before_d0\\f1_anchor\\rehearsal\\stage_fault_1\\apply\\before_2026-10-26T190102Z)"
+     ]
+    },
+    "tree_unchanged": true,
+    "strays": [],
+    "ok": true
+   },
+   "stage_fault_9": {
+    "step": {
+     "args": [
+      "--apply"
+     ],
+     "fault": "stage:9",
+     "rc": 2,
+     "tail": [
+      "8  OK   ~/.clawdbot/extensions/styxx-gate/native_import.cjs  source=b173faea8eca  target=None  want before=None after=b173faea8eca",
+      "9  OK   ~/.clawdbot/extensions/styxx-gate/index.js  source=e56990f43713  target=759ceb82174c  want before=759ceb82174c after=e56990f43713",
+      "REFUSED: OSError('F1_FAULT stage:9'); every staged file removed, nothing moved (snapshot C:\\Users\\heyzo\\clawd\\wt\\_darkflobi_gate_2026_10_22\\before_d0\\f1_anchor\\rehearsal\\stage_fault_9\\apply\\before_2026-10-26T190102Z)"
+     ]
+    },
+    "tree_unchanged": true,
+    "strays": [],
+    "ok": true
+   },
+   "rename_fault_8_then_rollback": {
+    "steps": [
+     {
+      "args": [
+       "--apply"
+      ],
+      "fault": "rename:8",
+      "rc": 3,
+      "tail": [
+       "9  OK   ~/.clawdbot/extensions/styxx-gate/index.js  source=e56990f43713  target=759ceb82174c  want before=759ceb82174c after=e56990f43713",
+       "ERROR during rename: OSError('F1_FAULT rename:8'); renamed: ['W:gate/plugin/tests/fakes/import_deliver_v040.mjs', 'W:gate/plugin/tests/f1_native_deliver_probe.mjs', 'W:gate/plugin/tests/run_tests.mjs', 'W:gate/plugin/README.md', 'W:gate/plugin/native_import.cjs', 'W:gate/plugin/index.js', '~/.clawdbot/extensions/styxx-gate/README.md']",
+       "ROLL BACK: --rollback C:\\Users\\heyzo\\clawd\\wt\\_darkflobi_gate_2026_10_22\\before_d0\\f1_anchor\\rehearsal\\rename_fault_8\\apply\\before_2026-10-26T190103Z"
+      ]
+     },
+     {
+      "args": [
+       "--rollback",
+       "C:\\Users\\heyzo\\clawd\\wt\\_darkflobi_gate_2026_10_22\\before_d0\\f1_anchor\\rehearsal\\rename_fault_8\\apply\\before_2026-10-26T190103Z"
+      ],
+      "fault": null,
+      "rc": 0,
+      "tail": [
+       "7 restore ~/.clawdbot/extensions/styxx-gate/README.md -> ed2ac65e341e",
+       "rollback complete, every row at its before digest",
+       "NEXT: start the gateway, as after a move"
+      ]
+     }
+    ],
+    "strays_after_fault": [],
+    "tree_restored": true,
+    "strays": [],
+    "ok": true
+   },
+   "rollback_fault_then_rollback": {
+    "steps": [
+     {
+      "args": [
+       "--apply"
+      ],
+      "fault": null,
+      "rc": 0,
+      "tail": [
+       "      wait for :18789 and its started line, then resume the watchdog (pm2 start darkflobi-watchdog).",
+       "THEN: rederive_gate_sha256.py --gate C:/Users/heyzo/clawd/gate -> expect 445ac94cb9687618…, the plugin harness in place, the strict check with",
+       "      every amendment, gate_verify --rederive, then the addendum."
+      ]
+     },
+     {
+      "args": [
+       "--rollback",
+       "C:\\Users\\heyzo\\clawd\\wt\\_darkflobi_gate_2026_10_22\\before_d0\\f1_anchor\\rehearsal\\rollback_fault\\apply\\before_2026-10-26T190103Z"
+      ],
+      "fault": "rollback:8",
+      "rc": 3,
+      "tail": [
+       "6 restore W:gate/plugin/index.js -> 759ceb82174c",
+       "7 restore ~/.clawdbot/extensions/styxx-gate/README.md -> ed2ac65e341e",
+       "ERROR during rollback: OSError('F1_FAULT rollback:8'); run --rollback again (it reads every row before it writes)"
+      ]
+     },
+     {
+      "args": [
+       "--rollback",
+       "C:\\Users\\heyzo\\clawd\\wt\\_darkflobi_gate_2026_10_22\\before_d0\\f1_anchor\\rehearsal\\rollback_fault\\apply\\before_2026-10-26T190103Z"
+      ],
+      "fault": null,
+      "rc": 0,
+      "tail": [
+       "8 remove ~/.clawdbot/extensions/styxx-gate/native_import.cjs -> None",
+       "rollback complete, every row at its before digest",
+       "NEXT: start the gateway, as after a move"
+      ]
+     }
+    ],
+    "strays_after_fault": [],
+    "tree_restored": true,
+    "strays": [],
+    "ok": true
+   },
+   "required_present": {
+    "dry": {
+     "args": [],
+     "fault": null,
+     "rc": 2,
+     "tail": [
+      "8  OK   ~/.clawdbot/extensions/styxx-gate/native_import.cjs  source=b173faea8eca  target=None  want before=None after=b173faea8eca",
+      "9  OK   ~/.clawdbot/extensions/styxx-gate/index.js  source=e56990f43713  target=759ceb82174c  want before=759ceb82174c after=e56990f43713",
+      "REFUSED: W:gate/REQUIRED exists"
+     ]
+    },
+    "apply": {
+     "args": [
+      "--apply"
+     ],
+     "fault": null,
+     "rc": 2,
+     "tail": [
+      "REFUSED: W:gate/REQUIRED exists"
+     ]
+    },
+    "ok": true
+   },
+   "stray_present": {
+    "dry": {
+     "args": [],
+     "fault": null,
+     "rc": 2,
+     "tail": [
+      "9  OK   ~/.clawdbot/extensions/styxx-gate/index.js  source=e56990f43713  target=759ceb82174c  want before=759ceb82174c after=e56990f43713",
+      "STRAY  C:\\Users\\heyzo\\clawd\\wt\\_darkflobi_gate_2026_10_22\\before_d0\\f1_anchor\\rehearsal\\stray\\home\\.clawdbot\\extensions\\styxx-gate\\index.js.new",
+      "REFUSED: a row does not read, or a stray exists"
+     ]
+    },
+    "apply": {
+     "args": [
+      "--apply"
+     ],
+     "fault": null,
+     "rc": 2,
+     "tail": [
+      "9  OK   ~/.clawdbot/extensions/styxx-gate/index.js  source=e56990f43713  target=759ceb82174c  want before=759ceb82174c after=e56990f43713",
+      "STRAY  C:\\Users\\heyzo\\clawd\\wt\\_darkflobi_gate_2026_10_22\\before_d0\\f1_anchor\\rehearsal\\stray\\home\\.clawdbot\\extensions\\styxx-gate\\index.js.new",
+      "REFUSED: a row does not read as the table says, or a stray exists; nothing written"
+     ]
+    },
+    "ok": true
+   },
+   "extra_file_present": {
+    "dry": {
+     "args": [],
+     "fault": null,
+     "rc": 2,
+     "tail": [
+      "9  OK   ~/.clawdbot/extensions/styxx-gate/index.js  source=e56990f43713  target=759ceb82174c  want before=759ceb82174c after=e56990f43713",
+      "INSTALLED FOLDER  holds ['README.md', 'clawdbot.plugin.json', 'gate.js', 'index.js', 'index.js.bak', 'package.json', 'patch_dist.js'], the table's before set is ['README.md', 'clawdbot.plugin.json', 'gate.js', 'index.js', 'package.json', 'patch_dist.js']",
+      "REFUSED: a row does not read, or a stray exists"
+     ]
+    },
+    "apply": {
+     "args": [
+      "--apply"
+     ],
+     "fault": null,
+     "rc": 2,
+     "tail": [
+      "9  OK   ~/.clawdbot/extensions/styxx-gate/index.js  source=e56990f43713  target=759ceb82174c  want before=759ceb82174c after=e56990f43713",
+      "INSTALLED FOLDER  holds ['README.md', 'clawdbot.plugin.json', 'gate.js', 'index.js', 'index.js.bak', 'package.json', 'patch_dist.js'], the table's before set is ['README.md', 'clawdbot.plugin.json', 'gate.js', 'index.js', 'package.json', 'patch_dist.js']",
+      "REFUSED: a row does not read as the table says, or a stray exists; nothing written"
+     ]
+    },
+    "ok": true
+   },
+   "box_only_refusals_in_process": {
+    "checks": {
+     "mixed_live_is_box": true,
+     "mixed_installed_is_box": true,
+     "gateway_up_refuses": true,
+     "anchor_window_refuses": true,
+     "window_bounds": true,
+     "decoys_untouched": true
+    },
+    "ok": true
+   }
+  }
+ },
+ "lock_check_tool_v2": {
+  "path": "F1:lock_check_tool_v2.txt",
+  "sha256": "e982bcd9bf547164edfb6213be01e309e282081d0ff35671ce4b8bfc0440ed6a",
+  "last_line": "rows 84, changed 0, built since 0, absent 0, unreadable 0, unlocked 0, bytecode 0 (strict)"
+ },
+ "reviews": {
+  "F1:REVIEW_1.md": "ec1e8e7e6af7ec211b45e39076281edfa2090262d1c23b368f948ac418f50f49",
+  "F1:REVIEW_2.md": "9637b3e8cefe43b01c39f859a01cb358523caf77aa2449faa5c0c29c04b7f797",
+  "F1:REVIEW_3.md": "69fb625bfcecbbf80b37c0e5ab5d70c1b28e792f84ccb7bff1ce4e5d1e7a7032"
+ }
+}
