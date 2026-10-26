@@ -315,7 +315,11 @@ of the gate folder and refuses an argument naming the live one.
    row form; the runner of item 5, as its task's name, its action text as created and the sha256 of what `schtasks
    /query /tn <name> /xml` prints; whether `canary_chat.txt` exists, yes or no and never its content) and committed on
    a branch of this repository before 00:00 America/New_York of D0; the operator's own `sha256sum` of the schedule
-   file, when he gives one, stands beside the lead's in the OD-10 manner. The row of item 9 is then a lock row, and
+   file, when he gives one, stands beside the lead's in the OD-10 manner. The commit's UTC time is written in the
+   addendum and printed in the RESULT. A commit made after 00:00 of D0 still comes before the runner's earliest
+   submission (no item is submitted before 23:40 of its day, item 5), and is printed as late; a commit made after the
+   earliest submission of any day voids the commitment for that day's items, which the RESULT then lists, by date and
+   count, as planted with no commitment before them (pass 3, `BD:REVIEW_rule.md` note N2). The row of item 9 is then a lock row, and
    `lock_hashes.py check` reads the schedule row CHANGED against the PREREG alone and SAME against this amendment's
    row once a check reads amendment rows (15.3, l.852-853). No gate file moves at D0 but the schedule; `REQUIRED` is
    the operator's (OD-9).
@@ -486,7 +490,8 @@ above this heading edited.
 - the stretch digest `canary_plan.py` entered with: _named in the lock-rows amendment's addendum, not here_
 - `W:gate/canary_sealed/canary_chat.txt` exists: _yes or no; never its content_
 - the operator's own `sha256sum` of the schedule file, when given: _blank_
-- the commit of this addendum: _blank_
+- the commit of this addendum, and its UTC time (item 4: after 00:00 of D0 it is printed as late; after a day's earliest
+  submission it voids the commitment for that day's items): _blank_
 
 The lock row, in `lock_hashes.py`'s row form at the left margin, replacing `e6ee0fcf…` (the hash column is not in
 the row form until the lead writes the 64 hex characters, so no check reads this line as a row before D0):
