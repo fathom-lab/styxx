@@ -25,7 +25,8 @@ later `..` lays bare keeps its dots, as git reads it: `a/b./c/../.` reads `a/b.`
 neither `a/b./c/x.py` (a new, false CONTRADICTED) nor kept out `a/b/y.py` (a new, false VERIFIED). So every reading of
 a prefix with no inner dot segment is main's reading or a directory above it. Where the resolved reading is not main's
 and that cut run takes part of a name git reads whole (`...`, or the dots of the name written last beyond one final
-period), the claim abstains.
+period), git's reading, every name whole, is read beside it, and the claim abstains where a changed path lies under one
+and not the other; where none does, the two give one verdict and the cut reading decides.
 
 The PATH-2a overlay's model of main's scope reading (`_p2a_scope` / `_p2aScope`) reads both, in its key spaces A and K,
 so `unreproduced` does not fire on the repaired verdicts and #121's withholding still reads.
@@ -258,6 +259,7 @@ def test_174_the_overlay_reads_the_old_path_in_both_key_spaces(tmp_path):
 DOCS = _edit("docs/guide/a.md")
 SRC = _edit("src/x.py", "x = 1", "x = 2")
 DOTNAME = _edit("a/b./c/x.py")      # a directory whose name ends in a dot, which git writes and reads as it is
+CUT_TAIL = ", and a changed path lies under one of the two readings and not the other (#175)"
 SIBLING = _edit("a/b/y.py")
 C175 = [
     # the reporter's three
@@ -303,16 +305,29 @@ C175 = [
     # main's cut run holds the dots of the name written last: main's reading, `b`, is kept
     (_scope("175-dotname-in-the-cut-run", "`b./.../../`", _edit("b/src/x.py")), "VERIFIED",
      "all changed paths under prefix"),
-    # the resolved reading would rest on a cut git does not make
+    # the resolved reading would rest on a cut git does not make, and a changed path lies under one reading only
     (_scope("175-cut-run-name", "`docs/../a/.../`", _edit("a/x.py")), "UNCHECKABLE",
      "prefix 'docs/../a/.../' ends in a run of dots and slashes that this template cuts as a sentence's period or an "
-     "ellipsis and git reads as part of the name '...' (#175)"),
+     "ellipsis and git reads as part of the name '...'" + CUT_TAIL),
     (_scope("175-cut-run-last-name", "src/../b./.", _edit("b/x.py")), "UNCHECKABLE",
      "prefix 'src/../b./.' ends in a run of dots and slashes that this template cuts as a sentence's period or an "
-     "ellipsis and git reads as part of the name 'b.' (#175)"),
+     "ellipsis and git reads as part of the name 'b.'" + CUT_TAIL),
     (_scope("175-cut-run-two-dots", "src/../b..", _edit("b/x.py")), "UNCHECKABLE",
      "prefix 'src/../b..' ends in a run of dots and slashes that this template cuts as a sentence's period or an "
-     "ellipsis and git reads as part of the name 'b..' (#175)"),
+     "ellipsis and git reads as part of the name 'b..'" + CUT_TAIL),
+    # git's reading keeps a leading run of dots, which `_norm` drops (#121): `...` here is git's name, not the root
+    (_scope("175-cut-run-leading-dots", "c/../.../..", _edit(".../setup.py")), "UNCHECKABLE",
+     "prefix 'c/../.../..' ends in a run of dots and slashes that this template cuts as a sentence's period or an "
+     "ellipsis and git reads as part of the name '...'" + CUT_TAIL),
+    # the two readings hold the same changed paths: one verdict, the cut reading's (main printed it)
+    (_scope("175-cut-run-readings-agree", "src/./x.py..", _edit("docs/y.md")), "CONTRADICTED",
+     "paths outside 'src/x.py': ['docs/y.md']"),
+    (_scope("175-cut-run-readings-agree-name", "`docs/../a/.../`", _edit("lib/x.py")), "CONTRADICTED",
+     "paths outside 'a': ['lib/x.py']"),
+    # a bare file name is read on the cut reading, before the two readings, as before the review
+    (_scope("175-bare-before-the-cut-run", "x/../setup.py..", _edit("pkg/setup.py")), "UNCHECKABLE",
+     "prefix 'x/../setup.py..' resolves to the file name 'setup.py' at the repository root, which this template would "
+     "match in any directory (#175)"),
     # one final dot is a sentence's period, as main reads it
     (_scope("175-one-final-dot", "src/../b.", _edit("b/x.py")), "VERIFIED", "all changed paths under prefix"),
     # the reasons say what was read (M1, M2 of the review)
