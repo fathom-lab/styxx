@@ -125,7 +125,8 @@ def test_a_magnitude_does_not_bind_a_timestamp_the_review_found(tmp_path, text, 
     c = cert(tmp_path, text, receipt)
     (tok, status, ref), = rows(c)
     assert status == "ABSTAIN" and ref is None, rows(c)
-    assert c["ledger"][0]["epistemics"]["path_class_excluded"] == [f"d_r.json:{leaf}"]
+    # the leaf the review found is recorded as excluded (on the WebSocket row O and C sit in the window too)
+    assert f"d_r.json:{leaf}" in c["ledger"][0]["epistemics"]["path_class_excluded"]
 
 
 def test_the_true_values_of_the_same_responses_still_bind(tmp_path):

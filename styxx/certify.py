@@ -21,15 +21,17 @@ cited result JSONs), not discovered; no semantic/prose entailment (that is audit
 
 What the numeral reader reads (v0.15, 2026-10-25, flags V15_*, as shipped): signed digit runs with optional
 thousands commas and a decimal part; a magnitude after a currency symbol (`$67.4k`, `US$1.2B`, `€5m`,
-`$1.2 billion`) as mantissa times multiplier; `-$x`, `($x)` and `- $x` as negative; thin-space digit groups
-as one number. Counted and never valued: a decimal comma or dotted thousands beside a currency, a digit run
-glued to a non-ASCII letter or a superscript. Still not read and not counted: a magnitude no currency symbol
-leads (`7B`, `3.4M`, `2.4K`), numbers glued to other letters (`10x`, `24h`, `TP1`, `7B-Instruct`),
-scientific notation, number words, spans the sha/date/version scrub blanks. Behind flags that are OFF,
-because each moves committed certificates or charon lines (the operator's decision): the bare magnitude
-(V15_MAGNITUDE_BARE), the named form exclusions for clock times, thread markers, word-led versions and
-calendar dates (V15_FORM_NOISE), the sentence-final numeral (V15_SENTENCE_FINAL; until then the band's
-`trailing-period`) and the magnitude pair (V15_MAGNITUDE_RANGES).
+`$1.2 billion`) as mantissa times multiplier, the symbol glued to the digits; `-$x` and `$-x` as negative;
+thin-space digit groups as one number. Counted and never valued: a decimal comma or dotted thousands, a digit
+run glued to a non-ASCII letter or a superscript. Still not read and not counted: a magnitude no currency
+symbol leads glued to its digits (`7B`, `3.4M`, `2.4K`, `$ 67.4k`, `67.4k USD`), numbers glued to other
+letters (`10x`, `24h`, `TP1`, `7B-Instruct`), scientific notation, number words, spans the sha/date/version
+scrub blanks. Behind flags that are OFF (the operator's decision): the bare magnitude (V15_MAGNITUDE_BARE),
+the named form exclusions for clock times, thread markers, word-led versions and calendar dates
+(V15_FORM_NOISE), the sentence-final numeral (V15_SENTENCE_FINAL; until then the band's `trailing-period`)
+and the magnitude pair (V15_MAGNITUDE_RANGES), because each moves committed certificates or charon lines;
+and the accounting forms `($x)` and `- $x` as negative (V15_ACCOUNTING_SIGN), because on common post shapes
+(`0.5 BTC ($33,706)`, `**BTC** - $67,412.50`) they read a price as a loss.
 
 Pre-registration (kill-gates D1/D2/D3, frozen before the validation run):
   papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md
@@ -294,21 +296,24 @@ _UNCOVERED_COUNTED = frozenset({"trailing-period", "partial-extraction", "unexpl
 # THE RULE (RULE_final.md of the certify_suffix design, 2026-10-25, after its red team; the NOTE
 # `papers/closed-model-frontier/NOTE_numeral_reader_v2_2026_10_25.md` prints what it moved). One
 # master flag and one flag per rule, so a census can attribute every move to a rule. With the master
-# OFF every function below is unreachable and this module behaves as it did at 078b0a16, byte for
-# byte on every committed certificate: `conformance/numerals/vectors_v2.json` carries that reading
+# OFF every function below is unreachable and this module behaves as it did at 879f6be9 (its certify.py
+# is byte-identical to 078b0a16's, which the design measured), byte for byte on every committed certificate: `conformance/numerals/vectors_v2.json` carries that reading
 # as the `v1_reader` and `v1_binding` families, recorded from HEAD before this block existed.
 #
 #   V15_MAGNITUDE        a numeral after a currency symbol glued to k K M B T bn mn m b t mm is
 #                        the mantissa times the multiplier; it binds a leaf within half a unit of
 #                        the last shown mantissa digit, never looser than 5% (A-2: `$1B` is [0.95B,
-#                        1.05B], not [0.5B, 1.5B)); a leaf whose path names a time or an id is never
-#                        a magnitude hit (A-1b: `$1.7T` does not bind `openTime`); a zero-decimal
+#                        1.05B], not [0.5B, 1.5B)); a leaf in the time/id class `_v15_leaf_excluded`
+#                        names is never a magnitude hit (A-1b: `$1.7T` does not bind `openTime`; since
+#                        the review, `ts`, `E`, `updated` and a kline tuple's cells too). What it does
+#                        not name can bind, and a sibling price, count or volume inside the window of a
+#                        whole response binds: the certificate's scope_limit says so; a zero-decimal
 #                        magnitude keeps the v0.3 count-binding filter (A-1a); a CURRENCY-LED
 #                        magnitude is obligated as an unsuffixed numeral is (A-8). 0 currency-led
 #                        magnitudes stand in the certified corpus: moves nothing committed.
 #   V15_MAGNITUDE_BARE   OFF (RULE_final 0.1). The same rule for a magnitude no currency symbol leads
 #                        (`7B`, `124M`, `3.4M`, `2.4K`, `10k`, `1.2 billion`), never obligated (62 false
-#                        accusations on `7B` model sizes otherwise). Measured: 69 committed certificates
+#                        accusations otherwise: 60 on model sizes, 2 on `10k` held-out counts). Measured: 69 committed certificates
 #                        gain magnitude rows (0 verdicts) and 58 charon lines read SKEW, which fails the
 #                        stranger's ferry-log step. Off, such a span reads exactly as at 879f6be9: a
 #                        glued suffix reads nothing, a word magnitude reads its mantissa.
@@ -319,14 +324,21 @@ _UNCOVERED_COUNTED = frozenset({"trailing-period", "partial-extraction", "unexpl
 #                        month-day without a year is a date only before punctuation, a time, a zone or
 #                        at/on/the (A-16). Measured: 3 committed certificates lose 11 rows (0 verdicts)
 #                        and 3 charon lines read SKEW.
-#   V15_SIGNED_CURRENCY  `-$x`, `($x)` and `- $x` are negative (a markdown bullet is not a sign).
+#   V15_SIGNED_CURRENCY  `-$x`, `$-x` (and `−$x`, U+2212 normalised) are negative.
+#   V15_ACCOUNTING_SIGN  OFF (the correctness review, R2). `($x)` and `- $x` are negative (a markdown
+#                        bullet is not a sign). Off because on common post shapes they read a price as a
+#                        loss: `0.5 BTC ($33,706)`, `1 ETH ($2,431)`, `**BTC** - $67,412.50`, a nested bullet
+#                        indented four spaces. Off, both read the positive amount, as before v2, so an
+#                        accounting-format loss binds a positive leaf; the policy note says so. Measured:
+#                        0 accounting negatives in the certified corpus, so it moves nothing committed.
 #   V15_THIN_GROUPS      U+2009 / U+202F between three-digit groups join one number.
 #   V15_DECIMAL_COMMA    `84,17 €`, `1.234,5`, `1,5k`, `1.234.567` are COUNTED, never valued.
 #   V15_GLUED_NONASCII   a digit run glued to a non-ASCII letter or a superscript (`$99.9к`) is
 #                        COUNTED, never silent: it renders like the valid form and read nothing.
 #   V15_SENTENCE_FINAL   OFF. A numeral before a sentence period is read (the band's own defect,
-#                        v0.13). Measured: 12 committed OATH-HELD certificates re-derive OATH-FAILED,
-#                        6 committed capsules stop verifying, 152 charon lines read SKEW, every one
+#                        v0.13). Measured: 11 committed OATH-HELD certificates re-derive OATH-FAILED (12
+#                        without rule C2), 6 committed capsules stop verifying, 139 charon lines read SKEW
+#                        (152 with every rule but the pair on), every one
 #                        through a token the period had hidden and the ladder's standing rules accuse.
 #                        The operator decides; until then the band keeps counting them.
 #   V15_MAGNITUDE_RANGES OFF. `60-70k` read as 60,000 and 70,000 (A-5's full arm); rows only, off
@@ -336,8 +348,11 @@ _UNCOVERED_COUNTED = frozenset({"trailing-period", "partial-extraction", "unexpl
 # DOCTRINE. The reader READS `_NUM`'s shapes, `_scrub_line`, `_drop_reason`, `_STRUCT_ORDINAL` and
 # the band's `_WIDE_NUM`; it copies none of them, and `_NUM` is not edited (tests/test_uncovered_band
 # pins that). Every span the reader does not read as a value is enumerated with a reason: silence
-# loud, never omission. The integer filter, the obligation ladder, `is_spec`, the trigger vocabulary
-# and the verdict rule are not changed here; what they do with the tokens they can now see is theirs.
+# loud, never omission. The integer filter, `is_spec`, the trigger vocabulary and the verdict rule are
+# not changed here, and the obligation ladder is changed in two places only: a bare magnitude is never
+# obligated (RULE_final 1.5; dormant while V15_MAGNITUDE_BARE is off) and a numeral followed by an
+# ellipsis takes the notation branch, ABSTAIN `v15-ellipsis-truncated` (C2; live, and it withdraws a
+# VERIFIED as well as an accusation). What the rest does with the tokens it can now see is its own.
 V15_READER_V2 = True
 V15_MAGNITUDE = True
 V15_MAGNITUDE_BARE = False
@@ -349,9 +364,10 @@ V15_DECIMAL_COMMA = True
 V15_GLUED_NONASCII = True
 V15_SENTENCE_FINAL = False
 V15_MAGNITUDE_RANGES = False
+V15_ACCOUNTING_SIGN = False
 _V15_RULE_FLAGS = ("V15_MAGNITUDE", "V15_MAGNITUDE_BARE", "V15_MAGNITUDE_WORDS", "V15_FORM_NOISE",
                    "V15_SIGNED_CURRENCY", "V15_THIN_GROUPS", "V15_DECIMAL_COMMA", "V15_GLUED_NONASCII",
-                   "V15_SENTENCE_FINAL", "V15_MAGNITUDE_RANGES")
+                   "V15_SENTENCE_FINAL", "V15_MAGNITUDE_RANGES", "V15_ACCOUNTING_SIGN")
 
 # currency symbols: dollar, euro, pound, yen, rupee, won, ruble, lira, bitcoin
 _V15_CUR = "$\u20ac\u00a3\u00a5\u20b9\u20a9\u20bd\u20ba\u20bf"
@@ -370,11 +386,24 @@ _V15_FORM_REASONS = ("clock-time", "calendar-date", "thread-marker", "version-st
 _V15_HYPHEN_WORD = re.compile(r"^\s?[\u2212\u2013-]\s?(?:ish|plus|odd|something|level|range|or-so)\b", re.I)
 _V15_ELLIPSIS = re.compile(r"^(?:\.\.\.|\u2026)")
 _V15_COARSE = re.compile(r"\d|\.\d|0\.\d|\d\.0+")        # a one-significant-digit mantissa (A-2)
-# a leaf whose path's last segment names a time or an id, by segment (snake and camel), never by
-# substring: `openTime`, `updated_at`, `firstId`, `tradeIds` are excluded; `last_updated`, `bids`,
-# `grids`, `count`, `lastPrice` are not (A-1b)
+# THE TIME/ID LEAF CLASS (A-1b, widened by the correctness review's R1). A leaf is never a magnitude hit
+# when (a) its last path segment, index brackets removed and split into snake and camel parts and
+# lower-cased, has a part that is one of _V15_LEAF_WORDS or ends in one of _V15_LEAF_ENDS (`openTime`,
+# `updated_at`, `firstId`, `tradeIds`, OKX's `ts` and `uTime`, Bitfinex's `mts`, `last_updated`,
+# `createtime`, `birthdate`); or (b) the whole segment is one of Binance's single-letter time and trade-id
+# keys, case-sensitive (`E` event time, `T` trade or close time, `O` and `C` the stats window, `t` a
+# kline's start, `F` `L` `f` trade ids; lower-case `c` is the last price and is not in it); or (c) the leaf
+# is a cell of an array of arrays (the path ends in two indices: a kline or a market_chart tuple, whose
+# cell 0 is a time and whose cells carry no name). By part, never by substring: `bids`, `grids`, `count`,
+# `lastPrice`, `volume` are not in it; a part matches anywhere in the segment, so `at_price` and
+# `id_rank` are (an exclusion only ever withdraws a hit). A timestamp under another name still binds, and
+# so does a sibling price, count or volume inside the window: the policy's scope_limit says so.
 _V15_LEAF_WORDS = frozenset({"time", "times", "timestamp", "timestamps", "datetime", "epoch", "date",
-                             "dates", "at", "id", "ids", "firstid", "lastid", "tradeid"})
+                             "dates", "at", "id", "ids", "firstid", "lastid", "tradeid",
+                             "ts", "mts", "unix", "created", "updated", "modified"})
+_V15_LEAF_ENDS = ("time", "times", "stamp", "stamps", "date", "dates")
+_V15_LEAF_SINGLE = frozenset({"E", "T", "O", "C", "t", "F", "L", "f"})
+_V15_TUPLE_CELL = re.compile(r"\[\d+\]\[\d+\]$")
 _V15_SEG_PARTS = re.compile(r"[A-Z]?[a-z]+|[A-Z]+(?![a-z])|\d+")
 _V15_RX_CACHE: dict = {}
 
@@ -421,10 +450,15 @@ def _v15_num_rx(allow_lc: bool, plain: bool = False):
 
 
 def _v15_leaf_excluded(path: str) -> bool:
-    """True iff the leaf's LAST path segment names a time or an id (A-1b), by whole segment part."""
-    seg = re.sub(r"(?:\[\d+\])+$", "", path.rsplit(".", 1)[-1])
+    """True iff the leaf is in the time/id class (A-1b as widened by the review; see the comment above)."""
+    last = path.rsplit(".", 1)[-1]
+    if _V15_TUPLE_CELL.search(last):
+        return True
+    seg = re.sub(r"(?:\[\d+\])+$", "", last)
+    if seg in _V15_LEAF_SINGLE:
+        return True
     parts = [p.lower() for piece in seg.split("_") for p in _V15_SEG_PARTS.findall(piece)]
-    return any(p in _V15_LEAF_WORDS for p in parts)
+    return any(p in _V15_LEAF_WORDS or p.endswith(_V15_LEAF_ENDS) for p in parts)
 
 
 # ---- the forms (V15_FORM_NOISE, V15_DECIMAL_COMMA): each a NAMED span the reader does not value
@@ -624,9 +658,10 @@ def _v15_line(line: str, scrub: str):
         sign_form = None
         if lead:
             raw = "-" + raw
-        elif V15_SIGNED_CURRENCY and cur_led and not raw.startswith(("-", "+")):
-            # A-9: the accounting forms. `($1.2k)` with nothing but the currency and the number
-            # inside; `- $1.2k` with one space, unless the `-` is the line's bullet marker.
+        elif V15_ACCOUNTING_SIGN and cur_led and not raw.startswith(("-", "+")):
+            # A-9: the accounting forms, behind their own flag since the review (R2), shipped off.
+            # `($1.2k)` with nothing but the currency and the number inside; `- $1.2k` with one space,
+            # unless the `-` is the line's bullet marker.
             if ns >= 2 and s2[ns - 2] == "(" and s2[end:end + 1] == ")":
                 raw, start, end, sign_form = "-" + raw, ns - 2, end + 1, "parenthesis"
             elif (ns >= 3 and s2[ns - 3:ns - 1] == "- " and ns - 3 != bullet_at
@@ -778,8 +813,9 @@ def _v15_policy(n_excluded: int) -> dict:
     if reads:
         reads = [" and ".join(reads) + " as mantissa times multiplier"]
     if V15_SIGNED_CURRENCY:
-        reads.append("a minus before a currency symbol and the accounting forms ($x in parentheses, `- $x`) "
-                     "as the sign")
+        reads.append("a minus before or after a currency symbol (-$x, $-x) as the sign")
+    if V15_ACCOUNTING_SIGN:
+        reads.append("the accounting forms ($x in parentheses, `- $x`) as the sign")
     if V15_THIN_GROUPS:
         reads.append("thin-space digit groups as one number")
     if V15_SENTENCE_FINAL:
@@ -799,7 +835,12 @@ def _v15_policy(n_excluded: int) -> dict:
                  "numerals, as before v2 (V15_FORM_NOISE is off).")
     if not V15_SENTENCE_FINAL:
         note += (" A numeral before a sentence period is still listed here as trailing-period "
-                 "(V15_SENTENCE_FINAL is off).")
+                 "(V15_SENTENCE_FINAL is off), except a thousands-grouped one, which reads its leading group "
+                 "as a value beside a partial-extraction item (SL 66,200. reads 66), and a magnitude, whose "
+                 "suffix ends it (BTC $99.9k. reads 99.9k).")
+    if not V15_ACCOUNTING_SIGN:
+        note += (" $x in parentheses and `- $x` read as the positive amount, as before v2, so an "
+                 "accounting-format loss binds a positive leaf (V15_ACCOUNTING_SIGN is off).")
     excluded = ["year", "md-structure", "formula-notation", "range-second-half", "compound-identifier",
                 "unparseable", "ordered-list-marker", "heading-ordinal"]
     if V15_FORM_NOISE:
@@ -808,19 +849,34 @@ def _v15_policy(n_excluded: int) -> dict:
     never_valued = []
     if V15_DECIMAL_COMMA:
         counted |= {"decimal-comma", "dotted-groups"}
-        never_valued.append("a decimal comma or dotted thousands beside a currency")
+        never_valued.append("a decimal comma (84,17 €, 1.234,5, 1,5k) or dotted thousands (1.234.567, €1.789)")
     if V15_GLUED_NONASCII:
         counted |= {"glued-nonascii"}
         never_valued.append("a digit run glued to a non-ASCII letter or a superscript")
     unread = ["numbers glued to letters other than a magnitude suffix (10x, 24h, TP1, v2.5, 7B-Instruct, mid-60k)"]
-    if not (V15_MAGNITUDE and V15_MAGNITUDE_BARE):
-        unread.insert(0, "a magnitude no currency symbol leads (7B, 3.4M, 2.4K)")
+    if V15_MAGNITUDE and not V15_MAGNITUDE_BARE:
+        unread.insert(0, "a magnitude no currency symbol leads glued to its digits (7B, 3.4M, 2.4K; and $ 67.4k, "
+                         "US$ 1.2B, 67.4k$, 5m€, USD 67.4k, 67.4k USD: a space between, a symbol after the "
+                         "number, or a currency word)")
+    elif not V15_MAGNITUDE:
+        unread.insert(0, "a number glued to a magnitude suffix ($67.4k, 7B, 3.4M, 2.4K)")
     scope = ("not read and not counted: " + ", ".join(unread) + ", scientific notation (1e-5), number words "
-             "(one million), lakh and crore, and spans blanked by the sha/date/version scrub (2026-10-24, 7.50.0, "
-             "24.10.2026). Read like prose, not excluded: numerals inside fenced or inline code; digits of any "
+             "(one million), and spans blanked by the sha/date/version scrub (2026-10-24, 7.50.0, 24.10.2026). "
+             "Misread, as before v2: Indian lakh and crore grouping (12,34,567 reads 12 and 34,567, each a value). "
+             "Read like prose, not excluded: numerals inside fenced or inline code; digits of any "
              "Unicode script, read as their decimal value."
-             + (" Counted, never valued: " + "; ".join(never_valued) + "." if never_valued else "")
-             + " uncovered=0 does NOT mean fully covered.")
+             + (" Counted, never valued: " + "; ".join(never_valued) + "." if never_valued else ""))
+    if V15_MAGNITUDE:
+        scope += (" A space before the suffix ends the token: $67.4 k reads 67.4, the mantissa alone. A magnitude "
+                  "never binds a leaf in the time/id class: a last path segment with a part that is time(s), "
+                  "timestamp(s), datetime, epoch, date(s), at, id(s), firstid, lastid, tradeid, ts, mts, unix, "
+                  "created, updated or modified, or that ends in time, stamp or date; the exchange keys E T O C "
+                  "t F L f; or a cell of an array of arrays (a kline or chart tuple). A timestamp under any other "
+                  "name can bind: a 2026 epoch-ms value (about 1.79e12) lies in the window of $1.8T, 1.75T to "
+                  "1.85T, and an epoch-s value in that of $1.8B. Against a whole response, a sibling price, "
+                  "count or volume inside the window binds too (a wrong $66k binds a lowPrice of 66,010); the "
+                  "mitigation is a narrow receipt, holding only the fields the text cites.")
+    scope += " uncovered=0 does NOT mean fully covered."
     return {
         "schema": "styxx-oath/uncovered-band/v2",
         "note": note,
