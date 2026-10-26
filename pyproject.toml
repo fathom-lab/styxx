@@ -202,6 +202,7 @@ packages = [
     "styxx.fonts",
     "styxx._data",
     "styxx.harness",
+    "styxx.prereg_ci",
 ]
 
 [tool.setuptools.package-data]

@@ -7,8 +7,9 @@ What it reads
 The shipped surfaces of this repository (profile ``repo``): the root documents (README.md, action.yml,
 pyproject.toml, SECURITY.md and the other root .md files except CHANGELOG.md), the Action's script and the
 pre-commit hook definitions, and everything of a prose type under ``styxx/`` (the package the wheel
-carries), ``sworn/``, ``integrations/``, ``hooks/``, ``docs/``, ``web/`` and ``packages/``. Records are not
-surfaces and are not read: ``papers/``, ``CHANGELOG.md``, ``tests/``, ``conformance/``, ``release/``,
+carries), ``sworn/``, ``integrations/``, ``hooks/``, ``docs/``, ``web/``, ``packages/``, ``prereg-ci/`` (the
+prereg-ci Action, its README and credits) and ``examples/prereg-ci-demo/`` (its five-minute example). Records are
+not surfaces and are not read: ``papers/``, ``CHANGELOG.md``, ``tests/``, ``conformance/``, ``release/``,
 ``zenodo/`` and the recorded pull request bodies and harness under ``web/gate/differential/``. Data files
 (.json, .jsonl, .csv) are not read under ``repo``. Profile ``site`` reads the canonical site's source tree
 (``index.html``, ``styxx.jsx``, ``src/``, ``public/``, JSON included, because the site serves it).
@@ -85,7 +86,7 @@ PROFILES: Dict[str, dict] = {
                     "SECURITY.md", "CONTRIBUTING.md", "CITATION.cff", "CODE_OF_CONDUCT.md", "POSITIONING.md",
                     "OATH_CONTRACT.md", "BOUNTY.md", "LEADERBOARD.md", "REPLICATIONS.md", "AUTOPILOT.md",
                     "PATENTS.md", "styxx/**", "sworn/**", "integrations/**", "hooks/**", "docs/**", "web/**",
-                    "packages/**"],
+                    "packages/**", "prereg-ci/**", "examples/prereg-ci-demo/**"],
         "exclude": ["web/gate/differential/**"],
         "exts": PROSE_EXTS,
     },

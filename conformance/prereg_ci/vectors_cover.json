@@ -1,0 +1,10147 @@
+{
+ "schema": "styxx.prereg-ci.conformance.cover/v0",
+ "label": "conformance vectors for the gates scorers and the table cover; no claim",
+ "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+ "rules": {
+  "match": "a row matches an assignment when every (gate, value) of its when has fired[gate] == value, the scorers' expression; the earliest matching row lands",
+  "expect": "holes: assignments no row matches; landings[i]: assignments landing on row i; total: holes == 0; unreachable_rows: rows with no landing; over 2 ** len(gates) assignments",
+  "brute": "true: expect is brute force over every assignment (replay.brute_force); false: expect is the closed form the generator states for the table's shape"
+ },
+ "vectors": [
+  {
+   "name": "synthetic/hand/wildcard-only",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G0"
+   ],
+   "rows": [
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     2
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/hand/both-polarities",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G0"
+   ],
+   "rows": [
+    {
+     "G0": true
+    },
+    {
+     "G0": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/hand/shadowed-row",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G0",
+    "G1"
+   ],
+   "rows": [
+    {
+     "G0": true
+    },
+    {
+     "G0": true,
+     "G1": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     2,
+     0,
+     2
+    ],
+    "unreachable_rows": [
+     1
+    ]
+   }
+  },
+  {
+   "name": "synthetic/hand/dead-literals",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G0",
+    "G1"
+   ],
+   "rows": [
+    {
+     "G0": "true"
+    },
+    {
+     "G1": null
+    },
+    {
+     "G0": 2
+    },
+    {
+     "G1": 1
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 2,
+    "landings": [
+     0,
+     0,
+     0,
+     2
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     2
+    ]
+   }
+  },
+  {
+   "name": "synthetic/hand/b41-shape",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G0",
+    "G1",
+    "G2",
+    "G3"
+   ],
+   "rows": [
+    {
+     "G0": false
+    },
+    {
+     "G0": true,
+     "G1": false
+    },
+    {
+     "G0": true,
+     "G1": true,
+     "G2": true,
+     "G3": true
+    },
+    {
+     "G0": true,
+     "G1": true,
+     "G2": false
+    },
+    {
+     "G0": true,
+     "G1": true,
+     "G2": true,
+     "G3": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 1,
+    "landings": [
+     8,
+     4,
+     1,
+     2,
+     0
+    ],
+    "unreachable_rows": [
+     4
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n01/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00"
+   ],
+   "rows": [
+    {},
+    {
+     "G00": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     2,
+     0
+    ],
+    "unreachable_rows": [
+     1
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n01/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00"
+   ],
+   "rows": [
+    {
+     "G00": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n01/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00"
+   ],
+   "rows": [
+    {},
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     2,
+     0
+    ],
+    "unreachable_rows": [
+     1
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n01/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00"
+   ],
+   "rows": [
+    {
+     "G00": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 1,
+    "landings": [
+     1
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n01/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00"
+   ],
+   "rows": [
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     2
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n01/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00"
+   ],
+   "rows": [
+    {
+     "G00": null
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 2,
+    "landings": [
+     0
+    ],
+    "unreachable_rows": [
+     0
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n02/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G00": false,
+     "G01": true
+    },
+    {},
+    {
+     "G00": true,
+     "G01": false
+    },
+    {
+     "G01": true
+    },
+    {
+     "G01": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     2,
+     1,
+     1,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     3,
+     4,
+     5
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n02/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01"
+   ],
+   "rows": [
+    {
+     "G00": false
+    },
+    {
+     "G01": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 1,
+    "landings": [
+     2,
+     1
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n02/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01"
+   ],
+   "rows": [
+    {
+     "G01": false
+    },
+    {
+     "G00": 0
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 1,
+    "landings": [
+     2,
+     1
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n02/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G01": false
+    },
+    {
+     "G00": false
+    },
+    {},
+    {
+     "G01": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     1,
+     2,
+     1,
+     0
+    ],
+    "unreachable_rows": [
+     3
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n02/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01"
+   ],
+   "rows": [
+    {
+     "G00": false
+    },
+    {
+     "G01": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n02/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G00": false
+    },
+    {},
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     2,
+     2,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     2,
+     3
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n03/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {},
+    {
+     "G02": true
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     4,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     2,
+     3
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n03/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G01": false,
+     "G00": true
+    },
+    {
+     "G02": true,
+     "G01": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 3,
+    "landings": [
+     4,
+     0,
+     1
+    ],
+    "unreachable_rows": [
+     1
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n03/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02"
+   ],
+   "rows": [
+    {
+     "G00": null,
+     "G01": 1,
+     "G02": false
+    },
+    {
+     "G01": 2,
+     "G02": 0
+    },
+    {
+     "G00": 1
+    },
+    {
+     "G00": null,
+     "G01": true,
+     "G02": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     0,
+     0,
+     4,
+     0,
+     4
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     3
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n03/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02"
+   ],
+   "rows": [
+    {
+     "G00": false,
+     "G01": false
+    },
+    {
+     "G00": false,
+     "G02": false
+    },
+    {},
+    {},
+    {
+     "G00": true,
+     "G01": true,
+     "G02": false
+    },
+    {
+     "G01": false
+    },
+    {
+     "G00": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     2,
+     1,
+     5,
+     0,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     3,
+     4,
+     5,
+     6
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n03/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02"
+   ],
+   "rows": [
+    {
+     "G00": false
+    },
+    {
+     "G02": true,
+     "G00": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     0,
+     4
+    ],
+    "unreachable_rows": [
+     1
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n03/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G01": 2,
+     "G02": false
+    },
+    {
+     "G00": 0,
+     "G01": "true"
+    },
+    {},
+    {
+     "G01": 1,
+     "G02": 1
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     0,
+     0,
+     4,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     1,
+     2,
+     4,
+     5
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n04/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G01": true
+    },
+    {
+     "G02": false
+    },
+    {
+     "G01": false,
+     "G02": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 2,
+    "landings": [
+     4,
+     6,
+     4
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n04/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G01": false,
+     "G02": false
+    },
+    {
+     "G02": false
+    },
+    {
+     "G03": false,
+     "G01": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 3,
+    "landings": [
+     8,
+     2,
+     2,
+     1
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n04/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03"
+   ],
+   "rows": [
+    {
+     "G00": 1,
+     "G01": false,
+     "G02": true,
+     "G03": 0
+    },
+    {
+     "G01": "true",
+     "G03": "true"
+    },
+    {
+     "G00": null,
+     "G01": true,
+     "G02": null,
+     "G03": true
+    },
+    {
+     "G00": true,
+     "G01": false,
+     "G02": true
+    },
+    {},
+    {
+     "G00": 1,
+     "G02": 0
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     1,
+     0,
+     0,
+     1,
+     14,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     1,
+     2,
+     5,
+     6
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n04/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03"
+   ],
+   "rows": [
+    {
+     "G03": false
+    },
+    {
+     "G01": false,
+     "G03": true
+    },
+    {
+     "G01": false,
+     "G02": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 4,
+    "landings": [
+     8,
+     4,
+     0
+    ],
+    "unreachable_rows": [
+     2
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n04/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03"
+   ],
+   "rows": [
+    {
+     "G00": false
+    },
+    {
+     "G01": false
+    },
+    {
+     "G03": false,
+     "G02": true
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     1,
+     3
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n04/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03"
+   ],
+   "rows": [
+    {
+     "G00": 2
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     0,
+     16
+    ],
+    "unreachable_rows": [
+     0
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n05/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04"
+   ],
+   "rows": [
+    {},
+    {
+     "G00": true,
+     "G01": true
+    },
+    {
+     "G00": true
+    },
+    {
+     "G00": false,
+     "G01": true,
+     "G03": true
+    },
+    {
+     "G04": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     32,
+     0,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     1,
+     2,
+     3,
+     4
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n05/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G01": true
+    },
+    {
+     "G02": true
+    },
+    {
+     "G03": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 2,
+    "landings": [
+     16,
+     8,
+     4,
+     2
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n05/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04"
+   ],
+   "rows": [
+    {
+     "G00": false,
+     "G01": 0,
+     "G03": false
+    },
+    {
+     "G00": 1,
+     "G01": 1,
+     "G02": true,
+     "G03": false
+    },
+    {
+     "G00": 1,
+     "G01": 1,
+     "G02": true,
+     "G03": false
+    },
+    {
+     "G00": null,
+     "G01": "true",
+     "G02": 1,
+     "G04": true
+    },
+    {
+     "G00": 1,
+     "G03": 0
+    },
+    {
+     "G00": false,
+     "G01": 0,
+     "G03": false
+    },
+    {
+     "G00": false,
+     "G01": 0,
+     "G02": 0,
+     "G04": 0
+    },
+    {
+     "G00": true,
+     "G01": "true",
+     "G03": 2
+    },
+    {
+     "G01": null,
+     "G03": "true",
+     "G04": "true"
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 19,
+    "landings": [
+     4,
+     2,
+     0,
+     0,
+     6,
+     0,
+     1,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     2,
+     3,
+     5,
+     7,
+     8
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n05/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G03": true
+    },
+    {
+     "G02": false
+    },
+    {
+     "G01": true,
+     "G04": false
+    },
+    {
+     "G01": true
+    },
+    {
+     "G00": true,
+     "G02": false
+    },
+    {
+     "G00": false,
+     "G01": true
+    },
+    {
+     "G03": false
+    },
+    {
+     "G01": false,
+     "G04": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 1,
+    "landings": [
+     8,
+     12,
+     3,
+     3,
+     0,
+     0,
+     4,
+     1
+    ],
+    "unreachable_rows": [
+     4,
+     5
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n05/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G01": false
+    },
+    {
+     "G02": false
+    },
+    {
+     "G03": true
+    },
+    {
+     "G04": false,
+     "G00": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     16,
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n05/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04"
+   ],
+   "rows": [
+    {
+     "G00": 0,
+     "G03": false,
+     "G04": "true"
+    },
+    {
+     "G00": false,
+     "G01": 2,
+     "G02": false
+    },
+    {
+     "G00": 0,
+     "G02": null,
+     "G03": null,
+     "G04": "true"
+    },
+    {
+     "G00": "true",
+     "G02": true,
+     "G03": true,
+     "G04": false
+    },
+    {
+     "G00": true,
+     "G01": 0,
+     "G02": false,
+     "G03": false
+    },
+    {
+     "G00": 2,
+     "G01": true,
+     "G03": false
+    },
+    {
+     "G01": 1,
+     "G02": null,
+     "G03": "true"
+    },
+    {
+     "G00": 1,
+     "G01": 1,
+     "G04": null
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 30,
+    "landings": [
+     0,
+     0,
+     0,
+     0,
+     2,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     2,
+     3,
+     5,
+     6,
+     7
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n06/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G05": false
+    },
+    {
+     "G01": false,
+     "G04": false,
+     "G05": false
+    },
+    {
+     "G00": true,
+     "G02": true
+    },
+    {
+     "G03": true
+    },
+    {},
+    {
+     "G00": false,
+     "G01": true,
+     "G02": true,
+     "G03": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     16,
+     4,
+     8,
+     18,
+     18,
+     0
+    ],
+    "unreachable_rows": [
+     5
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n06/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05"
+   ],
+   "rows": [
+    {
+     "G00": false,
+     "G03": false
+    },
+    {
+     "G01": false
+    },
+    {
+     "G02": true,
+     "G04": true
+    },
+    {
+     "G04": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     16,
+     24,
+     6,
+     12,
+     6
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n06/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G01": "true",
+     "G04": true,
+     "G05": 0
+    },
+    {
+     "G00": 2,
+     "G02": null,
+     "G04": false,
+     "G05": "true"
+    },
+    {
+     "G01": false,
+     "G03": 2,
+     "G05": "true"
+    },
+    {
+     "G00": false,
+     "G01": false,
+     "G02": "true",
+     "G03": 0,
+     "G04": 2,
+     "G05": false
+    },
+    {
+     "G00": 2,
+     "G01": "true",
+     "G03": null,
+     "G05": null
+    },
+    {
+     "G01": false,
+     "G03": 2,
+     "G05": "true"
+    },
+    {
+     "G01": true,
+     "G02": false,
+     "G04": "true",
+     "G05": null
+    },
+    {
+     "G00": 2,
+     "G01": "true",
+     "G03": null,
+     "G05": null
+    },
+    {
+     "G00": false,
+     "G01": null,
+     "G02": "true",
+     "G03": true,
+     "G05": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     64
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n06/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05"
+   ],
+   "rows": [
+    {
+     "G03": true
+    },
+    {
+     "G01": true,
+     "G02": false
+    },
+    {
+     "G00": false,
+     "G02": true,
+     "G04": true
+    },
+    {
+     "G02": false,
+     "G03": true
+    },
+    {
+     "G03": false
+    },
+    {
+     "G01": true,
+     "G02": true,
+     "G04": false
+    },
+    {
+     "G03": true,
+     "G05": true
+    },
+    {
+     "G01": true,
+     "G03": true,
+     "G04": false
+    },
+    {
+     "G00": true,
+     "G01": false,
+     "G02": true,
+     "G04": false,
+     "G05": false
+    },
+    {
+     "G02": true
+    },
+    {
+     "G02": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     32,
+     8,
+     4,
+     0,
+     20,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     3,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n06/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G02": false,
+     "G01": false
+    },
+    {
+     "G03": false
+    },
+    {
+     "G04": true
+    },
+    {
+     "G05": false,
+     "G03": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 3,
+    "landings": [
+     32,
+     8,
+     12,
+     6,
+     3
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n06/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05"
+   ],
+   "rows": [
+    {
+     "G00": 2,
+     "G01": true,
+     "G04": true,
+     "G05": false
+    },
+    {
+     "G00": null,
+     "G01": true,
+     "G03": true,
+     "G05": 1
+    },
+    {
+     "G00": false,
+     "G01": true,
+     "G02": 1
+    },
+    {
+     "G00": null,
+     "G01": false
+    },
+    {
+     "G01": true,
+     "G04": true
+    },
+    {
+     "G01": true,
+     "G02": false
+    },
+    {
+     "G00": 1,
+     "G01": 2,
+     "G02": true,
+     "G05": false
+    },
+    {
+     "G00": false,
+     "G04": false,
+     "G05": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 32,
+    "landings": [
+     0,
+     0,
+     8,
+     0,
+     12,
+     8,
+     0,
+     4
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     3,
+     6
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n07/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06"
+   ],
+   "rows": [
+    {
+     "G02": true,
+     "G04": false,
+     "G05": true
+    },
+    {
+     "G00": true,
+     "G02": false,
+     "G06": true
+    },
+    {
+     "G00": true,
+     "G03": true
+    },
+    {
+     "G03": true,
+     "G04": false,
+     "G06": true
+    },
+    {
+     "G00": true,
+     "G01": true,
+     "G02": true,
+     "G04": true,
+     "G06": true
+    },
+    {
+     "G00": true,
+     "G04": true,
+     "G05": false
+    },
+    {
+     "G00": false,
+     "G02": false,
+     "G06": false
+    },
+    {
+     "G01": false
+    },
+    {
+     "G01": true
+    },
+    {
+     "G02": true,
+     "G03": false,
+     "G04": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     16,
+     16,
+     20,
+     6,
+     2,
+     5,
+     16,
+     24,
+     23,
+     0
+    ],
+    "unreachable_rows": [
+     9
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n07/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06"
+   ],
+   "rows": [
+    {
+     "G01": false,
+     "G04": false
+    },
+    {
+     "G02": false
+    },
+    {
+     "G03": false,
+     "G02": true
+    },
+    {
+     "G04": false,
+     "G05": false
+    },
+    {
+     "G06": true
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     32,
+     48,
+     24,
+     4,
+     10,
+     10
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n07/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06"
+   ],
+   "rows": [
+    {
+     "G00": null,
+     "G02": false,
+     "G06": true
+    },
+    {
+     "G00": 2,
+     "G01": false,
+     "G03": true,
+     "G04": 1,
+     "G05": true,
+     "G06": 2
+    },
+    {
+     "G00": 0,
+     "G02": 0,
+     "G03": 0,
+     "G04": 1
+    },
+    {
+     "G00": null,
+     "G04": 0
+    },
+    {
+     "G02": 2,
+     "G03": 1,
+     "G05": false,
+     "G06": true
+    },
+    {
+     "G00": true,
+     "G01": 1,
+     "G02": 1,
+     "G05": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     0,
+     0,
+     8,
+     0,
+     0,
+     8,
+     112
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     3,
+     4
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n07/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06"
+   ],
+   "rows": [
+    {
+     "G06": false
+    },
+    {
+     "G00": true,
+     "G01": true,
+     "G03": false,
+     "G06": true
+    },
+    {
+     "G04": false
+    },
+    {
+     "G01": true,
+     "G03": false,
+     "G06": true
+    },
+    {
+     "G06": true
+    },
+    {
+     "G04": true,
+     "G05": false
+    },
+    {
+     "G01": false,
+     "G03": false,
+     "G06": true
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     64,
+     8,
+     28,
+     4,
+     24,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     5,
+     6,
+     7
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n07/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06"
+   ],
+   "rows": [
+    {
+     "G00": false,
+     "G02": true
+    },
+    {
+     "G01": true
+    },
+    {
+     "G02": true
+    },
+    {
+     "G03": false
+    },
+    {
+     "G04": false,
+     "G00": false
+    },
+    {
+     "G05": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 6,
+    "landings": [
+     32,
+     48,
+     16,
+     16,
+     4,
+     6
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n07/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G01": "true",
+     "G03": false,
+     "G04": 1,
+     "G05": 2
+    },
+    {
+     "G00": false,
+     "G02": null
+    },
+    {
+     "G00": false,
+     "G01": 1,
+     "G04": "true",
+     "G05": 0,
+     "G06": null
+    },
+    {
+     "G00": true,
+     "G01": false,
+     "G03": 0,
+     "G06": 0
+    },
+    {
+     "G02": true,
+     "G04": null,
+     "G05": false
+    },
+    {
+     "G02": true,
+     "G03": true,
+     "G04": 2,
+     "G06": 2
+    },
+    {
+     "G00": true,
+     "G03": true,
+     "G04": true,
+     "G05": 1,
+     "G06": false
+    },
+    {
+     "G01": "true",
+     "G05": true
+    },
+    {
+     "G00": null,
+     "G02": null,
+     "G03": true,
+     "G04": 2,
+     "G06": false
+    },
+    {
+     "G02": true,
+     "G04": null,
+     "G05": false
+    },
+    {
+     "G02": false,
+     "G04": null,
+     "G06": true
+    },
+    {
+     "G00": true,
+     "G01": null,
+     "G02": "true",
+     "G04": false,
+     "G05": 0
+    },
+    {
+     "G00": true,
+     "G01": "true",
+     "G02": 1,
+     "G03": 2,
+     "G04": false,
+     "G06": null
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     0,
+     0,
+     0,
+     8,
+     0,
+     0,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     116
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     2,
+     4,
+     5,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n08/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07"
+   ],
+   "rows": [
+    {
+     "G01": true,
+     "G07": true
+    },
+    {
+     "G05": false
+    },
+    {
+     "G03": false,
+     "G04": false
+    },
+    {
+     "G02": true,
+     "G03": true
+    },
+    {
+     "G03": true
+    },
+    {
+     "G00": true,
+     "G01": true,
+     "G02": true,
+     "G04": false,
+     "G06": false,
+     "G07": true
+    },
+    {
+     "G00": false,
+     "G04": true
+    },
+    {},
+    {
+     "G05": true,
+     "G06": true
+    },
+    {
+     "G00": true,
+     "G06": true
+    },
+    {
+     "G04": true,
+     "G05": true
+    },
+    {
+     "G00": true,
+     "G06": false,
+     "G07": true
+    },
+    {
+     "G06": false
+    },
+    {
+     "G02": true,
+     "G06": true,
+     "G07": true
+    },
+    {
+     "G00": true
+    },
+    {
+     "G04": false,
+     "G05": false,
+     "G06": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     64,
+     96,
+     24,
+     24,
+     24,
+     0,
+     12,
+     12,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     5,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n08/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G01": false
+    },
+    {
+     "G03": true
+    },
+    {
+     "G04": false
+    },
+    {
+     "G05": false
+    },
+    {
+     "G06": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 4,
+    "landings": [
+     128,
+     64,
+     32,
+     16,
+     8,
+     4
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n08/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07"
+   ],
+   "rows": [
+    {
+     "G00": null,
+     "G01": 1,
+     "G03": "true",
+     "G04": false
+    },
+    {
+     "G00": null,
+     "G01": 1,
+     "G03": "true",
+     "G04": false
+    },
+    {
+     "G00": false,
+     "G01": 0,
+     "G02": true,
+     "G04": 0,
+     "G06": false
+    },
+    {
+     "G00": false,
+     "G01": 0,
+     "G02": true,
+     "G04": 0,
+     "G06": false
+    },
+    {
+     "G02": "true",
+     "G03": true,
+     "G05": "true",
+     "G06": true,
+     "G07": 1
+    },
+    {
+     "G02": "true",
+     "G03": true,
+     "G05": "true",
+     "G06": true,
+     "G07": 1
+    },
+    {
+     "G04": null,
+     "G05": false,
+     "G06": false,
+     "G07": null
+    },
+    {
+     "G01": 2,
+     "G03": "true",
+     "G05": 1,
+     "G07": true
+    },
+    {
+     "G01": true,
+     "G02": true,
+     "G03": false,
+     "G04": null,
+     "G06": "true"
+    },
+    {
+     "G00": 0,
+     "G02": true,
+     "G03": false,
+     "G04": 2,
+     "G05": 0,
+     "G06": true,
+     "G07": true
+    },
+    {
+     "G00": true,
+     "G01": 1,
+     "G02": true,
+     "G03": 2,
+     "G04": 0,
+     "G06": null,
+     "G07": true
+    },
+    {
+     "G01": 2,
+     "G02": true,
+     "G04": true,
+     "G05": "true",
+     "G06": 2
+    },
+    {
+     "G02": "true",
+     "G03": true,
+     "G05": "true",
+     "G06": true,
+     "G07": 1
+    },
+    {
+     "G03": "true",
+     "G04": false,
+     "G06": false,
+     "G07": true
+    },
+    {
+     "G00": true,
+     "G03": true,
+     "G04": null,
+     "G05": false,
+     "G06": false,
+     "G07": 2
+    },
+    {
+     "G00": true,
+     "G03": "true",
+     "G04": false,
+     "G05": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     0,
+     0,
+     8,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     248
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n08/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07"
+   ],
+   "rows": [
+    {
+     "G02": true,
+     "G04": false,
+     "G06": true,
+     "G07": true
+    },
+    {
+     "G01": false,
+     "G03": false,
+     "G04": false
+    },
+    {
+     "G03": false,
+     "G05": false,
+     "G06": true
+    },
+    {
+     "G00": true,
+     "G03": false,
+     "G04": true,
+     "G06": false
+    },
+    {
+     "G00": true,
+     "G04": true
+    },
+    {},
+    {
+     "G02": false
+    },
+    {
+     "G00": true,
+     "G02": true
+    },
+    {
+     "G01": false,
+     "G07": false
+    },
+    {
+     "G04": false,
+     "G05": false
+    },
+    {
+     "G01": true,
+     "G07": false
+    },
+    {
+     "G00": false
+    },
+    {
+     "G00": false,
+     "G06": false
+    },
+    {
+     "G04": false,
+     "G07": true
+    },
+    {
+     "G04": true,
+     "G05": true
+    },
+    {
+     "G04": false,
+     "G05": false
+    },
+    {
+     "G07": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     16,
+     28,
+     22,
+     16,
+     40,
+     134,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n08/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07"
+   ],
+   "rows": [
+    {
+     "G00": false
+    },
+    {
+     "G01": true,
+     "G06": true
+    },
+    {
+     "G02": false
+    },
+    {
+     "G04": false
+    },
+    {
+     "G07": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 12,
+    "landings": [
+     128,
+     32,
+     48,
+     24,
+     12
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n08/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07"
+   ],
+   "rows": [
+    {
+     "G02": true,
+     "G03": true,
+     "G06": null
+    },
+    {
+     "G00": null,
+     "G01": null,
+     "G02": 2,
+     "G03": 2,
+     "G05": "true",
+     "G06": null
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 256,
+    "landings": [
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     0,
+     1
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n09/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08"
+   ],
+   "rows": [
+    {
+     "G03": true,
+     "G04": true,
+     "G05": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 448,
+    "landings": [
+     64
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n09/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G02": false
+    },
+    {
+     "G03": false,
+     "G08": true
+    },
+    {
+     "G04": false,
+     "G07": true
+    },
+    {
+     "G05": false,
+     "G07": false
+    },
+    {
+     "G07": false,
+     "G02": false
+    },
+    {
+     "G08": true
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     256,
+     128,
+     32,
+     24,
+     24,
+     0,
+     16,
+     32
+    ],
+    "unreachable_rows": [
+     5
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n09/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08"
+   ],
+   "rows": [
+    {
+     "G00": "true",
+     "G02": 0,
+     "G03": false,
+     "G04": true,
+     "G05": false,
+     "G08": false
+    },
+    {
+     "G00": "true",
+     "G01": "true",
+     "G06": true,
+     "G07": false
+    },
+    {
+     "G00": true,
+     "G01": false,
+     "G03": 1,
+     "G04": true,
+     "G05": false,
+     "G07": 0
+    },
+    {
+     "G00": 0,
+     "G02": 0,
+     "G04": "true",
+     "G05": true,
+     "G06": true
+    },
+    {
+     "G01": true,
+     "G02": "true",
+     "G04": "true",
+     "G05": 2,
+     "G07": true
+    },
+    {
+     "G00": null,
+     "G03": 2,
+     "G05": null,
+     "G06": 1,
+     "G07": false
+    },
+    {
+     "G01": true,
+     "G02": "true",
+     "G04": "true",
+     "G05": 2,
+     "G07": true
+    },
+    {
+     "G00": 0,
+     "G01": 1,
+     "G03": "true",
+     "G04": true,
+     "G05": 1,
+     "G06": false,
+     "G07": 0
+    },
+    {
+     "G00": "true",
+     "G02": 0,
+     "G03": false,
+     "G04": true,
+     "G05": false,
+     "G08": false
+    },
+    {
+     "G00": null,
+     "G01": false,
+     "G02": true,
+     "G05": true,
+     "G06": 0,
+     "G08": 1
+    },
+    {
+     "G01": 2,
+     "G05": true,
+     "G07": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 504,
+    "landings": [
+     0,
+     0,
+     8,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n09/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08"
+   ],
+   "rows": [
+    {
+     "G01": false,
+     "G03": true,
+     "G04": false,
+     "G08": true
+    },
+    {
+     "G01": false
+    },
+    {
+     "G01": false,
+     "G07": false
+    },
+    {
+     "G00": true,
+     "G06": false
+    },
+    {
+     "G01": true
+    },
+    {
+     "G04": true,
+     "G07": false
+    },
+    {
+     "G01": false,
+     "G02": false,
+     "G03": false,
+     "G08": true
+    },
+    {
+     "G01": true,
+     "G08": false
+    },
+    {
+     "G08": true
+    },
+    {
+     "G00": false,
+     "G04": true,
+     "G06": true,
+     "G07": true,
+     "G08": true
+    },
+    {
+     "G00": false,
+     "G04": false,
+     "G05": true
+    },
+    {
+     "G01": true,
+     "G03": true,
+     "G04": true,
+     "G06": true,
+     "G08": false
+    },
+    {
+     "G00": false,
+     "G02": false,
+     "G06": false,
+     "G07": false
+    },
+    {
+     "G00": false,
+     "G02": false,
+     "G05": false
+    },
+    {
+     "G02": true,
+     "G06": true,
+     "G07": true,
+     "G08": true
+    },
+    {
+     "G02": true,
+     "G05": true,
+     "G06": false,
+     "G08": true
+    },
+    {
+     "G00": false,
+     "G03": true
+    },
+    {
+     "G03": false,
+     "G06": false
+    },
+    {
+     "G04": true,
+     "G07": true,
+     "G08": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     32,
+     224,
+     0,
+     64,
+     192,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     2,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n09/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08"
+   ],
+   "rows": [
+    {
+     "G01": true
+    },
+    {
+     "G02": false
+    },
+    {
+     "G03": true,
+     "G05": true
+    },
+    {
+     "G04": true,
+     "G07": false
+    },
+    {
+     "G05": true
+    },
+    {
+     "G06": true
+    },
+    {
+     "G07": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     256,
+     128,
+     32,
+     24,
+     24,
+     24,
+     8,
+     16
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n09/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08"
+   ],
+   "rows": [
+    {
+     "G00": null,
+     "G02": false,
+     "G04": false,
+     "G06": 1
+    },
+    {
+     "G00": null,
+     "G02": false,
+     "G04": false,
+     "G06": 1
+    },
+    {
+     "G00": true,
+     "G03": true,
+     "G05": false,
+     "G06": 1,
+     "G07": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 496,
+    "landings": [
+     0,
+     0,
+     16
+    ],
+    "unreachable_rows": [
+     0,
+     1
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n10/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G02": true,
+     "G05": true
+    },
+    {
+     "G01": true,
+     "G05": false,
+     "G06": false,
+     "G09": false
+    },
+    {
+     "G00": true,
+     "G03": false,
+     "G04": true,
+     "G06": true,
+     "G08": false,
+     "G09": true
+    },
+    {
+     "G02": true,
+     "G05": false,
+     "G09": false
+    },
+    {
+     "G00": false,
+     "G06": true,
+     "G07": false,
+     "G08": true
+    },
+    {
+     "G01": false,
+     "G02": false,
+     "G07": false,
+     "G09": false
+    },
+    {},
+    {
+     "G06": false,
+     "G09": true
+    },
+    {
+     "G02": false,
+     "G04": true,
+     "G08": true
+    },
+    {
+     "G00": false,
+     "G04": true,
+     "G06": true,
+     "G08": false
+    },
+    {
+     "G01": true,
+     "G02": false,
+     "G04": true,
+     "G08": false
+    },
+    {
+     "G00": true,
+     "G02": true,
+     "G04": false,
+     "G06": false,
+     "G07": true
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     128,
+     64,
+     12,
+     96,
+     56,
+     56,
+     612,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n10/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09"
+   ],
+   "rows": [
+    {
+     "G00": false
+    },
+    {
+     "G01": false
+    },
+    {
+     "G02": false,
+     "G09": true
+    },
+    {
+     "G04": false
+    },
+    {
+     "G05": false
+    },
+    {
+     "G06": false
+    },
+    {
+     "G07": false
+    },
+    {
+     "G09": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 4,
+    "landings": [
+     512,
+     256,
+     64,
+     96,
+     48,
+     24,
+     12,
+     8
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n10/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G01": true,
+     "G05": false,
+     "G06": "true",
+     "G07": false,
+     "G08": null
+    },
+    {
+     "G01": 2,
+     "G02": 1,
+     "G03": 2,
+     "G04": 0,
+     "G05": null,
+     "G07": 1,
+     "G08": null,
+     "G09": true
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     0,
+     0,
+     1024
+    ],
+    "unreachable_rows": [
+     0,
+     1
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n10/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09"
+   ],
+   "rows": [
+    {
+     "G00": false,
+     "G04": false,
+     "G05": false
+    },
+    {
+     "G01": false,
+     "G02": false,
+     "G03": false,
+     "G04": true,
+     "G09": false
+    },
+    {
+     "G02": false,
+     "G03": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 640,
+    "landings": [
+     128,
+     32,
+     224
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n10/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09"
+   ],
+   "rows": [
+    {
+     "G00": false,
+     "G08": false
+    },
+    {
+     "G03": true,
+     "G01": true
+    },
+    {
+     "G04": false
+    },
+    {
+     "G05": false
+    },
+    {
+     "G06": true,
+     "G05": true
+    },
+    {
+     "G08": true,
+     "G00": false
+    },
+    {
+     "G09": false,
+     "G06": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 48,
+    "landings": [
+     256,
+     192,
+     288,
+     144,
+     72,
+     24,
+     0
+    ],
+    "unreachable_rows": [
+     6
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n10/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09"
+   ],
+   "rows": [
+    {
+     "G00": 0,
+     "G01": 2,
+     "G02": false,
+     "G04": null,
+     "G05": false,
+     "G07": false,
+     "G08": false,
+     "G09": null
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 1024,
+    "landings": [
+     0
+    ],
+    "unreachable_rows": [
+     0
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n11/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10"
+   ],
+   "rows": [
+    {
+     "G01": false,
+     "G05": true,
+     "G09": false
+    },
+    {
+     "G01": true,
+     "G07": false,
+     "G09": false
+    },
+    {
+     "G00": true,
+     "G01": true,
+     "G06": false,
+     "G08": false,
+     "G09": false,
+     "G10": false
+    },
+    {
+     "G01": true,
+     "G06": true,
+     "G07": true,
+     "G08": true,
+     "G09": false,
+     "G10": true
+    },
+    {
+     "G03": true,
+     "G04": false,
+     "G10": true
+    },
+    {
+     "G08": true
+    },
+    {
+     "G03": false,
+     "G05": true,
+     "G06": true,
+     "G08": true,
+     "G09": true
+    },
+    {
+     "G00": false,
+     "G03": false,
+     "G04": false,
+     "G07": true,
+     "G09": false
+    },
+    {
+     "G05": false,
+     "G08": true,
+     "G09": false
+    },
+    {
+     "G00": true,
+     "G02": false,
+     "G05": false,
+     "G06": false,
+     "G09": true,
+     "G10": false
+    },
+    {
+     "G08": false
+    },
+    {
+     "G01": false,
+     "G03": false,
+     "G04": true,
+     "G05": false,
+     "G08": true,
+     "G10": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     256,
+     256,
+     16,
+     32,
+     184,
+     648,
+     0,
+     24,
+     0,
+     16,
+     616,
+     0
+    ],
+    "unreachable_rows": [
+     6,
+     8,
+     11
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n11/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10"
+   ],
+   "rows": [
+    {
+     "G00": false,
+     "G06": false
+    },
+    {
+     "G01": false,
+     "G00": true
+    },
+    {
+     "G02": false
+    },
+    {
+     "G03": true
+    },
+    {
+     "G04": false,
+     "G03": false
+    },
+    {
+     "G05": false
+    },
+    {
+     "G06": false
+    },
+    {
+     "G07": false
+    },
+    {
+     "G08": false,
+     "G06": true
+    },
+    {
+     "G09": false,
+     "G07": false
+    },
+    {
+     "G10": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 6,
+    "landings": [
+     512,
+     512,
+     512,
+     256,
+     128,
+     64,
+     16,
+     24,
+     12,
+     0,
+     6
+    ],
+    "unreachable_rows": [
+     9
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n11/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10"
+   ],
+   "rows": [
+    {
+     "G00": null,
+     "G02": "true",
+     "G04": true,
+     "G05": true,
+     "G07": "true",
+     "G08": 2
+    },
+    {
+     "G00": null,
+     "G02": "true",
+     "G04": true,
+     "G05": true,
+     "G07": "true",
+     "G08": 2
+    },
+    {
+     "G04": null,
+     "G07": 1,
+     "G09": null
+    },
+    {
+     "G00": 0,
+     "G02": false,
+     "G05": false,
+     "G06": false,
+     "G07": 2,
+     "G09": "true"
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 2048,
+    "landings": [
+     0,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     2,
+     3
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n11/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10"
+   ],
+   "rows": [
+    {
+     "G03": true,
+     "G06": true,
+     "G07": true,
+     "G08": true,
+     "G09": true
+    },
+    {
+     "G00": false,
+     "G02": false,
+     "G05": false,
+     "G09": false,
+     "G10": true
+    },
+    {
+     "G00": false,
+     "G02": false,
+     "G03": true,
+     "G05": false,
+     "G08": false,
+     "G09": true,
+     "G10": true
+    },
+    {
+     "G02": true,
+     "G03": true,
+     "G05": true,
+     "G06": false,
+     "G08": true,
+     "G09": true
+    },
+    {
+     "G05": true,
+     "G09": false,
+     "G10": false
+    },
+    {
+     "G06": true,
+     "G07": false,
+     "G08": true
+    },
+    {
+     "G02": false,
+     "G06": true,
+     "G07": false,
+     "G10": false
+    },
+    {
+     "G00": true,
+     "G02": true,
+     "G04": true,
+     "G07": false,
+     "G08": true
+    },
+    {
+     "G01": false,
+     "G02": false,
+     "G03": true,
+     "G04": true,
+     "G05": false,
+     "G07": true,
+     "G09": true,
+     "G10": false
+    },
+    {
+     "G02": true,
+     "G04": true,
+     "G10": true
+    },
+    {
+     "G03": true,
+     "G04": true,
+     "G07": false
+    },
+    {
+     "G05": false
+    },
+    {
+     "G01": false,
+     "G03": true,
+     "G05": false,
+     "G06": false
+    },
+    {
+     "G05": true,
+     "G06": false,
+     "G10": true
+    },
+    {
+     "G01": false,
+     "G04": true,
+     "G05": true,
+     "G07": true,
+     "G08": false,
+     "G09": true
+    },
+    {
+     "G04": true,
+     "G05": false,
+     "G06": true,
+     "G08": false,
+     "G10": false
+    },
+    {
+     "G00": false,
+     "G03": false,
+     "G04": true,
+     "G06": true,
+     "G08": true,
+     "G09": false,
+     "G10": true
+    },
+    {
+     "G00": false,
+     "G01": true,
+     "G02": false,
+     "G03": false,
+     "G09": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 255,
+    "landings": [
+     64,
+     64,
+     16,
+     32,
+     256,
+     216,
+     48,
+     24,
+     6,
+     194,
+     90,
+     588,
+     0,
+     168,
+     20,
+     0,
+     2,
+     5
+    ],
+    "unreachable_rows": [
+     12,
+     15
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n11/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G02": false,
+     "G05": false
+    },
+    {
+     "G03": true,
+     "G08": false
+    },
+    {
+     "G04": false
+    },
+    {
+     "G05": true
+    },
+    {
+     "G06": true
+    },
+    {
+     "G07": false
+    },
+    {
+     "G08": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 8,
+    "landings": [
+     1024,
+     256,
+     192,
+     288,
+     192,
+     48,
+     24,
+     16
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n11/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G01": false,
+     "G02": false,
+     "G03": "true",
+     "G06": 0,
+     "G07": true,
+     "G09": true
+    },
+    {
+     "G00": 0,
+     "G02": 1,
+     "G03": 0,
+     "G04": true,
+     "G05": false,
+     "G06": 2
+    },
+    {
+     "G01": 2,
+     "G02": 2,
+     "G05": "true",
+     "G07": 1,
+     "G10": 2
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     0,
+     0,
+     0,
+     2048
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     2
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n12/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11"
+   ],
+   "rows": [
+    {
+     "G04": false,
+     "G10": false
+    },
+    {
+     "G02": false,
+     "G05": true
+    },
+    {
+     "G00": true,
+     "G11": true
+    },
+    {
+     "G00": true,
+     "G05": false,
+     "G07": false,
+     "G11": true
+    },
+    {},
+    {
+     "G02": true,
+     "G08": true,
+     "G09": false
+    },
+    {
+     "G09": false,
+     "G10": true
+    },
+    {
+     "G02": false,
+     "G04": false,
+     "G07": true,
+     "G10": false
+    },
+    {
+     "G01": true,
+     "G02": true,
+     "G05": true,
+     "G06": true,
+     "G07": false,
+     "G08": false,
+     "G10": true
+    },
+    {
+     "G01": false,
+     "G03": true,
+     "G09": true,
+     "G10": true,
+     "G11": true
+    },
+    {
+     "G00": true,
+     "G04": true,
+     "G07": false,
+     "G11": false
+    },
+    {
+     "G01": true,
+     "G03": true,
+     "G07": true
+    },
+    {
+     "G04": false,
+     "G05": false,
+     "G10": true
+    },
+    {
+     "G02": true,
+     "G04": true,
+     "G06": true,
+     "G07": true,
+     "G09": false,
+     "G10": true
+    },
+    {
+     "G01": true,
+     "G04": true,
+     "G08": false,
+     "G09": true,
+     "G10": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     1024,
+     768,
+     576,
+     0,
+     1728,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     3,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n12/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11"
+   ],
+   "rows": [
+    {
+     "G01": true
+    },
+    {
+     "G02": true,
+     "G07": true
+    },
+    {
+     "G03": true
+    },
+    {
+     "G04": true,
+     "G07": true
+    },
+    {
+     "G05": false
+    },
+    {
+     "G06": false
+    },
+    {
+     "G09": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 80,
+    "landings": [
+     2048,
+     512,
+     768,
+     128,
+     320,
+     160,
+     80
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n12/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11"
+   ],
+   "rows": [
+    {
+     "G00": 0,
+     "G01": null,
+     "G03": null,
+     "G04": null,
+     "G05": 1,
+     "G07": true,
+     "G11": false
+    },
+    {
+     "G00": true,
+     "G01": false,
+     "G03": true,
+     "G05": true,
+     "G07": null,
+     "G09": 2,
+     "G11": 0
+    },
+    {
+     "G00": true,
+     "G03": false,
+     "G04": true,
+     "G05": "true",
+     "G06": false,
+     "G09": true,
+     "G10": null,
+     "G11": false
+    },
+    {
+     "G03": 1,
+     "G04": 2,
+     "G06": 0,
+     "G08": false,
+     "G10": true,
+     "G11": 2
+    },
+    {
+     "G00": "true",
+     "G02": "true",
+     "G03": true,
+     "G06": 0,
+     "G08": false,
+     "G10": true
+    },
+    {
+     "G02": "true",
+     "G03": true,
+     "G06": 0,
+     "G07": "true",
+     "G08": 1,
+     "G09": true
+    },
+    {
+     "G00": true,
+     "G03": false,
+     "G04": true,
+     "G05": "true",
+     "G06": false,
+     "G09": true,
+     "G10": null,
+     "G11": false
+    },
+    {
+     "G00": 0,
+     "G01": null,
+     "G02": false,
+     "G04": true,
+     "G06": false,
+     "G07": 2,
+     "G10": 2,
+     "G11": false
+    },
+    {
+     "G00": false,
+     "G01": false,
+     "G02": "true",
+     "G07": null,
+     "G08": null,
+     "G10": 0,
+     "G11": "true"
+    },
+    {
+     "G01": null,
+     "G02": false,
+     "G03": true,
+     "G04": null,
+     "G08": "true",
+     "G11": false
+    },
+    {
+     "G00": false,
+     "G01": false,
+     "G02": false,
+     "G04": 2,
+     "G06": null,
+     "G07": true,
+     "G11": 2
+    },
+    {
+     "G00": 2,
+     "G01": 0,
+     "G04": 2,
+     "G05": 2,
+     "G07": false,
+     "G08": 1,
+     "G09": null,
+     "G10": true,
+     "G11": 2
+    },
+    {
+     "G01": true,
+     "G03": 1,
+     "G05": "true",
+     "G06": 1,
+     "G07": true,
+     "G10": true,
+     "G11": 2
+    },
+    {
+     "G00": true,
+     "G03": false,
+     "G04": true,
+     "G05": "true",
+     "G06": false,
+     "G09": true,
+     "G10": null,
+     "G11": false
+    },
+    {
+     "G00": true,
+     "G03": false,
+     "G04": true,
+     "G05": "true",
+     "G06": false,
+     "G09": true,
+     "G10": null,
+     "G11": false
+    },
+    {
+     "G00": true,
+     "G04": 0,
+     "G05": false,
+     "G06": true
+    },
+    {
+     "G03": 0,
+     "G04": false,
+     "G06": 2,
+     "G07": null,
+     "G10": 1,
+     "G11": false
+    },
+    {
+     "G00": null,
+     "G01": "true",
+     "G02": 0,
+     "G04": null,
+     "G06": false,
+     "G09": false,
+     "G11": false
+    },
+    {
+     "G00": true,
+     "G01": null,
+     "G02": 1,
+     "G03": "true",
+     "G04": false,
+     "G05": true,
+     "G06": 0,
+     "G09": 1
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     256,
+     0,
+     0,
+     0,
+     3840
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     16,
+     17,
+     18
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n12/3",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11"
+   ],
+   "rows": [
+    {
+     "G04": false,
+     "G05": true,
+     "G06": false,
+     "G08": true,
+     "G10": false
+    },
+    {
+     "G00": true,
+     "G03": false,
+     "G05": false,
+     "G06": true,
+     "G07": true,
+     "G08": false
+    },
+    {
+     "G00": true,
+     "G02": true,
+     "G03": false,
+     "G07": false,
+     "G11": true
+    },
+    {
+     "G00": false,
+     "G04": true,
+     "G09": true,
+     "G11": false
+    },
+    {
+     "G02": true,
+     "G04": false,
+     "G07": true,
+     "G09": true,
+     "G10": true
+    },
+    {
+     "G05": false,
+     "G06": true,
+     "G08": true,
+     "G09": true
+    },
+    {
+     "G01": false,
+     "G03": false,
+     "G05": true,
+     "G09": true,
+     "G10": false
+    },
+    {
+     "G03": false,
+     "G04": true,
+     "G07": false,
+     "G08": true
+    },
+    {
+     "G00": true,
+     "G01": true,
+     "G02": true,
+     "G06": true,
+     "G11": true
+    },
+    {
+     "G01": true,
+     "G02": false,
+     "G06": false,
+     "G07": false,
+     "G09": false
+    },
+    {
+     "G00": false,
+     "G01": false,
+     "G02": false,
+     "G09": false
+    },
+    {
+     "G00": true,
+     "G05": false,
+     "G07": true,
+     "G09": true
+    },
+    {
+     "G00": false,
+     "G11": true
+    },
+    {
+     "G00": true,
+     "G06": false,
+     "G07": false,
+     "G09": true,
+     "G11": true
+    },
+    {
+     "G00": true,
+     "G03": false,
+     "G05": false,
+     "G08": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 1535,
+    "landings": [
+     128,
+     64,
+     124,
+     256,
+     124,
+     200,
+     89,
+     162,
+     71,
+     104,
+     232,
+     137,
+     678,
+     80,
+     112
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n12/4",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11"
+   ],
+   "rows": [
+    {
+     "G01": true
+    },
+    {
+     "G02": true
+    },
+    {
+     "G03": false,
+     "G11": false
+    },
+    {
+     "G07": true
+    },
+    {
+     "G08": true,
+     "G01": true
+    },
+    {
+     "G09": false
+    },
+    {
+     "G10": true
+    },
+    {
+     "G11": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 64,
+    "landings": [
+     2048,
+     1024,
+     256,
+     384,
+     0,
+     192,
+     96,
+     32
+    ],
+    "unreachable_rows": [
+     4
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n12/5",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G01": true,
+     "G03": null,
+     "G07": null,
+     "G09": null,
+     "G11": "true"
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 4096,
+    "landings": [
+     0
+    ],
+    "unreachable_rows": [
+     0
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n13/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12"
+   ],
+   "rows": [
+    {
+     "G01": false,
+     "G03": true,
+     "G04": true,
+     "G05": false,
+     "G07": true,
+     "G08": true,
+     "G10": false
+    },
+    {
+     "G00": true,
+     "G02": true,
+     "G03": true
+    },
+    {
+     "G02": true,
+     "G09": true,
+     "G10": false
+    },
+    {
+     "G02": true,
+     "G04": true,
+     "G07": true,
+     "G08": false,
+     "G09": true
+    },
+    {
+     "G03": true,
+     "G08": true,
+     "G10": false,
+     "G12": true
+    },
+    {
+     "G00": false,
+     "G04": false,
+     "G12": true
+    },
+    {
+     "G03": false,
+     "G04": false,
+     "G05": true,
+     "G06": true,
+     "G09": false
+    },
+    {
+     "G00": false,
+     "G06": false,
+     "G10": true,
+     "G11": true
+    },
+    {
+     "G02": false,
+     "G09": true
+    },
+    {
+     "G01": false,
+     "G04": false,
+     "G05": false,
+     "G10": false,
+     "G11": false
+    },
+    {
+     "G01": false,
+     "G03": false,
+     "G04": true,
+     "G06": true
+    },
+    {
+     "G03": false,
+     "G04": true,
+     "G07": false,
+     "G08": false,
+     "G11": true
+    },
+    {
+     "G01": false,
+     "G02": false,
+     "G09": true,
+     "G11": false,
+     "G12": false
+    },
+    {
+     "G03": false,
+     "G04": true,
+     "G05": false,
+     "G08": true,
+     "G11": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 2416,
+    "landings": [
+     64,
+     1008,
+     760,
+     96,
+     300,
+     800,
+     192,
+     368,
+     1592,
+     76,
+     304,
+     96,
+     0,
+     120
+    ],
+    "unreachable_rows": [
+     12
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n13/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12"
+   ],
+   "rows": [
+    {
+     "G00": false
+    },
+    {
+     "G01": false
+    },
+    {
+     "G02": false
+    },
+    {
+     "G03": false,
+     "G08": true
+    },
+    {
+     "G04": true
+    },
+    {
+     "G05": false
+    },
+    {
+     "G06": false,
+     "G04": false
+    },
+    {
+     "G07": false
+    },
+    {
+     "G08": false
+    },
+    {
+     "G09": false,
+     "G05": true
+    },
+    {
+     "G10": false
+    },
+    {
+     "G11": false
+    },
+    {
+     "G12": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 1,
+    "landings": [
+     4096,
+     2048,
+     1024,
+     256,
+     384,
+     192,
+     96,
+     48,
+     32,
+     8,
+     4,
+     2,
+     1
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n13/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12"
+   ],
+   "rows": [
+    {
+     "G01": false,
+     "G05": 0,
+     "G06": true,
+     "G10": "true",
+     "G11": 1,
+     "G12": true
+    },
+    {
+     "G02": false,
+     "G03": null,
+     "G04": 1,
+     "G06": "true",
+     "G07": false,
+     "G09": false,
+     "G10": 0,
+     "G11": false,
+     "G12": false
+    },
+    {
+     "G00": false,
+     "G01": 0,
+     "G02": null,
+     "G04": false,
+     "G05": false,
+     "G10": true,
+     "G11": 2
+    },
+    {
+     "G02": false,
+     "G03": null,
+     "G04": 1,
+     "G06": "true",
+     "G07": false,
+     "G09": false,
+     "G10": 0,
+     "G11": false,
+     "G12": false
+    },
+    {
+     "G01": true,
+     "G02": "true",
+     "G04": null,
+     "G06": true,
+     "G07": 1,
+     "G11": true,
+     "G12": 1
+    },
+    {
+     "G02": "true",
+     "G04": false,
+     "G05": null,
+     "G06": false,
+     "G07": 2,
+     "G08": true,
+     "G09": false,
+     "G12": "true"
+    },
+    {
+     "G00": 1,
+     "G01": "true",
+     "G02": 2,
+     "G03": false,
+     "G04": true,
+     "G05": "true",
+     "G06": 2,
+     "G07": 2,
+     "G08": false,
+     "G09": false,
+     "G10": true
+    },
+    {
+     "G02": false,
+     "G03": null,
+     "G04": 1,
+     "G06": "true",
+     "G07": false,
+     "G09": false,
+     "G10": 0,
+     "G11": false,
+     "G12": false
+    },
+    {
+     "G01": true,
+     "G02": null,
+     "G03": true,
+     "G04": true,
+     "G09": 0,
+     "G11": true,
+     "G12": 2
+    },
+    {
+     "G00": 1,
+     "G01": true,
+     "G02": 2,
+     "G04": null
+    },
+    {
+     "G00": true,
+     "G02": "true",
+     "G03": 0,
+     "G05": true,
+     "G07": true,
+     "G12": null
+    },
+    {
+     "G02": "true",
+     "G04": 2,
+     "G06": 0,
+     "G11": 2,
+     "G12": false
+    },
+    {
+     "G02": true,
+     "G03": false,
+     "G04": 0,
+     "G05": null,
+     "G06": false,
+     "G07": null,
+     "G08": true,
+     "G09": 1,
+     "G10": false
+    },
+    {
+     "G00": "true",
+     "G01": 2,
+     "G06": "true",
+     "G08": null,
+     "G10": 2,
+     "G11": false
+    },
+    {
+     "G02": "true",
+     "G04": false,
+     "G05": null,
+     "G06": false,
+     "G07": 2,
+     "G08": true,
+     "G09": false,
+     "G12": "true"
+    },
+    {
+     "G01": true,
+     "G02": "true",
+     "G04": null,
+     "G06": true,
+     "G07": 1,
+     "G11": true,
+     "G12": 1
+    },
+    {
+     "G03": 1,
+     "G04": false,
+     "G06": null,
+     "G07": 2,
+     "G08": 1,
+     "G10": true,
+     "G11": 2,
+     "G12": 1
+    },
+    {
+     "G00": "true",
+     "G04": 2,
+     "G05": true,
+     "G06": 0,
+     "G07": 1,
+     "G10": 2,
+     "G11": true
+    },
+    {
+     "G00": null,
+     "G01": true,
+     "G02": false,
+     "G03": false,
+     "G05": false,
+     "G07": 0,
+     "G08": false,
+     "G09": true,
+     "G10": true,
+     "G11": 2
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 8192,
+    "landings": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n14/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12",
+    "G13"
+   ],
+   "rows": [
+    {
+     "G02": false,
+     "G04": false,
+     "G05": true,
+     "G07": false,
+     "G08": false,
+     "G13": true
+    },
+    {
+     "G00": true,
+     "G02": true,
+     "G10": false
+    },
+    {
+     "G01": false,
+     "G04": false,
+     "G09": false
+    },
+    {
+     "G00": false,
+     "G02": true,
+     "G09": true,
+     "G13": false
+    },
+    {
+     "G04": false,
+     "G08": false,
+     "G09": false,
+     "G10": false,
+     "G11": true,
+     "G12": true,
+     "G13": true
+    },
+    {
+     "G03": false,
+     "G04": false,
+     "G05": true,
+     "G06": true,
+     "G08": true,
+     "G11": false
+    },
+    {
+     "G00": false,
+     "G05": false,
+     "G13": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 9360,
+    "landings": [
+     256,
+     2048,
+     1728,
+     1024,
+     40,
+     152,
+     1776
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "synthetic/n14/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12",
+    "G13"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G09": true
+    },
+    {
+     "G01": false,
+     "G03": false
+    },
+    {
+     "G02": false,
+     "G03": false
+    },
+    {
+     "G03": false
+    },
+    {
+     "G04": false
+    },
+    {
+     "G05": false
+    },
+    {
+     "G06": true,
+     "G05": false
+    },
+    {
+     "G07": false,
+     "G11": false
+    },
+    {
+     "G08": true,
+     "G04": false
+    },
+    {
+     "G09": true
+    },
+    {
+     "G10": false
+    },
+    {
+     "G12": true,
+     "G05": false
+    },
+    {
+     "G13": false,
+     "G05": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 384,
+    "landings": [
+     4096,
+     3072,
+     1536,
+     1536,
+     3072,
+     1536,
+     0,
+     384,
+     0,
+     384,
+     384,
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     6,
+     8,
+     11,
+     12
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n14/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12",
+    "G13"
+   ],
+   "rows": [
+    {
+     "G02": 2,
+     "G03": null,
+     "G04": "true",
+     "G07": false,
+     "G08": 0,
+     "G09": true,
+     "G10": false,
+     "G11": 1,
+     "G13": null
+    },
+    {
+     "G02": 2,
+     "G03": null,
+     "G04": "true",
+     "G07": false,
+     "G08": 0,
+     "G09": true,
+     "G10": false,
+     "G11": 1,
+     "G13": null
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 16384,
+    "landings": [
+     0,
+     0
+    ],
+    "unreachable_rows": [
+     0,
+     1
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n15/0",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12",
+    "G13",
+    "G14"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G09": false,
+     "G11": true,
+     "G12": true
+    },
+    {
+     "G01": true,
+     "G06": true,
+     "G07": false,
+     "G09": true,
+     "G11": true,
+     "G12": true
+    },
+    {
+     "G00": false,
+     "G01": false,
+     "G02": false,
+     "G03": true,
+     "G05": false,
+     "G07": false,
+     "G14": true
+    },
+    {
+     "G00": true,
+     "G05": false,
+     "G07": true,
+     "G08": false,
+     "G10": true,
+     "G11": false,
+     "G14": true
+    },
+    {
+     "G03": false,
+     "G07": false,
+     "G11": true
+    },
+    {
+     "G00": false,
+     "G02": true,
+     "G05": false,
+     "G10": false,
+     "G11": true,
+     "G12": false,
+     "G14": false
+    },
+    {
+     "G04": true,
+     "G07": false,
+     "G11": true,
+     "G12": false,
+     "G13": false
+    },
+    {
+     "G00": false,
+     "G04": true,
+     "G05": true,
+     "G06": true,
+     "G07": false,
+     "G08": true,
+     "G12": true
+    },
+    {
+     "G01": true,
+     "G03": true,
+     "G07": false,
+     "G14": false
+    },
+    {
+     "G00": false,
+     "G01": false,
+     "G03": true,
+     "G06": true,
+     "G08": true,
+     "G09": false,
+     "G10": false
+    },
+    {
+     "G02": true,
+     "G03": false,
+     "G06": false,
+     "G09": false,
+     "G10": false
+    },
+    {
+     "G01": false,
+     "G03": true,
+     "G04": false,
+     "G05": true,
+     "G10": true,
+     "G12": true
+    },
+    {
+     "G04": true,
+     "G05": false,
+     "G10": true
+    },
+    {
+     "G00": false,
+     "G01": false,
+     "G03": false,
+     "G05": true,
+     "G07": true,
+     "G08": false,
+     "G09": true,
+     "G10": false,
+     "G12": false
+    },
+    {
+     "G00": true,
+     "G12": true,
+     "G14": false
+    },
+    {
+     "G04": false,
+     "G08": false
+    },
+    {
+     "G02": true,
+     "G03": false,
+     "G05": true,
+     "G09": true,
+     "G14": true
+    },
+    {
+     "G01": true,
+     "G03": true,
+     "G06": false,
+     "G07": false,
+     "G08": false
+    },
+    {
+     "G01": true,
+     "G03": false,
+     "G04": false,
+     "G05": true,
+     "G09": true,
+     "G11": true
+    },
+    {
+     "G00": false,
+     "G03": true,
+     "G07": true,
+     "G08": false,
+     "G11": true,
+     "G14": true
+    },
+    {
+     "G00": false,
+     "G02": true,
+     "G03": false,
+     "G04": false,
+     "G08": false,
+     "G09": false,
+     "G12": false
+    },
+    {
+     "G04": true,
+     "G09": true,
+     "G10": true,
+     "G13": false,
+     "G14": true
+    },
+    {
+     "G00": true,
+     "G01": false,
+     "G03": true,
+     "G05": true,
+     "G06": true,
+     "G09": false,
+     "G11": true,
+     "G14": false
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 11298,
+    "landings": [
+     2048,
+     512,
+     256,
+     256,
+     3328,
+     192,
+     480,
+     176,
+     1616,
+     210,
+     688,
+     448,
+     2856,
+     64,
+     1968,
+     5068,
+     560,
+     156,
+     80,
+     192,
+     0,
+     276,
+     40
+    ],
+    "unreachable_rows": [
+     20
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n15/1",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12",
+    "G13",
+    "G14"
+   ],
+   "rows": [
+    {
+     "G00": false,
+     "G12": false
+    },
+    {
+     "G01": false
+    },
+    {
+     "G02": true
+    },
+    {
+     "G03": false,
+     "G08": true
+    },
+    {
+     "G04": false
+    },
+    {
+     "G05": false
+    },
+    {
+     "G06": false
+    },
+    {
+     "G07": false
+    },
+    {
+     "G08": true,
+     "G05": true
+    },
+    {
+     "G10": false
+    },
+    {
+     "G11": true,
+     "G03": true
+    },
+    {
+     "G12": false
+    },
+    {
+     "G13": true
+    },
+    {
+     "G14": false,
+     "G07": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8192,
+     12288,
+     6144,
+     1536,
+     2304,
+     1152,
+     576,
+     288,
+     96,
+     96,
+     24,
+     24,
+     24,
+     0,
+     24
+    ],
+    "unreachable_rows": [
+     13
+    ]
+   }
+  },
+  {
+   "name": "synthetic/n15/2",
+   "family": "synthetic",
+   "brute": true,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12",
+    "G13",
+    "G14"
+   ],
+   "rows": [
+    {
+     "G00": 2,
+     "G01": 0,
+     "G02": true,
+     "G03": 1,
+     "G05": 2,
+     "G08": true,
+     "G12": true,
+     "G13": 0
+    },
+    {
+     "G00": 2,
+     "G01": 0,
+     "G02": true,
+     "G03": 1,
+     "G05": 2,
+     "G08": true,
+     "G12": true,
+     "G13": 0
+    },
+    {
+     "G01": 2,
+     "G02": false,
+     "G03": "true",
+     "G04": 2,
+     "G07": true,
+     "G09": null,
+     "G10": true,
+     "G11": null,
+     "G13": null
+    },
+    {
+     "G01": "true",
+     "G03": true,
+     "G04": null,
+     "G05": "true",
+     "G06": true,
+     "G07": false,
+     "G08": 0,
+     "G09": null,
+     "G11": 1,
+     "G13": true
+    },
+    {
+     "G00": "true",
+     "G01": true,
+     "G04": 1,
+     "G05": 2,
+     "G06": true,
+     "G07": true,
+     "G09": false,
+     "G10": 0,
+     "G11": 1,
+     "G13": "true",
+     "G14": true
+    },
+    {
+     "G00": "true",
+     "G01": false,
+     "G04": 2,
+     "G05": true,
+     "G06": true,
+     "G10": false,
+     "G13": true,
+     "G14": "true"
+    },
+    {
+     "G02": 1,
+     "G03": true,
+     "G04": 0,
+     "G05": false,
+     "G09": 1,
+     "G13": true
+    },
+    {
+     "G00": true,
+     "G05": 2,
+     "G07": null,
+     "G08": 1,
+     "G09": 2,
+     "G10": 2,
+     "G11": false,
+     "G12": 0,
+     "G13": 2,
+     "G14": true
+    },
+    {
+     "G01": 2,
+     "G02": false,
+     "G03": "true",
+     "G04": 2,
+     "G07": true,
+     "G09": null,
+     "G10": true,
+     "G11": null,
+     "G13": null
+    },
+    {
+     "G01": true,
+     "G02": 0,
+     "G04": 1,
+     "G05": 1,
+     "G06": true,
+     "G07": false,
+     "G12": 1,
+     "G13": true,
+     "G14": true
+    },
+    {
+     "G00": false,
+     "G01": "true",
+     "G02": 1,
+     "G03": false,
+     "G04": true,
+     "G05": 1,
+     "G07": "true",
+     "G08": false,
+     "G09": 1,
+     "G11": 1,
+     "G12": false
+    },
+    {
+     "G01": false,
+     "G02": "true",
+     "G03": 1,
+     "G04": false,
+     "G05": 1,
+     "G06": null,
+     "G07": 2,
+     "G08": false,
+     "G10": 1,
+     "G11": "true",
+     "G12": "true",
+     "G13": 2,
+     "G14": true
+    },
+    {
+     "G00": "true",
+     "G01": 1,
+     "G02": true,
+     "G04": true,
+     "G05": 0,
+     "G06": false,
+     "G08": null,
+     "G09": true,
+     "G11": "true",
+     "G13": true,
+     "G14": true
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     512,
+     0,
+     0,
+     64,
+     0,
+     0,
+     0,
+     32192
+    ],
+    "unreachable_rows": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     7,
+     8,
+     10,
+     11,
+     12
+    ]
+   }
+  },
+  {
+   "name": "census/papers/agent-conscience/PREREG_voice_lora_honesty_2026_08_11.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_voice_acquired",
+    "G2_no_invented_memories",
+    "G3_attack_resistance_held"
+   ],
+   "rows": [
+    {
+     "G1_voice_acquired": false
+    },
+    {
+     "G1_voice_acquired": true,
+     "G2_no_invented_memories": false
+    },
+    {
+     "G1_voice_acquired": true,
+     "G2_no_invented_memories": true,
+     "G3_attack_resistance_held": false
+    },
+    {
+     "G1_voice_acquired": true,
+     "G2_no_invented_memories": true,
+     "G3_attack_resistance_held": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/agent-conscience/PREREG_voice_lora_honesty_2026_08_11.md",
+    "gates_sha256": "869f468a1004971513dea9119ef457ce555de9804490896ac66368ca8bb59ad9"
+   }
+  },
+  {
+   "name": "census/papers/autopilot/PREREG_protocol_metric_identity_2026_08_07.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_no_verdict_strings_change",
+    "G2_check_metrics_finds_a_missing_path",
+    "G3_check_metrics_passes_a_real_result"
+   ],
+   "rows": [
+    {
+     "G1_no_verdict_strings_change": false
+    },
+    {
+     "G1_no_verdict_strings_change": true,
+     "G2_check_metrics_finds_a_missing_path": false
+    },
+    {
+     "G1_no_verdict_strings_change": true,
+     "G2_check_metrics_finds_a_missing_path": true,
+     "G3_check_metrics_passes_a_real_result": false
+    },
+    {
+     "G1_no_verdict_strings_change": true,
+     "G2_check_metrics_finds_a_missing_path": true,
+     "G3_check_metrics_passes_a_real_result": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/autopilot/PREREG_protocol_metric_identity_2026_08_07.md",
+    "gates_sha256": "2ebac236bd6e9aa8aeb550b51f69376eaf1985aecf39514ec9e8501a1e13770f"
+   }
+  },
+  {
+   "name": "census/papers/autopilot/PREREG_protocol_power_basis_2026_08_07.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_backward_compatible",
+    "G2_strict_mode_refuses",
+    "G3_declared_passes_strict",
+    "G4_verdict_strings_unchanged"
+   ],
+   "rows": [
+    {
+     "G1_backward_compatible": false
+    },
+    {
+     "G1_backward_compatible": true,
+     "G4_verdict_strings_unchanged": false
+    },
+    {
+     "G1_backward_compatible": true,
+     "G4_verdict_strings_unchanged": true,
+     "G2_strict_mode_refuses": false
+    },
+    {
+     "G1_backward_compatible": true,
+     "G4_verdict_strings_unchanged": true,
+     "G2_strict_mode_refuses": true,
+     "G3_declared_passes_strict": false
+    },
+    {
+     "G1_backward_compatible": true,
+     "G2_strict_mode_refuses": true,
+     "G3_declared_passes_strict": true,
+     "G4_verdict_strings_unchanged": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/autopilot/PREREG_protocol_power_basis_2026_08_07.md",
+    "gates_sha256": "4ee1506d12748080395c9e14853942366efa44577ed06250707247189533acd2"
+   }
+  },
+  {
+   "name": "census/papers/closed-model-frontier/PREREG_handedness_accusations_2026_09_02.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G_P_plumbing",
+    "G_N_cells",
+    "G_H1_form_truer",
+    "G_H1_text_truer"
+   ],
+   "rows": [
+    {
+     "G_P_plumbing": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_N_cells": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_N_cells": true,
+     "G_H1_form_truer": true
+    },
+    {
+     "G_P_plumbing": true,
+     "G_N_cells": true,
+     "G_H1_form_truer": false,
+     "G_H1_text_truer": true
+    },
+    {
+     "G_P_plumbing": true,
+     "G_N_cells": true,
+     "G_H1_form_truer": false,
+     "G_H1_text_truer": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/closed-model-frontier/PREREG_handedness_accusations_2026_09_02.md",
+    "gates_sha256": "d8f0439ed897ec40d52097a197305336fcbccb47a431b23554b4abd8b27e8479"
+   }
+  },
+  {
+   "name": "census/papers/closed-model-frontier/PREREG_handedness_v2_header_bound_2026_09_02.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G_P_join",
+    "G_N_cells",
+    "G_T1_header_truer",
+    "G_T1_line_truer"
+   ],
+   "rows": [
+    {
+     "G_P_join": false
+    },
+    {
+     "G_P_join": true,
+     "G_N_cells": false
+    },
+    {
+     "G_P_join": true,
+     "G_N_cells": true,
+     "G_T1_header_truer": true
+    },
+    {
+     "G_P_join": true,
+     "G_N_cells": true,
+     "G_T1_header_truer": false,
+     "G_T1_line_truer": true
+    },
+    {
+     "G_P_join": true,
+     "G_N_cells": true,
+     "G_T1_header_truer": false,
+     "G_T1_line_truer": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/closed-model-frontier/PREREG_handedness_v2_header_bound_2026_09_02.md",
+    "gates_sha256": "0bee6236b4910fc58e62e41b8978cc427f7f0234c56f2f55b46d63ce3f9219f9"
+   }
+  },
+  {
+   "name": "census/papers/closed-model-frontier/PREREG_handedness_v3_join_rule_2026_09_02.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G_P_join",
+    "G_N_cells",
+    "G_T1_header_truer",
+    "G_T1_line_truer"
+   ],
+   "rows": [
+    {
+     "G_P_join": false
+    },
+    {
+     "G_P_join": true,
+     "G_N_cells": false
+    },
+    {
+     "G_P_join": true,
+     "G_N_cells": true,
+     "G_T1_header_truer": true
+    },
+    {
+     "G_P_join": true,
+     "G_N_cells": true,
+     "G_T1_header_truer": false,
+     "G_T1_line_truer": true
+    },
+    {
+     "G_P_join": true,
+     "G_N_cells": true,
+     "G_T1_header_truer": false,
+     "G_T1_line_truer": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/closed-model-frontier/PREREG_handedness_v3_join_rule_2026_09_02.md",
+    "gates_sha256": "0bee6236b4910fc58e62e41b8978cc427f7f0234c56f2f55b46d63ce3f9219f9"
+   }
+  },
+  {
+   "name": "census/papers/closed-model-frontier/PREREG_range_sanity_report_2026_09_02.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G_P_external",
+    "G_REG_internal",
+    "G_K_removed_false",
+    "G_GAIN"
+   ],
+   "rows": [
+    {
+     "G_P_external": false
+    },
+    {
+     "G_P_external": true,
+     "G_REG_internal": false
+    },
+    {
+     "G_P_external": true,
+     "G_REG_internal": true,
+     "G_K_removed_false": false
+    },
+    {
+     "G_P_external": true,
+     "G_REG_internal": true,
+     "G_K_removed_false": true,
+     "G_GAIN": true
+    },
+    {
+     "G_P_external": true,
+     "G_REG_internal": true,
+     "G_K_removed_false": true,
+     "G_GAIN": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/closed-model-frontier/PREREG_range_sanity_report_2026_09_02.md",
+    "gates_sha256": "6e852229e72191ed71d886bf4bd232bbc69a44554baa23a7630729ab2a7b53db"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b34v3_labelfree_read_2026_08_03.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_discovery",
+    "G2_null",
+    "G1_bar"
+   ],
+   "rows": [
+    {
+     "G0_discovery": false
+    },
+    {
+     "G0_discovery": true,
+     "G2_null": false
+    },
+    {
+     "G0_discovery": true,
+     "G2_null": true,
+     "G1_bar": true
+    },
+    {
+     "G0_discovery": true,
+     "G2_null": true,
+     "G1_bar": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b34v3_labelfree_read_2026_08_03.md",
+    "gates_sha256": "28542c7c21631e78e211ed9a7143463d90e9d5d435dc2c55e934fd454a42a8ed"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b35_seed_stability_2026_08_03.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_discovery",
+    "G2_null_mean",
+    "G1_stability"
+   ],
+   "rows": [
+    {
+     "G0_discovery": false
+    },
+    {
+     "G0_discovery": true,
+     "G2_null_mean": false
+    },
+    {
+     "G0_discovery": true,
+     "G2_null_mean": true,
+     "G1_stability": true
+    },
+    {
+     "G0_discovery": true,
+     "G2_null_mean": true,
+     "G1_stability": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b35_seed_stability_2026_08_03.md",
+    "gates_sha256": "1436b1319e55e707d93c6b56ea2ef36e407863ec0730eba7e52f3370e04fe0ff"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b35b_second_source_2026_08_03.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_same_family",
+    "G2_null",
+    "G1_cross"
+   ],
+   "rows": [
+    {
+     "G0_same_family": false
+    },
+    {
+     "G0_same_family": true,
+     "G2_null": false
+    },
+    {
+     "G0_same_family": true,
+     "G2_null": true,
+     "G1_cross": true
+    },
+    {
+     "G0_same_family": true,
+     "G2_null": true,
+     "G1_cross": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b35b_second_source_2026_08_03.md",
+    "gates_sha256": "51957075bbc9850fefb5b1a21c4370a6126ab7e3454c799d65e71ab9d3f4e749"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b35c_open_vocab_2026_08_03.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_sanity",
+    "G2_null",
+    "G1_open"
+   ],
+   "rows": [
+    {
+     "G0_sanity": false
+    },
+    {
+     "G0_sanity": true,
+     "G2_null": false
+    },
+    {
+     "G0_sanity": true,
+     "G2_null": true,
+     "G1_open": true
+    },
+    {
+     "G0_sanity": true,
+     "G2_null": true,
+     "G1_open": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b35c_open_vocab_2026_08_03.md",
+    "gates_sha256": "c47f7b61644d9ceb013a9042f33f2b8584555009edaff7d1508c3bfafbb3f891"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b37_legibility_matrix_2026_08_04.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_reproduce",
+    "G0b_reproduce_weak",
+    "G1_law",
+    "G2_beats_rsa",
+    "G3_symmetry"
+   ],
+   "rows": [
+    {
+     "G0_reproduce": false
+    },
+    {
+     "G0_reproduce": true,
+     "G0b_reproduce_weak": false
+    },
+    {
+     "G0_reproduce": true,
+     "G0b_reproduce_weak": true,
+     "G1_law": true,
+     "G2_beats_rsa": true,
+     "G3_symmetry": true
+    },
+    {
+     "G0_reproduce": true,
+     "G0b_reproduce_weak": true,
+     "G1_law": true,
+     "G2_beats_rsa": true,
+     "G3_symmetry": false
+    },
+    {
+     "G0_reproduce": true,
+     "G0b_reproduce_weak": true,
+     "G1_law": true,
+     "G2_beats_rsa": false
+    },
+    {
+     "G0_reproduce": true,
+     "G0b_reproduce_weak": true,
+     "G1_law": false,
+     "G2_beats_rsa": true
+    },
+    {
+     "G0_reproduce": true,
+     "G0b_reproduce_weak": true,
+     "G1_law": false,
+     "G2_beats_rsa": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     16,
+     8,
+     1,
+     1,
+     2,
+     2,
+     2
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b37_legibility_matrix_2026_08_04.md",
+    "gates_sha256": "bee27861fbefe136b2b95b07ebc516e2cc3fe2bf2dc4c2f3408e1e7921cff772"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b38_legibility_cliff_2026_08_04.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_baseline",
+    "G1_monotone",
+    "G2_island_matched",
+    "G2b_island_not_matched"
+   ],
+   "rows": [
+    {
+     "G0_baseline": false
+    },
+    {
+     "G0_baseline": true,
+     "G1_monotone": false
+    },
+    {
+     "G0_baseline": true,
+     "G1_monotone": true,
+     "G2_island_matched": true
+    },
+    {
+     "G0_baseline": true,
+     "G1_monotone": true,
+     "G2_island_matched": false,
+     "G2b_island_not_matched": true
+    },
+    {
+     "G0_baseline": true,
+     "G1_monotone": true,
+     "G2_island_matched": false,
+     "G2b_island_not_matched": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b38_legibility_cliff_2026_08_04.md",
+    "gates_sha256": "453903f2ea72aef4a417ed833754fdb189999b9e359a14ee96277973306ac7ad"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b39_whitening_rescue_2026_08_04.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_baseline",
+    "G0b_whiten_preserves_clique",
+    "G1_rescue",
+    "G2_no_rescue"
+   ],
+   "rows": [
+    {
+     "G0_baseline": false
+    },
+    {
+     "G0_baseline": true,
+     "G0b_whiten_preserves_clique": false
+    },
+    {
+     "G0_baseline": true,
+     "G0b_whiten_preserves_clique": true,
+     "G1_rescue": true
+    },
+    {
+     "G0_baseline": true,
+     "G0b_whiten_preserves_clique": true,
+     "G1_rescue": false,
+     "G2_no_rescue": true
+    },
+    {
+     "G0_baseline": true,
+     "G0b_whiten_preserves_clique": true,
+     "G1_rescue": false,
+     "G2_no_rescue": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b39_whitening_rescue_2026_08_04.md",
+    "gates_sha256": "5dd4296bf0df60f8cd9df9b8b6a20a10c51ec8780c71426ed854ae5aa442e3c5"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b40_anisotropy_signature_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_separation",
+    "G2_tracks_legibility"
+   ],
+   "rows": [
+    {
+     "G1_separation": true,
+     "G2_tracks_legibility": true
+    },
+    {
+     "G1_separation": true,
+     "G2_tracks_legibility": false
+    },
+    {
+     "G1_separation": false,
+     "G2_tracks_legibility": true
+    },
+    {
+     "G1_separation": false,
+     "G2_tracks_legibility": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     1,
+     1,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b40_anisotropy_signature_2026_08_05.md",
+    "gates_sha256": "d64d0ce6aae43b87d94bfd17633e962e5c69514d181262cd01bd43025beab0dc"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b41_bridge_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_baseline",
+    "G3_no_harm",
+    "G1_bridge",
+    "G2_specificity"
+   ],
+   "rows": [
+    {
+     "G0_baseline": false
+    },
+    {
+     "G0_baseline": true,
+     "G3_no_harm": false
+    },
+    {
+     "G0_baseline": true,
+     "G3_no_harm": true,
+     "G1_bridge": true,
+     "G2_specificity": true
+    },
+    {
+     "G0_baseline": true,
+     "G3_no_harm": true,
+     "G1_bridge": true,
+     "G2_specificity": false
+    },
+    {
+     "G0_baseline": true,
+     "G3_no_harm": true,
+     "G1_bridge": false,
+     "G2_specificity": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 1,
+    "landings": [
+     8,
+     4,
+     1,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b41_bridge_2026_08_05.md",
+    "gates_sha256": "43aac2407a50a439061a95364ca289606d61147d16631aeb806bd1ad0e61106c"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b42_bridge_dose_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_replicates",
+    "G2_null_clean",
+    "G3_dose_monotone"
+   ],
+   "rows": [
+    {
+     "G1_replicates": false
+    },
+    {
+     "G1_replicates": true,
+     "G2_null_clean": false
+    },
+    {
+     "G1_replicates": true,
+     "G2_null_clean": true,
+     "G3_dose_monotone": true
+    },
+    {
+     "G1_replicates": true,
+     "G2_null_clean": true,
+     "G3_dose_monotone": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b42_bridge_dose_2026_08_05.md",
+    "gates_sha256": "45c09ab5209aa5ab35827f495a1898a72436d197355f3b49bc038e929abe7fbe"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b43_name_the_twenty_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_stability",
+    "G2_coherence"
+   ],
+   "rows": [
+    {
+     "G1_stability": true,
+     "G2_coherence": true
+    },
+    {
+     "G1_stability": true,
+     "G2_coherence": false
+    },
+    {
+     "G1_stability": false,
+     "G2_coherence": true
+    },
+    {
+     "G1_stability": false,
+     "G2_coherence": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     1,
+     1,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b43_name_the_twenty_2026_08_05.md",
+    "gates_sha256": "e7365fe8c711985e2beedcd624de3ef9a037dec7c6ed9296b8b79d3a5e837d48"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b44_wrong_donor_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_positive_control",
+    "G1_wrong_max_low",
+    "G2_wrong_min_high"
+   ],
+   "rows": [
+    {
+     "G0_positive_control": false
+    },
+    {
+     "G0_positive_control": true,
+     "G1_wrong_max_low": true,
+     "G2_wrong_min_high": true
+    },
+    {
+     "G0_positive_control": true,
+     "G1_wrong_max_low": true,
+     "G2_wrong_min_high": false
+    },
+    {
+     "G0_positive_control": true,
+     "G1_wrong_max_low": false,
+     "G2_wrong_min_high": true
+    },
+    {
+     "G0_positive_control": true,
+     "G1_wrong_max_low": false,
+     "G2_wrong_min_high": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     1,
+     1,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b44_wrong_donor_2026_08_05.md",
+    "gates_sha256": "6113dcbf2589aa38d56675fac025ac34f1ba559e460b9df184f20022cd8cb445"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b45_frame_geometry_2026_08_06.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_clique_frames_shared",
+    "G2_island_separated_all_seeds"
+   ],
+   "rows": [
+    {
+     "G1_clique_frames_shared": false
+    },
+    {
+     "G1_clique_frames_shared": true,
+     "G2_island_separated_all_seeds": true
+    },
+    {
+     "G1_clique_frames_shared": true,
+     "G2_island_separated_all_seeds": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b45_frame_geometry_2026_08_06.md",
+    "gates_sha256": "e07bc396ad646c46c4c569e37c31e35669a8eb2a15bc90e33bca224412b3f15b"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b46_cliff_function_2026_08_06.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_baseline_low",
+    "G1_bridge_high",
+    "G2_monotone"
+   ],
+   "rows": [
+    {
+     "G0_baseline_low": false
+    },
+    {
+     "G0_baseline_low": true,
+     "G1_bridge_high": false
+    },
+    {
+     "G0_baseline_low": true,
+     "G1_bridge_high": true,
+     "G2_monotone": true
+    },
+    {
+     "G0_baseline_low": true,
+     "G1_bridge_high": true,
+     "G2_monotone": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b46_cliff_function_2026_08_06.md",
+    "gates_sha256": "47190e1064a286c246806e14c562d362482d2de52b5c2991e3054b7bbb33f43f"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b47_eight_minds_2026_08_06.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_cohort",
+    "G1_shared_frame",
+    "G2_islands_present"
+   ],
+   "rows": [
+    {
+     "G0_cohort": false
+    },
+    {
+     "G0_cohort": true,
+     "G1_shared_frame": false
+    },
+    {
+     "G0_cohort": true,
+     "G1_shared_frame": true,
+     "G2_islands_present": true
+    },
+    {
+     "G0_cohort": true,
+     "G1_shared_frame": true,
+     "G2_islands_present": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b47_eight_minds_2026_08_06.md",
+    "gates_sha256": "faefac22d9821e64217ab15fecb94a5e362661cf4b760565c50cf79c69402b4f"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b48_legibility_matrix_ten_2026_08_06.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_coverage",
+    "G1_signal_present",
+    "G2_null_clean",
+    "G3_legibility_islands"
+   ],
+   "rows": [
+    {
+     "G0_coverage": false
+    },
+    {
+     "G0_coverage": true,
+     "G1_signal_present": false
+    },
+    {
+     "G0_coverage": true,
+     "G1_signal_present": true,
+     "G2_null_clean": false
+    },
+    {
+     "G0_coverage": true,
+     "G1_signal_present": true,
+     "G2_null_clean": true,
+     "G3_legibility_islands": true
+    },
+    {
+     "G0_coverage": true,
+     "G1_signal_present": true,
+     "G2_null_clean": true,
+     "G3_legibility_islands": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b48_legibility_matrix_ten_2026_08_06.md",
+    "gates_sha256": "7ffbe5be95a1003169428e46fefb229244b197ad19b342c0d08e199bc0dc45c1"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b49_amplitude_reaudit_2026_08_07.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_b45_clique_still_above_null",
+    "G2_b45_island_still_lowest",
+    "G3_b47_verdict_unchanged"
+   ],
+   "rows": [
+    {
+     "G1_b45_clique_still_above_null": false
+    },
+    {
+     "G1_b45_clique_still_above_null": true,
+     "G2_b45_island_still_lowest": false
+    },
+    {
+     "G1_b45_clique_still_above_null": true,
+     "G2_b45_island_still_lowest": true,
+     "G3_b47_verdict_unchanged": false
+    },
+    {
+     "G1_b45_clique_still_above_null": true,
+     "G2_b45_island_still_lowest": true,
+     "G3_b47_verdict_unchanged": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b49_amplitude_reaudit_2026_08_07.md",
+    "gates_sha256": "b4e11467cdd9d1daa5c29171791767c2150d3408ac3208fb158a7fa76960694d"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b50_legibility_islands_2026_08_08.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_coverage",
+    "G1_signal_present",
+    "G2_null_at_chance",
+    "G3_null_tail_bounded",
+    "G4_islands"
+   ],
+   "rows": [
+    {
+     "G0_coverage": false
+    },
+    {
+     "G0_coverage": true,
+     "G1_signal_present": false
+    },
+    {
+     "G0_coverage": true,
+     "G1_signal_present": true,
+     "G2_null_at_chance": false
+    },
+    {
+     "G0_coverage": true,
+     "G1_signal_present": true,
+     "G2_null_at_chance": true,
+     "G3_null_tail_bounded": false
+    },
+    {
+     "G0_coverage": true,
+     "G1_signal_present": true,
+     "G2_null_at_chance": true,
+     "G3_null_tail_bounded": true,
+     "G4_islands": true
+    },
+    {
+     "G0_coverage": true,
+     "G1_signal_present": true,
+     "G2_null_at_chance": true,
+     "G3_null_tail_bounded": true,
+     "G4_islands": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     16,
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b50_legibility_islands_2026_08_08.md",
+    "gates_sha256": "99768c7e402494b152c3f8bc30c035f3d121ef2419a3695881ce7ae1f99e7c22"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_b52_pooled_battery_2026_09_01.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_battery_integrity",
+    "G1_heldout_freshness",
+    "G2_machinery",
+    "G3_decisive_paired",
+    "G4_decisive_labelfree",
+    "G5_null_bounded",
+    "G6_reproduces_old_read"
+   ],
+   "rows": [
+    {
+     "G0_battery_integrity": false
+    },
+    {
+     "G0_battery_integrity": true,
+     "G1_heldout_freshness": false
+    },
+    {
+     "G0_battery_integrity": true,
+     "G1_heldout_freshness": true,
+     "G2_machinery": false
+    },
+    {
+     "G0_battery_integrity": true,
+     "G1_heldout_freshness": true,
+     "G2_machinery": true,
+     "G5_null_bounded": false
+    },
+    {
+     "G0_battery_integrity": true,
+     "G1_heldout_freshness": true,
+     "G2_machinery": true,
+     "G5_null_bounded": true,
+     "G3_decisive_paired": false
+    },
+    {
+     "G0_battery_integrity": true,
+     "G1_heldout_freshness": true,
+     "G2_machinery": true,
+     "G5_null_bounded": true,
+     "G3_decisive_paired": true,
+     "G6_reproduces_old_read": false
+    },
+    {
+     "G0_battery_integrity": true,
+     "G1_heldout_freshness": true,
+     "G2_machinery": true,
+     "G5_null_bounded": true,
+     "G3_decisive_paired": true,
+     "G6_reproduces_old_read": true,
+     "G4_decisive_labelfree": false
+    },
+    {
+     "G0_battery_integrity": true,
+     "G1_heldout_freshness": true,
+     "G2_machinery": true,
+     "G5_null_bounded": true,
+     "G3_decisive_paired": true,
+     "G6_reproduces_old_read": true,
+     "G4_decisive_labelfree": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     64,
+     32,
+     16,
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_b52_pooled_battery_2026_09_01.md",
+    "gates_sha256": "323afd962673db244c86de1e315e3aeda6add4145cacfd8059998d24cad0a4dc"
+   }
+  },
+  {
+   "name": "census/papers/disjoint-worlds/PREREG_read_extraction_ceiling_2026_09_01.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_reconcile70",
+    "G1_ladder",
+    "G2_null_rank",
+    "G3_reject_option"
+   ],
+   "rows": [
+    {
+     "G0_reconcile70": false
+    },
+    {
+     "G0_reconcile70": true,
+     "G1_ladder": false
+    },
+    {
+     "G0_reconcile70": true,
+     "G1_ladder": true,
+     "G2_null_rank": false
+    },
+    {
+     "G0_reconcile70": true,
+     "G1_ladder": true,
+     "G2_null_rank": true,
+     "G3_reject_option": false
+    },
+    {
+     "G0_reconcile70": true,
+     "G1_ladder": true,
+     "G2_null_rank": true,
+     "G3_reject_option": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/disjoint-worlds/PREREG_read_extraction_ceiling_2026_09_01.md",
+    "gates_sha256": "ccfceb14250e540980ce5400ec8a9a0d80f4b3882460655ed21f7e9077a03f68"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_c1_coupling_on_neural_timeseries_2026_08_06.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_pairs",
+    "G1_finds_isc",
+    "G2_rejects_reversed"
+   ],
+   "rows": [
+    {
+     "G0_pairs": false
+    },
+    {
+     "G0_pairs": true,
+     "G1_finds_isc": false
+    },
+    {
+     "G0_pairs": true,
+     "G1_finds_isc": true,
+     "G2_rejects_reversed": false
+    },
+    {
+     "G0_pairs": true,
+     "G1_finds_isc": true,
+     "G2_rejects_reversed": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_c1_coupling_on_neural_timeseries_2026_08_06.md",
+    "gates_sha256": "1cffefa49ed9b6481de5cd63e2e6bf67adf29d04ec465d3820696ccb5cd9126f"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_c2_surrogate_recalibration_2026_08_07.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_finds_isc",
+    "G2_rejects_reversed",
+    "G3_rejects_independent_ar",
+    "G4_rejects_shared_trend"
+   ],
+   "rows": [
+    {
+     "G1_finds_isc": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": true,
+     "G2_rejects_reversed": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G2_rejects_reversed": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_c2_surrogate_recalibration_2026_08_07.md",
+    "gates_sha256": "73e24a3ef521454e58e5364ed989e043e69ae25541c729e15faf46eefb1bc828"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_c3_linear_statistic_2026_08_07.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_finds_isc",
+    "G2_rejects_reversed",
+    "G3_rejects_independent_ar",
+    "G4_rejects_shared_trend"
+   ],
+   "rows": [
+    {
+     "G1_finds_isc": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": true,
+     "G2_rejects_reversed": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G2_rejects_reversed": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_c3_linear_statistic_2026_08_07.md",
+    "gates_sha256": "58d52b481e3b9b3a8ed058d910699ba1f3df1da7b8172bea0ecc1e9d7ec70517"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_c4_signed_statistic_2026_08_07.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_finds_isc",
+    "G2_rejects_reversed",
+    "G3_rejects_independent_ar",
+    "G4_rejects_shared_trend"
+   ],
+   "rows": [
+    {
+     "G1_finds_isc": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": true,
+     "G2_rejects_reversed": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G2_rejects_reversed": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_c4_signed_statistic_2026_08_07.md",
+    "gates_sha256": "80ff363af2292977d73640f108236ab47c71a7df9651fddc8c72f9d9cd8d8694"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_c5_roi_2026_08_07.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_finds_isc",
+    "G2_rejects_reversed",
+    "G3_rejects_independent_ar",
+    "G4_rejects_shared_trend"
+   ],
+   "rows": [
+    {
+     "G1_finds_isc": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": true,
+     "G2_rejects_reversed": false
+    },
+    {
+     "G1_finds_isc": true,
+     "G2_rejects_reversed": true,
+     "G3_rejects_independent_ar": true,
+     "G4_rejects_shared_trend": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_c5_roi_2026_08_07.md",
+    "gates_sha256": "c43f4ed59769f3d8dc6894759a6ba11e0581c5619c768c63db1d493e7f5818be"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_c6_derived_bar_2026_08_13.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_exceeds_null_ceiling",
+    "G2_null_calibration_holds",
+    "G3_matched_leg_bind_count"
+   ],
+   "rows": [
+    {
+     "G2_null_calibration_holds": false
+    },
+    {
+     "G2_null_calibration_holds": true,
+     "G1_exceeds_null_ceiling": true
+    },
+    {
+     "G2_null_calibration_holds": true,
+     "G1_exceeds_null_ceiling": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     2
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_c6_derived_bar_2026_08_13.md",
+    "gates_sha256": "108faf87b9cde0d29b9a52443c1a6adcebf033e7f94db4bfb654d2e381896846"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_e1_effective_n_bakeoff_2026_08_08.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_grid_complete",
+    "G1_a_candidate_is_usable",
+    "G2_winner_not_silently_blind",
+    "G3_c5_range_recomputed"
+   ],
+   "rows": [
+    {
+     "G0_grid_complete": false
+    },
+    {
+     "G0_grid_complete": true,
+     "G1_a_candidate_is_usable": false
+    },
+    {
+     "G0_grid_complete": true,
+     "G1_a_candidate_is_usable": true,
+     "G2_winner_not_silently_blind": false
+    },
+    {
+     "G0_grid_complete": true,
+     "G1_a_candidate_is_usable": true,
+     "G2_winner_not_silently_blind": true,
+     "G3_c5_range_recomputed": false
+    },
+    {
+     "G0_grid_complete": true,
+     "G1_a_candidate_is_usable": true,
+     "G2_winner_not_silently_blind": true,
+     "G3_c5_range_recomputed": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_e1_effective_n_bakeoff_2026_08_08.md",
+    "gates_sha256": "667c0eba396ea5de7d5b528b310f3264836c057fcbc2d17d447078249595e2b9"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_h1a_human_alignment_2026_08_06.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_cohort",
+    "G1_shared_frame",
+    "G2_islands_present"
+   ],
+   "rows": [
+    {
+     "G0_cohort": false
+    },
+    {
+     "G0_cohort": true,
+     "G1_shared_frame": false
+    },
+    {
+     "G0_cohort": true,
+     "G1_shared_frame": true,
+     "G2_islands_present": true
+    },
+    {
+     "G0_cohort": true,
+     "G1_shared_frame": true,
+     "G2_islands_present": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_h1a_human_alignment_2026_08_06.md",
+    "gates_sha256": "3f323354408bed9914b740b2ad2d97e79fb7d7bd4478ee4cc7cc4b8ca82e5d29"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_h1b_human_readability_2026_08_06.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_cohort",
+    "G1_group_reads_above_chance",
+    "G2_bimodal_readability"
+   ],
+   "rows": [
+    {
+     "G0_cohort": false
+    },
+    {
+     "G0_cohort": true,
+     "G1_group_reads_above_chance": false
+    },
+    {
+     "G0_cohort": true,
+     "G1_group_reads_above_chance": true,
+     "G2_bimodal_readability": true
+    },
+    {
+     "G0_cohort": true,
+     "G1_group_reads_above_chance": true,
+     "G2_bimodal_readability": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_h1b_human_readability_2026_08_06.md",
+    "gates_sha256": "699c88df8c43efbe653b490e0a26936c22d04ec31611e457082ff3d01d487d6f"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_m1_magnetochemistry_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_reaction_works",
+    "G1_thermal",
+    "G2_ac_effect",
+    "G3_ac_specific"
+   ],
+   "rows": [
+    {
+     "G0_reaction_works": false
+    },
+    {
+     "G0_reaction_works": true,
+     "G1_thermal": false
+    },
+    {
+     "G0_reaction_works": true,
+     "G1_thermal": true,
+     "G2_ac_effect": true,
+     "G3_ac_specific": true
+    },
+    {
+     "G0_reaction_works": true,
+     "G1_thermal": true,
+     "G2_ac_effect": true,
+     "G3_ac_specific": false
+    },
+    {
+     "G0_reaction_works": true,
+     "G1_thermal": true,
+     "G2_ac_effect": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     1,
+     1,
+     2
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_m1_magnetochemistry_2026_08_05.md",
+    "gates_sha256": "64a6ad9c8bfa10304b05bc12d3ce09f6a612d620ab94f7b04e1037ec30a429d3"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_p1_power_refusal_2026_08_08.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_coverage",
+    "G1_historical_in_sample",
+    "G2_synthetic_balanced_accuracy",
+    "G3_beats_constant",
+    "G4_refuses_degenerate"
+   ],
+   "rows": [
+    {
+     "G0_coverage": false
+    },
+    {
+     "G0_coverage": true,
+     "G4_refuses_degenerate": false
+    },
+    {
+     "G0_coverage": true,
+     "G4_refuses_degenerate": true,
+     "G1_historical_in_sample": false
+    },
+    {
+     "G0_coverage": true,
+     "G4_refuses_degenerate": true,
+     "G1_historical_in_sample": true,
+     "G3_beats_constant": false
+    },
+    {
+     "G0_coverage": true,
+     "G4_refuses_degenerate": true,
+     "G1_historical_in_sample": true,
+     "G3_beats_constant": true,
+     "G2_synthetic_balanced_accuracy": false
+    },
+    {
+     "G0_coverage": true,
+     "G4_refuses_degenerate": true,
+     "G1_historical_in_sample": true,
+     "G3_beats_constant": true,
+     "G2_synthetic_balanced_accuracy": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     16,
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_p1_power_refusal_2026_08_08.md",
+    "gates_sha256": "25055588361c1859424b618cbffc022fba9c21e5586b03839129aecea3046b35"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_protocol_v4_composition_2026_08_09.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_mutants_refused",
+    "G1_valid_still_scores",
+    "G2_e1_retro_refused",
+    "G3_corpus_byte_identical"
+   ],
+   "rows": [
+    {
+     "G3_corpus_byte_identical": false
+    },
+    {
+     "G3_corpus_byte_identical": true,
+     "G0_mutants_refused": false
+    },
+    {
+     "G3_corpus_byte_identical": true,
+     "G0_mutants_refused": true,
+     "G2_e1_retro_refused": false
+    },
+    {
+     "G3_corpus_byte_identical": true,
+     "G0_mutants_refused": true,
+     "G2_e1_retro_refused": true,
+     "G1_valid_still_scores": false
+    },
+    {
+     "G3_corpus_byte_identical": true,
+     "G0_mutants_refused": true,
+     "G2_e1_retro_refused": true,
+     "G1_valid_still_scores": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_protocol_v4_composition_2026_08_09.md",
+    "gates_sha256": "d4a69f152907e892151cdbb7683f37b18ee04ebe3ba072ec09568045406a5f2d"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_r0_instrument_validation_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_detects_planted_coupling",
+    "G2_absorbs_pure_clock",
+    "G3_clock_beats_free_null",
+    "G4_silent_on_nothing"
+   ],
+   "rows": [
+    {
+     "G1_detects_planted_coupling": false
+    },
+    {
+     "G2_absorbs_pure_clock": false
+    },
+    {
+     "G3_clock_beats_free_null": false
+    },
+    {
+     "G4_silent_on_nothing": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_r0_instrument_validation_2026_08_05.md",
+    "gates_sha256": "6a73c61068c4b8079dec85b3abc366be4860cc67afa6996e2160b458bf36062d"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_r0v2_detection_exam_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G1_detects_planted_coupling",
+    "G2_absorbs_pure_clock",
+    "G3_clock_beats_free_null",
+    "G4_silent_on_nothing"
+   ],
+   "rows": [
+    {
+     "G1_detects_planted_coupling": false
+    },
+    {
+     "G2_absorbs_pure_clock": false
+    },
+    {
+     "G3_clock_beats_free_null": false
+    },
+    {
+     "G4_silent_on_nothing": false
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_r0v2_detection_exam_2026_08_05.md",
+    "gates_sha256": "a1a731fe50b58e20fd48319bf618eb2188c97ae74061d839691d639390e03f75"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_r1_room_legibility_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_coverage",
+    "G1_beats_hour_matched_null",
+    "G2_above_chance"
+   ],
+   "rows": [
+    {
+     "G0_coverage": false
+    },
+    {
+     "G0_coverage": true,
+     "G1_beats_hour_matched_null": true,
+     "G2_above_chance": true
+    },
+    {
+     "G0_coverage": true,
+     "G1_beats_hour_matched_null": false,
+     "G2_above_chance": true
+    },
+    {
+     "G0_coverage": true,
+     "G2_above_chance": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     1,
+     1,
+     2
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_r1_room_legibility_2026_08_05.md",
+    "gates_sha256": "885642a9c22fa4e48a514c4a2c3bafb522d1c9c12c90c9e166ece73c00134c82"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_r1v2_room_coupling_2026_08_06.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_coverage",
+    "G1_beats_hourmatched_null",
+    "G2_beats_free_null"
+   ],
+   "rows": [
+    {
+     "G0_coverage": false
+    },
+    {
+     "G0_coverage": true,
+     "G1_beats_hourmatched_null": true
+    },
+    {
+     "G0_coverage": true,
+     "G1_beats_hourmatched_null": false,
+     "G2_beats_free_null": true
+    },
+    {
+     "G0_coverage": true,
+     "G1_beats_hourmatched_null": false,
+     "G2_beats_free_null": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_r1v2_room_coupling_2026_08_06.md",
+    "gates_sha256": "e79860f3fc20533775d69a0c74ad39a16cb68104a9062a3bf71e7b2e4252f5ec"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_w1_water_imprint_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_commitment",
+    "G1_detection",
+    "G2_null_integrity"
+   ],
+   "rows": [
+    {
+     "G0_commitment": false
+    },
+    {
+     "G0_commitment": true,
+     "G2_null_integrity": false
+    },
+    {
+     "G0_commitment": true,
+     "G2_null_integrity": true,
+     "G1_detection": true
+    },
+    {
+     "G0_commitment": true,
+     "G2_null_integrity": true,
+     "G1_detection": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_w1_water_imprint_2026_08_05.md",
+    "gates_sha256": "f1fb86c873bc1f9513713c78310198abf83e25462049c5b135a046add046be20"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_w1v2_water_imprint_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_commitment",
+    "G1_detection",
+    "G2_blinding",
+    "G3_thermal"
+   ],
+   "rows": [
+    {
+     "G0_commitment": false
+    },
+    {
+     "G0_commitment": true,
+     "G2_blinding": false
+    },
+    {
+     "G0_commitment": true,
+     "G2_blinding": true,
+     "G3_thermal": false
+    },
+    {
+     "G0_commitment": true,
+     "G2_blinding": true,
+     "G3_thermal": true,
+     "G1_detection": true
+    },
+    {
+     "G0_commitment": true,
+     "G2_blinding": true,
+     "G3_thermal": true,
+     "G1_detection": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_w1v2_water_imprint_2026_08_05.md",
+    "gates_sha256": "17a9be4fb5dcffa6b216c4c162986b2dcbd5de1a27c61e5c1cd3827dbe5ecf9d"
+   }
+  },
+  {
+   "name": "census/papers/first-afference/PREREG_w1v3_water_arms_2026_08_05.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G0_commitment",
+    "G2_blinding",
+    "G3_thermal",
+    "G4_definitions",
+    "G1_any_arm",
+    "G5_dose_order"
+   ],
+   "rows": [
+    {
+     "G0_commitment": false
+    },
+    {
+     "G0_commitment": true,
+     "G4_definitions": false
+    },
+    {
+     "G0_commitment": true,
+     "G4_definitions": true,
+     "G2_blinding": false
+    },
+    {
+     "G0_commitment": true,
+     "G4_definitions": true,
+     "G2_blinding": true,
+     "G3_thermal": false
+    },
+    {
+     "G0_commitment": true,
+     "G4_definitions": true,
+     "G2_blinding": true,
+     "G3_thermal": true,
+     "G1_any_arm": true,
+     "G5_dose_order": true
+    },
+    {
+     "G0_commitment": true,
+     "G4_definitions": true,
+     "G2_blinding": true,
+     "G3_thermal": true,
+     "G1_any_arm": true,
+     "G5_dose_order": false
+    },
+    {
+     "G0_commitment": true,
+     "G4_definitions": true,
+     "G2_blinding": true,
+     "G3_thermal": true,
+     "G1_any_arm": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     32,
+     16,
+     8,
+     4,
+     1,
+     1,
+     2
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/first-afference/PREREG_w1v3_water_arms_2026_08_05.md",
+    "gates_sha256": "30b74ea07700b388d324eb4d13ecf96bcf4abb8cca9f7335eec1f1a0397ea543"
+   }
+  },
+  {
+   "name": "census/papers/frequency-resonance/PREREG_efficiency_control_2026_09_02.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G_P_anchors",
+    "G_C_oracle",
+    "G_E_static_wins",
+    "G_E_rich_wins"
+   ],
+   "rows": [
+    {
+     "G_P_anchors": false
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_oracle": false
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_oracle": true,
+     "G_E_static_wins": true
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_oracle": true,
+     "G_E_static_wins": false,
+     "G_E_rich_wins": true
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_oracle": true,
+     "G_E_static_wins": false,
+     "G_E_rich_wins": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/frequency-resonance/PREREG_efficiency_control_2026_09_02.md",
+    "gates_sha256": "28202f8b4b73fac009ca5c1f50943c811589a4f613469eb457b076e568f576e8"
+   }
+  },
+  {
+   "name": "census/papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G_P_plumbing",
+    "G_D_stable",
+    "G_F_floor",
+    "G_C_anchor",
+    "G_G_exists",
+    "G_G_mean",
+    "G_G_ci",
+    "G_B_long",
+    "G_R_diversity",
+    "G_R_rotation"
+   ],
+   "rows": [
+    {
+     "G_P_plumbing": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": true,
+     "G_F_floor": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": true,
+     "G_F_floor": true,
+     "G_C_anchor": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": true,
+     "G_F_floor": true,
+     "G_C_anchor": true,
+     "G_G_exists": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": true,
+     "G_F_floor": true,
+     "G_C_anchor": true,
+     "G_G_exists": true,
+     "G_G_mean": true,
+     "G_G_ci": true,
+     "G_B_long": true,
+     "G_R_diversity": true
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": true,
+     "G_F_floor": true,
+     "G_C_anchor": true,
+     "G_G_exists": true,
+     "G_G_mean": true,
+     "G_G_ci": true,
+     "G_B_long": true,
+     "G_R_diversity": false,
+     "G_R_rotation": true
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": true,
+     "G_F_floor": true,
+     "G_C_anchor": true,
+     "G_G_exists": true,
+     "G_G_mean": true,
+     "G_G_ci": true,
+     "G_B_long": true,
+     "G_R_diversity": false,
+     "G_R_rotation": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": true,
+     "G_F_floor": true,
+     "G_C_anchor": true,
+     "G_G_exists": true,
+     "G_G_mean": true,
+     "G_G_ci": true,
+     "G_B_long": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": true,
+     "G_F_floor": true,
+     "G_C_anchor": true,
+     "G_G_exists": true,
+     "G_G_mean": true,
+     "G_G_ci": false,
+     "G_R_diversity": true
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": true,
+     "G_F_floor": true,
+     "G_C_anchor": true,
+     "G_G_exists": true,
+     "G_G_mean": true,
+     "G_G_ci": false,
+     "G_R_diversity": false,
+     "G_R_rotation": true
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": true,
+     "G_F_floor": true,
+     "G_C_anchor": true,
+     "G_G_exists": true,
+     "G_G_mean": true,
+     "G_G_ci": false,
+     "G_R_diversity": false,
+     "G_R_rotation": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_D_stable": true,
+     "G_F_floor": true,
+     "G_C_anchor": true,
+     "G_G_exists": true,
+     "G_G_mean": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     512,
+     256,
+     128,
+     64,
+     32,
+     2,
+     1,
+     1,
+     4,
+     4,
+     2,
+     2,
+     16
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/frequency-resonance/PREREG_pmnist_robustness_2026_10_11.md",
+    "gates_sha256": "578924f8e776573cc82db8fbbd8bb9cf84106b81171a5ba6d5783e422c96e854"
+   }
+  },
+  {
+   "name": "census/papers/frequency-resonance/PREREG_pmnist_untied_2026_09_02.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G_P_anchors",
+    "G_C_gap",
+    "G_R_recovers",
+    "G_R_fails"
+   ],
+   "rows": [
+    {
+     "G_P_anchors": false
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_gap": false
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_gap": true,
+     "G_R_recovers": true
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_gap": true,
+     "G_R_recovers": false,
+     "G_R_fails": true
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_gap": true,
+     "G_R_recovers": false,
+     "G_R_fails": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/frequency-resonance/PREREG_pmnist_untied_2026_09_02.md",
+    "gates_sha256": "3df36d0a873ff07de00585c30aa33e2501221725951413f37c20182824aa1608"
+   }
+  },
+  {
+   "name": "census/papers/frequency-resonance/PREREG_realmodel_bridge_v3_2026_10_11.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G_P_plumbing",
+    "G_A_screen",
+    "G_A_guard",
+    "G_C_abl",
+    "G_S_between",
+    "G_S_ci",
+    "G_S_within",
+    "G_N_null"
+   ],
+   "rows": [
+    {
+     "G_P_plumbing": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_A_screen": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_A_screen": true,
+     "G_A_guard": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_A_screen": true,
+     "G_A_guard": true,
+     "G_C_abl": false
+    },
+    {
+     "G_P_plumbing": true,
+     "G_A_screen": true,
+     "G_A_guard": true,
+     "G_C_abl": true,
+     "G_S_between": true,
+     "G_S_ci": true,
+     "G_S_within": true
+    },
+    {
+     "G_P_plumbing": true,
+     "G_A_screen": true,
+     "G_A_guard": true,
+     "G_C_abl": true,
+     "G_N_null": true
+    },
+    {
+     "G_P_plumbing": true,
+     "G_A_screen": true,
+     "G_A_guard": true,
+     "G_C_abl": true,
+     "G_N_null": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     128,
+     64,
+     32,
+     16,
+     2,
+     7,
+     7
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/frequency-resonance/PREREG_realmodel_bridge_v3_2026_10_11.md",
+    "gates_sha256": "a21aa51d844c14a9abc206810890a4f9e8c16c4ce1bf89c68d98355b4db03931"
+   }
+  },
+  {
+   "name": "census/papers/rhythm-rescue/PREREG_untied_magnitudes_2026_09_02.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G_P_anchors",
+    "G_C_gap",
+    "G_R_recovers",
+    "G_R_fails"
+   ],
+   "rows": [
+    {
+     "G_P_anchors": false
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_gap": false
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_gap": true,
+     "G_R_recovers": true
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_gap": true,
+     "G_R_recovers": false,
+     "G_R_fails": true
+    },
+    {
+     "G_P_anchors": true,
+     "G_C_gap": true,
+     "G_R_recovers": false,
+     "G_R_fails": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/rhythm-rescue/PREREG_untied_magnitudes_2026_09_02.md",
+    "gates_sha256": "8089e624f48e33585a55e3a637d938ab14acfd8d5bb46209e697b4ac3e210697"
+   }
+  },
+  {
+   "name": "census/papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+   "family": "census",
+   "brute": true,
+   "gates": [
+    "G_D_claude_L_overall",
+    "G_D_claude_L_side",
+    "G_D_claude_R_overall",
+    "G_D_claude_R_side",
+    "G_D_local_L_overall",
+    "G_D_local_L_side",
+    "G_D_local_R_overall",
+    "G_D_local_R_side",
+    "G_F_L",
+    "G_F_R",
+    "G_S1",
+    "G_S2",
+    "G_P",
+    "G_C",
+    "G_G1"
+   ],
+   "rows": [
+    {
+     "G_F_L": true,
+     "G_D_claude_L_overall": false
+    },
+    {
+     "G_F_L": true,
+     "G_D_claude_L_side": false
+    },
+    {
+     "G_F_L": true,
+     "G_D_local_L_overall": false
+    },
+    {
+     "G_F_L": true,
+     "G_D_local_L_side": false
+    },
+    {
+     "G_F_R": true,
+     "G_D_claude_R_overall": false
+    },
+    {
+     "G_F_R": true,
+     "G_D_claude_R_side": false
+    },
+    {
+     "G_F_R": true,
+     "G_D_local_R_overall": false
+    },
+    {
+     "G_F_R": true,
+     "G_D_local_R_side": false
+    },
+    {
+     "G_F_L": false,
+     "G_D_claude_L_overall": true,
+     "G_D_claude_L_side": true,
+     "G_D_local_L_overall": true,
+     "G_D_local_L_side": true
+    },
+    {
+     "G_F_R": false,
+     "G_D_claude_R_overall": true,
+     "G_D_claude_R_side": true,
+     "G_D_local_R_overall": true,
+     "G_D_local_R_side": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": true,
+     "G_P": true,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": true,
+     "G_P": true,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": true,
+     "G_P": true,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": true,
+     "G_P": true,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": true,
+     "G_P": false,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": true,
+     "G_P": false,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": true,
+     "G_P": false,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": true,
+     "G_P": false,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": false,
+     "G_P": true,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": false,
+     "G_P": true,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": false,
+     "G_P": true,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": false,
+     "G_P": true,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": false,
+     "G_P": false,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": false,
+     "G_P": false,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": false,
+     "G_P": false,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": true,
+     "G_S2": false,
+     "G_P": false,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": true,
+     "G_P": true,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": true,
+     "G_P": true,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": true,
+     "G_P": true,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": true,
+     "G_P": true,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": true,
+     "G_P": false,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": true,
+     "G_P": false,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": true,
+     "G_P": false,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": true,
+     "G_P": false,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": false,
+     "G_P": true,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": false,
+     "G_P": true,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": false,
+     "G_P": true,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": false,
+     "G_P": true,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": false,
+     "G_P": false,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": false,
+     "G_P": false,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": false,
+     "G_P": false,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": true,
+     "G_S1": false,
+     "G_S2": false,
+     "G_P": false,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": true,
+     "G_P": true,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": true,
+     "G_P": true,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": true,
+     "G_P": true,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": true,
+     "G_P": true,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": true,
+     "G_P": false,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": true,
+     "G_P": false,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": true,
+     "G_P": false,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": true,
+     "G_P": false,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": true,
+     "G_S2": true,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": true,
+     "G_S2": true,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": true,
+     "G_S2": true,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": true,
+     "G_S2": true,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": true,
+     "G_S2": false,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": true,
+     "G_S2": false,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": true,
+     "G_S2": false,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": true,
+     "G_S2": false,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": false,
+     "G_S2": true,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": false,
+     "G_S2": true,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": false,
+     "G_S2": true,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": false,
+     "G_S2": true,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": false,
+     "G_S2": false,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": false,
+     "G_S2": false,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": false,
+     "G_S2": false,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": true,
+     "G_F_R": false,
+     "G_S1": false,
+     "G_S2": false,
+     "G_C": false,
+     "G_G1": false
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": false,
+     "G_C": true,
+     "G_G1": true
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": false,
+     "G_C": true,
+     "G_G1": false
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": false,
+     "G_C": false,
+     "G_G1": true
+    },
+    {
+     "G_F_L": false,
+     "G_F_R": false,
+     "G_C": false,
+     "G_G1": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     8192,
+     4096,
+     2048,
+     1024,
+     4352,
+     2176,
+     1088,
+     544,
+     544,
+     512,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     60,
+     60,
+     60,
+     60,
+     60,
+     60,
+     60,
+     60,
+     30,
+     30,
+     30,
+     30,
+     30,
+     30,
+     30,
+     30,
+     30,
+     30,
+     30,
+     30,
+     30,
+     30,
+     30,
+     30,
+     1800,
+     1800,
+     1800,
+     1800
+    ],
+    "unreachable_rows": []
+   },
+   "source": {
+    "rev": "ca3477308a4819b74e0d8011efcd6fd8849a5948",
+    "path": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "gates_sha256": "518e661662e0ec1b52cab4958e2a7a168b7e2c1a6a64fc0ab91833c9e69bc038"
+   }
+  },
+  {
+   "name": "known/chain-40-with-rest",
+   "family": "known",
+   "brute": false,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12",
+    "G13",
+    "G14",
+    "G15",
+    "G16",
+    "G17",
+    "G18",
+    "G19",
+    "G20",
+    "G21",
+    "G22",
+    "G23",
+    "G24",
+    "G25",
+    "G26",
+    "G27",
+    "G28",
+    "G29",
+    "G30",
+    "G31",
+    "G32",
+    "G33",
+    "G34",
+    "G35",
+    "G36",
+    "G37",
+    "G38",
+    "G39"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G01": true
+    },
+    {
+     "G02": true
+    },
+    {
+     "G03": true
+    },
+    {
+     "G04": true
+    },
+    {
+     "G05": true
+    },
+    {
+     "G06": true
+    },
+    {
+     "G07": true
+    },
+    {
+     "G08": true
+    },
+    {
+     "G09": true
+    },
+    {
+     "G10": true
+    },
+    {
+     "G11": true
+    },
+    {
+     "G12": true
+    },
+    {
+     "G13": true
+    },
+    {
+     "G14": true
+    },
+    {
+     "G15": true
+    },
+    {
+     "G16": true
+    },
+    {
+     "G17": true
+    },
+    {
+     "G18": true
+    },
+    {
+     "G19": true
+    },
+    {
+     "G20": true
+    },
+    {
+     "G21": true
+    },
+    {
+     "G22": true
+    },
+    {
+     "G23": true
+    },
+    {
+     "G24": true
+    },
+    {
+     "G25": true
+    },
+    {
+     "G26": true
+    },
+    {
+     "G27": true
+    },
+    {
+     "G28": true
+    },
+    {
+     "G29": true
+    },
+    {
+     "G30": true
+    },
+    {
+     "G31": true
+    },
+    {
+     "G32": true
+    },
+    {
+     "G33": true
+    },
+    {
+     "G34": true
+    },
+    {
+     "G35": true
+    },
+    {
+     "G36": true
+    },
+    {
+     "G37": true
+    },
+    {
+     "G38": true
+    },
+    {
+     "G39": true
+    },
+    {}
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     549755813888,
+     274877906944,
+     137438953472,
+     68719476736,
+     34359738368,
+     17179869184,
+     8589934592,
+     4294967296,
+     2147483648,
+     1073741824,
+     536870912,
+     268435456,
+     134217728,
+     67108864,
+     33554432,
+     16777216,
+     8388608,
+     4194304,
+     2097152,
+     1048576,
+     524288,
+     262144,
+     131072,
+     65536,
+     32768,
+     16384,
+     8192,
+     4096,
+     2048,
+     1024,
+     512,
+     256,
+     128,
+     64,
+     32,
+     16,
+     8,
+     4,
+     2,
+     1,
+     1
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "known/chain-40-no-rest",
+   "family": "known",
+   "brute": false,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12",
+    "G13",
+    "G14",
+    "G15",
+    "G16",
+    "G17",
+    "G18",
+    "G19",
+    "G20",
+    "G21",
+    "G22",
+    "G23",
+    "G24",
+    "G25",
+    "G26",
+    "G27",
+    "G28",
+    "G29",
+    "G30",
+    "G31",
+    "G32",
+    "G33",
+    "G34",
+    "G35",
+    "G36",
+    "G37",
+    "G38",
+    "G39"
+   ],
+   "rows": [
+    {
+     "G00": true
+    },
+    {
+     "G01": true
+    },
+    {
+     "G02": true
+    },
+    {
+     "G03": true
+    },
+    {
+     "G04": true
+    },
+    {
+     "G05": true
+    },
+    {
+     "G06": true
+    },
+    {
+     "G07": true
+    },
+    {
+     "G08": true
+    },
+    {
+     "G09": true
+    },
+    {
+     "G10": true
+    },
+    {
+     "G11": true
+    },
+    {
+     "G12": true
+    },
+    {
+     "G13": true
+    },
+    {
+     "G14": true
+    },
+    {
+     "G15": true
+    },
+    {
+     "G16": true
+    },
+    {
+     "G17": true
+    },
+    {
+     "G18": true
+    },
+    {
+     "G19": true
+    },
+    {
+     "G20": true
+    },
+    {
+     "G21": true
+    },
+    {
+     "G22": true
+    },
+    {
+     "G23": true
+    },
+    {
+     "G24": true
+    },
+    {
+     "G25": true
+    },
+    {
+     "G26": true
+    },
+    {
+     "G27": true
+    },
+    {
+     "G28": true
+    },
+    {
+     "G29": true
+    },
+    {
+     "G30": true
+    },
+    {
+     "G31": true
+    },
+    {
+     "G32": true
+    },
+    {
+     "G33": true
+    },
+    {
+     "G34": true
+    },
+    {
+     "G35": true
+    },
+    {
+     "G36": true
+    },
+    {
+     "G37": true
+    },
+    {
+     "G38": true
+    },
+    {
+     "G39": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 1,
+    "landings": [
+     549755813888,
+     274877906944,
+     137438953472,
+     68719476736,
+     34359738368,
+     17179869184,
+     8589934592,
+     4294967296,
+     2147483648,
+     1073741824,
+     536870912,
+     268435456,
+     134217728,
+     67108864,
+     33554432,
+     16777216,
+     8388608,
+     4194304,
+     2097152,
+     1048576,
+     524288,
+     262144,
+     131072,
+     65536,
+     32768,
+     16384,
+     8192,
+     4096,
+     2048,
+     1024,
+     512,
+     256,
+     128,
+     64,
+     32,
+     16,
+     8,
+     4,
+     2,
+     1
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "known/64-gates-one-literal",
+   "family": "known",
+   "brute": false,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12",
+    "G13",
+    "G14",
+    "G15",
+    "G16",
+    "G17",
+    "G18",
+    "G19",
+    "G20",
+    "G21",
+    "G22",
+    "G23",
+    "G24",
+    "G25",
+    "G26",
+    "G27",
+    "G28",
+    "G29",
+    "G30",
+    "G31",
+    "G32",
+    "G33",
+    "G34",
+    "G35",
+    "G36",
+    "G37",
+    "G38",
+    "G39",
+    "G40",
+    "G41",
+    "G42",
+    "G43",
+    "G44",
+    "G45",
+    "G46",
+    "G47",
+    "G48",
+    "G49",
+    "G50",
+    "G51",
+    "G52",
+    "G53",
+    "G54",
+    "G55",
+    "G56",
+    "G57",
+    "G58",
+    "G59",
+    "G60",
+    "G61",
+    "G62",
+    "G63"
+   ],
+   "rows": [
+    {
+     "G00": true
+    }
+   ],
+   "expect": {
+    "total": false,
+    "holes": 9223372036854775808,
+    "landings": [
+     9223372036854775808
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "known/64-gates-two-literal-cover",
+   "family": "known",
+   "brute": false,
+   "gates": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07",
+    "G08",
+    "G09",
+    "G10",
+    "G11",
+    "G12",
+    "G13",
+    "G14",
+    "G15",
+    "G16",
+    "G17",
+    "G18",
+    "G19",
+    "G20",
+    "G21",
+    "G22",
+    "G23",
+    "G24",
+    "G25",
+    "G26",
+    "G27",
+    "G28",
+    "G29",
+    "G30",
+    "G31",
+    "G32",
+    "G33",
+    "G34",
+    "G35",
+    "G36",
+    "G37",
+    "G38",
+    "G39",
+    "G40",
+    "G41",
+    "G42",
+    "G43",
+    "G44",
+    "G45",
+    "G46",
+    "G47",
+    "G48",
+    "G49",
+    "G50",
+    "G51",
+    "G52",
+    "G53",
+    "G54",
+    "G55",
+    "G56",
+    "G57",
+    "G58",
+    "G59",
+    "G60",
+    "G61",
+    "G62",
+    "G63"
+   ],
+   "rows": [
+    {
+     "G00": true,
+     "G01": true
+    },
+    {
+     "G00": false
+    },
+    {
+     "G01": false
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     4611686018427387904,
+     9223372036854775808,
+     4611686018427387904
+    ],
+    "unreachable_rows": []
+   }
+  },
+  {
+   "name": "known/100-gates-shadowed",
+   "family": "known",
+   "brute": false,
+   "gates": [
+    "G000",
+    "G001",
+    "G002",
+    "G003",
+    "G004",
+    "G005",
+    "G006",
+    "G007",
+    "G008",
+    "G009",
+    "G010",
+    "G011",
+    "G012",
+    "G013",
+    "G014",
+    "G015",
+    "G016",
+    "G017",
+    "G018",
+    "G019",
+    "G020",
+    "G021",
+    "G022",
+    "G023",
+    "G024",
+    "G025",
+    "G026",
+    "G027",
+    "G028",
+    "G029",
+    "G030",
+    "G031",
+    "G032",
+    "G033",
+    "G034",
+    "G035",
+    "G036",
+    "G037",
+    "G038",
+    "G039",
+    "G040",
+    "G041",
+    "G042",
+    "G043",
+    "G044",
+    "G045",
+    "G046",
+    "G047",
+    "G048",
+    "G049",
+    "G050",
+    "G051",
+    "G052",
+    "G053",
+    "G054",
+    "G055",
+    "G056",
+    "G057",
+    "G058",
+    "G059",
+    "G060",
+    "G061",
+    "G062",
+    "G063",
+    "G064",
+    "G065",
+    "G066",
+    "G067",
+    "G068",
+    "G069",
+    "G070",
+    "G071",
+    "G072",
+    "G073",
+    "G074",
+    "G075",
+    "G076",
+    "G077",
+    "G078",
+    "G079",
+    "G080",
+    "G081",
+    "G082",
+    "G083",
+    "G084",
+    "G085",
+    "G086",
+    "G087",
+    "G088",
+    "G089",
+    "G090",
+    "G091",
+    "G092",
+    "G093",
+    "G094",
+    "G095",
+    "G096",
+    "G097",
+    "G098",
+    "G099"
+   ],
+   "rows": [
+    {},
+    {
+     "G000": true
+    }
+   ],
+   "expect": {
+    "total": true,
+    "holes": 0,
+    "landings": [
+     1267650600228229401496703205376,
+     0
+    ],
+    "unreachable_rows": [
+     1
+    ]
+   }
+  }
+ ]
+}

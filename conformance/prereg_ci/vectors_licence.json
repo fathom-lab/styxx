@@ -1,0 +1,751 @@
+{
+ "schema": "styxx.prereg-ci.conformance.licence/v0",
+ "label": "conformance vectors for prereg-ci's licences; no claim",
+ "rules": {
+  "id": "sha256 of the sorted, compact UTF-8 JSON of {name, inputs}",
+  "inputs": "prereg is the PREREG's text; surfaces is a list of [path, text], text null for a surface not read; landed is the verdict the receipt landed on, null before data",
+  "licences": "styxx.prereg_ci.core.licences(prereg, [tuple(s) for s in surfaces], landed=landed)",
+  "code": "its code (null where the licences were read)",
+  "findings": "its findings in order, each [code, licence, path, line, col]",
+  "matches": "per licence id in table order, every match as [path, line, col, text, withdrawn], sorted by path, line and column, the withdrawn ones included"
+ },
+ "vectors": [
+  {
+   "id": "997dcada024bcd82fc5b026bd24c2fc0c1d25c0fb7335d9b18149789e95e62c9",
+   "name": "normalise/curly-apostrophe",
+   "why": "the surfaces write the apostrophe as U+2019 and as U+2018; the pattern writes it straight, and the three are read as one character (PLAN K15)",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"apostrophe\",\n     \"quote\": \"An agent's PR summary is read before it ships.\",\n     \"pattern\": \"agent's\\\\ pr\\\\ summary\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "a.md",
+      "An agent\u2019s PR summary is read.\n"
+     ],
+     [
+      "b.md",
+      "An agent\u2018s PR summary is read.\n"
+     ]
+    ],
+    "landed": null
+   },
+   "expect": {
+    "code": null,
+    "findings": [
+     [
+      "LICENCE_PENDING",
+      "apostrophe",
+      "a.md",
+      1,
+      4
+     ],
+     [
+      "LICENCE_PENDING",
+      "apostrophe",
+      "b.md",
+      1,
+      4
+     ]
+    ],
+    "matches": {
+     "apostrophe": [
+      [
+       "a.md",
+       1,
+       4,
+       "agent's PR summary",
+       false
+      ],
+      [
+       "b.md",
+       1,
+       4,
+       "agent's PR summary",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "23550f0c372066189369fc88a5191b59370b9d1ef76851b4382d8c94a9145657",
+   "name": "normalise/case",
+   "why": "the pattern is case-insensitive",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "a.md",
+      "CALIBRATED WELL ENOUGH TO SHIP\n"
+     ]
+    ],
+    "landed": "HOLD"
+   },
+   "expect": {
+    "code": null,
+    "findings": [
+     [
+      "LICENCE_WITHDRAWN",
+      "ship-claim",
+      "a.md",
+      1,
+      1
+     ]
+    ],
+    "matches": {
+     "ship-claim": [
+      [
+       "a.md",
+       1,
+       1,
+       "CALIBRATED WELL ENOUGH TO SHIP",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "935c41021b6fd66a94014a5e6c391743232774f6546aef526afa13de7f574242",
+   "name": "normalise/whitespace-across-lines",
+   "why": "a run of blank lines, spaces and a tab inside the sentence reads as one space; the match is named at the line and column where it starts",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "a.md",
+      "calibrated\n\n  well\tenough to ship\n"
+     ]
+    ],
+    "landed": "HOLD"
+   },
+   "expect": {
+    "code": null,
+    "findings": [
+     [
+      "LICENCE_WITHDRAWN",
+      "ship-claim",
+      "a.md",
+      1,
+      1
+     ]
+    ],
+    "matches": {
+     "ship-claim": [
+      [
+       "a.md",
+       1,
+       1,
+       "calibrated well enough to ship",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "6deabbd2422295718c4a45d8b4433835e6e77beb4cec7b0641b957c9127c5381",
+   "name": "window/withdrawn-inside",
+   "why": "the sentence that withdraws the claim quotes it: a withdrawal within the window marks the match withdrawn, so the landed row refuses nothing",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "a.md",
+      "The sentence 'calibrated well enough to ship' is withdrawn.\n"
+     ]
+    ],
+    "landed": "HOLD"
+   },
+   "expect": {
+    "code": null,
+    "findings": [],
+    "matches": {
+     "ship-claim": [
+      [
+       "a.md",
+       1,
+       15,
+       "calibrated well enough to ship",
+       true
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "e5a1f07d371f5e5cd69030c897951fc7c97cde6acf2ce47d0e77747ad2d23b24",
+   "name": "window/withdrawn-outside",
+   "why": "a withdrawal more than 300 characters past the match does not reach it",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "a.md",
+      "calibrated well enough to ship. yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy withdrawn\n"
+     ]
+    ],
+    "landed": "HOLD"
+   },
+   "expect": {
+    "code": null,
+    "findings": [
+     [
+      "LICENCE_WITHDRAWN",
+      "ship-claim",
+      "a.md",
+      1,
+      1
+     ]
+    ],
+    "matches": {
+     "ship-claim": [
+      [
+       "a.md",
+       1,
+       1,
+       "calibrated well enough to ship",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "c4472c0b9de8ae7d02c5e4e6a613bfae93f41eee484fb0e8cd8603209e80bc89",
+   "name": "window/whole-inside-at-the-edge",
+   "why": "the withdrawal lies whole inside the 300 characters after the match's end (290 filler characters, a space and the 9 characters of 'withdrawn' end at the edge), and not when one more filler character moves its end past the edge",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "edge.md",
+      "calibrated well enough to shipzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz withdrawn\n"
+     ],
+     [
+      "over.md",
+      "calibrated well enough to shipzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz withdrawn\n"
+     ]
+    ],
+    "landed": "HOLD"
+   },
+   "expect": {
+    "code": null,
+    "findings": [
+     [
+      "LICENCE_WITHDRAWN",
+      "ship-claim",
+      "over.md",
+      1,
+      1
+     ]
+    ],
+    "matches": {
+     "ship-claim": [
+      [
+       "edge.md",
+       1,
+       1,
+       "calibrated well enough to ship",
+       true
+      ],
+      [
+       "over.md",
+       1,
+       1,
+       "calibrated well enough to ship",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "b5a5da0b553d79539f82ad3919c4ce5e7c11001429be4dec384b6d1a664160c2",
+   "name": "window/not-yet-true",
+   "why": "the lab's own withdrawal phrase counts as a withdrawal",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "a.md",
+      "calibrated well enough to ship; this is not yet true of this instrument.\n"
+     ]
+    ],
+    "landed": "HOLD"
+   },
+   "expect": {
+    "code": null,
+    "findings": [],
+    "matches": {
+     "ship-claim": [
+      [
+       "a.md",
+       1,
+       1,
+       "calibrated well enough to ship",
+       true
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "164527c3f03aa719b06763b2e2fe920cfe1055da119f9dc080849b357ca0769e",
+   "name": "lint/pattern-finds-nothing",
+   "why": "before data, a licence whose pattern matches no surface is refused (the analogue of a vacuous gate), beside the pending match of the other licence",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    },\n    {\n     \"id\": \"floor-claim\",\n     \"quote\": \"Accuracy never drops under the floor.\",\n     \"pattern\": \"never\\\\s+drops\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "README.md",
+      "# Demo\n\nThe model is calibrated well enough to ship.\n"
+     ],
+     [
+      "docs/notes.md",
+      "Nothing here.\n"
+     ]
+    ],
+    "landed": null
+   },
+   "expect": {
+    "code": null,
+    "findings": [
+     [
+      "LICENCE_PENDING",
+      "ship-claim",
+      "README.md",
+      3,
+      14
+     ],
+     [
+      "LICENCE_PATTERN_FINDS_NOTHING",
+      "floor-claim",
+      null,
+      null,
+      null
+     ]
+    ],
+    "matches": {
+     "ship-claim": [
+      [
+       "README.md",
+       3,
+       14,
+       "calibrated well enough to ship",
+       false
+      ]
+     ],
+     "floor-claim": []
+    }
+   }
+  },
+  {
+   "id": "670c7e1b6523e1ec80fb3d14edae2840bdcbbcd38d5f6ddb847a67882bcb308f",
+   "name": "pending/before-data",
+   "why": "before any receipt lands, a match is a NOTE: the sentence stands on a verdict not yet given",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "README.md",
+      "# Demo\n\nThe model is calibrated well enough to ship.\n"
+     ],
+     [
+      "docs/notes.md",
+      "Nothing here.\n"
+     ]
+    ],
+    "landed": null
+   },
+   "expect": {
+    "code": null,
+    "findings": [
+     [
+      "LICENCE_PENDING",
+      "ship-claim",
+      "README.md",
+      3,
+      14
+     ]
+    ],
+    "matches": {
+     "ship-claim": [
+      [
+       "README.md",
+       3,
+       14,
+       "calibrated well enough to ship",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "7c108a9fa1224ff6777d790b7037853e4719b2a9cfa8a79dc75d92f3174fe10a",
+   "name": "landed/the-row",
+   "why": "a receipt landed on the row that withdraws the sentence: the match is refused",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "README.md",
+      "# Demo\n\nThe model is calibrated well enough to ship.\n"
+     ],
+     [
+      "docs/notes.md",
+      "Nothing here.\n"
+     ]
+    ],
+    "landed": "HOLD"
+   },
+   "expect": {
+    "code": null,
+    "findings": [
+     [
+      "LICENCE_WITHDRAWN",
+      "ship-claim",
+      "README.md",
+      3,
+      14
+     ]
+    ],
+    "matches": {
+     "ship-claim": [
+      [
+       "README.md",
+       3,
+       14,
+       "calibrated well enough to ship",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "c64541cad9f12e8850a63e37e5121d5c68759259b63bea09fc5ec5cde50198d8",
+   "name": "landed/other-row",
+   "why": "a receipt landed on another row: nothing is refused, and the match is still listed",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "README.md",
+      "# Demo\n\nThe model is calibrated well enough to ship.\n"
+     ],
+     [
+      "docs/notes.md",
+      "Nothing here.\n"
+     ]
+    ],
+    "landed": "SHIP"
+   },
+   "expect": {
+    "code": null,
+    "findings": [],
+    "matches": {
+     "ship-claim": [
+      [
+       "README.md",
+       3,
+       14,
+       "calibrated well enough to ship",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "7715faa518c317571cabe7fd1a570633d43ca09c4387e0cf1080f111401928a2",
+   "name": "landed/smoke",
+   "why": "a smoke run lands on no row",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "README.md",
+      "# Demo\n\nThe model is calibrated well enough to ship.\n"
+     ],
+     [
+      "docs/notes.md",
+      "Nothing here.\n"
+     ]
+    ],
+    "landed": "SMOKE"
+   },
+   "expect": {
+    "code": null,
+    "findings": [],
+    "matches": {
+     "ship-claim": [
+      [
+       "README.md",
+       3,
+       14,
+       "calibrated well enough to ship",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "b6a427cba005da460c1deb05eb644ae17cd516fd22ea071d07a4185450f6f79f",
+   "name": "locks/withdraws-map",
+   "why": "the locks block's withdraws map, read per declared outcome",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```locks\n{\n \"scorer\": \"score.py\",\n \"reads\": [],\n \"outcomes\": [\n  \"SHIP\",\n  \"HOLD\"\n ],\n \"withdraws\": {\n  \"HOLD\": [\n   {\n    \"id\": \"ship-claim\",\n    \"quote\": \"The model is calibrated well enough to ship.\",\n    \"pattern\": \"calibrated well enough to ship\"\n   }\n  ]\n }\n}\n```\n",
+    "surfaces": [
+     [
+      "README.md",
+      "# Demo\n\nThe model is calibrated well enough to ship.\n"
+     ]
+    ],
+    "landed": "HOLD"
+   },
+   "expect": {
+    "code": null,
+    "findings": [
+     [
+      "LICENCE_WITHDRAWN",
+      "ship-claim",
+      "README.md",
+      3,
+      14
+     ]
+    ],
+    "matches": {
+     "ship-claim": [
+      [
+       "README.md",
+       3,
+       14,
+       "calibrated well enough to ship",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "fdb366cff2696bf8a8fc2a8dae64cd2525dae0248fe338664b844bbbc10074b3",
+   "name": "locks/other-outcome",
+   "why": "the locks block's map for an outcome the scorer did not print",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```locks\n{\n \"scorer\": \"score.py\",\n \"reads\": [],\n \"outcomes\": [\n  \"SHIP\",\n  \"HOLD\"\n ],\n \"withdraws\": {\n  \"HOLD\": [\n   {\n    \"id\": \"ship-claim\",\n    \"quote\": \"The model is calibrated well enough to ship.\",\n    \"pattern\": \"calibrated well enough to ship\"\n   }\n  ]\n }\n}\n```\n",
+    "surfaces": [
+     [
+      "README.md",
+      "# Demo\n\nThe model is calibrated well enough to ship.\n"
+     ]
+    ],
+    "landed": "SHIP"
+   },
+   "expect": {
+    "code": null,
+    "findings": [],
+    "matches": {
+     "ship-claim": [
+      [
+       "README.md",
+       3,
+       14,
+       "calibrated well enough to ship",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "d646d1e9a30ce694d114e145001c3dbd3a233af695ae7edd4c6bdb9943826bf7",
+   "name": "surfaces/skipped-and-ordered",
+   "why": "a surface not read (binary, a symlink, over the cap) is listed and scanned on nothing; findings follow licence order, then path, line and column, whatever order the surfaces came in",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    },\n    {\n     \"id\": \"floor-claim\",\n     \"quote\": \"Accuracy never drops under the floor.\",\n     \"pattern\": \"never\\\\s+drops\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "b.md",
+      "calibrated well enough to ship\n"
+     ],
+     [
+      "a.md",
+      "never drops\ncalibrated well enough to ship\n"
+     ],
+     [
+      "styxx/bin.py",
+      null
+     ]
+    ],
+    "landed": "HOLD"
+   },
+   "expect": {
+    "code": null,
+    "findings": [
+     [
+      "LICENCE_WITHDRAWN",
+      "ship-claim",
+      "a.md",
+      2,
+      1
+     ],
+     [
+      "LICENCE_WITHDRAWN",
+      "ship-claim",
+      "b.md",
+      1,
+      1
+     ],
+     [
+      "LICENCE_WITHDRAWN",
+      "floor-claim",
+      "a.md",
+      1,
+      1
+     ]
+    ],
+    "matches": {
+     "ship-claim": [
+      [
+       "a.md",
+       2,
+       1,
+       "calibrated well enough to ship",
+       false
+      ],
+      [
+       "b.md",
+       1,
+       1,
+       "calibrated well enough to ship",
+       false
+      ]
+     ],
+     "floor-claim": [
+      [
+       "a.md",
+       1,
+       1,
+       "never drops",
+       false
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "22616e4f950dc4fc5332993d0a4fd966d4c86ce93011135d12acbd5925a2e71f",
+   "name": "refusal/pattern-does-not-compile",
+   "why": "a pattern that does not compile is the decision's refusal",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"(\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "README.md",
+      "# Demo\n\nThe model is calibrated well enough to ship.\n"
+     ]
+    ],
+    "landed": null
+   },
+   "expect": {
+    "code": "SCORER_REFUSES",
+    "findings": [
+     [
+      "SCORER_REFUSES",
+      null,
+      null,
+      null,
+      null
+     ]
+    ],
+    "matches": {}
+   }
+  },
+  {
+   "id": "b84c4cad954397647687db48367bfd1a63583c0562f9e4c7fdb8bdcc8f480319",
+   "name": "refusal/pattern-matches-empty",
+   "why": "a pattern that can match the empty string would match every surface and license nothing",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"(?=x)\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "README.md",
+      "# Demo\n\nThe model is calibrated well enough to ship.\n"
+     ]
+    ],
+    "landed": null
+   },
+   "expect": {
+    "code": "SCORER_REFUSES",
+    "findings": [
+     [
+      "SCORER_REFUSES",
+      null,
+      null,
+      null,
+      null
+     ]
+    ],
+    "matches": {}
+   }
+  },
+  {
+   "id": "f122365be3c38d91e97a10f4984cc37688c75de8ce0a8442ca357a8abe55d9d0",
+   "name": "refusal/table-before-licences",
+   "why": "a table rescore refuses (a row names an undeclared gate) is refused before its licences are read",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G\": {\n   \"metric\": \"m\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"Z\": true\n   },\n   \"verdict\": \"SHIP\"\n  },\n  {\n   \"when\": {\n    \"G\": false\n   },\n   \"verdict\": \"HOLD\",\n   \"withdraws\": [\n    {\n     \"id\": \"ship-claim\",\n     \"quote\": \"The model is calibrated well enough to ship.\",\n     \"pattern\": \"calibrated well enough to ship\"\n    }\n   ]\n  }\n ],\n \"smoke_verdict\": \"SMOKE\"\n}\n```\n",
+    "surfaces": [
+     [
+      "README.md",
+      "# Demo\n\nThe model is calibrated well enough to ship.\n"
+     ]
+    ],
+    "landed": null
+   },
+   "expect": {
+    "code": "SCORER_REFUSES",
+    "findings": [
+     [
+      "SCORER_REFUSES",
+      null,
+      null,
+      null,
+      null
+     ]
+    ],
+    "matches": {}
+   }
+  },
+  {
+   "id": "e20aa1caaf54393aa9ecaf192b6a72df20febf4ac442f455c37589e41aa9404c",
+   "name": "refusal/no-decision",
+   "why": "a prose PREREG holds no licences; its reading is the NOT_GATED note",
+   "inputs": {
+    "prereg": "# PREREG (synthetic)\n\nNo decision is sealed here; the plan is prose.\n",
+    "surfaces": [
+     [
+      "README.md",
+      "# Demo\n\nThe model is calibrated well enough to ship.\n"
+     ]
+    ],
+    "landed": null
+   },
+   "expect": {
+    "code": "NOT_GATED",
+    "findings": [
+     [
+      "NOT_GATED",
+      null,
+      null,
+      null,
+      null
+     ]
+    ],
+    "matches": {}
+   }
+  }
+ ]
+}

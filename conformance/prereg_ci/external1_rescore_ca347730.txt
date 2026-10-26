@@ -1,0 +1,5 @@
+receipt fields: decoys_correct 30 precision 0.23 gate_G_E1_pass False
+verdict FAILURE__gate_claim_not_yet_true
+gates {'G_rel': True, 'G_E1': False}
+gates_sha256 bd6f4256dcd01ccbfdcfa9864c312d1c008e0a5fd8aebed29486cb3321311841
+withdraws [{"id": "gate-claim", "quote": "an agent's PR summary cannot lie about its diff", "pattern": "cannot lie about its diff"}]
