@@ -71,14 +71,66 @@ def test_the_product_need_is_a_pinned_vector(path):
     assert v1["expect"]["rows"] == [] and v1["expect"]["verdict"] == "OATH-HELD"      # what HEAD read: nothing
 
 
+# the set that pins the shipped default; vectors_v2_default.json pinned it before the review fixes
+SHIPPED_SET = NUMERALS / "vectors_v2_default_after_review.json"
+
+
 def test_the_default_set_pins_the_shipped_flags():
-    """RULE_final 0.1: the shipped default has its own set, and that set names every flag as shipped."""
+    """RULE_final 0.1 and the review fixes: the shipped default has its own set, and that set names every
+    flag as shipped; its ids are over the whole flag block, since a flag that ships off (the accounting
+    forms) changes a reading without changing the list of rules that are on."""
     import importlib
     C = importlib.import_module("styxx.certify")    # not the package's `certify` function
-    doc = json.loads((NUMERALS / "vectors_v2_default.json").read_text(encoding="utf-8"))
+    doc = json.loads(SHIPPED_SET.read_text(encoding="utf-8"))
     assert doc["reader"]["flags"] == {k: bool(getattr(C, k)) for k in C._V15_RULE_FLAGS}
     assert doc["reader"]["rules"] == sorted(k for k in C._V15_RULE_FLAGS if getattr(C, k))
-    assert doc["id_rule"] == G.ID_RULE
+    assert doc["id_rule"] == G.ID_RULE_FLAGS
+
+
+def test_a_set_written_before_a_flag_replays_it_at_the_flag_it_was_split_from():
+    """V15_ACCOUNTING_SIGN was split out of V15_SIGNED_CURRENCY by the review fix (R2), as
+    V15_MAGNITUDE_BARE was split out of V15_MAGNITUDE by RULE_final 0.1. A committed set that predates the
+    split replays the new flag at its parent's value: what the parent covered the day the set was written."""
+    for name in ("vectors_v2.json", "vectors_v2_default.json"):
+        doc = json.loads((NUMERALS / name).read_text(encoding="utf-8"))
+        assert "V15_ACCOUNTING_SIGN" not in (doc["reader"].get("flags") or {}), name
+        got = G.set_flags_of(doc)
+        assert got["V15_ACCOUNTING_SIGN"] is True and got["V15_SIGNED_CURRENCY"] is True, name
+    named = json.loads((NUMERALS / "vectors_v2_default.json").read_text(encoding="utf-8"))
+    assert G.set_flags_of(named)["V15_MAGNITUDE_BARE"] is False          # a flag a set names is read as named
+    assert G.set_flags_of(json.loads(SHIPPED_SET.read_text(encoding="utf-8")))["V15_ACCOUNTING_SIGN"] is False
+
+
+def _magnitude_row(v):
+    rows = [r for r in v["expect"]["rows"] if any(c.isalpha() for c in r["token"])]
+    assert len(rows) == 1, v["expect"]["rows"]
+    return rows[0]
+
+
+def test_the_reviews_cases_are_pinned_in_the_set_after_the_review():
+    doc = json.loads(SHIPPED_SET.read_text(encoding="utf-8"))
+    by_name = {v["name"]: v for v in doc["families"]["binding"]["vectors"]}
+    # R1: the timestamp leaves the review found bind no longer
+    for n in ("FB01_mcap_vs_okx_ts", "FB02_mcap_vs_ws_event_time", "FB03_volume_vs_seconds_ts",
+              "FB04_volume_vs_updated", "FB05_mcap_vs_kline_open_time", "F1_created", "F1_last_updated"):
+        assert _magnitude_row(by_name[n])["status"] == "ABSTAIN", n
+    # R1, what stays: a sibling inside the window of a whole response still binds; a narrow receipt does not
+    for n, leaf in (("FB06_liquidations_vs_trade_count", "btc.count"), ("FB07_price_vs_base_volume", "btc.volume"),
+                    ("FB08_wrong_price_vs_low", "btc.lowPrice"), ("FB09_wrong_price_vs_high", "btc.highPrice"),
+                    ("FB10_wrong_price_vs_open", "btc.openPrice")):
+        r = _magnitude_row(by_name[n])
+        assert (r["status"], r["receipt_ref"]) == ("VERIFIED", f"receipt[0]:{leaf}"), n
+    for n in ("FB06_narrow", "FB07_narrow", "FB08_narrow"):
+        assert _magnitude_row(by_name[n])["status"] != "VERIFIED", n
+    # R2: a conversion or a dash before a price is not a loss
+    for n, tok in (("FM01_t8_conversion", "33,706"), ("FM02_conversion", "2,431"), ("FM03_paren_price", "67.4k"),
+                   ("FM04_bold_dash", "67,412.50"), ("FM05_ticker_dash", "67,412.50"), ("FM06_nested_bullet", "67.4k"),
+                   ("FM09_emoji_dash", "67.4k"), ("FM10_table_dash", "67.4k")):
+        mine = [r for r in by_name[n]["expect"]["rows"] if r["token"] == tok]
+        assert [r["status"] for r in mine] == ["VERIFIED"], (n, by_name[n]["expect"]["rows"])
+    # the product need, unchanged
+    v = by_name["k_suffix_made_up"]
+    assert v["expect"]["rows"] == [{"token": "99.9k", "status": "ABSTAIN", "receipt_ref": None}]
 
 
 def test_the_first_set_is_read_under_the_configuration_it_was_written_in():

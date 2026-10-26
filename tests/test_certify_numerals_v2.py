@@ -43,7 +43,10 @@ _MISSING = object()
 # sentence period and the magnitude pair, which have their own tests inside `flags(...)`
 CLAUSES = {"V15_READER_V2": True, "V15_MAGNITUDE": True, "V15_MAGNITUDE_BARE": True, "V15_MAGNITUDE_WORDS": True,
            "V15_FORM_NOISE": True, "V15_SIGNED_CURRENCY": True, "V15_THIN_GROUPS": True, "V15_DECIMAL_COMMA": True,
-           "V15_GLUED_NONASCII": True, "V15_SENTENCE_FINAL": False, "V15_MAGNITUDE_RANGES": False}
+           "V15_GLUED_NONASCII": True, "V15_SENTENCE_FINAL": False, "V15_MAGNITUDE_RANGES": False,
+           # the accounting forms of 1.8, split out of V15_SIGNED_CURRENCY by the review fix (R2); the
+           # clauses were written with them on
+           "V15_ACCOUNTING_SIGN": True}
 
 
 @contextlib.contextmanager
@@ -275,17 +278,21 @@ def test_a_zero_decimal_magnitude_keeps_the_integer_count_binding_filter(tmp_pat
 @pytest.mark.parametrize("seg,excluded", [
     ("openTime", True), ("closeTime", True), ("firstId", True), ("lastId", True), ("tradeIds", True),
     ("timestamp", True), ("epoch_ms", True), ("updated_at", True), ("at", True), ("id", True), ("ID", True),
-    ("_id", True), ("date", True), ("last_updated", False), ("bids", False), ("grids", False), ("count", False),
+    ("_id", True), ("date", True), ("last_updated", True), ("bids", False), ("grids", False), ("count", False),
     ("lastPrice", False), ("market_cap", False), ("params", False), ("width", False),
 ])
-def test_the_leaf_class_exclusion_names_times_and_ids_and_nothing_else(seg, excluded):
+def test_the_leaf_class_exclusion_names_times_and_ids_and_not_these(seg, excluded):
+    """`last_updated` joined the class with the review fix (R1); the full list is pinned in
+    tests/test_certify_numerals_v2_review.py."""
     assert C._v15_leaf_excluded(f"btc.{seg}") is excluded
     assert C._v15_leaf_excluded(f"rows[3].{seg}[0]") is excluded
 
 
-def test_a_magnitude_never_binds_a_timestamp_or_an_id_of_a_whole_response(tmp_path):
+def test_a_magnitude_does_not_bind_a_named_time_or_id_leaf_of_a_whole_response(tmp_path):
     """A-1(b): `$1.7T` against a Binance 24h row landed on openTime (ms since the epoch) in the design's
-    prototype; now the hit is recorded as excluded and the row is ABSTAIN."""
+    prototype; now the hit is recorded as excluded and the row is ABSTAIN. The class is a list of names
+    (and, since the review fix, a tuple cell), not every time or id a receipt can hold; a sibling inside
+    the window still binds (tests/test_certify_numerals_v2_review.py)."""
     c = cert(tmp_path, "BTC mcap $1.7T", {"btc": T.BINANCE})
     assert rows(c) == [("1.7T", "ABSTAIN", None)]
     assert set(c["ledger"][0]["epistemics"]["path_class_excluded"]) == {"r.json:btc.openTime", "r.json:btc.closeTime"}
@@ -634,7 +641,7 @@ def test_the_sentence_final_flag_reads_what_the_period_hid(tmp_path):
         assert rows(c) == [("0.0666", "ABSTAIN", "v15-ellipsis-truncated")]
 
 
-def test_an_ellipsis_after_a_magnitude_is_notation_under_the_default(tmp_path):
+def test_an_ellipsis_after_a_magnitude_is_notation_under_the_clauses(tmp_path):
     assert rows(cert(tmp_path, "vol 3.4M... up", {"eth": {"vol": 3412000}})) == [("3.4M", "ABSTAIN", "v15-ellipsis-truncated")]
     assert rows(cert(tmp_path, "ETH 3.4K…", {"eth": {"price": 3412}})) == [("3.4K", "ABSTAIN", "v15-ellipsis-truncated")]
     assert extract_numbers("ETH 3.4K...")[0]["ellipsis"] is True
@@ -714,6 +721,10 @@ def test_each_rule_flag_reverts_its_own_clause_and_nothing_else():
         assert nums("$67.4k | 14:00 UTC | Oct 24") == [("67.4k", 67400.0), ("14", 14.0), ("00", 0.0), ("24", 24.0)]
     with flags(V15_SIGNED_CURRENCY=False):
         assert nums("PnL -$1,234.56") == [("1,234.56", 1234.56)] and nums("-5k") == [("-5k", -5000.0)]
+        assert nums("PnL ($1.2k) today") == [("($1.2k)", -1200.0)]     # the accounting forms: their own flag
+    with flags(V15_ACCOUNTING_SIGN=False):
+        assert nums("PnL ($1.2k) today") == [("1.2k", 1200.0)] and nums("PnL - $1.2k today") == [("1.2k", 1200.0)]
+        assert nums("PnL -$1,234.56") == [("-$1,234.56", -1234.56)]
     with flags(V15_THIN_GROUPS=False):
         assert nums("67" + THIN + "412.50") == [("67", 67.0), ("412.50", 412.5)]
     with flags(V15_DECIMAL_COMMA=False):
