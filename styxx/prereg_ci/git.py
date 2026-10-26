@@ -345,6 +345,18 @@ class _Repo:
         head = self._batch_check().header(name)
         return None if head is None else head[1]
 
+    def commit_time(self, rev: str) -> int:
+        """The committer time of *rev*'s commit, in seconds since the epoch, as the commit object
+        records it: a date the author's git wrote and the author may set (DESIGN 3.5, T1)."""
+        c = self.commit(rev)
+        raw = self._batch_cat().contents(c)
+        for line in raw.split(b"\n\n", 1)[0].split(b"\n"):
+            if line.startswith(b"committer "):
+                parts = line.rsplit(b" ", 2)
+                if len(parts) == 3 and parts[1].isdigit():
+                    return int(parts[1])
+        raise _Refusal("GIT_UNAVAILABLE", f"commit {c} carries no committer time git reads")
+
     def is_shallow(self) -> bool:
         if self._shallow is None:
             out = self._ok("rev-parse", "--is-shallow-repository").strip()
