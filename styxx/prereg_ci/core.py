@@ -110,6 +110,11 @@ a pattern is capped at ``_PATTERN_MAX_CHARS`` characters, refused when it can ma
 string, and nothing else guards its cost. ``licences`` names the landed row by its index when given
 ``row`` (step B7), so two rows that share a verdict are told apart; ``_quote_coverage`` reads each
 licence's quote as a literal pattern, which is what the report prints beside the pattern's coverage.
+
+The ladder (DESIGN 3.4 C7, step B7). ``_ladder`` reads a scored receipt's outcome rows in order with
+the landed one marked, each gate's metric, op, bar, observed value and margin (positive where the gate
+fired with room), and the single-gate flip table: where the receipt would land with one gate's reading
+flipped. Every flip that moves the verdict is printed with its margin; none is called decisive.
 """
 from __future__ import annotations
 
@@ -372,6 +377,15 @@ def _table(spec: Any, smoke: bool) -> Tuple[List[str], List[Any]]:
         raise _GateSpecError(f"'smoke_verdict' {spec['smoke_verdict']!r} is not a string, and a smoke "
                              f"receipt's verdict is the smoke_verdict")
     return list(gates), [row["when"] for row in outcomes]
+
+
+def _gates_spec(block: str) -> Any:
+    """A gates fence's text as strict JSON (``research_capsule``'s reader: duplicate and non-ASCII keys
+    refused), or a ``GateSpecError`` in ``rescore``'s words; the reading ``lint`` starts from."""
+    try:
+        return _capsule._strict_json(block)
+    except (ValueError, UnicodeDecodeError) as e:
+        raise _GateSpecError(f"gates block is not valid strict JSON: {e}")
 
 
 def _smoke(receipt: Dict[str, Any]) -> Tuple[Optional[bool], Optional[str]]:
@@ -1901,6 +1915,61 @@ def _quote_coverage(prereg: Any, surfaces: Iterable[Any]) -> List[Dict[str, Any]
         hit = sorted({path for path, text in items if literal and _scan(text, [probe], path)})
         out.append({"id": spec["id"], "quote": spec["quote"], "surfaces": hit})
     return out
+
+
+# ---- the outcome ladder and the single-gate flip table (DESIGN 3.4 C7, step B7) ---------------------------
+
+# a gate's margin: how far its metric sits past the bar in the direction that fires it, so a gate fires
+# with a positive margin (">=" and "<=" also at 0, "==" only at 0) and does not fire with a negative one
+_MARGIN = {">=": lambda v, b: v - b, ">": lambda v, b: v - b, "<=": lambda v, b: b - v, "<": lambda v, b: b - v,
+           "==": lambda v, b: -abs(v - b)}
+
+
+def _ladder(rescored: Dict[str, Any], prereg: Any, receipt: Any) -> Optional[Dict[str, Any]]:
+    """The outcome ladder of one scored receipt (DESIGN 3.4 C7), or None where there is none to print: a
+    re-score that refused, a smoke receipt (scored by type, on no row), or a locks decision (its scorer
+    prints the verdict, and no gate table is read).
+
+    *rescored* is ``rescore``'s output for *prereg* (the decision in effect) and *receipt*. Returns
+    ``{landed, verdict, rows, gates, flips}``: ``rows`` every outcome row in order (``row``, ``verdict``,
+    ``when``, ``landed``); ``gates`` each gate in table order with ``metric``, ``op``, ``bar``,
+    ``observed`` (the value the scorer read at the receipt pointer), ``fired``, ``margin`` (``_MARGIN``)
+    and ``read_by_landed`` (whether the landed row's ``when`` names it); ``flips`` the single-gate flip
+    table, one entry per gate: the row and verdict the receipt would land on with that gate's reading
+    flipped (None where no row matches: a hole), and ``moves``. Every gate whose flip moves the
+    verdict is listed with its margin, and no single bar is called the decisive one (RED_TEAM m3)."""
+    if (rescored.get("form") != "gates" or rescored.get("code") is not None or rescored.get("smoke")
+            or rescored.get("row") is None):
+        return None
+    decision = _decision(prereg)
+    if decision["form"] != "gates" or decision["gates_sha256"] != rescored.get("gates_sha256"):
+        raise ValueError("the PREREG is not the decision this re-score read")
+    spec = _capsule._strict_json(decision["block"])
+    metrics, missing = _capsule._pointer(receipt, spec.get("receipt_pointer", ""))
+    if missing is not None:
+        raise ValueError(f"the receipt pointer does not resolve: {missing}")
+    fired = rescored["gates"]
+    whens = [r["when"] for r in spec["outcomes"]]
+    landed = rescored["row"]
+    gates = []
+    for name, g in spec["gates"].items():
+        observed = _protocol._resolve(metrics, g["metric"])
+        margin = _MARGIN[g["op"]](observed, g["value"])
+        if margin == 0:
+            margin = abs(margin)                  # no negative zero in a report
+        gates.append({"name": name, "metric": g["metric"], "op": g["op"], "bar": g["value"], "observed": observed,
+                      "fired": fired[name], "margin": margin, "read_by_landed": name in whens[landed]})
+    flips = []
+    for g in gates:
+        moved = dict(fired)
+        moved[g["name"]] = not moved[g["name"]]
+        i = _landed(whens, moved)
+        verdict = spec["outcomes"][i]["verdict"] if i is not None else None
+        flips.append({"gate": g["name"], "fired": g["fired"], "row": i, "verdict": verdict,
+                      "moves": verdict != rescored["verdict"], "margin": g["margin"]})
+    rows = [{"row": i, "verdict": r["verdict"], "when": r["when"], "landed": i == landed}
+            for i, r in enumerate(spec["outcomes"])]
+    return {"landed": landed, "verdict": rescored["verdict"], "rows": rows, "gates": gates, "flips": flips}
 
 
 @functools.lru_cache(maxsize=256)
