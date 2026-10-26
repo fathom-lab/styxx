@@ -14,8 +14,12 @@ description: >-
   the older blobs the check reads from the repository's own remote while it runs; a caller that checks
   out itself sets checkout "false", uses fetch-depth: 0, and keeps a working tree checked out (with
   blob:none and no checkout, every blob read is fetched on its own). Grant the job
-  contents: read and nothing else, and pin this action by commit sha in the uses: line. The check
-  opens no connection of its own: no time-stamp authority, no OpenTimestamps calendar, no forge API
+  contents: read and nothing else, and pin this action by commit sha in the uses: line. Both python
+  steps run with -I, so the checked-out pull request (the working directory), PYTHONPATH and the user
+  site stay off the import path and a pull request cannot replace the code that judges it; for the
+  same reason a repository whose own tree holds styxx (styxx itself) pins
+  fathom-lab/styxx/prereg-ci@<sha> and never uses: ./prereg-ci, whose styxx-source default installs
+  the pull request's own tree. The check opens no connection of its own: no time-stamp authority, no OpenTimestamps calendar, no forge API
   (the server rung prints "not read"). Policies come from prereg-ci.toml as the base commit holds it,
   and an input here wins over the file.
 author: "Fathom Lab"
@@ -25,7 +29,11 @@ branding:
 
 inputs:
   base:
-    description: "The base commit: the pull request's target (on a push, the commit before it)."
+    description: >-
+      The base commit: the pull request's target (on a push, the commit before it). The default
+      serves pull_request and push events; a push that creates a branch carries 40 zeros as its
+      before, and other events carry neither, so name the base there (the check reads COMMIT_ABSENT,
+      exit 3, otherwise).
     required: false
     default: ${{ github.event.pull_request.base.sha || github.event.before }}
   head:
@@ -79,7 +87,8 @@ inputs:
   styxx-source:
     description: >-
       What to pip install to get styxx.prereg_ci. Default: the action's own checkout, so the checker is
-      the bytes at the commit the action is pinned to. Empty skips the install because the job already
+      the bytes at the commit the action is pinned to (under uses: ./prereg-ci that checkout is the
+      pull request's tree, so pin the remote form). Empty skips the install because the job already
       installed it.
     required: false
     default: "${{ github.action_path }}/.."
@@ -114,7 +123,8 @@ runs:
       shell: bash
       env:
         STYXX_SOURCE: ${{ inputs.styxx-source }}
-      run: python -m pip install --quiet "$STYXX_SOURCE"
+      # -I: the working directory (the pull request's tree), PYTHONPATH and the user site stay off sys.path
+      run: python -I -m pip install --quiet --disable-pip-version-check "$STYXX_SOURCE"
     - id: check
       shell: bash
       env:
@@ -145,7 +155,9 @@ runs:
           if [ -n "$prefix" ]; then args+=(--exclude "$prefix"); fi
         done <<< "$PREREG_CI_EXCLUDE"
         code=0
-        python -m styxx.prereg_ci "${args[@]}" || code=$?
+        # -I keeps the pull request's tree off sys.path, so the installed checker judges it; -X utf8
+        # fixes the printout's encoding, which -I no longer takes from PYTHONIOENCODING
+        python -I -X utf8 -m styxx.prereg_ci "${args[@]}" || code=$?
         case "$code" in
           0) verdict=PASS ;;
           1) verdict=FAIL ;;

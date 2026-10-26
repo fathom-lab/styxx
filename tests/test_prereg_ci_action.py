@@ -9,6 +9,13 @@ do (``sworn/action.yml``, ``tests/test_sworn_action.py``), so no input text is e
 script. The check step's own script is run here under bash on a ``git init`` repository: its exit code
 is the command's, ``report-only`` makes it 0 with the verdict still written, and the job summary is
 appended to. No workflow is added and nothing reaches a network.
+
+DESIGN 3.2(f), "a pull request cannot change the code that judges it": both python steps run with
+``-I``, so the working directory (the checked-out pull request), ``PYTHONPATH`` and the user site stay
+off ``sys.path`` (the B7 review's F1: under plain ``-m``, a ``styxx/prereg_ci/__main__.py`` in the pull
+request's tree was the judge). The step is therefore run with an interpreter that has the package
+under test installed, as a runner has after the install step: a venv made with ``--without-pip``
+(no download) whose ``.pth`` names this checkout. No test runs pip.
 """
 from __future__ import annotations
 
@@ -63,6 +70,23 @@ def test_the_checkout_is_full_history_with_a_blob_none_partial_clone(action):
         assert needle in desc, needle
 
 
+def test_every_python_the_action_runs_is_isolated_from_the_checkout(action):
+    """Each ``python`` in a step's script is ``python -I``: under plain ``-m`` the working directory, which
+    is the pull request's tree, is ``sys.path[0]``, and ``python -m pip`` or ``python -m styxx.prereg_ci``
+    would import what the pull request wrote there."""
+    seen = 0
+    for step in _steps(action):
+        for line in (step.get("run") or "").splitlines():
+            code = line.split("#", 1)[0]
+            for m in re.finditer(r"(?<![\w./-])python(?:3(?:\.\d+)?)?(?![\w.-])", code):
+                seen += 1
+                assert code[m.end():].startswith(" -I "), line
+    assert seen == 2
+    desc = action["description"]
+    assert "-I" in desc and "fathom-lab/styxx/prereg-ci@<sha>" in desc and "never uses: ./prereg-ci" in desc
+    assert "./prereg-ci" in action["inputs"]["styxx-source"]["description"]
+
+
 def test_every_input_reaches_the_shell_through_the_environment(action):
     for step in _steps(action):
         script = step.get("run")
@@ -80,7 +104,7 @@ def test_every_input_reaches_the_shell_through_the_environment(action):
 
 def test_the_check_step_runs_the_merge_gate(action):
     script = _check_step(action)["run"]
-    assert "python -m styxx.prereg_ci" in script and " check " in script.replace('"${args[@]}"', " check ")
+    assert "python -I -X utf8 -m styxx.prereg_ci" in script and " check " in script.replace('"${args[@]}"', " check ")
     assert "--summary" in script and "--json" in script and "GITHUB_OUTPUT" in script
 
 
@@ -103,12 +127,35 @@ def _bash():
     return found
 
 
+def _isolated_python(where: Path) -> Path:
+    """An interpreter with this checkout installed and nothing else of the test's on its path: a venv
+    made with ``--without-pip`` (nothing is downloaded) that sees the interpreter's site-packages,
+    with a ``.pth`` naming this checkout ahead of them. Under ``-I`` it imports styxx from here, as a
+    runner imports the copy the install step put in site-packages, whatever the working directory
+    holds."""
+    import site
+    import venv
+
+    venv.EnvBuilder(system_site_packages=True, with_pip=False, symlinks=os.name != "nt").create(str(where))
+    exe = where / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+    r = subprocess.run([str(exe), "-I", "-c", "import sysconfig; print(sysconfig.get_paths()['purelib'])"],
+                       capture_output=True, check=True)
+    purelib = Path(r.stdout.decode("utf-8").strip())
+    lines = [str(ROOT)]
+    if sys.prefix != sys.base_prefix:                    # a venv's own site-packages are not the base's
+        lines += [p for p in site.getsitepackages() if os.path.isdir(p)]
+    (purelib / "_prereg_ci_under_test.pth").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return exe
+
+
 def run_step(action, repo: Path, tmp: Path, **inputs):
-    """Run the check step's script with the environment the composite sets for these inputs."""
+    """Run the check step's script with the environment the composite sets for these inputs, under an
+    interpreter that has this checkout installed (``_isolated_python``) and no ``PYTHONPATH``."""
     bash = _bash()
     if bash is None:
         pytest.skip("no bash on this box to run the step's script")
     step = _check_step(action)
+    python = _isolated_python(tmp / "py")
     defaults = {k: (v.get("default", "") if isinstance(v, dict) else "") for k, v in action["inputs"].items()}
     values = {**defaults, **inputs}
     env = dict(os.environ)
@@ -116,9 +163,9 @@ def run_step(action, repo: Path, tmp: Path, **inputs):
         m = re.fullmatch(r"\$\{\{ inputs\.([a-z-]+) \}\}", expr)
         if m:
             env[name] = str(values[m.group(1)])
+    env.pop("PYTHONPATH", None)
     env.update(GITHUB_OUTPUT=str(tmp / "out.txt"), GITHUB_STEP_SUMMARY=str(tmp / "summary.md"),
-               PYTHONPATH=str(ROOT), PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1",
-               PREREG_CI_TEST_PYTHON=Path(sys.executable).as_posix())
+               PYTHONDONTWRITEBYTECODE="1", PREREG_CI_TEST_PYTHON=python.as_posix())
     script = 'python() { "$PREREG_CI_TEST_PYTHON" -B "$@"; }\n' + step["run"]
     (tmp / "step.sh").write_text(script, encoding="utf-8", newline="\n")
     r = subprocess.run([bash, str(tmp / "step.sh")], cwd=str(repo), env=env, capture_output=True)
@@ -167,3 +214,33 @@ def test_policy_inputs_become_flags(action, tmp_path):
     assert code == 1 and "FAIL TIME_BELOW_POLICY" in text and "require_time T3a (flag)" in text, text
     rep = json.loads(Path(outputs["report"]).read_text(encoding="ascii"))
     assert rep["policies"]["exclude"] == ["conformance/", "docs/"]
+
+
+SHADOW = {"styxx/__init__.py": "", "styxx/prereg_ci/__init__.py": "",
+          "styxx/prereg_ci/__main__.py": "import sys\nprint('PASS  a judge the pull request wrote')\nsys.exit(0)\n"}
+
+
+def test_a_pull_request_that_brings_its_own_checker_is_judged_by_the_installed_one(action, tmp_path):
+    """The B7 review's F1: a typed-verdict pull request that also adds ``styxx/prereg_ci/__main__.py`` to its
+    tree still reads exit 1, FAIL VERDICT_DIFFERS, and the shadow never runs. The same step with ``-I``
+    taken out reads the shadow's PASS, so this test sees the flag it guards."""
+    g, rec = demo(tmp_path)
+    g("switch", "-q", "-c", "typed", "result")
+    g.write("RESULT_digits.md", result_md("HOLD__calibration"))
+    for path, text in SHADOW.items():
+        g.write(path, text)
+    g.commit("type the verdict and bring a judge")
+    base, head = g("rev-parse", "result"), g("rev-parse", "typed")
+    out = tmp_path / "o"
+    out.mkdir()
+    code, text, outputs = run_step(action, g.root, out, base=base, head=head, **{"out-dir": str(out / "r")})
+    assert code == 1 and outputs["verdict"] == "FAIL", text
+    assert "FAIL VERDICT_DIFFERS" in text and "a judge the pull request wrote" not in text
+    plain = json.loads(json.dumps(action))
+    step = _check_step(plain)
+    assert step["run"].count("python -I -X utf8 -m styxx.prereg_ci") == 1
+    step["run"] = step["run"].replace("python -I -X utf8 -m styxx.prereg_ci", "python -m styxx.prereg_ci")
+    out2 = tmp_path / "o2"
+    out2.mkdir()
+    code, text, outputs = run_step(plain, g.root, out2, base=base, head=head, **{"out-dir": str(out2 / "r")})
+    assert code == 0 and outputs["verdict"] == "PASS" and "a judge the pull request wrote" in text, text
