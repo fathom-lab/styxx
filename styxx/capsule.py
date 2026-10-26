@@ -637,6 +637,7 @@ _CERT_GENERATIONS = (
     ("2026-09-01", ("uncovered", "uncovered_items", "uncovered_excluded_by_rule",
                     "uncovered_policy")),
     ("2026-09-05", ("receipt_binding",)),
+    ("2026-10-25", ("numeral_reader",)),        # the numeral reader v2 names itself (V15_READER_V2)
 )
 # A row field certify writes on some rows only, and the change that began writing it: since 7e70cb4e
 # (OATH v0.3, 2026-06-10, 56 minutes after the earliest certify) every certify writes
@@ -646,7 +647,12 @@ _CERT_GENERATIONS = (
 # *.certificate.json and 24 CERT_*.json): none lacks it on a row where the installed certify
 # writes it. Until review round 4 its absence was NOT
 # CHECKED with the words "a certificate from an older certify does not".
-_ROW_FIELDS_SINCE = {"binding_context": ("2026-06-10", "7e70cb4e")}
+_ROW_FIELDS_SINCE = {"binding_context": ("2026-06-10", "7e70cb4e"),
+                     # the numeral reader v2 (2026-10-25): a suffixed magnitude's reading, an accounting
+                     # sign form, an ellipsis after a numeral; each on the rows it applies to only
+                     "magnitude": ("2026-10-25", "numeral reader v2"),
+                     "sign_form": ("2026-10-25", "numeral reader v2"),
+                     "ellipsis": ("2026-10-25", "numeral reader v2")}
 
 
 def _since(name: str) -> Optional[str]:
@@ -1081,6 +1087,21 @@ def _compare_certificate_v01(cert: dict, live: dict, payload: dict, recs: dict) 
                                f"every field it carries; {unchecked} field(s) NOT CHECKED, "
                                f"listed)"))
 
+    # the numeral reader (2026-10-25): when the certificate's reader is not the installed one, or one
+    # side has none, say so beside the problems, with the flag that reproduces the minting reader. A
+    # certificate issued before the reader v2 re-derives with the same rows under the shipped flags
+    # (RULE_final 0.1: no committed certificate moves), with more rows (bare magnitudes) or fewer
+    # (clock times, dates) when V15_MAGNITUDE_BARE or V15_FORM_NOISE is on, and with the rows a period
+    # hid under V15_SENTENCE_FINAL; it verifies under its minting reader.
+    _er = (cert.get("numeral_reader") or {}).get("schema") if isinstance(cert.get("numeral_reader"), dict) else None
+    _lr = (live.get("numeral_reader") or {}).get("schema") if isinstance(live.get("numeral_reader"), dict) else None
+    if _er != _lr:
+        advisory.append(
+            f"numeral_reader: the installed verifier reads numerals under "
+            f"{_lr or 'the reader before styxx-oath/numerals/v2 (V15_READER_V2 off)'}; this certificate "
+            f"was issued under {_er or 'the reader before styxx-oath/numerals/v2 (no numeral_reader block)'}. "
+            f"A row the two readers disagree on is reported above; to verify under the minting reader, "
+            f"re-derive with V15_READER_V2 = {'True' if _er else 'False'} in styxx.certify")
     # the minting environment: stated, never verified
     stated.append(f"certificate.verifier_sha256 {vs} (the certify.py that issued it; the "
                   f"installed certify.py is "
