@@ -109,9 +109,21 @@ _KIND = {_TIME_BELOW_POLICY: "FAIL", _TSA_TOKEN_UNVERIFIED: "NOTE", _TSA_TRUST_A
 _ISO = re.compile(r"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})Z")
 
 
+_EPOCH0 = datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
+
+
 def _iso(epoch: int) -> str:
-    """Seconds since the epoch as ``YYYY-MM-DDTHH:MM:SSZ``."""
-    return datetime.datetime.fromtimestamp(int(epoch), datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    """Seconds since the epoch as ``YYYY-MM-DDTHH:MM:SSZ``, for every year from 1 to 9999; any other time
+    (a committer date the author set past year 9999, say) as ``@<seconds>``, git's own form, so it prints
+    instead of raising. Added to the epoch by ``timedelta``, not read through the platform's gmtime, which
+    on the Windows box this was built on refuses any time before 1969-12-31T12:00:00Z or after
+    3001-01-19T21:59:59Z (``datetime.fromtimestamp`` raised OSError there)."""
+    n = int(epoch)
+    try:
+        d = _EPOCH0 + datetime.timedelta(seconds=n)
+    except OverflowError:
+        return f"@{n}"
+    return f"{d.year:04d}-{d.month:02d}-{d.day:02d}T{d.hour:02d}:{d.minute:02d}:{d.second:02d}Z"
 
 
 def _epoch(text: Any) -> Optional[int]:
@@ -724,14 +736,15 @@ def _reading(repo: Any, *, path: str, rev: str, seal: bytes, digests: Iterable[s
     trust, trust_paths = _trust(repo, tc, trust_dir)
     out: Dict[str, Any] = {
         "path": path, "rev": c, "seal_sha256": seal_sha, "digests": all_digests, "order": o, "receipt": r,
-        "ordered": ordered, "receipt_committed_at_epoch": r_at, "receipt_committed_at": _iso(r_at) if r_at else None,
+        "ordered": ordered, "receipt_committed_at_epoch": r_at,
+        "receipt_committed_at": _iso(r_at) if r_at is not None else None,
         "T1": {"holds": ordered, "detail": ("no receipt to order against" if r is None else
                                            "the order commit is a strict ancestor of the receipt's commit; the author "
                                            "set both and their dates" if ordered else
                                            "the order commit is not a strict ancestor of the receipt's commit (C3)")},
         "T2": {"read": False, "detail": "not read: v0 consults no server (GitHub's merge times would be SERVER_ORDER)"},
         "T3a": [], "T3b": [], "T3c": {}, "unread": [], "trust": trust_paths, "trust_rev": tc, "openssl": version,
-        "receipt_time": {"T3a": [], "T1": _iso(r_at) if r_at else None}, "rung": None, "name": None}
+        "receipt_time": {"T3a": [], "T1": _iso(r_at) if r_at is not None else None}, "rung": None, "name": None}
     anchors: List[Tuple[str, bytes]] = []
     for t in _tokens(repo, c, path, line):
         if t["bytes"] is None:

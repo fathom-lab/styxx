@@ -940,6 +940,62 @@ def test_iso_renders_utc_seconds_and_parses_them_back():
     assert T._epoch("2025-10-25 14:26:40") is None and T._epoch("") is None and T._epoch(None) is None
 
 
+def test_iso_renders_every_year_a_datetime_holds_and_prints_any_other_time_as_git_writes_it():
+    """B6 review A4: a committer time of 99999999999999 (git records it as written) raised OSError out of
+    _iso, which went through the platform's gmtime; on the Windows box this was written on that raised
+    for any time before 1969-12-31T12:00:00Z or after 3001-01-19T21:59:59Z, so a genTime of year 0001
+    raised too. Years 1 to 9999 print with four digits; any other time prints as ``@<seconds>``, git's
+    own form, and is still compared as the number it is."""
+    for epoch, text in ((-62_135_596_800, "0001-01-01T00:00:00Z"), (-1, "1969-12-31T23:59:59Z"),
+                        (-43_201, "1969-12-31T11:59:59Z"), (32_536_850_400, "3001-01-19T22:00:00Z"),
+                        (32_503_680_000, "3000-01-01T00:00:00Z"), (253_402_300_799, "9999-12-31T23:59:59Z")):
+        assert T._iso(epoch) == text and T._epoch(text) == epoch
+    for epoch in (253_402_300_800, 99_999_999_999_999, 9_999_999_999_999_999_999, -62_135_596_801):
+        assert T._iso(epoch) == f"@{epoch}" and T._epoch(T._iso(epoch)) is None
+
+
+@pytest.mark.parametrize("gen_time, text", [(b"00010101000000Z", "0001-01-01T00:00:00Z"),
+                                            (b"99991231235959Z", "9999-12-31T23:59:59Z")])
+def test_a_token_whose_gen_time_is_year_one_or_9999_reads_and_prints(gen_time, text):
+    info = T._tstinfo(hand_token(gen_time))
+    assert info["gen_time"] == text and info["gen_time_epoch"] == T._epoch(text)
+    r = T._rfc3161(SEAL, hand_token(gen_time), None)
+    assert r["status"] == "NO_TRUST" and r["gen_time"] == text
+
+
+def commit_dated(g, msg: str, committer: str) -> str:
+    """Commit everything with the committer date given as git reads it (``@<seconds> +0000``)."""
+    g("add", "-A")
+    env = {k: v for k, v in os.environ.items() if k not in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE")}
+    env.update(GIT_AUTHOR_DATE="1760000000 +0000", GIT_COMMITTER_DATE=committer)
+    done = subprocess.run(["git", "commit", "-q", "--allow-empty", "-m", msg], cwd=str(g.root), env=env,
+                          capture_output=True, stdin=subprocess.DEVNULL)
+    assert done.returncode == 0, done.stderr.decode("utf-8", "replace")
+    return g("rev-parse", "HEAD")
+
+
+@pytest.mark.parametrize("at, text", [(99_999_999_999_999, "@99999999999999"), (0, "1970-01-01T00:00:00Z")])
+def test_a_receipt_commit_dated_past_year_9999_or_at_the_epoch_reads_its_time(tmp_path, at, text):
+    """B6 review A4 through a repository: the receipt's time prints, the rung reads, close_after prints it.
+    At 0 the time printed None before, read as if there were no receipt to time."""
+    g = Git(tmp_path / "r")
+    g.write(P, SEAL)
+    c0 = g.commit("seal the plan")
+    g.write(R, receipt(m=0.7))
+    rc = commit_dated(g, "a result, dated by hand", f"@{at} +0000")
+    with G._Repo(g.root) as repo:
+        if repo.commit_time(rc) != at:
+            pytest.skip(f"this git recorded committer time {repo.commit_time(rc)}, not {at}")
+        r = T._reading(repo, path=P, rev=rc, seal=SEAL, order=c0, receipt=rc, trust_rev=c0)
+    assert r["receipt_committed_at_epoch"] == at and r["receipt_committed_at"] == text
+    assert r["receipt_time"]["T1"] == text and r["rung"] == "T1"
+    f = T._findings(r, close_after="1971-01-01T00:00:00Z")
+    if at:
+        assert codes(f) == [(T._RECEIPT_AFTER_CLOSE, "NOTE")] and text in f[0]["detail"]
+    else:
+        assert f == []
+
+
 # ---- stamp: the one networked command, which refuses without --go ------------------------------------------
 
 @pytest.fixture
