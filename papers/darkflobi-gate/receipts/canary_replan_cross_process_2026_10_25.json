@@ -1,0 +1,353 @@
+{
+ "cadence": "s7",
+ "canary_plan_sha256": "97f4f0f3d60e821f0675ed03dae35042feea137cfcc7e290238abbe44eb0075f",
+ "canary_shadow_sha256": "b7a13d9c22625087e140d23c139315dbd03caa5685f2a55660dfb4a10a36c0cd",
+ "committed_probe_receipt": "papers/darkflobi-gate/receipts/canary_replan_probe_2026_10_25.json",
+ "days": 28,
+ "derive_runs": [
+  {
+   "PYTHONHASHSEED": "0",
+   "argv": [
+    "BD:gate_copy/canary_plan.py",
+    "--snapshot",
+    "BD:gate_copy/snapshot_3437340b",
+    "derive",
+    "--seed",
+    "424242001",
+    "--window-start",
+    "2026-11-01",
+    "--cadence",
+    "s7"
+   ],
+   "counts": {
+    "ef_items": 8,
+    "fallbacks_to_D": 0,
+    "gc_items": 112,
+    "items": 124,
+    "live_items": 4
+   },
+   "exit": 0,
+   "schedule_sha256": "32a50c9d6133788cff6b7991321a17950dff7afdcfd0807053ec2f282c740f0a",
+   "seed": 424242001,
+   "started_utc": "2026-10-26T00:16:57+00:00",
+   "stdout_sha256": "0937c0362020a1e895116e3e5f9d9a2941ea04760543da3a5cf1c7b9c752a6bc"
+  },
+  {
+   "PYTHONHASHSEED": "1",
+   "argv": [
+    "BD:gate_copy/canary_plan.py",
+    "--snapshot",
+    "BD:gate_copy/snapshot_3437340b",
+    "derive",
+    "--seed",
+    "424242001",
+    "--window-start",
+    "2026-11-01",
+    "--cadence",
+    "s7"
+   ],
+   "counts": {
+    "ef_items": 8,
+    "fallbacks_to_D": 0,
+    "gc_items": 112,
+    "items": 124,
+    "live_items": 4
+   },
+   "exit": 0,
+   "schedule_sha256": "32a50c9d6133788cff6b7991321a17950dff7afdcfd0807053ec2f282c740f0a",
+   "seed": 424242001,
+   "started_utc": "2026-10-26T00:17:01+00:00",
+   "stdout_sha256": "0937c0362020a1e895116e3e5f9d9a2941ea04760543da3a5cf1c7b9c752a6bc"
+  },
+  {
+   "PYTHONHASHSEED": "77",
+   "argv": [
+    "BD:gate_copy/canary_plan.py",
+    "--snapshot",
+    "BD:gate_copy/snapshot_3437340b",
+    "derive",
+    "--seed",
+    "424242001",
+    "--window-start",
+    "2026-11-01",
+    "--cadence",
+    "s7"
+   ],
+   "counts": {
+    "ef_items": 8,
+    "fallbacks_to_D": 0,
+    "gc_items": 112,
+    "items": 124,
+    "live_items": 4
+   },
+   "exit": 0,
+   "schedule_sha256": "32a50c9d6133788cff6b7991321a17950dff7afdcfd0807053ec2f282c740f0a",
+   "seed": 424242001,
+   "started_utc": "2026-10-26T00:17:06+00:00",
+   "stdout_sha256": "0937c0362020a1e895116e3e5f9d9a2941ea04760543da3a5cf1c7b9c752a6bc"
+  },
+  {
+   "PYTHONHASHSEED": "unset",
+   "argv": [
+    "BD:gate_copy/canary_plan.py",
+    "--snapshot",
+    "BD:gate_copy/snapshot_3437340b",
+    "derive",
+    "--seed",
+    "424242001",
+    "--window-start",
+    "2026-11-01",
+    "--cadence",
+    "s7"
+   ],
+   "counts": {
+    "ef_items": 8,
+    "fallbacks_to_D": 0,
+    "gc_items": 112,
+    "items": 124,
+    "live_items": 4
+   },
+   "exit": 0,
+   "schedule_sha256": "32a50c9d6133788cff6b7991321a17950dff7afdcfd0807053ec2f282c740f0a",
+   "seed": 424242001,
+   "started_utc": "2026-10-26T00:17:10+00:00",
+   "stdout_sha256": "0937c0362020a1e895116e3e5f9d9a2941ea04760543da3a5cf1c7b9c752a6bc"
+  },
+  {
+   "PYTHONHASHSEED": "0",
+   "argv": [
+    "BD:gate_copy/canary_plan.py",
+    "--snapshot",
+    "BD:gate_copy/snapshot_3437340b",
+    "derive",
+    "--seed",
+    "424242002",
+    "--window-start",
+    "2026-11-01",
+    "--cadence",
+    "s7"
+   ],
+   "counts": {
+    "ef_items": 8,
+    "fallbacks_to_D": 0,
+    "gc_items": 112,
+    "items": 124,
+    "live_items": 4
+   },
+   "exit": 0,
+   "schedule_sha256": "b7691d079265dc3e860209bf1d5537c5ec30515699dd2f413f48049530f7a8a9",
+   "seed": 424242002,
+   "started_utc": "2026-10-26T00:17:14+00:00",
+   "stdout_sha256": "fc92e2ddcf75e3b0248ca76cb96480b5add18234ab4bf79d329bc07122d2ad89"
+  },
+  {
+   "PYTHONHASHSEED": "1",
+   "argv": [
+    "BD:gate_copy/canary_plan.py",
+    "--snapshot",
+    "BD:gate_copy/snapshot_3437340b",
+    "derive",
+    "--seed",
+    "424242002",
+    "--window-start",
+    "2026-11-01",
+    "--cadence",
+    "s7"
+   ],
+   "counts": {
+    "ef_items": 8,
+    "fallbacks_to_D": 0,
+    "gc_items": 112,
+    "items": 124,
+    "live_items": 4
+   },
+   "exit": 0,
+   "schedule_sha256": "b7691d079265dc3e860209bf1d5537c5ec30515699dd2f413f48049530f7a8a9",
+   "seed": 424242002,
+   "started_utc": "2026-10-26T00:17:19+00:00",
+   "stdout_sha256": "fc92e2ddcf75e3b0248ca76cb96480b5add18234ab4bf79d329bc07122d2ad89"
+  },
+  {
+   "PYTHONHASHSEED": "77",
+   "argv": [
+    "BD:gate_copy/canary_plan.py",
+    "--snapshot",
+    "BD:gate_copy/snapshot_3437340b",
+    "derive",
+    "--seed",
+    "424242002",
+    "--window-start",
+    "2026-11-01",
+    "--cadence",
+    "s7"
+   ],
+   "counts": {
+    "ef_items": 8,
+    "fallbacks_to_D": 0,
+    "gc_items": 112,
+    "items": 124,
+    "live_items": 4
+   },
+   "exit": 0,
+   "schedule_sha256": "b7691d079265dc3e860209bf1d5537c5ec30515699dd2f413f48049530f7a8a9",
+   "seed": 424242002,
+   "started_utc": "2026-10-26T00:17:23+00:00",
+   "stdout_sha256": "fc92e2ddcf75e3b0248ca76cb96480b5add18234ab4bf79d329bc07122d2ad89"
+  },
+  {
+   "PYTHONHASHSEED": "unset",
+   "argv": [
+    "BD:gate_copy/canary_plan.py",
+    "--snapshot",
+    "BD:gate_copy/snapshot_3437340b",
+    "derive",
+    "--seed",
+    "424242002",
+    "--window-start",
+    "2026-11-01",
+    "--cadence",
+    "s7"
+   ],
+   "counts": {
+    "ef_items": 8,
+    "fallbacks_to_D": 0,
+    "gc_items": 112,
+    "items": 124,
+    "live_items": 4
+   },
+   "exit": 0,
+   "schedule_sha256": "b7691d079265dc3e860209bf1d5537c5ec30515699dd2f413f48049530f7a8a9",
+   "seed": 424242002,
+   "started_utc": "2026-10-26T00:17:28+00:00",
+   "stdout_sha256": "fc92e2ddcf75e3b0248ca76cb96480b5add18234ab4bf79d329bc07122d2ad89"
+  }
+ ],
+ "generated_at_utc": "2026-10-26T00:17:44+00:00",
+ "generator": "papers/darkflobi-gate/canary_cross_process.py",
+ "generator_sha256": "aec03b5d502fe8c5969e9dbcf95a1657f38860a2c13deec191b31a53f5412fee",
+ "implementation": "CPython",
+ "interpreter": "3.12.10",
+ "one_seed_same_schedule_in_every_process": true,
+ "per_seed": {
+  "424242001": {
+   "digest": "32a50c9d6133788cff6b7991321a17950dff7afdcfd0807053ec2f282c740f0a",
+   "distinct_digests_over_runs": 1,
+   "equals_committed_probe_receipt": true,
+   "runs": 4
+  },
+  "424242002": {
+   "digest": "b7691d079265dc3e860209bf1d5537c5ec30515699dd2f413f48049530f7a8a9",
+   "distinct_digests_over_runs": 1,
+   "equals_committed_probe_receipt": true,
+   "runs": 4
+  }
+ },
+ "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
+ "platform": "Windows-11-10.0.26200-SP0",
+ "schema": "darkflobi.gate/canary-plan-cross-process/v0",
+ "sealed_probe": {
+  "expect_counts": {
+   "ef_items": 8,
+   "fallbacks_to_D": 0,
+   "gc_items": 112,
+   "items": 124,
+   "live_items": 4
+  },
+  "expect_schedule_sha256": "32a50c9d6133788cff6b7991321a17950dff7afdcfd0807053ec2f282c740f0a",
+  "note": "a probe seed sealed in a temporary folder by the harness's own seal-seed",
+  "plan_file_bytes": 13321,
+  "plan_file_crlf": false,
+  "plan_file_equals_committed_probe_receipt": true,
+  "plan_file_equals_expect": true,
+  "plan_file_sha256": "32a50c9d6133788cff6b7991321a17950dff7afdcfd0807053ec2f282c740f0a",
+  "seed": 424242001,
+  "steps": [
+   {
+    "PYTHONHASHSEED": "1",
+    "argv": [
+     "BD:gate_copy/canary_shadow.py",
+     "--snapshot",
+     "BD:gate_copy/snapshot_3437340b",
+     "--sealed",
+     "TMP:sealed",
+     "--out",
+     "TMP:out",
+     "--keys-dir",
+     "TMP:out/keys",
+     "seal-seed",
+     "--seed",
+     "424242001"
+    ],
+    "exit": 0,
+    "started_utc": "2026-10-26T00:17:33+00:00",
+    "stdout_sha256": "4190235bdb57b56f876b0ca2bb9ab7f012b87d1bb97ee329dcb20c67cdab7e00"
+   },
+   {
+    "PYTHONHASHSEED": "1",
+    "argv": [
+     "BD:gate_copy/canary_shadow.py",
+     "--snapshot",
+     "BD:gate_copy/snapshot_3437340b",
+     "--sealed",
+     "TMP:sealed",
+     "--out",
+     "TMP:out",
+     "--keys-dir",
+     "TMP:out/keys",
+     "check"
+    ],
+    "exit": 0,
+    "printed": "MATCH",
+    "started_utc": "2026-10-26T00:17:34+00:00",
+    "stdout_sha256": "57d702a27dbc1d75e12908d4b812d5500ef5727a4f05d19fdaed77a9df0c3802"
+   },
+   {
+    "PYTHONHASHSEED": "77",
+    "argv": [
+     "BD:gate_copy/canary_shadow.py",
+     "--snapshot",
+     "BD:gate_copy/snapshot_3437340b",
+     "--sealed",
+     "TMP:sealed",
+     "--out",
+     "TMP:out",
+     "--keys-dir",
+     "TMP:out/keys",
+     "plan",
+     "--cadence",
+     "s7",
+     "--window-start",
+     "2026-11-01"
+    ],
+    "exit": 0,
+    "started_utc": "2026-10-26T00:17:35+00:00",
+    "stdout_sha256": "0ccad31b88cdbdc40d8aad1a3e5c4c3bc66e56f96a7f669742226e1cb02bcd08"
+   },
+   {
+    "PYTHONHASHSEED": "unset",
+    "argv": [
+     "BD:gate_copy/canary_plan.py",
+     "--snapshot",
+     "BD:gate_copy/snapshot_3437340b",
+     "expect",
+     "--sealed",
+     "TMP:sealed",
+     "--keys-dir",
+     "TMP:out/keys",
+     "--window-start",
+     "2026-11-01",
+     "--cadence",
+     "s7"
+    ],
+    "exit": 0,
+    "seed_string_in_stdout": false,
+    "started_utc": "2026-10-26T00:17:39+00:00",
+    "stdout_sha256": "0ad65732a26a9e05546ed4fe4d7c161d59bcde8cec71e44a99f0336ceaf9c7ed"
+   }
+  ]
+ },
+ "sources": "the nine population documents at the pin, read from the read-only styxx checkout (canary_shadow.py's default --repo)",
+ "two_seeds_two_schedules": true,
+ "what": "the canary schedule's digest from two probe seeds, each derived in separate interpreter processes under four PYTHONHASHSEED settings, and the file canary_shadow.py plan writes from a sealed probe seed against the digest canary_plan.py expect prints in another process; never the sealed seed",
+ "window_start": "2026-11-01"
+}

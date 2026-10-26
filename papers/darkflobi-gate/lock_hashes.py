@@ -23,8 +23,12 @@ Standard library only (and `git` for `pin-tree`). Four verbs:
         anyone holding the repository.
 
     py -3.12 papers/darkflobi-gate/lock_hashes.py check PREREG.md [--w-root ...] [--home ...] [--strict]
+                                                     [--amendment AMENDMENT.md ...]
         reads every lock row of the PREREG (its section 11 and any later row under section 15; the last row
-        for a path wins), re-derives each hash from the box and prints one status per row:
+        for a path wins), then the lock rows of each `--amendment` file in the order given (a file written
+        under the PREREG's section 12 after the merge; its rows are applied after the PREREG's, so an
+        amendment's row for a path replaces the PREREG's), re-derives each hash from the box and prints one
+        status per row:
           SAME         the bytes are the locked bytes
           CHANGED      the bytes moved (a failure)
           BUILT SINCE  the row reads `not built at the freeze` and the file now exists with no later row (a failure:
@@ -39,6 +43,12 @@ Standard library only (and `git` for `pin-tree`). Four verbs:
         forged cache beside a locked `.py` would run with every row SAME; the snapshot's caches are inside its tree
         digest). Exit 1 on any CHANGED, BUILT SINCE or UNREADABLE; with --strict also on any ABSENT, UNLOCKED or
         BYTECODE, which is the form the merge-time run and the weekly check use.
+        Each amendment file read prints one `AMENDMENT <name> rows <n> sha256 <16 hex>` line (the sha256 of its LF
+        bytes, so the reading names the text it read), and a row an amendment supplied carries `via=<name>`. A
+        path two amendment files, or one file twice, name with two digests is a CLASH: both names and both digests
+        are printed and `check` exits 2 before any row is read, since no reading of the box can say which row is
+        the freeze. An amendment with no rows is read and counted (`rows 0`); a missing file exits 2. A `#gates`
+        row is read against the PREREG's own text, as before.
 
 What the lock covers under W:gate/, and what it never covers. Never entered, at the top level of W:gate/: the live
 state folders `sources/`, `refused/`, `prepared/`, the mint's dry-run records `prepared_dryrun/`, `pending/`,
@@ -374,6 +384,41 @@ def parse_lock_rows(text: str) -> dict[str, tuple[str, str]]:
     return out
 
 
+def amendment_rows(paths) -> tuple[dict[str, tuple[str, str]], dict[str, str], list[tuple[str, int, str]], list[str]]:
+    """The lock rows of the amendment files, read in the order given.
+
+    Returns (rows, via, files, clashes): rows maps path -> (hash, label) as `parse_lock_rows` does; via maps each
+    path to the file name(s) that named it ("a.md + b.md" when two files name one digest); files lists
+    (name, row count, sha256 of the LF bytes) per file; clashes lists one sentence per path named with two digests,
+    across files or inside one file. The caller refuses to read the box while clashes is not empty."""
+    rows: dict[str, tuple[str, str]] = {}
+    via: dict[str, str] = {}
+    files: list[tuple[str, int, str]] = []
+    clashes: list[str] = []
+    for f in paths:
+        f = Path(f)
+        raw = f.read_bytes()
+        text = raw.decode("utf-8")
+        n = 0
+        for line in text.splitlines():
+            m = ROW_RE.match(line)
+            if not m:
+                continue
+            n += 1
+            p, h, label = m.group("path"), m.group("hash"), m.group("label")
+            if p in rows and rows[p][0] != h:
+                clashes.append(f"{p}: {via[p]} reads {rows[p][0]}, {f.name} reads {h}")
+                continue
+            if p in rows:
+                if f.name not in via[p].split(" + "):
+                    via[p] = via[p] + " + " + f.name
+            else:
+                via[p] = f.name
+            rows[p] = (h, label)
+        files.append((f.name, n, hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest()))
+    return rows, via, files, clashes
+
+
 def gates_block_sha256(text: str) -> str:
     """The sha256 of the text between the plain ```gates fence and its closer, as the scanner reads a plain file.
 
@@ -391,12 +436,29 @@ def gates_block_sha256(text: str) -> str:
     raise ValueError("the ```gates fence is never closed")
 
 
-def check(prereg: Path, w_root: Path, home: Path, strict: bool = False) -> int:
+def check(prereg: Path, w_root: Path, home: Path, strict: bool = False, amendments=()) -> int:
     text = prereg.read_text(encoding="utf-8")
     rows = parse_lock_rows(text)
     if not rows:
         print("no lock rows found", file=sys.stderr)
         return 2
+    via: dict[str, str] = {}
+    if amendments:
+        try:
+            arows, via, files, clashes = amendment_rows(amendments)
+        except (OSError, UnicodeDecodeError) as e:
+            print(f"REFUSED: an amendment file cannot be read: {e}", file=sys.stderr)
+            return 2
+        for name, n, digest in files:
+            print(f"{'AMENDMENT':12s} {name}  rows {n}  sha256 {digest[:16]}")
+        if clashes:
+            for c in clashes:
+                print(f"{'CLASH':12s} {c}")
+                print(f"CLASH: {c}", file=sys.stderr)
+            print(f"clash {len(clashes)}: no row was read; each path must carry one digest across the amendment files",
+                  file=sys.stderr)
+            return 2
+        rows.update(arows)
     repo_root = prereg.resolve().parent.parent.parent      # papers/darkflobi-gate/PREREG -> the repository
     counts = {"CHANGED": 0, "BUILT SINCE": 0, "ABSENT": 0, "UNREADABLE": 0}
     for path, (h, label) in rows.items():
@@ -438,6 +500,8 @@ def check(prereg: Path, w_root: Path, home: Path, strict: bool = False) -> int:
                 now, status = "-", ("ABSENT" if h != NOT_BUILT else "NOT BUILT")
         if status in counts:
             counts[status] += 1
+        if path in via:
+            extra += f"  via={via[path]}"
         print(f"{status:12s} {path}  locked={h[:16]}  now={now[:16] if now != '-' else '-'}{extra}")
     # files the lock covers on the box that no row names: added after the fill, seen by no hash the agent did not compute
     unlocked = 0
@@ -487,6 +551,9 @@ def main(argv=None) -> int:
     c.add_argument("--home", default=str(Path.home()))
     c.add_argument("--strict", action="store_true",
                    help="an ABSENT or UNLOCKED path is a failure too (the merge-time and weekly form)")
+    c.add_argument("--amendment", action="append", default=[], metavar="FILE",
+                   help="an AMENDMENT file whose lock rows are applied after the PREREG's (repeatable, in order; "
+                        "a path two files name with two digests exits 2)")
     a = ap.parse_args(argv)
     try:
         if a.verb == "tree":
@@ -508,7 +575,8 @@ def main(argv=None) -> int:
     except (WalkError, ValueError) as e:
         print(f"REFUSED: {e}", file=sys.stderr)
         return 2
-    return check(Path(a.prereg), Path(a.w_root), Path(a.home), strict=a.strict)
+    return check(Path(a.prereg), Path(a.w_root), Path(a.home), strict=a.strict,
+                 amendments=[Path(x) for x in a.amendment])
 
 
 if __name__ == "__main__":

@@ -239,13 +239,138 @@ def test_lock_table_names_the_pin_the_snapshot_the_block_and_the_plugins_subtree
             assert lock.ROW_RE.match(line), f"a section 15 row is not in the lock row format: {line}"
 
 
+# every AMENDMENT file of this folder, by topic, with the number of lock rows its own lock-row table states; the
+# lock-rows AMENDMENT prints the same table, and a test below reads it there too
+AMENDMENT_ROW_COUNTS = {"canary_replan": 2, "count_rule": 4, "lint_overclaims": 0, "lock_rows": 0, "posting_skill": 7}
+# the paths the amendments lock, together: the before-D0 move's ten files under W:gate/ and the posting skill
+AMENDED_PATHS = {
+    "W:gate/gate.py", "W:gate/gate_verify.py", "W:gate/README.md", "W:gate/README_exhibit.md",
+    "W:gate/canary_plan.py", "W:gate/tests/test_trailer_rule.py", "W:gate/tests/test_prepared_guard.py",
+    "W:gate/tests/test_canary_plan.py", "W:gate/tests/test_gate.py", "W:gate/tests/test_gate_round2.py",
+    "W:skills/styxx-post/SKILL.md",
+}
+AMENDMENT_NAME = re.compile(r"AMENDMENT_darkflobi_gate_([a-z0-9_]+?)_(\d{4}_\d{2}_\d{2})\.md")
+
+
+def _amendment_files() -> list:
+    return sorted(FOLDER.glob("AMENDMENT_darkflobi_gate_*.md"))
+
+
 def test_lock_rows_agree_with_the_box_when_a_caller_names_it():
+    """The PREREG's rows, then every AMENDMENT file of this folder (`check --amendment`, in name order), against the box.
+
+    With STYXX_GATE_LOCK_ROWS=prereg the PREREG's rows alone are read: the reading of a box before the before-D0
+    move, which the amendment rows then read CHANGED for the files the move is to bring."""
     w_root = os.environ.get("STYXX_GATE_W_ROOT")
     if not w_root:
         pytest.skip("set STYXX_GATE_W_ROOT to the box's W: folder to compare the lock rows with the files there")
     lock = _load(LOCK_PY, "lock_hashes")
-    rc = lock.check(PREREG, Path(w_root), Path.home())
+    amendments = [] if os.environ.get("STYXX_GATE_LOCK_ROWS") == "prereg" else _amendment_files()
+    rc = lock.check(PREREG, Path(w_root), Path.home(), amendments=amendments)
     assert rc == 0, "a lock row reads CHANGED against the box (see the printed rows)"
+
+
+def test_each_amendment_parses_to_the_lock_rows_its_table_states():
+    lock = _load(LOCK_PY, "lock_hashes")
+    files = _amendment_files()
+    topics = {}
+    for f in files:
+        m = AMENDMENT_NAME.fullmatch(f.name)
+        assert m, f.name
+        topics[m.group(1)] = f
+    assert set(topics) == set(AMENDMENT_ROW_COUNTS), sorted(topics)
+    full_digest_row = re.compile(r"^\|[^|]*\|\s*`[^`]+`\s*\|\s*`[0-9a-f]{64}`")
+    for topic, f in topics.items():
+        text = f.read_text(encoding="utf-8")
+        lines = text.splitlines()
+        form = [ln for ln in lines if lock.ROW_RE.match(ln)]
+        assert len(form) == AMENDMENT_ROW_COUNTS[topic], (f.name, len(form))
+        assert len(lock.parse_lock_rows(text)) == len(form), f"{f.name} names a path twice"
+        for ln in lines:
+            if full_digest_row.match(ln):
+                assert lock.ROW_RE.match(ln), f"{f.name}: a table line with a full digest is not in the row form: {ln[:100]}"
+    rows, via, _read, clashes = lock.amendment_rows(files)
+    assert clashes == [], clashes
+    assert set(rows) == AMENDED_PATHS, sorted(set(rows) ^ AMENDED_PATHS)
+    assert via["W:gate/gate.py"] == ("AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md + "
+                                     "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md")
+    prereg = lock.parse_lock_rows(PREREG.read_text(encoding="utf-8"))
+    assert len(set(prereg) | set(rows)) == 84
+    # the lock-rows AMENDMENT states the same counts, one row of its table per file
+    stated = dict(re.findall(r"^[ ]*\| `(AMENDMENT_darkflobi_gate_[a-z0-9_]+\.md)` \| (\d+) \|",
+                             topics["lock_rows"].read_text(encoding="utf-8"), flags=re.M))
+    assert stated == {f.name: str(AMENDMENT_ROW_COUNTS[t]) for t, f in topics.items()}, stated
+
+
+def test_check_reads_amendment_rows_after_the_prereg_and_exits_2_on_a_clash(tmp_path, capsys):
+    lock = _load(LOCK_PY, "lock_hashes")
+    w = tmp_path / "W"
+    gate = w / "gate"
+    (gate / "snapshot_3437340b").mkdir(parents=True)
+    (gate / "snapshot_3437340b" / "x.py").write_bytes(b"print(1)\n")
+    (gate / "gate.py").write_bytes(b"# gate\n")
+    home = tmp_path / "home"
+    home.mkdir()
+    doc = tmp_path / "P.md"
+    doc.write_text("## 11. lock hashes\n\n| what | path | sha256 | note |\n|---|---|---|---|\n"
+                   + lock.markdown_rows(lock.rows_for_box(w, home)) + "\n", encoding="utf-8")
+    assert lock.check(doc, w, home, strict=True) == 0
+    n0 = len(lock.parse_lock_rows(doc.read_text(encoding="utf-8")))
+    # the box moves: an edited file, a new file, and a file the PREREG froze blank
+    (gate / "gate.py").write_bytes(b"# gate, amended\n")
+    (gate / "plan.py").write_bytes(b"# new\n")
+    (w / "skills" / "styxx-post").mkdir(parents=True)
+    (w / "skills" / "styxx-post" / "SKILL.md").write_bytes(b"---\nname: styxx-post\n---\n")
+    h_gate = hashlib.sha256(b"# gate, amended\n").hexdigest()
+    h_plan = hashlib.sha256(b"# new\n").hexdigest()
+    h_skill = hashlib.sha256(b"---\nname: styxx-post\n---\n").hexdigest()
+    assert lock.check(doc, w, home) == 1, "without the amendment's row the edited file reads CHANGED"
+    head = "# AMENDMENT\n\n| what | path | sha256 | note |\n|---|---|---|---|\n"
+    a1 = tmp_path / "AMENDMENT_a.md"
+    a1.write_text(head + f"| gate file | `W:gate/gate.py` | `{h_gate}` | before it the PREREG's row |\n"
+                  f"| the posting skill | `W:skills/styxx-post/SKILL.md` | `{h_skill}` | before it not built |\n",
+                  encoding="utf-8")
+    a2 = tmp_path / "AMENDMENT_b.md"
+    a2.write_text(head + f"| gate file | `W:gate/gate.py` | `{h_gate}` | the same digest, named again |\n"
+                  f"| gate file | `W:gate/plan.py` | `{h_plan}` | new, no earlier row |\n", encoding="utf-8")
+    a0 = tmp_path / "AMENDMENT_none.md"
+    a0.write_text("# AMENDMENT with no lock rows\n\n| what | n |\n|---|---|\n| a table | 1 |\n", encoding="utf-8")
+    capsys.readouterr()
+    assert lock.check(doc, w, home, amendments=[a1]) == 0, "with the amendment's rows the box reads SAME"
+    out = capsys.readouterr().out
+    assert "AMENDMENT    AMENDMENT_a.md  rows 2  sha256 " in out
+    assert "via=AMENDMENT_a.md" in out and f"rows {n0}," in out
+    assert lock.check(doc, w, home, strict=True, amendments=[a1]) == 1, "plan.py has no row yet: UNLOCKED"
+    capsys.readouterr()
+    assert lock.check(doc, w, home, strict=True, amendments=[a1, a2, a0]) == 0
+    out = capsys.readouterr().out
+    assert "via=AMENDMENT_a.md + AMENDMENT_b.md" in out and "AMENDMENT_none.md  rows 0" in out and f"rows {n0 + 1}," in out
+    assert lock.main(["check", str(doc), "--w-root", str(w), "--home", str(home), "--strict",
+                      "--amendment", str(a1), "--amendment", str(a2)]) == 0
+    assert lock.main(["check", str(doc), "--w-root", str(w), "--home", str(home), "--strict"]) == 1
+    # a path two files name with two digests: exit 2, both files named, no row read
+    a3 = tmp_path / "AMENDMENT_c.md"
+    a3.write_text(head + "| gate file | `W:gate/gate.py` | `" + "0" * 64 + "` | another digest |\n", encoding="utf-8")
+    capsys.readouterr()
+    assert lock.check(doc, w, home, amendments=[a1, a3]) == 2
+    cap = capsys.readouterr()
+    assert "AMENDMENT_a.md" in cap.err and "AMENDMENT_c.md" in cap.err and "CLASH" in cap.out
+    assert h_gate in cap.err and "0" * 64 in cap.err
+    assert not re.search(r"^(SAME|CHANGED)", cap.out, flags=re.M), "no row is read once a clash is found"
+    assert lock.main(["check", str(doc), "--w-root", str(w), "--home", str(home),
+                      "--amendment", str(a1), "--amendment", str(a3)]) == 2
+    # one file naming a path twice with two digests clashes too
+    a4 = tmp_path / "AMENDMENT_d.md"
+    a4.write_text(head + f"| gate file | `W:gate/gate.py` | `{h_gate}` | one |\n"
+                  "| gate file | `W:gate/gate.py` | `" + "1" * 64 + "` | two |\n", encoding="utf-8")
+    assert lock.check(doc, w, home, amendments=[a4]) == 2
+    # a missing amendment file is a refusal, never a silent PREREG-only reading
+    assert lock.check(doc, w, home, amendments=[tmp_path / "AMENDMENT_absent.md"]) == 2
+    # an amendment's row replaces the PREREG's even where the PREREG restates the path under its section 15
+    doc.write_text(doc.read_text(encoding="utf-8") + "\n## 15. amendments before the merge\n\n"
+                   "| gate file | `W:gate/gate.py` | `" + "2" * 64 + "` | a later PREREG row |\n", encoding="utf-8")
+    assert lock.check(doc, w, home) == 1
+    assert lock.check(doc, w, home, strict=True, amendments=[a1, a2]) == 0
 
 
 def test_every_verdict_has_a_printable_paragraph():

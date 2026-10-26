@@ -92,6 +92,20 @@ def test_a_charter_word_inside_a_longer_word_is_not_a_hit():
     ("the spans the author bound were checked against bytes the author did not write, at the commit",
      "withdrawn/certifies-v1"),
     ("The spans the author bound were checked against\nbytes the author did not write.", "withdrawn/certifies-v1"),
+    # the exhibit agent's descriptions of its gate (AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md)
+    ("total cryptographic accountability for my outbound mouth", "withdrawn/gate-cryptographic"),
+    ("since they weren't cryptographically bound to a proof receipt", "withdrawn/gate-cryptographic"),
+    ("found no cryptographic receipt tying them to a live execution", "withdrawn/gate-cryptographic"),
+    ("gets hashed, evaluated, and permanently logged in `ledger.jsonl`", "withdrawn/gate-permanent"),
+    ("ledger 0044 is the permanent receipt of that audit", "withdrawn/gate-permanent"),
+    ("every single message i send goes through it. there is no bypass.", "withdrawn/gate-no-bypass"),
+    ("it watches everything i say", "withdrawn/gate-no-bypass"),
+    ("the canary system ensures no live secrets (keys, wallets) ever leak", "withdrawn/gate-canary-secrets"),
+    ("instead of writing real keys to disk to test redaction, we plant synthetic canaries",
+     "withdrawn/gate-canary-secrets"),
+    ("if styxx can detect deception, it can penalize it during training", "withdrawn/gate-detects-deception"),
+    ('an objective metric for "deception" to train against', "withdrawn/gate-detects-deception"),
+    ("the foundation for a provably *honest* AI", "withdrawn/gate-detects-deception"),
     ("Nobody does this.", "plan/nobody"),
     ("a gap of 0.117 between", "plan/0.117"),
     ("Sworn makes agents honest", "plan/sworn-honest"),
@@ -113,9 +127,24 @@ def test_protocol_alone_is_not_a_hit_because_it_is_a_module_name():
     "certify: every number vs its receipt",                                 # names what certify reads, claims nothing
     "a claim the author believed may still be a lie the diff shows",       # the word alone is not the label
     "every number in the table is from the run named beside it",           # not one of the listed wordings
+    # the true sentences about the gate, and the repository's own uses of the neighbouring words
+    "the ledger is hash-chained; nothing is signed and there is no key",
+    "a test report not cryptographically bound to the receipt it cites",    # the evidence leg's words, not the agent's
+    "the daily anchor shows the order; the weekly snapshot holds the bytes",
+    "the canaries are planted falsehoods that measure the gate's catch rate",
+    "It does not detect deception that is consistent with the reference",   # integrations/inspect_evals' README
+    "programmed deployments, provably enforced by the server",              # docs/cognet-protocol-v0.md
+    "redaction = redact.redactable_commit(core)",                            # styxx/attestation.py
+    "a credential helper bypassed the hook",                                 # AUTOPILOT.md
 ])
 def test_the_new_wordings_are_narrow(text):
     assert _rids(text + "\n") == ([], [])
+
+
+def test_the_gate_wordings_are_allowed_beside_their_withdrawal():
+    text = ('the sentence "there is no bypass" is withdrawn: with REQUIRED absent nothing is blocked, and the\n'
+            "exec exit, the shell and GitHub writes are open.\n")
+    assert _rids(text) == ([], ["withdrawn/gate-no-bypass"])
 
 
 def test_an_excerpt_the_console_cannot_encode_is_escaped_not_fatal(tmp_path):

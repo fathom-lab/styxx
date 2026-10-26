@@ -27,7 +27,14 @@ withdrawn  sentences the lab has withdrawn. The gate claim that the EXTERNAL-1 p
            withdrew; and the retired LIE label ("[LIE]", "the lie exits"), replaced by CHANGELOG.md's
            "CONTRADICTED is printed as CONTRADICTED, with its reason, not as LIE". A match with the withdrawal itself
            within WINDOW characters ("is not yet true of this instrument", or a form of "withdraw") is
-           counted as allowed, not as a hit, so the sentence that withdraws a claim may quote it.
+           counted as allowed, not as a hit, so the sentence that withdraws a claim may quote it. The
+           ``withdrawn/gate-*`` rules are the exhibit agent's own public descriptions of its gate, withdrawn by
+           papers/darkflobi-gate/AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md with the ledger seq of
+           each: the ledger is hash-chained and nothing is signed (there is no key), it is a local file until
+           the weekly snapshot, with REQUIRED absent nothing is blocked and the exec exit, the shell and GitHub
+           writes are open, the gate reads strings and bound numerals and never what a sentence says, and the
+           canaries are planted falsehoods that measure the gate's catch rate. The gate itself runs this file
+           at its pin, so those rules reach it at the next pin, not inside the running window.
 charter    the words the lab's charter keeps out of its public text. They are stored reversed, as
            scripts/zenodo_deposit_software_v7_49_0.py stores them, so this file does not spell them, and
            every excerpt this script prints masks them.
@@ -146,6 +153,26 @@ RULES: Tuple[Rule, ...] = (
           r"spans\s+the\s+author\s+bound\s+were\s+checked\s+against\s+bytes\s+the\s+author\s+did\s+not\s+write",
           "the /v1 certificate sentence: the verifier's only authorship check is the manifest's "
           "(papers/sworn/NOTE_certifies_correction_2026_10_24.md)"),
+    # the exhibit agent's descriptions of its gate, withdrawn by
+    # papers/darkflobi-gate/AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md (the seqs are its ledger's)
+    _rule("withdrawn/gate-cryptographic", "withdrawn",
+          r"total\s+cryptographic\s+accountability|cryptographically\s+bound\s+to\s+a\s+proof"
+          r"|cryptographic\s+receipts?\b",
+          "the ledger is hash-chained and nothing is signed; there is no key (W:gate/ledger.py's docstring; seq 34, 46)"),
+    _rule("withdrawn/gate-permanent", "withdrawn", r"permanent(?:ly)?\s+(?:logged|receipts?)\b",
+          "the ledger is a local file until the weekly snapshot; order is shown by the daily anchor (seq 34, 46)"),
+    _rule("withdrawn/gate-no-bypass", "withdrawn", r"\bno\s+bypass\b|watches\s+everything\s+i\s+say",
+          "with REQUIRED absent nothing is blocked; the exec exit, the shell, GitHub writes and the browser are open "
+          "(RULES section 14; seq 46)"),
+    _rule("withdrawn/gate-canary-secrets", "withdrawn",
+          r"\bno\s+live\s+secrets\b|canar(?:y|ies)\b[^.\n]{0,60}?\b(?:secrets?|redact\w*)\b"
+          r"|\b(?:secrets?|redact\w*)\b[^.\n]{0,60}?\bcanar(?:y|ies)\b",
+          "the canaries are planted falsehoods that measure the gate's catch rate, not a secrets or redaction test "
+          "(W:gate/canary_shadow.py's docstring; seq 34)"),
+    _rule("withdrawn/gate-detects-deception", "withdrawn",
+          r"(?:can|will|to|that|and)\s+detects?\s+deception|objective\s+metric\s+for\s+\W{0,2}deception"
+          r"|provably\s+\W{0,2}(?:honest|truthful)",
+          "the gate reads strings and bound numerals, never what a sentence says (RULES section 14; seq 93)"),
     _rule("charter/ordinal", "charter", _word("tsrif"), "the ordinal meaning number one"),
     _rule("charter/newness-adjective", "charter", _word("levon"), "a charter word"),
     _rule("charter/revolution-adjective", "charter", _word("yranoitulover"), "a charter word"),
