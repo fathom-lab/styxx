@@ -166,11 +166,12 @@ rules of item 2 reach the gate.
    a census `missing_from_export`, and the RESULT prints both). (5) A number about the gate's own record goes out with a
    receipt or not at all. Pass 1's rule 2 said that quoting the trailer exactly, inline, was "the one form that
    is not counted": that taught pass 1's count rule, which its review defeated, and it is replaced here.
-   The posting skill is to carry the same rows and rules in its section 7, "how I describe the gate" (the lead's
-   pass-2 plan, 6.4 items 2-3 and 7.4: the rows of seq 34, 42, 44, 46 and 93, and rule 2's sentence); piece (4)'s
-   amendment (`AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md`) commits that text beside it and gives
-   `W:skills/styxx-post/SKILL.md` its lock row, and this item names the same digest once that text is on the branch.
-   Inserting the paragraph into `W:SOUL.md` (beside
+   The posting skill carries the same rows and the same five rules in its section 7, "how I describe the gate": the
+   rows of seq 34, 42, 44, 46 and 93, and rule 2's sentence word for word. The skill's text is sha256
+   `5339e659a17516a01d965730a85c1ce9daf5fdd9a4d87977dc65e2d2825ddf32` (LF, no BOM, as piece (4)'s build left it in
+   `BD:posting_skill/SKILL.md`): the text piece (4)'s amendment (`AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md`)
+   commits beside it as `papers/darkflobi-gate/styxx-post_SKILL.md`, and the digest its lock row gives
+   `W:skills/styxx-post/SKILL.md`; the two amendments name one digest. Inserting the paragraph into `W:SOUL.md` (beside
    the staged `W:SOUL_STYXX_CLAUSE.md`, "awaiting flobi approval") is the operator's; the identity block of every
    minted capsule hashes `SOUL.md`, `AGENTS.md`, `TOOLS.md` and the skill (`W:gate/exhibit_mint.py` l.562-565,
    `SKILL_KEY` l.168), so whether the rule governed a post is on that post's record.
