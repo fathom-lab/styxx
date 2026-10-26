@@ -305,6 +305,12 @@ All in the copy, with the real legs of the pinned snapshot, in gate homes of the
   the default mode; run box-named against the copy, `test_lock_rows_agree_with_the_box_when_a_caller_names_it` fails, as
   it must until `lock_hashes.py check` reads amendment rows (`--amendment`, the lock-rows AMENDMENT's piece): `check`
   reads the PREREG's rows alone today, and the copy's six moved files (this file's three and piece (4)'s) read CHANGED.
+- Pass 3 (no gate file moved): `check` now reads the amendment rows (`AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md`),
+  and the box-named run against the copy passes, 0 failed. The rule review's 27 attacks re-run against the copy read every
+  row as the review read it (`BD:fix_pass3/attacks/`). The copy's suite at pass 3: 279 passed, 12 subtests passed, 820 s,
+  rc 0 (`BD:fix_pass3/pytest_copy_full_suite_pass3.txt`); the plugin harness 79 of 79 on its second run, the run before it
+  reading 78 when its H1 needle `7731` fell inside the microsecond field of a scratch ledger's timestamp, a decimal run
+  that test does not blank (both runs kept, `BD:fix_pass3/plugin_harness_pass3_run*.txt`).
 
 ## What is the operator's and the lead's
 

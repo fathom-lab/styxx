@@ -166,18 +166,19 @@ beyond a listing and clawdbot's installed `dist/` (read, for how a skill is load
    rows below are the files with both changes, one digest each, and the count rule's file names the same digests. They
    enter `gate_sha256`; the stretch that begins with the move is named once, in the lock-rows AMENDMENT's addendum.
 
-8. **Placement** [the lead's]: after the move's in-place readings are green (`BD:APPLY_RUNBOOK.md` section 8), the lead
-   copies `styxx-post_SKILL.md` byte for byte to `W:skills/styxx-post/SKILL.md`, compares its
-   sha256 with the row, and confirms with `/context detail` in the operator's DM that `styxx-post` is listed (or `/new`,
-   which builds the snapshot on the new session's opening turn). Read with the PREREG alone, `lock_hashes.py check` reads the
-   placed skill BUILT SINCE against §11's `not built at the freeze`; read with this folder's amendment files
-   (`--amendment`, `AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md`) it reads the row below, SAME.
+8. **Placement** [the lead's]: after the move's in-place readings are green (`BD:APPLY_RUNBOOK.md` section 8), the
+   lead copies `styxx-post_SKILL.md` byte for byte to `W:skills/styxx-post/SKILL.md`, compares its sha256 with the row,
+   and confirms with `/context detail` in the operator's DM that `styxx-post` is listed (or `/new`, which builds the
+   snapshot on the new session's opening turn). Read with the PREREG alone, `lock_hashes.py check` reads the placed
+   skill BUILT SINCE against §11's `not built at the freeze`; read with this folder's amendment files (`--amendment`,
+   `AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md`) it reads the row below, SAME.
 
 ## Whose step
 
 - **The lead's**: the move (with the count rule's half, one process), the suite and the plugin harness in place, the
   dry harness against the copy (it refuses `W:gate` by path, `dry_harness.py` l.193; after the move the copy's ten files
-  are the live bytes, which the runbook's section 4 checks by `sha256sum`), the strict check naming every amendment file, the skill's placement and its listing, the PR with its CHANGELOG entry.
+  are the live bytes, which the runbook's section 4 checks by `sha256sum`), the strict check naming every amendment
+  file, the skill's placement and its listing, the PR with its CHANGELOG entry.
 - **The operator's**: the merge (the relock of record); the `--push` credential on `exhibit` and OD-7's protection;
   the phone test (`BD:posting_skill/PHONE_TEST_CHECKLIST.md`: one live mint, the two badges on the phone, the handshake
   read on the ledger, then one post the agent makes by the skill); the no-update line in `W:TOOLS.md`, or not.
@@ -195,7 +196,10 @@ empty `dry_run`, `url_live` as false, null, `"true"` and 1, an upper-case digest
 `gate_verify.py --rederive` reads SAME on every line of (a)-(d); (f) mutation: with `prepared_problem` switched off,
 every set-aside case fails and the honoured cases hold; with the verifier's hand-back switched off, a set-aside line
 re-derives as DRIFT on `prepared.footer_refused`. The suite in the copy, the plugin harness and the dry harness are the
-other readings (`BD:BUILD_skill.txt` names each receipt). On this branch,
+other readings (`BD:BUILD_skill.txt` names each receipt). Pass 3, with the pass-3 skill and the unchanged copy: the
+dry harness 20 PASS, 0 FAIL, 0 OBSERVED, the identity block hashing the skill as `3e2af050…`
+(`BD:fix_pass3/dry_harness_pass3_run.txt`); the suite 279 passed, 12 subtests passed; the plugin harness 79 of 79 on its
+second run (`BD:FIX_report.txt` names each receipt). On this branch,
 `tests/test_darkflobi_gate_posting_skill.py`: the committed skill text has the frontmatter, the pin's 40 hex, LF lines,
 no byte-order mark, 0 hits under this checkout's `scripts/surface_lint.py --files` (whose charter rules spell the words
 the lab never prints), and its sha256 is this file's row for `W:skills/styxx-post/SKILL.md`.
