@@ -400,8 +400,10 @@ HOLD_178_179 = 1910       # raw-door inputs of R.inputs() whose diff holds no #2
 # (none of those with a listing holds one of these shapes). 240 (515595d7...) until review 3 of fix batch 1, and 243
 # (aa4c38fc...) until the one-sided #178 (options judgment of fix batch 1), where main's tests count decides again a
 # claim above every count it takes: 54 inputs leave the set, their content the parent's again, and none joins it.
-MOVED_BY_178_179 = 189
-MOVED_BY_178_179_SHA = "0199f6b873cd583717601f594cbe467bbbea08b63d4ab78b22df6057c7a356a9"
+# 189 (0199f6b8...) until #174 and #175 (fix/diffgate-174-175), which move the scope claim of 65 inputs the set holds
+# (fuzz inputs that hold one of these shapes and claim the prefix `docs/..`); none leaves it.
+MOVED_BY_178_179 = 254
+MOVED_BY_178_179_SHA = "f354668fa9dfac0d65f02e31915dcd9764c971aa8c13ff0c2c0afbf7a9144f7d"
 
 # Review 3 of fix batch 1 (fix/diffgate-178-179) moved the reading of a diff of these shapes, by design: the two `def`
 # counts abstain where #205's seams part the two readers, a U+FEFF before a counted line's `def` or name or at a
@@ -415,6 +417,25 @@ HOLD_SEAMS = 123
 # reads it.
 MOVED_BY_SEAMS = {"16.0.0": (39, "baa927861d5a3e73f48fcd9529c62e478c58a44299edf221d3dc794f778c6cb4")}
 MOVED_BY_SEAMS_BEFORE_16 = (40, "2863a90eed5ddcf028759dcb0f2323cc1e9e4a25c5f7fdc2fc0039f2b8028d23")
+
+# #174 and #175 (fix/diffgate-174-175) moved the reading of an `only_touches` claim, by design: it reads a rename's old
+# path beside the status keys, and resolves a prefix's `.` and `..` segments as git resolves a pathspec. The predicate
+# holds on an input, holding none of the shapes above, whose diff holds a `rename from` line or whose summary holds a
+# segment of dots (a run of dots after a start, a space, a quote, a backtick or a slash, before a slash, a space, a
+# quote, a closing mark or the end). It takes the summary as well as the diff, which the three above do not.
+_RENAME_FROM = re.compile("(?m)^rename from ")
+_DOT_SEGMENT = re.compile(r"(?:^|[\s`\"'/\\])\.{1,}(?=[/\\]|[\s`\"'.,;:!?)]|$)")
+
+
+def _moved_by_174_175(summary: str, diff: str) -> bool:
+    return bool(_RENAME_FROM.search(diff) or _DOT_SEGMENT.search(summary))
+
+
+HOLD_174_175 = 1507
+# Of those, the inputs whose content moved in either strict mode, and the sha256 of their ids, as above. Measured on
+# CPython 3.12.10 and 3.14.2, the same set. The git-door fixtures with a listing move none.
+MOVED_BY_174_175 = 27
+MOVED_BY_174_175_SHA = "cb25c31c794139bcb949952068a0d74c0f690dbf5576683088122d7febb26d62"
 
 
 def _same_or_raised(a, b, run) -> str | None:
@@ -434,10 +455,12 @@ def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(par
     unseen. tests/test_diffgate_issue205_206.py holds what #205 moved. Since #179 and #178 the inputs holding none of
     those characters and a shape `_moved_by_178_179` reads are pinned apart the same way, and since review 3 of fix
     batch 1 the inputs holding neither and a shape `_MOVED_BY_SEAMS` reads; tests/test_diffgate_issue178_179.py holds
-    what those moved."""
+    what those moved. Since #174 and #175 the inputs holding none of those and a rename or a dotted scope prefix
+    (`_moved_by_174_175`), likewise; tests/test_diffgate_issue174_175.py holds what they moved."""
     bad, runs, held, moved = [], 0, 0, []
     held_new, moved_new = 0, []
     held_seam, moved_seam = 0, []
+    held_b2, moved_b2 = 0, []
     for row in R.inputs():
         holds = bool(_MOVED_BY_205.search(row[3] or ""))
         held += holds
@@ -445,6 +468,8 @@ def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(par
         held_new += holds_new
         holds_seam = not holds and not holds_new and bool(_MOVED_BY_SEAMS.search(row[3] or ""))
         held_seam += holds_seam
+        holds_b2 = not holds and not holds_new and not holds_seam and _moved_by_174_175(row[2] or "", row[3] or "")
+        held_b2 += holds_b2
         whys = []
         for strict in (False, True):
             whys.append(_same_or_raised(parent, N, lambda m, s=row[2], d=row[3], k=strict:
@@ -456,6 +481,8 @@ def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(par
             moved_new.append(R.uid(0, row))
         elif any(whys) and holds_seam:
             moved_seam.append(R.uid(0, row))
+        elif any(whys) and holds_b2:
+            moved_b2.append(R.uid(0, row))
         elif any(whys):
             bad.append((R.uid(0, row), whys))
     git_runs = 0
@@ -487,6 +514,10 @@ def test_content_keys_are_byte_for_byte_the_parents_on_every_committed_input(par
     moved_seam.sort()
     want = MOVED_BY_SEAMS.get(unicodedata.unidata_version, MOVED_BY_SEAMS_BEFORE_16)
     assert (len(moved_seam), hashlib.sha256("\n".join(moved_seam).encode("utf-8")).hexdigest()) == want, moved_seam[:5]
+    assert held_b2 == HOLD_174_175, held_b2
+    moved_b2.sort()
+    assert len(moved_b2) == MOVED_BY_174_175, (len(moved_b2), moved_b2[:5])
+    assert hashlib.sha256("\n".join(moved_b2).encode("utf-8")).hexdigest() == MOVED_BY_174_175_SHA, moved_b2[:5]
 
 
 def test_report_and_out_are_the_parents_but_for_the_identity(parent, tmp_path):

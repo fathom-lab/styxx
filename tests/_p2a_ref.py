@@ -169,8 +169,9 @@ def main_port_path(tmp: Path) -> Path:
 # ---- inputs -------------------------------------------------------------------------------------------------------
 
 # The moves files, in the order check_pairs.js and tests/test_port_is_current.py apply them: the overlay's moves of
-# main's pinned claims (PATH-2a), then the pinned claims main's line reading moved (#205, fix/diffgate-205-206).
-MOVES_FILES = ("path2a_moves.json", "issue205_moves.json")
+# main's pinned claims (PATH-2a), then the pinned claims main's line reading moved (#205, fix/diffgate-205-206), then
+# those main's reading of a rename's old path moved (#174, fix/diffgate-174-175).
+MOVES_FILES = ("path2a_moves.json", "issue205_moves.json", "issue174_moves.json")
 
 
 def moved_expect(name: str, pair: dict) -> dict:

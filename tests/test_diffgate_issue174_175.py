@@ -1,4 +1,4 @@
-"""#174 and #175 (fix/diffgate-174-175, prototype for PLAN_fix_batch2): what `only_touches` reads.
+"""#174 and #175 (fix/diffgate-174-175): what `only_touches` reads.
 
 #174. A rename's old path was registered by neither door: `parse_unified_diff` keys a rename by its new path (status M
 at the raw door, R at the git door), so "Only touches src/." over `R080 lib/old.py -> src/new.py` read VERIFIED while
