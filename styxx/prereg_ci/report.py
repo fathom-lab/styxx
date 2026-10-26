@@ -394,7 +394,19 @@ def _closing(report: Dict[str, Any]) -> str:
 # ---- the markdown job summary ----------------------------------------------------------------------------
 
 def _md(text: Any) -> str:
-    return str(text).replace("|", "\\|").replace("\n", " ")
+    """*text* as plain text in a summary cell or list item. Author text (a RESULT's sentences, a path, a
+    finding's detail) reaches the summary, so HTML is written as entities and brackets are escaped: a tag
+    or a markdown link in a RESULT prints as its characters, not as an image or a link (B7 review N3)."""
+    s = str(text).replace("\r", " ").replace("\n", " ").replace("\\", "\\\\")
+    s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    return s.replace("[", "\\[").replace("]", "\\]").replace("|", "\\|")
+
+
+def _code(text: Any) -> str:
+    """*text* as a code span (a path, a licence id): nothing inside one renders, so only what would end
+    it is changed, a backtick (as ') and a line break, and a pipe, which a table cell splits on."""
+    s = str(text).replace("\r", " ").replace("\n", " ").replace("`", "'").replace("|", "\\|")
+    return f"`{s}`"
 
 
 def _licence_rows(entries: Iterable[Dict[str, Any]]) -> List[str]:
@@ -406,7 +418,7 @@ def _licence_rows(entries: Iterable[Dict[str, Any]]) -> List[str]:
             c = rows.setdefault((lic["id"], m["path"]), [0, 0])
             c[0] += 1
             c[1] += 1 if m.get("withdrawn") else 0
-    return [f"| `{_md(lid)}` | `{_md(path)}` | {n} | {w} |" for (lid, path), (n, w) in rows.items()]
+    return [f"| {_code(lid)} | {_code(path)} | {n} | {w} |" for (lid, path), (n, w) in rows.items()]
 
 
 def _markdown(report: Dict[str, Any]) -> str:
@@ -421,7 +433,7 @@ def _markdown(report: Dict[str, Any]) -> str:
         for p in pairs:
             rs = p.get("rescore") or {}
             lad = p.get("ladder")
-            out.append(f"| {p.get('reading')} | `{_md(p.get('receipt'))}` | `{_md(p.get('prereg'))}` | "
+            out.append(f"| {p.get('reading')} | {_code(p.get('receipt'))} | {_code(p.get('prereg'))} | "
                        f"{_md(rs.get('verdict') or rs.get('code') or '')} | "
                        f"{(str(lad['landed'] + 1) + ' of ' + str(len(lad['rows']))) if lad else ''} | "
                        f"{_md((p.get('time') or {}).get('name') or '')} |")
@@ -432,8 +444,8 @@ def _markdown(report: Dict[str, Any]) -> str:
     if findings:
         out += ["| kind | code | where | detail |", "|---|---|---|---|"]
         for f in sorted(findings, key=lambda f: _ORDER.index(f["kind"]) if f["kind"] in _ORDER else 9)[:200]:
-            out.append(f"| {f['kind']} | `{f['code']}` | `{_md(f.get('pair') or f.get('path') or '')}` | "
-                       f"{_md(f.get('detail') or '')[:400]} |")
+            out.append(f"| {f['kind']} | `{f['code']}` | {_code(f.get('pair') or f.get('path') or '')} | "
+                       f"{_md((f.get('detail') or '')[:400])} |")
         out.append("")
     licence_entries = [lic for p in pairs for lic in ((p.get("licences") or {}).get("licences") or ())]
     licence_entries += [lic for e in report.get("tree_licences") or () for lic in e.get("licences") or ()]
@@ -448,13 +460,13 @@ def _markdown(report: Dict[str, Any]) -> str:
             counts[(f["kind"], f["code"])] = counts.get((f["kind"], f["code"]), 0) + 1
         out.append("Licence findings: " + "; ".join(f"{k} {c} x{n}" for (k, c), n in counts.items()))
         out.append("")
-    ne = list(report.get("not_examined") or [])
+    ne = [_md(x) for x in report.get("not_examined") or []]
     for p in pairs:
-        ne += [f"`{_md(p.get('receipt'))}`: " + "; ".join(p.get("not_examined") or [])]
+        ne += [f"{_code(p.get('receipt'))}: " + _md("; ".join(p.get("not_examined") or []))]
     if ne:
         out.append("**not examined**")
         out.append("")
-        out += [f"- {_md(x)}" for x in ne]
+        out += [f"- {x}" for x in ne]
         out.append("")
     return "\n".join(out) + "\n"
 

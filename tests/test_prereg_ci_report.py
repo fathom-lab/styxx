@@ -285,6 +285,22 @@ def test_the_summary_aggregates_licence_matches_per_licence_and_file():
     assert s.count("README.md") == 1
 
 
+def test_author_text_in_the_summary_prints_as_characters_not_as_markup():
+    """The B7 review's N3: a RESULT sentence holding an <img> tag and a markdown link reached the summary
+    raw. Plain text now carries HTML as entities and brackets escaped; a code span (a path) keeps its
+    characters, with a backtick, which would end it, written as '."""
+    said = 'The seal orders nothing <img src="https://example.invalid/t.png"> and [click](https://example.invalid/).'
+    rep = {"command": "check", "verdict": "PASS", "exit": 0, "base": "a" * 40, "head": "b" * 40,
+           "policies": {}, "findings": [{"kind": "NOTE", "code": "X", "path": "a`b|c.md", "detail": said}],
+           "pairs": [{"reading": "PASS", "receipt": "r<1>.json", "prereg": "P.md", "rescore": {"verdict": "V"},
+                      "ladder": None, "time": None, "not_examined": [f'the RESULT says: "{said}"']}],
+           "not_examined": ["a <b>bold</b> item"], "tree_licences": []}
+    s = R._markdown(rep)
+    assert "<img" not in s and "<b>" not in s and "[click](" not in s, s
+    assert "&lt;img src=" in s and "\\[click\\](https://example.invalid/)" in s and "&lt;b&gt;bold&lt;/b&gt;" in s
+    assert "`r<1>.json`" in s and "`a'b\\|c.md`" in s
+
+
 def test_json_drops_bytes_and_reads_tuples_and_sets_as_lists():
     assert R._jsonable({"bytes": b"x", "out_bytes": b"y", "a": (1, 2), "b": {3, 1}, "c": [{"bytes": b"z", "d": 1}]}) == \
         {"a": [1, 2], "b": [1, 3], "c": [{"d": 1}]}
