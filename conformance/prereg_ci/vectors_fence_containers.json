@@ -1,0 +1,1145 @@
+{
+ "schema": "styxx.prereg-ci.conformance.fence-containers/v0",
+ "label": "conformance vectors for prereg-ci's fence and RESULT readers on the B3 review's shapes; no claim",
+ "rules": {
+  "id": "sha256 of the sorted, compact UTF-8 JSON of {name, inputs: {info, text}}",
+  "text": "inputs.text names bytes in this file's blobs by sha256 ({utf8} or {b64}); fence_json reads them decoded as UTF-8 with CRLF and a lone CR read as LF, and is absent for bytes that are not UTF-8; candidate and reading are handed the bytes",
+  "candidate": "styxx.prereg_ci.core._result_candidate(bytes)",
+  "fence_json": "styxx.prereg_ci.core._fence_json(text, info): {line, object}, {none: true}, or {raises, message}",
+  "reading": "result only: styxx.prereg_ci.core._result_reading(bytes), as JSON"
+ },
+ "vectors": [
+  {
+   "id": "df1ad95061912bbd1ad041909104bb1e7115e1c7786a35a1849b0b58c54c5c75",
+   "name": "result/contained/list-continuation-4",
+   "why": "a list item's continuation, 4 columns in",
+   "info": "result",
+   "inputs": {
+    "text": "8adb8fd2e01a999ee7f35f0b103beb030e7ade1471b4d62733804b3d5452fba6"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "1e181e4326a5e72aa18e26265201c0cc647fe3ad671b40f9772b5cb875294677",
+   "name": "result/contained/ordered-continuation-4",
+   "why": "an ordered item's continuation, 4 columns in",
+   "info": "result",
+   "inputs": {
+    "text": "0dea8f25786cea327ee0fc1dbae036a9b9a74785e779b7de1a0fcd2c69152c37"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 4 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 4 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "c9c8f22b689e03a76d9ff37ae46a3f08c62fffb5943fca417544684093e2ae8f",
+   "name": "result/contained/list-continuation-tab",
+   "why": "a list item's continuation behind a tab",
+   "info": "result",
+   "inputs": {
+    "text": "563141e9159d13b0af1b4a9e68a3e269761fcef282d79eaeeb5f505abae72689"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "cfefd23dd88c39bb19e578bd2609b51644c84c9c14182303f31d140943cec903",
+   "name": "result/contained/list-continuation-7",
+   "why": "a 4-column item's continuation, 7 columns in",
+   "info": "result",
+   "inputs": {
+    "text": "2ad9fdf065f3b1331ee6da0822e33af93d942b989a0fd70d3f5184510702b993"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "2d1eac69d67e13acee1f3057ec554565730b4cc26d4001a78102e42d20ab7227",
+   "name": "result/contained/nested-list-continuation",
+   "why": "a nested item's continuation",
+   "info": "result",
+   "inputs": {
+    "text": "7c5de6d83b6f4a7d63572f27b631496e63229bd44d94202139bab4ccf458b607"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 6 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 6 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "8f5306b9b3c5fc6761b5f3f9f5bce90379c87429250da840c4bc0c66c945a89d",
+   "name": "result/contained/lazy-paragraph-then-4",
+   "why": "below a lazy paragraph line of an item",
+   "info": "result",
+   "inputs": {
+    "text": "c7b310853486ecc941fd7dc990a01bb96b5b3755a924b7fb4069514f5d107363"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "d5043665c5b4ad23432ecfc6ba7fe5b5f1e47983e22617b797f1751a37080fc6",
+   "name": "result/contained/quoted-list-continuation",
+   "why": "an item's continuation inside a block quote",
+   "info": "result",
+   "inputs": {
+    "text": "6a02c924290423828eb9b349e7b1b04644df301885294aaff6b81e1d93bc8137"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "04609399320a2ec2626b956bc0f232363cbe1ba5f2f1c975569bc237d75d6d73",
+   "name": "result/contained/nested-marker-at-4",
+   "why": "a nested list marker 4 columns in, the fence on its line",
+   "info": "result",
+   "inputs": {
+    "text": "9a0395dcc1ce2c5ed90b5ba879404689c8bdc6747e8a92b5895f481edd5e8750"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "be3bcfd4ce5ccca1ba91a3cdb1e011b1b5d9b6b3dc4c119764f877009a0b3e6a",
+   "name": "result/contained/footnote-continuation",
+   "why": "a footnote's continuation, 4 columns in",
+   "info": "result",
+   "inputs": {
+    "text": "46ac5d318565558f4e6674a818625c3f0150364f79c577dc9cbbd18df0d74f2e"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 7 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 7 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "5887f39e3f089627944cc22f72fbcb32d8c52ee328d8a467d3602f547693ead9",
+   "name": "result/contained/footnote-label-line",
+   "why": "the fence on a footnote label's line",
+   "info": "result",
+   "inputs": {
+    "text": "6338c66a9ac71363338dc9bc96b3985faef16ef91671b334be1077e98a5dc967"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 5 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "daba8bc82bde2c121ece960bb775e30d57fe51e227a6bb9a9bbe269bbbf3ff1c",
+   "name": "result/contained/quote-then-tab",
+   "why": "a tab after a block quote marker",
+   "info": "result",
+   "inputs": {
+    "text": "de5cc916a17cd524a7ec8aca458b11a478a1135f4c6137b885d7b8c1d1ce4be1"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 3 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 3 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "7a402e6da661dcf4c1751b32fe2153f51aa4856956c89898efa30d3816af99db",
+   "name": "result/contained/beside-the-plain-fence",
+   "why": "the plain fence, and a list item's continuation fence below it",
+   "info": "result",
+   "inputs": {
+    "text": "ca268359a0cad06d6d86e76cf19549401b2f9c2711d3f324775f1343b4aadd7a"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 9 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 9 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "d455fbd8289e45ec330e88b1138b507ff3e5820faed520a1bfff1adb1c2ad3cb",
+   "name": "result/boundary/indented-code-below-prose",
+   "why": "4 columns in with no list item or footnote above: code",
+   "info": "result",
+   "inputs": {
+    "text": "4e27e12d968cd96e76cc7944c5f31281d896451ead222f730b7b05da73c5ffc6"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "bf3d37c87cb948c96d092125d003c1fb5295d3c3ebb511d09324d1d87ad55a36",
+   "name": "result/boundary/indented-code-behind-a-tab",
+   "why": "a tab in with no list item or footnote above: code",
+   "info": "result",
+   "inputs": {
+    "text": "5c353bbf552cd656b99c59cd15b8ad96d43102ec76eabbd27acefc8aa2f7123f"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "ccdf1d3f0b8d0ffa993d3cb5d4c6b6d9834547c841e3caa59acd6c9a0c415b2e",
+   "name": "result/boundary/indented-code-below-a-quote",
+   "why": "4 columns in below a block quote: code",
+   "info": "result",
+   "inputs": {
+    "text": "81ac78659bf381fb8dcfd4185ed44aed6303e8266df273d09f3d0a469851e7e5"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "b70fcd63421a1d1fae0f16ade26bc8b0a460bbef0774ddc1d6fdf8e006c16288",
+   "name": "result/boundary/below-a-list-that-has-ended",
+   "why": "4 columns in below a list a paragraph has ended: a renderer prints code, and the reader refuses (over-refusal, stated)",
+   "info": "result",
+   "inputs": {
+    "text": "69d48e08180ad8d39f7e47b3298d16d9addec7e77f34a5a3ffb4f02822d7943e"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 7 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 7 may render as a result block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```result fence outside every container",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "d8a716c5bb4ab2d7f60453de6cb7139f1cb0947381d13940b17caf2653175efc",
+   "name": "result/boundary/the-plain-fence-below-a-list",
+   "why": "the one plain fence at column 0 below a list: read",
+   "info": "result",
+   "inputs": {
+    "text": "a96e5fc38f5941965e84cff6347943dc193246e3a94222b96d9fcaa00ed56ea5"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "line": 6,
+     "object": {
+      "prereg": "PREREG_a.md",
+      "receipt": "receipt.json",
+      "verdict": "PASS"
+     }
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [
+      {
+       "form": "fence",
+       "receipt": "receipt.json",
+       "prereg": "PREREG_a.md",
+       "verdict": "PASS",
+       "line": 6
+      }
+     ],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "34294fc6c0b0d2f3fcfc80aa6b850a6a957d90aacc18d6ce48af18c35321906c",
+   "name": "locks/contained/list-continuation-4",
+   "why": "a list item's continuation, 4 columns in",
+   "info": "locks",
+   "inputs": {
+    "text": "c8f8f0bb4b95c59dad0b1adbf03cf13724ebdc6b754cf46b087ca1056e99acab"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 5 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "264b29f572af37744fa1bdba7255053cfd688b1b9fb07f90c96b21873f9ae681",
+   "name": "locks/contained/ordered-continuation-4",
+   "why": "an ordered item's continuation, 4 columns in",
+   "info": "locks",
+   "inputs": {
+    "text": "fd46235c63f0332382daff286db2c8b46d7ff5b5eff0a6398aa9c067ef0b3a80"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 4 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "c383742156e3f60bd27c11b5072023d186eb02918e49dabae0554e2f2f2c1950",
+   "name": "locks/contained/list-continuation-tab",
+   "why": "a list item's continuation behind a tab",
+   "info": "locks",
+   "inputs": {
+    "text": "fa9cada81d187c11993372d1595f8932a91c5fc08c9d6010b976362702987d01"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 5 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "a4986606852b803921bd37de6de1ae4b57a230caa072ae83a4075bf34af3fa2f",
+   "name": "locks/contained/list-continuation-7",
+   "why": "a 4-column item's continuation, 7 columns in",
+   "info": "locks",
+   "inputs": {
+    "text": "996e453c7cc5fc262be6fb02db3c5d1578a0e85f3e28228e9e7b67f3af325439"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 5 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "9809a33b8a09036789f337075c1f4a5cdc08a8770b2d92177c7ea3b465b5c91c",
+   "name": "locks/contained/nested-list-continuation",
+   "why": "a nested item's continuation",
+   "info": "locks",
+   "inputs": {
+    "text": "4586274eaaf7015ed07ebcdad3e6a9cb99c6ec007cc6ba522e502f1e066aed4c"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 6 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "500074e1a67f2004d7284599a66a511fd42f7c08af7e653291e4eac5210cd8bf",
+   "name": "locks/contained/lazy-paragraph-then-4",
+   "why": "below a lazy paragraph line of an item",
+   "info": "locks",
+   "inputs": {
+    "text": "ff18571d04378758fd9a43f672f3cc710b2d015b6b993bc4fdc3e8a31630fb92"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 5 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "91cc376a659d7ffe4c6707b427cf31d40b46b61b84973daf3314005dd2a74c1b",
+   "name": "locks/contained/quoted-list-continuation",
+   "why": "an item's continuation inside a block quote",
+   "info": "locks",
+   "inputs": {
+    "text": "28700b2443ffd9017208b0ae360300f71057a8f23babe857f1e0759281d427f0"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 5 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "2f82a536f207cdcfc3992ebf5a943850a09027b720d00d8daee8bebc52edcbb1",
+   "name": "locks/contained/nested-marker-at-4",
+   "why": "a nested list marker 4 columns in, the fence on its line",
+   "info": "locks",
+   "inputs": {
+    "text": "b0945cec5fc41f8cb61b0373868c54ed124cc237822bb807938d016c5573ad9b"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 5 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "a4f3d42c86da399b77abb596c5030e9ac7c60e6b0fcf7a8616beb07f03b33d87",
+   "name": "locks/contained/footnote-continuation",
+   "why": "a footnote's continuation, 4 columns in",
+   "info": "locks",
+   "inputs": {
+    "text": "7ce3ffe47b4e01c5200866fbaddc4c0ac39dd1f119815ed6f71410a1a3542e88"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 7 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "9efa3adb5ac31902ed050358f41017bfc3629902474dbb36f163a89718930858",
+   "name": "locks/contained/footnote-label-line",
+   "why": "the fence on a footnote label's line",
+   "info": "locks",
+   "inputs": {
+    "text": "6feeb39fe6cc88f4adbe6ce2ff9c9861fdb68e7d9f6214eae55ce1ce2e665ab1"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 5 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "6e437322de13ba18f7e80e60a2367e4ec8b0ce4cc097e2a29cccc4ebd5ca50d9",
+   "name": "locks/contained/quote-then-tab",
+   "why": "a tab after a block quote marker",
+   "info": "locks",
+   "inputs": {
+    "text": "20bafe6e8513cd0a8b1271d3f990f0a02fa9f4acca1ad7945334aec72487e507"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 3 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "13d5cab0643945d4ef58804934838271cd1255a13517fba02a2e1a28b1af69e5",
+   "name": "locks/contained/beside-the-plain-fence",
+   "why": "the plain fence, and a list item's continuation fence below it",
+   "info": "locks",
+   "inputs": {
+    "text": "cc4126e7bc444b13afd66bdbc32772b82be745cd7c7af62d94f9a3c3fa77e35b"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 9 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "c3250ef57ecf140f67a5b1da2b8e38058c931a8da62d6cb93f022957e3d8313b",
+   "name": "locks/boundary/indented-code-below-prose",
+   "why": "4 columns in with no list item or footnote above: code",
+   "info": "locks",
+   "inputs": {
+    "text": "6c653ee1c3912665202e62053692d1bbe2f563310f938d98f5f83c2f454f0bb6"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "10aa5fea6d67fc86d33da8eb5d73cc08a9a1bede4dbfbf2dffd94102720da891",
+   "name": "locks/boundary/indented-code-behind-a-tab",
+   "why": "a tab in with no list item or footnote above: code",
+   "info": "locks",
+   "inputs": {
+    "text": "70385ac49f8661302156f88ac0405c31917502655d7c49e2ba4944a14b0fb040"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "b02859b9d14e158435262f45311a45275bcf858298b1280d281fc8455c4492e6",
+   "name": "locks/boundary/indented-code-below-a-quote",
+   "why": "4 columns in below a block quote: code",
+   "info": "locks",
+   "inputs": {
+    "text": "eae8f159abb173d43a3a2555cc3eda957a7ecd531a55151b00cfd2660afd4b8a"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "432b2a9b277224ff07390f4c5350c5ea431ad850bdcd590d2e53396fcf832c31",
+   "name": "locks/boundary/below-a-list-that-has-ended",
+   "why": "4 columns in below a list a paragraph has ended: a renderer prints code, and the reader refuses (over-refusal, stated)",
+   "info": "locks",
+   "inputs": {
+    "text": "b7b2c9accbb7fe079353752b1694d1a642970014c49894dcb0d8767c240dab2d"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 7 may render as a locks block inside a container (behind a block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in below a line that opens a list item or a footnote) and the scanner counts no fence there \u2014 this reader does not follow a container to its end, so the class is refused; write the one plain unindented ```locks fence outside every container"
+    }
+   }
+  },
+  {
+   "id": "1085806746af75f3fc1ee7fda9d59d95e5c37b8ca95c45181a2211f651c75eef",
+   "name": "locks/boundary/the-plain-fence-below-a-list",
+   "why": "the one plain fence at column 0 below a list: read",
+   "info": "locks",
+   "inputs": {
+    "text": "80e4e2cd69a7b9dc048f628e9654a8af3923bf087cda595e880b01a719b590e6"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "line": 6,
+     "object": {
+      "scorer": "score.py",
+      "reads": [
+       "data.csv"
+      ],
+      "outcomes": [
+       "PASS",
+       "FAIL"
+      ],
+      "withdraws": {}
+     }
+    }
+   }
+  },
+  {
+   "id": "6d99b29cdecbfe0c9c3d7cdb0ae57b9a9bacccdc2614017570c619606376e408",
+   "name": "result/encoding/utf-16-le-bom-fence",
+   "why": "a result fence in utf-16-le with its byte-order mark: refused",
+   "info": "result",
+   "inputs": {
+    "text": "6bf565ce1077a7201457bf58fa8ce5915168a12d282ad6e67e613fa7edcfbb5a"
+   },
+   "expect": {
+    "candidate": true,
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the document is UTF-16-LE (it starts with that byte-order mark), and read that way it holds the marker of a form (a fence whose info string reads result or holds a non-ASCII character, or a sworn tag naming a verdict leaf); a RESULT is read as UTF-8, so nothing in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "430deab17e4fd3af4ae4fa8e59b2f7bfa38562dc72870697bbdd9bd627dad7f1",
+   "name": "result/encoding/utf-16-le-bom-prose",
+   "why": "prose and a python fence in utf-16-le: nothing",
+   "info": "result",
+   "inputs": {
+    "text": "1b89f1655c7c725ba36b035170e21df2c243a586ae442730f296532e11b1aa6d"
+   },
+   "expect": {
+    "candidate": false,
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "1269e3cdb3d6854fb38ac36b72a97e502013c37385c97ec62ccecda0fa9931db",
+   "name": "result/encoding/utf-16-be-bom-fence",
+   "why": "a result fence in utf-16-be with its byte-order mark: refused",
+   "info": "result",
+   "inputs": {
+    "text": "b53e93808e9cdb2ae73808077fbf0a9e1f988fa58f0154aa88ca86280fedd251"
+   },
+   "expect": {
+    "candidate": true,
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the document is UTF-16-BE (it starts with that byte-order mark), and read that way it holds the marker of a form (a fence whose info string reads result or holds a non-ASCII character, or a sworn tag naming a verdict leaf); a RESULT is read as UTF-8, so nothing in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "15405112fe4d2ad8f40fb5776bd4170b88541000b84bcfc7d21dbfd0cde1c4fd",
+   "name": "result/encoding/utf-16-be-bom-prose",
+   "why": "prose and a python fence in utf-16-be: nothing",
+   "info": "result",
+   "inputs": {
+    "text": "1f20246bb14d83c8274b0b66e7d9ded7c330dfa0a6ab03c66c74b98b78bcaf13"
+   },
+   "expect": {
+    "candidate": false,
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "6ce8f1abd8ebae00e8fb9b4b936caf3a56dd6683d748451f6d4f1102b0c0e09f",
+   "name": "result/encoding/utf-32-le-bom-fence",
+   "why": "a result fence in utf-32-le with its byte-order mark: refused",
+   "info": "result",
+   "inputs": {
+    "text": "9cec91ac99b495d3d8c71d54a7801cd59198b097d8e1e444f224c1a082a74548"
+   },
+   "expect": {
+    "candidate": true,
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the document is UTF-32-LE (it starts with that byte-order mark), and read that way it holds the marker of a form (a fence whose info string reads result or holds a non-ASCII character, or a sworn tag naming a verdict leaf); a RESULT is read as UTF-8, so nothing in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "a4ebdacd400557006f624fa76204f1e26c461c5193b8b81512fb0dc27473e4a5",
+   "name": "result/encoding/utf-32-le-bom-prose",
+   "why": "prose and a python fence in utf-32-le: nothing",
+   "info": "result",
+   "inputs": {
+    "text": "18480841d88bc61241c39727feae0974606814acacd23968dd9457bc432e8ca0"
+   },
+   "expect": {
+    "candidate": false,
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "6303b00d922ad42623b898552d31b72667e1ba7c43cfe13e35504039d219a229",
+   "name": "result/encoding/utf-32-be-bom-fence",
+   "why": "a result fence in utf-32-be with its byte-order mark: refused",
+   "info": "result",
+   "inputs": {
+    "text": "3b8515c45167e48399402244363a7f8d770f843d97f5977bf9bc51ff4314a760"
+   },
+   "expect": {
+    "candidate": true,
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the document is UTF-32-BE (it starts with that byte-order mark), and read that way it holds the marker of a form (a fence whose info string reads result or holds a non-ASCII character, or a sworn tag naming a verdict leaf); a RESULT is read as UTF-8, so nothing in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "14d50f0f378e718b188aa23c96b1c35e5647193027c884674e3a46df31678e04",
+   "name": "result/encoding/utf-32-be-bom-prose",
+   "why": "prose and a python fence in utf-32-be: nothing",
+   "info": "result",
+   "inputs": {
+    "text": "d527a72e4b8e844545df038981475a1389f36062699b99a1e4059760f0eeb674"
+   },
+   "expect": {
+    "candidate": false,
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "8dac990d23ec95313c28d5da1bf1a72f6c92fd18be412be82dfa6413fcc4d41f",
+   "name": "result/encoding/utf-16-le-bom-span",
+   "why": "a sworn verdict span in UTF-16 with its mark: refused",
+   "info": "result",
+   "inputs": {
+    "text": "b943c4ce578954b45f76293cd157076e2b74c54f6defd1e2872da064c6005298"
+   },
+   "expect": {
+    "candidate": true,
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the document is UTF-16-LE (it starts with that byte-order mark), and read that way it holds the marker of a form (a fence whose info string reads result or holds a non-ASCII character, or a sworn tag naming a verdict leaf); a RESULT is read as UTF-8, so nothing in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "f7c5ab340c43796eee666dd17a665126224c1fd8f987a029536453f2a74619a8",
+   "name": "result/encoding/utf-16-le-bom-confusable",
+   "why": "a confusable info string in UTF-16 with its mark: refused",
+   "info": "result",
+   "inputs": {
+    "text": "45d305e702e875665c1ff6e273adf9ad640530a19714511e69a5a5f543c89bbd"
+   },
+   "expect": {
+    "candidate": true,
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the document is UTF-16-LE (it starts with that byte-order mark), and read that way it holds the marker of a form (a fence whose info string reads result or holds a non-ASCII character, or a sworn tag naming a verdict leaf); a RESULT is read as UTF-8, so nothing in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "1042254d699c85d6d63703bfcc9563255db1bc1de24bb1a5653785e76ef09ba4",
+   "name": "result/encoding/utf-16-le-no-bom",
+   "why": "UTF-16 with no mark is read as the bytes it is: no fence there",
+   "info": "result",
+   "inputs": {
+    "text": "170b33d32f20ed68b6b9988cb381697c67fba6d2f4e11f43d0f79a067b0b9bf4"
+   },
+   "expect": {
+    "candidate": false,
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "04d3fe417f4df43a506a0d40236e9211afd0bdbaba9180a56bb7ee811a2b5d4e",
+   "name": "result/encoding/utf-8-with-a-nul",
+   "why": "a UTF-8 RESULT holding a NUL byte is read as UTF-8, as at B3",
+   "info": "result",
+   "inputs": {
+    "text": "117328e164f30af461b9a0e309952ba985904bfea59b3f31535652216a7f1ffd"
+   },
+   "expect": {
+    "candidate": true,
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "prereg": "PREREG_a.md",
+      "receipt": "receipt.json",
+      "verdict": "FAIL"
+     }
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [
+      {
+       "form": "fence",
+       "receipt": "receipt.json",
+       "prereg": "PREREG_a.md",
+       "verdict": "FAIL",
+       "line": 3
+      }
+     ],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "bbb04811d65c720ce51e10712f382ad1ade41e4a4f1b86044df8f8ff411cea6a",
+   "name": "result/binary/noise",
+   "why": "8192 seeded random bytes: no candidate",
+   "info": "result",
+   "inputs": {
+    "text": "b2300010498770e220444a7390e2425fb5246226dbed84c9ecc1f1ead1429b6d"
+   },
+   "expect": {
+    "candidate": false,
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "c640c0aa0b93ae94421388ee32cf11c0beebf882080618247f358e3444c01e21",
+   "name": "result/binary/fence-run-and-a-high-byte",
+   "why": "binary bytes holding a backtick run and a high byte: no candidate (the narrow marker for bytes that are not UTF-8)",
+   "info": "result",
+   "inputs": {
+    "text": "51b70290a239081912a0f98d28babd695f806b407f119f0768468873074b7c38"
+   },
+   "expect": {
+    "candidate": false,
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "2fa97afe94e002b12daa7350cc63ee7dda51f16ae6e35a1cb7cb365ccdcf4a79",
+   "name": "result/binary/a-result-marker",
+   "why": "binary bytes holding a result fence's marker: refused, as at B3",
+   "info": "result",
+   "inputs": {
+    "text": "8c617e7cf5d868fd33138c1056576a0d61194fe27b790b020a73be1d6cf4873c"
+   },
+   "expect": {
+    "candidate": true,
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the document is not UTF-8 ('utf-8' codec can't decode byte 0x89 in position 0: invalid start byte), and it holds the marker of a ```result fence or of a span on a verdict leaf",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  }
+ ],
+ "blobs": {
+  "0dea8f25786cea327ee0fc1dbae036a9b9a74785e779b7de1a0fcd2c69152c37": {
+   "utf8": "# d\n\n10. the verdict:\n    ```result\n    {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n    ```\n"
+  },
+  "117328e164f30af461b9a0e309952ba985904bfea59b3f31535652216a7f1ffd": {
+   "utf8": "# RESULT a\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n```\n\u0000"
+  },
+  "170b33d32f20ed68b6b9988cb381697c67fba6d2f4e11f43d0f79a067b0b9bf4": {
+   "utf8": "#\u0000 \u0000R\u0000E\u0000S\u0000U\u0000L\u0000T\u0000 \u0000a\u0000\n\u0000\n\u0000`\u0000`\u0000`\u0000r\u0000e\u0000s\u0000u\u0000l\u0000t\u0000\n\u0000{\u0000\"\u0000p\u0000r\u0000e\u0000r\u0000e\u0000g\u0000\"\u0000:\u0000 \u0000\"\u0000P\u0000R\u0000E\u0000R\u0000E\u0000G\u0000_\u0000a\u0000.\u0000m\u0000d\u0000\"\u0000,\u0000 \u0000\"\u0000r\u0000e\u0000c\u0000e\u0000i\u0000p\u0000t\u0000\"\u0000:\u0000 \u0000\"\u0000r\u0000e\u0000c\u0000e\u0000i\u0000p\u0000t\u0000.\u0000j\u0000s\u0000o\u0000n\u0000\"\u0000,\u0000 \u0000\"\u0000v\u0000e\u0000r\u0000d\u0000i\u0000c\u0000t\u0000\"\u0000:\u0000 \u0000\"\u0000F\u0000A\u0000I\u0000L\u0000\"\u0000}\u0000\n\u0000`\u0000`\u0000`\u0000\n\u0000"
+  },
+  "18480841d88bc61241c39727feae0974606814acacd23968dd9457bc432e8ca0": {
+   "b64": "//4AACMAAAAgAAAAbgAAAG8AAAB0AAAAZQAAAHMAAAAKAAAACgAAAFQAAABoAAAAZQAAACAAAAB2AAAAZQAAAHIAAABkAAAAaQAAAGMAAAB0AAAAIAAAAHcAAABhAAAAcwAAACAAAABGAAAAQQAAAEkAAABMAAAALgAAAAoAAAAKAAAAYAAAAGAAAABgAAAAcAAAAHkAAAB0AAAAaAAAAG8AAABuAAAACgAAAHAAAAByAAAAaQAAAG4AAAB0AAAAKAAAADEAAAApAAAACgAAAGAAAABgAAAAYAAAAAoAAAA="
+  },
+  "1b89f1655c7c725ba36b035170e21df2c243a586ae442730f296532e11b1aa6d": {
+   "b64": "//4jACAAbgBvAHQAZQBzAAoACgBUAGgAZQAgAHYAZQByAGQAaQBjAHQAIAB3AGEAcwAgAEYAQQBJAEwALgAKAAoAYABgAGAAcAB5AHQAaABvAG4ACgBwAHIAaQBuAHQAKAAxACkACgBgAGAAYAAKAA=="
+  },
+  "1f20246bb14d83c8274b0b66e7d9ded7c330dfa0a6ab03c66c74b98b78bcaf13": {
+   "b64": "/v8AIwAgAG4AbwB0AGUAcwAKAAoAVABoAGUAIAB2AGUAcgBkAGkAYwB0ACAAdwBhAHMAIABGAEEASQBMAC4ACgAKAGAAYABgAHAAeQB0AGgAbwBuAAoAcAByAGkAbgB0ACgAMQApAAoAYABgAGAACg=="
+  },
+  "20bafe6e8513cd0a8b1271d3f990f0a02fa9f4acca1ad7945334aec72487e507": {
+   "utf8": "# d\n\n> \t```locks\n> \t{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n> \t```\n"
+  },
+  "28700b2443ffd9017208b0ae360300f71057a8f23babe857f1e0759281d427f0": {
+   "utf8": "# d\n\n> - a\n>\n>     ```locks\n>     {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n>     ```\n"
+  },
+  "2ad9fdf065f3b1331ee6da0822e33af93d942b989a0fd70d3f5184510702b993": {
+   "utf8": "# d\n\n-   the verdict:\n\n       ```result\n       {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n       ```\n"
+  },
+  "3b8515c45167e48399402244363a7f8d770f843d97f5977bf9bc51ff4314a760": {
+   "b64": "AAD+/wAAACMAAAAgAAAAUgAAAEUAAABTAAAAVQAAAEwAAABUAAAAIAAAAGEAAAAKAAAACgAAAGAAAABgAAAAYAAAAHIAAABlAAAAcwAAAHUAAABsAAAAdAAAAAoAAAB7AAAAIgAAAHAAAAByAAAAZQAAAHIAAABlAAAAZwAAACIAAAA6AAAAIAAAACIAAABQAAAAUgAAAEUAAABSAAAARQAAAEcAAABfAAAAYQAAAC4AAABtAAAAZAAAACIAAAAsAAAAIAAAACIAAAByAAAAZQAAAGMAAABlAAAAaQAAAHAAAAB0AAAAIgAAADoAAAAgAAAAIgAAAHIAAABlAAAAYwAAAGUAAABpAAAAcAAAAHQAAAAuAAAAagAAAHMAAABvAAAAbgAAACIAAAAsAAAAIAAAACIAAAB2AAAAZQAAAHIAAABkAAAAaQAAAGMAAAB0AAAAIgAAADoAAAAgAAAAIgAAAEYAAABBAAAASQAAAEwAAAAiAAAAfQAAAAoAAABgAAAAYAAAAGAAAAAK"
+  },
+  "4586274eaaf7015ed07ebcdad3e6a9cb99c6ec007cc6ba522e502f1e066aed4c": {
+   "utf8": "# d\n\n- a\n  - b\n\n      ```locks\n      {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n      ```\n"
+  },
+  "45d305e702e875665c1ff6e273adf9ad640530a19714511e69a5a5f543c89bbd": {
+   "b64": "//4jACAAUgBFAFMAVQBMAFQAIABhAAoACgBgAGAAYAByADUEcwB1AGwAdAAKAHsAfQAKAGAAYABgAAoA"
+  },
+  "46ac5d318565558f4e6674a818625c3f0150364f79c577dc9cbbd18df0d74f2e": {
+   "utf8": "# d\n\ntext[^1]\n\n[^1]: note\n\n    ```result\n    {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n    ```\n"
+  },
+  "4e27e12d968cd96e76cc7944c5f31281d896451ead222f730b7b05da73c5ffc6": {
+   "utf8": "# d\n\ntext\n\n    ```result\n    {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n    ```\n"
+  },
+  "51b70290a239081912a0f98d28babd695f806b407f119f0768468873074b7c38": {
+   "b64": "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"
+  },
+  "563141e9159d13b0af1b4a9e68a3e269761fcef282d79eaeeb5f505abae72689": {
+   "utf8": "# d\n\n- the verdict:\n\n\t```result\n\t{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n\t```\n"
+  },
+  "5c353bbf552cd656b99c59cd15b8ad96d43102ec76eabbd27acefc8aa2f7123f": {
+   "utf8": "# d\n\n\t```result\n\t{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n\t```\n"
+  },
+  "6338c66a9ac71363338dc9bc96b3985faef16ef91671b334be1077e98a5dc967": {
+   "utf8": "# d\n\ntext[^1]\n\n[^1]: ```result\n    {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n    ```\n"
+  },
+  "69d48e08180ad8d39f7e47b3298d16d9addec7e77f34a5a3ffb4f02822d7943e": {
+   "utf8": "# d\n\n- a\n\npara\n\n    ```result\n    {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n    ```\n"
+  },
+  "6a02c924290423828eb9b349e7b1b04644df301885294aaff6b81e1d93bc8137": {
+   "utf8": "# d\n\n> - a\n>\n>     ```result\n>     {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n>     ```\n"
+  },
+  "6bf565ce1077a7201457bf58fa8ce5915168a12d282ad6e67e613fa7edcfbb5a": {
+   "b64": "//4jACAAUgBFAFMAVQBMAFQAIABhAAoACgBgAGAAYAByAGUAcwB1AGwAdAAKAHsAIgBwAHIAZQByAGUAZwAiADoAIAAiAFAAUgBFAFIARQBHAF8AYQAuAG0AZAAiACwAIAAiAHIAZQBjAGUAaQBwAHQAIgA6ACAAIgByAGUAYwBlAGkAcAB0AC4AagBzAG8AbgAiACwAIAAiAHYAZQByAGQAaQBjAHQAIgA6ACAAIgBGAEEASQBMACIAfQAKAGAAYABgAAoA"
+  },
+  "6c653ee1c3912665202e62053692d1bbe2f563310f938d98f5f83c2f454f0bb6": {
+   "utf8": "# d\n\ntext\n\n    ```locks\n    {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n    ```\n"
+  },
+  "6feeb39fe6cc88f4adbe6ce2ff9c9861fdb68e7d9f6214eae55ce1ce2e665ab1": {
+   "utf8": "# d\n\ntext[^1]\n\n[^1]: ```locks\n    {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n    ```\n"
+  },
+  "70385ac49f8661302156f88ac0405c31917502655d7c49e2ba4944a14b0fb040": {
+   "utf8": "# d\n\n\t```locks\n\t{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n\t```\n"
+  },
+  "7c5de6d83b6f4a7d63572f27b631496e63229bd44d94202139bab4ccf458b607": {
+   "utf8": "# d\n\n- a\n  - b\n\n      ```result\n      {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n      ```\n"
+  },
+  "7ce3ffe47b4e01c5200866fbaddc4c0ac39dd1f119815ed6f71410a1a3542e88": {
+   "utf8": "# d\n\ntext[^1]\n\n[^1]: note\n\n    ```locks\n    {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n    ```\n"
+  },
+  "80e4e2cd69a7b9dc048f628e9654a8af3923bf087cda595e880b01a719b590e6": {
+   "utf8": "# d\n\n- a\n- b\n\n```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "81ac78659bf381fb8dcfd4185ed44aed6303e8266df273d09f3d0a469851e7e5": {
+   "utf8": "# d\n\n> quoted\n\n    ```result\n    {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n    ```\n"
+  },
+  "8adb8fd2e01a999ee7f35f0b103beb030e7ade1471b4d62733804b3d5452fba6": {
+   "utf8": "# d\n\n-   the verdict:\n\n    ```result\n    {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n    ```\n"
+  },
+  "8c617e7cf5d868fd33138c1056576a0d61194fe27b790b020a73be1d6cf4873c": {
+   "b64": "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"
+  },
+  "996e453c7cc5fc262be6fb02db3c5d1578a0e85f3e28228e9e7b67f3af325439": {
+   "utf8": "# d\n\n-   the verdict:\n\n       ```locks\n       {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n       ```\n"
+  },
+  "9a0395dcc1ce2c5ed90b5ba879404689c8bdc6747e8a92b5895f481edd5e8750": {
+   "utf8": "# d\n\n-   a\n\n    - ```result\n      {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n      ```\n"
+  },
+  "9cec91ac99b495d3d8c71d54a7801cd59198b097d8e1e444f224c1a082a74548": {
+   "b64": "//4AACMAAAAgAAAAUgAAAEUAAABTAAAAVQAAAEwAAABUAAAAIAAAAGEAAAAKAAAACgAAAGAAAABgAAAAYAAAAHIAAABlAAAAcwAAAHUAAABsAAAAdAAAAAoAAAB7AAAAIgAAAHAAAAByAAAAZQAAAHIAAABlAAAAZwAAACIAAAA6AAAAIAAAACIAAABQAAAAUgAAAEUAAABSAAAARQAAAEcAAABfAAAAYQAAAC4AAABtAAAAZAAAACIAAAAsAAAAIAAAACIAAAByAAAAZQAAAGMAAABlAAAAaQAAAHAAAAB0AAAAIgAAADoAAAAgAAAAIgAAAHIAAABlAAAAYwAAAGUAAABpAAAAcAAAAHQAAAAuAAAAagAAAHMAAABvAAAAbgAAACIAAAAsAAAAIAAAACIAAAB2AAAAZQAAAHIAAABkAAAAaQAAAGMAAAB0AAAAIgAAADoAAAAgAAAAIgAAAEYAAABBAAAASQAAAEwAAAAiAAAAfQAAAAoAAABgAAAAYAAAAGAAAAAKAAAA"
+  },
+  "a96e5fc38f5941965e84cff6347943dc193246e3a94222b96d9fcaa00ed56ea5": {
+   "utf8": "# d\n\n- a\n- b\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "b0945cec5fc41f8cb61b0373868c54ed124cc237822bb807938d016c5573ad9b": {
+   "utf8": "# d\n\n-   a\n\n    - ```locks\n      {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n      ```\n"
+  },
+  "b2300010498770e220444a7390e2425fb5246226dbed84c9ecc1f1ead1429b6d": {
+   "b64": "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"
+  },
+  "b53e93808e9cdb2ae73808077fbf0a9e1f988fa58f0154aa88ca86280fedd251": {
+   "b64": "/v8AIwAgAFIARQBTAFUATABUACAAYQAKAAoAYABgAGAAcgBlAHMAdQBsAHQACgB7ACIAcAByAGUAcgBlAGcAIgA6ACAAIgBQAFIARQBSAEUARwBfAGEALgBtAGQAIgAsACAAIgByAGUAYwBlAGkAcAB0ACIAOgAgACIAcgBlAGMAZQBpAHAAdAAuAGoAcwBvAG4AIgAsACAAIgB2AGUAcgBkAGkAYwB0ACIAOgAgACIARgBBAEkATAAiAH0ACgBgAGAAYAAK"
+  },
+  "b7b2c9accbb7fe079353752b1694d1a642970014c49894dcb0d8767c240dab2d": {
+   "utf8": "# d\n\n- a\n\npara\n\n    ```locks\n    {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n    ```\n"
+  },
+  "b943c4ce578954b45f76293cd157076e2b74c54f6defd1e2872da064c6005298": {
+   "b64": "//4jACAAUgBFAFMAVQBMAFQAIABhAAoACgBWAGUAcgBkAGkAYwB0ADoAIAA8AHMAdwBvAHIAbgAgAHIAPQAiAHAAYQB0AGgAOgBwAC8AcgBlAGMAZQBpAHAAdAAuAGoAcwBvAG4AIwAvAHYAZQByAGQAaQBjAHQAIgAgAGsAPQAiAHEAdQBvAHQAZQAiAD4AYABGAEEASQBMAGAAPAAvAHMAdwBvAHIAbgA+AAoA"
+  },
+  "c7b310853486ecc941fd7dc990a01bb96b5b3755a924b7fb4069514f5d107363": {
+   "utf8": "# d\n\n- a\nlazy\n    ```result\n    {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n    ```\n"
+  },
+  "c8f8f0bb4b95c59dad0b1adbf03cf13724ebdc6b754cf46b087ca1056e99acab": {
+   "utf8": "# d\n\n-   the verdict:\n\n    ```locks\n    {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n    ```\n"
+  },
+  "ca268359a0cad06d6d86e76cf19549401b2f9c2711d3f324775f1343b4aadd7a": {
+   "utf8": "# d\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n\n-   but read this one:\n\n    ```result\n    {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n    ```\n"
+  },
+  "cc4126e7bc444b13afd66bdbc32772b82be745cd7c7af62d94f9a3c3fa77e35b": {
+   "utf8": "# d\n\n```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n\n-   but read this one:\n\n    ```locks\n    {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n    ```\n"
+  },
+  "d527a72e4b8e844545df038981475a1389f36062699b99a1e4059760f0eeb674": {
+   "b64": "AAD+/wAAACMAAAAgAAAAbgAAAG8AAAB0AAAAZQAAAHMAAAAKAAAACgAAAFQAAABoAAAAZQAAACAAAAB2AAAAZQAAAHIAAABkAAAAaQAAAGMAAAB0AAAAIAAAAHcAAABhAAAAcwAAACAAAABGAAAAQQAAAEkAAABMAAAALgAAAAoAAAAKAAAAYAAAAGAAAABgAAAAcAAAAHkAAAB0AAAAaAAAAG8AAABuAAAACgAAAHAAAAByAAAAaQAAAG4AAAB0AAAAKAAAADEAAAApAAAACgAAAGAAAABgAAAAYAAAAAo="
+  },
+  "de5cc916a17cd524a7ec8aca458b11a478a1135f4c6137b885d7b8c1d1ce4be1": {
+   "utf8": "# d\n\n> \t```result\n> \t{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n> \t```\n"
+  },
+  "eae8f159abb173d43a3a2555cc3eda957a7ecd531a55151b00cfd2660afd4b8a": {
+   "utf8": "# d\n\n> quoted\n\n    ```locks\n    {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n    ```\n"
+  },
+  "fa9cada81d187c11993372d1595f8932a91c5fc08c9d6010b976362702987d01": {
+   "utf8": "# d\n\n- the verdict:\n\n\t```locks\n\t{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n\t```\n"
+  },
+  "fd46235c63f0332382daff286db2c8b46d7ff5b5eff0a6398aa9c067ef0b3a80": {
+   "utf8": "# d\n\n10. the verdict:\n    ```locks\n    {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n    ```\n"
+  },
+  "ff18571d04378758fd9a43f672f3cc710b2d015b6b993bc4fdc3e8a31630fb92": {
+   "utf8": "# d\n\n- a\nlazy\n    ```locks\n    {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n    ```\n"
+  }
+ }
+}

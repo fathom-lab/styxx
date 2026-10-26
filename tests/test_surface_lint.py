@@ -179,8 +179,12 @@ def test_the_profile_keeps_records_and_fixtures_out():
                  "styxx/__pycache__/diffgate.cpython-312.py"):
         assert not L.selected(path, repo), path
     for path in ("README.md", "action.yml", "styxx/diffgate.py", "integrations/git/commit-msg",
-                 "integrations/claude-code/diffgate-hook/README.md", "web/gate/README.md", "sworn/action.yml"):
+                 "integrations/claude-code/diffgate-hook/README.md", "web/gate/README.md", "sworn/action.yml",
+                 "prereg-ci/README.md", "prereg-ci/action.yml", "examples/prereg-ci-demo/README_demo.md",
+                 "examples/prereg-ci-demo/eval.py"):
         assert L.selected(path, repo), path
+    for path in ("examples/quickstart.py", "examples/README.md"):     # the rest of examples/ is not a surface
+        assert not L.selected(path, repo), path
 
 
 # ---- the repository ----------------------------------------------------------------------------------------

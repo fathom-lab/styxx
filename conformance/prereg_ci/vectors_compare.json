@@ -1,0 +1,1384 @@
+{
+ "schema": "styxx.prereg-ci.conformance.compare/v0",
+ "label": "conformance vectors for prereg-ci's compare; no claim",
+ "rules": {
+  "id": "sha256 of the sorted, compact UTF-8 JSON of {name, inputs}",
+  "blobs": "inputs.prereg and inputs.receipt name bytes in this file's blobs by sha256",
+  "receipt": "json.loads over the receipt bytes decoded as UTF-8",
+  "frozen": "as vectors_score.json: score_frozen over the selected fence, no newline translation, no smoke branch",
+  "experiment": "as vectors_score.json: Experiment(<the PREREG committed to a repository>).score(receipt, smoke=bool(receipt.get('smoke')))",
+  "rescore": "styxx.prereg_ci.core.rescore(prereg, receipt), compared on the keys the vector holds",
+  "compare": "styxx.prereg_ci.core.compare(rescore, inputs.recorded or {}, sealed=inputs.sealed, declared=inputs.declared): a list of {code, kind}, or {raises: <class>}",
+  "agree": "frozen and experiment both refuse, or both give the same verdict, gates and digest"
+ },
+ "vectors": [
+  {
+   "id": "0a8dda3b93cc69652d54c2216c1bd87f2339f21e03dc4696fa58168cc0ebbaf5",
+   "name": "not-gated/recorded-digest-and-verdict",
+   "why": "a receipt that records a gates digest names a PREREG with no gates fence: no seal holds a decision digest for it, so C6(i) refuses it",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "3c062623b76cc9b6e0274d9c4799a48104eb4d1a871164fd3f64d210de976267",
+    "receipt": "1b6607f26143c33f09888143592a4df45aef345ba1b370ce833e42af9e597185",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "rescore": {
+     "form": null,
+     "code": "NOT_GATED",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    },
+    "compare": [
+     {
+      "code": "DECISION_DIGEST_UNSEALED",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "c0b6a00ec739f9a20f5b6289859255d6ff2fbd30a6fb556199fa953965051d4d",
+   "name": "not-gated/recorded-digest-a-sealed-list-names",
+   "why": "a NOT_GATED re-score holds no decision; a sealed list handed in beside it does not make the recorded digest the PREREG's",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "3c062623b76cc9b6e0274d9c4799a48104eb4d1a871164fd3f64d210de976267",
+    "receipt": "1b6607f26143c33f09888143592a4df45aef345ba1b370ce833e42af9e597185",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates_sha256": "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0"
+    },
+    "sealed": [
+     "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0"
+    ]
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "rescore": {
+     "form": null,
+     "code": "NOT_GATED",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    },
+    "compare": [
+     {
+      "code": "DECISION_DIGEST_UNSEALED",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "d1ef5bf35d8496aabd619177c9bc7e5328fcd17974545b4243b5d1ab30bcd6da",
+   "name": "not-gated/recorded-verdict-only",
+   "why": "a prose PREREG's receipt that records a verdict and no digest: nothing is compared, and a NOTE says the PREREG holds no decision",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "3c062623b76cc9b6e0274d9c4799a48104eb4d1a871164fd3f64d210de976267",
+    "receipt": "1b6607f26143c33f09888143592a4df45aef345ba1b370ce833e42af9e597185",
+    "recorded": {
+     "verdict": "PASS__a"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "rescore": {
+     "form": null,
+     "code": "NOT_GATED",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    },
+    "compare": [
+     {
+      "code": "NOT_GATED",
+      "kind": "NOTE"
+     }
+    ]
+   }
+  },
+  {
+   "id": "b6466337ad6257f8d945bf99b7474eae7f977c39f1c7399a5e8b2bc3508c491d",
+   "name": "not-gated/nothing-recorded",
+   "why": "no record and no decision: the NOTE alone",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "3c062623b76cc9b6e0274d9c4799a48104eb4d1a871164fd3f64d210de976267",
+    "receipt": "1b6607f26143c33f09888143592a4df45aef345ba1b370ce833e42af9e597185",
+    "recorded": {}
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "rescore": {
+     "form": null,
+     "code": "NOT_GATED",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    },
+    "compare": [
+     {
+      "code": "NOT_GATED",
+      "kind": "NOTE"
+     }
+    ]
+   }
+  },
+  {
+   "id": "fca7efed2871debcc151b0afc172b7f42b36fec8bc5a3cebc676b5fad5c6dbcd",
+   "name": "a2/the-working-copy-bar",
+   "why": "the working copy holds the bar moved from 0.5 to 0.1; Experiment scores the receipt PASS__a under its digest, which is the record the re-run carries",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "22e71c142686bfc9d40d71372b73616636842c37f3d45296b591585c135a0fed",
+    "receipt": "1b6607f26143c33f09888143592a4df45aef345ba1b370ce833e42af9e597185",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "9899af3d6b803eeb09304499af02e29fded4c8216ef25bf57dde2f63630fcc0a",
+   "name": "a2/visible-fence",
+   "why": "the sealed PREREG's fence is the plain form: the re-run's digest is unsealed and the sealed bar scores the receipt FAIL__a",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f65c308adb12cc3e6ba7a5841ef8b4dfc36a0118c35b12224faa3d4476f5aac5",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "FAIL__a",
+     "gates": {
+      "G0": false
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "FAIL__a",
+     "gates": {
+      "G0": false
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "FAIL__a",
+     "gates": {
+      "G0": false
+     },
+     "row": 1,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": [
+     {
+      "code": "DECISION_DIGEST_UNSEALED",
+      "kind": "FAIL"
+     },
+     {
+      "code": "VERDICT_DIFFERS",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "0029dee56ffa0c5e24d9cba15b99466d041aedaf217aae55a3e7ca9c1b233c35",
+   "name": "a2/hidden-fence/bom-on-line-1",
+   "why": "the sealed PREREG's fence sits bom on line 1: the scanner counts no fence, so the re-score reads NOT_GATED, and Experiment (styxx.seal's reading) refuses the PREREG; the re-run's recorded digest is unsealed",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "45d5eb2779c97bba0165998f153cf06ccfe3644b8e056b16f61386af4cd73a5a",
+    "receipt": "f65c308adb12cc3e6ba7a5841ef8b4dfc36a0118c35b12224faa3d4476f5aac5",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "rescore": {
+     "form": null,
+     "code": "NOT_GATED",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    },
+    "compare": [
+     {
+      "code": "DECISION_DIGEST_UNSEALED",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "5634845807fd85a0807958af6bf1f4b1b2f7a22e2b11d1eab41c211b82f5f4cb",
+   "name": "a2/hidden-fence/block-quote",
+   "why": "the sealed PREREG's fence sits block quote: the scanner counts no fence, so the re-score reads NOT_GATED, and Experiment (styxx.seal's reading) refuses the PREREG; the re-run's recorded digest is unsealed",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "ed4ee364cd2d276f6c87515899c6fc0310b46544df10ccb8660abf02a9cb03c1",
+    "receipt": "f65c308adb12cc3e6ba7a5841ef8b4dfc36a0118c35b12224faa3d4476f5aac5",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "rescore": {
+     "form": null,
+     "code": "NOT_GATED",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    },
+    "compare": [
+     {
+      "code": "DECISION_DIGEST_UNSEALED",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "24580793689c04080028db8a1fae126194d9bd5ba0ffe6d49edf356bb2c01642",
+   "name": "a2/hidden-fence/list-item",
+   "why": "the sealed PREREG's fence sits list item: the scanner counts no fence, so the re-score reads NOT_GATED, and Experiment (styxx.seal's reading) refuses the PREREG; the re-run's recorded digest is unsealed",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "d466b5c522b7b26325fc8778ab75fc0ef930695191aa82e2b0623cee6eba38da",
+    "receipt": "f65c308adb12cc3e6ba7a5841ef8b4dfc36a0118c35b12224faa3d4476f5aac5",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "select",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "init",
+     "message": "prereg has no ```gates block \u2014 nothing frozen to score against"
+    },
+    "rescore": {
+     "form": null,
+     "code": "NOT_GATED",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": null,
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    },
+    "compare": [
+     {
+      "code": "DECISION_DIGEST_UNSEALED",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "eda01858e1beba95c662beea10e1298e06461e0fc7a4391b216650888a4ad3bf",
+   "name": "refusal/scorer-refuses",
+   "why": "a metric the receipt does not hold: the refusal passes through",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "5993c4fc3dcf9d8b6b517f474611399b4a056c9bde7db715e3440e5c7dc2f82f",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "metric 'a' not present in result"
+    },
+    "experiment": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "metric 'a' not present in result"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    },
+    "compare": [
+     {
+      "code": "SCORER_REFUSES",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "cc043a7edc168a152e3ddf7eda3dd7dd470d5a33662887ab6ccf7998c1888d16",
+   "name": "refusal/smoke-ambiguous",
+   "why": "the two smoke conventions disagree: an input error passes through",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "5bc715351357664715206365a87246e93bbceb442d7cd687fcbc5ca0d18ee641",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SMOKE_AMBIGUOUS",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": null,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    },
+    "compare": [
+     {
+      "code": "SMOKE_AMBIGUOUS",
+      "kind": "INPUT"
+     }
+    ]
+   }
+  },
+  {
+   "id": "caf3ce1421e71cb3fc3b28a7ad6f4690647f83a41fad9bc84a123288563ac93c",
+   "name": "recorded/all-agree",
+   "why": "verdict, gates and digest equal the re-score",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "f872064f4dc607e83036ee02be23ac75c718b5b7b005dd2709830029962245c2",
+   "name": "recorded/digest-absent",
+   "why": "no recorded digest: (i) is not read, and a NOTE says so",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     }
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": [
+     {
+      "code": "RECORDED_DIGEST_ABSENT",
+      "kind": "NOTE"
+     }
+    ]
+   }
+  },
+  {
+   "id": "579912746b51c044fd71e162efdd8cec6113f3a6fb2fe76751466e1dce683169",
+   "name": "recorded/verdict-absent-gates-agree",
+   "why": "no recorded verdict: (ii) reads the recorded gates, which agree",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": [
+     {
+      "code": "RECORDED_VERDICT_ABSENT",
+      "kind": "NOTE"
+     }
+    ]
+   }
+  },
+  {
+   "id": "73eda17c87d312bd753c2e24c5ca62034f79f1356872918f71208d66581f5f65",
+   "name": "recorded/verdict-absent-gates-differ",
+   "why": "no recorded verdict, and the recorded gates are not the ones the sealed decision fires",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "gates": {
+      "G0": false
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": [
+     {
+      "code": "RECORDED_VERDICT_ABSENT",
+      "kind": "NOTE"
+     },
+     {
+      "code": "VERDICT_DIFFERS",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "602b8d080ce488a81fa340fbf18262d3207bea4302e8c8da19e0b28e8dfed1e0",
+   "name": "recorded/gates-differ-verdict-agrees",
+   "why": "the recorded verdict agrees and the recorded gates do not",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": false
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": [
+     {
+      "code": "VERDICT_DIFFERS",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "999627f7450ec48bb4c9aa5282ab9a03909580319d2a8e93b405b5f6e532631d",
+   "name": "recorded/verdict-differs",
+   "why": "the recorded verdict is not the sealed decision's",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "verdict": "FAIL__a",
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": [
+     {
+      "code": "VERDICT_DIFFERS",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "fb71cc4b06267fb1ff0b72c05c373c3382686d2a77b4b1ddfd15a23a780c5929",
+   "name": "recorded/nothing",
+   "why": "an empty record: both NOTEs",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {}
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": [
+     {
+      "code": "RECORDED_DIGEST_ABSENT",
+      "kind": "NOTE"
+     },
+     {
+      "code": "RECORDED_VERDICT_ABSENT",
+      "kind": "NOTE"
+     }
+    ]
+   }
+  },
+  {
+   "id": "d1313643a9d37625ce2b890a2d7b62e1c3b0afaef2e049d9199b5b3c8fb0fa2e",
+   "name": "sealed/empty-list",
+   "why": "a seal that holds no digest holds none the receipt records",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "sealed": []
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": [
+     {
+      "code": "DECISION_DIGEST_UNSEALED",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "a2a0cf00645828bb0219b13711b98d383ad978fa1702c92bd7effdbcc6424c13",
+   "name": "sealed/two-digests-one-held",
+   "why": "the recorded digest is one of the sealed ones",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "sealed": [
+     "f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0",
+     "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    ]
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "4a01b9e6ddf0dbc34df454c316271021a1e09f4c3aef802c20f6b4ce4d9afa73",
+   "name": "sealed/one-digest-as-a-string",
+   "why": "one digest passed as a string would be read character by character; compare refuses the type",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "sealed": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": {
+     "raises": "TypeError"
+    }
+   }
+  },
+  {
+   "id": "aa5b01c6e3ce2f3b52f8c34f45661513caf8e094e70ef0fdfdf58ba2749655ac",
+   "name": "declared/agrees",
+   "why": "the RESULT prints the sealed decision's verdict",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "declared": "PASS__a"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "2f547b9a83cb7b65948082212ebe422b03dc91930bfd2dfe4420077247d38042",
+   "name": "declared/differs",
+   "why": "the RESULT prints another verdict",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "declared": "FAIL__a"
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "row": 0,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": false,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": [
+     {
+      "code": "VERDICT_DIFFERS",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "078668eac18eeaa0650cc8c790e8cee3fda7261935e6208e8942034530218537",
+   "name": "smoke/recorded-smoke-verdict",
+   "why": "a smoke receipt recording the smoke verdict by type agrees; score_frozen has no smoke branch and finds no metric",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b",
+    "receipt": "e5a31d86b5ec0f1d079656a3815f25df1035c3650489d14bcb29f35377a0acc6",
+    "recorded": {
+     "verdict": "INVALID__smoke",
+     "gates": {},
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    }
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "metric 'a' not present in result"
+    },
+    "experiment": {
+     "verdict": "INVALID__smoke",
+     "gates": {},
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": null,
+     "verdict": "INVALID__smoke",
+     "gates": {},
+     "row": null,
+     "gates_sha256": "e09b809357b94e446bf73e0fde783132992c763367f75aa1466288e2bdc7785d",
+     "smoke": true,
+     "smoke_verdict": "INVALID__smoke",
+     "total": true,
+     "holes": 0,
+     "unreachable_rows": []
+    },
+    "compare": []
+   }
+  },
+  {
+   "id": "844cf74ebd1b76cf07a297dfde537852871f1eaa5e9f94bceb04ea424de901c6",
+   "name": "smoke/pointer-not-a-string",
+   "why": "a table whose receipt_pointer is not a string is refused for a smoke receipt as for a scored one; Experiment reads only the smoke verdict, score_frozen finds no metric",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "17c42c11a90f2466449a0715f59efd1b88ce159e4fc7a594e6821618613ea66d",
+    "receipt": "e5a31d86b5ec0f1d079656a3815f25df1035c3650489d14bcb29f35377a0acc6",
+    "recorded": {
+     "verdict": "INVALID__smoke",
+     "gates": {}
+    }
+   },
+   "agree": false,
+   "expect": {
+    "frozen": {
+     "raises": "GateSpecError",
+     "at": "score",
+     "message": "metric 'a' not present in result"
+    },
+    "experiment": {
+     "verdict": "INVALID__smoke",
+     "gates": {},
+     "gates_sha256": "51c8d31ce3310309cb6974d3be134471a3c46a3585765a814b7013c923d86f37"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "51c8d31ce3310309cb6974d3be134471a3c46a3585765a814b7013c923d86f37",
+     "smoke": true,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    },
+    "compare": [
+     {
+      "code": "SCORER_REFUSES",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  },
+  {
+   "id": "c8d75f00d60cd754429908964905b89777502691a1999e152be0f35530dc26b6",
+   "name": "smoke/pointer-not-a-string-scored-receipt",
+   "why": "the same table under a scored receipt: the scorers ignore the key and agree, rescore refuses it",
+   "file": "PREREG_synthetic.md",
+   "inputs": {
+    "prereg": "17c42c11a90f2466449a0715f59efd1b88ce159e4fc7a594e6821618613ea66d",
+    "receipt": "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0",
+    "recorded": {
+     "verdict": "PASS__a"
+    }
+   },
+   "agree": true,
+   "expect": {
+    "frozen": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "51c8d31ce3310309cb6974d3be134471a3c46a3585765a814b7013c923d86f37"
+    },
+    "experiment": {
+     "verdict": "PASS__a",
+     "gates": {
+      "G0": true
+     },
+     "gates_sha256": "51c8d31ce3310309cb6974d3be134471a3c46a3585765a814b7013c923d86f37"
+    },
+    "rescore": {
+     "form": "gates",
+     "code": "SCORER_REFUSES",
+     "verdict": null,
+     "gates": null,
+     "row": null,
+     "gates_sha256": "51c8d31ce3310309cb6974d3be134471a3c46a3585765a814b7013c923d86f37",
+     "smoke": false,
+     "smoke_verdict": null,
+     "total": null,
+     "holes": null,
+     "unreachable_rows": null
+    },
+    "compare": [
+     {
+      "code": "SCORER_REFUSES",
+      "kind": "FAIL"
+     }
+    ]
+   }
+  }
+ ],
+ "blobs": {
+  "17c42c11a90f2466449a0715f59efd1b88ce159e4fc7a594e6821618613ea66d": {
+   "utf8": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G0\": {\n   \"metric\": \"a\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G0\": true\n   },\n   \"verdict\": \"PASS__a\"\n  },\n  {\n   \"when\": {},\n   \"verdict\": \"FAIL__a\"\n  }\n ],\n \"smoke_verdict\": \"INVALID__smoke\",\n \"receipt_pointer\": 5\n}\n```\n"
+  },
+  "1b6607f26143c33f09888143592a4df45aef345ba1b370ce833e42af9e597185": {
+   "utf8": "{\n \"a\": 0.3\n}\n"
+  },
+  "22e71c142686bfc9d40d71372b73616636842c37f3d45296b591585c135a0fed": {
+   "utf8": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G0\": {\n   \"metric\": \"a\",\n   \"op\": \">=\",\n   \"value\": 0.1\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G0\": true\n   },\n   \"verdict\": \"PASS__a\"\n  },\n  {\n   \"when\": {},\n   \"verdict\": \"FAIL__a\"\n  }\n ],\n \"smoke_verdict\": \"INVALID__smoke\"\n}\n```\n"
+  },
+  "3c062623b76cc9b6e0274d9c4799a48104eb4d1a871164fd3f64d210de976267": {
+   "utf8": "# PREREG (synthetic)\n\nNo decision is sealed here; the plan is prose.\n"
+  },
+  "45d5eb2779c97bba0165998f153cf06ccfe3644b8e056b16f61386af4cd73a5a": {
+   "utf8": "\ufeff```gates\n{\n \"gates\": {\n  \"G0\": {\n   \"metric\": \"a\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G0\": true\n   },\n   \"verdict\": \"PASS__a\"\n  },\n  {\n   \"when\": {},\n   \"verdict\": \"FAIL__a\"\n  }\n ],\n \"smoke_verdict\": \"INVALID__smoke\"\n}\n```\n\nThe decision is the fence above.\n"
+  },
+  "5993c4fc3dcf9d8b6b517f474611399b4a056c9bde7db715e3440e5c7dc2f82f": {
+   "utf8": "{\n \"b\": 1.0\n}\n"
+  },
+  "5bc715351357664715206365a87246e93bbceb442d7cd687fcbc5ca0d18ee641": {
+   "utf8": "{\n \"a\": 0.9,\n \"smoke\": false,\n \"config\": {\n  \"smoke\": true\n }\n}\n"
+  },
+  "7cd4c78af7634d4014c662efd2f3e3ce175184c70f6a0545e35bc33bbd6c280b": {
+   "utf8": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n```gates\n{\n \"gates\": {\n  \"G0\": {\n   \"metric\": \"a\",\n   \"op\": \">=\",\n   \"value\": 0.5\n  }\n },\n \"outcomes\": [\n  {\n   \"when\": {\n    \"G0\": true\n   },\n   \"verdict\": \"PASS__a\"\n  },\n  {\n   \"when\": {},\n   \"verdict\": \"FAIL__a\"\n  }\n ],\n \"smoke_verdict\": \"INVALID__smoke\"\n}\n```\n"
+  },
+  "d466b5c522b7b26325fc8778ab75fc0ef930695191aa82e2b0623cee6eba38da": {
+   "utf8": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n- ```gates\n  {\n   \"gates\": {\n    \"G0\": {\n     \"metric\": \"a\",\n     \"op\": \">=\",\n     \"value\": 0.5\n    }\n   },\n   \"outcomes\": [\n    {\n     \"when\": {\n      \"G0\": true\n     },\n     \"verdict\": \"PASS__a\"\n    },\n    {\n     \"when\": {},\n     \"verdict\": \"FAIL__a\"\n    }\n   ],\n   \"smoke_verdict\": \"INVALID__smoke\"\n  }\n  ```\n"
+  },
+  "e5a31d86b5ec0f1d079656a3815f25df1035c3650489d14bcb29f35377a0acc6": {
+   "utf8": "{\n \"smoke\": true\n}\n"
+  },
+  "ed4ee364cd2d276f6c87515899c6fc0310b46544df10ccb8660abf02a9cb03c1": {
+   "utf8": "# PREREG (synthetic)\n\nThe decision is the one fence below.\n\n> ```gates\n> {\n>  \"gates\": {\n>   \"G0\": {\n>    \"metric\": \"a\",\n>    \"op\": \">=\",\n>    \"value\": 0.5\n>   }\n>  },\n>  \"outcomes\": [\n>   {\n>    \"when\": {\n>     \"G0\": true\n>    },\n>    \"verdict\": \"PASS__a\"\n>   },\n>   {\n>    \"when\": {},\n>    \"verdict\": \"FAIL__a\"\n>   }\n>  ],\n>  \"smoke_verdict\": \"INVALID__smoke\"\n> }\n> ```\n"
+  },
+  "f1ebcca8527f2016800ffb59b608f903ec816c8cd28f866551ee7f80a67cbdb0": {
+   "utf8": "{\n \"a\": 0.9\n}\n"
+  },
+  "f65c308adb12cc3e6ba7a5841ef8b4dfc36a0118c35b12224faa3d4476f5aac5": {
+   "utf8": "{\n \"a\": 0.3,\n \"verdict\": \"PASS__a\",\n \"gates\": {\n  \"G0\": true\n },\n \"gates_sha256\": \"f5d71aeb7e1bf0d05e184d49013d3513dcdc0fb9755275330d3339edd23f37a0\"\n}\n"
+  }
+ }
+}
