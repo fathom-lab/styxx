@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 """styxx.prereg_ci.cli: the commands, ``python -m styxx.prereg_ci <verb>`` (DESIGN 3.3).
 
-Step B2 builds ``seal``; step B7 adds ``lint``, ``stamp``, ``check``, ``ladder`` and ``census`` and
-the report. Exit codes follow DESIGN 3.3: 0 done, 2 input error, 3 UNCHECKABLE (a shallow clone, a
-missing commit, git that does not answer). ``seal`` decides nothing, so every refusal of it that is
-not UNCHECKABLE is an input error.
+Step B2 builds ``seal``; step B6 adds ``stamp``; step B7 adds ``lint``, ``check``, ``ladder`` and
+``census`` and the report. Exit codes follow DESIGN 3.3: 0 done, 2 input error, 3 UNCHECKABLE (a
+shallow clone, a missing commit, git that does not answer). ``seal`` and ``stamp`` decide nothing, so
+every refusal of either that is not UNCHECKABLE is an input error.
+
+``stamp PATH --rfc3161 TSA_URL | --ots [--commit C] [--go]`` is the one networked command: it sends
+the sha256 of the blob at the commit (HEAD by default; never the working copy) to an RFC 3161 TSA, or
+hands the blob to the OpenTimestamps client, and writes ``PATH.tsr`` or ``PATH.ots`` beside the file.
+Without ``--go`` it prints what it would send where and writes nothing, exit 2
+(``styxx.prereg_ci.time``).
 
 ``seal PATH [--commit C] [--append]`` prints the bytes the seal holds, their sha256 (the digest
 ``git show <commit>:<path> | sha256sum`` gives), the decision digest, the landing commit L, the add
@@ -33,6 +39,7 @@ from typing import Any, Dict, List, Optional
 
 from styxx.prereg_ci import core as _core
 from styxx.prereg_ci import git as _git
+from styxx.prereg_ci import time as _time
 
 __all__ = ["main"]
 
@@ -130,6 +137,31 @@ def _seal(args: argparse.Namespace) -> int:
     return 0
 
 
+def _stamp(args: argparse.Namespace) -> int:
+    """``stamp PATH --rfc3161 TSA_URL | --ots [--commit C] [--go]``: the one networked command (DESIGN
+    3.3). Without ``--go`` it prints what it would send where and writes nothing (exit 2); the blob at
+    the commit is stamped, never the working copy."""
+    if bool(args.rfc3161) == bool(args.ots):
+        raise _Input("name exactly one of --rfc3161 TSA_URL and --ots")
+    with _git._Repo(os.getcwd()) as repo:
+        top = repo._where()
+        rel = _repo_path(args.path, top)
+        try:
+            r = _time._stamp(repo, rel, rfc3161=args.rfc3161, ots=args.ots, commit=args.commit, go=args.go)
+        except _time._StampError as e:
+            raise _Input(str(e))
+    print(f"stamp {r['path']} at {r['commit']}: sha256 {r['sha256']} ({r['bytes']} bytes of the blob)")
+    print(f"  to {r['to']}; writes {r['writes']}")
+    if r["status"] != "WRITTEN":
+        print(f"REFUSED {r['detail']}")
+        return 2
+    print(f"  {r['detail']}")
+    if r.get("gen_time"):
+        print(f"  time {r['gen_time']} by {r.get('tsa') or 'a TSA that gave no name'} (policy {r.get('policy')}, "
+              f"serial {r.get('serial')})")
+    return 0
+
+
 def _parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(prog="python -m styxx.prereg_ci",
                                  description="prereg-ci: a sealed decision, the verdict it gives, and the sentences "
@@ -144,6 +176,15 @@ def _parser() -> argparse.ArgumentParser:
     s.add_argument("--append", action="store_true", help="append the line(s) to the manifest's working copy")
     s.add_argument("--manifest", default=_git._MANIFEST, help="the manifest, relative to the work tree's top")
     s.set_defaults(run=_seal)
+    t = sub.add_parser("stamp", help="write an outside time token beside a sealed file: the one networked command, "
+                                     "which refuses without --go")
+    t.add_argument("path", help="the sealed file, as a path from the working directory")
+    t.add_argument("--rfc3161", metavar="TSA_URL", help="send the blob's sha256 to this RFC 3161 TSA; writes PATH.tsr")
+    t.add_argument("--ots", action="store_true", help="hand the blob to the OpenTimestamps client on PATH; writes PATH.ots")
+    t.add_argument("--commit", default="HEAD", help="the commit whose blob is stamped (default HEAD); never the working copy")
+    t.add_argument("--go", action="store_true", help="send it; without --go the command prints what it would send and "
+                                                     "writes nothing")
+    t.set_defaults(run=_stamp)
     return ap
 
 
