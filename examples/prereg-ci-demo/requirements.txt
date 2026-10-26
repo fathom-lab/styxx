@@ -1,0 +1,5 @@
+# the versions eval.py's numbers were read under (examples/prereg-ci-demo/README.md);
+# styxx itself is installed apart (README.md, "what you need")
+numpy==2.4.4
+scikit-learn==1.8.0
+scipy==1.17.1
