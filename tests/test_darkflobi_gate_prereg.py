@@ -240,14 +240,22 @@ def test_lock_table_names_the_pin_the_snapshot_the_block_and_the_plugins_subtree
 
 
 # every AMENDMENT file of this folder, by topic, with the number of lock rows its own lock-row table states; the
-# lock-rows AMENDMENT prints the same table, and a test below reads it there too
-AMENDMENT_ROW_COUNTS = {"canary_replan": 2, "count_rule": 4, "lint_overclaims": 0, "lock_rows": 0, "posting_skill": 7}
-# the paths the amendments lock, together: the before-D0 move's ten files under W:gate/ and the posting skill
+# lock-rows AMENDMENT prints the same table for the five before-D0 files it was written with, and a test below reads it
+# there too; an AMENDMENT after it states its own count in its own lock-rows section
+AMENDMENT_ROW_COUNTS = {"canary_replan": 2, "count_rule": 4, "lint_overclaims": 0, "lock_rows": 0, "posting_skill": 7,
+                        "anchor_native": 9}
+LOCK_ROWS_TABLE_TOPICS = {"canary_replan", "count_rule", "lint_overclaims", "lock_rows", "posting_skill"}
+# the paths the amendments lock, together: the before-D0 move's ten files under W:gate/, the posting skill, and the
+# anchor's nine plugin files (F-1: index.js, native_import.cjs and README.md in both places, and three test files)
 AMENDED_PATHS = {
     "W:gate/gate.py", "W:gate/gate_verify.py", "W:gate/README.md", "W:gate/README_exhibit.md",
     "W:gate/canary_plan.py", "W:gate/tests/test_trailer_rule.py", "W:gate/tests/test_prepared_guard.py",
     "W:gate/tests/test_canary_plan.py", "W:gate/tests/test_gate.py", "W:gate/tests/test_gate_round2.py",
     "W:skills/styxx-post/SKILL.md",
+    "W:gate/plugin/index.js", "~/.clawdbot/extensions/styxx-gate/index.js",
+    "W:gate/plugin/native_import.cjs", "~/.clawdbot/extensions/styxx-gate/native_import.cjs",
+    "W:gate/plugin/README.md", "~/.clawdbot/extensions/styxx-gate/README.md", "W:gate/plugin/tests/run_tests.mjs",
+    "W:gate/plugin/tests/f1_native_deliver_probe.mjs", "W:gate/plugin/tests/fakes/import_deliver_v040.mjs",
 }
 AMENDMENT_NAME = re.compile(r"AMENDMENT_darkflobi_gate_([a-z0-9_]+?)_(\d{4}_\d{2}_\d{2})\.md")
 
@@ -295,11 +303,19 @@ def test_each_amendment_parses_to_the_lock_rows_its_table_states():
     assert via["W:gate/gate.py"] == ("AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md + "
                                      "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md")
     prereg = lock.parse_lock_rows(PREREG.read_text(encoding="utf-8"))
-    assert len(set(prereg) | set(rows)) == 84
-    # the lock-rows AMENDMENT states the same counts, one row of its table per file
+    # 84 for the before-D0 files, and the anchor's four new paths (F-1: the helper in both places, two test files)
+    assert len(set(prereg) | set(rows)) == 88
+    # the lock-rows AMENDMENT states the same counts for the five files it was written with, one row of its table each
     stated = dict(re.findall(r"^[ ]*\| `(AMENDMENT_darkflobi_gate_[a-z0-9_]+\.md)` \| (\d+) \|",
                              topics["lock_rows"].read_text(encoding="utf-8"), flags=re.M))
-    assert stated == {f.name: str(AMENDMENT_ROW_COUNTS[t]) for t, f in topics.items()}, stated
+    assert stated == {f.name: str(AMENDMENT_ROW_COUNTS[t]) for t, f in topics.items() if t in LOCK_ROWS_TABLE_TOPICS}, stated
+    # a later AMENDMENT states its own count, once, in its lock-rows section
+    for t, f in topics.items():
+        if t in LOCK_ROWS_TABLE_TOPICS:
+            continue
+        own = re.findall(r"^This file carries (\d+) rows? in `lock_hashes\.py`'s row form\.$",
+                         f.read_text(encoding="utf-8"), flags=re.M)
+        assert own == [str(AMENDMENT_ROW_COUNTS[t])], (f.name, own)
 
 
 def test_check_reads_amendment_rows_after_the_prereg_and_exits_2_on_a_clash(tmp_path, capsys):
@@ -1049,3 +1065,32 @@ def test_the_documents_are_lf_without_a_bom_in_the_blob():
         raw = p.read_bytes()
         assert not raw.startswith(b"\xef\xbb\xbf")
         assert raw.decode("utf-8")
+
+
+def test_rows_for_box_reads_every_file_of_the_installed_plugin_folder(tmp_path, capsys):
+    """F-1: gate.py's gate_sha256 hashes every file of the installed folder, so the lock reads every file there.
+
+    A file no row names (a stray `.new` left by a failed move) reads UNLOCKED under --strict; a named file the folder
+    does not hold reads NOT BUILT in the table."""
+    lock = _load(LOCK_PY, "lock_hashes")
+    w = tmp_path / "W"
+    (w / "gate").mkdir(parents=True)
+    home = tmp_path / "home"
+    inst = home / ".clawdbot" / "extensions" / "styxx-gate"
+    inst.mkdir(parents=True)
+    (inst / "index.js").write_bytes(b"// index\n")
+    (inst / "native_import.cjs").write_bytes(b"// helper\n")
+    pre = "~/.clawdbot/extensions/styxx-gate/"
+    rows = {p: (h, label) for label, p, h, _n in lock.rows_for_box(w, home)}
+    assert rows[pre + "index.js"] == (hashlib.sha256(b"// index\n").hexdigest(), "plugin as installed")
+    assert rows[pre + "native_import.cjs"] == (hashlib.sha256(b"// helper\n").hexdigest(), "plugin as installed")
+    assert rows[pre + "gate.js"][0] == lock.NOT_BUILT
+    assert pre + "native_import.cjs" in lock.PLUGIN_HOME
+    doc = tmp_path / "P.md"
+    doc.write_text("## 11. lock hashes\n\n| what | path | sha256 | note |\n|---|---|---|---|\n"
+                   + lock.markdown_rows(lock.rows_for_box(w, home)) + "\n", encoding="utf-8")
+    assert lock.check(doc, w, home, strict=True) == 0
+    capsys.readouterr()
+    (inst / "index.js.new").write_bytes(b"// a stray\n")
+    assert lock.check(doc, w, home, strict=True) != 0
+    assert "UNLOCKED     " + pre + "index.js.new" in capsys.readouterr().out

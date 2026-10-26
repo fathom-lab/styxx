@@ -117,14 +117,17 @@ OUTSIDE_W = (
     ("the X script (P0.5 not built: no check in it)", "W:ops/darkflobi-tweet.js"),
     ("the posting skill", "W:skills/styxx-post/SKILL.md"),
 )
-# the plugin as installed (OD-4; W:gate/plugin/README.md step 1 copies these six); hashed where it exists, else
-# NOT_BUILT; relative to the home folder
+# the plugin as installed (OD-4; W:gate/plugin/README.md step 1 copies these seven, native_import.cjs since F-1);
+# every regular file the folder holds is a row (gate.py's gate_sha256 hashes them all, so a file there that no row
+# names reads UNLOCKED), and a named file the folder does not hold is NOT_BUILT; relative to the home folder
+PLUGIN_HOME_DIR = "~/.clawdbot/extensions/styxx-gate/"
 PLUGIN_HOME = ("~/.clawdbot/extensions/styxx-gate/clawdbot.plugin.json",
                "~/.clawdbot/extensions/styxx-gate/index.js",
                "~/.clawdbot/extensions/styxx-gate/package.json",
                "~/.clawdbot/extensions/styxx-gate/README.md",
                "~/.clawdbot/extensions/styxx-gate/gate.js",
-               "~/.clawdbot/extensions/styxx-gate/patch_dist.js")
+               "~/.clawdbot/extensions/styxx-gate/patch_dist.js",
+               "~/.clawdbot/extensions/styxx-gate/native_import.cjs")
 
 # a lock row: | label | `path` | `sha256 (64 hex), or the pin (40 hex), or the not-built note` | note |
 ROW_RE = re.compile(r"^\|\s*(?P<label>[^|]*?)\s*\|\s*`(?P<path>[^`]+)`\s*\|\s*`(?P<hash>[0-9a-f]{64}|[0-9a-f]{40}|"
@@ -365,8 +368,16 @@ def rows_for_box(w_root: Path, home: Path, hashed: bool = True) -> list[tuple[st
         rows.append(("config_sha256", "W:gate/config.json", NOT_BUILT, cfg_note + "; appended under section 15 before the merge"))
     for label, rel in OUTSIDE_W:
         rows.append(file_row(label, rel, resolve(rel, w_root, home), "locked when the piece lands"))
+    pdir = resolve(PLUGIN_HOME_DIR, w_root, home)
+    held = set()
+    if pdir.is_dir():
+        for f in sorted(x for x in pdir.iterdir() if x.is_file()):
+            rel = PLUGIN_HOME_DIR + f.name
+            held.add(rel)
+            rows.append(file_row("plugin as installed", rel, f, "installed at the sitting (OD-4)"))
     for rel in PLUGIN_HOME:
-        rows.append(file_row("plugin as installed", rel, resolve(rel, w_root, home), "installed at the sitting (OD-4)"))
+        if rel not in held:
+            rows.append(("plugin as installed", rel, NOT_BUILT, "installed at the sitting (OD-4)"))
     return rows
 
 
