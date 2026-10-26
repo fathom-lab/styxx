@@ -26,7 +26,10 @@ populations B and C run the real block. The REPLICATIONS.md audit line is re-der
 names), derived here from the per-configuration blocks beside it.
 
 NOTHING IS WRITTEN OUTSIDE THIS FILE'S OWN RESULT. No committed certificate, capsule, receipt or charon
-line is touched; a move is reported, never repaired.
+line is touched; a move is reported, never repaired. A committed result is never rewritten either: the
+result of 261f11c1 (`oath_v15_numeral_reader_census_result.json`, which the NOTE swears to) stays as it was
+measured, and the script refuses to write over any tracked file. The default output since the review fixes
+is `oath_v15_numeral_reader_census_result_after_review.json`.
 
   python papers/closed-model-frontier/oath_v15_numeral_reader_census.py            # all populations
   python papers/closed-model-frontier/oath_v15_numeral_reader_census.py --quick    # population A only
@@ -51,7 +54,7 @@ import styxx.certify as C              # noqa: E402
 import styxx.charon as CH              # noqa: E402
 import styxx.corpus_audit as CA        # noqa: E402
 
-OUT = HERE / "oath_v15_numeral_reader_census_result.json"
+OUT = HERE / "oath_v15_numeral_reader_census_result_after_review.json"
 SCHEMA = "styxx-oath/numeral-reader-census/v1"
 COMPARED = ("verdict", "counts", "uncovered", "uncovered_items", "uncovered_excluded_by_rule", "ledger",
             "epistemics_summary", "ungrounded", "abstained")
@@ -221,12 +224,16 @@ def main(argv=None) -> int:
     ap.add_argument("--quick", action="store_true", help="population A only")
     ap.add_argument("--out", type=Path, default=OUT)
     a = ap.parse_args(argv)
+    tracked = subprocess.run(["git", "-C", str(ROOT), "ls-files", "--", str(a.out.resolve())], capture_output=True,
+                             text=True).stdout.strip()
+    if tracked:
+        raise SystemExit(f"REFUSED: {a.out} is a committed result (a receipt is history too); write a new file")
     t0 = time.time()
     head = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
     # the measurement names the commit it ran at; a dirty styxx/ or papers/ tree is said, never hidden
     porcelain = subprocess.run(["git", "-C", str(ROOT), "status", "--porcelain", "--", "styxx", "papers"],
                                capture_output=True, text=True).stdout.splitlines()
-    tree_clean = not [ln for ln in porcelain if not ln.endswith(OUT.name)]
+    tree_clean = not [ln for ln in porcelain if not ln.endswith(a.out.name)]
     certify_lf = hashlib.sha256((ROOT / "styxx/certify.py").read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
     # ---- population A
