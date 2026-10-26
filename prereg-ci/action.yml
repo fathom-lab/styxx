@@ -8,7 +8,8 @@ description: >-
   prints a sentence the landed row withdraws. It prints the time ladder, the outcome ladder with each
   gate's margin, the single-gate flip table and what it did not examine, into the job summary and a
   JSON report (styxx.prereg-ci/report/v0). Exit codes are the command's: 0 PASS, 1 FAIL, 2 an input
-  error, 3 UNCHECKABLE; report-only "true" prints the verdict and exits 0. It needs full history: the
+  error, 3 UNCHECKABLE, 4 an internal error (ERROR: no verdict was read); report-only "true" prints
+  the verdict and exits 0. It needs full history: the
   checkout this action runs (checkout "true") checks out the head commit with fetch-depth: 0 and the
   partial-clone filter blob:none, so the head's blobs come in the checkout's one batch and git fetches
   the older blobs the check reads from the repository's own remote while it runs; a caller that checks
@@ -95,7 +96,7 @@ inputs:
 
 outputs:
   verdict:
-    description: "PASS, FAIL, INPUT_ERROR or UNCHECKABLE."
+    description: "PASS, FAIL, INPUT_ERROR, UNCHECKABLE or ERROR (an exit code outside 0-3)."
     value: ${{ steps.check.outputs.verdict }}
   exit-code:
     description: "The command's exit code (0, 1, 2 or 3), whatever report-only does with it."

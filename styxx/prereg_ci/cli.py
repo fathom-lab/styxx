@@ -13,6 +13,10 @@ Exit codes (DESIGN 3.3, the audit-claims contract plus one): 0 PASS (or nothing 
 an input error, 3 UNCHECKABLE (a shallow clone, a missing commit, git that does not answer, a cover past
 its budget, ``openssl`` absent under ``require_time = T3a``). When one run reads a refusal and also an
 input error or an unchecked reading, the refusal decides the code (1) and the report lists the rest.
+A ``--json`` or ``--summary`` path that does not write is an input error (2, or 1 when the reading
+refused something). An exception none of these readings names is no verdict: it prints ``ERROR`` and
+the exception, and exits 4 (the Action's ERROR), never 1, the code Python gives an uncaught one, which
+would read as FAIL.
 ``seal`` and ``stamp`` decide nothing, so every refusal of either that is not UNCHECKABLE is an input
 error. Step B2 built ``seal``, step B6 ``stamp``; step B7 adds the rest and the report
 (``styxx.prereg_ci.report``). The verbs are this module's, run as ``python -m styxx.prereg_ci``, as
@@ -877,12 +881,22 @@ def _run_check(repo: _git._Repo, base: str, head: str, args: argparse.Namespace)
 
 
 def _emit(report: Dict[str, Any], lines: Sequence[str], args: argparse.Namespace) -> int:
+    """Print the reading, then write the JSON report and append the summary; a path that does not
+    write is an input error after the reading (exit 2, or 1 when the reading refused something)."""
     for ln in lines:
         print(ln)
-    if getattr(args, "json", None):
-        _report._write(args.json, _report._dumps(report))
-    if getattr(args, "summary", None):
-        _report._write(args.summary, _report._markdown(_report._jsonable(report)).encode("utf-8"), append=True)
+    writes = (("json", lambda path: _report._write(path, _report._dumps(report))),
+              ("summary", lambda path: _report._write(
+                  path, _report._markdown(_report._jsonable(report)).encode("utf-8"), append=True)))
+    for flag, write in writes:
+        path = getattr(args, flag, None)
+        if not path:
+            continue
+        try:
+            write(path)
+        except OSError as e:
+            print(f"REFUSED --{flag} {path} does not write: {e.strerror or e}")
+            return 1 if report["exit"] == 1 else 2
     return report["exit"]
 
 
@@ -1290,6 +1304,9 @@ def _parser() -> argparse.ArgumentParser:
     return ap
 
 
+_CRASH = 4                                            # outside DESIGN 3.3's four codes; the Action reads ERROR
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     """Run one verb; returns its exit code (argparse exits 2 itself on arguments it does not take)."""
     args = _parser().parse_args(argv)
@@ -1304,6 +1321,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     except _git._Refusal as e:
         print(f"REFUSED {e.code}: {e.detail}")
         return 3 if e.kind == "UNCHECKABLE" else 2
+    except Exception as e:                            # noqa: BLE001 - a crash is no verdict, so never exit 1
+        import traceback
+        traceback.print_exc()
+        print(f"ERROR  {type(e).__name__}: {e} (an internal error: no verdict was read, exit {_CRASH})")
+        return _CRASH
 
 
 if __name__ == "__main__":

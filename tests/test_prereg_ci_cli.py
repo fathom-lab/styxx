@@ -541,6 +541,32 @@ def test_census_rederives_every_receipt_at_a_revision_and_tallies_them(tmp_path,
     assert "VERDICT_DIFFERS other/receipt.json" in out and '"VERDICT_DIFFERS": 1' in out
 
 
+def test_a_report_path_that_does_not_write_is_an_input_error_and_a_crash_is_no_verdict(tmp_path, capsys,
+                                                                                       monkeypatch):
+    """The B7 review's F5: ``--json`` naming a directory raised out of main (exit 1, which the Action
+    reads as FAIL). It is now exit 2 after the reading, or 1 when the reading refused something; an
+    exception no reading names exits 4, the Action's ERROR, with the exception printed."""
+    g, rec = demo(tmp_path)
+    d = tmp_path / "a_directory"
+    d.mkdir()
+    code, out = run(g, "check", "--base", "main", "--head", "result", "--json", str(d), capsys=capsys)
+    assert code == 2 and f"REFUSED --json {d} does not write" in out and "PASS  exit 0" in out, out
+    code, out = run(g, "check", "--base", "main", "--head", "result", "--summary", str(d), capsys=capsys)
+    assert code == 2 and "REFUSED --summary" in out, out
+    g("switch", "-q", "-c", "typed", "result")
+    g.write("RESULT_digits.md", result_md("HOLD__calibration"))
+    g.commit("type the verdict")
+    code, out = run(g, "check", "--base", "result", "--head", "typed", "--json", str(d), capsys=capsys)
+    assert code == 1 and "FAIL VERDICT_DIFFERS" in out and "REFUSED --json" in out, out
+
+    def boom(*a, **k):
+        raise RuntimeError("a reader that broke")
+
+    monkeypatch.setattr(cli, "_run_check", boom)
+    code, out = run(g, "check", "--base", "result", "--head", "typed", capsys=capsys)
+    assert code == 4 and "ERROR  RuntimeError: a reader that broke" in out, out
+
+
 def test_the_python_dash_m_entry_runs_check(tmp_path):
     g, rec = demo(tmp_path)
     env = dict(os.environ, PYTHONPATH=str(ROOT), PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1")
