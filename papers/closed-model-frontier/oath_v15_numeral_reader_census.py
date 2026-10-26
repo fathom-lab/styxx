@@ -347,9 +347,14 @@ def main(argv=None) -> int:
             rep = CH.verify_log(ROOT / "papers/charon/charon.log.jsonl", ROOT)
             per_config[name]["capsules"] = {"total": len(cap_rows), "ok": sum(1 for c in cap_rows if c["ok"]),
                                             "rows": cap_rows}
-            per_config[name]["charon"] = {"lines": len(rep.get("rows", [])), "by_status": rep.get("by_status"),
-                                          "skew_lines": [{"seq": r.get("seq"), "name": r.get("name"), "kind": r.get("kind")}
-                                                         for r in rep.get("rows", []) if r.get("status") == "SKEW"]}
+            # verify_log reports its rows under `lines` (the earlier draft read `rows`, a key it does not write,
+            # and so counted 0 lines and listed no SKEW line; by_status was right)
+            lines = rep.get("lines") or []
+            per_config[name]["charon"] = {"lines": len(lines), "by_status": rep.get("by_status"),
+                                          "line_status": [[r.get("seq"), r.get("kind"), r.get("status")] for r in lines],
+                                          "skew_lines": [{"seq": r.get("seq"), "name": r.get("name"), "kind": r.get("kind"),
+                                                          "fields_changed": r.get("fields_changed")}
+                                                         for r in lines if r.get("status") == "SKEW"]}
             print(name, "capsules ok", per_config[name]["capsules"]["ok"], "/", len(cap_rows), "charon",
                   rep.get("by_status"), round(time.time() - t, 1), "s", flush=True)
     restore_shipped()
