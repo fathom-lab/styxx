@@ -1,0 +1,167 @@
+name: "styxx prereg-ci"
+description: >-
+  A sealed decision, the verdict it gives, and the sentences that rest on it. On a pull request it
+  re-derives the verdict of every receipt the pull request writes, or a RESULT it changes names, from
+  the PREREG's sealed bytes (the gates table, or the locked scorer at its sealed blobs), and refuses a
+  receipt or RESULT whose verdict differs, a receipt scored under a decision digest no seal holds, a
+  committed receipt rewritten in place, a sealed decision edited, and a shipped surface that still
+  prints a sentence the landed row withdraws. It prints the time ladder, the outcome ladder with each
+  gate's margin, the single-gate flip table and what it did not examine, into the job summary and a
+  JSON report (styxx.prereg-ci/report/v0). Exit codes are the command's: 0 PASS, 1 FAIL, 2 an input
+  error, 3 UNCHECKABLE; report-only "true" prints the verdict and exits 0. It needs full history: the
+  checkout this action runs (checkout "true") checks out the head commit with fetch-depth: 0 and the
+  partial-clone filter blob:none, so the head's blobs come in the checkout's one batch and git fetches
+  the older blobs the check reads from the repository's own remote while it runs; a caller that checks
+  out itself sets checkout "false", uses fetch-depth: 0, and keeps a working tree checked out (with
+  blob:none and no checkout, every blob read is fetched on its own). Grant the job
+  contents: read and nothing else, and pin this action by commit sha in the uses: line. The check
+  opens no connection of its own: no time-stamp authority, no OpenTimestamps calendar, no forge API
+  (the server rung prints "not read"). Policies come from prereg-ci.toml as the base commit holds it,
+  and an input here wins over the file.
+author: "Fathom Lab"
+branding:
+  icon: "check-square"
+  color: "gray-dark"
+
+inputs:
+  base:
+    description: "The base commit: the pull request's target (on a push, the commit before it)."
+    required: false
+    default: ${{ github.event.pull_request.base.sha || github.event.before }}
+  head:
+    description: "The head commit: the pull request's head (on a push, the pushed commit)."
+    required: false
+    default: ${{ github.event.pull_request.head.sha || github.sha }}
+  checkout:
+    description: >-
+      Run actions/checkout with fetch-depth: 0 and filter: blob:none before the check. Set "false"
+      when the job has checked out the repository itself with full history.
+    required: false
+    default: "true"
+  report-only:
+    description: >-
+      "true" prints the verdict, writes the report and the outputs, and exits 0 on every verdict (the
+      lab runs it so through its measurement window); "false" passes the command's exit code on.
+    required: false
+    default: "false"
+  immutability:
+    description: "C0 policy: gates (prose moved around a sealed fence is printed) or file (refused). Empty: the config, else gates."
+    required: false
+    default: ""
+  amend-after-data:
+    description: "C4 policy: report or fail an amendment that governs after a receipt under the old decision. Empty: the config, else report."
+    required: false
+    default: ""
+  receipt-rewrite:
+    description: "C1 policy: fail or note a committed receipt changed in place. Empty: the config, else fail."
+    required: false
+    default: ""
+  require-time:
+    description: "The rung a seal must read: T1 (author order) or T3a (an RFC 3161 token verified offline). Empty: the config, else T1."
+    required: false
+    default: ""
+  preregistered-word:
+    description: "A RESULT that calls itself preregistered below T3a: note or fail. Empty: the config, else note."
+    required: false
+    default: ""
+  exclude:
+    description: "Repository-relative path prefixes the pairing and the licence scan leave out, one per line. Empty: the config's."
+    required: false
+    default: ""
+  out-dir:
+    description: "Where the JSON report is written."
+    required: false
+    default: "${{ runner.temp }}/prereg-ci"
+  python-version:
+    description: "Run actions/setup-python with this version before anything else; empty uses the job's Python."
+    required: false
+    default: ""
+  styxx-source:
+    description: >-
+      What to pip install to get styxx.prereg_ci. Default: the action's own checkout, so the checker is
+      the bytes at the commit the action is pinned to. Empty skips the install because the job already
+      installed it.
+    required: false
+    default: "${{ github.action_path }}/.."
+
+outputs:
+  verdict:
+    description: "PASS, FAIL, INPUT_ERROR or UNCHECKABLE."
+    value: ${{ steps.check.outputs.verdict }}
+  exit-code:
+    description: "The command's exit code (0, 1, 2 or 3), whatever report-only does with it."
+    value: ${{ steps.check.outputs.exit-code }}
+  report:
+    description: "Path of the JSON report (styxx.prereg-ci/report/v0)."
+    value: ${{ steps.check.outputs.report }}
+
+runs:
+  using: "composite"
+  steps:
+    - if: ${{ inputs.checkout == 'true' }}
+      uses: actions/checkout@v4
+      with:
+        # the head commit's tree is the one the check reads, so its blobs arrive in the checkout's one batch;
+        # history's blobs are fetched as the check reads them
+        ref: ${{ inputs.head }}
+        fetch-depth: 0
+        filter: blob:none
+    - if: ${{ inputs.python-version != '' }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+    - if: ${{ inputs.styxx-source != '' }}
+      shell: bash
+      env:
+        STYXX_SOURCE: ${{ inputs.styxx-source }}
+      run: python -m pip install --quiet "$STYXX_SOURCE"
+    - id: check
+      shell: bash
+      env:
+        # every input reaches the shell through the environment; none is spliced into the script
+        PREREG_CI_BASE: ${{ inputs.base }}
+        PREREG_CI_HEAD: ${{ inputs.head }}
+        PREREG_CI_REPORT_ONLY: ${{ inputs.report-only }}
+        PREREG_CI_IMMUTABILITY: ${{ inputs.immutability }}
+        PREREG_CI_AMEND_AFTER_DATA: ${{ inputs.amend-after-data }}
+        PREREG_CI_RECEIPT_REWRITE: ${{ inputs.receipt-rewrite }}
+        PREREG_CI_REQUIRE_TIME: ${{ inputs.require-time }}
+        PREREG_CI_PREREGISTERED_WORD: ${{ inputs.preregistered-word }}
+        PREREG_CI_EXCLUDE: ${{ inputs.exclude }}
+        PREREG_CI_OUT: ${{ inputs.out-dir }}
+      run: |
+        set -u
+        mkdir -p "$PREREG_CI_OUT"
+        report="$PREREG_CI_OUT/report.json"
+        args=(check --base "$PREREG_CI_BASE" --head "$PREREG_CI_HEAD" --json "$report")
+        if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then args+=(--summary "$GITHUB_STEP_SUMMARY"); fi
+        if [ -n "$PREREG_CI_IMMUTABILITY" ]; then args+=(--immutability "$PREREG_CI_IMMUTABILITY"); fi
+        if [ -n "$PREREG_CI_AMEND_AFTER_DATA" ]; then args+=(--amend-after-data "$PREREG_CI_AMEND_AFTER_DATA"); fi
+        if [ -n "$PREREG_CI_RECEIPT_REWRITE" ]; then args+=(--receipt-rewrite "$PREREG_CI_RECEIPT_REWRITE"); fi
+        if [ -n "$PREREG_CI_REQUIRE_TIME" ]; then args+=(--require-time "$PREREG_CI_REQUIRE_TIME"); fi
+        if [ -n "$PREREG_CI_PREREGISTERED_WORD" ]; then args+=(--preregistered-word "$PREREG_CI_PREREGISTERED_WORD"); fi
+        while IFS= read -r prefix; do
+          prefix="${prefix%$'\r'}"
+          if [ -n "$prefix" ]; then args+=(--exclude "$prefix"); fi
+        done <<< "$PREREG_CI_EXCLUDE"
+        code=0
+        python -m styxx.prereg_ci "${args[@]}" || code=$?
+        case "$code" in
+          0) verdict=PASS ;;
+          1) verdict=FAIL ;;
+          2) verdict=INPUT_ERROR ;;
+          3) verdict=UNCHECKABLE ;;
+          *) verdict=ERROR ;;
+        esac
+        if [ -n "${GITHUB_OUTPUT:-}" ]; then
+          {
+            echo "verdict=$verdict"
+            echo "exit-code=$code"
+            echo "report=$report"
+          } >> "$GITHUB_OUTPUT"
+        fi
+        if [ "$PREREG_CI_REPORT_ONLY" = "true" ]; then
+          echo "prereg-ci: $verdict (exit $code); report-only, so this step exits 0"
+          exit 0
+        fi
+        exit "$code"
