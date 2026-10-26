@@ -389,8 +389,8 @@ PY_PLANTS = [
     ("the summary never read", "        self.summary = _P2A_EMOJI_RX.sub(_P2A_EMOJI_AS, summary)",
      '        self.summary = ""'),
     ("the scope's second prefix never read",
-     '            ps = [fm(x).rstrip("/.") for x in (prefixes if shaped else prefixes[:1])]',
-     '            ps = [fm(x).rstrip("/.") for x in prefixes[:1]]'),
+     '            rs = [_p2a_readings(x, fm, paths + moved) for x in (prefixes if shaped else prefixes[:1])]',
+     '            rs = [_p2a_readings(x, fm, paths + moved) for x in prefixes[:1]]'),
     # pass 4 (NOTE_path2a_fourth_pass_2026_09_30)
     ("V121's reading of the leading prefix's shape dropped", '    if d.get("prefix2") and not got["K", False][0]:',
      "    if False:"),
@@ -878,7 +878,8 @@ def test_the_fourth_reviews_scope_reproductions(monkeypatch):
     """B-1 (NOTE_path2a_fourth_pass_2026_09_30): main reads `github` as a path only because `.github` loses its dot, and
     a rendering fault or a rename makes its verdict false; V121 says the prefix is not a path. Each false verdict is
     attributable and must be withheld, at the raw door and, for the rename, at the git door too. On ea677740 all four
-    readings kept main's verdict."""
+    readings kept main's verdict. Since #174 (fix/diffgate-174-175) main reads the rename's old path, docs/x.md,
+    outside the prefixes and abstains itself at both doors, so two readings are left for the overlay to withhold."""
     M = R.main_module()
     V = variants()
     seen = []
@@ -893,6 +894,10 @@ def test_the_fourth_reviews_scope_reproductions(monkeypatch):
             a = run(M).to_dict()
             b = run(N).to_dict()
             assert R.relation(a, b, False, N._P2A_PHRASES) == [], (it["id"], door)
+            if it["id"] == "git-rename-into-dotted-dir":
+                assert [(x["verdict"], x["why"]) for x in a["claims"]] == [("UNCHECKABLE", WHY_174)], (door, a)
+                assert b["claims"] == a["claims"], (door, b)
+                continue
             vs = {k: run(mod).to_dict()["claims"] for k, mod in V.items()}
             for i, x, t, who in judge(it["model"], a["claims"], vs):
                 assert T.wrong(x["verdict"], t) and who, (it["id"], door, x, t, who)
@@ -900,7 +905,11 @@ def test_the_fourth_reviews_scope_reproductions(monkeypatch):
                 assert y["verdict"] == "UNCHECKABLE" and R.phrase_key(y["why"], N._P2A_PHRASES) == "shape", \
                     (it["id"], door, y)
                 seen.append((it["id"], door))
-    assert len(seen) == 4, seen
+    assert len(seen) == 2, seen
+
+
+WHY_174 = ("every changed path lies under the prefix, but not the old path of a rename; git lists it as deleted where it "
+           "reads no rename, and this template does not decide whether the claim covers it (#174)")
 
 
 # ---- pass 11: the tenth coverage review's single-prefix cases, kept (operator option O-10) ----------------------------

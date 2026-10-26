@@ -51,8 +51,12 @@ FIXTURE = ROOT / "tests" / "fixtures" / "path2a_repros.json"
 # them. So relation (A), the lockstep and bar C run against the new main in both languages, and every figure they pin
 # was measured again on it. The one-sided #178 then narrowed the tests count's abstention to a claim at or below the
 # larger count, in both files (91d45e3a... and ba76562c... were the two before it); the block did not move.
-MAIN_PY_SHA = "969abb0df7eada6ff4e2c6b8fceb5af3056f19447e152bb1b48695712eedec62"
-MAIN_JS_SHA = "1097d2fb6a2484e64aeb5a5d3cd3c554a8b42d6ef11e9c204a8c53d981d35324"
+# fix/diffgate-174-175 then changed the reader and main's port outside the block on reading paths (969abb0d... and
+# 1097d2fb... were the two): `only_touches` reads a rename's old path (#174) and resolves `.` and `..` prefix segments
+# (#175); the block's model of main's scope reading reads both. So relation (A), the lockstep and bar C run against
+# the new main in both languages, and every figure they pin was measured again on it.
+MAIN_PY_SHA = "6944190cd9c52f81d04dbd3628a14ac11dbb2ed4d2b5eb2a1a9f348f224c3305"
+MAIN_JS_SHA = "e32bb9ddb2e52118576c3512330e2f16bf76e7f8ae9a932adc07bc9df3bb60f3"
 FUZZ_SHA = "2e80cd1d5a42e867d2a2581619976580a1f492820cbfc6d446618cbb8202b91f"      # corpus_fuzz.json, never committed
 
 _MARK = "=== PATH-2a abstain-only overlay: "
@@ -165,8 +169,9 @@ def main_port_path(tmp: Path) -> Path:
 # ---- inputs -------------------------------------------------------------------------------------------------------
 
 # The moves files, in the order check_pairs.js and tests/test_port_is_current.py apply them: the overlay's moves of
-# main's pinned claims (PATH-2a), then the pinned claims main's line reading moved (#205, fix/diffgate-205-206).
-MOVES_FILES = ("path2a_moves.json", "issue205_moves.json")
+# main's pinned claims (PATH-2a), then the pinned claims main's line reading moved (#205, fix/diffgate-205-206), then
+# those main's reading of a rename's old path moved (#174, fix/diffgate-174-175).
+MOVES_FILES = ("path2a_moves.json", "issue205_moves.json", "issue174_moves.json")
 
 
 def moved_expect(name: str, pair: dict) -> dict:

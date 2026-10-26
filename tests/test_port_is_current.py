@@ -149,16 +149,20 @@ MOVES = DIFFERENTIAL / "path2a_moves.json"
 # #205: the pinned claims main's new line reading moves, in the same form, applied after the overlay's (check_pairs.js
 # reads the two files in this order too)
 MOVES_205 = DIFFERENTIAL / "issue205_moves.json"
+# #174: the pinned claims main's reading of a rename's old path moves, applied after #205's
+MOVES_174 = DIFFERENTIAL / "issue174_moves.json"
 
 
 def _moves() -> list[dict]:
     """PATH-2a: pinned claims of main's files that the overlay moves (NOTE_path2a_abstain_overlay_2026_09_30); then
-    #205's, pinned claims main's line reading moves since fix/diffgate-205-206."""
-    return [m for f in (MOVES, MOVES_205) for m in json.loads(f.read_text(encoding="utf-8"))["moves"]]
+    #205's, pinned claims main's line reading moves since fix/diffgate-205-206; then #174's, pinned claims main's
+    reading of a rename's old path moves since fix/diffgate-174-175."""
+    return [m for f in (MOVES, MOVES_205, MOVES_174) for m in json.loads(f.read_text(encoding="utf-8"))["moves"]]
 
 
 def _expected(name: str, pair: dict) -> dict:
-    """The pinned expect, with any PATH-2a or #205 move applied, in order, after checking the claim still reads `from`."""
+    """The pinned expect, with any PATH-2a, #205 or #174 move applied, in order, after checking the claim still reads
+    `from`."""
     expect = json.loads(json.dumps(pair["expect"]))
     for m in _moves():
         if m["file"] == name and m["id"] == pair["id"]:
@@ -192,9 +196,9 @@ def test_every_path2a_move_names_a_pinned_claim_and_is_whitelisted():
         assert list(expect["claims"][m["claim"]]) == m["from"]
     allowed = {l[1:].strip() for l in (DIFFERENTIAL / ".gitignore").read_text(encoding="utf-8").splitlines()
                if l.startswith("!")}
-    assert MOVES.name in allowed and MOVES_205.name in allowed
-    assert re.search(r'const MOVES = \["path2a_moves\.json", "issue205_moves\.json"\]',
-                     CHECK_PAIRS.read_text(encoding="utf-8")), "check_pairs.js does not read both moves files in order"
+    assert MOVES.name in allowed and MOVES_205.name in allowed and MOVES_174.name in allowed
+    assert re.search(r'const MOVES = \["path2a_moves\.json", "issue205_moves\.json", "issue174_moves\.json"\]',
+                     CHECK_PAIRS.read_text(encoding="utf-8")), "check_pairs.js does not read the three moves files in order"
 
 
 def test_the_javascript_port_agrees_on_every_pinned_pair():
