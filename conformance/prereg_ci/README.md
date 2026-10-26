@@ -1,0 +1,373 @@
+# The prereg-ci conformance set
+
+Step B0 of the prereg-ci build: vectors for the two gates scorers the lab ships
+(`styxx.research_capsule.score_frozen` and `styxx.protocol.Experiment.score`), for prereg-ci's
+re-score (`styxx.prereg_ci.core.rescore` and `.compare`), and for the cube-split cover that reads a
+table's totality with no gate cap. Label: conformance vectors for the gates scorers and the table
+cover; no claim.
+
+## What is here
+
+| file | what it is |
+|---|---|
+| `vectors_score.json` | one vector per census record, per R2 replay and per synthetic case; each names its PREREG and receipt by sha256 and holds the outcome of every leg |
+| `vectors_cover.json` | outcome tables (gate names and `when` rows) with the exact counts of holes and of landings per row |
+| `blobs.json` | every byte object a score vector names, keyed by sha256; the lab's committed bytes as base64, synthetic ones as UTF-8 text |
+| `replay.py` | the reference legs and the brute force; it imports nothing from `styxx.prereg_ci` |
+| `gen_vectors.py` | builds the set from styxx's history at `REV` (in `__init__.py`), checks every vector, and writes the three JSON files |
+| `vectors_compare.json` | added after the B0 review, beside the committed set: synthetic vectors for every code `compare` returns, the A.2 re-run through a fence the scanner does not count, and the readings the review asked for; its bytes are in its own `blobs` |
+| `gen_vectors_compare.py` | builds `vectors_compare.json` from cases that state their outcome in advance; reads no history |
+| `rescore_census_ca347730.txt`, `seal_rule_ca347730.txt`, `landing_order_ca347730.txt`, `pairs_ca347730.txt` | added at step B1: the design's R1, RV1 and RV2 outputs and RV2's pair list, copied; see "The history the git layer reproduces" |
+| `seals_manifest_from_SEALS_2026_09_13.jsonl` | added at step B2: the eight rows of `papers/checksum/SEALS_2026_09_13.md` as seals manifest lines; see "The SEALS record as manifest lines" |
+| `gen_seals_manifest.py` | builds that file from the SEALS blob at `REV` and checks it; prints R10's `MATCH` lines |
+| `vectors_fence.json` | added at step B3: the fence scanner with its info string as a parameter, for `gates`, `result` and `locks`, and what a RESULT declares; see "The fence scanner and the RESULT readers" |
+| `gen_vectors_fence.py` | builds `vectors_fence.json` from cases that state their outcome in advance; reads no history |
+| `vectors_fence_containers.json` | added after the B3 review: result and locks fences inside containers, where that rule stops, and RESULT bytes in wide encodings and binary files; see "The fence scanner and the RESULT readers" |
+| `gen_vectors_fence_containers.py` | builds `vectors_fence_containers.json` from cases that state their outcome in advance; reads no history |
+| `locks/LOCKS_checksum_deploy_quant_reconstructed.md` | added at step B4: the checksum scorer's deploy-quant path as a locks decision, a RECONSTRUCTION (never sealed, not a catch); see "The locks form and the checksum scorer" |
+| `gen_locks_checksum.py` | builds that file from `papers/checksum/score.py`'s blob at `f0ec5605`, whose sha256 and grammar lines it pins |
+| `reconstructed/external1_reconstructed.md` | added at step B5: the design's RV4 table, two of EXTERNAL-1's rules as a gates table whose failing row carries the licence form, a RECONSTRUCTION (written 2026-10-24 after the result; never sealed, not a catch), copied byte for byte; see "The licences and the surface scan" |
+| `licence_replay_ca347730.txt`, `external1_rescore_ca347730.txt` | added at step B5: the design's RV3 and RV4 outputs, copied (CRLF read as LF, as the step B1 copies were); see "The licences and the surface scan" |
+| `vectors_licence.json` | added at step B5: `core.licences` over synthetic PREREGs and surfaces, each outcome stated before the run; see "The licences and the surface scan" |
+| `gen_vectors_licence.py` | builds `vectors_licence.json` from cases that state their outcome in advance; reads no history |
+
+The JSON files are generated, never edited by hand. `tests/test_prereg_ci_score_vectors.py` and
+`tests/test_prereg_ci_cover.py` replay every vector; only the checks that read history skip, when
+`REV` is not in the object store, and they say so.
+
+## What a score vector is
+
+Inputs: the PREREG bytes, the receipt bytes (parsed with `json.loads`), and for a vector that
+compares, what the record states (`recorded`), the digests a seal holds (`sealed`) and a RESULT's
+verdict (`declared`). The id is the sha256 of the sorted, compact JSON of the name and the inputs.
+The legs:
+
+- `frozen`: `score_frozen` over `protocol._select_gates_block` of the bytes decoded as UTF-8, with
+  no newline translation and no smoke branch;
+- `experiment`: `Experiment(path).score(receipt, smoke=bool(receipt.get("smoke")))` over the PREREG
+  written to disk and committed to a repository built for the run, which is how `styxx.seal` scores
+  a pair;
+- `rescore`: prereg-ci's reading, pinned on the keys the vector holds, so a key added later to its
+  output moves no committed vector;
+- `compare`: the findings of `compare`, pinned on code and kind.
+
+An outcome is `{verdict, gates, gates_sha256}` or `{raises, at, message}`; the message is pinned for
+`GateSpecError` only, since a Python error's text may move between interpreter versions and its
+class does not. `agree` is true when `frozen` and `experiment` both refuse, or both give the same
+verdict, gates and digest. Every vector on which they part ways says why, and the test pins the
+list by name, so a new divergence is never silent. They fall in three groups: the differences of
+DESIGN K1 (a bar that is not a finite number, a row naming an undeclared gate, a malformed row the
+Experiment never reaches, a verdict that is not a string, an empty gates object, and the smoke
+branch only `Experiment.score` has), the newline reading (a CRLF or lone-CR blob, which
+`Experiment` reads through universal newlines and a raw decode does not), and prereg-ci's own smoke
+readings.
+
+## What a compare vector is
+
+`vectors_compare.json` holds the same legs as a score vector (`frozen`, `experiment`, `rescore`,
+`compare`) for 26 synthetic cases, and `compare` is run on every one of them (an absent record
+reads as `{}`); a `compare` outcome is a list of `{code, kind}`, or `{raises: <class>}` where
+`compare` refuses its arguments. Together the vectors reach every code `compare` returns:
+`NOT_GATED`, `SCORER_REFUSES`, `SMOKE_AMBIGUOUS`, `DECISION_DIGEST_UNSEALED`, `VERDICT_DIFFERS`,
+`RECORDED_DIGEST_ABSENT` and `RECORDED_VERDICT_ABSENT`. They pin:
+
+- a receipt that records a gates digest against a PREREG reading `NOT_GATED` is
+  `DECISION_DIGEST_UNSEALED` (DESIGN 3.4 C6(i): a PREREG with no decision holds no sealed digest);
+  with no recorded digest it is a `NOT_GATED` NOTE and nothing recorded is read;
+- DESIGN 4.A's A.2 (a re-run scored under a bar moved only in the working copy) through three
+  fences the scanner does not count and CommonMark renders: a BOM before the opener on line 1, a
+  fence in a block quote, a fence as a list item's content. `Experiment` (the reading `styxx.seal`
+  uses) refuses each of the three PREREGs, and `compare` refuses the re-run's digest; beside them
+  the visible fence, where `compare` gives `DECISION_DIGEST_UNSEALED` and `VERDICT_DIFFERS`;
+- recorded gates read without a recorded verdict, a gates-only mismatch, an empty sealed list,
+  one digest passed as a string (`TypeError`), and a table whose `receipt_pointer` is not a
+  string, refused for a smoke receipt as for a scored one.
+
+## What a cover vector is
+
+A row matches an assignment when every literal of its `when` equals the fired value, the scorers'
+own expression; the earliest matching row lands. `expect` holds the holes (assignments no row
+matches), the landings per row, `total` and the unreachable rows, over `2 ** len(gates)`
+assignments. With `brute` true, `expect` is brute force (`replay.brute_force`), recomputed live by
+the test; with `brute` false (tables of 40, 64 and 100 gates), it is the closed form the generator
+states for the table's shape.
+
+## The numbers it reproduces
+
+At `REV` = `ca3477308a4819b74e0d8011efcd6fd8849a5948`, the commit the prereg-ci design's census
+receipts were made at. The scripts that made them belong to the design and are kept outside this
+repository (its `census/rescore_census.py`, `census/replay_224.py`, `census/cover_check.py` and
+`census/receipts.sh`); the generator re-derives each number from git objects and refuses to write
+if one differs:
+
+- R1: 33 committed records name a `gates_sha256`, over 32 distinct (PREREG, receipt) pairs; each,
+  re-scored from the PREREG blob at the commit that added it, gives its recorded verdict and digest.
+- R2: the #224 receipt under the blob sealed at `3598e59d` reads
+  `BUDGET_CONFOUND__gap_does_not_survive_3x_steps` (gates digest `578924f8...`); with `G_B_long`'s
+  bar moved from 0.15 to 0.10 it reads `ROBUST__ROTATION_LOAD_BEARING__beyond_diversity`
+  (`e513a1da...`).
+- R8: 52 gated tables; b41 is the one that is not total; no row is unreachable.
+- R8b: the 15-gate leg-2 table (70 rows) is total over 32,768 assignments, where
+  `research_capsule._table_total` returns None.
+
+## The history the git layer reproduces
+
+Step B1 adds `styxx.prereg_ci.git`, and `tests/test_prereg_ci_history.py` re-derives three of the
+design's receipts through it and `styxx.prereg_ci.core`, line by line, at `REV`. The receipts are the
+outputs of the design's own probes, which live with the design outside this repository; the copies
+here are those outputs with CRLF read as LF (the probes ran on Windows, whose console writes CRLF,
+and a tracked file under `conformance/` holds no carriage return). Nothing else in them changed.
+
+| copy | the design's file | its sha256 | the copy's sha256 |
+|---|---|---|---|
+| `rescore_census_ca347730.txt` (R1) | `census/rescore_census_ca347730.txt` | `42d3c6ba0123dc589d3e85a86ca428fe723488229eff69d29280a6cd26c85857` | `f901d7dea242bfba30d0e356a63ba53a8acb0622bbbc049f9b8035a54ed7c763` |
+| `seal_rule_ca347730.txt` (RV1) | `revision_probes/seal_rule_ca347730.txt` | `ca880e9b2f016a93dc8b3d580b3226c79cb30c267c37e43769eaa3db41babebf` | `c59d1180ed033381aa1858294380bc37cf87c124ebe180d8c6f0e8ab88f4d6c9` |
+| `landing_order_ca347730.txt` (RV2) | `revision_probes/landing_order_ca347730.txt` | `96e283ab57fb016c0b1ca3db6400fedac9dee54f1724b0030b765da19568ebfb` | `674e64cd01e8da324267ceb01bb2c575edd8f211eff9496432d0329e84e1e452` |
+| `pairs_ca347730.txt` (RV2's input) | the 32 `PAIR` lines (lines 36-67) of `red_team_probes/distinct_pairs_ca347730.txt` | `7d2b4a0de249c2a85069fc200cd5a0955062f78dacf02d6c5f86e06c7afa83da` (the whole file) | `80c81a157ef6afe2125bd169753fe6cdeea58dc58dd6c4308c370467647c565b` |
+
+What each copy pins, as the test reads it:
+
+- R1: 33 records naming a gates digest, over 32 distinct (PREREG, receipt) pairs; each re-scored from
+  the PREREG blob at its add commit gives the recorded verdict and digest (`TALLY {"RESCORES": 33}`),
+  with the order of add commits, the count of PREREG blobs between seal and receipt (2 for #224, 1
+  elsewhere) and whether the blob at `REV` is the sealed one (not for the realmodel smoke record).
+- RV1: of 52 gated PREREGs, the add commit is the landing commit for 40, the file blob differs
+  between the two rules for 2, and the gates digest for 1 (`PREREG_pmnist_untied_2026_09_02.md`,
+  add `1cbc5997`, landing `320b3032`).
+- RV2: over the 32 pairs, the order commit on the landed gates digest is strictly before the
+  receipt's add commit for 32, the order commit on the landed file blob for 31 (the miss is
+  `realmodel_bridge_v3_smoke.json`), the add commit for 32.
+
+The copies carry the lab's history as is: paths, verdict identifiers and commit ids.
+
+## Boundaries
+
+- The census vectors seal at the commit that added the PREREG (R1's rule). The landing rule of the
+  design (3.2(b)) is the git layer's (`styxx.prereg_ci.git`, step B1); for every census PREREG the
+  two rules give the same gates digest (the one PREREG where they do not,
+  `PREREG_pmnist_untied_2026_09_02.md`, carries no census record), and
+  `tests/test_prereg_ci_history.py` shows every record reading as recorded under the landing rule.
+- `newline/bom-on-the-fence-line`: a BOM before an opener on line 1 makes that line no fence for
+  the scanner, so the PREREG reads `NOT_GATED`. A renderer that drops a leading BOM would show the
+  fence. Pinned as the scanner reads it today, and left to the step that reads the ```result and
+  the ```locks fences with the same rules. A fence in a block quote or a list item is the same class.
+  Since the B0 review, `compare` refuses a receipt that records a gates digest against such a
+  PREREG (`vectors_compare.json`, `a2/hidden-fence/*`); a receipt that records a verdict and no
+  digest against it is still read as `NOT_GATED`, which the scanner step decides.
+  Since step B3 the gates fence keeps this reading (sealed PREREGs depend on it), and the result and
+  locks fences refuse the class: see "The fence scanner and the RESULT readers".
+- `rescore` runs the cover under a work budget (`core._COVER_BUDGET`, 2 ** 20 subcubes): past it
+  the verdict stands and `total`, `holes` and `unreachable_rows` stay None, with `cover_code`
+  `COVER_UNCHECKABLE`. Every committed cover vector fits inside it (the largest visits 2,591).
+- The vector files hold `gates_sha256` keys inside their inputs and outcomes, below their top
+  level, so the git layer's record rule (a top-level `gates_sha256`, or a `protocol` entry holding
+  one) reads none of them. Since the B1 review nothing is left out by default: a prefix to leave
+  out is the caller's `exclude` argument, and the paths it leaves out are listed.
+- The census and R2 vectors carry the lab's history as is: paths, verdict identifiers, gate names
+  and the bytes. The generator scans the words it writes itself, never carried history.
+
+## The SEALS record as manifest lines
+
+Step B2 adds the seals manifest of DESIGN 3.2(b) (`styxx.prereg_ci.core._manifest`, the git layer's
+`_manifest_*` readings, and the `seal` verb). `seals_manifest_from_SEALS_2026_09_13.jsonl` is the
+lab's own record of seals in that format: `gen_seals_manifest.py` reads
+`papers/checksum/SEALS_2026_09_13.md` as git stores it at `REV`, takes the table under "## the
+digests" (lines 33-40), and writes one line per row. The design's receipt R10 is that each row
+reproduces under `git show <commit>:<path> | sha256sum`; the generator prints R10's `MATCH` line
+for each and refuses on any `DIFFERS`.
+
+| id | kind | amends | decision | why |
+|---|---|---|---|---|
+| 2, 3, 6, 7 | `prereg` | null | `own` | a number alone |
+| 3b, 6b, 7b | `amendment` | 3, 6, 7 | `inherits` | a number with a letter; the three CORRECTIONs hold no gates fence |
+| 8 | `withdrawn` | 7 | `inherits` | its note says it "supersedes row 7" and was "Withdrawn"; its blob holds row 7's fence |
+
+Every `seen` is null (the record states none) and every `time` is empty (no token exists). Lines
+7, 7b and 8 are, byte for byte, the three example lines DESIGN 3.2(b) prints. Parsing the file
+with `core._manifest` and rendering it with `core._manifest_bytes` gives its bytes back.
+`tests/test_prereg_ci_manifest.py` re-runs the generator at `REV`, compares it with this file, and
+re-derives each `blob_sha256` with `git show` itself. Under PLAN K10 as built, a null `seen` stands
+on an amendment line only when the manifest held that line where it began and the line's commit was
+on the default branch before the pull request that began it (the record a manifest imports when it
+begins): a pull request that adds the manifest imports only what its base already holds, so the
+record's four amendment and withdrawn lines stand at null, and an amendment that pull request
+commits itself states its `seen`.
+
+## The fence scanner and the RESULT readers
+
+Step B3. `styxx.protocol._select_gates_block` names its info string in its code, and `styxx/protocol.py` does
+not change (PLAN K4), so `styxx.prereg_ci.core._fence_at` holds the same scanner with the info string as a
+parameter: the module's own fence-line pattern, the non-ASCII info string refused on any fence line, a fence a
+renderer shows (at most 3 columns of indent) counted inside HTML comments too, exactly one, plain, outside every
+comment, and closed. For `gates` its refusals carry the module's own words. `vectors_fence.json` holds 99
+vectors, each with its outcome stated by the generator before the run:
+
+- for `gates`, the scanner's outcome equals `_select_gates_block`'s on every vector (a text with no gates fence,
+  which that module refuses with "prereg has no ... gates block", reads as `{none: true}`), and
+  `tests/test_prereg_ci_result.py` shows the same over every PREREG blob the score and compare vectors name and
+  over the 420 `PREREG_*.md` files in the tree at `REV` (52 gated, the 412 under `papers/` being R8's count);
+- for `result` and `locks`, every attack class `tests/test_protocol_v4.py` pins for the gates fence refuses
+  (a decoy in an HTML comment, a tilde fence, a case variant, the fence only in a comment, a confusable info
+  string, a tab-indented opener, an unterminated comment, an unclosed fence, two fences, an indented opener),
+  and so do duplicate and non-ASCII keys, read by `research_capsule`'s strict JSON;
+- for `result` and `locks` only, `core._fence_json` also refuses a fence CommonMark renders and the scanner does
+  not count: behind a byte-order mark on line 1, in a block quote, in a list item, or with a second word in its
+  info string. The gates fence keeps the scanner's reading of these (it is `NOT_GATED`, and `compare` refuses a
+  digest recorded against it, `vectors_compare.json`), since sealed PREREGs are read that way.
+
+What a RESULT declares (`core._result_reading`, DESIGN 3.2(c)): its one result fence, a strict JSON object
+naming `prereg`, `receipt` and `verdict` (three strings, and no other key), and every sworn span on a receipt's
+verdict leaf (`path:<receipt>#/verdict`, read through `styxx.sworn.scan`), whose needle is the verdict. A span
+is held to every check `styxx.sworn` makes from the bytes alone, in its order (the lexer's MALFORMED reasons,
+including a tag in an HTML comment; a blank span; the length cap; the kind, which must be `quote`; the receipt
+grammar; a directional override; one needle), and a document sworn reads as MALFORMED, or whose tags do not
+lex, refuses when it names a verdict leaf. Any refusal is `RESULT_REFUSES`. A span naming its receipt by a
+manifest id or a `prereg:` digest is printed (`RESULT_NOT_READ`), not paired. Two declarations for one receipt
+in one RESULT that differ are `RESULT_FORMS_DIFFER` (`core._declared`).
+
+The vectors are synthetic. The lab's own sworn spans are read by the test from git objects at `REV`: 20
+markdown files name a `json#/verdict` leaf, 13 of them declare through 17 spans, and none is refused.
+
+Since the B3 review, `vectors_fence_containers.json` (49 vectors, written by `gen_vectors_fence_containers.py`;
+`vectors_fence.json` is not written again, and every one of its vectors still reads as it states) pins three
+more rules:
+
+- a result or locks fence a renderer may show inside a container refuses: behind a block quote marker, a list
+  item marker or a footnote label on its own line, at any indent; or 4 or more columns in (a tab to the next
+  multiple of 4) once a line above it opens a list item or a footnote. The reader does not follow a container
+  to its end, so the last rule also refuses below a list that has ended, which a renderer prints as code; the
+  vectors state that over-refusal in advance. Indented code with no list item or footnote opened above it stays
+  code. A refusal of a B3 class keeps its B3 words;
+- every file a pull request writes is read as a RESULT when it is a `.md` file or its bytes hold the marker of
+  a form (`core._result_candidate`), whatever its suffix, so a RESULT renamed to `.markdown` or `.txt` is still
+  read. A RESULT that declared a verdict at the merge base and declares none of it at HEAD (deleted, renamed
+  away or under `exclude`, or edited to prose) is `RESULT_DECLARATION_DROPPED`, a NOTE;
+- a RESULT that starts with a UTF-16 or UTF-32 byte-order mark is refused when its text holds the marker of a
+  form. Other bytes that are not UTF-8 keep the B3 marker, a result fence's or a verdict span's: a fence run
+  followed by a non-ASCII byte occurs by chance in compressed files.
+
+Not refused, and named: a plain result fence a renderer shows as code or as raw HTML (inside an outer fence,
+or in an HTML block opened by a line such as `<script>`, `<style>` or `<details>` above it) is read as the
+declaration, as the gates rule reads a gates fence there. A file that shows an example result fence or verdict
+span (documentation, tests, these vectors) is read as a RESULT when a pull request writes it, and such paths
+go in `exclude`.
+
+## The locks form and the checksum scorer
+
+Step B4. A PREREG's decision is one of two forms (DESIGN 3.2(a)): the gates fence, or one locks fence read
+with the result fence's rules (`core._fence_block`: the scanner's refusals, then a fence a renderer may show
+inside a container). `core._decision` reads both forms and refuses a PREREG that holds both, and a gates
+PREREG that holds a locks-like fence the locks reader refuses. The gates scanner reads before the locks
+reader, so every gates reading stands; `tests/test_prereg_ci_scorer_run.py` checks that over every `.md` blob
+in the tree at `REV` and at HEAD. `core._locks` reads the block: `scorer`, `reads` and `outcomes`, and the
+optional `withdraws`, `argv` (with `{receipt}` once and `{out}` at most once, each a whole element) and
+`verdict_from` (`stdout`, or an RFC 6901 pointer into the `{out}` JSON), the two keys of PLAN K2b.
+`core.rescore` runs nothing, and reads a locks decision as `SCORER_NOT_RUN`.
+
+The module `styxx.prereg_ci.scorer_run` runs a locked scorer. Each locked file's sealed blob and the receipt
+are written into an empty temporary directory, and the scorer runs under `python -I -S -B -X utf8` through a
+bootstrap that puts that directory ahead of the standard library on `sys.path` and runs it as `__main__`
+(PLAN K3), with a 60-second timeout and no environment but `SYSTEMROOT` on Windows. An audit hook and a last
+import finder refuse and record each reach past the locks: a read of a file not locked (the standard library
+aside, which is the `sys.path` entries less the interpreter's install root), a write but `{out}`, an import
+the locked code asks for that the run does not hold (an import from a compiled string with no `__file__` is
+the asking code's), a process, a socket; and at the close, an import system no longer as the bootstrap set
+it. `core._run_reading` reads any of them as `SCORER_READS_UNLOCKED`, whatever the scorer printed. The
+record's runtime and closing lines carry a nonce the scorer does not hold, and the last stderr line names
+the run's, the interpreter's and the home directory rather than printing them.
+
+The boundary, printed beside every reading (`scorer_run._WATCHED`): the watch is Python in the scorer's own
+process and holds for a scorer that leaves it alone. A scorer written against it can reach the bootstrap's
+globals through `sys._getframe` or `gc` and widen the read set or replace the judge, pop the finder and put
+it back before returning, run a compiled string whose filename or `__file__` names a file outside the run,
+load native code it holds or call `stat`; none of that is recorded in v0. It is not a sandbox (DESIGN 7,
+risk 5); the OS-level sandbox is v1 (DESIGN 3.8). `tests/test_prereg_ci_scorer_run.py` pins the frame walk,
+the restored finder and the forged `__file__` as the boundary, so a hardening that closes one is seen as a
+change. The B4 review's cases (a frame walk, an exec'd string, a popped finder, a forged runtime line, the
+interpreter's path in the stderr tail, a read under the install root) drove this statement and the refusals
+named above.
+
+The checksum PREREGs froze their reading rules as prose and are sealed, so neither can gain a locks fence
+(PLAN K2b). The file under `locks/`, written by `gen_locks_checksum.py`, is a RECONSTRUCTION: written after the
+data and after the scorer, never sealed, not a catch. It locks `papers/checksum/score.py`'s deploy-quant path
+at `f0ec5605`, and its outcomes are the 1730 readings that path can print, enumerated from the scorer's code
+(the generator pins the blob's sha256 and the lines the grammar is read from). The test re-derives each of
+the four committed deploy-quant dry-run cards byte for byte, each with the scorer's blob of the commit that
+wrote it; the cards are instrument checks, not results. The certs were written before the scorer's oldest
+blob, so no seal holding the scorer could have ordered them. The beacon-draw path imports numpy through
+`styxx.checksum` and reads `SCORER_READS_UNLOCKED` under `-S`; its scorer catches that import failure and
+prints its committed reading anyway, which is why the run watches imports. The reconstruction holds a locks
+fence, so once it lands the git layer reads it as a decision (C0) like any other; it is never written again
+either way.
+
+## The licences and the surface scan
+
+Step B5. An outcome row of a gates table, or the locks block's `withdraws` map, may carry licences (DESIGN
+3.2(g)): `{"id", "quote", "pattern"}`, the sentence the row withdraws as the PREREG writes it, and a
+case-insensitive regular expression over whitespace-collapsed text (every run of whitespace one space, the
+curly apostrophes U+2018 and U+2019 read as the straight one, PLAN K15). `core._licence_specs` reads them
+strictly, after the table reads as `rescore` reads it; `core.rescore` returns the landed row's list under
+`withdraws`, and the locked scorer run returns the block's list for the verdict it read.
+`core.licences(prereg, surfaces, landed=...)` scans the surfaces it is handed and names each match by line and
+column; `styxx.prereg_ci.git._surfaces` reads them at a commit, every blob `scripts/surface_lint.py`'s `repo`
+profile selects (copied into `core._SURFACE_PROFILE`, since `scripts/` is not in the wheel, PLAN K14) or a
+configured profile of globs. A match is withdrawn when a withdrawal (a form of "withdraw", or "not yet true of
+this instrument") lies whole within 300 characters of it, surface_lint's window rule over compiled patterns,
+so the sentence that withdraws a claim may quote it. Once a receipt has landed on a row, a match of that
+row's licences that is not withdrawn is `LICENCE_WITHDRAWN` (FAIL); before any receipt lands it is
+`LICENCE_PENDING` (NOTE: the sentence stands on a verdict not yet given), and a licence whose pattern matches
+no surface is `LICENCE_PATTERN_FINDS_NOTHING` (FAIL, the lint's refusal, the analogue of a vacuous gate).
+Rows that did not land withdraw nothing; every match is listed either way, so the author sees a pattern's
+coverage. Licences match strings (DESIGN 7, risk 3): a pattern registered before data does not reach a
+wording written after it.
+
+`vectors_licence.json` holds 19 vectors, each one call of `core.licences` over a synthetic PREREG, a list of
+surfaces and the verdict landed on, with its outcome stated by the generator before the run: the
+normalisation (case, whitespace runs across lines, the curly apostrophes), the window (a withdrawal inside,
+outside, whole inside at its edge, the lab's own phrase), the three codes, the rows that did not land and the
+smoke verdict, the locks block's map, a surface not read, the order of findings, and the refusals (a pattern
+that does not compile or can match the empty string, a table refused before its licences, a PREREG with no
+decision).
+
+The design's RV3 and RV4 are reproduced through the module by `tests/test_prereg_ci_licences.py`, on the
+lab's own history, and the copies here state the numbers the test holds it to:
+
+| copy | the design's file | its sha256 | the copy's sha256 |
+|---|---|---|---|
+| `reconstructed/external1_reconstructed.md` (RV4's table) | `revision_probes/external1_reconstructed.md` | `fe6454d54cb0228ecea2231d8fd558e6b62eb89dd0fba8bfd37c260b2fc07840` | the same (LF, no carriage return) |
+| `licence_replay_ca347730.txt` (RV3) | `revision_probes/licence_replay_ca347730.txt` | `3a83adb9fd5b730bae10eaeee87250129729d8a1852783e319a10f06cff99b0e` | `2f984da434f7acd12f77124af1d4b7eb375b1ba812170b8b7a8a44c18cf5b0fa` |
+| `external1_rescore_ca347730.txt` (RV4) | `revision_probes/external1_rescore_ca347730.txt` | `80bc6e2c400ae1c5ec104e4a328b6d51cdb083c823290645df983d6448d4a61b` | `4fa6ec04375dab24c5d5e390f5daf24f65fdfb06b9cea4638e53f42cb75e6e05` |
+
+- RV3: over the surfaces surface_lint's `repo` profile selects, read from git objects, the sentence
+  EXTERNAL-1's PREREG bound the lab to withdraw (`papers/closed-model-frontier/PREREG_external1_aidev_2026_08_31.md`,
+  lines 93-95), registered as a licence pattern verbatim, matches 0 of 328 surfaces at `414db45a` (the
+  commit that added the EXTERNAL-1 RESULT) and 0 of 394 at `3437340b^1` (the parent of the #221 merge): the
+  lint would have refused it before data. Its last five words match 4 surfaces at `414db45a` (`README.md`,
+  `action.yml`, `styxx/__init__.py`, `styxx/diffgate.py`), the same 4 the hand-written rule
+  `withdrawn/gate-claim` of `scripts/surface_lint.py` (added by #221) reports, each `LICENCE_WITHDRAWN` under
+  the landed row; at `3437340b^1` they match 3 of the hand rule's 10, the 7 they miss being integration
+  surfaces added 2026-09-16, 16 days after the RESULT, in other wordings. The test takes the hand rule's
+  count from `scripts/surface_lint.py`, never from prereg-ci.
+- RV4: the committed adjudication receipt `papers/closed-model-frontier/external1_adjudication.json` at
+  `414db45a` scores `FAILURE__gate_claim_not_yet_true` under the reconstructed table through `core.rescore`
+  (gates `G_rel` true, `G_E1` false, 0.23 against 0.95; decision digest
+  `bd6f4256dcd01ccbfdcfa9864c312d1c008e0a5fd8aebed29486cb3321311841`), and its `withdraws` is the row's one
+  licence, `gate-claim`. The table is a reconstruction written after the result: it shows the mechanism on
+  real bytes, not a catch.
+
+## How to regenerate it
+
+```
+python -B conformance/prereg_ci/gen_vectors.py            # write the set where none is committed
+python -B conformance/prereg_ci/gen_vectors.py --check    # regenerate in memory; exit 1 if a byte differs
+python -B conformance/prereg_ci/gen_vectors_compare.py --check
+python -B conformance/prereg_ci/gen_seals_manifest.py --check
+python -B conformance/prereg_ci/gen_vectors_fence.py --check
+python -B conformance/prereg_ci/gen_vectors_fence_containers.py --check
+python -B conformance/prereg_ci/gen_locks_checksum.py --check
+python -B conformance/prereg_ci/gen_vectors_licence.py --check
+```
+
+Once committed, the set is never written again. A run that regenerates it byte for byte exits 0;
+any other prints the vectors whose outcome moved and writes nothing. A moved outcome is a finding
+about the code, never a reason to rewrite the set; new vectors go in new files.

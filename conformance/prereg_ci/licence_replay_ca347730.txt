@@ -1,0 +1,16 @@
+== rev 414db45a: surfaces read 328; files with Q 0, K 4, H 4; H found by Q 0, by K 4; Q or K outside H 0
+  H -K added 2026-04-11 README.md
+  H -K added 2026-08-01 action.yml
+  H -K added 2026-04-11 styxx/__init__.py
+  H -K added 2026-08-01 styxx/diffgate.py
+== rev 3437340b^1: surfaces read 394; files with Q 0, K 3, H 10; H found by Q 0, by K 3; Q or K outside H 0
+  H -K added 2026-08-01 action.yml
+  H -- added 2026-09-16 integrations/claude-code/diffgate-hook/README.md
+  H -- added 2026-09-16 integrations/claude-code/diffgate-hook/pretool.py
+  H -- added 2026-09-16 integrations/cursor/diffgate-hook/README.md
+  H -- added 2026-09-16 integrations/cursor/diffgate-hook/before_shell.py
+  H -- added 2026-09-16 integrations/git/README.md
+  H -- added 2026-09-16 integrations/git/commit-msg
+  H -- added 2026-09-16 integrations/pre-commit/README.md
+  H -K added 2026-04-11 styxx/__init__.py
+  H -K added 2026-08-01 styxx/diffgate.py

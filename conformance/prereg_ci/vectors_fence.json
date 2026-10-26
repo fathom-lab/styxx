@@ -1,0 +1,2593 @@
+{
+ "schema": "styxx.prereg-ci.conformance.fence/v0",
+ "label": "conformance vectors for prereg-ci's fence scanner and RESULT readers; no claim",
+ "rules": {
+  "id": "sha256 of the sorted, compact UTF-8 JSON of {name, inputs: {info, text}}",
+  "text": "inputs.text names bytes in this file's blobs by sha256; each leg reads them decoded as UTF-8 with CRLF and a lone CR read as LF, except reading, which is handed the bytes",
+  "select": "styxx.prereg_ci.core._select_fence(text, info): {block}, {none: true}, or {raises, message}",
+  "protocol": "gates only: styxx.protocol._select_gates_block(text), its refusal 'prereg has no ```gates block ...' read as {none: true}; equal to select on every vector",
+  "fence_json": "result and locks: styxx.prereg_ci.core._fence_json(text, info): {line, object}, {none: true}, or {raises, message}",
+  "reading": "result only: styxx.prereg_ci.core._result_reading(bytes), as JSON"
+ },
+ "vectors": [
+  {
+   "id": "8c9bb5bf80ca3bdbe5b5a42857775d92a4ba002d1d8da949464d3599a852d510",
+   "name": "gates/plain",
+   "why": "the one plain fence",
+   "info": "gates",
+   "inputs": {
+    "text": "84361d8fc3e3c191807f7064bdfc85650ac6dd632a20e576a1f1cc33076bc26e"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}"
+    },
+    "protocol": {
+     "block": "{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}"
+    }
+   }
+  },
+  {
+   "id": "98ce8b0d85983fc133950ccc502c1474d4c3f4c3d6553266330181fb6686b4ea",
+   "name": "gates/plain-crlf",
+   "why": "the plain fence with CRLF newlines, read as LF",
+   "info": "gates",
+   "inputs": {
+    "text": "245d67cc79c2cff4dae52dbbb7204d496313e0780b7194942c3dce2a5c777a5f"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}"
+    },
+    "protocol": {
+     "block": "{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}"
+    }
+   }
+  },
+  {
+   "id": "6d9eaa33aae9f71e8fa521bd490b969cb2c74cbc2daee0e80ab033e2c90f0be3",
+   "name": "gates/no-fence",
+   "why": "prose only",
+   "info": "gates",
+   "inputs": {
+    "text": "104cfb23d4c409d0272e7a9f825930eff3d1e6ea0c8171938e2adf8b4b3d0adb"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "protocol": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "c72d93ed1255ac577136c1f31cba6d5dfccc7d7b85d5bac503b5eaa8f092ed6f",
+   "name": "gates/indented-code",
+   "why": "four columns of indent is code a renderer prints as text",
+   "info": "gates",
+   "inputs": {
+    "text": "f6a4e419b7d4655c9bb905f66bf1b020d7e240983653511295455b56c4a9b53e"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "protocol": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "f3761a0a39a471ee241f98cb056279b2aa29149bbca5a0a017a9f690063217f2",
+   "name": "gates/attack/decoy-in-comment",
+   "why": "a decoy fence in an HTML comment beside the visible one",
+   "info": "gates",
+   "inputs": {
+    "text": "3e38c981089ec8843c821348b8d68488288398e1f14cd974e7d4aae4aa33d48d"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 gates-like fenced blocks (line 4 (```gates), line 9 (```gates)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "protocol": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 gates-like fenced blocks (line 4 (```gates), line 9 (```gates)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    }
+   }
+  },
+  {
+   "id": "b388a4fa4fc822ece3df011bb6ef2b9ddbdef715a0a50d489bcbaa0c2de2bf20",
+   "name": "gates/attack/tilde-fence",
+   "why": "a tilde fence beside a hidden backtick decoy",
+   "info": "gates",
+   "inputs": {
+    "text": "c98645a9ccb00d80a3b2dd68872ff3afbb1fc783ba10721142242d06b6f8413c"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 gates-like fenced blocks (line 4 (```gates), line 9 (~~~gates)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "protocol": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 gates-like fenced blocks (line 4 (```gates), line 9 (~~~gates)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    }
+   }
+  },
+  {
+   "id": "1d2bf54987718e5064183a98c5a789fe3f178a05797f463d82d741cfd3223bcc",
+   "name": "gates/attack/case-variant",
+   "why": "an upper-case info string",
+   "info": "gates",
+   "inputs": {
+    "text": "c9fa932d1b07961adad62f0db68edcfa5934a61b7a30c408f9e320d9ca28e28c"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the single gates-like block (line 3, ''```GATES) is not a plain unindented ```gates fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "protocol": {
+     "raises": "GateSpecError",
+     "message": "the single gates-like block (line 3, ''```GATES) is not a plain unindented ```gates fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    }
+   }
+  },
+  {
+   "id": "bf1a2114ccd9169162751bc8f79022ce9344ceb65fd68d38e00c62481e55ba82",
+   "name": "gates/attack/fence-only-in-comment",
+   "why": "the one fence sits in an HTML comment",
+   "info": "gates",
+   "inputs": {
+    "text": "81fcbdd1358736d272854ed5dc184082396db076a60f34de20ea01902e3ba9cc"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```gates fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "protocol": {
+     "raises": "GateSpecError",
+     "message": "the ```gates fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    }
+   }
+  },
+  {
+   "id": "7ce7a44e1589c289bc90f9e33cf3e125bc3dd2953350072b9be2f1e007826d27",
+   "name": "gates/attack/confusable-info",
+   "why": "a Cyrillic letter in an info string, beside a decoy",
+   "info": "gates",
+   "inputs": {
+    "text": "65e2b30a605adf314f99fad7e48fc738fbeaa6de30d1ed9efd79d16b4dc7f8d6"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "fence info string 'g\u0430tes' (line 3) contains non-ASCII characters \u2014 a confusable info string is a shadowing channel, and this parser refuses the class rather than trusting a normalization table to enumerate it"
+    },
+    "protocol": {
+     "raises": "GateSpecError",
+     "message": "fence info string 'g\u0430tes' (line 3) contains non-ASCII characters \u2014 a confusable info string is a shadowing channel, and this parser refuses the class rather than trusting a normalization table to enumerate it"
+    }
+   }
+  },
+  {
+   "id": "c72340d9fa6ee40b958d441ed2e1b03795987b52d7ed378de3e6bab48e4ba73c",
+   "name": "gates/attack/tab-indented-opener",
+   "why": "a tab-indented decoy opener a renderer prints as text, the honest fence in a comment",
+   "info": "gates",
+   "inputs": {
+    "text": "e28418657d7b6ba9280ee805239f5c0316be7c9d2beebda633eb8a420d69f098"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```gates fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "protocol": {
+     "raises": "GateSpecError",
+     "message": "the ```gates fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    }
+   }
+  },
+  {
+   "id": "593dfe872a9c14c7e3235ceb490fb63f3ec443dab7fb262da3c3ac7e22e78aa4",
+   "name": "gates/attack/unterminated-comment",
+   "why": "an unterminated HTML comment hides the fence to the end",
+   "info": "gates",
+   "inputs": {
+    "text": "d15a316931f0e6f79a558972d31d687c591f23721eb1ce9f408ddb600bb9bbb3"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```gates fence at line 5 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "protocol": {
+     "raises": "GateSpecError",
+     "message": "the ```gates fence at line 5 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    }
+   }
+  },
+  {
+   "id": "e5c24bed8249843f99c97a4312ef3d89b7ee55f5f3f01a0be1b3ea73074a8b43",
+   "name": "gates/attack/unclosed-fence",
+   "why": "the fence is never closed",
+   "info": "gates",
+   "inputs": {
+    "text": "ab763d0bf2cfea483d6e05d2509cb3cdaa9c435f87f8ea811707bce92f512795"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```gates fence at line 3 is never closed \u2014 an unterminated block renders as everything-is-code and freezes nothing"
+    },
+    "protocol": {
+     "raises": "GateSpecError",
+     "message": "the ```gates fence at line 3 is never closed \u2014 an unterminated block renders as everything-is-code and freezes nothing"
+    }
+   }
+  },
+  {
+   "id": "1f232bbea0e93df7ef0d8b13ef332d5877002a9490d8023d1a28e36911c2f129",
+   "name": "gates/attack/two-fences",
+   "why": "two plain fences",
+   "info": "gates",
+   "inputs": {
+    "text": "b742795024d01c3cd3ea53950605dff5bc38c8efae18d6b390177768baa22d2a"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 gates-like fenced blocks (line 3 (```gates), line 7 (```gates)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "protocol": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 gates-like fenced blocks (line 3 (```gates), line 7 (```gates)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    }
+   }
+  },
+  {
+   "id": "b92f010d32b3701f7bfe1949b939d07abfb4579e5c3fa1d25fda0bc80e9e7f83",
+   "name": "gates/attack/indented-opener",
+   "why": "a two-space opener a renderer reads",
+   "info": "gates",
+   "inputs": {
+    "text": "e69689491f269e79631ce1e1c24c6fb25090719cbf9da8e1abf1f222dfce0a5a"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the single gates-like block (line 3, '  '```gates) is not a plain unindented ```gates fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "protocol": {
+     "raises": "GateSpecError",
+     "message": "the single gates-like block (line 3, '  '```gates) is not a plain unindented ```gates fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    }
+   }
+  },
+  {
+   "id": "4a4100cb8ac0e91391946deafa5dcec448526a9f223900257cdfa36696234565",
+   "name": "gates/keys/duplicate-key",
+   "why": "a key declared twice",
+   "info": "gates",
+   "inputs": {
+    "text": "3f8d60e5e29c87aaad309478bb94d4acaa9f733c50627628cc08d38f34d5d9d4"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"gates\": 1, \"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}"
+    },
+    "protocol": {
+     "block": "{\"gates\": 1, \"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}"
+    }
+   }
+  },
+  {
+   "id": "23ee9fc49b5171ad5091d850cff9cacc3cf10346a5aae1f5c39650f7ab58ac45",
+   "name": "gates/keys/non-ascii-key",
+   "why": "a key with a Cyrillic letter beside its ASCII twin",
+   "info": "gates",
+   "inputs": {
+    "text": "0f60761dee728922f6b3398b3dd875c83d96a9792b49259e9bbe13d3c968ea7a"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"\u0441ates\": 1, \"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}"
+    },
+    "protocol": {
+     "block": "{\"\u0441ates\": 1, \"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}"
+    }
+   }
+  },
+  {
+   "id": "5f47255572c058f518e8ff6761ad5991a6770e1db28e5a3513290c02ddf98f0e",
+   "name": "gates/shadow/bom-on-line-1",
+   "why": "a byte-order mark before the opener on line 1",
+   "info": "gates",
+   "inputs": {
+    "text": "301c4658efab3600334038b0ae4b71a74bcffdbe722ff312c3430655e799cf46"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "protocol": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "f18d9e5e4e050bb1b5756dd07bb6432f192b195fa6eb426124197f68a86e6154",
+   "name": "gates/shadow/block-quote",
+   "why": "the fence in a block quote",
+   "info": "gates",
+   "inputs": {
+    "text": "d5f1cb6a353cee1426c5bb9d777faeea8d09357d0c7e2c7b765146db5d82bd9e"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "protocol": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "f8221f2c04a4dfbbfb709f0a45ba91d9d35839f093d7499bad96a611318125b9",
+   "name": "gates/shadow/list-item",
+   "why": "the fence as a list item's content",
+   "info": "gates",
+   "inputs": {
+    "text": "15374bb3c1c45e55675899e658d8d716b0ad40075258f6af257086f7ac4b0695"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "protocol": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "6a8ef09d2c8044c2aaf278f82e115b92f8a9130c8e52603d1219fb8dffcef762",
+   "name": "gates/shadow/ordered-list-item",
+   "why": "the fence as an ordered list item's content",
+   "info": "gates",
+   "inputs": {
+    "text": "b64beeff1b8c2de3d376a9d5f53201a2c9912f5c24e8f0837062dc30c56b3df4"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "protocol": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "ae283898044e228d828e7a520f232d3bed19a9110e4e85e1ce45f838af0bfed5",
+   "name": "gates/shadow/quote-in-list",
+   "why": "a block quote inside a list item",
+   "info": "gates",
+   "inputs": {
+    "text": "867795f53ffe2eec9305d6321253968fb076f62b578128e053f12876b41625e9"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "protocol": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "abf0202cc53f529e5537da5748126c3fdef6b053f012bcd4c4cde6c8b0c4e218",
+   "name": "gates/shadow/second-word",
+   "why": "an info string with a second word",
+   "info": "gates",
+   "inputs": {
+    "text": "7871165cc5f54e9934c4299675586a3ca3e01a83dc8caf31b9117f7777cc8c2e"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "protocol": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "5518214cf5233548a426b26118a870b66c712bcd9c057d285dd4eceff1faf974",
+   "name": "result/plain",
+   "why": "the one plain fence",
+   "info": "result",
+   "inputs": {
+    "text": "3d04d1a45466e1491bfbb88a0f675a61362dfb45b672fed8799d0df5da426b18"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "prereg": "PREREG_a.md",
+      "receipt": "receipt.json",
+      "verdict": "PASS"
+     }
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [
+      {
+       "form": "fence",
+       "receipt": "receipt.json",
+       "prereg": "PREREG_a.md",
+       "verdict": "PASS",
+       "line": 3
+      }
+     ],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "268d1bc202035b1a910129dc8a3e794d8b59241ddd288dc18c8d34675f4ca78e",
+   "name": "result/plain-crlf",
+   "why": "the plain fence with CRLF newlines, read as LF",
+   "info": "result",
+   "inputs": {
+    "text": "bfc1e0ee364500d37909b93da9e684a2d8dff15a74b2e481b33b68ccfa0b7a22"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "prereg": "PREREG_a.md",
+      "receipt": "receipt.json",
+      "verdict": "PASS"
+     }
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [
+      {
+       "form": "fence",
+       "receipt": "receipt.json",
+       "prereg": "PREREG_a.md",
+       "verdict": "PASS",
+       "line": 3
+      }
+     ],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "b56e6b59474a5470f9e2306d069c20d391bb36ad001bc5b2705e44957b182872",
+   "name": "result/no-fence",
+   "why": "prose only",
+   "info": "result",
+   "inputs": {
+    "text": "104cfb23d4c409d0272e7a9f825930eff3d1e6ea0c8171938e2adf8b4b3d0adb"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "5d64a03ed62f83cb2ddffa44d89a9f0c90fc23bbc9d9a769ce2374e4838a0f06",
+   "name": "result/indented-code",
+   "why": "four columns of indent is code a renderer prints as text",
+   "info": "result",
+   "inputs": {
+    "text": "80ca7b622feea3685828ae6da7a4d261dc9b4868e9dc1a67c6d93ea33830ea2f"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "becbf6ebc41ebf1efefb639a0c67cb62f34861216bf79cf8b6f96bf101576603",
+   "name": "result/attack/decoy-in-comment",
+   "why": "a decoy fence in an HTML comment beside the visible one",
+   "info": "result",
+   "inputs": {
+    "text": "95918fc3aa3a8f1da1852fd6fd14033248567f3e3d7f7f4a6959a56c0f0419c7"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the document contains 2 result-like fenced blocks (line 4 (```result), line 9 (```result)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the document contains 2 result-like fenced blocks (line 4 (```result), line 9 (```result)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the document contains 2 result-like fenced blocks (line 4 (```result), line 9 (```result)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one.",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "9aca400a751f22a47cd1cb861be79024580cd299d4dc625aa263a2ea13332d6b",
+   "name": "result/attack/tilde-fence",
+   "why": "a tilde fence beside a hidden backtick decoy",
+   "info": "result",
+   "inputs": {
+    "text": "6d10db5fe87579019f2941d5ebf452dc1f9f02f75eb73d503f173e0e235f9e94"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the document contains 2 result-like fenced blocks (line 4 (```result), line 9 (~~~result)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the document contains 2 result-like fenced blocks (line 4 (```result), line 9 (~~~result)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the document contains 2 result-like fenced blocks (line 4 (```result), line 9 (~~~result)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one.",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "fed0745e7ac116a3944301b0d2c815055cb4d00a6fd11bdc980ede14c87e398c",
+   "name": "result/attack/case-variant",
+   "why": "an upper-case info string",
+   "info": "result",
+   "inputs": {
+    "text": "fb3e1e9d790d7c449d442cba79d21d15c05a94d12f1fdbb3b87429cac2a60425"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the single result-like block (line 3, ''```RESULT) is not a plain unindented ```result fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the single result-like block (line 3, ''```RESULT) is not a plain unindented ```result fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the single result-like block (line 3, ''```RESULT) is not a plain unindented ```result fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice.",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "8a2350fdd9ee37abf6e95c4d4aa6b1345b89a174deee2a2d83a8169495cc3c20",
+   "name": "result/attack/fence-only-in-comment",
+   "why": "the one fence sits in an HTML comment",
+   "info": "result",
+   "inputs": {
+    "text": "7bb2cc275d5ccbf1bbcb7b92c0f7918f6c465afcb21181f61665a2744d883a0b"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```result fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```result fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it.",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "687732971686e6dcd5ebde2e8179cc6163a47bb4ad235c027e0c9844318e9210",
+   "name": "result/attack/confusable-info",
+   "why": "a Cyrillic letter in an info string, beside a decoy",
+   "info": "result",
+   "inputs": {
+    "text": "eeb428d9b40f49953956f80fe3e25893b1ac5af78651eb714dcdb4f56c9fb81a"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "fence info string 'r\u0435sult' (line 3) contains non-ASCII characters \u2014 a confusable info string is a shadowing channel, and this parser refuses the class rather than trusting a normalization table to enumerate it"
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "fence info string 'r\u0435sult' (line 3) contains non-ASCII characters \u2014 a confusable info string is a shadowing channel, and this parser refuses the class rather than trusting a normalization table to enumerate it"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "fence info string 'r\u0435sult' (line 3) contains non-ASCII characters \u2014 a confusable info string is a shadowing channel, and this parser refuses the class rather than trusting a normalization table to enumerate it",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "19f03c3948bfd22505e80b2fab9bd64a10db6ad3f3048f6a172e9eeaf0c8f80d",
+   "name": "result/attack/tab-indented-opener",
+   "why": "a tab-indented decoy opener a renderer prints as text, the honest fence in a comment",
+   "info": "result",
+   "inputs": {
+    "text": "7d6e789976b15e2c85464a8ad8fa256d0cd8aa4e947a57d2f42cdcc415c476c3"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```result fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```result fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it.",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "8abce363da00807d168a1d2f37d04e51a5b3b2adda50d416f55d281820bde693",
+   "name": "result/attack/unterminated-comment",
+   "why": "an unterminated HTML comment hides the fence to the end",
+   "info": "result",
+   "inputs": {
+    "text": "6b34a927d27b87d367e36c2756fe318308e1b52f8562b1e2768b111ddc7b4af6"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```result fence at line 5 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```result fence at line 5 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 5 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it.",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "0e43d10d01a68c43794b72f567a089ec1fe8c334a2db87f6fd0f708b0c6f8cf8",
+   "name": "result/attack/unclosed-fence",
+   "why": "the fence is never closed",
+   "info": "result",
+   "inputs": {
+    "text": "1becc794851fc1b0edc5771cdf0676abd953ed62a0248905e966e319988412ed"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```result fence at line 3 is never closed \u2014 an unterminated block renders as everything-is-code and freezes nothing"
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```result fence at line 3 is never closed \u2014 an unterminated block renders as everything-is-code and freezes nothing"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 3 is never closed \u2014 an unterminated block renders as everything-is-code and freezes nothing",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "b3d9f6d8e382d8f49573f18e4a2814f842b2adc5c4841371ab262efec68b9b86",
+   "name": "result/attack/two-fences",
+   "why": "two plain fences",
+   "info": "result",
+   "inputs": {
+    "text": "9885a83e96475f6829a85d2acafd0a24e527737ec875441d7c04992677955041"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the document contains 2 result-like fenced blocks (line 3 (```result), line 7 (```result)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the document contains 2 result-like fenced blocks (line 3 (```result), line 7 (```result)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the document contains 2 result-like fenced blocks (line 3 (```result), line 7 (```result)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one.",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "031dac64b56d0f9635ba4eb4ac12bc2d36a179c73a4356831845c4c91914e437",
+   "name": "result/attack/indented-opener",
+   "why": "a two-space opener a renderer reads",
+   "info": "result",
+   "inputs": {
+    "text": "a6b438a4fd0ea8e55990bb264a2925e5c87fe15fa41bcd2d07d951a8a64f328d"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the single result-like block (line 3, '  '```result) is not a plain unindented ```result fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the single result-like block (line 3, '  '```result) is not a plain unindented ```result fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the single result-like block (line 3, '  '```result) is not a plain unindented ```result fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice.",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "416f1d7d2c846b54486f57259b0d21a6baceca0a4e017b3ced34482f3e6dacab",
+   "name": "result/keys/duplicate-key",
+   "why": "a key declared twice",
+   "info": "result",
+   "inputs": {
+    "text": "e375ea7081e3441aa20a1d1fbdcd50fdc27faacb7867f5c03d0daf1c4f3cc3eb"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"prereg\": 1, \"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}"
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```result fence at line 3 is not valid strict JSON: duplicate key 'prereg'"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 3 is not valid strict JSON: duplicate key 'prereg'",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "959c3d3243c97bb28277b08d120f74c39b723027072c0f1ef7c00da3ddf7504a",
+   "name": "result/keys/non-ascii-key",
+   "why": "a key with a Cyrillic letter beside its ASCII twin",
+   "info": "result",
+   "inputs": {
+    "text": "e337cb41d18e22055ba317582aee45defa7f772b37793cfae92a043e4e13009c"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"\u0441rereg\": 1, \"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}"
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```result fence at line 3 is not valid strict JSON: non-ASCII key '\u0441rereg'"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 3 is not valid strict JSON: non-ASCII key '\u0441rereg'",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "7b70f1d5600e6fa14c5d3c4d5a07df728bbd8f64ed8a1be0c084c50424eea611",
+   "name": "result/shadow/bom-on-line-1",
+   "why": "a byte-order mark before the opener on line 1",
+   "info": "result",
+   "inputs": {
+    "text": "99d36c0fe46c8794ccc1f61193d214a371fb624ce349cdc7500f5ec84d83fe81"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 1 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 1 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "74eb34e85ac2dd32e56daa03b452ef0e7aeb7753b609c10e6b42f30c15e1bd31",
+   "name": "result/shadow/block-quote",
+   "why": "the fence in a block quote",
+   "info": "result",
+   "inputs": {
+    "text": "37a157ac684f0c056c006c29ec32f3667d0dd49fce271eb1ffad1180961b8f2c"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 3 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 3 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "c909770ae4225ab337471937a182020765e28cc901ae0ddea8eed535088531fc",
+   "name": "result/shadow/list-item",
+   "why": "the fence as a list item's content",
+   "info": "result",
+   "inputs": {
+    "text": "4ae571b733825621f00845cf72a46747185d916f5e50a76095a2d75f072eddd3"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 3 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 3 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "073d3cb1f861a76245779c8ba05a2730f914506f7b545b812613af302ad7c5b7",
+   "name": "result/shadow/ordered-list-item",
+   "why": "the fence as an ordered list item's content",
+   "info": "result",
+   "inputs": {
+    "text": "b75b2505dc118374022abf57cf30b8e0d0380516d95966acd06fe4bd609c3569"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 3 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 3 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "2b45eaf5b18e4df133f4b482285bb0812c2f48428d7576015acc5591e95a4d0e",
+   "name": "result/shadow/quote-in-list",
+   "why": "a block quote inside a list item",
+   "info": "result",
+   "inputs": {
+    "text": "bd0e32b21af8f6b248cc7b926b3d56c99f6813ecb7efb36aa036de170c507c4b"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 3 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 3 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "753b2b7d45f7a857f58aaf4a1422927162588e04a9fc532982c7e18262be1783",
+   "name": "result/shadow/second-word",
+   "why": "an info string with a second word",
+   "info": "result",
+   "inputs": {
+    "text": "3728999c6a9a7150e48b157bf237507d3f8ec92274db78c8ffe7bfef631fe438"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 3 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 3 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "4a6b95827803bf78737b26e2a1b3cb3efc22b10f597fcff44121d61e6093ccea",
+   "name": "result/shadow/beside-the-plain-fence",
+   "why": "the plain fence, and a quoted one beside it",
+   "info": "result",
+   "inputs": {
+    "text": "f04ad5a47b4be55b96e9d773eb19e4464dc72f71d8a2a2f18dfe7f7a1d75e0ff"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}"
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```result fence at line 7 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "a ```result fence at line 7 renders as a result block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```result fence",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "8c9b0c8f65e60e8f865d5359da8127b6ede2aac330125d9ef1ff4aa7b05f28a7",
+   "name": "locks/plain",
+   "why": "the one plain fence",
+   "info": "locks",
+   "inputs": {
+    "text": "15fd00444e02a453b983570fd37076fff644283f918f0e0b53fa0dfafeab4957"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "scorer": "score.py",
+      "reads": [
+       "data.csv"
+      ],
+      "outcomes": [
+       "PASS",
+       "FAIL"
+      ],
+      "withdraws": {}
+     }
+    }
+   }
+  },
+  {
+   "id": "8d99b8c0eef85e7bf334e0c7e7ead37740ff0ad32015e404daed9847c230c11d",
+   "name": "locks/plain-crlf",
+   "why": "the plain fence with CRLF newlines, read as LF",
+   "info": "locks",
+   "inputs": {
+    "text": "cd156a80ede4d1d679e3afa0b4b77c6e55e96dc3a22d4724daab2f361dd13122"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "scorer": "score.py",
+      "reads": [
+       "data.csv"
+      ],
+      "outcomes": [
+       "PASS",
+       "FAIL"
+      ],
+      "withdraws": {}
+     }
+    }
+   }
+  },
+  {
+   "id": "d0ea64b7487d8cffb45fa1e811ff7bb51a1b63a6f94e9abf52e26320234d323a",
+   "name": "locks/no-fence",
+   "why": "prose only",
+   "info": "locks",
+   "inputs": {
+    "text": "104cfb23d4c409d0272e7a9f825930eff3d1e6ea0c8171938e2adf8b4b3d0adb"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "93464f200b1f23aa4106229f0bf0fbc6b3cdea4f79e305c35b7cb98492f52770",
+   "name": "locks/indented-code",
+   "why": "four columns of indent is code a renderer prints as text",
+   "info": "locks",
+   "inputs": {
+    "text": "9d11f7515d1f3d9114a34b1eaf24d1eccfe5c0efeb2c859d503fdaf1ccae4782"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    }
+   }
+  },
+  {
+   "id": "fd3dcf6b5b5c10dfab3bce69f41f9cde3d33b91ab5afbfdac3ed49cc30de8b2d",
+   "name": "locks/attack/decoy-in-comment",
+   "why": "a decoy fence in an HTML comment beside the visible one",
+   "info": "locks",
+   "inputs": {
+    "text": "e232b6b52680f24c2d5ffcc149dd19eb65f9267058e71efcd2ce3b03be526053"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 locks-like fenced blocks (line 4 (```locks), line 9 (```locks)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 locks-like fenced blocks (line 4 (```locks), line 9 (```locks)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    }
+   }
+  },
+  {
+   "id": "9e09b4092ba09e871e97cf2fd6fd4c5e2b7cd181c726e1e03b03d38af58d46af",
+   "name": "locks/attack/tilde-fence",
+   "why": "a tilde fence beside a hidden backtick decoy",
+   "info": "locks",
+   "inputs": {
+    "text": "4233890d13efb74f700be43c803c34c107ba540af426ac3814d8ec703069fcd1"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 locks-like fenced blocks (line 4 (```locks), line 9 (~~~locks)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 locks-like fenced blocks (line 4 (```locks), line 9 (~~~locks)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    }
+   }
+  },
+  {
+   "id": "165d37883aa63fdf08e6f50796a2d0593cd3dc3e102cd1e7052b31bba6df92aa",
+   "name": "locks/attack/case-variant",
+   "why": "an upper-case info string",
+   "info": "locks",
+   "inputs": {
+    "text": "28c236d218c4c9512ae2991fa77db75ab0b811f31882855ce6b06318132c704d"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the single locks-like block (line 3, ''```LOCKS) is not a plain unindented ```locks fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the single locks-like block (line 3, ''```LOCKS) is not a plain unindented ```locks fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    }
+   }
+  },
+  {
+   "id": "f4ddf7df074ddeb8633370e9375e70b8f7e7cc135e5f783ddf834f4a12d37fbd",
+   "name": "locks/attack/fence-only-in-comment",
+   "why": "the one fence sits in an HTML comment",
+   "info": "locks",
+   "inputs": {
+    "text": "1d92c28b84c9872e17c9a551390ea4caadeb43d34dc8a74e742f9d0e2a452592"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```locks fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```locks fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    }
+   }
+  },
+  {
+   "id": "2defa86eddf8937d639ebfa9ba4c44356ed9a7f784829039fd3b461ab6688bc3",
+   "name": "locks/attack/confusable-info",
+   "why": "a Cyrillic letter in an info string, beside a decoy",
+   "info": "locks",
+   "inputs": {
+    "text": "beec2a032f7742767ed040653e38a6a086df825f11178d50316289093bbc9c99"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "fence info string 'l\u043ecks' (line 3) contains non-ASCII characters \u2014 a confusable info string is a shadowing channel, and this parser refuses the class rather than trusting a normalization table to enumerate it"
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "fence info string 'l\u043ecks' (line 3) contains non-ASCII characters \u2014 a confusable info string is a shadowing channel, and this parser refuses the class rather than trusting a normalization table to enumerate it"
+    }
+   }
+  },
+  {
+   "id": "b36734550866349b8c646b9ab54574f1292b68c35f8a1e7ffab9e48e3b25e630",
+   "name": "locks/attack/tab-indented-opener",
+   "why": "a tab-indented decoy opener a renderer prints as text, the honest fence in a comment",
+   "info": "locks",
+   "inputs": {
+    "text": "3c3c32e9dea0e267c65f8a5aefc031574d1bc3371a2486644995a455db776381"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```locks fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```locks fence at line 4 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    }
+   }
+  },
+  {
+   "id": "8412b6f7dc2698392fd7d194ae1a34cb9a8f16b96abb1a44109c85cdf6e0d9d8",
+   "name": "locks/attack/unterminated-comment",
+   "why": "an unterminated HTML comment hides the fence to the end",
+   "info": "locks",
+   "inputs": {
+    "text": "9f105e0c5b40a8c83547cce149fae5fae9668716c73597a4c22ed0f80a728522"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```locks fence at line 5 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```locks fence at line 5 sits inside an HTML comment (possibly unterminated) \u2014 a renderer hides it, so scoring it would divorce the machine's authority from the reader's. De-comment it."
+    }
+   }
+  },
+  {
+   "id": "ca59484e5b84fcc3d30aea7b177447a28b4720fea80f62a9e844da974fb8d5d1",
+   "name": "locks/attack/unclosed-fence",
+   "why": "the fence is never closed",
+   "info": "locks",
+   "inputs": {
+    "text": "07713ea902196f4265580ffc555293523e1567f7cf641f7cbe20be02d0c70aa2"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the ```locks fence at line 3 is never closed \u2014 an unterminated block renders as everything-is-code and freezes nothing"
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```locks fence at line 3 is never closed \u2014 an unterminated block renders as everything-is-code and freezes nothing"
+    }
+   }
+  },
+  {
+   "id": "87dc9b8179d3771a46333fecc21745c237ddc7cc932e61bd67d4efef524bc3a8",
+   "name": "locks/attack/two-fences",
+   "why": "two plain fences",
+   "info": "locks",
+   "inputs": {
+    "text": "1e2ef4804d7aac2998cf73e0d8b99786baed10e08baadceabd5a662ac5f29450"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 locks-like fenced blocks (line 3 (```locks), line 7 (```locks)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "prereg contains 2 locks-like fenced blocks (line 3 (```locks), line 7 (```locks)) \u2014 the frozen block must be unambiguous. A document that can show a reader one block and score against another is not frozen; remove or rename all but one."
+    }
+   }
+  },
+  {
+   "id": "8d017253c73c6db7a1e516945c3c7c7dac11fee9ca141298744df9be872abbf9",
+   "name": "locks/attack/indented-opener",
+   "why": "a two-space opener a renderer reads",
+   "info": "locks",
+   "inputs": {
+    "text": "a6b6e627db4b2f9452377768c12a18166abec0e1a1d91ead0cdc4fdd4b2fe63d"
+   },
+   "expect": {
+    "select": {
+     "raises": "GateSpecError",
+     "message": "the single locks-like block (line 3, '  '```locks) is not a plain unindented ```locks fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the single locks-like block (line 3, '  '```locks) is not a plain unindented ```locks fence \u2014 the one form a renderer and this parser read identically. A block only one of them recognises is a shadowing channel, not a style choice."
+    }
+   }
+  },
+  {
+   "id": "5fcc09b4b3040de59729b8c59a021129daa9129cf12801ddc5b6d631c59578aa",
+   "name": "locks/keys/duplicate-key",
+   "why": "a key declared twice",
+   "info": "locks",
+   "inputs": {
+    "text": "94aac811e7774bab301ee1e06d26973054deccbcb9bd858a6671492bc9e1f21b"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"scorer\": 1, \"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}"
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```locks fence at line 3 is not valid strict JSON: duplicate key 'scorer'"
+    }
+   }
+  },
+  {
+   "id": "e78b55e6b1d16dbbf4341befc8775f91df86007bd4b9dee8380549ef05c15f16",
+   "name": "locks/keys/non-ascii-key",
+   "why": "a key with a Cyrillic letter beside its ASCII twin",
+   "info": "locks",
+   "inputs": {
+    "text": "c6d229f4fbd1ac28c724d22ac968a6bfcab7428d09cf4fe5f03d6f0d592e1772"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"\u0441corer\": 1, \"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}"
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```locks fence at line 3 is not valid strict JSON: non-ASCII key '\u0441corer'"
+    }
+   }
+  },
+  {
+   "id": "697f6f3d72f936e0ca7a996600a421b2f86648bc47eb8be9501dfce1fd6b5ed6",
+   "name": "locks/shadow/bom-on-line-1",
+   "why": "a byte-order mark before the opener on line 1",
+   "info": "locks",
+   "inputs": {
+    "text": "8250f68a4047fb0f6f93ff07b0b0a256bfd72a4836b1b669d67f421534d544cd"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 1 renders as a locks block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```locks fence"
+    }
+   }
+  },
+  {
+   "id": "4dac1f5938144c9822af0ed548be31f1fa6986f13e153ecb63f630ce75f8d869",
+   "name": "locks/shadow/block-quote",
+   "why": "the fence in a block quote",
+   "info": "locks",
+   "inputs": {
+    "text": "da81c433a7ff13dc807e1c50310c5f784076c0c981a0892984b55c92e0daf4c3"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 3 renders as a locks block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```locks fence"
+    }
+   }
+  },
+  {
+   "id": "5119c6b53dc7b065ac9a5d016d525e1580fff7a5f7c03624dcaa25ead5e8eef3",
+   "name": "locks/shadow/list-item",
+   "why": "the fence as a list item's content",
+   "info": "locks",
+   "inputs": {
+    "text": "f190a97c2ce9b060f15fee6383cc5bb0d84c28442ad81ce7fea6d455417061e8"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 3 renders as a locks block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```locks fence"
+    }
+   }
+  },
+  {
+   "id": "c9d661ba74ad5fcb34384a442ccc950fbf38db141fc12cc45c0fa1e4b460a685",
+   "name": "locks/shadow/ordered-list-item",
+   "why": "the fence as an ordered list item's content",
+   "info": "locks",
+   "inputs": {
+    "text": "82ae3d72f1a777b972ebad64660ded36b1e762ad56beeedf4757b2bed4a2f8e7"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 3 renders as a locks block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```locks fence"
+    }
+   }
+  },
+  {
+   "id": "6ebbbf1f4dea0606365a54c4ca9c7e229a12edf8b8e970467e66852e89b421d3",
+   "name": "locks/shadow/quote-in-list",
+   "why": "a block quote inside a list item",
+   "info": "locks",
+   "inputs": {
+    "text": "112d3809c8a6da2a66f0117b65a93344d670894920b55ef01adbaab898a0a5d0"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 3 renders as a locks block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```locks fence"
+    }
+   }
+  },
+  {
+   "id": "c6b742e87f7e375e7f56b7b3f9e84fc205a39d72145d81924b53094b3f163272",
+   "name": "locks/shadow/second-word",
+   "why": "an info string with a second word",
+   "info": "locks",
+   "inputs": {
+    "text": "4aa9c460c07e40a3ec9a17ac7c8b0b0e44d07f930d394f982ea45ee49bec514c"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 3 renders as a locks block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```locks fence"
+    }
+   }
+  },
+  {
+   "id": "c11337d50ad73d34a3a3826e8cd2746cc0d3495a17aa52e2803e0b3706ed7af4",
+   "name": "locks/shadow/beside-the-plain-fence",
+   "why": "the plain fence, and a quoted one beside it",
+   "info": "locks",
+   "inputs": {
+    "text": "2aa6ca073a5f7cb89eedc65c951ab9a9eb11b4968113f7e3127edc8818eda016"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}"
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "a ```locks fence at line 7 renders as a locks block (behind a byte-order mark, in a block quote or a list item, or with a second word in its info string) and the scanner counts no fence there \u2014 a block only one of them recognises is a shadowing channel; write the one plain unindented ```locks fence"
+    }
+   }
+  },
+  {
+   "id": "56b242f3b1d3f1308a32f4093cd6c9b2f5a9525c80309aa883467b48533e128e",
+   "name": "result/fence/three-keys",
+   "why": "a fence naming prereg, receipt and verdict",
+   "info": "result",
+   "inputs": {
+    "text": "3cb96176873e5e65a5fd62293f56b2b6df662f5972d9efb007f21c763cc7d105"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "prereg": "PREREG_a.md",
+      "receipt": "receipt.json",
+      "verdict": "PASS"
+     }
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [
+      {
+       "form": "fence",
+       "receipt": "receipt.json",
+       "prereg": "PREREG_a.md",
+       "verdict": "PASS",
+       "line": 3
+      }
+     ],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "e047ae7a88477d5f888b18e6d544c407347647b68b4ea2e6e169818480296b21",
+   "name": "result/fence/lacks-prereg",
+   "why": "a fence without its prereg",
+   "info": "result",
+   "inputs": {
+    "text": "c725ca0bf2078d21740dc96f068818bbf980cf2fd6db550f03c3b62ea48665e8"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "receipt": "receipt.json",
+      "verdict": "PASS"
+     }
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 3 names prereg, receipt and verdict and nothing else; it lacks ['prereg']",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "06930ea57a9401f9665750b3c5a10f78cbceb79c33d41e7a83a0b39e15010498",
+   "name": "result/fence/extra-key",
+   "why": "a fence with a key the reader does not read",
+   "info": "result",
+   "inputs": {
+    "text": "6b1624e696679c3abba987489fe949f53192091de65d96cf646b82cc7b4eb638"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\", \"gates\": {\"G\": true}}"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "prereg": "PREREG_a.md",
+      "receipt": "receipt.json",
+      "verdict": "PASS",
+      "gates": {
+       "G": true
+      }
+     }
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 3 names prereg, receipt and verdict and nothing else; it holds ['gates']",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "59ca719dfcfefb8fd69208f7231987ca399be38d4ff07c9fd80772323d0a997b",
+   "name": "result/fence/verdict-not-a-string",
+   "why": "a number for the verdict",
+   "info": "result",
+   "inputs": {
+    "text": "ea201788a395d0e8b3d9ad1fd66cd38d9292ce7ba7d92ae3def17bf2c30ab4cb"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": 5}"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "prereg": "PREREG_a.md",
+      "receipt": "receipt.json",
+      "verdict": 5
+     }
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 3: verdict 5 is not a non-empty string of one line",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "a834bc0dd8010b59a3aa09341acb6b9ba915a9865c13f2e6e6636991bd542199",
+   "name": "result/fence/verdict-empty",
+   "why": "an empty verdict",
+   "info": "result",
+   "inputs": {
+    "text": "8417cb62206954c04180aac001c8e2c39007c76e03ba1ec3066d7dff783b41d1"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"\"}"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "prereg": "PREREG_a.md",
+      "receipt": "receipt.json",
+      "verdict": ""
+     }
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 3: verdict '' is not a non-empty string of one line",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "7aab043fdcc939506c8f699df0c0e9339e1509fc77cff91bd5da8534b5bea7c6",
+   "name": "result/fence/not-an-object",
+   "why": "a list in the fence",
+   "info": "result",
+   "inputs": {
+    "text": "70ea8807e6970d09dcc04e3b6ff9a4d56285fedd5590b5c85555206ac12356af"
+   },
+   "expect": {
+    "select": {
+     "block": "[{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}]"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": [
+      {
+       "prereg": "PREREG_a.md",
+       "receipt": "receipt.json",
+       "verdict": "PASS"
+      }
+     ]
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 3 is not a JSON object (it is a list)",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "1815c1991ce6542545427c81335b3940b8c67a79081c66c65ab59004c161e794",
+   "name": "result/fence/not-strict-json",
+   "why": "a trailing comma",
+   "info": "result",
+   "inputs": {
+    "text": "29e1b11362600e1807668cf376b9eabbea8a2a41172296ef8e1b210e4c5b1d5c"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\",}"
+    },
+    "fence_json": {
+     "raises": "GateSpecError",
+     "message": "the ```result fence at line 3 is not valid strict JSON: Expecting property name enclosed in double quotes: line 1 column 72 (char 71)"
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the ```result fence at line 3 is not valid strict JSON: Expecting property name enclosed in double quotes: line 1 column 72 (char 71)",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "7b2b92a08ec3d682a8d636276a1d3aaa3b436ac1aa96e1318518589afde0aa07",
+   "name": "result/sworn/verdict-leaf",
+   "why": "a sworn span on the receipt's verdict leaf",
+   "info": "result",
+   "inputs": {
+    "text": "61431efd35ad45656eb860f37d0cd343758d38713d4b374537832ccce008ec44"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [
+      {
+       "form": "sworn",
+       "receipt": "papers/x/receipt.json",
+       "prereg": null,
+       "verdict": "PASS",
+       "line": 3
+      }
+     ],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "6709b7eb2a1a3c4421135c19e336e6d5d94ebea0dd2d31966471d0453f47a4e2",
+   "name": "result/sworn/other-leaves",
+   "why": "spans on other leaves declare nothing",
+   "info": "result",
+   "inputs": {
+    "text": "35bdadb8306d0bf3d6c5e45becea90bb5f978492a6c30cebc00c82005494ed24"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "7f10c1a84ae0db82f16f00757f577894e9c79eb9f87105e387098ec1fdf35368",
+   "name": "result/sworn/in-a-code-fence",
+   "why": "a span inside a fenced code block, which sworn does not read",
+   "info": "result",
+   "inputs": {
+    "text": "d216f1abe2827253881da4a198e775b06d5cb27a4daa61e0291d950028d9e3f2"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "e118886059d9fefd2adcc25edc2ef4716f2962b66f6cffa848a61e4036756804",
+   "name": "result/sworn/in-inline-code",
+   "why": "a span inside an inline code span, which sworn does not read",
+   "info": "result",
+   "inputs": {
+    "text": "f9ecf683d78938f53615b7809ce70bbf37d114aeeef1742a91de9c3a52ab3822"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "3648cd55a65b8008b3707e53746de865fa4e9211e6af06d34e4a0e1d90d909f0",
+   "name": "result/sworn/rn-form",
+   "why": "a span naming its receipt by a manifest id: printed, not paired",
+   "info": "result",
+   "inputs": {
+    "text": "81e35862d086136ff3af2366694ec3b854f13f69597f70c1afc479edeed0a1ff"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": [
+      {
+       "code": "RESULT_NOT_READ",
+       "kind": "NOTE",
+       "receipt": "r1#/verdict",
+       "line": 3,
+       "detail": "the span at line 3 declares the verdict of r1#/verdict, a rn receipt no committed path holds, so it is not paired (styxx.sworn checks the span itself)"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "79c52983185440d27e1e47b476fdc398abc3e0ed713be5bc2774df382ccf8dc8",
+   "name": "result/sworn/unlexable-names-the-leaf-in-prose",
+   "why": "a document whose fence lines sworn cannot balance, naming the verdict leaf in an inline code span and in no tag: nothing is declared and nothing refused",
+   "info": "result",
+   "inputs": {
+    "text": "7fbd8e928890f53d32e9403ec198155f58bc137af580cd30a8a4d44ae9283c98"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "ebb6ea24fae514109fc5b7da26cd0af647e53b2c7eddcb512e7e91db40977914",
+   "name": "result/both/agree",
+   "why": "the fence and a span on the same receipt, agreeing",
+   "info": "result",
+   "inputs": {
+    "text": "6d7525f5083c49d91a50d66916522b18714dcc67411fbf9eade941959e0ac347"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"prereg\": \"PREREG_a.md\", \"receipt\": \"papers/x/receipt.json\", \"verdict\": \"PASS\"}"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "prereg": "PREREG_a.md",
+      "receipt": "papers/x/receipt.json",
+      "verdict": "PASS"
+     }
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [
+      {
+       "form": "fence",
+       "receipt": "papers/x/receipt.json",
+       "prereg": "PREREG_a.md",
+       "verdict": "PASS",
+       "line": 3
+      },
+      {
+       "form": "sworn",
+       "receipt": "papers/x/receipt.json",
+       "prereg": null,
+       "verdict": "PASS",
+       "line": 7
+      }
+     ],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "f3ff3ecfb3bc32d3599e160aede302f72fc4321967418afb9556db06cf3a91d3",
+   "name": "result/both/disagree",
+   "why": "the fence and a span that disagree: both declarations are read here, and core._declared refuses the pair",
+   "info": "result",
+   "inputs": {
+    "text": "7856858228f52c120922a3d25dbec642f330a41a8da389d8b0c68170fc21fa35"
+   },
+   "expect": {
+    "select": {
+     "block": "{\"prereg\": \"PREREG_a.md\", \"receipt\": \"papers/x/receipt.json\", \"verdict\": \"PASS\"}"
+    },
+    "fence_json": {
+     "line": 3,
+     "object": {
+      "prereg": "PREREG_a.md",
+      "receipt": "papers/x/receipt.json",
+      "verdict": "PASS"
+     }
+    },
+    "reading": {
+     "code": null,
+     "kind": null,
+     "detail": null,
+     "declarations": [
+      {
+       "form": "fence",
+       "receipt": "papers/x/receipt.json",
+       "prereg": "PREREG_a.md",
+       "verdict": "PASS",
+       "line": 3
+      },
+      {
+       "form": "sworn",
+       "receipt": "papers/x/receipt.json",
+       "prereg": null,
+       "verdict": "HOLD",
+       "line": 7
+      }
+     ],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "01e8478247019d95e7e0b5c588c2f2e205b36fe9c17fda2a557a1b65ccef26b7",
+   "name": "result/sworn-attack/hidden-in-a-comment",
+   "why": "refused: hidden in a comment",
+   "info": "result",
+   "inputs": {
+    "text": "73c5d5ee41a815ea988fd2ea6318afeaefb8a55c8515cb9547857c238791161b"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the span at line 3 on path:papers/x/receipt.json#/verdict is MALFORMED hidden_commitment under styxx.sworn, so the verdict it declares is not read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "b5d58ed1b0c83360f471aec14807fe83a5eeac4620e6fcba94ab61ea0edc6c14",
+   "name": "result/sworn-attack/behind-an-unterminated-comment",
+   "why": "refused: behind an unterminated comment",
+   "info": "result",
+   "inputs": {
+    "text": "a0d9511c6f76e36289116fb02f44657af441e42e36f32b3e0dc2e91efca2b29b"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the span at line 5 on path:papers/x/receipt.json#/verdict is MALFORMED hidden_commitment under styxx.sworn, so the verdict it declares is not read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "504968ddc4ee703b7de903a125aa71f1614f29ce81ee9b44ceabb3745c8d83ad",
+   "name": "result/sworn-attack/nested",
+   "why": "refused: nested",
+   "info": "result",
+   "inputs": {
+    "text": "3d1c4d6596cebd8fcf712c7fb2360f8bee5ef882ca0072ec7b13044dde1c26ae"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "styxx.sworn reads the tag at line 3 as MALFORMED nesting: the document's tags do not lex, so no verdict sworn in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "69b99caf2c1c3ef552fb356297a53367a5e7f9ee8b075537f16e746eaf3b48c1",
+   "name": "result/sworn-attack/unclosed",
+   "why": "refused: unclosed",
+   "info": "result",
+   "inputs": {
+    "text": "abe3e73c99b2fe3ca5cf5d432a4e0e327a89a64ab66631f04d2fb25f0680380d"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "styxx.sworn reads the tag at line 3 as MALFORMED unclosed: the document's tags do not lex, so no verdict sworn in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "d117b61583fb9823ec926245d0ce541180e15cc5eaa683b9f14979a7e354c2b1",
+   "name": "result/sworn-attack/a-stray-closer-elsewhere",
+   "why": "refused: a stray closer elsewhere",
+   "info": "result",
+   "inputs": {
+    "text": "625fadee38b7be2b3f09a9b8713f14d043c52c0e3e22b4f41707e473afc7030e"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "styxx.sworn reads the tag at line 3 as MALFORMED stray_closer: the document's tags do not lex, so no verdict sworn in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "fb2c369ffc22a4dd43d8c95ce26b3a77aa196ba07b5a91f61fb3adb5b57a5584",
+   "name": "result/sworn-attack/single-quoted-attributes",
+   "why": "refused: single quoted attributes",
+   "info": "result",
+   "inputs": {
+    "text": "7ca80a15506f5ade7c445817ffc26d083ac2445658bf74a11d6086764332fa2f"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "styxx.sworn reads the tag at line 3 as MALFORMED tag_syntax: the document's tags do not lex, so no verdict sworn in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "883804104cc05ab12aa10fe3ebefa5a68743e14761964f7314fc0e7e6c820f08",
+   "name": "result/sworn-attack/upper-case-tag",
+   "why": "refused: upper case tag",
+   "info": "result",
+   "inputs": {
+    "text": "74a533521dbed8c6c0f7aeaeebeda582aac166ccb598f8b6c221f3877ab78b31"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "styxx.sworn reads the tag at line 3 as MALFORMED tag_syntax: the document's tags do not lex, so no verdict sworn in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "ec087fd58f91541b97b3bb2513317b5dc4c85fab2ef3a63e40b8cab35e166bc9",
+   "name": "result/sworn-attack/kind-numeric",
+   "why": "refused: kind numeric",
+   "info": "result",
+   "inputs": {
+    "text": "23d9a50b7c301f67a8d233e73ead59b0971cf2c4ebc09282e1585656933f8a9b"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the span at line 3 on path:papers/x/receipt.json#/verdict has k=\"numeric\"; a verdict leaf is declared with k=\"quote\", whose needle is the verdict",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "66eb896e7a29924773eeaf0ad45fefc5e4199cc9fb52a808193bee881be05349",
+   "name": "result/sworn-attack/kind-unknown",
+   "why": "refused: kind unknown",
+   "info": "result",
+   "inputs": {
+    "text": "12fcc753ef203f8eb2e8e29ebcc6be3093551c4c39f1c7da10a089d190666475"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the span at line 3 on path:papers/x/receipt.json#/verdict is MALFORMED kind_unknown under styxx.sworn, so the verdict it declares is not read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "f997018e92f899de2c00a673a9c1a9a1c84d8eafc91c46516685ec3e5b651212",
+   "name": "result/sworn-attack/kind-absent",
+   "why": "refused: kind absent",
+   "info": "result",
+   "inputs": {
+    "text": "fc395647e7cc8367f453d82bb3b36d080ac57c3e1087f0abc09120eac55cc1bb"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the span at line 3 on path:papers/x/receipt.json#/verdict is MALFORMED absent_over_partial under styxx.sworn, so the verdict it declares is not read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "932bbef269ed2d3f0095ace494ac61482ca8fbfe894a629e214c06ccdc860459",
+   "name": "result/sworn-attack/two-needles",
+   "why": "refused: two needles",
+   "info": "result",
+   "inputs": {
+    "text": "a62a1c97e8e6411aca1e5482c89f4d41f90a9c0974205d10fff879503d3c7466"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the span at line 3 on path:papers/x/receipt.json#/verdict is MALFORMED needle_count under styxx.sworn, so the verdict it declares is not read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "b01fadea0c43be434f6e5dbe6036dfb8a7827964b6026e6ac02fdbc1018e25b6",
+   "name": "result/sworn-attack/blank-needle",
+   "why": "refused: blank needle",
+   "info": "result",
+   "inputs": {
+    "text": "c4b3952fb86ca673e9117d4b7fe28bc2c5866aff20dd8e647e3bf8a9766b5bbc"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the span at line 3 on path:papers/x/receipt.json#/verdict is MALFORMED needle_empty under styxx.sworn, so the verdict it declares is not read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "16dc81d5a1da2b48e130248ede09d397ee64b776f16785113d923367a2af9ea4",
+   "name": "result/sworn-attack/directional-override",
+   "why": "refused: directional override",
+   "info": "result",
+   "inputs": {
+    "text": "706d493a534b431ba6582b7872c8e2e45ea8d23090e9824cf0263fd98adcf15a"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the span at line 3 on path:papers/x/receipt.json#/verdict is MALFORMED directional_override under styxx.sworn, so the verdict it declares is not read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "0e5a6e6d0bf3d91b7dc9d57ed532fb0442e3422523ebf60655813f9fea2932b4",
+   "name": "result/sworn-attack/over-the-length-cap",
+   "why": "refused: over the length cap",
+   "info": "result",
+   "inputs": {
+    "text": "23a4adc05c84bcfe64bd5d2d5f69d90a295464eac24ada550d8ee95b2b6ee114"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the span at line 3 on path:papers/x/receipt.json#/verdict is MALFORMED length_cap under styxx.sworn, so the verdict it declares is not read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "0a8e2bab8e0835727c5f952dd475324c30616e61c50a2891cdf99d45f1ec9912",
+   "name": "result/sworn-attack/a-path-sworn-cannot-name",
+   "why": "refused: a path sworn cannot name",
+   "info": "result",
+   "inputs": {
+    "text": "3ad2fa82940caf3800a684522ffd7a4d808a3b88fb3d52a4b579727ebb660c4a"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "the span at line 3 on path:/abs/receipt.json#/verdict is MALFORMED receipt_form under styxx.sworn, so the verdict it declares is not read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  },
+  {
+   "id": "13f21fcf718575b0e27c9b5449edd1b715c5dc8c8a6b583e30bebd2ca2c392da",
+   "name": "result/sworn-attack/unbalanced-fences",
+   "why": "refused: unbalanced fences",
+   "info": "result",
+   "inputs": {
+    "text": "e6814139563c4c4fe46092ea04aa05062ec02368129340aae4d24be5d694f353"
+   },
+   "expect": {
+    "select": {
+     "none": true
+    },
+    "fence_json": {
+     "none": true
+    },
+    "reading": {
+     "code": "RESULT_REFUSES",
+     "kind": "FAIL",
+     "detail": "styxx.sworn reads the document as MALFORMED unbalanced_fences, so no verdict sworn in it is read",
+     "declarations": [],
+     "unread": []
+    }
+   }
+  }
+ ],
+ "blobs": {
+  "07713ea902196f4265580ffc555293523e1567f7cf641f7cbe20be02d0c70aa2": {
+   "utf8": "# d\n\n```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n"
+  },
+  "0f60761dee728922f6b3398b3dd875c83d96a9792b49259e9bbe13d3c968ea7a": {
+   "utf8": "# d\n\n```gates\n{\"\u0441ates\": 1, \"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "104cfb23d4c409d0272e7a9f825930eff3d1e6ea0c8171938e2adf8b4b3d0adb": {
+   "utf8": "# d\n\nno fence here.\n"
+  },
+  "112d3809c8a6da2a66f0117b65a93344d670894920b55ef01adbaab898a0a5d0": {
+   "utf8": "# d\n\n- > ```locks\n  > {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n  > ```\n"
+  },
+  "12fcc753ef203f8eb2e8e29ebcc6be3093551c4c39f1c7da10a089d190666475": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quot\">`PASS`</sworn>\n"
+  },
+  "15374bb3c1c45e55675899e658d8d716b0ad40075258f6af257086f7ac4b0695": {
+   "utf8": "# d\n\n- ```gates\n  {\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n  ```\n"
+  },
+  "15fd00444e02a453b983570fd37076fff644283f918f0e0b53fa0dfafeab4957": {
+   "utf8": "# d\n\n```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "1becc794851fc1b0edc5771cdf0676abd953ed62a0248905e966e319988412ed": {
+   "utf8": "# d\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n"
+  },
+  "1d92c28b84c9872e17c9a551390ea4caadeb43d34dc8a74e742f9d0e2a452592": {
+   "utf8": "# d\n\n<!--\n```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n-->\n"
+  },
+  "1e2ef4804d7aac2998cf73e0d8b99786baed10e08baadceabd5a662ac5f29450": {
+   "utf8": "# d\n\n```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n\n```locks\n{\"scorer\": \"other.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "23a4adc05c84bcfe64bd5d2d5f69d90a295464eac24ada550d8ee95b2b6ee114": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA`</sworn>\n"
+  },
+  "23d9a50b7c301f67a8d233e73ead59b0971cf2c4ebc09282e1585656933f8a9b": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"numeric\">`PASS`</sworn>\n"
+  },
+  "245d67cc79c2cff4dae52dbbb7204d496313e0780b7194942c3dce2a5c777a5f": {
+   "utf8": "# d\r\n\r\n```gates\r\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\r\n```\r\n"
+  },
+  "28c236d218c4c9512ae2991fa77db75ab0b811f31882855ce6b06318132c704d": {
+   "utf8": "# d\n\n```LOCKS\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "29e1b11362600e1807668cf376b9eabbea8a2a41172296ef8e1b210e4c5b1d5c": {
+   "utf8": "# RESULT\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\",}\n```\n"
+  },
+  "2aa6ca073a5f7cb89eedc65c951ab9a9eb11b4968113f7e3127edc8818eda016": {
+   "utf8": "# d\n\n```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n\n> ```locks\n> {\"scorer\": \"other.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n> ```\n"
+  },
+  "301c4658efab3600334038b0ae4b71a74bcffdbe722ff312c3430655e799cf46": {
+   "utf8": "\ufeff```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "35bdadb8306d0bf3d6c5e45becea90bb5f978492a6c30cebc00c82005494ed24": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:papers/x/receipt.json#/gates_sha256\" k=\"quote\">`PASS`</sworn> <sworn r=\"path:papers/x/receipt.json#/verdict/x\" k=\"quote\">`PASS`</sworn> <sworn r=\"path:papers/x/receipt.json#L3\" k=\"quote\">`PASS`</sworn>\n"
+  },
+  "3728999c6a9a7150e48b157bf237507d3f8ec92274db78c8ffe7bfef631fe438": {
+   "utf8": "# d\n\n```result json\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "37a157ac684f0c056c006c29ec32f3667d0dd49fce271eb1ffad1180961b8f2c": {
+   "utf8": "# d\n\n> ```result\n> {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n> ```\n"
+  },
+  "3ad2fa82940caf3800a684522ffd7a4d808a3b88fb3d52a4b579727ebb660c4a": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:/abs/receipt.json#/verdict\" k=\"quote\">`PASS`</sworn>\n"
+  },
+  "3c3c32e9dea0e267c65f8a5aefc031574d1bc3371a2486644995a455db776381": {
+   "utf8": "# d\n\n<!--\n```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n-->\n\n\t```locks\n{\"scorer\": \"other.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "3cb96176873e5e65a5fd62293f56b2b6df662f5972d9efb007f21c763cc7d105": {
+   "utf8": "# RESULT\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "3d04d1a45466e1491bfbb88a0f675a61362dfb45b672fed8799d0df5da426b18": {
+   "utf8": "# d\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "3d1c4d6596cebd8fcf712c7fb2360f8bee5ef882ca0072ec7b13044dde1c26ae": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\"><sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS`</sworn></sworn>\n"
+  },
+  "3e38c981089ec8843c821348b8d68488288398e1f14cd974e7d4aae4aa33d48d": {
+   "utf8": "# d\n\n<!--\n```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 99}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n-->\n\n```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "3f8d60e5e29c87aaad309478bb94d4acaa9f733c50627628cc08d38f34d5d9d4": {
+   "utf8": "# d\n\n```gates\n{\"gates\": 1, \"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "4233890d13efb74f700be43c803c34c107ba540af426ac3814d8ec703069fcd1": {
+   "utf8": "# d\n\n<!--\n```locks\n{\"scorer\": \"other.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n-->\n\n~~~locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n~~~\n"
+  },
+  "4aa9c460c07e40a3ec9a17ac7c8b0b0e44d07f930d394f982ea45ee49bec514c": {
+   "utf8": "# d\n\n```locks json\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "4ae571b733825621f00845cf72a46747185d916f5e50a76095a2d75f072eddd3": {
+   "utf8": "# d\n\n- ```result\n  {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n  ```\n"
+  },
+  "61431efd35ad45656eb860f37d0cd343758d38713d4b374537832ccce008ec44": {
+   "utf8": "# RESULT\n\nVerdict: <sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS`</sworn>.\n"
+  },
+  "625fadee38b7be2b3f09a9b8713f14d043c52c0e3e22b4f41707e473afc7030e": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS`</sworn> and later </sworn>\n"
+  },
+  "65e2b30a605adf314f99fad7e48fc738fbeaa6de30d1ed9efd79d16b4dc7f8d6": {
+   "utf8": "# d\n\n```g\u0430tes\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n\n```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 99}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "6b1624e696679c3abba987489fe949f53192091de65d96cf646b82cc7b4eb638": {
+   "utf8": "# RESULT\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\", \"gates\": {\"G\": true}}\n```\n"
+  },
+  "6b34a927d27b87d367e36c2756fe318308e1b52f8562b1e2768b111ddc7b4af6": {
+   "utf8": "# d\n\n<!--\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "6d10db5fe87579019f2941d5ebf452dc1f9f02f75eb73d503f173e0e235f9e94": {
+   "utf8": "# d\n\n<!--\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n```\n-->\n\n~~~result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n~~~\n"
+  },
+  "6d7525f5083c49d91a50d66916522b18714dcc67411fbf9eade941959e0ac347": {
+   "utf8": "# RESULT\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"papers/x/receipt.json\", \"verdict\": \"PASS\"}\n```\n\nVerdict: <sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS`</sworn>.\n"
+  },
+  "706d493a534b431ba6582b7872c8e2e45ea8d23090e9824cf0263fd98adcf15a": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`\u202ePASS`</sworn>\n"
+  },
+  "70ea8807e6970d09dcc04e3b6ff9a4d56285fedd5590b5c85555206ac12356af": {
+   "utf8": "# RESULT\n\n```result\n[{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}]\n```\n"
+  },
+  "73c5d5ee41a815ea988fd2ea6318afeaefb8a55c8515cb9547857c238791161b": {
+   "utf8": "# RESULT\n\nVerdict: HOLD. <!-- <sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS`</sworn> -->\n"
+  },
+  "74a533521dbed8c6c0f7aeaeebeda582aac166ccb598f8b6c221f3877ab78b31": {
+   "utf8": "# RESULT\n\n<SWORN r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS`</SWORN>\n"
+  },
+  "7856858228f52c120922a3d25dbec642f330a41a8da389d8b0c68170fc21fa35": {
+   "utf8": "# RESULT\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"papers/x/receipt.json\", \"verdict\": \"PASS\"}\n```\n\nVerdict: <sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`HOLD`</sworn>.\n"
+  },
+  "7871165cc5f54e9934c4299675586a3ca3e01a83dc8caf31b9117f7777cc8c2e": {
+   "utf8": "# d\n\n```gates json\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "7bb2cc275d5ccbf1bbcb7b92c0f7918f6c465afcb21181f61665a2744d883a0b": {
+   "utf8": "# d\n\n<!--\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n-->\n"
+  },
+  "7ca80a15506f5ade7c445817ffc26d083ac2445658bf74a11d6086764332fa2f": {
+   "utf8": "# RESULT\n\n<sworn r='path:papers/x/receipt.json#/verdict' k='quote'>`PASS`</sworn>\n"
+  },
+  "7d6e789976b15e2c85464a8ad8fa256d0cd8aa4e947a57d2f42cdcc415c476c3": {
+   "utf8": "# d\n\n<!--\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n-->\n\n\t```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n```\n"
+  },
+  "7fbd8e928890f53d32e9403ec198155f58bc137af580cd30a8a4d44ae9283c98": {
+   "utf8": "# notes\n\n  ```locks in a wrapped line\n\nThe leaf `path:<receipt>#/verdict` is named in prose.\n"
+  },
+  "80ca7b622feea3685828ae6da7a4d261dc9b4868e9dc1a67c6d93ea33830ea2f": {
+   "utf8": "# d\n\n    ```result\n    {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n    ```\n"
+  },
+  "81e35862d086136ff3af2366694ec3b854f13f69597f70c1afc479edeed0a1ff": {
+   "utf8": "# RESULT\n\n<sworn r=\"r1#/verdict\" k=\"quote\">`PASS`</sworn>\n"
+  },
+  "81fcbdd1358736d272854ed5dc184082396db076a60f34de20ea01902e3ba9cc": {
+   "utf8": "# d\n\n<!--\n```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n-->\n"
+  },
+  "8250f68a4047fb0f6f93ff07b0b0a256bfd72a4836b1b669d67f421534d544cd": {
+   "utf8": "\ufeff```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "82ae3d72f1a777b972ebad64660ded36b1e762ad56beeedf4757b2bed4a2f8e7": {
+   "utf8": "# d\n\n1. ```locks\n   {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n   ```\n"
+  },
+  "8417cb62206954c04180aac001c8e2c39007c76e03ba1ec3066d7dff783b41d1": {
+   "utf8": "# RESULT\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"\"}\n```\n"
+  },
+  "84361d8fc3e3c191807f7064bdfc85650ac6dd632a20e576a1f1cc33076bc26e": {
+   "utf8": "# d\n\n```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "867795f53ffe2eec9305d6321253968fb076f62b578128e053f12876b41625e9": {
+   "utf8": "# d\n\n- > ```gates\n  > {\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n  > ```\n"
+  },
+  "94aac811e7774bab301ee1e06d26973054deccbcb9bd858a6671492bc9e1f21b": {
+   "utf8": "# d\n\n```locks\n{\"scorer\": 1, \"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "95918fc3aa3a8f1da1852fd6fd14033248567f3e3d7f7f4a6959a56c0f0419c7": {
+   "utf8": "# d\n\n<!--\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n```\n-->\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "9885a83e96475f6829a85d2acafd0a24e527737ec875441d7c04992677955041": {
+   "utf8": "# d\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n```\n"
+  },
+  "99d36c0fe46c8794ccc1f61193d214a371fb624ce349cdc7500f5ec84d83fe81": {
+   "utf8": "\ufeff```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "9d11f7515d1f3d9114a34b1eaf24d1eccfe5c0efeb2c859d503fdaf1ccae4782": {
+   "utf8": "# d\n\n    ```locks\n    {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n    ```\n"
+  },
+  "9f105e0c5b40a8c83547cce149fae5fae9668716c73597a4c22ed0f80a728522": {
+   "utf8": "# d\n\n<!--\n\n```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "a0d9511c6f76e36289116fb02f44657af441e42e36f32b3e0dc2e91efca2b29b": {
+   "utf8": "# RESULT\n\nVerdict: HOLD.\n<!--\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS`</sworn>\n"
+  },
+  "a62a1c97e8e6411aca1e5482c89f4d41f90a9c0974205d10fff879503d3c7466": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS` or `HOLD`</sworn>\n"
+  },
+  "a6b438a4fd0ea8e55990bb264a2925e5c87fe15fa41bcd2d07d951a8a64f328d": {
+   "utf8": "# d\n\n  ```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "a6b6e627db4b2f9452377768c12a18166abec0e1a1d91ead0cdc4fdd4b2fe63d": {
+   "utf8": "# d\n\n  ```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "ab763d0bf2cfea483d6e05d2509cb3cdaa9c435f87f8ea811707bce92f512795": {
+   "utf8": "# d\n\n```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n"
+  },
+  "abe3e73c99b2fe3ca5cf5d432a4e0e327a89a64ab66631f04d2fb25f0680380d": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS`\n"
+  },
+  "b64beeff1b8c2de3d376a9d5f53201a2c9912f5c24e8f0837062dc30c56b3df4": {
+   "utf8": "# d\n\n1. ```gates\n   {\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n   ```\n"
+  },
+  "b742795024d01c3cd3ea53950605dff5bc38c8efae18d6b390177768baa22d2a": {
+   "utf8": "# d\n\n```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n\n```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 99}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "b75b2505dc118374022abf57cf30b8e0d0380516d95966acd06fe4bd609c3569": {
+   "utf8": "# d\n\n1. ```result\n   {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n   ```\n"
+  },
+  "bd0e32b21af8f6b248cc7b926b3d56c99f6813ecb7efb36aa036de170c507c4b": {
+   "utf8": "# d\n\n- > ```result\n  > {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n  > ```\n"
+  },
+  "beec2a032f7742767ed040653e38a6a086df825f11178d50316289093bbc9c99": {
+   "utf8": "# d\n\n```l\u043ecks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n\n```locks\n{\"scorer\": \"other.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "bfc1e0ee364500d37909b93da9e684a2d8dff15a74b2e481b33b68ccfa0b7a22": {
+   "utf8": "# d\r\n\r\n```result\r\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\r\n```\r\n"
+  },
+  "c4b3952fb86ca673e9117d4b7fe28bc2c5866aff20dd8e647e3bf8a9766b5bbc": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">` `</sworn>\n"
+  },
+  "c6d229f4fbd1ac28c724d22ac968a6bfcab7428d09cf4fe5f03d6f0d592e1772": {
+   "utf8": "# d\n\n```locks\n{\"\u0441corer\": 1, \"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "c725ca0bf2078d21740dc96f068818bbf980cf2fd6db550f03c3b62ea48665e8": {
+   "utf8": "# RESULT\n\n```result\n{\"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "c98645a9ccb00d80a3b2dd68872ff3afbb1fc783ba10721142242d06b6f8413c": {
+   "utf8": "# d\n\n<!--\n```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 99}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n-->\n\n~~~gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n~~~\n"
+  },
+  "c9fa932d1b07961adad62f0db68edcfa5934a61b7a30c408f9e320d9ca28e28c": {
+   "utf8": "# d\n\n```GATES\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "cd156a80ede4d1d679e3afa0b4b77c6e55e96dc3a22d4724daab2f361dd13122": {
+   "utf8": "# d\r\n\r\n```locks\r\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\r\n```\r\n"
+  },
+  "d15a316931f0e6f79a558972d31d687c591f23721eb1ce9f408ddb600bb9bbb3": {
+   "utf8": "# d\n\n<!--\n\n```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "d216f1abe2827253881da4a198e775b06d5cb27a4daa61e0291d950028d9e3f2": {
+   "utf8": "# RESULT\n\n```\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS`</sworn>\n```\n"
+  },
+  "d5f1cb6a353cee1426c5bb9d777faeea8d09357d0c7e2c7b765146db5d82bd9e": {
+   "utf8": "# d\n\n> ```gates\n> {\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n> ```\n"
+  },
+  "da81c433a7ff13dc807e1c50310c5f784076c0c981a0892984b55c92e0daf4c3": {
+   "utf8": "# d\n\n> ```locks\n> {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n> ```\n"
+  },
+  "e232b6b52680f24c2d5ffcc149dd19eb65f9267058e71efcd2ce3b03be526053": {
+   "utf8": "# d\n\n<!--\n```locks\n{\"scorer\": \"other.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n-->\n\n```locks\n{\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n```\n"
+  },
+  "e28418657d7b6ba9280ee805239f5c0316be7c9d2beebda633eb8a420d69f098": {
+   "utf8": "# d\n\n<!--\n```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n-->\n\n\t```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 99}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "e337cb41d18e22055ba317582aee45defa7f772b37793cfae92a043e4e13009c": {
+   "utf8": "# d\n\n```result\n{\"\u0441rereg\": 1, \"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "e375ea7081e3441aa20a1d1fbdcd50fdc27faacb7867f5c03d0daf1c4f3cc3eb": {
+   "utf8": "# d\n\n```result\n{\"prereg\": 1, \"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "e6814139563c4c4fe46092ea04aa05062ec02368129340aae4d24be5d694f353": {
+   "utf8": "# RESULT\n\n```\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS`</sworn>\n"
+  },
+  "e69689491f269e79631ce1e1c24c6fb25090719cbf9da8e1abf1f222dfce0a5a": {
+   "utf8": "# d\n\n  ```gates\n{\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n```\n"
+  },
+  "ea201788a395d0e8b3d9ad1fd66cd38d9292ce7ba7d92ae3def17bf2c30ab4cb": {
+   "utf8": "# RESULT\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": 5}\n```\n"
+  },
+  "eeb428d9b40f49953956f80fe3e25893b1ac5af78651eb714dcdb4f56c9fb81a": {
+   "utf8": "# d\n\n```r\u0435sult\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n```\n"
+  },
+  "f04ad5a47b4be55b96e9d773eb19e4464dc72f71d8a2a2f18dfe7f7a1d75e0ff": {
+   "utf8": "# d\n\n```result\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n\n> ```result\n> {\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"FAIL\"}\n> ```\n"
+  },
+  "f190a97c2ce9b060f15fee6383cc5bb0d84c28442ad81ce7fea6d455417061e8": {
+   "utf8": "# d\n\n- ```locks\n  {\"scorer\": \"score.py\", \"reads\": [\"data.csv\"], \"outcomes\": [\"PASS\", \"FAIL\"], \"withdraws\": {}}\n  ```\n"
+  },
+  "f6a4e419b7d4655c9bb905f66bf1b020d7e240983653511295455b56c4a9b53e": {
+   "utf8": "# d\n\n    ```gates\n    {\"gates\": {\"G\": {\"metric\": \"m\", \"op\": \"<=\", \"value\": 0.2}}, \"outcomes\": [{\"when\": {\"G\": true}, \"verdict\": \"PASS\"}, {\"when\": {\"G\": false}, \"verdict\": \"FAIL\"}], \"smoke_verdict\": \"SMOKE\"}\n    ```\n"
+  },
+  "f9ecf683d78938f53615b7809ce70bbf37d114aeeef1742a91de9c3a52ab3822": {
+   "utf8": "# RESULT\n\n`` <sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"quote\">`PASS`</sworn> ``\n"
+  },
+  "fb3e1e9d790d7c449d442cba79d21d15c05a94d12f1fdbb3b87429cac2a60425": {
+   "utf8": "# d\n\n```RESULT\n{\"prereg\": \"PREREG_a.md\", \"receipt\": \"receipt.json\", \"verdict\": \"PASS\"}\n```\n"
+  },
+  "fc395647e7cc8367f453d82bb3b36d080ac57c3e1087f0abc09120eac55cc1bb": {
+   "utf8": "# RESULT\n\n<sworn r=\"path:papers/x/receipt.json#/verdict\" k=\"absent\">`PASS`</sworn>\n"
+  }
+ }
+}

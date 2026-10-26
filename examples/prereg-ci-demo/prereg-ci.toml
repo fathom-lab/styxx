@@ -1,0 +1,3 @@
+# prereg-ci's policies for this repository; a key not named here takes the default
+# the shipped surfaces the licence check scans (C8): this repository's READMEs
+surfaces = ["README*.md"]
