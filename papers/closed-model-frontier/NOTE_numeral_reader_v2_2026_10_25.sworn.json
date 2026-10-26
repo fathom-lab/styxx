@@ -1,0 +1,219 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "f3a46be583ae5d5b1504b4f0ae6169c71bb7ea57",
+ "document": {
+  "name": "NOTE_numeral_reader_v2_2026_10_25.md",
+  "sha256": "574344a936806f2ee80d8c14ede37efbc0ad0943ad4c2a4bd1b80bf440410dd3"
+ },
+ "text": "# NOTE — certify's numeral reader v2: a made-up `$99.9k` is now a ledger row; what would move the committed tree ships off, the operator's decision\n\nFathom Lab · 2026-10-25 · An instrument change, measured before it ships. No committed certificate, capsule,\nreceipt, conformance vector, sworn sidecar or charon line is edited or regenerated. Every count inside a sworn\nspan below is sworn to `papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json`, which\n`papers/closed-model-frontier/oath_v15_numeral_reader_census.py` writes by re-deriving every committed certify\noutput under each flag configuration (run it again to regenerate it; it writes nothing else). The design, its red\nteam and the rule as built (`RULE_final.md`) are in the operator's product kit, outside the tree, under\n`clawd/wt/_product_2026_10_24/certify_suffix/`.\n\n## Why\n\nThe product red team of 2026-10-24 (blocker B1) found that certify read no numeral at all in `$67.4k`, `$1.2B`,\n`3.4M` or `2.4K`: every alternative of `_NUM` ends with `(?![\\w.])`, so a digit run glued to a letter is not a\ntoken. A post reading `BTC is at $99.9k` against a receipt holding `67412.50` got 0 ledger rows and OATH-HELD, and a\nmade-up `$99.9k` passed unmarked. The operator chose to hold outreach until certify reads suffixed numbers.\n\n## What the reader reads now, as shipped\n\nThe numeral reader v2 is a second path in `styxx/certify.py`, behind the master flag `V15_READER_V2`; `_NUM` is not\nedited. With the master off, every function reads as it did before v2, byte for byte on the recorded families of\n`conformance/numerals/`. As shipped:\n\n- **A magnitude after a currency symbol** (`V15_MAGNITUDE`): `$67.4k`, `US$1.2B`, `€5m`, `$5mm`, and\n  (`V15_MAGNITUDE_WORDS`) `$1.2 billion`, read as mantissa times multiplier. Suffixes `k K M B T bn mn`, and `m b t\n  mm`, after the symbol only. A leaf binds it when it equals the value, or when, in the suffixed unit, it lies within\n  half a unit of the last shown mantissa digit and within 5% of the mantissa: `$1B` binds 0.95B to 1.05B, not 0.5B\n  to 1.5B; `$67k` binds 66,500 to 67,500; `$67.4k` binds 67,350 to 67,450; `$67.41k` binds 67,405 to 67,415.\n  Percent scaling never applies. A whole-number magnitude keeps the count-binding filter integers keep; a leaf whose\n  path names a time or an id (`openTime`, `lastId`, `updated_at`) is never a hit and is recorded as excluded. It is\n  obligated exactly as an unsuffixed numeral is: `the mean rate is $99.9k` with no matching leaf is UNGROUNDED and\n  OATH-FAILED; `BTC is at $99.9k on Binance spot` is one ABSTAIN row, unbound; `$67.4k` against `67412.50` is\n  VERIFIED (`tests/test_certify_numerals_v2_default.py::test_the_product_need_is_met_by_the_shipped_default`).\n- **Signs** (`V15_SIGNED_CURRENCY`): `-$1,234.56`, `$-5k`, `($1.2k)` and `- $1.2k` read negative; a markdown bullet\n  is not a sign.\n- **Separators** (`V15_THIN_GROUPS`): thin and narrow no-break spaces between three-digit groups join one number.\n- **Counted, never valued** (`V15_DECIMAL_COMMA`, `V15_GLUED_NONASCII`): a decimal comma or dotted thousands\n  (`84,17 €`, `1.234,5`, `1.234.567`), and a digit run glued to a non-ASCII letter or a superscript (`$99.9к`,\n  `3.4М`), go to the uncovered band with a reason. A Greek letter after a digit (`2π`, `-3.4σ`) is notation and stays\n  silent, as before.\n- **On with the master and the magnitude rule, under no flag of their own:** a hyphen word after a numeral does not\n  make it formula notation (`3-ish` reads 3; before v2 it read nothing); a currency-led numeral is never formula\n  notation or a compound identifier (`sub-$67k`, `$99.9k-ish`); a numeral the reader reads followed by an ellipsis\n  (`rate 0.0666…`) is ABSTAIN as a truncation the writer marked (rule C2; before v2 that token could be\n  UNGROUNDED); and the lower half of a suffixed range (`60-70k`, `2–3B`) is ABSTAIN as notation, never bound to an\n  unrelated leaf (the class-B suffix set widened from `[BMK]` to the suffix table; before v2 `60` in `60-70k` could\n  bind an RSI of 60). Each `only_<flag>` configuration of the census runs with the master on, so these moved no\n  committed certificate either.\n- **Still not read and not counted:** a magnitude no currency symbol leads (`7B`, `124M`, `3.4M`, `2.4K`, `10k`),\n  numbers glued to other letters (`10x`, `24h`, `TP1`, `7B-Instruct`), scientific notation, number words, and spans\n  the sha/date/version scrub blanks. A made-up `ETH 2.4K` still passes unmarked. A numeral before a sentence period\n  is still the band's `trailing-period`.\n\n## What did not move\n\nUnder the shipped flags, of the\n240 committed certificates whose documents and receipts resolve,\n0 re-derive differently\nin any compared field (verdict, counts, ledger, the band, epistemics) from the reader before v2:\n0 rows added,\n0 rows removed.\n12 committed capsules verify\nof\n13,\nthe same ones as with the master off (the one that does not is the HANDOFF diffgate record,\n`NOTE_handoff_capsule_reproduces_under_its_minting_build_2026_10_11.md`), and\n0 capsules stop verifying.\nOf the\n257 charon lines,\n257 read MOVED_VERIFIER\nas they do with the master off, and\n0 read SKEW,\nso the stranger's ferry-log step passes. The `REPLICATIONS.md` audit line re-derives byte for byte:\n`corpus papers: 208 certificates | HELD 200  FAILED 8  unresolved 0  verdict-drift 1  receipt-drift 0  incomplete 1  receipt-changed 1`.\nEach rule that ships on, run alone, moves no committed certificate (`summary.configs.only_<flag>`). Nothing committed\nwas re-issued: `verifier_sha256` moves, as on every certify change, and a certificate issued from here on carries a\n`numeral_reader` block naming the rules that read it and an `uncovered_policy` of schema `v2` written from those\nrules.\n\n## The operator's open decision: what each flag that ships off would move\n\nThe lead's scope for this build: every flag that moves any committed certificate, capsule or charon line ships off,\nso the tree reads exactly as today; the magnitude, form-noise and separator flags ship on. The two halves disagreed\non two flags, and the build followed the rule (section \"How the default was chosen\"). These are the measured costs,\neach against the reader with the master off. A move here is a re-derivation reading differently; nothing committed\nchanges until someone turns a flag on.\n\n**`V15_MAGNITUDE_BARE`** (a magnitude no currency symbol leads: `7B`, `124M`, `3.4M`, `2.4K`, `10k`, `1.2 billion`;\nnever obligated, since an obligated bare magnitude made 62 false accusations on model sizes in the design's\ncounterfactual):\n69 certificates re-derive differently,\n334 rows added\n(2 VERIFIED,\nboth `124M` against `per_model.gpt2.params`;\n332 ABSTAIN,\nmost of them `B` model sizes),\n0 verdict classes moved,\n0 capsules stop verifying,\nand\n58 charon lines read SKEW.\nOn, `ETH 2.4K` and `24h volume 3.4M` are read and marked; the product needs it for bots that post bare magnitudes.\n\n**`V15_FORM_NOISE`** (clock times, thread markers, word-led version strings and calendar dates become named\nexclusions instead of numerals):\n3 certificates re-derive differently,\n11 ABSTAIN rows removed\n(time and date parts),\n0 verdict classes moved,\nand\n3 charon lines read SKEW.\nOn, `14:00` stops being two numerals and `1/` stops counting.\n\n**Both together**, the lead's explicit list (the earlier build session's default):\n71 certificates re-derive differently,\n0 verdict classes moved,\n59 charon lines read SKEW.\nA SKEW line fails the stranger's ferry-log step (`styxx/stranger.py`, which passes only SAME_LINE and MOVED_VERIFIER)\nand `tests/test_stranger.py::test_the_ferry_log_passes_against_its_own_head`, which\n`tests/test_charon_instrument.py` names as the lab's invariant over the committed log. Turning either flag on is\ntherefore also a decision about the charon log: amend charon's reading under a dated amendment, as\n`AMENDMENT_charon_same_verifier_build_flag_2026_10_25.md` did for one sworn field, or accept a ferry log that fails.\n\n**`V15_SENTENCE_FINAL`** (a numeral before a sentence period is read: `$84.17.` reads 84.17, `all 23,247.` reads\n23,247 whole), with the shipped flags otherwise:\n157 certificates re-derive differently,\n373 rows added\n(14 of them UNGROUNDED),\n11 committed OATH-HELD certificates re-derive OATH-FAILED,\n6 committed capsules stop verifying,\nand\n139 charon lines read SKEW.\nWith every rule but the magnitude pair on (the design's `v2_all`),\n152 charon lines read SKEW.\nThe design measured 12 class flips with a prototype that had no ellipsis rule; with rule C2 built, the twelfth\n(`papers/anchored-validity/FINDING_hardening_part2a_2026_07_21.md` line 38, `(rate 0.0666...)`) is ABSTAIN as a\ntruncation the writer marked. The eleven, each through a token the period had hidden and the ladder's standing\nrules accuse (the list with every accused row is `configurations.sentence_final.class_flips_list` in the census\nresult; the nearest receipt leaves of each are in the design's `proto/FLIP_DETAIL_OUTPUT.txt` and, re-derived at\n`33981121`, `base_remeasure/FLIP_DETAIL_OUTPUT.txt` in the kit):\n\n| document | accused |\n|---|---|\n| `agent-conscience/FINDING_combined_signal_2026_07_26.md` | line 17 `0.0039506719834589` |\n| `agent-conscience/FINDING_framelocality_dogfood_2026_07_29.md` | line 3 `93` |\n| `agent-conscience/FINDING_kp_replication_2026_07_28.md` | line 7 `0` |\n| `agent-conscience/FINDING_self_verification_2026_07_25.md` | line 12 `0.012253193960511` |\n| `anchored-validity/FINDING_r8_sync_corrected_2026_07_20.md` | line 38 `-0.3634153106917754` |\n| `closed-model-frontier/RESULT_agent_claim_extractor_baseline_2026_08_30.md` | line 35 `294` |\n| `closed-model-frontier/RESULT_external1_the_gate_fails_in_the_wild_2026_08_31.md` | line 39 `0.95` |\n| `closed-model-frontier/RESULT_oath_v07_SHIPPED_2026_08_22.md` | line 51 `2` |\n| `closed-model-frontier/RESULT_obligate2_split_verdict_2026_08_31.md` | line 37 `624` |\n| `closed-model-frontier/RESULT_v14_naming_the_defects_did_not_save_it_2026_09_01.md` | lines 25 and 50 `0.95` |\n| `mind-instrument/FINDING_anatomy_v0_2026_06_10.md` | line 4 `0` |\n\nSome accuse values the receipts hold under another path or rounding (the design's reading: `294` is\n`E4.sampled_valid`, `-0.3634153106917754` is within 0.07% of `pi_unclipped`); those are the ladder's debts, not the\nreader's. On, the flag also turns the eleven into newly visible drifts that `tests/test_certificate_reproduces.py`\nwould have to list, or that a re-certification cycle with its own preregistration would answer\n(`tests/test_certify_numerals_census.py` holds that none of them is listed while the flag is off).\n\n**`V15_MAGNITUDE_RANGES`** (`60-70k` read as two magnitudes) is measured and off: with the shipped flags it moves\n0 certificates,\nsince a pair it reads must be currency-led; beside the bare arm it moves\n75 certificates.\n\n## How the default was chosen\n\nThe lead's scope had a rule (\"every flag that moves ANY committed certificate, capsule or charon line ... ships\nDEFAULT OFF behind the master flag, so the tree reads exactly as today\") and a list (\"the magnitude, form-noise and\nseparator flags ship ON\"). The list rested on a measurement at verdict grain: those rules move 0 committed verdicts,\nwhich is true. At the grain the rule is written in, the bare arm and the form rule move ledgers and charon lines.\nThe build followed the rule and kept the product need, which a currency-led magnitude alone carries: the magnitude\nrule ships on for currency-led magnitudes, its bare arm became its own flag, and both flags that move committed\noutputs ship off. `V15_MAGNITUDE_BARE = True` and `V15_FORM_NOISE = True` restore the list exactly\n(`tests/test_certify_numerals_v2_default.py::test_two_flags_give_the_leads_explicit_list_back`). The flags are module\nconstants, as `V08_*` to `V14_*` are; a caller that wants another reading sets them in its own process, and every\ncertificate it issues names the rules it read under.\n\n## Conformance\n\n`conformance/numerals/vectors_v2.json` pins the reader under the earlier session's default and is not edited;\n`conformance/numerals/vectors_v2_default.json` pins the shipped default. Each holds 412 reader texts and 145 binding\ncases and the two families recorded from the reader before v2 at `879f6be9`, which the generator refuses to write\nunless the master-off reader reproduces exactly; it did. Each set names the flags it was written under, and\n`tests/test_certify_numerals_v2_vectors.py` replays every vector, skipping none.\n\n## What this is not\n\nNot a change to the obligation ladder, to `is_spec`, to the count-binding filter or to the trigger vocabulary: what\nthey do with the tokens the reader can now see is theirs. Not a recall or precision figure: the texts are the probes\nrun before the reader was built, and a text absent from the vectors is not covered. Not a claim about posts in the\nwild. The darkflobi gate runs certify from a snapshot pinned at its own commit and does not move with this change.\n\n## Re-derive\n\n    py -3.12 -B papers/closed-model-frontier/oath_v15_numeral_reader_census.py\n    py -3.12 -B -m pytest tests/test_certify_numerals_v2.py tests/test_certify_numerals_v2_default.py \\\n        tests/test_certify_numerals_v2_vectors.py tests/test_certify_numerals_census.py tests/test_stranger.py\n    py -3.12 -B -m styxx.sworn check papers/closed-model-frontier/NOTE_numeral_reader_v2_2026_10_25.sworn-receipt.json \\\n        papers/closed-model-frontier/NOTE_numeral_reader_v2_2026_10_25.sworn.json --repo .\n",
+ "spans": [
+  {
+   "start": 4632,
+   "end": 4695,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/certificates",
+   "kind": "numeric"
+  },
+  {
+   "start": 4697,
+   "end": 4720,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/default/certificates_moved",
+   "kind": "numeric"
+  },
+  {
+   "start": 4818,
+   "end": 4830,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/default/rows_added",
+   "kind": "numeric"
+  },
+  {
+   "start": 4832,
+   "end": 4846,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/default/rows_removed",
+   "kind": "numeric"
+  },
+  {
+   "start": 4848,
+   "end": 4876,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/default/capsules_ok",
+   "kind": "numeric"
+  },
+  {
+   "start": 4880,
+   "end": 4882,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/default/capsules",
+   "kind": "numeric"
+  },
+  {
+   "start": 5054,
+   "end": 5079,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/default/capsules_stop_verifying",
+   "kind": "numeric"
+  },
+  {
+   "start": 5088,
+   "end": 5104,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/default/charon_lines",
+   "kind": "numeric"
+  },
+  {
+   "start": 5106,
+   "end": 5129,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/default/charon_moved_verifier",
+   "kind": "numeric"
+  },
+  {
+   "start": 5166,
+   "end": 5177,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/default/charon_skew",
+   "kind": "numeric"
+  },
+  {
+   "start": 5279,
+   "end": 5414,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/configurations/default/audit_line",
+   "kind": "quote"
+  },
+  {
+   "start": 6590,
+   "end": 6627,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/only_V15_MAGNITUDE_BARE/certificates_moved",
+   "kind": "numeric"
+  },
+  {
+   "start": 6629,
+   "end": 6643,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/only_V15_MAGNITUDE_BARE/rows_added",
+   "kind": "numeric"
+  },
+  {
+   "start": 6645,
+   "end": 6655,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/only_V15_MAGNITUDE_BARE/rows_added_verified",
+   "kind": "numeric"
+  },
+  {
+   "start": 6702,
+   "end": 6713,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/only_V15_MAGNITUDE_BARE/rows_added_abstain",
+   "kind": "numeric"
+  },
+  {
+   "start": 6746,
+   "end": 6769,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/only_V15_MAGNITUDE_BARE/class_flips",
+   "kind": "numeric"
+  },
+  {
+   "start": 6771,
+   "end": 6796,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/only_V15_MAGNITUDE_BARE/capsules_stop_verifying",
+   "kind": "numeric"
+  },
+  {
+   "start": 6802,
+   "end": 6827,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/only_V15_MAGNITUDE_BARE/charon_skew",
+   "kind": "numeric"
+  },
+  {
+   "start": 7086,
+   "end": 7122,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/only_V15_FORM_NOISE/certificates_moved",
+   "kind": "numeric"
+  },
+  {
+   "start": 7124,
+   "end": 7147,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/only_V15_FORM_NOISE/rows_removed",
+   "kind": "numeric"
+  },
+  {
+   "start": 7171,
+   "end": 7194,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/only_V15_FORM_NOISE/class_flips",
+   "kind": "numeric"
+  },
+  {
+   "start": 7200,
+   "end": 7224,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/only_V15_FORM_NOISE/charon_skew",
+   "kind": "numeric"
+  },
+  {
+   "start": 7372,
+   "end": 7409,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/explicit_list/certificates_moved",
+   "kind": "numeric"
+  },
+  {
+   "start": 7411,
+   "end": 7434,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/explicit_list/class_flips",
+   "kind": "numeric"
+  },
+  {
+   "start": 7436,
+   "end": 7461,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/explicit_list/charon_skew",
+   "kind": "numeric"
+  },
+  {
+   "start": 8157,
+   "end": 8195,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/sentence_final/certificates_moved",
+   "kind": "numeric"
+  },
+  {
+   "start": 8197,
+   "end": 8211,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/sentence_final/rows_added",
+   "kind": "numeric"
+  },
+  {
+   "start": 8213,
+   "end": 8234,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/sentence_final/rows_added_ungrounded",
+   "kind": "numeric"
+  },
+  {
+   "start": 8237,
+   "end": 8294,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/sentence_final/class_flips",
+   "kind": "numeric"
+  },
+  {
+   "start": 8296,
+   "end": 8331,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/sentence_final/capsules_stop_verifying",
+   "kind": "numeric"
+  },
+  {
+   "start": 8337,
+   "end": 8363,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/sentence_final/charon_skew",
+   "kind": "numeric"
+  },
+  {
+   "start": 8432,
+   "end": 8458,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/all_rules/charon_skew",
+   "kind": "numeric"
+  },
+  {
+   "start": 10743,
+   "end": 10757,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/ranges/certificates_moved",
+   "kind": "numeric"
+  },
+  {
+   "start": 10832,
+   "end": 10847,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result.json#/summary/configs/explicit_list_ranges/certificates_moved",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
