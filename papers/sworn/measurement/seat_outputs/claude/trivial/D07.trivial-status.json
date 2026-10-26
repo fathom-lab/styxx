@@ -1,0 +1,11 @@
+{
+ "doc_id": "D07",
+ "family": "claude",
+ "dry_run": false,
+ "raw_sha256": "9742547dcebfbf6c0d18fbadea135cfcf2f3b919ff8b3dd10b7b2ddff1058f99",
+ "error": null,
+ "twin_text_changed": true,
+ "spans_original": 11,
+ "spans_twin": 1,
+ "written": "C:\\Users\\heyzo\\clawd\\wt\\leg2-run\\papers\\sworn\\measurement\\seat_outputs\\claude\\trivial\\D07.trivial-twin.json"
+}

@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — RESULT: leg 2, tranche A folded: `VOID_L_R__G_S1_G_S2_G_P_withheld__MISSED__G_G1`; both panels void, the canaries caught on planted spans, the twin floor untested; tranche A's keys stay sealed
+
+**`papers/sworn/RESULT_sworn_measurement_tranche_A_2026_10_25.md` (sworn: 728 spans held at `747e0890`, its sidecar and
+receipt beside it); `papers/sworn/measurement/measurement_result.json`; `papers/sworn/measurement/verdict_A.json`;
+`papers/sworn/measurement/seat_outputs/claude/` (the ledger, the nine trivial twins and their status files);
+`papers/sworn/measurement/tranche_A_seat_facts.py` and `tranche_A_packet_facts.py` with their three receipts;
+`papers/sworn/measurement/receipts/` (the lead's runners, logs, fold report, L-0033 finding, twin diagnostic, two
+transport-check records, and an erratum beside the report and beside the finding).**
+The six Claude seat files (`claude-opus-5-5`, Amendment 6), the nine trivial twins and the six local seat files
+(`Qwen/Qwen2.5-3B-Instruct`, bf16, cuda, SUBSTRATE NOT NAMED IN DESIGN v2) ran on 2026-10-24, and `score.py` folded
+tranche A with its keys read in place from the sealed store; no key was released. The fold's two outputs are committed
+byte for byte as they were written that day, never re-run into the tree.
+
+- **Under DESIGN v2's titles.** Panel L: *void panel; the void is the result* (claude, `claude-opus-5-5`
+  (Amendment 6), 26 of 30; local, SUBSTRATE NOT NAMED IN DESIGN v2, 14 of 30; bar 27). Panel R: *one-family: counts
+  only, no precision* (claude, `claude-opus-5-5` (Amendment 6), 29 of 30, cleared; local, SUBSTRATE NOT NAMED IN
+  DESIGN v2, 15 of 30). G-S1, G-S2, G-P withheld. G-C: 182 of 182 planted spans FAILED, Wilson lower bound 0.9793
+  against 0.95, on the PREREG's three constructions only. G-G1: 0 of 0, *the floor cannot price gaming; the floor
+  leaves the headline*, the bar was not tested. j = 0 outside seats as of 2026-10-25, beside every number.
+- **The decoys' authorship** (`papers/sworn/measurement/decoys_L.json#/authorship_disclosure`): "Authorship,
+  disclosed rather than buried: the Panel L decoys were selected and sided by the builder of this machinery from
+  documents the population rule excludes. A family's agreement with them measures agreement with the builder's
+  reading, not truth, and any result quoting the decoy gate carries this sentence."
+- **Two defects in the locked transport path, printed, not repaired.** Item L-0033, the one item beginning with "-",
+  got no JSON envelope on the last of its three attempts in each of the three Claude Panel L seats
+  (`claude-opus-5-5`, Amendment 6) and counts as unparsed by the PREREG's rule; the twin path strips a document's
+  final line feed, so no twin could pair. The route is the operator's, chosen in chat on 2026-10-25 ("New prereg with
+  fixes (Recommended)"): tranche B runs on a fixed transport under a new preregistration that carries both fixes. That
+  preregistration is not in this change.
+- **What enters the tree now, and what waits.** The operator's D1 of 2026-10-25, "At key release (Recommended)": the
+  twelve seat files enter the tree only in tranche A's key-release commit, and the RESULT names each by its sha256
+  through `receipts/tranche_A_seat_facts.json` (headers, counts and sha256; no answer, no label). The local family's
+  ledger (SUBSTRATE NOT NAMED IN DESIGN v2) waits with them, by the lead's reading of D1: its Panel R rows hash the
+  model's generated text and hold 2 distinct values over 498 rows, so a row's hash names its answer. The lead's
+  defaults: the lead-attested files are committed as receipts, each scanned before it was kept, with an erratum
+  beside the two that need one (D3); L-0033's decoy status is not printed, though `decoys_L.json` against
+  `packet_L.json#/items/32/text` decides it (D4); no machinery change (D5).
+- **What it does not say.** No share of bound sentences was measured; G-C is not a miss rate on real errors; j = 0 as
+  of 2026-10-25; no outside reader can re-score tranche A until its keys are released after tranche B's seats answer.
+  Committed 2026-10-25, before the PREREG's due time of 2026-10-30T08:04:55-04:00. No bar moved; no seat was re-run.
+
 ## [Unreleased] — sworn verdict receipt /v2: the certificate sentence says what the verifier checks; every committed /v1 receipt re-derives as before
 
 - **`styxx/sworn.py`, `styxx/_data/sworn_verify.js`, `styxx/capsule.py`, `styxx/research_capsule.py`, `styxx/challenge.py`, `conformance/sworn/` (with `receipt_v2/` beside it), `papers/sworn/NOTE_certifies_correction_2026_10_24.md`, `styxx/charon.py`, `papers/charon/AMENDMENT_charon_same_verifier_build_flag_2026_10_25.md`.** The /v1 `certifies` sentence opened "the spans the author bound were checked against bytes the author did not write", but the verifier's only authorship check is the manifest's (`kind_of_source` and `authored_sha256` for `rN`, `authored_sha256` for `path:` and `prereg:`, and nothing without a manifest), so a file the author committed that the harness never digested was never caught, and 1,261 of the 1,261 `path:` spans in the 58 committed sidecars rest on files an agent name touched. Receipts now issue as `styxx.sworn.verdict-receipt/v2` with a sentence that says that (its rung clause names `rN` spans alone, since a `path:` or `prereg:` span carries no rung and is counted as committed, and it says that a MALFORMED span was refused before any comparison and an UNRESOLVED one was not compared), and nothing else in the core moved; a /v1 receipt keeps its digest over its committed bytes and is compared with `schema` and `certifies` held at the /v1 strings (58 of 58 committed sidecar receipts re-derive), a /v0 receipt is checked as before, the browser verifier carries the same strings and `coreAs`, the conformance set's 2,069 core vectors are unchanged with a /v2 set beside them, the capsule, research-capsule and challenge comparisons learned the projection, and a new action sample sits beside the old ones. No committed receipt was edited. Fourteen sworn lines of `papers/charon/charon.log.jsonl` recorded `same_verifier_build: true` inside their compared core, so under the moved `sworn.py` they read SKEW under charon's SPEC E5 and `styxx.stranger`'s ferry-log step read FAIL; their receipts still verify and the flag is the only value that moved in each. On the operator's decision of 2026-10-25, the charon amendment and `styxx/charon.py` read such a line MOVED_VERIFIER, with `read_apart` naming the flag on its row, when that flag alone moved, from true to false, while the `sworn.py` the line names is not the installed one and its receipt still names it; under the same build it stays DRIFT (a receipt rewritten in place), beside any other moved value it reads what E5 reads, and a line of another kind is untouched (`tests/test_charon_build_flag.py`). Under the moved `sworn.py`, `charon verify` over the whole log reads 243 MOVED_VERIFIER and 14 SKEW without the amendment and 257 MOVED_VERIFIER with it, 14 of them read apart; no committed line was edited, and the ferry-log step and `tests/test_stranger.py` read PASS again, with `papers/checksum/STRANGER.md` and the NOTE saying so.

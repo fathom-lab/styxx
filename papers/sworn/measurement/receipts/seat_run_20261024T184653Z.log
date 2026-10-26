@@ -1,0 +1,143 @@
+18:46:53Z run worktree head 7680159d; amendment present: 1
+18:46:53Z start L-seat1
+seat L-1 (claude): verdict RECORDED, items 59, unparsed 1, errors 1
+contamination probe answered 'NO'
+18:56:50Z done L-seat1: model=claude-opus-5-5 verdict=RECORDED items=59 errors=1 (exit 0)
+18:56:50Z start L-seat2
+seat L-2 (claude): verdict RECORDED, items 59, unparsed 1, errors 1
+contamination probe answered 'NO'
+19:05:56Z done L-seat2: model=claude-opus-5-5 verdict=RECORDED items=59 errors=1 (exit 0)
+19:05:56Z start L-seat3
+seat L-3 (claude): verdict RECORDED, items 59, unparsed 1, errors 1
+contamination probe answered 'NO'
+19:15:07Z done L-seat3: model=claude-opus-5-5 verdict=RECORDED items=59 errors=1 (exit 0)
+19:15:07Z start R-seat1
+seat R-1 (claude): verdict RECORDED, items 166, unparsed 0, errors 0
+contamination probe answered 'NO'
+19:26:52Z done R-seat1: model=claude-opus-5-5 verdict=RECORDED items=166 errors=0 (exit 0)
+19:26:52Z start R-seat2
+seat R-2 (claude): verdict RECORDED, items 166, unparsed 0, errors 0
+contamination probe answered 'NO'
+19:38:05Z done R-seat2: model=claude-opus-5-5 verdict=RECORDED items=166 errors=0 (exit 0)
+19:38:05Z start R-seat3
+seat R-3 (claude): verdict RECORDED, items 166, unparsed 0, errors 0
+contamination probe answered 'NO'
+19:49:49Z done R-seat3: model=claude-opus-5-5 verdict=RECORDED items=166 errors=0 (exit 0)
+19:49:49Z twin D01
+{
+ "doc_id": "D01",
+ "family": "claude",
+ "dry_run": false,
+ "raw_sha256": "c762ca4da20e15bcc59c7ed2a50f8e97deec3842c890898ad1c33fb99fdcc064",
+ "error": null,
+ "twin_text_changed": true,
+ "spans_original": 8,
+ "spans_twin": 1,
+ "written": "C:\\Users\\heyzo\\clawd\\wt\\leg2-run\\papers\\sworn\\measurement\\seat_outputs\\claude\\trivial\\D01.trivial-twin.json"
+}
+19:50:04Z twin D01 exit 0
+19:50:04Z twin D02
+{
+ "doc_id": "D02",
+ "family": "claude",
+ "dry_run": false,
+ "raw_sha256": "73ffaf7e81b0b1d552704ff741c6656abb27fa397ed93ab3d2d674ffa71d0d13",
+ "error": null,
+ "twin_text_changed": true,
+ "spans_original": 26,
+ "spans_twin": 2,
+ "written": "C:\\Users\\heyzo\\clawd\\wt\\leg2-run\\papers\\sworn\\measurement\\seat_outputs\\claude\\trivial\\D02.trivial-twin.json"
+}
+19:50:43Z twin D02 exit 0
+19:50:43Z twin D03
+{
+ "doc_id": "D03",
+ "family": "claude",
+ "dry_run": false,
+ "raw_sha256": "d77f14715bc747552f2bb46fd9b11f164233baeb9a8369e02388c541be77d64c",
+ "error": null,
+ "twin_text_changed": true,
+ "spans_original": 12,
+ "spans_twin": 0,
+ "written": "C:\\Users\\heyzo\\clawd\\wt\\leg2-run\\papers\\sworn\\measurement\\seat_outputs\\claude\\trivial\\D03.trivial-twin.json"
+}
+19:51:06Z twin D03 exit 0
+19:51:06Z twin D04
+{
+ "doc_id": "D04",
+ "family": "claude",
+ "dry_run": false,
+ "raw_sha256": "a65b8359341e1b7bf8c8917fc4f39c1aec7c99b5e4b5ed58d80b30c0e4ba58eb",
+ "error": null,
+ "twin_text_changed": true,
+ "spans_original": 12,
+ "spans_twin": 1,
+ "written": "C:\\Users\\heyzo\\clawd\\wt\\leg2-run\\papers\\sworn\\measurement\\seat_outputs\\claude\\trivial\\D04.trivial-twin.json"
+}
+19:51:27Z twin D04 exit 0
+19:51:27Z twin D05
+{
+ "doc_id": "D05",
+ "family": "claude",
+ "dry_run": false,
+ "raw_sha256": "e5c752586135b8e2526ef8ab5a4b0cad6b11bf57bbe8fc4e9cd803de23ada29c",
+ "error": null,
+ "twin_text_changed": true,
+ "spans_original": 14,
+ "spans_twin": 1,
+ "written": "C:\\Users\\heyzo\\clawd\\wt\\leg2-run\\papers\\sworn\\measurement\\seat_outputs\\claude\\trivial\\D05.trivial-twin.json"
+}
+19:51:46Z twin D05 exit 0
+19:51:46Z twin D06
+{
+ "doc_id": "D06",
+ "family": "claude",
+ "dry_run": false,
+ "raw_sha256": "7a11ee7811c18d29cba64c9381f37ed50e298f09ed93507d2ad158c8acf9f8fe",
+ "error": null,
+ "twin_text_changed": true,
+ "spans_original": 11,
+ "spans_twin": 1,
+ "written": "C:\\Users\\heyzo\\clawd\\wt\\leg2-run\\papers\\sworn\\measurement\\seat_outputs\\claude\\trivial\\D06.trivial-twin.json"
+}
+19:52:03Z twin D06 exit 0
+19:52:03Z twin D07
+{
+ "doc_id": "D07",
+ "family": "claude",
+ "dry_run": false,
+ "raw_sha256": "9742547dcebfbf6c0d18fbadea135cfcf2f3b919ff8b3dd10b7b2ddff1058f99",
+ "error": null,
+ "twin_text_changed": true,
+ "spans_original": 11,
+ "spans_twin": 1,
+ "written": "C:\\Users\\heyzo\\clawd\\wt\\leg2-run\\papers\\sworn\\measurement\\seat_outputs\\claude\\trivial\\D07.trivial-twin.json"
+}
+19:52:25Z twin D07 exit 0
+19:52:25Z twin D08
+{
+ "doc_id": "D08",
+ "family": "claude",
+ "dry_run": false,
+ "raw_sha256": "577c5143fc549424d8b4a6247186258429cfb24c19d29c4bd17fdcf0c7638a5f",
+ "error": null,
+ "twin_text_changed": true,
+ "spans_original": 27,
+ "spans_twin": 1,
+ "written": "C:\\Users\\heyzo\\clawd\\wt\\leg2-run\\papers\\sworn\\measurement\\seat_outputs\\claude\\trivial\\D08.trivial-twin.json"
+}
+19:53:04Z twin D08 exit 0
+19:53:04Z twin D09
+{
+ "doc_id": "D09",
+ "family": "claude",
+ "dry_run": false,
+ "raw_sha256": "bfdb078ad0717da3eaed414e13376ec91a2a9aa500dd97c6e361266155c8e03a",
+ "error": null,
+ "twin_text_changed": true,
+ "spans_original": 15,
+ "spans_twin": 1,
+ "written": "C:\\Users\\heyzo\\clawd\\wt\\leg2-run\\papers\\sworn\\measurement\\seat_outputs\\claude\\trivial\\D09.trivial-twin.json"
+}
+19:53:25Z twin D09 exit 0
+19:53:25Z ALL DONE: six seat files and nine twins; next the local seats (GPU, by day), then score.py and verdict_input.py --tranche A
