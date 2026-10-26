@@ -10,6 +10,14 @@ This text replaces, in place and under the same name, the draft committed on thi
 review (`BD:REVIEW_rule.md` §3-4, attacks A1-A5); the file is unmerged, so the draft is no frozen text, and its bytes stay in
 the branch's history. The operator has not signed this file: "what is the operator's and the lead's" lists what is theirs.
 
+Pass 3 (2026-10-25 evening, the fix pass after the two pass-2 reviews, `BD:REVIEW_rule.md` and `BD:REVIEW_apply.md`)
+changed the words around the rule and none of its bytes: item 8 states certify's scrubs as an aperture and no longer as
+something a writer can rely on (the rule review's finding F1); item 3(b) says the writer chooses which mark to quote
+(note N1); item 11 writes the reading that tells the replay's race from a fault (F3); "What does not change" and "What
+the RESULT prints" fix the counter of numerals per selected post (F4) and add the shape count and the count of quoted
+marks with no trailer of their own (F1, N1). No file under `W:gate` moved for pass 3, and the four lock rows below are
+pass 2's.
+
 Receipt key: `W:` = `C:/Users/heyzo/clawd/`; `WT:` = `W:wt/`; `BD:` = `WT:_darkflobi_gate_2026_10_22/before_d0/`; `M:` = the
 styxx checkout at the pin `3437340b`; `seq N` = a line of `W:gate/ledger.jsonl`; `[R]` a file or a run shows it; `[J]`
 judgement. The live gate `W:gate` was read and never written: every change below was built and tested on the copy
@@ -96,7 +104,11 @@ is against the copy carrying both.
 3. **Why a verified quotation, and not every form** [J]. (a) "No rule here reads what a sentence says" (RULES §14), so
    the gate cannot tell a quotation from a fabrication by what the sentence around it claims; but a quoted mark is a claim
    about a ledger line, and the gate binds it to that line, which is its whole method. (b) Every digit a verified
-   quotation carries is fixed by the line it names, so no figure of the writer's can be hidden in it (A5). (c) The gate appends a trailer only when `Nb` < `Nn` (`decide`), so no verified
+   quotation carries is fixed by the line it names, so no figure of the writer's can be hidden in it (A5); what the
+   writer does choose is which mark to quote, any earlier marked line of the chain, and a writer who has posted seven
+   unbound numerals has made a line whose mark reads `0 of 7` (`BD:REVIEW_rule.md` §5.4, D1 and D4). Every digit shown
+   is then true of the line it names and of nothing else, which is why the RESULT counts the lines that hold such a mark
+   and carry no trailer of their own (below). (c) The gate appends a trailer only when `Nb` < `Nn` (`decide`), so no verified
    quotation can read "n of n": it can show an earlier mark, never a clean verdict (A1). (d) A composed form is counted, its
    digits read unbound and the gate's own trailer is appended after it, as today (A1-A5 all draw the real trailer). With
    this the own-position clause is not needed: a verified quotation at the end of a message is a true statement naming
@@ -133,11 +145,22 @@ is against the copy carrying both.
    ledger, never what a sentence says, and it is the same at every exit and destination class: the operator's DM takes the
    same count and its own trailer quotes like any (`test_the_operator_dm_takes_the_same_count_and_its_own_trailer_quotes_like_any`),
    E3 the same, and X refuses on the prose numeral alone (`test_e3_takes_the_same_count_and_x_refuses_on_the_prose_numeral_alone`).
-8. **What a writer can rely on.** To point at a mark, quote it whole, exactly as the gate appended it to the line it names,
-   and its numbers are not counted; anything else that looks like the mark is counted. A seq in prose is a number: print
-   it bound, or not at all. Write a model by its identifier with the hyphen (`claude-opus-4-8`,
-   `gemini-3.1-pro-preview`) or a version with three parts (`7.50.0`): certify does not count those, as signed; `opus 4.8`
-   and a quoted `"3.1"` are numerals.
+8. **What a writer can rely on, and what it cannot.** To point at a mark, quote it whole, exactly as the gate appended it
+   to the line it names, and its numbers are not counted; anything else that looks like the mark is counted. A seq in
+   prose is a number: print it bound, or not at all. That is all this rule offers a writer. Beside it stands an aperture
+   that is certify's and not this rule's, stated here so that no one reads it as a route: certify's scrubs as signed in
+   RULES §5 (`_VERSIONISH`, `M:styxx/certify.py` l.55; `_drop_reason`'s `formula-notation` and `compound-identifier`,
+   l.135 and l.139) leave out a number written in three dotted parts and a number glued to a word by a hyphen,
+   **whatever the number is**. A published model identifier (`claude-opus-4-8`, `gemini-3.1-pro-preview`) and a version
+   (`7.50.0`) are not counted for that reason, and for the same reason a price written `4.99.0` or `1.299.00`, a count
+   written `1.200.000`, `500-user` or `28-day`, a split written `3-of-4` and a measured share written `precision-0.23`
+   or `accuracy-97` are not counted either: each read `Nn` 0, `allow`, no trailer, against the copy
+   (`BD:REVIEW_rule.md` §4, B1-B10). Those shapes are not bindable by form under RULES §3 either, so a figure moved into
+   them leaves the mark and cell 1 together. What a writer is told is therefore narrow: the two shapes the posting skill
+   names as not counted are a model's published identifier and a version, and nothing else; a figure of the lab's (a
+   price, a count, a share, a span of days, a split) is never written glued to a word, in hyphens or in three dotted
+   parts, but as a numeral, bound or left out. `opus 4.8` and a quoted `"3.1"` are numerals. The scrubs cannot move in
+   the window (RULES §5 as signed); what can be done is to count the shapes, and the RESULT does (below).
 9. **RULES §5 and §13 restated.** `Nn`, `Nb` and `Nu` are read over the numerals that remain after the verified
    quotations' are left out. A `send` line's `numerals` carries four more keys: `trailer_quotes` (the verified quotations),
    `trailer_quote_numerals` (the numerals left out), `trailer_quote_seqs` (the seqs they name, at most 20) and
@@ -162,7 +185,17 @@ is against the copy carrying both.
     lists it as the one line whose count the amended rule reads otherwise. One reading the replay can differ on, fixed
     here before any window line exists: a form naming a line appended by another process after the live check read the
     ledger and before its own line was written is counted live and verified in the replay, and reads DRIFT there; to compose
-    it, the writer must reproduce the bytes of a trailer not yet written when the check began.
+    it, the writer must reproduce the bytes of a trailer not yet written when the check began. How the RESULT tells that
+    race from a fault, by a rule over fields every send line carries (`timestamp`, `latency_ms`, `seq`,
+    `numerals.trailer_quote_seqs`) and with no code: a DRIFT on a replayed line L is printed as **the race**, by seq,
+    beside G-2's count and not inside its DRIFT count, when (i) every key that differs is one the count moves
+    (`numerals.*`, `sent_sha256`, `decision`, `finding`, `reasons`), `checked_sha256` and every other key SAME; (ii) the
+    replay verified a form the live line counted (the replay's `trailer_quote_seqs` holds a seq the line's does not); and
+    (iii) each such seq names a send line whose `timestamp` is not earlier than L's `timestamp` less L's `latency_ms` less
+    one second (the timestamp's resolution), so that the named line was appended while L's check ran. A DRIFT that fails
+    any of the three is a DRIFT. The alternative, one integer on the line (the highest seq the check read) with the replay
+    handed lines up to it, would make the replay exact and move `gate.py` and `gate_verify.py` again; it is not taken
+    before D0.
 12. **The fourth `gate_sha256` stretch.** `gate.py` and `gate_verify.py` both enter `gate_sha256` (`Env.gate_sha256`: the
     folder's `*.py`, `helpers/*.py` and the installed plugin's files). They move in one process with piece (4)'s guard and
     the canary piece's `canary_plan.py`, and the stretch's digest and the seq at which it begins are named once, in the
@@ -190,8 +223,14 @@ The pin, the snapshot and every instrument; certify's `_NUM` and its scrubs, whi
 grammar and the drop rule as signed; §6's codes and §7's matrix; the trailer the gate writes and where it writes it; the
 census's end forms (RULES §12); the verdict's shape; the plugin and its installed copies, which relay `content` as before
 (the plugin harness, 79 of 79 against the amended copy, "the tests" below); `selector.py`, whose count of digit-bearing
-tokens is the selector's own (the pre-gate cell's "numerals per post" is the selector's alone, `W:gate/pregate_count.py`
-l.145) and still counts a quotation's digits, in every cell alike. Lines written before the move are read under the old rule.
+tokens (`selector.digit_tokens`) is the selector's own and still counts a quotation's digits. "Numerals per selected post"
+(PREREG §4, §5) is that count in every cell: the pre-gate cell's already is (`W:gate/pregate_count.py` l.145), and this
+file fixes it for the shadow and live cells, read over the stored checked text `W:gate/sources/<checked_sha256>.md` of
+each selected line and never from `numerals.total` (`Nn`), which this rule moves on a line holding a verified quotation and
+certify's scrubs move on every line, so a quoted mark cannot show as a fall in numerals per post. `selector.py`'s
+docstring calls its count "what the gate's trailer counts as Nn" (l.18); that is the selector's own description, not the
+definition here: the two counts differ wherever certify's extraction differs from a token count, and the RESULT prints
+both. Lines written before the move are read under the old rule.
 
 ## What the RESULT prints
 
@@ -200,6 +239,26 @@ For each `gate_sha256` stretch, with 15.12's reading of (iv): the count of publi
 the lines of the earlier stretches); `Nn`, `Nb`, `Nu` as the lines carry them, beside the sum of `trailer_quote_numerals`, so
 a reader can add the quoted numerals back; the census class above; seq 46 as the one line of the ledger at seq 116 whose count
 the amended rule reads otherwise, with the two verify reports' digests; the day-0 token split of "what was observed" item 2.
+
+Four more readings, per cell (pre-gate, shadow, live) where a cell has the lines, and per `gate_sha256` stretch; counts
+and seqs only, never a byte of text:
+
+- **Numerals per selected post**, as `selector.digit_tokens` counts them over the text the cell reads (the pre-gate cell's
+  by `pregate_count.py`; the shadow and live cells' from `W:gate/sources/<checked_sha256>.md`), with the mean of `Nn` over
+  the same lines beside it for the shadow and live cells. PREREG §4's vagueness escape is read from the selector's count, never
+  from `Nn`.
+- **The shape count** (item 8): over the same texts, the digit-bearing tokens `selector.digit_tokens` returns (a trailing
+  `.`, `,` or `:` set aside, as `selector.one_number` sets it aside) that fall in one of three shapes, each token counted
+  once, in the earliest of the three, in this order, that fits: **dotted**, holding `[0-9]+\.[0-9]+\.[0-9]+`; **after a word**, holding a letter, a hyphen
+  and a digit (`[^\W\d_]-[0-9]`); **before a word**, holding a digit, a hyphen and a letter (`[0-9]-[^\W\d_]`). These are
+  the shapes certify's scrubs leave out. The count is of the shapes, so it includes the model identifiers and versions
+  the skill names, and it is printed per shape beside numerals per post, so that a fall in counted numerals under the
+  skill has a number beside it. Probed over the review's B1-B10 and B4 texts with the copy's selector: every one of
+  those tokens falls in a shape, and `opus 4.8`'s `4.8` and a plain `0.23` in none
+  (`BD:fix_pass3/shape_grammar_probe_run.txt`, synthetic texts).
+- **Quoted marks with no trailer of their own** (item 3(b)): the public send lines with `trailer_quotes` > 0 and finding
+  `clean`, by seq, beside the sums of `trailer_quotes`.
+- **The race** of item 11, by seq, beside G-2's "[n] of [n]"; none is expected.
 
 ## The lock rows that move
 
@@ -268,4 +327,5 @@ sentence says: the rule is a byte match and a lookup in the gate's own ledger. T
 excused: they are numerals. That a verified quotation is true of the post it sits in: it is true of the line it names. That
 seq 46 re-derives SAME under the amended gate: it reads DRIFT there, and SAME under its own stretch's gate. That the census or
 the plugin changed: neither did. That `c5084df2…` is the fourth stretch's digest: it is a candidate, and the lock-rows
-addendum names the digest of record.
+addendum names the digest of record. That a figure written in the shapes of item 8 is counted: it is not, by certify as
+signed, and the RESULT counts the shapes instead.
