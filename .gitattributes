@@ -193,3 +193,7 @@ papers/NOTE_forward_pointer_program_documents_oscillation_2026_10_23.sworn-recei
 papers/closed-model-frontier/NOTE_numeral_reader_v2_2026_10_25.md -text
 papers/closed-model-frontier/NOTE_numeral_reader_v2_2026_10_25.sworn.json -text
 papers/closed-model-frontier/NOTE_numeral_reader_v2_2026_10_25.sworn-receipt.json -text
+# its erratum after the two reviews: a sworn triple too
+papers/closed-model-frontier/ERRATUM_numeral_reader_v2_2026_10_25.md -text
+papers/closed-model-frontier/ERRATUM_numeral_reader_v2_2026_10_25.sworn.json -text
+papers/closed-model-frontier/ERRATUM_numeral_reader_v2_2026_10_25.sworn-receipt.json -text
