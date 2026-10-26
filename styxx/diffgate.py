@@ -362,9 +362,12 @@ def _scope_resolve(prefix: str, segs: list, changed) -> tuple:
             kept.append(s)
             at.append(o)
         elif s == "..":
-            if len(kept) <= i or not kept[-1]:
+            if len(kept) <= i:
                 return None, (f"prefix {prefix!r} has a '..' segment with no directory before it, so it names a "
                               f"directory outside the one it is read from (#175)")
+            if not kept[-1]:
+                return None, (f"prefix {prefix!r} has a '..' segment after an empty segment, which this template "
+                              f"does not resolve (#175)")
             kept.pop()
             at.pop()
         o = o + len(s) + 1
@@ -1759,8 +1762,11 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                         c.why = f"prefix {not_paths[0]!r} is not a path (#110)"
                     elif dots is not None:
                         c.verdict, c.why = "UNCHECKABLE", dots
-                    elif parts:
-                        two = next(x for x, (r, _why) in zip(raw_prefs, read) if len(r) == 2)
+                    elif parts:             # a prefix whose two readings part the verdict, the other's held
+                        vs = ["C" if o else "U" if m else "V" for o, m in seen]
+                        two = next(x for k, x in enumerate(raw_prefs)
+                                   if any(vs[a] != vs[b] and ways[a][:k] + ways[a][k + 1:] == ways[b][:k] + ways[b][k + 1:]
+                                          for a in range(len(ways)) for b in range(len(ways))))
                         c.verdict = "UNCHECKABLE"
                         c.why = (f"prefix {two!r} ends in '..', which reads as the directory before it (its last dot "
                                  f"a sentence's period) and as that directory's parent (git's reading), and the claim "

@@ -151,7 +151,10 @@ function _scopeResolve(prefix, segs, changed) {
       kept.push(s);
       at.push(o);
     } else if (s === "..") {
-      if (kept.length <= i || !kept[kept.length - 1]) return [null, climbs];
+      if (kept.length <= i) return [null, climbs];
+      if (!kept[kept.length - 1]) {
+        return [null, `prefix ${pyRepr(prefix)} has a '..' segment after an empty segment, which this template does not resolve (#175)`];
+      }
       kept.pop();
       at.pop();
     }
@@ -962,8 +965,10 @@ function _gateDiffTextMain(summaryText, diffText, { strict = false, _declared = 
           if (noPaths) { c.verdict = "UNCHECKABLE"; c.why = noPaths; }
           else if (notPaths.length) { c.verdict = "UNCHECKABLE"; c.why = `prefix ${pyRepr(notPaths[0])} is not a path (#110)`; }
           else if (dots !== null) { c.verdict = "UNCHECKABLE"; c.why = dots; }
-          else if (parts) {
-            const two = rawPrefs.find((x, k) => read[k][0].length === 2);
+          else if (parts) {     // a prefix whose two readings part the verdict, the other's held, as the Python's
+            const vs = seen.map(([o, m]) => o.length ? "C" : m.length ? "U" : "V");
+            const rest = (w, k) => JSON.stringify(w.slice(0, k).concat(w.slice(k + 1)));
+            const two = rawPrefs.find((x, k) => ways.some((a, i) => ways.some((b, j) => vs[i] !== vs[j] && rest(a, k) === rest(b, k))));
             c.verdict = "UNCHECKABLE";
             c.why = `prefix ${pyRepr(two)} ends in '..', which reads as the directory before it (its last dot a sentence's period) and as that directory's parent (git's reading), and the claim holds under one and not the other (#175)`;
           }
