@@ -311,9 +311,10 @@ def main(argv=None) -> int:
     data = (json.dumps(doc, indent=1, ensure_ascii=False) + "\n").encode("utf-8")
     committed = {q.resolve() for q in committed_sets()}
     if a.out.resolve() in committed:
-        # a committed set is never rewritten, not even to the same content in other line endings: the two
-        # sets of 2026-10-25 were written in text mode on Windows and are stored with CRLF (conformance/**
-        # is -text), and they stay so
+        # a committed set is never rewritten by the generator, not even to the same content in other line
+        # endings. (The two sets of 2026-10-25 were written in text mode on Windows with CRLF; the conformance
+        # suite requires LF in every tracked file under conformance/, and they were converted to LF in one
+        # commit of their own, every id, expectation and set_sha256 unchanged.)
         if a.out.read_bytes().replace(b"\r\n", b"\n") != data:
             raise SystemExit(f"REFUSED: {a.out.name} is a committed set and these bytes differ from it (a receipt "
                              "is history too): a reader that reads differently writes a new file")
