@@ -646,6 +646,9 @@ def _pair(ctx: _Ctx, p: Dict[str, Any]) -> Dict[str, Any]:
     data = effect["bytes"]
     decision = _core._decision(data)
     out["decision"] = {k: decision[k] for k in ("form", "gates_sha256", "code", "detail")}
+    shadow = _core._shadowed(data)
+    if shadow is not None:
+        found.append(_report._finding("FENCE_SHADOWED", f"{pp}: {shadow}", path=pp, check="C5", pair=rp))
     sentences, called = _results_text(ctx, p["declared"])
     # C3: some minimal holder of the sealed decision is a strict ancestor of R
     order = None
@@ -1037,6 +1040,9 @@ def _lint(args: argparse.Namespace) -> int:
                  f"surfaces and config read at {c[:12]}",
                  f"  decision {decision['form'] or 'none'} {decision['gates_sha256'] or ''}".rstrip()]
         read_licences = False
+        shadow = _core._shadowed(data)
+        if shadow is not None:
+            add("FENCE_SHADOWED", shadow)
         if decision["form"] is None:
             add(decision["code"], decision["detail"] or "")
         elif decision["form"] == "gates":
@@ -1160,6 +1166,9 @@ def _census_row(ctx: _Ctx, kind: str, rec: Dict[str, Any], label: str) -> Dict[s
             seal, effect = eff["seal"], eff["effect"]
             found = _tag(eff["findings"], "C4", label)
             decision = _core._decision(effect["bytes"])
+            shadow = _core._shadowed(effect["bytes"])
+            if shadow is not None:
+                found.append(_report._finding("FENCE_SHADOWED", f"{pp}: {shadow}", path=pp, check="C5", pair=label))
             gov = next((a["commit"] for a in effect["amendments"] if a["id"] == effect["source"]), seal["commit"])
             rs, _ = _rescore(ctx, effect["bytes"], decision, rp, obj, gov, label, found)
             if seal.get("form") is not None and seal.get("order"):

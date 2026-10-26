@@ -16,7 +16,13 @@ bytes decoded as UTF-8 with newlines read as ``Path.read_text`` reads them: CRLF
 become LF. prereg-ci reads blobs and ``styxx.protocol.Experiment`` reads a working copy, so this
 is what makes the digest of a fence the one an Experiment recorded for the same file on a box that
 checks text out with CRLF. The fence is scored by ``styxx.research_capsule.score_frozen``; any
-refusal of the scanner or the scorer reads ``SCORER_REFUSES`` with its text.
+refusal of the scanner or the scorer reads ``SCORER_REFUSES`` with its text. ``_decision`` and
+``rescore`` read the gates form as that scanner reads it, which the conformance set pins (a fence
+hidden from it reads ``NOT_GATED``, ``vectors_compare.json``); ``_shadowed`` names a gates-like fence a
+renderer shows that the scanner does not count (in a block quote, a list item or a footnote, or with a
+second word in its info string: ``_shadow_lines``, the rule the locks and result readers refuse), and
+the check, C0 and lint refuse a PREREG holding one as ``FENCE_SHADOWED``, so a PREREG cannot show a
+reader one table while another is scored (the B8 battery, M1).
 
 Where ``rescore`` departs from ``score_frozen``, and why:
 
@@ -1093,20 +1099,40 @@ def _fence_block(text: str, info: str) -> Optional[Tuple[int, str]]:
     ``GateSpecError``: every refusal of ``_fence_at``, then a fence ``_shadow_fences`` finds."""
     found = _fence_at(text, info)
     shadow = _shadow_lines(text, info)
-    if shadow and shadow[0][1]:
-        raise _GateSpecError(
-            f"a ```{info} fence at line {shadow[0][0]} renders as a {info} block (behind a byte-order mark, in a "
-            f"block quote or a list item, or with a second word in its info string) and the scanner counts no "
-            f"fence there {_EM} a block only one of them recognises is a shadowing channel; write the one plain "
-            f"unindented ```{info} fence")
     if shadow:
-        raise _GateSpecError(
-            f"a ```{info} fence at line {shadow[0][0]} may render as a {info} block inside a container (behind a "
+        raise _GateSpecError(_shadow_refusal(info, shadow))
+    return found
+
+
+def _shadowed(prereg: Any) -> Optional[str]:
+    """The refusal for a gates-like fence a renderer shows that the scanner does not count, or None:
+    ``_shadow_lines`` over the PREREG as ``_decision`` reads it (None for bytes that are not UTF-8, which
+    ``_decision`` refuses itself). ``_decision`` keeps the scanner's reading, pinned by the conformance
+    set; the check reads this beside it (``FENCE_SHADOWED``), so a table quoted for the reader beside the
+    one the scanner scores, or a PREREG whose one table is quoted and so reads ``NOT_GATED``, is refused
+    (the B8 battery, M1)."""
+    try:
+        text = _decision_text(prereg)
+    except UnicodeDecodeError:
+        return None
+    shadow = _shadow_lines(text, "gates")
+    return _shadow_refusal("gates", shadow) if shadow else None
+
+
+def _shadow_refusal(info: str, shadow: Sequence[Tuple[int, bool]]) -> str:
+    """The refusal's words for the earliest line ``_shadow_lines`` finds: the B3 rule's class (a fence a
+    renderer shows that the scanner counts nowhere) or the container class past it (the B3 review)."""
+    line, b3 = shadow[0]
+    if b3:
+        return (f"a ```{info} fence at line {line} renders as a {info} block (behind a byte-order mark, in a "
+                f"block quote or a list item, or with a second word in its info string) and the scanner counts no "
+                f"fence there {_EM} a block only one of them recognises is a shadowing channel; write the one plain "
+                f"unindented ```{info} fence")
+    return (f"a ```{info} fence at line {line} may render as a {info} block inside a container (behind a "
             f"block quote marker, a list item marker or a footnote label on its line, or 4 or more columns in "
             f"below a line that opens a list item or a footnote) and the scanner counts no fence there {_EM} this "
             f"reader does not follow a container to its end, so the class is refused; write the one plain "
             f"unindented ```{info} fence outside every container")
-    return found
 
 
 def _result_fence(text: str) -> Optional[Dict[str, Any]]:

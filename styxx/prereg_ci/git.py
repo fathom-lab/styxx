@@ -1079,11 +1079,12 @@ def _decisions_moved(repo: _Repo, base: str, head: str, immutability: str = "gat
         if old is None or not _suffix(old, suffixes):
             continue
         try:
-            before = _core._decision(repo.read(mb, old) or b"")
+            was = repo.read(mb, old) or b""
         except _Refusal as e:
             if e.code == "NOT_A_BLOB":
                 continue                            # a symlink at the base holds no decision
             raise
+        before = _core._decision(was)
         if before["form"] is None:
             continue
         sealed = before["gates_sha256"]
@@ -1094,15 +1095,21 @@ def _decisions_moved(repo: _Repo, base: str, head: str, immutability: str = "gat
             moved = f"is renamed to {x['path']}"
         else:
             try:
-                after = _core._decision(repo.read(h, old) or b"")
+                now = repo.read(h, old) or b""
             except _Refusal as e:
                 if e.code != "NOT_A_BLOB":
                     raise
                 moved = "is no longer a regular file"
             else:
+                after = _core._decision(now)
+                shadow = _core._shadowed(now)
                 if after["gates_sha256"] != sealed:
                     moved = ("holds no fence the scanner reads" if after["form"] is None
                              else f"holds the fence {after['gates_sha256']}")
+                elif shadow is not None and _core._shadowed(was) is None:
+                    # the sealed fence untouched and a table beside it that a reader is shown and the scanner
+                    # does not count (the B8 battery, M1): the decision a reader sees moved
+                    moved = f"holds a second table beside it: {shadow}"
         if moved is not None:
             out.append({"code": "DECISION_EDITED_AFTER_SEAL", "kind": "FAIL", "path": old,
                         "detail": f"{old} held the sealed fence {sealed} at {mb[:12]}; at HEAD it {moved}. A "

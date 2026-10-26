@@ -44,6 +44,9 @@ _CHECK_KIND = {
     "CONFIG_CHANGED": "NOTE",                   # the pull request changes prereg-ci.toml; the base's governs it
     "CONFIG_REPAIRED": "NOTE",                  # the base's copy does not read; the pull request replaces it
     "CLOSE_AFTER_UNREAD": "NOTE",               # a sealed close_after the time reader does not read (check prints it)
+    # a gates-like fence a renderer shows that the scanner does not count (core._shadowed; the B8 battery, M1):
+    # read in the decision in effect (check, census) and in a draft (lint)
+    "FENCE_SHADOWED": "FAIL",
     # lint (DESIGN 3.7), before data
     "TABLE_NOT_TOTAL": "FAIL", "ROW_UNREACHABLE": "FAIL", "VERDICTS_REPEATED": "FAIL", "GATE_VACUOUS": "FAIL",
     "POWER_BASIS_UNDECLARED": "NOTE", "ROW_KEY_UNREAD": "NOTE", "WITHDRAWS_KEY_MISSPELLED": "FAIL",
