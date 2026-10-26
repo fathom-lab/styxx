@@ -338,6 +338,95 @@ def _prefix_is_path_shaped(prefix: str, status: dict) -> bool:
     return False
 
 
+def _scope_resolve(prefix: str, segs: list, changed) -> tuple:
+    """#175: one reading of a scope prefix's segments: (the prefix, None), "" for the repository root, or (None, why).
+    `.` drops and `..` leaves the directory before it, as git resolves a pathspec; the result is read through `_norm`
+    again. A reading the resolution did not change is main's reading before #175, as is every reading of a prefix
+    without such a segment. What main's `rstrip("/.")` cut off the prefix (its trailing run of dots and slashes: a
+    sentence's period, an ellipsis) stays cut, and nothing else is: a name a later `..` lays bare keeps its dots (`b.`
+    in `a/b./c/../.`), as git reads it. So every reading of a prefix with no inner `.` or `..` segment is main's reading
+    or a directory above it. Where the resolved reading is not main's and that cut run takes part of a name git reads
+    whole (a name of three or more dots, or the dots of the name written last beyond one final dot), git's reading, every
+    name whole, is read beside it, and the claim abstains where a changed path lies under one and not the other."""
+    whole = _norm(prefix)
+    plain = whole.rstrip("/.")
+    i = 0                   # a leading run of `..` is the key's to read: `_norm` drops it (#121), and a key that
+    while i < len(segs) - 1 and segs[i] == "..":        # keeps it (PATH-2a's V121) reads it as written, as before
+        i = i + 1
+    if segs[-1] != ".." and not any(s in (".", "..") for s in segs[i:-1]):
+        return "/".join(segs).rstrip("/."), None
+    kept: list = []
+    at: list = []           # where each kept segment starts in the prefix as `_norm` reads it
+    o = 0
+    for n, s in enumerate(segs):
+        if n < i or s not in (".", ".."):
+            kept.append(s)
+            at.append(o)
+        elif s == "..":
+            if len(kept) <= i:
+                return None, (f"prefix {prefix!r} has a '..' segment with no directory before it, so it names a "
+                              f"directory outside the one it is read from (#175)")
+            if not kept[-1]:
+                return None, (f"prefix {prefix!r} has a '..' segment after an empty segment, which this template "
+                              f"does not resolve (#175)")
+            kept.pop()
+            at.pop()
+        o = o + len(s) + 1
+    if i and len(kept) <= i:
+        return None, (f"prefix {prefix!r} has a '..' segment with no directory before it, so it names a "
+                      f"directory outside the one it is read from (#175)")
+    m = len([a for a in at if a < len(plain)])      # the segments main's reading holds; the rest lie in its cut run
+    names, cut = kept[:m], [s for s in kept[m:] if s]
+    if m and at[m - 1] + len(names[-1]) > len(plain):   # the name holding main's last character: its dots lie in the run
+        if at[m - 1] + len(names[-1]) < len(whole) or names[-1][len(plain) - at[m - 1]:] != ".":
+            cut = [names[-1]] + cut     # more than one final dot, a sentence's period, is cut from it
+        names = names[:-1] + [names[-1].rstrip(".")]
+    got = _norm("/".join(names)).rstrip("/")
+    if got == plain:
+        return got, None
+    if got and "/" not in got and _is_bare_filename(got):
+        return None, (f"prefix {prefix!r} resolves to the file name {got!r} at the repository root, which this "
+                      f"template would match in any directory (#175)")
+    full = "/".join(kept).rstrip("/")       # git's reading: every name kept whole, a leading dot too
+    if cut and any((not got or _path_inside(p, got)) != (not full or _path_inside(p, full)) for p in changed):
+        return None, (f"prefix {prefix!r} ends in a run of dots and slashes that this template cuts as a sentence's "
+                      f"period or an ellipsis and git reads as part of the name {cut[0]!r}, and a changed path lies "
+                      f"under one of the two readings and not the other (#175)")
+    if not got:
+        return got, None
+    for p in changed:
+        if any(s in (".", "..") for s in p.split("/")):
+            return None, (f"prefix {prefix!r} and the changed path {p!r} each hold a '.' or '..' segment; git "
+                          f"writes no such path, and the two are not compared (#175)")
+    return got, None
+
+
+def _scope_readings(prefix: str, changed) -> tuple:
+    """#175: ([each reading of a scope prefix], None), or (None, why) where the claim abstains.
+
+    git reads a pathspec's `.` and `..` segments lexically: `src/../docs` is `docs`, `docs/./guide` is `docs/guide`.
+    `only_touches` compared the prefix as text after `_norm` and `rstrip("/.")`, so such a segment inside it was kept
+    (and accused the paths it holds) and a trailing `/..` was cut off. The segments of `_norm(prefix)` now resolve
+    (`_scope_resolve`). `_norm`'s own reading of the leading run of `.` and `/` is #121's and is not changed here.
+    A last segment `..` has two readings, the parent (git's) and the prefix before it with the last dot a sentence's
+    period; the claim takes the verdict both give (`_gate`). A last segment of three or more dots is a name to git
+    and a period or an ellipsis to prose, and abstains, as does a prefix whose only reading is the root."""
+    segs = _norm(prefix).split("/")
+    last = segs[-1]
+    if len(last) >= 3 and not last.strip("."):
+        return None, (f"prefix {prefix!r} ends in {last!r}, which git reads as a directory of that name and prose as "
+                      f"a sentence's period or an ellipsis (#175)")
+    out: list = []
+    for cut in ((segs[:-1], segs) if last == ".." and len(segs) > 1 else (segs,)):
+        got, why = _scope_resolve(prefix, cut, changed)
+        if why is not None:
+            return None, why
+        out.append(got)
+    if out == [""]:
+        return None, f"prefix {prefix!r} names the repository root, which holds every changed path (#175)"
+    return out, None
+
+
 # COMPAT-1 (PREREG_compat1_2026_09_16). 8,467 of the 71,016 EXTERNAL-1 descriptions claim
 # compatibility and the gate read none of them. It reads them now and says one thing: which
 # public top-level definitions the diff removed without re-defining, per language, with files.
@@ -496,6 +585,25 @@ def parse_unified_diff_sides(diff_text: str) -> dict:
             pending.note(line)
     flush()
     return sides
+
+
+def parse_unified_diff_renames(diff_text: str) -> list:
+    """#174: the normalized old path of each rename, in diff order: the `rename from` line of a `diff --git` header,
+    read where `_Pending` reads it (after the header, before its `---`/`+++` pair). `parse_unified_diff` keys a rename
+    by its new path only, and its return shape is untouched because callers unpack it (the pattern COMPAT-1 used for
+    `parse_unified_diff_sides`). A copy's `copy from` is not read: a copy leaves its source in place."""
+    out: list = []
+    pending = False
+    for line in _git_lines(diff_text):                  # #205: git's line ends
+        if line.startswith("diff --git "):
+            pending = True
+        elif line.startswith("+++ "):
+            pending = False
+        elif pending and line.startswith("rename from "):
+            old = _norm(line[len("rename from "):])
+            if old:
+                out.append(old)
+    return out
 
 
 def _edge_cut(s: str) -> str:
@@ -1316,7 +1424,7 @@ def gate_diff_text(summary_text: str, diff_text: str,
                  evidence=evidence, commit=commit,
                  raw_input_len=len(diff_text or ""),
                  sides=parse_unified_diff_sides(diff_text or ""), sections=_diff_sections(diff_text or ""),
-                 seam_header=_seam_header(diff_text or ""))
+                 seam_header=_seam_header(diff_text or ""), sources=parse_unified_diff_renames(diff_text or ""))
     return _p2a_abstain(g, strict, lambda: _P2aFacts(diff_text or "", None, summary_text))  # PATH-2a
 
 
@@ -1344,11 +1452,14 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
     repo = Path(repo)
     name_status = _git(repo, "diff", "--name-status", f"{base}..{head}")
     status: dict[str, str] = {}
+    sources: list = []
     for line in _git_lines(name_status):                # #205: a path may hold U+0085, U+2028, U+2029 raw
         parts = line.split("\t")
         if len(parts) >= 2:
             st, path = parts[0][:1], parts[-1]
             status[_norm(path)] = st            # A / M / D / R
+            if st == "R" and len(parts) >= 3 and _norm(parts[1]):
+                sources.append(_norm(parts[1]))      # #174: the rename's old path
     diff_text = _git(repo, "diff", f"{base}..{head}")
     added_lines = [l[1:] for l in _git_lines(diff_text)          # #205
                    if l.startswith("+") and not l.startswith("+++")]
@@ -1357,7 +1468,7 @@ def gate_diff(summary_text: str, repo: str | Path, base: str, head: str,
                  repo=repo, base=base, head=head,
                  evidence=evidence, commit=commit,
                  sides=parse_unified_diff_sides(diff_text), sections=_diff_sections(diff_text),
-                 seam_header=_seam_header(diff_text))
+                 seam_header=_seam_header(diff_text), sources=sources)
     return _p2a_abstain(g, strict, lambda: _P2aFacts(diff_text, name_status, summary_text))  # PATH-2a
 
 
@@ -1430,7 +1541,8 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
           run: str | None, strict: bool, repo, base: str, head: str,
           evidence=None, commit: str | None = None,
           raw_input_len: int | None = None, sides: dict | None = None,
-          sections: list | None = None, seam_header: str | None = None, _declared: bool = False) -> DiffGate:
+          sections: list | None = None, seam_header: str | None = None, sources: list | None = None,
+          _declared: bool = False) -> DiffGate:
 
     # Some claim kinds are VACUOUSLY TRUE against an empty diff. `only_touches`
     # asks "is anything outside the prefix?" and an empty status answers "no" —
@@ -1632,14 +1744,41 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                     raw_prefs = [d["prefix"]] + ([d["prefix2"]] if len(prefs) == 2 else [])
                     not_paths = [_norm(x).rstrip("/.") for x in raw_prefs
                                  if not _prefix_is_path_shaped(x, status)] if BC1_BY_CONSTRUCTION else []
+                    # #175: each reading of the prefixes, `.` and `..` resolved as git resolves them ("" is the root);
+                    # #174: a rename's old path, which the status keys do not hold, is read beside them
+                    olds = sources or []
+                    read = [_scope_readings(x, list(status) + olds) for x in raw_prefs]
+                    dots = next((why for _r, why in read if why is not None), None)
+                    ways = [[]]
+                    for r, _why in (read if dots is None else [([x], None) for x in prefs]):
+                        ways = [w + [x] for w in ways for x in r]
                     # PATH-1 mode 1: _path_inside matches a bare filename on its basename.
-                    outside = [p for p in status
-                               if not any(_path_inside(p, x) for x in prefs)]
+                    seen = [([p for p in status if not any(x == "" or _path_inside(p, x) for x in w)],
+                             [p for p in olds if not any(x == "" or _path_inside(p, x) for x in w)]) for w in ways]
+                    prefs = ways[0]
+                    outside, moved = seen[0]
+                    parts = len({"C" if o else "U" if m else "V" for o, m in seen}) > 1
                     if no_paths:
                         c.verdict, c.why = "UNCHECKABLE", no_paths
                     elif not_paths:                             # BC-1 repair 4
                         c.verdict = "UNCHECKABLE"
                         c.why = f"prefix {not_paths[0]!r} is not a path (#110)"
+                    elif dots is not None:
+                        c.verdict, c.why = "UNCHECKABLE", dots
+                    elif parts:             # a prefix whose two readings part the verdict, the other's held
+                        vs = ["C" if o else "U" if m else "V" for o, m in seen]
+                        two = next(x for k, x in enumerate(raw_prefs)
+                                   if any(vs[a] != vs[b] and ways[a][:k] + ways[a][k + 1:] == ways[b][:k] + ways[b][k + 1:]
+                                          for a in range(len(ways)) for b in range(len(ways))))
+                        c.verdict = "UNCHECKABLE"
+                        c.why = (f"prefix {two!r} ends in '..', which reads as the directory before it (its last dot "
+                                 f"a sentence's period) and as that directory's parent (git's reading), and the claim "
+                                 f"holds under one and not the other (#175)")
+                    elif moved and not outside:     # #174: one reason, naming no path, alike in both ports
+                        c.verdict = "UNCHECKABLE"
+                        c.why = ("every changed path lies under the prefix, but not the old path of a rename; git "
+                                 "lists it as deleted where it reads no rename, and this template does not decide "
+                                 "whether the claim covers it (#174)")
                     else:
                         c.verdict = "VERIFIED" if not outside else "CONTRADICTED"
                         shown = prefs[0] if len(prefs) == 1 else " and ".join(repr(x) for x in prefs)
@@ -1679,7 +1818,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
                 _sub = _gate(_dtext, status, added_blob, run=run, strict=strict, repo=repo,
                              base=base, head=head, evidence=evidence, commit=commit,
                              raw_input_len=raw_input_len, sides=sides, sections=sections,
-                             seam_header=seam_header, _declared=True)
+                             seam_header=seam_header, sources=sources, _declared=True)
                 for _c in _sub.claims:
                     _c.detail = dict(_c.detail or {})
                     _c.detail["declared"] = True
@@ -1755,7 +1894,7 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # data and calls what it is given; code that reaches around its argument by reflection (a class reached by type(), a
 # function's __globals__, a frame) is not covered (NOTE_path2a_eleventh_pass_2026_10_05). DECIDE's copy is built from
 # the block's own slotted classes, so nothing of main's is reachable from it as data.
-# Everything outside this block is main's reader (sha256 969abb0d..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
+# Everything outside this block is main's reader (sha256 6944190c..., LF: f457d2e4..., which is 4eb3d6f0..., 1cde8b82's
 # 9b620e00... with the demo's CONTRADICTED label, fix/contradicted-not-lie, plus the record naming its instrument,
 # identity phase 2; then #205, fix/diffgate-205-206, moved reading paths: every piece of git output is cut at git's
 # line ends, and the `def` counts and the compatibility reading abstain over a line holding a character of _READ_APART;
@@ -1765,7 +1904,9 @@ def _gate(summary_text: str, status: dict[str, str], added_blob: str, *,
 # in a file not read as .py or .pyi or after an odd number of triple quotes, where #205's seams part the two readers (a
 # header's edge, before a `def`, after a name), and where two lines of one section define one test name, one after
 # `async`, 91d45e3a...; then the tests count's abstention narrowed to a claim at or below the larger count, the
-# one-sided #178), unchanged; the two doors call
+# one-sided #178, 969abb0d...; then #174 and #175, fix/diffgate-174-175, moved reading paths: `only_touches` reads a
+# rename's old path and abstains where only it lies outside the prefixes, and resolves a prefix's `.` and `..` segments
+# as git resolves a pathspec), unchanged; the two doors call
 # `_p2a_abstain` on the gate main's `_gate` returns. The overlay reads each DECIDED claim once more and turns it
 # UNCHECKABLE, with a reason that names the verdict it withholds, the defect and main's own reason verbatim, only
 # where #97, #121 or #101 can have made it wrong:
@@ -2028,6 +2169,31 @@ def _p2a_regs_git(name_status: str) -> list:
         if len(parts) >= 2:
             regs.append((parts[-1], parts[0][:1], "+"))
     return regs
+
+
+def _p2a_sources_raw(lines: list) -> list:
+    """#174: parse_unified_diff_renames line for line, the paths as written: the `rename from` path of a header
+    still waiting for its pair."""
+    out: list = []
+    pending = False
+    for line in lines:
+        if line.startswith("diff --git "):
+            pending = True
+        elif line.startswith("+++ "):
+            pending = False
+        elif pending and line.startswith("rename from "):
+            out.append(line[len("rename from "):])
+    return out
+
+
+def _p2a_sources_git(name_status: str) -> list:
+    """#174: main's gate_diff, the old path of each R row, as written."""
+    out: list = []
+    for line in _p2a_lines(name_status, _P2A_COARSE):
+        parts = line.split("\t")
+        if len(parts) >= 3 and parts[0][:1] == "R":
+            out.append(parts[1])
+    return out
 
 
 def _p2a_view(lines: list) -> tuple:
@@ -2678,6 +2844,11 @@ class _P2aFacts:
             return self._get("regs", lambda: _p2a_regs_git(self.name_status))
         return self._get("regs", lambda: _p2a_regs_raw(self.lines()))
 
+    def sources(self) -> list:
+        if self.name_status is not None:
+            return self._get("sources", lambda: _p2a_sources_git(self.name_status))
+        return self._get("sources", lambda: _p2a_sources_raw(self.lines()))
+
     def views(self) -> list:
         return self._get("views", lambda: _p2a_views(self.lines()))
 
@@ -3022,22 +3193,106 @@ def _p2a_shaped(prefix: str, keys: list, form) -> bool:   # _prefix_is_path_shap
 _P2A_SPACES = {"A": (_p2a_A, _p2a_WA, _p2a_strip), "K": (_p2a_K, _p2a_WK, _p2a_dotted)}
 
 
+def _p2a_segments(fm, segs: list, whole: str, changed: list):   # _scope_resolve (#175), in the key space of `fm`
+    """main's key drops a prefix's leading run of '.' and '/'; V121's keeps a leading run of '..' segments, read as
+    written, as before #175 (the truth oracle judges no prefix that starts with '..'). The segments after it resolve
+    as main's do: what main's rstrip cut off `whole` (the prefix in the key's form) stays cut, and nothing else is.
+    None where main abstains."""
+    plain = whole.rstrip("/.")
+    i = 0
+    while i < len(segs) - 1 and segs[i] == "..":
+        i = i + 1
+    if segs[-1] != ".." and not any(s == "." or s == ".." for s in segs[i:-1]):
+        return "/".join(segs).rstrip("/.")
+    kept: list = []
+    at: list = []
+    o = 0
+    for n, s in enumerate(segs):
+        if n < i or not (s == "." or s == ".."):
+            kept.append(s)
+            at.append(o)
+        elif s == "..":
+            if len(kept) <= i or not kept[-1]:
+                return None
+            kept.pop()
+            at.pop()
+        o = o + len(s) + 1
+    if i and len(kept) <= i:
+        return None
+    m = len([a for a in at if a < len(plain)])
+    names = kept[:m]
+    cut = [s for s in kept[m:] if s]
+    if m and at[m - 1] + len(names[-1]) > len(plain):
+        if at[m - 1] + len(names[-1]) < len(whole) or names[-1][len(plain) - at[m - 1]:] != ".":
+            cut = [names[-1]] + cut
+        names = names[:-1] + [names[-1].rstrip(".")]
+    got = fm("/".join(names)).rstrip("/")
+    if got == plain:
+        return got
+    if got and "/" not in got and _p2a_ext(got):
+        return None
+    full = "/".join(kept).rstrip("/")
+    if cut and any((got == "" or _p2a_inside(p, got)) != (full == "" or _p2a_inside(p, full)) for p in changed):
+        return None
+    if not got:
+        return got
+    for p in changed:
+        if any(s == "." or s == ".." for s in p.split("/")):
+            return None
+    return got
+
+
+def _p2a_readings(prefix: str, fm, changed: list):   # _scope_readings (#175)
+    segs = fm(prefix).split("/")
+    last = segs[-1]
+    if len(last) >= 3 and not last.strip("."):
+        return None
+    out: list = []
+    for cut in ((segs[:-1], segs) if last == ".." and len(segs) > 1 else (segs,)):
+        got = _p2a_segments(fm, cut, fm(prefix), changed)
+        if got is None:
+            return None
+        out.append(got)
+    if out == [""]:
+        return None
+    return out
+
+
 def _p2a_scope(f: "_P2aFacts", prefixes: tuple) -> dict:
-    """{(space, wild): (whether `prefix` reads as a path, whether prefix2 does, whether every changed path lies
-    under the prefixes that reading uses)}, in main's key space A and V121's K, with case folded (wild False) and
-    outside ASCII a placeholder (True)."""
+    """{(space, wild): (whether `prefix` reads as a path, whether prefix2 does, the reading of the prefixes that
+    reading uses)}, in main's key space A and V121's K, with case folded (wild False) and outside ASCII a placeholder
+    (True). The reading is True where every changed path lies under them, False where one does not, and None where
+    main's reading abstains: a prefix #175 does not read, readings of it that part (#175), or only a rename's old
+    path outside them (#174)."""
     two = len(prefixes) == 2
     regs = f.regs()
+    olds = f.sources()
     out = {}
     for sp, (form, wform, pre_key) in _P2A_SPACES.items():
         fs, ws = f.space(sp)[:2]
         keep = [i for i, r in enumerate(regs) if r[2] == "+" or pre_key(r[0])]
+        held = [s for s in olds if pre_key(s)]
         for wild, fm, forms in ((False, form, fs), (True, wform, ws)):
             paths = [forms[i] for i in keep]
+            moved = [fm(s) for s in held]
             lead = _p2a_shaped(prefixes[0], paths, fm)
             shaped = two and _p2a_shaped(prefixes[1], paths, fm)
-            ps = [fm(x).rstrip("/.") for x in (prefixes if shaped else prefixes[:1])]
-            out[sp, wild] = (lead, shaped, all(any(_p2a_inside(p, x) for x in ps) for p in paths))
+            rs = [_p2a_readings(x, fm, paths + moved) for x in (prefixes if shaped else prefixes[:1])]
+            if any(r is None for r in rs):
+                out[sp, wild] = (lead, shaped, None)
+                continue
+            ways = [[]]
+            for r in rs:
+                ways = [w + [x] for w in ways for x in r]
+            got = set()
+            for w in ways:
+                if not all(any(x == "" or _p2a_inside(p, x) for x in w) for p in paths):
+                    got.add(False)
+                elif not all(any(x == "" or _p2a_inside(p, x) for x in w) for p in moved):
+                    got.add(None)
+                else:
+                    got.add(True)
+            out[sp, wild] = (lead, shaped, got.pop() if len(got) == 1 else None)
     return out
 
 
@@ -3069,7 +3324,7 @@ def _p2a_only(c, f: "_P2aFacts"):
     if got["A", False] != got["A", True] or got["K", False] != got["K", True]:
         return "case", "#121"
     lead, _shaped, under = got["A", False]
-    if not lead or ("VERIFIED" if under else "CONTRADICTED") != c.verdict:
+    if not lead or under is not (c.verdict == "VERIFIED"):
         return "unreproduced", "#121"
     # B-1 (NOTE_path2a_fourth_pass_2026_09_30): V121 does not read a `prefix` that only the dropped dots make a
     # path ("github" beside `.github/`), and says "is not a path (#110)". With a second prefix claimed, main's verdict
@@ -3266,7 +3521,7 @@ _P2A_ATTRS_OK = frozenset({
     "diff_text", "name_status", "summary", "_m", "_get", "lines", "regs", "views", "divergent", "space", "odd",
     "count", "pairing", "defines", "runs", "zones", "zone_text", "scope",
     "order", "groups", "prime", "ends", "automaton", "joined", "seam", "unchanged", "tokens", "occurs",
-    "redefines"})
+    "redefines", "sources"})
 _P2A_TYPES = frozenset({"str", "list", "dict", "set", "tuple", "frozenset", "int", "bool"})
 
 
