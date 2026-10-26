@@ -54,16 +54,31 @@ moves file or charon line is touched.
   prefix's segments as git resolves a pathspec's, after `_norm`, whose reading of a leading run of `.` and `/` is #121's
   and is not changed (`_scope_readings` and `_scope_resolve`, `_scopeReadings` and `_scopeResolve`). A last segment `..`
   reads two ways, the parent (git's reading) and the directory before it with its last dot a sentence's period, and the
-  claim takes the verdict both give, or abstains. A last segment of three or more dots, a `..` with no directory before
-  it, a sole reading that is the root, a file name only the resolution made bare, and a changed path that holds a `.` or
-  `..` segment abstain (UNCHECKABLE, #175), each with a reason that says which. A prefix with no such segment reads as
-  before, and `src/.../tests` keeps `main`'s CONTRADICTED (git reads `...` as a name).
+  claim takes the verdict both give, or abstains. The resolution cuts from the prefix only what `main`'s `rstrip("/.")`
+  cut there, its trailing run of dots and slashes (a sentence's period, an ellipsis), so a name a later `..` lays bare
+  keeps its dots, as git reads it: "Only touches a/b./c/../." reads `a/b.`. Where the resolved reading is not `main`'s
+  and that cut run takes part of a name git reads whole (a name of three or more dots, or the dots of the name written
+  last beyond one final dot), git's reading, every name whole, is read beside the cut one, and the claim abstains where
+  a changed path lies under one and not the other. A last segment of three or more dots, a `..` with no directory before
+  it or after an empty segment, a sole reading that is the root, a file name only the resolution made bare, and a
+  changed path that holds a `.` or `..` segment abstain too (UNCHECKABLE, #175), each with a reason that says which;
+  where a claim names two prefixes, the reason names one whose two readings part the verdict. A prefix with no such
+  segment reads as before, and `src/.../tests` keeps `main`'s CONTRADICTED (git reads `...` as a name).
 - **No new CONTRADICTED, by construction and measured.** `only_touches` reads CONTRADICTED only where a status key lies
-  outside the prefixes under every reading of them, and each reading holds every status key the text reading held
-  unless a changed path holds a dot segment, where the claim abstains. So every CONTRADICTED it prints, `main` printed;
-  its reason is `main`'s but where an inner segment resolved (the resolved prefix is shown; no committed input holds
-  one). Measured: 0 new CONTRADICTED on every set below, in both ports, both strict modes, `main`'s level and the final
-  record, on CPython 3.12.10 and 3.14.2.
+  outside the prefixes under every reading of them. Where a prefix has no inner `.` or `..` segment, each reading is
+  `main`'s text reading or a directory above it, since the resolution cuts nothing `main` did not cut, so it holds every
+  status key `main`'s reading held; where it has one, `main`'s reading holds no path git writes, and a changed path that
+  holds a dot segment makes the claim abstain. So every CONTRADICTED it prints, `main` printed; its reason is `main`'s
+  but where an inner segment resolved (the resolved prefix is shown; no committed input holds one). The review of this
+  batch showed the argument as it stood false, and the fix round repaired the code: the resolved prefix was re-read
+  through `rstrip("/.")`, which cut the dot off a name like `b.` once a later `..` laid it bare, so "Only touches
+  a/b./c/../." read `a/b`, a sibling of git's `a/b.`, and printed a new CONTRADICTED over `a/b./c/x.py` and a new
+  VERIFIED over `a/b/y.py`, in both ports, at both doors and both levels (off every committed and standard set).
+  Measured at the head: 0 new CONTRADICTED on every set below, in both ports, both strict modes, `main`'s level and the
+  final record, on CPython 3.12.10 and 3.14.2; 0 on the review's 54 adversarial raw-door cases and 43 more, and on 168
+  git-door cells over repositories built with git plumbing under three rename configs, with git's own pathspec reading
+  beside every claim; and 0 in 600,000 claim readings of two seeded searches over prefixes that hold dots in every way a
+  segment can, where the reviewed head printed 52, every one of that shape.
 - **PATH-2a's model of `main`'s scope reading, in the same commits.** `_p2a_scope` and `_p2aScope` read both, in key
   spaces A and K: the old paths as written (`_p2a_sources_raw`, `_p2a_sources_git`, `_P2aFacts.sources()`, the port's
   `sources`), each prefix's readings (`_p2a_readings` and `_p2a_segments`, `main`'s two functions with `_norm` replaced
@@ -112,24 +127,33 @@ moves file or charon line is touched.
   sets now): 6,000 inputs of rename headers under `only_touches` claims with dotted, quoted, case-folded and two-prefix
   forms (seed 174175), and 4,000 with letters from outside ASCII in the prefixes and paths (seed 1751742). 0 new
   CONTRADICTED on either, in both readers, both levels and both strict modes. Judged on git the same way, they show the
-  cost more sharply, since the generator chose the mix: on the rename probe the change withdraws or flips 1,480 decided
-  verdicts in the final record, 267 of them right under both readings (129 a last run of three or more dots, such as
-  `docs/guide/...`, which `main` read as `docs/guide`; 104 a file name the resolution made bare, such as
-  `x/../setup.py.`) and 240 wrong under both (174 a prefix that names the root, such as `./.`; 41 VERIFIEDs over a
-  rename out of the prefix, #174; and 14 CONTRADICTEDs that now read VERIFIED, right under both readings, beside 3
-  more that build no repository and were read by hand: right); 492 build no repository (U+2028, U+001C or a quote in a
-  path). Its 1,135 gate flips without `--strict`
-  lose 219 catches and remove 164 false alarms under both readings. On the letters probe, 27 right and 83 wrong under
-  both, and 24 catches lost and 77 false alarms removed.
+  cost more sharply, since the generator chose the mix: on the rename probe the change withdraws or flips 1,479 decided
+  verdicts in the final record, 266 of them right under both readings (129 a last run of three or more dots, such as
+  `docs/guide/...`, which `main` read as `docs/guide`: 126 CONTRADICTEDs where the claim is false either way and 3
+  VERIFIEDs where it is true either way; 104 a file name the resolution made bare, such as `x/../setup.py.`) and 240
+  wrong under both (174 a prefix that names the root, such as `./.`; 41 VERIFIEDs over a rename out of the prefix, #174;
+  and 14 CONTRADICTEDs that now read VERIFIED, right under both readings, beside 3 more that build no repository and
+  were read by hand: right); 492 build no repository (U+2028, U+001C or a quote in a path). Its 1,134 gate flips without
+  `--strict` lose 218 catches and remove 164 false alarms under both readings. With `--strict`, judged the same way, its
+  46 PASS → FAIL withdraw a VERIFIED that is wrong under git's reading in 19 (21 under the prose reading), right in 9
+  (8), not decidable in 1 (0), and 17 build no repository; its 7 FAIL → PASS remove 6 false alarms under both readings,
+  and 1 builds no repository. On the letters probe, 27 right and 83 wrong under both, and 24 catches lost and 77 false
+  alarms removed; with `--strict` its 13 PASS → FAIL withdraw a wrong VERIFIED in 6 (8), a right one in 5 (5), and 2 are
+  not decidable under git's reading, and its 1 FAIL → PASS removes a false alarm under both. Against the reviewed head
+  the fix round moves only the rename probe: one CONTRADICTED withdrawn that is right under both readings (an old path
+  lies under one of the cut run's two readings only, beside a status key outside both), and `main`'s CONTRADICTED back
+  on two claims the dot-eating `rstrip` had withdrawn, right under both.
 - **The two ports.** On the committed inputs they print different records on 509 inputs before and after on CPython
   3.12.10 (508 on 3.14.2), and no input is newly apart at any grain (whole record, verdicts, gate), at either level, in
-  either strict mode; the same on every other set above. On the rename probe no record is newly apart (359 come
-  together); at `main`'s level 5 gates part under `--strict` where the claim lists already differed. On the letters
-  probe 2 records are newly apart in the final record, on the reason only (verdicts and gates agree), and at `main`'s
-  level 340 inputs part in claim verdicts and 337 in gates without `--strict`: Python's template reads a letter from
-  outside ASCII in a prefix and the port's does not (the template's word class), so the two readers hold different
-  prefixes, and one `main` decides where the other's abstains. The overlay withholds the decided one. Not repaired; named
-  beside #173.
+  either strict mode; the same on the truth world, #205's grid, the byte-order-mark exemplar, bar C's line-break set,
+  the two seeded fuzz sets and the 176 real pairs, on both interpreters. On the rename probe no record is newly apart
+  (359 come together, 217 on 3.14.2); at `main`'s level 5 gates part under `--strict` where the claim lists already
+  differed (on 3.14.2, 7, and 1 input in claim verdicts and gates without it, where 3.14.2's `lower()` folds U+A7CB and
+  the port's `toLowerCase()` does not; the reviewed head reads the same). On the letters probe 2 records are newly apart
+  in the final record, on the reason only (verdicts and gates agree), and at `main`'s level 340 inputs part in claim
+  verdicts and 337 in gates without `--strict`: Python's template reads a letter from outside ASCII in a prefix and the
+  port's does not (the template's word class), so the two readers hold different prefixes, and one `main` decides where
+  the other's abstains. The overlay withholds the decided one. Not repaired; named beside #173.
 - **The numbers that moved, each re-pinned with the reason beside it** (CPython 3.12.10 and 3.14.2, Node 24.13.0):
   `ABSTENTIONS` decided 12,146 → 12,050 (Windows) and 12,143 → 12,047 (POSIX), `only_touches:shape` 29 → 28,
   `only_touches:only` 32 → 33, 2,615 withheld as before; the port's (decided, abstained) (11,951, 2,482) →
@@ -148,15 +172,17 @@ moves file or charon line is touched.
   `path2a_pairs.json` `path2a:scope-shape-rename-raw` claim 0, from the overlay's `shape` to `main`'s #174 abstention
   (UNCHECKABLE and PASS kept), recorded in `web/gate/differential/issue174_moves.json` (`issue205_moves.json`'s form),
   which `check_pairs.js`, `tests/_p2a_ref.py` and `tests/test_port_is_current.py` read after `issue205_moves.json`.
-  `tests/test_diffgate_issue174_175.py` (31 tests) fails 23 and passes 8 (the controls) on `879f6be9`'s code.
+  `tests/test_diffgate_issue174_175.py` (52 tests) fails 37 and passes 15 (the controls) on `main`'s code (`33981121`,
+  whose readers are `879f6be9`'s), and 17 on the reviewed head's.
 - **The pin set moved**, as #220 moved it, on reading paths in both languages: the whole file (LF) `7b264014…` →
-  `2f79793e…` (`py_side.py` `PINNED`, the README's sha and run-book lines, the port block's comment); `main`'s reader,
-  the block cut, `969abb0d…` → `a7debd58…` (`MAIN_PY_SHA`, the README's reader line, the Python block's comment);
-  `main`'s port, the block cut, `1097d2fb…` → `7ff464f0…` (`MAIN_JS_SHA`, the README's port line, the port block's
+  `5134175b…` (`py_side.py` `PINNED`, the README's sha and run-book lines, the port block's comment); `main`'s reader,
+  the block cut, `969abb0d…` → `6944190c…` (`MAIN_PY_SHA`, the README's reader line, the Python block's comment);
+  `main`'s port, the block cut, `1097d2fb…` → `e32bb9dd…` (`MAIN_JS_SHA`, the README's port line, the port block's
   comment); the bookmarklet rebuilt with terser 5.46.0, laid out from the npm cache, which rebuilds `879f6be9`'s build
-  byte for byte from its sources: `bookmarklet.min.js` `5c4a9fd4…`, 63,612 characters, `bookmarklet.href.txt`
-  `e610678d…`, 63,623; #238's `eb2465a6…` (59,765) joins the README's earlier builds. The two PATH-2a blocks change in
-  those comments and in the model above.
+  byte for byte from its sources: `bookmarklet.min.js` `fe38f4b7…`, 64,919 characters, `bookmarklet.href.txt`
+  `9da2e2ce…`, 64,930; #238's `eb2465a6…` (59,765) joins the README's earlier builds. The values the branch held before
+  the fix round were never on `main`, and each is replaced where it stood. The two PATH-2a blocks change in those
+  comments and in the model above.
 - **What does not move.** `node check_pairs.js` reads 190 pinned pairs, 0 disagreements, with the new moves file. The
   port differential (176 real pairs, 3,000 fuzz pairs, the pinned pairs: 3,230 in all) reads 0 disagreements; none of
   the 176 real pairs' records moves. The truth world, #205's grid, the byte-order-mark exemplar, bar C's line-break set
@@ -185,12 +211,25 @@ moves file or charon line is touched.
   and `copy from` under `diff.renames=copies` read as before. The template's word class, which parts the two ports on a
   prefix holding a letter from outside ASCII (above), is #173's family. The overlay's rename gap (B-3,
   `path2a:p6-a-claim-on-a-moved-files-old-path`) reads as pinned. G-P1 is not claimed; #97, #101 and #121 stay open, and
-  operator option O-10 is not taken: the single-prefix pins stay as they are.
+  operator option O-10 is not taken: the single-prefix pins stay as they are. A rename whose old path differs from the
+  prefix only in case (`SRC/a.py -> src/a.py` under "Only touches src/.") reads VERIFIED, as on `main`, though git lists
+  `D SRC/a.py` outside: `_norm` folds the old path's case as it folds the status keys'. `main`'s reading of a prefix
+  with no inner dot segment is kept, so "Only touches a/b./." still reads `a/b` (CONTRADICTED over `a/b./c/x.py`, where
+  git holds the path), as on `main`. In the seeded searches above the head prints 52 VERIFIEDs, in 600,000 claim
+  readings, where `main` read CONTRADICTED and git's reading of the generated prefix leaves a changed path out, 51 of
+  them at `main`'s level: 50 through #121's leading run (a changed path, a prefix or a resolved prefix that starts with
+  dots, which `_norm` drops) and 2 (one input, both levels) through a last dot read as a sentence's period; the overlay
+  withholds every one of the 50 in the final record.
 - **Commits.** The tests, failing on the branch point; #174 with the overlay's `sources`; #175 with the overlay's
   readings; the pins and the bookmarklet; the moved figures, the re-anchored plant and the moves file (one line of
   `test_git_door_reproductions`, the raw door's `scope-shape-rename`, was moved there after the named suites found it);
   the README; a merge of `origin/main` (#239, which moves no diffgate file), with this file's entries kept as a union;
-  one word of the new test module's docstring; and this entry. Merge is the operator's; a release (tag push = PyPI publish) needs the operator's go.
+  one word of the new test module's docstring; and this entry. Then the review's fix round: the tests of its findings,
+  failing on the reviewed head; #175's cut made `main`'s only (the review's F1); two #175 reasons that say what was
+  read (M1, M2); the pins and the bookmarklet; a test of the overlay's model of `main`'s readings, which no claim could
+  tell; the cut run read two ways where it takes part of a name (the tests, then the code); the pins and the
+  bookmarklet again; and this entry's update. Merge is the operator's; a release (tag push = PyPI publish) needs the
+  operator's go.
 
 ## [Unreleased] — RESULT: leg 2, tranche A folded: `VOID_L_R__G_S1_G_S2_G_P_withheld__MISSED__G_G1`; both panels void, the canaries caught on planted spans, the twin floor untested; tranche A's keys stay sealed
 
