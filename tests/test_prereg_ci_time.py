@@ -279,6 +279,98 @@ def test_a_truncated_token_is_refused(token):
         T._tstinfo(token.bytes[:-40])
 
 
+# ---- bytes a branch can commit as a token: each reads MALFORMED with a reason, none raises past the reader ----
+
+def der(tag: int, body: bytes) -> bytes:
+    n = len(body)
+    if n < 0x80:
+        return bytes([tag, n]) + body
+    nb = n.to_bytes((n.bit_length() + 7) // 8, "big")
+    return bytes([tag, 0x80 | len(nb)]) + nb + body
+
+
+def oid_bytes(arcs) -> bytes:
+    out = b""
+    for a in [40 * arcs[0] + arcs[1], *arcs[2:]]:
+        chunk = [a & 0x7F]
+        a >>= 7
+        while a:
+            chunk.append(0x80 | (a & 0x7F))
+            a >>= 7
+        out += bytes(reversed(chunk))
+    return out
+
+
+def hand_token(gen_time: bytes, imprint: bytes = hashlib.sha256(SEAL).digest(), serial: bytes = b"\x2b") -> bytes:
+    """A bare TimeStampToken's shape written by hand (ContentInfo, SignedData, TSTInfo), with no signer:
+    the DER reader reads it, and openssl would refuse it."""
+    tst = der(0x30, der(0x02, b"\x01") + der(0x06, oid_bytes([1, 3, 6, 1, 4, 1, 99999, 1]))
+              + der(0x30, der(0x30, der(0x06, oid_bytes([2, 16, 840, 1, 101, 3, 4, 2, 1]))) + der(0x04, imprint))
+              + der(0x02, serial) + der(0x18, gen_time))
+    eci = der(0x30, der(0x06, oid_bytes([1, 2, 840, 113549, 1, 9, 16, 1, 4])) + der(0xA0, der(0x04, tst)))
+    sd = der(0x30, der(0x02, b"\x03") + der(0x31, b"") + eci)
+    return der(0x30, der(0x06, oid_bytes([1, 2, 840, 113549, 1, 7, 2])) + der(0xA0, sd))
+
+
+def test_a_hand_written_token_reads_as_the_test_tsas_do():
+    info = T._tstinfo(hand_token(b"20261025000000Z"))
+    assert info["form"] == "token" and info["policy"] == "1.3.6.1.4.1.99999.1" and info["serial"] == 0x2B
+    assert info["imprint_alg"] == "sha256" and info["imprint"] == sha(SEAL)
+    assert info["gen_time"] == "2026-10-25T00:00:00Z"
+
+
+@pytest.mark.parametrize("data, words", [
+    (bytes.fromhex("3005060180a000"), "cut mid-arc"),                    # an OID of the one byte 0x80 (B6 review A1)
+    (der(0x30, der(0x06, b"\x2a" + b"\xff" * 3000 + b"\x7f") + der(0xA0, b"")), "arc of"),  # one arc 3001 bytes long
+    (der(0x30, der(0x30, der(0x02, b"\x01" * 2000))), "integer of 2000 bytes"),          # a PKI status 2000 bytes long
+    (hand_token(b"20261025000000Z", serial=b"\x01" * 129), "integer of 129 bytes"),      # a serial past 1024 bits
+], ids=["oid-0x80-alone", "oid-arc-3001-bytes", "status-2000-bytes", "serial-129-bytes"])
+def test_a_token_whose_oid_or_integer_python_would_not_read_or_print_is_malformed(data, words):
+    """Before the fix the A1 bytes raised IndexError, the long arc and status ValueError (Python prints no
+    int past 4300 digits) and the long serial read as an int nothing prints; the contract is MALFORMED."""
+    with pytest.raises(T._TokenError) as e:
+        T._tstinfo(data)
+    assert words in str(e.value)
+    r = T._rfc3161(SEAL, data, None)
+    assert r["status"] == "MALFORMED" and words in r["detail"]
+
+
+@pytest.mark.parametrize("hexed", ["80", "2a80", "2a8686", "2a864886f7"])
+def test_an_oid_whose_last_byte_continues_an_arc_is_cut_mid_arc(hexed):
+    """B6 review A7: ``2a 80`` read as "1.2", since a trailing 0x80 leaves the arc's value at 0."""
+    data = bytes.fromhex(hexed)
+    with pytest.raises(T._TokenError) as e:
+        T._oid(data, 0, len(data))
+    assert "cut mid-arc" in str(e.value)
+
+
+def test_the_reader_keeps_a_uuid_arc_and_a_160_bit_serial():
+    """The caps sit past what RFC 3161 tokens carry: a 2.25 UUID arc is 19 bytes, a serial runs to 160 bits."""
+    uuid_oid = oid_bytes([2, 25, 2 ** 128 - 1])
+    assert T._oid(uuid_oid, 0, len(uuid_oid)) == f"2.25.{2 ** 128 - 1}"
+    serial = b"\x7f" + b"\xff" * 19
+    assert T._tstinfo(hand_token(b"20261025000000Z", serial=serial))["serial"] == int.from_bytes(serial, "big")
+    edge = b"\x7f" + b"\xff" * (T._INT_MAX_BYTES - 1)
+    assert T._int(edge, 0, len(edge)) == int.from_bytes(edge, "big")
+
+
+def test_a_crafted_token_committed_beside_the_seal_reads_malformed_through_the_ladder(tmp_path):
+    """B6 review A1, through a repository: the ladder prints the token MALFORMED and reads on."""
+    g = Git(tmp_path / "r")
+    g.write(P, SEAL)
+    c0 = g.commit("seal the plan")
+    g.write(P + ".tsr", bytes.fromhex("3005060180a000"))
+    c1 = g.commit("a crafted token")
+    g.write(R, receipt(m=0.7))
+    rc = g.commit("a result")
+    with G._Repo(g.root) as repo:
+        r = T._reading(repo, path=P, rev=rc, seal=SEAL, order=c0, receipt=rc, trust_rev=c0)
+    [t] = r["T3a"]
+    assert t["path"] == P + ".tsr" and t["status"] == "MALFORMED" and "cut mid-arc" in t["detail"]
+    assert r["rung"] == "T1" and c1 != rc
+    assert codes(T._findings(r)) == [(T._TSA_TOKEN_UNVERIFIED, "NOTE")]
+
+
 # ---- offline verification through openssl (the done-when) -------------------------------------------------
 
 @needs_openssl

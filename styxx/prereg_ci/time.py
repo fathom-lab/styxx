@@ -133,6 +133,11 @@ class _TokenError(ValueError):
 
 _SEQ, _SET, _INT, _OID, _OCTETS, _GENTIME = 0x30, 0x31, 0x02, 0x06, 0x04, 0x18
 _CTX0 = 0xA0
+# An INTEGER or an OID arc longer than these is refused as malformed. RFC 3161 serials run to 160 bits and a
+# 2.25 UUID arc to 19 bytes, so a token from a TSA stays under them; past them Python would not print the
+# number (no int past 4300 digits by default) and an arc of a megabyte would take minutes to read.
+_INT_MAX_BYTES = 128
+_ARC_MAX_BYTES = 20
 _OID_SIGNED_DATA = "1.2.840.113549.1.7.2"
 _OID_TSTINFO = "1.2.840.113549.1.9.16.1.4"
 _HASH_OIDS = {"1.3.14.3.2.26": "sha1", "2.16.840.1.101.3.4.2.4": "sha224", "2.16.840.1.101.3.4.2.1": "sha256",
@@ -186,15 +191,18 @@ def _expect(child: Tuple[int, int, int], tag: int, what: str) -> Tuple[int, int]
 def _oid(data: bytes, s: int, e: int) -> str:
     if s >= e:
         raise _TokenError("an empty object identifier")
+    if data[e - 1] & 0x80:                                  # the last byte says an arc goes on: none ends here
+        raise _TokenError("an object identifier cut mid-arc (its last byte continues an arc)")
     arcs: List[int] = []
-    val = 0
+    val = width = 0
     for b in data[s:e]:
         val = (val << 7) | (b & 0x7F)
+        width += 1
+        if width > _ARC_MAX_BYTES:
+            raise _TokenError(f"an object identifier arc of over {_ARC_MAX_BYTES} bytes, past what this reader reads")
         if not b & 0x80:
             arcs.append(val)
-            val = 0
-    if val:
-        raise _TokenError("an object identifier cut mid-arc")
+            val = width = 0
     lead = arcs[0]
     head = [0, lead] if lead < 40 else [1, lead - 40] if lead < 80 else [2, lead - 80]
     return ".".join(str(a) for a in head + arcs[1:])
@@ -203,6 +211,8 @@ def _oid(data: bytes, s: int, e: int) -> str:
 def _int(data: bytes, s: int, e: int) -> int:
     if s >= e:
         raise _TokenError("an empty integer")
+    if e - s > _INT_MAX_BYTES:
+        raise _TokenError(f"an integer of {e - s} bytes, over the {_INT_MAX_BYTES} this reader reads")
     return int.from_bytes(data[s:e], "big", signed=True)
 
 
