@@ -3,10 +3,11 @@
 
 One test per clause of the rule (`RULE_final.md` of the 2026-10-25 certify_suffix design, after its red
 team), written before the code and watched failing against the reader at `879f6be9` (every test here
-raised AttributeError: the flags did not exist). The shipped default reads suffixed magnitudes, names
-form noise, reads `-$x` as negative, joins thin-space groups and counts decimal commas and non-ASCII
-glue; the sentence-final rule and the magnitude-range pair are in the tree behind flags that are OFF,
-because each moves a committed certificate (the operator's decision, see the NOTE).
+raised AttributeError: the flags did not exist). Every test here runs under `CLAUSES`, the configuration
+the clauses were written against: every rule on except the sentence-final rule and the magnitude-range
+pair. The SHIPPED default is narrower (RULE_final 0.1: a flag that moves a committed certificate, capsule
+or charon line ships off, so bare magnitudes and form noise are off too) and has its own suite,
+`tests/test_certify_numerals_v2_default.py`.
 
 The product need these tests confirm: a made-up `$99.9k` against a receipt that holds 67412.50 is one
 ledger row, ABSTAIN, unbound; `$67.4k` against the same receipt is VERIFIED. `_NUM` is not widened: the
@@ -31,10 +32,20 @@ import texts as T  # noqa: E402
 THIN, NNBSP, NBSP, MINUS, THREAD = " ", " ", " ", "−", "\U0001F9F5"
 
 
+_MISSING = object()
+
+# the configuration every clause test below runs under: each rule on except the two that read the
+# sentence period and the magnitude pair, which have their own tests inside `flags(...)`
+CLAUSES = {"V15_READER_V2": True, "V15_MAGNITUDE": True, "V15_MAGNITUDE_BARE": True, "V15_MAGNITUDE_WORDS": True,
+           "V15_FORM_NOISE": True, "V15_SIGNED_CURRENCY": True, "V15_THIN_GROUPS": True, "V15_DECIMAL_COMMA": True,
+           "V15_GLUED_NONASCII": True, "V15_SENTENCE_FINAL": False, "V15_MAGNITUDE_RANGES": False}
+
+
 @contextlib.contextmanager
 def flags(**kw):
-    """Set reader flags for one test and put them back; the regex cache is cleared both ways."""
-    old = {k: getattr(C, k) for k in kw}
+    """Set reader flags for one test and put them back; the regex cache is cleared both ways. A flag the
+    installed module does not define is set for the test and removed after it."""
+    old = {k: getattr(C, k, _MISSING) for k in kw}
     for k, v in kw.items():
         setattr(C, k, v)
     C._v15_reset()
@@ -42,8 +53,17 @@ def flags(**kw):
         yield
     finally:
         for k, v in old.items():
-            setattr(C, k, v)
+            if v is _MISSING:
+                delattr(C, k)
+            else:
+                setattr(C, k, v)
         C._v15_reset()
+
+
+@pytest.fixture(autouse=True)
+def _clauses():
+    with flags(**CLAUSES):
+        yield
 
 
 def nums(text):
@@ -80,17 +100,11 @@ def rows(c):
 
 # --------------------------------------------------------------------------- the flags, as shipped
 
-def test_shipped_defaults_are_the_leads_scope():
-    assert C.V15_READER_V2 is True
-    for f in ("V15_MAGNITUDE", "V15_MAGNITUDE_WORDS", "V15_FORM_NOISE", "V15_SIGNED_CURRENCY",
-              "V15_THIN_GROUPS", "V15_DECIMAL_COMMA", "V15_GLUED_NONASCII"):
-        assert getattr(C, f) is True, f
-    # each of these moves a committed certificate, capsule or charon line: off, the operator's decision
-    assert C.V15_SENTENCE_FINAL is False
-    assert C.V15_MAGNITUDE_RANGES is False
-    assert set(C._V15_RULE_FLAGS) == {"V15_MAGNITUDE", "V15_MAGNITUDE_WORDS", "V15_FORM_NOISE",
-                                      "V15_SIGNED_CURRENCY", "V15_THIN_GROUPS", "V15_DECIMAL_COMMA",
-                                      "V15_GLUED_NONASCII", "V15_SENTENCE_FINAL", "V15_MAGNITUDE_RANGES"}
+def test_the_clause_configuration_is_every_rule_but_the_period_and_the_pair():
+    """The shipped default is pinned in tests/test_certify_numerals_v2_default.py; here, what the clauses read."""
+    assert set(C._V15_RULE_FLAGS) == set(CLAUSES) - {"V15_READER_V2"}
+    for k, v in CLAUSES.items():
+        assert getattr(C, k) is v, k
 
 
 def test_num_itself_is_not_widened():
@@ -683,6 +697,12 @@ def test_the_cli_and_the_exit_code_do_not_move(tmp_path, capsys):
 def test_each_rule_flag_reverts_its_own_clause_and_nothing_else():
     with flags(V15_MAGNITUDE=False):
         assert nums("BTC $67.4k | 14:00 UTC") == [] and excluded("BTC $67.4k | 14:00 UTC") == [("14:00 UTC", "clock-time")]
+        assert nums("ETH 2.4K") == []                       # the bare arm reads nothing without its rule
+    with flags(V15_MAGNITUDE_BARE=False):
+        # RULE_final 0.1: a bare magnitude reads as at 879f6be9; a currency-led one is still a magnitude
+        assert nums("ETH 2.4K | $67.4k | 1.2 billion | $1.2 billion") == [
+            ("67.4k", 67400.0), ("1.2", 1.2), ("1.2 billion", 1.2e9)]
+        assert excluded("ETH 2.4K | 14:00 UTC") == [("14:00 UTC", "clock-time")]
     with flags(V15_MAGNITUDE_WORDS=False):
         assert nums("1.2 billion") == [("1.2", 1.2)] and nums("$67.4k") == [("67.4k", 67400.0)]
     with flags(V15_FORM_NOISE=False):
