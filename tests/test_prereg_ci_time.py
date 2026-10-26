@@ -909,6 +909,33 @@ def test_require_time_t3a_fails_a_seal_read_below_it():
     assert T._findings(reading("T3a", t3a=[{"path": "a.tsr", "status": "VERIFIED", "detail": ""}]), require_time="T3a") == []
 
 
+def test_time_below_policy_names_what_kept_the_rung_below_t3a():
+    """B6 review A8: under T0, a verified token whose time precedes the receipt's was described as one
+    whose time does not precede it; the suffix went on every verified token, whatever kept the rung down.
+    Only T0 or a time that does not precede R keeps a verified token's seal below T3a (_rung)."""
+    ahead = {"path": "p/x.tsr", "status": "VERIFIED", "detail": "", "precedes_receipt": True}
+    late = {"path": "p/x.tsr", "status": "VERIFIED", "detail": "", "precedes_receipt": False}
+    [f] = T._findings(reading("T0", t3a=[ahead]), require_time="T3a")
+    assert (f["code"], f["kind"]) == (T._TIME_BELOW_POLICY, "FAIL") and "does not precede" not in f["detail"]
+    assert f["detail"] == ("require_time is T3a and the seal reads NOT_ORDERED: the order commit is not a strict "
+                           "ancestor of the receipt's commit (C3), which no token lifts; p/x.tsr verified")
+    [f] = T._findings(reading("T1", t3a=[late]), require_time="T3a")
+    assert f["detail"] == ("require_time is T3a and the seal reads AUTHOR_ORDER: p/x.tsr verified but its time "
+                           "does not precede the receipt's")
+    [f] = T._findings(reading("T0"), require_time="T3a")
+    assert "not a strict ancestor" in f["detail"] and "no RFC 3161 token is committed" in f["detail"]
+
+
+def test_under_t0_the_policy_finding_names_the_missing_order_through_a_repository(stamped):
+    r = T._reading(stamped.repo, path=P, rev=stamped.c3, seal=SEAL, receipt=stamped.r_late, order=stamped.o)
+    assert r["rung"] == "T0" and r["T3a"][0]["status"] == "VERIFIED" and r["T3a"][0]["precedes_receipt"] is True
+    [f] = [x for x in T._findings(r, require_time="T3a") if x["code"] == T._TIME_BELOW_POLICY]
+    assert f["kind"] == "FAIL" and "not a strict ancestor" in f["detail"] and "does not precede" not in f["detail"]
+    early = T._reading(stamped.repo, path=P, rev=stamped.c3, seal=SEAL, receipt=stamped.r_early, order=stamped.c0)
+    [f] = [x for x in T._findings(early, require_time="T3a") if x["code"] == T._TIME_BELOW_POLICY]
+    assert "does not precede" in f["detail"] and "not a strict ancestor" not in f["detail"]
+
+
 def test_a_token_that_fails_or_has_no_trust_prints_under_t1_and_is_the_fails_detail_under_t3a():
     failed = {"path": "p/x.tsr", "status": "FAILED", "detail": "message imprint mismatch"}
     f = T._findings(reading("T1", t3a=[failed]))

@@ -863,14 +863,18 @@ def _findings(reading: Dict[str, Any], *, require_time: str = "T1", preregistere
     rung = reading.get("rung")
     name = reading.get("name") or "no rung (no receipt, no token)"
     if require_time == "T3a" and rung != "T3a" and not waiting:
+        # what kept the rung below T3a (_rung): T0, which no token lifts, or for each token its status, and
+        # for a verified one a time that does not precede the receipt's
         tokens = reading.get("T3a", ())
+        why = (["the order commit is not a strict ancestor of the receipt's commit (C3), which no token lifts"]
+               if rung == "T0" else [])
         if not tokens:
-            why = "no RFC 3161 token is committed beside the sealed file"
-        else:
-            why = "; ".join(f"{t['path']} {t['status'].lower()}"
-                            + (" but its time does not precede the receipt's" if t["status"] == "VERIFIED" else "")
-                            for t in tokens)
-        out.append(_finding(_TIME_BELOW_POLICY, f"require_time is T3a and the seal reads {name}: {why}"))
+            why.append("no RFC 3161 token is committed beside the sealed file")
+        why.extend(f"{t['path']} {t['status'].lower()}"
+                   + (" but its time does not precede the receipt's"
+                      if t["status"] == "VERIFIED" and t.get("precedes_receipt") is False else "")
+                   for t in tokens)
+        out.append(_finding(_TIME_BELOW_POLICY, f"require_time is T3a and the seal reads {name}: {'; '.join(why)}"))
     if preregistered and rung != "T3a":
         out.append(_finding(_PREREGISTERED_ON_AUTHOR_ORDER,
                             f"the RESULT calls itself preregistered while its seal reads {name}, below T3a TSA_TIME; "
