@@ -1,0 +1,99 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "03c89099e518a4f86ad1b4f06b70f44194ba464a",
+ "document": {
+  "name": "ERRATUM_numeral_reader_v2_2026_10_25.md",
+  "sha256": "471682352ecaabd4d16c31f015e7a12ea494c1e4503a6384c51749dee4408820"
+ },
+ "text": "# ERRATUM — certify's numeral reader v2, after its two reviews: two defects fixed in the reader, thirteen sentences of the NOTE corrected\n\nFathom Lab · 2026-10-25 · An erratum to `papers/closed-model-frontier/NOTE_numeral_reader_v2_2026_10_25.md`, which\nis not edited: its sworn receipt is committed, and a receipt is history too. Two reviews of branch\n`feat/certify-suffixed-numbers` at 73d480fa, one for correctness and one for what the documents claim, found two\ndefects in the reader and sentences in the NOTE that the code contradicts. Their reports, scripts and raw outputs are\nin the operator's product kit, outside the tree, under `clawd/wt/_product_2026_10_24/certify_suffix/`\n(`REVIEW_correctness.md`, `REVIEW_claims.md`, `review_correctness/`); the re-runs after the fix are under `fix/`\nthere. The reader is fixed; the NOTE's sentences are corrected below. Every count inside a sworn span is sworn to\n`papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json`, which the census script\nwrote on a clean tree after the fix. The result the NOTE swears to is not regenerated.\n\n## What changed in the reader\n\n**The time and id leaf class is wider.** Cited against a whole exchange response, a magnitude after a currency\nsymbol verified made-up numbers on timestamp leaves the class did not name: `BTC market cap is $1.79T` bound OKX's\n`ts` (milliseconds since the epoch), `$1.8T` bound Binance WebSocket's event time `E` and a kline's open time, and\n`$1.79B` bound a seconds `ts` and an `updated` key. A leaf is now never a magnitude hit when a snake or camel part of\nits last path segment is `time(s)`, `timestamp(s)`, `datetime`, `epoch`, `date(s)`, `at`, `id(s)`, `firstid`,\n`lastid`, `tradeid`, `ts`, `mts`, `unix`, `created`, `updated` or `modified`, or ends in `time`, `stamp` or `date`\n(`createtime`, `servertime`, `birthdate`); when the whole segment is one of Binance's single-letter time and\ntrade-id keys `E T O C t F L f`, compared case-sensitively (lower-case `c` is Binance's last price and binds); or\nwhen the leaf is a cell of an array of arrays, as in a kline or a chart series, whose cells carry no name. The\nexcluded leaves are recorded on the row, as before.\n\n**The accounting forms ship off.** `($x)` and `- $x` read as negative on common post shapes. The product red\nteam's own probe `Wallet balance: 0.5 BTC ($33,706)` read `-33,706` and went from VERIFIED before v2 to ABSTAIN;\nso did `1 ETH ($2,431)`, `**BTC** - $67,412.50` and `Bitcoin (BTC) - $67,412.50`, and `BTC ($67.4k)`, a bullet\nindented four spaces, an emoji or a table pipe before ` - $67.4k` read a price as a loss. Both forms now sit behind\ntheir own flag, `V15_ACCOUNTING_SIGN`, shipped off, and read the positive amount, as before v2. `-$x`, `$-x` and\n`−$x` stay the sign.\n\n**The certificate says more of what it does not read.** The `uncovered_policy` of a certificate issued from here on\nnames the leaf class and what it leaves open, the window arithmetic, the condition that the currency symbol be glued\nto the digits, the lakh misreading, the two sentence-final exceptions and the cost of the accounting flag being off.\n\n## What did not move\n\nUnder the shipped flags after the fix, of the\n240 committed certificates whose documents and receipts resolve,\n0 re-derive differently\nfrom the reader before v2, with\n0 rows added\nand\n0 rows removed;\n12 committed capsules verify\nof\n13,\n0 stop verifying,\nand of the\n257 charon lines,\n257 read MOVED_VERIFIER\nand\n0 read SKEW.\nThe `REPLICATIONS.md` audit line still re-derives:\n`corpus papers: 208 certificates | HELD 200  FAILED 8  unresolved 0  verdict-drift 1  receipt-drift 0  incomplete 1  receipt-changed 1`.\nThe new flag, on alone,\nmoves 0 certificates:\nthe corpus holds no accounting negative and no magnitude after a currency symbol, which is why neither fix moves a\ncommitted output. Every count the NOTE swears to has the same value in the result after the fix as in the result it\nswears to (`tests/test_certify_numerals_census.py::test_every_count_the_note_swears_to_re_derives_after_the_fix`),\nso the operator's open decision costs what the NOTE says: the bare magnitude arm, on alone,\nturns 58 charon lines SKEW,\nand the sentence-final rule\nflips 11 committed OATH-HELD certificates to OATH-FAILED.\n\nThe two committed vector sets replay unchanged (`conformance/numerals/gen_vectors.py --check`). A set written\nbefore the accounting flag existed replays it at the value of the flag it was split from, as `vectors_v2.json`\nalready replays the bare arm; without that rule, 9 vectors of each set would not replay. The shipped default after\nthe fix is pinned in a new set, `conformance/numerals/vectors_v2_default_after_review.json`, with the reviews'\ncases from a new texts file, `conformance/numerals/texts_review.py`; `texts.py` is not edited.\n\n## The NOTE's sentences, corrected\n\n1. \"a leaf whose path names a time or an id (`openTime`, `lastId`, `updated_at`) is never a hit\". The class was a\n   fixed list, and common timestamp names were not on it. The list above is the class now, and it is still a list: a\n   timestamp under another name can bind. In 2026 a millisecond epoch, about 1.79e12, lies inside the window of\n   `$1.8T`, 1.75T to 1.85T, and a seconds epoch inside that of `$1.8B`. Against a whole response a sibling field\n   inside the window binds too: a wrong `$66k`, `$68.1k` and `$66.8k` bind `lowPrice`, `highPrice` and `openPrice`,\n   `$1.83M liquidations` binds the trade `count`, and a price of `$18.2k` binds the base-asset `volume`. In the\n   correctness review's sweep, 5 of 149 wrong `$X.Yk` prices verify against a whole 24h ticker, before the fix and\n   after it, and 0 of 149 against a receipt holding `lastPrice` alone. The mitigation is a narrow receipt, holding\n   only the fields the post cites. `tests/test_certify_numerals_v2_review.py` pins the closed binds and the\n   residual both.\n2. \"`($1.2k)` and `- $1.2k` read negative\". Under the shipped flags they read positive. The cost, on the review's\n   cases: an accounting-format loss binds a positive leaf (`BTC PnL ($5k) today` against a `pnl` of 5000 is\n   VERIFIED), as the unsuffixed `($5,000)` did before v2. `V15_ACCOUNTING_SIGN = True` restores the reading.\n3. \"Still not read and not counted: a magnitude no currency symbol leads\". The condition is that the symbol is\n   glued to the digits. `$ 67.4k`, `€ 5m`, `US$ 1.2B`, `67.4k$`, `5m€`, `USD 67.4k` and `67.4k USD` read nothing and\n   are not counted, so a made-up `$ 99.9k` or `99.9k USD` still passes unmarked. `$67.4 k` reads `67.4`, the\n   mantissa alone.\n4. Word magnitudes. Under the shipped flags a word magnitude no currency symbol leads reads its mantissa, as before\n   v2: `a 1.2 billion users` reads `1.2`. The NOTE listed `1.2 billion` only under the bare flag.\n5. \"A numeral before a sentence period is still the band's `trailing-period`.\" Two exceptions: a\n   thousands-grouped numeral reads its leading group as a value beside a `partial-extraction` item (`SL 66,200.`\n   reads `66`, `all 23,247.` reads `23`), unchanged from before v2; and a magnitude before a period is read, by\n   design (`BTC is at $99.9k.` is a row).\n6. The certificate's scope said lakh and crore are \"not read and not counted\". They are misread, as before v2:\n   `12,34,567` reads `12` and `34,567`, each a value.\n7. The ellipsis rule (a numeral followed by an ellipsis is ABSTAIN) withdraws a VERIFIED as well as an accusation:\n   `the drift rate 0.0666…` against a 0.0666 leaf was VERIFIED before v2 and is ABSTAIN `v15-ellipsis-truncated`\n   now, and `BTC at $67.4k… waiting` is ABSTAIN with a right price.\n8. \"Counted, never valued: a decimal comma or dotted thousands\". A three-decimal euro price, `Super E10 costs\n   €1.789`, was VERIFIED before v2 and is a counted `dotted-groups` item now. The rule chose this; the cost is a\n   vector in the set after the fix.\n9. \"word-led version strings\". Only after `version` or `ver.`. With `V15_FORM_NOISE` on, `opus 4.8 and gemini 3.1`\n   and `Top 3` still read their numerals; of the product kit's form-noise examples the flag clears `14:00` and `1/`\n   only.\n10. \"Not a change to the obligation ladder\". It changes in two places. A bare magnitude is never obligated, which\n    is dormant while `V15_MAGNITUDE_BARE` is off and live the moment it is on; and the ellipsis rule adds an ABSTAIN\n    branch beside the notation classes, which is live.\n11. \"by re-deriving every committed certify output\". The census covers the committed `*.certificate.json` and\n    `CERT_*.json` files whose documents and receipts resolve, outside `anc/` paths, the committed capsules and the\n    charon log. It does not cover the certificates under `anc/` or the `*.seal.json` files. The correctness review\n    re-derived the seals from their sibling certificates' receipts and found none moved; the claims review found the\n    `anc/` documents either byte-identical to documents inside the census or no longer at their recorded sha.\n12. \"62 false accusations on model sizes\". 60 were model sizes and 2 were `10k` held-out counts.\n13. \"`conformance/numerals/vectors_v2.json` ... is not edited\". Its bytes, and those of `vectors_v2_default.json`,\n    were converted from CRLF to LF once, in d49e9427: only CR bytes were removed, and every id, expectation and\n    `set_sha256` is unchanged.\n\n## Still owed, named\n\nThe rule as built said its owed items are named in the NOTE; these were not. A-18: `ETH $2,431` against 2431.27\nis ABSTAIN while `ETH at $2.4k` against the same leaf is VERIFIED, so a coarser short form binds where the fuller\ninteger does not (both are vectors in the set after the fix). A receipt-side suffixed string (`{\"price\": \"67.4K\"}`)\nis not a number, so `$67.4k` against it is ABSTAIN. Lakh and crore grouping (above). The letter-glued spans the\ndesign counted. Count-binding stem misses, trigger-word polysemy, fenced-code skipping, the A-17 label exclusion\n(`Cycle N`, relevant under the sentence-final flag) and A-4(d) (counting magnitude-suffixed drops as band items).\nTwo more from the reviews: the `magnitude.coarse` annotation is wrong for a one-digit mantissa with zeros (`10`,\n`500`, `0.05`); nothing reads it, and a fix would move committed vectors. And the capsule's numeral-reader advisory\ncompares the reader's schema and names the master flag only, so two v2 certificates minted under different flag\nsets draw no advisory (their rows still differ, and are reported); under the shipped reader 10 of the 13 committed\ncapsules print it while still verifying (the census result's `configurations.default.capsules.rows`).\n\n## Re-derive\n\n    py -3.12 -B papers/closed-model-frontier/oath_v15_numeral_reader_census.py      # writes the result after the fix\n    py -3.12 -B conformance/numerals/gen_vectors.py --check\n    py -3.12 -B -m pytest tests/test_certify_numerals_v2_review.py tests/test_certify_numerals_v2_vectors.py \\\n        tests/test_certify_numerals_census.py\n    py -3.12 -B -m styxx.sworn check papers/closed-model-frontier/ERRATUM_numeral_reader_v2_2026_10_25.sworn-receipt.json \\\n        papers/closed-model-frontier/ERRATUM_numeral_reader_v2_2026_10_25.sworn.json --repo .\n",
+ "spans": [
+  {
+   "start": 3224,
+   "end": 3287,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/certificates",
+   "kind": "numeric"
+  },
+  {
+   "start": 3289,
+   "end": 3312,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/default/certificates_moved",
+   "kind": "numeric"
+  },
+  {
+   "start": 3345,
+   "end": 3357,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/default/rows_added",
+   "kind": "numeric"
+  },
+  {
+   "start": 3362,
+   "end": 3376,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/default/rows_removed",
+   "kind": "numeric"
+  },
+  {
+   "start": 3378,
+   "end": 3406,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/default/capsules_ok",
+   "kind": "numeric"
+  },
+  {
+   "start": 3410,
+   "end": 3412,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/default/capsules",
+   "kind": "numeric"
+  },
+  {
+   "start": 3414,
+   "end": 3430,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/default/capsules_stop_verifying",
+   "kind": "numeric"
+  },
+  {
+   "start": 3443,
+   "end": 3459,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/default/charon_lines",
+   "kind": "numeric"
+  },
+  {
+   "start": 3461,
+   "end": 3484,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/default/charon_moved_verifier",
+   "kind": "numeric"
+  },
+  {
+   "start": 3489,
+   "end": 3500,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/default/charon_skew",
+   "kind": "numeric"
+  },
+  {
+   "start": 3553,
+   "end": 3688,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/configurations/default/audit_line",
+   "kind": "quote"
+  },
+  {
+   "start": 3714,
+   "end": 3734,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/only_V15_ACCOUNTING_SIGN/certificates_moved",
+   "kind": "numeric"
+  },
+  {
+   "start": 4174,
+   "end": 4200,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/only_V15_MAGNITUDE_BARE/charon_skew",
+   "kind": "numeric"
+  },
+  {
+   "start": 4230,
+   "end": 4286,
+   "receipt": "path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result_after_review.json#/summary/configs/sentence_final/class_flips",
+   "kind": "numeric"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}
