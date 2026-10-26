@@ -270,6 +270,38 @@ def test_lock_rows_agree_with_the_box_when_a_caller_names_it():
     assert rc == 0, "a lock row reads CHANGED against the box (see the printed rows)"
 
 
+def test_each_amendment_parses_to_the_lock_rows_its_table_states():
+    lock = _load(LOCK_PY, "lock_hashes")
+    files = _amendment_files()
+    topics = {}
+    for f in files:
+        m = AMENDMENT_NAME.fullmatch(f.name)
+        assert m, f.name
+        topics[m.group(1)] = f
+    assert set(topics) == set(AMENDMENT_ROW_COUNTS), sorted(topics)
+    full_digest_row = re.compile(r"^\|[^|]*\|\s*`[^`]+`\s*\|\s*`[0-9a-f]{64}`")
+    for topic, f in topics.items():
+        text = f.read_text(encoding="utf-8")
+        lines = text.splitlines()
+        form = [ln for ln in lines if lock.ROW_RE.match(ln)]
+        assert len(form) == AMENDMENT_ROW_COUNTS[topic], (f.name, len(form))
+        assert len(lock.parse_lock_rows(text)) == len(form), f"{f.name} names a path twice"
+        for ln in lines:
+            if full_digest_row.match(ln):
+                assert lock.ROW_RE.match(ln), f"{f.name}: a table line with a full digest is not in the row form: {ln[:100]}"
+    rows, via, _read, clashes = lock.amendment_rows(files)
+    assert clashes == [], clashes
+    assert set(rows) == AMENDED_PATHS, sorted(set(rows) ^ AMENDED_PATHS)
+    assert via["W:gate/gate.py"] == ("AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md + "
+                                     "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md")
+    prereg = lock.parse_lock_rows(PREREG.read_text(encoding="utf-8"))
+    assert len(set(prereg) | set(rows)) == 84
+    # the lock-rows AMENDMENT states the same counts, one row of its table per file
+    stated = dict(re.findall(r"^[ ]*\| `(AMENDMENT_darkflobi_gate_[a-z0-9_]+\.md)` \| (\d+) \|",
+                             topics["lock_rows"].read_text(encoding="utf-8"), flags=re.M))
+    assert stated == {f.name: str(AMENDMENT_ROW_COUNTS[t]) for t, f in topics.items()}, stated
+
+
 def test_check_reads_amendment_rows_after_the_prereg_and_exits_2_on_a_clash(tmp_path, capsys):
     lock = _load(LOCK_PY, "lock_hashes")
     w = tmp_path / "W"
