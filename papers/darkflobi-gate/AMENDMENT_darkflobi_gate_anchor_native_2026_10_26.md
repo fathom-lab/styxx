@@ -290,13 +290,47 @@ This file carries 9 rows in `lock_hashes.py`'s row form.
 
 Filled by the lead after the move, one commit, nothing above this heading edited.
 
-- the move's UTC time, the gateway's stop and start, and the nine files' times and digests: _blank_
-- `gate_sha256` after the move, re-derived from the box both ways, and its file count: _blank_ (the candidate
-  `445ac94c…`, 20 files)
-- the seq of the earliest line of each kind carrying it (`started`, `send`, `delivered`, and the earliest
-  `payload_kind: anchor` send): _blank_
-- every line written after the move carrying another digest (the two intermediates of item 8 among them), by seq:
-  _none expected_
-- the in-place readings (the plugin harness, the gate's suite, the strict check with every amendment file, the
-  re-derive): _blank_
-- the commit of this addendum, and its UTC time: _blank_
+- the operator's go: "I trust your judgement claude", on 2026-10-26, in answer to the lead's question whether to apply
+  the anchor fix to the live gate before D0. The merge of the pull request stays the operator's.
+- the move's UTC time, the gateway's stop and start, and the nine files' times and digests
+  (`F1:apply/move_2026-10-26T190433Z.json`, `F1:apply/gateway_stop.txt`, `F1:apply/gateway_start.txt`): the watchdog
+  paused (`F1:apply/pm2_before_move.txt`); the serving pair stopped by pid (t0 2026-10-26T19:04:22Z child 45248 parent
+  42696; task state: Ready;
+  listeners on 18789 after stop: 0; stopped at 2026-10-26T19:04:27Z); `apply_f1_move.py` pass 3 staged and renamed the
+  nine files, the last rename
+  at 2026-10-26T19:04:36.114Z, no stray, the installed folder holding exactly the table's seven files, `REQUIRED`
+  absent; the task started (started task at 2026-10-26T19:04:49Z) and the port bound (bound at 2026-10-26T19:05:20Z
+  pid 26820 created 2026-10-26T19:04:50Z parent 5968; node processes naming gateway: 2); the
+  watchdog resumed (`F1:apply/pm2_after_move.txt`). Each file's time (2026-10-26, its staging write), sha256 and size:
+
+  ```text
+  1  W:gate/plugin/tests/fakes/import_deliver_v040.mjs    19:04:33.976530Z  120f0f2eff8dc9242df123475c07ed81dce3ef6d651016300e799517e8172658     415 bytes  new
+  2  W:gate/plugin/tests/f1_native_deliver_probe.mjs      19:04:33.979759Z  e0d0178a12c76195785c45f9fdb218d31bb9b940eedd23c3dc8e57bdcd39011c    7901 bytes  new
+  3  W:gate/plugin/tests/run_tests.mjs                    19:04:33.993675Z  90ae51c1700277ebe371b6e758eb5d5205ac926be7fb540dbbc65bf3504ef23f  113560 bytes  was 8d4b7db0369d2313…
+  4  W:gate/plugin/README.md                              19:04:34.017816Z  49a7dc73dbe76d1b9207a835eba31602b73e88e6d6704a3a482daea9c781257b   23831 bytes  was ed2ac65e341ec9bc…
+  5  W:gate/plugin/native_import.cjs                      19:04:34.027889Z  b173faea8eca7a1bb71db956299016bcf84bcf8d3a921936dd4097b5cb2bb124    1025 bytes  new
+  6  W:gate/plugin/index.js                               19:04:34.029882Z  e56990f437134dd26a31db256062d4911ebf7e7be08d2605c4a94c7644d6921f   71944 bytes  was 759ceb82174cc8c1…
+  7  ~/.clawdbot/extensions/styxx-gate/README.md          19:04:34.055113Z  49a7dc73dbe76d1b9207a835eba31602b73e88e6d6704a3a482daea9c781257b   23831 bytes  was ed2ac65e341ec9bc…
+  8  ~/.clawdbot/extensions/styxx-gate/native_import.cjs  19:04:34.065120Z  b173faea8eca7a1bb71db956299016bcf84bcf8d3a921936dd4097b5cb2bb124    1025 bytes  new
+  9  ~/.clawdbot/extensions/styxx-gate/index.js           19:04:34.067119Z  e56990f437134dd26a31db256062d4911ebf7e7be08d2605c4a94c7644d6921f   71944 bytes  was 759ceb82174cc8c1…
+  ```
+
+- `gate_sha256` after the move, re-derived from the box both ways, and its file count:
+  `445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f` over 20 files, the candidate, from
+  `BD:apply/rederive_gate_sha256.py --gate C:/Users/heyzo/clawd/gate` and from `gate.Env().gate_sha256()` alike
+  (`s_20261026T190546Z/rederive_gate_sha256.txt`, `gate_env_sha256.txt`); the gateway's log names the same digest at
+  2026-10-26T19:05:19Z ("styxx-gate: registered").
+- the seq of the earliest line of each kind carrying it: `started` seq 135 (2026-10-26T19:05:18Z, process gateway pid
+  26820, `markers_present` true, `required_present` false); `send`, `delivered` and the earliest `payload_kind:
+  anchor` send: none yet at this commit (the head is seq 135). The anchor of 00:00 America/New_York on 2026-10-27 is
+  the stretch's earliest; the RESULT reads its seq from the ledger.
+- every line written after the move carrying another digest, by seq: none (the head is seq 135, under `445ac94c…`).
+- the in-place readings (`F1:apply/s_20261026T190546Z/`): the gate's suite `279 passed, 12 subtests passed`, rc 0; the
+  plugin harness 85 of 85, rc 0; item 3 of the lock-rows amendment's strict check with every amendment file, this
+  one included, rows 88 and every count 0, rc 0; the same check with the PREREG alone, rows 80, changed 11, built since
+  1, unlocked 8, rc 1, the PREREG's rows reading the files the before-D0 move and this one brought; `gate_verify.py
+  --rederive` over 135 lines, the chain re-derives, SAME 64, DRIFT 1 (seq 46), TAMPER 0, rc 1; the plugins subtree
+  re-read as `519905d2…`, the lock's.
+- the commit of this addendum, and its UTC time: the commit that adds these lines, authored and committed at
+  2026-10-26T19:19:57Z.
+  A commit cannot carry its own hash; `git log -1 --format=%H --` on this file names it.
