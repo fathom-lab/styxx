@@ -830,8 +830,8 @@ def _run_check(repo: _git._Repo, base: str, head: str, args: argparse.Namespace)
                 raise
             head_reads = False
             config_findings.append(_report._finding("CONFIG_INVALID", (
-                f"{e.detail}; this pull request writes it, and once it lands every later check, a repair "
-                f"included, reads its policies as an input error"), path=_CONFIG, check="config", pair=None))
+                f"{e.detail}; this pull request writes it, and once it lands every later check that leaves it "
+                f"alone reads its policies as an input error"), path=_CONFIG, check="config", pair=None))
     repaired: Optional[_Coded] = None
     try:
         read = _config_read(repo, b)
