@@ -9,20 +9,19 @@ description: >-
   gate's margin, the single-gate flip table and what it did not examine, into the job summary and a
   JSON report (styxx.prereg-ci/report/v0). Exit codes are the command's: 0 PASS, 1 FAIL, 2 an input
   error, 3 UNCHECKABLE, 4 an internal error (ERROR: no verdict was read); report-only "true" prints
-  the verdict and exits 0. It needs full history: the
-  checkout this action runs (checkout "true") checks out the head commit with fetch-depth: 0 and the
-  partial-clone filter blob:none, so the head's blobs come in the checkout's one batch and git fetches
-  the older blobs the check reads from the repository's own remote while it runs; a caller that checks
-  out itself sets checkout "false", uses fetch-depth: 0, and keeps a working tree checked out (with
-  blob:none and no checkout, every blob read is fetched on its own). Grant the job
-  contents: read and nothing else, and pin this action by commit sha in the uses: line. Both python
-  steps run with -I, so the checked-out pull request (the working directory), PYTHONPATH and the user
-  site stay off the import path and a pull request cannot replace the code that judges it; for the
-  same reason a repository whose own tree holds styxx (styxx itself) pins
-  fathom-lab/styxx/prereg-ci@<sha> and never uses: ./prereg-ci, whose styxx-source default installs
-  the pull request's own tree. The check opens no connection of its own: no time-stamp authority, no OpenTimestamps calendar, no forge API
-  (the server rung prints "not read"). Policies come from prereg-ci.toml as the base commit holds it,
-  and an input here wins over the file.
+  the verdict and exits 0. It needs full history: the checkout this action runs (checkout "true")
+  checks out the head commit with fetch-depth: 0 and the partial-clone filter blob:none, so the head's
+  blobs come in the checkout's one batch and git fetches the older blobs the check reads from the
+  repository's own remote while it runs; a caller that checks out itself sets checkout "false", uses
+  fetch-depth: 0, and keeps a working tree checked out (with blob:none and no checkout, every blob
+  read is fetched on its own). Grant the job contents: read and nothing else, and pin this action by
+  commit sha in the uses: line. Both python steps run with -I, so the checked-out pull request (the
+  working directory), PYTHONPATH and the user site stay off the import path and a pull request cannot
+  replace the code that judges it; for the same reason a repository whose own tree holds styxx (styxx
+  itself) pins fathom-lab/styxx/prereg-ci@<sha> and never uses: ./prereg-ci, whose styxx-source
+  default installs the pull request's own tree. The check opens no connection of its own: no
+  time-stamp authority, no OpenTimestamps calendar, no forge API (the server rung prints "not read").
+  Policies come from prereg-ci.toml as the base commit holds it, and an input here wins over the file.
 author: "Fathom Lab"
 branding:
   icon: "check-square"
@@ -99,7 +98,7 @@ outputs:
     description: "PASS, FAIL, INPUT_ERROR, UNCHECKABLE or ERROR (an exit code outside 0-3)."
     value: ${{ steps.check.outputs.verdict }}
   exit-code:
-    description: "The command's exit code (0, 1, 2 or 3), whatever report-only does with it."
+    description: "The command's exit code (0, 1, 2, 3, or 4 for ERROR), whatever report-only does with it."
     value: ${{ steps.check.outputs.exit-code }}
   report:
     description: "Path of the JSON report (styxx.prereg-ci/report/v0)."
