@@ -23,7 +23,9 @@ before the hook:
 - opening a file to read that is neither locked, the receipt, the ``{out}`` file, nor under the
   standard library's directories (the ``sys.path`` entries ``-I -S`` sets, less the interpreter's
   install root, which Windows puts there too; a ``site-packages`` or ``dist-packages`` directory
-  below them is not standard library);
+  below them is not standard library); a name in angle brackets that names no file (``<string>``,
+  which a traceback asks ``linecache`` for on Python 3.9 and 3.10) reads nothing and is not
+  recorded, and the same name naming a file is judged as any other read;
 - opening any file to write but the ``{out}`` file, and every event that changes the file system;
 - listing a directory outside the run and the standard library (the import system's listing of a
   ``sys.path`` entry is not a reach);
@@ -209,6 +211,9 @@ def _judge(event, args):
             return f"opens {n} for writing" if n else "opens a file outside the run for writing"
         if p in _reads or p in _writes:
             return None
+        base = os.path.basename(a)
+        if base.startswith("<") and base.endswith(">") and not os.path.lexists(a):
+            return None  # a pseudo file name that names no file: the open fails and reads nothing
         n = _name(p, a)
         if n is not None:
             return f"opens {n} to read"

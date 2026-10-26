@@ -516,6 +516,19 @@ def test_a_scorer_error_carries_its_last_stderr_line():
     assert r["code"] == "SCORER_ERROR" and "exited 4" in r["detail"], r
 
 
+def test_an_open_of_a_pseudo_file_name_that_names_no_file_is_not_a_read():
+    """Python 3.9 and 3.10 print a traceback by asking linecache for "<string>", an open the hook sees.
+    It reads nothing, so the scorer's own error is what the run reports, on every interpreter."""
+    raw, r = go("""
+        try:
+            open("<string>")
+        except OSError:
+            pass
+        raise ValueError("boom at the bar")
+        """)
+    assert r["code"] == "SCORER_ERROR" and "ValueError: boom at the bar" in r["detail"], r
+
+
 def test_the_last_stderr_line_names_the_run_directory_without_printing_it():
     """DESIGN 3.2(e): no absolute path in the report. A traceback naming the scorer's own file names
     the run directory as <run>."""
