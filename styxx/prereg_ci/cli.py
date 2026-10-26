@@ -800,7 +800,9 @@ def _tree_licences(ctx: _Ctx, handled: Sequence[str]) -> List[Dict[str, Any]]:
 def _not_examined(ctx: _Ctx, excluded: Sequence[str], licences_read: bool) -> List[str]:
     items = ["T2 SERVER_ORDER: v0 reads no server, so the forge's merge times are not read",
              "a RESULT this pull request leaves alone or deletes is not read again, and prose verdicts and sworn spans "
-             "on other leaves are not read (DESIGN 3.4 C9)"]
+             "on other leaves are not read (DESIGN 3.4 C9)",
+             "a JSON file the pull request writes that names no PREREG by a top-level prereg key is not paired, though it "
+             "records a verdict or a gates digest (DESIGN 3.2(d); census reads R1's records)"]
     if excluded:
         items.append("left out under exclude: " + ", ".join(excluded))
     if licences_read:

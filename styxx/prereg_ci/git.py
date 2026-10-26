@@ -761,6 +761,23 @@ def _receipt_kind(obj: Any) -> Optional[str]:
     return None
 
 
+_VERDICT_KEYS = ("verdict", "gates", "gates_sha256")
+
+
+def _prereg_unusable(obj: Any) -> Optional[str]:
+    """For a JSON object that records a verdict, a gates map or a gates digest and holds a top-level
+    ``prereg`` that is not a string (a number, a boolean, a list, an object, null): the detail of its
+    PREREG_ABSENT, read as an empty ``prereg`` string is (B7 review F4). None otherwise: an object with
+    no ``prereg`` key is a record (R1's rule) or not a receipt, and is not paired."""
+    if not isinstance(obj, dict) or "prereg" not in obj or isinstance(obj["prereg"], str):
+        return None
+    if not any(k in obj for k in _VERDICT_KEYS):
+        return None
+    shown = json.dumps(obj["prereg"])
+    shown = shown if len(shown) <= 80 else shown[:77] + "..."
+    return f"the record's prereg is {type(obj['prereg']).__name__} {shown}, not a path naming its PREREG"
+
+
 def _json(data: bytes) -> Any:
     """A receipt as the conformance set reads one: UTF-8, then ``json.loads``."""
     return json.loads(data.decode("utf-8"))
@@ -1001,6 +1018,9 @@ def _receipts_written(repo: _Repo, base: str, head: str,
             notes.append(_Refusal("RECEIPT_UNREADABLE", f"{path} is not JSON: {e}").finding(path))
             continue
         if _receipt_kind(obj) != "receipt":
+            unusable = _prereg_unusable(obj)
+            if unusable is not None:
+                notes.append(_Refusal("PREREG_ABSENT", f"{path}: {unusable}").finding(path))
             continue
         held = repo._held(path, h, lambda c, p=path: _holds_receipt(repo, c, p), stop=mb)
         receipts.append({"path": path, "status": x["status"], "old": x["old"], "receipt_commit": held[-1],

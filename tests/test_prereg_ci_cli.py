@@ -567,6 +567,23 @@ def test_a_report_path_that_does_not_write_is_an_input_error_and_a_crash_is_no_v
     assert code == 4 and "ERROR  RuntimeError: a reader that broke" in out, out
 
 
+@pytest.mark.parametrize("value", [7, True, None, ["PREREG_digits.md"], {"path": "PREREG_digits.md"}])
+def test_a_receipt_whose_prereg_is_not_a_string_is_an_input_error_as_an_empty_one_is(tmp_path, capsys, value):
+    """The B7 review's F4: a receipt recording verdict, gates and gates_sha256 whose prereg is a number,
+    a boolean, null, a list or an object read PASS (it was a record, and C1 pairs receipts), while
+    ``"prereg": ""`` read INPUT PREREG_ABSENT. Both now read PREREG_ABSENT, exit 2; a JSON file with no
+    prereg key and no verdict stays outside the pairing, and the check says so."""
+    g, rec = demo(tmp_path)
+    g("switch", "-q", "-c", "odd", "result")
+    g.write("r_odd.json", json.dumps(dict(scored({"acc": 0.95, "ece": 0.03}), prereg=value)) + "\n")
+    g.write("settings.json", json.dumps({"prereg": True, "colour": "red"}) + "\n")
+    g.commit("a receipt whose prereg is no path")
+    code, out = run(g, "check", "--base", "result", "--head", "odd", capsys=capsys)
+    assert code == 2, out
+    assert "INPUT PREREG_ABSENT  r_odd.json: the record's prereg is" in out and "settings.json" not in out, out
+    assert "names no PREREG by a top-level prereg key is not paired" in out
+
+
 def test_the_python_dash_m_entry_runs_check(tmp_path):
     g, rec = demo(tmp_path)
     env = dict(os.environ, PYTHONPATH=str(ROOT), PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1")
