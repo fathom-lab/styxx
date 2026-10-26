@@ -8,8 +8,10 @@ description: >-
   prints a sentence the landed row withdraws. It prints the time ladder, the outcome ladder with each
   gate's margin, the single-gate flip table and what it did not examine, into the job summary and a
   JSON report (styxx.prereg-ci/report/v0). Exit codes are the command's: 0 PASS, 1 FAIL, 2 an input
-  error, 3 UNCHECKABLE, 4 an internal error (ERROR: no verdict was read); report-only "true" prints
-  the verdict and exits 0. It needs full history: the checkout this action runs (checkout "true")
+  error, 3 UNCHECKABLE, 4 an internal error (ERROR: no verdict was read). The step is report-only by
+  default: report-only "true" writes the verdict, the report and the summary and exits 0 on every
+  verdict, so the check blocks nothing until a caller sets report-only "false", which passes the
+  command's exit code on. It needs full history: the checkout this action runs (checkout "true")
   checks out the head commit with fetch-depth: 0 and the partial-clone filter blob:none, so the head's
   blobs come in the checkout's one batch and git fetches the older blobs the check reads from the
   repository's own remote while it runs; a caller that checks out itself sets checkout "false", uses
@@ -55,10 +57,11 @@ inputs:
     default: "true"
   report-only:
     description: >-
-      "true" prints the verdict, writes the report and the outputs, and exits 0 on every verdict (the
-      lab runs it so through its measurement window); "false" passes the command's exit code on.
+      "true" (the default) prints the verdict, writes the report and the outputs, and exits 0 on every
+      verdict (the lab runs it so through its measurement window); "false" passes the command's exit
+      code on, so a FAIL fails the step.
     required: false
-    default: "false"
+    default: "true"
   immutability:
     description: "C0 policy: gates (prose moved around a sealed fence is printed) or file (refused). Empty: the config, else gates."
     required: false

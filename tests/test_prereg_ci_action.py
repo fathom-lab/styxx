@@ -217,12 +217,32 @@ def test_a_refusal_fails_the_step_and_report_only_writes_it_and_exits_zero(actio
         assert "FAIL VERDICT_DIFFERS" in text
 
 
+def test_the_step_is_report_only_by_default_and_still_writes_the_refusal(action, tmp_path):
+    """B9: the README calls the Action report-only by default. With no report-only input a FAIL exits 0, and
+    the verdict, the exit code and the report still say FAIL."""
+    assert action["inputs"]["report-only"]["default"] == "true"
+    assert "report-only by default" in " ".join(action["description"].split())
+    g, rec = demo(tmp_path)
+    g("switch", "-q", "-c", "typed", "result")
+    g.write("RESULT_digits.md", result_md("HOLD__calibration"))
+    g.commit("type the verdict")
+    out = tmp_path / "o"
+    out.mkdir()
+    code, text, outputs = run_step(action, g.root, out, base=g("rev-parse", "result"), head=g("rev-parse", "typed"),
+                                   **{"out-dir": str(out / "report")})
+    assert code == 0, text
+    assert outputs["verdict"] == "FAIL" and outputs["exit-code"] == "1" and "FAIL VERDICT_DIFFERS" in text
+    assert "report-only, so this step exits 0" in text
+    assert json.loads(Path(outputs["report"]).read_text(encoding="ascii"))["verdict"] == "FAIL"
+
+
 def test_policy_inputs_become_flags(action, tmp_path):
     g, rec = demo(tmp_path)
     out = tmp_path / "o"
     out.mkdir()
     code, text, outputs = run_step(action, g.root, out, base=g("rev-parse", "main"), head=g("rev-parse", "result"),
-                                   **{"out-dir": str(out / "r"), "require-time": "T3a", "exclude": "conformance/\ndocs/"})
+                                   **{"out-dir": str(out / "r"), "require-time": "T3a", "exclude": "conformance/\ndocs/",
+                                      "report-only": "false"})
     assert code == 1 and "FAIL TIME_BELOW_POLICY" in text and "require_time T3a (flag)" in text, text
     rep = json.loads(Path(outputs["report"]).read_text(encoding="ascii"))
     assert rep["policies"]["exclude"] == ["conformance/", "docs/"]
@@ -245,7 +265,8 @@ def test_a_pull_request_that_brings_its_own_checker_is_judged_by_the_installed_o
     base, head = g("rev-parse", "result"), g("rev-parse", "typed")
     out = tmp_path / "o"
     out.mkdir()
-    code, text, outputs = run_step(action, g.root, out, base=base, head=head, **{"out-dir": str(out / "r")})
+    code, text, outputs = run_step(action, g.root, out, base=base, head=head,
+                                   **{"out-dir": str(out / "r"), "report-only": "false"})
     assert code == 1 and outputs["verdict"] == "FAIL", text
     assert "FAIL VERDICT_DIFFERS" in text and "a judge the pull request wrote" not in text
     plain = json.loads(json.dumps(action))
@@ -254,5 +275,6 @@ def test_a_pull_request_that_brings_its_own_checker_is_judged_by_the_installed_o
     step["run"] = step["run"].replace("python -I -X utf8 -m styxx.prereg_ci", "python -m styxx.prereg_ci")
     out2 = tmp_path / "o2"
     out2.mkdir()
-    code, text, outputs = run_step(plain, g.root, out2, base=base, head=head, **{"out-dir": str(out2 / "r")})
+    code, text, outputs = run_step(plain, g.root, out2, base=base, head=head,
+                                   **{"out-dir": str(out2 / "r"), "report-only": "false"})
     assert code == 0 and outputs["verdict"] == "PASS" and "a judge the pull request wrote" in text, text
