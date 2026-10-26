@@ -357,6 +357,13 @@ class _Repo:
                     return int(parts[1])
         raise _Refusal("GIT_UNAVAILABLE", f"commit {c} carries no committer time git reads")
 
+    def subject(self, rev: str) -> str:
+        """The opening line of *rev*'s commit message as the commit object records it: text the author
+        wrote, which the report prints (a merge's pull request number) and nothing decides on."""
+        raw = self._batch_cat().contents(self.commit(rev))
+        message = raw.split(b"\n\n", 1)[1] if b"\n\n" in raw else b""
+        return message.split(b"\n", 1)[0].decode("utf-8", "replace").strip()
+
     def is_shallow(self) -> bool:
         if self._shallow is None:
             out = self._ok("rev-parse", "--is-shallow-repository").strip()
