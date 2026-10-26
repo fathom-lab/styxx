@@ -149,14 +149,48 @@ as item 2's table states; the tool's digests above are repository blobs in a tex
 
 Filled by the lead after the move, one commit, nothing above this heading edited.
 
-- the move's UTC time, and the ten files' times and digests (`BD:apply/move_<UTC>.json`): _blank_
-- `gate_sha256` after the move, from `BD:apply/rederive_gate_sha256.py --gate C:/Users/heyzo/clawd/gate` and from
-  `gate.Env().gate_sha256()`, and its file count: _blank_ (the candidate `c5084df2…`, 19 files)
-- the seq of the earliest line of each kind carrying it (`send`, `delivered`, `anchor`, `started`): _blank_
-- every line written after the move carrying another digest (one of the six intermediates or a superseded candidate of
-  `BD:APPLY_RUNBOOK.md` section 0), by seq: _none expected_
-- that `canary_plan.py` entered `gate_sha256` with this move: _blank_
-- the in-place readings: the gate's suite (`279 passed, 12 subtests` expected), the plugin harness (79 of 79), item 3's
-  strict check with every amendment file (rows 84; the skill ABSENT until placed, then every count 0, rc 0), and
-  `gate_verify.py --rederive` (one DRIFT, seq 46, expected): _blank_
-- the commit of this addendum, and its UTC time: _blank_
+- the move's UTC time, and the ten files' times and digests (`BD:apply/move_2026-10-26T134158Z.json`, written by
+  `apply_move.py` pass 3, `required_present` false, so the gate stayed in shadow): the move at 2026-10-26T13:41:58Z,
+  in the runbook's order, each file's time (2026-10-26), sha256 and size as written:
+
+  ```text
+   1  W:gate/tests/test_trailer_rule.py    13:41:58.822164Z  f5a19f6a801d5ce2cd31b06b50b1a4746703debb2c63ca58d5f87145b74b50ba   29086 bytes  new
+   2  W:gate/tests/test_prepared_guard.py  13:41:58.832161Z  d9870b45126e1500a64ab2d32503772187ac7aa183d6967eb4bdce5a4d2739c0   16354 bytes  new
+   3  W:gate/tests/test_canary_plan.py     13:41:58.841033Z  8deba26fe548ed46588caf35485559d881938ad2ee41c69122bef10acb717711   14422 bytes  new
+   4  W:gate/tests/test_gate.py            13:41:58.849036Z  626d5e9eb98dd3b0ddead29151ace4c003419b4f3139be9e91ee26210c8c97e5   23815 bytes  was 589450c79379c1b3…
+   5  W:gate/tests/test_gate_round2.py     13:41:58.857561Z  ddb8e988bc1e59636c1f280a7ebb6dc8b24fef5fa227bf333ac1af220574bfff   27531 bytes  was 1ccb07ad38c73985…
+   6  W:gate/README.md                     13:41:58.867075Z  54e9a33f5bf4a3475197c6ee76a4564cea6d77d58dbf37e220865beb453b95bf   21520 bytes  was de55f382f45943ac…
+   7  W:gate/README_exhibit.md             13:41:58.874079Z  b940f0006fe9af432cc21983902de4fe4f635363961aec41d42e719c0c5f2379   14994 bytes  was 3b65ebde31da9634…
+   8  W:gate/canary_plan.py                13:41:58.883869Z  97f4f0f3d60e821f0675ed03dae35042feea137cfcc7e290238abbe44eb0075f   13068 bytes  new  enters gate_sha256
+   9  W:gate/gate_verify.py                13:41:58.893377Z  049d870bcdbf4726d961bc4b58d5b3134c63f06511d398c11c0f7ed57dd3487b   28886 bytes  was f4b19c9428cfc73f…  enters gate_sha256
+  10  W:gate/gate.py                       13:41:58.901481Z  4416692cfc983dbb9bc7d0f31342b3eaaf30c3beb7e27f31acdaa991c778dfbf   95482 bytes  was 25d53fd6aa5e7604…  enters gate_sha256
+  ```
+
+  Three of the ten enter `gate_sha256` (`canary_plan.py`, `gate_verify.py`, `gate.py`); the five tests and the two
+  READMEs do not.
+- `gate_sha256` after the move: `c5084df2ef574658fe84f84feea0b70a1169eb695a882f1d4237b439d3a418e8` over 19 files, the
+  candidate, from `BD:apply/rederive_gate_sha256.py --gate C:/Users/heyzo/clawd/gate` (rc 0) and from
+  `gate.Env().gate_sha256()` alike, at the move (`BD:apply/post_move_20261026T134206Z.txt`) and again at
+  2026-10-26T16:01Z (`BD:apply/s7_20261026T160121Z/`). The 19 files: canary_plan.py, canary_shadow.py, exhibit_mint.py, exhibit_page.py, gate.py, gate_verify.py, ledger.py, make_exhibit_out.py, page.py, pregate_count.py, reconcile.py, selector.py, numerals.py, clawdbot.plugin.json, gate.js, index.js, package.json, patch_dist.js, README.md.
+- the seq of the earliest line of each kind carrying it: `started` seq 126 (2026-10-26T14:40:40Z, the gateway's
+  restart), `send` seq 127 (2026-10-26T15:41:03Z, outbound, allow), `delivered` seq 128 (2026-10-26T15:41:04Z);
+  `anchor` none yet at this commit, so the RESULT reads that seq from the ledger.
+- every line written after the move carrying another digest: none. At seq 132 the ledger holds three digests:
+  `387fc063…` at seq 1-13 (13 lines), `ff34b52d…` at seq 14-125 (112 lines, 2 of them anchors) and `c5084df2…` at seq
+  126-132 (7 lines: started 1, send 3, delivered 3). No line carries one of the six intermediates or a superseded
+  candidate (`BD:apply/s7_20261026T160121Z/ledger_digest_scan.txt`).
+- that `canary_plan.py` entered `gate_sha256` with this move: yes. The move record gives it no earlier bytes (`before`
+  null) and `enters_gate_sha256` true; the stretch before the move, `ff34b52d…`, is over 18 files without it, and the 19
+  above include it.
+- the in-place readings, right after the move (`BD:apply/s6_20261026T134223Z/`): the gate's suite `279 passed, 12
+  subtests passed`, rc 0; the plugin harness 79 of 79, rc 0; no `__pycache__` or `.pytest_cache` under `W:gate`; item
+  3's strict check with every amendment file, rows 84, changed 0, built since 0, absent 1, unreadable 0, unlocked 0,
+  bytecode 0, rc 1, the one absent row `W:skills/styxx-post/SKILL.md` (not yet placed); the same with the PREREG alone,
+  rows 80, changed 6, unlocked 4, rc 1, as item 3 expects; `gate_verify.py --rederive` over 125 lines, SAME 60, DRIFT 1
+  (seq 46), TAMPER 0, rc 1; the posting skill's dry harness 20 passed, 0 failed. Read again with the skill placed, at
+  2026-10-26T16:01Z (`BD:apply/s7_20261026T160121Z/`): item 3's strict check with every amendment file, rows 84 and
+  every count 0, rc 0, the `plugins-subtree:clawdbot.json` row skipped by the tool as its docstring says and re-read by
+  `reconcile.plugins_subtree_digest` as `519905d2…`, the lock's; `gate_verify.py --rederive` over 132 lines, SAME 63,
+  DRIFT 1 (seq 46), TAMPER 0, rc 1.
+- the commit of this addendum, and its UTC time: the commit that adds these lines, authored and committed at
+  2026-10-26T16:04:31Z. A commit cannot carry its own hash; `git log -1 --format=%H --` on this file names it.
