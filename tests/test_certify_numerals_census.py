@@ -12,6 +12,11 @@ arm and the form rule) are measured moving it, with no verdict class among it; u
 none of them in `KNOWN_VERDICT_DRIFT` (the flag is off, so the committed certificates still reproduce).
 The two flag arms are re-derived live here on the flip documents, so the committed result cannot go
 stale without this test saying so.
+
+Since the review fixes (2026-10-25: the wider time/id leaf class, `V15_ACCOUNTING_SIGN`), the live checks
+read the result measured after them, `oath_v15_numeral_reader_census_result_after_review.json`, and the
+result the NOTE swears to (measured at 261f11c1, kept as it was measured) is held to it: every count the
+NOTE swears to has the same value in both.
 """
 from __future__ import annotations
 
@@ -30,8 +35,11 @@ C = importlib.import_module("styxx.certify")
 from styxx.corpus_audit import _resolve_receipts
 
 ROOT = Path(__file__).resolve().parents[1]
-RESULT = ROOT / "papers" / "closed-model-frontier" / "oath_v15_numeral_reader_census_result.json"
+RESULT = ROOT / "papers" / "closed-model-frontier" / "oath_v15_numeral_reader_census_result_after_review.json"
 DOC = json.loads(RESULT.read_text(encoding="utf-8"))
+# the result the NOTE swears to, measured before the review fixes; never regenerated
+RESULT_NOTE = ROOT / "papers" / "closed-model-frontier" / "oath_v15_numeral_reader_census_result.json"
+NOTE = ROOT / "papers" / "closed-model-frontier" / "NOTE_numeral_reader_v2_2026_10_25.md"
 CFG = DOC["configurations"]
 
 
@@ -64,6 +72,35 @@ def test_the_result_was_measured_at_the_shipped_flags_on_a_clean_tree():
     assert CFG["default"]["flags"]["V15_READER_V2"] is True
     assert CFG["v1"]["flags"]["V15_READER_V2"] is False
     assert DOC["population"]["resolved"] >= 230 and DOC["summary"]["certificates"] == DOC["population"]["resolved"]
+
+
+def test_the_result_was_measured_on_the_certify_in_this_tree():
+    """A certify change after the census makes this fail: re-run the census into a new file."""
+    import hashlib
+    lf = hashlib.sha256((ROOT / "styxx" / "certify.py").read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+    assert DOC["certify_sha256_lf"] == lf
+
+
+def _at(doc, pointer: str):
+    for part in pointer.strip("/").split("/"):
+        doc = doc[int(part)] if isinstance(doc, list) else doc[part]
+    return doc
+
+
+def test_every_count_the_note_swears_to_re_derives_after_the_fix():
+    """The review fixes move none of the counts the NOTE swears to: each sworn pointer reads the same value
+    in the result measured after them as in the result the NOTE's receipt names."""
+    note = NOTE.read_text(encoding="utf-8")
+    pointers = re.findall(r'r="path:papers/closed-model-frontier/oath_v15_numeral_reader_census_result\.json#(/[^"]+)"',
+                          note)
+    assert len(pointers) >= 30
+    before = json.loads(RESULT_NOTE.read_text(encoding="utf-8"))
+    for ptr in pointers:
+        assert _at(DOC, ptr) == _at(before, ptr), ptr
+    # and every summary count of every configuration the earlier result measured
+    for name, row in before["summary"]["configs"].items():
+        assert {k: DOC["summary"]["configs"][name][k] for k in row} == row, name
+    assert DOC["summary"]["configs"]["only_V15_ACCOUNTING_SIGN"]["certificates_moved"] == 0
 
 
 def test_the_shipped_default_moves_nothing_committed():
