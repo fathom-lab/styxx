@@ -9,14 +9,14 @@ through `capsule.verify_capsule`. Population C: `papers/charon/charon.log.jsonl`
 
 Configurations of `styxx.certify`'s V15_* flags: `v1` (master off, the reader at 879f6be9), `default`
 (the flags as shipped, RULE_final 0.1), `explicit_list` (default + V15_MAGNITUDE_BARE + V15_FORM_NOISE:
-the lead's explicit list, the first build session's default), `sentence_final` (default +
+the lead's explicit list, the earlier build session's default), `sentence_final` (default +
 V15_SENTENCE_FINAL), `all_rules` (every rule but the pair: the design's `v2_all`), `ranges` (default +
 V15_MAGNITUDE_RANGES), `explicit_list_ranges`, and each rule alone with what it needs to act
 (`only_<FLAG>`: V15_MAGNITUDE_BARE with V15_MAGNITUDE; V15_MAGNITUDE_RANGES with both). For population
 A, every configuration is compared with `v1` field by field (verdict, counts, uncovered, uncovered_items,
 uncovered_excluded_by_rule, ledger, epistemics_summary, ungrounded, abstained), and each configuration's
 verdict class with the committed certificate's. Populations B and C run under `v1`, `default`,
-`explicit_list`, `sentence_final`, `only_V15_MAGNITUDE_BARE` and `only_V15_FORM_NOISE`.
+`explicit_list`, `sentence_final`, `all_rules`, `only_V15_MAGNITUDE_BARE` and `only_V15_FORM_NOISE`.
 
 The receipt-binding block is stubbed for population A (it reads git and is not part of the reader);
 populations B and C run the real block. The REPLICATIONS.md audit line is re-derived under `v1` and
@@ -71,7 +71,8 @@ CONFIGS: dict = {
 NEEDS = {"V15_MAGNITUDE_BARE": ("V15_MAGNITUDE",), "V15_MAGNITUDE_RANGES": ("V15_MAGNITUDE", "V15_MAGNITUDE_BARE")}
 for _k in ALL:
     CONFIGS[f"only_{_k}"] = (True, {k: (k == _k or k in NEEDS.get(_k, ())) for k in ALL})
-BC_CONFIGS = ("v1", "default", "explicit_list", "sentence_final", "only_V15_MAGNITUDE_BARE", "only_V15_FORM_NOISE")
+BC_CONFIGS = ("v1", "default", "explicit_list", "sentence_final", "all_rules", "only_V15_MAGNITUDE_BARE",
+              "only_V15_FORM_NOISE")
 STUB = {"schema": "stub", "head": None, "receipts": []}
 
 
