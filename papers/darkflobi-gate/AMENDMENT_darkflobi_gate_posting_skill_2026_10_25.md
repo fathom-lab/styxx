@@ -46,7 +46,7 @@ beyond a listing and clawdbot's installed `dist/` (read, for how a skill is load
   the record names (l.1087-1100); before this amendment it read neither `dry_run`, `url_live` nor `receipts_sha256`.
 - The `exhibit` branch: `WT:exhibit` at `893d1a5e` equal to `origin/exhibit` ("the empty shelf", OD-7), no `posts/`
   [R, `git rev-parse`]. `W:gate/prepared/` is empty and `W:gate/prepared_dryrun/` holds the mint's two dry-run records
-  [R, listings, 2026-10-26T00:3xZ]; no send line on the ledger carries a prepared record (`BD:PLAN.md` section 1.1).
+  [R, listings, 2026-10-26T00:31Z]; no send line on the ledger carries a prepared record (`BD:PLAN.md` section 1.1).
 - Not built before this file: the skill, its row, the guard, its tests.
 
 ## What was observed
@@ -54,10 +54,13 @@ beyond a listing and clawdbot's installed `dist/` (read, for how a skill is load
 1. **A dry run's record placed in `prepared/` was honoured.** Pass 1's dry harness, re-run by the apply review
    (`BD:dry_harness_review_run.txt`, 2026-10-25T19:54:37Z, against the copy's pass-1 `gate.py` `8d45166a…`), step 12:
    a record with `dry_run` set and `url_live` false under the message's sha256 read `allow`, `footer_split true`,
-   4 of 4 bound (`BD:REVIEW_apply.md` finding F3). Nothing else in `gate.py` differs on that path from the live bytes.
+   4 of 4 bound (`BD:REVIEW_apply.md` finding F3).
 2. **The guard's tests fail against the live bytes and pass against the copy.** `tests/test_prepared_guard.py` (13
    tests, below) run in a private copy holding the live `gate.py` (`25d53fd6…`) and `gate_verify.py` (`f4b19c94…`):
-   10 failed, 3 passed, rc 1; the three that pass are the honoured live-shaped record, the missing receipts file and the request naming its own receipts, which the guard does not change. Against the guard: 13 passed (`BD:skill_pytest_devcopy_live_bytes.txt` holds both runs).
+   10 failed, 3 passed, rc 1; the three that pass are the honoured live-shaped record, the missing receipts file
+   and the request naming its own receipts, which the guard does not change. Against the guard: 13 passed
+   (`BD:skill_pytest_devcopy_live_bytes.txt` holds both runs). The live bytes honour a dry run's record as pass 1's
+   copy did (test (a) there reads `footer_split true`).
 3. **The mint's own record passes the guard.** The dry harness against the copy (`BD:skill_dry_harness_copy_run.txt`,
    sha256 `065e3c2cb1b50fe0…`, 2026-10-26T00:37:40Z; its transcript `posting_skill/harness/_out/last_run.txt`
    `152e0d7c509c5892…`): 20 PASS, 0 FAIL, 0 OBSERVED. Step 4: a live-shaped mint through the CLI against a loopback
@@ -72,7 +75,8 @@ beyond a listing and clawdbot's installed `dist/` (read, for how a skill is load
    `refuse`, reasons `audit_fail:X1`, 6 numerals 0 bound, `cancel` under `REQUIRED`; restored, the same message is
    honoured again; in shadow the dry run's message is sent unmarked with `would_refuse`. The cause is step 10's: with no
    split, the footer's install line `styxx 7.50.0 (pip install styxx==7.50.0; pin 3437340b)` is read, the audit leg
-   takes it as a version claim against the pin, whose `styxx/_version.py` reads 7.49.0, and fails it.
+   takes it as a version claim against the pin, whose `styxx/_version.py` reads `__version__ = "7.49.0"` [R, `git
+   cat-file -p 3437340b:styxx/_version.py`], and fails it.
 5. **How the gateway loads a skill** [R, clawdbot's installed `dist/`, read only]: `loadSkillEntries`
    (`agents/skills/workspace.js` l.64-118) merges extra dirs < bundled < managed (`~/.clawdbot/skills`, absent on this
    box) < workspace (`<workspace>/skills/<name>/SKILL.md`; `W:skills/` holds the agent's other skills); each entry's
@@ -134,9 +138,14 @@ beyond a listing and clawdbot's installed `dist/` (read, for how a skill is load
    reason without opening any file of the record; `_diff_fields` already compares `footer_refused` (`gate_verify.py`
    l.134). A line written before the move carries none of the three values and re-derives as before.
 
-5. **RULES §13's `prepared` fields** gain three values of `footer_refused` (`record_dry_run`, `record_url_not_live`,
-   `record_receipts_moved`) beside the footer problems it already carries (`document_not_found`, `capsule_url_form`,
-   `footer_line_count` and the rest). No key is added to a line.
+5. **RULES restated.** §7's sentence on the capsule footer (l.327-330: the gate reads only the document above the
+   footer "when the footer is OD-20's fixed lines composed for the prepared record (…), otherwise the whole text, the
+   line's `prepared.footer_refused` saying why") reads, from the move: when the record is honoured (item 2) and the
+   footer is OD-20's fixed lines composed for it, otherwise the whole text, `prepared.footer_refused` saying why. The
+   `prepared` field §13 lists (l.567) gains three values of `footer_refused` (`record_dry_run`,
+   `record_url_not_live`, `record_receipts_moved`) beside the footer problems it already carries
+   (`document_not_found`, `capsule_url_form`, `footer_line_count` and the rest). No key is added to a line; §6's codes
+   and §7's matrix are unchanged.
 
 6. **Three hand-made records in the gate's own tests** become live-shaped, their assertions unchanged:
    `tests/test_gate.py` `test_prepared_record_splits_the_footer_and_binds_the_document` gains `"dry_run": None`,
