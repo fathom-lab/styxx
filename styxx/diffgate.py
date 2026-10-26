@@ -345,8 +345,9 @@ def _scope_resolve(prefix: str, segs: list, changed) -> tuple:
     without such a segment. What main's `rstrip("/.")` cut off the prefix (its trailing run of dots and slashes: a
     sentence's period, an ellipsis) stays cut, and nothing else is: a name a later `..` lays bare keeps its dots (`b.`
     in `a/b./c/../.`), as git reads it. So every reading of a prefix with no inner `.` or `..` segment is main's reading
-    or a directory above it. Where the resolved reading is not main's, it abstains if that cut run takes part of a name
-    git reads whole: a name of three or more dots, or the dots of the name written last beyond one final dot."""
+    or a directory above it. Where the resolved reading is not main's and that cut run takes part of a name git reads
+    whole (a name of three or more dots, or the dots of the name written last beyond one final dot), git's reading, every
+    name whole, is read beside it, and the claim abstains where a changed path lies under one and not the other."""
     whole = _norm(prefix)
     plain = whole.rstrip("/.")
     i = 0                   # a leading run of `..` is the key's to read: `_norm` drops it (#121), and a key that
@@ -383,14 +384,16 @@ def _scope_resolve(prefix: str, segs: list, changed) -> tuple:
     got = _norm("/".join(names)).rstrip("/")
     if got == plain:
         return got, None
-    if cut:
-        return None, (f"prefix {prefix!r} ends in a run of dots and slashes that this template cuts as a sentence's "
-                      f"period or an ellipsis and git reads as part of the name {cut[0]!r} (#175)")
-    if not got:
-        return got, None
-    if "/" not in got and _is_bare_filename(got):
+    if got and "/" not in got and _is_bare_filename(got):
         return None, (f"prefix {prefix!r} resolves to the file name {got!r} at the repository root, which this "
                       f"template would match in any directory (#175)")
+    full = "/".join(kept).rstrip("/")       # git's reading: every name kept whole, a leading dot too
+    if cut and any((not got or _path_inside(p, got)) != (not full or _path_inside(p, full)) for p in changed):
+        return None, (f"prefix {prefix!r} ends in a run of dots and slashes that this template cuts as a sentence's "
+                      f"period or an ellipsis and git reads as part of the name {cut[0]!r}, and a changed path lies "
+                      f"under one of the two readings and not the other (#175)")
+    if not got:
+        return got, None
     for p in changed:
         if any(s in (".", "..") for s in p.split("/")):
             return None, (f"prefix {prefix!r} and the changed path {p!r} each hold a '.' or '..' segment; git "
@@ -3226,12 +3229,13 @@ def _p2a_segments(fm, segs: list, whole: str, changed: list):   # _scope_resolve
     got = fm("/".join(names)).rstrip("/")
     if got == plain:
         return got
-    if cut:
+    if got and "/" not in got and _p2a_ext(got):
+        return None
+    full = "/".join(kept).rstrip("/")
+    if cut and any((got == "" or _p2a_inside(p, got)) != (full == "" or _p2a_inside(p, full)) for p in changed):
         return None
     if not got:
         return got
-    if "/" not in got and _p2a_ext(got):
-        return None
     for p in changed:
         if any(s == "." or s == ".." for s in p.split("/")):
             return None
