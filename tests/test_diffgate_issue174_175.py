@@ -498,3 +498,43 @@ def _git_outside(case) -> bool:
         return False
     return any(not (g == "" or p == g or p.startswith(g + "/"))
                for p in list(status) + N.parse_unified_diff_renames(case["diff"]))
+
+
+MIRROR_RUNNER = r"""
+"use strict";
+const fs = require("fs");
+const vm = require("vm");
+const [port, inp, out] = process.argv.slice(2);
+const P = vm.runInContext(fs.readFileSync(port, "utf8") + "\n;({_scopeReadings, _p2aReadings, _p2aA})", vm.createContext({}), { filename: port });
+fs.writeFileSync(out, JSON.stringify(JSON.parse(fs.readFileSync(inp, "utf8")).map(([p, ch]) =>
+  [P._scopeReadings(p, ch)[0], P._p2aReadings(p, P._p2aA, ch)])));
+"""
+
+
+def test_the_overlay_reads_a_prefix_as_main_does(tmp_path):
+    """The PATH-2a overlay's model of main's scope readings in main's key space (`_p2a_readings` with `_p2a_A`, the
+    port's `_p2aReadings` with `_p2aA`) against main's own (`_scope_readings`, `_scopeReadings`), on the grid's prefixes
+    and on seeded prefixes holding dots in every way a segment can, over changed paths with and without a dot segment:
+    main's abstention is the overlay's None and main's readings are its readings, in each port, and the two ports' main
+    readings agree. The overlay's own abstentions where main abstains change no record while the mirror is exact, so
+    no claim above can tell them; this does."""
+    import random
+    rng = random.Random(1751742)
+    segs = ["a", "b", "b.", "v1..", "...", "src", "docs", ".", "..", "", "c", "x.py"]
+    cases = [(p, ["src/b/x.py", "a/b./c/x.py"]) for p in PREFIXES]
+    for _ in range(3000):
+        p = rng.choice(["/", "\\"]).join(rng.choice(segs) for _ in range(rng.randint(1, 6)))
+        cases.append((p + rng.choice(["", ".", "/.", "/", "..", "/.."]),
+                      ["a/b/x.py", "b./c/y.md"] + (["a/./b/z.py"] if rng.random() < 0.2 else [])))
+    py = [[N._scope_readings(p, ch)[0], N._p2a_readings(p, N._p2a_A, ch)] for p, ch in cases]
+    assert [c for c, (m, o) in zip(cases, py) if m != o] == []
+    if NODE is None:
+        _missing("node", "the port half of this check")
+    runner, src, out = tmp_path / "mirror.js", tmp_path / "mirror_in.json", tmp_path / "mirror_out.json"
+    runner.write_text(MIRROR_RUNNER, encoding="utf-8")
+    src.write_text(json.dumps(cases, ensure_ascii=True), encoding="utf-8")
+    r = subprocess.run([NODE, str(runner), str(R.PORT), str(src), str(out)], capture_output=True, text=True, timeout=600)
+    assert r.returncode == 0, r.stderr[-2000:]
+    js = json.loads(out.read_text(encoding="utf-8"))
+    assert [c for c, (m, o) in zip(cases, js) if m != o] == []
+    assert [c for c, a, b in zip(cases, py, js) if a[0] != b[0]] == []
