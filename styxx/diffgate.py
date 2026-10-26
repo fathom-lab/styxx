@@ -342,29 +342,48 @@ def _scope_resolve(prefix: str, segs: list, changed) -> tuple:
     """#175: one reading of a scope prefix's segments: (the prefix, None), "" for the repository root, or (None, why).
     `.` drops and `..` leaves the directory before it, as git resolves a pathspec; the result is read through `_norm`
     again. A reading the resolution did not change is main's reading before #175, as is every reading of a prefix
-    without such a segment."""
-    plain = _norm(prefix).rstrip("/.")
+    without such a segment. What main's `rstrip("/.")` cut off the prefix (its trailing run of dots and slashes: a
+    sentence's period, an ellipsis) stays cut, and nothing else is: a name a later `..` lays bare keeps its dots (`b.`
+    in `a/b./c/../.`), as git reads it. So every reading of a prefix with no inner `.` or `..` segment is main's reading
+    or a directory above it. Where the resolved reading is not main's, it abstains if that cut run takes part of a name
+    git reads whole: a name of three or more dots, or the dots of the name written last beyond one final dot."""
+    whole = _norm(prefix)
+    plain = whole.rstrip("/.")
     i = 0                   # a leading run of `..` is the key's to read: `_norm` drops it (#121), and a key that
     while i < len(segs) - 1 and segs[i] == "..":        # keeps it (PATH-2a's V121) reads it as written, as before
         i = i + 1
     if segs[-1] != ".." and not any(s in (".", "..") for s in segs[i:-1]):
         return "/".join(segs).rstrip("/."), None
-    kept: list = segs[:i]
-    for s in segs[i:]:
-        if s == ".":
-            continue
-        if s == "..":
+    kept: list = []
+    at: list = []           # where each kept segment starts in the prefix as `_norm` reads it
+    o = 0
+    for n, s in enumerate(segs):
+        if n < i or s not in (".", ".."):
+            kept.append(s)
+            at.append(o)
+        elif s == "..":
             if len(kept) <= i or not kept[-1]:
                 return None, (f"prefix {prefix!r} has a '..' segment with no directory before it, so it names a "
                               f"directory outside the one it is read from (#175)")
             kept.pop()
-            continue
-        kept.append(s)
+            at.pop()
+        o = o + len(s) + 1
     if i and len(kept) <= i:
         return None, (f"prefix {prefix!r} has a '..' segment with no directory before it, so it names a "
                       f"directory outside the one it is read from (#175)")
-    got = _norm("/".join(kept)).rstrip("/.")
-    if got == plain or not got:
+    m = len([a for a in at if a < len(plain)])      # the segments main's reading holds; the rest lie in its cut run
+    names, cut = kept[:m], [s for s in kept[m:] if s]
+    if m and at[m - 1] + len(names[-1]) > len(plain):   # the name holding main's last character: its dots lie in the run
+        if at[m - 1] + len(names[-1]) < len(whole) or names[-1][len(plain) - at[m - 1]:] != ".":
+            cut = [names[-1]] + cut     # more than one final dot, a sentence's period, is cut from it
+        names = names[:-1] + [names[-1].rstrip(".")]
+    got = _norm("/".join(names)).rstrip("/")
+    if got == plain:
+        return got, None
+    if cut:
+        return None, (f"prefix {prefix!r} ends in a run of dots and slashes that this template cuts as a sentence's "
+                      f"period or an ellipsis and git reads as part of the name {cut[0]!r} (#175)")
+    if not got:
         return got, None
     if "/" not in got and _is_bare_filename(got):
         return None, (f"prefix {prefix!r} resolves to the file name {got!r} at the repository root, which this "
@@ -3165,29 +3184,45 @@ def _p2a_shaped(prefix: str, keys: list, form) -> bool:   # _prefix_is_path_shap
 _P2A_SPACES = {"A": (_p2a_A, _p2a_WA, _p2a_strip), "K": (_p2a_K, _p2a_WK, _p2a_dotted)}
 
 
-def _p2a_segments(fm, segs: list, plain: str, changed: list):   # _scope_resolve (#175), in the key space of `fm`
+def _p2a_segments(fm, segs: list, whole: str, changed: list):   # _scope_resolve (#175), in the key space of `fm`
     """main's key drops a prefix's leading run of '.' and '/'; V121's keeps a leading run of '..' segments, read as
     written, as before #175 (the truth oracle judges no prefix that starts with '..'). The segments after it resolve
-    as main's do. None where main abstains."""
+    as main's do: what main's rstrip cut off `whole` (the prefix in the key's form) stays cut, and nothing else is.
+    None where main abstains."""
+    plain = whole.rstrip("/.")
     i = 0
     while i < len(segs) - 1 and segs[i] == "..":
         i = i + 1
     if segs[-1] != ".." and not any(s == "." or s == ".." for s in segs[i:-1]):
         return "/".join(segs).rstrip("/.")
-    kept: list = segs[:i]
-    for s in segs[i:]:
-        if s == ".":
-            continue
-        if s == "..":
+    kept: list = []
+    at: list = []
+    o = 0
+    for n, s in enumerate(segs):
+        if n < i or not (s == "." or s == ".."):
+            kept.append(s)
+            at.append(o)
+        elif s == "..":
             if len(kept) <= i or not kept[-1]:
                 return None
             kept.pop()
-            continue
-        kept.append(s)
+            at.pop()
+        o = o + len(s) + 1
     if i and len(kept) <= i:
         return None
-    got = fm("/".join(kept)).rstrip("/.")
-    if got == plain or not got:
+    m = len([a for a in at if a < len(plain)])
+    names = kept[:m]
+    cut = [s for s in kept[m:] if s]
+    if m and at[m - 1] + len(names[-1]) > len(plain):
+        if at[m - 1] + len(names[-1]) < len(whole) or names[-1][len(plain) - at[m - 1]:] != ".":
+            cut = [names[-1]] + cut
+        names = names[:-1] + [names[-1].rstrip(".")]
+    got = fm("/".join(names)).rstrip("/")
+    if got == plain:
+        return got
+    if cut:
+        return None
+    if not got:
         return got
     if "/" not in got and _p2a_ext(got):
         return None
@@ -3204,7 +3239,7 @@ def _p2a_readings(prefix: str, fm, changed: list):   # _scope_readings (#175)
         return None
     out: list = []
     for cut in ((segs[:-1], segs) if last == ".." and len(segs) > 1 else (segs,)):
-        got = _p2a_segments(fm, cut, fm(prefix).rstrip("/."), changed)
+        got = _p2a_segments(fm, cut, fm(prefix), changed)
         if got is None:
             return None
         out.append(got)
