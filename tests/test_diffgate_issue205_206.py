@@ -472,14 +472,15 @@ def cut_sites(text: str) -> tuple:
 
 
 WANT_SITES = sorted(["parse_unified_diff_sides", "parse_unified_diff", "gate_diff", "gate_diff", "_diff_sections",
-                     "_seam_header"])
+                     "_seam_header", "parse_unified_diff_renames"])
 
 
 def test_every_site_that_cuts_git_output_uses_the_cut():
-    """No reader outside the block cuts with str.splitlines() any more, and the six sites cut with _git_lines:
+    """No reader outside the block cuts with str.splitlines() any more, and the seven sites cut with _git_lines:
     parse_unified_diff_sides, parse_unified_diff, gate_diff's --name-status and its added lines, #178's walk of the
     diff's sections, _diff_sections, and the read of #205's seam at a header's edge, _seam_header
-    (fix/diffgate-178-179)."""
+    (fix/diffgate-178-179), and the read of a rename's old path, parse_unified_diff_renames (#174,
+    fix/diffgate-174-175)."""
     split, cut = cut_sites(R.lf(R.INSTRUMENT))
     assert split == [] and cut == WANT_SITES, (split, cut)
 
