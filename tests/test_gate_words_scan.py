@@ -40,8 +40,11 @@ def _r(s: str) -> str:
 
 TEXTS = {
     # seq: (dest_class, day, text)
+    # seq 30 and 31 below are test input carrying the agent's own wordings of live seq 34, which
+    # AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md withdraws; they are not the lab's words.
     30: ("public", "2026-10-24", f"{MARKER} the ledger is my receipt book; total cryptographic accountability for it.\n"),
     31: ("public", "2026-10-24", f"{MARKER} every message is permanently logged in the file.\n"),
+    # seq 32 and 33: the same, the withdrawn wordings of live seq 46 and 34, as test input.
     32: ("public", "2026-10-24", f"{MARKER} every single message goes through it. there is no bypass.\n"),
     33: ("public", "2026-10-25", f"{MARKER} the canary system ensures no live secrets ever leak.\n"),
     34: ("public", "2026-10-25", f"{MARKER} if styxx can detect deception, it can penalize it.\n"),
