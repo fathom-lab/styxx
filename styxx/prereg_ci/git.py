@@ -28,7 +28,9 @@ missing blob from the clone's promisor remote, which a full clone never needs. T
   recorded digest of PLAN K2, the receipts a pull request writes (C1: every path it leaves holding
   a receipt, whatever the path held before, with R the oldest commit of the pull request at which
   the path holds one), and the immutability of the receipts it found committed
-  (``RECEIPT_REWRITTEN``);
+  (``RECEIPT_REWRITTEN``); a receipt is a ``.json`` file, so one a pull request writes under another
+  suffix is ``RECEIPT_NOT_JSON`` and one committed under another suffix is held immutable too (the B8
+  battery, M3);
 * sealed decisions (C0): a fence edited in place, a deleted PREREG and a renamed one are
   ``DECISION_EDITED_AFTER_SEAL`` (fail closed); prose edited around an unchanged fence is
   ``PROSE_AMENDED_IN_PLACE``, a NOTE, or a FAIL under ``immutability = "file"``. This is the refusal
@@ -86,6 +88,9 @@ _KIND = {
     "PREREG_ABSENT": "INPUT", "PREREG_AMBIGUOUS": "INPUT", "RECEIPT_ABSENT": "INPUT", "RECEIPT_AMBIGUOUS": "INPUT",
     "RECORDED_DIGEST_AMBIGUOUS": "INPUT",
     "RECEIPT_UNREADABLE": "NOTE", "RECEIPT_NOT_A_FILE": "NOTE",
+    # a receipt (a JSON object naming its PREREG) a pull request writes under a suffix other than .json, which
+    # the readers of receipts in trees and history do not read (the B8 battery, M3)
+    "RECEIPT_NOT_JSON": "FAIL",
     "RECEIPT_REWRITTEN": "FAIL", "DECISION_EDITED_AFTER_SEAL": "FAIL",
     "PROSE_AMENDED_IN_PLACE": "NOTE",
     # the seals manifest (step B2)
@@ -970,6 +975,28 @@ def _seal(repo: _Repo, path: str, base: str, head: Optional[str] = None) -> Dict
 
 # ---- what a pull request does to receipts and sealed decisions (C0, C1) -------------------------------
 
+def _outside_json(repo: _Repo, rev: str, path: str) -> Optional[Dict[str, Any]]:
+    """The receipt a file under a suffix other than ``.json`` holds at *rev*, or None: a regular file at
+    most this layer's cap whose bytes, read as a receipt is read (``_json``), are a JSON object naming its
+    PREREG by a top-level ``prereg`` string (3.2(d)). A file over the cap, a symlink, a submodule and bytes
+    that are not such an object hold none; nothing here refuses a file for not being one."""
+    c = repo.commit(rev)
+    e = repo._entry(c, _plain_path(path))
+    if e is None or e[1] != "blob" or e[0] == "120000":
+        return None
+    head = repo._batch_check().header(e[2])
+    if head is not None and head[2] > _MAX_BLOB_BYTES:
+        return None
+    data = repo._contents(e[2], path)
+    if data.lstrip()[:1] != b"{":
+        return None
+    try:
+        obj = _json(data)
+    except (UnicodeDecodeError, ValueError):
+        return None
+    return obj if _receipt_kind(obj) == "receipt" else None
+
+
 def _holds_receipt(repo: _Repo, commit: str, path: str) -> bool:
     """Whether *path* at *commit* is a regular file whose JSON names a PREREG (3.2(d))."""
     try:
@@ -1000,14 +1027,26 @@ def _receipts_written(repo: _Repo, base: str, head: str,
     can be read from it; one that is a symlink or a submodule at HEAD is a ``RECEIPT_NOT_A_FILE``
     NOTE. A ``.json`` suffix is read whatever its case. Every changed ``.json`` path (new or old)
     under *exclude* is left out here and in ``_receipts_rewritten`` and listed in ``excluded``, for
-    the report's not_examined. Returns ``{receipts, notes, excluded}``."""
+    the report's not_examined. A receipt is a ``.json`` file: the readers of receipts in a tree and in
+    history (C4's earlier receipts, C8 over the tree, census) read that suffix, so a file the pull request
+    writes under another suffix that holds a receipt (``_outside_json``) is ``RECEIPT_NOT_JSON``, a FAIL
+    naming it, rather than a receipt no later check would find (the B8 battery, M3). Returns
+    ``{receipts, notes, excluded}``."""
     ch = repo.changes(base, head)
     mb, h = ch["merge_base"], ch["head"]
     receipts, notes, excluded = [], [], set()
     for x in ch["changes"]:
         path = x["path"]
         excluded.update(p for p in (path, x["old"]) if p and _suffix(p, (".json",)) and _excluded(p, exclude))
-        if x["status"] not in _WRITES or not _suffix(path, (".json",)) or _excluded(path, exclude):
+        if x["status"] not in _WRITES or _excluded(path, exclude):
+            continue
+        if not _suffix(path, (".json",)):
+            held = _outside_json(repo, h, path)
+            if held is not None:
+                notes.append(_Refusal("RECEIPT_NOT_JSON", (
+                    f"{path} holds a receipt (a JSON object naming {held['prereg']} by a top-level prereg key) under "
+                    f"a suffix other than .json; prereg-ci holds a receipt immutable and finds it in a tree or in "
+                    f"history only in a .json file, so it is written as one (DESIGN 3.2(d))")).finding(path))
             continue
         try:
             obj = _json(repo.read(h, path) or b"")
@@ -1032,7 +1071,9 @@ def _receipts_rewritten(repo: _Repo, base: str, head: str, policy: str = "fail",
                         exclude: Sequence[str] = ()) -> List[Dict[str, Any]]:
     """RECEIPT_REWRITTEN (DESIGN 3.2(d), C1) for every receipt or record committed at the merge
     base that the pull request changes, deletes or renames; a re-run writes a new path. FAIL under
-    ``receipt_rewrite = "fail"`` (the default), a NOTE under ``"note"``."""
+    ``receipt_rewrite = "fail"`` (the default), a NOTE under ``"note"``. A receipt committed under a
+    suffix other than ``.json`` (``_outside_json``: one a RESULT paired when it landed) is held as one
+    under ``.json`` is (the B8 battery, M3)."""
     if policy not in _POLICIES:
         raise ValueError(f"receipt_rewrite is one of {_POLICIES}, not {policy!r}")
     ch = repo.changes(base, head)
@@ -1040,17 +1081,21 @@ def _receipts_rewritten(repo: _Repo, base: str, head: str, policy: str = "fail",
     out = []
     for x in ch["changes"]:
         old = x["old"]
-        if old is None or not _suffix(old, (".json",)) or _excluded(old, exclude):
+        if old is None or _excluded(old, exclude):
             continue
-        try:
-            obj = _json(repo.read(mb, old) or b"")
-        except _Refusal as e:
-            _not_a_file(e, old, mb)
-            continue                                # a symlink or a submodule at the base held no receipt
-        except (UnicodeDecodeError, ValueError):
-            continue                                # no receipt was ever read from bytes that are not JSON
-        if _receipt_kind(obj) is None:
-            continue
+        if not _suffix(old, (".json",)):
+            if _outside_json(repo, mb, old) is None:
+                continue                            # under another suffix, a receipt alone is held (B8, M3)
+        else:
+            try:
+                obj = _json(repo.read(mb, old) or b"")
+            except _Refusal as e:
+                _not_a_file(e, old, mb)
+                continue                            # a symlink or a submodule at the base held no receipt
+            except (UnicodeDecodeError, ValueError):
+                continue                            # no receipt was ever read from bytes that are not JSON
+            if _receipt_kind(obj) is None:
+                continue
         how = f"renamed to {x['path']}" if x["status"] == "R" else _HOW.get(x["status"], f"changed ({x['status']})")
         if x["status"] == "M":
             was, now = repo._entry(mb, old), repo._entry(ch["head"], x["path"])

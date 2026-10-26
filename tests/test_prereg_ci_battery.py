@@ -248,3 +248,52 @@ def test_a_manifest_added_where_the_base_never_held_one_is_not_compared(tmp_path
     g.commit("start the manifest")
     code, out = run(g, "check", "--base", "main", "--head", "man", capsys=capsys)
     assert code == 0 and "MANIFEST_REWRITTEN" not in out, out
+
+
+# ---- M3: a receipt kept under a suffix other than .json --------------------------------------------------------
+
+def test_a_typed_receipt_under_another_suffix_is_refused_where_it_is_written(tmp_path, capsys):
+    """O50: a typed SHIP over HOLD numbers in receipt2.jsonc, no RESULT: C1 read *.json only, and it passed."""
+    g = sealed(tmp_path, "jsonc", prereg())
+    g("switch", "-q", "-c", "run")
+    g.write("receipt2.jsonc", json.dumps({**scored(HOLD), "verdict": "SHIP"}, indent=1) + "\n")
+    g.commit("run")
+    code, out = run(g, "check", "--base", "main", "--head", "run", capsys=capsys)
+    assert code == 1, out
+    assert "FAIL RECEIPT_NOT_JSON" in out and "receipt2.jsonc" in out, out
+
+
+@pytest.mark.parametrize("name", ["receipt.txt", "receipt_old.jsonc"])
+def test_a_committed_receipt_under_another_suffix_is_held_immutable(tmp_path, capsys, name):
+    """O07, O07b: a receipt paired through its RESULT when it landed, rewritten in place later, passed."""
+    g = sealed(tmp_path, "txt", prereg())
+    g("switch", "-q", "-c", "result")
+    rec = scored(SHIP)
+    g.write(name, json.dumps(rec, indent=1) + "\n")
+    g.write("RESULT_digits.md", result_md(rec["verdict"], receipt=name))
+    g.commit("result")
+    g("switch", "-q", "main")
+    g.merge("result", "Merge pull request #2")
+    g("switch", "-q", "-c", "rewrite")
+    g.write(name, json.dumps(scored({"acc": 0.95, "ece": 0.04}), indent=1) + "\n")
+    g.commit("rewrite")
+    code, out = run(g, "check", "--base", "main", "--head", "rewrite", capsys=capsys)
+    assert code == 1, out
+    assert "FAIL RECEIPT_REWRITTEN" in out and f"{name}, committed at" in out, out
+    g("switch", "-q", "-c", "delete", "main")
+    (g.root / name).unlink()
+    g.commit("delete it")
+    code, out = run(g, "check", "--base", "main", "--head", "delete", capsys=capsys)
+    assert code == 1 and "FAIL RECEIPT_REWRITTEN" in out and "is deleted" in out, out
+
+
+def test_text_files_that_hold_no_receipt_are_left_alone(tmp_path, capsys):
+    g = sealed(tmp_path, "plain", prereg())
+    g("switch", "-q", "-c", "docs")
+    g.write("notes.txt", "{ not json\n")
+    g.write("config.jsonc", json.dumps({"name": "x", "verdict": "SHIP"}) + "\n")
+    g.write("list.txt", json.dumps(["PREREG_digits.md"]) + "\n")
+    g.write("doc.md", "# a\n")
+    g.commit("docs")
+    code, out = run(g, "check", "--base", "main", "--head", "docs", capsys=capsys)
+    assert code == 0 and "RECEIPT_NOT_JSON" not in out, out
