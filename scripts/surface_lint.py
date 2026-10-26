@@ -142,6 +142,10 @@ RULES: Tuple[Rule, ...] = (
     _rule("withdrawn/lie-label", "withdrawn", r"\[lie\]|\bthe\s+lie\s+exits\b",
           "the LIE label was retired (CHANGELOG.md: CONTRADICTED is printed as CONTRADICTED, with its reason, not "
           "as LIE)"),
+    _rule("withdrawn/certifies-v1", "withdrawn",
+          r"spans\s+the\s+author\s+bound\s+were\s+checked\s+against\s+bytes\s+the\s+author\s+did\s+not\s+write",
+          "the /v1 certificate sentence: the verifier's only authorship check is the manifest's "
+          "(papers/sworn/NOTE_certifies_correction_2026_10_24.md)"),
     _rule("charter/ordinal", "charter", _word("tsrif"), "the ordinal meaning number one"),
     _rule("charter/newness-adjective", "charter", _word("levon"), "a charter word"),
     _rule("charter/revolution-adjective", "charter", _word("yranoitulover"), "a charter word"),

@@ -25,7 +25,12 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
-PINNED = "b63f2b03c5051f7ca1a196c9b6ac9e7f907fe626970a22e400e484e4598aa446"  # styxx/diffgate.py: main's e1441f18 reader (f457d2e4 + the front door's docstring, --help and WITHHOLD comment wording, outside any reading path; f457d2e4 is 4eb3d6f0 + #205's line cut and abstention; 4eb3d6f0 is 68873068, which is 9b620e00 + the demo's CONTRADICTED label, + the record naming its instrument) + the PATH-2a block (LF)
+PINNED = "7b264014b757d64fd97981f9b823f3f648b9890f82973982b580491041ccef63"  # styxx/diffgate.py: main's 969abb0d reader (91d45e3a + the one-sided #178, on a reading path; 91d45e3a is e1441f18 + #179's async read and #178's abstention, on reading paths; e1441f18 is f457d2e4 + the front door's docstring, --help and WITHHOLD comment wording, outside any reading path; f457d2e4 is 4eb3d6f0 + #205's line cut and abstention; 4eb3d6f0 is 68873068, which is 9b620e00 + the demo's CONTRADICTED label, + the record naming its instrument) + the PATH-2a block (LF)
+# #179 and #178 (fix/diffgate-178-179) moved reading paths in both files at once: both read `async def` where they read
+# `def`, and both abstain on the `def` counts where a counted line sits in a file not read as .py or .pyi or after an
+# odd number of triple quotes in the added lines of its `+++` section, where #205's seams part the two readers (a
+# header's edge, before a `def`, after a name), and where two lines of one `+++` section define one test name, one
+# after `async`, so the differential compares the new reading on both sides.
 # #205 (fix/diffgate-205-206) moved reading paths in both files at once: the Python cuts git output where the port
 # always did, and both abstain on the `def` counts over a line holding a character of _READ_APART, so the differential
 # compares the new reading on both sides. #206 moved styxx/declare.py, which this pin does not hold.

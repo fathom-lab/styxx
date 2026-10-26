@@ -1,0 +1,289 @@
+{
+ "schema": "styxx.sworn.conformance/v1",
+ "format": "sworn/0.1",
+ "spec": "papers/sworn/NOTE_certifies_correction_2026_10_24.md",
+ "label": "the precondition for any second verifier; no claim",
+ "clock": "2026-09-01T00:00:00Z",
+ "manifest_specs": [
+  "sworn/manifest/0.1",
+  "sworn/manifest/0.2"
+ ],
+ "receipt_schemas": [
+  "styxx.sworn.verdict-receipt/v0",
+  "styxx.sworn.verdict-receipt/v1",
+  "styxx.sworn.verdict-receipt/v2"
+ ],
+ "core_schema": "styxx.sworn.verdict-receipt/v2",
+ "core_definition": [
+  "schema",
+  "format",
+  "document",
+  "commit",
+  "manifest_digest",
+  "spans",
+  "counts",
+  "sworn_total",
+  "unresolved",
+  "document_verdict",
+  "document_malformed",
+  "rungs",
+  "certifies"
+ ],
+ "core_rule": "core_sha256 = sha256(utf8(jcs(core))); core = verify() output minus verifier minus coverage",
+ "id_rule": "id = sha256(utf8(jcs({\"mode\": mode, \"inputs\": inputs})))",
+ "set_rule": "set_sha256 = sha256(utf8(jcs(index minus set_sha256 minus provenance)))",
+ "blob_rule": "blobs.json maps sha256 -> base64; every blob hashes to its key; a JSON blob is UTF-8 text, indent 1, LF",
+ "sources": [
+  "tests/test_sworn_receipt_v2.py"
+ ],
+ "sources_note": "the /v2 step's own source (papers/sworn/NOTE_certifies_correction_2026_10_24.md): one core per clause of the /v2 certifies sentence that a document, a manifest and an in-memory tree can show, and /v2, /v1 and /v0 receipts checked by a verifier that issues /v2",
+ "vector_count": 52,
+ "family_count": 4,
+ "families": {
+  "check_v0": {
+   "file": "vectors/check_v0.json",
+   "sha256": "53998804ddf85d70e8c380e9e49ccb808753e68b733d9a97447c035a08ff7f98",
+   "count": 5
+  },
+  "check_v1": {
+   "file": "vectors/check_v1.json",
+   "sha256": "80551bdb6ab412762698955c56fb7a9cf2806312f638e197dcad75c928ccd659",
+   "count": 5
+  },
+  "check_v2": {
+   "file": "vectors/check_v2.json",
+   "sha256": "3e9c557499c3d8c7c325cee800afa6937539a8dcc1e84da3f755ce59847f7f3a",
+   "count": 4
+  },
+  "core_v2": {
+   "file": "vectors/core_v2.json",
+   "sha256": "b333bf7f3f968bf831f4d2bb7e3de7d226d8f91e355817c96647b3118980c57d",
+   "count": 38
+  }
+ },
+ "blobs": {
+  "file": "blobs.json",
+  "sha256": "f994f4496bd5e2dad3cf8fbef6df3644e65b0a3642361eff9bd2148493694bc4",
+  "count": 92
+ },
+ "observer": {
+  "file": "observer.json",
+  "note": "outside set_sha256: the observer's and the build's numbers (C4)"
+ },
+ "modes": {
+  "inline": 39,
+  "receipt_check": 13
+ },
+ "outcomes": {
+  "check": 13,
+  "core": 39
+ },
+ "requires": {
+  "manifest": 38,
+  "manifest+tree": 8,
+  "none": 4,
+  "tree": 2
+ },
+ "requires_legend": {
+  "manifest": "a sworn/manifest/0.x object was given; a second verifier for rN and embedded blobs must pass these",
+  "tree": "a tree snapshot was given (SnapshotTree semantics, C10); a second verifier may skip these and must report how many it skipped, per family",
+  "git": "only a live git object store reproduces this; no vector in v0.1 carries it",
+  "observer": "styxx.claimdetect; never required and never pinned (C4)"
+ },
+ "refusal_codes": {
+  "document_malformed": {
+   "match": "no canonical text exists",
+   "where": []
+  },
+  "commit_form": {
+   "match": "commit must be a full lowercase hex object id or None",
+   "where": []
+  },
+  "lexical_malformed": {
+   "match": "cannot carry a lexically MALFORMED declaration",
+   "where": []
+  },
+  "round_trip": {
+   "match": "canonical round trip does not reproduce the document bytes",
+   "where": []
+  },
+  "sidecar_spec_unknown": {
+   "match": "unknown sidecar spec",
+   "where": []
+  },
+  "sidecar_keys": {
+   "match": "sidecar keys",
+   "where": []
+  },
+  "sidecar_commit_form": {
+   "match": "sidecar commit must be a full lowercase hex object id or null",
+   "where": []
+  },
+  "sidecar_text_not_string": {
+   "match": "sidecar text must be a string",
+   "where": []
+  },
+  "sidecar_text_not_utf8": {
+   "match": "sidecar text is not encodable as UTF-8",
+   "where": []
+  },
+  "sidecar_document_shape": {
+   "match": "sidecar document must carry a string name and a string sha256",
+   "where": []
+  },
+  "sidecar_text_digest": {
+   "match": "sidecar text does not hash to document.sha256",
+   "where": []
+  },
+  "sidecar_spans_not_list": {
+   "match": "sidecar spans must be a list",
+   "where": []
+  },
+  "sidecar_span_shape": {
+   "match": "is not an object with exactly start/end/receipt/kind",
+   "where": []
+  },
+  "sidecar_span_range": {
+   "match": "are not a non-empty range in the text",
+   "where": []
+  },
+  "sidecar_spans_overlap": {
+   "match": "spans are not ordered and non-overlapping",
+   "where": []
+  },
+  "sidecar_span_boundary": {
+   "match": "is not on a UTF-8 character boundary",
+   "where": []
+  },
+  "sidecar_span_attribute": {
+   "match": "cannot be carried by the inline tag grammar",
+   "where": []
+  },
+  "sidecar_manifest_shape": {
+   "match": "sidecar manifest is not a",
+   "where": []
+  },
+  "manifest_spec": {
+   "match": "unknown manifest spec",
+   "where": []
+  },
+  "manifest_receipts_shape": {
+   "match": "manifest receipts must be an object keyed by receipt id",
+   "where": []
+  },
+  "manifest_authored_shape": {
+   "match": "manifest authored_sha256 must be a list of hex strings",
+   "where": []
+  },
+  "sidecar_commit_disagrees": {
+   "match": "and --commit says",
+   "where": []
+  },
+  "manifest_disagrees": {
+   "match": "the supplied manifest disagrees with the embedded one",
+   "where": []
+  },
+  "nothing_to_verify": {
+   "match": "nothing to verify",
+   "where": []
+  },
+  "sidecar_no_canonical_form": {
+   "match": "the sidecar text has no canonical form",
+   "where": []
+  },
+  "sidecar_declaration_unrepresentable": {
+   "match": "carries a declaration the sidecar form cannot represent",
+   "where": []
+  },
+  "sidecar_spans_not_reproduced": {
+   "match": "does not reproduce its spans",
+   "where": []
+  }
+ },
+ "rule_contract": {},
+ "unvectored": {
+  "reasons": [
+   "anchor_out_of_range",
+   "commit_absent",
+   "digest_form",
+   "directional_override",
+   "empty_span",
+   "git_unavailable",
+   "hash_over_partial",
+   "hidden_commitment",
+   "invalid_utf8",
+   "kind_reserved",
+   "kind_unknown",
+   "leaf_not_numeric",
+   "leaf_not_scalar",
+   "length_cap",
+   "manifest_integrity",
+   "manifest_no_completeness",
+   "manifest_spec_unknown",
+   "needle_count",
+   "needle_empty",
+   "nesting",
+   "no_commit",
+   "not_a_blob",
+   "number_count",
+   "number_grammar",
+   "path_absent",
+   "pointer_ambiguous",
+   "pointer_unresolvable",
+   "prereg_not_in_tree",
+   "receipt_form",
+   "receipt_not_json",
+   "receipt_too_large",
+   "short_needle",
+   "stray_closer",
+   "tag_syntax",
+   "unclosed"
+  ],
+  "verdicts": [
+   "WITHHELD"
+  ],
+  "refusal_codes": [
+   "commit_form",
+   "document_malformed",
+   "lexical_malformed",
+   "manifest_authored_shape",
+   "manifest_disagrees",
+   "manifest_receipts_shape",
+   "manifest_spec",
+   "nothing_to_verify",
+   "round_trip",
+   "sidecar_commit_disagrees",
+   "sidecar_commit_form",
+   "sidecar_declaration_unrepresentable",
+   "sidecar_document_shape",
+   "sidecar_keys",
+   "sidecar_manifest_shape",
+   "sidecar_no_canonical_form",
+   "sidecar_span_attribute",
+   "sidecar_span_boundary",
+   "sidecar_span_range",
+   "sidecar_span_shape",
+   "sidecar_spans_not_list",
+   "sidecar_spans_not_reproduced",
+   "sidecar_spans_overlap",
+   "sidecar_spec_unknown",
+   "sidecar_text_digest",
+   "sidecar_text_not_string",
+   "sidecar_text_not_utf8"
+  ],
+  "skipped_count": 0,
+  "skipped": []
+ },
+ "provenance": {
+  "note": "outside set_sha256: which bytes generated the set, not what the set pins (C7)",
+  "sworn_sha256": "3f32da0fdd69d2f448c54d87fc9bfdb07917c3fc076c86d591ba771ec2267fcb",
+  "sources_sha256": {
+   "tests/test_sworn_receipt_v2.py": "3557b24c4a0badc9d89488e5248f0502a6ffadd621d6c4f275937fa6405e9f14"
+  },
+  "python": "3.12.10",
+  "platform": "win32",
+  "styxx_version": "7.50.0",
+  "pytest_summary": "32 passed"
+ },
+ "set_sha256": "801bd62547ccb53ee68ab358e76c684f032eb742af88d8f01d0c7a96ca0ef793"
+}

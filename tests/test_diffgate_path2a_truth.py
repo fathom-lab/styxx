@@ -25,6 +25,7 @@ import json
 import os
 import shutil
 import subprocess
+import types
 
 import pytest
 
@@ -55,15 +56,37 @@ DECIDED = ("VERIFIED", "CONTRADICTED")
 # Pass 9 (NOTE_path2a_ninth_pass_2026_10_04): the C-1 switch is removed, and no figure here moves. The switch did keep
 # attributable verdicts under a U+FEFF before the summary, or a sentence naming styxx beside U+2028, which main's two
 # ports read as they read the plain summary: the transformed worlds at the end of this module.
-PINNED = {"cases": 1706, "main raises": 0, "decided": 7614, "false": 1535, "attributable": 1206, "abstained": 1591,
-          "attributable abstained": 1206, "right": 5897, "right lost": 253, "undecided": 182,
-          "undecided abstained": 39, "unjudged": 0, "unjudged abstained": 0, "false other": 329,
-          "false other abstained": 93}
-# The port judged in its own terms: 1,100 attributable claims, of which 942 carry the same main record in Python and
+# #179 and #178 (fix/diffgate-178-179): main's reading moved and no overlay rule did; the V101 counterfactual reads
+# every count main takes as main reads it (tests/_p2a_truth.py). main abstains (#178) on 60 claims it decided (57 test
+# counts and 3 symbols, in 22 cases, each holding triple quotes): decided 7614 -> 7554 in Python, 7393 -> 7333 in the
+# port. main reads `async def` (#179), so a test or function made async, or changed while async, is counted as added: a
+# false verdict the counterfactual attributes to #101. Attributable 1206 -> 1230 in Python (35 new, each over an added
+# `async def` line; 11 leave, 8 of them to main's #178 abstention and 3, p2a-101:20260930:235 claim 8, :322 claim 1 and
+# :355 claim 4, where main now prints a right CONTRADICTED, since it counts the async test, and the overlay withholds it
+# (#101), so the gate prints UNCHECKABLE there) and 1100 -> 1124 in the port, each withheld.
+# Of the right verdicts the gate printed, 5,644 -> 5,569 in Python, 45 are withheld by #101, 28 are main's own #178
+# abstention, and 2 become false (p2a-101:20260930:217 claim 5 and :379 claim 0, "Added 2 tests." VERIFIED over one
+# async test defined twice in a file: main counts `def` lines and CPython binds one name, the duplicate-definition
+# limit main already had for `def`). Review 3 of fix batch 1 (the same branch): main abstains (#179) on a test count
+# where two lines of one `+++` section the count reads define one name, one of them after `async`, so on 17 claims it
+# decided in 4 cases (p2a-101:20260930:103, :217, :373, :379): decided 7554 -> 7537 in Python, 7333 -> 7316 in the
+# port; false 1547 -> 1542 (the 2 wrong VERIFIEDs above leave, 1 more false verdict of main's the overlay withheld,
+# and 2 attributable ones), attributable 1230 -> 1228 and 1124 -> 1122, right 5828 -> 5817 (right lost 259 -> 255). The
+# gate prints 5,562 right verdicts (5,569 before), 226 wrong ones (228) and withholds 1,609 claims (1,616). #205's seams
+# reach no case of this world. The one-sided #178 (options judgment of fix batch 1): main's tests count abstains only
+# on a claim at or below the larger of its two counts, so on 19 claims in 13 cases, each claiming more tests than any
+# count main takes, main decides again, each a right CONTRADICTED: decided 7537 -> 7556 and right 5817 -> 5836 in
+# Python, 7316 -> 7335 and 5659 -> 5678 in the port; no false verdict, attributable or withheld figure moves. The gate
+# prints 5,581 right verdicts (5,499 in the port), 226 wrong ones, and withholds 1,609 claims.
+PINNED = {"cases": 1706, "main raises": 0, "decided": 7556, "false": 1542, "attributable": 1228, "abstained": 1609,
+          "attributable abstained": 1228, "right": 5836, "right lost": 255, "undecided": 178,
+          "undecided abstained": 38, "unjudged": 0, "unjudged abstained": 0, "false other": 314,
+          "false other abstained": 88}
+# The port judged in its own terms: 1,122 attributable claims, of which 964 carry the same main record in Python and
 # 158 are read otherwise by Python's main (paths and names outside ASCII, which the two templates extract apart).
-PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7393, "abstained": 1452, "right": 5739, "right lost": 177,
-               "false": 1385, "attributable": 1100, "attributable abstained": 1100, "false other": 285,
-               "false other abstained": 49, "undecided": 269, "undecided abstained": 126}
+PINNED_PORT = {"cases": 1706, "main raises": 0, "decided": 7335, "abstained": 1470, "right": 5678, "right lost": 179,
+               "false": 1392, "attributable": 1122, "attributable abstained": 1122, "false other": 270,
+               "false other abstained": 44, "undecided": 265, "undecided abstained": 125}
 PINNED_GIT = {"cases": 96, "main raises": 0, "with R, C or T": 16, "decided": 63, "abstained": 14, "false": 17,
               "attributable": 14, "attributable abstained": 14, "right": 46, "right lost": 0, "false other": 3,
               "false other abstained": 0}
@@ -249,16 +272,17 @@ PORT_161_MODELS = {
 
 
 def test_the_port_withholds_its_attributable_verdicts_on_161s_bom_reproductions(tmp_path):
-    """Judged by truth, in the port's own terms: four of the port's verdicts on these three inputs are false through
-    #101 (a counted `def test_` is a changed test), and each is withheld; the port's three other decided verdicts
-    there are right, and one of them is lost (y2's count of 0 against one new test, `split`)."""
+    """Judged by truth, in the port's own terms. Until review 3 of fix batch 1 four of the port's verdicts on these
+    three inputs were false through #101 (a counted `def test_` is a changed test), and each was withheld; the port's
+    three other decided verdicts there were right, and one of them was lost (y2's count of 0 against one new test,
+    `split`). Since then main's port, like main's Python, abstains on every tests claim there (#205's seam before a
+    `def`: the U+FEFF-led line, which only the port's \\s reads), so it decides no claim on them to judge."""
     cases = [dict(c, model=PORT_161_MODELS[c["id"]]) for c in R.repro_cases() if c["id"] in PORT_161_MODELS]
     assert len(cases) == 3
     counts, misses, _rows = _port_truth(cases, tmp_path)
     print("port truth on #161's BOM reproductions:", json.dumps(counts))
     assert misses == []
-    assert (counts["attributable"], counts["attributable abstained"]) == (4, 4), counts
-    assert (counts["right"], counts["right lost"]) == (3, 1), counts
+    assert counts == {"cases": 3, "main raises": 0}, counts
 
 
 def test_every_attributable_false_verdict_abstains_at_the_git_door(monkeypatch):
@@ -440,8 +464,15 @@ PY_PLANTS = [
 # one: main now abstains on a tests claim whenever an added line holds U+2028 or U+2029, so the starts after them, which
 # only the counted tests of a decided claim read, can move no record. They are kept because the overlay's count must
 # still be main's on every input, decided or not: tests/test_diffgate_path2a.py's lockstep holds that in each port, and
-# tests/test_diffgate_issue205_206.py plants this same slip and tells it there.
-EQUIVALENT: set = {"the counted tests read without the U+2028 and U+2029 starts"}
+# tests/test_diffgate_issue205_206.py plants this same slip and tells it there. Review 3 of fix batch 1
+# (fix/diffgate-178-179) adds the split rule: main abstains on a tests claim wherever its two ports can count an added
+# `def test_` apart (#205's seam before a `def`), so no claim the overlay reads has two line views that count apart, and
+# the rule moves no record. It is kept for such a claim, and told on one built by hand (EQUIVALENT_DECIDE): views
+# counting 2 and 2, one changed in one view only, read `split`, and `redefined` without the rule.
+EQUIVALENT: set = {"the counted tests read without the U+2028 and U+2029 starts", "split read as keep"}
+_SPLIT_CLAIM = types.SimpleNamespace(why="diff adds 2 test functions, claim says 2", detail={"n": "2"}, verdict="VERIFIED")
+EQUIVALENT_DECIDE = {"split read as keep": lambda m: m._p2a_tests(_SPLIT_CLAIM, types.SimpleNamespace(
+    pairing=lambda: [(2, 0, 0), (2, 1, 1)]))}
 
 
 def _planted(k, old, new):
@@ -523,6 +554,9 @@ def test_plants_are_refused(world):
         if why is None and name in EQUIVALENT:
             assert _same_everywhere(mod, world, inputs), name
             why = "equivalent: identical records on every committed input and truth case"
+            if name in EQUIVALENT_DECIDE:                            # ... and told where it shows
+                assert EQUIVALENT_DECIDE[name](N) == ("split", "#101"), name
+                assert EQUIVALENT_DECIDE[name](mod) != EQUIVALENT_DECIDE[name](N), name
         caught[name] = why
     print("plants:", json.dumps(caught, indent=1))
     assert all(caught.values()), [n for n, w in caught.items() if not w]
@@ -634,6 +668,27 @@ def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
         real = json.loads((tmp_path / "own_real.json").read_text(encoding="utf-8"))
         mine = json.loads((tmp_path / "own_planted.json").read_text(encoding="utf-8"))
         new_disagreements = sum(json.dumps(x, sort_keys=True) != json.dumps(y, sort_keys=True) for x, y in zip(real, mine))
+    if new_disagreements == 0 and name in JS_EQUIVALENT_DECIDE:
+        # review 3 of fix batch 1: a plant that can move no record (JS_EQUIVALENT_DECIDE) is held to that, on every
+        # input here, and told where it shows: the planted port's own decision on a tests claim whose two line views
+        # count apart, which main now abstains on before the overlay reads it
+        recs = {}
+        for port, tag in ((R.PORT, "real"), (planted, "planted")):
+            r = subprocess.run([NODE, str(R.DIFFERENTIAL / "check_path2a.js"), "--records", str(port),
+                                str(tmp_path / "in.json"), str(tmp_path / f"eq_{tag}.json")], capture_output=True,
+                               text=True)
+            assert r.returncode == 0, r.stderr[-2000:]
+            recs[tag] = json.loads((tmp_path / f"eq_{tag}.json").read_text(encoding="utf-8"))
+        assert recs["planted"] == recs["real"], name
+        runner = tmp_path / "decide.js"
+        runner.write_text(DECIDE_RUNNER, encoding="utf-8")
+        got = {}
+        for port, tag in ((R.PORT, "real"), (planted, "planted")):
+            r = subprocess.run([NODE, str(runner), str(port)], capture_output=True, text=True)
+            assert r.returncode == 0, r.stderr[-2000:]
+            got[tag] = json.loads(r.stdout)
+        assert got["real"] == JS_EQUIVALENT_DECIDE[name], got["real"]
+        new_disagreements = sum(x != y for x, y in zip(got["real"], got["planted"]))
     if new_disagreements == 0 and name in JS_EQUIVALENT:
         # #205 (fix/diffgate-205-206): a plant that can move no record (JS_EQUIVALENT) is held to that, on every input
         # here, and told where it shows: the port's lockstep, whose count in view 1 is no longer its main's
@@ -658,10 +713,30 @@ def test_port_plants_make_the_ports_disagree(name, old, new, tmp_path):
 # main's on every input, which the lockstep holds.
 JS_EQUIVALENT = {"the port's counted tests without the U+2028 and U+2029 starts"}
 
+# Review 3 of fix batch 1 (fix/diffgate-178-179): main's two ports abstain on a tests claim wherever the two line views
+# can count an added `def test_` apart (a U+FEFF lead, #205's seam before a `def`; U+2028, U+2029 and #205's other
+# characters before that), so the split rule and the port's own view can move no record; they are kept for the claims
+# main decides with the two views apart, and told on such a claim built by hand: (view 0 counts 2, view 1 counts 2,
+# one changed in view 1 only) reads `split`, and (view 0 counts 1, view 1 counts 2) reads `tests` in this port and
+# `unreproduced` where the port takes view 0 as its own.
+DECIDE_RUNNER = r"""
+"use strict";
+const fs = require("fs");
+const vm = require("vm");
+const port = process.argv[2];
+const P = vm.runInContext(fs.readFileSync(port, "utf8") + "\n;({_p2aTests})", vm.createContext({}), { filename: port });
+const claim = { why: "diff adds 2 test functions, claim says 2", detail: { n: "2" }, verdict: "VERIFIED" };
+const out = [[[2, 0, 0], [2, 1, 1]], [[1, 1, 1], [2, 1, 1]]].map(counts => P._p2aTests(claim, { pairing: () => counts }));
+process.stdout.write(JSON.stringify(out));
+"""
+JS_EQUIVALENT_DECIDE = {"no split rule": [["split", "#101"], ["tests", "#101"]],
+                        "the port reading its count as CPython's": [["split", "#101"], ["tests", "#101"]]}
+
 
 # Claims only one main decides so (NOTE_path2a_sixth_pass_2026_09_30): a created test after U+FEFF, which the port
-# counts and CPython does not, so "Added 2 tests." is VERIFIED in the port only; the real port withholds it (`tests`: a
-# changed test is among the two).
+# counts and CPython does not, so "Added 2 tests." was VERIFIED in the port only and the real port withheld it (`tests`:
+# a changed test is among the two). Since review 3 of fix batch 1 both mains abstain on it (#205's seam before a
+# `def`), and the plants it told are told by JS_EQUIVALENT_DECIDE.
 PORT_ONLY_CASES = [
     {"id": "own-count-view", "summary": "Added 2 tests.",
      "diff": ("diff --git a/tests/test_x.py b/tests/test_x.py\n--- a/tests/test_x.py\n+++ b/tests/test_x.py\n"
@@ -981,8 +1056,11 @@ def _transformed(how: str) -> list:
     return out
 
 
-# The attributable false verdicts of each transformed world, in Python and in the port: every one is withheld.
-TRANSFORMED = {"cjk2": (1073, 969), "insent": (1193, 1087), "bom": (1175, 1087), "styxx": (1193, 1087)}
+# The attributable false verdicts of each transformed world, in Python and in the port: every one is withheld. Each
+# 24 more in both ports since #179 and #178 (fix/diffgate-178-179), as on the plain world: the changed async tests and
+# functions main now counts, attributed to #101; and 2 fewer since review 3 of fix batch 1, as on the plain world: main
+# abstains on a test name defined twice in one section, one line after `async`.
+TRANSFORMED = {"cjk2": (1095, 991), "insent": (1215, 1109), "bom": (1197, 1109), "styxx": (1215, 1109)}
 
 
 @pytest.mark.parametrize("how", sorted(TRANSFORMED))

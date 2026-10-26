@@ -1,0 +1,23 @@
+15:54:31 local seats, packet L, head 7680159d, deadline 22:00 local, first estimate 5400s
+15:54:31 start L-seat1 (expected ~90 min)
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.75s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.81s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.95s/it]
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+seat L-1 (local): verdict RECORDED, items 59, unparsed 14, errors 0, substrate {"model": "Qwen/Qwen2.5-3B-Instruct", "transport": "transformers", "dtype": "bf16", "device": "cuda", "quant": null, "named_in_design": false, "block_order": ["TASK", "FORMAT", "CAUTIONS"], "threads": 22, "load_seconds": 6.7}
+timing: 16794 new tokens in 875.8 s (19.18 tok/s), rss 1.27 GB
+16:09:23 done L-seat1 in 892s: model=Qwen/Qwen2.5-3B-Instruct named_in_design=False verdict=RECORDED items=59 errors=0 (exit 0)
+16:09:23 start L-seat2 (expected ~14 min)
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.98s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.45s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.53s/it]
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+seat L-2 (local): verdict RECORDED, items 59, unparsed 14, errors 0, substrate {"model": "Qwen/Qwen2.5-3B-Instruct", "transport": "transformers", "dtype": "bf16", "device": "cuda", "quant": null, "named_in_design": false, "block_order": ["FORMAT", "CAUTIONS", "TASK"], "threads": 22, "load_seconds": 5.7}
+timing: 16428 new tokens in 862.5 s (19.05 tok/s), rss 1.28 GB
+16:24:01 done L-seat2 in 878s: model=Qwen/Qwen2.5-3B-Instruct named_in_design=False verdict=RECORDED items=59 errors=0 (exit 0)
+16:24:01 start L-seat3 (expected ~14 min)
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.96s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.43s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.51s/it]
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+seat L-3 (local): verdict RECORDED, items 59, unparsed 16, errors 0, substrate {"model": "Qwen/Qwen2.5-3B-Instruct", "transport": "transformers", "dtype": "bf16", "device": "cuda", "quant": null, "named_in_design": false, "block_order": ["CAUTIONS", "TASK", "FORMAT"], "threads": 22, "load_seconds": 5.9}
+timing: 14408 new tokens in 756.1 s (19.05 tok/s), rss 1.28 GB
+16:36:53 done L-seat3 in 772s: model=Qwen/Qwen2.5-3B-Instruct named_in_design=False verdict=RECORDED items=59 errors=0 (exit 0)
+16:36:53 packet L: all three local seats written

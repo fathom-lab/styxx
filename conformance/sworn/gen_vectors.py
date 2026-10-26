@@ -10,6 +10,12 @@ verifier; no claim.
   python conformance/sworn/gen_vectors.py            regenerate in place; refuses a moved core
   python conformance/sworn/gen_vectors.py --check    regenerate in memory; exit 1 if set_sha256 differs
   python conformance/sworn/gen_vectors.py --replay   replay the committed set; exit 1 on any mismatch
+  ... --set NAME                                     which set (default `sworn`, the /v1 set); see SETS
+
+Each set declares the receipt schema its cores carry (index ``core_schema``). The replay projects a
+live core onto it (``styxx.sworn._core_as``), and for a set whose cores are an older schema than the
+verifier issues, the recorder holds the two strings at that schema while the sources run (C3b,
+``conformance/sworn/recorder.py``), so the set's cores never move when the verifier's schema does.
 
 Exit 0 is a set written or confirmed; exit 1 is a refusal with the reason printed. Nothing is
 written on a refusal.
@@ -190,6 +196,28 @@ REFUSALS = [
     ("sidecar_spans_not_reproduced", "does not reproduce its spans"),
 ]
 
+# The sets this generator writes. `core_schema` is the receipt schema a set's cores carry, written into
+# its index and read by every replay; `pin` is what the recorder holds the verifier's two receipt
+# strings at while the sources run (C3b), or None when the live schema is the set's own.
+SETS: Dict[str, Dict[str, Any]] = {
+    "sworn": {"dir": SET_DIR, "sources": list(SOURCES), "sources_note": SOURCES_NOTE, "spec": SPEC_PATH,
+              "core_schema": "styxx.sworn.verdict-receipt/v1", "pin": "styxx.sworn.verdict-receipt/v1",
+              "family_by_class": FAMILY_BY_CLASS, "rule_contract": RULE_CONTRACT},
+    # The /v2 set beside it: its cores carry the live schema, so nothing is pinned; its only source is
+    # pure (no git, no repository tree, no node), so every call it makes records. Its rule contract is
+    # the /v1 set's to keep; this set pins the two strings /v2 moved and the clauses of its sentence.
+    "receipt_v2": {"dir": SET_DIR / "receipt_v2", "sources": ["tests/test_sworn_receipt_v2.py"],
+                   "sources_note": ("the /v2 step's own source (papers/sworn/NOTE_certifies_correction_2026_10_24.md): "
+                                    "one core per clause of the /v2 certifies sentence that a document, a manifest and "
+                                    "an in-memory tree can show, and /v2, /v1 and /v0 receipts checked by a verifier "
+                                    "that issues /v2"),
+                   "spec": "papers/sworn/NOTE_certifies_correction_2026_10_24.md",
+                   "core_schema": "styxx.sworn.verdict-receipt/v2", "pin": None,
+                   "family_by_class": {"TestCoreV2": "core_v2", "TestReceiptV2": "check_v2",
+                                       "TestReceiptV1UnderV2": "check_v1", "TestReceiptV0UnderV2": "check_v0"},
+                   "rule_contract": {}},
+}
+
 REQUIRES_LEGEND = {
     "manifest": "a sworn/manifest/0.x object was given; a second verifier for rN and embedded blobs must pass these",
     "tree": "a tree snapshot was given (SnapshotTree semantics, C10); a second verifier may skip these and must report how many it skipped, per family",
@@ -229,13 +257,16 @@ def _rule_key(r: str) -> Tuple[str, int]:
 
 # --------------------------------------------------------------------------- the recorder run
 
-def run_recorder(sources: List[str]) -> Tuple[List[dict], str]:
+def run_recorder(sources: List[str], pin: Optional[str] = None) -> Tuple[List[dict], str]:
     with tempfile.TemporaryDirectory() as td:
         out = Path(td) / "records.jsonl"
         env = dict(os.environ)
         env["PYTHONPATH"] = str(ROOT) + (os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
         env["SWORN_RECORDER_OUT"] = str(out)
         env["PYTHONIOENCODING"] = "utf-8"
+        env.pop("SWORN_RECORDER_RECEIPT_SCHEMA", None)
+        if pin is not None:
+            env["SWORN_RECORDER_RECEIPT_SCHEMA"] = pin          # C3b, conformance/sworn/recorder.py
         cmd = [sys.executable, "-m", "pytest", *sources, "-q", "--no-header", "-p", "no:cacheprovider",
                "-p", "conformance.sworn.recorder"]
         r = subprocess.run(cmd, cwd=str(ROOT), env=env, capture_output=True, text=True,
@@ -342,17 +373,17 @@ def _test_name(source: str) -> str:
     return source.split("::")[-1].split("[")[0]
 
 
-def family_of(sources: List[str]) -> str:
+def family_of(sources: List[str], family_by_class: Optional[Dict[str, str]] = None) -> str:
     src = min(sources)
     parts = src.split("::")
     test = _test_name(src)
     if test == FUZZ_TEST:
         return "fuzz"
     cls = parts[1] if len(parts) >= 3 else None
-    return FAMILY_BY_CLASS.get(cls, "other")
+    return (FAMILY_BY_CLASS if family_by_class is None else family_by_class).get(cls, "other")
 
 
-def fold(records: List[dict]):
+def fold(records: List[dict], family_by_class: Optional[Dict[str, str]] = None):
     blobs: Dict[str, bytes] = {}
     vectors: Dict[str, dict] = {}
     observer: Dict[str, dict] = {}
@@ -386,7 +417,7 @@ def fold(records: List[dict]):
         for s in vec["sources"]:
             rules.update(RULES_BY_TEST.get(_test_name(s), []))
         vec["rules"] = sorted(rules, key=_rule_key)
-        vec["family"] = family_of(vec["sources"])
+        vec["family"] = family_of(vec["sources"], family_by_class)
     seen = set()
     uniq = []
     for s in skipped:
@@ -417,7 +448,8 @@ def _reasons_seen(vectors: Dict[str, dict], blobs: Dict[str, bytes]):
 
 
 def build_set(vectors: Dict[str, dict], blobs: Dict[str, bytes], observer: Dict[str, dict],
-              skipped: List[dict], summary: str):
+              skipped: List[dict], summary: str, cfg: Optional[Dict[str, Any]] = None):
+    cfg = SETS["sworn"] if cfg is None else cfg
     families: Dict[str, List[dict]] = {}
     for v in vectors.values():
         families.setdefault(v["family"], []).append(v)
@@ -448,18 +480,19 @@ def build_set(vectors: Dict[str, dict], blobs: Dict[str, bytes], observer: Dict[
     index: Dict[str, Any] = {
         "schema": SCHEMA,
         "format": sworn.SPEC,
-        "spec": SPEC_PATH,
+        "spec": cfg["spec"],
         "label": LABEL,
         "clock": CLOCK,
         "manifest_specs": list(sworn.MANIFEST_SPECS),
         "receipt_schemas": list(sworn.RECEIPT_SCHEMAS),
+        "core_schema": cfg["core_schema"],
         "core_definition": CORE_KEYS,
         "core_rule": CORE_RULE,
         "id_rule": ID_RULE,
         "set_rule": SET_RULE,
         "blob_rule": BLOB_RULE,
-        "sources": list(SOURCES),
-        "sources_note": SOURCES_NOTE,
+        "sources": list(cfg["sources"]),
+        "sources_note": cfg["sources_note"],
         "vector_count": len(vectors),
         "family_count": len(family_meta),
         "families": family_meta,
@@ -470,7 +503,7 @@ def build_set(vectors: Dict[str, dict], blobs: Dict[str, bytes], observer: Dict[
         "requires": {k: requires[k] for k in sorted(requires)},
         "requires_legend": REQUIRES_LEGEND,
         "refusal_codes": refusal_codes,
-        "rule_contract": RULE_CONTRACT,
+        "rule_contract": cfg["rule_contract"],
         "unvectored": {
             "reasons": sorted(set(sworn.REASONS) - reasons),
             "verdicts": sorted(set(sworn.VERDICTS) - verdicts),
@@ -483,7 +516,7 @@ def build_set(vectors: Dict[str, dict], blobs: Dict[str, bytes], observer: Dict[
     index["provenance"] = {
         "note": "outside set_sha256: which bytes generated the set, not what the set pins (C7)",
         "sworn_sha256": _normalised_sha256(ROOT / "styxx" / "sworn.py"),
-        "sources_sha256": {s: _normalised_sha256(ROOT / s) for s in SOURCES},
+        "sources_sha256": {s: _normalised_sha256(ROOT / s) for s in cfg["sources"]},
         "python": platform.python_version(),
         "platform": sys.platform,
         "styxx_version": __version__,
@@ -550,12 +583,12 @@ def refuse_if_moved(old: Dict[str, dict], new: Dict[str, dict]) -> None:
                       "rewrite the set; nothing written" % len(moved))
 
 
-def replay_all(vectors: Dict[str, dict], blob_store: Dict[str, str]) -> Dict[str, Dict[str, int]]:
+def replay_all(vectors: Dict[str, dict], blob_store: Dict[str, str], core_schema: str) -> Dict[str, Dict[str, int]]:
     counts: Dict[str, Dict[str, int]] = {}
     failures = []
     for vid in sorted(vectors):
         v = vectors[vid]
-        status, detail = replay_vector(v, blob_store)
+        status, detail = replay_vector(v, blob_store, core_schema=core_schema)
         fam = counts.setdefault(v["family"], {"pass": 0, "fail": 0, "skip": 0})
         fam[status] += 1
         if status == "fail":
@@ -567,14 +600,15 @@ def replay_all(vectors: Dict[str, dict], blob_store: Dict[str, str]) -> Dict[str
     return counts
 
 
-def generate(sources: List[str]):
-    records, summary = run_recorder(sources)
-    vectors, blobs, observer, skipped = fold(records)
+def generate(sources: List[str], cfg: Optional[Dict[str, Any]] = None):
+    cfg = dict(SETS["sworn"] if cfg is None else cfg, sources=list(sources))
+    records, summary = run_recorder(sources, cfg["pin"])
+    vectors, blobs, observer, skipped = fold(records, cfg["family_by_class"])
     if not vectors:
         raise Refused("no vectors recorded")
-    index, family_files, blobs_bytes, obs_doc = build_set(vectors, blobs, observer, skipped, summary)
+    index, family_files, blobs_bytes, obs_doc = build_set(vectors, blobs, observer, skipped, summary, cfg)
     blob_store = {h: base64.b64encode(b).decode("ascii") for h, b in blobs.items()}
-    counts = replay_all(vectors, blob_store)
+    counts = replay_all(vectors, blob_store, cfg["core_schema"])
     return index, family_files, blobs_bytes, obs_doc, vectors, counts
 
 
@@ -639,21 +673,27 @@ def _short(v) -> str:
 
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--sources", nargs="+", default=SOURCES)
-    ap.add_argument("--out", default=str(SET_DIR))
+    ap.add_argument("--set", dest="set_name", choices=sorted(SETS), default="sworn",
+                    help="which conformance set (default: sworn, the /v1 set under conformance/sworn/)")
+    ap.add_argument("--sources", nargs="+", default=None)
+    ap.add_argument("--out", default=None)
     ap.add_argument("--check", action="store_true", help="regenerate in memory; exit 1 if set_sha256 differs")
     ap.add_argument("--replay", action="store_true", help="replay the committed set; exit 1 on any mismatch")
     args = ap.parse_args(argv)
-    out_dir = Path(args.out)
+    cfg = SETS[args.set_name]
+    out_dir = Path(args.out) if args.out else cfg["dir"]
     try:
         if args.replay:
             index, vectors, blob_store = load_committed(out_dir)
             if index is None:
                 raise Refused("no committed set at %s" % out_dir)
-            counts = replay_all(vectors, blob_store)
+            if index.get("core_schema") != cfg["core_schema"]:
+                raise Refused("the set at %s declares core_schema %r; the %s set is %r"
+                              % (out_dir, index.get("core_schema"), args.set_name, cfg["core_schema"]))
+            counts = replay_all(vectors, blob_store, index["core_schema"])
             _report(index, counts)
             return 0
-        index, family_files, blobs_bytes, obs_doc, vectors, counts = generate(args.sources)
+        index, family_files, blobs_bytes, obs_doc, vectors, counts = generate(args.sources or cfg["sources"], cfg)
         committed, old_vectors, _ = load_committed(out_dir)
         if args.check:
             _report(index, counts)

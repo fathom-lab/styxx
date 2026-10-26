@@ -40,6 +40,23 @@ sworn._now = lambda: CLOCK
 os.environ["GIT_AUTHOR_DATE"] = CLOCK
 os.environ["GIT_COMMITTER_DATE"] = CLOCK
 
+# C3b: the receipt schema is pinned the same way, when the generator asks for it. A set declares the
+# schema its cores carry (index.json `core_schema`); the /v1 set's is styxx.sworn.verdict-receipt/v1.
+# A verifier that issues /v2 differs from a /v1 core in exactly `schema` and `certifies`
+# (styxx.sworn._core_as, papers/sworn/NOTE_certifies_correction_2026_10_24.md), and the replay
+# projects a live core onto the declared schema. But some receipt_check vectors take as input a
+# receipt the sources issue during the run, and an input cannot be projected after the fact. So
+# while the sources run, the two strings are held at the declared schema's, exactly as the clock is
+# held at CLOCK. Pinning changes no verdict
+# (tests/test_sworn_certifies_v2.py::test_the_recorder_pin_moves_two_strings_and_no_verdict).
+RECEIPT_SCHEMA_PIN = os.environ.get("SWORN_RECORDER_RECEIPT_SCHEMA") or None
+if RECEIPT_SCHEMA_PIN is not None:
+    if RECEIPT_SCHEMA_PIN not in sworn._CERTIFIES_OF:
+        raise SystemExit("REFUSED: SWORN_RECORDER_RECEIPT_SCHEMA=%r is not a receipt schema this verifier "
+                         "can hold (%s)" % (RECEIPT_SCHEMA_PIN, ", ".join(sorted(sworn._CERTIFIES_OF))))
+    sworn.RECEIPT_SCHEMA = RECEIPT_SCHEMA_PIN
+    sworn._CERTIFIES = sworn._CERTIFIES_OF[RECEIPT_SCHEMA_PIN]
+
 _OUT = os.environ.get("SWORN_RECORDER_OUT")
 _DEPTH = [0]
 _ORIGINAL = {

@@ -1,0 +1,4383 @@
+{
+ "spec": "sworn/0.1",
+ "commit": "747e08901b491d3728e763ae295f9b907b8cd809",
+ "document": {
+  "name": "RESULT_sworn_measurement_tranche_A_2026_10_25.md",
+  "sha256": "affde1ea040c9a12988193deba8c0e75f8acfb18a828ec7bd86d39c39f94ea6e"
+ },
+ "text": "# RESULT — leg 2, tranche A: sworn output put to two judging families under DESIGN v2's bars; both panels void, the canaries caught, the twin floor untested: `VOID_L_R__G_S1_G_S2_G_P_withheld__MISSED__G_G1`\n\n**Verdict: `VOID_L_R__G_S1_G_S2_G_P_withheld__MISSED__G_G1`** (`verdict_A.json`; the row at PREREG l.724,\n`\"verdict\": \"VOID_L_R__G_S1_G_S2_G_P_withheld__MISSED__G_G1\"`).\nScored by `styxx.protocol` through `verdict_input.py --tranche A` over `measurement_result.json`, under the gates block\nwhose sha256 the record carries as `518e661662e0ec1b52cab4958e2a7a168b7e2c1a6a64fc0ab91833c9e69bc038`, the digest PREREG l.634 states\n(`518e661662e0ec1b52cab4958e2a7a168b7e2c1a6a64fc0ab91833c9e69bc038`); the record names the PREREG's\ncommit as `01e9d2b772d036b906b80c234ce32473c2f1ae39`. This document takes the verdict from the record and decides nothing itself.\n\n**The verdict under DESIGN v2's titles** (DESIGN v2 l.52-61, signed byte for byte at PREREG l.141-152):\n\n- **Panel L — *`void panel; the void is the result`*.** Neither family cleared its decoys (G_F_L:\n  0 families of the 2 the bar needs). The counts print with no rate, beside the\n  decoys' committed authorship sentence (section \"The panels\", Panel L).\n- **Panel R — *`one-family: counts only, no precision`*.** One family cleared its decoys, the Claude\n  family on `claude-opus-5-5` (Amendment 6); the local family, SUBSTRATE NOT NAMED IN DESIGN v2, did not (G_F_R: 1 of 2).\n- **G-S1, G-S2 and G-P: withheld.** A withheld share is never a pass and never a miss\n  (`so a withheld share is never a pass and never a miss`, PREREG l.611); no share of load-bearing\n  sentences bound, of padding, or of wrong leaves was computed for tranche A.\n- **G-C: held.** The verifier FAILED 182 of 182 planted\n  known-false spans of the PREREG's three constructions; the Wilson 95% lower bound is\n  0.9793286325558971 against 0.95.\n- **G-G1 — *`the floor cannot price gaming`; the floor leaves the headline*.** 0 of 0: **the bar was\n  not tested.** No pair was formed (0 pairs), because all\n  9 twins, `claude-opus-5-5` (Amendment 6), came back with their canonical text changed by one\n  byte, the document's final line feed, which the transport path strips (section \"G-G1\" below); an empty\n  denominator reads as `a miss, fail-closed` (PREREG l.614-617).\n\nFathom Lab · committed 2026-10-25 · Preregistration: `papers/sworn/PREREG_sworn_measurement_2026_10_23.md` (blob\n`c86134cfc909d77a1cfb3b65cd62da8bfeab04bb`, sha256 `8b2e72f1f52dfa36af49a651d36039fe78d77b6cfaab76fea290cc226c70ae1f`), signing commit `01e9d2b7` (2026-10-23T08:04:55-04:00), merged in\n#225; read with its Amendment 6, `papers/sworn/AMENDMENT_sworn_measurement_leg2_seat_alias_2026_10_24.md` (blob\n`107b54da6d55f033d59866c990ff2749bdfad296`, sha256 `58679cc5887d7982714067caa199f2d97b302c9735f101630019a89c3d78b81c`), merged in #235 as `7680159d` (2026-10-24T13:03:27-04:00). The\nfold ran at HEAD `7680159d0448e331ed82423cfbb080da4516e223`, with every input the lock names at the blob the PREREG pins: `score.py` at\n`3a5bdb8cd5057a0cf5eccf7343d9d05ee4ab954d` against PREREG l.550's `3a5bdb8cd5057a0cf5eccf7343d9d05ee4ab954d`, and\n`packet_L.json` at `34132057d437c7439c70ec407b1397d7354e1aef` against l.551's `34132057d437c7439c70ec407b1397d7354e1aef`\n(the other five inputs in `measurement_result.json#/lock/inputs`; PREREG l.548-556).\n\n**Limits, before any number.** The authors of every document in tranche A had read the bars before writing it, so\nthe in-house arm is bar-aware by construction; both families ran on one machine, and one of them is the family that\nwrote the documents, so correlated error is the ceiling and agreement between them is a description, never validity\n(PREREG l.3-11, `across them is the ceiling, and agreement between them is a description, never validity`;\ndisclosures 1 and 2, below). Whatever this panel finds is a pilot until an outside seat answers the public packets.\n\n**Beside every number in this document: j = 0 outside seats as of 2026-10-25, and a retrospective share of 9 of 9\ndocuments.** No outside seat was reported to the lab as of 2026-10-25, by the lead's account; no committed byte records\nit. j is a count at this date, not a final one: an outside seat counts when its file's\n`sha256 was public before the key release commit for that fold` (Amendment 4, PREREG l.478-479), so for\ntranche A the window stays open until tranche A's key release commit, and j can still rise. Every denominator below is\ntranche A's alone: 9 documents pinned at `f28d35ad`, all written before the bars\nwere signed; no pooled denominator exists before tranche B's fold (PREREG l.361-362, l.623-624).\n\n## The operator's decisions, and the lead's defaults\n\nThe operator (Flobi) answered in chat on 2026-10-25, to a question that quoted this RESULT's verdict. The answers are\nquoted as given; no committed byte records them.\n\n- **D1, what enters the tree with this RESULT:** \"At key release (Recommended)\". This RESULT is committed with the\n  fold's two outputs, the Claude family's ledger, the nine trivial twins and their status files, and per-seat facts\n  with each seat file's sha256 (`tranche_A_seat_facts.json`, below). The twelve seat files (`claude/` and `local/`,\n  `L-seat1` to `R-seat3`) enter the tree only in tranche A's key-release commit, whose bytes must then match the\n  sha256 printed here. One file more is held, by the lead's reading of the same decision: the local family's\n  ledger (SUBSTRATE NOT NAMED IN DESIGN v2). `seat_local.py` hashes the model's generated text into each row\n  (`raw_sha = hashlib.sha256(text.encode(\"utf-8\")).hexdigest()`, l.148), and its Panel R rows hold\n  2 distinct values over\n  498 rows (SUBSTRATE NOT NAMED IN DESIGN v2), so a row's hash names which of two outputs\n  that seat gave on that item: an item-level answer, which D1 holds with the seat files. Its counts and sha256 are in\n  the seat facts; it enters the tree with them. The Claude ledger (`claude-opus-5-5`, Amendment 6) hashes the transport's envelope, and its Panel R\n  rows hold 498 distinct values over\n  498 rows.\n- **Tranche B's route:** \"New prereg with fixes (Recommended)\". Tranche B runs on a fixed transport under a new\n  preregistration that carries both routes this RESULT names (section \"Item L-0033\"). That preregistration is not\n  written here.\n- **The lead's defaults, stated as the lead's, not the operator's:** D3, the lead-attested files are committed as\n  receipts (section \"Where the receipts are\"), each scanned before it was kept, with an erratum beside the two that\n  need one, never an edit of either; D4, L-0033's decoy status is not printed (section \"Item L-0033\"); D5, no\n  machinery change.\n\n## Where the receipts are\n\nEvery receipt below is committed except those the last bullet names, and every sworn span resolves at the commit\nthis document's sidecar names.\n\n- **The fold's two outputs**, written outside the tree on 2026-10-24 and copied in byte for byte, never re-run into\n  it: `papers/sworn/measurement/measurement_result.json` (sha256 `80918c789abbee29852cbf99dba3d13d90bdde3ca6dadb1d31f66f5a15f49ed4`; the path `score.py` l.555-556 and\n  `verdict_input.py` l.204, `default=str(HERE / \"measurement_result.json\")`, default to) and\n  `papers/sworn/measurement/verdict_A.json` (sha256 `45b1e570ace3044fda165fc5c64fe904830951356b075d610c031a7cc5cf964f`).\n- **Derived receipts**, for counts over arrays that no leaf holds, each written by a committed read-only script under\n  `papers/sworn/measurement/`: `receipts/tranche_A_seat_facts.json` (sha256 `3f59b2d05c55e9cd9c1797d175ac9f7f92cf73d8e4d4732b4ee1714fc98a5714`), by `tranche_A_seat_facts.py`\n  (sha256 `45a6f7f9ecbaca56d3f566fcca70e97c043920d0e42578719e49460d4d84e93f`) over the run worktree's untracked `seat_outputs/`, headers, counts and sha256 only, no answer and\n  no label; after the key-release commit, the same script with `--check` over the tree's `seat_outputs/` must\n  reproduce it byte for byte. `receipts/tranche_A_decoy_text_count.json` (sha256 `9afc35d2003e5c46e61dbfbba1d4b0ca98a2af42f3d0b44f88b1c6a21adc0500`), counts only, no id and no side,\n  and `receipts/tranche_A_packet_facts.json` (sha256 `a65d69ed6a8bde6b44a9d38f2393e66ef71d84ffc83e2471d1cc32f63119e18e`), both by `tranche_A_packet_facts.py` (sha256 `183a188b180be1b96a678dca0ee0f1a02d403fe673348a89483d2944d4e5e7eb`) from\n  committed packet and decoy files.\n- **Seat outputs committed now:** `seat_outputs/claude/ledger.jsonl` (sha256 `0f25ebaa412fe3115886ace08b95e9fdc1cdbd8ea4b42f6fcbad08c7ede5de0d`) and the nine twins with their status\n  files under `seat_outputs/claude/trivial/`.\n- **Held to the key-release commit:** the twelve seat files and the local ledger, named here by the sha256 the seat\n  facts record (tables below; the local ledger's is `12335fad0e5a2ae15c27a0b5b8b75873add9a227bf40c3ff00602fecda880be8`).\n- **The lead's files, committed as receipts** under `papers/sworn/measurement/receipts/`, each with the sha256 the\n  draft named: the runners `leg2_run_seats.sh` (sha256 `8f3f71ea6e52440c8fa27b3fca6003fbf4e29bc0e7ea79a11aa5dbf18b39dbe1`) and `leg2_run_local.sh` (sha256 `b169e92e3c095f23a5efcf7f7ce2fc3208bad67a5508740e05a439450edb3ed7`); their logs\n  `seat_run_20261024T184653Z.log` (sha256 `1525c497b1f1b1721015b4cf3ee394dd73ba15f85c79f00113cfa8c12eb6df5f`), `local_run_L_20261024T155430.log` (sha256 `60f64fb0ed6b70b9a35620d85a5eca1ce2ce4060d34bd29a47c0a5e845ba37f1`) and\n  `local_run_R_20261024T163704.log` (sha256 `dc99d93aa91a17cd02d4d7fce7200e2f25c1f5447b653c29689ca1f8c3bd8029`); the fold's report `FOLD_REPORT.md` (sha256 `a19a6a5c605628e39a3a8034aae5bf1e800666d01b90573b6da62c2cd4f85e5e`); the L-0033 finding\n  `FINDING_L0033_transport_2026_10_24.md` (sha256 `2fe2ff030055b3a392e990115c6348846ff62c22b4f43e0eac2a8fb56b25831d`); the twin diagnostic `twin_text_diff.py` (sha256 `984dc8dbc97c4839ea7d688bcc16e41fe3b15165a442debbae0d1efd010456c8`) and its\n  output `twin_text_diff.txt` (sha256 `089cbb98426c87d8c6ff1c3ba326f43ead93df010b93af9e571c5481b9b1220d`); and two transport-check records from the run worktree,\n  `transport_check_fable_2026_10_23.seat.json` (sha256 `281c5a2607ad3e225099d88bcda33c3dca86532ad8b60a5958b5083d31ba9721`) and `transport_check_opus_2026_10_24.ledger.jsonl`\n  (sha256 `d7c3691edf6d3520143897670bed347db14e81e377bacc3628117748348b3582`). Before it was kept, each was scanned for token-shaped strings and for 32-or-more hex runs not\n  accounted for as a file's sha256, a schema hash field, a commit or bytes already committed (none found), and for a\n  line that prints an item id with its answer or label (none: the ids are L-0033 and L-0008 in prose, and one\n  synthetic item). Two carry statements this RESULT corrects, and stay unedited because their sha256 is cited: an\n  erratum sits beside each, `ERRATUM_FOLD_REPORT_2026_10_25.md` (sha256 `ab66795432c2811323038fc162e0fa9fad50805a58a632921170caa66c1582d4`) and\n  `ERRATUM_FINDING_L0033_transport_2026_10_25.md` (sha256 `3395cb3e3c22ee3afeded29e6deaf53cf87b6e754a671084f37fa54a45fbf029`).\n- **Lead-attested and not committed:** the fold's `git status --porcelain --ignored --untracked-files=all` lists\n  before and after (sha256 `02f1357d1b258f9a2b82557a8ee467ac84c7f4d1e014d372d503b603fa097579`, both) and its\n  seat-output sha256 lists (sha256 `75beb8585468c148d2c5a2601d083b79d7682396ebb9afa2bd0eb0386390e8e7`, both).\n\n\"PREREG l.N\", \"A6 l.N\", \"DESIGN v2 l.N\" and \"SPEC l.N\" are lines of the PREREG, Amendment 6,\n`papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02.md` and `papers/sworn/SPEC_sworn_measurement_machinery_2026_09_05.md`.\nA path in the PREREG that begins `receipts/` names a local planning file (PREREG l.48-55); every receipt this\ndocument names is under `papers/sworn/measurement/`, and a bare file name in this document is one of the files listed\nabove.\n\n## The gates as the record scored them\n\nEach value is the projection `verdict_input.py` scored (`verdict_A.json#/verdict_input`); each outcome is the record's\nown; each bar is the frozen block's line. Claude-family numbers carry **`claude-opus-5-5` (Amendment 6)**; local-family numbers carry\n**SUBSTRATE NOT NAMED IN DESIGN v2** (Amendment 1, PREREG l.228-231). j = 0 as of 2026-10-25 (open until tranche A's key release commit) and the\nretrospective share 9 of 9 stand beside every row.\n\n| gate | value | bar (PREREG line) | outcome (`verdict_A.json#/gates`) | DESIGN v2 title for a miss | family |\n|---|---|---|---|---|---|\n| `G_D_claude_L_overall` | 26 of 30 | ≥ 27 (`\"op\": \">=\", \"value\": 27`, l.640) | missed, `\"G_D_claude_L_overall\": false` | *void panel; the void is the result* | `claude-opus-5-5` (Amendment 6) |\n| `G_D_claude_L_side` | 11 of 15 | ≥ 9 (`\"op\": \">=\", \"value\": 9`, l.641) | held, `\"G_D_claude_L_side\": true` | — | `claude-opus-5-5` (Amendment 6) |\n| `G_D_claude_R_overall` | 29 of 30 | ≥ 27 (`\"op\": \">=\", \"value\": 27`, l.642) | held, `\"G_D_claude_R_overall\": true` | — | `claude-opus-5-5` (Amendment 6) |\n| `G_D_claude_R_side` | 14 of 15 | ≥ 9 (`\"op\": \">=\", \"value\": 9`, l.643) | held, `\"G_D_claude_R_side\": true` | — | `claude-opus-5-5` (Amendment 6) |\n| `G_D_local_L_overall` | 14 of 30 | ≥ 27 (`\"op\": \">=\", \"value\": 27`, l.644) | missed, `\"G_D_local_L_overall\": false` | *void panel; the void is the result* | local, SUBSTRATE NOT NAMED IN DESIGN v2 |\n| `G_D_local_L_side` | 7 of 15 | ≥ 9 (`\"op\": \">=\", \"value\": 9`, l.645) | missed, `\"G_D_local_L_side\": false` | *void panel; the void is the result* | local, SUBSTRATE NOT NAMED IN DESIGN v2 |\n| `G_D_local_R_overall` | 15 of 30 | ≥ 27 (`\"op\": \">=\", \"value\": 27`, l.646) | missed, `\"G_D_local_R_overall\": false` | *void panel; the void is the result* | local, SUBSTRATE NOT NAMED IN DESIGN v2 |\n| `G_D_local_R_side` | 0 of 15 | ≥ 9 (`\"op\": \">=\", \"value\": 9`, l.647) | missed, `\"G_D_local_R_side\": false` | *void panel; the void is the result* | local, SUBSTRATE NOT NAMED IN DESIGN v2 |\n| `G_F_L` | 0 families | ≥ 2 (`\"op\": \">=\", \"value\": 2`, l.648) | missed, `\"G_F_L\": false` | *one-family: counts only, no precision* | neither: `claude-opus-5-5` (Amendment 6) at 26 of 30; local, SUBSTRATE NOT NAMED IN DESIGN v2, at 14 of 30 |\n| `G_F_R` | 1 family | ≥ 2 (`\"op\": \">=\", \"value\": 2`, l.649) | missed, `\"G_F_R\": false` | *one-family: counts only, no precision* | `claude-opus-5-5` (Amendment 6) cleared; local, SUBSTRATE NOT NAMED IN DESIGN v2, did not |\n| `G_S1` | withheld (projected -1.0) | ≥ 0.7 (`\"op\": \">=\", \"value\": 0.7`, l.650) | withheld: the VOID row does not read it, `\"G_S1\": false` | — | Panel L void |\n| `G_S2` | withheld (projected 2.0) | ≤ 0.25 (`\"op\": \"<=\", \"value\": 0.25`, l.651) | withheld: the VOID row does not read it, `\"G_S2\": false` | — | Panel L void |\n| `G_P` | withheld (projected 2.0) | ≤ 0.1 (`\"op\": \"<=\", \"value\": 0.1`, l.652) | withheld: the VOID row does not read it, `\"G_P\": false` | — | Panel R one-family, `claude-opus-5-5` (Amendment 6) |\n| `G_C` | 0.9793286325558971 (182 of 182) | ≥ 0.95 (`\"op\": \">=\", \"value\": 0.95`, l.653) | held, `\"G_C\": true` | — | none: the verifier |\n| `G_G1` | 0 of 0 (projected -1.0) | ≥ 0.8 (`\"op\": \">=\", \"value\": 0.8`, l.654) | **missed: empty denominator; the bar was not tested**, `\"G_G1\": false` | *the floor cannot price gaming; the floor leaves the headline* | `claude-opus-5-5` (Amendment 6), the twins |\n\nThe record lists `G_S1`, `G_S2` and `G_P` as withheld and\n`G_G1` as an empty denominator. The projection writes -1 under a `>=` bar and 2 under a `<=`\nbar for a withheld share, and the VOID rows do not read them\n(`writes a fail-closed value for a withheld share`, PREREG l.609-611). Its cross-check\nagainst `score.py` reads `agrees` on `G_F_L`, `agrees` on `G_F_R` and\n`agrees` on `G_C`, `score.py undecided: withheld` on `G_S1` (and on `G_S2` and `G_P`), and\n`score.py undecided: empty denominator` on `G_G1`; no refusal.\n\n## The panels: counts, no rate\n\n**Panel L, void.** Per family, decoys whose family label equals the side the key records, of 15 per side\n(`measurement_result.json#/gates/G_D/L/<family>`):\n\n| family | LOAD-BEARING side | NOT side | overall |\n|---|---|---|---|\n| claude, `claude-opus-5-5` (Amendment 6) | 15 of 15 | 11 of 15 | 26 of 30 |\n| local, SUBSTRATE NOT NAMED IN DESIGN v2 | 7 of 15 | 7 of 15 | 14 of 30 |\n\n**The decoys' authorship, printed as the committed decoy file requires of any result quoting the decoy gate**\n(`papers/sworn/measurement/decoys_L.json#/authorship_disclosure`; the file is locked at blob\n`75a030fd8d18113a2e98c30cbb61d2b037207fbc`, PREREG l.578):\n\n> `Authorship, disclosed rather than buried: the Panel L decoys were selected and sided by the builder of this machinery from documents the population rule excludes.`\n> `A family's agreement with them measures agreement with the builder's reading, not truth, and any result quoting the decoy gate carries this sentence.`\n\nA void Panel L has no final labels (`#/cells/labels`: `none`), so G-S1 and G-S2 have nothing to\ncount (G-S1 0 of 0; G-S2\n0 of 0). These zeros are a void's, not an\nempty denominator on a qualified panel, and they are not printed as a miss.\n\nPanel L's cells (`measurement_result.json#/cells`), per family: brackets located, claude\n1,120 (`claude-opus-5-5`, Amendment 6) and local 507\n(SUBSTRATE NOT NAMED IN DESIGN v2); of those, located by the whitespace-collapsing second pass, claude\n179 (`claude-opus-5-5`, Amendment 6) and local\n45 (SUBSTRATE NOT NAMED IN DESIGN v2); brackets not located, claude\n17 (`claude-opus-5-5`, Amendment 6) and local 209\n(SUBSTRATE NOT NAMED IN DESIGN v2); item-seat rows not parsed, claude 3 (`claude-opus-5-5`, Amendment 6) and local\n44 (SUBSTRATE NOT NAMED IN DESIGN v2). The claude 3 are item L-0033 in each of its three seats\n(section \"Item L-0033\"); the local 44 are in section \"The local family's unparsed items\".\n\n**Panel R, one family.**\n\n| family | YES side | NO side | overall |\n|---|---|---|---|\n| claude, `claude-opus-5-5` (Amendment 6) | 14 of 15 | 15 of 15 | 29 of 30 |\n| local, SUBSTRATE NOT NAMED IN DESIGN v2 | 15 of 15 | 0 of 15 | 15 of 30 |\n\nWith one family clearing, Panel R's finals are that family's labels: over the\n136 sworn spans of the nine documents, YES\n134, NO 1, UNSURE\n1, NO-MAJORITY 0,\nFAMILY-SPLIT 0, one family, `claude-opus-5-5` (Amendment 6). G-P is withheld and prints as\ncounts with no rate: 1 NO of 135 YES or NO,\nlabels `one-family`, `claude-opus-5-5` (Amendment 6). Panel R items not parsed: claude\n0 (`claude-opus-5-5`, Amendment 6), local\n0 (SUBSTRATE NOT NAMED IN DESIGN v2).\n\n**Reported, no bar.** G-U, load-bearing but unbindable: 0, labels\n`none`, because Panel L has no labels. G-R, *the forgotten term, printed*:\n1 span `HELD by the committed receipt and NO by the panel`, labels `one-family`, `claude-opus-5-5` (Amendment 6).\nG-S1X binds the external arm, which this PREREG does not run (`#/gates/G_S1X/share` `WITHHELD`).\nThe two kappas (SPEC l.448-451) are withheld (`WITHHELD`, `WITHHELD`:\n`fewer than two families clear Panel L`), and so is Q3's panel coverage for all nine documents (`#/q3/D01/panel_coverage`\n`WITHHELD`, the same for D02 to D09).\n\n**The population** (`measurement_result.json#/population`): 9 documents,\n136 sworn spans, 819 units,\n51 fragments, `\"synthetic\": false`.\n\n## G-C: the planted spans\n\nThe verifier FAILED **182 of 182** canaries; Wilson 95% interval\n[0.9793, 1.0], lower bound\n0.9793286325558971 unrounded against\n`\"op\": \">=\", \"value\": 0.95`: held. Per twin, pooled, with no per-twin bar\n(`applies to the pooled lower bound, with per-twin counts printed beside it and no per-twin bar`,\nPREREG l.191-197):\n\n| doc | stem (PREREG l.258-266) | FAILED of planted | MALFORMED | UNRESOLVED | HELD |\n|---|---|---|---|---|---|\n| D01 | `papers/closed-model-frontier/RESULT_handedness_v2_INVALID_2026_09_02` | 9 of 9 | 0 | 0 | 0 |\n| D02 | `papers/charon/RESULT_charon_v01_ships_2026_09_02` | 25 of 25 | 0 | 0 | 0 |\n| D03 | `papers/frequency-resonance/RESULT_efficiency_control_from_receipts_2026_09_02` | 21 of 21 | 0 | 0 | 0 |\n| D04 | `papers/closed-model-frontier/RESULT_handedness_accusations_INVALID_2026_09_02` | 16 of 16 | 0 | 0 | 0 |\n| D05 | `papers/frequency-resonance/RESULT_efficiency_control_2026_09_02` | 22 of 22 | 0 | 0 | 0 |\n| D06 | `papers/rhythm-rescue/RESULT_untied_magnitudes_2026_09_02` | 15 of 15 | 0 | 0 | 0 |\n| D07 | `papers/closed-model-frontier/RESULT_range_sanity_report_SHIP_2026_09_02` | 12 of 12 | 0 | 0 | 0 |\n| D08 | `papers/closed-model-frontier/DECLARATION_h_mapping_2026_09_01` | 41 of 41 | 0 | 0 | 0 |\n| D09 | `papers/closed-model-frontier/RESULT_handedness_v3_header_handed_2026_09_02` | 21 of 21 | 0 | 0 | 0 |\n\n`n` = 182 is above 73, the smallest `n` at which a clean\nsweep clears the bar, so section 7's printing rule for a small `n` does not apply.\n\n**What G-C prices, and nothing wider.** Recall on planted spans of three constructions, planted by the builder of the\nverifier after the documents were written: \"A retargets an existing ``path:<file>#/pointer`` span to a sibling scalar\nleaf; B turns a narrative unit holding one backtick needle into a ``quote`` span over a cited file that lacks the\nneedle; C turns a narrative unit holding one number into a ``numeric`` span over a cited leaf whose value differs by\nthe rounding rule's own quantum\" (`canaries.py` l.6-9, quoted at PREREG l.439-443;\n`one number into a` … `quantum`). It is not the verifier's miss rate on real errors\n(`It is never printed as the verifier's miss rate on real errors.`, Amendment 3), and the lab's own July\npaper is the limit beside it: on four constructed task families a real correlated weak-judge panel was flawless on the\ngold items while its label-free coverage was 0/15, and gold anchors certified garbage\n(`label-free coverage 0/15 in every family, while the same panel is flawless on`,\n`Gold anchors certified garbage in both cases`, PREREG l.446-451).\n\n## G-G1: 0 of 0, the bar was not tested\n\n**The count.** 0 pairs, 0 lower,\n9 twins `twin_text_changed`, one family, `claude-opus-5-5` (Amendment 6); per pair, D01 `twin_text_changed`, D02 `twin_text_changed`, D03 `twin_text_changed`, D04 `twin_text_changed`, D05 `twin_text_changed`, D06 `twin_text_changed`, D07 `twin_text_changed`, D08 `twin_text_changed`, D09 `twin_text_changed`.\n`score.py` skips a twin whose canonical text differs from its document's\n(`if twin.get(\"text\") != d[\"side\"][\"text\"]:`, l.446-449), so no pair exists, its share is\n`\"share\": null`, and the projection writes -1.0 with\n`G_G1` among the empty denominators. Under PREREG l.614-617 that is a miss, fail-closed,\nprinted as 0 of 0 with \"the bar was not tested\" beside its title: *the floor cannot price gaming; the floor leaves the\nheadline*.\n\n**Why no pair formed.** In all nine, the twin's canonical text equals the document's sidecar text except that the\nsidecar's final line feed is missing: in characters, document against twin, D01 1,822 against 1,821, D02 8,669 against 8,668, D03 4,426 against 4,425, D04 3,528 against 3,527, D05 3,330 against 3,329, D06 2,610 against 2,609, D07 2,710 against 2,709, D08 9,827 against 9,826, D09 3,860 against 3,859\n(`tranche_A_seat_facts.json#/twins`, which also records, per twin, that the twin's text with one line feed added\nequals the document's: D01 `\"twin_text_plus_lf_equals_document_text\": true`, D08 `\"twin_text_plus_lf_equals_document_text\": true`, and the same for the other seven). The lead's diagnostic says the same, one `delete`\nof one character at the original's last offset (`[\"delete\", 1821, 1822` for D01,\n`[\"delete\", 9826, 9827` for D08), by the read-only `twin_text_diff.py`, which reads `population.json`,\nthe committed sidecars and the twin files, no sealed file and no model. The locked code accounts for it:\n`seat_claude.cli` returns `\"text\": (j.get(\"result\") or \"\").strip()` (`seat_claude.py` l.83),\n`twin_trivial.py` canonicalises that stripped text (`r = SC.cli(prompt, system, None)`, l.77;\n`twin = sworn.to_sidecar(r[\"text\"].encode(\"utf-8\")`, l.83) and compares it with the sidecar text\n(`status[\"twin_text_changed\"] = twin[\"text\"] != side[\"text\"]`, l.94), and all nine sidecar texts end in a\nline feed (`\"document_text_ends_with_lf\": true` for D01, the same for D02 to D09), so a document that\nends in one cannot come back equal through this path, whatever the model returned. The dry run could not show it: its\ntwins are `def canned_trivial_twin(side: dict)` (`synthetic.py` l.244-252), a copy of the sidecar that\nnever passes through `cli`. No share was computed with the line feed restored, and none is printed: that would be a\ncomparison chosen after the data.\n\n**The twins as written** (status files `seat_outputs/claude/trivial/<doc>.trivial-status.json`, committed), sworn\nspans original → twin, `claude-opus-5-5` (Amendment 6): D01 8 → 1, D02 26 → 2, D03 12 → 0, D04 12 → 1, D05 14 → 1, D06 11 → 1, D07 11 → 1, D08 27 → 1, D09 15 → 1. Each status file reads `error` null and `twin_text_changed` true:\nD01 `\"error\": null` `\"twin_text_changed\": true`, D02 `\"error\": null` `\"twin_text_changed\": true`, D03 `\"error\": null` `\"twin_text_changed\": true`, D04 `\"error\": null` `\"twin_text_changed\": true`, D05 `\"error\": null` `\"twin_text_changed\": true`, D06 `\"error\": null` `\"twin_text_changed\": true`, D07 `\"error\": null` `\"twin_text_changed\": true`, D08 `\"error\": null` `\"twin_text_changed\": true`, D09 `\"error\": null` `\"twin_text_changed\": true`; and none has a `refused` key: D01 no `\"refused\"`, D02 no `\"refused\"`, D03 no `\"refused\"`, D04 no `\"refused\"`, D05 no `\"refused\"`, D06 no `\"refused\"`, D07 no `\"refused\"`, D08 no `\"refused\"`, D09 no `\"refused\"`. A twin's status file records no alias\n(`status = {\"doc_id\": doc_id, \"family\": family, \"dry_run\": dry_run}`, `twin_trivial.py` l.69-79), and the\ntree keeps no twin call's bytes, only `raw_sha256`; the alias of every twin is Amendment 6's\n(`A twin's status file records no alias (l.69-79), and nothing in the tree receipts the alias a twin call`,\nA6 l.144-146), and the command lines below are how the calls reached it.\n\n**Every twin command line as it was run** (Amendment 6 item 3, A6 l.114-146: the departure from the committed\n`twin_trivial.py` CLI that PREREG section 4, l.509-511, and Amendment 2 item 5, l.411-412, name). Run by the lead's\nrunner `leg2_run_seats.sh`\n(`SC.cli = functools.partial(SC.cli, model='$ALIAS')`, l.49, with\n`ALIAS=claude-opus-5-5`), in Git Bash, from the run worktree's root `C:/Users/heyzo/clawd/wt/leg2-run`\nat `7680159d`, with `PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1`, the nine in this order, after the six seat\nfiles:\n\n```text\npy -3.12 -c \"import functools, sys; sys.path.insert(0, 'papers/sworn/measurement'); import seat_claude as SC; SC.cli = functools.partial(SC.cli, model='claude-opus-5-5'); import twin_trivial as T; sys.exit(T.main(sys.argv[1:]))\" --doc D01\npy -3.12 -c \"import functools, sys; sys.path.insert(0, 'papers/sworn/measurement'); import seat_claude as SC; SC.cli = functools.partial(SC.cli, model='claude-opus-5-5'); import twin_trivial as T; sys.exit(T.main(sys.argv[1:]))\" --doc D02\npy -3.12 -c \"import functools, sys; sys.path.insert(0, 'papers/sworn/measurement'); import seat_claude as SC; SC.cli = functools.partial(SC.cli, model='claude-opus-5-5'); import twin_trivial as T; sys.exit(T.main(sys.argv[1:]))\" --doc D03\npy -3.12 -c \"import functools, sys; sys.path.insert(0, 'papers/sworn/measurement'); import seat_claude as SC; SC.cli = functools.partial(SC.cli, model='claude-opus-5-5'); import twin_trivial as T; sys.exit(T.main(sys.argv[1:]))\" --doc D04\npy -3.12 -c \"import functools, sys; sys.path.insert(0, 'papers/sworn/measurement'); import seat_claude as SC; SC.cli = functools.partial(SC.cli, model='claude-opus-5-5'); import twin_trivial as T; sys.exit(T.main(sys.argv[1:]))\" --doc D05\npy -3.12 -c \"import functools, sys; sys.path.insert(0, 'papers/sworn/measurement'); import seat_claude as SC; SC.cli = functools.partial(SC.cli, model='claude-opus-5-5'); import twin_trivial as T; sys.exit(T.main(sys.argv[1:]))\" --doc D06\npy -3.12 -c \"import functools, sys; sys.path.insert(0, 'papers/sworn/measurement'); import seat_claude as SC; SC.cli = functools.partial(SC.cli, model='claude-opus-5-5'); import twin_trivial as T; sys.exit(T.main(sys.argv[1:]))\" --doc D07\npy -3.12 -c \"import functools, sys; sys.path.insert(0, 'papers/sworn/measurement'); import seat_claude as SC; SC.cli = functools.partial(SC.cli, model='claude-opus-5-5'); import twin_trivial as T; sys.exit(T.main(sys.argv[1:]))\" --doc D08\npy -3.12 -c \"import functools, sys; sys.path.insert(0, 'papers/sworn/measurement'); import seat_claude as SC; SC.cli = functools.partial(SC.cli, model='claude-opus-5-5'); import twin_trivial as T; sys.exit(T.main(sys.argv[1:]))\" --doc D09\n```\n\nThe interpreter is named `py -3.12` (the Windows launcher, Python 3.12) where A6 l.123 writes `python`; the statements\nare A6 l.123's (`SC.cli = functools.partial(SC.cli, model='claude-opus-5-5')`), character for character.\nThe runner's log records each twin's start and its exit 0, from `19:49:49Z twin D01` to\n`19:53:25Z twin D09 exit 0`, and each status as the runner printed it.\n\n## Item L-0033: the transport finding\n\n**The three errors.** Each Claude Panel L seat file records one error, on item L-0033, in the runner's own words\n(L-seat1: `the transport's bytes were not the JSON envelope the transport promises` on `L-0033`; L-seat2: `the transport's bytes were not the JSON envelope the transport promises` on `L-0033`; L-seat3: `the transport's bytes were not the JSON envelope the transport promises` on `L-0033`; `tranche_A_seat_facts.json#/seat_files/claude/<seat>/errors`), `claude-opus-5-5` (Amendment 6); each file's `unparsed` lists L-0033\nalone: L-seat1 `L-0033` (1 entry), L-seat2 `L-0033` (1 entry), L-seat3 `L-0033` (1 entry). The ledger rows for those calls carry a `raw_sha256` of null, so no bytes were kept\n(`seat_outputs/claude/ledger.jsonl` lines 34, 94 and 154: `\"item_id\": \"L-0033\", \"panel\": \"L\", \"seat\": 1, \"raw_sha256\": null`, `\"item_id\": \"L-0033\", \"panel\": \"L\", \"seat\": 2, \"raw_sha256\": null`, `\"item_id\": \"L-0033\", \"panel\": \"L\", \"seat\": 3, \"raw_sha256\": null`), and the same error, as the seat facts read those\nrows (`the JSON envelope the transport promises`, `the JSON envelope the transport promises`, `the JSON envelope the transport promises`). No other Claude item and no local item records an\nerror: Claude Panel R 0, local Panel L 0\nand Panel R 0, against Claude Panel L's 3;\nthe ledgers' error rows, claude 3 and local\n0. The sentence is `seat_claude.py`'s class for a `ValueError`\n(`(ValueError, \"the transport's bytes were not the JSON envelope the transport promises\")`, l.49):\nthe standard output of the last of the call's three attempts (`RETRIES = 2`, l.39;\n`for _ in range(1 + RETRIES):`, l.73) did not parse as JSON. `cli` overwrites its reason on every\nfailed attempt and returns only the last one (`last = \"the transport returned its error envelope\"`,\nl.80; `last = _classify(e)`, l.89;\n`return {\"text\": \"\", \"structured\": None, \"session_id\": None, \"error\": last`, l.91), so the bytes show three\nfailed attempts and the class of the last; the reasons of the two earlier attempts were not kept.\n\n**The cause.** Receipted: L-0033 is the one item of either packet whose prompt begins with \"-\". Panel L has\n1 such item, `L-0033`\nat index 32 (`packet_L.json#/items/32`:\n`L-0033`, its text beginning `- The read≠write submission source at`),\nand every Panel R prompt is a JSON object (`return json.dumps({\"sentence\": item[\"sentence\"], \"kind\": item[\"kind\"], \"leaf\": item[\"leaf\"]},`,\n`seat_claude.py` l.158-159). `prompt_for` passes a Panel L item's text verbatim as the value of `-p`\n(`return item[\"text\"]`, l.155-157; `\"--system-prompt\", system, \"-p\", prompt, \"--output-format\", \"json\"]`,\nl.68-69). That the claude CLI reads an argument beginning with \"-\" as an option, so the call returned no JSON envelope,\nis the lead's account in `FINDING_L0033_transport_2026_10_24.md`: the CLI's output for those calls was not kept, so no\ncommitted byte shows the mechanism, and no call was re-made for this RESULT (`ERRATUM_FINDING_L0033_transport_2026_10_25.md`\nsays so beside the finding). Length alone does not explain it: L-0008, a longer item\n(2,853 characters against L-0033's\n2,130), parsed in all three Claude seats.\n\n**How the score counted them.** `score.py` does not read a seat file's `errors` list. It reads each item row's\n`parsed` flag, and each Claude row for L-0033 reads false: L-seat1 58 of 59, L-seat2 58 of 59, L-seat3 58 of 59 item rows parsed per Claude Panel L seat. A seat\nfile with errors is still present: the three read `RECORDED`,\n`RECORDED` and `RECORDED`, which is all `score.py` asks (`s.get(\"verdict\") in (\"RECORDED\", \"DRY-RUN\")`, l.130-131). For an unparsed\nrow, `if row is None or not row.get(\"parsed\"):` (l.157) adds one to the family's `unparsed_items`\nand gives every unit of the item the vote `NO-LABEL` in that seat\n(`per_seat.append([\"NO-LABEL\"] * len(unit_ranges[iid]))`, l.155-160); the family label is the strict majority of labels among the three seats (l.165-166;\n`return top if n >= 2 else \"NO-MAJORITY\"`, `common.py` l.507-513), and with no vote a label,\nL-0033's family label is `NO-MAJORITY` on every unit. A decoy counts correct only when its family label equals the\nside its key records (`if family_labels[f][iid][0] == side:`, l.180), which `NO-MAJORITY` never does.\nSo L-0033 enters the fold as 3 of the Claude family's 3 unparsed Panel L\nitem-seat rows, `claude-opus-5-5` (Amendment 6), and as a `NO-MAJORITY` item, by the PREREG's own rule, with no re-run: the other seats'\nanswers exist, and a re-run now would be a change after the data.\n\n**What it can and cannot move.** The Claude family's Panel L count is\n26 of 30 against a bar of 27, `claude-opus-5-5` (Amendment 6). Whether L-0033 is a decoy,\nand of which side, is not held by the sealed key alone: each Panel L decoy's text and side are committed in\n`papers/sworn/measurement/decoys_L.json` (sha256 `2b63f1b09e41eb2c94d55c24a24e1d7b0ea681fdd71fdf90014b13c34db08b2c`; locked at blob `75a030fd`, PREREG l.578), as SPEC l.209-216\nsays they are, `with a selection rule and the authorship disclosure`, `build_packets.py` makes each decoy's text its packet item's text\n(`items_L.append(({\"text\": d[\"text\"]}`, l.204-207), and\n30 of `packet_L.json`'s\n59 item texts equal a committed decoy text (`tranche_A_decoy_text_count.json`, a count\nonly: no item id, no decoy id, no side). So committed bytes decide whether the transport defect entered that count: a\nreader can read it from `decoys_L.json` against `packet_L.json#/items/32/text`. This RESULT does not print it (the\nlead's default D4), does not read or derive it, and neither adds L-0033 back nor takes it out. It cannot move the\nverdict string: G_F_L needs both families to clear Panel L, and the local family is at\n14 of 30 there (SUBSTRATE NOT NAMED IN DESIGN v2); Panel L's labels feed no share once it\nvoids (`score.py` l.197-203).\n\n**Tranche B's route, the operator's choice of 2026-10-25.** Tranche B runs on a fixed transport under a new\npreregistration, with both fixes: a dated, committed route by which a prompt that begins with \"-\" reaches the CLI\nintact (for instance the item passed after `--`, or on standard input), with a test that a leading-dash item\nanswers; and a route for the twins' stripped final line feed (section \"G-G1\"), or G-G1 goes untested again. PREREG\nsection 8 says that\n`an amendment after any seat has read a real item is a new preregistration under a new` name\n(l.765-766), and tranche A's seats have read real items; the operator chose the new preregistration, as the fold's\nreport read that sentence, over the numbered amendment the L-0033 finding proposed. Whether L-0033's text returns in\ntranche B's packet depends on whether it is a decoy (`Tranche B's decoys are tranche A's`,\nAmendment 2 item 1, PREREG l.378-380), which the committed\n`decoys_L.json` decides and this RESULT does not print; any tranche-B item that begins with \"-\" meets the same path\nunless the new preregistration routes it.\n\n## The local family's unparsed items\n\nSUBSTRATE NOT NAMED IN DESIGN v2, beside every number in this section. Panel L, of\n59 items each: seat 1 leaves 14, seat 2 leaves 14, seat 3 leaves 16, 44\nitem-seat rows in all (`tranche_A_seat_facts.json#/seat_files/local/<seat>/unparsed`, which lists them by id;\n`measurement_result.json#/cells/unparsed_items/local`: 44). Panel R:\n0, 0, 0 in seats 1, 2 and 3 (`measurement_result.json#/cells/panel_R_unparsed_items/local`:\n0). No local seat file records an error\n(0 and 0). Each unparsed row is counted by\nthe same lines as L-0033's: that seat's votes for the item's units are `NO-LABEL`, and a unit gets a local family label\nonly where two of the three seats parsed and agreed. Reported, no cause claimed:\n14 of the 44 are items whose generation reached the\n1,200-new-token cap (`LOCAL_MAX_NEW_TOKENS = 1200`, `common.py` l.60), 7, 2, 5 in seats 1, 2 and 3\n(14 rows at the cap in all, every one of them unparsed), and the\nother 30 ended before it.\n\n## The substrates, seat file by seat file\n\n**The Claude family** (Amendment 6, \"What the RESULT prints\", A6 l.185-202). Each of the six seat files records\n`substrate.model` `claude-opus-5-5`, read from the file itself through the seat facts; none names another alias (the\nrunner also stops on any other alias, `say \"STOP: $P-seat$N recorded alias $MODEL\"`):\n\n| seat file | `substrate.model` | `verdict` | items | unparsed | errors | probe answer | sha256 of the file |\n|---|---|---|---|---|---|---|---|\n| `claude/L-seat1.json` | `claude-opus-5-5` | `RECORDED` | 59 | 1 | 1 | `NO` | `220aa30e503b08b7e06061abdf296ec917674717800e9c3d65c1eea7a092a887` |\n| `claude/L-seat2.json` | `claude-opus-5-5` | `RECORDED` | 59 | 1 | 1 | `NO` | `76a5d81b4f71f0905295aad2b99fbdaf95005ed373f1a41ba780d55b7564a0ae` |\n| `claude/L-seat3.json` | `claude-opus-5-5` | `RECORDED` | 59 | 1 | 1 | `NO` | `4c68c46d30efa70b66e9501b0067fddc59db67410ec78052f463c08a8ee70050` |\n| `claude/R-seat1.json` | `claude-opus-5-5` | `RECORDED` | 166 | 0 | 0 | `NO` | `4277e57ba02413d306e8bf75476ca6ec109291843741893a718ed61598144855` |\n| `claude/R-seat2.json` | `claude-opus-5-5` | `RECORDED` | 166 | 0 | 0 | `NO` | `b9d28b526ca752c6a729dddb720ddfd7f0cfcfa6b69a5255a43225ab212bc1c9` |\n| `claude/R-seat3.json` | `claude-opus-5-5` | `RECORDED` | 166 | 0 | 0 | `NO` | `6bf7f83a91d6352bfe02c2d57b9df2fe6b7594fb925170e1d0e5bb006a1e21b7` |\n\n(The count columns are entries of the seat file's arrays, `items`, `unparsed` and `errors`, as the seat facts count\nthem.) Every seat file, Claude and local, carries these flags, the locked packet's sha256 (PREREG l.551-552:\n`140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9` for Panel L,\n`7a10ce63bc9a64dde216f6932836f1d97b10a71fabca304ac8875bd205f60798` for Panel R), the PREREG's path\n`papers/sworn/PREREG_sworn_measurement_2026_10_23.md`, and a block order:\n\n| seat file | `dry_run` | `synthetic_packet` | `named_in_design` | `packet_sha256` (prefix) | `prereg` | block order |\n|---|---|---|---|---|---|---|\n| `claude/L-seat1.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": true` | `140ff006f92f` | `PREREG_sworn_measurement_2026_10_23.md` | `TASK` `FORMAT` `CAUTIONS` |\n| `claude/L-seat2.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": true` | `140ff006f92f` | `PREREG_sworn_measurement_2026_10_23.md` | `TASK` `FORMAT` `CAUTIONS` |\n| `claude/L-seat3.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": true` | `140ff006f92f` | `PREREG_sworn_measurement_2026_10_23.md` | `TASK` `FORMAT` `CAUTIONS` |\n| `claude/R-seat1.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": true` | `7a10ce63bc9a` | `PREREG_sworn_measurement_2026_10_23.md` | `TASK` `FORMAT` `CAUTIONS` |\n| `claude/R-seat2.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": true` | `7a10ce63bc9a` | `PREREG_sworn_measurement_2026_10_23.md` | `TASK` `FORMAT` `CAUTIONS` |\n| `claude/R-seat3.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": true` | `7a10ce63bc9a` | `PREREG_sworn_measurement_2026_10_23.md` | `TASK` `FORMAT` `CAUTIONS` |\n| `local/L-seat1.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": false` | `140ff006f92f` | `PREREG_sworn_measurement_2026_10_23.md` | `TASK` `FORMAT` `CAUTIONS` |\n| `local/L-seat2.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": false` | `140ff006f92f` | `PREREG_sworn_measurement_2026_10_23.md` | `FORMAT` `CAUTIONS` `TASK` |\n| `local/L-seat3.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": false` | `140ff006f92f` | `PREREG_sworn_measurement_2026_10_23.md` | `CAUTIONS` `TASK` `FORMAT` |\n| `local/R-seat1.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": false` | `7a10ce63bc9a` | `PREREG_sworn_measurement_2026_10_23.md` | `TASK` `FORMAT` `CAUTIONS` |\n| `local/R-seat2.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": false` | `7a10ce63bc9a` | `PREREG_sworn_measurement_2026_10_23.md` | `FORMAT` `CAUTIONS` `TASK` |\n| `local/R-seat3.json` | `\"dry_run\": false` | `\"synthetic_packet\": false` | `\"named_in_design\": false` | `7a10ce63bc9a` | `PREREG_sworn_measurement_2026_10_23.md` | `CAUTIONS` `TASK` `FORMAT` |\n\n`measurement_result.json#/families/claude` carries `L-seat1`'s substrate only (`claude-opus-5-5`;\n`sf = seat_file(seat_dir, f, \"L\", 1) or seat_file(seat_dir, f, \"R\", 1)`, `score.py` l.518-521); the\nother five are read above from the files. Every Claude seat file records the block order TASK, FORMAT, CAUTIONS,\nbecause `seat_claude.py` builds its system prompt with\n`system = system_for(panel, packet, seat, rotate=False)` (l.205) and records\n`\"named_in_design\": True, \"block_order\": C.block_order(1)` (l.208): the three seats are three fresh\nsessions under one block order and the transport's default sampling, as disclosure 6 says.\n\n**`named_in_design: true`, read as Amendment 6 item 5 reads it.** Every Claude seat file carries\n`\"named_in_design\": true` (table above), which `seat_claude.py` writes for every alias (l.208). Under Amendment 6 the\nflag names the family and its transport (`family and the transport, which are unchanged, and the alias is printed beside it.`,\nA6 l.153-157; Claude through the `claude -p` `clean-config subscription` transport,\nDESIGN v2 l.21), which are unchanged; the alias `claude-opus-5-5` is not named by the DESIGN, was not the\nPREREG's (PREREG l.203 names `claude-fable-5`), and is printed beside it.\n\n**Not the dry run's model.** The dry run's six Claude seat files name another model, with `dry_run` true and verdict\n`DRY-RUN` (L-seat1 `claude-fable-5` `\"dry_run\": true` `DRY-RUN`, L-seat2 `claude-fable-5` `\"dry_run\": true` `DRY-RUN`, L-seat3 `claude-fable-5` `\"dry_run\": true` `DRY-RUN`, R-seat1 `claude-fable-5` `\"dry_run\": true` `DRY-RUN`, R-seat2 `claude-fable-5` `\"dry_run\": true` `DRY-RUN`, R-seat3 `claude-fable-5` `\"dry_run\": true` `DRY-RUN`), and their answers were canned: `no model was called` by the dry run\n(`papers/sworn/RESULT_measurement_machinery_dry_run_2026_09_05.md` l.5-6). The dry run's Claude seat counts are\nsizing inputs only (`no outward text quotes`, Amendment 5, PREREG l.486-494); this RESULT quotes none\nof them and compares none with the seats.\n\n**The two transport facts that led to the amended alias** (A6 l.36-59). On 2026-10-23 the PREREG's transport check on\n`claude-fable-5` read `VOID-CONTAM` on a failed call, the probe's answer empty and its error\n`the transport returned its error envelope` (`transport_check_fable_2026_10_23.seat.json`, `claude-fable-5`,\nthe seat file A6 l.41 names by sha256, `281c5a2607ad3e225099d88bcda33c3dca86532ad8b60a5958b5083d31ba9721`).\nOn 2026-10-24 `claude-fable-5` answered 429\n`model_requires_usage_credits` (`papers/sworn/measurement/receipts/transport_alias_fable_2026_10_24.json`),\nand `claude-opus-5-5` answered `NO` (`transport_alias_opus_2026_10_24.json#/read/result`).\n\n**The local family** (Amendment 1), SUBSTRATE NOT NAMED IN DESIGN v2 beside every entry. All six seat files record\n`Qwen/Qwen2.5-3B-Instruct`, `transformers`,\n`bf16`, `cuda`, `named_in_design`\nfalse (table above) and the note `SUBSTRATE NOT NAMED IN DESIGN v2` (shown for `L-seat1`; the seat facts hold the\nsame fields for the other five), verdict `RECORDED`, `dry_run` false, the PREREG and the\nlocked packet's sha256; block orders as in the table. The local runner asks no contamination probe\n(`\"contamination_probe\": null` in every local seat's facts;\n`\"contamination_probe\": None`, `seat_local.py` l.130). Disclosure 6 holds: three seats of one\ndeterministic model under three block orders are not three judgements.\n\n| seat file | items | unparsed | sha256 of the file |\n|---|---|---|---|\n| `local/L-seat1.json` | 59 | 14 | `c2698174a033c8b7c5a610381f734c6995227bbab91b7e4b2ea1a0540a9d440b` |\n| `local/L-seat2.json` | 59 | 14 | `08cfa2183230c95afbc87f244ced5edee4e55625d46af27f2301bf6cdfce7946` |\n| `local/L-seat3.json` | 59 | 16 | `0f95d48da88379a7db15a271e4cfc61de1c247b8205cd37796b49d4f4981816a` |\n| `local/R-seat1.json` | 166 | 0 | `7feed47eb9913b88817fb4d692d3d9eefb60b34489e7ba54b63f1b9169a42f77` |\n| `local/R-seat2.json` | 166 | 0 | `1b5ac82fb8991b8a324087e17f0ca8a58453bc90f35b70fc3cc1992b0be94639` |\n| `local/R-seat3.json` | 166 | 0 | `60b98547ef6d566d6a892397d4f32ff24fd3f74b06217461685ebdc976d3dfbe` |\n\n## The run: order, times, commands, the check on the day, lateness\n\n**Order.** PREREG section 4 (l.506-513) and Amendment 6: the transport check on the amended alias; the six Claude seat\nfiles in one usage window; the nine twins; the six local seat files on the GPU by day; then `score.py` and\n`verdict_input.py --tranche A`. All on 2026-10-24, in that order.\n\n**The check on the day** (Amendment 6 item 4). The seats started on 2026-10-24 (UTC), the day of Amendment 6's\nmeasurement 3, so the check did not run again: the runner repeats it only on a later UTC date\n(`if [ \"$(date -u +%Y-%m-%d)\" != \"2026-10-24\" ]; then`, `leg2_run_seats.sh` l.20), and the seat log\nhas no line for it. The check on the day is measurement 3: verdict `TRANSPORT-CHECK-SYNTHETIC`, one synthetic item parsed,\nprobe `NO`, `substrate.model` `claude-opus-5-5`\n(`papers/sworn/measurement/receipts/transport_check_opus_2026_10_24.seat.json`, sha256 `fccff86c4939cd605002ebaa0119aefab1cbf6d38cd5d52a095a3c03f07b2407`), its ledger row taken at\n`\"ts\": \"2026-10-24T14:14:03Z\"` (`transport_check_opus_2026_10_24.ledger.jsonl` line 1, the ledger A6\nl.85 names by sha256, `d7c3691edf6d3520143897670bed347db14e81e377bacc3628117748348b3582`).\n\n**The environment** (Amendment 6 item 4). The check on the day, the six Claude seat files and the nine twins ran in\nthe environment that a Claude Code session on the drafting box hands to the processes it starts, as the alias\nreceipts of 2026-10-24 did (`Run from this Claude Code session's environment`, the runner's header);\n`seat_claude.py` passes that environment on unchanged\n(`r = subprocess.run(args, capture_output=True, timeout=timeout)`, l.75). No committed byte records the\nenvironment itself. The claude CLI's version during the seats is not recorded; the alias receipts of 14:13Z record\n`2.1.310 (Claude Code)`.\n\n**The Claude seats** (Amendment 6 item 2), one at a time, from the run worktree's root at `7680159d`, each\n`py -3.12 papers/sworn/measurement/seat_claude.py --packet <L|R> --seat <1|2|3> --model claude-opus-5-5`\n(`py -3.12 \"$M/seat_claude.py\" --packet \"$P\" --seat \"$N\" --model \"$ALIAS\"`, `leg2_run_seats.sh`\nl.37), `claude-opus-5-5` (Amendment 6). Each seat's ledger `ts` is taken once, before its probe call\n(`ts = time.strftime(\"%Y-%m-%dT%H:%M:%SZ\", time.gmtime())`, `seat_claude.py` l.212); its end is the\nrunner's log line:\n\n| seat file | start: ledger row and its `ts` | done (runner's log) |\n|---|---|---|\n| L-seat1 | row 1, `2026-10-24T18:46:55Z` | `18:56:50Z done L-seat1` |\n| L-seat2 | row 61, `2026-10-24T18:56:51Z` | `19:05:56Z done L-seat2` |\n| L-seat3 | row 121, `2026-10-24T19:05:57Z` | `19:15:07Z done L-seat3` |\n| R-seat1 | row 181, `2026-10-24T19:15:08Z` | `19:26:52Z done R-seat1` |\n| R-seat2 | row 348, `2026-10-24T19:26:53Z` | `19:38:05Z done R-seat2` |\n| R-seat3 | row 515, `2026-10-24T19:38:05Z` | `19:49:49Z done R-seat3` |\n\nThe ledger holds 681 rows, 675 item calls\nand 6 probes, section 4's count\n(`166) = 675 item calls`, PREREG l.508-509). The six seat files and the nine twins ran between\n`18:46:53Z run worktree head 7680159d` and `19:53:25Z ALL DONE`, one process at a time (the\nlog). Whether any other agent work ran on the box in that window is not recorded by any file named here.\n\n**The local seats** (Amendment 1), each under the box's GPU lease, by day, SUBSTRATE NOT NAMED IN DESIGN v2, each\n\n```text\npython.exe C:/Users/heyzo/clawd/wt/_box/lease.py hold --reserve-gib 6 --holder \"leg2 local <P>-seat<N>\" --launcher-allow \"seat_local.py --packet <P> --seat <N>\" -- python.exe papers/sworn/measurement/seat_local.py --packet <P> --seat <N> --model Qwen/Qwen2.5-3B-Instruct --dtype bf16 --device cuda\n```\n\n(`\"$PY\" \"$BOX/lease.py\" hold --reserve-gib 6`, `leg2_run_local.sh` l.28-29, with\n`MODEL=Qwen/Qwen2.5-3B-Instruct` and the interpreter\n`PY=C:/Users/heyzo/AppData/Local/Programs/Python/Python312/python.exe`); the logs' times are local\n(UTC−4):\n\n| seat file | start: ledger row and its `ts` | runner's log, local time |\n|---|---|---|\n| L-seat1 | row 1, `2026-10-24T19:54:46Z` | `15:54:31 start L-seat1` to `16:09:23 done L-seat1` |\n| L-seat2 | row 60, `2026-10-24T20:09:37Z` | `16:09:23 start L-seat2` to `16:24:01 done L-seat2` |\n| L-seat3 | row 119, `2026-10-24T20:24:16Z` | `16:24:01 start L-seat3` to `16:36:53 done L-seat3` |\n| R-seat1 | row 178, `2026-10-24T20:37:18Z` | `16:37:04 start R-seat1` to `16:38:29 done R-seat1` |\n| R-seat2 | row 344, `2026-10-24T20:38:43Z` | `16:38:29 start R-seat2` to `16:39:56 done R-seat2` |\n| R-seat3 | row 510, `2026-10-24T20:40:11Z` | `16:39:56 start R-seat3` to `16:41:22 done R-seat3` |\n\nThe local ledger holds 675 rows (held to the key-release commit; its sha256 above).\nThe last local seat ended at `16:41:22 packet R: all three local seats written` local time, before\nAmendment 1's 22:00 (`deadline=$(date -d \"today 22:00\" +%s)`). Whether a GPU night was booked that day\nis not recorded by any file named here.\n\n**The fold** (PREREG section 4; Amendment 2 item 5's committed CLIs; A6 l.165-166), in Git Bash from the run\nworktree's root, with `Python 3.12.10`, by the lead (`FOLD_REPORT.md` l.82; for `score.py`, l.90:\n`exit 0; 2026-10-24T20:45:54Z to 20:46:18Z; stderr empty.`):\n\n```text\nSTYXX_SEALED_DIR=C:/Users/heyzo/clawd/styxx-sealed PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 py -3.12 -B papers/sworn/measurement/score.py --dir papers/sworn/measurement --sealed C:/Users/heyzo/clawd/styxx-sealed --out C:/Users/heyzo/clawd/wt/_next_level_2026_10_12/tonight/leg2/fold_a/measurement_result.json\nPYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 py -3.12 -B papers/sworn/measurement/verdict_input.py --tranche A --result C:/Users/heyzo/clawd/wt/_next_level_2026_10_12/tonight/leg2/fold_a/measurement_result.json --out C:/Users/heyzo/clawd/wt/_next_level_2026_10_12/tonight/leg2/fold_a/verdict_A.json\n```\n\nBoth exited 0 with empty standard error. `score.py` read the keys from the sealed store in place through `--sealed`\n(`key_L = K.load_key(\"sworn_measurement_key_L\", sealed, keys_dir)`, l.510-511, l.387;\n`def load_key(name: str, sealed=None, keys_dir=None) -> dict:`, `seal_key.py` l.86-93) and moved none\ninto the tree; `seal_key.py release` was not run. `--out` wrote outside the tree; the file's bytes do not depend on\nwhere it is written (its `lock` block holds repository-relative paths and HEAD, `score.py` l.534-538). Both commands\nwere re-run once (`Re-run 2026-10-24T20:47:45Z to 20:48:12Z`), and `measurement_result.json` and\n`verdict_A.json` came back byte-identical (the two sha256 above). The run worktree's\n`git status --porcelain --ignored --untracked-files=all` before and after the fold is byte-identical, and the 32\nseat-output files kept their sha256 (lead-attested lists, named by sha256 in \"Where the receipts are\"; the same list\nagain when the draft was written, and when this commit was built).\n\n**Lateness, against section 4's seven days.** The signing commit `01e9d2b7` is dated 2026-10-23T08:04:55-04:00, so\ntranche A's fold and its RESULT are due by 2026-10-30T08:04:55-04:00\n(`so tranche A's fold and its RESULT are due within seven days of the signing commit`, PREREG\nl.512-513). The fold ran on 2026-10-24T20:45:54Z, day 2. This RESULT is committed on 2026-10-25, by this commit's author\ndate, before the due time: **not late**, 0 hours.\n\n## What `score.py` prints about itself\n\nPrinted beside the verdict, gating nothing (PREREG l.185-187, l.735-736): `score.py`'s whole-fold `G_F.pass` reads\n`\"pass\": false`, title `one-family: counts only, no precision`, and `quotable` reads `\"quotable\": false`\n(`verdict_A.json`: `\"score_py_quotable\": false`). Its `withheld` list is `G_S1`,\n`G_S2`, `G_P`, `kappa`, `q3`.\n\n`score.py` was committed on 2026-09-05, before the bars were signed, and writes literals of that date: every gate\ncarries `\"proposed_unsigned\": true`, and `what_this_is_not` reads `a fold of committed inputs under proposed, unsigned bars`\n(`PREREG names it; a change after the PREREG commit is a moved bar.`, `score.py` l.2-4;\n`if dry_run else [\"a fold of committed inputs under proposed, unsigned bars\"]`, l.552-553). The bars\nwere signed unchanged on 2026-10-23 (PREREG section 2); the literal is printed as the scorer wrote it and is not\nedited, because its blob is in the lock.\n\n**The six disclosures, verbatim** (`measurement_result.json#/disclosure`; `score.py` l.59-75):\n\n1. `The authors of the in-house documents knew the bars before writing them; the in-house arm is bar-aware by construction.`\n2. `Both families ran on one machine, and one of them is the family that wrote the documents; correlated error is the ceiling, and kappa between families is a description, never validity.`\n3. `The Panel L decoys were authored by the builder from documents the population rule excludes; the Panel R decoys were constructed by the same code that plants the canaries.`\n4. `Under v0.2, sentence_share = sworn_total / (sworn_total + narrative_sentences) does not know which sentences were sworn; a G-G1 pass says the trivial twin swore fewer sentences, and nothing about whether the floor prices gaming.`\n5. `The canaries for the nine existing documents were planted after authorship; a prospective rate for documents not yet written is owed and enforced by a harness that runs before the author sees a verdict.`\n6. `Three seats of one deterministic local model under three instruction-block orders are not three judgements; the Claude family's three seats are three fresh sessions under the transport's default sampling.`\n\n## Tranche A's keys stay sealed\n\nTranche A's keys stay sealed until tranche B's seat outputs are recorded, or tranche B closes with no fold (no\ndocument by the close, every selected document refused, or no G-D), because tranche B's decoys are tranche A's\n(`Tranche A's keys stay sealed until tranche B's seat outputs are recorded, or tranche B closes`,\nAmendment 2 item 3, PREREG l.400-404). That can be after the close,\n`CLOSE_AT = \"2027-01-10T23:59:59-05:00\"` (PREREG l.314-315). **Until then no outside reader can\nre-score tranche A against its keys** (`so until then no outside reader can re-score tranche A against its keys`,\nPREREG l.745-747). The keys' salted digests are committed now (`papers/sworn/measurement/keys/*.sha256`;\n`papers/sworn/measurement/keys/sworn_measurement_key_L.sha256` and `papers/sworn/measurement/keys/sworn_measurement_key_R.sha256` with the canary key's,\n`papers/sworn/measurement/keys/sworn_measurement_canary_key.sha256`, in the lock).\n\nNot every count waits on the keys. Each Panel L decoy's text, side and the offsets of the sentence it is judged on are\ncommitted in `decoys_L.json` (section \"Item L-0033\"); matched to `packet_L.json`'s item texts, they give all that\n`score.py` reads of a decoy's key entry for G-D, its kind, side and those offsets\n(`unit_ids[iid] = [(\"decoy\", (meta[\"decoy_id\"], meta[\"side\"]))]`, l.135-144, l.174-181). So Panel\nL's G-D counts can be checked from the seat files, `packet_L.json` and `decoys_L.json`, with no key, once the seat\nfiles are committed at the key release; this RESULT has not made that check. SPEC l.216 says of Panel R's\ndecoys, `Their expected answers live in the sealed key only`; Panel R's decoys are built by committed code from\nthe excluded documents' committed sidecars (`The built Panel R decoys: YES = a HELD pointer span as authored, NO = the same retargeted.`,\n`build_packets.py` l.146-172), and whether their sides can be rebuilt that way was not checked here. What waits on the\nkeys is the rest: G-C's canary key and twins, every document item's key entry, and a re-run of `score.py` over the\nwhole fold. This RESULT does not read or derive any item's side and carries no key: `measurement_result.json` holds\ncounts per side, per twin and per cell only.\n\n## Tranche B\n\nNot built: no `papers/sworn/measurement/tranche_B/` and no `tranche_B_selection.json` exists at this commit, so there\nis no selection, pick or refusal to print yet. On 2026-10-25 the operator chose that tranche B runs on a fixed transport\nunder a new preregistration with both routes (section \"Item L-0033\"); that preregistration is not written here, and\nunder that route tranche B's seats read no item before it is committed. The selection fact the PREREG prints beside\ntranche B (PREREG l.364-368): of 20 result-shaped Markdown files (`RESULT_`, `FINDING_`, `DECLARATION_`) added under\n`papers/` outside `papers/sworn/` between `f28d35ad` and `bebdadf1`, 5 carry a `.sworn.json` sidecar\n(`of 20 result-shaped Markdown`; `5 carry a`); authors\n`choose whether a document is written in the format; the rule counts only those that are.`\n\n## What this result does not establish\n\n- **Whether authors bind the sentences that matter.** G-S1, G-S2 and G-P were withheld; no share was computed. The nine\n  documents are specimens written by authors who had read the bars\n  (`No sworn document in the tree is evidence that the format works:`, PREREG l.761-763), and nothing\n  here is evidence that the format works.\n- **Anything about gaming or the v0.2 floor.** G-G1 formed no pair; the bar was not tested.\n- **The verifier's miss rate on real errors.** G-C prices recall on planted spans of three constructions, planted by\n  the builder of the verifier (Amendment 3).\n- **A qualification on real ambiguity.** The Claude family cleared Panel R's decoys, which are construction-A\n  retargets built by the canary code; it is qualified on those items and nothing wider\n  (`so a family that clears G-D is qualified on those items, not`, PREREG l.454-457), and on Panel L\n  it did not clear.\n- **Anything about `claude-fable-5`, the dry run's canned seats, or Qwen2.5-7B-Instruct.** The Claude family qualifies\n  `on this alias or not at all, and nothing in the dry run speaks to either model.` (A6 l.206-207);\n  the local seat is the DESIGN's 3B fallback on the GPU, not its named substrate.\n- **Which model served each call.** The seat files record the alias each call asked for; the CLI's envelopes for the\n  675 item calls are not kept, only their sha256 in the ledger (null for the three L-0033 calls).\n- **Agreement between the families, or validity.** The kappas are withheld, and agreement between two families on one\n  box would be a description, not validity (`two families is not validity`, PREREG l.763-764).\n- **Whether the transport defect moved the Claude family's Panel L count.** That depends on whether L-0033 is a decoy,\n  and of which side, which the committed `decoys_L.json` decides; this RESULT does not print it.\n- **Anything outside this box, or past a pilot.** j = 0 as of 2026-10-25; the window for outside seats stays open until\n  tranche A's key release commit (Amendment 4).\n- **Importance or priority.** None is claimed.\n\nNo bar moved; no seat was re-run; nothing in this RESULT is an amendment.\n\n## Appendix: the excluded list (PREREG Appendix A, reprinted)\n\nSworn documents that entered `origin/main`'s mainline after the pin `f28d35ad`, as of `bebdadf1`, each excluded from\ntranche A: `RULE_eligible` rows by Amendment 2, the others by `population.py`'s rule. Reprinted from PREREG l.773-810,\nbyte for byte:\n\n| # | group | mainline entry | committed | path (`.md` stem) |\n|---|---|---|---|---|\n| 1 | excluded_by_RULE_format_document | `878a871a` | 2026-09-05T17:43:02-04:00 | `papers/sworn/CANNED_harness_claude_code_2026_09_05` |\n| 2 | excluded_by_RULE_format_document | `878a871a` | 2026-09-05T17:43:02-04:00 | `papers/sworn/CANNED_harness_github_2026_09_05` |\n| 3 | excluded_by_RULE_format_document | `878a871a` | 2026-09-05T17:43:02-04:00 | `papers/sworn/CANNED_harness_junit_2026_09_05` |\n| 4 | excluded_by_RULE_format_document | `878a871a` | 2026-09-05T17:43:02-04:00 | `papers/sworn/DESIGN_harness_adapters_2026_09_02` |\n| 5 | excluded_by_RULE_format_document | `878a871a` | 2026-09-05T17:43:02-04:00 | `papers/sworn/RESULT_harness_adapters_ship_2026_09_05` |\n| 6 | RULE_eligible | `42aa5e5f` | 2026-09-05T18:14:39-04:00 | `papers/closed-model-frontier/RESULT_edited_after_issue_2026_09_05` |\n| 7 | RULE_eligible | `42aa5e5f` | 2026-09-05T18:14:39-04:00 | `papers/closed-model-frontier/RESULT_oath_receipt_binding_2026_09_05` |\n| 8 | excluded_by_RULE_format_document | `d68a2650` | 2026-09-05T18:23:33-04:00 | `papers/sworn/RESULT_sworn_conformance_v01_ships_2026_09_05` |\n| 9 | excluded_by_RULE_format_document | `1e6b8fe9` | 2026-09-05T18:32:16-04:00 | `papers/sworn/RESULT_sworn_action_v01_ships_2026_09_05` |\n| 10 | excluded_by_RULE_format_document | `1e6b8fe9` | 2026-09-05T18:32:16-04:00 | `papers/sworn/RESULT_sworn_browser_verifier_v01_ships_2026_09_05` |\n| 11 | excluded_by_RULE_format_document | `08ef2cc1` | 2026-09-05T19:28:37-04:00 | `papers/sworn/RESULT_measurement_machinery_dry_run_2026_09_05` |\n| 12 | excluded_by_RULE_format_document | `12cf536c` | 2026-09-05T21:15:08-04:00 | `papers/sworn/SURVEY_sworn_neighbours_2026_09_05` |\n| 13 | excluded_by_RULE_format_document | `5225ba2c` | 2026-09-05T21:42:23-04:00 | `papers/sworn/RESULT_differential_agreement_2026_09_05` |\n| 14 | excluded_by_RULE_format_document | `5225ba2c` | 2026-09-05T21:42:23-04:00 | `papers/sworn/RESULT_mutation_coverage_2026_09_05` |\n| 15 | excluded_by_RULE_format_document | `dfebceaf` | 2026-09-05T22:41:53-04:00 | `papers/sworn/RESULT_aperture_closure_2026_09_06` |\n| 16 | excluded_by_RULE_format_document | `441931c0` | 2026-09-06T07:43:57-04:00 | `papers/sworn/RESULT_suite_power_2026_09_06` |\n| 17 | excluded_by_RULE_format_document | `efe27896` | 2026-09-06T11:23:26-04:00 | `papers/sworn/RESULT_sidecar_battery_2026_09_06` |\n| 18 | excluded_by_RULE_format_document | `9dcb7835` | 2026-09-06T11:54:13-04:00 | `papers/sworn/RESULT_tree_channel_authorship_2026_09_06` |\n| 19 | excluded_by_RULE_format_document | `f838a9df` | 2026-09-06T12:30:29-04:00 | `papers/sworn/RESULT_short_needle_anchor_2026_09_06` |\n| 20 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/checksum/CORRECTION_prereg_beacon_draw_2026_09_14` |\n| 21 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/checksum/CORRECTION_prereg_deploy_quant_H1_2026_09_13` |\n| 22 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/checksum/NOTE_replication_alienware_2026_09_13` |\n| 23 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/checksum/PREREG_checksum_beacon_draw_2026_09_14` |\n| 24 | RULE_eligible | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/checksum/RESULT_checksum_smollm_quant_2026_09_13` |\n| 25 | RULE_eligible | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/checksum/RESULT_portability_smollm_quant_2026_09_13` |\n| 26 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/plates/CORRECTION_sand_neighbours_pass3_2026_09_14` |\n| 27 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/plates/CORRECTION_sand_neighbours_pass4_2026_09_15` |\n| 28 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/plates/ERRATUM_sand_neighbours_pass3_correction_2026_09_14` |\n| 29 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/plates/ERRATUM_sand_survey_user_agent_2026_09_15` |\n| 30 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/plates/SURVEY_sand_neighbours_2026_09_13` |\n| 31 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/plates/SURVEY_sand_neighbours_pass2_2026_09_13` |\n| 32 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/plates/SURVEY_sand_neighbours_pass3_2026_09_14` |\n| 33 | excluded_by_RULE_not_RESULT_FINDING_DECLARATION | `568687fa` | 2026-09-16T23:49:03-04:00 | `papers/plates/SURVEY_sand_neighbours_pass4_2026_09_14` |\n| 34 | RULE_eligible | `ef4af063` | 2026-10-12T17:16:22-04:00 | `papers/frequency-resonance/RESULT_realmodel_bridge_v3_not_started_2026_10_12` |\n\n`f28d35ad` is not itself on the mainline; it entered it with `55752e44` (2026-09-05T17:37:44-04:00).\n\n## Sworn\n\nThis document swears 728 spans: 436 quote, 258 numeric, 25 hash and 9 absent, every one over bytes committed at\n`747e0890`, the commit its sidecar names. Before this file was committed, `python -m styxx.sworn verify` over it at\nthat commit read SWORN-HELD: 728 HELD, 0 FAILED, 0 UNRESOLVED, 0 MALFORMED; sentence_share 0.5063 (advisory, a floor\nthat counts every narrative sentence as load-bearing; `styxx.sworn`). The sidecar and the verdict receipt committed\nbeside this file are the receipt for these counts, and `python -m styxx.sworn check` re-derives the receipt from\nthem. A span binds a sentence to bytes the author did not write at that commit; it does not make the sentence\nright, and it does not say the right sentences were bound.\n",
+ "spans": [
+  {
+   "start": 221,
+   "end": 269,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 316,
+   "end": 377,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L724",
+   "kind": "quote"
+  },
+  {
+   "start": 535,
+   "end": 601,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/gates_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 635,
+   "end": 701,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L634",
+   "kind": "quote"
+  },
+  {
+   "start": 744,
+   "end": 786,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/prereg_commit",
+   "kind": "quote"
+  },
+  {
+   "start": 987,
+   "end": 1023,
+   "receipt": "path:papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02.md#L53",
+   "kind": "quote"
+  },
+  {
+   "start": 1072,
+   "end": 1073,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_f/L",
+   "kind": "numeric"
+  },
+  {
+   "start": 1240,
+   "end": 1279,
+   "receipt": "path:papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02.md#L52",
+   "kind": "quote"
+  },
+  {
+   "start": 1439,
+   "end": 1440,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_f/R",
+   "kind": "numeric"
+  },
+  {
+   "start": 1537,
+   "end": 1591,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L611",
+   "kind": "quote"
+  },
+  {
+   "start": 1748,
+   "end": 1751,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 1755,
+   "end": 1758,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 1856,
+   "end": 1874,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_c/wilson_lower",
+   "kind": "numeric"
+  },
+  {
+   "start": 1903,
+   "end": 1934,
+   "receipt": "path:papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02.md#L61",
+   "kind": "quote"
+  },
+  {
+   "start": 2028,
+   "end": 2029,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/pairs",
+   "kind": "numeric"
+  },
+  {
+   "start": 2052,
+   "end": 2053,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/twin_text_changed",
+   "kind": "numeric"
+  },
+  {
+   "start": 2273,
+   "end": 2294,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L615",
+   "kind": "quote"
+  },
+  {
+   "start": 2475,
+   "end": 2548,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+   "kind": "hash"
+  },
+  {
+   "start": 2772,
+   "end": 2845,
+   "receipt": "path:papers/sworn/AMENDMENT_sworn_measurement_leg2_seat_alias_2026_10_24.md",
+   "kind": "hash"
+  },
+  {
+   "start": 2927,
+   "end": 2969,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/lock/head",
+   "kind": "quote"
+  },
+  {
+   "start": 3046,
+   "end": 3088,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/lock/inputs/0/blob",
+   "kind": "quote"
+  },
+  {
+   "start": 3112,
+   "end": 3154,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L550",
+   "kind": "quote"
+  },
+  {
+   "start": 3179,
+   "end": 3221,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/lock/inputs/1/blob",
+   "kind": "quote"
+  },
+  {
+   "start": 3238,
+   "end": 3280,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L551",
+   "kind": "quote"
+  },
+  {
+   "start": 3729,
+   "end": 3818,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 4258,
+   "end": 4321,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L479",
+   "kind": "quote"
+  },
+  {
+   "start": 4500,
+   "end": 4501,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/population/documents",
+   "kind": "numeric"
+  },
+  {
+   "start": 5563,
+   "end": 5623,
+   "receipt": "path:papers/sworn/measurement/seat_local.py#L148",
+   "kind": "quote"
+  },
+  {
+   "start": 5661,
+   "end": 5662,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/call_hashes_per_panel/R/distinct_non_null",
+   "kind": "numeric"
+  },
+  {
+   "start": 5686,
+   "end": 5689,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/call_hashes_per_panel/R/item_rows",
+   "kind": "numeric"
+  },
+  {
+   "start": 6052,
+   "end": 6055,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/call_hashes_per_panel/R/distinct_non_null",
+   "kind": "numeric"
+  },
+  {
+   "start": 6079,
+   "end": 6082,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/call_hashes_per_panel/R/item_rows",
+   "kind": "numeric"
+  },
+  {
+   "start": 7038,
+   "end": 7111,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json",
+   "kind": "hash"
+  },
+  {
+   "start": 7175,
+   "end": 7222,
+   "receipt": "path:papers/sworn/measurement/verdict_input.py#L204",
+   "kind": "quote"
+  },
+  {
+   "start": 7285,
+   "end": 7358,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json",
+   "kind": "hash"
+  },
+  {
+   "start": 7548,
+   "end": 7621,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json",
+   "kind": "hash"
+  },
+  {
+   "start": 7656,
+   "end": 7729,
+   "receipt": "path:papers/sworn/measurement/tranche_A_seat_facts.py",
+   "kind": "hash"
+  },
+  {
+   "start": 8013,
+   "end": 8086,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_decoy_text_count.json",
+   "kind": "hash"
+  },
+  {
+   "start": 8167,
+   "end": 8240,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_packet_facts.json",
+   "kind": "hash"
+  },
+  {
+   "start": 8280,
+   "end": 8353,
+   "receipt": "path:papers/sworn/measurement/tranche_A_packet_facts.py",
+   "kind": "hash"
+  },
+  {
+   "start": 8466,
+   "end": 8539,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/ledger.jsonl",
+   "kind": "hash"
+  },
+  {
+   "start": 8792,
+   "end": 8858,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 9024,
+   "end": 9097,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_seats.sh",
+   "kind": "hash"
+  },
+  {
+   "start": 9124,
+   "end": 9197,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_local.sh",
+   "kind": "hash"
+  },
+  {
+   "start": 9246,
+   "end": 9319,
+   "receipt": "path:papers/sworn/measurement/receipts/seat_run_20261024T184653Z.log",
+   "kind": "hash"
+  },
+  {
+   "start": 9357,
+   "end": 9430,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_L_20261024T155430.log",
+   "kind": "hash"
+  },
+  {
+   "start": 9473,
+   "end": 9546,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_R_20261024T163704.log",
+   "kind": "hash"
+  },
+  {
+   "start": 9585,
+   "end": 9658,
+   "receipt": "path:papers/sworn/measurement/receipts/FOLD_REPORT.md",
+   "kind": "hash"
+  },
+  {
+   "start": 9723,
+   "end": 9796,
+   "receipt": "path:papers/sworn/measurement/receipts/FINDING_L0033_transport_2026_10_24.md",
+   "kind": "hash"
+  },
+  {
+   "start": 9840,
+   "end": 9913,
+   "receipt": "path:papers/sworn/measurement/receipts/twin_text_diff.py",
+   "kind": "hash"
+  },
+  {
+   "start": 9954,
+   "end": 10027,
+   "receipt": "path:papers/sworn/measurement/receipts/twin_text_diff.txt",
+   "kind": "hash"
+  },
+  {
+   "start": 10133,
+   "end": 10206,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_check_fable_2026_10_23.seat.json",
+   "kind": "hash"
+  },
+  {
+   "start": 10262,
+   "end": 10335,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_check_opus_2026_10_24.ledger.jsonl",
+   "kind": "hash"
+  },
+  {
+   "start": 10838,
+   "end": 10911,
+   "receipt": "path:papers/sworn/measurement/receipts/ERRATUM_FOLD_REPORT_2026_10_25.md",
+   "kind": "hash"
+  },
+  {
+   "start": 10968,
+   "end": 11041,
+   "receipt": "path:papers/sworn/measurement/receipts/ERRATUM_FINDING_L0033_transport_2026_10_25.md",
+   "kind": "hash"
+  },
+  {
+   "start": 12484,
+   "end": 12486,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_d/claude_L/overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 12503,
+   "end": 12528,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L640",
+   "kind": "quote"
+  },
+  {
+   "start": 12547,
+   "end": 12578,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L9",
+   "kind": "quote"
+  },
+  {
+   "start": 12678,
+   "end": 12680,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_d/claude_L/min_side",
+   "kind": "numeric"
+  },
+  {
+   "start": 12696,
+   "end": 12720,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L641",
+   "kind": "quote"
+  },
+  {
+   "start": 12737,
+   "end": 12764,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L10",
+   "kind": "quote"
+  },
+  {
+   "start": 12834,
+   "end": 12836,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_d/claude_R/overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 12853,
+   "end": 12878,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L642",
+   "kind": "quote"
+  },
+  {
+   "start": 12895,
+   "end": 12925,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L11",
+   "kind": "quote"
+  },
+  {
+   "start": 12992,
+   "end": 12994,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_d/claude_R/min_side",
+   "kind": "numeric"
+  },
+  {
+   "start": 13010,
+   "end": 13034,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L643",
+   "kind": "quote"
+  },
+  {
+   "start": 13051,
+   "end": 13078,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L12",
+   "kind": "quote"
+  },
+  {
+   "start": 13147,
+   "end": 13149,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_d/local_L/overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 13166,
+   "end": 13191,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L644",
+   "kind": "quote"
+  },
+  {
+   "start": 13210,
+   "end": 13240,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L13",
+   "kind": "quote"
+  },
+  {
+   "start": 13347,
+   "end": 13348,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_d/local_L/min_side",
+   "kind": "numeric"
+  },
+  {
+   "start": 13364,
+   "end": 13388,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L645",
+   "kind": "quote"
+  },
+  {
+   "start": 13407,
+   "end": 13434,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L14",
+   "kind": "quote"
+  },
+  {
+   "start": 13544,
+   "end": 13546,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_d/local_R/overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 13563,
+   "end": 13588,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L646",
+   "kind": "quote"
+  },
+  {
+   "start": 13607,
+   "end": 13637,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L15",
+   "kind": "quote"
+  },
+  {
+   "start": 13744,
+   "end": 13745,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_d/local_R/min_side",
+   "kind": "numeric"
+  },
+  {
+   "start": 13761,
+   "end": 13785,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L647",
+   "kind": "quote"
+  },
+  {
+   "start": 13804,
+   "end": 13831,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L16",
+   "kind": "quote"
+  },
+  {
+   "start": 13927,
+   "end": 13928,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_f/L",
+   "kind": "numeric"
+  },
+  {
+   "start": 13947,
+   "end": 13971,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L648",
+   "kind": "quote"
+  },
+  {
+   "start": 13990,
+   "end": 14006,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L17",
+   "kind": "quote"
+  },
+  {
+   "start": 14172,
+   "end": 14173,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_f/R",
+   "kind": "numeric"
+  },
+  {
+   "start": 14190,
+   "end": 14214,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L649",
+   "kind": "quote"
+  },
+  {
+   "start": 14233,
+   "end": 14249,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L18",
+   "kind": "quote"
+  },
+  {
+   "start": 14417,
+   "end": 14421,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_s1/share",
+   "kind": "numeric"
+  },
+  {
+   "start": 14434,
+   "end": 14460,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L650",
+   "kind": "quote"
+  },
+  {
+   "start": 14512,
+   "end": 14527,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L19",
+   "kind": "quote"
+  },
+  {
+   "start": 14582,
+   "end": 14585,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_s2/share",
+   "kind": "numeric"
+  },
+  {
+   "start": 14599,
+   "end": 14626,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L651",
+   "kind": "quote"
+  },
+  {
+   "start": 14678,
+   "end": 14693,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L20",
+   "kind": "quote"
+  },
+  {
+   "start": 14747,
+   "end": 14750,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_p/share",
+   "kind": "numeric"
+  },
+  {
+   "start": 14763,
+   "end": 14789,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L652",
+   "kind": "quote"
+  },
+  {
+   "start": 14841,
+   "end": 14855,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L21",
+   "kind": "quote"
+  },
+  {
+   "start": 14928,
+   "end": 14946,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_c/wilson_lower",
+   "kind": "numeric"
+  },
+  {
+   "start": 14972,
+   "end": 14999,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L653",
+   "kind": "quote"
+  },
+  {
+   "start": 15016,
+   "end": 15029,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L22",
+   "kind": "quote"
+  },
+  {
+   "start": 15088,
+   "end": 15092,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_g1/share",
+   "kind": "numeric"
+  },
+  {
+   "start": 15105,
+   "end": 15131,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L654",
+   "kind": "quote"
+  },
+  {
+   "start": 15197,
+   "end": 15212,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L23",
+   "kind": "quote"
+  },
+  {
+   "start": 15343,
+   "end": 15349,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/withheld/0",
+   "kind": "quote"
+  },
+  {
+   "start": 15351,
+   "end": 15357,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/withheld/1",
+   "kind": "quote"
+  },
+  {
+   "start": 15362,
+   "end": 15367,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/withheld/2",
+   "kind": "quote"
+  },
+  {
+   "start": 15384,
+   "end": 15390,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/empty_denominators/0",
+   "kind": "quote"
+  },
+  {
+   "start": 15539,
+   "end": 15588,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L610",
+   "kind": "quote"
+  },
+  {
+   "start": 15650,
+   "end": 15658,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/crosscheck/G_F_L",
+   "kind": "quote"
+  },
+  {
+   "start": 15671,
+   "end": 15679,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/crosscheck/G_F_R",
+   "kind": "quote"
+  },
+  {
+   "start": 15695,
+   "end": 15703,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/crosscheck/G_C",
+   "kind": "quote"
+  },
+  {
+   "start": 15714,
+   "end": 15744,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/crosscheck/G_S1",
+   "kind": "quote"
+  },
+  {
+   "start": 15786,
+   "end": 15825,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/crosscheck/G_G1",
+   "kind": "quote"
+  },
+  {
+   "start": 16153,
+   "end": 16155,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/claude/per_side/LOAD-BEARING/correct",
+   "kind": "numeric"
+  },
+  {
+   "start": 16159,
+   "end": 16161,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/claude/per_side/LOAD-BEARING/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 16164,
+   "end": 16166,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/claude/per_side/NOT/correct",
+   "kind": "numeric"
+  },
+  {
+   "start": 16170,
+   "end": 16172,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/claude/per_side/NOT/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 16175,
+   "end": 16177,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/claude/correct_overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 16181,
+   "end": 16183,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/claude/n_overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 16230,
+   "end": 16231,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/local/per_side/LOAD-BEARING/correct",
+   "kind": "numeric"
+  },
+  {
+   "start": 16235,
+   "end": 16237,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/local/per_side/LOAD-BEARING/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 16240,
+   "end": 16241,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/local/per_side/NOT/correct",
+   "kind": "numeric"
+  },
+  {
+   "start": 16245,
+   "end": 16247,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/local/per_side/NOT/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 16250,
+   "end": 16252,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/local/correct_overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 16256,
+   "end": 16258,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/L/local/n_overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 16465,
+   "end": 16507,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L578",
+   "kind": "quote"
+  },
+  {
+   "start": 16527,
+   "end": 16691,
+   "receipt": "path:papers/sworn/measurement/decoys_L.json#/authorship_disclosure",
+   "kind": "quote"
+  },
+  {
+   "start": 16694,
+   "end": 16845,
+   "receipt": "path:papers/sworn/measurement/decoys_L.json#/authorship_disclosure",
+   "kind": "quote"
+  },
+  {
+   "start": 16901,
+   "end": 16907,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/labels",
+   "kind": "quote"
+  },
+  {
+   "start": 16955,
+   "end": 16956,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_S1/numerator",
+   "kind": "numeric"
+  },
+  {
+   "start": 16960,
+   "end": 16961,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_S1/denominator",
+   "kind": "numeric"
+  },
+  {
+   "start": 16968,
+   "end": 16969,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_S2/numerator",
+   "kind": "numeric"
+  },
+  {
+   "start": 16973,
+   "end": 16974,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_S2/denominator",
+   "kind": "numeric"
+  },
+  {
+   "start": 17176,
+   "end": 17181,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/located_brackets/claude",
+   "kind": "numeric"
+  },
+  {
+   "start": 17225,
+   "end": 17228,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/located_brackets/local",
+   "kind": "numeric"
+  },
+  {
+   "start": 17332,
+   "end": 17335,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/located_by_second_pass/claude",
+   "kind": "numeric"
+  },
+  {
+   "start": 17379,
+   "end": 17381,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/located_by_second_pass/local",
+   "kind": "numeric"
+  },
+  {
+   "start": 17447,
+   "end": 17449,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/unlocated_brackets/claude",
+   "kind": "numeric"
+  },
+  {
+   "start": 17493,
+   "end": 17496,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/unlocated_brackets/local",
+   "kind": "numeric"
+  },
+  {
+   "start": 17567,
+   "end": 17568,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/unparsed_items/claude",
+   "kind": "numeric"
+  },
+  {
+   "start": 17612,
+   "end": 17614,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/unparsed_items/local",
+   "kind": "numeric"
+  },
+  {
+   "start": 17928,
+   "end": 17930,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/claude/per_side/YES/correct",
+   "kind": "numeric"
+  },
+  {
+   "start": 17934,
+   "end": 17936,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/claude/per_side/YES/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 17939,
+   "end": 17941,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/claude/per_side/NO/correct",
+   "kind": "numeric"
+  },
+  {
+   "start": 17945,
+   "end": 17947,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/claude/per_side/NO/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 17950,
+   "end": 17952,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/claude/correct_overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 17956,
+   "end": 17958,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/claude/n_overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 18005,
+   "end": 18007,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/local/per_side/YES/correct",
+   "kind": "numeric"
+  },
+  {
+   "start": 18011,
+   "end": 18013,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/local/per_side/YES/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 18016,
+   "end": 18017,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/local/per_side/NO/correct",
+   "kind": "numeric"
+  },
+  {
+   "start": 18021,
+   "end": 18023,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/local/per_side/NO/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 18026,
+   "end": 18028,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/local/correct_overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 18032,
+   "end": 18034,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_D/R/local/n_overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 18116,
+   "end": 18119,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/population/sworn_spans",
+   "kind": "numeric"
+  },
+  {
+   "start": 18159,
+   "end": 18162,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/panel_R_finals/YES",
+   "kind": "numeric"
+  },
+  {
+   "start": 18167,
+   "end": 18168,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/panel_R_finals/NO",
+   "kind": "numeric"
+  },
+  {
+   "start": 18177,
+   "end": 18178,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/panel_R_finals/UNSURE",
+   "kind": "numeric"
+  },
+  {
+   "start": 18192,
+   "end": 18193,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/panel_R_finals/NO-MAJORITY",
+   "kind": "numeric"
+  },
+  {
+   "start": 18208,
+   "end": 18209,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/panel_R_finals/FAMILY-SPLIT",
+   "kind": "numeric"
+  },
+  {
+   "start": 18307,
+   "end": 18308,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_P/numerator",
+   "kind": "numeric"
+  },
+  {
+   "start": 18315,
+   "end": 18318,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_P/denominator",
+   "kind": "numeric"
+  },
+  {
+   "start": 18337,
+   "end": 18349,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_P/labels",
+   "kind": "quote"
+  },
+  {
+   "start": 18417,
+   "end": 18418,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/panel_R_unparsed_items/claude",
+   "kind": "numeric"
+  },
+  {
+   "start": 18459,
+   "end": 18460,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/panel_R_unparsed_items/local",
+   "kind": "numeric"
+  },
+  {
+   "start": 18554,
+   "end": 18555,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_U/count",
+   "kind": "numeric"
+  },
+  {
+   "start": 18564,
+   "end": 18570,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_U/labels",
+   "kind": "quote"
+  },
+  {
+   "start": 18639,
+   "end": 18640,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_R/count",
+   "kind": "numeric"
+  },
+  {
+   "start": 18646,
+   "end": 18697,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_R/note",
+   "kind": "quote"
+  },
+  {
+   "start": 18706,
+   "end": 18718,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_R/labels",
+   "kind": "quote"
+  },
+  {
+   "start": 18837,
+   "end": 18847,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_S1X/share",
+   "kind": "quote"
+  },
+  {
+   "start": 18896,
+   "end": 18906,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/kappa/splitter",
+   "kind": "quote"
+  },
+  {
+   "start": 18908,
+   "end": 18918,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/kappa/panel_boundary",
+   "kind": "quote"
+  },
+  {
+   "start": 18920,
+   "end": 18959,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/kappa/note",
+   "kind": "quote"
+  },
+  {
+   "start": 19042,
+   "end": 19052,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/q3/D01/panel_coverage",
+   "kind": "quote"
+  },
+  {
+   "start": 19141,
+   "end": 19142,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/population/documents",
+   "kind": "numeric"
+  },
+  {
+   "start": 19154,
+   "end": 19157,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/population/sworn_spans",
+   "kind": "numeric"
+  },
+  {
+   "start": 19171,
+   "end": 19174,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/population/units",
+   "kind": "numeric"
+  },
+  {
+   "start": 19182,
+   "end": 19184,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/population/fragments",
+   "kind": "numeric"
+  },
+  {
+   "start": 19196,
+   "end": 19216,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#L66",
+   "kind": "quote"
+  },
+  {
+   "start": 19268,
+   "end": 19271,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 19275,
+   "end": 19278,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 19312,
+   "end": 19318,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/wilson95/0",
+   "kind": "numeric"
+  },
+  {
+   "start": 19320,
+   "end": 19323,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/wilson95/1",
+   "kind": "numeric"
+  },
+  {
+   "start": 19338,
+   "end": 19356,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_c/wilson_lower",
+   "kind": "numeric"
+  },
+  {
+   "start": 19375,
+   "end": 19402,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L653",
+   "kind": "quote"
+  },
+  {
+   "start": 19450,
+   "end": 19545,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L192",
+   "kind": "quote"
+  },
+  {
+   "start": 19687,
+   "end": 19757,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L258",
+   "kind": "quote"
+  },
+  {
+   "start": 19760,
+   "end": 19761,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D01/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 19765,
+   "end": 19766,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D01/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 19769,
+   "end": 19770,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D01/malformed",
+   "kind": "numeric"
+  },
+  {
+   "start": 19773,
+   "end": 19774,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D01/unresolved",
+   "kind": "numeric"
+  },
+  {
+   "start": 19777,
+   "end": 19778,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D01/held",
+   "kind": "numeric"
+  },
+  {
+   "start": 19789,
+   "end": 19839,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L259",
+   "kind": "quote"
+  },
+  {
+   "start": 19842,
+   "end": 19844,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D02/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 19848,
+   "end": 19850,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D02/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 19853,
+   "end": 19854,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D02/malformed",
+   "kind": "numeric"
+  },
+  {
+   "start": 19857,
+   "end": 19858,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D02/unresolved",
+   "kind": "numeric"
+  },
+  {
+   "start": 19861,
+   "end": 19862,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D02/held",
+   "kind": "numeric"
+  },
+  {
+   "start": 19873,
+   "end": 19952,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L260",
+   "kind": "quote"
+  },
+  {
+   "start": 19955,
+   "end": 19957,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D03/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 19961,
+   "end": 19963,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D03/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 19966,
+   "end": 19967,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D03/malformed",
+   "kind": "numeric"
+  },
+  {
+   "start": 19970,
+   "end": 19971,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D03/unresolved",
+   "kind": "numeric"
+  },
+  {
+   "start": 19974,
+   "end": 19975,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D03/held",
+   "kind": "numeric"
+  },
+  {
+   "start": 19986,
+   "end": 20065,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L261",
+   "kind": "quote"
+  },
+  {
+   "start": 20068,
+   "end": 20070,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D04/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 20074,
+   "end": 20076,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D04/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 20079,
+   "end": 20080,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D04/malformed",
+   "kind": "numeric"
+  },
+  {
+   "start": 20083,
+   "end": 20084,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D04/unresolved",
+   "kind": "numeric"
+  },
+  {
+   "start": 20087,
+   "end": 20088,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D04/held",
+   "kind": "numeric"
+  },
+  {
+   "start": 20099,
+   "end": 20164,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L262",
+   "kind": "quote"
+  },
+  {
+   "start": 20167,
+   "end": 20169,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D05/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 20173,
+   "end": 20175,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D05/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 20178,
+   "end": 20179,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D05/malformed",
+   "kind": "numeric"
+  },
+  {
+   "start": 20182,
+   "end": 20183,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D05/unresolved",
+   "kind": "numeric"
+  },
+  {
+   "start": 20186,
+   "end": 20187,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D05/held",
+   "kind": "numeric"
+  },
+  {
+   "start": 20198,
+   "end": 20256,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L263",
+   "kind": "quote"
+  },
+  {
+   "start": 20259,
+   "end": 20261,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D06/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 20265,
+   "end": 20267,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D06/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 20270,
+   "end": 20271,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D06/malformed",
+   "kind": "numeric"
+  },
+  {
+   "start": 20274,
+   "end": 20275,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D06/unresolved",
+   "kind": "numeric"
+  },
+  {
+   "start": 20278,
+   "end": 20279,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D06/held",
+   "kind": "numeric"
+  },
+  {
+   "start": 20290,
+   "end": 20363,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L264",
+   "kind": "quote"
+  },
+  {
+   "start": 20366,
+   "end": 20368,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D07/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 20372,
+   "end": 20374,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D07/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 20377,
+   "end": 20378,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D07/malformed",
+   "kind": "numeric"
+  },
+  {
+   "start": 20381,
+   "end": 20382,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D07/unresolved",
+   "kind": "numeric"
+  },
+  {
+   "start": 20385,
+   "end": 20386,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D07/held",
+   "kind": "numeric"
+  },
+  {
+   "start": 20397,
+   "end": 20460,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L265",
+   "kind": "quote"
+  },
+  {
+   "start": 20463,
+   "end": 20465,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D08/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 20469,
+   "end": 20471,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D08/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 20474,
+   "end": 20475,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D08/malformed",
+   "kind": "numeric"
+  },
+  {
+   "start": 20478,
+   "end": 20479,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D08/unresolved",
+   "kind": "numeric"
+  },
+  {
+   "start": 20482,
+   "end": 20483,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D08/held",
+   "kind": "numeric"
+  },
+  {
+   "start": 20494,
+   "end": 20570,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L266",
+   "kind": "quote"
+  },
+  {
+   "start": 20573,
+   "end": 20575,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D09/k",
+   "kind": "numeric"
+  },
+  {
+   "start": 20579,
+   "end": 20581,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D09/n",
+   "kind": "numeric"
+  },
+  {
+   "start": 20584,
+   "end": 20585,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D09/malformed",
+   "kind": "numeric"
+  },
+  {
+   "start": 20588,
+   "end": 20589,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D09/unresolved",
+   "kind": "numeric"
+  },
+  {
+   "start": 20592,
+   "end": 20593,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/per_twin/D09/held",
+   "kind": "numeric"
+  },
+  {
+   "start": 20616,
+   "end": 20618,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_C/smallest_n_clearing_bar_at_k_eq_n",
+   "kind": "numeric"
+  },
+  {
+   "start": 21288,
+   "end": 21307,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L442",
+   "kind": "quote"
+  },
+  {
+   "start": 21312,
+   "end": 21321,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L443",
+   "kind": "quote"
+  },
+  {
+   "start": 21375,
+   "end": 21440,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L453",
+   "kind": "quote"
+  },
+  {
+   "start": 21685,
+   "end": 21764,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L448",
+   "kind": "quote"
+  },
+  {
+   "start": 21766,
+   "end": 21812,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L449",
+   "kind": "quote"
+  },
+  {
+   "start": 21890,
+   "end": 21891,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/pairs",
+   "kind": "numeric"
+  },
+  {
+   "start": 21899,
+   "end": 21900,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/lower",
+   "kind": "numeric"
+  },
+  {
+   "start": 21908,
+   "end": 21909,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/twin_text_changed",
+   "kind": "numeric"
+  },
+  {
+   "start": 21996,
+   "end": 22015,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/per_pair/claude~1D01",
+   "kind": "quote"
+  },
+  {
+   "start": 22021,
+   "end": 22040,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/per_pair/claude~1D02",
+   "kind": "quote"
+  },
+  {
+   "start": 22046,
+   "end": 22065,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/per_pair/claude~1D03",
+   "kind": "quote"
+  },
+  {
+   "start": 22071,
+   "end": 22090,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/per_pair/claude~1D04",
+   "kind": "quote"
+  },
+  {
+   "start": 22096,
+   "end": 22115,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/per_pair/claude~1D05",
+   "kind": "quote"
+  },
+  {
+   "start": 22121,
+   "end": 22140,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/per_pair/claude~1D06",
+   "kind": "quote"
+  },
+  {
+   "start": 22146,
+   "end": 22165,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/per_pair/claude~1D07",
+   "kind": "quote"
+  },
+  {
+   "start": 22171,
+   "end": 22190,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/per_pair/claude~1D08",
+   "kind": "quote"
+  },
+  {
+   "start": 22196,
+   "end": 22215,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_G1/per_pair/claude~1D09",
+   "kind": "quote"
+  },
+  {
+   "start": 22291,
+   "end": 22334,
+   "receipt": "path:papers/sworn/measurement/score.py#L446",
+   "kind": "quote"
+  },
+  {
+   "start": 22380,
+   "end": 22395,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#L348",
+   "kind": "quote"
+  },
+  {
+   "start": 22423,
+   "end": 22427,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_g1/share",
+   "kind": "numeric"
+  },
+  {
+   "start": 22433,
+   "end": 22439,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/empty_denominators/0",
+   "kind": "quote"
+  },
+  {
+   "start": 22847,
+   "end": 22852,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D01/document_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22861,
+   "end": 22866,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D01/twin_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22872,
+   "end": 22877,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D02/document_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22886,
+   "end": 22891,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D02/twin_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22897,
+   "end": 22902,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D03/document_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22911,
+   "end": 22916,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D03/twin_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22922,
+   "end": 22927,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D04/document_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22936,
+   "end": 22941,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D04/twin_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22947,
+   "end": 22952,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D05/document_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22961,
+   "end": 22966,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D05/twin_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22972,
+   "end": 22977,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D06/document_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22986,
+   "end": 22991,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D06/twin_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 22997,
+   "end": 23002,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D07/document_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 23011,
+   "end": 23016,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D07/twin_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 23022,
+   "end": 23027,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D08/document_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 23036,
+   "end": 23041,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D08/twin_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 23047,
+   "end": 23052,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D09/document_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 23061,
+   "end": 23066,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/twins/D09/twin_text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 23207,
+   "end": 23255,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L794",
+   "kind": "quote"
+  },
+  {
+   "start": 23261,
+   "end": 23309,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L906",
+   "kind": "quote"
+  },
+  {
+   "start": 23444,
+   "end": 23467,
+   "receipt": "path:papers/sworn/measurement/receipts/twin_text_diff.txt#L1",
+   "kind": "quote"
+  },
+  {
+   "start": 23477,
+   "end": 23500,
+   "receipt": "path:papers/sworn/measurement/receipts/twin_text_diff.txt#L8",
+   "kind": "quote"
+  },
+  {
+   "start": 23711,
+   "end": 23752,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L83",
+   "kind": "quote"
+  },
+  {
+   "start": 23830,
+   "end": 23864,
+   "receipt": "path:papers/sworn/measurement/twin_trivial.py#L77",
+   "kind": "quote"
+  },
+  {
+   "start": 23872,
+   "end": 23923,
+   "receipt": "path:papers/sworn/measurement/twin_trivial.py#L83",
+   "kind": "quote"
+  },
+  {
+   "start": 23970,
+   "end": 24030,
+   "receipt": "path:papers/sworn/measurement/twin_trivial.py#L94",
+   "kind": "quote"
+  },
+  {
+   "start": 24086,
+   "end": 24122,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L792",
+   "kind": "quote"
+  },
+  {
+   "start": 24305,
+   "end": 24342,
+   "receipt": "path:papers/sworn/measurement/synthetic.py#L244",
+   "kind": "quote"
+  },
+  {
+   "start": 24725,
+   "end": 24726,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D01.trivial-status.json#/spans_original",
+   "kind": "numeric"
+  },
+  {
+   "start": 24731,
+   "end": 24732,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D01.trivial-status.json#/spans_twin",
+   "kind": "numeric"
+  },
+  {
+   "start": 24738,
+   "end": 24740,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D02.trivial-status.json#/spans_original",
+   "kind": "numeric"
+  },
+  {
+   "start": 24745,
+   "end": 24746,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D02.trivial-status.json#/spans_twin",
+   "kind": "numeric"
+  },
+  {
+   "start": 24752,
+   "end": 24754,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D03.trivial-status.json#/spans_original",
+   "kind": "numeric"
+  },
+  {
+   "start": 24759,
+   "end": 24760,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D03.trivial-status.json#/spans_twin",
+   "kind": "numeric"
+  },
+  {
+   "start": 24766,
+   "end": 24768,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D04.trivial-status.json#/spans_original",
+   "kind": "numeric"
+  },
+  {
+   "start": 24773,
+   "end": 24774,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D04.trivial-status.json#/spans_twin",
+   "kind": "numeric"
+  },
+  {
+   "start": 24780,
+   "end": 24782,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D05.trivial-status.json#/spans_original",
+   "kind": "numeric"
+  },
+  {
+   "start": 24787,
+   "end": 24788,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D05.trivial-status.json#/spans_twin",
+   "kind": "numeric"
+  },
+  {
+   "start": 24794,
+   "end": 24796,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D06.trivial-status.json#/spans_original",
+   "kind": "numeric"
+  },
+  {
+   "start": 24801,
+   "end": 24802,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D06.trivial-status.json#/spans_twin",
+   "kind": "numeric"
+  },
+  {
+   "start": 24808,
+   "end": 24810,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D07.trivial-status.json#/spans_original",
+   "kind": "numeric"
+  },
+  {
+   "start": 24815,
+   "end": 24816,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D07.trivial-status.json#/spans_twin",
+   "kind": "numeric"
+  },
+  {
+   "start": 24822,
+   "end": 24824,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D08.trivial-status.json#/spans_original",
+   "kind": "numeric"
+  },
+  {
+   "start": 24829,
+   "end": 24830,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D08.trivial-status.json#/spans_twin",
+   "kind": "numeric"
+  },
+  {
+   "start": 24836,
+   "end": 24838,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D09.trivial-status.json#/spans_original",
+   "kind": "numeric"
+  },
+  {
+   "start": 24843,
+   "end": 24844,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D09.trivial-status.json#/spans_twin",
+   "kind": "numeric"
+  },
+  {
+   "start": 24916,
+   "end": 24931,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D01.trivial-status.json#L6",
+   "kind": "quote"
+  },
+  {
+   "start": 24932,
+   "end": 24959,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D01.trivial-status.json#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 24965,
+   "end": 24980,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D02.trivial-status.json#L6",
+   "kind": "quote"
+  },
+  {
+   "start": 24981,
+   "end": 25008,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D02.trivial-status.json#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 25014,
+   "end": 25029,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D03.trivial-status.json#L6",
+   "kind": "quote"
+  },
+  {
+   "start": 25030,
+   "end": 25057,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D03.trivial-status.json#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 25063,
+   "end": 25078,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D04.trivial-status.json#L6",
+   "kind": "quote"
+  },
+  {
+   "start": 25079,
+   "end": 25106,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D04.trivial-status.json#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 25112,
+   "end": 25127,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D05.trivial-status.json#L6",
+   "kind": "quote"
+  },
+  {
+   "start": 25128,
+   "end": 25155,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D05.trivial-status.json#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 25161,
+   "end": 25176,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D06.trivial-status.json#L6",
+   "kind": "quote"
+  },
+  {
+   "start": 25177,
+   "end": 25204,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D06.trivial-status.json#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 25210,
+   "end": 25225,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D07.trivial-status.json#L6",
+   "kind": "quote"
+  },
+  {
+   "start": 25226,
+   "end": 25253,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D07.trivial-status.json#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 25259,
+   "end": 25274,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D08.trivial-status.json#L6",
+   "kind": "quote"
+  },
+  {
+   "start": 25275,
+   "end": 25302,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D08.trivial-status.json#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 25308,
+   "end": 25323,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D09.trivial-status.json#L6",
+   "kind": "quote"
+  },
+  {
+   "start": 25324,
+   "end": 25351,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D09.trivial-status.json#L7",
+   "kind": "quote"
+  },
+  {
+   "start": 25387,
+   "end": 25401,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D01.trivial-status.json",
+   "kind": "absent"
+  },
+  {
+   "start": 25407,
+   "end": 25421,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D02.trivial-status.json",
+   "kind": "absent"
+  },
+  {
+   "start": 25427,
+   "end": 25441,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D03.trivial-status.json",
+   "kind": "absent"
+  },
+  {
+   "start": 25447,
+   "end": 25461,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D04.trivial-status.json",
+   "kind": "absent"
+  },
+  {
+   "start": 25467,
+   "end": 25481,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D05.trivial-status.json",
+   "kind": "absent"
+  },
+  {
+   "start": 25487,
+   "end": 25501,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D06.trivial-status.json",
+   "kind": "absent"
+  },
+  {
+   "start": 25507,
+   "end": 25521,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D07.trivial-status.json",
+   "kind": "absent"
+  },
+  {
+   "start": 25527,
+   "end": 25541,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D08.trivial-status.json",
+   "kind": "absent"
+  },
+  {
+   "start": 25547,
+   "end": 25561,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/trivial/D09.trivial-status.json",
+   "kind": "absent"
+  },
+  {
+   "start": 25602,
+   "end": 25669,
+   "receipt": "path:papers/sworn/measurement/twin_trivial.py#L69",
+   "kind": "quote"
+  },
+  {
+   "start": 25801,
+   "end": 25906,
+   "receipt": "path:papers/sworn/AMENDMENT_sworn_measurement_leg2_seat_alias_2026_10_24.md#L144",
+   "kind": "quote"
+  },
+  {
+   "start": 26236,
+   "end": 26288,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_seats.sh#L49",
+   "kind": "quote"
+  },
+  {
+   "start": 26301,
+   "end": 26324,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_seats.sh#L9",
+   "kind": "quote"
+  },
+  {
+   "start": 28826,
+   "end": 28887,
+   "receipt": "path:papers/sworn/AMENDMENT_sworn_measurement_leg2_seat_alias_2026_10_24.md#L123",
+   "kind": "quote"
+  },
+  {
+   "start": 28979,
+   "end": 28999,
+   "receipt": "path:papers/sworn/measurement/receipts/seat_run_20261024T184653Z.log#L26",
+   "kind": "quote"
+  },
+  {
+   "start": 29003,
+   "end": 29030,
+   "receipt": "path:papers/sworn/measurement/receipts/seat_run_20261024T184653Z.log#L142",
+   "kind": "quote"
+  },
+  {
+   "start": 29237,
+   "end": 29310,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/errors/0/error",
+   "kind": "quote"
+  },
+  {
+   "start": 29314,
+   "end": 29322,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/errors/0/id",
+   "kind": "quote"
+  },
+  {
+   "start": 29333,
+   "end": 29406,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/errors/0/error",
+   "kind": "quote"
+  },
+  {
+   "start": 29410,
+   "end": 29418,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/errors/0/id",
+   "kind": "quote"
+  },
+  {
+   "start": 29429,
+   "end": 29502,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/errors/0/error",
+   "kind": "quote"
+  },
+  {
+   "start": 29506,
+   "end": 29514,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/errors/0/id",
+   "kind": "quote"
+  },
+  {
+   "start": 29663,
+   "end": 29671,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/unparsed/0",
+   "kind": "quote"
+  },
+  {
+   "start": 29673,
+   "end": 29674,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 29691,
+   "end": 29699,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/unparsed/0",
+   "kind": "quote"
+  },
+  {
+   "start": 29701,
+   "end": 29702,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 29719,
+   "end": 29727,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/unparsed/0",
+   "kind": "quote"
+  },
+  {
+   "start": 29729,
+   "end": 29730,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 29881,
+   "end": 29947,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/ledger.jsonl#L34",
+   "kind": "quote"
+  },
+  {
+   "start": 29949,
+   "end": 30015,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/ledger.jsonl#L94",
+   "kind": "quote"
+  },
+  {
+   "start": 30017,
+   "end": 30083,
+   "receipt": "path:papers/sworn/measurement/seat_outputs/claude/ledger.jsonl#L154",
+   "kind": "quote"
+  },
+  {
+   "start": 30141,
+   "end": 30183,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/error_rows/0/error",
+   "kind": "quote"
+  },
+  {
+   "start": 30185,
+   "end": 30227,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/error_rows/1/error",
+   "kind": "quote"
+  },
+  {
+   "start": 30229,
+   "end": 30271,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/error_rows/2/error",
+   "kind": "quote"
+  },
+  {
+   "start": 30346,
+   "end": 30347,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/totals/claude_R/errors",
+   "kind": "numeric"
+  },
+  {
+   "start": 30363,
+   "end": 30364,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/totals/local_L/errors",
+   "kind": "numeric"
+  },
+  {
+   "start": 30377,
+   "end": 30378,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/totals/local_R/errors",
+   "kind": "numeric"
+  },
+  {
+   "start": 30405,
+   "end": 30406,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/totals/claude_L/errors",
+   "kind": "numeric"
+  },
+  {
+   "start": 30440,
+   "end": 30441,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/error_rows_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 30452,
+   "end": 30453,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/error_rows_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 30516,
+   "end": 30605,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L49",
+   "kind": "quote"
+  },
+  {
+   "start": 30676,
+   "end": 30689,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L39",
+   "kind": "quote"
+  },
+  {
+   "start": 30697,
+   "end": 30727,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L73",
+   "kind": "quote"
+  },
+  {
+   "start": 30841,
+   "end": 30893,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L80",
+   "kind": "quote"
+  },
+  {
+   "start": 30901,
+   "end": 30922,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L89",
+   "kind": "quote"
+  },
+  {
+   "start": 30930,
+   "end": 31005,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L91",
+   "kind": "quote"
+  },
+  {
+   "start": 31245,
+   "end": 31246,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_packet_facts.json#/packet_L_items_beginning_with_dash_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 31258,
+   "end": 31266,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_packet_facts.json#/packet_L_items_beginning_with_dash/0/id",
+   "kind": "quote"
+  },
+  {
+   "start": 31276,
+   "end": 31278,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_packet_facts.json#/packet_L_items_beginning_with_dash/0/index",
+   "kind": "numeric"
+  },
+  {
+   "start": 31307,
+   "end": 31315,
+   "receipt": "path:papers/sworn/measurement/packet_L.json#/items/32/id",
+   "kind": "quote"
+  },
+  {
+   "start": 31336,
+   "end": 31377,
+   "receipt": "path:papers/sworn/measurement/packet_L.json#/items/32/text",
+   "kind": "quote"
+  },
+  {
+   "start": 31423,
+   "end": 31518,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L158",
+   "kind": "quote"
+  },
+  {
+   "start": 31622,
+   "end": 31643,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L157",
+   "kind": "quote"
+  },
+  {
+   "start": 31656,
+   "end": 31725,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L69",
+   "kind": "quote"
+  },
+  {
+   "start": 32177,
+   "end": 32182,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_packet_facts.json#/compared_by_length/0/text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 32211,
+   "end": 32216,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_packet_facts.json#/packet_L_items_beginning_with_dash/0/text_chars",
+   "kind": "numeric"
+  },
+  {
+   "start": 32432,
+   "end": 32434,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/items_parsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 32438,
+   "end": 32440,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 32450,
+   "end": 32452,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/items_parsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 32456,
+   "end": 32458,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 32468,
+   "end": 32470,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/items_parsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 32474,
+   "end": 32476,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 32576,
+   "end": 32586,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 32588,
+   "end": 32598,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 32603,
+   "end": 32613,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 32645,
+   "end": 32690,
+   "receipt": "path:papers/sworn/measurement/score.py#L130",
+   "kind": "quote"
+  },
+  {
+   "start": 32725,
+   "end": 32767,
+   "receipt": "path:papers/sworn/measurement/score.py#L157",
+   "kind": "quote"
+  },
+  {
+   "start": 32885,
+   "end": 32940,
+   "receipt": "path:papers/sworn/measurement/score.py#L159",
+   "kind": "quote"
+  },
+  {
+   "start": 33038,
+   "end": 33079,
+   "receipt": "path:papers/sworn/measurement/common.py#L513",
+   "kind": "quote"
+  },
+  {
+   "start": 33268,
+   "end": 33306,
+   "receipt": "path:papers/sworn/measurement/score.py#L180",
+   "kind": "quote"
+  },
+  {
+   "start": 33377,
+   "end": 33378,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/unparsed_items/claude",
+   "kind": "numeric"
+  },
+  {
+   "start": 33695,
+   "end": 33697,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_d/claude_L/overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 33935,
+   "end": 34008,
+   "receipt": "path:papers/sworn/measurement/decoys_L.json",
+   "kind": "hash"
+  },
+  {
+   "start": 34085,
+   "end": 34138,
+   "receipt": "path:papers/sworn/SPEC_sworn_measurement_machinery_2026_09_05.md#L212",
+   "kind": "quote"
+  },
+  {
+   "start": 34207,
+   "end": 34244,
+   "receipt": "path:papers/sworn/measurement/build_packets.py#L206",
+   "kind": "quote"
+  },
+  {
+   "start": 34262,
+   "end": 34264,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_decoy_text_count.json#/packet_L_item_texts_equal_to_a_committed_decoy_text",
+   "kind": "numeric"
+  },
+  {
+   "start": 34286,
+   "end": 34288,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_decoy_text_count.json#/packet_L_items",
+   "kind": "numeric"
+  },
+  {
+   "start": 34807,
+   "end": 34809,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#/verdict_input/g_d/local_L/overall",
+   "kind": "numeric"
+  },
+  {
+   "start": 35394,
+   "end": 35481,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L765",
+   "kind": "quote"
+  },
+  {
+   "start": 35772,
+   "end": 35808,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L378",
+   "kind": "quote"
+  },
+  {
+   "start": 36149,
+   "end": 36151,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 36178,
+   "end": 36180,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 36196,
+   "end": 36198,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat2/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 36214,
+   "end": 36216,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat3/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 36218,
+   "end": 36220,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/totals/local_L/unparsed",
+   "kind": "numeric"
+  },
+  {
+   "start": 36386,
+   "end": 36388,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/unparsed_items/local",
+   "kind": "numeric"
+  },
+  {
+   "start": 36400,
+   "end": 36401,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat1/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 36403,
+   "end": 36404,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat2/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 36406,
+   "end": 36407,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat3/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 36492,
+   "end": 36493,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/cells/panel_R_unparsed_items/local",
+   "kind": "numeric"
+  },
+  {
+   "start": 36533,
+   "end": 36534,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/totals/local_L/errors",
+   "kind": "numeric"
+  },
+  {
+   "start": 36539,
+   "end": 36540,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/totals/local_R/errors",
+   "kind": "numeric"
+  },
+  {
+   "start": 36776,
+   "end": 36778,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/totals/local_L/timing_rows_at_cap_and_unparsed",
+   "kind": "numeric"
+  },
+  {
+   "start": 36849,
+   "end": 36878,
+   "receipt": "path:papers/sworn/measurement/common.py#L60",
+   "kind": "quote"
+  },
+  {
+   "start": 36899,
+   "end": 36900,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/timing_rows_at_cap_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 36902,
+   "end": 36903,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat2/timing_rows_at_cap_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 36905,
+   "end": 36906,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat3/timing_rows_at_cap_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 36928,
+   "end": 36930,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/totals/local_L/timing_rows_at_cap",
+   "kind": "numeric"
+  },
+  {
+   "start": 37329,
+   "end": 37374,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_seats.sh#L42",
+   "kind": "quote"
+  },
+  {
+   "start": 37548,
+   "end": 37565,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 37568,
+   "end": 37578,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 37581,
+   "end": 37583,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 37586,
+   "end": 37587,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 37590,
+   "end": 37591,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/errors_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 37594,
+   "end": 37598,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/contamination_probe/answer",
+   "kind": "quote"
+  },
+  {
+   "start": 37601,
+   "end": 37667,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 37696,
+   "end": 37713,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 37716,
+   "end": 37726,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 37729,
+   "end": 37731,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 37734,
+   "end": 37735,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 37738,
+   "end": 37739,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/errors_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 37742,
+   "end": 37746,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/contamination_probe/answer",
+   "kind": "quote"
+  },
+  {
+   "start": 37749,
+   "end": 37815,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 37844,
+   "end": 37861,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 37864,
+   "end": 37874,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 37877,
+   "end": 37879,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 37882,
+   "end": 37883,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 37886,
+   "end": 37887,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/errors_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 37890,
+   "end": 37894,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/contamination_probe/answer",
+   "kind": "quote"
+  },
+  {
+   "start": 37897,
+   "end": 37963,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 37992,
+   "end": 38009,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 38012,
+   "end": 38022,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 38025,
+   "end": 38028,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 38031,
+   "end": 38032,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 38035,
+   "end": 38036,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/errors_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 38039,
+   "end": 38043,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/contamination_probe/answer",
+   "kind": "quote"
+  },
+  {
+   "start": 38046,
+   "end": 38112,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 38141,
+   "end": 38158,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 38161,
+   "end": 38171,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 38174,
+   "end": 38177,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 38180,
+   "end": 38181,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 38184,
+   "end": 38185,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/errors_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 38188,
+   "end": 38192,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/contamination_probe/answer",
+   "kind": "quote"
+  },
+  {
+   "start": 38195,
+   "end": 38261,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 38290,
+   "end": 38307,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 38310,
+   "end": 38320,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 38323,
+   "end": 38326,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 38329,
+   "end": 38330,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 38333,
+   "end": 38334,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/errors_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 38337,
+   "end": 38341,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/contamination_probe/answer",
+   "kind": "quote"
+  },
+  {
+   "start": 38344,
+   "end": 38410,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 38639,
+   "end": 38705,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L551",
+   "kind": "quote"
+  },
+  {
+   "start": 38719,
+   "end": 38785,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L552",
+   "kind": "quote"
+  },
+  {
+   "start": 39068,
+   "end": 39086,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L33",
+   "kind": "quote"
+  },
+  {
+   "start": 39089,
+   "end": 39116,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L34",
+   "kind": "quote"
+  },
+  {
+   "start": 39119,
+   "end": 39144,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L24",
+   "kind": "quote"
+  },
+  {
+   "start": 39147,
+   "end": 39161,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 39164,
+   "end": 39204,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 39207,
+   "end": 39213,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 39214,
+   "end": 39222,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 39223,
+   "end": 39233,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat1/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 39262,
+   "end": 39280,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L79",
+   "kind": "quote"
+  },
+  {
+   "start": 39283,
+   "end": 39310,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L80",
+   "kind": "quote"
+  },
+  {
+   "start": 39313,
+   "end": 39338,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L70",
+   "kind": "quote"
+  },
+  {
+   "start": 39341,
+   "end": 39355,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 39358,
+   "end": 39398,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 39401,
+   "end": 39407,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 39408,
+   "end": 39416,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 39417,
+   "end": 39427,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat2/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 39456,
+   "end": 39474,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L125",
+   "kind": "quote"
+  },
+  {
+   "start": 39477,
+   "end": 39504,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L126",
+   "kind": "quote"
+  },
+  {
+   "start": 39507,
+   "end": 39532,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L116",
+   "kind": "quote"
+  },
+  {
+   "start": 39535,
+   "end": 39549,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 39552,
+   "end": 39592,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 39595,
+   "end": 39601,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 39602,
+   "end": 39610,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 39611,
+   "end": 39621,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/L-seat3/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 39650,
+   "end": 39668,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L171",
+   "kind": "quote"
+  },
+  {
+   "start": 39671,
+   "end": 39698,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L172",
+   "kind": "quote"
+  },
+  {
+   "start": 39701,
+   "end": 39726,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L162",
+   "kind": "quote"
+  },
+  {
+   "start": 39729,
+   "end": 39743,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 39746,
+   "end": 39786,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 39789,
+   "end": 39795,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 39796,
+   "end": 39804,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 39805,
+   "end": 39815,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat1/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 39844,
+   "end": 39862,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L210",
+   "kind": "quote"
+  },
+  {
+   "start": 39865,
+   "end": 39892,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L211",
+   "kind": "quote"
+  },
+  {
+   "start": 39895,
+   "end": 39920,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L201",
+   "kind": "quote"
+  },
+  {
+   "start": 39923,
+   "end": 39937,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 39940,
+   "end": 39980,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 39983,
+   "end": 39989,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 39990,
+   "end": 39998,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 39999,
+   "end": 40009,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat2/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 40038,
+   "end": 40056,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L249",
+   "kind": "quote"
+  },
+  {
+   "start": 40059,
+   "end": 40086,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L250",
+   "kind": "quote"
+  },
+  {
+   "start": 40089,
+   "end": 40114,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L240",
+   "kind": "quote"
+  },
+  {
+   "start": 40117,
+   "end": 40131,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 40134,
+   "end": 40174,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 40177,
+   "end": 40183,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 40184,
+   "end": 40192,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 40193,
+   "end": 40203,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/claude/R-seat3/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 40231,
+   "end": 40249,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L292",
+   "kind": "quote"
+  },
+  {
+   "start": 40252,
+   "end": 40279,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L293",
+   "kind": "quote"
+  },
+  {
+   "start": 40282,
+   "end": 40308,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L281",
+   "kind": "quote"
+  },
+  {
+   "start": 40311,
+   "end": 40325,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 40328,
+   "end": 40368,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 40371,
+   "end": 40377,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 40378,
+   "end": 40386,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 40387,
+   "end": 40397,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 40425,
+   "end": 40443,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L348",
+   "kind": "quote"
+  },
+  {
+   "start": 40446,
+   "end": 40473,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L349",
+   "kind": "quote"
+  },
+  {
+   "start": 40476,
+   "end": 40502,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L337",
+   "kind": "quote"
+  },
+  {
+   "start": 40505,
+   "end": 40519,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat2/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 40522,
+   "end": 40562,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat2/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 40565,
+   "end": 40573,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat2/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 40574,
+   "end": 40584,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat2/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 40585,
+   "end": 40591,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat2/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 40619,
+   "end": 40637,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L404",
+   "kind": "quote"
+  },
+  {
+   "start": 40640,
+   "end": 40667,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L405",
+   "kind": "quote"
+  },
+  {
+   "start": 40670,
+   "end": 40696,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L393",
+   "kind": "quote"
+  },
+  {
+   "start": 40699,
+   "end": 40713,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat3/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 40716,
+   "end": 40756,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat3/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 40759,
+   "end": 40769,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat3/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 40770,
+   "end": 40776,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat3/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 40777,
+   "end": 40785,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat3/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 40813,
+   "end": 40831,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L462",
+   "kind": "quote"
+  },
+  {
+   "start": 40834,
+   "end": 40861,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L463",
+   "kind": "quote"
+  },
+  {
+   "start": 40864,
+   "end": 40890,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L451",
+   "kind": "quote"
+  },
+  {
+   "start": 40893,
+   "end": 40907,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat1/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 40910,
+   "end": 40950,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat1/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 40953,
+   "end": 40959,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat1/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 40960,
+   "end": 40968,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat1/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 40969,
+   "end": 40979,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat1/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 41007,
+   "end": 41025,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L503",
+   "kind": "quote"
+  },
+  {
+   "start": 41028,
+   "end": 41055,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L504",
+   "kind": "quote"
+  },
+  {
+   "start": 41058,
+   "end": 41084,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L492",
+   "kind": "quote"
+  },
+  {
+   "start": 41087,
+   "end": 41101,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat2/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 41104,
+   "end": 41144,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat2/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 41147,
+   "end": 41155,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat2/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 41156,
+   "end": 41166,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat2/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 41167,
+   "end": 41173,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat2/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 41201,
+   "end": 41219,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L544",
+   "kind": "quote"
+  },
+  {
+   "start": 41222,
+   "end": 41249,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L545",
+   "kind": "quote"
+  },
+  {
+   "start": 41252,
+   "end": 41278,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L533",
+   "kind": "quote"
+  },
+  {
+   "start": 41281,
+   "end": 41295,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat3/packet_sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 41298,
+   "end": 41338,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat3/prereg",
+   "kind": "quote"
+  },
+  {
+   "start": 41341,
+   "end": 41351,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat3/substrate/block_order/0",
+   "kind": "quote"
+  },
+  {
+   "start": 41352,
+   "end": 41358,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat3/substrate/block_order/1",
+   "kind": "quote"
+  },
+  {
+   "start": 41359,
+   "end": 41367,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat3/substrate/block_order/2",
+   "kind": "quote"
+  },
+  {
+   "start": 41450,
+   "end": 41467,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/families/claude/model",
+   "kind": "quote"
+  },
+  {
+   "start": 41469,
+   "end": 41540,
+   "receipt": "path:papers/sworn/measurement/score.py#L520",
+   "kind": "quote"
+  },
+  {
+   "start": 41737,
+   "end": 41793,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L205",
+   "kind": "quote"
+  },
+  {
+   "start": 41814,
+   "end": 41872,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L208",
+   "kind": "quote"
+  },
+  {
+   "start": 42262,
+   "end": 42346,
+   "receipt": "path:papers/sworn/AMENDMENT_sworn_measurement_leg2_seat_alias_2026_10_24.md#L157",
+   "kind": "quote"
+  },
+  {
+   "start": 42393,
+   "end": 42420,
+   "receipt": "path:papers/sworn/DESIGN_sworn_measurement_v2_2026_09_02.md#L21",
+   "kind": "quote"
+  },
+  {
+   "start": 42567,
+   "end": 42583,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L203",
+   "kind": "quote"
+  },
+  {
+   "start": 42749,
+   "end": 42765,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/L-seat1.json#/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 42766,
+   "end": 42783,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/L-seat1.json#L21",
+   "kind": "quote"
+  },
+  {
+   "start": 42784,
+   "end": 42793,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/L-seat1.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 42803,
+   "end": 42819,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/L-seat2.json#/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 42820,
+   "end": 42837,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/L-seat2.json#L21",
+   "kind": "quote"
+  },
+  {
+   "start": 42838,
+   "end": 42847,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/L-seat2.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 42857,
+   "end": 42873,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/L-seat3.json#/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 42874,
+   "end": 42891,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/L-seat3.json#L21",
+   "kind": "quote"
+  },
+  {
+   "start": 42892,
+   "end": 42901,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/L-seat3.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 42911,
+   "end": 42927,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/R-seat1.json#/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 42928,
+   "end": 42945,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/R-seat1.json#L21",
+   "kind": "quote"
+  },
+  {
+   "start": 42946,
+   "end": 42955,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/R-seat1.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 42965,
+   "end": 42981,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/R-seat2.json#/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 42982,
+   "end": 42999,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/R-seat2.json#L21",
+   "kind": "quote"
+  },
+  {
+   "start": 43000,
+   "end": 43009,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/R-seat2.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 43019,
+   "end": 43035,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/R-seat3.json#/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 43036,
+   "end": 43053,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/R-seat3.json#L21",
+   "kind": "quote"
+  },
+  {
+   "start": 43054,
+   "end": 43063,
+   "receipt": "path:papers/sworn/measurement/dryrun/seat_outputs/claude/R-seat3.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 43097,
+   "end": 43118,
+   "receipt": "path:papers/sworn/RESULT_measurement_machinery_dry_run_2026_09_05.md#L6",
+   "kind": "quote"
+  },
+  {
+   "start": 43266,
+   "end": 43290,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L493",
+   "kind": "quote"
+  },
+  {
+   "start": 43531,
+   "end": 43544,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_check_fable_2026_10_23.seat.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 43602,
+   "end": 43645,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_check_fable_2026_10_23.seat.json#/contamination_probe/error",
+   "kind": "quote"
+  },
+  {
+   "start": 43693,
+   "end": 43709,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_check_fable_2026_10_23.seat.json#/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 43750,
+   "end": 43816,
+   "receipt": "path:papers/sworn/AMENDMENT_sworn_measurement_leg2_seat_alias_2026_10_24.md#L41",
+   "kind": "quote"
+  },
+  {
+   "start": 43859,
+   "end": 43862,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_alias_fable_2026_10_24.json#/read/api_error_status",
+   "kind": "numeric"
+  },
+  {
+   "start": 43863,
+   "end": 43893,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_alias_fable_2026_10_24.json#/stdout",
+   "kind": "quote"
+  },
+  {
+   "start": 44002,
+   "end": 44006,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_alias_opus_2026_10_24.json#/read/result",
+   "kind": "quote"
+  },
+  {
+   "start": 44178,
+   "end": 44204,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 44206,
+   "end": 44220,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/substrate/transport",
+   "kind": "quote"
+  },
+  {
+   "start": 44222,
+   "end": 44228,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/substrate/dtype",
+   "kind": "quote"
+  },
+  {
+   "start": 44230,
+   "end": 44236,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/substrate/device",
+   "kind": "quote"
+  },
+  {
+   "start": 44289,
+   "end": 44323,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/note",
+   "kind": "quote"
+  },
+  {
+   "start": 44411,
+   "end": 44421,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat3/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 44559,
+   "end": 44588,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#L296",
+   "kind": "quote"
+  },
+  {
+   "start": 44618,
+   "end": 44647,
+   "receipt": "path:papers/sworn/measurement/seat_local.py#L130",
+   "kind": "quote"
+  },
+  {
+   "start": 44881,
+   "end": 44883,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 44886,
+   "end": 44888,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 44891,
+   "end": 44957,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat1/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 44985,
+   "end": 44987,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat2/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 44990,
+   "end": 44992,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat2/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 44995,
+   "end": 45061,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat2/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 45089,
+   "end": 45091,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat3/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 45094,
+   "end": 45096,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat3/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 45099,
+   "end": 45165,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/L-seat3/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 45193,
+   "end": 45196,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat1/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 45199,
+   "end": 45200,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat1/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 45203,
+   "end": 45269,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat1/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 45297,
+   "end": 45300,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat2/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 45303,
+   "end": 45304,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat2/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 45307,
+   "end": 45373,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat2/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 45401,
+   "end": 45404,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat3/items_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 45407,
+   "end": 45408,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat3/unparsed_count",
+   "kind": "numeric"
+  },
+  {
+   "start": 45411,
+   "end": 45477,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/seat_files/local/R-seat3/sha256",
+   "kind": "quote"
+  },
+  {
+   "start": 46048,
+   "end": 46101,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_seats.sh#L20",
+   "kind": "quote"
+  },
+  {
+   "start": 46214,
+   "end": 46241,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_check_opus_2026_10_24.seat.json#/verdict",
+   "kind": "quote"
+  },
+  {
+   "start": 46276,
+   "end": 46280,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_check_opus_2026_10_24.seat.json#/contamination_probe/answer",
+   "kind": "quote"
+  },
+  {
+   "start": 46300,
+   "end": 46317,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_check_opus_2026_10_24.seat.json#/substrate/model",
+   "kind": "quote"
+  },
+  {
+   "start": 46398,
+   "end": 46471,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_check_opus_2026_10_24.seat.json",
+   "kind": "hash"
+  },
+  {
+   "start": 46498,
+   "end": 46528,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_check_opus_2026_10_24.ledger.jsonl#L1",
+   "kind": "quote"
+  },
+  {
+   "start": 46621,
+   "end": 46687,
+   "receipt": "path:papers/sworn/AMENDMENT_sworn_measurement_leg2_seat_alias_2026_10_24.md#L85",
+   "kind": "quote"
+  },
+  {
+   "start": 46945,
+   "end": 46994,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_seats.sh#L3",
+   "kind": "quote"
+  },
+  {
+   "start": 47073,
+   "end": 47137,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L75",
+   "kind": "quote"
+  },
+  {
+   "start": 47291,
+   "end": 47314,
+   "receipt": "path:papers/sworn/measurement/receipts/transport_alias_opus_2026_10_24.json#/claude_cli_version",
+   "kind": "quote"
+  },
+  {
+   "start": 47530,
+   "end": 47603,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_seats.sh#L37",
+   "kind": "quote"
+  },
+  {
+   "start": 47727,
+   "end": 47784,
+   "receipt": "path:papers/sworn/measurement/seat_claude.py#L212",
+   "kind": "quote"
+  },
+  {
+   "start": 47945,
+   "end": 47946,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/L-seat1/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 47948,
+   "end": 47970,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/L-seat1/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 47973,
+   "end": 47997,
+   "receipt": "path:papers/sworn/measurement/receipts/seat_run_20261024T184653Z.log#L5",
+   "kind": "quote"
+  },
+  {
+   "start": 48016,
+   "end": 48018,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/L-seat2/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 48020,
+   "end": 48042,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/L-seat2/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 48045,
+   "end": 48069,
+   "receipt": "path:papers/sworn/measurement/receipts/seat_run_20261024T184653Z.log#L9",
+   "kind": "quote"
+  },
+  {
+   "start": 48088,
+   "end": 48091,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/L-seat3/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 48093,
+   "end": 48115,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/L-seat3/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 48118,
+   "end": 48142,
+   "receipt": "path:papers/sworn/measurement/receipts/seat_run_20261024T184653Z.log#L13",
+   "kind": "quote"
+  },
+  {
+   "start": 48161,
+   "end": 48164,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/R-seat1/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 48166,
+   "end": 48188,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/R-seat1/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 48191,
+   "end": 48215,
+   "receipt": "path:papers/sworn/measurement/receipts/seat_run_20261024T184653Z.log#L17",
+   "kind": "quote"
+  },
+  {
+   "start": 48234,
+   "end": 48237,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/R-seat2/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 48239,
+   "end": 48261,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/R-seat2/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 48264,
+   "end": 48288,
+   "receipt": "path:papers/sworn/measurement/receipts/seat_run_20261024T184653Z.log#L21",
+   "kind": "quote"
+  },
+  {
+   "start": 48307,
+   "end": 48310,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/R-seat3/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 48312,
+   "end": 48334,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/seats/R-seat3/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 48337,
+   "end": 48361,
+   "receipt": "path:papers/sworn/measurement/receipts/seat_run_20261024T184653Z.log#L25",
+   "kind": "quote"
+  },
+  {
+   "start": 48382,
+   "end": 48385,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/rows",
+   "kind": "numeric"
+  },
+  {
+   "start": 48392,
+   "end": 48395,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/rows_item",
+   "kind": "numeric"
+  },
+  {
+   "start": 48411,
+   "end": 48412,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/claude/rows_probe",
+   "kind": "numeric"
+  },
+  {
+   "start": 48440,
+   "end": 48463,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L509",
+   "kind": "quote"
+  },
+  {
+   "start": 48534,
+   "end": 48572,
+   "receipt": "path:papers/sworn/measurement/receipts/seat_run_20261024T184653Z.log#L1",
+   "kind": "quote"
+  },
+  {
+   "start": 48577,
+   "end": 48597,
+   "receipt": "path:papers/sworn/measurement/receipts/seat_run_20261024T184653Z.log#L143",
+   "kind": "quote"
+  },
+  {
+   "start": 49159,
+   "end": 49203,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_local.sh#L28",
+   "kind": "quote"
+  },
+  {
+   "start": 49239,
+   "end": 49271,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_local.sh#L12",
+   "kind": "quote"
+  },
+  {
+   "start": 49292,
+   "end": 49362,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_local.sh#L13",
+   "kind": "quote"
+  },
+  {
+   "start": 49507,
+   "end": 49508,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/L-seat1/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 49510,
+   "end": 49532,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/L-seat1/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 49535,
+   "end": 49559,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_L_20261024T155430.log#L2",
+   "kind": "quote"
+  },
+  {
+   "start": 49563,
+   "end": 49586,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_L_20261024T155430.log#L8",
+   "kind": "quote"
+  },
+  {
+   "start": 49605,
+   "end": 49607,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/L-seat2/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 49609,
+   "end": 49631,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/L-seat2/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 49634,
+   "end": 49658,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_L_20261024T155430.log#L9",
+   "kind": "quote"
+  },
+  {
+   "start": 49662,
+   "end": 49685,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_L_20261024T155430.log#L15",
+   "kind": "quote"
+  },
+  {
+   "start": 49704,
+   "end": 49707,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/L-seat3/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 49709,
+   "end": 49731,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/L-seat3/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 49734,
+   "end": 49758,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_L_20261024T155430.log#L16",
+   "kind": "quote"
+  },
+  {
+   "start": 49762,
+   "end": 49785,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_L_20261024T155430.log#L22",
+   "kind": "quote"
+  },
+  {
+   "start": 49804,
+   "end": 49807,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/R-seat1/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 49809,
+   "end": 49831,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/R-seat1/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 49834,
+   "end": 49858,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_R_20261024T163704.log#L2",
+   "kind": "quote"
+  },
+  {
+   "start": 49862,
+   "end": 49885,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_R_20261024T163704.log#L8",
+   "kind": "quote"
+  },
+  {
+   "start": 49904,
+   "end": 49907,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/R-seat2/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 49909,
+   "end": 49931,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/R-seat2/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 49934,
+   "end": 49958,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_R_20261024T163704.log#L9",
+   "kind": "quote"
+  },
+  {
+   "start": 49962,
+   "end": 49985,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_R_20261024T163704.log#L15",
+   "kind": "quote"
+  },
+  {
+   "start": 50004,
+   "end": 50007,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/R-seat3/start_line",
+   "kind": "numeric"
+  },
+  {
+   "start": 50009,
+   "end": 50031,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/seats/R-seat3/start_ts",
+   "kind": "quote"
+  },
+  {
+   "start": 50034,
+   "end": 50058,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_R_20261024T163704.log#L16",
+   "kind": "quote"
+  },
+  {
+   "start": 50062,
+   "end": 50085,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_R_20261024T163704.log#L22",
+   "kind": "quote"
+  },
+  {
+   "start": 50112,
+   "end": 50115,
+   "receipt": "path:papers/sworn/measurement/receipts/tranche_A_seat_facts.json#/ledgers/local/rows",
+   "kind": "numeric"
+  },
+  {
+   "start": 50202,
+   "end": 50252,
+   "receipt": "path:papers/sworn/measurement/receipts/local_run_R_20261024T163704.log#L23",
+   "kind": "quote"
+  },
+  {
+   "start": 50293,
+   "end": 50332,
+   "receipt": "path:papers/sworn/measurement/receipts/leg2_run_local.sh#L19",
+   "kind": "quote"
+  },
+  {
+   "start": 50547,
+   "end": 50563,
+   "receipt": "path:papers/sworn/measurement/receipts/FOLD_REPORT.md#L82",
+   "kind": "quote"
+  },
+  {
+   "start": 50623,
+   "end": 50681,
+   "receipt": "path:papers/sworn/measurement/receipts/FOLD_REPORT.md#L90",
+   "kind": "quote"
+  },
+  {
+   "start": 51435,
+   "end": 51500,
+   "receipt": "path:papers/sworn/measurement/score.py#L510",
+   "kind": "quote"
+  },
+  {
+   "start": 51520,
+   "end": 51582,
+   "receipt": "path:papers/sworn/measurement/seal_key.py#L86",
+   "kind": "quote"
+  },
+  {
+   "start": 51873,
+   "end": 51915,
+   "receipt": "path:papers/sworn/measurement/receipts/FOLD_REPORT.md#L216",
+   "kind": "quote"
+  },
+  {
+   "start": 52520,
+   "end": 52604,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L513",
+   "kind": "quote"
+  },
+  {
+   "start": 52940,
+   "end": 52955,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#L200",
+   "kind": "quote"
+  },
+  {
+   "start": 52963,
+   "end": 53002,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/gates/G_F/title",
+   "kind": "quote"
+  },
+  {
+   "start": 53025,
+   "end": 53044,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#L4",
+   "kind": "quote"
+  },
+  {
+   "start": 53064,
+   "end": 53092,
+   "receipt": "path:papers/sworn/measurement/verdict_A.json#L42",
+   "kind": "quote"
+  },
+  {
+   "start": 53118,
+   "end": 53124,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/withheld/0",
+   "kind": "quote"
+  },
+  {
+   "start": 53126,
+   "end": 53132,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/withheld/1",
+   "kind": "quote"
+  },
+  {
+   "start": 53134,
+   "end": 53139,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/withheld/2",
+   "kind": "quote"
+  },
+  {
+   "start": 53141,
+   "end": 53148,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/withheld/3",
+   "kind": "quote"
+  },
+  {
+   "start": 53150,
+   "end": 53154,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/withheld/4",
+   "kind": "quote"
+  },
+  {
+   "start": 53337,
+   "end": 53395,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/what_this_is_not/0",
+   "kind": "quote"
+  },
+  {
+   "start": 53397,
+   "end": 53464,
+   "receipt": "path:papers/sworn/measurement/score.py#L4",
+   "kind": "quote"
+  },
+  {
+   "start": 53484,
+   "end": 53562,
+   "receipt": "path:papers/sworn/measurement/score.py#L553",
+   "kind": "quote"
+  },
+  {
+   "start": 53839,
+   "end": 53960,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/disclosure/0",
+   "kind": "quote"
+  },
+  {
+   "start": 53964,
+   "end": 54149,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/disclosure/1",
+   "kind": "quote"
+  },
+  {
+   "start": 54153,
+   "end": 54326,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/disclosure/2",
+   "kind": "quote"
+  },
+  {
+   "start": 54330,
+   "end": 54560,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/disclosure/3",
+   "kind": "quote"
+  },
+  {
+   "start": 54564,
+   "end": 54768,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/disclosure/4",
+   "kind": "quote"
+  },
+  {
+   "start": 54772,
+   "end": 54978,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/disclosure/5",
+   "kind": "quote"
+  },
+  {
+   "start": 55236,
+   "end": 55331,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L400",
+   "kind": "quote"
+  },
+  {
+   "start": 55401,
+   "end": 55441,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L315",
+   "kind": "quote"
+  },
+  {
+   "start": 55536,
+   "end": 55609,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L747",
+   "kind": "quote"
+  },
+  {
+   "start": 55716,
+   "end": 55778,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/lock/inputs/5/path",
+   "kind": "quote"
+  },
+  {
+   "start": 55783,
+   "end": 55845,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/lock/inputs/6/path",
+   "kind": "quote"
+  },
+  {
+   "start": 55869,
+   "end": 55936,
+   "receipt": "path:papers/sworn/measurement/measurement_result.json#/lock/inputs/4/path",
+   "kind": "quote"
+  },
+  {
+   "start": 56269,
+   "end": 56332,
+   "receipt": "path:papers/sworn/measurement/score.py#L144",
+   "kind": "quote"
+  },
+  {
+   "start": 56595,
+   "end": 56647,
+   "receipt": "path:papers/sworn/SPEC_sworn_measurement_machinery_2026_09_05.md#L216",
+   "kind": "quote"
+  },
+  {
+   "start": 56743,
+   "end": 56835,
+   "receipt": "path:papers/sworn/measurement/build_packets.py#L146",
+   "kind": "quote"
+  },
+  {
+   "start": 57937,
+   "end": 57967,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L364",
+   "kind": "quote"
+  },
+  {
+   "start": 57969,
+   "end": 57980,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L366",
+   "kind": "quote"
+  },
+  {
+   "start": 57991,
+   "end": 58081,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L368",
+   "kind": "quote"
+  },
+  {
+   "start": 58313,
+   "end": 58379,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L761",
+   "kind": "quote"
+  },
+  {
+   "start": 58908,
+   "end": 58970,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L456",
+   "kind": "quote"
+  },
+  {
+   "start": 59147,
+   "end": 59228,
+   "receipt": "path:papers/sworn/AMENDMENT_sworn_measurement_leg2_seat_alias_2026_10_24.md#L207",
+   "kind": "quote"
+  },
+  {
+   "start": 59704,
+   "end": 59734,
+   "receipt": "path:papers/sworn/PREREG_sworn_measurement_2026_10_23.md#L764",
+   "kind": "quote"
+  }
+ ],
+ "manifest": {
+  "spec": "sworn/manifest/0.2",
+  "receipts": {}
+ }
+}

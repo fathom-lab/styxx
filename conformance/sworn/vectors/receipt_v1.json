@@ -4,7 +4,7 @@
  "count": 5,
  "vectors": [
   {
-   "id": "3a34d77bf3e2bb584dd3bdb2f850d40e28965ce75fde402e929f5cc48151cbbf",
+   "id": "307d0ec5481234732039041ad21f3b45c4763d7d5d5a94b631b07a5fb7bd9adf",
    "family": "receipt_v1",
    "sources": [
     "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
@@ -17,7 +17,65 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "4c85b1af6938aa613d0dd94ed22adee214c64b69d13f1d62066c3b7034e03631",
+    "receipt": "21f456efd795348fde4786f0d89ec3516ab36b87c6ca9153fdeaeac46106fd0e",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "FAILED",
+     "digest_match": false,
+     "verdict_reproduces": false
+    }
+   }
+  },
+  {
+   "id": "32c2acce4ee0059beda5bbbbdb475778f969278a21d0cd6f1f4a35f3fb6bf523",
+   "family": "receipt_v1",
+   "sources": [
+    "tests/test_sworn.py::TestVerdictReceipt::test_a_receipt_from_another_verifier_build_is_reported_not_hidden"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "9c89c9bc1e2eaa9a4ad0b2f895ad2a564151a263238bac712265fca723c5facf",
+    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
+    "sidecar": null,
+    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
+    "tree": null
+   },
+   "expect": {
+    "outcome": "check",
+    "check": {
+     "status": "VERIFIED",
+     "digest_match": true,
+     "verdict_reproduces": true
+    }
+   }
+  },
+  {
+   "id": "43168a886cf32417ec570b18d844289851643fa84a615f6086a09f8ed52da58c",
+   "family": "receipt_v1",
+   "sources": [
+    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
+   ],
+   "rules": [
+    "R9"
+   ],
+   "mode": "receipt_check",
+   "requires": [
+    "manifest"
+   ],
+   "inputs": {
+    "receipt": "04367b4342b4add8a5a3186c59c946334c7beba62b8fd4eadad61ce5151f077e",
     "document": "637b3b6b1ac524d8c277aa295b09f1f7886a342ec6204edba51c359380382f15",
     "sidecar": null,
     "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
@@ -85,36 +143,7 @@
    }
   },
   {
-   "id": "634cb7c061cea1532c3850ec2f0b0fdf8c6322df05ecb979a9277fcc9f84af65",
-   "family": "receipt_v1",
-   "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_a_tampered_verdict_or_document_fails_re_derivation"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "c114a2887c8b8656f8647995c065aa58651a82dba727697460ffbc35775f154d",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "35e30e745d45f08fdde097302b8d938063528b8cd4d73a2e38bd4ad8ab81e6ed",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "FAILED",
-     "digest_match": false,
-     "verdict_reproduces": false
-    }
-   }
-  },
-  {
-   "id": "799c8ff5985fe7ed2823c36d0b795a83c723509650c5e4cd3214e2710e46a705",
+   "id": "c12f634e711dd8591a36bec8469428a0b56ae50b2010cdc7aa5e082b6917316b",
    "family": "receipt_v1",
    "sources": [
     "tests/test_sworn.py::TestVerdictReceipt::test_the_receipt_is_content_addressed_and_re_derivable"
@@ -127,36 +156,7 @@
     "manifest"
    ],
    "inputs": {
-    "receipt": "dde94864da034a62890071d278f20e3616b9e780d074bae7cf2f5b50d56695e3",
-    "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
-    "sidecar": null,
-    "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",
-    "tree": null
-   },
-   "expect": {
-    "outcome": "check",
-    "check": {
-     "status": "VERIFIED",
-     "digest_match": true,
-     "verdict_reproduces": true
-    }
-   }
-  },
-  {
-   "id": "7bf676e5f6f6af8ae4adb89eee58d93c0b2444b8515d29a18829f0048ccc5d3d",
-   "family": "receipt_v1",
-   "sources": [
-    "tests/test_sworn.py::TestVerdictReceipt::test_a_receipt_from_another_verifier_build_is_reported_not_hidden"
-   ],
-   "rules": [
-    "R9"
-   ],
-   "mode": "receipt_check",
-   "requires": [
-    "manifest"
-   ],
-   "inputs": {
-    "receipt": "95c79dba9f8eb53ad7b5db2a2207e7d436960cd7edb45ca8b83073d70b685b09",
+    "receipt": "79e70ba81c9d45b107d84bd8c601b6541d3799458cd6e7002e9ad0f63e10bc70",
     "document": "25801a54d2459c4dbd72e974a824ef26fa51fbf8e1192eefa7029d7801aa10ce",
     "sidecar": null,
     "manifest": "1bed2d0b30de1476483dfaa5711eaceae6300bf5b64740149343650edbf46c09",

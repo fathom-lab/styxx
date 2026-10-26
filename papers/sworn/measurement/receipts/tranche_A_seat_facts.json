@@ -1,0 +1,925 @@
+{
+ "schema": "styxx-sworn/measurement-tranche-A-seat-facts/v1",
+ "script": "papers/sworn/measurement/tranche_A_seat_facts.py",
+ "script_sha256": "45a6f7f9ecbaca56d3f566fcca70e97c043920d0e42578719e49460d4d84e93f",
+ "population_sha256": "fb36ef41fb38707c546865df429cf54cba7e3d4114d07b0b9d7821c086920b4a",
+ "what_this_is": "headers, counts and sha256 read from tranche A's twelve seat files, two ledgers and nine trivial twins, so a RESULT can swear to counts over arrays the seat files hold",
+ "what_this_is_not": "not a re-score, not a key read, and no item's answer or label: an item id appears only where a seat file lists it as unparsed or as an error, or a ledger row carries an error",
+ "seat_files": {
+  "claude": {
+   "L-seat1": {
+    "path": "claude/L-seat1.json",
+    "sha256": "220aa30e503b08b7e06061abdf296ec917674717800e9c3d65c1eea7a092a887",
+    "bytes": 58163,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "claude",
+    "panel": "L",
+    "seat": 1,
+    "substrate": {
+     "model": "claude-opus-5-5",
+     "transport": "claude-cli clean-config",
+     "dtype": null,
+     "device": null,
+     "quant": null,
+     "named_in_design": true,
+     "block_order": [
+      "TASK",
+      "FORMAT",
+      "CAUTIONS"
+     ]
+    },
+    "packet_sha256": "140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "contamination_probe": {
+     "answer": "NO",
+     "ok": true,
+     "error": null
+    },
+    "items_count": 59,
+    "items_parsed_count": 58,
+    "unparsed": [
+     "L-0033"
+    ],
+    "unparsed_count": 1,
+    "errors": [
+     {
+      "id": "L-0033",
+      "error": "the transport's bytes were not the JSON envelope the transport promises"
+     }
+    ],
+    "errors_count": 1,
+    "timing_count": null
+   },
+   "L-seat2": {
+    "path": "claude/L-seat2.json",
+    "sha256": "76a5d81b4f71f0905295aad2b99fbdaf95005ed373f1a41ba780d55b7564a0ae",
+    "bytes": 57468,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "claude",
+    "panel": "L",
+    "seat": 2,
+    "substrate": {
+     "model": "claude-opus-5-5",
+     "transport": "claude-cli clean-config",
+     "dtype": null,
+     "device": null,
+     "quant": null,
+     "named_in_design": true,
+     "block_order": [
+      "TASK",
+      "FORMAT",
+      "CAUTIONS"
+     ]
+    },
+    "packet_sha256": "140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "contamination_probe": {
+     "answer": "NO",
+     "ok": true,
+     "error": null
+    },
+    "items_count": 59,
+    "items_parsed_count": 58,
+    "unparsed": [
+     "L-0033"
+    ],
+    "unparsed_count": 1,
+    "errors": [
+     {
+      "id": "L-0033",
+      "error": "the transport's bytes were not the JSON envelope the transport promises"
+     }
+    ],
+    "errors_count": 1,
+    "timing_count": null
+   },
+   "L-seat3": {
+    "path": "claude/L-seat3.json",
+    "sha256": "4c68c46d30efa70b66e9501b0067fddc59db67410ec78052f463c08a8ee70050",
+    "bytes": 59306,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "claude",
+    "panel": "L",
+    "seat": 3,
+    "substrate": {
+     "model": "claude-opus-5-5",
+     "transport": "claude-cli clean-config",
+     "dtype": null,
+     "device": null,
+     "quant": null,
+     "named_in_design": true,
+     "block_order": [
+      "TASK",
+      "FORMAT",
+      "CAUTIONS"
+     ]
+    },
+    "packet_sha256": "140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "contamination_probe": {
+     "answer": "NO",
+     "ok": true,
+     "error": null
+    },
+    "items_count": 59,
+    "items_parsed_count": 58,
+    "unparsed": [
+     "L-0033"
+    ],
+    "unparsed_count": 1,
+    "errors": [
+     {
+      "id": "L-0033",
+      "error": "the transport's bytes were not the JSON envelope the transport promises"
+     }
+    ],
+    "errors_count": 1,
+    "timing_count": null
+   },
+   "R-seat1": {
+    "path": "claude/R-seat1.json",
+    "sha256": "4277e57ba02413d306e8bf75476ca6ec109291843741893a718ed61598144855",
+    "bytes": 25948,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "claude",
+    "panel": "R",
+    "seat": 1,
+    "substrate": {
+     "model": "claude-opus-5-5",
+     "transport": "claude-cli clean-config",
+     "dtype": null,
+     "device": null,
+     "quant": null,
+     "named_in_design": true,
+     "block_order": [
+      "TASK",
+      "FORMAT",
+      "CAUTIONS"
+     ]
+    },
+    "packet_sha256": "7a10ce63bc9a64dde216f6932836f1d97b10a71fabca304ac8875bd205f60798",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "contamination_probe": {
+     "answer": "NO",
+     "ok": true,
+     "error": null
+    },
+    "items_count": 166,
+    "items_parsed_count": 166,
+    "unparsed": [],
+    "unparsed_count": 0,
+    "errors": [],
+    "errors_count": 0,
+    "timing_count": null
+   },
+   "R-seat2": {
+    "path": "claude/R-seat2.json",
+    "sha256": "b9d28b526ca752c6a729dddb720ddfd7f0cfcfa6b69a5255a43225ab212bc1c9",
+    "bytes": 25941,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "claude",
+    "panel": "R",
+    "seat": 2,
+    "substrate": {
+     "model": "claude-opus-5-5",
+     "transport": "claude-cli clean-config",
+     "dtype": null,
+     "device": null,
+     "quant": null,
+     "named_in_design": true,
+     "block_order": [
+      "TASK",
+      "FORMAT",
+      "CAUTIONS"
+     ]
+    },
+    "packet_sha256": "7a10ce63bc9a64dde216f6932836f1d97b10a71fabca304ac8875bd205f60798",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "contamination_probe": {
+     "answer": "NO",
+     "ok": true,
+     "error": null
+    },
+    "items_count": 166,
+    "items_parsed_count": 166,
+    "unparsed": [],
+    "unparsed_count": 0,
+    "errors": [],
+    "errors_count": 0,
+    "timing_count": null
+   },
+   "R-seat3": {
+    "path": "claude/R-seat3.json",
+    "sha256": "6bf7f83a91d6352bfe02c2d57b9df2fe6b7594fb925170e1d0e5bb006a1e21b7",
+    "bytes": 25945,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "claude",
+    "panel": "R",
+    "seat": 3,
+    "substrate": {
+     "model": "claude-opus-5-5",
+     "transport": "claude-cli clean-config",
+     "dtype": null,
+     "device": null,
+     "quant": null,
+     "named_in_design": true,
+     "block_order": [
+      "TASK",
+      "FORMAT",
+      "CAUTIONS"
+     ]
+    },
+    "packet_sha256": "7a10ce63bc9a64dde216f6932836f1d97b10a71fabca304ac8875bd205f60798",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "contamination_probe": {
+     "answer": "NO",
+     "ok": true,
+     "error": null
+    },
+    "items_count": 166,
+    "items_parsed_count": 166,
+    "unparsed": [],
+    "unparsed_count": 0,
+    "errors": [],
+    "errors_count": 0,
+    "timing_count": null
+   }
+  },
+  "local": {
+   "L-seat1": {
+    "path": "local/L-seat1.json",
+    "sha256": "c2698174a033c8b7c5a610381f734c6995227bbab91b7e4b2ea1a0540a9d440b",
+    "bytes": 47808,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "local",
+    "panel": "L",
+    "seat": 1,
+    "substrate": {
+     "model": "Qwen/Qwen2.5-3B-Instruct",
+     "transport": "transformers",
+     "dtype": "bf16",
+     "device": "cuda",
+     "quant": null,
+     "named_in_design": false,
+     "block_order": [
+      "TASK",
+      "FORMAT",
+      "CAUTIONS"
+     ],
+     "threads": 22,
+     "load_seconds": 6.7
+    },
+    "packet_sha256": "140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "note": "SUBSTRATE NOT NAMED IN DESIGN v2",
+    "contamination_probe": null,
+    "items_count": 59,
+    "items_parsed_count": 45,
+    "unparsed": [
+     "L-0002",
+     "L-0003",
+     "L-0006",
+     "L-0007",
+     "L-0013",
+     "L-0016",
+     "L-0019",
+     "L-0021",
+     "L-0028",
+     "L-0030",
+     "L-0032",
+     "L-0034",
+     "L-0035",
+     "L-0038"
+    ],
+    "unparsed_count": 14,
+    "errors": [],
+    "errors_count": 0,
+    "timing_count": 59,
+    "new_tokens_cap": 1200,
+    "timing_rows_at_cap_count": 7,
+    "timing_rows_at_cap_and_unparsed_count": 7
+   },
+   "L-seat2": {
+    "path": "local/L-seat2.json",
+    "sha256": "08cfa2183230c95afbc87f244ced5edee4e55625d46af27f2301bf6cdfce7946",
+    "bytes": 59250,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "local",
+    "panel": "L",
+    "seat": 2,
+    "substrate": {
+     "model": "Qwen/Qwen2.5-3B-Instruct",
+     "transport": "transformers",
+     "dtype": "bf16",
+     "device": "cuda",
+     "quant": null,
+     "named_in_design": false,
+     "block_order": [
+      "FORMAT",
+      "CAUTIONS",
+      "TASK"
+     ],
+     "threads": 22,
+     "load_seconds": 5.7
+    },
+    "packet_sha256": "140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "note": "SUBSTRATE NOT NAMED IN DESIGN v2",
+    "contamination_probe": null,
+    "items_count": 59,
+    "items_parsed_count": 45,
+    "unparsed": [
+     "L-0003",
+     "L-0004",
+     "L-0007",
+     "L-0016",
+     "L-0019",
+     "L-0022",
+     "L-0027",
+     "L-0028",
+     "L-0029",
+     "L-0030",
+     "L-0032",
+     "L-0034",
+     "L-0035",
+     "L-0038"
+    ],
+    "unparsed_count": 14,
+    "errors": [],
+    "errors_count": 0,
+    "timing_count": 59,
+    "new_tokens_cap": 1200,
+    "timing_rows_at_cap_count": 2,
+    "timing_rows_at_cap_and_unparsed_count": 2
+   },
+   "L-seat3": {
+    "path": "local/L-seat3.json",
+    "sha256": "0f95d48da88379a7db15a271e4cfc61de1c247b8205cd37796b49d4f4981816a",
+    "bytes": 45012,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "local",
+    "panel": "L",
+    "seat": 3,
+    "substrate": {
+     "model": "Qwen/Qwen2.5-3B-Instruct",
+     "transport": "transformers",
+     "dtype": "bf16",
+     "device": "cuda",
+     "quant": null,
+     "named_in_design": false,
+     "block_order": [
+      "CAUTIONS",
+      "TASK",
+      "FORMAT"
+     ],
+     "threads": 22,
+     "load_seconds": 5.9
+    },
+    "packet_sha256": "140ff006f92f3b64f88019b5c5f326052b92c3e4af36623cdc59c21b53eef9e9",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "note": "SUBSTRATE NOT NAMED IN DESIGN v2",
+    "contamination_probe": null,
+    "items_count": 59,
+    "items_parsed_count": 43,
+    "unparsed": [
+     "L-0002",
+     "L-0003",
+     "L-0013",
+     "L-0027",
+     "L-0028",
+     "L-0035",
+     "L-0036",
+     "L-0038",
+     "L-0041",
+     "L-0042",
+     "L-0047",
+     "L-0049",
+     "L-0051",
+     "L-0054",
+     "L-0055",
+     "L-0059"
+    ],
+    "unparsed_count": 16,
+    "errors": [],
+    "errors_count": 0,
+    "timing_count": 59,
+    "new_tokens_cap": 1200,
+    "timing_rows_at_cap_count": 5,
+    "timing_rows_at_cap_and_unparsed_count": 5
+   },
+   "R-seat1": {
+    "path": "local/R-seat1.json",
+    "sha256": "7feed47eb9913b88817fb4d692d3d9eefb60b34489e7ba54b63f1b9169a42f77",
+    "bytes": 41130,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "local",
+    "panel": "R",
+    "seat": 1,
+    "substrate": {
+     "model": "Qwen/Qwen2.5-3B-Instruct",
+     "transport": "transformers",
+     "dtype": "bf16",
+     "device": "cuda",
+     "quant": null,
+     "named_in_design": false,
+     "block_order": [
+      "TASK",
+      "FORMAT",
+      "CAUTIONS"
+     ],
+     "threads": 22,
+     "load_seconds": 5.7
+    },
+    "packet_sha256": "7a10ce63bc9a64dde216f6932836f1d97b10a71fabca304ac8875bd205f60798",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "note": "SUBSTRATE NOT NAMED IN DESIGN v2",
+    "contamination_probe": null,
+    "items_count": 166,
+    "items_parsed_count": 166,
+    "unparsed": [],
+    "unparsed_count": 0,
+    "errors": [],
+    "errors_count": 0,
+    "timing_count": 166,
+    "new_tokens_cap": 1200,
+    "timing_rows_at_cap_count": 0,
+    "timing_rows_at_cap_and_unparsed_count": 0
+   },
+   "R-seat2": {
+    "path": "local/R-seat2.json",
+    "sha256": "1b5ac82fb8991b8a324087e17f0ca8a58453bc90f35b70fc3cc1992b0be94639",
+    "bytes": 41109,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "local",
+    "panel": "R",
+    "seat": 2,
+    "substrate": {
+     "model": "Qwen/Qwen2.5-3B-Instruct",
+     "transport": "transformers",
+     "dtype": "bf16",
+     "device": "cuda",
+     "quant": null,
+     "named_in_design": false,
+     "block_order": [
+      "FORMAT",
+      "CAUTIONS",
+      "TASK"
+     ],
+     "threads": 22,
+     "load_seconds": 5.8
+    },
+    "packet_sha256": "7a10ce63bc9a64dde216f6932836f1d97b10a71fabca304ac8875bd205f60798",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "note": "SUBSTRATE NOT NAMED IN DESIGN v2",
+    "contamination_probe": null,
+    "items_count": 166,
+    "items_parsed_count": 166,
+    "unparsed": [],
+    "unparsed_count": 0,
+    "errors": [],
+    "errors_count": 0,
+    "timing_count": 166,
+    "new_tokens_cap": 1200,
+    "timing_rows_at_cap_count": 0,
+    "timing_rows_at_cap_and_unparsed_count": 0
+   },
+   "R-seat3": {
+    "path": "local/R-seat3.json",
+    "sha256": "60b98547ef6d566d6a892397d4f32ff24fd3f74b06217461685ebdc976d3dfbe",
+    "bytes": 41112,
+    "schema": "styxx-sworn/measurement-seat/v1",
+    "family": "local",
+    "panel": "R",
+    "seat": 3,
+    "substrate": {
+     "model": "Qwen/Qwen2.5-3B-Instruct",
+     "transport": "transformers",
+     "dtype": "bf16",
+     "device": "cuda",
+     "quant": null,
+     "named_in_design": false,
+     "block_order": [
+      "CAUTIONS",
+      "TASK",
+      "FORMAT"
+     ],
+     "threads": 22,
+     "load_seconds": 6.0
+    },
+    "packet_sha256": "7a10ce63bc9a64dde216f6932836f1d97b10a71fabca304ac8875bd205f60798",
+    "prereg": "papers/sworn/PREREG_sworn_measurement_2026_10_23.md",
+    "dry_run": false,
+    "synthetic_packet": false,
+    "verdict": "RECORDED",
+    "note": "SUBSTRATE NOT NAMED IN DESIGN v2",
+    "contamination_probe": null,
+    "items_count": 166,
+    "items_parsed_count": 166,
+    "unparsed": [],
+    "unparsed_count": 0,
+    "errors": [],
+    "errors_count": 0,
+    "timing_count": 166,
+    "new_tokens_cap": 1200,
+    "timing_rows_at_cap_count": 0,
+    "timing_rows_at_cap_and_unparsed_count": 0
+   }
+  }
+ },
+ "totals": {
+  "claude_L": {
+   "items": 177,
+   "unparsed": 3,
+   "errors": 3
+  },
+  "claude_R": {
+   "items": 498,
+   "unparsed": 0,
+   "errors": 0
+  },
+  "local_L": {
+   "items": 177,
+   "unparsed": 44,
+   "errors": 0,
+   "timing_rows_at_cap": 14,
+   "timing_rows_at_cap_and_unparsed": 14
+  },
+  "local_R": {
+   "items": 498,
+   "unparsed": 0,
+   "errors": 0,
+   "timing_rows_at_cap": 0,
+   "timing_rows_at_cap_and_unparsed": 0
+  }
+ },
+ "ledgers": {
+  "claude": {
+   "path": "claude/ledger.jsonl",
+   "sha256": "0f25ebaa412fe3115886ace08b95e9fdc1cdbd8ea4b42f6fcbad08c7ede5de0d",
+   "bytes": 148365,
+   "rows": 681,
+   "rows_probe": 6,
+   "rows_item": 675,
+   "keys": [
+    "dry_run",
+    "error",
+    "item_id",
+    "panel",
+    "raw_sha256",
+    "seat",
+    "transport_check",
+    "ts"
+   ],
+   "seats": {
+    "L-seat1": {
+     "start_line": 1,
+     "start_ts": "2026-10-24T18:46:55Z",
+     "end_line": 60,
+     "rows": 60,
+     "rows_probe": 1,
+     "rows_item": 59
+    },
+    "L-seat2": {
+     "start_line": 61,
+     "start_ts": "2026-10-24T18:56:51Z",
+     "end_line": 120,
+     "rows": 60,
+     "rows_probe": 1,
+     "rows_item": 59
+    },
+    "L-seat3": {
+     "start_line": 121,
+     "start_ts": "2026-10-24T19:05:57Z",
+     "end_line": 180,
+     "rows": 60,
+     "rows_probe": 1,
+     "rows_item": 59
+    },
+    "R-seat1": {
+     "start_line": 181,
+     "start_ts": "2026-10-24T19:15:08Z",
+     "end_line": 347,
+     "rows": 167,
+     "rows_probe": 1,
+     "rows_item": 166
+    },
+    "R-seat2": {
+     "start_line": 348,
+     "start_ts": "2026-10-24T19:26:53Z",
+     "end_line": 514,
+     "rows": 167,
+     "rows_probe": 1,
+     "rows_item": 166
+    },
+    "R-seat3": {
+     "start_line": 515,
+     "start_ts": "2026-10-24T19:38:05Z",
+     "end_line": 681,
+     "rows": 167,
+     "rows_probe": 1,
+     "rows_item": 166
+    }
+   },
+   "error_rows": [
+    {
+     "line": 34,
+     "item_id": "L-0033",
+     "panel": "L",
+     "seat": 1,
+     "error": "the transport's bytes were not the JSON envelope the transport promises",
+     "raw_sha256_is_null": true
+    },
+    {
+     "line": 94,
+     "item_id": "L-0033",
+     "panel": "L",
+     "seat": 2,
+     "error": "the transport's bytes were not the JSON envelope the transport promises",
+     "raw_sha256_is_null": true
+    },
+    {
+     "line": 154,
+     "item_id": "L-0033",
+     "panel": "L",
+     "seat": 3,
+     "error": "the transport's bytes were not the JSON envelope the transport promises",
+     "raw_sha256_is_null": true
+    }
+   ],
+   "error_rows_count": 3,
+   "call_hashes_per_panel": {
+    "L": {
+     "item_rows": 177,
+     "null": 3,
+     "distinct_non_null": 174
+    },
+    "R": {
+     "item_rows": 498,
+     "null": 0,
+     "distinct_non_null": 498
+    }
+   }
+  },
+  "local": {
+   "path": "local/ledger.jsonl",
+   "sha256": "12335fad0e5a2ae15c27a0b5b8b75873add9a227bf40c3ff00602fecda880be8",
+   "bytes": 140400,
+   "rows": 675,
+   "rows_probe": 0,
+   "rows_item": 675,
+   "keys": [
+    "dry_run",
+    "error",
+    "item_id",
+    "panel",
+    "raw_sha256",
+    "seat",
+    "smoke",
+    "ts"
+   ],
+   "seats": {
+    "L-seat1": {
+     "start_line": 1,
+     "start_ts": "2026-10-24T19:54:46Z",
+     "end_line": 59,
+     "rows": 59,
+     "rows_probe": 0,
+     "rows_item": 59
+    },
+    "L-seat2": {
+     "start_line": 60,
+     "start_ts": "2026-10-24T20:09:37Z",
+     "end_line": 118,
+     "rows": 59,
+     "rows_probe": 0,
+     "rows_item": 59
+    },
+    "L-seat3": {
+     "start_line": 119,
+     "start_ts": "2026-10-24T20:24:16Z",
+     "end_line": 177,
+     "rows": 59,
+     "rows_probe": 0,
+     "rows_item": 59
+    },
+    "R-seat1": {
+     "start_line": 178,
+     "start_ts": "2026-10-24T20:37:18Z",
+     "end_line": 343,
+     "rows": 166,
+     "rows_probe": 0,
+     "rows_item": 166
+    },
+    "R-seat2": {
+     "start_line": 344,
+     "start_ts": "2026-10-24T20:38:43Z",
+     "end_line": 509,
+     "rows": 166,
+     "rows_probe": 0,
+     "rows_item": 166
+    },
+    "R-seat3": {
+     "start_line": 510,
+     "start_ts": "2026-10-24T20:40:11Z",
+     "end_line": 675,
+     "rows": 166,
+     "rows_probe": 0,
+     "rows_item": 166
+    }
+   },
+   "error_rows": [],
+   "error_rows_count": 0,
+   "call_hashes_per_panel": {
+    "L": {
+     "item_rows": 177,
+     "null": 0,
+     "distinct_non_null": 171
+    },
+    "R": {
+     "item_rows": 498,
+     "null": 0,
+     "distinct_non_null": 2
+    }
+   }
+  }
+ },
+ "twins": {
+  "D01": {
+   "status_path": "claude/trivial/D01.trivial-status.json",
+   "status_sha256": "b33230c17f25eede0bd7a00cb6a8c334602d1b5ab5fde309d3013c33cd622844",
+   "twin_path": "claude/trivial/D01.trivial-twin.json",
+   "twin_sha256": "a0d7de90c881122d9720ba2d7c5fda62d47766265e27815d1f4f12311dbea72f",
+   "status_error": null,
+   "status_has_refused_key": false,
+   "twin_text_changed": true,
+   "spans_original": 8,
+   "spans_twin": 1,
+   "document_text_chars": 1822,
+   "twin_text_chars": 1821,
+   "document_text_ends_with_lf": true,
+   "twin_text_equals_document_text": false,
+   "twin_text_plus_lf_equals_document_text": true
+  },
+  "D02": {
+   "status_path": "claude/trivial/D02.trivial-status.json",
+   "status_sha256": "b8868b53b857da44b6891bb4db85c30d30379baa15231946bba21844dac4185c",
+   "twin_path": "claude/trivial/D02.trivial-twin.json",
+   "twin_sha256": "ff5f99e4205a3fe88571324109b47381d7a3b23ebdf0741076f674332a2bb1c0",
+   "status_error": null,
+   "status_has_refused_key": false,
+   "twin_text_changed": true,
+   "spans_original": 26,
+   "spans_twin": 2,
+   "document_text_chars": 8669,
+   "twin_text_chars": 8668,
+   "document_text_ends_with_lf": true,
+   "twin_text_equals_document_text": false,
+   "twin_text_plus_lf_equals_document_text": true
+  },
+  "D03": {
+   "status_path": "claude/trivial/D03.trivial-status.json",
+   "status_sha256": "668461ade8491ac05a50641f6e6b2f377e2b96f43903e28d3e9942632af63318",
+   "twin_path": "claude/trivial/D03.trivial-twin.json",
+   "twin_sha256": "2ea584faeae72573fcc5cfec83838d225c191f46e7f02756f40d55454451e642",
+   "status_error": null,
+   "status_has_refused_key": false,
+   "twin_text_changed": true,
+   "spans_original": 12,
+   "spans_twin": 0,
+   "document_text_chars": 4426,
+   "twin_text_chars": 4425,
+   "document_text_ends_with_lf": true,
+   "twin_text_equals_document_text": false,
+   "twin_text_plus_lf_equals_document_text": true
+  },
+  "D04": {
+   "status_path": "claude/trivial/D04.trivial-status.json",
+   "status_sha256": "f08c0075522405a5c6038440bf6472bb7d8841f6cf2a6c3db765509db8a9f912",
+   "twin_path": "claude/trivial/D04.trivial-twin.json",
+   "twin_sha256": "7488343bd46da00555bdc2c12b3908f5c7baf368fb85dfce41afa95e2f2c04d9",
+   "status_error": null,
+   "status_has_refused_key": false,
+   "twin_text_changed": true,
+   "spans_original": 12,
+   "spans_twin": 1,
+   "document_text_chars": 3528,
+   "twin_text_chars": 3527,
+   "document_text_ends_with_lf": true,
+   "twin_text_equals_document_text": false,
+   "twin_text_plus_lf_equals_document_text": true
+  },
+  "D05": {
+   "status_path": "claude/trivial/D05.trivial-status.json",
+   "status_sha256": "2c996f26a87edab5a292f3811cd659ee7379736820bb7fc6ea61ce497a867d83",
+   "twin_path": "claude/trivial/D05.trivial-twin.json",
+   "twin_sha256": "3e3433cfa879abfe773d088e1d4dafdb6a0c4d21be0a835aa4f98a98b3447c82",
+   "status_error": null,
+   "status_has_refused_key": false,
+   "twin_text_changed": true,
+   "spans_original": 14,
+   "spans_twin": 1,
+   "document_text_chars": 3330,
+   "twin_text_chars": 3329,
+   "document_text_ends_with_lf": true,
+   "twin_text_equals_document_text": false,
+   "twin_text_plus_lf_equals_document_text": true
+  },
+  "D06": {
+   "status_path": "claude/trivial/D06.trivial-status.json",
+   "status_sha256": "bf55902b565d66b4147b418fa5982556acec78a9fc681d3f4ff9bf7c3b6be0a8",
+   "twin_path": "claude/trivial/D06.trivial-twin.json",
+   "twin_sha256": "14ca0e08cdfeb4ffde19d46f6f5707a92b38b1008c25243555fe8b29900697f8",
+   "status_error": null,
+   "status_has_refused_key": false,
+   "twin_text_changed": true,
+   "spans_original": 11,
+   "spans_twin": 1,
+   "document_text_chars": 2610,
+   "twin_text_chars": 2609,
+   "document_text_ends_with_lf": true,
+   "twin_text_equals_document_text": false,
+   "twin_text_plus_lf_equals_document_text": true
+  },
+  "D07": {
+   "status_path": "claude/trivial/D07.trivial-status.json",
+   "status_sha256": "2ec4608d190f2b6358dcbe04e5030bd9751f8abb38657e2ad94a3590d7b4b928",
+   "twin_path": "claude/trivial/D07.trivial-twin.json",
+   "twin_sha256": "141ac529a3ad44daf1596f7912488ee82c84527756bc2753e514ffe497fcb0fe",
+   "status_error": null,
+   "status_has_refused_key": false,
+   "twin_text_changed": true,
+   "spans_original": 11,
+   "spans_twin": 1,
+   "document_text_chars": 2710,
+   "twin_text_chars": 2709,
+   "document_text_ends_with_lf": true,
+   "twin_text_equals_document_text": false,
+   "twin_text_plus_lf_equals_document_text": true
+  },
+  "D08": {
+   "status_path": "claude/trivial/D08.trivial-status.json",
+   "status_sha256": "2b43b702317cc9d8cfc035dc0b4e9717781ff2a49fe384e11a5b6518d5493790",
+   "twin_path": "claude/trivial/D08.trivial-twin.json",
+   "twin_sha256": "1be38ae979a40c78495128c576c3e18d2443a59d31d10427408031ebfd61264d",
+   "status_error": null,
+   "status_has_refused_key": false,
+   "twin_text_changed": true,
+   "spans_original": 27,
+   "spans_twin": 1,
+   "document_text_chars": 9827,
+   "twin_text_chars": 9826,
+   "document_text_ends_with_lf": true,
+   "twin_text_equals_document_text": false,
+   "twin_text_plus_lf_equals_document_text": true
+  },
+  "D09": {
+   "status_path": "claude/trivial/D09.trivial-status.json",
+   "status_sha256": "08a4be145ea45889b445a16975bd40f76a9c186cbfd756c95703dccd4ae4be10",
+   "twin_path": "claude/trivial/D09.trivial-twin.json",
+   "twin_sha256": "e7e1dc7bed450cbbc9ada7155fef45abf942baf28401c57319b8809caef4764f",
+   "status_error": null,
+   "status_has_refused_key": false,
+   "twin_text_changed": true,
+   "spans_original": 15,
+   "spans_twin": 1,
+   "document_text_chars": 3860,
+   "twin_text_chars": 3859,
+   "document_text_ends_with_lf": true,
+   "twin_text_equals_document_text": false,
+   "twin_text_plus_lf_equals_document_text": true
+  }
+ }
+}

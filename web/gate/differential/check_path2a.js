@@ -428,7 +428,7 @@ function main(argv) {
       // still takes the diff text before them
       const lines = P._splitlines(it.diff || "");
       const pairing = P._p2aPairing(P._p2aViews.length === 1 ? P._p2aViews(lines) : P._p2aViews(it.diff || "", lines));
-      counts[it.id] = { main: (parsed.addedBlob.match(/^\s*def test_/gm) || []).length, views: pairing.map(x => x[0]) };
+      counts[it.id] = { main: (parsed.addedBlob.match(/^\s*(?:async[ \t\f]+)?def test_/gm) || []).length, views: pairing.map(x => x[0]) };
     }
     fs.writeFileSync(argv[2], JSON.stringify({ checked: n, main_raises: skipped, differ: bad, counts }));
     return 0;

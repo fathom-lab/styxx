@@ -271,7 +271,7 @@ class TestRules:
         m = harness(r1=(REC, "test_report"))
         doc = sp("296 tests passed.", "r1#/passed").encode()
         rec = issue_receipt(verify(doc, name="d.md", manifest=m), timestamp="2026-09-02T00:00:00Z")
-        assert rec["schema"] == "styxx.sworn.verdict-receipt/v1"
+        assert rec["schema"] == sworn.RECEIPT_SCHEMA
         broken = json.loads(json.dumps(rec))
         broken["coverage"]["narrative_sentences"] = 999            # coverage is outside the digest
         res = verify_receipt(broken, doc, manifest=m)
