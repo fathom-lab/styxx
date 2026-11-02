@@ -257,6 +257,34 @@ def _rule_key(r: str) -> Tuple[str, int]:
 
 # --------------------------------------------------------------------------- the recorder run
 
+# A vector's `sources` are the pytest node ids that produced it, and they are inside set_sha256. pytest 9.2
+# changed how it names a parametrized case whose string value is over 100 characters: it now writes the
+# argument name and index (`inner6`) where every earlier pytest wrote the escaped value, so the same tests
+# regenerated the same vectors under a new set_sha256 (gaming, lexer and receipts moved; every vector still
+# replayed). The committed set is history and is not rewritten for a runner's naming change; instead the
+# recorder asks pytest 9.2 and later for its `legacy` names, which are the names every earlier pytest wrote.
+# Older pytest does not know the option and is left exactly as it was.
+PYTEST_LEGACY_IDS_SINCE = (9, 2)
+
+
+def pytest_id_args(pytest_version: Optional[str] = None) -> List[str]:
+    """The extra pytest arguments that keep parametrized node ids, and so `sources`, stable across pytest."""
+    if pytest_version is None:
+        try:
+            from importlib.metadata import version as _dist_version
+            pytest_version = _dist_version("pytest")
+        except Exception:
+            return []
+    nums = []
+    for part in pytest_version.split(".")[:2]:
+        m = re.match(r"\d+", part)
+        nums.append(int(m.group(0)) if m else 0)
+    while len(nums) < 2:
+        nums.append(0)
+    if tuple(nums) >= PYTEST_LEGACY_IDS_SINCE:
+        return ["-o", "parametrize_long_str_id_strategy=legacy"]
+    return []
+
 def run_recorder(sources: List[str], pin: Optional[str] = None) -> Tuple[List[dict], str]:
     with tempfile.TemporaryDirectory() as td:
         out = Path(td) / "records.jsonl"
@@ -268,7 +296,7 @@ def run_recorder(sources: List[str], pin: Optional[str] = None) -> Tuple[List[di
         if pin is not None:
             env["SWORN_RECORDER_RECEIPT_SCHEMA"] = pin          # C3b, conformance/sworn/recorder.py
         cmd = [sys.executable, "-m", "pytest", *sources, "-q", "--no-header", "-p", "no:cacheprovider",
-               "-p", "conformance.sworn.recorder"]
+               "-p", "conformance.sworn.recorder", *pytest_id_args()]
         r = subprocess.run(cmd, cwd=str(ROOT), env=env, capture_output=True, text=True,
                            encoding="utf-8", errors="replace")
         # the counts, not the wall time: provenance must not change between two stable runs
