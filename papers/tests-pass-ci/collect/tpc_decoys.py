@@ -76,6 +76,32 @@ class DecoyError(ValueError):
     pass
 
 
+# The runner's own steps: in every failing job of the pre-window development store (110 jobs) both ran, "Complete
+# job" success in 110 of 110; and no post step there was listed for a step that did not run (0 of 221 post steps).
+ALWAYS_RUN = ("Set up job", "Complete job")
+NOT_RUN = ("skipped", "cancelled")
+
+
+def step_pattern_problems(ci: dict) -> list:
+    """Step listings no real run shows: "Set up job" or "Complete job" not run, or a post step listed for a step that
+    did not run (a synthetic step flip that marked every later step skipped would show both). A cancelled job is not
+    read: of 6,234 jobs in that store, the 5 that showed either pattern were all cancelled."""
+    out = []
+    for j in ci.get("jobs") or []:
+        if j.get("conclusion") == "cancelled":
+            continue
+        steps = j.get("steps") or []
+        by_name = {s.get("name"): s for s in steps}
+        for s in steps:
+            n = s.get("name") or ""
+            if n in ALWAYS_RUN and s.get("conclusion") in NOT_RUN:
+                out.append(f"job {j.get('name')!r}: step {n!r} -> {s.get('conclusion')}")
+            main = by_name.get(n[len("Post "):]) if n.startswith("Post ") else None
+            if main is not None and main.get("conclusion") in NOT_RUN:
+                out.append(f"job {j.get('name')!r}: step {n!r} listed for a step that did not run")
+    return out
+
+
 def canonical(obj) -> bytes:
     return json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
 
@@ -188,6 +214,8 @@ def check_decoy(entry: dict, built: dict, *, excluded: Iterable[str] = ()) -> li
             probs.append(f"{name}: the item text carries a date (P8.1 masks every date)")
             break
     ci = entry.get("ci") or {}
+    for p in step_pattern_problems(ci):
+        probs.append(f"{name}: {p}, which no real failing job shows (P9)")
     outcome = ci_outcome(ci)
     logs_shown = [x for x in (built.get("build") or {}).get("logs", []) if x.get("how") not in ("no_log",)]
     names_only = not logs_shown and not (built.get("build") or {}).get("annotations_shown")
@@ -331,18 +359,42 @@ def _job(ci: dict, job_id) -> dict:
     raise DecoyError(f"no job {job_id}")
 
 
-def _fail_from(ci: dict, job_id, step_name: str, log: Optional[str]) -> dict:
+def _fail_from(ci: dict, job_id, step_name: str, log: Optional[str], post_skipped: Iterable[str] = ()) -> dict:
+    """The step turned to failing as a real run shows it: the runner's own "Set up job" and "Complete job" keep their
+    conclusions; the job's later steps are skipped; a post step is listed only for a step that ran, so the post steps
+    of the skipped steps leave the listing; the post steps of the steps that ran keep their conclusions, except those
+    named in `post_skipped` (an action whose post step runs only on success, such as a cache save)."""
     out = copy.deepcopy(ci)
     j = _job(out, job_id)
-    hit = False
-    for s in sorted(j.get("steps") or [], key=lambda s: (s.get("number") or 0)):
-        if hit:
-            s["conclusion"] = "skipped"
-        elif s.get("name") == step_name:
-            s["conclusion"] = "failure"
-            hit = True
-    if not hit:
+    steps = sorted(j.get("steps") or [], key=lambda s: (s.get("number") or 0))
+    names = [s.get("name") or "" for s in steps]
+    if step_name not in names:
         raise DecoyError(f"job {job_id} has no step {step_name!r}")
+    post_skipped = set(post_skipped)
+    bad = sorted(p for p in post_skipped if not p.startswith("Post ") or p not in names)
+    if bad:
+        raise DecoyError(f"post_skipped names no post step of job {job_id}: {bad}")
+    k = names.index(step_name)
+    steps[k]["conclusion"] = "failure"
+    not_run = set()
+    for s in steps[k + 1:]:
+        n = s.get("name") or ""
+        if n in ALWAYS_RUN or n.startswith("Post "):
+            continue
+        s["conclusion"] = "skipped"
+        not_run.add(n)
+    kept = []
+    for s in steps:
+        n = s.get("name") or ""
+        if n.startswith("Post ") and n[len("Post "):] in not_run:
+            continue
+        if n in post_skipped:
+            s["conclusion"] = "skipped"
+        kept.append(s)
+    if len(kept) != len(steps):
+        for i, s in enumerate(kept, 1):
+            s["number"] = i
+    j["steps"] = kept
     j["conclusion"] = "failure"
     for c in out.get("check_runs") or []:
         if c.get("id") == job_id:
@@ -352,21 +404,23 @@ def _fail_from(ci: dict, job_id, step_name: str, log: Optional[str]) -> dict:
     return out
 
 
-def fail_test_step(ci: dict, job_id, step_name: str, log: Optional[str] = None) -> dict:
-    """A passing test step turned to failing (P9), later steps skipped, the job and its check run failing; `log` is an
-    excerpt taken from another real failing log of the same runner."""
+def fail_test_step(ci: dict, job_id, step_name: str, log: Optional[str] = None, *,
+                   post_skipped: Iterable[str] = ()) -> dict:
+    """A passing test step turned to failing (P9), later steps skipped as `_fail_from` says, the job and its check run
+    failing; `log` is an excerpt taken from another real failing log of the same runner."""
     if not is_test_step(step_name):
         raise DecoyError(f"{step_name!r} is not a test-like step")
-    return _fail_from(ci, job_id, step_name, log)
+    return _fail_from(ci, job_id, step_name, log, post_skipped)
 
 
-def fail_install_step(ci: dict, job_id, step_name: str, log: Optional[str] = None) -> dict:
+def fail_install_step(ci: dict, job_id, step_name: str, log: Optional[str] = None, *,
+                      post_skipped: Iterable[str] = ()) -> dict:
     """An installation step of a job named for tests turned to failing; the test steps after it are skipped."""
     if is_test_step(step_name) or not INSTALL_STEP.search(step_name):
         raise DecoyError(f"{step_name!r} is not an installation step")
     if not test_like_job(_job(ci, job_id)):
         raise DecoyError(f"job {job_id} is not named for tests")
-    return _fail_from(ci, job_id, step_name, log)
+    return _fail_from(ci, job_id, step_name, log, post_skipped)
 
 
 def names_only(ci: dict) -> dict:

@@ -352,9 +352,54 @@ def test_transforms_return_new_objects():
     assert ci == before
     assert tpc_decoys.ci_outcome(failed) == "tests failed" and failed["check_runs"][0]["conclusion"] == "failure"
     inst = tpc_decoys.fail_install_step(ci, ci["jobs"][0]["id"], "Install dependencies")
-    assert [s["conclusion"] for s in inst["jobs"][0]["steps"]][-2:] == ["failure", "skipped"]
+    assert {s["name"]: s["conclusion"] for s in inst["jobs"][0]["steps"]} == {
+        "Set up job": "success", "Checkout": "success", "Install dependencies": "failure", "Run tests": "skipped",
+        "Post Checkout": "success", "Complete job": "success"}
     with pytest.raises(tpc_decoys.DecoyError):
         tpc_decoys.fail_test_step(ci, ci["jobs"][0]["id"], "Install dependencies")
     with pytest.raises(tpc_decoys.DecoyError):
         tpc_decoys.fail_install_step(ci, ci["jobs"][0]["id"], "Run tests")
     assert tpc_decoys.names_only(failed)["logs"] == {}
+
+
+# ---- step flips as real runs list them (finding 5 of 2026-11-02) ---------------------------------------------
+def _passing_job():
+    names = ("Set up job", "Checkout", "Run tests", "Upload coverage", "Post Upload coverage", "Post Checkout",
+             "Complete job")
+    job = {"id": 9, "name": "test", "status": "completed", "conclusion": "success",
+           "steps": [{"number": i, "name": n, "status": "completed", "conclusion": "success"}
+                     for i, n in enumerate(names, 1)]}
+    return {"check_runs": [{"id": 9, "name": "test", "app": "github-actions", "status": "completed",
+                            "conclusion": "success"}], "jobs": [job], "statuses": [], "annotations": [], "logs": {}}
+
+
+def test_a_step_flip_lists_what_a_real_failing_run_lists():
+    out = tpc_decoys.fail_test_step(_passing_job(), 9, "Run tests", log="##[group]Run pytest\n1 failed\n")
+    steps = out["jobs"][0]["steps"]
+    assert {s["name"]: s["conclusion"] for s in steps} == {
+        "Set up job": "success", "Checkout": "success", "Run tests": "failure", "Upload coverage": "skipped",
+        "Post Checkout": "success", "Complete job": "success"}  # the skipped step's post step leaves the listing
+    assert [s["number"] for s in steps] == [1, 2, 3, 4, 5, 6]
+    assert tpc_decoys.step_pattern_problems(out) == []
+    block, _ = tpc_items.render_ci(out)
+    assert "step: Complete job -> success" in block and "-> skipped" in block
+    assert "step: Complete job -> skipped" not in block and "Post Upload coverage" not in block
+    cache = tpc_decoys.fail_test_step(_passing_job(), 9, "Run tests", post_skipped=["Post Checkout"])
+    assert {s["name"]: s["conclusion"] for s in cache["jobs"][0]["steps"]}["Post Checkout"] == "skipped"
+    with pytest.raises(tpc_decoys.DecoyError):
+        tpc_decoys.fail_test_step(_passing_job(), 9, "Run tests", post_skipped=["Checkout"])
+
+
+@pytest.mark.parametrize("change,want", [
+    (lambda s: s[-1].update(conclusion="skipped"), "'Complete job' -> skipped"),
+    (lambda s: s[0].update(conclusion="skipped"), "'Set up job' -> skipped"),
+    (lambda s: s[1].update(conclusion="skipped"), "'Post Checkout' listed for a step that did not run"),
+])
+def test_a_decoy_with_a_step_listing_no_real_run_shows_is_refused(change, want):
+    spec = synthetic_decoys.spec("P2")
+    e = spec["decoys"][0]  # yes_log: a failing test job
+    assert [s["name"] for s in e["ci"]["jobs"][0]["steps"]][-2:] == ["Post Checkout", "Complete job"]
+    assert tpc_decoys.build_set(spec)[1] == []
+    change(e["ci"]["jobs"][0]["steps"])
+    probs = tpc_decoys.build_set(spec)[1]
+    assert any(want in p and "no real failing job shows" in p for p in probs), probs

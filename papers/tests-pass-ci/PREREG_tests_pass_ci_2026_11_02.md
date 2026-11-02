@@ -1118,7 +1118,12 @@ beacon exists, uses `"tests-pass-ci:Q"` in place of `beacon_hex`.
     negative in the window is unknown before the window is read; the mix weights the classes that would add a false
     contradiction to k.
   - P1's decoys imitate A1 items (2025-like ones carry names-only CI blocks); P2's imitate A2 items.
-- No construction leaves a marker in an item, and no decoy carries a date once P8.1's rule has masked it.
+- No construction leaves a marker in an item, and no decoy carries a date once P8.1's rule has masked it. A step
+  turned to failing is listed as real failing runs list it: the runner's own `Set up job` and `Complete job` keep
+  their conclusions, the job's later steps are skipped, and the post steps of skipped steps leave the listing (in
+  110 failing jobs of the pre-window development store, `Complete job` read success 110 times and no post step was
+  listed for a step that did not run). A decoy whose listing shows either pattern, outside a cancelled job, is
+  refused.
 - The key (item id to decoy or not, side, construction and full label; for real items, id to pull request) is
   JSON. With a 32-byte random salt kept beside it off the repository, `sha256(salt || key_bytes)` is committed and
   pushed before any seat reads the packet (OD-9). Scoring refuses a key that does not hash to the committed digest.

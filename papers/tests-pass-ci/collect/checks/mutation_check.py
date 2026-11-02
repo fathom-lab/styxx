@@ -91,6 +91,13 @@ M = [
     # dates masked in every item (P8.1)
     ("dates kept in the items", "tpc_items.py", "    return DATES.sub(DATE_TOKEN, text)", "    return text"),
     ("a decoy may carry a date", "tpc_decoys.py", "        if DATES.search(text):", "        if False:"),
+    # step flips as real runs list them
+    ("a step flip skips the runner's own steps", "tpc_decoys.py",
+     '        if n in ALWAYS_RUN or n.startswith("Post "):', "        if False:"),
+    ("a step flip keeps the posts of skipped steps", "tpc_decoys.py",
+     '        if n.startswith("Post ") and n[len("Post "):] in not_run:', "        if False:"),
+    ("impossible step listings accepted", "tpc_decoys.py",
+     '    for p in step_pattern_problems(ci):', "    for p in []:"),
 ]
 
 

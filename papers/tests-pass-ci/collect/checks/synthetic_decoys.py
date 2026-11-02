@@ -37,6 +37,11 @@ def _log(step_lines, tail, t0="2026-10-01T10:00"):
 def _test_job(jid, name, test_concl, *, install="success", log=None):
     st = _steps(("Set up job", "success"), ("Checkout", "success"), ("Install dependencies", install),
                 ("Run tests", "skipped" if install == "failure" else test_concl))
+    # the checkout's post step and the runner's own last step, as real jobs list them
+    st += [{"number": 5, "name": "Post Checkout", "status": "completed", "conclusion": "success",
+            "started_at": "2026-10-01T10:00:51Z", "completed_at": "2026-10-01T10:00:52Z"},
+           {"number": 6, "name": "Complete job", "status": "completed", "conclusion": "success",
+            "started_at": "2026-10-01T10:00:53Z", "completed_at": "2026-10-01T10:00:54Z"}]
     concl = "failure" if "failure" in (install, test_concl) else "success"
     job = {"id": jid, "name": name, "status": "completed", "conclusion": concl, "steps": st}
     chk = {"id": jid, "name": name, "app": "github-actions", "status": "completed", "conclusion": concl}
