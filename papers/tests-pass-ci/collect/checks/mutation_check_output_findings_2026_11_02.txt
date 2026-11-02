@@ -1,0 +1,60 @@
+CAUGHT seal check never raises :: 1 failed in 3.09s
+CAUGHT seal skips the ancestry check :: 1 failed, 5 passed in 3.29s
+CAUGHT seal reads any signature line :: 1 failed, 8 passed in 5.49s
+CAUGHT seal reads the markers anywhere :: 1 failed, 26 passed in 3.46s
+CAUGHT seal ignores TO-FILL rows :: 1 failed, 13 passed in 3.13s
+CAUGHT seal ignores the running code :: 1 failed, 16 passed in 2.81s
+CAUGHT seal takes a future anchor :: 1 failed, 4 passed in 2.99s
+CAUGHT read_row skips the guard :: 1 failed, 151 passed in 18.28s
+CAUGHT batch skips the guard :: 1 failed, 151 passed in 19.41s
+CAUGHT stage_read drops the sealed filter :: 1 failed, 153 passed in 23.67s
+CAUGHT cap by u :: 1 failed, 102 passed in 4.60s
+CAUGHT M uses P_AGENT for all :: 1 failed, 137 passed in 18.56s
+CAUGHT timed_out not mapped :: 1 failed, 171 passed in 27.69s
+CAUGHT slice formula label :: 1 failed, 126 passed in 17.00s
+CAUGHT postfilter dropped :: 1 failed, 140 passed in 20.11s
+CAUGHT au1 logs dropped :: 1 failed, 146 passed in 19.26s
+CAUGHT rule R ignores staleness :: 1 failed, 149 passed in 20.38s
+CAUGHT rule R reads local claims :: 1 failed, 199 passed in 25.65s
+CAUGHT dry run asks for databaseId :: 1 failed, 154 passed in 23.44s
+CAUGHT frame keeps forks :: 1 failed, 133 passed in 16.56s
+CAUGHT images kept in the description :: 1 failed, 37 passed in 3.82s
+CAUGHT excerpt ignores the step's times :: 1 failed, 60 passed in 3.66s
+CAUGHT decoy mix unchecked :: 1 failed, 82 passed in 3.72s
+CAUGHT stand-in hash accepted :: 1 failed, 92 passed in 3.98s
+CAUGHT window draw under any Bitcoin block :: 1 failed, 98 passed in 4.10s
+CAUGHT AU4 may be cut :: 1 failed, 103 passed in 4.22s
+CAUGHT top-ups cut by lowest w :: 1 failed, 104 passed in 4.23s
+CAUGHT shuffle ignores the seed :: 1 failed, 106 passed in 4.19s
+CAUGHT spool not read back :: 1 failed, 228 passed in 27.52s
+CAUGHT inconsistent step-2 label accepted :: 1 failed, 220 passed in 27.04s
+CAUGHT dev server on any packet :: 1 failed, 233 passed in 43.03s
+CAUGHT step 2 asked after a step-1 NO_ANSWER :: 1 failed, 230 passed in 26.82s
+CAUGHT decoys scored on the side :: 1 failed, 244 passed in 27.62s
+CAUGHT NO-side bar at 12 :: 1 failed, 246 passed in 25.78s
+CAUGHT one voter decides :: 1 failed, 249 passed in 27.14s
+CAUGHT undecided whole candidates dropped :: 1 failed, 254 passed in 43.43s
+CAUGHT n_eff is n :: 1 failed, 253 passed in 37.45s
+CAUGHT answers need no seal :: 1 failed, 251 passed in 30.05s
+CAUGHT P2 decoys not held to the sealed set :: 1 failed, 252 passed in 28.50s
+CAUGHT excerpt runs into the post steps :: 1 failed, 61 passed in 3.35s
+CAUGHT excerpt runs past the step's error line :: 1 failed, 61 passed in 3.06s
+CAUGHT dates kept in the items :: 1 failed, 40 passed in 3.61s
+CAUGHT a decoy may carry a date :: 1 failed, 59 passed in 3.04s
+CAUGHT a step flip skips the runner's own steps :: 1 failed, 86 passed in 3.41s
+CAUGHT a step flip keeps the posts of skipped steps :: 1 failed, 87 passed in 3.26s
+CAUGHT impossible step listings accepted :: 1 failed, 88 passed in 3.28s
+CAUGHT the shuffle starts from the reals then the decoys :: 1 failed, 108 passed in 3.97s
+CAUGHT the shuffle keyed by the public seed alone :: 1 failed, 106 passed in 3.76s
+CAUGHT seal skips the rows filled at signing :: 1 failed, 17 passed in 3.14s
+CAUGHT seal requires the collector row only :: 1 failed, 17 passed in 2.90s
+CAUGHT seal reads any prereg_path :: 1 failed, 22 passed in 2.88s
+CAUGHT seal opens after a failed fetch :: 1 failed, 23 passed in 2.93s
+CAUGHT signed text handed to any working copy :: 1 failed, 25 passed in 3.39s
+CAUGHT P2 build reads the working copy's lock row :: 1 failed, 117 passed in 10.73s
+CAUGHT scorer reads the working copy's lock row :: 1 failed, 258 passed in 53.53s
+CAUGHT P2's packet key digest never needed :: 1 failed, 250 passed in 26.23s
+CAUGHT a salt may sit inside a git working tree :: 1 failed, 124 passed in 14.13s
+CAUGHT secrets written where git does not ignore them :: 1 failed, 124 passed in 14.62s
+CAUGHT the key's salt written beside the key :: 1 failed, 114 passed in 6.84s
+59 of 59 caught

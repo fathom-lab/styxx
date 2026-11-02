@@ -290,3 +290,12 @@ A2 and A1 end to end to their rows; and the receipt, which `styxx.prereg_ci.resc
 `prereg-ci check` passes in a scratch repository (and fails when a RESULT types another row). The mutation check now
 breaks 39 rules (the twenty above and nineteen of the builder's, the seats' and the scorer's); its run on this code is
 `checks/mutation_check_output_builder.txt`.
+
+The fixes of 2026-11-02 (the open findings of the stopped decoy run) add tests and rules: the log excerpt's two step
+boundaries, dates masked in every item and refused in a decoy, step flips listed as real failing runs list them, the
+packet order from the item sha256 order under the key's salt (the draft's predictor gets no better than chance), the
+seal guard's rows filled at signing, its file, its fetch and the signed text it hands the build and the scorer, P2's
+packet key digest in `G_KEYS`, and every salt outside any git working tree. The tests-pass-ci tests now number 287
+(the collector's 272 and the PREREG's 15), and the mutation check breaks 59 rules, every one caught:
+`checks/mutation_check_output_findings_2026_11_02.txt`, run from the repository root with the collector test files as
+targets, the seal guard's file at the head of the list.
