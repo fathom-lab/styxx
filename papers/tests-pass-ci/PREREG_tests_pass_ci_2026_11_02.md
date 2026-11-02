@@ -870,7 +870,7 @@ Part II differ, the difference is printed in the RESULT and §15.4 applies; the 
 | `PACKET_MAX` | 400 items in P2 with its 30 decoys | P7 |
 | `READ_LAG` | 72 hours after `createdAt`; outside the backlog, read between 72 and 84 hours | §4 |
 | `BEACON_HEIGHT` | 975000, with the late rule of §3.1 | §3.1 |
-| `LOG_EXCERPT` | the last 150 lines of each failing step's group, 12,000 characters per job; 3 jobs and 30,000 characters per item; no pattern selects a line | P8.3 |
+| `LOG_EXCERPT` | the last 150 lines of each failing step's span (P8.3), 12,000 characters per job; 3 jobs and 30,000 characters per item; no pattern selects a line | P8.3 |
 | `DESC_MAX` | 20,000 characters | P8.2 |
 | `ARTIFACT_MAX` | 25 MB | P18 |
 | `LOG_MAX` | 30 MB per job log, gzipped on disk | P4.3 |
@@ -1055,9 +1055,16 @@ Repository words inside the prose stay as they are.
   each step.
 - Up to 20 annotations of failed check runs, `annotation: <level>: <message, at most 300 characters>`.
 - Log excerpts, by code and without judgement: for each failing test-like job, in job-id order, at most 3, the log
-  decoded as UTF-8 with replacement, ANSI escapes and each line's leading timestamp removed; the last 150 lines of each
-  failing step's group (from its `##[group]Run` line to the next group); 12,000 characters per job, 30,000 per item.
-  No pattern chooses a line: P17.2's summaries select nothing the panel sees, so a firing of rule R is judged on
+  decoded as UTF-8 with replacement, ANSI escapes and each line's leading timestamp removed. For each step of the job
+  whose conclusion is failure or timed_out, in step order, a span of lines: it starts at the earliest line beginning
+  `##[group]Run` that is stamped from one second before the step started to one second after it ended; it ends before
+  the earliest later line stamped more than one second after the step ended (an unstamped line takes the latest stamp
+  before it) or beginning `Post job cleanup.` (the line that opens the post steps), whichever comes sooner; and when
+  the span holds `##[error]` lines, it ends just after the last of them. When no failing step's times find a span:
+  from the last `##[group]Run` line before the log's last `##[error]` line to that line; failing that, the whole log.
+  Of each span, the last 150 lines, the spans joined in step order; 12,000 characters per job, 30,000 per item, a
+  leading `[cut]` line counted and the tail kept. The boundaries are step times and the runner's own markers. No
+  pattern chooses a line: P17.2's summaries select nothing the panel sees, so a firing of rule R is judged on
   evidence the rule did not pick (the statistics and integrity reviews).
 - One fixed line: "These checks are the latest attempt of each check at the head commit, read some days after the pull
   request was opened." The edit order of the description (`STALE`, §2) is not shown: the panel judges the description

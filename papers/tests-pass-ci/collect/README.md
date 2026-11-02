@@ -168,11 +168,12 @@ Readings the packet builder, the seat runners and the scorer make:
     Cursor's post-filter text `cursor.com/` among them, Codex task links and Devin session links.
 14. **Order inside the block.** Check runs by name, statuses by context, jobs by id, steps by number, annotations in
     check-run order (at most 20); a check run with no conclusion prints its status.
-15. **"From its `##[group]Run` line to the next group".** Read as the failing step's lines: from the earliest Run line
-    inside the step's own start and end times (one second either side) to the last line stamped before the step ended,
-    so a composite action's several Run groups stay one step and the post-step cleanup lines stay out. With no usable
-    times, the Run group holding the log's last `##[error]` line, to the next Run line; failing that, the log's last
-    150 lines. Which way was used is in the build record, never shown to a seat.
+15. **The failing step's span** (P8.3, written to the code on 2026-11-02): from the earliest Run line inside the
+    step's own start and end times (one second either side), up to and not including the earliest of: the line stamped
+    after the step ended, the "Post job cleanup." line, and the line after the span's last `##[error]` line. So a
+    composite action's several Run groups stay one step, and the post-step cleanup lines stay out even when they share
+    the step's last second. With no usable times, the Run group holding the log's last `##[error]` line, to that line;
+    failing that, the log's last 150 lines. Which way was used is in the build record, never shown to a seat.
 16. **The caps hold the cut mark.** 12,000 characters per job and 30,000 per item count the leading `[cut]` line; the
     tail is kept, since a runner's summary prints last.
 17. **The CI block is not capped beyond logs and annotations** (P8.3 lists every step of every failed or test-like

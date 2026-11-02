@@ -14,11 +14,22 @@ carries a URL, repository name, pull request number, author, agent name, date or
   then the one fixed line. URLs in the block are replaced by "<url>" and the repository's own owner/name by "<repo>"
   (P8.1 says no item carries either; P8.3 does not say how, so this is the reading the code makes).
 - `log_excerpt` (P8.3): the log decoded as UTF-8 with replacement, ANSI escapes and each line's leading timestamp
-  removed; for each failing step, the last 150 lines of its group, from its `##[group]Run` line to the end of the step;
-  12,000 characters per job and 30,000 per item, "[cut]" included (the tail kept). No pattern chooses a line. Where the step's group is
-  found: by the step's own start and end times against the log's timestamps (a composite step's several Run groups
-  are one step); with no usable times, the Run group holding the log's last `##[error]` line; failing that, the
-  last 150 lines of the log. Which way was used is recorded beside the item, never shown to a seat.
+  removed. For each failing step of the job (failure or timed_out), in step-number order, a span of lines:
+  * by the step's times: it starts at the earliest line that begins `##[group]Run ` and is stamped from one second
+    before the step's started_at to one second after its completed_at (a composite step's several Run groups are one
+    step); it ends before the earliest later line stamped more than one second after completed_at (an unstamped line
+    takes the latest stamp before it) or beginning "Post job cleanup." (the line that opens the post steps),
+    whichever comes sooner; and when the span holds `##[error]` lines, it ends just after the last of them (a failed
+    step's output closes with one, "Process completed with exit code N.");
+  * with no span found by any failing step's times: from the last `##[group]Run ` line before the log's last
+    `##[error]` line to that line;
+  * failing that, the whole log.
+  Of each span, the last 150 lines; the spans joined in step order; 12,000 characters per job and 30,000 per item,
+  "[cut]" included (the tail kept). The boundaries are step times and the runner's own markers; no pattern chooses a
+  line. Which way was used is recorded beside the item, never shown to a seat. Why the two markers: GitHub stamps
+  steps to the second, so the post steps that begin in the second the failing step ended fall inside its time range,
+  and their checkout cleanup would otherwise fill the last 150 lines and push the failure out (seen on pre-window
+  logs while P2's decoy material was read).
 
 The step-1 text is the cleaned description; the step-2 item text is
 "DESCRIPTION\\n" + description + "\\n\\nCI AT THE HEAD COMMIT\\n" + the CI block (P12.3 sends it after the prompt and
@@ -64,6 +75,7 @@ FOOTER = re.compile(r"(?i)generated with \[?claude code\b|cursor\.com/|chatgpt\.
 LOG_TIMESTAMP = re.compile(r"^﻿?(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.\d+)?Z ?")
 RUN_GROUP = "##[group]Run "
 ERROR_MARK = "##[error]"
+POST_STEPS = "Post job cleanup."
 ONE_SECOND = dt.timedelta(seconds=1)
 
 
@@ -128,14 +140,21 @@ def _step_span(lines: list, step: dict) -> Optional[tuple]:
     end = len(lines)
     for i in range(start + 1, len(lines)):
         t = lines[i][2]
-        if t is not None and t > t1:
+        if (t is not None and t > t1) or lines[i][1].startswith(POST_STEPS):
             end = i
             break
-    return start, end
+    return start, _end_at_error(lines, start, end)
+
+
+def _end_at_error(lines: list, start: int, end: int) -> int:
+    """A failed step's output closes with its ##[error] line; the lines after the span's last one belong to the steps
+    that follow in the same second."""
+    errs = [i for i in range(start, end) if lines[i][1].startswith(ERROR_MARK)]
+    return errs[-1] + 1 if errs else end
 
 
 def _error_span(lines: list) -> Optional[tuple]:
-    """The Run group holding the log's last ##[error] line: from its Run line to the next Run line."""
+    """The Run group holding the log's last ##[error] line: from its Run line to that ##[error] line."""
     errs = [i for i, (_, ln, _) in enumerate(lines) if ln.startswith(ERROR_MARK)]
     runs = [i for i, (_, ln, _) in enumerate(lines) if ln.startswith(RUN_GROUP)]
     if not errs or not runs:
@@ -146,7 +165,7 @@ def _error_span(lines: list) -> Optional[tuple]:
         return None
     start = before[-1]
     after = [r for r in runs if r > start]
-    return start, (after[0] if after else len(lines))
+    return start, _end_at_error(lines, start, after[0] if after else len(lines))
 
 
 def log_excerpt(raw: "bytes | str", job: dict) -> tuple:

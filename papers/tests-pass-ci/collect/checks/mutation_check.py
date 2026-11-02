@@ -12,7 +12,8 @@ run from the repository root and pass them, e.g.
 The copy is named to those tests by the environment variable TPC_COLLECT_DIR. It sits at
 <scratch>/mut/tests-pass-ci/collect with the PREREG copied beside its folder, as in the repository, so code that
 reads the PREREG (the seats' rubric, the scorer's table) reads the same bytes. Nothing outside the scratch
-directory is written. Rules 21 to 39 are the packet and decoy builder's, the seat runners' and the scorer's.
+directory is written. Rules 21 to 39 are the packet and decoy builder's, the seat runners' and the scorer's; rules
+40 and 41 are the log excerpt's step boundaries, repaired while packet P2's decoys were built.
 """
 import os
 import pathlib
@@ -80,6 +81,12 @@ M = [
     ("n_eff is n", "tpc_score.py", "    n_eff = math.floor(n_pass * s_lo) + c_fail", "    n_eff = n"),
     ("answers need no seal", "tpc_score.py", "        if not sp.exists():", "        if False:"),
     ("P2 decoys not held to the sealed set", "tpc_score.py", "            if d is None:", "            if False:"),
+    # the excerpt's step boundaries (repaired while P2's decoys were built)
+    ("excerpt runs into the post steps", "tpc_items.py",
+     "        if (t is not None and t > t1) or lines[i][1].startswith(POST_STEPS):",
+     "        if t is not None and t > t1:"),
+    ("excerpt runs past the step's error line", "tpc_items.py", "    return errs[-1] + 1 if errs else end",
+     "    return end"),
 ]
 
 

@@ -83,6 +83,34 @@ def test_log_excerpt_by_the_failing_steps_times_leaves_out_post_steps():
     assert not any(ln.startswith("2026-") for ln in lines)  # timestamps removed
 
 
+def test_log_excerpt_ends_at_the_failure_when_post_steps_share_its_last_second():
+    # GitHub stamps steps to the second: the post steps begin in the second the failing step ended, inside the
+    # step's own time range, and a long checkout cleanup would fill the last 150 lines and push the failure out
+    # every line below is invented for this test (no pull request's log)
+    job = _job(9, "test", "failure", [("Set up job", "success"), ("Run tests", "failure")])
+    log = ("2026-10-01T10:00:20.1Z ##[group]Run make check\n2026-10-01T10:00:20.2Z ##[endgroup]\n"
+           "2026-10-01T10:00:29.1Z FAIL ledger/rounding_test.go:41: TestHalfEvenRounding: got 0.13, want 0.12\n"
+           "2026-10-01T10:00:29.2Z 1 of 57 checks failed in package ledger\n"
+           "2026-10-01T10:00:29.3Z ##[error]Process completed with exit code 1.\n"
+           "2026-10-01T10:00:29.4Z Post job cleanup.\n"
+           + "".join(f"2026-10-01T10:00:29.5Z cleanup line {i} of the checkout\n" for i in range(400)))
+    text, how = tpc_items.log_excerpt(log, job)
+    assert how == "step_times"
+    assert text.split("\n")[-1] == "##[error]Process completed with exit code 1."
+    assert "1 of 57 checks failed" in text and "Post job" not in text and "cleanup line" not in text
+    # without the post steps' marker, the span still ends at its last ##[error] line
+    text, _ = tpc_items.log_excerpt(log.replace("Post job cleanup.", "Run actions/upload-artifact"), job)
+    assert text.split("\n")[-1] == "##[error]Process completed with exit code 1." and "cleanup line" not in text
+    # without an ##[error] line, the post steps' marker ends it
+    text, _ = tpc_items.log_excerpt(log.replace("##[error]Process completed with exit code 1.", "exit 1"), job)
+    assert text.split("\n")[-1] == "exit 1" and "cleanup line" not in text
+    # and the error-marker fallback ends there too
+    nojob = {"id": 1, "name": "test", "conclusion": "failure", "steps": [{"number": 1, "name": "Run tests",
+                                                                           "conclusion": "failure"}]}
+    text, how = tpc_items.log_excerpt(log, nojob)
+    assert how == "error_marker" and text.split("\n")[-1] == "##[error]Process completed with exit code 1."
+
+
 def test_log_excerpt_falls_back_to_the_error_marker_then_the_tail():
     job = {"id": 1, "name": "test", "conclusion": "failure", "steps": [{"number": 1, "name": "Run tests",
                                                                          "conclusion": "failure"}]}
