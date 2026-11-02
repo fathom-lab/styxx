@@ -18,7 +18,7 @@
 [![License](https://img.shields.io/pypi/l/styxx.svg?color=ff2330&label=license&style=flat-square)](https://github.com/fathom-lab/styxx/blob/v7.50.0/LICENSE)
 [![tests](https://github.com/fathom-lab/styxx/actions/workflows/test.yml/badge.svg)](https://github.com/fathom-lab/styxx/actions/workflows/test.yml)
 [![Spec](https://img.shields.io/badge/spec_v1.0-10.5281%2Fzenodo.19746215-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19746215)
-[![Concept](https://img.shields.io/badge/concept_DOI-always--latest-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19326174)
+[![Paper series](https://img.shields.io/badge/paper_series-concept_DOI-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19326174) [![Software](https://img.shields.io/badge/software-concept_DOI-ff2330.svg?style=flat-square)](https://doi.org/10.5281/zenodo.19758618)
 
 </div>
 
@@ -500,7 +500,7 @@ knitr and Sweave, and showyourwork! (2021) did it for filings and papers, and
 | research | [papers/](https://github.com/fathom-lab/styxx/tree/v7.50.0/papers) — pre-registrations, findings, and the negatives · headline arc: [the island, bridged and dissected](https://github.com/fathom-lab/styxx/blob/v7.50.0/papers/disjoint-worlds/REPLICATE_legibility.md) (nine sealed acts, replicates on a laptop) |
 | site | [styxx-org.netlify.app](https://styxx-org.netlify.app) · live activation read: [/live](https://styxx-org.netlify.app/live.html) · GitHub Pages: [fathom-lab.github.io/styxx](https://fathom-lab.github.io/styxx/), which serves the darkflobi exhibit (the posts the lab's agent minted as capsules), not a copy of the site |
 | arXiv (staged) | three submissions prepared, each carrying its OATH certificate and receipts as ancillary files — frame-locality, the know-say gap, the connection of minds ([papers/arxiv/SUBMIT.md](https://github.com/fathom-lab/styxx/blob/v7.50.0/papers/arxiv/SUBMIT.md)) |
-| DOI (concept, always-latest) | [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174) |
+| DOI (Fathom paper series, concept) | [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174) — resolves to the latest paper in the series, not to the software; the software's concept DOI is in the citation row |
 | DOI (spec v1.0) | [10.5281/zenodo.19746215](https://doi.org/10.5281/zenodo.19746215) |
 | DOI (*Every Mind Leaves Vitals*) | [10.5281/zenodo.19777921](https://doi.org/10.5281/zenodo.19777921) — central claims bounded or falsified by a scope erratum (2026-06-21) in the [repo copy](https://github.com/fathom-lab/styxx/blob/v7.50.0/papers/every-mind-leaves-vitals.md) |
 | citation | [CITATION.cff](https://github.com/fathom-lab/styxx/blob/main/CITATION.cff) · software concept DOI [10.5281/zenodo.19758618](https://doi.org/10.5281/zenodo.19758618) |

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — CITATION.cff and the DOI labels name what this repository is today
+
+- **`CITATION.cff`.** The title is the README's own, "styxx: verification for the agent era", in place of "a drop-in cognitive-vitals monitor and cognometric guardrail for LLM agents"; a new abstract gives the README's three layers and the EXTERNAL-1 result (23 of 100 accusations upheld, precision 0.23 against the 0.95 floor) with what the gate does about it; the keywords follow the layers; the identifier's description names 7.50.0's record (10.5281/zenodo.23594959). Every DOI field and the preferred citation are unchanged.
+- **The DOI labels** (defects D3 and D4 in `zenodo/MANIFEST.json`). 10.5281/zenodo.19326174 was called the always-latest concept DOI; it is the Fathom paper series' concept record, and the README badge and link row, `pyproject.toml`'s project URLs (on PyPI from the next release), `LEADERBOARD.md` (both copies) and `examples/quickstart` now say so, with the software's concept DOI, 10.5281/zenodo.19758618, beside it. LEADERBOARD calls 10.5281/zenodo.20418532 the paper deposited with v7.7.7, v24 in the paper-series chain, not a release DOI in the software's chain.
+
 ## [Unreleased] — CONTRIBUTING and REPLICATIONS name the open asks and the instruments the README leads with
 
 - **`CONTRIBUTING.md`.** "Where to start" leads with the open asks: #43 (re-adjudicate EXTERNAL-1, reading only), #44 (the collateral census, CPU-only), and Discussion #103 (a VERIFIED that is false). #38 says the matrix itself (`run_b37.py`) takes about an hour, as the issue now says, and #39 points at the lab's comment of 2026-08-22 that reframed its headline. The install is `.[test]`, as `test.yml` installs; the suite time is CI's own (16 min 27 s to 25 min 4 s, run 40400834265), not "under 60 s"; `tests/test_classifier.py`, which does not exist, gives way to `tests/test_diffgate.py`; the file table names the diff gate, the Action, OATH, islands and sense.

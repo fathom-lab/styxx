@@ -152,7 +152,7 @@ Leaderboard: github.com/fathom-lab/styxx/blob/main/LEADERBOARD.md
 Paper: github.com/fathom-lab/styxx/blob/main/papers/PAPER_decorrelation_ceiling_2026_05_27.md
 ```
 
-The styxx project carries Zenodo concept DOI [`10.5281/zenodo.19326174`](https://doi.org/10.5281/zenodo.19326174). The release-specific DOI for v7.7.7 is [**`10.5281/zenodo.20418532`**](https://doi.org/10.5281/zenodo.20418532) (v24 in the concept chain, published 2026-05-27).
+The Fathom paper series carries Zenodo concept DOI [`10.5281/zenodo.19326174`](https://doi.org/10.5281/zenodo.19326174); the styxx software's concept DOI is [`10.5281/zenodo.19758618`](https://doi.org/10.5281/zenodo.19758618). The paper deposited with v7.7.7 is [**`10.5281/zenodo.20418532`**](https://doi.org/10.5281/zenodo.20418532) (v24 in the paper-series chain, published 2026-05-27).
 
 ---
 

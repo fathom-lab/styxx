@@ -2,7 +2,19 @@
 # GitHub's "Cite this repository" prompt renders preferred-citation below (the position paper), not this entry.
 cff-version: 1.2.0
 message: "If you use styxx in research, please cite both the software and the position paper that motivates it."
-title: "styxx: a drop-in cognitive-vitals monitor and cognometric guardrail for LLM agents"
+title: "styxx: verification for the agent era"
+abstract: >-
+  styxx is a verification layer for the agent era, built on one principle: an instrument
+  that cannot refuse cannot be trusted. Its instruments are in three layers. VERIFY asks
+  whether a claim matches its evidence (certify, the OATH implementation; protocol; seal;
+  diffgate and its GitHub Action; corpus_audit). MEASURE asks what is actually true about
+  these minds (islands, coupling, mind, meaning_diff, crossmind and the register
+  instruments). SENSE asks whether an agent can be connected to the world without lying
+  about what it feels (sense). The diff gate's own real-world measurement went against it:
+  a blind panel upheld 23 of 100 accusations sampled from 71,016 external agent-authored
+  pull requests, precision 0.23 against a preregistered 0.95 floor. Its path accusation is
+  withheld, and its GitHub Action reports by default and blocks only when a user sets
+  soft-fail to false.
 authors:
   - family-names: Rodabaugh
     given-names: Alexander
@@ -14,16 +26,12 @@ date-released: "2026-10-23"
 repository-code: "https://github.com/fathom-lab/styxx"
 url: "https://styxx-org.netlify.app"
 keywords:
-  - cognometry
-  - cognitive-fingerprint
-  - refusal-detection
-  - tool-call-drift
-  - sycophancy-detection
-  - conversation-loop-detection
-  - deception-detection
-  - plan-action-gap
-  - overconfidence-register
-  - goal-drift
+  - agent-verification
+  - claim-verification
+  - receipts
+  - preregistration
+  - replication
+  - representational-geometry
   - llm-observability
   - ai-safety
 
@@ -31,10 +39,11 @@ keywords:
 identifiers:
   - type: doi
     value: "10.5281/zenodo.19758618"
-    description: "styxx software (concept DOI — resolves to the latest version; 7.48.0 is 10.5281/zenodo.23042251)"
+    description: "styxx software (concept DOI — resolves to the latest version; 7.50.0 is 10.5281/zenodo.23594959)"
 
-# Preferred citation: the position paper that called for the
-# 9 instruments shipped in this repo.
+# Preferred citation: the position paper. Its central claims are bounded or falsified by a
+# scope erratum (2026-06-21) in the repo copy, papers/every-mind-leaves-vitals.md; whether it
+# stays the preferred citation is defect D2 in zenodo/MANIFEST.json, the operator's call.
 preferred-citation:
   type: article
   title: "Every Mind Leaves Vitals: A Position on Cognometric Observability"
