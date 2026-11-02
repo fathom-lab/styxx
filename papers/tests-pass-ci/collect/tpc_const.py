@@ -124,6 +124,10 @@ PREREG_REPO_PATH = "papers/tests-pass-ci/PREREG_tests_pass_ci_2026_11_02.md"
 # data/direction_a/raw/. The collector keeps both under one root: <root>/frames, <root>/a2.
 DATA_ROOT = Path("C:/Users/heyzo/clawd/data/direction_a/raw")
 DEV_ROOT = Path("C:/Users/heyzo/clawd/data/direction_a/raw_dev")
+# P9: every salt (the decoy sets' and the packet keys') is written here, outside any git working tree, until its
+# release; tpc_packet refuses a salt folder inside one, and a set, key or packet folder inside one that does not
+# ignore it (C:/Users/heyzo/clawd, which holds data/direction_a/, is a git working tree)
+SALT_DIR = Path("C:/Users/heyzo/direction_a_salts")
 
 USER_AGENT = "styxx-tests-pass-ci-collector/0.1 (research; read-only)"
 

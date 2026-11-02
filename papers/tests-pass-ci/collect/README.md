@@ -209,7 +209,7 @@ Readings the packet builder, the seat runners and the scorer make:
 ```
 py -3.12 tpc_packet.py decoys --spec SPEC.json --packet P2 --out DIR --testreceipt TR_CLONE   # check P9 and seal the set
 py -3.12 tpc_packet.py p2 --root DATA_ROOT --decoys DIR                    # at the close, seal open, lock row filled
-py -3.12 tpc_packet.py p2 --root DEV_ROOT --decoys DIR --out DIR --dry-run # pre-window store, stand-in hash
+py -3.12 tpc_packet.py p2 --root DEV_ROOT --decoys DIR --out DIR --salts DIR --dry-run  # pre-window store, stand-in hash
 py -3.12 tpc_packet.py q --root DEV_ROOT --decoys DIR --out DIR
 py -3.12 tpc_seats.py transport --seat C --out DIR                        # P10.4, before any real item
 py -3.12 tpc_seats.py run --packet packet_P2.json --seat C --out DIR
@@ -219,8 +219,11 @@ py -3.12 tpc_seats.py seal --packet packet_P2.json --seat H --out DIR
 py -3.12 tpc_score.py score --packets DIR --root DATA_ROOT --testreceipt TR_CLONE --publication FILE --out measurement_result.json
 ```
 
-The scorer reads `<packets>/P1/` and `<packets>/P2/`, each holding the packet, its key, salt and digest, every seat's
-sealed answer file and the packet's sealed decoy set. `checks/builder_dev_check.py` runs the builder on the
+Every salt is written to `C:/Users/heyzo/direction_a_salts/` (`--salts`; `tpc_const.SALT_DIR`), outside any git
+working tree, until its release; sets, keys and packets go under `--out`, which must be outside any git working tree
+or ignored by it (`C:/Users/heyzo/clawd` is one, so its exclude file must name `data/direction_a/`). The scorer runs
+after the release and reads `<packets>/P1/` and `<packets>/P2/`, each holding the packet, its key, its released salt
+and digest, every seat's sealed answer file and the packet's sealed decoy set with its released salt. `checks/builder_dev_check.py` runs the builder on the
 development store (items, a P2 dry run, Q, the human form) and writes nothing a seat reads; `checks/synthetic_decoys.py`
 is an invented decoy spec for tests and dry runs, never a packet's decoys.
 

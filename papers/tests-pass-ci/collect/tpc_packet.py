@@ -5,9 +5,9 @@ the shuffle of P8.5, and the key sealed by a salt.
 
     py -3.12 tpc_packet.py draw-check --root ROOT
         re-derive the draw from the stored frames and beacon and compare it with the stored draw files
-    py -3.12 tpc_packet.py decoys --spec SPEC.json --packet P2 --out DIR [--testreceipt DIR] [--other-set SET.json ...]
-        check a decoy spec against P9 and seal the set: decoyset_<P>.json, .salt, .sha256 (P2's digest fills its lock
-        row at the signing commit)
+    py -3.12 tpc_packet.py decoys --spec SPEC.json --packet P2 --out DIR [--salts DIR] [--testreceipt DIR] [--other-set SET.json ...]
+        check a decoy spec against P9 and seal the set: decoyset_<P>.json and .sha256 to --out, the salt to --salts
+        (P2's digest fills its lock row at the signing commit)
     py -3.12 tpc_packet.py p2 --root ROOT --decoys DIR --out DIR [--dry-run]
     py -3.12 tpc_packet.py p1 --testreceipt DIR --snapshot FILE --logs DIR --bodies FILE --decoys DIR --root ROOT --out DIR [--dry-run]
     py -3.12 tpc_packet.py q --root DEVROOT --decoys DIR --out DIR
@@ -41,6 +41,7 @@ import hashlib
 import json
 import random
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Iterable, Optional
@@ -54,7 +55,7 @@ import tpc_decoys  # noqa: E402
 import tpc_seal  # noqa: E402
 from tpc_collect import capped  # noqa: E402
 from tpc_const import (AGENT_ORDER, AU_SIZES, DECOYS_PER_PACKET, P_AGENT, PACKET_MAX,  # noqa: E402
-                       PREREG_REPO_PATH, WINDOW_START, UTC, iso, parse_utc)
+                       PREREG_REPO_PATH, SALT_DIR, WINDOW_START, UTC, iso, parse_utc)
 from tpc_draw import membership  # noqa: E402
 from tpc_frame import dedupe, kept  # noqa: E402
 from tpc_items import body_from_row, build_item, ci_from_row, ci_from_snapshot, ci_from_transcription  # noqa: E402
@@ -286,33 +287,84 @@ def assemble(packet: str, seed_hex: str, reals: list, decoys: list, *, beacon: d
             "key_digest": tpc_decoys.salted_digest(salt, key_bytes)}
 
 
-def write_packet(out: Path, built: dict, build_record: dict) -> dict:
-    """Write packet_<P>.json (the seats'), key_<P>.json, its salt and digest, and build_<P>.json. Never overwrites."""
-    out = Path(out)
-    out.mkdir(parents=True, exist_ok=True)
+# ---- where secrets may be written (P9; finding 10 of 2026-11-02) -------------------------------------------------
+def git_working_tree(path: Path) -> Optional[Path]:
+    """The top of the git working tree holding `path` (it need not exist yet), or None."""
+    p = Path(path).resolve()
+    while not p.exists() and p != p.parent:
+        p = p.parent
+    try:
+        r = subprocess.run(["git", "-C", str(p), "rev-parse", "--show-toplevel"], capture_output=True, timeout=60)
+    except (OSError, subprocess.TimeoutExpired) as e:
+        raise PacketError(f"cannot tell whether {path} is inside a git working tree: {type(e).__name__}") from e
+    out = r.stdout.decode("utf-8", "replace").strip()
+    return Path(out) if r.returncode == 0 and out else None
+
+
+def private_dir_problem(path: Path, *, salt: bool) -> Optional[str]:
+    """Why secrets may not be written under `path`. A salt lives outside any git working tree (P9); a decoy set, a key
+    or a packet may sit inside one only where that working tree ignores it (`git check-ignore`), so no `git add -A`
+    there takes it."""
+    top = git_working_tree(path)
+    if top is None:
+        return None
+    if salt:
+        return f"{path} is inside the git working tree {top}; a salt lives outside any (P9)"
+    probe = Path(path).resolve() / "probe"
+    r = subprocess.run(["git", "-C", str(top), "check-ignore", "-q", str(probe)], capture_output=True, timeout=60)
+    if r.returncode == 0:
+        return None
+    return f"{path} is inside the git working tree {top} and not ignored there; add it to that tree's exclude file"
+
+
+def _require_private(out: Path, salt_dir: Path, *, dry_run: bool = False) -> None:
+    """Refuse unless `out` is outside any git working tree or ignored there, and `salt_dir` is outside any (a dry
+    run's stand-in salt, never read for real, may sit where its packet sits)."""
+    for path, salt in ((out, False), (salt_dir, not dry_run)):
+        why = private_dir_problem(path, salt=salt)
+        if why:
+            raise PacketError(why)
+
+
+def write_packet(out: Path, built: dict, build_record: dict, *, salt_dir: Path, dry_run: bool = False) -> dict:
+    """Write packet_<P>.json (the seats'), key_<P>.json, its digest and build_<P>.json to `out`, and the key's salt to
+    `salt_dir`, outside any git working tree (P9). Never overwrites."""
+    out, salt_dir = Path(out), Path(salt_dir)
+    _require_private(out, salt_dir, dry_run=dry_run)
     p = built["public"]["packet"]
-    files = {f"packet_{p}.json": dumps(built["public"], indent=1), f"key_{p}.json": built["key_bytes"],
-             f"key_{p}.salt": (built["salt"].hex() + "\n").encode("utf-8"),
-             f"key_{p}.sha256": (built["key_digest"] + "\n").encode("utf-8"),
-             f"build_{p}.json": dumps(build_record, indent=1)}
-    for name in files:
-        if (out / name).exists():
-            raise PacketError(f"{out / name} exists; a packet is never rebuilt over itself")
+    files = {out / f"packet_{p}.json": dumps(built["public"], indent=1), out / f"key_{p}.json": built["key_bytes"],
+             salt_dir / f"key_{p}.salt": (built["salt"].hex() + "\n").encode("utf-8"),
+             out / f"key_{p}.sha256": (built["key_digest"] + "\n").encode("utf-8"),
+             out / f"build_{p}.json": dumps(build_record, indent=1)}
+    for path in files:
+        if path.exists():
+            raise PacketError(f"{path} exists; a packet is never rebuilt over itself")
+    out.mkdir(parents=True, exist_ok=True)
+    salt_dir.mkdir(parents=True, exist_ok=True)
     digests = {}
-    for name, data in files.items():
-        (out / name).write_bytes(data)
-        if (out / name).read_bytes() != data:
-            raise OSError(f"short write: {out / name}")
-        digests[name] = hashlib.sha256(data).hexdigest()
+    for path, data in files.items():
+        path.write_bytes(data)
+        if path.read_bytes() != data:
+            raise OSError(f"short write: {path}")
+        digests[path.name] = hashlib.sha256(data).hexdigest()
     (out / f"packet_{p}.sha256").write_bytes((digests[f"packet_{p}.json"] + "\n").encode("utf-8"))
     return digests
 
 
-def load_decoy_set(d: Path, packet: str, *, lock_digest: Optional[str] = None) -> list:
-    """The sealed decoy set of a packet, refused unless it hashes to its digest (and to the lock row, for P2)."""
+def _read_salt(name: str, salt_dir: Optional[Path], beside: Path) -> bytes:
+    """A salt from the salt folder, or beside its file once released (the release publishes it there)."""
+    for d in ([Path(salt_dir)] if salt_dir is not None else []) + [Path(beside)]:
+        if (d / name).exists():
+            return bytes.fromhex((d / name).read_bytes().decode("utf-8").strip())
+    raise PacketError(f"no {name} in the salt folder {salt_dir} or beside its file in {beside}")
+
+
+def load_decoy_set(d: Path, packet: str, *, salt_dir: Optional[Path], lock_digest: Optional[str] = None) -> list:
+    """The sealed decoy set of a packet, refused unless it hashes to its digest (and to the lock row, for P2). Its
+    salt is read from `salt_dir`, or beside the set once released."""
     d = Path(d)
     data = (d / f"decoyset_{packet}.json").read_bytes()
-    salt = bytes.fromhex((d / f"decoyset_{packet}.salt").read_bytes().decode("utf-8").strip())
+    salt = _read_salt(f"decoyset_{packet}.salt", salt_dir, d)
     digest = (d / f"decoyset_{packet}.sha256").read_bytes().decode("utf-8").strip()
     if lock_digest is not None and digest != lock_digest:
         raise PacketError(f"the {packet} decoy set's digest {digest[:12]}... is not the lock row's {lock_digest[:12]}...")
@@ -534,15 +586,23 @@ def testreceipt_urls(tr_dir: Optional[Path]) -> list:
     return out
 
 
-def _write_set(out: Path, packet: str, sealed: dict, problems: list) -> None:
-    out = Path(out)
+def _write_set(out: Path, packet: str, sealed: dict, problems: list, *, salt_dir: Path) -> None:
+    """decoyset_<P>.json and .sha256 to `out` (outside any git working tree, or ignored there), the salt to `salt_dir`
+    (outside any git working tree; P9). Never reseals over a set."""
+    out, salt_dir = Path(out), Path(salt_dir)
+    _require_private(out, salt_dir)
+    files = {out / f"decoyset_{packet}.json": sealed["set_bytes"],
+             salt_dir / f"decoyset_{packet}.salt": (sealed["salt"].hex() + "\n").encode("utf-8"),
+             out / f"decoyset_{packet}.sha256": (sealed["digest"] + "\n").encode("utf-8")}
+    for path in files:
+        if path.exists():
+            raise PacketError(f"{path} exists; a decoy set is never resealed over itself")
     out.mkdir(parents=True, exist_ok=True)
-    for name in (f"decoyset_{packet}.json", f"decoyset_{packet}.salt", f"decoyset_{packet}.sha256"):
-        if (out / name).exists():
-            raise PacketError(f"{out / name} exists; a decoy set is never resealed over itself")
-    (out / f"decoyset_{packet}.json").write_bytes(sealed["set_bytes"])
-    (out / f"decoyset_{packet}.salt").write_bytes((sealed["salt"].hex() + "\n").encode("utf-8"))
-    (out / f"decoyset_{packet}.sha256").write_bytes((sealed["digest"] + "\n").encode("utf-8"))
+    salt_dir.mkdir(parents=True, exist_ok=True)
+    for path, data in files.items():
+        path.write_bytes(data)
+        if path.read_bytes() != data:
+            raise OSError(f"short write: {path}")
 
 
 def cmd_decoys(a) -> int:
@@ -556,7 +616,7 @@ def cmd_decoys(a) -> int:
         print(json.dumps({"refused": probs}, indent=1))
         return 1
     sealed = tpc_decoys.seal_set(set_obj)
-    _write_set(Path(a.out), a.packet, sealed, probs)
+    _write_set(Path(a.out), a.packet, sealed, probs, salt_dir=_salt_dir(a))
     print(json.dumps({"packet": a.packet, "decoys": len(set_obj["decoys"]), "digest": sealed["digest"]}, indent=1))
     return 0
 
@@ -582,6 +642,20 @@ def _official_out(a, packet: str) -> Path:
     return Path(a.out) if a.out else DEFAULT_OUT / packet
 
 
+def _salt_dir(a) -> Path:
+    """Where salts are written (P9): --salts, or SALT_DIR, outside any git working tree. A dry run names its own
+    folder and never writes into SALT_DIR, where a stand-in salt would stand in the official build's way."""
+    if getattr(a, "dry_run", False):
+        if not a.salts:
+            raise PacketError("a dry run names its own --salts folder")
+        s = Path(a.salts).resolve()
+        base = SALT_DIR.resolve()
+        if s == base or base in s.parents:
+            raise PacketError("a dry run never writes into the salts folder")
+        return s
+    return Path(a.salts) if a.salts else SALT_DIR
+
+
 def cmd_p2(a) -> int:
     root = Path(a.root)
     if a.dry_run:
@@ -598,10 +672,11 @@ def cmd_p2(a) -> int:
         lock = p2_lock_digest(prereg)
         if lock is None:
             raise PacketError("the signed PREREG's P2 decoy set row holds no single sha256")
-    decoys = load_decoy_set(Path(a.decoys), "P2", lock_digest=lock)
+    salts = _salt_dir(a)
+    decoys = load_decoy_set(Path(a.decoys), "P2", salt_dir=salts, lock_digest=lock)
     built, record = build_p2(root, decoys, beacon=beacon, dry_run=a.dry_run, guard=guard)
     out = _official_out(a, "P2")
-    digests = write_packet(out, built, record)
+    digests = write_packet(out, built, record, salt_dir=salts, dry_run=a.dry_run)
     print(json.dumps({"packet": "P2", "dry_run": a.dry_run, "items": record["items"], "key_digest": built["key_digest"],
                       "files": digests, "selection": record["selection"]}, indent=1))
     return 0
@@ -616,19 +691,21 @@ def cmd_p1(a) -> int:
         beacon = json.loads((Path(a.root) / "draw" / "beacon.json").read_bytes().decode("utf-8"))
     snapshot = json.loads(Path(a.snapshot).read_bytes().decode("utf-8"))
     bodies = json.loads(Path(a.bodies).read_bytes().decode("utf-8")) if a.bodies else {}
-    decoys = load_decoy_set(Path(a.decoys), "P1")
+    salts = _salt_dir(a)
+    decoys = load_decoy_set(Path(a.decoys), "P1", salt_dir=salts)
     built, record = build_p1(Path(a.testreceipt), snapshot, Path(a.logs) if a.logs else None, bodies, decoys,
                              beacon=beacon, dry_run=a.dry_run)
-    digests = write_packet(_official_out(a, "P1"), built, record)
+    digests = write_packet(_official_out(a, "P1"), built, record, salt_dir=salts, dry_run=a.dry_run)
     print(json.dumps({"packet": "P1", "dry_run": a.dry_run, "items": len(built["public"]["items"]),
                       "key_digest": built["key_digest"], "files": digests}, indent=1))
     return 0
 
 
 def cmd_q(a) -> int:
-    decoys = load_decoy_set(Path(a.decoys), "Q")
+    salts = _salt_dir(a)
+    decoys = load_decoy_set(Path(a.decoys), "Q", salt_dir=salts)
     built, record = build_q(Path(a.root), decoys)
-    digests = write_packet(Path(a.out) if a.out else DEFAULT_OUT / "Q", built, record)
+    digests = write_packet(Path(a.out) if a.out else DEFAULT_OUT / "Q", built, record, salt_dir=salts)
     print(json.dumps({"packet": "Q", "items": len(built["public"]["items"]), "key_digest": built["key_digest"],
                       "files": digests}, indent=1))
     return 0
@@ -645,10 +722,13 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     s.add_argument("--out", required=True)
     s.add_argument("--testreceipt", help="testreceipt's clone: its 138 items are refused as sources")
     s.add_argument("--other-set", action="append", help="another packet's sealed set: no decoy is reused")
+    salts_help = f"where salts are written, outside any git working tree (default {SALT_DIR}; a dry run names its own)"
+    s.add_argument("--salts", help=salts_help)
     p2 = sub.add_parser("p2")
     p2.add_argument("--root", required=True)
     p2.add_argument("--decoys", required=True)
     p2.add_argument("--out")
+    p2.add_argument("--salts", help=salts_help)
     p2.add_argument("--dry-run", action="store_true")
     p1 = sub.add_parser("p1")
     p1.add_argument("--testreceipt", required=True)
@@ -658,11 +738,13 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     p1.add_argument("--decoys", required=True)
     p1.add_argument("--root", help="the window store holding draw/beacon.json")
     p1.add_argument("--out")
+    p1.add_argument("--salts", help=salts_help)
     p1.add_argument("--dry-run", action="store_true")
     q = sub.add_parser("q")
     q.add_argument("--root", required=True)
     q.add_argument("--decoys", required=True)
     q.add_argument("--out")
+    q.add_argument("--salts", help=salts_help)
     a = ap.parse_args(list(argv) if argv is not None else None)
     try:
         return {"draw-check": cmd_draw_check, "decoys": cmd_decoys, "p2": cmd_p2, "p1": cmd_p1, "q": cmd_q}[a.cmd](a)

@@ -121,6 +121,10 @@ M = [
     ("P2's packet key digest never needed", "tpc_score.py",
      '        parse_utc(p["key_public_at"])  # every packet\'s key digest public before its seats read (section 14)',
      "        pass"),
+    # where salts and keys may be written (P9)
+    ("a salt may sit inside a git working tree", "tpc_packet.py", "    if salt:", "    if False:"),
+    ("secrets written where git does not ignore them", "tpc_packet.py", "    if r.returncode == 0:", "    if True:"),
+    ("the key's salt written beside the key", "tpc_packet.py", 'salt_dir / f"key_{p}.salt"', 'out / f"key_{p}.salt"'),
 ]
 
 

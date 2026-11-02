@@ -336,16 +336,20 @@ def test_the_p2_lock_row_reads_one_digest_or_none():
 def test_a_decoy_set_loads_only_by_its_digest_and_the_lock_row(tmp_path):
     set_obj, _ = tpc_decoys.build_set(synthetic_decoys.spec("P2"))
     sealed = tpc_decoys.seal_set(set_obj, salt=b"\x05" * 32)
-    tpc_packet._write_set(tmp_path, "P2", sealed, [])
-    assert len(tpc_packet.load_decoy_set(tmp_path, "P2")) == 30
-    assert len(tpc_packet.load_decoy_set(tmp_path, "P2", lock_digest=sealed["digest"])) == 30
+    salts = tmp_path / "salts"
+    tpc_packet._write_set(tmp_path, "P2", sealed, [], salt_dir=salts)
+    assert not (tmp_path / "decoyset_P2.salt").exists() and (salts / "decoyset_P2.salt").exists()
+    assert len(tpc_packet.load_decoy_set(tmp_path, "P2", salt_dir=salts)) == 30
+    assert len(tpc_packet.load_decoy_set(tmp_path, "P2", salt_dir=salts, lock_digest=sealed["digest"])) == 30
     with pytest.raises(tpc_packet.PacketError):
-        tpc_packet.load_decoy_set(tmp_path, "P2", lock_digest="0" * 64)
+        tpc_packet.load_decoy_set(tmp_path, "P2", salt_dir=None)  # no salt beside it before the release
     with pytest.raises(tpc_packet.PacketError):
-        tpc_packet._write_set(tmp_path, "P2", sealed, [])  # never resealed over itself
+        tpc_packet.load_decoy_set(tmp_path, "P2", salt_dir=salts, lock_digest="0" * 64)
+    with pytest.raises(tpc_packet.PacketError):
+        tpc_packet._write_set(tmp_path, "P2", sealed, [], salt_dir=salts)  # never resealed over itself
     (tmp_path / "decoyset_P2.json").write_bytes(sealed["set_bytes"].replace(b"WHOLE_CONTRADICTED", b"NOT_DECIDABLE", 1))
     with pytest.raises(tpc_decoys.DecoyError):
-        tpc_packet.load_decoy_set(tmp_path, "P2")
+        tpc_packet.load_decoy_set(tmp_path, "P2", salt_dir=salts)
 
 
 # ---- a store opened before 2026-11-02 ----------------------------------------------------------------------
@@ -392,7 +396,7 @@ def make_store(root, beacon_hex, day="2026-10-20"):
 def _write_p2_set(d):
     set_obj, _ = tpc_decoys.build_set(synthetic_decoys.spec("P2"))
     sealed = tpc_decoys.seal_set(set_obj)
-    tpc_packet._write_set(d, "P2", sealed, [])
+    tpc_packet._write_set(d, "P2", sealed, [], salt_dir=d)  # its salt beside it, as once released
     return sealed
 
 
@@ -402,12 +406,15 @@ def test_p2_dry_run_builds_under_the_stand_in_on_a_pre_window_store(tmp_path):
     dec = tmp_path / "dec"
     _write_p2_set(dec)
     out = tmp_path / "out"
-    rc = tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(out), "--dry-run"])
+    salts = tmp_path / "salts"
+    rc = tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(out), "--salts", str(salts),
+                          "--dry-run"])
     assert rc == 0
     pub = json.loads((out / "packet_P2.json").read_bytes())
     assert pub["beacon"]["kind"] == "stand_in" and pub["DRY_RUN"] and pub["seed"] == tpc_packet.STAND_IN_HEX
     key = json.loads((out / "key_P2.json").read_bytes())
-    salt = bytes.fromhex((out / "key_P2.salt").read_bytes().decode().strip())
+    assert not (out / "key_P2.salt").exists()  # the salt is written to the salts folder, never beside the key
+    salt = bytes.fromhex((salts / "key_P2.salt").read_bytes().decode().strip())
     assert (out / "key_P2.sha256").read_bytes().decode().strip() == hashlib.sha256(salt + (out / "key_P2.json").read_bytes()).hexdigest()
     assert sum(1 for k in key["items"].values() if k["decoy"]) == 30
     real = [k for k in key["items"].values() if not k["decoy"]]
@@ -418,7 +425,11 @@ def test_p2_dry_run_builds_under_the_stand_in_on_a_pre_window_store(tmp_path):
             assert hashlib.sha256(it["item_text"].encode()).hexdigest() == k["item_sha256"]
     rec = json.loads((out / "build_P2.json").read_bytes())
     assert rec["dry_run"] is True and rec["decoys"] == 30
-    assert tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(out), "--dry-run"]) == 2
+    assert tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(out), "--salts", str(salts),
+                            "--dry-run"]) == 2
+    # a dry run names its own salts folder
+    assert tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(tmp_path / "o3"),
+                            "--dry-run"]) == 2
 
 
 def test_dry_runs_refuse_window_rows_and_the_packets_folder(tmp_path):
@@ -430,7 +441,7 @@ def test_dry_runs_refuse_window_rows_and_the_packets_folder(tmp_path):
     dec = tmp_path / "dec"
     _write_p2_set(dec)
     with pytest.raises(tpc_packet.PacketError):
-        tpc_packet.build_p2(root, tpc_packet.load_decoy_set(dec, "P2"), beacon=tpc_packet.stand_in_beacon(), dry_run=True)
+        tpc_packet.build_p2(root, tpc_packet.load_decoy_set(dec, "P2", salt_dir=None), beacon=tpc_packet.stand_in_beacon(), dry_run=True)
     a = types.SimpleNamespace(dry_run=True, out=str(tpc_packet.DEFAULT_OUT / "P2"))
     with pytest.raises(tpc_packet.PacketError):
         tpc_packet._official_out(a, "P2")
@@ -443,7 +454,7 @@ def test_the_official_p2_build_refuses_without_the_named_beacon_or_the_open_seal
     make_store(root, GENESIS_ID)
     dec = tmp_path / "dec"
     _write_p2_set(dec)
-    decoys = tpc_packet.load_decoy_set(dec, "P2")
+    decoys = tpc_packet.load_decoy_set(dec, "P2", salt_dir=None)
     with pytest.raises(tpc_packet.PacketError, match="stand-in"):
         tpc_packet.build_p2(root, decoys, beacon=tpc_packet.stand_in_beacon(), dry_run=False, guard=OpenGuard())
     shut = types.SimpleNamespace(open=False)
@@ -459,7 +470,8 @@ def test_the_official_p2_build_refuses_without_the_named_beacon_or_the_open_seal
     built, record = tpc_packet.build_p2(root, decoys, beacon=_named(), dry_run=False, guard=OpenGuard(), salt=b"\x09" * 32)
     assert record["dry_run"] is False and built["public"]["seed"] == GENESIS_ID
     # the CLI's official path reads the lock row through the seal guard, which is shut on this box
-    rc = tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(tmp_path / "o")])
+    rc = tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(tmp_path / "o"),
+                          "--salts", str(tmp_path / "salts")])
     assert rc == 2
 
 
@@ -494,13 +506,17 @@ def test_the_official_p2_build_takes_the_lock_row_from_the_signed_text_the_guard
     monkeypatch.setattr(tpc_packet.tpc_seal, "SealGuard", lambda: g)
     out = tmp_path / "o"
     # this checkout's PREREG is the unsigned draft; the build reads the guard's text and hands it this file to compare
-    assert tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(out)]) == 0
+    salts = tmp_path / "salts"
+    assert tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(out),
+                            "--salts", str(salts)]) == 0
+    assert (salts / "key_P2.salt").exists() and not (out / "key_P2.salt").exists()
     assert g.working == [tpc_packet.PREREG_FILE]
     rec = json.loads((out / "build_P2.json").read_bytes())
     assert rec["prereg_blob_sha256"] == "b" * 64 and rec["p2_decoy_set_sealed"] == sealed["digest"]
     g2 = _SignedGuard("0" * 64)  # a signed row that is not this set's digest
     monkeypatch.setattr(tpc_packet.tpc_seal, "SealGuard", lambda: g2)
-    assert tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(tmp_path / "o2")]) == 2
+    assert tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(tmp_path / "o2"),
+                            "--salts", str(tmp_path / "salts2")]) == 2
 
 
 def test_q_takes_thirty_pre_window_claimers_and_refuses_window_rows(tmp_path):
@@ -514,8 +530,8 @@ def test_q_takes_thirty_pre_window_claimers_and_refuses_window_rows(tmp_path):
         Store(root).write_json(f"a2/rows/{r['pr_id']}.json", r)
     q_dec = tmp_path / "qd"
     set_obj, _ = tpc_decoys.build_set(synthetic_decoys.spec("Q"))
-    tpc_packet._write_set(q_dec, "Q", tpc_decoys.seal_set(set_obj), [])
-    built, rec = tpc_packet.build_q(root, tpc_packet.load_decoy_set(q_dec, "Q"))
+    tpc_packet._write_set(q_dec, "Q", tpc_decoys.seal_set(set_obj), [], salt_dir=q_dec)
+    built, rec = tpc_packet.build_q(root, tpc_packet.load_decoy_set(q_dec, "Q", salt_dir=None))
     assert rec["items"] == 30 and len(built["public"]["items"]) == 60
     picked = sorted(k["pr_id"] for k in built["key"]["items"].values() if not k["decoy"])
     rows = [r for r in tpc_packet._read_rows(root) if tpc_packet._claim_ci(r)]
@@ -524,7 +540,7 @@ def test_q_takes_thirty_pre_window_claimers_and_refuses_window_rows(tmp_path):
     bad["created_at"] = "2026-11-05T00:00:00Z"
     Store(root).write_json(f"a2/rows/{picked[0]}.json", bad, overwrite=True)
     with pytest.raises(tpc_packet.PacketError):
-        tpc_packet.build_q(root, tpc_packet.load_decoy_set(q_dec, "Q"))
+        tpc_packet.build_q(root, tpc_packet.load_decoy_set(q_dec, "Q", salt_dir=None))
 
 
 # ---- P1 -------------------------------------------------------------------------------------------------------
@@ -607,12 +623,15 @@ def test_the_decoys_cli_seals_a_set_and_refuses_a_bad_one(tmp_path):
     spec = synthetic_decoys.spec("P2")
     sp = tmp_path / "spec.json"
     sp.write_bytes(json.dumps(spec).encode())
-    assert tpc_packet.main(["decoys", "--spec", str(sp), "--packet", "P2", "--out", str(tmp_path / "s")]) == 0
+    assert tpc_packet.main(["decoys", "--spec", str(sp), "--packet", "P2", "--out", str(tmp_path / "s"),
+                            "--salts", str(tmp_path / "salts")]) == 0
+    assert (tmp_path / "salts" / "decoyset_P2.salt").exists() and not (tmp_path / "s" / "decoyset_P2.salt").exists()
     d = (tmp_path / "s" / "decoyset_P2.sha256").read_bytes().decode().strip()
     assert len(d) == 64
     spec["decoys"].pop()
     sp.write_bytes(json.dumps(spec).encode())
-    assert tpc_packet.main(["decoys", "--spec", str(sp), "--packet", "P2", "--out", str(tmp_path / "t")]) == 1
+    assert tpc_packet.main(["decoys", "--spec", str(sp), "--packet", "P2", "--out", str(tmp_path / "t"),
+                            "--salts", str(tmp_path / "salts_t")]) == 1
     assert not (tmp_path / "t" / "decoyset_P2.json").exists()
 
 
@@ -620,3 +639,49 @@ def test_membership_the_builder_reads_is_the_draws():
     m = membership(GENESIS_ID, 12345, "Cursor")
     assert set(m) >= {"u", "v", "in_D", "in_M"}
     assert dt.date(2026, 11, 2) > dt.date(2026, 10, 20)
+
+
+# ---- where salts and keys may be written (P9; finding 10 of 2026-11-02) -------------------------------------
+def _git_repo(path):
+    import subprocess
+    path.mkdir(parents=True)
+    subprocess.run(["git", "init", "-q", str(path)], check=True, capture_output=True)
+    return path
+
+
+def test_a_salt_lives_outside_any_git_working_tree_and_a_set_only_where_git_ignores_it(tmp_path):
+    repo = _git_repo(tmp_path / "repo")
+    outside = tmp_path / "outside" / "salts"
+    assert tpc_packet.private_dir_problem(outside, salt=True) is None
+    assert tpc_packet.private_dir_problem(outside, salt=False) is None
+    assert "a salt lives outside any" in tpc_packet.private_dir_problem(repo / "data" / "salts", salt=True)
+    assert "not ignored" in tpc_packet.private_dir_problem(repo / "data" / "packets", salt=False)
+    (repo / ".git" / "info" / "exclude").write_bytes(b"data/\n")
+    assert tpc_packet.private_dir_problem(repo / "data" / "packets" / "P2", salt=False) is None
+    assert "a salt lives outside any" in tpc_packet.private_dir_problem(repo / "data" / "salts", salt=True)
+    sealed = tpc_decoys.seal_set(tpc_decoys.build_set(synthetic_decoys.spec("P2"))[0], salt=b"\x05" * 32)
+    with pytest.raises(tpc_packet.PacketError, match="a salt lives outside any"):
+        tpc_packet._write_set(repo / "data" / "packets" / "P2", "P2", sealed, [], salt_dir=repo / "data" / "salts")
+    with pytest.raises(tpc_packet.PacketError, match="not ignored"):
+        tpc_packet._write_set(repo / "kept" / "P2", "P2", sealed, [], salt_dir=outside)
+    assert not (repo / "data").exists() and not (repo / "kept").exists() and not outside.exists()  # nothing written
+    tpc_packet._write_set(repo / "data" / "packets" / "P2", "P2", sealed, [], salt_dir=outside)
+    assert sorted(p.name for p in (repo / "data" / "packets" / "P2").iterdir()) == ["decoyset_P2.json",
+                                                                                   "decoyset_P2.sha256"]
+    assert [p.name for p in outside.iterdir()] == ["decoyset_P2.salt"]
+
+
+def test_a_packet_key_salt_is_written_to_the_salts_folder_only(tmp_path):
+    built = tpc_packet.assemble("P2", "a" * 64, _reals(3), _decoys(), beacon={"kind": "bitcoin"}, salt=b"\x03" * 32)
+    repo = _git_repo(tmp_path / "repo")
+    with pytest.raises(tpc_packet.PacketError, match="a salt lives outside any"):
+        tpc_packet.write_packet(tmp_path / "out", built, {"packet": "P2"}, salt_dir=repo / "salts")
+    tpc_packet.write_packet(tmp_path / "out", built, {"packet": "P2"}, salt_dir=tmp_path / "salts")
+    assert not (tmp_path / "out" / "key_P2.salt").exists()
+    assert (tmp_path / "salts" / "key_P2.salt").read_bytes() == (b"\x03" * 32).hex().encode() + b"\n"
+    # a dry run's stand-in salt may sit where its packet sits, in an ignored folder
+    (repo / ".git" / "info" / "exclude").write_bytes(b"dry/\n")
+    tpc_packet.write_packet(repo / "dry", built, {"packet": "P2"}, salt_dir=repo / "dry", dry_run=True)
+    a = types.SimpleNamespace(dry_run=True, salts=str(tpc_packet.SALT_DIR / "x"))
+    with pytest.raises(tpc_packet.PacketError, match="never writes into the salts folder"):
+        tpc_packet._salt_dir(a)

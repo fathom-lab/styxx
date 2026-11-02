@@ -181,7 +181,7 @@ def test_keys_in_order_reads_the_publication_times():
 # ---- packets on disk, answers, the order of sealing ---------------------------------------------------------------
 def _write_packet(d, packet, reals, decoys, seed="a" * 64, kind="bitcoin"):
     built = tpc_packet.assemble(packet, seed, reals, decoys, beacon={"kind": kind, "beacon_hex": seed}, salt=b"\x07" * 32)
-    tpc_packet.write_packet(d, built, {"packet": packet})
+    tpc_packet.write_packet(d, built, {"packet": packet}, salt_dir=d)  # the salt beside the key, as once released
     return built
 
 
@@ -281,7 +281,7 @@ def _a2_world(tmp_path, n_pass=950, n_fail=50, contradicted=2, undecided=0, fire
     d = tmp_path / "packets" / "P2"
     set_obj, _ = tpc_decoys.build_set(synthetic_decoys.spec("P2"))
     sealed = tpc_decoys.seal_set(set_obj, salt=b"\x0b" * 32)
-    tpc_packet._write_set(d, "P2", sealed, [])
+    tpc_packet._write_set(d, "P2", sealed, [], salt_dir=d)
     _write_packet(d, "P2", reals, set_obj["decoys"], seed="c" * 64)
     contra = {10_000 + i for i in range(contradicted)}
     undec = {10_000 + contradicted + i for i in range(undecided)}
@@ -462,7 +462,7 @@ def _a1_world(tmp_path, confirm=36, add=3, undecided=0, n_wrong=0):
                                            tpc_items.ci_from_transcription(it.get("failing") or ""))} for it in items]
     d = tmp_path / "packets" / "P1"
     set_obj, _ = tpc_decoys.build_set(synthetic_decoys.spec("P1"))
-    tpc_packet._write_set(d, "P1", tpc_decoys.seal_set(set_obj), [])
+    tpc_packet._write_set(d, "P1", tpc_decoys.seal_set(set_obj), [], salt_dir=d)
     _write_packet(d, "P1", reals, set_obj["decoys"], seed="e" * 64)
 
     def answer(seat):

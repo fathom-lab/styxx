@@ -63,7 +63,7 @@ def main() -> int:
     assert not probs, probs
     built, record = tpc_packet.build_p2(store, set_obj["decoys"], beacon=tpc_packet.stand_in_beacon(), dry_run=True)
     pdir = out / "dryrun_P2"
-    digests = tpc_packet.write_packet(pdir, built, record)
+    digests = tpc_packet.write_packet(pdir, built, record, salt_dir=pdir, dry_run=True)
     report["p2_dry_run"] = {"items": len(built["public"]["items"]), "selection": record["selection"],
                             "drawn_without_record": record["drawn_without_record"], "key_digest": built["key_digest"],
                             "packet_sha256": digests["packet_P2.json"]}
@@ -86,7 +86,7 @@ def main() -> int:
         q_set, _ = tpc_decoys.build_set(synthetic_decoys.spec("Q"))
         q_built, q_rec = tpc_packet.build_q(store, q_set["decoys"])
         qdir = out / "dryrun_Q"
-        tpc_packet.write_packet(qdir, q_built, q_rec)
+        tpc_packet.write_packet(qdir, q_built, q_rec, salt_dir=qdir, dry_run=True)
         report["q_dry_run"] = {"items": len(q_built["public"]["items"]), "key_digest": q_built["key_digest"]}
         hx = tpc_seats.export_h(qdir / "packet_Q.json", 1, out / "dryrun_Q_H")
         report["q_human_form"] = {"sittings": hx["sittings"], "items": hx["items"]}

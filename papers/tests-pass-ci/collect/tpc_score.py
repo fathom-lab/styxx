@@ -685,10 +685,12 @@ def score(packets: Path, root: Optional[Path], tr_dir: Optional[Path], pub: dict
     if has_p2:
         if lock is None and not (smoke or dry_run):
             raise ScoreError("the lock table's P2 decoy row is unfilled; P2 cannot be scored for real")
-        p2set = tpc_packet.load_decoy_set(packets / "P2", "P2", lock_digest=None if (smoke or dry_run) else lock)
+        # scored after the release: each salt is published beside its set
+        p2set = tpc_packet.load_decoy_set(packets / "P2", "P2", salt_dir=None,
+                                          lock_digest=None if (smoke or dry_run) else lock)
     p1set = None
     if (packets / "P1" / "decoyset_P1.json").exists():
-        p1set = tpc_packet.load_decoy_set(packets / "P1", "P1")
+        p1set = tpc_packet.load_decoy_set(packets / "P1", "P1", salt_dir=None)
     p1 = _panel(packets / "P1", "P1", decoy_set=p1set, dry_run=dry_run) if (packets / "P1").exists() else None
     p2 = _panel(packets / "P2", "P2", decoy_set=p2set, dry_run=dry_run) if (packets / "P2").exists() else None
     rows = _rows_of(root) if root else []

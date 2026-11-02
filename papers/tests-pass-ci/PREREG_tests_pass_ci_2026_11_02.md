@@ -685,8 +685,8 @@ well-made set holds about 80%). A forecast that misses is printed beside the mea
 | `styxx.evidence` (report reader) | `M:styxx/evidence.py` | `598406796b6d550011ad3ce4d6c4c0c33328f3fc25166b9b5e39d154c84e8657` | pinned |
 | the block check | `M:papers/sealed-ahead/draw.py` | `4026f204dd548776e55f06c2f081f029c331326cd628ff8f25e80de6647fe46b` | pinned |
 | the collector: frame, draw, read, screen wrapper, rule R, packet and decoy builder, seat runners, scorer | `papers/tests-pass-ci/collect/`: the combined digest `py -3.12 tpc_collect.py digest` prints (sha256 of the sorted lines `<path> <sha256>` over its top-level `*.py` and `vendor/testreceipt/*`) | TO-FILL at the signing commit | not frozen until filled; the seal guard opens only for this code (P21) |
-| decoy set digest of packet P2 | `sha256(salt \|\| set_bytes)` of P2's sealed decoy set, `decoyset_P2.json`: the 30 decoy item texts, each with its item sha256, side, construction and full label, built from pull requests opened before 2026-11-02 (§6, P9) | TO-FILL at the signing commit | public at the freeze anchor, before any window CI is read; the seal guard opens only when this row holds exactly one sha256 (P21) |
-| packet key digests of Q, P1 and P2 | `sha256(salt \|\| key_bytes)` of each packet's key, `key_<P>.json` (each id to decoy or not, side, construction and full label, and for a real item its pull request; P2's maps its ids to item sha256s after the shuffle of P8.5), with the sha256 of the packet the seats read, `packet_<P>.json` | TO-FILL per packet | committed and pushed before that packet's seats read; for P2 after the window is read (`G_KEYS`) |
+| decoy set digest of packet P2 | `sha256(salt \|\| set_bytes)` of P2's sealed decoy set, `decoyset_P2.json`: the 30 decoy item texts, each with its item sha256, side, construction and full label, built from pull requests opened before 2026-11-02 (§6, P9); its salt kept in `C:/Users/heyzo/direction_a_salts/`, outside any git working tree, until the release (P9) | TO-FILL at the signing commit | public at the freeze anchor, before any window CI is read; the seal guard opens only when this row holds exactly one sha256 (P21) |
+| packet key digests of Q, P1 and P2 | `sha256(salt \|\| key_bytes)` of each packet's key, `key_<P>.json` (each id to decoy or not, side, construction and full label, and for a real item its pull request; P2's maps its ids to item sha256s after the shuffle of P8.5), with the sha256 of the packet the seats read, `packet_<P>.json`; each salt kept in `C:/Users/heyzo/direction_a_salts/` until the release (P9) | TO-FILL per packet | committed and pushed before that packet's seats read; for P2 after the window is read (`G_KEYS`) |
 | each seat's answer file, per packet | the sha256 of H's export and of C's and N's ledgers | TO-FILL per packet and seat | public before that packet's key release (§6, `G_KEYS`, `G_A1_V`) |
 | the beacon | block 975000 or the late rule's block | TO-FILL after the block | after the freeze |
 
@@ -1133,8 +1133,16 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
   listed for a step that did not run). A decoy whose listing shows either pattern, outside a cancelled job, is
   refused.
 - The key (item id to decoy or not, side, construction and full label; for real items, id to pull request) is
-  JSON. With a 32-byte random salt kept beside it off the repository, `sha256(salt || key_bytes)` is committed and
-  pushed before any seat reads the packet (OD-9). Scoring refuses a key that does not hash to the committed digest.
+  JSON. With a 32-byte random salt, `sha256(salt || key_bytes)` is committed and pushed before any seat reads the
+  packet (OD-9). Scoring refuses a key that does not hash to the committed digest.
+- **Where the salts are.** Every salt, the decoy sets' and the packet keys', is written to
+  `C:/Users/heyzo/direction_a_salts/` (`tpc_const.SALT_DIR`), outside any git working tree, and stays there until it
+  is released with its key; the builder refuses a salt folder inside a git working tree, ignored or not. Sets, keys
+  and packets are written under `C:/Users/heyzo/clawd/data/direction_a/packets/`, inside the git working tree
+  `C:/Users/heyzo/clawd`, so the builder refuses to write them unless that tree ignores the folder (`git
+  check-ignore`): its exclude file names `data/direction_a/` before any set is written (a lead's or the operator's
+  step; on 2026-11-02 the folder was untracked and not ignored). A dry run under the stand-in hash names its own
+  folders and never writes into either.
 - **P2's decoy set is sealed before the freeze** (§6, OD-18): the 30 decoy item texts, each with its sha256, side,
   construction and full label, as one JSON set with its own 32-byte salt; `sha256(salt || set_bytes)` fills the lock
   row at the signing commit. P2's packet key then maps ids to item sha256s after the shuffle, and its digest is
