@@ -1,9 +1,9 @@
 # $STYXX Token — Overview
 
-$STYXX is the unit that styxx receipts and bounties settle in. Bounties for reproduction
-failures are paid in $STYXX; receipt hashes are anchored on-chain from the wallet that
-launched it. It is not required to use the library. It is not equity and not a promise of
-anything.
+$STYXX is the unit that styxx receipts settle in: receipt hashes are anchored on-chain from
+the wallet that launched it. Bounties, once to be paid in $STYXX, are paused
+([BOUNTY.md](../../BOUNTY.md)). It is not required to use the library. It is not equity and
+not a promise of anything.
 
 ## The contract (the only one)
 
@@ -99,4 +99,4 @@ There is no migration and no claim from either.
 ## For enterprise readers
 
 The styxx library is usable without ever touching $STYXX. The token coordinates the
-*public* side — bounties and anchored receipts. It does not gate the technology.
+*public* side — anchored receipts (bounties are paused). It does not gate the technology.

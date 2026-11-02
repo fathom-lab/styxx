@@ -1,5 +1,12 @@
-"""Offline tests for styxx.token — the read-only $STYXX tier lookup. No network."""
-from styxx.token import tier_for_balance, get_tier, TIERS, STYXX_MINT, Tier
+"""Offline tests for styxx.token — the read-only $STYXX tier lookup. No network.
+
+The module is deprecated and warns on import; tests/test_token_deprecation.py tests the warning,
+so this file imports it with that one warning silenced."""
+import warnings
+
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore", DeprecationWarning)
+    from styxx.token import tier_for_balance, get_tier, TIERS, STYXX_MINT, Tier
 
 
 def test_tier_thresholds():

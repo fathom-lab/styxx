@@ -59,8 +59,8 @@ For production use, run the full `styxx.profile` Python pipeline via
 
 ## Credits
 
-Built by [Fathom Lab](https://fathom.darkflobi.com).
-Spec: <https://fathom.darkflobi.com/spec>.
+Built by [Fathom Lab](https://github.com/fathom-lab).
+Spec: <https://doi.org/10.5281/zenodo.19746215>.
 Reference Python implementation: <https://pypi.org/project/styxx/>.
 
 *Nothing crosses unseen.*

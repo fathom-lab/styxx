@@ -1,4 +1,11 @@
-"""styxx.token — read-only $STYXX holder-tier lookup.
+"""styxx.token — read-only $STYXX holder-tier lookup. DEPRECATED.
+
+**Deprecated 2026-11-02.** ``STYXX_MINT`` below is the April 2026 Solana mint, which
+``docs/token/README.md`` lists as retired; the current $STYXX is an EVM contract on Robinhood
+Chain, which a Solana RPC lookup cannot read, so ``get_balance`` and ``get_tier`` read a token
+that is no longer the project's. The same file calls the tiers design documents, not deployed
+mechanics. Importing this module emits a ``DeprecationWarning`` that says so, and so does every
+``get_balance`` call; nothing is removed, and whether the module goes is the operator's call.
 
 Maps a Solana wallet's $STYXX balance to a utility tier (see ``docs/token/utility-tiers.md``).
 
@@ -19,10 +26,20 @@ from __future__ import annotations
 
 import json
 import urllib.request
+import warnings
 from typing import NamedTuple
 
 STYXX_MINT = "Dxw3u4KxN32KpSdHSq4TkwjfMPJTPeosa22JXN15pump"
 DEFAULT_RPC = "https://api.mainnet-beta.solana.com"
+
+DEPRECATION_MESSAGE = (
+    "styxx.token is deprecated: its STYXX_MINT, " + STYXX_MINT + ", is the April 2026 Solana mint "
+    "that docs/token/README.md lists as retired. The current $STYXX contract is on Robinhood Chain, "
+    "which this module cannot read, and the tiers are design documents, not deployed mechanics. "
+    "See docs/token/README.md."
+)
+
+warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning, stacklevel=2)
 
 
 class Tier(NamedTuple):
@@ -58,7 +75,9 @@ def get_balance(wallet: str, *, mint: str = STYXX_MINT, rpc_url: str = DEFAULT_R
 
     Uses ``getTokenAccountsByOwner`` (jsonParsed). No keys, no signing, no transactions. Raises on
     network / RPC error — callers decide how to handle it (e.g. treat a failed lookup as Tier 0).
+    Deprecated: ``mint`` defaults to a retired mint; see the module docstring.
     """
+    warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning, stacklevel=2)
     body = json.dumps({
         "jsonrpc": "2.0", "id": 1, "method": "getTokenAccountsByOwner",
         "params": [wallet, {"mint": mint}, {"encoding": "jsonParsed"}],
@@ -84,6 +103,7 @@ def get_tier(wallet: str, *, mint: str = STYXX_MINT, rpc_url: str = DEFAULT_RPC)
 def _main(argv=None) -> int:
     import sys
     argv = sys.argv[1:] if argv is None else argv
+    print(DEPRECATION_MESSAGE, file=sys.stderr)
     if len(argv) != 1:
         print("usage: python -m styxx.token <wallet-address>")
         return 2

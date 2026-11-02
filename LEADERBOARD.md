@@ -1,5 +1,7 @@
 # styxx gauntlet — public leaderboard
 
+> **Status, 2026-11-02: the arc this board scores is closed.** [`papers/INDEX.md`](https://github.com/fathom-lab/styxx/blob/main/papers/INDEX.md) lists `consensus-hallucination` as NEGATIVE-RESULT: "Seven preregistered methods failed to see or crack shared cultural-prior errors, and the curated folklore corpus itself collapsed." The rows below are kept as the record; read each one against that status.
+
 **The empirical floor is the bar. Submit your method. Beat us or join the floor.**
 
 This leaderboard tracks external submissions to `styxx gauntlet` (shipped in styxx 7.7.5). Anyone can run their detection or classification method against the labeled benchmark (`papers/consensus-hallucination/darkcore_benchmark_2026_05_27.json`) and submit results here via PR.
@@ -150,7 +152,7 @@ Leaderboard: github.com/fathom-lab/styxx/blob/main/LEADERBOARD.md
 Paper: github.com/fathom-lab/styxx/blob/main/papers/PAPER_decorrelation_ceiling_2026_05_27.md
 ```
 
-The styxx project carries Zenodo concept DOI [`10.5281/zenodo.19326174`](https://doi.org/10.5281/zenodo.19326174). The release-specific DOI for v7.7.7 is [**`10.5281/zenodo.20418532`**](https://doi.org/10.5281/zenodo.20418532) (v24 in the concept chain, published 2026-05-27).
+The Fathom paper series carries Zenodo concept DOI [`10.5281/zenodo.19326174`](https://doi.org/10.5281/zenodo.19326174); the styxx software's concept DOI is [`10.5281/zenodo.19758618`](https://doi.org/10.5281/zenodo.19758618). The paper deposited with v7.7.7 is [**`10.5281/zenodo.20418532`**](https://doi.org/10.5281/zenodo.20418532) (v24 in the paper-series chain, published 2026-05-27).
 
 ---
 

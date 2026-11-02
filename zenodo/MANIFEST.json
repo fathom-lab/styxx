@@ -2,8 +2,8 @@
   "schema": "fathom/zenodo-manifest/v1",
   "generated": "2026-09-01",
   "generated_from_commit": "0f9b9e3ff96c15839bff39ab4bbf06bca0aa6619",
-  "updated": "2026-10-23",
-  "updated_in": "150121ea (#166: the 7.48.0 software version), the 2026-09-29 audit corrections (line references re-pointed; D1 note; the 23042251 notes), #198 (the 7.48.1 software version, 10.5281/zenodo.23200977), #204 (the 7.49.0 software version, 10.5281/zenodo.23221755), and branch release/7.50.0-followups (the 7.50.0 software version, 10.5281/zenodo.23594959)",
+  "updated": "2026-11-02",
+  "updated_in": "150121ea (#166: the 7.48.0 software version), the 2026-09-29 audit corrections (line references re-pointed; D1 note; the 23042251 notes), #198 (the 7.48.1 software version, 10.5281/zenodo.23200977), #204 (the 7.49.0 software version, 10.5281/zenodo.23221755), branch release/7.50.0-followups (the 7.50.0 software version, 10.5281/zenodo.23594959), and branch docs/front-door-repair (README.md line references moved up one line after the dead playground row was removed; D3's line with them; then the DOI labels: D3 and D4 resolved, CITATION.cff line references re-pointed)",
   "what_this_is": "One entry per Zenodo deposit this repository cites. It exists because the deposits live outside the release path: nothing in this repo fails when a deposited file is later edited here, so the repo and the permanent record drift apart silently. tests/test_zenodo_manifest.py is the mechanism that was missing.",
   "what_this_is_not": "This manifest was built entirely from inside the repository. No Zenodo API call was made and no deposit page was fetched. Every statement about what a remote record CONTAINS is either (a) quoted from a deposit receipt this repo committed at deposit time, or (b) marked UNCHECKABLE. Where a receipt exists it is named in `evidence`. Absence of a receipt is not evidence that a deposit is wrong; it means we cannot check it from here.",
   "hashing_note": "Two hashes are recorded per text file. `sha256_local_bytes` is the sha256 of the bytes in THIS checkout; on Windows with core.autocrlf=true those bytes are CRLF, and the same file checked out on Linux CI is LF, so that hash is NOT portable. `sha256_lf_normalized` (CRLF collapsed to LF before hashing) is the portable content identity and is what the drift test asserts on. This is the same failure the repo's own .gitattributes records for styxx/centroids/*.json, where a CRLF-rendered pin broke an LF CI checkout. For binary files (pdf, png, zip) normalization is meaningless and would corrupt the file, so only `sha256_local_bytes` is recorded and asserted.",
@@ -38,7 +38,7 @@
     {
       "id": "D2",
       "file": "CITATION.cff",
-      "line": 46,
+      "line": 55,
       "current_text": "  doi: \"10.5281/zenodo.19777921\"",
       "surrounding_claim": "preferred-citation for 'Every Mind Leaves Vitals: A Position on Cognometric Observability'",
       "defect": "The preferred citation points at a frozen version record deposited 2026-04-26 whose content predates the 2026-06-21 scope erratum that now heads the repo copy. A reader who follows the preferred citation gets the unbounded substrate-independence claim and the cross-family-transfer claim with no erratum attached. The erratum is not a stylistic edit: it records that those claims were bounded or falsified by this program's own pre-registered experiments.",
@@ -49,13 +49,14 @@
     {
       "id": "D3",
       "file": "README.md",
-      "line": 504,
+      "line": 503,
       "current_text": "| DOI (concept, always-latest) | [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174) |",
       "surrounding_claim": "listed in the repo's own link table directly above the spec DOI, in a table of styxx project links",
       "defect": "19326174 IS a concept DOI, but it is the concept record of the Fathom research-paper series (v19, v20, v22, v23, v24, v26, v27, v28, v30, v31, v32, v33, v34 ...), not of the styxx software. Presenting it in a project link table as the 'always-latest' DOI implies it resolves to the current software release; it resolves to the most recent PAPER in the chain. The software concept DOI is 10.5281/zenodo.19758618.",
       "evidence": "release/zenodo-deposit-receipt-spec-v1.0.json concept_recid=19326174 with this_version = the spec v1.0 paper; arxiv/read_neq_write/zenodo-deposit-receipt*.json all carry concept_doi=10.5281/zenodo.19326174 for paper versions v26/v27/v28; papers/DEPOSIT_frame_locality_2026_07_28.md line 87 'Concept record: 19326174 — the Fathom series'.",
       "should_say": "Label it as the Fathom research-series concept DOI, and if a software always-latest DOI is wanted in that row, use 10.5281/zenodo.19758618.",
-      "fix_owner": "operator"
+      "fix_owner": "operator",
+      "resolved": "2026-11-02, branch docs/front-door-repair: README.md line 503 reads \"| DOI (Fathom paper series, concept) | ...\" and says the software's concept DOI is in the citation row. Kept here as the record of the defect."
     },
     {
       "id": "D4",
@@ -66,7 +67,8 @@
       "defect": "Same mislabel as D3, in the badge row, where the surrounding badges are all software badges. This is the more visible of the two.",
       "evidence": "same as D3",
       "should_say": "same as D3",
-      "fix_owner": "operator"
+      "fix_owner": "operator",
+      "resolved": "2026-11-02, branch docs/front-door-repair: the badge on README.md line 21 reads \"paper series | concept DOI\" and a \"software | concept DOI\" badge for 10.5281/zenodo.19758618 sits beside it. Kept here as the record of the defect."
     },
     {
       "id": "D5",
@@ -90,11 +92,11 @@
       "status": "NO_LOCAL_COUNTERPART",
       "cited_in": [
         "README.md:21",
-        "README.md:504",
+        "README.md:503",
         "many papers"
       ],
       "deposited_files": [],
-      "notes": "Mislabelled in README as a software always-latest DOI. See defects D3, D4."
+      "notes": "Labelled in README as a software always-latest DOI until branch docs/front-door-repair, which labels it as the Fathom paper series (defects D3 and D4, resolved there)."
     },
     {
       "doi": "10.5281/zenodo.19703526",
@@ -115,11 +117,12 @@
       "chain": null,
       "status": "NO_LOCAL_COUNTERPART",
       "cited_in": [
-        "CITATION.cff:33",
-        "README.md:507"
+        "CITATION.cff:41",
+        "README.md:21",
+        "README.md:506"
       ],
       "deposited_files": [],
-      "notes": "Named by CITATION.cff line 33 since 2026-09-29 (defect D1 resolved). Latest version: 7.50.0, 10.5281/zenodo.23594959 (release/zenodo-deposit-receipt-software-v7.50.0.json, concept_latest_after_publish), since 2026-10-23. The concept holds four versions before it (release/zenodo-record-software-v7.50.0-readback.json: relations.version index 4, counted from 0): 7.49.0, 10.5281/zenodo.23221755 (release/zenodo-deposit-receipt-software-v7.49.0.json); 7.48.1, 10.5281/zenodo.23200977 (release/zenodo-deposit-receipt-software-v7.48.1.json); 7.48.0, 10.5281/zenodo.23042251 (release/zenodo-deposit-receipt-software-v7.48.0.json); and 6.2.0, 10.5281/zenodo.19758619 (release/zenodo-deposit-receipt-software-v6.2.0.json)."
+      "notes": "Named by CITATION.cff since 2026-09-29 (defect D1 resolved; line 33 then, line 41 since branch docs/front-door-repair). Latest version: 7.50.0, 10.5281/zenodo.23594959 (release/zenodo-deposit-receipt-software-v7.50.0.json, concept_latest_after_publish), since 2026-10-23. The concept holds four versions before it (release/zenodo-record-software-v7.50.0-readback.json: relations.version index 4, counted from 0): 7.49.0, 10.5281/zenodo.23221755 (release/zenodo-deposit-receipt-software-v7.49.0.json); 7.48.1, 10.5281/zenodo.23200977 (release/zenodo-deposit-receipt-software-v7.48.1.json); 7.48.0, 10.5281/zenodo.23042251 (release/zenodo-deposit-receipt-software-v7.48.0.json); and 6.2.0, 10.5281/zenodo.19758619 (release/zenodo-deposit-receipt-software-v6.2.0.json)."
     },
     {
       "doi": "10.5281/zenodo.19502715",
@@ -177,8 +180,8 @@
       "status": "DIVERGED",
       "cited_in": [
         "README.md:20",
-        "README.md:505",
-        "CITATION.cff:57"
+        "README.md:504",
+        "CITATION.cff:66"
       ],
       "deposited_files": [
         {
@@ -221,7 +224,7 @@
       "chain": "concept 10.5281/zenodo.19326174",
       "status": "TRACKED",
       "cited_in": [
-        "CITATION.cff:64"
+        "CITATION.cff:73"
       ],
       "deposited_files": [
         {
@@ -270,9 +273,9 @@
       "chain": "concept 10.5281/zenodo.19703526",
       "status": "DIVERGED",
       "cited_in": [
-        "CITATION.cff:46",
-        "CITATION.cff:47",
-        "README.md:506"
+        "CITATION.cff:55",
+        "CITATION.cff:56",
+        "README.md:505"
       ],
       "deposited_files": [
         {
@@ -612,11 +615,9 @@
       "points_at": "styxx v7.48.0: three files - styxx-v7.48.0-source-bundle.zip (git archive of tag v7.48.0, commit 1218dbad, with core.autocrlf=false), and the PyPI wheel and sdist. Published 2026-09-29T15:46:04Z as a new version of concept 10.5281/zenodo.19758618; related identifiers link the spec v1.0 (10.5281/zenodo.19746215, isSupplementTo) and the Fathom research series (10.5281/zenodo.19326174, isPartOf).",
       "chain": "concept 10.5281/zenodo.19758618",
       "status": "NO_LOCAL_COUNTERPART",
-      "cited_in": [
-        "CITATION.cff:34 (description)"
-      ],
+      "cited_in": [],
       "deposited_files": [],
-      "notes": "The deposited zip is not in the repo; its contents are the tagged tree, reproducible with `git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.48.0/ v7.48.0`. File md5s are in the receipt; the wheel and sdist sha256 are the ones PyPI serves for 7.48.0. Zenodo stores the MIT license as 'mit-license'. The tag is the local counterpart: `git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.48.0/ v7.48.0` reproduces the deposited zip byte for byte on git 2.52.0.windows.1 (md5 1145aff5e0fe5f532ee2f7e8ab01f9fe). Its description was corrected on Zenodo on 2026-09-29 (release/zenodo-metadata-software-v7.48.0-edit-2026-09-29.json); files and DOI unchanged. Superseded as the concept's latest version by 7.48.1, 10.5281/zenodo.23200977, on 2026-10-06 (release/zenodo-deposit-receipt-software-v7.48.1.json); CITATION.cff:34 still names it, as 7.48.0's version DOI."
+      "notes": "The deposited zip is not in the repo; its contents are the tagged tree, reproducible with `git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.48.0/ v7.48.0`. File md5s are in the receipt; the wheel and sdist sha256 are the ones PyPI serves for 7.48.0. Zenodo stores the MIT license as 'mit-license'. The tag is the local counterpart: `git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.48.0/ v7.48.0` reproduces the deposited zip byte for byte on git 2.52.0.windows.1 (md5 1145aff5e0fe5f532ee2f7e8ab01f9fe). Its description was corrected on Zenodo on 2026-09-29 (release/zenodo-metadata-software-v7.48.0-edit-2026-09-29.json); files and DOI unchanged. Superseded as the concept's latest version by 7.48.1, 10.5281/zenodo.23200977, on 2026-10-06 (release/zenodo-deposit-receipt-software-v7.48.1.json); CITATION.cff:34 named it, as 7.48.0's version DOI, until branch docs/front-door-repair, which names 7.50.0's record, 10.5281/zenodo.23594959, there instead."
     },
     {
       "doi": "10.5281/zenodo.23200977",
@@ -647,9 +648,11 @@
       "points_at": "styxx v7.50.0: three files - styxx-v7.50.0-source-bundle.zip (git archive of tag v7.50.0, commit bebdadf1, with core.autocrlf=false), and the PyPI wheel and sdist. Published 2026-10-23T13:04:07Z (UTC; 09:04 at UTC-4) as a new version of concept 10.5281/zenodo.19758618 made from 7.49.0 (10.5281/zenodo.23221755, isNewVersionOf); related identifiers also link the spec v1.0 (10.5281/zenodo.19746215, isSupplementTo) and the Fathom research series (10.5281/zenodo.19326174, isPartOf). No advisory accompanies 7.50.0, so the record has no isDocumentedBy row.",
       "chain": "concept 10.5281/zenodo.19758618",
       "status": "NO_LOCAL_COUNTERPART",
-      "cited_in": [],
+      "cited_in": [
+        "CITATION.cff:42 (description)"
+      ],
       "deposited_files": [],
-      "notes": "The deposited zip is not in the repo; its contents are the tagged tree. `git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.50.0/ v7.50.0` reproduces it byte for byte on git 2.52.0.windows.1 (md5 37ce89258987104eb06ba1556b7e4b33). Sizes, sha256 and md5 of the three files are in the receipts; the wheel and sdist sha256 are the ones PyPI serves for 7.50.0. Zenodo stores the MIT license as 'mit-license'. The metadata as sent and as published, and the public record as read back after the publish, are in release/; release/NOTE_zenodo_software_v7_50_0_provenance.md says how it was published and what the receipts do not show. No citation surface names this version DOI; CITATION.cff and README.md name the concept DOI."
+      "notes": "The deposited zip is not in the repo; its contents are the tagged tree. `git -c core.autocrlf=false archive --format=zip --prefix=styxx-7.50.0/ v7.50.0` reproduces it byte for byte on git 2.52.0.windows.1 (md5 37ce89258987104eb06ba1556b7e4b33). Sizes, sha256 and md5 of the three files are in the receipts; the wheel and sdist sha256 are the ones PyPI serves for 7.50.0. Zenodo stores the MIT license as 'mit-license'. The metadata as sent and as published, and the public record as read back after the publish, are in release/; release/NOTE_zenodo_software_v7_50_0_provenance.md says how it was published and what the receipts do not show. CITATION.cff:42 names it in the concept identifier's description since branch docs/front-door-repair; README.md names only the concept DOI."
     }
   ],
   "open_questions": [

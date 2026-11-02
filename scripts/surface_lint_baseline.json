@@ -5,12 +5,8 @@
   "AUTOPILOT.md": {
    "charter/ordinal": 1
   },
-  "BOUNTY.md": {
-   "charter/ordinal": 1
-  },
   "CONTRIBUTING.md": {
-   "charter/ordinal": 4,
-   "plan/nobody": 1
+   "charter/ordinal": 4
   },
   "LEADERBOARD.md": {
    "charter/ordinal": 4
@@ -26,7 +22,7 @@
    "charter/ordinal": 1
   },
   "README.md": {
-   "charter/ordinal": 6,
+   "charter/ordinal": 5,
    "plan/nobody": 3
   },
   "REPLICATIONS.md": {

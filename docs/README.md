@@ -20,7 +20,17 @@ If you are an LLM agent reading this without a human in the loop, start at [`age
 See also:
 
 - **[../README.md](../README.md)** — project overview, install, quickstart.
-- **[REFERENCE.md](REFERENCE.md)** — full API reference (every public symbol, every CLI command).
+- **[REFERENCE.md](REFERENCE.md)** — API reference for the vitals and guardrail surface. It does not cover the verification instruments below.
+
+## For checking claims — the verification instruments
+
+The instruments the [README](../README.md) leads with. Each documents itself: `python -m styxx.<name> --help` and the module's docstring.
+
+- **The diff gate** (`styxx.diffgate`) — a pull request's description against its diff. In CI: [`action.yml`](../action.yml); before each commit: [`integrations/git/README.md`](../integrations/git/README.md).
+- **OATH** (`styxx.certify`, `styxx.oathready`, `styxx.corpus_audit`) — the numbers in a document against its receipts. The contract: [`OATH_CONTRACT.md`](../OATH_CONTRACT.md).
+- **sworn** (`styxx.sworn`) — sworn output; its Action: [`sworn/README.md`](../sworn/README.md).
+- **prereg-ci** (`styxx.prereg_ci`) — a sealed decision, re-derived at merge: [`prereg-ci/README.md`](../prereg-ci/README.md). On main; not in a PyPI release yet.
+- **Replicating a result** — [`REPLICATIONS.md`](../REPLICATIONS.md).
 
 ## 🔬 For researchers — cognitive metrology
 
