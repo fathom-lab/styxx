@@ -22,13 +22,15 @@ opened on or after 2026-11-02, nor classifies a claim in one (section 0.1). The 
   time) unless the seal is open. It is asked before the GraphQL batch is sent (from the frame's `created_at`),
   again on the response's own `createdAt`, and again before any REST call for the row;
 - the seal opens only when `C:/Users/heyzo/clawd/wt/_direction_a_2026_11_02/SEALED` exists and names a 40-hex
-  `prereg_commit` and a `freeze_anchor` that is not in the future; after `git fetch origin` in
-  `C:/Users/heyzo/clawd/styxx` that commit is an ancestor of `origin/main`; the PREREG at that commit (read with
-  `git show`, nothing checked out) begins with "# PREREG"; every line that begins with `**Signature.**` begins
-  `**Signature.** Signed` (and there is one); no lock-table row (a line beginning "|") still reads "TO-FILL at the
-  signing commit" (prose that quotes the markers mid-line is not read); and the lock table's collector row holds one
-  sha256, equal to the combined digest of the running code. Each failure is refused by name (P21). The collector
-  never writes SEALED;
+  `prereg_commit`, a `freeze_anchor` that is not in the future and no `prereg_path` but this PREREG's; `git fetch
+  origin` in `C:/Users/heyzo/clawd/styxx` succeeds and that commit is an ancestor of `origin/main`; the PREREG at that
+  commit (read with `git show`, nothing checked out) begins with "# PREREG"; every line that begins with
+  `**Signature.**` begins `**Signature.** Signed` (and there is one); no lock-table row (a line beginning "|") still
+  reads "TO-FILL at the signing commit" (prose that quotes the markers mid-line is not read); the rows filled at the
+  signing commit (the collector's and P2's decoy set) are each there once and hold one sha256; and the collector
+  row's sha256 equals the combined digest of the running code. Each failure is refused by name (P21). The collector
+  never writes SEALED. The official P2 build and the scorer read P2's decoy set digest from the text the open guard
+  read at the signing commit (`SealGuard.signed_prereg`), and refuse a checkout whose PREREG is not those bytes;
 - `run` without `--fetch-ci` reads no body and no CI at all; `--dry-run` reads only the seal's own metadata list.
 
 What the frame stage stores before the freeze: P2.4's fields (`pr_id`, `repo`, `number`, `stars`, `fork`,

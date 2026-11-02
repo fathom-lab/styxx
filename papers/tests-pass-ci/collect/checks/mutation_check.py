@@ -104,6 +104,23 @@ M = [
     ("the shuffle keyed by the public seed alone", "tpc_packet.py",
      '    return int(hashlib.sha256((seed_hex + ":" + packet + ":" + salt.hex()).encode("utf-8")).hexdigest(), 16)',
      '    return int(hashlib.sha256((seed_hex + ":" + packet).encode("utf-8")).hexdigest(), 16)'),
+    # the seal guard: the rows filled at signing, the file it reads, the fetch, the signed text
+    ("seal skips the rows filled at signing", "tpc_seal.py", "        if unfilled:", "        if False:"),
+    ("seal requires the collector row only", "tpc_seal.py", "SIGNING_ROWS = (COLLECTOR_ROW_PREFIX, P2_SET_ROW_PREFIX)",
+     "SIGNING_ROWS = (COLLECTOR_ROW_PREFIX,)"),
+    ("seal reads any prereg_path", "tpc_seal.py", "        if path != PREREG_REPO_PATH:", "        if False:"),
+    ("seal opens after a failed fetch", "tpc_seal.py", '        if st["fetch"] != "ok":', "        if False:"),
+    ("signed text handed to any working copy", "tpc_seal.py", '            if got != self.state["prereg_blob_sha256"]:',
+     "            if False:"),
+    ("P2 build reads the working copy's lock row", "tpc_packet.py",
+     "            prereg = guard.signed_prereg(PREREG_FILE)",
+     '            prereg = PREREG_FILE.read_text(encoding="utf-8")'),
+    ("scorer reads the working copy's lock row", "tpc_score.py",
+     '            return guard.signed_prereg(PREREG_FILE), "the signed blob, through the seal guard"',
+     '            return PREREG_FILE.read_text(encoding="utf-8"), "the signed blob, through the seal guard"'),
+    ("P2's packet key digest never needed", "tpc_score.py",
+     '        parse_utc(p["key_public_at"])  # every packet\'s key digest public before its seats read (section 14)',
+     "        pass"),
 ]
 
 

@@ -1,7 +1,7 @@
 # PREREG — tests-pass-ci: how often coding agents' "tests pass" sentences disagree with CI at the same commit; A1 re-labels testreceipt's published items, A2 measures agent pull requests opened 2026-11-02 to 2026-11-29 — 2026-11-02
 
 **DRAFT. To be frozen by 2026-11-06.** It is frozen when three things hold: the rows of the lock table (§14) marked
-TO-FILL at the signing commit are filled (the collector's code digest and packet P2's decoy key digest among them);
+TO-FILL at the signing commit are filled (the collector's code digest and packet P2's decoy set digest);
 the operator's word is quoted under "Signature"; and the pull request carrying it opens (the freeze anchor, §15).
 Seal: the sha256 of the **git blob** of this file at the signing commit, by the rule of
 `papers/checksum/SEALS_2026_09_13.md` (`git show <commit>:<path> | sha256sum`, never the working copy). Scorer:
@@ -305,10 +305,11 @@ AU4's bound to about 870 (§9.2) with up to 2, undecided whole-suite candidates 
   The key is sealed by `sha256(salt || key)`, committed and pushed before any seat reads the packet (the evidence leg's
   G-E4: "key digest committed publicly before any item is judged" [`M:.../PREREG_evidence_leg_2026_09_01.md`
   l.233-239]). Ids are numbered after the shuffle. P9.
-- **P2's decoys are built before the freeze**, from pull requests opened before 2026-11-02, and their salted key
+- **P2's decoys are built before the freeze**, from pull requests opened before 2026-11-02, and their salted set
   digest is a lock row filled at the signing commit (§14), so it is public at the freeze anchor, before any window CI
   is read: no decoy of P2 can be shaped by the window's data. P2's items are placed among them after the window is
-  read; the shuffle of P8.5 orders the packet. Q's and P1's keys are pushed before their seats read.
+  read; the shuffle of P8.5 orders the packet. Every packet's key digest, P2's included, is committed and pushed
+  before that packet's seats read (§14).
 - **Seat answers are sealed before any key opens** (the sworn PREREG's Amendment 4 counts an outside seat only when
   its file's "sha256 was public before the key release commit for that fold"
   [`M:papers/sworn/PREREG_sworn_measurement_2026_10_23.md` l.478-479], and tranche A's RESULT applies it at l.44-48):
@@ -599,7 +600,7 @@ synthetic receipt for every row.
 | A2 half | what it tells maintainers | what it tells the lab | what it does not tell |
 |---|---|---|---|
 | `COUNTS_ONLY__a2_under_400` | nothing about rates; the counts of agent pull requests, claimers and CI coverage in the window | the frame, the screen or the collector fell short of the proposal's floor; A2 closes | that claims are rare: under 400 can mean the reader, the frame or the collector, and the RESULT names which |
-| `INVALID__a2_keys_not_sealed_in_order` | machine counts only, labelled as such | P2's key digest was not public at the freeze, or a seat's answer file was not public before the key opened; the decoy gate cannot be shown to predate the answers, so no rate is published | anything about the claims or the seats |
+| `INVALID__a2_keys_not_sealed_in_order` | machine counts only, labelled as such | P2's decoy set digest was not a filled lock row at the freeze, P2's packet key digest was not public before its seats read, or a seat's answer file was not public before the key opened; the decoy gate cannot be shown to predate the answers, so no rate is published | anything about the claims or the seats |
 | `INVALID__a2_panel_void_outside_seat` | machine counts only, labelled as such | the outside seat did not sit or did not pass the lab's decoys; no rate is published | whether agents' claims or the decoys were at fault |
 | `INVALID__a2_one_model_family_counts_only` | machine counts only | the non-Claude seat did not qualify (or none sat); the human and Claude seats' labels print as counts, not as a panel of the decided design | anything about the human seat's quality |
 | `KILL__no_tests_pass_accuser` | in this window and for the frame's agent mix (about 96% Claude Code), whole-suite "tests pass" sentences beside a failing test at the head commit were confidently under 1 in 100 even with every undecided candidate counted against them, no agent with 100 or more claimers was shown at or above 1 in 100, and part claims contradicted inside their part were confidently under 3 in 100 | no `tests_pass` accuser is built; `evidence.py` keeps VERIFIED and UNCHECKABLE; the RESULT says so in the proposal's words | that claims are true: a claim beside green CI can still be false (tests skipped, the wrong tests); that the rate holds in other months, for private repositories, for agent mixes other than the frame's, or for claims the reader misses |
@@ -684,8 +685,8 @@ well-made set holds about 80%). A forecast that misses is printed beside the mea
 | `styxx.evidence` (report reader) | `M:styxx/evidence.py` | `598406796b6d550011ad3ce4d6c4c0c33328f3fc25166b9b5e39d154c84e8657` | pinned |
 | the block check | `M:papers/sealed-ahead/draw.py` | `4026f204dd548776e55f06c2f081f029c331326cd628ff8f25e80de6647fe46b` | pinned |
 | the collector: frame, draw, read, screen wrapper, rule R, packet and decoy builder, seat runners, scorer | `papers/tests-pass-ci/collect/`: the combined digest `py -3.12 tpc_collect.py digest` prints (sha256 of the sorted lines `<path> <sha256>` over its top-level `*.py` and `vendor/testreceipt/*`) | TO-FILL at the signing commit | not frozen until filled; the seal guard opens only for this code (P21) |
-| decoy key digest of packet P2 | `sha256(salt \|\| key)` of P2's 30 decoys, built from pull requests opened before 2026-11-02 (§6, P9) | TO-FILL at the signing commit | public at the freeze anchor, before any window CI is read |
-| decoy key digests of packets Q and P1 | committed and pushed before each packet's seats read | TO-FILL per packet | before seats |
+| decoy set digest of packet P2 | `sha256(salt \|\| set_bytes)` of P2's sealed decoy set, `decoyset_P2.json`: the 30 decoy item texts, each with its item sha256, side, construction and full label, built from pull requests opened before 2026-11-02 (§6, P9) | TO-FILL at the signing commit | public at the freeze anchor, before any window CI is read; the seal guard opens only when this row holds exactly one sha256 (P21) |
+| packet key digests of Q, P1 and P2 | `sha256(salt \|\| key_bytes)` of each packet's key, `key_<P>.json` (each id to decoy or not, side, construction and full label, and for a real item its pull request; P2's maps its ids to item sha256s after the shuffle of P8.5), with the sha256 of the packet the seats read, `packet_<P>.json` | TO-FILL per packet | committed and pushed before that packet's seats read; for P2 after the window is read (`G_KEYS`) |
 | each seat's answer file, per packet | the sha256 of H's export and of C's and N's ledgers | TO-FILL per packet and seat | public before that packet's key release (§6, `G_KEYS`, `G_A1_V`) |
 | the beacon | block 975000 or the late rule's block | TO-FILL after the block | after the freeze |
 
@@ -761,7 +762,7 @@ A module changed after the signing commit is a moved bar unless an amendment mad
 | OD-15 | how K2's part line is read (§9.4) | `PART_CONTRADICTED` gated by a Wilson upper bound under 3.0% (`G_PC`); `PART_BESIDE_FAILURE` printed only; failing it with the whole-suite line cleared lands on `PART_NOT_RARE__new_prereg_may_propose_part_accuser` | (a) the proposal's literal "part-claim-with-suite-failed" as a point share of PC plus PB: a repeat of testreceipt's 4.7% then stops the kill and the lab keeps working toward an accuser; (b) the earlier draft's split, under which both rows build nothing |
 | OD-16 | how K2's whole-suite line is read (§9.2) | worst case: undecided whole-suite candidates counted as contradicted, over n_eff cut by AU4's bound | the proposal's literal reading, panel-confirmed k over the reader's n: a split panel or reader false claims then count toward "rare" (the statistics and integrity reviews) |
 | OD-17 | whether the non-Claude seat must qualify (§7) | yes, for P1 and P2 (`G_A1_V`, `G_P2_N`) | any one model seat (the earlier draft): a human and Claude panel could publish a KILL |
-| OD-18 | P2's decoys built and their key digest filled before signing (§6) | yes: signing waits for them | built after the freeze but before any window CI is read: the seal guard would need a further check, and the decoys could be built knowing the window's metadata |
+| OD-18 | P2's decoys built and their set digest filled before signing (§6) | yes: signing waits for them | built after the freeze but before any window CI is read: the seal guard would need a further check, and the decoys could be built knowing the window's metadata |
 | OD-19 | A1 read item by item (§9.2, §10) | `A1_STANDS` needs 34 of 42 confirmed and at most 8 added; `A1_LOWER` needs the worst case at 31 or fewer; otherwise `A1_UNSETTLED` | the earlier draft's net count against the 32-to-55 interval, under which panel splits alone could print `A1_LOWER` about a named neighbour's tool |
 | OD-20 | the per-agent block on the "rare" verdict (`G_AG`) | an agent with 100 or more capped claimers whose worst-case Wilson lower bound is at or above 1.0% blocks KILL | no block: KILL would speak for the frame's mix only, about 96% Claude Code |
 | OD-21 | whether an undisclosed failure that also fails without the change is a contradiction (P11.2) | yes: `WHOLE_CONTRADICTED` with `preexisting` = yes, 2 YES decoys of that kind, and every rate without such rows printed (P16) | no: such rows would read `NOT_CONTRADICTED`, the decoys move to the NO side (the integrity review's proposal), and the rubric and the step-2 prompt change before the freeze |
@@ -1136,8 +1137,9 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
   pushed before any seat reads the packet (OD-9). Scoring refuses a key that does not hash to the committed digest.
 - **P2's decoy set is sealed before the freeze** (§6, OD-18): the 30 decoy item texts, each with its sha256, side,
   construction and full label, as one JSON set with its own 32-byte salt; `sha256(salt || set_bytes)` fills the lock
-  row at the signing commit. P2's packet key then maps ids to item sha256s after the shuffle; scoring refuses a P2
-  decoy whose bytes are not in the sealed set and a set that does not hash to the lock row.
+  row at the signing commit. P2's packet key then maps ids to item sha256s after the shuffle, and its digest is
+  committed and pushed before P2's seats read (§14); scoring refuses a P2 decoy whose bytes are not in the sealed set
+  and a set that does not hash to the lock row.
 - **Answers before keys**: each seat's answer file for a packet is hashed, and the sha256 is committed in a pull
   request that opens before the pull request releasing that packet's salt and key (`G_KEYS`, `G_A1_V`).
 - The RESULT prints per packet how many decoys were real and how many synthetic, and each voter's score on each
@@ -1341,7 +1343,7 @@ Under `result` (n, k, d_W, k_PC, d_P and n_eff as §9.2 defines them):
 | `a1.k2025_strict` | `a1.confirmed + a1.added` | -1 when `a1.panel_valid` is 0 |
 | `a1.k2025_worst` | `a1.k2025_strict` plus the 87 explicit 2025 items whose final label is `NOT_DECIDABLE` | -1 when `a1.panel_valid` is 0 |
 | `a2.n_claimers_ci` | n: rows of capped M that are eligible claimers with a CI test result | always computable |
-| `a2.keys_in_order` | 1 when P2's decoy-set digest was a filled lock row at the signing commit and every P2 seat's answer-file digest was in a pull request opened before the one releasing P2's key, else 0 | -1 when P2 did not run |
+| `a2.keys_in_order` | 1 when P2's decoy-set digest was a filled lock row at the signing commit, P2's packet key digest was public no later than any P2 seat's answer-file digest (§14), and every P2 seat's answer-file digest was in a pull request opened before the one releasing P2's key, else 0 | -1 when P2 did not run |
 | `a2.human_qualified` | P13 on packet P2: 1 or 0 | -1 when P2 did not run |
 | `a2.nonclaude_qualified` | P13 on packet P2 for N: 1 or 0 (0 when no N sat) | -1 when P2 did not run |
 | `a2.whole_wilson_upper_worst` | `styxx.mind.wilson(k + d_W, n_eff)[1]`, unrounded | 1.0 when P2 did not run or n_eff is 0 |
@@ -1485,18 +1487,28 @@ The collector refuses by name (`SEAL_GUARD`) any check, status, Actions, log, ar
 created at or after `WINDOW_START` (or with no creation time) unless the seal is open, as the feasibility scout's
 `assert_pre_window` did [SC-FE §0]. The guard (`papers/tests-pass-ci/collect/tpc_seal.py`) opens only when all of
 these hold, each refused by name otherwise (the integrity review's probe opened it on a side-branch draft, a re-wrapped
-signature line, a moved paragraph, junk text and a signed draft with the lock table unfilled; each is now a test):
+signature line, a moved paragraph, junk text and a signed draft with the lock table unfilled; the review of 2026-11-02
+opened it with P2's decoy set row reworded, reading "pending", or deleted, and with SEALED naming another file; each
+is now a test):
 
-1. a file `SEALED`, written by the lead and never by the collector, names a 40-hex `prereg_commit` and a
-   `freeze_anchor` (the server time the signing pull request opened) that is not in the future;
-2. after `git fetch origin` in the lab's checkout (its outcome recorded), that commit is an ancestor of
-   `origin/main`: a commit on a side branch, or in a worktree sharing the object store, does not open it;
+1. a file `SEALED`, written by the lead and never by the collector, names a 40-hex `prereg_commit`, a
+   `freeze_anchor` (the server time the signing pull request opened) that is not in the future, and no `prereg_path`
+   other than this file's (`papers/tests-pass-ci/PREREG_tests_pass_ci_2026_11_02.md`);
+2. `git fetch origin` in the lab's checkout succeeds (a failed fetch keeps the guard shut, since `origin/main` would
+   then be the checkout's own ref), and that commit is an ancestor of `origin/main`: a commit on a side branch, or in
+   a worktree sharing the object store, does not open it;
 3. the file at that commit begins with "# PREREG"; every line of it that begins with the signature marker begins
    "Signature. Signed" in bold (and there is one), so the draft's "Unsigned", a re-wrapped line or a moved paragraph
    keeps it shut; and no lock-table row (a line beginning "|") still reads "TO-FILL at the signing commit". Prose that
    quotes these markers mid-line, as this paragraph does, is not read;
-4. the lock table's collector row at that commit holds exactly one sha256, and it equals the combined digest of the
-   code that is running (§14).
+4. each lock-table row filled at the signing commit, the collector's (beginning "| the collector: ") and P2's decoy
+   set (beginning "| decoy set digest of packet P2 "), is there exactly once and holds exactly one sha256, so a
+   reworded, pending or deleted row keeps it shut;
+5. the collector row's sha256 equals the combined digest of the code that is running (§14).
 
-The guard's state, the PREREG blob's sha256 and both code digests go into every run's record. Development and tests
-use pull requests opened before 2026-11-02 only.
+`SEALED` sits in a folder agents can write to; what opens the guard is the signed, filled file at a commit on the
+fetched `origin/main` and the running code's digest, which no written file supplies. The guard keeps the text it read
+at that commit: the official P2 build and the scorer take P2's decoy set digest from that text, never from a working
+copy, and refuse a checkout whose PREREG is not those bytes; the blob's sha256 goes into P2's build record and into
+the receipt. The guard's state, the PREREG blob's sha256 and both code digests go into every run's record. Development
+and tests use pull requests opened before 2026-11-02 only.

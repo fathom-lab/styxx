@@ -10,8 +10,9 @@ it, `tpc_seats.seal_answers`) and still hashes to that digest; a key opens only 
 digest committed for it; P2's decoys must be the bytes of the decoy set sealed in the lock row, item by item. Whether
 the digests were public in pull requests in that order (`G_KEYS`, and the P1 half of `G_A1_V`) is read from the
 publication record the lead writes from the pull requests' opened-at times: {"P1": {"key_public_at", "answers_public_at":
-{seat: time}, "key_released_at"}, "P2": {"set_in_lock_row_at_signing": true, "answers_public_at": {...},
-"key_released_at"}}; every answer time must be strictly before the key release.
+{seat: time}, "key_released_at"}, "P2": {"set_in_lock_row_at_signing": true, "key_public_at", "answers_public_at":
+{...}, "key_released_at"}}; every packet's key digest (P2's too: its lock row in section 14) public no later than any
+answer file's, and every answer time strictly before the key release.
 
 Panel (P13): a voter qualifies on a packet with at least 14 of the 15 NO-side and 13 of the 15 YES-side decoys right;
 a decoy answer is right when its step-2 label equals the key's label (NOT_DECIDABLE and NO_ANSWER are wrong). A
@@ -297,17 +298,16 @@ def final_labels(key: dict, answers: dict, qualified: list) -> dict:
 
 
 def keys_in_order(pub: dict, packet: str, seats_sat: list, *, p2: bool) -> int:
-    """1 when the packet's key digest was public before any seat answered (for P2: in the lock row at the signing
-    commit) and every seat's answer-file digest was public before the key was released, else 0."""
+    """1 when the packet's key digest was public before any seat answered (for P2 also its decoy set digest in the
+    lock row at the signing commit) and every seat's answer-file digest was public before the key was released, else
+    0."""
     p = pub.get(packet) or {}
     try:
         rel = parse_utc(p["key_released_at"])
         times = p["answers_public_at"]
-        if p2:
-            if p.get("set_in_lock_row_at_signing") is not True:
-                return 0
-        else:
-            parse_utc(p["key_public_at"])
+        if p2 and p.get("set_in_lock_row_at_signing") is not True:
+            return 0
+        parse_utc(p["key_public_at"])  # every packet's key digest public before its seats read (section 14)
         for s in seats_sat:
             if s not in times or not parse_utc(times[s]) < rel:
                 return 0
@@ -655,15 +655,34 @@ def receipt_bytes(receipt: dict) -> bytes:
     return (json.dumps(_finite(receipt), indent=1, ensure_ascii=False) + "\n").encode("utf-8")
 
 
+def _prereg_for_scoring(prereg_text: Optional[str], *, real_p2: bool, guard=None) -> tuple:
+    """(text, how): the PREREG the scorer reads. A caller's text is used as given (tests); for P2 scored for real, the
+    text the open seal guard read at the signing commit, refused unless this checkout's PREREG is those bytes (so the
+    lock row read is the signed one, never a working copy); otherwise this checkout's file."""
+    if prereg_text is not None:
+        return prereg_text, "text given by the caller"
+    if real_p2:
+        if guard is None:
+            from tpc_seal import SealGuard
+            guard = SealGuard()
+        from tpc_seal import SealRefused
+        try:
+            return guard.signed_prereg(PREREG_FILE), "the signed blob, through the seal guard"
+        except SealRefused as e:
+            raise ScoreError(str(e)) from e
+    return PREREG_FILE.read_text(encoding="utf-8"), "this checkout's file"
+
+
 def score(packets: Path, root: Optional[Path], tr_dir: Optional[Path], pub: dict, *, smoke: bool = False,
-          prereg_text: Optional[str] = None, dry_run: bool = False, boot: int = BOOT) -> dict:
+          prereg_text: Optional[str] = None, dry_run: bool = False, boot: int = BOOT, guard=None) -> dict:
     """The whole scoring: P1 and P2 panels, the A1 and A2 metrics, the receipt."""
     pins = check_styxx_pins()
     packets = Path(packets)
-    text = prereg_text if prereg_text is not None else PREREG_FILE.read_text(encoding="utf-8")
+    has_p2 = (packets / "P2" / "packet_P2.json").exists()
+    text, how = _prereg_for_scoring(prereg_text, real_p2=has_p2 and not (smoke or dry_run), guard=guard)
     lock = tpc_packet.p2_lock_digest(text)
     p2set = None
-    if (packets / "P2" / "packet_P2.json").exists():
+    if has_p2:
         if lock is None and not (smoke or dry_run):
             raise ScoreError("the lock table's P2 decoy row is unfilled; P2 cannot be scored for real")
         p2set = tpc_packet.load_decoy_set(packets / "P2", "P2", lock_digest=None if (smoke or dry_run) else lock)
@@ -678,6 +697,7 @@ def score(packets: Path, root: Optional[Path], tr_dir: Optional[Path], pub: dict
     seed = (p2 or {}).get("key", {}).get("seed") or "no-beacon"
     a2, a2_counts = a2_metrics(rows, p2, pub, boot_seed=seed, boot=boot)
     printed = {"a1": a1_counts, "a2": a2_counts, "styxx_pins": pins, "scored_at": iso(dt.datetime.now(UTC)),
+               "prereg_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "prereg_read": how,
                "panels": {p["packet"]: {"qualified": p["qualified"], "answer_digests": p["answer_digests"],
                                         "key_digest": p["key_digest"], "packet_sha256": p["packet_sha256"],
                                         "decoys": {s: {k: v for k, v in sc.items() if k != "wrong"}

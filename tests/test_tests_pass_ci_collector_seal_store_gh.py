@@ -22,20 +22,24 @@ COMMIT = "a" * 40
 CODE = "c" * 64
 ROW = ("| the collector: frame, draw, read, screen wrapper, rule R | `papers/tests-pass-ci/collect/` | "
        + CODE + " | frozen at the signing commit |\n")
-SIGNED = ("# PREREG - tests-pass-ci\n\n**Signature.** Signed by the operator on 2026-11-05: \"go\".\n\n" + ROW).encode()
+P2DIG = "d" * 64
+P2ROW = "| decoy set digest of packet P2 | `decoyset_P2.json` | " + P2DIG + " | public at the freeze anchor |\n"
+SIGNED = ("# PREREG - tests-pass-ci\n\n**Signature.** Signed by the operator on 2026-11-05: \"go\".\n\n" + ROW
+          + P2ROW).encode()
 UNSIGNED = SIGNED.replace(b"**Signature.** Signed by the operator on 2026-11-05: \"go\".",
                           b"**Signature.** Unsigned. At the signing commit...")
 GOOD = "prereg_commit: " + COMMIT + "\nfreeze_anchor: 2026-11-06T12:00:00Z\n"
 
 
-def guard(tmp_path, text=None, blob=SIGNED, now=dt.datetime(2026, 11, 7, tzinfo=UTC), on_main=True, code=CODE):
+def guard(tmp_path, text=None, blob=SIGNED, now=dt.datetime(2026, 11, 7, tzinfo=UTC), on_main=True, code=CODE,
+          fetch="ok"):
     f = tmp_path / "SEALED"
     if text is not None:
         f.write_bytes(text.encode("utf-8"))
     fetched = []
     g = SealGuard(sealed_file=f, repo=tmp_path, now=lambda: now,
                   blob_reader=lambda repo, c, p: blob if c == COMMIT else None,
-                  fetch=lambda repo: fetched.append(repo) or "ok",
+                  fetch=lambda repo: fetched.append(repo) or fetch,
                   on_main=lambda repo, c: on_main and c == COMMIT,
                   running_code=lambda: code)
     g.fetched = fetched
@@ -83,6 +87,15 @@ def test_no_sealed_file_refuses_window_and_allows_pre_window(tmp_path):
     ("collector row with two digests", GOOD, SIGNED.replace(CODE.encode(), (CODE + " " + "d" * 64).encode()), {},
      "holds 2 sha256"),
     ("running code is not the sealed code", GOOD, SIGNED, {"code": "e" * 64}, "is not the sealed one"),
+    # the review of 2026-11-02 (finding 4): the P2 decoy set row reworded, pending or deleted opened the guard
+    ("P2 row reworded", GOOD, SIGNED.replace(P2DIG.encode(), b"TO-FILL at signing"), {}, "holds 0 sha256"),
+    ("P2 row pending", GOOD, SIGNED.replace(P2DIG.encode(), b"pending"), {}, "holds 0 sha256"),
+    ("P2 row deleted", GOOD, SIGNED.replace(P2ROW.encode(), b""), {}, "0 lock rows begin"),
+    ("P2 row twice", GOOD, SIGNED + P2ROW.encode(), {}, "2 lock rows begin"),
+    ("P2 row with two digests", GOOD, SIGNED.replace(P2DIG.encode(), (P2DIG + " " + "f" * 64).encode()), {},
+     "holds 2 sha256"),
+    ("SEALED names another file", GOOD + "prereg_path: papers/other/PREREG_other.md\n", SIGNED, {}, "prereg_path"),
+    ("the fetch failed", GOOD, SIGNED, {"fetch": "fetch failed: exit 128"}, "did not succeed"),
 ])
 def test_the_seal_stays_shut_unless_every_check_holds(tmp_path, name, text, blob, kw, why):
     g = guard(tmp_path, text, blob, **kw)
@@ -100,6 +113,26 @@ def test_a_signed_commit_on_main_with_the_running_code_opens_the_seal(tmp_path):
     assert len(g.state["prereg_blob_sha256"]) == 64
     assert g.state["collector_sealed"] == [CODE] and g.state["collector_running"] == CODE
     g.check("2026-11-03T00:00:00Z", "CI read")
+
+
+def test_the_signed_text_is_read_only_through_an_open_guard_and_only_for_the_signed_bytes(tmp_path):
+    """Finding 8: the packet build and the scorer read P2's decoy set row from the text the guard read at the signing
+    commit, and refuse a checkout whose PREREG is not those bytes."""
+    (tmp_path / "a").mkdir()
+    g = guard(tmp_path / "a", GOOD)
+    assert g.open and g.state["p2_decoy_set_sealed"] == P2DIG
+    work = tmp_path / "PREREG.md"
+    work.write_bytes(SIGNED)
+    assert g.signed_prereg(work) == SIGNED.decode() and g.signed_prereg() == SIGNED.decode()
+    work.write_bytes(SIGNED.replace(P2DIG.encode(), b"e" * 64))
+    with pytest.raises(SealRefused):
+        g.signed_prereg(work)
+    (tmp_path / "b").mkdir()
+    shut = guard(tmp_path / "b", None)
+    with pytest.raises(SealRefused):
+        shut.signed_prereg()
+    assert tpc_seal.p2_set_digest(SIGNED.decode()) == P2DIG
+    assert tpc_seal.p2_set_digest(SIGNED.decode().replace(P2DIG, "pending")) is None
 
 
 def test_prose_that_quotes_the_markers_mid_line_does_not_shut_the_seal(tmp_path):

@@ -51,6 +51,7 @@ if str(HERE) not in sys.path:
 
 import tpc_beacon  # noqa: E402
 import tpc_decoys  # noqa: E402
+import tpc_seal  # noqa: E402
 from tpc_collect import capped  # noqa: E402
 from tpc_const import (AGENT_ORDER, AU_SIZES, DECOYS_PER_PACKET, P_AGENT, PACKET_MAX,  # noqa: E402
                        PREREG_REPO_PATH, WINDOW_START, UTC, iso, parse_utc)
@@ -63,8 +64,6 @@ STAND_IN_HEX = tpc_beacon.STAND_IN_HEX
 Q_SEED = "tests-pass-ci:Q"  # P8.5: packet Q, built before the beacon exists
 EXPLORER_NAMES = tpc_beacon.EXPLORERS
 PREREG_FILE = HERE.parent / Path(PREREG_REPO_PATH).name
-P2_LOCK_ROW = re.compile(r"^\| decoy key digest of packet P2 [^\n]*$", re.M)
-HEX64 = re.compile(r"\b[0-9a-f]{64}\b")
 DEFAULT_OUT = Path("C:/Users/heyzo/clawd/data/direction_a/packets")
 
 
@@ -324,12 +323,9 @@ def load_decoy_set(d: Path, packet: str, *, lock_digest: Optional[str] = None) -
 
 
 def p2_lock_digest(prereg_text: str) -> Optional[str]:
-    """The sha256 the lock table's P2 decoy row holds, or None while it reads TO-FILL."""
-    rows = P2_LOCK_ROW.findall(prereg_text)
-    if len(rows) != 1:
-        return None
-    found = HEX64.findall(rows[0])
-    return found[0] if len(found) == 1 else None
+    """The sha256 the lock table's P2 decoy set row holds, or None unless one such row holds exactly one (the seal
+    guard's own reading, `tpc_seal.p2_set_digest`)."""
+    return tpc_seal.p2_set_digest(prereg_text)
 
 
 # ---- packets ---------------------------------------------------------------------------------------------------
@@ -387,8 +383,10 @@ def build_p2(root: Path, decoys: list, *, beacon: dict, dry_run: bool, guard=Non
         reals.append({"key": {"pr_id": k, "repo": r["repo"], "number": r["number"], "agent": r["agent"],
                               "strata": meta["strata"], "in_M": bool(r.get("in_M"))}, "item": it, "build": it["build"]})
     built = assemble("P2", bh, reals, decoys, beacon=beacon, salt=salt)
+    seal = getattr(guard, "state", None) or {}
     record = {"packet": "P2", "dry_run": dry_run, "beacon": built["public"]["beacon"], "selection": sel["counts"],
-              "cut": sel["cut"], "grew": sel["grew"], "rows_read": len(rows), "drawn_without_record": missing,
+              "prereg_blob_sha256": seal.get("prereg_blob_sha256"),
+              "p2_decoy_set_sealed": seal.get("p2_decoy_set_sealed"), "cut": sel["cut"], "grew": sel["grew"], "rows_read": len(rows), "drawn_without_record": missing,
               "items": len(built["public"]["items"]), "decoys": len(decoys),
               "item_builds": {r["key"]["pr_id"]: r["build"] for r in reals}, "built_at": iso(dt.datetime.now(UTC))}
     return built, record
@@ -586,17 +584,20 @@ def _official_out(a, packet: str) -> Path:
 
 def cmd_p2(a) -> int:
     root = Path(a.root)
-    prereg = PREREG_FILE.read_text(encoding="utf-8") if PREREG_FILE.exists() else ""
     if a.dry_run:
         beacon, lock = stand_in_beacon(), None
         guard = None
     else:
         beacon = json.loads((root / "draw" / "beacon.json").read_bytes().decode("utf-8"))
+        guard = tpc_seal.SealGuard()
+        try:
+            # the lock row the guard read at the signing commit, and only if this checkout's PREREG is those bytes
+            prereg = guard.signed_prereg(PREREG_FILE)
+        except tpc_seal.SealRefused as e:
+            raise PacketError(str(e)) from e
         lock = p2_lock_digest(prereg)
         if lock is None:
-            raise PacketError("the lock table's P2 decoy row still reads TO-FILL: the set is sealed at the signing commit")
-        from tpc_seal import SealGuard
-        guard = SealGuard()
+            raise PacketError("the signed PREREG's P2 decoy set row holds no single sha256")
     decoys = load_decoy_set(Path(a.decoys), "P2", lock_digest=lock)
     built, record = build_p2(root, decoys, beacon=beacon, dry_run=a.dry_run, guard=guard)
     out = _official_out(a, "P2")

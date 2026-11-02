@@ -326,7 +326,7 @@ def test_q_uses_the_prereg_seed_text():
 
 
 def test_the_p2_lock_row_reads_one_digest_or_none():
-    row = "| decoy key digest of packet P2 | `sha256(salt \\|\\| key)` | TO-FILL at the signing commit | public |"
+    row = "| decoy set digest of packet P2 | `sha256(salt \\|\\| set_bytes)` | TO-FILL at the signing commit | public |"
     assert tpc_packet.p2_lock_digest(row) is None
     assert tpc_packet.p2_lock_digest(row.replace("TO-FILL at the signing commit", "`" + "c" * 64 + "`")) == "c" * 64
     prereg = (COLLECTOR.parent / "PREREG_tests_pass_ci_2026_11_02.md").read_text(encoding="utf-8")
@@ -458,9 +458,49 @@ def test_the_official_p2_build_refuses_without_the_named_beacon_or_the_open_seal
         st.read_jsonl(f"frames/frame_{day}.jsonl"), GENESIS_ID, day)))
     built, record = tpc_packet.build_p2(root, decoys, beacon=_named(), dry_run=False, guard=OpenGuard(), salt=b"\x09" * 32)
     assert record["dry_run"] is False and built["public"]["seed"] == GENESIS_ID
-    # the CLI's official path reads the lock row, which is unfilled in this draft
+    # the CLI's official path reads the lock row through the seal guard, which is shut on this box
     rc = tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(tmp_path / "o")])
     assert rc == 2
+
+
+class _SignedGuard:
+    """An open guard holding a signed PREREG text whose P2 decoy set row holds `digest` (finding 8)."""
+
+    def __init__(self, digest):
+        self.open = True
+        self.text = "# PREREG\n| decoy set digest of packet P2 | x | `" + digest + "` | public |\n"
+        self.state = {"open": True, "why": "test", "prereg_blob_sha256": "b" * 64, "p2_decoy_set_sealed": digest}
+        self.working = []
+
+    def check(self, created_at, what):
+        return None
+
+    def signed_prereg(self, working_file=None):
+        self.working.append(working_file)
+        return self.text
+
+
+def test_the_official_p2_build_takes_the_lock_row_from_the_signed_text_the_guard_read(tmp_path, monkeypatch):
+    root = tmp_path / "store"
+    make_store(root, GENESIS_ID)
+    dec = tmp_path / "dec"
+    sealed = _write_p2_set(dec)
+    st = Store(root)
+    st.write("draw/beacon.json", json.dumps(_named()).encode())
+    day = "2026-10-20"
+    st.write(f"draw/draw_{day}.jsonl", b"".join(dumps(r) for r in tpc_packet.derive_draw(
+        st.read_jsonl(f"frames/frame_{day}.jsonl"), GENESIS_ID, day)))
+    g = _SignedGuard(sealed["digest"])
+    monkeypatch.setattr(tpc_packet.tpc_seal, "SealGuard", lambda: g)
+    out = tmp_path / "o"
+    # this checkout's PREREG is the unsigned draft; the build reads the guard's text and hands it this file to compare
+    assert tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(out)]) == 0
+    assert g.working == [tpc_packet.PREREG_FILE]
+    rec = json.loads((out / "build_P2.json").read_bytes())
+    assert rec["prereg_blob_sha256"] == "b" * 64 and rec["p2_decoy_set_sealed"] == sealed["digest"]
+    g2 = _SignedGuard("0" * 64)  # a signed row that is not this set's digest
+    monkeypatch.setattr(tpc_packet.tpc_seal, "SealGuard", lambda: g2)
+    assert tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(tmp_path / "o2")]) == 2
 
 
 def test_q_takes_thirty_pre_window_claimers_and_refuses_window_rows(tmp_path):

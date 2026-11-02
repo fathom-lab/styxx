@@ -12,23 +12,31 @@ The SEALED file (written by the lead after the signing pull request opened, neve
 
     prereg_commit: <40 hex>                 required: the signing commit
     freeze_anchor: 2026-11-06T12:00:00Z     required: the server time the pull request opened
-    prereg_path: papers/tests-pass-ci/...   optional; default tpc_const.PREREG_REPO_PATH
+    prereg_path: papers/tests-pass-ci/...   optional; if given, it must be tpc_const.PREREG_REPO_PATH
 
 The guard opens only when all of these hold (P21), each refused by name otherwise:
 
- 1. SEALED names a 40-hex prereg_commit and a readable freeze_anchor that is not in the future;
- 2. after a `git fetch origin` in the lab's checkout (best effort; its outcome is recorded), the
-    commit is an ancestor of origin/main: a commit on a side branch or in a worktree that shares
-    the object store does not open the seal;
+ 1. SEALED names a 40-hex prereg_commit, a readable freeze_anchor that is not in the future, and no
+    prereg_path other than this PREREG's;
+ 2. `git fetch origin` in the lab's checkout succeeds (a failed fetch keeps the seal shut: origin/main
+    would then be the checkout's own ref, which anyone on the box can move), and the commit is an
+    ancestor of origin/main: a commit on a side branch or in a worktree that shares the object store
+    does not open the seal;
  3. the PREREG exists at that commit (read with `git show`, nothing checked out), begins with
     "# PREREG", every line of it that begins with "**Signature.**" begins "**Signature.** Signed" (and
     there is one), and no lock-table row (a line beginning "|") still reads "TO-FILL at the signing
     commit"; prose that quotes these markers mid-line is not read;
- 4. the lock table's collector row at that commit holds exactly one sha256, and it equals the
-    combined digest of the code that is running (`code_digests()["combined"]`).
+ 4. each lock-table row filled at the signing commit (SIGNING_ROWS: the collector's code digest and
+    P2's decoy set digest) is there exactly once and holds exactly one sha256: a reworded, "pending"
+    or deleted row keeps the seal shut;
+ 5. the collector row's sha256 equals the combined digest of the code that is running
+    (`code_digests()["combined"]`).
 
-It records the blob's sha256, the fetch outcome and both code digests, so every run log names the
-sealed bytes and the code that read under them.
+The SEALED file sits in a folder agents can write to; what opens the seal is the signed, filled PREREG
+at a commit on the fetched origin/main and the running code's digest, none of which a written file
+can supply. It records the blob's sha256, the fetch outcome, both code digests and P2's decoy set
+digest, and keeps the blob's text (`signed_prereg`), so the packet build and the scorer read the lock
+table the guard read, not a working copy.
 """
 from __future__ import annotations
 
@@ -73,9 +81,41 @@ def signed(text: str) -> bool:
 def to_fill_rows(text: str) -> list:
     """Lock-table rows (lines that begin with "|") still marked TO-FILL at the signing commit."""
     return [ln for ln in text.splitlines() if ln.startswith("|") and TO_FILL_AT_SIGNING in ln]
+
+
 # the lock table's row (section 14) begins "| the collector: "; section 0.2's "| the collector's window dry run" row,
 # which also carries a sha256, does not match
+COLLECTOR_ROW_PREFIX = "| the collector: "
 COLLECTOR_ROW = re.compile(r"^\| the collector: [^\n]*$", re.MULTILINE)
+P2_SET_ROW_PREFIX = "| decoy set digest of packet P2 "
+# the lock-table rows filled at the signing commit: each must be there once and hold exactly one sha256
+SIGNING_ROWS = (COLLECTOR_ROW_PREFIX, P2_SET_ROW_PREFIX)
+
+
+def lock_row_digests(text: str, prefix: str) -> Optional[list]:
+    """The sha256 digests on the one lock-table row that begins with `prefix`; None unless exactly one row does."""
+    rows = [ln for ln in text.splitlines() if ln.startswith(prefix)]
+    return HEX64.findall(rows[0]) if len(rows) == 1 else None
+
+
+def signing_row_problems(text: str) -> list:
+    """Why the rows filled at the signing commit are not filled: a row missing or doubled, or not holding exactly one
+    sha256 (a reworded "TO-FILL at signing", a "pending", a deleted row)."""
+    out = []
+    for prefix in SIGNING_ROWS:
+        found = lock_row_digests(text, prefix)
+        if found is None:
+            n = sum(1 for ln in text.splitlines() if ln.startswith(prefix))
+            out.append(f"{n} lock rows begin {prefix.strip()!r}, not one")
+        elif len(found) != 1:
+            out.append(f"the lock row {prefix.strip()!r} holds {len(found)} sha256 digests, not one")
+    return out
+
+
+def p2_set_digest(text: str) -> Optional[str]:
+    """The sha256 P2's decoy set row holds, or None unless there is one such row holding exactly one."""
+    found = lock_row_digests(text, P2_SET_ROW_PREFIX)
+    return found[0] if found is not None and len(found) == 1 else None
 
 
 def code_digests(root: Path = HERE) -> dict:
@@ -154,6 +194,7 @@ class SealGuard:
         self._fetch = fetch
         self._on_main = on_main
         self._code = running_code or (lambda: code_digests()["combined"])
+        self._text: Optional[str] = None
         self.state = self._evaluate()
 
     def _evaluate(self) -> dict:
@@ -167,6 +208,9 @@ class SealGuard:
         st.update({"prereg_commit": commit, "prereg_path": path})
         if not HEX40.match(commit):
             st["why"] = "SEALED names no 40-hex prereg_commit"
+            return st
+        if path != PREREG_REPO_PATH:
+            st["why"] = f"SEALED names prereg_path {path!r}, not this PREREG's {PREREG_REPO_PATH}"
             return st
         anchor = fields.get("freeze_anchor")
         if not anchor:
@@ -182,6 +226,9 @@ class SealGuard:
             st["why"] = f"before the freeze anchor {iso(t)}"
             return st
         st["fetch"] = self._fetch(self.repo)
+        if st["fetch"] != "ok":
+            st["why"] = f"git fetch origin did not succeed in {self.repo} ({st['fetch']}): origin/main is not read"
+            return st
         if not self._on_main(self.repo, commit):
             st["why"] = f"{commit} is not an ancestor of origin/main in {self.repo} ({st['fetch']})"
             return st
@@ -201,16 +248,22 @@ class SealGuard:
             st["why"] = (f"the PREREG at that commit still has {len(to_fill_rows(text))} lock rows marked TO-FILL at "
                          "the signing commit")
             return st
+        unfilled = signing_row_problems(text)
+        if unfilled:
+            st["why"] = "the lock rows filled at the signing commit are not filled: " + "; ".join(unfilled)
+            return st
         sealed_code = collector_row_digests(text)
         running = self._code()
         st["collector_sealed"] = sealed_code
         st["collector_running"] = running
+        st["p2_decoy_set_sealed"] = p2_set_digest(text)
         if len(sealed_code) != 1:
             st["why"] = f"the lock table's collector row holds {len(sealed_code)} sha256 digests, not one"
             return st
         if sealed_code[0] != running:
             st["why"] = f"the running collector {running[:12]}... is not the sealed one {sealed_code[0][:12]}..."
             return st
+        self._text = text
         st["open"] = True
         st["why"] = "sealed"
         return st
@@ -218,6 +271,19 @@ class SealGuard:
     @property
     def open(self) -> bool:
         return bool(self.state.get("open"))
+
+    def signed_prereg(self, working_file: Optional[Path] = None) -> str:
+        """The PREREG text the open guard read at the signing commit, for the lock table's rows (P2's decoy set digest
+        above all). With `working_file`, refused unless that file's bytes are the signed blob's: a checkout whose
+        PREREG differs from the signed one must not make the build or the scorer accept another set."""
+        if not self.open or self._text is None:
+            raise SealRefused(f"SEAL_GUARD: the signed PREREG is read only through an open seal: {self.state.get('why')}")
+        if working_file is not None:
+            got = hashlib.sha256(Path(working_file).read_bytes()).hexdigest()
+            if got != self.state["prereg_blob_sha256"]:
+                raise SealRefused(f"SEAL_GUARD: {working_file} ({got[:12]}...) is not the signed PREREG blob "
+                                  f"({self.state['prereg_blob_sha256'][:12]}...)")
+        return self._text
 
     @staticmethod
     def in_window(created_at: Optional[str]) -> bool:

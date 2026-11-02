@@ -326,7 +326,10 @@ def test_the_lock_rows_left_for_the_signing_commit_are_the_collector_and_p2s_dec
     text = _text()
     to_fill = [ln for ln in text.splitlines() if ln.startswith("| ") and "TO-FILL at the signing commit" in ln]
     assert len(to_fill) == 2
-    assert to_fill[0].startswith("| the collector") and to_fill[1].startswith("| decoy key digest of packet P2")
+    assert to_fill[0].startswith("| the collector") and to_fill[1].startswith("| decoy set digest of packet P2")
+    import tpc_seal  # the guard requires exactly these rows to be filled at the signing commit
+    assert all(sum(r.startswith(p) for r in to_fill) == 1 for p in tpc_seal.SIGNING_ROWS)
+    assert all(r.startswith(tpc_seal.SIGNING_ROWS) for r in to_fill)
 
 
 # -- the seal guard against this file's own text ------------------------------------------------------------
@@ -357,7 +360,7 @@ def test_the_seal_guard_refuses_this_draft_and_opens_on_a_signed_filled_copy(tmp
     for ln in signed.split("\n"):
         if ln.startswith("| the collector") and "TO-FILL at the signing commit" in ln:
             ln = ln.replace("TO-FILL at the signing commit", "`" + code + "`")
-        elif ln.startswith("| decoy key digest of packet P2"):
+        elif ln.startswith("| decoy set digest of packet P2"):
             ln = ln.replace("TO-FILL at the signing commit", "`" + "d" * 64 + "`")
         lines.append(ln)
     signed = "\n".join(lines)

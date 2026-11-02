@@ -156,7 +156,8 @@ def test_final_labels_by_qualified_voters_only():
 def test_keys_in_order_reads_the_publication_times():
     pub = {"P1": {"key_public_at": "2026-11-10T00:00:00Z", "key_released_at": "2026-12-22T00:00:00Z",
                   "answers_public_at": {"H": "2026-12-21T00:00:00Z", "N": "2026-12-21T01:00:00Z"}},
-           "P2": {"set_in_lock_row_at_signing": True, "key_released_at": "2027-01-12T00:00:00Z",
+           "P2": {"set_in_lock_row_at_signing": True, "key_public_at": "2026-12-01T00:00:00Z",
+                  "key_released_at": "2027-01-12T00:00:00Z",
                   "answers_public_at": {"H": "2027-01-11T00:00:00Z", "C": "2027-01-11T00:00:00Z",
                                         "N": "2027-01-11T00:00:00Z"}}}
     assert tpc_score.keys_in_order(pub, "P1", ["H", "N"], p2=False) == 1
@@ -167,6 +168,9 @@ def test_keys_in_order_reads_the_publication_times():
     assert tpc_score.keys_in_order(late, "P2", ["H", "C", "N"], p2=True) == 0
     late = json.loads(json.dumps(pub))
     late["P2"]["set_in_lock_row_at_signing"] = False
+    assert tpc_score.keys_in_order(late, "P2", ["H", "C", "N"], p2=True) == 0
+    late = json.loads(json.dumps(pub))
+    del late["P2"]["key_public_at"]  # P2's packet key digest never public before its seats read (finding 9)
     assert tpc_score.keys_in_order(late, "P2", ["H", "C", "N"], p2=True) == 0
     late = json.loads(json.dumps(pub))
     late["P1"]["key_public_at"] = "2026-12-21T12:00:00Z"  # the key digest after an answer
@@ -301,12 +305,13 @@ def _a2_world(tmp_path, n_pass=950, n_fail=50, contradicted=2, undecided=0, fire
         return f
     for seat in ("H", "C", "N"):
         _ledger(d, "P2", seat, answer(seat))
-    pub = {"P2": {"set_in_lock_row_at_signing": True, "key_released_at": "2027-01-12T00:00:00Z",
+    pub = {"P2": {"set_in_lock_row_at_signing": True, "key_public_at": "2026-12-01T00:00:00Z",
+                  "key_released_at": "2027-01-12T00:00:00Z",
                   "answers_public_at": {s: "2027-01-11T00:00:00Z" for s in ("H", "C", "N")}}}
     text = PREREG.read_text(encoding="utf-8")
     lines = []
     for ln in text.split("\n"):
-        if ln.startswith("| decoy key digest of packet P2"):
+        if ln.startswith("| decoy set digest of packet P2"):
             ln = ln.replace("TO-FILL at the signing commit", "`" + sealed["digest"] + "`")
         lines.append(ln)
     return {"rows": rows, "store": store, "packets": tmp_path / "packets", "pub": pub, "text": "\n".join(lines),
@@ -368,6 +373,37 @@ def test_p2_is_not_scored_for_real_before_the_lock_row_is_filled(tmp_path):
     smoke = tpc_score.score(w["packets"], w["store"], None, w["pub"], smoke=True,
                             prereg_text=PREREG.read_text(encoding="utf-8"), boot=200)
     assert smoke["verdict"] == "INVALID__smoke_plumbing_only" and smoke["gates"] == {}
+
+
+def test_p2_scored_for_real_reads_the_lock_row_the_seal_guard_read(tmp_path):
+    """Finding 8: with no text given, P2 is scored under the signed text the open guard read, compared against this
+    checkout's PREREG; a shut guard refuses. The receipt names the PREREG bytes it was scored under."""
+    import tpc_seal
+    w = _a2_world(tmp_path)
+
+    class Open:
+        open = True
+        state = {"open": True, "prereg_blob_sha256": "b" * 64}
+
+        def signed_prereg(self, working_file=None):
+            assert working_file == tpc_score.PREREG_FILE
+            return w["text"]
+
+    class Shut:
+        open = False
+        state = {"why": "no SEALED file"}
+
+        def signed_prereg(self, working_file=None):
+            raise tpc_seal.SealRefused("SEAL_GUARD: shut")
+
+    rec = tpc_score.score(w["packets"], w["store"], None, w["pub"], guard=Open(), boot=200)
+    printed = rec["result"]["printed"]
+    assert printed["prereg_read"] == "the signed blob, through the seal guard"
+    assert printed["prereg_sha256"] == hashlib.sha256(w["text"].encode("utf-8")).hexdigest()
+    assert rec["verdict"] == tpc_score.score(w["packets"], w["store"], None, w["pub"], prereg_text=w["text"],
+                                             boot=200)["verdict"]
+    with pytest.raises(tpc_score.ScoreError, match="SEAL_GUARD"):
+        tpc_score.score(w["packets"], w["store"], None, w["pub"], guard=Shut(), boot=200)
 
 
 def test_under_400_claimers_prints_counts_only_with_the_sentinels(tmp_path):
