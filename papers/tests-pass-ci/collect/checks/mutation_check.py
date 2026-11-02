@@ -9,8 +9,10 @@ run from the repository root and pass them, e.g.
 
     py -3.12 papers/tests-pass-ci/collect/checks/mutation_check.py <scratch> tests/test_tests_pass_ci_collector_*.py
 
-The copy is named to those tests by the environment variable TPC_COLLECT_DIR. Nothing outside the
-scratch directory is written.
+The copy is named to those tests by the environment variable TPC_COLLECT_DIR. It sits at
+<scratch>/mut/tests-pass-ci/collect with the PREREG copied beside its folder, as in the repository, so code that
+reads the PREREG (the seats' rubric, the scorer's table) reads the same bytes. Nothing outside the scratch
+directory is written. Rules 21 to 39 are the packet and decoy builder's, the seat runners' and the scorer's.
 """
 import os
 import pathlib
@@ -51,18 +53,48 @@ M = [
      'DRYRUN_FIELDS = "databaseId number createdAt'),
     ("frame keeps forks", "tpc_frame.py", '    return (row.get("stars") or 0) >= MIN_STARS and row.get("fork") is False',
      '    return (row.get("stars") or 0) >= MIN_STARS'),
+    # the packet and decoy builder, the seat runners, the scorer
+    ("images kept in the description", "tpc_items.py", '    text = MD_IMAGE.sub("", text)', "    text = text"),
+    ("excerpt ignores the step's times", "tpc_items.py", "        sp = _step_span(lines, s)", "        sp = None"),
+    ("decoy mix unchecked", "tpc_decoys.py", "        if counts.get(name, 0) != n:", "        if False:"),
+    ("stand-in hash accepted", "tpc_beacon.py", "    if bh == STAND_IN_HEX:", "    if False:"),
+    ("window draw under any Bitcoin block", "tpc_collect.py", "    if not why and not ctx.dev:", "    if False:"),
+    ("AU4 may be cut", "tpc_packet.py", '    never = set(in_m_cands) | set(au["AU4"]) | set(rule_r)',
+     "    never = set(in_m_cands) | set(rule_r)"),
+    ("top-ups cut by lowest w", "tpc_packet.py", "                k = keep_topups.pop()  # the highest w",
+     "                k = keep_topups.pop(0)"),
+    ("shuffle ignores the seed", "tpc_packet.py", "    rng = random.Random(shuffle_seed(seed_hex, packet))",
+     "    rng = random.Random(0)"),
+    ("spool not read back", "tpc_seats.py", "    if back != data:", "    if False:"),
+    ("inconsistent step-2 label accepted", "tpc_seats.py", '    if not consistent(scope, obj["label"]):', "    if False:"),
+    ("dev server on any packet", "tpc_seats.py",
+     '    if getattr(seat, "dev", False) and packet not in DEV_PACKETS and not allow_dev:', "    if False:"),
+    ("step 2 asked after a step-1 NO_ANSWER", "tpc_seats.py", '                if s1.get("answer") is None:',
+     "                if False:"),
+    ("decoys scored on the side", "tpc_score.py", '            ok = bool(s2) and s2.get("label") == k["label"]',
+     '            ok = bool(s2) and (s2.get("label") == "WHOLE_CONTRADICTED") == (k["side"] == "YES")'),
+    ("NO-side bar at 12", "tpc_const.py", "QUALIFY_NO = 14  #", "QUALIFY_NO = 12  #"),
+    ("one voter decides", "tpc_score.py", "        if n >= 2:", "        if n >= 1:"),
+    ("undecided whole candidates dropped", "tpc_score.py",
+     "    whole_up = wilson(k + d_w, n_eff)[1] if n_eff > 0 else 1.0", "    whole_up = wilson(k, n_eff)[1] if n_eff > 0 else 1.0"),
+    ("n_eff is n", "tpc_score.py", "    n_eff = math.floor(n_pass * s_lo) + c_fail", "    n_eff = n"),
+    ("answers need no seal", "tpc_score.py", "        if not sp.exists():", "        if False:"),
+    ("P2 decoys not held to the sealed set", "tpc_score.py", "            if d is None:", "            if False:"),
 ]
 
 
 def main() -> int:
     scratch = pathlib.Path(sys.argv[1]).resolve()
     targets = sys.argv[2:]
-    work = scratch / "mut"
+    base = scratch / "mut"
+    work = base / "tests-pass-ci" / "collect"
     missed = 0
     for name, f, old, new in M:
-        if work.exists():
-            shutil.rmtree(work)
+        if base.exists():
+            shutil.rmtree(base)
         shutil.copytree(SRC, work, ignore=shutil.ignore_patterns("__pycache__", "checks"))
+        for prereg in SRC.parent.glob("PREREG_*.md"):
+            shutil.copy2(prereg, work.parent / prereg.name)
         p = work / f
         s = p.read_bytes().decode("utf-8")
         assert s.count(old) == 1, (name, s.count(old))

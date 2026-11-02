@@ -2,13 +2,14 @@
 
 The collector for `PREREG_tests_pass_ci_2026_11_02.md` (draft of 2026-11-02, revised after the critics' reviews):
 the frame (Part II P2), the draw (P3), the read (P4), the screen (P5), the CI test result at the head commit (P6),
-rule R (P17) and the machine-readable report check (P18), under the seal guard (P21). In the lab's repository it lives
+rule R (P17) and the machine-readable report check (P18), under the seal guard (P21); then the packet and decoy
+builder (P7 to P9), the seat runners (P10, P12) and the scorer (P13 to P16, P19). In the lab's repository it lives
 in `papers/tests-pass-ci/collect/` beside the PREREG, with its tests in `tests/test_tests_pass_ci_collector_*.py`;
 the combined digest `py -3.12 tpc_collect.py digest` prints fills the lock table's collector row (section 14) at the
-signing commit, and the seal guard opens only for that code. Not here yet: the packet and decoy builder, the seat
-runners and the scorer (section 14 lists them in the same row).
+signing commit, and the seal guard opens only for that code.
 
-Python 3.9 or later, standard library only (pytest for the tests). Raw data never goes into git.
+Python 3.9 or later, standard library only (pytest for the tests; pyarrow only to read AIDev's parquet, and
+transformers only in a local non-Claude seat's worker). Raw data, packets, keys, salts and answers never go into git.
 
 ## The seal
 
@@ -45,7 +46,13 @@ py -3.12 tpc_collect.py status                 # counts per stage, K1's capped c
 py -3.12 tpc_collect.py verify                 # re-hash every file the manifest names
 py -3.12 tpc_collect.py digest                 # the code digests the lock table's collector row holds
 py -3.12 tpc_collect.py beacon --height 975000 --rule "section 3.1, named height" --go     # OD-8, operator's word only
+py -3.12 tpc_collect.py beacon --height H --rule "section 3.1, late rule" --pr-opened-at T --go   # the late rule only
 ```
+
+The window store draws only under a beacon record that names block 975000 (or the late rule's block, with the time
+the pull request opened and a header at least six hours after it), read from both explorers, which agree, each header
+hashing to the block and meeting its own target, with six confirmations (`tpc_beacon.named_problems`); the `beacon`
+command refuses to store any other.
 
 Options: `--max-reads N`, `--max-calls N` (a request budget), `--max-wait S` (the longest wait for a limit before
 the run stops cleanly; default 3,700 s), `--workers N` (search threads; searches are paced to about 27 a minute
@@ -111,6 +118,11 @@ dryrun/dryrun_<time>.json   dry-run counts
 | `tpc_rule.py` | P17, P8.3 | log cleaning, the twelve summary patterns (digest checked at import), rule R |
 | `tpc_reports.py` | P18 | report-like artifact names, JUnit/TRX/in-toto detection inside a zip, `styxx.evidence` |
 | `tpc_collect.py` | | the catch-up run, the dry run, status, verify, digest, beacon (named `tpc_` so it cannot shadow another arc's `collect.py` on the test suite's path) |
+| `tpc_items.py` | P8 | the description's cleaning, the CI block, the log excerpt, the two texts a seat reads and the item's sha256; adapters from a collector row, the A1 snapshot and testreceipt's transcription |
+| `tpc_decoys.py` | 6, P9 | the eleven constructions and P9's mix, each decoy checked by machine, markers and sources refused, the set sealed by its salt, transforms for synthetic decoys |
+| `tpc_packet.py` | 3, 5, P3, P7, P8.5, P9 | the beacon checked (block 975000 or the late rule's, both explorers, the stand-in refused), the draw re-derived from the frame, the cap and audits by v, the size cut, the shuffle and ids, the key sealed; packets P2, P1 and Q |
+| `tpc_seats.py` | 7, P10, P12 | the prompts (digests checked at import), inputs and reply parsing, the spool, the Claude seat, the non-Claude seat (API by dated snapshot, or a local candidate in its own process), the transport check, the answer files and their seal, the human seat's forms and sheets |
+| `tpc_score.py` | 8 to 10, P13 to P16, P19 | answers sealed before keys, keys by their digests, decoys on the full label and both bars, final labels, the A1 and A2 metrics with `styxx.mind.wilson` (pinned) and P15's Clopper-Pearson, P16's printed readings, the receipt re-derived by `styxx.prereg_ci` |
 | `vendor/testreceipt/` | 14 | `claims.py`, `ci.py`, `reconcile.py`, `__init__.py`, `LICENSE` from `amos689/testreceipt` at `95864ef9`, byte-identical (MIT); the pins are checked at import |
 
 ## Readings of the PREREG the code makes (each one is a sentence the reviser can change)
@@ -143,6 +155,71 @@ dryrun/dryrun_<time>.json   dry-run counts
 10. **`pushedDate`** is requested as P4.2 lists it; GitHub returns null for it (deprecated).
 11. **Skipped jobs.** A test-like job whose conclusion is `skipped` is listed in the row record but its log is not
     asked for: in the development run all 51 such requests that reached GitHub's log store answered 404.
+
+Readings the packet builder, the seat runners and the scorer make:
+
+12. **What a seat reads.** Step 1's text is the cleaned description alone (the step-1 prompt ends with the line
+    `DESCRIPTION`); the step-2 item is `DESCRIPTION`, the description, a blank line, `CI AT THE HEAD COMMIT` and the
+    block (the step-2 prompt ends with `STEP 1 ANSWER`, then the seat's own answer, P12.3). The seat's own step-1
+    answer is re-serialized as JSON with the prompt's four fields in the prompt's order.
+13. **No URL and no repository name in the CI block.** P8.1 says no item carries either; P8.3 does not say how. URLs
+    in the block become `<url>`, the pull request's own owner/name `<repo>` (case-folded); the description keeps its
+    repository words (P8.2) and has its URLs replaced. Footer lines are those holding P2.1's signature texts, with
+    Cursor's post-filter text `cursor.com/` among them, Codex task links and Devin session links.
+14. **Order inside the block.** Check runs by name, statuses by context, jobs by id, steps by number, annotations in
+    check-run order (at most 20); a check run with no conclusion prints its status.
+15. **"From its `##[group]Run` line to the next group".** Read as the failing step's lines: from the earliest Run line
+    inside the step's own start and end times (one second either side) to the last line stamped before the step ended,
+    so a composite action's several Run groups stay one step and the post-step cleanup lines stay out. With no usable
+    times, the Run group holding the log's last `##[error]` line, to the next Run line; failing that, the log's last
+    150 lines. Which way was used is in the build record, never shown to a seat.
+16. **The caps hold the cut mark.** 12,000 characters per job and 30,000 per item count the leading `[cut]` line; the
+    tail is kept, since a runner's summary prints last.
+17. **The CI block is not capped beyond logs and annotations** (P8.3 lists every step of every failed or test-like
+    job). On the development store one pre-window item rendered at 229,640 characters (203 test-like jobs, 5,343 step
+    lines); the median was 11,288. A seat with a short context window cannot read such an item whole. The code follows
+    P8.3 as written; a cap on step lines is an amendment for the operator before any seat reads a real item (section
+    15.4).
+18. **Candidates and top-ups.** "Candidates in M" (never cut) are candidates whose row is in M, whichever capped set
+    made them candidates; top-ups are the rest (section 5: "not in M"). A cut top-up has no label and enters no
+    per-agent count; it prints as cut.
+19. **Packet Q's 30 items** are eligible claimers with a CI test result opened before 2026-11-02, the 30 lowest by
+    `sha256("tests-pass-ci:Q:" + pr_id)`; the PREREG names no order.
+20. **NO_ANSWER without a call.** A step-2 call is never made for an item whose step 1 had no answer; that step is
+    NO_ANSWER. At a packet's closing date `seal --close` writes NO_ANSWER for every step left.
+21. **The human seat's lock.** Step 1's form shows descriptions only; its sheet is imported once and locked; step 2's
+    form is exported only after, holding only two-step items whose step 1 was answered, each beside the seat's own
+    step-1 answer. Neither form says which items are decoys or audits.
+22. **Publication order.** `G_KEYS` and the P1 half of `G_A1_V` read a publication record the lead writes from the
+    pull requests' opened-at times (key digest public, each answer-file digest public, key released); every answer
+    time must be strictly before the release.
+23. **"Reader claim scope full"** (d_W) is any explicit pass claim of scope `full` among testreceipt's reader's claims.
+24. **The Claude seat's working folder** is an empty folder beside the ledger. Whether `claude -p --setting-sources ""`
+    still loads a user's global CLAUDE.md or auto-memory is not settled by the command line the PREREG fixes; the
+    ledger records every call's usage.
+25. **The non-Claude API seat** is an OpenAI-compatible chat completions endpoint, one user message holding the input
+    bytes; its snapshot id must carry a date; its key is read from an environment variable the operator names and is
+    written nowhere.
+
+## Building packets, running seats, scoring
+
+```
+py -3.12 tpc_packet.py decoys --spec SPEC.json --packet P2 --out DIR --testreceipt TR_CLONE   # check P9 and seal the set
+py -3.12 tpc_packet.py p2 --root DATA_ROOT --decoys DIR                    # at the close, seal open, lock row filled
+py -3.12 tpc_packet.py p2 --root DEV_ROOT --decoys DIR --out DIR --dry-run # pre-window store, stand-in hash
+py -3.12 tpc_packet.py q --root DEV_ROOT --decoys DIR --out DIR
+py -3.12 tpc_seats.py transport --seat C --out DIR                        # P10.4, before any real item
+py -3.12 tpc_seats.py run --packet packet_P2.json --seat C --out DIR
+py -3.12 tpc_seats.py export-h --packet packet_P2.json --step 1 --out DIR
+py -3.12 tpc_seats.py import-h --packet packet_P2.json --step 1 --csv FILE --out DIR
+py -3.12 tpc_seats.py seal --packet packet_P2.json --seat H --out DIR
+py -3.12 tpc_score.py score --packets DIR --root DATA_ROOT --testreceipt TR_CLONE --publication FILE --out measurement_result.json
+```
+
+The scorer reads `<packets>/P1/` and `<packets>/P2/`, each holding the packet, its key, salt and digest, every seat's
+sealed answer file and the packet's sealed decoy set. `checks/builder_dev_check.py` runs the builder on the
+development store (items, a P2 dry run, Q, the human form) and writes nothing a seat reads; `checks/synthetic_decoys.py`
+is an invented decoy spec for tests and dry runs, never a packet's decoys.
 
 ## Measured on pull requests opened 2026-10-29 (development store, dev beacon; not window data)
 
@@ -190,3 +267,20 @@ search cooldown, the cap by v, Claude Code read last on double matches, and ever
 113 tests in this folder's layout. A mutation check (`checks/mutation_check.py`, run as
 `py -3.12 checks/mutation_check.py <scratch dir>`, or from the repository root with the collector tests as targets)
 breaks twenty of these rules one at a time and the tests catch each one (`checks/mutation_check_output.txt`).
+
+The builder, the seat runners and the scorer add 118 tests, offline, on invented items, packets, answers and rows
+(`tests/test_tests_pass_ci_collector_items_decoys.py`, `_packet.py`, `_seats.py`, `_score.py`): the description's
+cleaning, the CI block and the log excerpt by the failing step's times; every decoy construction broken and caught by
+machine, P9's mix, markers, sources, the seal of a set; the beacon refused unless it is the named block read from both
+explorers (the window draw included), the stand-in refused for real; the draw re-derived equal to the collector's;
+the cap and the audits by v, the size cut in P7's order, AU4 and rule R's rows never cut; the shuffle, the ids and
+the key's salted digest; packets P2 (a dry run on an invented pre-window store), P1 and Q; the prompts equal to the
+PREREG's fences; replies parsed by their outermost object and refused when they do not fit the seat's own step-1
+scope; the spool read back; the Claude seat's command line, its standard input and its environment; the API seat's
+dated snapshot and unchanged bytes; resumption, one retry, no step 2 after a step-1 NO_ANSWER; answer files sealed
+once; the human seat's forms (no decoy shown, step 2 only after step 1 is locked); the bars on both sides and the full
+label; final labels by qualified voters; keys only after sealed answers and only by their digests; G_KEYS's order;
+A2 and A1 end to end to their rows; and the receipt, which `styxx.prereg_ci.rescore` re-derives and whose
+`prereg-ci check` passes in a scratch repository (and fails when a RESULT types another row). The mutation check now
+breaks 39 rules (the twenty above and nineteen of the builder's, the seats' and the scorer's); its run on this code is
+`checks/mutation_check_output_builder.txt`.

@@ -21,9 +21,11 @@ import struct
 import urllib.request
 from typing import Callable, Optional
 
-from tpc_const import UTC, USER_AGENT, iso
+from tpc_const import BEACON_HEIGHT, UTC, USER_AGENT, iso, parse_utc
 
 EXPLORERS = ("https://mempool.space/api", "https://blockstream.info/api")
+# a dry run's stated stand-in (tpc_packet), never a beacon: every check below refuses it
+STAND_IN_HEX = hashlib.sha256(b"tests-pass-ci/stand-in: the hash of a dry run, never a beacon").hexdigest()
 
 
 class BeaconError(Exception):
@@ -97,6 +99,54 @@ def validate(beacon: dict, *, official: bool) -> Optional[str]:
         if h["id"] != bh or not h["pow_ok"]:
             return "the stored header does not hash to the beacon or fails proof of work"
     return None
+
+
+def named_problems(b: Optional[dict]) -> list:
+    """Why a beacon record may not draw rows or shuffle P1 and P2 (section 3.1); [] when it may: a Bitcoin block at the
+    named height 975000, or a higher one under the late rule (named in the rule text, with the time the pull request
+    opened and a header time at least six hours after it), read from both explorers, which agree, each header hashing
+    to the block and meeting its own target, with six confirmations; never the dry run's stand-in hash."""
+    if not b:
+        return ["no beacon: block 975000 is not read yet (OD-8)"]
+    probs = []
+    bh = b.get("beacon_hex") or ""
+    if b.get("kind") != "bitcoin":
+        probs.append(f"the beacon is a {b.get('kind')!r} record, not a Bitcoin block")
+    if bh == STAND_IN_HEX:
+        probs.append("the beacon is the dry run's stand-in hash")
+    if len(bh) != 64 or any(c not in "0123456789abcdef" for c in bh):
+        probs.append("beacon_hex is not 64 lowercase hex characters")
+    h = b.get("height")
+    rule = (b.get("rule") or "").lower()
+    if h != BEACON_HEIGHT:
+        if not (isinstance(h, int) and h > BEACON_HEIGHT and "late rule" in rule and b.get("pr_opened_at")):
+            probs.append(f"height {h!r}: the named height is {BEACON_HEIGHT}; another height needs the late rule, "
+                         "named in the rule text with the time the pull request opened (pr_opened_at)")
+        else:
+            try:
+                if parse_utc(b.get("header_time") or "") < parse_utc(b["pr_opened_at"]) + dt.timedelta(hours=6):
+                    probs.append("under the late rule the block's header time is at least six hours after the pull "
+                                 "request opened")
+            except ValueError:
+                probs.append("header_time or pr_opened_at unreadable")
+    answers = b.get("explorers") or []
+    seen = {a.get("explorer") for a in answers}
+    if not set(EXPLORERS) <= seen:
+        probs.append(f"the block is read from both explorers {EXPLORERS}; this record names {sorted(seen, key=str)}")
+    for a in answers:
+        if a.get("block_id") != bh:
+            probs.append(f"{a.get('explorer')} answers {a.get('block_id')}, not {bh}")
+            continue
+        try:
+            hd = parse_header(a.get("header") or "")
+        except (ValueError, BeaconError) as e:
+            probs.append(f"{a.get('explorer')}: header unreadable ({e})")
+            continue
+        if hd["id"] != bh or not hd["pow_ok"]:
+            probs.append(f"{a.get('explorer')}: the header does not hash to the block or fails its target")
+        if isinstance(h, int) and (a.get("tip_height") or 0) < h + 5:
+            probs.append(f"{a.get('explorer')}: fewer than 6 confirmations")
+    return probs
 
 
 def dumps(beacon: dict) -> bytes:

@@ -11,6 +11,7 @@ import json
 import pytest
 from tests._tests_pass_ci_fakes import FakeGitHub, OpenGuard
 
+import tpc_beacon
 import tpc_collect as collect
 import tpc_read
 from tpc_const import UTC
@@ -256,8 +257,12 @@ def test_window_rows_are_refused_without_a_sealed_file(monkeypatch, tmp_path):
     gh = FakeGitHub(search=frame_search(uni), prs={}, rest={})
     root = setup_run(monkeypatch, tmp_path, dt.datetime(2026, 11, 7, 12, tzinfo=UTC), gh)
     st = Store(root)
-    st.write("draw/beacon.json", json.dumps({"kind": "bitcoin", "height": 0, "beacon_hex": GENESIS_ID, "header": GENESIS,
-                                             "read_at": "2026-11-07T10:00:00Z"}).encode())
+    # the window draws only under the named block read from both explorers (section 3.1); the genesis header stands in
+    st.write("draw/beacon.json", json.dumps({"kind": "bitcoin", "height": 975000, "beacon_hex": GENESIS_ID,
+                                             "header": GENESIS, "header_time": "2009-01-03T18:15:05Z",
+                                             "rule": "section 3.1, named height", "read_at": "2026-11-07T10:00:00Z",
+                                             "explorers": [{"explorer": e, "block_id": GENESIS_ID, "header": GENESIS,
+                                                            "tip_height": 975010} for e in tpc_beacon.EXPLORERS]}).encode())
     assert collect.main(["run", "--root", str(root), "--fetch-ci", "--workers", "1"]) == 0
     assert st.exists("frames/frame_2026-11-02.jsonl")  # the frame stage runs before the freeze (section 0.3)
     assert st.read_jsonl("draw/draw_2026-11-02.jsonl")

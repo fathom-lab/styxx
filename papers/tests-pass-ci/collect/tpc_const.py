@@ -84,6 +84,27 @@ ANNOTATED_CONCLUSIONS = ("failure", "timed_out", "action_required")  # P4.2
 LOGGED_JOB_CONCLUSIONS = ("failure", "timed_out")  # P4.2
 CAP = 3  # section 9.2: claimers with a CI test result per repository per analysis set
 
+# ---- packets, decoys, seats, the scorer (P7-P15) --------------------------------------------------
+AU_SIZES = {"AU1": 40, "AU2": 30, "AU3": 30, "AU4": 100}  # P1, P7: each the lowest v of its kind in M
+PACKET_MAX = 400  # P1, P7: items in P2 with its 30 decoys
+DECOYS_PER_PACKET = 30  # section 6, P9: 15 YES, 15 NO
+DESC_MAX = 20000  # P1, P8.2: characters of the description, cut with "[cut]"
+LOG_EXCERPT_LINES = 150  # P1, P8.3: the last 150 lines of each failing step's group
+LOG_EXCERPT_JOB_CHARS = 12000  # P8.3: per job
+LOG_EXCERPT_ITEM_CHARS = 30000  # P8.3: per item
+LOG_EXCERPT_JOBS = 3  # P8.3: failing test-like jobs per item, in job-id order
+ANNOTATIONS_MAX = 20  # P8.3
+ANNOTATION_CHARS = 300  # P8.3
+QUALIFY_NO = 14  # P13: of the 15 NO-side decoys
+QUALIFY_YES = 13  # P13: of the 15 YES-side decoys
+SITTING_MAX = 50  # P10.1: at most 50 items a sitting
+MAX_OUTPUT_TOKENS = 400  # P10.3
+BOOT = 10000  # P1, P15: repository-cluster resamples
+CLOSE_P1 = dt.date(2026, 12, 20)  # section 7: an item unanswered by then is NO_ANSWER
+CLOSE_P2 = dt.date(2027, 1, 10)
+CLAUDE_MODEL = "claude-opus-5-5"  # P10.2
+LOCAL_SEATS = ("microsoft/Phi-3.5-mini-instruct", "meta-llama/Llama-3.2-3B-Instruct")  # P10.3, in order
+
 # P18: an artifact counts when its name matches this
 REPORT_ARTIFACT_NAME = (
     r"(?i)test|junit|xunit|report|result|surefire|trx|pytest|jest|vitest|mocha|playwright"

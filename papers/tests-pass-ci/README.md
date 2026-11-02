@@ -16,7 +16,7 @@ This arc holds the preregistration of one measurement of that, in two parts:
 |---|---|---|
 | `PREREG_tests_pass_ci_2026_11_02.md` | the plan, its gates block (14 gates, 45 rows) and every procedure (Part II) | draft, unsigned; to be frozen by 2026-11-06 by the operator's word, the signing commit and the pull request's opened-at |
 | `FORECAST_tests_pass_ci_2026_11_02.md` | the lab's forecast of every row and quantity, scored by the RESULT | sealed by its sha256 in the PREREG §13 |
-| `collect/` | the collector: frame, draw, read, screen, CI result, rule R, report check, under the seal guard | its combined digest fills the PREREG's lock table at the signing commit |
+| `collect/` | the collector: frame, draw, read, screen, CI result, rule R, report check, under the seal guard; the packet and decoy builder, the seat runners and the scorer | its combined digest fills the PREREG's lock table at the signing commit |
 
 Before the freeze no one in the lab reads CI conclusions, check runs, statuses or job logs of any pull request opened
 on or after 2026-11-02, nor classifies a claim in one; the PREREG §0 records every read of the window by metadata, and

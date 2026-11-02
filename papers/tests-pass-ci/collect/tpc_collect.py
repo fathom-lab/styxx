@@ -43,7 +43,7 @@ if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
 import tpc_beacon  # noqa: E402
-from tpc_const import (AGENT_ORDER, CAP, DATA_ROOT, DEV_ROOT, FRAME_FIELDS, READ_LAG, UTC,  # noqa: E402
+from tpc_const import (AGENT_ORDER, BEACON_HEIGHT, CAP, DATA_ROOT, DEV_ROOT, FRAME_FIELDS, READ_LAG, UTC,  # noqa: E402
                        WINDOW_DAYS, WINDOW_START, day_start, iso, parse_utc)
 from tpc_draw import membership  # noqa: E402
 from tpc_frame import FRAME_KEYS, dedupe, dry_run, enumerate_day, frame_row, kept  # noqa: E402
@@ -203,6 +203,8 @@ def load_beacon(ctx: Ctx):
             return None
     b = ctx.store.read_json(rel)
     why = tpc_beacon.validate(b, official=not ctx.dev)
+    if not why and not ctx.dev:  # the window draws only under the block section 3.1 names, read from both explorers
+        why = "; ".join(tpc_beacon.named_problems(b)) or None
     if why:
         raise SystemExit(f"beacon refused: {why}")
     return b
@@ -472,7 +474,17 @@ def cmd_beacon(args) -> int:
     if ctx.store.exists("draw/beacon.json"):
         print("a beacon is already stored; it is never replaced")
         return 2
+    if args.height != BEACON_HEIGHT and not (ctx.dev or args.pr_opened_at):
+        print(f"section 3.1 names block {BEACON_HEIGHT}; another height is read only under the late rule, with "
+              "--pr-opened-at (the time the pull request carrying the PREREG opened)")
+        return 2
     b = tpc_beacon.read_beacon(args.height, args.rule)
+    if args.pr_opened_at:
+        b["pr_opened_at"] = args.pr_opened_at
+    probs = [] if ctx.dev else tpc_beacon.named_problems(b)
+    if probs:
+        print("beacon refused, not stored: " + "; ".join(probs))
+        return 2
     ctx.store.write("draw/beacon.json", tpc_beacon.dumps(b))
     print(json.dumps({k: b[k] for k in ("height", "beacon_hex", "header_time", "rule")}, indent=1))
     return 0
@@ -504,6 +516,8 @@ def main(argv=None) -> int:
     b.add_argument("--height", type=int, required=True)
     b.add_argument("--rule", required=True)
     b.add_argument("--go", action="store_true")
+    b.add_argument("--pr-opened-at", default=None,
+                   help="the late rule of section 3.1: when the pull request carrying the PREREG opened")
     a = ap.parse_args(argv)
     if a.cmd == "run":
         if a.dry_run and a.fetch_ci:
