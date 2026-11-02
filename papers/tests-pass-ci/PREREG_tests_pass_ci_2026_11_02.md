@@ -96,6 +96,23 @@ window is read before the freeze; the collector's guard (P21) refuses it by name
   [SC-NB §7].
 - testreceipt's published labels, which the scouts joined and counted (SC-TR §8, SC-NB §1.3). The panel's seats will
   not see them; the lab has.
+- **Material for P2's decoys**, read on 2026-11-02 by the lab agent building P2's decoy set (it sits on no seat), from
+  pull requests opened before 2026-11-02 that are not among testreceipt's 138 items. Which pull requests, and when
+  they opened, are held with the material and named when P2's key is released: naming them now would show which
+  items are decoys (§6, P9). 1,082 logged requests in two runs, each asking the seal guard on GitHub's own
+  `createdAt` and checking it is before 2026-11-02 before every batch (112 creation times recorded with the
+  material, 0 at or after 2026-11-02):
+  - 19:52:58Z to 19:54:13Z: 75 job logs of failing jobs, 75 REST log requests (answered 302) and 75 downloads from
+    the signed URLs (answered 200), 149,245,375 response bytes, 4 logs cut at `LOG_MAX`; read log
+    `readlog_material.jsonl`, sha256 `55b7ab223cc06c2452e135ad997e83af6ef01f903a95afa43872ef9c4bdc914f`;
+  - 20:01:29Z to 20:06:35Z: 37 pull requests read as the collector reads a row (P4.2), 4 GraphQL requests, 872 REST
+    requests and 56 log downloads (875 answered 200, 57 answered 302), 44,406,404 response bytes; read log
+    `store/readlogs/readlog_material_20261102.jsonl`, sha256
+    `f32c766d56de8f28d3afc61fd7e5615ecb0f86c6be0dffad578d1918b88a9973`.
+
+  The read logs, their manifests, the two scripts that made them and the material sit under
+  `C:/Users/heyzo/clawd/data/direction_a/sealed/P2/material/`, off the repository until P2's key is released; any
+  later read for the set is added here before the signing commit.
 
 ### 0.5 Other reads by this file's writer
 
