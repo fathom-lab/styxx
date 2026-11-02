@@ -2,19 +2,24 @@
 """Packet items (PREREG P8): the description a seat reads in step 1 and the CI record it reads in step 2.
 
 An item is two parts (P8.1): DESCRIPTION, shown in step 1, and CI AT THE HEAD COMMIT, shown only in step 2. No item
-carries a URL, repository name, pull request number, author, agent name, date or state.
+carries a URL, repository name, pull request number, author, agent name, date or state. Dates are masked by one rule,
+`mask_dates` (P8.1), over the description and every line of the CI block, log excerpts included: ISO dates and
+date-times, YYYY/MM/DD, DD/MM/YYYY and MM/DD/YYYY with "/", ".", "-" or "_", MM/DD/YY, YYYYMMDD standing
+alone, a month's name or abbreviation beside a day (with or without a year) or beside a year; each becomes "<date>".
+URLs are replaced before dates are masked, so a date inside a URL goes with the URL. A clock time without a date
+stays. Decoys built in October would otherwise carry October dates beside November items.
 
 - `clean_description` (P8.2): the body as read, line endings made LF; HTML comments removed (an unclosed comment to
   the end, as GitHub renders it); images removed (markdown and <img>); agent footer lines (P2.1's signature texts,
-  Codex task links, Devin session links) replaced by "[agent footer removed]"; every URL replaced by "<url>"; cut at
-  DESC_MAX with "[cut]". Repository words inside the prose stay as they are.
+  Codex task links, Devin session links) replaced by "[agent footer removed]"; every URL replaced by "<url>"; dates
+  masked; cut at DESC_MAX with "[cut]". Repository words inside the prose stay as they are.
 - `render_ci` (P8.3): per check run `check: <name> (<app slug>) -> <conclusion>`; per status
   `status: <context> -> <state>`; per Actions job that failed or is test-like `job: <name> -> <conclusion>` and its
   steps; up to 20 annotations of failed check runs; log excerpts of failing test-like jobs (at most 3, job-id order);
   then the one fixed line. URLs in the block are replaced by "<url>" and the repository's own owner/name by "<repo>"
   (P8.1 says no item carries either; P8.3 does not say how, so this is the reading the code makes).
 - `log_excerpt` (P8.3): the log decoded as UTF-8 with replacement, ANSI escapes and each line's leading timestamp
-  removed. For each failing step of the job (failure or timed_out), in step-number order, a span of lines:
+  removed, URLs replaced and dates masked in each line. For each failing step of the job (failure or timed_out), in step-number order, a span of lines:
   * by the step's times: it starts at the earliest line that begins `##[group]Run ` and is stamped from one second
     before the step's started_at to one second after its completed_at (a composite step's several Run groups are one
     step); it ends before the earliest later line stamped more than one second after completed_at (an unstamped line
@@ -69,6 +74,23 @@ MD_IMAGE = re.compile(r"!\[[^\]]*\]\([^)\n]*\)")
 HTML_IMG = re.compile(r"<img\b[^>]*>", re.I)
 URL = re.compile(r"(?i)\b(?:https?|ftp)://[^\s<>()\[\]\"'`]+")
 URL_TRAIL = ".,;:!?*_~"
+DATE_TOKEN = "<date>"
+# P8.1: the one date rule, case-insensitive, over the description and every line of the CI block
+_MON = (r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June?|July?|Aug(?:ust)?|Sep(?:t(?:ember)?)?"
+        r"|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)")
+_YEAR = r"(?:19|20)\d{2}"
+DATES = re.compile("|".join((
+    # ISO dates and date-times: 2026-10-29, 2026-10-29T12:00:00.5Z, 2026-10-29 12:00:00+02:00
+    rf"(?<!\d){_YEAR}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])"
+    rf"(?:[T ]\d{{2}}:\d{{2}}(?::\d{{2}}(?:[.,]\d+)?)?(?:Z|[+-]\d{{2}}:?\d{{2}})?)?(?!\d)",
+    rf"(?<!\d){_YEAR}[/._](?:0?[1-9]|1[0-2])[/._](?:0?[1-9]|[12]\d|3[01])(?!\d)",  # 2026/10/29, 2026.10.29, 2026_10_29
+    rf"(?<!\d)\d{{1,2}}[/.\-_]\d{{1,2}}[/.\-_]{_YEAR}(?!\d)",  # 29/10/2026, 10/29/2026, 29.10.2026, 29-10-2026
+    r"(?<![\d/])\d{1,2}/\d{1,2}/\d{2}(?![\d/])",  # 10/29/26
+    rf"(?<![0-9A-Za-z]){_YEAR}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])(?![0-9A-Za-z])",  # 20261029 standing alone
+    rf"\b{_MON}\.? \d{{1,2}}(?:st|nd|rd|th)?(?:,? {_YEAR})?(?!\d)",  # Oct 29, Oct 29th, October 29, 2026
+    rf"\b\d{{1,2}}(?:st|nd|rd|th)? {_MON}\b\.?(?: {_YEAR}(?!\d))?",  # 29 Oct, 29 Oct 2026
+    rf"\b{_MON}\.? {_YEAR}(?!\d)",  # October 2026
+)), re.I)
 # P8.2: P2.1's signature texts (Claude Code's footer, Cursor's agent link and its post-filter text), Codex task links,
 # Devin session links
 FOOTER = re.compile(r"(?i)generated with \[?claude code\b|cursor\.com/|chatgpt\.com/codex/tasks|app\.devin\.ai/sessions")
@@ -91,13 +113,23 @@ def _replace_urls(text: str) -> str:
     return URL.sub(sub, text)
 
 
+def mask_dates(text: str) -> str:
+    """Every date P8.1's rule names, replaced by "<date>"."""
+    return DATES.sub(DATE_TOKEN, text)
+
+
+def _scrub(text: str) -> str:
+    """URLs replaced, then dates masked (a date inside a URL goes with the URL)."""
+    return mask_dates(_replace_urls(text))
+
+
 def clean_description(body: Optional[str]) -> str:
     text = (body or "").replace("\r\n", "\n").replace("\r", "\n")
     text = HTML_COMMENT.sub("", text)
     text = MD_IMAGE.sub("", text)
     text = HTML_IMG.sub("", text)
     lines = [FOOTER_TOKEN if FOOTER.search(ln) else ln for ln in text.split("\n")]
-    text = _replace_urls("\n".join(lines)).strip()
+    text = _scrub("\n".join(lines)).strip()
     if len(text) > DESC_MAX:
         text = text[:DESC_MAX] + "\n" + CUT_TOKEN
     return text
@@ -119,7 +151,7 @@ def _parse_log(raw: "bytes | str") -> list:
             except ValueError:
                 own = None
             ln = ln[m.end():]
-        out.append((own, ln, last))
+        out.append((own, _scrub(ln), last))
     return out
 
 
@@ -226,19 +258,21 @@ def render_ci(ci: dict, repo: Optional[str] = None) -> tuple:
     for c in sorted(ci.get("check_runs") or [], key=lambda c: ((c.get("name") or "").lower(), c.get("name") or "",
                                                                  c.get("id") or 0)):
         concl = c.get("conclusion") or c.get("status") or "none"
-        lines.append(f"check: {_one_line(c.get('name'))} ({c.get('app') or 'none'}) -> {concl}")
+        lines.append(_scrub(f"check: {_one_line(c.get('name'))} ({c.get('app') or 'none'}) -> {concl}"))
     for s in sorted(ci.get("statuses") or [], key=lambda s: ((s.get("context") or "").lower(), s.get("context") or "")):
-        lines.append(f"status: {_one_line(s.get('context'))} -> {s.get('state')}")
+        lines.append(_scrub(f"status: {_one_line(s.get('context'))} -> {s.get('state')}"))
     for j in sorted(ci.get("jobs") or [], key=lambda j: j["id"]):
         if not (_map(j.get("conclusion")) == "failure" or test_like_job(j)):
             continue
-        lines.append(f"job: {_one_line(j.get('name'))} -> {j.get('conclusion') or j.get('status') or 'none'}")
+        lines.append(_scrub(f"job: {_one_line(j.get('name'))} -> {j.get('conclusion') or j.get('status') or 'none'}"))
         for st in sorted(j.get("steps") or [], key=lambda s: (s.get("number") or 0)):
-            lines.append(f"step: {_one_line(st.get('name'))} -> {st.get('conclusion') or st.get('status') or 'none'}")
+            lines.append(_scrub(f"step: {_one_line(st.get('name'))} -> "
+                                f"{st.get('conclusion') or st.get('status') or 'none'}"))
     failed_ids = {c.get("id") for c in ci.get("check_runs") or [] if c.get("conclusion") in ANNOTATED_CONCLUSIONS}
     ann = [a for a in ci.get("annotations") or [] if a.get("check_run_id") in failed_ids]
     for a in ann[:ANNOTATIONS_MAX]:
-        lines.append(f"annotation: {a.get('level') or 'none'}: {_one_line(a.get('message'))[:ANNOTATION_CHARS]}")
+        msg = _one_line(_scrub(a.get("message") or ""))[:ANNOTATION_CHARS]
+        lines.append(f"annotation: {a.get('level') or 'none'}: {msg}")
     info = {"logs": [], "annotations_shown": min(len(ann), ANNOTATIONS_MAX), "annotations_listed": len(ann)}
     budget = LOG_EXCERPT_ITEM_CHARS
     logs = ci.get("logs") or {}
@@ -254,7 +288,7 @@ def render_ci(ci: dict, repo: Optional[str] = None) -> tuple:
         text = _tail(text, budget)
         budget -= len(text)
         lines.append("")
-        lines.append(f"log: {_one_line(j.get('name'))}")
+        lines.append(_scrub(f"log: {_one_line(j.get('name'))}"))
         lines.append(text)
         info["logs"].append({"job_id": j["id"], "how": how, "chars": len(text)})
     lines.append("")

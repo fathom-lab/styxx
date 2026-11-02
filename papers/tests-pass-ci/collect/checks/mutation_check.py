@@ -13,7 +13,8 @@ The copy is named to those tests by the environment variable TPC_COLLECT_DIR. It
 <scratch>/mut/tests-pass-ci/collect with the PREREG copied beside its folder, as in the repository, so code that
 reads the PREREG (the seats' rubric, the scorer's table) reads the same bytes. Nothing outside the scratch
 directory is written. Rules 21 to 39 are the packet and decoy builder's, the seat runners' and the scorer's; rules
-40 and 41 are the log excerpt's step boundaries, repaired while packet P2's decoys were built.
+40 and 41 are the log excerpt's step boundaries, repaired while packet P2's decoys were built; the rules after them
+answer the open findings of 2026-11-02 (dates, step flips, the shuffle, the seal guard, the signed PREREG, the salts).
 """
 import os
 import pathlib
@@ -87,6 +88,9 @@ M = [
      "        if t is not None and t > t1:"),
     ("excerpt runs past the step's error line", "tpc_items.py", "    return errs[-1] + 1 if errs else end",
      "    return end"),
+    # dates masked in every item (P8.1)
+    ("dates kept in the items", "tpc_items.py", "    return DATES.sub(DATE_TOKEN, text)", "    return text"),
+    ("a decoy may carry a date", "tpc_decoys.py", "        if DATES.search(text):", "        if False:"),
 ]
 
 

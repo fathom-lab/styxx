@@ -54,6 +54,45 @@ def test_clean_description_keeps_repository_words_in_prose():
     assert "kody-hq/kody" in out
 
 
+# ---- P8.1, dates ------------------------------------------------------------------------------------------
+@pytest.mark.parametrize("text", ["2026-10-29", "2026-10-29T12:00:00.5Z", "2026-10-29 12:00:00+02:00", "2026/10/29",
+                                  "2026_10_29", "29/10/2026", "10/29/2026", "29.10.2026", "29-10-2026", "10/29/26",
+                                  "20261029", "Oct 29", "oct 29th", "October 29, 2026", "29 Oct 2026", "Sept 3",
+                                  "November 2026"])
+def test_every_date_form_of_p8_1_is_masked(text):
+    assert tpc_items.mask_dates(f"at {text} ok") == "at <date> ok"
+
+
+def test_clock_times_versions_and_counts_stay():
+    for text in ("12:34:56", "v1.2.3", "node 20.10.0", "3 failed, 120 passed in 2.10s", "sha a20261029b", "1/2 done"):
+        assert tpc_items.mask_dates(text) == text
+
+
+def test_no_date_reaches_an_item():
+    job = _job(5, "test 2026-10-29", "failure", [("Run tests", "failure")])
+    ci = {"check_runs": [{"id": 1, "name": "nightly 2026/10/29", "app": "buildkite", "conclusion": "failure"}],
+          "statuses": [{"context": "ci: Oct 29 run", "state": "failure"}],
+          "jobs": [job],
+          "annotations": [{"check_run_id": 1, "level": "failure", "message": "expired on 29 Oct 2026"}],
+          "logs": {"5": "##[group]Run pytest\nDate: Thu, 29 Oct 2026 12:00:00 GMT\nsee https://x.example/2026-10-29/r\n"
+                         "FAILED test_expiry - assert 2026-10-29 == 2026-11-03\n##[error]exit 1\n"}}
+    it = tpc_items.build_item("Fixed the October 2026 report (10/29/2026). All tests pass.", ci)
+    for text in (it["step1_text"], it["item_text"]):
+        assert not tpc_items.DATES.search(text)
+        for s in ("2026", "Oct 29", "October"):
+            assert s not in text
+    assert it["item_text"].count(tpc_items.DATE_TOKEN) >= 8 and "12:00:00 GMT" in it["item_text"]
+    assert "see <url>" in it["item_text"]  # a date inside a URL goes with the URL
+
+
+def test_a_decoy_that_carries_a_date_is_refused():
+    e = synthetic_decoys.spec("P2")["decoys"][0]
+    built = tpc_items.build_item(e["body"], e["ci"], e["repo"])
+    assert not any("carries a date" in p for p in tpc_decoys.check_decoy(copy.deepcopy(e), built))
+    dated = dict(built, item_text=built["item_text"] + "\nrun of 2026-10-29")
+    assert any("carries a date" in p for p in tpc_decoys.check_decoy(copy.deepcopy(e), dated))
+
+
 # ---- P8.3 --------------------------------------------------------------------------------------------------
 def _job(jid, name, concl, steps):
     return {"id": jid, "name": name, "status": "completed", "conclusion": concl,

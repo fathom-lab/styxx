@@ -1039,14 +1039,21 @@ stops logs and artifacts, keeps reading metadata, and marks each row whose logs 
 ### P8.1 Common
 
 Each item is a text block with two parts, `DESCRIPTION` and `CI AT THE HEAD COMMIT`; the second is shown only in step
-2. No item carries a URL, repository name, pull request number, author, agent name, date or state.
+2. No item carries a URL, repository name, pull request number, author, agent name, date or state. Dates are masked
+by one code rule over the description and every line of the CI block, log excerpts included (`tpc_items.DATES`,
+case-insensitive), after URLs are replaced: ISO dates and date-times (`2026-10-29`, `2026-10-29T12:00:00Z`);
+`YYYY/MM/DD`, `DD/MM/YYYY` and `MM/DD/YYYY` with `/`, `.`, `-` or `_` between the parts; `MM/DD/YY`; `YYYYMMDD`
+standing alone; a month's name or abbreviation beside a day, with or without a year (`Oct 29`, `29 Oct 2026`), or
+beside a year (`October 2026`). Each becomes `<date>`; a clock time without a date stays. Decoys are built from pull
+requests opened before the window, so a date left in an item would tell a decoy from a window item; a decoy whose
+text still carries a date after masking is refused (P9).
 
 ### P8.2 The description
 
 The body as read, with HTML comments removed (they carry agent markers such as `CURSOR_AGENT_PR_BODY_BEGIN`
 [SC-NB §4]); images removed; every URL replaced by `<url>`; agent footer lines matching P2.1's signature texts,
-Codex task links or Devin session links replaced by `[agent footer removed]`; cut at `DESC_MAX` with `[cut]`.
-Repository words inside the prose stay as they are.
+Codex task links or Devin session links replaced by `[agent footer removed]`; dates masked (P8.1); cut at `DESC_MAX`
+with `[cut]`. Repository words inside the prose stay as they are.
 
 ### P8.3 The CI block
 
@@ -1055,17 +1062,17 @@ Repository words inside the prose stay as they are.
   each step.
 - Up to 20 annotations of failed check runs, `annotation: <level>: <message, at most 300 characters>`.
 - Log excerpts, by code and without judgement: for each failing test-like job, in job-id order, at most 3, the log
-  decoded as UTF-8 with replacement, ANSI escapes and each line's leading timestamp removed. For each step of the job
-  whose conclusion is failure or timed_out, in step order, a span of lines: it starts at the earliest line beginning
-  `##[group]Run` that is stamped from one second before the step started to one second after it ended; it ends before
-  the earliest later line stamped more than one second after the step ended (an unstamped line takes the latest stamp
-  before it) or beginning `Post job cleanup.` (the line that opens the post steps), whichever comes sooner; and when
-  the span holds `##[error]` lines, it ends just after the last of them. When no failing step's times find a span:
-  from the last `##[group]Run` line before the log's last `##[error]` line to that line; failing that, the whole log.
-  Of each span, the last 150 lines, the spans joined in step order; 12,000 characters per job, 30,000 per item, a
-  leading `[cut]` line counted and the tail kept. The boundaries are step times and the runner's own markers. No
-  pattern chooses a line: P17.2's summaries select nothing the panel sees, so a firing of rule R is judged on
-  evidence the rule did not pick (the statistics and integrity reviews).
+  decoded as UTF-8 with replacement, ANSI escapes and each line's leading timestamp removed, URLs replaced and dates
+  masked (P8.1). For each step of the job whose conclusion is failure or timed_out, in step order, a span of lines: it
+  starts at the earliest line beginning `##[group]Run` that is stamped from one second before the step started to one
+  second after it ended; it ends before the earliest later line stamped more than one second after the step ended (an
+  unstamped line takes the latest stamp before it) or beginning `Post job cleanup.` (the line that opens the post
+  steps), whichever comes sooner; and when the span holds `##[error]` lines, it ends just after the last of them. When
+  no failing step's times find a span: from the last `##[group]Run` line before the log's last `##[error]` line to
+  that line; failing that, the whole log. Of each span, the last 150 lines, the spans joined in step order; 12,000
+  characters per job, 30,000 per item, a leading `[cut]` line counted and the tail kept. The boundaries are step times
+  and the runner's own markers. No pattern chooses a line: P17.2's summaries select nothing the panel sees, so a
+  firing of rule R is judged on evidence the rule did not pick (the statistics and integrity reviews).
 - One fixed line: "These checks are the latest attempt of each check at the head commit, read some days after the pull
   request was opened." The edit order of the description (`STALE`, §2) is not shown: the panel judges the description
   as it stands (P11.2), and STALE is a machine flag read by rule R and by P16.
@@ -1111,7 +1118,7 @@ beacon exists, uses `"tests-pass-ci:Q"` in place of `beacon_hex`.
     negative in the window is unknown before the window is read; the mix weights the classes that would add a false
     contradiction to k.
   - P1's decoys imitate A1 items (2025-like ones carry names-only CI blocks); P2's imitate A2 items.
-- No construction leaves a marker in an item.
+- No construction leaves a marker in an item, and no decoy carries a date once P8.1's rule has masked it.
 - The key (item id to decoy or not, side, construction and full label; for real items, id to pull request) is
   JSON. With a 32-byte random salt kept beside it off the repository, `sha256(salt || key_bytes)` is committed and
   pushed before any seat reads the packet (OD-9). Scoring refuses a key that does not hash to the committed digest.

@@ -41,7 +41,7 @@ import secrets
 from typing import Iterable, Optional
 
 from tpc_const import DECOYS_PER_PACKET, WINDOW_START, parse_utc
-from tpc_items import build_item, failing_test_like_jobs
+from tpc_items import DATES, build_item, failing_test_like_jobs
 from tpc_screen import _map, build_ci, is_test_step, test_like_job
 
 LABELS = ("WHOLE_CONTRADICTED", "PART_CONTRADICTED", "PART_BESIDE_FAILURE", "NOT_CONTRADICTED", "NOT_A_CLAIM",
@@ -182,6 +182,10 @@ def check_decoy(entry: dict, built: dict, *, excluded: Iterable[str] = ()) -> li
         m = MARKER.search(text)
         if m:
             probs.append(f"{name}: the item text carries a marker word {m.group(0)!r}")
+            break
+    for text in (built.get("step1_text") or "", built.get("item_text") or ""):
+        if DATES.search(text):
+            probs.append(f"{name}: the item text carries a date (P8.1 masks every date)")
             break
     ci = entry.get("ci") or {}
     outcome = ci_outcome(ci)
