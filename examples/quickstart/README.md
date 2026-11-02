@@ -49,8 +49,8 @@ Zenodo, 2026-04-24. doi:10.5281/zenodo.19746215.
 - **Software (v6.2.0):** https://doi.org/10.5281/zenodo.19758619
 - **Robustness audit (v22):** https://doi.org/10.5281/zenodo.19761194
 - **Concept (always-latest):** https://doi.org/10.5281/zenodo.19326174
-- **Project:** https://fathom.darkflobi.com
-- **Browser extension:** https://fathom.darkflobi.com/scope
+- **Project:** https://github.com/fathom-lab/styxx
+- **Browser extension:** https://github.com/fathom-lab/styxx/tree/main/packages/styxx-scope
 
 ## License
 

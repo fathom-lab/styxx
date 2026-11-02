@@ -1,5 +1,7 @@
 # styxx gauntlet — public leaderboard
 
+> **Status, 2026-11-02: the arc this board scores is closed.** [`papers/INDEX.md`](https://github.com/fathom-lab/styxx/blob/main/papers/INDEX.md) lists `consensus-hallucination` as NEGATIVE-RESULT: "Seven preregistered methods failed to see or crack shared cultural-prior errors, and the curated folklore corpus itself collapsed." The rows below are kept as the record; read each one against that status.
+
 **The empirical floor is the bar. Submit your method. Beat us or join the floor.**
 
 This leaderboard tracks external submissions to `styxx gauntlet` (shipped in styxx 7.7.5). Anyone can run their detection or classification method against the labeled benchmark (`papers/consensus-hallucination/darkcore_benchmark_2026_05_27.json`) and submit results here via PR.

@@ -58,10 +58,12 @@ This is the open MIT protocol's reference implementation. Trust signals:
   the same artifacts attached as release assets, so an artifact
   fetched from PyPI can be cross-checked against the GitHub Release
   for the same tag.
-- **Runtime dependency surface** in core is `numpy>=1.24`. All other
-  dependencies live behind opt-in extras (`tier1`, `tier2`,
-  `langchain`, `langfuse`, `crewai`, `autogen`, `langsmith`, `openai`,
-  `anthropic`, `agent-card`).
+- **Runtime dependency surface** in core is `numpy>=1.24` and
+  `scikit-learn>=1.3` (`pyproject.toml`; scikit-learn is imported lazily
+  by the functions that use it: `audit_confound`, `validate_probe`,
+  `audit_hf_model` and the learned classifier, never at
+  `import styxx`). All other dependencies live behind opt-in extras
+  (`[project.optional-dependencies]` in `pyproject.toml`).
 - **License posture** for the methods themselves is documented in
   [`PATENTS.md`](PATENTS.md). The MIT license on the code does not
   grant a patent license under those filings; commercial use of the
@@ -71,8 +73,8 @@ This is the open MIT protocol's reference implementation. Trust signals:
 
 ## Verifying a release
 
-1. Note the published version, e.g. `7.1.1`.
-2. Find the matching GitHub Release: `https://github.com/fathom-lab/styxx/releases/tag/v7.1.1`.
+1. Note the published version, e.g. `7.50.0`.
+2. Find the matching GitHub Release: `https://github.com/fathom-lab/styxx/releases/tag/v7.50.0`.
 3. Compare the `*.whl` and `*.tar.gz` SHA-256 sums between PyPI, the
    assets attached to the GitHub Release, and the hashes its notes give.
 
@@ -84,7 +86,11 @@ Report the discrepancy immediately through
 
 - We will not silently change the cognometric scoring contract within
   a stable spec version. Any change to the wire format requires a new
-  spec version under the [versioning policy](https://styxx.org/governance).
+  spec version. The wire-format versioning rules are §3 of
+  [`docs/cvp/CVP-1.0-specification.md`](docs/cvp/CVP-1.0-specification.md);
+  what stays stable across the 1.x revisions of the scoring framework
+  (the three axes and the seven fault kinds) is §1.5 of
+  [`papers/cognometric-fingerprint-spec-v1.0.md`](papers/cognometric-fingerprint-spec-v1.0.md).
 - We will not gate the open MIT protocol behind a token, an account,
   or a paywall.
 - We will not ship release artifacts produced from a contributor laptop

@@ -1,6 +1,7 @@
 # styxx replications — run the receipts, get named
 
-**Every flagship claim in this repo ships with receipts that re-run on an 8GB consumer GPU. This
+**The claims below ship with receipts: the GPU targets re-run on an 8GB consumer GPU, the rest on
+a CPU, and one needs only reading. This
 file converts that from a statement into a ledger. The first independent re-run of each target
 earns a named credit line in the next Zenodo version of the corresponding paper and a permanent row
 here. Zero replications after six months is also an answer, and we will publish that too.**
@@ -9,13 +10,18 @@ here. Zero replications after six months is also an answer, and we will publish 
 
 A moat nobody has tried to cross is indistinguishable from a field. The claims below are only as
 strong as the number of people who have independently re-run them. We are asking you to try to
-break them — a replication that *fails* to match is MORE valuable than one that matches, and earns
-the same credit.
+break them — a replication that *fails* to match is MORE valuable than one that matches. It gets its
+row here like any other, and a verdict flip that survives our re-run of your exact setup earns
+co-credit on the correction (see Credit).
 
 ## Targets (in order of leverage)
 
 | target | claim | frozen code | canonical receipt | replication bar |
 |---|---|---|---|---|
+| **EXTERNAL-1 re-adjudication** (reading only, no GPU, no code; [#43](https://github.com/fathom-lab/styxx/issues/43)) | the diff gate's accusations on external agent pull requests: a blind panel upheld 23 of 100, precision 0.23 against a preregistered 0.95 floor, with 30 of 30 decoys called correctly | `papers/closed-model-frontier/external1_packet.json` (130 items, no verdicts) and `papers/closed-model-frontier/external1_key_digest.txt` (the sealed key's salted SHA-256), rules in `papers/closed-model-frontier/PREREG_external1_aidev_2026_08_31.md`; you post SUPPORTED or CONTRADICTED per item, and the lab scores them against the sealed key as `papers/closed-model-frontier/external1_packet.py score` scored ours | `papers/closed-model-frontier/external1_adjudication.json`; our panel's answers `papers/closed-model-frontier/external1_answers.json` | 27 of 30 decoys or the adjudication voids, for you as for us; agreement with our answers published item by item, disagreements named. The published packet's item ids carry the arm, and its 15 synthetic decoys carry a visible `zz_` path perturbation ([#125](https://github.com/fathom-lab/styxx/issues/125)): judge the claims without reading the ids, or the decoy gate measures nothing; the `zz_` paths weaken its synthetic half even so |
+| **collateral census** (CPU-only, deterministic; the corpus is downloaded; [#44](https://github.com/fathom-lab/styxx/issues/44)) | of 1,386,104 files changed by 69,654 AIDev agent pull requests, 10.96% are collateral (lockfile, generated, snapshot, migration, whitespace-equivalent), each file in exactly one class | `pip install -e . datasets`, then `python papers/closed-model-frontier/external1_harness.py --stage shelf`, then `python papers/closed-model-frontier/collateral_census.py` (it rewrites `collateral_census.json` in place; `git diff` it) | `papers/closed-model-frontier/collateral_census.json` | every count matches; name the dataset revision you read. `whitespace-equivalent` is a lower bound by design, and an AST comparison that moves the headline is the more valuable result (#44) |
+| **certify silent-pass census** (CPU-only, a few minutes) | mutate one significant digit of 3951 claims the verifier certified VERIFIED: 2696 are not accused (0.6824), 604 of them VERIFIED against an unrelated leaf (README, `certify` row) | `git checkout e463824f`, then `python papers/closed-model-frontier/oath_v07_silentpass_census.py` (seed 1; it rewrites its JSON in place) | `papers/closed-model-frontier/oath_v07_silentpass_census.json` | every field matches. `verifier_sha256` (`2bd7299f…`) is the sha256 of `styxx/certify.py` as a CRLF checkout reads it, so it matches only on a CRLF checkout (an LF checkout reads `d84bb373…`). That commit predates the 2026-08-26 line-ending fix described below, so a Linux run may diverge for that reason |
+| **BENCH-2 rows** (CPU-only; the diffs are downloaded) | 604 claims from 568 public agent pull requests, each with the sha256 of its diff and no verdict of ours | `python papers/closed-model-frontier/bench_reproduce.py --fetch`, then `--oracle`, then `--score styxx` or `--score yourmodule:check` | the `diff_sha256` column of `papers/closed-model-frontier/bench2_dataset.jsonl` | every re-fetched diff matches its published sha256. Both benchmarks voided themselves on their own audit gates (`papers/closed-model-frontier/RESULT_bench2_INVALID_2026_09_17.md`), so the rows are data, not a validated benchmark |
 | **B2-adaptive** | the chasing eraser never converges; private-13 read survives (`SURVIVES__vs_adaptive_erasure_1p5B`) | `papers/calib-poison-general/b2_adaptive_erasure.py` | `papers/calib-poison-general/b2_adaptive_erasure_result.json` | verdict string matches; per-cell `private13_auroc` within tolerance |
 | **B2 static** | subspace verifiably zeroed, signal relocates (`SURVIVES__vs_subspace_erasure_1p5B`) | `papers/calib-poison-general/b2_subspace_erasure.py` | `papers/calib-poison-general/b2_subspace_erasure_result.json` | same |
 | **parity control** | the flagship private>naive recovery is probe-capacity-dominated (`PRIVACY_PARTIAL__between_bars`) | `papers/calib-poison-general/honesty_parity_control.py` | `papers/calib-poison-general/honesty_parity_control_result.json` | verdict matches; `parity_gap` sign per cell matches |
@@ -24,6 +30,8 @@ the same credit.
 | **island frame geometry** (CPU-only, ~4 s — the single easiest check in this repo) | the clique's concept-frames co-align far above random; the island sits below the clique in every seed (`SHARED_FRAME_CONFIRMED_GEOMETRICALLY`) | `papers/disjoint-worlds/run_b45.py` | `papers/disjoint-worlds/b45_result.json` | verdict matches; clique median 0.848 vs null p95 0.0566; qwen below in 5/5 seeds |
 | **the bridge + dose + cliff** (CPU-only) | the island's barrier is causal (0.0612→0.9745 vs random 0.0), rank-2 at core (k\*=2), and switch-like (knee t=0.8) | `run_b41.py` · `run_b42.py` · `run_b46.py` (same dir) | `b41_result.json` · `b42_result.json` · `b46_result.json` | verdict strings match; medians within tolerance — see [REPLICATE_legibility.md](papers/disjoint-worlds/REPLICATE_legibility.md) |
 | **OATH corpus audit** (CPU-only) | every published claim doc certifies against its receipts, with five disclosed exceptions | `python -m styxx.corpus_audit papers/` | committed `*.certificate.json` files | your output matches the expected line below, character for character (CPU-deterministic) |
+| **islands demo** (CPU-only, seconds) | from frame geometry alone, with no labels, the instrument separates a planted island from a seeded synthetic cohort (README, MEASURE) | `python -m styxx.islands --demo` | the printed block in README.md, MEASURE | `ISLANDS_PRESENT`, the planted member the only island listed, mind_0 to mind_6 between 0.4407 and 0.4529, ISLAND 0.1636; the same cohort has differed by up to about 0.005 between machines, cause not established ([#93](https://github.com/fathom-lab/styxx/issues/93)) |
+| **sense demo** (CPU-only, seconds) | a channel sharing the agent's latent state reads `COUPLED_BEYOND_CONFOUND__attribution_pending`, an unrelated one `NO_DETECTABLE_COUPLING__above_measured_floor`, and no stronger verdict exists (README, SENSE) | `python -m styxx.sense --demo` | none committed: SENSE has no measurement claim to replicate yet, and the demo is the check | both verdict strings match |
 
 **What the corpus audit prints today, so a divergence means something.** As of 2026-09-01 the
 audit does **not** come back clean, and the honest bar is that you reproduce the same nine
@@ -124,19 +132,25 @@ which would waste the first thing an outside checker ever does for us.
 
 **Tolerance for GPU targets:** bf16 CUDA training is non-deterministic across hardware; the honest
 replication bar is the frozen VERDICT STRING plus per-cell decisive reads within ±0.05 AUROC, with
-your per-cell deltas disclosed in the PR. The CPU target (corpus audit) must match exactly.
+your per-cell deltas disclosed in the PR. A CPU target with a command must match exactly, except
+where its bar states a tolerance (the islands demo); EXTERNAL-1 is a judgement, and its bar is the
+decoy gate.
 
 ## How to replicate
 
 1. Clone at the commit recorded in the target's RESULT doc (each RESULT names its frozen commit).
 2. Run the frozen script verbatim — no flags beyond those in the RESULT's Reproducibility section.
-   GPU targets need ~8GB VRAM and a few hours; the corpus audit needs only CPU.
+   GPU targets need ~8GB VRAM and a few hours; the CPU targets need no GPU, and EXTERNAL-1 needs
+   no code.
 3. Open a PR titled `[replication] <target> — <your name/handle>` adding:
    - your result JSON at `replications/<target>__<handle>.json` (verbatim, unedited);
    - one row to the ledger below (date, hardware, verdict match yes/no, max per-cell delta).
 4. CI runs `python scripts/verify_replication.py <target> replications/<your file>` — it checks the
    verdict string and tolerances against the canonical receipt and posts the comparison. Honest
    mismatches are merged too, labeled `replication-divergent` — divergence is data.
+   `verify_replication.py` knows the four GPU targets (B2-adaptive, B2 static, parity control,
+   E1). For the others the comparison is the `git diff` of the receipt the command rewrote, or,
+   for EXTERNAL-1, the lab's item-by-item comparison, posted in the issue.
 
 ## Credit
 

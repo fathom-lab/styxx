@@ -2,8 +2,8 @@
   "schema": "fathom/zenodo-manifest/v1",
   "generated": "2026-09-01",
   "generated_from_commit": "0f9b9e3ff96c15839bff39ab4bbf06bca0aa6619",
-  "updated": "2026-10-23",
-  "updated_in": "150121ea (#166: the 7.48.0 software version), the 2026-09-29 audit corrections (line references re-pointed; D1 note; the 23042251 notes), #198 (the 7.48.1 software version, 10.5281/zenodo.23200977), #204 (the 7.49.0 software version, 10.5281/zenodo.23221755), and branch release/7.50.0-followups (the 7.50.0 software version, 10.5281/zenodo.23594959)",
+  "updated": "2026-11-02",
+  "updated_in": "150121ea (#166: the 7.48.0 software version), the 2026-09-29 audit corrections (line references re-pointed; D1 note; the 23042251 notes), #198 (the 7.48.1 software version, 10.5281/zenodo.23200977), #204 (the 7.49.0 software version, 10.5281/zenodo.23221755), branch release/7.50.0-followups (the 7.50.0 software version, 10.5281/zenodo.23594959), and branch docs/front-door-repair (README.md line references moved up one line after the dead playground row was removed; D3's line with them)",
   "what_this_is": "One entry per Zenodo deposit this repository cites. It exists because the deposits live outside the release path: nothing in this repo fails when a deposited file is later edited here, so the repo and the permanent record drift apart silently. tests/test_zenodo_manifest.py is the mechanism that was missing.",
   "what_this_is_not": "This manifest was built entirely from inside the repository. No Zenodo API call was made and no deposit page was fetched. Every statement about what a remote record CONTAINS is either (a) quoted from a deposit receipt this repo committed at deposit time, or (b) marked UNCHECKABLE. Where a receipt exists it is named in `evidence`. Absence of a receipt is not evidence that a deposit is wrong; it means we cannot check it from here.",
   "hashing_note": "Two hashes are recorded per text file. `sha256_local_bytes` is the sha256 of the bytes in THIS checkout; on Windows with core.autocrlf=true those bytes are CRLF, and the same file checked out on Linux CI is LF, so that hash is NOT portable. `sha256_lf_normalized` (CRLF collapsed to LF before hashing) is the portable content identity and is what the drift test asserts on. This is the same failure the repo's own .gitattributes records for styxx/centroids/*.json, where a CRLF-rendered pin broke an LF CI checkout. For binary files (pdf, png, zip) normalization is meaningless and would corrupt the file, so only `sha256_local_bytes` is recorded and asserted.",
@@ -49,7 +49,7 @@
     {
       "id": "D3",
       "file": "README.md",
-      "line": 504,
+      "line": 503,
       "current_text": "| DOI (concept, always-latest) | [10.5281/zenodo.19326174](https://doi.org/10.5281/zenodo.19326174) |",
       "surrounding_claim": "listed in the repo's own link table directly above the spec DOI, in a table of styxx project links",
       "defect": "19326174 IS a concept DOI, but it is the concept record of the Fathom research-paper series (v19, v20, v22, v23, v24, v26, v27, v28, v30, v31, v32, v33, v34 ...), not of the styxx software. Presenting it in a project link table as the 'always-latest' DOI implies it resolves to the current software release; it resolves to the most recent PAPER in the chain. The software concept DOI is 10.5281/zenodo.19758618.",
@@ -90,7 +90,7 @@
       "status": "NO_LOCAL_COUNTERPART",
       "cited_in": [
         "README.md:21",
-        "README.md:504",
+        "README.md:503",
         "many papers"
       ],
       "deposited_files": [],
@@ -116,7 +116,7 @@
       "status": "NO_LOCAL_COUNTERPART",
       "cited_in": [
         "CITATION.cff:33",
-        "README.md:507"
+        "README.md:506"
       ],
       "deposited_files": [],
       "notes": "Named by CITATION.cff line 33 since 2026-09-29 (defect D1 resolved). Latest version: 7.50.0, 10.5281/zenodo.23594959 (release/zenodo-deposit-receipt-software-v7.50.0.json, concept_latest_after_publish), since 2026-10-23. The concept holds four versions before it (release/zenodo-record-software-v7.50.0-readback.json: relations.version index 4, counted from 0): 7.49.0, 10.5281/zenodo.23221755 (release/zenodo-deposit-receipt-software-v7.49.0.json); 7.48.1, 10.5281/zenodo.23200977 (release/zenodo-deposit-receipt-software-v7.48.1.json); 7.48.0, 10.5281/zenodo.23042251 (release/zenodo-deposit-receipt-software-v7.48.0.json); and 6.2.0, 10.5281/zenodo.19758619 (release/zenodo-deposit-receipt-software-v6.2.0.json)."
@@ -177,7 +177,7 @@
       "status": "DIVERGED",
       "cited_in": [
         "README.md:20",
-        "README.md:505",
+        "README.md:504",
         "CITATION.cff:57"
       ],
       "deposited_files": [
@@ -272,7 +272,7 @@
       "cited_in": [
         "CITATION.cff:46",
         "CITATION.cff:47",
-        "README.md:506"
+        "README.md:505"
       ],
       "deposited_files": [
         {
