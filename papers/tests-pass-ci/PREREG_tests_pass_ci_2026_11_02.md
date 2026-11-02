@@ -1088,10 +1088,17 @@ with `[cut]`. Repository words inside the prose stay as they are.
 
 ### P8.5 Order and ids
 
-Items and decoys of a packet are shuffled by
-`random.Random(int(sha256((beacon_hex + ":" + packet_name).encode("utf-8")).hexdigest(), 16))` and numbered after
-the shuffle (`P1-001`, ...), so no id carries an arm (EXTERNAL-1's id leak [SC-CO §4]). Packet Q, built before the
-beacon exists, uses `"tests-pass-ci:Q"` in place of `beacon_hex`.
+Items and decoys of a packet, real and decoy together, are put in the order of their item sha256 (the sha256 of the
+step-2 item text; for a step-1-only item, of its text framed as an item with an empty CI block), so the starting order
+says nothing about which items are decoys. They are then shuffled by
+`random.Random(int(sha256((beacon_hex + ":" + packet_name + ":" + salt_hex).encode("utf-8")).hexdigest(), 16))`,
+where `salt_hex` is the lowercase hex of the packet key's 32-byte salt (P9), and numbered after the shuffle
+(`P1-001`, ...), so no id carries an arm (EXTERNAL-1's id leak [SC-CO §4]). The salt is secret until the key is
+released and is bound by the key digest committed before any seat reads (§14), so no one holding the public packet
+can recompute the order, and anyone holding the released key can. A decoy whose bytes equal a real item's is refused.
+Packet Q, built before the beacon exists, uses `"tests-pass-ci:Q"` in place of `beacon_hex`. (The draft of this
+rule shuffled the real items, placed before the decoys, by the public seed alone, so the seed and the item count gave
+every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 2026-11-02 before any seat read.)
 
 ## P9. Decoys
 

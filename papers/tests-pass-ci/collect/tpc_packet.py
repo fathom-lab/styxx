@@ -232,21 +232,35 @@ def select_p2(rows: list, budget: int = PACKET_MAX - DECOYS_PER_PACKET) -> dict:
 
 
 # ---- P8.5, the shuffle, and the key -----------------------------------------------------------------------------
-def shuffle_seed(seed_hex: str, packet: str) -> int:
-    return int(hashlib.sha256((seed_hex + ":" + packet).encode("utf-8")).hexdigest(), 16)
+def shuffle_seed(seed_hex: str, packet: str, salt: bytes) -> int:
+    """P8.5: the shuffle's seed, keyed by the packet key's 32-byte salt. The salt is secret until the key is released
+    and bound by the key digest committed before any seat reads, so no one holding the public packet (its seed and
+    item count are printed in it) can recompute the order, and anyone holding the released key can."""
+    if len(salt) != 32:
+        raise PacketError("the packet key's salt is 32 bytes (P9)")
+    return int(hashlib.sha256((seed_hex + ":" + packet + ":" + salt.hex()).encode("utf-8")).hexdigest(), 16)
 
 
 def assemble(packet: str, seed_hex: str, reals: list, decoys: list, *, beacon: dict, salt: Optional[bytes] = None,
              extra: Optional[dict] = None) -> dict:
-    """Shuffle real items and decoys (P8.5), number them after the shuffle, and seal the key (P9).
+    """Order real items and decoys (P8.5), number them after the shuffle, and seal the key (P9).
 
     reals: [{"key": {...}, "item": build_item(...)}], in a deterministic order; decoys: the sealed set's entries.
+    All entries, real and decoy together, are put in the order of their item sha256, so the starting order says
+    nothing about which are decoys; then shuffled under `shuffle_seed`, keyed by the key's salt. A decoy whose bytes
+    equal a real item's is refused (the key could not tell them apart).
     Returns {"public": the packet the seats get, "key": the key object, "key_bytes", "salt", "key_digest"}."""
-    entries = [("real", r) for r in reals] + [("decoy", d) for d in sorted(decoys, key=lambda d: d["item_sha256"])]
-    rng = random.Random(shuffle_seed(seed_hex, packet))
+    salt = salt if salt is not None else tpc_decoys.new_salt()
+    entries = ([("real", r, r["item"]["item_sha256"]) for r in reals]
+               + [("decoy", d, d["item_sha256"]) for d in decoys])
+    shared = {r["item"]["item_sha256"] for r in reals} & {d["item_sha256"] for d in decoys}
+    if shared:
+        raise PacketError(f"{len(shared)} decoys have the bytes of a real item of {packet}")
+    entries.sort(key=lambda e: e[2])
+    rng = random.Random(shuffle_seed(seed_hex, packet, salt))
     rng.shuffle(entries)
     public_items, key_items = [], {}
-    for i, (kind, e) in enumerate(entries, 1):
+    for i, (kind, e, _) in enumerate(entries, 1):
         pid = f"{packet}-{i:03d}"
         if kind == "real":
             it = e["item"]
@@ -269,7 +283,6 @@ def assemble(packet: str, seed_hex: str, reals: list, decoys: list, *, beacon: d
     if extra:
         key.update(extra)
     key_bytes = tpc_decoys.canonical(key)
-    salt = salt if salt is not None else tpc_decoys.new_salt()
     return {"public": public, "key": key, "key_bytes": key_bytes, "salt": salt,
             "key_digest": tpc_decoys.salted_digest(salt, key_bytes)}
 

@@ -65,7 +65,7 @@ M = [
      "    never = set(in_m_cands) | set(rule_r)"),
     ("top-ups cut by lowest w", "tpc_packet.py", "                k = keep_topups.pop()  # the highest w",
      "                k = keep_topups.pop(0)"),
-    ("shuffle ignores the seed", "tpc_packet.py", "    rng = random.Random(shuffle_seed(seed_hex, packet))",
+    ("shuffle ignores the seed", "tpc_packet.py", "    rng = random.Random(shuffle_seed(seed_hex, packet, salt))",
      "    rng = random.Random(0)"),
     ("spool not read back", "tpc_seats.py", "    if back != data:", "    if False:"),
     ("inconsistent step-2 label accepted", "tpc_seats.py", '    if not consistent(scope, obj["label"]):', "    if False:"),
@@ -98,6 +98,12 @@ M = [
      '        if n.startswith("Post ") and n[len("Post "):] in not_run:', "        if False:"),
     ("impossible step listings accepted", "tpc_decoys.py",
      '    for p in step_pattern_problems(ci):', "    for p in []:"),
+    # P8.5: the order says nothing about which items are decoys
+    ("the shuffle starts from the reals then the decoys", "tpc_packet.py", "    entries.sort(key=lambda e: e[2])",
+     "    pass"),
+    ("the shuffle keyed by the public seed alone", "tpc_packet.py",
+     '    return int(hashlib.sha256((seed_hex + ":" + packet + ":" + salt.hex()).encode("utf-8")).hexdigest(), 16)',
+     '    return int(hashlib.sha256((seed_hex + ":" + packet).encode("utf-8")).hexdigest(), 16)'),
 ]
 
 

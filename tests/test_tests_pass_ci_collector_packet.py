@@ -240,10 +240,83 @@ def test_assemble_shuffles_by_the_seed_and_numbers_after_the_shuffle():
     for x in a["public"]["items"]:
         assert set(x) == {"id", "steps", "step1_text", "item_text"}  # nothing else reaches a seat
     assert a["key_digest"] == hashlib.sha256(b"\x03" * 32 + a["key_bytes"]).hexdigest()
+    d = tpc_packet.assemble("P2", "a" * 64, _reals(), _decoys(), beacon=beacon, salt=b"\x04" * 32)
+    assert [x["item_text"] for x in a["public"]["items"]] != [x["item_text"] for x in d["public"]["items"]]
+
+
+# ---- P8.5: the order says nothing about which items are decoys (finding 3 of 2026-11-02) --------------------
+def _public_sha(it):
+    import tpc_items
+    text = it["item_text"] if it["steps"] == 2 else tpc_items.item_text(it["step1_text"], "")
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _shuffled(order, seed_text):
     import random
-    order = list(range(35))
-    random.Random(int(hashlib.sha256(("a" * 64 + ":P2").encode()).hexdigest(), 16)).shuffle(order)
-    assert len(set(order)) == 35
+    order = list(order)
+    random.Random(int(hashlib.sha256(seed_text.encode("utf-8")).hexdigest(), 16)).shuffle(order)
+    return order
+
+
+def test_decoy_ids_cannot_be_predicted_from_the_public_seed_and_item_count():
+    """The draft put the real items before the decoys and shuffled by the public seed alone: the permutation, and so
+    every decoy's id, followed from the seed and the item count (30 of 30 on both dry-run P2 packets)."""
+    beacon = {"kind": "bitcoin", "beacon_hex": "a" * 64}
+    reals, decoys = _reals(70), _decoys()
+    hits = []
+    for k in range(20):
+        a = tpc_packet.assemble("P2", "a" * 64, reals, decoys, beacon=beacon, salt=bytes([k + 1]) * 32)
+        ids = [x["id"] for x in a["public"]["items"]]
+        n = len(ids)
+        truth = {i for i, pid in enumerate(ids) if a["key"]["items"][pid]["decoy"]}
+        # the draft's predictor: positions that the public permutation fills from the last 30 slots
+        guess = {i for i, src in enumerate(_shuffled(range(n), a["public"]["seed"] + ":P2")) if src >= n - 30}
+        hits.append(len(truth & guess))
+    assert max(hits) < 30
+    assert sum(hits) / len(hits) < 15  # chance is 30 x 30 / 100 = 9
+
+
+def test_the_order_needs_the_key_salt_and_starts_from_the_item_sha256_order():
+    beacon = {"kind": "bitcoin", "beacon_hex": "a" * 64}
+    salt = b"\x0b" * 32
+    a = tpc_packet.assemble("P2", "a" * 64, _reals(12), _decoys(), beacon=beacon, salt=salt)
+    shas = [_public_sha(it) for it in a["public"]["items"]]
+    assert all(a["key"]["items"][it["id"]]["item_sha256"] == s for it, s in zip(a["public"]["items"], shas))
+    canonical = sorted(shas)
+    # with the released salt anyone can recompute the order from the public items
+    assert _shuffled(canonical, "a" * 64 + ":P2:" + salt.hex()) == shas
+    # without it, the public seed alone does not give it
+    assert _shuffled(canonical, "a" * 64 + ":P2") != shas
+    with pytest.raises(tpc_packet.PacketError):
+        tpc_packet.shuffle_seed("a" * 64, "P2", b"short")
+
+
+def test_a_decoy_with_a_real_items_bytes_is_refused():
+    reals = _reals(3)
+    decoys = _decoys()
+    reals[0]["item"] = dict(reals[0]["item"], item_sha256=decoys[0]["item_sha256"])
+    with pytest.raises(tpc_packet.PacketError):
+        tpc_packet.assemble("P2", "a" * 64, reals, decoys, beacon={"kind": "bitcoin"}, salt=b"\x03" * 32)
+
+
+def test_the_sealed_set_is_rebuilt_from_the_released_key_and_the_public_packet():
+    """Finding 12: once both salts are released, anyone can rebuild decoyset_P2.json from key_P2.json and
+    packet_P2.json and check it against the lock row's digest."""
+    set_obj, _ = tpc_decoys.build_set(synthetic_decoys.spec("P2"))
+    sealed = tpc_decoys.seal_set(set_obj, salt=b"\x0c" * 32)
+    a = tpc_packet.assemble("P2", "a" * 64, _reals(8), set_obj["decoys"], beacon={"kind": "bitcoin"},
+                            salt=b"\x0d" * 32)
+    fields = ("item_sha256", "side", "construction", "label", "scope", "evidence", "preexisting", "names_only",
+              "source_kind")
+    rebuilt = []
+    for it in a["public"]["items"]:
+        k = a["key"]["items"][it["id"]]
+        if k["decoy"]:
+            rebuilt.append(dict({f: k[f] for f in fields}, step1_text=it["step1_text"], item_text=it["item_text"]))
+    rebuilt.sort(key=lambda d: d["item_sha256"])
+    data = tpc_decoys.canonical({"packet": "P2", "decoys": rebuilt})
+    assert data == sealed["set_bytes"]
+    assert tpc_decoys.salted_digest(b"\x0c" * 32, data) == sealed["digest"]
 
 
 def test_q_uses_the_prereg_seed_text():
