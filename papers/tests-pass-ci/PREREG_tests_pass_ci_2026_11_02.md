@@ -113,6 +113,40 @@ window is read before the freeze; the collector's guard (P21) refuses it by name
   The read logs, their manifests, the two scripts that made them and the material sit under
   `C:/Users/heyzo/clawd/data/direction_a/sealed/P2/material/`, off the repository until P2's key is released; any
   later read for the set is added here before the signing commit.
+
+  A second round of reads for the set, on 2026-11-03 (UTC), by the lab agent building P2's decoy set (it sits on no
+  seat), from the development frame of 2026-10-29: Claude Code and Cursor pull requests kept in that frame (100+ stars,
+  not a fork), neither drawn into the development store nor read by the runs above, taken in the same order as the run
+  of 20:01Z (the sha256 of `"tests-pass-ci:P2-decoy-material:"` and the pull request's id, so the choice is not the
+  builder's) and read as the collector reads a row (P4.2, `tpc_read.read_row`; logs of failing jobs only, no artifact),
+  each row checked opened before 2026-11-02 and asked of the seal guard before its batch, testreceipt's 138 items
+  refused. The token was the lab's, passed in the environment of the one command that ran each read (the runs above
+  used the machine's `gh` login). 486 rows read (446 Claude Code, 40 Cursor; the latest opened
+  2026-10-29T23:49:37Z), 4 left unread after read errors; the run holding the Cursor rows stopped at the disk floor
+  (P4.3) with 44 of them unread:
+  - 04:35:30Z to 04:35:35Z: 7 job logs the disk floor had skipped in the run of 20:01Z, 7 REST log requests (answered
+    302) and 7 downloads (answered 200), 3,122,713 response bytes; read log
+    `material2/logs/readlog_material2_logs.jsonl`, sha256
+    `624fe00b186318259a8c0892f7e3ad184e26a98be68be80707ac9d5fcee355a5`;
+  - 04:35:43Z to 05:00:39Z: 236 rows, 12 GraphQL requests, 3,848 REST requests and 25 log downloads (3,837 answered
+    200, 25 answered 302, 21 answered 502 and were asked again, 2 answered 404), 81,869,301 response bytes; read log
+    `material2/store/readlogs/readlog_material2_20261103.jsonl`, sha256
+    `ff76329958a170d2de25ec1e43ad326457f3a5224a520b654d3b5cec67f373ce`;
+  - 04:55:07Z to 05:04:50Z: 250 rows, 13 GraphQL requests, 3,749 REST requests and 50 log downloads (3,759 answered
+    200, 50 answered 302, 3 answered 502 and were asked again), 162,260,605 response bytes; read log
+    `material2/store_b/readlogs/readlog_material2_20261103.jsonl`, sha256
+    `618604c415f8906b47c933427d7cc5da0789188d14b9eed69283a1e1119d5841`.
+
+  In all, 753 pull requests opened before 2026-11-02 were read for P2's decoys (the development store's 230, then 37,
+  then 486), 662 of them Claude Code or Cursor. 40 of those read `tests failed` (37 Claude Code, 3 Cursor); 32 show
+  every failing test-like job's excerpt found by the step's times and carry no date trace (1 Cursor; 24
+  repositories, 27 sources at two a repository). Of the shapes P9 asks for beyond a test failure with its log: a
+  failure the CI record shows, in its own bytes, also failing without the change, 0; a job named for tests failing at
+  installation with its tests skipped, 1, whose CI reads `no test result` (outside P2's combinations); failures
+  outside Actions only, 2, neither a test failure the builder can key with a clean label. The
+  builder read each candidate privately (P9). Scripts, read logs and material sit under
+  `C:/Users/heyzo/clawd/data/direction_a/sealed/P2/material2/` and `.../sealed/P2/build2/`, off the repository until
+  P2's key is released.
 - **The distinguishability audit of P9**, run on 2026-11-02 by the repair step (it sits on no seat): the development
   store's 230 rows (all opened 2026-10-29) and the material's job logs above, read on this box with no request to
   GitHub; its outputs are counts and feature names only
@@ -1219,7 +1253,9 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
     material read for P2's decoys on 2026-11-02 (§0.4) hold 15 Claude Code pull requests whose CI reads `tests failed`
     (9 and 6) and no Cursor pull request with anything failing, against the 24 P2 decoys whose construction needs a
     test failure; the builder reads more pull requests opened before 2026-11-02 (each read added to §0.4) rather
-    than leave M's mix.
+    than leave M's mix. With the second round of 2026-11-03 the material holds 37 Claude Code and 3 Cursor pull
+    requests whose CI reads `tests failed`, 32 of them (1 Cursor) with every failing test-like job's excerpt found by
+    the step's times.
   - P1's decoys imitate A1 items (2025-like ones carry names-only CI blocks); P2's imitate A2 items.
 - No text a construction writes carries a marker word (`tpc_decoys.MARKER`), and no decoy carries a date trace once
   P8.1's rule has masked it. The marker check reads only what the construction wrote: the lines it inserted into the
@@ -1299,11 +1335,19 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
   jobs rendered otherwise, every one by its annotations' order or by which 20 were shown; the CI block now orders
   annotations by check run (P8.3), and all 44 render byte for byte. So before P2's set is sealed, the builder runs
   the audit on a trial build of it (`tpc_packet.py decoys` to a scratch folder) against the development store's real
-  items in P2's combinations, their logs merged (`set` mode), keeps its output beside the spec (released with the
-  key), and changes the set, where its top features point, until the logistic model's balanced accuracy has a
+  items in P2's combinations, their logs merged (`set` mode), leaving out of the stand-ins every pull request the
+  spec draws on (`--exclude-spec`: a decoy's source, a flip's donor and its reference run), so no real decoy stands
+  beside its own item (the second round of 2026-11-03 found the mode would have set a real decoy beside itself),
+  with the material read for the set (§0.4) as further stand-ins where the builder adds them (`--store`; each run
+  kept), keeps its output beside the spec (released with the key), and changes the set, where its top features point, until the logistic model's balanced accuracy has a
   permutation p-value of 0.05 or more; only then is the set sealed.
 - The RESULT prints per packet how many decoys were real and how many synthetic, and each voter's score on each
-  construction. Decoy keys are the builder's reading.
+  construction. Decoy keys are the builder's reading (the lead's decision of 2026-11-02): the builder reads each
+  candidate source's description and CI record itself, privately, and writes each key from that reading; no script
+  writes a claim or a key the builder has not read, since a decoy's key is only as good as that reading. The secrecy
+  is owed to the seats and the public: decoy contents, source ids, keys and salts live only in the git-ignored
+  `C:/Users/heyzo/clawd/data/direction_a/` tree and the salts folder; nothing of a decoy enters a commit, a file
+  outside those folders, or a report, and the lead does not see decoy contents.
 
 ## P10. Seats
 

@@ -331,6 +331,8 @@ says so is refused; and the CI block shows annotations in the check runs' order,
 annotations no longer sit apart (`checks/distinguish_audit.py`'s identity mode: 18 of 44 real failing jobs made again
 through the flip rendered otherwise before, 44 of 44 byte for byte after). `checks/distinguish_audit.py` is the
 distinguishability audit P9 asks the builder to run on a trial build of P2's set before sealing it (numbers and feature
-names only; it needs numpy and scikit-learn, and nothing in the collector imports it). The tests-pass-ci tests now
+names only; it needs numpy and scikit-learn, and nothing in the collector imports it). Its `set` mode leaves
+every pull request the spec draws on out of the real stand-ins (`--exclude-spec`), so a real decoy never stands
+beside its own item, and takes the material read for the set as further stand-ins (`--store`). The tests-pass-ci tests now
 number 352 (the collector's 336 and the PREREG's 16), and the mutation check breaks 119 rules, 119 caught:
 `checks/mutation_check_output_repair2_2026_11_02.txt`.

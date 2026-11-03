@@ -26,8 +26,11 @@ out the same way.
         times): what the constructions themselves leave. --only claim_written or step_flip keeps one construction;
         --real-with-log keeps the real items whose CI block shows a failing test job's log excerpt (the shape a step
         flip makes)
-    py -3.12 checks/distinguish_audit.py set OUT.json STORE DECOYSET.json [--logs DIR]
+    py -3.12 checks/distinguish_audit.py set OUT.json STORE DECOYSET.json [--logs DIR ...] [--store DIR ...]
+                                         [--exclude-spec SPEC.json]
         a decoy set (decoyset_<P>.json, its item texts) against the pre-window store's real items in P2's combinations
+        (and those of each further pre-window --store), leaving out every pull request the spec draws on (a decoy's
+        source, a flip's donor and reference run), so a real decoy never stands beside its own item; --logs may repeat
     py -3.12 checks/distinguish_audit.py identity OUT.json STORE [--logs DIR]
         no classifier: each real failing test-like job of the store with one failing test step is made again through
         the step flip (`tpc_decoys.fail_test_step`) with its own log, annotations, times, later steps and skipped post
@@ -273,12 +276,15 @@ def _with_logs(ci: dict, pr_id, logs_dir) -> dict:
     store has none (pre-window logs read for P2's decoy material)."""
     if logs_dir is None:
         return ci
+    dirs = [logs_dir] if isinstance(logs_dir, (str, Path)) else list(logs_dir)
     for j in tpc_items.failing_test_like_jobs(ci):
         if str(j["id"]) in ci["logs"]:
             continue
-        p = Path(logs_dir) / str(pr_id) / f"{j['id']}.log.gz"
-        if p.exists():
-            ci["logs"][str(j["id"])] = gzip.decompress(p.read_bytes())
+        for d in dirs:
+            p = Path(d) / str(pr_id) / f"{j['id']}.log.gz"
+            if p.exists():
+                ci["logs"][str(j["id"])] = gzip.decompress(p.read_bytes())
+                break
     return ci
 
 
@@ -417,12 +423,36 @@ def constructed(store: Path, logs_dir=None, only=None, real_with_log: bool = Fal
     return rows, labels, groups, dict(counts)
 
 
-def from_set(store: Path, set_path: Path, logs_dir=None) -> tuple:
+def spec_sources(spec_path: Path) -> set:
+    """The pull requests a decoy spec draws on (each decoy's source, and a step flip's donor and reference run),
+    normalised as `tpc_decoys.norm_pr` does: none of them stands in as a real item beside the set it built."""
+    out = set()
+    for e in _json(spec_path).get("decoys") or []:
+        refs = [(e.get("source") or {}).get("pr")]
+        fl = e.get("flip") or {}
+        refs += [(fl.get("donor") or {}).get("pr"), (fl.get("reference") or {}).get("pr")]
+        for ref in refs:
+            if ref:
+                out.add(tpc_decoys.norm_pr(ref))
+    return out
+
+
+def from_set(store: Path, set_path: Path, logs_dir=None, exclude=(), stores=()) -> tuple:
+    """The set's decoys against the real items in P2's combinations of the store (and of any further pre-window
+    `stores`), leaving out every pull request in `exclude` (the decoys' own sources, `spec_sources`), so a real decoy
+    never stands beside its own item."""
     rows, labels, groups = [], [], []
-    for r, body, ci, it in _real_items(Path(store), logs_dir):
-        rows.append(features(it["step1_text"], it["item_text"]))
-        labels.append(0)
-        groups.append(f"real:{r['pr_id']}")
+    exclude = set(exclude)
+    left_out = 0
+    for st in [Path(store)] + [Path(s) for s in stores]:
+        for r, body, ci, it in _real_items(st, logs_dir):
+            if tpc_decoys.norm_pr(f"{r.get('repo')}#{r.get('number')}") in exclude:
+                left_out += 1
+                continue
+            rows.append(features(it["step1_text"], it["item_text"]))
+            labels.append(0)
+            groups.append(f"real:{r['pr_id']}")
+    from_set.left_out = left_out
     s = _json(set_path)
     for i, d in enumerate(s["decoys"]):
         rows.append(features(d["step1_text"], d["item_text"]))
@@ -486,10 +516,22 @@ def identity(store: Path, logs_dir=None) -> dict:
 def main(argv: list) -> int:
     mode, out = argv[1], Path(argv[2])
     rest = argv[3:]
-    logs = only = None
-    if "--logs" in rest:
+    logs = only = spec = None
+    stores = []
+    logs_all = []
+    while "--logs" in rest:
         i = rest.index("--logs")
-        logs = rest[i + 1]
+        logs_all.append(rest[i + 1])
+        rest = rest[:i] + rest[i + 2:]
+    if logs_all:
+        logs = logs_all[0] if len(logs_all) == 1 else logs_all
+    while "--store" in rest:
+        i = rest.index("--store")
+        stores.append(rest[i + 1])
+        rest = rest[:i] + rest[i + 2:]
+    if "--exclude-spec" in rest:
+        i = rest.index("--exclude-spec")
+        spec = rest[i + 1]
         rest = rest[:i] + rest[i + 2:]
     if "--only" in rest:
         i = rest.index("--only")
@@ -511,7 +553,10 @@ def main(argv: list) -> int:
         rows, labels, groups, extra = constructed(Path(rest[0]), logs, only, real_with_log)
         extra = dict(extra, only=only, real_with_log=real_with_log)
     elif mode == "set":
-        rows, labels, groups = from_set(Path(rest[0]), Path(rest[1]), logs)
+        excl = spec_sources(Path(spec)) if spec else set()
+        rows, labels, groups = from_set(Path(rest[0]), Path(rest[1]), logs, excl, stores)
+        extra = {"stores": 1 + len(stores), "excluded_sources": len(excl),
+                 "real_items_left_out_as_sources": from_set.left_out}
     else:
         raise SystemExit(f"unknown mode {mode!r}")
     res = {"mode": mode, "logs_merged": logs is not None, "construction_counts": extra}
