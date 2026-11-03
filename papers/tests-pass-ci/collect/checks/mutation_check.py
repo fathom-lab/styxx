@@ -19,7 +19,7 @@ and the last group the second review of 2026-11-02 (P2's shapes, annotations, fl
 across packets, the pinned main and the signing commit, the committed digests, and the reviewer's ten surviving
 mutants R1 to R4, R10, R17, R18, R29, R31 and R32); the last rules answer the repair round of 2026-11-02 that came
 after it (markers read only in the text a construction writes, P2's agent mix, preexisting failures shown by the CI
-record's own bytes).
+record's own bytes, annotations shown in the check runs' order).
 
 A rule may name a test file (its fifth field) that runs ahead of the others; every target still runs until one fails, so the hint
 only orders the run and never narrows it.
@@ -281,6 +281,9 @@ M = [
     ("a changed record may show a preexisting failure", "tpc_decoys.py",
      '        if src.get("kind") == "synthetic" and src.get("ci_changed") is not False:', "        if False:",
      "items_decoys"),
+    ("annotations in the record's list order", "tpc_items.py",
+     "    ann = [a for _, a in sorted(enumerate(ann), key=lambda t: (run_at.get(t[1].get(\"check_run_id\"), len(runs)), t[0]))]\n",
+     "", "items_decoys"),
 ]
 
 

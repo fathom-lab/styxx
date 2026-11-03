@@ -220,6 +220,23 @@ def test_render_ci_lines_order_and_redaction():
     assert info["logs"][0]["how"] == "error_marker"
 
 
+def test_annotations_follow_the_check_runs_order_whatever_the_records_list_order():
+    """P8.3: annotations are shown in the check runs' order, each run's own in its order, so a step flip that appends
+    its donor's annotations at the end of the list renders as the real failing run does (the distinguishability audit
+    of 2026-11-02: re-making real failing jobs through the flip changed 18 of 44 items, by annotation order)."""
+    runs = [{"id": 7, "name": "build", "app": "github-actions", "conclusion": "failure"},
+            {"id": 3, "name": "test (ubuntu)", "app": "github-actions", "conclusion": "failure"},
+            {"id": 9, "name": "Lint", "app": "github-actions", "conclusion": "failure"}]
+    ann = [{"check_run_id": 3, "level": "failure", "message": "t1"}, {"check_run_id": 7, "level": "failure", "message": "b1"},
+           {"check_run_id": 3, "level": "failure", "message": "t2"}, {"check_run_id": 9, "level": "warning", "message": "l1"}]
+    base = {"check_runs": runs, "statuses": [], "jobs": [], "logs": {}}
+    a, _ = tpc_items.render_ci(dict(base, annotations=ann))
+    b, _ = tpc_items.render_ci(dict(base, annotations=[ann[1], ann[3], ann[0], ann[2]]))
+    assert a == b
+    shown = [ln.rsplit(": ", 1)[1] for ln in a.split("\n") if ln.startswith("annotation: ")]
+    assert shown == ["b1", "l1", "t1", "t2"]  # build, Lint, test (ubuntu): the check lines' order
+
+
 def test_the_ci_block_carries_no_repository_name_in_runner_paths_tokens_or_a_donor_log():
     """The review of 2026-11-02: the runner's working path named the repository in 6 of 26 real two-step-like items,
     and the short name appeared in 15 of 26 CI blocks; a synthetic flip's donor log named another repository."""

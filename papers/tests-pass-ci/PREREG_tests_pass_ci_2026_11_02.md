@@ -113,6 +113,10 @@ window is read before the freeze; the collector's guard (P21) refuses it by name
   The read logs, their manifests, the two scripts that made them and the material sit under
   `C:/Users/heyzo/clawd/data/direction_a/sealed/P2/material/`, off the repository until P2's key is released; any
   later read for the set is added here before the signing commit.
+- **The distinguishability audit of P9**, run on 2026-11-02 by the repair step (it sits on no seat): the development
+  store's 230 rows (all opened 2026-10-29) and the material's job logs above, read on this box with no request to
+  GitHub; its outputs are counts and feature names only
+  (`_direction_a_2026_11_02/audit_distinguish/AUDIT_distinguishability_2026_11_02.md`).
 
 ### 0.5 Other reads by this file's writer
 
@@ -1108,7 +1112,11 @@ with `[cut]`. Repository words inside the prose stay as they are.
 - Per check run, `check: <name> (<app slug>) -> <conclusion>`; per status, `status: <context> -> <state>`.
 - Per Actions job that failed or is test-like, `job: <name> -> <conclusion>`, then `step: <name> -> <conclusion>` for
   each step.
-- Up to 20 annotations of failed check runs, `annotation: <level>: <message, at most 300 characters>`.
+- Up to 20 annotations of failed check runs, `annotation: <level>: <message, at most 300 characters>`, in the
+  check runs' order above and each run's own in the order the record lists them, so where an annotation sits in
+  the record says nothing (a step flip appends its donor's: the distinguishability audit of 2026-11-02 made 44
+  real failing jobs of the development store again through the flip, with their own logs, annotations and times,
+  and 18 items differed, every one by the order of its annotations or by which 20 were shown; P9).
 - Log excerpts, by code and without judgement: for each failing test-like job, in job-id order, at most 3, the log
   decoded as UTF-8 with replacement, ANSI escapes and each line's leading timestamp removed, URLs replaced and dates
   masked (P8.1). For each step of the job whose conclusion is failure or timed_out, in step order, a span of lines: it
@@ -1207,7 +1215,11 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
     rarer among the decoys than among P2's real items, which marks some real items as real and no decoy as a decoy,
     and touches only the agent sets' rates, not k. P2's build record counts its real items' agents by stratum beside
     the decoys' mix, and the RESULT prints both. Q's and P1's decoys hold no agent mix: their real items are not drawn
-    from M (Q's are the development store's claimers, P1's testreceipt's items).
+    from M (Q's are the development store's claimers, P1's testreceipt's items). The development store and the
+    material read for P2's decoys on 2026-11-02 (§0.4) hold 15 Claude Code pull requests whose CI reads `tests failed`
+    (9 and 6) and no Cursor pull request with anything failing, against the 24 P2 decoys whose construction needs a
+    test failure; the builder reads more pull requests opened before 2026-11-02 (each read added to §0.4) rather
+    than leave M's mix.
   - P1's decoys imitate A1 items (2025-like ones carry names-only CI blocks); P2's imitate A2 items.
 - No text a construction writes carries a marker word (`tpc_decoys.MARKER`), and no decoy carries a date trace once
   P8.1's rule has masked it. The marker check reads only what the construction wrote: the lines it inserted into the
@@ -1270,6 +1282,26 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
   and a set that does not hash to the lock row.
 - **Answers before keys**: each seat's answer file for a packet is hashed, and the sha256 is committed in a pull
   request that opens before the pull request releasing that packet's salt and key (`G_KEYS`, `G_A1_V`).
+- **A distinguishability audit** (the repair of 2026-11-02; `checks/distinguish_audit.py`; its numbers in
+  `_direction_a_2026_11_02/audit_distinguish/AUDIT_distinguishability_2026_11_02.md`, every item read there opened
+  before 2026-11-02). A logistic regression and a depth-2 tree read form only: lengths and line counts, the
+  description's markdown shape, check, status, job, step, annotation and log lines, conclusions, apps, the runner's
+  own steps, generic CI words in names, the tokens the builder writes and date-like strings left; they are scored
+  held out by stratified group k-fold over 20 seeds, a group being the source pull request, with a permutation test.
+  The dry-run P2 packet rebuilt under the stand-in hash with this code (5 two-step real items beside 30 decoys of the
+  invented fixture) is told apart at accuracy 0.971 against a majority share of 0.857 (balanced 0.90, permutation
+  p = 0.005), and the development store's 54 two-step-like items against the same decoys at 0.988 against 0.643: the
+  fixture's decoys are short invented records of one job, by description length, check count and CI size, and no
+  sealed set holds them. Made from the development store's own items by the builder's transforms, claims written
+  beside real failures are not told apart (balanced 0.53, p = 0.26); step flips of passing claimers are, against real
+  failing items with a log, at balanced 0.69 (p = 0.015), by their sources' descriptions and CI size and by their
+  single failing job. Made again through the flip with their own logs, annotations and times, 18 of 44 real failing
+  jobs rendered otherwise, every one by its annotations' order or by which 20 were shown; the CI block now orders
+  annotations by check run (P8.3), and all 44 render byte for byte. So before P2's set is sealed, the builder runs
+  the audit on a trial build of it (`tpc_packet.py decoys` to a scratch folder) against the development store's real
+  items in P2's combinations, their logs merged (`set` mode), keeps its output beside the spec (released with the
+  key), and changes the set, where its top features point, until the logistic model's balanced accuracy has a
+  permutation p-value of 0.05 or more; only then is the set sealed.
 - The RESULT prints per packet how many decoys were real and how many synthetic, and each voter's score on each
   construction. Decoy keys are the builder's reading.
 

@@ -20,7 +20,9 @@ count, "10/29 passed"). Decoys built in October would otherwise carry October da
   masked; cut at DESC_MAX with "[cut]". Repository words inside the prose stay as they are.
 - `render_ci` (P8.3): per check run `check: <name> (<app slug>) -> <conclusion>`; per status
   `status: <context> -> <state>`; per Actions job that failed or is test-like `job: <name> -> <conclusion>` and its
-  steps; up to 20 annotations of failed check runs; log excerpts of failing test-like jobs (at most 3, job-id order);
+  steps; up to 20 annotations of failed check runs, in the check runs' order above and each run's own in the order it
+  lists them (so where an annotation sits in the record's list says nothing: a step flip appends its donor's);
+  log excerpts of failing test-like jobs (at most 3, job-id order);
   then the one fixed line. URLs in the block are replaced by "<url>"; the repository's own owner/name, and any other
   repository a decoy's donor log came from (`also`), by "<repo>"; the repository folders of a runner's working path
   (/home/runner/work/<name>/<name>, /Users/runner/work/..., D:\\a\\..., /__w/..., /_work/...) by "<repo>"; and the
@@ -334,8 +336,9 @@ def render_ci(ci: dict, repo: Optional[str] = None, also: tuple = ()) -> tuple:
     id (str) to its raw log (bytes or str). `also`: other repositories whose names the block may carry (a decoy's donor
     log), redacted as the item's own."""
     lines = []
-    for c in sorted(ci.get("check_runs") or [], key=lambda c: ((c.get("name") or "").lower(), c.get("name") or "",
-                                                                 c.get("id") or 0)):
+    runs = sorted(ci.get("check_runs") or [], key=lambda c: ((c.get("name") or "").lower(), c.get("name") or "",
+                                                              c.get("id") or 0))
+    for c in runs:
         concl = c.get("conclusion") or c.get("status") or "none"
         lines.append(_scrub(f"check: {_one_line(c.get('name'))} ({c.get('app') or 'none'}) -> {concl}"))
     for s in sorted(ci.get("statuses") or [], key=lambda s: ((s.get("context") or "").lower(), s.get("context") or "")):
@@ -348,7 +351,11 @@ def render_ci(ci: dict, repo: Optional[str] = None, also: tuple = ()) -> tuple:
             lines.append(_scrub(f"step: {_one_line(st.get('name'))} -> "
                                 f"{st.get('conclusion') or st.get('status') or 'none'}"))
     failed_ids = {c.get("id") for c in ci.get("check_runs") or [] if c.get("conclusion") in ANNOTATED_CONCLUSIONS}
+    run_at = {}
+    for i, c in enumerate(runs):
+        run_at.setdefault(c.get("id"), i)
     ann = [a for a in ci.get("annotations") or [] if a.get("check_run_id") in failed_ids]
+    ann = [a for _, a in sorted(enumerate(ann), key=lambda t: (run_at.get(t[1].get("check_run_id"), len(runs)), t[0]))]
     for a in ann[:ANNOTATIONS_MAX]:
         msg = _one_line(_scrub(a.get("message") or ""))[:ANNOTATION_CHARS]
         lines.append(f"annotation: {a.get('level') or 'none'}: {msg}")

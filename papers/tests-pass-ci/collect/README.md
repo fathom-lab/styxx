@@ -318,3 +318,19 @@ tests-pass-ci tests now number 346 (the collector's 331 and the PREREG's 15), an
 the mutation check breaks 107 rules, 107 caught: `checks/mutation_check_output_review2_2026_11_02.txt`.
 A rule may name the test file that runs ahead of the others; every target still runs until one fails.
 `checks/decoy_shape_check.py` counts the shapes P9 now refuses over the development store's real items (counts only).
+
+The repair round of 2026-11-02 after that review, before any decoy was built: `G_KEYS` in the gates block names P2's
+decoy-set digest (the lock row of the signing commit) and its packet key digest (the publication record) as P14 reads
+them, so the block's digest moved to `e803da55...` (`tpc_score.GATES_SHA256` and the PREREG test re-pinned); the
+marker check reads only the text a construction writes into the description (`tpc_decoys.written_text`, against the
+source's description as read, `source.body`, which every decoy states); P2's decoys hold M's agent mix, 29 Claude Code
+and 1 Cursor (`tpc_decoys.agent_mix`, over `tpc_const.M_CLAIMERS_CI_PLANNING`, P3.4), each stating its source's agent
+and carrying the text P2.1's frame requires of it, and P2's build record counts its real items' agents by stratum; a
+preexisting failure is quoted from the CI block of a record the construction did not change, and a description that
+says so is refused; and the CI block shows annotations in the check runs' order, so a step flip's appended donor
+annotations no longer sit apart (`checks/distinguish_audit.py`'s identity mode: 18 of 44 real failing jobs made again
+through the flip rendered otherwise before, 44 of 44 byte for byte after). `checks/distinguish_audit.py` is the
+distinguishability audit P9 asks the builder to run on a trial build of P2's set before sealing it (numbers and feature
+names only; it needs numpy and scikit-learn, and nothing in the collector imports it). The tests-pass-ci tests now
+number 352 (the collector's 336 and the PREREG's 16), and the mutation check breaks 119 rules, 119 caught:
+`checks/mutation_check_output_repair2_2026_11_02.txt`.
