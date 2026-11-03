@@ -67,7 +67,7 @@ from tpc_items import item_text as _item_text  # noqa: E402
 
 PREREG_FILE = HERE.parent / Path(PREREG_REPO_PATH).name
 PREREG_NAME = Path(PREREG_REPO_PATH).name
-GATES_SHA256 = "f2c378b369b6b0b3917fc2f001f02b8364dbd8f5b8f77582c33fc346401d96d8"  # section 19
+GATES_SHA256 = "e803da551928978e7c2ab1c992667bfa026db54a914d93eeac1255ba6a044773"  # section 19
 STYXX_PINS = {"mind.py": "c4c5091b991061f22592e1353da3a9d14889e4817aecf9bb15645de720577115",
               "protocol.py": "45da869e1571396589dc50ed75183de56055a846432ae43dde6aa7fac7519fdc"}
 TR_2025_CONTRADICTIONS = 42  # section 1, P19

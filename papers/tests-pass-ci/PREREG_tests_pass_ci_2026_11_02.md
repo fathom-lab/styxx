@@ -529,8 +529,8 @@ above the 3.0% line (`LJ` l.74; `AS` §6). Read under the proposal's text ("part
                  "power_basis": "the proposal's floor (PROPOSAL_research.md section A, kill criterion: fewer than 400 by 2026-12-15 publishes counts only and closes A2), counted by machine over the main sample after the per-repository cap of 3 (section 9.2); planning figure about 1,292 before the cap and before implied-only bodies leave (SCOUT_feasibility section 4 per-agent figures times the main probability 0.020, Part II P3.4), so the floor fails when November's yield of claimers with a CI test result falls under about 31% of planning. It is a floor on counts, not on power: at n = 400 the whole-suite line clears only at no contradiction (section 9.3), and the RESULT prints the power at the landed n beside G_W",
                  "metric_means": "rows of the capped main sample that are eligible explicit claimers (testreceipt's reader) with a CI test result at the head commit"},
            "G_KEYS": {"metric": "result.a2.keys_in_order", "op": ">=", "value": 1,
-                 "power_basis": "the decoy gate means something only if its key was fixed before anyone answered and the answers before the key opened (the evidence leg's G-E4, PREREG_evidence_leg_2026_09_01 l.233-239: key digest committed publicly before any item is judged; the sworn PREREG's Amendment 4, l.478-479: a seat counts when its file's sha256 was public before the key release): P2's salted key digest is a lock row filled at the signing commit, so public at the freeze anchor and before any window CI is read, and every P2 seat's answer-file sha256 is in a pull request opened before the one releasing P2's key; otherwise no A2 rate publishes (the integrity review)",
-                 "metric_means": "1 if P2's key digest was public at the freeze anchor and every P2 seat's answer-file digest was public before P2's key release, else 0; -1 when P2 did not run (A2 closed by G_N)"},
+                 "power_basis": "the decoy gate means something only if its key was fixed before anyone answered and the answers before the key opened (the evidence leg's G-E4, PREREG_evidence_leg_2026_09_01 l.233-239: key digest committed publicly before any item is judged; the sworn PREREG's Amendment 4, l.478-479: a seat counts when its file's sha256 was public before the key release): P2's salted decoy-set digest is a lock row filled at the signing commit, so fixed at signing, before any window CI is read; P2's salted packet key digest is a line of the publication record committed before any P2 seat answers; and every P2 seat's answer-file sha256 is in a pull request opened before the one releasing P2's key; otherwise no A2 rate publishes (the integrity review)",
+                 "metric_means": "1 if P2's decoy-set digest was the filled lock row of the signing commit, P2's packet key digest was public before every P2 seat's earliest answer and no later than any P2 seat's answer-file digest, and every P2 seat's answer-file digest was public before P2's key release, else 0; -1 when P2 did not run (A2 closed by G_N)"},
            "G_P2_H": {"metric": "result.a2.human_qualified", "op": ">=", "value": 1,
                  "power_basis": "the outside seat is the point of the panel: it qualifies on packet P2 by the bar of G_A1_V (at least 14 of 15 NO-side and 13 of 15 YES-side decoys on the full label); a human seat that does not sit, or does not clear the decoys, voids the A2 panel and no rate publishes",
                  "metric_means": "1 if the human seat qualifies on P2, 0 if not or if no human seat sat; -1 when P2 did not run (A2 closed by G_N)"},
@@ -618,7 +618,7 @@ synthetic receipt for every row.
 | A2 half | what it tells maintainers | what it tells the lab | what it does not tell |
 |---|---|---|---|
 | `COUNTS_ONLY__a2_under_400` | nothing about rates; the counts of agent pull requests, claimers and CI coverage in the window | the frame, the screen or the collector fell short of the proposal's floor; A2 closes | that claims are rare: under 400 can mean the reader, the frame or the collector, and the RESULT names which |
-| `INVALID__a2_keys_not_sealed_in_order` | machine counts only, labelled as such | P2's decoy set digest was not a filled lock row at the freeze, P2's packet key digest was not public before its seats read, or a seat's answer file was not public before the key opened; the decoy gate cannot be shown to predate the answers, so no rate is published | anything about the claims or the seats |
+| `INVALID__a2_keys_not_sealed_in_order` | machine counts only, labelled as such | P2's decoy set digest was not the filled lock row of the signing commit, P2's packet key digest was not public before its seats read, or a seat's answer file was not public before the key opened; the decoy gate cannot be shown to predate the answers, so no rate is published | anything about the claims or the seats |
 | `INVALID__a2_panel_void_outside_seat` | machine counts only, labelled as such | the outside seat did not sit or did not pass the lab's decoys; no rate is published | whether agents' claims or the decoys were at fault |
 | `INVALID__a2_one_model_family_counts_only` | machine counts only | the non-Claude seat did not qualify (or none sat); the human and Claude seats' labels print as counts, not as a panel of the decided design | anything about the human seat's quality |
 | `KILL__no_tests_pass_accuser` | in this window and for the frame's agent mix (about 96% Claude Code), whole-suite "tests pass" sentences beside a failing test at the head commit were confidently under 1 in 100 even with every undecided candidate counted against them, no agent with 100 or more claimers was shown at or above 1 in 100, and part claims contradicted inside their part were confidently under 3 in 100 | no `tests_pass` accuser is built; `evidence.py` keeps VERIFIED and UNCHECKABLE; the RESULT says so in the proposal's words | that claims are true: a claim beside green CI can still be false (tests skipped, the wrong tests); that the rate holds in other months, for private repositories, for agent mixes other than the frame's, or for claims the reader misses |
@@ -825,19 +825,25 @@ synthetic numbers only, after the revision (the draft's own receipts of 09:31, f
 kept in `out/` there and superseded). styxx came from `git archive 310df453` (`_scout/styxx_310df453/`; the installed
 styxx is 7.47.0 and has no `prereg_ci` [SC-CO §3]). This file was copied, with this section still the earlier text,
 into a scratch repository (`_prereg_check/repo_r2/`, `git init`) and committed there; the same checks run in the
-repository as `tests/test_tests_pass_ci_prereg.py`.
+repository as `tests/test_tests_pass_ci_prereg.py`. Re-run the same day after the second repair round, before any
+decoy was built: `G_KEYS`'s power basis and meaning called P2's decoy-set digest a key digest and said P2's key digest
+was public at the freeze anchor; they now name the decoy-set digest (the lock row of the signing commit) and the packet
+key digest (the publication record, before any P2 seat answers) as P14 reads `a2.keys_in_order`. No metric, operator,
+bar or row moved. The block's digest moved from `f2c378b3...` (20,839 bytes; its receipts are kept in `out_r2/`,
+superseded) to the one below. The fence was written by `build_fence_r3.py`, the file copied with this section still
+the earlier text into `_prereg_check/repo_r3/` and committed there, and the three checks below ran on it.
 
-- **The block.** `styxx.protocol._select_gates_block` finds one gates block of 20,839 bytes and 88 lines, sha256
-  `f2c378b369b6b0b3917fc2f001f02b8364dbd8f5b8f77582c33fc346401d96d8`.
+- **The block.** `styxx.protocol._select_gates_block` finds one gates block of 21,081 bytes and 88 lines, sha256
+  `e803da551928978e7c2ab1c992667bfa026db54a914d93eeac1255ba6a044773`.
   `Experiment(require_power_basis=True, require_nonvacuous_gates=True)` accepts it with no undeclared power basis and
   no vacuous gate. It has 14 gates and 45 rows. All 16,384 assignments reach a row and every row is reached; in row
   order they land 4096, 2048, 1024, 256, 768, 2048, 1024, 512, 128, 384, 1024, 512, 256, 64, 192, 512, 256, 128, 32,
   96, 64, 32, 16, 4, 12, 64, 32, 16, 4, 12, 192, 96, 48, 12, 36, 96, 48, 24, 6, 18, 96, 48, 24, 6, 18 times
   (`check_fence.py`).
 - **The lint.** `python -m styxx.prereg_ci lint PREREG_tests_pass_ci_2026_11_02.md` prints `decision gates
-  f2c378b3...`, `total over 16384 assignments; 45 rows, each reached`, `licences: ... the decision declares none`,
+  e803da55...`, `total over 16384 assignments; 45 rows, each reached`, `licences: ... the decision declares none`,
   and `PASS exit 0`.
-- **Every branch decided.** `check_fence.py` builds one synthetic receipt per row (`out_r2/receipts/row_01.json` to
+- **Every branch decided.** `check_fence.py` builds one synthetic receipt per row (`out_r3/receipts/row_01.json` to
   `row_45.json`) and scores each with `Experiment.score` and `styxx.prereg_ci.rescore`: all 45 land on the row they
   were built for, and the smoke receipt lands on `INVALID__smoke_plumbing_only`. A receipt whose pooled whole-suite
   line clears while one agent's lower bound reads 1.23% lands on `NO_ACCUSER__rule_underpowered__A1_STANDS` (the
@@ -864,16 +870,17 @@ repository as `tests/test_tests_pass_ci_prereg.py`.
   - (B) The same RESULT retyped as `FLOOR_MET__new_prereg_may_propose_accuser__A1_STANDS`: `FAIL VERDICT_DIFFERS`,
     exit 1.
   - (C) A re-run receipt scored under the whole-suite bar moved from 0.01 to 0.02 in a copy outside the sealed file:
-    `FAIL DECISION_DIGEST_UNSEALED` (the receipt records `99007de7...`, the sealed file holds `f2c378b3...`) and
+    `FAIL DECISION_DIGEST_UNSEALED` (the receipt records `dd71a14c...`, the sealed file holds `e803da55...`) and
     `FAIL VERDICT_DIFFERS` (the sealed table gives `NO_ACCUSER__rule_underpowered__A1_STANDS`), exit 1.
 - **The word lint.** `scripts/surface_lint.py --files` at `M:` (copy `_scout/surface_lint_310df453.py`) found 0 hits
   over this file and the forecast, after one repair: the revision had used a banned ordinal four times.
-- **Bytes.** Scripts: `build_fence.py` `3ce773c49d5cf07648099f9b6801420915d96987c46e784a80fefcc8365f17d6`,
-  `check_fence.py` `96b845e2a9d719d55547e7ea4762c86157cbbb1e12d5231845ed08172218d181`, `check_ci_demo.py`
-  `75177a99a5a64ab16ad628685cfd698d0eb5b5f50889f21b375ec65ae925af76`. Outputs under `out_r2/`:
-  `check_fence_output.txt` `e2d5c5cb0cd8357fea803350ea79c06a180a162288256472c65ce178d92af127`, `lint_output.txt`
-  `2405b7d85b9c5fb4deb7cc6ccf2a07899326a28e60fa37ffc262b4751279500f`, `check_ci_demo_output.txt`
-  `e27069fe5a1b784ecd1af4690972bfc4c79492065e7fe9f8417f95ebcfce0338`.
+- **Bytes.** Scripts: `build_fence_r3.py` `94541bbda97a3d129fb565314f6f0d39f522bcedf2bfee390f844f5ed05a0c54`
+  (`build_fence.py`, `3ce773c4...`, wrote the earlier block), `check_fence.py`
+  `96b845e2a9d719d55547e7ea4762c86157cbbb1e12d5231845ed08172218d181`, `check_ci_demo.py`
+  `75177a99a5a64ab16ad628685cfd698d0eb5b5f50889f21b375ec65ae925af76`. Outputs under `out_r3/`:
+  `check_fence_output.txt` `e84a51c4e6c6a76b06cc3a470d9bf3f64b37299369d4f3235ce80661e42245f6`, `lint_output.txt`
+  `123b3ba4fed53b12b70adbedad2b769a8fae6e1b78758fed65545a2ddc330f15`, `check_ci_demo_output.txt`
+  `cc6794b5d4dc80103188f46742974b8a2b73f1611e86319e48cfcbf2ac350213`.
 - **When to re-run.** Any change to §10 changes the block's digest. Whoever changes it re-runs the three scripts and
   re-prints this section before signing. `tests/test_tests_pass_ci_prereg.py` (§15.1) makes the same checks inside
   the repository and pins the digest above.

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """PREREG_tests_pass_ci_2026_11_02 (papers/tests-pass-ci), on CPU, offline, with no data of the window.
 
-What is pinned here: the gates block hashes to the digest the PREREG's section 19 prints (f2c378b3..., 20,839 bytes) and
+What is pinned here: the gates block hashes to the digest the PREREG's section 19 prints (e803da55..., 21,081 bytes) and
 parses through the lab's own `_select_gates_block` with one fence and no duplicate key; every one of the 16,384 boolean
 assignments of the fourteen gates reaches a row, every one of the 45 rows is reached, by the stated counts, and every
 gate is named by some row; `Experiment` (power basis and non-vacuity refusals on) scores a receipt of Part II P14's
@@ -39,8 +39,8 @@ README = FOLDER / "README.md"
 COLLECT = FOLDER / "collect"
 TEST_FILE = Path(__file__).resolve()
 
-GATES_SHA256 = "f2c378b369b6b0b3917fc2f001f02b8364dbd8f5b8f77582c33fc346401d96d8"
-GATES_BYTES = 20839
+GATES_SHA256 = "e803da551928978e7c2ab1c992667bfa026db54a914d93eeac1255ba6a044773"
+GATES_BYTES = 21081
 GATES = ["G_A1_V", "G_A1_LOW", "G_A1_HIGH", "G_A1_C", "G_A1_ADD", "G_N", "G_KEYS", "G_P2_H", "G_P2_N", "G_W",
          "G_AG", "G_PC", "G_RN", "G_RULE"]
 A2_HALVES = ["COUNTS_ONLY__a2_under_400", "INVALID__a2_keys_not_sealed_in_order",
@@ -118,6 +118,24 @@ def test_gates_block_digest_and_size_are_the_ones_section_19_prints():
     assert text.count("```gates") == 1
     assert GATES_SHA256 in text  # section 19 prints it
 
+
+def test_g_keys_names_the_decoy_set_digest_and_the_packet_key_digest_as_p14_reads_them():
+    """The lock row filled at the signing commit holds P2's decoy-set digest (section 14), not its packet key digest,
+    and the packet key digest is public before P2's seats answer, not at the freeze anchor (repair of 2026-11-02)."""
+    g = _spec()["gates"]["G_KEYS"]
+    pb, mm = g["power_basis"], g["metric_means"]
+    assert "P2's salted decoy-set digest is a lock row filled at the signing commit" in pb
+    assert "salted key digest is a lock row" not in pb
+    assert "freeze anchor" not in pb + mm
+    assert "packet key digest" in pb and "publication record" in pb
+    assert mm.startswith("1 if P2's decoy-set digest was the filled lock row of the signing commit, ")
+    p14 = [ln for ln in _text().splitlines() if ln.startswith("| `a2.keys_in_order` |")]
+    assert len(p14) == 1
+    for words in ("decoy-set digest", "signing commit", "packet key digest", "earliest answer", "answer-file digest"):
+        assert words in p14[0] and words in mm, words
+    # the lock row it names is the decoy set's, and that row says nothing of a key
+    row = [ln for ln in _text().splitlines() if ln.startswith("| decoy set digest of packet P2 |")]
+    assert len(row) == 1 and "set_bytes" in row[0] and "key_bytes" not in row[0]
 
 def test_gates_block_parses_with_one_fence_and_no_duplicate_keys():
     spec = _spec()
