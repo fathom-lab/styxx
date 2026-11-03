@@ -147,6 +147,26 @@ window is read before the freeze; the collector's guard (P21) refuses it by name
   builder read each candidate privately (P9). Scripts, read logs and material sit under
   `C:/Users/heyzo/clawd/data/direction_a/sealed/P2/material2/` and `.../sealed/P2/build2/`, off the repository until
   P2's key is released.
+
+  A third round for the set, on 2026-11-03 (UTC) after OD-22 was taken (§17), by the same builder: the rows of the
+  second round's pool that no earlier round read, Claude Code only, in the same order and read the same way (P4.2,
+  `tpc_read.read_row`; logs of failing jobs only, no artifact), each row checked opened before 2026-11-02 and asked of
+  the seal guard before its batch, testreceipt's 138 items refused, the lab's token in the environment of the one
+  command that ran it. 196 rows read (all Claude Code, all opened 2026-10-29, the latest at 23:48:12Z), 4 left unread
+  after read errors:
+  - 18:44:51Z to 19:05:05Z: 196 rows, 10 GraphQL requests, 3,550 REST requests and 40 log downloads (3,529 answered
+    200, 40 answered 302, 3 answered 301, 28 answered 502 and were asked again), 99,755,227 response bytes; read log
+    `material2/store_c/readlogs/readlog_material3_20261103.jsonl`, sha256
+    `a22eda61ddc8dcae584ebe07dff0690978b1022511d7b1124b27679540893315`.
+
+  With it, 949 pull requests opened before 2026-11-02 were read for P2's decoys, 858 of them Claude Code or Cursor. 51
+  of those read `tests failed` (48 Claude Code, 3 Cursor); 42 show every failing test-like job's excerpt found by the
+  step's times and carry no date trace (1 Cursor; 32 repositories, 35 sources at two a repository). Of OD-22's three
+  shapes the round adds no failure the CI record shows also failing without the change, 1 job named for tests failing
+  at installation whose CI reads `no test result` (2 in all, both outside P2's combinations), and 1 pull request
+  failing outside Actions only (3 in all, none a test failure the builder can key with a clean label). The builder
+  read each candidate privately (P9). The script, read log and rows sit under `.../sealed/P2/material2/store_c/` and
+  `.../sealed/P2/build3/`, off the repository until P2's key is released.
 - **The distinguishability audit of P9**, run on 2026-11-02 by the repair step (it sits on no seat): the development
   store's 230 rows (all opened 2026-10-29) and the material's job logs above, read on this box with no request to
   GitHub; its outputs are counts and feature names only
@@ -1256,7 +1276,7 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
     test failure; the builder reads more pull requests opened before 2026-11-02 (each read added to §0.4) rather
     than leave M's mix. With the second round of 2026-11-03 the material holds 37 Claude Code and 3 Cursor pull
     requests whose CI reads `tests failed`, 32 of them (1 Cursor) with every failing test-like job's excerpt found by
-    the step's times.
+    the step's times; with the third (§0.4), 48 and 3, 42 of them (1 Cursor).
   - **Shapes the pre-window material does not show (OD-22, taken by the operator on 2026-11-03, §17; reversible until
     the signature).** After the reads of §0.4 (753 pull requests opened before 2026-11-02; 40 of
     the 662 Claude Code and Cursor ones read `tests failed`), no source shows three of P2's shapes in a form the
