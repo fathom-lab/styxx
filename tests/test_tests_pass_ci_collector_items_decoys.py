@@ -339,13 +339,20 @@ def test_the_constructions_are_p9s_mix():
         m = tpc_decoys.mix(packet)
         assert sum(n for k, n in m.items() if c[k][0] == "YES") == 15 and sum(n for k, n in m.items() if c[k][0] == "NO") == 15
         assert all(n >= 2 for k, n in m.items() if c[k][0] == "NO" and n)
-    # P2: no decoy shows nothing failing (no real two-step item of P2 does); two names-only decoys (the review of
-    # 2026-11-02: four of thirty against about one real candidate or AU1 row in twenty)
-    assert tpc_decoys.mix("P2") == dict(tpc_decoys.mix("P1"), yes_log=10, yes_names_only=1, no_passing=0,
-                                        no_lint_build=4)
-    assert tpc_decoys.names_only_mix("P2") == {"no_disclosed": 1, "no_part_beside": 0}
+    # P2: no decoy shows nothing failing (no real two-step item of P2 does); with OD-22 taken (2026-11-03), the shapes
+    # no pre-window source showed are filled by real-sourced decoys of the same side: the preexisting and names-only
+    # YES decoys by yes_log, the installation failures by no_lint_build, and no decoy of P2 is names-only
+    assert tpc_decoys.mix("P2") == dict(tpc_decoys.mix("P1"), yes_log=13, yes_names_only=0, yes_preexisting=0,
+                                        no_passing=0, no_lint_build=6, no_install_in_test_job=0)
+    assert {k: n for k, n in tpc_decoys.mix("P2").items() if n} == {
+        "yes_log": 13, "yes_stale": 2, "no_lint_build": 6, "no_disclosed": 3, "no_part_beside": 2,
+        "no_part_contradicted": 2, "no_not_a_claim": 2}
+    assert tpc_decoys.names_only_mix("P2") == {"no_disclosed": 0, "no_part_beside": 0}
     assert tpc_decoys.names_only_mix("P1") == {"no_disclosed": 1, "no_part_beside": 1}
+    assert tpc_decoys.mix("P1") == tpc_decoys.mix("Q") == {n: v[1] for n, v in c.items()}
     assert synthetic_decoys.MIX_P2 == {k: tpc_decoys.mix("P2")[k] for k in synthetic_decoys.MIX_P2}
+    assert synthetic_decoys.MIX == {k: tpc_decoys.mix("P1")[k] for k in synthetic_decoys.MIX}
+    assert synthetic_decoys.NAMES_ONLY_P2 == tpc_decoys.names_only_mix("P2")
 
 
 def test_the_fixture_set_holds_every_construction_and_seals():
@@ -370,22 +377,40 @@ def _break(name, fn, packet="P2"):
     return tpc_decoys.build_set(spec)[1]
 
 
-@pytest.mark.parametrize("name,fn,want", [
+@pytest.mark.parametrize("name,fn,want,packet", [
     ("yes_log", lambda e: e.update(ci=dict(tpc_decoys.names_only(e["ci"]), annotations=e["ci"]["annotations"])),
-     "a log excerpt is shown"),
-    ("yes_log", lambda e: e["key"].update(label="NOT_CONTRADICTED"), "key label"),
-    ("yes_names_only", lambda e: e["ci"].update(statuses=[{"context": "ci/x: unit", "state": "success"}]), "test failure"),
-    ("yes_stale", lambda e: e.update(last_edited_at="2026-10-01T10:00:00Z"), "STALE"),
-    ("yes_preexisting", lambda e: e.update(preexisting_shown="not in the item"), "preexisting_shown"),
-    ("no_lint_build", lambda e: e["ci"]["jobs"][1]["steps"][1].update(name="Run unit tests"), "nothing that fails"),
-    ("no_install_in_test_job", lambda e: e["ci"]["jobs"][0]["steps"][3].update(conclusion="failure"), "installation"),
-    ("no_disclosed", lambda e: e.update(disclosure="a sentence the body lacks"), "disclosure"),
-    ("no_part_beside", lambda e: e.update(part=""), "part quotes"),
-    ("no_not_a_claim", lambda e: e["key"].update(scope="WHOLE"), "key scope"),
+     "a log excerpt is shown", "P2"),
+    ("yes_log", lambda e: e["key"].update(label="NOT_CONTRADICTED"), "key label", "P2"),
+    ("yes_names_only", lambda e: e["ci"].update(statuses=[{"context": "ci/x: unit", "state": "success"}]), "test failure",
+     "P1"),
+    ("yes_stale", lambda e: e.update(last_edited_at="2026-10-01T10:00:00Z"), "STALE", "P2"),
+    ("yes_preexisting", lambda e: e.update(preexisting_shown="not in the item"), "preexisting_shown", "P1"),
+    ("no_lint_build", lambda e: e["ci"]["jobs"][1]["steps"][1].update(name="Run unit tests"), "nothing that fails", "P2"),
+    ("no_install_in_test_job", lambda e: e["ci"]["jobs"][0]["steps"][3].update(conclusion="failure"), "installation",
+     "P1"),
+    ("no_disclosed", lambda e: e.update(disclosure="a sentence the body lacks"), "disclosure", "P2"),
+    ("no_part_beside", lambda e: e.update(part=""), "part quotes", "P2"),
+    ("no_not_a_claim", lambda e: e["key"].update(scope="WHOLE"), "key scope", "P2"),
 ])
-def test_each_construction_is_checked_by_machine(name, fn, want):
-    probs = _break(name, fn)
+def test_each_construction_is_checked_by_machine(name, fn, want, packet):
+    """Each construction broken and caught, in a packet that holds it (with OD-22 taken, P2 holds no yes_names_only,
+    yes_preexisting or no_install_in_test_job decoy; Q and P1 hold two of each)."""
+    assert tpc_decoys.mix(packet)[name] > 0
+    probs = _break(name, fn, packet)
     assert any(want in p for p in probs), probs
+
+
+@pytest.mark.parametrize("name", ["yes_names_only", "yes_preexisting", "no_install_in_test_job"])
+def test_p2_holds_none_of_the_shapes_od22_replaced(name):
+    """OD-22 (taken 2026-11-03): a P2 decoy of a shape no pre-window source showed in a form the builder can key is
+    refused by P2's mix, and the set the fixture builds in P2's mix holds none."""
+    assert tpc_decoys.mix("P2")[name] == 0
+    assert not any(e["construction"] == name for e in synthetic_decoys.spec("P2")["decoys"])
+    spec = synthetic_decoys.spec("P2")
+    spec["decoys"][0]["construction"] = name
+    probs = tpc_decoys.build_set(spec)[1]
+    assert any(p.startswith(f"{name}: 1 decoys, P9 asks for 0 in P2") for p in probs), probs
+    assert any(p.startswith("yes_log: 12 decoys, P9 asks for 13 in P2") for p in probs), probs
 
 
 def test_no_passing_is_checked_by_machine_where_its_packet_holds_it():
@@ -401,13 +426,20 @@ def test_the_set_refuses_a_wrong_mix_a_missing_names_only_and_reuse():
     spec = synthetic_decoys.spec("P2")
     spec["decoys"][0]["construction"] = "no_passing"
     probs = tpc_decoys.build_set(spec)[1]
-    assert any("yes_log: 9 decoys" in p for p in probs) and any("no_passing: 1 decoys, P9 asks for 0" in p
-                                                               for p in probs)
-    spec = synthetic_decoys.spec("P2")
+    assert any("yes_log: 12 decoys" in p for p in probs) and any("no_passing: 1 decoys, P9 asks for 0" in p
+                                                                for p in probs)
+    spec = synthetic_decoys.spec("P1")
     d = next(x for x in spec["decoys"] if x["construction"] == "no_disclosed" and not x["ci"]["jobs"])
-    d["ci"] = synthetic_decoys.spec("P2")["decoys"][0]["ci"]
+    d["ci"] = synthetic_decoys.spec("P1")["decoys"][0]["ci"]
     probs = tpc_decoys.build_set(spec)[1]
-    assert any("no_disclosed: 0 names-only" in p for p in probs)
+    assert any("no_disclosed: 0 names-only decoys, P9 asks for 1" in p for p in probs), probs
+    # OD-22: P2's disclosed failures all show a log; a names-only one is refused
+    spec = synthetic_decoys.spec("P2")
+    d = next(x for x in spec["decoys"] if x["construction"] == "no_disclosed")
+    d["ci"] = {"check_runs": [], "jobs": [], "statuses": [{"context": "ci/circleci: unit", "state": "failure"}],
+               "annotations": [], "logs": {}}
+    probs = tpc_decoys.build_set(spec)[1]
+    assert any("no_disclosed: 1 names-only decoys, P9 asks for 0" in p for p in probs), probs
     set_p2, _ = tpc_decoys.build_set(synthetic_decoys.spec("P2"))
     probs = tpc_decoys.build_set(synthetic_decoys.spec("P2"), other_sets=[set_p2["decoys"][0]["item_sha256"]])[1]
     assert any("another packet's" in p for p in probs)
@@ -507,9 +539,8 @@ def test_p2_refuses_an_implied_only_claim_and_a_ci_with_no_test_result():
 def test_p2_refuses_names_only_failures_inside_actions_and_logs_missing_or_found_by_markers():
     """The review of 2026-11-02: 94 of 94 failing Actions check runs of the development store carry an annotation,
     the collector reads every candidate's and AU1 row's logs, and every real excerpt was found by the step's times."""
-    spec, e = _p2_entry("yes_names_only")
-    log_e = next(x for x in synthetic_decoys.spec("P2")["decoys"] if x["construction"] == "yes_log")
-    e["ci"] = tpc_decoys.names_only(log_e["ci"])
+    spec, e = _p2_entry("yes_log")
+    e["ci"] = tpc_decoys.names_only(e["ci"])
     probs = tpc_decoys.build_set(spec)[1]
     assert any("carries no annotation" in p for p in probs), probs
     assert any("names-only decoy of P2" in p for p in probs), probs
@@ -640,8 +671,9 @@ def test_p2s_decoys_hold_ms_agent_mix():
 
 def test_a_preexisting_failure_is_shown_by_the_ci_records_own_bytes():
     """yes_preexisting: the CI block shows the failure predating the change, in the record's own bytes; a description
-    that says so discloses it (P11.2), and a record the construction changed cannot show it (repair of 2026-11-02)."""
-    spec = synthetic_decoys.spec("P2")
+    that says so discloses it (P11.2), and a record the construction changed cannot show it (repair of 2026-11-02).
+    Read in P1, which holds two (with OD-22 taken, P2 holds none)."""
+    spec = synthetic_decoys.spec("P1")
     a, b = [e for e in spec["decoys"] if e["construction"] == "yes_preexisting"]
     note = a["preexisting_shown"]
     a["ci"]["logs"] = {k: v.replace(note, "the run ended") for k, v in a["ci"]["logs"].items()}
@@ -653,7 +685,7 @@ def test_a_preexisting_failure_is_shown_by_the_ci_records_own_bytes():
     assert any("a disclosure (P11.2)" in p for p in probs), probs
     assert any("the CI record is the source's own, unchanged" in p for p in probs), probs
     # the note in both the description and the record: still a disclosure
-    spec = synthetic_decoys.spec("P2")
+    spec = synthetic_decoys.spec("P1")
     a = [e for e in spec["decoys"] if e["construction"] == "yes_preexisting"][0]
     a["body"] = a["source"]["body"] = a["body"] + "\n" + a["preexisting_shown"]
     probs = tpc_decoys.build_set(spec)[1]

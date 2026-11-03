@@ -336,3 +336,12 @@ every pull request the spec draws on out of the real stand-ins (`--exclude-spec`
 beside its own item, and takes the material read for the set as further stand-ins (`--store`). The tests-pass-ci tests now
 number 352 (the collector's 336 and the PREREG's 16), and the mutation check breaks 119 rules, 119 caught:
 `checks/mutation_check_output_repair2_2026_11_02.txt`.
+
+OD-22, taken by the operator on 2026-11-03 (PREREG section 17, P9): P2's mix (`tpc_decoys.P2_COUNTS`,
+`P2_NAMES_ONLY`) is YES 13 `yes_log` and 2 `yes_stale`; NO 6 `no_lint_build`, 3 `no_disclosed`, 2 `no_part_beside`,
+2 `no_part_contradicted`, 2 `no_not_a_claim`; no names-only decoy. A P2 decoy of a shape OD-22 replaced
+(`yes_names_only`, `yes_preexisting`, `no_install_in_test_job`) is refused by P2's mix; those constructions are tested
+in P1's fixture set. The fixture's `MIX_P2` follows, and its P2 topics put "error messages", read as no claim in the
+`no_lint_build` sentence, last. The tests-pass-ci tests number 355 (the collector's 339 and the PREREG's 16), and the
+mutation check breaks 123 rules (four more: the mix OD-22 replaced, its preexisting and installation decoys, and its
+names-only `no_disclosed`).

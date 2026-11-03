@@ -16,11 +16,14 @@ import copy
 T0 = "2026-10-01T10:00:00Z"
 EXIT_ANNOTATION = "Process completed with exit code 1."
 
-# P9's mix, as the fixture builds it (P2 differs: no no_passing, four no_lint_build, two names-only decoys)
-MIX = {"yes_log": 9, "yes_names_only": 2, "no_passing": 2, "no_lint_build": 2}
-MIX_P2 = {"yes_log": 10, "yes_names_only": 1, "no_passing": 0, "no_lint_build": 4}
+# P9's mix, as the fixture builds it (P2 differs, with OD-22 taken: no no_passing, yes_names_only, yes_preexisting
+# or no_install_in_test_job, thirteen yes_log, six no_lint_build, and no names-only decoy)
+MIX = {"yes_log": 9, "yes_names_only": 2, "yes_preexisting": 2, "no_passing": 2, "no_lint_build": 2,
+       "no_install_in_test_job": 2}
+MIX_P2 = {"yes_log": 13, "yes_names_only": 0, "yes_preexisting": 0, "no_passing": 0, "no_lint_build": 6,
+          "no_install_in_test_job": 0}
 NAMES_ONLY = {"no_disclosed": 1, "no_part_beside": 1}
-NAMES_ONLY_P2 = {"no_disclosed": 1, "no_part_beside": 0}
+NAMES_ONLY_P2 = {"no_disclosed": 0, "no_part_beside": 0}
 # P9: P2's decoys hold M's agent mix (29 Claude Code, 1 Cursor), each description with the text P2.1's frame requires of
 # its agent; the fixture's one Cursor decoy is P2's no_lint_build of index 0. Every decoy states its source's description as
 # read (source.body); the fixture writes nothing into it, so its decoys carry their invented bodies unchanged.
@@ -29,9 +32,11 @@ FOOTER = {"Claude_Code": "Generated with [Claude Code](https://claude.com/claude
           "Cursor": "[Open in Cursor](https://cursor.com/background-agent?bcId=bc-00000000-example)"}
 
 TOPICS = {
+    # P2's six no_lint_build decoys take topics 2 to 7 (OD-22), so "error messages", which the claim reader reads as
+    # no claim in that sentence, stands last
     "P2": ("the pager", "date parsing", "the retry loop", "config loading", "the cache layer", "CSV export",
-           "the CLI flags", "error messages", "the scheduler", "path handling", "unicode names", "the upload queue",
-           "rate limiting", "the logger", "token refresh"),
+           "the CLI flags", "token refresh", "the scheduler", "path handling", "unicode names", "the upload queue",
+           "rate limiting", "the logger", "error messages"),
     "P1": ("the tokenizer", "image resizing", "the webhook handler", "locale fallback", "the plugin loader",
            "JSON schemas", "the shell completion", "audit trails", "the mailer", "socket timeouts", "font metrics",
            "the diff viewer", "proxy settings", "the job queue", "session cookies"),
@@ -137,7 +142,7 @@ def spec(packet: str = "P2") -> dict:
         out.append(_entry(packet, n, "yes_stale", f"Refactored {topics[11 + i]}.\n\nCI is green, all tests pass.",
                           _ci([j], logs={str(500 + n): _pytest_log([f"s{i}"], 30)}), dict(yes), stale=True,
                           last_edited_at="2026-10-01T09:00:00Z", head_committed_at="2026-10-01T09:30:00Z"))
-    for i in range(2):
+    for i in range(mix["yes_preexisting"]):
         n += 1
         note = f"tests/test_ttl{i}.py::test_expiry also fails on the base branch at the same test"
         j = _test_job(500 + n, "pytest", "failure")
@@ -156,7 +161,7 @@ def spec(packet: str = "P2") -> dict:
         j = _test_job(500 + n, "test", "success")
         out.append(_entry(packet, n, "no_lint_build", f"Renamed helpers in {topics[(2 + i) % 15]}. All tests pass.",
                           _ci([j, (lint, lint_c)]), dict(nc), agent="Cursor" if i == 0 else "Claude_Code"))
-    for i in range(2):
+    for i in range(mix["no_install_in_test_job"]):
         n += 1
         j = _test_job(500 + n, "test (ubuntu)", "skipped", install="failure")
         # a second job's unit tests pass, so testreceipt's reader reads "tests passed" beside a failed job (AU2's

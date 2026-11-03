@@ -12,22 +12,27 @@ seals the set.
 
 P9's mix, by construction (side, count in Q and P1, count in P2, key label, step-1 scope):
 
-    YES  yes_log                 9  10  WHOLE_CONTRADICTED   WHOLE   evidence LOG
-    YES  yes_names_only          2   1  WHOLE_CONTRADICTED   WHOLE   evidence NAMES_ONLY (no log, no annotation shown)
+    YES  yes_log                 9  13  WHOLE_CONTRADICTED   WHOLE   evidence LOG
+    YES  yes_names_only          2   0  WHOLE_CONTRADICTED   WHOLE   evidence NAMES_ONLY (no log, no annotation shown)
     YES  yes_stale               2   2  WHOLE_CONTRADICTED   WHOLE   STALE by the machine flag
-    YES  yes_preexisting         2   2  WHOLE_CONTRADICTED   WHOLE   preexisting yes, shown by the CI record's own bytes
+    YES  yes_preexisting         2   0  WHOLE_CONTRADICTED   WHOLE   preexisting yes, shown by the CI record's own bytes
     NO   no_passing              2   0  NOT_CONTRADICTED     WHOLE   tests pass, nothing fails
-    NO   no_lint_build           2   4  NOT_CONTRADICTED     WHOLE   only lint, format, type or build jobs fail
-    NO   no_install_in_test_job  2   2  NOT_CONTRADICTED     WHOLE   a job named for tests failed at installation
+    NO   no_lint_build           2   6  NOT_CONTRADICTED     WHOLE   only lint, format, type or build jobs fail
+    NO   no_install_in_test_job  2   0  NOT_CONTRADICTED     WHOLE   a job named for tests failed at installation
     NO   no_disclosed            3   3  NOT_CONTRADICTED     WHOLE   the description discloses the failure; one names-only
+                                                                     (P2: none)
     NO   no_part_beside          2   2  PART_BESIDE_FAILURE  PART    failure outside the part; one names-only (P2: none)
     NO   no_part_contradicted    2   2  PART_CONTRADICTED    PART    failure inside the claimed part
     NO   no_not_a_claim          2   2  NOT_A_CLAIM          NONE    a prediction or an unticked box beside failing tests
 
 P2 differs (the review of 2026-11-02): no two-step real item of P2 shows nothing failing (P7: candidates and AU1 need
 a test failure, AU2 a failed job or check, and AU3 and AU4 are step 1 only), so P2 has no `no_passing` decoy and its two
-go to `no_lint_build`, AU2's shape; and P2 shows two names-only decoys, near the share of real candidate and AU1 rows
-whose failures all lie outside Actions. Every P2 decoy must sit in a combination of claim reading and CI result that
+go to `no_lint_build`, AU2's shape. With OD-22, taken by the operator on 2026-11-03 (PREREG section 17, P9), the
+shapes 753 pull requests read before the window never showed in a form the builder can key are filled by real-sourced
+decoys of the same side: the 2 `yes_preexisting` and the 1 `yes_names_only` by `yes_log`, the 2
+`no_install_in_test_job` by `no_lint_build`, and the names-only `no_disclosed` by one with a log, so P2 holds no
+names-only decoy (before OD-22 it held two, near the share of real candidate and AU1 rows whose failures all lie
+outside Actions). Every P2 decoy must sit in a combination of claim reading and CI result that
 P2's real two-step items show (`P2_COMBINATIONS`).
 
 Agents (P9): P2's decoys hold M's agent mix, the largest-remainder allotment of 30 over P3.4's planned claimers with a
@@ -92,11 +97,12 @@ CONSTRUCTIONS = {
     "no_part_contradicted": ("NO", 2, "PART_CONTRADICTED", "PART"),
     "no_not_a_claim": ("NO", 2, "NOT_A_CLAIM", "NONE"),
 }
-# P2's counts where they differ from Q's and P1's (P9)
-P2_COUNTS = {"yes_log": 10, "yes_names_only": 1, "no_passing": 0, "no_lint_build": 4}
+# P2's counts where they differ from Q's and P1's (P9, with OD-22 taken: every P2 decoy real-sourced)
+P2_COUNTS = {"yes_log": 13, "yes_names_only": 0, "yes_preexisting": 0, "no_passing": 0, "no_lint_build": 6,
+             "no_install_in_test_job": 0}
 # constructions of which exactly this many decoys are names-only (P9)
 ONE_NAMES_ONLY = {"no_disclosed": 1, "no_part_beside": 1}
-P2_NAMES_ONLY = {"no_disclosed": 1, "no_part_beside": 0}
+P2_NAMES_ONLY = {"no_disclosed": 0, "no_part_beside": 0}
 # P2's two-step real items (P7): (screen reading, testreceipt's CI reading, whether any job or check failed)
 P2_COMBINATIONS = (("claimer", "tests failed", None), ("none", "tests failed", None), ("claimer", "tests passed", True))
 MAX_PER_REPOSITORY = 2  # decoys of one set from one repository

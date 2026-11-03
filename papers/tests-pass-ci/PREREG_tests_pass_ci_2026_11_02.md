@@ -835,7 +835,7 @@ there (P9). No packet's bytes are published before every seat's answer-file dige
 | OD-19 | A1 read item by item (§9.2, §10) | `A1_STANDS` needs 34 of 42 confirmed and at most 8 added; `A1_LOWER` needs the worst case at 31 or fewer; otherwise `A1_UNSETTLED` | the earlier draft's net count against the 32-to-55 interval, under which panel splits alone could print `A1_LOWER` about a named neighbour's tool |
 | OD-20 | the per-agent block on the "rare" verdict (`G_AG`) | an agent with 100 or more capped claimers whose worst-case Wilson lower bound is at or above 1.0% blocks KILL | no block: KILL would speak for the frame's mix only, about 96% Claude Code |
 | OD-21 | whether an undisclosed failure that also fails without the change is a contradiction (P11.2) | yes: `WHOLE_CONTRADICTED` with `preexisting` = yes, 2 YES decoys of that kind, and every rate without such rows printed (P16) | no: such rows would read `NOT_CONTRADICTED`, the decoys move to the NO side (the integrity review's proposal), and the rubric and the step-2 prompt change before the freeze |
-| OD-22 | P2's decoy shapes no pre-window source shows (P9's OD-22 bullet): 2 preexisting, 2 installation failures in a job named for tests, 2 names-only | none: undecided, so P2's set is not built and signing waits (OD-18) | taken: P2's mix as P9's OD-22 bullet states, the code changed, the set built, audited and sealed; declined: more pre-window reads (the frame of 2026-10-29 holds about 2,100 Claude Code and 260 Cursor pull requests not read; 753 read gave 0, 0 and 0 keyable sources) or a further change reopening a synthetic route, each before signing |
+| OD-22 | P2's decoy shapes no pre-window source shows (P9's OD-22 bullet): 2 preexisting, 2 installation failures in a job named for tests, 2 names-only | **taken** on 2026-11-03 at about 12:40Z: inside a plan, the lead recommended "Take OD-22, and I'll run the last round", and the operator replied "Ok". P2's mix is the one P9's OD-22 bullet states, the code is changed for it, and P2's set is built from real sources, audited and sealed before signing (§0.4, P9). It stays reversible until the signature | declined at signing: the OD-22 commits (`2b68e1bb` and the commits after it that apply OD-22) are reverted, and before signing P2's set is built again, from more pre-window reads (the frame of 2026-10-29 holds about 2,100 Claude Code and 260 Cursor pull requests not read; 753 read gave 0, 0 and 0 keyable sources) or by a further change reopening a synthetic route |
 
 ## 18. What this PREREG does not say
 
@@ -1229,10 +1229,10 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
   - P2's mix (the review of 2026-11-02): no two-step real item of P2 shows nothing failing (P7: candidates and AU1
     need `tests failed`, AU2 a failed job or check, and AU3 and AU4 are step 1 only), so P2 holds no whole-suite claim
     with passing tests and nothing failing; its two join the claims beside a failing lint, formatting, type or build
-    job (4 in P2), AU2's shape. P2 shows two names-only decoys, near the share of real candidate and AU1 rows whose
-    failures all lie outside Actions (1 of 21 in the development store): its YES side is 10 with log evidence, 1
-    names-only, 2 STALE and 2 preexisting; one of its disclosed failures is names-only, and both part claims beside a
-    failure show a log. Every P2 decoy sits in a combination of the screen's reading (P5, on the description as read
+    job (4 in P2 before OD-22, 6 with it), AU2's shape. Before OD-22 (taken; its bullet below states the mix P2's set
+    holds), P2 showed two names-only decoys, near the share of real candidate and AU1 rows whose failures all lie
+    outside Actions (1 of 21 in the development store): its YES side was 10 with log evidence, 1 names-only, 2 STALE
+    and 2 preexisting; one of its disclosed failures was names-only, and both part claims beside a failure show a log. Every P2 decoy sits in a combination of the screen's reading (P5, on the description as read
     and as cleaned) and testreceipt's CI reading that P2's two-step real items show: a claimer or a description with
     no claim beside `tests failed`, or a claimer beside `tests passed` with a failed job or check
     (`tpc_decoys.P2_COMBINATIONS`); an implied-only description, `no test result` and a passing CI with nothing
@@ -1257,15 +1257,15 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
     than leave M's mix. With the second round of 2026-11-03 the material holds 37 Claude Code and 3 Cursor pull
     requests whose CI reads `tests failed`, 32 of them (1 Cursor) with every failing test-like job's excerpt found by
     the step's times.
-  - **Shapes the pre-window material does not show (OD-22; for the operator's decision, not applied: the builder
-    stopped before building P2's set).** After the reads of §0.4 (753 pull requests opened before 2026-11-02; 40 of
+  - **Shapes the pre-window material does not show (OD-22, taken by the operator on 2026-11-03, §17; reversible until
+    the signature).** After the reads of §0.4 (753 pull requests opened before 2026-11-02; 40 of
     the 662 Claude Code and Cursor ones read `tests failed`), no source shows three of P2's shapes in a form the
     builder can key: a failure the CI record shows, in its own bytes, also failing without the change (0 found); a
     job named for tests failing at installation with its tests skipped, inside P2's combinations (1 found, its CI
     reading `no test result`); failures outside Actions only (2 found, neither a test failure keyable with a clean
     label). P9 closes the synthetic routes to each: a preexisting failure is shown by the source's own record, never a
     changed one; an installation flip needs a real failing run of the same job for the steps after it; a names-only
-    decoy of P2 fails outside Actions only. If the operator takes OD-22, each of those decoys is filled by a
+    decoy of P2 fails outside Actions only. With OD-22 taken, each of those decoys is filled by a
     real-sourced decoy of the same side and the nearest construction: the 2 `yes_preexisting` and the 1
     `yes_names_only` by `yes_log`, the 2 `no_install_in_test_job` by `no_lint_build` (the same error class, a
     failure that is not a test failure, in its common form), and P2's names-only `no_disclosed` by one with a log.
@@ -1284,8 +1284,9 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
     only is tested in P1 (P8.4) and not in P2, and a real P2 item shown by name only reads as real (2 of the 40
     `tests failed` rows read before the window showed failures outside Actions only); (d) the YES side leans on one
     construction, 13 of 15. Q's and P1's sets, not yet built, will meet the same scarcity; OD-22 covers P2 only.
-    Taking it needs, before P2's set is built: `tpc_decoys.P2_COUNTS` and `P2_NAMES_ONLY` (and the fixture's
-    `MIX_P2`) changed, their tests and mutation rules, and the collector digest computed after.
+    Taking it changed, before P2's set was built, `tpc_decoys.P2_COUNTS` and `P2_NAMES_ONLY` and the fixture's
+    `MIX_P2` (now a P2 decoy of a shape OD-22 replaced is refused by P2's mix), with their tests and mutation rules;
+    the collector digest in §14 was computed after.
   - P1's decoys imitate A1 items (2025-like ones carry names-only CI blocks); P2's imitate A2 items.
 - No text a construction writes carries a marker word (`tpc_decoys.MARKER`), and no decoy carries a date trace once
   P8.1's rule has masked it. The marker check reads only what the construction wrote: the lines it inserted into the
