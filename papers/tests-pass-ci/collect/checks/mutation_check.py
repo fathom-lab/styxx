@@ -14,7 +14,13 @@ The copy is named to those tests by the environment variable TPC_COLLECT_DIR. It
 reads the PREREG (the seats' rubric, the scorer's table) reads the same bytes. Nothing outside the scratch
 directory is written. Rules 21 to 39 are the packet and decoy builder's, the seat runners' and the scorer's; rules
 40 and 41 are the log excerpt's step boundaries, repaired while packet P2's decoys were built; the rules after them
-answer the open findings of 2026-11-02 (dates, step flips, the shuffle, the seal guard, the signed PREREG, the salts).
+answer the open findings of 2026-11-02 (dates, step flips, the shuffle, the seal guard, the signed PREREG, the salts),
+and the last group the second review of 2026-11-02 (P2's shapes, annotations, flips, dates, repository names, reuse
+across packets, the pinned main and the signing commit, the committed digests, and the reviewer's ten surviving
+mutants R1 to R4, R10, R17, R18, R29, R31 and R32).
+
+A rule may name a test file (its fifth field) that runs ahead of the others; every target still runs until one fails, so the hint
+only orders the run and never narrows it.
 """
 import os
 import pathlib
@@ -89,15 +95,18 @@ M = [
     ("excerpt runs past the step's error line", "tpc_items.py", "    return errs[-1] + 1 if errs else end",
      "    return end"),
     # dates masked in every item (P8.1)
-    ("dates kept in the items", "tpc_items.py", "    return DATES.sub(DATE_TOKEN, text)", "    return text"),
-    ("a decoy may carry a date", "tpc_decoys.py", "        if DATES.search(text):", "        if False:"),
+    ("dates kept in the items", "tpc_items.py",
+     "    return EPOCH.sub(_epoch_sub, MONTH_ABBR.sub(DATE_TOKEN, DATES.sub(DATE_TOKEN, text)))", "    return text"),
+    ("a decoy may carry a date", "tpc_decoys.py",
+     '    traces = date_traces(built.get("step1_text") or "") + date_traces(built.get("item_text") or "")',
+     "    traces = []", "items_decoys"),
     # step flips as real runs list them
     ("a step flip skips the runner's own steps", "tpc_decoys.py",
-     '        if n in ALWAYS_RUN or n.startswith("Post "):', "        if False:"),
+     '        if n in ALWAYS_RUN or n.startswith("Post "):', "        if False:", "items_decoys"),
     ("a step flip keeps the posts of skipped steps", "tpc_decoys.py",
-     '        if n.startswith("Post ") and n[len("Post "):] in not_run:', "        if False:"),
+     '        if n.startswith("Post ") and n[len("Post "):] in not_run:', "        if False:", "items_decoys"),
     ("impossible step listings accepted", "tpc_decoys.py",
-     '    for p in step_pattern_problems(ci):', "    for p in []:"),
+     '    for p in step_pattern_problems(ci):', "    for p in []:", "items_decoys"),
     # P8.5: the order says nothing about which items are decoys
     ("the shuffle starts from the reals then the decoys", "tpc_packet.py", "    entries.sort(key=lambda e: e[2])",
      "    pass"),
@@ -119,12 +128,131 @@ M = [
      '            return guard.signed_prereg(PREREG_FILE), "the signed blob, through the seal guard"',
      '            return PREREG_FILE.read_text(encoding="utf-8"), "the signed blob, through the seal guard"'),
     ("P2's packet key digest never needed", "tpc_score.py",
-     '        parse_utc(p["key_public_at"])  # every packet\'s key digest public before its seats read (section 14)',
-     "        pass"),
+     '        kp = parse_utc(p["key_public_at"])  # every packet\'s key digest public before its seats read (section 14)',
+     '        kp = parse_utc(p.get("key_public_at") or p["key_released_at"])', "score"),
     # where salts and keys may be written (P9)
     ("a salt may sit inside a git working tree", "tpc_packet.py", "    if salt:", "    if False:"),
-    ("secrets written where git does not ignore them", "tpc_packet.py", "    if r.returncode == 0:", "    if True:"),
+    ("secrets written where git does not ignore them", "tpc_packet.py", "    if r.returncode == 0:\n        return None",
+     "    if True:\n        return None"),
     ("the key's salt written beside the key", "tpc_packet.py", 'salt_dir / f"key_{p}.salt"', 'out / f"key_{p}.salt"'),
+    # the second review of 2026-11-02: dates (finding 4)
+    ("the mask leaves Unix times", "tpc_items.py", "    return EPOCH.sub(_epoch_sub, MONTH_ABBR.sub(DATE_TOKEN, DATES.sub",
+     "    return (lambda f, t: t)(_epoch_sub, MONTH_ABBR.sub(DATE_TOKEN, DATES.sub", "items_decoys"),
+    ("the mask leaves month abbreviations", "tpc_items.py", "_epoch_sub, MONTH_ABBR.sub(DATE_TOKEN, DATES.sub",
+     "_epoch_sub, (lambda a, t: t)(DATE_TOKEN, DATES.sub", "items_decoys"),
+    ("the decoy date check misses Unix times", "tpc_items.py", "        if TRACE_EPOCH[0] <= s < TRACE_EPOCH[1]:",
+     "        if False:", "items_decoys"),
+    # repository names (finding 5)
+    ("runner paths keep the repository", "tpc_items.py",
+     "    text = RUNNER_WORK.sub(lambda m: m.group(1) + REPO_TOKEN + m.group(3) + REPO_TOKEN, text)", "    pass",
+     "items_decoys"),
+    ("short names stay in the CI block", "tpc_items.py", "    for t in _name_tokens(repos):", "    for t in []:",
+     "items_decoys"),
+    ("a donor's repository stays", "tpc_items.py", "    repos = [r for r in (repo,) + tuple(also) if r]",
+     "    repos = [r for r in (repo,) if r]", "items_decoys"),
+    ("an entry may name another repository", "tpc_decoys.py",
+     '        if (entry.get("repo") or "").lower() != repo_of(src["pr"]):', "        if False:", "items_decoys"),
+    # P2's shapes (findings 1 and 2)
+    ("P2 takes any claim and CI combination", "tpc_decoys.py",
+     "            if not any(kind == k and outcome == o and (f is None or failed_any == f) for k, o, f in P2_COMBINATIONS):",
+     "            if False:", "items_decoys"),
+    ("P2 keeps Q's and P1's mix", "tpc_decoys.py",
+     'P2_COUNTS = {"yes_log": 10, "yes_names_only": 1, "no_passing": 0, "no_lint_build": 4}', "P2_COUNTS = {}",
+     "items_decoys"),
+    ("P2 keeps two names-only decoys of no_part_beside's", "tpc_decoys.py",
+     'P2_NAMES_ONLY = {"no_disclosed": 1, "no_part_beside": 0}', 'P2_NAMES_ONLY = {"no_disclosed": 1, "no_part_beside": 1}',
+     "items_decoys"),
+    ("a failing Actions check run needs no annotation", "tpc_decoys.py", "    for p in annotation_problems(ci):",
+     "    for p in []:", "items_decoys"),
+    ("P2 names-only inside Actions", "tpc_decoys.py", "        if names_only and _failing_actions_checks(ci):",
+     "        if False:", "items_decoys"),
+    ("P2 shows a failing test job without its log", "tpc_decoys.py",
+     '        if any(x.get("how") == "no_log" for x in build.get("logs", [])):', "        if False:", "items_decoys"),
+    ("P2 takes excerpts found by markers", "tpc_decoys.py",
+     '        other = sorted({x.get("how") for x in logs_shown} - {"step_times"})', "        other = []", "items_decoys"),
+    # step flips (finding 3)
+    ("a flip skips every later step", "tpc_decoys.py", "    if rest and later is None:", "    if False:", "items_decoys"),
+    ("a changed CI record needs no flip", "tpc_decoys.py",
+     '        return [f"{name}: a changed CI record is declared as a step flip (flip)"]', "        return []",
+     "items_decoys"),
+    ("a donor's repository need not be redacted", "tpc_decoys.py",
+     '        if drepo is not None and drepo != own and drepo not in {r.lower() for r in entry.get("donor_repos") or []}:',
+     "        if False:", "items_decoys"),
+    ("a flip's later steps unchecked against its reference", "tpc_decoys.py",
+     '            if got != (ref.get("later") or {}):', "            if False:", "items_decoys"),
+    # reuse within a set and across packets (finding 6)
+    ("a source pull request may carry two decoys", "tpc_decoys.py", "    if any(n > 1 for n in sources.values()):",
+     "    if False:", "items_decoys"),
+    ("a repository may carry three decoys", "tpc_decoys.py",
+     "    if any(n > MAX_PER_REPOSITORY for n in repos.values()):", "    if False:", "items_decoys"),
+    ("another packet's sources accepted", "tpc_decoys.py", "    shared = set(sources) & others", "    shared = set()",
+     "items_decoys"),
+    ("near-duplicate descriptions accepted", "tpc_decoys.py",
+     '    near = sum(1 for b in builts if any(near_duplicate(b.get("step1_text"), t) for t in texts))', "    near = 0",
+     "items_decoys"),
+    ("Q takes claimers with nothing failing", "tpc_packet.py",
+     "    rows = [r for r in _read_rows(root) if _claim_ci(r) and _ci_shows_failure(r)",
+     "    rows = [r for r in _read_rows(root) if _claim_ci(r)", "packet"),
+    ("Q takes another packet's sources", "tpc_packet.py",
+     "            and f\"{(r.get('repo') or '').lower()}#{int(r['number'])}\" not in ex]", "            and True]",
+     "packet"),
+    ("the decoys CLI ignores other packets' sources", "tpc_packet.py",
+     '        out["other_sources"] += [(e.get("source") or {}).get("pr") for e in _json(p)["decoys"]',
+     '        out["other_sources"] += [] and [(e.get("source") or {}).get("pr") for e in _json(p)["decoys"]', "packet"),
+    ("a git error reads as outside any working tree", "tpc_packet.py", "    if marked is not None:", "    if False:",
+     "packet"),
+    # the seal guard reads main from the pinned URL (finding 8; R1 to R4 are the review's mutants)
+    ("R1 git_on_main returns True", "tpc_seal.py", "    return r.returncode == 0\n\n\ndef git_signing_commit",
+     "    return True\n\n\ndef git_signing_commit", "seal_store"),
+    ("R2 git_fetch returns ok", "tpc_seal.py", "def git_fetch(repo: Path, url: str = PINNED_URL) -> str:",
+     'def git_fetch(repo: Path, url: str = PINNED_URL) -> str:\n    return "ok"', "seal_store"),
+    ("R3 ancestry checked against HEAD", "tpc_seal.py",
+     '        r = _git(repo, ["merge-base", "--is-ancestor", commit, sha])',
+     '        r = _git(repo, ["merge-base", "--is-ancestor", commit, "HEAD"])', "seal_store"),
+    ("R4 blob read from HEAD", "tpc_seal.py", '        r = _git(repo, ["show", f"{commit}:{path}"])',
+     '        r = _git(repo, ["show", f"HEAD:{path}"])', "seal_store"),
+    ("the fetch follows origin's refspec", "tpc_seal.py",
+     '        r = _git(repo, ["fetch", "--quiet", "--no-tags", url, f"+refs/heads/main:{SEAL_REF}"], timeout=180)',
+     '        r = _git(repo, ["fetch", "--quiet", "origin"], timeout=180)', "seal_store"),
+    ("main read by a short name", "tpc_seal.py",
+     '        r = _git(repo, ["show-ref", "--verify", "--hash", SEAL_REF])',
+     '        r = _git(repo, ["rev-parse", "origin/main"])', "seal_store"),
+    ("origin's URL unchecked", "tpc_seal.py", "        if r.returncode != 0 or norm_url(got) != norm_url(url):",
+     "        if False:", "seal_store"),
+    ("a URL rewrite is followed", "tpc_seal.py",
+     '        if any(k.endswith((".insteadof", ".pushinsteadof")) for k in keys):', "        if False:", "seal_store"),
+    # the signing commit only, and the PREREG never changed after it (finding 9)
+    ("a later commit opens the guard", "tpc_seal.py", "        if signing != commit:", "        if False:", "seal_store"),
+    ("the PREREG may change after signing", "tpc_seal.py", "        if tip != blob:", "        if False:", "seal_store"),
+    ("the signing commit is the latest signed one", "tpc_seal.py",
+     '        r = _git(repo, ["log", "--reverse", "--format=%H", sha, "--", path], timeout=120)',
+     '        r = _git(repo, ["log", "--format=%H", sha, "--", path], timeout=120)', "seal_store"),
+    # the committed digests (finding 10) and the review's surviving mutants R10, R17, R18, R29, R31, R32 (finding 11)
+    ("the committed digests unchecked", "tpc_score.py",
+     '            if probs:\n                raise ScoreError(f"the committed digests refuse',
+     '            if False:\n                raise ScoreError(f"the committed digests refuse', "score"),
+    ("the key line need not be committed", "tpc_score.py", "    elif not any(_holds(o, want) for o in lines):",
+     "    elif False:", "score"),
+    ("answer digests need not be committed", "tpc_score.py",
+     "        if lines is None or not any(_holds(o, w) for o in lines):", "        if False:", "score"),
+    ("a seat may answer before the key digest is public", "tpc_score.py",
+     "                if fa is None or not kp < parse_utc(fa):", "                if False:", "score"),
+    ("seats read an uncommitted packet", "tpc_seats.py",
+     '    if not (published or key_committed)(pk["packet"], pk_sha):', "    if False:", "seats"),
+    ("R10 the packet's decoy count unchecked", "tpc_score.py", "        if n != len(decoy_set):", "        if False:",
+     "score"),
+    ("R17 cmd_p2 accepts an unfilled P2 lock row", "tpc_packet.py", "        if lock is None:", "        if False:",
+     "packet"),
+    ("R18 the scorer loads P2's set without the lock row", "tpc_score.py",
+     "                                          lock_digest=None if (smoke or dry_run) else lock)",
+     "                                          lock_digest=None)", "score"),
+    ("R29 only the side compared between key and set", "tpc_score.py",
+     '            for f in ("side", "construction", "label"):', '            for f in ("side",):', "score"),
+    ("R31 ledger rows for other packet bytes accepted", "tpc_score.py",
+     '        if other:\n            raise ScoreError(f"{lp.name} answers other packet bytes',
+     '        if False:\n            raise ScoreError(f"{lp.name} answers other packet bytes', "score"),
+    ("R32 a stand-in packet scored for real", "tpc_score.py",
+     '    if public.get("beacon", {}).get("kind") == "stand_in" and not dry_run:', "    if False:", "score"),
 ]
 
 
@@ -134,7 +262,9 @@ def main() -> int:
     base = scratch / "mut"
     work = base / "tests-pass-ci" / "collect"
     missed = 0
-    for name, f, old, new in M:
+    for rule in M:
+        name, f, old, new = rule[:4]
+        hint = rule[4] if len(rule) > 4 else None
         if base.exists():
             shutil.rmtree(base)
         shutil.copytree(SRC, work, ignore=shutil.ignore_patterns("__pycache__", "checks"))
@@ -146,7 +276,8 @@ def main() -> int:
         p.write_bytes(s.replace(old, new).encode("utf-8"))
         env = dict(os.environ, TPC_COLLECT_DIR=str(work))
         if targets:
-            cmd = [sys.executable, "-m", "pytest", "-q", "-x", "-p", "no:cacheprovider"] + targets
+            ordered = sorted(targets, key=lambda t: 0 if hint and hint in t else 1)
+            cmd = [sys.executable, "-m", "pytest", "-q", "-x", "-p", "no:cacheprovider"] + ordered
             cwd = None
         else:
             cmd = [sys.executable, "-m", "pytest", "-q", "-x", "-p", "no:cacheprovider", "tests"]

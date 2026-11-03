@@ -299,3 +299,22 @@ packet key digest in `G_KEYS`, and every salt outside any git working tree. The 
 (the collector's 272 and the PREREG's 15), and the mutation check breaks 59 rules, every one caught:
 `checks/mutation_check_output_findings_2026_11_02.txt`, run from the repository root with the collector test files as
 targets, the seal guard's file at the head of the list.
+
+The second review of 2026-11-02 (two adversarial reviewers at `9df254a4`) added tests and rules for what it found:
+P2's decoys held to the combinations of claim reading and CI result P2's two-step real items show (no `no_passing`
+decoy in P2; its two join `no_lint_build`), a failing Actions check run always annotated, P2's names-only decoys only
+outside Actions and cut to two, no failing test-like Actions job without its excerpt in P2, excerpts found by the
+step's times; step flips whose later steps come from a real failing run of the same job, declared in the spec, with
+the donor's annotations, step times and repository; the date mask widened (Unix times, basic ISO date-times, hyphened
+and standing month names, a year and month) and the decoy check's own detector; repository names redacted from runner
+paths and as tokens; one decoy per source and two per repository, and no source, real item or near-duplicate
+description shared across packets (packet Q's real items now claimers whose CI shows a failure); the seal guard
+reading main from the pinned URL into its own ref, opening only for the signing commit while the PREREG on main is
+still that commit's blob, tested on real repositories in a temporary folder against a tag, a branch, a fetch refspec,
+a repointed origin and a URL rewrite; the publication record (`PUBLICATION_REPO_PATH`), which the seat runners read
+before a packet is answered and the scorer reads at each committed digest's commit; a seat's earliest answer after the
+key digest's public time; a salt folder git cannot confirm refused; and the reviewer's ten surviving mutants. The
+tests-pass-ci tests now number 346 (the collector's 331 and the PREREG's 15), and
+the mutation check breaks 107 rules, 107 caught: `checks/mutation_check_output_review2_2026_11_02.txt`.
+A rule may name the test file that runs ahead of the others; every target still runs until one fails.
+`checks/decoy_shape_check.py` counts the shapes P9 now refuses over the development store's real items (counts only).
