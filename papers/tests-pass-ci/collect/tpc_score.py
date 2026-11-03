@@ -7,12 +7,17 @@ final labels, the gates' metrics, and the receipt `measurement_result.json` that
 
 Order (P9, section 6): no key is opened before every seat's answer file for that packet is sealed (its sha256 beside
 it, `tpc_seats.seal_answers`) and still hashes to that digest; a key opens only when it hashes, with its salt, to the
-digest committed for it; P2's decoys must be the bytes of the decoy set sealed in the lock row, item by item. Whether
-the digests were public in pull requests in that order (`G_KEYS`, and the P1 half of `G_A1_V`) is read from the
-publication record the lead writes from the pull requests' opened-at times: {"P1": {"key_public_at", "answers_public_at":
-{seat: time}, "key_released_at"}, "P2": {"set_in_lock_row_at_signing": true, "key_public_at", "answers_public_at":
-{...}, "key_released_at"}}; every packet's key digest (P2's too: its lock row in section 14) public no later than any
-answer file's, and every answer time strictly before the key release.
+digest committed for it; P2's decoys must be the bytes of the decoy set sealed in the lock row, item by item. Scored for
+real, the committed values are read where they were committed (the review of 2026-11-02: the key was checked only
+against the .sha256 file beside it): the publication file of the pinned main (`tpc_seal.Publication`, section 14) must
+hold, at the commit the publication times name, the key digest beside the packet's sha256 and each seat's answer-file
+digest, and these must be the key's, the packet's and the sealed answer files' own; any mismatch refuses the scoring.
+Whether the digests were public in that order (`G_KEYS`, and the P1 half of `G_A1_V`) is read from the publication
+times the lead writes from the pull requests' opened-at times: {"P1": {"key_public_at", "key_digest": {"sha256",
+"packet_sha256", "commit"}, "answers_public_at": {seat: time}, "answers": {seat: {"sha256", "commit"}},
+"key_released_at"}, "P2": {"set_in_lock_row_at_signing": true, ...}}; every packet's key digest public before any seat's
+earliest answer in its ledger and no later than any answer file's digest, and every answer time strictly before the key
+release.
 
 Panel (P13): a voter qualifies on a packet with at least 14 of the 15 NO-side and 13 of the 15 YES-side decoys right;
 a decoy answer is right when its step-2 label equals the key's label (NOT_DECIDABLE and NO_ANSWER are wrong). A
@@ -171,7 +176,13 @@ def load_answers(pdir: Path, packet: str, pk_sha: str) -> dict:
         other = {r.get("packet_sha256") for r in rows} - {pk_sha}
         if other:
             raise ScoreError(f"{lp.name} answers other packet bytes than {packet}'s")
-        out[seat] = {"rows": tpc_seats.final_answers(rows), "sha256": digest}
+        ats = [r.get("at") for r in rows if r.get("final")]
+        try:
+            earliest = min(parse_utc(a) for a in ats) if ats and all(ats) else None
+        except ValueError:
+            earliest = None
+        out[seat] = {"rows": tpc_seats.final_answers(rows), "sha256": digest,
+                     "first_at": iso(earliest) if earliest is not None else None}
     return out
 
 
@@ -297,25 +308,71 @@ def final_labels(key: dict, answers: dict, qualified: list) -> dict:
     return out
 
 
-def keys_in_order(pub: dict, packet: str, seats_sat: list, *, p2: bool) -> int:
+def keys_in_order(pub: dict, packet: str, seats_sat: list, *, p2: bool,
+                  first_answer_at: Optional[dict] = None) -> int:
     """1 when the packet's key digest was public before any seat answered (for P2 also its decoy set digest in the
     lock row at the signing commit) and every seat's answer-file digest was public before the key was released, else
-    0."""
+    0. With `first_answer_at` ({seat: the earliest "at" of its ledger}), the key digest's public time must be earlier
+    than every seat's earliest answer; a seat with no time is not in order."""
     p = pub.get(packet) or {}
     try:
         rel = parse_utc(p["key_released_at"])
         times = p["answers_public_at"]
         if p2 and p.get("set_in_lock_row_at_signing") is not True:
             return 0
-        parse_utc(p["key_public_at"])  # every packet's key digest public before its seats read (section 14)
+        kp = parse_utc(p["key_public_at"])  # every packet's key digest public before its seats read (section 14)
         for s in seats_sat:
             if s not in times or not parse_utc(times[s]) < rel:
                 return 0
         if p.get("key_public_at") and any(parse_utc(p["key_public_at"]) > parse_utc(t) for t in times.values()):
             return 0
+        if first_answer_at is not None:
+            for s in seats_sat:
+                fa = first_answer_at.get(s)
+                if fa is None or not kp < parse_utc(fa):
+                    return 0
     except (KeyError, TypeError, ValueError):
         return 0
     return 1
+
+
+def _holds(obj: dict, want: dict) -> bool:
+    return all(obj.get(k) == v for k, v in want.items())
+
+
+def publication_problems(pub: dict, panel: dict, read) -> list:
+    """Why the committed digests refuse a packet's scoring (section 14, P9): the publication times must name, for the
+    key and for each seat's answer file, the commit that carries it and the value committed there; the record read at
+    that commit of the pinned main (`read(commit)`: its objects, or None when the commit is not on the pinned main or
+    holds no record) must hold it; and every value must be the key's, the packet's and the sealed answer file's own."""
+    packet = panel["packet"]
+    rec = pub.get(packet) or {}
+    out = []
+    kd = rec.get("key_digest") or {}
+    if kd.get("sha256") != panel["key_digest"] or kd.get("packet_sha256") != panel["packet_sha256"]:
+        out.append(f"the publication times' key digest or packet sha256 of {packet} is not this key's or packet's")
+    want = {"what": "key", "packet": packet, "key_digest": panel["key_digest"], "packet_sha256": panel["packet_sha256"]}
+    lines = read(kd.get("commit") or "")
+    if lines is None:
+        out.append(f"{packet}'s key digest commit {str(kd.get('commit'))[:12]} is not on the pinned main or holds no "
+                   "publication record")
+    elif not any(_holds(o, want) for o in lines):
+        out.append(f"the publication record at {packet}'s key commit does not hold this key digest beside this packet")
+    for seat, digest in sorted(panel["answer_digests"].items()):
+        a = (rec.get("answers") or {}).get(seat) or {}
+        if a.get("sha256") != digest:
+            out.append(f"the publication times' answer digest of {packet}/{seat} is not the sealed answer file's")
+        w = {"what": "answers", "packet": packet, "seat": seat, "sha256": digest}
+        lines = read(a.get("commit") or "")
+        if lines is None or not any(_holds(o, w) for o in lines):
+            out.append(f"the answer-file digest of {packet}/{seat} is not committed on the pinned main")
+    return out
+
+
+def _default_reader():
+    """The publication record at a commit of the pinned main (`tpc_seal.Publication.at`)."""
+    import tpc_seal
+    return tpc_seal.Publication().at
 
 
 # ---- testreceipt's labels (P19) ------------------------------------------------------------------------------
@@ -370,6 +427,7 @@ def _panel(pdir: Path, packet: str, *, decoy_set: Optional[list] = None, dry_run
     return {"packet": packet, "packet_sha256": pk_sha, "key": key, "key_digest": opened["digest"],
             "answers": answers, "scores": scores, "qualified": qualified,
             "answer_digests": {s: a["sha256"] for s, a in answers.items()},
+            "first_answer_at": {s: a.get("first_at") for s, a in answers.items()},
             "finals": final_labels(key, answers, qualified)}
 
 
@@ -444,7 +502,8 @@ def a2_metrics(rows: list, panel: Optional[dict], pub: dict, *, boot_seed: str, 
     firings = sorted(pid for pid in capped_ids if (by_id[pid].get("rule_r") or {}).get("fires"))
     right = sum(1 for pid in firings if label(pid) == "WHOLE_CONTRADICTED" and pid in pid_of)
     gated = {"n_claimers_ci": n,
-             "keys_in_order": keys_in_order(pub, "P2", sorted(panel["answers"]), p2=True),
+             "keys_in_order": keys_in_order(pub, "P2", sorted(panel["answers"]), p2=True,
+                                            first_answer_at=panel["first_answer_at"]),
              "human_qualified": int(scores["H"]["qualified"]), "nonclaude_qualified": int(scores["N"]["qualified"]),
              "whole_wilson_upper_worst": whole_up, "agent_whole_wilson_lower_max": max(lows) if lows else 0.0,
              "part_contradicted_wilson_upper": part_up, "rule_firings": len(firings),
@@ -589,8 +648,8 @@ def a1_metrics(panel: Optional[dict], tr_labels: dict, pub: dict) -> tuple:
         return {"panel_valid": 0, "confirmed": -1, "added": -1, "k2025_strict": -1, "k2025_worst": -1}, {"p1_ran": False}
     key, finals, scores = panel["key"], panel["finals"], panel["scores"]
     seats = sorted(panel["answers"])
-    valid = int(keys_in_order(pub, "P1", seats, p2=False) == 1 and scores["H"]["qualified"]
-                and scores["N"]["qualified"])
+    valid = int(keys_in_order(pub, "P1", seats, p2=False, first_answer_at=panel["first_answer_at"]) == 1
+                and scores["H"]["qualified"] and scores["N"]["qualified"])
     explicit, implied, rows = [], [], []
     for iid, k in key["items"].items():
         if k.get("decoy"):
@@ -674,8 +733,11 @@ def _prereg_for_scoring(prereg_text: Optional[str], *, real_p2: bool, guard=None
 
 
 def score(packets: Path, root: Optional[Path], tr_dir: Optional[Path], pub: dict, *, smoke: bool = False,
-          prereg_text: Optional[str] = None, dry_run: bool = False, boot: int = BOOT, guard=None) -> dict:
-    """The whole scoring: P1 and P2 panels, the A1 and A2 metrics, the receipt."""
+          prereg_text: Optional[str] = None, dry_run: bool = False, boot: int = BOOT, guard=None,
+          publication=None) -> dict:
+    """The whole scoring: P1 and P2 panels, the A1 and A2 metrics, the receipt. Scored for real, every panel's key
+    and answer-file digests are checked where they were committed (`publication`: commit -> the record's objects, by
+    default read on the pinned main)."""
     pins = check_styxx_pins()
     packets = Path(packets)
     has_p2 = (packets / "P2" / "packet_P2.json").exists()
@@ -693,12 +755,19 @@ def score(packets: Path, root: Optional[Path], tr_dir: Optional[Path], pub: dict
         p1set = tpc_packet.load_decoy_set(packets / "P1", "P1", salt_dir=None)
     p1 = _panel(packets / "P1", "P1", decoy_set=p1set, dry_run=dry_run) if (packets / "P1").exists() else None
     p2 = _panel(packets / "P2", "P2", decoy_set=p2set, dry_run=dry_run) if (packets / "P2").exists() else None
+    if not (smoke or dry_run):
+        read = publication or _default_reader()
+        for p in (p1, p2):
+            probs = publication_problems(pub, p, read) if p is not None else []
+            if probs:
+                raise ScoreError(f"the committed digests refuse packet {p['packet']}: " + "; ".join(probs))
     rows = _rows_of(root) if root else []
     tr = testreceipt_labels(tr_dir) if (tr_dir and p1) else {}
     a1, a1_counts = a1_metrics(p1, tr, pub)
     seed = (p2 or {}).get("key", {}).get("seed") or "no-beacon"
     a2, a2_counts = a2_metrics(rows, p2, pub, boot_seed=seed, boot=boot)
     printed = {"a1": a1_counts, "a2": a2_counts, "styxx_pins": pins, "scored_at": iso(dt.datetime.now(UTC)),
+               "committed_digests_checked": not (smoke or dry_run),
                "prereg_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "prereg_read": how,
                "panels": {p["packet"]: {"qualified": p["qualified"], "answer_digests": p["answer_digests"],
                                         "key_digest": p["key_digest"], "packet_sha256": p["packet_sha256"],

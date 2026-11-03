@@ -341,7 +341,8 @@ def _guard(tmp_path, blob, code):
     sealed.write_bytes(b"prereg_commit: " + b"a" * 40 + b"\nfreeze_anchor: 2026-11-06T12:00:00Z\n")
     return tpc_seal.SealGuard(sealed_file=sealed, repo=tmp_path, now=lambda: dt.datetime(2026, 11, 8, tzinfo=UTC),
                               blob_reader=lambda r, c, p: blob, fetch=lambda r: "ok", on_main=lambda r, c: True,
-                              running_code=lambda: code)
+                              running_code=lambda: code, signing_commit=lambda r, p: "a" * 40,
+                              main_blob=lambda r, p: blob)
 
 
 def test_the_seal_guard_refuses_this_draft_and_opens_on_a_signed_filled_copy(tmp_path):

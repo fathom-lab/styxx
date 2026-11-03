@@ -54,6 +54,8 @@ import urllib.request
 from pathlib import Path
 from typing import Callable, Optional
 
+import tpc_seal
+
 HERE = Path(__file__).resolve().parent
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
@@ -386,6 +388,21 @@ def hf_worker(model: str, revision: str) -> int:  # pragma: no cover - needs the
 
 
 # ---- the ledger --------------------------------------------------------------------------------------------
+def key_committed(packet: str, packet_sha256: str) -> bool:
+    """Whether the packet's key digest, beside this packet's sha256, is in the publication record on the pinned main
+    (section 14: committed and pushed before the packet's seats read)."""
+    return tpc_seal.key_published(tpc_seal.Publication().tip(), packet, packet_sha256)
+
+
+def require_key_committed(pk: dict, pk_sha: str, published: Optional[Callable[[str, str], bool]]) -> None:
+    """Refuse a real packet whose key digest is not committed (the review of 2026-11-02: nothing refused it)."""
+    if pk["packet"] in DEV_PACKETS:
+        return
+    if not (published or key_committed)(pk["packet"], pk_sha):
+        raise SeatError(f"packet {pk['packet']}'s key digest, beside its sha256 {pk_sha[:12]}..., is not in the "
+                        "publication record on the pinned main; no seat reads it before (section 14)")
+
+
 def load_packet(path: Path) -> tuple:
     raw = Path(path).read_bytes()
     pk = json.loads(raw.decode("utf-8"))
@@ -425,9 +442,11 @@ def final_answers(rows: list) -> dict:
 
 def run_seat(packet_path: Path, seat, out: Path, *, limit: Optional[int] = None, ids: Optional[list] = None,
              allow_dev: bool = False, now: Callable[[], dt.datetime] = lambda: dt.datetime.now(UTC),
-             sleep: Callable[[float], None] = time.sleep) -> dict:
+             sleep: Callable[[float], None] = time.sleep,
+             published: Optional[Callable[[str, str], bool]] = None) -> dict:
     """Answer every item of a packet, step 1 then step 2 per item, appending to the seat's ledger. Resumable: an
-    (id, step) with a final row is never asked again. Refuses a sealed ledger and, for the development backend, any
+    (id, step) with a final row is never asked again. Refuses a sealed ledger, a packet whose key digest is not in the
+    publication record on the pinned main (`published`, read there by default), and, for the development backend, any
     packet but the transport check's."""
     pk, pk_sha = load_packet(packet_path)
     packet = pk["packet"]
@@ -435,6 +454,8 @@ def run_seat(packet_path: Path, seat, out: Path, *, limit: Optional[int] = None,
         raise SeatError("the development server answers synthetic items only (P10.3: not through :18790)")
     if pk.get("beacon", {}).get("kind") == "stand_in" and not allow_dev:
         raise SeatError("the packet was built under the dry run's stand-in hash; no seat reads it")
+    if not allow_dev:
+        require_key_committed(pk, pk_sha, published)
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     lp = ledger_path(out, packet, seat.name)
@@ -703,10 +724,15 @@ def _select(name: str, options: tuple) -> str:
     return f"<label>{name}: <select name=\"{name}\">{opts}</select></label>"
 
 
-def export_h(packet_path: Path, step: int, out: Path, *, step1_answers: Optional[dict] = None) -> dict:
-    """Write the human seat's form (HTML) and sheet (CSV) per sitting for one step (P10.1)."""
+def export_h(packet_path: Path, step: int, out: Path, *, step1_answers: Optional[dict] = None,
+             published: Optional[Callable[[str, str], bool]] = None) -> dict:
+    """Write the human seat's form (HTML) and sheet (CSV) per sitting for one step (P10.1), refused for a packet whose
+    key digest is not in the publication record on the pinned main (`published`, read there by default)."""
     pk, pk_sha = load_packet(packet_path)
     packet = pk["packet"]
+    if pk.get("beacon", {}).get("kind") == "stand_in":
+        raise SeatError("the packet was built under the dry run's stand-in hash; no seat reads it")
+    require_key_committed(pk, pk_sha, published)
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     rubric = rubric_text()

@@ -8,13 +8,15 @@ from __future__ import annotations
 import datetime as dt
 import gzip
 import json
+import os
+import subprocess
 
 import pytest
 
 from tests import _tests_pass_ci_fakes  # noqa: F401,E402  (puts the collector on sys.path)
 import tpc_gh
 import tpc_seal
-from tpc_const import UTC
+from tpc_const import PREREG_REPO_PATH, UTC
 from tpc_seal import SealGuard, SealRefused
 from tpc_store import Store
 
@@ -32,7 +34,7 @@ GOOD = "prereg_commit: " + COMMIT + "\nfreeze_anchor: 2026-11-06T12:00:00Z\n"
 
 
 def guard(tmp_path, text=None, blob=SIGNED, now=dt.datetime(2026, 11, 7, tzinfo=UTC), on_main=True, code=CODE,
-          fetch="ok"):
+          fetch="ok", signing=COMMIT, tip=None):
     f = tmp_path / "SEALED"
     if text is not None:
         f.write_bytes(text.encode("utf-8"))
@@ -41,7 +43,9 @@ def guard(tmp_path, text=None, blob=SIGNED, now=dt.datetime(2026, 11, 7, tzinfo=
                   blob_reader=lambda repo, c, p: blob if c == COMMIT else None,
                   fetch=lambda repo: fetched.append(repo) or fetch,
                   on_main=lambda repo, c: on_main and c == COMMIT,
-                  running_code=lambda: code)
+                  running_code=lambda: code,
+                  signing_commit=lambda repo, p: signing,
+                  main_blob=lambda repo, p: blob if tip is None else tip)
     g.fetched = fetched
     return g
 
@@ -69,7 +73,7 @@ def test_no_sealed_file_refuses_window_and_allows_pre_window(tmp_path):
     ("anchor unreadable", "prereg_commit: " + COMMIT + "\nfreeze_anchor: soon\n", SIGNED, {}, "unreadable"),
     ("anchor in the future", "prereg_commit: " + COMMIT + "\nfreeze_anchor: 2026-11-08T00:00:00Z\n", SIGNED, {},
      "before the freeze anchor"),
-    ("commit on a side branch", GOOD, SIGNED, {"on_main": False}, "not an ancestor of origin/main"),
+    ("commit on a side branch", GOOD, SIGNED, {"on_main": False}, "not an ancestor of the pinned main"),
     ("commit unknown", "prereg_commit: " + "b" * 40 + "\nfreeze_anchor: 2026-11-06T12:00:00Z\n", SIGNED, {},
      "not an ancestor"),
     ("junk at the path", GOOD, b"not a prereg at all\n", {}, "not a PREREG"),
@@ -95,7 +99,12 @@ def test_no_sealed_file_refuses_window_and_allows_pre_window(tmp_path):
     ("P2 row with two digests", GOOD, SIGNED.replace(P2DIG.encode(), (P2DIG + " " + "f" * 64).encode()), {},
      "holds 2 sha256"),
     ("SEALED names another file", GOOD + "prereg_path: papers/other/PREREG_other.md\n", SIGNED, {}, "prereg_path"),
-    ("the fetch failed", GOOD, SIGNED, {"fetch": "fetch failed: exit 128"}, "did not succeed"),
+    ("the fetch failed", GOOD, SIGNED, {"fetch": "fetch failed: exit 128"}, "pinned main was not read"),
+    # the review of 2026-11-02: only the signing commit opens the guard, and only while the PREREG on main is its blob
+    ("SEALED names a later commit", GOOD, SIGNED, {"signing": "e" * 40}, "not the signing commit"),
+    ("no signed PREREG on main", GOOD, SIGNED, {"signing": None}, "not the signing commit"),
+    ("the PREREG changed after signing", GOOD, SIGNED, {"tip": SIGNED.replace(P2DIG.encode(), b"e" * 64)},
+     "changed after signing"),
 ])
 def test_the_seal_stays_shut_unless_every_check_holds(tmp_path, name, text, blob, kw, why):
     g = guard(tmp_path, text, blob, **kw)
@@ -104,6 +113,152 @@ def test_the_seal_stays_shut_unless_every_check_holds(tmp_path, name, text, blob
     with pytest.raises(SealRefused):
         g.check("2026-11-03T00:00:00Z", "CI read")
     g.check("2026-10-29T12:00:00Z", "CI read")  # pre-window reads never depend on the seal
+
+
+# ---- the guard's git reads, on real repositories in tmp_path (the review of 2026-11-02, git_probe) -----------------
+def _g(cwd, *args, check=True):
+    env = dict(os.environ, GIT_TERMINAL_PROMPT="0")
+    r = subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@localhost", "-c", "core.autocrlf=false",
+                        "-c", "commit.gpgsign=false", "-c", "init.defaultBranch=main", "-c", "advice.detachedHead=false"]
+                       + list(args), cwd=str(cwd), capture_output=True, text=True, env=env)
+    if check:
+        assert r.returncode == 0, (args, r.stderr)
+    return r.stdout.strip()
+
+
+def _bare(tmp_path, name):
+    p = tmp_path / name
+    _g(tmp_path, "init", "-q", "--bare", str(p))
+    _g(p, "symbolic-ref", "HEAD", "refs/heads/main")
+    return p
+
+
+def _seal_world(tmp_path):
+    """A remote (the pinned URL), a work clone that pushed an unsigned draft to main and a signed, filled PREREG to a
+    side branch, and the lab's clone with the side branch checked out (HEAD at the signed commit)."""
+    remote = _bare(tmp_path, "remote.git")
+    work = tmp_path / "work"
+    _g(tmp_path, "init", "-q", "-b", "main", str(work))
+    path = work / PREREG_REPO_PATH
+    path.parent.mkdir(parents=True)
+    path.write_bytes(UNSIGNED)
+    _g(work, "add", "-A")
+    _g(work, "commit", "-qm", "draft")
+    base = _g(work, "rev-parse", "HEAD")
+    _g(work, "remote", "add", "origin", str(remote))
+    _g(work, "push", "-q", "origin", "main")
+    _g(work, "checkout", "-qb", "side")
+    path.write_bytes(SIGNED)
+    _g(work, "commit", "-qam", "signed")
+    c = _g(work, "rev-parse", "HEAD")
+    _g(work, "push", "-q", "origin", "side")
+    lab = tmp_path / "lab"
+    _g(tmp_path, "clone", "-q", str(remote), str(lab))
+    _g(lab, "checkout", "-q", "side")
+    sealed = tmp_path / "SEALED"
+    sealed.write_bytes(f"prereg_commit: {c}\nfreeze_anchor: 2026-11-06T12:00:00Z\n".encode())
+    return {"remote": remote, "work": work, "lab": lab, "base": base, "c": c, "sealed": sealed, "path": path}
+
+
+def _real_guard(w):
+    return SealGuard(sealed_file=w["sealed"], repo=w["lab"], url=str(w["remote"]),
+                     now=lambda: dt.datetime(2026, 11, 7, tzinfo=UTC), running_code=lambda: CODE)
+
+
+def test_the_guard_reads_main_from_the_pinned_url_and_no_local_ref_bends_it(tmp_path):
+    """A signed, filled PREREG committed on a side branch only: the guard stays shut under every bend the review's
+    probe opened it with: a tag or a branch named origin/main, a fetch refspec mapping the side branch onto
+    origin/main, origin repointed at another repository whose main holds the commit, and a URL rewrite."""
+    w = _seal_world(tmp_path)
+    g = _real_guard(w)
+    assert not g.open and "not an ancestor of the pinned main" in g.state["why"], g.state
+    _g(w["lab"], "tag", "origin/main", w["c"])
+    assert not _real_guard(w).open
+    _g(w["lab"], "branch", "origin/main", w["c"])
+    assert not _real_guard(w).open
+    _g(w["lab"], "config", "remote.origin.fetch", "+refs/heads/side:refs/remotes/origin/main")
+    _g(w["lab"], "fetch", "-q", "origin")
+    assert _g(w["lab"], "rev-parse", "refs/remotes/origin/main") == w["c"]
+    assert not _real_guard(w).open
+    evil = _bare(tmp_path, "evil.git")
+    _g(w["work"], "push", "-q", str(evil), "side:main")
+    _g(w["lab"], "remote", "set-url", "origin", str(evil))
+    g = _real_guard(w)
+    assert not g.open and "not the pinned" in g.state["why"], g.state
+    _g(w["lab"], "remote", "set-url", "origin", str(w["remote"]))
+    _g(w["lab"], "config", "url." + str(evil) + ".insteadOf", str(w["remote"]))
+    g = _real_guard(w)
+    assert not g.open and "insteadOf" in g.state["why"], g.state
+
+
+def test_the_guard_opens_on_the_signing_commit_once_it_is_on_the_pinned_main(tmp_path):
+    w = _seal_world(tmp_path)
+    _g(w["work"], "push", "-q", "origin", "side:main")
+    _g(w["lab"], "checkout", "-q", "--detach", w["base"])  # HEAD at the unsigned draft: the guard reads the commit
+    g = _real_guard(w)
+    assert g.open, g.state
+    assert g.state["signing_commit"] == w["c"] and g.state["p2_decoy_set_sealed"] == P2DIG
+    assert _g(w["lab"], "show-ref", "--verify", "--hash", tpc_seal.SEAL_REF) == w["c"]
+    # a later commit on main that re-fills a row: neither it nor the signing commit opens the guard
+    _g(w["work"], "checkout", "-q", "side")
+    w["path"].write_bytes(SIGNED.replace(P2DIG.encode(), b"e" * 64))
+    _g(w["work"], "commit", "-qam", "row re-filled after signing")
+    later = _g(w["work"], "rev-parse", "HEAD")
+    _g(w["work"], "push", "-q", "origin", "side:main")
+    g = _real_guard(w)
+    assert not g.open and "changed after signing" in g.state["why"], g.state
+    w["sealed"].write_bytes(f"prereg_commit: {later}\nfreeze_anchor: 2026-11-06T12:00:00Z\n".encode())
+    g = _real_guard(w)
+    assert not g.open and "not the signing commit" in g.state["why"], g.state
+
+
+def test_a_later_commit_that_leaves_the_prereg_alone_keeps_the_guard_open(tmp_path):
+    w = _seal_world(tmp_path)
+    (w["work"] / "papers" / "tests-pass-ci" / "PUBLICATION_tests_pass_ci_2026_11_02.jsonl").write_bytes(
+        b'{"what": "beacon", "height": 975000}\n')
+    _g(w["work"], "add", "-A")
+    _g(w["work"], "commit", "-qm", "publication record")
+    _g(w["work"], "push", "-q", "origin", "side:main")
+    assert _real_guard(w).open
+
+
+def test_the_guards_git_functions_read_what_they_name(tmp_path):
+    """Each of the guard's git reads checked on its own (the review's mutants R1 to R4 left every test passing)."""
+    w = _seal_world(tmp_path)
+    lab, url = w["lab"], str(w["remote"])
+    assert tpc_seal.git_main_sha(lab) is None  # nothing fetched yet: no ref, and no local name stands in
+    assert tpc_seal.git_fetch(lab, url) == "ok"
+    assert tpc_seal.git_main_sha(lab) == w["base"]
+    assert not tpc_seal.git_on_main(lab, w["c"])  # HEAD is the side commit; main is not
+    assert tpc_seal.git_on_main(lab, w["base"])
+    assert tpc_seal.git_blob(lab, w["base"], PREREG_REPO_PATH) == UNSIGNED  # the commit's blob, not HEAD's
+    assert tpc_seal.git_signing_commit(lab, PREREG_REPO_PATH) is None
+    _g(w["work"], "push", "-q", "origin", "side:main")
+    assert tpc_seal.git_main_sha(lab) == w["base"]  # still the last fetch's
+    assert tpc_seal.git_fetch(lab, url) == "ok" and tpc_seal.git_main_sha(lab) == w["c"]
+    assert tpc_seal.git_on_main(lab, w["c"]) and tpc_seal.git_signing_commit(lab, PREREG_REPO_PATH) == w["c"]
+    assert tpc_seal.git_main_blob(lab, PREREG_REPO_PATH) == SIGNED
+    assert tpc_seal.git_fetch(lab, str(tmp_path / "nowhere.git")).startswith("fetch refused")
+    _g(lab, "remote", "set-url", "origin", str(tmp_path / "nowhere.git"))
+    assert tpc_seal.git_fetch(lab, str(tmp_path / "nowhere.git")).startswith("fetch failed")
+
+
+def test_the_publication_record_is_read_at_commits_of_the_pinned_main(tmp_path):
+    w = _seal_world(tmp_path)
+    rec = w["work"] / tpc_seal.PUBLICATION_REPO_PATH
+    rec.write_bytes(b'{"what": "key", "packet": "Q", "key_digest": "' + b"1" * 64 + b'", "packet_sha256": "'
+                    + b"2" * 64 + b'"}\n')
+    _g(w["work"], "add", "-A")
+    _g(w["work"], "commit", "-qm", "Q key digest")
+    q = _g(w["work"], "rev-parse", "HEAD")
+    _g(w["work"], "push", "-q", "origin", "side")
+    pub = tpc_seal.Publication(repo=w["lab"], url=str(w["remote"]))
+    assert pub.at(q) is None and pub.tip() is None  # on a side branch only
+    _g(w["work"], "push", "-q", "origin", "side:main")
+    pub = tpc_seal.Publication(repo=w["lab"], url=str(w["remote"]))
+    assert pub.at(q)[0]["packet"] == "Q" and pub.at(w["c"]) is None  # no record at the signing commit
+    assert tpc_seal.key_published(pub.tip(), "Q", "2" * 64) and not tpc_seal.key_published(pub.tip(), "Q", "3" * 64)
+    assert tpc_seal.parse_publication(b"not json\n") is None
 
 
 def test_a_signed_commit_on_main_with_the_running_code_opens_the_seal(tmp_path):

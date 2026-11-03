@@ -118,6 +118,14 @@ DIRECTION_A = Path("C:/Users/heyzo/clawd/wt/_direction_a_2026_11_02")
 SEALED_FILE = DIRECTION_A / "SEALED"
 STYXX_REPO = Path("C:/Users/heyzo/clawd/styxx")
 PREREG_REPO_PATH = "papers/tests-pass-ci/PREREG_tests_pass_ci_2026_11_02.md"
+# P21: the guard reads main from this URL into its own ref, never from the checkout's origin/main, which a local tag,
+# branch, fetch refspec or origin URL can move (the review of 2026-11-02)
+PINNED_URL = "https://github.com/fathom-lab/styxx.git"
+SEAL_REF = "refs/tpc-seal/main"
+# section 14, P9: the digests made public after the signing commit (each packet's key digest with its packet's
+# sha256, each seat's answer-file digest, the beacon, AIDev's file), one JSON object a line, appended, never edited;
+# the PREREG blob does not change after its signing commit
+PUBLICATION_REPO_PATH = "papers/tests-pass-ci/PUBLICATION_tests_pass_ci_2026_11_02.jsonl"
 
 # ---- storage (P2.4, P4.3) -----------------------------------------------------------------------
 # The PREREG draft names data/direction_a/frames/ and data/direction_a/a2/; the run brief names

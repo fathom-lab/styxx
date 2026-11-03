@@ -32,6 +32,38 @@ import tpc_score  # noqa: E402
 import tpc_seats  # noqa: E402
 
 PREREG = COLLECTOR.parent / "PREREG_tests_pass_ci_2026_11_02.md"
+# the publication record on an invented main: commit -> the objects committed there (`_publish` fills it)
+COMMITTED = {}
+
+
+@pytest.fixture(autouse=True)
+def _invented_main(monkeypatch):
+    COMMITTED.clear()
+    monkeypatch.setattr(tpc_score, "_default_reader", lambda: COMMITTED.get)
+
+
+def _commit_id(text):
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:40]
+
+
+def _publish(pub, d, packet):
+    """Commit the packet's key digest beside its sha256, then every sealed answer file's digest, on the invented main,
+    and name each commit in the publication times (section 14)."""
+    pk, sha = tpc_seats.load_packet(d / f"packet_{packet}.json")
+    kd = (d / f"key_{packet}.sha256").read_bytes().decode().strip()
+    key_line = {"what": "key", "packet": packet, "key_digest": kd, "packet_sha256": sha}
+    kc, ac = _commit_id(f"{d}:{packet}:key"), _commit_id(f"{d}:{packet}:answers")
+    answers, lines = {}, []
+    for seat in tpc_seats.SEATS:
+        sp = tpc_seats.seal_path(d, packet, seat)
+        if sp.exists():
+            digest = sp.read_bytes().decode().strip()
+            lines.append({"what": "answers", "packet": packet, "seat": seat, "sha256": digest})
+            answers[seat] = {"sha256": digest, "commit": ac}
+    COMMITTED[kc] = [key_line]
+    COMMITTED[ac] = [key_line] + lines
+    pub[packet].update(key_digest={"sha256": kd, "packet_sha256": sha, "commit": kc}, answers=answers)
+    return pub
 
 
 def _cp_ref(k, n, alpha=0.05):
@@ -185,7 +217,7 @@ def _write_packet(d, packet, reals, decoys, seed="a" * 64, kind="bitcoin"):
     return built
 
 
-def _ledger(d, packet, seat, answer_of):
+def _ledger(d, packet, seat, answer_of, at="2026-12-05T00:00:00Z"):
     """Write and seal a seat's answer file: answer_of(id, key_item) -> (step-1 answer, step-2 answer or None)."""
     pk, sha = tpc_seats.load_packet(d / f"packet_{packet}.json")
     key = json.loads((d / f"key_{packet}.json").read_bytes())
@@ -193,10 +225,10 @@ def _ledger(d, packet, seat, answer_of):
     for it in pk["items"]:
         s1, s2 = answer_of(it["id"], key["items"][it["id"]])
         tpc_seats._append(lp, {"packet": packet, "packet_sha256": sha, "seat": seat, "id": it["id"], "step": 1,
-                               "answer": s1, "no_answer": None if s1 else "x", "final": True})
+                               "answer": s1, "no_answer": None if s1 else "x", "final": True, "at": at})
         if it["steps"] == 2:
             tpc_seats._append(lp, {"packet": packet, "packet_sha256": sha, "seat": seat, "id": it["id"], "step": 2,
-                                   "answer": s2, "no_answer": None if s2 else "x", "final": True})
+                                   "answer": s2, "no_answer": None if s2 else "x", "final": True, "at": at})
     return tpc_seats.seal_answers(d / f"packet_{packet}.json", seat, d)
 
 
@@ -308,6 +340,7 @@ def _a2_world(tmp_path, n_pass=950, n_fail=50, contradicted=2, undecided=0, fire
     pub = {"P2": {"set_in_lock_row_at_signing": True, "key_public_at": "2026-12-01T00:00:00Z",
                   "key_released_at": "2027-01-12T00:00:00Z",
                   "answers_public_at": {s: "2027-01-11T00:00:00Z" for s in ("H", "C", "N")}}}
+    _publish(pub, d, "P2")
     text = PREREG.read_text(encoding="utf-8")
     lines = []
     for ln in text.split("\n"):
@@ -315,7 +348,7 @@ def _a2_world(tmp_path, n_pass=950, n_fail=50, contradicted=2, undecided=0, fire
             ln = ln.replace("TO-FILL at the signing commit", "`" + sealed["digest"] + "`")
         lines.append(ln)
     return {"rows": rows, "store": store, "packets": tmp_path / "packets", "pub": pub, "text": "\n".join(lines),
-            "sel": sel}
+            "sel": sel, "set": set_obj, "sealed": sealed, "dir": d}
 
 
 def test_a2_end_to_end_lands_on_kill_with_the_strict_and_decisive_numbers(tmp_path):
@@ -406,6 +439,134 @@ def test_p2_scored_for_real_reads_the_lock_row_the_seal_guard_read(tmp_path):
         tpc_score.score(w["packets"], w["store"], None, w["pub"], guard=Shut(), boot=200)
 
 
+# ---- the committed digests and the order of answers (the review of 2026-11-02) --------------------------------------
+def test_scoring_reads_the_key_and_answer_digests_where_they_were_committed(tmp_path):
+    """A P2 key rewritten (here a real item's agent), with a fresh salt and its own .sha256, opened before; now the
+    key digest must be the one committed beside the packet's sha256, and each answer file's digest committed too."""
+    w = _a2_world(tmp_path)
+    rec = tpc_score.score(w["packets"], w["store"], None, w["pub"], prereg_text=w["text"], boot=200)
+    assert rec["result"]["printed"]["committed_digests_checked"] is True
+    d = w["dir"]
+    key = json.loads((d / "key_P2.json").read_bytes())
+    iid = next(i for i, k in key["items"].items() if not k.get("decoy"))
+    key["items"][iid]["agent"] = "Devin"
+    salt = b"\x0e" * 32
+    data = tpc_decoys.canonical(key)
+    (d / "key_P2.json").write_bytes(data)
+    (d / "key_P2.salt").write_bytes((salt.hex() + "\n").encode())
+    (d / "key_P2.sha256").write_bytes((tpc_decoys.salted_digest(salt, data) + "\n").encode())
+    with pytest.raises(tpc_score.ScoreError, match="committed digests refuse packet P2"):
+        tpc_score.score(w["packets"], w["store"], None, w["pub"], prereg_text=w["text"], boot=200)
+
+
+@pytest.mark.parametrize("bend", ["key commit off main", "key line missing", "answers not committed",
+                                  "answer digest differs", "packet sha differs"])
+def test_each_committed_value_is_checked(tmp_path, bend):
+    w = _a2_world(tmp_path)
+    pub = json.loads(json.dumps(w["pub"]))
+    p = pub["P2"]
+    if bend == "key commit off main":
+        p["key_digest"]["commit"] = "f" * 40
+    elif bend == "key line missing":
+        COMMITTED[p["key_digest"]["commit"]] = []
+    elif bend == "answers not committed":
+        COMMITTED[p["answers"]["N"]["commit"]] = [x for x in COMMITTED[p["answers"]["N"]["commit"]]
+                                                 if x.get("seat") != "N"]
+    elif bend == "answer digest differs":
+        p["answers"]["H"]["sha256"] = "0" * 64
+    else:
+        p["key_digest"]["packet_sha256"] = "0" * 64
+    with pytest.raises(tpc_score.ScoreError, match="committed digests refuse"):
+        tpc_score.score(w["packets"], w["store"], None, pub, prereg_text=w["text"], boot=200)
+    # smoke and dry runs read nothing committed
+    smoke = tpc_score.score(w["packets"], w["store"], None, pub, smoke=True, prereg_text=w["text"], boot=200)
+    assert smoke["result"]["printed"]["committed_digests_checked"] is False
+
+
+def test_the_default_reader_is_the_pinned_mains_publication_record(monkeypatch):
+    import tpc_seal
+    seen = []
+
+    class Pub:
+        def at(self, commit):
+            seen.append(commit)
+            return []
+    monkeypatch.undo()
+    monkeypatch.setattr(tpc_seal, "Publication", lambda: Pub())
+    read = tpc_score._default_reader()
+    assert read("a" * 40) == [] and seen == ["a" * 40]
+
+
+def test_the_key_digest_must_be_public_before_each_seats_earliest_answer():
+    pub = {"P2": {"set_in_lock_row_at_signing": True, "key_public_at": "2026-12-01T00:00:00Z",
+                  "key_released_at": "2027-01-12T00:00:00Z",
+                  "answers_public_at": {s: "2027-01-11T00:00:00Z" for s in ("H", "C", "N")}}}
+    earliest = {"H": "2026-12-02T00:00:00Z", "C": "2026-12-03T00:00:00Z", "N": "2026-12-02T00:00:00Z"}
+    assert tpc_score.keys_in_order(pub, "P2", ["H", "C", "N"], p2=True, first_answer_at=earliest) == 1
+    early = dict(earliest, C="2026-11-30T00:00:00Z")  # C answered before the key digest was public
+    assert tpc_score.keys_in_order(pub, "P2", ["H", "C", "N"], p2=True, first_answer_at=early) == 0
+    same = dict(earliest, N="2026-12-01T00:00:00Z")
+    assert tpc_score.keys_in_order(pub, "P2", ["H", "C", "N"], p2=True, first_answer_at=same) == 0
+    assert tpc_score.keys_in_order(pub, "P2", ["H", "C", "N"], p2=True, first_answer_at=dict(earliest, H=None)) == 0
+
+
+def test_a_seat_that_answered_before_the_key_digest_was_public_invalidates_p2(tmp_path):
+    w = _a2_world(tmp_path)
+    pub = json.loads(json.dumps(w["pub"]))
+    pub["P2"]["key_public_at"] = "2026-12-06T00:00:00Z"  # after the ledgers' answers of 2026-12-05
+    rec = tpc_score.score(w["packets"], w["store"], None, pub, prereg_text=w["text"], boot=200)
+    assert rec["result"]["a2"]["keys_in_order"] == 0
+    assert rec["verdict"].startswith("INVALID__a2_keys_not_sealed_in_order")
+
+
+# ---- the integrity checks the review's mutants left untested (R10, R18, R29, R31, R32) ----------------------------
+def test_a_key_whose_decoy_count_or_label_is_not_the_sealed_sets_is_refused(tmp_path):
+    decoys = tpc_decoys.build_set(synthetic_decoys.spec("P2"))[0]["decoys"]
+    reals = [{"key": {"pr_id": 1, "strata": ["candidate_M"]}, "item": tpc_items.build_item("All tests pass.", {"jobs": []})}]
+    built = tpc_packet.assemble("P2", "a" * 64, reals, decoys[:29], beacon={"kind": "bitcoin"}, salt=b"\x07" * 32)
+    with pytest.raises(tpc_score.ScoreError, match="holds 29 decoys, the sealed set 30"):
+        tpc_score.check_items(built["public"], built["key"], decoys)
+    built = tpc_packet.assemble("P2", "a" * 64, reals, decoys, beacon={"kind": "bitcoin"}, salt=b"\x07" * 32)
+    tpc_score.check_items(built["public"], built["key"], decoys)
+    for field, value in (("label", "NOT_DECIDABLE"), ("construction", "yes_stale")):
+        key = json.loads(json.dumps(built["key"]))
+        iid = next(i for i, k in key["items"].items() if k.get("decoy") and k[field] != value)
+        key["items"][iid][field] = value  # the side unchanged
+        with pytest.raises(tpc_score.ScoreError, match=f"the key's {field} is not the sealed set's"):
+            tpc_score.check_items(built["public"], key, decoys)
+
+
+def test_an_answer_file_for_other_packet_bytes_is_refused(tmp_path):
+    decoys = tpc_decoys.build_set(synthetic_decoys.spec("P2"))[0]["decoys"]
+    reals = [{"key": {"pr_id": 1, "strata": ["candidate_M"]}, "item": tpc_items.build_item("All tests pass.", {"jobs": []})}]
+    _write_packet(tmp_path, "P2", reals, decoys)
+    pk, sha = tpc_seats.load_packet(tmp_path / "packet_P2.json")
+    lp = tpc_seats.ledger_path(tmp_path, "P2", "C")
+    tpc_seats._append(lp, {"packet": "P2", "packet_sha256": "0" * 64, "seat": "C", "id": "P2-001", "step": 1,
+                           "final": True})
+    (tmp_path / "answers_P2_C.sha256").write_bytes((hashlib.sha256(lp.read_bytes()).hexdigest() + "\n").encode())
+    with pytest.raises(tpc_score.ScoreError, match="answers other packet bytes"):
+        tpc_score.load_answers(tmp_path, "P2", sha)
+
+
+def test_a_stand_in_packet_is_never_scored_for_real(tmp_path):
+    decoys = tpc_decoys.build_set(synthetic_decoys.spec("P2"))[0]["decoys"]
+    reals = [{"key": {"pr_id": 1, "strata": ["candidate_M"]}, "item": tpc_items.build_item("All tests pass.", {"jobs": []})}]
+    _write_packet(tmp_path, "P2", reals, decoys, kind="stand_in")
+    _ledger(tmp_path, "P2", "C", lambda i, k: (_s1("WHOLE"), _s2("NOT_CONTRADICTED")))
+    with pytest.raises(tpc_score.ScoreError, match="stand-in"):
+        tpc_score._panel(tmp_path, "P2")
+    assert tpc_score._panel(tmp_path, "P2", dry_run=True)["packet"] == "P2"
+
+
+def test_p2_scored_for_real_refuses_a_set_that_does_not_hash_to_the_lock_row(tmp_path):
+    w = _a2_world(tmp_path)
+    other = w["text"].replace(w["sealed"]["digest"], "0" * 64)
+    assert other != w["text"]
+    with pytest.raises((tpc_score.ScoreError, tpc_packet.PacketError), match="lock row"):
+        tpc_score.score(w["packets"], w["store"], None, w["pub"], prereg_text=other, boot=200)
+
+
 def test_under_400_claimers_prints_counts_only_with_the_sentinels(tmp_path):
     rows = [_row(i, "tests passed") for i in range(120)]
     store = tmp_path / "store"
@@ -484,9 +645,10 @@ def _a1_world(tmp_path, confirm=36, add=3, undecided=0, n_wrong=0):
         f.wrong = 0
         return f
     for seat in ("H", "C", "N"):
-        _ledger(d, "P1", seat, answer(seat))
+        _ledger(d, "P1", seat, answer(seat), at="2026-11-25T00:00:00Z")
     pub = {"P1": {"key_public_at": "2026-11-20T00:00:00Z", "key_released_at": "2026-12-22T00:00:00Z",
                   "answers_public_at": {s: "2026-12-21T00:00:00Z" for s in ("H", "C", "N")}}}
+    _publish(pub, d, "P1")
     return tr, tmp_path / "packets", pub
 
 

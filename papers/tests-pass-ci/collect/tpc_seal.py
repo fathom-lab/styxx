@@ -18,37 +18,45 @@ The guard opens only when all of these hold (P21), each refused by name otherwis
 
  1. SEALED names a 40-hex prereg_commit, a readable freeze_anchor that is not in the future, and no
     prereg_path other than this PREREG's;
- 2. `git fetch origin` in the lab's checkout succeeds (a failed fetch keeps the seal shut: origin/main
-    would then be the checkout's own ref, which anyone on the box can move), and the commit is an
-    ancestor of origin/main: a commit on a side branch or in a worktree that shares the object store
-    does not open the seal;
- 3. the PREREG exists at that commit (read with `git show`, nothing checked out), begins with
-    "# PREREG", every line of it that begins with "**Signature.**" begins "**Signature.** Signed" (and
-    there is one), and no lock-table row (a line beginning "|") still reads "TO-FILL at the signing
-    commit"; prose that quotes these markers mid-line is not read;
- 4. each lock-table row filled at the signing commit (SIGNING_ROWS: the collector's code digest and
-    P2's decoy set digest) is there exactly once and holds exactly one sha256: a reworded, "pending"
-    or deleted row keeps the seal shut;
- 5. the collector row's sha256 equals the combined digest of the code that is running
+ 2. main is read from the pinned URL (`PINNED_URL`) into the guard's own ref (`SEAL_REF`), by a fetch that
+    names the URL and the refspec itself, so neither a local tag, branch or remote ref named origin/main nor the
+    origin's fetch refspec is read; the fetch is refused when origin is not the pinned URL or a url.<base>.insteadOf
+    rule could rewrite it, and a fetch that does not succeed keeps the seal shut; the commit is then an ancestor of
+    that ref, read by its sha: a commit on a side branch or in a worktree that shares the object store does not
+    open the seal;
+ 3. the commit is the signing commit: the earliest commit on that main whose PREREG blob carries the signature
+    line (a commit that re-fills a row later is not), and the PREREG on that main is still the signing commit's
+    blob (the digests made public after signing go to the publication record, `PUBLICATION_REPO_PATH`, never into
+    the PREREG);
+ 4. the PREREG at that commit (read with `git show`, nothing checked out) begins with "# PREREG", every line of it
+    that begins with "**Signature.**" begins "**Signature.** Signed" (and there is one), and no lock-table row (a
+    line beginning "|") still reads "TO-FILL at the signing commit"; prose that quotes these markers mid-line is not
+    read;
+ 5. each lock-table row filled at the signing commit (SIGNING_ROWS: the collector's code digest and P2's decoy set
+    digest) is there exactly once and holds exactly one sha256: a reworded, "pending" or deleted row keeps it shut;
+ 6. the collector row's sha256 equals the combined digest of the code that is running
     (`code_digests()["combined"]`).
 
 The SEALED file sits in a folder agents can write to; what opens the seal is the signed, filled PREREG
-at a commit on the fetched origin/main and the running code's digest, none of which a written file
+at the signing commit of the pinned main and the running code's digest, none of which a written file
 can supply. It records the blob's sha256, the fetch outcome, both code digests and P2's decoy set
 digest, and keeps the blob's text (`signed_prereg`), so the packet build and the scorer read the lock
-table the guard read, not a working copy.
+table the guard read, not a working copy. `Publication` reads the publication record at a commit of the
+pinned main for the scorer and the seat runners.
 """
 from __future__ import annotations
 
 import datetime as dt
 import hashlib
+import json
 import os
 import re
 import subprocess
 from pathlib import Path
 from typing import Callable, Optional
 
-from tpc_const import PREREG_REPO_PATH, SEALED_FILE, STYXX_REPO, UTC, WINDOW_START, iso, parse_utc
+from tpc_const import (PINNED_URL, PREREG_REPO_PATH, PUBLICATION_REPO_PATH, SEAL_REF, SEALED_FILE, STYXX_REPO, UTC,
+                       WINDOW_START, iso, parse_utc)
 
 HERE = Path(__file__).resolve().parent
 
@@ -143,9 +151,25 @@ def parse_sealed(text: str) -> dict:
     return out
 
 
+# ---- git, read-only -------------------------------------------------------------------------------------------
+def _env() -> dict:
+    """The caller's environment without the variables that point git at another repository or other configuration."""
+    drop = ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+            "GIT_NAMESPACE", "GIT_COMMON_DIR", "GIT_CEILING_DIRECTORIES")
+    env = {k: v for k, v in os.environ.items() if k.upper() not in drop and not k.upper().startswith("GIT_CONFIG")}
+    env["GIT_TERMINAL_PROMPT"] = "0"
+    return env
+
+
 def _git(repo: Path, args: list, timeout: int = 60):
-    env = dict(os.environ, GIT_TERMINAL_PROMPT="0")
-    return subprocess.run(["git", "-C", str(repo)] + args, capture_output=True, timeout=timeout, env=env)
+    return subprocess.run(["git", "-C", str(repo)] + args, capture_output=True, timeout=timeout, env=_env())
+
+
+def norm_url(u: Optional[str]) -> str:
+    s = (u or "").strip().replace("\\", "/").rstrip("/")
+    if s.lower().endswith(".git"):
+        s = s[:-4]
+    return s.lower()
 
 
 def git_blob(repo: Path, commit: str, path: str) -> Optional[bytes]:
@@ -156,22 +180,68 @@ def git_blob(repo: Path, commit: str, path: str) -> Optional[bytes]:
     return r.stdout if r.returncode == 0 else None
 
 
-def git_fetch(repo: Path) -> str:
-    """`git fetch origin`, read-only; returns "ok" or why not. A failed fetch does not open the seal:
-    the ancestry check below then reads the origin/main the checkout already has."""
+def git_fetch(repo: Path, url: str = PINNED_URL) -> str:
+    """Read main of the pinned URL into SEAL_REF; "ok" or why not. The fetch names the URL and the refspec itself, so
+    the origin's fetch refspec, and any local tag, branch or remote ref named origin/main, are never read. Refused
+    when a url.<base>.insteadOf rule could rewrite the URL, or when origin is not the pinned URL (a repointed origin
+    is a moved checkout). A fetch that does not succeed keeps the seal shut."""
     try:
-        r = _git(repo, ["fetch", "--quiet", "origin"], timeout=180)
+        r = _git(repo, ["config", "--get-regexp", r"^url\."])
+        keys = [ln.split(" ", 1)[0].lower() for ln in r.stdout.decode("utf-8", "replace").splitlines()]
+        if any(k.endswith((".insteadof", ".pushinsteadof")) for k in keys):
+            return "fetch refused: a url.<base>.insteadOf rule could rewrite the pinned URL"
+        r = _git(repo, ["remote", "get-url", "origin"])
+        got = r.stdout.decode("utf-8", "replace").strip()
+        if r.returncode != 0 or norm_url(got) != norm_url(url):
+            return f"fetch refused: origin is {got or 'unset'}, not the pinned {url}"
+        r = _git(repo, ["fetch", "--quiet", "--no-tags", url, f"+refs/heads/main:{SEAL_REF}"], timeout=180)
     except (OSError, subprocess.TimeoutExpired) as e:
         return f"fetch failed: {type(e).__name__}"
     return "ok" if r.returncode == 0 else f"fetch failed: exit {r.returncode}"
 
 
-def git_on_main(repo: Path, commit: str) -> bool:
+def git_main_sha(repo: Path) -> Optional[str]:
+    """The sha SEAL_REF holds, read by its full name only (`show-ref --verify`: no tag or branch can stand in)."""
     try:
-        r = _git(repo, ["merge-base", "--is-ancestor", commit, "origin/main"])
+        r = _git(repo, ["show-ref", "--verify", "--hash", SEAL_REF])
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    sha = r.stdout.decode("utf-8", "replace").strip()
+    return sha if r.returncode == 0 and HEX40.match(sha) else None
+
+
+def git_on_main(repo: Path, commit: str) -> bool:
+    """Whether the commit is an ancestor of the pinned main the last fetch read."""
+    sha = git_main_sha(repo)
+    if sha is None:
+        return False
+    try:
+        r = _git(repo, ["merge-base", "--is-ancestor", commit, sha])
     except (OSError, subprocess.TimeoutExpired):
         return False
     return r.returncode == 0
+
+
+def git_signing_commit(repo: Path, path: str) -> Optional[str]:
+    """The earliest commit on the pinned main whose blob at `path` carries the signature line, or None."""
+    sha = git_main_sha(repo)
+    if sha is None:
+        return None
+    try:
+        r = _git(repo, ["log", "--reverse", "--format=%H", sha, "--", path], timeout=120)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    for c in r.stdout.decode("utf-8", "replace").split():
+        blob = git_blob(repo, c, path)
+        if blob is not None and signed(blob.decode("utf-8", "replace")):
+            return c
+    return None
+
+
+def git_main_blob(repo: Path, path: str) -> Optional[bytes]:
+    """The blob at `path` on the pinned main the last fetch read."""
+    sha = git_main_sha(repo)
+    return git_blob(repo, sha, path) if sha is not None else None
 
 
 def collector_row_digests(text: str) -> list:
@@ -184,16 +254,21 @@ class SealGuard:
     def __init__(self, sealed_file: Path = SEALED_FILE, repo: Path = STYXX_REPO,
                  now: Callable[[], dt.datetime] = lambda: dt.datetime.now(UTC),
                  blob_reader: Callable[[Path, str, str], Optional[bytes]] = git_blob,
-                 fetch: Callable[[Path], str] = git_fetch,
+                 fetch: Optional[Callable[[Path], str]] = None,
                  on_main: Callable[[Path, str], bool] = git_on_main,
-                 running_code: Optional[Callable[[], str]] = None) -> None:
+                 running_code: Optional[Callable[[], str]] = None,
+                 signing_commit: Callable[[Path, str], Optional[str]] = git_signing_commit,
+                 main_blob: Callable[[Path, str], Optional[bytes]] = git_main_blob,
+                 url: str = PINNED_URL) -> None:
         self.sealed_file = Path(sealed_file)
         self.repo = Path(repo)
         self._now = now
         self._blob = blob_reader
-        self._fetch = fetch
+        self._fetch = fetch or (lambda r: git_fetch(r, url))
         self._on_main = on_main
         self._code = running_code or (lambda: code_digests()["combined"])
+        self._signing = signing_commit
+        self._main_blob = main_blob
         self._text: Optional[str] = None
         self.state = self._evaluate()
 
@@ -227,10 +302,16 @@ class SealGuard:
             return st
         st["fetch"] = self._fetch(self.repo)
         if st["fetch"] != "ok":
-            st["why"] = f"git fetch origin did not succeed in {self.repo} ({st['fetch']}): origin/main is not read"
+            st["why"] = f"the pinned main was not read in {self.repo} ({st['fetch']})"
             return st
         if not self._on_main(self.repo, commit):
-            st["why"] = f"{commit} is not an ancestor of origin/main in {self.repo} ({st['fetch']})"
+            st["why"] = f"{commit} is not an ancestor of the pinned main in {self.repo}"
+            return st
+        signing = self._signing(self.repo, path)
+        st["signing_commit"] = signing
+        if signing != commit:
+            st["why"] = (f"SEALED names {commit}, not the signing commit (the earliest signed PREREG on the pinned main: "
+                         f"{signing or 'none'})")
             return st
         blob = self._blob(self.repo, commit, path)
         if blob is None:
@@ -251,6 +332,11 @@ class SealGuard:
         unfilled = signing_row_problems(text)
         if unfilled:
             st["why"] = "the lock rows filled at the signing commit are not filled: " + "; ".join(unfilled)
+            return st
+        tip = self._main_blob(self.repo, path)
+        if tip != blob:
+            st["why"] = ("the PREREG on the pinned main is not its signing commit's blob: it changed after signing "
+                         "(digests made public later go to the publication record)")
             return st
         sealed_code = collector_row_digests(text)
         running = self._code()
@@ -297,3 +383,55 @@ class SealGuard:
         if self.in_window(created_at) and not self.open:
             raise SealRefused(f"SEAL_GUARD: refused {what} for a pull request created {created_at}: "
                               f"{self.state.get('why')}")
+
+
+# ---- the publication record (section 14, P9) ------------------------------------------------------------------
+def parse_publication(data: Optional[bytes]) -> Optional[list]:
+    """The record's JSON objects, one a line; None for no record or an unreadable line."""
+    if data is None:
+        return None
+    out = []
+    for ln in data.decode("utf-8", "replace").splitlines():
+        if not ln.strip():
+            continue
+        try:
+            obj = json.loads(ln)
+        except ValueError:
+            return None
+        if not isinstance(obj, dict):
+            return None
+        out.append(obj)
+    return out
+
+
+class Publication:
+    """The publication record read from the pinned main (fetched once, lazily): `at(commit)` its objects at a commit
+    that is an ancestor of the pinned main (None otherwise), `tip()` its objects on the pinned main."""
+
+    def __init__(self, repo: Path = STYXX_REPO, url: str = PINNED_URL, path: str = PUBLICATION_REPO_PATH,
+                 fetch: Optional[Callable[[Path], str]] = None) -> None:
+        self.repo, self.path = Path(repo), path
+        self._fetch = fetch or (lambda r: git_fetch(r, url))
+        self.fetched: Optional[str] = None
+
+    def _ready(self) -> bool:
+        if self.fetched is None:
+            self.fetched = self._fetch(self.repo)
+        return self.fetched == "ok"
+
+    def at(self, commit: Optional[str]) -> Optional[list]:
+        if not commit or not HEX40.match(commit) or not self._ready() or not git_on_main(self.repo, commit):
+            return None
+        return parse_publication(git_blob(self.repo, commit, self.path))
+
+    def tip(self) -> Optional[list]:
+        if not self._ready():
+            return None
+        return parse_publication(git_main_blob(self.repo, self.path))
+
+
+def key_published(lines: Optional[list], packet: str, packet_sha256: str) -> bool:
+    """Whether the record holds the packet's key digest beside this packet's sha256 (section 14: before its seats
+    read)."""
+    return any(o.get("what") == "key" and o.get("packet") == packet and o.get("packet_sha256") == packet_sha256
+               and HEX64.fullmatch(str(o.get("key_digest") or "")) for o in lines or [])

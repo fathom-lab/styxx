@@ -118,6 +118,36 @@ class FakeSeat:
         return (obj if isinstance(obj, str) else json.dumps(obj)), {"fake": True}
 
 
+@pytest.fixture(autouse=True)
+def _keys_committed(monkeypatch):
+    """The packets here are invented; their key digests stand as committed unless a test says otherwise."""
+    monkeypatch.setattr(tpc_seats, "key_committed", lambda packet, sha: True)
+
+
+def test_no_seat_reads_a_packet_whose_key_digest_is_not_committed(tmp_path, monkeypatch):
+    """Section 14: every packet's key digest is committed and pushed before its seats read; the review of 2026-11-02
+    found run_seat and export_h started without it."""
+    p = _packet(tmp_path)
+    with pytest.raises(tpc_seats.SeatError, match="publication record"):
+        tpc_seats.run_seat(p, FakeSeat(), tmp_path / "o", published=lambda packet, sha: False)
+    with pytest.raises(tpc_seats.SeatError, match="publication record"):
+        tpc_seats.export_h(p, 1, tmp_path / "h", published=lambda packet, sha: False)
+    assert not (tmp_path / "o" / "answers_P2_C.jsonl").exists() and not (tmp_path / "h").exists()
+    pk, sha = tpc_seats.load_packet(p)
+    seen = []
+    tpc_seats.run_seat(p, FakeSeat(), tmp_path / "o2", limit=1, sleep=lambda s: None,
+                       published=lambda packet, s: seen.append((packet, s)) or True)
+    assert seen == [("P2", sha)]
+    # by default the record is read on the pinned main (tpc_seal.Publication), the key line beside this packet's sha256
+    monkeypatch.undo()
+
+    class Pub:
+        def tip(self):
+            return [{"what": "key", "packet": "P2", "key_digest": "1" * 64, "packet_sha256": sha}]
+    monkeypatch.setattr(tpc_seats.tpc_seal, "Publication", lambda: Pub())
+    assert tpc_seats.key_committed("P2", sha) and not tpc_seats.key_committed("P2", "0" * 64)
+    assert not tpc_seats.key_committed("P1", sha)
+
 def _packet(tmp_path, items=None, kind="bitcoin", name="P2"):
     items = items or [{"id": f"{name}-{i:03d}", "steps": 1 if i == 3 else 2, "step1_text": f"desc {i}",
                        "item_text": None if i == 3 else f"DESCRIPTION\ndesc {i}\n\nCI AT THE HEAD COMMIT\nci {i}"}
