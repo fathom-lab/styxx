@@ -1,0 +1,124 @@
+CAUGHT seal check never raises :: 1 failed, 161 passed in 18.64s
+CAUGHT seal skips the ancestry check :: 1 failed, 269 passed in 88.09s (0:01:28)
+CAUGHT seal reads any signature line :: 1 failed, 272 passed in 86.81s (0:01:26)
+CAUGHT seal reads the markers anywhere :: 1 failed, 298 passed in 102.07s (0:01:42)
+CAUGHT seal ignores TO-FILL rows :: 1 failed, 277 passed in 86.04s (0:01:26)
+CAUGHT seal ignores the running code :: 1 failed, 280 passed in 85.97s (0:01:25)
+CAUGHT seal takes a future anchor :: 1 failed, 268 passed in 86.42s (0:01:26)
+CAUGHT read_row skips the guard :: 1 failed, 161 passed in 17.81s
+CAUGHT batch skips the guard :: 1 failed, 161 passed in 17.32s
+CAUGHT stage_read drops the sealed filter :: 1 failed, 163 passed in 20.52s
+CAUGHT cap by u :: 1 failed, 122 passed in 7.45s
+CAUGHT M uses P_AGENT for all :: 1 failed, 11 passed in 2.84s
+CAUGHT timed_out not mapped :: 1 failed, 225 passed in 86.19s (0:01:26)
+CAUGHT slice formula label :: 1 failed in 2.59s
+CAUGHT postfilter dropped :: 1 failed, 150 passed in 17.81s
+CAUGHT au1 logs dropped :: 1 failed, 156 passed in 17.39s
+CAUGHT rule R ignores staleness :: 1 failed, 159 passed in 17.77s
+CAUGHT rule R reads local claims :: 1 failed, 253 passed in 86.86s (0:01:26)
+CAUGHT dry run asks for databaseId :: 1 failed, 164 passed in 21.21s
+CAUGHT frame keeps forks :: 1 failed, 7 passed in 2.63s
+CAUGHT images kept in the description :: 1 failed, 13 passed in 4.57s
+CAUGHT excerpt ignores the step's times :: 1 failed, 57 passed in 4.59s
+CAUGHT decoy mix unchecked :: 1 failed, 80 passed in 5.10s
+CAUGHT stand-in hash accepted :: 1 failed, 112 passed in 7.07s
+CAUGHT window draw under any Bitcoin block :: 1 failed, 118 passed in 7.02s
+CAUGHT AU4 may be cut :: 1 failed, 123 passed in 7.20s
+CAUGHT top-ups cut by lowest w :: 1 failed, 124 passed in 7.30s
+CAUGHT shuffle ignores the seed :: 1 failed, 126 passed in 7.32s
+CAUGHT spool not read back :: 1 failed, 327 passed in 102.74s (0:01:42)
+CAUGHT inconsistent step-2 label accepted :: 1 failed, 319 passed in 106.32s (0:01:46)
+CAUGHT dev server on any packet :: 1 failed, 333 passed in 122.27s (0:02:02)
+CAUGHT step 2 asked after a step-1 NO_ANSWER :: 1 failed, 330 passed in 103.54s (0:01:43)
+CAUGHT decoys scored on the side :: 1 failed, 175 passed in 23.20s
+CAUGHT NO-side bar at 12 :: 1 failed, 177 passed in 22.52s
+CAUGHT one voter decides :: 1 failed, 180 passed in 22.66s
+CAUGHT undecided whole candidates dropped :: 1 failed, 185 passed in 32.08s
+CAUGHT n_eff is n :: 1 failed, 184 passed in 28.30s
+CAUGHT answers need no seal :: 1 failed, 182 passed in 22.64s
+CAUGHT P2 decoys not held to the sealed set :: 1 failed, 183 passed in 22.47s
+CAUGHT excerpt runs into the post steps :: 1 failed, 58 passed in 4.87s
+CAUGHT excerpt runs past the step's error line :: 1 failed, 58 passed in 4.73s
+CAUGHT dates kept in the items :: 1 failed, 16 passed in 4.61s
+CAUGHT a decoy may carry a date :: 1 failed, 37 passed in 2.67s
+CAUGHT a step flip skips the runner's own steps :: 1 failed, 89 passed in 4.45s
+CAUGHT a step flip keeps the posts of skipped steps :: 1 failed, 90 passed in 4.48s
+CAUGHT impossible step listings accepted :: 1 failed, 93 passed in 4.82s
+CAUGHT the shuffle starts from the reals then the decoys :: 1 failed, 128 passed in 7.36s
+CAUGHT the shuffle keyed by the public seed alone :: 1 failed, 126 passed in 7.19s
+CAUGHT seal skips the rows filled at signing :: 1 failed, 281 passed in 84.87s (0:01:24)
+CAUGHT seal requires the collector row only :: 1 failed, 281 passed in 91.16s (0:01:31)
+CAUGHT seal reads any prereg_path :: 1 failed, 286 passed in 104.04s (0:01:44)
+CAUGHT seal opens after a failed fetch :: 1 failed, 287 passed in 97.10s (0:01:37)
+CAUGHT signed text handed to any working copy :: 1 failed, 297 passed in 108.67s (0:01:48)
+CAUGHT P2 build reads the working copy's lock row :: 1 failed, 137 passed in 15.92s
+CAUGHT scorer reads the working copy's lock row :: 1 failed, 189 passed in 39.83s
+CAUGHT P2's packet key digest never needed :: 1 failed, 9 passed in 3.24s
+CAUGHT a salt may sit inside a git working tree :: 1 failed, 146 passed in 16.50s
+CAUGHT secrets written where git does not ignore them :: 1 failed, 147 passed in 14.36s
+CAUGHT the key's salt written beside the key :: 1 failed, 134 passed in 8.65s
+CAUGHT the mask leaves Unix times :: 1 failed, 20 passed in 2.56s
+CAUGHT the mask leaves month abbreviations :: 1 failed, 32 passed in 2.66s
+CAUGHT the decoy date check misses Unix times :: 1 failed, 38 passed in 2.61s
+CAUGHT runner paths keep the repository :: 1 failed, 50 passed in 2.68s
+CAUGHT short names stay in the CI block :: 1 failed, 50 passed in 2.59s
+CAUGHT a donor's repository stays :: 1 failed, 50 passed in 2.72s
+CAUGHT an entry may name another repository :: 1 failed, 74 passed in 3.56s
+CAUGHT P2 takes any claim and CI combination :: 1 failed, 75 passed in 3.64s
+CAUGHT P2 keeps Q's and P1's mix :: 1 failed, 55 passed in 2.64s
+CAUGHT P2 keeps two names-only decoys of no_part_beside's :: 1 failed, 55 passed in 2.64s
+CAUGHT P2 keeps the mix OD-22 replaced :: 1 failed, 55 passed in 2.67s
+CAUGHT P2 keeps its preexisting decoys :: 1 failed, 55 passed in 2.68s
+CAUGHT P2 keeps its installation decoys :: 1 failed, 55 passed in 2.93s
+CAUGHT P2 keeps the names-only no_disclosed OD-22 replaced :: 1 failed, 55 passed in 2.97s
+CAUGHT a failing Actions check run needs no annotation :: 1 failed, 80 passed in 4.16s
+CAUGHT P2 names-only inside Actions :: 1 failed, 80 passed in 4.36s
+CAUGHT P2 shows a failing test job without its log :: 1 failed, 80 passed in 4.27s
+CAUGHT P2 takes excerpts found by markers :: 1 failed, 80 passed in 4.62s
+CAUGHT a flip skips every later step :: 1 failed, 91 passed in 4.97s
+CAUGHT a changed CI record needs no flip :: 1 failed, 92 passed in 5.05s
+CAUGHT a donor's repository need not be redacted :: 1 failed, 92 passed in 4.75s
+CAUGHT a flip's later steps unchecked against its reference :: 1 failed, 92 passed in 4.90s
+CAUGHT a source pull request may carry two decoys :: 1 failed, 73 passed in 3.76s
+CAUGHT a repository may carry three decoys :: 1 failed, 73 passed in 3.88s
+CAUGHT another packet's sources accepted :: 1 failed, 72 passed in 3.76s
+CAUGHT near-duplicate descriptions accepted :: 1 failed, 72 passed in 3.76s
+CAUGHT Q takes claimers with nothing failing :: 1 failed, 28 passed in 12.17s
+CAUGHT Q takes another packet's sources :: 1 failed, 28 passed in 11.54s
+CAUGHT the decoys CLI ignores other packets' sources :: 1 failed, 32 passed in 12.03s
+CAUGHT a git error reads as outside any working tree :: 1 failed, 35 passed in 11.92s
+CAUGHT R1 git_on_main returns True :: 1 failed, 27 passed in 4.73s
+CAUGHT R2 git_fetch returns ok :: 1 failed, 27 passed in 4.82s
+CAUGHT R3 ancestry checked against HEAD :: 1 failed, 27 passed in 4.87s
+CAUGHT R4 blob read from HEAD :: 1 failed, 28 passed in 7.99s
+CAUGHT the fetch follows origin's refspec :: 1 failed, 28 passed in 7.53s
+CAUGHT main read by a short name :: 1 failed, 27 passed in 4.82s
+CAUGHT origin's URL unchecked :: 1 failed, 27 passed in 5.97s
+CAUGHT a URL rewrite is followed :: 1 failed, 27 passed in 5.79s
+CAUGHT a later commit opens the guard :: 1 failed, 24 passed in 2.68s
+CAUGHT the PREREG may change after signing :: 1 failed, 26 passed in 2.68s
+CAUGHT the signing commit is the latest signed one :: 1 failed, 28 passed in 8.76s
+CAUGHT the committed digests unchecked :: 1 failed, 18 passed in 25.57s
+CAUGHT the key line need not be committed :: 1 failed, 20 passed in 28.85s
+CAUGHT answer digests need not be committed :: 1 failed, 21 passed in 31.85s
+CAUGHT a seat may answer before the key digest is public :: 1 failed, 25 passed in 37.69s
+CAUGHT seats read an uncommitted packet :: 1 failed, 19 passed in 2.68s
+CAUGHT R10 the packet's decoy count unchecked :: 1 failed, 27 passed in 40.56s
+CAUGHT R17 cmd_p2 accepts an unfilled P2 lock row :: 1 failed, 27 passed in 9.47s
+CAUGHT R18 the scorer loads P2's set without the lock row :: 1 failed, 30 passed in 50.26s
+CAUGHT R29 only the side compared between key and set :: 1 failed, 27 passed in 49.74s
+CAUGHT R31 ledger rows for other packet bytes accepted :: 1 failed, 28 passed in 48.58s
+CAUGHT R32 a stand-in packet scored for real :: 1 failed, 29 passed in 44.97s
+CAUGHT markers read over the whole item again :: 1 failed, 84 passed in 3.97s
+CAUGHT markers the construction writes accepted :: 1 failed, 83 passed in 3.83s
+CAUGHT a real decoy may change its source's description :: 1 failed, 85 passed in 3.95s
+CAUGHT a changed word read as its whole line :: 1 failed, 84 passed in 3.93s
+CAUGHT P2's agent mix unchecked :: 1 failed, 86 passed in 3.98s
+CAUGHT P2's agent allotment by floors alone :: 1 failed, 56 passed in 2.55s
+CAUGHT a P2 decoy's agent signature unchecked :: 1 failed, 86 passed in 3.99s
+CAUGHT a P2 decoy may name no agent :: 1 failed, 86 passed in 4.09s
+CAUGHT a preexisting note read anywhere in the item :: 1 failed, 87 passed in 4.20s
+CAUGHT the description may carry the preexisting note :: 1 failed, 87 passed in 4.25s
+CAUGHT a changed record may show a preexisting failure :: 1 failed, 87 passed in 4.14s
+CAUGHT annotations in the record's list order :: 1 failed, 49 passed in 2.45s
+123 of 123 caught

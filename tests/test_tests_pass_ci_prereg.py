@@ -340,14 +340,19 @@ def test_the_forecast_is_the_sealed_bytes_and_covers_the_rows():
     assert "0.8889" in ft and "0.8000" in ft and "60%" in ft  # the reference scores and the miss rule
 
 
-def test_the_lock_rows_left_for_the_signing_commit_are_the_collector_and_p2s_decoys():
+def test_the_rows_left_for_the_signing_commit_are_filled_with_the_collector_and_p2s_set_digests():
+    """The two rows the signing commit fills (the collector and P2's decoy set) each hold exactly one sha256, filled for
+    the operator's signature: the collector row holds the running code's combined digest, and no row is TO-FILL."""
     text = _text()
     to_fill = [ln for ln in text.splitlines() if ln.startswith("| ") and "TO-FILL at the signing commit" in ln]
-    assert len(to_fill) == 2
-    assert to_fill[0].startswith("| the collector") and to_fill[1].startswith("| decoy set digest of packet P2")
+    assert to_fill == []
     import tpc_seal  # the guard requires exactly these rows to be filled at the signing commit
-    assert all(sum(r.startswith(p) for r in to_fill) == 1 for p in tpc_seal.SIGNING_ROWS)
-    assert all(r.startswith(tpc_seal.SIGNING_ROWS) for r in to_fill)
+    assert tpc_seal.signing_row_problems(text) == []
+    rows = [ln for ln in text.splitlines() if ln.startswith(tpc_seal.SIGNING_ROWS)]
+    assert len(rows) == 2 and rows[0].startswith("| the collector") and rows[1].startswith("| decoy set digest of packet P2")
+    assert tpc_seal.collector_row_digests(text) == [tpc_seal.code_digests(COLLECT)["combined"]]
+    p2 = tpc_seal.p2_set_digest(text)
+    assert p2 is not None and re.fullmatch(r"[0-9a-f]{64}", p2) and p2 not in tpc_seal.collector_row_digests(text)
 
 
 # -- the seal guard against this file's own text ------------------------------------------------------------
@@ -364,26 +369,31 @@ def _guard(tmp_path, blob, code):
 
 
 def test_the_seal_guard_refuses_this_draft_and_opens_on_a_signed_filled_copy(tmp_path):
-    """The guard reads the PREREG's own markers: this draft is unsigned and has rows TO-FILL at the signing commit; a
-    copy signed in the house form, with those rows filled and the collector row holding the running code's digest,
-    opens it. Nothing else of the file is read by the guard."""
+    """The guard reads the PREREG's own markers. The signing rows are filled, the collector row holding the running
+    code's digest. Unsigned (filled for the operator's signature), the file keeps the guard shut and a copy signed in
+    the house form opens it; signed (the signing commit and after), the file's own bytes open it. Either way the signed
+    text with P2's row put back to TO-FILL, or read beside other running code, does not. Nothing else of the file is
+    read by the guard."""
     import tpc_seal
     raw = PREREG.read_bytes()
     code = tpc_seal.code_digests(COLLECT)["combined"]
-    shut = _guard(tmp_path, raw, code)
-    assert not shut.open and "no positive" in shut.state["why"]
     text = raw.decode("utf-8")
-    assert text.count("**Signature.** Unsigned.") == 1
-    signed = text.replace("**Signature.** Unsigned.", "**Signature.** Signed by the operator: \"go\" (synthetic).")
-    lines = []
-    for ln in signed.split("\n"):
-        if ln.startswith("| the collector") and "TO-FILL at the signing commit" in ln:
-            ln = ln.replace("TO-FILL at the signing commit", "`" + code + "`")
-        elif ln.startswith("| decoy set digest of packet P2"):
-            ln = ln.replace("TO-FILL at the signing commit", "`" + "d" * 64 + "`")
-        lines.append(ln)
-    signed = "\n".join(lines)
-    half = signed.replace("`" + "d" * 64 + "`", "TO-FILL at the signing commit")
+    assert tpc_seal.to_fill_rows(text) == [] and tpc_seal.signing_row_problems(text) == []
+    assert len(tpc_seal.signature_lines(text)) == 1
+    if tpc_seal.signed(text):
+        assert "**Signature.** Unsigned" not in text
+        signed = text
+    else:
+        assert tpc_seal.signature_lines(text)[0].startswith("**Signature.** Unsigned.")
+        assert text.count("**Signature.** Unsigned.") == 1
+        shut = _guard(tmp_path, raw, code)
+        assert not shut.open and "no positive" in shut.state["why"]
+        signed = text.replace("**Signature.** Unsigned.", "**Signature.** Signed by the operator: \"go\" (synthetic).")
+    assert tpc_seal.signed(signed)
+    p2 = tpc_seal.p2_set_digest(signed)
+    assert p2 is not None and signed.count("`" + p2 + "`") == 1
+    half = signed.replace("`" + p2 + "`", "TO-FILL at the signing commit")
+    assert half != signed
     assert not _guard(tmp_path, half.encode("utf-8"), code).open
     assert not _guard(tmp_path, signed.encode("utf-8"), "e" * 64).open
     g = _guard(tmp_path, signed.encode("utf-8"), code)

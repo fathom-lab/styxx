@@ -13,6 +13,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import subprocess
 import sys
 
@@ -32,6 +33,18 @@ import tpc_score  # noqa: E402
 import tpc_seats  # noqa: E402
 
 PREREG = COLLECTOR.parent / "PREREG_tests_pass_ci_2026_11_02.md"
+
+
+def _with_p2_row(text, cell):
+    """The PREREG's text with P2's decoy-set lock row holding `cell` where its sha256 cell is (TO-FILL or filled)."""
+    out = []
+    for ln in text.split("\n"):
+        if ln.startswith("| decoy set digest of packet P2"):
+            ln = re.sub(r"TO-FILL at the signing commit|`[0-9a-f]{64}`", lambda m: cell, ln, count=1)
+        out.append(ln)
+    return "\n".join(out)
+
+
 # the publication record on an invented main: commit -> the objects committed there (`_publish` fills it)
 COMMITTED = {}
 
@@ -341,13 +354,8 @@ def _a2_world(tmp_path, n_pass=950, n_fail=50, contradicted=2, undecided=0, fire
                   "key_released_at": "2027-01-12T00:00:00Z",
                   "answers_public_at": {s: "2027-01-11T00:00:00Z" for s in ("H", "C", "N")}}}
     _publish(pub, d, "P2")
-    text = PREREG.read_text(encoding="utf-8")
-    lines = []
-    for ln in text.split("\n"):
-        if ln.startswith("| decoy set digest of packet P2"):
-            ln = ln.replace("TO-FILL at the signing commit", "`" + sealed["digest"] + "`")
-        lines.append(ln)
-    return {"rows": rows, "store": store, "packets": tmp_path / "packets", "pub": pub, "text": "\n".join(lines),
+    text = _with_p2_row(PREREG.read_text(encoding="utf-8"), "`" + sealed["digest"] + "`")
+    return {"rows": rows, "store": store, "packets": tmp_path / "packets", "pub": pub, "text": text,
             "sel": sel, "set": set_obj, "sealed": sealed, "dir": d}
 
 
@@ -401,10 +409,11 @@ def test_rule_r_firings_are_scored_against_the_panel(tmp_path):
 
 def test_p2_is_not_scored_for_real_before_the_lock_row_is_filled(tmp_path):
     w = _a2_world(tmp_path)
+    unfilled = _with_p2_row(PREREG.read_text(encoding="utf-8"), "TO-FILL at the signing commit")
+    assert tpc_packet.p2_lock_digest(unfilled) is None
     with pytest.raises(tpc_score.ScoreError, match="unfilled"):
-        tpc_score.score(w["packets"], w["store"], None, w["pub"], prereg_text=PREREG.read_text(encoding="utf-8"), boot=200)
-    smoke = tpc_score.score(w["packets"], w["store"], None, w["pub"], smoke=True,
-                            prereg_text=PREREG.read_text(encoding="utf-8"), boot=200)
+        tpc_score.score(w["packets"], w["store"], None, w["pub"], prereg_text=unfilled, boot=200)
+    smoke = tpc_score.score(w["packets"], w["store"], None, w["pub"], smoke=True, prereg_text=unfilled, boot=200)
     assert smoke["verdict"] == "INVALID__smoke_plumbing_only" and smoke["gates"] == {}
 
 

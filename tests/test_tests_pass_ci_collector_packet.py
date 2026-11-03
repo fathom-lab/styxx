@@ -331,7 +331,10 @@ def test_the_p2_lock_row_reads_one_digest_or_none():
     assert tpc_packet.p2_lock_digest(row) is None
     assert tpc_packet.p2_lock_digest(row.replace("TO-FILL at the signing commit", "`" + "c" * 64 + "`")) == "c" * 64
     prereg = (COLLECTOR.parent / "PREREG_tests_pass_ci_2026_11_02.md").read_text(encoding="utf-8")
-    assert tpc_packet.p2_lock_digest(prereg) is None  # unfilled until the signing commit
+    filled = tpc_packet.p2_lock_digest(prereg)  # filled for the signing commit
+    assert filled is not None and len(filled) == 64 and set(filled) <= set("0123456789abcdef")
+    assert prereg.count("`" + filled + "`") == 1
+    assert tpc_packet.p2_lock_digest(prereg.replace("`" + filled + "`", "TO-FILL at the signing commit")) is None
 
 
 def test_a_decoy_set_loads_only_by_its_digest_and_the_lock_row(tmp_path):
