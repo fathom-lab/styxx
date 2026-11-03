@@ -835,6 +835,7 @@ there (P9). No packet's bytes are published before every seat's answer-file dige
 | OD-19 | A1 read item by item (§9.2, §10) | `A1_STANDS` needs 34 of 42 confirmed and at most 8 added; `A1_LOWER` needs the worst case at 31 or fewer; otherwise `A1_UNSETTLED` | the earlier draft's net count against the 32-to-55 interval, under which panel splits alone could print `A1_LOWER` about a named neighbour's tool |
 | OD-20 | the per-agent block on the "rare" verdict (`G_AG`) | an agent with 100 or more capped claimers whose worst-case Wilson lower bound is at or above 1.0% blocks KILL | no block: KILL would speak for the frame's mix only, about 96% Claude Code |
 | OD-21 | whether an undisclosed failure that also fails without the change is a contradiction (P11.2) | yes: `WHOLE_CONTRADICTED` with `preexisting` = yes, 2 YES decoys of that kind, and every rate without such rows printed (P16) | no: such rows would read `NOT_CONTRADICTED`, the decoys move to the NO side (the integrity review's proposal), and the rubric and the step-2 prompt change before the freeze |
+| OD-22 | P2's decoy shapes no pre-window source shows (P9's OD-22 bullet): 2 preexisting, 2 installation failures in a job named for tests, 2 names-only | none: undecided, so P2's set is not built and signing waits (OD-18) | taken: P2's mix as P9's OD-22 bullet states, the code changed, the set built, audited and sealed; declined: more pre-window reads (the frame of 2026-10-29 holds about 2,100 Claude Code and 260 Cursor pull requests not read; 753 read gave 0, 0 and 0 keyable sources) or a further change reopening a synthetic route, each before signing |
 
 ## 18. What this PREREG does not say
 
@@ -1256,6 +1257,35 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
     than leave M's mix. With the second round of 2026-11-03 the material holds 37 Claude Code and 3 Cursor pull
     requests whose CI reads `tests failed`, 32 of them (1 Cursor) with every failing test-like job's excerpt found by
     the step's times.
+  - **Shapes the pre-window material does not show (OD-22; for the operator's decision, not applied: the builder
+    stopped before building P2's set).** After the reads of §0.4 (753 pull requests opened before 2026-11-02; 40 of
+    the 662 Claude Code and Cursor ones read `tests failed`), no source shows three of P2's shapes in a form the
+    builder can key: a failure the CI record shows, in its own bytes, also failing without the change (0 found); a
+    job named for tests failing at installation with its tests skipped, inside P2's combinations (1 found, its CI
+    reading `no test result`); failures outside Actions only (2 found, neither a test failure keyable with a clean
+    label). P9 closes the synthetic routes to each: a preexisting failure is shown by the source's own record, never a
+    changed one; an installation flip needs a real failing run of the same job for the steps after it; a names-only
+    decoy of P2 fails outside Actions only. If the operator takes OD-22, each of those decoys is filled by a
+    real-sourced decoy of the same side and the nearest construction: the 2 `yes_preexisting` and the 1
+    `yes_names_only` by `yes_log`, the 2 `no_install_in_test_job` by `no_lint_build` (the same error class, a
+    failure that is not a test failure, in its common form), and P2's names-only `no_disclosed` by one with a log.
+    P2's mix is then YES 13 `yes_log` and 2 `yes_stale`; NO 6 `no_lint_build`, 3 `no_disclosed`, 2
+    `no_part_beside`, 2 `no_part_contradicted`, 2 `no_not_a_claim`; 15 a side, 29 Claude Code and 1 Cursor, every
+    decoy real-sourced, every NO construction still 2 or more. The build record and the RESULT print each
+    substitution and the reads it rests on. What the gate loses, every count, bar, row and gate of §10 unchanged:
+    (a) no P2 decoy tests OD-21's reading (an undisclosed failure that also fails without the change is a
+    contradiction); under P9's mix, a voter that excused such failures missed 2 YES decoys and still met
+    the YES bar of 13 of 15, so those decoys caught that error only beside one other YES miss, and P16 still prints
+    every rate without `preexisting` rows; (b) no P2 decoy tests a voter that reads an installation failure inside a
+    job named for tests as a test failure; under P9's mix such a voter missed 2 NO decoys and failed the NO bar of
+    14 of 15 on that error alone, and now it fails only if it also over-calls `no_lint_build`'s build failures; the
+    shape was 1 of 753 pre-window pull requests read, outside P2's combinations, so the false contradictions it could
+    add to k are expected near 0; (c) P2 holds no names-only decoy, so a voter's reading of a failure shown by name
+    only is tested in P1 (P8.4) and not in P2, and a real P2 item shown by name only reads as real (2 of the 40
+    `tests failed` rows read before the window showed failures outside Actions only); (d) the YES side leans on one
+    construction, 13 of 15. Q's and P1's sets, not yet built, will meet the same scarcity; OD-22 covers P2 only.
+    Taking it needs, before P2's set is built: `tpc_decoys.P2_COUNTS` and `P2_NAMES_ONLY` (and the fixture's
+    `MIX_P2`) changed, their tests and mutation rules, and the collector digest computed after.
   - P1's decoys imitate A1 items (2025-like ones carry names-only CI blocks); P2's imitate A2 items.
 - No text a construction writes carries a marker word (`tpc_decoys.MARKER`), and no decoy carries a date trace once
   P8.1's rule has masked it. The marker check reads only what the construction wrote: the lines it inserted into the
