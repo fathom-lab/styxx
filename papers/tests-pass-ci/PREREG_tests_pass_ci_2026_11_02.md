@@ -172,6 +172,26 @@ window is read before the freeze; the collector's guard (P21) refuses it by name
   GitHub; its outputs are counts and feature names only
   (`_direction_a_2026_11_02/audit_distinguish/AUDIT_distinguishability_2026_11_02.md`).
 
+  P9's audit of P2's set (`set` mode), run on 2026-11-03 by the builder (it sits on no seat) on this box with no
+  request to GitHub: a trial build of the set (`tpc_packet.py decoys` to `.../sealed/P2/build3/trial1/`, its trial salt
+  under the salt folder's `trials/`) against the real items in P2's combinations of the development store and of the
+  four material stores above (five stores), their logs merged, every pull request the spec draws on left out of the
+  stand-ins (30 sources; 26 real items left out as sources). It **failed** P9's bar: 82 items (30 decoys, 52 real
+  stand-ins from 37 repositories); the logistic model's balanced accuracy held out, 0.626 on average over the 20 seeds
+  (accuracy 0.645 against a majority share of 0.634), had a permutation p-value of 0.0199 (n = 200), under 0.05; the
+  features that alone told the two apart best were the CI block's characters, its skipped conclusions, its lines and
+  its check count (`ci_chars`, `concl_skipped`, `ci_lines`, `n_check`); 18 of the 52 stand-ins came from 4
+  repositories with 47 to 242 checks each, while P2's draw keeps at most 3 claimers with a CI test result per
+  repository (§9.2). Its output, `audit_set_trial1.json` beside the spec (sha256
+  `174f5bf45f1f2804d7bc28784db6d39c1991336579dc46b3bc8b8681d8576998`), stays in the record with its numbers and is
+  released with P2's key; nothing was sealed. **The lead's decision of 2026-11-03**, after that run (P9 states the
+  method as it now stands): the audit's real stand-ins are capped at 3 per repository, so the comparison set follows
+  the same per-repository cap as the real P2 draw (§9.2); the cap is applied by a fixed rule (the stand-ins of each
+  repository in item_sha256 order, the lowest 3 kept), never by looking at features. This changes P9's audit method
+  after one failed run; the failed run stays in the record with its numbers and digest; the reason is that the
+  stand-in set broke the draw's own cap; there is exactly one rerun under the capped method; if it fails, nothing is
+  sealed and the decision goes to the operator (more reads, or accept the audit result, which is his alone).
+
 ### 0.5 Other reads by this file's writer
 
 `AS` §6-§8; `PR-A`; `LJ`; `LENS_research.md` §0-§3; the five scout memos in full; at `M:` the PREREGs of EXTERNAL-1
@@ -1392,6 +1412,16 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
   with the material read for the set (§0.4) as further stand-ins where the builder adds them (`--store`; each run
   kept), keeps its output beside the spec (released with the key), and changes the set, where its top features point, until the logistic model's balanced accuracy has a
   permutation p-value of 0.05 or more; only then is the set sealed.
+  **The audit's method after one failed run (the lead's decision of 2026-11-03, §0.4).** The audit's real stand-ins
+  are capped at 3 per repository, so the comparison set follows the same per-repository cap as the real P2 draw
+  (§9.2); the cap is applied by a fixed rule, the stand-ins of each repository in item_sha256 order, the lowest 3
+  kept, never by looking at features (`set` mode's `--cap-per-repo 3`, `distinguish_audit.cap_per_repo`: over all
+  the stores, after the spec's sources are left out). This changes P9's audit method after one failed run (the trial
+  build `trial1`: 82 items, 30 decoys beside 52 real stand-ins from 37 repositories, 18 of them from 4 repositories;
+  balanced accuracy 0.626, permutation p = 0.0199 with n = 200; output sha256 `174f5bf4...`); the failed run stays
+  in the record with its numbers and digest; the reason is that the stand-in set broke the draw's own cap. There is
+  exactly one rerun under the capped method, on a fresh trial build; if it fails, nothing is sealed and the decision
+  goes to the operator (more reads, or accept the audit result, which is his alone).
 - The RESULT prints per packet how many decoys were real and how many synthetic, and each voter's score on each
   construction. Decoy keys are the builder's reading (the lead's decision of 2026-11-02): the builder reads each
   candidate source's description and CI record itself, privately, and writes each key from that reading; no script

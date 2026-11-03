@@ -827,3 +827,66 @@ def test_a_decoy_with_a_step_listing_no_real_run_shows_is_refused(change, want):
     change(e["ci"]["jobs"][0]["steps"])
     probs = tpc_decoys.build_set(spec)[1]
     assert any(want in p and "no real failing job shows" in p for p in probs), probs
+
+
+# ---- P9's distinguishability audit: the real stand-ins under P2's per-repository cap -----------------------------
+def _audit_module():
+    """checks/distinguish_audit.py of the repository, imported with sys.path left as it was: it puts its own collector
+    in front, and under the mutation check the collector the tests read is a mutated copy (the modules it imports are
+    imported here from that collector beforehand)."""
+    import importlib
+
+    import tpc_const  # noqa: F401
+    import tpc_packet  # noqa: F401
+    import tpc_screen  # noqa: F401
+    saved = list(sys.path)
+    try:
+        return importlib.import_module("distinguish_audit")
+    finally:
+        sys.path[:] = saved
+
+
+def test_the_audit_caps_real_stand_ins_per_repository_by_item_sha256_alone():
+    """At most N stand-ins per repository (case-folded), the lowest item sha256s kept, the kept ones in their order;
+    the rule is given a stand-in's repository and sha256 only, so no feature chooses (the lead's decision of
+    2026-11-03, P9: the stand-ins follow P2's draw cap of 3 a repository, section 9.2)."""
+    da = _audit_module()
+    sha = lambda c: c * 64  # noqa: E731
+    entries = [("Org/A", sha("9"), "a9"), ("org/a", sha("1"), "a1"), ("org/b", sha("5"), "b5"),
+               ("ORG/A", sha("4"), "a4"), ("org/a", sha("2"), "a2"), ("org/c", sha("7"), "c7"),
+               ("org/b", sha("3"), "b3"), ("org/a", sha("0"), "a0")]
+    kept, left = da.cap_per_repo(entries, 3)
+    assert [e[2] for e in kept] == ["a1", "b5", "a2", "c7", "b3", "a0"] and left == 2
+    kept, left = da.cap_per_repo(entries, 1)
+    assert [e[2] for e in kept] == ["c7", "b3", "a0"] and left == 5
+    assert da.cap_per_repo(entries, 8) == (entries, 0)
+    for bad in (0, -1, True, 2.5, "3", None):
+        with pytest.raises(ValueError):
+            da.cap_per_repo(entries, bad)
+
+
+def test_the_set_audit_leaves_sources_out_before_the_cap_and_refuses_the_cap_elsewhere(tmp_path, monkeypatch):
+    """A decoy's own source leaves the stand-ins before the cap counts, so it takes no repository's place; uncapped,
+    every other stand-in stays; capped, the kept ones are the lowest item sha256s however their form reads."""
+    da = _audit_module()
+    real = []
+    for n, (repo, c, size) in enumerate([("org/a", "8", 1), ("org/a", "0", 40), ("org/a", "6", 2), ("org/a", "2", 30),
+                                         ("org/a", "4", 3), ("org/b", "5", 9), ("org/b", "1", 50)]):
+        r = {"repo": repo, "number": n + 1, "pr_id": f"PR_{n}"}
+        text = "x" * size
+        it = {"step1_text": text, "item_text": text + "\n\nCI\n" + "check: t -> failure\n" * size,
+              "item_sha256": c * 64}
+        real.append((r, None, None, it))
+    monkeypatch.setattr(da, "_real_items", lambda st, logs: list(real))
+    set_path = tmp_path / "decoyset.json"
+    set_path.write_bytes(json.dumps({"decoys": [{"step1_text": "d", "item_text": "d"}]}).encode("utf-8"))
+    excl = {tpc_decoys.norm_pr("org/a#2")}  # the stand-in of the lowest sha256 is a decoy's source
+    rows, labels, groups = da.from_set(tmp_path, set_path, None, excl)
+    assert labels.count(0) == 6 and da.from_set.left_out == 1 and da.from_set.left_out_by_cap == 0
+    rows, labels, groups = da.from_set(tmp_path, set_path, None, excl, cap=2)
+    assert [g for g, y in zip(groups, labels) if y == 0] == ["real:PR_3", "real:PR_4", "real:PR_5", "real:PR_6"]
+    assert labels == [0, 0, 0, 0, 1] and da.from_set.left_out == 1 and da.from_set.left_out_by_cap == 2
+    assert da.from_set.repositories == 2 and da.from_set.most_per_repository == 2
+    with pytest.raises(SystemExit, match="set-mode option"):
+        da.main(["distinguish_audit.py", "identity", str(tmp_path / "out.json"), str(tmp_path), "--cap-per-repo", "3"])
+    assert not (tmp_path / "out.json").exists()

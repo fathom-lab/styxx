@@ -345,3 +345,13 @@ in P1's fixture set. The fixture's `MIX_P2` follows, and its P2 topics put "erro
 `no_lint_build` sentence, last. The tests-pass-ci tests number 355 (the collector's 339 and the PREREG's 16), and the
 mutation check breaks 123 rules (four more: the mix OD-22 replaced, its preexisting and installation decoys, and its
 names-only `no_disclosed`).
+
+P9's audit of P2's trial build failed once on 2026-11-03 (PREREG section 0.4: balanced accuracy 0.626, permutation
+p = 0.0199), its real stand-ins breaking the per-repository cap of P2's draw (18 of 52 from 4 repositories). The
+lead's decision (PREREG P9): the `set` mode's `--cap-per-repo N` keeps at most N real stand-ins per repository over
+all the stores, after the spec's sources are left out, by a fixed rule that reads no feature: each repository's
+stand-ins in item_sha256 order, the lowest N kept (`checks/distinguish_audit.cap_per_repo`); a run without it writes
+the same keys as before, so the failed run reproduces byte for byte. Two tests read the rule and its place after the
+sources are left out (`tests/test_tests_pass_ci_collector_items_decoys.py`); the tests-pass-ci tests number 357 (the
+collector's 341 and the PREREG's 16). `checks/` lies outside the collector's combined digest and the mutation check's
+copy, so neither moves.

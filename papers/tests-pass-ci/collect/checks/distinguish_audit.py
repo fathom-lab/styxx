@@ -27,10 +27,14 @@ out the same way.
         --real-with-log keeps the real items whose CI block shows a failing test job's log excerpt (the shape a step
         flip makes)
     py -3.12 checks/distinguish_audit.py set OUT.json STORE DECOYSET.json [--logs DIR ...] [--store DIR ...]
-                                         [--exclude-spec SPEC.json]
+                                         [--exclude-spec SPEC.json] [--cap-per-repo N]
         a decoy set (decoyset_<P>.json, its item texts) against the pre-window store's real items in P2's combinations
         (and those of each further pre-window --store), leaving out every pull request the spec draws on (a decoy's
-        source, a flip's donor and reference run), so a real decoy never stands beside its own item; --logs may repeat
+        source, a flip's donor and reference run), so a real decoy never stands beside its own item; --logs may repeat.
+        --cap-per-repo N then keeps at most N real stand-ins per repository, over all the stores, by a fixed rule that
+        reads no feature: each repository's stand-ins in item_sha256 order, the lowest N kept (the lead's decision of
+        2026-11-03: the stand-ins follow the per-repository cap of P2's real draw, 3 claimers a repository, PREREG
+        section 9.2)
     py -3.12 checks/distinguish_audit.py identity OUT.json STORE [--logs DIR]
         no classifier: each real failing test-like job of the store with one failing test step is made again through
         the step flip (`tpc_decoys.fail_test_step`) with its own log, annotations, times, later steps and skipped post
@@ -437,22 +441,49 @@ def spec_sources(spec_path: Path) -> set:
     return out
 
 
-def from_set(store: Path, set_path: Path, logs_dir=None, exclude=(), stores=()) -> tuple:
+def cap_per_repo(entries: list, cap: int) -> tuple:
+    """(kept, left_out) of `entries`, each (repository, item_sha256, anything): at most `cap` kept per repository
+    (case-folded), those with the lowest item sha256, the kept ones in their given order. The rule reads a stand-in's
+    repository and item sha256 and nothing else, so no feature chooses which stand-ins stay (the lead's decision of
+    2026-11-03: the audit's real stand-ins follow the per-repository cap of P2's real draw, PREREG section 9.2)."""
+    if isinstance(cap, bool) or not isinstance(cap, int) or cap < 1:
+        raise ValueError(f"a cap per repository is a whole number of 1 or more, not {cap!r}")
+    by_repo = {}
+    for i, (repo, sha, _) in enumerate(entries):
+        by_repo.setdefault(str(repo).lower(), []).append((str(sha), i))
+    keep = set()
+    for held in by_repo.values():
+        keep.update(i for _, i in sorted(held)[:cap])
+    kept = [e for i, e in enumerate(entries) if i in keep]
+    return kept, len(entries) - len(kept)
+
+
+def from_set(store: Path, set_path: Path, logs_dir=None, exclude=(), stores=(), cap=None) -> tuple:
     """The set's decoys against the real items in P2's combinations of the store (and of any further pre-window
     `stores`), leaving out every pull request in `exclude` (the decoys' own sources, `spec_sources`), so a real decoy
-    never stands beside its own item."""
+    never stands beside its own item; with `cap`, at most `cap` of the stand-ins left per repository over all the
+    stores (`cap_per_repo`, applied after the sources are left out)."""
     rows, labels, groups = [], [], []
     exclude = set(exclude)
     left_out = 0
+    reals = []
     for st in [Path(store)] + [Path(s) for s in stores]:
         for r, body, ci, it in _real_items(st, logs_dir):
             if tpc_decoys.norm_pr(f"{r.get('repo')}#{r.get('number')}") in exclude:
                 left_out += 1
                 continue
-            rows.append(features(it["step1_text"], it["item_text"]))
-            labels.append(0)
-            groups.append(f"real:{r['pr_id']}")
+            reals.append((r.get("repo"), it["item_sha256"], (r, it)))
     from_set.left_out = left_out
+    from_set.left_out_by_cap = 0
+    if cap is not None:
+        reals, from_set.left_out_by_cap = cap_per_repo(reals, cap)
+    per_repo = Counter(str(repo).lower() for repo, _, _ in reals)
+    from_set.repositories = len(per_repo)
+    from_set.most_per_repository = max(per_repo.values(), default=0)
+    for _, _, (r, it) in reals:
+        rows.append(features(it["step1_text"], it["item_text"]))
+        labels.append(0)
+        groups.append(f"real:{r['pr_id']}")
     s = _json(set_path)
     for i, d in enumerate(s["decoys"]):
         rows.append(features(d["step1_text"], d["item_text"]))
@@ -537,6 +568,13 @@ def main(argv: list) -> int:
         i = rest.index("--only")
         only = rest[i + 1]
         rest = rest[:i] + rest[i + 2:]
+    cap = None
+    if "--cap-per-repo" in rest:
+        if mode != "set":
+            raise SystemExit("refused: --cap-per-repo is a set-mode option")
+        i = rest.index("--cap-per-repo")
+        cap = int(rest[i + 1])
+        rest = rest[:i] + rest[i + 2:]
     real_with_log = "--real-with-log" in rest
     rest = [x for x in rest if x != "--real-with-log"]
     extra = {}
@@ -554,9 +592,14 @@ def main(argv: list) -> int:
         extra = dict(extra, only=only, real_with_log=real_with_log)
     elif mode == "set":
         excl = spec_sources(Path(spec)) if spec else set()
-        rows, labels, groups = from_set(Path(rest[0]), Path(rest[1]), logs, excl, stores)
+        rows, labels, groups = from_set(Path(rest[0]), Path(rest[1]), logs, excl, stores, cap)
         extra = {"stores": 1 + len(stores), "excluded_sources": len(excl),
                  "real_items_left_out_as_sources": from_set.left_out}
+        # the uncapped output keeps its earlier keys, so a run made before the cap reproduces byte for byte
+        if cap is not None:
+            extra.update(cap_per_repo=cap, real_items_left_out_by_cap=from_set.left_out_by_cap,
+                         real_repositories=from_set.repositories,
+                         real_most_per_repository=from_set.most_per_repository)
     else:
         raise SystemExit(f"unknown mode {mode!r}")
     res = {"mode": mode, "logs_merged": logs is not None, "construction_counts": extra}
