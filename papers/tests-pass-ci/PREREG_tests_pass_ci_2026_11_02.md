@@ -310,7 +310,7 @@ AU4's bound to about 870 (§9.2) with up to 2, undecided whole-suite candidates 
 
 - Three packets, each with 30 sealed decoys of its own, 15 whose key is `WHOLE_CONTRADICTED` and 15 whose key is
   another decided label, each keyed and scored on its full step-2 label: **Q** (30 pre-window items, used only to
-  choose the non-Claude seat), **P1** (A1: the 138 items), **P2** (A2: candidates and audits, at most 400 items with
+  choose the non-Claude seat; its real items are claimers whose CI shows a failure, P10.3), **P1** (A1: the 138 items), **P2** (A2: candidates and audits, at most 400 items with
   its decoys; P7 gives the cut order). The NO side is built from the error classes that would move the decisive count:
   failures that are not test failures (lint or build before tests, an install step inside a job named for tests),
   failures the description discloses, part claims with failures outside and inside the part, and predictions (P9).
@@ -325,8 +325,9 @@ AU4's bound to about 870 (§9.2) with up to 2, undecided whole-suite candidates 
 - **P2's decoys are built before the freeze**, from pull requests opened before 2026-11-02, and their salted set
   digest is a lock row filled at the signing commit (§14), so it is public at the freeze anchor, before any window CI
   is read: no decoy of P2 can be shaped by the window's data. P2's items are placed among them after the window is
-  read; the shuffle of P8.5 orders the packet. Every packet's key digest, P2's included, is committed and pushed
-  before that packet's seats read (§14).
+  read; the shuffle of P8.5 orders the packet. Every packet's key digest, P2's included, is committed and pushed, as
+  a line of the publication record (§14), before that packet's seats read; the seat runners refuse a packet whose line
+  is not on main.
 - **Seat answers are sealed before any key opens** (the sworn PREREG's Amendment 4 counts an outside seat only when
   its file's "sha256 was public before the key release commit for that fold"
   [`M:papers/sworn/PREREG_sworn_measurement_2026_10_23.md` l.478-479], and tranche A's RESULT applies it at l.44-48):
@@ -696,18 +697,29 @@ well-made set holds about 80%). A forecast that misses is printed beside the mea
 | testreceipt's signatures | `TR:evals/fresh.py` l.44-53 | `4051755afdbad3130744e57853c907c16be85942e0cfc1d8fc6068e000cc2d96` | pinned |
 | A1 items and labels | `TR:evals/results/sheet-m2.md`; `sheet-fresh.md`; `judge1-m2.md`; `judge2-m2.md`; `judge1-fresh.md`; `judge2-fresh.md`; `evals/aidev_labels.toml`; `docs/study.md` | `043af49e9fba4bae7facfbd136950c496f85a290d542957a5a761dc7cbd1401c`; `095b20aab999991e3a0d65d42ceeb4b19e3018b8be9da750c0a39153efff9b15`; `7f2116586f4cdd6b81d8f6935e30102e1e3a9cce5619605511e87a888aeef738`; `4b255450c41de89ec284ea444b345625842486ff183156113ac7915d3d602636`; `296261cf88b94b38a1b5810a8941e10ec484626be56600ee7f2b26fb6025f5a6`; `d8a1e87a9828398c919eab6e7a5c8242736275c9efbb4b124cd5d2c8eaa64898`; `b661b9c8c76f2d4b67f85c7b642220e72312c9acd5abc51aebbd5e028f5aadb2`; `9995bca7d2157f2dbbe552d434350f52491628d165daf3a3524b5720e4f80a85` | pinned |
 | the CI snapshot of A1's items | `C:/Users/heyzo/clawd/data/direction_a/ext_archive/testreceipt_items_2026-11-02/snapshot.json` | `bacedfdbca17834a65c9bbef9392c6251acdc1237ec224b707ef1bc9f813fc11` | pinned [SC-TR §9] |
-| AIDev bodies for A1's 2025 items | `hao-li/AIDev` `pull_request.parquet` at `c63c8a57a2de34fc03fa83722412824af4d8753b` | TO-FILL at download (OD-12) | before P1 is built |
+| AIDev bodies for A1's 2025 items | `hao-li/AIDev` `pull_request.parquet` at `c63c8a57a2de34fc03fa83722412824af4d8753b` | in the publication record (below), at download (OD-12) | before P1 is built |
 | `styxx.mind` (`wilson`) | `M:styxx/mind.py` | `c4c5091b991061f22592e1353da3a9d14889e4817aecf9bb15645de720577115` | pinned |
 | `styxx.protocol` (the scorer) | `M:styxx/protocol.py` | `45da869e1571396589dc50ed75183de56055a846432ae43dde6aa7fac7519fdc` | pinned |
 | `styxx.evidence` (report reader) | `M:styxx/evidence.py` | `598406796b6d550011ad3ce4d6c4c0c33328f3fc25166b9b5e39d154c84e8657` | pinned |
 | the block check | `M:papers/sealed-ahead/draw.py` | `4026f204dd548776e55f06c2f081f029c331326cd628ff8f25e80de6647fe46b` | pinned |
 | the collector: frame, draw, read, screen wrapper, rule R, packet and decoy builder, seat runners, scorer | `papers/tests-pass-ci/collect/`: the combined digest `py -3.12 tpc_collect.py digest` prints (sha256 of the sorted lines `<path> <sha256>` over its top-level `*.py` and `vendor/testreceipt/*`) | TO-FILL at the signing commit | not frozen until filled; the seal guard opens only for this code (P21) |
 | decoy set digest of packet P2 | `sha256(salt \|\| set_bytes)` of P2's sealed decoy set, `decoyset_P2.json`: the 30 decoy item texts, each with its item sha256, side, construction and full label, built from pull requests opened before 2026-11-02 (§6, P9); its salt kept in `C:/Users/heyzo/direction_a_salts/`, outside any git working tree, until the release (P9) | TO-FILL at the signing commit | public at the freeze anchor, before any window CI is read; the seal guard opens only when this row holds exactly one sha256 (P21) |
-| packet key digests of Q, P1 and P2 | `sha256(salt \|\| key_bytes)` of each packet's key, `key_<P>.json` (each id to decoy or not, side, construction and full label, and for a real item its pull request; P2's maps its ids to item sha256s after the shuffle of P8.5), with the sha256 of the packet the seats read, `packet_<P>.json`; each salt kept in `C:/Users/heyzo/direction_a_salts/` until the release (P9) | TO-FILL per packet | committed and pushed before that packet's seats read; for P2 after the window is read (`G_KEYS`) |
-| each seat's answer file, per packet | the sha256 of H's export and of C's and N's ledgers | TO-FILL per packet and seat | public before that packet's key release (§6, `G_KEYS`, `G_A1_V`) |
-| the beacon | block 975000 or the late rule's block | TO-FILL after the block | after the freeze |
+| packet key digests of Q, P1 and P2 | `sha256(salt \|\| key_bytes)` of each packet's key, `key_<P>.json` (each id to decoy or not, side, construction and full label, and for a real item its pull request; P2's maps its ids to item sha256s after the shuffle of P8.5), with the sha256 of the packet the seats read, `packet_<P>.json`; each salt kept in `C:/Users/heyzo/direction_a_salts/` until the release (P9) | in the publication record (below): one line per packet, the key digest beside the packet's sha256 | committed and pushed before that packet's seats read (the seat runners refuse a packet whose line is not on main); for P2 after the window is read (`G_KEYS`) |
+| each seat's answer file, per packet | the sha256 of H's export and of C's and N's ledgers | in the publication record (below): one line per packet and seat | public before that packet's key release (§6, `G_KEYS`, `G_A1_V`); the scorer reads each at the commit that carries it |
+| the beacon | block 975000 or the late rule's block | in the publication record (below) | after the freeze |
 
 A module changed after the signing commit is a moved bar unless an amendment made under §15.4 names it.
+
+**The publication record.** The digests made public after the signing commit are never written into this file, whose
+blob stays the signing commit's (the seal guard refuses a main whose copy of this file differs from it, P21; the review
+of 2026-11-02 found that filling rows here after signing forced SEALED to name a later commit). They are appended to
+`papers/tests-pass-ci/PUBLICATION_tests_pass_ci_2026_11_02.jsonl` (`tpc_const.PUBLICATION_REPO_PATH`), one JSON object
+a line, never edited: `{"what": "key", "packet", "key_digest", "packet_sha256"}`, `{"what": "answers", "packet",
+"seat", "sha256"}`, and lines for the beacon and AIDev's file. The publication times the lead writes name, for each
+key and answer digest, the commit that carries its line; scored for real, the scorer reads each line at that commit of
+the main read from the pinned URL (P21) and refuses a key, packet or answer file whose digest is not the one committed
+there (P9). No packet's bytes are published before every seat's answer-file digest for it is public; build records
+(which name every real item's pull request) and decoy specs are released with their key.
 
 ## 15. Freeze, commit plan, amendments, lateness
 
@@ -729,8 +741,10 @@ A module changed after the signing commit is a moved bar unless an amendment mad
 2. **Seal and anchors**: the git-blob sha256 at the signing commit; `prereg-ci seal` with `--seen "no results seen"`
    (the window was read by metadata only, §0.2); the freeze anchor is the server time at which the pull request
    carrying this file opens, then its merge (`M:papers/darkflobi-gate/PREREG_darkflobi_gate_2026_10_23.md` l.8-13).
-   The seal guard (P21) opens window reads only for the signing commit once it is an ancestor of `origin/main`, so in
-   practice after the merge; the lead then writes `SEALED` with `prereg_commit` and `freeze_anchor`.
+   The seal guard (P21) opens window reads only for the signing commit, the earliest commit whose copy of this file
+   carries the signature line on main as read from the pinned URL `https://github.com/fathom-lab/styxx.git`, so in
+   practice after the merge, and only while main's copy of this file is still that commit's blob: digests made public
+   later go to the publication record (§14). The lead then writes `SEALED` with `prereg_commit` and `freeze_anchor`.
    An RFC 3161 or OpenTimestamps stamp (`prereg-ci stamp --go`) is the operator's call (OD-1). The push and the pull
    request are the operator's; this workflow pushes nothing.
 3. **Who signs**: the operator, by a word in chat quoted under "Signature".
@@ -1058,13 +1072,22 @@ stops logs and artifacts, keeps reading metadata, and marks each row whose logs 
 
 Each item is a text block with two parts, `DESCRIPTION` and `CI AT THE HEAD COMMIT`; the second is shown only in step
 2. No item carries a URL, repository name, pull request number, author, agent name, date or state. Dates are masked
-by one code rule over the description and every line of the CI block, log excerpts included (`tpc_items.DATES`,
-case-insensitive), after URLs are replaced: ISO dates and date-times (`2026-10-29`, `2026-10-29T12:00:00Z`);
-`YYYY/MM/DD`, `DD/MM/YYYY` and `MM/DD/YYYY` with `/`, `.`, `-` or `_` between the parts; `MM/DD/YY`; `YYYYMMDD`
-standing alone; a month's name or abbreviation beside a day, with or without a year (`Oct 29`, `29 Oct 2026`), or
-beside a year (`October 2026`). Each becomes `<date>`; a clock time without a date stays. Decoys are built from pull
-requests opened before the window, so a date left in an item would tell a decoy from a window item; a decoy whose
-text still carries a date after masking is refused (P9).
+by one code rule over the description and every line of the CI block, log excerpts included
+(`tpc_items.mask_dates`: `DATES`, case-insensitive, then `MONTH_ABBR` and `EPOCH`), after URLs are replaced: ISO
+dates and date-times (`2026-10-29`, `2026-10-29T12:00:00Z`) and basic ISO date-times (`20261029T120000Z`);
+`YYYY/MM/DD`, `DD/MM/YYYY` and `MM/DD/YYYY` with `/`, `.`, `-` or `_` between the parts; `MM/DD/YY`; `DD.MM.YY`
+with a year 24 to 27 (`3.12.10` stays); `YYYYMMDD` standing alone; a month's name or abbreviation beside a day, with
+or without a year, by a space or a hyphen (`Oct 29`, `29 Oct 2026`, `29-Oct-2026`, `Oct-29`), or beside a year
+(`October 2026`); a year and month standing alone (`2026-10`); a month's full name standing alone (`May` stays: it is
+also the verb); a month's abbreviation standing alone when capitalised or in capitals (`Oct`, `OCT`; `oct` and `dec`
+stay, as code uses them); and a 10- or 13-digit number that reads as a Unix time in 2026, in seconds or milliseconds.
+Each becomes `<date>`; a clock time without a date stays, and so does a bare `MM/DD`, which has the form of a count
+(`10/29 passed`). Decoys are built from pull requests opened before the window, so a date left in an item would tell
+a decoy from a window item; P9's decoy check reads dates by patterns of its own, written apart from this rule, and
+refuses a decoy that still carries one. (The review of 2026-11-02 found Unix times, basic ISO date-times and several
+written forms surviving the earlier rule, a Unix time within a week of the material's dates in 5 of 131 excerpts of
+P2's decoy material, and the decoy check reading only what the mask had already masked.) Repository names in the CI
+block are replaced as P8.3 says.
 
 ### P8.2 The description
 
@@ -1091,6 +1114,15 @@ with `[cut]`. Repository words inside the prose stay as they are.
   characters per job, 30,000 per item, a leading `[cut]` line counted and the tail kept. The boundaries are step times
   and the runner's own markers. No pattern chooses a line: P17.2's summaries select nothing the panel sees, so a
   firing of rule R is judged on evidence the rule did not pick (the statistics and integrity reviews).
+- Repository names, by code, over the whole block but its two fixed lines (`tpc_items._redact`): the repository's
+  `owner/name`, and for a synthetic decoy its donor log's repository, become `<repo>`; so do the repository folders of
+  a runner's working path (`/home/runner/work/<name>/<name>`, `/Users/runner/work/...`, `D:\a\...`, `/__w/...`,
+  `/_work/...`), and the short name and the owner wherever they stand as a whole token (no letter or digit on either
+  side), unless the token is under 3 characters or a common word of `tpc_items.GENERIC_NAMES` (`test`, `app`, `core`
+  and the like). The review of 2026-11-02 found the working path naming the repository in 6 of 26 two-step-like
+  development items and the short name in 15 of 26 CI blocks. The description keeps its words (P8.2), and a verbatim
+  description can be searched, so the model seats run with no tools (P10.2, P10.3), the human seat agrees not to look
+  items up (P10.1), and no packet's bytes are published before every seat's answer-file digest for it is public (§14).
 - One fixed line: "These checks are the latest attempt of each check at the head commit, read some days after the pull
   request was opened." The edit order of the description (`STALE`, §2) is not shown: the panel judges the description
   as it stands (P11.2), and STALE is a machine flag read by rule R and by P16.
@@ -1142,16 +1174,58 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
     over-calls any one of them misses at least 2 and fails the NO bar of 14 (P13). The real share of each hard
     negative in the window is unknown before the window is read; the mix weights the classes that would add a false
     contradiction to k.
+  - P2's mix (the review of 2026-11-02): no two-step real item of P2 shows nothing failing (P7: candidates and AU1
+    need `tests failed`, AU2 a failed job or check, and AU3 and AU4 are step 1 only), so P2 holds no whole-suite claim
+    with passing tests and nothing failing; its two join the claims beside a failing lint, formatting, type or build
+    job (4 in P2), AU2's shape. P2 shows two names-only decoys, near the share of real candidate and AU1 rows whose
+    failures all lie outside Actions (1 of 21 in the development store): its YES side is 10 with log evidence, 1
+    names-only, 2 STALE and 2 preexisting; one of its disclosed failures is names-only, and both part claims beside a
+    failure show a log. Every P2 decoy sits in a combination of the screen's reading (P5, on the description as read
+    and as cleaned) and testreceipt's CI reading that P2's two-step real items show: a claimer or a description with
+    no claim beside `tests failed`, or a claimer beside `tests passed` with a failed job or check
+    (`tpc_decoys.P2_COMBINATIONS`); an implied-only description, `no test result` and a passing CI with nothing
+    failing are refused.
   - P1's decoys imitate A1 items (2025-like ones carry names-only CI blocks); P2's imitate A2 items.
-- No construction leaves a marker in an item, and no decoy carries a date once P8.1's rule has masked it. A step
-  turned to failing is listed as real failing runs list it: the runner's own `Set up job` and `Complete job` keep
-  their conclusions, the job's later steps are skipped, and the post steps of skipped steps leave the listing (in
-  110 failing jobs of the pre-window development store, `Complete job` read success 110 times and no post step was
-  listed for a step that did not run). A decoy whose listing shows either pattern, outside a cancelled job, is
-  refused.
+- No construction leaves a marker in an item, and no decoy carries a date trace once P8.1's rule has masked it. The
+  check (`tpc_items.date_traces`) is written apart from the mask: any 10- or 13-digit number that is a Unix time from
+  2026-09-01 to the year's end, any name of September to December (or its abbreviation, capitalised or in capitals),
+  any `MM/DD` of September or October (the decoy material's months), and anything the mask would still change. A
+  bare `MM/DD` is not masked, since a test count has its form (`9/10 passed`); in the development store, read in
+  October, 5 of 54 two-step-like items carry a September or October form after masking, so window items may carry
+  November forms that no decoy carries: that marks some real items as real and no decoy as a decoy, and the counts over
+  P2's real items print beside the decoys'. The same counts over P2's real items go into
+  P2's build record, and the RESULT prints them beside the decoys' zero.
+- A step turned to failing is listed as real failing runs list it: the runner's own `Set up job` and `Complete job`
+  keep their conclusions, and the post steps of steps that did not run leave the listing (in 110 failing jobs of the
+  pre-window development store, `Complete job` read success 110 times and no post step was listed for a step that did
+  not run); the job's later steps that are not post steps take the conclusions of a real failing run of the same job
+  (same repository and step names, opened before 2026-11-02), named in the decoy's spec as the flip's reference, which
+  the listing must equal, and a job with such steps and no reference is not flipped (applied to 94 failing
+  development jobs at their failing step, skipping every later step reproduced the real listing in 54; in the other 40
+  a later step that runs on failure, an upload or a report, succeeded). The flipped check run carries the donor job's
+  failure annotations, and the flipped step the donor's failing step's times, so its excerpt is found by the step's
+  times as real excerpts are; the donor's repository is redacted as the item's own (P8.3). A decoy whose listing
+  shows a pattern no real run shows, outside a cancelled job, is refused, and so is a synthetic decoy whose changed CI
+  record is not declared as such a flip.
+- Shapes no real item shows are refused in every packet: a failing Actions check run with no annotation (94 of 94
+  failing Actions check runs of the development store carry one), and a decoy whose repository is not its source's.
+  In P2 also: a names-only decoy with a failing Actions check run (P2's names-only decoys fail only outside Actions);
+  a failing test-like Actions job shown without its log excerpt (the collector reads the logs of every candidate and
+  AU1 row, P4.2); and an excerpt found otherwise than by the failing step's times.
+- One decoy per source pull request and at most two per repository in a set. No decoy's source pull request is a
+  source or a real item of another packet, and no decoy's description near-duplicates another packet's item (equal
+  once reduced to lower-case letters and digits, or 80% or more of the shorter one's word 3-shingles found in the
+  other): the decoys command reads the other packets' sealed sets, decoy specs, keys and packets, and packet Q's
+  builder excludes the other packets' decoy sources.
 - The key (item id to decoy or not, side, construction and full label; for real items, id to pull request) is
   JSON. With a 32-byte random salt, `sha256(salt || key_bytes)` is committed and pushed before any seat reads the
-  packet (OD-9). Scoring refuses a key that does not hash to the committed digest.
+  packet (OD-9), as a line of the publication record beside the packet's sha256 (§14): the seat runners refuse a
+  packet whose line is not on main. Scoring refuses a key that does not hash to the committed digest: scored for real,
+  the scorer reads the key's and each answer file's digest at the commit that carries it on the pinned main and
+  refuses any that differs from the key's, the packet's or the sealed answer file's own (the review of 2026-11-02
+  found a re-keyed P2 key with its own digest file opened). Packet bytes, build records and decoy specs stay private
+  until every seat's answer-file digest for that packet is public; build records and specs are released with their
+  key.
 - **Where the salts are.** Every salt, the decoy sets' and the packet keys', is written to
   `C:/Users/heyzo/direction_a_salts/` (`tpc_const.SALT_DIR`), outside any git working tree, and stays there until it
   is released with its key; the builder refuses a salt folder inside a git working tree, ignored or not. Sets, keys
@@ -1194,8 +1268,10 @@ model until an amendment names it (§15.4).
 
 1. The operator names a non-Anthropic model reachable by API with a dated snapshot id, not a moving alias, and a
    spending cap (OD-4). Temperature 0 where the API allows it; at most 400 output tokens; the same prompt bytes as C.
-2. Before any P1 or P2 item it answers packet Q (30 pre-window items and Q's 30 decoys) and qualifies by P13's bar
-   (at least 14 of 15 NO-side and 13 of 15 YES-side decoys on the full label).
+2. Before any P1 or P2 item it answers packet Q (30 pre-window claimers with a CI test result whose CI shows a
+   failure, tests failed or a failed job or check, none a source of another packet's decoys; and Q's 30 decoys) and
+   qualifies by P13's bar (at least 14 of 15 NO-side and 13 of 15 YES-side decoys on the full label). Q's real items
+   show failures as its decoys do (the review of 2026-11-02: 28 of 30 decoys did, against 8 of 30 random claimers).
 3. If it does not qualify, or no API model is funded by 2026-11-20, the local candidates answer Q in this order:
    `microsoft/Phi-3.5-mini-instruct`, then `meta-llama/Llama-3.2-3B-Instruct` (both in the HF cache [SC-CO §6]), each in
    bf16 in its own process with the full prompt, not through the `:18790` server, whose lean mode rewrites system
@@ -1368,7 +1444,7 @@ Under `result` (n, k, d_W, k_PC, d_P and n_eff as §9.2 defines them):
 | `a1.k2025_strict` | `a1.confirmed + a1.added` | -1 when `a1.panel_valid` is 0 |
 | `a1.k2025_worst` | `a1.k2025_strict` plus the 87 explicit 2025 items whose final label is `NOT_DECIDABLE` | -1 when `a1.panel_valid` is 0 |
 | `a2.n_claimers_ci` | n: rows of capped M that are eligible claimers with a CI test result | always computable |
-| `a2.keys_in_order` | 1 when P2's decoy-set digest was a filled lock row at the signing commit, P2's packet key digest was public no later than any P2 seat's answer-file digest (§14), and every P2 seat's answer-file digest was in a pull request opened before the one releasing P2's key, else 0 | -1 when P2 did not run |
+| `a2.keys_in_order` | 1 when P2's decoy-set digest was a filled lock row at the signing commit, P2's packet key digest was public before every P2 seat's earliest answer in its ledger and no later than any P2 seat's answer-file digest (§14), and every P2 seat's answer-file digest was in a pull request opened before the one releasing P2's key, else 0 | -1 when P2 did not run |
 | `a2.human_qualified` | P13 on packet P2: 1 or 0 | -1 when P2 did not run |
 | `a2.nonclaude_qualified` | P13 on packet P2 for N: 1 or 0 (0 when no N sat) | -1 when P2 did not run |
 | `a2.whole_wilson_upper_worst` | `styxx.mind.wilson(k + d_W, n_eff)[1]`, unrounded | 1.0 when P2 did not run or n_eff is 0 |
@@ -1513,26 +1589,33 @@ created at or after `WINDOW_START` (or with no creation time) unless the seal is
 `assert_pre_window` did [SC-FE §0]. The guard (`papers/tests-pass-ci/collect/tpc_seal.py`) opens only when all of
 these hold, each refused by name otherwise (the integrity review's probe opened it on a side-branch draft, a re-wrapped
 signature line, a moved paragraph, junk text and a signed draft with the lock table unfilled; the review of 2026-11-02
-opened it with P2's decoy set row reworded, reading "pending", or deleted, and with SEALED naming another file; each
-is now a test):
+opened it with P2's decoy set row reworded, reading "pending", or deleted, and with SEALED naming another file; the
+second review of 2026-11-02 opened it with a local tag or branch named `origin/main`, a fetch refspec, a repointed
+`origin`, and a SEALED naming a commit later than the signing one; each is now a test):
 
 1. a file `SEALED`, written by the lead and never by the collector, names a 40-hex `prereg_commit`, a
    `freeze_anchor` (the server time the signing pull request opened) that is not in the future, and no `prereg_path`
    other than this file's (`papers/tests-pass-ci/PREREG_tests_pass_ci_2026_11_02.md`);
-2. `git fetch origin` in the lab's checkout succeeds (a failed fetch keeps the guard shut, since `origin/main` would
-   then be the checkout's own ref), and that commit is an ancestor of `origin/main`: a commit on a side branch, or in
-   a worktree sharing the object store, does not open it;
-3. the file at that commit begins with "# PREREG"; every line of it that begins with the signature marker begins
+2. main is read from the pinned URL `https://github.com/fathom-lab/styxx.git` into the guard's own ref
+   `refs/tpc-seal/main`, by a fetch that names the URL and the refspec itself (never the checkout's `origin/main`, its
+   fetch refspec or a local tag or branch); the fetch is refused when the checkout's `origin` is not that URL or a
+   `url.<base>.insteadOf` rule could rewrite it, a fetch that does not succeed keeps the guard shut, and that commit is
+   an ancestor of the ref, read by its sha: a commit on a side branch, or in a worktree sharing the object store, does
+   not open it;
+3. that commit is the signing commit, the earliest commit on that main whose file carries the signature line, and the
+   file on that main is still that commit's blob (the digests made public after signing go to the publication record,
+   §14, so no later commit is ever named);
+4. the file at that commit begins with "# PREREG"; every line of it that begins with the signature marker begins
    "Signature. Signed" in bold (and there is one), so the draft's "Unsigned", a re-wrapped line or a moved paragraph
    keeps it shut; and no lock-table row (a line beginning "|") still reads "TO-FILL at the signing commit". Prose that
    quotes these markers mid-line, as this paragraph does, is not read;
-4. each lock-table row filled at the signing commit, the collector's (beginning "| the collector: ") and P2's decoy
+5. each lock-table row filled at the signing commit, the collector's (beginning "| the collector: ") and P2's decoy
    set (beginning "| decoy set digest of packet P2 "), is there exactly once and holds exactly one sha256, so a
    reworded, pending or deleted row keeps it shut;
-5. the collector row's sha256 equals the combined digest of the code that is running (§14).
+6. the collector row's sha256 equals the combined digest of the code that is running (§14).
 
-`SEALED` sits in a folder agents can write to; what opens the guard is the signed, filled file at a commit on the
-fetched `origin/main` and the running code's digest, which no written file supplies. The guard keeps the text it read
+`SEALED` sits in a folder agents can write to; what opens the guard is the signed, filled file at the signing commit
+of the main read from the pinned URL and the running code's digest, which no written file supplies. The guard keeps the text it read
 at that commit: the official P2 build and the scorer take P2's decoy set digest from that text, never from a working
 copy, and refuse a checkout whose PREREG is not those bytes; the blob's sha256 goes into P2's build record and into
 the receipt. The guard's state, the PREREG blob's sha256 and both code digests go into every run's record. Development
