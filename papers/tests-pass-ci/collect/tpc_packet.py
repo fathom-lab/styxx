@@ -5,12 +5,13 @@ the shuffle of P8.5, and the key sealed by a salt.
 
     py -3.12 tpc_packet.py draw-check --root ROOT
         re-derive the draw from the stored frames and beacon and compare it with the stored draw files
-    py -3.12 tpc_packet.py decoys --spec SPEC.json --packet P2 --out DIR [--salts DIR] [--testreceipt DIR] [--other-set SET.json ...]
+    py -3.12 tpc_packet.py decoys --spec SPEC.json --packet P2 --out DIR [--salts DIR] [--testreceipt DIR]
+        [--other-set SET.json ...] [--other-spec SPEC.json ...] [--other-key KEY.json ...] [--other-packet PACKET.json ...]
         check a decoy spec against P9 and seal the set: decoyset_<P>.json and .sha256 to --out, the salt to --salts
         (P2's digest fills its lock row at the signing commit)
     py -3.12 tpc_packet.py p2 --root ROOT --decoys DIR --out DIR [--dry-run]
     py -3.12 tpc_packet.py p1 --testreceipt DIR --snapshot FILE --logs DIR --bodies FILE --decoys DIR --root ROOT --out DIR [--dry-run]
-    py -3.12 tpc_packet.py q --root DEVROOT --decoys DIR --out DIR
+    py -3.12 tpc_packet.py q --root DEVROOT --decoys DIR --out DIR [--exclude-spec SPEC.json ...]
 
 The beacon (section 3.1): the draw and the shuffles of P1 and P2 read Bitcoin block 975000, or the block the late rule
 names, read from mempool.space and blockstream.info, which must agree; its header must hash to the id and meet its own
@@ -39,10 +40,12 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import os
 import random
 import re
 import subprocess
 import sys
+from collections import Counter
 from pathlib import Path
 from typing import Iterable, Optional
 
@@ -58,7 +61,8 @@ from tpc_const import (AGENT_ORDER, AU_SIZES, DECOYS_PER_PACKET, P_AGENT, PACKET
                        PREREG_REPO_PATH, SALT_DIR, WINDOW_START, UTC, iso, parse_utc)
 from tpc_draw import membership  # noqa: E402
 from tpc_frame import dedupe, kept  # noqa: E402
-from tpc_items import body_from_row, build_item, ci_from_row, ci_from_snapshot, ci_from_transcription  # noqa: E402
+from tpc_items import (body_from_row, build_item, ci_from_row, ci_from_snapshot,  # noqa: E402
+                       ci_from_transcription, date_traces)
 from tpc_store import dumps  # noqa: E402
 
 STAND_IN_HEX = tpc_beacon.STAND_IN_HEX
@@ -289,16 +293,27 @@ def assemble(packet: str, seed_hex: str, reals: list, decoys: list, *, beacon: d
 
 # ---- where secrets may be written (P9; finding 10 of 2026-11-02) -------------------------------------------------
 def git_working_tree(path: Path) -> Optional[Path]:
-    """The top of the git working tree holding `path` (it need not exist yet), or None."""
+    """The top of the git working tree holding `path` (it need not exist yet), or None. Git runs without the
+    caller's GIT_* variables (a stray GIT_DIR would answer for another tree). A path under a folder holding a .git
+    entry is inside a working tree whatever git answers: when git cannot confirm the tree there (dubious ownership,
+    a broken .git), the path is refused, never read as outside (the review of 2026-11-02)."""
     p = Path(path).resolve()
     while not p.exists() and p != p.parent:
         p = p.parent
+    marked = next((q for q in [p] + list(p.parents) if (q / ".git").exists()), None)
+    env = {k: v for k, v in os.environ.items() if not k.upper().startswith("GIT_")}
     try:
-        r = subprocess.run(["git", "-C", str(p), "rev-parse", "--show-toplevel"], capture_output=True, timeout=60)
+        r = subprocess.run(["git", "-C", str(p), "rev-parse", "--show-toplevel"], capture_output=True, timeout=60,
+                           env=env)
     except (OSError, subprocess.TimeoutExpired) as e:
         raise PacketError(f"cannot tell whether {path} is inside a git working tree: {type(e).__name__}") from e
     out = r.stdout.decode("utf-8", "replace").strip()
-    return Path(out) if r.returncode == 0 and out else None
+    if r.returncode == 0 and out:
+        return Path(out)
+    if marked is not None:
+        raise PacketError(f"{path} lies under {marked}, which holds .git, and git cannot confirm that working tree "
+                          f"(exit {r.returncode}); nothing secret is written there")
+    return None
 
 
 def private_dir_problem(path: Path, *, salt: bool) -> Optional[str]:
@@ -436,10 +451,18 @@ def build_p2(root: Path, decoys: list, *, beacon: dict, dry_run: bool, guard=Non
                               "strata": meta["strata"], "in_M": bool(r.get("in_M"))}, "item": it, "build": it["build"]})
     built = assemble("P2", bh, reals, decoys, beacon=beacon, salt=salt)
     seal = getattr(guard, "state", None) or {}
+    # P9: the decoys' date check (`date_traces`) counted over P2's real items, where it refuses nothing; the RESULT
+    # prints these counts beside the decoys' (zero by construction)
+    kinds, with_trace = Counter(), 0
+    for r in reals:
+        t = date_traces(r["item"]["step1_text"] or "") + date_traces(r["item"]["item_text"] or "")
+        kinds.update(t)
+        with_trace += int(bool(t))
     record = {"packet": "P2", "dry_run": dry_run, "beacon": built["public"]["beacon"], "selection": sel["counts"],
               "prereg_blob_sha256": seal.get("prereg_blob_sha256"),
               "p2_decoy_set_sealed": seal.get("p2_decoy_set_sealed"), "cut": sel["cut"], "grew": sel["grew"], "rows_read": len(rows), "drawn_without_record": missing,
               "items": len(built["public"]["items"]), "decoys": len(decoys),
+              "date_traces_real": {"items": len(reals), "items_with_trace": with_trace, "by_kind": dict(kinds)},
               "item_builds": {r["key"]["pr_id"]: r["build"] for r in reals}, "built_at": iso(dt.datetime.now(UTC))}
     return built, record
 
@@ -553,16 +576,26 @@ def q_order(pr_id) -> str:
     return hashlib.sha256((Q_SEED + ":" + str(pr_id)).encode("utf-8")).hexdigest()
 
 
-def build_q(root: Path, decoys: list, n: int = 30, salt: Optional[bytes] = None) -> tuple:
-    """Q's 30 real items: eligible claimers with a CI test result opened before 2026-11-02, the 30 lowest by
-    sha256("tests-pass-ci:Q:" + pr_id) (the PREREG names no order; this one is fixed before Q is built)."""
-    rows = [r for r in _read_rows(root) if _claim_ci(r)]
+def _ci_shows_failure(r: dict) -> bool:
+    ci = r.get("ci") or {}
+    return ci.get("outcome") == "tests failed" or bool(ci.get("any_failed_job_or_check"))
+
+
+def build_q(root: Path, decoys: list, n: int = 30, salt: Optional[bytes] = None, exclude: Iterable[str] = ()) -> tuple:
+    """Q's 30 real items (P10.3): eligible claimers with a CI test result opened before 2026-11-02 whose CI shows a
+    failure (tests failed, or a failed job or check), so Q's decoys sit among items like them (the review of
+    2026-11-02: 28 of 30 decoys showed a failure, 8 of 30 random claimers did), none of them a pull request another
+    packet's decoys come from (`exclude`, P9), the 30 lowest by sha256("tests-pass-ci:Q:" + pr_id)."""
+    ex = {tpc_decoys.norm_pr(x) for x in exclude}
+    rows = [r for r in _read_rows(root) if _claim_ci(r) and _ci_shows_failure(r)
+            and f"{(r.get('repo') or '').lower()}#{int(r['number'])}" not in ex]
     late = [r["pr_id"] for r in rows if parse_utc(r["created_at"]) >= WINDOW_START]
     if late:
         raise PacketError(f"packet Q takes pull requests opened before 2026-11-02 only; {len(late)} are not")
     pick = sorted(rows, key=lambda r: q_order(r["pr_id"]))[:n]
     if len(pick) < n:
-        raise PacketError(f"packet Q needs {n} pre-window claimers with a CI test result; the store has {len(pick)}")
+        raise PacketError(f"packet Q needs {n} pre-window claimers with a CI test result and a failure; the store "
+                          f"has {len(pick)}")
     reals = []
     for r in sorted(pick, key=lambda r: r["pr_id"]):
         it = build_item(body_from_row(root, r), ci_from_row(root, r), r.get("repo"))
@@ -570,7 +603,7 @@ def build_q(root: Path, decoys: list, n: int = 30, salt: Optional[bytes] = None)
                       "item": it})
     built = assemble("Q", Q_SEED, reals, decoys, beacon={"kind": "q_rule", "label": Q_SEED}, salt=salt)
     record = {"packet": "Q", "items": len(reals), "decoys": len(decoys), "built_at": iso(dt.datetime.now(UTC)),
-              "item_builds": {r["key"]["pr_id"]: r["item"]["build"] for r in reals}}
+              "excluded_sources": len(ex), "item_builds": {r["key"]["pr_id"]: r["item"]["build"] for r in reals}}
     return built, record
 
 
@@ -605,13 +638,39 @@ def _write_set(out: Path, packet: str, sealed: dict, problems: list, *, salt_dir
             raise OSError(f"short write: {path}")
 
 
+def _json(p) -> dict:
+    return json.loads(Path(p).read_bytes().decode("utf-8"))
+
+
+def other_packets(sets=(), specs=(), keys=(), packets=()) -> dict:
+    """What another packet uses (P9), for `tpc_decoys.check_set`: its sealed sets' item sha256s and descriptions,
+    its decoy specs' source pull requests, its keys' real pull requests and its public packets' descriptions."""
+    out = {"other_sets": [], "other_sources": [], "other_texts": []}
+    for p in sets:
+        for d in _json(p)["decoys"]:
+            out["other_sets"].append(d["item_sha256"])
+            out["other_texts"].append(d.get("step1_text"))
+    for p in specs:
+        out["other_sources"] += [(e.get("source") or {}).get("pr") for e in _json(p)["decoys"]
+                                 if (e.get("source") or {}).get("pr")]
+    for p in keys:
+        for it in (_json(p).get("items") or {}).values():
+            if it.get("decoy"):
+                continue
+            if it.get("url"):
+                out["other_sources"].append(it["url"])
+            elif it.get("repo") and it.get("number") is not None:
+                out["other_sources"].append(f"{it['repo']}#{it['number']}")
+    for p in packets:
+        out["other_texts"] += [it.get("step1_text") for it in _json(p).get("items") or []]
+    return out
+
+
 def cmd_decoys(a) -> int:
-    spec = json.loads(Path(a.spec).read_bytes().decode("utf-8"))
+    spec = _json(a.spec)
     spec["packet"] = a.packet
-    others = []
-    for p in a.other_set or []:
-        others += [d["item_sha256"] for d in json.loads(Path(p).read_bytes().decode("utf-8"))["decoys"]]
-    set_obj, probs = tpc_decoys.build_set(spec, excluded=testreceipt_urls(a.testreceipt), other_sets=others)
+    others = other_packets(a.other_set or [], a.other_spec or [], a.other_key or [], a.other_packet or [])
+    set_obj, probs = tpc_decoys.build_set(spec, excluded=testreceipt_urls(a.testreceipt), **others)
     if probs:
         print(json.dumps({"refused": probs}, indent=1))
         return 1
@@ -704,7 +763,8 @@ def cmd_p1(a) -> int:
 def cmd_q(a) -> int:
     salts = _salt_dir(a)
     decoys = load_decoy_set(Path(a.decoys), "Q", salt_dir=salts)
-    built, record = build_q(Path(a.root), decoys)
+    exclude = other_packets(specs=a.exclude_spec or [])["other_sources"]
+    built, record = build_q(Path(a.root), decoys, exclude=exclude)
     digests = write_packet(Path(a.out) if a.out else DEFAULT_OUT / "Q", built, record, salt_dir=salts)
     print(json.dumps({"packet": "Q", "items": len(built["public"]["items"]), "key_digest": built["key_digest"],
                       "files": digests}, indent=1))
@@ -721,7 +781,10 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     s.add_argument("--packet", required=True, choices=("Q", "P1", "P2"))
     s.add_argument("--out", required=True)
     s.add_argument("--testreceipt", help="testreceipt's clone: its 138 items are refused as sources")
-    s.add_argument("--other-set", action="append", help="another packet's sealed set: no decoy is reused")
+    s.add_argument("--other-set", action="append", help="another packet's sealed set: no decoy or description is reused")
+    s.add_argument("--other-spec", action="append", help="another packet's decoy spec: no source pull request is reused")
+    s.add_argument("--other-key", action="append", help="another packet's key: none of its real items is a source")
+    s.add_argument("--other-packet", action="append", help="another packet: no description near-duplicates its items")
     salts_help = f"where salts are written, outside any git working tree (default {SALT_DIR}; a dry run names its own)"
     s.add_argument("--salts", help=salts_help)
     p2 = sub.add_parser("p2")
@@ -745,6 +808,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     q.add_argument("--decoys", required=True)
     q.add_argument("--out")
     q.add_argument("--salts", help=salts_help)
+    q.add_argument("--exclude-spec", action="append", help="another packet's decoy spec: its sources are not Q's items")
     a = ap.parse_args(list(argv) if argv is not None else None)
     try:
         return {"draw-check": cmd_draw_check, "decoys": cmd_decoys, "p2": cmd_p2, "p1": cmd_p1, "q": cmd_q}[a.cmd](a)

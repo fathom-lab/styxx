@@ -519,11 +519,34 @@ def test_the_official_p2_build_takes_the_lock_row_from_the_signed_text_the_guard
                             "--salts", str(tmp_path / "salts2")]) == 2
 
 
+def test_the_official_p2_build_refuses_a_signed_text_whose_p2_row_is_unfilled(tmp_path, monkeypatch, capsys):
+    """The review's mutant R17 (cmd_p2 accepts an unfilled P2 lock row) left every test passing."""
+    root = tmp_path / "store"
+    make_store(root, GENESIS_ID)
+    dec = tmp_path / "dec"
+    _write_p2_set(dec)
+    st = Store(root)
+    st.write("draw/beacon.json", json.dumps(_named()).encode())
+    day = "2026-10-20"
+    st.write(f"draw/draw_{day}.jsonl", b"".join(dumps(r) for r in tpc_packet.derive_draw(
+        st.read_jsonl(f"frames/frame_{day}.jsonl"), GENESIS_ID, day)))
+    for row in ("pending", "TO-FILL at the signing commit", "c" * 64 + " " + "d" * 64):
+        g = _SignedGuard(row)
+        monkeypatch.setattr(tpc_packet.tpc_seal, "SealGuard", lambda: g)
+        out = tmp_path / ("o_" + row[:7].replace(" ", "_"))
+        assert tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(out),
+                                "--salts", str(tmp_path / "salts")]) == 2
+        assert "holds no single sha256" in capsys.readouterr().err
+        assert not out.exists()
+
+
 def test_q_takes_thirty_pre_window_claimers_and_refuses_window_rows(tmp_path):
+    """Q's real items are claimers whose CI shows a failure, as its decoys' does (the review of 2026-11-02: 28 of 30
+    decoys showed one against 8 of 30 random claimers), and none is a source of another packet's decoys."""
     root = tmp_path / "store"
     make_store(root, tpc_packet.STAND_IN_HEX)
-    for i in range(40):  # more claimers with a CI test result
-        r = _row(800_000 + i, outcome="tests passed")
+    for i in range(60):  # more claimers with a CI test result: a third fail tests, a third pass beside a failed job
+        r = _row(800_000 + i, outcome="tests passed" if i % 3 else "tests failed", other_fail=i % 3 == 1)
         r.update(raw_dir=f"a2/raw/{800_000 + i}/att", repo="o/q", number=i)
         _gz(root / r["raw_dir"] / "pr_node.json.gz", {"body": f"Q item {i}. All tests pass."})
         _gz(root / r["raw_dir"] / "check_runs.p1.json.gz", {"check_runs": []})
@@ -534,8 +557,18 @@ def test_q_takes_thirty_pre_window_claimers_and_refuses_window_rows(tmp_path):
     built, rec = tpc_packet.build_q(root, tpc_packet.load_decoy_set(q_dec, "Q", salt_dir=None))
     assert rec["items"] == 30 and len(built["public"]["items"]) == 60
     picked = sorted(k["pr_id"] for k in built["key"]["items"].values() if not k["decoy"])
-    rows = [r for r in tpc_packet._read_rows(root) if tpc_packet._claim_ci(r)]
+    rows = [r for r in tpc_packet._read_rows(root) if tpc_packet._claim_ci(r) and tpc_packet._ci_shows_failure(r)]
+    assert all(r["ci"]["outcome"] == "tests failed" or r["ci"]["any_failed_job_or_check"] for r in rows)
     assert picked == sorted(r["pr_id"] for r in sorted(rows, key=lambda r: tpc_packet.q_order(r["pr_id"]))[:30])
+    passing_only = {r["pr_id"] for r in tpc_packet._read_rows(root) if tpc_packet._claim_ci(r)
+                    and not tpc_packet._ci_shows_failure(r)}
+    assert passing_only and not passing_only & set(picked)
+    # a pull request another packet's decoys come from is not one of Q's items
+    chosen = next(r for r in rows if r["pr_id"] == picked[0])
+    built2, rec2 = tpc_packet.build_q(root, tpc_packet.load_decoy_set(q_dec, "Q", salt_dir=None),
+                                      exclude=[f"https://github.com/{chosen['repo']}/pull/{chosen['number']}"])
+    picked2 = {k["pr_id"] for k in built2["key"]["items"].values() if not k["decoy"]}
+    assert chosen["pr_id"] not in picked2 and len(picked2) == 30 and rec2["excluded_sources"] == 1
     bad = json.loads((root / "a2" / "rows" / f"{picked[0]}.json").read_bytes())
     bad["created_at"] = "2026-11-05T00:00:00Z"
     Store(root).write_json(f"a2/rows/{picked[0]}.json", bad, overwrite=True)
@@ -619,6 +652,28 @@ def test_fetch_bodies_asks_the_seal_guard_on_githubs_created_at():
         tpc_packet.fetch_bodies(gh, ["https://github.com/acme/f1/pull/1"], Shut())
 
 
+def test_the_decoys_cli_refuses_what_another_packet_uses(tmp_path):
+    """--other-spec, --other-key and --other-packet: a source pull request or a near-duplicate description another
+    packet uses is refused (the review of 2026-11-02)."""
+    spec = synthetic_decoys.spec("P2")
+    sp = tmp_path / "spec.json"
+    sp.write_bytes(json.dumps(spec).encode())
+    other = tmp_path / "other_spec.json"
+    other.write_bytes(json.dumps({"decoys": [{"source": {"pr": spec["decoys"][0]["source"]["pr"]}}]}).encode())
+    key = tmp_path / "key_Q.json"
+    key.write_bytes(json.dumps({"items": {"Q-001": {"decoy": False, "repo": spec["decoys"][1]["repo"],
+                                                    "number": int(spec["decoys"][1]["source"]["pr"].split("#")[1])},
+                                          "Q-002": {"decoy": True}}}).encode())
+    pk = tmp_path / "packet_Q.json"
+    pk.write_bytes(json.dumps({"items": [{"id": "Q-001", "step1_text": spec["decoys"][2]["body"] + " Yes."}]}).encode())
+    got = tpc_packet.other_packets(specs=[other], keys=[key], packets=[pk])
+    assert len(got["other_sources"]) == 2 and len(got["other_texts"]) == 1
+    rc = tpc_packet.main(["decoys", "--spec", str(sp), "--packet", "P2", "--out", str(tmp_path / "s"),
+                          "--salts", str(tmp_path / "salts"), "--other-spec", str(other), "--other-key", str(key),
+                          "--other-packet", str(pk)])
+    assert rc == 1 and not (tmp_path / "s" / "decoyset_P2.json").exists()
+
+
 def test_the_decoys_cli_seals_a_set_and_refuses_a_bad_one(tmp_path):
     spec = synthetic_decoys.spec("P2")
     sp = tmp_path / "spec.json"
@@ -647,6 +702,20 @@ def _git_repo(path):
     path.mkdir(parents=True)
     subprocess.run(["git", "init", "-q", str(path)], check=True, capture_output=True)
     return path
+
+
+def test_a_folder_git_cannot_confirm_is_never_read_as_outside_a_working_tree(tmp_path, monkeypatch):
+    """The review of 2026-11-02: any git error (dubious ownership, a broken .git, a stray GIT_DIR) read as "outside
+    any working tree", so a salt could be written there."""
+    broken = tmp_path / "broken"
+    broken.mkdir()
+    (broken / ".git").write_bytes(b"gitdir: /nowhere/at/all\n")
+    with pytest.raises(tpc_packet.PacketError, match="cannot confirm"):
+        tpc_packet.private_dir_problem(broken / "salts", salt=True)
+    repo = _git_repo(tmp_path / "repo")
+    monkeypatch.setenv("GIT_DIR", str(tmp_path / "elsewhere"))  # a stray GIT_DIR does not answer for the tree
+    assert "a salt lives outside any" in tpc_packet.private_dir_problem(repo / "salts", salt=True)
+    assert tpc_packet.private_dir_problem(tmp_path / "plain" / "salts", salt=True) is None
 
 
 def test_a_salt_lives_outside_any_git_working_tree_and_a_set_only_where_git_ignores_it(tmp_path):

@@ -80,7 +80,7 @@ def main() -> int:
         report["stand_in_packet_refused_by_seats"] = False
     except tpc_seats.SeatError as e:
         report["stand_in_packet_refused_by_seats"] = str(e)
-    claim_rows = [r for r in rows if tpc_packet._claim_ci(r)]
+    claim_rows = [r for r in rows if tpc_packet._claim_ci(r) and tpc_packet._ci_shows_failure(r)]
     report["q_candidates"] = len(claim_rows)
     if len(claim_rows) >= 30:
         q_set, _ = tpc_decoys.build_set(synthetic_decoys.spec("Q"))
@@ -88,7 +88,8 @@ def main() -> int:
         qdir = out / "dryrun_Q"
         tpc_packet.write_packet(qdir, q_built, q_rec, salt_dir=qdir, dry_run=True)
         report["q_dry_run"] = {"items": len(q_built["public"]["items"]), "key_digest": q_built["key_digest"]}
-        hx = tpc_seats.export_h(qdir / "packet_Q.json", 1, out / "dryrun_Q_H")
+        # a dry run's packet, read by no seat: its key digest is in no publication record, so the check stands in
+        hx = tpc_seats.export_h(qdir / "packet_Q.json", 1, out / "dryrun_Q_H", published=lambda packet, sha: True)
         report["q_human_form"] = {"sittings": hx["sittings"], "items": hx["items"]}
     data = (json.dumps(report, indent=1) + "\n").encode("utf-8")
     (out / "builder_dev_check.json").write_bytes(data)

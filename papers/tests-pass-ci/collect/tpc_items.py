@@ -4,10 +4,15 @@
 An item is two parts (P8.1): DESCRIPTION, shown in step 1, and CI AT THE HEAD COMMIT, shown only in step 2. No item
 carries a URL, repository name, pull request number, author, agent name, date or state. Dates are masked by one rule,
 `mask_dates` (P8.1), over the description and every line of the CI block, log excerpts included: ISO dates and
-date-times, YYYY/MM/DD, DD/MM/YYYY and MM/DD/YYYY with "/", ".", "-" or "_", MM/DD/YY, YYYYMMDD standing
-alone, a month's name or abbreviation beside a day (with or without a year) or beside a year; each becomes "<date>".
-URLs are replaced before dates are masked, so a date inside a URL goes with the URL. A clock time without a date
-stays. Decoys built in October would otherwise carry October dates beside November items.
+date-times, basic ISO date-times (20261029T120000Z), YYYY/MM/DD, DD/MM/YYYY and MM/DD/YYYY with "/", ".", "-" or
+"_", MM/DD/YY, DD.MM.YY with a year 24 to 27, YYYYMMDD standing alone, a month's name or abbreviation beside a day
+(with or without a year, by a space or a hyphen: "Oct 29", "29-Oct-2026", "Oct-29") or beside a year, a year and month
+alone (2026-10), a month's full name standing alone ("May" stays: it is also the verb), a capitalised month
+abbreviation standing alone ("Oct", "OCT"; lower case stays, as in code), and a 10- or 13-digit number that reads as
+a Unix time in 2026 (seconds or milliseconds); each becomes "<date>". URLs are replaced before dates are masked, so a date
+inside a URL goes with the URL. A clock time without a date stays, and so does a bare MM/DD (it has the form of a
+count, "10/29 passed"). Decoys built in October would otherwise carry October dates beside November items.
+`date_traces` is P9's check of a decoy, broader than the mask and written apart from it (P9).
 
 - `clean_description` (P8.2): the body as read, line endings made LF; HTML comments removed (an unclosed comment to
   the end, as GitHub renders it); images removed (markdown and <img>); agent footer lines (P2.1's signature texts,
@@ -16,8 +21,11 @@ stays. Decoys built in October would otherwise carry October dates beside Novemb
 - `render_ci` (P8.3): per check run `check: <name> (<app slug>) -> <conclusion>`; per status
   `status: <context> -> <state>`; per Actions job that failed or is test-like `job: <name> -> <conclusion>` and its
   steps; up to 20 annotations of failed check runs; log excerpts of failing test-like jobs (at most 3, job-id order);
-  then the one fixed line. URLs in the block are replaced by "<url>" and the repository's own owner/name by "<repo>"
-  (P8.1 says no item carries either; P8.3 does not say how, so this is the reading the code makes).
+  then the one fixed line. URLs in the block are replaced by "<url>"; the repository's own owner/name, and any other
+  repository a decoy's donor log came from (`also`), by "<repo>"; the repository folders of a runner's working path
+  (/home/runner/work/<name>/<name>, /Users/runner/work/..., D:\\a\\..., /__w/..., /_work/...) by "<repo>"; and the
+  repository's short name and owner as whole tokens (a letter or digit on neither side), unless the token is under 3
+  characters or a common word of `GENERIC_NAMES` (P8.1, P8.3).
 - `log_excerpt` (P8.3): the log decoded as UTF-8 with replacement, ANSI escapes and each line's leading timestamp
   removed, URLs replaced and dates masked in each line. For each failing step of the job (failure or timed_out), in step-number order, a span of lines:
   * by the step's times: it starts at the earliest line that begins `##[group]Run ` and is stamped from one second
@@ -90,7 +98,28 @@ DATES = re.compile("|".join((
     rf"\b{_MON}\.? \d{{1,2}}(?:st|nd|rd|th)?(?:,? {_YEAR})?(?!\d)",  # Oct 29, Oct 29th, October 29, 2026
     rf"\b\d{{1,2}}(?:st|nd|rd|th)? {_MON}\b\.?(?: {_YEAR}(?!\d))?",  # 29 Oct, 29 Oct 2026
     rf"\b{_MON}\.? {_YEAR}(?!\d)",  # October 2026
+    # basic ISO date-times: 20261029T120000Z, 20261029T1200
+    rf"(?<![0-9A-Za-z]){_YEAR}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])T\d{{2}}(?:\d{{2}}(?:\d{{2}}(?:[.,]\d+)?)?)?"
+    rf"(?:Z|[+-]\d{{2}}:?\d{{2}})?(?![0-9A-Za-z])",
+    r"(?<![\d.])(?:0?[1-9]|[12]\d|3[01])\.(?:0?[1-9]|1[0-2])\.2[4-7](?![\d.])",  # 29.10.26 (3.12.10 stays)
+    rf"\b\d{{1,2}}-{_MON}\b(?:-(?:{_YEAR}|\d{{2}})(?!\d))?",  # 29-Oct-2026, 29-Oct-26, 29-Oct
+    rf"\b{_MON}-\d{{1,2}}(?!\d)(?:-{_YEAR}(?!\d))?",  # Oct-29, Oct-29-2026
+    rf"(?<![\d./-]){_YEAR}[-/.](?:0[1-9]|1[0-2])(?!\d)(?![-/.]\d)",  # 2026-10, 2026/10 (a year and month alone)
+    r"\b(?:January|February|March|April|June|July|August|September|October|November|December)\b",  # standing alone
 )), re.I)
+# a month abbreviation standing alone, capitalised or in capitals ("Oct", "OCT"): "oct" or "dec" in code stays
+MONTH_ABBR = re.compile(r"\b(?:Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept?|Oct|Nov|Dec"
+                        r"|JAN|FEB|MAR|APR|JUN|JUL|AUG|SEPT?|OCT|NOV|DEC)\b\.?")
+# a 10- or 13-digit number that reads as a Unix time in 2026, in seconds or milliseconds
+EPOCH = re.compile(r"(?<!\d)(\d{10}|\d{13})(?!\d)")
+EPOCH_2026 = (1767225600, 1798761600)  # 2026-01-01T00:00:00Z and 2027-01-01T00:00:00Z
+# P9's check of a decoy (`date_traces`), written apart from the mask: a Unix time from 2026-09-01 to the year's end,
+# the full name of September to December in any case or its abbreviation capitalised or in capitals, and MM/DD of
+# September or October, the months the decoy material comes from (a MM/DD of November or December reads as a count in
+# real items, "11/12 passed", and a decoy's would not tell it apart)
+TRACE_EPOCH = (1788220800, 1798761600)  # 2026-09-01T00:00:00Z and 2027-01-01T00:00:00Z
+TRACE_MONTH = re.compile(r"(?i:\b(?:september|october|november|december)\b)|\b(?:Sept?|Oct|Nov|Dec|SEPT?|OCT|NOV|DEC)\b")
+TRACE_MMDD = re.compile(r"(?<![\d/.])(?:0?9|10)/(?:0?[1-9]|[12]\d|3[01])(?![\d/])")
 # P8.2: P2.1's signature texts (Claude Code's footer, Cursor's agent link and its post-filter text), Codex task links,
 # Devin session links
 FOOTER = re.compile(r"(?i)generated with \[?claude code\b|cursor\.com/|chatgpt\.com/codex/tasks|app\.devin\.ai/sessions")
@@ -113,9 +142,31 @@ def _replace_urls(text: str) -> str:
     return URL.sub(sub, text)
 
 
+def _epoch_sub(m: "re.Match[str]") -> str:
+    s = int(m.group(1)) if len(m.group(1)) == 10 else int(m.group(1)) // 1000
+    return DATE_TOKEN if EPOCH_2026[0] <= s < EPOCH_2026[1] else m.group(0)
+
+
 def mask_dates(text: str) -> str:
     """Every date P8.1's rule names, replaced by "<date>"."""
-    return DATES.sub(DATE_TOKEN, text)
+    return EPOCH.sub(_epoch_sub, MONTH_ABBR.sub(DATE_TOKEN, DATES.sub(DATE_TOKEN, text)))
+
+
+def date_traces(text: str) -> list:
+    """What P9 refuses in a decoy's texts after masking, each a kind: "epoch" (a Unix time from 2026-09-01 to the
+    year's end), "month" (a name or abbreviation of September to December), "mm_dd" (MM/DD of September or
+    October) and "date" (anything the mask itself would still change). The same counts are printed over P2's real
+    items (P9), where nothing is refused."""
+    out = []
+    for m in EPOCH.finditer(text):
+        s = int(m.group(1)) if len(m.group(1)) == 10 else int(m.group(1)) // 1000
+        if TRACE_EPOCH[0] <= s < TRACE_EPOCH[1]:
+            out.append("epoch")
+    out += ["month"] * len(TRACE_MONTH.findall(text))
+    out += ["mm_dd"] * len(TRACE_MMDD.findall(text))
+    if mask_dates(text) != text:
+        out.append("date")
+    return out
 
 
 def _scrub(text: str) -> str:
@@ -233,10 +284,39 @@ def _tail(text: str, cap: int) -> str:
 
 
 # ---- P8.3, the CI block ---------------------------------------------------------------------------------------
-def _redact(text: str, repo: Optional[str]) -> str:
+# the repository folders of a runner's working path: GitHub's hosted runners (Linux, macOS, Windows), container jobs
+# and self-hosted runners; a folder whose name begins "_" (_temp, _actions, _tool) is the runner's own
+RUNNER_WORK = re.compile(r"((?:/home/runner/work|/Users/runner/work|/__w|/_work|\b[A-Za-z]:\\a)[/\\])"
+                         r"([^/\\\s'\"`_][^/\\\s'\"`]*)([/\\])([^/\\\s'\"`]+)")
+# short names and owners not redacted as tokens: under 3 characters, or words every CI block carries
+GENERIC_NAMES = frozenset((
+    "action", "actions", "api", "app", "apps", "backend", "bot", "build", "check", "ci", "cli", "client", "code",
+    "common", "config", "core", "data", "demo", "deploy", "dev", "docs", "engine", "error", "example", "examples",
+    "frontend", "github", "infra", "install", "job", "lib", "libs", "lint", "main", "master", "module", "modules",
+    "node", "package", "packages", "platform", "plugin", "plugins", "project", "python", "release", "repo", "run",
+    "rust", "scripts", "sdk", "server", "service", "setup", "shared", "site", "src", "step", "test", "tests", "tools",
+    "utils", "web", "website", "workspace", "www"))
+
+
+def _name_tokens(repos: list) -> list:
+    toks = set()
+    for r in repos:
+        if not r or "/" not in r:
+            continue
+        for t in r.split("/", 1):
+            if len(t) >= 3 and t.lower() not in GENERIC_NAMES:
+                toks.add(t)
+    return sorted(toks, key=lambda t: (-len(t), t.lower()))
+
+
+def _redact(text: str, repo: Optional[str], also: tuple = ()) -> str:
     text = _replace_urls(text)
-    if repo:
-        text = re.sub(re.escape(repo), REPO_TOKEN, text, flags=re.I)
+    repos = [r for r in (repo,) + tuple(also) if r]
+    for r in repos:
+        text = re.sub(re.escape(r), REPO_TOKEN, text, flags=re.I)
+    text = RUNNER_WORK.sub(lambda m: m.group(1) + REPO_TOKEN + m.group(3) + REPO_TOKEN, text)
+    for t in _name_tokens(repos):
+        text = re.sub(r"(?<![A-Za-z0-9<])" + re.escape(t) + r"(?![A-Za-z0-9>])", REPO_TOKEN, text, flags=re.I)
     return text
 
 
@@ -249,12 +329,11 @@ def failing_test_like_jobs(ci: dict) -> list:
             if _map(j.get("conclusion")) == "failure" and test_like_job(j)]
 
 
-def render_ci(ci: dict, repo: Optional[str] = None) -> tuple:
+def render_ci(ci: dict, repo: Optional[str] = None, also: tuple = ()) -> tuple:
     """(CI block text, build info). `ci`: {check_runs, statuses, jobs, annotations, logs, names_only}; logs maps a job
-    id (str) to its raw log (bytes or str)."""
+    id (str) to its raw log (bytes or str). `also`: other repositories whose names the block may carry (a decoy's donor
+    log), redacted as the item's own."""
     lines = []
-    if ci.get("names_only"):
-        lines.append(NAMES_ONLY_LINE)
     for c in sorted(ci.get("check_runs") or [], key=lambda c: ((c.get("name") or "").lower(), c.get("name") or "",
                                                                  c.get("id") or 0)):
         concl = c.get("conclusion") or c.get("status") or "none"
@@ -291,9 +370,10 @@ def render_ci(ci: dict, repo: Optional[str] = None) -> tuple:
         lines.append(_scrub(f"log: {_one_line(j.get('name'))}"))
         lines.append(text)
         info["logs"].append({"job_id": j["id"], "how": how, "chars": len(text)})
-    lines.append("")
-    lines.append(FIXED_LINE)
-    return _redact("\n".join(lines), repo), info
+    # the two lines the code writes are not redacted: a short name that is a word they hold must not change them
+    head = [NAMES_ONLY_LINE] if ci.get("names_only") else []
+    body = [_redact("\n".join(lines), repo, tuple(also))] if lines else []
+    return "\n".join(head + body + ["", FIXED_LINE]), info
 
 
 # ---- the two texts a seat reads ----------------------------------------------------------------------------
@@ -305,13 +385,14 @@ def item_sha256(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def build_item(body: Optional[str], ci: Optional[dict], repo: Optional[str] = None, *, steps: int = 2) -> dict:
+def build_item(body: Optional[str], ci: Optional[dict], repo: Optional[str] = None, *, steps: int = 2,
+               also: tuple = ()) -> dict:
     """{"steps", "step1_text", "item_text" (None for a step-1-only item), "item_sha256", "build"}."""
     desc = clean_description(body)
     if steps == 1:
         return {"steps": 1, "step1_text": desc, "item_text": None,
                 "item_sha256": item_sha256(item_text(desc, "")), "build": {}}
-    block, info = render_ci(ci or {}, repo)
+    block, info = render_ci(ci or {}, repo, tuple(also))
     text = item_text(desc, block)
     return {"steps": 2, "step1_text": desc, "item_text": text, "item_sha256": item_sha256(text), "build": info}
 
