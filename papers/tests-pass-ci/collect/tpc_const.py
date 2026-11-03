@@ -68,6 +68,9 @@ P_AGENT = {  # P1 P_AGENT; Claude Code's 0.120 applies inside its enumerated sli
     "Google_Jules": Fraction(1),
 }
 BEACON_HEIGHT = 975000  # section 3.1 (late rule there)
+# P3.4's planning column "claimers with CI in M": the agent mix of M that P2's decoys are held to (P9, `agent_mix`)
+M_CLAIMERS_CI_PLANNING = {"Claude_Code": 1238, "Cursor": 39, "Devin": 13, "OpenAI_Codex": 2, "Copilot": 0,
+                          "Google_Jules": 0}
 DRAW_TAG = ":tests-pass-ci:"
 
 # ---- reading (P4) -------------------------------------------------------------------------------

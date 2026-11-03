@@ -15,7 +15,7 @@ P9's mix, by construction (side, count in Q and P1, count in P2, key label, step
     YES  yes_log                 9  10  WHOLE_CONTRADICTED   WHOLE   evidence LOG
     YES  yes_names_only          2   1  WHOLE_CONTRADICTED   WHOLE   evidence NAMES_ONLY (no log, no annotation shown)
     YES  yes_stale               2   2  WHOLE_CONTRADICTED   WHOLE   STALE by the machine flag
-    YES  yes_preexisting         2   2  WHOLE_CONTRADICTED   WHOLE   preexisting yes, the record showing it
+    YES  yes_preexisting         2   2  WHOLE_CONTRADICTED   WHOLE   preexisting yes, shown by the CI record's own bytes
     NO   no_passing              2   0  NOT_CONTRADICTED     WHOLE   tests pass, nothing fails
     NO   no_lint_build           2   4  NOT_CONTRADICTED     WHOLE   only lint, format, type or build jobs fail
     NO   no_install_in_test_job  2   2  NOT_CONTRADICTED     WHOLE   a job named for tests failed at installation
@@ -30,7 +30,18 @@ go to `no_lint_build`, AU2's shape; and P2 shows two names-only decoys, near the
 whose failures all lie outside Actions. Every P2 decoy must sit in a combination of claim reading and CI result that
 P2's real two-step items show (`P2_COMBINATIONS`).
 
-Shapes refused in every packet: a marker word; a date trace after P8.1's mask (`tpc_items.date_traces`); a step listing
+Agents (P9): P2's decoys hold M's agent mix, the largest-remainder allotment of 30 over P3.4's planned claimers with a
+CI test result in M (`agent_mix`: 29 Claude Code, 1 Cursor), since the decisive count reads M's candidates only; each
+P2 decoy states its source's agent (`source.agent`), and a description that lacks the text P2.1's frame requires of that
+agent is refused, as no real item of P2 lacks it.
+
+Markers (P9): a marker word is refused only in the text the construction itself writes (`written_text`: the lines it
+inserts into the description and the words it changes, read against the source's description as read, `source.body`,
+which every decoy states; a real decoy carries it unchanged). A source's own words stay as they are, marker words
+included, so a marker word in an item says nothing of which items are decoys.
+
+Shapes refused in every packet: a marker word the construction wrote; a date trace after P8.1's mask
+(`tpc_items.date_traces`); a step listing
 no real failing run shows; a failing Actions check run with no annotation (every failing Actions check run of the
 development store carries one); an entry whose repository is not its source's; a synthetic CI change not declared as a
 step flip, or a flip whose later steps are not those of a real failing run of the same job. In P2 also: a names-only
@@ -49,14 +60,16 @@ return new objects and never change their input.
 from __future__ import annotations
 
 import copy
+import difflib
 import hashlib
 import json
 import re
 import secrets
+from fractions import Fraction
 from typing import Iterable, Optional
 
-from tpc_const import DECOYS_PER_PACKET, WINDOW_START, parse_utc
-from tpc_items import build_item, date_traces, failing_test_like_jobs
+from tpc_const import AGENT_ORDER, DECOYS_PER_PACKET, M_CLAIMERS_CI_PLANNING, POSTFILTER, WINDOW_START, parse_utc
+from tpc_items import CI_HEAD, build_item, date_traces, failing_test_like_jobs
 from tpc_screen import _map, build_ci, is_test_step, screen, test_like_job
 
 LABELS = ("WHOLE_CONTRADICTED", "PART_CONTRADICTED", "PART_BESIDE_FAILURE", "NOT_CONTRADICTED", "NOT_A_CLAIM",
@@ -109,6 +122,77 @@ def mix(packet: Optional[str]) -> dict:
 
 def names_only_mix(packet: Optional[str]) -> dict:
     return dict(P2_NAMES_ONLY if packet == "P2" else ONE_NAMES_ONLY)
+
+
+def agent_mix(packet: Optional[str]) -> Optional[dict]:
+    """{agent: count} of a packet's decoys, or None where P9 holds no mix. P2: M's mix, the largest-remainder
+    allotment of 30 over P3.4's planned claimers with a CI test result in M (ties to the larger share, then to
+    AGENT_ORDER), every agent listed; Q's and P1's real items are not drawn from M (P9)."""
+    if packet != "P2":
+        return None
+    total = sum(M_CLAIMERS_CI_PLANNING.values())
+    quota = {a: Fraction(M_CLAIMERS_CI_PLANNING.get(a, 0) * DECOYS_PER_PACKET, total) for a in AGENT_ORDER}
+    out = {a: int(q) for a, q in quota.items()}
+    rest = DECOYS_PER_PACKET - sum(out.values())
+    order = sorted(AGENT_ORDER, key=lambda a: (-(quota[a] - int(quota[a])), -quota[a], AGENT_ORDER.index(a)))
+    for a in order[:rest]:
+        out[a] += 1
+    return out
+
+
+def agent_problems(entry: dict, name: str) -> list:
+    """A P2 decoy states its source's agent (one of P2.1's), and its description carries the text P2.1's frame
+    requires of that agent's bodies (Claude Code's "claude code", Cursor's "cursor.com/"), as every real item of P2
+    does."""
+    agent = (entry.get("source") or {}).get("agent")
+    if agent not in AGENT_ORDER:
+        return [f"{name}: the source's agent {agent!r} is not one of P2.1's {AGENT_ORDER} (source.agent, P9)"]
+    need = POSTFILTER.get(agent)
+    if need and need not in (entry.get("body") or "").lower():
+        return [f"{name}: the description lacks {need!r}, the text P2.1 requires of {agent}'s bodies (P9)"]
+    return []
+
+
+def _lines(t: str) -> list:
+    return (t or "").replace("\r\n", "\n").replace("\r", "\n").split("\n")
+
+
+def _word_char(c: str) -> bool:
+    return c.isalnum() or c == "_"
+
+
+def _changed_words(old: str, new: str) -> list:
+    """The parts of `new` that are not `old`'s, each widened to the whole words it touches."""
+    out = []
+    sm = difflib.SequenceMatcher(None, old, new, autojunk=False)
+    for tag, _, _, j1, j2 in sm.get_opcodes():
+        if tag not in ("replace", "insert"):
+            continue
+        while j1 > 0 and _word_char(new[j1]) and _word_char(new[j1 - 1]):
+            j1 -= 1
+        while j2 < len(new) and _word_char(new[j2 - 1]) and _word_char(new[j2]):
+            j2 += 1
+        out.append(new[j1:j2].strip())
+    return out
+
+
+def written_text(entry: dict) -> Optional[list]:
+    """The text the construction itself writes into the item (P9): the description's lines that are not the
+    source's own (`source.body`, the description as read) and, in a line it changed, the words it changed. A step
+    flip writes no text: it changes conclusions and carries the donor's real log, annotations and times. None when
+    the source's description is not stated."""
+    old = (entry.get("source") or {}).get("body")
+    if not isinstance(old, str):
+        return None
+    a, b = _lines(old), _lines(entry.get("body") or "")
+    out = []
+    for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes():
+        if tag == "insert" or (tag == "replace" and i2 - i1 != j2 - j1):
+            out += b[j1:j2]
+        elif tag == "replace":
+            for x, y in zip(a[i1:i2], b[j1:j2]):
+                out += _changed_words(x, y)
+    return [t for t in out if t.strip()]
 
 
 # The runner's own steps: in every failing job of the pre-window development store (110 jobs) both ran, "Complete
@@ -361,11 +445,20 @@ def check_decoy(entry: dict, built: dict, *, excluded: Iterable[str] = (), packe
     if src.get("kind") == "synthetic" and not (src.get("change") or "").strip():
         probs.append(f"{name}: a synthetic decoy states the change it carries")
     probs += flip_problems(entry, name)
-    for text in (built.get("step1_text") or "", built.get("item_text") or ""):
+    written = written_text(entry)
+    if written is None:
+        probs.append(f"{name}: the source's description as read is stated (source.body), so what the construction "
+                     "writes can be read (P9)")
+        written = []
+    elif src.get("kind") == "real" and written:
+        probs.append(f"{name}: a real decoy carries its source's description unchanged (P9)")
+    for text in written:
         m = MARKER.search(text)
         if m:
-            probs.append(f"{name}: the item text carries a marker word {m.group(0)!r}")
+            probs.append(f"{name}: the text the construction writes carries a marker word {m.group(0)!r} (P9)")
             break
+    if packet == "P2":
+        probs += agent_problems(entry, name)
     traces = date_traces(built.get("step1_text") or "") + date_traces(built.get("item_text") or "")
     if traces:
         kinds = ", ".join(f"{k} {traces.count(k)}" for k in sorted(set(traces)))
@@ -412,8 +505,18 @@ def check_decoy(entry: dict, built: dict, *, excluded: Iterable[str] = (), packe
             probs.append("yes_stale: last_edited_at and head_committed_at are needed")
     if name == "yes_preexisting":
         note = (entry.get("preexisting_shown") or "").strip()
-        if key.get("preexisting") != "yes" or not note or note not in (built.get("item_text") or ""):
-            probs.append("yes_preexisting: preexisting yes, and preexisting_shown quotes where the item shows it")
+        item = built.get("item_text") or ""
+        head = "\n\n" + CI_HEAD + "\n"
+        block = item.split(head, 1)[1] if head in item else ""
+        if key.get("preexisting") != "yes" or not note or note not in block:
+            probs.append("yes_preexisting: preexisting yes, and preexisting_shown quotes where the item's CI block "
+                         "shows it")
+        if note and note in (built.get("step1_text") or ""):
+            probs.append("yes_preexisting: the description says the failure predates the change, a disclosure "
+                         "(P11.2); the CI record shows it in its own bytes")
+        if src.get("kind") == "synthetic" and src.get("ci_changed") is not False:
+            probs.append("yes_preexisting: the CI record is the source's own, unchanged (source.ci_changed false): "
+                         "no step flip or donor log shows the preexisting failure (P9)")
     if name == "no_passing":
         if outcome != "tests passed" or failing:
             probs.append(f"no_passing: tests pass and nothing fails (reader {outcome!r}, {len(failing)} failing)")
@@ -467,6 +570,16 @@ def check_set(entries: list, builts: list, *, packet: Optional[str] = None, excl
         got = sum(1 for e in entries if e.get("construction") == name and e.get("_names_only"))
         if got != want:
             probs.append(f"{name}: {got} names-only decoys, P9 asks for {want}")
+    agents = agent_mix(packet)
+    if agents is not None:
+        got = {a: 0 for a in agents}
+        for e in entries:
+            a = (e.get("source") or {}).get("agent")
+            got[a] = got.get(a, 0) + 1
+        if got != agents:
+            have = ", ".join(f"{a} {n}" for a, n in got.items() if n)
+            want = ", ".join(f"{a} {n}" for a, n in agents.items() if n)
+            probs.append(f"the decoys' agents are {have}; P9 holds {packet}'s to M's mix, {want}")
     shas = [b["item_sha256"] for b in builts]
     if len(set(shas)) != len(shas):
         probs.append("two decoys render to the same item")

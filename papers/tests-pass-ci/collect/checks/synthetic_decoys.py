@@ -21,6 +21,12 @@ MIX = {"yes_log": 9, "yes_names_only": 2, "no_passing": 2, "no_lint_build": 2}
 MIX_P2 = {"yes_log": 10, "yes_names_only": 1, "no_passing": 0, "no_lint_build": 4}
 NAMES_ONLY = {"no_disclosed": 1, "no_part_beside": 1}
 NAMES_ONLY_P2 = {"no_disclosed": 1, "no_part_beside": 0}
+# P9: P2's decoys hold M's agent mix (29 Claude Code, 1 Cursor), each description with the text P2.1's frame requires of
+# its agent; the fixture's one Cursor decoy is P2's no_lint_build of index 0. Every decoy states its source's description as
+# read (source.body); the fixture writes nothing into it, so its decoys carry their invented bodies unchanged.
+AGENTS_P2 = {"Claude_Code": 29, "Cursor": 1}
+FOOTER = {"Claude_Code": "Generated with [Claude Code](https://claude.com/claude-code)",
+          "Cursor": "[Open in Cursor](https://cursor.com/background-agent?bcId=bc-00000000-example)"}
 
 TOPICS = {
     "P2": ("the pager", "date parsing", "the retry loop", "config loading", "the cache layer", "CSV export",
@@ -92,11 +98,14 @@ def _ci(jobs_checks, statuses=(), logs=None):
             "statuses": [{"context": c, "state": s} for c, s in statuses], "annotations": ann, "logs": logs or {}}
 
 
-def _entry(packet, n, construction, body, ci, key, **extra):
+def _entry(packet, n, construction, body, ci, key, agent="Claude_Code", **extra):
     repo = f"example-org/{packet.lower()}-example-{n // 2}"  # two decoys to a repository at most
+    if packet == "P2":
+        body = body + "\n\n" + FOOTER[agent]
     e = {"construction": construction, "body": body, "ci": ci, "repo": repo,
          "source": {"kind": "synthetic", "pr": f"{repo}#{1000 + n}", "created_at": T0,
-                    "change": "invented for the builder's tests", "ci_changed": False},
+                    "change": "invented for the builder's tests", "ci_changed": False, "body": body,
+                    "agent": agent},
          "key": key}
     e.update(extra)
     return e
@@ -146,7 +155,7 @@ def spec(packet: str = "P2") -> dict:
         lint_c = {"id": 700 + n, "name": "lint", "app": "github-actions", "status": "completed", "conclusion": "failure"}
         j = _test_job(500 + n, "test", "success")
         out.append(_entry(packet, n, "no_lint_build", f"Renamed helpers in {topics[(2 + i) % 15]}. All tests pass.",
-                          _ci([j, (lint, lint_c)]), dict(nc)))
+                          _ci([j, (lint, lint_c)]), dict(nc), agent="Cursor" if i == 0 else "Claude_Code"))
     for i in range(2):
         n += 1
         j = _test_job(500 + n, "test (ubuntu)", "skipped", install="failure")

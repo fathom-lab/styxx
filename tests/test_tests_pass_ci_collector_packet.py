@@ -15,6 +15,7 @@ import hashlib
 import json
 import sys
 import types
+from collections import Counter
 
 import pytest
 
@@ -425,6 +426,13 @@ def test_p2_dry_run_builds_under_the_stand_in_on_a_pre_window_store(tmp_path):
             assert hashlib.sha256(it["item_text"].encode()).hexdigest() == k["item_sha256"]
     rec = json.loads((out / "build_P2.json").read_bytes())
     assert rec["dry_run"] is True and rec["decoys"] == 30
+    # P9: the real items' agents by stratum, beside the decoys' mix (M's)
+    by_stratum = Counter()
+    for k in real:
+        for s in k["strata"]:
+            by_stratum[s] += 1
+    assert {s: sum(c.values()) for s, c in rec["agents_real"].items()} == dict(by_stratum)
+    assert rec["agents_decoys"] == tpc_decoys.agent_mix("P2")
     assert tpc_packet.main(["p2", "--root", str(root), "--decoys", str(dec), "--out", str(out), "--salts", str(salts),
                             "--dry-run"]) == 2
     # a dry run names its own salts folder

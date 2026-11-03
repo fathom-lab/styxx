@@ -1169,8 +1169,10 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
     style beside a real failing test job, or a passing test step turned to failing with an excerpt taken from another
     real failing log of the same runner. Of the 15: 9 with log evidence; 2 with only a failing test-like name
     (`NAMES_ONLY`); 2 STALE by the machine flag (the description written before a later head commit whose tests fail);
-    2 whose failing test the record shows also failing without the change (key `preexisting` = yes, printed per
-    construction, P11.2).
+    2 whose failing test the CI record shows, in its own bytes, also failing without the change (key `preexisting` =
+    yes, printed per construction, P11.2): the decoy quotes where its CI block shows it (`preexisting_shown`), its
+    description does not say so (that would disclose the failure, P11.2), and its record is the source's own, never
+    one a step flip changed (the repair of 2026-11-02: the check had found the quote anywhere in the item).
   - NO, 15, by construction and key: 2 whole-suite claims with passing tests (`NOT_CONTRADICTED`); 2 whole-suite
     claims beside failing lint, formatting, type or build-before-tests jobs only (`NOT_CONTRADICTED`); 2 whole-suite
     claims beside a job named for tests that failed at dependency installation before any test ran
@@ -1192,8 +1194,28 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
     no claim beside `tests failed`, or a claimer beside `tests passed` with a failed job or check
     (`tpc_decoys.P2_COMBINATIONS`); an implied-only description, `no test result` and a passing CI with nothing
     failing are refused.
+  - **P2's agents** (the repair of 2026-11-02): P2's decoys hold M's agent mix, since the decisive count reads
+    candidates of capped M only (§9.2, P7). Of P3.4's 1,292 planned claimers with a CI test result in M, Claude Code
+    holds 1,238 (95.8%), Cursor 39 (3.0%), Devin 13 (1.0%), Codex 2 (0.2%), Copilot and Jules none; the
+    largest-remainder allotment of 30 (`tpc_decoys.agent_mix`) is 29 Claude Code and 1 Cursor (quotas 28.75 and 0.91,
+    every other under 0.31). Each P2 decoy states its source's agent, and its description carries the text P2.1's
+    frame requires of that agent's bodies, which P8.2 replaces by `[agent footer removed]` as in every real Claude
+    Code and Cursor item. P2's real items are not M's alone: top-up candidates of other agents (rows not in M, P7) join
+    them. At P3.4's figures 472 claimers with a CI test result in D lie outside M, and in the development store of
+    2026-10-29 5 of 38 claimers with a CI test result read `tests failed`, so about 62 top-up candidates before the
+    cap, beside about 170 candidates of M and the audits' 200 rows. Their agents (Cursor, Devin, Codex, Copilot) are
+    rarer among the decoys than among P2's real items, which marks some real items as real and no decoy as a decoy,
+    and touches only the agent sets' rates, not k. P2's build record counts its real items' agents by stratum beside
+    the decoys' mix, and the RESULT prints both. Q's and P1's decoys hold no agent mix: their real items are not drawn
+    from M (Q's are the development store's claimers, P1's testreceipt's items).
   - P1's decoys imitate A1 items (2025-like ones carry names-only CI blocks); P2's imitate A2 items.
-- No construction leaves a marker in an item, and no decoy carries a date trace once P8.1's rule has masked it. The
+- No text a construction writes carries a marker word (`tpc_decoys.MARKER`), and no decoy carries a date trace once
+  P8.1's rule has masked it. The marker check reads only what the construction wrote: the lines it inserted into the
+  description and the words it changed, read against the source's description as read (`source.body`), which every
+  decoy states; a real decoy carries it unchanged, and a step flip writes no text (it changes conclusions and carries
+  the donor's real log, annotations and times). A source's own words stay as they are, marker words included, so such
+  a word in an item says nothing of which items are decoys (the repair of 2026-11-02: the check had read each decoy's
+  whole text, refusing any source whose own words held one, so a real item holding one could only be real). The date
   check (`tpc_items.date_traces`) is written apart from the mask: any 10- or 13-digit number that is a Unix time from
   2026-09-01 to the year's end, any name of September to December (or its abbreviation, capitalised or in capitals),
   any `MM/DD` of September or October (the decoy material's months), and anything the mask would still change. A

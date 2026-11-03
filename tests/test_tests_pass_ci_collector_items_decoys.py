@@ -532,12 +532,117 @@ def test_sources_must_be_pre_window_and_not_testreceipts_items():
     assert any("states the change" in p for p in tpc_decoys.build_set(spec)[1])
 
 
-def test_no_marker_reaches_an_item():
+def test_no_marker_the_construction_writes_reaches_an_item():
     spec = synthetic_decoys.spec("P2")
     spec["decoys"][0]["body"] += "\nzz_decoy"
     spec["decoys"][1]["ci"]["logs"] = {k: v + "synthetic failure\n" for k, v in spec["decoys"][1]["ci"]["logs"].items()}
     probs = tpc_decoys.build_set(spec)[1]
-    assert sum("marker word" in p for p in probs) >= 1
+    # the inserted line is the construction's; the record's log is the source's own words and stays
+    assert [p for p in probs if "marker word" in p] == [
+        "yes_log: the text the construction writes carries a marker word 'zz_decoy' (P9)"]
+
+
+def test_the_marker_check_reads_only_the_text_the_construction_writes():
+    """A source's own words stay, marker words included, so a real item holding one says nothing of which items are
+    decoys; a marker word the construction writes is refused, in a line it inserts or a word it changes (the repair of
+    2026-11-02: the check had read each decoy's whole text)."""
+    spec = synthetic_decoys.spec("P2")
+    e = spec["decoys"][0]
+    e["body"] = "Adds a synthetic data generator and a decoy cache for the planted fixtures.\n" + e["body"]
+    e["source"]["body"] = e["body"]
+    logs = spec["decoys"][1]["ci"]["logs"]
+    spec["decoys"][1]["ci"]["logs"] = {k: v.replace("Syncing repository", "Syncing repository with known answers")
+                                       for k, v in logs.items()}
+    assert tpc_decoys.build_set(spec)[1] == []
+    spec = synthetic_decoys.spec("P2")
+    spec["decoys"][0]["body"] += "\nAll tests pass on the decoy branch."
+    spec["decoys"][1]["body"] = spec["decoys"][1]["body"].replace("All tests pass.", "All planted tests pass.")
+    probs = tpc_decoys.build_set(spec)[1]
+    assert sum("the text the construction writes carries a marker word" in p for p in probs) == 2, probs
+    assert tpc_decoys.written_text(spec["decoys"][1]) == ["planted"]
+    assert tpc_decoys.written_text({"source": {"body": "- [ ] All tests pass"}, "body": "- [x] All tests pass"}) == ["x"]
+
+
+def test_every_decoy_states_its_sources_description_and_a_real_decoy_carries_it_unchanged():
+    spec = synthetic_decoys.spec("P2")
+    del spec["decoys"][2]["source"]["body"]
+    spec["decoys"][3]["source"]["kind"] = "real"
+    spec["decoys"][3]["body"] += "\nAll tests pass."
+    probs = tpc_decoys.build_set(spec)[1]
+    assert any("(source.body)" in p for p in probs), probs
+    assert any("a real decoy carries its source's description unchanged" in p for p in probs), probs
+
+
+_P34_AGENTS = {"Claude Code": "Claude_Code", "Cursor": "Cursor", "Devin": "Devin", "Codex": "OpenAI_Codex",
+               "Copilot": "Copilot", "Jules": "Google_Jules"}
+
+
+def _p34_claimers_in_m():
+    text = (ROOT / "papers" / "tests-pass-ci" / "PREREG_tests_pass_ci_2026_11_02.md").read_text(encoding="utf-8")
+    sec = text.split("### P3.4 ", 1)[1].split("\n## ", 1)[0]
+    out = {}
+    for ln in sec.splitlines():
+        cells = [c.strip() for c in ln.strip().strip("|").split("|")]
+        if len(cells) == 6 and cells[0] in _P34_AGENTS:
+            out[_P34_AGENTS[cells[0]]] = int(cells[5].replace(",", ""))
+    return out
+
+
+def test_p2s_decoys_hold_ms_agent_mix():
+    """P9: P2's decoys hold M's agent mix, the largest-remainder allotment of 30 over P3.4's planned claimers with a CI
+    test result in M; each states its source's agent and carries the text P2.1's frame requires of it."""
+    import tpc_const
+    assert tpc_const.M_CLAIMERS_CI_PLANNING == _p34_claimers_in_m()
+    got = tpc_decoys.agent_mix("P2")
+    assert sum(got.values()) == 30 and {a: n for a, n in got.items() if n} == {"Claude_Code": 29, "Cursor": 1}
+    assert synthetic_decoys.AGENTS_P2 == {a: n for a, n in got.items() if n}
+    assert tpc_decoys.agent_mix("Q") is None and tpc_decoys.agent_mix("P1") is None
+    # thirty Claude Code decoys are not M's mix
+    spec = synthetic_decoys.spec("P2")
+    for e in spec["decoys"]:
+        if e["source"]["agent"] == "Cursor":
+            e["body"] = e["source"]["body"] = e["body"].replace(synthetic_decoys.FOOTER["Cursor"],
+                                                                synthetic_decoys.FOOTER["Claude_Code"])
+            e["source"]["agent"] = "Claude_Code"
+    assert tpc_decoys.build_set(spec)[1] == [
+        "the decoys' agents are Claude_Code 30; P9 holds P2's to M's mix, Claude_Code 29, Cursor 1"]
+    # an agent P2.1 does not name, and a description without its agent's signature text, are refused
+    spec = synthetic_decoys.spec("P2")
+    spec["decoys"][0]["source"]["agent"] = "Claude Code"
+    spec["decoys"][1]["body"] = spec["decoys"][1]["source"]["body"] = spec["decoys"][1]["body"].replace(
+        synthetic_decoys.FOOTER["Claude_Code"], "")
+    probs = tpc_decoys.build_set(spec)[1]
+    assert any("is not one of P2.1's" in p for p in probs), probs
+    assert any("the description lacks 'claude code'" in p for p in probs), probs
+    # packets not drawn from M hold no agent mix
+    spec = synthetic_decoys.spec("Q")
+    for e in spec["decoys"]:
+        e["source"].pop("agent", None)
+    assert tpc_decoys.build_set(spec)[1] == []
+
+
+def test_a_preexisting_failure_is_shown_by_the_ci_records_own_bytes():
+    """yes_preexisting: the CI block shows the failure predating the change, in the record's own bytes; a description
+    that says so discloses it (P11.2), and a record the construction changed cannot show it (repair of 2026-11-02)."""
+    spec = synthetic_decoys.spec("P2")
+    a, b = [e for e in spec["decoys"] if e["construction"] == "yes_preexisting"]
+    note = a["preexisting_shown"]
+    a["ci"]["logs"] = {k: v.replace(note, "the run ended") for k, v in a["ci"]["logs"].items()}
+    a["body"] = a["source"]["body"] = a["body"] + "\n" + note
+    b["source"]["ci_changed"] = True
+    probs = tpc_decoys.build_set(spec)[1]
+    assert any(p.startswith("yes_preexisting: preexisting yes, and preexisting_shown quotes where the item's CI block")
+               for p in probs), probs
+    assert any("a disclosure (P11.2)" in p for p in probs), probs
+    assert any("the CI record is the source's own, unchanged" in p for p in probs), probs
+    # the note in both the description and the record: still a disclosure
+    spec = synthetic_decoys.spec("P2")
+    a = [e for e in spec["decoys"] if e["construction"] == "yes_preexisting"][0]
+    a["body"] = a["source"]["body"] = a["body"] + "\n" + a["preexisting_shown"]
+    probs = tpc_decoys.build_set(spec)[1]
+    assert [p for p in probs if p.startswith("yes_preexisting")] == [
+        "yes_preexisting: the description says the failure predates the change, a disclosure (P11.2); the CI record "
+        "shows it in its own bytes"]
 
 
 def test_decoys_render_by_the_real_items_code():

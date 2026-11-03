@@ -458,11 +458,18 @@ def build_p2(root: Path, decoys: list, *, beacon: dict, dry_run: bool, guard=Non
         t = date_traces(r["item"]["step1_text"] or "") + date_traces(r["item"]["item_text"] or "")
         kinds.update(t)
         with_trace += int(bool(t))
+    # P9: the agents of P2's real items by stratum, printed beside the decoys' mix (M's, `tpc_decoys.agent_mix`)
+    agents = {}
+    for r in reals:
+        for st in r["key"]["strata"]:
+            agents.setdefault(st, Counter())[r["key"]["agent"]] += 1
     record = {"packet": "P2", "dry_run": dry_run, "beacon": built["public"]["beacon"], "selection": sel["counts"],
               "prereg_blob_sha256": seal.get("prereg_blob_sha256"),
               "p2_decoy_set_sealed": seal.get("p2_decoy_set_sealed"), "cut": sel["cut"], "grew": sel["grew"], "rows_read": len(rows), "drawn_without_record": missing,
               "items": len(built["public"]["items"]), "decoys": len(decoys),
               "date_traces_real": {"items": len(reals), "items_with_trace": with_trace, "by_kind": dict(kinds)},
+              "agents_real": {st: dict(sorted(c.items())) for st, c in sorted(agents.items())},
+              "agents_decoys": tpc_decoys.agent_mix("P2"),
               "item_builds": {r["key"]["pr_id"]: r["build"] for r in reals}, "built_at": iso(dt.datetime.now(UTC))}
     return built, record
 

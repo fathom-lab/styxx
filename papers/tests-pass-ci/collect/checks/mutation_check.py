@@ -17,7 +17,9 @@ directory is written. Rules 21 to 39 are the packet and decoy builder's, the sea
 answer the open findings of 2026-11-02 (dates, step flips, the shuffle, the seal guard, the signed PREREG, the salts),
 and the last group the second review of 2026-11-02 (P2's shapes, annotations, flips, dates, repository names, reuse
 across packets, the pinned main and the signing commit, the committed digests, and the reviewer's ten surviving
-mutants R1 to R4, R10, R17, R18, R29, R31 and R32).
+mutants R1 to R4, R10, R17, R18, R29, R31 and R32); the last rules answer the repair round of 2026-11-02 that came
+after it (markers read only in the text a construction writes, P2's agent mix, preexisting failures shown by the CI
+record's own bytes).
 
 A rule may name a test file (its fifth field) that runs ahead of the others; every target still runs until one fails, so the hint
 only orders the run and never narrows it.
@@ -253,6 +255,32 @@ M = [
      '        if False:\n            raise ScoreError(f"{lp.name} answers other packet bytes', "score"),
     ("R32 a stand-in packet scored for real", "tpc_score.py",
      '    if public.get("beacon", {}).get("kind") == "stand_in" and not dry_run:', "    if False:", "score"),
+    # the repair round of 2026-11-02 after the second review: markers, agents, preexisting failures
+    ("markers read over the whole item again", "tpc_decoys.py", "    for text in written:\n        m = MARKER.search(text)",
+     '    for text in (built.get("step1_text") or "", built.get("item_text") or ""):\n        m = MARKER.search(text)',
+     "items_decoys"),
+    ("markers the construction writes accepted", "tpc_decoys.py", "    for text in written:\n", "    for text in []:\n",
+     "items_decoys"),
+    ("a real decoy may change its source's description", "tpc_decoys.py",
+     '    elif src.get("kind") == "real" and written:', "    elif False:", "items_decoys"),
+    ("a changed word read as its whole line", "tpc_decoys.py",
+     "            for x, y in zip(a[i1:i2], b[j1:j2]):\n                out += _changed_words(x, y)",
+     "            out += b[j1:j2]", "items_decoys"),
+    ("P2's agent mix unchecked", "tpc_decoys.py", "        if got != agents:", "        if False:", "items_decoys"),
+    ("P2's agent allotment by floors alone", "tpc_decoys.py", "    for a in order[:rest]:", "    for a in order[:0]:",
+     "items_decoys"),
+    ("a P2 decoy's agent signature unchecked", "tpc_decoys.py",
+     '    if need and need not in (entry.get("body") or "").lower():', "    if False:", "items_decoys"),
+    ("a P2 decoy may name no agent", "tpc_decoys.py", "    if agent not in AGENT_ORDER:", "    if False:",
+     "items_decoys"),
+    ("a preexisting note read anywhere in the item", "tpc_decoys.py",
+     '        if key.get("preexisting") != "yes" or not note or note not in block:',
+     '        if key.get("preexisting") != "yes" or not note or note not in item:', "items_decoys"),
+    ("the description may carry the preexisting note", "tpc_decoys.py",
+     '        if note and note in (built.get("step1_text") or ""):', "        if False:", "items_decoys"),
+    ("a changed record may show a preexisting failure", "tpc_decoys.py",
+     '        if src.get("kind") == "synthetic" and src.get("ci_changed") is not False:', "        if False:",
+     "items_decoys"),
 ]
 
 
