@@ -192,6 +192,19 @@ window is read before the freeze; the collector's guard (P21) refuses it by name
   stand-in set broke the draw's own cap; there is exactly one rerun under the capped method; if it fails, nothing is
   sealed and the decision goes to the operator (more reads, or accept the audit result, which is his alone).
 
+  The one rerun under the capped method, on 2026-11-03 by the same builder on this box with no request to GitHub: a
+  fresh trial build of the same spec (`.../sealed/P2/build3/trial2/`, its trial salt under `trials/`; its set bytes
+  equal trial1's) against the same five stores, logs merged the same way and the same 30 sources left out, with
+  `--cap-per-repo 3`. It **passed** P9's bar: 76 items (30 decoys, 46 real stand-ins from 37 repositories, at most 3 a
+  repository; 26 real items left out as sources and 6 by the cap); the logistic model's balanced accuracy held out,
+  0.577 on average over the 20 seeds (accuracy 0.588 against a majority share of 0.605; the depth-2 tree's 0.535),
+  had a permutation p-value of 0.0995 (n = 200), 0.05 or more. The features that alone tell the two apart best are
+  still the CI block's skipped conclusions, characters and lines (a one-split tree's balanced accuracy 0.677, 0.654
+  and 0.615). Its output, `audit_set_trial2_capped.json` beside the spec (sha256
+  `f6919b65ce92bd7b769ed867c5959ac9df780a113bcd3cca297840813157df49`), is released with P2's key. P2's set was then
+  sealed from the same spec with a new salt in the salt folder (P9), its bytes equal to the audited trial build's;
+  its digest fills the lock row at the signing commit (§14).
+
 ### 0.5 Other reads by this file's writer
 
 `AS` §6-§8; `PR-A`; `LJ`; `LENS_research.md` §0-§3; the five scout memos in full; at `M:` the PREREGs of EXTERNAL-1
@@ -1421,7 +1434,9 @@ every decoy's id: 30 of 30 on both dry-run P2 packets, found by the review of 20
   balanced accuracy 0.626, permutation p = 0.0199 with n = 200; output sha256 `174f5bf4...`); the failed run stays
   in the record with its numbers and digest; the reason is that the stand-in set broke the draw's own cap. There is
   exactly one rerun under the capped method, on a fresh trial build; if it fails, nothing is sealed and the decision
-  goes to the operator (more reads, or accept the audit result, which is his alone).
+  goes to the operator (more reads, or accept the audit result, which is his alone). The rerun passed (§0.4: 76
+  items, 30 decoys beside 46 real stand-ins from 37 repositories, at most 3 a repository; balanced accuracy 0.577,
+  permutation p = 0.0995 with n = 200; output sha256 `f6919b65...`), and P2's set was sealed after it.
 - The RESULT prints per packet how many decoys were real and how many synthetic, and each voter's score on each
   construction. Decoy keys are the builder's reading (the lead's decision of 2026-11-02): the builder reads each
   candidate source's description and CI record itself, privately, and writes each key from that reading; no script

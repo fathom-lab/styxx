@@ -354,4 +354,5 @@ stand-ins in item_sha256 order, the lowest N kept (`checks/distinguish_audit.cap
 the same keys as before, so the failed run reproduces byte for byte. Two tests read the rule and its place after the
 sources are left out (`tests/test_tests_pass_ci_collector_items_decoys.py`); the tests-pass-ci tests number 357 (the
 collector's 341 and the PREREG's 16). `checks/` lies outside the collector's combined digest and the mutation check's
-copy, so neither moves.
+copy, so neither moves. The one rerun under the cap passed (PREREG section 0.4: 76 items, 46 real stand-ins, balanced
+0.577, permutation p = 0.0995), and P2's set was sealed after it.
