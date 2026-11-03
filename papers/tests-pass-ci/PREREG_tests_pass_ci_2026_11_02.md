@@ -123,7 +123,7 @@ window is read before the freeze; the collector's guard (P21) refuses it by name
   refused. The token was the lab's, passed in the environment of the one command that ran each read (the runs above
   used the machine's `gh` login). 486 rows read (446 Claude Code, 40 Cursor; the latest opened
   2026-10-29T23:49:37Z), 4 left unread after read errors; the run holding the Cursor rows stopped at the disk floor
-  (P4.3) with 44 of them unread:
+  (P4.3) with 40 of them unread:
   - 04:35:30Z to 04:35:35Z: 7 job logs the disk floor had skipped in the run of 20:01Z, 7 REST log requests (answered
     302) and 7 downloads (answered 200), 3,122,713 response bytes; read log
     `material2/logs/readlog_material2_logs.jsonl`, sha256
