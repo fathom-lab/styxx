@@ -10,12 +10,11 @@
  "anchors": 11,
  "anchors_in_chain": 11,
  "anchors_late": 0,
- "built_at": "2026-11-04T12:36:52Z",
+ "built_at": "2026-11-04T12:47:47Z",
  "continuity": {
-  "added_bytes": null,
-  "extends": false,
-  "previous_commit": "7cd76914c2d1",
-  "rewrite_reason": "publisher correction: the guard read the exhibit capsule URL in prepared.capsule_url as a local path and withheld seq 373 in snapshot 7cd76914; the pattern is fixed and the line is published"
+  "added_bytes": 20198,
+  "extends": true,
+  "previous_commit": "ddcbd02854d2"
  },
  "days": [
   {
@@ -143,7 +142,7 @@
    "allow": 8,
    "anchor_head_seq": null,
    "day": "2026-11-04",
-   "dm": 11,
+   "dm": 17,
    "marked": 0,
    "numerals_bound": 4,
    "numerals_total": 4,
@@ -152,7 +151,7 @@
   }
  ],
  "first_timestamp": "2026-10-24T15:09:56Z",
- "full_file_sha256": "ca3b628b3443c0c01263a4adbad0ab190838db1f64717218904403f64f45d9c6",
+ "full_file_sha256": "87d2692368bec98863b3ebb01977fd7250920b3fc4e866033929b4818a13d52d",
  "gate_sha256_stretches": [
   {
    "first_seq": 1,
@@ -172,33 +171,33 @@
   {
    "first_seq": 135,
    "gate_sha256": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f",
-   "last_seq": 376
+   "last_seq": 388
   }
  ],
  "gate_unavailable": 0,
- "head": "deb19f7d55b4d9a8620dfa8d31991bf01bb1c0169d1a9c039ff0ef5b7be51580",
+ "head": "2bde76db3f278434cb03eed287342e591de911278230099b30f89b8eb8a4a062",
  "kinds": {
   "anchor": 11,
-  "delivered": 175,
-  "send": 175,
+  "delivered": 181,
+  "send": 181,
   "started": 15
  },
  "last_anchor_date": "2026-11-03",
  "last_anchor_head_seq": 336,
- "last_timestamp": "2026-11-04T12:33:08Z",
- "lines": 376,
- "lines_after_last_anchor": 40,
+ "last_timestamp": "2026-11-04T12:47:43Z",
+ "lines": 388,
+ "lines_after_last_anchor": 52,
  "numerals_public_bound": 4,
  "numerals_public_total": 17,
- "operator_dm_lines": 127,
+ "operator_dm_lines": 133,
  "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
  "public_allow": 42,
  "public_marked": 5,
  "public_refused": 1,
  "public_sends": 48,
  "public_would_refuse": 1,
- "published_file_sha256": "b1d60adbd6cc7cdb062f97f10d5e5b605e1388b806241bfa49720f9fcda82b04",
- "published_lines": 371,
+ "published_file_sha256": "707cfb83e09a6fcff5dcdc3513aafef8e3bd5f63e5c2df05e5f46e8d56dc8d74",
+ "published_lines": 383,
  "required_present_true": 0,
  "withheld": {
   "count": 5,
