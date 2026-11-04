@@ -54,16 +54,5 @@
   "kind": "send",
   "reason": "a string field carries an identifier's shape; the line's fields are withheld, its digest published",
   "seq": 351
- },
- {
-  "day": "2026-11-04",
-  "dest_class": "public",
-  "entry_id": "7520b08de22fcda968d1ff08b721201f78eb029ada7a95822b18832ec01492cb",
-  "fields_flagged": [
-   "/prepared/capsule_url"
-  ],
-  "kind": "send",
-  "reason": "a string field carries an identifier's shape; the line's fields are withheld, its digest published",
-  "seq": 373
  }
 ]

@@ -10,11 +10,12 @@
  "anchors": 11,
  "anchors_in_chain": 11,
  "anchors_late": 0,
- "built_at": "2026-11-04T12:35:23Z",
+ "built_at": "2026-11-04T12:36:52Z",
  "continuity": {
-  "added_bytes": 14088,
-  "extends": true,
-  "previous_commit": "39a6d238fd64"
+  "added_bytes": null,
+  "extends": false,
+  "previous_commit": "7cd76914c2d1",
+  "rewrite_reason": "publisher correction: the guard read the exhibit capsule URL in prepared.capsule_url as a local path and withheld seq 373 in snapshot 7cd76914; the pattern is fixed and the line is published"
  },
  "days": [
   {
@@ -196,11 +197,11 @@
  "public_refused": 1,
  "public_sends": 48,
  "public_would_refuse": 1,
- "published_file_sha256": "01ea1b32eaf9c46d083aad496647a1163247bd680763a8f73d90d79779f6f1e1",
- "published_lines": 370,
+ "published_file_sha256": "b1d60adbd6cc7cdb062f97f10d5e5b605e1388b806241bfa49720f9fcda82b04",
+ "published_lines": 371,
  "required_present_true": 0,
  "withheld": {
-  "count": 6,
+  "count": 5,
   "flagged_but_published": [],
   "reason": "a string field carries an identifier's shape; the line's fields are withheld, its digest published",
   "seqs": [
@@ -208,9 +209,8 @@
    131,
    136,
    138,
-   351,
-   373
+   351
   ]
  },
- "withheld_lines": 6
+ "withheld_lines": 5
 }
