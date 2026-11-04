@@ -1,0 +1,41 @@
+{
+ "what_this_is": "...",
+ "minted_by": {
+  "agent": "darkflobi",
+  "agent_id": "main",
+  "runtime": {
+   "gateway": "clawdbot 2026.1.24-3",
+   "model_observed": "anthropic/claude-opus-5-5",
+   "model_configured_primary": "anthropic/claude-opus-5-5",
+   "python": "cpython 3.12.10",
+   "styxx": "styxx 7.50.0 wheel sha256 66744ee588eacfa4 (its styxx/ tree: the pin 3437340b's blobs but _version.py)"
+  },
+  "build": {
+   "SOUL.md": "0f650855a2937ca57371dc7c399218b1bbeeca6b3898576c8e04fc84b2d141f4",
+   "AGENTS.md": "75f57ba70cb4fd50e12c7e8aa2d91c6798ffed9163178cf2051924ecb3db0196",
+   "TOOLS.md": "0679f1f503733938854cfef6e549163b1b1578aed6c9aedb0932371a059c5db8",
+   "skills/styxx-post/SKILL.md": "3e2af0503d21cd665f192714f5b7ad5f80c7ddca0795a8c4f47e3810a8b86c5e",
+   "gate/exhibit_mint.py": "e2dcf38641411e185c9e1eab6b0fb454af21163c27e52611075060144bef9f47",
+   "content_rule": "sha256 over bytes with CRLF read as LF; null when the file could not be read"
+  },
+  "session_id": "9e291e6b-466a-4d22-82f0-14528d6f679c",
+  "session_key": "agent:main:main",
+  "drafted_at": "2026-11-04T12:31:41Z"
+ },
+ "precision": {
+  "accusation_precision": 0.23,
+  "read_from": "papers/closed-model-frontier/external1_adjudication.json#/precision@3437340b9e944644372e41d9fcab735d47e20fa0"
+ },
+ "sample": {
+  "sampled_accusations": 100,
+  "adjudicators_upheld": 23,
+  "read_from": {
+   "sampled_accusations": "papers/closed-model-frontier/external1_adjudication.json#/accusations_scored@3437340b9e944644372e41d9fcab735d47e20fa0",
+   "adjudicators_upheld": "papers/closed-model-frontier/external1_adjudication.json#/accusations_upheld@3437340b9e944644372e41d9fcab735d47e20fa0"
+  }
+ },
+ "post": {
+  "numbers_post_holds": 4,
+  "read_from": "self:count"
+ }
+}
