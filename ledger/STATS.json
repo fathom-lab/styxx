@@ -10,11 +10,11 @@
  "anchors": 11,
  "anchors_in_chain": 11,
  "anchors_late": 0,
- "built_at": "2026-11-04T12:27:23Z",
+ "built_at": "2026-11-04T12:35:23Z",
  "continuity": {
-  "added_bytes": 48638,
+  "added_bytes": 14088,
   "extends": true,
-  "previous_commit": "7ce6776cec2b"
+  "previous_commit": "39a6d238fd64"
  },
  "days": [
   {
@@ -139,19 +139,19 @@
    "would_refuse": 0
   },
   {
-   "allow": 6,
+   "allow": 8,
    "anchor_head_seq": null,
    "day": "2026-11-04",
-   "dm": 8,
+   "dm": 11,
    "marked": 0,
-   "numerals_bound": 0,
-   "numerals_total": 0,
-   "public": 6,
+   "numerals_bound": 4,
+   "numerals_total": 4,
+   "public": 8,
    "would_refuse": 0
   }
  ],
  "first_timestamp": "2026-10-24T15:09:56Z",
- "full_file_sha256": "1e9969bb050030c81fd374b9e6a99899dcef887f54e7c5ec21df54b6b71ac276",
+ "full_file_sha256": "ca3b628b3443c0c01263a4adbad0ab190838db1f64717218904403f64f45d9c6",
  "gate_sha256_stretches": [
   {
    "first_seq": 1,
@@ -171,36 +171,36 @@
   {
    "first_seq": 135,
    "gate_sha256": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f",
-   "last_seq": 366
+   "last_seq": 376
   }
  ],
  "gate_unavailable": 0,
- "head": "00bed21656ba208c360eced431016827cb847729a7a38af9cf2ab6195a88d145",
+ "head": "deb19f7d55b4d9a8620dfa8d31991bf01bb1c0169d1a9c039ff0ef5b7be51580",
  "kinds": {
   "anchor": 11,
-  "delivered": 170,
-  "send": 170,
+  "delivered": 175,
+  "send": 175,
   "started": 15
  },
  "last_anchor_date": "2026-11-03",
  "last_anchor_head_seq": 336,
- "last_timestamp": "2026-11-04T12:25:45Z",
- "lines": 366,
- "lines_after_last_anchor": 30,
- "numerals_public_bound": 0,
- "numerals_public_total": 13,
- "operator_dm_lines": 124,
+ "last_timestamp": "2026-11-04T12:33:08Z",
+ "lines": 376,
+ "lines_after_last_anchor": 40,
+ "numerals_public_bound": 4,
+ "numerals_public_total": 17,
+ "operator_dm_lines": 127,
  "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
- "public_allow": 40,
+ "public_allow": 42,
  "public_marked": 5,
  "public_refused": 1,
- "public_sends": 46,
+ "public_sends": 48,
  "public_would_refuse": 1,
- "published_file_sha256": "d6e9a4cca41dfa6f0027eee72453ee78ea68924e13f4e86122b7104d47fd65a1",
- "published_lines": 361,
+ "published_file_sha256": "01ea1b32eaf9c46d083aad496647a1163247bd680763a8f73d90d79779f6f1e1",
+ "published_lines": 370,
  "required_present_true": 0,
  "withheld": {
-  "count": 5,
+  "count": 6,
   "flagged_but_published": [],
   "reason": "a string field carries an identifier's shape; the line's fields are withheld, its digest published",
   "seqs": [
@@ -208,8 +208,9 @@
    131,
    136,
    138,
-   351
+   351,
+   373
   ]
  },
- "withheld_lines": 5
+ "withheld_lines": 6
 }

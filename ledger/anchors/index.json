@@ -263,20 +263,20 @@
   "unstamped": 0
  },
  "notes": [
-  "stamped 2026-10-24",
-  "stamped 2026-10-25",
-  "stamped 2026-10-26",
-  "stamped 2026-10-27",
-  "stamped 2026-10-28",
-  "stamped 2026-10-29",
-  "stamped 2026-10-30",
-  "stamped 2026-10-31",
-  "stamped 2026-11-01",
-  "stamped 2026-11-02",
-  "stamped 2026-11-03"
+  "upgrade 2026-10-24: pending",
+  "upgrade 2026-10-25: pending",
+  "upgrade 2026-10-26: pending",
+  "upgrade 2026-10-27: pending",
+  "upgrade 2026-10-28: pending",
+  "upgrade 2026-10-29: pending",
+  "upgrade 2026-10-30: pending",
+  "upgrade 2026-10-31: pending",
+  "upgrade 2026-11-01: pending",
+  "upgrade 2026-11-02: pending",
+  "upgrade 2026-11-03: pending"
  ],
  "schema": "darkflobi.exhibit/anchors/v0",
  "verify": "node ots-cli.js verify anchors/<date>.txt.ots (javascript-opentimestamps), ots verify (python opentimestamps-client) against a Bitcoin node, or opentimestamps.org",
  "what_a_proof_attests": "that the bytes of the .txt file existed before the Bitcoin block named in the proof; not that the post was on Telegram at that time, nor that the head covers every send",
- "written_at": "2026-11-04T12:27:48Z"
+ "written_at": "2026-11-04T12:35:51Z"
 }
