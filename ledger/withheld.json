@@ -42,5 +42,17 @@
   "kind": "send",
   "reason": "a string field carries an identifier's shape; the line's fields are withheld, its digest published",
   "seq": 138
+ },
+ {
+  "day": "2026-11-04",
+  "dest_class": "operator_dm",
+  "entry_id": "9df5de45ad78cf6aaea001aedd737f16803e734aa96d9762d0305596d70f092b",
+  "fields_flagged": [
+   "/numerals/unbound_tokens[0]",
+   "/numerals/unbound_tokens[9]"
+  ],
+  "kind": "send",
+  "reason": "a string field carries an identifier's shape; the line's fields are withheld, its digest published",
+  "seq": 351
  }
 ]

@@ -1,8 +1,21 @@
 {
- "anchors": 10,
- "anchors_in_chain": 10,
+ "anchor_stamps": {
+  "anchors": 11,
+  "bitcoin": 0,
+  "mismatch": 0,
+  "pending": 11,
+  "unknown": 0,
+  "unstamped": 0
+ },
+ "anchors": 11,
+ "anchors_in_chain": 11,
  "anchors_late": 0,
- "built_at": "2026-11-04T03:28:32Z",
+ "built_at": "2026-11-04T12:27:23Z",
+ "continuity": {
+  "added_bytes": 48638,
+  "extends": true,
+  "previous_commit": "7ce6776cec2b"
+ },
  "days": [
   {
    "allow": 15,
@@ -116,7 +129,7 @@
   },
   {
    "allow": 1,
-   "anchor_head_seq": null,
+   "anchor_head_seq": 336,
    "day": "2026-11-03",
    "dm": 8,
    "marked": 0,
@@ -124,10 +137,21 @@
    "numerals_total": 0,
    "public": 1,
    "would_refuse": 0
+  },
+  {
+   "allow": 6,
+   "anchor_head_seq": null,
+   "day": "2026-11-04",
+   "dm": 8,
+   "marked": 0,
+   "numerals_bound": 0,
+   "numerals_total": 0,
+   "public": 6,
+   "would_refuse": 0
   }
  ],
  "first_timestamp": "2026-10-24T15:09:56Z",
- "full_file_sha256": "9bd06cedf07f763b2d5ae9229a50e274a6aa890c65826e6abe62e1bdef2020a8",
+ "full_file_sha256": "1e9969bb050030c81fd374b9e6a99899dcef887f54e7c5ec21df54b6b71ac276",
  "gate_sha256_stretches": [
   {
    "first_seq": 1,
@@ -147,44 +171,45 @@
   {
    "first_seq": 135,
    "gate_sha256": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f",
-   "last_seq": 336
+   "last_seq": 366
   }
  ],
  "gate_unavailable": 0,
- "head": "afd04344e6d37d8db746e2f8147791d25bc0be1ec68f3826a4191679f26ca4fe",
+ "head": "00bed21656ba208c360eced431016827cb847729a7a38af9cf2ab6195a88d145",
  "kinds": {
-  "anchor": 10,
-  "delivered": 156,
-  "send": 156,
-  "started": 14
+  "anchor": 11,
+  "delivered": 170,
+  "send": 170,
+  "started": 15
  },
- "last_anchor_date": "2026-11-02",
- "last_anchor_head_seq": 316,
- "last_timestamp": "2026-11-04T02:44:38Z",
- "lines": 336,
- "lines_after_last_anchor": 20,
+ "last_anchor_date": "2026-11-03",
+ "last_anchor_head_seq": 336,
+ "last_timestamp": "2026-11-04T12:25:45Z",
+ "lines": 366,
+ "lines_after_last_anchor": 30,
  "numerals_public_bound": 0,
  "numerals_public_total": 13,
- "operator_dm_lines": 116,
+ "operator_dm_lines": 124,
  "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
- "public_allow": 34,
+ "public_allow": 40,
  "public_marked": 5,
  "public_refused": 1,
- "public_sends": 40,
+ "public_sends": 46,
  "public_would_refuse": 1,
- "published_file_sha256": "bb0b8c2fd5b9b853d70b2efd21d67c79274b410dab552c4d98c56c4f94416e74",
- "published_lines": 332,
+ "published_file_sha256": "d6e9a4cca41dfa6f0027eee72453ee78ea68924e13f4e86122b7104d47fd65a1",
+ "published_lines": 361,
  "required_present_true": 0,
  "withheld": {
-  "count": 4,
+  "count": 5,
   "flagged_but_published": [],
   "reason": "a string field carries an identifier's shape; the line's fields are withheld, its digest published",
   "seqs": [
    129,
    131,
    136,
-   138
+   138,
+   351
   ]
  },
- "withheld_lines": 4
+ "withheld_lines": 5
 }

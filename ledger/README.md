@@ -10,6 +10,15 @@ the gate's ledger (`darkflobi.gate/entry/v0`) as bytes, and a page that re-deriv
 - `verify.js` — the verifier, a second implementation of the gate's ledger.py chain check (browser and node);
   `check_ledger.cjs` — the node command.
 - `STATS.json` — counts at build time; the page computes its own from the bytes.
+- `SNAPSHOTS.jsonl` — one line per published snapshot (built_at, lines, head, digests, the commit it
+  extends). snapshots are append-only: each commit's `ledger.jsonl` extends the previous one byte for byte,
+  so `git log -p ledger/ledger.jsonl` on this branch shows additions only; the builder refuses a rewrite.
+- `anchors/<date>.txt` — the exact bytes of each day's post at t.me/DFledger; `anchors/<date>.txt.ots` — its
+  OpenTimestamps proof (the file's sha256, committed into Bitcoin by the public calendars);
+  `anchors/index.json` — each proof's state (pending, or the Bitcoin block height). a proof attests that the
+  bytes existed before that block: nothing the lab controls can move that. it does not attest where the
+  post appeared or that the head covers every send, and a stamp made on a later day for an earlier post
+  shows only that the post existed by the stamping day.
 
 check it without the page (node 20+, no packages):
 
@@ -17,7 +26,7 @@ check it without the page (node 20+, no packages):
 
 the anchor texts are the posts at https://t.me/DFledger, one per day at 00:00 new york time.
 
-withheld lines: 4 of 336 (seqs 129, 131, 136, 138). each is an operator-dm line whose numeral-token field carried a
+withheld lines: 5 of 366 (seqs 129, 131, 136, 138, 351). each is an operator-dm line whose numeral-token field carried a
 ten-digit identifier typed in a message; the ledger's header promises never message text or chat ids, and
 the publisher keeps that promise where the gate's own field would not. a withheld line's digest is in
 `withheld.json` (re-derived by the lab over the full file, not by you); the chain is bridged through it,
@@ -29,4 +38,4 @@ cannot show: that every send got a line (the census at the window's close reads 
 any message said. the gate runs in shadow: every line reads `required_present: false`; a would-refuse is what
 it would have blocked, and it blocked nothing. nothing here is signed and nothing here says a post is true.
 
-built 2026-11-04T03:28:32Z from head `afd04344e6d37d8d` (336 lines, 10 anchors through 2026-11-02); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.
+built 2026-11-04T12:27:23Z from head `00bed21656ba208c` (366 lines, 11 anchors through 2026-11-03); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.
