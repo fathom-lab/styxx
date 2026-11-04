@@ -1,0 +1,141 @@
+{
+ "schema": "darkflobi.exhibit/mint/v0",
+ "started_at": "2026-11-04T12:31:51Z",
+ "date": "2026-11-04",
+ "slug": "outside-adjudication",
+ "post_dir": "posts/2026-11-04_outside-adjudication",
+ "branch": "exhibit",
+ "instrument": {
+  "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
+  "source": "wheel styxx-7.50.0-py3-none-any.whl styxx/ tree; scripts/ from snapshot_3437340b",
+  "wheel_sha256": "66744ee588eacfa413fe036b37fc4f7b171d15a86d2c0c31ceacf6f24a0560b3",
+  "styxx_version_string": "7.50.0",
+  "pin_version_string": "7.49.0",
+  "modules": [
+   [
+    "styxx/certify.py",
+    "c448ded108df0f54de7a68cb0755fd31f574e21d4ace8c6b6b4b427cd8e9ea59"
+   ],
+   [
+    "styxx/capsule.py",
+    "54f472d863776f28225440c72ad2b84b8e40eb1218dbd4993f5578109b42c9b3"
+   ],
+   [
+    "styxx/receipt_binding.py",
+    "f3436793167cd2f1e24b8eca933b307363c911d24e9cb0cbb4eb431be99cebbb"
+   ],
+   [
+    "styxx/charon.py",
+    "5b5bce0d4f008dd1b3fae1d08277f3d05c108a73aeb564218ba9449d903d55af"
+   ],
+   [
+    "scripts/surface_lint.py",
+    "27551f2385b3edc71fbfc93af0f81df2bc48d68d381fa13c3643dec3247c83f9"
+   ]
+  ],
+  "tree_list": "pin_tree_3437340b.txt",
+  "tree_list_sha256": "65afebdc0d795189f49e75fa5e4a24799a3c9af99c7ee693f59508d3106b292d",
+  "isolation": "python -I -B -X utf8 -X pycache_prefix=<empty folder>; the instrument root after the standard library, before site-packages; STYXX_* and PYTHON* variables dropped",
+  "runtime": {
+   "implementation": "cpython",
+   "version": "3.12.10",
+   "unicode": "15.0.0"
+  }
+ },
+ "warnings": [],
+ "document_sha256": "e25a765a3cc41a7dca5e693da0448d0116edb4b4558fb449a3e8da5cc648add5",
+ "receipts_sha256": "8ed7a3faed3a7071b98969bcf446c8f1121dfea2497b54d41b43b3a35c78888b",
+ "exhibit_head_before": "5e303673b49d3f9d3eef3ac8231144be72b7dd95",
+ "minted_by_sha256": "83db890b724d953ea9dae3282b3af19054a8fba074a540b77000e46b9f736f67",
+ "mint_script_hash_matches_identity": true,
+ "instrument_ran": true,
+ "stray_files": 0,
+ "receipts_commit": "made by the mint",
+ "certify_exit": 0,
+ "certify": {
+  "verdict": "OATH-HELD",
+  "counts": {
+   "VERIFIED": 4,
+   "ABSTAIN": 0,
+   "UNGROUNDED": 0
+  },
+  "uncovered": 0,
+  "ledger_len": 4,
+  "verifier_sha256": "c448ded108df0f54de7a68cb0755fd31f574e21d4ace8c6b6b4b427cd8e9ea59",
+  "document_sha256": "e25a765a3cc41a7dca5e693da0448d0116edb4b4558fb449a3e8da5cc648add5"
+ },
+ "receipt_binding": {
+  "head": "cbefb4bcb4c4aa4bdef1d7fc6e8e1911dde29771",
+  "all_receipts_committed": true,
+  "blob": "fdef6152c9ce4ee36dd21f7c190bb49c77b7f445"
+ },
+ "leaves": {
+  "numeric": 4,
+  "bound_paths": 4,
+  "unbound_numeric_leaves": []
+ },
+ "numerals": 4,
+ "bindings": [
+  {
+   "line": 1,
+   "token": "100",
+   "status": "VERIFIED",
+   "receipt": "sample.sampled_accusations"
+  },
+  {
+   "line": 1,
+   "token": "23",
+   "status": "VERIFIED",
+   "receipt": "sample.adjudicators_upheld"
+  },
+  {
+   "line": 1,
+   "token": "0.23",
+   "status": "VERIFIED",
+   "receipt": "precision.accusation_precision"
+  },
+  {
+   "line": 3,
+   "token": "4",
+   "status": "VERIFIED",
+   "receipt": "post.numbers_post_holds"
+  }
+ ],
+ "footer_install_source": "wheel_check.json",
+ "url": "https://fathom-lab.github.io/styxx/posts/2026-11-04_outside-adjudication/outside-adjudication.capsule.html",
+ "message_sha256": "b0e313e9483e5938ba8f734d78a0148baa7341d8d46c6c1dac9839884b7b42ae",
+ "footer": [
+  "capsule: https://fathom-lab.github.io/styxx/posts/2026-11-04_outside-adjudication/outside-adjudication.capsule.html",
+  "post sha256 e25a765a3cc41a7d · styxx 7.50.0 (pip install styxx==7.50.0; pin 3437340b) · nothing signed; the words are not checked",
+  "the page does not print this digest yet: compare it on a desktop with python -m styxx.capsule verify"
+ ],
+ "message_utf16_units": 695,
+ "limit_utf16_units": 4000,
+ "lint": {
+  "exit": 0,
+  "hits": 0,
+  "allowed": 0,
+  "files_read": 2
+ },
+ "capsule_sha256": "e64883946acf17ed9550c5d867561a440a75ab062a0d407e4e847b198d9604f3",
+ "capsule_bytes": 22591,
+ "verify": {
+  "exit": 0
+ },
+ "mutation_control": {
+  "byte_index": 64,
+  "mutated_document_sha256": "3a91f4bc70326f9641cae140aa327f34abd85c3da988da0191cfea626db081e1",
+  "verify_exit": 1,
+  "reports_failure": true,
+  "mutated_capsule_sha256": "74753d9668a31499b4928c35d31e98252cfa038768cddbb7360fd9aff0a21508"
+ },
+ "refusals": [],
+ "refusal_ids": [],
+ "finished_at": "2026-11-04T12:31:59Z",
+ "charon": {
+  "exit": 0,
+  "log": "charon.exhibit.log.jsonl",
+  "head": "dca94f3fcce522ff243dcf7f91de2a7a47ec466ef351d2469236dae333ebdaf3",
+  "entries": 1
+ }
+}

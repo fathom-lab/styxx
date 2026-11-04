@@ -1,0 +1,7 @@
+the lab’s diff gate was measured on outside pull requests. of 100 accusations it made, adjudicators upheld 23, a precision of 0.23 on that sample. the lab withdrew that accusation class and published the number instead of the claim.
+
+each of its 4 numbers is bound to a receipt in the file beside this post; the words around them are not checked.
+
+capsule: https://fathom-lab.github.io/styxx/posts/2026-11-04_outside-adjudication/outside-adjudication.capsule.html
+post sha256 e25a765a3cc41a7d · styxx 7.50.0 (pip install styxx==7.50.0; pin 3437340b) · nothing signed; the words are not checked
+the page does not print this digest yet: compare it on a desktop with python -m styxx.capsule verify

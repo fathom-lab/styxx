@@ -1,0 +1,5 @@
+VERDICT: OATH-HELD   counts {'VERIFIED': 4, 'ABSTAIN': 0, 'UNGROUNDED': 0}   uncovered 0
+  L1         100  VERIFIED   obliged value-match  sample.sampled_accusations
+  L1          23  VERIFIED   obliged value-match  sample.adjudicators_upheld
+  L1        0.23  VERIFIED   obliged value-match  precision.accusation_precision
+  L3           4  VERIFIED   offered value-match  post.numbers_post_holds

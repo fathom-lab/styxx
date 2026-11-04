@@ -1,0 +1,152 @@
+{
+  "oath": "styxx OATH v0 (numeric-claim certificate)",
+  "prereg": "papers/closed-model-frontier/PREREG_oath_v0_certify_doc_2026_06_09.md",
+  "document": "POST.md",
+  "document_sha256": "e25a765a3cc41a7dca5e693da0448d0116edb4b4558fb449a3e8da5cc648add5",
+  "receipts_sha256": {
+    "POST.receipts.json": "8ed7a3faed3a7071b98969bcf446c8f1121dfea2497b54d41b43b3a35c78888b"
+  },
+  "receipt_binding": {
+    "schema": "styxx-oath/receipt-binding/v1",
+    "content_rule": "sha256 over bytes with CRLF normalised to LF",
+    "head": "cbefb4bcb4c4aa4bdef1d7fc6e8e1911dde29771",
+    "all_receipts_committed": true,
+    "receipts": [
+      {
+        "name": "POST.receipts.json",
+        "path": "posts/2026-11-04_outside-adjudication/POST.receipts.json",
+        "raw_sha256": "8ed7a3faed3a7071b98969bcf446c8f1121dfea2497b54d41b43b3a35c78888b",
+        "content_sha256": "8ed7a3faed3a7071b98969bcf446c8f1121dfea2497b54d41b43b3a35c78888b",
+        "blob": "fdef6152c9ce4ee36dd21f7c190bb49c77b7f445",
+        "committed": true
+      }
+    ]
+  },
+  "verifier_sha256": "c448ded108df0f54de7a68cb0755fd31f574e21d4ace8c6b6b4b427cd8e9ea59",
+  "counts": {
+    "VERIFIED": 4,
+    "ABSTAIN": 0,
+    "UNGROUNDED": 0
+  },
+  "epistemics_summary": {
+    "schema": "styxx-oath/epistemics-summary/v1",
+    "note": "attestation composition folded from this certificate's own ledger; counts which door each token came through; says nothing about whether any token is a true claim or a good one",
+    "by_branch": {
+      "row-ordinal-label": 0,
+      "formula-constant": 0,
+      "spec-or-historical": 0,
+      "notation": 0,
+      "derived": 0,
+      "unbound-field": 0,
+      "value-match": 4,
+      "ulp-neighbour": 0,
+      "obligated-accusation": 0,
+      "silent": 0
+    },
+    "verified": {
+      "total": 4,
+      "derived": {
+        "obligated": 0,
+        "unobligated": 0
+      },
+      "value_match": {
+        "obligated_integer_filter_ran": 2,
+        "obligated_integer_filter_na": 1,
+        "unobligated_integer_filter_ran": 1,
+        "unobligated_integer_filter_na": 0
+      }
+    },
+    "obligated_total": 3,
+    "obligation_sources": {
+      "vocabulary": 3,
+      "n-glued": 0,
+      "range-correlation": 0,
+      "precision": 0,
+      "range-sanity": 0
+    }
+  },
+  "uncovered": 0,
+  "uncovered_items": [],
+  "uncovered_excluded_by_rule": [],
+  "uncovered_policy": {
+    "schema": "styxx-oath/uncovered-band/v1",
+    "note": "numeric spans present in the document text that the extractor never examined \u2014 neither VERIFIED nor ABSTAIN nor UNGROUNDED. Reporting only: _NUM is unchanged and no token's status moves.",
+    "counted_reasons": [
+      "partial-extraction",
+      "trailing-period",
+      "unexplained"
+    ],
+    "excluded_reasons_note": "spans a NAMED rule already decided about (year, md-structure, formula-notation, range-second-half, compound-identifier, unparseable, ordered-list-marker, heading-ordinal); listed in uncovered_excluded_by_rule, not in the band",
+    "excluded_by_rule": 0,
+    "scope_limit": "this band detects ONE extractor blind spot \u2014 a numeric span followed by a period, which _NUM's right guard (?![\\w.]) rejects. It does NOT detect scientific notation, letter-glued numbers, non-ASCII digits, numerals in fenced code, or spans blanked by the sha/date/version scrub. uncovered=0 does NOT mean fully covered."
+  },
+  "verdict": "OATH-HELD",
+  "ungrounded": [],
+  "abstained": [],
+  "ledger": [
+    {
+      "line": 1,
+      "token": "100",
+      "value": 100.0,
+      "decimals": 0,
+      "context": "the lab\u2019s diff gate was measured on outside pull requests. of 100 accusations it made, adjudicators upheld 23, a precision of 0.23 on that sample. the lab withd",
+      "col": 62,
+      "status": "VERIFIED",
+      "receipt_ref": "POST.receipts.json:sample.sampled_accusations",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 1,
+      "token": "23",
+      "value": 23.0,
+      "decimals": 0,
+      "context": "the lab\u2019s diff gate was measured on outside pull requests. of 100 accusations it made, adjudicators upheld 23, a precision of 0.23 on that sample. the lab withd",
+      "col": 107,
+      "status": "VERIFIED",
+      "receipt_ref": "POST.receipts.json:sample.adjudicators_upheld",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": true
+      }
+    },
+    {
+      "line": 1,
+      "token": "0.23",
+      "value": 0.23,
+      "decimals": 2,
+      "context": "the lab\u2019s diff gate was measured on outside pull requests. of 100 accusations it made, adjudicators upheld 23, a precision of 0.23 on that sample. the lab withd",
+      "col": 126,
+      "status": "VERIFIED",
+      "receipt_ref": "POST.receipts.json:precision.accusation_precision",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": true,
+        "obligation_source": "vocabulary",
+        "path_checked": false
+      }
+    },
+    {
+      "line": 3,
+      "token": "4",
+      "value": 4.0,
+      "decimals": 0,
+      "context": "each of its 4 numbers is bound to a receipt in the file beside this post; the words around them are not checked.",
+      "col": 12,
+      "status": "VERIFIED",
+      "receipt_ref": "POST.receipts.json:post.numbers_post_holds",
+      "epistemics": {
+        "branch": "value-match",
+        "obligated": false,
+        "obligation_source": null,
+        "path_checked": true
+      }
+    }
+  ]
+}
