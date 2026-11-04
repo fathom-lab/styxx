@@ -10,11 +10,11 @@
  "anchors": 11,
  "anchors_in_chain": 11,
  "anchors_late": 0,
- "built_at": "2026-11-04T12:47:47Z",
+ "built_at": "2026-11-04T13:42:49Z",
  "continuity": {
-  "added_bytes": 20198,
+  "added_bytes": 37397,
   "extends": true,
-  "previous_commit": "ddcbd02854d2"
+  "previous_commit": "6db83fc0f704"
  },
  "days": [
   {
@@ -142,7 +142,7 @@
    "allow": 8,
    "anchor_head_seq": null,
    "day": "2026-11-04",
-   "dm": 17,
+   "dm": 28,
    "marked": 0,
    "numerals_bound": 4,
    "numerals_total": 4,
@@ -151,7 +151,7 @@
   }
  ],
  "first_timestamp": "2026-10-24T15:09:56Z",
- "full_file_sha256": "87d2692368bec98863b3ebb01977fd7250920b3fc4e866033929b4818a13d52d",
+ "full_file_sha256": "98d342786b9eeccdb849a4d66d83c3076b72f32b375d97f3b3a46d061bd30034",
  "gate_sha256_stretches": [
   {
    "first_seq": 1,
@@ -171,33 +171,33 @@
   {
    "first_seq": 135,
    "gate_sha256": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f",
-   "last_seq": 388
+   "last_seq": 410
   }
  ],
  "gate_unavailable": 0,
- "head": "2bde76db3f278434cb03eed287342e591de911278230099b30f89b8eb8a4a062",
+ "head": "25db4c719300d5ce6c9f10b3adf80b3b572487c9d13bec4919b1ef3ee133f166",
  "kinds": {
   "anchor": 11,
-  "delivered": 181,
-  "send": 181,
+  "delivered": 192,
+  "send": 192,
   "started": 15
  },
  "last_anchor_date": "2026-11-03",
  "last_anchor_head_seq": 336,
- "last_timestamp": "2026-11-04T12:47:43Z",
- "lines": 388,
- "lines_after_last_anchor": 52,
+ "last_timestamp": "2026-11-04T13:08:45Z",
+ "lines": 410,
+ "lines_after_last_anchor": 74,
  "numerals_public_bound": 4,
  "numerals_public_total": 17,
- "operator_dm_lines": 133,
+ "operator_dm_lines": 144,
  "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
  "public_allow": 42,
  "public_marked": 5,
  "public_refused": 1,
  "public_sends": 48,
  "public_would_refuse": 1,
- "published_file_sha256": "707cfb83e09a6fcff5dcdc3513aafef8e3bd5f63e5c2df05e5f46e8d56dc8d74",
- "published_lines": 383,
+ "published_file_sha256": "a2b9b1f1f83791ac5eeba9ea3889b3d8f87b5fe6bb103dcf15628fe6bfc0dc2b",
+ "published_lines": 405,
  "required_present_true": 0,
  "withheld": {
   "count": 5,

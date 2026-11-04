@@ -26,7 +26,7 @@ check it without the page (node 20+, no packages):
 
 the anchor texts are the posts at https://t.me/DFledger, one per day at 00:00 new york time.
 
-withheld lines: 5 of 388 (seqs 129, 131, 136, 138, 351). each is an operator-dm line whose numeral-token field carried a
+withheld lines: 5 of 410 (seqs 129, 131, 136, 138, 351). each is an operator-dm line whose numeral-token field carried a
 ten-digit identifier typed in a message; the ledger's header promises never message text or chat ids, and
 the publisher keeps that promise where the gate's own field would not. a withheld line's digest is in
 `withheld.json` (re-derived by the lab over the full file, not by you); the chain is bridged through it,
@@ -38,4 +38,4 @@ cannot show: that every send got a line (the census at the window's close reads 
 any message said. the gate runs in shadow: every line reads `required_present: false`; a would-refuse is what
 it would have blocked, and it blocked nothing. nothing here is signed and nothing here says a post is true.
 
-built 2026-11-04T12:47:47Z from head `2bde76db3f278434` (388 lines, 11 anchors through 2026-11-03); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.
+built 2026-11-04T13:42:49Z from head `25db4c719300d5ce` (410 lines, 11 anchors through 2026-11-03); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.
