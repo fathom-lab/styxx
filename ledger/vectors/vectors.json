@@ -1,0 +1,217 @@
+{
+ "base": "base.jsonl",
+ "base_head": "fa71a2990439424b54fdcdcf6ab1b6d4d74582cb0eac6755cf24a6f0b195bfd0",
+ "base_lines": 120,
+ "base_sha256": "8029fce0bed73a52067d2e7e3552555d45c81d837187a93b6dd20d48ad8861f1",
+ "cases": [
+  {
+   "anchors": [
+    "gate anchor 2026-10-25 head 76de868c00863ca95bf00a5a5cfa515105fb11138e8b74e7e2102e6b34bc9ff4 seq 116",
+    "gate anchor 2026-10-25 head 76de868c00863ca95bf00a5a5cfa515105fb11138e8b74e7e2102e6b34bc9ff4 seq 110"
+   ],
+   "expect": {
+    "anchors_ok": [
+     true,
+     false
+    ],
+    "bridged": [],
+    "head": "fa71a2990439424b54fdcdcf6ab1b6d4d74582cb0eac6755cf24a6f0b195bfd0",
+    "ok": true,
+    "problem_seqs": [],
+    "problems_without_seq": 0
+   },
+   "input_sha256": "8029fce0bed73a52067d2e7e3552555d45c81d837187a93b6dd20d48ad8861f1",
+   "name": "identity",
+   "transform": {
+    "op": "identity"
+   }
+  },
+  {
+   "expect": {
+    "bridged": [],
+    "head": "fa71a2990439424b54fdcdcf6ab1b6d4d74582cb0eac6755cf24a6f0b195bfd0",
+    "ok": false,
+    "problem_seqs": [
+     22
+    ],
+    "problems_without_seq": 0
+   },
+   "input_sha256": "af6356588a8f159d22c337caf5d2ece53a534a75ee20de4f75f1fe4ea6abd26a",
+   "name": "rewrite-one-field",
+   "transform": {
+    "field": "decision",
+    "op": "set_field",
+    "seq": 22,
+    "value": "allow_marked"
+   }
+  },
+  {
+   "expect": {
+    "bridged": [],
+    "head": "fa71a2990439424b54fdcdcf6ab1b6d4d74582cb0eac6755cf24a6f0b195bfd0",
+    "ok": false,
+    "problem_seqs": [
+     60
+    ],
+    "problems_without_seq": 0
+   },
+   "input_sha256": "dca67085428602971f75df7f8a608b41820e571761d5f1dd5ebf3d58306c132c",
+   "name": "rewrite-prev",
+   "transform": {
+    "field": "prev",
+    "op": "set_field",
+    "seq": 60,
+    "value": "0000000000000000000000000000000000000000000000000000000000000000"
+   }
+  },
+  {
+   "expect": {
+    "bridged": [],
+    "head": "fa71a2990439424b54fdcdcf6ab1b6d4d74582cb0eac6755cf24a6f0b195bfd0",
+    "ok": false,
+    "problem_seqs": [
+     61
+    ],
+    "problems_without_seq": 0
+   },
+   "input_sha256": "3a08de36cee1694b4956f0104023fff8273d58465a15dfcaa3da9d881b7da3d1",
+   "name": "drop-a-line",
+   "transform": {
+    "op": "drop_seq",
+    "seq": 60
+   }
+  },
+  {
+   "anchors": [
+    "gate anchor 2026-10-25 head 76de868c00863ca95bf00a5a5cfa515105fb11138e8b74e7e2102e6b34bc9ff4 seq 116"
+   ],
+   "expect": {
+    "anchors_ok": [
+     true
+    ],
+    "bridged": [
+     60
+    ],
+    "head": "fa71a2990439424b54fdcdcf6ab1b6d4d74582cb0eac6755cf24a6f0b195bfd0",
+    "ok": true,
+    "problem_seqs": [],
+    "problems_without_seq": 0
+   },
+   "input_sha256": "3a08de36cee1694b4956f0104023fff8273d58465a15dfcaa3da9d881b7da3d1",
+   "name": "drop-a-line-withheld",
+   "transform": {
+    "op": "drop_seq",
+    "seq": 60
+   },
+   "withheld": [
+    {
+     "entry_id": "3917a56b3c2d12e4dab69324fd03b09fbdbb1486df8ba1a009c41fe9e176396d",
+     "seq": 60
+    }
+   ]
+  },
+  {
+   "expect": {
+    "bridged": [
+     60
+    ],
+    "head": "fa71a2990439424b54fdcdcf6ab1b6d4d74582cb0eac6755cf24a6f0b195bfd0",
+    "ok": false,
+    "problem_seqs": [
+     61
+    ],
+    "problems_without_seq": 0
+   },
+   "input_sha256": "3a08de36cee1694b4956f0104023fff8273d58465a15dfcaa3da9d881b7da3d1",
+   "name": "drop-a-line-withheld-wrong-digest",
+   "transform": {
+    "op": "drop_seq",
+    "seq": 60
+   },
+   "withheld": [
+    {
+     "entry_id": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+     "seq": 60
+    }
+   ]
+  },
+  {
+   "expect": {
+    "bridged": [],
+    "head": "fa71a2990439424b54fdcdcf6ab1b6d4d74582cb0eac6755cf24a6f0b195bfd0",
+    "ok": false,
+    "problem_seqs": [],
+    "problems_without_seq": 2
+   },
+   "input_sha256": "326d236eef52ad3c666fea3f1ffd558cf28a04744f56ada71e91d5dd3455d49a",
+   "name": "cr-byte",
+   "transform": {
+    "op": "crlf_first_line"
+   }
+  },
+  {
+   "expect": {
+    "bridged": [],
+    "head": "fa71a2990439424b54fdcdcf6ab1b6d4d74582cb0eac6755cf24a6f0b195bfd0",
+    "ok": false,
+    "problem_seqs": [
+     11
+    ],
+    "problems_without_seq": 1
+   },
+   "input_sha256": "8fe05d4565e003e7669d0a2cc42fd90e4b50168b3a541dd1a283e79692526353",
+   "name": "duplicate-key",
+   "transform": {
+    "key": "decision",
+    "op": "dup_key",
+    "seq": 10,
+    "value": "allow"
+   }
+  },
+  {
+   "anchors": [
+    "gate anchor 2026-10-25 head 76de868c00863ca95bf00a5a5cfa515105fb11138e8b74e7e2102e6b34bc9ff4 seq 116"
+   ],
+   "expect": {
+    "anchors_ok": [
+     true
+    ],
+    "bridged": [],
+    "head": "995a69dc0286b702e342a6f6ae244058ac0c78972ff48537bd69619a7d6da183",
+    "ok": true,
+    "problem_seqs": [],
+    "problems_without_seq": 0
+   },
+   "input_sha256": "4779084dcd3c45882a1f1bf0cb84039fc8299f990f50186d3faf08b22dc6f447",
+   "name": "truncate-last-line",
+   "transform": {
+    "op": "truncate_last"
+   }
+  },
+  {
+   "anchors": [
+    "gate anchor 2026-10-25 head 76de868c00863ca95bf00a5a5cfa515105fb11138e8b74e7e2102e6b34bc9ff4 seq 116"
+   ],
+   "expect": {
+    "anchors_ok": [
+     false
+    ],
+    "bridged": [],
+    "head": "e48ec73ef18d3c343fdf8c66acd1f3f99d8acd67f7f68ecabe036e3f3f4334fe",
+    "ok": true,
+    "problem_seqs": [],
+    "problems_without_seq": 0
+   },
+   "input_sha256": "1f58d1905a8bba3a3aa0b5c4fac31e62feecfd65dcf72dea4d00682df49fbb1b",
+   "name": "flip-and-rechain",
+   "transform": {
+    "field": "decision",
+    "op": "set_field_rechain",
+    "seq": 22,
+    "value": "allow_marked"
+   }
+  }
+ ],
+ "note": "apply the transform to base.jsonl, run the verifier with the withheld list and the anchor texts given, and answer as `expect` says; `problem_seqs` are the seqs carrying a problem, `problems_without_seq` the count of problems that name no seq (reading problems); a duplicate-key case expects only ok=false",
+ "schema": "darkflobi.ledger/vectors/v0"
+}
