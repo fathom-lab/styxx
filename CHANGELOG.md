@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased] — conformance: the sworn sets regenerate to their own digests under pytest 9.2
+
+- **`conformance/sworn/gen_vectors.py`; new `tests/test_conformance_pytest_ids.py`.** pytest 9.2.0 names a parametrized case whose string value is over 100 characters by its argument name and index (`inner6`), where every earlier pytest wrote the escaped value. A vector's `sources` are those node ids and sit inside `set_sha256`, so under pytest 9.2.0 the unchanged tests regenerated the sworn set to `30588903…` instead of the committed `2427e106…`: the `gaming`, `lexer` and `receipts` families moved while all 3620 vectors still replayed. CI installs the newest pytest, so `test_the_committed_set_regenerates_to_its_own_digest` failed on every pull request opened after pytest 9.2.0 reached it, on py3.10, py3.11 and py3.12.
+- **The fix.** The committed sets are history and are not regenerated. The recorder now passes `-o parametrize_long_str_id_strategy=legacy` to its pytest child when the installed pytest is 9.2 or later, which restores the names earlier pytest wrote; older pytest gets no new argument. Both sets, `sworn` and `receipt_v2`, regenerate to their committed digests under pytest 9.0.3 and under 9.2.0.
+
 ## [Unreleased] — darkflobi gate: the daily anchor reaches the gateway's own `deliver.js` (F-1)
 
 - **`papers/darkflobi-gate/AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md`, `anchor_route_scan.py`, `anchor_sdk_repro.mjs`, `receipts/anchor_native_2026_10_26.json`.** The two anchors delivered in shadow (days 2026-10-24 and 2026-10-25) have no `payload_kind: anchor` send line: gate.py never judged either text, and the gateway's log holds no hook run near either midnight while, up to a cutoff before the reviews' own test runs, its runs number the same as the 65 send lines. The judged cause, reproduced on the box's dist in another process: clawdbot evaluates plugins through jiti, which rewrites a plugin's `import()` and keeps the modules it evaluates in Node's `require.cache`; once the telegram channel plugin has pulled the plugin SDK through jiti, the plugin's `import()` of `deliver.js` returns jiti's copy, whose hook runner is null, so the anchor leaves ungated in shadow and would be cancelled as `gate_not_registered` under `REQUIRED`.
