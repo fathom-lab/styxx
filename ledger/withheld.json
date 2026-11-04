@@ -1,0 +1,46 @@
+[
+ {
+  "day": "2026-10-26",
+  "dest_class": "operator_dm",
+  "entry_id": "b0254beb5e20a447af0df5d2e2c5ae8092e3f384c39d485ffd5e488796558fa4",
+  "fields_flagged": [
+   "/numerals/unbound_tokens[0]"
+  ],
+  "kind": "send",
+  "reason": "a string field carries an identifier's shape; the line's fields are withheld, its digest published",
+  "seq": 129
+ },
+ {
+  "day": "2026-10-26",
+  "dest_class": "operator_dm",
+  "entry_id": "e58c2b30e314c07e84d334236f0ff41be8754d92a585515eed9a515ed52adbf2",
+  "fields_flagged": [
+   "/numerals/unbound_tokens[0]"
+  ],
+  "kind": "send",
+  "reason": "a string field carries an identifier's shape; the line's fields are withheld, its digest published",
+  "seq": 131
+ },
+ {
+  "day": "2026-10-26",
+  "dest_class": "operator_dm",
+  "entry_id": "67b93b77ce83f544199755def2ad6548ec0bf154517fc3ce4a1c939deeecc8c0",
+  "fields_flagged": [
+   "/numerals/unbound_tokens[0]"
+  ],
+  "kind": "send",
+  "reason": "a string field carries an identifier's shape; the line's fields are withheld, its digest published",
+  "seq": 136
+ },
+ {
+  "day": "2026-10-26",
+  "dest_class": "operator_dm",
+  "entry_id": "752a541b51a6dfa92066dad0e2ebcba376e76423ae0a305837d467268829acfc",
+  "fields_flagged": [
+   "/numerals/unbound_tokens[0]"
+  ],
+  "kind": "send",
+  "reason": "a string field carries an identifier's shape; the line's fields are withheld, its digest published",
+  "seq": 138
+ }
+]
