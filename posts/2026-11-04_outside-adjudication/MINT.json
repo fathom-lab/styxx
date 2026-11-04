@@ -137,5 +137,40 @@
   "log": "charon.exhibit.log.jsonl",
   "head": "dca94f3fcce522ff243dcf7f91de2a7a47ec466ef351d2469236dae333ebdaf3",
   "entries": 1
- }
+ },
+ "exhibit_head": "41dd1861b4d1241731d3780da5661a0ada6d3e4c",
+ "push": {
+  "exit": 0
+ },
+ "poll": {
+  "live": true,
+  "url": "https://fathom-lab.github.io/styxx/posts/2026-11-04_outside-adjudication/outside-adjudication.capsule.html",
+  "attempts": [
+   {
+    "t": 0.156,
+    "status": 404,
+    "note": null
+   },
+   {
+    "t": 5.25,
+    "status": 404,
+    "note": null
+   },
+   {
+    "t": 15.312,
+    "status": 404,
+    "note": null
+   },
+   {
+    "t": 35.5,
+    "status": 200,
+    "note": null
+   }
+  ],
+  "body_sha256": "e64883946acf17ed9550c5d867561a440a75ab062a0d407e4e847b198d9604f3",
+  "elapsed_s": 35.5,
+  "url_equals_footer_url": true
+ },
+ "polled_url_equals_footer_url": true,
+ "outcome": "minted"
 }
