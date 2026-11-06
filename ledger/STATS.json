@@ -1,20 +1,20 @@
 {
  "anchor_stamps": {
-  "anchors": 12,
-  "bitcoin": 11,
+  "anchors": 13,
+  "bitcoin": 12,
   "mismatch": 0,
   "pending": 1,
   "unknown": 0,
   "unstamped": 0
  },
- "anchors": 12,
- "anchors_in_chain": 12,
+ "anchors": 13,
+ "anchors_in_chain": 13,
  "anchors_late": 0,
- "built_at": "2026-11-05T05:30:02Z",
+ "built_at": "2026-11-06T05:30:02Z",
  "continuity": {
-  "added_bytes": 435482,
+  "added_bytes": 64027,
   "extends": true,
-  "previous_commit": "67a86e8cdce4"
+  "previous_commit": "490e678fb38c"
  },
  "days": [
   {
@@ -151,9 +151,20 @@
   },
   {
    "allow": 1,
-   "anchor_head_seq": null,
+   "anchor_head_seq": 704,
    "day": "2026-11-05",
-   "dm": 2,
+   "dm": 17,
+   "marked": 0,
+   "numerals_bound": 0,
+   "numerals_total": 0,
+   "public": 1,
+   "would_refuse": 0
+  },
+  {
+   "allow": 1,
+   "anchor_head_seq": null,
+   "day": "2026-11-06",
+   "dm": 0,
    "marked": 0,
    "numerals_bound": 0,
    "numerals_total": 0,
@@ -162,7 +173,7 @@
   }
  ],
  "first_timestamp": "2026-10-24T15:09:56Z",
- "full_file_sha256": "9aad7907a440acbad3db9da8160f5cc9f9158116656617ff19a2006d18689fc7",
+ "full_file_sha256": "f2845b986fe7c75181052161889001d22568f582429dabad6c1b8edefcc5852b",
  "gate_sha256_stretches": [
   {
    "first_seq": 1,
@@ -187,33 +198,33 @@
   {
    "first_seq": 411,
    "gate_sha256": "f321b1bcde60a62e7be990883d82243e5c5cd2a41fef036381e0a8b24c4a01ff",
-   "last_seq": 671
+   "last_seq": 707
   }
  ],
  "gate_unavailable": 0,
- "head": "5eba9e83ca0c7a112e2f1948f92a2f23ee199ca48dd3900f9ff572eba0113df4",
+ "head": "621554d70dd18059baf4093b0091b5de7fc666e5ad0d7b7da7afeaaf7b9bc31d",
  "kinds": {
-  "anchor": 12,
-  "delivered": 322,
-  "send": 322,
-  "started": 15
+  "anchor": 13,
+  "delivered": 338,
+  "send": 338,
+  "started": 18
  },
- "last_anchor_date": "2026-11-04",
- "last_anchor_head_seq": 664,
- "last_timestamp": "2026-11-05T05:21:48Z",
- "lines": 671,
- "lines_after_last_anchor": 7,
+ "last_anchor_date": "2026-11-05",
+ "last_anchor_head_seq": 704,
+ "last_timestamp": "2026-11-06T05:00:03Z",
+ "lines": 707,
+ "lines_after_last_anchor": 3,
  "numerals_public_bound": 4,
  "numerals_public_total": 17,
- "operator_dm_lines": 271,
+ "operator_dm_lines": 286,
  "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
- "public_allow": 45,
+ "public_allow": 46,
  "public_marked": 5,
  "public_refused": 1,
- "public_sends": 51,
+ "public_sends": 52,
  "public_would_refuse": 1,
- "published_file_sha256": "6482bd9df11a66afacba552b3aaf795d622deeaa22e991145a843c8c7f6b5c6a",
- "published_lines": 666,
+ "published_file_sha256": "ecb2d98462040cb7250d19b5c91496c36cf6acdfd33caec75b13e839ae6a8364",
+ "published_lines": 702,
  "required_present_true": 0,
  "withheld": {
   "count": 5,
