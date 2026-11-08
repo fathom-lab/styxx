@@ -943,16 +943,75 @@ folder read without these eight lines clashes on eight paths [R, `RC8:` `lock_ch
 
 Filled by the lead after the move, one commit, nothing above this heading edited.
 
-- the operator's go: _blank_
-- the move's UTC time, the gateway's stop and start, and the 26 files' times and digests: _blank_
-- `gate_sha256` after the move, re-derived from the box both ways, and its file count: _blank_ (the candidate
-  `7249a8f8…`, 21 files, item 8)
-- the seq of the earliest line of each kind carrying it (`started`, `send`, `delivered`, and the earliest
-  `payload_kind: anchor` send), the earliest v1 send line, and the process name of the stretch's opening line (the
-  restarted gateway's expected, item 8): _blank_
-- every line written after the move carrying another digest (the six intermediates of item 8 among them), by seq:
-  _none expected_
-- v0 send lines after the earliest v1 line, by seq (`v0_after_earliest_v1`, item 5): _none expected_
-- the in-place readings (the plugin harness, the gate's suite, the strict check with every amendment file, the same
-  with the PREREG alone, the re-derive): _blank_
-- the commit of this addendum, and its UTC time: _blank_
+- the operator's go: Flobi, in chat, 2026-11-08 (about 23:40Z): "Yeah let's do this", answering the lead's question "Go for the
+  substrate sitting tonight, the four points as built, gateway down about twenty minutes?" — (h) the move, with (j) the 300 s
+  bound, (l) `chain_index` on the line and (m) the open-attempt reading, each as built. His standing words earlier the same
+  day: "I trust your judgement for our ultimate success" and "Push let's go it's time to shine".
+- the move's UTC time, the gateway's stop and start, and the 26 files' times and digests: `apply_substrate_move.py --apply`
+  started 2026-11-08T22:50:27Z, renames at 22:50:29Z (the record: `receipts/substrate_move_2026_11_08.json`, sha256
+  `70c8a7723d7ace41…`; before-snapshot `apply/before_2026-11-08T225027Z/` on the box). The gateway: the pm2 watchdog paused 22:49:35Z;
+  `Stop-ScheduledTask 'Clawdbot Gateway'` at 22:49:46Z left the server process and its gateway-resilience wrapper listening
+  on 18789, both stopped by process at 22:50:06Z (nothing on the port after); the dry run then read 26 rows OK and the box's
+  digest `f321b1bc…` over 20 files; `Start-ScheduledTask` at 22:50:46Z, the port listening by 22:51:04Z, the watchdog
+  resumed; downtime about 80 s. The 26 files, in the table's order:
+
+| # | path | sha256 | bytes | written (UTC) | before |
+|---|---|---|---|---|---|
+| 1 | `W:gate/tests/fixtures/gate_v0_25d53fd6/gate.py` | `25d53fd6aa5e7604…` | 87547 | 2026-11-08T22:50:27Z | new |
+| 2 | `W:gate/tests/fixtures/gate_v0_25d53fd6/gate_verify.py` | `f4b19c9428cfc73f…` | 27204 | 2026-11-08T22:50:27Z | new |
+| 3 | `W:gate/tests/fixtures/gate_v0_25d53fd6/helpers/numerals.py` | `6e56ef95554522b3…` | 4928 | 2026-11-08T22:50:27Z | new |
+| 4 | `W:gate/tests/fixtures/gate_v0_25d53fd6/ledger.py` | `dfdecee0c37ca183…` | 27202 | 2026-11-08T22:50:27Z | new |
+| 5 | `W:gate/tests/fixtures/gate_v0_4416692c/gate.py` | `4416692cfc983dbb…` | 95482 | 2026-11-08T22:50:27Z | new |
+| 6 | `W:gate/tests/fixtures/gate_v0_4416692c/gate_verify.py` | `049d870bcdbf4726…` | 28886 | 2026-11-08T22:50:27Z | new |
+| 7 | `W:gate/tests/fixtures/gate_v0_4416692c/helpers/numerals.py` | `6e56ef95554522b3…` | 4928 | 2026-11-08T22:50:27Z | new |
+| 8 | `W:gate/tests/fixtures/gate_v0_4416692c/ledger.py` | `dfdecee0c37ca183…` | 27202 | 2026-11-08T22:50:27Z | new |
+| 9 | `W:gate/tests/fixtures/gate_v0_c17e3d06/gate.py` | `c17e3d06c52ac929…` | 96086 | 2026-11-08T22:50:27Z | new |
+| 10 | `W:gate/tests/fixtures/gate_v0_c17e3d06/gate_verify.py` | `5ab8454c15918734…` | 29842 | 2026-11-08T22:50:27Z | new |
+| 11 | `W:gate/tests/fixtures/gate_v0_c17e3d06/helpers/numerals.py` | `6e56ef95554522b3…` | 4928 | 2026-11-08T22:50:27Z | new |
+| 12 | `W:gate/tests/fixtures/gate_v0_c17e3d06/ledger.py` | `dfdecee0c37ca183…` | 27202 | 2026-11-08T22:50:27Z | new |
+| 13 | `W:gate/tests/test_substrate.py` | `7dba8b7936cff5b5…` | 88457 | 2026-11-08T22:50:27Z | new |
+| 14 | `W:gate/plugin/tests/stub_gate.py` | `44800d7b687f1bf1…` | 25633 | 2026-11-08T22:50:27Z | `7da1a4db092a…` |
+| 15 | `W:gate/plugin/tests/run_tests.mjs` | `3021b8ce48714382…` | 204365 | 2026-11-08T22:50:27Z | `90ae51c17002…` |
+| 16 | `W:gate/plugin/README.md` | `515ab11d6c8a5fff…` | 33366 | 2026-11-08T22:50:27Z | `49a7dc73dbe7…` |
+| 17 | `W:gate/plugin/clawdbot.plugin.json` | `71bbe2e99449b874…` | 2326 | 2026-11-08T22:50:27Z | `27c2ecd9dafa…` |
+| 18 | `W:gate/plugin/index.js` | `c472d35b6e84a357…` | 99531 | 2026-11-08T22:50:27Z | `e56990f43713…` |
+| 19 | `W:gate/README.md` | `39cd38ee27464f54…` | 28072 | 2026-11-08T22:50:27Z | `54e9a33f5bf4…` |
+| 20 | `W:gate/substrate_split.py` | `77f44bd40100c0f9…` | 9071 | 2026-11-08T22:50:27Z | new |
+| 21 | `W:gate/page.py` | `d1d964efdee9e573…` | 7019 | 2026-11-08T22:50:27Z | `59f1f5eddd86…` |
+| 22 | `W:gate/gate_verify.py` | `90164f2d121feac7…` | 36091 | 2026-11-08T22:50:27Z | `5ab8454c1591…` |
+| 23 | `W:gate/gate.py` | `40586451bf657f6b…` | 121835 | 2026-11-08T22:50:27Z | `c17e3d06c52a…` |
+| 24 | `~/.clawdbot/extensions/styxx-gate/README.md` | `515ab11d6c8a5fff…` | 33366 | 2026-11-08T22:50:27Z | `49a7dc73dbe7…` |
+| 25 | `~/.clawdbot/extensions/styxx-gate/clawdbot.plugin.json` | `71bbe2e99449b874…` | 2326 | 2026-11-08T22:50:27Z | `27c2ecd9dafa…` |
+| 26 | `~/.clawdbot/extensions/styxx-gate/index.js` | `c472d35b6e84a357…` | 99531 | 2026-11-08T22:50:27Z | `e56990f43713…` |
+
+- `gate_sha256` after the move, re-derived from the box both ways, and its file count:
+  `7249a8f86a586ae0e6ebb8b3d362f2cb1820c61e0c57f110c09b51e5ed149962` over 21 files — by `apply_substrate_move.py`
+  (`gate_sha256_reads_candidate: true`) and by `rederive_gate_sha256.py` (MATCH, 21 files, 22:51Z; the tool labels the digest
+  UNKNOWN beside the MATCH, its KNOWN list stopping at the fourth stretch), and carried by the ledger's own line 735.
+- the seq of the earliest line of each kind carrying it, the earliest v1 send line, and the process name of the stretch's
+  opening line: `started` seq 735 (2026-11-08T22:51:06Z, process `gateway`: the opening line); `send` seq 736
+  (22:56:58Z, operator dm, `gate_schema` `darkflobi.gate/send/v1`, decision allow, finding clean; `substrate`: provider
+  `local`, model `qwen2.5-3b-instruct`, api `openai-completions`, `chain_index` 3, `fallback_from` [], source
+  `session_store_by_chat`, `read_age_s` 4, gateway `clawdbot` 2026.1.24-3 commit `885167dd…`; `subject_digest`
+  `d88caaaa9c8824d6…`); `delivered` seq 737 (22:56:59Z); the earliest `payload_kind: anchor` send: none yet at the time of
+  this commit (the next anchor posts 2026-11-09T05:00Z). The earliest v1 send line is seq 736. Observation, not a verdict:
+  that line's substrate names the local fallback model; the gateway's log at the time reads an Anthropic auth profile in a
+  billing lockout, so the first live reading of the field is a fallback the agent's own reply also marked.
+- every line written after the move carrying another digest (the six intermediates of item 8 among them), by seq: none
+  (seqs 735-737 all carry `7249a8f8…`, read 2026-11-08T23:15Z).
+- v0 send lines after the earliest v1 line, by seq (`v0_after_earliest_v1`, item 5): none (the replay's count 0).
+- the in-place readings: the plugin harness `node plugin/tests/run_tests.mjs` in `W:gate` → 111 passed, 0 failed
+  (22:54:02Z); the gate's suite `py -3.12 -B -m pytest tests -q -p no:cacheprovider` in `W:gate` → 331 passed, 12 subtests
+  passed (923 s, 22:54-23:09Z); the strict check with every amendment file (the eight) → rows 102, changed 0, built since 0,
+  absent 0, unreadable 0, unlocked 0, bytecode 0 (strict), rc 0, fifteen SUPERSEDED (22:51Z, and again 23:16Z after the
+  suite); the same with the PREREG alone → rows 80, changed 16, built since 1, absent 0, unreadable 0, unlocked 22, bytecode 0,
+  rc 1 (the moved and the new files read against the PREREG's own rows, as they must); the box-named repository tests
+  (`STYXX_GATE_W_ROOT=C:/Users/heyzo/clawd`) → 50 passed, none skipped; the re-derive `rederive_gate_sha256.py --expect
+  7249a8f8…` → MATCH, 21 files; the live replay `gate_verify.py --rederive` over the live log (737 lines,
+  `STYXX_GATE_VERIFY_HOME` under the work folder) → chain re-derives, head `5181669aabf3…`; send lines by schema v0 349,
+  v1 1, other 0; earliest v1 line seq 736, v0 send lines after it 0; SAME 349, SAME_UNDER_SKEW 0, UNAVAILABLE_THEN 0, DRIFT 1
+  (seq 46, the count rule's standing reading), SKEW 0, UNRESOLVED 0, TAMPER 0; rc 1 from the DRIFT. Four `.pyc` files the
+  harness's own fixtures plant under `plugin/tests/_tmp/` were removed after it; none elsewhere under `W:gate`. The
+  readings' files are indexed, with their sha256, in `receipts/substrate_sitting_2026_11_08.json`.
+- the commit of this addendum, and its UTC time: the commit that carries this text, on `papers/darkflobi-gate-substrate-v2`,
+  2026-11-08 (about 23:25Z); its hash is the one the pull request shows for this file.

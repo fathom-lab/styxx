@@ -1,0 +1,62 @@
+{
+ "amendment": "AMENDMENT_darkflobi_gate_substrate_2026_11_08.md",
+ "move_record": "receipts/substrate_move_2026_11_08.json",
+ "move_record_sha256": "70c8a7723d7ace410c8fbd8c2f0cf3e747176383c47b95cc5a4d2b04de787eae",
+ "readings": {
+  "step10_harness_in_place.txt": {
+   "bytes": 21170,
+   "sha256": "7dd83b5ffef276535d279e2b8feeb07567a8a1040bc762865c7e7234b091a883"
+  },
+  "step11_suite_in_place.txt": {
+   "bytes": 446,
+   "sha256": "b76b26af9d265a4c496b4f77f3fcd265bb7d8f3f8b2bb321b923d81428c51a15"
+  },
+  "step12_lock_check_eight.txt": {
+   "bytes": 15908,
+   "sha256": "4b51b47227456273a1f620298ae6e5610cad66afd2a4e49aecefb8f0f3b70291"
+  },
+  "step12_lock_check_eight_after_suite.txt": {
+   "bytes": 15908,
+   "sha256": "4b51b47227456273a1f620298ae6e5610cad66afd2a4e49aecefb8f0f3b70291"
+  },
+  "step12_lock_check_prereg_alone.txt": {
+   "bytes": 9730,
+   "sha256": "2360822fd7c57505ae7bd1fe4584be599a3faf09ba5dd9e3c426ec138c8c69b8"
+  },
+  "step12_repo_tests_box_named.txt": {
+   "bytes": 102,
+   "sha256": "84363dae525b258b783258e1ac89bdd6838e6ea0ef542caf1cc935c142e7c3bd"
+  },
+  "step13_live_replay.json": {
+   "bytes": 42933,
+   "sha256": "1f09ecca065baf1811bf7a3f4fdbdb09b0b5bb1fb20b2a33636561e994a980a2"
+  },
+  "step13_live_replay.txt": {
+   "bytes": 323,
+   "sha256": "91f1af3b8f415f516ac54a70ddd44101930a3ed9354aea693cb12a82d8947e0f"
+  },
+  "step13b_live_replay.json": {
+   "bytes": 43045,
+   "sha256": "3b51a61e3d4fd88c21fec1e8421adc77987c005c6ba7d1ac7c8f84d3e1e13194"
+  },
+  "step13b_live_replay.txt": {
+   "bytes": 322,
+   "sha256": "5136fa760369e1defdfa8e121a3431043f60c69a5cd6036a25fdbde65911acfc"
+  },
+  "step9_rederive_digest.txt": {
+   "bytes": 459,
+   "sha256": "c454721232c8c620bb9b1bb858eb352e93529141123303a217bf4d76c07247ed"
+  }
+ },
+ "readings_folder": "wt/_substrate_2026_11_08/sitting_readings/ (the box)",
+ "schema": "darkflobi.gate/sitting-readings/v0",
+ "summary": {
+  "harness": "111 passed, 0 failed (2026-11-08T22:54:02Z)",
+  "prereg_alone": "rows 80, changed 16, built since 1, absent 0, unreadable 0, unlocked 22, bytecode 0 (strict); rc 1",
+  "rederive_digest": "7249a8f86a586ae0e6ebb8b3d362f2cb1820c61e0c57f110c09b51e5ed149962 over 21 files: MATCH",
+  "replay": "737 lines, head 5181669aabf3, chain re-derives; v0 349, v1 1, other 0; earliest v1 seq 736, v0 after 0; SAME 349, DRIFT 1 (seq 46), SKEW 0, UNRESOLVED 0, TAMPER 0; rc 1 from the DRIFT",
+  "repo_tests_box_named": "50 passed",
+  "strict_eight": "rows 102, changed 0, built since 0, absent 0, unreadable 0, unlocked 0, bytecode 0 (strict); 15 SUPERSEDED; rc 0 (22:51Z and 23:16Z)",
+  "suite": "331 passed, 12 subtests passed in 923.33s (22:54-23:09Z)"
+ }
+}
