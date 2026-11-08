@@ -278,8 +278,8 @@
   },
   {
    "anchor_line_seq": 705,
-   "bitcoin_seen_at": null,
-   "block": null,
+   "bitcoin_seen_at": "2026-11-08T05:30:22Z",
+   "block": 974768,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
@@ -291,29 +291,52 @@
    "head": "be4a89b24fe3b27cc5343acd1d12369dad415c37f550a268aeef186b2a912ca5",
    "late": false,
    "ots": "anchors/2026-11-05.txt.ots",
-   "ots_sha256": "0a38d5680c6ef063cc3b463d86a5062c9c9895c357495c4e8d85bda2ecaecfbb",
+   "ots_sha256": "9f0796c82bfb44ebfbc3a4e4df8f9d61f28d1d7960489e632a5fe9c7a9a5085a",
    "posted_at": "2026-11-06T05:00:01Z",
    "seq": 704,
    "stamped_at": "2026-11-06T05:30:20Z",
-   "status": "pending",
+   "status": "bitcoin",
    "text": "gate anchor 2026-11-05 head be4a89b24fe3b27cc5343acd1d12369dad415c37f550a268aeef186b2a912ca5 seq 704",
    "text_sha256": "ba6169a6c1368e4c28e3ca657c7be23653b7846dd7adc4b45280772810551610"
+  },
+  {
+   "anchor_line_seq": 730,
+   "bitcoin_seen_at": null,
+   "block": null,
+   "calendars": [
+    "https://alice.btc.calendar.opentimestamps.org",
+    "https://bob.btc.calendar.opentimestamps.org",
+    "https://btc.calendar.catallaxy.com",
+    "https://finney.calendar.eternitywall.com"
+   ],
+   "date": "2026-11-07",
+   "file": "anchors/2026-11-07.txt",
+   "head": "62e123dede84ebf90a12e42f55eb94c270e238593d0dd4cbb72b161df3b71e2f",
+   "late": false,
+   "ots": "anchors/2026-11-07.txt.ots",
+   "ots_sha256": "20cb7480b9da0bace700fa725846f5ee7897f8af8a10371fbaaf9542379bed0f",
+   "posted_at": "2026-11-08T05:00:00Z",
+   "seq": 729,
+   "stamped_at": "2026-11-08T05:30:23Z",
+   "status": "pending",
+   "text": "gate anchor 2026-11-07 head 62e123dede84ebf90a12e42f55eb94c270e238593d0dd4cbb72b161df3b71e2f seq 729",
+   "text_sha256": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce"
   }
  ],
  "counts": {
-  "anchors": 13,
-  "bitcoin": 12,
+  "anchors": 14,
+  "bitcoin": 13,
   "mismatch": 0,
   "pending": 1,
   "unknown": 0,
   "unstamped": 0
  },
  "notes": [
-  "upgrade 2026-11-04: bitcoin block 974635",
-  "stamped 2026-11-05"
+  "upgrade 2026-11-05: bitcoin block 974768",
+  "stamped 2026-11-07"
  ],
  "schema": "darkflobi.exhibit/anchors/v0",
  "verify": "node ots-cli.js verify anchors/<date>.txt.ots (javascript-opentimestamps), ots verify (python opentimestamps-client) against a Bitcoin node, or opentimestamps.org",
  "what_a_proof_attests": "that the bytes of the .txt file existed before the Bitcoin block named in the proof; not that the post was on Telegram at that time, nor that the head covers every send",
- "written_at": "2026-11-06T05:30:20Z"
+ "written_at": "2026-11-08T05:30:23Z"
 }
