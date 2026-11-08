@@ -10,12 +10,12 @@
  "anchors": 14,
  "anchors_in_chain": 14,
  "anchors_late": 0,
- "built_at": "2026-11-08T23:42:59Z",
+ "built_at": "2026-11-08T23:50:36Z",
  "checkout_artefacts_restored": [],
  "continuity": {
-  "added_bytes": 18349,
+  "added_bytes": 0,
   "extends": true,
-  "previous_commit": "6b3a98034c86"
+  "previous_commit": "7ab69a4bc8b3"
  },
  "days": [
   {
@@ -347,8 +347,8 @@
    "replaced": 0,
    "shrunk": 0,
    "stray_in_store": 0,
-   "unchanged": 0,
-   "written": 744
+   "unchanged": 744,
+   "written": 0
   },
   "seal": {
    "file": "WITNESS_PREREG.md",

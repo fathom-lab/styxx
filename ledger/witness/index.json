@@ -15599,7 +15599,7 @@
  },
  "publisher": {
   "checked": "the witness states on the page (status, block, header time) are the tail's store as copied at build; the publisher checks each proof's opentimestamps magic and the digest it commits to, and parses nothing further; the page parses no proof and asks no explorer; the proof file is what a stranger checks",
-  "copied_at": "2026-11-08T23:42:59Z",
+  "copied_at": "2026-11-08T23:50:36Z",
   "from": "the live witness store's index.json",
   "proofs": "a published proof's bytes are replaced by their upgraded form on a later build: the commitment never changes, the bytes grow when a calendar's bitcoin attestation is added; nothing under proofs/ is deleted",
   "why": "for a withheld seq the published witness carries no clock finer than the utc day on that seq's record: line_timestamp is blanked and seen_at, stamped_at, upgraded_at are cut to the day, in index.json and in the page's embed; the published ledger shows a withheld line's digest and day only, and the publisher keeps that here. runs.jsonl is the tail's run log, copied whole: a run that stamped a single line names, by the tail's clock, a moment within the batch window of that line's write",

@@ -74,4 +74,4 @@ cannot show: that every send got a line (the census at the window's close reads 
 any message said. the gate runs in shadow: every line reads `required_present: false`; a would-refuse is what
 it would have blocked, and it blocked nothing. nothing here is signed and nothing here says a post is true.
 
-built 2026-11-08T23:42:59Z from head `8afd642915b2a397` (743 lines, 14 anchors through 2026-11-07); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.
+built 2026-11-08T23:50:36Z from head `8afd642915b2a397` (743 lines, 14 anchors through 2026-11-07); the gate's instrument pin `3437340b9e944644372e41d9fcab735d47e20fa0`.
