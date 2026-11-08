@@ -1,0 +1,21 @@
+CAUGHT seal check never raises :: 1 failed, 25 passed in 4.41s
+CAUGHT seal skips the ancestry check :: 1 failed, 89 passed in 11.84s
+CAUGHT seal reads any signature line :: 1 failed, 92 passed in 11.20s
+CAUGHT seal reads the markers anywhere :: 1 failed, 102 passed in 11.25s
+CAUGHT seal ignores TO-FILL rows :: 1 failed, 97 passed in 11.82s
+CAUGHT seal ignores the running code :: 1 failed, 100 passed in 13.49s
+CAUGHT seal takes a future anchor :: 1 failed, 88 passed in 14.80s
+CAUGHT read_row skips the guard :: 1 failed, 25 passed in 6.10s
+CAUGHT batch skips the guard :: 1 failed, 25 passed in 5.95s
+CAUGHT stage_read drops the sealed filter :: 1 failed, 27 passed in 11.63s
+CAUGHT cap by u :: 1 failed, 31 passed in 10.73s
+CAUGHT M uses P_AGENT for all :: 1 failed, 11 passed in 2.33s
+CAUGHT timed_out not mapped :: 1 failed, 45 passed in 13.30s
+CAUGHT slice formula label :: 1 failed in 2.15s
+CAUGHT postfilter dropped :: 1 failed, 14 passed in 5.30s
+CAUGHT au1 logs dropped :: 1 failed, 20 passed in 5.59s
+CAUGHT rule R ignores staleness :: 1 failed, 23 passed in 5.93s
+CAUGHT rule R reads local claims :: 1 failed, 73 passed in 13.76s
+CAUGHT dry run asks for databaseId :: 1 failed, 28 passed in 11.16s
+CAUGHT frame keeps forks :: 1 failed, 7 passed in 2.13s
+20 of 20 caught

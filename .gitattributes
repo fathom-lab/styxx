@@ -197,3 +197,7 @@ papers/closed-model-frontier/NOTE_numeral_reader_v2_2026_10_25.sworn-receipt.jso
 papers/closed-model-frontier/ERRATUM_numeral_reader_v2_2026_10_25.md -text
 papers/closed-model-frontier/ERRATUM_numeral_reader_v2_2026_10_25.sworn.json -text
 papers/closed-model-frontier/ERRATUM_numeral_reader_v2_2026_10_25.sworn-receipt.json -text
+
+# tests-pass-ci (2026-11-02): the PREREG, its forecast and the collector are named by sha256 in the lock table and
+# read by the collector's seal guard; this box has core.autocrlf=true, and a CRLF checkout would change those bytes
+papers/tests-pass-ci/** -text
