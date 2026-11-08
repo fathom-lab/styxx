@@ -84,6 +84,18 @@ that the post existed by the stamping day.
   exhibit branch `git log -p ledger/ledger.jsonl` therefore shows additions only, except where a line says why not.
 - `anchors/<date>.txt`, `anchors/<date>.txt.ots`, `anchors/index.json`: the posts, their proofs, their state.
 
+## 6b. proving one message
+
+A `send` line carries four digests of the message it records: `sent_sha256` (the bytes delivered), `checked_sha256`
+(the text the gate checked), `stripped_sha256` (that text with a minted post's footer removed) and `draft_sha256`
+(the draft as handed to the gate). A reader holding a message's text hashes it (UTF-8, LF) and looks for a send line
+carrying that digest; the line's `seq`, `timestamp`, `decision` and `numerals` are then that message's record, the
+day's posted head fixes the line in the chain, and the head's OpenTimestamps proof fixes it in time. The gate's
+trailer, `[gate: b of n numerals bound · ledger NNNN]`, names the line's seq in the message itself. What a match
+proves: these exact bytes left the gate at that second under that verdict. What it does not prove: who typed them,
+or that they are true. A text that a channel re-rendered (markdown removed, whitespace changed) may not match the
+bytes the gate saw; the page tries a few whitespace variants and the trailer-less form, and says which matched.
+
 ## 7. what this protocol does not do
 
 It does not show that every send got a line: that is a census of the destinations against the ledger, done at a
