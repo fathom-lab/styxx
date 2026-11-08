@@ -1,0 +1,2505 @@
+{
+ "what": "The substrate AMENDMENT (2026-11-02): the readings it cites, each bound to the sha256 of the file that holds it under S27:, RA: or BD:, outside the repository. Names, digests and counts only.",
+ "made_by": "S27:stage3/make_receipt.py",
+ "made_at_utc": "2026-11-03T00:56:09Z",
+ "keys": {
+  "W:": "C:/Users/heyzo/clawd/",
+  "WT:": "W:wt/",
+  "S27:": "WT:_substrate_2026_10_27/",
+  "RA:": "WT:_receipted_agent_2026_10_25/",
+  "BD:": "WT:_darkflobi_gate_2026_10_22/before_d0/"
+ },
+ "amendment": {
+  "file": "papers/darkflobi-gate/AMENDMENT_darkflobi_gate_substrate_2026_11_02.md",
+  "sha256_lf": "e3331d7983fcebcf96c777777be2f63f6cab53a541b7f9eec92534120c6bebbc",
+  "note": "the text this receipt was written beside; the lock checks below read it before its readings and this receipt were final, so their AMENDMENT line may name an earlier digest (its 22 rows and 10 declarations were the same)"
+ },
+ "supersedes": {
+  "commit": "be538fa4acf010201686555fa37e19c39cacf760",
+  "note": "the receipt at be538fa4 bound the stage-3 move table, rehearsal and move scripts; made again in the fix round, their stage-3 bytes are kept here",
+  "files": [
+   {
+    "file": "S27:readings/fix3_2026_11_02/superseded_stage3/substrate_move_table.json",
+    "sha256": "10dca16e3f0cb0b29b44ff661cd095ed652cb4f1b1fa88626b026453832ddbeb",
+    "bytes": 9492
+   },
+   {
+    "file": "S27:readings/fix3_2026_11_02/superseded_stage3/rehearsals.json",
+    "sha256": "a21ee6c75668c4677b774fedb1cc30c2c56d866fcc25ccae209860605ca7884d",
+    "bytes": 18605
+   },
+   {
+    "file": "S27:readings/fix3_2026_11_02/superseded_stage3/apply_substrate_move.py",
+    "sha256": "9c76ed7320dc3fa921995b961267d760da978de8d15c9e86742b0b917c3dee6a",
+    "bytes": 20377
+   },
+   {
+    "file": "S27:readings/fix3_2026_11_02/superseded_stage3/rehearse_substrate_move.py",
+    "sha256": "4991c7c8fddcc7926504b0798fe082fe65d669601a2ee55cf86bcf9d778f9946",
+    "bytes": 13258
+   },
+   {
+    "file": "S27:readings/fix3_2026_11_02/superseded_stage3/make_substrate_move_table.py",
+    "sha256": "8b7942637b5b3fe755f53d8cdaa5aa610c9fb410ca8528ad09071ea6f85d5a76",
+    "bytes": 7955
+   }
+  ],
+  "candidate_then": "e2de6251e2c7f10d9a4014f1149765643dde963197faac84fdcf917eb5f0de4d"
+ },
+ "supersedes_de092f10": {
+  "commit": "de092f10f5bd8ac9f40fa057c81ce89a43eb6972",
+  "note": "the receipt at de092f10 bound the move table and the rehearsal's record of fixer 3's pass; the second pass made both again (the harness and the plugin's README moved), and their earlier bytes are kept here",
+  "files": [
+   {
+    "file": "S27:readings/fix3b_2026_11_02/superseded_fix3/substrate_move_table.json",
+    "sha256": "848dd27fcf828759310ad938f2107d1e21396784c01dd199b62326f9529e3780",
+    "bytes": 9891
+   },
+   {
+    "file": "S27:readings/fix3b_2026_11_02/superseded_fix3/rehearsals.json",
+    "sha256": "64af02747de7d74719455b616004971afd463d5e123f438a3f62c92cacd38dd5",
+    "bytes": 39711
+   }
+  ],
+  "candidate_then": "e9f149553941a94f8425d6eef9da497f4357cf9bac0212be204d2265c8619a55"
+ },
+ "supersedes_cb70eb85": {
+  "commit": "cb70eb85895bcd3643955c056db12596030a0206",
+  "note": "the receipt at cb70eb85 bound the move table and the rehearsal's record of the second pass; the re-review answers made both again (index.js, the harness, both READMEs, gate_verify.py and test_substrate.py moved), and their earlier bytes are kept here",
+  "files": [
+   {
+    "file": "S27:readings/fix4_2026_11_02/superseded_fix3b/substrate_move_table.json",
+    "sha256": "67ba383d07fa85bd18cfe45f2cb0119e85c4859923d244fcb626e1a8a848eee9",
+    "bytes": 9891
+   },
+   {
+    "file": "S27:readings/fix4_2026_11_02/superseded_fix3b/rehearsals.json",
+    "sha256": "daea9d2938c988cd6a16ac70f932902f61afc7a6260392acf2c7565b8ba3f76f",
+    "bytes": 39711
+   }
+  ],
+  "candidate_then": "3a7e89153cf1578ae893ef00967f898a74270b572c3d1bd5cf0143fb5f185530"
+ },
+ "design": {
+  "critic": {
+   "file": "RA:CRITIC.md",
+   "sha256": "5a1758d9b6cd97b923a95f2205f5311029e79847648728e4e3dbe0477348c38e",
+   "bytes": 28955
+  },
+  "draft": {
+   "file": "RA:AMENDMENT_substrate_DRAFT.md",
+   "sha256": "a396ddf931baaf6fee44ad7fe9f2225141d1f049ba4fb3fa74803ecf7c97f975",
+   "bytes": 25001
+  }
+ },
+ "reviews": {
+  "review": {
+   "file": "S27:REVIEW_2026_11_02.md",
+   "sha256": "3fdd23273320f34d3f4bd168ce9c0b9386ef1df0911e7b872b533d0a68ec5169",
+   "bytes": 23751
+  },
+  "probe_store": {
+   "file": "S27:review/substrate_lens/probe_store_out.txt",
+   "sha256": "5821f97c47723150d47d782b9802c4f5c4bfd6c232b0c86591b2a806160580b4",
+   "bytes": 8469
+  },
+  "live_reading": {
+   "file": "S27:review/substrate_lens/live_reading_out.txt",
+   "sha256": "0ba8e980028a685f0859cabc06cb9b748dbed66298e51d7c3a497c89b336d84c",
+   "bytes": 472
+  },
+  "probe_subject": {
+   "file": "S27:review/substrate_lens/probe_subject_out.txt",
+   "sha256": "b6a863df1374e3b8728787273427b6c873ee3066b28675b21ba7013d99dd78be",
+   "bytes": 853
+  },
+  "synth_plugin": {
+   "file": "S27:review/substrate_lens/synth_plugin_out.txt",
+   "sha256": "197fe154019d374126092c9d21645a6400e677bb8cf205bffe05d0993d433b58",
+   "bytes": 1202
+  },
+  "synth_gate": {
+   "file": "S27:review/substrate_lens/synth_gate_out.txt",
+   "sha256": "d52606d88689980eb4f5bf2b281c852980bc0bc3e8c55479324a5f0bebc4f452",
+   "bytes": 2234
+  }
+ },
+ "preflight": {
+  "rehash_live_start": {
+   "file": "S27:readings/fix4_2026_11_02/rehash_live_2026-11-02T232653Z.json",
+   "sha256": "9363b42886cda20c156bae0ec6f0bc876d0be6aa84c79d1f7a458db2f1da6eba",
+   "bytes": 12875,
+   "rows": 46,
+   "differ": 0,
+   "installed_files": 7,
+   "required_present": false,
+   "ledger_lines": 271,
+   "ledger_last_seq": 270,
+   "ledger_last_gate_sha256": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f"
+  },
+  "rehash_live_end": {
+   "file": "S27:readings/fix4_2026_11_02/rehash_live_2026-11-03T005607Z.json",
+   "sha256": "731059ea44edf38f66c5fdd70edf62c78c07b5df2299440f1678827191c89dee",
+   "bytes": 12875,
+   "rows": 46,
+   "differ": 0,
+   "installed_files": 7,
+   "required_present": false,
+   "ledger_lines": 299,
+   "ledger_last_seq": 298,
+   "ledger_last_gate_sha256": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f"
+  },
+  "receipts_live_start": {
+   "file": "S27:readings/fix4_2026_11_02/RECEIPTS_live_1.txt",
+   "sha256": "09b8ece05e14a4417670e4ae65da81d8ba79c4aafeca35c918074341fe893f6d",
+   "bytes": 7360
+  },
+  "receipts_live_end": {
+   "file": "S27:readings/fix4_2026_11_02/RECEIPTS_live_2.txt",
+   "sha256": "b3002fba4d77119f0b73fefe0c2ff9df4b7385eb04f02c13924a139fe7cc6c23",
+   "bytes": 7360
+  },
+  "start_equals_end_but_the_ledger": true,
+  "start_equals_fix3b_end_but_the_ledger": true,
+  "config_line": "clawdbot.json: mtime_ns 1793646875763833700 size 11190 (bytes not read here)",
+  "fix3b_receipts_live_start": {
+   "file": "S27:readings/fix3b_2026_11_02/RECEIPTS_live_1.txt",
+   "sha256": "acc1867dbb78c1eda19af30d15ff5f705f54e22925faea483cfc7a876c2a1cfe",
+   "bytes": 7360
+  },
+  "fix3b_receipts_live_end": {
+   "file": "S27:readings/fix3b_2026_11_02/RECEIPTS_live_2.txt",
+   "sha256": "acc1867dbb78c1eda19af30d15ff5f705f54e22925faea483cfc7a876c2a1cfe",
+   "bytes": 7360
+  },
+  "fix3_receipts_live_start": {
+   "file": "S27:readings/fix3_2026_11_02/RECEIPTS_live_1.txt",
+   "sha256": "8a3ef64cc6b79da94eab813cd2b4970d5c4106058530396e37861646ff1a7e56",
+   "bytes": 7358
+  },
+  "fix3_receipts_live_end": {
+   "file": "S27:readings/fix3_2026_11_02/RECEIPTS_live_2.txt",
+   "sha256": "8a3ef64cc6b79da94eab813cd2b4970d5c4106058530396e37861646ff1a7e56",
+   "bytes": 7358
+  },
+  "stage3_receipts_live_before": {
+   "file": "S27:readings/stage3_2026_11_02/RECEIPTS_live_before.txt",
+   "sha256": "98fb4b8dc23c7a7205fa665de9ab34b122b0a32448661fee03635ac78a13a57b",
+   "bytes": 7359
+  },
+  "stage3_receipts_live_after": {
+   "file": "S27:readings/stage3_2026_11_02/RECEIPTS_live_after.txt",
+   "sha256": "98fb4b8dc23c7a7205fa665de9ab34b122b0a32448661fee03635ac78a13a57b",
+   "bytes": 7359
+  }
+ },
+ "copy_vs_live": {
+  "file": "S27:readings/fix4_2026_11_02/copy_vs_live.json",
+  "sha256": "395a194129d331cb2ebb91bb1da05350b537dc47f25ab88be4f6aa6fafc21e90",
+  "bytes": 3861
+ },
+ "config_key_names": {
+  "file": "S27:readings/stage3_2026_11_02/config_key_names_sessionsDir.txt",
+  "sha256": "04b3b60cbf1d7f816281d83759669f72994baff85d2bc241586c3d94e918f89e",
+  "bytes": 155,
+  "line": "paths of a key named sessionsDir: []"
+ },
+ "move": {
+  "table": {
+   "file": "S27:substrate_move_table.json",
+   "sha256": "8bccb5017283d9313e7b73e7e41de125c7b5c26a90c796b56721e9186ca09729",
+   "bytes": 9891
+  },
+  "maker": {
+   "file": "S27:make_substrate_move_table.py",
+   "sha256": "0d73d7dbaecf76b2c2c629aafb32567178076db42ff1ffb7af3fb266ace07502",
+   "bytes": 8237
+  },
+  "apply": {
+   "file": "S27:apply_substrate_move.py",
+   "sha256": "e99c4c68db838e3be7bafbc2206d043563bed70bcf5fe0ae44b4952ba76c4065",
+   "bytes": 28774
+  },
+  "rehearse": {
+   "file": "S27:rehearse_substrate_move.py",
+   "sha256": "9e5a165e8f5a56fa603ee45ab5fbc21a619c65443d1583aa21212e6ac2d24135",
+   "bytes": 24948
+  },
+  "table_run": {
+   "file": "S27:readings/fix4_2026_11_02/make_move_table.txt",
+   "sha256": "71426f6971d88aa7c35b21fd0957717ddd0516ea0723654d2b43ef94c522a02a",
+   "bytes": 5641
+  },
+  "plugin_as_installed": {
+   "file": "S27:readings/fix4_2026_11_02/make_plugin_as_installed.txt",
+   "sha256": "aaaee1a89b6c0eb43f01d41f43ebff7590dbc85d264d2294c55da0fb7aa21a8d",
+   "bytes": 842
+  },
+  "rows": [
+   {
+    "order": 1,
+    "label": "W:gate/tests/fixtures/gate_v0_25d53fd6/gate.py",
+    "after": "25d53fd6aa5e76046087ac78b3063b0b12c567c13f399471da225b036de2dad1",
+    "before": null,
+    "bytes": 87547,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 2,
+    "label": "W:gate/tests/fixtures/gate_v0_25d53fd6/gate_verify.py",
+    "after": "f4b19c9428cfc73f205e8b540b657f3711255361f45dc4b345b23fd25fdc1d70",
+    "before": null,
+    "bytes": 27204,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 3,
+    "label": "W:gate/tests/fixtures/gate_v0_25d53fd6/helpers/numerals.py",
+    "after": "6e56ef95554522b3ce10ae30cb1c9b33b111a412a96690dc32b48ac524b28f86",
+    "before": null,
+    "bytes": 4928,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 4,
+    "label": "W:gate/tests/fixtures/gate_v0_25d53fd6/ledger.py",
+    "after": "dfdecee0c37ca18327f074121d752ca51ed49231109172b31ce7ee67195b9e2e",
+    "before": null,
+    "bytes": 27202,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 5,
+    "label": "W:gate/tests/fixtures/gate_v0_4416692c/gate.py",
+    "after": "4416692cfc983dbb9bc7d0f31342b3eaaf30c3beb7e27f31acdaa991c778dfbf",
+    "before": null,
+    "bytes": 95482,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 6,
+    "label": "W:gate/tests/fixtures/gate_v0_4416692c/gate_verify.py",
+    "after": "049d870bcdbf4726d961bc4b58d5b3134c63f06511d398c11c0f7ed57dd3487b",
+    "before": null,
+    "bytes": 28886,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 7,
+    "label": "W:gate/tests/fixtures/gate_v0_4416692c/helpers/numerals.py",
+    "after": "6e56ef95554522b3ce10ae30cb1c9b33b111a412a96690dc32b48ac524b28f86",
+    "before": null,
+    "bytes": 4928,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 8,
+    "label": "W:gate/tests/fixtures/gate_v0_4416692c/ledger.py",
+    "after": "dfdecee0c37ca18327f074121d752ca51ed49231109172b31ce7ee67195b9e2e",
+    "before": null,
+    "bytes": 27202,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 9,
+    "label": "W:gate/tests/test_substrate.py",
+    "after": "2785d90fc45d2449e9f9abeeaf4bdeaa6413392ee5942b2403a4e6b72583a19e",
+    "before": null,
+    "bytes": 75790,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 10,
+    "label": "W:gate/plugin/tests/stub_gate.py",
+    "after": "44800d7b687f1bf1ee0cd1311a1087a25c69b9337e52dc349cccfa8fcc06719c",
+    "before": "7da1a4db092aab74b6d25ec296c2cb858b8a8f2ed0047ead97dcb4fc02e837e4",
+    "bytes": 25633,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 11,
+    "label": "W:gate/plugin/tests/run_tests.mjs",
+    "after": "3021b8ce4871438262367e329d47570cd5f68a912330f5cc99ad9fdc3f769d02",
+    "before": "90ae51c1700277ebe371b6e758eb5d5205ac926be7fb540dbbc65bf3504ef23f",
+    "bytes": 204365,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 12,
+    "label": "W:gate/plugin/README.md",
+    "after": "515ab11d6c8a5fffc98841976b470c2d9227ae5f1f53294cbc7db21b57229980",
+    "before": "49a7dc73dbe76d1b9207a835eba31602b73e88e6d6704a3a482daea9c781257b",
+    "bytes": 33366,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 13,
+    "label": "W:gate/plugin/clawdbot.plugin.json",
+    "after": "71bbe2e99449b874e2d9444f23fd8887406b861ffa7f773ba9b7f4baf2f401a3",
+    "before": "27c2ecd9dafa19df5d214c84a578c0408aee4bf1ef53602db073bd32ad2f5f54",
+    "bytes": 2326,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 14,
+    "label": "W:gate/plugin/index.js",
+    "after": "c472d35b6e84a3570295b474c76d9d78fded7038a8ce696d70baf45e7f25dc7a",
+    "before": "e56990f437134dd26a31db256062d4911ebf7e7be08d2605c4a94c7644d6921f",
+    "bytes": 99531,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 15,
+    "label": "W:gate/README.md",
+    "after": "7361a1dec2d749deeccd1a0d5e833dba3722965e7f4655f2ffc0fac6a060adcc",
+    "before": "54e9a33f5bf4a3475197c6ee76a4564cea6d77d58dbf37e220865beb453b95bf",
+    "bytes": 27407,
+    "enters_gate_sha256": false
+   },
+   {
+    "order": 16,
+    "label": "W:gate/substrate_split.py",
+    "after": "77f44bd40100c0f94b6b09aa7c718e6c74a5da7b63c62a322dab51ac33b29f65",
+    "before": null,
+    "bytes": 9071,
+    "enters_gate_sha256": true
+   },
+   {
+    "order": 17,
+    "label": "W:gate/page.py",
+    "after": "d1d964efdee9e5731cab8e59a6dbc6ab1c23098627e82d5715e4c9b8a0f47cd9",
+    "before": "59f1f5eddd86e39a7266e11b378735052b71e9099362859be7fd00bb92b6d4ee",
+    "bytes": 7019,
+    "enters_gate_sha256": true
+   },
+   {
+    "order": 18,
+    "label": "W:gate/gate_verify.py",
+    "after": "898a6091a42f4155a1f683688106fe764e4bf0b232bcf7227c367e02d6d845f9",
+    "before": "049d870bcdbf4726d961bc4b58d5b3134c63f06511d398c11c0f7ed57dd3487b",
+    "bytes": 33063,
+    "enters_gate_sha256": true
+   },
+   {
+    "order": 19,
+    "label": "W:gate/gate.py",
+    "after": "b0b47381b98db8bec6507651813f83af506167327fe462498911f825b02e96b4",
+    "before": "4416692cfc983dbb9bc7d0f31342b3eaaf30c3beb7e27f31acdaa991c778dfbf",
+    "bytes": 119622,
+    "enters_gate_sha256": true
+   },
+   {
+    "order": 20,
+    "label": "~/.clawdbot/extensions/styxx-gate/README.md",
+    "after": "515ab11d6c8a5fffc98841976b470c2d9227ae5f1f53294cbc7db21b57229980",
+    "before": "49a7dc73dbe76d1b9207a835eba31602b73e88e6d6704a3a482daea9c781257b",
+    "bytes": 33366,
+    "enters_gate_sha256": true
+   },
+   {
+    "order": 21,
+    "label": "~/.clawdbot/extensions/styxx-gate/clawdbot.plugin.json",
+    "after": "71bbe2e99449b874e2d9444f23fd8887406b861ffa7f773ba9b7f4baf2f401a3",
+    "before": "27c2ecd9dafa19df5d214c84a578c0408aee4bf1ef53602db073bd32ad2f5f54",
+    "bytes": 2326,
+    "enters_gate_sha256": true
+   },
+   {
+    "order": 22,
+    "label": "~/.clawdbot/extensions/styxx-gate/index.js",
+    "after": "c472d35b6e84a3570295b474c76d9d78fded7038a8ce696d70baf45e7f25dc7a",
+    "before": "e56990f437134dd26a31db256062d4911ebf7e7be08d2605c4a94c7644d6921f",
+    "bytes": 99531,
+    "enters_gate_sha256": true
+   }
+  ],
+  "new_dirs": [
+   "tests/fixtures/gate_v0_25d53fd6",
+   "tests/fixtures/gate_v0_25d53fd6/helpers",
+   "tests/fixtures/gate_v0_4416692c",
+   "tests/fixtures/gate_v0_4416692c/helpers"
+  ],
+  "installed_files_before": [
+   "README.md",
+   "clawdbot.plugin.json",
+   "gate.js",
+   "index.js",
+   "native_import.cjs",
+   "package.json",
+   "patch_dist.js"
+  ],
+  "installed_files_after": [
+   "README.md",
+   "clawdbot.plugin.json",
+   "gate.js",
+   "index.js",
+   "native_import.cjs",
+   "package.json",
+   "patch_dist.js"
+  ]
+ },
+ "gate_sha256": {
+  "live": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f",
+  "live_files": 20,
+  "live_file_names": [
+   "canary_plan.py",
+   "canary_shadow.py",
+   "exhibit_mint.py",
+   "exhibit_page.py",
+   "gate.py",
+   "gate_verify.py",
+   "ledger.py",
+   "make_exhibit_out.py",
+   "page.py",
+   "pregate_count.py",
+   "reconcile.py",
+   "selector.py",
+   "numerals.py",
+   "clawdbot.plugin.json",
+   "gate.js",
+   "index.js",
+   "native_import.cjs",
+   "package.json",
+   "patch_dist.js",
+   "README.md"
+  ],
+  "candidate": "8006c50b880a00c183a6ced62206ec254eb04732c07f77729fef101454dcbf3d",
+  "candidate_files": 21,
+  "candidate_file_names": [
+   "canary_plan.py",
+   "canary_shadow.py",
+   "exhibit_mint.py",
+   "exhibit_page.py",
+   "gate.py",
+   "gate_verify.py",
+   "ledger.py",
+   "make_exhibit_out.py",
+   "page.py",
+   "pregate_count.py",
+   "reconcile.py",
+   "selector.py",
+   "substrate_split.py",
+   "numerals.py",
+   "clawdbot.plugin.json",
+   "gate.js",
+   "index.js",
+   "native_import.cjs",
+   "package.json",
+   "patch_dist.js",
+   "README.md"
+  ],
+  "stages": [
+   {
+    "after_order": null,
+    "gate_sha256": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f",
+    "files": 20,
+    "what": "before the move"
+   },
+   {
+    "after_order": 16,
+    "gate_sha256": "21a6247eb1ddf98de20d43ae8d0f4d784798d45bda5b500c3359aa15f885a233",
+    "files": 21,
+    "what": "after W:gate/substrate_split.py"
+   },
+   {
+    "after_order": 17,
+    "gate_sha256": "4301a0eea26584d88a504d344d134ffcece6b9e166f408770616ab19db1540f2",
+    "files": 21,
+    "what": "after W:gate/page.py"
+   },
+   {
+    "after_order": 18,
+    "gate_sha256": "45b9f76a390693c792eca872902b199575569f0285f22749c3acd496d02daa47",
+    "files": 21,
+    "what": "after W:gate/gate_verify.py"
+   },
+   {
+    "after_order": 19,
+    "gate_sha256": "d9ed845dd0fe67019089a39ca87361f624b9bd532b7032f5841731994bdf44f5",
+    "files": 21,
+    "what": "after W:gate/gate.py"
+   },
+   {
+    "after_order": 20,
+    "gate_sha256": "4b970a339be5e331489e0d699f112d5390d95432cb98e388f0bb37f0492a5fe7",
+    "files": 21,
+    "what": "after ~/.clawdbot/extensions/styxx-gate/README.md"
+   },
+   {
+    "after_order": 21,
+    "gate_sha256": "50c4cd934f278edb0819753b6d5931c97e066449d1a01ed4b4b3eb19e47b30a3",
+    "files": 21,
+    "what": "after ~/.clawdbot/extensions/styxx-gate/clawdbot.plugin.json"
+   },
+   {
+    "after_order": 22,
+    "gate_sha256": "8006c50b880a00c183a6ced62206ec254eb04732c07f77729fef101454dcbf3d",
+    "files": 21,
+    "what": "after ~/.clawdbot/extensions/styxx-gate/index.js"
+   }
+  ],
+  "rule": "BD:apply/rederive_gate_sha256.py (Env.gate_sha256's rule, without importing gate.py), and the same rule inside S27:apply_substrate_move.py (gate_digest), the two agreeing in the rehearsal",
+  "rederive": {
+   "file": "BD:apply/rederive_gate_sha256.py",
+   "sha256": "a5fcd3bbafc5bbd84b4e3c896ebdfffcb0f3689b67590cd0eae66725c455be9a",
+   "bytes": 4661
+  },
+  "superseded_candidates": {
+   "35a39305 (2026-10-30)": {
+    "file": "S27:readings/stage2/gate_sha256_candidate_2026_10_30.txt",
+    "sha256": "e95450884019403ca7da4af4943abb8831013eaaa7de6a5d4d7019b23f72fb53",
+    "bytes": 935
+   },
+   "e2de6251 (stage 2 and 3, 2026-11-02)": {
+    "file": "S27:readings/stage2_2026_11_02/gate_sha256_candidate.txt",
+    "sha256": "74e6e3228dc1bcf5830de6a14d229754dbb1c0dd65e2440ffa333be041db436b",
+    "bytes": 973
+   },
+   "e9f14955 (fix round, fixer 3, 2026-11-02)": {
+    "file": "S27:readings/fix3_2026_11_02/make_move_table.txt",
+    "sha256": "5890ce2fa23d381675226c2059d84e841d5eb803ef24740779838f104c9c6607",
+    "bytes": 5828
+   },
+   "3a7e8915 (fix round, fixer 3 second pass, 2026-11-02)": {
+    "file": "S27:readings/fix3b_2026_11_02/make_move_table.txt",
+    "sha256": "03bc4dca09ab3fb75fdcca890cc8028edde55864eceab2d14049239b600d70b5",
+    "bytes": 5641
+   }
+  },
+  "candidate_rederived": {
+   "file": "S27:readings/fix4_2026_11_02/rederive_candidate.txt",
+   "sha256": "43df2065e0844e0f5fd0cdc0d0e129be36401f8fce9eb66c8e78e2d86552ba98",
+   "bytes": 485,
+   "line": "expect 8006c50b880a00c1: MATCH"
+  }
+ },
+ "stage1": {
+  "pytest_full_run1": {
+   "file": "S27:readings/pytest_full_run1.txt",
+   "sha256": "6778ea06a7877f5644a0824fc3c1691e2a577688a32e5fbd42702ac047ba46a8",
+   "bytes": 964,
+   "result": "301 passed, 12 subtests passed in 988.17s (0:16:28)",
+   "gate_py": "a3c261b76694444c3dd970830ddeac5f536b8aa7288acc47dbe30ed87b4ab7ca"
+  },
+  "pytest_full_run2": {
+   "file": "S27:readings/pytest_full_run2.txt",
+   "sha256": "449b7179372bf8cbc22c35517116864cb516f811b04d4864396a3923b2345d2a",
+   "bytes": 964,
+   "result": "301 passed, 12 subtests passed in 991.29s (0:16:31)",
+   "gate_py": "cce267f88fcaa49b22690ca9fdd88e3c85c9b57cdb8287270271d6ea71f7b6a6"
+  },
+  "snapshot_ledger": {
+   "file": "S27:snap/ledger.jsonl",
+   "sha256": "2e76602ee7aaaba079da34e4f31242f03780eee600d2634da202c659e11dcfeb",
+   "bytes": 221553,
+   "lines": 136,
+   "send_lines": 65
+  },
+  "snapshot_frozen": {
+   "file": "S27:readings/snapshot_frozen.txt",
+   "sha256": "164ff990bad4c331accdb394d1de8a792b905c06bed347d891fd03d0188ffae0",
+   "bytes": 471
+  },
+  "rederive_copy": {
+   "file": "S27:readings/gate_verify_snapshot_copy.txt",
+   "sha256": "7ba85b766ac71e82af51975f57455947c908c8239c10dfd33183878889fbb336",
+   "bytes": 556,
+   "summary": "re-derived SAME 64, SAME_UNDER_SKEW 0, UNAVAILABLE_THEN 0, DRIFT 1, SKEW 0, UNRESOLVED 0, TAMPER 0",
+   "schemas": "send lines by schema: v0 65, v1 0, other 0"
+  },
+  "rederive_copy_json": {
+   "file": "S27:readings/gate_verify_snapshot_copy.json",
+   "sha256": "04d079c680c7434cba731166916cbc5180b61008658f00b1a0c315a2fa0194bf",
+   "bytes": 10571
+  },
+  "rederive_livepair": {
+   "file": "S27:readings/gate_verify_snapshot_livepair.txt",
+   "sha256": "4d846a3ebd86848e6ab0ddac01e84e832ea7447d4f51b6171ffd9852042f1a36",
+   "bytes": 489,
+   "summary": "re-derived SAME 64, SAME_UNDER_SKEW 0, UNAVAILABLE_THEN 0, DRIFT 1, SKEW 0, UNRESOLVED 0, TAMPER 0"
+  },
+  "rederive_livepair_json": {
+   "file": "S27:readings/gate_verify_snapshot_livepair.json",
+   "sha256": "65cc92dc9d3459e2fc9728bc972199b23b9d32781fcb57a73050f0c252c3d540",
+   "bytes": 10512
+  },
+  "rederive_compare": {
+   "file": "S27:readings/rederive_compare.txt",
+   "sha256": "efd5d3018dbc89241c73266a0f22b8bb78befae110f254183d2a4ab0a703679f",
+   "bytes": 648,
+   "identical": "seqs compared 65; identical status and diffs on every line: True"
+  },
+  "cli_smoke": {
+   "file": "S27:readings/cli_smoke.txt",
+   "sha256": "2b59cf4fbb50e22a63d3f3c5755ae86ecf623bcda17dcb616f51846f00625b18",
+   "bytes": 1041
+  },
+  "plugin_harness_before_stage2": {
+   "file": "S27:readings/plugin_harness.txt",
+   "sha256": "6d55a7ae50a96b709007e65412cf4d5dd4a4812a21522c45c9d1373b069868f6",
+   "bytes": 11845,
+   "result": "{\"passed\":85,\"failed\":0,\"total\":85,\"elapsed_ms\":109211,\"rss_mb\":193,\"node\":\"v24.13.0\",\"ran_at\":\"2026-10-26T20:26:39.160Z\"}"
+  },
+  "substrate_split_snapshot": {
+   "file": "S27:readings/substrate_split_snapshot.txt",
+   "sha256": "fc368ab14c46db9fd37b3d7b1e16ad555dc7888c7b8d55d9768e97b62b0cc4b9",
+   "bytes": 923
+  },
+  "gate_side_diff": {
+   "file": "S27:readings/gate_side.diff",
+   "sha256": "d16d413d317e69eefc266cca9fad3fad443ffd06ee3addffe279f17432e23f72",
+   "bytes": 38058
+  },
+  "receipts_live_before": {
+   "file": "S27:readings/RECEIPTS_live_before.txt",
+   "sha256": "e4c4e268a4405ddcf1496b2e0286fd41df3c45f33c26624848bdf22b62cbbaf2",
+   "bytes": 7357
+  },
+  "receipts_live_after": {
+   "file": "S27:readings/RECEIPTS_live_after.txt",
+   "sha256": "e4c4e268a4405ddcf1496b2e0286fd41df3c45f33c26624848bdf22b62cbbaf2",
+   "bytes": 7357
+  }
+ },
+ "stage2": {
+  "harness_run5": {
+   "file": "S27:readings/stage2_2026_11_02/harness_run5.txt",
+   "sha256": "40fd97a4c73316286c07e48282744f53b306484756564aadc28f5bb16ec396a9",
+   "bytes": 16711,
+   "result": "{\"passed\":100,\"failed\":0,\"total\":100,\"elapsed_ms\":76501,\"rss_mb\":201,\"node\":\"v24.13.0\",\"ran_at\":\"2026-11-02T12:50:56.084Z\"}"
+  },
+  "harness_run6_after_battery": {
+   "file": "S27:readings/stage2_2026_11_02/harness_run6_after_battery.txt",
+   "sha256": "4a37e70c13d3020bfc6d490c61177b6ca2a1648672236072bc6fee8f2c1e9161",
+   "bytes": 16713,
+   "result": "{\"passed\":100,\"failed\":0,\"total\":100,\"elapsed_ms\":75832,\"rss_mb\":191,\"node\":\"v24.13.0\",\"ran_at\":\"2026-11-02T13:34:02.892Z\"}"
+  },
+  "pytest_substrate": {
+   "file": "S27:readings/stage2_2026_11_02/pytest_substrate_baseline.txt",
+   "sha256": "de0d9e6ac67b9bd86636432f01276db271c34c1793ed0669cbd3d19edd70a687",
+   "bytes": 629,
+   "result": "22 passed in 57.41s"
+  },
+  "mutants": {
+   "results": {
+    "file": "S27:mutants/results.json",
+    "sha256": "63266c0cdb0918fd30c5add62d3b38a84600ed2aa9e7ef7b2fdec337b0039d67",
+    "bytes": 11277
+   },
+   "log": {
+    "file": "S27:readings/stage2_2026_11_02/mutants_run_2026_11_02.txt",
+    "sha256": "82990233a01fe1ed6211869a61e4ffbb554fec3fc513aaa573f958c1b3619693",
+    "bytes": 5382
+   },
+   "summary": {
+    "file": "S27:readings/stage2_2026_11_02/mutants_summary.txt",
+    "sha256": "2cbc14c83b9ea94ff225ee0548fe02d5047c985d7ac2da0c2402b4b7d2801e82",
+    "bytes": 4577,
+    "line": "mutants 26 killed 26 restored 26"
+   }
+  },
+  "f1_untouched": {
+   "file": "S27:readings/stage2_2026_11_02/f1_untouched.txt",
+   "sha256": "72062874282a527043dfd2968769437ee3585a3bdb67034c73286c7da590f152",
+   "bytes": 1297,
+   "line": "F-1 functions not byte-identical once in the copy: 0"
+  },
+  "patch_replay": {
+   "file": "S27:readings/stage2_2026_11_02/patch_replay.txt",
+   "sha256": "5a8f696170d99675f3b44509853f2b482c37c4dcf35ab9e930d2f1fa31a3573a",
+   "bytes": 278
+  },
+  "index_js_vs_live": {
+   "file": "S27:readings/stage2_2026_11_02/index_js_vs_live.diff",
+   "sha256": "b5ef9a2ad76249940fde4b155ab523bac0d02c8a3730622f220e958290eecb0d",
+   "bytes": 19802
+  },
+  "run_tests_vs_live": {
+   "file": "S27:readings/stage2_2026_11_02/run_tests_vs_live.diff",
+   "sha256": "d40dc7b992f7ae28a0fd49064bebafa6c20e19d622fff1e8a5c9367e7c7b765b",
+   "bytes": 49918
+  },
+  "transcript_stops": {
+   "file": "S27:readings/stage2_2026_11_02/transcript_stops.txt",
+   "sha256": "7f29279c5ec7360e185f1a6c1bf86abb863aeb24cd78c06f90eea7f94dc8f558",
+   "bytes": 2607
+  },
+  "store_shape_2026_10_30": {
+   "file": "S27:readings/stage2/store_shape_2026_10_30.txt",
+   "sha256": "5ac5ea3a0621a7354faf6df4a2db3a314b2996fc2284a53716c64137ab8d47a2",
+   "bytes": 2815
+  },
+  "receipts_live_after": {
+   "file": "S27:readings/stage2_2026_11_02/RECEIPTS_live_after.txt",
+   "sha256": "98fb4b8dc23c7a7205fa665de9ab34b122b0a32448661fee03635ac78a13a57b",
+   "bytes": 7359
+  }
+ },
+ "fix1": {
+  "transcript_structure": {
+   "file": "S27:readings/fix1_2026_11_02/transcript_structure.txt",
+   "sha256": "1922b56e418669ff25bc129e134fc2bc97fb3c1a750c51044030f1010ac9ef0c",
+   "bytes": 7703
+  },
+  "send_vs_transcript": {
+   "file": "S27:readings/fix1_2026_11_02/send_vs_transcript.txt",
+   "sha256": "e91c3db25335605328868d8a18a83e8af919aeb3748daf7e1e85417efad311c9",
+   "bytes": 1168
+  },
+  "final_harness": {
+   "file": "S27:readings/fix1_2026_11_02/final_harness.txt",
+   "sha256": "33432f028a21b6c915c4a3244b2ecb82adb93c2f70b5a021c8532d10c25e056f",
+   "bytes": 18479,
+   "result": "{\"passed\":104,\"failed\":0,\"total\":104,\"elapsed_ms\":143808,\"rss_mb\":195,\"node\":\"v24.13.0\",\"ran_at\":\"2026-11-02T16:44:26.237Z\"}"
+  },
+  "final_pytest_substrate": {
+   "file": "S27:readings/fix1_2026_11_02/final_pytest_substrate.txt",
+   "sha256": "17da9b9e8a73b68ce9ed795e2fa7a5be6e89407019f31fee1f50a88eb83cb020",
+   "bytes": 1145,
+   "result": "30 passed in 145.32s (0:02:25)"
+  },
+  "final_pytest_full": {
+   "file": "S27:readings/fix1_2026_11_02/final_pytest_full.txt",
+   "sha256": "40cfdb0c91bebecba2a3f71755a1fa16519eca9d202ca6d7d664b8e6e452a6e3",
+   "bytes": 1470,
+   "result": "309 passed, 12 subtests passed in 1132.71s (0:18:52)"
+  },
+  "before_harness": {
+   "file": "S27:readings/fix1_2026_11_02/before_harness.txt",
+   "sha256": "02f19e2fa24569248bfdf0c70097f5a20de8ce8c9ab40a79fd41c7bb4d93cac6",
+   "bytes": 45428,
+   "result": "{\"passed\":89,\"failed\":15,\"total\":104,\"elapsed_ms\":113241,\"rss_mb\":192,\"node\":\"v24.13.0\",\"ran_at\":\"2026-11-02T16:11:09.033Z\"}"
+  },
+  "before_pytest_substrate": {
+   "file": "S27:readings/fix1_2026_11_02/before_pytest_substrate.txt",
+   "sha256": "4e8839a50252cbb6862f3b09186f580468e52c860898ebedfb40b907a45b6a1e",
+   "bytes": 27451,
+   "result": "18 failed, 12 passed in 47.48s"
+  },
+  "reversals": {
+   "file": "S27:readings/fix1_2026_11_02/reversals/results.json",
+   "sha256": "665cc9cf8602c401645ca6fb777f3354c65ef9dece734e8e3c85100540cdfe91",
+   "bytes": 6984
+  },
+  "reversals_run": {
+   "file": "S27:readings/fix1_2026_11_02/reversals_run.txt",
+   "sha256": "cea5bd2bc824872ff39abe7047e73bfec143c10717af32637cfb691675c831c0",
+   "bytes": 3041,
+   "line": "15 of 15 killed"
+  },
+  "patch_replay": {
+   "file": "S27:readings/fix1_2026_11_02/patch_replay_3.txt",
+   "sha256": "49daa054353eee5625d78f0085ab667810a6bfd76abdb9be133e1d112f3eaaf6",
+   "bytes": 1158,
+   "line": "9 of 9 SAME"
+  },
+  "f1_untouched": {
+   "file": "S27:readings/fix1_2026_11_02/f1_untouched.txt",
+   "sha256": "c9950151a9c63f51a02ed3d1c98c5d5c44d9ccb6ddf1cf42f864a5329a872e20",
+   "bytes": 1323
+  },
+  "receipts_live_1": {
+   "file": "S27:readings/fix1_2026_11_02/RECEIPTS_live_1.txt",
+   "sha256": "304cd5a69ebe28f3f62085f5c9f415adca85816b1a523d90953e583136ce2742",
+   "bytes": 7357
+  },
+  "receipts_live_2": {
+   "file": "S27:readings/fix1_2026_11_02/RECEIPTS_live_2.txt",
+   "sha256": "304cd5a69ebe28f3f62085f5c9f415adca85816b1a523d90953e583136ce2742",
+   "bytes": 7357
+  }
+ },
+ "fix2": {
+  "final_harness": {
+   "file": "S27:readings/fix2_2026_11_02/final_harness.txt",
+   "sha256": "e87e8244bbda66c7690e6c2703bba5511fac594e8698962e566ac8117a01d181",
+   "bytes": 18956,
+   "result": "{\"passed\":105,\"failed\":0,\"total\":105,\"elapsed_ms\":122752,\"rss_mb\":183,\"node\":\"v24.13.0\",\"ran_at\":\"2026-11-02T18:59:07.904Z\"}"
+  },
+  "final_pytest_full": {
+   "file": "S27:readings/fix2_2026_11_02/final_pytest_full.txt",
+   "sha256": "ab610602b39b5cc0d9dbc7467f0e2d6f9e87b61aaf37c67aad96a849b72f2539",
+   "bytes": 1479,
+   "result": "318 passed, 12 subtests passed in 1141.16s (0:19:01)"
+  },
+  "dev_pytest_substrate": {
+   "file": "S27:readings/fix2_2026_11_02/dev_pytest_substrate.txt",
+   "sha256": "2b9da927f7990cedf72c073d4d1b487ba8d10603602f80b55de6570a071780f0",
+   "bytes": 118,
+   "result": "39 passed in 187.83s (0:03:07)"
+  },
+  "before_pytest_substrate": {
+   "file": "S27:readings/fix2_2026_11_02/before_pytest_substrate.txt",
+   "sha256": "ed1e9b25c7b6edb72455d95d7f2347c9ea13daeedaa173f332e64f1519261180",
+   "bytes": 3864,
+   "result": "2 failed, 37 passed in 250.59s (0:04:10)"
+  },
+  "worktree_prereg_tests": {
+   "file": "S27:readings/fix2_2026_11_02/worktree_prereg_tests.txt",
+   "sha256": "23192ab0d017393884db8c234baf39e594a48d088baf23ac10c945423b0f9ae4",
+   "bytes": 1525,
+   "result": "42 passed, 8 skipped in 20.66s"
+  },
+  "mutants_table": {
+   "file": "S27:mutants_round3/out/table_round3.txt",
+   "sha256": "4be6b140375ac68efb8629143a558136cb69560dde8768bd8803941a94e025b3",
+   "bytes": 8654,
+   "round_a": "round A (fixer 1's tests, the code before this round): 9 of 27 killed",
+   "round_b": "round B (this round's tests and code): 30 of 31 killed"
+  },
+  "patch_replay": {
+   "file": "S27:readings/fix2_2026_11_02/patch_replay.txt",
+   "sha256": "51fe7ee0d2d391d5a217fb859d4ee61c1388abfce894de5af4054f22f7ac2184",
+   "bytes": 960,
+   "line": "8 of 8 SAME"
+  },
+  "live_subject": {
+   "file": "S27:readings/fix2_2026_11_02/live_subject_2026_11_02.txt",
+   "sha256": "2078414e647453fb659bc9f8f6f0413b74b7f4c7d5bba365f2dbec1160deafdf",
+   "bytes": 1516,
+   "digest": "510b6a8846f2391635ada022aba4c4f977c081722019738693b1a00e76878207"
+  },
+  "live_subject_b": {
+   "file": "S27:readings/fix2_2026_11_02/live_subject_2026_11_02_b.txt",
+   "sha256": "ca088b9ad9cb6e80c6c9d682110293a864cf72760a0c5c27c5659dba46e61035",
+   "bytes": 1544,
+   "digest": "9e214afae96fc13e7ca1ebdf57cbd9858312691479c7c2a310efc1b702ce5e5d"
+  },
+  "memsearch_keys": {
+   "file": "S27:readings/fix2_2026_11_02/memsearch_keys_2026_11_02.txt",
+   "sha256": "b35a8cc022a050e42d8d034f8df4a32e06cc87f4dacd1430c016ffc8fa064be2",
+   "bytes": 1717
+  },
+  "memsearch_keys_b": {
+   "file": "S27:readings/fix2_2026_11_02/memsearch_keys_2026_11_02_b.txt",
+   "sha256": "1d925fde6ea71628d144f0323f956915f6a5210664d25d9a7a8b0efc0c81f6d1",
+   "bytes": 1362
+  },
+  "receipts_live_1": {
+   "file": "S27:readings/fix2_2026_11_02/RECEIPTS_live_1.txt",
+   "sha256": "304cd5a69ebe28f3f62085f5c9f415adca85816b1a523d90953e583136ce2742",
+   "bytes": 7357
+  },
+  "receipts_live_2": {
+   "file": "S27:readings/fix2_2026_11_02/RECEIPTS_live_2.txt",
+   "sha256": "8a3ef64cc6b79da94eab813cd2b4970d5c4106058530396e37861646ff1a7e56",
+   "bytes": 7358
+  }
+ },
+ "fix3": {
+  "patches_tools": {
+   "file": "S27:readings/fix3_2026_11_02/apply_patches_tools.txt",
+   "sha256": "3b0b2e7f540ac4b73a6c4fcf58c78bbf75d5358633497344adae08408a743090",
+   "bytes": 1053
+  },
+  "patches_text": {
+   "file": "S27:readings/fix3_2026_11_02/apply_patches_text.txt",
+   "sha256": "04b950fae6e8b6964b206ad2124ebe86613f371efb445a0c568ae36668c081fa",
+   "bytes": 1283
+  },
+  "patch_replay": {
+   "file": "S27:readings/fix3_2026_11_02/patch_replay.txt",
+   "sha256": "00c7fa5ee92262fd2e66f81910092eef13f88821e5fe706ce912880315a228b8",
+   "bytes": 875,
+   "line": "7 of 7 SAME"
+  },
+  "copy_bytecode_removed": {
+   "file": "S27:readings/fix3_2026_11_02/remove_copy_bytecode.txt",
+   "sha256": "f215db83cc14df3098adfd2e2444808f97e4a016516b852bf718e28a4e5e88c9",
+   "bytes": 236
+  },
+  "readings_run": {
+   "file": "S27:readings/fix3_2026_11_02/readings_run.json",
+   "sha256": "7cc7214ddcdf5a5d864c5eda2d5734ae38a2397481d53c85da567acd9c57696a",
+   "bytes": 1510
+  },
+  "make_amendment_run": {
+   "file": "S27:readings/fix3_2026_11_02/make_amendment_run.txt",
+   "sha256": "67179bd51b157a040df010e25f99c4e8a5fac31fbc15524158e72d6d82735775",
+   "bytes": 222
+  },
+  "repo_tests_final": {
+   "file": "S27:readings/fix3_2026_11_02/repo_tests_final.txt",
+   "sha256": "79bac6a2d71e5ed0dcdae1996fc2ab4d8f80e1f072f1614777cbaf671206b1b3",
+   "bytes": 2100,
+   "result": "301 passed, 8 skipped in 383.13s (0:06:23)"
+  },
+  "rehearsal_run": {
+   "file": "S27:readings/fix3_2026_11_02/rehearsal_run.txt",
+   "sha256": "7a3fff9b33aec6db9bc5a0b77b695c424612dce35d8e05fe88f63ec027848dc4",
+   "bytes": 1383
+  }
+ },
+ "fix3b": {
+  "config_vs_transcript": {
+   "file": "S27:readings/fix3b_2026_11_02/config_vs_transcript.txt",
+   "sha256": "3eec52f45ec49194ad1104ab29e47c8b74924be5c17bd71c9af66b97c6e1365e",
+   "bytes": 16824
+  },
+  "gateway_log": {
+   "file": "S27:readings/fix3b_2026_11_02/gateway_log.txt",
+   "sha256": "7be3eaf0329d4570382ff1b4f8424e9dee29b5e213583c0f5ea23708abe68362",
+   "bytes": 3348
+  },
+  "dist_lines": {
+   "file": "S27:readings/fix3b_2026_11_02/dist_lines.txt",
+   "sha256": "145d16f739626c620b06d5d7cf8935e8f771d37aa7fb0582d40dac836dfa3e97",
+   "bytes": 7101
+  },
+  "live_snapshot_bytecode": {
+   "file": "S27:readings/fix3b_2026_11_02/live_snapshot_bytecode.txt",
+   "sha256": "3ed29fd6d0bf11521b1ebacd510684b8ce26b5184d6a1bc68382b37f9a826214",
+   "bytes": 578,
+   "probe": {
+    "file": "S27:probes/fix3b_live_snapshot_bytecode.py",
+    "sha256": "60f8885548b784b4d9b5d845289b7f868180df0e2ce68040f025d2886399cb51",
+    "bytes": 2288
+   }
+  },
+  "probes": [
+   {
+    "file": "S27:probes/fix3b_config_vs_transcript.py",
+    "sha256": "e01e364658c49e41339f8a6e5cddadda3873c899c04635a6f3aa527ae79e9552",
+    "bytes": 13158
+   },
+   {
+    "file": "S27:probes/fix3b_gateway_log.py",
+    "sha256": "56593d5c3ec46876d5db26540c6c69bfc76e4ac66246ee1aecdba2816efcb2b2",
+    "bytes": 2857
+   },
+   {
+    "file": "S27:probes/fix3b_dist_lines.py",
+    "sha256": "a88d1c1e625d8c8606b36c1e1bd7ebcbbf105d03ba2a99c41e51f17990c49feb",
+    "bytes": 3005
+   }
+  ],
+  "patches_copy": {
+   "file": "S27:readings/fix3b_2026_11_02/apply_patches_copy.txt",
+   "sha256": "4f626a69d97cd43a248a42253f9cda45a457563d5033a5861e6e0273c3d00a00",
+   "bytes": 542
+  },
+  "patches_text": {
+   "file": "S27:readings/fix3b_2026_11_02/apply_patches_text.txt",
+   "sha256": "2e17571d586565981da18a4b8067cf20b4580213cd5a42c85bc4e40b3d71a23f",
+   "bytes": 1486
+  },
+  "patch_replay": {
+   "file": "S27:readings/fix3b_2026_11_02/patch_replay.txt",
+   "sha256": "ccaff0e9f0f1095d2c35c73c706d3be2914498cef042581b2d22f15984c4f3ba",
+   "bytes": 837,
+   "line": "7 of 7 SAME"
+  },
+  "final_harness": {
+   "file": "S27:readings/fix3b_2026_11_02/final_harness.txt",
+   "sha256": "0b7c9c65df7a717a40b760961423c8a236592a20250e4d93690fad7f7c312527",
+   "bytes": 19985,
+   "result": "{\"passed\":107,\"failed\":0,\"total\":107,\"elapsed_ms\":110321,\"rss_mb\":182,\"node\":\"v24.13.0\",\"ran_at\":\"2026-11-02T21:59:11.114Z\"}"
+  },
+  "pytest_substrate": {
+   "file": "S27:readings/fix3b_2026_11_02/final_pytest_substrate.txt",
+   "sha256": "451a38b13d8a8479cfe04baeb10b8d8b57ff88a21868e1e46ff4ef9341f5c583",
+   "bytes": 1145,
+   "result": "39 passed in 101.38s (0:01:41)"
+  },
+  "mutants": {
+   "file": "S27:readings/fix3b_2026_11_02/mutants/results.json",
+   "sha256": "fe50cc123d71512149ac2aeaa795a17073143d58934036db8144a4c5a8f7a274",
+   "bytes": 1416,
+   "killed": 4,
+   "total": 4,
+   "killed_by_S17_or_R9e": 4,
+   "by_mutant": {
+    "MX1_model_from_the_loaded_config": [
+     "S1",
+     "S2",
+     "S3",
+     "S4",
+     "S6",
+     "S8",
+     "S14",
+     "S15",
+     "S17",
+     "R9a",
+     "R9c"
+    ],
+    "MX2_model_from_the_config_file": [
+     "S17",
+     "R9a",
+     "R9c",
+     "R9e"
+    ],
+    "MX3_chain_from_the_config_file": [
+     "S17",
+     "R9e"
+    ],
+    "MX4_store_entry_model_before_the_transcript": [
+     "S1",
+     "S2",
+     "S3",
+     "S4",
+     "S6",
+     "S8",
+     "S12",
+     "S17",
+     "R9e"
+    ]
+   },
+   "run": {
+    "file": "S27:readings/fix3b_2026_11_02/mutants_run.txt",
+    "sha256": "16c889699c5cb303debaa8424db52f55ff92e05bb916a30806075e03dc9744fe",
+    "bytes": 565
+   }
+  },
+  "readings_run": {
+   "file": "S27:readings/fix3b_2026_11_02/readings_run.json",
+   "sha256": "d28c5bce7faac8619b65c3a1ed6849e6bfee616b3facfbcb210398e7769b83a3",
+   "bytes": 1510
+  },
+  "make_amendment_run": {
+   "file": "S27:readings/fix3b_2026_11_02/make_amendment_run.txt",
+   "sha256": "dbf0b9989811e9f7c93dad77b2445e88c54333b87b138fb6c3e0fac336fbe2fe",
+   "bytes": 248
+  },
+  "receipts_live_1": {
+   "file": "S27:readings/fix3b_2026_11_02/RECEIPTS_live_1.txt",
+   "sha256": "acc1867dbb78c1eda19af30d15ff5f705f54e22925faea483cfc7a876c2a1cfe",
+   "bytes": 7360
+  },
+  "receipts_live_2": {
+   "file": "S27:readings/fix3b_2026_11_02/RECEIPTS_live_2.txt",
+   "sha256": "acc1867dbb78c1eda19af30d15ff5f705f54e22925faea483cfc7a876c2a1cfe",
+   "bytes": 7360
+  }
+ },
+ "fix4": {
+  "probes": [
+   {
+    "file": "S27:probes/fix4_synth_midrun.mjs",
+    "sha256": "d3d31d4b9ef2c4681d6e87af3f562271963d474f51f8a6010f1e00303de53a92",
+    "bytes": 8474
+   },
+   {
+    "file": "S27:probes/fix4_build_replicas.py",
+    "sha256": "eb8f9793925b1a4636aebb034ab731c42c1b9b99670ef33fea713d5a0359535a",
+    "bytes": 11646
+   },
+   {
+    "file": "S27:probes/fix4_replay_plugin.mjs",
+    "sha256": "d211c7ce59191f5fb61bbe2099083057f5b6a9bca7f81b7d7982ea3c42d16f40",
+    "bytes": 4876
+   },
+   {
+    "file": "S27:probes/fix4_judge_replay.py",
+    "sha256": "8e1359392b1c3ea4886fee4fdd43c5b1c20f78b8b479e8311f9be0e1500a2a39",
+    "bytes": 2326
+   },
+   {
+    "file": "S27:probes/fix4_ledger_keys.py",
+    "sha256": "a494422a0d60252f72f131a3bd79cecc418d9b3b7d06288ca6754c39cda4ee21",
+    "bytes": 1711
+   }
+  ],
+  "probe_copies": {
+   "file": "S27:build_tools/fix4/make_probe_copies.py",
+   "sha256": "bb2bb46a2364006639186c969c539df9d01e46ccbb9629b8badc71662f1fae37",
+   "bytes": 6781
+  },
+  "synth_midrun": {
+   "file": "S27:readings/fix4_2026_11_02/synth_midrun.txt",
+   "sha256": "bc011eadf5f6a711d2c7864e6c41f4bc47ee2f08327866e6dc262a9595d6c23d",
+   "bytes": 1760,
+   "out": {
+    "file": "S27:readings/fix4_2026_11_02/synth_midrun.json",
+    "sha256": "53d3c83376017dab25658e4451da1961009ddf7af8b7e5fd8c43f6f1a7726cad",
+    "bytes": 1969
+   }
+  },
+  "build_replicas": {
+   "file": "S27:readings/fix4_2026_11_02/build_replicas.txt",
+   "sha256": "c197559a7b36a73f22027d0ed73f132871e6326e15735f4ed2dbaea9b5a948c9",
+   "bytes": 162
+  },
+  "replicas_removed": {
+   "file": "S27:readings/fix4_2026_11_02/replicas_removed.txt",
+   "sha256": "ce85a9d361a03f44713061025e7fd8224bc49ba2a5a48454067c5a00953eec21",
+   "bytes": 34
+  },
+  "replay_plugin": {
+   "file": "S27:readings/fix4_2026_11_02/replay_plugin.txt",
+   "sha256": "dfde1748e99d4d10ce3c0461f6ab7e51feea125a0766436c5df885a8a9cddfa7",
+   "bytes": 223,
+   "out": {
+    "file": "S27:readings/fix4_2026_11_02/replay_out.json",
+    "sha256": "224ed4d534fb01b4b0ffeeb02284a2db722981612176c34132e15a96463630e5",
+    "bytes": 23498
+   }
+  },
+  "judge_replay": {
+   "file": "S27:readings/fix4_2026_11_02/judge_replay.txt",
+   "sha256": "a742c3329b55b445fae5ee7e68100bad614f71504ed08d811cb51b20d46b9931",
+   "bytes": 7592,
+   "tally": "{'hi RIGHT': 17, 'hi names anthropic/claude-opus-4-8': 2, 'hi unknown/None': 1, 'hi unknown/stale': 6, 'lo RIGHT': 17, 'lo names anthropic/claude-opus-4-8': 2, 'lo unknown/None': 1, 'lo unknown/stale': 6}"
+  },
+  "ledger_keys": {
+   "file": "S27:readings/fix4_2026_11_02/ledger_keys.txt",
+   "sha256": "aef9c99bdd9bd1bc0bed336265fcaf2b219c8b281d1f238ffada27991b78faa7",
+   "bytes": 535,
+   "keyed": "send lines carrying a session_hash: 0 {}"
+  },
+  "patches_copy": {
+   "file": "S27:readings/fix4_2026_11_02/apply_patches_copy.txt",
+   "sha256": "4c04dabf797d3fa30ae3b9d62c814c70f13f62204f235698cd3ce4d8e6f8b8c2",
+   "bytes": 2001
+  },
+  "patches_text": {
+   "file": "S27:readings/fix4_2026_11_02/apply_patches_text.txt",
+   "sha256": "fe42996e2173fbe5e579578af6aad3427ec5d9c3584d7b9cf24e3c5919d79392",
+   "bytes": 1935
+  },
+  "patch_replay": {
+   "file": "S27:readings/fix4_2026_11_02/patch_replay.txt",
+   "sha256": "8f9a176967424dff8bc9711faca0eda75833987ec5ab44e41853535c9f331bcd",
+   "bytes": 1411,
+   "line": "12 of 12 SAME"
+  },
+  "before_harness": {
+   "file": "S27:readings/fix4_2026_11_02/before_harness.txt",
+   "sha256": "a22c570f1f8e5673cdc85646cf67bd13127e1d73758e4d5631f298e687d76479",
+   "bytes": 30183,
+   "result": "{\"passed\":106,\"failed\":5,\"total\":111,\"elapsed_ms\":130811,\"rss_mb\":192,\"node\":\"v24.13.0\",\"ran_at\":\"2026-11-02T23:45:48.487Z\"}"
+  },
+  "before_pytest_substrate": {
+   "file": "S27:readings/fix4_2026_11_02/before_pytest_substrate.txt",
+   "sha256": "f18f6806fb87493629ad61fffdb1c913b19b928b9499bd5ebc7cbb2ad780edde",
+   "bytes": 3175,
+   "result": "1 failed, 43 passed in 204.62s (0:03:24)"
+  },
+  "final_harness": {
+   "file": "S27:readings/fix4_2026_11_02/final_harness.txt",
+   "sha256": "8bfe672b1456e5f5a991881654b8c4e3bd3f1315e16b7697caf551f652a8e8d0",
+   "bytes": 22213,
+   "result": "{\"passed\":111,\"failed\":0,\"total\":111,\"elapsed_ms\":167118,\"rss_mb\":189,\"node\":\"v24.13.0\",\"ran_at\":\"2026-11-03T00:31:02.493Z\"}"
+  },
+  "final_pytest_substrate": {
+   "file": "S27:readings/fix4_2026_11_02/final_pytest_substrate.txt",
+   "sha256": "a7355402e26f187e13e8c30efdcec46b89bf80c0fedd392b232180f4ed8fd529",
+   "bytes": 1145,
+   "result": "44 passed in 165.05s (0:02:45)"
+  },
+  "final_pytest_full": {
+   "file": "S27:readings/fix4_2026_11_02/final_pytest_full.txt",
+   "sha256": "aafb2a2e949c68039c222785680eb43452c005847bb18536600efe4a78241117",
+   "bytes": 1479,
+   "result": "323 passed, 12 subtests passed in 1405.76s (0:23:25)"
+  },
+  "f1_untouched": {
+   "file": "S27:readings/fix4_2026_11_02/f1_untouched.txt",
+   "sha256": "210a218160048f30715c0f35b14c8c7d928efb9a358673da9147cbc8c6b03267",
+   "bytes": 1302,
+   "line": "F-1 functions not byte-identical once in the copy: 0"
+  },
+  "mutants": {
+   "results_harness_MR3_tail_not_extended": {
+    "file": "S27:readings/fix4_2026_11_02/mutants/results_harness_MR3_tail_not_extended.json",
+    "sha256": "877bbc5f63d9600ebff7a85295436d03b57a943fd895c3bf00cd25548584ab8f",
+    "bytes": 2143,
+    "killed": 6,
+    "total": 6,
+    "by_mutant": {
+     "MR3_tail_not_extended": [
+      "S9",
+      "S20"
+     ],
+     "MR4_stop_kept_while_open": [
+      "S18"
+     ],
+     "MR5_no_api_lookup": [
+      "S18",
+      "R9f"
+     ],
+     "MR6_open_age_from_the_entry_before": [
+      "S18"
+     ],
+     "MR7_rows_end_the_attempts_walk": [
+      "S18",
+      "R9f"
+     ],
+     "MR9_scan_unbounded": [
+      "S20"
+     ]
+    }
+   },
+   "results_harness_RR07b_store_entry_fields_read": {
+    "file": "S27:readings/fix4_2026_11_02/mutants/results_harness_RR07b_store_entry_fields_read.json",
+    "sha256": "0821c4a66778517fc5b2ebc26a355d1da8ce5460cbd7c7a4466bfe081beef39c",
+    "bytes": 2168,
+    "killed": 6,
+    "total": 6,
+    "by_mutant": {
+     "RR07b_store_entry_fields_read": [
+      "S19",
+      "S20"
+     ],
+     "RR08_entry_thread_precedence_swapped": [
+      "S19"
+     ],
+     "RR09_aborted_attempt_counted": [
+      "S19"
+     ],
+     "RR10_keyed_miss_stops_the_reading": [
+      "S19"
+     ],
+     "MR1_rows_not_read": [
+      "S18",
+      "R9f"
+     ],
+     "MR2_no_attempt_opened_after_an_entry": [
+      "S18"
+     ]
+    }
+   },
+   "results_lock_RR11_amendment_sha_of_crlf_bytes": {
+    "file": "S27:readings/fix4_2026_11_02/mutants/results_lock_RR11_amendment_sha_of_crlf_bytes.json",
+    "sha256": "d5fb3f0e46bff43df1fe132db760fe2cd64418998f2ffad2e29422d1d9e8faba",
+    "bytes": 1298,
+    "killed": 2,
+    "total": 2,
+    "by_mutant": {
+     "RR11_amendment_sha_of_crlf_bytes": [
+      "test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it"
+     ],
+     "RR12_declaration_digest_64_hex_only": [
+      "test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it"
+     ]
+    }
+   },
+   "results_substrate_RR01_profile_default_kept": {
+    "file": "S27:readings/fix4_2026_11_02/mutants/results_substrate_RR01_profile_default_kept.json",
+    "sha256": "6cb5a6765a84679f498b39b46ba651a25e3093ad9f164ab7ea04091dcd29ec37",
+    "bytes": 2986,
+    "killed": 7,
+    "total": 7,
+    "by_mutant": {
+     "RR01_profile_default_kept": [
+      "test_the_workspace_is_the_default_agents"
+     ],
+     "RR02_unreadable_tree_file_skipped": [
+      "test_a_file_the_walk_cannot_read_makes_the_tree_unreadable"
+     ],
+     "RR03_check_anchor_by_payload_kind": [
+      "test_an_internal_line_rederives_its_three_keys",
+      "test_gate_is_kept_only_on_the_anchor_check_composed"
+     ],
+     "RR04_fault_replay_without_exit": [
+      "test_a_subject_defect_is_written_null_never_a_digest",
+      "test_an_internal_line_rederives_its_three_keys",
+      "test_the_lines_exit_enters_the_fault_replay"
+     ],
+     "RR05_report_counts_other_schema_as_v1": [
+      "test_another_schema_is_counted_and_split_apart"
+     ],
+     "RR06_split_reads_other_schema_as_v1": [
+      "test_another_schema_is_counted_and_split_apart"
+     ],
+     "MR8_internal_line_keys_not_compared": [
+      "test_an_internal_line_rederives_its_three_keys"
+     ]
+    }
+   }
+  },
+  "mutants_run": [
+   {
+    "file": "S27:readings/fix4_2026_11_02/mutants/run_lock.txt",
+    "sha256": "c775429b4cdc97f2b97a7c0fdfa1f4d6678e8edf6bb1cc1d96a7303344f0c828",
+    "bytes": 380
+   },
+   {
+    "file": "S27:readings/fix4_2026_11_02/mutants/run_w1.txt",
+    "sha256": "67bc560e346c8a026504aba11c6952b783580e9839e483e1bb390d5b39407e11",
+    "bytes": 550
+   },
+   {
+    "file": "S27:readings/fix4_2026_11_02/mutants/run_w2.txt",
+    "sha256": "d27a37c76a6de5d386b9839e21f23e22a8ca916ecf752e172dc15792eb123c65",
+    "bytes": 556
+   },
+   {
+    "file": "S27:readings/fix4_2026_11_02/mutants/run_w3.txt",
+    "sha256": "18f3e4bd6bbc6f27ca095b396ea4fb60c9e1a264d4bc38e42423bffead591290",
+    "bytes": 1171
+   }
+  ],
+  "rederive_candidate": {
+   "file": "S27:readings/fix4_2026_11_02/rederive_candidate.txt",
+   "sha256": "43df2065e0844e0f5fd0cdc0d0e129be36401f8fce9eb66c8e78e2d86552ba98",
+   "bytes": 485,
+   "line": "expect 8006c50b880a00c1: MATCH"
+  },
+  "readings_run": {
+   "file": "S27:readings/fix4_2026_11_02/readings_run.json",
+   "sha256": "0eff5d400d7eb365068cc21c1f697d70b80f2d1cec696ce5228f74936d565b38",
+   "bytes": 1510
+  },
+  "make_amendment_run": {
+   "file": "S27:readings/fix4_2026_11_02/make_amendment_run.txt",
+   "sha256": "54c873cf00413a2293c8fd47442dc54ec29f2e8a259f1ca8a67798c6b401aa15",
+   "bytes": 248
+  },
+  "receipts_live_1": {
+   "file": "S27:readings/fix4_2026_11_02/RECEIPTS_live_1.txt",
+   "sha256": "09b8ece05e14a4417670e4ae65da81d8ba79c4aafeca35c918074341fe893f6d",
+   "bytes": 7360
+  },
+  "receipts_live_2": {
+   "file": "S27:readings/fix4_2026_11_02/RECEIPTS_live_2.txt",
+   "sha256": "b3002fba4d77119f0b73fefe0c2ff9df4b7385eb04f02c13924a139fe7cc6c23",
+   "bytes": 7360
+  }
+ },
+ "rereview": {
+  "answered": {
+   "file": "S27:REREVIEW_ANSWERED.md",
+   "sha256": "5cce234eed12e5b60843b4db45ea30070b2c2f2ed3db5b11665ae94a8a40fa3b",
+   "bytes": 13940
+  },
+  "semantics": {
+   "probes": [
+    {
+     "file": "S27:review2/semantics/probes/around.py",
+     "sha256": "91fdb95475a91d276eae43caf4ce5851122f15730eeae054e0edb2650b130be6",
+     "bytes": 1456
+    },
+    {
+     "file": "S27:review2/semantics/probes/build_replicas.py",
+     "sha256": "9ae696c4fc59e7d6d8cfae155edc47351fa1043182df52b82a65475618efcb75",
+     "bytes": 10964
+    },
+    {
+     "file": "S27:review2/semantics/probes/emulate_reading.py",
+     "sha256": "9630ab015c909c90d52d008b47ffcf12aa81a2de4cac75b2afe9e7da7177ce7c",
+     "bytes": 1763
+    },
+    {
+     "file": "S27:review2/semantics/probes/failover_tool_counts.py",
+     "sha256": "97a2aacb1c456089be1771180b5373b20de8f5daea554b6f4bbdd00f654d40f4",
+     "bytes": 3184
+    },
+    {
+     "file": "S27:review2/semantics/probes/judge_replay.py",
+     "sha256": "65374403d203f139397d2073d6c701a0c81832c6645f148cbf3b278f2b6ec204",
+     "bytes": 1972
+    },
+    {
+     "file": "S27:review2/semantics/probes/replay_plugin.mjs",
+     "sha256": "571ec1a0f5508cef63cec9695a350500f46f5d967aa1668fb01e4fabca7c4f8a",
+     "bytes": 4525
+    },
+    {
+     "file": "S27:review2/semantics/probes/send_truth.py",
+     "sha256": "52c9ed630d4c5afb0a582e826a16dbd5336c2c8a3e5a7b30ea02400a2cbb7dba",
+     "bytes": 8069
+    },
+    {
+     "file": "S27:review2/semantics/probes/send_truth_window.py",
+     "sha256": "0ddcaabd78db10b73f2f7fe5a1f25a03df7b065827a21af5889c34b6ac5ba2fb",
+     "bytes": 8223
+    },
+    {
+     "file": "S27:review2/semantics/probes/snapshot_rows.py",
+     "sha256": "7ee665d884e530264910d4f90c8ef6aaf5d536ff77022bcbb5a1ccbafaf2bd76",
+     "bytes": 2389
+    },
+    {
+     "file": "S27:review2/semantics/probes/store_classes.py",
+     "sha256": "10a5fbb9ae237d087f8c4258abbd6d167cf94d4a7adaec747be0939dbc8eaff5",
+     "bytes": 5159
+    },
+    {
+     "file": "S27:review2/semantics/probes/synth_midrun.mjs",
+     "sha256": "6a503175919c3b109a6fe83974384bc33d20b5bbc111821b885baeefdd06bdb0",
+     "bytes": 8111
+    },
+    {
+     "file": "S27:review2/semantics/probes/tail_gaps.py",
+     "sha256": "a8516d9fa8d40c414945d9209557d430dcfb3ea29717e002383c620eb508ef7c",
+     "bytes": 1185
+    },
+    {
+     "file": "S27:review2/semantics/probes/transcript_shape.py",
+     "sha256": "83b31bccc2c2700ca8caaa346f8203df149442cd501d9b7c1da3453a0ad66d5e",
+     "bytes": 2214
+    },
+    {
+     "file": "S27:review2/semantics/probes/unmatched_reading.py",
+     "sha256": "35b577d9e0b8c469f927926c4f202e5074f8431c901462d1eb7eebf5c4197856",
+     "bytes": 2350
+    },
+    {
+     "file": "S27:review2/semantics/probes/unmatched_split.py",
+     "sha256": "ffd1d07818bc9be8b857b5d8cf4b476cdbe7dec4b9706b7596fb3d114a2c6483",
+     "bytes": 2878
+    }
+   ],
+   "e1_order": {
+    "file": "S27:review2/semantics/out/e1_order.txt",
+    "sha256": "90dc4fbb41d4557d2d178ea94083d8d27d60f3e41fcf5512cfed6d01c5be3bcd",
+    "bytes": 142
+   },
+   "synth_midrun": {
+    "file": "S27:review2/semantics/out/synth_midrun.txt",
+    "sha256": "4eadf2e26a420b4205fa30d77230b52de8038963e48de22b74b3ea14aa173c33",
+    "bytes": 2068,
+    "out": {
+     "file": "S27:review2/semantics/out/synth_midrun.json",
+     "sha256": "aa2959243fda5c6be3717a3aa3733181b8ebc629fce62b0b31abf0b1aee6d56d",
+     "bytes": 1465
+    }
+   },
+   "snapshot_rows": {
+    "file": "S27:review2/semantics/out/snapshot_rows.txt",
+    "sha256": "35cacc783ebc773efda2dc6bc559634844b6675bab28e95534b503b08d208608",
+    "bytes": 2821
+   },
+   "tail_gaps": {
+    "file": "S27:review2/semantics/out/tail_gaps.txt",
+    "sha256": "44dad896250e238536ffad00a416afc134317549c96dc441bbd8a4938691d7e5",
+    "bytes": 103
+   },
+   "failover_tool_counts": {
+    "file": "S27:review2/semantics/out/failover_tool_counts.txt",
+    "sha256": "87d84ac37fc56af7026c4e6e584061433dca7ac9a7a19d6290fc895864576e06",
+    "bytes": 2123
+   },
+   "judge_replay": {
+    "file": "S27:review2/semantics/out/judge_replay.txt",
+    "sha256": "5ea6d28df1c8fe86ffe4ab8a4dd78e3b029ef29ef9deee64dac7ec4f000c0633",
+    "bytes": 7060
+   },
+   "unmatched_split": {
+    "file": "S27:review2/semantics/out/unmatched_split.txt",
+    "sha256": "f6fc20b19d6067248a36d8b12cc000a93ee46cf685ca5712111e9fc281ba2cb0",
+    "bytes": 44
+   },
+   "unmatched_reading": {
+    "file": "S27:review2/semantics/out/unmatched_reading.txt",
+    "sha256": "82be2281b9790240514d489dcd479e13fff9b799d80c31a7bf8c8296547afa56",
+    "bytes": 1330
+   },
+   "send_truth": {
+    "file": "S27:review2/semantics/out/send_truth.json",
+    "sha256": "e2ae50aceac7fdb13817a299a71e107a668dac7296fdda39be10cc50ce41bfeb",
+    "bytes": 12476
+   },
+   "send_truth_window": {
+    "file": "S27:review2/semantics/out/send_truth_window.txt",
+    "sha256": "8874e74a528c1e4d6b45c79d73e54c9af1978ee7277457cd5f8b797bd9f3c01c",
+    "bytes": 20519
+   },
+   "emulate_all": {
+    "file": "S27:review2/semantics/out/emulate_all.txt",
+    "sha256": "d63dcb9399f58387f6bad965bf65cbc56d028587ca6f27d4717898e69d3b1126",
+    "bytes": 24978
+   },
+   "spot_1_4": {
+    "file": "S27:review2/semantics/out/spot_1_4.txt",
+    "sha256": "0716c94301b500bea1891eb742dd2de087ed33223cdf7eae81d3483487c0202b",
+    "bytes": 1487
+   },
+   "store_classes": {
+    "file": "S27:review2/semantics/out/store_classes.txt",
+    "sha256": "b2034ddbd8a9c623b46f148265d308bfe8aa43270313391b198b5c0d27f44c94",
+    "bytes": 2191
+   },
+   "transcript_shape": {
+    "file": "S27:review2/semantics/out/transcript_shape.txt",
+    "sha256": "390c4575d5b6816849ed919c50b9ef757e9e539f6407f8347b813760728a1185",
+    "bytes": 898
+   },
+   "tree_harness": {
+    "file": "S27:review2/semantics/out/tree_harness.txt",
+    "sha256": "1dcf24ade80094aa5b867682681dbc679b75f9191eaf602f04adbd0954dd1684",
+    "bytes": 19022
+   },
+   "tree_pytest_substrate": {
+    "file": "S27:review2/semantics/out/tree_pytest_substrate.txt",
+    "sha256": "bb24b507a270a846bf55799d2f7b9d62b24366583e775219ef62678c90d0cb12",
+    "bytes": 160
+   }
+  },
+  "tests": {
+   "section": {
+    "file": "S27:review2/tests/out/BUILD_LOG_section_rereview_tests.md",
+    "sha256": "43d87ef6783758eed122b6c49ef7ba3a89b79d3113a26a6f82da663a8ec39b4e",
+    "bytes": 4886
+   },
+   "tools": [
+    {
+     "file": "S27:review2/tests/tools/append_log.py",
+     "sha256": "a8d7cd62bea9a781a93c420d62735d64ebe11f8a5565ad3622dd9b594f2a024b",
+     "bytes": 1293
+    },
+    {
+     "file": "S27:review2/tests/tools/ast_compare.py",
+     "sha256": "75d5826cca15782ca0c6e3ee9d65f59f68958406aba29455cbfb28923c34dc4c",
+     "bytes": 2371
+    },
+    {
+     "file": "S27:review2/tests/tools/make_js_variants.py",
+     "sha256": "5548e2a46feda53468ddecb5e89f25354dae7b1210506e41d5f4a3da7fa14748",
+     "bytes": 1820
+    },
+    {
+     "file": "S27:review2/tests/tools/mutants_rr.py",
+     "sha256": "49ab981cba3907638773faa4afe38e3b57faa1374013f41fdfcb8fff8d9c25d0",
+     "bytes": 6165
+    },
+    {
+     "file": "S27:review2/tests/tools/probe_gate_survivors.py",
+     "sha256": "372aeb776ca716285f9b8b9dd1774991c3f2ac2555de836902deca3a39ee7f8e",
+     "bytes": 8466
+    },
+    {
+     "file": "S27:review2/tests/tools/probe_plugin.mjs",
+     "sha256": "b56f01cb8f2bc10601156d4443f81a261dbf8c00216a7116388acdf6e175f21f",
+     "bytes": 6582
+    },
+    {
+     "file": "S27:review2/tests/tools/probe_replay_gaps.py",
+     "sha256": "7acde10b077d305fe7527f52434c83f8288ddd4dc122a01a7be8999eb3599954",
+     "bytes": 4966
+    },
+    {
+     "file": "S27:review2/tests/tools/recheck_review3.py",
+     "sha256": "d2b8a1e10e425fea7bac7621f9864eb8afaaa5e66c117fb84db8cf58ace46a6f",
+     "bytes": 5443
+    },
+    {
+     "file": "S27:review2/tests/tools/rehash_live.py",
+     "sha256": "acc7a09e8ce1d7747b3d4adc18bb682aa4faec1187d3ff490bac4eb99e2d5f13",
+     "bytes": 5128
+    },
+    {
+     "file": "S27:review2/tests/tools/remove_trees.py",
+     "sha256": "6c5509af1bebb7d44b0d6c4342685c679c98667ee51779137ef5f991617f47e3",
+     "bytes": 1347
+    },
+    {
+     "file": "S27:review2/tests/tools/run_baseline.py",
+     "sha256": "8cae4dbcca5576e202754fc16fe7689b512921c7bf3ce201d4519597503457bd",
+     "bytes": 3743
+    },
+    {
+     "file": "S27:review2/tests/tools/run_rr.py",
+     "sha256": "52be8d6f046040808aa9b2ec22b4a636a5b632992e00d510b0f100ffa9c5c095",
+     "bytes": 10034
+    }
+   ],
+   "mutants_gate": {
+    "file": "S27:review2/tests/out/mutants/results_gate.json",
+    "sha256": "cc3770d174aebe5fd65cf381005b69d27a2787b7cc74aaeaeae5c8bac687f5b6",
+    "bytes": 7049
+   },
+   "mutants_lock": {
+    "file": "S27:review2/tests/out/mutants/results_lock.json",
+    "sha256": "fd96cbea76d9d85ccae068be90eb8fe3638ce201748274cd90e9bedf529f1213",
+    "bytes": 1006
+   },
+   "combined": {
+    "file": "S27:review2/tests/out/combined/combined.json",
+    "sha256": "c4a61a2545368b2577a94511aa8b5dff0ee688b9670ba9a21802d6fa18d019c7",
+    "bytes": 869
+   },
+   "probe_gate_survivors": {
+    "file": "S27:review2/tests/out/probe_gate_survivors.txt",
+    "sha256": "263a12b1d098f34b56472521cf396c74b75fb0b36b52e59ea2aa15d3b5f83b4d",
+    "bytes": 5260
+   },
+   "probe_plugin": {
+    "file": "S27:review2/tests/out/probe_plugin.txt",
+    "sha256": "e828e23d95786b8d326ab8b35ecbb19223d221c7fded10dc4c848da7150f7b51",
+    "bytes": 961
+   },
+   "probe_replay_gaps": {
+    "file": "S27:review2/tests/out/probe_replay_gaps.txt",
+    "sha256": "2ef629f4c4997a90fcbaa0a1bedb5f43bd7ddf7304d0169ab5a515e8549ed9fd",
+    "bytes": 1515
+   },
+   "recheck_review3": {
+    "file": "S27:review2/tests/out/recheck_review3/recheck.json",
+    "sha256": "dd5e707aecea80d0cf52884fecbf59c98351acaad061adddec6b82a08b75e2cf",
+    "bytes": 3510
+   }
+  }
+ },
+ "subject": {
+  "file": "S27:readings/stage3_2026_11_02/subject_manifest_live_2026_11_02.txt",
+  "sha256": "ebcb80803c89ef504f9093c3ad7aa245d5304b04f79a8cb3caf4f9844c4716f3",
+  "bytes": 1248,
+  "digest": "624924c31f5806dc708a5b788dac83edaa749c357126d102825ce80594b80e93",
+  "gate_py": "cce267f88fcaa49b22690ca9fdd88e3c85c9b57cdb8287270271d6ea71f7b6a6",
+  "stage1_reading": {
+   "file": "S27:probes/subject_manifest_live_first_read.txt",
+   "sha256": "35d64df6493baf90c7b6f7a022fc8e4df8d85c8008ad3912f6028dedf581dcd8",
+   "bytes": 1179
+  }
+ },
+ "ledger": {
+  "all": {
+   "file": "S27:readings/stage3_2026_11_02/ledger_all_from_seq1.txt",
+   "sha256": "07a651cece512299091c2b91fd01c8b7cf1f8758c9be582a9e23fc2ffc89b457",
+   "bytes": 2371,
+   "ledger": "ledger.jsonl sha256 7c1d6889baf9f7a0b1e846ecfbfa42d3733c829fa7664fced12b2ef3a11e1e76 lines 249 (read only)",
+   "sends": "send lines 117; with gate_schema 0, substrate 0, subject_digest 0",
+   "days": "send by day (UTC): {'2026-10-24': 28, '2026-10-25': 29, '2026-10-26': 12, '2026-10-27': 11, '2026-10-28': 3, '2026-10-29': 5, '2026-10-30': 6, '2026-10-31': 15, '2026-11-01': 6, '2026-11-02': 2}",
+   "stretches": "gate_sha256: {'387fc063ef11': 13, 'ff34b52d634e': 112, 'c5084df2ef57': 9, '445ac94cb968': 114}"
+  },
+  "from_136": {
+   "file": "S27:readings/stage3_2026_11_02/ledger_stretch_from_136.txt",
+   "sha256": "93503aa1eec272ab1d89c88f5cbaca1dbb9fd1b2fce598ccf638cf8469b141bd",
+   "bytes": 2073,
+   "sends": "send lines 52; with gate_schema 0, substrate 0, subject_digest 0",
+   "exits": "send by exit: {'E1': 44, 'E2': 7, 'E3': 1}",
+   "days": "send by day (UTC): {'2026-10-26': 4, '2026-10-27': 11, '2026-10-28': 3, '2026-10-29': 5, '2026-10-30': 6, '2026-10-31': 15, '2026-11-01': 6, '2026-11-02': 2}",
+   "span": "stretch seq 136-248: 113 entries, from 2026-10-26T20:41:29Z to 2026-11-02T11:14:42Z"
+  }
+ },
+ "lock_check": {
+  "tool": {
+   "before": {
+    "commit": "310df453",
+    "blob": "fa59627f1db1cdc259a3bef444db644b2a474c11",
+    "sha256_lf": "9e9163d05bf9de6f03e290d0dc17fe88c0d50de6c13cc6740f165c53a5058b1d",
+    "bytes": 30338,
+    "copy": {
+     "file": "S27:stage3/lock_hashes_310df453.py",
+     "sha256": "9e9163d05bf9de6f03e290d0dc17fe88c0d50de6c13cc6740f165c53a5058b1d",
+     "bytes": 30338
+    }
+   },
+   "after": {
+    "sha256_lf": "4f2948a3f7b5b85f4612f786cfd0554c1567a6b5b4af5d3344fa34e64701a43f",
+    "bytes": 36778
+   }
+  },
+  "live_all": {
+   "file": "S27:readings/fix4_2026_11_02/lock_check_live_all.txt",
+   "sha256": "490e3168b22c4d583a08b35564c74ea62db2f5d1a36330e948cdf1a701ef8bd9",
+   "bytes": 13949,
+   "summary": "rows 98, changed 13, built since 0, absent 10, unreadable 0, unlocked 0, bytecode 0 (strict)",
+   "rc": 1,
+   "superseded_lines": 10,
+   "clash_lines": 0,
+   "amendment_lines": [
+    [
+     "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md",
+     "2",
+     "46d3953cf17000b5"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md",
+     "4",
+     "8647691ab5faf7c6"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md",
+     "0",
+     "d48b15f8037a1401"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md",
+     "0",
+     "9f3b075911539040"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md",
+     "7",
+     "76e41f9317e5e9b3"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md",
+     "9",
+     "e8d7bdf54a23a98b"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_substrate_2026_11_02.md",
+     "22",
+     "667079498e695d12"
+    ]
+   ],
+   "statuses": {
+    "SAME": 74,
+    "CHANGED": 13,
+    "ABSENT": 10,
+    "UNLOCKED": 0,
+    "BYTECODE": 0,
+    "SKIPPED": 1,
+    "NOT BUILT": 0
+   },
+   "run_at_utc": "2026-11-03T00:33:39Z"
+  },
+  "live_six": {
+   "file": "S27:readings/fix4_2026_11_02/lock_check_live_six.txt",
+   "sha256": "003f00cb7b3bf83c3d367f2396c384203f789fe1aac7a227dbc9f09082ecab8b",
+   "bytes": 10523,
+   "summary": "rows 88, changed 1, built since 0, absent 0, unreadable 0, unlocked 0, bytecode 0 (strict)",
+   "rc": 1,
+   "superseded_lines": 0,
+   "clash_lines": 0,
+   "amendment_lines": [
+    [
+     "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md",
+     "2",
+     "46d3953cf17000b5"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md",
+     "4",
+     "8647691ab5faf7c6"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md",
+     "0",
+     "d48b15f8037a1401"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md",
+     "0",
+     "9f3b075911539040"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md",
+     "7",
+     "76e41f9317e5e9b3"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md",
+     "9",
+     "e8d7bdf54a23a98b"
+    ]
+   ],
+   "statuses": {
+    "SAME": 86,
+    "CHANGED": 1,
+    "ABSENT": 0,
+    "UNLOCKED": 0,
+    "BYTECODE": 0,
+    "SKIPPED": 1,
+    "NOT BUILT": 0
+   },
+   "run_at_utc": "2026-11-03T00:34:50Z"
+  },
+  "live_prereg_alone": {
+   "file": "S27:readings/fix4_2026_11_02/lock_check_live_prereg_alone.txt",
+   "sha256": "9807ad7082b4f0cf5396a2be6f6908614e8a4c633c63dd852141f6969fb5c30c",
+   "bytes": 8485,
+   "summary": "rows 80, changed 12, built since 1, absent 0, unreadable 0, unlocked 8, bytecode 0 (strict)",
+   "rc": 1,
+   "superseded_lines": 0,
+   "clash_lines": 0,
+   "amendment_lines": [],
+   "statuses": {
+    "SAME": 66,
+    "CHANGED": 12,
+    "ABSENT": 0,
+    "UNLOCKED": 8,
+    "BYTECODE": 0,
+    "SKIPPED": 1,
+    "NOT BUILT": 0
+   },
+   "run_at_utc": "2026-11-03T00:34:56Z"
+  },
+  "this_file_alone": {
+   "file": "S27:readings/fix4_2026_11_02/lock_check_this_file_alone.txt",
+   "sha256": "cfdb9aeffe27c64d1dc020fbb5241cae25d9eb80fcabd7e28dc1ac4d446ee652",
+   "bytes": 6389,
+   "summary": null,
+   "rc": 2,
+   "superseded_lines": 0,
+   "clash_lines": 10,
+   "amendment_lines": [
+    [
+     "AMENDMENT_darkflobi_gate_substrate_2026_11_02.md",
+     "22",
+     "667079498e695d12"
+    ]
+   ],
+   "statuses": {
+    "SAME": 0,
+    "CHANGED": 0,
+    "ABSENT": 0,
+    "UNLOCKED": 0,
+    "BYTECODE": 0,
+    "SKIPPED": 0,
+    "NOT BUILT": 0
+   },
+   "run_at_utc": "2026-11-03T00:35:04Z"
+  },
+  "copy_as_after_move": {
+   "file": "S27:readings/fix4_2026_11_02/lock_check_copy_as_after_move.txt",
+   "sha256": "090a1984453a761aca7cd38e4e59c21cf029109b1dcae09c7c5260b94fcd4b6e",
+   "bytes": 14037,
+   "summary": "rows 98, changed 0, built since 0, absent 4, unreadable 0, unlocked 0, bytecode 0 (strict)",
+   "rc": 1,
+   "superseded_lines": 10,
+   "clash_lines": 0,
+   "amendment_lines": [
+    [
+     "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md",
+     "2",
+     "46d3953cf17000b5"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md",
+     "4",
+     "8647691ab5faf7c6"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md",
+     "0",
+     "d48b15f8037a1401"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md",
+     "0",
+     "9f3b075911539040"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md",
+     "7",
+     "76e41f9317e5e9b3"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md",
+     "9",
+     "e8d7bdf54a23a98b"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_substrate_2026_11_02.md",
+     "22",
+     "667079498e695d12"
+    ]
+   ],
+   "statuses": {
+    "SAME": 93,
+    "CHANGED": 0,
+    "ABSENT": 4,
+    "UNLOCKED": 0,
+    "BYTECODE": 0,
+    "SKIPPED": 1,
+    "NOT BUILT": 0
+   },
+   "run_at_utc": "2026-11-03T00:35:04Z"
+  },
+  "bare_declarations": {
+   "file": "S27:readings/fix4_2026_11_02/lock_check_bare_declarations.txt",
+   "sha256": "665aa451de6620f1a6ba9a656643385ff0b0c7f7064179196cbba896f61a065d",
+   "bytes": 8009,
+   "summary": null,
+   "rc": 2,
+   "superseded_lines": 0,
+   "clash_lines": 8,
+   "amendment_lines": [
+    [
+     "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md",
+     "2",
+     "46d3953cf17000b5"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md",
+     "4",
+     "8647691ab5faf7c6"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md",
+     "0",
+     "d48b15f8037a1401"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md",
+     "0",
+     "9f3b075911539040"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md",
+     "7",
+     "76e41f9317e5e9b3"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md",
+     "9",
+     "e8d7bdf54a23a98b"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_substrate_2026_11_02.md",
+     "22",
+     "79d23dc5b636d7fd"
+    ]
+   ],
+   "statuses": {
+    "SAME": 0,
+    "CHANGED": 0,
+    "ABSENT": 0,
+    "UNLOCKED": 0,
+    "BYTECODE": 0,
+    "SKIPPED": 0,
+    "NOT BUILT": 0
+   },
+   "run_at_utc": "2026-11-03T00:36:09Z"
+  },
+  "old_tool_seven": {
+   "file": "S27:readings/fix4_2026_11_02/lock_check_old_tool_seven.txt",
+   "sha256": "b63ba80e96291b4605f58d4e7be5c0aa09e80edc8d32ab852104cc196a4968af",
+   "bytes": 5559,
+   "summary": null,
+   "rc": 2,
+   "superseded_lines": 0,
+   "clash_lines": 8,
+   "amendment_lines": [
+    [
+     "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md",
+     "9",
+     "e8d7bdf54a23a98b"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md",
+     "2",
+     "46d3953cf17000b5"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md",
+     "4",
+     "8647691ab5faf7c6"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md",
+     "0",
+     "d48b15f8037a1401"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md",
+     "0",
+     "9f3b075911539040"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md",
+     "7",
+     "76e41f9317e5e9b3"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_substrate_2026_11_02.md",
+     "22",
+     "667079498e695d12"
+    ]
+   ],
+   "statuses": {
+    "SAME": 0,
+    "CHANGED": 0,
+    "ABSENT": 0,
+    "UNLOCKED": 0,
+    "BYTECODE": 0,
+    "SKIPPED": 0,
+    "NOT BUILT": 0
+   },
+   "run_at_utc": "2026-11-03T00:36:10Z"
+  },
+  "old_tool_six_after_move": {
+   "file": "S27:readings/fix4_2026_11_02/lock_check_old_tool_six_after_move.txt",
+   "sha256": "ed884660175130933d4023d79bbfac733dbb4003d79d3e816e2e88359c1ad759",
+   "bytes": 11300,
+   "summary": "rows 88, changed 12, built since 0, absent 4, unreadable 0, unlocked 10, bytecode 0 (strict)",
+   "rc": 1,
+   "superseded_lines": 0,
+   "clash_lines": 0,
+   "amendment_lines": [
+    [
+     "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md",
+     "9",
+     "e8d7bdf54a23a98b"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md",
+     "2",
+     "46d3953cf17000b5"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md",
+     "4",
+     "8647691ab5faf7c6"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md",
+     "0",
+     "d48b15f8037a1401"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md",
+     "0",
+     "9f3b075911539040"
+    ],
+    [
+     "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md",
+     "7",
+     "76e41f9317e5e9b3"
+    ]
+   ],
+   "statuses": {
+    "SAME": 71,
+    "CHANGED": 12,
+    "ABSENT": 4,
+    "UNLOCKED": 10,
+    "BYTECODE": 0,
+    "SKIPPED": 1,
+    "NOT BUILT": 0
+   },
+   "run_at_utc": "2026-11-03T00:36:10Z"
+  },
+  "fix3b_readings": {
+   "live_all": {
+    "file": "S27:readings/fix3b_2026_11_02/lock_check_live_all.txt",
+    "sha256": "27413aebd7898ecd4d24a843ccfff9ef1e750a883dab8078211c4a7aa49a6fb0",
+    "bytes": 13949,
+    "summary": "rows 98, changed 13, built since 0, absent 10, unreadable 0, unlocked 0, bytecode 0 (strict)",
+    "rc": 1,
+    "superseded_lines": 10,
+    "clash_lines": 0,
+    "amendment_lines": [
+     [
+      "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md",
+      "2",
+      "46d3953cf17000b5"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md",
+      "4",
+      "8647691ab5faf7c6"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md",
+      "0",
+      "d48b15f8037a1401"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md",
+      "0",
+      "9f3b075911539040"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md",
+      "7",
+      "76e41f9317e5e9b3"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md",
+      "9",
+      "e8d7bdf54a23a98b"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_substrate_2026_11_02.md",
+      "22",
+      "02b12c18d3049188"
+     ]
+    ],
+    "statuses": {
+     "SAME": 74,
+     "CHANGED": 13,
+     "ABSENT": 10,
+     "UNLOCKED": 0,
+     "BYTECODE": 0,
+     "SKIPPED": 1,
+     "NOT BUILT": 0
+    },
+    "run_at_utc": "2026-11-02T22:01:04Z"
+   },
+   "live_six": {
+    "file": "S27:readings/fix3b_2026_11_02/lock_check_live_six.txt",
+    "sha256": "429067552c4944806632c715f12a16a787d784961465156135f2e8c375af861d",
+    "bytes": 10523,
+    "summary": "rows 88, changed 1, built since 0, absent 0, unreadable 0, unlocked 0, bytecode 0 (strict)",
+    "rc": 1,
+    "superseded_lines": 0,
+    "clash_lines": 0,
+    "amendment_lines": [
+     [
+      "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md",
+      "2",
+      "46d3953cf17000b5"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md",
+      "4",
+      "8647691ab5faf7c6"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md",
+      "0",
+      "d48b15f8037a1401"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md",
+      "0",
+      "9f3b075911539040"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md",
+      "7",
+      "76e41f9317e5e9b3"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md",
+      "9",
+      "e8d7bdf54a23a98b"
+     ]
+    ],
+    "statuses": {
+     "SAME": 86,
+     "CHANGED": 1,
+     "ABSENT": 0,
+     "UNLOCKED": 0,
+     "BYTECODE": 0,
+     "SKIPPED": 1,
+     "NOT BUILT": 0
+    },
+    "run_at_utc": "2026-11-02T22:01:15Z"
+   },
+   "live_prereg_alone": {
+    "file": "S27:readings/fix3b_2026_11_02/lock_check_live_prereg_alone.txt",
+    "sha256": "6b568604c7df92a6681b573d8e48282f25cc4ef163fd9aba31bfbcd2fd384ba4",
+    "bytes": 8485,
+    "summary": "rows 80, changed 12, built since 1, absent 0, unreadable 0, unlocked 8, bytecode 0 (strict)",
+    "rc": 1,
+    "superseded_lines": 0,
+    "clash_lines": 0,
+    "amendment_lines": [],
+    "statuses": {
+     "SAME": 66,
+     "CHANGED": 12,
+     "ABSENT": 0,
+     "UNLOCKED": 8,
+     "BYTECODE": 0,
+     "SKIPPED": 1,
+     "NOT BUILT": 0
+    },
+    "run_at_utc": "2026-11-02T22:01:20Z"
+   }
+  },
+  "mutants": {
+   "file": "S27:readings/stage3_2026_11_02/lock_mutants.json",
+   "sha256": "6369e52d4ec95c9df684048b3fb9e87c3c986e714e246f5471673dce36523db0",
+   "bytes": 2590,
+   "killed": 10,
+   "total": 10,
+   "by_mutant": {
+    "M1_undeclared_accepted": [
+     "test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it"
+    ],
+    "M2_declared_digest_unchecked": [
+     "test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it"
+    ],
+    "M3_given_order": [
+     "test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it"
+    ],
+    "M4_undated_allowed": [
+     "test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it"
+    ],
+    "M5_unused_declaration_allowed": [
+     "test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it"
+    ],
+    "M6_superseded_rows_stay_in_force": [
+     "test_each_amendment_parses_to_the_lock_rows_its_table_states"
+    ],
+    "M7_name_twice_allowed": [
+     "test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it"
+    ],
+    "M8_malformed_declaration_skipped": [
+     "test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it"
+    ],
+    "M9_one_file_two_digests_allowed": [
+     "test_check_reads_amendment_rows_after_the_prereg_and_exits_2_on_a_clash"
+    ],
+    "M10_superseded_not_printed": [
+     "test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it"
+    ]
+   }
+  },
+  "fix3_readings": {
+   "live_all": {
+    "file": "S27:readings/fix3_2026_11_02/lock_check_live_all.txt",
+    "sha256": "7a55ce6164cb90c2cd2a3027aebfed31bdd08a22016a156f8df264f7788535ec",
+    "bytes": 13949,
+    "summary": "rows 98, changed 12, built since 0, absent 10, unreadable 0, unlocked 0, bytecode 0 (strict)",
+    "rc": 1,
+    "superseded_lines": 10,
+    "clash_lines": 0,
+    "amendment_lines": [
+     [
+      "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md",
+      "2",
+      "46d3953cf17000b5"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md",
+      "4",
+      "8647691ab5faf7c6"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md",
+      "0",
+      "d48b15f8037a1401"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md",
+      "0",
+      "9f3b075911539040"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md",
+      "7",
+      "76e41f9317e5e9b3"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md",
+      "9",
+      "e8d7bdf54a23a98b"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_substrate_2026_11_02.md",
+      "22",
+      "e3ddee8b685fcdc8"
+     ]
+    ],
+    "statuses": {
+     "SAME": 75,
+     "CHANGED": 12,
+     "ABSENT": 10,
+     "UNLOCKED": 0,
+     "BYTECODE": 0,
+     "SKIPPED": 1,
+     "NOT BUILT": 0
+    },
+    "run_at_utc": "2026-11-02T19:50:50Z"
+   },
+   "live_six": {
+    "file": "S27:readings/fix3_2026_11_02/lock_check_live_six.txt",
+    "sha256": "d3b4269803235e9335328187d9dea4a128495259f407bef1e042761d5e43e504",
+    "bytes": 10523,
+    "summary": "rows 88, changed 0, built since 0, absent 0, unreadable 0, unlocked 0, bytecode 0 (strict)",
+    "rc": 0,
+    "superseded_lines": 0,
+    "clash_lines": 0,
+    "amendment_lines": [
+     [
+      "AMENDMENT_darkflobi_gate_canary_replan_2026_10_25.md",
+      "2",
+      "46d3953cf17000b5"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_count_rule_2026_10_25.md",
+      "4",
+      "8647691ab5faf7c6"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_lint_overclaims_2026_10_25.md",
+      "0",
+      "d48b15f8037a1401"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_lock_rows_2026_10_25.md",
+      "0",
+      "9f3b075911539040"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_posting_skill_2026_10_25.md",
+      "7",
+      "76e41f9317e5e9b3"
+     ],
+     [
+      "AMENDMENT_darkflobi_gate_anchor_native_2026_10_26.md",
+      "9",
+      "e8d7bdf54a23a98b"
+     ]
+    ],
+    "statuses": {
+     "SAME": 87,
+     "CHANGED": 0,
+     "ABSENT": 0,
+     "UNLOCKED": 0,
+     "BYTECODE": 0,
+     "SKIPPED": 1,
+     "NOT BUILT": 0
+    },
+    "run_at_utc": "2026-11-02T19:51:02Z"
+   },
+   "live_prereg_alone": {
+    "file": "S27:readings/fix3_2026_11_02/lock_check_live_prereg_alone.txt",
+    "sha256": "a258f69f3dc811e6ad152feccd78aea0b11f6a52e1f937f4cea69de968b4ec98",
+    "bytes": 8485,
+    "summary": "rows 80, changed 11, built since 1, absent 0, unreadable 0, unlocked 8, bytecode 0 (strict)",
+    "rc": 1,
+    "superseded_lines": 0,
+    "clash_lines": 0,
+    "amendment_lines": [],
+    "statuses": {
+     "SAME": 67,
+     "CHANGED": 11,
+     "ABSENT": 0,
+     "UNLOCKED": 8,
+     "BYTECODE": 0,
+     "SKIPPED": 1,
+     "NOT BUILT": 0
+    },
+    "run_at_utc": "2026-11-02T19:51:08Z"
+   }
+  },
+  "stage3_readings": {
+   "live_all": {
+    "file": "S27:readings/stage3_2026_11_02/lock_check_live_all.txt",
+    "sha256": "5503f3a13adf467145f301111cf270dc97553a9640e4eea05cac7689cb4fdf97",
+    "bytes": 14044
+   },
+   "live_six": {
+    "file": "S27:readings/stage3_2026_11_02/lock_check_live_six.txt",
+    "sha256": "363a4237eaffe6a6e6e52b1c45bb14cfbfb6a41a375936a4e7ff4141368b73c5",
+    "bytes": 10597
+   },
+   "bare_and_old_tool": {
+    "file": "S27:readings/stage3_2026_11_02/lock_check_bare_and_old_tool.txt",
+    "sha256": "fa43ae2cb6d19609206a71bce95ee3e3f79014dbb9d15fdf3df838bc203eaa44",
+    "bytes": 13645
+   }
+  }
+ },
+ "repo_tests": {
+  "default": {
+   "file": "S27:readings/fix4_2026_11_02/repo_tests.txt",
+   "sha256": "99564ce1655de895bf753dc8539be0fa97209bc6812e532d6608adc8bab2807f",
+   "bytes": 1623,
+   "result": "301 passed, 8 skipped in 519.85s (0:08:39)"
+  },
+  "box_named_on_copy": {
+   "file": "S27:readings/fix4_2026_11_02/repo_tests_box_named_on_copy.txt",
+   "sha256": "5f7444fd9d88d599cbdecb858b22f7e7a27421128ebdb2d58e4caea5d4ab7379",
+   "bytes": 147,
+   "result": "50 passed in 40.43s"
+  },
+  "final": {
+   "file": "S27:readings/fix4_2026_11_02/repo_tests_final.txt",
+   "sha256": "b187c5c7d4335280fb8ea1a8b8e098d4ad88444cd1200b389de4b14066e77aa4",
+   "bytes": 2100,
+   "result": "301 passed, 8 skipped in 558.59s (0:09:18)",
+   "note": "the same files on the bytes committed beside this receipt"
+  },
+  "final_run1": {
+   "file": "S27:readings/fix3_2026_11_02/repo_tests_final_run1.txt",
+   "sha256": "e5282bb32caa2f33166931fc7bcef583751a87c0a070764aa58b38be7a3ccfc5",
+   "bytes": 6533,
+   "result": "2 failed, 299 passed, 8 skipped in 418.56s (0:06:58)",
+   "note": "fixer 3's run while the disk read under 1G free; its two failures each pass alone"
+  },
+  "final_run1_failures_alone": {
+   "file": "S27:readings/fix3_2026_11_02/repo_tests_final_run1_failures_alone.txt",
+   "sha256": "71edb15d0534cf351932030dccca00c8c4fb794197412810a106ca57a33d3df8",
+   "bytes": 339
+  },
+  "surface_lint": {
+   "file": "S27:readings/fix4_2026_11_02/surface_lint_texts.json",
+   "sha256": "4c5104fead7eeb2526455d9d9405a28d8621a5ae039658998cfa13828285e1bb",
+   "bytes": 172,
+   "files_read": 45,
+   "hits": 0
+  },
+  "surface_lint_patch_scripts": {
+   "file": "S27:readings/fix4_2026_11_02/surface_lint_patch_scripts.json",
+   "sha256": "bbb314ceb550d22318adcc3e4298de7f9a155ac2493274a157d778b1ec39f721",
+   "bytes": 2886,
+   "files_read": 19,
+   "hits": 7,
+   "rules": [
+    "charter/ordinal"
+   ],
+   "note": "the round's patch scripts hold, in their hunks, the text the next patch replaced"
+  }
+ },
+ "rehearsal": {
+  "file": "S27:rehearsal/rehearsals.json",
+  "sha256": "c7de507675a57e25dd33a7fd210907196dd32436b78f7f204ccf4411ef52239a",
+  "bytes": 39711,
+  "all_ok": true,
+  "script_sha256": "e99c4c68db838e3be7bafbc2206d043563bed70bcf5fe0ae44b4952ba76c4065",
+  "table_sha256": "8bccb5017283d9313e7b73e7e41de125c7b5c26a90c796b56721e9186ca09729",
+  "rehearsal_sha256": "9e5a165e8f5a56fa603ee45ab5fbc21a619c65443d1583aa21212e6ac2d24135",
+  "wrapper_sha256": "810edfc9fd599d50d94358dd9d3ca913844bae5b23dc332473284dc5e168c1f3",
+  "ran_at": "2026-11-03T00:27:48Z",
+  "scenarios": {
+   "happy_move_rollback_rollback": true,
+   "stage_fault_1": true,
+   "stage_fault_22": true,
+   "fault_mkdir_3_then_rollback": true,
+   "fault_rename_1_then_rollback": true,
+   "fault_rename_19_then_rollback": true,
+   "fault_rename_22_then_rollback": true,
+   "rollback_fault_then_rollback": true,
+   "required_present": true,
+   "stray_present": true,
+   "extra_file_present": true,
+   "new_folder_present": true,
+   "target_edited": true,
+   "extra_py_in_gate": true,
+   "extra_py_in_helpers": true,
+   "killed_after_18_renames_then_rollback_then_move": true,
+   "killed_while_staging_then_rollback_then_move": true,
+   "killed_inside_rollback_then_rollback_then_move": true,
+   "bytecode_in_created_folders_then_rollback": true,
+   "foreign_file_in_created_folder_then_rollback": true,
+   "extra_py_appears_mid_move_then_rollback": true,
+   "box_only_refusals_in_process": true
+  },
+  "happy": {
+   "gate_sha256_before": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f 20",
+   "gate_sha256_after_move": "8006c50b880a00c183a6ced62206ec254eb04732c07f77729fef101454dcbf3d 21",
+   "gate_sha256_after_rollback": "445ac94cb96876181f0a354ff776e6a702cf3064609d4d9a7b2227da2f4e3f1f 20",
+   "move_record_gate_sha256": "8006c50b880a00c183a6ced62206ec254eb04732c07f77729fef101454dcbf3d 21",
+   "new_dirs_after_move": [
+    "tests/fixtures/gate_v0_25d53fd6",
+    "tests/fixtures/gate_v0_25d53fd6/helpers",
+    "tests/fixtures/gate_v0_4416692c",
+    "tests/fixtures/gate_v0_4416692c/helpers"
+   ]
+  },
+  "run": {
+   "file": "S27:readings/fix4_2026_11_02/rehearsal_run.txt",
+   "sha256": "b73f3c320711a6451daee85fba241385dcdd56c63d0cd3caa329d5bea15d52d4",
+   "bytes": 1207
+  },
+  "before_fix": {
+   "file": "S27:readings/fix3_2026_11_02/rehearsals_before_fix.json",
+   "sha256": "d4c7d67244ee40bb4c8664c8132cb2e32d981c7e1a1043615823577cdcfd50cd",
+   "bytes": 43954,
+   "script_sha256": "9c76ed7320dc3fa921995b961267d760da978de8d15c9e86742b0b917c3dee6a",
+   "all_ok": false,
+   "scenarios": {
+    "happy_move_rollback_rollback": false,
+    "stage_fault_1": true,
+    "stage_fault_22": true,
+    "fault_mkdir_3_then_rollback": true,
+    "fault_rename_1_then_rollback": true,
+    "fault_rename_19_then_rollback": true,
+    "fault_rename_22_then_rollback": true,
+    "rollback_fault_then_rollback": true,
+    "required_present": true,
+    "stray_present": true,
+    "extra_file_present": true,
+    "new_folder_present": true,
+    "target_edited": true,
+    "extra_py_in_gate": false,
+    "extra_py_in_helpers": false,
+    "killed_after_18_renames_then_rollback_then_move": false,
+    "killed_while_staging_then_rollback_then_move": false,
+    "killed_inside_rollback_then_rollback_then_move": true,
+    "bytecode_in_created_folders_then_rollback": false,
+    "foreign_file_in_created_folder_then_rollback": true,
+    "extra_py_appears_mid_move_then_rollback": false,
+    "box_only_refusals_in_process": false
+   }
+  }
+ }
+}
