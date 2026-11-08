@@ -1292,7 +1292,7 @@ def test_a_later_amendment_supersedes_an_earlier_row_only_when_it_declares_it(tm
 
 
 def test_the_folder_reads_in_date_order_and_each_supersession_is_declared(tmp_path):
-    """The folder's nine files, given in any order, read by date then name; the token-shapes file (2026-11-04) declares
+    """The folder's eight files, given in any order, read by date then name; the token-shapes file (2026-11-04) declares
     each of the seven earlier rows it supersedes and the substrate file (2026-11-08) each of the eight rows in force when
     it is read (D9), each states its count, and without a file's declarations the folder clashes on each of its paths."""
     lock = _load(LOCK_PY, "lock_hashes")

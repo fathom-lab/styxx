@@ -1,12 +1,13 @@
 {
- "what": "The substrate AMENDMENT re-based onto the token-shapes gate (2026-11-08): the readings it cites under RC8:, each bound to the sha256 of the file under S8: (C:/Users/heyzo/clawd/wt/_substrate_2026_11_08/) that holds it; the 26 files the move carries as the copy holds them; the move table and scripts; the rehearsal's record; the patch scripts and diffs the re-base rests on. The 2026-11-02 build's readings stay bound by receipts/substrate_2026_11_02.json (RC:), carried beside this file unchanged.",
- "made_by": "S8:tools/make_receipt_v2.py",
- "made_at_utc": "2026-11-08T20:11:40Z",
+ "what": "The substrate AMENDMENT re-based onto the token-shapes gate (2026-11-08) and revised the same day after three reviews of the re-base: the readings it cites under RC8:, each bound to the sha256 of the file under S8: (C:/Users/heyzo/clawd/wt/_substrate_2026_11_08/) that holds it (the fix round's readings under the keys the text cites, the re-base's own readings, which the reviews read, under rebase.*); the 26 files the move carries as the copy holds them after the fix round; the move table and scripts; the rehearsal's record; the patch scripts and diffs of the re-base and the fix round; the three reviews and the reviewers' readings the text cites. The 2026-11-02 build's readings stay bound by receipts/substrate_2026_11_02.json (RC:), carried beside this file unchanged.",
+ "made_by": "S8:tools/make_receipt_v3.py",
+ "made_at_utc": "2026-11-08T21:24:29Z",
  "amendment": {
   "path": "papers/darkflobi-gate/AMENDMENT_darkflobi_gate_substrate_2026_11_08.md",
-  "lf_sha256": "7b0502bafb99768535921954afdf0de0322e926602975b70cba38b63c4246945",
+  "lf_sha256": "089b25408c02083679edf2b3f2f64d3d62718786fe75794da42dd3eb4befb971",
   "rows": 26,
-  "declarations": 8
+  "declarations": 8,
+  "fix_round": "2026-11-08, after S8:REVIEW_replay.md, S8:REVIEW_record.md and S8:REVIEW_wiring.md; S8:REPORT_fix.md"
  },
  "stands_beside": {
   "path": "papers/darkflobi-gate/receipts/substrate_2026_11_02.json",
@@ -24,6 +25,16 @@
     "path": "S8:readings/RECEIPTS_live_after.txt",
     "sha256": "c41edc1fbc9419f70dd82f4b5bd19167a77f5a9c7d19e9350b3134411a91faa3",
     "bytes": 5517
+   },
+   "readings/RECEIPTS_live_before_fix.txt": {
+    "path": "S8:readings/RECEIPTS_live_before_fix.txt",
+    "sha256": "036c4f7f830872a699cfe3cca725cae568c957c76a56c17e25201f8d03173cf2",
+    "bytes": 4646
+   },
+   "readings/RECEIPTS_live_after_fix.txt": {
+    "path": "S8:readings/RECEIPTS_live_after_fix.txt",
+    "sha256": "931632705be665c56f2735acaf7b084d9fe7fb9a700f7ed493ac6f710b6a5902",
+    "bytes": 4645
    }
   },
   "baseline": {
@@ -32,26 +43,53 @@
    "bytes": 730
   },
   "after": {
+   "path": "S8:readings/fix_pytest_full.txt",
+   "sha256": "0d86fd8cbdbbdbe838bea3cd736639a3cb93a4d545b3a81f5a2b730b80bb1075",
+   "bytes": 823
+  },
+  "pytest_substrate": {
+   "path": "S8:readings/fix_pytest_substrate.txt",
+   "sha256": "31735f46a7103ae7b8708f7ba02c2d6317c7032357f912d54bb16b7b94deeecc",
+   "bytes": 428
+  },
+  "harness": {
+   "path": "S8:readings/fix_harness.txt",
+   "sha256": "eff418167c38b8c575663899a3eee2fa73dda2ede702f3405f65378fe50bdc48",
+   "bytes": 21419
+  },
+  "fix.targeted": {
+   "readings/fix_targeted_pytest_substrate.txt": {
+    "path": "S8:readings/fix_targeted_pytest_substrate.txt",
+    "sha256": "84dfa793b4545b75c4240a55acb367b1cdffda409789c7d71d9ac4d31040b451",
+    "bytes": 588
+   },
+   "readings/fix_targeted_2_pytest_substrate.txt": {
+    "path": "S8:readings/fix_targeted_2_pytest_substrate.txt",
+    "sha256": "c91d0452c0a0a866acb37e4d85ee34267f38a042c4bfbfdbb00abd28c2cb6c44",
+    "bytes": 427
+   }
+  },
+  "rebase.after": {
    "path": "S8:readings/after_pytest_full.txt",
    "sha256": "8b40f8137073ce8d06e00bf71b9cae3fe2048aee25a48d6ca3b58a6eed5d81aa",
    "bytes": 796
   },
-  "harness": {
+  "rebase.harness": {
    "path": "S8:readings/after_harness.txt",
    "sha256": "cb0ac5f9318b10bfbaf21298e42b6490eb60df954fe338922ed06ec21bf6dd81",
    "bytes": 21425
   },
-  "dev.pytest_substrate": {
+  "rebase.dev.pytest_substrate": {
    "path": "S8:readings/dev_pytest_substrate.txt",
    "sha256": "5a8162a6d431e832d6129b365711ab7d6a76b5ff1ad4de51117cbe291f6e98b5",
    "bytes": 391
   },
-  "dev.harness": {
+  "rebase.dev.harness": {
    "path": "S8:readings/dev_harness.txt",
    "sha256": "6a78c534cdfe80865d5f82baf4ff5356a5d6495637527aff909680834cb59f55",
    "bytes": 21370
   },
-  "rederive.ledger_copy": {
+  "rebase.rederive.ledger_copy": {
    "readings/rederive_ledger_copy.txt": {
     "path": "S8:readings/rederive_ledger_copy.txt",
     "sha256": "7ccde015b8708e3f1f6849b0eb9e8f226c38aecc8403689860d872f38cc54eeb",
@@ -63,10 +101,34 @@
     "bytes": 42840
    }
   },
+  "rederive.ledger_copy": {
+   "readings/fix_rederive_ledger_copy.txt": {
+    "path": "S8:readings/fix_rederive_ledger_copy.txt",
+    "sha256": "173643e453e9c4f0789e8e41f034d0fc0063c707952c5f6db8b9a8428ab39597",
+    "bytes": 745
+   },
+   "readings/fix_rederive_ledger_copy.json": {
+    "path": "S8:readings/fix_rederive_ledger_copy.json",
+    "sha256": "ec53a54e04c65a535664020b9e0c35bb58738ee156e569eb65aa91d7cd93bd86",
+    "bytes": 42959
+   }
+  },
+  "rederive.live_pair": {
+   "review/rederive_livepair.txt": {
+    "path": "S8:review/rederive_livepair.txt",
+    "sha256": "81d94e249c30dae276bd2083f56b348f7bd0b655f04d51af41cb6c6b38e80887",
+    "bytes": 609
+   },
+   "review/rederive_livepair.json": {
+    "path": "S8:review/rederive_livepair.json",
+    "sha256": "909947271d06fd4a0c54ef6ff4e0d6f7214777e0b9e074d2fd36be96f18d7396",
+    "bytes": 42780
+   }
+  },
   "rederive.candidate": {
    "path": "S8:readings/rederive_candidate.txt",
-   "sha256": "6330615ed994d69f1be07abb7b9185bed4e33753371dd851a5ab603669cfd9de",
-   "bytes": 33971
+   "sha256": "0a19354bde2ac00fd189149d230fd2297f65a19569b1de4afd0a368167618016",
+   "bytes": 2203
   },
   "ledger.stretches": {
    "path": "S8:readings/ledger_counts.txt",
@@ -78,16 +140,21 @@
    "sha256": "f76fb95776a18dd7531e030ea72fa575f5b50daedaf950205b8a642ee6667214",
    "bytes": 599
   },
+  "ledger.counts_v3": {
+   "path": "S8:readings/ledger_counts_v3.txt",
+   "sha256": "f05d51f7aabd699c59bf2a1496feb3ab4bec5e98c3c2fb907d0385b7d86496f2",
+   "bytes": 1546
+  },
   "move.table": {
    "substrate_move_table.json": {
     "path": "S8:substrate_move_table.json",
-    "sha256": "90af649d04e61d5921759a271abb6fb9c5b5cc7f93c427af2e6ca1c8d8a9c67f",
+    "sha256": "a8c5e29bd641d90fc1f20d113b806fb1fe04db806b79e0ae024afa06ccd56f5f",
     "bytes": 11222
    },
    "readings/make_move_table.txt": {
     "path": "S8:readings/make_move_table.txt",
-    "sha256": "6615a8e2fd3d611a69d837001144cee75bffe8bdaf5fabe4b43e88e4b8ea2957",
-    "bytes": 6218
+    "sha256": "639a60154ef98aed21b60359d372e6cfb25b146abdd7ad284448d9909ac7cf3d",
+    "bytes": 6369
    }
   },
   "move.scripts": {
@@ -115,7 +182,7 @@
   "rehearsal": {
    "rehearsal/rehearsals.json": {
     "path": "S8:rehearsal/rehearsals.json",
-    "sha256": "a2107dde95da02977930ce38f7bb18cb71e9a34a6f5e522fa2f4fa8966bf1837",
+    "sha256": "6599c3d3be96a7fe27e64447bf5d0053ec0f3beb0b32d0013c4ad161cc613e87",
     "bytes": 41503
    },
    "rehearsal/wrap.py": {
@@ -125,7 +192,7 @@
    },
    "readings/rehearsal_run.txt": {
     "path": "S8:readings/rehearsal_run.txt",
-    "sha256": "5a916aaa7500ec021909c5e234e3ce91e8643eb883d93cb8b534259bc39bf780",
+    "sha256": "2f4e5d32a919e9e3e937f1e44ee8548ca32179f1850420646d2066e2e3823a76",
     "bytes": 1105
    }
   },
@@ -136,43 +203,48 @@
   },
   "lock_check.live_eight": {
    "path": "S8:readings/lock_check_live_eight.txt",
-   "sha256": "3842cdf34f3480645d553f361213136fa80a61dcf463548fc9cd5e4aedbd4177",
+   "sha256": "6001252803edf9c38414cc4a3bec38dd60dec94e17bd79a5138ec6f73990e1e5",
    "bytes": 16624
   },
   "lock_check.this_file_alone": {
    "path": "S8:readings/lock_check_this_file_alone.txt",
-   "sha256": "3785dc7c0c08f8251bf6445f16d021fc0b657bba7954b86684547ed6d0052e2b",
+   "sha256": "9431bdc054d599a957d63b8223e16dc6a429e32d0dfcdb7d343002582c1b51f7",
    "bytes": 5494
   },
   "lock_check.bare_declarations": {
    "path": "S8:readings/lock_check_bare_declarations.txt",
-   "sha256": "6b60ebacefdc8b1e7466d0c348a82d64a6736d9dfa37fd14b5b79bbb7663f753",
+   "sha256": "2d4a1794a7616dbff1163afa70478f1436f513e9b6241885de97a14f2800ddc3",
    "bytes": 8885
   },
   "lock_check.copy_as_after_move": {
    "path": "S8:readings/lock_check_copy_as_after_move.txt",
-   "sha256": "6ce8f26d9172540aceb77245a39082b057b2a5e051af0928fb1b3ba35c013a82",
+   "sha256": "268888da6f4aa8608a6b04e400d9dd38074a35df8a30b15f17843a92784901f8",
    "bytes": 16884
   },
   "lock_check.live_prereg_alone": {
    "path": "S8:readings/lock_check_live_prereg_alone.txt",
-   "sha256": "a286c0da3f76fda1dbae153e89399951cde8cebd4b13feeabd2cb4f78dd63e0a",
+   "sha256": "1b50eefd2dd7d9bd1b478a6f28b454634203c52af84436d2217e6097be2c1092",
    "bytes": 8765
+  },
+  "lock_check.old_file_with_seven": {
+   "path": "S8:readings/lock_check_old_file_with_seven.txt",
+   "sha256": "faeb407d11023daab77f2351d75db37e59a83aa8f425c5f7d22c7eb89cafeceb",
+   "bytes": 5965
   },
   "repo_tests": {
    "path": "S8:readings/repo_tests.txt",
-   "sha256": "9c176f807fc61c0098c607a4db49bcf8bf2ce5eb3cda53b48fe472a169634033",
+   "sha256": "2f1291d39260546cbea496c1c0efac2821e7813ae8f848ea679a82d69ca9724a",
    "bytes": 461
   },
   "surface_lint": {
    "path": "S8:readings/surface_lint_texts.txt",
-   "sha256": "ed2063d81509ffe8eae714f4b058529cc5dd7ab0ea6f768e7dec8d5ac7eaa02e",
-   "bytes": 323
+   "sha256": "02c66eb9be08ae96d4ef56a973033149967736ef7cf9730f2c0e1acc00adfb03",
+   "bytes": 426
   },
   "copy.install": {
    "path": "S8:readings/copy_after_install_sha256.txt",
-   "sha256": "c05eb9976e5dc0c08e6849ef468c4bd376b0e420bfaf4ff2618dfa51130fb8c7",
-   "bytes": 2285
+   "sha256": "5aacfafbc53060663994fdf51096548e7144bbbad04f9491f3aee82259a86bd9",
+   "bytes": 2259
   },
   "patches": {
    "ref/substrate_patch_gate_py.diff": {
@@ -227,8 +299,77 @@
    },
    "readings_fill_v2.json": {
     "path": "S8:readings_fill_v2.json",
-    "sha256": "6e32b2fde0ff7ff3b08a735d34d9b75cd036d310830a65351e018289c404dec5",
-    "bytes": 13052
+    "sha256": "8ce2d0fd432facc37a5ad531901ca1ae7f9a99310bd2aed3759314b87502bf04",
+    "bytes": 16730
+   }
+  },
+  "fix.tools": {
+   "tools/fix_round_code.py": {
+    "path": "S8:tools/fix_round_code.py",
+    "sha256": "80229ad375f87ffa05157a001462df67b23ea215acb501a200450abe844132c9",
+    "bytes": 31349
+   },
+   "tools/fix_round_code_2.py": {
+    "path": "S8:tools/fix_round_code_2.py",
+    "sha256": "fa2a4b8c41eb877fcc7a8a77f2835dcff1eb69a88fb01975e0bdfeb101757955",
+    "bytes": 2086
+   },
+   "tools/fix_amendment_v3.py": {
+    "path": "S8:tools/fix_amendment_v3.py",
+    "sha256": "43468c1bd6165d4ab01c3415fab7e99f620177b14480fd676c1e8921760b3917",
+    "bytes": 29739
+   },
+   "tools/fix_repo_texts_v3.py": {
+    "path": "S8:tools/fix_repo_texts_v3.py",
+    "sha256": "f2f44efa9345370a8cec362b506bb2cc3b179b0819e90f648d00ce335ea7a1a9",
+    "bytes": 8456
+   },
+   "tools/make_fill_v3.py": {
+    "path": "S8:tools/make_fill_v3.py",
+    "sha256": "69a647fb16596676c4c0b0e0b106bce61eadb28173555e5398b8f146bd31a1cf",
+    "bytes": 23709
+   },
+   "tools/ledger_counts_v3.py": {
+    "path": "S8:tools/ledger_counts_v3.py",
+    "sha256": "bfb0b126e8a40731501f3bc2081df549cfc38ed470ce9346197f82ee9bd304a4",
+    "bytes": 4292
+   },
+   "tools/receipts_live.py": {
+    "path": "S8:tools/receipts_live.py",
+    "sha256": "b01c2ca208e5be820de742ccacfd054861e44ae0606295928e9e360766ae2a29",
+    "bytes": 3131
+   }
+  },
+  "reviews": {
+   "REVIEW_replay.md": {
+    "path": "S8:REVIEW_replay.md",
+    "sha256": "67de6b2b88ad81f7ae6ec4c1ca39298a0168f293bc3fea515d8c1edb438a6269",
+    "bytes": 23767
+   },
+   "REVIEW_record.md": {
+    "path": "S8:REVIEW_record.md",
+    "sha256": "c6903c0b71008c3b856c42ff18619143ed0a5ae6965ce70b2778ea40a8ccbe8d",
+    "bytes": 19096
+   },
+   "REVIEW_wiring.md": {
+    "path": "S8:REVIEW_wiring.md",
+    "sha256": "1b4328fd82d1826e54b190d85b52bb1bc9f39ae89c9c1cb672258035cf8f0828",
+    "bytes": 23106
+   },
+   "review_replay/tools/demo_gaps.py": {
+    "path": "S8:review_replay/tools/demo_gaps.py",
+    "sha256": "a8c8239a35a8b89f814430ef09cf57539b57c6432599d72e22f1d3e38e97e5d4",
+    "bytes": 3402
+   },
+   "review_wiring/substrate_of_id_strings.txt": {
+    "path": "S8:review_wiring/substrate_of_id_strings.txt",
+    "sha256": "157ce1252c534ae5798d1e8b335f07aff742a981537748a7dc60ea7cd8c6369e",
+    "bytes": 611
+   },
+   "review/lock_check_old_file_with_seven_reviewer.txt": {
+    "path": "S8:review/lock_check_old_file_with_seven_reviewer.txt",
+    "sha256": "8c316d0209f25105cb2102b5de933dbfe47fab426a0615262911e908c19e6815",
+    "bytes": 3375
    }
   },
   "ref.amendment_2026_11_02": {
@@ -349,8 +490,8 @@
   {
    "order": 13,
    "path": "W:gate/tests/test_substrate.py",
-   "sha256": "d7cd3cac0a155f71ea17b6a15873297151df03715afc1a2e3ea3841ecd924001",
-   "bytes": 77548,
+   "sha256": "7dba8b7936cff5b5e8de2013962dba512b047615fa732f2edc1c15416c81b23a",
+   "bytes": 88457,
    "before": null,
    "source": "S8:gate_copy/tests/test_substrate.py",
    "enters_gate_sha256": false
@@ -403,8 +544,8 @@
   {
    "order": 19,
    "path": "W:gate/README.md",
-   "sha256": "7361a1dec2d749deeccd1a0d5e833dba3722965e7f4655f2ffc0fac6a060adcc",
-   "bytes": 27407,
+   "sha256": "39cd38ee27464f546f3754ccc939cbfad8ab7cd388df5a2c791a3b6d6e0a376b",
+   "bytes": 28072,
    "before": "54e9a33f5bf4a3475197c6ee76a4564cea6d77d58dbf37e220865beb453b95bf",
    "source": "S8:gate_copy/README.md",
    "enters_gate_sha256": false
@@ -430,8 +571,8 @@
   {
    "order": 22,
    "path": "W:gate/gate_verify.py",
-   "sha256": "8ffa0295e51fefaa2507b161829e25f419849939fe21afd1da65848e16d41b4c",
-   "bytes": 34119,
+   "sha256": "90164f2d121feac792701a7ada0734ce2ba6d03ad2ea60d534e4b99bb2d57949",
+   "bytes": 36091,
    "before": "5ab8454c15918734a7946bf493959506ed37f65e4234b2d499d9977c9a404ee3",
    "source": "S8:gate_copy/gate_verify.py",
    "enters_gate_sha256": true
@@ -439,8 +580,8 @@
   {
    "order": 23,
    "path": "W:gate/gate.py",
-   "sha256": "e1960c37d9dcdb56215566f864e80c1ca5e51707ce445fe6d6b42bd9de5b1e54",
-   "bytes": 120226,
+   "sha256": "40586451bf657f6bb6dac454dbdd37f1f375b0ae2bda23d7fd659f5a88908023",
+   "bytes": 121835,
    "before": "c17e3d06c52ac929a1bfdc673451b04661fc70c1f24992b21d9f3deb99b239cc",
    "source": "S8:gate_copy/gate.py",
    "enters_gate_sha256": true
@@ -473,7 +614,7 @@
    "enters_gate_sha256": true
   }
  ],
- "candidate_gate_sha256": "17de31a1962650191b93383692156928eefd5318f1c468ab4524a3bfc26af2bb",
+ "candidate_gate_sha256": "7249a8f86a586ae0e6ebb8b3d362f2cb1820c61e0c57f110c09b51e5ed149962",
  "candidate_files": 21,
  "gate_sha256_stages": [
   {
@@ -496,31 +637,31 @@
   },
   {
    "after_order": 22,
-   "gate_sha256": "5d0a39fc39c8282b37b7d5eba90f3f9ae4425c3ac95c1d039f58760916bfe8b0",
+   "gate_sha256": "d4e3b181520332c9c1b1df6d3c4d5ee5e5f4ccd211b68e9d6e6c799ae83bc984",
    "files": 21,
    "what": "after W:gate/gate_verify.py"
   },
   {
    "after_order": 23,
-   "gate_sha256": "4f786b7e5cf6e078da662bb4c9357940e3ab61b0e5a8522487055de44da08d45",
+   "gate_sha256": "c1078717c99d72b93c5ac73e8386ac3255e112a4a7193e76857637d65f5c440d",
    "files": 21,
    "what": "after W:gate/gate.py"
   },
   {
    "after_order": 24,
-   "gate_sha256": "3d269cea160ffcdd8821fd1a4d5bc163e02265716bace7a0d2e5b3d643144798",
+   "gate_sha256": "e51423103bfb50477a164b29e3b735ca0d0eae4548c8b510387068a0983fe8ae",
    "files": 21,
    "what": "after ~/.clawdbot/extensions/styxx-gate/README.md"
   },
   {
    "after_order": 25,
-   "gate_sha256": "3c9b72f10703fbde475d14f215bf270a6bb4fc40df2e24d7cd245b2152ab88ce",
+   "gate_sha256": "c3b42a029234ec0953183510f3e744d2cb1e75a0f04b4b96ec2fae34275f81b5",
    "files": 21,
    "what": "after ~/.clawdbot/extensions/styxx-gate/clawdbot.plugin.json"
   },
   {
    "after_order": 26,
-   "gate_sha256": "17de31a1962650191b93383692156928eefd5318f1c468ab4524a3bfc26af2bb",
+   "gate_sha256": "7249a8f86a586ae0e6ebb8b3d362f2cb1820c61e0c57f110c09b51e5ed149962",
    "files": 21,
    "what": "after ~/.clawdbot/extensions/styxx-gate/index.js"
   }
@@ -535,8 +676,8 @@
   "README.md": "515ab11d6c8a5fffc98841976b470c2d9227ae5f1f53294cbc7db21b57229980"
  },
  "work_folder_private_bytes": [
-  "S8:verify_home/ (the replay's scratch home: payload copies of the live sources' texts; delete when convenient)",
-  "S8:ledger_copy.jsonl (a copy of the live ledger: hashes and verdicts, no text; delete when convenient)",
-  "S8:gate_copy/ and S8:dev_tree/ hold copies of W:gate/config.json, anchor_dest.txt, head.txt, anchor_state.json, plugin_sent_index.jsonl and plugin_failures.jsonl as the house rule's robocopy carries them; none printed"
+  "S8:verify_home/, S8:verify_home_harness/, S8:review/verify_home_livepair/ and S8:review_replay/verify_home/ (the replays' scratch homes: payload copies of the live sources' texts; delete when convenient)",
+  "S8:ledger_copy.jsonl and S8:review_replay/ledger_copy.jsonl (copies of the live ledger: hashes, verdicts and, on the 192 send lines written before the token-shapes move, the stored tokens of their unbound numerals, the five id-bearing lines the token-shapes amendment names among them; delete when convenient)",
+  "S8:gate_copy/, S8:dev_tree/ and S8:review/gate_copy_livepair/ hold copies of W:gate/config.json, anchor_dest.txt, head.txt, anchor_state.json, plugin_sent_index.jsonl and plugin_failures.jsonl as the house rule's robocopy carries them; none printed"
  ]
 }
