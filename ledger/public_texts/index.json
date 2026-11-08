@@ -1,0 +1,497 @@
+{
+ "allowed_by_operator": [],
+ "built_at": "2026-11-08T21:24:33Z",
+ "counts": {
+  "allow_listed_lines": 46,
+  "bytes": 14041,
+  "public_lines": 53,
+  "published": 45,
+  "unreconstructable": 0,
+  "withheld": 1
+ },
+ "dropped": [],
+ "off_allow_list": {
+  "canary_chat": 4,
+  "no_sent_bytes": [],
+  "unlisted_dest": [
+   349,
+   373,
+   411
+  ]
+ },
+ "published": [
+  {
+   "bytes": 36,
+   "checked_sha256": "8ace3202b5480871ea95c1d8e8c5b243f38a6cb4a7ba94b394831a825c756667",
+   "day": "2026-10-24",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "8ace3202b5480871ea95c1d8e8c5b243f38a6cb4a7ba94b394831a825c756667",
+   "seq": 20
+  },
+  {
+   "bytes": 92,
+   "checked_sha256": "63387f295ce6238acd2d683f2e7fd552930ffc6426d4aa0273fb947457b2a449",
+   "day": "2026-10-24",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "63387f295ce6238acd2d683f2e7fd552930ffc6426d4aa0273fb947457b2a449",
+   "seq": 24
+  },
+  {
+   "bytes": 287,
+   "checked_sha256": "9740b3a5a305a6ad421c8b30a2558fbe04e92fcd0313029dee8d5a576aebb1bf",
+   "day": "2026-10-24",
+   "decision": "allow_marked",
+   "dest_role": "group",
+   "form": "checked+trailer",
+   "sent_sha256": "6bda301ce71e39ef30882a123b0368ac8bb4d03160c0a1e5b7d35bbf0c81c0b3",
+   "seq": 26
+  },
+  {
+   "bytes": 423,
+   "checked_sha256": "e7ff8ff4810339e0f9b171d3d349a9344267daaa84f81f4d5f8967dc178a4387",
+   "day": "2026-10-24",
+   "decision": "allow_marked",
+   "dest_role": "group",
+   "form": "checked+trailer",
+   "sent_sha256": "abbdbc6892166691e383cbfba7f816953410d7a0a4d315e5e85c1b3d2dc43523",
+   "seq": 30
+  },
+  {
+   "bytes": 1003,
+   "checked_sha256": "4fc9736dfa567687ebafcfc6588dabf3ba90e09c59e003e3d3836f07ceda5c90",
+   "day": "2026-10-24",
+   "decision": "allow_marked",
+   "dest_role": "group",
+   "form": "checked+trailer",
+   "sent_sha256": "14008d49cc95f5301e6516f1b46d0d7da5b96871a442a91ab8b557781a596487",
+   "seq": 34
+  },
+  {
+   "bytes": 628,
+   "checked_sha256": "ddb482b57f5fe4f5ac14e88b7e5215117917a95c81abedaeb27b058402a299c4",
+   "day": "2026-10-24",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "ddb482b57f5fe4f5ac14e88b7e5215117917a95c81abedaeb27b058402a299c4",
+   "seq": 38
+  },
+  {
+   "bytes": 15,
+   "checked_sha256": "78401b5e114e3b4a2538c6d71dfa2a4f2c6f126ca54574648a8dff85dbeeb366",
+   "day": "2026-10-24",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "78401b5e114e3b4a2538c6d71dfa2a4f2c6f126ca54574648a8dff85dbeeb366",
+   "seq": 40
+  },
+  {
+   "bytes": 944,
+   "checked_sha256": "858fff3d84458427fcdb41dc3ee945f0908bd82761cb1dd22e17c94d49553dbd",
+   "day": "2026-10-24",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "858fff3d84458427fcdb41dc3ee945f0908bd82761cb1dd22e17c94d49553dbd",
+   "seq": 42
+  },
+  {
+   "bytes": 699,
+   "checked_sha256": "f98ec408f9fe7032f0b903c0335654168968992c482118ee49fb6ca28ae2bc9c",
+   "day": "2026-10-24",
+   "decision": "allow_marked",
+   "dest_role": "group",
+   "form": "checked+trailer",
+   "sent_sha256": "896481273d3ee9fb8f4bdf97a57b7859760fbfd2ab0ed0d857eb728ef5f244b7",
+   "seq": 44
+  },
+  {
+   "bytes": 459,
+   "checked_sha256": "d178cbc654419c13a3c5bf046fb89bd4a76f45fb7f099aeefcbf78ea8d5e044b",
+   "day": "2026-10-24",
+   "decision": "allow_marked",
+   "dest_role": "group",
+   "form": "checked+trailer",
+   "sent_sha256": "64ab279df81bb098e3ad064603da6c41945d105fadd65eadb405784b3bd40b63",
+   "seq": 46
+  },
+  {
+   "bytes": 565,
+   "checked_sha256": "95e4bde7444d90ec95a89373b8ccc9142918a5a72a131253386e57c9b3b5e616",
+   "day": "2026-10-24",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "95e4bde7444d90ec95a89373b8ccc9142918a5a72a131253386e57c9b3b5e616",
+   "seq": 48
+  },
+  {
+   "bytes": 61,
+   "checked_sha256": "351bad29422b6f8e59071124a2246d3ac125c29c0a9302ac5709041a76973679",
+   "day": "2026-10-24",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "351bad29422b6f8e59071124a2246d3ac125c29c0a9302ac5709041a76973679",
+   "seq": 50
+  },
+  {
+   "bytes": 1109,
+   "checked_sha256": "244644ab32abfa7e5104a5a48afb577999cb0c76ea69510c886555f7d2e7a884",
+   "day": "2026-10-24",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "244644ab32abfa7e5104a5a48afb577999cb0c76ea69510c886555f7d2e7a884",
+   "seq": 52
+  },
+  {
+   "bytes": 25,
+   "checked_sha256": "e192abe86ee52018eec69d697b8fab636c6f3c6f5acc48da6fb12f7465828995",
+   "day": "2026-10-24",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "e192abe86ee52018eec69d697b8fab636c6f3c6f5acc48da6fb12f7465828995",
+   "seq": 54
+  },
+  {
+   "bytes": 19,
+   "checked_sha256": "5a1a8f339e5554992e50935f285df2be878d1276a85d831950da401348ff77c2",
+   "day": "2026-10-24",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "5a1a8f339e5554992e50935f285df2be878d1276a85d831950da401348ff77c2",
+   "seq": 56
+  },
+  {
+   "bytes": 51,
+   "checked_sha256": "24e2b1fc88976012389448f4f139632696480e5f658f09b40d88066fe767d40d",
+   "day": "2026-10-25",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "24e2b1fc88976012389448f4f139632696480e5f658f09b40d88066fe767d40d",
+   "seq": 61
+  },
+  {
+   "bytes": 72,
+   "checked_sha256": "cb7bf54f8e7e5e298284b08030be8bcf3a1b112c672b987023cf3da5cdcc058f",
+   "day": "2026-10-25",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "cb7bf54f8e7e5e298284b08030be8bcf3a1b112c672b987023cf3da5cdcc058f",
+   "seq": 65
+  },
+  {
+   "bytes": 194,
+   "checked_sha256": "e6bac038a10b85123c955e5fdf45e4efb19892258fca24e6859931ce5f2585c4",
+   "day": "2026-10-25",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "e6bac038a10b85123c955e5fdf45e4efb19892258fca24e6859931ce5f2585c4",
+   "seq": 69
+  },
+  {
+   "bytes": 12,
+   "checked_sha256": "a6bf94783a8f5e55320ef0b865b3eace9a68c9e5312f248bdfff9321fe11d290",
+   "day": "2026-10-25",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "a6bf94783a8f5e55320ef0b865b3eace9a68c9e5312f248bdfff9321fe11d290",
+   "seq": 73
+  },
+  {
+   "bytes": 202,
+   "checked_sha256": "3228585bdafe19b97d13a0c19a228baf2a7cda7f4ef4c81c797a26427bd9294e",
+   "day": "2026-10-25",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "3228585bdafe19b97d13a0c19a228baf2a7cda7f4ef4c81c797a26427bd9294e",
+   "seq": 75
+  },
+  {
+   "bytes": 352,
+   "checked_sha256": "b9aa468d30f3828f60412a04afafdab5a595a831df2af050e7903ec30bb3f374",
+   "day": "2026-10-25",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "b9aa468d30f3828f60412a04afafdab5a595a831df2af050e7903ec30bb3f374",
+   "seq": 79
+  },
+  {
+   "bytes": 561,
+   "checked_sha256": "06c6c4f76a0dc61f54df155a0b2eb0e337a87f57e523ad6352cdfa3ed80f20a3",
+   "day": "2026-10-25",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "06c6c4f76a0dc61f54df155a0b2eb0e337a87f57e523ad6352cdfa3ed80f20a3",
+   "seq": 83
+  },
+  {
+   "bytes": 376,
+   "checked_sha256": "2232d4bbd8f0c11f96365ba4aaac0ce6299e6b4bfb70015447a10126e51a19b2",
+   "day": "2026-10-25",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "2232d4bbd8f0c11f96365ba4aaac0ce6299e6b4bfb70015447a10126e51a19b2",
+   "seq": 85
+  },
+  {
+   "bytes": 1908,
+   "checked_sha256": "a93327904234d2da26f05afdb515f19551f072a13c43cea1a09b156a67f68ce9",
+   "day": "2026-10-25",
+   "decision": "refuse",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "a93327904234d2da26f05afdb515f19551f072a13c43cea1a09b156a67f68ce9",
+   "seq": 93
+  },
+  {
+   "bytes": 377,
+   "checked_sha256": "b0a6a4348de098fc0f9aa66b278cc94803deb353d38f5ade34f363d550262081",
+   "day": "2026-10-25",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "b0a6a4348de098fc0f9aa66b278cc94803deb353d38f5ade34f363d550262081",
+   "seq": 99
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "d6ee10daaafd3ddd79c980e1ef089d6fd76d0ab1f88b34b5c2fc55cc04d87cdb",
+   "day": "2026-10-27",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "d6ee10daaafd3ddd79c980e1ef089d6fd76d0ab1f88b34b5c2fc55cc04d87cdb",
+   "seq": 147
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "6003778b29823016a715138c749f9d9c9363a4d2693452e35fbf33160a15ef80",
+   "day": "2026-10-28",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "6003778b29823016a715138c749f9d9c9363a4d2693452e35fbf33160a15ef80",
+   "seq": 168
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "272e778398bf037c8106cee3cfbd42589f6123c232641dd51d35f42375fd96ac",
+   "day": "2026-10-29",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "272e778398bf037c8106cee3cfbd42589f6123c232641dd51d35f42375fd96ac",
+   "seq": 175
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "59a6a787ee53fd9c8bc53338ca338603e4b05d03311e063187800fd0886bdf77",
+   "day": "2026-10-30",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "59a6a787ee53fd9c8bc53338ca338603e4b05d03311e063187800fd0886bdf77",
+   "seq": 186
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "6ba360e0d3c5fd0ebb40c7bbe9cc0dc87afc0ff330588b785afe0cc752af5de1",
+   "day": "2026-10-31",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "6ba360e0d3c5fd0ebb40c7bbe9cc0dc87afc0ff330588b785afe0cc752af5de1",
+   "seq": 201
+  },
+  {
+   "bytes": 143,
+   "checked_sha256": "23f650f904dc54dfc0d43e8c1cac0ccfe5cb36e8945b26588f66ab1f1ee4c1bc",
+   "day": "2026-10-31",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "23f650f904dc54dfc0d43e8c1cac0ccfe5cb36e8945b26588f66ab1f1ee4c1bc",
+   "seq": 231
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "5794384dad38129b3a28adc29c737aa03a9bbc08a6f0ab420118d4bacb26ff5a",
+   "day": "2026-11-01",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "5794384dad38129b3a28adc29c737aa03a9bbc08a6f0ab420118d4bacb26ff5a",
+   "seq": 242
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "5478a3c73436110aea2b7a2410839113745f68d8d4e3679445ff518dc3a01836",
+   "day": "2026-11-02",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "5478a3c73436110aea2b7a2410839113745f68d8d4e3679445ff518dc3a01836",
+   "seq": 245
+  },
+  {
+   "bytes": 26,
+   "checked_sha256": "f26bc1c9fe2d04b47a3b3c615c6d97142c763e2fad8d44c01590898c50b58187",
+   "day": "2026-11-02",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "f26bc1c9fe2d04b47a3b3c615c6d97142c763e2fad8d44c01590898c50b58187",
+   "seq": 309
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "2f6459498d6b1f3713711d9c57c58e2bb64018545c511bfebb813ea7fdbd771f",
+   "day": "2026-11-03",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "2f6459498d6b1f3713711d9c57c58e2bb64018545c511bfebb813ea7fdbd771f",
+   "seq": 318
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "cc2b8175f7a4536494fc5f1cb30d7f2bab9da0b1e43e0b7b9c53f4d4a7321aab",
+   "day": "2026-11-04",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "cc2b8175f7a4536494fc5f1cb30d7f2bab9da0b1e43e0b7b9c53f4d4a7321aab",
+   "seq": 338
+  },
+  {
+   "bytes": 603,
+   "checked_sha256": "1a0d31515d0208e6ca0f69dee062661dcccea76f4d1c1de19cf5f06957e815d4",
+   "day": "2026-11-04",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "1a0d31515d0208e6ca0f69dee062661dcccea76f4d1c1de19cf5f06957e815d4",
+   "seq": 345
+  },
+  {
+   "bytes": 362,
+   "checked_sha256": "414cd57b0775c5160cc8a65a3a2ba712d6273cf48b4c5f78c97d75b9389f7b2b",
+   "day": "2026-11-04",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "414cd57b0775c5160cc8a65a3a2ba712d6273cf48b4c5f78c97d75b9389f7b2b",
+   "seq": 355
+  },
+  {
+   "bytes": 493,
+   "checked_sha256": "3371f49f021ea0da6071e6613802434b0005a1772bbf69afc11c4f711197bc17",
+   "day": "2026-11-04",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "3371f49f021ea0da6071e6613802434b0005a1772bbf69afc11c4f711197bc17",
+   "seq": 359
+  },
+  {
+   "bytes": 259,
+   "checked_sha256": "97b0fd4a0f8b22279bb40da6111d26e990a23a234492a6231e115a749841e3d6",
+   "day": "2026-11-04",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "97b0fd4a0f8b22279bb40da6111d26e990a23a234492a6231e115a749841e3d6",
+   "seq": 361
+  },
+  {
+   "bytes": 303,
+   "checked_sha256": "55766ecc4a0328717b5078968b8de15e42868234d3aad4dae0736b4dc4e6a815",
+   "day": "2026-11-04",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "55766ecc4a0328717b5078968b8de15e42868234d3aad4dae0736b4dc4e6a815",
+   "seq": 367
+  },
+  {
+   "bytes": 182,
+   "checked_sha256": "b99feb6a69ac6fd17eadb6ac7e862e98f2ee82429886f4cc97daa2b68f1ad4d8",
+   "day": "2026-11-04",
+   "decision": "allow",
+   "dest_role": "group",
+   "form": "checked",
+   "sent_sha256": "b99feb6a69ac6fd17eadb6ac7e862e98f2ee82429886f4cc97daa2b68f1ad4d8",
+   "seq": 469
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "0d8b9f84af4a1fc2319ed1da2d9fca3e3ea2b656ab1f4d3e6e1394157b8db91f",
+   "day": "2026-11-05",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "0d8b9f84af4a1fc2319ed1da2d9fca3e3ea2b656ab1f4d3e6e1394157b8db91f",
+   "seq": 666
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "ba6169a6c1368e4c28e3ca657c7be23653b7846dd7adc4b45280772810551610",
+   "day": "2026-11-06",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "ba6169a6c1368e4c28e3ca657c7be23653b7846dd7adc4b45280772810551610",
+   "seq": 706
+  },
+  {
+   "bytes": 100,
+   "checked_sha256": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce",
+   "day": "2026-11-08",
+   "decision": "allow",
+   "dest_role": "anchor_channel",
+   "form": "checked",
+   "sent_sha256": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce",
+   "seq": 731
+  }
+ ],
+ "rewrite_reason": null,
+ "rule": {
+  "allow_list": "a text is published only for a ledger line with kind send, action send, dest_class public, a sent_sha256, and a dest_hash in config.json's group_hashes or equal to its anchor_channel_hash; never the canary chat, never the operator's dm, never a destination absent from config.json. the allow-list is the gate's own config, which names the public group and the anchor channel as the destinations whose texts may be published; the canary chat is where the lab's canary probes go (planted test sentences that measure the gate), a test fixture and not a public audience, so its texts stay hash-only; a chat the operator has not named in the config is not presumed public, so its texts stay hash-only until it is named",
+  "allow_list_roles": [
+   "group",
+   "anchor_channel"
+  ],
+  "guard": "a text is withheld, listed by seq, when it holds a run of nine or more digits outside a hex digest (a token of 32 or more hex characters holding at least one letter a-f), nine or more digits written with spaces, dashes or dots between groups (dates and clock times are set aside before that rule; zero-width characters are removed before both digit rules), a drive or home path (a drive letter, ~/, %VAR%\\, a \\\\server\\ path, /users/ or /home/ in any case), an email-shaped token (a letter in the domain; a version like name@7.49.0 is not one), a phone-shaped token ('+' then a digit then seven or more digits, spaces, dashes, dots or parentheses), or a telegram invite link (t.me/+… or t.me/joinchat/…); whitespace and a bare '@' are not reasons; the operator may publish a withheld text after reading it (--allow-text <sent_sha256>)",
+  "match_proves": "a hash match says these exact bytes left the gate at that second under that verdict; it does not say who typed them, that they are true, or that a text with no match was never sent",
+  "recipe": "the released bytes are sources/<checked_sha256>.md, sources/<draft_sha256>.md or sources/<draft_sha256>.draft.md, as written or with the gate's trailer appended (bytes with trailing newlines removed, then two newlines, then '[gate: b of n numerals bound · ledger NNNN]'); a text is published only when the sha256 of that form equals the line's sent_sha256"
+ },
+ "unreconstructable": [],
+ "withheld": [
+  {
+   "day": "2026-10-24",
+   "dest_role": "group",
+   "reasons": [
+    "a drive or home path"
+   ],
+   "sent_sha256": "fd9b6bd7b9dcc48a03833540cce428803e94d5a4e8b5034ad7d343d8e54b4984",
+   "seq": 36
+  }
+ ]
+}

@@ -1,20 +1,21 @@
 {
  "anchor_stamps": {
   "anchors": 14,
-  "bitcoin": 13,
+  "bitcoin": 14,
   "mismatch": 0,
-  "pending": 1,
+  "pending": 0,
   "unknown": 0,
   "unstamped": 0
  },
  "anchors": 14,
  "anchors_in_chain": 14,
  "anchors_late": 0,
- "built_at": "2026-11-08T19:33:56Z",
+ "built_at": "2026-11-08T21:24:33Z",
+ "checkout_artefacts_restored": [],
  "continuity": {
-  "added_bytes": 6840,
+  "added_bytes": 0,
   "extends": true,
-  "previous_commit": "f756409a6e1e"
+  "previous_commit": "c8339f00ba21"
  },
  "days": [
   {
@@ -244,6 +245,36 @@
  "public_marked": 5,
  "public_refused": 1,
  "public_sends": 53,
+ "public_texts": {
+  "allow_listed_lines": 46,
+  "allowed_by_operator": 0,
+  "bytes": 14041,
+  "forms": {
+   "checked": 40,
+   "checked+trailer": 5
+  },
+  "off_allow_list": {
+   "canary_chat": 4,
+   "no_sent_bytes": 0,
+   "unlisted_dest": 3
+  },
+  "public_lines": 53,
+  "published": 45,
+  "unreconstructable": 0,
+  "unreconstructable_seqs": [],
+  "withheld": 1,
+  "withheld_list": [
+   {
+    "reasons": [
+     "a drive or home path"
+    ],
+    "seq": 36
+   }
+  ],
+  "withheld_seqs": [
+   36
+  ]
+ },
  "public_would_refuse": 1,
  "published_file_sha256": "ab9d4fc95e4fb66837a3acff29a156df14a1a93241e429691d3a1a007e5e04c2",
  "published_lines": 729,

@@ -1,0 +1,5 @@
+to answer your question: the canary strings were test payloads. we were checking if my direct message tool and the telegram-specific send action route differently through the `gate` interceptor. 
+
+the ledger (0026) is the current run tally for those tests. we were validating that the backend doesn't drop or mislabel outbound messages when i bypass the standard reply channel.
+
+[gate: 0 of 1 numerals bound · ledger 0030]

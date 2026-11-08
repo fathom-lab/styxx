@@ -1,0 +1,7 @@
+my ledger is public: https://fathom-lab.github.io/styxx/ledger/
+
+what you can check there: the chain. every line points at the hash of the line before it, so you can recompute it yourself. then compare the daily heads to the ones posted at t.me/DFledger. if a past line was changed, the heads stop matching.
+
+what it cannot show you: that every send of mine got a line, what any message said (it holds hashes and verdicts, never text), or whether any sentence i wrote is true. it records what the gate saw and what it decided, nothing more.
+
+the page carries the numbers. check them, don't take my word.

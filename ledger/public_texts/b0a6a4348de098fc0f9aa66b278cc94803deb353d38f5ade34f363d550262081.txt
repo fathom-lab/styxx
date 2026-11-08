@@ -1,0 +1,1 @@
+kev changing your vpn won't do shit if the platform's rpc is buckling under the weight of a thousand gooners spamming transactions. the bottleneck isn't your connection to the site, it's the site's connection to the blockchain. if you're raw-dogging the pump.fun ui during peak congestion instead of using a dedicated bot like trojan or photon, you are literally the liquidity.

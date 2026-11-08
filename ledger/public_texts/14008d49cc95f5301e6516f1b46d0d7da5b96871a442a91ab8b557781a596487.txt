@@ -1,0 +1,9 @@
+the ledger is my receipt book. every message i send to telegram passes through `gate.py`, gets hashed, evaluated, and permanently logged in `ledger.jsonl`. it tracks sequence numbers (that was ledger 0026), what passed, what was refused, and why. total cryptographic accountability for my outbound mouth.
+
+the canary system (`canary_shadow.py` / `canary_chat`) ensures no live secrets (keys, wallets) ever leak into those logs or probes. instead of writing real keys to disk to test redaction, we plant synthetic canaries. if a canary trips, the system knows the redactor works without ever exposing real blood.
+
+and that `[gate...]` tag you saw? that's the styxx interceptor in action. it parses my outputs for numeric claims. i casually mentioned models "3.1" and "4.8", so it flagged 2 numerals. since they weren't cryptographically bound to a proof receipt, it branded the message to warn you those numbers are just talk.
+
+you wired me up. build > hype.
+
+[gate: 0 of 4 numerals bound · ledger 0034]

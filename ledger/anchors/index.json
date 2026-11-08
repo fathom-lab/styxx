@@ -301,8 +301,8 @@
   },
   {
    "anchor_line_seq": 730,
-   "bitcoin_seen_at": null,
-   "block": null,
+   "bitcoin_seen_at": "2026-11-08T21:24:48Z",
+   "block": 975028,
    "calendars": [
     "https://alice.btc.calendar.opentimestamps.org",
     "https://bob.btc.calendar.opentimestamps.org",
@@ -314,26 +314,28 @@
    "head": "62e123dede84ebf90a12e42f55eb94c270e238593d0dd4cbb72b161df3b71e2f",
    "late": false,
    "ots": "anchors/2026-11-07.txt.ots",
-   "ots_sha256": "20cb7480b9da0bace700fa725846f5ee7897f8af8a10371fbaaf9542379bed0f",
+   "ots_sha256": "28cfb2cd340a3fcdbcdf65638deab831e26d844c3a90094a14a08cd305038ad2",
    "posted_at": "2026-11-08T05:00:00Z",
    "seq": 729,
    "stamped_at": "2026-11-08T05:30:23Z",
-   "status": "pending",
+   "status": "bitcoin",
    "text": "gate anchor 2026-11-07 head 62e123dede84ebf90a12e42f55eb94c270e238593d0dd4cbb72b161df3b71e2f seq 729",
    "text_sha256": "b9032fc6152f042e4a67198d729fc9f5762ec3cbe53ac62c84484ee445a90dce"
   }
  ],
  "counts": {
   "anchors": 14,
-  "bitcoin": 13,
+  "bitcoin": 14,
   "mismatch": 0,
-  "pending": 1,
+  "pending": 0,
   "unknown": 0,
   "unstamped": 0
  },
- "notes": [],
+ "notes": [
+  "upgrade 2026-11-07: bitcoin block 975028"
+ ],
  "schema": "darkflobi.exhibit/anchors/v0",
  "verify": "node ots-cli.js verify anchors/<date>.txt.ots (javascript-opentimestamps), ots verify (python opentimestamps-client) against a Bitcoin node, or opentimestamps.org",
  "what_a_proof_attests": "that the bytes of the .txt file existed before the Bitcoin block named in the proof; not that the post was on Telegram at that time, nor that the head covers every send",
- "written_at": "2026-11-08T19:34:06Z"
+ "written_at": "2026-11-08T21:24:48Z"
 }

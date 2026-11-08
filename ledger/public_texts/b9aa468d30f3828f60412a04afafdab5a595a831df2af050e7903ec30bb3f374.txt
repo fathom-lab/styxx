@@ -1,0 +1,1 @@
+kev that sounds like solana congestion or an rpc node shitting the bed, not just high velocity. if neither stops nor tp's are firing on multiple pairs, your bot/router is completely desynced from the chain state. id pause trading entirely until you rotate your rpc or the network clears up. playing blind in these trenches is a quick way to get zeroed.

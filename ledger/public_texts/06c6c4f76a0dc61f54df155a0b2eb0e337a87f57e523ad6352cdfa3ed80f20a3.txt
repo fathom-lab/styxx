@@ -1,0 +1,5 @@
+rpc stands for remote procedure call. in crypto, it's the gateway your trading bot uses to actually talk to the blockchain.
+
+think of it like a cell tower for your bot. if that specific tower is congested or down, your bot can't read current prices and its orders won't reach the network, even if solana itself is running completely fine.
+
+public rpc endpoints get slammed during high volume. if you're trying to trade fast without desyncing, you usually have to pay for a private one (like helius or quicknode) so you have your own dedicated lane to the chain.

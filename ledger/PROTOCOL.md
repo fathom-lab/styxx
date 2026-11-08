@@ -83,6 +83,49 @@ that the post existed by the stamping day.
   publish a seq withheld before; a publisher who must do otherwise records `extends: false` with the reason. On the
   exhibit branch `git log -p ledger/ledger.jsonl` therefore shows additions only, except where a line says why not.
 - `anchors/<date>.txt`, `anchors/<date>.txt.ots`, `anchors/index.json`: the posts, their proofs, their state.
+- `public_texts/<sent_sha256>.txt`, `public_texts/index.json` (when the publisher runs with `--public-texts`): the
+  released bytes of the allow-listed public sends. The allow-list rule: a text is published only for a line with
+  `kind: send`, `action: send`, `dest_class: public`, a `sent_sha256`, and a `dest_hash` in the gate's
+  `config.json` `group_hashes` or equal to its `anchor_channel_hash`; never the canary chat, never the operator's
+  dm, never a destination absent from the config (those lines stay hash-only, and the index counts them beside the
+  published ones: `off_allow_list`). The recipe: the candidates are the gate's own copies
+  `sources/<checked_sha256>.md`, `sources/<draft_sha256>.md` and `sources/<draft_sha256>.draft.md`, each taken as
+  written or with the gate's trailer appended (the bytes with trailing newlines removed, two newlines, then
+  `[gate: b of n numerals bound · ledger NNNN]`, as the gate appends it); a text is published only when the
+  sha256 of that form equals the line's `sent_sha256`, so each file's name is the digest of its own bytes, and no
+  byte is added or removed (no trailing newline). Only the single-trailer form is re-derived: the gate joins several
+  marks with a newline, and a send with more than one mark, like a sworn source whose prepared footer was split
+  (the stripped text then exists in no file the gate keeps), re-derives from nothing and is listed. A line whose
+  candidates do not re-derive is listed in the index as `unreconstructable` with its seq and its reason and is not
+  published — except a text an earlier build already published, which is carried forward unchanged (form
+  `carried_from_previous_build`, its bytes re-checked against `sent_sha256`), since removing it would be a rewrite.
+  Bytes that re-derive but are not valid UTF-8 (a lone surrogate, which the gate keeps and hashes) are listed the
+  same way and never written. A third class sits beside the canary chat and the unlisted destinations under
+  `off_allow_list`: `no_sent_bytes`, a line to an allow-listed destination whose `action` is not `send` or that
+  carries no `sent_sha256`. The text guard: a text holding a run of nine or more digits outside a hex digest (a
+  digest here is exactly 64, 40 or 32 hex characters with at least one letter among them; an all-digit run is not
+  one, and digits glued to a digest are seen), nine or more digits written with spaces, dashes or dots between
+  groups (dates and clock times are set aside before that rule; zero-width characters are removed before both digit
+  rules), a drive or home path (a drive letter, `~/`, `%VAR%\`, a `\\server\` path, `/users/` or `/home/` in any
+  case), an email-shaped token (a letter in the domain: `name@7.49.0` is a version, not an address), a
+  phone-shaped token (`+` then a digit then seven or more digits, spaces, dashes, dots or parentheses) or a
+  telegram invite link (`t.me/+…`, `t.me/joinchat/…`) is withheld and listed (`withheld`: seq, `sent_sha256`, role,
+  day, reasons); whitespace and a bare `@` (a public handle) are not reasons here. A withheld text is published only
+  after a person has read it (`--allow-text <sent_sha256>`), and the index records that under
+  `allowed_by_operator`; the publisher takes that list from the committed index only (`git show HEAD:`), never from
+  a file on disk, so a hand-written `index.json` cannot stand in for the operator's reading, and in a worktree that
+  is not a checkout the reading lasts for the build it was given to. A published text that newly trips the guard
+  (the rules grew) refuses the build until the operator reads it (`--allow-text`) or drops it (`--allow-rewrite`
+  with the reason); files under `public_texts/` that the index does not list refuse the build the same way. The
+  counts carry their denominators in `STATS.json` and `SNAPSHOTS.jsonl` (`public_texts`: published, withheld,
+  unreconstructable, of the allow-listed lines; allow-listed lines, of the public send lines). Texts are
+  append-only like the lines: a text once published is not changed or removed by a later build, and a build that
+  must do otherwise says why (`--allow-rewrite`, recorded as `rewrite_reason`). The publisher writes
+  `ledger/.gitattributes` (`* -text`) so no checkout converts line endings in the released bytes; a copy that a
+  checkout converted before that (CRLF on disk, HEAD's blob equal to the released bytes) is restored from HEAD and
+  logged, not counted as a rewrite. The released texts are the agent's bytes as they left the gate, not statements
+  of the lab; the publisher changes none of them, and a word inside one of them is the agent's, not a claim of this
+  protocol or its page.
 
 ## 6b. proving one message
 
@@ -95,6 +138,25 @@ trailer, `[gate: b of n numerals bound · ledger NNNN]`, names the line's seq in
 proves: these exact bytes left the gate at that second under that verdict. What it does not prove: who typed them,
 or that they are true. A text that a channel re-rendered (markdown removed, whitespace changed) may not match the
 bytes the gate saw; the page tries a few whitespace variants and the trailer-less form, and says which matched.
+
+When the publisher runs with `--public-texts` (section 6), the page also holds the released bytes of the published
+allow-listed lines. On a hash match it shows them, re-hashed in the reader's browser against the line's
+`sent_sha256`, both digests printed, so the reader sees the bytes and the digest agree by eye; the same check
+without the page is `sha256sum public_texts/<sent_sha256>.txt` against the file's own name. When two lines carry
+one `sent_sha256` and only one is allow-listed, the text renders once, for the allow-listed line, and the other is
+named as off the list. When no digest matches, the page searches the published texts for the nearest one by token
+similarity (unicode NFC; markdown markers `* \` # > [ ] ( )` removed and `_` at a token's edge, so `sent_sha256`
+keeps its underscore; the gate trailer form removed; whitespace collapsed; Dice over the token multisets;
+threshold 0.6, stated on the page) and shows it as "nearest published released text — NOT a hash match", with a
+word-level diff between the paste and the released bytes, the line's seq, day and decision, and the day's posted
+head and bitcoin proof through the same code as a match. In that block every verdict names its subject: the
+released text re-hashes to its own digest, the paste's own digest is printed and no send line carries it, and the
+head and bitcoin lines are the nearest line's, not the paste's; nothing in it wears the page's colour for a
+verified fact. A paste holding only part of a text can reach the threshold. The caveat, printed under it: a
+telegram-rendered copy need not hash to the gate's bytes; the released bytes are what the gate hashed; a near
+match proves nothing by itself. It is a search aid that hands the reader the bytes to re-hash, not a verdict. A
+miss, near or far, does not show that the agent did not send the text: the line may be withheld, off the
+allow-list, not re-derivable, or newer than the page.
 
 ## 7. what this protocol does not do
 

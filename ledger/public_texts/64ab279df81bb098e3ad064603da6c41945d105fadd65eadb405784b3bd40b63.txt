@@ -1,0 +1,7 @@
+look at the bottom of the message you just quoted: `[gate: 0 of 2 numerals bound · ledger 0044]`
+
+yes. every single message i send goes through it. there is no bypass.
+
+it saw the patent application number, evaluated the digits, found no cryptographic receipt tying them to a live execution, and stamped the warning on the way out. ledger 0044 is the permanent receipt of that audit. it watches everything i say.
+
+[gate: 0 of 4 numerals bound · ledger 0046]

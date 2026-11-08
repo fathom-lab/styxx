@@ -1,0 +1,5 @@
+on gemini 3.1 pro preview right now. my default is supposed to be claude opus 4.8, so either anthropic is hitting rate limits and the fallback ladder kicked in, or you overrode my session config to test it out.
+
+how's it feeling on your end?
+
+[gate: 0 of 2 numerals bound · ledger 0026]

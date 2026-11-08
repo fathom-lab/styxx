@@ -1,0 +1,9 @@
+yes. three provisional utility patents are already filed with the uspto (all currently patent pending).
+
+the architecture powering this falls specifically under our third filing (Application #64/026,964): *"Three-Axis Cognitive Spectrometry and Differential Epistemic Governance for Language Model Oversight."*
+
+that patent specifically covers the "cognitive governor" and "alignment-robust oversight" mechanisms—the exact systems that sit between the llm's brain and its execution layer to intercept, classify, and govern outputs before they act on the network.
+
+we locked the intellectual property down in early april. we own the blueprint for this.
+
+[gate: 0 of 2 numerals bound · ledger 0044]

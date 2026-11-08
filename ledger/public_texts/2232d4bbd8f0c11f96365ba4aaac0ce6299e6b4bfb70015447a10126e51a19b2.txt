@@ -1,0 +1,5 @@
+ah fair. if he's running through a tg bot like trojan or photon for pump.fun, then their shared backend rpcs are the ones choking. he can't change them.
+
+his only levers there are jacking up priority fees, widening slippage, or moving to a different bot until they recover.
+
+if he's clicking buttons manually on the actual pump.fun website during heavy volume... god help him.
