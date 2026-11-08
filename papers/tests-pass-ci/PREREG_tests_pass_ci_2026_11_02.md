@@ -29,11 +29,22 @@ estimated on 70 audited rows and its false claims on 100 (AU4), and the decisive
 print only where an agent reaches 100 capped claimers. Every number this file licenses is printed with `j`, the count
 of qualified outside seats (0 or 1), beside it.
 
-**Signature.** Unsigned. At the signing commit this paragraph begins with the words "**Signature.** Signed", quotes
-the operator's word from chat, and the commit message names it (the house form:
-`M:papers/sworn/PREREG_sworn_measurement_2026_10_23.md` l.13-24); the collector's seal guard reads that line (P21). If
-the signing commit is later than 2026-11-06, the delay, its cause and its cost in backlog days are printed here; the
-window does not move (§15.5).
+**Signature.** Signed by the operator on 2026-11-08, against `origin/main` `096d41c9` (merge #246,
+2026-11-04T14:05:09Z), two days after the deadline of 2026-11-06 (§15.5, OD-1). The operator's word, given in chat on
+2026-11-08 and quoted here: **"Sign under late rule"**, after the lead had put the choice to him as "sign it now under
+the late rule, or hold"; the lead committed this file under that word, in the manner of
+`M:papers/sworn/PREREG_sworn_measurement_2026_10_23.md` l.13-24, with the sentence quoted in the signing commit's
+message; the collector's seal guard reads this line (P21). The delay and its cause: the lead's weekly usage window
+reached its cap on 2026-11-04 at about 14:25Z, while this packet stood ready, and reset on 2026-11-08 at 10:00Z; no
+extra usage was enabled; no byte of this file, of the collector or of the sealed set changed in between (the signing
+rows were filled at `faa8626d` on 2026-11-03). Its cost in backlog days: the signing commit is 2 days late, and the
+pull request carrying this file opens after the header time of block 975000 (2026-11-07T23:36:16Z, read from
+blockstream.info on 2026-11-08), so the late rule of §3.1 applies: the beacon is the block at the lowest height whose
+header time is at least six hours after the pull request opens, read on the operator's word (OD-8) from two explorers
+that must agree and recorded in the publication record (§14). Every window row opened before that block is a backlog
+row read under P4.1 within 3 days of it; a row read more than 7 days after it opened carries `LATE_READ` and leaves
+the report share only (§15.5) — with a beacon on 2026-11-09 that reaches the rows opened on 2026-11-02 and 2026-11-03.
+The window stays 2026-11-02 to 2026-11-29; no kill date, bar or row of §10 moves; OD-22 stands as taken.
 
 ---
 
