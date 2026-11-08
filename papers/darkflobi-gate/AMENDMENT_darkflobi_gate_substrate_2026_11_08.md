@@ -996,7 +996,7 @@ Filled by the lead after the move, one commit, nothing above this heading edited
   `d88caaaa9c8824d6…`); `delivered` seq 737 (22:56:59Z); the earliest `payload_kind: anchor` send: none yet at the time of
   this commit (the next anchor posts 2026-11-09T05:00Z). The earliest v1 send line is seq 736. Observation, not a verdict:
   that line's substrate names the local fallback model; the gateway's log at the time reads an Anthropic auth profile in a
-  billing lockout, so the first live reading of the field is a fallback the agent's own reply also marked.
+  billing lockout, so the earliest live reading of the field is a fallback the agent's own reply also marked.
 - every line written after the move carrying another digest (the six intermediates of item 8 among them), by seq: none
   (seqs 735-737 all carry `7249a8f8…`, read 2026-11-08T23:15Z).
 - v0 send lines after the earliest v1 line, by seq (`v0_after_earliest_v1`, item 5): none (the replay's count 0).
