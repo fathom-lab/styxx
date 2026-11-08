@@ -258,12 +258,19 @@ should state the gap where it stands.
 
 Operator sign-line: the merge of the pull request that carries this file. Apply date: 2026-11-04 (13:15:12Z, the move).
 
-## Addendum — the first line under the new stretch
+## Addendum — the first line under the new stretch (filled 2026-11-08 by the lead)
 
-Filled by the lead in a later commit on this branch, or on main after the merge, once a send line carries the new
-`gate_sha256`: its seq, its timestamp, its `numerals` keys (`unbound_shapes` present, `unbound_tokens` absent), and
-whether any line between seq 410 and it carries a digest that is neither `445ac94c…` nor `f321b1bc…` (none is
-expected: the renames took 2.69 ms and no line was written during them).
+- **seq 411**, `send`, 2026-11-04T14:18:13Z, `public`, `telegram_action`, decision `allow`, finding `clean`,
+  `gate_sha256` `f321b1bcde60a62e7be990883d82243e5c5cd2a41fef036381e0a8b24c4a01ff` — the digest computed with
+  `gate.py`'s recipe in "The apply" above, byte for byte. Its `numerals` carry `unbound_shapes` and no
+  `unbound_tokens` (`total` 0: a digit-free sentence darkflobi posted about this change, Telegram message 10191).
+- No line sits between seq 410 (the last under `445ac94c…`, 13:08:45Z) and seq 411; no line of the log carries a
+  digest other than the five stretches' (`387fc063…`, `ff34b52d…`, `c5084df2…`, `445ac94c…`, `f321b1bc…`).
+- Read at 2026-11-08 ~19:00Z over 734 lines: 324 lines under `f321b1bc…`, of them 157 send lines, every one with
+  `unbound_shapes` and none with `unbound_tokens`. The public page's publisher, which withholds a line whose string
+  carries an identifier's shape, withheld nothing new in its three nightly builds since the move (2026-11-05, -06, -08):
+  the withheld set is still the five lines of this file's defect table [R, `exhibit` branch `ledger/withheld.json`,
+  `ledger/SNAPSHOTS.jsonl`].
 
 ## What this amendment does not say
 
