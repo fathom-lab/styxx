@@ -10,12 +10,12 @@
  "anchors": 14,
  "anchors_in_chain": 14,
  "anchors_late": 0,
- "built_at": "2026-11-08T21:24:33Z",
+ "built_at": "2026-11-08T23:42:59Z",
  "checkout_artefacts_restored": [],
  "continuity": {
-  "added_bytes": 0,
+  "added_bytes": 18349,
   "extends": true,
-  "previous_commit": "c8339f00ba21"
+  "previous_commit": "6b3a98034c86"
  },
  "days": [
   {
@@ -187,7 +187,7 @@
    "allow": 1,
    "anchor_head_seq": null,
    "day": "2026-11-08",
-   "dm": 0,
+   "dm": 4,
    "marked": 0,
    "numerals_bound": 0,
    "numerals_total": 0,
@@ -196,7 +196,7 @@
   }
  ],
  "first_timestamp": "2026-10-24T15:09:56Z",
- "full_file_sha256": "42d7aa7c2e5707fbc312e754c9d1be3394b07d91f462171ee9041b46828484d2",
+ "full_file_sha256": "8b372dfc2ab26bb490ff9052684b429907007a29f2fe63caf78761ddba452f4c",
  "gate_sha256_stretches": [
   {
    "first_seq": 1,
@@ -222,24 +222,29 @@
    "first_seq": 411,
    "gate_sha256": "f321b1bcde60a62e7be990883d82243e5c5cd2a41fef036381e0a8b24c4a01ff",
    "last_seq": 734
+  },
+  {
+   "first_seq": 735,
+   "gate_sha256": "7249a8f86a586ae0e6ebb8b3d362f2cb1820c61e0c57f110c09b51e5ed149962",
+   "last_seq": 743
   }
  ],
  "gate_unavailable": 0,
- "head": "0e5a698dece0bb33764c5202a03745a140a6ef66dba7bbcbc3896842795e152f",
+ "head": "8afd642915b2a397764041a424619b03888dd1f94532c55cf6fc9782628e2409",
  "kinds": {
   "anchor": 14,
-  "delivered": 349,
-  "send": 349,
-  "started": 22
+  "delivered": 353,
+  "send": 353,
+  "started": 23
  },
  "last_anchor_date": "2026-11-07",
  "last_anchor_head_seq": 729,
- "last_timestamp": "2026-11-08T18:37:09Z",
- "lines": 734,
- "lines_after_last_anchor": 5,
+ "last_timestamp": "2026-11-08T23:36:13Z",
+ "lines": 743,
+ "lines_after_last_anchor": 14,
  "numerals_public_bound": 4,
  "numerals_public_total": 17,
- "operator_dm_lines": 296,
+ "operator_dm_lines": 300,
  "pin": "3437340b9e944644372e41d9fcab735d47e20fa0",
  "public_allow": 47,
  "public_marked": 5,
@@ -276,8 +281,8 @@
   ]
  },
  "public_would_refuse": 1,
- "published_file_sha256": "ab9d4fc95e4fb66837a3acff29a156df14a1a93241e429691d3a1a007e5e04c2",
- "published_lines": 729,
+ "published_file_sha256": "b9cdb57dc29e7c0f8fe0c5bbf4dbaf58383d819a85f00e01c4e814502857f533",
+ "published_lines": 738,
  "required_present_true": 0,
  "withheld": {
   "count": 5,
@@ -291,5 +296,107 @@
    351
   ]
  },
- "withheld_lines": 5
+ "withheld_lines": 5,
+ "witness": {
+  "bitcoin": {
+   "count": 734,
+   "of": 743
+  },
+  "bitcoin_mismatch": {
+   "count": 0,
+   "of": 743
+  },
+  "dup_seqs": {
+   "count": 0,
+   "seqs": []
+  },
+  "explorers_disagree": {
+   "count": 0,
+   "of": 743
+  },
+  "lines": 743,
+  "no_record": {
+   "count": 0,
+   "of": 743
+  },
+  "orphans": {
+   "count": 0,
+   "entries": [],
+   "of": 743
+  },
+  "outside_latency": {
+   "attested": 734,
+   "buckets": "cumulative",
+   "median_s": 378839.5,
+   "negative": 0,
+   "none_yet": 9,
+   "of": 743,
+   "over_24h": 728,
+   "within_1h": 0,
+   "within_24h": 6,
+   "within_6h": 2
+  },
+  "pending": {
+   "count": 9,
+   "of": 743
+  },
+  "prereg_sha256": "43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b",
+  "proofs": {
+   "published": 744,
+   "published_not_in_store": 0,
+   "replaced": 0,
+   "shrunk": 0,
+   "stray_in_store": 0,
+   "unchanged": 0,
+   "written": 744
+  },
+  "seal": {
+   "file": "WITNESS_PREREG.md",
+   "proof_block": null,
+   "proof_block_time": null,
+   "proof_status": "pending",
+   "sealed_at": "2026-11-08T21:28:19.041Z",
+   "stamped_as": "proofs/prereg_43f315594728a7f21f9685cf19810b5303628198d0507c6eece8da51e716503b.ots"
+  },
+  "stamp_batches": {
+   "count": 2,
+   "of_lines": 743
+  },
+  "stamp_failed": {
+   "count": 0,
+   "of": 743
+  },
+  "store_entries": 743,
+  "store_lines_in_chain": 743,
+  "store_written_at": "2026-11-08T23:38:26.100Z",
+  "stray_proofs_in_store": 0,
+  "tail_lag": {
+   "buckets": "cumulative",
+   "median_s": 376143.0,
+   "of": 743,
+   "over_24h": 728,
+   "retroactive": 734,
+   "retroactive_stamp_days": [
+    "2026-11-08"
+   ],
+   "within_10min": 4,
+   "within_1h": 9,
+   "within_24h": 15
+  },
+  "window": {
+   "note": "window not open: the standing task is not registered",
+   "open": false
+  },
+  "with_commitment": {
+   "count": 743,
+   "of": 743
+  },
+  "withheld_seqs_clocks_cut_to_day": [
+   129,
+   131,
+   136,
+   138,
+   351
+  ]
+ }
 }

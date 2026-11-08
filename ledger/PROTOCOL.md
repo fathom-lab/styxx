@@ -66,6 +66,76 @@ which commit them into a Bitcoin block; the proof (`anchors/<date>.txt.ots`) att
 that block, and nothing the writer controls can move that. A proof made on a later day for an earlier post shows only
 that the post existed by the stamping day.
 
+## 5b. the per-line witness
+
+When the publisher runs with `--witness <store>` (section 6), every line of the ledger has its own OpenTimestamps
+file beside the page: `witness/proofs/<entry_id>.ots`, one per `entry_id` (the sha256 of the line's canonical
+core, section 3), the withheld lines' digests included. A tail on the box (`wt/_witness_2026_11_08/witness.cjs`)
+reads the ledger — complete LF-terminated lines only, never its lock — re-derives the chain with `verify.js`,
+and sends every entry_id not yet in its store, as one merkle batch, to the public OpenTimestamps aggregators; at
+least two calendars must accept it. Later runs ask the calendars for the Bitcoin block their commitment landed in
+and record it only when two block explorers (blockstream.info, mempool.space) return the same hash, merkle root
+and header time for that block.
+
+Two words, kept apart. A PENDING file is a calendar's receipt: a url and a commitment, and no time a stranger can
+check. A PROOF is the file once it holds a Bitcoin attestation, and it attests exactly this: the line's digest
+existed before that block. The block header's `time` is the one clock in this folder the lab does not run; it is
+the miner's, within about two hours of consensus wall time, so a latency under six hours carries that slop and a
+negative latency can appear for an honest line (it is printed, never hidden). What a proof does not show: that
+every send got a line (section 7), the words of any message, who wrote the line, or that the line is true.
+
+Two clocks, named. `seen_at` and `stamped_at` in the store are the tail's own clock: the lab's word, process
+evidence, labelled so wherever they are printed. The line's `timestamp` is the gate's statement (section 1).
+`block_time` is the block header's. The number the page's sentence rests on is `block_time − timestamp`
+("outside latency"), as counts with denominators: within 1 h, 6 h, 24 h, over 24 h, none yet, of n. The tail's own
+`stamped_at − seen_at` ("stamp latency") is one request's round trip and never enters a sentence about the proofs.
+Lines the tail saw more than an hour after their own timestamp were stamped retroactively (the opening batch of
+2026-11-08 stamped every line written since 2026-10-24); a proof for one of them pins its digest to a block at or
+after the stamping (that batch's block, 975101, has header time 2026-11-08T21:41:26Z: the same UTC day, 39 min
+52 s after the stamp), not to the line's own day, and the page prints that count.
+
+What is published under `witness/`: `proofs/<entry_id>.ots` for every entry of the store's index (bytes copied;
+a stray file in the store that the index does not name is counted, not copied); `index.json`, the tail's latest
+state per entry_id — status, calendars, block, block time, the tail's clocks — and, for a withheld seq, no clock
+finer than the UTC day on that seq's record: `line_timestamp` blanked and `seen_at`, `stamped_at`, `upgraded_at`
+cut to the day, in `index.json` and in the page's embedded document alike (the published ledger shows a withheld
+line's digest and day only, and the publisher keeps that here; the seqs are listed under `publisher`). One
+exception, stated: `runs.jsonl` is the tail's run log and is copied whole, and a run that stamped a single line
+names, by the tail's clock, a moment within the batch window of that line's write; the publisher does not edit
+the tail's log. `REPORT.md` and `runs.jsonl` are copied as the tail wrote them, so their denominators are the
+chain as the tail last read it, and the page's are the lines the page carries; the page names both moments.
+Before copying, the publisher checks every proof's OpenTimestamps magic and the digest it commits to (the 32
+bytes after the version and hash-op bytes) against its file name — the entry_id, or the sealed sha256 for the
+prereg's own proof — and refuses the build on a mismatch; it parses nothing further of a proof. `seal.jsonl`
+and `WITNESS_PREREG.md`, the preregistered kill gate for this layer (three bars read at the close of day 9 of the
+opening window) and its seal: line 1 of `seal.jsonl` names the file's sha256, written the moment the tail opened
+the store, and the publisher refuses the build when the file it would publish does not hash to that
+sealed digest or the index disagrees with the seal; the sealed digest is itself stamped as
+`proofs/prereg_<sha256>.ots`. The replacement rule: a proof's commitment never changes, but its bytes grow when a
+calendar's Bitcoin attestation is added, so a later build REPLACES a published `.ots` with the store's longer form
+(counted as `replaced` in `STATS.json`); nothing under `proofs/` is deleted, and a published proof the store no
+longer names stays and is counted. A store entry whose digest is not in the chain is an ORPHAN — what a rewrite or a
+re-chain leaves behind — and is published as a count with its list, never hidden, and never refuses the build; so
+is a seq that carries more than one entry_id in the store.
+
+What the page re-derives and what it does not: the chain, every digest and every chain count are computed in
+the browser from the embedded bytes; the witness states (status, block, header time per entry_id) are the tail's
+store as copied at build — the page parses no proof and asks no explorer, and says so in its opening sentence
+when `--witness` is on; the proof file beside the page is what a stranger checks.
+
+The counts carry their denominators in `STATS.json` and `SNAPSHOTS.jsonl` (`witness`: lines with a commitment, pending,
+with a Bitcoin attestation, explorers disagreed, mismatch, stamp failed, no record, orphans of store entries, seqs
+with more than one entry_id, outside latency, tail lag, stamp batches) and on the page (the tile, the `ots` column of
+the lines table, the witness section, and the two witness lines under a FOUND message). The kill-gate window opens
+on the standing task's opening run; until the operator registers it the page says so (`--witness-window-since` names
+day 1 once it has). A stranger pins one line without the page: take its `entry_id` from `ledger.jsonl` (or a
+withheld digest from `withheld.json`), fetch `witness/proofs/<entry_id>.ots`, and run
+`node ots-cli.js verify -i -d <entry_id> <entry_id>.ots` with javascript-opentimestamps 0.4.9 (or `ots verify -d`
+with the python client); a pending file prints "Pending confirmation in Bitcoin blockchain" and pins nothing, a
+proof prints the block, and the block's header time is at `https://mempool.space/api/block/<hash>` and
+`https://blockstream.info/api/block/<hash>` (`/block-height/<H>` gives the hash). The store was written by the
+lab's tail; the proofs are what the stranger checks.
+
 ## 6. publication
 
 - `ledger.jsonl`: every published line byte for byte, in order, with the header.
@@ -83,6 +153,9 @@ that the post existed by the stamping day.
   publish a seq withheld before; a publisher who must do otherwise records `extends: false` with the reason. On the
   exhibit branch `git log -p ledger/ledger.jsonl` therefore shows additions only, except where a line says why not.
 - `anchors/<date>.txt`, `anchors/<date>.txt.ots`, `anchors/index.json`: the posts, their proofs, their state.
+- `witness/` (when the publisher runs with `--witness <store>`): the per-line witness, section 5b — one
+  OpenTimestamps file per entry_id under `witness/proofs/`, the tail's index, report and runs, the sealed kill-gate
+  preregistration; counts with denominators in `STATS.json` and `SNAPSHOTS.jsonl` under `witness`.
 - `public_texts/<sent_sha256>.txt`, `public_texts/index.json` (when the publisher runs with `--public-texts`): the
   released bytes of the allow-listed public sends. The allow-list rule: a text is published only for a line with
   `kind: send`, `action: send`, `dest_class: public`, a `sent_sha256`, and a `dest_hash` in the gate's

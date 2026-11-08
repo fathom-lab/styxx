@@ -331,11 +331,9 @@
   "unknown": 0,
   "unstamped": 0
  },
- "notes": [
-  "upgrade 2026-11-07: bitcoin block 975028"
- ],
+ "notes": [],
  "schema": "darkflobi.exhibit/anchors/v0",
  "verify": "node ots-cli.js verify anchors/<date>.txt.ots (javascript-opentimestamps), ots verify (python opentimestamps-client) against a Bitcoin node, or opentimestamps.org",
  "what_a_proof_attests": "that the bytes of the .txt file existed before the Bitcoin block named in the proof; not that the post was on Telegram at that time, nor that the head covers every send",
- "written_at": "2026-11-08T21:24:48Z"
+ "written_at": "2026-11-08T23:43:12Z"
 }
