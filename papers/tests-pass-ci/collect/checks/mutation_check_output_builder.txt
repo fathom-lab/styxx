@@ -1,0 +1,40 @@
+CAUGHT seal check never raises :: 1 failed, 25 passed in 6.44s
+CAUGHT seal skips the ancestry check :: 1 failed, 89 passed in 11.72s
+CAUGHT seal reads any signature line :: 1 failed, 92 passed in 12.75s
+CAUGHT seal reads the markers anywhere :: 1 failed, 102 passed in 13.69s
+CAUGHT seal ignores TO-FILL rows :: 1 failed, 97 passed in 12.21s
+CAUGHT seal ignores the running code :: 1 failed, 100 passed in 14.26s
+CAUGHT seal takes a future anchor :: 1 failed, 88 passed in 14.89s
+CAUGHT read_row skips the guard :: 1 failed, 25 passed in 7.06s
+CAUGHT batch skips the guard :: 1 failed, 25 passed in 7.74s
+CAUGHT stage_read drops the sealed filter :: 1 failed, 27 passed in 10.70s
+CAUGHT cap by u :: 1 failed, 31 passed in 10.02s
+CAUGHT M uses P_AGENT for all :: 1 failed, 11 passed in 5.31s
+CAUGHT timed_out not mapped :: 1 failed, 45 passed in 17.40s
+CAUGHT slice formula label :: 1 failed in 3.83s
+CAUGHT postfilter dropped :: 1 failed, 14 passed in 6.25s
+CAUGHT au1 logs dropped :: 1 failed, 20 passed in 6.98s
+CAUGHT rule R ignores staleness :: 1 failed, 23 passed in 8.77s
+CAUGHT rule R reads local claims :: 1 failed, 73 passed in 14.39s
+CAUGHT dry run asks for databaseId :: 1 failed, 28 passed in 12.48s
+CAUGHT frame keeps forks :: 1 failed, 7 passed in 3.90s
+CAUGHT images kept in the description :: 1 failed, 113 passed in 14.11s
+CAUGHT excerpt ignores the step's times :: 1 failed, 116 passed in 14.47s
+CAUGHT decoy mix unchecked :: 1 failed, 137 passed in 14.21s
+CAUGHT stand-in hash accepted :: 1 failed, 143 passed in 14.31s
+CAUGHT window draw under any Bitcoin block :: 1 failed, 149 passed in 14.52s
+CAUGHT AU4 may be cut :: 1 failed, 154 passed in 15.21s
+CAUGHT top-ups cut by lowest w :: 1 failed, 155 passed in 16.09s
+CAUGHT shuffle ignores the seed :: 1 failed, 157 passed in 15.66s
+CAUGHT spool not read back :: 1 failed, 188 passed in 23.98s
+CAUGHT inconsistent step-2 label accepted :: 1 failed, 180 passed in 21.68s
+CAUGHT dev server on any packet :: 1 failed, 193 passed in 40.02s
+CAUGHT step 2 asked after a step-1 NO_ANSWER :: 1 failed, 190 passed in 22.86s
+CAUGHT decoys scored on the side :: 1 failed, 204 passed in 24.45s
+CAUGHT NO-side bar at 12 :: 1 failed, 206 passed in 23.03s
+CAUGHT one voter decides :: 1 failed, 209 passed in 24.17s
+CAUGHT undecided whole candidates dropped :: 1 failed, 214 passed in 39.29s
+CAUGHT n_eff is n :: 1 failed, 213 passed in 32.06s
+CAUGHT answers need no seal :: 1 failed, 211 passed in 24.88s
+CAUGHT P2 decoys not held to the sealed set :: 1 failed, 212 passed in 23.56s
+39 of 39 caught
