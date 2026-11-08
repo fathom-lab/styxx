@@ -25,10 +25,11 @@ Standard library only (and `git` for `pin-tree`). Four verbs:
     py -3.12 papers/darkflobi-gate/lock_hashes.py check PREREG.md [--w-root ...] [--home ...] [--strict]
                                                      [--amendment AMENDMENT.md ...]
         reads every lock row of the PREREG (its section 11 and any later row under section 15; the last row
-        for a path wins), then the lock rows of each `--amendment` file in the order given (a file written
-        under the PREREG's section 12 after the merge; its rows are applied after the PREREG's, so an
-        amendment's row for a path replaces the PREREG's), re-derives each hash from the box and prints one
-        status per row:
+        for a path wins), then the lock rows of each `--amendment` file (a file written under the PREREG's
+        section 12 after the merge; its rows are applied after the PREREG's, so an amendment's row for a path
+        replaces the PREREG's) in the stated order: by the date its name ends with (`_YYYY_MM_DD.md`), then by
+        name, whatever order the files are given in (a name without a date sorts ahead of every dated one),
+        re-derives each hash from the box and prints one status per row:
           SAME         the bytes are the locked bytes
           CHANGED      the bytes moved (a failure)
           BUILT SINCE  the row reads `not built at the freeze` and the file now exists with no later row (a failure:
@@ -43,12 +44,22 @@ Standard library only (and `git` for `pin-tree`). Four verbs:
         forged cache beside a locked `.py` would run with every row SAME; the snapshot's caches are inside its tree
         digest). Exit 1 on any CHANGED, BUILT SINCE or UNREADABLE; with --strict also on any ABSENT, UNLOCKED or
         BYTECODE, which is the form the merge-time run and the weekly check use.
-        Each amendment file read prints one `AMENDMENT <name> rows <n> sha256 <16 hex>` line (the sha256 of its LF
-        bytes, so the reading names the text it read), and a row an amendment supplied carries `via=<name>`. A
-        path two amendment files, or one file twice, name with two digests is a CLASH: both names and both digests
-        are printed and `check` exits 2 before any row is read, since no reading of the box can say which row is
-        the freeze. An amendment with no rows is read and counted (`rows 0`); a missing file exits 2. A `#gates`
-        row is read against the PREREG's own text, as before.
+        Each amendment file read prints one `AMENDMENT <name> rows <n> sha256 <16 hex>` line, in the order read
+        (the sha256 of its LF bytes, so the reading names the text it read), and a row an amendment supplied carries
+        `via=<name>`. A path one file names twice with two digests is a CLASH. A path a later file names with a
+        digest other than the one an earlier amendment file's row holds is a CLASH too, unless the later file
+        declares the supersession, one declaration per earlier file whose row it replaces, each naming the path,
+        that file and that row's digest, in a five-cell table line that is never a lock row:
+            | supersedes | `<path>` | `<earlier AMENDMENT file name>` | `<the earlier row's digest>` | note |
+        A declared supersession prints one `SUPERSEDED <path> <earlier> <digest> -> <later> <digest>` line and the
+        later row replaces the earlier one, as an amendment's row replaces the PREREG's. It is a CLASH, never a
+        silent reading, when a declaration is missing for any earlier file holding the row in force, names another
+        digest, names a file not read or read later, names a path whose row it does not replace, is given twice, or
+        sits in a line that opens `| supersedes |` and is not in the form; when either file's name carries no date;
+        and when one file name is given twice. On any CLASH both names and both digests (or the line) are printed
+        and `check` exits 2 before any row is read, since no reading of the box can say which row is the freeze.
+        An amendment with no rows is read and counted (`rows 0`); a missing file exits 2. A `#gates` row is read
+        against the PREREG's own text, as before.
 
 What the lock covers under W:gate/, and what it never covers. Never entered, at the top level of W:gate/: the live
 state folders `sources/`, `refused/`, `prepared/`, the mint's dry-run records `prepared_dryrun/`, `pending/`,
@@ -132,6 +143,14 @@ PLUGIN_HOME = ("~/.clawdbot/extensions/styxx-gate/clawdbot.plugin.json",
 # a lock row: | label | `path` | `sha256 (64 hex), or the pin (40 hex), or the not-built note` | note |
 ROW_RE = re.compile(r"^\|\s*(?P<label>[^|]*?)\s*\|\s*`(?P<path>[^`]+)`\s*\|\s*`(?P<hash>[0-9a-f]{64}|[0-9a-f]{40}|"
                     + re.escape(NOT_BUILT) + r")`\s*\|\s*(?P<note>[^|]*?)\s*\|\s*$")
+# a supersession declaration (D9 of the substrate AMENDMENT, 2026-11-02): | supersedes | `path` | `earlier file` |
+# `the earlier row's digest` | note |. Its third cell is a file name, so ROW_RE never reads it as a lock row; a line
+# that opens like one and is not in this form is refused, never skipped.
+SUPERSEDES_RE = re.compile(r"^\|\s*supersedes\s*\|\s*`(?P<path>[^`]+)`\s*\|\s*`(?P<file>[^`]+\.md)`\s*\|\s*`(?P<hash>"
+                           r"[0-9a-f]{64}|[0-9a-f]{40}|" + re.escape(NOT_BUILT) + r")`\s*\|\s*(?P<note>[^|]*?)\s*\|\s*$")
+SUPERSEDES_LEAD = re.compile(r"^\|\s*supersedes\s*\|")
+# the date an amendment file's name ends with; the files are read by it, then by name
+AMENDMENT_DATE_RE = re.compile(r"_(\d{4})_(\d{2})_(\d{2})\.md$")
 
 
 class WalkError(RuntimeError):
@@ -395,39 +414,109 @@ def parse_lock_rows(text: str) -> dict[str, tuple[str, str]]:
     return out
 
 
-def amendment_rows(paths) -> tuple[dict[str, tuple[str, str]], dict[str, str], list[tuple[str, int, str]], list[str]]:
-    """The lock rows of the amendment files, read in the order given.
+def amendment_date(name: str):
+    """The (year, month, day) an amendment file's name ends with (`_YYYY_MM_DD.md`), or None."""
+    m = AMENDMENT_DATE_RE.search(name)
+    return (int(m.group(1)), int(m.group(2)), int(m.group(3))) if m else None
 
-    Returns (rows, via, files, clashes): rows maps path -> (hash, label) as `parse_lock_rows` does; via maps each
-    path to the file name(s) that named it ("a.md + b.md" when two files name one digest); files lists
-    (name, row count, sha256 of the LF bytes) per file; clashes lists one sentence per path named with two digests,
-    across files or inside one file. The caller refuses to read the box while clashes is not empty."""
+
+def amendment_order(paths) -> list[Path]:
+    """The stated order the amendment files are read in: the date the name ends with, then the name; a name without a
+    date sorts ahead of every dated one, by name. The order given on the command line does not enter."""
+    def key(p: Path):
+        d = amendment_date(p.name)
+        return (0, (0, 0, 0), p.name) if d is None else (1, d, p.name)
+    return sorted((Path(p) for p in paths), key=key)
+
+
+def read_amendments(paths) -> dict:
+    """The lock rows of the amendment files, read in `amendment_order`, with each declared supersession applied.
+
+    Returns {"rows", "via", "files", "clashes", "supersessions", "order"}: rows maps path -> (hash, label) as
+    `parse_lock_rows` does; via maps each path to the file name(s) whose row is in force ("a.md + b.md" when two files
+    name one digest); files lists (name, row count, sha256 of the LF bytes) in the order read; supersessions lists
+    (path, earlier file, earlier digest, later file, later digest), one per declaration applied; clashes lists one
+    sentence per refusal (a path one file names with two digests; a later digest no declaration covers; a declaration
+    that is malformed, given twice, names another digest or a file not holding the row in force, or replaces nothing;
+    an undated name in a supersession; a file name given twice). The caller refuses to read the box while clashes is
+    not empty."""
     rows: dict[str, tuple[str, str]] = {}
-    via: dict[str, str] = {}
+    holders: dict[str, list[str]] = {}
     files: list[tuple[str, int, str]] = []
     clashes: list[str] = []
-    for f in paths:
-        f = Path(f)
+    supersessions: list[tuple[str, str, str, str, str]] = []
+    ordered = amendment_order(paths)
+    seen_names: set[str] = set()
+    for f in ordered:
         raw = f.read_bytes()
         text = raw.decode("utf-8")
+        if f.name in seen_names:
+            clashes.append(f"{f.name} is given twice; each amendment file is read once, by its name")
+            continue
+        seen_names.add(f.name)
+        own: dict[str, tuple[str, str]] = {}
+        declared: dict[tuple[str, str], str] = {}
         n = 0
         for line in text.splitlines():
             m = ROW_RE.match(line)
-            if not m:
+            if m:
+                n += 1
+                p, h, label = m.group("path"), m.group("hash"), m.group("label")
+                if p in own and own[p][0] != h:
+                    clashes.append(f"{p}: {f.name} reads {own[p][0]}, {f.name} reads {h} (one file, two digests)")
+                    continue
+                own[p] = (h, label)
                 continue
-            n += 1
-            p, h, label = m.group("path"), m.group("hash"), m.group("label")
+            if SUPERSEDES_LEAD.match(line):
+                d = SUPERSEDES_RE.match(line)
+                if not d:
+                    clashes.append(f"{f.name}: a line opening `| supersedes |` is not in the declaration's form: "
+                                   f"{line.strip()[:160]}")
+                    continue
+                k = (d.group("path"), d.group("file"))
+                if k in declared:
+                    clashes.append(f"{d.group('path')}: {f.name} declares its supersession of {d.group('file')} twice")
+                    continue
+                declared[k] = d.group("hash")
+        used: set[tuple[str, str]] = set()
+        for p, (h, label) in own.items():
             if p in rows and rows[p][0] != h:
-                clashes.append(f"{p}: {via[p]} reads {rows[p][0]}, {f.name} reads {h}")
-                continue
-            if p in rows:
-                if f.name not in via[p].split(" + "):
-                    via[p] = via[p] + " + " + f.name
+                earlier = holders[p]
+                old = rows[p][0]
+                missing = [e for e in earlier if declared.get((p, e)) != old]
+                undated = [x for x in earlier + [f.name] if amendment_date(x) is None]
+                if missing or undated:
+                    why = (f"{f.name} declares no supersession of {', '.join(missing)}'s row" if missing else
+                           f"a supersession needs a date in both names ({', '.join(undated)} has none)")
+                    clashes.append(f"{p}: {' + '.join(earlier)} reads {old}, {f.name} reads {h}; {why}")
+                    continue
+                for e in earlier:
+                    used.add((p, e))
+                    supersessions.append((p, e, old, f.name, h))
+                rows[p] = (h, label)
+                holders[p] = [f.name]
+            elif p in rows:
+                if f.name not in holders[p]:
+                    holders[p].append(f.name)
+                rows[p] = (h, label)
             else:
-                via[p] = f.name
-            rows[p] = (h, label)
+                rows[p] = (h, label)
+                holders[p] = [f.name]
+        for (p, e), h in declared.items():
+            if (p, e) not in used:
+                now = (f"in force: {' + '.join(holders[p])} at {rows[p][0]}" if p in holders and holders[p] != [f.name]
+                       else "no earlier amendment row is in force for it")
+                clashes.append(f"{p}: {f.name} declares it supersedes {e}'s row {h}, which it does not replace ({now})")
         files.append((f.name, n, hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest()))
-    return rows, via, files, clashes
+    via = {p: " + ".join(names) for p, names in holders.items()}
+    return {"rows": rows, "via": via, "files": files, "clashes": clashes, "supersessions": supersessions,
+            "order": [f.name for f in ordered]}
+
+
+def amendment_rows(paths) -> tuple[dict[str, tuple[str, str]], dict[str, str], list[tuple[str, int, str]], list[str]]:
+    """(rows, via, files, clashes) of `read_amendments`, the form the earlier callers read."""
+    r = read_amendments(paths)
+    return r["rows"], r["via"], r["files"], r["clashes"]
 
 
 def gates_block_sha256(text: str) -> str:
@@ -456,19 +545,22 @@ def check(prereg: Path, w_root: Path, home: Path, strict: bool = False, amendmen
     via: dict[str, str] = {}
     if amendments:
         try:
-            arows, via, files, clashes = amendment_rows(amendments)
+            read = read_amendments(amendments)
         except (OSError, UnicodeDecodeError) as e:
             print(f"REFUSED: an amendment file cannot be read: {e}", file=sys.stderr)
             return 2
+        arows, via, files, clashes = read["rows"], read["via"], read["files"], read["clashes"]
         for name, n, digest in files:
             print(f"{'AMENDMENT':12s} {name}  rows {n}  sha256 {digest[:16]}")
         if clashes:
             for c in clashes:
                 print(f"{'CLASH':12s} {c}")
                 print(f"CLASH: {c}", file=sys.stderr)
-            print(f"clash {len(clashes)}: no row was read; each path must carry one digest across the amendment files",
-                  file=sys.stderr)
+            print(f"clash {len(clashes)}: no row was read; a path carries one digest across the amendment files "
+                  f"unless a later file declares its supersession of each earlier row", file=sys.stderr)
             return 2
+        for p, earlier, old, later, new in read["supersessions"]:
+            print(f"{'SUPERSEDED':12s} {p}  {earlier} {old[:16]} -> {later} {new[:16]}")
         rows.update(arows)
     repo_root = prereg.resolve().parent.parent.parent      # papers/darkflobi-gate/PREREG -> the repository
     counts = {"CHANGED": 0, "BUILT SINCE": 0, "ABSENT": 0, "UNREADABLE": 0}
@@ -563,8 +655,9 @@ def main(argv=None) -> int:
     c.add_argument("--strict", action="store_true",
                    help="an ABSENT or UNLOCKED path is a failure too (the merge-time and weekly form)")
     c.add_argument("--amendment", action="append", default=[], metavar="FILE",
-                   help="an AMENDMENT file whose lock rows are applied after the PREREG's (repeatable, in order; "
-                        "a path two files name with two digests exits 2)")
+                   help="an AMENDMENT file whose lock rows are applied after the PREREG's (repeatable; read by the "
+                        "date its name ends with, then by name; a path two files name with two digests exits 2 unless "
+                        "the later file declares the supersession)")
     a = ap.parse_args(argv)
     try:
         if a.verb == "tree":
